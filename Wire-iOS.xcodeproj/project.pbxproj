@@ -951,6 +951,7 @@
 		F195EB9D1E2F75BC00712118 /* FeedbackOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F195EB9C1E2F75BC00712118 /* FeedbackOverlayView.swift */; };
 		F1AA8AD61E5DF36A006A0E68 /* DegradationOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1AA8AD51E5DF36A006A0E68 /* DegradationOverlayView.swift */; };
 		F1B025641E574B3C00900C65 /* VoiceChannelOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1B025631E574B3C00900C65 /* VoiceChannelOverlay.swift */; };
+		F1BD15AE1F05203400EE5B42 /* AcountManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1BD15AD1F05203400EE5B42 /* AcountManager.swift */; };
 		F1C9E3601EAE008C006438D7 /* TestSetup.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1C9E35E1EADFFB8006438D7 /* TestSetup.swift */; };
 		F1CE2DF01EF0337F00631D8A /* PureLayout.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F1CE2DEF1EF0337F00631D8A /* PureLayout.framework */; };
 		F93D58431D7D9184003AE972 /* Analytics+ConversationEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = F93D58421D7D9184003AE972 /* Analytics+ConversationEvents.swift */; };
@@ -4357,6 +4358,7 @@
 				8FC85132199245760008B66B /* ZMUserSession+iOS.h */,
 				8FC85133199245760008B66B /* ZMUserSession+iOS.m */,
 				163495861F010F91004E80DB /* UnauthenticatedSession.swift */,
+				F1BD15AD1F05203400EE5B42 /* AcountManager.swift */,
 				8FC85138199245760008B66B /* ZMConversation+Validation.h */,
 				8FC85139199245760008B66B /* ZMConversation+Validation.m */,
 				8FC85142199245760008B66B /* ZetaKeyValueValidation.h */,
@@ -6145,6 +6147,7 @@
 				BF7ED2D61DF18724003A4397 /* UserNameDetailView.swift in Sources */,
 				BF8CADD91D6CAAFC007602B8 /* Conversation+SortedParticipants.swift in Sources */,
 				87BEB0401D3E44E600DE9575 /* AssetCell.swift in Sources */,
+				F1BD15AE1F05203400EE5B42 /* AcountManager.swift in Sources */,
 				1607359B1EB2393000528965 /* SettingsShareDatabaseCellDescriptor.swift in Sources */,
 				871BC2301D34F8F800DF0793 /* FormGuidance.m in Sources */,
 				54F4BAB61E143B4C00603C6F /* AppDelegate+ErrorTracking.swift in Sources */,
