@@ -79,8 +79,9 @@ final class ConversationListTopBar: TopBar {
     fileprivate var showTeams: Bool = false
     
     internal func updateShowTeamsIfNeeded() {
+        let showTeams = !ConversationListTopBar.hideTeamSelector && ZMUser.selfUser().hasTeam
         guard showTeams != self.showTeams else { return }
-        setShowTeams(to: !ConversationListTopBar.hideTeamSelector && ZMUser.selfUser().hasTeam)
+        setShowTeams(to: showTeams)
     }
     
     private func setShowTeams(to showTeams: Bool) {
