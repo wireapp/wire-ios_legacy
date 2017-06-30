@@ -150,7 +150,7 @@
     // Dismiss keyboard and delay presentation for a smoother transition
     [[UIApplication sharedApplication] sendAction:@selector(resignFirstResponder) to:nil from:nil forEvent:nil];
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        ProfilePictureStepViewController *profilePictureStepViewController = [[ProfilePictureStepViewController alloc] initWithEditableUser:self.unregisteredUser];
+        ProfilePictureStepViewController *profilePictureStepViewController = [[ProfilePictureStepViewController alloc] initWithUnregisteredUser:self.unregisteredUser];
         profilePictureStepViewController.formStepDelegate = self;
         profilePictureStepViewController.analyticsTracker = self.analyticsTracker;
         

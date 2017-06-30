@@ -139,7 +139,7 @@ typedef NS_ENUM(NSUInteger, InvitationFlow) {
 
 - (void)presentProfilePictureStep
 {
-    ProfilePictureStepViewController *pictureStepViewController = [[ProfilePictureStepViewController alloc] initWithEditableUser:[ZMUser editableSelfUser]];
+    ProfilePictureStepViewController *pictureStepViewController = [[ProfilePictureStepViewController alloc] initWithUnregisteredUser:self.unregisteredUser];
     pictureStepViewController.analyticsTracker = self.analyticsTracker;
     pictureStepViewController.formStepDelegate = self;
     

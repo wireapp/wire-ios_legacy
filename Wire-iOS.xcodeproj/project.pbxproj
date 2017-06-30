@@ -35,6 +35,7 @@
 		162CFAA71AE500C10078FB87 /* AddPhoneNumberViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 162CFAA61AE500C10078FB87 /* AddPhoneNumberViewController.m */; };
 		162E8C631CF5D68A004B4F45 /* AudioProcessingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 162E8C621CF5D68A004B4F45 /* AudioProcessingTests.swift */; };
 		16325E651EE03CC4000E72EB /* SearchResultsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16325E641EE03CC4000E72EB /* SearchResultsView.swift */; };
+		1633875B1F065A960015034C /* AcountManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1633875A1F065A960015034C /* AcountManager.swift */; };
 		163495831EFD0F8F004E80DB /* AppController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 163495821EFD0F8F004E80DB /* AppController.swift */; };
 		163495871F010F91004E80DB /* UnauthenticatedSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 163495861F010F91004E80DB /* UnauthenticatedSession.swift */; };
 		163495891F015389004E80DB /* AppDelegate+Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = 163495881F015389004E80DB /* AppDelegate+Network.swift */; };
@@ -951,7 +952,6 @@
 		F195EB9D1E2F75BC00712118 /* FeedbackOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F195EB9C1E2F75BC00712118 /* FeedbackOverlayView.swift */; };
 		F1AA8AD61E5DF36A006A0E68 /* DegradationOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1AA8AD51E5DF36A006A0E68 /* DegradationOverlayView.swift */; };
 		F1B025641E574B3C00900C65 /* VoiceChannelOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1B025631E574B3C00900C65 /* VoiceChannelOverlay.swift */; };
-		F1BD15AE1F05203400EE5B42 /* AcountManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1BD15AD1F05203400EE5B42 /* AcountManager.swift */; };
 		F1C9E3601EAE008C006438D7 /* TestSetup.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1C9E35E1EADFFB8006438D7 /* TestSetup.swift */; };
 		F1CE2DF01EF0337F00631D8A /* PureLayout.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F1CE2DEF1EF0337F00631D8A /* PureLayout.framework */; };
 		F93D58431D7D9184003AE972 /* Analytics+ConversationEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = F93D58421D7D9184003AE972 /* Analytics+ConversationEvents.swift */; };
@@ -1075,6 +1075,7 @@
 		162CFAA61AE500C10078FB87 /* AddPhoneNumberViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = AddPhoneNumberViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		162E8C621CF5D68A004B4F45 /* AudioProcessingTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioProcessingTests.swift; sourceTree = "<group>"; };
 		16325E641EE03CC4000E72EB /* SearchResultsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchResultsView.swift; sourceTree = "<group>"; };
+		1633875A1F065A960015034C /* AcountManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AcountManager.swift; sourceTree = "<group>"; };
 		163495821EFD0F8F004E80DB /* AppController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppController.swift; sourceTree = "<group>"; };
 		163495861F010F91004E80DB /* UnauthenticatedSession.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnauthenticatedSession.swift; sourceTree = "<group>"; };
 		163495881F015389004E80DB /* AppDelegate+Network.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AppDelegate+Network.swift"; sourceTree = "<group>"; };
@@ -4345,6 +4346,7 @@
 		8FC8512F199245760008B66B /* syncengine */ = {
 			isa = PBXGroup;
 			children = (
+				1633875A1F065A960015034C /* AcountManager.swift */,
 				8F41CFC4199297C600E3B032 /* ZMConversation+Additions.h */,
 				8F41CFC5199297C600E3B032 /* ZMConversation+Additions.m */,
 				8F41CFC6199297C600E3B032 /* Message+UI.h */,
@@ -4358,7 +4360,6 @@
 				8FC85132199245760008B66B /* ZMUserSession+iOS.h */,
 				8FC85133199245760008B66B /* ZMUserSession+iOS.m */,
 				163495861F010F91004E80DB /* UnauthenticatedSession.swift */,
-				F1BD15AD1F05203400EE5B42 /* AcountManager.swift */,
 				8FC85138199245760008B66B /* ZMConversation+Validation.h */,
 				8FC85139199245760008B66B /* ZMConversation+Validation.m */,
 				8FC85142199245760008B66B /* ZetaKeyValueValidation.h */,
@@ -6144,7 +6145,6 @@
 				BF7ED2D61DF18724003A4397 /* UserNameDetailView.swift in Sources */,
 				BF8CADD91D6CAAFC007602B8 /* Conversation+SortedParticipants.swift in Sources */,
 				87BEB0401D3E44E600DE9575 /* AssetCell.swift in Sources */,
-				F1BD15AE1F05203400EE5B42 /* AcountManager.swift in Sources */,
 				1607359B1EB2393000528965 /* SettingsShareDatabaseCellDescriptor.swift in Sources */,
 				871BC2301D34F8F800DF0793 /* FormGuidance.m in Sources */,
 				54F4BAB61E143B4C00603C6F /* AppDelegate+ErrorTracking.swift in Sources */,
@@ -6237,6 +6237,7 @@
 				874A02561D1D329B00D0D74A /* AudioEffectCell.swift in Sources */,
 				DB888FB61ADD18B400CE9A88 /* RegistrationEmailFlowViewController.m in Sources */,
 				87E56EDA1E4E10CA0097D489 /* TextSearchViewController.swift in Sources */,
+				1633875B1F065A960015034C /* AcountManager.swift in Sources */,
 				BD979D2E1D8F41E700E8E3CB /* String+WireLocales.swift in Sources */,
 				16A761341AD55ED800A999D0 /* RegistrationViewController.m in Sources */,
 				87DCF4EC1D34EA4500BB420F /* UsersInDirectorySection.m in Sources */,

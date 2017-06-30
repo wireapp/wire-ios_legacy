@@ -51,7 +51,7 @@ NSString * const UnsplashRandomImageLowQualityURL = @"https://source.unsplash.co
 @property (nonatomic) UILabel *subtitleLabel;
 @property (nonatomic) Button *selectOwnPictureButton;
 @property (nonatomic) Button *keepDefaultPictureButton;
-@property (nonatomic) id<ZMEditableUser> editabledUser;
+@property (nonatomic) ZMIncompleteRegistrationUser *unregisteredUser;
 @property (nonatomic) UIImageView *profilePictureImageView;
 @property (nonatomic) UIImage *defaultProfilePictureImage;
 @property (nonatomic) UIView *contentView;
@@ -65,12 +65,12 @@ NSString * const UnsplashRandomImageLowQualityURL = @"https://source.unsplash.co
 
 @implementation ProfilePictureStepViewController
 
-- (instancetype)initWithEditableUser:(id<ZMEditableUser>)editableUser
+- (instancetype)initWithUnregisteredUser:(ZMIncompleteRegistrationUser *)unregisteredUser
 {
     self = [super initWithNibName:nil bundle:nil];
     
     if (self) {
-        self.editabledUser = editableUser;
+        self.unregisteredUser = unregisteredUser;
     }
     
     return self;
@@ -123,7 +123,7 @@ NSString * const UnsplashRandomImageLowQualityURL = @"https://source.unsplash.co
     self.subtitleLabel.font = [UIFont fontWithMagicIdentifier:@"style.text.large.font_spec_light"];
     self.subtitleLabel.textColor = [UIColor colorWithMagicIdentifier:@"style.color.static_foreground.normal"];
     self.subtitleLabel.numberOfLines = 0;
-    self.subtitleLabel.text = [NSString stringWithFormat:NSLocalizedString(@"registration.select_picture.subtitle", nil), self.editabledUser.name];
+    self.subtitleLabel.text = [NSString stringWithFormat:NSLocalizedString(@"registration.select_picture.subtitle", nil), self.unregisteredUser.name];
 
     [self.contentView addSubview:self.subtitleLabel];
 }
@@ -293,9 +293,7 @@ NSString * const UnsplashRandomImageLowQualityURL = @"https://source.unsplash.co
 {
     if (imageData != nil) {
         [AppDelegate checkNetworkAndFlashIndicatorIfNecessary];
-        [[ZMUserSession sharedSession] enqueueChanges:^{
-            [[ZMUserSession sharedSession].profileUpdate updateImageWithImageData:imageData];
-        }];
+        [[UnauthenticatedSession sharedSession] setProfileImage:imageData];
         [self.formStepDelegate didCompleteFormStep:self];
     }
 }
