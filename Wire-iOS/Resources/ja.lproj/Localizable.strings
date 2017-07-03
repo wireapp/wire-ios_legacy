@@ -33,7 +33,7 @@
 "peoplepicker.header.send_invitation" = "招待";
 "peoplepicker.header.contacts" = "連絡先";
 "peoplepicker.header.contacts_personal" = "個人の連絡先";
-"peoplepicker.header.team_members" = "%@";
+"peoplepicker.header.team_members" = "%@ and Contacts";
 "peoplepicker.header.directory" = "接続";
 "peoplepicker.title.create_conversation" = "グループを作成します";
 "peoplepicker.title.add_to_conversation" = "人を追加します";
@@ -48,9 +48,9 @@
 
 "peoplepicker.no_matching_results_provide_valid_email" = "有効なメール アドレスを入力してください";
 "peoplepicker.no_matching_results_after_address_book_upload_title" = "結果はありません";
-/* This sentence ends with button title, contained in peoplepicker.no_matching_results_after_address_book_upload_button */
+/*This sentence ends with button title, contained in peoplepicker.no_matching_results_after_address_book_upload_button*/
 "peoplepicker.no_matching_results_after_address_book_upload_message" = "メールアドレスを正確に入力します";
-/*  */
+/**/
 "peoplepicker.no_matching_results_after_address_book_upload_button" = "連絡先を共有します";
 
 "peoplepicker.share_contacts.no_results.title" = "名前またはメールアドレスで見つける";
@@ -472,7 +472,12 @@
 
 // User Details
 "profile.details.title" = "詳細";
-"profile.details.guest_in_team" = "%@ のゲスト";
+"profile.details.guest" = "ゲスト";
+
+"profile_view.team_name.in" = "in %@";
+"profile_view.accessibility.handle" = "ユーザーネーム";
+"profile_view.accessibility.name" = "Display name";
+"profile_view.accessibility.team_name" = "Team name";
 
 // Device list
 "profile.devices.title" = "デバイス";

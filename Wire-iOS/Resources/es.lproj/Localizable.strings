@@ -33,7 +33,7 @@
 "peoplepicker.header.send_invitation" = "Invitar";
 "peoplepicker.header.contacts" = "Contactos";
 "peoplepicker.header.contacts_personal" = "Personal Contacts";
-"peoplepicker.header.team_members" = "%@";
+"peoplepicker.header.team_members" = "%@ and Contacts";
 "peoplepicker.header.directory" = "Conectar";
 "peoplepicker.title.create_conversation" = "Crear grupo";
 "peoplepicker.title.add_to_conversation" = "Añadir contactos";
@@ -48,9 +48,9 @@
 
 "peoplepicker.no_matching_results_provide_valid_email" = "Por favor, introduce una dirección de email válida";
 "peoplepicker.no_matching_results_after_address_book_upload_title" = "No hay resultados.";
-/* This sentence ends with button title, contained in peoplepicker.no_matching_results_after_address_book_upload_button */
+/*This sentence ends with button title, contained in peoplepicker.no_matching_results_after_address_book_upload_button*/
 "peoplepicker.no_matching_results_after_address_book_upload_message" = "Introduce un email completo o";
-/*  */
+/**/
 "peoplepicker.no_matching_results_after_address_book_upload_button" = "compartir contactos";
 
 "peoplepicker.share_contacts.no_results.title" = "Encuentra usuarios por su nombre o email";
@@ -472,7 +472,12 @@
 
 // User Details
 "profile.details.title" = "Detalles";
-"profile.details.guest_in_team" = "Guest in %@";
+"profile.details.guest" = "Guest";
+
+"profile_view.team_name.in" = "in %@";
+"profile_view.accessibility.handle" = "Nombre de usuario";
+"profile_view.accessibility.name" = "Display name";
+"profile_view.accessibility.team_name" = "Team name";
 
 // Device list
 "profile.devices.title" = "Dispositivos";

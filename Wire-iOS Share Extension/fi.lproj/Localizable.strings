@@ -20,9 +20,6 @@
 
 
 
-"share_extension.team_selection.title" = "Team:";
-"share_extension.team_selection.empty.value" = "Ei mitään";
-"share_extension.team_selection.personal.team.name" = "Ei mitään";
 "share_extension.conversation_selection.title" = "Keskustelu:";
 "share_extension.send_button.title" = "Lähetä";
 "share_extension.conversation_selection.empty.value" = "Valitse";

@@ -1,4 +1,4 @@
-/* 
+/*
  *  Wire
  *  Copyright (C) 2016 Wire Swiss GmbH
  *
@@ -14,7 +14,7 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with this program. If not, see http://www.gnu.org/licenses/.
-*/
+ */
 
 "NSContactsUsageDescription" = "Salli Wiren käyttää yhteystietojasi yhdistääkseen sinut muiden kanssa. Me anonymisoimme kaiken tiedon ja emme jaa sitä kenellekään muulle.";
 "NSMicrophoneUsageDescription" = "Salli Wiren käyttää mikrofoniasi, jolloin voit puhua muiden käyttäjien kanssa ja lähettää ääniviestejä.";

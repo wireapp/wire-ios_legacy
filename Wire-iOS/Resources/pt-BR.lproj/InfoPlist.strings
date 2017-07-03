@@ -1,4 +1,4 @@
-/* 
+/*
  *  Wire
  *  Copyright (C) 2016 Wire Swiss GmbH
  *
@@ -14,7 +14,7 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with this program. If not, see http://www.gnu.org/licenses/.
-*/
+ */
 
 "NSContactsUsageDescription" = "Permitir que o Wire acesse seus contatos para conectar você com outras pessoas. Nós tornamos anônimas todas as informações e não compartilhamos com mais ninguém.";
 "NSMicrophoneUsageDescription" = "Permitir que o Wire acesse seu microfone para você enviar mensagens de áudio e falar com as pessoas.";

@@ -33,7 +33,7 @@
 "peoplepicker.header.send_invitation" = "Inviter";
 "peoplepicker.header.contacts" = "Contacts";
 "peoplepicker.header.contacts_personal" = "Contacts personnels";
-"peoplepicker.header.team_members" = "%@";
+"peoplepicker.header.team_members" = "%@ et Contacts";
 "peoplepicker.header.directory" = "Se connecter";
 "peoplepicker.title.create_conversation" = "Créer un groupe";
 "peoplepicker.title.add_to_conversation" = "Ajouter des personnes";
@@ -48,9 +48,9 @@
 
 "peoplepicker.no_matching_results_provide_valid_email" = "Veuillez entrer une adresse email valide";
 "peoplepicker.no_matching_results_after_address_book_upload_title" = "Aucun résultat.";
-/* This sentence ends with button title, contained in peoplepicker.no_matching_results_after_address_book_upload_button */
+/*This sentence ends with button title, contained in peoplepicker.no_matching_results_after_address_book_upload_button*/
 "peoplepicker.no_matching_results_after_address_book_upload_message" = "Veuillez entrer une adresse e-mail complète ou";
-/*  */
+/**/
 "peoplepicker.no_matching_results_after_address_book_upload_button" = "partagez vos Contacts";
 
 "peoplepicker.share_contacts.no_results.title" = "Trouvez des personnes par leur nom ou leur adresse email";
@@ -238,7 +238,7 @@
 
 "content.system.participants_you" = "Vous";
 "content.system.participants_1_other" = "%@ et %@";
-"content.system.other_left" = "%@ est parti";
+"content.system.other_left" = "%@ a quitté la conversation";
 "content.system.you_left" = "Vous avez quitté la conversation";
 "content.system.other_removed_other" = "%@ a retiré %@";
 "content.system.other_removed_you" = "%@ vous a enlevé";
@@ -472,7 +472,12 @@
 
 // User Details
 "profile.details.title" = "Détails";
-"profile.details.guest_in_team" = "Invité dans %@";
+"profile.details.guest" = "Invité";
+
+"profile_view.team_name.in" = "dans %@";
+"profile_view.accessibility.handle" = "Nom d'utilisateur";
+"profile_view.accessibility.name" = "Nom affiché";
+"profile_view.accessibility.team_name" = "Nom d'équipe";
 
 // Device list
 "profile.devices.title" = "Appareils";
