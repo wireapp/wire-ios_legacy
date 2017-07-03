@@ -185,8 +185,12 @@
     BOOL isAddPhoneNumber = [viewController isKindOfClass:[AddPhoneNumberViewController class]];
     BOOL isAddEmailPassword = [viewController isKindOfClass:[AddEmailPasswordViewController class]];
     BOOL isNoHistoryViewController = [viewController isKindOfClass:[NoHistoryViewController class]];
+    BOOL isEmailRegistration = [viewController isKindOfClass:[RegistrationEmailFlowViewController class]];
     
-    if (isAddPhoneNumber || isAddEmailPassword) {
+    if (isEmailRegistration) {
+        [self.delegate registrationViewControllerDidCompleteRegistration];
+    }
+    else if (isAddPhoneNumber || isAddEmailPassword) {
         [self presentNoHistoryViewController:ContextTypeNewDevice];
     }
     else if (isNoHistoryViewController) {
@@ -291,7 +295,7 @@
         ContextType type = [[ZMUserSession sharedSession] hadHistoryAtLastLogin] ? ContextTypeLoggedOut : ContextTypeNewDevice;
         [self presentNoHistoryViewController:type];
     }
-    else {
+    else if ([self.class registrationFlow] == RegistrationFlowPhone) {
         [self.delegate registrationViewControllerDidCompleteRegistration];
     }
 }
