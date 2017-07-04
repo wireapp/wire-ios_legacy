@@ -18,7 +18,7 @@
 
 
 import UIKit
-import MarkdownTextView
+import Marklight
 
 @objc public protocol TextViewInteractionDelegate: NSObjectProtocol {
     func textView(_ textView: LinkInteractionTextView, open url: URL) -> Bool
@@ -26,36 +26,29 @@ import MarkdownTextView
 }
 
 
-@objc public class LinkInteractionTextView: MarkdownTextView {
+@objc public class LinkInteractionTextView: UITextView {
+    
+    let marklightTextStorage = MarklightTextStorage()
     
     public weak var interactionDelegate: TextViewInteractionDelegate?
-//    
-//    override init(frame: CGRect, textContainer: NSTextContainer?) {
-//        super.init(frame: frame, textContainer: textContainer)
-//        delegate = self
-//    }
     
-    required public init(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+    override init(frame: CGRect, textContainer: NSTextContainer?) {
+        
+        MarklightTextView.configure(textStorage: marklightTextStorage, hideSyntax: true)
+        
+        let marklightLayoutManager = NSLayoutManager()
+        marklightTextStorage.addLayoutManager(marklightLayoutManager)
+        
+        let marklightTextContainer = NSTextContainer()
+        marklightLayoutManager.addTextContainer(marklightTextContainer)
+        
+        super.init(frame: frame, textContainer: marklightTextContainer)
+        
+        delegate = self
     }
     
-    public init() {
-        let attributes = MarkdownAttributes()
-        let textStorage = MarkdownTextStorage(attributes: attributes)
-        do {
-            textStorage.addHighlighter(try LinkHighlighter())
-        } catch let error {
-            fatalError("Error initializing LinkHighlighter: \(error)")
-        }
-        textStorage.addHighlighter(MarkdownStrikethroughHighlighter())
-        textStorage.addHighlighter(MarkdownSuperscriptHighlighter())
-        if let codeBlockAttributes = attributes.codeBlockAttributes {
-            textStorage.addHighlighter(MarkdownFencedCodeHighlighter(attributes: codeBlockAttributes))
-        }
-        
-        super.init(frame: CGRect.zero, textStorage: textStorage)
-        self.translatesAutoresizingMaskIntoConstraints = false
-        delegate = self
+    required public init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
     override public func point(inside point: CGPoint, with event: UIEvent?) -> Bool {
@@ -74,7 +67,7 @@ import MarkdownTextView
 }
 
 
-extension LinkInteractionTextView {
+extension LinkInteractionTextView: UITextViewDelegate {
     
     public func textView(_ textView: UITextView, shouldInteractWith URL: URL, in characterRange: NSRange) -> Bool {
         let beganLongPressRecognizers: [UILongPressGestureRecognizer] = gestureRecognizers?.flatMap { (recognizer: AnyObject) -> (UILongPressGestureRecognizer?) in

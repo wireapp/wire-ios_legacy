@@ -15,4 +15,4 @@ github "wireapp/wire-ios-canvas" ~> 3.0.0
 github "wireapp/HockeySDK-iOS" "4.1.4-swift3.1"
 github "wireapp/FLAnimatedImage" "1.0.12-wire"
 github "wireapp/PureLayout" "v3.0.0"
-github "leonardo-hammer/MarkdownTextView" "demo"
+github "wireapp/Marklight" "v1.0.1"
