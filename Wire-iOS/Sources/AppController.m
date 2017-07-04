@@ -134,7 +134,7 @@ NSString *const ZMUserSessionDidBecomeAvailableNotification = @"ZMUserSessionDid
     [self setupBackendEnvironment];
     
     if (! self.isRunningTests) {
-        [self loadAccount];
+        [self loadAccountWithLaunchOptions:launchOptions];
         [self loadLaunchControllerIfNeeded];
     } else {
         [self loadLaunchController];
@@ -402,41 +402,6 @@ NSString *const ZMUserSessionDidBecomeAvailableNotification = @"ZMUserSessionDid
 }
 
 #pragma mark - SE Loading
-
-// TODO move launch paramters, blacklisting and migration
-- (BOOL)startSyncEngine:(UIApplication *)application launchOptions:(NSDictionary *)launchOptions
-{
-    dispatch_block_t configuration = ^() {
-    
-        [[ZMUserSession sharedSession] application:application didFinishLaunchingWithOptions:launchOptions];
-        
-        if (launchOptions[UIApplicationLaunchOptionsURLKey] != nil) {
-            [[ZMUserSession sharedSession] didLaunchWithURL:launchOptions[UIApplicationLaunchOptionsURLKey]];
-        }
-    };
-
-    if ([ZMUserSession needsToPrepareLocalStoreUsingAppGroupIdentifier:self.groupIdentifier]) {
-        self.seState = AppSEStateMigration;
-        [self.launchImageViewController showLoadingScreen];
-        
-        DDLogInfo(@"Database migration required, performing migration now:");
-        NSTimeInterval timeStart = [NSDate timeIntervalSinceReferenceDate];
-        [ZMUserSession prepareLocalStoreUsingAppGroupIdentifier:self.groupIdentifier completion:^{
-            dispatch_async(dispatch_get_main_queue(), ^{
-                NSTimeInterval timeEnd = [NSDate timeIntervalSinceReferenceDate];
-                DDLogInfo(@"Database migration DONE: %.02f sec", timeEnd - timeStart);
-                configuration();
-            });
-        }];
-        return NO;
-    }
-    else {
-        DDLogInfo(@"Database migration not required");
-        configuration();
-        return YES;
-    }
-
-}
 
 - (ZMUserSession *)zetaUserSession
 {

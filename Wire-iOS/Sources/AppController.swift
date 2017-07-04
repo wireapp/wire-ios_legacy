@@ -23,7 +23,7 @@ import avs
 extension AppController {
     
     @objc
-    public func loadAccount() {
+    public func loadAccount(launchOptions: [UIApplicationLaunchOptionsKey : Any]) {
         
         let bundle = Bundle.main
         let appVersion = bundle.infoDictionary?[kCFBundleVersionKey as String] as? String
@@ -35,7 +35,7 @@ extension AppController {
     
         let mediaManager = AVSMediaManager.sharedInstance()
         let analytics = Analytics.shared()
-        accountManager = AccountManager(appGroupIdentifier: groupIdentifier, appVersion: appVersion!, mediaManager: mediaManager!, analytics: analytics, delegate: self)
+        accountManager = AccountManager(appGroupIdentifier: groupIdentifier, appVersion: appVersion!, mediaManager: mediaManager!, analytics: analytics, delegate: self, application: UIApplication.shared, launchOptions: launchOptions)
     }
     
 }
@@ -50,5 +50,8 @@ extension AppController : AccountStateDelegate {
     public func userSessionCreated(session: ZMUserSession) {
         setupUserSession(session)
     }
-        
+    
+    public func willStartMigratingLocalStore() {
+        seState = .migration
+    }
 }
