@@ -82,7 +82,7 @@
 {
     PhoneNumberStepViewController *phoneNumberStepViewController;
     
-    ZMUser *currentUser = [AccountManager shared].currentUser;
+    ZMUser *currentUser = [SessionManager shared].currentUser;
     if (currentUser.phoneNumber.length > 0) {
         // User was previously signed in so we must force him to sign in with the same credentials
         phoneNumberStepViewController = [[PhoneNumberStepViewController alloc] initWithUneditablePhoneNumber:currentUser.phoneNumber];

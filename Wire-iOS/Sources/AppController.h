@@ -38,7 +38,7 @@ typedef NS_ENUM(NSUInteger, AppSEState) {
 @class NotificationWindowRootViewController;
 @class MediaPlaybackManager;
 @class LaunchImageViewController;
-@class AccountManager;
+@class SessionManager;
 @class FileBackupExcluder;
 @class UnauthenticatedSession;
 
@@ -54,7 +54,7 @@ FOUNDATION_EXPORT NSString *const ZMUserSessionDidBecomeAvailableNotification;
 @property (nonatomic, readonly) NotificationWindowRootViewController *notificationWindowController;
 @property (nonatomic, readonly) UIWindow *notificationsWindow;
 @property (nonatomic, readonly) MediaPlaybackManager *mediaPlaybackManager;
-@property (nonatomic) AccountManager *accountManager;
+@property (nonatomic) SessionManager *sessionManager;
 @property (nonatomic, readonly, weak) LaunchImageViewController *launchImageViewController;
 @property (nonatomic, readonly) FileBackupExcluder *fileBackupExcluder;
 

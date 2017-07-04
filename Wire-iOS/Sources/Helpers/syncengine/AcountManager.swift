@@ -19,8 +19,8 @@
 import Foundation
 import WireSyncEngine
 
-extension AccountManager {
-    @objc static var shared : AccountManager? {
-        return AppDelegate.shared().accountManager
+extension SessionManager {
+    @objc static var shared : SessionManager? {
+        return AppDelegate.shared().sessionManager
     }
 }

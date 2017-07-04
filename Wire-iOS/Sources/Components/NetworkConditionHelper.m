@@ -19,6 +19,7 @@
 
 #import "NetworkConditionHelper.h"
 #import "AppDelegate.h"
+#import "Wire-Swift.h"
 @import CoreTelephony;
 @import WireSyncEngine;
 
@@ -56,7 +57,7 @@ QualityTypeFromNSString(NSString *qualityString);
 
 - (NetworkQualityType)qualityType;
 {
-    id<ServerConnection> serverConnection = AppDelegate.sharedAppDelegate.accountManager.serverConnection;
+    id<ServerConnection> serverConnection = SessionManager.shared.serverConnection;
     
     if (serverConnection.isOffline) {
         return NetworkQualityTypeUnkown;

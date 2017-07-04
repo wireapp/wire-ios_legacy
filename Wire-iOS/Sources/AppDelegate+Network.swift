@@ -34,7 +34,7 @@ extension AppDelegate {
     @objc(checkNetworkAndFlashIndicatorIfNecessaryAndShowAlert:)
     static func checkNetworkAndFlashIndicatorIfNecessary(showAlert: Bool)  -> Bool {
         AppDelegate.shared().notificationWindowController.networkStatusViewController.flashNetworkStatusIfNecessaryAndShowAlert(showAlert)
-        return AppDelegate.shared().accountManager.serverConnection?.isOffline ?? true
+        return AppDelegate.shared().sessionManager.serverConnection?.isOffline ?? true
     }
     
 }
