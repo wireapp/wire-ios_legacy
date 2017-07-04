@@ -33,8 +33,8 @@
 "peoplepicker.header.send_invitation" = "邀请";
 "peoplepicker.header.contacts" = "联系人";
 "peoplepicker.header.contacts_personal" = "联系人";
-"peoplepicker.header.team_members" = "%@";
-"peoplepicker.header.directory" = "新增好友";
+"peoplepicker.header.team_members" = "%@ and Contacts";
+"peoplepicker.header.directory" = "添加好友";
 "peoplepicker.title.create_conversation" = "创建群聊\n";
 "peoplepicker.title.add_to_conversation" = "新增好友";
 
@@ -48,9 +48,9 @@
 
 "peoplepicker.no_matching_results_provide_valid_email" = "请输入有效的电邮箱地址";
 "peoplepicker.no_matching_results_after_address_book_upload_title" = "没有结果。";
-/* This sentence ends with button title, contained in peoplepicker.no_matching_results_after_address_book_upload_button */
+/*This sentence ends with button title, contained in peoplepicker.no_matching_results_after_address_book_upload_button*/
 "peoplepicker.no_matching_results_after_address_book_upload_message" = "请输入完整的电邮箱地址或";
-/*  */
+/**/
 "peoplepicker.no_matching_results_after_address_book_upload_button" = "共享联络人";
 
 "peoplepicker.share_contacts.no_results.title" = "按名称或电邮箱地址搜索";
@@ -472,7 +472,12 @@
 
 // User Details
 "profile.details.title" = "详细信息";
-"profile.details.guest_in_team" = "Guest in %@";
+"profile.details.guest" = "游客";
+
+"profile_view.team_name.in" = "in %@";
+"profile_view.accessibility.handle" = "用户名";
+"profile_view.accessibility.name" = "Display name";
+"profile_view.accessibility.team_name" = "Team name";
 
 // Device list
 "profile.devices.title" = "設備";

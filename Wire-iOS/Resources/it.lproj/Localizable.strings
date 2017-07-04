@@ -33,7 +33,7 @@
 "peoplepicker.header.send_invitation" = "Invita";
 "peoplepicker.header.contacts" = "Contatti";
 "peoplepicker.header.contacts_personal" = "Contatti personali";
-"peoplepicker.header.team_members" = "%@";
+"peoplepicker.header.team_members" = "%@ e contatti";
 "peoplepicker.header.directory" = "Connetti";
 "peoplepicker.title.create_conversation" = "Crea gruppo";
 "peoplepicker.title.add_to_conversation" = "Aggiungi persone";
@@ -48,9 +48,9 @@
 
 "peoplepicker.no_matching_results_provide_valid_email" = "Inserisci un indirizzo email valido";
 "peoplepicker.no_matching_results_after_address_book_upload_title" = "Nessun risultato.";
-/* This sentence ends with button title, contained in peoplepicker.no_matching_results_after_address_book_upload_button */
+/*This sentence ends with button title, contained in peoplepicker.no_matching_results_after_address_book_upload_button*/
 "peoplepicker.no_matching_results_after_address_book_upload_message" = "Metti un indirizzo email completo o";
-/*  */
+/**/
 "peoplepicker.no_matching_results_after_address_book_upload_button" = "condividi contatti";
 
 "peoplepicker.share_contacts.no_results.title" = "Trova le persone per nome o indirizzo email";
@@ -63,7 +63,7 @@
 "peoplepicker.quick-action.open-conversation" = "Apri";
 "peoplepicker.quick-action.create-conversation" = "Crea gruppo";
 
-"add_participants.all_contacts_added" = "Everyone's here.";
+"add_participants.all_contacts_added" = "Ognuno è qui.";
 
 // Contacts UI
 "contacts_ui.search_placeholder" = "Cerca per nome";
@@ -88,7 +88,7 @@
 "conversation_list.header.self_team.accessibility_value" = "%@ team.";
 "conversation_list.header.self_team.accessibility_value.inactive" = "Tocca per attivare.";
 "conversation_list.header.self_team.accessibility_value.active" = "Attiva ora.";
-"conversation_list.header.self_team.accessibility_value.has_new_messages" = "Has new messages.";
+"conversation_list.header.self_team.accessibility_value.has_new_messages" = "Ha nuovi messaggi.";
 
 // Profile Header View
 "conversation.connection_view.in_address_book" = "in Contatti";
@@ -255,7 +255,7 @@
 "content.system.conversation.you.added" = "%@ ha aggiunto %@";
 "content.system.conversation.you.removed" = "%@ rimosso %@";
 "content.system.conversation.you.left" = "%@ ha lasciato la conversazione";
-"content.system.conversation.team.member-leave" = "%@ was removed from the team.";
+"content.system.conversation.team.member-leave" = "%@ è stato rimosso dal team.";
 
 "content.system.other_renamed_conv_to_nothing" = "%@ ha rimosso il nome della conversazione";
 "content.system.you_renamed_conv_to_nothing" = "Hai rimosso il nome della conversazione";
@@ -472,7 +472,12 @@
 
 // User Details
 "profile.details.title" = "Dettagli";
-"profile.details.guest_in_team" = "Guest in %@";
+"profile.details.guest" = "Ospite";
+
+"profile_view.team_name.in" = "in %@";
+"profile_view.accessibility.handle" = "Username";
+"profile_view.accessibility.name" = "Nome visualizzato";
+"profile_view.accessibility.team_name" = "Nome team";
 
 // Device list
 "profile.devices.title" = "Dispositivi";
@@ -684,7 +689,7 @@
 "self.settings.privacy_analytics_menu.devices.title" = "Dispositivi";
 
 "self.settings.privacy_analytics_section.title" = "Segnalazioni di crash e dati di utilizzo";
-"self.settings.privacy_analytics.title" = "Send Anonymous Data";
+"self.settings.privacy_analytics.title" = "Inviare dati anonimi";
 "self.settings.privacy_analytics_menu.description.title" = "Migliora Wire con l'invio di informazioni anonime.\n";
 
 "self.settings.privacy.clear_history.title" = "Cancella cronologia";

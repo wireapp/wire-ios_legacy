@@ -24,7 +24,7 @@
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // People picker/start UI
-"peoplepicker.search_placeholder" = "Nach Name oder Benutzername suchen";
+"peoplepicker.search_placeholder" = "Nach Name/Benutzername suchen";
 "peoplepicker.header.top_people" = "Top Kontakte";
 "peoplepicker.button.create_conversation" = "Gruppe erstellen";
 "peoplepicker.button.add_to_conversation" = "Personen zur Gruppe hinzufügen";
@@ -33,7 +33,7 @@
 "peoplepicker.header.send_invitation" = "Einladen";
 "peoplepicker.header.contacts" = "Kontakte";
 "peoplepicker.header.contacts_personal" = "Persönliche Kontakte";
-"peoplepicker.header.team_members" = "%@";
+"peoplepicker.header.team_members" = "%@ und Kontakte";
 "peoplepicker.header.directory" = "Vorschläge";
 "peoplepicker.title.create_conversation" = "Gruppe erstellen";
 "peoplepicker.title.add_to_conversation" = "Kontakte hinzufügen";
@@ -48,9 +48,9 @@
 
 "peoplepicker.no_matching_results_provide_valid_email" = "Bitte gib eine gültige \nE-Mail-Adresse ein";
 "peoplepicker.no_matching_results_after_address_book_upload_title" = "Kein Ergebnis";
-/* This sentence ends with button title, contained in peoplepicker.no_matching_results_after_address_book_upload_button */
+/*This sentence ends with button title, contained in peoplepicker.no_matching_results_after_address_book_upload_button*/
 "peoplepicker.no_matching_results_after_address_book_upload_message" = "Gib eine vollständige E-Mail-Adresse ein oder";
-/*  */
+/**/
 "peoplepicker.no_matching_results_after_address_book_upload_button" = "Kontakte teilen";
 
 "peoplepicker.share_contacts.no_results.title" = "Finde andere mit ihrem Namen oder ihrer E-Mail";
@@ -472,7 +472,12 @@
 
 // User Details
 "profile.details.title" = "Details";
-"profile.details.guest_in_team" = "Ist Gast in %@";
+"profile.details.guest" = "Gast";
+
+"profile_view.team_name.in" = "in %@";
+"profile_view.accessibility.handle" = "Benutzername";
+"profile_view.accessibility.name" = "Angezeigter Name";
+"profile_view.accessibility.team_name" = "Name des Teams";
 
 // Device list
 "profile.devices.title" = "Geräte";

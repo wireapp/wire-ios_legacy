@@ -33,7 +33,7 @@
 "peoplepicker.header.send_invitation" = "Запросити";
 "peoplepicker.header.contacts" = "Контакти";
 "peoplepicker.header.contacts_personal" = "Персональні контакти";
-"peoplepicker.header.team_members" = "%@";
+"peoplepicker.header.team_members" = "%@ and Contacts";
 "peoplepicker.header.directory" = "Додати до контактів";
 "peoplepicker.title.create_conversation" = "Створити групу";
 "peoplepicker.title.add_to_conversation" = "Додати учасників";
@@ -48,9 +48,9 @@
 
 "peoplepicker.no_matching_results_provide_valid_email" = "Будь ласка, введіть актуальну адресу електронної пошти";
 "peoplepicker.no_matching_results_after_address_book_upload_title" = "Нікого не знайдено.";
-/* This sentence ends with button title, contained in peoplepicker.no_matching_results_after_address_book_upload_button */
+/*This sentence ends with button title, contained in peoplepicker.no_matching_results_after_address_book_upload_button*/
 "peoplepicker.no_matching_results_after_address_book_upload_message" = "Введіть адресу електронної пошти або";
-/*  */
+/**/
 "peoplepicker.no_matching_results_after_address_book_upload_button" = "поділіться контактами";
 
 "peoplepicker.share_contacts.no_results.title" = "Знайти людей за іменем або email";
@@ -63,7 +63,7 @@
 "peoplepicker.quick-action.open-conversation" = "Вiдкрити";
 "peoplepicker.quick-action.create-conversation" = "Створити групу";
 
-"add_participants.all_contacts_added" = "Everyone's here.";
+"add_participants.all_contacts_added" = "Усі вже тут.";
 
 // Contacts UI
 "contacts_ui.search_placeholder" = "Пошук за іменем";
@@ -255,7 +255,7 @@
 "content.system.conversation.you.added" = "%@ додав(-ла) %@";
 "content.system.conversation.you.removed" = "%@ видалив(-ла) %@";
 "content.system.conversation.you.left" = "%@ вийшов(-ла)";
-"content.system.conversation.team.member-leave" = "%@ was removed from the team.";
+"content.system.conversation.team.member-leave" = "%@ був(-ла) видалений(-а) з команди.";
 
 "content.system.other_renamed_conv_to_nothing" = "%@ видалив(-ла) ім'я розмови";
 "content.system.you_renamed_conv_to_nothing" = "Ви видалили ім'я розмови";
@@ -472,7 +472,12 @@
 
 // User Details
 "profile.details.title" = "Подробиці";
-"profile.details.guest_in_team" = "Гість в %@";
+"profile.details.guest" = "Гість";
+
+"profile_view.team_name.in" = "in %@";
+"profile_view.accessibility.handle" = "Нік";
+"profile_view.accessibility.name" = "Display name";
+"profile_view.accessibility.team_name" = "Team name";
 
 // Device list
 "profile.devices.title" = "Пристрої";
@@ -684,7 +689,7 @@
 "self.settings.privacy_analytics_menu.devices.title" = "Пристрої";
 
 "self.settings.privacy_analytics_section.title" = "Статистика використання та збоїв";
-"self.settings.privacy_analytics.title" = "Send Anonymous Data";
+"self.settings.privacy_analytics.title" = "Надсилати анонімну статистику";
 "self.settings.privacy_analytics_menu.description.title" = "Зробіть Wire кращим, відправляючи анонімну інформацію.\n";
 
 "self.settings.privacy.clear_history.title" = "Очистити Історію";

@@ -33,7 +33,7 @@
 "peoplepicker.header.send_invitation" = "Kutsu";
 "peoplepicker.header.contacts" = "Kontaktid";
 "peoplepicker.header.contacts_personal" = "Isiklikud kontaktid";
-"peoplepicker.header.team_members" = "%@";
+"peoplepicker.header.team_members" = "%@ and Contacts";
 "peoplepicker.header.directory" = "Lisa kontakt";
 "peoplepicker.title.create_conversation" = "Loo grupp";
 "peoplepicker.title.add_to_conversation" = "Lisa inimesi";
@@ -48,9 +48,9 @@
 
 "peoplepicker.no_matching_results_provide_valid_email" = "Palun sisesta korrektne e-posti aadress";
 "peoplepicker.no_matching_results_after_address_book_upload_title" = "Tulemusi ei leitud.";
-/* This sentence ends with button title, contained in peoplepicker.no_matching_results_after_address_book_upload_button */
+/*This sentence ends with button title, contained in peoplepicker.no_matching_results_after_address_book_upload_button*/
 "peoplepicker.no_matching_results_after_address_book_upload_message" = "Otsi meiliaadressi järgi või";
-/*  */
+/**/
 "peoplepicker.no_matching_results_after_address_book_upload_button" = "jaga kontakte";
 
 "peoplepicker.share_contacts.no_results.title" = "Otsi inimesi nime või meiliaadressi järgi";
@@ -63,7 +63,7 @@
 "peoplepicker.quick-action.open-conversation" = "Ava";
 "peoplepicker.quick-action.create-conversation" = "Loo grupivestlus";
 
-"add_participants.all_contacts_added" = "Everyone's here.";
+"add_participants.all_contacts_added" = "Kõik kontaktid juba vestlusesse lisatud.";
 
 // Contacts UI
 "contacts_ui.search_placeholder" = "Otsi nime järgi";
@@ -255,7 +255,7 @@
 "content.system.conversation.you.added" = "%@ lisas kasutaja %@";
 "content.system.conversation.you.removed" = "%@ eemaldas kasutaja %@";
 "content.system.conversation.you.left" = "%@ lahkus";
-"content.system.conversation.team.member-leave" = "%@ was removed from the team.";
+"content.system.conversation.team.member-leave" = "%@ eemaldati tiimist.";
 
 "content.system.other_renamed_conv_to_nothing" = "%@ eemaldas vestluselt nime";
 "content.system.you_renamed_conv_to_nothing" = "Eemaldasid vestluse nime";
@@ -472,7 +472,12 @@
 
 // User Details
 "profile.details.title" = "Üksikasjad";
-"profile.details.guest_in_team" = "Guest in %@";
+"profile.details.guest" = "Külaline";
+
+"profile_view.team_name.in" = "in %@";
+"profile_view.accessibility.handle" = "Kasutajanimi";
+"profile_view.accessibility.name" = "Display name";
+"profile_view.accessibility.team_name" = "Team name";
 
 // Device list
 "profile.devices.title" = "Seadmed";
@@ -684,7 +689,7 @@
 "self.settings.privacy_analytics_menu.devices.title" = "Seadmed";
 
 "self.settings.privacy_analytics_section.title" = "Kasutus- ja krahhiaruanded";
-"self.settings.privacy_analytics.title" = "Send Anonymous Data";
+"self.settings.privacy_analytics.title" = "Saada anonüümseid andmeid";
 "self.settings.privacy_analytics_menu.description.title" = "Aitad Wire paremaks muuta, kui saadad anonüümset informatsiooni.\n";
 
 "self.settings.privacy.clear_history.title" = "Kustuta Ajalugu";

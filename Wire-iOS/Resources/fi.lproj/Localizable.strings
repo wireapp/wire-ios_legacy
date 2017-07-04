@@ -33,7 +33,7 @@
 "peoplepicker.header.send_invitation" = "Kutsu";
 "peoplepicker.header.contacts" = "Yhteystiedot";
 "peoplepicker.header.contacts_personal" = "Personal Contacts";
-"peoplepicker.header.team_members" = "%@";
+"peoplepicker.header.team_members" = "%@ and Contacts";
 "peoplepicker.header.directory" = "Yhdistä";
 "peoplepicker.title.create_conversation" = "Luo ryhmä";
 "peoplepicker.title.add_to_conversation" = "Lisää ihmisiä";
@@ -48,9 +48,9 @@
 
 "peoplepicker.no_matching_results_provide_valid_email" = "Anna kelvollinen sähköpostiosoite";
 "peoplepicker.no_matching_results_after_address_book_upload_title" = "Ei tuloksia.";
-/* This sentence ends with button title, contained in peoplepicker.no_matching_results_after_address_book_upload_button */
+/*This sentence ends with button title, contained in peoplepicker.no_matching_results_after_address_book_upload_button*/
 "peoplepicker.no_matching_results_after_address_book_upload_message" = "Anna kelvollinen sähköpostiosoite tai";
-/*  */
+/**/
 "peoplepicker.no_matching_results_after_address_book_upload_button" = "jaa yhteystietoja";
 
 "peoplepicker.share_contacts.no_results.title" = "Etsi ihmisiä nimellä tai sähköpostiosoitteella";
@@ -472,7 +472,12 @@
 
 // User Details
 "profile.details.title" = "Lisätietoja";
-"profile.details.guest_in_team" = "Guest in %@";
+"profile.details.guest" = "Guest";
+
+"profile_view.team_name.in" = "in %@";
+"profile_view.accessibility.handle" = "Käyttäjänimi";
+"profile_view.accessibility.name" = "Display name";
+"profile_view.accessibility.team_name" = "Team name";
 
 // Device list
 "profile.devices.title" = "Laitteet";

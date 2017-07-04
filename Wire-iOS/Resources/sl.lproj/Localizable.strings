@@ -33,7 +33,7 @@
 "peoplepicker.header.send_invitation" = "Povabi";
 "peoplepicker.header.contacts" = "Stiki";
 "peoplepicker.header.contacts_personal" = "Osebni stiki";
-"peoplepicker.header.team_members" = "%@";
+"peoplepicker.header.team_members" = "%@ in stiki";
 "peoplepicker.header.directory" = "Poveži";
 "peoplepicker.title.create_conversation" = "Ustvari skupino";
 "peoplepicker.title.add_to_conversation" = "Dodaj osebe";
@@ -48,9 +48,9 @@
 
 "peoplepicker.no_matching_results_provide_valid_email" = "Prosimo vnesite veljaven e-poštni naslov";
 "peoplepicker.no_matching_results_after_address_book_upload_title" = "Ni rezultatov.";
-/* This sentence ends with button title, contained in peoplepicker.no_matching_results_after_address_book_upload_button */
+/*This sentence ends with button title, contained in peoplepicker.no_matching_results_after_address_book_upload_button*/
 "peoplepicker.no_matching_results_after_address_book_upload_message" = "Vnesite celoten e-poštni naslov ali";
-/*  */
+/**/
 "peoplepicker.no_matching_results_after_address_book_upload_button" = "deli stike";
 
 "peoplepicker.share_contacts.no_results.title" = "Najdi osebe po imenu ali e-poštnem naslovu";
@@ -63,7 +63,7 @@
 "peoplepicker.quick-action.open-conversation" = "Odpri";
 "peoplepicker.quick-action.create-conversation" = "Ustvari skupino";
 
-"add_participants.all_contacts_added" = "Everyone's here.";
+"add_participants.all_contacts_added" = "Vsi so prisotni.";
 
 // Contacts UI
 "contacts_ui.search_placeholder" = "Iskanje po imenu";
@@ -472,7 +472,12 @@
 
 // User Details
 "profile.details.title" = "Podrobnosti";
-"profile.details.guest_in_team" = "Gost v %@";
+"profile.details.guest" = "Gost";
+
+"profile_view.team_name.in" = "v %@";
+"profile_view.accessibility.handle" = "Uporabniško ime";
+"profile_view.accessibility.name" = "Uporabniško ime";
+"profile_view.accessibility.team_name" = "Ime ekipe";
 
 // Device list
 "profile.devices.title" = "Naprave";
@@ -684,7 +689,7 @@
 "self.settings.privacy_analytics_menu.devices.title" = "Naprave";
 
 "self.settings.privacy_analytics_section.title" = "Podatki o uporabi in poročila o prisilnih ustavitvah";
-"self.settings.privacy_analytics.title" = "Send Anonymous Data";
+"self.settings.privacy_analytics.title" = "Pošlji anonimne podatke";
 "self.settings.privacy_analytics_menu.description.title" = "Izboljšajte Wire s pošiljanjem anonimnih informacij.\n";
 
 "self.settings.privacy.clear_history.title" = "Počisti zgodovino";

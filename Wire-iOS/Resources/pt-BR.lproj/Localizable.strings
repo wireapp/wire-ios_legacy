@@ -33,7 +33,7 @@
 "peoplepicker.header.send_invitation" = "Convidar";
 "peoplepicker.header.contacts" = "Contatos";
 "peoplepicker.header.contacts_personal" = "Contatos pessoais";
-"peoplepicker.header.team_members" = "%@";
+"peoplepicker.header.team_members" = "%@ e Contatos";
 "peoplepicker.header.directory" = "Conectar";
 "peoplepicker.title.create_conversation" = "Criar grupo";
 "peoplepicker.title.add_to_conversation" = "Adicionar pessoas";
@@ -48,9 +48,9 @@
 
 "peoplepicker.no_matching_results_provide_valid_email" = "Por favor, insira um endereço de e-mail válido";
 "peoplepicker.no_matching_results_after_address_book_upload_title" = "Sem resultados.";
-/* This sentence ends with button title, contained in peoplepicker.no_matching_results_after_address_book_upload_button */
+/*This sentence ends with button title, contained in peoplepicker.no_matching_results_after_address_book_upload_button*/
 "peoplepicker.no_matching_results_after_address_book_upload_message" = "Digite um endereço de e-mail ou";
-/*  */
+/**/
 "peoplepicker.no_matching_results_after_address_book_upload_button" = "compartilhar contatos";
 
 "peoplepicker.share_contacts.no_results.title" = "Encontrar pessoas pelo nome ou endereço de e-mail";
@@ -63,7 +63,7 @@
 "peoplepicker.quick-action.open-conversation" = "Abrir";
 "peoplepicker.quick-action.create-conversation" = "Criar grupo";
 
-"add_participants.all_contacts_added" = "Everyone's here.";
+"add_participants.all_contacts_added" = "Todo mundo está aqui.";
 
 // Contacts UI
 "contacts_ui.search_placeholder" = "Pesquisar por nome";
@@ -255,7 +255,7 @@
 "content.system.conversation.you.added" = "%@ adicionou %@";
 "content.system.conversation.you.removed" = "%@ removeu %@";
 "content.system.conversation.you.left" = "%@ saiu";
-"content.system.conversation.team.member-leave" = "%@ was removed from the team.";
+"content.system.conversation.team.member-leave" = "%@ foi removido da equipe.";
 
 "content.system.other_renamed_conv_to_nothing" = "%@ removeu o nome da conversa";
 "content.system.you_renamed_conv_to_nothing" = "Você removeu o nome da conversa";
@@ -472,7 +472,12 @@
 
 // User Details
 "profile.details.title" = "Detalhes";
-"profile.details.guest_in_team" = "Guest in %@";
+"profile.details.guest" = "Convidado";
+
+"profile_view.team_name.in" = "em %@";
+"profile_view.accessibility.handle" = "Nome de usuário";
+"profile_view.accessibility.name" = "Display name";
+"profile_view.accessibility.team_name" = "Nome da Equipe";
 
 // Device list
 "profile.devices.title" = "Dispositivos";
@@ -684,7 +689,7 @@
 "self.settings.privacy_analytics_menu.devices.title" = "Dispositivos";
 
 "self.settings.privacy_analytics_section.title" = "Relatórios de Uso e Erro";
-"self.settings.privacy_analytics.title" = "Send Anonymous Data";
+"self.settings.privacy_analytics.title" = "Enviar Dados Anônimos";
 "self.settings.privacy_analytics_menu.description.title" = "Faça o Wire melhorar mandando informações de uso anônimas.\n";
 
 "self.settings.privacy.clear_history.title" = "Limpar Histórico";
