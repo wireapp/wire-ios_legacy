@@ -30,9 +30,9 @@ extension AppDelegate {
                 "user_info_keys" : userInfo.keys.joined(separator: "; "),
                 "error_code" : error.code,
                 "error_domain" : error.domain,
-                "error_failure_reason" : error.localizedFailureReason ?? "",
-                "error_description" : error.description,
-                "error_user_info" : error.userInfo.description
+                "error_failure_reason" : error.localizedFailureReason?.truncatedForTracking() ?? "",
+                "error_description" : error.description.truncatedForTracking(),
+                "error_user_info" : error.userInfo.description.truncatedForTracking()
             ] as [String: Any]
             
             DispatchQueue.main.async {
@@ -41,4 +41,18 @@ extension AppDelegate {
         })
     }
     
+}
+
+
+fileprivate extension String {
+
+    func truncatedForTracking() -> String {
+        return truncated(at: 100)
+    }
+
+    func truncated(at length: Int) -> String {
+        guard characters.count > length else { return self }
+        return substring(to: index(startIndex, offsetBy: length))
+    }
+
 }
