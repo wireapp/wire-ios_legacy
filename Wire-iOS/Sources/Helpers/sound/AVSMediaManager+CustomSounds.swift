@@ -30,7 +30,7 @@ extension AVSMediaManager {
     }
     
     func configureCustomSounds() {
-        let settingsPropertyFactory = SettingsPropertyFactory.shared!
+        guard let settingsPropertyFactory = SettingsPropertyFactory.shared else { return }
         
         let messageSoundProperty = settingsPropertyFactory.property(.messageSoundName)
         self.updateCustomSoundForProperty(messageSoundProperty)
