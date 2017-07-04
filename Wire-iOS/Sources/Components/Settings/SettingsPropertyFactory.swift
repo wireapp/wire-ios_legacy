@@ -309,7 +309,7 @@ class SettingsPropertyFactory {
 
 extension SettingsPropertyFactory {
     static var shared: SettingsPropertyFactory? {
-        guard let manager = AccountManager.shared, let session = manager.isUserSessionActive ? ZMUserSession.shared() : nil else {
+        guard let manager = SessionManager.shared, let session = manager.isUserSessionActive ? ZMUserSession.shared() : nil else {
             return .none
         }
         let settingsPropertyFactory = SettingsPropertyFactory(userDefaults: UserDefaults.standard,

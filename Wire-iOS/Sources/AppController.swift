@@ -35,23 +35,24 @@ extension AppController {
     
         let mediaManager = AVSMediaManager.sharedInstance()
         let analytics = Analytics.shared()
-        accountManager = AccountManager(appGroupIdentifier: groupIdentifier, appVersion: appVersion!, mediaManager: mediaManager!, analytics: analytics, delegate: self, application: UIApplication.shared, launchOptions: launchOptions)
+        sessionManager = SessionManager(appGroupIdentifier: groupIdentifier, appVersion: appVersion!, mediaManager: mediaManager!, analytics: analytics, delegate: self, application: UIApplication.shared, launchOptions: launchOptions)
     }
     
 }
 
-extension AppController : AccountStateDelegate {
+extension AppController : SessionManagerDelegate {
     
-    public func unauthenticatedSessionCreated(session: UnauthenticatedSession) {
-        unautenticatedUserSession = session
+    public func sessionManagerCreated(unauthenticatedSession: UnauthenticatedSession) {
+        self.unautenticatedUserSession = unauthenticatedSession
         loadUnauthenticatedUIWithError(nil)
     }
     
-    public func userSessionCreated(session: ZMUserSession) {
-        setupUserSession(session)
+    public func sessionManagerCreated(userSession: ZMUserSession) {
+        setupUserSession(userSession)
     }
     
-    public func willStartMigratingLocalStore() {
+    public func sessionManagerWillStartMigratingLocalStore() {
         seState = .migration
     }
+    
 }

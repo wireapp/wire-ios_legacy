@@ -135,7 +135,7 @@ static UIColor *fontColor, *warningBackgroundColor;
 
     [self addTapGestureRecognizer];
     
-    self.serverConnectionObserverToken = [AppDelegate.sharedAppDelegate.accountManager.serverConnection addObserver:self];
+    self.serverConnectionObserverToken = [SessionManager.shared.serverConnection addObserver:self];
     
     // Set the view hidden to disable receiving touches. It will be eventually set to NO by a reachability change.
     self.view.hidden = YES;
@@ -157,7 +157,7 @@ static UIColor *fontColor, *warningBackgroundColor;
 
 - (void)dealloc
 {
-    [AppDelegate.sharedAppDelegate.accountManager.serverConnection removeObserver:self.serverConnectionObserverToken];
+    [SessionManager.shared.serverConnection removeObserver:self.serverConnectionObserverToken];
 }
 
 - (void)tappedOnBackground:(UIGestureRecognizer *)sender
@@ -173,7 +173,7 @@ static UIColor *fontColor, *warningBackgroundColor;
 
 - (void)updateState
 {
-    BOOL isOffline = AppDelegate.sharedAppDelegate.accountManager.serverConnection.isOffline;
+    BOOL isOffline = SessionManager.shared.serverConnection.isOffline;
     [self enqueueStatusBarStateChange:isOffline ? StatusBarStateServerUnreachable : StatusBarStateOk];
 }
 

@@ -98,8 +98,8 @@
     [self setupEmailSignInViewController];
     [self setupPhoneFlowViewController];
     
-    BOOL hasAddedPhoneNumber = [AccountManager shared].currentUser.phoneNumber.length > 0;
-    BOOL hasAddedEmailAddress = [AccountManager shared].currentUser.emailAddress.length > 0;
+    BOOL hasAddedPhoneNumber = [SessionManager shared].currentUser.phoneNumber.length > 0;
+    BOOL hasAddedEmailAddress = [SessionManager shared].currentUser.emailAddress.length > 0;
 
     if (hasAddedEmailAddress || ! hasAddedPhoneNumber) {
         [self presentSignInViewController:self.emailSignInViewControllerContainer];

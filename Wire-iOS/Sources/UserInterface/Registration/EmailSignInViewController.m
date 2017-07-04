@@ -123,7 +123,7 @@
     self.emailField.accessibilityIdentifier = @"EmailField";
     self.emailField.delegate = self;
     
-    ZMUser *currentUser = [AccountManager shared].currentUser;
+    ZMUser *currentUser = [SessionManager shared].currentUser;
 
     if (currentUser.emailAddress != nil) {
         // User was previously signed in so we must force him to sign in with the same credentials
