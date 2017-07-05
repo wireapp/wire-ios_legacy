@@ -37,11 +37,7 @@ class EphemeralTimeoutFormatter {
         // DateComponentsFormatter ZeroFormattingBehavior.pad unfortunately does
         // not add a leading 0 to the first unit (e.g. 5:21 instead of 05:21), which
         // is the reason we need to fallback to manual formatting here.
-        let total = Int(round(interval))
-        let min = (total / 60) % 60
-        let hour = total / 3600
-        let sec = total % 60
-
+        let (hour, min, sec) = interval.decomposed()
         if interval <= 60 {
             return secondsFormatter.string(from: interval + 1) // We need to add one second to start with the correct value
         } else if interval <= 3600 {
@@ -51,4 +47,13 @@ class EphemeralTimeoutFormatter {
         }
     }
     
+}
+
+fileprivate extension TimeInterval {
+
+    func decomposed() -> (hour: Int, min: Int, sec: Int) {
+        let total = Int(rounded())
+        return (total / 3600, (total / 60) % 60, total % 60)
+    }
+
 }
