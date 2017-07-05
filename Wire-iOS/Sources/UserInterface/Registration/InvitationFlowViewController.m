@@ -66,7 +66,7 @@ typedef NS_ENUM(NSUInteger, InvitationFlow) {
 - (void)removeObservers
 {
     [[UnauthenticatedSession sharedSession] removeRegistrationObserver:self.registrationToken];
-    [[ZMUserSession sharedSession] removeAuthenticationObserverForToken:self.authenticationToken];
+    [ZMUserSessionAuthenticationNotification removeObserverForToken:self.authenticationToken];
     
     self.registrationToken = nil;
     self.authenticationToken = nil;
@@ -81,7 +81,7 @@ typedef NS_ENUM(NSUInteger, InvitationFlow) {
         NSString *context = (self.invitationFlow == InvitationFlowEmail) ? AnalyticsContextRegistrationPersonalInviteEmail : AnalyticsContextRegistrationPersonalInvitePhone;
         self.analyticsTracker = [AnalyticsTracker analyticsTrackerWithContext:context];
         self.registrationToken = [[UnauthenticatedSession sharedSession] addRegistrationObserver:self];
-        self.authenticationToken = [[ZMUserSession sharedSession] addAuthenticationObserver:self];
+        self.authenticationToken = [ZMUserSessionAuthenticationNotification addObserver:self];
         
         if (self.invitationFlow == InvitationFlowEmail) {
             [self.analyticsTracker tagOpenedEmailRegistration];

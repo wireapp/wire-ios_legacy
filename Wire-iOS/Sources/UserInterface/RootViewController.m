@@ -89,14 +89,14 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self.convContentChangedObserver];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 
-    [ZMUserSessionAuthenticationNotification removeObserver:self.authToken];
+    [ZMUserSessionAuthenticationNotification removeObserverForToken:self.authToken];
 }
 
 - (void)setup
 {
     self.keyboardFrameObserver = [[KeyboardFrameObserver alloc] init];
 
-    self.authToken = [ZMUserSessionAuthenticationNotification addObserverWithObserver:self];
+    self.authToken = [ZMUserSessionAuthenticationNotification addObserver:self];
 }
 
 - (void)viewDidLoad

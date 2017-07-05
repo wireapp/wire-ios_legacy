@@ -91,7 +91,7 @@
     [super viewDidAppear:animated];
     
     if (self.isMovingToParentViewController || self.isBeingPresented || self.authenticationToken == nil) {
-        self.authenticationToken = [ZMUserSessionAuthenticationNotification addObserverWithObserver:self];
+        self.authenticationToken = [ZMUserSessionAuthenticationNotification addObserver:self];
     }
     
     if(AutomationHelper.sharedHelper.automationEmailCredentials != nil) {
@@ -105,7 +105,7 @@
 
 - (void)removeObservers
 {
-    [ZMUserSessionAuthenticationNotification removeObserver:self.authenticationToken];
+    [ZMUserSessionAuthenticationNotification removeObserverForToken:self.authenticationToken];
     self.authenticationToken = nil;
 }
 
