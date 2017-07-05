@@ -27,6 +27,20 @@ class EphemeralTimeoutFormatter {
         return formatter
     }()
 
+    private let minuteFormatter: DateComponentsFormatter = {
+        let formatter = DateComponentsFormatter()
+        formatter.allowedUnits = [.minute, .second]
+        formatter.zeroFormattingBehavior = .pad
+        return formatter
+    }()
+
+    private let hourFormatter: DateComponentsFormatter = {
+        let formatter = DateComponentsFormatter()
+        formatter.allowedUnits = [.hour, .minute, .second]
+        formatter.zeroFormattingBehavior = .pad
+        return formatter
+    }()
+
     func string(from interval: TimeInterval) -> String? {
         return timeString(from: interval).map {
             "content.system.ephemeral_time_remaining".localized(args: $0)
@@ -34,26 +48,11 @@ class EphemeralTimeoutFormatter {
     }
 
     private func timeString(from interval: TimeInterval) -> String? {
-        // DateComponentsFormatter ZeroFormattingBehavior.pad unfortunately does
-        // not add a leading 0 to the first unit (e.g. 5:21 instead of 05:21), which
-        // is the reason we need to fallback to manual formatting here.
-        let (hour, min, sec) = interval.decomposed()
-        if interval < 60 {
-            return secondsFormatter.string(from: interval + 1) // We need to add one second to start with the correct value
-        } else if interval < 3600 {
-            return String(format: "%02u:%02u", min, sec)
-        } else {
-            return String(format: "%02u:%02u:%02u", hour, min, sec)
+        switch interval {
+        case 0..<60: return secondsFormatter.string(from: interval)
+        case 60..<3600: return minuteFormatter.string(from: interval)
+        default: return hourFormatter.string(from: interval)
         }
     }
     
-}
-
-fileprivate extension TimeInterval {
-
-    func decomposed() -> (hour: Int, min: Int, sec: Int) {
-        let total = Int(rounded())
-        return (total / 3600, (total / 60) % 60, total % 60)
-    }
-
 }
