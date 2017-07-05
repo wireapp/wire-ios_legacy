@@ -858,7 +858,6 @@
 		BFAD3A171CD0F14800F0FBED /* ConversationTitleViewTests.m in Sources */ = {isa = PBXBuildFile; fileRef = BFAD3A161CD0F14800F0FBED /* ConversationTitleViewTests.m */; };
 		BFAD3A191CD1011100F0FBED /* ProfilePictureStepViewControllerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = BFAD3A181CD1011100F0FBED /* ProfilePictureStepViewControllerTests.m */; };
 		BFAD3A1D1CD1079200F0FBED /* unsplash_matterhorn.jpg in Resources */ = {isa = PBXBuildFile; fileRef = BFAD3A1C1CD1079200F0FBED /* unsplash_matterhorn.jpg */; };
-		BFAD3A201CD10D6000F0FBED /* MockEditableUser.m in Sources */ = {isa = PBXBuildFile; fileRef = BFAD3A1F1CD10D6000F0FBED /* MockEditableUser.m */; };
 		BFAD540D1E6972CD0015C677 /* NotificationFetchComponents.h in Headers */ = {isa = PBXBuildFile; fileRef = BFAD53FD1E6972CD0015C677 /* NotificationFetchComponents.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		BFAD54191E6972F40015C677 /* NotificationContentFetchEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAD54181E6972F40015C677 /* NotificationContentFetchEngine.swift */; };
 		BFAD541B1E69734F0015C677 /* FetchEngineStrategyFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAD541A1E69734F0015C677 /* FetchEngineStrategyFactory.swift */; };
@@ -2337,8 +2336,6 @@
 		BFAD3A181CD1011100F0FBED /* ProfilePictureStepViewControllerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfilePictureStepViewControllerTests.m; sourceTree = "<group>"; };
 		BFAD3A1A1CD1065B00F0FBED /* ProfilePictureStepViewController+Testing.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ProfilePictureStepViewController+Testing.h"; sourceTree = "<group>"; };
 		BFAD3A1C1CD1079200F0FBED /* unsplash_matterhorn.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = unsplash_matterhorn.jpg; sourceTree = "<group>"; };
-		BFAD3A1E1CD10D6000F0FBED /* MockEditableUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MockEditableUser.h; sourceTree = "<group>"; };
-		BFAD3A1F1CD10D6000F0FBED /* MockEditableUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MockEditableUser.m; sourceTree = "<group>"; };
 		BFAD53FB1E6972CC0015C677 /* NotificationFetchComponents.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = NotificationFetchComponents.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BFAD53FD1E6972CD0015C677 /* NotificationFetchComponents.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NotificationFetchComponents.h; sourceTree = "<group>"; };
 		BFAD53FE1E6972CD0015C677 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -3856,8 +3853,6 @@
 				87BEB0DA1C734D710094BFE9 /* MockUser.h */,
 				87BEB0DB1C734D710094BFE9 /* MockUser.m */,
 				87BEB0DE1C734DA60094BFE9 /* MockLoader.h */,
-				BFAD3A1E1CD10D6000F0FBED /* MockEditableUser.h */,
-				BFAD3A1F1CD10D6000F0FBED /* MockEditableUser.m */,
 				87BEB0DF1C734DA60094BFE9 /* MockLoader.m */,
 				87BEB0E11C734DB60094BFE9 /* MockMessage.swift */,
 				87BEB0E31C7363D30094BFE9 /* MockMessage+Creation.h */,
@@ -6454,7 +6449,6 @@
 				877ABB491E8127B200CBCF2B /* BackgroundViewControllerTests.swift in Sources */,
 				F127BD571E262E9F0093B2F1 /* CollectionsViewControllerTests.swift in Sources */,
 				1651F9C01D36789C00A9FAE8 /* Message+FormattingTests.swift in Sources */,
-				BFAD3A201CD10D6000F0FBED /* MockEditableUser.m in Sources */,
 				87BEB0E21C734DB60094BFE9 /* MockMessage.swift in Sources */,
 				87D5E4431C3E79DA00EB8289 /* UserClient+Fingerprint.swift in Sources */,
 				BF7ED2DC1DF1D1CF003A4397 /* IncomingConnectionViewTests.swift in Sources */,

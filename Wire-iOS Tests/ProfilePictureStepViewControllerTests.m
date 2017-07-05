@@ -22,7 +22,6 @@
 #import "ProfilePictureStepViewController.h"
 #import "ProfilePictureStepViewController+Testing.h"
 @import PureLayout;
-#import "MockEditableUser.h"
 
 
 @interface ProfilePictureStepViewControllerTests : ZMSnapshotTestCase
@@ -37,8 +36,9 @@
 - (void)setUp {
     [super setUp];
     self.accentColor = ZMAccentColorStrongBlue;
-    MockEditableUser *editableUser = [MockEditableUser mockUser];
-    self.sut = [[ProfilePictureStepViewController alloc] initWithEditableUser:editableUser];
+    
+    ZMIncompleteRegistrationUser *user = [[ZMIncompleteRegistrationUser alloc] init];
+    self.sut = [[ProfilePictureStepViewController alloc] initWithUnregisteredUser:user];
 
     __weak typeof(self)weakSelf = self;
     self.configurationBlock = ^(__unused UIView *view) {
