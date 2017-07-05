@@ -28,6 +28,7 @@
 
 #import "WAZUIMagicIOS.h"
 #import "WireSyncEngine+iOS.h"
+#import "UIAlertController+Wire.h"
 #import "Wire-Swift.h"
 
 typedef NS_ENUM(NSInteger, StatusBarState) {
@@ -56,7 +57,7 @@ static UIColor *fontColor, *warningBackgroundColor;
 
 
 
-@interface NetworkStatusViewController () <UIAlertViewDelegate>
+@interface NetworkStatusViewController ()
 
 @property (nonatomic, readonly) StatusBarState statusBarState;
 @property (nonatomic, assign) StatusBarState pendingStatusBarState;
@@ -200,13 +201,10 @@ static UIColor *fontColor, *warningBackgroundColor;
     
     NSString *acknowledge = NSLocalizedString(@"general.confirm", @"OK");
     
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:title
-                                                    message:explanation
-                                                   delegate:self
-                                          cancelButtonTitle:acknowledge
-                                          otherButtonTitles:nil];
-    alert.delegate = self;
-    [alert show];
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:title
+                                                                   message:explanation
+                                                         cancelButtonTitle:acknowledge];
+    [alert presentTopmost];
 }
 
 - (void)enqueueStatusBarStateChange:(StatusBarState)state

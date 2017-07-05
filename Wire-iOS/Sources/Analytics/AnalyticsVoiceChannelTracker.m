@@ -21,7 +21,7 @@
 #import "Analytics.h"
 #import "WireSyncEngine+iOS.h"
 #import "DeveloperMenuState.h"
-
+#import "UIAlertController+Wire.h"
 
 @interface AnalyticsVoiceChannelTracker () <VoiceChannelStateObserver>
 
@@ -85,12 +85,10 @@
 - (void)callCenterDidEndCallWithReason:(VoiceChannelV2CallEndReason)reason conversation:(ZMConversation *)conversation callingProtocol:(enum CallingProtocol)callingProtocol
 {
     if (reason == VoiceChannelV2CallEndReasonInputOutputError && [DeveloperMenuState developerMenuEnabled]) {
-        UIAlertView* view = [[UIAlertView alloc] initWithTitle:@"Calling error"
-                                                       message:@"AVS I/O error"
-                                                      delegate:nil
-                                             cancelButtonTitle:@"OK"
-                                             otherButtonTitles:nil];
-        [view show];
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Calling error"
+                                                                       message:@"AVS I/O error"
+                                                             cancelButtonTitle:@"OK"];
+        [alert presentTopmost];
     }
     [self.analytics tagEndedCallInConversation:conversation
                                          video:self.isVideoCall

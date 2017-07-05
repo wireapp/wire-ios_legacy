@@ -46,6 +46,7 @@
 #import "Wire-Swift.h"
 #import "Message+Formatting.h"
 #import "ConversationListCell.h"
+#import "UIAlertController+Wire.h"
 
 NSString *const ZMUserSessionDidBecomeAvailableNotification = @"ZMUserSessionDidBecomeAvailableNotification";
 
@@ -544,19 +545,18 @@ NSString *const ZMUserSessionDidBecomeAvailableNotification = @"ZMUserSessionDid
         return;
     }
     
-    UIAlertView *forceUpdateAlertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"force.update.title", nil)
-                                                                   message:NSLocalizedString(@"force.update.message", nil)
-                                                                  delegate:self
-                                                         cancelButtonTitle:NSLocalizedString(@"force.update.ok_button", nil)
-                                                         otherButtonTitles:nil];
-    [forceUpdateAlertView show];
-}
-
-- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
-{
-    NSString *iTunesLink = @"https://itunes.apple.com/us/app/wire/id930944768?mt=8";
-    
-    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:iTunesLink]];
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"force.update.title", nil)
+                                                                             message:NSLocalizedString(@"force.update.message", nil)
+                                                                      preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *updateAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"force.update.ok_button", nil)
+                                                           style:UIAlertActionStyleDefault
+                                                         handler:^(UIAlertAction * _Nonnull action) {
+                                                             NSString *iTunesLink = @"https://itunes.apple.com/us/app/wire/id930944768?mt=8";
+                                                             
+                                                             [[UIApplication sharedApplication] openURL:[NSURL URLWithString:iTunesLink]];
+                                                         }];
+    [alertController addAction:updateAction];
+    [alertController presentTopmost];
 }
 
 @end

@@ -16,16 +16,24 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-#import "UIView+UIAppearanceSwift.h"
+#import "UIApplication+StatusBar.h"
 
-@implementation UIView (UIAppearanceSwift)
-+ (instancetype)wr_appearanceWhenContainedIn:(Class<UIAppearanceContainer>)containerClass {
-    return [self appearanceWhenContainedIn:containerClass, nil];
-}
-@end
+@implementation UIApplication (StatusBar)
 
-@implementation UIBarButtonItem (UIAppearanceSwift)
-+ (instancetype)wr_appearanceWhenContainedIn:(Class<UIAppearanceContainer>)containerClass {
-    return [self appearanceWhenContainedIn:containerClass, nil];
+- (void)wr_setStatusBarStyle:(UIStatusBarStyle)style animated:(BOOL)animated
+{
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+    [self setStatusBarStyle:style animated:animated];
+#pragma clang diagnostic pop
 }
+
+- (void)wr_setStatusBarHidden:(BOOL)hidden withAnimation:(UIStatusBarAnimation)animation
+{
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+    [self setStatusBarHidden:hidden withAnimation:animation];
+#pragma clang diagnostic pop
+}
+
 @end

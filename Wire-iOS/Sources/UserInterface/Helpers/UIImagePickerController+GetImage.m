@@ -18,177 +18,87 @@
 
 
 #import "UIImagePickerController+GetImage.h"
-
-#import <AssetsLibrary/AssetsLibrary.h>
-#import <MobileCoreServices/MobileCoreServices.h>
-
 #import "NSError+Zeta.h"
+
+@import Photos;
+@import MobileCoreServices;
 @import FLAnimatedImage;
 
-UIImageOrientation ImageOrientationFromAssetOrientation(ALAssetOrientation orientation);
+@interface PHAsset (MediaInfo)
++ (nullable PHAsset *)loadFromMediaInfo:(nonnull NSDictionary *)mediaInfo;
+@end
 
-UIImageOrientation ImageOrientationFromAssetOrientation(ALAssetOrientation orientation)
+@implementation PHAsset (MediaInfo)
+
++ (nullable PHAsset *)loadFromMediaInfo:(nonnull NSDictionary *)mediaInfo
 {
-    switch (orientation) {
-        case ALAssetOrientationUp:
-            return UIImageOrientationUp;
-            break;
-        case ALAssetOrientationDown:
-            return UIImageOrientationDown;
-            break;
-        case ALAssetOrientationLeft:
-            return UIImageOrientationLeft;
-            break;
-        case ALAssetOrientationRight:
-            return UIImageOrientationRight;
-            break;
-        case ALAssetOrientationUpMirrored:
-            return UIImageOrientationUpMirrored;
-            break;
-        case ALAssetOrientationDownMirrored:
-            return UIImageOrientationDownMirrored;
-            break;
-        case ALAssetOrientationLeftMirrored:
-            return UIImageOrientationLeftMirrored;
-            break;
-        case ALAssetOrientationRightMirrored:
-            return UIImageOrientationRightMirrored;
-            break;
-        default:
-            break;
-    }
+    NSURL *assetURL = [mediaInfo objectForKey:UIImagePickerControllerReferenceURL];
+    PHFetchResult<PHAsset *> *result = [PHAsset fetchAssetsWithALAssetURLs:@[assetURL] options:nil];
+    return result.firstObject;
 }
+
+@end
 
 @implementation UIImagePickerController (GetImage)
 
-+ (void)loadImageFromMediaInfo:(NSDictionary *)info result:(void(^)(UIImage*,NSData*,NSString*))callback failure:(void(^)(NSError*))failure
++ (void)imageFromMediaInfo:(NSDictionary *)info resultBlock:(void(^)(UIImage*))callback
 {
-    NSString *mediaType = info[UIImagePickerControllerMediaType];
-    DDLogDebug(@"mediaType chosen %@", mediaType);
-
-    ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
-
-    [library assetForURL:[info objectForKey:UIImagePickerControllerReferenceURL]
-             resultBlock:^(ALAsset *asset) {
-                 // NB: sometimes it returns asset == nil
-
-                 NSData *imageData = nil;
-                 UIImage *image = nil;
-
-                 if (asset != nil) {
-                     ALAssetRepresentation *representation = [asset defaultRepresentation];
-
-                     uint8_t *buffer = (uint8_t *) malloc((unsigned long) representation.size);
-                     unsigned long buffered = [representation getBytes:buffer fromOffset:0.0 length:(NSUInteger)representation.size error:nil];
-                     imageData = [NSData dataWithBytesNoCopy:buffer length:buffered freeWhenDone:YES];
-                     image = [UIImage imageWithCGImage:[representation fullResolutionImage]
-                                                 scale:[representation scale]
-                                           orientation:ImageOrientationFromAssetOrientation([representation orientation])];
-                 }
-                 else {
-                     image = info[UIImagePickerControllerEditedImage];
-
-                     if (image == nil) {
-                         image = info[UIImagePickerControllerOriginalImage];
-                     }
-                 }
-
-                 if (image == nil && imageData != nil) {
-                     image = [UIImage imageWithData:imageData];
-                 }
-                 else if (image != nil && imageData == nil) {
-                     imageData = UIImageJPEGRepresentation(image, 0.9f);
-                 }
-
-                 if (image != nil && imageData != nil) {
-                     callback(image, imageData, mediaType);
-                 }
-                 else {
-                     failure([NSError errorWithDomain:ZetaErrorDomain code:0 userInfo:@{NSLocalizedDescriptionKey: @"Cannot pick image"}]);
-                 }
-             }
-            failureBlock:^(NSError *error) {
-                failure(error);
-            }];
+    UIImage *image = nil;
+    PHAsset *resultAsset = [PHAsset loadFromMediaInfo:info];
+    if (resultAsset != nil) {
+        [PHImageManager.defaultManager requestImageForAsset:resultAsset
+                                                 targetSize:PHImageManagerMaximumSize
+                                                contentMode:PHImageContentModeDefault
+                                                    options:nil
+                                              resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
+                                                  dispatch_async(dispatch_get_main_queue(), ^{
+                                                      callback(result);
+                                                  });
+                                              }];
+        return;
+    }
+    else {
+        image = info[UIImagePickerControllerEditedImage];
+        
+        if (image == nil) {
+            image = info[UIImagePickerControllerOriginalImage];
+        }
+        
+        if (image != nil) {
+            callback(image);
+        }
+    }
 }
 
 + (void)imageDataFromMediaInfo:(NSDictionary *)info resultBlock:(void (^)(NSData *imageData))resultBlock
 {
-    if (info[UIImagePickerControllerReferenceURL]) {
-        ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
-        
-        [library assetForURL:info[UIImagePickerControllerReferenceURL]
-                 resultBlock:^(ALAsset *asset) {
-                     if (asset != nil) {
-                         ALAssetRepresentation *representation = [asset defaultRepresentation];
-                         
-                         uint8_t *buffer = (uint8_t *) malloc((unsigned long) representation.size);
-                         unsigned long buffered = [representation getBytes:buffer fromOffset:0.0 length:(NSUInteger)representation.size error:nil];
-                         resultBlock([NSData dataWithBytesNoCopy:buffer length:buffered freeWhenDone:YES]);
-                     }
-                     else {
-                         if (info[UIImagePickerControllerEditedImage] != nil) {
-                             resultBlock(UIImageJPEGRepresentation(info[UIImagePickerControllerEditedImage], 0.9f));
-                         }
-                         else if (info[UIImagePickerControllerOriginalImage] != nil) {
-                             resultBlock(UIImageJPEGRepresentation(info[UIImagePickerControllerOriginalImage], 0.9f));
-                         }
-                         else {
-                             resultBlock(nil);
-                         }
-                     }
-                 } failureBlock:^(NSError *error) {
-                     resultBlock(nil);
-                 }];
+    PHAsset *resultAsset = [PHAsset loadFromMediaInfo:info];
+
+    if (nil != resultAsset) {
+        [PHImageManager.defaultManager requestImageDataForAsset:resultAsset
+                                                        options:nil
+                                                  resultHandler:^(NSData * _Nullable imageData, NSString * _Nullable dataUTI, UIImageOrientation orientation, NSDictionary * _Nullable info) {
+                                                      if (imageData != nil) {
+                                                          resultBlock(imageData);
+                                                      }
+                                                      else {
+                                                          if (info[UIImagePickerControllerEditedImage] != nil) {
+                                                              resultBlock(UIImageJPEGRepresentation(info[UIImagePickerControllerEditedImage], 0.9f));
+                                                          }
+                                                          else if (info[UIImagePickerControllerOriginalImage] != nil) {
+                                                              resultBlock(UIImageJPEGRepresentation(info[UIImagePickerControllerOriginalImage], 0.9f));
+                                                          }
+                                                          else {
+                                                              resultBlock(nil);
+                                                          }
+                                                      }
+                                                  }];
     }
     else if (info[UIImagePickerControllerEditedImage]) {
         resultBlock(UIImageJPEGRepresentation(info[UIImagePickerControllerEditedImage], 0.9));
     }
     else if (info[UIImagePickerControllerOriginalImage]) {
         resultBlock(UIImageJPEGRepresentation(info[UIImagePickerControllerOriginalImage], 0.9));
-    }
-}
-
-+ (void)previewImageFromMediaInfo:(NSDictionary *)info resultBlock:(void (^)(UIImage *image))resultBlock
-{
-    if (info[UIImagePickerControllerReferenceURL]) {
-        ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
-        
-        [library assetForURL:info[UIImagePickerControllerReferenceURL]
-                 resultBlock:^(ALAsset *asset) {
-                     if (asset != nil) {
-                         ALAssetRepresentation *representation = [asset defaultRepresentation];
-                         CGImageRef fullScreenImage = representation.fullScreenImage;
-
-                         if (fullScreenImage != NULL) {
-                             resultBlock([UIImage imageWithCGImage:fullScreenImage]);
-                         } else {
-                             resultBlock(nil);
-                         }
-
-                     }
-                     else {
-                         if (info[UIImagePickerControllerEditedImage] != nil) {
-                             resultBlock(info[UIImagePickerControllerEditedImage]);
-                         }
-                         else if (info[UIImagePickerControllerOriginalImage] != nil) {
-                             resultBlock(info[UIImagePickerControllerOriginalImage]);
-                         }
-                         else {
-                             resultBlock(nil);
-                         }
-                     }
-
-
-                 } failureBlock:^(NSError *error) {
-                     resultBlock(nil);
-                 }];
-    }
-    else if (info[UIImagePickerControllerEditedImage]) {
-        resultBlock(info[UIImagePickerControllerEditedImage]);
-    }
-    else if (info[UIImagePickerControllerOriginalImage]) {
-        resultBlock(info[UIImagePickerControllerOriginalImage]);
     }
 }
 

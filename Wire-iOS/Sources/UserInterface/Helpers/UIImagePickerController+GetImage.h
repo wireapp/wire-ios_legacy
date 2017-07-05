@@ -21,12 +21,7 @@
 
 @interface UIImagePickerController (GetImage)
 
-+ (void)loadImageFromMediaInfo:(NSDictionary *)info
-                       result:(void(^)(UIImage *image, NSData *imageData, NSString *mediaType))callback
-                      failure:(void(^)(NSError*))failure;
-
-
++ (void)imageFromMediaInfo:(NSDictionary *)info resultBlock:(void(^)(UIImage*))callback;
 + (void)imageDataFromMediaInfo:(NSDictionary *)info resultBlock:(void (^)(NSData *imageData))resultBlock;
-+ (void)previewImageFromMediaInfo:(NSDictionary *)info resultBlock:(void (^)(UIImage *image))resultBlock;
 
 @end

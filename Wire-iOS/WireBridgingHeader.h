@@ -140,7 +140,6 @@
 #import "DeviceOrientationObserver.h"
 #import "Analytics+ConversationEvents.h"
 #import "AppDelegate+Logging.h"
-#import "UIView+UIAppearanceSwift.h"
 #import "LinkAttachment.h"
 #import "Message+Formatting.h"
 #import "UIImagePickerController+GetImage.h"
@@ -148,6 +147,7 @@
 #import "MessagePresenter.h"
 #import "WireStyleKit+Additions.h"
 #import "UIResponder+FirstResponder.h"
+#import "UIApplication+StatusBar.h"
 
 // Camera
 #import "CameraController.h"
