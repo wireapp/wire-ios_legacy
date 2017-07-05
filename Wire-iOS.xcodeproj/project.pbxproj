@@ -936,6 +936,7 @@
 		DBF7235F1B5566B80036F4C5 /* a_lot_of_people.json in Resources */ = {isa = PBXBuildFile; fileRef = DBF7235E1B5566B80036F4C5 /* a_lot_of_people.json */; };
 		EE291BB51F0B9BF200142F31 /* Marklight.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EE291BB41F0B9BF200142F31 /* Marklight.framework */; };
 		EE291BB71F0BC54D00142F31 /* MarklightTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE291BB61F0BC54D00142F31 /* MarklightTextView.swift */; };
+		EEB8401A1F0D1E9700D9C44E /* MarklightCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEB840191F0D1E9700D9C44E /* MarklightCache.swift */; };
 		F127BD571E262E9F0093B2F1 /* CollectionsViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F127BD561E262E9F0093B2F1 /* CollectionsViewControllerTests.swift */; };
 		F127BD5A1E2667170093B2F1 /* MockCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = F127BD581E265FB40093B2F1 /* MockCollection.swift */; };
 		F12CDADE1E43868200CEFCEB /* ChangeEmailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F12CDADA1E43868200CEFCEB /* ChangeEmailViewController.swift */; };
@@ -2468,6 +2469,7 @@
 		EE291BB41F0B9BF200142F31 /* Marklight.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Marklight.framework; path = Carthage/Build/iOS/Marklight.framework; sourceTree = "<group>"; };
 		EE291BB61F0BC54D00142F31 /* MarklightTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MarklightTextView.swift; sourceTree = "<group>"; };
 		EE497EB91F0BE31C0088F90A /* Marklight.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Marklight.xcodeproj; path = ../../Repos/Marklight/Marklight.xcodeproj; sourceTree = "<group>"; };
+		EEB840191F0D1E9700D9C44E /* MarklightCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MarklightCache.swift; sourceTree = "<group>"; };
 		F127BD561E262E9F0093B2F1 /* CollectionsViewControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionsViewControllerTests.swift; sourceTree = "<group>"; };
 		F127BD581E265FB40093B2F1 /* MockCollection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockCollection.swift; sourceTree = "<group>"; };
 		F12CDADA1E43868200CEFCEB /* ChangeEmailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChangeEmailViewController.swift; sourceTree = "<group>"; };
@@ -3552,6 +3554,7 @@
 				87F18BBF1E017B7F00C69D9B /* UIView+VisibleViews.swift */,
 				F15E9BFC1E4878AC00EA207F /* UINavigationController+PopToPrevious.swift */,
 				879E5E981F0104A6007A88A3 /* UITextView+Autocorrect.swift */,
+				EEB840191F0D1E9700D9C44E /* MarklightCache.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -6188,6 +6191,7 @@
 				872CB8B819E58816006752B4 /* ProfileSendConnectionRequestFooterView.m in Sources */,
 				877B07821E3B4C4A0070A6F2 /* ZMConversationMessage+Properties.swift in Sources */,
 				87DCF49C1D34E9E600BB420F /* LocationSendViewController.swift in Sources */,
+				EEB8401A1F0D1E9700D9C44E /* MarklightCache.swift in Sources */,
 				871BC2541D34F8F800DF0793 /* ActionSheetTransition.m in Sources */,
 				BF808B4D1DE5AD1600718076 /* SettingsCellDescriptorFactory+Account.swift in Sources */,
 				871BC36D1D34F96000DF0793 /* DeviceOrientationObserver.m in Sources */,
@@ -6993,6 +6997,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = "${CODE_SIGN_ENTITLEMENTS_APP}";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = W5KEQBF9B5;
 				FRAMEWORK_SEARCH_PATHS = (

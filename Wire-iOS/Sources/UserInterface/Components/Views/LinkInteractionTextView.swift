@@ -29,6 +29,7 @@ import Marklight
 @objc public class LinkInteractionTextView: UITextView {
     
     let marklightTextStorage = MarklightTextStorage()
+    static let marklightCache = MarklightCache()
     
     public weak var interactionDelegate: TextViewInteractionDelegate?
     
@@ -43,7 +44,7 @@ import Marklight
         marklightLayoutManager.addTextContainer(marklightTextContainer)
         
         super.init(frame: frame, textContainer: marklightTextContainer)
-        
+        marklightTextStorage.cacheDelegate = type(of: self).marklightCache
         delegate = self
     }
     
