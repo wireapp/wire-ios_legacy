@@ -210,8 +210,12 @@
     }
 }
 
-- (void)presentClientManagementForUserClients:(NSArray<UserClient *> *)userClients credentials:(ZMEmailCredentials *)credentials
-{
+- (void)presentClientManagementForUserClientIds:(NSArray<NSManagedObjectID *> *)clientIds credentials:(ZMEmailCredentials *)credentials
+{    
+    NSArray *userClients = [clientIds mapWithBlock:^id(NSManagedObjectID *objId) {
+        return [ZMUserSession.sharedSession.managedObjectContext existingObjectWithID:objId error:NULL];
+    }];
+    
     ClientUnregisterFlowViewController *unregisterClientFlowController = [[ClientUnregisterFlowViewController alloc] initWithClientsList:userClients delegate:self credentials:credentials];
     
     NavigationController *navigationController = self.wr_navigationController;
@@ -349,7 +353,7 @@
     }
     
     if (error.code == ZMUserSessionCanNotRegisterMoreClients) {
-        [self presentClientManagementForUserClients:error.userInfo[ZMClientsKey] credentials:[self credentials]];
+        [self presentClientManagementForUserClientIds:error.userInfo[ZMClientsKey] credentials:[self credentials]];
     }
 }
 
