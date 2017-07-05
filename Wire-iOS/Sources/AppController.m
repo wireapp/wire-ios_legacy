@@ -106,7 +106,8 @@ NSString *const ZMUserSessionDidBecomeAvailableNotification = @"ZMUserSessionDid
 - (void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-    [self.zetaUserSession removeAuthenticationObserverForToken:self.authToken];
+    
+    [ZMUserSessionAuthenticationNotification removeObserverForToken:self.authToken];
 }
 
 - (void)setUiState:(AppUIState)uiState
@@ -442,7 +443,7 @@ NSString *const ZMUserSessionDidBecomeAvailableNotification = @"ZMUserSessionDid
     self.analyticsEventPersistence = [[ShareExtensionAnalyticsPersistence alloc] initWithSharedContainerURL:userSession.sharedContainerURL];
         
     // Sign up for authentication notifications
-    self.authToken = [userSession addAuthenticationObserver:self];
+    self.authToken = [ZMUserSessionAuthenticationNotification addObserver:self];
     
     [[NSNotificationCenter defaultCenter] postNotificationName:ZMUserSessionDidBecomeAvailableNotification object:nil];
     [self executeQueuedBlocksIfNeeded];

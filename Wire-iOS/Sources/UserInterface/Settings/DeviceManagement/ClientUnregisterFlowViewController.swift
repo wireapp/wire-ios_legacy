@@ -41,7 +41,7 @@ class ClientUnregisterFlowViewController: FormFlowViewController, FormStepDelega
         self.credentials = credentials
         self.delegate = delegate
         super.init(nibName: nil, bundle: nil)
-        self.authToken = ZMUserSession.shared()?.add(self)
+        self.authToken = ZMUserSessionAuthenticationNotification.addObserver(self)
     }
     
     required override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
@@ -54,7 +54,7 @@ class ClientUnregisterFlowViewController: FormFlowViewController, FormStepDelega
     
     deinit {
         if let token = self.authToken {
-            ZMUserSession.shared()?.removeAuthenticationObserver(for: token)
+            ZMUserSessionAuthenticationNotification.removeObserver(for: token)
         }
     }
     
