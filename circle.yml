@@ -8,7 +8,7 @@ checkout:
   post:
     # Download other scripts
     - curl -O "${DEPENDENCIES_BASE_URL}/environment.sh"
-    - sh environment.sh
+    - bash environment.sh
     - curl -O "${DEPENDENCIES_BASE_URL}/dependencies.sh"
     - curl -O "${DEPENDENCIES_BASE_URL}/build.sh"
     - curl -O "${DEPENDENCIES_BASE_URL}/test.sh"
@@ -16,14 +16,14 @@ checkout:
 
 dependencies:
   override:
-    - sh dependencies.sh
+    - bash dependencies.sh
   cache_directories:
     - Carthage/Build
     - ~/.gem
 
 test:
   override:
-    - sh build.sh
-    - sh test.sh
+    - bash build.sh
+    - bash test.sh
   post:
-    - sh post_test.sh
+    - bash post_test.sh
