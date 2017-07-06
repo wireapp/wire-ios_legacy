@@ -154,7 +154,7 @@ class ConversationStatusLineTests: CoreDataSnapshotTestCase {
     
     func testStatusForSystemMessageIWasAdded() {
         // GIVEN
-        let sut = self.otherUserConversation!
+        let sut = createGroupConversation()
         let otherMessage = ZMSystemMessage.insertNewObject(in: moc)
         otherMessage.systemMessageType = .participantsAdded
         otherMessage.sender = self.otherUser
@@ -171,7 +171,7 @@ class ConversationStatusLineTests: CoreDataSnapshotTestCase {
     
     func testNoStatusForSystemMessageIAddedSomeone() {
         // GIVEN
-        let sut = self.otherUserConversation!
+        let sut = createGroupConversation()
         let otherMessage = ZMSystemMessage.insertNewObject(in: moc)
         otherMessage.systemMessageType = .participantsAdded
         otherMessage.sender = self.selfUser
@@ -188,7 +188,8 @@ class ConversationStatusLineTests: CoreDataSnapshotTestCase {
     
     func testNoStatusForSystemMessageIRemovedSomeone() {
         // GIVEN
-        let sut = self.otherUserConversation!
+        let sut = createGroupConversation()
+        sut.internalAddParticipants([createUser(name: "Vanessa")], isAuthoritative: true)
         let otherMessage = ZMSystemMessage.insertNewObject(in: moc)
         otherMessage.systemMessageType = .participantsRemoved
         otherMessage.sender = self.selfUser
@@ -202,10 +203,30 @@ class ConversationStatusLineTests: CoreDataSnapshotTestCase {
         // THEN
         XCTAssertEqual(status.string, "")
     }
+
+    func testEveryoneLeftStatusAfterLastPersonLeft() {
+        // Given
+        let sut = ZMConversation.insertNewObject(in: moc)
+        sut.conversationType = .group
+
+        let otherMessage = ZMSystemMessage.insertNewObject(in: moc)
+        otherMessage.systemMessageType = .participantsRemoved
+        otherMessage.sender = selfUser
+        otherMessage.users = [otherUser]
+        otherMessage.removedUsers = [otherUser]
+        sut.sortedAppendMessage(otherMessage)
+        sut.lastReadServerTimeStamp = .distantPast
+
+        // When
+        let status = sut.status.description(for: sut)
+
+        // Then
+        XCTAssertEqual(status.string, "Everyone left")
+    }
     
     func testStatusForSystemMessageSomeoneWasAdded() {
         // GIVEN
-        let sut = self.otherUserConversation!
+        let sut = createGroupConversation()
         let otherMessage = ZMSystemMessage.insertNewObject(in: moc)
         otherMessage.systemMessageType = .participantsAdded
         otherMessage.sender = self.otherUser
@@ -222,7 +243,7 @@ class ConversationStatusLineTests: CoreDataSnapshotTestCase {
     
     func testStatusForSystemMessageIWasRemoved() {
         // GIVEN
-        let sut = self.otherUserConversation!
+        let sut = createGroupConversation()
         let otherMessage = ZMSystemMessage.insertNewObject(in: moc)
         otherMessage.systemMessageType = .participantsRemoved
         otherMessage.sender = self.otherUser
@@ -233,13 +254,15 @@ class ConversationStatusLineTests: CoreDataSnapshotTestCase {
         
         // WHEN
         let status = sut.status.description(for: sut)
+
         // THEN
         XCTAssertEqual(status.string, "You were removed")
     }
     
     func testStatusForSystemMessageSomeoneWasRemoved() {
         // GIVEN
-        let sut = self.otherUserConversation!
+        let sut = createGroupConversation()
+        sut.internalAddParticipants([createUser(name: "Lilly")], isAuthoritative: true)
         let otherMessage = ZMSystemMessage.insertNewObject(in: moc)
         otherMessage.systemMessageType = .participantsRemoved
         otherMessage.sender = self.otherUser

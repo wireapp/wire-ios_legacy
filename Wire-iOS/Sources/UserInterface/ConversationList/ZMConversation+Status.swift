@@ -459,7 +459,7 @@ final internal class GroupActivityMatcher: ConversationStatusMatcher {
                 let systemMessage = message.systemMessageData,
                 let sender = message.sender {
 
-            if systemMessage.users.contains(.selfUser()) {
+            if systemMessage.users.contains(where: { $0.isSelfUser }) {
                 if sender.isSelfUser {
                     return "conversation.status.you_left".localized && type(of: self).regularStyle
                 }
