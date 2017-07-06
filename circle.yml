@@ -13,18 +13,17 @@ checkout:
     - curl -O "${DEPENDENCIES_BASE_URL}/build.sh"
     - curl -O "${DEPENDENCIES_BASE_URL}/test.sh"
     - curl -O "${DEPENDENCIES_BASE_URL}/post_test.sh"
-    - chmod +x *.sh
 
 dependencies:
   override:
-    - ./dependencies.sh
+    - bash dependencies.sh
   cache_directories:
     - Carthage/Build
     - ~/.gem
 
 test:
   override:
-    - ./build.sh
-    - ./test.sh
+    - bash build.sh
+    - bash test.sh
   post:
-    - ./post_test.sh
+    - bash post_test.sh
