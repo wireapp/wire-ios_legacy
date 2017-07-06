@@ -63,6 +63,7 @@ internal enum StatusMessageType: Int {
     case file
     case knock
     case addParticipants
+    case removeParticipants
     case newConversation
     case missedCall
 }
@@ -70,6 +71,7 @@ internal enum StatusMessageType: Int {
 extension StatusMessageType {
     private static let conversationSystemMessageTypeToStatusMessageType: [ZMSystemMessageType: StatusMessageType] = [
         .participantsAdded:   .addParticipants,
+        .participantsRemoved: .removeParticipants,
         .missedCall:          .missedCall,
         .newConversation:     .newConversation
     ]
@@ -409,12 +411,12 @@ final internal class FailedSendMatcher: ConversationStatusMatcher {
     var combinesWith: [ConversationStatusMatcher] = []
 }
 
-// "[You|User] [added] [users|you]"
+// "[You|User] [added|removed|left] [_|users|you]"
 final internal class GroupActivityMatcher: ConversationStatusMatcher {
-    let matchedType: StatusMessageType = .addParticipants
+    let matchedTypes: [StatusMessageType] = [.addParticipants, .removeParticipants]
 
     func isMatching(with status: ConversationStatus) -> Bool {
-        return status.messagesRequiringAttentionByType[matchedType] > 0
+        return matchedTypes.flatMap { status.messagesRequiringAttentionByType[$0] }.reduce(0, +) > 0
     }
     
     private func addedString(for messages: [ZMConversationMessage], in conversation: ZMConversation) -> NSAttributedString? {
@@ -441,9 +443,57 @@ final internal class GroupActivityMatcher: ConversationStatusMatcher {
         return .none
     }
     
+    private static let indicate3rdPartiesRemoval: Bool = false
+    
+    private func removedString(for messages: [ZMConversationMessage], in conversation: ZMConversation) -> NSAttributedString? {
+        
+        if messages.count > 1 {
+            if type(of: self).indicate3rdPartiesRemoval {
+                return "conversation.status.removed_multiple".localized && type(of: self).regularStyle
+            }
+            else {
+                return .none
+            }
+        }
+        else if let message = messages.last,
+                let systemMessage = message.systemMessageData,
+                let sender = message.sender {
+
+            if systemMessage.users.contains(.selfUser()) {
+                if sender.isSelfUser {
+                    return "conversation.status.you_left".localized && type(of: self).regularStyle
+                }
+                else {
+                    return "conversation.status.you_were_removed".localized && type(of: self).regularStyle
+                }
+            }
+            else {
+                if type(of: self).indicate3rdPartiesRemoval {
+                    let usersList = systemMessage.users.map { $0.displayName(in: conversation) }.joined(separator: ", ")
+                    let sender = sender.isSelfUser ? "conversation.status.you".localized : sender.displayName(in: conversation)!
+                    let result = String(format: "conversation.status.removed_users".localized, sender, usersList) && type(of: self).regularStyle
+                    return self.addEmphasis(to: result, for: sender)
+                }
+                else {
+                    return .none
+                }
+            }
+        }
+        return .none
+    }
+    
     func description(with status: ConversationStatus, conversation: ZMConversation) -> NSAttributedString? {
-        let statusMessages = status.messagesRequiringAttention.filter { StatusMessageType(message: $0) == .addParticipants }
-        return addedString(for: statusMessages, in: conversation).flatMap { $0 && type(of: self).regularStyle }
+        var allStatusMessagesByType: [StatusMessageType: [ZMConversationMessage]] = [:]
+        
+        self.matchedTypes.forEach { type in
+            allStatusMessagesByType[type] = status.messagesRequiringAttention.filter {
+                StatusMessageType(message: $0) == type
+            }
+        }
+        
+        let resultString = [addedString(for: allStatusMessagesByType[.addParticipants] ?? [], in: conversation),
+                            removedString(for: allStatusMessagesByType[.removeParticipants] ?? [], in: conversation)].flatMap { $0 }.joined(separator: "; " && type(of: self).regularStyle)
+        return resultString
     }
     
     var combinesWith: [ConversationStatusMatcher] = []
