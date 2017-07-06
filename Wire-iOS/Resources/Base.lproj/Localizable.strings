@@ -157,6 +157,7 @@
 "conversation.status.you_left" = "You left";
 "conversation.status.started_conversation" = "%@ started a conversation";
 "conversation.status.removed_users" = "%@ removed %@";
+"conversation.status.everyone_left" = "Everyone left";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Compose Entry Point

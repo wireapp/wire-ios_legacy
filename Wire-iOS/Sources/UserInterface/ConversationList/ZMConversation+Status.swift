@@ -468,10 +468,13 @@ final internal class GroupActivityMatcher: ConversationStatusMatcher {
                 }
             }
             else {
-                if type(of: self).indicate3rdPartiesRemoval {
+                if conversation.otherActiveParticipants.count == 0 {
+                    return "conversation.status.everyone_left".localized && type(of: self).regularStyle
+                }
+                else if type(of: self).indicate3rdPartiesRemoval {
                     let usersList = systemMessage.users.map { $0.displayName(in: conversation) }.joined(separator: ", ")
                     let sender = sender.isSelfUser ? "conversation.status.you".localized : sender.displayName(in: conversation)!
-                    let result = String(format: "conversation.status.removed_users".localized, sender, usersList) && type(of: self).regularStyle
+                    let result = "conversation.status.removed_users".localized(args: sender, usersList) && type(of: self).regularStyle
                     return self.addEmphasis(to: result, for: sender)
                 }
                 else {
