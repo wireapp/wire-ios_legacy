@@ -8,11 +8,12 @@ checkout:
   post:
     # Download other scripts
     - curl -O "${DEPENDENCIES_BASE_URL}/environment.sh"
-    - ./environment.sh
+    - bash environment.sh
     - curl -O "${DEPENDENCIES_BASE_URL}/dependencies.sh"
     - curl -O "${DEPENDENCIES_BASE_URL}/build.sh"
     - curl -O "${DEPENDENCIES_BASE_URL}/test.sh"
     - curl -O "${DEPENDENCIES_BASE_URL}/post_test.sh"
+    - chmod +x *.sh
 
 dependencies:
   override:
