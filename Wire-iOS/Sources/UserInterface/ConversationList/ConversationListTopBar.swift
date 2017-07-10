@@ -21,6 +21,9 @@ import Cartography
 import WireExtensionComponents
 
 final class ConversationListTopBar: TopBar {
+
+    static let hideTeamSelector = true
+
     private var teamsView: TeamSelectorView? = .none
     public weak var contentScrollView: UIScrollView? = .none {
         didSet {
@@ -47,7 +50,7 @@ final class ConversationListTopBar: TopBar {
             }
             self.updateShowTeamsIfNeeded()
         })
-        self.setShowTeams(to: nil != ZMUser.selfUser().team)
+        setShowTeams(to: !ConversationListTopBar.hideTeamSelector && ZMUser.selfUser().hasTeam)
     }
     
     required public init?(coder aDecoder: NSCoder) {
@@ -76,20 +79,14 @@ final class ConversationListTopBar: TopBar {
     fileprivate var showTeams: Bool = false
     
     internal func updateShowTeamsIfNeeded() {
-        if ZMUser.selfUser().hasTeam {
-            if !showTeams {
-                self.setShowTeams(to: true)
-            }
-        }
-        else {
-            if showTeams {
-                self.setShowTeams(to: false)
-            }
-        }
+        let showTeams = !ConversationListTopBar.hideTeamSelector && ZMUser.selfUser().hasTeam
+        guard showTeams != self.showTeams else { return }
+        setShowTeams(to: showTeams)
     }
     
-    fileprivate func setShowTeams(to showTeams: Bool) {
+    private func setShowTeams(to showTeams: Bool) {
         self.showTeams = showTeams
+
         UIView.performWithoutAnimation {
             if showTeams {
                 self.teamsView?.removeFromSuperview()

@@ -33,7 +33,7 @@
 "peoplepicker.header.send_invitation" = "Пригласить";
 "peoplepicker.header.contacts" = "Контакты";
 "peoplepicker.header.contacts_personal" = "Личные контакты";
-"peoplepicker.header.team_members" = "%@";
+"peoplepicker.header.team_members" = "%@ и контакты";
 "peoplepicker.header.directory" = "Добавить в контакты";
 "peoplepicker.title.create_conversation" = "Создать группу";
 "peoplepicker.title.add_to_conversation" = "Добавить людей";
@@ -48,9 +48,9 @@
 
 "peoplepicker.no_matching_results_provide_valid_email" = "Пожалуйста, введите правильный email";
 "peoplepicker.no_matching_results_after_address_book_upload_title" = "Ничего не найдено.";
-/* This sentence ends with button title, contained in peoplepicker.no_matching_results_after_address_book_upload_button */
+/*This sentence ends with button title, contained in peoplepicker.no_matching_results_after_address_book_upload_button*/
 "peoplepicker.no_matching_results_after_address_book_upload_message" = "Введите полный адрес электронной почты или";
-/*  */
+/**/
 "peoplepicker.no_matching_results_after_address_book_upload_button" = "поделитесь контактами";
 
 "peoplepicker.share_contacts.no_results.title" = "Ищите людей по имени или по email";
@@ -472,7 +472,12 @@
 
 // User Details
 "profile.details.title" = "Подробнее";
-"profile.details.guest_in_team" = "Гость в %@";
+"profile.details.guest" = "Гость";
+
+"profile_view.team_name.in" = "в %@";
+"profile_view.accessibility.handle" = "Имя пользователя";
+"profile_view.accessibility.name" = "Отображаемое имя";
+"profile_view.accessibility.team_name" = "Название команды";
 
 // Device list
 "profile.devices.title" = "Устройства";
@@ -819,7 +824,7 @@
 "registration.add_phone_number.skip_button.title" = "Не сейчас";
 
 "registration.add_email_password.hero.title" = "Добавьте ваш email и пароль.";
-"registration.add_email_password.hero.paragraph" = "Это позволит использовать Wire на нескольких устройствах.";
+"registration.add_email_password.hero.paragraph" = "Это позволяет использовать Wire на нескольких устройствах.";
 
 "registration.email_invitation.title" = "Приглашение";
 "registration.email_invitation.hero.title" = "Привет, %@";

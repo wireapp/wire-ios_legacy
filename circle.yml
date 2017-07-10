@@ -1,8 +1,8 @@
 machine:
   xcode:
-    version: "8.3"
+    version: "8.3.2"
   environment:
-    DESTINATION: "platform=iOS Simulator,name=iPhone 6,OS=10.3.1"
+    DESTINATION: "platform=iOS Simulator,name=iPhone 6,OS=10.3"
 
 checkout:
   post:

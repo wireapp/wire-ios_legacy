@@ -272,6 +272,7 @@
 "content.system.connected_to" = "Connected to %@\nStart a conversation";
 "content.system.other_wanted_to_talk" = "%@ called";
 "content.system.you_wanted_to_talk" = "You called";
+"content.system.ephemeral_time_remaining" = "%@ left";
 
 "content.system.you_started" = "You";
 "content.system.this_device" = "this device";

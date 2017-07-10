@@ -33,7 +33,7 @@
 "peoplepicker.header.send_invitation" = "قم بدعوة";
 "peoplepicker.header.contacts" = "جهات الاتصال";
 "peoplepicker.header.contacts_personal" = "جهات الاتصال شخصية";
-"peoplepicker.header.team_members" = "%@";
+"peoplepicker.header.team_members" = "%@ وجهات الاتصال";
 "peoplepicker.header.directory" = "تواصل";
 "peoplepicker.title.create_conversation" = "إنشاء مجموعة";
 "peoplepicker.title.add_to_conversation" = "إضافة أشخاص";
@@ -48,9 +48,9 @@
 
 "peoplepicker.no_matching_results_provide_valid_email" = "الرجاء إدخال عنوان بريد إلكتروني صالح.";
 "peoplepicker.no_matching_results_after_address_book_upload_title" = "لا توجد نتائج.";
-/* This sentence ends with button title, contained in peoplepicker.no_matching_results_after_address_book_upload_button */
+/*This sentence ends with button title, contained in peoplepicker.no_matching_results_after_address_book_upload_button*/
 "peoplepicker.no_matching_results_after_address_book_upload_message" = "أدخل عنوان البريد الإلكتروني أو";
-/*  */
+/**/
 "peoplepicker.no_matching_results_after_address_book_upload_button" = "مشاركة جهات الاتصال";
 
 "peoplepicker.share_contacts.no_results.title" = "البحث عن أشخاص باستخدام الاسم أو عنوان البريد الإلكتروني";
@@ -63,7 +63,7 @@
 "peoplepicker.quick-action.open-conversation" = "افتح";
 "peoplepicker.quick-action.create-conversation" = "إنشاء مجموعة";
 
-"add_participants.all_contacts_added" = "Everyone's here.";
+"add_participants.all_contacts_added" = "الكل حاضر.";
 
 // Contacts UI
 "contacts_ui.search_placeholder" = "البحث بحسب الاسم";
@@ -472,7 +472,12 @@
 
 // User Details
 "profile.details.title" = "التفاصيل";
-"profile.details.guest_in_team" = "ضيف في %@";
+"profile.details.guest" = "ضيف";
+
+"profile_view.team_name.in" = "في %@";
+"profile_view.accessibility.handle" = "مُعرّف";
+"profile_view.accessibility.name" = "اسم العرض";
+"profile_view.accessibility.team_name" = "اسم الفريق";
 
 // Device list
 "profile.devices.title" = "الأجهزة";
@@ -684,7 +689,7 @@
 "self.settings.privacy_analytics_menu.devices.title" = "الأجهزة";
 
 "self.settings.privacy_analytics_section.title" = "تقارير الإستخدام والأعطال";
-"self.settings.privacy_analytics.title" = "Send Anonymous Data";
+"self.settings.privacy_analytics.title" = "أرسل بيانات كمجهول";
 "self.settings.privacy_analytics_menu.description.title" = "اجعل Wire أفضل عبر إرسال معلومات مُموّهة.\n";
 
 "self.settings.privacy.clear_history.title" = "مسح التاريخ";

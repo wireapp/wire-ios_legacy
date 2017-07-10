@@ -85,6 +85,7 @@ typedef NS_ENUM(NSUInteger, ProfileUserAction) {
 @property (nonatomic) UIView *userImageViewContainer;
 @property (nonatomic) UIView *footerView;
 @property (nonatomic) UILabel *teamsGuestLabel;
+@property (nonatomic) BOOL showGuestLabel;
 
 @end
 
@@ -98,6 +99,7 @@ typedef NS_ENUM(NSUInteger, ProfileUserAction) {
         _context = context;
         _bareUser = user;
         _conversation = conversation;
+        _showGuestLabel = [user isGuestInConversation:conversation];
     }
     
     return self;
@@ -105,7 +107,6 @@ typedef NS_ENUM(NSUInteger, ProfileUserAction) {
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
     [self setupViews];
     [self setupConstraints];
 }
@@ -113,8 +114,10 @@ typedef NS_ENUM(NSUInteger, ProfileUserAction) {
 - (void)setupViews
 {
     [self createUserImageView];
-    [self createTeamsGuestLabel];
     [self createFooter];
+    if (self.showGuestLabel) {
+        [self createTeamsGuestLabel];
+    }
 }
 
 - (void)setupConstraints
@@ -125,11 +128,13 @@ typedef NS_ENUM(NSUInteger, ProfileUserAction) {
     [self.userImageView autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:48 relation:NSLayoutRelationGreaterThanOrEqual];
     [self.userImageView autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:48 relation:NSLayoutRelationGreaterThanOrEqual];
     [self.userImageView autoPinEdgeToSuperviewEdge:ALEdgeTop withInset:0 relation:NSLayoutRelationGreaterThanOrEqual];
-    
-    [self.teamsGuestLabel autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.userImageView withOffset:15];
-    [self.teamsGuestLabel autoPinEdgeToSuperviewEdge:ALEdgeBottom withInset:0 relation:NSLayoutRelationGreaterThanOrEqual];
-    [self.teamsGuestLabel autoPinEdge:ALEdgeLeft toEdge:ALEdgeLeft ofView:self.userImageView];
-    [self.teamsGuestLabel autoPinEdge:ALEdgeRight toEdge:ALEdgeRight ofView:self.userImageView];
+
+    if (self.showGuestLabel) {
+        [self.teamsGuestLabel autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.userImageView withOffset:15];
+        [self.teamsGuestLabel autoPinEdgeToSuperviewEdge:ALEdgeBottom withInset:0 relation:NSLayoutRelationGreaterThanOrEqual];
+        [self.teamsGuestLabel autoPinEdge:ALEdgeLeft toEdge:ALEdgeLeft ofView:self.userImageView];
+        [self.teamsGuestLabel autoPinEdge:ALEdgeRight toEdge:ALEdgeRight ofView:self.userImageView];
+    }
     
     [self.userImageView autoAlignAxisToSuperviewAxis:ALAxisVertical];
     [NSLayoutConstraint autoSetPriority:UILayoutPriorityDefaultLow forConstraints:^{

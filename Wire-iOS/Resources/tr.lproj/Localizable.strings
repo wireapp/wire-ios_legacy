@@ -33,7 +33,7 @@
 "peoplepicker.header.send_invitation" = "Davet et";
 "peoplepicker.header.contacts" = "Kişiler";
 "peoplepicker.header.contacts_personal" = "Kişisel Kişiler";
-"peoplepicker.header.team_members" = "%@";
+"peoplepicker.header.team_members" = "%@ ve Kişiler";
 "peoplepicker.header.directory" = "Bağlan";
 "peoplepicker.title.create_conversation" = "Grup oluştur";
 "peoplepicker.title.add_to_conversation" = "Kişi ekle";
@@ -48,9 +48,9 @@
 
 "peoplepicker.no_matching_results_provide_valid_email" = "Lütfen geçerli bir e-posta adresi girin";
 "peoplepicker.no_matching_results_after_address_book_upload_title" = "Sonuç yok.";
-/* This sentence ends with button title, contained in peoplepicker.no_matching_results_after_address_book_upload_button */
+/*This sentence ends with button title, contained in peoplepicker.no_matching_results_after_address_book_upload_button*/
 "peoplepicker.no_matching_results_after_address_book_upload_message" = "Tam bir e-posta adresi girin veya";
-/*  */
+/**/
 "peoplepicker.no_matching_results_after_address_book_upload_button" = "kişileri paylaş";
 
 "peoplepicker.share_contacts.no_results.title" = "İsim veya e-posta adresiyle insanları bul";
@@ -63,7 +63,7 @@
 "peoplepicker.quick-action.open-conversation" = "Aç";
 "peoplepicker.quick-action.create-conversation" = "Grup oluştur";
 
-"add_participants.all_contacts_added" = "Everyone's here.";
+"add_participants.all_contacts_added" = "Herkes burada.";
 
 // Contacts UI
 "contacts_ui.search_placeholder" = "İsme göre ara";
@@ -472,7 +472,12 @@
 
 // User Details
 "profile.details.title" = "Ayrıntılar";
-"profile.details.guest_in_team" = "Guest in %@";
+"profile.details.guest" = "Misafir";
+
+"profile_view.team_name.in" = "%@'de";
+"profile_view.accessibility.handle" = "Kullanıcı Adı";
+"profile_view.accessibility.name" = "Görünen İsim";
+"profile_view.accessibility.team_name" = "Takım Adı";
 
 // Device list
 "profile.devices.title" = "Cihazlar";
@@ -684,7 +689,7 @@
 "self.settings.privacy_analytics_menu.devices.title" = "Cihazlar";
 
 "self.settings.privacy_analytics_section.title" = "Kullanım ve kilitlenme raporları";
-"self.settings.privacy_analytics.title" = "Send Anonymous Data";
+"self.settings.privacy_analytics.title" = "Anonim Veri Yolla";
 "self.settings.privacy_analytics_menu.description.title" = "Anonim bilgiler göndererek Wire'ın daha iyi olmasını sağlayabilirsiniz.\n";
 
 "self.settings.privacy.clear_history.title" = "Geçmişi Temizle";
