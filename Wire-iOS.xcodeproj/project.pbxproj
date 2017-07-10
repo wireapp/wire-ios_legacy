@@ -989,6 +989,27 @@
 			remoteGlobalIDString = 8F42C537199244A700288E4D;
 			remoteInfo = "ZClient-iOS";
 		};
+		EECCCF221F13DAB900362E46 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = EECCCF1D1F13DAB900362E46 /* Marklight.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 95C46D681C33E11A0070AEDC;
+			remoteInfo = Marklight;
+		};
+		EECCCF241F13DAB900362E46 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = EECCCF1D1F13DAB900362E46 /* Marklight.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 95C46D721C33E11A0070AEDC;
+			remoteInfo = MarklightTests;
+		};
+		EECCCF291F13DAF900362E46 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = EECCCF1D1F13DAB900362E46 /* Marklight.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 95C46D671C33E11A0070AEDC;
+			remoteInfo = Marklight;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -2447,6 +2468,7 @@
 		EE291BB41F0B9BF200142F31 /* Marklight.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Marklight.framework; path = Carthage/Build/iOS/Marklight.framework; sourceTree = "<group>"; };
 		EE291BB61F0BC54D00142F31 /* MarklightTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MarklightTextView.swift; sourceTree = "<group>"; };
 		EEB840191F0D1E9700D9C44E /* MarklightCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MarklightCache.swift; sourceTree = "<group>"; };
+		EECCCF1D1F13DAB900362E46 /* Marklight.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Marklight.xcodeproj; path = ../../Repos/Marklight/Marklight.xcodeproj; sourceTree = "<group>"; };
 		F127BD561E262E9F0093B2F1 /* CollectionsViewControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionsViewControllerTests.swift; sourceTree = "<group>"; };
 		F127BD581E265FB40093B2F1 /* MockCollection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockCollection.swift; sourceTree = "<group>"; };
 		F12CDADA1E43868200CEFCEB /* ChangeEmailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChangeEmailViewController.swift; sourceTree = "<group>"; };
@@ -4091,6 +4113,7 @@
 		8F42C52F199244A700288E4D = {
 			isa = PBXGroup;
 			children = (
+				EECCCF1D1F13DAB900362E46 /* Marklight.xcodeproj */,
 				87501FB21D40D6490056C042 /* ComponentsVersions.plist */,
 				87C8D7FB1BA8261C00B0530B /* Entitlements-Dev.entitlements */,
 				87C8D7FC1BA8261C00B0530B /* Entitlements-Prod.entitlements */,
@@ -5047,6 +5070,15 @@
 			path = InputBar;
 			sourceTree = "<group>";
 		};
+		EECCCF1E1F13DAB900362E46 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				EECCCF231F13DAB900362E46 /* Marklight.framework */,
+				EECCCF251F13DAB900362E46 /* MarklightTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		F12CDAD91E43868200CEFCEB /* ChangingDetails */ = {
 			isa = PBXGroup;
 			children = (
@@ -5225,6 +5257,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				EECCCF2A1F13DAF900362E46 /* PBXTargetDependency */,
 				1EE85C661B5F96FC008E084B /* PBXTargetDependency */,
 				168A16B21D9597C2005CFA6C /* PBXTargetDependency */,
 			);
@@ -5365,6 +5398,12 @@
 			mainGroup = 8F42C52F199244A700288E4D;
 			productRefGroup = 8F42C539199244A700288E4D /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = EECCCF1E1F13DAB900362E46 /* Products */;
+					ProjectRef = EECCCF1D1F13DAB900362E46 /* Marklight.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				8F42C537199244A700288E4D /* Wire-iOS */,
@@ -5376,6 +5415,23 @@
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		EECCCF231F13DAB900362E46 /* Marklight.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = Marklight.framework;
+			remoteRef = EECCCF221F13DAB900362E46 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		EECCCF251F13DAB900362E46 /* MarklightTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = MarklightTests.xctest;
+			remoteRef = EECCCF241F13DAB900362E46 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		168A16A71D9597C2005CFA6C /* Resources */ = {
@@ -5694,7 +5750,7 @@
 				"$(SRCROOT)/Carthage/Build/iOS/FLAnimatedImage.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/WireCanvas.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/PureLayout.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/Marklight.framework",
+				"$(BUILT_PRODUCTS_DIR)/Marklight.framework",
 			);
 			name = "Copy Frameworks and DSYMs";
 			outputPaths = (
@@ -6550,6 +6606,11 @@
 			isa = PBXTargetDependency;
 			target = 8F42C537199244A700288E4D /* Wire-iOS */;
 			targetProxy = BACB88571AF7C48900DDCDB0 /* PBXContainerItemProxy */;
+		};
+		EECCCF2A1F13DAF900362E46 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = Marklight;
+			targetProxy = EECCCF291F13DAF900362E46 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
