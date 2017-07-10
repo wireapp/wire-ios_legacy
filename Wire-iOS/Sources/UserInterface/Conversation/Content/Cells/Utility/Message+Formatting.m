@@ -23,16 +23,18 @@
 #import "WireSyncEngine+iOS.h"
 #import "LinkAttachment.h"
 #import "NSString+EmoticonSubstitution.h"
-#import "TSMarkdownParser+Wire.m"
 #import "Settings.h"
 #import "UIColor+WR_ColorScheme.h"
 #import "NSString+Emoji.h"
 #import "Wire-Swift.h"
 
+
 @import WireExtensionComponents;
 @import WireLinkPreview;
+@import Marklight;
 
 static NSMutableParagraphStyle *cellParagraphStyle;
+static MarklightGroupStyler *groupStyler;
 
 
 
@@ -51,7 +53,6 @@ static NSMutableParagraphStyle *cellParagraphStyle;
 
 @end
 
-static TSMarkdownParser *WireMarkdownParser = nil;
 
 static NSDataDetector *linkDataDetector(void);
 
@@ -168,14 +169,17 @@ static inline NSDataDetector *linkDataDetector(void)
     
     [attributedString endEditing];
     
-
-//    if (! Settings.sharedSettings.disableMarkdown) {
-//        if (! WireMarkdownParser) {
-//            WireMarkdownParser = [TSMarkdownParser standardWireParserWithTextColor:[UIColor wr_colorFromColorScheme:ColorSchemeColorTextForeground]];
-//        }
-//
-//        attributedString = [WireMarkdownParser attributedStringFromAttributedMarkdownString:attributedString].mutableCopy;
-//    }
+    if (nil == groupStyler) {
+        // set markdown attribute styles here
+        ColorScheme *colorScheme = [ColorScheme defaultColorScheme];
+        MarklightStyle *style = [[MarklightStyle alloc] initWithHideSyntax: YES];
+        style.syntaxColor = [colorScheme colorWithName: ColorSchemeColorAccent];
+        style.codeColor = [UIColor orangeColor];
+        groupStyler = [[MarklightGroupStyler alloc] initWithStyle: style];
+    }
+    
+    // parse for markdown syntax & apply attributes
+    [groupStyler addMarkdownAttributes:attributedString editedRange: NSMakeRange(0, attributedString.length)];
     
     if ([attributedString.string wr_containsOnlyEmojiWithSpaces]) {
         [attributedString setAttributes:@{NSFontAttributeName: [UIFont systemFontOfSize:40]} range:NSMakeRange(0, attributedString.length)];
@@ -196,7 +200,7 @@ static inline NSDataDetector *linkDataDetector(void)
 
 + (void)invalidateMarkdownStyle
 {
-    WireMarkdownParser = nil;
+    groupStyler = nil;
 }
 
 + (NSArray *)linkAttachmentsForURLMatches:(NSArray *)matches

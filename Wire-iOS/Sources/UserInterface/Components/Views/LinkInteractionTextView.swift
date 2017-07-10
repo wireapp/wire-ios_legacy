@@ -18,7 +18,6 @@
 
 
 import UIKit
-import Marklight
 
 @objc public protocol TextViewInteractionDelegate: NSObjectProtocol {
     func textView(_ textView: LinkInteractionTextView, open url: URL) -> Bool
@@ -28,23 +27,10 @@ import Marklight
 
 @objc public class LinkInteractionTextView: UITextView {
     
-    let marklightTextStorage = MarklightTextStorage()
-    static let marklightCache = MarklightCache()
-    
     public weak var interactionDelegate: TextViewInteractionDelegate?
     
     override init(frame: CGRect, textContainer: NSTextContainer?) {
-        
-        MarklightTextView.configure(textStorage: marklightTextStorage, hideSyntax: true)
-        
-        let marklightLayoutManager = NSLayoutManager()
-        marklightTextStorage.addLayoutManager(marklightLayoutManager)
-        
-        let marklightTextContainer = NSTextContainer()
-        marklightLayoutManager.addTextContainer(marklightTextContainer)
-        
-        super.init(frame: frame, textContainer: marklightTextContainer)
-        marklightTextStorage.cacheDelegate = type(of: self).marklightCache
+        super.init(frame: frame, textContainer: textContainer)
         delegate = self
     }
     
