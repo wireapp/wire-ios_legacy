@@ -545,6 +545,25 @@
     self.view.hidden = self.conversation.isReadOnly;
 }
 
+#pragma mark - Keyboard Shortcuts
+
+- (NSArray<UIKeyCommand *> *)keyCommands
+{
+    return @[[UIKeyCommand keyCommandWithInput:@"\r" modifierFlags:UIKeyModifierCommand action:@selector(commandReturnPressed)]];
+}
+
+- (BOOL)canBecomeFirstResponder
+{
+    return YES;
+}
+
+- (void)commandReturnPressed
+{
+    if (nil != self.inputBar.textView.text) {
+        [self sendOrEditText:self.inputBar.textView.text];
+    }
+}
+
 #pragma mark - Input views handling
 
 - (void)onSingleTap:(UITapGestureRecognizer *)recognier
