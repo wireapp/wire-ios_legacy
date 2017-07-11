@@ -192,23 +192,6 @@ import Foundation
             return DeveloperOptionsController()
         }
         
-        let sendBrokenMessage = { (type: SettingsCellDescriptorType) -> Void in
-            guard
-                let userSession = ZMUserSession.shared(),
-                let conversation = ZMConversationList.conversationsIncludingArchived(inUserSession: userSession).firstObject as? ZMConversation
-            else {
-                return
-            }
-
-            let builder = ZMExternal.builder()
-            _ = builder?.setOtrKey("broken_key".data(using: .utf8))
-            let genericMessage = ZMGenericMessage.genericMessage(pbMessage: builder!.build(), messageID: UUID().transportString(), expiresAfter: nil)
-            
-            userSession.enqueueChanges {
-                conversation.append(genericMessage, expires: false, hidden: false)
-            }
-        }
-        
         developerCellDescriptors.append(devController)
         
         let diableAVSSetting = SettingsPropertyToggleCellDescriptor(settingsProperty: self.settingsPropertyFactory.property(.disableAVS))
@@ -221,8 +204,10 @@ import Foundation
         developerCellDescriptors.append(diableAnalyticsSetting)
         let enableBatchCollections = SettingsPropertyToggleCellDescriptor(settingsProperty: self.settingsPropertyFactory.property(.enableBatchCollections))
         developerCellDescriptors.append(enableBatchCollections)
-        let sendBrokenMessageButton = SettingsButtonCellDescriptor(title: "Send broken message", isDestructive: true, selectAction: sendBrokenMessage)
+        let sendBrokenMessageButton = SettingsButtonCellDescriptor(title: "Send broken message", isDestructive: true, selectAction: SettingsCellDescriptorFactory.sendBrokenMessage)
         developerCellDescriptors.append(sendBrokenMessageButton)
+        let findUnreadConvoButton = SettingsButtonCellDescriptor(title: "Find first unread conversation", isDestructive: false, selectAction: SettingsCellDescriptorFactory.findUnreadConversation)
+        developerCellDescriptors.append(findUnreadConvoButton)
         let shareDatabase = SettingsShareDatabaseCellDescriptor()
         developerCellDescriptors.append(shareDatabase)
         
@@ -310,4 +295,39 @@ import Foundation
         return colorsSection
     }
     
+    private static func findUnreadConversation(_ type: SettingsCellDescriptorType) {
+        guard let userSession = ZMUserSession.shared() else { return }
+        let predicate = ZMConversation.predicateForConversationConsideredUnread()!
+        
+        let message: String
+        if let convo = (ZMConversationList.conversations(inUserSession: userSession) as! [ZMConversation])
+            .first(where: { predicate.evaluate(with: $0) }) {
+            message = ["Found an unread conversation:",
+                       "\(convo.displayName)",
+                        "<\(convo.remoteIdentifier?.uuidString ?? "n/a")>"
+            ].joined(separator: "\n")
+        } else {
+            message = "No unread conversation"
+        }
+        UIAlertView(title: nil, message: message, delegate: nil, cancelButtonTitle: "OK").show()
+    }
+    
+    private static func sendBrokenMessage(_ type: SettingsCellDescriptorType) {
+        guard
+            let userSession = ZMUserSession.shared(),
+            let conversation = ZMConversationList.conversationsIncludingArchived(inUserSession: userSession).firstObject as? ZMConversation
+            else {
+                return
+        }
+        
+        let builder = ZMExternal.builder()
+        _ = builder?.setOtrKey("broken_key".data(using: .utf8))
+        let genericMessage = ZMGenericMessage.genericMessage(pbMessage: builder!.build(), messageID: UUID().transportString(), expiresAfter: nil)
+        
+        userSession.enqueueChanges {
+            conversation.append(genericMessage, expires: false, hidden: false)
+        }
+    }
 }
+
+
