@@ -174,7 +174,7 @@ static inline NSDataDetector *linkDataDetector(void)
         ColorScheme *colorScheme = [ColorScheme defaultColorScheme];
         MarklightStyle *style = [[MarklightStyle alloc] initWithHideSyntax:YES];
         style.syntaxColor = [colorScheme colorWithName: ColorSchemeColorAccent];
-        style.codeColor = [UIColor orangeColor];
+        style.codeColor = [colorScheme colorWithName: ColorSchemeColorAccent];
         groupStyler = [[MarklightGroupStyler alloc] initWithStyle: style];
     }
     
