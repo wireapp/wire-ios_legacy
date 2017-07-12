@@ -31,5 +31,6 @@
 @property (nonatomic, readonly) UILabel *titleLabel;
 @property (nonatomic, readonly) UIImageView *providerImageView;
 @property (nonatomic, readonly) UIImageView *previewImageView;
+@property (nonatomic, readonly) UIView *containerView;
 
 @end

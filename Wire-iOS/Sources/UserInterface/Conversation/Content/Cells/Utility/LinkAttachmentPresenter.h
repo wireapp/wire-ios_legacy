@@ -28,6 +28,7 @@
 @protocol LinkAttachmentPresenter <NSObject>
 
 @property (nonatomic) LinkAttachment *linkAttachment;
+@property (nonatomic, readonly) UIView *touchableView;
 
 - (void)fetchAttachment;
 - (void)tearDown;

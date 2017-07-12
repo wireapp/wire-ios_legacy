@@ -425,8 +425,9 @@
 
 - (void)handleAttachmentLongPress:(UIGestureRecognizer *)gestureRecognizer
 {
-    BOOL touchInContainer = CGRectContainsPoint(self.linkAttachmentContainer.bounds, [gestureRecognizer locationInView:self.contentView]);
-    if (! touchInContainer || ! self.message.canBeDeleted) {
+    CGPoint location = [gestureRecognizer locationInView:self.linkAttachmentViewController.touchableView];
+    BOOL hit = CGRectContainsPoint(self.linkAttachmentViewController.touchableView.bounds, location);
+    if (! hit || ! self.message.canBeDeleted) {
         gestureRecognizer.enabled = NO;
         gestureRecognizer.enabled = YES;
     }
