@@ -147,7 +147,8 @@ public extension ConversationViewController {
     
     public func rightNavigationItems(forConversation conversation: ZMConversation) -> [UIBarButtonItem] {
         guard !conversation.isReadOnly else { return [] }
-        if conversation.conversationListIndicator == .inactiveCall {
+
+        if conversation.canJoinCall {
             return [UIBarButtonItem(customView: joinCallButton)]
         }
 
@@ -237,8 +238,7 @@ public extension ConversationViewController {
     }
 
     private dynamic func joinCallButtonTapped(_sender: UIBarButtonItem) {
-        guard conversation.voiceChannel?.state == .incomingCallInactive
-           || conversation.voiceChannel?.state == .incomingCall else { return }
+        guard conversation.canJoinCall else { return }
 
         // This will result in joining an ongoing call.
         conversation.acceptIncomingCall()
@@ -310,4 +310,15 @@ extension ConversationViewController: CollectionsViewControllerDelegate {
             break
         }
     }
+}
+
+
+extension ZMConversation {
+
+    /// Whether there is an incoming or inactive incoming call that can be joined.
+    var canJoinCall: Bool {
+        guard let state = voiceChannel?.state else { return false }
+        return state == .incomingCallInactive || state == .incomingCall
+    }
+
 }
