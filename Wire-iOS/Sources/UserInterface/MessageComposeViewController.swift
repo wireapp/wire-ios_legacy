@@ -35,6 +35,7 @@ final class MessageComposeViewController: UIViewController {
     fileprivate let messageTextView = UITextView()
     private let color = ColorScheme.default().color(withName:)
     private let sendButtonView = DraftSendInputAccessoryView()
+    private let markdownBarView = MarkdownBarView()
 
     private var draft: MessageDraft?
     private let persistence: MessageDraftStorage
@@ -67,8 +68,9 @@ final class MessageComposeViewController: UIViewController {
 
     private func setupViews() {
         view.backgroundColor = color(ColorSchemeColorBackground)
-        [messageTextView, sendButtonView].forEach(view.addSubview)
+        [messageTextView, sendButtonView, markdownBarView].forEach(view.addSubview)
         setupInputAccessoryView()
+        setupMarkdownBarView()
         setupNavigationItem()
         setupTextView()
         updateLeftNavigationItem()
@@ -168,6 +170,15 @@ final class MessageComposeViewController: UIViewController {
             self.present(controller, animated: true, completion: nil)
         }
     }
+    
+    private func setupMarkdownBarView() {
+        constrain(view, markdownBarView) { view, markdownBarView in
+            markdownBarView.leading == view.leading
+            markdownBarView.trailing == view.trailing
+            markdownBarView.bottom == view.bottom
+        }
+        
+    }
 
     private func popToListIfNeeded() {
         if splitViewController?.isCollapsed == true {
@@ -217,15 +228,19 @@ final class MessageComposeViewController: UIViewController {
     }
 
     private func createConstraints() {
-        constrain(view, messageTextView, sendButtonView) { view, messageTextView, sendButtonView in
+        constrain(view, messageTextView, sendButtonView, markdownBarView) { view, messageTextView, sendButtonView, markdownBarView in
             messageTextView.top == view.top
             messageTextView.leading == view.leading
             messageTextView.trailing == view.trailing
             messageTextView.bottom == sendButtonView.top
 
+            markdownBarView.leading == view.leading
+            markdownBarView.trailing == view.trailing
+            markdownBarView.bottom == view.bottom
+            
             sendButtonView.leading == view.leading
             sendButtonView.trailing == view.trailing
-            sendButtonView.bottom == view.bottom
+            sendButtonView.bottom == markdownBarView.top
         }
     }
 
