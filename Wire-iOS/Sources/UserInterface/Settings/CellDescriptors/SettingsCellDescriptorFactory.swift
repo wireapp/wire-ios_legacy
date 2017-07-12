@@ -295,23 +295,36 @@ import Foundation
         return colorsSection
     }
     
+    // MARK: Actions
+    
+    /// Check if there is any unread conversation, if there is, show an alert with the name and ID of the conversation
     private static func findUnreadConversation(_ type: SettingsCellDescriptorType) {
         guard let userSession = ZMUserSession.shared() else { return }
         let predicate = ZMConversation.predicateForConversationConsideredUnread()!
         
-        let message: String
+        guard let controller = UIApplication.shared.wr_topmostController(onlyFullScreen: false) else { return }
+        let alert = UIAlertController(title: nil, message: "", preferredStyle: .alert)
+
         if let convo = (ZMConversationList.conversations(inUserSession: userSession) as! [ZMConversation])
-            .first(where: { predicate.evaluate(with: $0) }) {
-            message = ["Found an unread conversation:",
+            .first(where: { predicate.evaluate(with: $0) })
+        {
+            alert.message = ["Found an unread conversation:",
                        "\(convo.displayName)",
                         "<\(convo.remoteIdentifier?.uuidString ?? "n/a")>"
-            ].joined(separator: "\n")
+                ].joined(separator: "\n")
+            alert.addAction(UIAlertAction(title: "Copy", style: .default, handler: { _ in
+                UIPasteboard.general.string = alert.message
+            }))
+
         } else {
-            message = "No unread conversation"
+            alert.message = "No unread conversation"
         }
-        UIAlertView(title: nil, message: message, delegate: nil, cancelButtonTitle: "OK").show()
+        
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        controller.present(alert, animated: false)
     }
     
+    /// Sends a message that will fail to decode on every other device, on the first conversation of the list
     private static func sendBrokenMessage(_ type: SettingsCellDescriptorType) {
         guard
             let userSession = ZMUserSession.shared(),
