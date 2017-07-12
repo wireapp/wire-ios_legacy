@@ -32,6 +32,7 @@ extension Settings {
 public enum InputBarState: Equatable {
     case writing(ephemeral: Bool)
     case editing(originalText: String)
+    case markdown
 
     var isWriting: Bool {
         switch self {
@@ -82,8 +83,13 @@ private struct InputBarConstants {
     // Contains and clips the buttonInnerContainer
     public let buttonContainer = UIView()
     
-    public let editingView = InputBarEditView()
+    // Contains editingView and mardownView
+    public let secondaryButtonsView: InputBarSecondaryButtonsView
+    
     public let buttonsView: InputBarButtonsView
+    public let editingView = InputBarEditView()
+    public let markdownView = MarkdownBarView()
+    
     
     public var editingBackgroundColor: UIColor?
     public var barBackgroundColor: UIColor?
@@ -94,7 +100,7 @@ private struct InputBarConstants {
     fileprivate var contentSizeObserver: NSObject? = nil
     fileprivate var rowTopInsetConstraint: NSLayoutConstraint? = nil
     
-    // Contains the editingView and buttonsView
+    // Contains the secondaryButtonsView and buttonsView
     fileprivate let buttonInnerContainer = UIView()
     fileprivate let fakeCursor = UIView()
     fileprivate let inputBarSeparator = UIView()
@@ -150,8 +156,10 @@ private struct InputBarConstants {
 
     required public init(buttons: [UIButton]) {
         buttonsView = InputBarButtonsView(buttons: buttons)
+        secondaryButtonsView = InputBarSecondaryButtonsView(editBarView: editingView, markdownBarView: markdownView)
+        
         super.init(frame: CGRect.zero)
-                
+        
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(didTapBackground))
         addGestureRecognizer(tapGestureRecognizer)
         buttonsView.clipsToBounds = true
@@ -159,7 +167,7 @@ private struct InputBarConstants {
         
         [leftAccessoryView, textView, rightAccessoryView, inputBarSeparator, buttonContainer, buttonRowSeparator].forEach(addSubview)
         buttonContainer.addSubview(buttonInnerContainer)
-        [buttonsView, editingView].forEach(buttonInnerContainer.addSubview)
+        [buttonsView, secondaryButtonsView].forEach(buttonInnerContainer.addSubview)
         textView.addSubview(fakeCursor)
         CASStyler.default().styleItem(self)
 
@@ -196,6 +204,8 @@ private struct InputBarConstants {
         contentSizeObserver = KeyValueObserver.observe(textView, keyPath: "contentSize", target: self, selector: #selector(textViewContentSizeDidChange))
         updateInputBar(withState: inputBarState, animated: false)
         updateColors()
+        
+        markdownView.delegate = self
     }
     
     fileprivate func createConstraints() {
@@ -225,12 +235,12 @@ private struct InputBarConstants {
             buttonRowSeparator.height == .hairline
         }
         
-        constrain(editingView, buttonsView, buttonInnerContainer) { editingView, buttonsView, buttonInnerContainer in
-            editingView.top == buttonInnerContainer.top
-            editingView.leading == buttonInnerContainer.leading
-            editingView.trailing == buttonInnerContainer.trailing
-            editingView.bottom == buttonsView.top
-            editingView.height == constants.buttonsBarHeight
+        constrain(secondaryButtonsView, buttonsView, buttonInnerContainer) { secondaryButtonsView, buttonsView, buttonInnerContainer in
+            secondaryButtonsView.top == buttonInnerContainer.top
+            secondaryButtonsView.leading == buttonInnerContainer.leading
+            secondaryButtonsView.trailing == buttonInnerContainer.trailing
+            secondaryButtonsView.bottom == buttonsView.top
+            secondaryButtonsView.height == constants.buttonsBarHeight
             
             buttonsView.leading == buttonInnerContainer.leading
             buttonsView.trailing <= buttonInnerContainer.trailing
@@ -298,6 +308,7 @@ private struct InputBarConstants {
             }
             return "conversation.input_bar.placeholder".localized
         case .editing: return nil
+        case .markdown: return nil
         }
     }
     
@@ -355,6 +366,10 @@ private struct InputBarConstants {
                 }
             case .editing(let text):
                 self.setInputBarText(text)
+                self.secondaryButtonsView.setEditBarView()
+            
+            case .markdown:
+                self.secondaryButtonsView.setMarkdownBarView()
             }
         }
         
@@ -467,5 +482,23 @@ extension InputBar {
 extension InputBar {
     func applicationDidBecomeActive(_ notification: Notification) {
         startCursorBlinkAnimation()
+    }
+}
+
+// MARK: - Markdown bar delegate
+
+extension InputBar: MarkdownBarViewDelegate {
+    
+    public func markdownBarView(_ markdownBarView: MarkdownBarView, didSelectElementType type: MarkdownElementType, with sender: IconButton) {
+        
+        switch type {
+        case .header(.h1):  setInputBarState(.writing(ephemeral: false), animated: true)
+        case .bold:         print("bold")
+        case .italic:       print("italics")
+        case .underline:    print("underline")
+        case .list:         print("list")
+        case .code:         print("code")
+        default:            print("other")
+        }
     }
 }

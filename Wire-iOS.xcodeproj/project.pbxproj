@@ -938,6 +938,7 @@
 		EE291BB71F0BC54D00142F31 /* MarklightTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE291BB61F0BC54D00142F31 /* MarklightTextView.swift */; };
 		EEB8401A1F0D1E9700D9C44E /* MarklightCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEB840191F0D1E9700D9C44E /* MarklightCache.swift */; };
 		EEF28EEA1F1613DA007642E2 /* MarkdownBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEF28EE91F1613DA007642E2 /* MarkdownBarView.swift */; };
+		EEF28EED1F16692A007642E2 /* InputBarSecondaryButtonsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEF28EEC1F16692A007642E2 /* InputBarSecondaryButtonsView.swift */; };
 		F127BD571E262E9F0093B2F1 /* CollectionsViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F127BD561E262E9F0093B2F1 /* CollectionsViewControllerTests.swift */; };
 		F127BD5A1E2667170093B2F1 /* MockCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = F127BD581E265FB40093B2F1 /* MockCollection.swift */; };
 		F12CDADE1E43868200CEFCEB /* ChangeEmailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F12CDADA1E43868200CEFCEB /* ChangeEmailViewController.swift */; };
@@ -2471,6 +2472,7 @@
 		EEB840191F0D1E9700D9C44E /* MarklightCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MarklightCache.swift; sourceTree = "<group>"; };
 		EECCCF1D1F13DAB900362E46 /* Marklight.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Marklight.xcodeproj; path = ../../Repos/Marklight/Marklight.xcodeproj; sourceTree = "<group>"; };
 		EEF28EE91F1613DA007642E2 /* MarkdownBarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MarkdownBarView.swift; sourceTree = "<group>"; };
+		EEF28EEC1F16692A007642E2 /* InputBarSecondaryButtonsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputBarSecondaryButtonsView.swift; sourceTree = "<group>"; };
 		F127BD561E262E9F0093B2F1 /* CollectionsViewControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionsViewControllerTests.swift; sourceTree = "<group>"; };
 		F127BD581E265FB40093B2F1 /* MockCollection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockCollection.swift; sourceTree = "<group>"; };
 		F12CDADA1E43868200CEFCEB /* ChangeEmailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChangeEmailViewController.swift; sourceTree = "<group>"; };
@@ -4573,6 +4575,7 @@
 				16B2DE2D1CCFB3B0000D7C30 /* InputBar.swift */,
 				BFBB03071D61AF8D0065AF4F /* InputBarEditView.swift */,
 				BFBB03051D5DF4CB0065AF4F /* InputBarButtonsView.swift */,
+				EEF28EEC1F16692A007642E2 /* InputBarSecondaryButtonsView.swift */,
 				BF2A74721CEB4882002608BF /* AudioButtonOverlay.swift */,
 				BFAF4CB61CEDB9FC00780537 /* AudioButtonOverlayState.swift */,
 				BFAF4CAC1CEB670F00780537 /* AudioRecordViewController.swift */,
@@ -5878,6 +5881,7 @@
 				87AEF9351ECF38B0008CB9D9 /* WireStyleKit+Additions.m in Sources */,
 				BF7ED2DA1DF1B5ED003A4397 /* OutgoingConnectionBottomBar.swift in Sources */,
 				871BC2911D34F8F800DF0793 /* UIView+RemoveAnimations.m in Sources */,
+				EEF28EED1F16692A007642E2 /* InputBarSecondaryButtonsView.swift in Sources */,
 				CE8E4FBF1DF17BBE0009F437 /* UILabel+TextTransform.m in Sources */,
 				871BC23B1D34F8F800DF0793 /* KeyboardFrameObserver.m in Sources */,
 				BF515F941D9D1C1900C786FB /* EmojiSectionViewController.swift in Sources */,
