@@ -32,7 +32,7 @@ public final class InputBarEditView: UIView {
     let undoButton = IconButton()
     let confirmButton = IconButton()
     let cancelButton = IconButton()
-    let iconSize = UIImage.size(for: .tiny)
+    let iconSize: CGFloat = UIImage.size(for: .tiny)
     
     public weak var delegate: InputBarEditViewDelegate?
     
@@ -65,16 +65,17 @@ public final class InputBarEditView: UIView {
     
     fileprivate func createConstraints() {
         let margin: CGFloat = 16
+        let buttonMargin: CGFloat = margin + iconSize / 2
         constrain(self, undoButton, confirmButton, cancelButton) { view, undoButton, confirmButton, cancelButton in
             align(top: view, undoButton, confirmButton, cancelButton)
             align(bottom: view, undoButton, confirmButton, cancelButton)
             
-            undoButton.centerX == view.leading + margin + iconSize / 2
+            undoButton.centerX == view.leading + buttonMargin
             undoButton.width == view.height
             
             confirmButton.centerX == view.centerX
             confirmButton.width == view.height
-            cancelButton.centerX == view.trailing - margin - iconSize / 2
+            cancelButton.centerX == view.trailing - buttonMargin
             cancelButton.width == view.height
         }
     }
