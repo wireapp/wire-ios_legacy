@@ -78,7 +78,7 @@
 "contacts_ui.title" = "Invite people";
 
 "contacts_ui.no_contact.title" = "No conversations yet\n";
-"contacts_ui.no_contact.message" = "Start a conversation, create a group or invite people to join.";
+"contacts_ui.no_contact.message" = "Start a conversation or create a group.";
 
 "contacts_ui.no_contact.archived.title" = "Everything archived";
 
@@ -100,7 +100,7 @@
 
 // Add contact tool tip
 "tool_tip.contacts.title" = "Conversations start here";
-"tool_tip.contacts.message" = "Start a conversation or invite more people to join. Call, message and share in private or with groups.";
+"tool_tip.contacts.message" = "Start a conversation. Call, message and share in private or with groups.";
 
 // "Knows" subtitle in cell: "Knows Indrek", "Knows Indrek and Jane", "Knows Indrek and 5 others"
 "peoplepicker.suggested.knows_one" = "Knows %@";
@@ -157,6 +157,7 @@
 "conversation.status.you_left" = "You left";
 "conversation.status.started_conversation" = "%@ started a conversation";
 "conversation.status.removed_users" = "%@ removed %@";
+"conversation.status.everyone_left" = "Everyone left";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Compose Entry Point
@@ -193,6 +194,8 @@
 "conversation.call.many_participants_confirmation.call" = "Call";
 
 "conversation.connection_view.in_address_book" = "in Contacts";
+
+"conversation.input_bar.shortcut.send" = "Send Message";
 
 // Image confirmation dialogue
 "image_confirmer.confirm" = "OK";

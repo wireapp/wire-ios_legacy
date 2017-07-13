@@ -845,12 +845,13 @@
 
 - (void)callCenterDidFailToJoinVoiceChannelWithError:(NSError *)error conversation:(ZMConversation *)conversation
 {
+    [self updateRightNavigationItemsButtons];
     [self showAlertForError:error];
 }
 
 - (void)callCenterDidEndCallWithReason:(VoiceChannelV2CallEndReason)reason conversation:(ZMConversation *)conversation callingProtocol:(enum CallingProtocol)callingProtocol
 {
-    
+    [self updateRightNavigationItemsButtons];
 }
 
 @end

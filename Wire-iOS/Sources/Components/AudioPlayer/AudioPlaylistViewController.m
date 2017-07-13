@@ -193,6 +193,11 @@ static const CGFloat SeparatorLineOverflow = 4;
     self.contentContainer.layoutMargins = self.view.layoutMargins;
 }
 
+- (UIView *)touchableView
+{
+    return self.view;
+}
+
 - (void)createInitialConstraints
 {
     [self.backgroundView autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero];

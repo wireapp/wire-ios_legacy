@@ -127,6 +127,11 @@
     [self.audioTrackPlayer stop];
 }
 
+- (UIView *)touchableView
+{
+    return self.view;
+}
+
 - (void)createInitialConstraints
 {
     [self.backgroundView autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero];
