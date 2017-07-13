@@ -25,7 +25,6 @@ import Photos
     
     fileprivate let imageData: Data
     fileprivate let imageOrientation: UIImageOrientation
-    fileprivate let library = PHPhotoLibrary()
     fileprivate var writeInProgess = false
 
     init(data: Data, orientation: UIImageOrientation) {
@@ -38,7 +37,7 @@ import Photos
         guard !writeInProgess else { return }
         writeInProgess = true
         
-        library.performChanges({ [weak self] in
+        PHPhotoLibrary.shared().performChanges({ [weak self] in
             guard let `self` = self, let image = UIImage(data: self.imageData) else {
                 return
             }
