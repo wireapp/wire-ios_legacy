@@ -66,6 +66,11 @@
     //NO-OP
 }
 
+- (UIView *)touchableView
+{
+    return self.mediaPreviewView.containerView;
+}
+
 - (MediaPreviewView *)mediaPreviewView
 {
     return (MediaPreviewView *)self.view;

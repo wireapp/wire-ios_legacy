@@ -2,26 +2,28 @@ machine:
   xcode:
     version: "8.3.2"
   environment:
-    DESTINATION: "platform=iOS Simulator,name=iPhone 6,OS=10.3"
+    DEPENDENCIES_BASE_URL: "https://raw.githubusercontent.com/wireapp/wire-ios-shared-resources/master"
 
 checkout:
   post:
-    # Preheat cocoapods main repo
-    - bash <(curl -s https://cocoapods-specs.circleci.com/fetch-cocoapods-repo-from-s3.sh)
+    # Download other scripts
+    - curl -O "${DEPENDENCIES_BASE_URL}/environment.sh"
+    - bash environment.sh
+    - curl -O "${DEPENDENCIES_BASE_URL}/dependencies.sh"
+    - curl -O "${DEPENDENCIES_BASE_URL}/build.sh"
+    - curl -O "${DEPENDENCIES_BASE_URL}/test.sh"
+    - curl -O "${DEPENDENCIES_BASE_URL}/post_test.sh"
 
 dependencies:
   override:
-    - ./setup.sh
-    - curl -O https://raw.githubusercontent.com/wireapp/wire-ios-shared-resources/master/Dangerfile
+    - bash dependencies.sh
   cache_directories:
     - Carthage/Build
     - ~/.gem
 
 test:
   override:
-    - mkdir -p $CIRCLE_TEST_REPORTS/junit/
-    - set -o pipefail && xcodebuild -workspace Wire-iOS.xcworkspace -scheme Wire-iOS build-for-testing -enableCodeCoverage YES -destination "${DESTINATION}" | tee $CIRCLE_ARTIFACTS/xcode_build.log | xcpretty
-    - set -o pipefail && xcodebuild -workspace Wire-iOS.xcworkspace -scheme Wire-iOS test-without-building -enableCodeCoverage YES -destination "${DESTINATION}" | tee $CIRCLE_ARTIFACTS/xcode_test.log | xcpretty -r junit --output $CIRCLE_TEST_REPORTS/junit/tests.xml
-    - bundle exec danger
+    - bash build.sh
+    - bash test.sh
   post:
-    - if [ -d "SnapshotResults" ]; then cp -R SnapshotResults $CIRCLE_ARTIFACTS/; fi
+    - bash post_test.sh
