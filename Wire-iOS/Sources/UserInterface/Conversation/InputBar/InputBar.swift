@@ -48,6 +48,13 @@ public enum InputBarState: Equatable {
         }
     }
     
+    var isMarkingDown: Bool {
+        switch self {
+        case .markdown: return true
+        default: return false
+        }
+    }
+    
     var isEphemeral: Bool {
         if case .writing(let ephemeral) = self {
             return ephemeral
@@ -110,6 +117,10 @@ private struct InputBarConstants {
     
     var isEditing: Bool {
         return inputBarState.isEditing
+    }
+    
+    var isMarkingDown: Bool {
+        return inputBarState.isMarkingDown
     }
     
     private var inputBarState: InputBarState = .writing(ephemeral: false)
@@ -400,7 +411,7 @@ private struct InputBarConstants {
 
     fileprivate func backgroundColor(forInputBarState state: InputBarState) -> UIColor? {
         guard let writingColor = barBackgroundColor, let editingColor = editingBackgroundColor else { return nil }
-        return state.isWriting ? writingColor : writingColor.mix(editingColor, amount: 0.16)
+        return state.isWriting || state.isMarkingDown ? writingColor : writingColor.mix(editingColor, amount: 0.16)
     }
     
     fileprivate func updateColors() {
@@ -492,7 +503,7 @@ extension InputBar: MarkdownBarViewDelegate {
     public func markdownBarView(_ markdownBarView: MarkdownBarView, didSelectElementType type: MarkdownElementType, with sender: IconButton) {
         
         switch type {
-        case .header(.h1):  setInputBarState(.writing(ephemeral: false), animated: true)
+        case .header(.h1):  print("header")
         case .bold:         print("bold")
         case .italic:       print("italics")
         case .underline:    print("underline")

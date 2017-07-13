@@ -76,7 +76,7 @@ public final class MarkdownBarView: UIView {
         codeButton.setIcon(.markdownCode, with: .tiny, for: .normal)
         
         for button in buttons {
-            let color = ColorScheme.default().color(withName: ColorSchemeColorTextForeground)
+            let color = ColorScheme.default().color(withName: ColorSchemeColorIconNormal)
             button.setIconColor(color, for: .normal)
             button.addTarget(self, action: #selector(buttonTapped(sender:)), for: .touchUpInside)
             stackView.addArrangedSubview(button)

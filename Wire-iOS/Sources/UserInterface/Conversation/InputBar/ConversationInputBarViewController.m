@@ -126,6 +126,7 @@
 @property (nonatomic) IconButton *sendButton;
 @property (nonatomic) IconButton *ephemeralIndicatorButton;
 @property (nonatomic) IconButton *emojiButton;
+@property (nonatomic) IconButton *markdownButton;
 @property (nonatomic) IconButton *gifButton;
 @property (nonatomic) IconButton *hourglassButton;
 
@@ -190,6 +191,7 @@
     [self createSendButton];
     [self createEphemeralIndicatorButton];
     [self createEmojiButton];
+    [self createMarkdownButton];
 
     [self createHourglassButton];
     [self createTypingIndicatorView];
@@ -200,6 +202,7 @@
     
     [self configureAudioButton:self.audioButton];
     [self configureEmojiButton:self.emojiButton];
+    [self configureMarkdownButton:self.markdownButton];
     [self configureEphemeralKeyboardButton:self.hourglassButton];
     [self configureEphemeralKeyboardButton:self.ephemeralIndicatorButton];
     
@@ -384,16 +387,29 @@
 
 - (void)createEmojiButton
 {
+//    const CGFloat senderDiameter = 28;
+//    
+//    self.emojiButton = IconButton.iconButtonCircular;
+//    self.emojiButton.translatesAutoresizingMaskIntoConstraints = NO;
+//    self.emojiButton.accessibilityIdentifier = @"emojiButton";
+//
+//    [self.inputBar.leftAccessoryView addSubview:self.emojiButton];
+//    [self.emojiButton autoAlignAxisToSuperviewAxis:ALAxisVertical];
+//    [self.emojiButton autoPinEdgeToSuperviewEdge:ALEdgeBottom withInset:14];
+//    [self.emojiButton autoSetDimensionsToSize:CGSizeMake(senderDiameter, senderDiameter)];
+}
+
+- (void)createMarkdownButton
+{
     const CGFloat senderDiameter = 28;
     
-    self.emojiButton = IconButton.iconButtonCircular;
-    self.emojiButton.translatesAutoresizingMaskIntoConstraints = NO;
-    self.emojiButton.accessibilityIdentifier = @"emojiButton";
-
-    [self.inputBar.leftAccessoryView addSubview:self.emojiButton];
-    [self.emojiButton autoAlignAxisToSuperviewAxis:ALAxisVertical];
-    [self.emojiButton autoPinEdgeToSuperviewEdge:ALEdgeBottom withInset:14];
-    [self.emojiButton autoSetDimensionsToSize:CGSizeMake(senderDiameter, senderDiameter)];
+    self.markdownButton = IconButton.iconButtonCircular;
+    self.markdownButton.translatesAutoresizingMaskIntoConstraints = NO;
+    self.markdownButton.accessibilityIdentifier = @"markdownButton";
+    [self.inputBar.leftAccessoryView addSubview:self.markdownButton];
+    [self.markdownButton autoAlignAxisToSuperviewAxis:ALAxisVertical];
+    [self.markdownButton autoPinEdgeToSuperviewEdge:ALEdgeBottom withInset:14];
+    [self.markdownButton autoSetDimensionsToSize:CGSizeMake(senderDiameter, senderDiameter)];
 }
 
 - (void)createHourglassButton

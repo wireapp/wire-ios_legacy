@@ -181,7 +181,7 @@ typedef NS_ENUM(NSInteger, ZetaIconType)
     ZetaIconTypeFlag                            = 0x256,
     
     // Markdown
-    ZetaIconTypeMarkdownExit                    = 0x738,
+    ZetaIconTypeMarkdownToggle                  = 0x738,
     ZetaIconTypeMarkdownH1                      = 0x739,
     ZetaIconTypeMarkdownH2                      = 0x740,
     ZetaIconTypeMarkdownH3                      = 0x741,
