@@ -69,7 +69,7 @@ fileprivate extension UIViewController {
             NSFontAttributeName: UIFont(magicIdentifier: "style.text.normal.font_spec").allCaps()
         ]
 
-        UIBarButtonItem.wr_appearanceWhenContained(in: UINavigationBar.self).setTitleTextAttributes([
+        UIBarButtonItem.appearance(whenContainedInInstancesOf: [UINavigationBar.self]).setTitleTextAttributes([
             NSFontAttributeName : UIFont(magicIdentifier: "style.text.normal.font_spec").allCaps()
             ], for: UIControlState.normal)
 
