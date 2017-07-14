@@ -510,6 +510,7 @@
                     forState:UIControlStateNormal];
     
     [self updateEmojiButton:self.emojiButton];
+    [self updateMarkdownButton:self.markdownButton];
 }
 
 - (void)updateAccessoryViews
@@ -653,6 +654,10 @@
             self.singleTapGestureRecognizer.enabled = NO;
             [self selectInputControllerButton:self.emojiButton];
             [Analytics.shared tagEmojiKeyboardOpenend:self.conversation];
+            break;
+            
+        case ConversationInputBarViewControllerModeMarkdown:
+            [self clearTextInputAssistentItemIfNeeded];
             break;
 
         case ConversationInputBarViewControllerModeTimeoutConfguration:

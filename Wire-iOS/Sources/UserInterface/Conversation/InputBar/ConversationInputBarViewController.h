@@ -32,6 +32,7 @@ typedef NS_ENUM(NSUInteger, ConversationInputBarViewControllerMode) {
     ConversationInputBarViewControllerModeAudioRecord,
     ConversationInputBarViewControllerModeCamera,
     ConversationInputBarViewControllerModeEmojiInput,
+    ConversationInputBarViewControllerModeMarkdown,
     ConversationInputBarViewControllerModeTimeoutConfguration
 };
 

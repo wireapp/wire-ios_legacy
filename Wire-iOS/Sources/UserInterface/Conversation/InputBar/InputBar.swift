@@ -32,7 +32,7 @@ extension Settings {
 public enum InputBarState: Equatable {
     case writing(ephemeral: Bool)
     case editing(originalText: String)
-    case markdown
+    case markingDown
 
     var isWriting: Bool {
         switch self {
@@ -50,7 +50,7 @@ public enum InputBarState: Equatable {
     
     var isMarkingDown: Bool {
         switch self {
-        case .markdown: return true
+        case .markingDown: return true
         default: return false
         }
     }
@@ -319,7 +319,7 @@ private struct InputBarConstants {
             }
             return "conversation.input_bar.placeholder".localized
         case .editing: return nil
-        case .markdown: return nil
+        case .markingDown: return nil
         }
     }
     
@@ -379,7 +379,7 @@ private struct InputBarConstants {
                 self.setInputBarText(text)
                 self.secondaryButtonsView.setEditBarView()
             
-            case .markdown:
+            case .markingDown:
                 self.secondaryButtonsView.setMarkdownBarView()
             }
         }

@@ -28,9 +28,30 @@ extension ConversationInputBarViewController {
         button.setIconColor(ColorScheme.default().color(withName: ColorSchemeColorIconNormal), for: .normal)
     }
     
+    public func updateMarkdownButton(_ button: IconButton) {
+    
+        let color: UIColor
+        
+        if mode == .markdown {
+            color = ColorScheme.default().color(withName: ColorSchemeColorAccent)
+        } else {
+            color = ColorScheme.default().color(withName: ColorSchemeColorIconNormal)
+        }
+        
+        button.setIconColor(color, for: .normal)
+    }
+    
     func markdownButtonTapped(_ sender: IconButton) {
-        // TODO: ephemeral?
-        let state: InputBarState = inputBar.isMarkingDown ? .writing(ephemeral: false) : .markdown
-        inputBar.setInputBarState(state, animated: true)
+    
+        if mode != .markdown {
+            mode = .markdown
+            inputBar.textView.becomeFirstResponder()
+            inputBar.setInputBarState(.markingDown, animated: true)
+        } else {
+            mode = .textInput
+            inputBar.setInputBarState(.writing(ephemeral: sendButtonState.ephemeral), animated: true)
+        }
+        
+        updateMarkdownButton(sender)
     }
 }

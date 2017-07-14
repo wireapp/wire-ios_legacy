@@ -4584,6 +4584,7 @@
 				8FC851B8199245760008B66B /* ConversationInputBarViewController.h */,
 				87DE06AF1D252B3D0009411F /* ConversationInputBarViewController+Private.h */,
 				8FC851B9199245760008B66B /* ConversationInputBarViewController.m */,
+				EEF28EEE1F168039007642E2 /* ConversationInputBarViewController+Markdown.swift */,
 				BF8EE5551D62FBCD00B0D6D7 /* ConversationInputBarViewController+Editing.swift */,
 				BF2A74701CEB466A002608BF /* ConversationInputBarViewController+Audio.swift */,
 				BFBDDBC51DB0D51C00BEED02 /* ConversationInputBarButtonState.swift */,
@@ -4602,7 +4603,6 @@
 				DB3A47DE1B4AD96C00391B5C /* MentionsCollectionViewCell.h */,
 				DB3A47DF1B4AD96C00391B5C /* MentionsCollectionViewCell.m */,
 				870A8C6A1CF719C400874B16 /* RecordingDotView.swift */,
-				EEF28EEE1F168039007642E2 /* ConversationInputBarViewController+Markdown.swift */,
 			);
 			path = InputBar;
 			sourceTree = "<group>";
