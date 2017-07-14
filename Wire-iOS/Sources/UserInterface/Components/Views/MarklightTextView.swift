@@ -55,4 +55,117 @@ public class MarklightTextView: NextResponderTextView {
             NSFontAttributeName: FontSpec(.normal, .none).font!
         ]
     }
+    
+    public func insertSyntaxForMarkdownElement(type: MarkdownElementType) {
+        
+        guard let selection = selectedTextRange else { return }
+        
+        // caret position before insertions
+        let start = selection.start
+        
+        switch type {
+        case .header(let size):
+            let syntax: String
+            switch size {
+            case .h1: syntax = "# "
+            case .h2: syntax = "## "
+            case .h3: syntax = "### "
+            }
+            
+            // insert syntax at start of line
+            let lineStart = lineStartForCurrentSelection()
+            replace(textRange(from: lineStart, to: lineStart)!, withText: syntax)
+            
+            // preserve relative caret position
+            let newPos = position(from: start, offset: syntax.characters.count)!
+            selectedTextRange = textRange(from: newPos, to: newPos)
+            
+        case .list:
+            // insert syntax at start of line
+            let lineStart = lineStartForCurrentSelection()
+            replace(textRange(from: lineStart, to: lineStart)!, withText: "- ")
+            
+            // preserve relative caret position
+            let newPos = position(from: start, offset: 2)!
+            selectedTextRange = textRange(from: newPos, to: newPos)
+            
+        case .bold:
+            // wrap syntax around selection
+            if !selection.isEmpty {
+                let preRange = textRange(from: start, to: start)!
+                replace(preRange, withText: "**")
+                
+                // offset acounts for first insertion
+                let end = position(from: selection.end, offset: 2)!
+                let postRange = textRange(from: end, to: end)!
+                replace(postRange, withText: "** ")
+            }
+            else {
+                // insert syntax & move caret inside
+                replace(selection, withText: "**** ")
+                let newPos = position(from: start, offset: 2)!
+                selectedTextRange = textRange(from: newPos, to: newPos)
+            }
+            
+        case .italic:
+            // wrap syntax around selection
+            if !selection.isEmpty {
+                let preRange = textRange(from: start, to: start)!
+                replace(preRange, withText: "_")
+                
+                // offset acounts for first insertion
+                let end = position(from: selection.end, offset: 1)!
+                let postRange = textRange(from: end, to: end)!
+                replace(postRange, withText: "_ ")
+            }
+            else {
+                // insert syntax & move caret inside
+                replace(selection, withText: "__ ")
+                let newPos = position(from: start, offset: 1)!
+                selectedTextRange = textRange(from: newPos, to: newPos)
+            }
+            
+        case .code:
+            // wrap syntax around selection
+            if !selection.isEmpty {
+                let preRange = textRange(from: start, to: start)!
+                replace(preRange, withText: "`")
+                
+                // offset acounts for first insertion
+                let end = position(from: selection.end, offset: 1)!
+                let postRange = textRange(from: end, to: end)!
+                replace(postRange, withText: "` ")
+            }
+            else {
+                // insert syntax & move caret inside
+                replace(selection, withText: "`` ")
+                let newPos = position(from: start, offset: 1)!
+                selectedTextRange = textRange(from: newPos, to: newPos)
+            }
+            
+        default:
+            replace(selection, withText: "not yet implemented ")
+        }
+    }
+    
+    
+    private func lineStartForCurrentSelection() -> UITextPosition {
+        
+        // no selection
+        guard let caretPos = selectedTextRange?.start else {
+            return beginningOfDocument
+        }
+        
+        // check if last char is newline
+        if let prevPos = position(from: caretPos, offset: -1) {
+            if text(in: textRange(from: prevPos, to: caretPos)!) == "\n" {
+                return caretPos
+            }
+        }
+        
+        // if caret is at document beginning, position() returns nil
+        return tokenizer.position(from: caretPos,
+                                  toBoundary: .paragraph,
+                                  inDirection: UITextStorageDirection.backward.rawValue) ?? beginningOfDocument
+    }
 }

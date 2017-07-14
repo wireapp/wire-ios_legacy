@@ -501,15 +501,6 @@ extension InputBar {
 extension InputBar: MarkdownBarViewDelegate {
     
     public func markdownBarView(_ markdownBarView: MarkdownBarView, didSelectElementType type: MarkdownElementType, with sender: IconButton) {
-        
-        switch type {
-        case .header(.h1):  print("header")
-        case .bold:         print("bold")
-        case .italic:       print("italics")
-        case .underline:    print("underline")
-        case .list:         print("list")
-        case .code:         print("code")
-        default:            print("other")
-        }
+        textView.insertSyntaxForMarkdownElement(type: type)
     }
 }
