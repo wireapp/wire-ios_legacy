@@ -74,10 +74,12 @@ final class ProfileHeaderView: UIView {
         let topMargin = WAZUIMagic.cgFloat(forIdentifier: "profile_temp.content_top_margin")
         let horizontalMargin = WAZUIMagic.cgFloat(forIdentifier: "profile_temp.content_left_margin")
 
+        let detailViewMargin = horizontalMargin + 32
+        
         constrain(self, detailView) { (view: LayoutProxy, detailView: LayoutProxy) -> () in
             detailView.top == view.top + topMargin
-            detailView.leading == view.leading + horizontalMargin + 32
-            detailView.trailing == view.trailing - (horizontalMargin + 32)
+            detailView.leading == view.leading + detailViewMargin
+            detailView.trailing == view.trailing - detailViewMargin
             detailView.bottom == view.bottom - 12
         }
 

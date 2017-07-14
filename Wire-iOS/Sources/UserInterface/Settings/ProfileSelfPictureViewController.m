@@ -21,7 +21,7 @@
 #import "ProfileSelfPictureViewController.h"
 
 @import MobileCoreServices;
-@import AssetsLibrary;
+@import Photos;
 
 @import PureLayout;
 
@@ -42,10 +42,6 @@
 
 #import "AnalyticsTracker.h"
 #import "AnalyticsTracker+SelfUser.h"
-
-static ALAssetsLibrary *SelfProfileAssetsLibrary = nil;
-
-
 
 @interface ProfileSelfPictureViewController () <CameraViewControllerDelegate>
 
@@ -104,54 +100,48 @@ static ALAssetsLibrary *SelfProfileAssetsLibrary = nil;
 
 - (void)addLibraryButton
 {
+    CGSize libraryButtonSize = CGSizeMake(32, 32);
+    
     self.libraryButton = [[ButtonWithLargerHitArea alloc] init];
     self.libraryButton.translatesAutoresizingMaskIntoConstraints = NO;
 
     self.libraryButton.accessibilityIdentifier = @"CameraLibraryButton";
     [self.bottomOverlayView addSubview:self.libraryButton];
 
-    [self.libraryButton addConstraintsForSize:CGSizeMake(32, 32)];
+    [self.libraryButton addConstraintsForSize:libraryButtonSize];
     [self.libraryButton addConstraintForAligningVerticallyWithView:self.cameraButton];
     [self.libraryButton addConstraintForLeftMargin:24 relativeToView:self.bottomOverlayView];
 
     [self.libraryButton setImage:[UIImage imageForIcon:ZetaIconTypePhoto iconSize:ZetaIconSizeSmall color:[UIColor whiteColor]] forState:UIControlStateNormal];
     
-    if ([ALAssetsLibrary authorizationStatus] == ALAuthorizationStatusAuthorized) {
-        // If we have access to images, set the gallery image to the latest camera one
-        static dispatch_once_t onceToken;
-        dispatch_once(&onceToken, ^{
-            SelfProfileAssetsLibrary = [[ALAssetsLibrary alloc] init];
-        });
-        [SelfProfileAssetsLibrary enumerateGroupsWithTypes:ALAssetsGroupSavedPhotos usingBlock:^(ALAssetsGroup *group, BOOL *stop) {
-            [group setAssetsFilter:[ALAssetsFilter allPhotos]];
-            
-            if (group.numberOfAssets > 0) {
-                 [group enumerateAssetsAtIndexes:[NSIndexSet indexSetWithIndex:group.numberOfAssets - 1] options:0 usingBlock:^(ALAsset *asset, NSUInteger index, BOOL *innerStop) {
-                    if (asset) {
-                        // If asset is found, grab its thumbnail, create a CALayer with its contents,
-                        CGImageRef thumbnailRef = [asset thumbnail];
-                        
-                        UIImage *anImage = [UIImage imageWithCGImage:thumbnailRef];
-                        self.libraryButton.imageView.contentMode = UIViewContentModeScaleAspectFill;
-                        self.libraryButton.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
-                        self.libraryButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
-                        [self.libraryButton setImage:anImage forState:UIControlStateNormal];
-                        
-                        self.libraryButton.layer.borderColor = [UIColor colorWithMagicIdentifier:@"camera.gallery_button_tile_stroke_color"].CGColor;
-                        self.libraryButton.layer.borderWidth = [WAZUIMagic floatForIdentifier:@"camera.gallery_button_tile_stroke_width"];
-                        self.libraryButton.layer.cornerRadius = 5;
-                        self.libraryButton.clipsToBounds = YES;
-                        *innerStop = YES;
-                    }
-                }];
-                *stop = YES;
-            }
-        } failureBlock:^(NSError *error) {
-            if (error != nil) {
-                [[Analytics shared] tagApplicationError:error.localizedDescription
-                                          timeInSession:[[UIApplication sharedApplication] lastApplicationRunDuration]];
-            }
-        }];
+    if ([PHPhotoLibrary authorizationStatus] == PHAuthorizationStatusAuthorized) {
+        PHFetchOptions *options = [[PHFetchOptions alloc] init];
+        options.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"creationDate" ascending:NO]];
+        options.fetchLimit = 1;
+        
+        PHAsset *asset = [PHAsset fetchAssetsWithOptions:options].firstObject;
+        if (nil != asset) {
+            // If asset is found, grab its thumbnail, create a CALayer with its contents,
+            [[PHImageManager defaultManager]
+             requestImageForAsset:asset
+             targetSize:CGSizeApplyAffineTransform(libraryButtonSize, CGAffineTransformMakeScale(self.view.contentScaleFactor, self.view.contentScaleFactor))
+             contentMode:PHImageContentModeAspectFill
+             options:nil
+             resultHandler:^(UIImage *result, NSDictionary *info) {
+                 dispatch_async(dispatch_get_main_queue(), ^{
+                     self.libraryButton.imageView.contentMode = UIViewContentModeScaleAspectFill;
+                     self.libraryButton.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
+                     self.libraryButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
+                     [self.libraryButton setImage:result forState:UIControlStateNormal];
+                     
+                     self.libraryButton.layer.borderColor = [UIColor colorWithMagicIdentifier:@"camera.gallery_button_tile_stroke_color"].CGColor;
+                     self.libraryButton.layer.borderWidth = [WAZUIMagic floatForIdentifier:@"camera.gallery_button_tile_stroke_width"];
+                     self.libraryButton.layer.cornerRadius = 5;
+                     self.libraryButton.clipsToBounds = YES;
+                 });
+                 
+             }];
+        }
     }
 
     [self.libraryButton addTarget:self action:@selector(libraryButtonTapped:) forControlEvents:UIControlEventTouchUpInside];

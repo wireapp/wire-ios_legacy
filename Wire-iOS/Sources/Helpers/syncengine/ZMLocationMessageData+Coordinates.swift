@@ -19,7 +19,7 @@
 
 import Foundation
 import MapKit
-import AddressBook
+import Contacts
 
 public extension Message {
     public class func openInMaps(_ messageData: ZMLocationMessageData) {
@@ -50,7 +50,7 @@ public extension ZMLocationMessageData {
     var mapItem: MKMapItem? {
         var addressDictionary: [String : AnyObject]? = nil
         if let name = name {
-            addressDictionary = [String(kABPersonAddressStreetKey): name as AnyObject]
+            addressDictionary = [CNPostalAddressStreetKey: name as AnyObject]
         }
         
         let placemark = MKPlacemark(coordinate: coordinate, addressDictionary: addressDictionary)

@@ -322,9 +322,9 @@ NSString * const UnsplashRandomImageLowQualityURL = @"https://source.unsplash.co
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info
 {
-    [UIImagePickerController loadImageFromMediaInfo:info result:^(UIImage *image, NSData *imageData, NSString *mediaType) {
+    [UIImagePickerController imageFromMediaInfo:info resultBlock:^(UIImage *image) {
         self.profilePictureImageView.image = image;
-    } failure:^(NSError *error) {}];
+    }];
     
     [UIImagePickerController imageDataFromMediaInfo:info resultBlock:^(NSData *imageData) {
         [self dismissViewControllerAnimated:YES completion:nil];

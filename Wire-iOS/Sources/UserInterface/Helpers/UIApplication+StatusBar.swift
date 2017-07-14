@@ -1,4 +1,4 @@
-// 
+//
 // Wire
 // Copyright (C) 2016 Wire Swiss GmbH
 // 
@@ -43,12 +43,12 @@ public extension UIApplication {
         var changed = false
         
         if (self.isStatusBarHidden != statusBarHidden) {
-            self.setStatusBarHidden(statusBarHidden, with: animated ? .fade : .none)
+            self.wr_setStatusBarHidden(statusBarHidden, with: animated ? .fade : .none)
             changed = true
         }
         
         if self.statusBarStyle != statusBarStyle {
-            self.setStatusBarStyle(statusBarStyle, animated: animated)
+            self.wr_setStatusBarStyle(statusBarStyle, animated: animated)
             changed = true
         }
         
@@ -57,7 +57,7 @@ public extension UIApplication {
         }
     }
 
-    @objc func wr_topMostViewController() -> UIViewController? {
+    @objc func wr_topmostViewController() -> UIViewController? {
         return wr_topmostController()
     }
     

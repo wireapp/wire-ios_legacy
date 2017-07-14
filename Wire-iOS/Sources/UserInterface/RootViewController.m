@@ -33,7 +33,6 @@
 #import "UIColor+WAZExtensions.h"
 #import "ZMUser+Additions.h"
 #import "Constants.h"
-#import "FileManager.h"
 
 #import "AnalyticsConversationListObserver.h"
 #import "ZClientViewController.h"
