@@ -52,8 +52,10 @@ extension AddressBookHelper {
     /// whether access was granted.
     public func requestPermissions(_ callback: ((Bool)->())?) {
         CNContactStore().requestAccess(for: .contacts, completionHandler: { [weak self] authorized, _ in
-            self?.persistCurrentAccessStatus()
-            callback?(authorized)
+            DispatchQueue.main.async {                
+                self?.persistCurrentAccessStatus()
+                callback?(authorized)
+            }
         })
     }
     

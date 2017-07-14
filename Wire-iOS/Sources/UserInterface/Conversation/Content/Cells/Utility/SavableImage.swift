@@ -44,8 +44,10 @@ import Photos
             
             PHAssetChangeRequest.creationRequestForAsset(from: image)
         }) { [weak self] success, error in
-            self?.writeInProgess = false
-            completion?()
+            DispatchQueue.main.async {
+                self?.writeInProgess = false
+                completion?()
+            }
         }
     }
 
