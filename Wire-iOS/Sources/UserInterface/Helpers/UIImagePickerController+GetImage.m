@@ -78,20 +78,22 @@
         [PHImageManager.defaultManager requestImageDataForAsset:resultAsset
                                                         options:nil
                                                   resultHandler:^(NSData * _Nullable imageData, NSString * _Nullable dataUTI, UIImageOrientation orientation, NSDictionary * _Nullable info) {
-                                                      if (imageData != nil) {
-                                                          resultBlock(imageData);
-                                                      }
-                                                      else {
-                                                          if (info[UIImagePickerControllerEditedImage] != nil) {
-                                                              resultBlock(UIImageJPEGRepresentation(info[UIImagePickerControllerEditedImage], 0.9f));
-                                                          }
-                                                          else if (info[UIImagePickerControllerOriginalImage] != nil) {
-                                                              resultBlock(UIImageJPEGRepresentation(info[UIImagePickerControllerOriginalImage], 0.9f));
+                                                      dispatch_async(dispatch_get_main_queue(), ^{
+                                                          if (imageData != nil) {
+                                                              resultBlock(imageData);
                                                           }
                                                           else {
-                                                              resultBlock(nil);
+                                                              if (info[UIImagePickerControllerEditedImage] != nil) {
+                                                                  resultBlock(UIImageJPEGRepresentation(info[UIImagePickerControllerEditedImage], 0.9f));
+                                                              }
+                                                              else if (info[UIImagePickerControllerOriginalImage] != nil) {
+                                                                  resultBlock(UIImageJPEGRepresentation(info[UIImagePickerControllerOriginalImage], 0.9f));
+                                                              }
+                                                              else {
+                                                                  resultBlock(nil);
+                                                              }
                                                           }
-                                                      }
+                                                      });
                                                   }];
     }
     else if (info[UIImagePickerControllerEditedImage]) {
