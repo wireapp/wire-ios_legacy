@@ -510,7 +510,6 @@
                     forState:UIControlStateNormal];
     
     [self updateEmojiButton:self.emojiButton];
-    [self updateMarkdownButton:self.markdownButton];
 }
 
 - (void)updateAccessoryViews
@@ -656,10 +655,6 @@
             [Analytics.shared tagEmojiKeyboardOpenend:self.conversation];
             break;
             
-        case ConversationInputBarViewControllerModeMarkdown:
-            [self clearTextInputAssistentItemIfNeeded];
-            break;
-
         case ConversationInputBarViewControllerModeTimeoutConfguration:
             [self clearTextInputAssistentItemIfNeeded];
 

@@ -32,7 +32,7 @@ extension ConversationInputBarViewController {
     
         let color: UIColor
         
-        if mode == .markdown {
+        if inputBar.isMarkingDown {
             color = ColorScheme.default().color(withName: ColorSchemeColorAccent)
         } else {
             color = ColorScheme.default().color(withName: ColorSchemeColorIconNormal)
@@ -43,12 +43,10 @@ extension ConversationInputBarViewController {
     
     func markdownButtonTapped(_ sender: IconButton) {
     
-        if mode != .markdown {
-            mode = .markdown
+        if !inputBar.isMarkingDown {
             inputBar.textView.becomeFirstResponder()
             inputBar.setInputBarState(.markingDown, animated: true)
         } else {
-            mode = .textInput
             inputBar.setInputBarState(.writing(ephemeral: sendButtonState.ephemeral), animated: true)
         }
         
