@@ -39,6 +39,7 @@ public final class MarkdownBarView: UIView {
     weak var delegate: MarkdownBarViewDelegate?
     
     private let stackView =  UIStackView()
+    private let buttonMargin = WAZUIMagic.cgFloat(forIdentifier: "content.left_margin") / 2 - UIImage.size(for: .tiny) / 2
     
     public let headerButton     = IconButton()
     public let boldButton       = IconButton()
@@ -66,7 +67,11 @@ public final class MarkdownBarView: UIView {
     private func setupViews() {
         
         stackView.axis = .horizontal
-        stackView.distribution = .fillEqually
+        stackView.distribution = .equalSpacing
+        stackView.alignment = .center
+        stackView.layoutMargins = UIEdgeInsets(top: 0, left: buttonMargin, bottom: 0, right: buttonMargin)
+        stackView.isLayoutMarginsRelativeArrangement = true
+        
         
         headerButton.setIcon(.markdownH1, with: .tiny, for: .normal)
         boldButton.setIcon(.markdownBold, with: .tiny, for: .normal)
