@@ -41,7 +41,7 @@ public final class MarkdownBarView: UIView {
     private let stackView =  UIStackView()
     private let buttonMargin = WAZUIMagic.cgFloat(forIdentifier: "content.left_margin") / 2 - UIImage.size(for: .tiny) / 2
     
-    public let headerButton     = IconButton()
+    public let headerButton     = PopUpIconButton()
     public let boldButton       = IconButton()
     public let italicButton     = IconButton()
     public let underlineButton  = IconButton()
@@ -92,6 +92,10 @@ public final class MarkdownBarView: UIView {
         constrain(self, stackView) { view, stackView in
             stackView.edges == view.edges
         }
+        
+        headerButton.itemIcons = [.markdownH1, .markdownH2, .markdownH3]
+        headerButton.expandDirection = .right
+        headerButton.setupView()
     }
     
     // MARK: Actions
@@ -101,7 +105,12 @@ public final class MarkdownBarView: UIView {
         let elementType: MarkdownElementType
         
         switch sender {
-        case headerButton:      elementType = .header(.h1)
+        case headerButton:
+            switch headerButton.iconType(for: .normal) {
+            case .markdownH1:   elementType = .header(.h1)
+            case .markdownH2:   elementType = .header(.h2)
+            default:            elementType = .header(.h3)
+            }
         case boldButton:        elementType = .bold
         case italicButton:      elementType = .italic
         case underlineButton:   elementType = .underline
