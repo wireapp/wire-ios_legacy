@@ -67,8 +67,8 @@ public final class MarkdownBarView: UIView {
         headerButton.setIcon(.markdownH1, with: .tiny, for: .normal)
         boldButton.setIcon(.markdownBold, with: .tiny, for: .normal)
         italicButton.setIcon(.markdownItalic, with: .tiny, for: .normal)
-        numberListButton.setIcon(.markdownList, with: .tiny, for: .normal)
-        bulletListButton.setIcon(.markdownList, with: .tiny, for: .normal)
+        numberListButton.setIcon(.markdownNumberList, with: .tiny, for: .normal)
+        bulletListButton.setIcon(.markdownBulletList, with: .tiny, for: .normal)
         codeButton.setIcon(.markdownCode, with: .tiny, for: .normal)
         
         for button in buttons {
