@@ -189,7 +189,7 @@
     [self createInputBar]; // Creates all input bar buttons
     [self createSendButton];
     [self createEphemeralIndicatorButton];
-    [self createEmojiButton];
+//    [self createEmojiButton];
     [self createMarkdownButton];
 
     [self createHourglassButton];
@@ -386,16 +386,16 @@
 
 - (void)createEmojiButton
 {
-//    const CGFloat senderDiameter = 28;
-//    
-//    self.emojiButton = IconButton.iconButtonCircular;
-//    self.emojiButton.translatesAutoresizingMaskIntoConstraints = NO;
-//    self.emojiButton.accessibilityIdentifier = @"emojiButton";
-//
-//    [self.inputBar.leftAccessoryView addSubview:self.emojiButton];
-//    [self.emojiButton autoAlignAxisToSuperviewAxis:ALAxisVertical];
-//    [self.emojiButton autoPinEdgeToSuperviewEdge:ALEdgeBottom withInset:14];
-//    [self.emojiButton autoSetDimensionsToSize:CGSizeMake(senderDiameter, senderDiameter)];
+    const CGFloat senderDiameter = 28;
+    
+    self.emojiButton = IconButton.iconButtonCircular;
+    self.emojiButton.translatesAutoresizingMaskIntoConstraints = NO;
+    self.emojiButton.accessibilityIdentifier = @"emojiButton";
+
+    [self.inputBar.leftAccessoryView addSubview:self.emojiButton];
+    [self.emojiButton autoAlignAxisToSuperviewAxis:ALAxisVertical];
+    [self.emojiButton autoPinEdgeToSuperviewEdge:ALEdgeBottom withInset:14];
+    [self.emojiButton autoSetDimensionsToSize:CGSizeMake(senderDiameter, senderDiameter)];
 }
 
 - (void)createMarkdownButton

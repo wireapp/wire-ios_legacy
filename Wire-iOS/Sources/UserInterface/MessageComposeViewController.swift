@@ -32,7 +32,7 @@ final class MessageComposeViewController: UIViewController {
     weak var delegate: MessageComposeViewControllerDelegate?
 
     private let subjectTextField = UITextField()
-    fileprivate let messageTextView = UITextView()
+    fileprivate let messageTextView = MarklightTextView()
     private let color = ColorScheme.default().color(withName:)
     private let sendButtonView = DraftSendInputAccessoryView()
     private let markdownBarView = MarkdownBarView()
@@ -58,6 +58,7 @@ final class MessageComposeViewController: UIViewController {
         navigationController?.navigationController?.interactivePopGestureRecognizer?.isEnabled = true
         navigationController?.navigationController?.interactivePopGestureRecognizer?.delegate = self
         messageTextView.becomeFirstResponder()
+        markdownBarView.delegate = self
     }
 
     override func viewWillDisappear(_ animated: Bool) {
@@ -70,7 +71,6 @@ final class MessageComposeViewController: UIViewController {
         view.backgroundColor = color(ColorSchemeColorBackground)
         [messageTextView, sendButtonView, markdownBarView].forEach(view.addSubview)
         setupInputAccessoryView()
-        setupMarkdownBarView()
         setupNavigationItem()
         setupTextView()
         updateLeftNavigationItem()
@@ -171,15 +171,6 @@ final class MessageComposeViewController: UIViewController {
         }
     }
     
-    private func setupMarkdownBarView() {
-        constrain(view, markdownBarView) { view, markdownBarView in
-            markdownBarView.leading == view.leading
-            markdownBarView.trailing == view.trailing
-            markdownBarView.bottom == view.bottom
-        }
-        
-    }
-
     private func popToListIfNeeded() {
         if splitViewController?.isCollapsed == true {
            navigationController?.navigationController?.popToRootViewController(animated: true)
@@ -234,13 +225,14 @@ final class MessageComposeViewController: UIViewController {
             messageTextView.trailing == view.trailing
             messageTextView.bottom == sendButtonView.top
 
-            markdownBarView.leading == view.leading
-            markdownBarView.trailing == view.trailing
-            markdownBarView.bottom == view.bottom
-            
             sendButtonView.leading == view.leading
             sendButtonView.trailing == view.trailing
             sendButtonView.bottom == markdownBarView.top
+            sendButtonView.height == 60
+
+            markdownBarView.leading == view.leading
+            markdownBarView.trailing == view.trailing
+            markdownBarView.bottom == view.bottom
         }
     }
 
@@ -306,5 +298,12 @@ extension MessageComposeViewController: UIGestureRecognizerDelegate {
     @nonobjc public func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
         return navigationController?.navigationController?.interactivePopGestureRecognizer == gestureRecognizer
             && navigationController?.navigationController?.viewControllers.count > 1
+    }
+}
+
+extension MessageComposeViewController: MarkdownBarViewDelegate {
+    
+    func markdownBarView(_ markdownBarView: MarkdownBarView, didSelectElementType type: MarkdownElementType, with sender: IconButton) {
+        messageTextView.insertSyntaxForMarkdownElement(type: type)
     }
 }
