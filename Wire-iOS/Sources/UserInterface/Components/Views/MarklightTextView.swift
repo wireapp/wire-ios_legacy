@@ -58,7 +58,7 @@ public class MarklightTextView: NextResponderTextView {
         let colorScheme = ColorScheme.default()
         textStorage.syntaxColor = colorScheme.color(withName: ColorSchemeColorAccent)
         textStorage.quoteColor = colorScheme.color(withName: ColorSchemeColorTextForeground)
-        textStorage.codeColor = colorScheme.color(withName: ColorSchemeColorTextForeground)
+        textStorage.codeColor = colorScheme.color(withName: ColorSchemeColorAccent)
         textStorage.codeFontName = "Courier"
         textStorage.fontTextStyle = UIFontTextStyle.subheadline.rawValue
         textStorage.hideSyntax = hideSyntax
