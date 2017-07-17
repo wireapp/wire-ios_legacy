@@ -935,7 +935,6 @@
 		EE291BB71F0BC54D00142F31 /* MarklightTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE291BB61F0BC54D00142F31 /* MarklightTextView.swift */; };
 		EE4332491F1A67E500096D90 /* PopUpIconButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE4332481F1A67E500096D90 /* PopUpIconButton.swift */; };
 		EE43324B1F1A785800096D90 /* PopUpIconButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE43324A1F1A785800096D90 /* PopUpIconButtonView.swift */; };
-		EEB8401A1F0D1E9700D9C44E /* MarklightCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEB840191F0D1E9700D9C44E /* MarklightCache.swift */; };
 		EEF28EEA1F1613DA007642E2 /* MarkdownBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEF28EE91F1613DA007642E2 /* MarkdownBarView.swift */; };
 		EEF28EED1F16692A007642E2 /* InputBarSecondaryButtonsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEF28EEC1F16692A007642E2 /* InputBarSecondaryButtonsView.swift */; };
 		EEF28EEF1F168039007642E2 /* ConversationInputBarViewController+Markdown.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEF28EEE1F168039007642E2 /* ConversationInputBarViewController+Markdown.swift */; };
@@ -990,6 +989,20 @@
 			proxyType = 1;
 			remoteGlobalIDString = 8F42C537199244A700288E4D;
 			remoteInfo = "ZClient-iOS";
+		};
+		EE604B661F1CF95700F37F36 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = EE604B611F1CF95600F37F36 /* Marklight.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 95C46D681C33E11A0070AEDC;
+			remoteInfo = Marklight;
+		};
+		EE604B681F1CF95700F37F36 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = EE604B611F1CF95600F37F36 /* Marklight.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 95C46D721C33E11A0070AEDC;
+			remoteInfo = MarklightTests;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -2446,7 +2459,7 @@
 		EE291BB61F0BC54D00142F31 /* MarklightTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MarklightTextView.swift; sourceTree = "<group>"; };
 		EE4332481F1A67E500096D90 /* PopUpIconButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PopUpIconButton.swift; sourceTree = "<group>"; };
 		EE43324A1F1A785800096D90 /* PopUpIconButtonView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PopUpIconButtonView.swift; sourceTree = "<group>"; };
-		EEB840191F0D1E9700D9C44E /* MarklightCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MarklightCache.swift; sourceTree = "<group>"; };
+		EE604B611F1CF95600F37F36 /* Marklight.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Marklight.xcodeproj; path = ../../Repos/Marklight/Marklight.xcodeproj; sourceTree = "<group>"; };
 		EEF28EE91F1613DA007642E2 /* MarkdownBarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MarkdownBarView.swift; path = ../../MarkdownBarView.swift; sourceTree = "<group>"; };
 		EEF28EEC1F16692A007642E2 /* InputBarSecondaryButtonsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputBarSecondaryButtonsView.swift; sourceTree = "<group>"; };
 		EEF28EEE1F168039007642E2 /* ConversationInputBarViewController+Markdown.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ConversationInputBarViewController+Markdown.swift"; sourceTree = "<group>"; };
@@ -3534,7 +3547,6 @@
 				87F18BBF1E017B7F00C69D9B /* UIView+VisibleViews.swift */,
 				F15E9BFC1E4878AC00EA207F /* UINavigationController+PopToPrevious.swift */,
 				879E5E981F0104A6007A88A3 /* UITextView+Autocorrect.swift */,
-				EEB840191F0D1E9700D9C44E /* MarklightCache.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -4094,6 +4106,7 @@
 		8F42C52F199244A700288E4D = {
 			isa = PBXGroup;
 			children = (
+				EE604B611F1CF95600F37F36 /* Marklight.xcodeproj */,
 				87501FB21D40D6490056C042 /* ComponentsVersions.plist */,
 				87C8D7FB1BA8261C00B0530B /* Entitlements-Dev.entitlements */,
 				87C8D7FC1BA8261C00B0530B /* Entitlements-Prod.entitlements */,
@@ -5051,6 +5064,15 @@
 			path = InputBar;
 			sourceTree = "<group>";
 		};
+		EE604B621F1CF95600F37F36 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				EE604B671F1CF95700F37F36 /* Marklight.framework */,
+				EE604B691F1CF95700F37F36 /* MarklightTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		F12CDAD91E43868200CEFCEB /* ChangingDetails */ = {
 			isa = PBXGroup;
 			children = (
@@ -5368,6 +5390,12 @@
 			mainGroup = 8F42C52F199244A700288E4D;
 			productRefGroup = 8F42C539199244A700288E4D /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = EE604B621F1CF95600F37F36 /* Products */;
+					ProjectRef = EE604B611F1CF95600F37F36 /* Marklight.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				8F42C537199244A700288E4D /* Wire-iOS */,
@@ -5379,6 +5407,23 @@
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		EE604B671F1CF95700F37F36 /* Marklight.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = Marklight.framework;
+			remoteRef = EE604B661F1CF95700F37F36 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		EE604B691F1CF95700F37F36 /* MarklightTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = MarklightTests.xctest;
+			remoteRef = EE604B681F1CF95700F37F36 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		168A16A71D9597C2005CFA6C /* Resources */ = {
@@ -5697,7 +5742,7 @@
 				"$(SRCROOT)/Carthage/Build/iOS/FLAnimatedImage.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/WireCanvas.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/PureLayout.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/Marklight.framework",
+				"$(BUILT_PRODUCTS_DIR)/Marklight.framework",
 			);
 			name = "Copy Frameworks and DSYMs";
 			outputPaths = (
@@ -6135,7 +6180,6 @@
 				872CB8B819E58816006752B4 /* ProfileSendConnectionRequestFooterView.m in Sources */,
 				877B07821E3B4C4A0070A6F2 /* ZMConversationMessage+Properties.swift in Sources */,
 				87DCF49C1D34E9E600BB420F /* LocationSendViewController.swift in Sources */,
-				EEB8401A1F0D1E9700D9C44E /* MarklightCache.swift in Sources */,
 				871BC2541D34F8F800DF0793 /* ActionSheetTransition.m in Sources */,
 				BF808B4D1DE5AD1600718076 /* SettingsCellDescriptorFactory+Account.swift in Sources */,
 				871BC36D1D34F96000DF0793 /* DeviceOrientationObserver.m in Sources */,
