@@ -19,7 +19,6 @@
 
 #import <UIKit/UIKit.h>
 #import "TextView.h"
-@import UIKit;
 
 @interface ResizingTextView : TextView
 
