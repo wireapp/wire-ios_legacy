@@ -19,6 +19,19 @@
 import UIKit
 import Marklight
 
+public enum MarkdownElementType {
+    
+    public enum HeaderLevel {
+        case h1, h2, h3
+    }
+    
+    public enum ListType {
+        case number, bullet
+    }
+    
+    case header(HeaderLevel), bold, italic, list(ListType), code
+}
+
 public class MarklightTextView: NextResponderTextView {
     
     fileprivate let marklightTextStorage = MarklightTextStorage()
@@ -80,13 +93,24 @@ public class MarklightTextView: NextResponderTextView {
             let newPos = position(from: start, offset: syntax.characters.count)!
             selectedTextRange = textRange(from: newPos, to: newPos)
             
-        case .list:
-            // insert syntax at start of line
-            let lineStart = lineStartForCurrentSelection()
-            replace(textRange(from: lineStart, to: lineStart)!, withText: "- ")
+        case .list(let type):
+            
+            let offset: Int
+            switch type {
+            case .number:
+                // insert syntax at start of line
+                let lineStart = lineStartForCurrentSelection()
+                replace(textRange(from: lineStart, to: lineStart)!, withText: "1. ")
+                offset = 3
+            case .bullet:
+                // insert syntax at start of line
+                let lineStart = lineStartForCurrentSelection()
+                replace(textRange(from: lineStart, to: lineStart)!, withText: "- ")
+                offset = 2
+            }
             
             // preserve relative caret position
-            let newPos = position(from: start, offset: 2)!
+            let newPos = position(from: start, offset: offset)!
             selectedTextRange = textRange(from: newPos, to: newPos)
             
         case .bold:
@@ -98,11 +122,11 @@ public class MarklightTextView: NextResponderTextView {
                 // offset acounts for first insertion
                 let end = position(from: selection.end, offset: 2)!
                 let postRange = textRange(from: end, to: end)!
-                replace(postRange, withText: "** ")
+                replace(postRange, withText: "**")
             }
             else {
                 // insert syntax & move caret inside
-                replace(selection, withText: "**** ")
+                replace(selection, withText: "****")
                 let newPos = position(from: start, offset: 2)!
                 selectedTextRange = textRange(from: newPos, to: newPos)
             }
@@ -116,11 +140,11 @@ public class MarklightTextView: NextResponderTextView {
                 // offset acounts for first insertion
                 let end = position(from: selection.end, offset: 1)!
                 let postRange = textRange(from: end, to: end)!
-                replace(postRange, withText: "_ ")
+                replace(postRange, withText: "_")
             }
             else {
                 // insert syntax & move caret inside
-                replace(selection, withText: "__ ")
+                replace(selection, withText: "__")
                 let newPos = position(from: start, offset: 1)!
                 selectedTextRange = textRange(from: newPos, to: newPos)
             }
@@ -134,17 +158,14 @@ public class MarklightTextView: NextResponderTextView {
                 // offset acounts for first insertion
                 let end = position(from: selection.end, offset: 1)!
                 let postRange = textRange(from: end, to: end)!
-                replace(postRange, withText: "` ")
+                replace(postRange, withText: "`")
             }
             else {
                 // insert syntax & move caret inside
-                replace(selection, withText: "`` ")
+                replace(selection, withText: "``")
                 let newPos = position(from: start, offset: 1)!
                 selectedTextRange = textRange(from: newPos, to: newPos)
             }
-            
-        default:
-            replace(selection, withText: "not yet implemented ")
         }
     }
     

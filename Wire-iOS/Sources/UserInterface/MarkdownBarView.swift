@@ -19,15 +19,6 @@
 import UIKit
 import Cartography
 
-public enum MarkdownElementType {
-    
-    public enum HeaderLevel {
-        case h1, h2, h3
-    }
-
-    case header(HeaderLevel), bold, italic, underline, list, code
-}
-
 
 public protocol MarkdownBarViewDelegate: class {
     func markdownBarView(_ markdownBarView: MarkdownBarView, didSelectElementType type: MarkdownElementType, with sender: IconButton)
@@ -41,17 +32,17 @@ public final class MarkdownBarView: UIView {
     private let stackView =  UIStackView()
     private let buttonMargin = WAZUIMagic.cgFloat(forIdentifier: "content.left_margin") / 2 - UIImage.size(for: .tiny) / 2
     
-    public let headerButton     = PopUpIconButton()
-    public let boldButton       = IconButton()
-    public let italicButton     = IconButton()
-    public let underlineButton  = IconButton()
-    public let listButton       = IconButton()
-    public let codeButton       = IconButton()
+    public let headerButton         = PopUpIconButton()
+    public let boldButton           = IconButton()
+    public let italicButton         = IconButton()
+    public let numberListButton     = IconButton()
+    public let bulletListButton     = IconButton()
+    public let codeButton           = IconButton()
     
     public let buttons: [IconButton]
     
     required public init() {
-        buttons = [headerButton, boldButton, italicButton, underlineButton, listButton, codeButton]
+        buttons = [headerButton, boldButton, italicButton, numberListButton, bulletListButton, codeButton]
         super.init(frame: CGRect.zero)
         setupViews()
     }
@@ -76,8 +67,8 @@ public final class MarkdownBarView: UIView {
         headerButton.setIcon(.markdownH1, with: .tiny, for: .normal)
         boldButton.setIcon(.markdownBold, with: .tiny, for: .normal)
         italicButton.setIcon(.markdownItalic, with: .tiny, for: .normal)
-        underlineButton.setIcon(.markdownUnderline, with: .tiny, for: .normal)
-        listButton.setIcon(.markdownList, with: .tiny, for: .normal)
+        numberListButton.setIcon(.markdownList, with: .tiny, for: .normal)
+        bulletListButton.setIcon(.markdownList, with: .tiny, for: .normal)
         codeButton.setIcon(.markdownCode, with: .tiny, for: .normal)
         
         for button in buttons {
@@ -107,15 +98,15 @@ public final class MarkdownBarView: UIView {
         switch sender {
         case headerButton:
             switch headerButton.iconType(for: .normal) {
-            case .markdownH1:   elementType = .header(.h1)
-            case .markdownH2:   elementType = .header(.h2)
-            default:            elementType = .header(.h3)
+            case .markdownH1:       elementType = .header(.h1)
+            case .markdownH2:       elementType = .header(.h2)
+            default:                elementType = .header(.h3)
             }
-        case boldButton:        elementType = .bold
-        case italicButton:      elementType = .italic
-        case underlineButton:   elementType = .underline
-        case listButton:        elementType = .list
-        case codeButton:        elementType = .code
+        case boldButton:            elementType = .bold
+        case italicButton:          elementType = .italic
+        case numberListButton:      elementType = .list(.number)
+        case bulletListButton:      elementType = .list(.bullet)
+        case codeButton:            elementType = .code
         default: return
         }
         
