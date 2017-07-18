@@ -46,7 +46,6 @@
 #import "TextMessageCell.h"
 
 #import "ZClientViewController.h"
-#import "ConversationListViewController.h"
 #import "ParticipantsViewController.h"
 #import "ConversationViewController+ParticipantsPopover.h"
 #import "MediaBar.h"
@@ -66,7 +65,6 @@
 #import "VerticalTransition.h"
 
 #import "UIColor+WAZExtensions.h"
-#import "KeyboardFrameObserver+iOS.h"
 #import "AnalyticsTracker.h"
 #import "AnalyticsTracker+Invitations.h"
 #import "UIViewController+Errors.h"

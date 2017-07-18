@@ -210,6 +210,8 @@ import Foundation
         developerCellDescriptors.append(findUnreadConvoButton)
         let shareDatabase = SettingsShareDatabaseCellDescriptor()
         developerCellDescriptors.append(shareDatabase)
+        let reloadUIButton = SettingsButtonCellDescriptor(title: "Reload user interface", isDestructive: false, selectAction: SettingsCellDescriptorFactory.reloadUserInterface)
+        developerCellDescriptors.append(reloadUIButton)
         
         return SettingsGroupCellDescriptor(items: [SettingsSectionDescriptor(cellDescriptors:developerCellDescriptors)], title: title, icon: .effectRobot)
     }
@@ -340,6 +342,14 @@ import Foundation
         userSession.enqueueChanges {
             conversation.append(genericMessage, expires: false, hidden: false)
         }
+    }
+    
+    private static func reloadUserInterface(_ type: SettingsCellDescriptorType) {
+        guard let rootViewController = UIApplication.shared.keyWindow?.rootViewController as? RootViewController else {
+            return
+        }
+        
+        rootViewController.reloadCurrentController()
     }
 }
 

@@ -66,6 +66,7 @@
 #import "VoiceChannelCollectionViewLayout.h"
 
 // View Controllers
+#import "RootViewController.h"
 #import "ZClientViewController.h"
 #import "ZClientViewController+Internal.h"
 #import "FormFlowViewController.h"
