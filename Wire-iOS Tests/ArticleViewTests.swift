@@ -24,12 +24,7 @@ import WireLinkPreview
 class ArticleViewTests: ZMSnapshotTestCase {
     
     var sut: ArticleView!
-    
-    override func setUp() {
-        super.setUp()
-        accentColor = .vividRed
-    }
-    
+        
     /// MARK - Fixture
     
     func articleWithoutPicture() -> MockTextMessageData {

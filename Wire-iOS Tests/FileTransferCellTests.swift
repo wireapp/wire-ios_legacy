@@ -49,11 +49,6 @@ class FileTransferCellTests: ZMSnapshotTestCase {
       
         return cell.wrapInTableView()
     }
-    
-    override func setUp() {
-        super.setUp()
-        self.accentColor = .vividRed
-    }
    
     func testUploadedCell_fromThisDevice() {
         let cell = self.wrappedCellWithConfig({
