@@ -201,7 +201,7 @@
     
     [self configureAudioButton:self.audioButton];
     [self configureEmojiButton:self.emojiButton];
-    [self configureMarkdownButton:self.markdownButton];
+    [self configureMarkdownButton];
     [self configureEphemeralKeyboardButton:self.hourglassButton];
     [self configureEphemeralKeyboardButton:self.ephemeralIndicatorButton];
     

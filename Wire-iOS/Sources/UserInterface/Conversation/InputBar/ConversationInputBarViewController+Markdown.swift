@@ -21,14 +21,14 @@ import Foundation
 
 extension ConversationInputBarViewController {
     
-    func configureMarkdownButton(_ button: IconButton) {
-        button.addTarget(self, action: #selector(markdownButtonTapped), for: .touchUpInside)
+    func configureMarkdownButton() {
         
-        button.setIcon(.markdownToggle, with: .tiny, for: .normal)
-        button.setIconColor(ColorScheme.default().color(withName: ColorSchemeColorIconNormal), for: .normal)
+        markdownButton.addTarget(self, action: #selector(markdownButtonTapped), for: .touchUpInside)
+        markdownButton.setIcon(.markdownToggle, with: .tiny, for: .normal)
+        markdownButton.setIconColor(ColorScheme.default().color(withName: ColorSchemeColorIconNormal), for: .normal)
     }
     
-    public func updateMarkdownButton(_ button: IconButton) {
+    public func updateMarkdownButton() {
     
         let color: UIColor
         
@@ -38,7 +38,8 @@ extension ConversationInputBarViewController {
             color = ColorScheme.default().color(withName: ColorSchemeColorIconNormal)
         }
         
-        button.setIconColor(color, for: .normal)
+        markdownButton.setIconColor(color, for: .normal)
+        markdownButton.isEnabled = !inputBar.isEditing
     }
     
     func markdownButtonTapped(_ sender: IconButton) {
@@ -50,6 +51,6 @@ extension ConversationInputBarViewController {
             inputBar.setInputBarState(.writing(ephemeral: sendButtonState.ephemeral), animated: true)
         }
         
-        updateMarkdownButton(sender)
+        updateMarkdownButton()
     }
 }

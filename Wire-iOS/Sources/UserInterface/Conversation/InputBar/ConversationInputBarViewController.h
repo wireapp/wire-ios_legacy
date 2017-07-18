@@ -52,6 +52,7 @@ typedef NS_ENUM(NSUInteger, ConversationInputBarViewControllerMode) {
 
 @property (nonatomic, readonly) IconButton *photoButton;
 @property (nonatomic, readonly) IconButton *ephemeralIndicatorButton;
+@property (nonatomic, readonly) IconButton *markdownButton;
 @property (nonatomic, readonly) InputBar *inputBar;
 @property (nonatomic, readonly) ZMConversation *conversation;
 @property (nonatomic, weak) id <ConversationInputBarViewControllerDelegate> delegate;
