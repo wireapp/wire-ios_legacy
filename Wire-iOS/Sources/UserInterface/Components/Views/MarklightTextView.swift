@@ -68,11 +68,9 @@ public class MarklightTextView: NextResponderTextView {
         
         guard let selection = selectedTextRange else { return }
         
-        // caret position before insertions
-        let start = selection.start
-        
         switch type {
         case .header(let size):
+            
             let syntax: String
             switch size {
             case .h1: syntax = "# "
@@ -80,86 +78,50 @@ public class MarklightTextView: NextResponderTextView {
             case .h3: syntax = "### "
             }
             
-            // insert syntax at start of line
-            let lineStart = lineStartForCurrentSelection()
-            replace(textRange(from: lineStart, to: lineStart)!, withText: syntax)
+            insertPrefixSyntax(syntax, forSelection: selection)
             
-            // preserve relative caret position
-            let newPos = position(from: start, offset: syntax.characters.count)!
-            selectedTextRange = textRange(from: newPos, to: newPos)
-            
-        case .numberList:
-            // insert syntax at start of line
-            let lineStart = lineStartForCurrentSelection()
-            replace(textRange(from: lineStart, to: lineStart)!, withText: "1. ")
-            // preserve relative caret position
-            let newPos = position(from: start, offset: 3)!
-            selectedTextRange = textRange(from: newPos, to: newPos)
-
-        case .bulletList:
-            // insert syntax at start of line
-            let lineStart = lineStartForCurrentSelection()
-            replace(textRange(from: lineStart, to: lineStart)!, withText: "- ")
-            // preserve relative caret position
-            let newPos = position(from: start, offset: 2)!
-            selectedTextRange = textRange(from: newPos, to: newPos)
-        
-        case .bold:
-            // wrap syntax around selection
-            if !selection.isEmpty {
-                let preRange = textRange(from: start, to: start)!
-                replace(preRange, withText: "**")
-                
-                // offset acounts for first insertion
-                let end = position(from: selection.end, offset: 2)!
-                let postRange = textRange(from: end, to: end)!
-                replace(postRange, withText: "**")
-            }
-            else {
-                // insert syntax & move caret inside
-                replace(selection, withText: "****")
-                let newPos = position(from: start, offset: 2)!
-                selectedTextRange = textRange(from: newPos, to: newPos)
-            }
-            
-        case .italic:
-            // wrap syntax around selection
-            if !selection.isEmpty {
-                let preRange = textRange(from: start, to: start)!
-                replace(preRange, withText: "_")
-                
-                // offset acounts for first insertion
-                let end = position(from: selection.end, offset: 1)!
-                let postRange = textRange(from: end, to: end)!
-                replace(postRange, withText: "_")
-            }
-            else {
-                // insert syntax & move caret inside
-                replace(selection, withText: "__")
-                let newPos = position(from: start, offset: 1)!
-                selectedTextRange = textRange(from: newPos, to: newPos)
-            }
-            
-        case .code:
-            // wrap syntax around selection
-            if !selection.isEmpty {
-                let preRange = textRange(from: start, to: start)!
-                replace(preRange, withText: "`")
-                
-                // offset acounts for first insertion
-                let end = position(from: selection.end, offset: 1)!
-                let postRange = textRange(from: end, to: end)!
-                replace(postRange, withText: "`")
-            }
-            else {
-                // insert syntax & move caret inside
-                replace(selection, withText: "``")
-                let newPos = position(from: start, offset: 1)!
-                selectedTextRange = textRange(from: newPos, to: newPos)
-            }
+        case .numberList:   insertPrefixSyntax("1. ", forSelection: selection)
+        case .bulletList:   insertPrefixSyntax("- ", forSelection: selection)
+        case .bold:         insertWrapSyntax("**", forSelection: selection)
+        case .italic:       insertWrapSyntax("_", forSelection: selection)
+        case .code:         insertWrapSyntax("`", forSelection: selection)
         }
     }
     
+    private func insertPrefixSyntax(_ syntax: String, forSelection selection: UITextRange) {
+        
+        // original start
+        let start = selection.start
+        // insert syntax at start of line
+        let lineStart = lineStartForCurrentSelection()
+        replace(textRange(from: lineStart, to: lineStart)!, withText: syntax)
+        // preserve relative caret position
+        let newPos = position(from: start, offset: syntax.characters.count)!
+        selectedTextRange = textRange(from: newPos, to: newPos)
+    }
+    
+    private func insertWrapSyntax(_ syntax: String, forSelection selection: UITextRange) {
+        
+        // original start
+        let start = selection.start
+        
+        // wrap syntax around selection
+        if !selection.isEmpty {
+            let preRange = textRange(from: start, to: start)!
+            replace(preRange, withText: syntax)
+            
+            // offset acounts for first insertion
+            let end = position(from: selection.end, offset: syntax.characters.count)!
+            let postRange = textRange(from: end, to: end)!
+            replace(postRange, withText: syntax)
+        }
+        else {
+            // insert syntax & move caret inside
+            replace(selection, withText: syntax + syntax)
+            let newPos = position(from: start, offset: syntax.characters.count)!
+            selectedTextRange = textRange(from: newPos, to: newPos)
+        }
+    }
     
     private func lineStartForCurrentSelection() -> UITextPosition {
         
