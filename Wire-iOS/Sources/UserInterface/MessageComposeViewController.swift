@@ -19,6 +19,7 @@
 
 import Foundation
 import Cartography
+import Marklight
 
 
 protocol MessageComposeViewControllerDelegate: class {
@@ -35,7 +36,7 @@ final class MessageComposeViewController: UIViewController {
     fileprivate let messageTextView = MarklightTextView()
     private let color = ColorScheme.default().color(withName:)
     private let sendButtonView = DraftSendInputAccessoryView()
-    private let markdownBarView = MarkdownBarView()
+    fileprivate let markdownBarView = MarkdownBarView()
 
     private var draft: MessageDraft?
     private let persistence: MessageDraftStorage
@@ -249,6 +250,7 @@ extension MessageComposeViewController: UITextViewDelegate {
 
     func textViewDidChange(_ textView: UITextView) {
         updateDraftThrottled()
+        markdownBarView.updateIcons(messageTextView.markdownElementsForRange(nil))
     }
 
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
@@ -258,7 +260,10 @@ extension MessageComposeViewController: UITextViewDelegate {
 
         return true
     }
-
+    
+    func textViewDidChangeSelection(_ textView: UITextView) {
+        markdownBarView.updateIcons(messageTextView.markdownElementsForRange(nil))
+    }
 }
 
 

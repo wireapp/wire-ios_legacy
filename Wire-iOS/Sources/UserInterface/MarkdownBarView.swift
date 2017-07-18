@@ -18,6 +18,7 @@
 
 import UIKit
 import Cartography
+import Marklight
 
 
 public protocol MarkdownBarViewDelegate: class {
@@ -31,6 +32,8 @@ public final class MarkdownBarView: UIView {
     
     private let stackView =  UIStackView()
     private let buttonMargin = WAZUIMagic.cgFloat(forIdentifier: "content.left_margin") / 2 - UIImage.size(for: .tiny) / 2
+    private let accentColor = ColorScheme.default().accentColor
+    private let normalColor = ColorScheme.default().color(withName: ColorSchemeColorIconNormal)
     
     public let headerButton         = PopUpIconButton()
     public let boldButton           = IconButton()
@@ -104,12 +107,31 @@ public final class MarkdownBarView: UIView {
             }
         case boldButton:            elementType = .bold
         case italicButton:          elementType = .italic
-        case numberListButton:      elementType = .list(.number)
-        case bulletListButton:      elementType = .list(.bullet)
+        case numberListButton:      elementType = .numberList
+        case bulletListButton:      elementType = .bulletList
         case codeButton:            elementType = .code
         default: return
         }
         
         delegate?.markdownBarView(self, didSelectElementType: elementType, with: sender)
+    }
+    
+    public func updateIcons(_ types: [MarkdownElementType]) {
+        
+        buttons.forEach { $0.setIconColor(normalColor, for: .normal) }
+        var buttonsToHighlight = [IconButton]()
+        
+        for type in types {
+            switch type {
+            case .header(_): buttonsToHighlight.append(headerButton)
+            case .italic: buttonsToHighlight.append(italicButton)
+            case .bold: buttonsToHighlight.append(boldButton)
+            case .numberList: buttonsToHighlight.append(numberListButton)
+            case .bulletList: buttonsToHighlight.append(bulletListButton)
+            case .code: buttonsToHighlight.append(codeButton)
+            }
+        }
+        
+        buttonsToHighlight.forEach { $0.setIconColor(accentColor, for: .normal) }
     }
 }

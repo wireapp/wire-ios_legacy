@@ -19,22 +19,17 @@
 import UIKit
 import Marklight
 
-public enum MarkdownElementType {
-    
-    public enum HeaderLevel {
-        case h1, h2, h3
-    }
-    
-    public enum ListType {
-        case number, bullet
-    }
-    
-    case header(HeaderLevel), bold, italic, list(ListType), code
-}
+let MarklightTextViewDidChangeSelectionNotification = "MarklightTextViewDidChangeSelectionNotification"
 
 public class MarklightTextView: NextResponderTextView {
     
     fileprivate let marklightTextStorage = MarklightTextStorage()
+    
+    public override var selectedTextRange: UITextRange? {
+        didSet {
+            NotificationCenter.default.post(name: Notification.Name(rawValue: MarklightTextViewDidChangeSelectionNotification), object: self)
+        }
+    }
     
     public override init(frame: CGRect, textContainer: NSTextContainer?) {
         
@@ -48,7 +43,7 @@ public class MarklightTextView: NextResponderTextView {
         
         super.init(frame: frame, textContainer: marklightTextContainer)
     }
-    
+
     required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -93,26 +88,22 @@ public class MarklightTextView: NextResponderTextView {
             let newPos = position(from: start, offset: syntax.characters.count)!
             selectedTextRange = textRange(from: newPos, to: newPos)
             
-        case .list(let type):
-            
-            let offset: Int
-            switch type {
-            case .number:
-                // insert syntax at start of line
-                let lineStart = lineStartForCurrentSelection()
-                replace(textRange(from: lineStart, to: lineStart)!, withText: "1. ")
-                offset = 3
-            case .bullet:
-                // insert syntax at start of line
-                let lineStart = lineStartForCurrentSelection()
-                replace(textRange(from: lineStart, to: lineStart)!, withText: "- ")
-                offset = 2
-            }
-            
+        case .numberList:
+            // insert syntax at start of line
+            let lineStart = lineStartForCurrentSelection()
+            replace(textRange(from: lineStart, to: lineStart)!, withText: "1. ")
             // preserve relative caret position
-            let newPos = position(from: start, offset: offset)!
+            let newPos = position(from: start, offset: 3)!
             selectedTextRange = textRange(from: newPos, to: newPos)
-            
+
+        case .bulletList:
+            // insert syntax at start of line
+            let lineStart = lineStartForCurrentSelection()
+            replace(textRange(from: lineStart, to: lineStart)!, withText: "- ")
+            // preserve relative caret position
+            let newPos = position(from: start, offset: 2)!
+            selectedTextRange = textRange(from: newPos, to: newPos)
+        
         case .bold:
             // wrap syntax around selection
             if !selection.isEmpty {
@@ -188,5 +179,27 @@ public class MarklightTextView: NextResponderTextView {
         return tokenizer.position(from: caretPos,
                                   toBoundary: .paragraph,
                                   inDirection: UITextStorageDirection.backward.rawValue) ?? beginningOfDocument
+    }
+    
+    public func markdownElementsForRange(_ range: NSRange?) -> [MarkdownElementType] {
+        
+        let groupStyler = (textStorage as! MarklightTextStorage).groupStyler
+        let selection = range ?? selectedRange
+        var types = [MarkdownElementType]()
+        
+        // TODO: different header types
+        let elementTypes: [MarkdownElementType] = [.header(.h1), .italic, .bold, .numberList, .bulletList, .code]
+        
+        for type in elementTypes {
+            for range in groupStyler.rangesForElementType(type) {
+                // selection is contained in range
+                if NSEqualRanges(range, NSUnionRange(selection, range)) {
+                    types.append(type)
+                    break
+                }
+            }
+        }
+        
+        return types
     }
 }

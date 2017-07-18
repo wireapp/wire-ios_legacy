@@ -21,7 +21,7 @@ import UIKit
 import Cartography
 import Classy
 import WireExtensionComponents
-
+import Marklight
 
 extension Settings {
     var returnKeyType: UIReturnKeyType {
@@ -185,7 +185,8 @@ private struct InputBarConstants {
         setupViews()
         createConstraints()
         updateTopSeparator()
-
+        
+        notificationCenter.addObserver(self, selector: #selector(textViewDidChangeSelection), name: Notification.Name(rawValue: MarklightTextViewDidChangeSelectionNotification), object: textView)
         notificationCenter.addObserver(self, selector: #selector(textViewTextDidChange), name: NSNotification.Name.UITextViewTextDidChange, object: textView)
         notificationCenter.addObserver(self, selector: #selector(textViewDidBeginEditing), name: NSNotification.Name.UITextViewTextDidBeginEditing, object: nil)
         notificationCenter.addObserver(self, selector: #selector(textViewDidEndEditing), name: NSNotification.Name.UITextViewTextDidEndEditing, object: nil)
@@ -476,6 +477,7 @@ extension InputBar {
     func textViewTextDidChange(_ notification: Notification) {
         updateFakeCursorVisibility()
         updateEditViewState()
+        markdownView.updateIcons(textView.markdownElementsForRange(nil))
     }
     
     func textViewDidBeginEditing(_ notification: Notification) {
@@ -487,7 +489,11 @@ extension InputBar {
         updateFakeCursorVisibility()
         updateEditViewState()
     }
-
+    
+    func textViewDidChangeSelection(_ notification: Notification) {
+        
+        markdownView.updateIcons(textView.markdownElementsForRange(nil))
+    }
 }
 
 extension InputBar {
