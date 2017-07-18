@@ -51,12 +51,7 @@ class AudioMessageCellTests: ZMSnapshotTestCase {
         
         return cell.wrapInTableView()
     }
-    
-    override func setUp() {
-        super.setUp()
-        self.accentColor = .vividRed
-    }
-    
+        
     // MARK : Uploaded (File not downloaded)
     
     func testUploadedCell_fromThisDevice() {

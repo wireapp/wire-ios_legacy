@@ -24,11 +24,6 @@ import MapKit
 class LocationMessageCellTests: ZMSnapshotTestCase {
 
     typealias CellConfiguration = (MockMessage) -> Void
-    
-    override func setUp() {
-        super.setUp()
-        accentColor = .vividRed
-    }
 
     func testThatItRendersLocationCellWithAddressCorrect() {
         // This is experimental as the MKMapView might break the snapshot tests,
