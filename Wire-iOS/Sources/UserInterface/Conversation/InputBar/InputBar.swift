@@ -320,7 +320,7 @@ private struct InputBarConstants {
             }
             return "conversation.input_bar.placeholder".localized
         case .editing: return nil
-        case .markingDown: return nil
+        case .markingDown: return "conversation.input_bar.placeholder".localized
         }
     }
     
