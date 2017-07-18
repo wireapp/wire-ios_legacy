@@ -20,7 +20,7 @@
 import UIKit
 import Cartography
 import CoreLocation
-import AddressBook
+import Contacts
 import CocoaLumberjackSwift
 import Classy
 
@@ -75,8 +75,8 @@ class ClientTableViewCell: UITableViewCell {
                 CLGeocoder().reverseGeocodeLocation(userClient.activationLocation, completionHandler: { (placemarks: [CLPlacemark]?, error: Error?) -> Void in
                     
                     if let placemark = placemarks?.first,
-                        let addressCountry = placemark.addressDictionary?[kABPersonAddressCountryCodeKey as String] as? String,
-                        let addressCity = placemark.addressDictionary?[kABPersonAddressCityKey as String],
+                        let addressCountry = placemark.addressDictionary?[CNPostalAddressCountryKey] as? String,
+                        let addressCity = placemark.addressDictionary?[CNPostalAddressCityKey],
                         localClient == self.userClient &&
                             error == nil {
                         

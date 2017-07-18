@@ -18,7 +18,7 @@
 
 
 import Foundation
-import AddressBook
+import Contacts
 
 /// Allows access to address book for search
 @objc open class AddressBookHelper : NSObject {
@@ -37,37 +37,26 @@ import AddressBook
 extension AddressBookHelper {
     
     public var isAddressBookAccessUnknown : Bool {
-        return ABAddressBookGetAuthorizationStatus() == .notDetermined
+        return CNContactStore.authorizationStatus(for: .contacts) == .notDetermined
     }
     
     public var isAddressBookAccessGranted : Bool {
-        return ABAddressBookGetAuthorizationStatus() == .authorized
+        return CNContactStore.authorizationStatus(for: .contacts) == .authorized
     }
     
     public var isAddressBookAccessDisabled : Bool {
-        return ABAddressBookGetAuthorizationStatus() == .denied
+        return CNContactStore.authorizationStatus(for: .contacts) == .denied
     }
     
     /// Request access to the user. Will asynchronously invoke the callback passing as argument
     /// whether access was granted.
     public func requestPermissions(_ callback: ((Bool)->())?) {
-        addressBookIsolationQueue.async {
-            
-            guard let addressBookRef = ABAddressBookCreateWithOptions(nil, nil)?.takeRetainedValue() else {
-                DispatchQueue.main.async {
-                    callback?(false)
-                }
-                return
-            }
-            
-            ABAddressBookRequestAccessWithCompletion(addressBookRef) { [weak self] (granted, error) in
+        CNContactStore().requestAccess(for: .contacts, completionHandler: { [weak self] authorized, _ in
+            DispatchQueue.main.async {                
                 self?.persistCurrentAccessStatus()
-
-                DispatchQueue.main.async {
-                    callback?(granted)
-                }
+                callback?(authorized)
             }
-        }
+        })
     }
     
     /// Whether enough time has passed since last search to request a new search
@@ -111,18 +100,18 @@ extension AddressBookHelper {
 extension AddressBookHelper {
 
     @objc public func persistCurrentAccessStatus() {
-        let status = ABAddressBookGetAuthorizationStatus().rawValue as Int
+        let status = CNContactStore.authorizationStatus(for: .contacts).rawValue as Int
         UserDefaults.standard.set(NSNumber(value: status), forKey: addressBookLastAccessStatusKey)
     }
 
-    private var lastAccessStatus: ABAuthorizationStatus? {
+    private var lastAccessStatus: CNAuthorizationStatus? {
         guard let value = UserDefaults.standard.object(forKey: addressBookLastAccessStatusKey) as? NSNumber else { return nil }
-        return ABAuthorizationStatus(rawValue: value.intValue)
+        return CNAuthorizationStatus(rawValue: value.intValue)
     }
 
     @objc public var accessStatusDidChangeToGranted: Bool {
         guard let lastStatus = lastAccessStatus else { return false }
-        return ABAddressBookGetAuthorizationStatus() != lastStatus && isAddressBookAccessGranted
+        return CNContactStore.authorizationStatus(for: .contacts) != lastStatus && isAddressBookAccessGranted
     }
 
 }
@@ -153,8 +142,6 @@ private let addressBookLastSearchDate = "UserDefaultsKeyAddressBookExportDate"
 private let addressBookSearchPerfomedAtLeastOnceKey = "AddressBookWasUploaded"
 private let addressBookSearchWasPostponedKey = "AddressBookUploadWasPostponed"
 private let addressBookLastAccessStatusKey = "AddressBookLastAccessStatus"
-
-private let addressBookIsolationQueue = DispatchQueue(label: "Address book helper", attributes: [])
 
 // MARK: - Testing
 @objc public protocol AddressBookHelperConfiguration : NSObjectProtocol {

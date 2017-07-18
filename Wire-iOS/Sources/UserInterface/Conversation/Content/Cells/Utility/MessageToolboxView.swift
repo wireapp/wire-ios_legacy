@@ -65,13 +65,7 @@ extension ZMSystemMessageData {
     fileprivate static let resendLink = URL(string: "settings://resend-message")!
     fileprivate static let deleteLink = URL(string: "settings://delete-message")!
 
-    private static let ephemeralTimeFormatter: DateComponentsFormatter = {
-        let formatter = DateComponentsFormatter()
-        formatter.unitsStyle = .full
-        formatter.allowedUnits = [.day, .hour, .minute, .second]
-        formatter.zeroFormattingBehavior = .dropAll
-        return formatter
-    }()
+    private static let ephemeralTimeFormatter = EphemeralTimeoutFormatter()
 
     open let statusLabel = TTTAttributedLabel(frame: CGRect.zero)
     open let reactionsView = ReactionsView()

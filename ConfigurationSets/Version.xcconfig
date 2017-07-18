@@ -16,6 +16,4 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 // 
 
-
-
-WIRE_SHORT_VERSION = 2.39
+WIRE_SHORT_VERSION = 2.41

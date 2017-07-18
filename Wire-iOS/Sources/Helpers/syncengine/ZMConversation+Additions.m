@@ -25,7 +25,6 @@
 #import <AVFoundation/AVFoundation.h>
 #import "Analytics+iOS.h"
 #import "AnalyticsBase.h"
-#import "UIAlertView+Zeta.h"
 #import "UIAlertController+Wire.h"
 #import "AppDelegate.h"
 #import "VoiceChannelController.h"

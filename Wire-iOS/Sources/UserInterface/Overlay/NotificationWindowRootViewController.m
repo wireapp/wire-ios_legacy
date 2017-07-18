@@ -124,12 +124,12 @@
 
 - (BOOL)shouldAutorotate
 {
-    return UIApplication.sharedApplication.wr_topMostViewController.shouldAutorotate;
+    return UIApplication.sharedApplication.wr_topmostViewController.shouldAutorotate;
 }
 
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations
 {
-    return UIApplication.sharedApplication.wr_topMostViewController.supportedInterfaceOrientations;
+    return UIApplication.sharedApplication.wr_topmostViewController.supportedInterfaceOrientations;
 }
 
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator
