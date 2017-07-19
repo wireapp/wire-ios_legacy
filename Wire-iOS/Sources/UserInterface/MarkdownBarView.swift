@@ -23,6 +23,7 @@ import Marklight
 
 public protocol MarkdownBarViewDelegate: class {
     func markdownBarView(_ markdownBarView: MarkdownBarView, didSelectElementType type: MarkdownElementType, with sender: IconButton)
+    func markdownBarView(_ markdownBarView: MarkdownBarView, didDeselectElementType type: MarkdownElementType, with sender: IconButton)
 }
 
 
@@ -43,6 +44,7 @@ public final class MarkdownBarView: UIView {
     public let codeButton           = IconButton()
     
     public let buttons: [IconButton]
+    public var activeModes = [MarkdownElementType]()
     
     required public init() {
         buttons = [headerButton, boldButton, italicButton, numberListButton, bulletListButton, codeButton]
@@ -94,7 +96,7 @@ public final class MarkdownBarView: UIView {
     
     // MARK: Actions
     
-    func buttonTapped(sender: IconButton) {
+    @objc private func buttonTapped(sender: IconButton) {
         
         let elementType: MarkdownElementType
         
@@ -113,15 +115,19 @@ public final class MarkdownBarView: UIView {
         default: return
         }
         
-        delegate?.markdownBarView(self, didSelectElementType: elementType, with: sender)
+        if sender.iconColor(for: .normal) != normalColor {
+            delegate?.markdownBarView(self, didDeselectElementType: elementType, with: sender)
+        } else {
+            delegate?.markdownBarView(self, didSelectElementType: elementType, with: sender)
+        }
     }
     
-    public func updateIcons(_ types: [MarkdownElementType]) {
+    public func updateIconsForModes(_ modes: [MarkdownElementType]) {
         
         buttons.forEach { $0.setIconColor(normalColor, for: .normal) }
         var buttonsToHighlight = [IconButton]()
         
-        for type in types {
+        for type in modes {
             switch type {
             case .header(_): buttonsToHighlight.append(headerButton)
             case .italic: buttonsToHighlight.append(italicButton)

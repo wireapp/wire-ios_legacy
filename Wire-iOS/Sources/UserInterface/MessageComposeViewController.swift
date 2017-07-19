@@ -59,7 +59,6 @@ final class MessageComposeViewController: UIViewController {
         navigationController?.navigationController?.interactivePopGestureRecognizer?.isEnabled = true
         navigationController?.navigationController?.interactivePopGestureRecognizer?.delegate = self
         messageTextView.becomeFirstResponder()
-        markdownBarView.delegate = self
     }
 
     override func viewWillDisappear(_ animated: Bool) {
@@ -88,6 +87,7 @@ final class MessageComposeViewController: UIViewController {
         messageTextView.delegate = self
         messageTextView.indicatorStyle = ColorScheme.default().indicatorStyle
         messageTextView.accessibilityLabel = "messageTextField"
+        markdownBarView.delegate = messageTextView
     }
 
     private dynamic func backButtonPressed() {
@@ -250,7 +250,7 @@ extension MessageComposeViewController: UITextViewDelegate {
 
     func textViewDidChange(_ textView: UITextView) {
         updateDraftThrottled()
-        markdownBarView.updateIcons(messageTextView.markdownElementsForRange(nil))
+        markdownBarView.updateIconsForModes(messageTextView.markdownElementsForRange(nil))
     }
 
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
@@ -262,7 +262,7 @@ extension MessageComposeViewController: UITextViewDelegate {
     }
     
     func textViewDidChangeSelection(_ textView: UITextView) {
-        markdownBarView.updateIcons(messageTextView.markdownElementsForRange(nil))
+        markdownBarView.updateIconsForModes(messageTextView.markdownElementsForRange(nil))
     }
 }
 
@@ -303,12 +303,5 @@ extension MessageComposeViewController: UIGestureRecognizerDelegate {
     @nonobjc public func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
         return navigationController?.navigationController?.interactivePopGestureRecognizer == gestureRecognizer
             && navigationController?.navigationController?.viewControllers.count > 1
-    }
-}
-
-extension MessageComposeViewController: MarkdownBarViewDelegate {
-    
-    func markdownBarView(_ markdownBarView: MarkdownBarView, didSelectElementType type: MarkdownElementType, with sender: IconButton) {
-        messageTextView.insertSyntaxForMarkdownElement(type: type)
     }
 }

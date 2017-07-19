@@ -123,6 +123,80 @@ public class MarklightTextView: NextResponderTextView {
         }
     }
     
+    fileprivate func deleteSyntaxForMarkdownElement(type: MarkdownElementType) {
+        
+        switch type {
+        case .header(_), .numberList, .bulletList:
+            removePrefixSyntaxForElement(type: type, forSelection: selectedRange)
+        case .italic, .bold, .code:
+            removeWrapSyntaxForElement(type: type, forSelection: selectedRange)
+        }
+    }
+    
+    private func removePrefixSyntaxForElement(type: MarkdownElementType, forSelection selection: NSRange) {
+        
+        let pattern: String
+        
+        switch type {
+        case .header(_):    pattern = "\\#{1,3}\\s*"
+        case .numberList:   pattern = "\\d+\\.\\s*"
+        case .bulletList:   pattern = "[*+-]\\s*"
+        default: return
+        }
+        
+        let lineRange = (text as NSString).lineRange(for: selection)
+        let regex = try! NSRegularExpression(pattern: pattern, options: [])
+        let matchRange = regex.rangeOfFirstMatch(in: text, options: [], range: lineRange)
+        text.removeSubrange(text.rangeFrom(range: matchRange))
+        
+        // shift selection location to account for removal, but don't exceed line start
+        let location = max(lineRange.location, selection.location - matchRange.length)
+        // how much of selection was part of syntax
+        let length = NSIntersectionRange(matchRange, selection).length
+        // preserve relative selection
+        selectedRange = NSMakeRange(location, selection.length - length)
+    }
+    
+    private func removeWrapSyntaxForElement(type: MarkdownElementType, forSelection selection: NSRange) {
+        
+        guard let range = rangeForMarkdownElement(type: type, forSelection: selection) else { return }
+        let preRange: NSRange
+        let postRange: NSRange
+        
+        switch type {
+        case .italic:
+            // TODO: adjust italic matcher so match range fits syntax exactly, then refactor
+            preRange = NSMakeRange(range.location + 1, 1)
+            postRange = NSMakeRange(range.location + range.length - 1, 1)
+        case .code:
+            preRange = NSMakeRange(range.location, 1)
+            postRange = NSMakeRange(range.location + range.length - 1, 1)
+        case .bold:
+            preRange = NSMakeRange(range.location, 2)
+            postRange = NSMakeRange(range.location + range.length - 2, 2)
+        default: return
+        }
+        
+        // remove postRange first so preRange is still valid
+        text.removeSubrange(text.rangeFrom(range: postRange))
+        text.removeSubrange(text.rangeFrom(range: preRange))
+        
+        // reposition caret:
+        // if non zero selection or caret pos was within postRange
+        if selection.length > 0 || NSEqualRanges(postRange, NSUnionRange(selection, postRange)) {
+            // move caret to end of token
+            selectedRange = NSMakeRange(postRange.location - preRange.length, 0)
+        }
+        else if NSEqualRanges(preRange, NSUnionRange(selection, preRange)) {
+            // caret was within preRange, move caret to start of token
+            selectedRange = NSMakeRange(preRange.location, 0)
+        }
+        else {
+            // caret pos was between syntax, preserve relative position
+            selectedRange = NSMakeRange(selection.location - preRange.length, 0)
+        }
+    }
+    
     private func lineStartForCurrentSelection() -> UITextPosition {
         
         // no selection
@@ -143,9 +217,21 @@ public class MarklightTextView: NextResponderTextView {
                                   inDirection: UITextStorageDirection.backward.rawValue) ?? beginningOfDocument
     }
     
-    public func markdownElementsForRange(_ range: NSRange?) -> [MarkdownElementType] {
+    private func rangeForMarkdownElement(type: MarkdownElementType, forSelection selection: NSRange) -> NSRange? {
         
         let groupStyler = (textStorage as! MarklightTextStorage).groupStyler
+        
+        for range in groupStyler.rangesForElementType(type) {
+            // selection is contained in range
+            if NSEqualRanges(range, NSUnionRange(selection, range)) {
+                return range
+            }
+        }
+        return nil
+    }
+    
+    public func markdownElementsForRange(_ range: NSRange?) -> [MarkdownElementType] {
+        
         let selection = range ?? selectedRange
         var types = [MarkdownElementType]()
         
@@ -153,15 +239,33 @@ public class MarklightTextView: NextResponderTextView {
         let elementTypes: [MarkdownElementType] = [.header(.h1), .italic, .bold, .numberList, .bulletList, .code]
         
         for type in elementTypes {
-            for range in groupStyler.rangesForElementType(type) {
-                // selection is contained in range
-                if NSEqualRanges(range, NSUnionRange(selection, range)) {
-                    types.append(type)
-                    break
-                }
+            if rangeForMarkdownElement(type: type, forSelection: selection) != nil {
+                types.append(type)
             }
         }
         
         return types
+    }
+}
+
+// MARK: MarkdownBarViewDelegate
+
+extension MarklightTextView: MarkdownBarViewDelegate {
+    
+    public func markdownBarView(_ markdownBarView: MarkdownBarView, didSelectElementType type: MarkdownElementType, with sender: IconButton) {
+        insertSyntaxForMarkdownElement(type: type)
+    }
+    
+    public func markdownBarView(_ markdownBarView: MarkdownBarView, didDeselectElementType type: MarkdownElementType, with sender: IconButton) {
+        deleteSyntaxForMarkdownElement(type: type)
+    }
+}
+
+extension String {
+    
+    func rangeFrom(range: NSRange) -> Range<String.Index> {
+        let start = index(startIndex, offsetBy: range.location)
+        let end = index(startIndex, offsetBy: range.location + range.length)
+        return start..<end
     }
 }

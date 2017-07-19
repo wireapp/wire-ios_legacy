@@ -210,14 +210,13 @@ private struct InputBarConstants {
         textView.keyboardAppearance = ColorScheme.default().keyboardAppearance
         textView.placeholderTextTransform = .upper
         textView.tintAdjustmentMode = .automatic
+        markdownView.delegate = textView
 
         updateReturnKey()
 
         contentSizeObserver = KeyValueObserver.observe(textView, keyPath: "contentSize", target: self, selector: #selector(textViewContentSizeDidChange))
         updateInputBar(withState: inputBarState, animated: false)
         updateColors()
-        
-        markdownView.delegate = self
     }
     
     fileprivate func createConstraints() {
@@ -477,7 +476,7 @@ extension InputBar {
     func textViewTextDidChange(_ notification: Notification) {
         updateFakeCursorVisibility()
         updateEditViewState()
-        markdownView.updateIcons(textView.markdownElementsForRange(nil))
+        markdownView.updateIconsForModes(textView.markdownElementsForRange(nil))
     }
     
     func textViewDidBeginEditing(_ notification: Notification) {
@@ -491,22 +490,12 @@ extension InputBar {
     }
     
     func textViewDidChangeSelection(_ notification: Notification) {
-        
-        markdownView.updateIcons(textView.markdownElementsForRange(nil))
+        markdownView.updateIconsForModes(textView.markdownElementsForRange(nil))
     }
 }
 
 extension InputBar {
     func applicationDidBecomeActive(_ notification: Notification) {
         startCursorBlinkAnimation()
-    }
-}
-
-// MARK: - Markdown bar delegate
-
-extension InputBar: MarkdownBarViewDelegate {
-    
-    public func markdownBarView(_ markdownBarView: MarkdownBarView, didSelectElementType type: MarkdownElementType, with sender: IconButton) {
-        textView.insertSyntaxForMarkdownElement(type: type)
     }
 }
