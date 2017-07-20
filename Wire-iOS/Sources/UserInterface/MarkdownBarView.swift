@@ -116,6 +116,7 @@ public final class MarkdownBarView: UIView {
         }
         
         if sender.iconColor(for: .normal) != normalColor {
+            sender.setIconColor(normalColor, for: .normal)
             delegate?.markdownBarView(self, didDeselectElementType: elementType, with: sender)
         } else {
             delegate?.markdownBarView(self, didSelectElementType: elementType, with: sender)
