@@ -23,7 +23,7 @@ let MarklightTextViewDidChangeSelectionNotification = "MarklightTextViewDidChang
 
 public class MarklightTextView: NextResponderTextView {
     
-    fileprivate let marklightTextStorage = MarklightTextStorage()
+    fileprivate let marklightTextStorage: MarklightTextStorage
     
     private var nextListNumber = 1
     private var nextListBullet = "-"
@@ -41,7 +41,12 @@ public class MarklightTextView: NextResponderTextView {
     
     public override init(frame: CGRect, textContainer: NSTextContainer?) {
         
-        MarklightTextView.configure(textStorage: marklightTextStorage, hideSyntax: false)
+        marklightTextStorage = MarklightTextStorage(style: MarklightTextView.configureStyle(hideSyntax: false))
+        
+        marklightTextStorage.defaultAttributes = [
+            NSForegroundColorAttributeName: ColorScheme.default().color(withName: ColorSchemeColorTextForeground),
+            NSFontAttributeName: FontSpec(.normal, .none).font!
+        ]
         
         let marklightLayoutManager = NSLayoutManager()
         marklightTextStorage.addLayoutManager(marklightLayoutManager)
@@ -62,20 +67,15 @@ public class MarklightTextView: NextResponderTextView {
         NotificationCenter.default.removeObserver(self)
     }
 
-    class func configure(textStorage: MarklightTextStorage, hideSyntax: Bool) {
+    class func configureStyle(hideSyntax: Bool) -> MarklightStyle {
         
         let colorScheme = ColorScheme.default()
-        textStorage.syntaxColor = colorScheme.color(withName: ColorSchemeColorAccent)
-        textStorage.quoteColor = colorScheme.color(withName: ColorSchemeColorTextForeground)
-        textStorage.codeColor = colorScheme.color(withName: ColorSchemeColorTextForeground)
-        textStorage.codeFontName = "Menlo"
-        textStorage.fontTextStyle = UIFontTextStyle.subheadline.rawValue
-        textStorage.hideSyntax = hideSyntax
-        
-        textStorage.defaultAttributes = [
-            NSForegroundColorAttributeName: colorScheme.color(withName: ColorSchemeColorTextForeground),
-            NSFontAttributeName: FontSpec(.normal, .none).font!
-        ]
+        let style = MarklightStyle(hideSyntax: hideSyntax)
+        style.syntaxAttributes = [NSForegroundColorAttributeName: colorScheme.accentColor]
+        style.codeAttributes[NSForegroundColorAttributeName] = colorScheme.color(withName: ColorSchemeColorTextForeground)
+        style.blockQuoteAttributes[NSForegroundColorAttributeName] = colorScheme.color(withName: ColorSchemeColorTextForeground)
+        style.fontTextStyle = UIFontTextStyle.subheadline.rawValue
+        return style
     }
     
     // MARK: Markdown Insertion

@@ -173,9 +173,10 @@ static inline NSDataDetector *linkDataDetector(void)
         // set markdown attribute styles here
         ColorScheme *colorScheme = [ColorScheme defaultColorScheme];
         MarklightStyle *style = [[MarklightStyle alloc] initWithHideSyntax:YES];
-        style.syntaxColor = [colorScheme colorWithName: ColorSchemeColorAccent];
-        style.codeColor = [colorScheme colorWithName: ColorSchemeColorTextForeground];
-        style.codeFontName = @"Menlo";
+        style.syntaxAttributes = @{NSForegroundColorAttributeName: colorScheme.accentColor};
+        NSMutableDictionary *codeAttributes = [[NSMutableDictionary alloc] initWithDictionary:style.codeAttributes];
+        [codeAttributes setValue:[colorScheme colorWithName: ColorSchemeColorTextForeground] forKey:NSForegroundColorAttributeName];
+        style.codeAttributes = codeAttributes;
         groupStyler = [[MarklightGroupStyler alloc] initWithStyle: style];
     }
     
