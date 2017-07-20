@@ -78,7 +78,7 @@
 "contacts_ui.title" = "Inviter des personnes";
 
 "contacts_ui.no_contact.title" = "Aucune conversation";
-"contacts_ui.no_contact.message" = "Démarrez une conversation, créez un group ou invitez des personnes à vous rejoindre.";
+"contacts_ui.no_contact.message" = "Démarrez une conversation, créez un groupe ou invitez des personnes à vous rejoindre.";
 
 "contacts_ui.no_contact.archived.title" = "Tout a été archivé";
 
@@ -131,8 +131,8 @@
 "list.archived_conversations_close" = "Fermer l'archive";
 
 "conversation.status.call" = "Appel en cours";
-"conversation.status.typing" = "Écris un message…";
-"conversation.status.typing.group" = "%@ : tape un message…";
+"conversation.status.typing" = "Écrit un message…";
+"conversation.status.typing.group" = "%@ : écrit un message…";
 "conversation.status.silenced" = "En sourdine";
 "conversation.status.blocked" = "Bloqué";
 
@@ -167,7 +167,7 @@
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Conversation
-"conversation.invite_more_people.title" = "Faîtes passer le mot !";
+"conversation.invite_more_people.title" = "Faites passer le mot !";
 "conversation.invite_more_people.description" = "Ajoutez quelqu'un à la conversation";
 "conversation.invite_more_people.explanation_url" = "https://support.wire.com";
 "conversation.invite_more_people.button_title" = "Ajouter des personnes";
@@ -313,7 +313,7 @@
 // Full sentence: "A message from %@ was not received. [...] (device d1b23c54f34a). This is a debug information.
 
 "content.system.unknown_message.body" = "Vous utilisez une ancienne version de Wire qui ne peut pas afficher ce message.";
-"content.system.unknown_message.body.link" = "Pourquoi cela s'est-il produit?";
+"content.system.unknown_message.body.link" = "Pourquoi cela s'est-il produit ?";
 
 "content.file.uploading" = "Envoi en cours…";
 "content.file.downloading" = "Téléchargement en cours…";
@@ -408,7 +408,7 @@
 "meta.menu.cancel_connection_request" = "Annuler la demande";
 
 // Delete conversation
-"meta.menu.delete_content.dialog_title" = "Effacer le contenu?";
+"meta.menu.delete_content.dialog_title" = "Effacer le contenu ?";
 "meta.menu.delete_content.dialog_message" = "Cela va supprimer l'historique de la conversation et la retirer de la liste.";
 "meta.menu.delete_content.leave_as_well_message" = "Et quitter la conversation";
 "meta.menu.delete_content.button_cancel" = "Annuler";
@@ -424,7 +424,7 @@
 // Conversation Degraded (security level lowered)
 "meta.degraded.degradation_reason_message.singular" = "%@ a commencé à utiliser un nouvel appareil.";
 "meta.degraded.degradation_reason_message.plural" = "%@ a commencé à utiliser de nouveaux appareils.";
-"meta.degraded.dialog_message" = "Voulez-vous toujours envoyer votre message?";
+"meta.degraded.dialog_message" = "Voulez-vous toujours envoyer votre message ?";
 "meta.degraded.show_device_button" = "Afficher l'appareil";
 "meta.degraded.send_anyway_button" = "Envoyer quand même";
 "meta.degraded.cancel_sending_button" = "Annuler";
@@ -436,7 +436,7 @@
 "profile.remove_dialog_button_remove" = "Supprimer";
 
 // Block dialog
-"profile.block_dialog.title" = "Bloquer?";
+"profile.block_dialog.title" = "Bloquer ?";
 "profile.block_dialog.message" = "%@ ne sera plus en mesure de vous contacter ou de vous ajouter à des conversations de groupe.";
 "profile.block_dialog.button_cancel" = "Annuler";
 "profile.block_dialog.button_block" = "Bloquer";
@@ -560,7 +560,7 @@
 
 "self.settings.account_picture_group.theme" = "Thème sombre";
 
-"self.settings.device_details.fingerprint.subtitle" = "Wire donne à chaque appareil une empreinte unique. Comparez les et vérifiez vos appareils et conversations.";
+"self.settings.device_details.fingerprint.subtitle" = "Wire donne à chaque appareil une empreinte unique. Comparez-les et vérifiez vos appareils et conversations.";
 "self.settings.device_details.reset_session.subtitle" = "Si les empreintes ne correspondent pas, réinitialisez la session afin de générer de nouvelles clés de chiffrement des deux côtés.";
 "self.settings.device_details.remove_device.subtitle" = "Supprimez cet appareil si vous ne l'utilisez plus. Vous serez déconnecté de cet appareil immédiatement.";
 "self.settings.device_details.reset_session.success" = "La session a été réinitialisée";
@@ -751,7 +751,7 @@
 
 "registration.verify_phone_number.instructions" = "Entrez le code de vérification que nous avons envoyé au %@";
 "registration.verify_phone_number.resend" = "Renvoyer";
-"registration.verify_phone_number.resend_placeholder" = "Aucun code ne s'affiche?\nVous pourrez en demander un nouveau dans %.0f secondes";
+"registration.verify_phone_number.resend_placeholder" = "Aucun code ne s'affiche ?\nVous pourrez en demander un nouveau dans %.0f secondes";
 
 "registration.verify_email.instructions" = "Nous avons envoyé un email à %@.\nCliquez sur le lien afin de vérifier votre adresse.";
 "registration.verify_email.resend.instructions" = "Message non reçu ?";
