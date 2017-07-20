@@ -25,9 +25,17 @@ public class MarklightTextView: NextResponderTextView {
     
     fileprivate let marklightTextStorage = MarklightTextStorage()
     
+    private var nextListNumber = 1
+    private var nextListBullet = "-"
+    private var needsNewNumberListItem = false
+    private var needsNewBulletListItem = false
+    
     public override var selectedTextRange: UITextRange? {
         didSet {
             NotificationCenter.default.post(name: Notification.Name(rawValue: MarklightTextViewDidChangeSelectionNotification), object: self)
+            // invalidate list item prefixes
+            nextListNumber = 1
+            nextListBullet = "-"
         }
     }
     
@@ -42,10 +50,16 @@ public class MarklightTextView: NextResponderTextView {
         marklightLayoutManager.addTextContainer(marklightTextContainer)
         
         super.init(frame: frame, textContainer: marklightTextContainer)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(textChangedHandler), name: NSNotification.Name.UITextViewTextDidChange, object: self)
     }
 
     required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
     }
 
     class func configure(textStorage: MarklightTextStorage, hideSyntax: Bool) {
@@ -64,6 +78,8 @@ public class MarklightTextView: NextResponderTextView {
         ]
     }
     
+    // MARK: Markdown Insertion
+    
     public func insertSyntaxForMarkdownElement(type: MarkdownElementType) {
         
         guard let selection = selectedTextRange else { return }
@@ -80,8 +96,8 @@ public class MarklightTextView: NextResponderTextView {
             
             insertPrefixSyntax(syntax, forSelection: selection)
             
-        case .numberList:   insertPrefixSyntax("1. ", forSelection: selection)
-        case .bulletList:   insertPrefixSyntax("- ", forSelection: selection)
+        case .numberList:   insertPrefixSyntax("\(nextListNumber). ", forSelection: selection)
+        case .bulletList:   insertPrefixSyntax("\(nextListBullet) ", forSelection: selection)
         case .bold:         insertWrapSyntax("**", forSelection: selection)
         case .italic:       insertWrapSyntax("_", forSelection: selection)
         case .code:         insertWrapSyntax("`", forSelection: selection)
@@ -93,7 +109,7 @@ public class MarklightTextView: NextResponderTextView {
         // original start
         let start = selection.start
         // insert syntax at start of line
-        let lineStart = lineStartForCurrentSelection()
+        let lineStart = lineStartForTextAtPosition(start)
         replace(textRange(from: lineStart, to: lineStart)!, withText: syntax)
         // preserve relative caret position
         let newPos = position(from: start, offset: syntax.characters.count)!
@@ -123,6 +139,8 @@ public class MarklightTextView: NextResponderTextView {
         }
     }
     
+    // MARK: Markdown Deletion
+    
     fileprivate func deleteSyntaxForMarkdownElement(type: MarkdownElementType) {
         
         switch type {
@@ -132,7 +150,7 @@ public class MarklightTextView: NextResponderTextView {
             removeWrapSyntaxForElement(type: type, forSelection: selectedRange)
         }
     }
-    
+
     private func removePrefixSyntaxForElement(type: MarkdownElementType, forSelection selection: NSRange) {
         
         let pattern: String
@@ -159,7 +177,7 @@ public class MarklightTextView: NextResponderTextView {
     
     private func removeWrapSyntaxForElement(type: MarkdownElementType, forSelection selection: NSRange) {
         
-        guard let range = rangeForMarkdownElement(type: type, forSelection: selection) else { return }
+        guard let range = rangeForMarkdownElement(type: type, enclosingSelection: selection) else { return }
         let preRange: NSRange
         let postRange: NSRange
         
@@ -197,27 +215,24 @@ public class MarklightTextView: NextResponderTextView {
         }
     }
     
-    private func lineStartForCurrentSelection() -> UITextPosition {
-        
-        // no selection
-        guard let caretPos = selectedTextRange?.start else {
-            return beginningOfDocument
-        }
+    // MARK: Range calculations
+    
+    private func lineStartForTextAtPosition(_ pos: UITextPosition) -> UITextPosition {
         
         // check if last char is newline
-        if let prevPos = position(from: caretPos, offset: -1) {
-            if text(in: textRange(from: prevPos, to: caretPos)!) == "\n" {
-                return caretPos
+        if let prevPos = position(from: pos, offset: -1) {
+            if text(in: textRange(from: prevPos, to: pos)!) == "\n" {
+                return pos
             }
         }
         
         // if caret is at document beginning, position() returns nil
-        return tokenizer.position(from: caretPos,
+        return tokenizer.position(from: pos,
                                   toBoundary: .paragraph,
                                   inDirection: UITextStorageDirection.backward.rawValue) ?? beginningOfDocument
     }
     
-    private func rangeForMarkdownElement(type: MarkdownElementType, forSelection selection: NSRange) -> NSRange? {
+    private func rangeForMarkdownElement(type: MarkdownElementType, enclosingSelection selection: NSRange) -> NSRange? {
         
         let groupStyler = (textStorage as! MarklightTextStorage).groupStyler
         
@@ -233,18 +248,72 @@ public class MarklightTextView: NextResponderTextView {
     public func markdownElementsForRange(_ range: NSRange?) -> [MarkdownElementType] {
         
         let selection = range ?? selectedRange
-        var types = [MarkdownElementType]()
         
         // TODO: different header types
         let elementTypes: [MarkdownElementType] = [.header(.h1), .italic, .bold, .numberList, .bulletList, .code]
         
-        for type in elementTypes {
-            if rangeForMarkdownElement(type: type, forSelection: selection) != nil {
-                types.append(type)
+        
+        return elementTypes.filter { type -> Bool in
+            return self.isMarkdownElement(type: type, activeForSelection: selection)
+        }
+    }
+    
+    private func isMarkdownElement(type: MarkdownElementType, activeForSelection selection: NSRange) -> Bool {
+        return rangeForMarkdownElement(type: type, enclosingSelection: selection) != nil
+    }
+    
+    // MARK: Automatic List Insertion
+    
+    public func handleNewLine() {
+        
+        guard let caretPos = selectedTextRange?.start else { return }
+        
+        let lineStart = lineStartForTextAtPosition(caretPos)
+        let lineTextRange = textRange(from: lineStart, to: caretPos)!
+        let location = offset(from: beginningOfDocument, to: lineTextRange.start)
+        let length = offset(from: lineTextRange.start, to: lineTextRange.end)
+        let lineRange = NSMakeRange(location, length)
+        
+        // if line is number list element
+        if isMarkdownElement(type: .numberList, activeForSelection: lineRange) {
+            // non empty number list item
+            let regex = try! NSRegularExpression(pattern: "(^\\d+)(?:[.][\\t ]+)(.|[\\t ])+", options: [.anchorsMatchLines])
+            
+            if let match = regex.firstMatch(in: text, options: [], range: lineRange) {
+                
+                let numberStr = text.substring(with: text.rangeFrom(range: match.rangeAt(1))) as NSString
+                nextListNumber = numberStr.integerValue + 1
+                needsNewNumberListItem = true
+
+            } else {
+                // replace empty list item with newline
+                text.removeSubrange(text.rangeFrom(range: lineRange))
+                nextListNumber = 1
+            }
+            
+        } else if isMarkdownElement(type: .bulletList, activeForSelection: lineRange) {
+            // non empty bullet list item
+            let regex = try! NSRegularExpression(pattern: "(^[*+-])(?:[\\t ]+)(.|[\\t ])+", options: [.anchorsMatchLines])
+            
+            if let match = regex.firstMatch(in: text, options: [], range: lineRange) {
+                nextListBullet = text.substring(with: text.rangeFrom(range: match.rangeAt(1)))
+                needsNewBulletListItem = true
+            } else {
+                // replace empty list item with newline
+                text.removeSubrange(text.rangeFrom(range: lineRange))
+                nextListBullet = "-"
             }
         }
-        
-        return types
+    }
+    
+    @objc private func textChangedHandler() {
+        if needsNewNumberListItem {
+            needsNewNumberListItem = false
+            insertSyntaxForMarkdownElement(type: .numberList)
+        } else if needsNewBulletListItem {
+            needsNewBulletListItem = false
+            insertSyntaxForMarkdownElement(type: .bulletList)
+        }
     }
 }
 

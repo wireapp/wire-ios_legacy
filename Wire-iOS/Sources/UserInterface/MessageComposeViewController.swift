@@ -254,6 +254,11 @@ extension MessageComposeViewController: UITextViewDelegate {
     }
 
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        
+        if text == "\n" {
+            (textView as! MarklightTextView).handleNewLine()
+        }
+        
         if range.location == 0 && text == " " && textView.text?.isEmpty ?? true {
             return false
         }

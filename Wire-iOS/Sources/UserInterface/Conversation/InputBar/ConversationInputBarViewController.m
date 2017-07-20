@@ -822,6 +822,12 @@
 
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
 {
+    // markdown text view needs to detect newlines
+    // in order to automatically insert new list items
+    if ([text isEqualToString:@"\n"]) {
+        [self.inputBar.textView handleNewLine];
+    }
+    
     if (!Settings.sharedSettings.disableSendButton) {
         // The send button is not disabled, we allow newlines and don't send.
         return YES;
