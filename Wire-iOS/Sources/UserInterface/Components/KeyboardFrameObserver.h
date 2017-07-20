@@ -23,7 +23,6 @@
 
 @interface KeyboardFrameObserver : NSObject
 
-
 - (CGRect)keyboardFrame;
 - (CGRect)keyboardFrameInView:(UIView *)view;
 

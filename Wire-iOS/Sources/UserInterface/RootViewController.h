@@ -17,18 +17,21 @@
 // 
 
 
-#import <UIKit/UIKit.h>
+@import UIKit;
 #import "WireSyncEngine+iOS.h"
 
 @class ZClientViewController;
-@class KeyboardFrameObserver;
+
+NS_ASSUME_NONNULL_BEGIN
 
 @interface RootViewController : UIViewController
-
 @property (nonatomic) BOOL isLoggedIn;
 @property (nonatomic) ZMUserSessionErrorCode signInErrorCode;
 
-@property (nonatomic, strong) ZClientViewController *zClientViewController;
-@property (nonatomic, readonly) KeyboardFrameObserver *keyboardFrameObserver;
+@property (nonatomic, strong, nullable) ZClientViewController *zClientViewController;
 
+// Debug method to force user interface reload.
+- (void)reloadCurrentController;
 @end
+
+NS_ASSUME_NONNULL_END

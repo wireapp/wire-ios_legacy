@@ -130,11 +130,6 @@
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     [ZMUserSession removeInitalSyncCompletionObserver:self];
-    [self removeUserProfileObserver];
-}
-
-- (void)removeUserProfileObserver
-{
     [self.userProfile removeObserverWithToken:self.userProfileObserverToken];
 }
 
@@ -560,7 +555,9 @@
         [self presentViewController:keyboardAvoidingWrapperController animated:YES completion:nil];
     }
     else {
+        @weakify(self);
         settingsViewController.dismissAction = ^(SettingsNavigationController *controller) {
+            @strongify(self);
             [self.parentViewController dismissViewControllerAnimated:YES completion:nil];
         };
         keyboardAvoidingWrapperController.modalPresentationStyle = UIModalPresentationFormSheet;

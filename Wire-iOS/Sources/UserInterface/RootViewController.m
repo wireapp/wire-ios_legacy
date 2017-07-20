@@ -28,7 +28,6 @@
 // Helpers
 #import "WAZUIMagicIOS.h"
 #import "Analytics+iOS.h"
-#import "KeyboardFrameObserver.h"
 
 #import "UIColor+WAZExtensions.h"
 #import "ZMUser+Additions.h"
@@ -38,7 +37,6 @@
 #import "ZClientViewController.h"
 #import "RegistrationViewController.h"
 #import "AnalyticsTracker.h"
-#import "ConversationListViewController.h"
 #import "StopWatch.h"
 #import "UIViewController+Orientation.h"
 #import "Wire-Swift.h"
@@ -52,15 +50,11 @@
 
 @interface RootViewController ()
 
-@property (nonatomic, strong, readwrite) KeyboardFrameObserver *keyboardFrameObserver;
-
-
 @property (nonatomic) UIViewController *visibleViewController;
 
 @property (nonatomic) RegistrationViewController *registrationViewController;
 
 @property (nonatomic, strong) id convContentChangedObserver;
-@property (nonatomic, assign) UIInterfaceOrientation lastVisibleInterfaceOrientation;
 
 @property (nonatomic) id<ZMAuthenticationObserverToken> authToken;
 
@@ -78,7 +72,7 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        [self setup];
+        self.authToken = [[ZMUserSession sharedSession] addAuthenticationObserver:self];
     }
     return self;
 }
@@ -107,12 +101,6 @@
     } else {
         [self presentRegistration];
     }
-}
-
-- (void)viewWillDisappear:(BOOL)animated
-{
-    [super viewWillDisappear:animated];
-    self.lastVisibleInterfaceOrientation = [UIApplication sharedApplication].statusBarOrientation;
 }
 
 #pragma mark - View controller rotation
@@ -202,6 +190,30 @@
     }
 }
 
+- (void)reloadCurrentController
+{
+    if (self.isLoggedIn) {
+        [self.zClientViewController dismissAllModalControllersWithCallback:^{
+            self.zClientViewController = nil;
+            [self presentFrameworkFromRegistration:NO];
+        }];
+    }
+    else {
+        self.registrationViewController = nil;
+        [self presentRegistration];
+    }
+}
+
+#pragma mark - ZMUserObserver
+
+- (void)userDidChange:(UserChangeInfo *)change
+{
+    if (change.accentColorValueChanged) {
+        if ([[UIApplication sharedApplication].keyWindow respondsToSelector:@selector(setTintColor:)]) {
+            [UIApplication sharedApplication].keyWindow.tintColor = [UIColor accentColor];
+        }
+    }
+}
 
 @end
 
