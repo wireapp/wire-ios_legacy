@@ -173,7 +173,17 @@ static inline NSDataDetector *linkDataDetector(void)
         // set markdown attribute styles here
         ColorScheme *colorScheme = [ColorScheme defaultColorScheme];
         MarklightStyle *style = [[MarklightStyle alloc] initWithHideSyntax:YES];
+        
         style.syntaxAttributes = @{NSForegroundColorAttributeName: colorScheme.accentColor};
+        
+        NSMutableParagraphStyle * paragraphStyle = [[NSMutableParagraphStyle alloc] init];
+        paragraphStyle.paragraphSpacingBefore = 24.0;
+        paragraphStyle.paragraphSpacing = 12.0;
+        
+        NSMutableDictionary *h1HeaderAttributes = [[NSMutableDictionary alloc] initWithDictionary:style.h1HeadingAttributes];
+        [h1HeaderAttributes setValue:paragraphStyle forKey:NSParagraphStyleAttributeName];
+        style.h1HeadingAttributes = h1HeaderAttributes;
+        
         NSMutableDictionary *codeAttributes = [[NSMutableDictionary alloc] initWithDictionary:style.codeAttributes];
         [codeAttributes setValue:[colorScheme colorWithName: ColorSchemeColorTextForeground] forKey:NSForegroundColorAttributeName];
         style.codeAttributes = codeAttributes;
