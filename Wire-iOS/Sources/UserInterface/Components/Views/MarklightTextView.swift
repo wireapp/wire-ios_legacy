@@ -262,7 +262,7 @@ public class MarklightTextView: NextResponderTextView {
         }
     }
     
-    private func isMarkdownElement(type: MarkdownElementType, activeForSelection selection: NSRange) -> Bool {
+    fileprivate func isMarkdownElement(type: MarkdownElementType, activeForSelection selection: NSRange) -> Bool {
         return rangeForMarkdownElement(type: type, enclosingSelection: selection) != nil
     }
     
@@ -330,6 +330,18 @@ public class MarklightTextView: NextResponderTextView {
 extension MarklightTextView: MarkdownBarViewDelegate {
     
     public func markdownBarView(_ markdownBarView: MarkdownBarView, didSelectElementType type: MarkdownElementType, with sender: IconButton) {
+        
+        // convert current list type to new list type
+        if case .numberList = type {
+            if isMarkdownElement(type: .bulletList, activeForSelection: selectedRange) {
+                deleteSyntaxForMarkdownElement(type: .bulletList)
+            }
+        } else if case .bulletList = type {
+            if isMarkdownElement(type: .numberList, activeForSelection: selectedRange) {
+                deleteSyntaxForMarkdownElement(type: .numberList)
+            }
+        }
+        
         insertSyntaxForMarkdownElement(type: type)
     }
     
