@@ -229,11 +229,12 @@ final class MessageComposeViewController: UIViewController {
             sendButtonView.leading == view.leading
             sendButtonView.trailing == view.trailing
             sendButtonView.bottom == markdownBarView.top
-            sendButtonView.height == 60
+            sendButtonView.height == 56
 
             markdownBarView.leading == view.leading
             markdownBarView.trailing == view.trailing
             markdownBarView.bottom == view.bottom
+            markdownBarView.height == 56
         }
     }
 
