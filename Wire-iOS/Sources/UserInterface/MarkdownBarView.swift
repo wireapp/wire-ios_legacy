@@ -105,14 +105,15 @@ public final class MarkdownBarView: UIView {
             switch headerButton.iconType(for: .normal) {
             case .markdownH1:       elementType = .header(.h1)
             case .markdownH2:       elementType = .header(.h2)
-            default:                elementType = .header(.h3)
+            case .markdownH3:       elementType = .header(.h3)
+            default:                return
             }
         case boldButton:            elementType = .bold
         case italicButton:          elementType = .italic
         case numberListButton:      elementType = .numberList
         case bulletListButton:      elementType = .bulletList
         case codeButton:            elementType = .code
-        default: return
+        default:                    return
         }
         
         if sender.iconColor(for: .normal) != normalColor {
