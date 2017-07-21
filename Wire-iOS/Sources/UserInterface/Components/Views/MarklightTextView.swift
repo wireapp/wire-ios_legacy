@@ -23,6 +23,7 @@ let MarklightTextViewDidChangeSelectionNotification = "MarklightTextViewDidChang
 
 public class MarklightTextView: NextResponderTextView {
     
+    public let style: MarklightStyle
     fileprivate let marklightTextStorage: MarklightTextStorage
     
     private var nextListNumber = 1
@@ -46,7 +47,8 @@ public class MarklightTextView: NextResponderTextView {
     
     public override init(frame: CGRect, textContainer: NSTextContainer?) {
         
-        marklightTextStorage = MarklightTextStorage(style: MarklightTextView.configureStyle(hideSyntax: false))
+        style = MarklightTextView.defaultMarkdownStyle()
+        marklightTextStorage = MarklightTextStorage(style: style)
         
         marklightTextStorage.defaultAttributes = defaultAttributes
         let marklightLayoutManager = NSLayoutManager()
@@ -68,14 +70,15 @@ public class MarklightTextView: NextResponderTextView {
         NotificationCenter.default.removeObserver(self)
     }
 
-    class func configureStyle(hideSyntax: Bool) -> MarklightStyle {
+    class func defaultMarkdownStyle() -> MarklightStyle {
         
         let colorScheme = ColorScheme.default()
-        let style = MarklightStyle(hideSyntax: hideSyntax)
+        let style = MarklightStyle()
         style.syntaxAttributes = [NSForegroundColorAttributeName: colorScheme.accentColor]
         style.codeAttributes[NSForegroundColorAttributeName] = colorScheme.color(withName: ColorSchemeColorTextForeground)
         style.blockQuoteAttributes[NSForegroundColorAttributeName] = colorScheme.color(withName: ColorSchemeColorTextForeground)
         style.fontTextStyle = UIFontTextStyle.subheadline.rawValue
+        style.hideSyntax = false
         return style
     }
     

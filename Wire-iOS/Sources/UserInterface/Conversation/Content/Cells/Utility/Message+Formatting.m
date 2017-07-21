@@ -172,7 +172,8 @@ static inline NSDataDetector *linkDataDetector(void)
     if (nil == groupStyler) {
         // set markdown attribute styles here
         ColorScheme *colorScheme = [ColorScheme defaultColorScheme];
-        MarklightStyle *style = [[MarklightStyle alloc] initWithHideSyntax:YES];
+        MarklightStyle *style = [[MarklightStyle alloc] init];
+        style.hideSyntax = YES;
         
         style.syntaxAttributes = @{NSForegroundColorAttributeName: colorScheme.accentColor};
         

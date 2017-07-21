@@ -210,6 +210,13 @@ private struct InputBarConstants {
         textView.keyboardAppearance = ColorScheme.default().keyboardAppearance
         textView.placeholderTextTransform = .upper
         textView.tintAdjustmentMode = .automatic
+        
+        // we don't want large fonts in message text view
+        let headerFont = FontSpec(.normal, .medium).font!
+        textView.style.h1HeadingAttributes[NSFontAttributeName] = headerFont
+        textView.style.h2HeadingAttributes[NSFontAttributeName] = headerFont
+        textView.style.h3HeadingAttributes[NSFontAttributeName] = headerFont
+        
         markdownView.delegate = textView
 
         updateReturnKey()
