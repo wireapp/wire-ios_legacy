@@ -34,6 +34,7 @@ class PopUpIconButtonView: UIView {
     
     private let selectionColor = ColorScheme.default().accentColor
     private let normalIconColor = ColorScheme.default().color(withName: ColorSchemeColorIconNormal)
+    private let expandDirection: PopUpIconButtonExpandDirection
     
     
     init(withButton button: PopUpIconButton) {
@@ -44,8 +45,19 @@ class PopUpIconButtonView: UIView {
         itemWidth = lowerRect.width + 2 * largeRadius
         
         var rect = lowerRect
+        rect.size.height = lowerRect.height * 1.5
+        rect.size.width = CGFloat(button.itemIcons.count) * itemWidth
         
-        switch button.expandDirection {
+        // first we test to see if the popup fits onscreen when expanding right,
+        // if not we expand left
+        if rect.minX - largeRadius + rect.width < UIScreen.main.bounds.maxX {
+            expandDirection = .right
+        } else {
+            expandDirection = .left
+        }
+        
+        // determine origin
+        switch expandDirection {
         case .left:
             rect.origin.x -= largeRadius + CGFloat(button.itemIcons.count - 1) * itemWidth
             rect.origin.y -= largeRadius + lowerRect.height * 1.5
@@ -54,8 +66,6 @@ class PopUpIconButtonView: UIView {
             rect.origin.y -= largeRadius + lowerRect.height * 1.5
         }
 
-        rect.size.height = lowerRect.height * 1.5
-        rect.size.width = CGFloat(button.itemIcons.count) * itemWidth
         upperRect = rect
     
         super.init(frame: UIScreen.main.bounds)
@@ -141,7 +151,7 @@ class PopUpIconButtonView: UIView {
         point.y -= lowerRect.height - smallRadius
         path.addLine(to: point)
         
-        switch button.expandDirection {
+        switch expandDirection {
         case .right:
             
             // UPPER RECT
@@ -259,7 +269,7 @@ class PopUpIconButtonView: UIView {
     private func rectForItem(_ item: ZetaIconType) -> CGRect? {
         
         let icons: [ZetaIconType]
-        switch button.expandDirection {
+        switch expandDirection {
         case .left:     icons = button.itemIcons.reversed()
         case .right:    icons = button.itemIcons
         }
@@ -275,7 +285,7 @@ class PopUpIconButtonView: UIView {
     
     public func updateSelectionForPoint(_ point: CGPoint) {
         
-        switch button.expandDirection {
+        switch expandDirection {
         case .left:
             var selection = 0
             

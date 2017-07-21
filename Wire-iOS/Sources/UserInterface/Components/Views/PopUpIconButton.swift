@@ -25,7 +25,6 @@ public enum PopUpIconButtonExpandDirection {
 public class PopUpIconButton: IconButton {
 
     public var itemIcons: [ZetaIconType] = []
-    public var expandDirection: PopUpIconButtonExpandDirection = .right
     
     private var buttonView: PopUpIconButtonView?
     fileprivate let longPressGR = UILongPressGestureRecognizer()

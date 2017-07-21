@@ -90,7 +90,6 @@ public final class MarkdownBarView: UIView {
         }
         
         headerButton.itemIcons = [.markdownH1, .markdownH2, .markdownH3]
-        headerButton.expandDirection = .right
         headerButton.setupView()
     }
     
