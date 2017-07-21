@@ -78,12 +78,12 @@ public extension ConversationViewController {
         let button = IconButton()
         button.adjustsTitleWhenHighlighted = true
         button.adjustBackgroundImageWhenHighlighted = true
-        button.setTitle("conversation_list.right_accessory.join_button.title".localized, for: .normal)
+        button.setTitle("conversation_list.right_accessory.join_button.title".localized.uppercased(), for: .normal)
         button.titleLabel?.font = FontSpec(.medium, .medium).font
         button.backgroundColor = UIColor(for: .strongLimeGreen)
         button.addTarget(self, action: #selector(joinCallButtonTapped), for: .touchUpInside)
         button.contentEdgeInsets = UIEdgeInsets(top: 2, left: 8, bottom: 2, right: 8)
-        button.bounds.size = button.systemLayoutSizeFitting(CGSize(width: .max, height: .max))
+        button.bounds.size = button.systemLayoutSizeFitting(CGSize(width: .max, height: 24))
         button.layer.cornerRadius = button.bounds.height / 2
         return button
     }
