@@ -157,6 +157,8 @@ public class MarklightTextView: NextResponderTextView {
 
     private func removePrefixSyntaxForElement(type: MarkdownElementType, forSelection selection: NSRange) {
         
+        guard isMarkdownElement(type: type, activeForSelection: selection) else { return }
+        
         let pattern: String
         
         switch type {
@@ -169,6 +171,7 @@ public class MarklightTextView: NextResponderTextView {
         let lineRange = (text as NSString).lineRange(for: selection)
         let regex = try! NSRegularExpression(pattern: pattern, options: [])
         let matchRange = regex.rangeOfFirstMatch(in: text, options: [], range: lineRange)
+        
         text.removeSubrange(text.rangeFrom(range: matchRange))
         
         // shift selection location to account for removal, but don't exceed line start
@@ -182,6 +185,7 @@ public class MarklightTextView: NextResponderTextView {
     private func removeWrapSyntaxForElement(type: MarkdownElementType, forSelection selection: NSRange) {
         
         guard let range = rangeForMarkdownElement(type: type, enclosingSelection: selection) else { return }
+        
         let preRange: NSRange
         let postRange: NSRange
         
