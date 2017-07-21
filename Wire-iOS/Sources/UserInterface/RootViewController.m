@@ -40,7 +40,7 @@
 #import "StopWatch.h"
 #import "UIViewController+Orientation.h"
 #import "Wire-Swift.h"
-
+@import WireSyncEngine;
 
 @interface RootViewController (Registration) <RegistrationViewControllerDelegate>
 
@@ -72,7 +72,7 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        self.authToken = [[ZMUserSession sharedSession] addAuthenticationObserver:self];
+        self.authToken = [ZMUserSessionAuthenticationNotification addObserver:self];
     }
     return self;
 }
@@ -87,8 +87,6 @@
 
 - (void)setup
 {
-    self.keyboardFrameObserver = [[KeyboardFrameObserver alloc] init];
-
     self.authToken = [ZMUserSessionAuthenticationNotification addObserver:self];
 }
 

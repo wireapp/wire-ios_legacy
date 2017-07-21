@@ -27,15 +27,14 @@ extension AppController {
         
         let bundle = Bundle.main
         let appVersion = bundle.infoDictionary?[kCFBundleVersionKey as String] as? String
-        let groupIdentifier = "group.\(bundle.bundleIdentifier!)"
-        
-        if let sharedContainerURL = ZMUserSession.sharedContainerDirectory(forApplicationGroup: groupIdentifier) {
-            fileBackupExcluder.excludeLibraryFolderInSharedContainer(sharedContainerURL: sharedContainerURL)
-        }
     
         let mediaManager = AVSMediaManager.sharedInstance()
         let analytics = Analytics.shared()
-        sessionManager = SessionManager(appGroupIdentifier: groupIdentifier, appVersion: appVersion!, mediaManager: mediaManager!, analytics: analytics, delegate: self, application: UIApplication.shared, launchOptions: launchOptions)
+        sessionManager = SessionManager(appVersion: appVersion!, mediaManager: mediaManager!, analytics: analytics, delegate: self, application: UIApplication.shared, launchOptions: launchOptions)
+        
+        if let sharedContainerURL = sessionManager.storeProvider.sharedContainerDirectory {
+            fileBackupExcluder.excludeLibraryFolderInSharedContainer(sharedContainerURL: sharedContainerURL)
+        }
     }
     
 }
