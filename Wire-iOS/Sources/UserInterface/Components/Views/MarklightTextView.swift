@@ -30,6 +30,11 @@ public class MarklightTextView: NextResponderTextView {
     private var needsNewNumberListItem = false
     private var needsNewBulletListItem = false
     
+    private let defaultAttributes = [
+        NSForegroundColorAttributeName: ColorScheme.default().color(withName: ColorSchemeColorTextForeground),
+        NSFontAttributeName: FontSpec(.normal, .none).font!
+    ]
+
     public override var selectedTextRange: UITextRange? {
         didSet {
             NotificationCenter.default.post(name: Notification.Name(rawValue: MarklightTextViewDidChangeSelectionNotification), object: self)
@@ -43,11 +48,7 @@ public class MarklightTextView: NextResponderTextView {
         
         marklightTextStorage = MarklightTextStorage(style: MarklightTextView.configureStyle(hideSyntax: false))
         
-        marklightTextStorage.defaultAttributes = [
-            NSForegroundColorAttributeName: ColorScheme.default().color(withName: ColorSchemeColorTextForeground),
-            NSFontAttributeName: FontSpec(.normal, .none).font!
-        ]
-        
+        marklightTextStorage.defaultAttributes = defaultAttributes
         let marklightLayoutManager = NSLayoutManager()
         marklightTextStorage.addLayoutManager(marklightLayoutManager)
         
@@ -314,6 +315,10 @@ public class MarklightTextView: NextResponderTextView {
             needsNewBulletListItem = false
             insertSyntaxForMarkdownElement(type: .bulletList)
         }
+    }
+    
+    @objc public func resetTypingAttributes() {
+        typingAttributes = defaultAttributes
     }
 }
 

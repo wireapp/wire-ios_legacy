@@ -1052,6 +1052,8 @@
 {
     [self.inputBar.textView autocorrectLastWord];
     [self sendOrEditText:self.inputBar.textView.text];
+    [self.inputBar.textView resetTypingAttributes];
+    [self.inputBar.markdownView resetIcons];
 }
 
 @end

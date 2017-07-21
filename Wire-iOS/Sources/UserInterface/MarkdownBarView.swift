@@ -125,7 +125,7 @@ public final class MarkdownBarView: UIView {
     
     public func updateIconsForModes(_ modes: [MarkdownElementType]) {
         
-        buttons.forEach { $0.setIconColor(normalColor, for: .normal) }
+        resetIcons()
         var buttonsToHighlight = [IconButton]()
         
         for type in modes {
@@ -140,5 +140,9 @@ public final class MarkdownBarView: UIView {
         }
         
         buttonsToHighlight.forEach { $0.setIconColor(accentColor, for: .normal) }
+    }
+    
+    @objc public func resetIcons() {
+        buttons.forEach { $0.setIconColor(normalColor, for: .normal) }
     }
 }
