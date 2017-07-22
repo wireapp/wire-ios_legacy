@@ -145,7 +145,7 @@ public class MarklightTextView: NextResponderTextView {
     
     // MARK: Markdown Deletion
     
-    fileprivate func deleteSyntaxForMarkdownElement(type: MarkdownElementType) {
+    public func deleteSyntaxForMarkdownElement(type: MarkdownElementType) {
         
         switch type {
         case .header(_), .numberList, .bulletList:
@@ -191,8 +191,11 @@ public class MarklightTextView: NextResponderTextView {
         
         switch type {
         case .italic:
-            // TODO: adjust italic matcher so match range fits syntax exactly, then refactor
-            preRange = NSMakeRange(range.location + 1, 1)
+            // italic regex matches a space before prefix if not already
+            // start of string, so if range start is > 0, need to offset
+            // by 1 so prefix range excludes the space
+            let offset = range.location == 0 ? 0 : 1
+            preRange = NSMakeRange(range.location + offset, 1)
             postRange = NSMakeRange(range.location + range.length - 1, 1)
         case .code:
             preRange = NSMakeRange(range.location, 1)
