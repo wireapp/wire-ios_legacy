@@ -242,7 +242,7 @@ public class MarklightTextView: NextResponderTextView {
     
     private func rangeForMarkdownElement(type: MarkdownElementType, enclosingSelection selection: NSRange) -> NSRange? {
         
-        let groupStyler = (textStorage as! MarklightTextStorage).groupStyler
+        let groupStyler = marklightTextStorage.groupStyler
         
         for range in groupStyler.rangesForElementType(type) {
             // selection is contained in range
