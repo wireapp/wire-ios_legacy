@@ -262,9 +262,11 @@ public class MarklightTextView: NextResponderTextView {
         
         let selection = range ?? selectedRange
         
-        // TODO: different header types
-        let elementTypes: [MarkdownElementType] = [.header(.h1), .italic, .bold, .numberList, .bulletList, .code]
-        
+        let elementTypes: [MarkdownElementType] = [
+            .header(.h1), .header(.h2), .header(.h3),
+            .italic, .bold, .numberList, .bulletList,
+            .code, .quote
+        ]
         
         return elementTypes.filter { type -> Bool in
             return self.isMarkdownElement(type: type, activeForSelection: selection)

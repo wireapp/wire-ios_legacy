@@ -130,7 +130,17 @@ public final class MarkdownBarView: UIView {
         
         for type in modes {
             switch type {
-            case .header(_): buttonsToHighlight.append(headerButton)
+            case .header(let level):
+                // update header icon
+                let icon: ZetaIconType
+                switch level {
+                case .h1: icon = .markdownH1
+                case .h2: icon = .markdownH2
+                case .h3: icon = .markdownH3
+                }
+                headerButton.setIcon(icon, with: .tiny, for: .normal)
+                buttonsToHighlight.append(headerButton)
+                
             case .italic: buttonsToHighlight.append(italicButton)
             case .bold: buttonsToHighlight.append(boldButton)
             case .numberList: buttonsToHighlight.append(numberListButton)
