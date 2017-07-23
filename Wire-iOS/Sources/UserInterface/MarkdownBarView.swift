@@ -136,6 +136,7 @@ public final class MarkdownBarView: UIView {
             case .numberList: buttonsToHighlight.append(numberListButton)
             case .bulletList: buttonsToHighlight.append(bulletListButton)
             case .code: buttonsToHighlight.append(codeButton)
+            default: break
             }
         }
         

@@ -105,6 +105,7 @@ public class MarklightTextView: NextResponderTextView {
         case .bold:         insertWrapSyntax("**", forSelection: selection)
         case .italic:       insertWrapSyntax("_", forSelection: selection)
         case .code:         insertWrapSyntax("`", forSelection: selection)
+        default: return
         }
     }
     
@@ -152,6 +153,7 @@ public class MarklightTextView: NextResponderTextView {
             removePrefixSyntaxForElement(type: type, forSelection: selectedRange)
         case .italic, .bold, .code:
             removeWrapSyntaxForElement(type: type, forSelection: selectedRange)
+        default: return
         }
     }
 
