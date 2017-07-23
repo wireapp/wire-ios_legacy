@@ -219,4 +219,18 @@ class MarklightTextViewTests: XCTestCase {
         // then
         XCTAssertEqual(sut.text, "example")
     }
+    
+    func testThatItStripsEmptyListItems() {
+        // given
+        let text = ["1. example", "2. example", "3.  ", "- example", "-  "].joined(separator: "\n")
+        sut.text = text
+        
+        // when
+        sut.stripEmptyListItems()
+        
+        // then
+        let expectation = ["1. example", "2. example", "", "- example", ""].joined(separator: "\n")
+        XCTAssertEqual(sut.text, expectation)
+        
+    }
 }
