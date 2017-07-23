@@ -579,6 +579,7 @@
 
 - (void)commandReturnPressed
 {
+    [self.inputBar.textView stripEmptyListItems];
     if (nil != self.inputBar.textView.text) {
         [self sendOrEditText:self.inputBar.textView.text];
     }
@@ -1051,6 +1052,7 @@
 - (void)sendButtonPressed:(id)sender
 {
     [self.inputBar.textView autocorrectLastWord];
+    [self.inputBar.textView stripEmptyListItems];
     [self sendOrEditText:self.inputBar.textView.text];
     [self.inputBar.textView resetTypingAttributes];
     [self.inputBar.markdownView resetIcons];

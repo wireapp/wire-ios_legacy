@@ -317,6 +317,15 @@ public class MarklightTextView: NextResponderTextView {
         }
     }
     
+    @objc public func stripEmptyListItems() {
+        let numberListPrefix = "(^\\d+)(?:[.][\\t ]*$)"
+        let bulletListPrefix = "(^[*+-])([\\t ]*$)"
+        let listPrefixPattern = "(\(numberListPrefix))|(\(bulletListPrefix))"
+        let regex = try! NSRegularExpression(pattern: listPrefixPattern, options: [.anchorsMatchLines])
+        let wholeRange = NSMakeRange(0, text.characters.count)
+        text = regex.stringByReplacingMatches(in: text, options: [], range: wholeRange, withTemplate: "")
+    }
+    
     @objc private func textChangedHandler() {
         if needsNewNumberListItem {
             needsNewNumberListItem = false
