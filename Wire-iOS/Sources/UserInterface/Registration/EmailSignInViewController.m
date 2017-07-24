@@ -345,7 +345,18 @@
         self.passwordField.rightAccessoryView = RegistrationTextFieldRightAccessoryViewGuidanceDot;
     }
     
-    if (error.code != ZMUserSessionNeedsPasswordToRegisterClient &&
+    if (error.code == ZMUserSessionUnkownError) {
+        NSString *email = self.emailField.text;
+        NSString *password = self.passwordField.text;
+        
+        if (![ZMUser validateEmailAddress:&email error:nil]) {
+            [self showAlertForError:[NSError errorWithDomain:ZMUserSessionErrorDomain code:ZMUserSessionInvalidEmail userInfo:nil]];
+        } else if (![ZMUser validatePassword:&password error:nil]) {
+            [self showAlertForError:[NSError errorWithDomain:ZMUserSessionErrorDomain code:ZMUserSessionInvalidCredentials userInfo:nil]];
+        } else {
+            [self showAlertForError:error];
+        }
+    } else if (error.code != ZMUserSessionNeedsPasswordToRegisterClient &&
         error.code != ZMUserSessionCanNotRegisterMoreClients &&
         error.code != ZMUserSessionNeedsToRegisterEmailToRegisterClient) {
 
