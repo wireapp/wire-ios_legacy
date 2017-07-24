@@ -190,6 +190,7 @@
 
 - (void)registrationDidFail:(NSError *)error
 {
+    [self.navigationController popToRootViewControllerAnimated:YES];
     [self showAlertForError:error];
 }
 
