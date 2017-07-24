@@ -46,7 +46,7 @@ extern NSString * const ColorSchemeColorTabSelected;
 extern NSString * const ColorSchemeColorTabHighlighted;
 
 extern NSString * const ColorSchemeColorBackground;
-extern NSString * const ColorSchemeColorBackgroundNew;
+extern NSString * const ColorSchemeColorConversationBackground;
 extern NSString * const ColorSchemeColorSeparator;
 extern NSString * const ColorSchemeColorBackgroundOverlay;
 extern NSString * const ColorSchemeColorBackgroundOverlayWithoutPicture;

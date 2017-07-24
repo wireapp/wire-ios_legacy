@@ -29,7 +29,7 @@ NSString * const ColorSchemeColorAccentDarken = @"accent-current-darken";
 
 NSString * const ColorSchemeColorSeparator = @"separator";
 NSString * const ColorSchemeColorBackground = @"background";
-NSString * const ColorSchemeColorBackgroundNew = @"background-new";
+NSString * const ColorSchemeColorConversationBackground = @"background-new";
 NSString * const ColorSchemeColorBackgroundOverlay = @"background-overlay";
 NSString * const ColorSchemeColorBackgroundOverlayWithoutPicture = @"background-overlay-without-picture";
 
@@ -241,7 +241,7 @@ static NSString* light(NSString *colorString) {
                                    ColorSchemeColorTextPlaceholder: lightGraphiteAlpha64,
                                    ColorSchemeColorSeparator: lightGraphiteAlpha48,
                                    ColorSchemeColorBackground: white,
-                                   ColorSchemeColorBackgroundNew: white98,
+                                   ColorSchemeColorConversationBackground: white98,
                                    ColorSchemeColorIconNormal: graphite,
                                    ColorSchemeColorIconSelected: white,
                                    ColorSchemeColorIconHighlighted: white,
@@ -290,7 +290,7 @@ static NSString* light(NSString *colorString) {
                                   ColorSchemeColorTextPlaceholder: lightGraphiteAlpha64,
                                   ColorSchemeColorSeparator: lightGraphiteAlpha24,
                                   ColorSchemeColorBackground: backgroundGraphite,
-                                  ColorSchemeColorBackgroundNew: backgroundGraphite,
+                                  ColorSchemeColorConversationBackground: backgroundGraphite,
                                   ColorSchemeColorIconNormal: white,
                                   ColorSchemeColorIconSelected: black,
                                   ColorSchemeColorIconHighlighted: white,

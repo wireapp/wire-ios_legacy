@@ -98,7 +98,7 @@
     ColorScheme *scheme = ColorScheme.defaultColorScheme;
     self.messageTextView.editable = NO;
     self.messageTextView.selectable = YES;
-    self.messageTextView.backgroundColor = [scheme colorWithName:ColorSchemeColorBackgroundNew];
+    self.messageTextView.backgroundColor = [scheme colorWithName:ColorSchemeColorConversationBackground];
     self.messageTextView.scrollEnabled = NO;
     self.messageTextView.textContainerInset = UIEdgeInsetsZero;
     self.messageTextView.textContainer.lineFragmentPadding = 0;
