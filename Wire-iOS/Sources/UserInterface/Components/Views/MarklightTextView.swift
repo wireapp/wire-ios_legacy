@@ -31,9 +31,10 @@ public class MarklightTextView: NextResponderTextView {
     private var needsNewNumberListItem = false
     private var needsNewBulletListItem = false
     
-    private let defaultAttributes = [
+    private let defaultAttributes: [String: Any] = [
         NSForegroundColorAttributeName: ColorScheme.default().color(withName: ColorSchemeColorTextForeground),
-        NSFontAttributeName: FontSpec(.normal, .none).font!
+        NSFontAttributeName: FontSpec(.normal, .none).font!,
+        NSParagraphStyleAttributeName: NSMutableParagraphStyle.default,
     ]
 
     public override var selectedTextRange: UITextRange? {
