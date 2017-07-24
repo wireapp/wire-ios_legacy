@@ -35,6 +35,7 @@ public class MarklightTextView: NextResponderTextView {
         NSForegroundColorAttributeName: ColorScheme.default().color(withName: ColorSchemeColorTextForeground),
         NSFontAttributeName: FontSpec(.normal, .none).font!,
         NSParagraphStyleAttributeName: NSMutableParagraphStyle.default,
+        NSKernAttributeName: 0.295
     ]
 
     public override var selectedTextRange: UITextRange? {
