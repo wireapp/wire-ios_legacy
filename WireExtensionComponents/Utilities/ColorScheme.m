@@ -29,7 +29,7 @@ NSString * const ColorSchemeColorAccentDarken = @"accent-current-darken";
 
 NSString * const ColorSchemeColorSeparator = @"separator";
 NSString * const ColorSchemeColorBackground = @"background";
-NSString * const ColorSchemeColorConversationBackground = @"background-new";
+NSString * const ColorSchemeColorConversationBackground = @"conversation-background";
 NSString * const ColorSchemeColorBackgroundOverlay = @"background-overlay";
 NSString * const ColorSchemeColorBackgroundOverlayWithoutPicture = @"background-overlay-without-picture";
 
