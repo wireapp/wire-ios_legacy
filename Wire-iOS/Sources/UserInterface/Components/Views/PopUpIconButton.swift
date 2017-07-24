@@ -30,6 +30,7 @@ public class PopUpIconButton: IconButton {
     fileprivate let longPressGR = UILongPressGestureRecognizer()
     
     public func setupView() {
+        longPressGR.minimumPressDuration = 0.15
         longPressGR.addTarget(self, action: #selector(longPressHandler(gestureRecognizer:)))
         addGestureRecognizer(longPressGR)
     }
