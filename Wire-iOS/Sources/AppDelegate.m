@@ -342,7 +342,9 @@ static AppDelegate *sharedAppDelegate = nil;
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)newDeviceToken
 {
     DDLogWarn(@"Received APNS token: %@", newDeviceToken);
-    [[ZMUserSession sharedSession] application:application didRegisterForRemoteNotificationsWithDeviceToken:newDeviceToken];
+    [self.appController performAfterUserSessionIsInitialized:^{
+        [[ZMUserSession sharedSession] application:application didRegisterForRemoteNotificationsWithDeviceToken:newDeviceToken];
+    }];
 }
 
 - (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error
