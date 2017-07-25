@@ -104,13 +104,11 @@ private struct InputBarConstants {
     public var ephemeralColor: UIColor?
     public var placeholderColor: UIColor?
 
-    fileprivate var contentSizeObserver: NSObject? = nil
     fileprivate var rowTopInsetConstraint: NSLayoutConstraint? = nil
     
     // Contains the secondaryButtonsView and buttonsView
     fileprivate let buttonInnerContainer = UIView()
     fileprivate let fakeCursor = UIView()
-    fileprivate let inputBarSeparator = UIView()
     fileprivate let buttonRowSeparator = UIView()
     fileprivate let constants = InputBarConstants()
     fileprivate let notificationCenter = NotificationCenter.default
@@ -124,18 +122,6 @@ private struct InputBarConstants {
     }
     
     private var inputBarState: InputBarState = .writing(ephemeral: false)
-    
-    fileprivate var textIsOverflowing = false {
-        didSet {
-            updateTopSeparator() 
-        }
-    }
-    
-    public var separatorEnabled = false {
-        didSet {
-            updateTopSeparator()
-        }
-    }
     
     public var invisibleInputAccessoryView : InvisibleInputAccessoryView? = nil  {
         didSet {
@@ -162,7 +148,6 @@ private struct InputBarConstants {
     
     deinit {
         notificationCenter.removeObserver(self)
-        contentSizeObserver = nil
     }
 
     required public init(buttons: [UIButton]) {
@@ -176,7 +161,7 @@ private struct InputBarConstants {
         buttonsView.clipsToBounds = true
         buttonContainer.clipsToBounds = true
         
-        [leftAccessoryView, textView, rightAccessoryView, inputBarSeparator, buttonContainer, buttonRowSeparator].forEach(addSubview)
+        [leftAccessoryView, textView, rightAccessoryView, buttonContainer, buttonRowSeparator].forEach(addSubview)
         buttonContainer.addSubview(buttonInnerContainer)
         [buttonsView, secondaryButtonsView].forEach(buttonInnerContainer.addSubview)
         textView.addSubview(fakeCursor)
@@ -184,7 +169,6 @@ private struct InputBarConstants {
 
         setupViews()
         createConstraints()
-        updateTopSeparator()
         
         notificationCenter.addObserver(self, selector: #selector(textViewDidChangeSelection), name: Notification.Name(rawValue: MarklightTextViewDidChangeSelectionNotification), object: textView)
         notificationCenter.addObserver(self, selector: #selector(textViewTextDidChange), name: NSNotification.Name.UITextViewTextDidChange, object: textView)
@@ -198,8 +182,6 @@ private struct InputBarConstants {
     }
     
     fileprivate func setupViews() {
-        inputBarSeparator.cas_styleClass = "separator"
-        
         textView.accessibilityIdentifier = "inputField"
         updatePlaceholder()
         textView.lineFragmentPadding = 0
@@ -221,7 +203,6 @@ private struct InputBarConstants {
 
         updateReturnKey()
 
-        contentSizeObserver = KeyValueObserver.observe(textView, keyPath: "contentSize", target: self, selector: #selector(textViewContentSizeDidChange))
         updateInputBar(withState: inputBarState, animated: false)
         updateColors()
     }
@@ -276,13 +257,6 @@ private struct InputBarConstants {
             self.rowTopInsetConstraint = innerContainer.top == container.top - constants.buttonsBarHeight
         }
         
-        constrain(inputBarSeparator) { inputBarSeparator in
-            inputBarSeparator.top == inputBarSeparator.superview!.top
-            inputBarSeparator.leading == inputBarSeparator.superview!.leading
-            inputBarSeparator.trailing == inputBarSeparator.superview!.trailing
-            inputBarSeparator.height == .hairline
-        }
-        
         constrain(fakeCursor) { fakeCursor in
             fakeCursor.width == 2
             fakeCursor.height == 23
@@ -330,20 +304,8 @@ private struct InputBarConstants {
         }
     }
     
-    fileprivate func updateTopSeparator() {
-        inputBarSeparator.isHidden = !textIsOverflowing && !separatorEnabled
-    }
-    
     func updateFakeCursorVisibility(_ firstResponder: UIResponder? = nil) {
         fakeCursor.isHidden = textView.isFirstResponder || textView.text.characters.count != 0 || firstResponder != nil
-    }
-    
-    func textViewContentSizeDidChange(_ sender: AnyObject) {
-        guard let textViewFont = textView.font
-            else { return }
-        
-        let lineCount = floor((textView.contentSize.height - inputBarVerticalInset) / textViewFont.lineHeight)
-        textIsOverflowing = lineCount > 1 // we show separator when the text is 2+ lines
     }
 
     // MARK: - Disable interactions on the lower part to not to interfere with the keyboard

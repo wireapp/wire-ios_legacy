@@ -220,7 +220,6 @@
     
     [self updateAccessoryViews];
     [self updateInputBarVisibility];
-    [self updateSeparatorLineVisibility];
     [self updateTypingIndicatorVisibility];
     [self updateWritingStateAnimated:NO];
     [self updateButtonIconsForEphemeral];
@@ -528,15 +527,12 @@
 - (void)setInputBarOverlapsContent:(BOOL)inputBarOverlapsContent
 {
     _inputBarOverlapsContent = inputBarOverlapsContent;
-    
-    [self updateSeparatorLineVisibility];
 }
 
 - (void)setTypingUsers:(NSSet *)typingUsers
 {
     _typingUsers = typingUsers;
     
-    [self updateSeparatorLineVisibility];
     [self updateTypingIndicatorVisibility];
 }
 
@@ -548,11 +544,6 @@
     }
     
     [self.typingIndicatorView setHidden:self.typingUsers.count == 0 animated: true];
-}
-
-- (void)updateSeparatorLineVisibility
-{
-    self.inputBar.separatorEnabled = self.inputBarOverlapsContent || self.typingUsers.count > 0;
 }
 
 - (void)updateInputBarVisibility
