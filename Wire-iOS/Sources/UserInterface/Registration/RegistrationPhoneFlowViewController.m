@@ -32,7 +32,6 @@
 #import "UIFont+MagicAccess.h"
 #import "UIViewController+Errors.h"
 #import <WireExtensionComponents/UIViewController+LoadingView.h>
-#import "ZMUserSession+Additions.h"
 #import "CheckmarkViewController.h"
 #import "TermsOfUseStepViewController.h"
 #import "NameStepViewController.h"

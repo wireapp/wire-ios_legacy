@@ -20,7 +20,6 @@
 #import "AppDelegate.h"
 
 #import "WireSyncEngine+iOS.h"
-#import "ZMUserSession+Additions.h"
 #import "Wire-Swift.h"
 
 #import "Settings.h"
@@ -77,9 +76,6 @@ static AppDelegate *sharedAppDelegate = nil;
 @end
 
 
-@interface AppDelegate (InitialSyncCompletionObserver) <ZMInitialSyncCompletionObserver>
-@end
-
 @interface AppDelegate (PushNotifications)
 @end
 
@@ -93,7 +89,6 @@ static AppDelegate *sharedAppDelegate = nil;
 
 - (void)dealloc
 {
-    [ZMUserSession removeInitalSyncCompletionObserver:self];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
@@ -230,7 +225,6 @@ static AppDelegate *sharedAppDelegate = nil;
 
 - (void)userSessionDidBecomeAvailable:(NSNotification *)notification
 {
-    [ZMUserSession addInitalSyncCompletionObserver:self];
     [ZMNetworkAvailabilityChangeNotification addNetworkAvailabilityObserver:self userSession:self.zetaUserSession];
     [self trackLaunchAnalyticsWithLaunchOptions:self.launchOptions];
     [self trackErrors];
@@ -436,14 +430,3 @@ static AppDelegate *sharedAppDelegate = nil;
 }
 
 @end
-
-
-@implementation AppDelegate (InitialSyncObserver)
-
-- (void)initialSyncCompleted:(NSNotification *)notification
-{
-    [self.zetaUserSession setInitialSyncOnceCompleted:@(YES)];
-}
-
-@end
-

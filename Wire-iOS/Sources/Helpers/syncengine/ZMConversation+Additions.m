@@ -21,7 +21,6 @@
 
 #import "WireSyncEngine+iOS.h"
 #import "ZMUserSession+iOS.h"
-#import "ZMUserSession+Additions.h"
 #import <AVFoundation/AVFoundation.h>
 #import "Analytics+iOS.h"
 #import "AnalyticsBase.h"
