@@ -152,24 +152,6 @@ final class MessageComposeViewController: UIViewController {
         sendButtonView.onSend = { [unowned self] in
             self.delegate?.composeViewController(self, wantsToSendDraft: self.draft!)
         }
-
-        sendButtonView.onDelete = { [weak self] in
-            guard let `self` = self else { return }
-            let controller = UIAlertController.controllerForDraftDeletion {
-                self.persistence.enqueue(
-                    block: {
-                        self.draft.map($0.delete)
-                        self.draft = nil
-                }, completion: {
-                    self.subjectTextField.text = nil
-                    self.messageTextView.text = nil
-                    self.updateButtonStates()
-                    self.popToListIfNeeded()
-                })
-            }
-
-            self.present(controller, animated: true, completion: nil)
-        }
     }
     
     private func popToListIfNeeded() {
@@ -179,7 +161,34 @@ final class MessageComposeViewController: UIViewController {
     }
 
     fileprivate dynamic func dismissTapped() {
-        delegate?.composeViewControllerWantsToDismiss(self)
+        
+        // if nothing to save/delete, just dismiss
+        let subject = subjectTextField.text ?? ""
+        if messageTextView.text.isEmpty && subject.isEmpty {
+            self.delegate?.composeViewControllerWantsToDismiss(self)
+            return
+        }
+        
+        let deleteHandler: () -> Void = {
+            self.persistence.enqueue(
+                block: {
+                    self.draft.map($0.delete)
+                    self.draft = nil
+            }, completion: {
+                self.messageTextView.text = ""
+                self.subjectTextField.text = ""
+                self.delegate?.composeViewControllerWantsToDismiss(self)
+            })
+        }
+        
+        // since draft already saved, just dismiss
+        let saveHandler: () -> Void = {
+            self.delegate?.composeViewControllerWantsToDismiss(self)
+        }
+        
+        let controller = UIAlertController.controllerForDraftDismiss(deleteHandler: deleteHandler,
+                                                                     saveHandler: saveHandler)
+        self.present(controller, animated: true, completion: nil)
     }
 
     fileprivate dynamic func updateDraftThrottled() {
