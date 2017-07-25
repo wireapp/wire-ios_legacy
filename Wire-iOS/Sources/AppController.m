@@ -158,14 +158,16 @@ NSString *const ZMUserSessionDidBecomeAvailableNotification = @"ZMUserSessionDid
     self.enteringForeground = YES;
     [self loadAppropriateController];
     self.enteringForeground = NO;
-
-    [[self zetaUserSession] checkIfLoggedInWithCallback:^(BOOL isLoggedIn) {
-        if (isLoggedIn) {
-            [self uploadAddressBookIfNeeded];
-            [self trackShareExtensionEventsIfNeeded];
-            [self.messageCountTracker trackLegacyMessageCount];
-        }
-    }];
+    
+    if (self.sessionManager.isUserSessionActive) {
+        [[self zetaUserSession] checkIfLoggedInWithCallback:^(BOOL isLoggedIn) {
+            if (isLoggedIn) {
+                [self uploadAddressBookIfNeeded];
+                [self trackShareExtensionEventsIfNeeded];
+                [self.messageCountTracker trackLegacyMessageCount];
+            }
+        }];
+    }
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application
