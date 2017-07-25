@@ -94,7 +94,7 @@ final class DraftListViewController: CoreDataTableViewController<MessageDraft, D
         navigationItem.leftBarButtonItem = UIBarButtonItem(icon: .plus, target: self, action: #selector(newDraftTapped))
         navigationItem.leftBarButtonItem?.accessibilityLabel = "newDraftButton"
         DraftMessageCell.register(in: tableView)
-        tableView.rowHeight = 56
+        tableView.rowHeight = 64
         tableView.separatorStyle = .none
     }
 
