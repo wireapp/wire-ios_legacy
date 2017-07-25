@@ -36,11 +36,7 @@ import Foundation
     }
     
     func rootGroup() -> SettingsControllerGeneratorType & SettingsInternalGroupCellDescriptorType {
-        var rootElements = [self.createTeamCell(), self.addAccountCell(), self.settingsGroup()]
-        
-        if !self.settingsPropertyFactory.selfUser.isTeamMember {
-            rootElements.append(self.inviteButton())
-        }
+        let rootElements = [self.createTeamCell(), self.addAccountCell(), self.settingsGroup()]
         
         let topSection = SettingsSectionDescriptor(cellDescriptors: rootElements)
         
@@ -64,7 +60,7 @@ import Foundation
     func createTeamCell() -> SettingsCellDescriptorType {
         return SettingsExternalScreenCellDescriptor(title: "self.settings.create_team.title".localized,
                                                     isDestructive: false,
-                                                    presentationStyle: PresentationStyle.modal,
+                                                    presentationStyle: PresentationStyle.navigation,
                                                     identifier: nil,
                                                     presentationAction: { () -> (UIViewController?) in
                                                         NSURL.wr_createTeam().wr_URLByAppendingLocaleParameter().open()
@@ -90,7 +86,7 @@ import Foundation
         var topLevelElements = [self.accountGroup(), self.devicesCell(), self.optionsGroup(), self.advancedGroup(), self.helpSection(), self.aboutSection()]
         
         if DeveloperMenuState.developerMenuEnabled() {
-            topLevelElements = topLevelElements + [self.developerGroup()]
+            topLevelElements.append(self.developerGroup())
         }
         
         let topSection = SettingsSectionDescriptor(cellDescriptors: topLevelElements)

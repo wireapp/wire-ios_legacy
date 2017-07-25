@@ -24,6 +24,7 @@ import Cartography
     public let nameLabel = UILabel()
     public let handleLabel = UILabel()
     public let teamNameLabel = UILabel()
+    public var teamView: TeamImageView?
     
     init(user: ZMUser) {
         super.init(frame: .zero)
@@ -46,7 +47,7 @@ import Cartography
         nameLabel.text = user.name
         nameLabel.accessibilityValue = nameLabel.text
         
-        if let teamName = user.team?.name {
+        if let team = user.team, let teamName = team.name {
             teamNameLabel.text = "profile_view.team_name.in".localized(args: teamName)
             teamNameLabel.accessibilityValue = teamNameLabel.text
         }
@@ -63,6 +64,13 @@ import Cartography
         }
         
         [imageView, nameLabel, handleLabel, teamNameLabel].forEach(addSubview)
+        
+        if let team = user.team {
+            let teamView = TeamImageView(team: team)
+            teamView.style = .big
+            addSubview(teamView)
+            self.teamView = teamView
+        }
         
         self.createConstraints()
     }
@@ -96,6 +104,16 @@ import Cartography
             teamNameLabel.centerX == selfView.centerX
             teamNameLabel.leading >= selfView.leading
             teamNameLabel.trailing <= selfView.trailing
+        }
+        
+        if let teamView = self.teamView {
+            constrain(imageView, teamView) { imageView, teamView in
+                teamView.width == teamView.height
+                teamView.width == 64
+                
+                teamView.trailing == imageView.trailing
+                teamView.bottom == imageView.bottom
+            }
         }
     }
     

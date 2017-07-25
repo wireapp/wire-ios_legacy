@@ -785,6 +785,12 @@ TeamImageView {
     backgroundColor: $color-background-light;
 }
 
+TeamImageView.big {
+    initialLabel: @{
+        font: $font-large-thin;
+    }
+}
+
 PersonalTeamView {
     userImageView: @{
         containerView: @{
