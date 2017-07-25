@@ -46,6 +46,7 @@ final class DraftSendInputAccessoryView: UIView {
     }
 
     func setupViews() {
+        backgroundColor = UIColor.clear
         [sendButton, separator].forEach(addSubview)
         separator.backgroundColor = ColorScheme.default().color(withName: ColorSchemeColorSeparator)
         sendButton.cas_styleClass = "send-button"
@@ -66,9 +67,9 @@ final class DraftSendInputAccessoryView: UIView {
 
     func createConstraints() {
         constrain(self, sendButton, separator) { view, sendButton, separator in
-            separator.leading == view.leading
-            separator.trailing == view.trailing
-            separator.top == view.top
+            separator.leading == view.leading + 16
+            separator.trailing == view.trailing - 16
+            separator.bottom == view.bottom
             separator.height == .hairline
 
             sendButton.trailing == view.trailing - 16
