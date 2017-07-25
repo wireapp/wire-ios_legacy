@@ -130,6 +130,11 @@
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     [ZMUserSession removeInitalSyncCompletionObserver:self];
+    [self removeUserProfileObserver];
+}
+
+- (void)removeUserProfileObserver
+{
     [self.userProfile removeObserverWithToken:self.userProfileObserverToken];
 }
 
