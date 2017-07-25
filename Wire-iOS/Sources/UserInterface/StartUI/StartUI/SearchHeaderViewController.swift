@@ -39,6 +39,7 @@ public class SearchHeaderViewController : UIViewController {
     let closeButton : IconButton
     let userSelection : UserSelection
     let colorSchemeVariant : ColorSchemeVariant
+    let separatorView = OverflowSeparatorView()
     
     @objc
     public weak var delegate : SearchHeaderViewControllerDelegate? = nil
@@ -94,7 +95,7 @@ public class SearchHeaderViewController : UIViewController {
         closeButton.setIcon(.X, with: .tiny, for: .normal)
         closeButton.addTarget(self, action: #selector(onCloseButtonPressed), for: .touchUpInside)
         
-        [titleLabel, tokenField, searchIcon, closeButton, clearButton].forEach(view.addSubview)
+        [titleLabel, tokenField, searchIcon, closeButton, clearButton, separatorView].forEach(view.addSubview)
         
         createConstraints()
     }
@@ -115,11 +116,11 @@ public class SearchHeaderViewController : UIViewController {
             titleLabel.leading == tokenField.leading
             titleLabel.trailing == tokenField.trailing
             
-            tokenField.top == view.top + 64
+            tokenField.top == view.top + 56
             tokenField.leading == view.leading + 8
             tokenField.trailing == view.trailing - 8
             tokenField.height >= 32
-            tokenField.bottom == view.bottom
+            tokenField.bottom == view.bottom - 8
             
             closeButton.trailing == view.trailing
             closeButton.centerY == titleLabel.centerY
@@ -127,6 +128,11 @@ public class SearchHeaderViewController : UIViewController {
             closeButton.height == closeButton.width
         }
         
+        constrain(view, separatorView) { view, separatorView in
+            separatorView.leading == view.leading
+            separatorView.trailing == view.trailing
+            separatorView.bottom == view.bottom
+        }
     }
     
     fileprivate dynamic func onCloseButtonPressed() {

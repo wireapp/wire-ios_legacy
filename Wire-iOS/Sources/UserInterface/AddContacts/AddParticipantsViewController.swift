@@ -103,6 +103,8 @@ public class AddParticipantsViewController : UIViewController {
         if conversation.conversationType == .oneOnOne, let connectedUser = conversation.connectedUser {
             userSelection.add(connectedUser)
         }
+        
+        searchResultsViewController.sectionAggregator.delegate = self
     }
 
     override public func viewDidLoad() {
@@ -204,4 +206,11 @@ extension AddParticipantsViewController : UIPopoverPresentationControllerDelegat
         return UIModalPresentationStyle.overFullScreen
     }
     
+}
+
+extension AddParticipantsViewController: CollectionViewSectionAggregatorDelegate {
+    
+    public func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        searchHeaderViewController.separatorView.scrollViewDidScroll(scrollView: scrollView)
+    }
 }
