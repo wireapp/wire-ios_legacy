@@ -71,6 +71,7 @@
 #import "ZClientViewController+Internal.h"
 #import "FormFlowViewController.h"
 #import "RegistrationStepViewController.h"
+#import "SignInViewController.h"
 #import "NavigationController.h"
 #import "ConversationInputBarViewController.h"
 #import "ConversationInputBarViewController+Files.h"

@@ -171,6 +171,8 @@ typedef NS_ENUM(NSInteger, ZetaIconType)
     ZetaIconTypeLibrary                         = 0x260,
     ZetaIconTypeSearchOngoing                   = 0x261,
     
+    ZetaIconTypeCreateTeam                      = 0x269,
+    
     // Emoji Categories
     ZetaIconTypeFlower                          = 0x250,
     ZetaIconTypeCake                            = 0x251,
