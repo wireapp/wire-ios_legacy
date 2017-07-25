@@ -82,7 +82,7 @@ final class MessageComposeViewController: UIViewController {
         messageTextView.backgroundColor = .clear
         messageTextView.font = FontSpec(.normal, .none).font!
         messageTextView.contentInset = .zero
-        messageTextView.textContainerInset = UIEdgeInsetsMake(24, 16, 24, 16)
+        messageTextView.textContainerInset = UIEdgeInsetsMake(24, 16, 56, 16)
         messageTextView.textContainer.lineFragmentPadding = 0
         messageTextView.delegate = self
         messageTextView.indicatorStyle = ColorScheme.default().indicatorStyle
@@ -233,7 +233,7 @@ final class MessageComposeViewController: UIViewController {
             messageTextView.top == view.top
             messageTextView.leading == view.leading
             messageTextView.trailing == view.trailing
-            messageTextView.bottom == sendButtonView.top
+            messageTextView.bottom == markdownBarView.top
 
             sendButtonView.leading == view.leading
             sendButtonView.trailing == view.trailing
