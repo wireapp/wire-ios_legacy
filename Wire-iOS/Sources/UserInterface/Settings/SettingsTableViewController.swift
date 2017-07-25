@@ -210,6 +210,13 @@ class SettingsTableViewController: SettingsBaseTableViewController {
             cell.descriptor = cellDescriptor
             cellDescriptor.featureCell(cell)
             cell.isFirst = indexPath.row == 0
+            
+            // devices cell
+            if let id = cell.descriptor?.identifier, id == SettingsCellDescriptorFactory.settingsDevicesCellIdentifier {
+                cell.badge.backgroundColor = UIColor.white
+                cell.badgeLabel.textColor = UIColor.black
+            }
+            
             return cell
         }
 
