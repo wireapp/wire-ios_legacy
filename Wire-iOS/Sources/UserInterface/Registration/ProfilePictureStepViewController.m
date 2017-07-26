@@ -26,7 +26,6 @@
 #import "WireSyncEngine+iOS.h"
 #import "CameraViewController.h"
 #import "UIViewController+Errors.h"
-#import "ZMUserSession+Additions.h"
 #import "Button.h"
 
 #import "AnalyticsTracker+Registration.h"

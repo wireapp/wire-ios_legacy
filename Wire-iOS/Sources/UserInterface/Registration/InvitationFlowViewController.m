@@ -30,7 +30,6 @@
 #import "TermsOfUseStepViewController.h"
 #import "ProfilePictureStepViewController.h"
 #import "UIViewController+Errors.h"
-#import "ZMUserSession+Additions.h"
 #import "RegistrationViewController.h"
 #import "WireSyncEngine+iOS.h"
 #import "Constants.h"

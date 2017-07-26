@@ -129,7 +129,6 @@
 #import "UIImage+ZetaIconsNeue.h"
 #import "UIColor+WAZExtensions.h"
 #import "AccentColorChangeHandler.h"
-#import "ZMUserSession+Additions.h"
 #import "AnalyticsTracker+FileTransfer.h"
 #import "TimeIntervalClusterizer.h"
 #import "UIColor+WR_ColorScheme.h"
