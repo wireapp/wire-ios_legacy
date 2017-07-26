@@ -33,7 +33,6 @@
 "peoplepicker.header.send_invitation" = "Invite";
 "peoplepicker.header.contacts" = "Contacts";
 "peoplepicker.header.contacts_personal" = "Personal Contacts";
-"peoplepicker.header.team_members" = "%@ and Contacts";
 "peoplepicker.header.directory" = "Connect";
 "peoplepicker.title.create_conversation" = "Create group";
 "peoplepicker.title.add_to_conversation" = "Add people";
