@@ -331,7 +331,7 @@ static NSUInteger const StartUIInitiallyShowsKeyboardConversationThreshold = 10;
             break;
     }
     
-    if (! user.isConnected && section != SearchResultsViewControllerSectionTeamMembers) {
+    if (! user.isConnected && ! user.isTeamMember) {
         [self presentProfileViewControllerForUser:user atIndexPath:indexPath];
     }
 }

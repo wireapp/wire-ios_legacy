@@ -162,7 +162,7 @@ static NSString *ConnectionRequestCellIdentifier = @"ConnectionRequestCell";
         
         if (self.connectionRequests.count == 0) {
             [[ZClientViewController sharedZClientViewController] hideIncomingContactRequestsWithCompletion:^{
-                [[ZClientViewController sharedZClientViewController] selectConversation:[user oneToOneConversationInTeam:nil]
+                [[ZClientViewController sharedZClientViewController] selectConversation:user.oneToOneConversation
                                                                             focusOnView:YES
                                                                                animated:YES];
             }];

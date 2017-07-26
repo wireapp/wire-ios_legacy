@@ -551,7 +551,7 @@ typedef NS_ENUM(NSUInteger, ProfileUserAction) {
     ZMConversation __block *conversation = nil;
     
     [[ZMUserSession sharedSession] enqueueChanges:^{
-        conversation = [self.fullUser oneToOneConversationInTeam:ZMUser.selfUser.team];
+        conversation = self.fullUser.oneToOneConversation;
     } completionHandler:^{
         [self.delegate profileDetailsViewController:self didSelectConversation:conversation];
     }];
