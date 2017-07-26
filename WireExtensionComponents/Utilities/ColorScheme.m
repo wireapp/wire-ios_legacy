@@ -29,6 +29,7 @@ NSString * const ColorSchemeColorAccentDarken = @"accent-current-darken";
 
 NSString * const ColorSchemeColorSeparator = @"separator";
 NSString * const ColorSchemeColorBackground = @"background";
+NSString * const ColorSchemeColorBarBackground = @"bar-background";
 NSString * const ColorSchemeColorConversationBackground = @"conversation-background";
 NSString * const ColorSchemeColorBackgroundOverlay = @"background-overlay";
 NSString * const ColorSchemeColorBackgroundOverlayWithoutPicture = @"background-overlay-without-picture";
@@ -220,6 +221,7 @@ static NSString* light(NSString *colorString) {
     UIColor *blackAlpha40 = [UIColor colorWithWhite:0 alpha:0.4];
     UIColor *blackAlpha80 = [UIColor wr_colorFromString:@"rgb(0, 0, 0, 0.80)"];
     UIColor *backgroundGraphite = [UIColor wr_colorFromString:@"rgb(22, 24, 25)"];
+    UIColor *backgroundLightGraphite = [UIColor wr_colorFromString:@"rgb(30, 32, 33)"];
     UIColor *graphite = [UIColor wr_colorFromString:@"rgb(51, 55, 58)"];
     UIColor *graphiteAlpha16 = [UIColor wr_colorFromString:@"rgb(51, 55, 58, 0.16)"];
     UIColor *graphiteAlpha40 = [UIColor wr_colorFromString:@"rgb(51, 55, 58, 0.40)"];
@@ -240,6 +242,7 @@ static NSString* light(NSString *colorString) {
                                    ColorSchemeColorTextDimmed: lightGraphite,
                                    ColorSchemeColorTextPlaceholder: lightGraphiteAlpha64,
                                    ColorSchemeColorSeparator: lightGraphiteAlpha48,
+                                   ColorSchemeColorBarBackground: white,
                                    ColorSchemeColorBackground: white,
                                    ColorSchemeColorConversationBackground: white98,
                                    ColorSchemeColorIconNormal: graphite,
@@ -289,6 +292,7 @@ static NSString* light(NSString *colorString) {
                                   ColorSchemeColorTextDimmed: lightGraphite,
                                   ColorSchemeColorTextPlaceholder: lightGraphiteAlpha64,
                                   ColorSchemeColorSeparator: lightGraphiteAlpha24,
+                                  ColorSchemeColorBarBackground: backgroundLightGraphite,
                                   ColorSchemeColorBackground: backgroundGraphite,
                                   ColorSchemeColorConversationBackground: backgroundGraphite,
                                   ColorSchemeColorIconNormal: white,
