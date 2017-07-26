@@ -116,6 +116,7 @@ public class AddParticipantsViewController : UIViewController {
         view.addSubview(searchResultsViewController.view)
         searchResultsViewController.didMove(toParentViewController: self)
         searchResultsViewController.searchResultsView?.emptyResultView = emptyResultLabel
+        searchResultsViewController.sectionAggregator.delegate = self
         
         createConstraints()
         updateConfirmButtonVisibility()
@@ -204,4 +205,11 @@ extension AddParticipantsViewController : UIPopoverPresentationControllerDelegat
         return UIModalPresentationStyle.overFullScreen
     }
     
+}
+
+extension AddParticipantsViewController: CollectionViewSectionAggregatorDelegate {
+    
+    public func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        searchHeaderViewController.separatorView.scrollViewDidScroll(scrollView: scrollView)
+    }
 }

@@ -325,10 +325,25 @@ extension PersonalTeamView {
 }
 
 public final class TeamImageView: UIImageView {
+    public enum TeamImageViewStyle {
+        case small
+        case big
+    }
+    
     private var lastLayoutBounds: CGRect = .zero
     private let maskLayer = CALayer()
     internal let initialLabel = UILabel()
     public let team: TeamType
+    public var style: TeamImageViewStyle = .small {
+        didSet {
+            switch (self.style) {
+            case .big:
+                self.cas_styleClass = "big"
+            case .small:
+                self.cas_styleClass = nil
+            }
+        }
+    }
     
     init(team: TeamType) {
         self.team = team
@@ -360,7 +375,7 @@ public final class TeamImageView: UIImageView {
         }
         
         UIGraphicsBeginImageContextWithOptions(bounds.size, false, maskLayer.contentsScale)
-        WireStyleKit.drawSpace(withFrame: bounds, resizing: WireStyleKitResizingBehaviorCenter, color: .black)
+        WireStyleKit.drawSpace(withFrame: bounds, resizing: WireStyleKitResizingBehaviorAspectFit, color: .black)
         
         let image = UIGraphicsGetImageFromCurrentImageContext()!
         UIGraphicsEndImageContext()
@@ -409,13 +424,13 @@ public final class TeamImageView: UIImageView {
     init(team: TeamType) {
         self.team = team
         
-        self.imageView = TeamImageView(team: team)
+        imageView = TeamImageView(team: team)
         
         super.init()
         
-        self.isAccessibilityElement = true
-        self.accessibilityTraits = UIAccessibilityTraitButton
-        self.shouldGroupAccessibilityChildren = true
+        isAccessibilityElement = true
+        accessibilityTraits = UIAccessibilityTraitButton
+        shouldGroupAccessibilityChildren = true
         
         imageView.contentMode = .scaleAspectFill
         
@@ -436,10 +451,10 @@ public final class TeamImageView: UIImageView {
             }
         }
 
-        self.update()
+        update()
         
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(didTap(_:)))
-        self.addGestureRecognizer(tapGesture)
+        addGestureRecognizer(tapGesture)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -448,14 +463,14 @@ public final class TeamImageView: UIImageView {
     
     public override func update() {
         super.update()
-        self.updateLabel()
-        self.imageView.updateImage()
-        self.accessibilityValue = String(format: "conversation_list.header.self_team.accessibility_value".localized, self.team.name ?? "") + " " + accessibilityState
-        self.accessibilityIdentifier = "\(self.team.name ?? "") team"
+        updateLabel()
+        imageView.updateImage()
+        accessibilityValue = String(format: "conversation_list.header.self_team.accessibility_value".localized, self.team.name ?? "") + " " + accessibilityState
+        accessibilityIdentifier = "\(self.team.name ?? "") team"
     }
     
     fileprivate func updateLabel() {
-        self.nameLabel.text = self.team.name
+        nameLabel.text = self.team.name
     }
     
     static let ciContext: CIContext = {

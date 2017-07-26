@@ -39,6 +39,31 @@ extension UIAlertController {
         controller.addAction(deleteAction)
         return controller
     }
+    
+    static func controllerForDraftDismiss(deleteHandler: @escaping() -> Void, saveHandler: @escaping() -> Void) -> UIAlertController {
+        let controller = UIAlertController(
+            title: "compose.drafts.compose.dismiss.confirm.title".localized,
+            message: nil,
+            preferredStyle: .actionSheet
+        )
+        
+        let saveAction = UIAlertAction(
+            title: "compose.drafts.compose.dismiss.confirm.action.title".localized,
+            style: .default,
+            handler: { _ in saveHandler() }
+        )
+
+        let deleteAction = UIAlertAction(
+            title: "compose.drafts.compose.dismiss.delete.action.title".localized,
+            style: .destructive,
+            handler: { _ in deleteHandler() }
+        )
+        
+        controller.addAction(.cancel())
+        controller.addAction(saveAction)
+        controller.addAction(deleteAction)
+        return controller
+    }
 
 }
 

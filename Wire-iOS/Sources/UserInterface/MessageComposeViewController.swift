@@ -82,7 +82,7 @@ final class MessageComposeViewController: UIViewController {
         messageTextView.backgroundColor = .clear
         messageTextView.font = FontSpec(.normal, .none).font!
         messageTextView.contentInset = .zero
-        messageTextView.textContainerInset = UIEdgeInsetsMake(24, 16, 24, 16)
+        messageTextView.textContainerInset = UIEdgeInsetsMake(24, 16, 56, 16)
         messageTextView.textContainer.lineFragmentPadding = 0
         messageTextView.delegate = self
         messageTextView.indicatorStyle = ColorScheme.default().indicatorStyle
@@ -152,24 +152,6 @@ final class MessageComposeViewController: UIViewController {
         sendButtonView.onSend = { [unowned self] in
             self.delegate?.composeViewController(self, wantsToSendDraft: self.draft!)
         }
-
-        sendButtonView.onDelete = { [weak self] in
-            guard let `self` = self else { return }
-            let controller = UIAlertController.controllerForDraftDeletion {
-                self.persistence.enqueue(
-                    block: {
-                        self.draft.map($0.delete)
-                        self.draft = nil
-                }, completion: {
-                    self.subjectTextField.text = nil
-                    self.messageTextView.text = nil
-                    self.updateButtonStates()
-                    self.popToListIfNeeded()
-                })
-            }
-
-            self.present(controller, animated: true, completion: nil)
-        }
     }
     
     private func popToListIfNeeded() {
@@ -179,7 +161,33 @@ final class MessageComposeViewController: UIViewController {
     }
 
     fileprivate dynamic func dismissTapped() {
-        delegate?.composeViewControllerWantsToDismiss(self)
+        
+        // if nothing to save/delete, just dismiss
+        if !hasDraftContent {
+            self.delegate?.composeViewControllerWantsToDismiss(self)
+            return
+        }
+        
+        let deleteHandler: () -> Void = {
+            self.persistence.enqueue(
+                block: {
+                    self.draft.map($0.delete)
+                    self.draft = nil
+            }, completion: {
+                self.messageTextView.text = ""
+                self.subjectTextField.text = ""
+                self.delegate?.composeViewControllerWantsToDismiss(self)
+            })
+        }
+        
+        // since draft already saved, just dismiss
+        let saveHandler: () -> Void = {
+            self.delegate?.composeViewControllerWantsToDismiss(self)
+        }
+        
+        let controller = UIAlertController.controllerForDraftDismiss(deleteHandler: deleteHandler,
+                                                                     saveHandler: saveHandler)
+        self.present(controller, animated: true, completion: nil)
     }
 
     fileprivate dynamic func updateDraftThrottled() {
@@ -224,7 +232,7 @@ final class MessageComposeViewController: UIViewController {
             messageTextView.top == view.top
             messageTextView.leading == view.leading
             messageTextView.trailing == view.trailing
-            messageTextView.bottom == sendButtonView.top
+            messageTextView.bottom == markdownBarView.top
 
             sendButtonView.leading == view.leading
             sendButtonView.trailing == view.trailing

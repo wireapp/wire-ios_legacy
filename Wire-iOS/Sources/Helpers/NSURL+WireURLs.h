@@ -49,6 +49,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (instancetype)wr_unknownMessageHelpURL;
 
++ (instancetype)wr_createTeamURL;
+
 @end
 
 NS_ASSUME_NONNULL_END

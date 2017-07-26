@@ -33,7 +33,6 @@
 "peoplepicker.header.send_invitation" = "Invite";
 "peoplepicker.header.contacts" = "Contacts";
 "peoplepicker.header.contacts_personal" = "Personal Contacts";
-"peoplepicker.header.team_members" = "%@ and Contacts";
 "peoplepicker.header.directory" = "Connect";
 "peoplepicker.title.create_conversation" = "Create group";
 "peoplepicker.title.add_to_conversation" = "Add people";
@@ -537,6 +536,10 @@
 "self.new_device_alert.manage_devices" = "Manage devices";
 "self.new_device_alert.trust_devices" = "OK";
 
+// Settings - top level
+"self.settings.create_team.title" = "Create team";
+"self.settings.add_account.title" = "Add account";
+
 // Settings - Account details
 "self.settings.account_section" = "Account";
 
@@ -945,3 +948,7 @@
 "compose.drafts.compose.delete.confirm.title" = "Confirm Deletion";
 "compose.drafts.compose.delete.confirm.message" = "This action will permamently delete this draft and cannot be undone.";
 "compose.drafts.compose.delete.confirm.action.title" = "Delete";
+
+"compose.drafts.compose.dismiss.confirm.title" = "Save as draft";
+"compose.drafts.compose.dismiss.confirm.action.title" = "Save";
+"compose.drafts.compose.dismiss.delete.action.title" = "Delete";

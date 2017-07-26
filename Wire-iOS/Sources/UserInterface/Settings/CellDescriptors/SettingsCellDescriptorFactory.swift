@@ -36,11 +36,7 @@ import Foundation
     }
     
     func rootGroup() -> SettingsControllerGeneratorType & SettingsInternalGroupCellDescriptorType {
-        var rootElements = [self.devicesGroup(), self.settingsGroup()]
-        
-        if !self.settingsPropertyFactory.selfUser.isTeamMember {
-            rootElements.append(self.inviteButton())
-        }
+        let rootElements = [self.createTeamCell(), self.addAccountCell(), self.settingsGroup()]
         
         let topSection = SettingsSectionDescriptor(cellDescriptors: rootElements)
         
@@ -61,11 +57,36 @@ import Foundation
         
     }
     
+    func createTeamCell() -> SettingsCellDescriptorType {
+        return SettingsExternalScreenCellDescriptor(title: "self.settings.create_team.title".localized,
+                                                    isDestructive: false,
+                                                    presentationStyle: PresentationStyle.navigation,
+                                                    identifier: nil,
+                                                    presentationAction: { () -> (UIViewController?) in
+                                                        NSURL.wr_createTeam().wr_URLByAppendingLocaleParameter().open()
+                                                        return nil
+                                                    },
+                                                    previewGenerator: nil,
+                                                    icon: .createTeam)
+    }
+    
+    func addAccountCell() -> SettingsCellDescriptorType {
+        return SettingsExternalScreenCellDescriptor(title: "self.settings.add_account.title".localized,
+                                                    isDestructive: false,
+                                                    presentationStyle: PresentationStyle.navigation,
+                                                    identifier: nil,
+                                                    presentationAction: { () -> (UIViewController?) in
+                                                        return SignInViewController()
+        },
+                                                    previewGenerator: nil,
+                                                    icon: .convMetaAddPerson)
+    }
+    
     func settingsGroup() -> SettingsControllerGeneratorType & SettingsInternalGroupCellDescriptorType {
-        var topLevelElements = [self.accountGroup(), self.optionsGroup(), self.advancedGroup(), self.helpSection(), self.aboutSection()]
+        var topLevelElements = [self.accountGroup(), self.devicesCell(), self.optionsGroup(), self.advancedGroup(), self.helpSection(), self.aboutSection()]
         
         if DeveloperMenuState.developerMenuEnabled() {
-            topLevelElements = topLevelElements + [self.developerGroup()]
+            topLevelElements.append(self.developerGroup())
         }
         
         let topSection = SettingsSectionDescriptor(cellDescriptors: topLevelElements)
@@ -73,7 +94,7 @@ import Foundation
         return SettingsGroupCellDescriptor(items: [topSection], title: "self.settings".localized, style: .plain, previewGenerator: .none, icon: .gear)
     }
     
-    func devicesGroup() -> SettingsCellDescriptorType {
+    func devicesCell() -> SettingsCellDescriptorType {
         return SettingsExternalScreenCellDescriptor(title: "self.settings.privacy_analytics_menu.devices.title".localized,
             isDestructive: false,
             presentationStyle: PresentationStyle.navigation,

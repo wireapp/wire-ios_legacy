@@ -28,7 +28,6 @@
 #import "TermsOfUseStepViewController.h"
 #import "UIViewController+Errors.h"
 #import "Analytics+iOS.h"
-#import "ZMUserSession+Additions.h"
 #import "NavigationController.h"
 #import "AppDelegate.h"
 
@@ -190,6 +189,7 @@
 
 - (void)registrationDidFail:(NSError *)error
 {
+    [self.navigationController popToRootViewControllerAnimated:YES];
     [self showAlertForError:error];
 }
 

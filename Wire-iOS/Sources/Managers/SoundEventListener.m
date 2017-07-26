@@ -22,7 +22,6 @@
 #import "WireSyncEngine+iOS.h"
 #import "avs+iOS.h"
 #import "ZClientViewController.h"
-#import "ZMUserSession+Additions.h"
 #import "SoundEventRulesWatchDog.h"
 #import "AppDelegate.h"
 #import "Wire-Swift.h"

@@ -518,7 +518,7 @@ PlaceholderConversationViewController {
 
 ConversationRootViewController {
     UINavigationBar {
-        barTintColor: $color-background;
+        barTintColor: $color-bar-background;
         tintColor: $color-text-foreground;
     }
 }
@@ -785,6 +785,12 @@ TeamImageView {
     backgroundColor: $color-background-light;
 }
 
+TeamImageView.big {
+    initialLabel: @{
+        font: $font-large-thin;
+    }
+}
+
 PersonalTeamView {
     userImageView: @{
         containerView: @{
@@ -959,7 +965,7 @@ UILabel.conversationVerifiedLabel {
 }
 
 InputBar: {
-    barBackgroundColor: $color-text-background;
+    barBackgroundColor: $color-bar-background;
     editingBackgroundColor: $color-accent-yellow;
     writingSeparatorColor: $color-separator;
     ephemeralColor: $color-accent-current;
@@ -1629,7 +1635,7 @@ TokenField.share {
 /* Collections */
 
 CollectionsView {
-    backgroundColor: $color-background-new;
+    backgroundColor: $color-conversation-background;
 }
 
 NoResultsView {

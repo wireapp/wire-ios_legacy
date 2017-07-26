@@ -23,7 +23,6 @@ import Cartography
 // This class wraps the conversation content view controller in order to display the navigation bar on the top
 @objc open class ConversationRootViewController: UIViewController {
     
-    fileprivate var navigationSeparator = UIView()
     fileprivate(set) var customNavBar = UINavigationBar()
     fileprivate var contentView = UIView()
     
@@ -53,8 +52,6 @@ import Cartography
             return
         }
         
-        self.navigationSeparator.translatesAutoresizingMaskIntoConstraints = false
-        
         self.customNavBar.isTranslucent = false
         self.customNavBar.isOpaque = true
         self.customNavBar.setBackgroundImage(UIImage(), for: .any, barMetrics: .default)
@@ -62,16 +59,9 @@ import Cartography
         self.customNavBar.translatesAutoresizingMaskIntoConstraints = false
         
         self.view.addSubview(self.customNavBar)
-        self.navigationSeparator.cas_styleClass = "separator"
-        self.view.addSubview(navigationSeparator)
         self.view.addSubview(self.contentView)
         
-        constrain(self.customNavBar, self.navigationSeparator, self.view, self.contentView, conversationViewController.view) { (customNavBar: LayoutProxy, navigationSeparator: LayoutProxy, view: LayoutProxy, contentView: LayoutProxy, conversationViewControllerView: LayoutProxy) -> () in
-            navigationSeparator.height == .hairline
-            navigationSeparator.left == customNavBar.left
-            navigationSeparator.top == customNavBar.bottom - 1
-            navigationSeparator.right == customNavBar.right
-            
+        constrain(self.customNavBar, self.view, self.contentView, conversationViewController.view) { (customNavBar: LayoutProxy, view: LayoutProxy, contentView: LayoutProxy, conversationViewControllerView: LayoutProxy) -> () in
             customNavBar.top == view.top
             customNavBar.height == 64
             customNavBar.left == view.left
@@ -80,7 +70,7 @@ import Cartography
             contentView.left == view.left
             contentView.right == view.right
             contentView.bottom == view.bottom
-            contentView.top == navigationSeparator.bottom
+            contentView.top == customNavBar.bottom
             
             conversationViewControllerView.edges == contentView.edges
         }

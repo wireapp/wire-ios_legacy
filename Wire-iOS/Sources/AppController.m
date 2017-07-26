@@ -21,7 +21,6 @@
 #import "AppController+Internal.h"
 
 #import "WireSyncEngine+iOS.h"
-#import "ZMUserSession+Additions.h"
 #import "MagicConfig.h"
 #import "PassthroughWindow.h"
 
@@ -88,6 +87,9 @@ NSString *const ZMUserSessionDidBecomeAvailableNotification = @"ZMUserSessionDid
 {
     self = [super init];
     if (self) {
+        // Must be performed before any SE instance is initialized.
+        [self configureCallKit];
+        
         self.uiState = AppUIStateNotLoaded;
         self.seState = AppSEStateNotLoaded;
         self.blocksToExecute = [NSMutableArray array];
@@ -123,7 +125,7 @@ NSString *const ZMUserSessionDidBecomeAvailableNotification = @"ZMUserSessionDid
     _seState = seState;
 }
 
--(BOOL)isRunningTests
+- (BOOL)isRunningTests
 {
     NSString *testPath = NSProcessInfo.processInfo.environment[@"XCTestConfigurationFilePath"];
     return testPath != nil;
@@ -155,14 +157,16 @@ NSString *const ZMUserSessionDidBecomeAvailableNotification = @"ZMUserSessionDid
     self.enteringForeground = YES;
     [self loadAppropriateController];
     self.enteringForeground = NO;
-
-    [[self zetaUserSession] checkIfLoggedInWithCallback:^(BOOL isLoggedIn) {
-        if (isLoggedIn) {
-            [self uploadAddressBookIfNeeded];
-            [self trackShareExtensionEventsIfNeeded];
-            [self.messageCountTracker trackLegacyMessageCount];
-        }
-    }];
+    
+    if (self.sessionManager.isUserSessionActive) {
+        [[self zetaUserSession] checkIfLoggedInWithCallback:^(BOOL isLoggedIn) {
+            if (isLoggedIn) {
+                [self uploadAddressBookIfNeeded];
+                [self trackShareExtensionEventsIfNeeded];
+                [self.messageCountTracker trackLegacyMessageCount];
+            }
+        }];
+    }
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application
@@ -305,13 +309,13 @@ NSString *const ZMUserSessionDidBecomeAvailableNotification = @"ZMUserSessionDid
 
         self.notificationsWindow = [PassthroughWindow new];
         [self setupClassyWithWindows:@[self.window, self.notificationsWindow]];
-
-        // Window creation order is important, main window should be the keyWindow when its done.
-        [self loadRootViewController];
-
+        
         // setup overlay window
         [self loadNotificationWindowRootController];
         
+        // Window creation order is important, main window should be the keyWindow when its done.
+        [self loadRootViewController];
+
         // Bring them into UI
         [self.window makeKeyAndVisible];
         
@@ -433,11 +437,6 @@ NSString *const ZMUserSessionDidBecomeAvailableNotification = @"ZMUserSessionDid
 - (void)setupUserSession:(ZMUserSession *)userSession
 {
     (void)[Settings sharedSettings];
-
-    BOOL callKitSupported = ([CXCallObserver class] != nil) && !TARGET_IPHONE_SIMULATOR;
-    BOOL callKitDisabled = [[Settings sharedSettings] disableCallKit];
-    
-    [ZMUserSession setUseCallKit:callKitSupported && !callKitDisabled];
     
     _zetaUserSession = userSession;
 
@@ -462,6 +461,16 @@ NSString *const ZMUserSessionDidBecomeAvailableNotification = @"ZMUserSessionDid
         self.seState = AppSEStateBlacklisted;
         [self showForceUpdateIfNeeeded];
     }];
+}
+
+// Must be performed before any SE instance is initialized.
+- (void)configureCallKit
+{
+    NSAssert(_zetaUserSession == nil, @"User session is already initialized");
+    BOOL callKitSupported = ([CXCallObserver class] != nil) && !TARGET_IPHONE_SIMULATOR;
+    BOOL callKitDisabled = [[Settings sharedSettings] disableCallKit];
+    
+    [ZMUserSession setUseCallKit:callKitSupported && !callKitDisabled];
 }
 
 #pragma mark - User Session block queueing
