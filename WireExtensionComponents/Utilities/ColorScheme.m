@@ -213,6 +213,7 @@ static NSString* light(NSString *colorString) {
     UIColor *whiteAlpha24 = [UIColor wr_colorFromString:@"rgb(255, 255, 255, 0.24)"];
     UIColor *whiteAlpha40 = [UIColor wr_colorFromString:@"rgb(255, 255, 255, 0.40)"];
     UIColor *whiteAlpha80 = [UIColor wr_colorFromString:@"rgb(255, 255, 255, 0.80)"];
+    UIColor *offWhite = [UIColor wr_colorFromString:@"rgb(245, 245, 245)"];
     UIColor *black = [UIColor blackColor];
     UIColor *blackAlpha4 = [UIColor wr_colorFromString:@"rgb(0, 0, 0, 0.04)"];
     UIColor *blackAlpha8 = [UIColor wr_colorFromString:@"rgb(0, 0, 0, 0.08)"];
@@ -244,7 +245,7 @@ static NSString* light(NSString *colorString) {
                                    ColorSchemeColorSeparator: lightGraphiteAlpha48,
                                    ColorSchemeColorBarBackground: white,
                                    ColorSchemeColorBackground: white,
-                                   ColorSchemeColorConversationBackground: white98,
+                                   ColorSchemeColorConversationBackground: offWhite,
                                    ColorSchemeColorIconNormal: graphite,
                                    ColorSchemeColorIconSelected: white,
                                    ColorSchemeColorIconHighlighted: white,
