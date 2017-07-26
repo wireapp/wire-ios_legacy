@@ -81,8 +81,15 @@ final class MessageComposeViewController: UIViewController {
         messageTextView.textColor = color(ColorSchemeColorTextForeground)
         messageTextView.backgroundColor = .clear
         messageTextView.font = FontSpec(.normal, .none).font!
-        messageTextView.contentInset = .zero
-        messageTextView.textContainerInset = UIEdgeInsetsMake(24, 16, 56, 16)
+        
+        // NB: setting the textContainerInset causes the content size to change
+        // drastically when tapping on a white space ¯\_(ツ)_/¯. We simulate
+        // textContainerInset = UIEdgeInsetsMake(24, 16, 56, 16) by constraining
+        // the text view's leading margin 16 points from the view's margin and
+        // setting the scroll views content inset to compensate (accounting for
+        // the default text container inset (8,0,8,0))
+        
+        messageTextView.contentInset = UIEdgeInsetsMake(16, 0, 48, -16)
         messageTextView.textContainer.lineFragmentPadding = 0
         messageTextView.delegate = self
         messageTextView.indicatorStyle = ColorScheme.default().indicatorStyle
@@ -230,7 +237,7 @@ final class MessageComposeViewController: UIViewController {
     private func createConstraints() {
         constrain(view, messageTextView, sendButtonView, markdownBarView) { view, messageTextView, sendButtonView, markdownBarView in
             messageTextView.top == view.top
-            messageTextView.leading == view.leading
+            messageTextView.leading == view.leading + 16
             messageTextView.trailing == view.trailing
             messageTextView.bottom == markdownBarView.top
 
