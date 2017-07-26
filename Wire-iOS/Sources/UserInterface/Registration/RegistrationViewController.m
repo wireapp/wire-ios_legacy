@@ -262,7 +262,7 @@
         return;
     }
     
-    if (! [[ZMUserSession sharedSession] registeredOnThisDevice] && [ZMUser selfUserHasIncompleteUserDetails]) {
+    if (! [[ZMUserSession sharedSession] registeredOnThisDevice] && [[[ZMUser selfUser] emailAddress] length] == 0) {
         self.rootNavigationController.logoEnabled = NO;
         self.rootNavigationController.backButtonEnabled = NO;
         
@@ -274,22 +274,12 @@
             self.hasPushedPostRegistrationStep = YES;
         }
         
-        if ([[[ZMUser selfUser] phoneNumber] length] == 0) {
-            AddPhoneNumberViewController *addPhoneNumberViewController = [[AddPhoneNumberViewController alloc] init];
-            addPhoneNumberViewController.analyticsTracker = [AnalyticsTracker analyticsTrackerWithContext:AnalyticsContextPostLogin];
-            addPhoneNumberViewController.formStepDelegate = self;
-            addPhoneNumberViewController.skipButtonType = AddPhoneNumberViewControllerSkipButtonTypeSkip;
-            
-            [self.rootNavigationController pushViewController:addPhoneNumberViewController animated:YES];
-        }
-        else if ([[[ZMUser selfUser] emailAddress] length] == 0) {
-            AddEmailPasswordViewController *addEmailPasswordViewController = [[AddEmailPasswordViewController alloc] init];
-            addEmailPasswordViewController.analyticsTracker = [AnalyticsTracker analyticsTrackerWithContext:AnalyticsContextPostLogin];
-            addEmailPasswordViewController.formStepDelegate = self;
-            addEmailPasswordViewController.skipButtonType = AddEmailPasswordViewControllerSkipButtonTypeNone;
-            
-            [self.rootNavigationController pushViewController:addEmailPasswordViewController animated:YES];
-        }
+        AddEmailPasswordViewController *addEmailPasswordViewController = [[AddEmailPasswordViewController alloc] init];
+        addEmailPasswordViewController.analyticsTracker = [AnalyticsTracker analyticsTrackerWithContext:AnalyticsContextPostLogin];
+        addEmailPasswordViewController.formStepDelegate = self;
+        addEmailPasswordViewController.skipButtonType = AddEmailPasswordViewControllerSkipButtonTypeNone;
+        
+        [self.rootNavigationController pushViewController:addEmailPasswordViewController animated:YES];
     }
     else if (! [[ZMUserSession sharedSession] registeredOnThisDevice]) {
         ContextType type = [[ZMUserSession sharedSession] hadHistoryAtLastLogin] ? ContextTypeLoggedOut : ContextTypeNewDevice;
