@@ -103,8 +103,6 @@ public class AddParticipantsViewController : UIViewController {
         if conversation.conversationType == .oneOnOne, let connectedUser = conversation.connectedUser {
             userSelection.add(connectedUser)
         }
-        
-        searchResultsViewController.sectionAggregator.delegate = self
     }
 
     override public func viewDidLoad() {
@@ -118,6 +116,7 @@ public class AddParticipantsViewController : UIViewController {
         view.addSubview(searchResultsViewController.view)
         searchResultsViewController.didMove(toParentViewController: self)
         searchResultsViewController.searchResultsView?.emptyResultView = emptyResultLabel
+        searchResultsViewController.sectionAggregator.delegate = self
         
         createConstraints()
         updateConfirmButtonVisibility()
