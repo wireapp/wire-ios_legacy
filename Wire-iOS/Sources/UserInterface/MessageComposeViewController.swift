@@ -162,12 +162,9 @@ final class MessageComposeViewController: UIViewController {
 
     fileprivate dynamic func dismissTapped() {
         
-        // if textfield active when popping vc, transition breaks
-        subjectTextField.resignFirstResponder()
-        
         // if nothing to save/delete, just dismiss
         if !hasDraftContent {
-            popToListIfNeeded()
+            self.delegate?.composeViewControllerWantsToDismiss(self)
             return
         }
         
@@ -179,7 +176,7 @@ final class MessageComposeViewController: UIViewController {
             }, completion: {
                 self.messageTextView.text = ""
                 self.subjectTextField.text = ""
-                self.popToListIfNeeded()
+                self.delegate?.composeViewControllerWantsToDismiss(self)
             })
         }
         
