@@ -950,7 +950,6 @@
 "compose.drafts.compose.delete.confirm.message" = "This action will permamently delete this draft and cannot be undone.";
 "compose.drafts.compose.delete.confirm.action.title" = "Delete";
 
-"compose.drafts.compose.dismiss.confirm.title" = "Confirm Changes";
-"compose.drafts.compose.dismiss.confirm.message" = "Deleting this draft cannot be undone.";
+"compose.drafts.compose.dismiss.confirm.title" = "Save as draft";
 "compose.drafts.compose.dismiss.confirm.action.title" = "Save";
 "compose.drafts.compose.dismiss.delete.action.title" = "Delete";
