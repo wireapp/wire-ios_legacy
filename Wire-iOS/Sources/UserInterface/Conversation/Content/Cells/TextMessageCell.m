@@ -188,9 +188,7 @@
                                                                                             obfuscated:message.isObfuscated];
     if (self.searchQueries.count > 0 && attributedMessageText.length > 0) {
         
-        NSMutableDictionary<NSString *, id> *highlightStyle = [NSMutableDictionary dictionaryWithDictionary:[attributedMessageText attributesAtIndex:0
-                                                                                                                                     effectiveRange:nil]];
-        highlightStyle[NSBackgroundColorAttributeName] = [[ColorScheme defaultColorScheme] colorWithName:ColorSchemeColorAccentDarken];
+        NSDictionary<NSString *, id> *highlightStyle = @{ NSBackgroundColorAttributeName: [[ColorScheme defaultColorScheme] colorWithName:ColorSchemeColorAccentDarken]};
         attributedMessageText = [attributedMessageText highlightingAppearancesOf:self.searchQueries
                                                                             with:highlightStyle
                                                                        upToWidth:0
