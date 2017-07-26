@@ -264,13 +264,11 @@ protocol SettingsCellType: class {
         
         if self.isHighlighted && self.selectionStyle != .none {
             self.backgroundColor = UIColor(white: 0, alpha: 0.2)
-            self.badge.backgroundColor = UIColor.clear
-            self.badgeLabel.textColor = UIColor.white
+            self.badge.backgroundColor = UIColor.white
+            self.badgeLabel.textColor = UIColor.black
         }
         else {
             self.backgroundColor = UIColor.clear
-            self.badge.backgroundColor = UIColor.white
-            self.badgeLabel.textColor = UIColor.black
         }
     }
 }
