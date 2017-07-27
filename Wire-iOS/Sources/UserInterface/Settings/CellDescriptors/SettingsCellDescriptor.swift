@@ -266,6 +266,8 @@ func SettingsPropertyLabelText(_ name: SettingsPropertyName) -> String {
         return "Last app lock date"
     case .callingConstantBitRate:
         return "self.settings.vbr.title".localized
+    case .disableLinkPreviews:
+        return "self.settings.privacy_security.disable_link_previews.title".localized
     }
 }
 

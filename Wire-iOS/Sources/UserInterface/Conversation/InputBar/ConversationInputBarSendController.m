@@ -67,6 +67,8 @@
 {
     [AppDelegate checkNetworkAndFlashIndicatorIfNecessary];
     
+    BOOL shouldFetchLinkPreview = ![Settings sharedSettings].disableLinkPreviews;
+    
     __block id<ZMConversationMessage> textMessage = nil;
     [[ZMUserSession sharedSession] enqueueChanges:^{
         
@@ -76,13 +78,13 @@
             for(int i = 0; i < 500; ++i) {
                 NSString *textWithNumber = [NSString stringWithFormat:@"%@ (%d)", text, i+1];
                 // only save last ones, who cares
-                textMessage = [self.conversation appendMessageWithText:textWithNumber];
+                textMessage = [self.conversation appendMessageWithText:textWithNumber fetchLinkPreview:shouldFetchLinkPreview];
                 [(ZMMessage *)textMessage removeExpirationDate];
             }
         }
         else {
             // normal sending
-            textMessage = [self.conversation appendMessageWithText:text];
+            textMessage = [self.conversation appendMessageWithText:text fetchLinkPreview:shouldFetchLinkPreview];
         }
         self.conversation.draftMessageText = @"";
     } completionHandler:^{
@@ -96,8 +98,11 @@
     [AppDelegate checkNetworkAndFlashIndicatorIfNecessary];
     __block id <ZMConversationMessage> textMessage = nil;
     
+    BOOL shouldFetchLinkPreview = ![Settings sharedSettings].disableLinkPreviews;
+    
     [ZMUserSession.sharedSession enqueueChanges:^{
-        textMessage = [self.conversation appendMessageWithText:text];
+        textMessage = [self.conversation appendMessageWithText:text fetchLinkPreview:shouldFetchLinkPreview];
+        
         [self.conversation appendMessageWithImageData:data];
         self.conversation.draftMessageText = @"";
     } completionHandler:^{

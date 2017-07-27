@@ -191,6 +191,15 @@ extension SettingsCellDescriptorFactory {
             }
         }
         
+        let linkPreviewDescriptor = SettingsPropertyToggleCellDescriptor(settingsProperty: settingsPropertyFactory.property(.disableLinkPreviews), inverse: true)
+        let linkPreviewSection = SettingsSectionDescriptor(
+            cellDescriptors: [linkPreviewDescriptor],
+            header: nil,
+            footer: "self.settings.privacy_security.disable_link_previews.footer".localized
+        )
+        
+        cellDescriptors.append(linkPreviewSection)
+        
         return SettingsGroupCellDescriptor(items: cellDescriptors, title: "self.settings.options_menu.title".localized, icon: .settingsOptions)
     }
 
