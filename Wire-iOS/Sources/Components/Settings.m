@@ -141,7 +141,11 @@ NSString * const UserDefaultCallingConstantBitRate = @"CallingConstantBitRate";
     if (self) {
         [self migrateHockeyAndOptOutSettingsToSharedDefaults];
         [self restoreLastUsedAVSSettings];
+        
+#if TARGET_IPHONE_OS_IPHONE
         [self loadEnabledLogs];
+#endif
+        
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationDidEnterBackground:) name:UIApplicationDidEnterBackgroundNotification object:nil];
     }
     return self;
