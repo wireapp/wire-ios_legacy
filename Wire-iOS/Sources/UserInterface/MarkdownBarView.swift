@@ -90,6 +90,7 @@ public final class MarkdownBarView: UIView {
         }
         
         headerButton.itemIcons = [.markdownH1, .markdownH2, .markdownH3]
+        headerButton.delegate = self
         headerButton.setupView()
     }
     
@@ -155,5 +156,23 @@ public final class MarkdownBarView: UIView {
     
     @objc public func resetIcons() {
         buttons.forEach { $0.setIconColor(normalColor, for: .normal) }
+    }
+}
+
+extension MarkdownBarView: PopUpIconButtonDelegate {
+    
+    func popUpIconButton(_ button: PopUpIconButton, didSelectIcon icon: ZetaIconType) {
+        
+        if button === headerButton {
+            var headerLevel: MarkdownElementType.HeaderLevel?
+            switch icon {
+            case .markdownH1: headerLevel = .h1
+            case .markdownH2: headerLevel = .h2
+            case .markdownH3: headerLevel = .h3
+            default: return
+            }
+            // selecting header level from popup view always inserts/converts current syntax
+            delegate?.markdownBarView(self, didSelectElementType: .header(headerLevel!), with: button)
+        }
     }
 }

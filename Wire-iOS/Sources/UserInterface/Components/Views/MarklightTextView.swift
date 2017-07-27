@@ -353,15 +353,11 @@ extension MarklightTextView: MarkdownBarViewDelegate {
     
     public func markdownBarView(_ markdownBarView: MarkdownBarView, didSelectElementType type: MarkdownElementType, with sender: IconButton) {
         
-        // convert current list type to new list type
-        if case .numberList = type {
-            if isMarkdownElement(type: .bulletList, activeForSelection: selectedRange) {
-                deleteSyntaxForMarkdownElement(type: .bulletList)
-            }
-        } else if case .bulletList = type {
-            if isMarkdownElement(type: .numberList, activeForSelection: selectedRange) {
-                deleteSyntaxForMarkdownElement(type: .numberList)
-            }
+        switch type {
+        case .header(_):    removeExistingHeader()
+        case .numberList:   removeExistingListItem(type: .bulletList)
+        case .bulletList:   removeExistingListItem(type: .numberList)
+        default:            break
         }
         
         insertSyntaxForMarkdownElement(type: type)
@@ -369,6 +365,32 @@ extension MarklightTextView: MarkdownBarViewDelegate {
     
     public func markdownBarView(_ markdownBarView: MarkdownBarView, didDeselectElementType type: MarkdownElementType, with sender: IconButton) {
         deleteSyntaxForMarkdownElement(type: type)
+    }
+    
+    private func removeExistingHeader() {
+        
+        var currentHeader: MarkdownElementType?
+        for header in [.header(.h1), .header(.h2), .header(.h3)] as [MarkdownElementType] {
+            if isMarkdownElement(type: header, activeForSelection: selectedRange) {
+                currentHeader = header
+            }
+        }
+        
+        if let header = currentHeader {
+            deleteSyntaxForMarkdownElement(type: header)
+        }
+    }
+    
+    private func removeExistingListItem(type: MarkdownElementType) {
+        
+        switch type {
+        case .numberList, .bulletList:
+            if isMarkdownElement(type: type, activeForSelection: selectedRange) {
+                deleteSyntaxForMarkdownElement(type: type)
+            }
+        default:
+            break
+        }
     }
 }
 
