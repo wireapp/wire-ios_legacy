@@ -47,7 +47,6 @@
 // model
 #import "WireSyncEngine+iOS.h"
 #import "avs+iOS.h"
-#import "ZMUserSession+Additions.h"
 #import "StartUIViewController.h"
 #import "UIImage+ZetaIconsNeue.h"
 

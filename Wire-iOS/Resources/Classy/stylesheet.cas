@@ -518,7 +518,7 @@ PlaceholderConversationViewController {
 
 ConversationRootViewController {
     UINavigationBar {
-        barTintColor: $color-background;
+        barTintColor: $color-bar-background;
         tintColor: $color-text-foreground;
     }
 }
@@ -965,7 +965,7 @@ UILabel.conversationVerifiedLabel {
 }
 
 InputBar: {
-    barBackgroundColor: $color-text-background;
+    barBackgroundColor: $color-bar-background;
     editingBackgroundColor: $color-accent-yellow;
     writingSeparatorColor: $color-separator;
     ephemeralColor: $color-accent-current;

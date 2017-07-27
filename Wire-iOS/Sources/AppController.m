@@ -21,7 +21,6 @@
 #import "AppController+Internal.h"
 
 #import "WireSyncEngine+iOS.h"
-#import "ZMUserSession+Additions.h"
 #import "MagicConfig.h"
 #import "PassthroughWindow.h"
 

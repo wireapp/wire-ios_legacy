@@ -136,7 +136,7 @@ public class SearchResultsViewController : UIViewController {
         contactsSection.colorSchemeVariant = variant
         teamMemberAndContactsSection = UsersInContactsSection()
         teamMemberAndContactsSection.userSelection = userSelection
-        teamMemberAndContactsSection.title = "peoplepicker.header.team_members".localized(args: teamName)
+        teamMemberAndContactsSection.title = "peoplepicker.header.contacts".localized
         teamMemberAndContactsSection.team = team
         teamMemberAndContactsSection.colorSchemeVariant = variant
         directorySection = UsersInDirectorySection()

@@ -43,8 +43,8 @@ extension UIAlertController {
     static func controllerForDraftDismiss(deleteHandler: @escaping() -> Void, saveHandler: @escaping() -> Void) -> UIAlertController {
         let controller = UIAlertController(
             title: "compose.drafts.compose.dismiss.confirm.title".localized,
-            message: "compose.drafts.compose.dismiss.confirm.message".localized,
-            preferredStyle: .alert
+            message: nil,
+            preferredStyle: .actionSheet
         )
         
         let saveAction = UIAlertAction(

@@ -33,7 +33,6 @@
 "peoplepicker.header.send_invitation" = "Invite";
 "peoplepicker.header.contacts" = "Contacts";
 "peoplepicker.header.contacts_personal" = "Personal Contacts";
-"peoplepicker.header.team_members" = "%@ and Contacts";
 "peoplepicker.header.directory" = "Connect";
 "peoplepicker.title.create_conversation" = "Create group";
 "peoplepicker.title.add_to_conversation" = "Add people";
@@ -950,7 +949,6 @@
 "compose.drafts.compose.delete.confirm.message" = "This action will permamently delete this draft and cannot be undone.";
 "compose.drafts.compose.delete.confirm.action.title" = "Delete";
 
-"compose.drafts.compose.dismiss.confirm.title" = "Confirm Changes";
-"compose.drafts.compose.dismiss.confirm.message" = "Deleting this draft cannot be undone.";
+"compose.drafts.compose.dismiss.confirm.title" = "Save as draft";
 "compose.drafts.compose.dismiss.confirm.action.title" = "Save";
 "compose.drafts.compose.dismiss.delete.action.title" = "Delete";

@@ -163,8 +163,7 @@ final class MessageComposeViewController: UIViewController {
     fileprivate dynamic func dismissTapped() {
         
         // if nothing to save/delete, just dismiss
-        let subject = subjectTextField.text ?? ""
-        if messageTextView.text.isEmpty && subject.isEmpty {
+        if !hasDraftContent {
             self.delegate?.composeViewControllerWantsToDismiss(self)
             return
         }

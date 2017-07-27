@@ -97,11 +97,6 @@ ZMUser *BareUserToUser(id bareUser) {
     return (self.isPendingApprovalBySelfUser || self.isPendingApprovalByOtherUser);
 }
 
-+ (BOOL)selfUserHasIncompleteUserDetails;
-{
-    return [[[ZMUser selfUser] emailAddress] length] == 0 || [[[ZMUser selfUser] phoneNumber] length] == 0;
-}
-
 + (ZMAccentColor)pickRandomAcceptableAccentColor
 {
     ZMAccentColor accentColorValue;
