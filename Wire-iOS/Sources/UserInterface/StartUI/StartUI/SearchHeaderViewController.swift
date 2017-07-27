@@ -33,10 +33,10 @@ public protocol SearchHeaderViewControllerDelegate : class {
 public class SearchHeaderViewController : UIViewController {
     
     let titleContainer = UIView()
-    let titleLabel : UILabel = UILabel()
+    let titleLabel = UILabel()
     let closeButton : IconButton
     let tokenFieldContainer = UIView()
-    let tokenField : TokenField = TokenField()
+    let tokenField = TokenField()
     let searchIcon = UIImageView()
     let clearButton: IconButton
     let userSelection : UserSelection
