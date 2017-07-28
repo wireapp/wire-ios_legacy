@@ -142,23 +142,6 @@ extension SettingsCellDescriptorFactory {
         let soundsSection = SettingsSectionDescriptor(cellDescriptors: [callSoundGroup, messageSoundGroup, pingSoundGroup], header: soundsHeader)
         cellDescriptors.append(soundsSection)
         
-        var externalAppsDescriptors = [SettingsCellDescriptorType]()
-
-        if BrowserOpeningOption.optionsAvailable {
-            externalAppsDescriptors.append(browserOpeningGroup(for: settingsPropertyFactory.property(.browserOpeningOption)))
-        }
-        if MapsOpeningOption.optionsAvailable {
-            externalAppsDescriptors.append(mapsOpeningGroup(for: settingsPropertyFactory.property(.mapsOpeningOption)))
-        }
-        if TweetOpeningOption.optionsAvailable {
-            externalAppsDescriptors.append(twitterOpeningGroup(for: settingsPropertyFactory.property(.tweetOpeningOption)))
-        }
-
-        let externalAppsSection = SettingsSectionDescriptor(
-            cellDescriptors: externalAppsDescriptors,
-            header: "self.settings.external_apps.header".localized
-        )
-
         let sendButtonDescriptor = SettingsPropertyToggleCellDescriptor(settingsProperty: settingsPropertyFactory.property(.disableSendButton), inverse: true)
 
         var popularDemandDescriptors: [SettingsCellDescriptorType] = [sendButtonDescriptor]
@@ -175,10 +158,6 @@ extension SettingsCellDescriptorFactory {
         )
         
         cellDescriptors.append(byPopularDemandSection)
-        
-        if externalAppsDescriptors.count > 0 {
-            cellDescriptors.append(externalAppsSection)
-        }
         
         if #available(iOS 9.0, *) {
             let context: LAContext = LAContext()
@@ -198,7 +177,28 @@ extension SettingsCellDescriptorFactory {
             footer: "self.settings.privacy_security.disable_link_previews.footer".localized
         )
         
+        var externalAppsDescriptors = [SettingsCellDescriptorType]()
+        
+        if BrowserOpeningOption.optionsAvailable {
+            externalAppsDescriptors.append(browserOpeningGroup(for: settingsPropertyFactory.property(.browserOpeningOption)))
+        }
+        if MapsOpeningOption.optionsAvailable {
+            externalAppsDescriptors.append(mapsOpeningGroup(for: settingsPropertyFactory.property(.mapsOpeningOption)))
+        }
+        if TweetOpeningOption.optionsAvailable {
+            externalAppsDescriptors.append(twitterOpeningGroup(for: settingsPropertyFactory.property(.tweetOpeningOption)))
+        }
+        
+        let externalAppsSection = SettingsSectionDescriptor(
+            cellDescriptors: externalAppsDescriptors,
+            header: "self.settings.external_apps.header".localized
+        )
+        
         cellDescriptors.append(linkPreviewSection)
+        
+        if externalAppsDescriptors.count > 0 {
+            cellDescriptors.append(externalAppsSection)
+        }
         
         return SettingsGroupCellDescriptor(items: cellDescriptors, title: "self.settings.options_menu.title".localized, icon: .settingsOptions)
     }
