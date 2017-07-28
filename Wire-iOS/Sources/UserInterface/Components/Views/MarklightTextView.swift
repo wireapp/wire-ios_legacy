@@ -354,10 +354,8 @@ extension MarklightTextView: MarkdownBarViewDelegate {
     public func markdownBarView(_ markdownBarView: MarkdownBarView, didSelectElementType type: MarkdownElementType, with sender: IconButton) {
         
         switch type {
-        case .header(_):    removeExistingHeader()
-        case .numberList:   removeExistingListItem(type: .bulletList)
-        case .bulletList:   removeExistingListItem(type: .numberList)
-        default:            break
+        case .header(_), .numberList, .bulletList:  removeExistingPrefixSyntax()
+        default: break
         }
         
         insertSyntaxForMarkdownElement(type: type)
@@ -365,6 +363,11 @@ extension MarklightTextView: MarkdownBarViewDelegate {
     
     public func markdownBarView(_ markdownBarView: MarkdownBarView, didDeselectElementType type: MarkdownElementType, with sender: IconButton) {
         deleteSyntaxForMarkdownElement(type: type)
+    }
+    
+    private func removeExistingPrefixSyntax() {
+        removeExistingHeader()
+        removeExistingListItem()
     }
     
     private func removeExistingHeader() {
@@ -381,15 +384,17 @@ extension MarklightTextView: MarkdownBarViewDelegate {
         }
     }
     
-    private func removeExistingListItem(type: MarkdownElementType) {
+    private func removeExistingListItem() {
         
-        switch type {
-        case .numberList, .bulletList:
-            if isMarkdownElement(type: type, activeForSelection: selectedRange) {
-                deleteSyntaxForMarkdownElement(type: type)
-            }
-        default:
-            break
+        var currentListType: MarkdownElementType?
+        if isMarkdownElement(type: .numberList, activeForSelection: selectedRange) {
+            currentListType = .numberList
+        } else if isMarkdownElement(type: .bulletList, activeForSelection: selectedRange) {
+            currentListType = .bulletList
+        }
+        
+        if let type = currentListType {
+            deleteSyntaxForMarkdownElement(type: type)
         }
     }
 }
