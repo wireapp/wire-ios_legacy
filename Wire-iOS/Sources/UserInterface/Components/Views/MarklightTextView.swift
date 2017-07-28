@@ -354,7 +354,7 @@ extension MarklightTextView: MarkdownBarViewDelegate {
     public func markdownBarView(_ markdownBarView: MarkdownBarView, didSelectElementType type: MarkdownElementType, with sender: IconButton) {
         
         switch type {
-        case .header(_), .numberList, .bulletList:  removeExistingPrefixSyntax()
+        case .header, .numberList, .bulletList:  removeExistingPrefixSyntax()
         default: break
         }
         
@@ -373,7 +373,7 @@ extension MarklightTextView: MarkdownBarViewDelegate {
     private func removeExistingHeader() {
         
         var currentHeader: MarkdownElementType?
-        for header in [.header(.h1), .header(.h2), .header(.h3)] as [MarkdownElementType] {
+        for header in [MarkdownElementType.header(.h1), .header(.h2), .header(.h3)] {
             if isMarkdownElement(type: header, activeForSelection: selectedRange) {
                 currentHeader = header
             }
