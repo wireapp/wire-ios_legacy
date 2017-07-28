@@ -64,13 +64,15 @@ class ClientUnregisterFlowViewController: FormFlowViewController, FormStepDelega
         self.popTransition = PopTransition()
         self.pushTransition = PushTransition()
     
-        self.setupBackgroundImageView()
-        
-        self.setupNavigationController()
-        
-        self.createConstraints()
-    
-        self.view?.isOpaque = false
+        UIView.performWithoutAnimation {            
+            self.setupBackgroundImageView()
+            
+            self.setupNavigationController()
+            
+            self.createConstraints()
+            
+            self.view?.isOpaque = false
+        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {

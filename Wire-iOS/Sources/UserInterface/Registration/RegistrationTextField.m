@@ -63,7 +63,13 @@ static const CGFloat GuidanceDotViewWidth = 40;
         self.font = [UIFont fontWithMagicIdentifier:@"style.text.normal.font_spec"];
         self.textColor = [UIColor colorWithMagicIdentifier:@"style.color.static_foreground.normal"];
         self.textInsets = UIEdgeInsetsMake(0, 8, 0, 8);
-        self.placeholderInsets = UIEdgeInsetsMake(8, 8, 0, 8);
+        if ([[[UIDevice currentDevice] systemVersion] floatValue] < 11.0) {
+            // Placeholder frame calculation is changed in iOS 11, therefore the TOP inset is not necessary
+            self.placeholderInsets = UIEdgeInsetsMake(8, 8, 0, 8);
+        }
+        else {
+            self.placeholderInsets = UIEdgeInsetsMake(0, 8, 0, 8);
+        }
         self.keyboardAppearance = UIKeyboardAppearanceDark;
         self.autocorrectionType = UITextAutocorrectionTypeNo;
         self.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;

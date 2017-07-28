@@ -236,9 +236,11 @@
     
     self.navigationController.showLoadingView = YES;
     
-    [self.analyticsTracker tagRequestedEmailLogin];
-    
-    [[UnauthenticatedSession sharedSession] loginWithCredentials:credentials];
+    dispatch_async(dispatch_get_main_queue(), ^{        
+        [self.analyticsTracker tagRequestedEmailLogin];
+        
+        [[UnauthenticatedSession sharedSession] loginWithCredentials:credentials];
+    });
 }
 
 - (IBAction)resetPassword:(id)sender
@@ -330,7 +332,7 @@
 - (void)authenticationDidSucceed
 {
     [self.analyticsTracker tagEmailLogin];
-    self.navigationController.showLoadingView = NO;
+    // Not necessary to remove the loading view, since the controller would not be used any more.
 }
 
 - (void)authenticationDidFail:(NSError *)error
