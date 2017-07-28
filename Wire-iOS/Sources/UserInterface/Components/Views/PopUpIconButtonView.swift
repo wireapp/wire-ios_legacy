@@ -118,7 +118,7 @@ class PopUpIconButtonView: UIView {
                 imageRect.origin = itemRect.origin
                 imageRect.origin.x += itemRect.midX - imageRect.midX
                 imageRect.origin.y += itemRect.midY - imageRect.midY
-                image.draw(in: imageRect.insetBy(dx: -2.0, dy: -2.0))
+                image.draw(in: imageRect)
             }
         }
     }
