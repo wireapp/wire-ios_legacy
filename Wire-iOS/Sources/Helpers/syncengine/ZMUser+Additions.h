@@ -51,8 +51,6 @@ FOUNDATION_EXPORT ZMUser *BareUserToUser(id bareUser);
 
 + (BOOL)isSelfUserActiveParticipantOfConversation:(ZMConversation *)conversation;
 
-+ (BOOL)selfUserHasIncompleteUserDetails;
-
 /// Just checks if any approval is pending from any side (SelfUser or OtherUser)
 - (BOOL)isPendingApproval;
 

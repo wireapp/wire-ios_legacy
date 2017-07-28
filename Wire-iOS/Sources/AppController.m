@@ -451,7 +451,6 @@ NSString *const ZMUserSessionDidBecomeAvailableNotification = @"ZMUserSessionDid
     // Singletons
     AddressBookHelper.sharedHelper.configuration = AutomationHelper.sharedHelper;
     
-    [DeveloperMenuState prepareForDebugging];
     [MessageDraftStorage setupSharedStorageAtURL:userSession.sharedContainerURL error:nil];
     self.messageCountTracker = [[LegacyMessageTracker alloc] initWithManagedObjectContext:userSession.syncManagedObjectContext];
     

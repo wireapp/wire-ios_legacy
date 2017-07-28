@@ -57,7 +57,7 @@
                 if (users.count == 1) {
                     ZMUser *user = users.anyObject;
                     [[ZMUserSession sharedSession] enqueueChanges:^{
-                        conversation = [user oneToOneConversationInTeam:team];
+                        conversation = user.oneToOneConversation;
                     } completionHandler:^{
                         [Analytics.shared tagOpenedExistingConversationWithType:conversation.conversationType];
                         [[ZClientViewController sharedZClientViewController] selectConversation:conversation
@@ -120,7 +120,7 @@
                 ZMUser *user = users.anyObject;
 
                 [[ZMUserSession sharedSession] enqueueChanges:^{
-                    conversation = [user oneToOneConversationInTeam:team];
+                    conversation = user.oneToOneConversation;
                 } completionHandler:^{
                     [[ZClientViewController sharedZClientViewController] selectConversation:conversation
                                                                                 focusOnView:YES
@@ -210,7 +210,7 @@
             if (self.startUISelectedUsers.count == 1) {
                 
                 ZMUser *user = self.startUISelectedUsers.anyObject;
-                ZMConversation *oneToOneConversation = [user oneToOneConversationInTeam:team];
+                ZMConversation *oneToOneConversation = user.oneToOneConversation;
                 
                 [[ZMUserSession sharedSession] enqueueChanges:^{
                     [oneToOneConversation appendMessageWithImageData:imageData];

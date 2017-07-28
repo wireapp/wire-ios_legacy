@@ -92,6 +92,7 @@ class SettingsPropertyFactory {
         SettingsPropertyName.callingProtocolStrategy    : UserDefaultCallingProtocolStrategy,
         SettingsPropertyName.enableBatchCollections     : UserDefaultEnableBatchCollections,
         SettingsPropertyName.callingConstantBitRate     : UserDefaultCallingConstantBitRate,
+        SettingsPropertyName.disableLinkPreviews        : UserDefaultDisableLinkPreviews,
     ]
     
     init(userDefaults: UserDefaults, analytics: AnalyticsInterface?, mediaManager: AVSMediaManagerInterface?, userSession: ZMUserSessionInterface, selfUser: SettingsSelfUser, crashlogManager: CrashlogManager? = .none) {
@@ -294,6 +295,19 @@ class SettingsPropertyFactory {
                 setAction: { _, value in
                     if case .number(let enabled) = value {
                         Settings.shared().callingConstantBitRate = enabled.boolValue
+                    }
+            })
+            
+        case .disableLinkPreviews:
+            return SettingsBlockProperty(
+                propertyName: propertyName,
+                getAction: { _ in return SettingsPropertyValue(Settings.shared().disableLinkPreviews) },
+                setAction: { _, value in
+                    switch value {
+                    case .number(value: let number):
+                        Settings.shared().disableLinkPreviews = number.boolValue
+                    default:
+                        throw SettingsPropertyError.WrongValue("Incorrect type \(value) for key \(propertyName)")
                     }
             })
             

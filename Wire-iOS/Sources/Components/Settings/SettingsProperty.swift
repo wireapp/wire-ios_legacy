@@ -30,6 +30,7 @@ Available settings
 - SoundAlerts:            Sound alerts level
 - AnalyticsOptOut:        Opt-Out analytics
 - DisableSendButton:      Opt-Out of new send button
+- DisableLinkPreviews:    Disable link previews for links you send
 - Disable(.*):            Disable some app features (debug)
 */
 enum SettingsPropertyName: String, CustomStringConvertible {
@@ -46,6 +47,8 @@ enum SettingsPropertyName: String, CustomStringConvertible {
     case darkMode = "DarkMode"
     
     case disableSendButton = "DisableSendButton"
+    
+    case disableLinkPreviews = "DisableLinkPreviews"
     
     // Profile
     case profileName = "ProfileName"

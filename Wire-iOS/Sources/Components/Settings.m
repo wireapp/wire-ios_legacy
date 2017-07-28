@@ -67,6 +67,8 @@ NSString * const UserDefaultDidMigrateHockeySettingInitially = @"DidMigrateHocke
 
 NSString * const UserDefaultCallingConstantBitRate = @"CallingConstantBitRate";
 
+NSString * const UserDefaultDisableLinkPreviews = @"DisableLinkPreviews";
+
 @interface Settings ()
 
 @property (strong, readonly, nonatomic) NSUserDefaults *defaults;
@@ -121,6 +123,7 @@ NSString * const UserDefaultCallingConstantBitRate = @"CallingConstantBitRate";
              UserDefaultEnableBatchCollections,
              UserDefaultDidMigrateHockeySettingInitially,
              UserDefaultCallingConstantBitRate,
+             UserDefaultDisableLinkPreviews,
              ];
 }
 
@@ -141,7 +144,11 @@ NSString * const UserDefaultCallingConstantBitRate = @"CallingConstantBitRate";
     if (self) {
         [self migrateHockeyAndOptOutSettingsToSharedDefaults];
         [self restoreLastUsedAVSSettings];
+        
+#if TARGET_IPHONE_OS_IPHONE
         [self loadEnabledLogs];
+#endif
+        
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationDidEnterBackground:) name:UIApplicationDidEnterBackgroundNotification object:nil];
     }
     return self;
@@ -401,6 +408,16 @@ NSString * const UserDefaultCallingConstantBitRate = @"CallingConstantBitRate";
 - (void)setDisableCallKit:(BOOL)disableCallKit
 {
     [self.defaults setBool:disableCallKit forKey:UserDefaultDisableCallKit];
+}
+
+- (BOOL)disableLinkPreviews
+{
+    return [self.defaults boolForKey:UserDefaultDisableLinkPreviews];
+}
+
+- (void)setDisableLinkPreviews:(BOOL)disableLinkPreviews
+{
+    [self.defaults setBool:disableLinkPreviews forKey:UserDefaultDisableLinkPreviews];
 }
 
 #pragma mark - Features disable keys
