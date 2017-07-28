@@ -177,6 +177,8 @@ extension SettingsCellDescriptorFactory {
             footer: "self.settings.privacy_security.disable_link_previews.footer".localized
         )
         
+        cellDescriptors.append(linkPreviewSection)
+        
         var externalAppsDescriptors = [SettingsCellDescriptorType]()
         
         if BrowserOpeningOption.optionsAvailable {
@@ -193,8 +195,6 @@ extension SettingsCellDescriptorFactory {
             cellDescriptors: externalAppsDescriptors,
             header: "self.settings.external_apps.header".localized
         )
-        
-        cellDescriptors.append(linkPreviewSection)
         
         if externalAppsDescriptors.count > 0 {
             cellDescriptors.append(externalAppsSection)
