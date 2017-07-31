@@ -86,8 +86,10 @@ public final class ConversationTitleView: UIView {
     private func updateAccessibilityValue(_ conversation: ZMConversation) {
         if conversation.securityLevel == .secure {
             self.accessibilityLabel = conversation.displayName.uppercased() + ", " + "conversation.voiceover.verified".localized
+            self.accessibilityIdentifier = conversation.displayName.uppercased() + " - verified fingerprints"
         } else {
             self.accessibilityLabel = conversation.displayName.uppercased()
+            self.accessibilityIdentifier = conversation.displayName.uppercased()
         }
     }
     
