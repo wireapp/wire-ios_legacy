@@ -35,7 +35,9 @@ extension ConversationListViewController {
         if let imageView = profileButton.imageView, let user = ZMUser.selfUser() {
             let newDevicesDot = NewDevicesDot(user: user)
             profileButton.addSubview(newDevicesDot)
-            profileButton.accessibilityLabel = "self.new-device.voiceover.label".localized
+            if user.clientsRequiringUserAttention.count > 0 {
+                profileButton.accessibilityLabel = "self.new-device.voiceover.label".localized
+            }
             
             constrain(newDevicesDot, imageView) { newDevicesDot, imageView in
                 newDevicesDot.top == imageView.top - 3
