@@ -515,6 +515,9 @@
 "self.about" = "About";
 "self.sign_out" = "Log Out";
 "self.report_abuse" = "Report Misuse";
+"self.voiceover.label" = "Profile";
+"self.voiceover.hint" = "Open profile and settings";
+"self.new-device.voiceover.label" = "Profile, new devices added";
 
 "self.add_phone_number" = "Add phone number";
 "self.add_email_password" = "Add email address and password";
