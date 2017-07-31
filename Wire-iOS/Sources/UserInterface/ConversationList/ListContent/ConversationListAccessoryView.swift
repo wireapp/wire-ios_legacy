@@ -86,11 +86,11 @@ final internal class ConversationListAccessoryView: UIView {
         switch self.icon {
         case .pendingConnection:
             iconView.image = UIImage(for: .clock, fontSize: iconSize, color: .white)
-            self.accessibilityValue = "pending connection"
+            self.accessibilityValue = "conversation_list.voiceover.status.pending_connection".localized
             return iconView
         case .activeCall(true):
             iconView.image = UIImage(for: .phone, fontSize: iconSize, color: .white)
-            self.accessibilityValue = "active call"
+            self.accessibilityValue = "conversation_list.voiceover.status.active_call".localized
             return iconView
         case .activeCall(false):
             textLabel.text = "conversation_list.right_accessory.join_button.title".localized.uppercased()
@@ -98,24 +98,24 @@ final internal class ConversationListAccessoryView: UIView {
             return textLabel
         case .missedCall:
             iconView.image = UIImage(for: .endCall, fontSize: iconSize, color: .black)
-            self.accessibilityValue = "missed call"
+            self.accessibilityValue = "conversation_list.voiceover.status.missed_call".localized
             return iconView
         case .playingMedia:
             if let mediaPlayer = self.mediaPlaybackManager.activeMediaPlayer, mediaPlayer.state == .playing {
                 iconView.image = UIImage(for: .pause, fontSize: iconSize, color: .white)
-                self.accessibilityValue = "pause media"
+                self.accessibilityValue = "conversation_list.voiceover.status.pause_media".localized
             }
             else {
                 iconView.image = UIImage(for: .play, fontSize: iconSize, color: .white)
-                self.accessibilityValue = "play media"
+                self.accessibilityValue = "conversation_list.voiceover.status.play_media".localized
             }
             return iconView
         case .silenced:
             iconView.image = UIImage(for: .bellWithStrikethrough, fontSize: iconSize, color: .white)
-            self.accessibilityValue = "silenced"
+            self.accessibilityValue = "conversation_list.voiceover.status.silenced".localized
             return iconView
         case .typing:
-            self.accessibilityValue = "typing"
+            self.accessibilityValue = "conversation_list.voiceover.status.typing".localized
             return .none
         case .unreadMessages(let count):
             textLabel.text = String(count)
@@ -123,7 +123,7 @@ final internal class ConversationListAccessoryView: UIView {
             return textLabel
         case .unreadPing:
             iconView.image = UIImage(for: .ping, fontSize: iconSize, color: .black)
-            self.accessibilityValue = "ping"
+            self.accessibilityValue = "conversation_list.voiceover.status.ping".localized
             return iconView
         default:
             return .none

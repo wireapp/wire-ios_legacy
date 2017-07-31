@@ -92,7 +92,15 @@
 // Profile Header View
 "conversation.connection_view.in_address_book" = "in Contacts";
 
-
+// Conversation list voiceover accessibility
+"conversation_list.voiceover.status.pending_connection" = "pending";
+"conversation_list.voiceover.status.active_call" = "active call";
+"conversation_list.voiceover.status.missed_call" = "missed call";
+"conversation_list.voiceover.status.pause_media" = "pause media";
+"conversation_list.voiceover.status.play_media" = "play media";
+"conversation_list.voiceover.status.silenced" = "silenced";
+"conversation_list.voiceover.status.typing" = "typing";
+"conversation_list.voiceover.status.ping" = "ping";
 
 // Archived List
 "archived_list.title" = "archive";
