@@ -551,6 +551,12 @@
 
 #pragma mark - Application Events & Notifications
 
+- (BOOL)accessibilityPerformEscape
+{
+    [self openConversationList];
+    return YES;
+}
+
 - (void)onBackButtonPressed:(UIButton *)backButton
 {
     [self openConversationList];
