@@ -77,18 +77,27 @@ import Cartography
         archivedButton.setIcon(.archive, with: .tiny, for: UIControlState())
         archivedButton.addTarget(self, action: #selector(archivedButtonTapped), for: .touchUpInside)
         archivedButton.accessibilityIdentifier = "bottomBarArchivedButton"
+        archivedButton.accessibilityLabel = "conversation_list.voiceover.bottom_bar.archived_button.label".localized
+        archivedButton.accessibilityHint = "conversation_list.voiceover.bottom_bar.archived_button.hint".localized
+
 
         plusButton.setIcon(.plus, with: .tiny, for: .normal)
         plusButton.addTarget(self, action: #selector(plusButtonTapped), for: .touchUpInside)
         plusButton.accessibilityIdentifier = "bottomBarPlusButton"
+        plusButton.accessibilityLabel = "conversation_list.voiceover.bottom_bar.contacts_button.label".localized
+        plusButton.accessibilityHint = "conversation_list.voiceover.bottom_bar.contacts_button.hint".localized
 
         composeButton.setIcon(.compose, with: .tiny, for: .normal)
         composeButton.addTarget(self, action: #selector(composeButtonTapped), for: .touchUpInside)
         composeButton.accessibilityIdentifier = "bottomBarComposeButton"
+        composeButton.accessibilityLabel = "conversation_list.voiceover.bottom_bar.compose_button.label".localized
+        composeButton.accessibilityHint = "conversation_list.voiceover.bottom_bar.compose_button.hint".localized
 
         cameraButton.setIcon(.cameraLens, with: .tiny, for: .normal)
         cameraButton.addTarget(self, action: #selector(cameraButtonTapped), for: .touchUpInside)
         cameraButton.accessibilityIdentifier = "bottomBarCameraButton"
+        cameraButton.accessibilityLabel = "conversation_list.voiceover.bottom_bar.camera_button.label".localized
+        cameraButton.accessibilityHint = "conversation_list.voiceover.bottom_bar.camera_button.hint".localized
 
         addSubviews()
         [separator, archivedButton].forEach{ $0.isHidden = true }
