@@ -81,6 +81,8 @@ NSString * const ConversationListItemDidScrollNotification = @"ConversationListI
 {
     self.labelsContainer = [[UIView alloc] initForAutoLayout];
     [self addSubview:self.labelsContainer];
+    self.labelsContainer.isAccessibilityElement = YES;
+    self.labelsContainer.accessibilityTraits = UIAccessibilityTraitButton;
     
     self.titleField = [[UILabel alloc] initForAutoLayout];
     self.titleField.numberOfLines = 1;
@@ -122,6 +124,7 @@ NSString * const ConversationListItemDidScrollNotification = @"ConversationListI
                                              selector:@selector(otherConversationListItemDidScroll:)
                                                  name:ConversationListItemDidScrollNotification
                                                object:nil];
+    self.isAccessibilityElement = NO;
 }
 
 - (void)createSubtitleField
@@ -213,6 +216,13 @@ NSString * const ConversationListItemDidScrollNotification = @"ConversationListI
 - (void)updateAppearance
 {
     self.titleField.text = self.titleText;
+}
+
+- (void)accessibilityContentsDidChange
+{
+    self.labelsContainer.accessibilityLabel = self.titleField.text;
+    self.labelsContainer.accessibilityHint = @"Open conversation";
+    self.labelsContainer.accessibilityValue = self.subtitleField.text;
 }
 
 #pragma mark - Observer
