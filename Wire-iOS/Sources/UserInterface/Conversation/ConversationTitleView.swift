@@ -31,7 +31,8 @@ public final class ConversationTitleView: UIView {
     init(conversation: ZMConversation, interactive: Bool = true) {
         super.init(frame: CGRect.zero)
         self.isAccessibilityElement = true
-        self.accessibilityLabel = "Name"
+        self.accessibilityLabel = conversation.displayName
+        self.accessibilityIdentifier = "Name"
         createViews(conversation)
         CASStyler.default().styleItem(self)
 
@@ -83,8 +84,11 @@ public final class ConversationTitleView: UIView {
     }
     
     private func updateAccessibilityValue(_ conversation: ZMConversation) {
-        let verifiedString = (conversation.securityLevel == .secure) ? " - verified fingerprints" : ""
-        self.accessibilityValue = conversation.displayName.uppercased() + verifiedString
+        if conversation.securityLevel == .secure {
+            self.accessibilityLabel = conversation.displayName.uppercased() + ", " + "conversation.voiceover.verified".localized
+        } else {
+            self.accessibilityLabel = conversation.displayName.uppercased()
+        }
     }
     
     private func createConstraints(_ hasAttachment: Bool) {

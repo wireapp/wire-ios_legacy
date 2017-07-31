@@ -129,6 +129,8 @@
 "list.archived_conversations" = "ARCHIVE";
 "list.archived_conversations_close" = "Close archive";
 
+"conversation.voiceover.verified" = "verified";
+
 "conversation.status.call" = "Ongoing call";
 "conversation.status.typing" = "Typing a message…";
 "conversation.status.typing.group" = "%@: typing a message…";
