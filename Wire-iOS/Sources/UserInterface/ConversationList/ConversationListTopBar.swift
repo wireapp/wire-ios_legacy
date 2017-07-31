@@ -112,6 +112,7 @@ final class ConversationListTopBar: TopBar {
                 titleLabel.textColor = ColorScheme.default().color(withName: ColorSchemeColorTextForeground,
                                                                    variant: .dark)
                 titleLabel.text = "list.title".localized.uppercased()
+                titleLabel.accessibilityTraits = UIAccessibilityTraitHeader
                 titleLabel.setContentCompressionResistancePriority(UILayoutPriorityRequired, for: .horizontal)
                 titleLabel.setContentCompressionResistancePriority(UILayoutPriorityRequired, for: .vertical)
                 titleLabel.setContentHuggingPriority(UILayoutPriorityRequired, for: .horizontal)
