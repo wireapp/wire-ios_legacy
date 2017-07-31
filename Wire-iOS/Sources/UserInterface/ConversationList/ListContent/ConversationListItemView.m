@@ -98,7 +98,7 @@ NSString * const ConversationListItemDidScrollNotification = @"ConversationListI
     [self.avatarContainer addSubview:self.avatarView];
 
     self.rightAccessory = [[ConversationListAccessoryView alloc] initWithMediaPlaybackManager:[AppDelegate sharedAppDelegate].mediaPlaybackManager];
-    self.rightAccessory.accessibilityLabel = @"status";
+    self.rightAccessory.accessibilityIdentifier = @"status";
     [self addSubview:self.rightAccessory];
 
     [self createSubtitleField];
@@ -131,7 +131,7 @@ NSString * const ConversationListItemDidScrollNotification = @"ConversationListI
 {
     self.subtitleField = [[UILabel alloc] initForAutoLayout];
     self.subtitleField.textColor = [UIColor colorWithWhite:1.0f alpha:0.64f];
-    self.subtitleField.accessibilityLabel = @"Conversation status";
+    self.subtitleField.accessibilityIdentifier = @"Conversation status";
     self.subtitleField.numberOfLines = 1;
     [self.labelsContainer addSubview:self.subtitleField];
 }
@@ -221,7 +221,7 @@ NSString * const ConversationListItemDidScrollNotification = @"ConversationListI
 - (void)accessibilityContentsDidChange
 {
     self.labelsContainer.accessibilityLabel = self.titleField.text;
-    self.labelsContainer.accessibilityHint = @"Open conversation";
+    self.labelsContainer.accessibilityHint = NSLocalizedString(@"conversation_list.voiceover.open_conversation.hint", nil);
     self.labelsContainer.accessibilityValue = self.subtitleField.text;
 }
 

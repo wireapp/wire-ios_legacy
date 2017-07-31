@@ -93,6 +93,7 @@
 "conversation.connection_view.in_address_book" = "in Contacts";
 
 // Conversation list voiceover accessibility
+"conversation_list.voiceover.open_conversation.hint" = "Open conversation";
 "conversation_list.voiceover.status.pending_connection" = "pending";
 "conversation_list.voiceover.status.active_call" = "active call";
 "conversation_list.voiceover.status.missed_call" = "missed call";
