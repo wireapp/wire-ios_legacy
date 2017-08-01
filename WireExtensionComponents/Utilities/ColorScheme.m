@@ -45,6 +45,8 @@ NSString * const ColorSchemeColorIconHighlighted = @"icon-highlighted";
 NSString * const ColorSchemeColorIconBackgroundSelected = @"icon-background-selected";
 NSString * const ColorSchemeColorIconBackgroundSelectedNoAccent = @"icon-background-selected-no-accent";
 
+NSString * const ColorSchemeColorPopUpButtonOverlayShadow = @"popup-button-overlay-shadow";
+
 NSString * const ColorSchemeColorButtonHighlighted = @"button-highlighted";
 NSString * const ColorSchemeColorButtonEmptyText = @"button-empty-text";
 
@@ -253,6 +255,7 @@ static NSString* light(NSString *colorString) {
                                    ColorSchemeColorIconHighlight: white,
                                    ColorSchemeColorIconBackgroundSelected: accentColor,
                                    ColorSchemeColorIconBackgroundSelectedNoAccent: graphite,
+                                   ColorSchemeColorPopUpButtonOverlayShadow: blackAlpha24,
                                    ColorSchemeColorButtonHighlighted: whiteAlpha24,
                                    ColorSchemeColorButtonEmptyText: accentColor,
                                    ColorSchemeColorTabNormal: blackAlpha48,
@@ -303,6 +306,7 @@ static NSString* light(NSString *colorString) {
                                   ColorSchemeColorIconHighlight: whiteAlpha16,
                                   ColorSchemeColorIconBackgroundSelected: white,
                                   ColorSchemeColorIconBackgroundSelectedNoAccent: white,
+                                  ColorSchemeColorPopUpButtonOverlayShadow: black,
                                   ColorSchemeColorButtonHighlighted: blackAlpha24,
                                   ColorSchemeColorButtonEmptyText: white,
                                   ColorSchemeColorTabNormal: lightGraphite,

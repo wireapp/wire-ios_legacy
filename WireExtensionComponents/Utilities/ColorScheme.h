@@ -41,6 +41,8 @@ extern NSString * const ColorSchemeColorIconBackgroundSelectedNoAccent;
 extern NSString * const ColorSchemeColorIconShadow;
 extern NSString * const ColorSchemeColorIconHighlight;
 
+extern NSString * const ColorSchemeColorPopUpButtonOverlayShadow;
+
 extern NSString * const ColorSchemeColorTabNormal;
 extern NSString * const ColorSchemeColorTabSelected;
 extern NSString * const ColorSchemeColorTabHighlighted;

@@ -32,10 +32,8 @@ class PopUpIconButtonView: UIView {
     private let upperRect: CGRect
     private let itemWidth: CGFloat
     
-    private let selectionColor = ColorScheme.default().accentColor
-    private let normalIconColor = ColorScheme.default().color(withName: ColorSchemeColorIconNormal)
+    private let color = ColorScheme.default().color(withName:)
     private let expandDirection: PopUpIconButtonExpandDirection
-    
     
     init(withButton button: PopUpIconButton) {
         self.button = button
@@ -89,29 +87,31 @@ class PopUpIconButtonView: UIView {
         context.saveGState()
         
         // overlay shadow
-        let color = UIColor.gray.cgColor
+        let shadowColor = color(ColorSchemeColorPopUpButtonOverlayShadow).cgColor
         let offset = CGSize(width: 0.0, height: 2.0)
         let blurRadius: CGFloat = 4.0
-        context.setShadow(offset: offset, blur: blurRadius, color: color)
+        context.setShadow(offset: offset, blur: blurRadius, color: shadowColor)
         
         // overlay fill
-        UIColor.white.set()
+        color(ColorSchemeColorBarBackground).set()
         path.fill()
         
         context.restoreGState()
         
         // button icon
-        if let buttonImage = button.imageView?.image {
+        if let imageView = button.imageView {
             // rect in window coordinates
-            let imageRect = button.imageView!.convert(button.imageView!.bounds, to: nil)
-            buttonImage.draw(in: imageRect)
+            let imageRect = imageView.convert(button.imageView!.bounds, to: nil)
+            let image = UIImage(for: button.iconType(for: .normal), iconSize: .tiny, color: color(ColorSchemeColorIconNormal))!
+            image.draw(in: imageRect)
         }
         
         // item icons
         if let buttonImageView = button.imageView {
             for (index, icon) in button.itemIcons.enumerated() {
                 let itemRect = rectForItem(icon)!
-                let image = UIImage(for: icon, iconSize: .medium, color: index == selectedIndex ? selectionColor : normalIconColor)!
+                let iconColor = index == selectedIndex ? color(ColorSchemeColorAccent) : color(ColorSchemeColorIconNormal)
+                let image = UIImage(for: icon, iconSize: .medium, color: iconColor)!
                 // rect in window coordinates
                 var imageRect = buttonImageView.convert(buttonImageView.bounds, to: nil)
                 // center image in item rect
