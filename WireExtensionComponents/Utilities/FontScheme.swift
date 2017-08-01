@@ -95,7 +95,7 @@ extension UIFont {
         return fontDescriptor.symbolicTraits.contains(.traitItalic)
     }
     
-    public func setItalic() -> UIFont {
+    public func italicFont() -> UIFont {
         
         if isItalic {
             return self
