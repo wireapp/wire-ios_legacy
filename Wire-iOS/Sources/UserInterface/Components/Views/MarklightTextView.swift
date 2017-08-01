@@ -74,13 +74,17 @@ public class MarklightTextView: NextResponderTextView {
 
     class func defaultMarkdownStyle() -> MarklightStyle {
         
+        let defaultFont = FontSpec(.normal, .light).font!
         let colorScheme = ColorScheme.default()
         let style = MarklightStyle()
+        
         style.syntaxAttributes = [NSForegroundColorAttributeName: colorScheme.accentColor]
+        style.italicAttributes = [NSFontAttributeName: defaultFont.setItalic()]
         style.codeAttributes[NSForegroundColorAttributeName] = colorScheme.color(withName: ColorSchemeColorTextForeground)
         style.blockQuoteAttributes[NSForegroundColorAttributeName] = colorScheme.color(withName: ColorSchemeColorTextForeground)
         style.fontTextStyle = UIFontTextStyle.subheadline.rawValue
         style.hideSyntax = false
+        
         return style
     }
     

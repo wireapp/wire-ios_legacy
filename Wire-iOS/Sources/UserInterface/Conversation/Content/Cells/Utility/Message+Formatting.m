@@ -181,6 +181,9 @@ static inline NSDataDetector *linkDataDetector(void)
         paragraphStyle.paragraphSpacingBefore = 24.0;
         paragraphStyle.paragraphSpacing = 12.0;
         
+        UIFont *italicFont = [[UIFont systemFontOfSize:16.0 weight:UIFontWeightLight] setItalic];
+        style.italicAttributes = @{NSFontAttributeName: italicFont};
+        
         NSMutableDictionary *h1HeaderAttributes = [[NSMutableDictionary alloc] initWithDictionary:style.h1HeadingAttributes];
         [h1HeaderAttributes setValue:paragraphStyle forKey:NSParagraphStyleAttributeName];
         style.h1HeadingAttributes = h1HeaderAttributes;
