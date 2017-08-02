@@ -349,6 +349,85 @@ public class MarklightTextView: NextResponderTextView {
     @objc public func resetTypingAttributes() {
         typingAttributes = defaultAttributes
     }
+    
+    @objc public func stripEmptyMarkdown() -> String {
+        var text = self.text!
+        let styler = marklightTextStorage.groupStyler
+        let types : [MarkdownElementType] = [.header(.h1), .header(.h2), .header(.h3), .bold, .italic, .code, .numberList, .bulletList]
+        var emptyMarkdownRanges = [NSRange]()
+        
+        // for all markdown ranges
+        for elementType in types {
+            for range in styler.rangesForElementType(elementType) {
+                // note empty ranges
+                if isEmptyMarkdownRange(range) {
+                    emptyMarkdownRanges.append(range)
+                }
+            }
+        }
+        
+        // discard nested ranges, sort by location descending
+        emptyMarkdownRanges = flattenRanges(emptyMarkdownRanges).sorted(by: { (x, y) -> Bool in
+            return x.location >= y.location
+        })
+        
+        // strip empty markdown
+        for range in emptyMarkdownRanges {
+            text.removeSubrange(text.rangeFrom(range: range))
+        }
+        
+        return text
+    }
+    
+    // empty markdown contains syntax and spaces only
+    private func isEmptyMarkdownRange(_ range: NSRange) -> Bool {
+        
+        let syntaxColor = style.syntaxAttributes[NSForegroundColorAttributeName] as! UIColor
+        
+        // check each char in range
+        for index in range.location..<NSMaxRange(range) {
+            let char = text[text.index(text.startIndex, offsetBy: index)]
+            let color = attributedText.attribute(NSForegroundColorAttributeName, at: index, effectiveRange: nil) as? UIColor
+            
+            // at least 1 non-syntax/non-space char -> non empty
+            if char == " " || char == "\t" || color == syntaxColor {
+                continue
+            } else {
+                return false
+            }
+        }
+
+        return true
+    }
+    
+    // discard nested ranges
+    func flattenRanges(_ ranges: [NSRange]) -> [NSRange] {
+        // sort by length ascending
+        var ranges = ranges.sorted { (x, y) -> Bool in
+            return x.length <= y.length
+        }
+        
+        var result = [NSRange]()
+        
+        // take the largest range
+        if let next = ranges.popLast() {
+            result.append(next)
+        }
+        
+        // check each remaining range
+        outer: while let next = ranges.popLast() {
+            for range in result {
+                // if it is nested
+                if NSEqualRanges(range, NSUnionRange(range, next)) {
+                    continue outer
+                }
+            }
+            // non nested range
+            result.append(next)
+        }
+        
+        return result
+    }
 }
 
 // MARK: MarkdownBarViewDelegate
