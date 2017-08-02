@@ -169,6 +169,7 @@ NSString * const UserDefaultDisableLinkPreviews = @"DisableLinkPreviews";
     if (! [self.defaults boolForKey:UserDefaultDidMigrateHockeySettingInitially]) {
         ExtensionSettings.shared.disableHockey = self.disableHockey;
         ExtensionSettings.shared.disableCrashAndAnalyticsSharing = self.disableAnalytics;
+        ExtensionSettings.shared.disableLinkPreviews = self.disableLinkPreviews;
         [self.defaults setBool:YES forKey:UserDefaultDidMigrateHockeySettingInitially];
     }
 }
@@ -418,6 +419,8 @@ NSString * const UserDefaultDisableLinkPreviews = @"DisableLinkPreviews";
 - (void)setDisableLinkPreviews:(BOOL)disableLinkPreviews
 {
     [self.defaults setBool:disableLinkPreviews forKey:UserDefaultDisableLinkPreviews];
+    ExtensionSettings.shared.disableLinkPreviews = disableLinkPreviews;
+    [self.defaults synchronize];
 }
 
 #pragma mark - Features disable keys
