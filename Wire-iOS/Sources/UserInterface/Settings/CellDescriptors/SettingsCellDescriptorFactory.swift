@@ -36,7 +36,11 @@ import Foundation
     }
     
     func rootGroup() -> SettingsControllerGeneratorType & SettingsInternalGroupCellDescriptorType {
-        let rootElements = [self.createTeamCell(), self.addAccountCell(), self.settingsGroup()]
+        var rootElements = [self.devicesCell(), self.settingsGroup()]
+        
+        if !self.settingsPropertyFactory.selfUser.isTeamMember {
+            rootElements.append(self.inviteButton())
+        }
         
         let topSection = SettingsSectionDescriptor(cellDescriptors: rootElements)
         
@@ -83,7 +87,7 @@ import Foundation
     }
     
     func settingsGroup() -> SettingsControllerGeneratorType & SettingsInternalGroupCellDescriptorType {
-        var topLevelElements = [self.accountGroup(), self.devicesCell(), self.optionsGroup(), self.advancedGroup(), self.helpSection(), self.aboutSection()]
+        var topLevelElements = [self.accountGroup(), self.optionsGroup(), self.advancedGroup(), self.helpSection(), self.aboutSection()]
         
         if DeveloperMenuState.developerMenuEnabled() {
             topLevelElements.append(self.developerGroup())
