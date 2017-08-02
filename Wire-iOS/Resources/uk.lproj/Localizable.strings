@@ -1,17 +1,17 @@
-// 
+//
 // Wire
 // Copyright (C) 2016 Wire Swiss GmbH
-// 
+//
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
-// 
+//
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 // GNU General Public License for more details.
-// 
+//
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
@@ -33,7 +33,6 @@
 "peoplepicker.header.send_invitation" = "Запросити";
 "peoplepicker.header.contacts" = "Контакти";
 "peoplepicker.header.contacts_personal" = "Персональні контакти";
-"peoplepicker.header.team_members" = "%@ and Contacts";
 "peoplepicker.header.directory" = "Додати до контактів";
 "peoplepicker.title.create_conversation" = "Створити групу";
 "peoplepicker.title.add_to_conversation" = "Додати учасників";
@@ -48,9 +47,9 @@
 
 "peoplepicker.no_matching_results_provide_valid_email" = "Будь ласка, введіть актуальну адресу електронної пошти";
 "peoplepicker.no_matching_results_after_address_book_upload_title" = "Нікого не знайдено.";
-/*This sentence ends with button title, contained in peoplepicker.no_matching_results_after_address_book_upload_button*/
+/* This sentence ends with button title, contained in peoplepicker.no_matching_results_after_address_book_upload_button */
 "peoplepicker.no_matching_results_after_address_book_upload_message" = "Введіть адресу електронної пошти або";
-/**/
+/*  */
 "peoplepicker.no_matching_results_after_address_book_upload_button" = "поділіться контактами";
 
 "peoplepicker.share_contacts.no_results.title" = "Знайти людей за іменем або email";
@@ -78,7 +77,7 @@
 "contacts_ui.title" = "Запросити людей";
 
 "contacts_ui.no_contact.title" = "Поки що розмови відсутні";
-"contacts_ui.no_contact.message" = "Розпочніть розмову, створіть групу або запросіть людей.";
+"contacts_ui.no_contact.message" = "Розпочніть розмову або створіть групу.";
 
 "contacts_ui.no_contact.archived.title" = "Усі розмови заархівовано";
 
@@ -93,14 +92,31 @@
 // Profile Header View
 "conversation.connection_view.in_address_book" = "в Контактах";
 
-
+// Conversation list voiceover accessibility
+"conversation_list.voiceover.open_conversation.hint" = "Відкрити розмову";
+"conversation_list.voiceover.status.pending_connection" = "pending";
+"conversation_list.voiceover.status.active_call" = "active call";
+"conversation_list.voiceover.status.missed_call" = "пропущений дзвінок";
+"conversation_list.voiceover.status.pause_media" = "pause media";
+"conversation_list.voiceover.status.play_media" = "play media";
+"conversation_list.voiceover.status.silenced" = "silenced";
+"conversation_list.voiceover.status.typing" = "typing";
+"conversation_list.voiceover.status.ping" = "ping";
+"conversation_list.voiceover.bottom_bar.archived_button.label" = "archived";
+"conversation_list.voiceover.bottom_bar.archived_button.hint" = "list of archived conversations";
+"conversation_list.voiceover.bottom_bar.contacts_button.label" = "контакти";
+"conversation_list.voiceover.bottom_bar.contacts_button.hint" = "search for people on Wire";
+"conversation_list.voiceover.bottom_bar.compose_button.label" = "compose";
+"conversation_list.voiceover.bottom_bar.compose_button.hint" = "compose messages and save for later";
+"conversation_list.voiceover.bottom_bar.camera_button.label" = "camera";
+"conversation_list.voiceover.bottom_bar.camera_button.hint" = "take picture and send quickly";
 
 // Archived List
 "archived_list.title" = "архів";
 
 // Add contact tool tip
 "tool_tip.contacts.title" = "Розмови починаються тут";
-"tool_tip.contacts.message" = "Почніть розмову або запросіть більше людей. Дзвінки, повідомлення та багато іншого — приватно або в групі.";
+"tool_tip.contacts.message" = "Розпочніть розмову. Дзвінки, повідомлення та обмін даними приватно або в групах.";
 
 // "Knows" subtitle in cell: "Knows Indrek", "Knows Indrek and Jane", "Knows Indrek and 5 others"
 "peoplepicker.suggested.knows_one" = "Знайомий(-а) з %@";
@@ -130,6 +146,8 @@
 "list.archived_conversations" = "АРХІВ";
 "list.archived_conversations_close" = "Закрити архів";
 
+"conversation.voiceover.verified" = "verified";
+
 "conversation.status.call" = "Активний дзвінок";
 "conversation.status.typing" = "Набирається повідомлення…";
 "conversation.status.typing.group" = "%@: набирає повідомлення…";
@@ -157,6 +175,7 @@
 "conversation.status.you_left" = "Ви вийшли";
 "conversation.status.started_conversation" = "%@ почав(-ла) розмову";
 "conversation.status.removed_users" = "%@ видалив(-ла) %@";
+"conversation.status.everyone_left" = "Всі вийшли";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Compose Entry Point
@@ -193,6 +212,8 @@
 "conversation.call.many_participants_confirmation.call" = "Подзвонити";
 
 "conversation.connection_view.in_address_book" = "в Контактах";
+
+"conversation.input_bar.shortcut.send" = "Надіслати повідомлення";
 
 // Image confirmation dialogue
 "image_confirmer.confirm" = "OK";
@@ -272,6 +293,7 @@
 "content.system.connected_to" = "%@ доданий(-на) до контактів\nМожете починати розмову";
 "content.system.other_wanted_to_talk" = "%@ дзвонив(-ла)";
 "content.system.you_wanted_to_talk" = "Ви дзвонили";
+"content.system.ephemeral_time_remaining" = "%@ вийшов(-ла)";
 
 "content.system.you_started" = "Ви";
 "content.system.this_device" = "цей пристрій";
@@ -474,10 +496,10 @@
 "profile.details.title" = "Подробиці";
 "profile.details.guest" = "Гість";
 
-"profile_view.team_name.in" = "in %@";
+"profile_view.team_name.in" = "в %@";
 "profile_view.accessibility.handle" = "Нік";
-"profile_view.accessibility.name" = "Display name";
-"profile_view.accessibility.team_name" = "Team name";
+"profile_view.accessibility.name" = "Власне ім'я";
+"profile_view.accessibility.team_name" = "Назва команди";
 
 // Device list
 "profile.devices.title" = "Пристрої";
@@ -512,6 +534,9 @@
 "self.about" = "Про програму";
 "self.sign_out" = "Вихід";
 "self.report_abuse" = "Надіслати звіт про зловживання";
+"self.voiceover.label" = "Профіль";
+"self.voiceover.hint" = "Open profile and settings";
+"self.new-device.voiceover.label" = "Profile, new devices added";
 
 "self.add_phone_number" = "Додати номер телефону";
 "self.add_email_password" = "Додайте email та пароль";
@@ -532,6 +557,10 @@
 "self.new_device_alert.message_plural" = "%@\n\nЯкщо ви не робили цього, видаліть ці пристрої та змініть пароль.";
 "self.new_device_alert.manage_devices" = "Керування пристроями";
 "self.new_device_alert.trust_devices" = "OK";
+
+// Settings - top level
+"self.settings.create_team.title" = "Створити команду";
+"self.settings.add_account.title" = "Додати акаунт";
 
 // Settings - Account details
 "self.settings.account_section" = "Акаунт";
@@ -685,6 +714,9 @@
 
 "self.settings.privacy_security.lock_cancelled.description" = "Розблокуйте Wire за допомогою Touch ID або коду допуску";
 "self.settings.privacy_security.lock_cancelled.action" = "Розблокувати";
+
+"self.settings.privacy_security.disable_link_previews.title" = "Create Previews For Links You Send";
+"self.settings.privacy_security.disable_link_previews.footer" = "Дана опція не впливає на попередній перегляд лінків від інших людей.";
 
 "self.settings.privacy_analytics_menu.devices.title" = "Пристрої";
 
@@ -896,7 +928,7 @@
 "push.notification.new_message" = "Нове повідомлення";
 
 
-// Force Update
+//Force Update
 "force.update.title" = "Необхідне оновлення";
 "force.update.message" = "Не пропустіть нові функції.\nОтримайте найновішу версію Wire з App Store.";
 "force.update.ok_button" = "Перейти в App Store";
@@ -941,3 +973,7 @@
 "compose.drafts.compose.delete.confirm.title" = "Підтвердити видалення";
 "compose.drafts.compose.delete.confirm.message" = "Ця дія назавжди видалить дану чернетку без можливості відновлення.";
 "compose.drafts.compose.delete.confirm.action.title" = "Видалити";
+
+"compose.drafts.compose.dismiss.confirm.title" = "Зберегти як чернетку";
+"compose.drafts.compose.dismiss.confirm.action.title" = "Зберегти";
+"compose.drafts.compose.dismiss.delete.action.title" = "Видалити";

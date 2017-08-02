@@ -1,17 +1,17 @@
-// 
+//
 // Wire
 // Copyright (C) 2016 Wire Swiss GmbH
-// 
+//
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
-// 
+//
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 // GNU General Public License for more details.
-// 
+//
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
@@ -33,7 +33,6 @@
 "peoplepicker.header.send_invitation" = "Пригласить";
 "peoplepicker.header.contacts" = "Контакты";
 "peoplepicker.header.contacts_personal" = "Личные контакты";
-"peoplepicker.header.team_members" = "%@ и контакты";
 "peoplepicker.header.directory" = "Добавить в контакты";
 "peoplepicker.title.create_conversation" = "Создать группу";
 "peoplepicker.title.add_to_conversation" = "Добавить людей";
@@ -48,9 +47,9 @@
 
 "peoplepicker.no_matching_results_provide_valid_email" = "Пожалуйста, введите правильный email";
 "peoplepicker.no_matching_results_after_address_book_upload_title" = "Ничего не найдено.";
-/*This sentence ends with button title, contained in peoplepicker.no_matching_results_after_address_book_upload_button*/
+/* This sentence ends with button title, contained in peoplepicker.no_matching_results_after_address_book_upload_button */
 "peoplepicker.no_matching_results_after_address_book_upload_message" = "Введите полный адрес электронной почты или";
-/**/
+/*  */
 "peoplepicker.no_matching_results_after_address_book_upload_button" = "поделитесь контактами";
 
 "peoplepicker.share_contacts.no_results.title" = "Ищите людей по имени или по email";
@@ -78,7 +77,7 @@
 "contacts_ui.title" = "Пригласить людей";
 
 "contacts_ui.no_contact.title" = "Разговоров пока нет\n";
-"contacts_ui.no_contact.message" = "Начните разговор, создайте группу или пригласите людей присоединиться.";
+"contacts_ui.no_contact.message" = "Начните разговор или создайте группу.";
 
 "contacts_ui.no_contact.archived.title" = "Все разговоры отправлены в архив";
 
@@ -93,14 +92,31 @@
 // Profile Header View
 "conversation.connection_view.in_address_book" = "в контактах";
 
-
+// Conversation list voiceover accessibility
+"conversation_list.voiceover.open_conversation.hint" = "Открыть разговор";
+"conversation_list.voiceover.status.pending_connection" = "pending";
+"conversation_list.voiceover.status.active_call" = "активный вызов";
+"conversation_list.voiceover.status.missed_call" = "пропущенный вызов";
+"conversation_list.voiceover.status.pause_media" = "pause media";
+"conversation_list.voiceover.status.play_media" = "play media";
+"conversation_list.voiceover.status.silenced" = "silenced";
+"conversation_list.voiceover.status.typing" = "typing";
+"conversation_list.voiceover.status.ping" = "пинг";
+"conversation_list.voiceover.bottom_bar.archived_button.label" = "archived";
+"conversation_list.voiceover.bottom_bar.archived_button.hint" = "list of archived conversations";
+"conversation_list.voiceover.bottom_bar.contacts_button.label" = "контакты";
+"conversation_list.voiceover.bottom_bar.contacts_button.hint" = "search for people on Wire";
+"conversation_list.voiceover.bottom_bar.compose_button.label" = "compose";
+"conversation_list.voiceover.bottom_bar.compose_button.hint" = "compose messages and save for later";
+"conversation_list.voiceover.bottom_bar.camera_button.label" = "камера";
+"conversation_list.voiceover.bottom_bar.camera_button.hint" = "take picture and send quickly";
 
 // Archived List
 "archived_list.title" = "архив";
 
 // Add contact tool tip
 "tool_tip.contacts.title" = "Общение начинается здесь";
-"tool_tip.contacts.message" = "Начни разговор или пригласи друзей. Звонки, сообщения и многое другое - приватно или в группе.";
+"tool_tip.contacts.message" = "Начните разговор. Звонки, сообщения и многое другое — приватно или в группе.";
 
 // "Knows" subtitle in cell: "Knows Indrek", "Knows Indrek and Jane", "Knows Indrek and 5 others"
 "peoplepicker.suggested.knows_one" = "Знает %@";
@@ -130,6 +146,8 @@
 "list.archived_conversations" = "АРХИВ";
 "list.archived_conversations_close" = "Закрыть архив";
 
+"conversation.voiceover.verified" = "верифицировано";
+
 "conversation.status.call" = "Исходящий звонок";
 "conversation.status.typing" = "Набирает сообщение…";
 "conversation.status.typing.group" = "%@: набирает сообщение…";
@@ -157,6 +175,7 @@
 "conversation.status.you_left" = "Вы покинули беседу";
 "conversation.status.started_conversation" = "%@ начал разговор";
 "conversation.status.removed_users" = "%@ удалил %@";
+"conversation.status.everyone_left" = "Все вышли";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Compose Entry Point
@@ -193,6 +212,8 @@
 "conversation.call.many_participants_confirmation.call" = "Звонок";
 
 "conversation.connection_view.in_address_book" = "в контактах";
+
+"conversation.input_bar.shortcut.send" = "Отправить сообщение";
 
 // Image confirmation dialogue
 "image_confirmer.confirm" = "OK";
@@ -272,6 +293,7 @@
 "content.system.connected_to" = "Добавил(-а) %@.\nНачните разговор";
 "content.system.other_wanted_to_talk" = "%@ звонил";
 "content.system.you_wanted_to_talk" = "Вы звонили";
+"content.system.ephemeral_time_remaining" = "%@ покинул(а) разговор";
 
 "content.system.you_started" = "Вы";
 "content.system.this_device" = "это устройство";
@@ -512,6 +534,9 @@
 "self.about" = "О программе";
 "self.sign_out" = "Выход";
 "self.report_abuse" = "Сообщить о злоупотреблении";
+"self.voiceover.label" = "Профиль";
+"self.voiceover.hint" = "Открыть профиль и настройки";
+"self.new-device.voiceover.label" = "Profile, new devices added";
 
 "self.add_phone_number" = "Добавить номер телефона";
 "self.add_email_password" = "Добавить email и пароль";
@@ -532,6 +557,10 @@
 "self.new_device_alert.message_plural" = "%@\n\nЕсли вы не делали этого, удалите устройства и измените ваш пароль.";
 "self.new_device_alert.manage_devices" = "Управление устройствами";
 "self.new_device_alert.trust_devices" = "OK";
+
+// Settings - top level
+"self.settings.create_team.title" = "Создать команду";
+"self.settings.add_account.title" = "Добавить аккаунт";
 
 // Settings - Account details
 "self.settings.account_section" = "Аккаунт";
@@ -685,6 +714,9 @@
 
 "self.settings.privacy_security.lock_cancelled.description" = "Разблокируйте Wire с помощью Touch ID или пароля";
 "self.settings.privacy_security.lock_cancelled.action" = "Разблокировать";
+
+"self.settings.privacy_security.disable_link_previews.title" = "Показывать предпросмотр ссылок, отправляемых вами";
+"self.settings.privacy_security.disable_link_previews.footer" = "Предпросмотр может по-прежнему отображаться для ссылок от других людей.";
 
 "self.settings.privacy_analytics_menu.devices.title" = "Устройства";
 
@@ -896,7 +928,7 @@
 "push.notification.new_message" = "Новое сообщение";
 
 
-// Force Update
+//Force Update
 "force.update.title" = "Необходимо обновление";
 "force.update.message" = "Не пропуcтите новые функции. Скачайте последнюю версию Wire в App Store.";
 "force.update.ok_button" = "Перейти в App Store";
@@ -941,3 +973,7 @@
 "compose.drafts.compose.delete.confirm.title" = "Подтвердить удаление";
 "compose.drafts.compose.delete.confirm.message" = "Это действие навсегда удалит этот черновик и не может быть отменено.";
 "compose.drafts.compose.delete.confirm.action.title" = "Удалить";
+
+"compose.drafts.compose.dismiss.confirm.title" = "Сохранить как черновик";
+"compose.drafts.compose.dismiss.confirm.action.title" = "Сохранить";
+"compose.drafts.compose.dismiss.delete.action.title" = "Удалить";

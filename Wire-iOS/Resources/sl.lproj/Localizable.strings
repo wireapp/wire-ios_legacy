@@ -1,17 +1,17 @@
-// 
+//
 // Wire
 // Copyright (C) 2016 Wire Swiss GmbH
-// 
+//
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
-// 
+//
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 // GNU General Public License for more details.
-// 
+//
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
@@ -33,7 +33,6 @@
 "peoplepicker.header.send_invitation" = "Povabi";
 "peoplepicker.header.contacts" = "Stiki";
 "peoplepicker.header.contacts_personal" = "Osebni stiki";
-"peoplepicker.header.team_members" = "%@ in stiki";
 "peoplepicker.header.directory" = "Poveži";
 "peoplepicker.title.create_conversation" = "Ustvari skupino";
 "peoplepicker.title.add_to_conversation" = "Dodaj osebe";
@@ -48,9 +47,9 @@
 
 "peoplepicker.no_matching_results_provide_valid_email" = "Prosimo vnesite veljaven e-poštni naslov";
 "peoplepicker.no_matching_results_after_address_book_upload_title" = "Ni rezultatov.";
-/*This sentence ends with button title, contained in peoplepicker.no_matching_results_after_address_book_upload_button*/
+/* This sentence ends with button title, contained in peoplepicker.no_matching_results_after_address_book_upload_button */
 "peoplepicker.no_matching_results_after_address_book_upload_message" = "Vnesite celoten e-poštni naslov ali";
-/**/
+/*  */
 "peoplepicker.no_matching_results_after_address_book_upload_button" = "deli stike";
 
 "peoplepicker.share_contacts.no_results.title" = "Najdi osebe po imenu ali e-poštnem naslovu";
@@ -78,7 +77,7 @@
 "contacts_ui.title" = "Povabite osebe";
 
 "contacts_ui.no_contact.title" = "Še ni pogovorov\n";
-"contacts_ui.no_contact.message" = "Začni pogovor, ustvari skupino ali povabi osebe za prijavo.";
+"contacts_ui.no_contact.message" = "Start a conversation or create a group.";
 
 "contacts_ui.no_contact.archived.title" = "Vse je arhivirano";
 
@@ -93,14 +92,31 @@
 // Profile Header View
 "conversation.connection_view.in_address_book" = "v stikih";
 
-
+// Conversation list voiceover accessibility
+"conversation_list.voiceover.open_conversation.hint" = "Odpri pogovor";
+"conversation_list.voiceover.status.pending_connection" = "pending";
+"conversation_list.voiceover.status.active_call" = "active call";
+"conversation_list.voiceover.status.missed_call" = "zgrešen klic";
+"conversation_list.voiceover.status.pause_media" = "pause media";
+"conversation_list.voiceover.status.play_media" = "play media";
+"conversation_list.voiceover.status.silenced" = "silenced";
+"conversation_list.voiceover.status.typing" = "typing";
+"conversation_list.voiceover.status.ping" = "ping";
+"conversation_list.voiceover.bottom_bar.archived_button.label" = "archived";
+"conversation_list.voiceover.bottom_bar.archived_button.hint" = "list of archived conversations";
+"conversation_list.voiceover.bottom_bar.contacts_button.label" = "stiki";
+"conversation_list.voiceover.bottom_bar.contacts_button.hint" = "search for people on Wire";
+"conversation_list.voiceover.bottom_bar.compose_button.label" = "compose";
+"conversation_list.voiceover.bottom_bar.compose_button.hint" = "compose messages and save for later";
+"conversation_list.voiceover.bottom_bar.camera_button.label" = "camera";
+"conversation_list.voiceover.bottom_bar.camera_button.hint" = "take picture and send quickly";
 
 // Archived List
 "archived_list.title" = "arhiv";
 
 // Add contact tool tip
 "tool_tip.contacts.title" = "Pogovori se začnejo tukaj";
-"tool_tip.contacts.message" = "Začnite pogovor ali povabite več oseb za pridružitev. Kličite, pošiljajte sporočila in delite zasebno ali v skupinah.";
+"tool_tip.contacts.message" = "Začnite pogovor. Kličite, pošiljajte sporočila in delite zasebno ali v skupinah.";
 
 // "Knows" subtitle in cell: "Knows Indrek", "Knows Indrek and Jane", "Knows Indrek and 5 others"
 "peoplepicker.suggested.knows_one" = "Pozna %@";
@@ -130,6 +146,8 @@
 "list.archived_conversations" = "ARHIVIRAJ";
 "list.archived_conversations_close" = "Zapri arhiv";
 
+"conversation.voiceover.verified" = "verified";
+
 "conversation.status.call" = "Trenutni klic";
 "conversation.status.typing" = "Tipka sporočilo…";
 "conversation.status.typing.group" = "%@: tipka sporočilo…";
@@ -157,6 +175,7 @@
 "conversation.status.you_left" = "Si zapustil(-a)";
 "conversation.status.started_conversation" = "%@ je začel(-a) pogovor";
 "conversation.status.removed_users" = "%@ je odstranil(-a) %@";
+"conversation.status.everyone_left" = "Vsi so zapustili pogovor";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Compose Entry Point
@@ -193,6 +212,8 @@
 "conversation.call.many_participants_confirmation.call" = "Klic";
 
 "conversation.connection_view.in_address_book" = "v stikih";
+
+"conversation.input_bar.shortcut.send" = "Pošlji sporočilo";
 
 // Image confirmation dialogue
 "image_confirmer.confirm" = "V redu";
@@ -272,6 +293,7 @@
 "content.system.connected_to" = "Povezan s/z %@\nZačni pogovor";
 "content.system.other_wanted_to_talk" = "%@ je klical(-a)";
 "content.system.you_wanted_to_talk" = "Si klical(-a)";
+"content.system.ephemeral_time_remaining" = "%@ je zapustil(-a) pogovor";
 
 "content.system.you_started" = "Ti";
 "content.system.this_device" = "ta naprava";
@@ -512,6 +534,9 @@
 "self.about" = "O aplikaciji";
 "self.sign_out" = "Odjava";
 "self.report_abuse" = "Poročaj zlorabe";
+"self.voiceover.label" = "Profil";
+"self.voiceover.hint" = "Open profile and settings";
+"self.new-device.voiceover.label" = "Profile, new devices added";
 
 "self.add_phone_number" = "Dodaj telefonsko številko";
 "self.add_email_password" = "Dodajte e-poštni naslov in geslo";
@@ -532,6 +557,10 @@
 "self.new_device_alert.message_plural" = "%@\n\nČe tega niste storili, odstranite te naprave in ponastavite vaše geslo.";
 "self.new_device_alert.manage_devices" = "Upravljanje naprav";
 "self.new_device_alert.trust_devices" = "V redu";
+
+// Settings - top level
+"self.settings.create_team.title" = "Create team";
+"self.settings.add_account.title" = "Add account";
 
 // Settings - Account details
 "self.settings.account_section" = "Račun";
@@ -685,6 +714,9 @@
 
 "self.settings.privacy_security.lock_cancelled.description" = "Odkleni Wire s Touch ID ali geslom";
 "self.settings.privacy_security.lock_cancelled.action" = "Odkleni";
+
+"self.settings.privacy_security.disable_link_previews.title" = "Create Previews For Links You Send";
+"self.settings.privacy_security.disable_link_previews.footer" = "Predogledi se še vedno lahko prikazujejo za povezave drugih ljudi.";
 
 "self.settings.privacy_analytics_menu.devices.title" = "Naprave";
 
@@ -896,7 +928,7 @@
 "push.notification.new_message" = "Novo sporočilo";
 
 
-// Force Update
+//Force Update
 "force.update.title" = "Potrebna posodobitev";
 "force.update.message" = "Zamujate nove funkcije na Wire.\nPrenesite najnovejšo različico na App Store.";
 "force.update.ok_button" = "Pojdi na App Store";
@@ -941,3 +973,7 @@
 "compose.drafts.compose.delete.confirm.title" = "Potrdi brisanje";
 "compose.drafts.compose.delete.confirm.message" = "To dejanje bo za vedno izbrisalo ta osnutek in ga ni mogoče razveljaviti.";
 "compose.drafts.compose.delete.confirm.action.title" = "Izbriši";
+
+"compose.drafts.compose.dismiss.confirm.title" = "Save as draft";
+"compose.drafts.compose.dismiss.confirm.action.title" = "Shrani";
+"compose.drafts.compose.dismiss.delete.action.title" = "Izbriši";

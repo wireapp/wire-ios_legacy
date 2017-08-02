@@ -1,17 +1,17 @@
-// 
+//
 // Wire
 // Copyright (C) 2016 Wire Swiss GmbH
-// 
+//
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
-// 
+//
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 // GNU General Public License for more details.
-// 
+//
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
@@ -33,7 +33,6 @@
 "peoplepicker.header.send_invitation" = "Uitnodigen";
 "peoplepicker.header.contacts" = "Contacten";
 "peoplepicker.header.contacts_personal" = "Persoonlijke Contacten";
-"peoplepicker.header.team_members" = "%@ and Contacts";
 "peoplepicker.header.directory" = "Contacten toevoegen";
 "peoplepicker.title.create_conversation" = "Maak groep";
 "peoplepicker.title.add_to_conversation" = "Contacten toevoegen";
@@ -48,9 +47,9 @@
 
 "peoplepicker.no_matching_results_provide_valid_email" = "Geldig e-mailadres invoeren a.u.b.";
 "peoplepicker.no_matching_results_after_address_book_upload_title" = "Geen resultaten";
-/*This sentence ends with button title, contained in peoplepicker.no_matching_results_after_address_book_upload_button*/
+/* This sentence ends with button title, contained in peoplepicker.no_matching_results_after_address_book_upload_button */
 "peoplepicker.no_matching_results_after_address_book_upload_message" = "E-mailadres invoeren of";
-/**/
+/*  */
 "peoplepicker.no_matching_results_after_address_book_upload_button" = "Contacten delen";
 
 "peoplepicker.share_contacts.no_results.title" = "Zoek personen op naam of op e-mailadres";
@@ -78,7 +77,7 @@
 "contacts_ui.title" = "Nodig anderen uit";
 
 "contacts_ui.no_contact.title" = "Nog geen gesprekken\n";
-"contacts_ui.no_contact.message" = "Begin een gesprek, mak een groep of nodig mensen uit tot Wire.";
+"contacts_ui.no_contact.message" = "Start een gesprek of een groep maken.";
 
 "contacts_ui.no_contact.archived.title" = "Alles gearchiveerd";
 
@@ -93,14 +92,31 @@
 // Profile Header View
 "conversation.connection_view.in_address_book" = "in Contacten";
 
-
+// Conversation list voiceover accessibility
+"conversation_list.voiceover.open_conversation.hint" = "Open gesprek";
+"conversation_list.voiceover.status.pending_connection" = "pending";
+"conversation_list.voiceover.status.active_call" = "active call";
+"conversation_list.voiceover.status.missed_call" = "gemiste bericht";
+"conversation_list.voiceover.status.pause_media" = "pause media";
+"conversation_list.voiceover.status.play_media" = "play media";
+"conversation_list.voiceover.status.silenced" = "silenced";
+"conversation_list.voiceover.status.typing" = "typing";
+"conversation_list.voiceover.status.ping" = "ping";
+"conversation_list.voiceover.bottom_bar.archived_button.label" = "archived";
+"conversation_list.voiceover.bottom_bar.archived_button.hint" = "list of archived conversations";
+"conversation_list.voiceover.bottom_bar.contacts_button.label" = "contacten";
+"conversation_list.voiceover.bottom_bar.contacts_button.hint" = "search for people on Wire";
+"conversation_list.voiceover.bottom_bar.compose_button.label" = "compose";
+"conversation_list.voiceover.bottom_bar.compose_button.hint" = "compose messages and save for later";
+"conversation_list.voiceover.bottom_bar.camera_button.label" = "camera";
+"conversation_list.voiceover.bottom_bar.camera_button.hint" = "take picture and send quickly";
 
 // Archived List
 "archived_list.title" = "archief";
 
 // Add contact tool tip
 "tool_tip.contacts.title" = "Gesprekken beginnen hier";
-"tool_tip.contacts.message" = "Begin een nieuw gesprek of nodig meer contacten uit. Bel, chat en deel in privé- of groepsgesprekken.";
+"tool_tip.contacts.message" = "Begin een nieuw gesprek. Bel, chat en deel in privé- of groepsgesprekken.";
 
 // "Knows" subtitle in cell: "Knows Indrek", "Knows Indrek and Jane", "Knows Indrek and 5 others"
 "peoplepicker.suggested.knows_one" = "Kent %@";
@@ -130,6 +146,8 @@
 "list.archived_conversations" = "ARCHIEF";
 "list.archived_conversations_close" = "Archief sluiten";
 
+"conversation.voiceover.verified" = "verified";
+
 "conversation.status.call" = "Uitgaand gesprek";
 "conversation.status.typing" = "Typt een bericht…";
 "conversation.status.typing.group" = "%@: Typt een bericht…";
@@ -157,6 +175,7 @@
 "conversation.status.you_left" = "Jij verliet";
 "conversation.status.started_conversation" = "%@ begon een gesprek";
 "conversation.status.removed_users" = "%@ verwijderde %@";
+"conversation.status.everyone_left" = "Verlaten door iedereen";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Compose Entry Point
@@ -193,6 +212,8 @@
 "conversation.call.many_participants_confirmation.call" = "Oproep";
 
 "conversation.connection_view.in_address_book" = "in Contacten";
+
+"conversation.input_bar.shortcut.send" = "Verstuur bericht";
 
 // Image confirmation dialogue
 "image_confirmer.confirm" = "OK";
@@ -272,6 +293,7 @@
 "content.system.connected_to" = "Verbonden met %@.\nBegin een gesprek";
 "content.system.other_wanted_to_talk" = "%@ belde";
 "content.system.you_wanted_to_talk" = "Jij belde";
+"content.system.ephemeral_time_remaining" = "%@ verliet";
 
 "content.system.you_started" = "Jij";
 "content.system.this_device" = "dit apparaat";
@@ -476,8 +498,8 @@
 
 "profile_view.team_name.in" = "in %@";
 "profile_view.accessibility.handle" = "Gebruikersnaam";
-"profile_view.accessibility.name" = "Display name";
-"profile_view.accessibility.team_name" = "Team name";
+"profile_view.accessibility.name" = "Weergavenaam";
+"profile_view.accessibility.team_name" = "Team naam";
 
 // Device list
 "profile.devices.title" = "Apparaten";
@@ -512,6 +534,9 @@
 "self.about" = "Over ons";
 "self.sign_out" = "Afmelden";
 "self.report_abuse" = "Misbruik melden";
+"self.voiceover.label" = "Profiel";
+"self.voiceover.hint" = "Open profile and settings";
+"self.new-device.voiceover.label" = "Profile, new devices added";
 
 "self.add_phone_number" = "Voeg telefoonnummer toe";
 "self.add_email_password" = "Voeg e-mailadres en wachtwoord toe";
@@ -532,6 +557,10 @@
 "self.new_device_alert.message_plural" = "%@\n\nAls je dit niet zelf gedaan hebt, verwijder dan deze apparaten en wijzig je wachtwoord.";
 "self.new_device_alert.manage_devices" = "Beheer apparaten";
 "self.new_device_alert.trust_devices" = "OK";
+
+// Settings - top level
+"self.settings.create_team.title" = "Create team";
+"self.settings.add_account.title" = "Add account";
 
 // Settings - Account details
 "self.settings.account_section" = "Profiel";
@@ -685,6 +714,9 @@
 
 "self.settings.privacy_security.lock_cancelled.description" = "Ontgrendel Wire met Touch ID of Wachtwoord";
 "self.settings.privacy_security.lock_cancelled.action" = "Ontgrendel";
+
+"self.settings.privacy_security.disable_link_previews.title" = "Create Previews For Links You Send";
+"self.settings.privacy_security.disable_link_previews.footer" = "Linkvoorbeelden kunnen nog steeds getoond worden voor links van andere mensen.";
 
 "self.settings.privacy_analytics_menu.devices.title" = "Apparaten";
 
@@ -896,7 +928,7 @@
 "push.notification.new_message" = "Nieuw bericht";
 
 
-// Force Update
+//Force Update
 "force.update.title" = "Update nodig";
 "force.update.message" = "Je mist nieuwe features. \nDownload de laatste versie van Wire in de App Store.";
 "force.update.ok_button" = "Ga naar de App Store";
@@ -941,3 +973,7 @@
 "compose.drafts.compose.delete.confirm.title" = "Verwijderen bevestigen";
 "compose.drafts.compose.delete.confirm.message" = "Hiermee zullen alle concepten verwijdert worden, dit kan niet ongedaan gemaakt worden.";
 "compose.drafts.compose.delete.confirm.action.title" = "Verwijderen";
+
+"compose.drafts.compose.dismiss.confirm.title" = "Save as draft";
+"compose.drafts.compose.dismiss.confirm.action.title" = "Opslaan";
+"compose.drafts.compose.dismiss.delete.action.title" = "Verwijderen";

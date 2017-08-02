@@ -1,17 +1,17 @@
-// 
+//
 // Wire
 // Copyright (C) 2016 Wire Swiss GmbH
-// 
+//
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
-// 
+//
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 // GNU General Public License for more details.
-// 
+//
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
@@ -33,7 +33,6 @@
 "peoplepicker.header.send_invitation" = "Kutsu";
 "peoplepicker.header.contacts" = "Yhteystiedot";
 "peoplepicker.header.contacts_personal" = "Personal Contacts";
-"peoplepicker.header.team_members" = "%@ and Contacts";
 "peoplepicker.header.directory" = "Yhdistä";
 "peoplepicker.title.create_conversation" = "Luo ryhmä";
 "peoplepicker.title.add_to_conversation" = "Lisää ihmisiä";
@@ -48,9 +47,9 @@
 
 "peoplepicker.no_matching_results_provide_valid_email" = "Anna kelvollinen sähköpostiosoite";
 "peoplepicker.no_matching_results_after_address_book_upload_title" = "Ei tuloksia.";
-/*This sentence ends with button title, contained in peoplepicker.no_matching_results_after_address_book_upload_button*/
+/* This sentence ends with button title, contained in peoplepicker.no_matching_results_after_address_book_upload_button */
 "peoplepicker.no_matching_results_after_address_book_upload_message" = "Anna kelvollinen sähköpostiosoite tai";
-/**/
+/*  */
 "peoplepicker.no_matching_results_after_address_book_upload_button" = "jaa yhteystietoja";
 
 "peoplepicker.share_contacts.no_results.title" = "Etsi ihmisiä nimellä tai sähköpostiosoitteella";
@@ -78,7 +77,7 @@
 "contacts_ui.title" = "Kutsu ihmisiä";
 
 "contacts_ui.no_contact.title" = "No conversations yet\n";
-"contacts_ui.no_contact.message" = "Start a conversation, create a group or invite people to join.";
+"contacts_ui.no_contact.message" = "Start a conversation or create a group.";
 
 "contacts_ui.no_contact.archived.title" = "Kaikki arkistoitu";
 
@@ -93,14 +92,31 @@
 // Profile Header View
 "conversation.connection_view.in_address_book" = "yhteystiedoissa";
 
-
+// Conversation list voiceover accessibility
+"conversation_list.voiceover.open_conversation.hint" = "Avaa keskustelu";
+"conversation_list.voiceover.status.pending_connection" = "pending";
+"conversation_list.voiceover.status.active_call" = "active call";
+"conversation_list.voiceover.status.missed_call" = "missed call";
+"conversation_list.voiceover.status.pause_media" = "pause media";
+"conversation_list.voiceover.status.play_media" = "play media";
+"conversation_list.voiceover.status.silenced" = "silenced";
+"conversation_list.voiceover.status.typing" = "typing";
+"conversation_list.voiceover.status.ping" = "ping";
+"conversation_list.voiceover.bottom_bar.archived_button.label" = "archived";
+"conversation_list.voiceover.bottom_bar.archived_button.hint" = "list of archived conversations";
+"conversation_list.voiceover.bottom_bar.contacts_button.label" = "yhteystiedot";
+"conversation_list.voiceover.bottom_bar.contacts_button.hint" = "search for people on Wire";
+"conversation_list.voiceover.bottom_bar.compose_button.label" = "compose";
+"conversation_list.voiceover.bottom_bar.compose_button.hint" = "compose messages and save for later";
+"conversation_list.voiceover.bottom_bar.camera_button.label" = "camera";
+"conversation_list.voiceover.bottom_bar.camera_button.hint" = "take picture and send quickly";
 
 // Archived List
 "archived_list.title" = "arkistoi";
 
 // Add contact tool tip
 "tool_tip.contacts.title" = "Keskustelut alkavat tästä";
-"tool_tip.contacts.message" = "Aloita keskustelu tai kutsu lisää käyttäjiä liittymään. Soita, pikaviestitä ja jaa yksityisesti tai ryhmissä.";
+"tool_tip.contacts.message" = "Start a conversation. Call, message and share in private or with groups.";
 
 // "Knows" subtitle in cell: "Knows Indrek", "Knows Indrek and Jane", "Knows Indrek and 5 others"
 "peoplepicker.suggested.knows_one" = "Tuntee %@";
@@ -130,6 +146,8 @@
 "list.archived_conversations" = "ARKISTOI";
 "list.archived_conversations_close" = "Sulje arkisto";
 
+"conversation.voiceover.verified" = "verified";
+
 "conversation.status.call" = "Ongoing call";
 "conversation.status.typing" = "Typing a message…";
 "conversation.status.typing.group" = "%@: typing a message…";
@@ -157,6 +175,7 @@
 "conversation.status.you_left" = "Sinä poistuit";
 "conversation.status.started_conversation" = "%@ started a conversation";
 "conversation.status.removed_users" = "%@ poisti %@ n";
+"conversation.status.everyone_left" = "Everyone left";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Compose Entry Point
@@ -193,6 +212,8 @@
 "conversation.call.many_participants_confirmation.call" = "Puhelu";
 
 "conversation.connection_view.in_address_book" = "yhteystiedoissa";
+
+"conversation.input_bar.shortcut.send" = "Send Message";
 
 // Image confirmation dialogue
 "image_confirmer.confirm" = "OK";
@@ -272,6 +293,7 @@
 "content.system.connected_to" = "Yhdistetty %@ een\nAloita keskustelu";
 "content.system.other_wanted_to_talk" = "%@ soitti";
 "content.system.you_wanted_to_talk" = "Sinä soitit";
+"content.system.ephemeral_time_remaining" = "%@ poistui";
 
 "content.system.you_started" = "Sinä";
 "content.system.this_device" = "tämä laite";
@@ -512,6 +534,9 @@
 "self.about" = "Tietoja meistä";
 "self.sign_out" = "Kirjaudu ulos";
 "self.report_abuse" = "Ilmoita väärinkäyttö";
+"self.voiceover.label" = "Profiili";
+"self.voiceover.hint" = "Open profile and settings";
+"self.new-device.voiceover.label" = "Profile, new devices added";
 
 "self.add_phone_number" = "Lisää puhelinnumero";
 "self.add_email_password" = "Lisää sähköpostiosoite ja salasana";
@@ -532,6 +557,10 @@
 "self.new_device_alert.message_plural" = "%@\n\nJos et tehnyt tätä, poista laitteet ja vaihda salasanasi.";
 "self.new_device_alert.manage_devices" = "Hallitse laitteita";
 "self.new_device_alert.trust_devices" = "OK";
+
+// Settings - top level
+"self.settings.create_team.title" = "Create team";
+"self.settings.add_account.title" = "Add account";
 
 // Settings - Account details
 "self.settings.account_section" = "Tili";
@@ -685,6 +714,9 @@
 
 "self.settings.privacy_security.lock_cancelled.description" = "Unlock Wire with Touch ID or Passcode";
 "self.settings.privacy_security.lock_cancelled.action" = "Avaa lukitus";
+
+"self.settings.privacy_security.disable_link_previews.title" = "Create Previews For Links You Send";
+"self.settings.privacy_security.disable_link_previews.footer" = "Previews may still be shown for links from other people.";
 
 "self.settings.privacy_analytics_menu.devices.title" = "Laitteet";
 
@@ -896,7 +928,7 @@
 "push.notification.new_message" = "Uusi viesti";
 
 
-// Force Update
+//Force Update
 "force.update.title" = "Päivitys on välttämätön";
 "force.update.message" = "Jäät vaille uusista ominaisuuksista.\nHanki uusin versio Wirestä App Storesta.";
 "force.update.ok_button" = "Siirry App Storeen";
@@ -941,3 +973,7 @@
 "compose.drafts.compose.delete.confirm.title" = "Confirm Deletion";
 "compose.drafts.compose.delete.confirm.message" = "This action will permamently delete this draft and cannot be undone.";
 "compose.drafts.compose.delete.confirm.action.title" = "Poista";
+
+"compose.drafts.compose.dismiss.confirm.title" = "Save as draft";
+"compose.drafts.compose.dismiss.confirm.action.title" = "Tallenna";
+"compose.drafts.compose.dismiss.delete.action.title" = "Poista";

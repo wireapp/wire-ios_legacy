@@ -1,17 +1,17 @@
-// 
+//
 // Wire
 // Copyright (C) 2016 Wire Swiss GmbH
-// 
+//
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
-// 
+//
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 // GNU General Public License for more details.
-// 
+//
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
@@ -27,13 +27,12 @@
 "peoplepicker.search_placeholder" = "Søg på navn eller brugernavn";
 "peoplepicker.header.top_people" = "Top personer";
 "peoplepicker.button.create_conversation" = "Opret gruppe";
-"peoplepicker.button.add_to_conversation" = "Add People to Group";
+"peoplepicker.button.add_to_conversation" = "Tilføj personer til gruppe";
 "peoplepicker.header.conversations" = "Grupper";
 "peoplepicker.header.team_conversations" = "%@ Groups";
 "peoplepicker.header.send_invitation" = "Invitér";
 "peoplepicker.header.contacts" = "Kontakter";
 "peoplepicker.header.contacts_personal" = "Personal Contacts";
-"peoplepicker.header.team_members" = "%@ and Contacts";
 "peoplepicker.header.directory" = "Forbind";
 "peoplepicker.title.create_conversation" = "Opret gruppe";
 "peoplepicker.title.add_to_conversation" = "Tilføj personer";
@@ -48,9 +47,9 @@
 
 "peoplepicker.no_matching_results_provide_valid_email" = "Indtast en gyldig e-mailadresse";
 "peoplepicker.no_matching_results_after_address_book_upload_title" = "Ingen resultater.";
-/*This sentence ends with button title, contained in peoplepicker.no_matching_results_after_address_book_upload_button*/
+/* This sentence ends with button title, contained in peoplepicker.no_matching_results_after_address_book_upload_button */
 "peoplepicker.no_matching_results_after_address_book_upload_message" = "Indtast en gyldig e-mailadresse eller";
-/**/
+/*  */
 "peoplepicker.no_matching_results_after_address_book_upload_button" = "del kontakter";
 
 "peoplepicker.share_contacts.no_results.title" = "Find personer ved navn eller e-mail adresse";
@@ -78,7 +77,7 @@
 "contacts_ui.title" = "Invitér personer";
 
 "contacts_ui.no_contact.title" = "No conversations yet\n";
-"contacts_ui.no_contact.message" = "Start a conversation, create a group or invite people to join.";
+"contacts_ui.no_contact.message" = "Start a conversation or create a group.";
 
 "contacts_ui.no_contact.archived.title" = "Alt arkiveret";
 
@@ -93,14 +92,31 @@
 // Profile Header View
 "conversation.connection_view.in_address_book" = "i Kontaktpersoner";
 
-
+// Conversation list voiceover accessibility
+"conversation_list.voiceover.open_conversation.hint" = "Åben samtale";
+"conversation_list.voiceover.status.pending_connection" = "pending";
+"conversation_list.voiceover.status.active_call" = "active call";
+"conversation_list.voiceover.status.missed_call" = "missed call";
+"conversation_list.voiceover.status.pause_media" = "pause media";
+"conversation_list.voiceover.status.play_media" = "play media";
+"conversation_list.voiceover.status.silenced" = "silenced";
+"conversation_list.voiceover.status.typing" = "typing";
+"conversation_list.voiceover.status.ping" = "ping";
+"conversation_list.voiceover.bottom_bar.archived_button.label" = "archived";
+"conversation_list.voiceover.bottom_bar.archived_button.hint" = "list of archived conversations";
+"conversation_list.voiceover.bottom_bar.contacts_button.label" = "kontakter";
+"conversation_list.voiceover.bottom_bar.contacts_button.hint" = "search for people on Wire";
+"conversation_list.voiceover.bottom_bar.compose_button.label" = "compose";
+"conversation_list.voiceover.bottom_bar.compose_button.hint" = "compose messages and save for later";
+"conversation_list.voiceover.bottom_bar.camera_button.label" = "camera";
+"conversation_list.voiceover.bottom_bar.camera_button.hint" = "take picture and send quickly";
 
 // Archived List
 "archived_list.title" = "arkiv";
 
 // Add contact tool tip
 "tool_tip.contacts.title" = "Samtaler starter her";
-"tool_tip.contacts.message" = "Start en samtale eller invitér flere personer til at deltage. Ring, skriv og del privat, eller med grupper.";
+"tool_tip.contacts.message" = "Start a conversation. Call, message and share in private or with groups.";
 
 // "Knows" subtitle in cell: "Knows Indrek", "Knows Indrek and Jane", "Knows Indrek and 5 others"
 "peoplepicker.suggested.knows_one" = "Kender %@";
@@ -130,8 +146,10 @@
 "list.archived_conversations" = "ARKIV";
 "list.archived_conversations_close" = "Luk arkiv";
 
+"conversation.voiceover.verified" = "verified";
+
 "conversation.status.call" = "Ongoing call";
-"conversation.status.typing" = "Typing a message…";
+"conversation.status.typing" = "Skriver en besked…";
 "conversation.status.typing.group" = "%@: typing a message…";
 "conversation.status.silenced" = "Muted";
 "conversation.status.blocked" = "Blokeret";
@@ -157,6 +175,7 @@
 "conversation.status.you_left" = "Du forlod";
 "conversation.status.started_conversation" = "%@ started a conversation";
 "conversation.status.removed_users" = "%@ har fjernet %@";
+"conversation.status.everyone_left" = "Alle forlod gruppen";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Compose Entry Point
@@ -193,6 +212,8 @@
 "conversation.call.many_participants_confirmation.call" = "Ring op";
 
 "conversation.connection_view.in_address_book" = "i Kontaktpersoner";
+
+"conversation.input_bar.shortcut.send" = "Send Message";
 
 // Image confirmation dialogue
 "image_confirmer.confirm" = "OK";
@@ -272,6 +293,7 @@
 "content.system.connected_to" = "Forbundet til %@\nStart en samtale";
 "content.system.other_wanted_to_talk" = "%@ har ringet";
 "content.system.you_wanted_to_talk" = "Du har ringet";
+"content.system.ephemeral_time_remaining" = "%@ har forladt";
 
 "content.system.you_started" = "Dig";
 "content.system.this_device" = "denne enhed";
@@ -394,7 +416,7 @@
 // Profile and Participants
 
 "participants.add_people_button_title" = "Tilføj personer";
-"participants.avatar.guest.title" = "Guest";
+"participants.avatar.guest.title" = "Gæst";
 
 // Meta Menu
 "meta.menu.rename" = "Omdøb";
@@ -472,7 +494,7 @@
 
 // User Details
 "profile.details.title" = "Detaljer";
-"profile.details.guest" = "Guest";
+"profile.details.guest" = "Gæst";
 
 "profile_view.team_name.in" = "in %@";
 "profile_view.accessibility.handle" = "Brugernavn";
@@ -512,6 +534,9 @@
 "self.about" = "Om";
 "self.sign_out" = "Log ud";
 "self.report_abuse" = "Rapporter misbrug";
+"self.voiceover.label" = "Profil";
+"self.voiceover.hint" = "Open profile and settings";
+"self.new-device.voiceover.label" = "Profile, new devices added";
 
 "self.add_phone_number" = "Tilføj telefonnummer";
 "self.add_email_password" = "Tilføj e-mail adresse og adgangskode";
@@ -532,6 +557,10 @@
 "self.new_device_alert.message_plural" = "%@\n\nHvis du ikke gjorde det, fjern enhederne og nulstil din adgangskode.";
 "self.new_device_alert.manage_devices" = "Administrer enheder";
 "self.new_device_alert.trust_devices" = "OK";
+
+// Settings - top level
+"self.settings.create_team.title" = "Create team";
+"self.settings.add_account.title" = "Add account";
 
 // Settings - Account details
 "self.settings.account_section" = "Konto";
@@ -685,6 +714,9 @@
 
 "self.settings.privacy_security.lock_cancelled.description" = "Åben Wire med Touch ID eller adgangskode";
 "self.settings.privacy_security.lock_cancelled.action" = "Åben";
+
+"self.settings.privacy_security.disable_link_previews.title" = "Create Previews For Links You Send";
+"self.settings.privacy_security.disable_link_previews.footer" = "Previews may still be shown for links from other people.";
 
 "self.settings.privacy_analytics_menu.devices.title" = "Enheder";
 
@@ -896,7 +928,7 @@
 "push.notification.new_message" = "Ny besked";
 
 
-// Force Update
+//Force Update
 "force.update.title" = "Opdatering nødvendig";
 "force.update.message" = "Du går glip af nye funktioner.\nHent den seneste version af Wire i App Store.";
 "force.update.ok_button" = "Gå til App Store";
@@ -941,3 +973,7 @@
 "compose.drafts.compose.delete.confirm.title" = "Confirm Deletion";
 "compose.drafts.compose.delete.confirm.message" = "This action will permamently delete this draft and cannot be undone.";
 "compose.drafts.compose.delete.confirm.action.title" = "Slet";
+
+"compose.drafts.compose.dismiss.confirm.title" = "Save as draft";
+"compose.drafts.compose.dismiss.confirm.action.title" = "Gem";
+"compose.drafts.compose.dismiss.delete.action.title" = "Slet";

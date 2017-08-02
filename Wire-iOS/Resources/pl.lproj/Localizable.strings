@@ -1,17 +1,17 @@
-// 
+//
 // Wire
 // Copyright (C) 2016 Wire Swiss GmbH
-// 
+//
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
-// 
+//
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 // GNU General Public License for more details.
-// 
+//
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
@@ -33,7 +33,6 @@
 "peoplepicker.header.send_invitation" = "Zaproś";
 "peoplepicker.header.contacts" = "Kontakty";
 "peoplepicker.header.contacts_personal" = "Kontakty osobiste";
-"peoplepicker.header.team_members" = "%@ i kontakty";
 "peoplepicker.header.directory" = "Połącz";
 "peoplepicker.title.create_conversation" = "Załóż grupę";
 "peoplepicker.title.add_to_conversation" = "Dodaj osoby";
@@ -48,9 +47,9 @@
 
 "peoplepicker.no_matching_results_provide_valid_email" = "Proszę wprowadź poprawny adres e-mail";
 "peoplepicker.no_matching_results_after_address_book_upload_title" = "Brak wyników.";
-/*This sentence ends with button title, contained in peoplepicker.no_matching_results_after_address_book_upload_button*/
+/* This sentence ends with button title, contained in peoplepicker.no_matching_results_after_address_book_upload_button */
 "peoplepicker.no_matching_results_after_address_book_upload_message" = "Wprowadź pełny adres e-mail lub";
-/**/
+/*  */
 "peoplepicker.no_matching_results_after_address_book_upload_button" = "udostępnij kontakty";
 
 "peoplepicker.share_contacts.no_results.title" = "Znajdź osoby po nazwie lub adresie e-mail";
@@ -78,7 +77,7 @@
 "contacts_ui.title" = "Zaproś osoby";
 
 "contacts_ui.no_contact.title" = "Brak jeszcze konwersacji\n";
-"contacts_ui.no_contact.message" = "Rozpocznij rozmowę, stwórz grupę, albo zaproś innych ludzi do przyłączenia się.";
+"contacts_ui.no_contact.message" = "Rozpocznij nową konwersację lub utwórz grupę.";
 
 "contacts_ui.no_contact.archived.title" = "Wszystko zarchiwizowane";
 
@@ -93,14 +92,31 @@
 // Profile Header View
 "conversation.connection_view.in_address_book" = "w kontaktach";
 
-
+// Conversation list voiceover accessibility
+"conversation_list.voiceover.open_conversation.hint" = "Otwórz konwersację";
+"conversation_list.voiceover.status.pending_connection" = "pending";
+"conversation_list.voiceover.status.active_call" = "active call";
+"conversation_list.voiceover.status.missed_call" = "nieodebrane połączenie";
+"conversation_list.voiceover.status.pause_media" = "pause media";
+"conversation_list.voiceover.status.play_media" = "play media";
+"conversation_list.voiceover.status.silenced" = "silenced";
+"conversation_list.voiceover.status.typing" = "typing";
+"conversation_list.voiceover.status.ping" = "ping";
+"conversation_list.voiceover.bottom_bar.archived_button.label" = "archived";
+"conversation_list.voiceover.bottom_bar.archived_button.hint" = "list of archived conversations";
+"conversation_list.voiceover.bottom_bar.contacts_button.label" = "kontakty";
+"conversation_list.voiceover.bottom_bar.contacts_button.hint" = "search for people on Wire";
+"conversation_list.voiceover.bottom_bar.compose_button.label" = "compose";
+"conversation_list.voiceover.bottom_bar.compose_button.hint" = "compose messages and save for later";
+"conversation_list.voiceover.bottom_bar.camera_button.label" = "camera";
+"conversation_list.voiceover.bottom_bar.camera_button.hint" = "take picture and send quickly";
 
 // Archived List
 "archived_list.title" = "archiwum";
 
 // Add contact tool tip
 "tool_tip.contacts.title" = "Zacznij konwersację tutaj";
-"tool_tip.contacts.message" = "Zacznij konwersację lub zaproś więcej osób do rozmów. Dzwoń, rozmawiaj i bierz udział w prywatnych lub grupowych rozmowach.";
+"tool_tip.contacts.message" = "Zacznij konwersację. Dzwoń, rozmawiaj i bierz udział w prywatnych lub grupowych rozmowach.";
 
 // "Knows" subtitle in cell: "Knows Indrek", "Knows Indrek and Jane", "Knows Indrek and 5 others"
 "peoplepicker.suggested.knows_one" = "Znasz %@";
@@ -130,6 +146,8 @@
 "list.archived_conversations" = "ARCHIWUM";
 "list.archived_conversations_close" = "Zamknij archiwum";
 
+"conversation.voiceover.verified" = "verified";
+
 "conversation.status.call" = "Bieżące połączenie";
 "conversation.status.typing" = "Pisanie wiadomości…";
 "conversation.status.typing.group" = "%@: pisze wiadomość…";
@@ -157,6 +175,7 @@
 "conversation.status.you_left" = "Wyszedłeś";
 "conversation.status.started_conversation" = "%@ rozpoczął konwersacje";
 "conversation.status.removed_users" = "%@ usunął %@";
+"conversation.status.everyone_left" = "Wszyscy opuścili rozmowę";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Compose Entry Point
@@ -193,6 +212,8 @@
 "conversation.call.many_participants_confirmation.call" = "Połączenie";
 
 "conversation.connection_view.in_address_book" = "w kontaktach";
+
+"conversation.input_bar.shortcut.send" = "Wyślij wiadomość";
 
 // Image confirmation dialogue
 "image_confirmer.confirm" = "OK";
@@ -272,6 +293,7 @@
 "content.system.connected_to" = "Połączono z %@\nRozpocznij konwersację";
 "content.system.other_wanted_to_talk" = "%@ dzwoni";
 "content.system.you_wanted_to_talk" = "Dzwonisz";
+"content.system.ephemeral_time_remaining" = "pozostało: %@";
 
 "content.system.you_started" = "Ty";
 "content.system.this_device" = "to urządzenie";
@@ -512,6 +534,9 @@
 "self.about" = "O programie";
 "self.sign_out" = "Wyloguj";
 "self.report_abuse" = "Raport z nadużycia";
+"self.voiceover.label" = "Profil";
+"self.voiceover.hint" = "Open profile and settings";
+"self.new-device.voiceover.label" = "Profile, new devices added";
 
 "self.add_phone_number" = "Dodaj numer telefonu";
 "self.add_email_password" = "Dodaj adres e-mail i hasło";
@@ -532,6 +557,10 @@
 "self.new_device_alert.message_plural" = "%@\n\nJeśli tego nie zrobiłeś, usuń te urządzenia i zresetuj swoje hasło.";
 "self.new_device_alert.manage_devices" = "Zarządzaj urządzeniami";
 "self.new_device_alert.trust_devices" = "OK";
+
+// Settings - top level
+"self.settings.create_team.title" = "Create team";
+"self.settings.add_account.title" = "Add account";
 
 // Settings - Account details
 "self.settings.account_section" = "Konto";
@@ -558,7 +587,7 @@
 "self.settings.account_picture_group.picture" = "Zdjęcie profilowe";
 "self.settings.account_picture_group.color" = "Kolor";
 
-"self.settings.account_picture_group.theme" = "Ciemny motym";
+"self.settings.account_picture_group.theme" = "Ciemny motyw";
 
 "self.settings.device_details.fingerprint.subtitle" = "Wire daje każdemu urządzeniowi unikalny klucz. Porównaj i sprawdź swoje urządzenia oraz konwersacje.";
 "self.settings.device_details.reset_session.subtitle" = "Jeśli kod nie pasuje, zresetuj sesję aby wygenerować nowy.";
@@ -685,6 +714,9 @@
 
 "self.settings.privacy_security.lock_cancelled.description" = "Odblokuj Wire za pomocą Touch ID lub kodem";
 "self.settings.privacy_security.lock_cancelled.action" = "Odblokuj";
+
+"self.settings.privacy_security.disable_link_previews.title" = "Create Previews For Links You Send";
+"self.settings.privacy_security.disable_link_previews.footer" = "Podglądy linków otrzymanych od innych osób mogą być nadal wyświetlane.";
 
 "self.settings.privacy_analytics_menu.devices.title" = "Urządzenia";
 
@@ -896,7 +928,7 @@
 "push.notification.new_message" = "nowa wiadomość";
 
 
-// Force Update
+//Force Update
 "force.update.title" = "Aktualizacja wymagana";
 "force.update.message" = "Nie możesz korzystać z nowych funkcji aplikacji. Pobierz nową wersję Wire w sklepie.";
 "force.update.ok_button" = "Przejdź do sklepu App Store";
@@ -941,3 +973,7 @@
 "compose.drafts.compose.delete.confirm.title" = "Potwierdź usunięcie";
 "compose.drafts.compose.delete.confirm.message" = "To spowoduje nieodwracalne usunięcie szkicu. Operacji nie będzie można cofnąć.";
 "compose.drafts.compose.delete.confirm.action.title" = "Usuń";
+
+"compose.drafts.compose.dismiss.confirm.title" = "Save as draft";
+"compose.drafts.compose.dismiss.confirm.action.title" = "Zapisz";
+"compose.drafts.compose.dismiss.delete.action.title" = "Usuń";
