@@ -327,15 +327,6 @@ public class MarklightTextView: NextResponderTextView {
         }
     }
     
-    @objc public func stripEmptyListItems() {
-        let numberListPrefix = "(^\\d+)(?:[.][\\t ]*$)"
-        let bulletListPrefix = "(^[*+-])([\\t ]*$)"
-        let listPrefixPattern = "(\(numberListPrefix))|(\(bulletListPrefix))"
-        let regex = try! NSRegularExpression(pattern: listPrefixPattern, options: [.anchorsMatchLines])
-        let wholeRange = NSMakeRange(0, text.characters.count)
-        text = regex.stringByReplacingMatches(in: text, options: [], range: wholeRange, withTemplate: "")
-    }
-    
     @objc private func textChangedHandler() {
         if needsNewNumberListItem {
             needsNewNumberListItem = false
@@ -351,6 +342,7 @@ public class MarklightTextView: NextResponderTextView {
     }
     
     @objc public func stripEmptyMarkdown() -> String {
+        
         var text = self.text!
         let styler = marklightTextStorage.groupStyler
         let types : [MarkdownElementType] = [.header(.h1), .header(.h2), .header(.h3), .bold, .italic, .code, .numberList, .bulletList]
@@ -375,6 +367,14 @@ public class MarklightTextView: NextResponderTextView {
         for range in emptyMarkdownRanges {
             text.removeSubrange(text.rangeFrom(range: range))
         }
+        
+        // strip empty list items
+        let numberListPrefix = "(^\\d+)(?:[.][\\t ]*$)"
+        let bulletListPrefix = "(^[*+-])([\\t ]*$)"
+        let listPrefixPattern = "(\(numberListPrefix))|(\(bulletListPrefix))"
+        let regex = try! NSRegularExpression(pattern: listPrefixPattern, options: [.anchorsMatchLines])
+        let wholeRange = NSMakeRange(0, text.characters.count)
+        text = regex.stringByReplacingMatches(in: text, options: [], range: wholeRange, withTemplate: "")
         
         return text
     }
