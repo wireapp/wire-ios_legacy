@@ -226,11 +226,66 @@ class MarklightTextViewTests: XCTestCase {
         sut.text = text
         
         // when
-        sut.stripEmptyListItems()
+        let result = sut.stripEmptyMarkdown()
         
         // then
         let expectation = ["1. example", "2. example", "", "- example", ""].joined(separator: "\n")
-        XCTAssertEqual(sut.text, expectation)
+        XCTAssertEqual(result, expectation)
         
+    }
+    
+    func testThatItStripsEmptyMarkdownInMessageContainingOnlyEmptyMarkdown() {
+        // given
+        let text = [
+            "#    ", "##   ", "### ",                   // empty headers
+            "****", "**   **", "____", "__      __",    // empty bold
+            " **", " *    *", " __ ", " _   _",         // empty italics
+            "``", "`    `",                             // empty code
+            ].joined(separator: "\n")
+        
+        // insert so markdown is applied
+        sut.text = ""
+        sut.insertText(text)
+        
+        // when
+        let result = sut.stripEmptyMarkdown().trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
+        
+        // then
+        XCTAssertEqual(result, "")
+    }
+    
+    func testThatItStripsEmptyMarkdownInMessageContainingNonEmptyMarkdown() {
+        // given
+        let text = [
+            "#    ",
+            "# header",
+            "**bold** _  _ `code`"
+            ].joined(separator: "\n")
+        
+        // insert so markdown is applied
+        sut.text = ""
+        sut.insertText(text)
+        
+        // when
+        let result = sut.stripEmptyMarkdown().trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
+        let expectation = ["# header", "**bold** `code`"].joined(separator: "\n")
+        
+        // then
+        XCTAssertEqual(result, expectation)
+    }
+    
+    func testThatItStripsNestedEmptyMarkdown() {
+        // given
+        let text = "#  **  _    _ **"
+        
+        // insert so markdown is applied
+        sut.text = ""
+        sut.insertText(text)
+        
+        // when
+        let result = sut.stripEmptyMarkdown()
+        
+        // then
+        XCTAssertEqual(result, "")
     }
 }
