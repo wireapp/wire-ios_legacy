@@ -453,8 +453,8 @@
 - (void)updateRightAccessoryView
 {
     [self updateEphemeralIndicatorButtonTitle:self.ephemeralIndicatorButton];
-
-    NSString *trimmed = [self.inputBar.textView.text stringByTrimmingCharactersInSet:NSCharacterSet.whitespaceAndNewlineCharacterSet];
+    
+    NSString *trimmed = [[self.inputBar.textView stripEmptyMarkdown] stringByTrimmingCharactersInSet:NSCharacterSet.whitespaceAndNewlineCharacterSet];
 
     [self.sendButtonState updateWithTextLength:trimmed.length
                                        editing:nil != self.editingMessage
@@ -519,6 +519,7 @@
 - (void)clearInputBar
 {
     self.inputBar.textView.text = @"";
+    [self.inputBar.markdownView resetIcons];
     [self updateRightAccessoryView];
     [self.conversation setIsTyping:NO];
 }
@@ -569,9 +570,9 @@
 
 - (void)commandReturnPressed
 {
-    [self.inputBar.textView stripEmptyListItems];
-    if (nil != self.inputBar.textView.text) {
-        [self sendOrEditText:self.inputBar.textView.text];
+    NSString *candidateText = [self.inputBar.textView stripEmptyMarkdown];
+    if (nil != candidateText) {
+        [self sendOrEditText:candidateText];
     }
 }
 
@@ -826,7 +827,8 @@
 
     if ([text isEqualToString:@"\n"]) {
         [self.inputBar.textView autocorrectLastWord];
-        [self sendOrEditText:textView.text];
+        NSString *candidateText = [self.inputBar.textView stripEmptyMarkdown];
+        [self sendOrEditText:candidateText];
         return NO;
     }
     
@@ -1039,10 +1041,8 @@
 - (void)sendButtonPressed:(id)sender
 {
     [self.inputBar.textView autocorrectLastWord];
-    [self.inputBar.textView stripEmptyListItems];
-    [self sendOrEditText:self.inputBar.textView.text];
+    [self sendOrEditText:[self.inputBar.textView stripEmptyMarkdown]];
     [self.inputBar.textView resetTypingAttributes];
-    [self.inputBar.markdownView resetIcons];
 }
 
 @end
