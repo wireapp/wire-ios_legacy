@@ -278,7 +278,7 @@ class MarklightTextViewTests: XCTestCase {
         
         // when
         let result = sut.stripEmptyMarkdown().trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
-        let expectation = ["# header", "**bold** `code`"].joined(separator: "\n")
+        let expectation = ["# header", "**bold**  `code`"].joined(separator: "\n")
         
         // then
         XCTAssertEqual(result, expectation)
