@@ -199,10 +199,10 @@ public class MarklightTextView: NextResponderTextView {
         
         switch type {
         case .italic:
-            // italic regex matches a space before prefix if not already
-            // start of string, so if range start is > 0, need to offset
-            // by 1 so prefix range excludes the space
-            let offset = range.location == 0 ? 0 : 1
+            // in case match has no content or is start of string, then match
+            // range fits exactly. Else, a preceeding space is included in match,
+            // so we need to offset by 1 to reach opening syntax
+            let offset = range.location == 0 || range.length == 2 ? 0 : 1
             preRange = NSMakeRange(range.location + offset, 1)
             postRange = NSMakeRange(range.location + range.length - 1, 1)
         case .code:
