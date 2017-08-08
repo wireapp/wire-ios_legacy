@@ -454,7 +454,7 @@
 {
     [self updateEphemeralIndicatorButtonTitle:self.ephemeralIndicatorButton];
     
-    NSString *trimmed = [[self.inputBar.textView stripEmptyMarkdown] stringByTrimmingCharactersInSet:NSCharacterSet.whitespaceAndNewlineCharacterSet];
+    NSString *trimmed = [self.inputBar.textView.preparedText stringByTrimmingCharactersInSet:NSCharacterSet.whitespaceAndNewlineCharacterSet];
 
     [self.sendButtonState updateWithTextLength:trimmed.length
                                        editing:nil != self.editingMessage
@@ -570,7 +570,7 @@
 
 - (void)commandReturnPressed
 {
-    NSString *candidateText = [self.inputBar.textView stripEmptyMarkdown];
+    NSString *candidateText = self.inputBar.textView.preparedText;
     if (nil != candidateText) {
         [self sendOrEditText:candidateText];
     }
@@ -827,7 +827,7 @@
 
     if ([text isEqualToString:@"\n"]) {
         [self.inputBar.textView autocorrectLastWord];
-        NSString *candidateText = [self.inputBar.textView stripEmptyMarkdown];
+        NSString *candidateText = self.inputBar.textView.preparedText;
         [self sendOrEditText:candidateText];
         return NO;
     }
@@ -1041,7 +1041,7 @@
 - (void)sendButtonPressed:(id)sender
 {
     [self.inputBar.textView autocorrectLastWord];
-    [self sendOrEditText:[self.inputBar.textView stripEmptyMarkdown]];
+    [self sendOrEditText:self.inputBar.textView.preparedText];
     [self.inputBar.textView resetTypingAttributes];
 }
 
