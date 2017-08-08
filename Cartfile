@@ -14,4 +14,4 @@ github "wireapp/wire-ios-canvas" ~> 3.0.0
 github "wireapp/HockeySDK-iOS" "4.1.4-swift3.1"
 github "wireapp/FLAnimatedImage" "1.0.12-wire"
 github "wireapp/PureLayout" "v3.0.0"
-github "wireapp/Marklight" ~> 1.0.8
+github "wireapp/Marklight" ~> 1.0.9
