@@ -236,7 +236,7 @@ class MarklightTextViewTests: XCTestCase {
         sut.text = text
         
         // when
-        let result = sut.stripEmptyMarkdown()
+        let result = sut.preparedText
         
         // then
         let expectation = ["1. example", "2. example", "", "- example", ""].joined(separator: "\n")
@@ -258,7 +258,7 @@ class MarklightTextViewTests: XCTestCase {
         sut.insertText(text)
         
         // when
-        let result = sut.stripEmptyMarkdown().trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
+        let result = sut.preparedText.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
         
         // then
         XCTAssertEqual(result, "")
@@ -277,7 +277,7 @@ class MarklightTextViewTests: XCTestCase {
         sut.insertText(text)
         
         // when
-        let result = sut.stripEmptyMarkdown().trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
+        let result = sut.preparedText.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
         let expectation = ["# header", "**bold**  `code`"].joined(separator: "\n")
         
         // then
@@ -293,7 +293,7 @@ class MarklightTextViewTests: XCTestCase {
         sut.insertText(text)
         
         // when
-        let result = sut.stripEmptyMarkdown()
+        let result = sut.preparedText
         
         // then
         XCTAssertEqual(result, "")
