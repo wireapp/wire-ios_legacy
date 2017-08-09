@@ -76,10 +76,6 @@ NSString *const ZMUserSessionDidBecomeAvailableNotification = @"ZMUserSessionDid
 @interface AppController (AuthObserver) <ZMAuthenticationObserver>
 @end
 
-@interface AppController (ForceUpdate)
-- (void)showForceUpdateIfNeeeded;
-@end
-
 @implementation AppController
 @synthesize window = _window;
 
@@ -454,12 +450,7 @@ NSString *const ZMUserSessionDidBecomeAvailableNotification = @"ZMUserSessionDid
     [MessageDraftStorage setupSharedStorageAtURL:userSession.sharedContainerURL error:nil];
     self.messageCountTracker = [[LegacyMessageTracker alloc] initWithManagedObjectContext:userSession.syncManagedObjectContext];
     
-    @weakify(self)
-    [[ZMUserSession sharedSession] startAndCheckClientVersionWithCheckInterval:Settings.sharedSettings.blacklistDownloadInterval blackListedBlock:^{
-        @strongify(self)
-        self.seState = AppSEStateBlacklisted;
-        [self showForceUpdateIfNeeeded];
-    }];
+    [[ZMUserSession sharedSession] start];
 }
 
 // Must be performed before any SE instance is initialized.

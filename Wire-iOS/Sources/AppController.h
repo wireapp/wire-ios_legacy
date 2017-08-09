@@ -64,3 +64,9 @@ FOUNDATION_EXPORT NSString *const ZMUserSessionDidBecomeAvailableNotification;
 - (void)loadUnauthenticatedUIWithError:(NSError *)error;
 
 @end
+
+@interface AppController (ForceUpdate)
+
+- (void)showForceUpdateIfNeeeded;
+
+@end
