@@ -679,7 +679,6 @@
 		87F61D1A1CD36F0900670794 /* GradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F61D191CD36F0900670794 /* GradientView.swift */; };
 		87F6B6361D2E9CF500F057A5 /* EmojiOnlyStringTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F6B6351D2E9CF500F057A5 /* EmojiOnlyStringTests.swift */; };
 		87F6D1BB1C1590B7000AB4D2 /* RequestPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F6D1BA1C1590B7000AB4D2 /* RequestPasswordViewController.swift */; };
-		87FEE0D01D76D65700265A9C /* VIMNetworkingFramework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87FEE0CF1D76D65700265A9C /* VIMNetworkingFramework.framework */; };
 		8F0DEDD51A693F58003F0ACC /* PingCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F0DEDD41A693F58003F0ACC /* PingCell.m */; };
 		8F264BA119E808A8005FF4BE /* ProximityMonitorManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F264BA019E808A8005FF4BE /* ProximityMonitorManager.m */; };
 		8F3C945519D1CC5600288AFE /* VoiceChannelOverlayController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F3C945419D1CC5600288AFE /* VoiceChannelOverlayController.m */; };
@@ -2011,7 +2010,6 @@
 		87F61D191CD36F0900670794 /* GradientView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GradientView.swift; sourceTree = "<group>"; };
 		87F6B6351D2E9CF500F057A5 /* EmojiOnlyStringTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmojiOnlyStringTests.swift; sourceTree = "<group>"; };
 		87F6D1BA1C1590B7000AB4D2 /* RequestPasswordViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestPasswordViewController.swift; sourceTree = "<group>"; };
-		87FEE0CF1D76D65700265A9C /* VIMNetworkingFramework.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VIMNetworkingFramework.framework; path = Carthage/Build/iOS/VIMNetworkingFramework.framework; sourceTree = "<group>"; };
 		8F0DEDD31A693F58003F0ACC /* PingCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PingCell.h; sourceTree = "<group>"; };
 		8F0DEDD41A693F58003F0ACC /* PingCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PingCell.m; sourceTree = "<group>"; };
 		8F264B9F19E808A8005FF4BE /* ProximityMonitorManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProximityMonitorManager.h; sourceTree = "<group>"; };
@@ -2527,7 +2525,6 @@
 				87023D7B1D76E4E2007B667E /* AFNetworking.framework in Frameworks */,
 				DBE6F98E1B1DE51C00B7DD32 /* ziphy.framework in Frameworks */,
 				5407B8C31A643CCE009090C6 /* UIKit.framework in Frameworks */,
-				87FEE0D01D76D65700265A9C /* VIMNetworkingFramework.framework in Frameworks */,
 				1E7222A41B8335EA004180EC /* CocoaLumberjack.framework in Frameworks */,
 				876FAEDB1C762CFC00EBA732 /* TTTAttributedLabel.framework in Frameworks */,
 				54BB91E01E1FA6330039E91F /* WireShareEngine.framework in Frameworks */,
@@ -3008,7 +3005,6 @@
 				161285DD1DD1DA85004728E9 /* WireShareEngine.framework */,
 				87775AB31D9513F9000CAD4F /* WireRequestStrategy.framework */,
 				87023D7A1D76E4E2007B667E /* AFNetworking.framework */,
-				87FEE0CF1D76D65700265A9C /* VIMNetworkingFramework.framework */,
 				873DC95B1D479A0500C1C9B0 /* AVFoundation.framework */,
 				874D0EB01D3E575E003DF418 /* Photos.framework */,
 				87BEB0351D39018600DE9575 /* FormatterKit.framework */,
@@ -4105,6 +4101,7 @@
 				87A418BD1C0CAB1A006FA803 /* Cartfile.private */,
 				1E88CC4D1BEB63020020B853 /* Cartfile.resolved */,
 				919064190C0D0A9268177FCC /* Pods */,
+				F145784C1F3CB846007FD97E /* Recovered References */,
 			);
 			sourceTree = "<group>";
 		};
@@ -5065,6 +5062,14 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
+		F145784C1F3CB846007FD97E /* Recovered References */ = {
+			isa = PBXGroup;
+			children = (
+				875B6B441C5953DA007C61E5 /* VideoToolbox.framework */,
+			);
+			name = "Recovered References";
+			sourceTree = "<group>";
+		};
 		F5F52F6F1B11D6DB0053F1C8 /* Sketchpad */ = {
 			isa = PBXGroup;
 			children = (
@@ -5678,7 +5683,6 @@
 				"$(SRCROOT)/Carthage/Build/iOS/Ono.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/OnePasswordExtension.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/FormatterKit.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/VIMNetworkingFramework.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/AFNetworking.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/WireRequestStrategy.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/WireMessageStrategy.framework",
