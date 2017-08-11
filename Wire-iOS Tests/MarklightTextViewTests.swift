@@ -312,22 +312,4 @@ class MarklightTextViewTests: XCTestCase {
     func testThatItDoesNotStripMarkdownForListItemsContainingOnlyEmojis() {
         XCTFail()
     }
-    
-    // MARK: - Range Calculations
-    
-    func testThatItCalculatesRangesForEmptyMarkdown() {
-        XCTFail()
-    }
-    
-    func testThatItCalculatesRangesForLeadingAndTrailingWhiteSpaceInMarkdown() {
-        XCTFail()
-    }
-    
-    func testThatItCalculatesRangesOfMarkdownContainingOnlyEmojis() {
-        XCTFail()
-    }
-    
-    func testThatItFlattensRanges() {
-        XCTFail()
-    }
 }
