@@ -96,75 +96,10 @@
 
 #pragma mark - Vimeo
 
-- (void)testThatVimeoMatcherRecognizesNormalVimeoLinks
+- (void)testThatItDoesNotMatchVimeoLinks
 {
     // Given
     NSString *link = @"https://vimeo.com/1234567890";
-    NSRange range = NSMakeRange(0, link.length);
-    
-    // When
-    LinkAttachment *linkAttachment = [[LinkAttachment alloc] initWithURL:[NSURL URLWithString:link] range:range];
-    
-    // Then
-    XCTAssertEqual(linkAttachment.type, LinkAttachmentTypeVimeoVideo);
-}
-
-- (void)testThatVimeoMatcherRecognizesMobileVimeoLinks
-{
-    // Given
-    NSString *link = @"https://vimeo.com/m/1234567890";
-    NSRange range = NSMakeRange(0, link.length);
-    
-    // When
-    LinkAttachment *linkAttachment = [[LinkAttachment alloc] initWithURL:[NSURL URLWithString:link] range:range];
-    
-    // Then
-    XCTAssertEqual(linkAttachment.type, LinkAttachmentTypeVimeoVideo);
-}
-
-- (void)testThatVimeoMatcherRecognizesWWWVimeoLinks
-{
-    // Given
-    NSString *link = @"https://www.vimeo.com/1234567890";
-    NSRange range = NSMakeRange(0, link.length);
-    
-    // When
-    LinkAttachment *linkAttachment = [[LinkAttachment alloc] initWithURL:[NSURL URLWithString:link] range:range];
-    
-    // Then
-    XCTAssertEqual(linkAttachment.type, LinkAttachmentTypeVimeoVideo);
-}
-
-- (void)testThatVimeoMatcherRecognizesLongVimeoLinks
-{
-    // Given
-    NSString *link = @"https://vimeo.com/channels/staffpicks/1234567890";
-    NSRange range = NSMakeRange(0, link.length);
-    
-    // When
-    LinkAttachment *linkAttachment = [[LinkAttachment alloc] initWithURL:[NSURL URLWithString:link] range:range];
-    
-    // Then
-    XCTAssertEqual(linkAttachment.type, LinkAttachmentTypeVimeoVideo);
-}
-
-- (void)testThatVimeoMatcherRecognizesNonSecureVimeoLinks
-{
-    // Given
-    NSString *link = @"http://vimeo.com/1234567890";
-    NSRange range = NSMakeRange(0, link.length);
-    
-    // When
-    LinkAttachment *linkAttachment = [[LinkAttachment alloc] initWithURL:[NSURL URLWithString:link] range:range];
-    
-    // Then
-    XCTAssertEqual(linkAttachment.type, LinkAttachmentTypeVimeoVideo);
-}
-
-- (void)testThatVimeoMatcherDoesNotRecognizeVimeoLinksWithoutMediaID
-{
-    // Given
-    NSString *link = @"https://vimeo.com/channels/staffpicks/";
     NSRange range = NSMakeRange(0, link.length);
     
     // When
