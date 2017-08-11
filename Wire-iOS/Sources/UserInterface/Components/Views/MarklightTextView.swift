@@ -102,6 +102,7 @@ extension MarklightTextView {
             var text = self.text!
             var rangesToDelete = rangesOfEmptyMarkdownElements()
             rangesToDelete += rangesOfMarkdownWhitespace()
+            rangesToDelete += rangesOfSyntaxForMarkdownEmoji()
             
             // discard nested ranges, sort by location descending
             rangesToDelete = flattenRanges(rangesToDelete).sorted {
@@ -110,7 +111,7 @@ extension MarklightTextView {
             
             // strip empty markdown
             rangesToDelete.forEach {
-                text.removeSubrange(text.rangeFrom(range: $0))
+                text.deleteCharactersIn(range: $0)
             }
             
             // strip empty list items
@@ -214,7 +215,7 @@ extension MarklightTextView {
             else { return }
         
         let lineRange = (text as NSString).lineRange(for: selection)
-        text.removeSubrange(text.rangeFrom(range: preRange))
+        text.deleteCharactersIn(range: preRange)
         
         // shift selection location to account for removal, but don't exceed line start
         let location = max(lineRange.location, selection.location - preRange.length)
@@ -235,8 +236,8 @@ extension MarklightTextView {
             else { return }
         
         // remove postRange first so preRange is still valid
-        text.removeSubrange(text.rangeFrom(range: postRange))
-        text.removeSubrange(text.rangeFrom(range: preRange))
+        text.deleteCharactersIn(range: postRange)
+        text.deleteCharactersIn(range: preRange)
         
         // reposition caret:
         // if non zero selection or caret pos was within postRange
@@ -326,28 +327,34 @@ extension MarklightTextView {
     ///
     fileprivate func rangesOfMarkdownWhitespace() -> [NSRange] {
         
+        let text = self.text as NSString
         var rangesToDelete = [NSRange]()
+        let charSet = CharacterSet.whitespacesAndNewlines.inverted
         
         for range in allMarkdownRanges() {
             
-            let contentRange = text.rangeFrom(range: range.contentRange)
-            let charSet = CharacterSet.whitespacesAndNewlines.inverted
+            let contentRange = range.contentRange
             
-            // offset of first non whitespace char relative to contentRange start
-            if let start = text.rangeOfCharacter(from: charSet, options: [], range: contentRange)?.lowerBound {
-                let length = text.distance(from: contentRange.lowerBound, to: start)
-                let preRange = NSMakeRange(range.contentRange.location, length)
-                if preRange.length > 0 {
-                    rangesToDelete.append(preRange)
+            // range start of first non whitespace char in content range
+            let rangeOfFirstChar = text.rangeOfCharacter(from: charSet, options: [], range: contentRange)
+            
+            // if not found, then content range contains only whitespace
+            if rangeOfFirstChar.location == NSNotFound {
+                rangesToDelete.append(contentRange)
+                continue
+            } else {
+                let spaces = rangeOfFirstChar.location - contentRange.location
+                if spaces > 0 {
+                    rangesToDelete.append(NSMakeRange(contentRange.location, spaces))
                 }
             }
             
-            // as above, but relative to contentRange end
-            if let end = text.rangeOfCharacter(from: charSet, options: .backwards, range: contentRange)?.upperBound {
-                let length = text.distance(from: end, to: contentRange.upperBound)
-                let postRange = NSMakeRange(NSMaxRange(range.contentRange) - length , length)
-                if postRange.length > 0 {
-                    rangesToDelete.append(postRange)
+            // as above, but starting from end of content range
+            let rangeOfLastChar = text.rangeOfCharacter(from: charSet, options: .backwards, range: range.contentRange)
+            if rangeOfLastChar.location != NSNotFound{
+                let spaces = NSMaxRange(contentRange) - NSMaxRange(rangeOfLastChar)
+                if spaces > 0 {
+                    rangesToDelete.append(NSMakeRange(NSMaxRange(rangeOfLastChar), spaces))
                 }
             }
         }
@@ -398,6 +405,39 @@ extension MarklightTextView {
         }
         
         return true
+    }
+    
+    /// Returns all syntax ranges of markdown elements that contain only whitespace and
+    /// at least one emoji.
+    ///
+    fileprivate func rangesOfSyntaxForMarkdownEmoji() -> [NSRange] {
+        
+        var result = [NSRange]()
+        
+        for range in allMarkdownRanges() {
+            let content = text.substring(with: range.contentRange)
+            
+            // emojis belong to symbols set, so if we split content str by symbols then the
+            // number of components - 1 is the number of symbols/emoji
+            
+            // no emojis
+            if (content.components(separatedBy: CharacterSet.symbols).count - 1) == 0 {
+                continue
+            }
+            
+            let nonEmojiNonSpaceSet = CharacterSet.symbols.union(CharacterSet.whitespacesAndNewlines).inverted
+            let numNonEmojiNonSpace = content.components(separatedBy: nonEmojiNonSpaceSet).count - 1
+            
+            // only emojis or space
+            if numNonEmojiNonSpace == 0 {
+                if let preRange = range.preRange { result.append(preRange) }
+                if let postRange = range.postRange { result.append(postRange) }
+            } else {
+                continue
+            }
+        }
+        
+        return result
     }
     
     /// Filters the given array of ranges by discarding all ranges that are
@@ -452,14 +492,13 @@ extension MarklightTextView {
             let regex = try! NSRegularExpression(pattern: "(^\\d+)(?:[.][\\t ]+)(.|[\\t ])+", options: [.anchorsMatchLines])
             
             if let match = regex.firstMatch(in: text, options: [], range: lineRange) {
-                
-                let numberStr = text.substring(with: text.rangeFrom(range: match.rangeAt(1))) as NSString
+                let numberStr = text.substring(with: match.rangeAt(1)) as NSString
                 nextListNumber = numberStr.integerValue + 1
                 needsNewNumberListItem = true
 
             } else {
                 // replace empty list item with newline
-                text.removeSubrange(text.rangeFrom(range: lineRange))
+                text.deleteCharactersIn(range: lineRange)
                 nextListNumber = 1
             }
             
@@ -468,11 +507,11 @@ extension MarklightTextView {
             let regex = try! NSRegularExpression(pattern: "(^[*+-])(?:[\\t ]+)(.|[\\t ])+", options: [.anchorsMatchLines])
             
             if let match = regex.firstMatch(in: text, options: [], range: lineRange) {
-                nextListBullet = text.substring(with: text.rangeFrom(range: match.rangeAt(1)))
+                nextListBullet = text.substring(with: match.rangeAt(1))
                 needsNewBulletListItem = true
             } else {
                 // replace empty list item with newline
-                text.removeSubrange(text.rangeFrom(range: lineRange))
+                text.deleteCharactersIn(range: lineRange)
                 nextListBullet = "-"
             }
         }
@@ -547,9 +586,11 @@ extension MarklightTextView: MarkdownBarViewDelegate {
 
 extension String {
     
-    func rangeFrom(range: NSRange) -> Range<String.Index> {
-        let start = index(startIndex, offsetBy: range.location)
-        let end = index(startIndex, offsetBy: range.location + range.length)
-        return start..<end
+    mutating fileprivate func deleteCharactersIn(range: NSRange) {
+        self = (self as NSString).replacingCharacters(in: range, with: "")
+    }
+    
+    fileprivate func substring(with range: NSRange) -> String {
+        return (self as NSString).substring(with: range)
     }
 }
