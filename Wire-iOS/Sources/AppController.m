@@ -435,8 +435,11 @@ NSString *const ZMUserSessionDidBecomeAvailableNotification = @"ZMUserSessionDid
     (void)[Settings sharedSettings];
     
     _zetaUserSession = userSession;
-
-    self.analyticsEventPersistence = [[ShareExtensionAnalyticsPersistence alloc] initWithSharedContainerURL:userSession.sharedContainerURL];
+    
+    NSString *appGroupIdentifier = NSBundle.mainBundle.appGroupIdentifier;
+    NSURL *sharedContainerURL = [NSFileManager sharedContainerDirectoryForAppGroupIdentifier:appGroupIdentifier]; // TODO jacob fallback
+    
+    self.analyticsEventPersistence = [[ShareExtensionAnalyticsPersistence alloc] initWithSharedContainerURL:sharedContainerURL];
         
     // Sign up for authentication notifications
     self.authToken = [ZMUserSessionAuthenticationNotification addObserver:self];
@@ -447,10 +450,28 @@ NSString *const ZMUserSessionDidBecomeAvailableNotification = @"ZMUserSessionDid
     // Singletons
     AddressBookHelper.sharedHelper.configuration = AutomationHelper.sharedHelper;
     
-    [MessageDraftStorage setupSharedStorageAtURL:userSession.sharedContainerURL error:nil];
+    [MessageDraftStorage setupSharedStorageAtURL:sharedContainerURL error:nil];
     self.messageCountTracker = [[LegacyMessageTracker alloc] initWithManagedObjectContext:userSession.syncManagedObjectContext];
     
     [[ZMUserSession sharedSession] start];
+    
+    ZM_WEAK(self);
+    [userSession checkIfLoggedInWithCallback:^(BOOL loggedIn) {
+        ZM_STRONG(self);
+        if (loggedIn) {
+            [self loadLoggedInController];
+        }
+    }];
+}
+
+- (void)loadLoggedInController
+{
+    self.seState = AppSEStateAuthenticated;
+    if (!AutomationHelper.sharedHelper.skipFirstLoginAlerts) {
+        [[ZMUserSession sharedSession] setupPushNotificationsForApplication:[UIApplication sharedApplication]];
+    }
+    [[Settings sharedSettings] updateAVSCallingConstantBitRateValue];
+    [self loadAppropriateController];
 }
 
 // Must be performed before any SE instance is initialized.
@@ -535,14 +556,9 @@ NSString *const ZMUserSessionDidBecomeAvailableNotification = @"ZMUserSessionDid
 
 @implementation AppController (AuthObserver)
 
-- (void)authenticationDidSucceed
+- (void)clientRegistrationDidSucceed
 {
-    self.seState = AppSEStateAuthenticated;
-    if (!AutomationHelper.sharedHelper.skipFirstLoginAlerts) {
-        [[ZMUserSession sharedSession] setupPushNotificationsForApplication:[UIApplication sharedApplication]];
-    }
-    [[Settings sharedSettings] updateAVSCallingConstantBitRateValue];
-    [self loadAppropriateController];
+    [self loadLoggedInController];
 }
 
 - (void)authenticationDidFail:(NSError *)error
