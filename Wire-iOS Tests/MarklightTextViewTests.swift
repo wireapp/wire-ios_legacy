@@ -34,7 +34,7 @@ class MarklightTextViewTests: XCTestCase {
         super.tearDown()
     }
     
-    // MARK: Syntax Insertions
+    // MARK: - Syntax Insertions
     
     func testThatItInsertsH1HeaderSyntax() {
         // given
@@ -124,7 +124,7 @@ class MarklightTextViewTests: XCTestCase {
         XCTAssertEqual(sut.text, "- example")
     }
     
-    // MARK: Syntax Deletions
+    // MARK: - Syntax Deletions
     
     func testThatItDeletesH1HeaderSyntax() {
         // given
@@ -297,5 +297,37 @@ class MarklightTextViewTests: XCTestCase {
         
         // then
         XCTAssertEqual(result, "")
+    }
+    
+    // MARK: - Emoji
+    
+    func testThatItStripsMarkdownSyntaxForMarkdownContainingOnlyEmojis() {
+        XCTFail()
+    }
+    
+    func testThatItStripsMarkdownSyntaxForNestedMarkdownContainingOnlyEmojis() {
+        XCTFail()
+    }
+    
+    func testThatItDoesNotStripMarkdownForListItemsContainingOnlyEmojis() {
+        XCTFail()
+    }
+    
+    // MARK: - Range Calculations
+    
+    func testThatItCalculatesRangesForEmptyMarkdown() {
+        XCTFail()
+    }
+    
+    func testThatItCalculatesRangesForLeadingAndTrailingWhiteSpaceInMarkdown() {
+        XCTFail()
+    }
+    
+    func testThatItCalculatesRangesOfMarkdownContainingOnlyEmojis() {
+        XCTFail()
+    }
+    
+    func testThatItFlattensRanges() {
+        XCTFail()
     }
 }
