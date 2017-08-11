@@ -32,7 +32,6 @@
 #import "WAZUIMagicIOS.h"
 #import "WireSyncEngine+iOS.h"
 #import "UIViewController+Errors.h"
-#import "UIView+MTAnimation.h"
 #import "UIImage+ZetaIconsNeue.h"
 #import "AnalyticsTracker+Registration.h"
 

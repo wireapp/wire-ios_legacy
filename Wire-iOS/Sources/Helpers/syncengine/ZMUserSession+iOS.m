@@ -20,24 +20,11 @@
 #import "ZMUserSession+iOS.h"
 #import "AppDelegate.h"
 
-
-NSString * const UserSessionDidRequestAuthenticationNotification = @"UserSessionDidRequestAuthenticationNotification";
-
-
 @implementation ZMUserSession (iOS)
 
 + (instancetype)sharedSession
 {
     return [AppDelegate sharedAppDelegate].zetaUserSession;
-}
-
-- (void)loginWithCredentials:(ZMCredentials *)loginCredentials notify:(BOOL)notify
-{
-    if (notify) {
-        [[NSNotificationCenter defaultCenter] postNotificationName:UserSessionDidRequestAuthenticationNotification object:self];
-    }
-    
-    [self loginWithCredentials:loginCredentials];
 }
 
 @end

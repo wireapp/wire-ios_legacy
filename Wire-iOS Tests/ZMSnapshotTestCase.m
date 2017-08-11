@@ -71,6 +71,7 @@ static NSSet *phoneWidths(void) {
     }
 
     [UIView setAnimationsEnabled:NO];
+    self.accentColor = ZMAccentColorVividRed;
     self.snapshotBackgroundColor = UIColor.clearColor;
     // Enable when the design of the view has changed in order to update the reference snapshots
 #ifdef RECORDING_SNAPSHOTS

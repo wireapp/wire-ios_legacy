@@ -1,17 +1,17 @@
-// 
+//
 // Wire
 // Copyright (C) 2016 Wire Swiss GmbH
-// 
+//
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
-// 
+//
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 // GNU General Public License for more details.
-// 
+//
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
@@ -33,7 +33,6 @@
 "peoplepicker.header.send_invitation" = "Davet et";
 "peoplepicker.header.contacts" = "Kişiler";
 "peoplepicker.header.contacts_personal" = "Kişisel Kişiler";
-"peoplepicker.header.team_members" = "%@";
 "peoplepicker.header.directory" = "Bağlan";
 "peoplepicker.title.create_conversation" = "Grup oluştur";
 "peoplepicker.title.add_to_conversation" = "Kişi ekle";
@@ -63,7 +62,7 @@
 "peoplepicker.quick-action.open-conversation" = "Aç";
 "peoplepicker.quick-action.create-conversation" = "Grup oluştur";
 
-"add_participants.all_contacts_added" = "Everyone's here.";
+"add_participants.all_contacts_added" = "Herkes burada.";
 
 // Contacts UI
 "contacts_ui.search_placeholder" = "İsme göre ara";
@@ -78,7 +77,7 @@
 "contacts_ui.title" = "İnsanları davet et";
 
 "contacts_ui.no_contact.title" = "Hiç konuşma yok\n";
-"contacts_ui.no_contact.message" = "Bir konuşma başlatın, bir grup oluşturun veya katılmak için insanları davet edin.";
+"contacts_ui.no_contact.message" = "Bir konuşma başlat ya da bir grup oluştur.";
 
 "contacts_ui.no_contact.archived.title" = "Her şey arşivlendi";
 
@@ -93,14 +92,31 @@
 // Profile Header View
 "conversation.connection_view.in_address_book" = "Kişilerde";
 
-
+// Conversation list voiceover accessibility
+"conversation_list.voiceover.open_conversation.hint" = "Konuşma aç";
+"conversation_list.voiceover.status.pending_connection" = "pending";
+"conversation_list.voiceover.status.active_call" = "active call";
+"conversation_list.voiceover.status.missed_call" = "cevapsız arama";
+"conversation_list.voiceover.status.pause_media" = "pause media";
+"conversation_list.voiceover.status.play_media" = "play media";
+"conversation_list.voiceover.status.silenced" = "silenced";
+"conversation_list.voiceover.status.typing" = "typing";
+"conversation_list.voiceover.status.ping" = "ping";
+"conversation_list.voiceover.bottom_bar.archived_button.label" = "archived";
+"conversation_list.voiceover.bottom_bar.archived_button.hint" = "list of archived conversations";
+"conversation_list.voiceover.bottom_bar.contacts_button.label" = "kişiler";
+"conversation_list.voiceover.bottom_bar.contacts_button.hint" = "search for people on Wire";
+"conversation_list.voiceover.bottom_bar.compose_button.label" = "compose";
+"conversation_list.voiceover.bottom_bar.compose_button.hint" = "compose messages and save for later";
+"conversation_list.voiceover.bottom_bar.camera_button.label" = "camera";
+"conversation_list.voiceover.bottom_bar.camera_button.hint" = "take picture and send quickly";
 
 // Archived List
 "archived_list.title" = "arşiv";
 
 // Add contact tool tip
 "tool_tip.contacts.title" = "Konuşmalar buradan başlıyor";
-"tool_tip.contacts.message" = "Katılmak için bir konuşma başlatın veya daha fazla insan davet edin. Özel olarak veya grupta arayın, mesajlaşın ve paylaşın.";
+"tool_tip.contacts.message" = "Bir konuşma başlatın. Özel konuşmada veya gruplarda arama yapın, mesajlaşın ve paylaşın.";
 
 // "Knows" subtitle in cell: "Knows Indrek", "Knows Indrek and Jane", "Knows Indrek and 5 others"
 "peoplepicker.suggested.knows_one" = "%@'ı tanıyor";
@@ -130,6 +146,8 @@
 "list.archived_conversations" = "ARŞİVLE";
 "list.archived_conversations_close" = "Arşivi kapat";
 
+"conversation.voiceover.verified" = "verified";
+
 "conversation.status.call" = "Devam eden arama";
 "conversation.status.typing" = "Bir mesaj yazıyor…";
 "conversation.status.typing.group" = "%@: bir mesaj yazıyor…";
@@ -157,6 +175,7 @@
 "conversation.status.you_left" = "Ayrıldın";
 "conversation.status.started_conversation" = "%@ bir konuşma başlattı";
 "conversation.status.removed_users" = "%@, %@'i sildi";
+"conversation.status.everyone_left" = "Herkes ayrıldı";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Compose Entry Point
@@ -193,6 +212,8 @@
 "conversation.call.many_participants_confirmation.call" = "Ara";
 
 "conversation.connection_view.in_address_book" = "Kişilerde";
+
+"conversation.input_bar.shortcut.send" = "Mesaj Gönder";
 
 // Image confirmation dialogue
 "image_confirmer.confirm" = "TAMAM";
@@ -272,6 +293,7 @@
 "content.system.connected_to" = "%@'e bağlanıldı.\nBir konuşma başlat";
 "content.system.other_wanted_to_talk" = "%@ aradı";
 "content.system.you_wanted_to_talk" = "Siz aradınız";
+"content.system.ephemeral_time_remaining" = "%@ ayrıldı";
 
 "content.system.you_started" = "Sen";
 "content.system.this_device" = "bu cihaz";
@@ -472,7 +494,12 @@
 
 // User Details
 "profile.details.title" = "Ayrıntılar";
-"profile.details.guest_in_team" = "Guest in %@";
+"profile.details.guest" = "Misafir";
+
+"profile_view.team_name.in" = "%@'de";
+"profile_view.accessibility.handle" = "Kullanıcı Adı";
+"profile_view.accessibility.name" = "Görünen İsim";
+"profile_view.accessibility.team_name" = "Takım Adı";
 
 // Device list
 "profile.devices.title" = "Cihazlar";
@@ -507,6 +534,9 @@
 "self.about" = "Hakkında";
 "self.sign_out" = "Çıkış Yap";
 "self.report_abuse" = "Kötüye Kullanımı Raporla";
+"self.voiceover.label" = "Profil";
+"self.voiceover.hint" = "Open profile and settings";
+"self.new-device.voiceover.label" = "Profile, new devices added";
 
 "self.add_phone_number" = "Telefon numarası ekleyin";
 "self.add_email_password" = "E-posta adresi ve parola ekleyin";
@@ -527,6 +557,10 @@
 "self.new_device_alert.message_plural" = "%@\n\nEğer bunu yapmadıysanız, cihazları kaldırın ve şifrenizi sıfırlayın.";
 "self.new_device_alert.manage_devices" = "Cihazları yönet";
 "self.new_device_alert.trust_devices" = "TAMAM";
+
+// Settings - top level
+"self.settings.create_team.title" = "Takım oluştur";
+"self.settings.add_account.title" = "Hesap ekle";
 
 // Settings - Account details
 "self.settings.account_section" = "Hesap";
@@ -681,10 +715,13 @@
 "self.settings.privacy_security.lock_cancelled.description" = "Lütfen Wire'ın Touch ID veya şifre ile kilidini açın";
 "self.settings.privacy_security.lock_cancelled.action" = "Kilidi aç";
 
+"self.settings.privacy_security.disable_link_previews.title" = "Gönderdiğin bağlantılar için ön izlemeler oluştur";
+"self.settings.privacy_security.disable_link_previews.footer" = "Ön izlemeler hala başkalarından gelen bağlantılar için görüntülenebilir olabilir.";
+
 "self.settings.privacy_analytics_menu.devices.title" = "Cihazlar";
 
 "self.settings.privacy_analytics_section.title" = "Kullanım ve kilitlenme raporları";
-"self.settings.privacy_analytics.title" = "Send Anonymous Data";
+"self.settings.privacy_analytics.title" = "Anonim Veri Yolla";
 "self.settings.privacy_analytics_menu.description.title" = "Anonim bilgiler göndererek Wire'ın daha iyi olmasını sağlayabilirsiniz.\n";
 
 "self.settings.privacy.clear_history.title" = "Geçmişi Temizle";
@@ -891,7 +928,7 @@
 "push.notification.new_message" = "Yeni Mesaj";
 
 
-// Force Update
+//Force Update
 "force.update.title" = "Güncelleme gerekli";
 "force.update.message" = "Yeni özellikleri kaçırıyorsun.\nApp Store'dan Wire'ın en güncel versiyonunu indir.";
 "force.update.ok_button" = "App Store'a git";
@@ -936,3 +973,7 @@
 "compose.drafts.compose.delete.confirm.title" = "Silmeyi Onayla";
 "compose.drafts.compose.delete.confirm.message" = "Bu işlem taslağı kalıcı olarak silecektir ve geri alınamaz.";
 "compose.drafts.compose.delete.confirm.action.title" = "Sil";
+
+"compose.drafts.compose.dismiss.confirm.title" = "Taslak olarak kaydet";
+"compose.drafts.compose.dismiss.confirm.action.title" = "Kaydet";
+"compose.drafts.compose.dismiss.delete.action.title" = "Sil";

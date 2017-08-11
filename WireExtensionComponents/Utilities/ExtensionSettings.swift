@@ -24,6 +24,7 @@ private enum ExtensionSettingsKey: String {
 
     case disableHockey = "disableHockey"
     case disableCrashAndAnalyticsSharing = "disableCrashAndAnalyticsSharing"
+    case disableLinkPreviews = "disableLinkPreviews"
 
     static var all: [ExtensionSettingsKey] {
         return [
@@ -38,6 +39,7 @@ private enum ExtensionSettingsKey: String {
         // into the shared settings (which is only done from the main app).
         case .disableHockey: return true
         case .disableCrashAndAnalyticsSharing: return true
+        case .disableLinkPreviews: return false
         }
     }
 
@@ -97,4 +99,13 @@ public class ExtensionSettings: NSObject {
         }
     }
     
+    public var disableLinkPreviews: Bool {
+        get {
+            return defaults?.bool(forKey: ExtensionSettingsKey.disableLinkPreviews.rawValue) ?? false
+        }
+        
+        set {
+            defaults?.set(newValue, forKey: ExtensionSettingsKey.disableLinkPreviews.rawValue)
+        }
+    }
 }

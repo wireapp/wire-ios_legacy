@@ -375,6 +375,11 @@ ProfileView {
         textColor: $color-text-foreground-dark;
         font: $font-normal-light;
     }
+    
+    teamNameLabel: @{
+        textColor: $color-text-foreground-dark;
+        font: $font-normal-light;
+    }
 }
 
 /* Profile */
@@ -513,7 +518,7 @@ PlaceholderConversationViewController {
 
 ConversationRootViewController {
     UINavigationBar {
-        barTintColor: $color-background;
+        barTintColor: $color-bar-background;
         tintColor: $color-text-foreground;
     }
 }
@@ -704,12 +709,13 @@ ParticipantsListCell {
         textColor: $color-text-foreground;
         font: $font-small-light;
     }
-    guestLabel @{
-        backgroundColor: $color-background-light;
-        textLabel @{
-            textColor: $color-text-foreground-light;
-            font: $font-small-light;
-        }
+}
+
+GuestLabel {
+    backgroundColor: $color-background-light;
+    textLabel @{
+        font: $font-small-light;
+        textColor: $color-text-foreground-light;
     }
 }
 
@@ -777,6 +783,12 @@ TeamImageView {
         textColor: $color-text-foreground-light;
     }
     backgroundColor: $color-background-light;
+}
+
+TeamImageView.big {
+    initialLabel: @{
+        font: $font-large-thin;
+    }
 }
 
 PersonalTeamView {
@@ -953,7 +965,7 @@ UILabel.conversationVerifiedLabel {
 }
 
 InputBar: {
-    barBackgroundColor: $color-text-background;
+    barBackgroundColor: $color-bar-background;
     editingBackgroundColor: $color-accent-yellow;
     writingSeparatorColor: $color-separator;
     ephemeralColor: $color-accent-current;
@@ -1623,7 +1635,7 @@ TokenField.share {
 /* Collections */
 
 CollectionsView {
-    backgroundColor: $color-background-new;
+    backgroundColor: $color-conversation-background;
 }
 
 NoResultsView {

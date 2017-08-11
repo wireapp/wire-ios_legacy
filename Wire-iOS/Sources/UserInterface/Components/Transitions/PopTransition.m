@@ -18,7 +18,7 @@
 
 
 #import "PopTransition.h"
-#import "UIView+MTAnimation.h"
+#import "UIView+WR_ExtendedBlockAnimations.h"
 
 
 
@@ -67,13 +67,9 @@
     
     NSTimeInterval duration = [self transitionDuration:transitionContext];
     
-    [UIView mt_animateWithViews:@[toView, fromView]
-                       duration:duration
-                 timingFunction:MTTimingFunctionEaseOutExpo
-                     animations:animation
-                     completion:^(){
-                         completion(YES);
-                     }];
+    [UIView wr_animateWithEasing:RBBEasingFunctionEaseOutExpo duration:duration animations:animation completion:^(BOOL finished) {
+        completion(finished);
+    }];
 }
 
 - (BOOL)rightToLeft

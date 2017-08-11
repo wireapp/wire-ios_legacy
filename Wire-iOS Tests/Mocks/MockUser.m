@@ -60,6 +60,16 @@ static id<ZMBareUser> mockSelfUser = nil;
     mockSelfUser = newMockUser;
 }
 
+- (BOOL)isTeamMember
+{
+    return NO;
+}
+
+- (BOOL)isGuestInConversation:(ZMConversation *)conversation
+{
+    return NO;
+}
+
 + (ZMUser<ZMEditableUser> *)selfUserInUserSession:(ZMUserSession *)session
 {
     return mockSelfUser ? : (id)self.mockSelfUser;
@@ -191,11 +201,6 @@ static id<ZMBareUser> mockSelfUser = nil;
  - (Team *)activeTeam
 {
     return nil;
-}
-
-- (BOOL)isMemberOf:(Team *)team
-{
-    return NO;
 }
     
 - (BOOL)isPendingApproval {

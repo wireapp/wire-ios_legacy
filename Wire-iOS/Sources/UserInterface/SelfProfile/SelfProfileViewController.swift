@@ -23,50 +23,97 @@ import Cartography
     public let imageView = UserImageView(size: .big)
     public let nameLabel = UILabel()
     public let handleLabel = UILabel()
+    public let teamNameLabel = UILabel()
+    public var teamView: TeamImageView?
     
     init(user: ZMUser) {
         super.init(frame: .zero)
-        self.imageView.accessibilityIdentifier = "user image"
-        self.imageView.user = user
-        self.nameLabel.text = user.name
+        imageView.accessibilityIdentifier = "user image"
+        imageView.user = user
         
-        if let handle = user.handle, !handle.isEmpty {
-            self.handleLabel.text = "@" + handle
+        nameLabel.accessibilityLabel = "profile_view.accessibility.name".localized
+        nameLabel.accessibilityIdentifier = "name"
+        nameLabel.setContentHuggingPriority(UILayoutPriorityRequired, for: .vertical)
+        nameLabel.setContentCompressionResistancePriority(UILayoutPriorityRequired, for: .vertical)
+        handleLabel.accessibilityLabel = "profile_view.accessibility.handle".localized
+        handleLabel.accessibilityIdentifier = "username"
+        handleLabel.setContentHuggingPriority(UILayoutPriorityRequired, for: .vertical)
+        handleLabel.setContentCompressionResistancePriority(UILayoutPriorityRequired, for: .vertical)
+        teamNameLabel.accessibilityLabel = "profile_view.accessibility.team_name".localized
+        teamNameLabel.accessibilityIdentifier = "team name"
+        teamNameLabel.setContentHuggingPriority(UILayoutPriorityRequired, for: .vertical)
+        teamNameLabel.setContentCompressionResistancePriority(UILayoutPriorityRequired, for: .vertical)
+        
+        nameLabel.text = user.name
+        nameLabel.accessibilityValue = nameLabel.text
+        
+        if let team = user.team, let teamName = team.name {
+            teamNameLabel.text = "profile_view.team_name.in".localized(args: teamName)
+            teamNameLabel.accessibilityValue = teamNameLabel.text
         }
         else {
-            self.handleLabel.text = ""
+            teamNameLabel.isHidden = true
         }
         
-        nameLabel.accessibilityIdentifier = "name"
-        handleLabel.accessibilityIdentifier = "username"
+        if let handle = user.handle, !handle.isEmpty {
+            handleLabel.text = "@" + handle
+            handleLabel.accessibilityValue = handleLabel.text
+        }
+        else {
+            handleLabel.isHidden = true
+        }
         
-        [imageView, nameLabel, handleLabel].forEach(self.addSubview)
+        [imageView, nameLabel, handleLabel, teamNameLabel].forEach(addSubview)
+        
+        if let team = user.team {
+            let teamView = TeamImageView(team: team)
+            teamView.style = .big
+            addSubview(teamView)
+            self.teamView = teamView
+        }
         
         self.createConstraints()
     }
     
     private func createConstraints() {
-        constrain(self, imageView, nameLabel, handleLabel) { selfView, imageView, nameLabel, handleLabel in
+        constrain(self, imageView, nameLabel, handleLabel, teamNameLabel) { selfView, imageView, nameLabel, handleLabel, teamNameLabel in
             
-            nameLabel.top >= selfView.top
+            nameLabel.top == selfView.top
             nameLabel.centerX == selfView.centerX
             nameLabel.leading >= selfView.leading
             nameLabel.trailing <= selfView.trailing
             
-            imageView.top == nameLabel.bottom + 24
-            
-            imageView.width == imageView.height
-            imageView.width <= 200
-            imageView.center == selfView.center
-            imageView.leading >= selfView.leading
-            imageView.trailing <= selfView.trailing
-            
-            imageView.bottom == handleLabel.top - 24
-            
-            handleLabel.bottom <= selfView.bottom
+            handleLabel.top == nameLabel.bottom + 24 ~ LayoutPriority(750.0)
+            handleLabel.top >= nameLabel.bottom
             handleLabel.centerX == selfView.centerX
             handleLabel.leading >= selfView.leading
             handleLabel.trailing <= selfView.trailing
+            
+            imageView.top == handleLabel.bottom + 32 ~ LayoutPriority(750.0)
+            imageView.top >= handleLabel.bottom
+            imageView.width == imageView.height
+            imageView.width <= 200
+            imageView.centerX == selfView.centerX
+            imageView.leading >= selfView.leading
+            imageView.trailing <= selfView.trailing
+            
+            imageView.bottom == teamNameLabel.top - 32 ~ LayoutPriority(750.0)
+            imageView.bottom <= teamNameLabel.top
+            
+            teamNameLabel.bottom == selfView.bottom
+            teamNameLabel.centerX == selfView.centerX
+            teamNameLabel.leading >= selfView.leading
+            teamNameLabel.trailing <= selfView.trailing
+        }
+        
+        if let teamView = self.teamView {
+            constrain(imageView, teamView) { imageView, teamView in
+                teamView.width == teamView.height
+                teamView.width == 64
+                
+                teamView.trailing == imageView.trailing
+                teamView.bottom == imageView.bottom
+            }
         }
     }
     
@@ -87,24 +134,23 @@ extension IconButton {
 }
 
 final internal class SelfProfileViewController: UIViewController {
-    private let settingsController: UIViewController
+    private let settingsController: SettingsTableViewController
+    private let profileContainerView = UIView()
     private let profileView: ProfileView
     @objc var dismissAction: (() -> ())? = .none
 
     
     init(rootGroup: SettingsControllerGeneratorType & SettingsInternalGroupCellDescriptorType) {
-        self.settingsController = rootGroup.generateViewController()!
+        settingsController = rootGroup.generateViewController()! as! SettingsTableViewController
         
-        self.profileView = ProfileView(user: ZMUser.selfUser())
+        profileView = ProfileView(user: ZMUser.selfUser())
         super.init(nibName: .none, bundle: .none)
         
-        if let settingsTableController = self.settingsController as? SettingsTableViewController {
-            settingsTableController.tableView.isScrollEnabled = false
-        }
+        settingsController.tableView.isScrollEnabled = false
         
-        self.profileView.imageView.delegate = self
+        profileView.imageView.delegate = self
 
-        self.title = "self.profile".localized
+        title = "self.profile".localized
         
         let closeButton = IconButton.closeButton()
         closeButton.addTarget(self, action: #selector(onCloseTouchUpInside(_:)), for: .touchUpInside)
@@ -118,22 +164,33 @@ final internal class SelfProfileViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.view.addSubview(profileView)
+        profileContainerView.addSubview(profileView)
+        view.addSubview(profileContainerView)
         
         settingsController.willMove(toParentViewController: self)
         view.addSubview(settingsController.view)
         addChildViewController(settingsController)
         
+        settingsController.view.setContentHuggingPriority(UILayoutPriorityRequired, for: .vertical)
+        settingsController.view.setContentCompressionResistancePriority(UILayoutPriorityRequired, for: .vertical)
+        settingsController.tableView.setContentHuggingPriority(UILayoutPriorityRequired, for: .vertical)
+        settingsController.tableView.setContentCompressionResistancePriority(UILayoutPriorityRequired, for: .vertical)
         self.createConstraints()
     }
     
     private func createConstraints() {
-        constrain(view, settingsController.view, profileView) { view, settingsControllerView, profileView in
-            profileView.top == view.top
-            profileView.leading == view.leading
-            profileView.trailing == view.trailing
+        constrain(view, settingsController.view, profileView, profileContainerView) { view, settingsControllerView, profileView, profileContainerView in
+            profileContainerView.top == self.topLayoutGuideCartography
+            profileContainerView.leading == view.leading
+            profileContainerView.trailing == view.trailing
+            profileContainerView.bottom == settingsControllerView.top
+            
+            profileView.top >= profileContainerView.top
+            profileView.centerY == profileContainerView.centerY
+            profileView.leading == profileContainerView.leading
+            profileView.trailing == profileContainerView.trailing
+            profileView.bottom <= profileContainerView.bottom
 
-            settingsControllerView.top == profileView.bottom
             settingsControllerView.leading == view.leading
             settingsControllerView.trailing == view.trailing
             settingsControllerView.bottom == view.bottom

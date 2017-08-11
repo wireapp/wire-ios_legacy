@@ -33,7 +33,6 @@
 "peoplepicker.header.send_invitation" = "Invite";
 "peoplepicker.header.contacts" = "Contacts";
 "peoplepicker.header.contacts_personal" = "Personal Contacts";
-"peoplepicker.header.team_members" = "%@";
 "peoplepicker.header.directory" = "Connect";
 "peoplepicker.title.create_conversation" = "Create group";
 "peoplepicker.title.add_to_conversation" = "Add people";
@@ -78,7 +77,7 @@
 "contacts_ui.title" = "Invite people";
 
 "contacts_ui.no_contact.title" = "No conversations yet\n";
-"contacts_ui.no_contact.message" = "Start a conversation, create a group or invite people to join.";
+"contacts_ui.no_contact.message" = "Start a conversation or create a group.";
 
 "contacts_ui.no_contact.archived.title" = "Everything archived";
 
@@ -93,14 +92,31 @@
 // Profile Header View
 "conversation.connection_view.in_address_book" = "in Contacts";
 
-
+// Conversation list voiceover accessibility
+"conversation_list.voiceover.open_conversation.hint" = "Open conversation";
+"conversation_list.voiceover.status.pending_connection" = "pending";
+"conversation_list.voiceover.status.active_call" = "active call";
+"conversation_list.voiceover.status.missed_call" = "missed call";
+"conversation_list.voiceover.status.pause_media" = "pause media";
+"conversation_list.voiceover.status.play_media" = "play media";
+"conversation_list.voiceover.status.silenced" = "silenced";
+"conversation_list.voiceover.status.typing" = "typing";
+"conversation_list.voiceover.status.ping" = "ping";
+"conversation_list.voiceover.bottom_bar.archived_button.label" = "archived";
+"conversation_list.voiceover.bottom_bar.archived_button.hint" = "list of archived conversations";
+"conversation_list.voiceover.bottom_bar.contacts_button.label" = "contacts";
+"conversation_list.voiceover.bottom_bar.contacts_button.hint" = "search for people on Wire";
+"conversation_list.voiceover.bottom_bar.compose_button.label" = "compose";
+"conversation_list.voiceover.bottom_bar.compose_button.hint" = "compose messages and save for later";
+"conversation_list.voiceover.bottom_bar.camera_button.label" = "camera";
+"conversation_list.voiceover.bottom_bar.camera_button.hint" = "take picture and send quickly";
 
 // Archived List
 "archived_list.title" = "archive";
 
 // Add contact tool tip
 "tool_tip.contacts.title" = "Conversations start here";
-"tool_tip.contacts.message" = "Start a conversation or invite more people to join. Call, message and share in private or with groups.";
+"tool_tip.contacts.message" = "Start a conversation. Call, message and share in private or with groups.";
 
 // "Knows" subtitle in cell: "Knows Indrek", "Knows Indrek and Jane", "Knows Indrek and 5 others"
 "peoplepicker.suggested.knows_one" = "Knows %@";
@@ -130,6 +146,8 @@
 "list.archived_conversations" = "ARCHIVE";
 "list.archived_conversations_close" = "Close archive";
 
+"conversation.voiceover.verified" = "verified";
+
 "conversation.status.call" = "Ongoing call";
 "conversation.status.typing" = "Typing a message…";
 "conversation.status.typing.group" = "%@: typing a message…";
@@ -157,6 +175,7 @@
 "conversation.status.you_left" = "You left";
 "conversation.status.started_conversation" = "%@ started a conversation";
 "conversation.status.removed_users" = "%@ removed %@";
+"conversation.status.everyone_left" = "Everyone left";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Compose Entry Point
@@ -193,6 +212,8 @@
 "conversation.call.many_participants_confirmation.call" = "Call";
 
 "conversation.connection_view.in_address_book" = "in Contacts";
+
+"conversation.input_bar.shortcut.send" = "Send Message";
 
 // Image confirmation dialogue
 "image_confirmer.confirm" = "OK";
@@ -272,6 +293,7 @@
 "content.system.connected_to" = "Connected to %@\nStart a conversation";
 "content.system.other_wanted_to_talk" = "%@ called";
 "content.system.you_wanted_to_talk" = "You called";
+"content.system.ephemeral_time_remaining" = "%@ left";
 
 "content.system.you_started" = "You";
 "content.system.this_device" = "this device";
@@ -472,7 +494,12 @@
 
 // User Details
 "profile.details.title" = "Details";
-"profile.details.guest_in_team" = "Guest in %@";
+"profile.details.guest" = "Guest";
+
+"profile_view.team_name.in" = "in %@";
+"profile_view.accessibility.handle" = "Username";
+"profile_view.accessibility.name" = "Display name";
+"profile_view.accessibility.team_name" = "Team name";
 
 // Device list
 "profile.devices.title" = "Devices";
@@ -507,6 +534,9 @@
 "self.about" = "About";
 "self.sign_out" = "Log Out";
 "self.report_abuse" = "Report Misuse";
+"self.voiceover.label" = "Profile";
+"self.voiceover.hint" = "Open profile and settings";
+"self.new-device.voiceover.label" = "Profile, new devices added";
 
 "self.add_phone_number" = "Add phone number";
 "self.add_email_password" = "Add email address and password";
@@ -527,6 +557,10 @@
 "self.new_device_alert.message_plural" = "%@\n\nIf you didn’t do this, remove those devices and reset your password.";
 "self.new_device_alert.manage_devices" = "Manage devices";
 "self.new_device_alert.trust_devices" = "OK";
+
+// Settings - top level
+"self.settings.create_team.title" = "Create team";
+"self.settings.add_account.title" = "Add account";
 
 // Settings - Account details
 "self.settings.account_section" = "Account";
@@ -680,6 +714,9 @@
 
 "self.settings.privacy_security.lock_cancelled.description" = "Unlock Wire with Touch ID or Passcode";
 "self.settings.privacy_security.lock_cancelled.action" = "Unlock";
+
+"self.settings.privacy_security.disable_link_previews.title" = "Create Previews For Links You Send";
+"self.settings.privacy_security.disable_link_previews.footer" = "Previews may still be shown for links from other people.";
 
 "self.settings.privacy_analytics_menu.devices.title" = "Devices";
 
@@ -936,3 +973,7 @@
 "compose.drafts.compose.delete.confirm.title" = "Confirm Deletion";
 "compose.drafts.compose.delete.confirm.message" = "This action will permamently delete this draft and cannot be undone.";
 "compose.drafts.compose.delete.confirm.action.title" = "Delete";
+
+"compose.drafts.compose.dismiss.confirm.title" = "Save as draft";
+"compose.drafts.compose.dismiss.confirm.action.title" = "Save";
+"compose.drafts.compose.dismiss.delete.action.title" = "Delete";

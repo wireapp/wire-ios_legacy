@@ -24,7 +24,6 @@
 #import "NetworkStatusViewController.h"
 #import "PassthroughTouchesView.h"
 #import "NetworkActivityViewController.h"
-#import "InvitationStatusController.h"
 #import "AppDelegate.h"
 #import "UIView+Borders.h"
 #import "VoiceChannelController.h"
@@ -33,29 +32,17 @@
 #import "Constants.h"
 #import "WireSyncEngine+iOS.h"
 #import "UIViewController+Orientation.h"
-#import "BarController.h"
 #import "Wire-Swift.h"
-
-
-
-@interface NotificationWindowRootViewController (InitialSync) <ZMNetworkAvailabilityObserver>
-- (void)updateAppearanceForNetworkState;
-@end
-
-
 
 @interface NotificationWindowRootViewController ()
 
 @property (nonatomic) NetworkStatusViewController *networkStatusViewController;
 @property (nonatomic) NetworkActivityViewController *networkActivityViewController;
-@property (nonatomic) InvitationStatusController *invitationStatusController;
-@property (nonatomic) BarController *notificationBarController;
 @property (nonatomic) AppLockViewController *appLockViewController;
 
 @property (nonatomic, strong) NSLayoutConstraint *overlayContainerLeftMargin;
 @property (nonatomic, strong) NSLayoutConstraint *networkStatusRightMargin;
 @property (nonatomic, strong) NSLayoutConstraint *networkActivityRightMargin;
-@property (nonatomic, strong) NSLayoutConstraint *notificationRightMargin;
 
 @end
 
@@ -67,55 +54,23 @@
 {
     self.view = [PassthroughTouchesView new];
     
-    _voiceChannelController = [[VoiceChannelController alloc] init];
-    self.voiceChannelController.view.translatesAutoresizingMaskIntoConstraints = NO;
-    [self addViewController:self.voiceChannelController toView:self.view];
-    
-    _notificationBarController = [[BarController alloc] init];
-    self.notificationBarController.view.translatesAutoresizingMaskIntoConstraints = NO;
-    [self addViewController:self.notificationBarController toView:self.view];
-    
-    self.networkActivityViewController = [[NetworkActivityViewController alloc] init];
-    self.networkActivityViewController.view.translatesAutoresizingMaskIntoConstraints = NO;
-    [self addViewController:self.networkActivityViewController toView:self.view];
-    
     self.networkStatusViewController = [[NetworkStatusViewController alloc] init];
     self.networkStatusViewController.view.translatesAutoresizingMaskIntoConstraints = NO;
     [self addViewController:self.networkStatusViewController toView:self.view];
     
-    self.invitationStatusController = [[InvitationStatusController alloc] initWithBarController:self.notificationBarController];
-       
     self.appLockViewController = [[AppLockViewController alloc] init];
     self.appLockViewController.view.translatesAutoresizingMaskIntoConstraints = NO;
     [self addViewController:self.appLockViewController toView:self.view];
     
     [self setupConstraints];
     [self updateAppearanceForOrientation:[UIApplication sharedApplication].statusBarOrientation];
-    [self updateAppearanceForNetworkState];
-    [ZMNetworkAvailabilityChangeNotification addNetworkAvailabilityObserver:self userSession:[ZMUserSession sharedSession]];
-}
-
-- (void)dealloc
-{
-    [ZMNetworkAvailabilityChangeNotification removeNetworkAvailabilityObserver:self];
 }
 
 - (void)setupConstraints
 {
-    [self.voiceChannelController.view autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero];
-    
-    [self.networkActivityViewController.view autoPinEdgeToSuperviewEdge:ALEdgeTop];
-    [self.networkActivityViewController.view autoPinEdgeToSuperviewEdge:ALEdgeLeft];
-    self.networkActivityRightMargin = [self.networkActivityViewController.view autoPinEdgeToSuperviewEdge:ALEdgeRight];
-    [self.networkActivityViewController.view autoSetDimension:ALDimensionHeight toSize:2.0f];
-    
     [self.networkStatusViewController.view autoPinEdgeToSuperviewEdge:ALEdgeTop];
     [self.networkStatusViewController.view autoPinEdgeToSuperviewEdge:ALEdgeLeft];
     self.networkStatusRightMargin = [self.networkStatusViewController.view autoPinEdgeToSuperviewEdge:ALEdgeRight];
-    
-    [self.notificationBarController.view autoPinEdgeToSuperviewEdge:ALEdgeTop];
-    [self.notificationBarController.view autoPinEdgeToSuperviewEdge:ALEdgeLeft];
-    self.notificationRightMargin = [self.notificationBarController.view autoPinEdgeToSuperviewEdge:ALEdgeRight];
     
     [self.appLockViewController.view autoPinEdgesToSuperviewEdges];
 }
@@ -147,16 +102,34 @@
     self.networkActivityViewController.view.hidden = hideNetworkActivityView;
 }
 
+- (void)transitionToLoggedInSession
+{
+    self.networkActivityViewController = [[NetworkActivityViewController alloc] init];
+    self.networkActivityViewController.view.translatesAutoresizingMaskIntoConstraints = NO;
+    [self addViewController:self.networkActivityViewController toView:self.view];
+    
+    [self.networkActivityViewController.view autoPinEdgeToSuperviewEdge:ALEdgeTop];
+    [self.networkActivityViewController.view autoPinEdgeToSuperviewEdge:ALEdgeLeft];
+    self.networkActivityRightMargin = [self.networkActivityViewController.view autoPinEdgeToSuperviewEdge:ALEdgeRight];
+    [self.networkActivityViewController.view autoSetDimension:ALDimensionHeight toSize:2.0f];
+    
+    _voiceChannelController = [[VoiceChannelController alloc] init];
+    self.voiceChannelController.view.translatesAutoresizingMaskIntoConstraints = NO;
+    [self addViewController:self.voiceChannelController toView:self.view];
+    
+    [self.voiceChannelController.view autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero];
+}
+
 #pragma mark - Rotation handling (should match up with roort)
 
 - (BOOL)shouldAutorotate
 {
-    return UIApplication.sharedApplication.wr_topMostViewController.shouldAutorotate;
+    return UIApplication.sharedApplication.wr_topmostViewController.shouldAutorotate;
 }
 
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations
 {
-    return UIApplication.sharedApplication.wr_topMostViewController.supportedInterfaceOrientations;
+    return UIApplication.sharedApplication.wr_topmostViewController.supportedInterfaceOrientations;
 }
 
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator
@@ -180,40 +153,11 @@
         CGFloat rightMargin =  -([UIScreen mainScreen].bounds.size.width - sidebarWidth);
         self.networkStatusRightMargin.constant = rightMargin;
         self.networkActivityRightMargin.constant = rightMargin;
-        self.notificationRightMargin.constant = rightMargin;
     }
     else {
         self.networkStatusRightMargin.constant = 0;
         self.networkActivityRightMargin.constant = 0;
-        self.notificationRightMargin.constant = 0;
     }
-}
-
-@end
-
-
-
-@implementation NotificationWindowRootViewController (InitialSync)
-
-- (void)didChangeAvailability:(ZMNetworkAvailabilityChangeNotification *)note
-{
-    [self updateAppearanceForNetworkState:note.networkState];
-}
-
-- (void)updateAppearanceForNetworkState
-{
-    [self updateAppearanceForNetworkState:[ZMUserSession sharedSession].networkState];
-}
-
-- (void)updateAppearanceForNetworkState:(ZMNetworkState)networkState
-{
-    [[ZMUserSession sharedSession] checkIfLoggedInWithCallback:^(BOOL isLoggedIn) {
-        if (isLoggedIn && networkState == ZMNetworkStateOnlineSynchronizing && [ZMConversationList conversationsInUserSession:[ZMUserSession sharedSession] team:ZMUser.selfUser.activeTeam].count == 0) {
-            self.networkActivityViewController.view.hidden = YES;
-        } else {
-            self.networkActivityViewController.view.hidden = NO;
-        }
-    }];
 }
 
 @end

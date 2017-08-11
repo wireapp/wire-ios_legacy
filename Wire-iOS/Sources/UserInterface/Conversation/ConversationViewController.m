@@ -46,7 +46,6 @@
 #import "TextMessageCell.h"
 
 #import "ZClientViewController.h"
-#import "ConversationListViewController.h"
 #import "ParticipantsViewController.h"
 #import "ConversationViewController+ParticipantsPopover.h"
 #import "MediaBar.h"
@@ -66,7 +65,6 @@
 #import "VerticalTransition.h"
 
 #import "UIColor+WAZExtensions.h"
-#import "KeyboardFrameObserver+iOS.h"
 #import "AnalyticsTracker.h"
 #import "AnalyticsTracker+Invitations.h"
 #import "UIViewController+Errors.h"
@@ -168,7 +166,7 @@
     [super viewDidLoad];
     
     self.conversationListObserverToken = [ConversationListChangeInfo addObserver:self
-                                                                         forList:[ZMConversationList conversationsInUserSession:[ZMUserSession sharedSession] team:self.conversation.team]];
+                                                                         forList:[ZMConversationList conversationsInUserSession:[ZMUserSession sharedSession]]];
 
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(keyboardFrameWillChange:)
@@ -553,6 +551,12 @@
 
 #pragma mark - Application Events & Notifications
 
+- (BOOL)accessibilityPerformEscape
+{
+    [self openConversationList];
+    return YES;
+}
+
 - (void)onBackButtonPressed:(UIButton *)backButton
 {
     [self openConversationList];
@@ -840,17 +844,18 @@
 
 - (void)callCenterDidChangeVoiceChannelState:(VoiceChannelV2State)voiceChannelState conversation:(ZMConversation *)conversation callingProtocol:(enum CallingProtocol)callingProtocol
 {
-    
+    [self updateRightNavigationItemsButtons];
 }
 
 - (void)callCenterDidFailToJoinVoiceChannelWithError:(NSError *)error conversation:(ZMConversation *)conversation
 {
+    [self updateRightNavigationItemsButtons];
     [self showAlertForError:error];
 }
 
 - (void)callCenterDidEndCallWithReason:(VoiceChannelV2CallEndReason)reason conversation:(ZMConversation *)conversation callingProtocol:(enum CallingProtocol)callingProtocol
 {
-    
+    [self updateRightNavigationItemsButtons];
 }
 
 @end

@@ -1,28 +1,25 @@
-// 
+//
 // Wire
 // Copyright (C) 2016 Wire Swiss GmbH
-// 
+//
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
-// 
+//
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 // GNU General Public License for more details.
-// 
+//
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see http://www.gnu.org/licenses/.
-// 
+//
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Share Extension
 
 
 
-"share_extension.team_selection.title" = "Équipe:";
-"share_extension.team_selection.empty.value" = "Aucun";
-"share_extension.team_selection.personal.team.name" = "Aucun";
 "share_extension.conversation_selection.title" = "Conversation :";
 "share_extension.send_button.title" = "Envoyer";
 "share_extension.conversation_selection.empty.value" = "Sélectionnez";
@@ -33,8 +30,8 @@
 "share_extension.not_signed_in.close_button" = "Fermer";
 
 "conversation.displayname.emptygroup" = "Conversation de groupe vide";
-"meta.degraded.degradation_reason_message.singular" = "%@ a commencé à utiliser un nouvel appareil.";
-"meta.degraded.degradation_reason_message.plural" = "%@ a commencé à utiliser de nouveaux appareils.";
+"meta.degraded.degradation_reason_message.singular" = "%@ utilise un nouvel appareil.";
+"meta.degraded.degradation_reason_message.plural" = "%@ utilisent de nouveaux appareils.";
 "meta.degraded.dialog_message" = "Voulez-vous quand même envoyer votre message ?";
 "meta.degraded.cancel_sending_button" = "Ne pas envoyer";
 "meta.degraded.send_anyway_button" = "Envoyer quand même";

@@ -31,9 +31,7 @@
 #import "WireSyncEngine+iOS.h"
 #import "UIFont+MagicAccess.h"
 #import "UIViewController+Errors.h"
-#import "UIView+MTAnimation.h"
 #import <WireExtensionComponents/UIViewController+LoadingView.h>
-#import "ZMUserSession+Additions.h"
 #import "CheckmarkViewController.h"
 #import "TermsOfUseStepViewController.h"
 #import "NameStepViewController.h"
@@ -41,6 +39,7 @@
 #import "AppDelegate.h"
 #import "AddEmailPasswordViewController.h"
 #import "AnalyticsTracker+Registration.h"
+#import "Wire-Swift.h"
 
 @import WireExtensionComponents;
 
@@ -62,8 +61,8 @@
 
 - (void)removeObservers
 {
-    [[ZMUserSession sharedSession] removeAuthenticationObserverForToken:self.authToken];
-    [[ZMUserSession sharedSession] removeRegistrationObserverForToken:self.registrationToken];
+    [ZMUserSessionAuthenticationNotification removeObserverForToken:self.authToken];
+    [[UnauthenticatedSession sharedSession] removeRegistrationObserver:self.registrationToken];
     
     self.authToken = nil;
     self.registrationToken = nil;
@@ -90,8 +89,8 @@
     [super didMoveToParentViewController:parent];
     
     if (parent && self.authToken == nil && self.registrationToken == nil) {
-        self.authToken = [[ZMUserSession sharedSession] addAuthenticationObserver:self];
-        self.registrationToken = [[ZMUserSession sharedSession] addRegistrationObserver:self];
+        self.authToken = [ZMUserSessionAuthenticationNotification addObserver:self];
+        self.registrationToken = [[UnauthenticatedSession sharedSession] addRegistrationObserver:self];
     } else {
         [self removeObservers];
     }
@@ -150,7 +149,7 @@
     // Dismiss keyboard and delay presentation for a smoother transition
     [[UIApplication sharedApplication] sendAction:@selector(resignFirstResponder) to:nil from:nil forEvent:nil];
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        ProfilePictureStepViewController *profilePictureStepViewController = [[ProfilePictureStepViewController alloc] initWithEditableUser:self.unregisteredUser];
+        ProfilePictureStepViewController *profilePictureStepViewController = [[ProfilePictureStepViewController alloc] initWithUnregisteredUser:self.unregisteredUser];
         profilePictureStepViewController.formStepDelegate = self;
         profilePictureStepViewController.analyticsTracker = self.analyticsTracker;
         
@@ -166,7 +165,7 @@
         self.navigationController.showLoadingView = YES;
         [self.analyticsTracker tagEnteredPhone];
         
-        [[ZMUserSession sharedSession] requestPhoneVerificationCodeForRegistration:self.unregisteredUser.phoneNumber];
+        [[UnauthenticatedSession sharedSession] requestPhoneVerificationCodeForRegistration:self.unregisteredUser.phoneNumber];
         
     }
     else if ([viewController isKindOfClass:[PhoneVerificationStepViewController class]]) {
@@ -177,9 +176,9 @@
         
         self.navigationController.showLoadingView = YES;
 
-        [[ZMUserSession sharedSession] checkNetworkAndFlashIndicatorIfNecessary];
+        [AppDelegate checkNetworkAndFlashIndicatorIfNecessary];
 
-        [[ZMUserSession sharedSession] verifyPhoneNumberForRegistration:phoneVerificationStepViewController.phoneNumber
+        [[UnauthenticatedSession sharedSession] verifyPhoneNumberForRegistration:phoneVerificationStepViewController.phoneNumber
                                                        verificationCode:phoneVerificationStepViewController.verificationCode];
     }
     else if ([viewController isKindOfClass:[TermsOfUseStepViewController class]]) {
@@ -189,17 +188,15 @@
     else if ([viewController isKindOfClass:[NameStepViewController class]]) {
         [self.analyticsTracker tagEnteredName];
         [self presentPictureStepController];
-        [[ZMUserSession sharedSession] setupPushNotificationsForApplication:[UIApplication sharedApplication]];
+        [[UIApplication sharedApplication] registerForRemoteNotifications];
     }
     else if ([viewController isKindOfClass:[ProfilePictureStepViewController class]]) {
         ProfilePictureStepViewController *step = (ProfilePictureStepViewController *)viewController;
         [self.analyticsTracker tagAddedPhotoFromSource:step.photoSource];
         
-        [[ZMUserSession sharedSession] checkNetworkAndFlashIndicatorIfNecessary];
-        
-        if ([ZMUserSession sharedSession].networkState != ZMNetworkStateOffline) {
+        if (![AppDelegate checkNetworkAndFlashIndicatorIfNecessary]) {
             ZMCompleteRegistrationUser *completeUser = [self.unregisteredUser completeRegistrationUser];
-            [[ZMUserSession sharedSession] registerSelfUser:completeUser];
+            [[UnauthenticatedSession sharedSession] registerUser:completeUser];
             
             self.navigationController.showLoadingView = YES;
         }
@@ -218,7 +215,7 @@
 
 - (void)phoneVerificationStepDidRequestVerificationCode
 {
-    [[ZMUserSession sharedSession] requestPhoneVerificationCodeForRegistration:self.unregisteredUser.phoneNumber];
+    [[UnauthenticatedSession sharedSession] requestPhoneVerificationCodeForRegistration:self.unregisteredUser.phoneNumber];
 }
 
 #pragma mark - ZMAuthenticationObserver

@@ -31,7 +31,6 @@
 #import "UIColor+MagicAccess.h"
 #import "UIFont+MagicAccess.h"
 #import "UIViewController+Errors.h"
-#import "UIView+MTAnimation.h"
 #import "UIImage+ZetaIconsNeue.h"
 @import WireExtensionComponents;
 #import "Wire-Swift.h"

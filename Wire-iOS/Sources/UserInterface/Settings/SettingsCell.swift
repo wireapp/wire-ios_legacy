@@ -188,14 +188,13 @@ protocol SettingsCellType: class {
         
         self.contentView.addSubview(self.valueLabel)
 
-        self.badgeLabel.textColor = UIColor.lightGray
         self.badgeLabel.font = FontSpec(.small, .medium).font
         self.badgeLabel.textAlignment = .center
-        self.badgeLabel.textColor = ColorScheme.default().color(withName: ColorSchemeColorTextForeground, variant: .dark)
+        self.badgeLabel.textColor = UIColor.black
         
         self.badge.containedView.addSubview(self.badgeLabel)
         
-        self.badge.backgroundColor = UIColor(white: 0, alpha: 0.16)
+        self.badge.backgroundColor = UIColor.white
         self.badge.isHidden = true
         self.contentView.addSubview(self.badge)
         
@@ -265,6 +264,8 @@ protocol SettingsCellType: class {
         
         if self.isHighlighted && self.selectionStyle != .none {
             self.backgroundColor = UIColor(white: 0, alpha: 0.2)
+            self.badge.backgroundColor = UIColor.white
+            self.badgeLabel.textColor = UIColor.black
         }
         else {
             self.backgroundColor = UIColor.clear

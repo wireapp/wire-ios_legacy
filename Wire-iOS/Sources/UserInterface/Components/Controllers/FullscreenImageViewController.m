@@ -38,7 +38,6 @@
 
 #import "WAZUIMagiciOS.h"
 #import "UIFont+MagicAccess.h"
-#import "UIView+MTAnimation.h"
 #import "UIColor+WR_ColorScheme.h"
 #import "NSDate+Format.h"
 
@@ -617,11 +616,11 @@
     ghostImageView.frame = initialFrame;
     CGPoint targetCenter = [self.view convertPoint:saveView.center fromView:saveView.superview];
     
-    [UIView mt_animateWithViews:@[ghostImageView] duration:0.55 timingFunction:kMTEaseInExpo animations:^{
+    [UIView wr_animateWithEasing:RBBEasingFunctionEaseInExpo duration:0.55f animations:^{
         ghostImageView.center = targetCenter;
         ghostImageView.alpha = 0;
         ghostImageView.transform = CGAffineTransformMakeScale(0.01, 0.01);
-    }                completion:^{
+    } completion:^(BOOL finished) {
         [ghostImageView removeFromSuperview];
     }];
 }

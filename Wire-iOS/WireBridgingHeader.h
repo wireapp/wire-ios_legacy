@@ -66,10 +66,12 @@
 #import "VoiceChannelCollectionViewLayout.h"
 
 // View Controllers
+#import "RootViewController.h"
 #import "ZClientViewController.h"
 #import "ZClientViewController+Internal.h"
 #import "FormFlowViewController.h"
 #import "RegistrationStepViewController.h"
+#import "SignInViewController.h"
 #import "NavigationController.h"
 #import "ConversationInputBarViewController.h"
 #import "ConversationInputBarViewController+Files.h"
@@ -103,6 +105,8 @@
 #import "CollectionViewSectionAggregator.h"
 #import "ProfileDetailsViewController.h"
 #import "ContactsDataSource.h"
+#import "LaunchImageViewController.h"
+#import "NetworkStatusViewController.h"
 
 // Helper objects
 #import "PushTransition.h"
@@ -125,7 +129,6 @@
 #import "UIImage+ZetaIconsNeue.h"
 #import "UIColor+WAZExtensions.h"
 #import "AccentColorChangeHandler.h"
-#import "ZMUserSession+Additions.h"
 #import "AnalyticsTracker+FileTransfer.h"
 #import "TimeIntervalClusterizer.h"
 #import "UIColor+WR_ColorScheme.h"
@@ -140,7 +143,6 @@
 #import "DeviceOrientationObserver.h"
 #import "Analytics+ConversationEvents.h"
 #import "AppDelegate+Logging.h"
-#import "UIView+UIAppearanceSwift.h"
 #import "LinkAttachment.h"
 #import "Message+Formatting.h"
 #import "UIImagePickerController+GetImage.h"
@@ -148,6 +150,7 @@
 #import "MessagePresenter.h"
 #import "WireStyleKit+Additions.h"
 #import "UIResponder+FirstResponder.h"
+#import "UIApplication+StatusBar.h"
 
 // Camera
 #import "CameraController.h"

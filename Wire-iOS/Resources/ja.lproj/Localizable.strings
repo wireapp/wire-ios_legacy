@@ -1,17 +1,17 @@
-// 
+//
 // Wire
 // Copyright (C) 2016 Wire Swiss GmbH
-// 
+//
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
-// 
+//
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 // GNU General Public License for more details.
-// 
+//
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
@@ -33,7 +33,6 @@
 "peoplepicker.header.send_invitation" = "招待";
 "peoplepicker.header.contacts" = "連絡先";
 "peoplepicker.header.contacts_personal" = "個人の連絡先";
-"peoplepicker.header.team_members" = "%@";
 "peoplepicker.header.directory" = "接続";
 "peoplepicker.title.create_conversation" = "グループを作成します";
 "peoplepicker.title.add_to_conversation" = "人を追加します";
@@ -78,7 +77,7 @@
 "contacts_ui.title" = "友達を招待する";
 
 "contacts_ui.no_contact.title" = "まだ会話が存在しません。\n";
-"contacts_ui.no_contact.message" = "会話を始める、グループを作るまたは友人を招待する";
+"contacts_ui.no_contact.message" = "Start a conversation or create a group.";
 
 "contacts_ui.no_contact.archived.title" = "全てアーカイブ済み";
 
@@ -93,14 +92,31 @@
 // Profile Header View
 "conversation.connection_view.in_address_book" = "連絡先";
 
-
+// Conversation list voiceover accessibility
+"conversation_list.voiceover.open_conversation.hint" = "会話を始めます";
+"conversation_list.voiceover.status.pending_connection" = "pending";
+"conversation_list.voiceover.status.active_call" = "active call";
+"conversation_list.voiceover.status.missed_call" = "不在着信";
+"conversation_list.voiceover.status.pause_media" = "pause media";
+"conversation_list.voiceover.status.play_media" = "play media";
+"conversation_list.voiceover.status.silenced" = "silenced";
+"conversation_list.voiceover.status.typing" = "typing";
+"conversation_list.voiceover.status.ping" = "ping";
+"conversation_list.voiceover.bottom_bar.archived_button.label" = "archived";
+"conversation_list.voiceover.bottom_bar.archived_button.hint" = "list of archived conversations";
+"conversation_list.voiceover.bottom_bar.contacts_button.label" = "連絡先";
+"conversation_list.voiceover.bottom_bar.contacts_button.hint" = "search for people on Wire";
+"conversation_list.voiceover.bottom_bar.compose_button.label" = "compose";
+"conversation_list.voiceover.bottom_bar.compose_button.hint" = "compose messages and save for later";
+"conversation_list.voiceover.bottom_bar.camera_button.label" = "camera";
+"conversation_list.voiceover.bottom_bar.camera_button.hint" = "take picture and send quickly";
 
 // Archived List
 "archived_list.title" = "アーカイブ";
 
 // Add contact tool tip
 "tool_tip.contacts.title" = "ここから会話を始めます";
-"tool_tip.contacts.message" = "会話を始めるか、参加する人をさらに招待します。プライベートにまたはグループで、通話、メッセージ、シェアをします。";
+"tool_tip.contacts.message" = "Start a conversation. Call, message and share in private or with groups.";
 
 // "Knows" subtitle in cell: "Knows Indrek", "Knows Indrek and Jane", "Knows Indrek and 5 others"
 "peoplepicker.suggested.knows_one" = "%@を知っています";
@@ -130,6 +146,8 @@
 "list.archived_conversations" = "アーカイブ";
 "list.archived_conversations_close" = "アーカイブして閉じます";
 
+"conversation.voiceover.verified" = "verified";
+
 "conversation.status.call" = "通話中";
 "conversation.status.typing" = "メッセージを入力中";
 "conversation.status.typing.group" = "%@: メッセージの入力中";
@@ -157,6 +175,7 @@
 "conversation.status.you_left" = "あなたは退出しました";
 "conversation.status.started_conversation" = "%@ 会話を始めました";
 "conversation.status.removed_users" = "%@は%@を削除しました";
+"conversation.status.everyone_left" = "Everyone left";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Compose Entry Point
@@ -193,6 +212,8 @@
 "conversation.call.many_participants_confirmation.call" = "通話";
 
 "conversation.connection_view.in_address_book" = "連絡先";
+
+"conversation.input_bar.shortcut.send" = "Send Message";
 
 // Image confirmation dialogue
 "image_confirmer.confirm" = "OK";
@@ -272,6 +293,7 @@
 "content.system.connected_to" = "%@につながり、会話をはじめます";
 "content.system.other_wanted_to_talk" = "%@ からの着信";
 "content.system.you_wanted_to_talk" = "あなたの発信";
+"content.system.ephemeral_time_remaining" = "%@が退出しました";
 
 "content.system.you_started" = "あなた";
 "content.system.this_device" = "このデバイス";
@@ -472,7 +494,12 @@
 
 // User Details
 "profile.details.title" = "詳細";
-"profile.details.guest_in_team" = "%@ のゲスト";
+"profile.details.guest" = "ゲスト";
+
+"profile_view.team_name.in" = "in %@";
+"profile_view.accessibility.handle" = "ユーザーネーム";
+"profile_view.accessibility.name" = "Display name";
+"profile_view.accessibility.team_name" = "Team name";
 
 // Device list
 "profile.devices.title" = "デバイス";
@@ -507,6 +534,9 @@
 "self.about" = "概要";
 "self.sign_out" = "ログアウト";
 "self.report_abuse" = "悪用を報告する";
+"self.voiceover.label" = "プロフィール";
+"self.voiceover.hint" = "Open profile and settings";
+"self.new-device.voiceover.label" = "Profile, new devices added";
 
 "self.add_phone_number" = "電話番号を追加する";
 "self.add_email_password" = "メールアドレスとパスワードを追加";
@@ -527,6 +557,10 @@
 "self.new_device_alert.message_plural" = "%@\nもしあなたがこれをしてなかった場合、これらのデバイスとあなたのパスワードを削除してください。";
 "self.new_device_alert.manage_devices" = "デバイスを管理";
 "self.new_device_alert.trust_devices" = "OK";
+
+// Settings - top level
+"self.settings.create_team.title" = "Create team";
+"self.settings.add_account.title" = "Add account";
 
 // Settings - Account details
 "self.settings.account_section" = "アカウント";
@@ -680,6 +714,9 @@
 
 "self.settings.privacy_security.lock_cancelled.description" = "Touch ID またはパスコードでWireのロックを解除する";
 "self.settings.privacy_security.lock_cancelled.action" = "ロックを解除";
+
+"self.settings.privacy_security.disable_link_previews.title" = "Create Previews For Links You Send";
+"self.settings.privacy_security.disable_link_previews.footer" = "Previews may still be shown for links from other people.";
 
 "self.settings.privacy_analytics_menu.devices.title" = "デバイス";
 
@@ -891,7 +928,7 @@
 "push.notification.new_message" = "新着メッセージ";
 
 
-// Force Update
+//Force Update
 "force.update.title" = "アップデートが必要です。";
 "force.update.message" = "新しい機能を利用できていないようです。\n最新バージョンのWireをApp Storeでダウンロードしてください。";
 "force.update.ok_button" = "App Storeに行く";
@@ -936,3 +973,7 @@
 "compose.drafts.compose.delete.confirm.title" = "削除を確認する";
 "compose.drafts.compose.delete.confirm.message" = "これは下書きを完全に削除します。この操作を元に戻すことはできません。";
 "compose.drafts.compose.delete.confirm.action.title" = "削除";
+
+"compose.drafts.compose.dismiss.confirm.title" = "Save as draft";
+"compose.drafts.compose.dismiss.confirm.action.title" = "保存";
+"compose.drafts.compose.dismiss.delete.action.title" = "削除";

@@ -48,6 +48,9 @@ final class DraftMessageCell: UITableViewCell {
         dateLabel.font = FontSpec(.medium, .regular).font!
         dateLabel.textColor = color(ColorSchemeColorTextDimmed)
         backgroundColor = color(ColorSchemeColorBackground)
+        let selectedView = UIView()
+        selectedView.backgroundColor = color(ColorSchemeColorTokenFieldBackground)
+        selectedBackgroundView = selectedView
         separator.backgroundColor = color(ColorSchemeColorSeparator)
         [titleLabel, dateLabel, separator].forEach(addSubview)
     }

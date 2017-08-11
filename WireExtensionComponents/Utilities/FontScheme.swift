@@ -90,6 +90,28 @@ extension UIFont {
     }
 }
 
+extension UIFont {
+    public var isItalic: Bool {
+        return fontDescriptor.symbolicTraits.contains(.traitItalic)
+    }
+    
+    public func italicFont() -> UIFont {
+        
+        if isItalic {
+            return self
+        } else {
+            var symbolicTraits = fontDescriptor.symbolicTraits
+            symbolicTraits.insert([.traitItalic])
+            
+            if let newFontDescriptor = fontDescriptor.withSymbolicTraits(symbolicTraits) {
+                return UIFont(descriptor: newFontDescriptor, size: pointSize)
+            } else {
+                return self
+            }
+        }
+    }
+}
+
 public struct FontSpec {
     public let size: FontSize
     public let weight: FontWeight?

@@ -49,10 +49,12 @@ NSString * const ConversationActionUnblockUser = @"ConversationActionUnblockUser
 {
     NSMutableOrderedSet *actions = [NSMutableOrderedSet orderedSet];
 
-    if (self.connectedUser.isBlocked) {
-        [actions addObject:ConversationActionUnblockUser];
-    } else {
-        [actions addObject:ConversationActionBlockUser];
+    if (nil == self.team) {
+        if (self.connectedUser.isBlocked) {
+            [actions addObject:ConversationActionUnblockUser];
+        } else {
+            [actions addObject:ConversationActionBlockUser];
+        }
     }
 
     [actions addObjectsFromArray:[self availableActionsForConversation].array];

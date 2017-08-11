@@ -39,7 +39,6 @@
 
 // ui
 #import "ZClientViewController.h"
-#import "UIView+MTAnimation.h"
 #import "NotificationWindowRootViewController.h"
 
 // helpers
@@ -172,7 +171,7 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
     self.tableView.keyboardDismissMode = UIScrollViewKeyboardDismissModeInteractive;
     
     [UIView performWithoutAnimation:^{
-        self.tableView.backgroundColor = self.view.backgroundColor = [UIColor wr_colorFromColorScheme:ColorSchemeColorTextBackground];
+    self.tableView.backgroundColor = self.view.backgroundColor = [UIColor wr_colorFromColorScheme:ColorSchemeColorConversationBackground];
     }];
     
     UIPinchGestureRecognizer *pinchImageGestureRecognizer = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(onPinchZoom:)];
@@ -215,6 +214,7 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
     }
 
     [self scrollToLastUnreadMessageIfNeeded];
+    UIAccessibilityPostNotification(UIAccessibilityScreenChangedNotification, nil);
 }
 
 - (void)viewWillDisappear:(BOOL)animated

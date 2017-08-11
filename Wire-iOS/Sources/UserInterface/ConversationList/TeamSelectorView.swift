@@ -73,28 +73,20 @@ final internal class TeamSelectorView: UIView {
     private var selfUserObserverToken: NSObjectProtocol!
     private var applicationDidBecomeActiveToken: NSObjectProtocol!
 
-    fileprivate var teams: [TeamType] = [] {
+    fileprivate var team: TeamType? = nil {
         didSet {
-            self.teamsViews = [personalTeamView] + self.teams.map { TeamView(team: $0) }
-            
-            self.teamsViews.forEach { $0.onTap = { [weak self] selectedTeam in
-                guard let `self` = self else {
-                    return
-                }
-                
-                ZMUserSession.shared()?.performChanges {
-                    self.teams.filter { $0.remoteIdentifier != selectedTeam?.remoteIdentifier }.forEach { $0.isActive = false }
-
-                    selectedTeam?.isActive = true
-                }
-                }
+            if let teamView = team.map(TeamView.init) {
+                teamsViews = [teamView]
+            } else {
+                teamsViews = [personalTeamView]
             }
-            
+
             self.lineView = LineView(views: self.teamsViews)
             self.topOffsetConstraint.constant = imagesCollapsed ? -20 : 0
             self.teamsViews.forEach { $0.collapsed = imagesCollapsed }
         }
     }
+
     private var teamsViews: [BaseTeamView] = []
     private var lineView: LineView? {
         didSet {
@@ -128,49 +120,28 @@ final internal class TeamSelectorView: UIView {
         
         selfUserObserverToken = UserChangeInfo.add(observer: self, forBareUser: ZMUser.selfUser())
         applicationDidBecomeActiveToken = NotificationCenter.default.addObserver(forName: Notification.Name.UIApplicationDidBecomeActive, object: nil, queue: nil, using: { [weak self] _ in
-            guard let `self` = self else {
-                return
-            }
-            self.update(with: ZMUser.selfUser()?.teams ?? Set())
+            self?.update(with: ZMUser.selfUser()?.team)
         })
-        self.update(with: ZMUser.selfUser()?.teams ?? Set())
+
+        self.update(with: ZMUser.selfUser()?.team)
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
-    fileprivate func update(with teams: Set<Team>) {
-        let sortedTeams = teams.sorted { (teamA, teamB) -> Bool in
-            let nameA = teamA.name ?? ""
-            let nameB = teamB.name ?? ""
-            
-            return nameA.compare(nameB) == .orderedAscending
-        }
-        
-        update(with: sortedTeams)
-    }
     
-    fileprivate func update(with teams: [TeamType]) {
-        
-        let selfTeamActive: Bool
-        if let _ = teams.first(where: { $0.isActive }) {
-            selfTeamActive = false
-        }
-        else {
-            selfTeamActive = true
-        }
-        self.personalTeamView.selected = selfTeamActive
-        self.teams = teams
+    fileprivate func update(with team: TeamType?) {
+        self.personalTeamView.selected = false
+        self.team = team
     }
+
 }
 
 
 extension TeamSelectorView: ZMUserObserver {
+
     public func userDidChange(_ changeInfo: UserChangeInfo) {
-        guard changeInfo.teamsChanged else {
-            return
-        }
-        self.update(with: ZMUser.selfUser()?.teams ?? Set())
+        guard changeInfo.teamsChanged else { return }
+        self.update(with: ZMUser.selfUser()?.team)
     }
 }

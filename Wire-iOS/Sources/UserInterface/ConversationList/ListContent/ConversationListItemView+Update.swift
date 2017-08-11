@@ -26,6 +26,7 @@ extension ConversationListItemView {
     internal func configure(with title: String, subtitle: NSAttributedString) {
         self.titleText = title
         self.subtitleAttributedText = subtitle
+        self.accessibilityContentsDidChange()
     }
     
     internal func configure(with title: String, subtitle: NSAttributedString, users: [ZMUser]) {
@@ -34,6 +35,7 @@ extension ConversationListItemView {
         self.rightAccessory.icon = .pendingConnection
         self.avatarView.conversation = .none
         self.avatarView.users = users
+        self.accessibilityContentsDidChange()
     }
     
     @objc(updateForConversation:)

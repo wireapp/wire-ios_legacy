@@ -43,7 +43,7 @@
     self = [super init];
     
     if (self) {
-        self.voiceChannelStateObserverToken = [VoiceChannelRouter addStateObserver:self userSession:[ZMUserSession sharedSession]];
+        self.voiceChannelStateObserverToken = [VoiceChannelV3 addStateObserver:self userSession:[ZMUserSession sharedSession]];
 
 
         // Wait and then update initial state so that getting the voice channel doesn't affect startup time

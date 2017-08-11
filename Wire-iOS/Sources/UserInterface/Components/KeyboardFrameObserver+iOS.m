@@ -27,9 +27,12 @@
 
 + (instancetype)sharedObserver
 {
-    AppDelegate *appDelegate = [AppDelegate sharedAppDelegate];
-    RootViewController *rootViewController = (RootViewController *) appDelegate.window.rootViewController;
-    return rootViewController.keyboardFrameObserver;
+    static KeyboardFrameObserver *sharedObserver = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        sharedObserver = [[KeyboardFrameObserver alloc] init];
+    });
+    return sharedObserver;
 }
 
 @end

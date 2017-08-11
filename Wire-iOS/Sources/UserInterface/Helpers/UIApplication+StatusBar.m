@@ -1,6 +1,6 @@
 //
 // Wire
-// Copyright (C) 2017 Wire Swiss GmbH
+// Copyright (C) 2016 Wire Swiss GmbH
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -16,19 +16,24 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-import Foundation
-import WireSystem
+#import "UIApplication+StatusBar.h"
 
-extension DeveloperMenuState {
-    
-    public static func prepareForDebugging() {
-        guard self.developerMenuEnabled() else { return }
-        self.enableLogsForMessageSendingDebugging()
-    }
-    
-    private static func enableLogsForMessageSendingDebugging() {
-        ["Network", "Dependencies", "State machine", "Pingback"].forEach {
-            ZMSLog.set(level: .debug, tag: $0)
-        }
-    }
+@implementation UIApplication (StatusBar)
+
+- (void)wr_setStatusBarStyle:(UIStatusBarStyle)style animated:(BOOL)animated
+{
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+    [self setStatusBarStyle:style animated:animated];
+#pragma clang diagnostic pop
 }
+
+- (void)wr_setStatusBarHidden:(BOOL)hidden withAnimation:(UIStatusBarAnimation)animation
+{
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+    [self setStatusBarHidden:hidden withAnimation:animation];
+#pragma clang diagnostic pop
+}
+
+@end

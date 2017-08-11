@@ -58,7 +58,7 @@
 {
     if (user.isConnected) {
         [self dismissViewControllerAnimated:YES completion:^{
-            [[ZClientViewController sharedZClientViewController] selectConversation:[user.user oneToOneConversationInTeam:nil]
+            [[ZClientViewController sharedZClientViewController] selectConversation:user.user.oneToOneConversation
                                                                         focusOnView:YES
                                                                            animated:YES];
         }];
@@ -68,7 +68,7 @@
         }];
     } else if (user.user.isPendingApprovalByOtherUser && ! user.user.isIgnored) {
         [self dismissViewControllerAnimated:YES completion:^{
-            [[ZClientViewController sharedZClientViewController] selectConversation:[user.user oneToOneConversationInTeam:nil]
+            [[ZClientViewController sharedZClientViewController] selectConversation:user.user.oneToOneConversation
                                                                         focusOnView:YES
                                                                            animated:YES];
         }];

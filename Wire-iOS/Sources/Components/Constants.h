@@ -43,10 +43,6 @@ FOUNDATION_EXPORT NSString *const UserPrefKeyAccentColorTipCompleted;
 #define IS_IPHONE_6 (IS_IPHONE && [[UIScreen mainScreen] nativeBounds].size.height == 1334.0)
 #define IS_IPHONE_6_PLUS_OR_BIGGER (IS_IPHONE && [[UIScreen mainScreen] nativeBounds].size.height >= 1920.0f)
 
-#define IS_OS_8_OR_LATER    ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0)
-#define IS_ZOOMED_IPHONE_6 (IS_IPHONE && [[UIScreen mainScreen] bounds].size.height == 568.0 && IS_OS_8_OR_LATER && [UIScreen mainScreen].nativeScale > [UIScreen mainScreen].scale)
-#define IS_ZOOMED_IPHONE_6_PLUS (IS_IPHONE && [[UIScreen mainScreen] bounds].size.height == 667.0 && IS_OS_8_OR_LATER && [UIScreen mainScreen].nativeScale < [UIScreen mainScreen].scale)
-
 #define IS_IPAD ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad)
 #define IS_IPAD_LANDSCAPE_LAYOUT (([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) && UIInterfaceOrientationIsLandscape([UIApplication sharedApplication].statusBarOrientation))
 #define IS_IPAD_PORTRAIT_LAYOUT (([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) && UIInterfaceOrientationIsPortrait([UIApplication sharedApplication].statusBarOrientation))

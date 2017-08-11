@@ -1,4 +1,4 @@
-// 
+//
 // Wire
 // Copyright (C) 2016 Wire Swiss GmbH
 // 
@@ -310,9 +310,9 @@ static NSString* EmptyStringIfNil(NSString *string) {
             self.audioTrack.failedToLoad = YES;
             [self.mediaPlayerDelegate mediaPlayer:self didChangeToState:self.state];
             
-//            if ([VIMReachability sharedInstance].isNetworkReachable) {
+            if (IsNetworkReachable()) {
                 [self skipToNextTrack];
-//            }
+            }
         }
     }
     

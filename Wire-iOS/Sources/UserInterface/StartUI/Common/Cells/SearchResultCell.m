@@ -20,10 +20,10 @@
 #import "SearchResultCell.h"
 #import "WAZUIMagiciOS.h"
 @import PureLayout;
-#import "UIView+MTAnimation.h"
 #import "BadgeUserImageView.h"
 #import "UIImage+ZetaIconsNeue.h"
 #import "WireSyncEngine+iOS.h"
+#import "UIView+WR_ExtendedBlockAnimations.h"
 #import <WireDataModel/ZMBareUser.h>
 #import "Wire-Swift.h"
 
@@ -48,6 +48,8 @@
 
 @property (nonatomic, strong) UILabel *subtitleLabel;
 
+@property (nonatomic, strong) GuestLabel *guestLabel;
+
 @end
 
 @implementation SearchResultCell
@@ -64,7 +66,7 @@
 
 + (UIFont *)boldFont
 {
- return [UIFont fontWithMagicIdentifier:@"style.text.small.font_spec_bold"];
+    return [UIFont fontWithMagicIdentifier:@"style.text.small.font_spec_bold"];
 }
 
 + (AddressBookCorrelationFormatter *)correlationFormatter
@@ -196,8 +198,16 @@
         }];
     }
 
-    self.subtitleRightMarginConstraint.constant = self.instantConnectButton.hidden ? -rightMargin : - self.instantConnectButton.bounds.size.width;
-    self.nameRightMarginConstraint.constant = self.instantConnectButton.hidden ? -rightMargin : - self.instantConnectButton.bounds.size.width;
+    CGFloat rightMarginForName = rightMargin;
+    if (!self.instantConnectButton.hidden) {
+        rightMarginForName = self.instantConnectButton.bounds.size.width;
+    }
+    else if (!self.guestLabel.hidden) {
+        rightMarginForName = self.guestLabel.bounds.size.width + rightMargin;
+    }
+    
+    self.subtitleRightMarginConstraint.constant = -rightMarginForName;
+    self.nameRightMarginConstraint.constant = -rightMarginForName;
 
     [super updateConstraints];
 }
@@ -238,6 +248,7 @@
     self.displayName = self.user.name;
     
     [self updateSubtitle];
+    [self updateGuestLabel];
     
     BOOL canBeConnected = YES;
 
@@ -246,8 +257,7 @@
     }
     else if (BareUserToUser(self.user) != nil) {
         ZMUser *fullUser = BareUserToUser(self.user);
-        
-        canBeConnected = fullUser.canBeConnected && ! fullUser.isBlocked && ! fullUser.isPendingApproval && ! [fullUser isMemberOf:self.team];
+        canBeConnected = fullUser.canBeConnected && ! fullUser.isBlocked && ! fullUser.isPendingApproval && !fullUser.isTeamMember;
     }
     else {
         canBeConnected = self.user.canBeConnected;
@@ -255,7 +265,6 @@
 
     self.instantConnectButton.hidden = ! canBeConnected;
     [self setNeedsUpdateConstraints];
-    self.badgeUserImageView.team = self.team;
     self.badgeUserImageView.user = self.user;
 }
 
@@ -276,13 +285,10 @@
     [self.avatarOverlay autoSetDimensionsToSize:self.badgeUserImageView.bounds.size];
     [self layoutIfNeeded];
 
-    [UIView mt_animateWithViews:@[self.avatarOverlay]
-                       duration:0.15f
-                 timingFunction:MTTimingFunctionEaseOutQuart
-                     animations:^{
-                         self.avatarOverlay.alpha = 0.5f;
-                     }];
-
+    [UIView wr_animateWithEasing:RBBEasingFunctionEaseOutQuart duration:0.15f animations:^{
+        self.avatarOverlay.alpha = 0.5f;
+    }];
+    
     self.successCheckmark = [[UIImageView alloc] initForAutoLayout];
     self.successCheckmark.image = [UIImage imageForIcon:ZetaIconTypeClock iconSize:ZetaIconSizeSmall color:[UIColor whiteColor]];
     [self.swipeView addSubview:self.successCheckmark];
@@ -293,29 +299,15 @@
     [self.successCheckmark autoAlignAxis:ALAxisVertical toSameAxisOfView:self.badgeUserImageView];
     [self.successCheckmark autoSetDimensionsToSize:self.successCheckmark.image.size];
     [self layoutIfNeeded];
-
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        if (self.successCheckmark != nil) {            
-            self.successCheckmark.mt_animationExaggeration = 4;
-            [UIView mt_animateWithViews:@[self.successCheckmark]
-                               duration:0.35f
-                         timingFunction:MTTimingFunctionEaseOutBack
-                             animations:^{
-                                 self.successCheckmark.transform = CGAffineTransformIdentity;
-                                 self.successCheckmark.alpha = 1.0f;
-                             }];
-        }
-    });
-
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.45f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [UIView mt_animateWithViews:@[self.contentView]
-                           duration:0.55f
-                     timingFunction:MTTimingFunctionEaseOutQuart
-                         animations:^{
-                             self.contentView.alpha = 0.0f;
-                         }];
-    });
-
+    
+    [UIView wr_animateWithEasing:RBBEasingFunctionEaseOutBounce duration:0.35f delay:0.1f animations:^{
+        self.successCheckmark.transform = CGAffineTransformIdentity;
+        self.successCheckmark.alpha = 1.0f;
+    } completion:nil];
+    
+    [UIView wr_animateWithEasing:RBBEasingFunctionEaseOutQuart duration:0.55f delay:0.45f animations:^{
+        self.contentView.alpha = 0.0f;
+    } completion:nil];
 }
 
 #pragma mark - Callbacks
@@ -403,6 +395,24 @@
         self.nameLabelVerticalConstraint.active = NO;
         self.nameLabelTopConstraint.active = YES;
         self.subtitleLabel.attributedText = subtitle;
+    }
+}
+
+- (void)updateGuestLabel
+{
+    CGFloat rightMargin = [WAZUIMagic cgFloatForIdentifier:@"people_picker.search_results_mode.person_tile_right_margin"];
+
+    if (nil != self.team && !self.user.isTeamMember) {
+        if (nil == self.guestLabel) {
+            self.guestLabel = [[GuestLabel alloc] init];
+            [self.swipeView addSubview:self.guestLabel];
+            [self.guestLabel autoAlignAxisToSuperviewAxis:ALAxisHorizontal];
+            [self.guestLabel autoPinEdgeToSuperviewEdge:ALEdgeTrailing withInset:rightMargin];
+        }
+        self.guestLabel.hidden = NO;
+    }
+    else {
+        self.guestLabel.hidden = YES;
     }
 }
 

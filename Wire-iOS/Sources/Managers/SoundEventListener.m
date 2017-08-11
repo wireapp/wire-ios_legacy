@@ -22,7 +22,6 @@
 #import "WireSyncEngine+iOS.h"
 #import "avs+iOS.h"
 #import "ZClientViewController.h"
-#import "ZMUserSession+Additions.h"
 #import "SoundEventRulesWatchDog.h"
 #import "AppDelegate.h"
 #import "Wire-Swift.h"
@@ -59,7 +58,7 @@ static NSTimeInterval const SoundEventListenerIgnoreTimeForPushStart = 2.0;
 {
     self = [super init];
     if (self) {
-        self.voiceChannelStateObserverToken = [VoiceChannelRouter addStateObserver:self userSession:[ZMUserSession sharedSession]];
+        self.voiceChannelStateObserverToken = [VoiceChannelV3 addStateObserver:self userSession:[ZMUserSession sharedSession]];
         self.unreadMessageObserverToken = [NewUnreadMessagesChangeInfo addNewMessageObserver:self];
         self.unreadKnockMessageObserverToken = [NewUnreadKnockMessagesChangeInfo addNewKnockObserver:self];
         

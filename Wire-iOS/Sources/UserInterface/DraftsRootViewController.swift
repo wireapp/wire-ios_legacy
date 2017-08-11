@@ -58,7 +58,7 @@ final class DraftsRootViewController: UISplitViewController {
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        UIApplication.shared.setStatusBarStyle(.lightContent, animated: animated)
+        UIApplication.shared.wr_setStatusBarStyle(.lightContent, animated: animated)
     }
 
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -77,7 +77,7 @@ extension DraftsRootViewController: MessageComposeViewControllerDelegate, UIAdap
 
     func composeViewController(_ controller: MessageComposeViewController, wantsToSendDraft draft: MessageDraft) {
         view.window?.endEditing(true)
-        let conversations = ZMConversationList.conversationsIncludingArchived(inUserSession: ZMUserSession.shared()!, team: ZMUser.selfUser().activeTeam).shareableConversations()
+        let conversations = ZMConversationList.conversationsIncludingArchived(inUserSession: ZMUserSession.shared()!).shareableConversations()
         let shareViewController = ShareViewController(shareable: draft, destinations: conversations, showPreview: false)
         let keyboardAvoiding = KeyboardAvoidingViewController(viewController: shareViewController)
 

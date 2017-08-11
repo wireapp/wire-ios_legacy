@@ -17,7 +17,7 @@
 //
 
 
-import AssetsLibrary
+import Photos
 
 @objc final public class SavableImage: NSObject {
 
@@ -25,7 +25,6 @@ import AssetsLibrary
     
     fileprivate let imageData: Data
     fileprivate let imageOrientation: UIImageOrientation
-    fileprivate let library = ALAssetsLibrary()
     fileprivate var writeInProgess = false
 
     init(data: Data, orientation: UIImageOrientation) {
@@ -37,12 +36,18 @@ import AssetsLibrary
     public func saveToLibrary(withCompletion completion: ImageSaveCompletion? = .none) {
         guard !writeInProgess else { return }
         writeInProgess = true
-
-        let metadata: [String: NSObject] = [ALAssetPropertyOrientation: imageOrientation.exifOrientiation as NSObject]
-        library.writeImageData(toSavedPhotosAlbum: imageData, metadata: metadata) { [weak self] _, _ in
-            guard let `self` = self else { return }
-            self.writeInProgess = false
-            completion?()
+        
+        PHPhotoLibrary.shared().performChanges({ [weak self] in
+            guard let `self` = self, let image = UIImage(data: self.imageData) else {
+                return
+            }
+            
+            PHAssetChangeRequest.creationRequestForAsset(from: image)
+        }) { [weak self] success, error in
+            DispatchQueue.main.async {
+                self?.writeInProgess = false
+                completion?()
+            }
         }
     }
 

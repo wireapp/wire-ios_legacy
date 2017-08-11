@@ -21,7 +21,7 @@ import UIKit
 import Cartography
 import Classy
 import WireExtensionComponents
-
+import Marklight
 
 extension Settings {
     var returnKeyType: UIReturnKeyType {
@@ -32,6 +32,7 @@ extension Settings {
 public enum InputBarState: Equatable {
     case writing(ephemeral: Bool)
     case editing(originalText: String)
+    case markingDown
 
     var isWriting: Bool {
         switch self {
@@ -43,6 +44,13 @@ public enum InputBarState: Equatable {
     var isEditing: Bool {
         switch self {
         case .editing(originalText: _): return true
+        default: return false
+        }
+    }
+    
+    var isMarkingDown: Bool {
+        switch self {
+        case .markingDown: return true
         default: return false
         }
     }
@@ -75,15 +83,20 @@ private struct InputBarConstants {
     private let inputBarVerticalInset : CGFloat = 34
 
 
-    public let textView: NextResponderTextView = NextResponderTextView()
+    public let textView = MarklightTextView()
     public let leftAccessoryView  = UIView()
     public let rightAccessoryView = UIView()
     
     // Contains and clips the buttonInnerContainer
     public let buttonContainer = UIView()
     
-    public let editingView = InputBarEditView()
+    // Contains editingView and mardownView
+    public let secondaryButtonsView: InputBarSecondaryButtonsView
+    
     public let buttonsView: InputBarButtonsView
+    public let editingView = InputBarEditView()
+    public let markdownView = MarkdownBarView()
+    
     
     public var editingBackgroundColor: UIColor?
     public var barBackgroundColor: UIColor?
@@ -91,13 +104,11 @@ private struct InputBarConstants {
     public var ephemeralColor: UIColor?
     public var placeholderColor: UIColor?
 
-    fileprivate var contentSizeObserver: NSObject? = nil
     fileprivate var rowTopInsetConstraint: NSLayoutConstraint? = nil
     
-    // Contains the editingView and buttonsView
+    // Contains the secondaryButtonsView and buttonsView
     fileprivate let buttonInnerContainer = UIView()
     fileprivate let fakeCursor = UIView()
-    fileprivate let inputBarSeparator = UIView()
     fileprivate let buttonRowSeparator = UIView()
     fileprivate let constants = InputBarConstants()
     fileprivate let notificationCenter = NotificationCenter.default
@@ -106,19 +117,11 @@ private struct InputBarConstants {
         return inputBarState.isEditing
     }
     
+    var isMarkingDown: Bool {
+        return inputBarState.isMarkingDown
+    }
+    
     private var inputBarState: InputBarState = .writing(ephemeral: false)
-    
-    fileprivate var textIsOverflowing = false {
-        didSet {
-            updateTopSeparator() 
-        }
-    }
-    
-    public var separatorEnabled = false {
-        didSet {
-            updateTopSeparator()
-        }
-    }
     
     public var invisibleInputAccessoryView : InvisibleInputAccessoryView? = nil  {
         didSet {
@@ -145,28 +148,29 @@ private struct InputBarConstants {
     
     deinit {
         notificationCenter.removeObserver(self)
-        contentSizeObserver = nil
     }
 
     required public init(buttons: [UIButton]) {
         buttonsView = InputBarButtonsView(buttons: buttons)
+        secondaryButtonsView = InputBarSecondaryButtonsView(editBarView: editingView, markdownBarView: markdownView)
+        
         super.init(frame: CGRect.zero)
-                
+        
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(didTapBackground))
         addGestureRecognizer(tapGestureRecognizer)
         buttonsView.clipsToBounds = true
         buttonContainer.clipsToBounds = true
         
-        [leftAccessoryView, textView, rightAccessoryView, inputBarSeparator, buttonContainer, buttonRowSeparator].forEach(addSubview)
+        [leftAccessoryView, textView, rightAccessoryView, buttonContainer, buttonRowSeparator].forEach(addSubview)
         buttonContainer.addSubview(buttonInnerContainer)
-        [buttonsView, editingView].forEach(buttonInnerContainer.addSubview)
+        [buttonsView, secondaryButtonsView].forEach(buttonInnerContainer.addSubview)
         textView.addSubview(fakeCursor)
         CASStyler.default().styleItem(self)
 
         setupViews()
         createConstraints()
-        updateTopSeparator()
-
+        
+        notificationCenter.addObserver(self, selector: #selector(textViewDidChangeSelection), name: Notification.Name(rawValue: MarklightTextViewDidChangeSelectionNotification), object: textView)
         notificationCenter.addObserver(self, selector: #selector(textViewTextDidChange), name: NSNotification.Name.UITextViewTextDidChange, object: textView)
         notificationCenter.addObserver(self, selector: #selector(textViewDidBeginEditing), name: NSNotification.Name.UITextViewTextDidBeginEditing, object: nil)
         notificationCenter.addObserver(self, selector: #selector(textViewDidEndEditing), name: NSNotification.Name.UITextViewTextDidEndEditing, object: nil)
@@ -178,8 +182,6 @@ private struct InputBarConstants {
     }
     
     fileprivate func setupViews() {
-        inputBarSeparator.cas_styleClass = "separator"
-        
         textView.accessibilityIdentifier = "inputField"
         updatePlaceholder()
         textView.lineFragmentPadding = 0
@@ -190,10 +192,17 @@ private struct InputBarConstants {
         textView.keyboardAppearance = ColorScheme.default().keyboardAppearance
         textView.placeholderTextTransform = .upper
         textView.tintAdjustmentMode = .automatic
+        
+        // we don't want large fonts in message text view
+        let headerFont = FontSpec(.normal, .medium).font!
+        textView.style.h1HeadingAttributes[NSFontAttributeName] = headerFont
+        textView.style.h2HeadingAttributes[NSFontAttributeName] = headerFont
+        textView.style.h3HeadingAttributes[NSFontAttributeName] = headerFont
+        
+        markdownView.delegate = textView
 
         updateReturnKey()
 
-        contentSizeObserver = KeyValueObserver.observe(textView, keyPath: "contentSize", target: self, selector: #selector(textViewContentSizeDidChange))
         updateInputBar(withState: inputBarState, animated: false)
         updateColors()
     }
@@ -225,12 +234,12 @@ private struct InputBarConstants {
             buttonRowSeparator.height == .hairline
         }
         
-        constrain(editingView, buttonsView, buttonInnerContainer) { editingView, buttonsView, buttonInnerContainer in
-            editingView.top == buttonInnerContainer.top
-            editingView.leading == buttonInnerContainer.leading
-            editingView.trailing == buttonInnerContainer.trailing
-            editingView.bottom == buttonsView.top
-            editingView.height == constants.buttonsBarHeight
+        constrain(secondaryButtonsView, buttonsView, buttonInnerContainer) { secondaryButtonsView, buttonsView, buttonInnerContainer in
+            secondaryButtonsView.top == buttonInnerContainer.top
+            secondaryButtonsView.leading == buttonInnerContainer.leading
+            secondaryButtonsView.trailing == buttonInnerContainer.trailing
+            secondaryButtonsView.bottom == buttonsView.top
+            secondaryButtonsView.height == constants.buttonsBarHeight
             
             buttonsView.leading == buttonInnerContainer.leading
             buttonsView.trailing <= buttonInnerContainer.trailing
@@ -246,13 +255,6 @@ private struct InputBarConstants {
             innerContainer.leading == container.leading
             innerContainer.trailing == container.trailing
             self.rowTopInsetConstraint = innerContainer.top == container.top - constants.buttonsBarHeight
-        }
-        
-        constrain(inputBarSeparator) { inputBarSeparator in
-            inputBarSeparator.top == inputBarSeparator.superview!.top
-            inputBarSeparator.leading == inputBarSeparator.superview!.leading
-            inputBarSeparator.trailing == inputBarSeparator.superview!.trailing
-            inputBarSeparator.height == .hairline
         }
         
         constrain(fakeCursor) { fakeCursor in
@@ -298,23 +300,12 @@ private struct InputBarConstants {
             }
             return "conversation.input_bar.placeholder".localized
         case .editing: return nil
+        case .markingDown: return "conversation.input_bar.placeholder".localized
         }
-    }
-    
-    fileprivate func updateTopSeparator() {
-        inputBarSeparator.isHidden = !textIsOverflowing && !separatorEnabled
     }
     
     func updateFakeCursorVisibility(_ firstResponder: UIResponder? = nil) {
         fakeCursor.isHidden = textView.isFirstResponder || textView.text.characters.count != 0 || firstResponder != nil
-    }
-    
-    func textViewContentSizeDidChange(_ sender: AnyObject) {
-        guard let textViewFont = textView.font
-            else { return }
-        
-        let lineCount = floor((textView.contentSize.height - inputBarVerticalInset) / textViewFont.lineHeight)
-        textIsOverflowing = lineCount > 1 // we show separator when the text is 2+ lines
     }
 
     // MARK: - Disable interactions on the lower part to not to interfere with the keyboard
@@ -355,6 +346,10 @@ private struct InputBarConstants {
                 }
             case .editing(let text):
                 self.setInputBarText(text)
+                self.secondaryButtonsView.setEditBarView()
+            
+            case .markingDown:
+                self.secondaryButtonsView.setMarkdownBarView()
             }
         }
         
@@ -385,7 +380,7 @@ private struct InputBarConstants {
 
     fileprivate func backgroundColor(forInputBarState state: InputBarState) -> UIColor? {
         guard let writingColor = barBackgroundColor, let editingColor = editingBackgroundColor else { return nil }
-        return state.isWriting ? writingColor : writingColor.mix(editingColor, amount: 0.16)
+        return state.isWriting || state.isMarkingDown ? writingColor : writingColor.mix(editingColor, amount: 0.16)
     }
     
     fileprivate func updateColors() {
@@ -450,6 +445,7 @@ extension InputBar {
     func textViewTextDidChange(_ notification: Notification) {
         updateFakeCursorVisibility()
         updateEditViewState()
+        markdownView.updateIconsForModes(textView.markdownElementsForRange(nil))
     }
     
     func textViewDidBeginEditing(_ notification: Notification) {
@@ -461,7 +457,10 @@ extension InputBar {
         updateFakeCursorVisibility()
         updateEditViewState()
     }
-
+    
+    func textViewDidChangeSelection(_ notification: Notification) {
+        markdownView.updateIconsForModes(textView.markdownElementsForRange(nil))
+    }
 }
 
 extension InputBar {

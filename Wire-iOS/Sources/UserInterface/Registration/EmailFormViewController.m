@@ -245,7 +245,7 @@
 {
     NSError *error = nil;
     NSString *newName = self.nameField.text;
-    BOOL valid = [[ZMUser editableSelfUser] validateValue:&newName forKey:NSStringFromSelector(@selector(name)) error:&error];
+    BOOL valid = [ZMUser validateValue:&newName forKey:NSStringFromSelector(@selector(name)) error:&error];
     
     if (valid) {
         self.nameField.rightAccessoryView = RegistrationTextFieldRightAccessoryViewNone;
@@ -261,7 +261,7 @@
 {
     NSError *error = nil;
     NSString *newEmail = self.emailField.text;
-    BOOL valid = [[ZMUser editableSelfUser] validateValue:&newEmail forKey:NSStringFromSelector(@selector(emailAddress)) error:&error];
+    BOOL valid = [ZMUser validateValue:&newEmail forKey:NSStringFromSelector(@selector(emailAddress)) error:&error];
     
     if (valid) {
         self.emailField.rightAccessoryView = RegistrationTextFieldRightAccessoryViewNone;
@@ -277,7 +277,7 @@
 {
     NSError *error = nil;
     NSString *newName = self.nameField.text;
-    BOOL valid = [[ZMUser editableSelfUser] validateValue:&newName forKey:NSStringFromSelector(@selector(name)) error:&error];
+    BOOL valid = [ZMUser validateValue:&newName forKey:NSStringFromSelector(@selector(name)) error:&error];
     
     if (valid) {
         self.guidanceLabel.text = @"";

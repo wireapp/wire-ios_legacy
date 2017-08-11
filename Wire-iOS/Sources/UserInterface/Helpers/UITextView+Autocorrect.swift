@@ -1,6 +1,6 @@
 //
 // Wire
-// Copyright (C) 2016 Wire Swiss GmbH
+// Copyright (C) 2017 Wire Swiss GmbH
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -17,19 +17,14 @@
 //
 
 import Foundation
+import UIKit
 
-extension CallingProtocolStrategy {
-    
-    static var allOptions: [CallingProtocolStrategy] {
-        return [.negotiate, .version2, .version3]
-    }
-    
-    var displayString: String {
-        switch self {
-        case .negotiate: return "Default"
-        case .version2: return "Version 2"
-        case .version3: return "Version 3"
+extension UITextView {
+    // Autocorrects the last word, if necessary.
+    func autocorrectLastWord() {
+        UIView.performWithoutAnimation {
+            resignFirstResponder()
+            becomeFirstResponder()
         }
     }
-    
 }

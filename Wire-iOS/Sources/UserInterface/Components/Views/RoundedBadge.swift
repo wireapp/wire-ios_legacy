@@ -19,34 +19,19 @@
 import Foundation
 import Cartography
 
-public class RoundedTextBadge: RoundedBadge {
-    public var textLabel = UILabel()
-
-    init() {
-        super.init(view: self.textLabel)
-        textLabel.setContentCompressionResistancePriority(UILayoutPriorityRequired, for: .horizontal)
-        textLabel.setContentHuggingPriority(UILayoutPriorityRequired, for: .horizontal)
-        textLabel.textAlignment = .center
-    }
-    
-    required public init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-}
-
 public class RoundedBadge: UIView {
     public let containedView: UIView
-    init(view: UIView) {
+    init(view: UIView, contentInset: UIEdgeInsets = UIEdgeInsets(top: 2, left: 4, bottom: 2, right: 4)) {
         containedView = view
         super.init(frame: .zero)
         
         self.addSubview(containedView)
         
         constrain(self, containedView) { selfView, containedView in
-            containedView.leading == selfView.leading + 4
-            containedView.trailing == selfView.trailing - 4
-            containedView.top == selfView.top + 2
-            containedView.bottom == selfView.bottom - 2
+            containedView.leading == selfView.leading + contentInset.left
+            containedView.trailing == selfView.trailing - contentInset.right
+            containedView.top == selfView.top + contentInset.top
+            containedView.bottom == selfView.bottom - contentInset.bottom
             
             selfView.width >= selfView.height
         }
@@ -68,3 +53,31 @@ public class RoundedBadge: UIView {
         updateCornerRadius()
     }
 }
+
+public class RoundedTextBadge: RoundedBadge {
+    public var textLabel = UILabel()
+    
+    init(contentInset: UIEdgeInsets = UIEdgeInsets(top: 2, left: 4, bottom: 2, right: 4)) {
+        super.init(view: self.textLabel, contentInset: contentInset)
+        textLabel.setContentCompressionResistancePriority(UILayoutPriorityRequired, for: .horizontal)
+        textLabel.setContentHuggingPriority(UILayoutPriorityRequired, for: .horizontal)
+        textLabel.textAlignment = .center
+    }
+    
+    required public init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+}
+
+public class GuestLabel: RoundedTextBadge {
+    init() {
+        super.init(contentInset: UIEdgeInsets(top: 2, left: 8, bottom: 2, right: 8))
+        textLabel.text = "participants.avatar.guest.title".localized
+        accessibilityIdentifier = "guest label"
+    }
+    
+    required public init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+}
+

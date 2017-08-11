@@ -19,7 +19,6 @@
 
 import UIKit
 
-
 @objc public protocol TextViewInteractionDelegate: NSObjectProtocol {
     func textView(_ textView: LinkInteractionTextView, open url: URL) -> Bool
     func textViewDidLongPress(_ textView: LinkInteractionTextView)

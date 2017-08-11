@@ -46,7 +46,7 @@
     BOOL call = NO;
     BOOL videoCall = NO;
     
-    Team *activeTeam = [[ZMUser selfUser] activeTeam];
+    Team *team = ZMUser.selfUser.team;
     
     switch (action) {
         case StartUIActionCreateOrOpenConversation:
@@ -57,7 +57,7 @@
                 if (users.count == 1) {
                     ZMUser *user = users.anyObject;
                     [[ZMUserSession sharedSession] enqueueChanges:^{
-                        conversation = [user oneToOneConversationInTeam:activeTeam];
+                        conversation = user.oneToOneConversation;
                     } completionHandler:^{
                         [Analytics.shared tagOpenedExistingConversationWithType:conversation.conversationType];
                         [[ZClientViewController sharedZClientViewController] selectConversation:conversation
@@ -70,7 +70,7 @@
                     [[ZMUserSession sharedSession] enqueueChanges:^{
                         conversation = [ZMConversation insertGroupConversationIntoUserSession:[ZMUserSession sharedSession]
                                                                              withParticipants:users.allObjects
-                                                                                       inTeam:activeTeam];
+                                                                                       inTeam:team];
                     } completionHandler:^{
                         [[ZClientViewController sharedZClientViewController] selectConversation:conversation
                                                                                     focusOnView:YES
@@ -120,7 +120,7 @@
                 ZMUser *user = users.anyObject;
 
                 [[ZMUserSession sharedSession] enqueueChanges:^{
-                    conversation = [user oneToOneConversationInTeam:activeTeam];
+                    conversation = user.oneToOneConversation;
                 } completionHandler:^{
                     [[ZClientViewController sharedZClientViewController] selectConversation:conversation
                                                                                 focusOnView:YES
@@ -146,7 +146,7 @@
                 [[ZMUserSession sharedSession] enqueueChanges:^{
                     conversation = [ZMConversation insertGroupConversationIntoUserSession:[ZMUserSession sharedSession]
                                                                          withParticipants:users.allObjects
-                                                                                   inTeam:activeTeam];
+                                                                                   inTeam:team];
                 } completionHandler:^{
                     
                     [[ZClientViewController sharedZClientViewController] selectConversation:conversation
@@ -202,7 +202,7 @@
 
 - (void)cameraViewController:(CameraViewController *)cameraViewController didPickImageData:(NSData *)imageData imageMetadata:(ImageMetadata *)metadata
 {
-    Team *activeTeam = [[ZMUser selfUser] activeTeam];
+    Team *team = ZMUser.selfUser.team;
 
     [self dismissViewControllerAnimated:YES completion:^() {
         [self dismissPeoplePickerWithCompletionBlock:^{
@@ -210,7 +210,7 @@
             if (self.startUISelectedUsers.count == 1) {
                 
                 ZMUser *user = self.startUISelectedUsers.anyObject;
-                ZMConversation *oneToOneConversation = [user oneToOneConversationInTeam:activeTeam];
+                ZMConversation *oneToOneConversation = user.oneToOneConversation;
                 
                 [[ZMUserSession sharedSession] enqueueChanges:^{
                     [oneToOneConversation appendMessageWithImageData:imageData];
@@ -232,7 +232,7 @@
                 [[ZMUserSession sharedSession] enqueueChanges:^{
                     conversation = [ZMConversation insertGroupConversationIntoUserSession:[ZMUserSession sharedSession]
                                                                          withParticipants:self.startUISelectedUsers.allObjects
-                                                                                   inTeam:activeTeam];
+                                                                                   inTeam:team];
                 } completionHandler:^{
                     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                         [[ZMUserSession sharedSession] enqueueChanges:^{

@@ -26,7 +26,6 @@
 #import "WireSyncEngine+iOS.h"
 #import "CameraViewController.h"
 #import "UIViewController+Errors.h"
-#import "ZMUserSession+Additions.h"
 #import "Button.h"
 
 #import "AnalyticsTracker+Registration.h"
@@ -51,7 +50,7 @@ NSString * const UnsplashRandomImageLowQualityURL = @"https://source.unsplash.co
 @property (nonatomic) UILabel *subtitleLabel;
 @property (nonatomic) Button *selectOwnPictureButton;
 @property (nonatomic) Button *keepDefaultPictureButton;
-@property (nonatomic) id<ZMEditableUser> editabledUser;
+@property (nonatomic) ZMIncompleteRegistrationUser *unregisteredUser;
 @property (nonatomic) UIImageView *profilePictureImageView;
 @property (nonatomic) UIImage *defaultProfilePictureImage;
 @property (nonatomic) UIView *contentView;
@@ -65,12 +64,12 @@ NSString * const UnsplashRandomImageLowQualityURL = @"https://source.unsplash.co
 
 @implementation ProfilePictureStepViewController
 
-- (instancetype)initWithEditableUser:(id<ZMEditableUser>)editableUser
+- (instancetype)initWithUnregisteredUser:(ZMIncompleteRegistrationUser *)unregisteredUser
 {
     self = [super initWithNibName:nil bundle:nil];
     
     if (self) {
-        self.editabledUser = editableUser;
+        self.unregisteredUser = unregisteredUser;
     }
     
     return self;
@@ -123,7 +122,7 @@ NSString * const UnsplashRandomImageLowQualityURL = @"https://source.unsplash.co
     self.subtitleLabel.font = [UIFont fontWithMagicIdentifier:@"style.text.large.font_spec_light"];
     self.subtitleLabel.textColor = [UIColor colorWithMagicIdentifier:@"style.color.static_foreground.normal"];
     self.subtitleLabel.numberOfLines = 0;
-    self.subtitleLabel.text = [NSString stringWithFormat:NSLocalizedString(@"registration.select_picture.subtitle", nil), self.editabledUser.name];
+    self.subtitleLabel.text = [NSString stringWithFormat:NSLocalizedString(@"registration.select_picture.subtitle", nil), self.unregisteredUser.name];
 
     [self.contentView addSubview:self.subtitleLabel];
 }
@@ -292,10 +291,8 @@ NSString * const UnsplashRandomImageLowQualityURL = @"https://source.unsplash.co
 - (void)setPictureImageData:(NSData *)imageData
 {
     if (imageData != nil) {
-        [[ZMUserSession sharedSession] checkNetworkAndFlashIndicatorIfNecessary];
-        [[ZMUserSession sharedSession] enqueueChanges:^{
-            [[ZMUserSession sharedSession].profileUpdate updateImageWithImageData:imageData];
-        }];
+        [AppDelegate checkNetworkAndFlashIndicatorIfNecessary];
+        [[UnauthenticatedSession sharedSession] setProfileImage:imageData];
         [self.formStepDelegate didCompleteFormStep:self];
     }
 }
@@ -322,9 +319,9 @@ NSString * const UnsplashRandomImageLowQualityURL = @"https://source.unsplash.co
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info
 {
-    [UIImagePickerController loadImageFromMediaInfo:info result:^(UIImage *image, NSData *imageData, NSString *mediaType) {
+    [UIImagePickerController imageFromMediaInfo:info resultBlock:^(UIImage *image) {
         self.profilePictureImageView.image = image;
-    } failure:^(NSError *error) {}];
+    }];
     
     [UIImagePickerController imageDataFromMediaInfo:info resultBlock:^(NSData *imageData) {
         [self dismissViewControllerAnimated:YES completion:nil];

@@ -23,10 +23,12 @@
 
 @class RootViewController;
 @class ZMUserSession;
+@class UnauthenticatedSession;
 @class NotificationWindowRootViewController;
 @class FirstTimeUsageAgent;
 @class ZMConversation;
 @class MediaPlaybackManager;
+@class SessionManager;
 
 
 
@@ -36,6 +38,8 @@
 
 // Singletons
 @property (readonly, nonatomic) ZMUserSession *zetaUserSession;
+@property (readonly, nonatomic) UnauthenticatedSession *unauthenticatedSession;
+@property (readonly, nonatomic) SessionManager *sessionManager;
 
 @property (readonly, nonatomic) NotificationWindowRootViewController *notificationWindowController;
 @property (readonly, nonatomic) UIWindow *notificationsWindow;

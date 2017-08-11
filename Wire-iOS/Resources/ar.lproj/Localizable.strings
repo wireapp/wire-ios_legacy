@@ -1,17 +1,17 @@
-// 
+//
 // Wire
 // Copyright (C) 2016 Wire Swiss GmbH
-// 
+//
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
-// 
+//
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 // GNU General Public License for more details.
-// 
+//
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
@@ -33,7 +33,6 @@
 "peoplepicker.header.send_invitation" = "قم بدعوة";
 "peoplepicker.header.contacts" = "جهات الاتصال";
 "peoplepicker.header.contacts_personal" = "جهات الاتصال شخصية";
-"peoplepicker.header.team_members" = "%@";
 "peoplepicker.header.directory" = "تواصل";
 "peoplepicker.title.create_conversation" = "إنشاء مجموعة";
 "peoplepicker.title.add_to_conversation" = "إضافة أشخاص";
@@ -63,7 +62,7 @@
 "peoplepicker.quick-action.open-conversation" = "افتح";
 "peoplepicker.quick-action.create-conversation" = "إنشاء مجموعة";
 
-"add_participants.all_contacts_added" = "Everyone's here.";
+"add_participants.all_contacts_added" = "الكل حاضر.";
 
 // Contacts UI
 "contacts_ui.search_placeholder" = "البحث بحسب الاسم";
@@ -78,7 +77,7 @@
 "contacts_ui.title" = "دعوة أُناس";
 
 "contacts_ui.no_contact.title" = "لا محادثات بعد";
-"contacts_ui.no_contact.message" = "ابدأ محادثة، أنشىء مجموعة أو ادعُ أشخاصًا للإِنْضِمام.";
+"contacts_ui.no_contact.message" = "ابدأ محادثة أو قم بإنشاء مجموعة.";
 
 "contacts_ui.no_contact.archived.title" = "أُرشف كل شيء";
 
@@ -93,14 +92,31 @@
 // Profile Header View
 "conversation.connection_view.in_address_book" = "في جهات الاتصال";
 
-
+// Conversation list voiceover accessibility
+"conversation_list.voiceover.open_conversation.hint" = "افتح المحادثة";
+"conversation_list.voiceover.status.pending_connection" = "مُعلّق";
+"conversation_list.voiceover.status.active_call" = "مكالمة نشطة";
+"conversation_list.voiceover.status.missed_call" = "مكالمة فائتة";
+"conversation_list.voiceover.status.pause_media" = "إيقاف الوسائط";
+"conversation_list.voiceover.status.play_media" = "تشغيل الوسائط";
+"conversation_list.voiceover.status.silenced" = "صامت";
+"conversation_list.voiceover.status.typing" = "كتابة";
+"conversation_list.voiceover.status.ping" = "ping";
+"conversation_list.voiceover.bottom_bar.archived_button.label" = "مؤرشف";
+"conversation_list.voiceover.bottom_bar.archived_button.hint" = "قائمة المحادثات المؤرشفة";
+"conversation_list.voiceover.bottom_bar.contacts_button.label" = "جهات اتصال";
+"conversation_list.voiceover.bottom_bar.contacts_button.hint" = "البحث عن أشخاص في Wire";
+"conversation_list.voiceover.bottom_bar.compose_button.label" = "إنشاء";
+"conversation_list.voiceover.bottom_bar.compose_button.hint" = "إنشاء الرسائل وحفظها في وقت لاحق";
+"conversation_list.voiceover.bottom_bar.camera_button.label" = "الكاميرا";
+"conversation_list.voiceover.bottom_bar.camera_button.hint" = "التقاط الصورة وإرسالها بسرعة";
 
 // Archived List
 "archived_list.title" = "الأرشيف";
 
 // Add contact tool tip
 "tool_tip.contacts.title" = "المحادثات تبدأ هنا";
-"tool_tip.contacts.message" = "ابدأ محادثة أو قم بدعوة المزيد من الأشخاص للانضمام. اتصل ، أرسل رسائل و شارك في محادثات خاصة أوجماعية.";
+"tool_tip.contacts.message" = "ابدأ محادثة. اتصل أو أرسل رسائل أو شارك في محادثات خاصة أوجماعية.";
 
 // "Knows" subtitle in cell: "Knows Indrek", "Knows Indrek and Jane", "Knows Indrek and 5 others"
 "peoplepicker.suggested.knows_one" = "تعرف %@";
@@ -130,6 +146,8 @@
 "list.archived_conversations" = "حفظ في الأرشيف";
 "list.archived_conversations_close" = "إغلاق الأرشيف";
 
+"conversation.voiceover.verified" = "موثّق";
+
 "conversation.status.call" = "المكالمة الجارية";
 "conversation.status.typing" = "يكتب رسالة…";
 "conversation.status.typing.group" = "%@: يكتب رسالة…";
@@ -157,6 +175,7 @@
 "conversation.status.you_left" = "أنت غادرت";
 "conversation.status.started_conversation" = "بدأ %@ محادثة جديدة";
 "conversation.status.removed_users" = "قام %@ بإزالة %@";
+"conversation.status.everyone_left" = "غادر الكُلّ";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Compose Entry Point
@@ -193,6 +212,8 @@
 "conversation.call.many_participants_confirmation.call" = "اتصال";
 
 "conversation.connection_view.in_address_book" = "في جهات الاتصال";
+
+"conversation.input_bar.shortcut.send" = "إرسال رسالة";
 
 // Image confirmation dialogue
 "image_confirmer.confirm" = "موافق";
@@ -272,6 +293,7 @@
 "content.system.connected_to" = "تم التواصل مع %@\nبدأ مُحادثة";
 "content.system.other_wanted_to_talk" = "اتصل %@";
 "content.system.you_wanted_to_talk" = "اتّصلت أنت";
+"content.system.ephemeral_time_remaining" = "غادر %@";
 
 "content.system.you_started" = "أنت";
 "content.system.this_device" = "هذا الجهاز";
@@ -472,7 +494,12 @@
 
 // User Details
 "profile.details.title" = "التفاصيل";
-"profile.details.guest_in_team" = "ضيف في %@";
+"profile.details.guest" = "ضيف";
+
+"profile_view.team_name.in" = "في %@";
+"profile_view.accessibility.handle" = "مُعرّف";
+"profile_view.accessibility.name" = "اسم العرض";
+"profile_view.accessibility.team_name" = "اسم الفريق";
 
 // Device list
 "profile.devices.title" = "الأجهزة";
@@ -507,6 +534,9 @@
 "self.about" = "عن";
 "self.sign_out" = "تسجيل الخروج";
 "self.report_abuse" = "بلغ عن إساءة الاستخدام";
+"self.voiceover.label" = "الملف الشخصي";
+"self.voiceover.hint" = "فتح الملف والإعدادات";
+"self.new-device.voiceover.label" = "الملف، أجهزة مضافة جديدة";
 
 "self.add_phone_number" = "أضف رقم الهاتف";
 "self.add_email_password" = "إضافة عنوان البريد الإلكتروني وكلمة المرور";
@@ -527,6 +557,10 @@
 "self.new_device_alert.message_plural" = "%@\n\nإذا لم تفعل ذلك، أزل هذه الأجهزة وقُم بتعيين كلمة المرور.";
 "self.new_device_alert.manage_devices" = "إدارة الأجهزة";
 "self.new_device_alert.trust_devices" = "موافق";
+
+// Settings - top level
+"self.settings.create_team.title" = "إنشاء فريق";
+"self.settings.add_account.title" = "إضافة حساب";
 
 // Settings - Account details
 "self.settings.account_section" = "الحساب";
@@ -681,10 +715,13 @@
 "self.settings.privacy_security.lock_cancelled.description" = "فتح قفل Wire بإستخدام Touch ID أو رمز الدخول";
 "self.settings.privacy_security.lock_cancelled.action" = "فتح القفل";
 
+"self.settings.privacy_security.disable_link_previews.title" = "إنشاء معاينات للروابط التي ترسلها";
+"self.settings.privacy_security.disable_link_previews.footer" = "قد تظهر المعاينات للروابط من الأشخاص الآخرين.";
+
 "self.settings.privacy_analytics_menu.devices.title" = "الأجهزة";
 
 "self.settings.privacy_analytics_section.title" = "تقارير الإستخدام والأعطال";
-"self.settings.privacy_analytics.title" = "Send Anonymous Data";
+"self.settings.privacy_analytics.title" = "أرسل بيانات كمجهول";
 "self.settings.privacy_analytics_menu.description.title" = "اجعل Wire أفضل عبر إرسال معلومات مُموّهة.\n";
 
 "self.settings.privacy.clear_history.title" = "مسح التاريخ";
@@ -891,7 +928,7 @@
 "push.notification.new_message" = "رسالة جديدة";
 
 
-// Force Update
+//Force Update
 "force.update.title" = "مطلوب التحديث";
 "force.update.message" = "أنت تفتقد مميزات جديدة.\nاحصل على آخر إصدار من Wire من خلال App Store.";
 "force.update.ok_button" = "اذهب لـApp Store";
@@ -936,3 +973,7 @@
 "compose.drafts.compose.delete.confirm.title" = "تأكيد الحذف";
 "compose.drafts.compose.delete.confirm.message" = "سيتم حذف هذه المسودّة بشكل دائم، ولن يمكن إرجاعها.";
 "compose.drafts.compose.delete.confirm.action.title" = "حذف";
+
+"compose.drafts.compose.dismiss.confirm.title" = "حفظ كمسودة";
+"compose.drafts.compose.dismiss.confirm.action.title" = "حفظ";
+"compose.drafts.compose.dismiss.delete.action.title" = "حذف";

@@ -54,8 +54,13 @@ extension SettingsCellDescriptorFactory {
     }
 
     func actionsSection() -> SettingsSectionDescriptorType {
+        var cellDescriptors = [ressetPasswordElement()]
+        if !self.settingsPropertyFactory.selfUser.isTeamMember {
+            cellDescriptors.append(deleteAccountButtonElement())
+        }
+        
         return SettingsSectionDescriptor(
-            cellDescriptors: [ressetPasswordElement(), deleteAccountButtonElement()],
+            cellDescriptors: cellDescriptors,
             header: "self.settings.account_details.actions.title".localized,
             footer: .none
         )
@@ -221,7 +226,7 @@ extension SettingsCellDescriptorFactory {
         return SettingsButtonCellDescriptor(title: "Sign out", isDestructive: false) { _ in
             Settings.shared().reset()
             ExtensionSettings.shared.reset()
-            ZMUserSession.resetStateAndExit()
+            ZMUserSession.shared()?.resetStateAndExit()
         }
     }
 

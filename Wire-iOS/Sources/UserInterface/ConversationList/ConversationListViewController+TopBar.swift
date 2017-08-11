@@ -29,10 +29,15 @@ extension ConversationListViewController {
         profileButton.addTarget(self, action: #selector(presentSettings), for: .touchUpInside)
         profileButton.accessibilityIdentifier = "bottomBarSettingsButton"
         profileButton.setIconColor(.white, for: .normal)
+        profileButton.accessibilityLabel = "self.voiceover.label".localized
+        profileButton.accessibilityHint = "self.voiceover.hint".localized
         
         if let imageView = profileButton.imageView, let user = ZMUser.selfUser() {
             let newDevicesDot = NewDevicesDot(user: user)
             profileButton.addSubview(newDevicesDot)
+            if user.clientsRequiringUserAttention.count > 0 {
+                profileButton.accessibilityLabel = "self.new-device.voiceover.label".localized
+            }
             
             constrain(newDevicesDot, imageView) { newDevicesDot, imageView in
                 newDevicesDot.top == imageView.top - 3

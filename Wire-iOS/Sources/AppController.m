@@ -21,7 +21,6 @@
 #import "AppController+Internal.h"
 
 #import "WireSyncEngine+iOS.h"
-#import "ZMUserSession+Additions.h"
 #import "MagicConfig.h"
 #import "PassthroughWindow.h"
 
@@ -46,12 +45,11 @@
 #import "Wire-Swift.h"
 #import "Message+Formatting.h"
 #import "ConversationListCell.h"
+#import "UIAlertController+Wire.h"
 
 NSString *const ZMUserSessionDidBecomeAvailableNotification = @"ZMUserSessionDidBecomeAvailableNotification";
 
 @interface AppController ()
-@property (nonatomic) AppUIState uiState;
-@property (nonatomic) AppSEState seState;
 @property (nonatomic) ZMUserSessionErrorCode signInErrorCode;
 @property (nonatomic) BOOL enteringForeground;
 
@@ -78,10 +76,6 @@ NSString *const ZMUserSessionDidBecomeAvailableNotification = @"ZMUserSessionDid
 @interface AppController (AuthObserver) <ZMAuthenticationObserver>
 @end
 
-@interface AppController (ForceUpdate)
-- (void)showForceUpdateIfNeeeded;
-@end
-
 @implementation AppController
 @synthesize window = _window;
 
@@ -89,6 +83,9 @@ NSString *const ZMUserSessionDidBecomeAvailableNotification = @"ZMUserSessionDid
 {
     self = [super init];
     if (self) {
+        // Must be performed before any SE instance is initialized.
+        [self configureCallKit];
+        
         self.uiState = AppUIStateNotLoaded;
         self.seState = AppSEStateNotLoaded;
         self.blocksToExecute = [NSMutableArray array];
@@ -108,7 +105,8 @@ NSString *const ZMUserSessionDidBecomeAvailableNotification = @"ZMUserSessionDid
 - (void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-    [self.zetaUserSession removeAuthenticationObserverForToken:self.authToken];
+    
+    [ZMUserSessionAuthenticationNotification removeObserverForToken:self.authToken];
 }
 
 - (void)setUiState:(AppUIState)uiState
@@ -123,7 +121,7 @@ NSString *const ZMUserSessionDidBecomeAvailableNotification = @"ZMUserSessionDid
     _seState = seState;
 }
 
--(BOOL)isRunningTests
+- (BOOL)isRunningTests
 {
     NSString *testPath = NSProcessInfo.processInfo.environment[@"XCTestConfigurationFilePath"];
     return testPath != nil;
@@ -133,8 +131,10 @@ NSString *const ZMUserSessionDidBecomeAvailableNotification = @"ZMUserSessionDid
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    [self setupBackendEnvironment];
+    
     if (! self.isRunningTests) {
-        [self startSyncEngine:application launchOptions:launchOptions];
+        [self loadAccountWithLaunchOptions:launchOptions];
         [self loadLaunchControllerIfNeeded];
     } else {
         [self loadLaunchController];
@@ -153,14 +153,16 @@ NSString *const ZMUserSessionDidBecomeAvailableNotification = @"ZMUserSessionDid
     self.enteringForeground = YES;
     [self loadAppropriateController];
     self.enteringForeground = NO;
-
-    [[self zetaUserSession] checkIfLoggedInWithCallback:^(BOOL isLoggedIn) {
-        if (isLoggedIn) {
-            [self uploadAddressBookIfNeeded];
-            [self trackShareExtensionEventsIfNeeded];
-            [self.messageCountTracker trackLegacyMessageCount];
-        }
-    }];
+    
+    if (self.sessionManager.isUserSessionActive) {
+        [[self zetaUserSession] checkIfLoggedInWithCallback:^(BOOL isLoggedIn) {
+            if (isLoggedIn) {
+                [self uploadAddressBookIfNeeded];
+                [self trackShareExtensionEventsIfNeeded];
+                [self.messageCountTracker trackLegacyMessageCount];
+            }
+        }];
+    }
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application
@@ -179,6 +181,11 @@ NSString *const ZMUserSessionDidBecomeAvailableNotification = @"ZMUserSessionDid
 
 - (void)uploadAddressBookIfNeeded
 {
+    // We should not even try to access address book when in a team
+    if (ZMUser.selfUser.hasTeam) {
+        return;
+    }
+
     BOOL addressBookDidBecomeGranted = [AddressBookHelper.sharedHelper accessStatusDidChangeToGranted];
     [AddressBookHelper.sharedHelper startRemoteSearchWithCheckingIfEnoughTimeSinceLast:!addressBookDidBecomeGranted];
     [AddressBookHelper.sharedHelper persistCurrentAccessStatus];
@@ -298,13 +305,13 @@ NSString *const ZMUserSessionDidBecomeAvailableNotification = @"ZMUserSessionDid
 
         self.notificationsWindow = [PassthroughWindow new];
         [self setupClassyWithWindows:@[self.window, self.notificationsWindow]];
-
-        // Window creation order is important, main window should be the keyWindow when its done.
-        [self loadRootViewController];
-
+        
         // setup overlay window
         [self loadNotificationWindowRootController];
         
+        // Window creation order is important, main window should be the keyWindow when its done.
+        [self loadRootViewController];
+
         // Bring them into UI
         [self.window makeKeyAndVisible];
         
@@ -398,51 +405,6 @@ NSString *const ZMUserSessionDidBecomeAvailableNotification = @"ZMUserSessionDid
 
 #pragma mark - SE Loading
 
-- (BOOL)startSyncEngine:(UIApplication *)application launchOptions:(NSDictionary *)launchOptions
-{
-    dispatch_block_t configuration = ^() {
-        
-        [self loadUserSession];
-        [[ZMUserSession sharedSession] application:application didFinishLaunchingWithOptions:launchOptions];
-        
-        if (launchOptions[UIApplicationLaunchOptionsURLKey] != nil) {
-            [[ZMUserSession sharedSession] didLaunchWithURL:launchOptions[UIApplicationLaunchOptionsURLKey]];
-        }
-
-        [self.fileBackupExcluder excludeLibraryFolderInSharedContainer];
-
-        @weakify(self)
-        [[ZMUserSession sharedSession] startAndCheckClientVersionWithCheckInterval:Settings.sharedSettings.blacklistDownloadInterval blackListedBlock:^{
-            @strongify(self)
-            self.seState = AppSEStateBlacklisted;
-            [self showForceUpdateIfNeeeded];
-        }];
-    };
-    
-    
-    if ([ZMUserSession needsToPrepareLocalStoreUsingAppGroupIdentifier:self.groupIdentifier]) {
-        self.seState = AppSEStateMigration;
-        [self.launchImageViewController showLoadingScreen];
-        
-        DDLogInfo(@"Database migration required, performing migration now:");
-        NSTimeInterval timeStart = [NSDate timeIntervalSinceReferenceDate];
-        [ZMUserSession prepareLocalStoreUsingAppGroupIdentifier:self.groupIdentifier completion:^{
-            dispatch_async(dispatch_get_main_queue(), ^{
-                NSTimeInterval timeEnd = [NSDate timeIntervalSinceReferenceDate];
-                DDLogInfo(@"Database migration DONE: %.02f sec", timeEnd - timeStart);
-                configuration();
-            });
-        }];
-        return NO;
-    }
-    else {
-        DDLogInfo(@"Database migration not required");
-        configuration();
-        return YES;
-    }
-    
-}
-
 - (ZMUserSession *)zetaUserSession
 {
     if (! self.isRunningTests) {
@@ -451,7 +413,7 @@ NSString *const ZMUserSessionDidBecomeAvailableNotification = @"ZMUserSessionDid
     return _zetaUserSession;
 }
 
-- (void)loadUserSession
+- (void)setupBackendEnvironment
 {
     NSString *BackendEnvironmentTypeKey = @"ZMBackendEnvironmentType";
     NSString *backendEnvironment = [[NSUserDefaults standardUserDefaults] stringForKey:BackendEnvironmentTypeKey];
@@ -466,28 +428,18 @@ NSString *const ZMUserSessionDidBecomeAvailableNotification = @"ZMUserSessionDid
     } else {
         DDLogInfo(@"Using '%@' backend environment", backendEnvironment);
     }
-    
+}
+
+- (void)setupUserSession:(ZMUserSession *)userSession
+{
     (void)[Settings sharedSettings];
+    
+    _zetaUserSession = userSession;
 
-    BOOL callKitSupported = ([CXCallObserver class] != nil) && !TARGET_IPHONE_SIMULATOR;
-    BOOL callKitDisabled = [[Settings sharedSettings] disableCallKit];
-    
-    [ZMUserSession setUseCallKit:callKitSupported && !callKitDisabled];
-    [ZMUserSession setCallingProtocolStrategy:[[Settings sharedSettings] callingProtocolStrategy]];
-    
-    NSBundle *bundle = NSBundle.mainBundle;
-    NSString *appVersion = [[bundle infoDictionary] objectForKey:(NSString *) kCFBundleVersionKey];
-    NSString *groupIdentifier = [NSString stringWithFormat:@"group.%@", bundle.bundleIdentifier];
-    
-    _zetaUserSession = [[ZMUserSession alloc] initWithMediaManager:(id)AVSProvider.shared.mediaManager
-                                                         analytics:Analytics.shared
-                                                        appVersion:appVersion
-                                                appGroupIdentifier:groupIdentifier];
-
-    self.analyticsEventPersistence = [[ShareExtensionAnalyticsPersistence alloc] initWithSharedContainerURL:_zetaUserSession.sharedContainerURL];
+    self.analyticsEventPersistence = [[ShareExtensionAnalyticsPersistence alloc] initWithSharedContainerURL:userSession.sharedContainerURL];
         
     // Sign up for authentication notifications
-    self.authToken = [[ZMUserSession sharedSession] addAuthenticationObserver:self];
+    self.authToken = [ZMUserSessionAuthenticationNotification addObserver:self];
     
     [[NSNotificationCenter defaultCenter] postNotificationName:ZMUserSessionDidBecomeAvailableNotification object:nil];
     [self executeQueuedBlocksIfNeeded];
@@ -495,9 +447,20 @@ NSString *const ZMUserSessionDidBecomeAvailableNotification = @"ZMUserSessionDid
     // Singletons
     AddressBookHelper.sharedHelper.configuration = AutomationHelper.sharedHelper;
     
-    [DeveloperMenuState prepareForDebugging];
-    [MessageDraftStorage setupSharedStorageAtURL:_zetaUserSession.sharedContainerURL error:nil];
-    self.messageCountTracker = [[LegacyMessageTracker alloc] initWithManagedObjectContext:_zetaUserSession.syncManagedObjectContext];
+    [MessageDraftStorage setupSharedStorageAtURL:userSession.sharedContainerURL error:nil];
+    self.messageCountTracker = [[LegacyMessageTracker alloc] initWithManagedObjectContext:userSession.syncManagedObjectContext];
+    
+    [[ZMUserSession sharedSession] start];
+}
+
+// Must be performed before any SE instance is initialized.
+- (void)configureCallKit
+{
+    NSAssert(_zetaUserSession == nil, @"User session is already initialized");
+    BOOL callKitSupported = ([CXCallObserver class] != nil) && !TARGET_IPHONE_SIMULATOR;
+    BOOL callKitDisabled = [[Settings sharedSettings] disableCallKit];
+    
+    [ZMUserSession setUseCallKit:callKitSupported && !callKitDisabled];
 }
 
 #pragma mark - User Session block queueing
@@ -528,6 +491,19 @@ NSString *const ZMUserSessionDidBecomeAvailableNotification = @"ZMUserSessionDid
     }
 }
 
+- (void)loadUnauthenticatedUIWithError:(NSError *)error
+{
+    self.seState = AppSEStateNotAuthenticated;
+    
+    self.signInErrorCode = error.code;
+    
+    if(error != nil && error.code == ZMUserSessionClientDeletedRemotely) {
+        [self.window.rootViewController showAlertForError:error];
+    }
+    
+    [self loadAppropriateController];
+}
+
 @end
 
 
@@ -540,19 +516,18 @@ NSString *const ZMUserSessionDidBecomeAvailableNotification = @"ZMUserSessionDid
         return;
     }
     
-    UIAlertView *forceUpdateAlertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"force.update.title", nil)
-                                                                   message:NSLocalizedString(@"force.update.message", nil)
-                                                                  delegate:self
-                                                         cancelButtonTitle:NSLocalizedString(@"force.update.ok_button", nil)
-                                                         otherButtonTitles:nil];
-    [forceUpdateAlertView show];
-}
-
-- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
-{
-    NSString *iTunesLink = @"https://itunes.apple.com/us/app/wire/id930944768?mt=8";
-    
-    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:iTunesLink]];
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"force.update.title", nil)
+                                                                             message:NSLocalizedString(@"force.update.message", nil)
+                                                                      preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *updateAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"force.update.ok_button", nil)
+                                                           style:UIAlertActionStyleDefault
+                                                         handler:^(UIAlertAction * _Nonnull action) {
+                                                             NSString *iTunesLink = @"https://itunes.apple.com/us/app/wire/id930944768?mt=8";
+                                                             
+                                                             [[UIApplication sharedApplication] openURL:[NSURL URLWithString:iTunesLink]];
+                                                         }];
+    [alertController addAction:updateAction];
+    [alertController presentTopmost];
 }
 
 @end
@@ -572,15 +547,7 @@ NSString *const ZMUserSessionDidBecomeAvailableNotification = @"ZMUserSessionDid
 
 - (void)authenticationDidFail:(NSError *)error
 {
-    self.seState = AppSEStateNotAuthenticated;
-    
-    self.signInErrorCode = error.code;
-    
-    if(error.code == ZMUserSessionClientDeletedRemotely) {
-        [self.window.rootViewController showAlertForError:error];
-    }
-    
-    [self loadAppropriateController];
+    [self loadUnauthenticatedUIWithError:error];
     DDLogInfo(@"Authentication failed: %@", error);
 }
 

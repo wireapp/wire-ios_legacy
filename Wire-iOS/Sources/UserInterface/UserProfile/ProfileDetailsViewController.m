@@ -85,6 +85,7 @@ typedef NS_ENUM(NSUInteger, ProfileUserAction) {
 @property (nonatomic) UIView *userImageViewContainer;
 @property (nonatomic) UIView *footerView;
 @property (nonatomic) UILabel *teamsGuestLabel;
+@property (nonatomic) BOOL showGuestLabel;
 
 @end
 
@@ -98,6 +99,7 @@ typedef NS_ENUM(NSUInteger, ProfileUserAction) {
         _context = context;
         _bareUser = user;
         _conversation = conversation;
+        _showGuestLabel = [user isGuestInConversation:conversation];
     }
     
     return self;
@@ -105,7 +107,6 @@ typedef NS_ENUM(NSUInteger, ProfileUserAction) {
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
     [self setupViews];
     [self setupConstraints];
 }
@@ -113,8 +114,10 @@ typedef NS_ENUM(NSUInteger, ProfileUserAction) {
 - (void)setupViews
 {
     [self createUserImageView];
-    [self createTeamsGuestLabel];
     [self createFooter];
+    if (self.showGuestLabel) {
+        [self createTeamsGuestLabel];
+    }
 }
 
 - (void)setupConstraints
@@ -125,11 +128,13 @@ typedef NS_ENUM(NSUInteger, ProfileUserAction) {
     [self.userImageView autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:48 relation:NSLayoutRelationGreaterThanOrEqual];
     [self.userImageView autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:48 relation:NSLayoutRelationGreaterThanOrEqual];
     [self.userImageView autoPinEdgeToSuperviewEdge:ALEdgeTop withInset:0 relation:NSLayoutRelationGreaterThanOrEqual];
-    
-    [self.teamsGuestLabel autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.userImageView withOffset:15];
-    [self.teamsGuestLabel autoPinEdgeToSuperviewEdge:ALEdgeBottom withInset:0 relation:NSLayoutRelationGreaterThanOrEqual];
-    [self.teamsGuestLabel autoPinEdge:ALEdgeLeft toEdge:ALEdgeLeft ofView:self.userImageView];
-    [self.teamsGuestLabel autoPinEdge:ALEdgeRight toEdge:ALEdgeRight ofView:self.userImageView];
+
+    if (self.showGuestLabel) {
+        [self.teamsGuestLabel autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.userImageView withOffset:15];
+        [self.teamsGuestLabel autoPinEdgeToSuperviewEdge:ALEdgeBottom withInset:0 relation:NSLayoutRelationGreaterThanOrEqual];
+        [self.teamsGuestLabel autoPinEdge:ALEdgeLeft toEdge:ALEdgeLeft ofView:self.userImageView];
+        [self.teamsGuestLabel autoPinEdge:ALEdgeRight toEdge:ALEdgeRight ofView:self.userImageView];
+    }
     
     [self.userImageView autoAlignAxisToSuperviewAxis:ALAxisVertical];
     [NSLayoutConstraint autoSetPriority:UILayoutPriorityDefaultLow forConstraints:^{
@@ -151,7 +156,6 @@ typedef NS_ENUM(NSUInteger, ProfileUserAction) {
     self.userImageView.userSession = [ZMUserSession sharedSession];
     self.userImageView.translatesAutoresizingMaskIntoConstraints = NO;
     self.userImageView.size = UserImageViewSizeBig;
-    self.userImageView.team = ZMUser.selfUser.activeTeam;
     self.userImageView.user = self.bareUser;
     [self.userImageViewContainer addSubview:self.userImageView];
 }
@@ -162,7 +166,7 @@ typedef NS_ENUM(NSUInteger, ProfileUserAction) {
     self.teamsGuestLabel.numberOfLines = 0;
     self.teamsGuestLabel.textAlignment = NSTextAlignmentCenter;
     [self.userImageViewContainer addSubview:self.teamsGuestLabel];
-    self.teamsGuestLabel.text = [self teamGuestsTextFor:self.bareUser];
+    self.teamsGuestLabel.text = NSLocalizedString(@"profile.details.guest", nil);
 }
 
 #pragma mark - Footer
@@ -178,14 +182,14 @@ typedef NS_ENUM(NSUInteger, ProfileUserAction) {
     BOOL validContext = (self.context == ProfileViewControllerContextSearch ||
                          self.context == ProfileViewControllerContextCommonConnection);
     
-    if (!user.isMemberOfActiveTeam && validContext && user.isPendingApprovalBySelfUser) {
+    if (!user.isTeamMember && validContext && user.isPendingApprovalBySelfUser) {
         ProfileIncomingConnectionRequestFooterView *incomingConnectionRequestFooterView = [[ProfileIncomingConnectionRequestFooterView alloc] init];
         incomingConnectionRequestFooterView.translatesAutoresizingMaskIntoConstraints = NO;
         [incomingConnectionRequestFooterView.acceptButton addTarget:self action:@selector(acceptConnectionRequest) forControlEvents:UIControlEventTouchUpInside];
         [incomingConnectionRequestFooterView.ignoreButton addTarget:self action:@selector(ignoreConnectionRequest) forControlEvents:UIControlEventTouchUpInside];
         footerView = incomingConnectionRequestFooterView;
     }
-    else if (!user.isMemberOfActiveTeam && user.isBlocked) {
+    else if (!user.isTeamMember && user.isBlocked) {
         ProfileUnblockFooterView *unblockFooterView = [[ProfileUnblockFooterView alloc] init];
         unblockFooterView.translatesAutoresizingMaskIntoConstraints = NO;
         [unblockFooterView.unblockButton addTarget:self action:@selector(unblockUser) forControlEvents:UIControlEventTouchUpInside];
@@ -198,18 +202,18 @@ typedef NS_ENUM(NSUInteger, ProfileUserAction) {
         footerView = sendConnectionRequestFooterView;
     }
     else {
-        ProfileFooterView *userActionsfooterView = [[ProfileFooterView alloc] init];
-        userActionsfooterView.translatesAutoresizingMaskIntoConstraints = NO;
+        ProfileFooterView *userActionsFooterView = [[ProfileFooterView alloc] init];
+        userActionsFooterView.translatesAutoresizingMaskIntoConstraints = NO;
         [[Analytics shared]tagScreen:@"OTHER_USER_PROFILE"];
         
-        [userActionsfooterView setIconTypeForLeftButton:[self iconTypeForUserAction:[self leftButtonAction]]];
-        [userActionsfooterView setIconTypeForRightButton:[self iconTypeForUserAction:[self rightButtonAction]]];
-        [userActionsfooterView.leftButton setTitle:[[self buttonTextForUserAction:[self leftButtonAction]] uppercasedWithCurrentLocale] forState:UIControlStateNormal];
+        [userActionsFooterView setIconTypeForLeftButton:[self iconTypeForUserAction:[self leftButtonAction]]];
+        [userActionsFooterView setIconTypeForRightButton:[self iconTypeForUserAction:[self rightButtonAction]]];
+        [userActionsFooterView.leftButton setTitle:[[self buttonTextForUserAction:[self leftButtonAction]] uppercasedWithCurrentLocale] forState:UIControlStateNormal];
         
-        [userActionsfooterView.leftButton addTarget:self action:@selector(performLeftButtonAction:) forControlEvents:UIControlEventTouchUpInside];
-        [userActionsfooterView.rightButton addTarget:self action:@selector(performRightButtonAction:) forControlEvents:UIControlEventTouchUpInside];
+        [userActionsFooterView.leftButton addTarget:self action:@selector(performLeftButtonAction:) forControlEvents:UIControlEventTouchUpInside];
+        [userActionsFooterView.rightButton addTarget:self action:@selector(performRightButtonAction:) forControlEvents:UIControlEventTouchUpInside];
         
-        footerView = userActionsfooterView;
+        footerView = userActionsFooterView;
     }
     
     [self.view addSubview:footerView];
@@ -299,10 +303,10 @@ typedef NS_ENUM(NSUInteger, ProfileUserAction) {
     if (user.isSelfUser) {
         return ProfileUserActionNone;
     }
-    else if ((user.isConnected || user.isMemberOfActiveTeam) && self.context == ProfileViewControllerContextOneToOneConversation) {
+    else if ((user.isConnected || user.isTeamMember) && self.context == ProfileViewControllerContextOneToOneConversation) {
         return ProfileUserActionAddPeople;
     }
-    else if (user.isMemberOfActiveTeam) {
+    else if (user.isTeamMember) {
         return ProfileUserActionOpenConversation;
     }
     else if (user.isBlocked) {
@@ -343,6 +347,9 @@ typedef NS_ENUM(NSUInteger, ProfileUserAction) {
         else {
             return ProfileUserActionPresentMenu;
         }
+    }
+    else if (nil != user.team) {
+        return ProfileUserActionPresentMenu;
     }
     else {
         return ProfileUserActionNone;
@@ -547,7 +554,7 @@ typedef NS_ENUM(NSUInteger, ProfileUserAction) {
     ZMConversation __block *conversation = nil;
     
     [[ZMUserSession sharedSession] enqueueChanges:^{
-        conversation = [self.fullUser oneToOneConversationInTeam:ZMUser.selfUser.activeTeam];
+        conversation = self.fullUser.oneToOneConversation;
     } completionHandler:^{
         [self.delegate profileDetailsViewController:self didSelectConversation:conversation];
     }];
@@ -580,7 +587,7 @@ typedef NS_ENUM(NSUInteger, ProfileUserAction) {
     ZMUser *fullUser = [self fullUser];
     
     if (fullUser != nil) {
-        if (fullUser.isMemberOfActiveTeam) {
+        if (fullUser.isTeamMember) {
             return ProfileViewContentModeNone;
         }
         if (fullUser.isPendingApproval) {

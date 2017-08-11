@@ -30,12 +30,12 @@
 #import "TermsOfUseStepViewController.h"
 #import "ProfilePictureStepViewController.h"
 #import "UIViewController+Errors.h"
-#import "ZMUserSession+Additions.h"
 #import "RegistrationViewController.h"
 #import "WireSyncEngine+iOS.h"
 #import "Constants.h"
 #import "Analytics+iOS.h"
 #import "AnalyticsTracker+Registration.h"
+#import "Wire-Swift.h"
 
 
 typedef NS_ENUM(NSUInteger, InvitationFlow) {
@@ -64,8 +64,8 @@ typedef NS_ENUM(NSUInteger, InvitationFlow) {
 
 - (void)removeObservers
 {
-    [[ZMUserSession sharedSession] removeRegistrationObserverForToken:self.registrationToken];
-    [[ZMUserSession sharedSession] removeAuthenticationObserverForToken:self.authenticationToken];
+    [[UnauthenticatedSession sharedSession] removeRegistrationObserver:self.registrationToken];
+    [ZMUserSessionAuthenticationNotification removeObserverForToken:self.authenticationToken];
     
     self.registrationToken = nil;
     self.authenticationToken = nil;
@@ -79,8 +79,8 @@ typedef NS_ENUM(NSUInteger, InvitationFlow) {
         self.unregisteredUser = unregisteredUser;
         NSString *context = (self.invitationFlow == InvitationFlowEmail) ? AnalyticsContextRegistrationPersonalInviteEmail : AnalyticsContextRegistrationPersonalInvitePhone;
         self.analyticsTracker = [AnalyticsTracker analyticsTrackerWithContext:context];
-        self.registrationToken = [[ZMUserSession sharedSession] addRegistrationObserver:self];
-        self.authenticationToken = [[ZMUserSession sharedSession] addAuthenticationObserver:self];
+        self.registrationToken = [[UnauthenticatedSession sharedSession] addRegistrationObserver:self];
+        self.authenticationToken = [ZMUserSessionAuthenticationNotification addObserver:self];
         
         if (self.invitationFlow == InvitationFlowEmail) {
             [self.analyticsTracker tagOpenedEmailRegistration];
@@ -138,7 +138,7 @@ typedef NS_ENUM(NSUInteger, InvitationFlow) {
 
 - (void)presentProfilePictureStep
 {
-    ProfilePictureStepViewController *pictureStepViewController = [[ProfilePictureStepViewController alloc] initWithEditableUser:[ZMUser editableSelfUser]];
+    ProfilePictureStepViewController *pictureStepViewController = [[ProfilePictureStepViewController alloc] initWithUnregisteredUser:self.unregisteredUser];
     pictureStepViewController.analyticsTracker = self.analyticsTracker;
     pictureStepViewController.formStepDelegate = self;
     
@@ -204,12 +204,9 @@ typedef NS_ENUM(NSUInteger, InvitationFlow) {
         
         [self.analyticsTracker tagRegistrationConfirmedPersonalInvite];
     }
-    else if ([viewController isKindOfClass:[TermsOfUseStepViewController class]])
-    {
-        [[ZMUserSession sharedSession] checkNetworkAndFlashIndicatorIfNecessary];
-        
-        if ([ZMUserSession sharedSession].networkState != ZMNetworkStateOffline) {
-            [[ZMUserSession sharedSession] registerSelfUser:self.unregisteredUser.completeRegistrationUser];
+    else if ([viewController isKindOfClass:[TermsOfUseStepViewController class]]) {
+        if (![AppDelegate checkNetworkAndFlashIndicatorIfNecessary]) {
+            [[UnauthenticatedSession sharedSession] registerUser:self.unregisteredUser.completeRegistrationUser];
         }
     }
     else if ([viewController isKindOfClass:[ProfilePictureStepViewController class]]) {

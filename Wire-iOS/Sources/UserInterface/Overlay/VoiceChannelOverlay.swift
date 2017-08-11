@@ -222,6 +222,7 @@ class VoiceChannelOverlay: UIView {
     }
     
     deinit {
+        EAGLContext.setCurrent(nil) // workaround for ZIOS-8718
         NotificationCenter.default.removeObserver(self)
         cancelHideControlsAfterElapsedTime()
     }

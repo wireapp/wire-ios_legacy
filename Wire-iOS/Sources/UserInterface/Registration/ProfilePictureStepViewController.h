@@ -21,7 +21,7 @@
 #import "AnalyticsTracker+Registration.h"
 
 
-@protocol ZMEditableUser;
+@class ZMIncompleteRegistrationUser;
 
 
 
@@ -29,7 +29,7 @@
 
 - (instancetype)initWithCoder:(NSCoder *)aDecoder NS_UNAVAILABLE;
 - (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil NS_UNAVAILABLE;
-- (instancetype)initWithEditableUser:(id<ZMEditableUser>)editableUser NS_DESIGNATED_INITIALIZER;
+- (instancetype)initWithUnregisteredUser:(ZMIncompleteRegistrationUser *)unregisteredUser NS_DESIGNATED_INITIALIZER;
 
 @property (nonatomic) AnalyticsTracker *analyticsTracker;
 @property (nonatomic, readonly) AnalyticsPhotoSource photoSource;

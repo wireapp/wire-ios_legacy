@@ -95,7 +95,8 @@ class SettingsBaseTableViewController: UIViewController {
             footerContainer.left == tableView.left
             footerContainer.right == tableView.right
             footerContainer.bottom == view.bottom
-
+            footerContainer.height == 0 ~ LayoutPriority(750.0)
+            
             footerSeparator.left == footerContainer.left
             footerSeparator.right == footerContainer.right
             footerSeparator.top == footerContainer.top

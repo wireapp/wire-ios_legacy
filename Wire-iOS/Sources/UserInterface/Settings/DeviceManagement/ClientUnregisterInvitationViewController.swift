@@ -36,6 +36,9 @@ class ClientUnregisterInvitationViewController: RegistrationStepViewController {
         self.createDeleteDevicesButton()
         self.createSignOutButton()
         self.createConstraints()
+        
+        // Layout first to avoid the initial layout animation during the presentation.
+        self.view.layoutIfNeeded()
     }
     
     fileprivate func createContainerView() {

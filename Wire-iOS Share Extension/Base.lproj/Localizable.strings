@@ -20,9 +20,6 @@
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Share Extension
 
-"share_extension.team_selection.title" = "Team:";
-"share_extension.team_selection.empty.value" = "None";
-"share_extension.team_selection.personal.team.name" = "None";
 "share_extension.conversation_selection.title" = "Conversation:";
 "share_extension.send_button.title" = "Send";
 "share_extension.conversation_selection.empty.value" = "Choose";

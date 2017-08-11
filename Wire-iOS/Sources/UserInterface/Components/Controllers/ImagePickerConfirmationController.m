@@ -108,7 +108,7 @@
             resultBlock([[FLAnimatedImage alloc] initWithAnimatedGIFData:imageData]);
         }];
     } else {
-        [UIImagePickerController previewImageFromMediaInfo:info resultBlock:^(UIImage *image) {
+        [UIImagePickerController imageFromMediaInfo:info resultBlock:^(UIImage *image) {
             resultBlock(image);
         }];
     }

@@ -1,4 +1,4 @@
-/* 
+/*
  *  Wire
  *  Copyright (C) 2016 Wire Swiss GmbH
  *
@@ -14,7 +14,7 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with this program. If not, see http://www.gnu.org/licenses/.
-*/
+ */
 
 "NSContactsUsageDescription" = "Разрешить Wire доступ к адресной книге для установления контактов с другими людьми. Мы анонимизируем всю информацию и не распространяем её третьим лицам.";
 "NSMicrophoneUsageDescription" = "Разрешить Wire доступ к микрофону для совершения звонков и отправки аудио сообщений.";

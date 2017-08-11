@@ -145,7 +145,7 @@ static CGFloat const MinDelayBeforeDisplay = 1.5;
 - (void)refreshShowOrHideLoadingBarWithNetworkState:(ZMNetworkState)networkState
 {
     [[ZMUserSession sharedSession] checkIfLoggedInWithCallback:^(BOOL isLoggedIn) {
-        if ( ! isLoggedIn) {
+        if ( !isLoggedIn || [ZMConversationList conversationsInUserSession:[ZMUserSession sharedSession]].count == 0) {
             self.isLoading = NO;
             return;
         }

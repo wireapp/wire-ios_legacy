@@ -17,6 +17,5 @@
 //
 
 @interface ConversationListViewModel ()
-@property (nonatomic) id<NSObject> teamsObserver;
 @property (nonatomic) id<NSObject> selfUserObserver;
 @end

@@ -54,7 +54,7 @@ public extension ConversationViewController {
         return button
     }
     
-    var audioCallBarButtonItem: IconButton {
+    var audioCallButton: IconButton {
         let button = barButtonItem(withType: .callAudio,
                                    target: self,
                                    action: #selector(ConversationViewController.voiceCallItemTapped(_:)),
@@ -64,7 +64,7 @@ public extension ConversationViewController {
         return button
     }
     
-    var videoCallBarButtonItem: IconButton {
+    var videoCallButton: IconButton {
         let button = barButtonItem(withType: .callVideo,
                                    target: self,
                                    action: #selector(ConversationViewController.videoCallItemTapped(_:)),
@@ -73,8 +73,22 @@ public extension ConversationViewController {
                                    imageEdgeInsets: UIEdgeInsetsMake(0, 0, 0, -8))
         return button
     }
+
+    var joinCallButton: IconButton {
+        let button = IconButton()
+        button.adjustsTitleWhenHighlighted = true
+        button.adjustBackgroundImageWhenHighlighted = true
+        button.setTitle("conversation_list.right_accessory.join_button.title".localized.uppercased(), for: .normal)
+        button.titleLabel?.font = FontSpec(.small, .semibold).font
+        button.backgroundColor = UIColor(for: .strongLimeGreen)
+        button.addTarget(self, action: #selector(joinCallButtonTapped), for: .touchUpInside)
+        button.contentEdgeInsets = UIEdgeInsets(top: 2, left: 8, bottom: 2, right: 8)
+        button.bounds.size = button.systemLayoutSizeFitting(CGSize(width: .max, height: 24))
+        button.layer.cornerRadius = button.bounds.height / 2
+        return button
+    }
     
-    var backBarButtonItem: IconButton {
+    var backButton: IconButton {
         let hasUnreadInOtherConversations = self.hasUnreadMessagesInOtherConversations
         let arrowIcon: ZetaIconType = hasUnreadInOtherConversations ? .backArrowWithDot : .backArrow
         
@@ -128,40 +142,28 @@ public extension ConversationViewController {
     }
     
     var hasUnreadMessagesInOtherConversations: Bool {
-        return ZMConversationList.conversations(inUserSession: ZMUserSession.shared()!, team: ZMUser.selfUser().activeTeam).hasUnreadMessages(excluding: self.conversation)
+        return ZMConversationList.conversations(inUserSession: ZMUserSession.shared()!).hasUnreadMessages(excluding: self.conversation)
     }
     
     public func rightNavigationItems(forConversation conversation: ZMConversation) -> [UIBarButtonItem] {
         guard !conversation.isReadOnly else { return [] }
+
+        if conversation.canJoinCall {
+            return [UIBarButtonItem(customView: joinCallButton)]
+        }
+
         if conversation.conversationType == .oneOnOne {
-            return [UIBarButtonItem(customView: audioCallBarButtonItem), UIBarButtonItem(customView: videoCallBarButtonItem)]
+            return [UIBarButtonItem(customView: audioCallButton), UIBarButtonItem(customView: videoCallButton)]
         }
 
-        return [UIBarButtonItem(customView: audioCallBarButtonItem)]
-    }
-    
-    private func shouldShowCollectionsButton() -> Bool {
-        guard #available(iOS 8.3, *) else { return false }
-
-        switch self.conversation.conversationType {
-        case .group:
-            return true
-        case .oneOnOne:
-            if let connection = conversation.connection,
-                connection.status != .pending && connection.status != .sent {
-                return true
-            }
-        default: return false
-        }
-        
-        return false
+        return [UIBarButtonItem(customView: audioCallButton)]
     }
     
     public func leftNavigationItems(forConversation conversation: ZMConversation) -> [UIBarButtonItem] {
         var items: [UIBarButtonItem] = []
         
         if self.parent?.wr_splitViewController?.layoutSize != .regularLandscape {
-            let backButton = backBarButtonItem
+            let backButton = self.backButton
             backButton.hitAreaPadding = CGSize(width: 28, height: 20)
             items.append(UIBarButtonItem(customView: backButton))
         }
@@ -173,6 +175,20 @@ public extension ConversationViewController {
         }
         
         return items
+    }
+
+    private func shouldShowCollectionsButton() -> Bool {
+        switch self.conversation.conversationType {
+        case .group: return true
+        case .oneOnOne:
+            if let connection = conversation.connection,
+                connection.status != .pending && connection.status != .sent {
+                return true
+            } else {
+                return nil != conversation.teamRemoteIdentifier
+            }
+        default: return false
+        }
     }
     
     private func confirmCallInGroup(completion: @escaping (_ accepted: Bool) -> ()) {
@@ -219,6 +235,13 @@ public extension ConversationViewController {
         ConversationInputBarViewController.endEditingMessage()
         conversation.startVideoCall(completionHandler: nil)
         Analytics.shared()?.tagMediaAction(.videoCall, inConversation: conversation)
+    }
+
+    private dynamic func joinCallButtonTapped(_sender: UIBarButtonItem) {
+        guard conversation.canJoinCall else { return }
+
+        // This will result in joining an ongoing call.
+        conversation.acceptIncomingCall()
     }
     
     func onCollectionButtonPressed(_ sender: AnyObject!) {
@@ -287,4 +310,15 @@ extension ConversationViewController: CollectionsViewControllerDelegate {
             break
         }
     }
+}
+
+
+extension ZMConversation {
+
+    /// Whether there is an incoming or inactive incoming call that can be joined.
+    var canJoinCall: Bool {
+        guard let state = voiceChannel?.state else { return false }
+        return state == .incomingCallInactive || state == .incomingCall
+    }
+
 }

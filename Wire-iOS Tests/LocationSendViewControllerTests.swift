@@ -26,7 +26,6 @@ class LocationSendViewControllerTests: ZMSnapshotTestCase {
     
     override func setUp() {
         super.setUp()
-        accentColor = .vividRed
         sut = LocationSendViewController()
     }
     

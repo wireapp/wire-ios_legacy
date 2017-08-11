@@ -81,6 +81,8 @@ NSString * const ConversationListItemDidScrollNotification = @"ConversationListI
 {
     self.labelsContainer = [[UIView alloc] initForAutoLayout];
     [self addSubview:self.labelsContainer];
+    self.labelsContainer.isAccessibilityElement = YES;
+    self.labelsContainer.accessibilityTraits = UIAccessibilityTraitButton;
     
     self.titleField = [[UILabel alloc] initForAutoLayout];
     self.titleField.numberOfLines = 1;
@@ -96,7 +98,7 @@ NSString * const ConversationListItemDidScrollNotification = @"ConversationListI
     [self.avatarContainer addSubview:self.avatarView];
 
     self.rightAccessory = [[ConversationListAccessoryView alloc] initWithMediaPlaybackManager:[AppDelegate sharedAppDelegate].mediaPlaybackManager];
-    self.rightAccessory.accessibilityLabel = @"status";
+    self.rightAccessory.accessibilityIdentifier = @"status";
     [self addSubview:self.rightAccessory];
 
     [self createSubtitleField];
@@ -122,13 +124,14 @@ NSString * const ConversationListItemDidScrollNotification = @"ConversationListI
                                              selector:@selector(otherConversationListItemDidScroll:)
                                                  name:ConversationListItemDidScrollNotification
                                                object:nil];
+    self.isAccessibilityElement = NO;
 }
 
 - (void)createSubtitleField
 {
     self.subtitleField = [[UILabel alloc] initForAutoLayout];
     self.subtitleField.textColor = [UIColor colorWithWhite:1.0f alpha:0.64f];
-    self.subtitleField.accessibilityLabel = @"Conversation status";
+    self.subtitleField.accessibilityIdentifier = @"Conversation status";
     self.subtitleField.numberOfLines = 1;
     [self.labelsContainer addSubview:self.subtitleField];
 }
@@ -213,6 +216,13 @@ NSString * const ConversationListItemDidScrollNotification = @"ConversationListI
 - (void)updateAppearance
 {
     self.titleField.text = self.titleText;
+}
+
+- (void)accessibilityContentsDidChange
+{
+    self.labelsContainer.accessibilityLabel = self.titleField.text;
+    self.labelsContainer.accessibilityHint = NSLocalizedString(@"conversation_list.voiceover.open_conversation.hint", nil);
+    self.labelsContainer.accessibilityValue = self.subtitleField.text;
 }
 
 #pragma mark - Observer

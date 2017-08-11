@@ -32,13 +32,16 @@ public protocol SearchHeaderViewControllerDelegate : class {
 
 public class SearchHeaderViewController : UIViewController {
     
+    let titleContainer = UIView()
+    let titleLabel = UILabel()
+    let closeButton : IconButton
+    let tokenFieldContainer = UIView()
+    let tokenField = TokenField()
     let searchIcon = UIImageView()
     let clearButton: IconButton
-    let titleLabel : UILabel = UILabel()
-    let tokenField : TokenField = TokenField()
-    let closeButton : IconButton
     let userSelection : UserSelection
     let colorSchemeVariant : ColorSchemeVariant
+    let separatorView = OverflowSeparatorView()
     
     @objc
     public weak var delegate : SearchHeaderViewControllerDelegate? = nil
@@ -94,39 +97,60 @@ public class SearchHeaderViewController : UIViewController {
         closeButton.setIcon(.X, with: .tiny, for: .normal)
         closeButton.addTarget(self, action: #selector(onCloseButtonPressed), for: .touchUpInside)
         
-        [titleLabel, tokenField, searchIcon, closeButton, clearButton].forEach(view.addSubview)
+        [titleLabel, closeButton].forEach(titleContainer.addSubview)
+        [tokenField, searchIcon, clearButton].forEach(tokenFieldContainer.addSubview)
+        [titleContainer, tokenFieldContainer, separatorView].forEach(view.addSubview)
         
         createConstraints()
     }
     
     fileprivate func createConstraints() {
-        constrain(view, tokenField, searchIcon, clearButton) { view, tokenField, searchIcon, clearButton in
-            searchIcon.top == tokenField.top + 8
-            searchIcon.leading == tokenField.leading + 8
-            
-            clearButton.height == 32
-            clearButton.width == 32
-            clearButton.top == tokenField.top
-            clearButton.trailing == tokenField.trailing
-        }
         
-        constrain(view, titleLabel, closeButton, tokenField) { view, titleLabel, closeButton, tokenField in
-            titleLabel.top == view.top + 34
-            titleLabel.leading == tokenField.leading
-            titleLabel.trailing == tokenField.trailing
+        constrain(titleContainer, titleLabel, closeButton) { container, titleLabel, closeButton in
+            titleLabel.leading == container.leading + 8
+            titleLabel.trailing == container.trailing - 8
+            titleLabel.centerY == container.centerY
             
-            tokenField.top == view.top + 64
-            tokenField.leading == view.leading + 8
-            tokenField.trailing == view.trailing - 8
-            tokenField.height >= 32
-            tokenField.bottom == view.bottom
-            
-            closeButton.trailing == view.trailing
-            closeButton.centerY == titleLabel.centerY
             closeButton.width == 44
             closeButton.height == closeButton.width
+            closeButton.centerY == container.centerY
+            closeButton.trailing == container.trailing
         }
         
+        constrain(tokenFieldContainer, tokenField, searchIcon, clearButton) { container, tokenField, searchIcon, clearButton in
+            searchIcon.centerY == tokenField.centerY
+            searchIcon.leading == tokenField.leading + 8
+            
+            clearButton.width == 32
+            clearButton.height == clearButton.width
+            clearButton.centerY == tokenField.centerY
+            clearButton.trailing == tokenField.trailing
+            
+            tokenField.height >= 32
+            tokenField.top >= container.top + 8
+            tokenField.bottom <= container.bottom - 8
+            tokenField.leading == container.leading + 8
+            tokenField.trailing == container.trailing - 8
+            tokenField.centerY == container.centerY
+        }
+                
+        constrain(view, titleContainer, tokenFieldContainer, separatorView) { view, titleContainer, tokenFieldContainer, separatorView in
+            
+            titleContainer.top == view.top + 20
+            titleContainer.leading == view.leading
+            titleContainer.trailing == view.trailing
+            titleContainer.height == 44
+            
+            tokenFieldContainer.top == titleContainer.bottom
+            tokenFieldContainer.bottom == view.bottom
+            tokenFieldContainer.leading == view.leading
+            tokenFieldContainer.trailing == view.trailing
+            tokenFieldContainer.height == 48
+            
+            separatorView.leading == view.leading
+            separatorView.trailing == view.trailing
+            separatorView.bottom == view.bottom
+        }
     }
     
     fileprivate dynamic func onCloseButtonPressed() {

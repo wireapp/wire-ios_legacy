@@ -98,7 +98,7 @@
     ColorScheme *scheme = ColorScheme.defaultColorScheme;
     self.messageTextView.editable = NO;
     self.messageTextView.selectable = YES;
-    self.messageTextView.backgroundColor = [scheme colorWithName:ColorSchemeColorBackground];
+    self.messageTextView.backgroundColor = [scheme colorWithName:ColorSchemeColorConversationBackground];
     self.messageTextView.scrollEnabled = NO;
     self.messageTextView.textContainerInset = UIEdgeInsetsZero;
     self.messageTextView.textContainer.lineFragmentPadding = 0;
@@ -188,9 +188,7 @@
                                                                                             obfuscated:message.isObfuscated];
     if (self.searchQueries.count > 0 && attributedMessageText.length > 0) {
         
-        NSMutableDictionary<NSString *, id> *highlightStyle = [NSMutableDictionary dictionaryWithDictionary:[attributedMessageText attributesAtIndex:0
-                                                                                                                                     effectiveRange:nil]];
-        highlightStyle[NSBackgroundColorAttributeName] = [[ColorScheme defaultColorScheme] colorWithName:ColorSchemeColorAccentDarken];
+        NSDictionary<NSString *, id> *highlightStyle = @{ NSBackgroundColorAttributeName: [[ColorScheme defaultColorScheme] colorWithName:ColorSchemeColorAccentDarken]};
         attributedMessageText = [attributedMessageText highlightingAppearancesOf:self.searchQueries
                                                                             with:highlightStyle
                                                                        upToWidth:0
@@ -425,8 +423,9 @@
 
 - (void)handleAttachmentLongPress:(UIGestureRecognizer *)gestureRecognizer
 {
-    BOOL touchInContainer = CGRectContainsPoint(self.linkAttachmentContainer.bounds, [gestureRecognizer locationInView:self.contentView]);
-    if (! touchInContainer || ! self.message.canBeDeleted) {
+    CGPoint location = [gestureRecognizer locationInView:self.linkAttachmentViewController.touchableView];
+    BOOL hit = CGRectContainsPoint(self.linkAttachmentViewController.touchableView.bounds, location);
+    if (! hit || ! self.message.canBeDeleted) {
         gestureRecognizer.enabled = NO;
         gestureRecognizer.enabled = YES;
     }

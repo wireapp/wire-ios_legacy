@@ -30,11 +30,12 @@
 
 @property (nonatomic, readonly) NetworkStatusViewController *networkStatusViewController;
 @property (nonatomic, readonly) VoiceChannelController *voiceChannelController;
-@property (nonatomic, readonly) BarController *notificationBarController;
 @property (nonatomic, readonly) AppLockViewController *appLockViewController;
 
 @property (nonatomic) BOOL showLoadMessages;
 
 @property (nonatomic) BOOL hideNetworkActivityView;
+
+- (void)transitionToLoggedInSession;
 
 @end

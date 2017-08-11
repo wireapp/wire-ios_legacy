@@ -36,7 +36,11 @@ import Foundation
     }
     
     func rootGroup() -> SettingsControllerGeneratorType & SettingsInternalGroupCellDescriptorType {
-        let rootElements = [self.devicesGroup(), self.settingsGroup(), self.inviteButton()]
+        var rootElements = [self.devicesCell(), self.settingsGroup()]
+        
+        if !self.settingsPropertyFactory.selfUser.isTeamMember {
+            rootElements.append(self.inviteButton())
+        }
         
         let topSection = SettingsSectionDescriptor(cellDescriptors: rootElements)
         
@@ -57,11 +61,36 @@ import Foundation
         
     }
     
+    func createTeamCell() -> SettingsCellDescriptorType {
+        return SettingsExternalScreenCellDescriptor(title: "self.settings.create_team.title".localized,
+                                                    isDestructive: false,
+                                                    presentationStyle: PresentationStyle.navigation,
+                                                    identifier: nil,
+                                                    presentationAction: { () -> (UIViewController?) in
+                                                        NSURL.wr_createTeam().wr_URLByAppendingLocaleParameter().open()
+                                                        return nil
+                                                    },
+                                                    previewGenerator: nil,
+                                                    icon: .createTeam)
+    }
+    
+    func addAccountCell() -> SettingsCellDescriptorType {
+        return SettingsExternalScreenCellDescriptor(title: "self.settings.add_account.title".localized,
+                                                    isDestructive: false,
+                                                    presentationStyle: PresentationStyle.navigation,
+                                                    identifier: nil,
+                                                    presentationAction: { () -> (UIViewController?) in
+                                                        return SignInViewController()
+        },
+                                                    previewGenerator: nil,
+                                                    icon: .convMetaAddPerson)
+    }
+    
     func settingsGroup() -> SettingsControllerGeneratorType & SettingsInternalGroupCellDescriptorType {
         var topLevelElements = [self.accountGroup(), self.optionsGroup(), self.advancedGroup(), self.helpSection(), self.aboutSection()]
         
         if DeveloperMenuState.developerMenuEnabled() {
-            topLevelElements = topLevelElements + [self.developerGroup()]
+            topLevelElements.append(self.developerGroup())
         }
         
         let topSection = SettingsSectionDescriptor(cellDescriptors: topLevelElements)
@@ -69,7 +98,7 @@ import Foundation
         return SettingsGroupCellDescriptor(items: [topSection], title: "self.settings".localized, style: .plain, previewGenerator: .none, icon: .gear)
     }
     
-    func devicesGroup() -> SettingsCellDescriptorType {
+    func devicesCell() -> SettingsCellDescriptorType {
         return SettingsExternalScreenCellDescriptor(title: "self.settings.privacy_analytics_menu.devices.title".localized,
             isDestructive: false,
             presentationStyle: PresentationStyle.navigation,
@@ -188,27 +217,8 @@ import Foundation
             return DeveloperOptionsController()
         }
         
-        let sendBrokenMessage = { (type: SettingsCellDescriptorType) -> Void in
-            guard
-                let userSession = ZMUserSession.shared(),
-                let conversation = ZMConversationList.conversationsIncludingArchived(inUserSession: userSession, team: ZMUser.selfUser().activeTeam).firstObject as? ZMConversation
-            else {
-                return
-            }
-
-            let builder = ZMExternal.builder()
-            _ = builder?.setOtrKey("broken_key".data(using: .utf8))
-            let genericMessage = ZMGenericMessage.genericMessage(pbMessage: builder!.build(), messageID: UUID().transportString(), expiresAfter: nil)
-            
-            userSession.enqueueChanges {
-                conversation.append(genericMessage, expires: false, hidden: false)
-            }
-        }
-        
         developerCellDescriptors.append(devController)
         
-        let callingProtocolSetting = callingProtocolStrategyGroup(for: self.settingsPropertyFactory.property(.callingProtocolStrategy))
-        developerCellDescriptors.append(callingProtocolSetting)
         let diableAVSSetting = SettingsPropertyToggleCellDescriptor(settingsProperty: self.settingsPropertyFactory.property(.disableAVS))
         developerCellDescriptors.append(diableAVSSetting)
         let diableUISetting = SettingsPropertyToggleCellDescriptor(settingsProperty: self.settingsPropertyFactory.property(.disableUI))
@@ -219,32 +229,16 @@ import Foundation
         developerCellDescriptors.append(diableAnalyticsSetting)
         let enableBatchCollections = SettingsPropertyToggleCellDescriptor(settingsProperty: self.settingsPropertyFactory.property(.enableBatchCollections))
         developerCellDescriptors.append(enableBatchCollections)
-        let sendBrokenMessageButton = SettingsButtonCellDescriptor(title: "Send broken message", isDestructive: true, selectAction: sendBrokenMessage)
+        let sendBrokenMessageButton = SettingsButtonCellDescriptor(title: "Send broken message", isDestructive: true, selectAction: SettingsCellDescriptorFactory.sendBrokenMessage)
         developerCellDescriptors.append(sendBrokenMessageButton)
+        let findUnreadConvoButton = SettingsButtonCellDescriptor(title: "Find first unread conversation", isDestructive: false, selectAction: SettingsCellDescriptorFactory.findUnreadConversation)
+        developerCellDescriptors.append(findUnreadConvoButton)
         let shareDatabase = SettingsShareDatabaseCellDescriptor()
         developerCellDescriptors.append(shareDatabase)
+        let reloadUIButton = SettingsButtonCellDescriptor(title: "Reload user interface", isDestructive: false, selectAction: SettingsCellDescriptorFactory.reloadUserInterface)
+        developerCellDescriptors.append(reloadUIButton)
         
         return SettingsGroupCellDescriptor(items: [SettingsSectionDescriptor(cellDescriptors:developerCellDescriptors)], title: title, icon: .effectRobot)
-    }
-    
-    func callingProtocolStrategyGroup(for property: SettingsProperty) -> SettingsCellDescriptorType {
-        let cells = CallingProtocolStrategy.allOptions.map { option -> SettingsPropertySelectValueCellDescriptor in
-            
-            return SettingsPropertySelectValueCellDescriptor(
-                settingsProperty: property,
-                value: SettingsPropertyValue(option.rawValue),
-                title: option.displayString
-            )
-        }
-        
-        let section = SettingsSectionDescriptor(cellDescriptors: cells.map { $0 as SettingsCellDescriptorType })
-        let preview: PreviewGeneratorType = { descriptor in
-            guard case .number(let intValue) = property.value(),  let option = CallingProtocolStrategy(rawValue: UInt(intValue)) else {
-                return .text(CallingProtocolStrategy.negotiate.displayString)
-            }
-            return .text(option.displayString)
-        }
-        return SettingsGroupCellDescriptor(items: [section], title: SettingsPropertyLabelText(property.propertyName), identifier: nil, previewGenerator: preview)
     }
     
     func helpSection() -> SettingsCellDescriptorType {
@@ -328,4 +322,60 @@ import Foundation
         return colorsSection
     }
     
+    // MARK: Actions
+    
+    /// Check if there is any unread conversation, if there is, show an alert with the name and ID of the conversation
+    private static func findUnreadConversation(_ type: SettingsCellDescriptorType) {
+        guard let userSession = ZMUserSession.shared() else { return }
+        let predicate = ZMConversation.predicateForConversationConsideredUnread()!
+        
+        guard let controller = UIApplication.shared.wr_topmostController(onlyFullScreen: false) else { return }
+        let alert = UIAlertController(title: nil, message: "", preferredStyle: .alert)
+
+        if let convo = (ZMConversationList.conversations(inUserSession: userSession) as! [ZMConversation])
+            .first(where: { predicate.evaluate(with: $0) })
+        {
+            alert.message = ["Found an unread conversation:",
+                       "\(convo.displayName)",
+                        "<\(convo.remoteIdentifier?.uuidString ?? "n/a")>"
+                ].joined(separator: "\n")
+            alert.addAction(UIAlertAction(title: "Copy", style: .default, handler: { _ in
+                UIPasteboard.general.string = alert.message
+            }))
+
+        } else {
+            alert.message = "No unread conversation"
+        }
+        
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        controller.present(alert, animated: false)
+    }
+    
+    /// Sends a message that will fail to decode on every other device, on the first conversation of the list
+    private static func sendBrokenMessage(_ type: SettingsCellDescriptorType) {
+        guard
+            let userSession = ZMUserSession.shared(),
+            let conversation = ZMConversationList.conversationsIncludingArchived(inUserSession: userSession).firstObject as? ZMConversation
+            else {
+                return
+        }
+        
+        let builder = ZMExternal.builder()
+        _ = builder?.setOtrKey("broken_key".data(using: .utf8))
+        let genericMessage = ZMGenericMessage.genericMessage(pbMessage: builder!.build(), messageID: UUID().transportString(), expiresAfter: nil)
+        
+        userSession.enqueueChanges {
+            conversation.append(genericMessage, expires: false, hidden: false)
+        }
+    }
+    
+    private static func reloadUserInterface(_ type: SettingsCellDescriptorType) {
+        guard let rootViewController = UIApplication.shared.keyWindow?.rootViewController as? RootViewController else {
+            return
+        }
+        
+        rootViewController.reloadCurrentController()
+    }
 }
+
+

@@ -67,6 +67,8 @@ NSString * const UserDefaultDidMigrateHockeySettingInitially = @"DidMigrateHocke
 
 NSString * const UserDefaultCallingConstantBitRate = @"CallingConstantBitRate";
 
+NSString * const UserDefaultDisableLinkPreviews = @"DisableLinkPreviews";
+
 @interface Settings ()
 
 @property (strong, readonly, nonatomic) NSUserDefaults *defaults;
@@ -121,6 +123,7 @@ NSString * const UserDefaultCallingConstantBitRate = @"CallingConstantBitRate";
              UserDefaultEnableBatchCollections,
              UserDefaultDidMigrateHockeySettingInitially,
              UserDefaultCallingConstantBitRate,
+             UserDefaultDisableLinkPreviews,
              ];
 }
 
@@ -141,7 +144,11 @@ NSString * const UserDefaultCallingConstantBitRate = @"CallingConstantBitRate";
     if (self) {
         [self migrateHockeyAndOptOutSettingsToSharedDefaults];
         [self restoreLastUsedAVSSettings];
+        
+#if !(TARGET_OS_SIMULATOR)
         [self loadEnabledLogs];
+#endif
+        
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationDidEnterBackground:) name:UIApplicationDidEnterBackgroundNotification object:nil];
     }
     return self;
@@ -162,6 +169,7 @@ NSString * const UserDefaultCallingConstantBitRate = @"CallingConstantBitRate";
     if (! [self.defaults boolForKey:UserDefaultDidMigrateHockeySettingInitially]) {
         ExtensionSettings.shared.disableHockey = self.disableHockey;
         ExtensionSettings.shared.disableCrashAndAnalyticsSharing = self.disableAnalytics;
+        ExtensionSettings.shared.disableLinkPreviews = self.disableLinkPreviews;
         [self.defaults setBool:YES forKey:UserDefaultDidMigrateHockeySettingInitially];
     }
 }
@@ -403,6 +411,18 @@ NSString * const UserDefaultCallingConstantBitRate = @"CallingConstantBitRate";
     [self.defaults setBool:disableCallKit forKey:UserDefaultDisableCallKit];
 }
 
+- (BOOL)disableLinkPreviews
+{
+    return [self.defaults boolForKey:UserDefaultDisableLinkPreviews];
+}
+
+- (void)setDisableLinkPreviews:(BOOL)disableLinkPreviews
+{
+    [self.defaults setBool:disableLinkPreviews forKey:UserDefaultDisableLinkPreviews];
+    ExtensionSettings.shared.disableLinkPreviews = disableLinkPreviews;
+    [self.defaults synchronize];
+}
+
 #pragma mark - Features disable keys
 
 - (BOOL)disableUI
@@ -449,22 +469,6 @@ NSString * const UserDefaultCallingConstantBitRate = @"CallingConstantBitRate";
     [self.defaults setBool:disableAnalytics forKey:UserDefaultDisableAnalytics];
     ExtensionSettings.shared.disableCrashAndAnalyticsSharing = disableAnalytics;
     [self.defaults synchronize];
-}
-
-- (void)setCallingProtocolStrategy:(CallingProtocolStrategy)callingProtocolStrategy
-{
-    [self.defaults setInteger:callingProtocolStrategy forKey:UserDefaultCallingProtocolStrategy];
-}
-
-- (CallingProtocolStrategy)callingProtocolStrategy
-{
-    if ([DeveloperMenuState developerMenuEnabled] &&
-        [self.defaults dictionaryRepresentation][UserDefaultCallingProtocolStrategy] == nil)
-    {
-        // In Internal and Developer builds, we want to return V3 unless the version is explicitly set
-        return CallingProtocolStrategyVersion3;
-    }
-    return [self.defaults integerForKey:UserDefaultCallingProtocolStrategy];
 }
 
 - (BOOL)enableBatchCollections

@@ -25,7 +25,6 @@
 #import "ConversationInputBarViewController+Private.h"
 #import "ConversationInputBarViewController+Files.h"
 #import "Analytics+Events.h"
-#import "UIAlertView+Zeta.h"
 @import WireExtensionComponents;
 #import "ConfirmAssetViewController.h"
 #import "TextView.h"
@@ -39,7 +38,6 @@
 #import "AnalyticsTracker+FileTransfer.h"
 #import "Wire-Swift.h"
 
-#import "ZMUserSession+Additions.h"
 #import "WireSyncEngine+iOS.h"
 #import "ZMUser+Additions.h"
 #import "avs+iOS.h"
@@ -126,6 +124,7 @@
 @property (nonatomic) IconButton *sendButton;
 @property (nonatomic) IconButton *ephemeralIndicatorButton;
 @property (nonatomic) IconButton *emojiButton;
+@property (nonatomic) IconButton *markdownButton;
 @property (nonatomic) IconButton *gifButton;
 @property (nonatomic) IconButton *hourglassButton;
 
@@ -189,7 +188,8 @@
     [self createInputBar]; // Creates all input bar buttons
     [self createSendButton];
     [self createEphemeralIndicatorButton];
-    [self createEmojiButton];
+//    [self createEmojiButton];
+    [self createMarkdownButton];
 
     [self createHourglassButton];
     [self createTypingIndicatorView];
@@ -200,6 +200,7 @@
     
     [self configureAudioButton:self.audioButton];
     [self configureEmojiButton:self.emojiButton];
+    [self configureMarkdownButton];
     [self configureEphemeralKeyboardButton:self.hourglassButton];
     [self configureEphemeralKeyboardButton:self.ephemeralIndicatorButton];
     
@@ -218,7 +219,6 @@
     
     [self updateAccessoryViews];
     [self updateInputBarVisibility];
-    [self updateSeparatorLineVisibility];
     [self updateTypingIndicatorVisibility];
     [self updateWritingStateAnimated:NO];
     [self updateButtonIconsForEphemeral];
@@ -396,6 +396,19 @@
     [self.emojiButton autoSetDimensionsToSize:CGSizeMake(senderDiameter, senderDiameter)];
 }
 
+- (void)createMarkdownButton
+{
+    const CGFloat senderDiameter = 28;
+    
+    self.markdownButton = IconButton.iconButtonCircular;
+    self.markdownButton.translatesAutoresizingMaskIntoConstraints = NO;
+    self.markdownButton.accessibilityIdentifier = @"markdownButton";
+    [self.inputBar.leftAccessoryView addSubview:self.markdownButton];
+    [self.markdownButton autoAlignAxisToSuperviewAxis:ALAxisVertical];
+    [self.markdownButton autoPinEdgeToSuperviewEdge:ALEdgeBottom withInset:14];
+    [self.markdownButton autoSetDimensionsToSize:CGSizeMake(senderDiameter, senderDiameter)];
+}
+
 - (void)createHourglassButton
 {
     self.hourglassButton = IconButton.iconButtonDefault;
@@ -440,8 +453,8 @@
 - (void)updateRightAccessoryView
 {
     [self updateEphemeralIndicatorButtonTitle:self.ephemeralIndicatorButton];
-
-    NSString *trimmed = [self.inputBar.textView.text stringByTrimmingCharactersInSet:NSCharacterSet.whitespaceAndNewlineCharacterSet];
+    
+    NSString *trimmed = [self.inputBar.textView.preparedText stringByTrimmingCharactersInSet:NSCharacterSet.whitespaceAndNewlineCharacterSet];
 
     [self.sendButtonState updateWithTextLength:trimmed.length
                                        editing:nil != self.editingMessage
@@ -506,6 +519,7 @@
 - (void)clearInputBar
 {
     self.inputBar.textView.text = @"";
+    [self.inputBar.markdownView resetIcons];
     [self updateRightAccessoryView];
     [self.conversation setIsTyping:NO];
 }
@@ -513,15 +527,12 @@
 - (void)setInputBarOverlapsContent:(BOOL)inputBarOverlapsContent
 {
     _inputBarOverlapsContent = inputBarOverlapsContent;
-    
-    [self updateSeparatorLineVisibility];
 }
 
 - (void)setTypingUsers:(NSSet *)typingUsers
 {
     _typingUsers = typingUsers;
     
-    [self updateSeparatorLineVisibility];
     [self updateTypingIndicatorVisibility];
 }
 
@@ -535,14 +546,34 @@
     [self.typingIndicatorView setHidden:self.typingUsers.count == 0 animated: true];
 }
 
-- (void)updateSeparatorLineVisibility
-{
-    self.inputBar.separatorEnabled = self.inputBarOverlapsContent || self.typingUsers.count > 0;
-}
-
 - (void)updateInputBarVisibility
 {
     self.view.hidden = self.conversation.isReadOnly;
+}
+
+#pragma mark - Keyboard Shortcuts
+
+- (NSArray<UIKeyCommand *> *)keyCommands
+{
+    return @[
+             [UIKeyCommand keyCommandWithInput:@"\r"
+                                 modifierFlags:UIKeyModifierCommand
+                                        action:@selector(commandReturnPressed)
+                          discoverabilityTitle:NSLocalizedString(@"conversation.input_bar.shortcut.send", nil)]
+             ];
+}
+
+- (BOOL)canBecomeFirstResponder
+{
+    return YES;
+}
+
+- (void)commandReturnPressed
+{
+    NSString *candidateText = self.inputBar.textView.preparedText;
+    if (nil != candidateText) {
+        [self sendOrEditText:candidateText];
+    }
 }
 
 #pragma mark - Input views handling
@@ -615,7 +646,7 @@
             [self selectInputControllerButton:self.emojiButton];
             [Analytics.shared tagEmojiKeyboardOpenend:self.conversation];
             break;
-
+            
         case ConversationInputBarViewControllerModeTimeoutConfguration:
             [self clearTextInputAssistentItemIfNeeded];
 
@@ -783,13 +814,21 @@
 
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
 {
+    // markdown text view needs to detect newlines
+    // in order to automatically insert new list items
+    if ([text isEqualToString:@"\n"] || [text isEqualToString:@"\r"]) {
+        [self.inputBar.textView handleNewLine];
+    }
+    
     if (!Settings.sharedSettings.disableSendButton) {
         // The send button is not disabled, we allow newlines and don't send.
         return YES;
     }
 
     if ([text isEqualToString:@"\n"]) {
-        [self sendOrEditText:textView.text];
+        [self.inputBar.textView autocorrectLastWord];
+        NSString *candidateText = self.inputBar.textView.preparedText;
+        [self sendOrEditText:candidateText];
         return NO;
     }
     
@@ -813,7 +852,7 @@
 {
     [self updateAccessoryViews];
     [self updateNewButtonTitleLabel];
-    [[ZMUserSession sharedSession] checkNetworkAndFlashIndicatorIfNecessary];
+    [AppDelegate checkNetworkAndFlashIndicatorIfNecessary];
 }
 
 - (BOOL)textViewShouldEndEditing:(UITextView *)textView
@@ -821,7 +860,7 @@
     if ([self.delegate respondsToSelector:@selector(conversationInputBarViewControllerShouldEndEditing:)]) {
         return [self.delegate conversationInputBarViewControllerShouldEndEditing:self];
     }
-    
+
     return YES;
 }
 
@@ -978,10 +1017,7 @@
 
 - (void)giphyButtonPressed:(id)sender
 {
-    
-    [[ZMUserSession sharedSession] checkNetworkAndFlashIndicatorIfNecessary];
-    
-    if ([ZMUserSession sharedSession].networkState != ZMNetworkStateOffline) {
+    if (![AppDelegate checkNetworkAndFlashIndicatorIfNecessary]) {
         
         [Analytics.shared tagMediaAction:ConversationMediaActionGif inConversation:self.conversation];
     
@@ -1004,7 +1040,9 @@
 
 - (void)sendButtonPressed:(id)sender
 {
-    [self sendOrEditText:self.inputBar.textView.text];
+    [self.inputBar.textView autocorrectLastWord];
+    [self sendOrEditText:self.inputBar.textView.preparedText];
+    [self.inputBar.textView resetTypingAttributes];
 }
 
 @end

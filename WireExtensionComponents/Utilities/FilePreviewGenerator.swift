@@ -28,7 +28,7 @@ extension URL {
         guard let UTI = UTTypeCreatePreferredIdentifierForTag(kUTTagClassFilenameExtension, self.pathExtension as CFString, .none) else {
             return kUTTypeItem as String
         }
-        return UTI.takeUnretainedValue() as String
+        return UTI.takeRetainedValue() as String
     }
 }
 

@@ -24,7 +24,6 @@
 
 #import "WireSyncEngine+iOS.h"
 #import "ZMUserSession+iOS.h"
-#import "ZMUserSession+Additions.h"
 
 #import "ConversationListViewModel.h"
 
@@ -37,7 +36,6 @@
 
 #import "ZClientViewController+Internal.h"
 
-#import "UIView+MTAnimation.h"
 #import "UIColor+WR_ColorScheme.h"
 
 #import "ConnectRequestsCell.h"

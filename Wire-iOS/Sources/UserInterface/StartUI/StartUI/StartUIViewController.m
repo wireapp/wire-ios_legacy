@@ -25,7 +25,6 @@
 #import "ProfilePresenter.h"
 #import "ShareContactsViewController.h"
 #import "ZClientViewController.h"
-#import "ConversationListViewController.h"
 #import "SearchResultCell.h"
 #import "TopPeopleCell.h"
 #import "StartUIQuickActionsBar.h"
@@ -50,7 +49,7 @@
 static NSUInteger const StartUIInitiallyShowsKeyboardConversationThreshold = 10;
 
 
-@interface StartUIViewController () <UIPopoverControllerDelegate, ContactsViewControllerDelegate, UserSelectionObserver, SearchResultsViewControllerDelegate, SearchHeaderViewControllerDelegate>
+@interface StartUIViewController () <ContactsViewControllerDelegate, UserSelectionObserver, SearchResultsViewControllerDelegate, SearchHeaderViewControllerDelegate, CollectionViewSectionAggregatorDelegate>
 
 @property (nonatomic) ProfilePresenter *profilePresenter;
 @property (nonatomic) StartUIQuickActionsBar *quickActionsBar;
@@ -61,7 +60,6 @@ static NSUInteger const StartUIInitiallyShowsKeyboardConversationThreshold = 10;
 @property (nonatomic) UserSelection *userSelection;
 @property (nonatomic) AnalyticsTracker *analyticsTracker;
 
-@property (nonatomic) UIPopoverController *presentedPopover;
 @property (nonatomic) BOOL addressBookUploadLogicHandled;
 @end
 
@@ -87,7 +85,7 @@ static NSUInteger const StartUIInitiallyShowsKeyboardConversationThreshold = 10;
 {
     [super viewDidLoad];
     
-    Team *team = [[ZMUser selfUser] activeTeam];
+    Team *team = ZMUser.selfUser.team;
     
     self.userSelection = [[UserSelection alloc] init];
     [self.userSelection addObserver:self];
@@ -106,7 +104,7 @@ static NSUInteger const StartUIInitiallyShowsKeyboardConversationThreshold = 10;
     [self.view addSubview:self.searchHeaderViewController.view];
     [self.searchHeaderViewController didMoveToParentViewController:self];
     
-    self.searchResultsViewController = [[SearchResultsViewController alloc] initWithUserSelection:self.userSelection team:[[ZMUser selfUser] activeTeam] variant:ColorSchemeVariantDark isAddingParticipants:NO];
+    self.searchResultsViewController = [[SearchResultsViewController alloc] initWithUserSelection:self.userSelection team:team variant:ColorSchemeVariantDark isAddingParticipants:NO];
     self.searchResultsViewController.mode = SearchResultsViewControllerModeList;
     self.searchResultsViewController.delegate = self;
     [self addChildViewController:self.searchResultsViewController];
@@ -127,6 +125,7 @@ static NSUInteger const StartUIInitiallyShowsKeyboardConversationThreshold = 10;
     [self updateActionBar];
     [self handleUploadAddressBookLogicIfNeeded];
     [self.searchResultsViewController searchContactList];
+    self.searchResultsViewController.sectionAggregator.delegate = self;
 }
 
 - (void)createConstraints
@@ -156,7 +155,7 @@ static NSUInteger const StartUIInitiallyShowsKeyboardConversationThreshold = 10;
     self.addressBookUploadLogicHandled = YES;
     
     // We should not even try to access address book when in a team
-    if([ZMUser selfUser].activeTeam != nil) {
+    if (ZMUser.selfUser.hasTeam) {
         return;
     }
     
@@ -178,7 +177,7 @@ static NSUInteger const StartUIInitiallyShowsKeyboardConversationThreshold = 10;
 
 - (void)showKeyboardIfNeeded
 {
-    NSUInteger conversationCount = [ZMConversationList conversationsInUserSession:[ZMUserSession sharedSession] team:[[ZMUser selfUser] activeTeam]].count;
+    NSUInteger conversationCount = [ZMConversationList conversationsInUserSession:[ZMUserSession sharedSession]].count;
     if (conversationCount > StartUIInitiallyShowsKeyboardConversationThreshold) {
         [self.searchHeaderViewController.tokenField becomeFirstResponder];
     }
@@ -189,7 +188,7 @@ static NSUInteger const StartUIInitiallyShowsKeyboardConversationThreshold = 10;
 {
     if (self.userSelection.users.count == 0) {
         if (self.searchHeaderViewController.query.length != 0 ||
-            [[ZMUser selfUser] activeTeam] != nil) {
+            ZMUser.selfUser.hasTeam) {
             self.searchResultsViewController.searchResultsView.accessoryView = nil;
         } else {
             self.searchResultsViewController.searchResultsView.accessoryView = self.quickActionsBar;
@@ -198,7 +197,7 @@ static NSUInteger const StartUIInitiallyShowsKeyboardConversationThreshold = 10;
     }
     else if (self.userSelection.users.count == 1) {
         self.searchResultsViewController.searchResultsView.accessoryView = self.quickActionsBar;
-        if ([[ZMUser selfUser] activeTeam] != nil) { // When in a team we always open group conversations
+        if (ZMUser.selfUser.hasTeam) { // When in a team we always open group conversations
             self.quickActionsBar.mode = StartUIQuickActionBarModeOpenGroupConversation;
         } else {
             self.quickActionsBar.mode = StartUIQuickActionBarModeOpenConversation;
@@ -332,7 +331,7 @@ static NSUInteger const StartUIInitiallyShowsKeyboardConversationThreshold = 10;
             break;
     }
     
-    if (! user.isConnected && section != SearchResultsViewControllerSectionTeamMembers) {
+    if (! user.isConnected && ! user.isTeamMember) {
         [self presentProfileViewControllerForUser:user atIndexPath:indexPath];
     }
 }
@@ -385,26 +384,6 @@ static NSUInteger const StartUIInitiallyShowsKeyboardConversationThreshold = 10;
     [self performSelector:@selector(performSearch) withObject:nil afterDelay:0.2f];
 }
 
-#pragma mark - UIPopoverControllerDelegate
-
-- (void)popoverControllerDidDismissPopover:(UIPopoverController *)popoverController
-{
-    if (popoverController == self.presentedPopover) {
-        self.presentedPopover = nil;
-    }
-}
-- (BOOL)popoverControllerShouldDismissPopover:(UIPopoverController *)popoverController {
-    
-    if (popoverController == self.presentedPopover) {
-        self.presentedPopover = nil;
-    }
-    
-    [popoverController dismissPopoverAnimated:NO];
-    [self.searchResultsViewController.searchResultsView.collectionView reloadItemsAtIndexPaths:self.searchResultsViewController.searchResultsView.collectionView.indexPathsForVisibleItems];
-    
-    return NO;
-}
-
 #pragma mark - ContactsViewControllerDelegate
 
 - (void)contactsViewControllerDidCancel:(ContactsViewController *)controller
@@ -417,6 +396,13 @@ static NSUInteger const StartUIInitiallyShowsKeyboardConversationThreshold = 10;
     [self dismissViewControllerAnimated:YES completion:^{
         [self wr_presentInviteActivityViewControllerWithSourceView:self.quickActionsBar logicalContext:GenericInviteContextStartUIBanner];
     }];
+}
+
+#pragma mark - CollectionViewSectionAggregatorDelegate
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    [self.searchHeaderViewController.separatorView scrollViewDidScroll:scrollView];
 }
 
 @end

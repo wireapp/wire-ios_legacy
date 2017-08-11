@@ -186,7 +186,7 @@ extension NSAttributedString {
                 let substring = self.attributedSubstring(from: NSRange(location: 0, length: currentRange.location + currentRange.length))
 
                 if upToWidth == 0 || substring.layoutSize().width < upToWidth {
-                    attributedText.setAttributes(attributes, range: currentRange)
+                    attributedText.addAttributes(attributes, range: currentRange)
                 }
                 else {
                     break

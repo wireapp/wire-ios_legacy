@@ -53,7 +53,6 @@
 #import "AnalyticsTracker.h"
 #import "Settings.h"
 #import "StopWatch.h"
-#import "UIView+MTAnimation.h"
 
 #import "Wire-Swift.h"
 
@@ -71,7 +70,7 @@
 @end
 
 
-@interface ZClientViewController ()
+@interface ZClientViewController () <ZMUserObserver>
 
 @property (nonatomic, readwrite) SoundEventListener *soundEventListener;
 
@@ -87,6 +86,7 @@
 
 @property (nonatomic) BOOL pendingInitialStateRestore;
 @property (nonatomic) SplitViewController *splitViewController;
+@property (nonatomic) id userObserverToken;
 
 @end
 
@@ -151,6 +151,8 @@
     if ([DeveloperMenuState developerMenuEnabled]) { //better way of dealing with this?
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(requestLoopNotification:) name:ZMTransportRequestLoopNotificationName object:nil];
     }
+    
+    self.userObserverToken = [UserChangeInfo addUserObserver:self forUser:[ZMUser selfUser]];
 }
 
 - (void)createBackgroundViewController
@@ -226,6 +228,17 @@
     [self.conversationListViewController view];
 }
 
+#pragma mark - ZMUserObserver
+
+- (void)userDidChange:(UserChangeInfo *)change
+{
+    if (change.accentColorValueChanged) {
+        if ([[UIApplication sharedApplication].keyWindow respondsToSelector:@selector(setTintColor:)]) {
+            [UIApplication sharedApplication].keyWindow.tintColor = [UIColor accentColor];
+        }
+    }
+}
+
 #pragma mark - Public API
 
 + (instancetype)sharedZClientViewController
@@ -266,7 +279,7 @@
 
 - (void)hideIncomingContactRequestsWithCompletion:(dispatch_block_t)completion
 {
-    NSArray *conversationsList = [ZMConversationList conversationsInUserSession:[ZMUserSession sharedSession] team:[[ZMUser selfUser] activeTeam]];
+    NSArray *conversationsList = [ZMConversationList conversationsInUserSession:[ZMUserSession sharedSession]];
     if (conversationsList.count != 0) {
         [self selectConversation:conversationsList.firstObject];
     }
@@ -426,66 +439,6 @@
     }
 }
 
-- (void)dismissModalControllersAnimated:(BOOL)animated completion:(dispatch_block_t)completion
-{
-    
-    if (animated) {
-        UIGraphicsBeginImageContextWithOptions(self.view.window.bounds.size, NO, self.view.window.screen.scale);
-        [self.view.window.layer renderInContext:UIGraphicsGetCurrentContext()];
-        UIImage* screenshot = UIGraphicsGetImageFromCurrentImageContext();
-        UIGraphicsEndImageContext();
-        
-        UIImageView *screenshotView = [[UIImageView alloc] initWithImage:screenshot];
-        
-        screenshotView.translatesAutoresizingMaskIntoConstraints = NO;
-        
-        [self dismissAllModalControllersWithCallback:^{
-            
-            [[UIApplication sharedApplication] wr_updateStatusBarForCurrentControllerAnimated:YES];
-            
-            [self.splitViewController setLeftViewControllerRevealed:YES animated:animated completion:nil];
-
-            NSArray *fadedViews = [self.splitViewController.leftViewController.view.subviews copy];
-            for (UIView *v in fadedViews) {
-                v.hidden = YES;
-            }
-            
-            [self.splitViewController.leftViewController.view addSubview:screenshotView];
-            [screenshotView addConstraintsForSize:self.view.bounds.size];
-            
-            [UIView mt_animateWithViews:@[screenshotView]
-                               duration:0.35f
-                                  delay:0.0f
-                         timingFunction:MTTimingFunctionEaseOutQuad
-                             animations:^{
-                                 screenshotView.alpha = 0.0f;
-                             }
-                             completion:^{
-                                 [screenshotView removeFromSuperview];
-                                 for (UIView *v in fadedViews) {
-                                     v.hidden = NO;
-                                 }
-                                 if (completion) {
-                                     completion();
-                                 }
-                             }];
-        }];
-    }
-    else {
-        [self dismissAllModalControllersWithCallback:^{
-            
-            [[UIApplication sharedApplication] wr_updateStatusBarForCurrentControllerAnimated:YES];
-            
-            [self.splitViewController setLeftViewControllerRevealed:YES animated:NO completion:nil];
-
-            
-            if (completion) {
-                completion();
-            }
-        }];
-    }
-}
-
 #pragma mark - Getters/Setters
 
 - (void)setCurrentConversation:(ZMConversation *)currentConversation
@@ -620,7 +573,7 @@
 {
     // check for conversations and pick the first one.. this can be tricky if there are pending updates and
     // we haven't synced yet, but for now we just pick the current first item
-    NSArray *list = [ZMConversationList conversationsInUserSession:[ZMUserSession sharedSession] team:[[ZMUser selfUser] activeTeam]];
+    NSArray *list = [ZMConversationList conversationsInUserSession:[ZMUserSession sharedSession]];
     
     if (list.count > 0) {
         // select the first conversation and don't focus on it

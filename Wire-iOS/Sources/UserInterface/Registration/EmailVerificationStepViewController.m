@@ -27,6 +27,7 @@
 #import "UIImage+ZetaIconsNeue.h"
 #import "UIColor+WAZExtensions.h"
 #import "WireSyncEngine+iOS.h"
+#import "Wire-Swift.h"
 
 
 @interface EmailVerificationStepViewController () <UITextViewDelegate>
@@ -74,7 +75,7 @@
 {
     [super viewWillDisappear:animated];
     
-    [[ZMUserSession sharedSession] cancelWaitForEmailVerification];
+    [[UnauthenticatedSession sharedSession] cancelWaitForEmailVerification];
 }
 
 - (void)createContainerView

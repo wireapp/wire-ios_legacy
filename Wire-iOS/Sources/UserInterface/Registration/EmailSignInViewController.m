@@ -91,7 +91,7 @@
     [super viewDidAppear:animated];
     
     if (self.isMovingToParentViewController || self.isBeingPresented || self.authenticationToken == nil) {
-        self.authenticationToken = [[ZMUserSession sharedSession] addAuthenticationObserver:self];
+        self.authenticationToken = [ZMUserSessionAuthenticationNotification addObserver:self];
     }
     
     if(AutomationHelper.sharedHelper.automationEmailCredentials != nil) {
@@ -105,7 +105,7 @@
 
 - (void)removeObservers
 {
-    [[ZMUserSession sharedSession] removeAuthenticationObserverForToken:self.authenticationToken];
+    [ZMUserSessionAuthenticationNotification removeObserverForToken:self.authenticationToken];
     self.authenticationToken = nil;
 }
 
@@ -123,9 +123,11 @@
     self.emailField.accessibilityIdentifier = @"EmailField";
     self.emailField.delegate = self;
     
-    if ([ZMUser selfUser].emailAddress != nil) {
+    ZMUser *currentUser = [SessionManager shared].currentUser;
+
+    if (currentUser.emailAddress != nil) {
         // User was previously signed in so we must force him to sign in with the same credentials
-        self.emailField.text = [ZMUser selfUser].emailAddress;
+        self.emailField.text = currentUser.emailAddress;
         self.emailField.enabled = NO;
     }
     
@@ -208,8 +210,12 @@
     }
 }
 
-- (void)presentClientManagementForUserClients:(NSArray<UserClient *> *)userClients credentials:(ZMEmailCredentials *)credentials
-{
+- (void)presentClientManagementForUserClientIds:(NSArray<NSManagedObjectID *> *)clientIds credentials:(ZMEmailCredentials *)credentials
+{    
+    NSArray *userClients = [clientIds mapWithBlock:^id(NSManagedObjectID *objId) {
+        return [ZMUserSession.sharedSession.managedObjectContext existingObjectWithID:objId error:NULL];
+    }];
+    
     ClientUnregisterFlowViewController *unregisterClientFlowController = [[ClientUnregisterFlowViewController alloc] initWithClientsList:userClients delegate:self credentials:credentials];
     
     NavigationController *navigationController = self.wr_navigationController;
@@ -230,9 +236,11 @@
     
     self.navigationController.showLoadingView = YES;
     
-    [self.analyticsTracker tagRequestedEmailLogin];
-    
-    [[ZMUserSession sharedSession] loginWithCredentials:credentials notify:YES];
+    dispatch_async(dispatch_get_main_queue(), ^{        
+        [self.analyticsTracker tagRequestedEmailLogin];
+        
+        [[UnauthenticatedSession sharedSession] loginWithCredentials:credentials];
+    });
 }
 
 - (IBAction)resetPassword:(id)sender
@@ -324,7 +332,7 @@
 - (void)authenticationDidSucceed
 {
     [self.analyticsTracker tagEmailLogin];
-    self.navigationController.showLoadingView = NO;
+    // Not necessary to remove the loading view, since the controller would not be used any more.
 }
 
 - (void)authenticationDidFail:(NSError *)error
@@ -339,7 +347,18 @@
         self.passwordField.rightAccessoryView = RegistrationTextFieldRightAccessoryViewGuidanceDot;
     }
     
-    if (error.code != ZMUserSessionNeedsPasswordToRegisterClient &&
+    if (error.code == ZMUserSessionUnkownError) {
+        NSString *email = self.emailField.text;
+        NSString *password = self.passwordField.text;
+        
+        if (![ZMUser validateEmailAddress:&email error:nil]) {
+            [self showAlertForError:[NSError errorWithDomain:ZMUserSessionErrorDomain code:ZMUserSessionInvalidEmail userInfo:nil]];
+        } else if (![ZMUser validatePassword:&password error:nil]) {
+            [self showAlertForError:[NSError errorWithDomain:ZMUserSessionErrorDomain code:ZMUserSessionInvalidCredentials userInfo:nil]];
+        } else {
+            [self showAlertForError:error];
+        }
+    } else if (error.code != ZMUserSessionNeedsPasswordToRegisterClient &&
         error.code != ZMUserSessionCanNotRegisterMoreClients &&
         error.code != ZMUserSessionNeedsToRegisterEmailToRegisterClient) {
 
@@ -347,7 +366,7 @@
     }
     
     if (error.code == ZMUserSessionCanNotRegisterMoreClients) {
-        [self presentClientManagementForUserClients:error.userInfo[ZMClientsKey] credentials:[self credentials]];
+        [self presentClientManagementForUserClientIds:error.userInfo[ZMClientsKey] credentials:[self credentials]];
     }
 }
 

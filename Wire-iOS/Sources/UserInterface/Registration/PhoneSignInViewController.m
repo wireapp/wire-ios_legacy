@@ -34,8 +34,7 @@
 #import "CheckmarkViewController.h"
 #import "StopWatch.h"
 #import "AnalyticsTracker+Registration.h"
-
-
+#import "Wire-Swift.h"
 
 
 @interface PhoneSignInViewController () <FormStepDelegate, ZMAuthenticationObserver, PhoneVerificationStepViewControllerDelegate>
@@ -69,13 +68,13 @@
     [super viewDidAppear:animated];
     
     if (self.isMovingToParentViewController || self.isBeingPresented || self.authenticationToken == nil) {
-        self.authenticationToken = [[ZMUserSession sharedSession] addAuthenticationObserver:self];
+        self.authenticationToken = [ZMUserSessionAuthenticationNotification addObserver:self];
     }
 }
 
 - (void)removeObservers
 {
-    [[ZMUserSession sharedSession] removeAuthenticationObserverForToken:self.authenticationToken];
+    [ZMUserSessionAuthenticationNotification removeObserverForToken:self.authenticationToken];
     self.authenticationToken = nil;
 }
 
@@ -83,9 +82,10 @@
 {
     PhoneNumberStepViewController *phoneNumberStepViewController;
     
-    if ([ZMUser selfUser].phoneNumber.length > 0) {
+    ZMUser *currentUser = [SessionManager shared].currentUser;
+    if (currentUser.phoneNumber.length > 0) {
         // User was previously signed in so we must force him to sign in with the same credentials
-        phoneNumberStepViewController = [[PhoneNumberStepViewController alloc] initWithUneditablePhoneNumber:[ZMUser selfUser].phoneNumber];
+        phoneNumberStepViewController = [[PhoneNumberStepViewController alloc] initWithUneditablePhoneNumber:currentUser.phoneNumber];
     } else {
         phoneNumberStepViewController = [[PhoneNumberStepViewController alloc] init];
     }
@@ -130,7 +130,7 @@
         
         PhoneNumberStepViewController *phoneNumberStepViewController = (PhoneNumberStepViewController *)viewController;
         self.phoneNumber = phoneNumberStepViewController.phoneNumber;
-        [[ZMUserSession sharedSession] requestPhoneVerificationCodeForLogin:self.phoneNumber];
+        [[UnauthenticatedSession sharedSession] requestPhoneVerificationCodeForLogin:self.phoneNumber];
     }
     else if ([viewController isKindOfClass:[PhoneVerificationStepViewController class]]) {
         self.navigationController.showLoadingView = YES;
@@ -142,7 +142,7 @@
         StopWatch *stopWatch = [StopWatch stopWatch];
         [stopWatch restartEvent:@"Login"];
         
-        [[ZMUserSession sharedSession] loginWithCredentials:credentials notify:YES];
+        [[UnauthenticatedSession sharedSession] loginWithCredentials:credentials];
     }
 }
 
@@ -150,7 +150,7 @@
 
 - (void)phoneVerificationStepDidRequestVerificationCode
 {
-    [[ZMUserSession sharedSession] requestPhoneVerificationCodeForLogin:self.phoneNumberStepViewController.phoneNumber];
+    [[UnauthenticatedSession sharedSession] requestPhoneVerificationCodeForLogin:self.phoneNumberStepViewController.phoneNumber];
 }
 
 #pragma mark - ZMAuthenticationObserver

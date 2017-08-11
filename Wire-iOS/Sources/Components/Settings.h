@@ -79,6 +79,8 @@ extern NSString * const UserDefaultBrowserOpeningRawValue;
 
 extern NSString * const UserDefaultCallingConstantBitRate;
 
+extern NSString * const UserDefaultDisableLinkPreviews;
+
 /// Model object for locally stored (not in SE or AVS) user app settings
 @interface Settings : NSObject
 
@@ -88,10 +90,10 @@ extern NSString * const UserDefaultCallingConstantBitRate;
 @property (nonatomic) BOOL disableMarkdown;
 @property (nonatomic) BOOL shouldRegisterForVoIPNotificationsOnly;
 @property (nonatomic) BOOL disableSendButton;
+@property (nonatomic) BOOL disableLinkPreviews;
 
 @property (nonatomic) BOOL disableCallKit;
 @property (nonatomic) BOOL callingConstantBitRate;
-@property (nonatomic) CallingProtocolStrategy callingProtocolStrategy;
 
 @property (nonatomic) BOOL enableBatchCollections; // develop option
 

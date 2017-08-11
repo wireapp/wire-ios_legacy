@@ -256,8 +256,7 @@ extension BaseTeamView: ZMUserObserver {
 
 public final class PersonalTeamView: BaseTeamView {
     internal let userImageView = UserImageView(size: .normal)
-    
-    private var teamsObserver: NSObjectProtocol!
+
     private var conversationListObserver: NSObjectProtocol!
     private var connectionRequestObserver: NSObjectProtocol!
     
@@ -272,8 +271,8 @@ public final class PersonalTeamView: BaseTeamView {
             return false
         }
         let unread = ZMConversation.predicateForConversationConsideredUnread()!
-        return ZMConversationList.conversations(inUserSession: userSession, team: nil).first(where: { unread.evaluate(with: $0) }) != nil ||
-                ZMConversationList.pendingConnectionConversations(inUserSession: userSession, team: nil).count > 0
+        return ZMConversationList.conversations(inUserSession: userSession).first(where: { unread.evaluate(with: $0) }) != nil ||
+                ZMConversationList.pendingConnectionConversations(inUserSession: userSession).count > 0
     }
     
     override init() {
@@ -288,11 +287,10 @@ public final class PersonalTeamView: BaseTeamView {
         selectionView.pathGenerator = {
             return UIBezierPath(ovalIn: CGRect(origin: .zero, size: $0))
         }
-        
-        teamsObserver = TeamChangeInfo.add(observer: self, for: nil)
+
         if let userSession = ZMUserSession.shared() {
-            conversationListObserver = ConversationListChangeInfo.add(observer: self, for: ZMConversationList.conversations(inUserSession: userSession, team: nil))
-            connectionRequestObserver = ConversationListChangeInfo.add(observer: self, for: ZMConversationList.pendingConnectionConversations(inUserSession: userSession, team: nil))
+            conversationListObserver = ConversationListChangeInfo.add(observer: self, for: ZMConversationList.conversations(inUserSession: userSession))
+            connectionRequestObserver = ConversationListChangeInfo.add(observer: self, for: ZMConversationList.pendingConnectionConversations(inUserSession: userSession))
         }
         
         self.imageViewContainer.addSubview(userImageView)
@@ -311,17 +309,9 @@ public final class PersonalTeamView: BaseTeamView {
     public override func update() {
         super.update()
         self.nameLabel.text = ZMUser.selfUser().displayName
-        self.selected = ZMUser.selfUser().teams.first(where: { $0.isActive }) == nil
+        self.selected = true // FIXME: ZMUser.selfUser().team
         self.accessibilityValue = String(format: "conversation_list.header.self_team.accessibility_value".localized, ZMUser.selfUser().displayName) + " " + accessibilityState
         self.accessibilityIdentifier = "self team"
-    }
-}
-
-extension PersonalTeamView: TeamObserver {
-    public func teamDidChange(_ changeInfo: TeamChangeInfo) {
-        if changeInfo.isActiveChanged {
-            update()
-        }
     }
 }
 
@@ -335,10 +325,25 @@ extension PersonalTeamView {
 }
 
 public final class TeamImageView: UIImageView {
+    public enum TeamImageViewStyle {
+        case small
+        case big
+    }
+    
     private var lastLayoutBounds: CGRect = .zero
     private let maskLayer = CALayer()
     internal let initialLabel = UILabel()
     public let team: TeamType
+    public var style: TeamImageViewStyle = .small {
+        didSet {
+            switch (self.style) {
+            case .big:
+                self.cas_styleClass = "big"
+            case .small:
+                self.cas_styleClass = nil
+            }
+        }
+    }
     
     init(team: TeamType) {
         self.team = team
@@ -370,7 +375,7 @@ public final class TeamImageView: UIImageView {
         }
         
         UIGraphicsBeginImageContextWithOptions(bounds.size, false, maskLayer.contentsScale)
-        WireStyleKit.drawSpace(withFrame: bounds, resizing: WireStyleKitResizingBehaviorCenter, color: .black)
+        WireStyleKit.drawSpace(withFrame: bounds, resizing: WireStyleKitResizingBehaviorAspectFit, color: .black)
         
         let image = UIGraphicsGetImageFromCurrentImageContext()!
         UIGraphicsEndImageContext()
@@ -419,13 +424,13 @@ public final class TeamImageView: UIImageView {
     init(team: TeamType) {
         self.team = team
         
-        self.imageView = TeamImageView(team: team)
+        imageView = TeamImageView(team: team)
         
         super.init()
         
-        self.isAccessibilityElement = true
-        self.accessibilityTraits = UIAccessibilityTraitButton
-        self.shouldGroupAccessibilityChildren = true
+        isAccessibilityElement = true
+        accessibilityTraits = UIAccessibilityTraitButton
+        shouldGroupAccessibilityChildren = true
         
         imageView.contentMode = .scaleAspectFill
         
@@ -442,14 +447,14 @@ public final class TeamImageView: UIImageView {
         if let team = self.team as? Team {
             teamObserver = TeamChangeInfo.add(observer: self, for: team)
             if let userSession = ZMUserSession.shared() {
-                conversationListObserver = ConversationListChangeInfo.add(observer: self, for: ZMConversationList.conversations(inUserSession: userSession, team: team))
+                conversationListObserver = ConversationListChangeInfo.add(observer: self, for: ZMConversationList.conversations(inUserSession: userSession))
             }
         }
 
-        self.update()
+        update()
         
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(didTap(_:)))
-        self.addGestureRecognizer(tapGesture)
+        addGestureRecognizer(tapGesture)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -458,15 +463,14 @@ public final class TeamImageView: UIImageView {
     
     public override func update() {
         super.update()
-        self.updateLabel()
-        self.selected = self.team.isActive
-        self.imageView.updateImage()
-        self.accessibilityValue = String(format: "conversation_list.header.self_team.accessibility_value".localized, self.team.name ?? "") + " " + accessibilityState
-        self.accessibilityIdentifier = "\(self.team.name ?? "") team"
+        updateLabel()
+        imageView.updateImage()
+        accessibilityValue = String(format: "conversation_list.header.self_team.accessibility_value".localized, self.team.name ?? "") + " " + accessibilityState
+        accessibilityIdentifier = "\(self.team.name ?? "") team"
     }
     
     fileprivate func updateLabel() {
-        self.nameLabel.text = self.team.name
+        nameLabel.text = self.team.name
     }
     
     static let ciContext: CIContext = {

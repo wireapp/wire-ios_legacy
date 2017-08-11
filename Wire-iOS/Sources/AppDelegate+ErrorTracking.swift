@@ -26,13 +26,8 @@ extension AppDelegate {
             let name = "debug.database_context_save_failure"
             let attributes = [
                 "context_type" : type.rawValue,
-                "metadata_keys" : metadata.keys.joined(separator: "; "),
-                "user_info_keys" : userInfo.keys.joined(separator: "; "),
                 "error_code" : error.code,
                 "error_domain" : error.domain,
-                "error_failure_reason" : error.localizedFailureReason ?? "",
-                "error_description" : error.description,
-                "error_user_info" : error.userInfo.description
             ] as [String: Any]
             
             DispatchQueue.main.async {

@@ -143,7 +143,7 @@ extension SettingsCellDescriptorFactory {
         cellDescriptors.append(soundsSection)
         
         var externalAppsDescriptors = [SettingsCellDescriptorType]()
-
+        
         if BrowserOpeningOption.optionsAvailable {
             externalAppsDescriptors.append(browserOpeningGroup(for: settingsPropertyFactory.property(.browserOpeningOption)))
         }
@@ -153,12 +153,16 @@ extension SettingsCellDescriptorFactory {
         if TweetOpeningOption.optionsAvailable {
             externalAppsDescriptors.append(twitterOpeningGroup(for: settingsPropertyFactory.property(.tweetOpeningOption)))
         }
-
+        
         let externalAppsSection = SettingsSectionDescriptor(
             cellDescriptors: externalAppsDescriptors,
             header: "self.settings.external_apps.header".localized
         )
-
+        
+        if externalAppsDescriptors.count > 0 {
+            cellDescriptors.append(externalAppsSection)
+        }
+        
         let sendButtonDescriptor = SettingsPropertyToggleCellDescriptor(settingsProperty: settingsPropertyFactory.property(.disableSendButton), inverse: true)
 
         var popularDemandDescriptors: [SettingsCellDescriptorType] = [sendButtonDescriptor]
@@ -176,10 +180,6 @@ extension SettingsCellDescriptorFactory {
         
         cellDescriptors.append(byPopularDemandSection)
         
-        if externalAppsDescriptors.count > 0 {
-            cellDescriptors.append(externalAppsSection)
-        }
-        
         if #available(iOS 9.0, *) {
             let context: LAContext = LAContext()
             var error: NSError?
@@ -190,6 +190,15 @@ extension SettingsCellDescriptorFactory {
                 cellDescriptors.append(section)
             }
         }
+        
+        let linkPreviewDescriptor = SettingsPropertyToggleCellDescriptor(settingsProperty: settingsPropertyFactory.property(.disableLinkPreviews), inverse: true)
+        let linkPreviewSection = SettingsSectionDescriptor(
+            cellDescriptors: [linkPreviewDescriptor],
+            header: nil,
+            footer: "self.settings.privacy_security.disable_link_previews.footer".localized
+        )
+        
+        cellDescriptors.append(linkPreviewSection)
         
         return SettingsGroupCellDescriptor(items: cellDescriptors, title: "self.settings.options_menu.title".localized, icon: .settingsOptions)
     }

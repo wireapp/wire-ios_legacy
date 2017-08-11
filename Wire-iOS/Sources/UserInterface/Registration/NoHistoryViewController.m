@@ -46,6 +46,9 @@
     [self createOKButton];
     
     [self createViewConstraints];
+    
+    // Layout first to avoid the initial layout animation during the presentation. 
+    [self.view layoutIfNeeded];
 }
 
 - (void)createContentView

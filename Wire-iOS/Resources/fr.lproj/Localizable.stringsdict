@@ -59,9 +59,9 @@
 			<key>zero</key>
 			<string></string>
 			<key>one</key>
-			<string>a été enlevé</string>
+			<string>a été</string>
 			<key>other</key>
-			<string>ont été enlevés</string>
+			<string>ont été</string>
 		</dict>
 	</dict>
 	<key>content.system.missing_messages.subtitle_removed</key>
@@ -77,9 +77,9 @@
 			<key>zero</key>
 			<string></string>
 			<key>one</key>
-			<string>a été ajouté</string>
+			<string>a été</string>
 			<key>other</key>
-			<string>ont été ajoutés</string>
+			<string>ont été</string>
 		</dict>
 	</dict>
 	<key>list.connect_request.people_waiting</key>
@@ -137,11 +137,11 @@
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>few</key>
-			<string>%d autres</string>
+			<string>%d autres personnes</string>
 			<key>many</key>
-			<string>%d autres</string>
+			<string>%d autres personnes</string>
 			<key>other</key>
-			<string>%d autres</string>
+			<string>%d autres personnes</string>
 		</dict>
 	</dict>
 	<key>content.system.people_started_using</key>
@@ -157,7 +157,7 @@
 			<key>one</key>
 			<string></string>
 			<key>other</key>
-			<string> et %d autres</string>
+			<string> et %d autres personnes</string>
 		</dict>
 		<key>d_new_devices</key>
 		<dict>
@@ -246,9 +246,9 @@
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>one</key>
-			<string>nouvel emplacement</string>
+			<string>nouvelle position</string>
 			<key>other</key>
-			<string>%d nouveaux emplacements</string>
+			<string>%d nouvelles positions</string>
 		</dict>
 	</dict>
 	<key>conversation.silenced.status.message.audio</key>
@@ -262,9 +262,9 @@
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>one</key>
-			<string>nouveau message audio</string>
+			<string>nouveau message vocal</string>
 			<key>other</key>
-			<string>%d nouveaux messages audio</string>
+			<string>%d nouveaux messages vocaux</string>
 		</dict>
 	</dict>
 	<key>conversation.silenced.status.message.video</key>
@@ -294,9 +294,9 @@
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>one</key>
-			<string>nouveau ping</string>
+			<string>nouveau signe</string>
 			<key>other</key>
-			<string>%d nouveaux pings</string>
+			<string>%d nouveaux signes</string>
 		</dict>
 	</dict>
 	<key>conversation.silenced.status.message.missedcall</key>

@@ -1,17 +1,17 @@
-// 
+//
 // Wire
 // Copyright (C) 2016 Wire Swiss GmbH
-// 
+//
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
-// 
+//
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 // GNU General Public License for more details.
-// 
+//
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
@@ -33,8 +33,7 @@
 "peoplepicker.header.send_invitation" = "邀请";
 "peoplepicker.header.contacts" = "联系人";
 "peoplepicker.header.contacts_personal" = "联系人";
-"peoplepicker.header.team_members" = "%@";
-"peoplepicker.header.directory" = "新增好友";
+"peoplepicker.header.directory" = "添加好友";
 "peoplepicker.title.create_conversation" = "创建群聊\n";
 "peoplepicker.title.add_to_conversation" = "新增好友";
 
@@ -78,7 +77,7 @@
 "contacts_ui.title" = "邀请联系人";
 
 "contacts_ui.no_contact.title" = "暂无对话\n";
-"contacts_ui.no_contact.message" = "开始聊天或者邀请好友加入。";
+"contacts_ui.no_contact.message" = "开始一段对话或创建一个组。";
 
 "contacts_ui.no_contact.archived.title" = "所以内容均已存档";
 
@@ -93,14 +92,31 @@
 // Profile Header View
 "conversation.connection_view.in_address_book" = "在联系人中";
 
-
+// Conversation list voiceover accessibility
+"conversation_list.voiceover.open_conversation.hint" = "打开对话";
+"conversation_list.voiceover.status.pending_connection" = "pending";
+"conversation_list.voiceover.status.active_call" = "active call";
+"conversation_list.voiceover.status.missed_call" = "missed call";
+"conversation_list.voiceover.status.pause_media" = "pause media";
+"conversation_list.voiceover.status.play_media" = "play media";
+"conversation_list.voiceover.status.silenced" = "silenced";
+"conversation_list.voiceover.status.typing" = "typing";
+"conversation_list.voiceover.status.ping" = "ping";
+"conversation_list.voiceover.bottom_bar.archived_button.label" = "archived";
+"conversation_list.voiceover.bottom_bar.archived_button.hint" = "list of archived conversations";
+"conversation_list.voiceover.bottom_bar.contacts_button.label" = "联系人";
+"conversation_list.voiceover.bottom_bar.contacts_button.hint" = "search for people on Wire";
+"conversation_list.voiceover.bottom_bar.compose_button.label" = "compose";
+"conversation_list.voiceover.bottom_bar.compose_button.hint" = "compose messages and save for later";
+"conversation_list.voiceover.bottom_bar.camera_button.label" = "camera";
+"conversation_list.voiceover.bottom_bar.camera_button.hint" = "take picture and send quickly";
 
 // Archived List
 "archived_list.title" = "档案";
 
 // Add contact tool tip
 "tool_tip.contacts.title" = "从这里开始对话";
-"tool_tip.contacts.message" = "开始一段对话，或邀请更多的人加入。与单个联系人或在群聊中进行文字聊天或语音聊天。";
+"tool_tip.contacts.message" = "开始一段对话。电话、 邮件和份额在私营或与团体。";
 
 // "Knows" subtitle in cell: "Knows Indrek", "Knows Indrek and Jane", "Knows Indrek and 5 others"
 "peoplepicker.suggested.knows_one" = "认识 %@";
@@ -130,6 +146,8 @@
 "list.archived_conversations" = "归档";
 "list.archived_conversations_close" = "关闭归档";
 
+"conversation.voiceover.verified" = "verified";
+
 "conversation.status.call" = "正在呼叫";
 "conversation.status.typing" = "输入信息";
 "conversation.status.typing.group" = "%@︰ 输入消息......";
@@ -157,6 +175,7 @@
 "conversation.status.you_left" = "您退出了";
 "conversation.status.started_conversation" = "%@ started a conversation";
 "conversation.status.removed_users" = "%@移除了%@";
+"conversation.status.everyone_left" = "所有人都已离开";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Compose Entry Point
@@ -193,6 +212,8 @@
 "conversation.call.many_participants_confirmation.call" = "通话";
 
 "conversation.connection_view.in_address_book" = "在联系人中";
+
+"conversation.input_bar.shortcut.send" = "Send Message";
 
 // Image confirmation dialogue
 "image_confirmer.confirm" = "好";
@@ -272,6 +293,7 @@
 "content.system.connected_to" = "已连接%@为好友\n开始对话";
 "content.system.other_wanted_to_talk" = "%@ 发送过通话请求";
 "content.system.you_wanted_to_talk" = "您发送的通话要求结束";
+"content.system.ephemeral_time_remaining" = "%@ 离开了";
 
 "content.system.you_started" = "你";
 "content.system.this_device" = "此设备";
@@ -472,7 +494,12 @@
 
 // User Details
 "profile.details.title" = "详细信息";
-"profile.details.guest_in_team" = "Guest in %@";
+"profile.details.guest" = "游客";
+
+"profile_view.team_name.in" = "in %@";
+"profile_view.accessibility.handle" = "用户名";
+"profile_view.accessibility.name" = "Display name";
+"profile_view.accessibility.team_name" = "Team name";
 
 // Device list
 "profile.devices.title" = "設備";
@@ -507,6 +534,9 @@
 "self.about" = "关于";
 "self.sign_out" = "登出";
 "self.report_abuse" = "滥用报告";
+"self.voiceover.label" = "用户信息";
+"self.voiceover.hint" = "Open profile and settings";
+"self.new-device.voiceover.label" = "Profile, new devices added";
 
 "self.add_phone_number" = "新增手机号码";
 "self.add_email_password" = "新增邮箱地址和密码";
@@ -527,6 +557,10 @@
 "self.new_device_alert.message_plural" = "%@ 如果您没有这样做 ，请移除此设备并重新设定您的密码。";
 "self.new_device_alert.manage_devices" = "设备管理";
 "self.new_device_alert.trust_devices" = "好";
+
+// Settings - top level
+"self.settings.create_team.title" = "Create team";
+"self.settings.add_account.title" = "Add account";
 
 // Settings - Account details
 "self.settings.account_section" = "帐户";
@@ -680,6 +714,9 @@
 
 "self.settings.privacy_security.lock_cancelled.description" = "通过Touch ID或Passcode解锁";
 "self.settings.privacy_security.lock_cancelled.action" = "解锁";
+
+"self.settings.privacy_security.disable_link_previews.title" = "Create Previews For Links You Send";
+"self.settings.privacy_security.disable_link_previews.footer" = "Previews may still be shown for links from other people.";
 
 "self.settings.privacy_analytics_menu.devices.title" = "設備";
 
@@ -891,7 +928,7 @@
 "push.notification.new_message" = "新信息";
 
 
-// Force Update
+//Force Update
 "force.update.title" = "必要更新";
 "force.update.message" = "您错过了些新功能。快到App Store中下载最新版本的Wire呀。";
 "force.update.ok_button" = "到App Store";
@@ -936,3 +973,7 @@
 "compose.drafts.compose.delete.confirm.title" = "确认删除";
 "compose.drafts.compose.delete.confirm.message" = "此操作将永久删除，且该操作不可恢复。";
 "compose.drafts.compose.delete.confirm.action.title" = "删除";
+
+"compose.drafts.compose.dismiss.confirm.title" = "Save as draft";
+"compose.drafts.compose.dismiss.confirm.action.title" = "保存";
+"compose.drafts.compose.dismiss.delete.action.title" = "删除";

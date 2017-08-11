@@ -21,11 +21,9 @@
 
 #import "WireSyncEngine+iOS.h"
 #import "ZMUserSession+iOS.h"
-#import "ZMUserSession+Additions.h"
 #import <AVFoundation/AVFoundation.h>
 #import "Analytics+iOS.h"
 #import "AnalyticsBase.h"
-#import "UIAlertView+Zeta.h"
 #import "UIAlertController+Wire.h"
 #import "AppDelegate.h"
 #import "VoiceChannelController.h"
@@ -61,13 +59,13 @@
     else if (self.conversationType == ZMConversationTypeOneOnOne &&
                (participants.count > 1 || (participants.count == 1 && ! [self.connectedUser isEqual:participants.anyObject]))) {
 
-        Team *activeTeam = [[ZMUser selfUser] activeTeam];
+        Team *team = ZMUser.selfUser.team;
 
         NSMutableArray *listOfPeople = [participants.allObjects mutableCopy];
         [listOfPeople addObject:self.connectedUser];
         ZMConversation *conversation = [ZMConversation insertGroupConversationIntoUserSession:[ZMUserSession sharedSession]
                                                                              withParticipants:listOfPeople
-                                                                                       inTeam:activeTeam];
+                                                                                       inTeam:team];
         AnalyticsGroupConversationEvent *event = [AnalyticsGroupConversationEvent eventForCreatedGroupWithContext:CreatedGroupContextConversation
                                                                                                  participantCount:conversation.activeParticipants.count];
         [[Analytics shared] tagEventObject:event];
@@ -375,7 +373,7 @@
 
 - (BOOL)warnAboutNoInternetConnection
 {
-    if ([[ZMUserSession sharedSession] checkNetworkAndFlashIndicatorIfNecessary]) {
+    if ([AppDelegate checkNetworkAndFlashIndicatorIfNecessary]) {
         UIAlertController *noInternetConnectionAlert = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"voice.network_error.title", "<missing title>")
                                                                                            message:NSLocalizedString(@"voice.network_error.body", "<voice failed because of network>")
                                                                                  cancelButtonTitle:NSLocalizedString(@"general.ok", "ok string")];

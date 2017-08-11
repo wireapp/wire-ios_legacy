@@ -49,7 +49,7 @@ import CoreData
         if let subject = subject, !subject.isEmpty {
             text += "# " + subject
             if nil != message {
-                text += "\n\n"
+                text += "\n"
             }
         }
 

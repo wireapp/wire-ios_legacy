@@ -105,6 +105,8 @@ static const NSTimeInterval OverscrollRatio = 2.5;
     if (![[Settings sharedSettings] disableAVS]) {
         [AVSMediaManagerClientChangeNotification addObserver:self];
     }
+    
+    self.isAccessibilityElement = NO;
 }
 
 - (void)setVisualDrawerOffset:(CGFloat)visualDrawerOffset updateUI:(BOOL)doUpdate

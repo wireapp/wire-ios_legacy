@@ -106,6 +106,8 @@ open class IconSystemCell: ConversationCell, TTTAttributedLabelDelegate {
     }
     
     private func createConstraints() {
+        let labelViewTopInset: CGFloat = verticalInset + lineMedianYOffset
+        
         constrain(self.leftIconContainer, self.leftIconView, self.labelView, self.messageContentView, self.authorLabel) { (leftIconContainer: LayoutProxy, leftIconView: LayoutProxy, labelView: LayoutProxy, messageContentView: LayoutProxy, authorLabel: LayoutProxy) -> () in
             leftIconContainer.leading == messageContentView.leading
             leftIconContainer.trailing == authorLabel.leading
@@ -115,20 +117,28 @@ open class IconSystemCell: ConversationCell, TTTAttributedLabelDelegate {
             leftIconView.height == 16
             leftIconView.height == leftIconView.width
             labelView.leading == leftIconContainer.trailing
-            labelView.top == messageContentView.top + verticalInset + lineMedianYOffset
+            labelView.top == messageContentView.top + labelViewTopInset
             labelView.trailing <= messageContentView.trailing - 72
             labelView.bottom <= messageContentView.bottom - verticalInset
             messageContentView.height >= 32
         }
 
+        createLineViewConstraints()
+
+        updateLineBaseLineConstraint()
+
+        createBaselineConstraint()
+    }
+    
+    private func createLineViewConstraints() {
         constrain(self.lineView, self.contentView, self.labelView, self.messageContentView) { (lineView: LayoutProxy, contentView: LayoutProxy, labelView: LayoutProxy, messageContentView: LayoutProxy) -> () in
             lineView.leading == labelView.trailing + 16
             lineView.height == .hairline
             lineView.trailing == contentView.trailing
         }
-
-        updateLineBaseLineConstraint()
-
+    }
+    
+    private func createBaselineConstraint() {
         constrain(lineView, labelView, leftIconContainer) { (lineView: LayoutProxy, labelView: LayoutProxy, icon: LayoutProxy) -> () in
             lineBaseLineConstraint = lineView.centerY == labelView.top + self.labelView.font.median - lineMedianYOffset
             icon.centerY == lineView.centerY

@@ -80,12 +80,17 @@
 
 + (instancetype)wr_cannotDecryptNewRemoteIDHelpURL
 {
-    return  [self URLWithString:@"https://wire.com/privacy/error-2"];
+    return [self URLWithString:@"https://wire.com/privacy/error-2"];
 }
 
 + (instancetype)wr_unknownMessageHelpURL
 {
-    return  [self URLWithString:@"https://wire.com/compatibility/unknown-message"];
+    return [self URLWithString:@"https://wire.com/compatibility/unknown-message"];
+}
+
++ (instancetype)wr_createTeamURL
+{
+    return [self URLWithString:@"https://teams.wire.com"];
 }
 
 @end

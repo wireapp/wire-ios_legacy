@@ -19,6 +19,7 @@
 
 import Foundation
 import Cartography
+import Marklight
 
 
 protocol MessageComposeViewControllerDelegate: class {
@@ -32,9 +33,10 @@ final class MessageComposeViewController: UIViewController {
     weak var delegate: MessageComposeViewControllerDelegate?
 
     private let subjectTextField = UITextField()
-    fileprivate let messageTextView = UITextView()
+    fileprivate let messageTextView = MarklightTextView()
     private let color = ColorScheme.default().color(withName:)
     private let sendButtonView = DraftSendInputAccessoryView()
+    fileprivate let markdownBarView = MarkdownBarView()
 
     private var draft: MessageDraft?
     private let persistence: MessageDraftStorage
@@ -67,7 +69,7 @@ final class MessageComposeViewController: UIViewController {
 
     private func setupViews() {
         view.backgroundColor = color(ColorSchemeColorBackground)
-        [messageTextView, sendButtonView].forEach(view.addSubview)
+        [messageTextView, sendButtonView, markdownBarView].forEach(view.addSubview)
         setupInputAccessoryView()
         setupNavigationItem()
         setupTextView()
@@ -79,12 +81,20 @@ final class MessageComposeViewController: UIViewController {
         messageTextView.textColor = color(ColorSchemeColorTextForeground)
         messageTextView.backgroundColor = .clear
         messageTextView.font = FontSpec(.normal, .none).font!
-        messageTextView.contentInset = .zero
-        messageTextView.textContainerInset = UIEdgeInsetsMake(24, 16, 24, 16)
+        
+        // NB: setting the textContainerInset causes the content size to change
+        // drastically when tapping on a white space ¯\_(ツ)_/¯. We simulate
+        // textContainerInset = UIEdgeInsetsMake(24, 16, 56, 16) by constraining
+        // the text view's leading margin 16 points from the view's margin and
+        // setting the scroll views content inset to compensate (accounting for
+        // the default text container inset (8,0,8,0))
+        
+        messageTextView.contentInset = UIEdgeInsetsMake(16, 0, 48, -16)
         messageTextView.textContainer.lineFragmentPadding = 0
         messageTextView.delegate = self
         messageTextView.indicatorStyle = ColorScheme.default().indicatorStyle
         messageTextView.accessibilityLabel = "messageTextField"
+        markdownBarView.delegate = messageTextView
     }
 
     private dynamic func backButtonPressed() {
@@ -149,26 +159,8 @@ final class MessageComposeViewController: UIViewController {
         sendButtonView.onSend = { [unowned self] in
             self.delegate?.composeViewController(self, wantsToSendDraft: self.draft!)
         }
-
-        sendButtonView.onDelete = { [weak self] in
-            guard let `self` = self else { return }
-            let controller = UIAlertController.controllerForDraftDeletion {
-                self.persistence.enqueue(
-                    block: {
-                        self.draft.map($0.delete)
-                        self.draft = nil
-                }, completion: {
-                    self.subjectTextField.text = nil
-                    self.messageTextView.text = nil
-                    self.updateButtonStates()
-                    self.popToListIfNeeded()
-                })
-            }
-
-            self.present(controller, animated: true, completion: nil)
-        }
     }
-
+    
     private func popToListIfNeeded() {
         if splitViewController?.isCollapsed == true {
            navigationController?.navigationController?.popToRootViewController(animated: true)
@@ -176,7 +168,33 @@ final class MessageComposeViewController: UIViewController {
     }
 
     fileprivate dynamic func dismissTapped() {
-        delegate?.composeViewControllerWantsToDismiss(self)
+        
+        // if nothing to save/delete, just dismiss
+        if !hasDraftContent {
+            self.delegate?.composeViewControllerWantsToDismiss(self)
+            return
+        }
+        
+        let deleteHandler: () -> Void = {
+            self.persistence.enqueue(
+                block: {
+                    self.draft.map($0.delete)
+                    self.draft = nil
+            }, completion: {
+                self.messageTextView.text = ""
+                self.subjectTextField.text = ""
+                self.delegate?.composeViewControllerWantsToDismiss(self)
+            })
+        }
+        
+        // since draft already saved, just dismiss
+        let saveHandler: () -> Void = {
+            self.delegate?.composeViewControllerWantsToDismiss(self)
+        }
+        
+        let controller = UIAlertController.controllerForDraftDismiss(deleteHandler: deleteHandler,
+                                                                     saveHandler: saveHandler)
+        self.present(controller, animated: true, completion: nil)
     }
 
     fileprivate dynamic func updateDraftThrottled() {
@@ -217,15 +235,21 @@ final class MessageComposeViewController: UIViewController {
     }
 
     private func createConstraints() {
-        constrain(view, messageTextView, sendButtonView) { view, messageTextView, sendButtonView in
+        constrain(view, messageTextView, sendButtonView, markdownBarView) { view, messageTextView, sendButtonView, markdownBarView in
             messageTextView.top == view.top
-            messageTextView.leading == view.leading
+            messageTextView.leading == view.leading + 16
             messageTextView.trailing == view.trailing
-            messageTextView.bottom == sendButtonView.top
+            messageTextView.bottom == markdownBarView.top
 
             sendButtonView.leading == view.leading
             sendButtonView.trailing == view.trailing
-            sendButtonView.bottom == view.bottom
+            sendButtonView.bottom == markdownBarView.top
+            sendButtonView.height == 56
+
+            markdownBarView.leading == view.leading
+            markdownBarView.trailing == view.trailing
+            markdownBarView.bottom == view.bottom
+            markdownBarView.height == 56
         }
     }
 
@@ -242,16 +266,25 @@ extension MessageComposeViewController: UITextViewDelegate {
 
     func textViewDidChange(_ textView: UITextView) {
         updateDraftThrottled()
+        markdownBarView.updateIconsForModes(messageTextView.markdownElementsForRange(nil))
     }
 
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        
+        if text == "\n" || text == "\r" {
+            (textView as! MarklightTextView).handleNewLine()
+        }
+        
         if range.location == 0 && text == " " && textView.text?.isEmpty ?? true {
             return false
         }
 
         return true
     }
-
+    
+    func textViewDidChangeSelection(_ textView: UITextView) {
+        markdownBarView.updateIconsForModes(messageTextView.markdownElementsForRange(nil))
+    }
 }
 
 

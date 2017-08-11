@@ -38,6 +38,7 @@ extension ConversationInputBarViewController {
         updateRightAccessoryView()
 
         inputBar.setInputBarState(.editing(originalText: text), animated: true)
+        updateMarkdownButton()
 
         NotificationCenter.default.addObserver(
             self,
@@ -73,6 +74,7 @@ extension ConversationInputBarViewController {
         inputBar.setInputBarState(.writing(ephemeral: conversation.destructionEnabled), animated: animated)
         updateRightAccessoryView()
         updateButtonIconsForEphemeral()
+        updateMarkdownButton()
     }
 
 }

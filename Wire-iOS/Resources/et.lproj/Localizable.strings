@@ -1,17 +1,17 @@
-// 
+//
 // Wire
 // Copyright (C) 2016 Wire Swiss GmbH
-// 
+//
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
-// 
+//
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 // GNU General Public License for more details.
-// 
+//
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
@@ -33,7 +33,6 @@
 "peoplepicker.header.send_invitation" = "Kutsu";
 "peoplepicker.header.contacts" = "Kontaktid";
 "peoplepicker.header.contacts_personal" = "Isiklikud kontaktid";
-"peoplepicker.header.team_members" = "%@";
 "peoplepicker.header.directory" = "Lisa kontakt";
 "peoplepicker.title.create_conversation" = "Loo grupp";
 "peoplepicker.title.add_to_conversation" = "Lisa inimesi";
@@ -63,7 +62,7 @@
 "peoplepicker.quick-action.open-conversation" = "Ava";
 "peoplepicker.quick-action.create-conversation" = "Loo grupivestlus";
 
-"add_participants.all_contacts_added" = "Everyone's here.";
+"add_participants.all_contacts_added" = "Kõik kontaktid juba vestlusesse lisatud.";
 
 // Contacts UI
 "contacts_ui.search_placeholder" = "Otsi nime järgi";
@@ -78,7 +77,7 @@
 "contacts_ui.title" = "Kutsu inimesi";
 
 "contacts_ui.no_contact.title" = "Pole veel vestlusi\n";
-"contacts_ui.no_contact.message" = "Alusta vestlust, loo grupp või kutsu inimesi liituma.";
+"contacts_ui.no_contact.message" = "Alustage vestlust või rühma loomine.";
 
 "contacts_ui.no_contact.archived.title" = "Kõik on arhiveeritud";
 
@@ -93,14 +92,31 @@
 // Profile Header View
 "conversation.connection_view.in_address_book" = "seadme kontaktides";
 
-
+// Conversation list voiceover accessibility
+"conversation_list.voiceover.open_conversation.hint" = "Ava vestlus";
+"conversation_list.voiceover.status.pending_connection" = "pending";
+"conversation_list.voiceover.status.active_call" = "active call";
+"conversation_list.voiceover.status.missed_call" = "vastamata kõne";
+"conversation_list.voiceover.status.pause_media" = "pause media";
+"conversation_list.voiceover.status.play_media" = "play media";
+"conversation_list.voiceover.status.silenced" = "silenced";
+"conversation_list.voiceover.status.typing" = "typing";
+"conversation_list.voiceover.status.ping" = "ping";
+"conversation_list.voiceover.bottom_bar.archived_button.label" = "archived";
+"conversation_list.voiceover.bottom_bar.archived_button.hint" = "list of archived conversations";
+"conversation_list.voiceover.bottom_bar.contacts_button.label" = "kontaktid";
+"conversation_list.voiceover.bottom_bar.contacts_button.hint" = "search for people on Wire";
+"conversation_list.voiceover.bottom_bar.compose_button.label" = "compose";
+"conversation_list.voiceover.bottom_bar.compose_button.hint" = "compose messages and save for later";
+"conversation_list.voiceover.bottom_bar.camera_button.label" = "camera";
+"conversation_list.voiceover.bottom_bar.camera_button.hint" = "take picture and send quickly";
 
 // Archived List
 "archived_list.title" = "arhiiv";
 
 // Add contact tool tip
 "tool_tip.contacts.title" = "Vestlused algavat siit";
-"tool_tip.contacts.message" = "Alusta vestlust või kutsu rohkem inimesi liituma. Helista, saada sõnumeid ja jaga üksikisikule või grupile.";
+"tool_tip.contacts.message" = "Alusta vestlust. Helista, saada sõnumeid ja jaga üksikisikule või grupile.";
 
 // "Knows" subtitle in cell: "Knows Indrek", "Knows Indrek and Jane", "Knows Indrek and 5 others"
 "peoplepicker.suggested.knows_one" = "Tema tuttavad on %@";
@@ -130,6 +146,8 @@
 "list.archived_conversations" = "ARHIIV";
 "list.archived_conversations_close" = "Sulge arhiiv";
 
+"conversation.voiceover.verified" = "verified";
+
 "conversation.status.call" = "Aktiivne kõne";
 "conversation.status.typing" = "Kirjutab…";
 "conversation.status.typing.group" = "%@: kirjutab…";
@@ -157,6 +175,7 @@
 "conversation.status.you_left" = "Lahkusid vestlusest";
 "conversation.status.started_conversation" = "%@ alustas vestlust";
 "conversation.status.removed_users" = "%@ eemaldas kasutaja %@";
+"conversation.status.everyone_left" = "Kõik lahkusid";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Compose Entry Point
@@ -193,6 +212,8 @@
 "conversation.call.many_participants_confirmation.call" = "Helista";
 
 "conversation.connection_view.in_address_book" = "seadme kontaktides";
+
+"conversation.input_bar.shortcut.send" = "Saada teade";
 
 // Image confirmation dialogue
 "image_confirmer.confirm" = "OK";
@@ -255,7 +276,7 @@
 "content.system.conversation.you.added" = "%@ lisas kasutaja %@";
 "content.system.conversation.you.removed" = "%@ eemaldas kasutaja %@";
 "content.system.conversation.you.left" = "%@ lahkus";
-"content.system.conversation.team.member-leave" = "%@ was removed from the team.";
+"content.system.conversation.team.member-leave" = "%@ eemaldati tiimist.";
 
 "content.system.other_renamed_conv_to_nothing" = "%@ eemaldas vestluselt nime";
 "content.system.you_renamed_conv_to_nothing" = "Eemaldasid vestluse nime";
@@ -272,6 +293,7 @@
 "content.system.connected_to" = "Ühendatatud kasutajaga %@. Alusta vestlust";
 "content.system.other_wanted_to_talk" = "%@ helistas";
 "content.system.you_wanted_to_talk" = "Sina helistasid";
+"content.system.ephemeral_time_remaining" = "%@ lahkus";
 
 "content.system.you_started" = "Sina";
 "content.system.this_device" = "see seade";
@@ -472,7 +494,12 @@
 
 // User Details
 "profile.details.title" = "Üksikasjad";
-"profile.details.guest_in_team" = "Guest in %@";
+"profile.details.guest" = "Külaline";
+
+"profile_view.team_name.in" = "aastal %@";
+"profile_view.accessibility.handle" = "Kasutajanimi";
+"profile_view.accessibility.name" = "Kuvatav nimi";
+"profile_view.accessibility.team_name" = "Meeskonna nimi";
 
 // Device list
 "profile.devices.title" = "Seadmed";
@@ -507,6 +534,9 @@
 "self.about" = "Wire'st";
 "self.sign_out" = "Logi välja";
 "self.report_abuse" = "Teavita kuritarvitamisest";
+"self.voiceover.label" = "Profiil";
+"self.voiceover.hint" = "Open profile and settings";
+"self.new-device.voiceover.label" = "Profile, new devices added";
 
 "self.add_phone_number" = "Lisa mobiilinumber";
 "self.add_email_password" = "Lisa meiliaadress ja parool";
@@ -527,6 +557,10 @@
 "self.new_device_alert.message_plural" = "%@\n\nKui sina seda ei teinud, eemalda need seamed ja muuda oma parool.";
 "self.new_device_alert.manage_devices" = "Halda seadmeid";
 "self.new_device_alert.trust_devices" = "OK";
+
+// Settings - top level
+"self.settings.create_team.title" = "Create team";
+"self.settings.add_account.title" = "Add account";
 
 // Settings - Account details
 "self.settings.account_section" = "Konto";
@@ -681,10 +715,13 @@
 "self.settings.privacy_security.lock_cancelled.description" = "Ava Wire Touch ID või parooliga";
 "self.settings.privacy_security.lock_cancelled.action" = "Vabasta lukust";
 
+"self.settings.privacy_security.disable_link_previews.title" = "Create Previews For Links You Send";
+"self.settings.privacy_security.disable_link_previews.footer" = "Eelvaateid võidakse siiski näidata teiste inimeste linkide puhul.";
+
 "self.settings.privacy_analytics_menu.devices.title" = "Seadmed";
 
 "self.settings.privacy_analytics_section.title" = "Kasutus- ja krahhiaruanded";
-"self.settings.privacy_analytics.title" = "Send Anonymous Data";
+"self.settings.privacy_analytics.title" = "Saada anonüümseid andmeid";
 "self.settings.privacy_analytics_menu.description.title" = "Aitad Wire paremaks muuta, kui saadad anonüümset informatsiooni.\n";
 
 "self.settings.privacy.clear_history.title" = "Kustuta Ajalugu";
@@ -891,7 +928,7 @@
 "push.notification.new_message" = "Uus sõnum";
 
 
-// Force Update
+//Force Update
 "force.update.title" = "Uuendamine vajalik";
 "force.update.message" = "Sa jääd teistest maha.\nTõmba uusim Wire App Store’st.";
 "force.update.ok_button" = "Mine App Store’i";
@@ -936,3 +973,7 @@
 "compose.drafts.compose.delete.confirm.title" = "Kinnita kustutamine";
 "compose.drafts.compose.delete.confirm.message" = "Antud toiming kustutab visandi ning seda muudatust pole võimalik tagasi võtta.";
 "compose.drafts.compose.delete.confirm.action.title" = "Kustuta";
+
+"compose.drafts.compose.dismiss.confirm.title" = "Save as draft";
+"compose.drafts.compose.dismiss.confirm.action.title" = "Salvesta";
+"compose.drafts.compose.dismiss.delete.action.title" = "Kustuta";

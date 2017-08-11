@@ -64,7 +64,7 @@
     
     WKWebViewConfiguration * configuration = [[WKWebViewConfiguration alloc] init];
     configuration.allowsInlineMediaPlayback = YES;
-    configuration.mediaPlaybackRequiresUserAction = NO;
+    configuration.requiresUserActionForMediaPlayback = NO;
     
     self.webView = [[WKWebView alloc] initWithFrame:self.view.frame configuration:configuration];
     self.webView.translatesAutoresizingMaskIntoConstraints = NO;

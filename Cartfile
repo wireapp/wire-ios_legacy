@@ -1,12 +1,11 @@
 github "wireapp/wire-ios-ziphy" ~> 6.3
-github "wireapp/TSMarkdownParser" "1.0.17-swift3.0.2"
 github "wireapp/Classy" "v0.2.6-swift3.0.2"
 github "wireapp/CocoaLumberjack" "3.1.0"
 github "wireapp/Cartography" "1.1.0"
 github "wireapp/TTTAttributedLabel" "2.0.0-swift3.0.2"
 github "wireapp/ZipArchive" "2.0-swift3.1"
-github "wireapp/wire-ios-share-engine" ~> 33.0
-github "wireapp/wire-ios-sync-engine" ~> 90.0.0
+github "wireapp/wire-ios-share-engine" ~> 42.0
+github "wireapp/wire-ios-sync-engine" ~> 101.0.1
 github "wireapp/onepassword-app-extension" "framework/1.8.2-wire-swift3.0.2"
 github "wireapp/FormatterKit" "1.8.1-swift3.0.2"
 github "wireapp/AFNetworking" "2.6.3-iOS8"
@@ -14,3 +13,4 @@ github "wireapp/wire-ios-canvas" ~> 3.0.0
 github "wireapp/HockeySDK-iOS" "4.1.4-swift3.1"
 github "wireapp/FLAnimatedImage" "1.0.12-wire"
 github "wireapp/PureLayout" "v3.0.0"
+github "wireapp/Marklight" ~> 1.0.9

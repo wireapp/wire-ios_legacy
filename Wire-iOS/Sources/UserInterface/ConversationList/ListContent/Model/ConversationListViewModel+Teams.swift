@@ -16,28 +16,26 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
+
 import Foundation
 import WireDataModel
 
+
 extension ConversationListViewModel {
+
     @objc public func subscribeToTeamsUpdates() {
         self.selfUserObserver = UserChangeInfo.add(observer: self, forBareUser: ZMUser.selfUser())
-        self.teamsObserver = TeamChangeInfo.add(observer: self, for: nil)
     }
+
 }
 
+
 extension ConversationListViewModel: ZMUserObserver {
+
     public func userDidChange(_ note: UserChangeInfo) {
         if note.teamsChanged {
             updateConversationListAnimated()
         }
     }
-}
 
-extension ConversationListViewModel: TeamObserver {
-    public func teamDidChange(_ changeInfo: TeamChangeInfo) {
-        if changeInfo.isActiveChanged {
-            reload()
-        }
-    }
 }

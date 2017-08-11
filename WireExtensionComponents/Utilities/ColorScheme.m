@@ -29,7 +29,8 @@ NSString * const ColorSchemeColorAccentDarken = @"accent-current-darken";
 
 NSString * const ColorSchemeColorSeparator = @"separator";
 NSString * const ColorSchemeColorBackground = @"background";
-NSString * const ColorSchemeColorBackgroundNew = @"background-new";
+NSString * const ColorSchemeColorBarBackground = @"bar-background";
+NSString * const ColorSchemeColorConversationBackground = @"conversation-background";
 NSString * const ColorSchemeColorBackgroundOverlay = @"background-overlay";
 NSString * const ColorSchemeColorBackgroundOverlayWithoutPicture = @"background-overlay-without-picture";
 
@@ -43,6 +44,8 @@ NSString * const ColorSchemeColorIconSelected = @"icon-selected";
 NSString * const ColorSchemeColorIconHighlighted = @"icon-highlighted";
 NSString * const ColorSchemeColorIconBackgroundSelected = @"icon-background-selected";
 NSString * const ColorSchemeColorIconBackgroundSelectedNoAccent = @"icon-background-selected-no-accent";
+
+NSString * const ColorSchemeColorPopUpButtonOverlayShadow = @"popup-button-overlay-shadow";
 
 NSString * const ColorSchemeColorButtonHighlighted = @"button-highlighted";
 NSString * const ColorSchemeColorButtonEmptyText = @"button-empty-text";
@@ -207,19 +210,21 @@ static NSString* light(NSString *colorString) {
 {
     UIColor *clear = [UIColor clearColor];
     UIColor *white = [UIColor whiteColor];
+    UIColor *white97 = [UIColor colorWithWhite:0.97 alpha:1];
     UIColor *white98 = [UIColor colorWithWhite:0.98 alpha:1];
-    UIColor *whiteAlpha8 = [UIColor wr_colorFromString:@"rgb(255, 255, 255, 0.08)"];
     UIColor *whiteAlpha16 = [UIColor wr_colorFromString:@"rgb(255, 255, 255, 0.16)"];
     UIColor *whiteAlpha24 = [UIColor wr_colorFromString:@"rgb(255, 255, 255, 0.24)"];
     UIColor *whiteAlpha40 = [UIColor wr_colorFromString:@"rgb(255, 255, 255, 0.40)"];
     UIColor *whiteAlpha80 = [UIColor wr_colorFromString:@"rgb(255, 255, 255, 0.80)"];
     UIColor *black = [UIColor blackColor];
+    UIColor *blackAlpha4 = [UIColor wr_colorFromString:@"rgb(0, 0, 0, 0.04)"];
     UIColor *blackAlpha8 = [UIColor wr_colorFromString:@"rgb(0, 0, 0, 0.08)"];
     UIColor *blackAlpha24 = [UIColor wr_colorFromString:@"rgb(0, 0, 0, 0.24)"];
     UIColor *blackAlpha48 = [UIColor wr_colorFromString:@"rgb(0, 0, 0, 0.48)"];
     UIColor *blackAlpha40 = [UIColor colorWithWhite:0 alpha:0.4];
     UIColor *blackAlpha80 = [UIColor wr_colorFromString:@"rgb(0, 0, 0, 0.80)"];
     UIColor *backgroundGraphite = [UIColor wr_colorFromString:@"rgb(22, 24, 25)"];
+    UIColor *backgroundLightGraphite = [UIColor wr_colorFromString:@"rgb(30, 32, 33)"];
     UIColor *graphite = [UIColor wr_colorFromString:@"rgb(51, 55, 58)"];
     UIColor *graphiteAlpha16 = [UIColor wr_colorFromString:@"rgb(51, 55, 58, 0.16)"];
     UIColor *graphiteAlpha40 = [UIColor wr_colorFromString:@"rgb(51, 55, 58, 0.40)"];
@@ -240,8 +245,9 @@ static NSString* light(NSString *colorString) {
                                    ColorSchemeColorTextDimmed: lightGraphite,
                                    ColorSchemeColorTextPlaceholder: lightGraphiteAlpha64,
                                    ColorSchemeColorSeparator: lightGraphiteAlpha48,
+                                   ColorSchemeColorBarBackground: white,
                                    ColorSchemeColorBackground: white,
-                                   ColorSchemeColorBackgroundNew: white98,
+                                   ColorSchemeColorConversationBackground: white97,
                                    ColorSchemeColorIconNormal: graphite,
                                    ColorSchemeColorIconSelected: white,
                                    ColorSchemeColorIconHighlighted: white,
@@ -249,6 +255,7 @@ static NSString* light(NSString *colorString) {
                                    ColorSchemeColorIconHighlight: white,
                                    ColorSchemeColorIconBackgroundSelected: accentColor,
                                    ColorSchemeColorIconBackgroundSelectedNoAccent: graphite,
+                                   ColorSchemeColorPopUpButtonOverlayShadow: blackAlpha24,
                                    ColorSchemeColorButtonHighlighted: whiteAlpha24,
                                    ColorSchemeColorButtonEmptyText: accentColor,
                                    ColorSchemeColorTabNormal: blackAlpha48,
@@ -270,7 +277,7 @@ static NSString* light(NSString *colorString) {
                                    ColorSchemeColorListAvatarInitials: blackAlpha40,
                                    ColorSchemeColorSectionBackground: UIColor.clearColor,
                                    ColorSchemeColorSectionText: blackAlpha40,
-                                   ColorSchemeColorTokenFieldBackground: whiteAlpha8,
+                                   ColorSchemeColorTokenFieldBackground: blackAlpha4,
                                    ColorSchemeColorTokenFieldTextPlaceHolder: graphiteAlpha40
                                    }];
     
@@ -289,8 +296,9 @@ static NSString* light(NSString *colorString) {
                                   ColorSchemeColorTextDimmed: lightGraphite,
                                   ColorSchemeColorTextPlaceholder: lightGraphiteAlpha64,
                                   ColorSchemeColorSeparator: lightGraphiteAlpha24,
+                                  ColorSchemeColorBarBackground: backgroundLightGraphite,
                                   ColorSchemeColorBackground: backgroundGraphite,
-                                  ColorSchemeColorBackgroundNew: backgroundGraphite,
+                                  ColorSchemeColorConversationBackground: backgroundGraphite,
                                   ColorSchemeColorIconNormal: white,
                                   ColorSchemeColorIconSelected: black,
                                   ColorSchemeColorIconHighlighted: white,
@@ -298,6 +306,7 @@ static NSString* light(NSString *colorString) {
                                   ColorSchemeColorIconHighlight: whiteAlpha16,
                                   ColorSchemeColorIconBackgroundSelected: white,
                                   ColorSchemeColorIconBackgroundSelectedNoAccent: white,
+                                  ColorSchemeColorPopUpButtonOverlayShadow: black,
                                   ColorSchemeColorButtonHighlighted: blackAlpha24,
                                   ColorSchemeColorButtonEmptyText: white,
                                   ColorSchemeColorTabNormal: lightGraphite,

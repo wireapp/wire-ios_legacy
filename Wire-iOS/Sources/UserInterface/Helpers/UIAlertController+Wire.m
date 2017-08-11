@@ -18,17 +18,30 @@
 
 
 #import "UIAlertController+Wire.h"
+#import "Wire-Swift.h"
 
 @implementation UIAlertController (Wire)
 
-+ (UIAlertController *)alertControllerWithTitle:(NSString *)title message:(NSString *)message cancelButtonTitle:(NSString *)cancelTitle;
++ (UIAlertController *)alertControllerWithTitle:(NSString *)title
+                                        message:(NSString *)message
+                              cancelButtonTitle:(NSString *)cancelTitle;
 {
     UIAlertController *alertController =
-    [UIAlertController alertControllerWithTitle:title
+[UIAlertController alertControllerWithTitle:title
                                         message:message
                                  preferredStyle:UIAlertControllerStyleAlert];
-    [alertController addAction:[UIAlertAction actionWithTitle:cancelTitle style:UIAlertActionStyleDefault handler:nil]];
+    
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:cancelTitle
+                                                           style:UIAlertActionStyleDefault
+                                                         handler:nil];
+    
+    [alertController addAction:cancelAction];
     return alertController;
+}
+
+- (void)presentTopmost
+{
+    [[UIApplication.sharedApplication wr_topmostViewController] presentViewController:self animated:YES completion:nil];
 }
 
 @end

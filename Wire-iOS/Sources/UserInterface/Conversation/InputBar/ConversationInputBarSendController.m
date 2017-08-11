@@ -22,7 +22,6 @@
 
 #import "ConversationInputBarSendController.h"
 #import "ZMUserSession+iOS.h"
-#import "ZMUserSession+Additions.h"
 #import "Analytics+iOS.h"
 #import "AnalyticsTracker+Media.h"
 #import "Message+Formatting.h"
@@ -66,7 +65,9 @@
 
 - (void)sendTextMessage:(NSString *)text
 {
-    [[ZMUserSession sharedSession] checkNetworkAndFlashIndicatorIfNecessary];
+    [AppDelegate checkNetworkAndFlashIndicatorIfNecessary];
+    
+    BOOL shouldFetchLinkPreview = ![Settings sharedSettings].disableLinkPreviews;
     
     __block id<ZMConversationMessage> textMessage = nil;
     [[ZMUserSession sharedSession] enqueueChanges:^{
@@ -77,13 +78,13 @@
             for(int i = 0; i < 500; ++i) {
                 NSString *textWithNumber = [NSString stringWithFormat:@"%@ (%d)", text, i+1];
                 // only save last ones, who cares
-                textMessage = [self.conversation appendMessageWithText:textWithNumber];
+                textMessage = [self.conversation appendMessageWithText:textWithNumber fetchLinkPreview:shouldFetchLinkPreview];
                 [(ZMMessage *)textMessage removeExpirationDate];
             }
         }
         else {
             // normal sending
-            textMessage = [self.conversation appendMessageWithText:text];
+            textMessage = [self.conversation appendMessageWithText:text fetchLinkPreview:shouldFetchLinkPreview];
         }
         self.conversation.draftMessageText = @"";
     } completionHandler:^{
@@ -94,11 +95,14 @@
 
 - (void)sendTextMessage:(NSString *)text withImageData:(NSData *)data
 {
-    [[ZMUserSession sharedSession] checkNetworkAndFlashIndicatorIfNecessary];
+    [AppDelegate checkNetworkAndFlashIndicatorIfNecessary];
     __block id <ZMConversationMessage> textMessage = nil;
     
+    BOOL shouldFetchLinkPreview = ![Settings sharedSettings].disableLinkPreviews;
+    
     [ZMUserSession.sharedSession enqueueChanges:^{
-        textMessage = [self.conversation appendMessageWithText:text];
+        textMessage = [self.conversation appendMessageWithText:text fetchLinkPreview:shouldFetchLinkPreview];
+        
         [self.conversation appendMessageWithImageData:data];
         self.conversation.draftMessageText = @"";
     } completionHandler:^{
@@ -127,7 +131,7 @@
         
         ZMUser *user = (ZMUser *) participant;
         
-        ZMConversation *conversation = [user oneToOneConversationInTeam:ZMUser.selfUser.activeTeam];
+        ZMConversation *conversation = user.oneToOneConversation;
         [[ZMUserSession sharedSession] enqueueChanges:^{
             [conversation appendKnock];
             [[Analytics shared] tagMediaActionCompleted:ConversationMediaActionPing inConversation:self.conversation];

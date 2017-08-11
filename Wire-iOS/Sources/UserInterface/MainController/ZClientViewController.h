@@ -29,7 +29,6 @@
 
 @interface ZClientViewController : UIViewController
 
-@property (nonatomic, readonly) ConversationListViewController *conversationListViewController;
 @property (nonatomic, readonly) UIViewController *conversationRootViewController;
 
 @property (nonatomic, readonly) ZMConversation *currentConversation;
@@ -80,5 +79,7 @@
 - (void)hideIncomingContactRequestsWithCompletion:(dispatch_block_t)completion;
 
 - (void)transitionToListAnimated:(BOOL)animated completion:(dispatch_block_t)completion;
+
+- (void)dismissAllModalControllersWithCallback:(dispatch_block_t)callback;
 
 @end

@@ -45,22 +45,24 @@ extension Settings {
     
     /// Loads from user default the list of logs that are enabled
     @objc public func loadEnabledLogs() {
-        guard let tagsToEnable = UserDefaults.shared().value(forKey: enabledLogsKey) as? Array<String> else {
-            return
-        }
+        guard DeveloperMenuState.developerMenuEnabled() else { return } // never record on non-internal
         
-        tagsToEnable.forEach { (tag) in
+        let tagsToEnable = UserDefaults.shared().value(forKey: enabledLogsKey) as? Array<String> ?? ["Network", "Dependencies", "State machine", "Pingback"]
+        enableLogs(tagsToEnable)
+    }
+    
+    private func enableLogs(_ tags : [String]) {
+        tags.forEach { (tag) in
             ZMSLog.set(level: .debug, tag: tag)
         }
-        setLogRecording(enabled: !tagsToEnable.isEmpty)
+        setLogRecording(enabled: !tags.isEmpty)
     }
     
     /// Sets whether recording is enabled
     private func setLogRecording(enabled: Bool) {
-        if enabled && DeveloperMenuState.developerMenuEnabled() { // never record on non-internal
+        if enabled {
             ZMSLog.startRecording(size: 100000)
-        }
-        else {
+        } else {
             ZMSLog.stopRecording()
         }
     }
