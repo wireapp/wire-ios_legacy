@@ -256,7 +256,7 @@ extension MarklightTextView {
     }
 }
 
-// MARK: - Range calculations
+// MARK: - Range Calculations
 
 extension MarklightTextView {
     
@@ -301,25 +301,6 @@ extension MarklightTextView {
             }
         }
         return nil
-    }
-    
-    public func markdownElementsForRange(_ range: NSRange?) -> [MarkdownElementType] {
-        
-        let selection = range ?? selectedRange
-        
-        let elementTypes: [MarkdownElementType] = [
-            .header(.h1), .header(.h2), .header(.h3),
-            .italic, .bold, .numberList, .bulletList,
-            .code, .quote
-        ]
-        
-        return elementTypes.filter { type -> Bool in
-            return self.isMarkdownElement(type: type, activeForSelection: selection)
-        }
-    }
-    
-    fileprivate func isMarkdownElement(type: MarkdownElementType, activeForSelection selection: NSRange) -> Bool {
-        return rangeForMarkdownElement(type: type, enclosingSelection: selection) != nil
     }
     
     /// Returns all ranges of leading/trailing whitespace exclusively contained
@@ -369,42 +350,13 @@ extension MarklightTextView {
         
         var result = [NSRange]()
         
-        for range in allMarkdownRanges() {
-            if isEmptyMarkdownElement(range) {
-                result.append(range.wholeRange)
+        allMarkdownRanges().forEach {
+            if isEmptyMarkdownElement($0) {
+                result.append($0.wholeRange)
             }
         }
         
         return result
-    }
-    
-    /// Returns true if the markdown element specified by the given range has a
-    /// zero content range or the content text contains only whitespace and/or
-    /// other markdown syntax.
-    /// - parameter range: the range specifying the markdown element
-    ///
-    fileprivate func isEmptyMarkdownElement(_ range: MarkdownRange) -> Bool {
-        
-        let contentRange = range.contentRange
-
-        if contentRange.length == 0 {
-            return true
-        }
-        
-        let syntaxColor = style.syntaxAttributes[NSForegroundColorAttributeName] as! UIColor
-        
-        for index in contentRange.location..<NSMaxRange(contentRange) {
-            let char = text[text.index(text.startIndex, offsetBy: index)]
-            let color = attributedText.attribute(NSForegroundColorAttributeName, at: index, effectiveRange: nil) as? UIColor
-            
-            if " \t\n\r".characters.contains(char) || color == syntaxColor {
-                continue
-            } else {
-                return false
-            }
-        }
-        
-        return true
     }
     
     /// Returns all syntax ranges of markdown elements that contain only whitespace and
@@ -414,26 +366,10 @@ extension MarklightTextView {
         
         var result = [NSRange]()
         
-        for range in allMarkdownRanges() {
-            let content = text.substring(with: range.contentRange)
-            
-            // emojis belong to symbols set, so if we split content str by symbols then the
-            // number of components - 1 is the number of symbols/emoji
-            
-            // no emojis
-            if (content.components(separatedBy: CharacterSet.symbols).count - 1) == 0 {
-                continue
-            }
-            
-            let nonEmojiNonSpaceSet = CharacterSet.symbols.union(CharacterSet.whitespacesAndNewlines).inverted
-            let numNonEmojiNonSpace = content.components(separatedBy: nonEmojiNonSpaceSet).count - 1
-            
-            // only emojis or space
-            if numNonEmojiNonSpace == 0 {
-                if let preRange = range.preRange { result.append(preRange) }
-                if let postRange = range.postRange { result.append(postRange) }
-            } else {
-                continue
+        allMarkdownRanges().forEach {
+            if isMarkdownEmoji($0) {
+                if let preRange = $0.preRange { result.append(preRange) }
+                if let postRange = $0.postRange { result.append(postRange) }
             }
         }
         
@@ -468,6 +404,76 @@ extension MarklightTextView {
         }
         
         return result
+    }
+    
+    // MARK: - Determining Markdown
+    
+    public func markdownElementsForRange(_ range: NSRange?) -> [MarkdownElementType] {
+        
+        let selection = range ?? selectedRange
+        
+        let elementTypes: [MarkdownElementType] = [
+            .header(.h1), .header(.h2), .header(.h3),
+            .italic, .bold, .numberList, .bulletList,
+            .code, .quote
+        ]
+        
+        return elementTypes.filter { type -> Bool in
+            return self.isMarkdownElement(type: type, activeForSelection: selection)
+        }
+    }
+    
+    fileprivate func isMarkdownElement(type: MarkdownElementType, activeForSelection selection: NSRange) -> Bool {
+        return rangeForMarkdownElement(type: type, enclosingSelection: selection) != nil
+    }
+    
+    /// Returns true if the markdown element specified by the given range has a
+    /// zero content range or the content text contains only whitespace and/or
+    /// other markdown syntax.
+    /// - parameter range: the range specifying a markdown element
+    ///
+    fileprivate func isEmptyMarkdownElement(_ range: MarkdownRange) -> Bool {
+        
+        return markdown(range, containsOnlyCharactersIn: CharacterSet.whitespacesAndNewlines)
+    }
+    
+    /// Returns true if the markdown element specified by the given range contains
+    /// only emojis, whitespace and other markdown syntax.
+    /// - parameter range: the range specifying a markdown element
+    ///
+    fileprivate func isMarkdownEmoji(_ range: MarkdownRange) -> Bool {
+        
+        var emojisAndSpaces = CharacterSet.symbols.union(CharacterSet.whitespaces)
+        
+        // the zero-width joiner is used to combine multiple emojis into new ones
+        emojisAndSpaces.insert("\u{200D}")
+        // '+' is used for list items
+        emojisAndSpaces.remove("+")
+        
+        return markdown(range, containsOnlyCharactersIn: emojisAndSpaces)
+    }
+    
+    /// Returns true if the markdown element specified by the given range contains
+    /// only characters in the given set, other markdown syntax, or if the content is empty.
+    /// - parameter range: the range specifying a markdown element
+    /// - parameter set: the set of permissible characters
+    ///
+    fileprivate func markdown(_ range: MarkdownRange, containsOnlyCharactersIn set: CharacterSet) -> Bool {
+        
+        // we ignore markdown syntax to allow for nested markdown
+        let syntaxColor = style.syntaxAttributes[NSForegroundColorAttributeName] as! UIColor
+        let markdown = attributedText.attributedSubstring(from: range.wholeRange)
+        var violation = false
+        
+        markdown.enumerateAttribute(NSForegroundColorAttributeName, in: NSMakeRange(0, markdown.length)) { value, range, stop in
+            // not syntax and contains non permissable char
+            if value as? UIColor != syntaxColor && markdown.string.substring(with: range).containsCharacters(from: set.inverted) {
+                violation = true
+                stop.pointee = true
+            }
+        }
+
+        return !violation
     }
 }
 
