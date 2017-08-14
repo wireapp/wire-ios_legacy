@@ -41,9 +41,6 @@ public class MarklightTextView: NextResponderTextView {
     public override var selectedTextRange: UITextRange? {
         didSet {
             NotificationCenter.default.post(name: Notification.Name(rawValue: MarklightTextViewDidChangeSelectionNotification), object: self)
-            // invalidate list item prefixes
-            nextListNumber = 1
-            nextListBullet = "-"
         }
     }
     
@@ -147,7 +144,10 @@ extension MarklightTextView {
             
             insertPrefixSyntax(syntax, forSelection: selection)
             
-        case .numberList:   insertPrefixSyntax("\(nextListNumber). ", forSelection: selection)
+        case .numberList:
+            insertPrefixSyntax("\(nextListNumber). ", forSelection: selection)
+            formatNumberLists()
+            
         case .bulletList:   insertPrefixSyntax("\(nextListBullet) ", forSelection: selection)
         case .bold:         insertWrapSyntax("**", forSelection: selection)
         case .italic:       insertWrapSyntax("_", forSelection: selection)
@@ -531,6 +531,44 @@ extension MarklightTextView {
             needsNewBulletListItem = false
             insertSyntaxForMarkdownElement(type: .bulletList)
         }
+    }
+    
+    fileprivate func formatNumberLists() {
+        
+        let listPrefix = "(?:(\\d+)[.][\\t ]+)"
+        let listItemPattern = "(?:^\(listPrefix))(.)*"
+        let wholeListPattern = "(?:\(listItemPattern))(\\n\(listItemPattern))*"
+        let wholeRange = NSMakeRange(0, (text as NSString).length)
+        
+        let wholeListRegex = try! NSRegularExpression(pattern: wholeListPattern, options: .anchorsMatchLines)
+        let itemRegex = try! NSRegularExpression(pattern: listItemPattern, options: .anchorsMatchLines)
+        
+        let previousSelection = selectedRange
+        var index = self.nextListNumber
+        
+        wholeListRegex.enumerateMatches(in: text, options: [], range: wholeRange) { result, _, stop in
+            
+            // the range of the whole list enclosing the cursor
+            if let listRange = result?.range, NSEqualRanges(NSIntersectionRange(listRange, selectedRange), selectedRange) {
+                
+                let currentItemRange = (text as NSString).paragraphRange(for: previousSelection)
+                let itemsBelow = NSMakeRange(currentItemRange.location, listRange.length - (currentItemRange.location - listRange.location))
+                
+                // for each list item at or below cursor position
+                itemRegex.enumerateMatches(in: text, options: [], range: itemsBelow) { innerResult, _, _ in
+                    if let itemNumber = innerResult?.rangeAt(1) {
+                        text = (text as NSString).replacingCharacters(in: itemNumber, with: "\(index)")
+                        index += 1
+                    }
+                }
+                
+                // no need to reformat other lists
+                stop.pointee = true
+            }
+        }
+        
+        selectedRange = previousSelection
+        scrollRangeToVisible(selectedRange)
     }
     
     @objc public func resetTypingAttributes() {
