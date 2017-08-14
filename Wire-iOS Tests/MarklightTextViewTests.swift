@@ -34,7 +34,7 @@ class MarklightTextViewTests: XCTestCase {
         super.tearDown()
     }
     
-    // MARK: Syntax Insertions
+    // MARK: - Syntax Insertions
     
     func testThatItInsertsH1HeaderSyntax() {
         // given
@@ -124,7 +124,7 @@ class MarklightTextViewTests: XCTestCase {
         XCTAssertEqual(sut.text, "- example")
     }
     
-    // MARK: Syntax Deletions
+    // MARK: - Syntax Deletions
     
     func testThatItDeletesH1HeaderSyntax() {
         // given
@@ -297,5 +297,49 @@ class MarklightTextViewTests: XCTestCase {
         
         // then
         XCTAssertEqual(result, "")
+    }
+    
+    // MARK: - Emoji
+    
+    func testThatItStripsMarkdownSyntaxForMarkdownContainingOnlyEmojis() {
+        
+        let emojiStrings = ["😂", "😂       👩🏻‍🏫  ", "  😂  👩🏻‍🏫    🐵  ", "😂👩🏻‍🏫", "   🐵🐵🐵  ", "👩🏻‍🎤  🐵🐵", "👨🏻‍🍳 👨🏻‍🍳 👨🏻‍🍳"]
+        
+        emojiStrings.forEach { emojiStr in
+            
+            var stringsToTest = [String]()
+            ["# ", "## ", "### "].forEach { stringsToTest.append("\($0)\(emojiStr)") }
+            ["*", "_", "**", "__", "`"].forEach { stringsToTest.append("\($0)\(emojiStr)\($0)") }
+            
+            for str in stringsToTest {
+                // given
+                sut.text = ""
+                sut.insertText(str)
+                
+                // then
+                XCTAssertEqual(sut.preparedText, emojiStr.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines))
+            }
+        }
+    }
+    
+    func testThatItStripsMarkdownSyntaxForNestedMarkdownContainingOnlyEmojis() {
+        
+        // given
+        sut.text = ""
+        sut.insertText("# ** _😂_ 👩🏻‍🏫 _🐵🐵_ **")
+        
+        // then
+        XCTAssertEqual(sut.preparedText, "😂 👩🏻‍🏫 🐵🐵")
+    }
+    
+    func testThatItDoesNotStripMarkdownForListItemsContainingOnlyEmojis() {
+        
+        // given
+        let str = ["1. 😂", "2. 👩🏻‍🏫😂", "- 🐵", "* 👩🏻‍🎤👩🏻‍🎤", "+ 👨🏻‍🍳 👨🏻‍🍳 👨🏻‍🍳"].joined(separator: "\n")
+        sut.text = ""
+        sut.insertText(str)
+        
+        // then
+        XCTAssertEqual(sut.preparedText, str)
     }
 }
