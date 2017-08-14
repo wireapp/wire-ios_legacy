@@ -437,7 +437,7 @@ NSString *const ZMUserSessionDidBecomeAvailableNotification = @"ZMUserSessionDid
     _zetaUserSession = userSession;
     
     NSString *appGroupIdentifier = NSBundle.mainBundle.appGroupIdentifier;
-    NSURL *sharedContainerURL = [NSFileManager sharedContainerDirectoryForAppGroupIdentifier:appGroupIdentifier]; // TODO jacob fallback
+    NSURL *sharedContainerURL = [NSFileManager sharedContainerDirectoryForAppGroupIdentifier:appGroupIdentifier];
     
     self.analyticsEventPersistence = [[ShareExtensionAnalyticsPersistence alloc] initWithSharedContainerURL:sharedContainerURL];
         
