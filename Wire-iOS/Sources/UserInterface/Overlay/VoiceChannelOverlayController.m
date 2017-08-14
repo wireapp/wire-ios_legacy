@@ -339,6 +339,7 @@
         case VoiceChannelV2StateOutgoingCallDegraded:
             overlayState = VoiceChannelOverlayStateOutgoingCallDegraded;
             break;
+        case VoiceChannelV2StateEstablishedDataChannel:
         case VoiceChannelV2StateSelfIsJoiningActiveChannel:
             if (previousVoiceChannelState == VoiceChannelV2StateOutgoingCall || previousVoiceChannelState == VoiceChannelV2StateOutgoingCallInactive) {
                 // Hide the media establishment phase for outgoing calls
