@@ -38,8 +38,13 @@ open class CoreDataSnapshotTestCase: ZMSnapshotTestCase {
     }
 
     override open func tearDown() {
+        moc = nil
+        selfUser = nil
+        otherUser = nil
+        otherUserConversation = nil
+        testSession?.tearDown()
+        testSession = nil
         super.tearDown()
-        testSession.tearDown()
     }
 
     // MARK: – Setup
