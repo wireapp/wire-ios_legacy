@@ -26,8 +26,6 @@ public class MarklightTextView: NextResponderTextView {
     public let style: MarklightStyle
     fileprivate let marklightTextStorage: MarklightTextStorage
     
-    fileprivate var nextListNumber = 1
-    fileprivate var nextListBullet = "-"
     fileprivate var needsNewNumberListItem = false
     fileprivate var needsNewBulletListItem = false
     
@@ -146,7 +144,7 @@ extension MarklightTextView {
             
         case .numberList:
             insertPrefixSyntax("\(nextListNumber). ", forSelection: selection)
-            formatNumberLists()
+            renumberLists()
             
         case .bulletList:   insertPrefixSyntax("\(nextListBullet) ", forSelection: selection)
         case .bold:         insertWrapSyntax("**", forSelection: selection)
@@ -260,6 +258,43 @@ extension MarklightTextView {
 
 extension MarklightTextView {
     
+    /// Returns the text position indicating the start of the line containin the given
+    /// position.
+    ///
+    fileprivate func lineStartForTextAtPosition(_ pos: UITextPosition) -> UITextPosition {
+        
+        guard let caretPos = selectedTextRange?.start, caretPos != beginningOfDocument else {
+            return beginningOfDocument
+        }
+        
+        // if prev char is new line, then caret is at start of current line
+        if let prevPos = position(from: caretPos, offset: -1), text(in: textRange(from: prevPos, to: caretPos)!) == "\n" {
+            return caretPos
+        } else {
+            return tokenizer.position(from: caretPos, toBoundary: .paragraph, inDirection: UITextStorageDirection.backward.rawValue)!
+        }
+    }
+    
+    /// Returns the range of the line previous to the current selection if it exists, else nil.
+    ///
+    fileprivate func rangeOfPreviousLine() -> NSRange? {
+        
+        guard let caretPos = selectedTextRange?.start, caretPos != beginningOfDocument else { return nil }
+        
+        let currLineStart = lineStartForTextAtPosition(caretPos)
+        
+        // move back one char
+        if let prevPos = position(from: currLineStart, offset: -1) {
+            if let prevLineStart = tokenizer.position(from: prevPos, toBoundary: .paragraph, inDirection: UITextStorageDirection.backward.rawValue) {
+                return NSMakeRange(offset(from: beginningOfDocument, to: prevLineStart),
+                                   offset(from: prevLineStart, to: prevPos)
+                )
+            }
+        }
+        
+        return nil
+    }
+    
     /// Returns all ranges of all markdown elements.
     ///
     fileprivate func allMarkdownRanges() -> [MarkdownRange] {
@@ -273,21 +308,6 @@ extension MarklightTextView {
         let groupStyler = marklightTextStorage.groupStyler
         types.forEach { ranges += groupStyler.rangesForElementType($0) }
         return ranges
-    }
-    
-    fileprivate func lineStartForTextAtPosition(_ pos: UITextPosition) -> UITextPosition {
-        
-        // check if last char is newline
-        if let prevPos = position(from: pos, offset: -1) {
-            if text(in: textRange(from: prevPos, to: pos)!) == "\n" {
-                return pos
-            }
-        }
-        
-        // if caret is at document beginning, position() returns nil
-        return tokenizer.position(from: pos,
-                                  toBoundary: .paragraph,
-                                  inDirection: UITextStorageDirection.backward.rawValue) ?? beginningOfDocument
     }
     
     fileprivate func rangeForMarkdownElement(type: MarkdownElementType, enclosingSelection selection: NSRange) -> MarkdownRange? {
@@ -434,7 +454,7 @@ extension MarklightTextView {
     ///
     fileprivate func isEmptyMarkdownElement(_ range: MarkdownRange) -> Bool {
         
-        return markdown(range, containsOnlyCharactersIn: CharacterSet.whitespacesAndNewlines)
+        return  range.contentRange.length == 0 || markdown(range, containsOnlyCharactersIn: CharacterSet.whitespacesAndNewlines)
     }
     
     /// Returns true if the markdown element specified by the given range contains
@@ -482,47 +502,57 @@ extension MarklightTextView {
 
 extension MarklightTextView {
     
-    public func handleNewLine() {
-        
-        guard let caretPos = selectedTextRange?.start else { return }
-        
-        let lineStart = lineStartForTextAtPosition(caretPos)
-        let lineTextRange = textRange(from: lineStart, to: caretPos)!
-        let location = offset(from: beginningOfDocument, to: lineTextRange.start)
-        let length = offset(from: lineTextRange.start, to: lineTextRange.end)
-        let lineRange = NSMakeRange(location, length)
-        
-        // if line is number list element
-        if isMarkdownElement(type: .numberList, activeForSelection: lineRange) {
-            // non empty number list item
-            let regex = try! NSRegularExpression(pattern: "(^\\d+)(?:[.][\\t ]+)(.|[\\t ])+", options: [.anchorsMatchLines])
-            
-            if let match = regex.firstMatch(in: text, options: [], range: lineRange) {
-                let numberStr = text.substring(with: match.rangeAt(1)) as NSString
-                nextListNumber = numberStr.integerValue + 1
-                needsNewNumberListItem = true
-
-            } else {
-                // replace empty list item with newline
-                text.deleteCharactersIn(range: lineRange)
-                nextListNumber = 1
-            }
-            
-        } else if isMarkdownElement(type: .bulletList, activeForSelection: lineRange) {
-            // non empty bullet list item
-            let regex = try! NSRegularExpression(pattern: "(^[*+-])(?:[\\t ]+)(.|[\\t ])+", options: [.anchorsMatchLines])
-            
-            if let match = regex.firstMatch(in: text, options: [], range: lineRange) {
-                nextListBullet = text.substring(with: match.rangeAt(1))
-                needsNewBulletListItem = true
-            } else {
-                // replace empty list item with newline
-                text.deleteCharactersIn(range: lineRange)
-                nextListBullet = "-"
+    fileprivate var nextListNumber: Int {
+        // if the line before the caret is a list item, return the next number
+        if let range = rangeOfPreviousLine() {
+            let regex = try! NSRegularExpression(pattern: "^\\d+", options: .anchorsMatchLines)
+            if let match = regex.firstMatch(in: text, range: range) {
+                return (text.substring(with: match.range) as NSString).integerValue + 1
             }
         }
+        
+        return 1
     }
     
+    fileprivate var nextListBullet: String {
+        // if line before the caret is a bullet item, return the same bullet
+        if let range = rangeOfPreviousLine() {
+            let regex = try! NSRegularExpression(pattern: "^[-+*]", options: .anchorsMatchLines)
+            if let match = regex.firstMatch(in: text, range: range) {
+                return text.substring(with: match.range)
+            }
+        }
+        
+        return "-"
+    }
+    
+    /// Checks if the caret is currently on a list item, if so, determines whether
+    /// the next item should be inserted or the current item should be deleted.
+    /// Note: this method should be called after the user enters a new line, but
+    /// before the new line is inserted.
+    ///
+    public func handleNewLine() {
+        
+        if let markdownRange = rangeForMarkdownElement(type: .numberList, enclosingSelection: selectedRange) {
+            
+            if isEmptyMarkdownElement(markdownRange) {
+                text.deleteCharactersIn(range: markdownRange.wholeRange)
+            } else {
+                needsNewNumberListItem = true
+            }
+            
+        } else if let markdownRange = rangeForMarkdownElement(type: .bulletList, enclosingSelection: selectedRange) {
+            
+            if isEmptyMarkdownElement(markdownRange) {
+                text.deleteCharactersIn(range: markdownRange.wholeRange)
+            } else {
+                needsNewBulletListItem = true
+            }
+        }
+        
+    }
+    
+    // Invoked when the text changes
     @objc fileprivate func textChangedHandler() {
         if needsNewNumberListItem {
             needsNewNumberListItem = false
@@ -533,7 +563,10 @@ extension MarklightTextView {
         }
     }
     
-    fileprivate func formatNumberLists() {
+    /// Ensures each sequential numbered list item from the current caret
+    /// position is correctly numbered.
+    ///
+    fileprivate func renumberLists() {
         
         let listPrefix = "(?:(\\d+)[.][\\t ]+)"
         let listItemPattern = "(?:^\(listPrefix))(.)*"
