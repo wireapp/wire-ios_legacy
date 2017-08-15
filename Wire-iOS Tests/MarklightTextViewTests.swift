@@ -342,4 +342,79 @@ class MarklightTextViewTests: XCTestCase {
         // then
         XCTAssertEqual(sut.preparedText, str)
     }
+    
+    // MARK: - Automatic lists
+    
+    func testThatItInsertsANewNumberListItemWhenNewlineEntered() {
+        
+        // given
+        sut.text = ""
+        sut.insertText("1. Pickle")
+        
+        // when
+        sut.handleNewLine()
+        sut.insertText("\n")
+        
+        // then
+        XCTAssertEqual(sut.text, ["1. Pickle", "2. "].joined(separator: "\n"))
+    }
+    
+    func testThatItDeletesEmptyNumberListItemWhenNewLineEntered() {
+        
+        // given
+        sut.text = ""
+        sut.insertText(["1. Pickle", "2. Rick", "3. "].joined(separator: "\n"))
+        
+        // when
+        sut.handleNewLine()
+        sut.insertText("\n")
+        
+        // then
+        XCTAssertEqual(sut.text, ["1. Pickle", "2. Rick", "\n"].joined(separator: "\n"))
+    }
+    
+    func testThatItCorrectlyNumbersListItemsWhenNewListItemInsertedBetweenItems() {
+        
+        // given
+        let text = ["1. I turned", "2. into", "3. a pickle", "4. Morty!"].joined(separator: "\n")
+        sut.text = ""
+        sut.insertText(text)
+        
+        // when
+        sut.selectedRange = NSMakeRange(11, 0) // move cursor to end of first item
+        sut.handleNewLine()
+        sut.insertText("\n")
+        sut.insertText("myself")
+        
+        // then
+        XCTAssertEqual(sut.text, ["1. I turned", "2. myself", "3. into", "4. a pickle", "5. Morty!"].joined(separator: "\n"))
+    }
+    
+    func testThatItInsertsANewBulletListItemWhenNewlineEntered() {
+        
+        // given
+        sut.text = ""
+        sut.insertText("+ Pickle")
+        
+        // when
+        sut.handleNewLine()
+        sut.insertText("\n")
+        
+        // then
+        XCTAssertEqual(sut.text, ["+ Pickle", "+ "].joined(separator: "\n"))
+    }
+    
+    func testThatItDeletesEmptyBulletListItemWhenNewLineEntered() {
+        
+        // given
+        sut.text = ""
+        sut.insertText(["* Pickle", "* Rick", "* "].joined(separator: "\n"))
+        
+        // when
+        sut.handleNewLine()
+        sut.insertText("\n")
+        
+        // then
+        XCTAssertEqual(sut.text, ["* Pickle", "* Rick", "\n"].joined(separator: "\n"))
+    }
 }
