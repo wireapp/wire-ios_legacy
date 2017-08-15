@@ -31,7 +31,8 @@ open class CoreDataSnapshotTestCase: ZMSnapshotTestCase {
     override open func setUp() {
         super.setUp()
         snapshotBackgroundColor = .white
-        testSession = ZMTestSession(dispatchGroup: ZMSDispatchGroup(dispatchGroup: DispatchGroup(), label: name))
+        let group = ZMSDispatchGroup(dispatchGroup: DispatchGroup(), label: name)
+        testSession = ZMTestSession(dispatchGroup: group, accountIdentifier: UUID())
         testSession.prepare(forTestNamed: name)
         moc = testSession.uiMOC
         setupTestObjects()
