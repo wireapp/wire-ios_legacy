@@ -226,7 +226,7 @@ extension SettingsCellDescriptorFactory {
         return SettingsButtonCellDescriptor(title: "Sign out", isDestructive: false) { _ in
             Settings.shared().reset()
             ExtensionSettings.shared.reset()
-            ZMUserSession.shared()?.resetStateAndExit()
+            SessionManager.shared?.logoutCurrentSession()
         }
     }
 

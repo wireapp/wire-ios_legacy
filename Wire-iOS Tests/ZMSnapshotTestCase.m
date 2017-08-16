@@ -58,6 +58,11 @@ static NSSet *phoneWidths(void) {
 }
 
 
+@interface ZMSnapshotTestCase ()
+@property (nonatomic) NSURL *documentsDirectory;
+@end
+
+
 @implementation ZMSnapshotTestCase
 
 - (void)setUp
@@ -80,17 +85,61 @@ static NSSet *phoneWidths(void) {
     
     self.usesDrawViewHierarchyInRect = YES;
 
-    [NSManagedObjectContext setUseInMemoryStore:YES];
-    [NSManagedObjectContext resetUserInterfaceContext];
-    [NSManagedObjectContext resetSharedPersistentStoreCoordinator];
-    self.uiMOC = [NSManagedObjectContext createUserInterfaceContextWithStoreAtURL:[[NSFileManager defaultManager] URLForDirectory:NSDocumentDirectory inDomain:NSUserDomainMask appropriateForURL:nil create:YES error:nil]];
+    XCTestExpectation *contextExpectation = [self expectationWithDescription:@"It should create a context"];
+
+    [StorageStack reset];
+    StorageStack.shared.createStorageAsInMemory = YES;
+    NSError *error = nil;
+    self.documentsDirectory = [NSFileManager.defaultManager URLForDirectory:NSDocumentDirectory
+                                                                   inDomain:NSUserDomainMask
+                                                          appropriateForURL:nil
+                                                                     create:YES
+                                                                      error:&error];
+
+    XCTAssertNil(error, @"Unexpected error %@", error);
+
+    [StorageStack.shared createManagedObjectContextDirectoryForAccountIdentifier:NSUUID.UUID
+                                                            applicationContainer:self.documentsDirectory
+                                                                   dispatchGroup:nil
+                                                        startedMigrationCallback:nil
+                                                               completionHandler:^(ManagedObjectContextDirectory * _Nonnull contextDirectory) {
+                                                                   self.uiMOC = contextDirectory.uiContext;
+                                                                   [contextExpectation fulfill];
+                                                               }];
+
+    [self waitForExpectations:@[contextExpectation] timeout:0.1];
 }
 
 - (void)tearDown
 {
-    [super tearDown];
+    // Needs to be called before setting self.documentsDirectory to nil.
+    [self removeContentsOfDocumentsDirectory];
+
+    self.uiMOC = (id _Nonnull)nil;
+    self.documentsDirectory = nil;
+    self.snapshotBackgroundColor = nil;
+
     [UIColor setAccentOverrideColor:ZMAccentColorUndefined];
     [UIView setAnimationsEnabled:YES];
+
+    [super tearDown];
+}
+
+- (void)removeContentsOfDocumentsDirectory
+{
+    NSError *error = nil;
+    NSArray<NSURL *> *contents = [NSFileManager.defaultManager contentsOfDirectoryAtURL:self.documentsDirectory
+                                                             includingPropertiesForKeys:nil
+                                                                                options:NSDirectoryEnumerationSkipsHiddenFiles
+                                                                                  error:&error];
+
+    XCTAssertNil(error, @"Unexpected error %@", error);
+
+    for (NSURL *content in contents) {
+        error = nil;
+        [NSFileManager.defaultManager removeItemAtURL:content error:&error];
+        XCTAssertNil(error, @"Unexpected error %@", error);
+    }
 }
 
 - (void)setAccentColor:(ZMAccentColor)accentColor

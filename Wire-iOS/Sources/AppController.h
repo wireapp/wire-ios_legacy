@@ -48,8 +48,8 @@ FOUNDATION_EXPORT NSString *const ZMUserSessionDidBecomeAvailableNotification;
 @property (nonatomic) AppUIState uiState;
 @property (nonatomic) AppSEState seState;
 
-@property (nonatomic, readonly) ZMUserSession *zetaUserSession;
-@property (nonatomic) UnauthenticatedSession *unautenticatedUserSession;
+@property (nonatomic, readonly, weak) ZMUserSession *zetaUserSession;
+@property (nonatomic, weak) UnauthenticatedSession *unautenticatedUserSession;
 
 @property (nonatomic, readonly) NotificationWindowRootViewController *notificationWindowController;
 @property (nonatomic, readonly) UIWindow *notificationsWindow;
