@@ -54,7 +54,7 @@ NSString *const ZMUserSessionDidBecomeAvailableNotification = @"ZMUserSessionDid
 @property (nonatomic) BOOL enteringForeground;
 
 @property (nonatomic) id<ZMAuthenticationObserverToken> authToken;
-@property (nonatomic) ZMUserSession *zetaUserSession;
+@property (nonatomic, weak) ZMUserSession *zetaUserSession;
 @property (nonatomic) NotificationWindowRootViewController *notificationWindowController;
 @property (nonatomic, weak) LaunchImageViewController *launchImageViewController;
 @property (nonatomic) UIWindow *notificationsWindow;
