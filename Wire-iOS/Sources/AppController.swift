@@ -44,8 +44,11 @@ extension AppController {
 extension AppController : SessionManagerDelegate {
     
     public func sessionManagerCreated(unauthenticatedSession: UnauthenticatedSession) {
+        let firstLoad = nil == self.unautenticatedUserSession
         self.unautenticatedUserSession = unauthenticatedSession
-        loadUnauthenticatedUIWithError(nil)
+        if firstLoad {
+            loadUnauthenticatedUIWithError(nil)
+        }
     }
     
     public func sessionManagerCreated(userSession: ZMUserSession) {
@@ -54,6 +57,11 @@ extension AppController : SessionManagerDelegate {
     
     public func sessionManagerWillStartMigratingLocalStore() {
         seState = .migration
+    }
+
+    public func sessionManagerDidLogout() {
+        guard let rootViewController = UIApplication.shared.keyWindow?.rootViewController as? RootViewController else { return }
+        rootViewController.reloadCurrentController()
     }
     
     public func sessionManagerDidBlacklistCurrentVersion() {
