@@ -2,7 +2,7 @@
 
 [![Wire logo](https://github.com/wireapp/wire/blob/master/assets/header-small.png?raw=true)](https://wire.com/jobs/)
 
-[![Build Status](https://travis-ci.org/wireapp/wire-ios.svg?branch=develop)](https://travis-ci.org/wireapp/wire-ios)
+[![CircleCI](https://circleci.com/gh/wireapp/wire-ios.svg?style=shield)](https://circleci.com/gh/wireapp/wire-ios)
 
 This repository is part of the source code of Wire. You can find more information at [wire.com](https://wire.com) or by contacting opensource@wire.com.
 
@@ -57,7 +57,6 @@ In order to build Wire for iOS locally, it is necessary to install the following
 - Carthage 0.17.2 or newer (https://github.com/Carthage/Carthage)
 - CocoaPods 1.2.0 or newer (https://cocoapods.org/)
 - Ruby 2.2.5
-- wget (https://www.gnu.org/software/wget/)
 
 The setup script will automatically check for you that you satisfy these requirements
 

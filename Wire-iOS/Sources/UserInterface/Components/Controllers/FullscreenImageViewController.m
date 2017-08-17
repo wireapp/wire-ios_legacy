@@ -204,7 +204,9 @@
     }
     snapshotBackgroundView.translatesAutoresizingMaskIntoConstraints = NO;
     [self.view addSubview:snapshotBackgroundView];
-    [snapshotBackgroundView autoPinEdgeToSuperviewEdge:ALEdgeTop];
+
+    const CGFloat topBarHeight = CGRectGetMaxY(self.navigationController.navigationBar.frame);
+    [snapshotBackgroundView autoPinEdgeToSuperviewEdge:ALEdgeTop withInset:-topBarHeight];
     [snapshotBackgroundView autoPinEdgeToSuperviewEdge:ALEdgeLeading];
     [snapshotBackgroundView autoSetDimensionsToSize:[[UIScreen mainScreen] bounds].size];
     snapshotBackgroundView.alpha = 0;

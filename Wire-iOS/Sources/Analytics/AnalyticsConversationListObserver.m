@@ -92,6 +92,10 @@ const NSTimeInterval PermantentConversationListObserverObservationFinalTime = 20
 
 - (void)probablyReceivedFullConversationList
 {
+    if (nil == ZMUserSession.sharedSession.managedObjectContext) {
+        return;
+    }
+
     NSUInteger groupConvCount = 0;
 
     for (ZMConversation *conversation in [ZMConversationList conversationsIncludingArchivedInUserSession:[ZMUserSession sharedSession]]) {
