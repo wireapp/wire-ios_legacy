@@ -30,17 +30,12 @@ enum AppState : Equatable {
     public static func ==(lhs: AppState, rhs: AppState) -> Bool {
         
         switch (lhs, rhs) {
-        case (.headless, .headless):
-            fallthrough
-        case (.authenticated, .authenticated):
-            fallthrough
-        case (.unauthenticated, .unauthenticated):
-            fallthrough
-        case (.blacklisted, .blacklisted):
-            fallthrough
-        case (.migrating, .migrating):
-            fallthrough
-        case (.suspended, .suspended):
+        case (.headless, .headless),
+             (.authenticated, .authenticated),
+             (.unauthenticated, .unauthenticated),
+             (.blacklisted, .blacklisted),
+             (.migrating, .migrating),
+             (.suspended, .suspended):
             return true
         default:
             return false
