@@ -366,11 +366,11 @@ import Foundation
     }
     
     private static func reloadUserInterface(_ type: SettingsCellDescriptorType) {
-        guard let rootViewController = UIApplication.shared.keyWindow?.rootViewController as? RootViewController else {
+        guard let rootViewController = UIApplication.shared.keyWindow?.rootViewController as? AppRootViewController else {
             return
         }
         
-        rootViewController.reloadCurrentController()
+        rootViewController.reload()
     }
 }
 

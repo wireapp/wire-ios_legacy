@@ -21,7 +21,6 @@
 
 #import "ApplicationLaunchType.h"
 
-@class RootViewController;
 @class ZMUserSession;
 @class UnauthenticatedSession;
 @class NotificationWindowRootViewController;
@@ -29,26 +28,28 @@
 @class ZMConversation;
 @class MediaPlaybackManager;
 @class SessionManager;
+@class AppRootViewController;
 
-
+FOUNDATION_EXPORT NSString * _Nonnull const ZMUserSessionDidBecomeAvailableNotification;
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
-@property (strong, nonatomic) UIWindow *window;
+@property (nonatomic, nonnull) UIWindow * window;
 
 // Singletons
-@property (readonly, nonatomic) ZMUserSession *zetaUserSession;
-@property (readonly, nonatomic) UnauthenticatedSession *unauthenticatedSession;
-@property (readonly, nonatomic) SessionManager *sessionManager;
+@property (readonly, nullable) ZMUserSession *zetaUserSession;
+@property (readonly, nullable) UnauthenticatedSession *unauthenticatedSession;
+@property (readonly, nonnull) SessionManager *sessionManager;
+@property (readonly, nonnull) AppRootViewController *rootViewController;
 
-@property (readonly, nonatomic) NotificationWindowRootViewController *notificationWindowController;
-@property (readonly, nonatomic) UIWindow *notificationsWindow;
-@property (readonly, nonatomic) MediaPlaybackManager *mediaPlaybackManager;
+@property (readonly, nullable) NotificationWindowRootViewController *notificationWindowController;
+@property (readonly, nullable) UIWindow *notificationsWindow;
+@property (readonly, nullable) MediaPlaybackManager *mediaPlaybackManager;
 
-@property (nonatomic, assign, readonly) ApplicationLaunchType launchType;
+@property (readonly) ApplicationLaunchType launchType;
 
-@property (nonatomic, copy) dispatch_block_t hockeyInitCompletion;
+@property (nonatomic, copy, nullable) dispatch_block_t hockeyInitCompletion;
 
-+ (instancetype)sharedAppDelegate;
++ (instancetype _Nonnull )sharedAppDelegate;
 
 @end

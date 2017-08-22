@@ -66,9 +66,9 @@
 #import "VoiceChannelCollectionViewLayout.h"
 
 // View Controllers
-#import "RootViewController.h"
 #import "ZClientViewController.h"
 #import "ZClientViewController+Internal.h"
+#import "RegistrationViewController.h"
 #import "FormFlowViewController.h"
 #import "RegistrationStepViewController.h"
 #import "SignInViewController.h"
@@ -93,7 +93,6 @@
 #import "ConversationListViewController+Private.h"
 #import "FullscreenImageViewController.h"
 #import "KeyboardAvoidingViewController.h"
-#import "AppController.h"
 #import "PhoneNumberViewController.h"
 #import "CountryCodeTableViewController.h"
 #import "UIViewController+WR_Invite.h"
@@ -115,6 +114,9 @@
 #import "CrossfadeTransition.h"
 #import "VerticalTransition.h"
 #import "MediaAsset.h"
+#import "MagicConfig.h"
+#import "PassthroughWindow.h"
+#import "StopWatch.h"
 
 // Utils
 #import "UIFont+MagicAccess.h"
@@ -151,6 +153,9 @@
 #import "WireStyleKit+Additions.h"
 #import "UIResponder+FirstResponder.h"
 #import "UIApplication+StatusBar.h"
+#import "CASStyler+Variables.h"
+#import "AVSLogObserver.h"
+#import "Analytics+Performance.h"
 
 // Camera
 #import "CameraController.h"

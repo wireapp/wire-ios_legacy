@@ -24,6 +24,12 @@ import Classy
 final class AudioMessageView: UIView, TransferView {
     public var fileMessage: ZMConversationMessage?
     weak public var delegate: TransferViewDelegate?
+    weak public var audioTrackPlayer : AudioTrackPlayer? {
+        didSet {
+            audioPlayerProgressObserver = KeyValueObserver.observe(audioTrackPlayer, keyPath: "progress", target: self, selector: #selector(audioProgressChanged(_:)), options: [.initial, .new])
+            audioPlayerStateObserver = KeyValueObserver.observe(audioTrackPlayer, keyPath: "state", target: self, selector: #selector(audioPlayerStateChanged(_:)), options: [.initial, .new])
+        }
+    }
     
     private let downloadProgressView = CircularProgressView()
     private let playButton = IconButton()
@@ -70,12 +76,6 @@ final class AudioMessageView: UIView, TransferView {
         var currentElements = self.accessibilityElements ?? []
         currentElements.append(contentsOf: [playButton, timeLabel])
         self.accessibilityElements = currentElements
-        
-        let audioTrackPlayer = self.audioTrackPlayer()
-        
-        self.audioPlayerProgressObserver = KeyValueObserver.observe(audioTrackPlayer, keyPath: "progress", target: self, selector: #selector(audioProgressChanged(_:)), options: [.initial, .new])
-        
-        self.audioPlayerStateObserver = KeyValueObserver.observe(audioTrackPlayer, keyPath: "state", target: self, selector: #selector(audioPlayerStateChanged(_:)), options: [.initial, .new])
         
         setNeedsLayout()
         layoutIfNeeded()
@@ -172,9 +172,7 @@ final class AudioMessageView: UIView, TransferView {
     
     public func willDeleteMessage() {
         proximityListener.stopListening()
-        let player = audioTrackPlayer()
-        let audioTrackPlayingSame = player.sourceMessage != nil && player.sourceMessage.isEqual(self.fileMessage)
-        guard audioTrackPlayingSame else { return }
+        guard let player = audioTrackPlayer, player.sourceMessage != nil && player.sourceMessage.isEqual(self.fileMessage) else { return }
         player.stop()
     }
     
@@ -215,10 +213,12 @@ final class AudioMessageView: UIView, TransferView {
     }
     
     private func updateTimeLabel() {
+        guard let audioTrackPlayer = self.audioTrackPlayer else { return }
+        
         var duration: Int? = .none
         
         if self.isOwnTrackPlayingInAudioPlayer() {
-            duration = Int(self.audioTrackPlayer().elapsedTime)
+            duration = Int(audioTrackPlayer.elapsedTime)
         }
         else {
             guard let message = self.fileMessage,
@@ -243,9 +243,11 @@ final class AudioMessageView: UIView, TransferView {
     }
     
     private func updateActivePlayButton() {
+        guard let audioTrackPlayer = self.audioTrackPlayer else { return }
+        
         self.playButton.backgroundColor = FileMessageViewState.normalColor
         
-        if self.audioTrackPlayer().isPlaying {
+        if audioTrackPlayer.isPlaying {
             self.playButton.setIcon(.pause, with: .tiny, for: UIControlState())
             self.playButton.accessibilityValue = "pause"
         }
@@ -265,15 +267,17 @@ final class AudioMessageView: UIView, TransferView {
     }
     
     private func updateActivePlayerProgressAnimated(_ animated: Bool) {
+        guard let audioTrackPlayer = self.audioTrackPlayer else { return }
+        
         let progress: Float
         var animated = animated
         
-        if fabs(1 - self.audioTrackPlayer().progress) < 0.01 {
+        if fabs(1 - audioTrackPlayer.progress) < 0.01 {
             progress = 0
             animated = false
         }
         else {
-            progress = Float(self.audioTrackPlayer().progress)
+            progress = Float(audioTrackPlayer.progress)
         }
         
         self.playerProgressView.setProgress(progress, animated: animated)
@@ -285,25 +289,18 @@ final class AudioMessageView: UIView, TransferView {
         self.playButton.layer.cornerRadius = self.playButton.bounds.size.width / 2.0
     }
     
-    private func audioTrackPlayer() -> AudioTrackPlayer {
-        return AppDelegate.shared().mediaPlaybackManager.audioTrackPlayer
-    }
-    
     public func stopPlaying() {
-        let player = audioTrackPlayer()
-        let audioTrackPlayingSame = player.sourceMessage != nil && player.sourceMessage.isEqual(self.fileMessage)
-        guard audioTrackPlayingSame else { return }
+        guard let player = self.audioTrackPlayer, player.sourceMessage != nil && player.sourceMessage.isEqual(self.fileMessage) else { return }
         player.pause()
     }
     
     private func playTrack() {
-        guard let fileMessage = self.fileMessage, let fileMessageData = fileMessage.fileMessageData else {
+        guard let fileMessage = self.fileMessage, let fileMessageData = fileMessage.fileMessageData, let audioTrackPlayer = self.audioTrackPlayer else {
             return
         }
         
         self.proximityListener.stateChanged = proximityStateDidChange
         
-        let audioTrackPlayer = self.audioTrackPlayer()
         let audioTrackPlayingSame = audioTrackPlayer.sourceMessage != nil && audioTrackPlayer.sourceMessage.isEqual(self.fileMessage)
         
         if let track = fileMessage.audioTrack(), !audioTrackPlayingSame {
@@ -329,9 +326,10 @@ final class AudioMessageView: UIView, TransferView {
     }
     
     private func isOwnTrackPlayingInAudioPlayer() -> Bool {
-        let audioTrackPlayer = self.audioTrackPlayer()
         guard let message = self.fileMessage,
-            let audioTrack = message.audioTrack() else {
+              let audioTrack = message.audioTrack(),
+              let audioTrackPlayer = self.audioTrackPlayer
+            else {
                 return false
         }
         
@@ -393,7 +391,9 @@ final class AudioMessageView: UIView, TransferView {
     // MARK: - Proximity Listener
     
     private func updateProximityObserverState() {
-        if audioTrackPlayer().isPlaying && isOwnTrackPlayingInAudioPlayer() {
+        guard let audioTrackPlayer = self.audioTrackPlayer else { return }
+        
+        if audioTrackPlayer.isPlaying && isOwnTrackPlayingInAudioPlayer() {
             proximityListener.startListening()
         } else {
             proximityListener.stopListening()

@@ -239,7 +239,7 @@ private let margin = (CGFloat(WAZUIMagic.float(forIdentifier: "content.left_marg
         }
         
         recorder.recordStartedCallback = {
-            AppDelegate.shared().mediaPlaybackManager.audioTrackPlayer.stop()
+            AppDelegate.shared().mediaPlaybackManager?.audioTrackPlayer.stop()
         }
         
         recorder.recordEndedCallback = { [weak self] reachedMaxRecordingDuration in

@@ -24,6 +24,8 @@ class AudioMessageCellTests: ZMSnapshotTestCase {
     
     func wrappedCellWithConfig(_ config: ((MockMessage) -> ())?) -> UITableView {
         
+        
+        let mediaPlayBackManager = MediaPlaybackManager(name: "conversationMedia")
         let fileMessage = MockMessageFactory.fileTransferMessage()
         fileMessage?.backingFileMessageData.mimeType = "audio/x-m4a"
         fileMessage?.backingFileMessageData.filename = "sound.m4a"
@@ -43,6 +45,7 @@ class AudioMessageCellTests: ZMSnapshotTestCase {
         cell.layer.speed = 0 // freeze animations for deterministic tests
         cell.bounds = CGRect(x: 0.0, y: 0.0, width: 320.0, height: 9999)
         cell.contentView.bounds = CGRect(x: 0.0, y: 0.0, width: 320, height: 9999)
+        cell.audioTrackPlayer = mediaPlayBackManager?.audioTrackPlayer
         
         cell.layoutMargins = UIEdgeInsetsMake(0, CGFloat(WAZUIMagic.float(forIdentifier: "content.left_margin")),
                                               0, CGFloat(WAZUIMagic.float(forIdentifier: "content.right_margin")))

@@ -266,7 +266,7 @@ import CocoaLumberjackSwift
         }
         
         recorder.recordStartedCallback = {
-            AppDelegate.shared().mediaPlaybackManager.audioTrackPlayer.stop()
+            AppDelegate.shared().mediaPlaybackManager?.audioTrackPlayer.stop()
         }
         
         recorder.recordEndedCallback = { [weak self] reachedMaxRecordingDuration in
