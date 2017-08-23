@@ -195,7 +195,12 @@ class AppRootViewController : UIViewController {
         passthroughWindow.windowLevel = UIWindowLevelStatusBar + 1
         passthroughWindow.accessibilityIdentifier = "ZClientNotificationWindow"
         
-        setupClassy(with: [mainWindow, passthroughWindow])
+        let windows = [self.mainWindow, passthroughWindow]
+        
+        // Delay Classy intialization to prevent deadlock
+        DispatchQueue.main.async {
+            self.setupClassy(with: windows)
+        }
         
         overlayWindow = passthroughWindow
         overlayWindow?.rootViewController = NotificationWindowRootViewController()

@@ -41,11 +41,13 @@ class AppStateController : NSObject {
     fileprivate var isMigrating = false
     fileprivate var hasCompletedRegistration = false
     fileprivate var authenticationError : Error?
+    fileprivate let isRunningTests = ProcessInfo.processInfo.environment["XCTestConfigurationFilePath"] != nil
     
     override init() {
         super.init()
         NotificationCenter.default.addObserver(self, selector: #selector(applicationWillEnterForeground), name: Notification.Name.UIApplicationWillEnterForeground, object: nil)
         authenticationObserverToken = ZMUserSessionAuthenticationNotification.addObserver(self)
+        appState = calculateAppState()
     }
     
     deinit {
@@ -97,10 +99,6 @@ class AppStateController : NSObject {
             appState = newAppState
             delegate?.appStateController(transitionedTo: appState)
         }
-    }
-    
-    public var isRunningTests : Bool {
-        return ProcessInfo.processInfo.environment["XCTestConfigurationFilePath"] != nil
     }
     
 }
