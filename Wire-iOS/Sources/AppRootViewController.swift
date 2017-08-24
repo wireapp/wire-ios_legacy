@@ -24,7 +24,7 @@ import Classy
 class AppRootViewController : UIViewController {
     
     public let mainWindow : UIWindow
-    public fileprivate(set) var overlayWindow : UIWindow? = nil
+    public let overlayWindow : UIWindow
     public fileprivate(set) var sessionManager : SessionManager?
     
     public fileprivate(set) var visibleViewController : UIViewController?
@@ -34,6 +34,7 @@ class AppRootViewController : UIViewController {
     fileprivate let avsLogObserver : AVSLogObserver
     fileprivate var authenticatedBlocks : [() -> Void] = []
     fileprivate let transitionQueue : DispatchQueue = DispatchQueue(label: "transitionQueue")
+    fileprivate var isClassyInitialized = false
     
     
     
@@ -47,11 +48,23 @@ class AppRootViewController : UIViewController {
         mainWindow.frame = UIScreen.main.bounds
         mainWindow.accessibilityIdentifier = "ZClientMainWindow"
         
+        overlayWindow = PassthroughWindow()
+        overlayWindow.backgroundColor = .clear
+        overlayWindow.frame = UIScreen.main.bounds
+        overlayWindow.windowLevel = UIWindowLevelStatusBar + 1
+        overlayWindow.accessibilityIdentifier = "ZClientNotificationWindow"
+        overlayWindow.rootViewController = NotificationWindowRootViewController()
+        
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
         
         appStateController.delegate = self
+        
+        // Notification window has to be on top, so must be made visible last.  Changing the window level is
+        // not possible because it has to be below the status bar.
         mainWindow.rootViewController = self
         mainWindow.makeKeyAndVisible()
+        overlayWindow.makeKeyAndVisible()
+        mainWindow.makeKey()
         
         let isCallkitEnabled = !Settings.shared().disableCallKit
         var isCallkitSupported = false
@@ -69,7 +82,7 @@ class AppRootViewController : UIViewController {
         
         NotificationCenter.default.addObserver(self, selector: #selector(onContentSizeCategoryChange), name: Notification.Name.UIContentSizeCategoryDidChange, object: nil)
         
-        transition(to: appStateController.appState)
+        enqueueTransition(to: appStateController.appState)
     }
     
     deinit {
@@ -96,6 +109,21 @@ class AppRootViewController : UIViewController {
             transitionGroup.enter()
             
             DispatchQueue.main.async {
+                self.prepare(for: appState, completionHandler: {
+                    transitionGroup.leave()
+                })
+            }
+            
+            transitionGroup.wait()
+        }
+        
+        
+        transitionQueue.async {
+            
+            let transitionGroup = DispatchGroup()
+            transitionGroup.enter()
+            
+            DispatchQueue.main.async {
                 self.transition(to: appState, completionHandler: {
                     transitionGroup.leave()
                 })
@@ -107,8 +135,6 @@ class AppRootViewController : UIViewController {
     
     func transition(to appState: AppState, completionHandler: (() -> Void)? = nil) {
         var viewController : UIViewController? = nil
-        
-        configureWindows(for: appState)
         
         switch appState {
         case .blacklisted:
@@ -179,18 +205,25 @@ class AppRootViewController : UIViewController {
         }
     }
     
-    func configureWindows(for appState: AppState) {
-        if appState == .authenticated(completedRegistration: false) || appState == .unauthenticated(error: nil) {
-            guard overlayWindow == nil else { return }
-            MagicConfig.shared()
-            self.installOverlayWindow()
-        } else {
-//            overlayWindow?.removeFromSuperview()
-//            overlayWindow = nil
-        }
+    func prepare(for appState: AppState, completionHandler: @escaping () -> Void) {
         
         if appState == .authenticated(completedRegistration: false) {
-            (overlayWindow?.rootViewController as? NotificationWindowRootViewController)?.transitionToLoggedInSession()
+            (overlayWindow.rootViewController as? NotificationWindowRootViewController)?.transitionToLoggedInSession()
+        } else {
+            overlayWindow.rootViewController = NotificationWindowRootViewController()
+        }
+        
+        if isClassyInitialized || appState == .authenticated(completedRegistration: false) || appState == .unauthenticated(error: nil) {
+            isClassyInitialized = true
+            MagicConfig.shared()
+            
+            let windows = [mainWindow, overlayWindow]
+            DispatchQueue.main.async {
+                self.setupClassy(with: windows)
+                completionHandler()
+            }
+        } else {
+            completionHandler()
         }
     }
     
@@ -203,37 +236,6 @@ class AppRootViewController : UIViewController {
         mediaManager?.observeSoundConfigurationChanges()
         mediaManager?.isMicrophoneMuted = false
         mediaManager?.isSpeakerEnabled = false
-    }
-    
-    func installOverlayWindow() {
-        
-        let passthroughWindow = PassthroughWindow()
-        passthroughWindow.backgroundColor = .clear
-        passthroughWindow.frame = UIScreen.main.bounds
-        passthroughWindow.windowLevel = UIWindowLevelStatusBar + 1
-        passthroughWindow.accessibilityIdentifier = "ZClientNotificationWindow"
-        
-        let windows = [self.mainWindow, passthroughWindow]
-        
-        // Delay Classy intialization to prevent deadlock
-        DispatchQueue.main.async {
-            self.setupClassy(with: windows)
-        }
-        
-        overlayWindow = passthroughWindow
-        overlayWindow?.rootViewController = NotificationWindowRootViewController()
-        
-        // Notification window has to be on top, so must be made visible last.  Changing the window level is
-        // not possible because it has to be below the status bar.
-        mainWindow.makeKeyAndVisible()
-        overlayWindow?.makeKeyAndVisible()
-        mainWindow.makeKey()
-        
-        let stopWatch = StopWatch()
-        if let appStartEvent = stopWatch.stopEvent("AppStart") {
-            let launchTime = appStartEvent.elapsedTime()
-            Analytics.shared()?.tagApplicationLaunchTime(launchTime)
-        }
     }
     
     func setupClassy(with windows: [UIWindow]) {
