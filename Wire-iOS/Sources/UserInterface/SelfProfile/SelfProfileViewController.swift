@@ -65,8 +65,8 @@ import Cartography
         
         [imageView, nameLabel, handleLabel, teamNameLabel].forEach(addSubview)
         
-        if let team = user.team {
-            let teamView = TeamImageView(team: team)
+        if user.team != nil, let account = SessionManager.shared?.accountManager.selectedAccount {
+            let teamView = TeamImageView(account: account)
             teamView.style = .big
             addSubview(teamView)
             self.teamView = teamView

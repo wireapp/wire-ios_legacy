@@ -37,6 +37,7 @@ class AppStateController : NSObject {
     fileprivate var isBlacklisted = false
     fileprivate var isLoggedIn = false
     fileprivate var isLoggedOut = false
+    fileprivate var isSuspended = false
     fileprivate var hasEnteredForeground = UIApplication.shared.applicationState != .background
     fileprivate var isMigrating = false
     fileprivate var hasCompletedRegistration = false
@@ -74,6 +75,10 @@ class AppStateController : NSObject {
         
         if isBlacklisted {
             return .blacklisted
+        }
+        
+        if (isSuspended) {
+            return .suspended
         }
         
         if isLoggedIn {
@@ -121,13 +126,17 @@ extension AppStateController : SessionManagerDelegate {
         recalculateAppState()
     }
     
-    func sessionManagerCreated(userSession: ZMUserSession) {
-        isMigrating = false
+    func sessionManagerWillSuspendSession() {
+        isSuspended = true
         recalculateAppState()
-        
+    }
+    
+    func sessionManagerCreated(userSession: ZMUserSession) {        
         userSession.checkIfLoggedIn { [weak self] (loggedIn) in
             self?.isLoggedIn = loggedIn
             self?.isLoggedOut = !loggedIn
+            self?.isSuspended = false
+            self?.isMigrating = false
             self?.recalculateAppState()
         }
     }
@@ -135,6 +144,7 @@ extension AppStateController : SessionManagerDelegate {
     func sessionManagerCreated(unauthenticatedSession: UnauthenticatedSession) {
         isLoggedIn = false
         isLoggedOut = true
+        isSuspended = false
         recalculateAppState()
     }
     

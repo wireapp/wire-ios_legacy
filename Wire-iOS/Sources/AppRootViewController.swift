@@ -33,6 +33,7 @@ class AppRootViewController : UIViewController {
     fileprivate let fileBackupExcluder : FileBackupExcluder
     fileprivate let avsLogObserver : AVSLogObserver
     fileprivate var authenticatedBlocks : [() -> Void] = []
+    fileprivate let transitionQueue : DispatchQueue = DispatchQueue(label: "transitionQueue")
     
     
     
@@ -85,6 +86,23 @@ class AppRootViewController : UIViewController {
         let mediaManager = AVSMediaManager.sharedInstance()
         let analytics = Analytics.shared()
         sessionManager = SessionManager(appVersion: appVersion!, mediaManager: mediaManager!, analytics: analytics, delegate: appStateController, application: UIApplication.shared, launchOptions: launchOptions, blacklistDownloadInterval: Settings.shared().blacklistDownloadInterval)
+    }
+    
+    func enqueueTransition(to appState: AppState) {
+        
+        transitionQueue.async {
+            
+            let transitionGroup = DispatchGroup()
+            transitionGroup.enter()
+            
+            DispatchQueue.main.async {
+                self.transition(to: appState, completionHandler: {
+                    transitionGroup.leave()
+                })
+            }
+            
+            transitionGroup.wait()
+        }
     }
     
     func transition(to appState: AppState, completionHandler: (() -> Void)? = nil) {
@@ -167,8 +185,8 @@ class AppRootViewController : UIViewController {
             MagicConfig.shared()
             self.installOverlayWindow()
         } else {
-            overlayWindow?.removeFromSuperview()
-            overlayWindow = nil
+//            overlayWindow?.removeFromSuperview()
+//            overlayWindow = nil
         }
         
         if appState == .authenticated(completedRegistration: false) {
@@ -257,9 +275,8 @@ class AppRootViewController : UIViewController {
     }
     
     func reload() {
-        transition(to: .headless, completionHandler: {
-            self.transition(to: self.appStateController.appState)
-        })
+        enqueueTransition(to: .headless)
+        enqueueTransition(to: self.appStateController.appState)
     }
     
 }
@@ -289,7 +306,7 @@ extension AppRootViewController {
 extension AppRootViewController : AppStateControllerDelegate {
     
     func appStateController(transitionedTo appState: AppState) {
-        transition(to: appState)
+        enqueueTransition(to: appState)
     }
     
 }

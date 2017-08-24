@@ -76,7 +76,8 @@ import Foundation
                                                     presentationStyle: PresentationStyle.navigation,
                                                     identifier: nil,
                                                     presentationAction: { () -> (UIViewController?) in
-                                                        return SignInViewController()
+                                                        SessionManager.shared?.logoutCurrentSession(deleteCookie: false)
+                                                        return nil
         },
                                                     previewGenerator: nil,
                                                     icon: .convMetaAddPerson)

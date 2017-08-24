@@ -73,12 +73,21 @@ final internal class TeamSelectorView: UIView {
     private var selfUserObserverToken: NSObjectProtocol!
     private var applicationDidBecomeActiveToken: NSObjectProtocol!
 
-    fileprivate var team: TeamType? = nil {
+    fileprivate var accounts: [Account]? = nil {
         didSet {
-            if let teamView = team.map(TeamView.init) {
-                teamsViews = [teamView]
+            
+            if let teamViews = accounts?.map({ TeamView(account: $0) }) {
+                teamsViews = teamViews
             } else {
                 teamsViews = [personalTeamView]
+            }
+            
+            teamsViews.forEach { (teamView) in
+                teamView.onTap = { account in
+                    if let account = account {
+                        SessionManager.shared?.select(account)
+                    }
+                }
             }
 
             self.lineView = LineView(views: self.teamsViews)
@@ -120,19 +129,19 @@ final internal class TeamSelectorView: UIView {
         
         selfUserObserverToken = UserChangeInfo.add(observer: self, forBareUser: ZMUser.selfUser())
         applicationDidBecomeActiveToken = NotificationCenter.default.addObserver(forName: Notification.Name.UIApplicationDidBecomeActive, object: nil, queue: nil, using: { [weak self] _ in
-            self?.update(with: ZMUser.selfUser()?.team)
+            self?.update(with: SessionManager.shared?.accountManager.accounts)
         })
-
-        self.update(with: ZMUser.selfUser()?.team)
+        
+        self.update(with: SessionManager.shared?.accountManager.accounts)
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    fileprivate func update(with team: TeamType?) {
+    fileprivate func update(with accounts: [Account]?) {
         self.personalTeamView.selected = false
-        self.team = team
+        self.accounts = accounts
     }
 
 }
@@ -142,6 +151,7 @@ extension TeamSelectorView: ZMUserObserver {
 
     public func userDidChange(_ changeInfo: UserChangeInfo) {
         guard changeInfo.teamsChanged else { return }
-        self.update(with: ZMUser.selfUser()?.team)
+        // TODO jacob
+//        self.update(with: ZMUser.selfUser()?.team)
     }
 }

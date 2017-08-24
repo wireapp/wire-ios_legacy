@@ -22,7 +22,7 @@ import WireExtensionComponents
 
 final class ConversationListTopBar: TopBar {
 
-    static let hideTeamSelector = true
+    static let hideTeamSelector = false
 
     private var teamsView: TeamSelectorView? = .none
     public weak var contentScrollView: UIScrollView? = .none {
@@ -50,7 +50,8 @@ final class ConversationListTopBar: TopBar {
             }
             self.updateShowTeamsIfNeeded()
         })
-        setShowTeams(to: !ConversationListTopBar.hideTeamSelector && ZMUser.selfUser().hasTeam)
+        
+        setShowTeams(to: !ConversationListTopBar.hideTeamSelector && SessionManager.shared?.accountManager.accounts.count > 1)
     }
     
     required public init?(coder aDecoder: NSCoder) {
@@ -79,7 +80,7 @@ final class ConversationListTopBar: TopBar {
     fileprivate var showTeams: Bool = false
     
     internal func updateShowTeamsIfNeeded() {
-        let showTeams = !ConversationListTopBar.hideTeamSelector && ZMUser.selfUser().hasTeam
+        let showTeams = !ConversationListTopBar.hideTeamSelector && SessionManager.shared?.accountManager.accounts.count > 1
         guard showTeams != self.showTeams else { return }
         setShowTeams(to: showTeams)
     }
