@@ -231,6 +231,8 @@ import Foundation
         developerCellDescriptors.append(findUnreadConvoButton)
         let shareDatabase = SettingsShareDatabaseCellDescriptor()
         developerCellDescriptors.append(shareDatabase)
+        let shareCryptobox = SettingsShareCryptoboxCellDescriptor()
+        developerCellDescriptors.append(shareCryptobox)
         let reloadUIButton = SettingsButtonCellDescriptor(title: "Reload user interface", isDestructive: false, selectAction: SettingsCellDescriptorFactory.reloadUserInterface)
         developerCellDescriptors.append(reloadUIButton)
         
