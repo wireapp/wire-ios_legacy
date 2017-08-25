@@ -88,7 +88,15 @@ public final class AudioRecorder: NSObject, AudioRecorderType {
         guard let `self` = self else { return nil }
         let fileName = NSString.filenameForSelfUser().appendingPathExtension(self.format.fileExtension())!
         let fileURL = NSURL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent(fileName)
-        let audioRecorder = try? AVAudioRecorder(url: fileURL!, settings: [AVFormatIDKey : NSNumber(value: self.format.audioFormat())])
+
+        let settings = [
+            AVFormatIDKey : self.format.audioFormat(),
+            AVSampleRateKey : 32000,
+            AVNumberOfChannelsKey : 1,
+        ]
+        
+        let audioRecorder = try? AVAudioRecorder(url: fileURL!, settings: settings)
+
         audioRecorder?.isMeteringEnabled = true
         audioRecorder?.delegate = self
         return audioRecorder
