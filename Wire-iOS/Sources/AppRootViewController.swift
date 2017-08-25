@@ -54,7 +54,7 @@ class AppRootViewController : UIViewController {
         
         let isCallkitEnabled = !Settings.shared().disableCallKit
         var isCallkitSupported = false
-        if #available(iOS 10, *), TARGET_OS_SIMULATOR != 0 {
+        if #available(iOS 10, *) {
             isCallkitSupported = true
         }
         ZMUserSession.useCallKit = isCallkitEnabled && isCallkitSupported
