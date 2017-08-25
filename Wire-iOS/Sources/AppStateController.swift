@@ -105,6 +105,10 @@ class AppStateController : NSObject {
 
 extension AppStateController : SessionManagerDelegate {
     
+    func sessionManagerWillSuspendSession() {
+        fatal("sessionManagerWillSuspendSession() is not yet implemented")
+    }
+    
     func sessionManagerDidLogout() {
         isLoggedIn = false
         isLoggedOut = true
