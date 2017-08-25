@@ -76,7 +76,8 @@ import Foundation
                                                     presentationStyle: PresentationStyle.navigation,
                                                     identifier: nil,
                                                     presentationAction: { () -> (UIViewController?) in
-                                                        return SignInViewController()
+                                                        SessionManager.shared?.logoutCurrentSession(deleteCookie: false)
+                                                        return nil
         },
                                                     previewGenerator: nil,
                                                     icon: .convMetaAddPerson)
@@ -231,6 +232,8 @@ import Foundation
         developerCellDescriptors.append(findUnreadConvoButton)
         let shareDatabase = SettingsShareDatabaseCellDescriptor()
         developerCellDescriptors.append(shareDatabase)
+        let shareCryptobox = SettingsShareCryptoboxCellDescriptor()
+        developerCellDescriptors.append(shareCryptobox)
         let reloadUIButton = SettingsButtonCellDescriptor(title: "Reload user interface", isDestructive: false, selectAction: SettingsCellDescriptorFactory.reloadUserInterface)
         developerCellDescriptors.append(reloadUIButton)
         
