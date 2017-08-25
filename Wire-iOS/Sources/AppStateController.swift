@@ -131,7 +131,7 @@ extension AppStateController : SessionManagerDelegate {
         recalculateAppState()
     }
     
-    func sessionManagerCreated(userSession: ZMUserSession) {
+    func sessionManagerCreated(userSession: ZMUserSession) {        
         userSession.checkIfLoggedIn { [weak self] (loggedIn) in
             self?.isLoggedIn = loggedIn
             self?.isLoggedOut = !loggedIn
