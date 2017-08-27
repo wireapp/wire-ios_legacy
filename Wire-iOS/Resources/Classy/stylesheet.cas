@@ -771,13 +771,13 @@ VideoMessageCell {
     }
 }
 
-^BaseTeamView {
+^BaseAccountView {
     nameLabel: @{
         font: $font-small-semibold;
     }
 }
 
-TeamImageView {
+AccountImageView {
     initialLabel: @{
         font: $font-small-semibold;
         textColor: $color-text-foreground-light;
@@ -785,13 +785,13 @@ TeamImageView {
     backgroundColor: $color-background-light;
 }
 
-TeamImageView.big {
+AccountImageView.big {
     initialLabel: @{
         font: $font-large-thin;
     }
 }
 
-PersonalTeamView {
+PersonalAccountView {
     userImageView: @{
         containerView: @{
             backgroundColor: $color-background-light;

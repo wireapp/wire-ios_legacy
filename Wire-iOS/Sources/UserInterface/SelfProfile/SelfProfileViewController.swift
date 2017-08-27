@@ -24,7 +24,7 @@ import Cartography
     public let nameLabel = UILabel()
     public let handleLabel = UILabel()
     public let teamNameLabel = UILabel()
-    public var teamView: TeamImageView?
+    public var teamView: AccountImageView?
     
     init(user: ZMUser) {
         super.init(frame: .zero)
@@ -66,7 +66,7 @@ import Cartography
         [imageView, nameLabel, handleLabel, teamNameLabel].forEach(addSubview)
         
         if user.team != nil, let account = SessionManager.shared?.accountManager.selectedAccount {
-            let teamView = TeamImageView(account: account)
+            let teamView = AccountImageView(account: account)
             teamView.style = .big
             addSubview(teamView)
             self.teamView = teamView
@@ -135,6 +135,7 @@ extension IconButton {
 
 final internal class SelfProfileViewController: UIViewController {
     private let settingsController: SettingsTableViewController
+    private let accountSelectorController = AccountSelectorController()
     private let profileContainerView = UIView()
     private let profileView: ProfileView
     @objc var dismissAction: (() -> ())? = .none
@@ -149,12 +150,6 @@ final internal class SelfProfileViewController: UIViewController {
         settingsController.tableView.isScrollEnabled = false
         
         profileView.imageView.delegate = self
-
-        title = "self.profile".localized
-        
-        let closeButton = IconButton.closeButton()
-        closeButton.addTarget(self, action: #selector(onCloseTouchUpInside(_:)), for: .touchUpInside)
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: closeButton)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -171,16 +166,43 @@ final internal class SelfProfileViewController: UIViewController {
         view.addSubview(settingsController.view)
         addChildViewController(settingsController)
         
+        accountSelectorController.willMove(toParentViewController: self)
+        view.addSubview(accountSelectorController.view)
+        addChildViewController(accountSelectorController)
+        
         settingsController.view.setContentHuggingPriority(UILayoutPriorityRequired, for: .vertical)
         settingsController.view.setContentCompressionResistancePriority(UILayoutPriorityRequired, for: .vertical)
         settingsController.tableView.setContentHuggingPriority(UILayoutPriorityRequired, for: .vertical)
         settingsController.tableView.setContentCompressionResistancePriority(UILayoutPriorityRequired, for: .vertical)
+        
+        createCloseButton()
+        
         self.createConstraints()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        self.navigationController?.isNavigationBarHidden = true
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.navigationController?.isNavigationBarHidden = false
+    }
+    
+    private func createCloseButton() {
+        let closeButton = IconButton.closeButton()
+        closeButton.addTarget(self, action: #selector(onCloseTouchUpInside(_:)), for: .touchUpInside)
+        self.view.addSubview(closeButton)
+        constrain(closeButton, self.view) { closeButton, selfView in
+            closeButton.top == selfView.top + 12
+            closeButton.trailing == selfView.trailing - 24
+        }
     }
     
     private func createConstraints() {
         constrain(view, settingsController.view, profileView, profileContainerView) { view, settingsControllerView, profileView, profileContainerView in
-            profileContainerView.top == self.topLayoutGuideCartography
+            profileContainerView.top == view.top
             profileContainerView.leading == view.leading
             profileContainerView.trailing == view.trailing
             profileContainerView.bottom == settingsControllerView.top
@@ -194,6 +216,13 @@ final internal class SelfProfileViewController: UIViewController {
             settingsControllerView.leading == view.leading
             settingsControllerView.trailing == view.trailing
             settingsControllerView.bottom == view.bottom
+        }
+        
+        constrain(view, accountSelectorController.view) { selfView, teamSelectorControllerView in
+            teamSelectorControllerView.leading >= selfView.leading
+            teamSelectorControllerView.trailing <= selfView.trailing
+            teamSelectorControllerView.top == selfView.top
+            teamSelectorControllerView.centerX == selfView.centerX
         }
     }
     

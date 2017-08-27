@@ -59,13 +59,6 @@ class ShapeView: LayerHostView<CAShapeLayer> {
     }
 }
 
-extension TeamType {
-    func hasUnreadMessages() -> Bool {
-        let unread = ZMConversation.predicateForConversationConsideredUnread()!
-        return conversations.first(where: { unread.evaluate(with: $0) }) != nil
-    }
-}
-
 class DotView: UIView {
     fileprivate let circleView = ShapeView()
     fileprivate let centerView = ShapeView()
@@ -109,16 +102,23 @@ extension DotView: ZMUserObserver {
     }
 }
 
-public protocol TeamViewType {
+public protocol AccountViewType {
     var collapsed: Bool { get set }
     var hasUnreadMessages: Bool { get }
     var onTap: ((Account?) -> ())? { get set }
     func update()
+    var account: Account { get }
 }
 
-public class BaseTeamView: UIView, TeamViewType {
+public final class AccountViewFactory {
+    public static func viewFor(account: Account) -> BaseAccountView {
+        return account.teamName == nil ? PersonalAccountView(account: account) : TeamAccountView(account: account)
+    }
+}
+
+public class BaseAccountView: UIView, AccountViewType {
     
-    fileprivate let imageViewContainer = UIView()
+    internal let imageViewContainer = UIView()
     fileprivate let outlineView = UIView()
     internal let nameLabel = UILabel()
     fileprivate let dotView = DotView()
@@ -143,6 +143,8 @@ public class BaseTeamView: UIView, TeamViewType {
         return false
     }
     
+    public let account: Account
+    
     func updateAppearance() {
         selectionView.isHidden = !selected || collapsed
         nameDotView.isHidden = selected || !hasUnreadMessages || !collapsed
@@ -160,7 +162,8 @@ public class BaseTeamView: UIView, TeamViewType {
                 (self.hasUnreadMessages ? (" " + "conversation_list.header.self_team.accessibility_value.has_new_messages".localized) : "")
     }
     
-    init() {
+    init(account: Account) {
+        self.account = account
         super.init(frame: .zero)
         
         selfUserObserver = UserChangeInfo.add(observer: self, forBareUser: ZMUser.selfUser())
@@ -232,11 +235,11 @@ public class BaseTeamView: UIView, TeamViewType {
     }
     
     @objc public func didTap(_ sender: UITapGestureRecognizer!) {
-        self.onTap?(.none)
+        self.onTap?(self.account)
     }
 }
 
-extension BaseTeamView: ZMConversationListObserver {
+extension BaseAccountView: ZMConversationListObserver {
     public func conversationListDidChange(_ changeInfo: ConversationListChangeInfo) {
         updateAppearance()
     }
@@ -246,7 +249,7 @@ extension BaseTeamView: ZMConversationListObserver {
     }
 }
 
-extension BaseTeamView: ZMUserObserver {
+extension BaseAccountView: ZMUserObserver {
     public func userDidChange(_ changeInfo: UserChangeInfo) {
         if changeInfo.accentColorValueChanged {
             updateAppearance()
@@ -254,8 +257,8 @@ extension BaseTeamView: ZMUserObserver {
     }
 }
 
-public final class PersonalTeamView: BaseTeamView {
-    internal let userImageView = UserImageView(size: .normal)
+public final class PersonalAccountView: BaseAccountView {
+    internal let userImageView = AvatarImageView(frame: .zero)
 
     private var conversationListObserver: NSObjectProtocol!
     private var connectionRequestObserver: NSObjectProtocol!
@@ -275,14 +278,22 @@ public final class PersonalTeamView: BaseTeamView {
                 ZMConversationList.pendingConnectionConversations(inUserSession: userSession).count > 0
     }
     
-    override init() {
-        super.init()
+    override init(account: Account) {
+        super.init(account: account)
         
         self.isAccessibilityElement = true
         self.accessibilityTraits = UIAccessibilityTraitButton
         self.shouldGroupAccessibilityChildren = true
         
-        userImageView.user = ZMUser.selfUser()
+        if let imageData = self.account.imageData {
+            userImageView.imageView.image = UIImage(data: imageData)
+        }
+        else {
+            // TODO: internal protection level
+            //let personName = PersonName(name: self.account.userName ?? "",
+            //                            schemeTagger: NSLinguisticTagger(tagSchemes: [NSLinguisticTagSchemeScript], options: 0))
+            userImageView.initials.text = ""
+        }
         
         selectionView.pathGenerator = {
             return UIBezierPath(ovalIn: CGRect(origin: .zero, size: $0))
@@ -308,14 +319,14 @@ public final class PersonalTeamView: BaseTeamView {
     
     public override func update() {
         super.update()
-        self.nameLabel.text = ZMUser.selfUser().displayName
-        self.selected = true // FIXME: ZMUser.selfUser().team
-        self.accessibilityValue = String(format: "conversation_list.header.self_team.accessibility_value".localized, ZMUser.selfUser().displayName) + " " + accessibilityState
-        self.accessibilityIdentifier = "self team"
+        self.nameLabel.text = self.account.userName
+        self.selected = SessionManager.shared?.accountManager.selectedAccount == self.account
+        self.accessibilityValue = String(format: "conversation_list.header.self_team.accessibility_value".localized, self.nameLabel.text ?? "") + " " + accessibilityState
+        self.accessibilityIdentifier = "personal team"
     }
 }
 
-extension PersonalTeamView {
+extension PersonalAccountView {
     override public func userDidChange(_ changeInfo: UserChangeInfo) {
         super.userDidChange(changeInfo)
         if changeInfo.nameChanged {
@@ -324,17 +335,18 @@ extension PersonalTeamView {
     }
 }
 
-public final class TeamImageView: UIImageView {
-    public enum TeamImageViewStyle {
+public final class AccountImageView: UIImageView {
+    public enum AccountImageViewStyle {
         case small
         case big
     }
     
+    private let account: Account
+    
     private var lastLayoutBounds: CGRect = .zero
     private let maskLayer = CALayer()
     internal let initialLabel = UILabel()
-    public let account: Account
-    public var style: TeamImageViewStyle = .small {
+    public var style: AccountImageViewStyle = .small {
         didSet {
             switch (self.style) {
             case .big:
@@ -394,18 +406,19 @@ public final class TeamImageView: UIImageView {
     }
     
     fileprivate func updateImage() {
-        // At some point the teams would have an image.
-
-        if let name = self.account.teamName {
+        if let imageData = self.account.imageData {
+            self.image = UIImage(data: imageData)
+            self.initialLabel.text = ""
+        }
+        else if let name = self.account.teamName {
             self.image = nil
             self.initialLabel.text = name.substring(to: name.index(after: name.startIndex))
         }
     }
 }
 
-@objc internal class TeamView: BaseTeamView {
+@objc internal class TeamAccountView: BaseAccountView {
 
-    public let account: Account
     public override var collapsed: Bool {
         didSet {
             self.imageView.isHidden = collapsed
@@ -413,20 +426,19 @@ public final class TeamImageView: UIImageView {
     }
     
     public override var hasUnreadMessages: Bool {
-        return false //team.hasUnreadMessages() TODO jacob
+        return false
     }
     
-    private let imageView: TeamImageView
+    private let imageView: AccountImageView
     
     private var teamObserver: NSObjectProtocol!
     private var conversationListObserver: NSObjectProtocol!
 
-    init(account: Account) {
-        self.account = account
+    override init(account: Account) {
         
-        imageView = TeamImageView(account: account)
+        imageView = AccountImageView(account: account)
         
-        super.init()
+        super.init(account: account)
         
         isAccessibilityElement = true
         accessibilityTraits = UIAccessibilityTraitButton
@@ -443,14 +455,6 @@ public final class TeamImageView: UIImageView {
         constrain(imageViewContainer, imageView) { imageViewContainer, imageView in
             imageView.edges == imageViewContainer.edges
         }
-
-        // TODO jacob
-//        if let team = self.team as? Team {
-//            teamObserver = TeamChangeInfo.add(observer: self, for: team)
-//            if let userSession = ZMUserSession.shared() {
-//                conversationListObserver = ConversationListChangeInfo.add(observer: self, for: ZMConversationList.conversations(inUserSession: userSession))
-//            }
-//        }
 
         update()
         
@@ -471,19 +475,15 @@ public final class TeamImageView: UIImageView {
     }
     
     fileprivate func updateLabel() {
-        nameLabel.text = self.account.teamName
+        nameLabel.text = self.account.teamName ?? self.account.userName
     }
     
     static let ciContext: CIContext = {
         return CIContext()
     }()
-    
-    @objc override public func didTap(_ sender: UITapGestureRecognizer!) {
-        self.onTap?(self.account)
-    }
 }
 
-extension TeamView: TeamObserver {
+extension TeamAccountView: TeamObserver {
     func teamDidChange(_ changeInfo: TeamChangeInfo) {
         self.update()
     }

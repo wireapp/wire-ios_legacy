@@ -69,34 +69,30 @@ internal class LineView: UIView {
     }
 }
 
-final internal class TeamSelectorView: UIView {
+final internal class AccountSelectorView: UIView {
     private var selfUserObserverToken: NSObjectProtocol!
     private var applicationDidBecomeActiveToken: NSObjectProtocol!
 
     fileprivate var accounts: [Account]? = nil {
         didSet {
             
-            if let teamViews = accounts?.map({ TeamView(account: $0) }) {
-                teamsViews = teamViews
-            } else {
-                teamsViews = [personalTeamView]
-            }
+            accountViews = accounts?.map({ AccountViewFactory.viewFor(account: $0) }) ?? []
             
-            teamsViews.forEach { (teamView) in
-                teamView.onTap = { account in
+            accountViews.forEach { (accountView) in
+                accountView.onTap = { account in
                     if let account = account {
                         SessionManager.shared?.select(account)
                     }
                 }
             }
 
-            self.lineView = LineView(views: self.teamsViews)
+            self.lineView = LineView(views: self.accountViews)
             self.topOffsetConstraint.constant = imagesCollapsed ? -20 : 0
-            self.teamsViews.forEach { $0.collapsed = imagesCollapsed }
+            self.accountViews.forEach { $0.collapsed = imagesCollapsed }
         }
     }
 
-    private var teamsViews: [BaseTeamView] = []
+    private var accountViews: [BaseAccountView] = []
     private var lineView: LineView? {
         didSet {
             oldValue?.removeFromSuperview()
@@ -113,12 +109,11 @@ final internal class TeamSelectorView: UIView {
         }
     }
     private var topOffsetConstraint: NSLayoutConstraint!
-    private let personalTeamView = PersonalTeamView()
     public var imagesCollapsed: Bool = false {
         didSet {
             self.topOffsetConstraint.constant = imagesCollapsed ? -20 : 0
             
-            self.teamsViews.forEach { $0.collapsed = imagesCollapsed }
+            self.accountViews.forEach { $0.collapsed = imagesCollapsed }
             
             self.layoutIfNeeded()
         }
@@ -127,7 +122,6 @@ final internal class TeamSelectorView: UIView {
     init() {
         super.init(frame: .zero)
         
-        selfUserObserverToken = UserChangeInfo.add(observer: self, forBareUser: ZMUser.selfUser())
         applicationDidBecomeActiveToken = NotificationCenter.default.addObserver(forName: Notification.Name.UIApplicationDidBecomeActive, object: nil, queue: nil, using: { [weak self] _ in
             self?.update(with: SessionManager.shared?.accountManager.accounts)
         })
@@ -140,18 +134,7 @@ final internal class TeamSelectorView: UIView {
     }
     
     fileprivate func update(with accounts: [Account]?) {
-        self.personalTeamView.selected = false
         self.accounts = accounts
     }
 
-}
-
-
-extension TeamSelectorView: ZMUserObserver {
-
-    public func userDidChange(_ changeInfo: UserChangeInfo) {
-        guard changeInfo.teamsChanged else { return }
-        // TODO jacob
-//        self.update(with: ZMUser.selfUser()?.team)
-    }
 }

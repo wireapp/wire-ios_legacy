@@ -22,21 +22,33 @@ import Cartography
 
 extension ConversationListViewController {
     
+    func currentAccountView() -> BaseAccountView {
+        guard let currentAccount = SessionManager.shared?.accountManager.selectedAccount else {
+            fatal("No account available")
+        }
+        let currentAccountView = AccountViewFactory.viewFor(account: currentAccount)
+        
+        return currentAccountView
+    }
+    
     public func createTopBar() {
-        let profileButton = IconButton()
+        let profileAccountView = self.currentAccountView()
+        profileAccountView.selected = false
         
-        profileButton.setIcon(.selfProfile, with: .tiny, for: UIControlState())
-        profileButton.addTarget(self, action: #selector(presentSettings), for: .touchUpInside)
-        profileButton.accessibilityIdentifier = "bottomBarSettingsButton"
-        profileButton.setIconColor(.white, for: .normal)
-        profileButton.accessibilityLabel = "self.voiceover.label".localized
-        profileButton.accessibilityHint = "self.voiceover.hint".localized
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(presentSettings))
+        profileAccountView.addGestureRecognizer(tapGestureRecognizer)
         
-        if let imageView = profileButton.imageView, let user = ZMUser.selfUser() {
+        profileAccountView.accessibilityTraits = UIAccessibilityTraitButton
+        profileAccountView.accessibilityIdentifier = "bottomBarSettingsButton"
+        profileAccountView.accessibilityLabel = "self.voiceover.label".localized
+        profileAccountView.accessibilityHint = "self.voiceover.hint".localized
+        
+        if let user = ZMUser.selfUser() {
+            let imageView = profileAccountView.imageViewContainer
             let newDevicesDot = NewDevicesDot(user: user)
-            profileButton.addSubview(newDevicesDot)
+            profileAccountView.addSubview(newDevicesDot)
             if user.clientsRequiringUserAttention.count > 0 {
-                profileButton.accessibilityLabel = "self.new-device.voiceover.label".localized
+                profileAccountView.accessibilityLabel = "self.new-device.voiceover.label".localized
             }
             
             constrain(newDevicesDot, imageView) { newDevicesDot, imageView in
@@ -49,7 +61,6 @@ extension ConversationListViewController {
         
         self.topBar = ConversationListTopBar()
         self.contentContainer.addSubview(self.topBar)
-        self.topBar.contentScrollView = self.listContentController.collectionView
-        self.topBar.leftView = profileButton
+        self.topBar.leftView = profileAccountView
     }
 }

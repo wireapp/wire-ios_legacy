@@ -24,7 +24,6 @@ NS_ASSUME_NONNULL_BEGIN
 @class SearchViewController;
 @class ConversationListTopBar;
 @class ConversationListBottomBarController;
-@class TeamSelectorView;
 @class ConversationListContentController;
 
 @interface ConversationListViewController (Private)
