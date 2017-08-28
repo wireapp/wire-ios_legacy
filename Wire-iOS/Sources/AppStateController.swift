@@ -47,6 +47,8 @@ class AppStateController : NSObject {
     override init() {
         super.init()
         NotificationCenter.default.addObserver(self, selector: #selector(applicationWillEnterForeground), name: Notification.Name.UIApplicationWillEnterForeground, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(applicationDidFinishLaunching), name: Notification.Name.UIApplicationDidFinishLaunching, object: nil)
+        
         authenticationObserverToken = ZMUserSessionAuthenticationNotification.addObserver(self)
         appState = calculateAppState()
     }
@@ -153,6 +155,11 @@ extension AppStateController : SessionManagerDelegate {
 extension AppStateController {
     
     func applicationWillEnterForeground() {
+        hasEnteredForeground = true
+        recalculateAppState()
+    }
+    
+    func applicationDidFinishLaunching() {
         hasEnteredForeground = true
         recalculateAppState()
     }
