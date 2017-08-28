@@ -21,7 +21,7 @@
 @import "common-controls.cas";
 
 
-^UIView.separator {
+UIView.separator {
     backgroundColor: $color-separator;
 }
 
@@ -771,7 +771,7 @@ VideoMessageCell {
     }
 }
 
-^BaseAccountView {
+BaseAccountView, PersonalAccountView, TeamAccountView {
     nameLabel: @{
         font: $font-small-semibold;
     }
@@ -821,7 +821,7 @@ MessageToolboxView {
     clipsToBounds: true;
 }
 
-^ConversationCell {
+ConversationCell, IconSystemCell, ConversationNewDeviceCell, MissedCallCell, PerformedCallCell, CannotDecryptCell, ConversationIgnoredDeviceCell, ConversationNewDeviceCell, ConversationRenamedCell, ConversationVerifiedCell, MissingMessagesCell, ParticipantsCell, ImageMessageCell, AudioMessageCell, VideoMessageCell, UnknownMessageCell, TextMessageCell, PingCell, MessageDeletedCell, LocationMessageCell, FileTransferCell, ConnectionRequestCell {
     countdownContainerView: @{
         backgroundColor: $color-background;
     }
@@ -847,7 +847,7 @@ ConversationCellBurstTimestampView {
 }
 
 
-^IconSystemCell {
+IconSystemCell, ConversationNewDeviceCell, MissedCallCell, PerformedCallCell, CannotDecryptCell, ConversationIgnoredDeviceCell, ConversationNewDeviceCell, ConversationRenamedCell, ConversationVerifiedCell, MissingMessagesCell, ParticipantsCell {
     lineView: @{
         backgroundColor: $color-separator;
     }
@@ -1277,7 +1277,7 @@ AddParticipantsViewController {
 
 /* Invite Contacts */
 
-^ContactsViewController {
+ContactsViewController, InviteContactsViewController {
     titleLabel: @{
         textAlignment: center;
         font: $font-small-light;
@@ -1457,7 +1457,7 @@ SettingsClientViewController.conversation {
         }
     }
     
-    ^ClientTableViewCell.conversation  {
+    ClientTableViewCell.conversation  {
         nameLabel: @{
             font: $font-normal-semibold;
             textColor: $color-text-foreground;
@@ -1479,7 +1479,7 @@ SettingsClientViewController.conversation {
         
     }
     
-    ^FingerprintTableViewCell.conversation  {
+    FingerprintTableViewCell.conversation  {
         fingerprintLabelFont: $font-normal-light;
         fingerprintLabelBoldFont: $font-normal-semibold;
         
@@ -1499,7 +1499,7 @@ SettingsClientViewController {
     }
 }
 
-^SettingsTableCell {
+SettingsTableCell, SettingsButtonCell, SettingsGroupCell, SettingsToggleCell, SettingsTextCell, SettingsValueCell {
     cellNameLabel: @{
         font: $font-normal-light;
         textColor: $color-text-foreground-dark;
