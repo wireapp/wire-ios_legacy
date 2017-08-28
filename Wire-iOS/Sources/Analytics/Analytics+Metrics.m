@@ -49,8 +49,9 @@ static id flowManagerDidBecomeAvailableObserver = nil;
     if (nil != flowManagerDidBecomeAvailableObserver) {
         return;
     }
+    
     @weakify(self)
-    flowManagerDidBecomeAvailableObserver = [[NSNotificationCenter defaultCenter] addObserverForName:ZMOnDemandFlowManagerDidBecomeAvailableNotification
+    flowManagerDidBecomeAvailableObserver = [[NSNotificationCenter defaultCenter] addObserverForName:ZMFlowManagerDidBecomeAvailableNotification
                                                                                               object:nil
                                                                                                queue:[NSOperationQueue mainQueue]
                                                                                           usingBlock:^(NSNotification * _Nonnull note) {
