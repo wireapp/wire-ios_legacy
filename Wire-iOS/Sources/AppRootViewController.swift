@@ -220,7 +220,7 @@ class AppRootViewController : UIViewController {
             overlayWindow.rootViewController = NotificationWindowRootViewController()
         }
         
-        if isClassyInitialized || appState == .authenticated(completedRegistration: false) || appState == .unauthenticated(error: nil) {
+        if !isClassyInitialized {
             isClassyInitialized = true
             MagicConfig.shared()
             
