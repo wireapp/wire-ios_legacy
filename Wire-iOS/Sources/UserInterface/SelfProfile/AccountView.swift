@@ -233,7 +233,7 @@ public class BaseAccountView: UIView, AccountViewType {
     }
     
     public func update() {
-        // no-op
+        self.selected = SessionManager.shared?.accountManager.selectedAccount == self.account
     }
     
     @objc public func didTap(_ sender: UITapGestureRecognizer!) {
@@ -320,7 +320,6 @@ public final class PersonalAccountView: BaseAccountView {
     public override func update() {
         super.update()
         self.nameLabel.text = self.account.userName
-        self.selected = SessionManager.shared?.accountManager.selectedAccount == self.account
         self.accessibilityValue = String(format: "conversation_list.header.self_team.accessibility_value".localized, self.nameLabel.text ?? "") + " " + accessibilityState
         self.accessibilityIdentifier = "personal team"
     }
