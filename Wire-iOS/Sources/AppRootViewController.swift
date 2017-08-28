@@ -82,6 +82,8 @@ class AppRootViewController : UIViewController {
         
         NotificationCenter.default.addObserver(self, selector: #selector(onContentSizeCategoryChange), name: Notification.Name.UIContentSizeCategoryDidChange, object: nil)
         
+        transition(to: .headless)
+        
         enqueueTransition(to: appStateController.appState)
     }
     
