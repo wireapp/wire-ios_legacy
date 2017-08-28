@@ -21,13 +21,6 @@ import Cartography
 import WireExtensionComponents
 
 final class ConversationListTopBar: TopBar {
-
-    public enum ImagesState: Int {
-        case collapsed
-        case visible
-    }
-
-    private var state: ImagesState = .visible
    
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -51,22 +44,13 @@ final class ConversationListTopBar: TopBar {
         fatalError("init(coder:) has not been implemented")
     }
     
-    public func update(to newState: ImagesState, animated: Bool = false, force: Bool = false) {
-        if !force && self.state == newState {
-            return
-        }
-        
-        self.state = newState
-    }
 }
 
 extension ConversationListTopBar {
     @objc(scrollViewDidScroll:)
     public func scrollViewDidScroll(scrollView: UIScrollView!) {
-        
-        let state: ImagesState = scrollView.contentOffset.y > 0 ? .collapsed : .visible
-        
-        self.update(to: state, animated: true)
+        self.leftSeparatorLineView.scrollViewDidScroll(scrollView: scrollView)
+        self.rightSeparatorLineView.scrollViewDidScroll(scrollView: scrollView)
     }
 }
 
