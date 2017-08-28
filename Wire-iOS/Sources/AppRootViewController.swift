@@ -93,6 +93,12 @@ class AppRootViewController : UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    public override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        view.frame = mainWindow.bounds
+    }
+    
     public func launch(with launchOptions : LaunchOptions) {
         let bundle = Bundle.main
         let appVersion = bundle.infoDictionary?[kCFBundleVersionKey as String] as? String
@@ -195,6 +201,7 @@ class AppRootViewController : UIViewController {
             UIView.performWithoutAnimation {
                 visibleViewController?.removeFromParentViewController()
                 addChildViewController(viewController)
+                viewController.view.frame = view.bounds
                 viewController.view.autoresizingMask = [.flexibleHeight, .flexibleWidth]
                 view.addSubview(viewController.view)
                 viewController.didMove(toParentViewController: self)
@@ -249,8 +256,6 @@ class AppRootViewController : UIViewController {
         CASStyler.bootstrapClassy(withTargetWindows: windows)
         CASStyler.default().apply(colorScheme)
         CASStyler.default().apply(fontScheme: fontScheme)
-        
-        // TODO jacob classy live re-loading on simulator
     }
     
     func onContentSizeCategoryChange() {
