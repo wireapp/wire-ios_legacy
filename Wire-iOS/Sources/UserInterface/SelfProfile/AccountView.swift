@@ -224,6 +224,8 @@ public class BaseAccountView: UIView, AccountViewType {
         
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(didTap(_:)))
         self.addGestureRecognizer(tapGesture)
+        
+        updateAppearance()
     }
     
     required public init?(coder aDecoder: NSCoder) {
@@ -289,10 +291,8 @@ public final class PersonalAccountView: BaseAccountView {
             userImageView.imageView.image = UIImage(data: imageData)
         }
         else {
-            // TODO: internal protection level
-            //let personName = PersonName(name: self.account.userName ?? "",
-            //                            schemeTagger: NSLinguisticTagger(tagSchemes: [NSLinguisticTagSchemeScript], options: 0))
-            userImageView.initials.text = ""
+            let personName = PersonName.person(withName: self.account.userName, schemeTagger: nil)
+            userImageView.initials.text = personName.initials
         }
         
         selectionView.pathGenerator = {
@@ -305,7 +305,7 @@ public final class PersonalAccountView: BaseAccountView {
         }
         
         self.imageViewContainer.addSubview(userImageView)
-        self.imageViewContainer.layoutMargins = UIEdgeInsets(top: 2, left: 2, bottom: 2, right: 2)
+        self.imageViewContainer.layoutMargins = UIEdgeInsets(top: 1, left: 1, bottom: 1, right: 1)
         constrain(imageViewContainer, userImageView) { imageViewContainer, userImageView in
             userImageView.edges == imageViewContainer.edgesWithinMargins
         }

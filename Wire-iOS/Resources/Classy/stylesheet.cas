@@ -771,6 +771,8 @@ VideoMessageCell {
     }
 }
 
+/* Account views */
+
 BaseAccountView, PersonalAccountView, TeamAccountView {
     nameLabel: @{
         font: $font-small-semibold;
