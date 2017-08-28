@@ -38,7 +38,7 @@ class AppStateController : NSObject {
     fileprivate var isLoggedIn = false
     fileprivate var isLoggedOut = false
     fileprivate var isSuspended = false
-    fileprivate var hasEnteredForeground = UIApplication.shared.applicationState == .active
+    fileprivate var hasEnteredForeground = false
     fileprivate var isMigrating = false
     fileprivate var hasCompletedRegistration = false
     fileprivate var authenticationError : Error?
@@ -160,7 +160,7 @@ extension AppStateController {
     }
     
     func applicationDidFinishLaunching() {
-        hasEnteredForeground = true
+        hasEnteredForeground = UIApplication.shared.applicationState == .active
         recalculateAppState()
     }
     
