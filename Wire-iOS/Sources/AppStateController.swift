@@ -38,7 +38,7 @@ class AppStateController : NSObject {
     fileprivate var isLoggedIn = false
     fileprivate var isLoggedOut = false
     fileprivate var isSuspended = false
-    fileprivate var hasEnteredForeground = UIApplication.shared.applicationState != .background
+    fileprivate var hasEnteredForeground = UIApplication.shared.applicationState == .active
     fileprivate var isMigrating = false
     fileprivate var hasCompletedRegistration = false
     fileprivate var authenticationError : Error?
