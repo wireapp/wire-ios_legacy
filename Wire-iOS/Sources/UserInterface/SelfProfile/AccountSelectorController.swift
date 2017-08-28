@@ -22,17 +22,16 @@ import Cartography
 
 final class AccountSelectorController: UIViewController {
     private var accountsView = AccountSelectorView()
-    private var selfUserObserverToken: NSObjectProtocol!
     private var applicationDidBecomeActiveToken: NSObjectProtocol!
 
     init() {
         super.init(nibName: nil, bundle: nil)
-        selfUserObserverToken = UserChangeInfo.add(observer: self, forBareUser: ZMUser.selfUser())
+
         applicationDidBecomeActiveToken = NotificationCenter.default.addObserver(forName: Notification.Name.UIApplicationDidBecomeActive, object: nil, queue: nil, using: { [weak self] _ in
             guard let `self` = self else {
                 return
             }
-            self.updateShowTeamsIfNeeded()
+            self.updateShowAccountsIfNeeded()
         })
         
         self.view.addSubview(accountsView)
@@ -40,33 +39,24 @@ final class AccountSelectorController: UIViewController {
             accountsView.edges == selfView.edges
         }
         
-        setShowTeams(to: SessionManager.shared?.accountManager.accounts.count > 1)
+        setShowAccounts(to: SessionManager.shared?.accountManager.accounts.count > 1)
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private var showTeams: Bool = false
+    private var showAccounts: Bool = false
     
-    internal func updateShowTeamsIfNeeded() {
-        let showTeams = SessionManager.shared?.accountManager.accounts.count > 1
-        guard showTeams != self.showTeams else { return }
-        setShowTeams(to: showTeams)
+    internal func updateShowAccountsIfNeeded() {
+        let showAccounts = SessionManager.shared?.accountManager.accounts.count > 1
+        guard showAccounts != self.showAccounts else { return }
+        setShowAccounts(to: showAccounts)
     }
     
-    private func setShowTeams(to showTeams: Bool) {
-        self.showTeams = showTeams
-        accountsView.isHidden = !showTeams
-    }
-}
-
-extension AccountSelectorController: ZMUserObserver {
-    public func userDidChange(_ changeInfo: UserChangeInfo) {
-        guard changeInfo.teamsChanged else {
-            return
-        }
-        updateShowTeamsIfNeeded()
+    private func setShowAccounts(to showAccounts: Bool) {
+        self.showAccounts = showAccounts
+        accountsView.isHidden = !showAccounts
     }
 }
 
