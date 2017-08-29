@@ -177,7 +177,7 @@ class AppRootViewController : UIViewController {
             executeAuthenticatedBlocks()
             let clientViewController = ZClientViewController()
             clientViewController.isComingFromRegistration = completedRegistration
-            viewController = ZClientViewController()
+            viewController = clientViewController
         case .suspended, .headless:
             viewController = LaunchImageViewController()
         }
