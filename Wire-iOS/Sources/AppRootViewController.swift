@@ -106,7 +106,18 @@ class AppRootViewController : UIViewController {
         let appVersion = bundle.infoDictionary?[kCFBundleVersionKey as String] as? String
         let mediaManager = AVSMediaManager.sharedInstance()
         let analytics = Analytics.shared()
-        sessionManager = SessionManager(appVersion: appVersion!, mediaManager: mediaManager!, analytics: analytics, delegate: appStateController, application: UIApplication.shared, launchOptions: launchOptions, blacklistDownloadInterval: Settings.shared().blacklistDownloadInterval)
+        
+        SessionManager.create(
+            appVersion: appVersion!,
+            mediaManager: mediaManager!,
+            analytics: analytics,
+            delegate: appStateController,
+            application: UIApplication.shared,
+            launchOptions: launchOptions,
+            blacklistDownloadInterval: Settings.shared().blacklistDownloadInterval)
+        { sessionManager in
+            self.sessionManager = sessionManager
+        }
     }
     
     func enqueueTransition(to appState: AppState) {
