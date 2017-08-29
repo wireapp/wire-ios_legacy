@@ -38,7 +38,7 @@ import Foundation
     func rootGroup() -> SettingsControllerGeneratorType & SettingsInternalGroupCellDescriptorType {
         var rootElements = [self.createTeamCell()]
         
-        if SessionManager.shared?.accountManager.accounts.count < 3 {
+        if SessionManager.shared?.accountManager.accounts.count < SessionManager.maxAccounts {
             rootElements.append(self.addAccountCell())
         }
         
