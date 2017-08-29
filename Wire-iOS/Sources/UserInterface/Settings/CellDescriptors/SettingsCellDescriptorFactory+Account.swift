@@ -23,15 +23,12 @@ import Foundation
 extension SettingsCellDescriptorFactory {
 
     func accountGroup() -> SettingsCellDescriptorType {
-        var sections: [SettingsSectionDescriptorType] = [
+        let sections: [SettingsSectionDescriptorType] = [
             infoSection(),
             appearanceSection(),
-            actionsSection()
+            actionsSection(),
+            signOutSection()
         ]
-
-        if let signOutSection = signOutSection() {
-            sections.append(signOutSection)
-        }
 
         return SettingsGroupCellDescriptor(items: sections, title: "self.settings.account_section".localized, icon: .settingsAccount)
     }
@@ -66,8 +63,7 @@ extension SettingsCellDescriptorFactory {
         )
     }
 
-    func signOutSection() -> SettingsSectionDescriptorType? {
-        guard DeveloperMenuState.signOutEnabled() else { return nil }
+    func signOutSection() -> SettingsSectionDescriptorType {
         return SettingsSectionDescriptor(cellDescriptors: [signOutElement()], header: .none, footer: .none)
     }
 
@@ -223,11 +219,26 @@ extension SettingsCellDescriptorFactory {
     }
 
     func signOutElement() -> SettingsCellDescriptorType {
-        return SettingsButtonCellDescriptor(title: "Sign out", isDestructive: false) { _ in
-            Settings.shared().reset()
-            ExtensionSettings.shared.reset()
-            SessionManager.shared?.logoutCurrentSession()
+        let presentationAction: () -> (UIViewController) = { _ in
+            
+            let alert = UIAlertController(
+                title: "self.settings.account_details.log_out.alert.title".localized,
+                message: "self.settings.account_details.log_out.alert.message".localized,
+                preferredStyle: .alert
+            )
+            let actionCancel = UIAlertAction(title: "general.cancel".localized, style: .cancel, handler: nil)
+            alert.addAction(actionCancel)
+            let actionDelete = UIAlertAction(title: "general.ok".localized, style: .destructive) { _ in
+                SessionManager.shared?.logoutAndDeleteCurrentAccount()
+            }
+            alert.addAction(actionDelete)
+            return alert
         }
+        
+        return SettingsExternalScreenCellDescriptor(title: "self.sign_out".localized,
+                                                    isDestructive: true,
+                                                    presentationStyle: .modal,
+                                                    presentationAction: presentationAction)
     }
 
 }
