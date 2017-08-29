@@ -271,15 +271,6 @@ public final class PersonalAccountView: BaseAccountView {
         }
     }
     
-    public override var hasUnreadMessages: Bool {
-        guard let userSession = ZMUserSession.shared() else {
-            return false
-        }
-        let unread = ZMConversation.predicateForConversationConsideredUnread()!
-        return ZMConversationList.conversations(inUserSession: userSession).first(where: { unread.evaluate(with: $0) }) != nil ||
-                ZMConversationList.pendingConnectionConversations(inUserSession: userSession).count > 0
-    }
-    
     override init(account: Account) {
         super.init(account: account)
         
@@ -424,9 +415,6 @@ public final class AccountImageView: UIImageView {
         }
     }
     
-    public override var hasUnreadMessages: Bool {
-        return false
-    }
     
     private let imageView: AccountImageView
     
