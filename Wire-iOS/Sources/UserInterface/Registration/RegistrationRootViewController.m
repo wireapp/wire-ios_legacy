@@ -35,6 +35,7 @@
 @property (nonatomic) TabBarController *registrationTabBarController;
 @property (nonatomic) ZMIncompleteRegistrationUser *unregisteredUser;
 @property (nonatomic, weak) SignInViewController *signInViewController;
+@property (nonatomic) IconButton *cancelButton;
 
 @end
 
@@ -86,9 +87,16 @@
     self.registrationTabBarController.style = TabBarStyleColored;
     self.registrationTabBarController.view.translatesAutoresizingMaskIntoConstraints = NO;
     
+    self.cancelButton = [[IconButton alloc] init];
+    [self.cancelButton setIcon:ZetaIconTypeCancel withSize:ZetaIconSizeTiny forState:UIControlStateNormal];
+    [self.cancelButton setIconColor:UIColor.whiteColor forState:UIControlStateNormal];
+    self.cancelButton.accessibilityLabel = @"cancelAddAccount";
+    [self.cancelButton addTarget:self action:@selector(cancelAddAccount) forControlEvents:UIControlEventTouchUpInside];
+    self.cancelButton.hidden = !SessionManager.shared.accountManager.selectedAccount.isAuthenticated;
     
     [self addChildViewController:self.registrationTabBarController];
     [self.view addSubview:self.registrationTabBarController.view];
+    [self.view addSubview:self.cancelButton];
     [self.registrationTabBarController didMoveToParentViewController:self];
     
     [self createConstraints];
@@ -98,6 +106,8 @@
 {
     [self.registrationTabBarController.view autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero excludingEdge:ALEdgeTop];
     [self.registrationTabBarController.view autoSetDimension:ALDimensionHeight toSize:IS_IPAD ? 262 : 244];
+    [self.cancelButton autoPinEdgeToSuperviewEdge:ALEdgeTop withInset:32];
+    [self.cancelButton autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:16];
 }
 
 - (void)presentLoginTab
@@ -108,6 +118,12 @@
 - (void)presentRegistrationTab
 {
     [self.registrationTabBarController selectIndex:0 animated:YES];
+}
+
+- (void)cancelAddAccount
+{
+    SessionManager *sessionManager = SessionManager.shared;
+    [sessionManager select:sessionManager.accountManager.selectedAccount];
 }
 
 #pragma mark - FormStepDelegate
