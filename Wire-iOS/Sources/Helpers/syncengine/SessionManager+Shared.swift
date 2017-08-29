@@ -23,4 +23,7 @@ extension SessionManager {
     @objc static var shared : SessionManager? {
         return AppDelegate.shared().sessionManager
     }
+    
+    // Maximum number of accounts allowed to be signed into the app.
+    public static let maxAccounts = 3
 }
