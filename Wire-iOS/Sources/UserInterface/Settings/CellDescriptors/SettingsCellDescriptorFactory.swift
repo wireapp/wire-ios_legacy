@@ -36,7 +36,13 @@ import Foundation
     }
     
     func rootGroup() -> SettingsControllerGeneratorType & SettingsInternalGroupCellDescriptorType {
-        let rootElements = [self.createTeamCell(), self.addAccountCell(), self.settingsGroup()]
+        var rootElements = [self.createTeamCell()]
+        
+        if SessionManager.shared?.accountManager.accounts.count < 3 {
+            rootElements.append(self.addAccountCell())
+        }
+        
+        rootElements.append(self.settingsGroup())
         
         let topSection = SettingsSectionDescriptor(cellDescriptors: rootElements)
         
