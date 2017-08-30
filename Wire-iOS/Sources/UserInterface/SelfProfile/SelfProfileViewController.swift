@@ -202,7 +202,6 @@ final internal class SelfProfileViewController: UIViewController {
     
     private func createConstraints() {
         constrain(view, settingsController.view, profileView, profileContainerView) { view, settingsControllerView, profileView, profileContainerView in
-            profileContainerView.top == view.top
             profileContainerView.leading == view.leading
             profileContainerView.trailing == view.trailing
             profileContainerView.bottom == settingsControllerView.top
@@ -218,11 +217,13 @@ final internal class SelfProfileViewController: UIViewController {
             settingsControllerView.bottom == view.bottom
         }
         
-        constrain(view, accountSelectorController.view) { selfView, teamSelectorControllerView in
-            teamSelectorControllerView.leading >= selfView.leading
-            teamSelectorControllerView.trailing <= selfView.trailing
-            teamSelectorControllerView.top == selfView.top
-            teamSelectorControllerView.centerX == selfView.centerX
+        constrain(view, accountSelectorController.view, profileContainerView) { selfView, accountSelectorControllerView, profileContainerView in
+            accountSelectorControllerView.leading >= selfView.leading
+            accountSelectorControllerView.trailing <= selfView.trailing
+            accountSelectorControllerView.top == selfView.top
+            accountSelectorControllerView.centerX == selfView.centerX
+            
+            profileContainerView.top == accountSelectorControllerView.bottom
         }
     }
     

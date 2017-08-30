@@ -120,9 +120,7 @@ public class BaseAccountView: UIView, AccountViewType {
     
     internal let imageViewContainer = UIView()
     fileprivate let outlineView = UIView()
-    internal let nameLabel = UILabel()
     fileprivate let dotView = DotView()
-    fileprivate let nameDotView = DotView()
     fileprivate let selectionView = ShapeView()
     
     private var selfUserObserver: NSObjectProtocol!
@@ -147,10 +145,7 @@ public class BaseAccountView: UIView, AccountViewType {
     
     func updateAppearance() {
         selectionView.isHidden = !selected || collapsed
-        nameDotView.isHidden = selected || !hasUnreadMessages || !collapsed
         dotView.isHidden = selected || !hasUnreadMessages || collapsed
-        
-        nameLabel.textColor = (collapsed && selected) ? UIColor.accent() : ColorScheme.default().color(withName: ColorSchemeColorTextForeground, variant: .dark)
         
         selectionView.hostedLayer.strokeColor = UIColor.accent().cgColor
     }
@@ -173,22 +168,7 @@ public class BaseAccountView: UIView, AccountViewType {
         selectionView.hostedLayer.lineWidth = 1.5
         selectionView.layoutMargins = UIEdgeInsets(top: 1, left: 1, bottom: 1, right: 1)
         
-        nameLabel.textAlignment = .center
-        nameLabel.setContentHuggingPriority(UILayoutPriorityRequired, for: .horizontal)
-        nameLabel.setContentCompressionResistancePriority(UILayoutPriorityRequired, for: .horizontal)
-        nameLabel.lineBreakMode = .byTruncatingTail
-        
-        [imageViewContainer, outlineView, nameLabel, nameDotView, selectionView, dotView].forEach(self.addSubview)
-        
-        let nameDotSize: CGFloat = 7
-
-        constrain(nameLabel, nameDotView) { nameLabel, nameDotView in
-            nameDotView.centerY == nameLabel.centerY
-            nameDotView.trailing == nameLabel.leading - 6
-            
-            nameDotView.width == nameDotView.height
-            nameDotView.height == nameDotSize
-        }
+        [imageViewContainer, outlineView, selectionView, dotView].forEach(self.addSubview)
         
         constrain(imageViewContainer, selectionView) { imageViewContainer, selectionView in
             selectionView.edgesWithinMargins == imageViewContainer.edges
@@ -204,7 +184,7 @@ public class BaseAccountView: UIView, AccountViewType {
             dotView.height == dotSize
         }
         
-        constrain(self, imageViewContainer, nameLabel, dotView, nameDotView) { selfView, imageViewContainer, nameLabel, dotView, nameDotView in
+        constrain(self, imageViewContainer, dotView) { selfView, imageViewContainer, dotView in
             imageViewContainer.top == selfView.top + 12
             imageViewContainer.centerX == selfView.centerX
             selfView.width >= imageViewContainer.width
@@ -212,13 +192,9 @@ public class BaseAccountView: UIView, AccountViewType {
             imageViewContainer.width == imageViewContainer.height
             imageViewContainer.width == 28
             
-            nameLabel.top == imageViewContainer.bottom + 4
-            
-            nameLabel.leading == selfView.leading + 9
-            nameLabel.trailing == selfView.trailing - 9
-            nameLabel.bottom == selfView.bottom - 4
-            nameLabel.width <= 96
-        
+            imageViewContainer.bottom == selfView.bottom - 4
+            imageViewContainer.leading == selfView.leading + 9
+            imageViewContainer.trailing == selfView.trailing - 9
             selfView.width <= 128
         }
         
@@ -277,7 +253,8 @@ public final class PersonalAccountView: BaseAccountView {
         self.isAccessibilityElement = true
         self.accessibilityTraits = UIAccessibilityTraitButton
         self.shouldGroupAccessibilityChildren = true
-        
+        self.accessibilityIdentifier = "personal team"
+
         if let imageData = self.account.imageData {
             userImageView.imageView.image = UIImage(data: imageData)
         }
@@ -310,9 +287,7 @@ public final class PersonalAccountView: BaseAccountView {
     
     public override func update() {
         super.update()
-        self.nameLabel.text = self.account.userName
-        self.accessibilityValue = String(format: "conversation_list.header.self_team.accessibility_value".localized, self.nameLabel.text ?? "") + " " + accessibilityState
-        self.accessibilityIdentifier = "personal team"
+        self.accessibilityValue = String(format: "conversation_list.header.self_team.accessibility_value".localized, self.account.userName) + " " + accessibilityState
     }
 }
 
@@ -455,15 +430,11 @@ public final class AccountImageView: UIImageView {
     
     public override func update() {
         super.update()
-        updateLabel()
         imageView.updateImage()
         accessibilityValue = String(format: "conversation_list.header.self_team.accessibility_value".localized, self.account.teamName ?? "") + " " + accessibilityState
         accessibilityIdentifier = "\(self.account.teamName ?? "") team"
     }
     
-    fileprivate func updateLabel() {
-        nameLabel.text = self.account.teamName ?? self.account.userName
-    }
     
     static let ciContext: CIContext = {
         return CIContext()
