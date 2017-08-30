@@ -306,6 +306,7 @@ static const CGFloat ImageToolbarMinimumSize = 192;
     [self updateImageBorder];
 
     self.imageToolbarView.showsSketchButton = !imageMessageData.isAnimatedGIF;
+    self.imageToolbarView.imageIsEphemeral = convMessage.isEphemeral;
     self.imageToolbarView.isPlacedOnImage = [self imageToolbarFitsInsideImage];
     self.imageToolbarView.configuration = [self imageToolbarNeedsToBeCompact] ? ImageToolbarConfigurationCompactCell : ImageToolbarConfigurationCell;
     
