@@ -60,6 +60,7 @@ extension ConversationListViewController {
         }
         
         self.topBar = ConversationListTopBar()
+        self.topBar.layoutMargins = UIEdgeInsetsMake(0, 10, 0, 16)
         self.contentContainer.addSubview(self.topBar)
         self.topBar.leftView = profileAccountView
     }

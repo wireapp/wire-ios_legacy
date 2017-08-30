@@ -66,7 +66,7 @@ open class TopBar: UIView {
             self.addSubview(new)
             
             constrain(self, new) { selfView, new in
-                new.leading == selfView.leading + 16
+                new.leading == selfView.leadingMargin
                 new.centerY == selfView.centerY
             }
         }
@@ -83,7 +83,7 @@ open class TopBar: UIView {
             self.addSubview(new)
             
             constrain(self, new) { selfView, new in
-                new.trailing == selfView.trailing - 16
+                new.trailing == selfView.trailingMargin
                 new.centerY == selfView.centerY
             }
         }
@@ -125,7 +125,7 @@ open class TopBar: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
+        self.layoutMargins = UIEdgeInsetsMake(0, 16, 0, 16)
         [leftSeparatorLineView, rightSeparatorLineView, middleViewContainer].forEach(self.addSubview)
         
         constrain(self, self.middleViewContainer, self.leftSeparatorLineView, self.rightSeparatorLineView) {
