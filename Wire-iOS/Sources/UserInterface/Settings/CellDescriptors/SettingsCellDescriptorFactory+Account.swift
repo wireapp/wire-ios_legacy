@@ -219,8 +219,24 @@ extension SettingsCellDescriptorFactory {
     }
 
     func signOutElement() -> SettingsCellDescriptorType {
-        let presentationAction: () -> (UIViewController) = { _ in
+
+        let logoutAction: ()->() = {
+            guard let selectedAccount = SessionManager.shared?.accountManager.selectedAccount else {
+                fatal("No session manager and selected account to log out from")
+            }
             
+            SessionManager.shared?.logoutCurrentSession(deleteCookie: true)
+            SessionManager.shared?.delete(account: selectedAccount)
+            
+            if let otherAccount = SessionManager.shared?.accountManager.accounts.first {
+                SessionManager.shared?.accountManager.select(otherAccount)
+            }
+        }
+
+        return SettingsExternalScreenCellDescriptor(title: "self.sign_out".localized,
+                                                    isDestructive: true,
+                                                    presentationStyle: .modal,
+                                                    presentationAction: { _ in
             let alert = UIAlertController(
                 title: "self.settings.account_details.log_out.alert.title".localized,
                 message: "self.settings.account_details.log_out.alert.message".localized,
@@ -228,17 +244,11 @@ extension SettingsCellDescriptorFactory {
             )
             let actionCancel = UIAlertAction(title: "general.cancel".localized, style: .cancel, handler: nil)
             alert.addAction(actionCancel)
-            let actionDelete = UIAlertAction(title: "general.ok".localized, style: .destructive) { _ in
-                SessionManager.shared?.logoutAndDeleteCurrentAccount()
-            }
-            alert.addAction(actionDelete)
+                                                        let actionLogout = UIAlertAction(title: "general.ok".localized, style: .destructive, handler: { _ in logoutAction() })
+            alert.addAction(actionLogout)
             return alert
-        }
+        })
         
-        return SettingsExternalScreenCellDescriptor(title: "self.sign_out".localized,
-                                                    isDestructive: true,
-                                                    presentationStyle: .modal,
-                                                    presentationAction: presentationAction)
     }
 
 }
