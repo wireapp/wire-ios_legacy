@@ -26,26 +26,4 @@ extension SessionManager {
     
     // Maximum number of accounts allowed to be signed into the app.
     public static let maxAccounts = 3
-    
-    func logoutAndDeleteCurrentAccount() {
-        guard let selectedAccount = self.accountManager.selectedAccount else {
-            fatal("No session manager and selected account to log out from")
-        }
-        
-        guard let sharedContainerURL = Bundle.main.appGroupIdentifier.map(FileManager.sharedContainerDirectory) else {
-            preconditionFailure("Unable to get shared container URL")
-        }
-        
-        let selectedAccountID = selectedAccount.userIdentifier
-        
-        self.logoutCurrentSession(deleteCookie: true)
-        self.accountManager.remove(selectedAccount)
-        
-        
-        try! FileManager.default.removeItem(at: StorageStack.accountFolder(accountIdentifier: selectedAccountID, applicationContainer: sharedContainerURL))
-        
-        if let otherAccount = self.accountManager.accounts.first {
-            self.accountManager.select(otherAccount)
-        }
-    }
 }
