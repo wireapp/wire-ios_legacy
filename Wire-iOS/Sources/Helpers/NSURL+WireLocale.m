@@ -28,10 +28,14 @@ NSString *const WireParameterKeyLocale = @"hl";
 - (instancetype)wr_URLByAppendingLocaleParameter
 {
     NSURLComponents *components = [[NSURLComponents alloc] initWithURL:self resolvingAgainstBaseURL:NO];
+    
     NSLocale *locale = [NSLocale currentLocale];
-    NSString *localeQueryString = [NSString stringWithFormat:@"%@=%@", WireParameterKeyLocale, [locale localeIdentifier]];
-    NSString *tmpQuery = (nil == components.query) ? @"": components.query;
-    components.query = [tmpQuery hasSuffix:@"&"] ? [tmpQuery stringByAppendingFormat:@"&%@", localeQueryString]: [tmpQuery stringByAppendingString:localeQueryString];
+    NSURLQueryItem *localeQueryItem = [[NSURLQueryItem alloc] initWithName:WireParameterKeyLocale value:[locale localeIdentifier]];
+    
+    NSMutableArray *newQueryItems = [[NSMutableArray alloc] initWithArray:components.queryItems];
+    [newQueryItems addObject:localeQueryItem];
+    
+    components.queryItems = newQueryItems;
     return components.URL;
 }
 
