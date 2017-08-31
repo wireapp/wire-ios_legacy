@@ -57,6 +57,8 @@ class AppRootViewController : UIViewController {
         
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
         
+        self.installDebugDataIfNeeded()
+
         appStateController.delegate = self
         
         // Notification window has to be on top, so must be made visible last.  Changing the window level is
@@ -327,6 +329,29 @@ extension AppRootViewController : AppStateControllerDelegate {
     
     func appStateController(transitionedTo appState: AppState) {
         enqueueTransition(to: appState)
+    }
+    
+}
+
+// MARK: - Debug
+extension AppRootViewController {
+    
+    /// Takes all files in the folder pointed at by `debugDataToInstall` and installs them
+    /// in the shared folder, erasing any other file in that folder.
+    fileprivate func installDebugDataIfNeeded() {
+        
+        guard let packageURL = AutomationHelper.sharedHelper.debugDataToInstall,
+            let appGroupIdentifier = Bundle.main.appGroupIdentifier else { return }
+        let sharedContainerURL = FileManager.sharedContainerDirectory(for: appGroupIdentifier)
+        
+        // DELETE
+        let filesToDelete = try! FileManager.default.contentsOfDirectory(atPath: sharedContainerURL.path)
+        filesToDelete.forEach {
+            try! FileManager.default.removeItem(atPath: sharedContainerURL.appendingPathComponent($0).path)
+        }
+        
+        // COPY
+        try! FileManager.default.copyFolderRecursively(from: packageURL, to: sharedContainerURL, overwriteExistingFiles: true)
     }
     
 }

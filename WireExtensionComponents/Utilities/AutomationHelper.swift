@@ -49,6 +49,9 @@ import WireSyncEngine
     
     /// Delay in address book remote search override
     public let delayInAddressBookRemoteSearch : TimeInterval?
+    
+    /// Debug data to install in the share container
+    public let debugDataToInstall: URL?
 
     /// The name of the arguments file in the /tmp directory
     private let fileArgumentsName = "wire_arguments.txt"
@@ -64,6 +67,14 @@ import WireSyncEngine
             ZMSLog.set(level: .debug, tag: "Network")
         }
         AutomationHelper.enableLogTags(arguments)
+        if let debugDataPath = arguments.flagValueIfPresent(AutomationKey.DebugDataToInstall.rawValue),
+            FileManager.default.fileExists(atPath: debugDataPath)
+        {
+            self.debugDataToInstall = URL(fileURLWithPath: debugDataPath)
+        } else {
+            self.debugDataToInstall = nil
+        }
+        
         self.delayInAddressBookRemoteSearch = AutomationHelper.addressBookSearchDelay(arguments)
         super.init()
     }
@@ -76,6 +87,7 @@ import WireSyncEngine
         case DisableAutocorrection = "disable-autocorrection"
         case EnableAddressBookOnSimulator = "addressbook-on-simulator"
         case AddressBookRemoteSearchDelay = "addressbook-search-delay"
+        case DebugDataToInstall = "debug-data-to-install"
     }
     
     /// Returns the login email and password credentials if set in the given arguments
