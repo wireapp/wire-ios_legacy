@@ -468,7 +468,9 @@ static const CGFloat ImageToolbarMinimumSize = 192;
 }
 
 - (void)imageTapped:(id)sender {
-    [self.delegate conversationCell:self didSelectAction:MessageActionPresent];
+    if (!self.message.isObfuscated) {
+        [self.delegate conversationCell:self didSelectAction:MessageActionPresent];
+    }
 }
 
 #pragma mark - Message updates
