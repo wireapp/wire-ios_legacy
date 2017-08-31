@@ -178,7 +178,7 @@ extension AutomationHelper {
     
     /// Takes all files in the folder pointed at by `debugDataToInstall` and installs them
     /// in the shared folder, erasing any other file in that folder.
-    func installDebugDataIfNeeded() {
+    public func installDebugDataIfNeeded() {
         
         guard let packageURL = AutomationHelper.sharedHelper.debugDataToInstall,
             let appGroupIdentifier = Bundle.main.appGroupIdentifier else { return }
