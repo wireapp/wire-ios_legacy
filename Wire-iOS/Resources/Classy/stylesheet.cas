@@ -373,12 +373,12 @@ ProfileView {
     
     handleLabel: @{
         textColor: $color-text-foreground-dark;
-        font: $font-normal-light;
+        font: $font-small;
     }
     
     teamNameLabel: @{
         textColor: $color-text-foreground-dark;
-        font: $font-normal-light;
+        font: $font-small;
     }
 }
 
@@ -779,7 +779,7 @@ BaseAccountView, PersonalAccountView, TeamAccountView {
     }
 }
 
-AccountImageView {
+TeamImageView {
     initialLabel: @{
         font: $font-small-semibold;
         textColor: $color-text-foreground-light;
@@ -787,7 +787,7 @@ AccountImageView {
     backgroundColor: $color-background-light;
 }
 
-AccountImageView.big {
+TeamImageView.big {
     initialLabel: @{
         font: $font-large-thin;
     }

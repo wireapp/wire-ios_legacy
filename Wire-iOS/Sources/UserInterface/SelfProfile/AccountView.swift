@@ -189,12 +189,13 @@ public class BaseAccountView: UIView, AccountViewType {
             imageViewContainer.centerX == selfView.centerX
             selfView.width >= imageViewContainer.width
             selfView.trailing >= dotView.trailing
-            imageViewContainer.width == imageViewContainer.height
-            imageViewContainer.width == 28
+            
+            imageViewContainer.width == 33
+            imageViewContainer.height == imageViewContainer.width
             
             imageViewContainer.bottom == selfView.bottom - 4
-            imageViewContainer.leading == selfView.leading + 9
-            imageViewContainer.trailing == selfView.trailing - 9
+            imageViewContainer.leading == selfView.leading + 7
+            imageViewContainer.trailing == selfView.trailing - 7
             selfView.width <= 128
         }
         
@@ -273,7 +274,7 @@ public final class PersonalAccountView: BaseAccountView {
         }
         
         self.imageViewContainer.addSubview(userImageView)
-        self.imageViewContainer.layoutMargins = UIEdgeInsets(top: 1, left: 1, bottom: 1, right: 1)
+        self.imageViewContainer.layoutMargins = UIEdgeInsets(top: 2, left: 2, bottom: 2, right: 2)
         constrain(imageViewContainer, userImageView) { imageViewContainer, userImageView in
             userImageView.edges == imageViewContainer.edgesWithinMargins
         }
@@ -300,8 +301,8 @@ extension PersonalAccountView {
     }
 }
 
-public final class AccountImageView: UIImageView {
-    public enum AccountImageViewStyle {
+public final class TeamImageView: UIImageView {
+    public enum TeamImageViewStyle {
         case small
         case big
     }
@@ -311,7 +312,7 @@ public final class AccountImageView: UIImageView {
     private var lastLayoutBounds: CGRect = .zero
     private let maskLayer = CALayer()
     internal let initialLabel = UILabel()
-    public var style: AccountImageViewStyle = .small {
+    public var style: TeamImageViewStyle = .small {
         didSet {
             switch (self.style) {
             case .big:
@@ -332,7 +333,7 @@ public final class AccountImageView: UIImageView {
         self.accessibilityElements = [initialLabel]
         
         constrain(self, initialLabel) { selfView, initialLabel in
-            initialLabel.centerY == selfView.centerY + CGFloat(0.5) // Font rendering issue fix
+            initialLabel.centerY == selfView.centerY
             initialLabel.centerX == selfView.centerX
         }
         
@@ -391,14 +392,14 @@ public final class AccountImageView: UIImageView {
     }
     
     
-    private let imageView: AccountImageView
+    private let imageView: TeamImageView
     
     private var teamObserver: NSObjectProtocol!
     private var conversationListObserver: NSObjectProtocol!
 
     override init(account: Account) {
         
-        imageView = AccountImageView(account: account)
+        imageView = TeamImageView(account: account)
         
         super.init(account: account)
         
@@ -410,12 +411,17 @@ public final class AccountImageView: UIImageView {
         
         imageViewContainer.addSubview(imageView)
         
-        self.selectionView.pathGenerator = { _ in
-            return WireStyleKit.pathForTeamSelection()
+        self.selectionView.pathGenerator = { size in
+            
+            let path = WireStyleKit.pathForTeamSelection()!
+            let scale = (size.width - 1) / path.bounds.width
+            path.apply(CGAffineTransform(scaleX: scale, y: scale))
+            return path
         }
         
+        self.imageViewContainer.layoutMargins = UIEdgeInsets(top: 1, left: 1, bottom: 1, right: 1)
         constrain(imageViewContainer, imageView) { imageViewContainer, imageView in
-            imageView.edges == imageViewContainer.edges
+            imageView.edges == imageViewContainer.edgesWithinMargins
         }
 
         update()

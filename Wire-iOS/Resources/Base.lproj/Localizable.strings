@@ -496,7 +496,6 @@
 "profile.details.title" = "Details";
 "profile.details.guest" = "Guest";
 
-"profile_view.team_name.in" = "in %@";
 "profile_view.accessibility.handle" = "Username";
 "profile_view.accessibility.name" = "Display name";
 "profile_view.accessibility.team_name" = "Team name";
