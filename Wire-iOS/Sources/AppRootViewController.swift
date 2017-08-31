@@ -56,8 +56,8 @@ class AppRootViewController : UIViewController {
         overlayWindow.rootViewController = NotificationWindowRootViewController()
         
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
-        
-        self.installDebugDataIfNeeded()
+
+        AutomationHelper.installDebugDataIfNeeded()
 
         appStateController.delegate = self
         
@@ -329,29 +329,6 @@ extension AppRootViewController : AppStateControllerDelegate {
     
     func appStateController(transitionedTo appState: AppState) {
         enqueueTransition(to: appState)
-    }
-    
-}
-
-// MARK: - Debug
-extension AppRootViewController {
-    
-    /// Takes all files in the folder pointed at by `debugDataToInstall` and installs them
-    /// in the shared folder, erasing any other file in that folder.
-    fileprivate func installDebugDataIfNeeded() {
-        
-        guard let packageURL = AutomationHelper.sharedHelper.debugDataToInstall,
-            let appGroupIdentifier = Bundle.main.appGroupIdentifier else { return }
-        let sharedContainerURL = FileManager.sharedContainerDirectory(for: appGroupIdentifier)
-        
-        // DELETE
-        let filesToDelete = try! FileManager.default.contentsOfDirectory(atPath: sharedContainerURL.path)
-        filesToDelete.forEach {
-            try! FileManager.default.removeItem(atPath: sharedContainerURL.appendingPathComponent($0).path)
-        }
-        
-        // COPY
-        try! FileManager.default.copyFolderRecursively(from: packageURL, to: sharedContainerURL, overwriteExistingFiles: true)
     }
     
 }

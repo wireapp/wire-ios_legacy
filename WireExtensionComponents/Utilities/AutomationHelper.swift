@@ -171,3 +171,27 @@ private struct FileArguments: ArgumentsType {
         arguments = Set(argumentsString.components(separatedBy: .whitespaces))
     }
 }
+
+
+// MARK: - Debug
+extension AutomationHelper {
+    
+    /// Takes all files in the folder pointed at by `debugDataToInstall` and installs them
+    /// in the shared folder, erasing any other file in that folder.
+    func installDebugDataIfNeeded() {
+        
+        guard let packageURL = AutomationHelper.sharedHelper.debugDataToInstall,
+            let appGroupIdentifier = Bundle.main.appGroupIdentifier else { return }
+        let sharedContainerURL = FileManager.sharedContainerDirectory(for: appGroupIdentifier)
+        
+        // DELETE
+        let filesToDelete = try! FileManager.default.contentsOfDirectory(atPath: sharedContainerURL.path)
+        filesToDelete.forEach {
+            try! FileManager.default.removeItem(atPath: sharedContainerURL.appendingPathComponent($0).path)
+        }
+        
+        // COPY
+        try! FileManager.default.copyFolderRecursively(from: packageURL, to: sharedContainerURL, overwriteExistingFiles: true)
+    }
+    
+}
