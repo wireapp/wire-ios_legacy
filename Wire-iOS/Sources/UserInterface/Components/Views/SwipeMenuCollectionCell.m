@@ -174,6 +174,16 @@ NSString * const SwipeMenuCollectionCellIDToCloseKey = @"IDToClose";
 
     switch (pan.state) {
         case UIGestureRecognizerStateBegan:
+            
+            // iOS 11 3D TOUCH WORKAROUND:
+            // We need to block force touch on the cell while panning. Since
+            // the force touch gesture recognizers are not exposed in the public
+            // API, we disable all gesture recognizers of the superview
+            // (collectionView), then re-enable when pan is finished.
+            for (UIGestureRecognizer *gr in self.superview.gestureRecognizers) {
+                gr.enabled = [gr isEqual:pan];
+            }
+            
             // reset gesture state
             [self drawerScrollingStarts];
             
@@ -195,6 +205,11 @@ NSString * const SwipeMenuCollectionCellIDToCloseKey = @"IDToClose";
         case UIGestureRecognizerStateFailed:
         case UIGestureRecognizerStateCancelled:
         {
+            // re-enable recognizers (see above)
+            for (UIGestureRecognizer *gr in self.superview.gestureRecognizers) {
+                gr.enabled = YES;
+            }
+            
             [self drawerScrollingEndedWithOffset:offset.x];
             
             if (offset.x + self.initialDrawerOffset > self.bounds.size.width * self.overscrollFraction) { // overscrolled
@@ -423,15 +438,14 @@ NSString * const SwipeMenuCollectionCellIDToCloseKey = @"IDToClose";
 
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldBeRequiredToFailByGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer
 {
-    if (gestureRecognizer == self.revealDrawerGestureRecognizer) {
-        return YES;
-    }
-    return NO;
+    // all other recognizers require this pan recognizer to fail
+    return gestureRecognizer == self.revealDrawerGestureRecognizer;
 }
 
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRequireFailureOfGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer
 {
-    return ![gestureRecognizer isKindOfClass:[UIPanGestureRecognizer class]] || ![otherGestureRecognizer isKindOfClass:[UIPanGestureRecognizer class]];
+    // pan recognizer should not be blocked by any other recognizer
+    return ![gestureRecognizer isKindOfClass:[UIPanGestureRecognizer class]];
 }
 
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer
