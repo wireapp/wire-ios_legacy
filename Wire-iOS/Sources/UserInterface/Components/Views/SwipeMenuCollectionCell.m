@@ -428,18 +428,29 @@ NSString * const SwipeMenuCollectionCellIDToCloseKey = @"IDToClose";
     return gestureRecognizer == self.revealDrawerGestureRecognizer;
 }
 
+// NOTE:
+// In iOS 11, the force touch gesture recognizer used for peek & pop was blocking
+// the pan gesture recognizer used for the swipeable cell. The fix to this problem
+// however broke the correct behaviour for iOS 10 (namely, the pan gesture recognizer
+// was now blocking the force touch recognizer). Although Apple documentation suggests
+// getting the reference to the force recognizer and using delegate methods to create
+// failure requirements, setting the delegate raised an exception (???). Here we
+// simply apply the fix for iOS 11 and above.
+
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRequireFailureOfGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer
 {
-    // pan recognizer should not be blocked by any other recognizer
-    return ![gestureRecognizer isKindOfClass:[UIPanGestureRecognizer class]];
+    // for iOS version >= 11
+    if ([[[UIDevice currentDevice] systemVersion] compare:@"11" options:NSNumericSearch] != NSOrderedAscending) {
+        // pan recognizer should not require failure of any other recognizer
+        return ![gestureRecognizer isKindOfClass:[UIPanGestureRecognizer class]];
+    } else {
+        return ![gestureRecognizer isKindOfClass:[UIPanGestureRecognizer class]] || ![otherGestureRecognizer isKindOfClass:[UIPanGestureRecognizer class]];
+    }
 }
 
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer
 {
-    // NOTE: in iOS 11 with a force touch enabled device, not allowing the pan recognizer to
-    // work simulatenously with the force touch recognizer produces the correct behaviour.
-    // However in iOS 10 with the same setting, the pan recognizer blocks force touch.
-    // Therefore in iOS 10 we allow simulatneous recognition.
+    // iOS version >= 11
     if ([[[UIDevice currentDevice] systemVersion] compare:@"11" options:NSNumericSearch] != NSOrderedAscending) {
         // pan recognizer should not recognize simultaneously with any other recognizer
         return ![gestureRecognizer isKindOfClass:[UIPanGestureRecognizer class]];
