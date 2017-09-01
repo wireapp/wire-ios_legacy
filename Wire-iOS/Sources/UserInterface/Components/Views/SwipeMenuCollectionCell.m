@@ -436,8 +436,17 @@ NSString * const SwipeMenuCollectionCellIDToCloseKey = @"IDToClose";
 
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer
 {
-    // pan recognizer should not recognize simultaneously with any other recognizer
-    return ![gestureRecognizer isKindOfClass:[UIPanGestureRecognizer class]];}
+    // NOTE: in iOS 11 with a force touch enabled device, not allowing the pan recognizer to
+    // work simulatenously with the force touch recognizer produces the correct behaviour.
+    // However in iOS 10 with the same setting, the pan recognizer blocks force touch.
+    // Therefore in iOS 10 we allow simulatneous recognition.
+    if ([[[UIDevice currentDevice] systemVersion] compare:@"11" options:NSNumericSearch] != NSOrderedAscending) {
+        // pan recognizer should not recognize simultaneously with any other recognizer
+        return ![gestureRecognizer isKindOfClass:[UIPanGestureRecognizer class]];
+    } else {
+        return YES;
+    }
+}
 
 @end
 
