@@ -423,21 +423,20 @@ NSString * const SwipeMenuCollectionCellIDToCloseKey = @"IDToClose";
 
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldBeRequiredToFailByGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer
 {
-    if (gestureRecognizer == self.revealDrawerGestureRecognizer) {
-        return YES;
-    }
-    return NO;
+    // all other recognizers require this pan recognizer to fail
+    return gestureRecognizer == self.revealDrawerGestureRecognizer;
 }
 
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRequireFailureOfGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer
 {
-    return ![gestureRecognizer isKindOfClass:[UIPanGestureRecognizer class]] || ![otherGestureRecognizer isKindOfClass:[UIPanGestureRecognizer class]];
+    // pan recognizer should not be blocked by any other recognizer
+    return ![gestureRecognizer isKindOfClass:[UIPanGestureRecognizer class]];
 }
 
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer
 {
-    return YES;
-}
+    // pan recognizer should not recognize simultaneously with any other recognizer
+    return ![gestureRecognizer isKindOfClass:[UIPanGestureRecognizer class]];}
 
 @end
 
