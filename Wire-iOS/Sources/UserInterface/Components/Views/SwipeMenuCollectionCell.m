@@ -175,15 +175,6 @@ NSString * const SwipeMenuCollectionCellIDToCloseKey = @"IDToClose";
     switch (pan.state) {
         case UIGestureRecognizerStateBegan:
             
-            // iOS 11 3D TOUCH WORKAROUND:
-            // We need to block force touch on the cell while panning. Since
-            // the force touch gesture recognizers are not exposed in the public
-            // API, we disable all gesture recognizers of the superview
-            // (collectionView), then re-enable when pan is finished.
-            for (UIGestureRecognizer *gr in self.superview.gestureRecognizers) {
-                gr.enabled = [gr isEqual:pan];
-            }
-            
             // reset gesture state
             [self drawerScrollingStarts];
             
@@ -204,12 +195,7 @@ NSString * const SwipeMenuCollectionCellIDToCloseKey = @"IDToClose";
         case UIGestureRecognizerStateEnded:
         case UIGestureRecognizerStateFailed:
         case UIGestureRecognizerStateCancelled:
-        {
-            // re-enable recognizers (see above)
-            for (UIGestureRecognizer *gr in self.superview.gestureRecognizers) {
-                gr.enabled = YES;
-            }
-            
+        {            
             [self drawerScrollingEndedWithOffset:offset.x];
             
             if (offset.x + self.initialDrawerOffset > self.bounds.size.width * self.overscrollFraction) { // overscrolled
