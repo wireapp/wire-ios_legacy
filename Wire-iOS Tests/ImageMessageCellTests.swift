@@ -83,12 +83,17 @@ class ImageMessageCellTests: ZMSnapshotTestCase {
         let wrap = sut.prepareForSnapshot(image.size, image: image, selected: true)
         verify(view: wrap)
     }
-
+    
+    func testThatItRendersImageWhenSelected_Ephemeral() {
+        let image = self.image(inTestBundleNamed: "unsplash_matterhorn.jpg")
+        let wrap = sut.prepareForSnapshot(image.size, image: image, selected: true, ephemeral: true)
+        verify(view: wrap)
+    }
 }
 
 private extension ImageMessageCell {
 
-    func prepareForSnapshot(_ imageSize: CGSize, image: UIImage? = nil, failedToSend: Bool = false, obfuscated: Bool = false, selected: Bool = false) -> UITableView {
+    func prepareForSnapshot(_ imageSize: CGSize, image: UIImage? = nil, failedToSend: Bool = false, obfuscated: Bool = false, selected: Bool = false, ephemeral: Bool = false) -> UITableView {
         let layoutProperties = ConversationCellLayoutProperties()
         layoutProperties.showSender = true
         layoutProperties.showBurstTimestamp = false
@@ -98,6 +103,7 @@ private extension ImageMessageCell {
         let message = MockMessageFactory.imageMessage()
         message?.deliveryState = failedToSend ? .failedToSend : .delivered
         message?.isObfuscated = obfuscated
+        message?.isEphemeral = ephemeral
         let imageMessageData = message?.imageMessageData as! MockImageMessageData
         imageMessageData.mockOriginalSize = imageSize
 

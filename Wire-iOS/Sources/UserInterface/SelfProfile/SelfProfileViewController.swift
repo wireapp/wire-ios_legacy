@@ -24,7 +24,6 @@ import Cartography
     public let nameLabel = UILabel()
     public let handleLabel = UILabel()
     public let teamNameLabel = UILabel()
-    public var teamView: AccountImageView?
     
     init(user: ZMUser) {
         super.init(frame: .zero)
@@ -48,7 +47,7 @@ import Cartography
         nameLabel.accessibilityValue = nameLabel.text
         
         if let team = user.team, let teamName = team.name {
-            teamNameLabel.text = "profile_view.team_name.in".localized(args: teamName)
+            teamNameLabel.text = teamName.uppercased()
             teamNameLabel.accessibilityValue = teamNameLabel.text
         }
         else {
@@ -65,55 +64,38 @@ import Cartography
         
         [imageView, nameLabel, handleLabel, teamNameLabel].forEach(addSubview)
         
-        if user.team != nil, let account = SessionManager.shared?.accountManager.selectedAccount {
-            let teamView = AccountImageView(account: account)
-            teamView.style = .big
-            addSubview(teamView)
-            self.teamView = teamView
-        }
-        
         self.createConstraints()
     }
     
     private func createConstraints() {
         constrain(self, imageView, nameLabel, handleLabel, teamNameLabel) { selfView, imageView, nameLabel, handleLabel, teamNameLabel in
             
-            nameLabel.top == selfView.top
+            nameLabel.top >= selfView.top
             nameLabel.centerX == selfView.centerX
             nameLabel.leading >= selfView.leading
             nameLabel.trailing <= selfView.trailing
             
-            handleLabel.top == nameLabel.bottom + 24 ~ LayoutPriority(750.0)
-            handleLabel.top >= nameLabel.bottom
+            handleLabel.top == nameLabel.bottom + 4
             handleLabel.centerX == selfView.centerX
             handleLabel.leading >= selfView.leading
             handleLabel.trailing <= selfView.trailing
             
-            imageView.top == handleLabel.bottom + 32 ~ LayoutPriority(750.0)
+            teamNameLabel.bottom == handleLabel.bottom + 32
+            teamNameLabel.centerX == selfView.centerX
+            teamNameLabel.leading >= selfView.leading
+            teamNameLabel.trailing <= selfView.trailing
+            
+            imageView.top == teamNameLabel.bottom + 32
             imageView.top >= handleLabel.bottom
             imageView.width == imageView.height
-            imageView.width <= 200
+            imageView.width <= 240
             imageView.centerX == selfView.centerX
             imageView.leading >= selfView.leading
             imageView.trailing <= selfView.trailing
             
-            imageView.bottom == teamNameLabel.top - 32 ~ LayoutPriority(750.0)
-            imageView.bottom <= teamNameLabel.top
+            imageView.bottom == selfView.bottom - 32 ~ LayoutPriority(750.0)
+            imageView.bottom <= selfView.bottom
             
-            teamNameLabel.bottom == selfView.bottom
-            teamNameLabel.centerX == selfView.centerX
-            teamNameLabel.leading >= selfView.leading
-            teamNameLabel.trailing <= selfView.trailing
-        }
-        
-        if let teamView = self.teamView {
-            constrain(imageView, teamView) { imageView, teamView in
-                teamView.width == teamView.height
-                teamView.width == 64
-                
-                teamView.trailing == imageView.trailing
-                teamView.bottom == imageView.bottom
-            }
         }
     }
     

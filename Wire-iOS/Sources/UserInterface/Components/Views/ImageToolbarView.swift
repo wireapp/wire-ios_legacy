@@ -50,6 +50,13 @@ class ImageToolbarView: UIView {
         }
     }
     
+    public var imageIsEphemeral = false {
+        didSet {
+            guard oldValue != imageIsEphemeral else { return }
+            updateButtonConfiguration()
+        }
+    }
+    
     var isPlacedOnImage : Bool = false {
         didSet {
             backgroundColor = isPlacedOnImage ? UIColor(white: 0, alpha: 0.40) : UIColor.clear
@@ -87,6 +94,9 @@ class ImageToolbarView: UIView {
         var newButtons = showsSketchButton ? [sketchButton] : []
 
         switch configuration {
+        case .cell where imageIsEphemeral, .compactCell where imageIsEphemeral:
+            // ephemeral images should only expand
+            newButtons = [expandButton]
         case .cell:
             newButtons.append(contentsOf: [emojiButton, expandButton])
         case .compactCell:
