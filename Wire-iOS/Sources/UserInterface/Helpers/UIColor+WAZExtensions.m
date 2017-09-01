@@ -46,7 +46,7 @@ static ZMAccentColor overridenAccentColor = ZMAccentColorUndefined;
 	}
 	
 	// priority 2: color from self user
-	ZMUser *selfUser = [SessionManager shared].currentUser;
+	ZMUser *selfUser = [ZMUser selfUserInUserSession:[SessionManager shared].userSession];
 	ZMAccentColor selfAccentColor = selfUser.accentColorValue;
 	if (selfUser && (selfAccentColor != ZMAccentColorUndefined)) {
 		return selfAccentColor;

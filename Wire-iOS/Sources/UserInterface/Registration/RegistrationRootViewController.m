@@ -61,6 +61,7 @@
     
     SignInViewController *signInViewController = [[SignInViewController alloc] init];
     signInViewController.analyticsTracker = [AnalyticsTracker analyticsTrackerWithContext:AnalyticsContextSignIn];
+    signInViewController.loginCredentials = self.loginCredentials;
     
     UIViewController *flowViewController = nil;
     if ([RegistrationViewController registrationFlow] == RegistrationFlowEmail) {
@@ -79,9 +80,8 @@
     self.registrationTabBarController = [[TabBarController alloc] initWithViewControllers:@[flowViewController, signInViewController]];
     self.signInViewController = signInViewController;
     
-    if (self.forceLogin) {
+    if (self.showLogin) {
         [self.registrationTabBarController selectIndex:1 animated:NO];
-        self.registrationTabBarController.enabled = ! self.forceLogin;
     }
     
     self.registrationTabBarController.style = TabBarStyleColored;
@@ -92,7 +92,7 @@
     [self.cancelButton setIconColor:UIColor.whiteColor forState:UIControlStateNormal];
     self.cancelButton.accessibilityLabel = @"cancelAddAccount";
     [self.cancelButton addTarget:self action:@selector(cancelAddAccount) forControlEvents:UIControlEventTouchUpInside];
-    self.cancelButton.hidden = !SessionManager.shared.accountManager.selectedAccount.isAuthenticated;
+    self.cancelButton.hidden = !SessionManager.shared.accountManager.selectedAccount.isAuthenticated || self.hasSignInError;
     
     [self addChildViewController:self.registrationTabBarController];
     [self.view addSubview:self.registrationTabBarController.view];
@@ -133,9 +133,10 @@
     [self.formStepDelegate didCompleteFormStep:viewController];
 }
 
-- (void)registrationPhoneFlowViewControllerNeedsSignIn:(RegistrationPhoneFlowViewController *)viewController
+- (void)registrationPhoneFlowViewController:(RegistrationPhoneFlowViewController *)viewController needsToSignInWith:(LoginCredentials *)loginCredentials
 {
     [self presentLoginTab];
+    self.signInViewController.loginCredentials = loginCredentials;
     [self.signInViewController presentEmailSignInViewControllerToEnterPassword];
 }
 

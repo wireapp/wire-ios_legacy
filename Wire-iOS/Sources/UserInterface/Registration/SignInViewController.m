@@ -98,8 +98,8 @@
     [self setupEmailSignInViewController];
     [self setupPhoneFlowViewController];
     
-    BOOL hasAddedPhoneNumber = [SessionManager shared].currentUser.phoneNumber.length > 0;
-    BOOL hasAddedEmailAddress = [SessionManager shared].currentUser.emailAddress.length > 0;
+    BOOL hasAddedPhoneNumber = self.loginCredentials.phoneNumber.length > 0;
+    BOOL hasAddedEmailAddress = self.loginCredentials.emailAddress.length > 0;
 
     if (hasAddedEmailAddress || ! hasAddedPhoneNumber) {
         [self presentSignInViewController:self.emailSignInViewControllerContainer];
@@ -107,7 +107,6 @@
         [self presentSignInViewController:self.phoneSignInViewController];
     }
     
-    self.buttonContainer.hidden = hasAddedEmailAddress || hasAddedPhoneNumber;
     self.view.opaque = NO;
     
     [self setupConstraints];
@@ -142,23 +141,25 @@
 - (void)setupEmailSignInViewController
 {
     EmailSignInViewController *emailSignInViewController = [[EmailSignInViewController alloc] init];
+    emailSignInViewController.loginCredentials = self.loginCredentials;
+    emailSignInViewController.analyticsTracker = self.analyticsTracker;
     emailSignInViewController.view.frame = self.viewControllerContainer.frame;
     emailSignInViewController.view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-    emailSignInViewController.analyticsTracker = self.analyticsTracker;
     self.emailSignInViewController = emailSignInViewController;
     self.emailSignInViewControllerContainer = emailSignInViewController.registrationFormViewController;
 }
 
 - (void)setupPhoneFlowViewController
 {
-    PhoneSignInViewController *phoneFlowViewController = [[PhoneSignInViewController alloc] init];
-    phoneFlowViewController.formStepDelegate = self.formStepDelegate;
-    phoneFlowViewController.view.frame = self.viewControllerContainer.frame;
-    phoneFlowViewController.view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-    phoneFlowViewController.delegate = self;
-    phoneFlowViewController.analyticsTracker = self.analyticsTracker;
-    self.phoneSignInViewController = phoneFlowViewController;
-    self.phoneSignInViewControllerContainer = phoneFlowViewController.registrationFormViewController;
+    PhoneSignInViewController *phoneSignInViewController = [[PhoneSignInViewController alloc] init];
+    phoneSignInViewController.formStepDelegate = self.formStepDelegate;
+    phoneSignInViewController.loginCredentials = self.loginCredentials;
+    phoneSignInViewController.analyticsTracker = self.analyticsTracker;
+    phoneSignInViewController.view.frame = self.viewControllerContainer.frame;
+    phoneSignInViewController.view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+    phoneSignInViewController.delegate = self;
+    self.phoneSignInViewController = phoneSignInViewController;
+    self.phoneSignInViewControllerContainer = phoneSignInViewController.registrationFormViewController;
 }
 
 - (void)presentSignInViewController:(UIViewController *)viewController
@@ -259,8 +260,9 @@
 
 #pragma mark - PhoneSignInViewControllerDelegate
 
-- (void)phoneSignInViewControllerNeedsPasswordToRegisterClient
+- (void)phoneSignInViewControllerNeedsPasswordFor:(LoginCredentials *)loginCredentials
 {
+    self.loginCredentials = loginCredentials;
     [self presentEmailSignInViewControllerToEnterPassword];
 }
 

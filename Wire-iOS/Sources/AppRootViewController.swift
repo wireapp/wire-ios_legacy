@@ -167,9 +167,7 @@ class AppRootViewController : UIViewController {
             mainWindow.tintColor = UIColor.accent()
             let registrationViewController = RegistrationViewController()
             registrationViewController.delegate = appStateController
-            if let error = error {
-                registrationViewController.signInErrorCode = (error as NSError).userSessionErrorCode
-            }
+            registrationViewController.signInError = error
             viewController = registrationViewController
         case .authenticated(completedRegistration: let completedRegistration):
             UIColor.setAccentOverride(.undefined)

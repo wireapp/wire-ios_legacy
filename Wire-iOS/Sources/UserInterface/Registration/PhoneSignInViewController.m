@@ -80,14 +80,15 @@
 
 - (void)createPhoneNumberStepViewController
 {
-    PhoneNumberStepViewController *phoneNumberStepViewController;
+    PhoneNumberStepViewController *phoneNumberStepViewController = [[PhoneNumberStepViewController alloc] init];
     
-    ZMUser *currentUser = [SessionManager shared].currentUser;
-    if (currentUser.phoneNumber.length > 0) {
-        // User was previously signed in so we must force him to sign in with the same credentials
-        phoneNumberStepViewController = [[PhoneNumberStepViewController alloc] initWithUneditablePhoneNumber:currentUser.phoneNumber];
-    } else {
-        phoneNumberStepViewController = [[PhoneNumberStepViewController alloc] init];
+    if (self.loginCredentials.phoneNumber.length > 0) {
+        // TODO
+        // User was previously signed in so we prefill the credentials.
+        //
+        // NOTE: would need to extract country code in a reliable way
+        //       in order to do this. Until then we don't prefill
+        //       phone numbers.
     }
     
     phoneNumberStepViewController.formStepDelegate = self;
@@ -213,7 +214,7 @@
     }
     else if (error.code == ZMUserSessionNeedsPasswordToRegisterClient) {
         [self.navigationController popToRootViewControllerAnimated:YES];
-        [self.delegate phoneSignInViewControllerNeedsPasswordToRegisterClient];
+        [self.delegate phoneSignInViewControllerNeedsPasswordFor:[[LoginCredentials alloc] initWithError:error]];
     }
     else {
         [self showAlertForError:error];

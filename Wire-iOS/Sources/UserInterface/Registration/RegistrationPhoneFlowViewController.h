@@ -27,10 +27,11 @@
 @class AnalyticsTracker;
 @class FormFlowViewController;
 @class RegistrationPhoneFlowViewController;
+@class LoginCredentials;
 
 @protocol RegistrationPhoneFlowViewControllerDelegate <NSObject>
 
-- (void)registrationPhoneFlowViewControllerNeedsSignIn:(RegistrationPhoneFlowViewController *)viewController;
+- (void)registrationPhoneFlowViewController:(RegistrationPhoneFlowViewController *)viewController needsToSignInWith:(LoginCredentials *)loginCredentials;
 
 @end
 

@@ -53,6 +53,7 @@
 		1651F9B81D352B7B00A9FAE8 /* ArticleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1651F9B61D352B7B00A9FAE8 /* ArticleView.swift */; };
 		1651F9BC1D352C5700A9FAE8 /* ArticleViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1651F9BA1D352C5300A9FAE8 /* ArticleViewTests.swift */; };
 		1651F9C01D36789C00A9FAE8 /* Message+FormattingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1651F9BF1D36789C00A9FAE8 /* Message+FormattingTests.swift */; };
+		1658C23C1F57531500889F22 /* LoginCredentials.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1658C23B1F57531500889F22 /* LoginCredentials.swift */; };
 		1658D2011D3E742A00249609 /* first_message.caf in Resources */ = {isa = PBXBuildFile; fileRef = 87A4DA9E1D34FF0400105D44 /* first_message.caf */; };
 		1658D2021D3E742A00249609 /* hotping_from_them.caf in Resources */ = {isa = PBXBuildFile; fileRef = 87A4DA9F1D34FF0400105D44 /* hotping_from_them.caf */; };
 		1658D2031D3E742A00249609 /* new_message_apns.caf in Resources */ = {isa = PBXBuildFile; fileRef = 87A4DAA01D34FF0400105D44 /* new_message_apns.caf */; };
@@ -1098,6 +1099,7 @@
 		1651F9B61D352B7B00A9FAE8 /* ArticleView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArticleView.swift; sourceTree = "<group>"; };
 		1651F9BA1D352C5300A9FAE8 /* ArticleViewTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArticleViewTests.swift; sourceTree = "<group>"; };
 		1651F9BF1D36789C00A9FAE8 /* Message+FormattingTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Message+FormattingTests.swift"; sourceTree = "<group>"; };
+		1658C23B1F57531500889F22 /* LoginCredentials.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginCredentials.swift; sourceTree = "<group>"; };
 		165B47EB1BF23D6C00C46EFE /* PhoneInvitationStepViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhoneInvitationStepViewController.h; sourceTree = "<group>"; };
 		165B47EC1BF23D6C00C46EFE /* PhoneInvitationStepViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhoneInvitationStepViewController.m; sourceTree = "<group>"; };
 		165FDC481DD5D447009D75A2 /* Wire-iOS Share Extension-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Wire-iOS Share Extension-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -2700,6 +2702,7 @@
 				DB29BD401AE1094E00DCEF6D /* EmailSignInViewController.m */,
 				162CFA9F1AE4FA7D0078FB87 /* PhoneSignInViewController.h */,
 				162CFAA01AE4FA7D0078FB87 /* PhoneSignInViewController.m */,
+				1658C23B1F57531500889F22 /* LoginCredentials.swift */,
 			);
 			name = SignIn;
 			sourceTree = "<group>";
@@ -6136,6 +6139,7 @@
 				879718921D1C109900163C07 /* AudioRecordKeyboardViewController.swift in Sources */,
 				875A23171ADEA1AD00111C88 /* CountryCodeView.m in Sources */,
 				AF36C5AB1E9F903800FADECC /* DraftNavigationController.swift in Sources */,
+				1658C23C1F57531500889F22 /* LoginCredentials.swift in Sources */,
 				87F18BBC1E01577C00C69D9B /* FileMessageViewState.swift in Sources */,
 				BF808B571DE71F3000718076 /* UserNameTakeOverViewController.swift in Sources */,
 				87DCF4941D34E9BA00BB420F /* ZMAddressBookContact+LocalInvitation.swift in Sources */,

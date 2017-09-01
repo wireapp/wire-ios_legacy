@@ -48,16 +48,11 @@ class AppStateController : NSObject {
         super.init()
         NotificationCenter.default.addObserver(self, selector: #selector(applicationDidBecomeActive), name: Notification.Name.UIApplicationDidBecomeActive, object: nil)
         
-        authenticationObserverToken = ZMUserSessionAuthenticationNotification.addObserver(self)
         appState = calculateAppState()
     }
     
     deinit {
         NotificationCenter.default.removeObserver(self)
-        
-        if let token = authenticationObserverToken {
-            ZMUserSessionAuthenticationNotification.removeObserver(for: token)
-        }
     }
     
     func calculateAppState() -> AppState {
@@ -111,7 +106,8 @@ class AppStateController : NSObject {
 
 extension AppStateController : SessionManagerDelegate {
     
-    func sessionManagerDidLogout() {
+    func sessionManagerDidLogout(error: Error?) {
+        authenticationError = error
         isLoggedIn = false
         isLoggedOut = true
         recalculateAppState()
@@ -134,8 +130,13 @@ extension AppStateController : SessionManagerDelegate {
     
     func sessionManagerCreated(userSession: ZMUserSession) {        
         userSession.checkIfLoggedIn { [weak self] (loggedIn) in
-            self?.isLoggedIn = loggedIn
-            self?.isLoggedOut = !loggedIn
+            guard loggedIn else { return }
+            
+            // NOTE: we don't enter the unauthenticated state here if we are not logged in
+            //       because we will receive `sessionManagerDidLogout()` with an auth error
+            
+            self?.isLoggedIn = true
+            self?.isLoggedOut = !false
             self?.isSuspended = false
             self?.isMigrating = false
             self?.recalculateAppState()
@@ -158,17 +159,6 @@ extension AppStateController {
         recalculateAppState()
     }
     
-}
-
-extension AppStateController : ZMAuthenticationObserver {
-    
-    func authenticationDidFail(_ error: Error) {
-        authenticationError = error
-        isLoggedIn = false
-        isLoggedOut = true
-        recalculateAppState()
-    }
-
 }
 
 extension AppStateController : RegistrationViewControllerDelegate {

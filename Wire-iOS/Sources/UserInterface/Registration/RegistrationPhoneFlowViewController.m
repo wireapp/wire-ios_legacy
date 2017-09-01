@@ -246,7 +246,7 @@
     }
     else if (error.code == ZMUserSessionNeedsPasswordToRegisterClient) {
         [self.navigationController popToRootViewControllerAnimated:NO];
-        [self.registrationDelegate registrationPhoneFlowViewControllerNeedsSignIn:self];
+        [self.registrationDelegate registrationPhoneFlowViewController:self needsToSignInWith:[[LoginCredentials alloc] initWithError:error]];
     }
     else {
         [self showAlertForError:error];

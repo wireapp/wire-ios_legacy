@@ -23,13 +23,13 @@
 
 
 
-@class AnalyticsTracker;
-@class ZMEmailCredentials;
+@class AnalyticsTracker, LoginCredentials;
 
 
 @interface SignInViewController : FormFlowViewController
 
 @property (nonatomic) AnalyticsTracker *analyticsTracker;
+@property (nonatomic) LoginCredentials *loginCredentials;
 
 - (void)presentEmailSignInViewControllerToEnterPassword;
 

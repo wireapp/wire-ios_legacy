@@ -123,12 +123,9 @@
     self.emailField.accessibilityIdentifier = @"EmailField";
     self.emailField.delegate = self;
     
-    ZMUser *currentUser = [SessionManager shared].currentUser;
-
-    if (currentUser.emailAddress != nil) {
-        // User was previously signed in so we must force him to sign in with the same credentials
-        self.emailField.text = currentUser.emailAddress;
-        self.emailField.enabled = NO;
+    if (self.loginCredentials.emailAddress != nil) {
+        // User was previously signed in so we prefill the credentials
+        self.emailField.text = self.loginCredentials.emailAddress;
     }
     
     [self.emailField addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
@@ -359,8 +356,8 @@
             [self showAlertForError:error];
         }
     } else if (error.code != ZMUserSessionNeedsPasswordToRegisterClient &&
-        error.code != ZMUserSessionCanNotRegisterMoreClients &&
-        error.code != ZMUserSessionNeedsToRegisterEmailToRegisterClient) {
+               error.code != ZMUserSessionCanNotRegisterMoreClients &&
+               error.code != ZMUserSessionNeedsToRegisterEmailToRegisterClient) {
 
         [self showAlertForError:error];
     }
