@@ -189,9 +189,22 @@ class AppRootViewController : UIViewController {
         }
     }
     
+    
+    private func dismissModalsFromAllChildren(of viewController: UIViewController?) {
+        guard let viewController = viewController else { return }
+        for child in viewController.childViewControllers {
+            if child.presentedViewController != nil {
+                child.dismiss(animated: false, completion: nil)
+            }
+            dismissModalsFromAllChildren(of: child)
+        }
+    }
+    
     func transition(to viewController : UIViewController, animated : Bool = true, completionHandler: (() -> Void)? = nil) {
         
-        visibleViewController?.dismiss(animated: false, completion: nil)
+        // If we have some modal view controllers presented in any of the (grand)children
+        // of this controller they stay in memory and leak on iOS 10.
+        dismissModalsFromAllChildren(of: visibleViewController)
         visibleViewController?.willMove(toParentViewController: nil)
         
         if let previousViewController = visibleViewController, animated {

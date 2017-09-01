@@ -112,6 +112,12 @@ static NSString * const CellReuseIdConversation = @"CellId";
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+
+    // viewWillAppear: can get called also when dismissing the controller above this one.
+    // The user session might not be there anymore in some cases, e.g. when logging out
+    if ([ZMUserSession sharedSession] == nil) {
+        return;
+    }
     [self updateVisibleCells];
     
     [self scrollToCurrentSelectionAnimated:NO];
