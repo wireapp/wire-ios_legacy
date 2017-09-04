@@ -600,8 +600,8 @@
 "self.settings.account_details.delete_account.alert.title" = "Delete Account";
 "self.settings.account_details.delete_account.alert.message" = "We will send you a message via email or SMS. Follow the link to permanently delete your account.";
 
-"self.settings.account_details.log_out.alert.title" = "Log out?";
-"self.settings.account_details.log_out.alert.message" = "Your conversations are going to be erased from this device.";
+"self.settings.account_details.log_out.alert.title" = "Log out";
+"self.settings.account_details.log_out.alert.message" = "Your message history will be erased on this device.";
 
 
 // Change Username
