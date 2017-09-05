@@ -73,7 +73,6 @@ static AppDelegate *sharedAppDelegate = nil;
     self = [super init];
     if (self) {
         sharedAppDelegate = self;
-        self.rootViewController = [[AppRootViewController alloc] init];
     }
     return self;
 }
@@ -105,6 +104,10 @@ static AppDelegate *sharedAppDelegate = nil;
     DDLogInfo(@"Wire-ios version %@ (%@)",
               [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"],
               [[[NSBundle mainBundle] infoDictionary] objectForKey:(NSString *) kCFBundleVersionKey]);
+    
+    // Note: if we instantiate the root view controller (& windows) any earlier,
+    // the windows will not receive any info about device orientation.
+    self.rootViewController = [[AppRootViewController alloc] init];
     
     return YES;
 }
