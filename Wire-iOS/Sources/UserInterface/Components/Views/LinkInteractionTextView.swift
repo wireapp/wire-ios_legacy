@@ -72,7 +72,8 @@ extension LinkInteractionTextView: UITextViewDelegate {
             return false
         }
         
-        return !(interactionDelegate?.textView(self, open: URL) ?? false)
+        // data detector links should be handled by the system
+        return URL.scheme == "x-apple-data-detectors" || !(interactionDelegate?.textView(self, open: URL) ?? false)
     }
     
     public func textView(_ textView: UITextView, shouldInteractWith textAttachment: NSTextAttachment, in characterRange: NSRange) -> Bool {
@@ -94,7 +95,8 @@ extension LinkInteractionTextView: UITextViewDelegate {
     public func textView(_ textView: UITextView, shouldInteractWith URL: URL, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
         switch interaction {
         case .invokeDefaultAction:
-            return !(interactionDelegate?.textView(self, open: URL) ?? false)
+            // data detector links should be handle by the system
+            return URL.scheme == "x-apple-data-detectors" || !(interactionDelegate?.textView(self, open: URL) ?? false)
         case .presentActions:
             interactionDelegate?.textViewDidLongPress(self)
             return false
