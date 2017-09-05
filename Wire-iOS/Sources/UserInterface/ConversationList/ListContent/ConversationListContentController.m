@@ -73,6 +73,9 @@ static NSString * const CellReuseIdConversation = @"CellId";
 
 - (void)dealloc
 {
+    // Observer must be deallocated before `mediaPlaybackManager`
+    self.activeMediaPlayerObserver = nil;
+    self.mediaPlaybackManager = nil;
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 

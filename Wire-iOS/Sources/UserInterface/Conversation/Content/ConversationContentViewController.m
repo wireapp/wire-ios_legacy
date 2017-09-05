@@ -126,6 +126,10 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
 
 - (void)dealloc
 {
+    // Observer must be deallocated before `mediaPlaybackManager`
+    self.activeMediaPlayerObserver = nil;
+    self.mediaPlaybackManager = nil;
+    
     if (nil != self.tableView) {
         self.tableView.delegate = nil;
         self.tableView.dataSource = nil;
