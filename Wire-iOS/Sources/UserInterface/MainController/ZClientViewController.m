@@ -123,9 +123,11 @@
         AddressBookHelper.sharedHelper.configuration = AutomationHelper.sharedHelper;
         
         NSString *appGroupIdentifier = NSBundle.mainBundle.appGroupIdentifier;
-        NSURL *sharedContainerURL = [NSFileManager sharedContainerDirectoryForAppGroupIdentifier:appGroupIdentifier];
-        self.analyticsEventPersistence = [[ShareExtensionAnalyticsPersistence alloc] initWithSharedContainerURL:sharedContainerURL];
-        [MessageDraftStorage setupSharedStorageAtURL:sharedContainerURL error:nil];
+        NSURL *sharedContainerURL = [NSFileManager sharedContainerDirectoryForAppGroupIdentifier:appGroupIdentifier];        
+        NSURL *accountContainerURL = [[sharedContainerURL URLByAppendingPathComponent:@"AccountData" isDirectory:YES]
+                                      URLByAppendingPathComponent:ZMUser.selfUser.remoteIdentifier.transportString isDirectory:YES];
+        self.analyticsEventPersistence = [[ShareExtensionAnalyticsPersistence alloc] initWithAccountContainer:accountContainerURL];
+        [MessageDraftStorage setupSharedStorageAtURL:accountContainerURL error:nil];
         
         [ZMNetworkAvailabilityChangeNotification addNetworkAvailabilityObserver:self userSession:[ZMUserSession sharedSession]];
         
