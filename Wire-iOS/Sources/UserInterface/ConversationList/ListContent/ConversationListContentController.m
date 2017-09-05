@@ -54,6 +54,7 @@ static NSString * const CellReuseIdConversation = @"CellId";
 @property (nonatomic, strong) ConversationListViewModel *listViewModel;
 
 @property (nonatomic) NSObject *activeMediaPlayerObserver;
+@property (nonatomic) MediaPlaybackManager *mediaPlaybackManager;
 @property (nonatomic) BOOL focusOnNextSelection;
 @property (nonatomic) BOOL animateNextSelection;
 @property (nonatomic, copy) dispatch_block_t selectConversationCompletion;
@@ -121,8 +122,9 @@ static NSString * const CellReuseIdConversation = @"CellId";
     [self updateVisibleCells];
     
     [self scrollToCurrentSelectionAnimated:NO];
-
-    self.activeMediaPlayerObserver = [KeyValueObserver observeObject:AppDelegate.sharedAppDelegate.mediaPlaybackManager
+    
+    self.mediaPlaybackManager = AppDelegate.sharedAppDelegate.mediaPlaybackManager;
+    self.activeMediaPlayerObserver = [KeyValueObserver observeObject:self.mediaPlaybackManager
                                                              keyPath:@"activeMediaPlayer"
                                                               target:self
                                                             selector:@selector(activeMediaPlayerChanged:)];
