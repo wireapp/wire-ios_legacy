@@ -120,16 +120,16 @@
     [self.voiceChannelController.view autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero];
 }
 
-#pragma mark - Rotation handling (should match up with roort)
+#pragma mark - Rotation handling (should match up with root)
 
 - (BOOL)shouldAutorotate
 {
-    return UIApplication.sharedApplication.wr_topmostViewController.shouldAutorotate;
+    return YES;
 }
 
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations
 {
-    return UIApplication.sharedApplication.wr_topmostViewController.supportedInterfaceOrientations;
+    return [UIViewController wr_supportedInterfaceOrientations];
 }
 
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator
