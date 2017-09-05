@@ -124,12 +124,22 @@
 
 - (BOOL)shouldAutorotate
 {
-    return YES;
+    // guard against a stack overflow
+    if (self != UIApplication.sharedApplication.wr_topmostViewController) {
+        return UIApplication.sharedApplication.wr_topmostViewController.supportedInterfaceOrientations;
+    } else {
+        return YES;
+    }
 }
 
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations
 {
-    return [UIViewController wr_supportedInterfaceOrientations];
+    // guard against a stack overflow
+    if (self != UIApplication.sharedApplication.wr_topmostViewController) {
+        return UIApplication.sharedApplication.wr_topmostViewController.supportedInterfaceOrientations;
+    } else {
+        return [UIViewController wr_supportedInterfaceOrientations];
+    }
 }
 
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator
