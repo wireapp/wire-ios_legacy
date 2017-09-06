@@ -94,6 +94,7 @@
 		16A202781B6774760095BBD1 /* soundcloud-playlist2.json in Resources */ = {isa = PBXBuildFile; fileRef = 16A202761B6774720095BBD1 /* soundcloud-playlist2.json */; };
 		16A2027A1B67777C0095BBD1 /* soundcloud-playlist3.json in Resources */ = {isa = PBXBuildFile; fileRef = 16A202791B67777C0095BBD1 /* soundcloud-playlist3.json */; };
 		16A2027C1B677A5D0095BBD1 /* soundcloud-track4.json in Resources */ = {isa = PBXBuildFile; fileRef = 16A2027B1B677A5D0095BBD1 /* soundcloud-track4.json */; };
+		16A293DA1F5FFA2E00B4EB16 /* SkeletonViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16A293D91F5FFA2E00B4EB16 /* SkeletonViewController.swift */; };
 		16A2C6691AA7752F00DC2905 /* CameraController.m in Sources */ = {isa = PBXBuildFile; fileRef = 16A2C6681AA7752F00DC2905 /* CameraController.m */; };
 		16A2C6721AA8AA6500DC2905 /* CameraControlsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 16A2C6711AA8AA6500DC2905 /* CameraControlsViewController.m */; };
 		16A7610B1ACC4BF000A999D0 /* RegistrationTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 16A7610A1ACC4BF000A999D0 /* RegistrationTextField.m */; };
@@ -1151,6 +1152,7 @@
 		16A202761B6774720095BBD1 /* soundcloud-playlist2.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "soundcloud-playlist2.json"; sourceTree = "<group>"; };
 		16A202791B67777C0095BBD1 /* soundcloud-playlist3.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "soundcloud-playlist3.json"; sourceTree = "<group>"; };
 		16A2027B1B677A5D0095BBD1 /* soundcloud-track4.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "soundcloud-track4.json"; sourceTree = "<group>"; };
+		16A293D91F5FFA2E00B4EB16 /* SkeletonViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SkeletonViewController.swift; sourceTree = "<group>"; };
 		16A2C6671AA7752F00DC2905 /* CameraController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CameraController.h; sourceTree = "<group>"; };
 		16A2C6681AA7752F00DC2905 /* CameraController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CameraController.m; sourceTree = "<group>"; };
 		16A2C6701AA8AA6500DC2905 /* CameraControlsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CameraControlsViewController.h; sourceTree = "<group>"; };
@@ -2723,6 +2725,14 @@
 				16A202661B66A0040095BBD1 /* SoundcloudServiceTests.m */,
 			);
 			path = Soundcloud;
+			sourceTree = "<group>";
+		};
+		16A293D81F5FF9F500B4EB16 /* Skeleton */ = {
+			isa = PBXGroup;
+			children = (
+				16A293D91F5FFA2E00B4EB16 /* SkeletonViewController.swift */,
+			);
+			name = Skeleton;
 			sourceTree = "<group>";
 		};
 		16A7612F1AD55E5800A999D0 /* New Registration */ = {
@@ -4399,6 +4409,7 @@
 		8FC8516F199245760008B66B /* UserInterface */ = {
 			isa = PBXGroup;
 			children = (
+				16A293D81F5FF9F500B4EB16 /* Skeleton */,
 				162936C11F4AD99C00D4F386 /* Blacklist */,
 				871BC1271D34F8F800DF0793 /* Components */,
 				87D56DF41E003A4400DFF722 /* Collections */,
@@ -6143,6 +6154,7 @@
 				879718921D1C109900163C07 /* AudioRecordKeyboardViewController.swift in Sources */,
 				875A23171ADEA1AD00111C88 /* CountryCodeView.m in Sources */,
 				AF36C5AB1E9F903800FADECC /* DraftNavigationController.swift in Sources */,
+				16A293DA1F5FFA2E00B4EB16 /* SkeletonViewController.swift in Sources */,
 				1658C23C1F57531500889F22 /* LoginCredentials.swift in Sources */,
 				87F18BBC1E01577C00C69D9B /* FileMessageViewState.swift in Sources */,
 				BF808B571DE71F3000718076 /* UserNameTakeOverViewController.swift in Sources */,

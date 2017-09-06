@@ -163,7 +163,9 @@ public class BaseAccountView: UIView, AccountViewType {
         self.account = account
         super.init(frame: .zero)
         
-        selfUserObserver = UserChangeInfo.add(observer: self, forBareUser: ZMUser.selfUser())
+        if let userSession = SessionManager.shared?.userSession {
+            selfUserObserver = UserChangeInfo.add(observer: self, forBareUser: ZMUser.selfUser(inUserSession: userSession))
+        }
 
         selectionView.hostedLayer.strokeColor = UIColor.accent().cgColor
         selectionView.hostedLayer.fillColor = UIColor.clear.cgColor
