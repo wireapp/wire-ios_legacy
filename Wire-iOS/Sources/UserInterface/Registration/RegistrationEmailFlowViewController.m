@@ -206,7 +206,7 @@
 
 #pragma mark - ZMAuthenticationObserver
 
-- (void)authenticationDidSucceed
+- (void)clientRegistrationDidSucceed
 {
     [self.analyticsTracker tagRegistrationSucceded];
     [self presentProfilePictureStep];
