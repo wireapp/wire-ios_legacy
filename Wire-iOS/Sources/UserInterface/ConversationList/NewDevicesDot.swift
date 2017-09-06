@@ -47,7 +47,7 @@ final class NewDevicesDot: DotView {
     }
     
     fileprivate func updateIndicator() {
-        showIndicator = user.clientsRequiringUserAttention?.count > 0
+        showIndicator = true // user.clientsRequiringUserAttention?.count > 0
     }
 }
 

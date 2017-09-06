@@ -34,6 +34,7 @@ extension ConversationListViewController {
     public func createTopBar() {
         let profileAccountView = self.currentAccountView()
         profileAccountView.selected = false
+        profileAccountView.autoupdate = false
         
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(presentSettings))
         profileAccountView.addGestureRecognizer(tapGestureRecognizer)
@@ -45,22 +46,23 @@ extension ConversationListViewController {
         
         if let user = ZMUser.selfUser() {
             let imageView = profileAccountView.imageViewContainer
+            
             let newDevicesDot = NewDevicesDot(user: user)
             profileAccountView.addSubview(newDevicesDot)
+            
             if user.clientsRequiringUserAttention.count > 0 {
                 profileAccountView.accessibilityLabel = "self.new-device.voiceover.label".localized
             }
             
             constrain(newDevicesDot, imageView) { newDevicesDot, imageView in
-                newDevicesDot.top == imageView.top - 3
-                newDevicesDot.trailing == imageView.trailing + 3
+                newDevicesDot.center.layout(around: imageView.center, at: CGFloat(Double.pi / 4) * 3, diameter: 16)
                 newDevicesDot.width == 8
-                newDevicesDot.height == 8
+                newDevicesDot.height == newDevicesDot.width
             }
         }
         
         self.topBar = ConversationListTopBar()
-        self.topBar.layoutMargins = UIEdgeInsetsMake(0, 10, 0, 16)
+        self.topBar.layoutMargins = UIEdgeInsetsMake(0, 9, 0, 16)
         self.contentContainer.addSubview(self.topBar)
         self.topBar.leftView = profileAccountView
     }
