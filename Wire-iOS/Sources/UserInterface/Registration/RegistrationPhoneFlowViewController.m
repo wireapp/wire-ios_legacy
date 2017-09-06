@@ -220,7 +220,7 @@
 
 #pragma mark - ZMAuthenticationObserver
 
-- (void)authenticationDidSucceed
+- (void)clientRegistrationDidSucceed
 {
     self.showLoadingView = NO;
     [self.analyticsTracker tagRegistrationSucceded];
