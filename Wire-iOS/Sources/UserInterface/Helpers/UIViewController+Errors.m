@@ -102,6 +102,8 @@
             case ZMUserSessionLastUserIdentityCantBeDeleted:
                 message = NSLocalizedString(@"error.user.last_identity_cant_be_deleted", @"");
                 break;
+            case ZMUserSessionAccountSuspended:
+                message = NSLocalizedString(@"error.user.account_suspended", @"");
                 
             default:
             case ZMUserSessionUnkownError:
