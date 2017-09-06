@@ -125,7 +125,7 @@
         NSString *appGroupIdentifier = NSBundle.mainBundle.appGroupIdentifier;
         NSURL *sharedContainerURL = [NSFileManager sharedContainerDirectoryForAppGroupIdentifier:appGroupIdentifier];        
         NSURL *accountContainerURL = [[sharedContainerURL URLByAppendingPathComponent:@"AccountData" isDirectory:YES]
-                                      URLByAppendingPathComponent:ZMUser.selfUser.remoteIdentifier.transportString isDirectory:YES];
+                                      URLByAppendingPathComponent:ZMUser.selfUser.remoteIdentifier.UUIDString isDirectory:YES];
         self.analyticsEventPersistence = [[ShareExtensionAnalyticsPersistence alloc] initWithAccountContainer:accountContainerURL];
         [MessageDraftStorage setupSharedStorageAtURL:accountContainerURL error:nil];
         
