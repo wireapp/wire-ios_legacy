@@ -271,11 +271,13 @@
 {
     AppDelegate *appDelegate = [AppDelegate sharedAppDelegate];
     
-    if ([appDelegate.rootViewController.visibleViewController isKindOfClass:ZClientViewController.class]) {
-        return (ZClientViewController *)appDelegate.rootViewController.visibleViewController;
-    } else {
-        return nil;
+    for (UIViewController *controller in appDelegate.rootViewController.childViewControllers) {
+        if ([controller isKindOfClass:ZClientViewController.class]) {
+            return (ZClientViewController *)controller;
+        }
     }
+    
+    return nil;
 }
 
 - (void)selectConversation:(ZMConversation *)conversation
