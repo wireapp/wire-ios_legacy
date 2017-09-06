@@ -159,6 +159,7 @@ class ListSkeletonView  : UIView {
     let titleLabel : UILabel
     let accountView : BaseAccountView
     let listContentView : ListSkeletonContentView
+    var buttonRowView : UIStackView!
 
     init(_ account: Account) {
         self.titleLabel = UILabel()
@@ -173,32 +174,10 @@ class ListSkeletonView  : UIView {
         titleLabel.font = FontSpec(.medium, .semibold).font
         titleLabel.text = "list.title".localized.uppercased()
         
-        let stackView = UIStackView(arrangedSubviews: disabledButtons(with: [.cameraLens, .plus, .compose]))
-        stackView.distribution = .equalCentering
-        addSubview(stackView)
+        buttonRowView = UIStackView(arrangedSubviews: disabledButtons(with: [.cameraLens, .plus, .compose]))
+        buttonRowView.distribution = .equalCentering
 
-        [accountView, titleLabel, listContentView, stackView].forEach(addSubview)
-        
-        constrain(self, accountView, titleLabel, stackView, listContentView) { (containerView, accountView, titleLabel, stackView, listContentView) in
-            
-            accountView.left == containerView.left + 6
-            accountView.top == containerView.top + 16
-            
-            titleLabel.centerY == accountView.centerY
-            titleLabel.centerX == containerView.centerX
-            titleLabel.left >= accountView.right
-            titleLabel.right <= containerView.right
-            
-            stackView.left == containerView.left + 16
-            stackView.right == containerView.right - 16
-            stackView.bottom == containerView.bottom
-            stackView.height == 55
-            
-            listContentView.top == containerView.top + 90
-            listContentView.left == containerView.left
-            listContentView.right == containerView.right
-            listContentView.bottom == stackView.top
-        }
+        [accountView, titleLabel, listContentView, buttonRowView].forEach(addSubview)
         
         createConstraints()
     }
@@ -218,6 +197,26 @@ class ListSkeletonView  : UIView {
     }
     
     func createConstraints() {
+        constrain(self, accountView, titleLabel, buttonRowView, listContentView) { (containerView, accountView, titleLabel, buttonRowView, listContentView) in
+            
+            accountView.left == containerView.left + 6
+            accountView.top == containerView.top + 16
+            
+            titleLabel.centerY == accountView.centerY
+            titleLabel.centerX == containerView.centerX
+            titleLabel.left >= accountView.right
+            titleLabel.right <= containerView.right
+            
+            buttonRowView.left == containerView.left + 16
+            buttonRowView.right == containerView.right - 16
+            buttonRowView.bottom == containerView.bottom
+            buttonRowView.height == 55
+            
+            listContentView.top == containerView.top + 90
+            listContentView.left == containerView.left
+            listContentView.right == containerView.right
+            listContentView.bottom == buttonRowView.top
+        }
     }
     
 }
