@@ -189,8 +189,10 @@ public class BaseAccountView: UIView, AccountViewType {
             dotView.height == dotSize
         }
         
+        let inset: CGFloat = 7
+        
         constrain(self, imageViewContainer, dotView) { selfView, imageViewContainer, dotView in
-            imageViewContainer.top == selfView.top + 10
+            imageViewContainer.top == selfView.top + inset
             imageViewContainer.centerX == selfView.centerX
             selfView.width >= imageViewContainer.width
             selfView.trailing >= dotView.trailing
@@ -198,9 +200,9 @@ public class BaseAccountView: UIView, AccountViewType {
             imageViewContainer.width == 32
             imageViewContainer.height == imageViewContainer.width
             
-            imageViewContainer.bottom == selfView.bottom - 4
-            imageViewContainer.leading == selfView.leading + 7
-            imageViewContainer.trailing == selfView.trailing - 7
+            imageViewContainer.bottom == selfView.bottom - inset
+            imageViewContainer.leading == selfView.leading + inset
+            imageViewContainer.trailing == selfView.trailing - inset
             selfView.width <= 128
         }
         

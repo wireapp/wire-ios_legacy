@@ -559,8 +559,8 @@
 "self.new_device_alert.trust_devices" = "OK";
 
 // Settings - top level
-"self.settings.create_team.title" = "Create team";
-"self.settings.add_account.title" = "Add account";
+"self.settings.create_team.title" = "Create Team";
+"self.settings.add_account.title" = "Add Account";
 
 // Settings - Account details
 "self.settings.account_section" = "Account";
@@ -901,6 +901,7 @@
 "error.user.registration_unknown_error" = "Something went wrong. Please try again.";
 "error.user.device_deleted_remotely" = "You have been logged out from another device.";
 "error.user.last_identity_cant_be_deleted" = "Either an email address or a phone number is required.";
+"error.user.account_suspended" = "This account is no longer authorized to log in.";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Those are caught by the UI without involving the SE validation. Basically very similar to ZMUserSessionErrorCode onces

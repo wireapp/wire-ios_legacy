@@ -37,10 +37,10 @@ class AppStateController : NSObject {
     fileprivate var isBlacklisted = false
     fileprivate var isLoggedIn = false
     fileprivate var isLoggedOut = false
-    fileprivate var isSuspended = false
     fileprivate var hasEnteredForeground = false
     fileprivate var isMigrating = false
     fileprivate var hasCompletedRegistration = false
+    fileprivate var loadingAccount : Account?
     fileprivate var authenticationError : Error?
     fileprivate let isRunningTests = ProcessInfo.processInfo.environment["XCTestConfigurationFilePath"] != nil
     
@@ -73,8 +73,8 @@ class AppStateController : NSObject {
             return .blacklisted
         }
         
-        if isSuspended {
-            return .suspended
+        if let account = loadingAccount {
+            return .loading(account: account)
         }
         
         if isLoggedIn {
@@ -123,8 +123,8 @@ extension AppStateController : SessionManagerDelegate {
         recalculateAppState()
     }
     
-    func sessionManagerWillSuspendSession() {
-        isSuspended = true
+    func sessionManagerWillOpenAccount(_ account: Account) {
+        loadingAccount = account
         recalculateAppState()
     }
     
@@ -137,7 +137,7 @@ extension AppStateController : SessionManagerDelegate {
             
             self?.isLoggedIn = true
             self?.isLoggedOut = !false
-            self?.isSuspended = false
+            self?.loadingAccount = nil
             self?.isMigrating = false
             self?.recalculateAppState()
         }
@@ -146,7 +146,7 @@ extension AppStateController : SessionManagerDelegate {
     func sessionManagerCreated(unauthenticatedSession: UnauthenticatedSession) {
         isLoggedIn = false
         isLoggedOut = true
-        isSuspended = false
+        loadingAccount = nil
         recalculateAppState()
     }
     
