@@ -119,7 +119,7 @@ public final class AccountViewFactory {
 }
 
 public class BaseAccountView: UIView, AccountViewType {
-    public var autoupdate: Bool = true
+    public var autoupdateSelection: Bool = true
     
     internal let imageViewContainer = UIView()
     fileprivate let outlineView = UIView()
@@ -217,7 +217,9 @@ public class BaseAccountView: UIView, AccountViewType {
     }
     
     public func update() {
-        self.selected = SessionManager.shared?.accountManager.selectedAccount == self.account
+        if self.autoupdateSelection {
+            self.selected = SessionManager.shared?.accountManager.selectedAccount == self.account
+        }
     }
     
     @objc public func didTap(_ sender: UITapGestureRecognizer!) {
@@ -301,7 +303,6 @@ public final class PersonalAccountView: BaseAccountView {
 
 extension PersonalAccountView {
     override public func userDidChange(_ changeInfo: UserChangeInfo) {
-        guard self.autoupdate else { return }
         super.userDidChange(changeInfo)
         if changeInfo.nameChanged {
             update()
@@ -457,7 +458,6 @@ public final class TeamImageView: UIImageView {
 
 extension TeamAccountView: TeamObserver {
     func teamDidChange(_ changeInfo: TeamChangeInfo) {
-        guard self.autoupdate else { return }
         self.update()
     }
 }

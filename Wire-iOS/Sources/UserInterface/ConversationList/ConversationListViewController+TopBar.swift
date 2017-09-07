@@ -34,7 +34,7 @@ extension ConversationListViewController {
     public func createTopBar() {
         let profileAccountView = self.currentAccountView()
         profileAccountView.selected = false
-        profileAccountView.autoupdate = false
+        profileAccountView.autoupdateSelection = false
         
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(presentSettings))
         profileAccountView.addGestureRecognizer(tapGestureRecognizer)

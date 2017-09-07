@@ -32,6 +32,7 @@ final class NewDevicesDot: DotView {
     init(user: ZMUser) {
         self.user = user
         super.init(frame: .zero)
+        self.isHidden = true
         self.backgroundColor = user.accentColorValue.color
         userObserverToken = UserChangeInfo.add(observer: self, forBareUser: user)
         self.createClientObservers()
