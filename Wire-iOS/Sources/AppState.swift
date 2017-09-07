@@ -25,7 +25,7 @@ enum AppState : Equatable {
     case unauthenticated(error : Error?)
     case blacklisted
     case migrating
-    case suspended
+    case loading(account: Account)
 
     public static func ==(lhs: AppState, rhs: AppState) -> Bool {
         
@@ -35,7 +35,7 @@ enum AppState : Equatable {
              (.unauthenticated, .unauthenticated),
              (.blacklisted, .blacklisted),
              (.migrating, .migrating),
-             (.suspended, .suspended):
+             (.loading, .loading):
             return true
         default:
             return false

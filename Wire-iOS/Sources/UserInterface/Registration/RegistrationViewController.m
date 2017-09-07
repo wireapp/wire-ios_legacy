@@ -112,6 +112,8 @@
 {
     ZMUserSessionErrorCode userSessionErrorCode = self.signInError.userSessionErrorCode;
     
+    BOOL addingAdditionalAccount = userSessionErrorCode == ZMUserSessionAddAccountRequested;
+    
     BOOL needsToReauthenticate = userSessionErrorCode == ZMUserSessionClientDeletedRemotely ||
                                  userSessionErrorCode == ZMUserSessionAccessTokenExpired ||
                                  userSessionErrorCode == ZMUserSessionNeedsPasswordToRegisterClient ||
@@ -119,8 +121,8 @@
     
     RegistrationRootViewController *registrationRootViewController = [[RegistrationRootViewController alloc] initWithUnregisteredUser:self.unregisteredUser];
     registrationRootViewController.formStepDelegate = self;
-    registrationRootViewController.hasSignInError = self.signInError != nil;
-    registrationRootViewController.showLogin = needsToReauthenticate;
+    registrationRootViewController.hasSignInError = self.signInError != nil && !addingAdditionalAccount;
+    registrationRootViewController.showLogin = needsToReauthenticate || addingAdditionalAccount;
     registrationRootViewController.loginCredentials = [[LoginCredentials alloc] initWithError:self.signInError];
     self.registrationRootViewController = registrationRootViewController;
     

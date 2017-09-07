@@ -82,7 +82,7 @@ import Foundation
                                                     presentationStyle: PresentationStyle.navigation,
                                                     identifier: nil,
                                                     presentationAction: { () -> (UIViewController?) in
-                                                        SessionManager.shared?.logoutCurrentSession(deleteCookie: false)
+                                                        SessionManager.shared?.addAccount()
                                                         return nil
         },
                                                     previewGenerator: nil,

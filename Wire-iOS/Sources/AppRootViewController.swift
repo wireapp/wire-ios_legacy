@@ -178,8 +178,8 @@ class AppRootViewController : UIViewController {
             viewController = clientViewController
         case .headless:
             viewController = LaunchImageViewController()
-        case .suspended:
-            viewController = SkeletonViewController(sessionManager!.accountManager.selectedAccount!)
+        case .loading(account: let account):
+            viewController = SkeletonViewController(account)
         }
         
         if let viewController = viewController {
