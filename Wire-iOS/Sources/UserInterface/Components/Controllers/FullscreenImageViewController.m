@@ -413,11 +413,6 @@
     [self centerScrollViewContent];
 }
 
-- (void)scrollViewDidEndZooming:(UIScrollView *)scrollView withView:(UIView *)view atScale:(CGFloat)scale
-{
-    [self.delegate setUIHidden:scale > self.lastZoomScale];
-}
-
 - (UIView *)viewForZoomingInScrollView:(UIScrollView *)scrollView
 {
     return self.imageView;
