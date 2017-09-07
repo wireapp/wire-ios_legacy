@@ -184,7 +184,7 @@ public final class LocationMessageCell: ConversationCell {
         case #selector(cut), #selector(paste), #selector(select), #selector(selectAll):
             return false
         case #selector(copy(_:)), #selector(forward(_:)):
-            return true
+            return !self.message.isEphemeral
         default:
             return super.canPerformAction(action, withSender: sender)
         }

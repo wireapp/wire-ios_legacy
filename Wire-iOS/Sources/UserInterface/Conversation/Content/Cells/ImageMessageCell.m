@@ -501,7 +501,7 @@ static const CGFloat ImageToolbarMinimumSize = 192;
         return NO;
     }
     else if (action == @selector(copy:) || action == @selector(saveImage) || action == @selector(forward:)) {
-        return self.fullImageView.image != nil;
+        return !self.message.isEphemeral && self.fullImageView.image != nil;
     }
     else if (action == @selector(paste:)) {
         return NO;

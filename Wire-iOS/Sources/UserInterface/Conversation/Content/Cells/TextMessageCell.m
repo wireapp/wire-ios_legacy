@@ -305,7 +305,7 @@
         return NO;
     }
     else if (action == @selector(copy:)) {
-        return self.messageTextView.text != nil;
+        return !self.message.isEphemeral && self.messageTextView.text != nil;
     }
     else if (action == @selector(paste:)) {
         return NO;

@@ -516,7 +516,8 @@ static const CGFloat BurstContainerExpandedHeight = 40;
 
 - (void)showMenu;
 {
-    if (self.message.isEphemeral) {
+    // ephemeral message's only possibility is to be deleted
+    if (self.message.isEphemeral && !self.message.canBeDeleted) {
         return;
     }
 
@@ -553,18 +554,22 @@ static const CGFloat BurstContainerExpandedHeight = 40;
     UIMenuController *menuController = UIMenuController.sharedMenuController;
     
     NSMutableArray <UIMenuItem *> *items = [NSMutableArray array];
-    [items addObjectsFromArray:menuConfigurationProperties.additionalItems];
-
-    if ([Message messageCanBeLiked:self.message]) {
-        UIMenuItem *likeItem = [UIMenuItem likeItemForMessage:self.message action:@selector(likeMessage:)];
+    
+    if (!self.message.isEphemeral) {
+        [items addObjectsFromArray:menuConfigurationProperties.additionalItems];
         
-        if (items.count > 0) {
-            [items insertObject:likeItem atIndex:menuConfigurationProperties.likeItemIndex];
-        } else {
-            [items addObject:likeItem];
+        if ([Message messageCanBeLiked:self.message]) {
+            UIMenuItem *likeItem = [UIMenuItem likeItemForMessage:self.message action:@selector(likeMessage:)];
+            
+            if (items.count > 0) {
+                [items insertObject:likeItem atIndex:menuConfigurationProperties.likeItemIndex];
+            } else {
+                [items addObject:likeItem];
+            }
         }
     }
 
+    // at this point, if message is ephemeral, then this will always be true
     if (self.message.canBeDeleted) {
         UIMenuItem *deleteItem = [UIMenuItem deleteItemWithAction:@selector(deleteMessage:)];
         [items addObject:deleteItem];
@@ -600,6 +605,10 @@ static const CGFloat BurstContainerExpandedHeight = 40;
     
     if (action == @selector(likeMessage:)) {
         return YES;
+    }
+    
+    if (action == @selector(copy:) && self.message.isEphemeral) {
+        return NO;
     }
     
     return [super canPerformAction:action withSender:sender];
