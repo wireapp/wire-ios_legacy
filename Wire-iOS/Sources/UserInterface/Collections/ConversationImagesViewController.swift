@@ -118,8 +118,9 @@ final class ConversationImagesViewController: UIViewController {
         super.viewDidLoad()
         
         navigationBar.items = [navigationItem]
-        navigationBar.isOpaque = true
-        navigationBar.backgroundColor = ColorScheme.default().color(withName: ColorSchemeColorBarBackground)
+        navigationBar.isTranslucent = false
+        navigationBar.barTintColor = ColorScheme.default().color(withName: ColorSchemeColorBarBackground)
+        
         
         self.createPageController()
         self.createControlsBar()
