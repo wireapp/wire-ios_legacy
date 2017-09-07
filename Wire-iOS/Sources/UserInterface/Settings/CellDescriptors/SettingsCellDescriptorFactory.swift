@@ -36,11 +36,13 @@ import Foundation
     }
     
     func rootGroup() -> SettingsControllerGeneratorType & SettingsInternalGroupCellDescriptorType {
-        var rootElements = [self.createTeamCell(), self.settingsGroup()]
+        var rootElements = [self.createTeamCell()]
         
         if SessionManager.shared?.accountManager.accounts.count < SessionManager.maxAccounts {
             rootElements.append(self.addAccountCell())
         }
+        
+        rootElements.append(self.settingsGroup())
         
         let topSection = SettingsSectionDescriptor(cellDescriptors: rootElements)
         
@@ -80,7 +82,7 @@ import Foundation
                                                     presentationStyle: PresentationStyle.navigation,
                                                     identifier: nil,
                                                     presentationAction: { () -> (UIViewController?) in
-                                                        SessionManager.shared?.logoutCurrentSession(deleteCookie: false)
+                                                        SessionManager.shared?.addAccount()
                                                         return nil
         },
                                                     previewGenerator: nil,

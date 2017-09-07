@@ -17,28 +17,26 @@
 //
 
 import Foundation
+import Cartography
 
-enum AppState : Equatable {
+extension Cartography.Point {
+    func edge(with value: NSLayoutAttribute) -> Cartography.Edge? {
+        return self.properties.filter { $0.attribute == value }.first as? Edge
+    }
     
-    case headless
-    case authenticated(completedRegistration: Bool)
-    case unauthenticated(error : Error?)
-    case blacklisted
-    case migrating
-    case loading(account: Account)
-
-    public static func ==(lhs: AppState, rhs: AppState) -> Bool {
+    var centerX: Cartography.Edge {
+        return self.edge(with: .centerX)!
+    }
+    
+    var centerY: Cartography.Edge {
+        return self.edge(with: .centerY)!
+    }
+    
+    @discardableResult func layout(around: Cartography.Point, at angle: CGFloat, diameter: CGFloat) -> [NSLayoutConstraint] {
+        let x = ceil(sin(angle) * diameter)
+        let y = ceil(cos(angle) * diameter)
+        return [self.centerX == around.centerX + x,
+                self.centerY == around.centerY + y]
         
-        switch (lhs, rhs) {
-        case (.headless, .headless),
-             (.authenticated, .authenticated),
-             (.unauthenticated, .unauthenticated),
-             (.blacklisted, .blacklisted),
-             (.migrating, .migrating),
-             (.loading, .loading):
-            return true
-        default:
-            return false
-        }   
     }
 }

@@ -176,8 +176,10 @@ class AppRootViewController : UIViewController {
             let clientViewController = ZClientViewController()
             clientViewController.isComingFromRegistration = completedRegistration
             viewController = clientViewController
-        case .suspended, .headless:
+        case .headless:
             viewController = LaunchImageViewController()
+        case .loading(account: let account):
+            viewController = SkeletonViewController(account)
         }
         
         if let viewController = viewController {

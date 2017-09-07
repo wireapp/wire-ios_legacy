@@ -44,7 +44,7 @@ internal class LineView: UIView {
         
         constrain(self, first) { selfView, first in
             first.leading == selfView.leading
-            first.top == selfView.top ~ LayoutPriority(750)
+            first.top == selfView.top
             first.bottom == selfView.bottom ~ LayoutPriority(750)
         }
         
@@ -53,8 +53,8 @@ internal class LineView: UIView {
         self.views.dropFirst().forEach {
             constrain(previous, $0, self) { previous, current, selfView in
                 current.leading == previous.trailing + inset
-                current.top == selfView.top ~ LayoutPriority(750)
-                current.bottom == selfView.bottom ~ LayoutPriority(750)
+                current.top == selfView.top
+                current.bottom == selfView.bottom
             }
             previous = $0
         }

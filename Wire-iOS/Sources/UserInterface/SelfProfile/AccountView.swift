@@ -73,7 +73,7 @@ class DotView: UIView {
         circleView.hostedLayer.fillColor = UIColor.white.cgColor
         
         centerView.pathGenerator = {
-            return UIBezierPath(ovalIn: CGRect(origin: .zero, size: $0).insetBy(dx: 1, dy: 1))
+            return UIBezierPath(ovalIn: CGRect(origin: .zero, size: $0))
         }
         centerView.hostedLayer.fillColor = UIColor.accent().cgColor
         
@@ -81,7 +81,7 @@ class DotView: UIView {
         addSubview(centerView)
         constrain(self, circleView, centerView) { selfView, backingView, centerView in
             backingView.edges == selfView.edges
-            centerView.edges == selfView.edges
+            centerView.edges == inset(selfView.edges, 1, 1, 1, 1)
         }
         
         if let selfUser = ZMUser.selfUser() {
@@ -119,6 +119,7 @@ public final class AccountViewFactory {
 }
 
 public class BaseAccountView: UIView, AccountViewType {
+    public var autoupdate: Bool = true
     
     internal let imageViewContainer = UIView()
     fileprivate let outlineView = UIView()
@@ -163,7 +164,9 @@ public class BaseAccountView: UIView, AccountViewType {
         self.account = account
         super.init(frame: .zero)
         
-        selfUserObserver = UserChangeInfo.add(observer: self, forBareUser: ZMUser.selfUser())
+        if let userSession = SessionManager.shared?.userSession {
+            selfUserObserver = UserChangeInfo.add(observer: self, forBareUser: ZMUser.selfUser(inUserSession: userSession))
+        }
 
         selectionView.hostedLayer.strokeColor = UIColor.accent().cgColor
         selectionView.hostedLayer.fillColor = UIColor.clear.cgColor
@@ -187,15 +190,15 @@ public class BaseAccountView: UIView, AccountViewType {
         }
         
         constrain(self, imageViewContainer, dotView) { selfView, imageViewContainer, dotView in
-            imageViewContainer.top == selfView.top + 12
+            imageViewContainer.top == selfView.top + 8
             imageViewContainer.centerX == selfView.centerX
             selfView.width >= imageViewContainer.width
             selfView.trailing >= dotView.trailing
             
-            imageViewContainer.width == 33
+            imageViewContainer.width == 32
             imageViewContainer.height == imageViewContainer.width
             
-            imageViewContainer.bottom == selfView.bottom - 4
+            imageViewContainer.bottom == selfView.bottom - 6
             imageViewContainer.leading == selfView.leading + 7
             imageViewContainer.trailing == selfView.trailing - 7
             selfView.width <= 128
@@ -296,6 +299,7 @@ public final class PersonalAccountView: BaseAccountView {
 
 extension PersonalAccountView {
     override public func userDidChange(_ changeInfo: UserChangeInfo) {
+        guard self.autoupdate else { return }
         super.userDidChange(changeInfo)
         if changeInfo.nameChanged {
             update()
@@ -416,12 +420,12 @@ public final class TeamImageView: UIImageView {
         self.selectionView.pathGenerator = { size in
             
             let path = WireStyleKit.pathForTeamSelection()!
-            let scale = (size.width - 1) / path.bounds.width
+            let scale = (size.width - 3) / path.bounds.width
             path.apply(CGAffineTransform(scaleX: scale, y: scale))
             return path
         }
         
-        self.imageViewContainer.layoutMargins = UIEdgeInsets(top: 1, left: 1, bottom: 1, right: 1)
+        self.imageViewContainer.layoutMargins = UIEdgeInsets(top: 2, left: 2, bottom: 2, right: 2)
         constrain(imageViewContainer, imageView) { imageViewContainer, imageView in
             imageView.edges == imageViewContainer.edgesWithinMargins
         }
@@ -451,6 +455,7 @@ public final class TeamImageView: UIImageView {
 
 extension TeamAccountView: TeamObserver {
     func teamDidChange(_ changeInfo: TeamChangeInfo) {
+        guard self.autoupdate else { return }
         self.update()
     }
 }

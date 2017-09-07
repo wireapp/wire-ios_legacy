@@ -148,7 +148,7 @@ static NSString * const CellReuseIdConversation = @"CellId";
     self.collectionView.alwaysBounceVertical = YES;
     self.collectionView.allowsSelection = YES;
     self.collectionView.allowsMultipleSelection = NO;
-    self.collectionView.contentInset = UIEdgeInsetsMake(8, 0, 0, 0);
+    self.collectionView.contentInset = UIEdgeInsetsMake(0, 0, 0, 0);
     self.collectionView.delaysContentTouches = NO;
     self.collectionView.accessibilityIdentifier = @"conversation list";
     self.clearsSelectionOnViewWillAppear = NO;
@@ -488,6 +488,18 @@ static NSString * const CellReuseIdConversation = @"CellId";
   sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     return [self.layoutCell sizeInCollectionViewSize:collectionView.bounds.size];
+}
+
+- (UIEdgeInsets)collectionView:(UICollectionView *)collectionView
+                        layout:(UICollectionViewLayout *)collectionViewLayout
+        insetForSectionAtIndex:(NSInteger)section
+{
+    if (section == 0) {
+        return UIEdgeInsetsMake(12, 0, 0, 0);
+    }
+    else {
+        return UIEdgeInsetsMake(0, 0, 0, 0);
+    }
 }
 
 @end

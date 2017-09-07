@@ -125,7 +125,7 @@
         NSString *appGroupIdentifier = NSBundle.mainBundle.appGroupIdentifier;
         NSURL *sharedContainerURL = [NSFileManager sharedContainerDirectoryForAppGroupIdentifier:appGroupIdentifier];        
         NSURL *accountContainerURL = [[sharedContainerURL URLByAppendingPathComponent:@"AccountData" isDirectory:YES]
-                                      URLByAppendingPathComponent:ZMUser.selfUser.remoteIdentifier.transportString isDirectory:YES];
+                                      URLByAppendingPathComponent:ZMUser.selfUser.remoteIdentifier.UUIDString isDirectory:YES];
         self.analyticsEventPersistence = [[ShareExtensionAnalyticsPersistence alloc] initWithAccountContainer:accountContainerURL];
         [MessageDraftStorage setupSharedStorageAtURL:accountContainerURL error:nil];
         
@@ -530,7 +530,7 @@
 - (void)uploadAddressBookIfNeeded
 {
     // We should not even try to access address book when in a team
-    if (ZMUser.selfUser.hasTeam) {
+    if (nil == ZMUser.selfUser || ZMUser.selfUser.hasTeam) {
         return;
     }
     
