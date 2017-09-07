@@ -225,12 +225,7 @@ extension SettingsCellDescriptorFactory {
                 fatal("No session manager and selected account to log out from")
             }
             
-            SessionManager.shared?.logoutCurrentSession(deleteCookie: true)
             SessionManager.shared?.delete(account: selectedAccount)
-            
-            if let otherAccount = SessionManager.shared?.accountManager.accounts.first {
-                SessionManager.shared?.accountManager.select(otherAccount)
-            }
         }
 
         return SettingsExternalScreenCellDescriptor(title: "self.sign_out".localized,
