@@ -113,11 +113,11 @@ final internal class SelfProfileViewController: UIViewController {
         constrain(view, accountSelectorController.view, profileContainerView, accountLabel) { selfView, accountSelectorControllerView, profileContainerView, accountLabel in
             accountSelectorControllerView.leading >= selfView.leading
             accountSelectorControllerView.trailing <= selfView.trailing
-            accountSelectorControllerView.top == selfView.top + 5
+            accountSelectorControllerView.top == selfView.top + 7
             accountSelectorControllerView.centerX == selfView.centerX
             accountSelectorControllerView.height == 46
             
-            accountLabel.top == selfView.top + 5
+            accountLabel.top == selfView.top + 7
             accountLabel.leading >= selfView.leading
             accountLabel.trailing >= selfView.trailing
             accountLabel.centerX == selfView.centerX

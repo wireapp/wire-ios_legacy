@@ -190,7 +190,7 @@ public class BaseAccountView: UIView, AccountViewType {
         }
         
         constrain(self, imageViewContainer, dotView) { selfView, imageViewContainer, dotView in
-            imageViewContainer.top == selfView.top + 10
+            imageViewContainer.top == selfView.top + 8
             imageViewContainer.centerX == selfView.centerX
             selfView.width >= imageViewContainer.width
             selfView.trailing >= dotView.trailing
@@ -198,7 +198,7 @@ public class BaseAccountView: UIView, AccountViewType {
             imageViewContainer.width == 32
             imageViewContainer.height == imageViewContainer.width
             
-            imageViewContainer.bottom == selfView.bottom - 4
+            imageViewContainer.bottom == selfView.bottom - 6
             imageViewContainer.leading == selfView.leading + 7
             imageViewContainer.trailing == selfView.trailing - 7
             selfView.width <= 128
