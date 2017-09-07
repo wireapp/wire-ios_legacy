@@ -246,7 +246,7 @@ class AppRootViewController : UIViewController {
             overlayWindow.rootViewController = NotificationWindowRootViewController()
         }
         
-        if !isClassyInitialized && (appState == .authenticated(completedRegistration: false) || appState == .unauthenticated(error: nil)) {
+        if !isClassyInitialized && isClassyRequired(for: appState) {
             isClassyInitialized = true
             MagicConfig.shared()
             
@@ -257,6 +257,15 @@ class AppRootViewController : UIViewController {
             }
         } else {
             completionHandler()
+        }
+    }
+    
+    func isClassyRequired(for appState: AppState) -> Bool {
+        switch appState {
+        case .authenticated, .unauthenticated, .loading:
+            return true
+        default:
+            return false
         }
     }
     

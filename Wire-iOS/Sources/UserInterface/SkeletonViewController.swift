@@ -146,7 +146,7 @@ class ListSkeletonContentView : UITableView, UITableViewDataSource {
         let cell = dequeueReusableCell(withIdentifier: "ListSkeletonCell")
         
         if let skeletonCell = cell as? ListSkeletonCell {
-            skeletonCell.lineInset =  Float(arc4random() % 100)
+            skeletonCell.lineInset =  Float(arc4random() % 200)
         }
         
         return cell!
