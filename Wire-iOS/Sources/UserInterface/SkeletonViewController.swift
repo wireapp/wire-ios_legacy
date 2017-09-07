@@ -68,9 +68,9 @@ class ListSkeletonCellView : UIView {
         constrain(self, avatarView, lineView) { (containerView, avatarView, lineView) in
             avatarView.width == CGFloat(28)
             avatarView.height == CGFloat(28)
-            avatarView.left == containerView.left + 16
-            avatarView.top == containerView.top
-            avatarView.bottom == containerView.bottom - 32
+            avatarView.left == containerView.left + 18
+            avatarView.top == containerView.top + 18
+            avatarView.bottom == containerView.bottom - 17.5
             
             lineView.height == CGFloat(14)
             lineView.left == avatarView.right + 16
@@ -85,7 +85,7 @@ class ListSkeletonCellView : UIView {
 
 class ListSkeletonCell : UITableViewCell {
     
-    static let estimatedHeight = 60.0
+    static let estimatedHeight = 64.0
     
     private let skeletonCellView : ListSkeletonCellView
     
@@ -186,7 +186,7 @@ class ListSkeletonView  : UIView {
         return iconTypes.map { (iconType) in
             let button = IconButton()
             button.setIcon(iconType, with: .tiny, for: .normal)
-            button.setIconColor(.white, for: .normal)
+            button.setIconColor(UIColor.init(white: 1.0, alpha: 0.32), for: .disabled)
             button.isEnabled = false
             return button
         }
@@ -199,8 +199,8 @@ class ListSkeletonView  : UIView {
     func createConstraints() {
         constrain(self, accountView, titleLabel, buttonRowView, listContentView) { (containerView, accountView, titleLabel, buttonRowView, listContentView) in
             
-            accountView.left == containerView.left + 6
-            accountView.top == containerView.top + 16
+            accountView.left == containerView.left + 9
+            accountView.top == containerView.top + 19
             
             titleLabel.centerY == accountView.centerY
             titleLabel.centerX == containerView.centerX
@@ -212,7 +212,7 @@ class ListSkeletonView  : UIView {
             buttonRowView.bottom == containerView.bottom
             buttonRowView.height == 55
             
-            listContentView.top == containerView.top + 90
+            listContentView.top == containerView.top + 76
             listContentView.left == containerView.left
             listContentView.right == containerView.right
             listContentView.bottom == buttonRowView.top
@@ -237,6 +237,9 @@ class SkeletonViewController: UIViewController {
         self.listView = ListSkeletonView(account)
         
         super.init(nibName: nil, bundle: nil)
+        
+        backgroundImageView.contentMode = .scaleAspectFill
+        backgroundImageView.transform = CGAffineTransform(scaleX: 1.4, y: 1.4)
         
         if let imageData = account.imageData, let image = UIImage(data: imageData) {
             backgroundImageView.image = image
@@ -270,8 +273,11 @@ class SkeletonViewController: UIViewController {
     func createConstraints() {
         constrain(self.view, blurEffectView, backgroundImageView, customSplitViewController.view) { (containerView, blurEffectView, backgroundImageView, splitViewControllerView) in
             blurEffectView.edges == containerView.edges
-            backgroundImageView.edges == containerView.edges
             splitViewControllerView.edges == containerView.edges
+            backgroundImageView.top == containerView.top
+            backgroundImageView.left == containerView.left - 100
+            backgroundImageView.right == containerView.right + 100
+            backgroundImageView.bottom == containerView.bottom
         }
     }
     

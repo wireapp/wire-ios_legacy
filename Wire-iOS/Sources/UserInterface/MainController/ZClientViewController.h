@@ -42,6 +42,8 @@
 
 @property (nonatomic, readonly) MediaPlaybackManager *mediaPlaybackManager;
 
+@property (nonatomic, readonly) ConversationListViewController *conversationListViewController;
+
 + (instancetype)sharedZClientViewController;
 
 /**
