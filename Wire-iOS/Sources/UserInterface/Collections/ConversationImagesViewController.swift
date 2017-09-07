@@ -121,7 +121,6 @@ final class ConversationImagesViewController: UIViewController {
         navigationBar.isTranslucent = false
         navigationBar.barTintColor = ColorScheme.default().color(withName: ColorSchemeColorBarBackground)
         
-        
         self.createPageController()
         self.createControlsBar()
         view.addSubview(overlay)
