@@ -41,8 +41,33 @@ extension UIView {
     }
 }
 
-internal final class ConversationImagesViewController: UIViewController {
-    internal let collection: AssetCollectionWrapper
+final class ConversationImagesViewController: UIViewController {
+    
+    let collection: AssetCollectionWrapper
+    
+    fileprivate let navigationBar = UINavigationBar()
+    var pageViewController: UIPageViewController = UIPageViewController(transitionStyle:.scroll, navigationOrientation:.horizontal, options: [:])
+    var buttonsBar: InputBarButtonsView!
+    let deleteButton = IconButton.iconButtonDefault()
+    let overlay = FeedbackOverlayView()
+    let separator = UIView()
+    fileprivate let likeButton = IconButton.iconButtonDefault()
+    
+    internal let inverse: Bool
+    
+    public weak var messageActionDelegate: MessageActionResponder? = .none
+    
+    public var snapshotBackgroundView: UIView? = .none
+    
+    fileprivate var imageMessages: [ZMConversationMessage] = []
+    
+    internal var currentMessage: ZMConversationMessage {
+        didSet {
+            self.updateButtonsForMessage()
+            self.createNavigationTitle()
+        }
+    }
+    
     public var swipeToDismiss: Bool = false {
         didSet {
             if let currentController = self.currentController {
@@ -50,6 +75,7 @@ internal final class ConversationImagesViewController: UIViewController {
             }
         }
     }
+    
     public var dismissAction: DismissAction? = .none {
         didSet {
             if let currentController = self.currentController {
@@ -57,24 +83,10 @@ internal final class ConversationImagesViewController: UIViewController {
             }
         }
     }
-    public var snapshotBackgroundView: UIView? = .none
-    fileprivate var imageMessages: [ZMConversationMessage] = []
-    internal var currentMessage: ZMConversationMessage {
-        didSet {
-            self.updateButtonsForMessage()
-            self.createNavigationTitle()
-        }
+    
+    override open var prefersStatusBarHidden: Bool {
+        return false
     }
-    internal var pageViewController: UIPageViewController = UIPageViewController(transitionStyle:.scroll, navigationOrientation:.horizontal, options: [:])
-    internal var buttonsBar: InputBarButtonsView!
-    internal let deleteButton = IconButton.iconButtonDefault()
-    internal let overlay = FeedbackOverlayView()
-    internal let separator = UIView()
-    fileprivate let likeButton = IconButton.iconButtonDefault()
-    
-    internal let inverse: Bool
-    
-    public weak var messageActionDelegate: MessageActionResponder? = .none
     
     init(collection: AssetCollectionWrapper, initialMessage: ZMConversationMessage, inverse: Bool = false) {
         assert(initialMessage.isImage)
@@ -105,17 +117,26 @@ internal final class ConversationImagesViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        navigationBar.items = [navigationItem]
+        navigationBar.delegate = self
+        navigationBar.isOpaque = true
+        navigationBar.backgroundColor = ColorScheme.default().color(withName: ColorSchemeColorBarBackground)
+        
         self.createPageController()
         self.createControlsBar()
         view.addSubview(overlay)
         view.addSubview(separator)
+        view.addSubview(navigationBar)
+
+        constrain(view, navigationBar) { view, navigationBar in
+            navigationBar.top == view.top
+            navigationBar.width == view.width
+            navigationBar.centerX == view.centerX
+            navigationBar.height == 64
+        }
         
         constrain(self.view, self.pageViewController.view, self.buttonsBar, overlay, separator) { view, pageControllerView, buttonsBar, overlay, separator in
-            pageControllerView.top == view.top
-            pageControllerView.leading == view.leading
-            pageControllerView.trailing == view.trailing
-            
-            pageControllerView.bottom == buttonsBar.top
+            pageControllerView.edges == view.edges
             
             buttonsBar.leading == view.leading
             buttonsBar.trailing == view.trailing
@@ -129,10 +150,6 @@ internal final class ConversationImagesViewController: UIViewController {
             separator.leading == buttonsBar.leading
             separator.trailing == buttonsBar.trailing
         }
-    }
-    
-    override open var prefersStatusBarHidden: Bool {
-        return false
     }
     
     private func createPageController() {
@@ -237,6 +254,7 @@ internal final class ConversationImagesViewController: UIViewController {
         self.buttonsBar = InputBarButtonsView(buttons: buttons)
         self.buttonsBar.clipsToBounds = true
         self.buttonsBar.expandRowButton.setIconColor(ColorScheme.default().color(withName: ColorSchemeColorTextForeground), for: .normal)
+        self.buttonsBar.backgroundColor = ColorScheme.default().color(withName: ColorSchemeColorBarBackground)
         self.view.addSubview(self.buttonsBar)
         
         self.updateButtonsForMessage()
@@ -415,4 +433,34 @@ extension ConversationImagesViewController: UIPageViewControllerDelegate, UIPage
             updateLikeButton()
         }
     }
+}
+
+extension ConversationImagesViewController: UINavigationBarDelegate {
+    
+    func position(for bar: UIBarPositioning) -> UIBarPosition {
+        return .top
+    }
+}
+
+extension ConversationImagesViewController: FullscreenImageViewControllerDelegate {
+    
+    var isUIHidden: Bool {
+        return  navigationBar.isHidden &&
+                buttonsBar.isHidden &&
+                separator.isHidden &&
+                UIApplication.shared.isStatusBarHidden
+    }
+    
+    func toggleUIControlsHidden() {
+        setUIHidden(!isUIHidden)
+    }
+
+    func setUIHidden(_ hidden: Bool) {
+        let duration = UIApplication.shared.statusBarOrientationAnimationDuration
+        navigationBar.fadeAndHide(hidden, duration: duration)
+        buttonsBar.fadeAndHide(hidden, duration: duration)
+        separator.fadeAndHide(hidden, duration: duration)
+        UIApplication.shared.wr_setStatusBarHidden(hidden, with: .fade)
+    }
+    
 }

@@ -30,13 +30,18 @@ NS_ASSUME_NONNULL_BEGIN
 - (nullable UIView *)backgroundScreenshotForController:(FullscreenImageViewController *)fullscreenController;
 @end
 
+@protocol FullscreenImageViewControllerDelegate <NSObject>
+- (void)setUIHidden:(BOOL)hidden;
+- (void)toggleUIControlsHidden;
+@end
+
 @interface FullscreenImageViewController : UIViewController
 
 @property (nonatomic, strong, readonly) UIImageView *imageView;
 @property (nonatomic, strong, readonly) UIScrollView *scrollView;
 @property (nonatomic, readonly) id<ZMConversationMessage> message;
 @property (nonatomic) UIView *snapshotBackgroundView;
-@property (nonatomic, weak)   id <MessageActionResponder, ScreenshotProvider> delegate;
+@property (nonatomic, weak)   id <MessageActionResponder, ScreenshotProvider, FullscreenImageViewControllerDelegate> delegate;
 @property (nonatomic) BOOL swipeToDismiss;
 @property (nonatomic) BOOL showCloseButton;
 @property (nonatomic, copy, nullable) void (^dismissAction)(__nullable dispatch_block_t);
