@@ -118,7 +118,6 @@ final class ConversationImagesViewController: UIViewController {
         super.viewDidLoad()
         
         navigationBar.items = [navigationItem]
-        navigationBar.delegate = self
         navigationBar.isOpaque = true
         navigationBar.backgroundColor = ColorScheme.default().color(withName: ColorSchemeColorBarBackground)
         
@@ -128,15 +127,15 @@ final class ConversationImagesViewController: UIViewController {
         view.addSubview(separator)
         view.addSubview(navigationBar)
 
-        constrain(view, navigationBar) { view, navigationBar in
+        constrain(view, pageViewController.view) { view, pageControllerView in
+            pageControllerView.edges == view.edges
+        }
+        
+        constrain(view, navigationBar, buttonsBar, overlay, separator) { view, navigationBar, buttonsBar, overlay, separator in
             navigationBar.top == view.top
             navigationBar.width == view.width
             navigationBar.centerX == view.centerX
             navigationBar.height == 64
-        }
-        
-        constrain(self.view, self.pageViewController.view, self.buttonsBar, overlay, separator) { view, pageControllerView, buttonsBar, overlay, separator in
-            pageControllerView.edges == view.edges
             
             buttonsBar.leading == view.leading
             buttonsBar.trailing == view.trailing
@@ -435,12 +434,6 @@ extension ConversationImagesViewController: UIPageViewControllerDelegate, UIPage
     }
 }
 
-extension ConversationImagesViewController: UINavigationBarDelegate {
-    
-    func position(for bar: UIBarPositioning) -> UIBarPosition {
-        return .top
-    }
-}
 
 extension ConversationImagesViewController: FullscreenImageViewControllerDelegate {
     
