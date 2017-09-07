@@ -104,6 +104,7 @@
                 break;
             case ZMUserSessionAccountSuspended:
                 message = NSLocalizedString(@"error.user.account_suspended", @"");
+                break;
                 
             default:
             case ZMUserSessionUnkownError:
