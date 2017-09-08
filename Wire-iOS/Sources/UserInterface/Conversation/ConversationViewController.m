@@ -341,7 +341,8 @@
         // We are presenting the conversation screen so mark it as the last viewed screen,
         // but only if we are acutally focused (otherwise we would be shown on the next launch)
         [Settings sharedSettings].lastViewedScreen = SettingsLastScreenConversation;
-        [Settings sharedSettings].lastViewedConversation = self.conversation;
+        Account *currentAccount = SessionManager.shared.accountManager.selectedAccount;
+        [[Settings sharedSettings] setLastViewedWithConversation:self.conversation for:currentAccount];
     }
 
     self.contentViewController.searchQueries = self.collectionController.currentTextSearchQuery;

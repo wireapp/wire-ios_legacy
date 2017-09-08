@@ -595,13 +595,16 @@
 {
     BOOL stateRestored = NO;
 
+    Account *currentAccount = SessionManager.shared.accountManager.selectedAccount;
+    
     SettingsLastScreen lastViewedScreen = [Settings sharedSettings].lastViewedScreen;
     switch (lastViewedScreen) {
             
         case SettingsLastScreenList: {
             
             [self transitionToListAnimated:NO completion:nil];
-            ZMConversation *conversation = [Settings sharedSettings].lastViewedConversation;
+            
+            ZMConversation *conversation = [[Settings sharedSettings] lastViewedConversationFor:currentAccount];
             if (conversation != nil) {
                 // Select the last viewed conversation without giving it focus
                 [self selectConversation:conversation];
@@ -620,7 +623,7 @@
         }
         case SettingsLastScreenConversation: {
             
-            ZMConversation *conversation = [Settings sharedSettings].lastViewedConversation;
+            ZMConversation *conversation = [[Settings sharedSettings] lastViewedConversationFor:currentAccount];
             if (conversation != nil) {
                 [self selectConversation:conversation
                              focusOnView:YES 
