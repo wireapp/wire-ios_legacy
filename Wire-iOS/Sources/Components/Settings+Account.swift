@@ -30,8 +30,11 @@ extension Settings {
         return self.defaults().value(forKey: account.userDefaultsKey()) as? [String: Any] ?? [:]
     }
     
+    /// Returns the value associated with the given account for the given key,
+    /// or nil if it doesn't exist.
+    ///
     func value<T>(for key: String, in account: Account) -> T? {
-        // Attemt to migrate the shared value
+        // Attempt to migrate the shared value
         if let rootValue = self.defaults().value(forKey: key) {
             setValue(rootValue, for: key, in: account)
             self.defaults().setValue(nil, forKey: key)
@@ -42,6 +45,8 @@ extension Settings {
         return accountPayload[key] as? T
     }
     
+    /// Sets the value associated with the given account for the given key.
+    ///
     func setValue<T>(_ value: T?, for key: String, in account: Account) {
         var accountPayload = self.payload(for: account)
         accountPayload[key] = value
