@@ -435,25 +435,30 @@ extension ConversationImagesViewController: UIPageViewControllerDelegate, UIPage
 }
 
 
-extension ConversationImagesViewController: FullscreenImageViewControllerDelegate {
+extension ConversationImagesViewController: MenuVisibilityController {
     
-    var isUIHidden: Bool {
+    var menuVisible: Bool {
         return  navigationBar.isHidden &&
                 buttonsBar.isHidden &&
                 separator.isHidden &&
                 UIApplication.shared.isStatusBarHidden
     }
     
-    func toggleUIControlsHidden() {
-        setUIHidden(!isUIHidden)
-    }
-
-    func setUIHidden(_ hidden: Bool) {
+    func fadeAndHideMenu(_ hidden: Bool) {
         let duration = UIApplication.shared.statusBarOrientationAnimationDuration
         navigationBar.fadeAndHide(hidden, duration: duration)
         buttonsBar.fadeAndHide(hidden, duration: duration)
         separator.fadeAndHide(hidden, duration: duration)
         UIApplication.shared.wr_setStatusBarHidden(hidden, with: .fade)
     }
-    
 }
+
+
+extension MenuVisibilityController {
+    
+    func toggleMenuVisibility() {
+        fadeAndHideMenu(!menuVisible)
+    }
+}
+
+

@@ -402,7 +402,7 @@
 
 - (void)scrollViewWillBeginZooming:(UIScrollView *)scrollView withView:(UIView *)view
 {
-    [self.delegate setUIHidden:YES];
+    [self.delegate fadeAndHideMenu:YES];
 }
 
 - (void)scrollViewDidZoom:(UIScrollView *)scrollView
@@ -442,7 +442,7 @@
     [self showChrome:!self.isShowingChrome];
     [self setSelectedByMenu:NO animated:NO];
     [[UIMenuController sharedMenuController] setMenuVisible:NO];
-    [self.delegate toggleUIControlsHidden];
+    [self.delegate fadeAndHideMenu:!self.delegate.menuVisible];
 }
 
 - (void)handleDoubleTap:(UITapGestureRecognizer *)doubleTapper
