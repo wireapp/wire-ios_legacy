@@ -164,7 +164,7 @@ public class BaseAccountView: UIView, AccountViewType {
         self.account = account
         super.init(frame: .zero)
         
-        if let userSession = SessionManager.shared?.userSession {
+        if let userSession = SessionManager.shared?.activeUserSession {
             selfUserObserver = UserChangeInfo.add(observer: self, forBareUser: ZMUser.selfUser(inUserSession: userSession))
         }
 

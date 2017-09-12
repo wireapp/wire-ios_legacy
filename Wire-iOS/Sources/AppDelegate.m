@@ -270,7 +270,7 @@ static AppDelegate *sharedAppDelegate = nil;
 
 - (ZMUserSession *)zetaUserSession
 {
-    return [[SessionManager shared] userSession];
+    return [[SessionManager shared] activeUserSession];
 }
 
 - (UnauthenticatedSession *)unauthenticatedSession
@@ -331,7 +331,7 @@ static AppDelegate *sharedAppDelegate = nil;
     DDLogWarn(@"Received APNS token: %@", newDeviceToken);
     
     [self.rootViewController performWhenAuthenticated:^{
-        [[ZMUserSession sharedSession] application:application didRegisterForRemoteNotificationsWithDeviceToken:newDeviceToken];
+        [[SessionManager shared] didRegisteredForRemoteNotificationsWith:newDeviceToken];
     }];
 }
 
@@ -360,7 +360,7 @@ static AppDelegate *sharedAppDelegate = nil;
         self.trackedResumeEvent = YES;
     }
     [self.rootViewController performWhenAuthenticated:^{
-        [[ZMUserSession sharedSession] application:application didReceiveRemoteNotification:userInfo fetchCompletionHandler:completionHandler];
+        [[SessionManager shared] didReceiveRemoteNotification:userInfo fetchCompletionHandler:completionHandler];
     }];
     
     self.launchType = (application.applicationState == UIApplicationStateInactive || application.applicationState == UIApplicationStateBackground) ? ApplicationLaunchPush: ApplicationLaunchDirect;
