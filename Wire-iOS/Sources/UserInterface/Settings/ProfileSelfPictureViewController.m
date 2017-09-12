@@ -166,9 +166,12 @@
 - (void)setSelfImageToData:(NSData *)selfImageData
 {
     [self.analyticsTracker tagPictureChanged];
+    
+    // iOS11 uses HEIF image format, but BE expects JPEG
+    NSData *jpegData = UIImageJPEGRepresentation([UIImage imageWithData:selfImageData], 1.0);
 
     [[ZMUserSession sharedSession] enqueueChanges:^{
-        [[ZMUserSession sharedSession].profileUpdate updateImageWithImageData:selfImageData];
+        [[ZMUserSession sharedSession].profileUpdate updateImageWithImageData:jpegData];
         [self.delegate bottomOverlayViewControllerBackgroundTapped:self];
     }];
 }
