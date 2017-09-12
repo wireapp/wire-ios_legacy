@@ -21,6 +21,7 @@ import UIKit
 import WireShareEngine
 import MobileCoreServices
 import WireExtensionComponents
+import CoreGraphics
 
 
 /// Error that can happen during the preparation or sending operation
@@ -102,14 +103,38 @@ class UnsentImageSendable: UnsentSendableBase, UnsentSendable {
         precondition(needsPreparation, "Ensure this objects needs preparation, c.f. `needsPreparation`")
         needsPreparation = false
 
-        let options = [NSItemProviderPreferredImageSizeKey : NSValue(cgSize: .init(width: 1024, height: 1024))]
-
+        let options = [NSItemProviderPreferredImageSizeKey : NSValue(cgSize: CGSize(width: 1024, height: 1024))]
+        
         attachment.loadItem(forTypeIdentifier: kUTTypeImage as String, options: options, imageCompletionHandler: { [weak self] (image, error) in
             error?.log(message: "Unable to load image from attachment")
-            self?.imageData = image.flatMap {
-                UIImageJPEGRepresentation($0, 0.9)
+            
+            if let image = image {
+                var finalImage: UIImage? = image
+                let longestSide = CGFloat(max(image.size.width, image.size.height))
+                
+                // app extensions have limited memory resources & risk termination
+                // if they are too greedy. Downscaling early keeps us in the green
+                //
+                if let cgImage = image.cgImage, longestSide > 1024 {
+                    let scaleFactor = 1024.0/longestSide
+                    let width = Int(CGFloat(cgImage.width) * scaleFactor)
+                    let height = Int(CGFloat(cgImage.height) * scaleFactor)
+                    let bitsPerComponnent = cgImage.bitsPerComponent
+                    let bytesPerRow = cgImage.bytesPerRow
+                    let colorSpace = cgImage.colorSpace!
+                    let bitmapInfo = cgImage.bitmapInfo
+                    
+                    let context = CGContext(data: nil, width: width, height: height, bitsPerComponent: bitsPerComponnent, bytesPerRow: bytesPerRow, space: colorSpace, bitmapInfo: bitmapInfo.rawValue)!
+                    context.interpolationQuality = .high
+                    context.draw(cgImage, in: CGRect(origin: .zero, size: CGSize(width: width, height: height)))
+                    finalImage = context.makeImage().flatMap {
+                        UIImage(cgImage: $0, scale: image.scale, orientation: image.imageOrientation)
+                    }
+                }
+                
+                self?.imageData = finalImage.flatMap { UIImageJPEGRepresentation($0, 0.9) }
             }
-
+            
             completion()
         })
     }
