@@ -84,7 +84,7 @@
 
 // Conversation List Indicator
 "conversation_list.right_accessory.join_button.title" = "Beitreten";
-"conversation_list.header.self_team.accessibility_value" = "%@ account.";
+"conversation_list.header.self_team.accessibility_value" = "%@ Konto.";
 "conversation_list.header.self_team.accessibility_value.inactive" = "Zum Aktivieren tippen.";
 "conversation_list.header.self_team.accessibility_value.active" = "Aktiv.";
 "conversation_list.header.self_team.accessibility_value.has_new_messages" = "Hat neue Nachrichten.";
@@ -97,10 +97,10 @@
 "conversation_list.voiceover.status.pending_connection" = "wird überprüft";
 "conversation_list.voiceover.status.active_call" = "Aktiver Anruf";
 "conversation_list.voiceover.status.missed_call" = "Entgangener Anruf";
-"conversation_list.voiceover.status.pause_media" = "pause media";
+"conversation_list.voiceover.status.pause_media" = "pause Medien";
 "conversation_list.voiceover.status.play_media" = "Medien abspielen";
 "conversation_list.voiceover.status.silenced" = "Schweigen";
-"conversation_list.voiceover.status.typing" = "typing";
+"conversation_list.voiceover.status.typing" = "tippt";
 "conversation_list.voiceover.status.ping" = "Ping";
 "conversation_list.voiceover.bottom_bar.archived_button.label" = "archivierte";
 "conversation_list.voiceover.bottom_bar.archived_button.hint" = "Liste der archivierten Unterhaltungen";
@@ -536,7 +536,7 @@
 "self.report_abuse" = "Missbrauch melden";
 "self.voiceover.label" = "Profil";
 "self.voiceover.hint" = "Offenes Profil und Einstellungen";
-"self.new-device.voiceover.label" = "Profile, new devices added";
+"self.new-device.voiceover.label" = "Profil, neue Geräte hinzugefügt";
 
 "self.add_phone_number" = "Telefonnummer hinzufügen";
 "self.add_email_password" = "E-Mail und Passwort hinzufügen";
