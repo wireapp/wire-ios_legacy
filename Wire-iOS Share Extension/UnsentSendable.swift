@@ -21,8 +21,7 @@ import UIKit
 import WireShareEngine
 import MobileCoreServices
 import WireExtensionComponents
-import CoreGraphics
-
+import ImageIO
 
 /// Error that can happen during the preparation or sending operation
 enum UnsentSendableError: Error {
@@ -86,6 +85,7 @@ class UnsentTextSendable: UnsentSendableBase, UnsentSendable {
 
 }
 
+
 /// `UnsentSendable` implementation to send image messages
 class UnsentImageSendable: UnsentSendableBase, UnsentSendable {
 
@@ -103,36 +103,29 @@ class UnsentImageSendable: UnsentSendableBase, UnsentSendable {
         precondition(needsPreparation, "Ensure this objects needs preparation, c.f. `needsPreparation`")
         needsPreparation = false
 
-        let options = [NSItemProviderPreferredImageSizeKey : NSValue(cgSize: CGSize(width: 1024, height: 1024))]
+        let longestDimension: CGFloat = 1024
         
-        attachment.loadItem(forTypeIdentifier: kUTTypeImage as String, options: options, imageCompletionHandler: { [weak self] (image, error) in
+        // note: this doesn't seem to have any effect, but perhaps it's an iOS bug that will be fixed...
+        let options = [NSItemProviderPreferredImageSizeKey : NSValue(cgSize: CGSize(width: longestDimension, height: longestDimension))]
+        
+        // app extensions have severely limited memory resources & risk termination if they are too greedy. In order to
+        // minimize memory consumption we must downscale the images being shared. Standard image scaling methods that
+        // rely on UIImage are too expensive (eg. 12MP image -> approx 48MB UIImage), so we make the system scale the images
+        // for us ('free' of charge) by using the image URL & ImageIO library.
+        //
+        self.attachment.loadItem(forTypeIdentifier: kUTTypeImage as String, options: options, urlCompletionHandler: { [weak self] (url, error) in
             error?.log(message: "Unable to load image from attachment")
             
-            if let image = image {
-                var finalImage: UIImage? = image
-                let longestSide = CGFloat(max(image.size.width, image.size.height))
+            if let url = url, let imageSource = CGImageSourceCreateWithURL(url as CFURL, nil) {
+                let options: [NSString : Any] = [
+                    kCGImageSourceThumbnailMaxPixelSize: longestDimension,
+                    kCGImageSourceCreateThumbnailFromImageAlways: true,
+                    kCGImageSourceCreateThumbnailWithTransform: true
+                ]
                 
-                // app extensions have limited memory resources & risk termination
-                // if they are too greedy. Downscaling early keeps us in the green
-                //
-                if let cgImage = image.cgImage, longestSide > 1024 {
-                    let scaleFactor = 1024.0/longestSide
-                    let width = Int(CGFloat(cgImage.width) * scaleFactor)
-                    let height = Int(CGFloat(cgImage.height) * scaleFactor)
-                    let bitsPerComponnent = cgImage.bitsPerComponent
-                    let bytesPerRow = cgImage.bytesPerRow
-                    let colorSpace = cgImage.colorSpace!
-                    let bitmapInfo = cgImage.bitmapInfo
-                    
-                    let context = CGContext(data: nil, width: width, height: height, bitsPerComponent: bitsPerComponnent, bytesPerRow: bytesPerRow, space: colorSpace, bitmapInfo: bitmapInfo.rawValue)!
-                    context.interpolationQuality = .high
-                    context.draw(cgImage, in: CGRect(origin: .zero, size: CGSize(width: width, height: height)))
-                    finalImage = context.makeImage().flatMap {
-                        UIImage(cgImage: $0, scale: image.scale, orientation: image.imageOrientation)
-                    }
+                if let scaledImage = CGImageSourceCreateThumbnailAtIndex(imageSource, 0, options as CFDictionary) {
+                    self?.imageData = UIImageJPEGRepresentation(UIImage(cgImage: scaledImage), 0.9)
                 }
-                
-                self?.imageData = finalImage.flatMap { UIImageJPEGRepresentation($0, 0.9) }
             }
             
             completion()
