@@ -84,7 +84,7 @@
 
 // Conversation List Indicator
 "conversation_list.right_accessory.join_button.title" = "Приєднатись";
-"conversation_list.header.self_team.accessibility_value" = "Команда %@.";
+"conversation_list.header.self_team.accessibility_value" = "Акаунт %@.";
 "conversation_list.header.self_team.accessibility_value.inactive" = "Торкніться, щоб активувати.";
 "conversation_list.header.self_team.accessibility_value.active" = "Наразі активна.";
 "conversation_list.header.self_team.accessibility_value.has_new_messages" = "Є нові повідомлення.";
@@ -94,22 +94,22 @@
 
 // Conversation list voiceover accessibility
 "conversation_list.voiceover.open_conversation.hint" = "Відкрити розмову";
-"conversation_list.voiceover.status.pending_connection" = "pending";
-"conversation_list.voiceover.status.active_call" = "active call";
+"conversation_list.voiceover.status.pending_connection" = "очікує";
+"conversation_list.voiceover.status.active_call" = "активний дзвінок";
 "conversation_list.voiceover.status.missed_call" = "пропущений дзвінок";
-"conversation_list.voiceover.status.pause_media" = "pause media";
-"conversation_list.voiceover.status.play_media" = "play media";
-"conversation_list.voiceover.status.silenced" = "silenced";
-"conversation_list.voiceover.status.typing" = "typing";
-"conversation_list.voiceover.status.ping" = "ping";
-"conversation_list.voiceover.bottom_bar.archived_button.label" = "archived";
-"conversation_list.voiceover.bottom_bar.archived_button.hint" = "list of archived conversations";
+"conversation_list.voiceover.status.pause_media" = "призупити відтворення медіа";
+"conversation_list.voiceover.status.play_media" = "відтворити медіа";
+"conversation_list.voiceover.status.silenced" = "сповіщення вимкнено";
+"conversation_list.voiceover.status.typing" = "вводить текст";
+"conversation_list.voiceover.status.ping" = "пінг";
+"conversation_list.voiceover.bottom_bar.archived_button.label" = "заархівовано";
+"conversation_list.voiceover.bottom_bar.archived_button.hint" = "перелік заархівованих розмов";
 "conversation_list.voiceover.bottom_bar.contacts_button.label" = "контакти";
-"conversation_list.voiceover.bottom_bar.contacts_button.hint" = "search for people on Wire";
-"conversation_list.voiceover.bottom_bar.compose_button.label" = "compose";
-"conversation_list.voiceover.bottom_bar.compose_button.hint" = "compose messages and save for later";
-"conversation_list.voiceover.bottom_bar.camera_button.label" = "camera";
-"conversation_list.voiceover.bottom_bar.camera_button.hint" = "take picture and send quickly";
+"conversation_list.voiceover.bottom_bar.contacts_button.hint" = "шукати людей в Wire";
+"conversation_list.voiceover.bottom_bar.compose_button.label" = "створити";
+"conversation_list.voiceover.bottom_bar.compose_button.hint" = "створити повідомлення та зберегти для подальшого використання";
+"conversation_list.voiceover.bottom_bar.camera_button.label" = "камера";
+"conversation_list.voiceover.bottom_bar.camera_button.hint" = "зробити фотографію та швидко надіслати";
 
 // Archived List
 "archived_list.title" = "архів";
@@ -146,7 +146,7 @@
 "list.archived_conversations" = "АРХІВ";
 "list.archived_conversations_close" = "Закрити архів";
 
-"conversation.voiceover.verified" = "verified";
+"conversation.voiceover.verified" = "верифіковано";
 
 "conversation.status.call" = "Активний дзвінок";
 "conversation.status.typing" = "Набирається повідомлення…";
@@ -496,7 +496,6 @@
 "profile.details.title" = "Подробиці";
 "profile.details.guest" = "Гість";
 
-"profile_view.team_name.in" = "в %@";
 "profile_view.accessibility.handle" = "Нік";
 "profile_view.accessibility.name" = "Власне ім'я";
 "profile_view.accessibility.team_name" = "Назва команди";
@@ -528,6 +527,7 @@
 
 "self.settings" = "Налаштування";
 "self.profile" = "Профіль";
+"self.account" = "Акаунт";
 "self.help_center" = "Служба підтримки";
 "self.help_center.support_website" = "Сайт підтримки Wire";
 "self.help_center.contact_support" = "Зверніться до служби підтримки";
@@ -535,8 +535,8 @@
 "self.sign_out" = "Вихід";
 "self.report_abuse" = "Надіслати звіт про зловживання";
 "self.voiceover.label" = "Профіль";
-"self.voiceover.hint" = "Open profile and settings";
-"self.new-device.voiceover.label" = "Profile, new devices added";
+"self.voiceover.hint" = "Відкрити профіль та налаштування";
+"self.new-device.voiceover.label" = "Профіль, нещодавно додані пристрої";
 
 "self.add_phone_number" = "Додати номер телефону";
 "self.add_email_password" = "Додайте email та пароль";
@@ -600,6 +600,10 @@
 
 "self.settings.account_details.delete_account.alert.title" = "Видалити акаунт";
 "self.settings.account_details.delete_account.alert.message" = "Ми надішлемо вам повідомлення електронною поштою або через SMS. Перейдіть за посиланням, щоб остаточно видалити свій акаунт.";
+
+"self.settings.account_details.log_out.alert.title" = "Вийти";
+"self.settings.account_details.log_out.alert.message" = "Ваше повідомлення буде стерто з цього пристрою.";
+
 
 // Change Username
 
@@ -715,7 +719,7 @@
 "self.settings.privacy_security.lock_cancelled.description" = "Розблокуйте Wire за допомогою Touch ID або коду допуску";
 "self.settings.privacy_security.lock_cancelled.action" = "Розблокувати";
 
-"self.settings.privacy_security.disable_link_previews.title" = "Create Previews For Links You Send";
+"self.settings.privacy_security.disable_link_previews.title" = "Генерувати попередній перегляд для посилань";
 "self.settings.privacy_security.disable_link_previews.footer" = "Дана опція не впливає на попередній перегляд лінків від інших людей.";
 
 "self.settings.privacy_analytics_menu.devices.title" = "Пристрої";
@@ -897,6 +901,7 @@
 "error.user.registration_unknown_error" = "Щось пішло не так. Будь ласка спробуйте ще раз.";
 "error.user.device_deleted_remotely" = "Ви вийшли на іншому пристрої.";
 "error.user.last_identity_cant_be_deleted" = "Необхідна або email-адреса або номер телефону.";
+"error.user.account_suspended" = "Даний акаунт був заблокований.";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Those are caught by the UI without involving the SE validation. Basically very similar to ZMUserSessionErrorCode onces

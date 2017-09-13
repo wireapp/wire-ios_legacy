@@ -84,7 +84,7 @@
 
 // Conversation List Indicator
 "conversation_list.right_accessory.join_button.title" = "Присоединиться";
-"conversation_list.header.self_team.accessibility_value" = "Команда %@.";
+"conversation_list.header.self_team.accessibility_value" = "%@ аккаунт.";
 "conversation_list.header.self_team.accessibility_value.inactive" = "Нажмите, чтобы активировать.";
 "conversation_list.header.self_team.accessibility_value.active" = "Теперь активна.";
 "conversation_list.header.self_team.accessibility_value.has_new_messages" = "Есть новые сообщения.";
@@ -94,22 +94,22 @@
 
 // Conversation list voiceover accessibility
 "conversation_list.voiceover.open_conversation.hint" = "Открыть разговор";
-"conversation_list.voiceover.status.pending_connection" = "pending";
-"conversation_list.voiceover.status.active_call" = "активный вызов";
+"conversation_list.voiceover.status.pending_connection" = "В обработке";
+"conversation_list.voiceover.status.active_call" = "активный звонок";
 "conversation_list.voiceover.status.missed_call" = "пропущенный вызов";
-"conversation_list.voiceover.status.pause_media" = "pause media";
-"conversation_list.voiceover.status.play_media" = "play media";
-"conversation_list.voiceover.status.silenced" = "silenced";
-"conversation_list.voiceover.status.typing" = "typing";
+"conversation_list.voiceover.status.pause_media" = "поставить на паузу";
+"conversation_list.voiceover.status.play_media" = "Воспроизведение медиа";
+"conversation_list.voiceover.status.silenced" = "тишина";
+"conversation_list.voiceover.status.typing" = "печатает";
 "conversation_list.voiceover.status.ping" = "пинг";
-"conversation_list.voiceover.bottom_bar.archived_button.label" = "archived";
-"conversation_list.voiceover.bottom_bar.archived_button.hint" = "list of archived conversations";
+"conversation_list.voiceover.bottom_bar.archived_button.label" = "Архивные";
+"conversation_list.voiceover.bottom_bar.archived_button.hint" = "список архивных разговоров";
 "conversation_list.voiceover.bottom_bar.contacts_button.label" = "контакты";
-"conversation_list.voiceover.bottom_bar.contacts_button.hint" = "search for people on Wire";
-"conversation_list.voiceover.bottom_bar.compose_button.label" = "compose";
-"conversation_list.voiceover.bottom_bar.compose_button.hint" = "compose messages and save for later";
+"conversation_list.voiceover.bottom_bar.contacts_button.hint" = "поиск людей в Wire";
+"conversation_list.voiceover.bottom_bar.compose_button.label" = "состоять";
+"conversation_list.voiceover.bottom_bar.compose_button.hint" = "напишите сообщение и сохраните его для последующей отправки";
 "conversation_list.voiceover.bottom_bar.camera_button.label" = "камера";
-"conversation_list.voiceover.bottom_bar.camera_button.hint" = "take picture and send quickly";
+"conversation_list.voiceover.bottom_bar.camera_button.hint" = "сделать снимок и быстро отправить";
 
 // Archived List
 "archived_list.title" = "архив";
@@ -496,7 +496,6 @@
 "profile.details.title" = "Подробнее";
 "profile.details.guest" = "Гость";
 
-"profile_view.team_name.in" = "в %@";
 "profile_view.accessibility.handle" = "Имя пользователя";
 "profile_view.accessibility.name" = "Отображаемое имя";
 "profile_view.accessibility.team_name" = "Название команды";
@@ -528,6 +527,7 @@
 
 "self.settings" = "Настройки";
 "self.profile" = "Профиль";
+"self.account" = "Аккаунт";
 "self.help_center" = "Служба поддержки";
 "self.help_center.support_website" = "Cайт техподдержки Wire";
 "self.help_center.contact_support" = "Связаться с техподдержкой";
@@ -536,7 +536,7 @@
 "self.report_abuse" = "Сообщить о злоупотреблении";
 "self.voiceover.label" = "Профиль";
 "self.voiceover.hint" = "Открыть профиль и настройки";
-"self.new-device.voiceover.label" = "Profile, new devices added";
+"self.new-device.voiceover.label" = "Профиль, добавлены новые устройства";
 
 "self.add_phone_number" = "Добавить номер телефона";
 "self.add_email_password" = "Добавить email и пароль";
@@ -600,6 +600,10 @@
 
 "self.settings.account_details.delete_account.alert.title" = "Удалить аккаунт";
 "self.settings.account_details.delete_account.alert.message" = "Мы вышлем вам сообщение по электронной почте или SMS. Перейдите по ссылке, чтобы окончательно удалить свой аккаунт.";
+
+"self.settings.account_details.log_out.alert.title" = "Выйти";
+"self.settings.account_details.log_out.alert.message" = "История сообщений будет удалена с этого устройства.";
+
 
 // Change Username
 
@@ -715,8 +719,8 @@
 "self.settings.privacy_security.lock_cancelled.description" = "Разблокируйте Wire с помощью Touch ID или пароля";
 "self.settings.privacy_security.lock_cancelled.action" = "Разблокировать";
 
-"self.settings.privacy_security.disable_link_previews.title" = "Показывать предпросмотр ссылок, отправляемых вами";
-"self.settings.privacy_security.disable_link_previews.footer" = "Предпросмотр может по-прежнему отображаться для ссылок от других людей.";
+"self.settings.privacy_security.disable_link_previews.title" = "Генерировать предпросмотр для ссылок";
+"self.settings.privacy_security.disable_link_previews.footer" = "Предпросмотр всё же может отображаться для ссылок от других людей.";
 
 "self.settings.privacy_analytics_menu.devices.title" = "Устройства";
 
@@ -897,6 +901,7 @@
 "error.user.registration_unknown_error" = "Что-то пошло не так. Пожалуйста, попробуйте еще раз.";
 "error.user.device_deleted_remotely" = "Вы вышли на другом устройстве.";
 "error.user.last_identity_cant_be_deleted" = "Необходимо оставить либо адрес электронной почты, либо номер телефона.";
+"error.user.account_suspended" = "Данный аккаунт заблокирован.";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Those are caught by the UI without involving the SE validation. Basically very similar to ZMUserSessionErrorCode onces

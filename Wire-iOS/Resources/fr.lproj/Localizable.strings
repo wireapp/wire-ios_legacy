@@ -84,7 +84,7 @@
 
 // Conversation List Indicator
 "conversation_list.right_accessory.join_button.title" = "Rejoindre";
-"conversation_list.header.self_team.accessibility_value" = "Équipe %@.";
+"conversation_list.header.self_team.accessibility_value" = "Compte %@.";
 "conversation_list.header.self_team.accessibility_value.inactive" = "Appuyez pour activer.";
 "conversation_list.header.self_team.accessibility_value.active" = "Actif.";
 "conversation_list.header.self_team.accessibility_value.has_new_messages" = "Nouveaux messages.";
@@ -496,7 +496,6 @@
 "profile.details.title" = "Informations";
 "profile.details.guest" = "Invité";
 
-"profile_view.team_name.in" = "dans %@";
 "profile_view.accessibility.handle" = "Nom d'utilisateur";
 "profile_view.accessibility.name" = "Nom affiché";
 "profile_view.accessibility.team_name" = "Nom d'équipe";
@@ -528,6 +527,7 @@
 
 "self.settings" = "Paramètres";
 "self.profile" = "Profil";
+"self.account" = "Compte";
 "self.help_center" = "Assistance";
 "self.help_center.support_website" = "Site d'assistance de Wire";
 "self.help_center.contact_support" = "Contacter l'assistance technique";
@@ -600,6 +600,10 @@
 
 "self.settings.account_details.delete_account.alert.title" = "Supprimer le compte";
 "self.settings.account_details.delete_account.alert.message" = "Nous allons vous envoyer un e-mail ou un SMS. Cliquez sur le lien pour supprimer définitivement votre compte.";
+
+"self.settings.account_details.log_out.alert.title" = "Se déconnecter";
+"self.settings.account_details.log_out.alert.message" = "L'historique de vos messages sera effacé de cet appareil.";
+
 
 // Change Username
 
@@ -715,7 +719,7 @@
 "self.settings.privacy_security.lock_cancelled.description" = "Veuillez déverrouiller Wire avec Touch ID ou le code";
 "self.settings.privacy_security.lock_cancelled.action" = "Déverrouiller";
 
-"self.settings.privacy_security.disable_link_previews.title" = "Créer des aperçus pour les liens que vous envoyez";
+"self.settings.privacy_security.disable_link_previews.title" = "Créer un aperçu pour les liens";
 "self.settings.privacy_security.disable_link_previews.footer" = "Les aperçus pourront toujours s'afficher pour les liens d'autres personnes.";
 
 "self.settings.privacy_analytics_menu.devices.title" = "Appareils";
@@ -897,6 +901,7 @@
 "error.user.registration_unknown_error" = "Une erreur s'est produite. Veuillez réessayer.";
 "error.user.device_deleted_remotely" = "Vous avez été déconnecté depuis un autre appareil.";
 "error.user.last_identity_cant_be_deleted" = "Une adresse e-mail ou un numéro de téléphone est nécessaire.";
+"error.user.account_suspended" = "Ce compte n'est plus autorisé à se connecter.";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Those are caught by the UI without involving the SE validation. Basically very similar to ZMUserSessionErrorCode onces
