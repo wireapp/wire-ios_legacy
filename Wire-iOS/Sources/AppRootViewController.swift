@@ -74,6 +74,7 @@ class AppRootViewController : UIViewController {
         }
         
         NotificationCenter.default.addObserver(self, selector: #selector(onContentSizeCategoryChange), name: Notification.Name.UIContentSizeCategoryDidChange, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(applicationDidEnterBackground), name: Notification.Name.UIApplicationDidEnterBackground, object: nil)
         
         transition(to: .headless)
         
@@ -350,9 +351,16 @@ extension AppRootViewController : AppStateControllerDelegate {
     
 }
 
+// MARK: - Application Icon Badge Number
+
 extension AppRootViewController : LocalMessageNotificationResponder {
-    
+
     func processLocalMessage(_ notification: UILocalNotification, forSession session: ZMUserSession) {
-            (self.overlayWindow.rootViewController as! NotificationWindowRootViewController).show(notification)    
+        (self.overlayWindow.rootViewController as! NotificationWindowRootViewController).show(notification)
+    }
+    
+    @objc fileprivate func applicationDidEnterBackground() {
+        let unreadConversations = sessionManager?.accountManager.totalUnreadCount ?? 0
+        UIApplication.shared.applicationIconBadgeNumber = unreadConversations
     }
 }
