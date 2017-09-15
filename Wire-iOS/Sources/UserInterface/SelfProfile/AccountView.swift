@@ -142,14 +142,14 @@ public class BaseAccountView: UIView, AccountViewType {
     }
     
     public var hasUnreadMessages: Bool {
-        return false
+        return account.unreadConversationCount > 0
     }
     
     public let account: Account
     
     func updateAppearance() {
         selectionView.isHidden = !selected || collapsed
-        dotView.isHidden = selected || !hasUnreadMessages || collapsed
+        dotView.isHidden = !hasUnreadMessages || collapsed
         
         selectionView.hostedLayer.strokeColor = UIColor.accent().cgColor
     }
@@ -209,6 +209,10 @@ public class BaseAccountView: UIView, AccountViewType {
         
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(didTap(_:)))
         self.addGestureRecognizer(tapGesture)
+        
+        NotificationCenter.default.addObserver(forName: .AccountUnreadCountDidChangeNotification, object: account, queue: .main) { _ in
+            self.updateAppearance()
+        }
         
         updateAppearance()
     }
