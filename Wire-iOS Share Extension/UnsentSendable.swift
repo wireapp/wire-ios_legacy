@@ -21,7 +21,7 @@ import UIKit
 import WireShareEngine
 import MobileCoreServices
 import WireExtensionComponents
-
+import ImageIO
 
 /// Error that can happen during the preparation or sending operation
 enum UnsentSendableError: Error {
@@ -85,6 +85,7 @@ class UnsentTextSendable: UnsentSendableBase, UnsentSendable {
 
 }
 
+
 /// `UnsentSendable` implementation to send image messages
 class UnsentImageSendable: UnsentSendableBase, UnsentSendable {
 
@@ -102,14 +103,31 @@ class UnsentImageSendable: UnsentSendableBase, UnsentSendable {
         precondition(needsPreparation, "Ensure this objects needs preparation, c.f. `needsPreparation`")
         needsPreparation = false
 
-        let options = [NSItemProviderPreferredImageSizeKey : NSValue(cgSize: .init(width: 1024, height: 1024))]
-
-        attachment.loadItem(forTypeIdentifier: kUTTypeImage as String, options: options, imageCompletionHandler: { [weak self] (image, error) in
+        let longestDimension: CGFloat = 1024
+        
+        // note: this doesn't seem to have any effect, but perhaps it's an iOS bug that will be fixed...
+        let options = [NSItemProviderPreferredImageSizeKey : NSValue(cgSize: CGSize(width: longestDimension, height: longestDimension))]
+        
+        // app extensions have severely limited memory resources & risk termination if they are too greedy. In order to
+        // minimize memory consumption we must downscale the images being shared. Standard image scaling methods that
+        // rely on UIImage are too expensive (eg. 12MP image -> approx 48MB UIImage), so we make the system scale the images
+        // for us ('free' of charge) by using the image URL & ImageIO library.
+        //
+        self.attachment.loadItem(forTypeIdentifier: kUTTypeImage as String, options: options, urlCompletionHandler: { [weak self] (url, error) in
             error?.log(message: "Unable to load image from attachment")
-            self?.imageData = image.flatMap {
-                UIImageJPEGRepresentation($0, 0.9)
+            
+            if let url = url, let imageSource = CGImageSourceCreateWithURL(url as CFURL, nil) {
+                let options: [NSString : Any] = [
+                    kCGImageSourceThumbnailMaxPixelSize: longestDimension,
+                    kCGImageSourceCreateThumbnailFromImageAlways: true,
+                    kCGImageSourceCreateThumbnailWithTransform: true
+                ]
+                
+                if let scaledImage = CGImageSourceCreateThumbnailAtIndex(imageSource, 0, options as CFDictionary) {
+                    self?.imageData = UIImageJPEGRepresentation(UIImage(cgImage: scaledImage), 0.9)
+                }
             }
-
+            
             completion()
         })
     }

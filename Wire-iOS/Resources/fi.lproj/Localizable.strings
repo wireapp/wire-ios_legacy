@@ -84,7 +84,7 @@
 
 // Conversation List Indicator
 "conversation_list.right_accessory.join_button.title" = "Liity";
-"conversation_list.header.self_team.accessibility_value" = "%@ team.";
+"conversation_list.header.self_team.accessibility_value" = "%@ account.";
 "conversation_list.header.self_team.accessibility_value.inactive" = "Tap to activate.";
 "conversation_list.header.self_team.accessibility_value.active" = "Active now.";
 "conversation_list.header.self_team.accessibility_value.has_new_messages" = "Has new messages.";
@@ -496,7 +496,6 @@
 "profile.details.title" = "Lisätietoja";
 "profile.details.guest" = "Guest";
 
-"profile_view.team_name.in" = "in %@";
 "profile_view.accessibility.handle" = "Käyttäjänimi";
 "profile_view.accessibility.name" = "Display name";
 "profile_view.accessibility.team_name" = "Team name";
@@ -528,6 +527,7 @@
 
 "self.settings" = "Asetukset";
 "self.profile" = "Profiili";
+"self.account" = "Tili";
 "self.help_center" = "Tuki";
 "self.help_center.support_website" = "Wiren Tuki Sivusto";
 "self.help_center.contact_support" = "Ota yhteyttä tukeen";
@@ -559,8 +559,8 @@
 "self.new_device_alert.trust_devices" = "OK";
 
 // Settings - top level
-"self.settings.create_team.title" = "Create team";
-"self.settings.add_account.title" = "Add account";
+"self.settings.create_team.title" = "Create Team";
+"self.settings.add_account.title" = "Add Account";
 
 // Settings - Account details
 "self.settings.account_section" = "Tili";
@@ -600,6 +600,10 @@
 
 "self.settings.account_details.delete_account.alert.title" = "Poista tili";
 "self.settings.account_details.delete_account.alert.message" = "Lähetämme sinulle viestin joko sähköpostina tai tekstiviestinä. Paina viestissä olevaa linkkiä poistaaksesi tilisi lopullisesti.";
+
+"self.settings.account_details.log_out.alert.title" = "Kirjaudu ulos";
+"self.settings.account_details.log_out.alert.message" = "Your message history will be erased on this device.";
+
 
 // Change Username
 
@@ -715,7 +719,7 @@
 "self.settings.privacy_security.lock_cancelled.description" = "Unlock Wire with Touch ID or Passcode";
 "self.settings.privacy_security.lock_cancelled.action" = "Avaa lukitus";
 
-"self.settings.privacy_security.disable_link_previews.title" = "Create Previews For Links You Send";
+"self.settings.privacy_security.disable_link_previews.title" = "Create Link Previews";
 "self.settings.privacy_security.disable_link_previews.footer" = "Previews may still be shown for links from other people.";
 
 "self.settings.privacy_analytics_menu.devices.title" = "Laitteet";
@@ -897,6 +901,7 @@
 "error.user.registration_unknown_error" = "Jotain meni pieleen. Yritä uudelleen.";
 "error.user.device_deleted_remotely" = "Olet kirjautunut ulos toisesta laitteesta.";
 "error.user.last_identity_cant_be_deleted" = "Either an email address or a phone number is required.";
+"error.user.account_suspended" = "This account is no longer authorized to log in.";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Those are caught by the UI without involving the SE validation. Basically very similar to ZMUserSessionErrorCode onces

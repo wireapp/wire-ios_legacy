@@ -84,7 +84,7 @@
 
 // Conversation List Indicator
 "conversation_list.right_accessory.join_button.title" = "Entra";
-"conversation_list.header.self_team.accessibility_value" = "%@ team.";
+"conversation_list.header.self_team.accessibility_value" = "%@ account.";
 "conversation_list.header.self_team.accessibility_value.inactive" = "Tocca per attivare.";
 "conversation_list.header.self_team.accessibility_value.active" = "Attiva ora.";
 "conversation_list.header.self_team.accessibility_value.has_new_messages" = "Ha nuovi messaggi.";
@@ -94,22 +94,22 @@
 
 // Conversation list voiceover accessibility
 "conversation_list.voiceover.open_conversation.hint" = "Apri conversazione";
-"conversation_list.voiceover.status.pending_connection" = "pending";
-"conversation_list.voiceover.status.active_call" = "active call";
+"conversation_list.voiceover.status.pending_connection" = "in sospeso";
+"conversation_list.voiceover.status.active_call" = "chiamata attiva";
 "conversation_list.voiceover.status.missed_call" = "chiamata senza risposta";
-"conversation_list.voiceover.status.pause_media" = "pause media";
-"conversation_list.voiceover.status.play_media" = "play media";
-"conversation_list.voiceover.status.silenced" = "silenced";
-"conversation_list.voiceover.status.typing" = "typing";
-"conversation_list.voiceover.status.ping" = "ping";
-"conversation_list.voiceover.bottom_bar.archived_button.label" = "archived";
-"conversation_list.voiceover.bottom_bar.archived_button.hint" = "list of archived conversations";
+"conversation_list.voiceover.status.pause_media" = "media in pausa";
+"conversation_list.voiceover.status.play_media" = "riproduci Media";
+"conversation_list.voiceover.status.silenced" = "silenzio";
+"conversation_list.voiceover.status.typing" = "sta scrivendo";
+"conversation_list.voiceover.status.ping" = "fai un trillo";
+"conversation_list.voiceover.bottom_bar.archived_button.label" = "archivio";
+"conversation_list.voiceover.bottom_bar.archived_button.hint" = "elenco di conversazioni archiviate";
 "conversation_list.voiceover.bottom_bar.contacts_button.label" = "contatti";
-"conversation_list.voiceover.bottom_bar.contacts_button.hint" = "search for people on Wire";
-"conversation_list.voiceover.bottom_bar.compose_button.label" = "compose";
-"conversation_list.voiceover.bottom_bar.compose_button.hint" = "compose messages and save for later";
-"conversation_list.voiceover.bottom_bar.camera_button.label" = "camera";
-"conversation_list.voiceover.bottom_bar.camera_button.hint" = "take picture and send quickly";
+"conversation_list.voiceover.bottom_bar.contacts_button.hint" = "cerca persone su Wire";
+"conversation_list.voiceover.bottom_bar.compose_button.label" = "componi";
+"conversation_list.voiceover.bottom_bar.compose_button.hint" = "componi i messaggi e salva per dopo";
+"conversation_list.voiceover.bottom_bar.camera_button.label" = "fotocamera";
+"conversation_list.voiceover.bottom_bar.camera_button.hint" = "scattare una foto e invia rapidamente";
 
 // Archived List
 "archived_list.title" = "archivio";
@@ -146,7 +146,7 @@
 "list.archived_conversations" = "ARCHIVIO";
 "list.archived_conversations_close" = "Chiudi archivio";
 
-"conversation.voiceover.verified" = "verified";
+"conversation.voiceover.verified" = "verificato";
 
 "conversation.status.call" = "Chiamata in corso";
 "conversation.status.typing" = "Scrivendo un messaggio…";
@@ -496,7 +496,6 @@
 "profile.details.title" = "Dettagli";
 "profile.details.guest" = "Ospite";
 
-"profile_view.team_name.in" = "in %@";
 "profile_view.accessibility.handle" = "Username";
 "profile_view.accessibility.name" = "Nome visualizzato";
 "profile_view.accessibility.team_name" = "Nome team";
@@ -528,6 +527,7 @@
 
 "self.settings" = "Impostazioni";
 "self.profile" = "Profilo";
+"self.account" = "Account";
 "self.help_center" = "Supporto";
 "self.help_center.support_website" = "Sito assistenza clienti Wire";
 "self.help_center.contact_support" = "Contatta il supporto";
@@ -535,8 +535,8 @@
 "self.sign_out" = "Esci dall’account";
 "self.report_abuse" = "Riporta un errore";
 "self.voiceover.label" = "Profilo";
-"self.voiceover.hint" = "Open profile and settings";
-"self.new-device.voiceover.label" = "Profile, new devices added";
+"self.voiceover.hint" = "Apri profilo e impostazioni";
+"self.new-device.voiceover.label" = "Profilo, nuovi dispositivi aggiunti";
 
 "self.add_phone_number" = "Aggiungi un numero di telefono";
 "self.add_email_password" = "Aggiungi indirizzo email e password";
@@ -559,8 +559,8 @@
 "self.new_device_alert.trust_devices" = "OK";
 
 // Settings - top level
-"self.settings.create_team.title" = "Create team";
-"self.settings.add_account.title" = "Add account";
+"self.settings.create_team.title" = "Create Team";
+"self.settings.add_account.title" = "Add Account";
 
 // Settings - Account details
 "self.settings.account_section" = "Account";
@@ -600,6 +600,10 @@
 
 "self.settings.account_details.delete_account.alert.title" = "Cancella account";
 "self.settings.account_details.delete_account.alert.message" = "Ti invieremo un SMS o una email. Segui il link per eliminare definitivamente il tuo account.";
+
+"self.settings.account_details.log_out.alert.title" = "Logout";
+"self.settings.account_details.log_out.alert.message" = "Your message history will be erased on this device.";
+
 
 // Change Username
 
@@ -715,7 +719,7 @@
 "self.settings.privacy_security.lock_cancelled.description" = "Sblocca Wire con Touch ID o Passcode";
 "self.settings.privacy_security.lock_cancelled.action" = "Sblocca";
 
-"self.settings.privacy_security.disable_link_previews.title" = "Create Previews For Links You Send";
+"self.settings.privacy_security.disable_link_previews.title" = "Create Link Previews";
 "self.settings.privacy_security.disable_link_previews.footer" = "È possibile che vengano comunque mostrate delle anteprime per i link inviati dagli altri utenti.";
 
 "self.settings.privacy_analytics_menu.devices.title" = "Dispositivi";
@@ -897,6 +901,7 @@
 "error.user.registration_unknown_error" = "Qualcosa è andato storto. Si prega di riprovare.";
 "error.user.device_deleted_remotely" = "Sei stato disconnesso da un altro dispositivo.";
 "error.user.last_identity_cant_be_deleted" = "È richiesto un numero di telefono oppure un'indirizzo email.";
+"error.user.account_suspended" = "This account is no longer authorized to log in.";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Those are caught by the UI without involving the SE validation. Basically very similar to ZMUserSessionErrorCode onces
@@ -974,6 +979,6 @@
 "compose.drafts.compose.delete.confirm.message" = "Questa azione eliminerà permanentemente la bozza e non potrà essere annullata.";
 "compose.drafts.compose.delete.confirm.action.title" = "Elimina";
 
-"compose.drafts.compose.dismiss.confirm.title" = "Save as draft";
+"compose.drafts.compose.dismiss.confirm.title" = "Salvare come bozza";
 "compose.drafts.compose.dismiss.confirm.action.title" = "Salva";
 "compose.drafts.compose.dismiss.delete.action.title" = "Elimina";

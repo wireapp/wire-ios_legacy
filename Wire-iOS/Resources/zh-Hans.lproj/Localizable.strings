@@ -62,7 +62,7 @@
 "peoplepicker.quick-action.open-conversation" = "开启";
 "peoplepicker.quick-action.create-conversation" = "创建群聊";
 
-"add_participants.all_contacts_added" = "Everyone's here.";
+"add_participants.all_contacts_added" = "所有用户已加入群聊";
 
 // Contacts UI
 "contacts_ui.search_placeholder" = "按名称搜索";
@@ -84,7 +84,7 @@
 
 // Conversation List Indicator
 "conversation_list.right_accessory.join_button.title" = "加入";
-"conversation_list.header.self_team.accessibility_value" = "%@ 团队。";
+"conversation_list.header.self_team.accessibility_value" = "%@帐号";
 "conversation_list.header.self_team.accessibility_value.inactive" = "点击激活";
 "conversation_list.header.self_team.accessibility_value.active" = "立即激活";
 "conversation_list.header.self_team.accessibility_value.has_new_messages" = "有新消息。";
@@ -94,22 +94,22 @@
 
 // Conversation list voiceover accessibility
 "conversation_list.voiceover.open_conversation.hint" = "打开对话";
-"conversation_list.voiceover.status.pending_connection" = "pending";
-"conversation_list.voiceover.status.active_call" = "active call";
-"conversation_list.voiceover.status.missed_call" = "missed call";
-"conversation_list.voiceover.status.pause_media" = "pause media";
-"conversation_list.voiceover.status.play_media" = "play media";
-"conversation_list.voiceover.status.silenced" = "silenced";
-"conversation_list.voiceover.status.typing" = "typing";
-"conversation_list.voiceover.status.ping" = "ping";
-"conversation_list.voiceover.bottom_bar.archived_button.label" = "archived";
-"conversation_list.voiceover.bottom_bar.archived_button.hint" = "list of archived conversations";
+"conversation_list.voiceover.status.pending_connection" = "等待接通";
+"conversation_list.voiceover.status.active_call" = "通话中";
+"conversation_list.voiceover.status.missed_call" = "未接来电";
+"conversation_list.voiceover.status.pause_media" = "暂停";
+"conversation_list.voiceover.status.play_media" = "播放";
+"conversation_list.voiceover.status.silenced" = "静音";
+"conversation_list.voiceover.status.typing" = "输入中";
+"conversation_list.voiceover.status.ping" = "打招呼";
+"conversation_list.voiceover.bottom_bar.archived_button.label" = "已归档";
+"conversation_list.voiceover.bottom_bar.archived_button.hint" = "已归档的聊天列表";
 "conversation_list.voiceover.bottom_bar.contacts_button.label" = "联系人";
-"conversation_list.voiceover.bottom_bar.contacts_button.hint" = "search for people on Wire";
-"conversation_list.voiceover.bottom_bar.compose_button.label" = "compose";
-"conversation_list.voiceover.bottom_bar.compose_button.hint" = "compose messages and save for later";
-"conversation_list.voiceover.bottom_bar.camera_button.label" = "camera";
-"conversation_list.voiceover.bottom_bar.camera_button.hint" = "take picture and send quickly";
+"conversation_list.voiceover.bottom_bar.contacts_button.hint" = "在Wire上找人";
+"conversation_list.voiceover.bottom_bar.compose_button.label" = "新建";
+"conversation_list.voiceover.bottom_bar.compose_button.hint" = "新建消息并保存";
+"conversation_list.voiceover.bottom_bar.camera_button.label" = "相机";
+"conversation_list.voiceover.bottom_bar.camera_button.hint" = "拍照并立即发送";
 
 // Archived List
 "archived_list.title" = "档案";
@@ -146,7 +146,7 @@
 "list.archived_conversations" = "归档";
 "list.archived_conversations_close" = "关闭归档";
 
-"conversation.voiceover.verified" = "verified";
+"conversation.voiceover.verified" = "已验证";
 
 "conversation.status.call" = "正在呼叫";
 "conversation.status.typing" = "输入信息";
@@ -173,7 +173,7 @@
 "conversation.status.removed_multiple" = "联系人已删除";
 "conversation.status.you_were_removed" = "你被删除";
 "conversation.status.you_left" = "您退出了";
-"conversation.status.started_conversation" = "%@ started a conversation";
+"conversation.status.started_conversation" = "%@正在输入";
 "conversation.status.removed_users" = "%@移除了%@";
 "conversation.status.everyone_left" = "所有人都已离开";
 
@@ -213,7 +213,7 @@
 
 "conversation.connection_view.in_address_book" = "在联系人中";
 
-"conversation.input_bar.shortcut.send" = "Send Message";
+"conversation.input_bar.shortcut.send" = "发送消息";
 
 // Image confirmation dialogue
 "image_confirmer.confirm" = "好";
@@ -496,10 +496,9 @@
 "profile.details.title" = "详细信息";
 "profile.details.guest" = "游客";
 
-"profile_view.team_name.in" = "in %@";
 "profile_view.accessibility.handle" = "用户名";
-"profile_view.accessibility.name" = "Display name";
-"profile_view.accessibility.team_name" = "Team name";
+"profile_view.accessibility.name" = "昵称";
+"profile_view.accessibility.team_name" = "团队名称";
 
 // Device list
 "profile.devices.title" = "設備";
@@ -528,6 +527,7 @@
 
 "self.settings" = "设置";
 "self.profile" = "用户信息";
+"self.account" = "帐户";
 "self.help_center" = "帮助";
 "self.help_center.support_website" = "Wire帮助网站";
 "self.help_center.contact_support" = "与客服联系";
@@ -535,8 +535,8 @@
 "self.sign_out" = "登出";
 "self.report_abuse" = "滥用报告";
 "self.voiceover.label" = "用户信息";
-"self.voiceover.hint" = "Open profile and settings";
-"self.new-device.voiceover.label" = "Profile, new devices added";
+"self.voiceover.hint" = "打开资料及设置";
+"self.new-device.voiceover.label" = "已添加资料及新设备";
 
 "self.add_phone_number" = "新增手机号码";
 "self.add_email_password" = "新增邮箱地址和密码";
@@ -559,8 +559,8 @@
 "self.new_device_alert.trust_devices" = "好";
 
 // Settings - top level
-"self.settings.create_team.title" = "Create team";
-"self.settings.add_account.title" = "Add account";
+"self.settings.create_team.title" = "创建团队";
+"self.settings.add_account.title" = "添加帐户";
 
 // Settings - Account details
 "self.settings.account_section" = "帐户";
@@ -600,6 +600,10 @@
 
 "self.settings.account_details.delete_account.alert.title" = "删除账号";
 "self.settings.account_details.delete_account.alert.message" = "我们将通过电子邮件或手机短信发送链接给您。请点击链接从而永久删除您的账号。";
+
+"self.settings.account_details.log_out.alert.title" = "登出";
+"self.settings.account_details.log_out.alert.message" = "你的对话历史记录将从此设备擦除";
+
 
 // Change Username
 
@@ -715,13 +719,13 @@
 "self.settings.privacy_security.lock_cancelled.description" = "通过Touch ID或Passcode解锁";
 "self.settings.privacy_security.lock_cancelled.action" = "解锁";
 
-"self.settings.privacy_security.disable_link_previews.title" = "Create Previews For Links You Send";
-"self.settings.privacy_security.disable_link_previews.footer" = "Previews may still be shown for links from other people.";
+"self.settings.privacy_security.disable_link_previews.title" = "创建链接预览";
+"self.settings.privacy_security.disable_link_previews.footer" = "仍会为其他人的链接显示预览";
 
 "self.settings.privacy_analytics_menu.devices.title" = "設備";
 
 "self.settings.privacy_analytics_section.title" = "使用与崩溃报告";
-"self.settings.privacy_analytics.title" = "Send Anonymous Data";
+"self.settings.privacy_analytics.title" = "发送匿名数据";
 "self.settings.privacy_analytics_menu.description.title" = "通过发送匿名反馈让Wire变得更好。";
 
 "self.settings.privacy.clear_history.title" = "清除历史记录";
@@ -897,6 +901,7 @@
 "error.user.registration_unknown_error" = "出了点问题，请再试一次。";
 "error.user.device_deleted_remotely" = "您的另一台设备已被登出。";
 "error.user.last_identity_cant_be_deleted" = "邮箱地址或手机号码是必填项。";
+"error.user.account_suspended" = "此账户不再被授权登录";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Those are caught by the UI without involving the SE validation. Basically very similar to ZMUserSessionErrorCode onces
@@ -966,7 +971,7 @@
 
 "compose.drafts.title" = "短消息";
 "compose.drafts.empty.title" = "无消息";
-"compose.drafts.empty.subtitle" = "Tap + to compose one";
+"compose.drafts.empty.subtitle" = "点击 + 来新建";
 "compose.drafts.compose.title" = "写短信";
 "compose.drafts.compose.subject.placeholder" = "点击设置主题";
 
@@ -974,6 +979,6 @@
 "compose.drafts.compose.delete.confirm.message" = "此操作将永久删除，且该操作不可恢复。";
 "compose.drafts.compose.delete.confirm.action.title" = "删除";
 
-"compose.drafts.compose.dismiss.confirm.title" = "Save as draft";
+"compose.drafts.compose.dismiss.confirm.title" = "保存为草稿";
 "compose.drafts.compose.dismiss.confirm.action.title" = "保存";
 "compose.drafts.compose.dismiss.delete.action.title" = "删除";

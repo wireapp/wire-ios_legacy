@@ -77,14 +77,14 @@
 "contacts_ui.title" = "Povabite osebe";
 
 "contacts_ui.no_contact.title" = "Še ni pogovorov\n";
-"contacts_ui.no_contact.message" = "Start a conversation or create a group.";
+"contacts_ui.no_contact.message" = "Pogovor zaènete ali ustvarite skupino.";
 
 "contacts_ui.no_contact.archived.title" = "Vse je arhivirano";
 
 
 // Conversation List Indicator
 "conversation_list.right_accessory.join_button.title" = "Pridruži";
-"conversation_list.header.self_team.accessibility_value" = "%@ ekipa.";
+"conversation_list.header.self_team.accessibility_value" = "%@ account.";
 "conversation_list.header.self_team.accessibility_value.inactive" = "Tapnite, če želite aktivirati.";
 "conversation_list.header.self_team.accessibility_value.active" = "Aktiven.";
 "conversation_list.header.self_team.accessibility_value.has_new_messages" = "Ima nova sporočila.";
@@ -496,7 +496,6 @@
 "profile.details.title" = "Podrobnosti";
 "profile.details.guest" = "Gost";
 
-"profile_view.team_name.in" = "v %@";
 "profile_view.accessibility.handle" = "Uporabniško ime";
 "profile_view.accessibility.name" = "Uporabniško ime";
 "profile_view.accessibility.team_name" = "Ime ekipe";
@@ -528,6 +527,7 @@
 
 "self.settings" = "Nastavitve";
 "self.profile" = "Profil";
+"self.account" = "Račun";
 "self.help_center" = "Podpora";
 "self.help_center.support_website" = "Spletna stran Wire podpore";
 "self.help_center.contact_support" = "Kontaktiraj podporo";
@@ -559,8 +559,8 @@
 "self.new_device_alert.trust_devices" = "V redu";
 
 // Settings - top level
-"self.settings.create_team.title" = "Create team";
-"self.settings.add_account.title" = "Add account";
+"self.settings.create_team.title" = "Create Team";
+"self.settings.add_account.title" = "Add Account";
 
 // Settings - Account details
 "self.settings.account_section" = "Račun";
@@ -600,6 +600,10 @@
 
 "self.settings.account_details.delete_account.alert.title" = "Izbriši račun";
 "self.settings.account_details.delete_account.alert.message" = "Poslali bomo sporočilo preko e-pošte ali SMS. Sledite povezavi za trajni izbris vašega računa.";
+
+"self.settings.account_details.log_out.alert.title" = "Odjava";
+"self.settings.account_details.log_out.alert.message" = "Your message history will be erased on this device.";
+
 
 // Change Username
 
@@ -715,7 +719,7 @@
 "self.settings.privacy_security.lock_cancelled.description" = "Odkleni Wire s Touch ID ali geslom";
 "self.settings.privacy_security.lock_cancelled.action" = "Odkleni";
 
-"self.settings.privacy_security.disable_link_previews.title" = "Create Previews For Links You Send";
+"self.settings.privacy_security.disable_link_previews.title" = "Create Link Previews";
 "self.settings.privacy_security.disable_link_previews.footer" = "Predogledi se še vedno lahko prikazujejo za povezave drugih ljudi.";
 
 "self.settings.privacy_analytics_menu.devices.title" = "Naprave";
@@ -897,6 +901,7 @@
 "error.user.registration_unknown_error" = "Nekaj je šlo narobe, prosimo poizkusite znova.";
 "error.user.device_deleted_remotely" = "Odjavljeni ste bili iz druge naprave.";
 "error.user.last_identity_cant_be_deleted" = "Zahtevan je ali e-poštni naslov ali telefonska številka.";
+"error.user.account_suspended" = "This account is no longer authorized to log in.";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Those are caught by the UI without involving the SE validation. Basically very similar to ZMUserSessionErrorCode onces

@@ -84,7 +84,7 @@
 
 // Conversation List Indicator
 "conversation_list.right_accessory.join_button.title" = "Deltag";
-"conversation_list.header.self_team.accessibility_value" = "%@ team.";
+"conversation_list.header.self_team.accessibility_value" = "%@ account.";
 "conversation_list.header.self_team.accessibility_value.inactive" = "Tap to activate.";
 "conversation_list.header.self_team.accessibility_value.active" = "Active now.";
 "conversation_list.header.self_team.accessibility_value.has_new_messages" = "Has new messages.";
@@ -162,7 +162,7 @@
 "conversation.status.message.video" = "Delte en video";
 "conversation.status.message.file" = "Delte en fil";
 "conversation.status.message.knock" = "Pingede";
-"conversation.status.message.missedcall" = "Missed call";
+"conversation.status.message.missedcall" = "Ubesvarede opkald";
 "conversation.status.message.ephemeral" = "Tidsbestemt besked";
 
 "conversation.status.unsent" = "⚠️ Unsent message";
@@ -496,7 +496,6 @@
 "profile.details.title" = "Detaljer";
 "profile.details.guest" = "Gæst";
 
-"profile_view.team_name.in" = "in %@";
 "profile_view.accessibility.handle" = "Brugernavn";
 "profile_view.accessibility.name" = "Display name";
 "profile_view.accessibility.team_name" = "Team name";
@@ -528,6 +527,7 @@
 
 "self.settings" = "Indstillinger";
 "self.profile" = "Profil";
+"self.account" = "Konto";
 "self.help_center" = "Support";
 "self.help_center.support_website" = "Wire support hjemmeside";
 "self.help_center.contact_support" = "Kontakt support";
@@ -559,8 +559,8 @@
 "self.new_device_alert.trust_devices" = "OK";
 
 // Settings - top level
-"self.settings.create_team.title" = "Create team";
-"self.settings.add_account.title" = "Add account";
+"self.settings.create_team.title" = "Create Team";
+"self.settings.add_account.title" = "Add Account";
 
 // Settings - Account details
 "self.settings.account_section" = "Konto";
@@ -600,6 +600,10 @@
 
 "self.settings.account_details.delete_account.alert.title" = "Slet konto";
 "self.settings.account_details.delete_account.alert.message" = "Vi vil sende en besked via e-mail eller SMS.\nFølg linket for at slette permanent din konto.";
+
+"self.settings.account_details.log_out.alert.title" = "Log ud";
+"self.settings.account_details.log_out.alert.message" = "Your message history will be erased on this device.";
+
 
 // Change Username
 
@@ -715,7 +719,7 @@
 "self.settings.privacy_security.lock_cancelled.description" = "Åben Wire med Touch ID eller adgangskode";
 "self.settings.privacy_security.lock_cancelled.action" = "Åben";
 
-"self.settings.privacy_security.disable_link_previews.title" = "Create Previews For Links You Send";
+"self.settings.privacy_security.disable_link_previews.title" = "Create Link Previews";
 "self.settings.privacy_security.disable_link_previews.footer" = "Previews may still be shown for links from other people.";
 
 "self.settings.privacy_analytics_menu.devices.title" = "Enheder";
@@ -897,6 +901,7 @@
 "error.user.registration_unknown_error" = "Noget gik galt. Venligst prøv igen.";
 "error.user.device_deleted_remotely" = "Du er blevet logget af fra en anden enhed.";
 "error.user.last_identity_cant_be_deleted" = "Der kræves enten en e-mailadresse eller et telefonnummer.";
+"error.user.account_suspended" = "This account is no longer authorized to log in.";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Those are caught by the UI without involving the SE validation. Basically very similar to ZMUserSessionErrorCode onces
