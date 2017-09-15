@@ -141,8 +141,16 @@ public class BaseAccountView: UIView, AccountViewType {
         }
     }
     
+    /// Set this to false if the account view should show the unread message dot for messages belonging only to this
+    /// account. Set to true if the dot should show for any unread message belonging to all other accounts.
+    public var invertUnreadMessagesCount = false
+    
     public var hasUnreadMessages: Bool {
-        return account.unreadConversationCount > 0
+        if invertUnreadMessagesCount{
+            return ((SessionManager.shared?.accountManager.totalUnreadCount ?? 0) - account.unreadConversationCount) > 0
+        } else {
+            return account.unreadConversationCount > 0
+        }
     }
     
     public let account: Account
