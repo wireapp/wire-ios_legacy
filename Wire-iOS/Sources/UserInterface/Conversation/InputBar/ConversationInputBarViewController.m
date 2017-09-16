@@ -458,6 +458,7 @@
 
     [self.sendButtonState updateWithTextLength:trimmed.length
                                        editing:nil != self.editingMessage
+                                   markingDown:self.inputBar.isMarkingDown
                             destructionTimeout:self.conversation.messageDestructionTimeout
                               conversationType:self.conversation.conversationType
                                           mode:self.mode];
