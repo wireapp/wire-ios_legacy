@@ -43,8 +43,9 @@ func forward(_ message: ZMMessage, to: [AnyObject]) {
     let conversations = to as! [ZMConversation]
     
     if message.isText {
+        let fetchLinkPreview = !Settings.shared().disableLinkPreviews
         ZMUserSession.shared()?.performChanges {
-            conversations.forEachNonEphemeral { _ = $0.appendMessage(withText: message.textMessageData!.messageText) }
+            conversations.forEachNonEphemeral { _ = $0.appendMessage(withText: message.textMessageData!.messageText, fetchLinkPreview: fetchLinkPreview) }
         }
     }
     else if message.isImage {
