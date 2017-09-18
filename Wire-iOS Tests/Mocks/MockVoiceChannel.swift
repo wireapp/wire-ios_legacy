@@ -35,14 +35,10 @@ class MockVoiceChannel : NSObject, VoiceChannel {
     
     // MARK - Call Properties
     
-    var callingProtocol: CallingProtocol {
-        return .version3
-    }
-    
     var isVideoCall: Bool = false
     
-    var state: VoiceChannelV2State {
-        return VoiceChannelV2State.incomingCall
+    var state: CallState {
+        return .incoming(video: false, shouldRing: true, degraded: false)
     }
     
     var conversation: ZMConversation?
@@ -51,11 +47,11 @@ class MockVoiceChannel : NSObject, VoiceChannel {
     
     var participants: NSOrderedSet = NSOrderedSet()
     
-    func state(forParticipant: ZMUser) -> VoiceChannelV2ParticipantState {
-        return VoiceChannelV2ParticipantState()
+    func state(forParticipant: ZMUser) -> CallParticipantState {
+        return .connected(muted: false, sendingVideo: false)
     }
     
-    var selfUserConnectionState: VoiceChannelV2ConnectionState = VoiceChannelV2ConnectionState.connected
+    var selfUserConnectionState: CallParticipantState = CallParticipantState.connected(muted: false, sendingVideo: false)
     
     func setVideoCaptureDevice(device: CaptureDevice) throws {
         
@@ -99,7 +95,7 @@ class MockVoiceChannel : NSObject, VoiceChannel {
         return NSObject()
     }
     
-    func addStateObserver(_ observer: VoiceChannelStateObserver) -> WireCallCenterObserverToken {
+    func addCallStateObserver(_ observer: WireCallCenterCallStateObserver) -> WireCallCenterObserverToken {
         return NSObject()
     }
     
@@ -111,7 +107,7 @@ class MockVoiceChannel : NSObject, VoiceChannel {
         return NSObject()
     }
     
-    static func addStateObserver(_ observer: VoiceChannelStateObserver, userSession: ZMUserSession) -> WireCallCenterObserverToken {
+    static func addCallStateObserver(_ observer: WireCallCenterCallStateObserver, userSession: ZMUserSession) -> WireCallCenterObserverToken {
         return NSObject()
     }
     

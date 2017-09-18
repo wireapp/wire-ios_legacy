@@ -65,4 +65,9 @@
     return 15;
 }
 
+- (id)voiceChannelInternal
+{
+    return self.voiceChannel;
+}
+
 @end
