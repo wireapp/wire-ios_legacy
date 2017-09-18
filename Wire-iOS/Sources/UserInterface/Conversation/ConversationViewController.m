@@ -783,7 +783,8 @@
             [ZMMessage deleteForEveryone:message];
         } else {
             [[Analytics shared] tagEditedMessageConversationType:conversationType timeElapsed:elapsedTime];
-            (void)[ZMMessage edit:message newText:newText];
+            BOOL fetchLinkPreview = ![[Settings sharedSettings] disableLinkPreviews];
+            (void)[ZMMessage edit:message newText:newText fetchLinkPreview:fetchLinkPreview];
         }
     }];
 }

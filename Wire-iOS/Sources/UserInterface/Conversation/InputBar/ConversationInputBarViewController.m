@@ -458,6 +458,7 @@
 
     [self.sendButtonState updateWithTextLength:trimmed.length
                                        editing:nil != self.editingMessage
+                                   markingDown:self.inputBar.isMarkingDown
                             destructionTimeout:self.conversation.messageDestructionTimeout
                               conversationType:self.conversation.conversationType
                                           mode:self.mode];
@@ -820,12 +821,8 @@
         [self.inputBar.textView handleNewLine];
     }
     
-    if (!Settings.sharedSettings.disableSendButton) {
-        // The send button is not disabled, we allow newlines and don't send.
-        return YES;
-    }
-
-    if ([text isEqualToString:@"\n"]) {
+    // send only if send key pressed
+    if (textView.returnKeyType == UIReturnKeySend && [text isEqualToString:@"\n"]) {
         [self.inputBar.textView autocorrectLastWord];
         NSString *candidateText = self.inputBar.textView.preparedText;
         [self sendOrEditText:candidateText];

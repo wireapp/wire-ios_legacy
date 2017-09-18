@@ -498,6 +498,7 @@
 		877316111B970A82007BA779 /* style.plist in Resources */ = {isa = PBXBuildFile; fileRef = 877316021B970A82007BA779 /* style.plist */; };
 		877316121B970A82007BA779 /* tutorial.plist in Resources */ = {isa = PBXBuildFile; fileRef = 877316031B970A82007BA779 /* tutorial.plist */; };
 		87775AB41D9513F9000CAD4F /* WireRequestStrategy.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87775AB31D9513F9000CAD4F /* WireRequestStrategy.framework */; };
+		8778AAED1F6BC6AD0022F53F /* AppLock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8778AAEC1F6BC6AD0022F53F /* AppLock.swift */; };
 		877A325C1E88FFB40017DD9A /* NewDevicesDot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 877A325B1E88FFB40017DD9A /* NewDevicesDot.swift */; };
 		877A325E1E8912500017DD9A /* RoundedBadge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 877A325D1E8912500017DD9A /* RoundedBadge.swift */; };
 		877A32601E892A100017DD9A /* ConversationListAccessoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 877A325F1E892A100017DD9A /* ConversationListAccessoryView.swift */; };
@@ -1772,6 +1773,7 @@
 		8774F0C61B4AB2DD002256A6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		87775AB21D95138D000CAD4F /* avs-versions */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = "avs-versions"; sourceTree = "<group>"; };
 		87775AB31D9513F9000CAD4F /* WireRequestStrategy.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WireRequestStrategy.framework; path = Carthage/Build/iOS/WireRequestStrategy.framework; sourceTree = "<group>"; };
+		8778AAEC1F6BC6AD0022F53F /* AppLock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppLock.swift; sourceTree = "<group>"; };
 		877A325B1E88FFB40017DD9A /* NewDevicesDot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewDevicesDot.swift; sourceTree = "<group>"; };
 		877A325D1E8912500017DD9A /* RoundedBadge.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoundedBadge.swift; sourceTree = "<group>"; };
 		877A325F1E892A100017DD9A /* ConversationListAccessoryView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConversationListAccessoryView.swift; sourceTree = "<group>"; };
@@ -3617,6 +3619,7 @@
 			children = (
 				871BC3381D34F94200DF0793 /* SettingsProperty.swift */,
 				871BC3391D34F94200DF0793 /* SettingsPropertyFactory.swift */,
+				8778AAEC1F6BC6AD0022F53F /* AppLock.swift */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -6337,6 +6340,7 @@
 				87AAD74C1CF2E312002760FF /* ConversationInputBarViewController+Files.m in Sources */,
 				875A23111ADEA1A200111C88 /* CountryCodeResultsTableViewController.m in Sources */,
 				871BC0591D34F60700DF0793 /* NSDate+Format.m in Sources */,
+				8778AAED1F6BC6AD0022F53F /* AppLock.swift in Sources */,
 				8FC854A0199245770008B66B /* ParticipantsHeaderView.m in Sources */,
 				871BC01B1D34F56300DF0793 /* AnalyticsTracker+FileTransfer.m in Sources */,
 				160DECD71AB329CC000FB575 /* CameraAccessDeniedView.m in Sources */,
