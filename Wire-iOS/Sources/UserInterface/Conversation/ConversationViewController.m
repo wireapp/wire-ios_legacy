@@ -58,7 +58,6 @@
 #import "UIView+Zeta.h"
 #import "ConversationInputBarViewController.h"
 #import "ProfileViewController.h"
-#import "ChatHeadsViewController.h"
 #import "MediaPlaybackManager.h"
 #import "BarController.h"
 #import "ContactsDataSource.h"
@@ -99,9 +98,6 @@
 @interface ConversationViewController (VoiceChannelStateObserver) <VoiceChannelStateObserver>
 @end
 
-@interface ConversationViewController (ChatHeadsViewControllerDelegate) <ChatHeadsViewControllerDelegate>
-@end
-
 @interface ConversationViewController (AddParticipants) <AddParticipantsViewControllerDelegate>
 @end
 
@@ -121,7 +117,6 @@
 
 @property (nonatomic) ConversationDetailsTransitioningDelegate *conversationDetailsTransitioningDelegate;
 @property (nonatomic) BarController *conversationBarController;
-@property (nonatomic) ChatHeadsViewController *chatHeadsViewController;
 @property (nonatomic) MediaBarViewController *mediaBarViewController;
 
 @property (nonatomic) ConversationContentViewController *contentViewController;
@@ -186,7 +181,6 @@
     [self createContentViewController];
     [self createConversationBarController];
     [self createMediaBarViewController];
-    [self createChatHeadsViewController];
 
     [self addChildViewController:self.contentViewController];
     [self.view addSubview:self.contentViewController.view];
@@ -199,10 +193,6 @@
     [self addChildViewController:self.conversationBarController];
     [self.view addSubview:self.conversationBarController.view];
     [self.conversationBarController didMoveToParentViewController:self];
-
-    [self addChildViewController:self.chatHeadsViewController];
-    [self.view addSubview:self.chatHeadsViewController.view];
-    [self.chatHeadsViewController didMoveToParentViewController:self];
 
     [self updateOutgoingConnectionVisibility];
     self.isAppearing = NO;
@@ -297,13 +287,6 @@
     [self.mediaBarViewController.view addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didTapMediaBar:)]];
 }
 
-- (void)createChatHeadsViewController
-{
-    self.chatHeadsViewController = [[ChatHeadsViewController alloc] init];
-    self.chatHeadsViewController.delegate = self;
-    self.chatHeadsViewController.view.translatesAutoresizingMaskIntoConstraints = NO;
-}
-
 - (void)createConstraints
 {
     [self.conversationBarController.view autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero excludingEdge:ALEdgeBottom];
@@ -317,10 +300,6 @@
     self.inputBarZeroHeight = [[NSLayoutConstraint autoCreateConstraintsWithoutInstalling:^{
         [self.inputBarController.view autoSetDimension:ALDimensionHeight toSize:0];
     }] firstObject];
-
-    [self.chatHeadsViewController.view autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.conversationBarController.view];
-    [self.chatHeadsViewController.view autoPinEdgeToSuperviewEdge:ALEdgeLeft];
-    [self.chatHeadsViewController.view autoPinEdgeToSuperviewEdge:ALEdgeRight];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -859,53 +838,6 @@
 - (void)callCenterDidEndCallWithReason:(VoiceChannelV2CallEndReason)reason conversation:(ZMConversation *)conversation callingProtocol:(enum CallingProtocol)callingProtocol
 {
     [self updateRightNavigationItemsButtons];
-}
-
-@end
-
-
-
-@implementation ConversationViewController (ChatHeadsViewControllerDelegate)
-
-- (BOOL)chatHeadsViewController:(ChatHeadsViewController *)viewController isMessageInCurrentConversation:(id<ZMConversationMessage>)message
-{
-    return [message.conversation isEqual:self.conversation];
-}
-
-- (BOOL)chatHeadsViewController:(ChatHeadsViewController *)viewController shouldDisplayMessage:(id<ZMConversationMessage>)message
-{
-    if (IS_IPAD && IS_IPAD_LANDSCAPE_LAYOUT) {
-        // no notifications in landscape
-        return NO;
-    }
-
-    if ([AppDelegate sharedAppDelegate].notificationWindowController.voiceChannelController.voiceChannelIsActive) {
-        return NO;
-    }
-
-    // in landscape no notificaitons if conversation view is not visible
-    if (! [ZClientViewController sharedZClientViewController].isConversationViewVisible) {
-        return NO;
-    }
-
-    BOOL isConversationCurrentConversation = [message.conversation isEqual:self.conversation];
-
-    BOOL isScrolledToBottom = self.contentViewController.tableView.contentOffset.y < self.view.bounds.size.height / 2.0f;
-
-    if ((! isConversationCurrentConversation || (isConversationCurrentConversation && ! isScrolledToBottom) ) &&
-        [Message isPresentableAsNotification:message]) {
-
-        return YES;
-    }
-
-    return NO;
-}
-
-- (void)chatHeadsViewController:(ChatHeadsViewController *)viewController didSelectMessage:(id<ZMConversationMessage>)message
-{
-    [self.zClientViewController selectConversation:message.conversation
-                                       focusOnView:YES
-                                          animated:YES];
 }
 
 @end

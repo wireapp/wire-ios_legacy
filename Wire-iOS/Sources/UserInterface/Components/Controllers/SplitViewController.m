@@ -343,6 +343,16 @@ NSString *SplitLayoutObservableDidChangeToLayoutSizeNotification = @"SplitLayout
     }
 }
 
+- (BOOL)shouldDisplayNotificationForMessage:(id<ZMConversationMessage>)message isActiveAccount:(BOOL)isActiveAccount
+{
+    if (self.openPercentage > 0) {
+        return [self.leftViewController shouldDisplayNotificationForMessage:message isActiveAccount:isActiveAccount];
+    }
+    else {
+        return [self.rightViewController shouldDisplayNotificationForMessage:message isActiveAccount:isActiveAccount];
+    }
+}
+
 - (NSArray *)constraintsActiveForCurrentLayout
 {
     NSMutableSet *constraints = [NSMutableSet set];

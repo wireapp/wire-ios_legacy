@@ -448,8 +448,6 @@
 		87501FB31D40D6490056C042 /* ComponentsVersions.plist in Resources */ = {isa = PBXBuildFile; fileRef = 87501FB21D40D6490056C042 /* ComponentsVersions.plist */; };
 		875060731E5B3D9E005B21C7 /* FileBackupExcluder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 875060721E5B3D9E005B21C7 /* FileBackupExcluder.swift */; };
 		8751A93C1C737D7200C72324 /* IconSystemCellTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 8751A93B1C737D7200C72324 /* IconSystemCellTests.m */; };
-		87555C851A85021C00A43E2E /* ChatHeadView.m in Sources */ = {isa = PBXBuildFile; fileRef = 87555C801A85021C00A43E2E /* ChatHeadView.m */; };
-		87555C871A85021C00A43E2E /* ChatHeadsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 87555C841A85021C00A43E2E /* ChatHeadsViewController.m */; };
 		8756CA141D2EBE1F002E7CB7 /* LaunchImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8756CA131D2EBE1F002E7CB7 /* LaunchImageViewController.m */; };
 		8756FE341CEB62F800EF58A6 /* AudioMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8756FE331CEB62F800EF58A6 /* AudioMessageCell.swift */; };
 		87582BA21C886BB90061FEB1 /* ClassyCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87582BA11C886BB90061FEB1 /* ClassyCache.swift */; };
@@ -929,6 +927,7 @@
 		DBE6F98E1B1DE51C00B7DD32 /* ziphy.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DBE6F98D1B1DE51C00B7DD32 /* ziphy.framework */; };
 		DBF597581A3600FC00269B7F /* icon-no-appstore.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DBF597571A3600FC00269B7F /* icon-no-appstore.xcassets */; };
 		DBF7235F1B5566B80036F4C5 /* a_lot_of_people.json in Resources */ = {isa = PBXBuildFile; fileRef = DBF7235E1B5566B80036F4C5 /* a_lot_of_people.json */; };
+		EE265E821F6FF4910087676B /* ChatHeadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE265E811F6FF4910087676B /* ChatHeadView.swift */; };
 		EE291BB51F0B9BF200142F31 /* Marklight.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EE291BB41F0B9BF200142F31 /* Marklight.framework */; };
 		EE291BB71F0BC54D00142F31 /* MarklightTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE291BB61F0BC54D00142F31 /* MarklightTextView.swift */; };
 		EE2FC1D81F56F89800A9A418 /* ConversationImagesViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE2FC1D71F56F89800A9A418 /* ConversationImagesViewControllerTests.swift */; };
@@ -938,6 +937,7 @@
 		EEB8A2D01F628D1100958881 /* Settings+Account.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEB8A2CF1F628D1100958881 /* Settings+Account.swift */; };
 		EEBE8C5C1F681694009D78C9 /* NSData+ImageType.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEBE8C5B1F681694009D78C9 /* NSData+ImageType.swift */; };
 		EEBE8C5E1F68171F009D78C9 /* NSData_ImageTypeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEBE8C5D1F68171F009D78C9 /* NSData_ImageTypeTests.swift */; };
+		EEE6310B1F7390D100E56803 /* ChatHeadsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEE6310A1F7390D100E56803 /* ChatHeadsViewController.swift */; };
 		EEF28EEA1F1613DA007642E2 /* MarkdownBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEF28EE91F1613DA007642E2 /* MarkdownBarView.swift */; };
 		EEF28EED1F16692A007642E2 /* InputBarSecondaryButtonsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEF28EEC1F16692A007642E2 /* InputBarSecondaryButtonsView.swift */; };
 		EEF28EEF1F168039007642E2 /* ConversationInputBarViewController+Markdown.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEF28EEE1F168039007642E2 /* ConversationInputBarViewController+Markdown.swift */; };
@@ -993,6 +993,48 @@
 			proxyType = 1;
 			remoteGlobalIDString = 8F42C537199244A700288E4D;
 			remoteInfo = "ZClient-iOS";
+		};
+		EE265E7B1F6FF4420087676B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = EE265E751F6FF4420087676B /* WireSyncEngine.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 549815931A43232400A7CE2E;
+			remoteInfo = "WireSyncEngine-ios";
+		};
+		EE265E7D1F6FF4420087676B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = EE265E751F6FF4420087676B /* WireSyncEngine.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 3E1860C3191A649D000FE027;
+			remoteInfo = "WireSyncEngine-iOS-Tests";
+		};
+		EE265E7F1F6FF4420087676B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = EE265E751F6FF4420087676B /* WireSyncEngine.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 3E186088191A56F6000FE027;
+			remoteInfo = "WireSyncEngine Test Host";
+		};
+		EEE631011F729CF200E56803 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = EEE630FB1F729CF200E56803 /* WireMessageStrategy.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = F9F056B31D93D22000FA1AAD;
+			remoteInfo = WireMessageStrategy;
+		};
+		EEE631031F729CF200E56803 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = EEE630FB1F729CF200E56803 /* WireMessageStrategy.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = F9F056BC1D93D22000FA1AAD;
+			remoteInfo = WireMessageStrategyTests;
+		};
+		EEE631051F729CF200E56803 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = EEE630FB1F729CF200E56803 /* WireMessageStrategy.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = F9F057651D94141C00FA1AAD;
+			remoteInfo = "WireMessageStrategy-Test-Host";
 		};
 /* End PBXContainerItemProxy section */
 
@@ -1699,10 +1741,6 @@
 		87501FB21D40D6490056C042 /* ComponentsVersions.plist */ = {isa = PBXFileReference; lastKnownFileType = file.bplist; name = ComponentsVersions.plist; path = "Wire-iOS/ComponentsVersions.plist"; sourceTree = "<group>"; };
 		875060721E5B3D9E005B21C7 /* FileBackupExcluder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileBackupExcluder.swift; sourceTree = "<group>"; };
 		8751A93B1C737D7200C72324 /* IconSystemCellTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IconSystemCellTests.m; sourceTree = "<group>"; };
-		87555C7F1A85021C00A43E2E /* ChatHeadView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatHeadView.h; sourceTree = "<group>"; };
-		87555C801A85021C00A43E2E /* ChatHeadView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatHeadView.m; sourceTree = "<group>"; };
-		87555C831A85021C00A43E2E /* ChatHeadsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatHeadsViewController.h; sourceTree = "<group>"; };
-		87555C841A85021C00A43E2E /* ChatHeadsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatHeadsViewController.m; sourceTree = "<group>"; };
 		8756CA121D2EBE1F002E7CB7 /* LaunchImageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LaunchImageViewController.h; sourceTree = "<group>"; };
 		8756CA131D2EBE1F002E7CB7 /* LaunchImageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LaunchImageViewController.m; sourceTree = "<group>"; };
 		8756FE331CEB62F800EF58A6 /* AudioMessageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioMessageCell.swift; sourceTree = "<group>"; };
@@ -2433,6 +2471,8 @@
 		EA64F89A9A2B5975159F31D1 /* libPods-ImageNotificationExtension.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ImageNotificationExtension.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		EA7BBD361993890900DB5E50 /* NSLayoutConstraint+Magic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSLayoutConstraint+Magic.h"; path = "Wire-iOS/Sources/Helpers/NSLayoutConstraint+Magic.h"; sourceTree = SOURCE_ROOT; };
 		EA7BBD371993890900DB5E50 /* NSLayoutConstraint+Magic.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSLayoutConstraint+Magic.m"; path = "Wire-iOS/Sources/Helpers/NSLayoutConstraint+Magic.m"; sourceTree = SOURCE_ROOT; };
+		EE265E751F6FF4420087676B /* WireSyncEngine.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = WireSyncEngine.xcodeproj; path = "../wire-ios-sync-engine/WireSyncEngine.xcodeproj"; sourceTree = "<group>"; };
+		EE265E811F6FF4910087676B /* ChatHeadView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatHeadView.swift; sourceTree = "<group>"; };
 		EE291BB41F0B9BF200142F31 /* Marklight.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Marklight.framework; path = Carthage/Build/iOS/Marklight.framework; sourceTree = "<group>"; };
 		EE291BB61F0BC54D00142F31 /* MarklightTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MarklightTextView.swift; sourceTree = "<group>"; };
 		EE2FC1D71F56F89800A9A418 /* ConversationImagesViewControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConversationImagesViewControllerTests.swift; sourceTree = "<group>"; };
@@ -2442,6 +2482,8 @@
 		EEB8A2CF1F628D1100958881 /* Settings+Account.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Settings+Account.swift"; sourceTree = "<group>"; };
 		EEBE8C5B1F681694009D78C9 /* NSData+ImageType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSData+ImageType.swift"; sourceTree = "<group>"; };
 		EEBE8C5D1F68171F009D78C9 /* NSData_ImageTypeTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSData_ImageTypeTests.swift; sourceTree = "<group>"; };
+		EEE630FB1F729CF200E56803 /* WireMessageStrategy.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = WireMessageStrategy.xcodeproj; path = "../wire-ios-message-strategy/WireMessageStrategy.xcodeproj"; sourceTree = "<group>"; };
+		EEE6310A1F7390D100E56803 /* ChatHeadsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatHeadsViewController.swift; sourceTree = "<group>"; };
 		EEF28EE91F1613DA007642E2 /* MarkdownBarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MarkdownBarView.swift; path = ../../MarkdownBarView.swift; sourceTree = "<group>"; };
 		EEF28EEC1F16692A007642E2 /* InputBarSecondaryButtonsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputBarSecondaryButtonsView.swift; sourceTree = "<group>"; };
 		EEF28EEE1F168039007642E2 /* ConversationInputBarViewController+Markdown.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ConversationInputBarViewController+Markdown.swift"; sourceTree = "<group>"; };
@@ -3705,10 +3747,8 @@
 		87555C7E1A85021C00A43E2E /* InAppNotifications */ = {
 			isa = PBXGroup;
 			children = (
-				87555C7F1A85021C00A43E2E /* ChatHeadView.h */,
-				87555C801A85021C00A43E2E /* ChatHeadView.m */,
-				87555C831A85021C00A43E2E /* ChatHeadsViewController.h */,
-				87555C841A85021C00A43E2E /* ChatHeadsViewController.m */,
+				EE265E811F6FF4910087676B /* ChatHeadView.swift */,
+				EEE6310A1F7390D100E56803 /* ChatHeadsViewController.swift */,
 				8795322C1A8A141000EB495B /* ContrastUserImageView.h */,
 				8795322D1A8A141000EB495B /* ContrastUserImageView.m */,
 			);
@@ -4081,6 +4121,8 @@
 		8F42C52F199244A700288E4D = {
 			isa = PBXGroup;
 			children = (
+				EEE630FB1F729CF200E56803 /* WireMessageStrategy.xcodeproj */,
+				EE265E751F6FF4420087676B /* WireSyncEngine.xcodeproj */,
 				87501FB21D40D6490056C042 /* ComponentsVersions.plist */,
 				87C8D7FB1BA8261C00B0530B /* Entitlements-Dev.entitlements */,
 				87C8D7FC1BA8261C00B0530B /* Entitlements-Prod.entitlements */,
@@ -5038,6 +5080,26 @@
 			path = InputBar;
 			sourceTree = "<group>";
 		};
+		EE265E761F6FF4420087676B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				EE265E7C1F6FF4420087676B /* WireSyncEngine.framework */,
+				EE265E7E1F6FF4420087676B /* WireSyncEngine-iOS-Tests.xctest */,
+				EE265E801F6FF4420087676B /* WireSyncEngine Test Host.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		EEE630FC1F729CF200E56803 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				EEE631021F729CF200E56803 /* WireMessageStrategy.framework */,
+				EEE631041F729CF200E56803 /* WireMessageStrategyTests.xctest */,
+				EEE631061F729CF200E56803 /* WireMessageStrategy-Test-Host.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		F12CDAD91E43868200CEFCEB /* ChangingDetails */ = {
 			isa = PBXGroup;
 			children = (
@@ -5355,6 +5417,16 @@
 			mainGroup = 8F42C52F199244A700288E4D;
 			productRefGroup = 8F42C539199244A700288E4D /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = EEE630FC1F729CF200E56803 /* Products */;
+					ProjectRef = EEE630FB1F729CF200E56803 /* WireMessageStrategy.xcodeproj */;
+				},
+				{
+					ProductGroup = EE265E761F6FF4420087676B /* Products */;
+					ProjectRef = EE265E751F6FF4420087676B /* WireSyncEngine.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				8F42C537199244A700288E4D /* Wire-iOS */,
@@ -5366,6 +5438,51 @@
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		EE265E7C1F6FF4420087676B /* WireSyncEngine.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = WireSyncEngine.framework;
+			remoteRef = EE265E7B1F6FF4420087676B /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		EE265E7E1F6FF4420087676B /* WireSyncEngine-iOS-Tests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = "WireSyncEngine-iOS-Tests.xctest";
+			remoteRef = EE265E7D1F6FF4420087676B /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		EE265E801F6FF4420087676B /* WireSyncEngine Test Host.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = "WireSyncEngine Test Host.app";
+			remoteRef = EE265E7F1F6FF4420087676B /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		EEE631021F729CF200E56803 /* WireMessageStrategy.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = WireMessageStrategy.framework;
+			remoteRef = EEE631011F729CF200E56803 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		EEE631041F729CF200E56803 /* WireMessageStrategyTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = WireMessageStrategyTests.xctest;
+			remoteRef = EEE631031F729CF200E56803 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		EEE631061F729CF200E56803 /* WireMessageStrategy-Test-Host.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = "WireMessageStrategy-Test-Host.app";
+			remoteRef = EEE631051F729CF200E56803 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		168A16A71D9597C2005CFA6C /* Resources */ = {
@@ -6189,7 +6306,6 @@
 				CE8E4FC01DF17BBE0009F437 /* UITextView+TextTransform.m in Sources */,
 				87D56DF61E003A5300DFF722 /* CollectionsViewController.swift in Sources */,
 				F12CDAE11E43868200CEFCEB /* ConfirmPhoneViewController.swift in Sources */,
-				87555C851A85021C00A43E2E /* ChatHeadView.m in Sources */,
 				871BC2271D34F8F800DF0793 /* CameraAccessMessageViewController.m in Sources */,
 				87722C541ADFEDFA00842F18 /* EmailVerificationStepViewController.m in Sources */,
 				871BC3601D34F94200DF0793 /* SettingsPropertyFactory.swift in Sources */,
@@ -6204,6 +6320,7 @@
 				871BC28B1D34F8F800DF0793 /* UIResponder+FirstResponder.m in Sources */,
 				871BC23A1D34F8F800DF0793 /* KeyboardFrameObserver+iOS.m in Sources */,
 				8F41CFC9199297C600E3B032 /* Message+UI.m in Sources */,
+				EEE6310B1F7390D100E56803 /* ChatHeadsViewController.swift in Sources */,
 				EEB8A2D01F628D1100958881 /* Settings+Account.swift in Sources */,
 				BF5C37981C0E0D9C00EA11E3 /* ParticipantsDeviceHeaderView.m in Sources */,
 				870A8C6B1CF719C400874B16 /* RecordingDotView.swift in Sources */,
@@ -6328,7 +6445,6 @@
 				160DECD71AB329CC000FB575 /* CameraAccessDeniedView.m in Sources */,
 				8FC85452199245770008B66B /* ConversationContentViewController.m in Sources */,
 				871BC0071D34F56300DF0793 /* Application+runDuration.m in Sources */,
-				87555C871A85021C00A43E2E /* ChatHeadsViewController.m in Sources */,
 				F12CDAEB1E43886A00CEFCEB /* DecriptionHeaderView.swift in Sources */,
 				871BC0091D34F56300DF0793 /* DefaultIntegerClusterizer.m in Sources */,
 				871BC3641D34F94200DF0793 /* SoundcloudService.m in Sources */,
@@ -6410,6 +6526,7 @@
 				873C5FE81C10426A00D5132A /* ClientTableViewCell.swift in Sources */,
 				87DCF4E71D34EA4500BB420F /* UIActivityViewController+Invite.m in Sources */,
 				8FC853FF199245770008B66B /* AppDelegate.m in Sources */,
+				EE265E821F6FF4910087676B /* ChatHeadView.swift in Sources */,
 				BF0555BD1E6D785C00D3E9D4 /* CallCells.swift in Sources */,
 				871BC3691D34F94200DF0793 /* MediaPreviewViewController.m in Sources */,
 				BF606D6F1CAA8A78002BAC94 /* ConversationListBottomBar.swift in Sources */,

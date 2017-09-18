@@ -258,28 +258,47 @@
 	</dict>
 	<key>notifications</key>
 	<dict>
-		<key>inset_top</key>
-		<integer>14</integer>
-		<key>inset_left</key>
-		<integer>14</integer>
-		<key>inset_right</key>
-		<integer>14</integer>
-		<key>user_name_font</key>
+		<key>container_inset_top</key>
+		<integer>16</integer>
+		<key>container_inset_left</key>
+		<integer>16</integer>
+		<key>container_inset_right</key>
+		<integer>16</integer>
+		<key>corner_radius</key>
+		<integer>6</integer>
+		<key>image_diameter</key>
+		<real>28</real>
+		<key>content_padding</key>
+		<integer>10</integer>
+		<key>title_label_font_regular</key>
 		<dict>
 			<key>font</key>
-			<string>System-Light-Semibold</string>
+			<string>System-Regular</string>
 			<key>size</key>
-			<integer>11</integer>
+			<integer>14</integer>
 		</dict>
-		<key>stroke_width</key>
-		<integer>0</integer>
-		<key>stroke_color</key>
-		<array>
-			<integer>1</integer>
-			<integer>1</integer>
-			<integer>1</integer>
-			<integer>0</integer>
-		</array>
+		<key>title_label_font_medium</key>
+		<dict>
+			<key>font</key>
+			<string>System-Medium</string>
+			<key>size</key>
+			<integer>14</integer>
+		</dict>
+		<key>subtitle_label_font</key>
+		<dict>
+			<key>font</key>
+			<string>System-Regular</string>
+			<key>size</key>
+			<string>12</string>
+		</dict>
+		<key>dismiss_delay_duration</key>
+		<integer>5</integer>
+		<key>animation_container_inset</key>
+		<integer>48</integer>
+		<key>animation_text_inset</key>
+		<integer>8</integer>
+		<key>gesture_threshold</key>
+		<integer>75</integer>
 		<key>user_initials_font</key>
 		<dict>
 			<key>font</key>
@@ -294,42 +313,6 @@
 			<integer>1</integer>
 			<integer>1</integer>
 		</array>
-		<key>single_user_duration</key>
-		<integer>5</integer>
-		<key>tile_diameter</key>
-		<real>28</real>
-		<key>tile_left_margin</key>
-		<integer>4</integer>
-		<key>text_color</key>
-		<array>
-			<integer>1</integer>
-			<integer>1</integer>
-			<integer>1</integer>
-			<integer>1</integer>
-		</array>
-		<key>author_text_color</key>
-		<array>
-			<integer>1</integer>
-			<integer>1</integer>
-			<integer>1</integer>
-			<real>0.64</real>
-		</array>
-		<key>corner_radius</key>
-		<integer>18</integer>
-		<key>box_tile_to_content_gap</key>
-		<integer>6</integer>
-		<key>top_label_inset</key>
-		<integer>4</integer>
-		<key>bottom_label_inset</key>
-		<integer>5</integer>
-		<key>ephemeral_bottom_label_inset</key>
-		<integer>8</integer>
-		<key>animation_inset_container</key>
-		<integer>48</integer>
-		<key>animation_inset_text</key>
-		<integer>8</integer>
-		<key>gesture_threshold</key>
-		<integer>75</integer>
 	</dict>
 	<key>voice_overlay</key>
 	<dict>
