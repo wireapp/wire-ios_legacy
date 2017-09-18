@@ -21,6 +21,7 @@ import Foundation
 public protocol ShareDestination: Hashable {
     var displayName: String { get }
     var securityLevel: ZMConversationSecurityLevel { get }
+    func avatarView() -> UIView?
 }
 
 public protocol Shareable {

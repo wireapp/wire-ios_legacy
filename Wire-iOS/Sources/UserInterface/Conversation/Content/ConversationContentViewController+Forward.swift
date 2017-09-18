@@ -21,8 +21,13 @@ import WireSyncEngine
 import Cartography
 
 
-extension ZMConversation: ShareDestination {}
-
+extension ZMConversation: ShareDestination {
+    public func avatarView() -> UIView? {
+        let avatarView = ConversationAvatarView()
+        avatarView.conversation = self
+        return avatarView
+    }
+}
 
 extension Array where Element == ZMConversation {
 
@@ -36,7 +41,6 @@ extension Array where Element == ZMConversation {
         }
     }
 }
-
 
 func forward(_ message: ZMMessage, to: [AnyObject]) {
 

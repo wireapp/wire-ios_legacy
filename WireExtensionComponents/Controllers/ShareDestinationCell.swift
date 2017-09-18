@@ -19,20 +19,29 @@
 import Foundation
 import Cartography
 
-
 private let verifiedShieldImage = WireStyleKit.imageOfShieldverified()
 
 
 final class ShareDestinationCell<D: ShareDestination>: UITableViewCell, Reusable {
     let checmarkSize: CGFloat = 24
+    let avatarSize: CGFloat = 32
     
     let titleLabel = UILabel()
     let checkImageView = UIImageView()
+    var avatarViewContainer = UIView()
 
     var destination: D? {
         didSet {
             self.titleLabel.text = destination?.displayName
             self.accessoryView = destination?.securityLevel == .secure ? UIImageView(image: verifiedShieldImage) : nil
+            
+            if let avatarView = destination?.avatarView() {
+                avatarView.frame = CGRect(x: 0, y: 0, width: avatarSize, height: avatarSize)
+                for view in self.avatarViewContainer.subviews {
+                    view.removeFromSuperview()
+                }
+                self.avatarViewContainer.addSubview(avatarView)
+            }
         }
     }
 
@@ -52,20 +61,29 @@ final class ShareDestinationCell<D: ShareDestination>: UITableViewCell, Reusable
         self.checkImageView.layer.borderWidth = 2
         self.checkImageView.contentMode = .center
         self.checkImageView.layer.cornerRadius = self.checmarkSize / 2.0
-
+        
+        self.contentView.addSubview(self.avatarViewContainer)
         self.contentView.addSubview(self.titleLabel)
         self.contentView.addSubview(self.checkImageView)
         
-        constrain(self.contentView, self.titleLabel, self.checkImageView) { contentView, titleLabel, checkImageView in
+        constrain(self.contentView, self.avatarViewContainer, self.titleLabel, self.checkImageView) {
+            contentView, avatarView, titleLabel, checkImageView in
+
+            avatarView.left == contentView.left + 16
+            avatarView.centerY == contentView.centerY
+            avatarView.width == self.avatarSize
+            avatarView.height == avatarView.width
+            
+            titleLabel.left == avatarView.right + 16
+            titleLabel.centerY == contentView.centerY
+            titleLabel.right <= checkImageView.left - 16
+            
             checkImageView.centerY == contentView.centerY
-            checkImageView.left == contentView.left + 16
+            checkImageView.right == contentView.right - 16
             checkImageView.width == self.checmarkSize
             checkImageView.height == checkImageView.width
-            
-            titleLabel.left == checkImageView.right + 24
-            titleLabel.centerY == contentView.centerY
-            titleLabel.right <= contentView.right - 16
-        }
+         }
+        
     }
     
     required init?(coder aDecoder: NSCoder) {
