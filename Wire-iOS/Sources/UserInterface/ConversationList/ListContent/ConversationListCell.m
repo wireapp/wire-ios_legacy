@@ -192,10 +192,9 @@ static const NSTimeInterval OverscrollRatio = 2.5;
         mediaPlaybackManager.activeMediaPlayer.sourceMessage.conversation == self.conversation) {
         [self toggleMediaPlayer];
     }
-    else if (   self.conversation.voiceChannel.state == VoiceChannelV2StateIncomingCallInactive
-             || self.conversation.voiceChannel.state == VoiceChannelV2StateIncomingCall        )
+    else if (self.conversation.canJoinCall)
     {
-        [self.conversation acceptIncomingCall];
+        [self.conversation joinCall];
     }
 }
     
@@ -250,7 +249,7 @@ static CGSize cachedSize = {0, 0};
 {
     // AUDIO-548 AVMediaManager notifications arrive on a background thread.
     dispatch_async(dispatch_get_main_queue(), ^{
-        if (notification.microphoneMuteChanged && (self.conversation.voiceChannel.state > VoiceChannelV2StateNoActiveUsers)) {
+        if (notification.microphoneMuteChanged) {
             [self updateAppearance];
         }
     });

@@ -21,6 +21,6 @@
 
 @interface NSIndexSet (IndexPaths)
 
-- (NSArray *)indexPaths;
+- (NSArray<NSIndexPath *> * _Nonnull)indexPaths;
 
 @end

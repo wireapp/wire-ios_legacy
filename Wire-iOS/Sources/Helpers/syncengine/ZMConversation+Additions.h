@@ -38,17 +38,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (BOOL)selfUserIsActiveParticipant;
 
 - (nullable ZMUser *)firstActiveParticipantOtherThanSelf;
-- (nullable ZMUser *)firstActiveCallingParticipantOtherThanSelf;
 
 - (ZMConversation *)addParticipantsOrCreateConversation:(NSSet *)participants;
-
-/// Calls
-- (BOOL)isCallingSupported;
-
-- (void)acceptIncomingCall;
-- (void)leaveOtherActiveCallsWithCompletionHandler:(nullable void(^)())completionHandler;
-- (void)startAudioCallWithCompletionHandler:(nullable void(^)(BOOL joined))completion;
-- (void)startVideoCallWithCompletionHandler:(nullable void(^)(BOOL joined))completion;
 
 @end
 

@@ -20,7 +20,7 @@
 @import UIKit;
 
 @class NetworkStatusViewController;
-@class VoiceChannelController;
+@class ActiveVoiceChannelViewController;
 @class NetworkActivityViewController;
 @class BarController;
 @class AppLockViewController;
@@ -29,7 +29,7 @@
 @interface NotificationWindowRootViewController : UIViewController
 
 @property (nonatomic, readonly) NetworkStatusViewController *networkStatusViewController;
-@property (nonatomic, readonly) VoiceChannelController *voiceChannelController;
+@property (nonatomic, readonly) ActiveVoiceChannelViewController *voiceChannelController;
 @property (nonatomic, readonly) AppLockViewController *appLockViewController;
 
 @property (nonatomic) BOOL showLoadMessages;

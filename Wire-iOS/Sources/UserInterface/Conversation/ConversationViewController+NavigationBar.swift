@@ -33,6 +33,10 @@ public extension ZMConversationList {
 
 public extension ConversationViewController {
     
+    func addCallStateObserver() -> WireCallCenterObserverToken? {
+        return conversation.voiceChannel?.addCallStateObserver(self)
+    }
+    
     func barButtonItem(withType type: ZetaIconType, target: AnyObject?, action: Selector, accessibilityIdentifier: String?, width: CGFloat = 30, imageEdgeInsets: UIEdgeInsets = .zero) -> IconButton {
         let button = IconButton.iconButtonDefault()
         button.setIcon(type, with: .tiny, for: .normal)
@@ -244,7 +248,7 @@ public extension ConversationViewController {
         guard conversation.canJoinCall else { return }
 
         // This will result in joining an ongoing call.
-        conversation.acceptIncomingCall()
+        conversation.joinCall()
     }
     
     func onCollectionButtonPressed(_ sender: AnyObject!) {
@@ -315,13 +319,26 @@ extension ConversationViewController: CollectionsViewControllerDelegate {
     }
 }
 
+extension ConversationViewController : WireCallCenterCallStateObserver {
+    
+    public func callCenterDidChange(callState: CallState, conversationId: UUID, userId: UUID?, timeStamp: Date?) {
+        updateRightNavigationItemsButtons()
+    }
+    
+}
+
 
 extension ZMConversation {
 
     /// Whether there is an incoming or inactive incoming call that can be joined.
     var canJoinCall: Bool {
         guard let state = voiceChannel?.state else { return false }
-        return state == .incomingCallInactive || state == .incomingCall
+        
+        if case .incoming = state {
+            return true
+        } else {
+            return false
+        }
     }
 
 }

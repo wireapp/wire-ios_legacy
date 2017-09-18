@@ -21,7 +21,6 @@
 #import "AnalyticsLocalyticsProvider.h"
 #import "Analytics+SessionEvents.h"
 #import "Analytics+Metrics.h"
-#import "AnalyticsVoiceChannelTracker.h"
 #import "AnalyticsConversationListObserver.h"
 #import "AnalyticsConversationVerifiedObserver.h"
 #import "AnalyticsDecryptionFailedObserver.h"

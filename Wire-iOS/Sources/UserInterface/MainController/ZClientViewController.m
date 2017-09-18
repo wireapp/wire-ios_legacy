@@ -35,17 +35,13 @@
 #import "ConversationListViewController.h"
 #import "ConversationViewController.h"
 #import "ConnectRequestsViewController.h"
-#import "SoundEventListener.h"
-#import "ProximityMonitorManager.h"
 #import "ColorSchemeController.h"
 #import "ProfileViewController.h"
 
 #import "WireSyncEngine+iOS.h"
 #import "ZMConversation+Additions.h"
-#import "VoiceChannelV2+Additions.h"
 
 #import "AppDelegate.h"
-#import "VoiceChannelController.h"
 
 #import "Constants.h"
 #import "Analytics+iOS.h"

@@ -21,7 +21,7 @@
 
 @interface UIAlertController (Wire)
 
-+ (UIAlertController *)alertControllerWithTitle:(NSString *)title message:(NSString *)message cancelButtonTitle:(NSString *)cancelTitle;
++ (UIAlertController * _Nonnull)alertControllerWithTitle:(NSString * _Nullable)title message:(NSString * _Nullable)message cancelButtonTitle:(NSString * _Nullable)cancelTitle;
 
 - (void)presentTopmost;
 

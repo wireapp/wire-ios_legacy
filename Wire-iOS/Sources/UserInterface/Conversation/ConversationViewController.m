@@ -27,7 +27,6 @@
 
 #import "AppDelegate.h"
 #import "NotificationWindowRootViewController.h"
-#import "VoiceChannelController.h"
 
 // helpers
 #import "WAZUIMagicIOS.h"
@@ -36,7 +35,6 @@
 
 // model
 #import "WireSyncEngine+iOS.h"
-#import "VoiceChannelV2+Additions.h"
 #import "Message+UI.h"
 
 // ui
@@ -94,9 +92,6 @@
 @end
 
 @interface ConversationViewController (ProfileViewController) <ProfileViewControllerDelegate>
-@end
-
-@interface ConversationViewController (VoiceChannelStateObserver) <VoiceChannelStateObserver>
 @end
 
 @interface ConversationViewController (ChatHeadsViewControllerDelegate) <ChatHeadsViewControllerDelegate>
@@ -417,7 +412,7 @@
     [self updateOutgoingConnectionVisibility];
     
     if (self.conversation != nil) {
-        self.voiceChannelStateObserverToken = [conversation.voiceChannel addStateObserver:self];
+        self.voiceChannelStateObserverToken = [self addCallStateObserver];
         self.conversationObserverToken = [ConversationChangeInfo addObserver:self forConversation:self.conversation];
     }
 }
@@ -835,28 +830,6 @@
     [self dismissViewControllerAnimated:YES completion:^{
         [self addParticipants:users];
     }];
-}
-
-@end
-
-
-
-@implementation ConversationViewController (VoiceChannelStateObserver)
-
-- (void)callCenterDidChangeVoiceChannelState:(VoiceChannelV2State)voiceChannelState conversation:(ZMConversation *)conversation callingProtocol:(enum CallingProtocol)callingProtocol
-{
-    [self updateRightNavigationItemsButtons];
-}
-
-- (void)callCenterDidFailToJoinVoiceChannelWithError:(NSError *)error conversation:(ZMConversation *)conversation
-{
-    [self updateRightNavigationItemsButtons];
-    [self showAlertForError:error];
-}
-
-- (void)callCenterDidEndCallWithReason:(VoiceChannelV2CallEndReason)reason conversation:(ZMConversation *)conversation callingProtocol:(enum CallingProtocol)callingProtocol
-{
-    [self updateRightNavigationItemsButtons];
 }
 
 @end

@@ -26,7 +26,6 @@
 #import "NetworkActivityViewController.h"
 #import "AppDelegate.h"
 #import "UIView+Borders.h"
-#import "VoiceChannelController.h"
 #import "WAZUIMagicIOS.h"
 #import "UIView+Borders.h"
 #import "Constants.h"
@@ -113,7 +112,7 @@
     self.networkActivityRightMargin = [self.networkActivityViewController.view autoPinEdgeToSuperviewEdge:ALEdgeRight];
     [self.networkActivityViewController.view autoSetDimension:ALDimensionHeight toSize:2.0f];
     
-    _voiceChannelController = [[VoiceChannelController alloc] init];
+    _voiceChannelController = [[ActiveVoiceChannelViewController alloc] init];
     self.voiceChannelController.view.translatesAutoresizingMaskIntoConstraints = NO;
     [self addViewController:self.voiceChannelController toView:self.view];
     
