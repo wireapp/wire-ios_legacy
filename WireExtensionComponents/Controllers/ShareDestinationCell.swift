@@ -28,7 +28,8 @@ final class ShareDestinationCell<D: ShareDestination>: UITableViewCell, Reusable
     
     let titleLabel = UILabel()
     let checkImageView = UIImageView()
-    var avatarViewContainer = UIView()
+    let avatarViewContainer = UIView()
+    var avatarView : UIView?
 
     var destination: D? {
         didSet {
@@ -37,12 +38,15 @@ final class ShareDestinationCell<D: ShareDestination>: UITableViewCell, Reusable
             
             if let avatarView = destination?.avatarView() {
                 avatarView.frame = CGRect(x: 0, y: 0, width: avatarSize, height: avatarSize)
-                for view in self.avatarViewContainer.subviews {
-                    view.removeFromSuperview()
-                }
                 self.avatarViewContainer.addSubview(avatarView)
+                self.avatarView = avatarView
             }
         }
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        avatarView?.removeFromSuperview()
     }
 
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
