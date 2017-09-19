@@ -22,7 +22,7 @@ import Cartography
 
 
 @objc enum ConversationListButtonType: UInt {
-    case archive, compose, camera, plus
+    case archive, compose, camera, startUI
 }
 
 @objc protocol ConversationListBottomBarControllerDelegate: class {
@@ -34,7 +34,7 @@ import Cartography
 
     weak var delegate: ConversationListBottomBarControllerDelegate?
 
-    let plusButton     = IconButton()
+    let startUIButton  = IconButton()
     let archivedButton = IconButton()
     let cameraButton   = IconButton()
     let composeButton  = IconButton()
@@ -80,12 +80,11 @@ import Cartography
         archivedButton.accessibilityLabel = "conversation_list.voiceover.bottom_bar.archived_button.label".localized
         archivedButton.accessibilityHint = "conversation_list.voiceover.bottom_bar.archived_button.hint".localized
 
-
-        plusButton.setIcon(.plus, with: .tiny, for: .normal)
-        plusButton.addTarget(self, action: #selector(plusButtonTapped), for: .touchUpInside)
-        plusButton.accessibilityIdentifier = "bottomBarPlusButton"
-        plusButton.accessibilityLabel = "conversation_list.voiceover.bottom_bar.contacts_button.label".localized
-        plusButton.accessibilityHint = "conversation_list.voiceover.bottom_bar.contacts_button.hint".localized
+        startUIButton.setIcon(.person, with: .tiny, for: .normal)
+        startUIButton.addTarget(self, action: #selector(startUIButtonTapped), for: .touchUpInside)
+        startUIButton.accessibilityIdentifier = "bottomBarPlusButton"
+        startUIButton.accessibilityLabel = "conversation_list.voiceover.bottom_bar.contacts_button.label".localized
+        startUIButton.accessibilityHint = "conversation_list.voiceover.bottom_bar.contacts_button.hint".localized
 
         composeButton.setIcon(.compose, with: .tiny, for: .normal)
         composeButton.addTarget(self, action: #selector(composeButtonTapped), for: .touchUpInside)
@@ -109,9 +108,9 @@ import Cartography
 
     private func addSubviews() {
         if showComposeButtons {
-            [cameraButton, composeButton, archivedButton, plusButton, separator].forEach(view.addSubview)
+            [cameraButton, composeButton, archivedButton, startUIButton, separator].forEach(view.addSubview)
         } else {
-            [archivedButton, plusButton, separator].forEach(view.addSubview)
+            [archivedButton, startUIButton, separator].forEach(view.addSubview)
         }
     }
 
@@ -138,10 +137,10 @@ import Cartography
     }
 
     private func createConstraintsWithoutComposeButtons() {
-        constrain(view, cameraButton, plusButton, archivedButton, composeButton) { view, cameraButton, plusButton, archivedButton, composeButton in
-            plusButton.centerY == view.centerY
+        constrain(view, cameraButton, startUIButton, archivedButton, composeButton) { view, cameraButton, startUIButton, archivedButton, composeButton in
+            startUIButton.centerY == view.centerY
             archivedButton.centerY == view.centerY
-            plusButton.leading == view.leading + xInset
+            startUIButton.leading == view.leading + xInset
             archivedButton.trailing == view.trailing - xInset
         }
     }
@@ -149,8 +148,8 @@ import Cartography
     private func createConstraintsWithComposeButtons() {
         let containerWidth = composeButton.frame.midX - cameraButton.frame.midX
 
-        constrain(view, cameraButton, plusButton, archivedButton, composeButton) { view, cameraButton, plusButton, archivedButton, composeButton in
-            plusButton.centerY == view.centerY
+        constrain(view, cameraButton, startUIButton, archivedButton, composeButton) { view, cameraButton, startUIButton, archivedButton, composeButton in
+            startUIButton.centerY == view.centerY
             archivedButton.centerY == view.centerY
 
             cameraButton.centerY == view.centerY
@@ -160,10 +159,10 @@ import Cartography
 
             if showArchived {
                 let spacingX = containerWidth / 3
-                plusButton.centerX == cameraButton.centerX + spacingX
-                archivedButton.centerX == plusButton.centerX + spacingX
+                startUIButton.centerX == cameraButton.centerX + spacingX
+                archivedButton.centerX == startUIButton.centerX + spacingX
             } else {
-                plusButton.center == view.center
+                startUIButton.center == view.center
             }
         }
     }
@@ -172,7 +171,7 @@ import Cartography
         archivedButton.isHidden = !showArchived
 
         if showComposeButtons {
-            [cameraButton, composeButton, archivedButton, plusButton, separator].forEach { $0.removeFromSuperview() }
+            [cameraButton, composeButton, archivedButton, startUIButton, separator].forEach { $0.removeFromSuperview() }
             addSubviews()
             createConstraints()
         }
@@ -184,8 +183,8 @@ import Cartography
         delegate?.conversationListBottomBar(self, didTapButtonWithType: .archive)
     }
 
-    private dynamic func plusButtonTapped(_ sender: IconButton) {
-        delegate?.conversationListBottomBar(self, didTapButtonWithType: .plus)
+    private dynamic func startUIButtonTapped(_ sender: IconButton) {
+        delegate?.conversationListBottomBar(self, didTapButtonWithType: .startUI)
     }
 
     private dynamic func cameraButtonTapped(_ sender: IconButton) {

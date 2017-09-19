@@ -174,7 +174,7 @@ class ListSkeletonView  : UIView {
         titleLabel.font = FontSpec(.medium, .semibold).font
         titleLabel.text = "list.title".localized.uppercased()
         
-        buttonRowView = UIStackView(arrangedSubviews: disabledButtons(with: [.plus, .compose]))
+        buttonRowView = UIStackView(arrangedSubviews: disabledButtons(with: [.person, .compose]))
         buttonRowView.distribution = .equalCentering
 
         [accountView, titleLabel, listContentView, buttonRowView].forEach(addSubview)
