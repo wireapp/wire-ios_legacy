@@ -22,11 +22,13 @@ import Cartography
 
 
 extension ZMConversation: ShareDestination {
-    public func avatarView() -> UIView? {
+    
+    public var avatarView: UIView? {
         let avatarView = ConversationAvatarView()
         avatarView.conversation = self
         return avatarView
     }
+    
 }
 
 extension Array where Element == ZMConversation {

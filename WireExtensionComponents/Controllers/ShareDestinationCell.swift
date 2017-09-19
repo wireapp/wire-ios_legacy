@@ -19,11 +19,12 @@
 import Foundation
 import Cartography
 
+
 private let verifiedShieldImage = WireStyleKit.imageOfShieldverified()
 
 
 final class ShareDestinationCell<D: ShareDestination>: UITableViewCell, Reusable {
-    let checmarkSize: CGFloat = 24
+    let checkmarkSize: CGFloat = 24
     let avatarSize: CGFloat = 32
     
     let titleLabel = UILabel()
@@ -36,7 +37,7 @@ final class ShareDestinationCell<D: ShareDestination>: UITableViewCell, Reusable
             self.titleLabel.text = destination?.displayName
             self.accessoryView = destination?.securityLevel == .secure ? UIImageView(image: verifiedShieldImage) : nil
             
-            if let avatarView = destination?.avatarView() {
+            if let avatarView = destination?.avatarView {
                 avatarView.frame = CGRect(x: 0, y: 0, width: avatarSize, height: avatarSize)
                 self.avatarViewContainer.addSubview(avatarView)
                 self.avatarView = avatarView
@@ -64,7 +65,7 @@ final class ShareDestinationCell<D: ShareDestination>: UITableViewCell, Reusable
         self.checkImageView.layer.borderColor = UIColor.white.cgColor
         self.checkImageView.layer.borderWidth = 2
         self.checkImageView.contentMode = .center
-        self.checkImageView.layer.cornerRadius = self.checmarkSize / 2.0
+        self.checkImageView.layer.cornerRadius = self.checkmarkSize / 2.0
         
         self.contentView.addSubview(self.avatarViewContainer)
         self.contentView.addSubview(self.titleLabel)
@@ -84,7 +85,7 @@ final class ShareDestinationCell<D: ShareDestination>: UITableViewCell, Reusable
             
             checkImageView.centerY == contentView.centerY
             checkImageView.right == contentView.right - 16
-            checkImageView.width == self.checmarkSize
+            checkImageView.width == self.checkmarkSize
             checkImageView.height == checkImageView.width
          }
         
