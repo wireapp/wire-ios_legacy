@@ -541,7 +541,7 @@ ConversationListBottomBarController {
         backgroundColor: clear;
     }
     
-    plusButton: @{
+    startUIButton: @{
         iconColor: $color-text-foreground-dark;
     }
 

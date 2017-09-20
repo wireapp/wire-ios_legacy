@@ -683,7 +683,7 @@
             [Analytics.shared tagArchiveOpened];
             break;
 
-        case ConversationListButtonTypePlus:
+        case ConversationListButtonTypeStartUI:
             [self presentPeoplePicker];
             break;
 
