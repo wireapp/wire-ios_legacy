@@ -84,7 +84,9 @@
     self.unregisteredUser = [ZMIncompleteRegistrationUser new];
     self.unregisteredUser.accentColorValue = [UIColor indexedAccentColor];
     
-    self.initialSyncObserverToken = [ZMUserSession addInitialSyncCompletionObserver:self userSession:[ZMUserSession sharedSession]];
+    if (nil != [ZMUserSession sharedSession]) {
+        self.initialSyncObserverToken = [ZMUserSession addInitialSyncCompletionObserver:self userSession:[ZMUserSession sharedSession]];
+    }
     
     [self setupBackgroundViewController];
     [self setupNavigationController];

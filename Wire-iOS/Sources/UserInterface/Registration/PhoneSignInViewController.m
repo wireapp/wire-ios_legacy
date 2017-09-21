@@ -38,10 +38,12 @@
 #import "Wire-Swift.h"
 
 
-@interface PhoneSignInViewController () <FormStepDelegate, PreLoginAuthenticationObserver, PhoneVerificationStepViewControllerDelegate>
+@interface PhoneSignInViewController () <FormStepDelegate, PreLoginAuthenticationObserver, PostLoginAuthenticationObserver, PhoneVerificationStepViewControllerDelegate>
 
 @property (nonatomic) PhoneNumberStepViewController *phoneNumberStepViewController;
-@property (nonatomic) id authenticationToken;
+
+@property (nonatomic) id preLoginAuthenticationToken;
+@property (nonatomic) id postLoginAuthenticationToken;
 
 @property (nonatomic, copy) NSString *phoneNumber;
 
@@ -68,15 +70,22 @@
 {
     [super viewDidAppear:animated];
     
-    if (self.isMovingToParentViewController || self.isBeingPresented || self.authenticationToken == nil) {
-        self.authenticationToken = [PreLoginAuthenticationNotification registerObserver:self
-                                                              forUnauthenticatedSession:[SessionManager shared].unauthenticatedSession];
+    if (self.isMovingToParentViewController || self.isBeingPresented) {
+        if (nil == self.preLoginAuthenticationToken) {
+            self.preLoginAuthenticationToken = [PreLoginAuthenticationNotification registerObserver:self
+                                                                          forUnauthenticatedSession:[SessionManager shared].unauthenticatedSession];
+        }
+        
+        if (nil == self.postLoginAuthenticationToken) {
+            self.postLoginAuthenticationToken = [PostLoginAuthenticationNotification addObserver:self];
+        }
     }
 }
 
 - (void)removeObservers
 {
-    self.authenticationToken = nil;
+    self.preLoginAuthenticationToken = nil;
+    self.postLoginAuthenticationToken = nil;
 }
 
 - (void)createPhoneNumberStepViewController
@@ -226,6 +235,21 @@
 {
     [self.analyticsTracker tagPhoneLogin];
     self.navigationController.showLoadingView = NO;
+}
+
+- (void)authenticationInvalidated:(NSError * _Nonnull)error accountId:(NSUUID * _Nonnull)accountId
+{
+    [self authenticationDidFail:error];
+}
+
+- (void)clientRegistrationDidSucceedWithAccountId:(NSUUID * _Nonnull)accountId
+{
+    [self authenticationDidSucceed];
+}
+
+- (void)clientRegistrationDidFail:(NSError * _Nonnull)error accountId:(NSUUID * _Nonnull)accountId
+{
+    [self authenticationDidFail:error];
 }
 
 @end
