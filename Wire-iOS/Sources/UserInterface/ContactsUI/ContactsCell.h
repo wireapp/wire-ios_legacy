@@ -23,7 +23,6 @@
 
 @class ZMSearchUser;
 @class Button;
-@class ZMInvitationStatusChangedNotification;
 
 
 
@@ -39,7 +38,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic) NSArray *allActionButtonTitles;   // needed to calculate button width
 @property (nonatomic, copy, nullable) ContactsCellActionButtonHandler actionButtonHandler;
 
-- (void)invitationStatusChanged:(ZMInvitationStatusChangedNotification *)note;
+- (void)invitationStatusChanged; // TODO call it
 
 @end
 NS_ASSUME_NONNULL_END

@@ -115,7 +115,7 @@
         _forcePortraitMode = NO;
         _swipeToDismiss = YES;
         _showCloseButton = YES;
-        self.messageObserverToken = [MessageChangeInfo addObserver:self forMessage:message];
+        self.messageObserverToken = [MessageChangeInfo addObserver:self forMessage:message userSession:[ZMUserSession sharedSession]];
     }
 
     return self;

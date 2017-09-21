@@ -142,6 +142,8 @@
 @property (nonatomic) UIViewController *inputController;
 
 @property (nonatomic) BOOL inRotation;
+
+@property (nonatomic) id typingObserverToken;
 @end
 
 
@@ -155,7 +157,7 @@
         self.sendController = [[ConversationInputBarSendController alloc] initWithConversation:self.conversation];
         self.conversationObserverToken = [ConversationChangeInfo addObserver:self forConversation:self.conversation];
         self.sendButtonState = [[ConversationInputBarButtonState alloc] init];
-        [conversation addTypingObserver:self];
+        self.typingObserverToken = [conversation addTypingObserver:self];
         self.typingUsers = conversation.typingUsers;
         
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidHide:) name:UIKeyboardDidHideNotification object:nil];
@@ -168,7 +170,6 @@
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     [NSObject cancelPreviousPerformRequestsWithTarget:self];
-    [ZMConversation removeTypingObserver:self];
 }
 
 - (void)didEnterBackground:(NSNotification *)notification
@@ -1104,10 +1105,10 @@
 
 @implementation ConversationInputBarViewController (ZMTypingChangeObserver)
 
-- (void)typingDidChange:(ZMTypingChangeNotification *)note
+- (void)typingDidChangeWithConversation:(ZMConversation *)conversation typingUsers:(NSSet<ZMUser *> *)typingUsers
 {
     NSPredicate *filterSelfUserPredicate = [NSPredicate predicateWithFormat:@"SELF != %@", [ZMUser selfUser]];
-    NSSet *filteredSet = [note.typingUsers filteredSetUsingPredicate:filterSelfUserPredicate];
+    NSSet *filteredSet = [typingUsers filteredSetUsingPredicate:filterSelfUserPredicate];
     
     self.typingUsers = filteredSet;
 }

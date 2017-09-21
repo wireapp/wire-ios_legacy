@@ -32,9 +32,11 @@ import Foundation
     
     override init() {
         super.init()
-        let list = ZMConversationList.archivedConversations(inUserSession: ZMUserSession.shared()!)
-        archivedConversationListObserverToken = ConversationListChangeInfo.add(observer: self, for: list)
-        archivedConversations = list.asArray() as! [ZMConversation]
+        if let userSession = ZMUserSession.shared() {
+            let list = ZMConversationList.archivedConversations(inUserSession: userSession)
+            archivedConversationListObserverToken = ConversationListChangeInfo.add(observer: self, for: list, userSession: userSession)
+            archivedConversations = list.asArray() as! [ZMConversation]
+        }
     }
     
     var count: Int {

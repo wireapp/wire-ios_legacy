@@ -57,7 +57,7 @@ NSString *const PeoplePickerUsersInDirectoryCellReuseIdentifier = @"PeoplePicker
     
     if (self.userObserverToken == nil) {
         // We only need to subscribe once for all searchUsers
-        self.userObserverToken = [UserChangeInfo addSearchUserObserver:self forSearchUser:nil];
+        self.userObserverToken = [UserChangeInfo addSearchUserObserver:self forSearchUser:nil userSession:[ZMUserSession sharedSession]];
     }
 }
 

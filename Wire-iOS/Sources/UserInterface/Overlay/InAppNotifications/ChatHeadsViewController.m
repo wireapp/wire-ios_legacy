@@ -88,8 +88,8 @@ typedef NS_ENUM(NSUInteger, ChatHeadPresentationState) {
                                                   withInset:[WAZUIMagic cgFloatForIdentifier:@"notifications.inset_right"]];
     [self.chatHeadsContainerView autoPinEdgeToSuperviewEdge:ALEdgeBottom];
 
-    self.unreadMessageObserverToken = [NewUnreadMessagesChangeInfo addNewMessageObserver:self];
-    self.unreadKnockMessageObserverToken = [NewUnreadKnockMessagesChangeInfo addNewKnockObserver:self];
+    self.unreadMessageObserverToken = [NewUnreadMessagesChangeInfo addNewMessageObserver:self forUserSession:[ZMUserSession sharedSession]];
+    self.unreadKnockMessageObserverToken = [NewUnreadKnockMessagesChangeInfo addNewKnockObserver:self forUserSession:[ZMUserSession sharedSession]];
 }
 
 - (void)tryToDisplayNotificationForMessage:(id<ZMConversationMessage>)message

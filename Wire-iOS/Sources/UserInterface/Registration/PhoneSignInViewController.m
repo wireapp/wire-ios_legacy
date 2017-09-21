@@ -20,6 +20,7 @@
 #import "PhoneSignInViewController.h"
 
 @import PureLayout;
+@import WireSyncEngine;
 
 #import "NavigationController.h"
 #import "PhoneNumberStepViewController.h"
@@ -37,10 +38,10 @@
 #import "Wire-Swift.h"
 
 
-@interface PhoneSignInViewController () <FormStepDelegate, ZMAuthenticationObserver, PhoneVerificationStepViewControllerDelegate>
+@interface PhoneSignInViewController () <FormStepDelegate, PreLoginAuthenticationObserver, PostLoginAuthenticationObserver, PhoneVerificationStepViewControllerDelegate>
 
 @property (nonatomic) PhoneNumberStepViewController *phoneNumberStepViewController;
-@property (nonatomic) id<ZMAuthenticationObserverToken> authenticationToken;
+@property (nonatomic) id authenticationToken;
 
 @property (nonatomic, copy) NSString *phoneNumber;
 
@@ -68,13 +69,13 @@
     [super viewDidAppear:animated];
     
     if (self.isMovingToParentViewController || self.isBeingPresented || self.authenticationToken == nil) {
-        self.authenticationToken = [ZMUserSessionAuthenticationNotification addObserver:self];
+        self.authenticationToken = [PreLoginAuthenticationNotification registerObserver:self
+                                                              forUnauthenticatedSession:[SessionManager shared].unauthenticatedSession];
     }
 }
 
 - (void)removeObservers
 {
-    [ZMUserSessionAuthenticationNotification removeObserverForToken:self.authenticationToken];
     self.authenticationToken = nil;
 }
 

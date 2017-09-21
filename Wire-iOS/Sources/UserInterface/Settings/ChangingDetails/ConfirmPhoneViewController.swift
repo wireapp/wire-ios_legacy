@@ -64,16 +64,14 @@ final class ConfirmPhoneViewController: SettingsBaseTableViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         observerToken = userProfile?.add(observer: self)
-        observer = UserChangeInfo.add(observer: self, forBareUser:ZMUser.selfUser())
+        observer = UserChangeInfo.add(observer: self, forBareUser:ZMUser.selfUser(), userSession: ZMUserSession.shared()!)
         startTimer()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
-        if let observer = observer {
-            UserChangeInfo.remove(observer: observer, forBareUser: nil)
-        }
+        observer = nil
     }
     
     fileprivate func setupViews() {

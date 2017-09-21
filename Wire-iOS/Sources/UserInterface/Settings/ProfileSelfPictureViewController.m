@@ -76,7 +76,7 @@
             [self setSelfImageToData:imageData];
         };
         
-        self.userObserverToken = [UserChangeInfo addUserObserver:self forUser:[ZMUser selfUser]];
+        self.userObserverToken = [UserChangeInfo addObserver:self forBareUser:[ZMUser selfUser] userSession:[ZMUserSession sharedSession]];
     }
     
     return self;

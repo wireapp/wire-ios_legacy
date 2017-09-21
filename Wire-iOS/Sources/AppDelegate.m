@@ -371,7 +371,7 @@ static AppDelegate *sharedAppDelegate = nil;
     DDLogInfo(@"application:didReceiveLocalNotification: %@", notification);
     
     [self.rootViewController performWhenAuthenticated:^{
-        [[SessionManager shared] didReceiveLocalNotification:notification];
+        [[SessionManager shared] didReceiveLocalNotification:notification application:application];
     }];
     
     self.launchType = (application.applicationState == UIApplicationStateInactive || application.applicationState == UIApplicationStateBackground) ? ApplicationLaunchPush: ApplicationLaunchDirect;
@@ -388,7 +388,8 @@ forLocalNotification:(UILocalNotification *)notification
         [[SessionManager shared] handleActionWithIdentifier:identifier
                                        forLocalNotification:notification
                                            withResponseInfo:[NSDictionary dictionary]
-                                          completionHandler:completionHandler];
+                                          completionHandler:completionHandler
+                                                application:application];
     }];
 }
 
@@ -404,7 +405,8 @@ forLocalNotification:(UILocalNotification *)notification
         [[SessionManager shared] handleActionWithIdentifier:identifier
                                        forLocalNotification:notification
                                            withResponseInfo:responseInfo
-                                          completionHandler:completionHandler];
+                                          completionHandler:completionHandler
+                                                application:application];
     }];
 }
 

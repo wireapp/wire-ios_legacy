@@ -37,7 +37,7 @@ open class CollectionCell: UICollectionViewCell, Reusable {
         didSet {
             self.messageObserverToken = nil
             if let newMessage = message {
-                self.messageObserverToken = MessageChangeInfo.add(observer: self, for: newMessage)
+                self.messageObserverToken = MessageChangeInfo.add(observer: self, for: newMessage, userSession: ZMUserSession.shared()!)
             }
             self.updateForMessage(changeInfo: .none)
         }

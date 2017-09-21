@@ -98,6 +98,7 @@
 @property (nonatomic) id userObserverToken;
 @property (nonatomic) id allConversationsObserverToken;
 @property (nonatomic) id connectionRequestsObserverToken;
+@property (nonatomic) id initialSyncObserverToken;
 
 @property (nonatomic) ConversationListContentController *listContentController;
 @property (nonatomic) InviteBannerViewController *invitationBannerViewController;
@@ -127,7 +128,6 @@
 - (void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-    [ZMUserSession removeInitalSyncCompletionObserver:self];
     [self removeUserProfileObserver];
 }
 
@@ -152,13 +152,13 @@
     [self.view addSubview:self.contentContainer];
 
     self.userProfile = ZMUserSession.sharedSession.userProfile;
-    self.userObserverToken = [UserChangeInfo addUserObserver:self forUser:[ZMUser selfUser]];
+    self.userObserverToken = [UserChangeInfo addObserver:self forBareUser:[ZMUser selfUser] userSession:[ZMUserSession sharedSession]];
 
     self.conversationListContainer = [[UIView alloc] initForAutoLayout];
     self.conversationListContainer.backgroundColor = [UIColor clearColor];
     [self.contentContainer addSubview:self.conversationListContainer];
 
-    [ZMUserSession addInitalSyncCompletionObserver:self];
+    self.initialSyncObserverToken = [ZMUserSession addInitialSyncCompletionObserver:self userSession:[ZMUserSession sharedSession]];
 
     [self createNoConversationLabel];
     [self createListContentController];
@@ -177,8 +177,12 @@
 
 - (void)updateObserverTokensForActiveTeam
 {
-    self.allConversationsObserverToken = [ConversationListChangeInfo addObserver:self forList:[ZMConversationList conversationsIncludingArchivedInUserSession:[ZMUserSession sharedSession]]];
-    self.connectionRequestsObserverToken = [ConversationListChangeInfo addObserver:self forList:[ZMConversationList pendingConnectionConversationsInUserSession:[ZMUserSession sharedSession]]];
+    self.allConversationsObserverToken = [ConversationListChangeInfo addObserver:self
+                                                                         forList:[ZMConversationList conversationsIncludingArchivedInUserSession:[ZMUserSession sharedSession]]
+                                                                     userSession:[ZMUserSession sharedSession]];
+    self.connectionRequestsObserverToken = [ConversationListChangeInfo addObserver:self
+                                                                           forList:[ZMConversationList pendingConnectionConversationsInUserSession:[ZMUserSession sharedSession]]
+                                                                       userSession:[ZMUserSession sharedSession]];
 
 }
 
@@ -761,7 +765,7 @@
 
 @implementation ConversationListViewController (InitialSyncObserver)
 
-- (void)initialSyncCompleted:(NSNotification *)notification
+- (void)initialSyncCompleted
 {
     [self requestSuggestedHandlesIfNeeded];
 }

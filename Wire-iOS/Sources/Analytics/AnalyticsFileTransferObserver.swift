@@ -28,11 +28,11 @@ import WireMessageStrategy
     override init() {
         super.init()
         
-        NotificationCenter.default.addObserver(self, selector: #selector(AnalyticsFileTransferObserver.uploadFinishedNotification(_:)), name: NSNotification.Name(rawValue: FileUploadRequestStrategyNotification.uploadFinishedNotificationName), object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(AnalyticsFileTransferObserver.uploadFailedNotification(_:)), name: NSNotification.Name(rawValue: FileUploadRequestStrategyNotification.uploadFailedNotificationName), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(AnalyticsFileTransferObserver.uploadFinishedNotification(_:)), name: FileUploadRequestStrategyNotification.uploadFinishedNotificationName, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(AnalyticsFileTransferObserver.uploadFailedNotification(_:)), name: FileUploadRequestStrategyNotification.uploadFailedNotificationName, object: nil)
         
-        NotificationCenter.default.addObserver(self, selector: #selector(AnalyticsFileTransferObserver.downloadFinishedNotification(_:)), name: NSNotification.Name(rawValue: AssetDownloadRequestStrategyNotification.downloadFinishedNotificationName), object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(AnalyticsFileTransferObserver.downloadFailedNotification(_:)), name: NSNotification.Name(rawValue: AssetDownloadRequestStrategyNotification.downloadFailedNotificationName), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(AnalyticsFileTransferObserver.downloadFinishedNotification(_:)), name: AssetDownloadRequestStrategyNotification.downloadFinishedNotificationName, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(AnalyticsFileTransferObserver.downloadFailedNotification(_:)), name: AssetDownloadRequestStrategyNotification.downloadFailedNotificationName, object: nil)
     }
     
     deinit {
@@ -50,7 +50,7 @@ import WireMessageStrategy
         self.analyticsTracker.tagSucceededFileUpload(
             withSize: fileMessageData.size,
             in: message.conversation,
-            fileExtension: (fileMessageData.filename as NSString).pathExtension,
+            fileExtension: ((fileMessageData.filename ?? "") as NSString).pathExtension,
             duration: fabs(startTime.timeIntervalSinceNow)
         )
     }
@@ -62,7 +62,7 @@ import WireMessageStrategy
                 return
         }
         
-        self.analyticsTracker.tagFailedFileUpload(withSize: fileMessageData.size, fileExtension: (fileMessageData.filename as NSString).pathExtension)
+        self.analyticsTracker.tagFailedFileUpload(withSize: fileMessageData.size, fileExtension: ((fileMessageData.filename ?? "") as NSString).pathExtension)
     }
     
     func downloadFinishedNotification(_ notification: Notification?) {
@@ -75,7 +75,7 @@ import WireMessageStrategy
         
         self.analyticsTracker.tagSuccededFileDownload(
             withSize: fileMessageData.size, message: message,
-            fileExtension: (fileMessageData.filename as NSString).pathExtension,
+            fileExtension: ((fileMessageData.filename ?? "") as NSString).pathExtension,
             duration: fabs(startTime.timeIntervalSinceNow)
         )
     }
@@ -87,7 +87,7 @@ import WireMessageStrategy
                 return
         }
         
-        self.analyticsTracker.tagFailedFileDownload(withSize: fileMessageData.size, fileExtension: (fileMessageData.filename as NSString).pathExtension)
+        self.analyticsTracker.tagFailedFileDownload(withSize: fileMessageData.size, fileExtension: ((fileMessageData.filename ?? "") as NSString).pathExtension)
     }
     
 }

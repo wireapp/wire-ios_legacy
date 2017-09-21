@@ -46,14 +46,12 @@ final class ConfirmEmailViewController: SettingsBaseTableViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        observer = UserChangeInfo.add(observer: self, forBareUser:ZMUser.selfUser())
+        observer = UserChangeInfo.add(observer: self, forBareUser: ZMUser.selfUser(), userSession: ZMUserSession.shared()!)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        if let observer = observer {
-            UserChangeInfo.remove(observer: observer, forBareUser: nil)
-        }
+        observer = nil
     }
 
     internal func setupViews() {

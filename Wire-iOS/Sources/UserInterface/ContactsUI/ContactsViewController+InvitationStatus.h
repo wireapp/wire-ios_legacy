@@ -22,6 +22,6 @@
 
 
 
-@interface ContactsViewController (InvitationStatus) <ZMInvitationStatusObserver>
+@interface ContactsViewController (InvitationStatus) /*<ZMInvitationStatusObserver>*/ // TODO
 
 @end

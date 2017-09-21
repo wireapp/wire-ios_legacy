@@ -28,33 +28,34 @@
 
 @implementation ContactsViewController (InvitationStatus)
 
-- (void)invitationStatusChanged:(ZMInvitationStatusChangedNotification *)note
-{
-    BOOL shouldUpdateCell = note.newStatus == ZMInvitationStatusPending || note.newStatus == ZMInvitationStatusFailed;
- 
-    NSIndexPath *index = [self indexPathForNotification:note];
-    if (index && shouldUpdateCell) {
-        ContactsCell *cell = (ContactsCell *)[self.tableView cellForRowAtIndexPath:index];
-        if (cell && [cell isKindOfClass:[ContactsCell class]]) {
-            [cell invitationStatusChanged:note];
-            if ([self.contentDelegate respondsToSelector:@selector(contactsViewController:shouldDisplayActionButtonForUser:)]) {
-                cell.actionButton.hidden = ! [self.contentDelegate contactsViewController:self shouldDisplayActionButtonForUser:[self.dataSource userAtIndexPath:index]];
-            }
-        }
-    }
-}
-
-- (NSIndexPath *)indexPathForNotification:(ZMInvitationStatusChangedNotification *)note
-{
-    NSArray *visibleRowPaths = [self.tableView indexPathsForVisibleRows];
-    for (NSIndexPath *indexPath in visibleRowPaths) {
-        ZMSearchUser *searchUser = [self.dataSource userAtIndexPath:indexPath];
-        if ([searchUser.contact.emailAddresses containsObject:note.emailAddress] ||
-            [searchUser.contact.phoneNumbers containsObject:note.phoneNumber]) {
-            return indexPath;
-        }
-    }
-    return nil;
-}
+// TODO
+//- (void)invitationStatusChanged:(ZMInvitationStatusChangedNotification *)note
+//{
+//    BOOL shouldUpdateCell = note.newStatus == ZMInvitationStatusPending || note.newStatus == ZMInvitationStatusFailed;
+// 
+//    NSIndexPath *index = [self indexPathForNotification:note];
+//    if (index && shouldUpdateCell) {
+//        ContactsCell *cell = (ContactsCell *)[self.tableView cellForRowAtIndexPath:index];
+//        if (cell && [cell isKindOfClass:[ContactsCell class]]) {
+//            [cell invitationStatusChanged:note];
+//            if ([self.contentDelegate respondsToSelector:@selector(contactsViewController:shouldDisplayActionButtonForUser:)]) {
+//                cell.actionButton.hidden = ! [self.contentDelegate contactsViewController:self shouldDisplayActionButtonForUser:[self.dataSource userAtIndexPath:index]];
+//            }
+//        }
+//    }
+//}
+//
+//- (NSIndexPath *)indexPathForNotification:(ZMInvitationStatusChangedNotification *)note
+//{
+//    NSArray *visibleRowPaths = [self.tableView indexPathsForVisibleRows];
+//    for (NSIndexPath *indexPath in visibleRowPaths) {
+//        ZMSearchUser *searchUser = [self.dataSource userAtIndexPath:indexPath];
+//        if ([searchUser.contact.emailAddresses containsObject:note.emailAddress] ||
+//            [searchUser.contact.phoneNumbers containsObject:note.phoneNumber]) {
+//            return indexPath;
+//        }
+//    }
+//    return nil;
+//}
 
 @end

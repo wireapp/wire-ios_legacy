@@ -85,7 +85,7 @@ class DotView: UIView {
         }
         
         if let selfUser = ZMUser.selfUser() {
-            userObserver = UserChangeInfo.add(observer: self, forBareUser: selfUser)
+            userObserver = UserChangeInfo.add(observer: self, forBareUser: selfUser, userSession: ZMUserSession.shared()!)
         }
     }
     
@@ -165,7 +165,7 @@ public class BaseAccountView: UIView, AccountViewType {
         super.init(frame: .zero)
         
         if let userSession = SessionManager.shared?.activeUserSession {
-            selfUserObserver = UserChangeInfo.add(observer: self, forBareUser: ZMUser.selfUser(inUserSession: userSession))
+            selfUserObserver = UserChangeInfo.add(observer: self, forBareUser: ZMUser.selfUser(inUserSession: userSession), userSession: userSession)
         }
 
         selectionView.hostedLayer.strokeColor = UIColor.accent().cgColor
@@ -278,8 +278,8 @@ public final class PersonalAccountView: BaseAccountView {
         }
 
         if let userSession = ZMUserSession.shared() {
-            conversationListObserver = ConversationListChangeInfo.add(observer: self, for: ZMConversationList.conversations(inUserSession: userSession))
-            connectionRequestObserver = ConversationListChangeInfo.add(observer: self, for: ZMConversationList.pendingConnectionConversations(inUserSession: userSession))
+            conversationListObserver = ConversationListChangeInfo.add(observer: self, for: ZMConversationList.conversations(inUserSession: userSession), userSession: userSession)
+            connectionRequestObserver = ConversationListChangeInfo.add(observer: self, for: ZMConversationList.pendingConnectionConversations(inUserSession: userSession), userSession: userSession)
         }
         
         self.imageViewContainer.addSubview(userImageView)

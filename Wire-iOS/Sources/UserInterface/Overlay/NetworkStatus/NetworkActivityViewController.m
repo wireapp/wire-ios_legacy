@@ -40,6 +40,7 @@ static CGFloat const MinDelayBeforeDisplay = 1.5;
 @interface NetworkActivityViewController () <ZMNetworkAvailabilityObserver>
 
 @property (nonatomic, strong) id accentColorChangeObserver;
+@property (nonatomic, strong) id networkAvailabilityChangeObserver;
 
 @property (nonatomic) CGFloat activityViewHeight;
 @property (nonatomic) CGFloat activityGapSize;
@@ -63,7 +64,6 @@ static CGFloat const MinDelayBeforeDisplay = 1.5;
 - (void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-    [ZMNetworkAvailabilityChangeNotification removeNetworkAvailabilityObserver:self];
 }
 
 
@@ -107,7 +107,7 @@ static CGFloat const MinDelayBeforeDisplay = 1.5;
     self.isLoading = NO;
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationWillResignActive:) name:UIApplicationWillResignActiveNotification object:nil];
-    [ZMNetworkAvailabilityChangeNotification addNetworkAvailabilityObserver:self userSession:[ZMUserSession sharedSession]];
+    self.networkAvailabilityChangeObserver = [ZMNetworkAvailabilityChangeNotification addNetworkAvailabilityObserver:self userSession:[ZMUserSession sharedSession]];
 }
 
 - (void)setIsLoadingMessages:(BOOL)isLoadingMessages
@@ -137,9 +137,9 @@ static CGFloat const MinDelayBeforeDisplay = 1.5;
     }
 }
 
-- (void)didChangeAvailability:(ZMNetworkAvailabilityChangeNotification *)note
+- (void)didChangeAvailabilityWithNewState:(ZMNetworkState)newState
 {
-    [self refreshShowOrHideLoadingBarWithNetworkState:note.networkState];
+    [self refreshShowOrHideLoadingBarWithNetworkState:newState];
 }
 
 - (void)refreshShowOrHideLoadingBarWithNetworkState:(ZMNetworkState)networkState

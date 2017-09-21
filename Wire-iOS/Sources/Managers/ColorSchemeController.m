@@ -51,7 +51,7 @@ NSString * const ColorSchemeControllerDidApplyColorSchemeChangeNotification = @"
     self = [super init];
     
     if (self) {
-        self.userObserverToken = [UserChangeInfo addUserObserver:self forUser:[ZMUser selfUser]];
+        self.userObserverToken = [UserChangeInfo addObserver:self forBareUser:[ZMUser selfUser] userSession:[ZMUserSession sharedSession]];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(settingsColorSchemeDidChange:) name:SettingsColorSchemeChangedNotification object:nil];
     }
     

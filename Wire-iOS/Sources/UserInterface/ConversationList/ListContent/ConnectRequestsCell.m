@@ -61,7 +61,8 @@
     [self addSubview:self.itemView];
     [self updateAppearance];
     self.conversationListObserverToken = [ConversationListChangeInfo addObserver:self
-                                                                         forList:[ZMConversationList pendingConnectionConversationsInUserSession:[ZMUserSession sharedSession]]];
+                                                                         forList:[ZMConversationList pendingConnectionConversationsInUserSession:[ZMUserSession sharedSession]]
+                                                                     userSession:[ZMUserSession sharedSession]];
     
     [self setNeedsUpdateConstraints];
 }

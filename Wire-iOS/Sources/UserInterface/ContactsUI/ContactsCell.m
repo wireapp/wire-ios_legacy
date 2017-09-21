@@ -236,12 +236,12 @@ NS_ASSUME_NONNULL_END
 
 #pragma mark - Status update
 
-- (void)invitationStatusChanged:(ZMInvitationStatusChangedNotification * __nonnull)note
+- (void)invitationStatusChanged
 {
-    if (note.newStatus == ZMInvitationStatusPending ||
-        note.newStatus == ZMInvitationStatusSent) {
+    if (self.searchUser.user.connection.status == ZMInvitationStatusPending ||
+        self.searchUser.user.connection.status == ZMInvitationStatusSent) {
         [self.userImageView setBadgeIcon:ZetaIconTypeClock animated:YES];
-    } else if (note.newStatus == ZMInvitationStatusFailed) {
+    } else if (self.searchUser.user.connection.status == ZMInvitationStatusFailed) {
         [self.userImageView setBadgeIcon:ZetaIconTypeNone animated:YES];
     }
 }

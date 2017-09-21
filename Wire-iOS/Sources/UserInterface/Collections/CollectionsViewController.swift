@@ -554,7 +554,7 @@ extension CollectionsViewController: UICollectionViewDelegate, UICollectionViewD
             resultCell = collectionView.dequeueReusableCell(withReuseIdentifier: CollectionImageCell.reuseIdentifier, for: indexPath) as! CollectionImageCell
             
         case CollectionsSectionSet.filesAndAudio:
-            if self.message(for: indexPath).fileMessageData?.isAudio() == true {
+            if self.message(for: indexPath).fileMessageData?.isAudio == true {
                 resultCell = collectionView.dequeueReusableCell(withReuseIdentifier: CollectionAudioCell.reuseIdentifier, for: indexPath) as! CollectionAudioCell
             }
             else {

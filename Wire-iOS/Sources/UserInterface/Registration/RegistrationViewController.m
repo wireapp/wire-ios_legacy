@@ -65,17 +65,13 @@
 @property (nonatomic) BOOL initialConstraintsCreated;
 @property (nonatomic) BOOL hasPushedPostRegistrationStep;
 @property (nonatomic) NSArray<UserClient *>* userClients;
+@property (nonatomic) id initialSyncObserverToken;
 
 @end
 
 
 
 @implementation RegistrationViewController
-
-- (void)dealloc
-{
-    [ZMUserSession removeInitalSyncCompletionObserver:self];
-}
 
 - (void)viewDidLoad
 {
@@ -89,7 +85,7 @@
     self.unregisteredUser = [ZMIncompleteRegistrationUser new];
     self.unregisteredUser.accentColorValue = [UIColor indexedAccentColor];
     
-    [ZMUserSession addInitalSyncCompletionObserver:self];
+    self.initialSyncObserverToken = [ZMUserSession addInitialSyncCompletionObserver:self userSession:[ZMUserSession sharedSession]];
     
     [self setupBackgroundViewController];
     [self setupNavigationController];
@@ -263,7 +259,7 @@
 
 #pragma mark - ZMInitialSyncCompletionObserver
 
-- (void)initialSyncCompleted:(NSNotification *)notification
+- (void)initialSyncCompleted
 {
     self.rootNavigationController.showLoadingView = NO;
     

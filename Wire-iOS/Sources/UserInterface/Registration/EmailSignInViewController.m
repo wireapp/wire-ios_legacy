@@ -48,13 +48,13 @@
 
 
 
-@interface EmailSignInViewController () <RegistrationTextFieldDelegate, ClientUnregisterViewControllerDelegate>
+@interface EmailSignInViewController () <RegistrationTextFieldDelegate, ClientUnregisterViewControllerDelegate, PreLoginAuthenticationObserver>
 
 @property (nonatomic) RegistrationTextField *emailField;
 @property (nonatomic) RegistrationTextField *passwordField;
 @property (nonatomic) ButtonWithLargerHitArea *forgotPasswordButton;
 
-@property (nonatomic) id<ZMAuthenticationObserverToken> authenticationToken;
+@property (nonatomic) id authenticationToken;
 
 /// After a login try we set this property to @c YES to reset both field accessories after a field change on any of those
 @property (nonatomic) BOOL needsToResetBothFieldAccessories;
@@ -71,11 +71,6 @@
 
 @implementation EmailSignInViewController
 
-- (void)dealloc
-{
-    [self removeObservers];
-}
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -91,7 +86,8 @@
     [super viewDidAppear:animated];
     
     if (self.isMovingToParentViewController || self.isBeingPresented || self.authenticationToken == nil) {
-        self.authenticationToken = [ZMUserSessionAuthenticationNotification addObserver:self];
+        self.authenticationToken = [PreLoginAuthenticationNotification registerObserver:self
+                                                              forUnauthenticatedSession:[SessionManager shared].unauthenticatedSession];
     }
     
     if(AutomationHelper.sharedHelper.automationEmailCredentials != nil) {
@@ -105,7 +101,6 @@
 
 - (void)removeObservers
 {
-    [ZMUserSessionAuthenticationNotification removeObserverForToken:self.authenticationToken];
     self.authenticationToken = nil;
 }
 

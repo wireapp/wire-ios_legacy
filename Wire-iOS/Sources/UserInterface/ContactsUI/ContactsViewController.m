@@ -97,8 +97,6 @@ static NSString * const ContactsViewControllerSectionHeaderID = @"ContactsSectio
     if (self.sharingContactsRequired && ! [[AddressBookHelper sharedHelper] isAddressBookAccessGranted] && !shouldSkip) {
         [self presentShareContactsViewController];
     }
-    
-    [ZMInvitationStatusChangedNotification addInvitationStatusObserver:self];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -122,7 +120,6 @@ static NSString * const ContactsViewControllerSectionHeaderID = @"ContactsSectio
 
 - (void)dealloc
 {
-    [ZMInvitationStatusChangedNotification removeInvitationStatusObserver:self];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillChangeFrameNotification object:nil];
 }
 

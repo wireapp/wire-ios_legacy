@@ -87,6 +87,7 @@
 @property (nonatomic) LegacyMessageTracker *messageCountTracker;
 
 @property (nonatomic) id incomingApnsObserver;
+@property (nonatomic) id networkAvailabilityObserverToken;
 
 @property (nonatomic) ProximityMonitorManager *proximityMonitorManager;
 
@@ -105,7 +106,6 @@
 - (void)dealloc
 {
     [AVSProvider.shared.mediaManager unregisterMedia:self.mediaPlaybackManager];
-    [ZMNetworkAvailabilityChangeNotification removeNetworkAvailabilityObserver:self];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
@@ -130,7 +130,7 @@
         self.analyticsEventPersistence = [[ShareExtensionAnalyticsPersistence alloc] initWithAccountContainer:accountContainerURL];
         [MessageDraftStorage setupSharedStorageAtURL:accountContainerURL error:nil];
         
-        [ZMNetworkAvailabilityChangeNotification addNetworkAvailabilityObserver:self userSession:[ZMUserSession sharedSession]];
+        self.networkAvailabilityObserverToken = [ZMNetworkAvailabilityChangeNotification addNetworkAvailabilityObserver:self userSession:[ZMUserSession sharedSession]];
         
         [[NSNotificationCenter defaultCenter] postNotificationName:ZMUserSessionDidBecomeAvailableNotification object:nil];
         
@@ -179,7 +179,7 @@
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(requestLoopNotification:) name:ZMTransportRequestLoopNotificationName object:nil];
     }
     
-    self.userObserverToken = [UserChangeInfo addUserObserver:self forUser:[ZMUser selfUser]];
+    self.userObserverToken = [UserChangeInfo addObserver:self forBareUser:[ZMUser selfUser] userSession:[ZMUserSession sharedSession]];
 }
 
 - (void)createBackgroundViewController
@@ -696,9 +696,9 @@
 
 @implementation ZClientViewController (NetworkAvailabilityObserver)
 
-- (void)didChangeAvailability:(ZMNetworkAvailabilityChangeNotification *)note
+- (void)didChangeAvailabilityWithNewState:(ZMNetworkState)newState
 {
-    if (note.networkState == ZMNetworkStateOnline && [[UIApplication sharedApplication] applicationState] == UIApplicationStateActive) {
+    if (newState == ZMNetworkStateOnline && [[UIApplication sharedApplication] applicationState] == UIApplicationStateActive) {
         [self uploadAddressBookIfNeeded];
     }
 }
