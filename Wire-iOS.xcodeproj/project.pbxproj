@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		1600E2051AD5799400C0DBA8 /* PhoneNumberStepViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1600E2041AD5799400C0DBA8 /* PhoneNumberStepViewController.m */; };
 		160287AD1E4351FC0036FC5B /* MockVoiceChannel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 160287AB1E434C460036FC5B /* MockVoiceChannel.swift */; };
-		160546DA1BF0DB9D001FE3F6 /* EmailInvitationStepViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 160546D91BF0DB9D001FE3F6 /* EmailInvitationStepViewController.m */; };
 		16063CEB1BCFCEB70097F62C /* InviteBannerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 16063CEA1BCFCEB70097F62C /* InviteBannerViewController.m */; };
 		16063D0B1BE0D5CE0097F62C /* ProfileNavigationControllerDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 16063D0A1BE0D5CE0097F62C /* ProfileNavigationControllerDelegate.m */; };
 		1607359B1EB2393000528965 /* SettingsShareDatabaseCellDescriptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1607359A1EB2393000528965 /* SettingsShareDatabaseCellDescriptor.swift */; };
@@ -60,7 +59,6 @@
 		1658D2041D3E742A00249609 /* new_message.caf in Resources */ = {isa = PBXBuildFile; fileRef = 87A4DAA11D34FF0400105D44 /* new_message.caf */; };
 		1658D2051D3E742A00249609 /* ping_from_them.caf in Resources */ = {isa = PBXBuildFile; fileRef = 87A4DAA21D34FF0400105D44 /* ping_from_them.caf */; };
 		1658D2061D3E742A00249609 /* ringing_from_them_long.caf in Resources */ = {isa = PBXBuildFile; fileRef = 87A4DAA31D34FF0400105D44 /* ringing_from_them_long.caf */; };
-		165B47ED1BF23D6C00C46EFE /* PhoneInvitationStepViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 165B47EC1BF23D6C00C46EFE /* PhoneInvitationStepViewController.m */; };
 		165FDC4B1DD5D447009D75A2 /* NSItemProvider+Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 165FDC4A1DD5D447009D75A2 /* NSItemProvider+Helper.m */; };
 		166390D41DC34CAB00D7BF1C /* ImageToolbarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 166390D31DC34CAB00D7BF1C /* ImageToolbarView.swift */; };
 		166390D61DC8AC0C00D7BF1C /* String+Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = 166390D51DC8AC0C00D7BF1C /* String+Image.swift */; };
@@ -118,7 +116,6 @@
 		16E311C31A5FEA2B00FF2C9E /* ConversationCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 16E311C21A5FEA2B00FF2C9E /* ConversationCell.m */; };
 		16E311C91A5FEAE200FF2C9E /* TextMessageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 16E311C81A5FEAE200FF2C9E /* TextMessageCell.m */; };
 		16E311D81A6024F400FF2C9E /* ImageMessageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 16E311D71A6024F400FF2C9E /* ImageMessageCell.m */; };
-		16E4E81A1BF215CB002D7409 /* InvitationFlowViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 16E4E8191BF215CB002D7409 /* InvitationFlowViewController.m */; };
 		16E6C1001A837C0300AA2F32 /* NSIndexSet+IndexPaths.m in Sources */ = {isa = PBXBuildFile; fileRef = 16E6C0FF1A837C0300AA2F32 /* NSIndexSet+IndexPaths.m */; };
 		16EB9B3A1CE1DBB400883FCF /* VideoMessageCellTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16EB9B391CE1DBB400883FCF /* VideoMessageCellTests.swift */; };
 		16F6BB0E1EDD7B23009EA803 /* SearchHeaderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16F6BB0D1EDD7B23009EA803 /* SearchHeaderViewController.swift */; };
@@ -1042,8 +1039,6 @@
 		1600E2031AD5799400C0DBA8 /* PhoneNumberStepViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhoneNumberStepViewController.h; sourceTree = "<group>"; };
 		1600E2041AD5799400C0DBA8 /* PhoneNumberStepViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhoneNumberStepViewController.m; sourceTree = "<group>"; };
 		160287AB1E434C460036FC5B /* MockVoiceChannel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockVoiceChannel.swift; sourceTree = "<group>"; };
-		160546D81BF0DB9D001FE3F6 /* EmailInvitationStepViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EmailInvitationStepViewController.h; sourceTree = "<group>"; };
-		160546D91BF0DB9D001FE3F6 /* EmailInvitationStepViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EmailInvitationStepViewController.m; sourceTree = "<group>"; };
 		16063CE91BCFCEB70097F62C /* InviteBannerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InviteBannerViewController.h; sourceTree = "<group>"; };
 		16063CEA1BCFCEB70097F62C /* InviteBannerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InviteBannerViewController.m; sourceTree = "<group>"; };
 		16063D091BE0D5CE0097F62C /* ProfileNavigationControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfileNavigationControllerDelegate.h; sourceTree = "<group>"; };
@@ -1108,8 +1103,6 @@
 		1651F9BA1D352C5300A9FAE8 /* ArticleViewTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArticleViewTests.swift; sourceTree = "<group>"; };
 		1651F9BF1D36789C00A9FAE8 /* Message+FormattingTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Message+FormattingTests.swift"; sourceTree = "<group>"; };
 		1658C23B1F57531500889F22 /* LoginCredentials.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginCredentials.swift; sourceTree = "<group>"; };
-		165B47EB1BF23D6C00C46EFE /* PhoneInvitationStepViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhoneInvitationStepViewController.h; sourceTree = "<group>"; };
-		165B47EC1BF23D6C00C46EFE /* PhoneInvitationStepViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhoneInvitationStepViewController.m; sourceTree = "<group>"; };
 		165FDC481DD5D447009D75A2 /* Wire-iOS Share Extension-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Wire-iOS Share Extension-Bridging-Header.h"; sourceTree = "<group>"; };
 		165FDC491DD5D447009D75A2 /* NSItemProvider+Helper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSItemProvider+Helper.h"; sourceTree = "<group>"; };
 		165FDC4A1DD5D447009D75A2 /* NSItemProvider+Helper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSItemProvider+Helper.m"; sourceTree = "<group>"; };
@@ -1199,8 +1192,6 @@
 		16E311C81A5FEAE200FF2C9E /* TextMessageCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TextMessageCell.m; sourceTree = "<group>"; };
 		16E311D61A6024F400FF2C9E /* ImageMessageCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageMessageCell.h; sourceTree = "<group>"; };
 		16E311D71A6024F400FF2C9E /* ImageMessageCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageMessageCell.m; sourceTree = "<group>"; };
-		16E4E8181BF215CB002D7409 /* InvitationFlowViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InvitationFlowViewController.h; sourceTree = "<group>"; };
-		16E4E8191BF215CB002D7409 /* InvitationFlowViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InvitationFlowViewController.m; sourceTree = "<group>"; };
 		16E6C0FE1A837C0300AA2F32 /* NSIndexSet+IndexPaths.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSIndexSet+IndexPaths.h"; sourceTree = "<group>"; };
 		16E6C0FF1A837C0300AA2F32 /* NSIndexSet+IndexPaths.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSIndexSet+IndexPaths.m"; sourceTree = "<group>"; };
 		16EB9B391CE1DBB400883FCF /* VideoMessageCellTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoMessageCellTests.swift; sourceTree = "<group>"; };
@@ -2600,19 +2591,6 @@
 				8798C5191C3ACDF700678AD7 /* NoHistoryViewController.m */,
 			);
 			name = Steps;
-			sourceTree = "<group>";
-		};
-		160546D41BF0DA87001FE3F6 /* Invitation */ = {
-			isa = PBXGroup;
-			children = (
-				16E4E8181BF215CB002D7409 /* InvitationFlowViewController.h */,
-				16E4E8191BF215CB002D7409 /* InvitationFlowViewController.m */,
-				160546D81BF0DB9D001FE3F6 /* EmailInvitationStepViewController.h */,
-				160546D91BF0DB9D001FE3F6 /* EmailInvitationStepViewController.m */,
-				165B47EB1BF23D6C00C46EFE /* PhoneInvitationStepViewController.h */,
-				165B47EC1BF23D6C00C46EFE /* PhoneInvitationStepViewController.m */,
-			);
-			name = Invitation;
 			sourceTree = "<group>";
 		};
 		160DECD41AB200FA000FB575 /* Camera */ = {
@@ -4189,7 +4167,6 @@
 		8FBCE5AE1A09395800411222 /* Registration */ = {
 			isa = PBXGroup;
 			children = (
-				160546D41BF0DA87001FE3F6 /* Invitation */,
 				168DDCE01AF7E6E00056A5EF /* SignIn */,
 				162CFAA41AE500740078FB87 /* Nag Screens */,
 				16A7612F1AD55E5800A999D0 /* New Registration */,
@@ -6198,7 +6175,6 @@
 				870C92691E8CE5E500A10995 /* ConversationAvatarView.swift in Sources */,
 				BF415B271C3C354C00DF57B7 /* MissingMessagesCell.swift in Sources */,
 				1693D9681CEDB26200D1F13C /* UIApplication+Permissions.m in Sources */,
-				160546DA1BF0DB9D001FE3F6 /* EmailInvitationStepViewController.m in Sources */,
 				16A95FFE1A6EC3210045E175 /* ZMConversationMessageWindow+Formatting.m in Sources */,
 				871BC0211D34F56300DF0793 /* AnalyticsTracker+SelfUser.m in Sources */,
 				87DCF48E1D34E9BA00BB420F /* ContactsDataSource.m in Sources */,
@@ -6394,7 +6370,6 @@
 				AFD4E72A1E449925002A4732 /* Analytics+StorableTrackingEvent.swift in Sources */,
 				8F89141D1A9F287E0056AB0C /* ConversationListViewModel.m in Sources */,
 				BF10B58D1E6452B800E7036E /* ZMMessage+Likes.swift in Sources */,
-				165B47ED1BF23D6C00C46EFE /* PhoneInvitationStepViewController.m in Sources */,
 				87D5E43E1C3E78A000EB8289 /* ProfileClientViewController.swift in Sources */,
 				BFE277631D5B4FC50074DC6D /* ConversationContentViewController+MessageDeletion.swift in Sources */,
 				164B65BE1CB41A3D00D882D8 /* RegistrationRootViewController.m in Sources */,
@@ -6445,7 +6420,6 @@
 				871BC3691D34F94200DF0793 /* MediaPreviewViewController.m in Sources */,
 				BF606D6F1CAA8A78002BAC94 /* ConversationListBottomBar.swift in Sources */,
 				871BC2901D34F8F800DF0793 /* UIView+PopoverBorder.m in Sources */,
-				16E4E81A1BF215CB002D7409 /* InvitationFlowViewController.m in Sources */,
 				163BB60D1BEA976C00606381 /* BarController.m in Sources */,
 				16E311D81A6024F400FF2C9E /* ImageMessageCell.m in Sources */,
 				163495871F010F91004E80DB /* UnauthenticatedSession+Shared.swift in Sources */,

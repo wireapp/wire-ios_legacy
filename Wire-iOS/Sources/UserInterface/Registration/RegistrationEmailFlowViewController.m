@@ -36,14 +36,14 @@
 #import "WireSyncEngine+iOS.h"
 #import "Wire-Swift.h"
 
-@interface RegistrationEmailFlowViewController () <FormStepDelegate, EmailVerificationStepViewControllerDelegate, ZMRegistrationObserver, ZMAuthenticationObserver>
+@interface RegistrationEmailFlowViewController () <FormStepDelegate, EmailVerificationStepViewControllerDelegate, ZMRegistrationObserver, PreLoginAuthenticationObserver>
 
 @property (nonatomic) BOOL hasUserAcceptedTOS;
 
 @property (nonatomic) EmailStepViewController *emailStepViewController;
 @property (nonatomic) ZMIncompleteRegistrationUser *unregisteredUser;
 @property (nonatomic) id<ZMRegistrationObserverToken> registrationToken;
-@property (nonatomic) id<ZMAuthenticationObserverToken> authenticationToken;
+@property (nonatomic) id authenticationToken;
 
 @end
 
@@ -56,9 +56,6 @@
 
 - (void)removeObservers
 {
-    [ZMUserSessionAuthenticationNotification removeObserverForToken:self.authenticationToken];
-    [[UnauthenticatedSession sharedSession]  removeRegistrationObserver:self.registrationToken];
-    
     self.authenticationToken = nil;
     self.registrationToken = nil;
 }
@@ -84,7 +81,8 @@
     [super didMoveToParentViewController:parent];
     
     if (parent && self.authenticationToken == nil && self.registrationToken == nil) {
-        self.authenticationToken = [ZMUserSessionAuthenticationNotification addObserver:self];
+        self.authenticationToken = [PreLoginAuthenticationNotification registerObserver:self
+                                                              forUnauthenticatedSession:[SessionManager shared].unauthenticatedSession];
         self.registrationToken = [[UnauthenticatedSession sharedSession] addRegistrationObserver:self];
     } else {
         [self removeObservers];

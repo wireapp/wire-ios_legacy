@@ -152,7 +152,7 @@
     [self.view addSubview:self.contentContainer];
 
     self.userProfile = ZMUserSession.sharedSession.userProfile;
-    self.userObserverToken = [UserChangeInfo addUserObserver:self forUser:[ZMUser selfUser] userSession:[ZMUserSession sharedSession]];
+    self.userObserverToken = [UserChangeInfo addObserver:self forUser:[ZMUser selfUser] userSession:[ZMUserSession sharedSession]];
 
     self.conversationListContainer = [[UIView alloc] initForAutoLayout];
     self.conversationListContainer.backgroundColor = [UIColor clearColor];

@@ -48,7 +48,7 @@
 
 
 
-@interface EmailSignInViewController () <RegistrationTextFieldDelegate, ClientUnregisterViewControllerDelegate, PreLoginAuthenticationObserver>
+@interface EmailSignInViewController () <RegistrationTextFieldDelegate, ClientUnregisterViewControllerDelegate>
 
 @property (nonatomic) RegistrationTextField *emailField;
 @property (nonatomic) RegistrationTextField *passwordField;
@@ -63,7 +63,7 @@
 
 
 
-@interface EmailSignInViewController (AuthenticationObserver) <ZMAuthenticationObserver>
+@interface EmailSignInViewController (AuthenticationObserver) <PreLoginAuthenticationObserver>
 
 @end
 

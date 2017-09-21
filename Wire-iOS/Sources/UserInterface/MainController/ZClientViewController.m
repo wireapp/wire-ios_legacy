@@ -179,7 +179,7 @@
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(requestLoopNotification:) name:ZMTransportRequestLoopNotificationName object:nil];
     }
     
-    self.userObserverToken = [UserChangeInfo addUserObserver:self forUser:[ZMUser selfUser] userSession:[ZMUserSession sharedSession]];
+    self.userObserverToken = [UserChangeInfo addObserver:self forUser:[ZMUser selfUser] userSession:[ZMUserSession sharedSession]];
 }
 
 - (void)createBackgroundViewController

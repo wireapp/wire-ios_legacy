@@ -46,7 +46,6 @@
 #import "KeyboardAvoidingViewController.h"
 
 #import "PhoneSignInViewController.h"
-#import "InvitationFlowViewController.h"
 
 #import "AnalyticsTracker+Registration.h"
 
@@ -163,14 +162,6 @@
     return IS_IPAD ? RegistrationFlowEmail : RegistrationFlowPhone;
 }
 
-- (void)presentInvitationToRegisterAsUser:(ZMIncompleteRegistrationUser *)unregisteredUser
-{
-    InvitationFlowViewController *invitationFlowViewController = [[InvitationFlowViewController alloc] initWithUnregisteredUser:unregisteredUser];
-    self.rootNavigationController.backButtonEnabled = NO;
-    self.rootNavigationController.logoEnabled = NO;
-    [self.rootNavigationController pushViewController:invitationFlowViewController animated:YES];
-}
-
 - (void)presentNoHistoryViewController:(ContextType)type
 {
     if ([self.rootNavigationController.topViewController isKindOfClass:[NoHistoryViewController class]]) {
@@ -250,11 +241,6 @@
 - (void)didFailToFetchPersonalInvitationWithError:(NSError *)error
 {
     DDLogDebug(@"Failed to fetch invitation with error: %@", error);
-}
-
-- (void)didReceiveInvitationToRegisterAsUser:(ZMIncompleteRegistrationUser *)user
-{
-    [self presentInvitationToRegisterAsUser:user];
 }
 
 #pragma mark - ZMInitialSyncCompletionObserver

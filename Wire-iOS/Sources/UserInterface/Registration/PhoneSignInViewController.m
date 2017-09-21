@@ -38,7 +38,7 @@
 #import "Wire-Swift.h"
 
 
-@interface PhoneSignInViewController () <FormStepDelegate, PreLoginAuthenticationObserver, PostLoginAuthenticationObserver, PhoneVerificationStepViewControllerDelegate>
+@interface PhoneSignInViewController () <FormStepDelegate, PreLoginAuthenticationObserver, PhoneVerificationStepViewControllerDelegate>
 
 @property (nonatomic) PhoneNumberStepViewController *phoneNumberStepViewController;
 @property (nonatomic) id authenticationToken;
