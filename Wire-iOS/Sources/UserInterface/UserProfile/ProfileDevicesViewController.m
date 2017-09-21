@@ -47,7 +47,7 @@
         return nil;
     }
     self.user = user;
-    self.userObserverToken = [UserChangeInfo addObserver:self forBareUser:self.user userSession:[ZMUserSession sharedSession]];
+    self.userObserverToken = [UserChangeInfo addUserObserver:self forUser:self.user userSession:[ZMUserSession sharedSession]];
     [self refreshSortedClientsWithSet:user.clients];
     return self;
 }

@@ -79,7 +79,7 @@ static NSString *ConnectionRequestCellIdentifier = @"ConnectionRequestCell";
                                                                                forList:pendingConnectionsList
                                                                            userSession:[ZMUserSession sharedSession]];
     
-    self.userObserverToken = [UserChangeInfo addObserver:self forBareUser:[ZMUser selfUser] userSession:[ZMUserSession sharedSession]];
+    self.userObserverToken = [UserChangeInfo addUserObserver:self forUser:[ZMUser selfUser] userSession:[ZMUserSession sharedSession]];
     self.connectionRequests = pendingConnectionsList;
     
     [self reload];

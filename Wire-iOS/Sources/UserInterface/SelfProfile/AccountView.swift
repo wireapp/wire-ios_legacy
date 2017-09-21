@@ -85,7 +85,7 @@ class DotView: UIView {
         }
         
         if let selfUser = ZMUser.selfUser() {
-            userObserver = UserChangeInfo.add(observer: self, forBareUser: selfUser, userSession: ZMUserSession.shared()!)
+            userObserver = UserChangeInfo.add(observer: self, for: selfUser, userSession: ZMUserSession.shared()!)
         }
     }
     
@@ -165,7 +165,7 @@ public class BaseAccountView: UIView, AccountViewType {
         super.init(frame: .zero)
         
         if let userSession = SessionManager.shared?.activeUserSession {
-            selfUserObserver = UserChangeInfo.add(observer: self, forBareUser: ZMUser.selfUser(inUserSession: userSession), userSession: userSession)
+            selfUserObserver = UserChangeInfo.add(observer: self, for: ZMUser.selfUser(inUserSession: userSession), userSession: userSession)
         }
 
         selectionView.hostedLayer.strokeColor = UIColor.accent().cgColor

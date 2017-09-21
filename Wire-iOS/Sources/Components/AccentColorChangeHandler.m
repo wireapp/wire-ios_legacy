@@ -59,7 +59,7 @@
         self.observer = observer;
         
         self.selfUser = [ZMUser selfUser];
-        self.userObserverToken = [UserChangeInfo addObserver:self forBareUser:self.selfUser userSession:[ZMUserSession sharedSession]];
+        self.userObserverToken = [UserChangeInfo addUserObserver:self forUser:self.selfUser userSession:[ZMUserSession sharedSession]];
     }
     return self;
 }

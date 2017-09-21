@@ -24,7 +24,7 @@ import WireDataModel
 extension ConversationListViewModel {
 
     @objc public func subscribeToTeamsUpdates() {
-        self.selfUserObserver = UserChangeInfo.add(observer: self, forBareUser: ZMUser.selfUser(), userSession: ZMUserSession.shared()!)
+        self.selfUserObserver = UserChangeInfo.add(observer: self, for: ZMUser.selfUser(), userSession: ZMUserSession.shared()!)
     }
 
 }

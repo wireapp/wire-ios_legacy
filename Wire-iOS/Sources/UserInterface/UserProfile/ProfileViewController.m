@@ -113,7 +113,7 @@ typedef NS_ENUM(NSUInteger, ProfileViewControllerTabBarIndex) {
     self.navigationController.delegate = self.navigationControllerDelegate;
     
     if (nil != self.fullUser) {
-        self.observerToken = [UserChangeInfo addObserver:self forBareUser:self.fullUser userSession:[ZMUserSession sharedSession]];
+        self.observerToken = [UserChangeInfo addUserObserver:self forUser:self.fullUser userSession:[ZMUserSession sharedSession]];
     }
     
     [self setupHeader];

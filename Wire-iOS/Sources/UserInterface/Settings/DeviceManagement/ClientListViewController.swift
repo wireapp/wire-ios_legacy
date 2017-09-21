@@ -78,7 +78,7 @@ import CocoaLumberjackSwift
         self.initalizeProperties(clientsList ?? Array(ZMUser.selfUser().clients.filter { !$0.isSelfClient() } ))
 
         self.clientsObserverToken = ZMUserSession.shared()?.add(self)
-        self.userObserverToken = UserChangeInfo.add(observer: self, forBareUser: ZMUser.selfUser(), userSession: ZMUserSession.shared()!)
+        self.userObserverToken = UserChangeInfo.add(observer: self, for: ZMUser.selfUser(), userSession: ZMUserSession.shared()!)
         
         if clientsList == nil {
             if clients.isEmpty {

@@ -46,7 +46,7 @@ final class ConfirmEmailViewController: SettingsBaseTableViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        observer = UserChangeInfo.add(observer: self, forBareUser: ZMUser.selfUser(), userSession: ZMUserSession.shared()!)
+        observer = UserChangeInfo.add(observer: self, for: ZMUser.selfUser(), userSession: ZMUserSession.shared()!)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
