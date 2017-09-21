@@ -29,6 +29,7 @@ import Cartography
     init(user: ZMUser) {
         super.init(frame: .zero)
         imageView.accessibilityIdentifier = "user image"
+        imageView.userSession = SessionManager.shared?.activeUserSession
         imageView.user = user
         
         nameLabel.accessibilityLabel = "profile_view.accessibility.name".localized
