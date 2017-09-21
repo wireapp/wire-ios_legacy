@@ -26,7 +26,7 @@ github "wireapp/wire-ios-message-strategy" "0116ec4282e0a7c353ed61dd23f7024b0b0f
 github "wireapp/wire-ios-protos" "11.0.1"
 github "wireapp/wire-ios-request-strategy" "17f9290763231f1a845132f2d70ce31d24e90417"
 github "wireapp/wire-ios-share-engine" "46.0.3"
-github "wireapp/wire-ios-sync-engine" "111.1.6"
+github "wireapp/wire-ios-sync-engine" "feature/multi-account"
 github "wireapp/wire-ios-system" "18.2.2"
 github "wireapp/wire-ios-transport" "25.0.2"
 github "wireapp/wire-ios-utilities" "17.1.1"
