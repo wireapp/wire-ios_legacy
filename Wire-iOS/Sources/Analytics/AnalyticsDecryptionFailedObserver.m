@@ -36,7 +36,10 @@
     self = [super init];
     if (self) {
         _analytics = analytics;
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(messageCannotBeDecrypted:) name:ZMConversationFailedToDecryptMessageNotificationName object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(messageCannotBeDecrypted:)
+                                                     name:[ZMConversation failedToDecryptMessageNotificationName]
+                                                   object:nil];
     }
     return self;
 }

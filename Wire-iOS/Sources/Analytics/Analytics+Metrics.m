@@ -25,41 +25,14 @@
 
 @import WireSyncEngine;
 
-static id flowManagerDidBecomeAvailableObserver = nil;
-
 @implementation Analytics (Metrics)
 
 + (void)updateAVSMetricsSettingsWithActiveProvider:(AnalyticsLocalyticsProvider *)provider
 {
-    if ([[AVSProvider shared] flowManager] == nil) {
-        // Flow manager is not ready yet
-        DDLogInfo(@"CANNOT set AVS metrics upload: no flow manager");
-        [self subscribeForAVSFlowManagerAvailabilityNotificationWithProvider:provider];
-        return;
-    }
-    
     BOOL uploadMetrics = provider ? !provider.isOptedOut : NO;
     
     [[[AVSProvider shared] flowManager] setEnableMetrics:uploadMetrics];
     DDLogInfo(@"Set AVS metrics upload to %d", uploadMetrics);
 }
-
-+ (void)subscribeForAVSFlowManagerAvailabilityNotificationWithProvider:(AnalyticsLocalyticsProvider *)provider
-{
-    if (nil != flowManagerDidBecomeAvailableObserver) {
-        return;
-    }
-    
-    @weakify(self)
-    flowManagerDidBecomeAvailableObserver = [[NSNotificationCenter defaultCenter] addObserverForName:ZMFlowManagerDidBecomeAvailableNotification
-                                                                                              object:nil
-                                                                                               queue:[NSOperationQueue mainQueue]
-                                                                                          usingBlock:^(NSNotification * _Nonnull note) {
-                                                                                              @strongify(self)
-                                                                                              [self updateAVSMetricsSettingsWithActiveProvider:provider];
-                                                                                              flowManagerDidBecomeAvailableObserver = nil;
-                                                                                          }];
-}
-
 
 @end
