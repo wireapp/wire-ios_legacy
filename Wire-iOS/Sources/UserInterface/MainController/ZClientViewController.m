@@ -117,7 +117,8 @@
         self.proximityMonitorManager = [ProximityMonitorManager new];
         self.mediaPlaybackManager = [[MediaPlaybackManager alloc] initWithName:@"conversationMedia"];
         self.messageCountTracker = [[LegacyMessageTracker alloc] initWithManagedObjectContext:ZMUserSession.sharedSession.syncManagedObjectContext];
-        [[ZMUserSession sharedSession] setRequestToOpenViewDelegate:self];
+        [[SessionManager shared] setRequestToOpenViewDelegate:self];
+
         [AVSProvider.shared.mediaManager registerMedia:self.mediaPlaybackManager withOptions:@{ @"media" : @"external "}];
         
         AddressBookHelper.sharedHelper.configuration = AutomationHelper.sharedHelper;
@@ -676,17 +677,17 @@
 
 @implementation ZClientViewController (ZMRequestsToOpenViewsDelegate)
 
-- (void)showConversationList
+- (void)showConversationListForUserSession:(ZMUserSession *)userSession
 {
     [self transitionToListAnimated:YES completion:nil];
 }
 
-- (void)showConversation:(ZMConversation *)conversation
+- (void)userSession:(ZMUserSession *)userSession showConversation:(ZMConversation *)conversation
 {
     [self selectConversation:conversation focusOnView:YES animated:YES];
 }
 
-- (void)showMessage:(id<ZMConversationMessage>)message inConversation:(ZMConversation *)conversation
+- (void)userSession:(ZMUserSession *)userSession showMessage:(ZMMessage *)message inConversation:(ZMConversation *)conversation
 {
     [self selectConversation:conversation focusOnView:YES animated:YES];
 }
