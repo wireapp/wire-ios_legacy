@@ -385,6 +385,7 @@ NSString * const UserDefaultDisableLinkPreviews = @"DisableLinkPreviews";
 - (void)setDisableCallKit:(BOOL)disableCallKit
 {
     [self.defaults setBool:disableCallKit forKey:UserDefaultDisableCallKit];
+    [[SessionManager shared] updateCallNotificationStyleFromSettings];
 }
 
 - (BOOL)disableLinkPreviews

@@ -86,7 +86,6 @@ class SettingsPropertyFactory {
         SettingsPropertyName.disableHockey              : UserDefaultDisableHockey,
         SettingsPropertyName.disableAnalytics           : UserDefaultDisableAnalytics,
         SettingsPropertyName.disableSendButton          : UserDefaultSendButtonDisabled,
-        SettingsPropertyName.disableCallKit             : UserDefaultDisableCallKit,
         SettingsPropertyName.mapsOpeningOption          : UserDefaultMapsOpeningRawValue,
         SettingsPropertyName.browserOpeningOption       : UserDefaultBrowserOpeningRawValue,
         SettingsPropertyName.tweetOpeningOption         : UserDefaultTwitterOpeningRawValue,
@@ -291,6 +290,15 @@ class SettingsPropertyFactory {
                         Settings.shared().disableLinkPreviews = number.boolValue
                     default:
                         throw SettingsPropertyError.WrongValue("Incorrect type \(value) for key \(propertyName)")
+                    }
+            })
+        case .disableCallKit:
+            return SettingsBlockProperty(
+                propertyName: propertyName,
+                getAction: { _ in return SettingsPropertyValue(Settings.shared().disableCallKit) },
+                setAction: { _, value in
+                    if case .number(let disabled) = value {
+                        Settings.shared().disableCallKit = disabled.boolValue
                     }
             })
             

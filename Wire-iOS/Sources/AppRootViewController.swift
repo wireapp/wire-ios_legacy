@@ -66,13 +66,6 @@ class AppRootViewController : UIViewController {
         overlayWindow.makeKeyAndVisible()
         mainWindow.makeKey()
         
-        let isCallkitEnabled = !Settings.shared().disableCallKit
-        var isCallkitSupported = false
-        if #available(iOS 10, *) {
-            isCallkitSupported = TARGET_OS_SIMULATOR == 0
-        }
-        ZMUserSession.useCallKit = isCallkitEnabled && isCallkitSupported
-        
         configureMediaManager()
         
         if let appGroupIdentifier = Bundle.main.appGroupIdentifier {
@@ -117,6 +110,7 @@ class AppRootViewController : UIViewController {
             blacklistDownloadInterval: Settings.shared().blacklistDownloadInterval)
         { sessionManager in
             self.sessionManager = sessionManager
+            sessionManager.updateCallNotificationStyleFromSettings()
         }
     }
     
