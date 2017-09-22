@@ -26,4 +26,19 @@ extension SessionManager {
     
     // Maximum number of accounts allowed to be signed into the app.
     public static let maxAccounts = 3
+    
+    public func updateCallNotificationStyleFromSettings() {
+        let isCallKitEnabled = !Settings.shared().disableCallKit
+        var isCallKitSupported = false
+        if #available(iOS 10, *) {
+            isCallKitSupported = TARGET_OS_SIMULATOR == 0
+        }
+    
+        if isCallKitEnabled && isCallKitSupported {
+            self.callNotificationStyle = .callKit
+        }
+        else {
+            self.callNotificationStyle = .pushNotifications
+        }
+    }
 }
