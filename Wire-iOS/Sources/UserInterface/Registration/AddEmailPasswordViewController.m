@@ -57,11 +57,6 @@
 
 @implementation AddEmailPasswordViewController
 
-- (void)dealloc
-{
-    [self.userProfile removeObserverWithToken:self.userEditingToken];
-}
-
 - (instancetype)init
 {
     self = [super init];

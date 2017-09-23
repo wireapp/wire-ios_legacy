@@ -133,7 +133,7 @@
 
 - (void)removeUserProfileObserver
 {
-    [self.userProfile removeObserverWithToken:self.userProfileObserverToken];
+    self.userProfileObserverToken = nil;
 }
 
 - (void)loadView

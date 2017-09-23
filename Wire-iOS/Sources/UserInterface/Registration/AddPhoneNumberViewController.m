@@ -62,7 +62,7 @@
 
 - (void)dealloc
 {
-    [self.userProfile removeObserverWithToken:self.userEditingToken];
+    self.userEditingToken = nil;
 }
 
 - (instancetype)init

@@ -503,7 +503,7 @@ NSString * const UserDefaultDisableLinkPreviews = @"DisableLinkPreviews";
 
 - (void)updateAVSCallingConstantBitRateValue
 {
-    WireCallCenterV3 *callCenter = [[[SessionManager shared] userSession] callCenter];
+    WireCallCenterV3 *callCenter = [[[SessionManager shared] activeUserSession] callCenter];
     if (nil != callCenter) {
         callCenter.useAudioConstantBitRate = self.callingConstantBitRate;
     }
