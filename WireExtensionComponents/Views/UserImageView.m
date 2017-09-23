@@ -143,7 +143,7 @@ static CIContext *ciContext(void)
 {    
     _user = user;
     
-    if (user != nil && ([user isKindOfClass:[ZMUser class]] || [user isKindOfClass:[ZMSearchUser class]])) {
+    if (self.userSession != nil && user != nil && ([user isKindOfClass:[ZMUser class]] || [user isKindOfClass:[ZMSearchUser class]])) {
         self.userObserverToken = [UserChangeInfo addObserver:self forBareUser:user userSession:self.userSession];
     }
     

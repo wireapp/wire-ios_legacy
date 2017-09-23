@@ -84,8 +84,9 @@ class DotView: UIView {
             centerView.edges == inset(selfView.edges, 1, 1, 1, 1)
         }
         
-        if let selfUser = ZMUser.selfUser() {
-            userObserver = UserChangeInfo.add(observer: self, for: selfUser, userSession: ZMUserSession.shared()!)
+        if let userSession = ZMUserSession.shared(),
+            let selfUser = ZMUser.selfUser() {
+            userObserver = UserChangeInfo.add(observer: self, for: selfUser, userSession: userSession)
         }
     }
     
