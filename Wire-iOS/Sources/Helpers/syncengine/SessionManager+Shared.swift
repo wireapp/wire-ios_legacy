@@ -33,8 +33,11 @@ extension SessionManager {
         if #available(iOS 10, *) {
             isCallKitSupported = TARGET_OS_SIMULATOR == 0
         }
+        
+        // TODO: CallKit only with 1 account
+        let hasMultipleAccounts = self.accountManager.accounts.count > 1
     
-        if isCallKitEnabled && isCallKitSupported {
+        if isCallKitEnabled && isCallKitSupported && !hasMultipleAccounts {
             self.callNotificationStyle = .callKit
         }
         else {
