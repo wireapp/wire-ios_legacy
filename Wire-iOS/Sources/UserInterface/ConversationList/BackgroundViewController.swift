@@ -85,6 +85,10 @@ final public class BackgroundViewController: UIViewController {
         return .lightContent
     }
     
+    public override func shouldDisplayNotification(for message: ZMConversationMessage, isActiveAccount: Bool) -> Bool {
+        return !isActiveAccount
+    }
+    
     private func configureViews() {
         self.cropView.clipsToBounds = true
         darkenOverlay.backgroundColor = UIColor(white: 0, alpha: 0.16)
