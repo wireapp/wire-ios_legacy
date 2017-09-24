@@ -238,10 +238,9 @@ static NSString* light(NSString *colorString) {
     UIColor *lightGraphiteAlpha24 = [UIColor wr_colorFromString:@"rgb(141, 152, 159, 0.24)"];
     UIColor *lightGraphiteAlpha48 = [UIColor wr_colorFromString:@"rgb(141, 152, 159, 0.48)"];
     UIColor *lightGraphiteAlpha64 = [UIColor wr_colorFromString:@"rgb(141, 152, 159, 0.64)"];
-    UIColor *chatHeadTitleTextLight = [UIColor wr_colorFromString:@"rgb(51, 55, 58)"];
-    UIColor *chatHeadSubtitleTextLight = [UIColor wr_colorFromString:@"rgb(153, 153, 153)"];
-    UIColor *chatHeadBGDark = [UIColor wr_colorFromString:@"rgb(67, 71, 74)"];
-    UIColor *chatHeadBorderLight = [UIColor wr_colorFromString:@"rgb(230, 230, 230)"];
+    UIColor *chatHeadSubtitleTextLight = [UIColor wr_colorFromString:@"rgb(153, 153, 153)"]; // TODO check color this is
+    UIColor *chatHeadBGDark = [UIColor wr_colorFromString:@"rgb(67, 71, 74)"]; // TODO check color this is
+    UIColor *chatHeadBorderLight = [UIColor wr_colorFromString:@"rgb(230, 230, 230)"]; // TODO check color this is
     
     
     NSMutableDictionary *lightColors = [NSMutableDictionary dictionaryWithDictionary:
@@ -267,7 +266,7 @@ static NSString* light(NSString *colorString) {
                                    ColorSchemeColorPopUpButtonOverlayShadow: blackAlpha24,
                                    ColorSchemeColorChatHeadBackground: white,
                                    ColorSchemeColorChatHeadBorder: chatHeadBorderLight,
-                                   ColorSchemeColorChatHeadTitleText: chatHeadTitleTextLight,
+                                   ColorSchemeColorChatHeadTitleText: graphite,
                                    ColorSchemeColorChatHeadSubtitleText: chatHeadSubtitleTextLight,
                                    ColorSchemeColorButtonHighlighted: whiteAlpha24,
                                    ColorSchemeColorButtonEmptyText: accentColor,
