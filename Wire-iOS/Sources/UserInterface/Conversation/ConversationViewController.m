@@ -689,7 +689,7 @@
         CGRect screenRect = [[notification.userInfo objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
         UIResponder *currentFirstResponder = [UIResponder wr_currentFirstResponder];
         if (currentFirstResponder != nil) {
-            CGSize keyboardSize = CGSizeMake(screenRect.size.width, screenRect.size.height - currentFirstResponder.inputAccessoryView.bounds.size.height);
+            CGSize keyboardSize = CGSizeMake(screenRect.size.width, currentFirstResponder.inputAccessoryView.bounds.size.height);
             [UIView wr_setLastKeyboardSize:keyboardSize];
         }
     }
