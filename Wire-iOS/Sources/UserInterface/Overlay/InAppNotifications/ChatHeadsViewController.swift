@@ -113,14 +113,6 @@ class ChatHeadsViewController: UIViewController {
     
     private func shouldDisplay(message: ZMConversationMessage, isActiveAccount: Bool) -> Bool {
         
-        let isIPAD = UIDevice.current.userInterfaceIdiom == .pad
-        let isLandscape = UIInterfaceOrientationIsLandscape(UIApplication.shared.statusBarOrientation)
-        
-        // conversation list is visible in landscape
-        if isActiveAccount && isIPAD && isLandscape {
-            return false;
-        }
-        
         let clientVC = ZClientViewController.shared()!
 
         // if current conversation contains message & is visible
