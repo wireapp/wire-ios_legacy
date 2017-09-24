@@ -70,9 +70,11 @@
 {
     [super viewDidAppear:animated];
     
-    if (self.isMovingToParentViewController || self.isBeingPresented || self.preLoginAuthenticationToken || self.postLoginAuthenticationToken) {
+    if (self.preLoginAuthenticationToken == nil) {
         self.preLoginAuthenticationToken = [PreLoginAuthenticationNotification registerObserver:self
                                                                       forUnauthenticatedSession:[SessionManager shared].unauthenticatedSession];
+    }
+    if (self.postLoginAuthenticationToken == nil) {
         self.postLoginAuthenticationToken = [PostLoginAuthenticationNotification addObserver:self];
     }
 }

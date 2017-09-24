@@ -49,6 +49,8 @@
 
 #import "AnalyticsTracker+Registration.h"
 
+@interface RegistrationViewController (SessionManagerObserver) <SessionManagerObserver>
+@end
 
 @interface RegistrationViewController () <UINavigationControllerDelegate, FormStepDelegate, ZMInitialSyncCompletionObserver>
 
@@ -65,6 +67,7 @@
 @property (nonatomic) BOOL hasPushedPostRegistrationStep;
 @property (nonatomic) NSArray<UserClient *>* userClients;
 @property (nonatomic) id initialSyncObserverToken;
+@property (nonatomic) id sessionCreationObserverToken;
 
 @end
 
@@ -86,6 +89,8 @@
     
     if (nil != [ZMUserSession sharedSession]) {
         self.initialSyncObserverToken = [ZMUserSession addInitialSyncCompletionObserver:self userSession:[ZMUserSession sharedSession]];
+    } else {
+        self.sessionCreationObserverToken = [[SessionManager shared] addSessionManagerObserver:self];
     }
     
     [self setupBackgroundViewController];
@@ -289,6 +294,16 @@
 - (void)clientDeletionSucceeded
 {
     // nop
+}
+
+@end
+
+#pragma mark - Session observer
+
+@implementation RegistrationViewController (SessionManagerObserver)
+
+- (void)sessionManagerCreatedWithUserSession:(ZMUserSession *)userSession {
+    self.initialSyncObserverToken = [ZMUserSession addInitialSyncCompletionObserver:self userSession:[ZMUserSession sharedSession]];
 }
 
 @end

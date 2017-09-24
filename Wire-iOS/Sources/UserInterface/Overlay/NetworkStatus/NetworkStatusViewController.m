@@ -136,7 +136,7 @@ static UIColor *fontColor, *warningBackgroundColor;
 
     [self addTapGestureRecognizer];
     
-    self.serverConnectionObserverToken = [SessionManager.shared.serverConnection addObserver:self];
+    self.serverConnectionObserverToken = [SessionManager.shared.serverConnection addServerConnectionObserver:self];
     
     // Set the view hidden to disable receiving touches. It will be eventually set to NO by a reachability change.
     self.view.hidden = YES;
@@ -154,11 +154,6 @@ static UIColor *fontColor, *warningBackgroundColor;
         self.tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tappedOnBackground:)];
         [self.animatedContainer addGestureRecognizer:self.tapGestureRecognizer];
     }
-}
-
-- (void)dealloc
-{
-    [SessionManager.shared.serverConnection removeObserver:self.serverConnectionObserverToken];
 }
 
 - (void)tappedOnBackground:(UIGestureRecognizer *)sender
