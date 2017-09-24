@@ -156,9 +156,9 @@ class ChatHeadView: UIView {
     
     private func titleText() -> NSAttributedString {
 
-        let regularFont: [String: AnyObject] = [NSFontAttributeName: magicFont("title_label_font_regular")]
-        let mediumFont: [String: AnyObject] = [NSFontAttributeName: magicFont("title_label_font_medium")]
-
+        let regularFont: [String: AnyObject] = [NSFontAttributeName: FontSpec(.normal, .regular).font!]
+        let mediumFont: [String: AnyObject] = [NSFontAttributeName: FontSpec(.normal, .medium).font!]
+        
         if let teamName = teamName, !isActiveAccount {
             let result = NSMutableAttributedString(string: "in ", attributes: regularFont)
             result.append(NSAttributedString(string: teamName, attributes: mediumFont))
@@ -202,7 +202,8 @@ class ChatHeadView: UIView {
     }
 
     private func messageFont() -> UIFont {
-        let font = magicFont("subtitle_label_font")
+        let font = FontSpec(.normal, .regular).font!
+        
         if message.isEphemeral {
             return UIFont(name: "RedactedScript-Regular", size: font.pointSize)!
         }
