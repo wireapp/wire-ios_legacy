@@ -630,7 +630,6 @@
 		87DCF48E1D34E9BA00BB420F /* ContactsDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 87DCF4801D34E9BA00BB420F /* ContactsDataSource.m */; };
 		87DCF48F1D34E9BA00BB420F /* ContactsEmptyResultView.m in Sources */ = {isa = PBXBuildFile; fileRef = 87DCF4821D34E9BA00BB420F /* ContactsEmptyResultView.m */; };
 		87DCF4901D34E9BA00BB420F /* ContactsSectionHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 87DCF4841D34E9BA00BB420F /* ContactsSectionHeaderView.m */; };
-		87DCF4911D34E9BA00BB420F /* ContactsViewController+InvitationStatus.m in Sources */ = {isa = PBXBuildFile; fileRef = 87DCF4861D34E9BA00BB420F /* ContactsViewController+InvitationStatus.m */; };
 		87DCF4921D34E9BA00BB420F /* ContactsViewController+ShareContacts.m in Sources */ = {isa = PBXBuildFile; fileRef = 87DCF4891D34E9BA00BB420F /* ContactsViewController+ShareContacts.m */; };
 		87DCF4931D34E9BA00BB420F /* ContactsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 87DCF48B1D34E9BA00BB420F /* ContactsViewController.m */; };
 		87DCF4941D34E9BA00BB420F /* ZMAddressBookContact+LocalInvitation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87DCF48C1D34E9BA00BB420F /* ZMAddressBookContact+LocalInvitation.swift */; };
@@ -1935,8 +1934,6 @@
 		87DCF4821D34E9BA00BB420F /* ContactsEmptyResultView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactsEmptyResultView.m; sourceTree = "<group>"; };
 		87DCF4831D34E9BA00BB420F /* ContactsSectionHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactsSectionHeaderView.h; sourceTree = "<group>"; };
 		87DCF4841D34E9BA00BB420F /* ContactsSectionHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactsSectionHeaderView.m; sourceTree = "<group>"; };
-		87DCF4851D34E9BA00BB420F /* ContactsViewController+InvitationStatus.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ContactsViewController+InvitationStatus.h"; sourceTree = "<group>"; };
-		87DCF4861D34E9BA00BB420F /* ContactsViewController+InvitationStatus.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "ContactsViewController+InvitationStatus.m"; sourceTree = "<group>"; };
 		87DCF4871D34E9BA00BB420F /* ContactsViewController+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ContactsViewController+Private.h"; sourceTree = "<group>"; };
 		87DCF4881D34E9BA00BB420F /* ContactsViewController+ShareContacts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ContactsViewController+ShareContacts.h"; sourceTree = "<group>"; };
 		87DCF4891D34E9BA00BB420F /* ContactsViewController+ShareContacts.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "ContactsViewController+ShareContacts.m"; sourceTree = "<group>"; };
@@ -3917,8 +3914,6 @@
 				87DCF4821D34E9BA00BB420F /* ContactsEmptyResultView.m */,
 				87DCF4831D34E9BA00BB420F /* ContactsSectionHeaderView.h */,
 				87DCF4841D34E9BA00BB420F /* ContactsSectionHeaderView.m */,
-				87DCF4851D34E9BA00BB420F /* ContactsViewController+InvitationStatus.h */,
-				87DCF4861D34E9BA00BB420F /* ContactsViewController+InvitationStatus.m */,
 				87DCF4871D34E9BA00BB420F /* ContactsViewController+Private.h */,
 				87DCF4881D34E9BA00BB420F /* ContactsViewController+ShareContacts.h */,
 				87DCF4891D34E9BA00BB420F /* ContactsViewController+ShareContacts.m */,
@@ -5518,7 +5513,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 		};
 		4DFF5716E7324BEEA41AB599 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -5550,7 +5545,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		783B15BA51E5BFF2D24E2C0F /* [CP] Embed Pods Frameworks */ = {
@@ -5626,7 +5621,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		B51FF934CF48FDB769715E40 /* [CP] Embed Pods Frameworks */ = {
@@ -5839,7 +5834,6 @@
 				871BC35F1D34F94200DF0793 /* SettingsProperty.swift in Sources */,
 				87D56DF81E003D9300DFF722 /* CollectionsView.swift in Sources */,
 				BFAF4CB91CEDE82400780537 /* NumberHelper.swift in Sources */,
-				87DCF4911D34E9BA00BB420F /* ContactsViewController+InvitationStatus.m in Sources */,
 				8708C6831F50860100845C7D /* AccountView.swift in Sources */,
 				87A6BD0F1F0D2A58006A3232 /* UIApplication+StatusBar.m in Sources */,
 				872E22221F600347007729D4 /* Cartography+Additions.swift in Sources */,

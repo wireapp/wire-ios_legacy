@@ -24,7 +24,6 @@
 
 #import "ContactsViewController.h"
 #import "ContactsDataSource.h"
-#import "ContactsViewController+InvitationStatus.h"
 #import "ContactsViewController+ShareContacts.h"
 #import "ContactsCell.h"
 #import "ContactsSectionHeaderView.h"

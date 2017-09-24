@@ -96,11 +96,6 @@ import CocoaLumberjackSwift
         fatalError("init(coder:) has not been implemented")
     }
     
-    deinit {
-//        ZMUserSession.shared()?.removeClientUpdateObserver(self.clientsObserverToken)
-        
-    }
-    
     fileprivate func initalizeProperties(_ clientsList: [UserClient]) {
         self.clients = clientsList
         self.editingList = false

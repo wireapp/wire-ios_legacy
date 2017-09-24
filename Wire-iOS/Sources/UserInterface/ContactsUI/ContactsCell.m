@@ -234,17 +234,5 @@ NS_ASSUME_NONNULL_END
     }
 }
 
-#pragma mark - Status update
-
-- (void)invitationStatusChanged
-{
-    if (self.searchUser.user.connection.status == ZMInvitationStatusPending ||
-        self.searchUser.user.connection.status == ZMInvitationStatusSent) {
-        [self.userImageView setBadgeIcon:ZetaIconTypeClock animated:YES];
-    } else if (self.searchUser.user.connection.status == ZMInvitationStatusFailed) {
-        [self.userImageView setBadgeIcon:ZetaIconTypeNone animated:YES];
-    }
-}
-
 @end
 
