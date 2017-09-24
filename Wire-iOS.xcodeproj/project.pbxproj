@@ -994,48 +994,6 @@
 			remoteGlobalIDString = 8F42C537199244A700288E4D;
 			remoteInfo = "ZClient-iOS";
 		};
-		EE265E7B1F6FF4420087676B /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = EE265E751F6FF4420087676B /* WireSyncEngine.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 549815931A43232400A7CE2E;
-			remoteInfo = "WireSyncEngine-ios";
-		};
-		EE265E7D1F6FF4420087676B /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = EE265E751F6FF4420087676B /* WireSyncEngine.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 3E1860C3191A649D000FE027;
-			remoteInfo = "WireSyncEngine-iOS-Tests";
-		};
-		EE265E7F1F6FF4420087676B /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = EE265E751F6FF4420087676B /* WireSyncEngine.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 3E186088191A56F6000FE027;
-			remoteInfo = "WireSyncEngine Test Host";
-		};
-		EEE631011F729CF200E56803 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = EEE630FB1F729CF200E56803 /* WireMessageStrategy.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = F9F056B31D93D22000FA1AAD;
-			remoteInfo = WireMessageStrategy;
-		};
-		EEE631031F729CF200E56803 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = EEE630FB1F729CF200E56803 /* WireMessageStrategy.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = F9F056BC1D93D22000FA1AAD;
-			remoteInfo = WireMessageStrategyTests;
-		};
-		EEE631051F729CF200E56803 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = EEE630FB1F729CF200E56803 /* WireMessageStrategy.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = F9F057651D94141C00FA1AAD;
-			remoteInfo = "WireMessageStrategy-Test-Host";
-		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -2471,7 +2429,6 @@
 		EA64F89A9A2B5975159F31D1 /* libPods-ImageNotificationExtension.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ImageNotificationExtension.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		EA7BBD361993890900DB5E50 /* NSLayoutConstraint+Magic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSLayoutConstraint+Magic.h"; path = "Wire-iOS/Sources/Helpers/NSLayoutConstraint+Magic.h"; sourceTree = SOURCE_ROOT; };
 		EA7BBD371993890900DB5E50 /* NSLayoutConstraint+Magic.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSLayoutConstraint+Magic.m"; path = "Wire-iOS/Sources/Helpers/NSLayoutConstraint+Magic.m"; sourceTree = SOURCE_ROOT; };
-		EE265E751F6FF4420087676B /* WireSyncEngine.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = WireSyncEngine.xcodeproj; path = "../wire-ios-sync-engine/WireSyncEngine.xcodeproj"; sourceTree = "<group>"; };
 		EE265E811F6FF4910087676B /* ChatHeadView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatHeadView.swift; sourceTree = "<group>"; };
 		EE291BB41F0B9BF200142F31 /* Marklight.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Marklight.framework; path = Carthage/Build/iOS/Marklight.framework; sourceTree = "<group>"; };
 		EE291BB61F0BC54D00142F31 /* MarklightTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MarklightTextView.swift; sourceTree = "<group>"; };
@@ -2482,7 +2439,6 @@
 		EEB8A2CF1F628D1100958881 /* Settings+Account.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Settings+Account.swift"; sourceTree = "<group>"; };
 		EEBE8C5B1F681694009D78C9 /* NSData+ImageType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSData+ImageType.swift"; sourceTree = "<group>"; };
 		EEBE8C5D1F68171F009D78C9 /* NSData_ImageTypeTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSData_ImageTypeTests.swift; sourceTree = "<group>"; };
-		EEE630FB1F729CF200E56803 /* WireMessageStrategy.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = WireMessageStrategy.xcodeproj; path = "../wire-ios-message-strategy/WireMessageStrategy.xcodeproj"; sourceTree = "<group>"; };
 		EEE6310A1F7390D100E56803 /* ChatHeadsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatHeadsViewController.swift; sourceTree = "<group>"; };
 		EEF28EE91F1613DA007642E2 /* MarkdownBarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MarkdownBarView.swift; path = ../../MarkdownBarView.swift; sourceTree = "<group>"; };
 		EEF28EEC1F16692A007642E2 /* InputBarSecondaryButtonsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputBarSecondaryButtonsView.swift; sourceTree = "<group>"; };
@@ -4121,8 +4077,6 @@
 		8F42C52F199244A700288E4D = {
 			isa = PBXGroup;
 			children = (
-				EEE630FB1F729CF200E56803 /* WireMessageStrategy.xcodeproj */,
-				EE265E751F6FF4420087676B /* WireSyncEngine.xcodeproj */,
 				87501FB21D40D6490056C042 /* ComponentsVersions.plist */,
 				87C8D7FB1BA8261C00B0530B /* Entitlements-Dev.entitlements */,
 				87C8D7FC1BA8261C00B0530B /* Entitlements-Prod.entitlements */,
@@ -5080,26 +5034,6 @@
 			path = InputBar;
 			sourceTree = "<group>";
 		};
-		EE265E761F6FF4420087676B /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				EE265E7C1F6FF4420087676B /* WireSyncEngine.framework */,
-				EE265E7E1F6FF4420087676B /* WireSyncEngine-iOS-Tests.xctest */,
-				EE265E801F6FF4420087676B /* WireSyncEngine Test Host.app */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		EEE630FC1F729CF200E56803 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				EEE631021F729CF200E56803 /* WireMessageStrategy.framework */,
-				EEE631041F729CF200E56803 /* WireMessageStrategyTests.xctest */,
-				EEE631061F729CF200E56803 /* WireMessageStrategy-Test-Host.app */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		F12CDAD91E43868200CEFCEB /* ChangingDetails */ = {
 			isa = PBXGroup;
 			children = (
@@ -5417,16 +5351,6 @@
 			mainGroup = 8F42C52F199244A700288E4D;
 			productRefGroup = 8F42C539199244A700288E4D /* Products */;
 			projectDirPath = "";
-			projectReferences = (
-				{
-					ProductGroup = EEE630FC1F729CF200E56803 /* Products */;
-					ProjectRef = EEE630FB1F729CF200E56803 /* WireMessageStrategy.xcodeproj */;
-				},
-				{
-					ProductGroup = EE265E761F6FF4420087676B /* Products */;
-					ProjectRef = EE265E751F6FF4420087676B /* WireSyncEngine.xcodeproj */;
-				},
-			);
 			projectRoot = "";
 			targets = (
 				8F42C537199244A700288E4D /* Wire-iOS */,
@@ -5438,51 +5362,6 @@
 			);
 		};
 /* End PBXProject section */
-
-/* Begin PBXReferenceProxy section */
-		EE265E7C1F6FF4420087676B /* WireSyncEngine.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = WireSyncEngine.framework;
-			remoteRef = EE265E7B1F6FF4420087676B /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		EE265E7E1F6FF4420087676B /* WireSyncEngine-iOS-Tests.xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = "WireSyncEngine-iOS-Tests.xctest";
-			remoteRef = EE265E7D1F6FF4420087676B /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		EE265E801F6FF4420087676B /* WireSyncEngine Test Host.app */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.application;
-			path = "WireSyncEngine Test Host.app";
-			remoteRef = EE265E7F1F6FF4420087676B /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		EEE631021F729CF200E56803 /* WireMessageStrategy.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = WireMessageStrategy.framework;
-			remoteRef = EEE631011F729CF200E56803 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		EEE631041F729CF200E56803 /* WireMessageStrategyTests.xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = WireMessageStrategyTests.xctest;
-			remoteRef = EEE631031F729CF200E56803 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		EEE631061F729CF200E56803 /* WireMessageStrategy-Test-Host.app */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.application;
-			path = "WireMessageStrategy-Test-Host.app";
-			remoteRef = EEE631051F729CF200E56803 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		168A16A71D9597C2005CFA6C /* Resources */ = {
