@@ -317,7 +317,9 @@ static NSString *const ConversationUnknownMessageCellId     = @"conversationUnkn
     conversationCell.delegate = self.conversationCellDelegate;
     conversationCell.analyticsTracker = self.analyticsTracker;
     
-    [self configureConversationCell:conversationCell withMessage:message];
+    if (nil != [ZMUserSession sharedSession]) {
+        [self configureConversationCell:conversationCell withMessage:message];
+    }
     
     return cell;
 }
