@@ -119,7 +119,7 @@ class ChatHeadsViewController: UIViewController {
     
     private func shouldDisplay(message: ZMConversationMessage, account: Account) -> Bool {
         
-        let clientVC = ZClientViewController.shared()!
+        guard let clientVC = ZClientViewController.shared() else { return false }
 
         // if current conversation contains message & is visible
         if clientVC.currentConversation === message.conversation && clientVC.isConversationViewVisible {
