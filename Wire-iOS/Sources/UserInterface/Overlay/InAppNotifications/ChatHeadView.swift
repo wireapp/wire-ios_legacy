@@ -35,19 +35,14 @@ class ChatHeadView: UIView {
     private let senderName: String
     private let teamName: String?
     
+    private let imageDiameter: CGFloat = 28
+    private let padding: CGFloat = 10
+    
     public var onSelect: ((ZMConversationMessage) -> Void)?
     
     override var intrinsicContentSize: CGSize {
-        let height = magicFloat("image_diameter") + 2 * magicFloat("content_padding")
+        let height = imageDiameter + 2 * padding
         return CGSize(width: UIViewNoIntrinsicMetric, height: height)
-    }
-
-    private let magicFloat: (String) -> CGFloat = {
-        return WAZUIMagic.cgFloat(forIdentifier: "notifications.\($0)")
-    }
-    
-    private let magicFont: (String) -> UIFont = {
-        return UIFont(magicIdentifier: "notifications.\($0)")
     }
     
     private func color(withName name: String) -> UIColor {
@@ -74,7 +69,7 @@ class ChatHeadView: UIView {
     
     private func setup() {
         backgroundColor = color(withName: ColorSchemeColorChatHeadBackground)
-        layer.cornerRadius = magicFloat("corner_radius")
+        layer.cornerRadius = 6
         layer.borderWidth = 0.5
         layer.borderColor = color(withName: ColorSchemeColorChatHeadBorder).cgColor
         
@@ -125,9 +120,6 @@ class ChatHeadView: UIView {
     }
     
     private func createConstraints() {
-        
-        let imageDiameter = magicFloat("image_diameter")
-        let padding = magicFloat("content_padding")
         
         constrain(labelContainer, titleLabel, subtitleLabel) { container, titleLabel, subtitleLabel in
             titleLabel.leading == container.leading
