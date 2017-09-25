@@ -117,10 +117,10 @@ class SettingsPropertyFactory {
                 case .string(let stringValue):
                     var inOutString: NSString? = stringValue as NSString
                     try type(of: self.selfUser).validateName(&inOutString)
-                    
-                    self.userSession?.enqueueChanges({
-                        self.selfUser.name = stringValue
-                    })
+                    let selfUser = self.selfUser
+                    self.userSession?.enqueueChanges {
+                        selfUser.name = stringValue
+                    }
                 default:
                     throw SettingsPropertyError.WrongValue("Incorrect type \(value) for key \(propertyName)")
                 }
