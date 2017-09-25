@@ -24,8 +24,8 @@ public extension UIViewController {
     /// Determines if this view controller allows local in app notifications
     /// (chat heads) to appear. The default is true.
     ///
-    @objc
-    public func shouldDisplayNotification(isActiveAccount: Bool) -> Bool {
+    @objc (shouldDisplayNotifcationFrom:)
+    public func shouldDisplayNotification(from account: Account) -> Bool {
         return true
     }
 }
@@ -219,7 +219,7 @@ class ChatHeadsViewController: UIViewController {
             return false;
         }
 
-        return clientVC.splitViewController.shouldDisplayNotification(isActiveAccount: account.isActive)
+        return clientVC.splitViewController.shouldDisplayNotification(from: account)
     }
     
     fileprivate func revealChatHeadFromCurrentState() {
