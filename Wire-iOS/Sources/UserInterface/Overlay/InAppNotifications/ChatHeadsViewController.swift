@@ -75,7 +75,7 @@ class ChatHeadsViewController: UIViewController {
                 return
         }
         
-        guard shouldDisplay(conversation: conversation, account: account) else {
+        guard shouldDisplay(note: note, conversation: conversation, account: account) else {
             return
         }
         
@@ -206,9 +206,14 @@ class ChatHeadsViewController: UIViewController {
         }
     }
     
-    private func shouldDisplay(conversation: ZMConversation, account: Account) -> Bool {
+    private func shouldDisplay(note: UILocalNotification, conversation: ZMConversation, account: Account) -> Bool {
         
         guard let clientVC = ZClientViewController.shared() else { return false }
+        
+        // if call notification & in active account
+        if account.isActive && [ZMIncomingCallCategory, ZMMissedCallCategory].contains(note.category ?? "") {
+            return false
+        }
 
         // if current conversation contains message & is visible
         if clientVC.currentConversation === conversation && clientVC.isConversationViewVisible {
