@@ -97,16 +97,12 @@ static CGFloat const MinDelayBeforeDisplay = 1.5;
     self.loadingBar.backgroundColor = [UIColor accentColor];
 
     @weakify(self);
-
     self.accentColorChangeHandler = [AccentColorChangeHandler addObserver:self handlerBlock:^(UIColor *newColor, id object) {
-
         @strongify(self);
         self.loadingBar.backgroundColor = newColor;
     }];
 
-    self.isLoading = NO;
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationWillResignActive:) name:UIApplicationWillResignActiveNotification object:nil];
+    self.isLoading = [ZMUserSession sharedSession].isPerformingSync;
     self.networkAvailabilityChangeObserver = [ZMNetworkAvailabilityChangeNotification addNetworkAvailabilityObserver:self userSession:[ZMUserSession sharedSession]];
 }
 
@@ -207,17 +203,6 @@ static CGFloat const MinDelayBeforeDisplay = 1.5;
 - (BOOL)shouldShowLoadingBarWithNetworkStatusState:(ZMNetworkState)networkState;
 {
     return networkState == ZMNetworkStateOnlineSynchronizing || self.isLoadingMessages;
-}
-
-- (void)applicationWillResignActive:(NSNotification *)note
-{
-    [self.shouldDisplayTimer invalidate];
-    [self.stopDisplayTimer invalidate];
-    
-    self.isLoading = NO;
-    
-    self.shouldDisplayTimer = nil;
-    self.stopDisplayTimer = nil;
 }
 
 @end
