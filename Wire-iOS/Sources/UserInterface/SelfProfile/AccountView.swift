@@ -126,6 +126,7 @@ public class BaseAccountView: UIView, AccountViewType {
     fileprivate let outlineView = UIView()
     fileprivate let dotView = DotView()
     fileprivate let selectionView = ShapeView()
+    fileprivate var unreadCountToken : Any?
     
     private var selfUserObserver: NSObjectProtocol!
 
@@ -141,15 +142,23 @@ public class BaseAccountView: UIView, AccountViewType {
         }
     }
     
+    /// Set this to false if the account view should show the unread message dot for messages belonging only to this
+    /// account. Set to true if the dot should show for any unread message belonging to all other accounts.
+    public var invertUnreadMessagesCount = false
+    
     public var hasUnreadMessages: Bool {
-        return false
+        if invertUnreadMessagesCount{
+            return ((SessionManager.shared?.accountManager.totalUnreadCount ?? 0) - account.unreadConversationCount) > 0
+        } else {
+            return account.unreadConversationCount > 0
+        }
     }
     
     public let account: Account
     
     func updateAppearance() {
         selectionView.isHidden = !selected || collapsed
-        dotView.isHidden = selected || !hasUnreadMessages || collapsed
+        dotView.isHidden = !hasUnreadMessages || collapsed
         
         selectionView.hostedLayer.strokeColor = UIColor.accent().cgColor
     }
@@ -209,6 +218,11 @@ public class BaseAccountView: UIView, AccountViewType {
         
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(didTap(_:)))
         self.addGestureRecognizer(tapGesture)
+        
+        
+        self.unreadCountToken = NotificationCenter.default.addObserver(forName: .AccountUnreadCountDidChangeNotification, object: nil, queue: .main) { [weak self] _ in
+            self?.updateAppearance()
+        }
         
         updateAppearance()
     }
