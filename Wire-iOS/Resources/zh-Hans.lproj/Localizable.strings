@@ -663,7 +663,7 @@
 
 "self.settings.callkit.title" = "通话";
 "self.settings.callkit.caption" = "与iOS分享";
-"self.settings.callkit.description" = "在屏幕锁界面与手机通话记录中显示Wire的来电信息。如果您已启动iCloud，您的来电记录也将与Apple服务器同步。重新启动Wire来启动该功能。";
+"self.settings.callkit.description" = "Show Wire calls on the lock screen and in iOS call history. If iCloud is enabled, call history is shared with Apple.";
 
 "self.settings.vbr.title" = "可变码率编码";
 "self.settings.vbr.description" = "使用较少的数据和更好地工作在较慢的网络上的音频呼叫。请关闭使用固定编码。";

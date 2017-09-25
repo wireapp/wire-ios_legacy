@@ -663,7 +663,7 @@
 
 "self.settings.callkit.title" = "Klici";
 "self.settings.callkit.caption" = "Deli z iOS";
-"self.settings.callkit.description" = "Prikaže Wire klice na zaklenjenem zaslonu in v iOS zgodovini klicev. Če je omogočen iCloud, je zgodovina klicev deljena z Apple. Znova zaženite Wire za uporabo te nastavitve.";
+"self.settings.callkit.description" = "Show Wire calls on the lock screen and in iOS call history. If iCloud is enabled, call history is shared with Apple.";
 
 "self.settings.vbr.title" = "Spremenljiva bitna hitrost kodiranja";
 "self.settings.vbr.description" = "Omogoča manjšo porabo podatkov v avdio klicih in bolje delovanje na počasnejših omrežjih. Izklopite za uporabo Stalne bitne hitrosti kodiranja.";
