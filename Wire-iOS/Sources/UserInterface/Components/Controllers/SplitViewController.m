@@ -350,10 +350,10 @@ NSString *SplitLayoutObservableDidChangeToLayoutSizeNotification = @"SplitLayout
     }
     
     if (self.openPercentage > 0) {
-        return [self.leftViewController shouldDisplayNotifcationFrom:account];
+        return [self.leftViewController shouldDisplayNotificationFrom:account];
     }
     else {
-        return [self.rightViewController shouldDisplayNotifcationFrom:account];
+        return [self.rightViewController shouldDisplayNotificationFrom:account];
     }
 }
 
