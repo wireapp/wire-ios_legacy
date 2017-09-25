@@ -343,17 +343,17 @@ NSString *SplitLayoutObservableDidChangeToLayoutSizeNotification = @"SplitLayout
     }
 }
 
-- (BOOL)shouldDisplayNotificationForMessage:(id<ZMConversationMessage>)message isActiveAccount:(BOOL)isActiveAccount
+- (BOOL)shouldDisplayNotificationFrom:(Account *)account
 {
-    if (isActiveAccount && self.layoutSize == SplitViewControllerLayoutSizeRegularLandscape) {
+    if (account.isActive && self.layoutSize == SplitViewControllerLayoutSizeRegularLandscape) {
         return NO; // in landscape on big a screen you always see the conversation list
     }
     
     if (self.openPercentage > 0) {
-        return [self.leftViewController shouldDisplayNotificationForMessage:message isActiveAccount:isActiveAccount];
+        return [self.leftViewController shouldDisplayNotifcationFrom:account];
     }
     else {
-        return [self.rightViewController shouldDisplayNotificationForMessage:message isActiveAccount:isActiveAccount];
+        return [self.rightViewController shouldDisplayNotifcationFrom:account];
     }
 }
 

@@ -24,8 +24,8 @@ public extension UIViewController {
     /// Determines if this view controller allows local in app notifications
     /// (chat heads) to appear. The default is true.
     ///
-    @objc(shouldDisplayNotificationForMessage:isActiveAccount:)
-    public func shouldDisplayNotification(for message: ZMConversationMessage, isActiveAccount: Bool) -> Bool {
+    @objc
+    public func shouldDisplayNotification(isActiveAccount: Bool) -> Bool {
         return true
     }
 }
@@ -35,7 +35,6 @@ class ChatHeadsViewController: UIViewController {
     enum ChatHeadPresentationState {
         case `default`, hidden, showing, visible, dragging, hiding, last
     }
-    
     
     fileprivate let dismissDelayDuration = 5.0
     fileprivate let animationContainerInset : CGFloat = 48.0
@@ -57,6 +56,13 @@ class ChatHeadsViewController: UIViewController {
     
     public func tryToDisplayNotification(_ note: UILocalNotification) {
 
+        // hide visible chat head and try again
+        if chatHeadState != .hidden {
+            hideChatHeadFromCurrentStateWithTiming(RBBEasingFunctionEaseInExpo, duration: 0.3)
+            perform(#selector(tryToDisplayNotification(_:)), with: note, afterDelay: 0.3)
+            return
+        }
+        
         let isSelfAccount: (Account) -> Bool = { return $0.userIdentifier == note.zm_selfUserUUID }
         
         guard
@@ -64,30 +70,50 @@ class ChatHeadsViewController: UIViewController {
             let account = accountManager.accounts.first(where: isSelfAccount),
             let session = SessionManager.shared?.backgroundUserSessions[account.userIdentifier],
             let conversation = note.conversation(in: session.managedObjectContext),
-            let message = note.message(in: conversation, in: session.managedObjectContext)
+            let sender = note.sender(in: session.managedObjectContext)
             else {
                 return
         }
         
-        guard shouldDisplay(message: message, account: account) else {
+        guard shouldDisplay(conversation: conversation, account: account) else {
             return
         }
         
-        if chatHeadState != .hidden {
-            // hide visible chat head and try again
-            hideChatHeadFromCurrentStateWithTiming(RBBEasingFunctionEaseInExpo, duration: 0.3)
-            perform(#selector(tryToDisplayNotification(_:)), with: note, afterDelay: 0.3)
-            return
+        // format title
+        var title: NSAttributedString? = titleText(conversation: conversation, account: account)
+
+        // if call notification & not a team, no title
+        if [ZMIncomingCallCategory, ZMMissedCallCategory].contains(note.category ?? "") {
+            if account.teamName == nil {
+                title = nil
+            }
         }
- 
-        chatHeadView = ChatHeadView(message: message, account: account)
         
-        chatHeadView!.onSelect = { message, account in
+        let content: NSAttributedString
+        
+        // if it is a message, extract the content for formatting
+        if let message = note.message(in: conversation, in: session.managedObjectContext) {
+            content = text(for: message, isAccountActive: account.isActive)
+        } else {
+            // use the alert body
+            guard let alertBody = note.alertBody else { return }
+            content = NSAttributedString(string: alertBody, attributes: [NSFontAttributeName: FontSpec(.medium, .regular).font!])
+        }
+        
+        chatHeadView = ChatHeadView(
+            title: title,
+            content: content,
+            sender: sender,
+            conversation: conversation,
+            account: account
+        )
+        
+        chatHeadView!.onSelect = { conversation, account in
             if account.isActive {
-                    ZClientViewController.shared().select(message.conversation!, focusOnView: true, animated: true)
+                    ZClientViewController.shared().select(conversation, focusOnView: true, animated: true)
             } else {
                 if let session = SessionManager.shared?.backgroundUserSessions[account.userIdentifier] {
-                    SessionManager.shared?.userSession(session, show: message as! ZMMessage, in: message.conversation!)
+                    SessionManager.shared?.userSession(session, show: conversation)
                 }
             }
             
@@ -117,12 +143,75 @@ class ChatHeadsViewController: UIViewController {
     
     // MARK: - Private Helpers
     
-    private func shouldDisplay(message: ZMConversationMessage, account: Account) -> Bool {
+    private func text(for message: ZMConversationMessage, isAccountActive: Bool) -> NSAttributedString {
+        var result = ""
         
-        let clientVC = ZClientViewController.shared()!
+        if Message.isText(message) {
+            
+            result = (message.textMessageData!.messageText as NSString).resolvingEmoticonShortcuts() ?? ""
+            
+            if !(isAccountActive && message.conversation!.conversationType == .oneOnOne) {
+                if let senderName = message.sender?.displayName {
+                    result = "\(senderName): \(result)"
+                }
+            }
+            
+        } else if Message.isImage(message) {
+            result = "notifications.shared_a_photo".localized
+        } else if Message.isKnock(message) {
+            result = "notifications.pinged".localized
+        } else if Message.isVideo(message) {
+            result = "notifications.sent_video".localized
+        } else if Message.isAudio(message) {
+            result = "notifications.sent_audio".localized
+        } else if Message.isFileTransfer(message) {
+            result = "notifications.sent_file".localized
+        } else if Message.isLocation(message) {
+            result = "notifications.sent_location".localized
+        }
+        
+        let attr: [String : AnyObject] = [NSFontAttributeName: font(for: message)]
+        return NSAttributedString(string: result, attributes: attr)
+    }
+    
+    private func font(for message: ZMConversationMessage) -> UIFont {
+        let font = FontSpec(.medium, .regular).font!
+        
+        if message.isEphemeral {
+            return UIFont(name: "RedactedScript-Regular", size: font.pointSize)!
+        }
+        return font
+    }
+    
+    private func titleText(conversation: ZMConversation, account: Account) -> NSAttributedString {
+        
+        let regularFont: [String: AnyObject] = [NSFontAttributeName: FontSpec(.medium, .regular).font!.withSize(14)]
+        let mediumFont: [String: AnyObject] = [NSFontAttributeName: FontSpec(.medium, .medium).font!.withSize(14)]
+        
+        // if team & background account
+        if let teamName = account.teamName, !account.isActive {
+            // "in Team"
+            let result = NSMutableAttributedString(string: "in ", attributes: regularFont)
+            result.append(NSAttributedString(string: teamName, attributes: mediumFont))
+            
+            // group conversaiton: "Group Name in Team"
+            if conversation.conversationType == .group {
+                result.insert(NSAttributedString(string: conversation.displayName + " ", attributes: mediumFont), at: 0)
+            }
+            
+            return result
+            
+        } else {
+            return NSAttributedString(string: conversation.displayName, attributes: mediumFont)
+        }
+    }
+    
+    private func shouldDisplay(conversation: ZMConversation, account: Account) -> Bool {
+        
+        guard let clientVC = ZClientViewController.shared() else { return false }
 
         // if current conversation contains message & is visible
-        if clientVC.currentConversation === message.conversation && clientVC.isConversationViewVisible {
+        if clientVC.currentConversation === conversation && clientVC.isConversationViewVisible {
             return false
         }
         
@@ -130,7 +219,7 @@ class ChatHeadsViewController: UIViewController {
             return false;
         }
 
-        return clientVC.splitViewController.shouldDisplayNotification(for: message, isActiveAccount: account.isActive)
+        return clientVC.splitViewController.shouldDisplayNotification(isActiveAccount: account.isActive)
     }
     
     fileprivate func revealChatHeadFromCurrentState() {

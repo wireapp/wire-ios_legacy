@@ -85,8 +85,8 @@ final public class BackgroundViewController: UIViewController {
         return .lightContent
     }
     
-    public override func shouldDisplayNotification(for message: ZMConversationMessage, isActiveAccount: Bool) -> Bool {
-        return !isActiveAccount
+    public override func shouldDisplayNotification(from account: Account) -> Bool {
+        return !account.isActive
     }
     
     private func configureViews() {

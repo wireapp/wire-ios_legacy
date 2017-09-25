@@ -23,21 +23,20 @@ import PureLayout
 class ChatHeadView: UIView {
 
     private var userImageView: ContrastUserImageView!
-    private var titleLabel: UILabel!
+    private var titleLabel: UILabel?
     private var subtitleLabel: UILabel!
     private var labelContainer: UIView!
     
+    private let title: NSAttributedString?
+    private let content: NSAttributedString
+    private let sender: ZMUser
+    private let conversation: ZMConversation
     private let account: Account
-    private let message: ZMConversationMessage
-    private let conversationName: String
-    private let senderName: String
-    private let teamName: String?
-    private let isOneToOneConversation: Bool
     
     private let imageDiameter: CGFloat = 28
     private let padding: CGFloat = 10
     
-    public var onSelect: ((ZMConversationMessage, Account) -> Void)?
+    public var onSelect: ((ZMConversation, Account) -> Void)?
     
     override var intrinsicContentSize: CGSize {
         let height = imageDiameter + 2 * padding
@@ -48,14 +47,12 @@ class ChatHeadView: UIView {
         return ColorScheme.default().color(withName: name)
     }
     
-    init(message: ZMConversationMessage, account: Account) {
-        
+    init(title: NSAttributedString?, content: NSAttributedString, sender: ZMUser, conversation: ZMConversation, account: Account) {
+        self.title = title
+        self.content = content
+        self.sender = sender
+        self.conversation = conversation
         self.account = account
-        self.message = message
-        self.conversationName = message.conversation?.displayName ?? ""
-        self.senderName = message.sender?.displayName ?? ""
-        self.teamName = account.teamName
-        self.isOneToOneConversation = message.conversation?.conversationType == .oneOnOne
         super.init(frame: .zero)
         setup()
     }
@@ -87,25 +84,27 @@ class ChatHeadView: UIView {
     }
     
     private func createLabels() {
-        titleLabel = UILabel()
-        subtitleLabel = UILabel()
+        
         labelContainer = UIView()
         addSubview(labelContainer)
         
-        [titleLabel, subtitleLabel].forEach {
-            labelContainer.addSubview($0!)
-            $0!.backgroundColor = .clear
-            $0!.isUserInteractionEnabled = false
+        if let title = title {
+            titleLabel = UILabel()
+            titleLabel!.backgroundColor = .clear
+            titleLabel!.isUserInteractionEnabled = false
+            titleLabel!.attributedText = title
+            titleLabel!.textColor = color(withName: ColorSchemeColorChatHeadTitleText)
+            titleLabel!.lineBreakMode = .byTruncatingTail
+            labelContainer.addSubview(titleLabel!)
         }
         
-        titleLabel.attributedText = titleText()
-        titleLabel.textColor = color(withName: ColorSchemeColorChatHeadTitleText)
-        titleLabel.lineBreakMode = .byTruncatingTail
-        
-        subtitleLabel.text = subtitleText()
-        subtitleLabel.font = messageFont()
+        subtitleLabel = UILabel()
+        subtitleLabel.backgroundColor = .clear
+        subtitleLabel.isUserInteractionEnabled = false
+        subtitleLabel.attributedText = content
         subtitleLabel.textColor = color(withName: ColorSchemeColorChatHeadSubtitleText)
         subtitleLabel.lineBreakMode = .byTruncatingTail
+        labelContainer.addSubview(subtitleLabel)
     }
     
     private func createImageView() {
@@ -113,23 +112,34 @@ class ChatHeadView: UIView {
         userImageView.userSession = ZMUserSession.shared()
         userImageView.isUserInteractionEnabled = false
         userImageView.translatesAutoresizingMaskIntoConstraints = false
-        userImageView.user = message.sender
+        userImageView.user = self.sender
         userImageView.accessibilityIdentifier = "ChatheadAvatarImage"
         addSubview(userImageView)
     }
     
     private func createConstraints() {
         
-        constrain(labelContainer, titleLabel, subtitleLabel) { container, titleLabel, subtitleLabel in
-            titleLabel.leading == container.leading
-            titleLabel.trailing == container.trailing
-            titleLabel.bottom == container.centerY
-            
-            subtitleLabel.leading == container.leading
-            subtitleLabel.top == container.centerY
-            subtitleLabel.trailing == container.trailing
+        if let titleLabel = titleLabel {
+            // title above subtitle
+            constrain(labelContainer, titleLabel, subtitleLabel) { container, titleLabel, subtitleLabel in
+                titleLabel.leading == container.leading
+                titleLabel.trailing == container.trailing
+                titleLabel.bottom == container.centerY
+                
+                subtitleLabel.leading == container.leading
+                subtitleLabel.top == container.centerY
+                subtitleLabel.trailing == container.trailing
+            }
+        } else {
+            // subtitle centered
+            constrain(labelContainer, subtitleLabel) { container, subtitleLabel in
+                subtitleLabel.leading == container.leading
+                subtitleLabel.trailing == container.trailing
+                subtitleLabel.centerY == container.centerY
+            }
         }
         
+        // image view left, labels right
         constrain(self, userImageView, labelContainer) { selfView, imageView, labelContainer in
             imageView.height == imageDiameter
             imageView.width == imageView.height
@@ -143,69 +153,12 @@ class ChatHeadView: UIView {
         }
     }
     
-    // MARK: - Private Helpers
-    
-    private func titleText() -> NSAttributedString {
-
-        let regularFont: [String: AnyObject] = [NSFontAttributeName: FontSpec(.medium, .regular).font!.withSize(14)]
-        let mediumFont: [String: AnyObject] = [NSFontAttributeName: FontSpec(.medium, .medium).font!.withSize(14)]
-        
-        if let teamName = teamName, !account.isActive {
-            let result = NSMutableAttributedString(string: "in ", attributes: regularFont)
-            result.append(NSAttributedString(string: teamName, attributes: mediumFont))
-            
-            if !isOneToOneConversation {
-                result.insert(NSAttributedString(string: conversationName + " ", attributes: mediumFont), at: 0)
-            }
-            
-            return result
-
-        } else {
-            return NSAttributedString(string: conversationName, attributes: mediumFont)
-        }
-    }
-    
-    private func subtitleText() -> String {
-        let content = messageText()
-        return (account.isActive && isOneToOneConversation) ? content : "\(senderName): \(content)"
-    }
-    
-    private func messageText() -> String {
-        var result = ""
-        
-        if Message.isText(message) {
-            return (message.textMessageData!.messageText as NSString).resolvingEmoticonShortcuts()
-        } else if Message.isImage(message) {
-            result = "notifications.shared_a_photo".localized
-        } else if Message.isKnock(message) {
-            result = "notifications.pinged".localized
-        } else if Message.isVideo(message) {
-            result = "notifications.sent_video".localized
-        } else if Message.isAudio(message) {
-            result = "notifications.sent_audio".localized
-        } else if Message.isFileTransfer(message) {
-            result = "notifications.sent_file".localized
-        } else if Message.isLocation(message) {
-            result = "notifications.sent_location".localized
-        }
-        
-        return result
-    }
-
-    private func messageFont() -> UIFont {
-        let font = FontSpec(.medium, .regular).font!
-        
-        if message.isEphemeral {
-            return UIFont(name: "RedactedScript-Regular", size: font.pointSize)!
-        }
-        return font
-    }
     
     // MARK: - Actions
     
     @objc private func didTapInAppNotification(_ gestureRecognizer: UITapGestureRecognizer) {
         if let onSelect = onSelect, gestureRecognizer.state == .recognized {
-            onSelect(message, account)
+            onSelect(conversation, account)
         }
     }
 }
