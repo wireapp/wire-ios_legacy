@@ -204,7 +204,6 @@
 		54F7C2851D746F3F004D8087 /* AddressBookHelper+Automation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54F7C2841D746F3F004D8087 /* AddressBookHelper+Automation.swift */; };
 		54FF9E281E813BA500323D2E /* DebugAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54FF9E271E813BA500323D2E /* DebugAlert.swift */; };
 		6DC7310EF4FE22057C3A6DC8 /* libPods-Wire-iOS-Tests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CC9C38FFEE2CB1B4A68D125E /* libPods-Wire-iOS-Tests.a */; };
-		7CFEA6AB1F7939F300B1C379 /* WireSyncEngine.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 095275931B7E834400123BAF /* WireSyncEngine.framework */; };
 		848DE12B1A83D20000E154B1 /* emoticons.min.json in Resources */ = {isa = PBXBuildFile; fileRef = 848DE12A1A83D20000E154B1 /* emoticons.min.json */; };
 		87023D7B1D76E4E2007B667E /* AFNetworking.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87023D7A1D76E4E2007B667E /* AFNetworking.framework */; };
 		870533FF1DD6162400A7F822 /* OverflowSeparatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 870533FE1DD6162400A7F822 /* OverflowSeparatorView.swift */; };
@@ -865,6 +864,7 @@
 		BFBAE9E31E041FB7003FCE49 /* ReactionsCellTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFBAE9E21E041FB7003FCE49 /* ReactionsCellTests.swift */; };
 		BFBB03061D5DF4CB0065AF4F /* InputBarButtonsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFBB03051D5DF4CB0065AF4F /* InputBarButtonsView.swift */; };
 		BFBB03081D61AF8D0065AF4F /* InputBarEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFBB03071D61AF8D0065AF4F /* InputBarEditView.swift */; };
+		BFBC11E11ED84DB200502AF0 /* WireSyncEngine.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 095275931B7E834400123BAF /* WireSyncEngine.framework */; };
 		BFBC11E31ED84DB200502AF0 /* WireDataModel.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BFBC11E21ED84DB200502AF0 /* WireDataModel.framework */; };
 		BFBC11E51ED84DE400502AF0 /* WireMessageStrategy.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BFBC11E41ED84DE400502AF0 /* WireMessageStrategy.framework */; };
 		BFBDDBC61DB0D51C00BEED02 /* ConversationInputBarButtonState.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFBDDBC51DB0D51C00BEED02 /* ConversationInputBarButtonState.swift */; };
@@ -2504,10 +2504,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7CFEA6AB1F7939F300B1C379 /* WireSyncEngine.framework in Frameworks */,
 				F1CE2DF01EF0337F00631D8A /* PureLayout.framework in Frameworks */,
 				BFBC11E51ED84DE400502AF0 /* WireMessageStrategy.framework in Frameworks */,
 				BFBC11E31ED84DB200502AF0 /* WireDataModel.framework in Frameworks */,
+				BFBC11E11ED84DB200502AF0 /* WireSyncEngine.framework in Frameworks */,
 				AF36C5A71E9F6F2000FADECC /* WireCanvas.framework in Frameworks */,
 				87AAE4291E43682E00E1D13A /* LocalAuthentication.framework in Frameworks */,
 				8714A9EC1E69E605006BBAE9 /* FLAnimatedImage.framework in Frameworks */,
