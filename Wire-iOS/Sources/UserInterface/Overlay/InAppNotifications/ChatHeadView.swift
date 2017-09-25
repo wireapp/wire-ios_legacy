@@ -27,18 +27,17 @@ class ChatHeadView: UIView {
     private var subtitleLabel: UILabel!
     private var labelContainer: UIView!
     
-    private let isActiveAccount: Bool
-    private let isOneToOneConversation: Bool
-    
+    private let account: Account
     private let message: ZMConversationMessage
     private let conversationName: String
     private let senderName: String
     private let teamName: String?
+    private let isOneToOneConversation: Bool
     
     private let imageDiameter: CGFloat = 28
     private let padding: CGFloat = 10
     
-    public var onSelect: ((ZMConversationMessage) -> Void)?
+    public var onSelect: ((ZMConversationMessage, Account) -> Void)?
     
     override var intrinsicContentSize: CGSize {
         let height = imageDiameter + 2 * padding
@@ -51,11 +50,11 @@ class ChatHeadView: UIView {
     
     init(message: ZMConversationMessage, account: Account) {
         
+        self.account = account
         self.message = message
         self.conversationName = message.conversation?.displayName ?? ""
         self.senderName = message.sender?.displayName ?? ""
         self.teamName = account.teamName
-        self.isActiveAccount = account == SessionManager.shared?.accountManager.selectedAccount
         self.isOneToOneConversation = message.conversation?.conversationType == .oneOnOne
         super.init(frame: .zero)
         setup()
@@ -151,7 +150,7 @@ class ChatHeadView: UIView {
         let regularFont: [String: AnyObject] = [NSFontAttributeName: FontSpec(.medium, .regular).font!.withSize(14)]
         let mediumFont: [String: AnyObject] = [NSFontAttributeName: FontSpec(.medium, .medium).font!.withSize(14)]
         
-        if let teamName = teamName, !isActiveAccount {
+        if let teamName = teamName, !account.isActive {
             let result = NSMutableAttributedString(string: "in ", attributes: regularFont)
             result.append(NSAttributedString(string: teamName, attributes: mediumFont))
             
@@ -168,7 +167,7 @@ class ChatHeadView: UIView {
     
     private func subtitleText() -> String {
         let content = messageText()
-        return (isActiveAccount && isOneToOneConversation) ? content : "\(senderName): \(content)"
+        return (account.isActive && isOneToOneConversation) ? content : "\(senderName): \(content)"
     }
     
     private func messageText() -> String {
@@ -206,7 +205,7 @@ class ChatHeadView: UIView {
     
     @objc private func didTapInAppNotification(_ gestureRecognizer: UITapGestureRecognizer) {
         if let onSelect = onSelect, gestureRecognizer.state == .recognized {
-            onSelect(message)
+            onSelect(message, account)
         }
     }
 }
