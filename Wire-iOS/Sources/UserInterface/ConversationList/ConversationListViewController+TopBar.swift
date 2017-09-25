@@ -27,7 +27,7 @@ extension ConversationListViewController {
             fatal("No account available")
         }
         let currentAccountView = AccountViewFactory.viewFor(account: currentAccount)
-        
+        currentAccountView.invertUnreadMessagesCount = true
         return currentAccountView
     }
     
