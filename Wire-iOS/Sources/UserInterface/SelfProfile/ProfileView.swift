@@ -25,12 +25,18 @@ import Cartography
     public let nameLabel = UILabel()
     public let handleLabel = UILabel()
     public let teamNameLabel = UILabel()
+    var userObserverToken: NSObjectProtocol?
     
     init(user: ZMUser) {
         super.init(frame: .zero)
+        let session = SessionManager.shared?.activeUserSession
         imageView.accessibilityIdentifier = "user image"
-        imageView.userSession = SessionManager.shared?.activeUserSession
+        imageView.userSession = session
         imageView.user = user
+        
+        if let session = session {
+            userObserverToken = UserChangeInfo.add(observer: self, for: user, userSession: session)
+        }
         
         nameLabel.accessibilityLabel = "profile_view.accessibility.name".localized
         nameLabel.accessibilityIdentifier = "name"
@@ -56,6 +62,14 @@ import Cartography
             teamNameLabel.isHidden = true
         }
         
+        updateHandleLabel(user: user)
+        
+        [imageView, nameLabel, handleLabel, teamNameLabel].forEach(addSubview)
+        
+        self.createConstraints()
+    }
+    
+    fileprivate func updateHandleLabel(user: ZMBareUser) {
         if let handle = user.handle, !handle.isEmpty {
             handleLabel.text = "@" + handle
             handleLabel.accessibilityValue = handleLabel.text
@@ -63,10 +77,6 @@ import Cartography
         else {
             handleLabel.isHidden = true
         }
-        
-        [imageView, nameLabel, handleLabel, teamNameLabel].forEach(addSubview)
-        
-        self.createConstraints()
     }
     
     private func createConstraints() {
@@ -103,5 +113,16 @@ import Cartography
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+}
+
+extension ProfileView: ZMUserObserver {
+    func userDidChange(_ changeInfo: UserChangeInfo) {
+        if changeInfo.nameChanged {
+            nameLabel.text = changeInfo.user.name
+        }
+        if changeInfo.handleChanged {
+            updateHandleLabel(user: changeInfo.user)
+        }
     }
 }
