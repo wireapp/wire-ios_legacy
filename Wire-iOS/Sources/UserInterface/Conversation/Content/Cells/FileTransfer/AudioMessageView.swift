@@ -24,7 +24,7 @@ import Classy
 final class AudioMessageView: UIView, TransferView {
     public var fileMessage: ZMConversationMessage?
     weak public var delegate: TransferViewDelegate?
-    weak public var audioTrackPlayer : AudioTrackPlayer? {
+    public var audioTrackPlayer : AudioTrackPlayer? {
         didSet {
             audioPlayerProgressObserver = KeyValueObserver.observe(audioTrackPlayer, keyPath: "progress", target: self, selector: #selector(audioProgressChanged(_:)), options: [.initial, .new])
             audioPlayerStateObserver = KeyValueObserver.observe(audioTrackPlayer, keyPath: "state", target: self, selector: #selector(audioPlayerStateChanged(_:)), options: [.initial, .new])
