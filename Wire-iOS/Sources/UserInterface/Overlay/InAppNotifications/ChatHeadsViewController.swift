@@ -150,7 +150,7 @@ class ChatHeadsViewController: UIViewController {
             
             result = (message.textMessageData!.messageText as NSString).resolvingEmoticonShortcuts() ?? ""
             
-            if !(isAccountActive && message.conversation!.conversationType == .oneOnOne) {
+            if message.conversation?.conversationType == .group {
                 if let senderName = message.sender?.displayName {
                     result = "\(senderName): \(result)"
                 }
@@ -190,15 +190,10 @@ class ChatHeadsViewController: UIViewController {
         
         // if team & background account
         if let teamName = account.teamName, !account.isActive {
-            // "in Team"
-            let result = NSMutableAttributedString(string: "in ", attributes: regularFont)
+            // "Name in Team"
+            let result = NSMutableAttributedString(string: conversation.displayName + " ", attributes: mediumFont)
+            result.append(NSMutableAttributedString(string: "in ", attributes: regularFont))
             result.append(NSAttributedString(string: teamName, attributes: mediumFont))
-            
-            // group conversaiton: "Group Name in Team"
-            if conversation.conversationType == .group {
-                result.insert(NSAttributedString(string: conversation.displayName + " ", attributes: mediumFont), at: 0)
-            }
-            
             return result
             
         } else {
