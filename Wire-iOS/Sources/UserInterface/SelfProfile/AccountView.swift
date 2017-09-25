@@ -126,6 +126,7 @@ public class BaseAccountView: UIView, AccountViewType {
     fileprivate let outlineView = UIView()
     fileprivate let dotView = DotView()
     fileprivate let selectionView = ShapeView()
+    fileprivate var unreadCountToken : Any?
     
     private var selfUserObserver: NSObjectProtocol!
 
@@ -218,8 +219,9 @@ public class BaseAccountView: UIView, AccountViewType {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(didTap(_:)))
         self.addGestureRecognizer(tapGesture)
         
-        NotificationCenter.default.addObserver(forName: .AccountUnreadCountDidChangeNotification, object: account, queue: .main) { _ in
-            self.updateAppearance()
+        
+        self.unreadCountToken = NotificationCenter.default.addObserver(forName: .AccountUnreadCountDidChangeNotification, object: nil, queue: .main) { [weak self] _ in
+            self?.updateAppearance()
         }
         
         updateAppearance()
