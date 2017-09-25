@@ -279,14 +279,6 @@ public final class PersonalAccountView: BaseAccountView {
         self.accessibilityTraits = UIAccessibilityTraitButton
         self.shouldGroupAccessibilityChildren = true
         self.accessibilityIdentifier = "personal team"
-
-        if let imageData = self.account.imageData {
-            userImageView.imageView.image = UIImage(data: imageData)
-        }
-        else {
-            let personName = PersonName.person(withName: self.account.userName, schemeTagger: nil)
-            userImageView.initials.text = personName.initials
-        }
         
         selectionView.pathGenerator = {
             return UIBezierPath(ovalIn: CGRect(origin: .zero, size: $0))
@@ -313,13 +305,20 @@ public final class PersonalAccountView: BaseAccountView {
     public override func update() {
         super.update()
         self.accessibilityValue = String(format: "conversation_list.header.self_team.accessibility_value".localized, self.account.userName) + " " + accessibilityState
+        if let imageData = self.account.imageData {
+            userImageView.imageView.image = UIImage(data: imageData)
+        }
+        else {
+            let personName = PersonName.person(withName: self.account.userName, schemeTagger: nil)
+            userImageView.initials.text = personName.initials
+        }
     }
 }
 
 extension PersonalAccountView {
     override public func userDidChange(_ changeInfo: UserChangeInfo) {
         super.userDidChange(changeInfo)
-        if changeInfo.nameChanged {
+        if changeInfo.nameChanged || changeInfo.imageMediumDataChanged || changeInfo.imageSmallProfileDataChanged  {
             update()
         }
     }

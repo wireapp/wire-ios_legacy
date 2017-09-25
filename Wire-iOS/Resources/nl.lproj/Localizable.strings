@@ -663,7 +663,7 @@
 
 "self.settings.callkit.title" = "Oproepen";
 "self.settings.callkit.caption" = "Deel met iOS";
-"self.settings.callkit.description" = "Toon Wire-gesprekken op het toegangsscherm en in de iOS gespreksgeschiedenis. Als iCloud aan staat wordt de oproepgeschiedenis bewaard bij Apple. Herstart Wire om deze instelling toe te passen.";
+"self.settings.callkit.description" = "Show Wire calls on the lock screen and in iOS call history. If iCloud is enabled, call history is shared with Apple.";
 
 "self.settings.vbr.title" = "Variable Bit Rate codering";
 "self.settings.vbr.description" = "Hierdoor gebruik je minder data tijdens het bellen, en het werkt beter op trage netwerken. Zet dit uit om een constante Bitrate Encoding te gebruiken.";

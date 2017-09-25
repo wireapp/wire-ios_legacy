@@ -97,7 +97,7 @@
 "conversation_list.voiceover.status.pending_connection" = "wird überprüft";
 "conversation_list.voiceover.status.active_call" = "Aktiver Anruf";
 "conversation_list.voiceover.status.missed_call" = "Entgangener Anruf";
-"conversation_list.voiceover.status.pause_media" = "pause Medien";
+"conversation_list.voiceover.status.pause_media" = "stoppe Medien";
 "conversation_list.voiceover.status.play_media" = "Medien abspielen";
 "conversation_list.voiceover.status.silenced" = "Schweigen";
 "conversation_list.voiceover.status.typing" = "tippt";
@@ -663,7 +663,7 @@
 
 "self.settings.callkit.title" = "Anrufe";
 "self.settings.callkit.caption" = "Mit iOS teilen";
-"self.settings.callkit.description" = "Zeige Wire Anrufe auf dem Sperrbildschirm und in der iOS Anrufhistorie. Wenn iCloud aktiviert ist wird die Anrufhistorie mit Apple geteilt. Die Aktivierung dieser Einstellung erfordert einen Neustart von Wire.";
+"self.settings.callkit.description" = "Show Wire calls on the lock screen and in iOS call history. If iCloud is enabled, call history is shared with Apple.";
 
 "self.settings.vbr.title" = "Variable Bitrate";
 "self.settings.vbr.description" = "Anrufe benötigen weniger Datenvolumen und funktionieren besser in Netzen mit geringer Bandbreite. Deaktivieren um eine konstante Bitrate zu benutzen.";

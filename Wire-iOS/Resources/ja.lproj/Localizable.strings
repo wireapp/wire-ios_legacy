@@ -663,7 +663,7 @@
 
 "self.settings.callkit.title" = "通話";
 "self.settings.callkit.caption" = "iOSで共有する";
-"self.settings.callkit.description" = "Wireの通話履歴をロック画面とiOSの通話履歴に表示する。もしiCloudが有効である場合、通話履歴はAppleに共有されます。この設定を適用するためにはWireを再起動してください。";
+"self.settings.callkit.description" = "Show Wire calls on the lock screen and in iOS call history. If iCloud is enabled, call history is shared with Apple.";
 
 "self.settings.vbr.title" = "可変ビットレートエンコーディング";
 "self.settings.vbr.description" = "これは通話でのデータ量を削減し、低速なネットワークにおける通話をより良くします。これをオフにすることで固定ビットレートエンコーディングを利用することができます。";

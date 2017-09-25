@@ -663,7 +663,7 @@
 
 "self.settings.callkit.title" = "Notificaciones de (vídeo)llamadas";
 "self.settings.callkit.caption" = "A pantalla completa";
-"self.settings.callkit.description" = "Esta opción muestra las notificaciones de (vídeo)llamadas de Wire como una llamada normal en la pantalla bloqueada y en el historial de llamadas del teléfono. Con iCloud activado, el historial de llamadas se almacena en los servidores de Apple. Necesitas reiniciar Wire tras modificar esta opción.";
+"self.settings.callkit.description" = "Show Wire calls on the lock screen and in iOS call history. If iCloud is enabled, call history is shared with Apple.";
 
 "self.settings.vbr.title" = "Tasa de bits variable";
 "self.settings.vbr.description" = "Esta opción permite que las llamadas de audio utilicen menos datos y funcionen mejor en redes lentas. Al desactivar esta opción se usará la codificación de audio de tasa de bits constante que necesita más ancho de banda pero es más segura frente a ataques de terceros.";

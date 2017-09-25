@@ -663,7 +663,7 @@
 
 "self.settings.callkit.title" = "Chiamate";
 "self.settings.callkit.caption" = "Condividi con iOS";
-"self.settings.callkit.description" = "Mostra le chiamate di Wire nella schermata di blocco e nella cronologia delle chiamate su iOS. Se iCloud è abilitato, la cronologia delle chiamate verrà condivisa con Apple. Riavvia Wire per applicare questa impostazione.";
+"self.settings.callkit.description" = "Show Wire calls on the lock screen and in iOS call history. If iCloud is enabled, call history is shared with Apple.";
 
 "self.settings.vbr.title" = "Codifica con Bit Rate variabile";
 "self.settings.vbr.description" = "Con questa modalità le chiamate utilizzano meno dati e funzionano meglio su reti con larghezza di banda minima. Disattiva per utilizzare la codifica Bit Rate costante.";

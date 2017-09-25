@@ -43,6 +43,7 @@ class AppRootViewController : UIViewController {
         classyCache = ClassyCache()
         fileBackupExcluder = FileBackupExcluder()
         avsLogObserver = AVSLogObserver()
+        MagicConfig.shared()
         
         mainWindow = UIWindow()
         mainWindow.frame = UIScreen.main.bounds
@@ -246,7 +247,6 @@ class AppRootViewController : UIViewController {
         
         if !isClassyInitialized && isClassyRequired(for: appState) {
             isClassyInitialized = true
-            MagicConfig.shared()
             
             let windows = [mainWindow, overlayWindow]
             DispatchQueue.main.async {
