@@ -258,47 +258,6 @@
 	</dict>
 	<key>notifications</key>
 	<dict>
-		<key>container_inset_top</key>
-		<integer>16</integer>
-		<key>container_inset_left</key>
-		<integer>16</integer>
-		<key>container_inset_right</key>
-		<integer>16</integer>
-		<key>corner_radius</key>
-		<integer>6</integer>
-		<key>image_diameter</key>
-		<real>28</real>
-		<key>content_padding</key>
-		<integer>10</integer>
-		<key>title_label_font_regular</key>
-		<dict>
-			<key>font</key>
-			<string>System-Regular</string>
-			<key>size</key>
-			<integer>14</integer>
-		</dict>
-		<key>title_label_font_medium</key>
-		<dict>
-			<key>font</key>
-			<string>System-Medium</string>
-			<key>size</key>
-			<integer>14</integer>
-		</dict>
-		<key>subtitle_label_font</key>
-		<dict>
-			<key>font</key>
-			<string>System-Regular</string>
-			<key>size</key>
-			<string>12</string>
-		</dict>
-		<key>dismiss_delay_duration</key>
-		<integer>5</integer>
-		<key>animation_container_inset</key>
-		<integer>48</integer>
-		<key>animation_text_inset</key>
-		<integer>8</integer>
-		<key>gesture_threshold</key>
-		<integer>75</integer>
 		<key>user_initials_font</key>
 		<dict>
 			<key>font</key>

@@ -69,7 +69,7 @@ class ChatHeadsViewController: UIViewController {
                 return
         }
         
-        guard shouldDisplay(message: message, isActiveAccount: accountManager.selectedAccount == account) else {
+        guard shouldDisplay(message: message, account: account) else {
             return
         }
         
@@ -82,9 +82,15 @@ class ChatHeadsViewController: UIViewController {
  
         chatHeadView = ChatHeadView(message: message, account: account)
         
-        // FIXME: doesn't consider multi account yet
-        chatHeadView!.onSelect = { _ in
-            ZClientViewController.shared().select(conversation, focusOnView: true, animated: true)
+        chatHeadView!.onSelect = { message, account in
+            if account.isActive {
+                    ZClientViewController.shared().select(message.conversation!, focusOnView: true, animated: true)
+            } else {
+                if let session = SessionManager.shared?.backgroundUserSessions[account.userIdentifier] {
+                    SessionManager.shared?.userSession(session, show: message as! ZMMessage, in: message.conversation!)
+                }
+            }
+            
             self.chatHeadView?.removeFromSuperview()
         }
         
@@ -111,7 +117,7 @@ class ChatHeadsViewController: UIViewController {
     
     // MARK: - Private Helpers
     
-    private func shouldDisplay(message: ZMConversationMessage, isActiveAccount: Bool) -> Bool {
+    private func shouldDisplay(message: ZMConversationMessage, account: Account) -> Bool {
         
         let clientVC = ZClientViewController.shared()!
 
@@ -124,7 +130,7 @@ class ChatHeadsViewController: UIViewController {
             return false;
         }
 
-        return clientVC.splitViewController.shouldDisplayNotification(for: message, isActiveAccount: isActiveAccount)
+        return clientVC.splitViewController.shouldDisplayNotification(for: message, isActiveAccount: account.isActive)
     }
     
     fileprivate func revealChatHeadFromCurrentState() {
@@ -224,5 +230,13 @@ extension ChatHeadsViewController {
         default:
             break
         }
+    }
+}
+
+
+extension Account {
+    
+    var isActive: Bool {
+        return SessionManager.shared?.accountManager.selectedAccount == self 
     }
 }
