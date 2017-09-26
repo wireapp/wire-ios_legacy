@@ -47,7 +47,6 @@ class ChatHeadTests: CoreDataSnapshotTestCase {
         super.tearDown()
     }
     
-    // MARK: - Label Format Tests
     
     func test_ActiveAccount_Team_OneOnOne() {
         
@@ -233,7 +232,6 @@ class ChatHeadTests: CoreDataSnapshotTestCase {
         verify(view: sut.prepareForSnapshots())
     }
 
-    // MARK: Misc
     
     func test_Long_Message() {
         
@@ -259,30 +257,8 @@ class ChatHeadTests: CoreDataSnapshotTestCase {
         
         verify(view: sut.prepareForSnapshots())
     }
-    
-    func test_Ephemeral() {
-        
-        message.isEphemeral = true
-        
-        let titleText = ChatHeadTextFormatter.titleText(
-            conversation: message.conversation!,
-            teamName: account.teamName,
-            isAccountActive: true
-        )
-        
-        let content = ChatHeadTextFormatter.text(for: message, isAccountActive: true)
-        
-        let sut = ChatHeadView(
-            title: titleText,
-            content: content,
-            sender: otherUser,
-            conversation: message.conversation!,
-            account: account
-        )
-        
-        verify(view: sut.prepareForSnapshots())
-    }
 }
+
 
 fileprivate extension UIView {
     
