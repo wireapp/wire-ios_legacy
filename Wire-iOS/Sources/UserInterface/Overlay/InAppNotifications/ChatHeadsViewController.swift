@@ -95,9 +95,8 @@ class ChatHeadsViewController: UIViewController {
         if let message = note.message(in: conversation, in: session.managedObjectContext) {
             content = ChatHeadTextFormatter.text(for: message, isAccountActive: account.isActive)
         } else {
-            // use the alert body
-            guard let alertBody = note.alertBody else { return }
-            content = NSAttributedString(string: alertBody, attributes: [NSFontAttributeName: FontSpec(.medium, .regular).font!])
+            guard let noteText = ChatHeadTextFormatter.text(for: note) else { return }
+            content = noteText
         }
         
         chatHeadView = ChatHeadView(

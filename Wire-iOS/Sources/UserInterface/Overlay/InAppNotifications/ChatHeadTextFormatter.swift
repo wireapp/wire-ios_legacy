@@ -80,6 +80,15 @@ class ChatHeadTextFormatter {
     }
     
     
+    /// Returns the formatted alert body of the notification if it exists, else nil.
+    ///
+    static func text(for notification: UILocalNotification) -> NSAttributedString? {
+        // use the alert body
+        guard let alertBody = notification.alertBody else { return nil }
+        return NSAttributedString(string: alertBody, attributes: [NSFontAttributeName: FontSpec(.medium, .regular).font!])
+    }
+    
+    
     /// Returns the appropriate font for the given message.
     ///
     static func font(for message: ZMConversationMessage) -> UIFont {
