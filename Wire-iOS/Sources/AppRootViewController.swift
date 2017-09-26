@@ -36,8 +36,16 @@ class AppRootViewController : UIViewController {
     fileprivate let transitionQueue : DispatchQueue = DispatchQueue(label: "transitionQueue")
     fileprivate var isClassyInitialized = false
     
-    fileprivate var performWhenRequestsToOpenViewsDelegateAvailable: ((ZMRequestsToOpenViewsDelegate)->())?
+    fileprivate weak var requestToOpenViewDelegate: ZMRequestsToOpenViewsDelegate? {
+        didSet {
+            if let delegate = requestToOpenViewDelegate {
+                performWhenRequestsToOpenViewsDelegateAvailable?(delegate)
+                performWhenRequestsToOpenViewsDelegateAvailable = nil
+            }
+        }
+    }
     
+    fileprivate var performWhenRequestsToOpenViewsDelegateAvailable: ((ZMRequestsToOpenViewsDelegate)->())?
     
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
@@ -154,6 +162,7 @@ class AppRootViewController : UIViewController {
     
     func transition(to appState: AppState, completionHandler: (() -> Void)? = nil) {
         var viewController : UIViewController? = nil
+        requestToOpenViewDelegate = nil
         
         switch appState {
         case .blacklisted:
@@ -186,10 +195,7 @@ class AppRootViewController : UIViewController {
         
         if let viewController = viewController {
             transition(to: viewController, animated: true) {
-                if viewController.conforms(to: ZMRequestsToOpenViewsDelegate.self) {
-                    self.performWhenRequestsToOpenViewsDelegateAvailable?(viewController as! ZMRequestsToOpenViewsDelegate)
-                    self.performWhenRequestsToOpenViewsDelegateAvailable = nil
-                }
+                self.requestToOpenViewDelegate = viewController as? ZMRequestsToOpenViewsDelegate
                 completionHandler?()
             }
         } else {
@@ -365,20 +371,29 @@ extension AppRootViewController : AppStateControllerDelegate {
 extension AppRootViewController : ZMRequestsToOpenViewsDelegate {
     
     public func showConversationList(for userSession: ZMUserSession!) {
-        performWhenRequestsToOpenViewsDelegateAvailable = { delegate in
+        whenRequestsToOpenViewsDelegateAvailable(do: { delegate in
             delegate.showConversationList(for: userSession)
-        }
+        })
     }
     
     public func userSession(_ userSession: ZMUserSession!, show conversation: ZMConversation!) {
-        performWhenRequestsToOpenViewsDelegateAvailable = { delegate in
+        whenRequestsToOpenViewsDelegateAvailable(do: { delegate in
             delegate.userSession(userSession, show: conversation)
-        }
+        })
     }
     
     public func userSession(_ userSession: ZMUserSession!, show message: ZMMessage!, in conversation: ZMConversation!) {
-        performWhenRequestsToOpenViewsDelegateAvailable = { delegate in
+        whenRequestsToOpenViewsDelegateAvailable(do: { delegate in
             delegate.userSession(userSession, show: message, in: conversation)
+        })
+    }
+    
+    internal func whenRequestsToOpenViewsDelegateAvailable(do closure: @escaping (ZMRequestsToOpenViewsDelegate)->()) {
+        if let delegate = self.requestToOpenViewDelegate {
+            closure(delegate)
+        }
+        else {
+            self.performWhenRequestsToOpenViewsDelegateAvailable = closure
         }
     }
 }
