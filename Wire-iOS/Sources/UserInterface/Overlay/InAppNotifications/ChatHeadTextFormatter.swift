@@ -44,7 +44,7 @@ class ChatHeadTextFormatter {
     
     /// Returns the formatted text for the given message and the account state.
     ///
-    static private func text(for message: ZMConversationMessage, isAccountActive: Bool) -> NSAttributedString {
+    static func text(for message: ZMConversationMessage, isAccountActive: Bool) -> NSAttributedString {
         var result = ""
         
         if Message.isText(message) {
