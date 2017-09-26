@@ -109,12 +109,9 @@ class ChatHeadsViewController: UIViewController {
         )
         
         chatHeadView!.onSelect = { conversation, account in
-            if account.isActive {
-                    ZClientViewController.shared().select(conversation, focusOnView: true, animated: true)
-            } else {
-                if let session = SessionManager.shared?.backgroundUserSessions[account.userIdentifier] {
-                    SessionManager.shared?.userSession(session, show: conversation)
-                }
+            
+            SessionManager.shared?.withSession(for: account) { userSession in
+                SessionManager.shared?.userSession(userSession, show: conversation)
             }
             
             self.chatHeadView?.removeFromSuperview()
