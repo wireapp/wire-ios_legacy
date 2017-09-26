@@ -51,7 +51,17 @@
 
 - (void)messageCannotBeDecrypted:(NSNotification *)note;
 {
-    [self.analytics tagCannotDecryptMessageWithAttributes:note.userInfo];
+    NSMutableDictionary* trackingInfo = [[NSMutableDictionary alloc] init];
+    if (nil != note.userInfo[@"deviceClass"]) {
+        trackingInfo[@"deviceClass"] = note.userInfo[@"deviceClass"];
+    }
+    if (nil != note.userInfo[@"cause"]) {
+        trackingInfo[@"cause"] = note.userInfo[@"cause"];
+    }
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.analytics tagCannotDecryptMessageWithAttributes:trackingInfo];
+    });
 }
 
 @end
