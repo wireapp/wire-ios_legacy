@@ -665,6 +665,9 @@
 "self.settings.callkit.caption" = "Ділитися інформацією з iOS";
 "self.settings.callkit.description" = "Show Wire calls on the lock screen and in iOS call history. If iCloud is enabled, call history is shared with Apple.";
 
+"self.settings.cbr.not_available" = "Сталий бітрейт";
+"self.settings.cbr.not_available.description" = "Сталий бітрейт було тимчасово вимкнуто через введення підтримки декількох акаунтів. Дана функціональність невдовзі буде доступна.";
+
 "self.settings.vbr.title" = "Змінний бітрейт";
 "self.settings.vbr.description" = "Дана опція дозволяє аудіодзвінкам економити трафік та покращує їх якість а мережах з низькою швидкістю передачі даних. Ви можете деактивувати її, увімкнувши сталий бітрейт.";
 

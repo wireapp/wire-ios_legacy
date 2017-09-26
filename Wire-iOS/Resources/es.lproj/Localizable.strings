@@ -665,6 +665,9 @@
 "self.settings.callkit.caption" = "A pantalla completa";
 "self.settings.callkit.description" = "Show Wire calls on the lock screen and in iOS call history. If iCloud is enabled, call history is shared with Apple.";
 
+"self.settings.cbr.not_available" = "Constant Bit Rate Encoding";
+"self.settings.cbr.not_available.description" = "Constant bit rate calls have been temporarily disabled with the introduction of multiple account support. CBR calls will be back soon.";
+
 "self.settings.vbr.title" = "Tasa de bits variable";
 "self.settings.vbr.description" = "Esta opción permite que las llamadas de audio utilicen menos datos y funcionen mejor en redes lentas. Al desactivar esta opción se usará la codificación de audio de tasa de bits constante que necesita más ancho de banda pero es más segura frente a ataques de terceros.";
 

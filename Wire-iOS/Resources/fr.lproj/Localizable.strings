@@ -665,6 +665,9 @@
 "self.settings.callkit.caption" = "Partager avec iOS";
 "self.settings.callkit.description" = "Affiche les appels Wire sur l'écran de verrouillage et dans le journal des appels iOS. Si iCloud est activé, le journal des appels est partagé avec Apple.";
 
+"self.settings.cbr.not_available" = "Encodage en échantillonnage constant";
+"self.settings.cbr.not_available.description" = "Les appels en échantillonnage constant ont été désactivés temporairement avec l'ajout de la prise en charge de plusieurs comptes. Ils reviendront bientôt.";
+
 "self.settings.vbr.title" = "Échantillonnage variable (VBR)";
 "self.settings.vbr.description" = "Les appels audio utiliseront moins de données et fonctionneront mieux sur des réseaux plus lents. Désactiver pour utiliser un échantillonnage constant (CBR).";
 

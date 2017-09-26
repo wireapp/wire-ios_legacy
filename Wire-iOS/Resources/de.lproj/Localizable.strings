@@ -663,7 +663,10 @@
 
 "self.settings.callkit.title" = "Anrufe";
 "self.settings.callkit.caption" = "Mit iOS teilen";
-"self.settings.callkit.description" = "Show Wire calls on the lock screen and in iOS call history. If iCloud is enabled, call history is shared with Apple.";
+"self.settings.callkit.description" = "Zeige Wire Anrufe auf dem Sperrbildschirm und in der iOS Anrufhistorie. Wenn iCloud aktiviert ist wird die Anrufhistorie mit Apple geteilt.";
+
+"self.settings.cbr.not_available" = "Constant Bit Rate Encoding";
+"self.settings.cbr.not_available.description" = "Die Option für Constant Bit Rate bei Anrufen ist vorübergehend nicht verfügbar, bedingt durch die neue Mehrkontenfähigkeit der App. CBR kommt aber bald wieder.";
 
 "self.settings.vbr.title" = "Variable Bitrate";
 "self.settings.vbr.description" = "Anrufe benötigen weniger Datenvolumen und funktionieren besser in Netzen mit geringer Bandbreite. Deaktivieren um eine konstante Bitrate zu benutzen.";

@@ -665,6 +665,9 @@
 "self.settings.callkit.caption" = "与iOS分享";
 "self.settings.callkit.description" = "Show Wire calls on the lock screen and in iOS call history. If iCloud is enabled, call history is shared with Apple.";
 
+"self.settings.cbr.not_available" = "Constant Bit Rate Encoding";
+"self.settings.cbr.not_available.description" = "Constant bit rate calls have been temporarily disabled with the introduction of multiple account support. CBR calls will be back soon.";
+
 "self.settings.vbr.title" = "可变码率编码";
 "self.settings.vbr.description" = "使用较少的数据和更好地工作在较慢的网络上的音频呼叫。请关闭使用固定编码。";
 

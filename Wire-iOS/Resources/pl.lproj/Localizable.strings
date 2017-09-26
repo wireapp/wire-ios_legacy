@@ -665,6 +665,9 @@
 "self.settings.callkit.caption" = "Udostępnij poprzez iOS";
 "self.settings.callkit.description" = "Show Wire calls on the lock screen and in iOS call history. If iCloud is enabled, call history is shared with Apple.";
 
+"self.settings.cbr.not_available" = "Constant Bit Rate Encoding";
+"self.settings.cbr.not_available.description" = "Constant bit rate calls have been temporarily disabled with the introduction of multiple account support. CBR calls will be back soon.";
+
 "self.settings.vbr.title" = "Kodowanie o zmiennej przepływności (VBR)";
 "self.settings.vbr.description" = "Zmniejsza ilość danych używanych przez połączenia głosowe, dzięki czemu działają one lepiej w powolnych sieciach. Wyłącz, aby używać kodowania o stałej przepływności (CBR).";
 
