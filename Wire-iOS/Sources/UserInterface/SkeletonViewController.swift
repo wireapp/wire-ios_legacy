@@ -231,7 +231,7 @@ class SkeletonViewController: UIViewController {
     
     public init(from: Account?, to: Account) {
 
-        if let fromUnwrapped = from, to.imageData == nil {
+        if let fromUnwrapped = from, to.imageData == nil, to.teamName == nil {
             account = fromUnwrapped
         }
         else {
