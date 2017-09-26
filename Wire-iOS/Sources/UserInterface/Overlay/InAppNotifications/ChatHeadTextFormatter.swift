@@ -44,7 +44,7 @@ class ChatHeadTextFormatter {
     
     /// Returns the formatted text for the given message and the account state.
     ///
-    static func text(for message: ZMConversationMessage, isAccountActive: Bool) -> NSAttributedString {
+    static func text(for message: ZMConversationMessage, isAccountActive: Bool) -> NSAttributedString? {
         var result = ""
         
         if Message.isText(message) {
@@ -73,6 +73,9 @@ class ChatHeadTextFormatter {
             result = "notifications.sent_file".localized
         } else if Message.isLocation(message) {
             result = "notifications.sent_location".localized
+        }
+        else {
+            return nil
         }
         
         let attr: [String : AnyObject] = [NSFontAttributeName: font(for: message)]
