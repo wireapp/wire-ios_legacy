@@ -18,6 +18,7 @@
 
 import UIKit
 import Cartography
+import WireDataModel
 
 public extension UIViewController {
     
@@ -146,6 +147,10 @@ class ChatHeadsViewController: UIViewController {
         if Message.isText(message) {
             
             result = (message.textMessageData!.messageText as NSString).resolvingEmoticonShortcuts() ?? ""
+            
+            if message.isEphemeral {
+                result = result.obfuscated()
+            }
             
             if message.conversation?.conversationType == .group {
                 if let senderName = message.sender?.displayName {
