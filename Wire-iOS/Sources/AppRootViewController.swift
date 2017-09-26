@@ -36,6 +36,8 @@ class AppRootViewController : UIViewController {
     fileprivate let transitionQueue : DispatchQueue = DispatchQueue(label: "transitionQueue")
     fileprivate var isClassyInitialized = false
     
+    fileprivate var performWhenRequestsToOpenViewsDelegateAvailable: ((ZMRequestsToOpenViewsDelegate)->())?
+    
     
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
@@ -113,6 +115,7 @@ class AppRootViewController : UIViewController {
         { sessionManager in
             self.sessionManager = sessionManager
             self.sessionManager?.localMessageNotificationResponder = self
+            self.sessionManager?.requestToOpenViewDelegate = self
             sessionManager.updateCallNotificationStyleFromSettings()
         }
     }
@@ -182,7 +185,13 @@ class AppRootViewController : UIViewController {
         }
         
         if let viewController = viewController {
-            transition(to: viewController, animated: true, completionHandler: completionHandler)
+            transition(to: viewController, animated: true) {
+                if viewController.conforms(to: ZMRequestsToOpenViewsDelegate.self) {
+                    self.performWhenRequestsToOpenViewsDelegateAvailable?(viewController as! ZMRequestsToOpenViewsDelegate)
+                    self.performWhenRequestsToOpenViewsDelegateAvailable = nil
+                }
+                completionHandler?()
+            }
         } else {
             completionHandler?()
         }
@@ -349,6 +358,29 @@ extension AppRootViewController : AppStateControllerDelegate {
         enqueueTransition(to: appState)
     }
     
+}
+
+// MARK: - RequestToOpenViewsDelegate
+
+extension AppRootViewController : ZMRequestsToOpenViewsDelegate {
+    
+    public func showConversationList(for userSession: ZMUserSession!) {
+        performWhenRequestsToOpenViewsDelegateAvailable = { delegate in
+            delegate.showConversationList(for: userSession)
+        }
+    }
+    
+    public func userSession(_ userSession: ZMUserSession!, show conversation: ZMConversation!) {
+        performWhenRequestsToOpenViewsDelegateAvailable = { delegate in
+            delegate.userSession(userSession, show: conversation)
+        }
+    }
+    
+    public func userSession(_ userSession: ZMUserSession!, show message: ZMMessage!, in conversation: ZMConversation!) {
+        performWhenRequestsToOpenViewsDelegateAvailable = { delegate in
+            delegate.userSession(userSession, show: message, in: conversation)
+        }
+    }
 }
 
 // MARK: - Application Icon Badge Number

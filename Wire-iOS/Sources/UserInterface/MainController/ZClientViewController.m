@@ -179,9 +179,6 @@
     }
     
     self.userObserverToken = [UserChangeInfo addObserver:self forUser:[ZMUser selfUser] userSession:[ZMUserSession sharedSession]];
-    
-    // set delegate here b/c it may trigger loading of other views
-    [[SessionManager shared] setRequestToOpenViewDelegate:self];
 }
 
 - (void)createBackgroundViewController
