@@ -76,10 +76,6 @@
         _conversation = conversation;
         _previousVoiceChannelState = VoiceChannelV2StateInvalid;
         self.remoteIsSendingVideo = conversation.voiceChannel.isVideoCall;
-        [[NSNotificationCenter defaultCenter] addObserver:self
-                                                 selector:@selector(voiceChannelEnabledCBR:)
-                                                     name:[WireCallCenterV3 cbrNotificationName]
-                                                   object:nil];
     }
     
     return self;
@@ -538,13 +534,6 @@
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer
 {
     return YES;
-}
-
-#pragma mark - CBR State Observer
-
-- (void)voiceChannelEnabledCBR:(NSNotification *)notification
-{
-    self.overlayView.constantBitRate = YES;
 }
 
 @end
