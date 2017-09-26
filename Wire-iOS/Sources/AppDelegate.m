@@ -230,7 +230,7 @@ static AppDelegate *sharedAppDelegate = nil;
 - (BOOL)application:(UIApplication *)application continueUserActivity:(NSUserActivity *)userActivity restorationHandler:(void (^)(NSArray * _Nullable))restorationHandler
 {
     DDLogInfo(@"application:continueUserActivity:restorationHandler: %@", userActivity);
-    return [self.zetaUserSession application:application continueUserActivity:userActivity restorationHandler:restorationHandler];
+    return [[[SessionManager shared] activeUserSession] application:application continueUserActivity:userActivity restorationHandler:restorationHandler];
 }
 
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
@@ -267,11 +267,6 @@ static AppDelegate *sharedAppDelegate = nil;
 }
 
 #pragma mark - AppController
-
-- (ZMUserSession *)zetaUserSession
-{
-    return [[SessionManager shared] activeUserSession];
-}
 
 - (UnauthenticatedSession *)unauthenticatedSession
 {
