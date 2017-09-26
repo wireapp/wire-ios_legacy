@@ -68,7 +68,9 @@
 
 - (void)dealloc
 {
-    [self.appLockViewController wr_removeFromParentViewController];
+    if (self.appLockViewController.parentViewController == self) {
+        [self.appLockViewController wr_removeFromParentViewController];
+    }
 }
     
 - (void)loadView

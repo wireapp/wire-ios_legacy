@@ -17,6 +17,7 @@
 //
 
 import Foundation
+import WireDataModel
 
 class ChatHeadTextFormatter {
     
@@ -43,12 +44,16 @@ class ChatHeadTextFormatter {
     
     /// Returns the formatted text for the given message and the account state.
     ///
-    static func text(for message: ZMConversationMessage, isAccountActive: Bool) -> NSAttributedString {
+    static private func text(for message: ZMConversationMessage, isAccountActive: Bool) -> NSAttributedString {
         var result = ""
         
         if Message.isText(message) {
             
             result = (message.textMessageData!.messageText as NSString).resolvingEmoticonShortcuts() ?? ""
+            
+            if message.isEphemeral {
+                result = result.obfuscated()
+            }
             
             if message.conversation?.conversationType == .group {
                 if let senderName = message.sender?.displayName {
@@ -73,6 +78,7 @@ class ChatHeadTextFormatter {
         let attr: [String : AnyObject] = [NSFontAttributeName: font(for: message)]
         return NSAttributedString(string: result, attributes: attr)
     }
+    
     
     /// Returns the appropriate font for the given message.
     ///
