@@ -34,6 +34,7 @@ import HockeySDK.BITHockeyManager
         }
     }
     
+    static let shared = AppLockViewController()
     
     override func viewDidLoad() {
         super.viewDidLoad()

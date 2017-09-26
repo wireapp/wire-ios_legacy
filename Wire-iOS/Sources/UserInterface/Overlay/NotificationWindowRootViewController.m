@@ -34,6 +34,21 @@
 #import "UIViewController+Orientation.h"
 #import "Wire-Swift.h"
 
+@interface UIViewController (Child)
+- (void)wr_removeFromParentViewController;
+@end
+
+@implementation UIViewController (Child)
+
+- (void)wr_removeFromParentViewController
+{
+    [self willMoveToParentViewController:nil];
+    [self.view removeFromSuperview];
+    [self removeFromParentViewController];
+}
+
+@end
+
 @interface NotificationWindowRootViewController ()
 
 @property (nonatomic) NetworkStatusViewController *networkStatusViewController;
@@ -51,6 +66,11 @@
 
 @implementation NotificationWindowRootViewController
 
+- (void)dealloc
+{
+    [self.appLockViewController wr_removeFromParentViewController];
+}
+    
 - (void)loadView
 {
     self.view = [PassthroughTouchesView new];
@@ -59,7 +79,11 @@
     self.networkStatusViewController.view.translatesAutoresizingMaskIntoConstraints = NO;
     [self addViewController:self.networkStatusViewController toView:self.view];
     
-    self.appLockViewController = [[AppLockViewController alloc] init];
+    self.appLockViewController = [AppLockViewController shared];
+    if (nil != self.appLockViewController.parentViewController) {
+        [self.appLockViewController wr_removeFromParentViewController];
+    }
+    
     self.appLockViewController.view.translatesAutoresizingMaskIntoConstraints = NO;
     [self addViewController:self.appLockViewController toView:self.view];
     
