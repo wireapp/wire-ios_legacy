@@ -117,7 +117,6 @@
         self.proximityMonitorManager = [ProximityMonitorManager new];
         self.mediaPlaybackManager = [[MediaPlaybackManager alloc] initWithName:@"conversationMedia"];
         self.messageCountTracker = [[LegacyMessageTracker alloc] initWithManagedObjectContext:ZMUserSession.sharedSession.syncManagedObjectContext];
-        [[SessionManager shared] setRequestToOpenViewDelegate:self];
 
         [AVSProvider.shared.mediaManager registerMedia:self.mediaPlaybackManager withOptions:@{ @"media" : @"external "}];
         
@@ -180,6 +179,9 @@
     }
     
     self.userObserverToken = [UserChangeInfo addObserver:self forUser:[ZMUser selfUser] userSession:[ZMUserSession sharedSession]];
+    
+    // set delegate here b/c it may trigger loading of other views
+    [[SessionManager shared] setRequestToOpenViewDelegate:self];
 }
 
 - (void)createBackgroundViewController
