@@ -56,7 +56,7 @@ class ChatHeadTests: CoreDataSnapshotTestCase {
             isAccountActive: true
         )
         
-        let content = ChatHeadTextFormatter.text(for: message, isAccountActive: true)
+        let content = ChatHeadTextFormatter.text(for: message, isAccountActive: true)!
         
         let sut = ChatHeadView(
             title: titleText,
@@ -79,7 +79,7 @@ class ChatHeadTests: CoreDataSnapshotTestCase {
             teamName: account.teamName,
             isAccountActive: true
         )
-        let content = ChatHeadTextFormatter.text(for: message, isAccountActive: true)
+        let content = ChatHeadTextFormatter.text(for: message, isAccountActive: true)!
         
         let sut = ChatHeadView(
             title: titleText,
@@ -101,7 +101,7 @@ class ChatHeadTests: CoreDataSnapshotTestCase {
             teamName: account.teamName,
             isAccountActive: true
         )
-        let content = ChatHeadTextFormatter.text(for: message, isAccountActive: true)
+        let content = ChatHeadTextFormatter.text(for: message, isAccountActive: true)!
         
         let sut = ChatHeadView(
             title: titleText,
@@ -126,7 +126,7 @@ class ChatHeadTests: CoreDataSnapshotTestCase {
             isAccountActive: true
         )
         
-        let content = ChatHeadTextFormatter.text(for: message, isAccountActive: true)
+        let content = ChatHeadTextFormatter.text(for: message, isAccountActive: true)!
         
         let sut = ChatHeadView(
             title: titleText,
@@ -147,7 +147,7 @@ class ChatHeadTests: CoreDataSnapshotTestCase {
             isAccountActive: false
         )
         
-        let content = ChatHeadTextFormatter.text(for: message, isAccountActive: false)
+        let content = ChatHeadTextFormatter.text(for: message, isAccountActive: false)!
         
         let sut = ChatHeadView(
             title: titleText,
@@ -171,7 +171,7 @@ class ChatHeadTests: CoreDataSnapshotTestCase {
             isAccountActive: false
         )
         
-        let content = ChatHeadTextFormatter.text(for: message, isAccountActive: false)
+        let content = ChatHeadTextFormatter.text(for: message, isAccountActive: false)!
         
         let sut = ChatHeadView(
             title: titleText,
@@ -194,7 +194,7 @@ class ChatHeadTests: CoreDataSnapshotTestCase {
             isAccountActive: false
         )
         
-        let content = ChatHeadTextFormatter.text(for: message, isAccountActive: false)
+        let content = ChatHeadTextFormatter.text(for: message, isAccountActive: false)!
         
         let sut = ChatHeadView(
             title: titleText,
@@ -219,7 +219,7 @@ class ChatHeadTests: CoreDataSnapshotTestCase {
             isAccountActive: false
         )
         
-        let content = ChatHeadTextFormatter.text(for: message, isAccountActive: false)
+        let content = ChatHeadTextFormatter.text(for: message, isAccountActive: false)!
         
         let sut = ChatHeadView(
             title: titleText,
@@ -245,7 +245,7 @@ class ChatHeadTests: CoreDataSnapshotTestCase {
             isAccountActive: true
         )
         
-        let content = ChatHeadTextFormatter.text(for: message, isAccountActive: true)
+        let content = ChatHeadTextFormatter.text(for: message, isAccountActive: true)!
         
         let sut = ChatHeadView(
             title: titleText,
