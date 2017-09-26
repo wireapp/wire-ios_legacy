@@ -880,9 +880,11 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
 {
     if (self.messagePresenter.waitingForFileDownload) {
         id<ZMConversationMessage> selectedMessage = self.conversationMessageWindowTableViewAdapter.selectedMessage;
-        if (([Message isVideoMessage:selectedMessage] ||
+        if (selectedMessage &&
+            ([Message isVideoMessage:selectedMessage] ||
              [Message isAudioMessage:selectedMessage] ||
-             [Message isFileTransferMessage:selectedMessage]) && selectedMessage.fileMessageData.transferState == ZMFileTransferStateDownloaded) {
+             [Message isFileTransferMessage:selectedMessage])
+            && selectedMessage.fileMessageData.transferState == ZMFileTransferStateDownloaded) {
             if ([self wr_isVisible]) {
                 NSUInteger indexOfFileMessage = [[[self messageWindow] messages] indexOfObject:selectedMessage];
                 
@@ -913,6 +915,11 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
 
 - (void)conversationWindowDidChange:(MessageWindowChangeInfo *)note
 {
+    // Clear selectedMessage if it is going to be deleted.
+    if ([note.deletedObjects containsObject:self.conversationMessageWindowTableViewAdapter.selectedMessage]) {
+        self.conversationMessageWindowTableViewAdapter.selectedMessage = nil;
+    }
+    
     if (note.insertedIndexes.count == 0) {
         return;
     }
