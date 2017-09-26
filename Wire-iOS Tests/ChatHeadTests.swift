@@ -257,6 +257,24 @@ class ChatHeadTests: CoreDataSnapshotTestCase {
         
         verify(view: sut.prepareForSnapshots())
     }
+    
+    func test_CallNotification_NoTitle() {
+        
+        let note = UILocalNotification()
+        note.alertBody = "Vytis is calling."
+        let content = ChatHeadTextFormatter.text(for: note)
+        XCTAssertNotNil(content)
+        
+        let sut = ChatHeadView(
+            title: nil,
+            content: content!,
+            sender: otherUser,
+            conversation: message.conversation!,
+            account: account
+        )
+        
+         verify(view: sut.prepareForSnapshots())
+    }
 }
 
 
