@@ -359,7 +359,9 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
                     if (self.presentedViewController && deleted) {
                         [self.presentedViewController dismissViewControllerAnimated:YES completion:nil];
                     }
-                    cell.beingEdited = NO;
+                    if (!deleted) {
+                        cell.beingEdited = NO;
+                    }
                 }];
             }
                 break;
