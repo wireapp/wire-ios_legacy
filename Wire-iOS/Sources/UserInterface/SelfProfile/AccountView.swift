@@ -126,7 +126,8 @@ public class BaseAccountView: UIView, AccountViewType {
     init(account: Account, user: ZMUser? = nil) {
         self.account = account
         
-        dotView = DotView(frame: .zero, hasUnreadMessages: account.unreadConversationCount > 0, user: user)
+        dotView = DotView(user: user)
+        dotView.hasUnreadMessages = account.unreadConversationCount > 0
         
         super.init(frame: .zero)
         

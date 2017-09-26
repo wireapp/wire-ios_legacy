@@ -26,7 +26,7 @@ class DotView: UIView {
     private var userObserver: NSObjectProtocol!
     private var clientsObserverTokens: [NSObjectProtocol] = []
     private let user : ZMUser?
-    public var hasUnreadMessages: Bool {
+    public var hasUnreadMessages: Bool = false {
         didSet { self.updateIndicator() }
     }
     
@@ -35,10 +35,9 @@ class DotView: UIView {
         get { return !self.isHidden }
     }
     
-    init(frame: CGRect, hasUnreadMessages: Bool, user: ZMUser? = nil) {
+    init(user: ZMUser? = nil) {
         self.user = user
-        self.hasUnreadMessages = hasUnreadMessages
-        super.init(frame: frame)
+        super.init(frame: .zero)
         self.isHidden = true
         
         circleView.pathGenerator = {
