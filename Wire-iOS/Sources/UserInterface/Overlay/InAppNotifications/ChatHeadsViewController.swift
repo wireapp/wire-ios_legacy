@@ -89,14 +89,16 @@ class ChatHeadsViewController: UIViewController {
             }
         }
         
-        let contentCandidate: NSAttributedString?
+        var contentCandidate: NSAttributedString? = nil
         
         // if it is a message, extract the content for formatting
         if let message = note.message(in: conversation, in: session.managedObjectContext) {
             contentCandidate = ChatHeadTextFormatter.text(for: message, isAccountActive: account.isActive)
-        } else {
-            guard let noteText = ChatHeadTextFormatter.text(for: note) else { return }
-            contentCandidate = noteText
+        }
+        
+        // fallback content
+        if nil == contentCandidate {
+            contentCandidate = ChatHeadTextFormatter.text(for: note)
         }
         
         guard let content = contentCandidate else {
