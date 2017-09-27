@@ -157,7 +157,7 @@ class ChatHeadsViewController: UIViewController {
             return false
         }
         
-        if AppDelegate.shared().notificationWindowController?.voiceChannelController.voiceChannelIsActive ?? false {
+        if AppDelegate.shared().notificationWindowController?.voiceChannelController?.voiceChannelIsActive ?? false {
             return false;
         }
 
