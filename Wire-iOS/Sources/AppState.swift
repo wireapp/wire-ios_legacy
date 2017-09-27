@@ -41,4 +41,5 @@ enum AppState : Equatable {
             return false
         }   
     }
+    
 }

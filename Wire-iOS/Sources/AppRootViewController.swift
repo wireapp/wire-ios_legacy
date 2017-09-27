@@ -128,7 +128,7 @@ class AppRootViewController : UIViewController {
         }
     }
     
-    func enqueueTransition(to appState: AppState) {
+    func enqueueTransition(to appState: AppState, completion: (() -> Void)? = nil) {
         
         transitionQueue.async {
             
@@ -153,6 +153,7 @@ class AppRootViewController : UIViewController {
             DispatchQueue.main.async {
                 self.transition(to: appState, completionHandler: {
                     transitionGroup.leave()
+                    completion?()
                 })
             }
             
@@ -360,10 +361,10 @@ extension AppRootViewController {
 
 extension AppRootViewController : AppStateControllerDelegate {
     
-    func appStateController(transitionedTo appState: AppState) {
-        enqueueTransition(to: appState)
+    func appStateController(transitionedTo appState: AppState, transitionCompleted: @escaping () -> Void) {
+        enqueueTransition(to: appState, completion: transitionCompleted)
     }
-    
+        
 }
 
 // MARK: - RequestToOpenViewsDelegate

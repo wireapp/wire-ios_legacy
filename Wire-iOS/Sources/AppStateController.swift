@@ -24,7 +24,7 @@ private let zmLog = ZMSLog(tag: "AppState")
 
 protocol AppStateControllerDelegate : class {
     
-    func appStateController(transitionedTo appState : AppState)
+    func appStateController(transitionedTo appState : AppState, transitionCompleted: @escaping () -> Void)
     
 }
 
@@ -88,7 +88,7 @@ class AppStateController : NSObject {
         return .headless
     }
     
-    func recalculateAppState() {
+    func updateAppState(completion: (() -> Void)? = nil) {
         let newAppState = calculateAppState()
         
         if newAppState != .unauthenticated(error: nil) {
@@ -98,7 +98,11 @@ class AppStateController : NSObject {
         if newAppState != appState {
             zmLog.debug("transitioning to app state: \(newAppState)")
             appState = newAppState
-            delegate?.appStateController(transitionedTo: appState)
+            delegate?.appStateController(transitionedTo: appState) {
+                completion?()
+            }
+        } else {
+            completion?()
         }
     }
     
@@ -106,26 +110,35 @@ class AppStateController : NSObject {
 
 extension AppStateController : SessionManagerDelegate {
     
-    func sessionManagerDidLogout(error: Error?) {
+    func sessionManagerWillLogout(error: Error?, userSessionCanBeTornDown: @escaping () -> Void) {
         authenticationError = error
         isLoggedIn = false
         isLoggedOut = true
-        recalculateAppState()
+        updateAppState {
+            userSessionCanBeTornDown()
+        }
     }
     
+    func sessionManagerDidFailToLogin(error: Error) {
+        authenticationError = error
+        isLoggedIn = false
+        isLoggedOut = true
+        updateAppState()
+    }
+        
     func sessionManagerDidBlacklistCurrentVersion() {
         isBlacklisted = true
-        recalculateAppState()
+        updateAppState()
     }
     
     func sessionManagerWillStartMigratingLocalStore() {
         isMigrating = true
-        recalculateAppState()
+        updateAppState()
     }
     
     func sessionManagerWillOpenAccount(_ account: Account) {
         loadingAccount = account
-        recalculateAppState()
+        updateAppState()
     }
     
     func sessionManagerCreated(userSession: ZMUserSession) {        
@@ -139,7 +152,7 @@ extension AppStateController : SessionManagerDelegate {
             self?.isLoggedOut = !false
             self?.loadingAccount = nil
             self?.isMigrating = false
-            self?.recalculateAppState()
+            self?.updateAppState()
         }
     }
     
@@ -147,7 +160,7 @@ extension AppStateController : SessionManagerDelegate {
         isLoggedIn = false
         isLoggedOut = true
         loadingAccount = nil
-        recalculateAppState()
+        updateAppState()
     }
     
 }
@@ -156,7 +169,7 @@ extension AppStateController {
     
     func applicationDidBecomeActive() {
         hasEnteredForeground = true
-        recalculateAppState()
+        updateAppState()
     }
     
 }
@@ -167,14 +180,14 @@ extension AppStateController : RegistrationViewControllerDelegate {
         isLoggedIn = true
         isLoggedOut = false
         hasCompletedRegistration = false
-        recalculateAppState()
+        updateAppState()
     }
     
     func registrationViewControllerDidCompleteRegistration() {
         isLoggedIn = true
         isLoggedOut = false
         hasCompletedRegistration = true
-        recalculateAppState()
+        updateAppState()
     }
     
 }
