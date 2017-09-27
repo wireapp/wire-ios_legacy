@@ -28,6 +28,8 @@ public protocol Shareable {
     associatedtype I: ShareDestination
     func share<I>(to: [I])
     func previewView() -> UIView?
+    func height(for previewView: UIView?) -> CGFloat
+    
 }
 
 final public class ShareViewController<D: ShareDestination, S: Shareable>: UIViewController, UITableViewDelegate, UITableViewDataSource, TokenFieldDelegate, UIViewControllerTransitioningDelegate {
@@ -150,7 +152,7 @@ final public class ShareViewController<D: ShareDestination, S: Shareable>: UIVie
         
         self.selectedDestinations.remove(destination)
     }
-    
+     
     public func scrollViewDidScroll(_ scrollView: UIScrollView) {
         self.topSeparatorView.scrollViewDidScroll(scrollView: scrollView)
     }

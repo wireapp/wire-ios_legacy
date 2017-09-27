@@ -76,7 +76,7 @@ public final class LocationMessageCell: ConversationCell {
     
     private func createConstraints() {
         constrain(messageContentView, containerView, authorLabel, mapView, obfuscationView) { contentView, container, authorLabel, mapView, obfuscationView in
-            container.left == authorLabel.left
+            container.left == contentView.leftMargin
             container.right == contentView.rightMargin
             container.top == contentView.top
             container.bottom == contentView.bottom
@@ -210,5 +210,9 @@ public final class LocationMessageCell: ConversationCell {
             self.containerView.alpha = selected ? ConversationCellSelectedOpacity : 1
         }
     }
+    
+    public override func preparePreview() {
+        super.preparePreview()
+        self.containerHeightConstraint.constant = 160
+    }
 }
-

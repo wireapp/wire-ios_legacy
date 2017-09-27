@@ -87,72 +87,41 @@ extension ZMMessage: Shareable {
     public typealias I = ZMConversation
     
     public func previewView() -> UIView? {
-        let cell: ConversationCell
-
+        var cell: ConversationCell
+        
         if isText {
-            let textMessageCell = TextMessageCell(style: .default, reuseIdentifier: "")
-            textMessageCell.smallLinkAttachments = true
-            textMessageCell.contentLayoutMargins = UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8)
-            
-            textMessageCell.messageTextView.backgroundColor = ColorScheme.default().color(withName: ColorSchemeColorBackground)
-            textMessageCell.messageTextView.layer.cornerRadius = 4
-            textMessageCell.messageTextView.layer.masksToBounds = true
-            textMessageCell.messageTextView.textContainerInset = UIEdgeInsets(top: 8, left: 8, bottom: 10, right: 8)
-            textMessageCell.messageTextView.textContainer.lineBreakMode = .byTruncatingTail
-            textMessageCell.messageTextView.textContainer.maximumNumberOfLines = 2
-            cell = textMessageCell
+            cell = TextMessageCell(style: .default, reuseIdentifier: "")
         }
         else if isImage {
-            let imageMessageCell = ImageMessageCell(style: .default, reuseIdentifier: "")
-            imageMessageCell.contentLayoutMargins = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
-            imageMessageCell.autoStretchVertically = false
-            imageMessageCell.defaultLayoutMargins = .zero
-            cell = imageMessageCell
+            cell = ImageMessageCell(style: .default, reuseIdentifier: "")
         }
         else if isVideo {
             cell = VideoMessageCell(style: .default, reuseIdentifier: "")
-            cell.contentLayoutMargins = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         }
         else if isAudio {
             cell = AudioMessageCell(style: .default, reuseIdentifier: "")
-            cell.contentLayoutMargins = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         }
         else if isLocation {
-            let locationCell = LocationMessageCell(style: .default, reuseIdentifier: "")
-            locationCell.contentLayoutMargins = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
-            locationCell.containerHeightConstraint.constant = 120
-            cell = locationCell
+            cell = LocationMessageCell(style: .default, reuseIdentifier: "")
         }
         else if isFile {
             cell = FileTransferCell(style: .default, reuseIdentifier: "")
-            cell.contentLayoutMargins = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         }
         else {
             fatal("Cannot create preview for \(self)")
         }
         
-        let layoutProperties = ConversationCellLayoutProperties()
-        layoutProperties.showSender       = false
-        layoutProperties.showUnreadMarker = false
-        layoutProperties.showBurstTimestamp = false
-        layoutProperties.topPadding       = 0
-        layoutProperties.alwaysShowDeliveryState = false
-        
-        cell.configure(for: self, layoutProperties: layoutProperties)
-        
-        constrain(cell, cell.contentView) { cell, contentView in
-            cell.width >= 320
-            cell.height <= 200
-            contentView.edges == cell.edges
-        }
-
-        cell.toolboxView.removeFromSuperview()
-        cell.likeButton.isHidden = true
-        cell.isUserInteractionEnabled = false
-        cell.setSelected(false, animated: false)
+        cell.preparePreview()
+        cell.prepareLayoutForPreview(message: self)
         
         return cell
     }
+    
+    public func height(for previewView: UIView?) -> CGFloat {
+        guard let previewView = previewView as? PreviewProvider else { return 0.0 }
+        return previewView.getPreviewContentHeight()
+    }
+
 }
 
 extension ZMConversationList {

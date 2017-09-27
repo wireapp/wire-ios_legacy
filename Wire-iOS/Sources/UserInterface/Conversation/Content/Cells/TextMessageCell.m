@@ -33,8 +33,6 @@
 #import "LinkAttachmentViewControllerFactory.h"
 #import "LinkAttachment.h"
 #import "Wire-Swift.h"
-
-
 #import "Analytics+iOS.h"
 
 @import WireLinkPreview;
@@ -51,13 +49,10 @@
 @property (nonatomic) BOOL initialTextCellConstraintsCreated;
 
 @property (nonatomic) UIImageView *editedImageView;
-@property (nonatomic) UIView *linkAttachmentContainer;
 @property (nonatomic) LinkAttachment *linkAttachment;
 @property (nonatomic) UIViewController <LinkAttachmentPresenter> *linkAttachmentViewController;
-
 @property (nonatomic) NSLayoutConstraint *mediaPlayerTopMarginConstraint;
 @property (nonatomic) UIView *linkAttachmentView;
-
 @property (nonatomic) NSLayoutConstraint *textViewHeightConstraint;
 @end
 
@@ -144,9 +139,7 @@
     [self.linkAttachmentContainer autoPinEdgeToSuperviewEdge:ALEdgeTrailing withInset:0];
     self.mediaPlayerTopMarginConstraint = [self.linkAttachmentContainer autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.messageTextView];
     
-    [NSLayoutConstraint autoSetPriority:UILayoutPriorityDefaultHigh forConstraints:^{
-        [self.linkAttachmentContainer autoPinEdgeToSuperviewMargin:ALEdgeBottom];
-    }];
+    [self.linkAttachmentContainer autoPinEdgeToSuperviewMargin:ALEdgeBottom];
     
     [self.editedImageView autoPinEdge:ALEdgeLeft toEdge:ALEdgeRight ofView:self.authorLabel withOffset:8];
     [self.editedImageView autoAlignAxis:ALAxisHorizontal toSameAxisOfView:self.authorLabel];
@@ -222,13 +215,17 @@
     }
 
     if (linkPreview != nil && nil == self.linkAttachmentViewController && !isGiphy) {
-        BOOL showImage = !self.smallLinkAttachments && textMesssageData.hasImageData;
+        BOOL showImage = textMesssageData.hasImageData;
+        
         ArticleView *articleView = [[ArticleView alloc] initWithImagePlaceholder:showImage];
 
         if (self.smallLinkAttachments) {
             articleView.messageLabel.numberOfLines = 1;
             articleView.authorLabel.numberOfLines = 1;
-            [articleView autoSetDimension:ALDimensionHeight toSize:70];
+            
+            if(showImage) {
+                articleView.imageHeight = [UIScreen isCompact] ? 75.0 : 125.0;
+            }
         }
         articleView.translatesAutoresizingMaskIntoConstraints = NO;
         [articleView configureWithTextMessageData:textMesssageData obfuscated:message.isObfuscated];
@@ -455,6 +452,21 @@
 - (void)textViewDidLongPress:(LinkInteractionTextView *)textView
 {
     [self showMenu];
+}
+
+#pragma mark - Preview Provider delegate
+
+-(void)preparePreview
+{
+    [super preparePreview];
+    self.smallLinkAttachments = YES;
+    self.linkAttachmentContainer.layoutMargins = UIEdgeInsetsZero;
+    self.messageTextView.backgroundColor = [UIColor wr_colorFromColorScheme:ColorSchemeColorBackground];
+    self.messageTextView.layer.cornerRadius = 4.0;
+    self.messageTextView.layer.masksToBounds = YES;
+    self.messageTextView.textContainerInset = UIEdgeInsetsMake(8, 8, 10, 8);
+    self.messageTextView.textContainer.lineBreakMode = NSLineBreakByTruncatingTail;
+    self.messageTextView.textContainer.maximumNumberOfLines = 2;
 }
 
 @end

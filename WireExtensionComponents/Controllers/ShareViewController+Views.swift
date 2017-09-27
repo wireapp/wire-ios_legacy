@@ -96,18 +96,21 @@ extension ShareViewController {
         }
         
         if self.showPreview {
-            let screenHeightCompact = (UIScreen.main.bounds.height <= 568)
-
+            
+            let height = self.shareable.height(for: self.shareablePreviewView!)
+            
             constrain(self.containerView, self.shareablePreviewWrapper!, self.shareablePreviewView!, self.tokenField) { view, shareablePreviewWrapper, shareablePreviewView, tokenField in
                 
                 shareablePreviewWrapper.top == view.top + 28
                 shareablePreviewWrapper.left == view.left + 16
                 shareablePreviewWrapper.right == -16 + view.right
-                shareablePreviewWrapper.height <= (screenHeightCompact ? 150 : 200)
                 
+                shareablePreviewView.height == height
+                shareablePreviewWrapper.height == height
                 shareablePreviewView.edges == shareablePreviewWrapper.edges
                 
                 tokenField.top == shareablePreviewWrapper.bottom + 16
+                
             }
         }
         else {

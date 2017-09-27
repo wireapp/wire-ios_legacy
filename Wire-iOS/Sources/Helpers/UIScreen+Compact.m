@@ -16,30 +16,13 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-import Foundation
+#import "UIScreen+Compact.h"
 
-enum AppState : Equatable {
-    
-    case headless
-    case authenticated(completedRegistration: Bool)
-    case unauthenticated(error : Error?)
-    case blacklisted
-    case migrating
-    case loading(account: Account, from: Account?)
+@implementation UIScreen (Compact)
 
-    public static func ==(lhs: AppState, rhs: AppState) -> Bool {
-        
-        switch (lhs, rhs) {
-        case (.headless, .headless),
-             (.authenticated, .authenticated),
-             (.unauthenticated, .unauthenticated),
-             (.blacklisted, .blacklisted),
-             (.migrating, .migrating),
-             (.loading, .loading):
-            return true
-        default:
-            return false
-        }   
-    }
-    
++(BOOL)isCompact
+{
+    return [UIScreen mainScreen].bounds.size.height <= 568;
 }
+
+@end

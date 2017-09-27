@@ -32,6 +32,7 @@
 #import "Analytics+iOS.h"
 #import "UIResponder+FirstResponder.h"
 #import "UserImageView+Magic.h"
+#import "UIScreen+Compact.h"
 
 const CGFloat ConversationCellSelectedOpacity = 0.4;
 const NSTimeInterval ConversationCellSelectionAnimationDuration = 0.33;
@@ -92,6 +93,10 @@ static const CGFloat BurstContainerExpandedHeight = 40;
 @end
 
 @interface ConversationCell (MessageToolboxViewDelegate) <MessageToolboxViewDelegate>
+
+@end
+
+@interface ConversationCell (PreviewProvider) <PreviewProvider>
 
 @end
 
@@ -316,6 +321,8 @@ static const CGFloat BurstContainerExpandedHeight = 40;
     if (!self.countdownContainerViewHidden) {
         self.countdownContainerView.layer.cornerRadius = CGRectGetWidth(self.countdownContainerView.bounds) / 2;
     }
+    
+    [self.contentView layoutIfNeeded];
 }
 
 - (void)updateConstraintConstants
@@ -647,6 +654,18 @@ static const CGFloat BurstContainerExpandedHeight = 40;
     if ([self.delegate respondsToSelector:@selector(conversationCell:userTapped:inView:)]) {
         [self.delegate conversationCell:self userTapped:BareUserToUser(userImageView.user) inView:userImageView];
     }
+}
+
+#pragma mark - Preview Provider delegate
+
+-(void)preparePreview
+{
+    self.contentLayoutMargins = UIEdgeInsetsZero;
+}
+
+-(CGFloat)getPreviewContentHeight
+{
+    return [CellSizesProvider compressedSizeForView: self.messageContentView];
 }
 
 #pragma mark - Message observation
