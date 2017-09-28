@@ -49,7 +49,7 @@
 
 #import "AnalyticsTracker+Registration.h"
 
-@interface RegistrationViewController (PostLoginAuthenticationObserver) <PostLoginAuthenticationObserver>
+@interface RegistrationViewController (UserSessionObserver) <SessionManagerObserver, PostLoginAuthenticationObserver>
 @end
 
 @interface RegistrationViewController () <UINavigationControllerDelegate, FormStepDelegate, ZMInitialSyncCompletionObserver>
@@ -68,6 +68,7 @@
 @property (nonatomic) NSArray<UserClient *>* userClients;
 @property (nonatomic) id initialSyncObserverToken;
 @property (nonatomic) id postLoginToken;
+@property (nonatomic) id sessionCreationObserverToken;
 
 @end
 
@@ -87,6 +88,7 @@
     self.unregisteredUser = [ZMIncompleteRegistrationUser new];
     self.unregisteredUser.accentColorValue = [UIColor indexedAccentColor];
     self.postLoginToken = [PostLoginAuthenticationNotification addObserver:self];
+    self.sessionCreationObserverToken = [[SessionManager shared] addSessionManagerObserver:self];
     
     [self setupBackgroundViewController];
     [self setupNavigationController];
@@ -295,7 +297,11 @@
 
 #pragma mark - Session observer
 
-@implementation RegistrationViewController (PostLoginAuthenticationObserver)
+@implementation RegistrationViewController (UserSessionObserver)
+
+- (void)sessionManagerCreatedWithUserSession:(ZMUserSession *)userSession {
+    self.initialSyncObserverToken = [ZMUserSession addInitialSyncCompletionObserver:self userSession:[ZMUserSession sharedSession]];
+}
 
 - (void)clientRegistrationDidSucceedWithAccountId:(NSUUID * _Nonnull)accountId
 {
