@@ -120,6 +120,7 @@ extension AppStateController : SessionManagerDelegate {
     }
     
     func sessionManagerDidFailToLogin(error: Error) {
+        loadingAccount = nil
         authenticationError = error
         isLoggedIn = false
         isLoggedOut = true
