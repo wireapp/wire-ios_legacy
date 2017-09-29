@@ -22,7 +22,7 @@ fileprivate let zmLog = ZMSLog(tag: "calling")
 
 class ActiveVoiceChannelViewController : UIViewController {
     
-    var callStateObserverToken : WireCallCenterObserverToken?
+    var callStateObserverToken : Any?
     
     var visibleVoiceChannelViewController : VoiceChannelViewController? {
         didSet {
@@ -37,7 +37,12 @@ class ActiveVoiceChannelViewController : UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        callStateObserverToken = WireCallCenterV3.addCallStateObserver(observer: self)
+        guard let userSession = ZMUserSession.shared() else {
+            zmLog.error("UserSession not available when initializing \(type(of: self))")
+            return
+        }
+        
+        callStateObserverToken = WireCallCenterV3.addCallStateObserver(observer: self, context: userSession.managedObjectContext) // TODO jacob: don't access NSManagedObjectContext
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -118,7 +123,7 @@ class ActiveVoiceChannelViewController : UIViewController {
     }
     
     var primaryCallingConversation : ZMConversation? {
-        guard let userSession = ZMUserSession.shared(), let callCenter = WireCallCenterV3.activeInstance else { return nil }
+        guard let userSession = ZMUserSession.shared(), let callCenter = userSession.callCenter else { return nil }
         
         let conversationsWithIncomingCall = callCenter.nonIdleCallConversations(in: userSession).filter({ conversation -> Bool in
             guard let callState = conversation.voiceChannel?.state else { return false }
@@ -140,7 +145,7 @@ class ActiveVoiceChannelViewController : UIViewController {
     
     
     var ongoingCallConversation : ZMConversation? {
-        guard let userSession = ZMUserSession.shared(), let callCenter = WireCallCenterV3.activeInstance else { return nil }
+        guard let userSession = ZMUserSession.shared(), let callCenter = userSession.callCenter else { return nil }
         
         return callCenter.nonIdleCallConversations(in: userSession).first { (conversation) -> Bool in
             guard let callState = conversation.voiceChannel?.state else { return false }

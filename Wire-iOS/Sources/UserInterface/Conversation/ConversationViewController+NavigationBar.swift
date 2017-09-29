@@ -33,7 +33,7 @@ public extension ZMConversationList {
 
 public extension ConversationViewController {
     
-    func addCallStateObserver() -> WireCallCenterObserverToken? {
+    func addCallStateObserver() -> Any? {
         return conversation.voiceChannel?.addCallStateObserver(self)
     }
     

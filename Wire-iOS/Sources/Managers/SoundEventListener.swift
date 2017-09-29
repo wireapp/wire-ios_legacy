@@ -18,6 +18,8 @@
 
 import Foundation
 
+fileprivate let zmLog = ZMSLog(tag: "Sounds")
+
 class SoundEventListener : NSObject {
     
     static let SoundEventListenerIgnoreTimeForPushStart = 2.0
@@ -27,21 +29,25 @@ class SoundEventListener : NSObject {
     
     var unreadMessageObserverToken : NSObjectProtocol?
     var unreadKnockMessageObserverToken : NSObjectProtocol?
-    var callStateObserverToken : WireCallCenterObserverToken?
+    var callStateObserverToken : Any?
+    var initialSyncObserverToken : Any?
     
     deinit {
-        ZMUserSession.removeInitalSyncCompletionObserver(self)
         NotificationCenter.default.removeObserver(self)
     }
     
     override init() {
         super.init()
         
-        ZMUserSession.addInitalSyncCompletionObserver(self)
+        guard let userSession = ZMUserSession.shared() else {
+            zmLog.error("UserSession not available when initializing \(type(of: self))")
+            return
+        }
         
-        callStateObserverToken = WireCallCenterV3.addCallStateObserver(observer: self)
-        unreadMessageObserverToken = NewUnreadMessagesChangeInfo.add(observer: self)
-        unreadKnockMessageObserverToken = NewUnreadKnockMessagesChangeInfo.add(observer: self)
+        initialSyncObserverToken = userSession.addInitialSyncCompletionObserver(self)
+        callStateObserverToken = WireCallCenterV3.addCallStateObserver(observer: self, context: userSession.managedObjectContext) // TODO jacob: don't access NSManagedObjectContext
+        unreadMessageObserverToken = NewUnreadMessagesChangeInfo.add(observer: self, for: userSession)
+        unreadKnockMessageObserverToken = NewUnreadKnockMessagesChangeInfo.add(observer: self, for: userSession)
         NotificationCenter.default.addObserver(self, selector: #selector(applicationWillEnterForeground), name: NSNotification.Name.UIApplicationWillEnterForeground, object: nil)
         
         soundEventWatchDog.startIgnoreDate = Date()
@@ -127,13 +133,13 @@ extension SoundEventListener : WireCallCenterCallStateObserver {
     func callCenterDidChange(callState: CallState, conversationId: UUID, userId: UUID?, timeStamp: Date?) {
         
         guard let mediaManager = AVSProvider.shared.mediaManager,
-              let callCenter = WireCallCenterV3.activeInstance,
               let userSession = ZMUserSession.shared(),
+              let callCenter = userSession.callCenter,
               let conversation = ZMConversation(remoteID: conversationId, createIfNeeded: false, in: userSession.managedObjectContext)
         else {
             return
         }
-        
+
         let previousCallState = previousCallStates[conversationId] ?? .none
         previousCallStates[conversationId] = callState
         
@@ -147,7 +153,7 @@ extension SoundEventListener : WireCallCenterCallStateObserver {
         case .established:
             mediaManager.playSound(MediaManagerSoundUserJoinsVoiceChannelSound)
         case .incoming(video: _, shouldRing: true, degraded: _):
-            guard !ZMUserSession.useCallKit && !conversation.isSilenced else { return }
+            guard userSession.callNotificationStyle != .callKit && !conversation.isSilenced else { return }
             
             let otherNonIdleCalls = callCenter.nonIdleCalls.filter({ (key: UUID, callState: CallState) -> Bool in
                 return key != conversationId
@@ -206,8 +212,8 @@ extension SoundEventListener {
 
 extension SoundEventListener : ZMInitialSyncCompletionObserver {
     
-    func initialSyncCompleted(_ notification: Notification!) {
+    func initialSyncCompleted() {
         soundEventWatchDog.isMuted = false
     }
-    
+        
 }

@@ -23,8 +23,8 @@ class VoiceChannelParticipantsController : NSObject {
     let conversation : ZMConversation
     let collectionView : UICollectionView
     
-    var voiceGainObserverToken : WireCallCenterObserverToken?
-    var participantObserverToken : WireCallCenterObserverToken?
+    var voiceGainObserverToken : Any?
+    var participantObserverToken : Any?
     
     init(conversation : ZMConversation, collectionView: UICollectionView) {
         self.conversation = conversation

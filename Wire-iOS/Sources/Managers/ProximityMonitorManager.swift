@@ -18,9 +18,11 @@
 
 import Foundation
 
+fileprivate let zmLog = ZMSLog(tag: "calling")
+
 class ProximityMonitorManager : NSObject {
     
-    var callStateObserverToken : WireCallCenterObserverToken?
+    var callStateObserverToken : Any?
     
     deinit {
         AVSMediaManagerClientChangeNotification.remove(self)
@@ -29,7 +31,13 @@ class ProximityMonitorManager : NSObject {
     override init() {
         super.init()
         
-        callStateObserverToken = WireCallCenterV3.addCallStateObserver(observer: self)
+        
+        guard let userSession = ZMUserSession.shared() else {
+            zmLog.error("UserSession not available when initializing \(type(of: self))")
+            return
+        }
+        
+        callStateObserverToken = WireCallCenterV3.addCallStateObserver(observer: self, context: userSession.managedObjectContext) // TODO jacob: don't access NSManagedObjectContext
         AVSMediaManagerClientChangeNotification.add(self)
         
         updateProximityMonitorState()
@@ -37,9 +45,9 @@ class ProximityMonitorManager : NSObject {
     
     func updateProximityMonitorState() {
         // Only do proximity monitoring on phones
-        guard UIDevice.current.userInterfaceIdiom == .phone else { return }
+        guard UIDevice.current.userInterfaceIdiom == .phone, let callCenter = ZMUserSession.shared()?.callCenter else { return }
         
-        let ongoingCalls = WireCallCenterV3.activeInstance?.nonIdleCalls.filter({ (key: UUID, callState: CallState) -> Bool in
+        let ongoingCalls = callCenter.nonIdleCalls.filter({ (key: UUID, callState: CallState) -> Bool in
             switch callState {
             case .established, .establishedDataChannel, .answered(degraded: false), .outgoing(degraded: false):
                 return true
@@ -48,7 +56,7 @@ class ProximityMonitorManager : NSObject {
             }
         })
         
-        let hasOngoingCall = (ongoingCalls?.count ?? 0) > 0
+        let hasOngoingCall = ongoingCalls.count > 0
         let speakerIsEnabled = AVSProvider.shared.mediaManager?.isSpeakerEnabled ?? false
         
         UIDevice.current.isProximityMonitoringEnabled = !speakerIsEnabled && hasOngoingCall

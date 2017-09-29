@@ -1,9 +1,19 @@
 //
-//  ZMConversation+Calling.swift
-//  Wire-iOS
+// Wire
+// Copyright (C) 2017 Wire Swiss GmbH
 //
-//  Created by Jacob on 15.09.17.
-//  Copyright © 2017 Zeta Project Germany GmbH. All rights reserved.
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
 import Foundation
@@ -75,12 +85,11 @@ extension ZMConversation {
             completionHandler?(joined)
         }
     }
-
     
     func leaveOtherActiveCalls(completionHandler: (() -> Void)?) -> Void {
-        guard let userSession = ZMUserSession.shared() else { completionHandler?(); return }
+        guard let userSession = ZMUserSession.shared(), let callCenter = userSession.callCenter else { completionHandler?(); return }
         
-        WireCallCenterV3.activeInstance?.nonIdleCallConversations(in: userSession).forEach({ (conversation) in
+        callCenter.nonIdleCallConversations(in: userSession).forEach({ (conversation) in
             if conversation != self {
                 conversation.voiceChannel?.leave(userSession: userSession)
             }

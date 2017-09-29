@@ -18,6 +18,8 @@
 
 import Foundation
 
+fileprivate let zmLog = ZMSLog(tag: "calling")
+
 struct CallInfo {
     var answeredDate : Date?
     var establishedDate : Date?
@@ -28,14 +30,19 @@ class AnalyticsVoiceChannelTracker : NSObject {
     
     let analytics : Analytics
     var callInfos : [UUID : CallInfo] = [:]
-    var callStateObserverToken : WireCallCenterObserverToken?
+    var callStateObserverToken : Any?
     
     init(analytics : Analytics) {
         self.analytics = analytics
         
         super.init()
         
-        self.callStateObserverToken = WireCallCenterV3.addCallStateObserver(observer: self)
+        guard let userSession = ZMUserSession.shared() else {
+            zmLog.error("UserSession not available when initializing \(type(of: self))")
+            return
+        }
+        
+        self.callStateObserverToken = WireCallCenterV3.addCallStateObserver(observer: self, context: userSession.managedObjectContext) // TODO jacob: don't access NSManagedObjectContext
     }
 }
 
