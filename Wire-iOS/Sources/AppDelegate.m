@@ -230,7 +230,7 @@ static AppDelegate *sharedAppDelegate = nil;
 - (BOOL)application:(UIApplication *)application continueUserActivity:(NSUserActivity *)userActivity restorationHandler:(void (^)(NSArray * _Nullable))restorationHandler
 {
     DDLogInfo(@"application:continueUserActivity:restorationHandler: %@", userActivity);
-    return [self.zetaUserSession application:application continueUserActivity:userActivity restorationHandler:restorationHandler];
+    return [[[SessionManager shared] activeUserSession] application:application continueUserActivity:userActivity restorationHandler:restorationHandler];
 }
 
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
@@ -267,11 +267,6 @@ static AppDelegate *sharedAppDelegate = nil;
 }
 
 #pragma mark - AppController
-
-- (ZMUserSession *)zetaUserSession
-{
-    return [[SessionManager shared] userSession];
-}
 
 - (UnauthenticatedSession *)unauthenticatedSession
 {
@@ -331,7 +326,7 @@ static AppDelegate *sharedAppDelegate = nil;
     DDLogWarn(@"Received APNS token: %@", newDeviceToken);
     
     [self.rootViewController performWhenAuthenticated:^{
-        [[ZMUserSession sharedSession] application:application didRegisterForRemoteNotificationsWithDeviceToken:newDeviceToken];
+        [[SessionManager shared] didRegisteredForRemoteNotificationsWith:newDeviceToken];
     }];
 }
 
@@ -360,7 +355,7 @@ static AppDelegate *sharedAppDelegate = nil;
         self.trackedResumeEvent = YES;
     }
     [self.rootViewController performWhenAuthenticated:^{
-        [[ZMUserSession sharedSession] application:application didReceiveRemoteNotification:userInfo fetchCompletionHandler:completionHandler];
+        [[SessionManager shared] didReceiveRemoteNotification:userInfo fetchCompletionHandler:completionHandler];
     }];
     
     self.launchType = (application.applicationState == UIApplicationStateInactive || application.applicationState == UIApplicationStateBackground) ? ApplicationLaunchPush: ApplicationLaunchDirect;
@@ -371,27 +366,42 @@ static AppDelegate *sharedAppDelegate = nil;
     DDLogInfo(@"application:didReceiveLocalNotification: %@", notification);
     
     [self.rootViewController performWhenAuthenticated:^{
-        [[ZMUserSession sharedSession] application:application didReceiveLocalNotification:notification];
+        [[SessionManager shared] didReceiveLocalNotification:notification application:application];
     }];
     
     self.launchType = (application.applicationState == UIApplicationStateInactive || application.applicationState == UIApplicationStateBackground) ? ApplicationLaunchPush: ApplicationLaunchDirect;
 }
 
-- (void)application:(UIApplication *)application handleActionWithIdentifier:(NSString *)identifier forLocalNotification:(UILocalNotification *)notification completionHandler:(void (^)())completionHandler
+- (void)application:(UIApplication *)application
+handleActionWithIdentifier:(NSString *)identifier
+forLocalNotification:(UILocalNotification *)notification
+  completionHandler:(void (^)())completionHandler
 {
     DDLogInfo(@"application:handleActionWithIdentifier:forLocalNotification: identifier: %@, notification: %@", identifier, notification);
     
     [self.rootViewController performWhenAuthenticated:^{
-        [[ZMUserSession sharedSession] application:application handleActionWithIdentifier:identifier forLocalNotification:notification responseInfo:nil completionHandler:completionHandler];
+        [[SessionManager shared] handleActionWithIdentifier:identifier
+                                       forLocalNotification:notification
+                                           withResponseInfo:[NSDictionary dictionary]
+                                          completionHandler:completionHandler
+                                                application:application];
     }];
 }
 
-- (void)application:(UIApplication *)application handleActionWithIdentifier:(NSString *)identifier forLocalNotification:(UILocalNotification *)notification withResponseInfo:(NSDictionary *)responseInfo completionHandler:(void(^)())completionHandler;
+- (void)application:(UIApplication *)application
+handleActionWithIdentifier:(NSString *)identifier
+forLocalNotification:(UILocalNotification *)notification
+   withResponseInfo:(NSDictionary *)responseInfo
+  completionHandler:(void(^)())completionHandler;
 {
     DDLogInfo(@"application:handleActionWithIdentifier:forLocalNotification: identifier: %@, notification: %@ responseInfo: %@", identifier, notification, responseInfo);
     
     [self.rootViewController performWhenAuthenticated:^{
-        [[ZMUserSession sharedSession] application:application handleActionWithIdentifier:identifier forLocalNotification:notification responseInfo:responseInfo completionHandler:completionHandler];
+        [[SessionManager shared] handleActionWithIdentifier:identifier
+                                       forLocalNotification:notification
+                                           withResponseInfo:responseInfo
+                                          completionHandler:completionHandler
+                                                application:application];
     }];
 }
 

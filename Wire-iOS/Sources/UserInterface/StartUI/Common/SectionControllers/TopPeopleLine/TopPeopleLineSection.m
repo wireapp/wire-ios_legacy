@@ -35,7 +35,7 @@ NSString *const StartUICollectionViewCellReuseIdentifier = @"StartUICollectionVi
 
 @property (nonatomic) UICollectionView *innerCollectionView;
 @property (nonatomic) TopPeopleLineCollectionViewController *innerCollectionViewController;
-@property (nonatomic) TopConversationsDirectoryObserverToken *observerToken;
+@property (nonatomic) id observerToken;
 
 @end
 
@@ -128,9 +128,7 @@ NSString *const StartUICollectionViewCellReuseIdentifier = @"StartUICollectionVi
 
 - (void)removeTopConversationObserverIfNeeded
 {
-    if (nil != self.observerToken) {
-        [self.topConversationDirectory removeObserver:self.observerToken];
-    }
+    self.observerToken = nil;
 }
 
 - (void)setTopConversationDirectory:(TopConversationsDirectory *)topConversationDirectory

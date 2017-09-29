@@ -317,7 +317,10 @@ static NSString *const ConversationUnknownMessageCellId     = @"conversationUnkn
     conversationCell.delegate = self.conversationCellDelegate;
     conversationCell.analyticsTracker = self.analyticsTracker;
     
-    [self configureConversationCell:conversationCell withMessage:message];
+    // Configuration of the cell is not possible when `ZMUserSession` is not available. 
+    if (nil != [ZMUserSession sharedSession]) {
+        [self configureConversationCell:conversationCell withMessage:message];
+    }
     
     return cell;
 }

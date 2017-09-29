@@ -57,6 +57,7 @@ static const NSTimeInterval OverscrollRatio = 2.5;
 @property (nonatomic) AnimatedListMenuView *menuDotsView;
 @property (nonatomic) NSDate *overscrollStartDate;
 
+@property (nonatomic) id typingObserverToken;
 @end
 
 @interface ConversationListCell (Typing) <ZMTypingChangeObserver>
@@ -69,7 +70,6 @@ static const NSTimeInterval OverscrollRatio = 2.5;
     if (![[Settings sharedSettings] disableAVS]) {
         [AVSMediaManagerClientChangeNotification removeObserver:self];
     }
-    [ZMConversation removeTypingObserver:self];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
@@ -171,9 +171,9 @@ static const NSTimeInterval OverscrollRatio = 2.5;
 - (void)setConversation:(ZMConversation *)conversation
 {
     if (_conversation != conversation) {
-        [ZMConversation removeTypingObserver:self];
+        self.typingObserverToken = nil;
         _conversation = conversation;
-        [_conversation addTypingObserver:self];
+        self.typingObserverToken = [_conversation addTypingObserver:self];
         
         [self updateAppearance];
     }
@@ -285,7 +285,7 @@ static CGSize cachedSize = {0, 0};
 
 @implementation ConversationListCell (Typing)
 
-- (void)typingDidChange:(ZMTypingChangeNotification *)note
+- (void)typingDidChangeWithConversation:(ZMConversation *)conversation typingUsers:(NSSet<ZMUser *> *)typingUsers
 {
     [self updateAppearance];
 }

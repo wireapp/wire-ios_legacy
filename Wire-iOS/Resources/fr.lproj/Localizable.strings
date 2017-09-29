@@ -84,7 +84,7 @@
 
 // Conversation List Indicator
 "conversation_list.right_accessory.join_button.title" = "Rejoindre";
-"conversation_list.header.self_team.accessibility_value" = "Compte %@.";
+"conversation_list.header.self_team.accessibility_value" = "Compte de %@.";
 "conversation_list.header.self_team.accessibility_value.inactive" = "Appuyez pour activer.";
 "conversation_list.header.self_team.accessibility_value.active" = "Actif.";
 "conversation_list.header.self_team.accessibility_value.has_new_messages" = "Nouveaux messages.";
@@ -663,7 +663,10 @@
 
 "self.settings.callkit.title" = "Appels";
 "self.settings.callkit.caption" = "Partager avec iOS";
-"self.settings.callkit.description" = "Affiche les appels Wire sur l'écran de verrouillage et dans le journal des appels iOS. Si iCloud est activé, le journal des appels est partagé avec Apple. Redémarrez Wire pour que ce paramètre s'applique.";
+"self.settings.callkit.description" = "Affiche les appels Wire sur l'écran de verrouillage et dans le journal des appels iOS. Si iCloud est activé, le journal des appels est partagé avec Apple.";
+
+"self.settings.cbr.not_available" = "Encodage en échantillonnage constant";
+"self.settings.cbr.not_available.description" = "Les appels en échantillonnage constant ont été désactivés temporairement avec l'ajout de la prise en charge de plusieurs comptes. Ils reviendront bientôt.";
 
 "self.settings.vbr.title" = "Échantillonnage variable (VBR)";
 "self.settings.vbr.description" = "Les appels audio utiliseront moins de données et fonctionneront mieux sur des réseaux plus lents. Désactiver pour utiliser un échantillonnage constant (CBR).";
@@ -719,7 +722,7 @@
 "self.settings.privacy_security.lock_cancelled.description" = "Veuillez déverrouiller Wire avec Touch ID ou le code";
 "self.settings.privacy_security.lock_cancelled.action" = "Déverrouiller";
 
-"self.settings.privacy_security.disable_link_previews.title" = "Créer un aperçu pour les liens";
+"self.settings.privacy_security.disable_link_previews.title" = "Créer un aperçu des liens";
 "self.settings.privacy_security.disable_link_previews.footer" = "Les aperçus pourront toujours s'afficher pour les liens d'autres personnes.";
 
 "self.settings.privacy_analytics_menu.devices.title" = "Appareils";

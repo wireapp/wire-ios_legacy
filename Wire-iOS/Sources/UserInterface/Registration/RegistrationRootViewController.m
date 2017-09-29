@@ -123,7 +123,7 @@
 - (void)cancelAddAccount
 {
     SessionManager *sessionManager = SessionManager.shared;
-    [sessionManager select:sessionManager.accountManager.selectedAccount];
+    [sessionManager select:sessionManager.accountManager.selectedAccount completion:nil tearDownCompletion:nil];
 }
 
 #pragma mark - FormStepDelegate

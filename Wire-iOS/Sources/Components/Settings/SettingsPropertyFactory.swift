@@ -65,6 +65,7 @@ protocol CrashlogManager {
 
 extension BITHockeyManager: CrashlogManager {}
 
+
 class SettingsPropertyFactory {
     let userDefaults: UserDefaults
     var analytics: AnalyticsInterface?
@@ -85,7 +86,6 @@ class SettingsPropertyFactory {
         SettingsPropertyName.disableHockey              : UserDefaultDisableHockey,
         SettingsPropertyName.disableAnalytics           : UserDefaultDisableAnalytics,
         SettingsPropertyName.disableSendButton          : UserDefaultSendButtonDisabled,
-        SettingsPropertyName.disableCallKit             : UserDefaultDisableCallKit,
         SettingsPropertyName.mapsOpeningOption          : UserDefaultMapsOpeningRawValue,
         SettingsPropertyName.browserOpeningOption       : UserDefaultBrowserOpeningRawValue,
         SettingsPropertyName.tweetOpeningOption         : UserDefaultTwitterOpeningRawValue,
@@ -117,10 +117,10 @@ class SettingsPropertyFactory {
                 case .string(let stringValue):
                     var inOutString: NSString? = stringValue as NSString
                     try type(of: self.selfUser).validateName(&inOutString)
-                    
-                    self.userSession?.enqueueChanges({
-                        self.selfUser.name = stringValue
-                    })
+                    let selfUser = self.selfUser
+                    self.userSession?.enqueueChanges {
+                        selfUser.name = stringValue
+                    }
                 default:
                     throw SettingsPropertyError.WrongValue("Incorrect type \(value) for key \(propertyName)")
                 }
@@ -247,18 +247,12 @@ class SettingsPropertyFactory {
             return SettingsBlockProperty(
                 propertyName: propertyName,
                 getAction: { _ in
-                    guard let data = ZMKeychain.data(forAccount: SettingsPropertyName.lockApp.rawValue),
-                            data.count != 0 else {
-                        return SettingsPropertyValue(false)
-                    }
-                    
-                    return SettingsPropertyValue(String(data: data, encoding: .utf8) == "YES")
+                    return SettingsPropertyValue(AppLock.isActive)
             },
                 setAction: { _, value in
                     switch value {
                     case .number(value: let lockApp):
-                        let data = (lockApp.boolValue ? "YES" : "NO").data(using: .utf8)!
-                        ZMKeychain.setData(data, forAccount: SettingsPropertyName.lockApp.rawValue)
+                        AppLock.isActive = lockApp.boolValue
                     default: throw SettingsPropertyError.WrongValue("Incorrect type \(value) for key \(propertyName)")
                     }
             })
@@ -266,28 +260,12 @@ class SettingsPropertyFactory {
             return SettingsBlockProperty(
                 propertyName: propertyName,
                 getAction: { _ in
-                    guard let data = ZMKeychain.data(forAccount: SettingsPropertyName.lockAppLastDate.rawValue),
-                        data.count != 0 else {
-                            return SettingsPropertyValue(0)
-                    }
-                    
-                    let intBits = data.withUnsafeBytes({(bytePointer: UnsafePointer<UInt8>) -> UInt32 in
-                        bytePointer.withMemoryRebound(to: UInt32.self, capacity: 4) { pointer in
-                            return pointer.pointee
-                        }
-                    })
-                    
-                    return SettingsPropertyValue(UInt32(littleEndian: intBits))
+                    return SettingsPropertyValue(AppLock.lastUnlockDateAsInt)
             },
                 setAction: { _, value in
                     switch value {
                     case .number(value: let lockAppLastDate):
-                        var value: UInt32 = lockAppLastDate.uint32Value
-                        let data = withUnsafePointer(to: &value) {
-                            Data(bytes: UnsafePointer($0), count: MemoryLayout.size(ofValue: lockAppLastDate))
-                        }
-                        
-                        ZMKeychain.setData(data, forAccount: SettingsPropertyName.lockAppLastDate.rawValue)
+                        AppLock.lastUnlockDateAsInt = lockAppLastDate.uint32Value
                     default: throw SettingsPropertyError.WrongValue("Incorrect type \(value) for key \(propertyName)")
                     }
             })
@@ -312,6 +290,15 @@ class SettingsPropertyFactory {
                         Settings.shared().disableLinkPreviews = number.boolValue
                     default:
                         throw SettingsPropertyError.WrongValue("Incorrect type \(value) for key \(propertyName)")
+                    }
+            })
+        case .disableCallKit:
+            return SettingsBlockProperty(
+                propertyName: propertyName,
+                getAction: { _ in return SettingsPropertyValue(Settings.shared().disableCallKit) },
+                setAction: { _, value in
+                    if case .number(let disabled) = value {
+                        Settings.shared().disableCallKit = disabled.boolValue
                     }
             })
             

@@ -59,51 +59,6 @@ class ShapeView: LayerHostView<CAShapeLayer> {
     }
 }
 
-class DotView: UIView {
-    fileprivate let circleView = ShapeView()
-    fileprivate let centerView = ShapeView()
-    private var userObserver: NSObjectProtocol!
-    
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        circleView.pathGenerator = {
-            return UIBezierPath(ovalIn: CGRect(origin: .zero, size: $0))
-        }
-        circleView.hostedLayer.lineWidth = 0
-        circleView.hostedLayer.fillColor = UIColor.white.cgColor
-        
-        centerView.pathGenerator = {
-            return UIBezierPath(ovalIn: CGRect(origin: .zero, size: $0))
-        }
-        centerView.hostedLayer.fillColor = UIColor.accent().cgColor
-        
-        addSubview(circleView)
-        addSubview(centerView)
-        constrain(self, circleView, centerView) { selfView, backingView, centerView in
-            backingView.edges == selfView.edges
-            centerView.edges == inset(selfView.edges, 1, 1, 1, 1)
-        }
-        
-        if let selfUser = ZMUser.selfUser() {
-            userObserver = UserChangeInfo.add(observer: self, forBareUser: selfUser)
-        }
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-}
-
-extension DotView: ZMUserObserver {
-    func userDidChange(_ changeInfo: UserChangeInfo) {
-        guard changeInfo.accentColorValueChanged && changeInfo.user.isSelfUser else {
-            return
-        }
-        
-        centerView.hostedLayer.fillColor = UIColor.accent().cgColor
-    }
-}
-
 public protocol AccountViewType {
     var collapsed: Bool { get set }
     var hasUnreadMessages: Bool { get }
@@ -113,8 +68,9 @@ public protocol AccountViewType {
 }
 
 public final class AccountViewFactory {
-    public static func viewFor(account: Account) -> BaseAccountView {
-        return account.teamName == nil ? PersonalAccountView(account: account) : TeamAccountView(account: account)
+    public static func viewFor(account: Account, user: ZMUser? = nil) -> BaseAccountView {
+        return account.teamName == nil ? PersonalAccountView(account: account, user: user)
+            : TeamAccountView(account: account, user: user)
     }
 }
 
@@ -123,8 +79,10 @@ public class BaseAccountView: UIView, AccountViewType {
     
     internal let imageViewContainer = UIView()
     fileprivate let outlineView = UIView()
-    fileprivate let dotView = DotView()
+    fileprivate let dotView : DotView
     fileprivate let selectionView = ShapeView()
+    fileprivate var unreadCountToken : Any?
+    public let account: Account
     
     private var selfUserObserver: NSObjectProtocol!
 
@@ -140,16 +98,21 @@ public class BaseAccountView: UIView, AccountViewType {
         }
     }
     
+    public var invertUnreadMessagesCount = false
+    
     public var hasUnreadMessages: Bool {
-        return false
+        if invertUnreadMessagesCount{
+            return ((SessionManager.shared?.accountManager.totalUnreadCount ?? 0) - account.unreadConversationCount) > 0
+        } else {
+            return account.unreadConversationCount > 0
+        }
     }
     
-    public let account: Account
     
     func updateAppearance() {
-        selectionView.isHidden = !selected || collapsed
-        dotView.isHidden = selected || !hasUnreadMessages || collapsed
         
+        selectionView.isHidden = !selected || collapsed
+        dotView.hasUnreadMessages = hasUnreadMessages
         selectionView.hostedLayer.strokeColor = UIColor.accent().cgColor
     }
     
@@ -160,12 +123,16 @@ public class BaseAccountView: UIView, AccountViewType {
                 (self.hasUnreadMessages ? (" " + "conversation_list.header.self_team.accessibility_value.has_new_messages".localized) : "")
     }
     
-    init(account: Account) {
+    init(account: Account, user: ZMUser? = nil) {
         self.account = account
+        
+        dotView = DotView(user: user)
+        dotView.hasUnreadMessages = account.unreadConversationCount > 0
+        
         super.init(frame: .zero)
         
-        if let userSession = SessionManager.shared?.userSession {
-            selfUserObserver = UserChangeInfo.add(observer: self, forBareUser: ZMUser.selfUser(inUserSession: userSession))
+        if let userSession = SessionManager.shared?.activeUserSession {
+            selfUserObserver = UserChangeInfo.add(observer: self, for: ZMUser.selfUser(inUserSession: userSession), userSession: userSession)
         }
 
         selectionView.hostedLayer.strokeColor = UIColor.accent().cgColor
@@ -208,6 +175,11 @@ public class BaseAccountView: UIView, AccountViewType {
         
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(didTap(_:)))
         self.addGestureRecognizer(tapGesture)
+        
+        
+        self.unreadCountToken = NotificationCenter.default.addObserver(forName: .AccountUnreadCountDidChangeNotification, object: nil, queue: .main) { [weak self] _ in
+            self?.updateAppearance()
+        }
         
         updateAppearance()
     }
@@ -257,29 +229,21 @@ public final class PersonalAccountView: BaseAccountView {
         }
     }
     
-    override init(account: Account) {
-        super.init(account: account)
+    override init(account: Account, user: ZMUser? = nil) {
+        super.init(account: account, user: user)
         
         self.isAccessibilityElement = true
         self.accessibilityTraits = UIAccessibilityTraitButton
         self.shouldGroupAccessibilityChildren = true
         self.accessibilityIdentifier = "personal team"
-
-        if let imageData = self.account.imageData {
-            userImageView.imageView.image = UIImage(data: imageData)
-        }
-        else {
-            let personName = PersonName.person(withName: self.account.userName, schemeTagger: nil)
-            userImageView.initials.text = personName.initials
-        }
         
         selectionView.pathGenerator = {
             return UIBezierPath(ovalIn: CGRect(origin: .zero, size: $0))
         }
 
         if let userSession = ZMUserSession.shared() {
-            conversationListObserver = ConversationListChangeInfo.add(observer: self, for: ZMConversationList.conversations(inUserSession: userSession))
-            connectionRequestObserver = ConversationListChangeInfo.add(observer: self, for: ZMConversationList.pendingConnectionConversations(inUserSession: userSession))
+            conversationListObserver = ConversationListChangeInfo.add(observer: self, for: ZMConversationList.conversations(inUserSession: userSession), userSession: userSession)
+            connectionRequestObserver = ConversationListChangeInfo.add(observer: self, for: ZMConversationList.pendingConnectionConversations(inUserSession: userSession), userSession: userSession)
         }
         
         self.imageViewContainer.addSubview(userImageView)
@@ -298,13 +262,20 @@ public final class PersonalAccountView: BaseAccountView {
     public override func update() {
         super.update()
         self.accessibilityValue = String(format: "conversation_list.header.self_team.accessibility_value".localized, self.account.userName) + " " + accessibilityState
+        if let imageData = self.account.imageData {
+            userImageView.imageView.image = UIImage(data: imageData)
+        }
+        else {
+            let personName = PersonName.person(withName: self.account.userName, schemeTagger: nil)
+            userImageView.initials.text = personName.initials
+        }
     }
 }
 
 extension PersonalAccountView {
     override public func userDidChange(_ changeInfo: UserChangeInfo) {
         super.userDidChange(changeInfo)
-        if changeInfo.nameChanged {
+        if changeInfo.nameChanged || changeInfo.imageMediumDataChanged || changeInfo.imageSmallProfileDataChanged  {
             update()
         }
     }
@@ -406,11 +377,11 @@ public final class TeamImageView: UIImageView {
     private var teamObserver: NSObjectProtocol!
     private var conversationListObserver: NSObjectProtocol!
 
-    override init(account: Account) {
+    override init(account: Account, user: ZMUser? = nil) {
         
         imageView = TeamImageView(account: account)
         
-        super.init(account: account)
+        super.init(account: account, user: user)
         
         isAccessibilityElement = true
         accessibilityTraits = UIAccessibilityTraitButton

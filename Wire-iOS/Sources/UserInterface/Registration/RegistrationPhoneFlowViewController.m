@@ -43,11 +43,11 @@
 
 @import WireExtensionComponents;
 
-@interface RegistrationPhoneFlowViewController () <UINavigationControllerDelegate, FormStepDelegate, PhoneVerificationStepViewControllerDelegate, ZMRegistrationObserver, ZMAuthenticationObserver>
+@interface RegistrationPhoneFlowViewController () <UINavigationControllerDelegate, FormStepDelegate, PhoneVerificationStepViewControllerDelegate, ZMRegistrationObserver, PreLoginAuthenticationObserver>
 
 @property (nonatomic) PhoneNumberStepViewController *phoneNumberStepViewController;
 @property (nonatomic) ZMIncompleteRegistrationUser *unregisteredUser;
-@property (nonatomic) id<ZMAuthenticationObserverToken> authToken;
+@property (nonatomic) id authToken;
 @property (nonatomic) id<ZMRegistrationObserverToken> registrationToken;
 
 @end
@@ -61,9 +61,6 @@
 
 - (void)removeObservers
 {
-    [ZMUserSessionAuthenticationNotification removeObserverForToken:self.authToken];
-    [[UnauthenticatedSession sharedSession] removeRegistrationObserver:self.registrationToken];
-    
     self.authToken = nil;
     self.registrationToken = nil;
 }
@@ -89,7 +86,8 @@
     [super didMoveToParentViewController:parent];
     
     if (parent && self.authToken == nil && self.registrationToken == nil) {
-        self.authToken = [ZMUserSessionAuthenticationNotification addObserver:self];
+        self.authToken = [PreLoginAuthenticationNotification registerObserver:self
+                                                    forUnauthenticatedSession:[SessionManager shared].unauthenticatedSession];
         self.registrationToken = [[UnauthenticatedSession sharedSession] addRegistrationObserver:self];
     } else {
         [self removeObservers];

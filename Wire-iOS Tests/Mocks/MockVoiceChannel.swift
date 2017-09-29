@@ -91,23 +91,23 @@ class MockVoiceChannel : NSObject, VoiceChannel {
     
     // MARK - Observers
     
-    func addVoiceGainObserver(_ observer: VoiceGainObserver) -> WireCallCenterObserverToken {
+    func addVoiceGainObserver(_ observer: VoiceGainObserver) -> Any {
         return NSObject()
     }
     
-    func addCallStateObserver(_ observer: WireCallCenterCallStateObserver) -> WireCallCenterObserverToken {
+    func addCallStateObserver(_ observer: WireCallCenterCallStateObserver) -> Any {
         return NSObject()
     }
     
-    func addReceivedVideoObserver(_ observer: ReceivedVideoObserver) -> WireCallCenterObserverToken {
+    func addReceivedVideoObserver(_ observer: ReceivedVideoObserver) -> Any {
         return NSObject()
     }
     
-    func addParticipantObserver(_ observer: VoiceChannelParticipantObserver) -> WireCallCenterObserverToken {
+    func addParticipantObserver(_ observer: VoiceChannelParticipantObserver) -> Any {
         return NSObject()
     }
     
-    static func addCallStateObserver(_ observer: WireCallCenterCallStateObserver, userSession: ZMUserSession) -> WireCallCenterObserverToken {
+    static func addCallStateObserver(_ observer: WireCallCenterCallStateObserver, userSession: ZMUserSession) -> Any {
         return NSObject()
     }
     

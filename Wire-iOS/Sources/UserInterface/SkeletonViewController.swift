@@ -174,7 +174,7 @@ class ListSkeletonView  : UIView {
         titleLabel.font = FontSpec(.medium, .semibold).font
         titleLabel.text = "list.title".localized.uppercased()
         
-        buttonRowView = UIStackView(arrangedSubviews: disabledButtons(with: [.plus, .compose]))
+        buttonRowView = UIStackView(arrangedSubviews: disabledButtons(with: [.person, .compose]))
         buttonRowView.distribution = .equalCentering
 
         [accountView, titleLabel, listContentView, buttonRowView].forEach(addSubview)
@@ -231,7 +231,7 @@ class SkeletonViewController: UIViewController {
     
     public init(from: Account?, to: Account) {
 
-        if let fromUnwrapped = from, to.imageData == nil {
+        if let fromUnwrapped = from, to.imageData == nil, to.teamName == nil {
             account = fromUnwrapped
         }
         else {

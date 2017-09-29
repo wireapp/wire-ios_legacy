@@ -59,7 +59,11 @@
         self.observer = observer;
         
         self.selfUser = [ZMUser selfUser];
-        self.userObserverToken = [UserChangeInfo addUserObserver:self forUser:self.selfUser];
+        if (nil != [ZMUserSession sharedSession]) {
+            self.userObserverToken = [UserChangeInfo addObserver:self
+                                                         forUser:self.selfUser
+                                                     userSession:[ZMUserSession sharedSession]];
+        }
     }
     return self;
 }

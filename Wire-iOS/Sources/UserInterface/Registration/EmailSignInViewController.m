@@ -54,7 +54,8 @@
 @property (nonatomic) RegistrationTextField *passwordField;
 @property (nonatomic) ButtonWithLargerHitArea *forgotPasswordButton;
 
-@property (nonatomic) id<ZMAuthenticationObserverToken> authenticationToken;
+@property (nonatomic) id preLoginAuthenticationToken;
+@property (nonatomic) id postLoginAuthenticationToken;
 
 /// After a login try we set this property to @c YES to reset both field accessories after a field change on any of those
 @property (nonatomic) BOOL needsToResetBothFieldAccessories;
@@ -63,18 +64,13 @@
 
 
 
-@interface EmailSignInViewController (AuthenticationObserver) <ZMAuthenticationObserver>
+@interface EmailSignInViewController (AuthenticationObserver) <PreLoginAuthenticationObserver, PostLoginAuthenticationObserver>
 
 @end
 
 
 
 @implementation EmailSignInViewController
-
-- (void)dealloc
-{
-    [self removeObservers];
-}
 
 - (void)viewDidLoad
 {
@@ -90,8 +86,14 @@
 {
     [super viewDidAppear:animated];
     
-    if (self.isMovingToParentViewController || self.isBeingPresented || self.authenticationToken == nil) {
-        self.authenticationToken = [ZMUserSessionAuthenticationNotification addObserver:self];
+    if (nil == self.preLoginAuthenticationToken) {
+    
+        self.preLoginAuthenticationToken = [PreLoginAuthenticationNotification registerObserver:self
+                                                                      forUnauthenticatedSession:[SessionManager shared].unauthenticatedSession];
+    }
+    
+    if (nil == self.postLoginAuthenticationToken) {
+        self.postLoginAuthenticationToken = [PostLoginAuthenticationNotification addObserver:self];
     }
     
     if(AutomationHelper.sharedHelper.automationEmailCredentials != nil) {
@@ -105,8 +107,8 @@
 
 - (void)removeObservers
 {
-    [ZMUserSessionAuthenticationNotification removeObserverForToken:self.authenticationToken];
-    self.authenticationToken = nil;
+    self.preLoginAuthenticationToken = nil;
+    self.postLoginAuthenticationToken = nil;
 }
 
 - (void)createEmailField
@@ -365,6 +367,22 @@
     if (error.code == ZMUserSessionCanNotRegisterMoreClients) {
         [self presentClientManagementForUserClientIds:error.userInfo[ZMClientsKey] credentials:[self credentials]];
     }
+}
+
+
+- (void)authenticationInvalidated:(NSError * _Nonnull)error accountId:(NSUUID * _Nonnull)accountId
+{
+    [self authenticationDidFail:error];
+}
+
+- (void)clientRegistrationDidSucceedWithAccountId:(NSUUID * _Nonnull)accountId
+{
+    [self authenticationDidSucceed];
+}
+
+- (void)clientRegistrationDidFail:(NSError * _Nonnull)error accountId:(NSUUID * _Nonnull)accountId
+{
+    [self authenticationDidFail:error];
 }
 
 @end

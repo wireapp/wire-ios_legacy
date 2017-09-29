@@ -159,7 +159,7 @@ class SettingsTableViewController: SettingsBaseTableViewController {
             }
         }
 
-        self.selfUserObserver = UserChangeInfo.add(observer: self, forBareUser: ZMUser.selfUser())
+        self.selfUserObserver = UserChangeInfo.add(observer: self, for: ZMUser.selfUser(), userSession: ZMUserSession.shared()!)
     }
 
     required init?(coder aDecoder: NSCoder) {

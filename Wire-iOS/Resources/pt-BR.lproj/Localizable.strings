@@ -559,8 +559,8 @@
 "self.new_device_alert.trust_devices" = "OK";
 
 // Settings - top level
-"self.settings.create_team.title" = "Create Team";
-"self.settings.add_account.title" = "Add Account";
+"self.settings.create_team.title" = "Criar uma Equipe";
+"self.settings.add_account.title" = "Adicionar conta";
 
 // Settings - Account details
 "self.settings.account_section" = "Conta";
@@ -663,7 +663,10 @@
 
 "self.settings.callkit.title" = "Chamadas";
 "self.settings.callkit.caption" = "Compartilhar com o iOS";
-"self.settings.callkit.description" = "Mostrar as chamadas do Wire na tela de bloqueio e no histórico de chamadas do iOS. Se o Icloud estiver ativado, o histórico de chamadas é compartilhado com a Apple. Reinicie o Wire para aplicar essa configuração.";
+"self.settings.callkit.description" = "Mostrar as chamadas do Wire na tela de bloqueio e no histórico de chamadas do iOS. Se o Icloud estiver ativado, o histórico de chamadas é compartilhado com a Apple.";
+
+"self.settings.cbr.not_available" = "Constant Bit Rate Encoding";
+"self.settings.cbr.not_available.description" = "Constant bit rate calls have been temporarily disabled with the introduction of multiple account support. CBR calls will be back soon.";
 
 "self.settings.vbr.title" = "Codificação com Taxa de Bits Variável";
 "self.settings.vbr.description" = "Isto faz chamadas de áudio usar menos dados e funcionam melhor em redes mais lentas. Desligue para usar a Codificação com Taxa de Bits Constante.";

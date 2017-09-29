@@ -24,7 +24,7 @@ import Classy
 final class AudioMessageView: UIView, TransferView {
     public var fileMessage: ZMConversationMessage?
     weak public var delegate: TransferViewDelegate?
-    weak public var audioTrackPlayer : AudioTrackPlayer? {
+    public var audioTrackPlayer : AudioTrackPlayer? {
         didSet {
             audioPlayerProgressObserver = KeyValueObserver.observe(audioTrackPlayer, keyPath: "progress", target: self, selector: #selector(audioProgressChanged(_:)), options: [.initial, .new])
             audioPlayerStateObserver = KeyValueObserver.observe(audioTrackPlayer, keyPath: "state", target: self, selector: #selector(audioPlayerStateChanged(_:)), options: [.initial, .new])
@@ -182,8 +182,8 @@ final class AudioMessageView: UIView, TransferView {
         
         var visibleViews = [self.playButton, self.timeLabel]
         
-        if (fileMessageData.normalizedLoudness.count > 0) {
-            waveformProgressView.samples = fileMessageData.normalizedLoudness
+        if (fileMessageData.normalizedLoudness?.count ?? 0 > 0) {
+            waveformProgressView.samples = fileMessageData.normalizedLoudness ?? []
             if let accentColor = fileMessage.sender?.accentColor {
                 waveformProgressView.barColor = accentColor
                 waveformProgressView.highlightedBarColor = UIColor.gray
@@ -310,7 +310,7 @@ final class AudioMessageView: UIView, TransferView {
                     audioTrackPlayer.play()
 
                     let duration = TimeInterval(Float(fileMessageData.durationMilliseconds) / 1000.0)
-                    Analytics.shared()?.tagPlayedAudioMessage(duration, extensionString: (fileMessageData.filename as NSString).pathExtension)
+                    Analytics.shared()?.tagPlayedAudioMessage(duration, extensionString: ((fileMessageData.filename ?? "") as NSString).pathExtension)
                 }
                 else {
                     DDLogWarn("Cannot load track \(track): \(String(describing: error))")

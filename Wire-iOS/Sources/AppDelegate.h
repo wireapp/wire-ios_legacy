@@ -37,7 +37,6 @@ FOUNDATION_EXPORT NSString * _Nonnull const ZMUserSessionDidBecomeAvailableNotif
 @property (nonatomic, nonnull) UIWindow * window;
 
 // Singletons
-@property (readonly, nullable) ZMUserSession *zetaUserSession;
 @property (readonly, nullable) UnauthenticatedSession *unauthenticatedSession;
 @property (readonly, nonnull) SessionManager *sessionManager;
 @property (readonly, nonnull) AppRootViewController *rootViewController;

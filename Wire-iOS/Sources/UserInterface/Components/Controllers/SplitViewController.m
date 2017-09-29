@@ -343,6 +343,20 @@ NSString *SplitLayoutObservableDidChangeToLayoutSizeNotification = @"SplitLayout
     }
 }
 
+- (BOOL)shouldDisplayNotificationFrom:(Account *)account
+{
+    if (account.isActive && self.layoutSize == SplitViewControllerLayoutSizeRegularLandscape) {
+        return NO; // in landscape on big a screen you always see the conversation list
+    }
+    
+    if (self.openPercentage > 0) {
+        return [self.leftViewController shouldDisplayNotificationFrom:account];
+    }
+    else {
+        return [self.rightViewController shouldDisplayNotificationFrom:account];
+    }
+}
+
 - (NSArray *)constraintsActiveForCurrentLayout
 {
     NSMutableSet *constraints = [NSMutableSet set];

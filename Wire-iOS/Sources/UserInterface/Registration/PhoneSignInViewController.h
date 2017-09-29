@@ -31,7 +31,7 @@
 
 @interface PhoneSignInViewController : FormFlowViewController
 
-@property (nonatomic) id<PhoneSignInViewControllerDelegate> delegate;
+@property (nonatomic, weak) id<PhoneSignInViewControllerDelegate> delegate;
 @property (nonatomic) AnalyticsTracker *analyticsTracker;
 @property (nonatomic) LoginCredentials *loginCredentials;
 

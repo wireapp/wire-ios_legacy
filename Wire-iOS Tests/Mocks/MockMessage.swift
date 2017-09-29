@@ -48,28 +48,28 @@ import WireLinkPreview
 
 
 @objc class MockFileMessageData: NSObject, ZMFileMessageData {
-    var mimeType: String! = "application/pdf"
+    var mimeType: String? = "application/pdf"
     var size: UInt64 = 1024 * 1024 * 2
     var transferState: ZMFileTransferState = .uploaded
-    var filename: String! = "TestFile.pdf"
+    var filename: String? = "TestFile.pdf"
     var progress: Float = 0
     var fileURL: URL? = .none
     var previewData: Data? = nil
     var thumbnailAssetID : String? = ""
-    var imagePreviewDataIdentifier: String! = "preview-identifier-123"
-    var durationMilliseconds: UInt = 233000
+    var imagePreviewDataIdentifier: String? = "preview-identifier-123"
+    var durationMilliseconds: UInt64 = 233000
     var videoDimensions: CGSize = CGSize.zero
-    var normalizedLoudness: [NSNumber]! = []
+    var normalizedLoudness: [Float]? = []
     
-    func isVideo() -> Bool {
+    var isVideo: Bool {
         return mimeType == "video/mp4"
     }
     
-    func isAudio() -> Bool {
+    var isAudio: Bool {
         return mimeType == "audio/x-m4a"
     }
 
-    func v3_isImage() -> Bool {
+    var v3_isImage: Bool {
         return false
     }
     

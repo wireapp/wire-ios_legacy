@@ -34,35 +34,7 @@ import HockeySDK.BITHockeyManager
         }
     }
     
-    fileprivate var appLockActive: Bool {
-        guard let settingsPropertyFactory = SettingsPropertyFactory.shared else {
-            return false
-        }
-        
-        let lockApp = settingsPropertyFactory.property(.lockApp)
-        
-        return lockApp.value() == SettingsPropertyValue(true)
-    }
-    
-    fileprivate var lastUnlockedDate: Date {
-        get {
-            guard let settingsPropertyFactory = SettingsPropertyFactory.shared else {
-                return Date.distantPast
-            }
-            
-            let lastAuthDateProperty = settingsPropertyFactory.property(.lockAppLastDate)
-            return Date(timeIntervalSinceReferenceDate: TimeInterval(lastAuthDateProperty.value().value() as! UInt32))
-        }
-        
-        set {
-            guard let settingsPropertyFactory = SettingsPropertyFactory.shared else {
-                return
-            }
-            
-            let lastAuthDateProperty = settingsPropertyFactory.property(.lockAppLastDate)
-            try! lastAuthDateProperty.set(newValue: SettingsPropertyValue(UInt32(newValue.timeIntervalSinceReferenceDate)))
-        }
-    }
+    static let shared = AppLockViewController()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -102,7 +74,7 @@ import HockeySDK.BITHockeyManager
     }
     
     fileprivate func showUnlockIfNeeded() {
-        if self.appLockActive && self.localAuthenticationNeeded {
+        if AppLock.isActive && self.localAuthenticationNeeded {
             self.dimContents = true
         
             if self.localAuthenticationCancelled {
@@ -128,12 +100,12 @@ import HockeySDK.BITHockeyManager
 
     /// @param callback confirmation; if the auth is not needed or is not possible on the current device called with '.none'
     func requireLocalAuthenticationIfNeeded(with callback: @escaping (Bool?)->()) {
-        guard #available(iOS 9.0, *), self.appLockActive else {
+        guard #available(iOS 9.0, *), AppLock.isActive else {
             callback(.none)
             return
         }
         
-        let lastAuthDate = self.lastUnlockedDate
+        let lastAuthDate = AppLock.lastUnlockedDate
         
         // The app was authenticated at least N seconds ago
         let timeSinceAuth = -lastAuthDate.timeIntervalSinceNow
@@ -155,7 +127,7 @@ import HockeySDK.BITHockeyManager
                         DDLogError("Local authentication error: \(String(describing: error?.localizedDescription))")
                     }
                     else {
-                        self.lastUnlockedDate = Date()
+                        AppLock.lastUnlockedDate = Date()
                     }
                 }
             })
@@ -169,7 +141,7 @@ import HockeySDK.BITHockeyManager
 
 extension AppLockViewController: UIApplicationDelegate {
     func applicationWillResignActive(_ application: UIApplication) {
-        if self.appLockActive {
+        if AppLock.isActive {
             self.resignKeyboard()
             self.dimContents = true
         }
@@ -177,11 +149,11 @@ extension AppLockViewController: UIApplicationDelegate {
     
     func applicationDidEnterBackground(_ application: UIApplication) {
         if !self.localAuthenticationNeeded {
-            self.lastUnlockedDate = Date()
+            AppLock.lastUnlockedDate = Date()
         }
         
         self.localAuthenticationNeeded = true
-        if self.appLockActive {
+        if AppLock.isActive {
             self.dimContents = true
         }
     }

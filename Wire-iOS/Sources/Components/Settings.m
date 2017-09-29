@@ -385,6 +385,7 @@ NSString * const UserDefaultDisableLinkPreviews = @"DisableLinkPreviews";
 - (void)setDisableCallKit:(BOOL)disableCallKit
 {
     [self.defaults setBool:disableCallKit forKey:UserDefaultDisableCallKit];
+    [[SessionManager shared] updateCallNotificationStyleFromSettings];
 }
 
 - (BOOL)disableLinkPreviews
@@ -502,9 +503,9 @@ NSString * const UserDefaultDisableLinkPreviews = @"DisableLinkPreviews";
 
 - (void)updateAVSCallingConstantBitRateValue
 {
-    WireCallCenterV3 *callCenter = [WireCallCenterV3 activeInstance];
+    WireCallCenterV3 *callCenter = [[[SessionManager shared] activeUserSession] callCenter];
     if (nil != callCenter) {
-        callCenter.useAudioConstantBitRate = self.callingConstantBitRate;
+        callCenter.useAudioConstantBitRate = NO; // self.callingConstantBitRate;
     }
 }
 

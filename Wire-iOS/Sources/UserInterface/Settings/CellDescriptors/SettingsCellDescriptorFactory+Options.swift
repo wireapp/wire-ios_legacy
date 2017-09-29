@@ -110,7 +110,8 @@ extension SettingsCellDescriptorFactory {
         let soundAlertSection = SettingsSectionDescriptor(cellDescriptors: [soundAlert])
         cellDescriptors.append(soundAlertSection)
         
-        if #available(iOS 10.0, *) {
+        // TODO: CallKit only with 1 account
+        if #available(iOS 10.0, *), (SessionManager.shared?.accountManager.accounts.count ?? 0 <= 1) {
             let callKitDescriptor = SettingsPropertyToggleCellDescriptor(settingsProperty: settingsPropertyFactory.property(.disableCallKit), inverse: true)
             let callKitHeader = "self.settings.callkit.title".localized
             let callKitDescription = "self.settings.callkit.description".localized
@@ -118,15 +119,10 @@ extension SettingsCellDescriptorFactory {
             cellDescriptors.append(callKitSection)
         }
         
-        let VBRDescriptor = SettingsPropertyToggleCellDescriptor(
-            settingsProperty: settingsPropertyFactory.property(.callingConstantBitRate),
-            inverse: true,
-            identifier: "VBRSwitch"
-        )
-        let VBRDescription = "self.settings.vbr.description".localized
-        let VBRSection = SettingsSectionDescriptor(cellDescriptors: [VBRDescriptor], header: .none, footer: VBRDescription, visibilityAction: .none)
-        cellDescriptors.append(VBRSection)
-        
+        let CBRDescriptor = SettingsInfoCellDescriptor(title: "self.settings.cbr.not_available".localized)
+        let CBRDescription = "self.settings.cbr.not_available.description".localized
+        let CBRSection = SettingsSectionDescriptor(cellDescriptors: [CBRDescriptor], header: .none, footer: CBRDescription, visibilityAction: .none)
+        cellDescriptors.append(CBRSection)
         
         let soundsHeader = "self.settings.sound_menu.sounds.title".localized
 

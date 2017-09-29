@@ -22,7 +22,7 @@ import Cartography
 
 private class WaveformBarsView: UIView {
     
-    var samples : [NSNumber] = [] {
+    var samples : [Float] = [] {
         didSet {
             setNeedsDisplay()
         }
@@ -66,7 +66,7 @@ private class WaveformBarsView: UIView {
         let numbersOfBars = Int((rect.width + barspacing) / stepSpacing)
         
         for i in 0..<numbersOfBars {
-            let loudness = samples[Int((Float(i) / Float(numbersOfBars)) * Float(samples.count))].floatValue
+            let loudness = samples[Int((Float(i) / Float(numbersOfBars)) * Float(samples.count))]
             let rect = CGRect(x: CGFloat(i) * stepSpacing, y: rect.height / 2, width: barWidth, height: max(minHeight, rect.height * CGFloat(loudness) * 0.5))
             c.addRect(rect)
         }
@@ -88,7 +88,7 @@ open class WaveformProgressView: UIView {
     fileprivate let foregroundWaveform = WaveformBarsView()
     fileprivate var maskShape = CAShapeLayer()
     
-    open var samples : [NSNumber] = [] {
+    open var samples : [Float] = [] {
         didSet {
             backgroundWaveform.samples = samples
             foregroundWaveform.samples = samples

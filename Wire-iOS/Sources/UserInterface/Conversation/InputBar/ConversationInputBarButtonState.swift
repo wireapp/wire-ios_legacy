@@ -26,7 +26,7 @@ private let disableEphemeralSendingInGroups = false
 public final class ConversationInputBarButtonState: NSObject {
 
     public var sendButtonHidden: Bool {
-        return !hasText || editing || (Settings.shared().disableSendButton && mode != .emojiInput)
+        return !hasText || editing || (Settings.shared().disableSendButton && mode != .emojiInput && !markingDown)
     }
 
     public var hourglassButtonHidden: Bool {
@@ -47,13 +47,15 @@ public final class ConversationInputBarButtonState: NSObject {
 
     private var textLength: Int = 0
     private var editing: Bool = false
+    private var markingDown: Bool = false
     private var destructionTimeout: TimeInterval = 0
     private var conversationType: ZMConversationType = .oneOnOne
     private var mode: ConversationInputBarViewControllerMode = .textInput
 
-    public func update(textLength: Int, editing: Bool, destructionTimeout: TimeInterval, conversationType: ZMConversationType, mode: ConversationInputBarViewControllerMode) {
+    public func update(textLength: Int, editing: Bool, markingDown: Bool, destructionTimeout: TimeInterval, conversationType: ZMConversationType, mode: ConversationInputBarViewControllerMode) {
         self.textLength = textLength
         self.editing = editing
+        self.markingDown = markingDown
         self.destructionTimeout = destructionTimeout
         self.conversationType = conversationType
         self.mode = mode

@@ -523,13 +523,6 @@ ConversationRootViewController {
     }
 }
 
-NewDevicesDot {
-    backgroundColor: $color-accent-current;
-    layer: @{
-        cornerRadius: 4.0;
-    }
-}
-
 ConversationListAccessoryView {
     textLabel: @{
         font: $font-medium-semibold;
@@ -541,7 +534,7 @@ ConversationListBottomBarController {
         backgroundColor: clear;
     }
     
-    plusButton: @{
+    startUIButton: @{
         iconColor: $color-text-foreground-dark;
     }
 
