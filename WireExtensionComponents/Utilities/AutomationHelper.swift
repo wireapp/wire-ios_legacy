@@ -184,7 +184,7 @@ extension AutomationHelper {
     /// in the shared folder, erasing any other file in that folder.
     public func installDebugDataIfNeeded() {
         
-        guard let packageURL = AutomationHelper.sharedHelper.debugDataToInstall,
+        guard let packageURL = self.debugDataToInstall,
             let appGroupIdentifier = Bundle.main.appGroupIdentifier else { return }
         let sharedContainerURL = FileManager.sharedContainerDirectory(for: appGroupIdentifier)
         

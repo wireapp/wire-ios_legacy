@@ -68,7 +68,7 @@ class AppRootViewController : UIViewController {
         
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
 
-        AutomationHelper.installDebugDataIfNeeded()
+        AutomationHelper.sharedHelper.installDebugDataIfNeeded()
 
         appStateController.delegate = self
         
