@@ -36,8 +36,8 @@ open class CollectionCell: UICollectionViewCell, Reusable {
     var message: ZMConversationMessage? = .none {
         didSet {
             self.messageObserverToken = nil
-            if let newMessage = message {
-                self.messageObserverToken = MessageChangeInfo.add(observer: self, for: newMessage)
+            if let userSession = ZMUserSession.shared(), let newMessage = message {
+                self.messageObserverToken = MessageChangeInfo.add(observer: self, for: newMessage, userSession: userSession)
             }
             self.updateForMessage(changeInfo: .none)
         }

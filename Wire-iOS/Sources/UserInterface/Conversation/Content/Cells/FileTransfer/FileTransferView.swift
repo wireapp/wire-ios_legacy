@@ -138,7 +138,7 @@ final public class FileTransferView: UIView, TransferView {
         configureVisibleViews(with: message, isInitial: isInitial)
         message.requestImageDownload()
         
-        let filepath = fileMessageData.filename as NSString
+        let filepath = (fileMessageData.filename ?? "") as NSString
         let filesize: UInt64 = fileMessageData.size
         
         let filename = (filepath.lastPathComponent as NSString).deletingPathExtension

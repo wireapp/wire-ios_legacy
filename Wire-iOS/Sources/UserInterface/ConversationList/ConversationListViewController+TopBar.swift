@@ -26,14 +26,16 @@ extension ConversationListViewController {
         guard let currentAccount = SessionManager.shared?.accountManager.selectedAccount else {
             fatal("No account available")
         }
-        let currentAccountView = AccountViewFactory.viewFor(account: currentAccount)
-        
+        let currentAccountView = AccountViewFactory.viewFor(account: currentAccount,
+                                                            user: ZMUser.selfUser(inUserSession: ZMUserSession.shared()!))
+        currentAccountView.invertUnreadMessagesCount = true
         return currentAccountView
     }
     
     public func createTopBar() {
         let profileAccountView = self.currentAccountView()
         profileAccountView.selected = false
+        profileAccountView.autoupdateSelection = false
         
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(presentSettings))
         profileAccountView.addGestureRecognizer(tapGestureRecognizer)
@@ -44,23 +46,13 @@ extension ConversationListViewController {
         profileAccountView.accessibilityHint = "self.voiceover.hint".localized
         
         if let user = ZMUser.selfUser() {
-            let imageView = profileAccountView.imageViewContainer
-            let newDevicesDot = NewDevicesDot(user: user)
-            profileAccountView.addSubview(newDevicesDot)
             if user.clientsRequiringUserAttention.count > 0 {
                 profileAccountView.accessibilityLabel = "self.new-device.voiceover.label".localized
-            }
-            
-            constrain(newDevicesDot, imageView) { newDevicesDot, imageView in
-                newDevicesDot.top == imageView.top - 3
-                newDevicesDot.trailing == imageView.trailing + 3
-                newDevicesDot.width == 8
-                newDevicesDot.height == 8
             }
         }
         
         self.topBar = ConversationListTopBar()
-        self.topBar.layoutMargins = UIEdgeInsetsMake(0, 10, 0, 16)
+        self.topBar.layoutMargins = UIEdgeInsetsMake(0, 9, 0, 16)
         self.contentContainer.addSubview(self.topBar)
         self.topBar.leftView = profileAccountView
     }

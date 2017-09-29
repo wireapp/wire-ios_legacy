@@ -155,6 +155,11 @@ protocol SettingsCellType: class {
         self.setupAccessibiltyElements()
     }
     
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        preview = .none
+    }
+    
     func setup() {
         self.backgroundColor = UIColor.clear
         self.backgroundView = UIView()

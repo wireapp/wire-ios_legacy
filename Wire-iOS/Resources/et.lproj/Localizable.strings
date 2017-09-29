@@ -84,7 +84,7 @@
 
 // Conversation List Indicator
 "conversation_list.right_accessory.join_button.title" = "Liitu";
-"conversation_list.header.self_team.accessibility_value" = "%@ meeskond.";
+"conversation_list.header.self_team.accessibility_value" = "Kasutaja %@ konto.";
 "conversation_list.header.self_team.accessibility_value.inactive" = "Vajuta aktiveerimiseks.";
 "conversation_list.header.self_team.accessibility_value.active" = "Praegu aktiivne.";
 "conversation_list.header.self_team.accessibility_value.has_new_messages" = "On uusi sõnumeid.";
@@ -94,22 +94,22 @@
 
 // Conversation list voiceover accessibility
 "conversation_list.voiceover.open_conversation.hint" = "Ava vestlus";
-"conversation_list.voiceover.status.pending_connection" = "pending";
-"conversation_list.voiceover.status.active_call" = "active call";
+"conversation_list.voiceover.status.pending_connection" = "ootel";
+"conversation_list.voiceover.status.active_call" = "aktiivne kõne";
 "conversation_list.voiceover.status.missed_call" = "vastamata kõne";
-"conversation_list.voiceover.status.pause_media" = "pause media";
-"conversation_list.voiceover.status.play_media" = "play media";
-"conversation_list.voiceover.status.silenced" = "silenced";
-"conversation_list.voiceover.status.typing" = "typing";
+"conversation_list.voiceover.status.pause_media" = "peata meedia esitlus";
+"conversation_list.voiceover.status.play_media" = "käivita meedia esitlus";
+"conversation_list.voiceover.status.silenced" = "hääletu";
+"conversation_list.voiceover.status.typing" = "trükib";
 "conversation_list.voiceover.status.ping" = "ping";
-"conversation_list.voiceover.bottom_bar.archived_button.label" = "archived";
-"conversation_list.voiceover.bottom_bar.archived_button.hint" = "list of archived conversations";
+"conversation_list.voiceover.bottom_bar.archived_button.label" = "arhiveeritud";
+"conversation_list.voiceover.bottom_bar.archived_button.hint" = "arhiveeritud vestluste nimekiri";
 "conversation_list.voiceover.bottom_bar.contacts_button.label" = "kontaktid";
-"conversation_list.voiceover.bottom_bar.contacts_button.hint" = "search for people on Wire";
-"conversation_list.voiceover.bottom_bar.compose_button.label" = "compose";
-"conversation_list.voiceover.bottom_bar.compose_button.hint" = "compose messages and save for later";
-"conversation_list.voiceover.bottom_bar.camera_button.label" = "camera";
-"conversation_list.voiceover.bottom_bar.camera_button.hint" = "take picture and send quickly";
+"conversation_list.voiceover.bottom_bar.contacts_button.hint" = "otsi Wire kasutajate hulgast";
+"conversation_list.voiceover.bottom_bar.compose_button.label" = "koosta";
+"conversation_list.voiceover.bottom_bar.compose_button.hint" = "koosta sõnum ja salvesta hilisemaks";
+"conversation_list.voiceover.bottom_bar.camera_button.label" = "kaamera";
+"conversation_list.voiceover.bottom_bar.camera_button.hint" = "tee pilt ja saada kiirelt";
 
 // Archived List
 "archived_list.title" = "arhiiv";
@@ -146,7 +146,7 @@
 "list.archived_conversations" = "ARHIIV";
 "list.archived_conversations_close" = "Sulge arhiiv";
 
-"conversation.voiceover.verified" = "verified";
+"conversation.voiceover.verified" = "kinnitatud";
 
 "conversation.status.call" = "Aktiivne kõne";
 "conversation.status.typing" = "Kirjutab…";
@@ -496,7 +496,6 @@
 "profile.details.title" = "Üksikasjad";
 "profile.details.guest" = "Külaline";
 
-"profile_view.team_name.in" = "aastal %@";
 "profile_view.accessibility.handle" = "Kasutajanimi";
 "profile_view.accessibility.name" = "Kuvatav nimi";
 "profile_view.accessibility.team_name" = "Meeskonna nimi";
@@ -528,6 +527,7 @@
 
 "self.settings" = "Seaded";
 "self.profile" = "Profiil";
+"self.account" = "Konto";
 "self.help_center" = "Klienditugi";
 "self.help_center.support_website" = "Wire klienditoe sait";
 "self.help_center.contact_support" = "Võta kasutajatoega ühendust";
@@ -535,8 +535,8 @@
 "self.sign_out" = "Logi välja";
 "self.report_abuse" = "Teavita kuritarvitamisest";
 "self.voiceover.label" = "Profiil";
-"self.voiceover.hint" = "Open profile and settings";
-"self.new-device.voiceover.label" = "Profile, new devices added";
+"self.voiceover.hint" = "Ava profiil ja seaded";
+"self.new-device.voiceover.label" = "Profiil, lisatud uus seade";
 
 "self.add_phone_number" = "Lisa mobiilinumber";
 "self.add_email_password" = "Lisa meiliaadress ja parool";
@@ -559,8 +559,8 @@
 "self.new_device_alert.trust_devices" = "OK";
 
 // Settings - top level
-"self.settings.create_team.title" = "Create team";
-"self.settings.add_account.title" = "Add account";
+"self.settings.create_team.title" = "Create Team";
+"self.settings.add_account.title" = "Add Account";
 
 // Settings - Account details
 "self.settings.account_section" = "Konto";
@@ -600,6 +600,10 @@
 
 "self.settings.account_details.delete_account.alert.title" = "Kustuta konto";
 "self.settings.account_details.delete_account.alert.message" = "Me saadame sulle sõnumi e-posti või SMS-ga. Külasta veebiaadressi, et oma konto lõplikult kustutada.";
+
+"self.settings.account_details.log_out.alert.title" = "Logi välja";
+"self.settings.account_details.log_out.alert.message" = "Your message history will be erased on this device.";
+
 
 // Change Username
 
@@ -659,7 +663,10 @@
 
 "self.settings.callkit.title" = "Kõned";
 "self.settings.callkit.caption" = "Jaga iOS-s";
-"self.settings.callkit.description" = "Näita Wire kõnesid lukustuskuval ja seadme kõnede ajaloos. Kui sul on iCloud sisse lülitatud, siis saadetakse kõnede ajalugu Apple'i serveritesse. Seadistuse rakendamiseks tuleb Wire taaskäivitada.";
+"self.settings.callkit.description" = "Show Wire calls on the lock screen and in iOS call history. If iCloud is enabled, call history is shared with Apple.";
+
+"self.settings.cbr.not_available" = "Constant Bit Rate Encoding";
+"self.settings.cbr.not_available.description" = "Constant bit rate calls have been temporarily disabled with the introduction of multiple account support. CBR calls will be back soon.";
 
 "self.settings.vbr.title" = "Muutuva bitisagedusega kodeering";
 "self.settings.vbr.description" = "Kõnede andmeside maht on väiksem ja kõnekvaliteet kehva ühenduse korral parem. Ühtlase bitisagedusega kodeeringu kasutamiseks lülita see valik välja.";
@@ -715,8 +722,8 @@
 "self.settings.privacy_security.lock_cancelled.description" = "Ava Wire Touch ID või parooliga";
 "self.settings.privacy_security.lock_cancelled.action" = "Vabasta lukust";
 
-"self.settings.privacy_security.disable_link_previews.title" = "Create Previews For Links You Send";
-"self.settings.privacy_security.disable_link_previews.footer" = "Eelvaateid võidakse siiski näidata teiste inimeste linkide puhul.";
+"self.settings.privacy_security.disable_link_previews.title" = "Create Link Previews";
+"self.settings.privacy_security.disable_link_previews.footer" = "Eelvaateid võidakse siiski näidata teiste saadetud linkide puhul.";
 
 "self.settings.privacy_analytics_menu.devices.title" = "Seadmed";
 
@@ -897,6 +904,7 @@
 "error.user.registration_unknown_error" = "Midagi läks valesti. Palun proovi uuesti.";
 "error.user.device_deleted_remotely" = "Sind on teisest seadmest välja logitud.";
 "error.user.last_identity_cant_be_deleted" = "Kas meiliaadress või telefoninumber peab olema täidetud.";
+"error.user.account_suspended" = "See konto ei ole enam sisse logimiseks autoriseeritud.";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Those are caught by the UI without involving the SE validation. Basically very similar to ZMUserSessionErrorCode onces
@@ -974,6 +982,6 @@
 "compose.drafts.compose.delete.confirm.message" = "Antud toiming kustutab visandi ning seda muudatust pole võimalik tagasi võtta.";
 "compose.drafts.compose.delete.confirm.action.title" = "Kustuta";
 
-"compose.drafts.compose.dismiss.confirm.title" = "Save as draft";
+"compose.drafts.compose.dismiss.confirm.title" = "Salvesta mustand";
 "compose.drafts.compose.dismiss.confirm.action.title" = "Salvesta";
 "compose.drafts.compose.dismiss.delete.action.title" = "Kustuta";

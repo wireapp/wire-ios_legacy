@@ -87,6 +87,7 @@
 @property (nonatomic) LegacyMessageTracker *messageCountTracker;
 
 @property (nonatomic) id incomingApnsObserver;
+@property (nonatomic) id networkAvailabilityObserverToken;
 
 @property (nonatomic) ProximityMonitorManager *proximityMonitorManager;
 
@@ -105,7 +106,6 @@
 - (void)dealloc
 {
     [AVSProvider.shared.mediaManager unregisterMedia:self.mediaPlaybackManager];
-    [ZMNetworkAvailabilityChangeNotification removeNetworkAvailabilityObserver:self];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
@@ -117,25 +117,27 @@
         self.proximityMonitorManager = [ProximityMonitorManager new];
         self.mediaPlaybackManager = [[MediaPlaybackManager alloc] initWithName:@"conversationMedia"];
         self.messageCountTracker = [[LegacyMessageTracker alloc] initWithManagedObjectContext:ZMUserSession.sharedSession.syncManagedObjectContext];
-        [[ZMUserSession sharedSession] setRequestToOpenViewDelegate:self];
+
         [AVSProvider.shared.mediaManager registerMedia:self.mediaPlaybackManager withOptions:@{ @"media" : @"external "}];
         
         AddressBookHelper.sharedHelper.configuration = AutomationHelper.sharedHelper;
         
         NSString *appGroupIdentifier = NSBundle.mainBundle.appGroupIdentifier;
-        NSURL *sharedContainerURL = [NSFileManager sharedContainerDirectoryForAppGroupIdentifier:appGroupIdentifier];
-        self.analyticsEventPersistence = [[ShareExtensionAnalyticsPersistence alloc] initWithSharedContainerURL:sharedContainerURL];
-        [MessageDraftStorage setupSharedStorageAtURL:sharedContainerURL error:nil];
+        NSURL *sharedContainerURL = [NSFileManager sharedContainerDirectoryForAppGroupIdentifier:appGroupIdentifier];        
+        NSURL *accountContainerURL = [[sharedContainerURL URLByAppendingPathComponent:@"AccountData" isDirectory:YES]
+                                      URLByAppendingPathComponent:ZMUser.selfUser.remoteIdentifier.UUIDString isDirectory:YES];
+        self.analyticsEventPersistence = [[ShareExtensionAnalyticsPersistence alloc] initWithAccountContainer:accountContainerURL];
+        [MessageDraftStorage setupSharedStorageAtURL:accountContainerURL error:nil];
         
-        [ZMNetworkAvailabilityChangeNotification addNetworkAvailabilityObserver:self userSession:[ZMUserSession sharedSession]];
+        self.networkAvailabilityObserverToken = [ZMNetworkAvailabilityChangeNotification addNetworkAvailabilityObserver:self userSession:[ZMUserSession sharedSession]];
         
         [[NSNotificationCenter defaultCenter] postNotificationName:ZMUserSessionDidBecomeAvailableNotification object:nil];
         
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(contentSizeCategoryDidChange:) name:UIContentSizeCategoryDidChangeNotification object:nil];
-        [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(applicationDidBecomeActive:) name:UIApplicationDidBecomeActiveNotification object:nil];
-        [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(applicationWillResignActive:) name:UIApplicationWillResignActiveNotification object:nil];
-        [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(applicationWillEnterForeground:) name:UIApplicationWillEnterForegroundNotification object:nil];
-        [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(applicationDidEnterBackground:) name:UIApplicationDidEnterBackgroundNotification object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationDidBecomeActive:) name:UIApplicationDidBecomeActiveNotification object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationWillResignActive:) name:UIApplicationWillResignActiveNotification object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationWillEnterForeground:) name:UIApplicationWillEnterForegroundNotification object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationDidEnterBackground:) name:UIApplicationDidEnterBackgroundNotification object:nil];
     }
     return self;
 }
@@ -176,7 +178,7 @@
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(requestLoopNotification:) name:ZMTransportRequestLoopNotificationName object:nil];
     }
     
-    self.userObserverToken = [UserChangeInfo addUserObserver:self forUser:[ZMUser selfUser]];
+    self.userObserverToken = [UserChangeInfo addObserver:self forUser:[ZMUser selfUser] userSession:[ZMUserSession sharedSession]];
 }
 
 - (void)createBackgroundViewController
@@ -269,11 +271,13 @@
 {
     AppDelegate *appDelegate = [AppDelegate sharedAppDelegate];
     
-    if ([appDelegate.rootViewController.visibleViewController isKindOfClass:ZClientViewController.class]) {
-        return (ZClientViewController *)appDelegate.rootViewController.visibleViewController;
-    } else {
-        return nil;
+    for (UIViewController *controller in appDelegate.rootViewController.childViewControllers) {
+        if ([controller isKindOfClass:ZClientViewController.class]) {
+            return (ZClientViewController *)controller;
+        }
     }
+    
+    return nil;
 }
 
 - (void)selectConversation:(ZMConversation *)conversation
@@ -293,7 +297,9 @@
     StopWatch *stopWatch = [StopWatch stopWatch];
     [stopWatch restartEvent:[NSString stringWithFormat:@"ConversationSelect%@", conversation.displayName]];
     
-    [self.conversationListViewController selectConversation:conversation focusOnView:focus animated:animated completion:completion];
+    [self dismissAllModalControllersWithCallback:^{
+        [self.conversationListViewController selectConversation:conversation focusOnView:focus animated:animated completion:completion];
+    }];
 }
 
 - (void)selectIncomingContactRequestsAndFocusOnView:(BOOL)focus
@@ -526,7 +532,7 @@
 - (void)uploadAddressBookIfNeeded
 {
     // We should not even try to access address book when in a team
-    if (ZMUser.selfUser.hasTeam) {
+    if (nil == ZMUser.selfUser || ZMUser.selfUser.hasTeam) {
         return;
     }
     
@@ -591,13 +597,16 @@
 {
     BOOL stateRestored = NO;
 
+    Account *currentAccount = SessionManager.shared.accountManager.selectedAccount;
+    
     SettingsLastScreen lastViewedScreen = [Settings sharedSettings].lastViewedScreen;
     switch (lastViewedScreen) {
             
         case SettingsLastScreenList: {
             
             [self transitionToListAnimated:NO completion:nil];
-            ZMConversation *conversation = [Settings sharedSettings].lastViewedConversation;
+            
+            ZMConversation *conversation = [[Settings sharedSettings] lastViewedConversationFor:currentAccount];
             if (conversation != nil) {
                 // Select the last viewed conversation without giving it focus
                 [self selectConversation:conversation];
@@ -616,7 +625,7 @@
         }
         case SettingsLastScreenConversation: {
             
-            ZMConversation *conversation = [Settings sharedSettings].lastViewedConversation;
+            ZMConversation *conversation = [[Settings sharedSettings] lastViewedConversationFor:currentAccount];
             if (conversation != nil) {
                 [self selectConversation:conversation
                              focusOnView:YES 
@@ -669,17 +678,17 @@
 
 @implementation ZClientViewController (ZMRequestsToOpenViewsDelegate)
 
-- (void)showConversationList
+- (void)showConversationListForUserSession:(ZMUserSession *)userSession
 {
     [self transitionToListAnimated:YES completion:nil];
 }
 
-- (void)showConversation:(ZMConversation *)conversation
+- (void)userSession:(ZMUserSession *)userSession showConversation:(ZMConversation *)conversation
 {
     [self selectConversation:conversation focusOnView:YES animated:YES];
 }
 
-- (void)showMessage:(id<ZMConversationMessage>)message inConversation:(ZMConversation *)conversation
+- (void)userSession:(ZMUserSession *)userSession showMessage:(ZMMessage *)message inConversation:(ZMConversation *)conversation
 {
     [self selectConversation:conversation focusOnView:YES animated:YES];
 }
@@ -688,9 +697,9 @@
 
 @implementation ZClientViewController (NetworkAvailabilityObserver)
 
-- (void)didChangeAvailability:(ZMNetworkAvailabilityChangeNotification *)note
+- (void)didChangeAvailabilityWithNewState:(ZMNetworkState)newState
 {
-    if (note.networkState == ZMNetworkStateOnline && [[UIApplication sharedApplication] applicationState] == UIApplicationStateActive) {
+    if (newState == ZMNetworkStateOnline && [[UIApplication sharedApplication] applicationState] == UIApplicationStateActive) {
         [self uploadAddressBookIfNeeded];
     }
 }

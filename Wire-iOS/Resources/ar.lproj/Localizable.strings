@@ -84,7 +84,7 @@
 
 // Conversation List Indicator
 "conversation_list.right_accessory.join_button.title" = "انضم إلى";
-"conversation_list.header.self_team.accessibility_value" = "فريق %@.";
+"conversation_list.header.self_team.accessibility_value" = "حساب %@.";
 "conversation_list.header.self_team.accessibility_value.inactive" = "انقر للتفعيل.";
 "conversation_list.header.self_team.accessibility_value.active" = "تفعيل الآن.";
 "conversation_list.header.self_team.accessibility_value.has_new_messages" = "لديه رسائل جديدة.";
@@ -101,7 +101,7 @@
 "conversation_list.voiceover.status.play_media" = "تشغيل الوسائط";
 "conversation_list.voiceover.status.silenced" = "صامت";
 "conversation_list.voiceover.status.typing" = "كتابة";
-"conversation_list.voiceover.status.ping" = "ping";
+"conversation_list.voiceover.status.ping" = "بينغ";
 "conversation_list.voiceover.bottom_bar.archived_button.label" = "مؤرشف";
 "conversation_list.voiceover.bottom_bar.archived_button.hint" = "قائمة المحادثات المؤرشفة";
 "conversation_list.voiceover.bottom_bar.contacts_button.label" = "جهات اتصال";
@@ -496,7 +496,6 @@
 "profile.details.title" = "التفاصيل";
 "profile.details.guest" = "ضيف";
 
-"profile_view.team_name.in" = "في %@";
 "profile_view.accessibility.handle" = "مُعرّف";
 "profile_view.accessibility.name" = "اسم العرض";
 "profile_view.accessibility.team_name" = "اسم الفريق";
@@ -528,6 +527,7 @@
 
 "self.settings" = "الإعدادات";
 "self.profile" = "الملف الشخصي";
+"self.account" = "الحساب";
 "self.help_center" = "الدعم";
 "self.help_center.support_website" = "الموقع الإلكتروني للدعم في واير ";
 "self.help_center.contact_support" = "اتصل بالدعم";
@@ -601,6 +601,10 @@
 "self.settings.account_details.delete_account.alert.title" = "حذف الحساب";
 "self.settings.account_details.delete_account.alert.message" = "سوف نرسل لك رسالة عبر البريد الإلكتروني أو في رسالة قصيرة.\nاتّبع التعليمات في الرابط لحذف حسابك بشكل دائم.";
 
+"self.settings.account_details.log_out.alert.title" = "تسجيل الخروج";
+"self.settings.account_details.log_out.alert.message" = "ستمسح محفوظات رسائلك على هذا الجهاز.";
+
+
 // Change Username
 
 "self.settings.account_section.handle.change.title" = "مُعرّف";
@@ -659,7 +663,10 @@
 
 "self.settings.callkit.title" = "المكالمات";
 "self.settings.callkit.caption" = "مشاركة بواسطة iOS";
-"self.settings.callkit.description" = "إظهار مكالمات Wire على شاشة القفل وفي سجّل مكالمات الهاتف. في حال تفعيل iCloud، سيتم مشاركة سجّل المكالمات مع Apple. أعد تشغيل Wire لتطبيق هذا الإعداد.";
+"self.settings.callkit.description" = "إظهار مكالمات Wire على شاشة القفل وفي سجّل مكالمات الهاتف. في حال تفعيل iCloud، سيتم مشاركة سجّل المكالمات مع Apple.";
+
+"self.settings.cbr.not_available" = "Constant Bit Rate Encoding";
+"self.settings.cbr.not_available.description" = "Constant bit rate calls have been temporarily disabled with the introduction of multiple account support. CBR calls will be back soon.";
 
 "self.settings.vbr.title" = "ترميز بمعدل بت متغير";
 "self.settings.vbr.description" = "هذا يجعل المكالمات الصوتية تستهلك بيانات أقل وتعمل بشكل أفضل على الشبكات الأبطأ. أوقفه لتستخدم ترميز ذو معدل بت ثابت.";
@@ -715,7 +722,7 @@
 "self.settings.privacy_security.lock_cancelled.description" = "فتح قفل Wire بإستخدام Touch ID أو رمز الدخول";
 "self.settings.privacy_security.lock_cancelled.action" = "فتح القفل";
 
-"self.settings.privacy_security.disable_link_previews.title" = "إنشاء معاينات للروابط التي ترسلها";
+"self.settings.privacy_security.disable_link_previews.title" = "إنشاء معاينات للروابط";
 "self.settings.privacy_security.disable_link_previews.footer" = "قد تظهر المعاينات للروابط من الأشخاص الآخرين.";
 
 "self.settings.privacy_analytics_menu.devices.title" = "الأجهزة";
@@ -897,6 +904,7 @@
 "error.user.registration_unknown_error" = "حدث خطأ ما. برجاء إعادة المحاولة.";
 "error.user.device_deleted_remotely" = "قمت بتسجيل خروج من جهاز آخر.";
 "error.user.last_identity_cant_be_deleted" = "مطلوب إمّا عنوان بريد إلكتروني أو رقم هاتف.";
+"error.user.account_suspended" = "لم يعد مصرّحًا لهذا الحساب بتسجيل الدخول.";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Those are caught by the UI without involving the SE validation. Basically very similar to ZMUserSessionErrorCode onces

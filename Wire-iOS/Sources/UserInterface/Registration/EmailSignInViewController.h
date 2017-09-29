@@ -19,12 +19,13 @@
 
 #import <UIKit/UIKit.h>
 
-@class AnalyticsTracker;
+@class AnalyticsTracker, LoginCredentials;
 
 
 @interface EmailSignInViewController : UIViewController
 
 @property (nonatomic) AnalyticsTracker *analyticsTracker;
+@property (nonatomic) LoginCredentials *loginCredentials;
 
 - (void)takeFirstResponder;
 - (void)removeObservers;

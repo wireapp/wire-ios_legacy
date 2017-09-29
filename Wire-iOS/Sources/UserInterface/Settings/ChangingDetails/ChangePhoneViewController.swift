@@ -125,7 +125,7 @@ final class ChangePhoneViewController: SettingsBaseTableViewController {
 
     fileprivate var state = ChangePhoneNumberState()
     fileprivate let userProfile = ZMUserSession.shared()?.userProfile
-    fileprivate var observerToken: AnyObject?
+    fileprivate var observerToken: Any?
 
     init() {
         super.init(style: .grouped)
@@ -143,8 +143,7 @@ final class ChangePhoneViewController: SettingsBaseTableViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        guard let token = observerToken else { return }
-        _ = userProfile?.removeObserver(token: token)
+        observerToken = nil
     }
     
     fileprivate func setupViews() {

@@ -173,7 +173,7 @@ final class ChangeHandleViewController: SettingsBaseTableViewController {
     var state: HandleChangeState
     private var footerLabel = UILabel()
     fileprivate weak var userProfile = ZMUserSession.shared()?.userProfile
-    private var observerToken: AnyObject?
+    private var observerToken: Any?
     var popOnSuccess = true
 
     convenience init() {
@@ -206,8 +206,7 @@ final class ChangeHandleViewController: SettingsBaseTableViewController {
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        guard let token = observerToken else { return }
-        userProfile?.removeObserver(token: token)
+        observerToken = nil
     }
 
     private func setupViews() {

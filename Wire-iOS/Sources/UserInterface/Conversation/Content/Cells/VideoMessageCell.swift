@@ -28,7 +28,7 @@ public final class VideoMessageCell: ConversationCell {
     private let videoMessageView = VideoMessageView()
     private let obfuscationView = ObfuscationView(icon: .videoMessage)
 
-    public var videoViewHeight = 160
+    public var videoViewHeight : CGFloat = CellSizesProvider.videoViewHeight
 
     private var topMargin: NSLayoutConstraint!
     
@@ -63,8 +63,7 @@ public final class VideoMessageCell: ConversationCell {
             videoMessageView.bottom == messageContentView.bottom
             videoMessageView.leading == messageContentView.leadingMargin
             videoMessageView.trailing == messageContentView.trailingMargin
-            videoMessageView.height == CGFloat(videoViewHeight)
-
+            videoMessageView.height == videoViewHeight
             obfuscationView.edges == videoMessageView.edges
         }
     }
@@ -186,7 +185,10 @@ public final class VideoMessageCell: ConversationCell {
             DDLogError("Cannot save video: \(error)")
         }
     }
-
+    
+    public override func getPreviewContentHeight() -> CGFloat {
+        return CellSizesProvider.heightForVideo()
+    }
 }
 
 

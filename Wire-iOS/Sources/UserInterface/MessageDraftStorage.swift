@@ -27,7 +27,7 @@ final class MessageDraftStorage: NSObject {
     @objc(setupSharedStorageAtURL:error:)
     static func setupSharedStorage(at URL: URL) throws {
         guard nil == _sharedStorage else { return }
-        _sharedStorage = try MessageDraftStorage(sharedContainerURL: URL)
+        _sharedStorage = try MessageDraftStorage(accountContainerURL: URL)
     }
 
     static var shared: MessageDraftStorage {
@@ -59,10 +59,10 @@ final class MessageDraftStorage: NSObject {
     private let storeURL: URL
     private let psc: NSPersistentStoreCoordinator
 
-    init(sharedContainerURL: URL) throws {
+    init(accountContainerURL: URL) throws {
         guard let model = NSManagedObjectModel.mergedModel(from: [Bundle(for: MessageDraftStorage.self)]) else { throw StorageError.noModel  }
         psc = NSPersistentStoreCoordinator(managedObjectModel: model)
-        let directoryURL = sharedContainerURL.appendingPathComponent("MessageDraftStorage")
+        let directoryURL = accountContainerURL.appendingPathComponent("drafts")
         try MessageDraftStorage.createDirectoryIfNeeded(at: directoryURL)
         storeURL = directoryURL.appendingPathComponent("Drafts")
 

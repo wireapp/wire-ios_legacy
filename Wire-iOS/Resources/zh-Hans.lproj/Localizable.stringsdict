@@ -198,9 +198,9 @@
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>one</key>
-			<string>new text message</string>
+			<string>新的文本消息</string>
 			<key>other</key>
-			<string>%d new text messages</string>
+			<string>%d 新邮件</string>
 		</dict>
 	</dict>
 	<key>conversation.silenced.status.message.link</key>
@@ -214,9 +214,9 @@
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>one</key>
-			<string>new link</string>
+			<string>新建链接</string>
 			<key>other</key>
-			<string>%d new links</string>
+			<string>%d 新链接</string>
 		</dict>
 	</dict>
 	<key>conversation.silenced.status.message.image</key>
@@ -230,9 +230,9 @@
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>one</key>
-			<string>new image</string>
+			<string>新建图像</string>
 			<key>other</key>
-			<string>%d new images</string>
+			<string>%d 新图像</string>
 		</dict>
 	</dict>
 	<key>conversation.silenced.status.message.location</key>
@@ -246,9 +246,9 @@
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>one</key>
-			<string>new location</string>
+			<string>新的位置</string>
 			<key>other</key>
-			<string>%d new locations</string>
+			<string>%d 新位置</string>
 		</dict>
 	</dict>
 	<key>conversation.silenced.status.message.audio</key>
@@ -262,9 +262,9 @@
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>one</key>
-			<string>new audio message</string>
+			<string>新的录音消息</string>
 			<key>other</key>
-			<string>%d new audio messages</string>
+			<string>%d 新的音频消息</string>
 		</dict>
 	</dict>
 	<key>conversation.silenced.status.message.video</key>
@@ -278,9 +278,9 @@
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>one</key>
-			<string>new video</string>
+			<string>新的视频</string>
 			<key>other</key>
-			<string>%d new videos</string>
+			<string>%d 新视频</string>
 		</dict>
 	</dict>
 	<key>conversation.silenced.status.message.knock</key>
@@ -310,9 +310,9 @@
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>one</key>
-			<string>missed call</string>
+			<string>未接电话</string>
 			<key>other</key>
-			<string>%d missed calls</string>
+			<string>%d 个未接来电</string>
 		</dict>
 	</dict>
 	<key>conversation.silenced.status.message.file</key>
@@ -326,9 +326,9 @@
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>one</key>
-			<string>new file</string>
+			<string>新的文件</string>
 			<key>other</key>
-			<string>%d new files</string>
+			<string>%d 新文件</string>
 		</dict>
 	</dict>
 </dict>

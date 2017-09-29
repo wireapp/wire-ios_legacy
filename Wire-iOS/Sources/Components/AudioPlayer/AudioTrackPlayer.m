@@ -124,8 +124,9 @@ static NSString* EmptyStringIfNil(NSString *string) {
 {
     MPRemoteCommandCenter *commandCenter = [MPRemoteCommandCenter sharedCommandCenter];
     
+    ZM_WEAK(self);
     [commandCenter.pauseCommand addTargetWithHandler:^MPRemoteCommandHandlerStatus(MPRemoteCommandEvent *event) {
-        
+        ZM_STRONG(self);
         if (self.avPlayer.rate > 0) {
             [self pause];
             return MPRemoteCommandHandlerStatusSuccess;
@@ -135,6 +136,7 @@ static NSString* EmptyStringIfNil(NSString *string) {
     }];
     
     [commandCenter.playCommand addTargetWithHandler:^MPRemoteCommandHandlerStatus(MPRemoteCommandEvent *event) {
+        ZM_STRONG(self);
         if (self.audioTrack == nil) {
             return MPRemoteCommandHandlerStatusNoSuchContent;
         }
@@ -148,6 +150,7 @@ static NSString* EmptyStringIfNil(NSString *string) {
     }];
     
     [commandCenter.nextTrackCommand addTargetWithHandler:^MPRemoteCommandHandlerStatus(MPRemoteCommandEvent *event) {
+        ZM_STRONG(self);
         if ([self skipToNextTrack]) {
            return MPRemoteCommandHandlerStatusSuccess;
         } else {
@@ -156,6 +159,7 @@ static NSString* EmptyStringIfNil(NSString *string) {
     }];
     
     [commandCenter.previousTrackCommand addTargetWithHandler:^MPRemoteCommandHandlerStatus(MPRemoteCommandEvent *event) {
+        ZM_STRONG(self);
         if ([self skipToPreviousTrack]) {
             return MPRemoteCommandHandlerStatusSuccess;
         } else {

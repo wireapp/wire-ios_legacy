@@ -57,10 +57,10 @@ import Cartography
     internal var selectedAudioEffect: AVSAudioEffectType = .none {
         didSet {
             if self.selectedAudioEffect == .reverse {
-                self.progressView.samples = self.normalizedLoudness.reversed() as [NSNumber]
+                self.progressView.samples = self.normalizedLoudness.reversed()
             }
             else {
-                self.progressView.samples = self.normalizedLoudness as [NSNumber]
+                self.progressView.samples = self.normalizedLoudness
             }
             
             self.setState(.playing, animated: true)
@@ -178,7 +178,7 @@ import Cartography
             DispatchQueue.main.async(execute: {
                 if let audioMetadata = metadata as? ZMAudioMetadata {
                     self.normalizedLoudness = audioMetadata.normalizedLoudness
-                    self.progressView.samples = audioMetadata.normalizedLoudness as [NSNumber]
+                    self.progressView.samples = audioMetadata.normalizedLoudness
                 }
             })
         }

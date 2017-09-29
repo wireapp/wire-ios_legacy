@@ -84,7 +84,7 @@
 
 // Conversation List Indicator
 "conversation_list.right_accessory.join_button.title" = "参加する";
-"conversation_list.header.self_team.accessibility_value" = "%@ チーム";
+"conversation_list.header.self_team.accessibility_value" = "%@ account.";
 "conversation_list.header.self_team.accessibility_value.inactive" = "タップしてアクティブにする";
 "conversation_list.header.self_team.accessibility_value.active" = "有効";
 "conversation_list.header.self_team.accessibility_value.has_new_messages" = "新しいメッセージ";
@@ -496,7 +496,6 @@
 "profile.details.title" = "詳細";
 "profile.details.guest" = "ゲスト";
 
-"profile_view.team_name.in" = "in %@";
 "profile_view.accessibility.handle" = "ユーザーネーム";
 "profile_view.accessibility.name" = "Display name";
 "profile_view.accessibility.team_name" = "Team name";
@@ -528,6 +527,7 @@
 
 "self.settings" = "設定";
 "self.profile" = "プロフィール";
+"self.account" = "アカウント";
 "self.help_center" = "サポート";
 "self.help_center.support_website" = "Wire サポート ウェブサイト";
 "self.help_center.contact_support" = "サポートへの問い合わせ";
@@ -559,8 +559,8 @@
 "self.new_device_alert.trust_devices" = "OK";
 
 // Settings - top level
-"self.settings.create_team.title" = "Create team";
-"self.settings.add_account.title" = "Add account";
+"self.settings.create_team.title" = "Create Team";
+"self.settings.add_account.title" = "Add Account";
 
 // Settings - Account details
 "self.settings.account_section" = "アカウント";
@@ -600,6 +600,10 @@
 
 "self.settings.account_details.delete_account.alert.title" = "アカウントを削除";
 "self.settings.account_details.delete_account.alert.message" = "EメールまたはSMSをあなたに送信します。リンクに従ってあなたのアカウントを削除してください";
+
+"self.settings.account_details.log_out.alert.title" = "ログアウト";
+"self.settings.account_details.log_out.alert.message" = "Your message history will be erased on this device.";
+
 
 // Change Username
 
@@ -659,7 +663,10 @@
 
 "self.settings.callkit.title" = "通話";
 "self.settings.callkit.caption" = "iOSで共有する";
-"self.settings.callkit.description" = "Wireの通話履歴をロック画面とiOSの通話履歴に表示する。もしiCloudが有効である場合、通話履歴はAppleに共有されます。この設定を適用するためにはWireを再起動してください。";
+"self.settings.callkit.description" = "Show Wire calls on the lock screen and in iOS call history. If iCloud is enabled, call history is shared with Apple.";
+
+"self.settings.cbr.not_available" = "Constant Bit Rate Encoding";
+"self.settings.cbr.not_available.description" = "Constant bit rate calls have been temporarily disabled with the introduction of multiple account support. CBR calls will be back soon.";
 
 "self.settings.vbr.title" = "可変ビットレートエンコーディング";
 "self.settings.vbr.description" = "これは通話でのデータ量を削減し、低速なネットワークにおける通話をより良くします。これをオフにすることで固定ビットレートエンコーディングを利用することができます。";
@@ -715,7 +722,7 @@
 "self.settings.privacy_security.lock_cancelled.description" = "Touch ID またはパスコードでWireのロックを解除する";
 "self.settings.privacy_security.lock_cancelled.action" = "ロックを解除";
 
-"self.settings.privacy_security.disable_link_previews.title" = "Create Previews For Links You Send";
+"self.settings.privacy_security.disable_link_previews.title" = "Create Link Previews";
 "self.settings.privacy_security.disable_link_previews.footer" = "Previews may still be shown for links from other people.";
 
 "self.settings.privacy_analytics_menu.devices.title" = "デバイス";
@@ -897,6 +904,7 @@
 "error.user.registration_unknown_error" = "何か問題が起きたようです。もう一度やり直してください。";
 "error.user.device_deleted_remotely" = "別のデバイスからログアウトしました。";
 "error.user.last_identity_cant_be_deleted" = "メールまたは電話番号のいずれかを削除するためには、それらが登録されている必要があります。";
+"error.user.account_suspended" = "This account is no longer authorized to log in.";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Those are caught by the UI without involving the SE validation. Basically very similar to ZMUserSessionErrorCode onces

@@ -25,13 +25,13 @@ import Cartography
 }
 
 
-class ClientUnregisterFlowViewController: FormFlowViewController, FormStepDelegate, ZMAuthenticationObserver {
+class ClientUnregisterFlowViewController: FormFlowViewController, FormStepDelegate {
     var popTransition: PopTransition?
     var pushTransition: PushTransition?
     var rootNavigationController: NavigationController?
     var backgroundImageView: UIImageView?
     weak var delegate: ClientUnregisterViewControllerDelegate?
-    var authToken: ZMAuthenticationObserverToken?
+    var authToken: Any?
     
     let clients: Array<UserClient>
     let credentials: ZMEmailCredentials?
@@ -41,7 +41,7 @@ class ClientUnregisterFlowViewController: FormFlowViewController, FormStepDelega
         self.credentials = credentials
         self.delegate = delegate
         super.init(nibName: nil, bundle: nil)
-        self.authToken = ZMUserSessionAuthenticationNotification.addObserver(self)
+        self.authToken = PostLoginAuthenticationNotification.addObserver(self, userSession: ZMUserSession.shared()!)
     }
     
     required override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
@@ -50,12 +50,6 @@ class ClientUnregisterFlowViewController: FormFlowViewController, FormStepDelega
     
     required init(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-    
-    deinit {
-        if let token = self.authToken {
-            ZMUserSessionAuthenticationNotification.removeObserver(for: token)
-        }
     }
     
     override func viewDidLoad() {
@@ -121,12 +115,6 @@ class ClientUnregisterFlowViewController: FormFlowViewController, FormStepDelega
         }
     }
 
-    // MARK: - ZMAuthenticationObserver
-    
-    func authenticationDidSucceed() {
-        self.delegate?.clientDeletionSucceeded()
-    }
-    
     // MARK: - FormStepDelegate
     
     func didCompleteFormStep(_ viewController: UIViewController!) {
@@ -164,4 +152,10 @@ class ClientUnregisterFlowViewController: FormFlowViewController, FormStepDelega
     }
     
 
+}
+
+extension ClientUnregisterFlowViewController: PostLoginAuthenticationObserver {
+    func clientRegistrationDidSucceed(accountId : UUID) {
+        self.delegate?.clientDeletionSucceeded()
+    }
 }

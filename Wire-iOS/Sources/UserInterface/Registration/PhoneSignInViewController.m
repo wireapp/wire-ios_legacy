@@ -20,6 +20,7 @@
 #import "PhoneSignInViewController.h"
 
 @import PureLayout;
+@import WireSyncEngine;
 
 #import "NavigationController.h"
 #import "PhoneNumberStepViewController.h"
@@ -37,10 +38,12 @@
 #import "Wire-Swift.h"
 
 
-@interface PhoneSignInViewController () <FormStepDelegate, ZMAuthenticationObserver, PhoneVerificationStepViewControllerDelegate>
+@interface PhoneSignInViewController () <FormStepDelegate, PreLoginAuthenticationObserver, PostLoginAuthenticationObserver, PhoneVerificationStepViewControllerDelegate>
 
 @property (nonatomic) PhoneNumberStepViewController *phoneNumberStepViewController;
-@property (nonatomic) id<ZMAuthenticationObserverToken> authenticationToken;
+
+@property (nonatomic) id preLoginAuthenticationToken;
+@property (nonatomic) id postLoginAuthenticationToken;
 
 @property (nonatomic, copy) NSString *phoneNumber;
 
@@ -67,27 +70,32 @@
 {
     [super viewDidAppear:animated];
     
-    if (self.isMovingToParentViewController || self.isBeingPresented || self.authenticationToken == nil) {
-        self.authenticationToken = [ZMUserSessionAuthenticationNotification addObserver:self];
+    if (self.preLoginAuthenticationToken == nil) {
+        self.preLoginAuthenticationToken = [PreLoginAuthenticationNotification registerObserver:self
+                                                                      forUnauthenticatedSession:[SessionManager shared].unauthenticatedSession];
+    }
+    if (self.postLoginAuthenticationToken == nil) {
+        self.postLoginAuthenticationToken = [PostLoginAuthenticationNotification addObserver:self];
     }
 }
 
 - (void)removeObservers
 {
-    [ZMUserSessionAuthenticationNotification removeObserverForToken:self.authenticationToken];
-    self.authenticationToken = nil;
+    self.preLoginAuthenticationToken = nil;
+    self.postLoginAuthenticationToken = nil;
 }
 
 - (void)createPhoneNumberStepViewController
 {
-    PhoneNumberStepViewController *phoneNumberStepViewController;
+    PhoneNumberStepViewController *phoneNumberStepViewController = [[PhoneNumberStepViewController alloc] init];
     
-    ZMUser *currentUser = [SessionManager shared].currentUser;
-    if (currentUser.phoneNumber.length > 0) {
-        // User was previously signed in so we must force him to sign in with the same credentials
-        phoneNumberStepViewController = [[PhoneNumberStepViewController alloc] initWithUneditablePhoneNumber:currentUser.phoneNumber];
-    } else {
-        phoneNumberStepViewController = [[PhoneNumberStepViewController alloc] init];
+    if (self.loginCredentials.phoneNumber.length > 0) {
+        // TODO
+        // User was previously signed in so we prefill the credentials.
+        //
+        // NOTE: would need to extract country code in a reliable way
+        //       in order to do this. Until then we don't prefill
+        //       phone numbers.
     }
     
     phoneNumberStepViewController.formStepDelegate = self;
@@ -213,7 +221,7 @@
     }
     else if (error.code == ZMUserSessionNeedsPasswordToRegisterClient) {
         [self.navigationController popToRootViewControllerAnimated:YES];
-        [self.delegate phoneSignInViewControllerNeedsPasswordToRegisterClient];
+        [self.delegate phoneSignInViewControllerNeedsPasswordFor:[[LoginCredentials alloc] initWithError:error]];
     }
     else {
         [self showAlertForError:error];
@@ -224,6 +232,21 @@
 {
     [self.analyticsTracker tagPhoneLogin];
     self.navigationController.showLoadingView = NO;
+}
+
+- (void)authenticationInvalidated:(NSError * _Nonnull)error accountId:(NSUUID * _Nonnull)accountId
+{
+    [self authenticationDidFail:error];
+}
+
+- (void)clientRegistrationDidSucceedWithAccountId:(NSUUID * _Nonnull)accountId
+{
+    [self authenticationDidSucceed];
+}
+
+- (void)clientRegistrationDidFail:(NSError * _Nonnull)error accountId:(NSUUID * _Nonnull)accountId
+{
+    [self authenticationDidFail:error];
 }
 
 @end

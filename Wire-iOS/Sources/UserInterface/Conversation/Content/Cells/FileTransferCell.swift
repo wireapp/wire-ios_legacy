@@ -58,7 +58,7 @@ public final class FileTransferCell: ConversationCell {
     
     func createConstraints() {
         constrain(messageContentView, self.containerView, fileTransferView, self.authorLabel) { messageContentView, containerView, fileTransferView, authorLabel in
-            containerView.left == authorLabel.left
+            containerView.left == messageContentView.leftMargin
             containerView.right == messageContentView.rightMargin
             containerView.top == messageContentView.top
             containerView.bottom == messageContentView.bottom ~ 100
@@ -127,7 +127,7 @@ public final class FileTransferCell: ConversationCell {
         
         var additionalItems = [UIMenuItem]()
         
-        if let fileMessageData = message.fileMessageData,
+        if let message = message, let fileMessageData = message.fileMessageData,
             let _ = fileMessageData.fileURL {
             additionalItems.append(contentsOf: [
                 .open(with: #selector(open)),

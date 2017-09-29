@@ -24,23 +24,23 @@ private let zmLog = ZMSLog(tag: "AppState")
 
 protocol AppStateControllerDelegate : class {
     
-    func appStateController(transitionedTo appState : AppState)
+    func appStateController(transitionedTo appState : AppState, transitionCompleted: @escaping () -> Void)
     
 }
 
 class AppStateController : NSObject {
     
     private(set) var appState : AppState = .headless
-    private var authenticationObserverToken : ZMAuthenticationObserverToken?
+    private var authenticationObserverToken : ZMAuthenticationStatusObserver?
     public weak var delegate : AppStateControllerDelegate? = nil
     
     fileprivate var isBlacklisted = false
     fileprivate var isLoggedIn = false
     fileprivate var isLoggedOut = false
-    fileprivate var isSuspended = false
     fileprivate var hasEnteredForeground = false
     fileprivate var isMigrating = false
     fileprivate var hasCompletedRegistration = false
+    fileprivate var loadingAccount : Account?
     fileprivate var authenticationError : Error?
     fileprivate let isRunningTests = ProcessInfo.processInfo.environment["XCTestConfigurationFilePath"] != nil
     
@@ -48,16 +48,11 @@ class AppStateController : NSObject {
         super.init()
         NotificationCenter.default.addObserver(self, selector: #selector(applicationDidBecomeActive), name: Notification.Name.UIApplicationDidBecomeActive, object: nil)
         
-        authenticationObserverToken = ZMUserSessionAuthenticationNotification.addObserver(self)
         appState = calculateAppState()
     }
     
     deinit {
         NotificationCenter.default.removeObserver(self)
-        
-        if let token = authenticationObserverToken {
-            ZMUserSessionAuthenticationNotification.removeObserver(for: token)
-        }
     }
     
     func calculateAppState() -> AppState {
@@ -78,8 +73,8 @@ class AppStateController : NSObject {
             return .blacklisted
         }
         
-        if isSuspended {
-            return .suspended
+        if let account = loadingAccount {
+            return .loading(account: account, from: SessionManager.shared?.accountManager.selectedAccount)
         }
         
         if isLoggedIn {
@@ -93,7 +88,7 @@ class AppStateController : NSObject {
         return .headless
     }
     
-    func recalculateAppState() {
+    func updateAppState(completion: (() -> Void)? = nil) {
         let newAppState = calculateAppState()
         
         if newAppState != .unauthenticated(error: nil) {
@@ -103,7 +98,11 @@ class AppStateController : NSObject {
         if newAppState != appState {
             zmLog.debug("transitioning to app state: \(newAppState)")
             appState = newAppState
-            delegate?.appStateController(transitionedTo: appState)
+            delegate?.appStateController(transitionedTo: appState) {
+                completion?()
+            }
+        } else {
+            completion?()
         }
     }
     
@@ -111,42 +110,53 @@ class AppStateController : NSObject {
 
 extension AppStateController : SessionManagerDelegate {
     
-    func sessionManagerDidLogout() {
+    func sessionManagerWillLogout(error: Error?, userSessionCanBeTornDown: @escaping () -> Void) {
+        authenticationError = error
         isLoggedIn = false
         isLoggedOut = true
-        recalculateAppState()
+        updateAppState {
+            userSessionCanBeTornDown()
+        }
     }
     
+    func sessionManagerDidFailToLogin(error: Error) {
+        loadingAccount = nil
+        authenticationError = error
+        isLoggedIn = false
+        isLoggedOut = true
+        updateAppState()
+    }
+        
     func sessionManagerDidBlacklistCurrentVersion() {
         isBlacklisted = true
-        recalculateAppState()
+        updateAppState()
     }
     
     func sessionManagerWillStartMigratingLocalStore() {
         isMigrating = true
-        recalculateAppState()
+        updateAppState()
     }
     
-    func sessionManagerWillSuspendSession() {
-        isSuspended = true
-        recalculateAppState()
+    func sessionManagerWillOpenAccount(_ account: Account, userSessionCanBeTornDown: @escaping () -> Void) {
+        loadingAccount = account
+        updateAppState { 
+            userSessionCanBeTornDown()
+        }
     }
     
     func sessionManagerCreated(userSession: ZMUserSession) {        
         userSession.checkIfLoggedIn { [weak self] (loggedIn) in
-            self?.isLoggedIn = loggedIn
-            self?.isLoggedOut = !loggedIn
-            self?.isSuspended = false
+            guard loggedIn else { return }
+            
+            // NOTE: we don't enter the unauthenticated state here if we are not logged in
+            //       because we will receive `sessionManagerDidLogout()` with an auth error
+            
+            self?.isLoggedIn = true
+            self?.isLoggedOut = !false
+            self?.loadingAccount = nil
             self?.isMigrating = false
-            self?.recalculateAppState()
+            self?.updateAppState()
         }
-    }
-    
-    func sessionManagerCreated(unauthenticatedSession: UnauthenticatedSession) {
-        isLoggedIn = false
-        isLoggedOut = true
-        isSuspended = false
-        recalculateAppState()
     }
     
 }
@@ -155,20 +165,9 @@ extension AppStateController {
     
     func applicationDidBecomeActive() {
         hasEnteredForeground = true
-        recalculateAppState()
+        updateAppState()
     }
     
-}
-
-extension AppStateController : ZMAuthenticationObserver {
-    
-    func authenticationDidFail(_ error: Error) {
-        authenticationError = error
-        isLoggedIn = false
-        isLoggedOut = true
-        recalculateAppState()
-    }
-
 }
 
 extension AppStateController : RegistrationViewControllerDelegate {
@@ -177,14 +176,14 @@ extension AppStateController : RegistrationViewControllerDelegate {
         isLoggedIn = true
         isLoggedOut = false
         hasCompletedRegistration = false
-        recalculateAppState()
+        updateAppState()
     }
     
     func registrationViewControllerDidCompleteRegistration() {
         isLoggedIn = true
         isLoggedOut = false
         hasCompletedRegistration = true
-        recalculateAppState()
+        updateAppState()
     }
     
 }

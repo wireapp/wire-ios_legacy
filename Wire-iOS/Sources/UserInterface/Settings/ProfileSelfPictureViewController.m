@@ -42,6 +42,8 @@
 #import "AnalyticsTracker.h"
 #import "AnalyticsTracker+SelfUser.h"
 
+#import "Wire-Swift.h"
+
 @interface ProfileSelfPictureViewController () <CameraViewControllerDelegate>
 
 @property (nonatomic) ButtonWithLargerHitArea *cameraButton;
@@ -74,7 +76,7 @@
             [self setSelfImageToData:imageData];
         };
         
-        self.userObserverToken = [UserChangeInfo addUserObserver:self forUser:[ZMUser selfUser]];
+        self.userObserverToken = [UserChangeInfo addObserver:self forUser:[ZMUser selfUser] userSession:[ZMUserSession sharedSession]];
     }
     
     return self;
@@ -166,9 +168,12 @@
 - (void)setSelfImageToData:(NSData *)selfImageData
 {
     [self.analyticsTracker tagPictureChanged];
-
+    
+    // iOS11 uses HEIF image format, but BE expects JPEG
+    NSData *jpegData = selfImageData.isJPEG ? selfImageData : UIImageJPEGRepresentation([UIImage imageWithData:selfImageData], 1.0);
+    
     [[ZMUserSession sharedSession] enqueueChanges:^{
-        [[ZMUserSession sharedSession].profileUpdate updateImageWithImageData:selfImageData];
+        [[ZMUserSession sharedSession].profileUpdate updateImageWithImageData:jpegData];
         [self.delegate bottomOverlayViewControllerBackgroundTapped:self];
     }];
 }

@@ -47,6 +47,11 @@ NSString * const ColorSchemeColorIconBackgroundSelectedNoAccent = @"icon-backgro
 
 NSString * const ColorSchemeColorPopUpButtonOverlayShadow = @"popup-button-overlay-shadow";
 
+NSString * const ColorSchemeColorChatHeadBackground = @"chat-head-background";
+NSString * const ColorSchemeColorChatHeadBorder = @"chat-head-border";
+NSString * const ColorSchemeColorChatHeadTitleText = @"chat-head-title-text";
+NSString * const ColorSchemeColorChatHeadSubtitleText = @"chat-head-subtitle-text";
+
 NSString * const ColorSchemeColorButtonHighlighted = @"button-highlighted";
 NSString * const ColorSchemeColorButtonEmptyText = @"button-empty-text";
 
@@ -212,6 +217,8 @@ static NSString* light(NSString *colorString) {
     UIColor *white = [UIColor whiteColor];
     UIColor *white97 = [UIColor colorWithWhite:0.97 alpha:1];
     UIColor *white98 = [UIColor colorWithWhite:0.98 alpha:1];
+    UIColor *white90 = [UIColor colorWithWhite:0.9 alpha:1];
+    UIColor *white60 = [UIColor colorWithWhite:0.6 alpha:1];
     UIColor *whiteAlpha16 = [UIColor wr_colorFromString:@"rgb(255, 255, 255, 0.16)"];
     UIColor *whiteAlpha24 = [UIColor wr_colorFromString:@"rgb(255, 255, 255, 0.24)"];
     UIColor *whiteAlpha40 = [UIColor wr_colorFromString:@"rgb(255, 255, 255, 0.40)"];
@@ -234,7 +241,6 @@ static NSString* light(NSString *colorString) {
     UIColor *lightGraphiteAlpha48 = [UIColor wr_colorFromString:@"rgb(141, 152, 159, 0.48)"];
     UIColor *lightGraphiteAlpha64 = [UIColor wr_colorFromString:@"rgb(141, 152, 159, 0.64)"];
     
-    
     NSMutableDictionary *lightColors = [NSMutableDictionary dictionaryWithDictionary:
                                 @{ ColorSchemeColorAccent: accentColor,
                                    ColorSchemeColorAccentDimmed: [accentColor colorWithAlphaComponent:0.16],
@@ -256,6 +262,10 @@ static NSString* light(NSString *colorString) {
                                    ColorSchemeColorIconBackgroundSelected: accentColor,
                                    ColorSchemeColorIconBackgroundSelectedNoAccent: graphite,
                                    ColorSchemeColorPopUpButtonOverlayShadow: blackAlpha24,
+                                   ColorSchemeColorChatHeadBackground: white,
+                                   ColorSchemeColorChatHeadBorder: white90,
+                                   ColorSchemeColorChatHeadTitleText: graphite,
+                                   ColorSchemeColorChatHeadSubtitleText: white60,
                                    ColorSchemeColorButtonHighlighted: whiteAlpha24,
                                    ColorSchemeColorButtonEmptyText: accentColor,
                                    ColorSchemeColorTabNormal: blackAlpha48,
@@ -307,6 +317,10 @@ static NSString* light(NSString *colorString) {
                                   ColorSchemeColorIconBackgroundSelected: white,
                                   ColorSchemeColorIconBackgroundSelectedNoAccent: white,
                                   ColorSchemeColorPopUpButtonOverlayShadow: black,
+                                  ColorSchemeColorChatHeadBackground: graphite,
+                                  ColorSchemeColorChatHeadBorder: graphite,
+                                  ColorSchemeColorChatHeadTitleText: white,
+                                  ColorSchemeColorChatHeadSubtitleText: whiteAlpha40,
                                   ColorSchemeColorButtonHighlighted: blackAlpha24,
                                   ColorSchemeColorButtonEmptyText: white,
                                   ColorSchemeColorTabNormal: lightGraphite,

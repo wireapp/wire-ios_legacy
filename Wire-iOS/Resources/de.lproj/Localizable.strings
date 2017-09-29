@@ -84,7 +84,7 @@
 
 // Conversation List Indicator
 "conversation_list.right_accessory.join_button.title" = "Beitreten";
-"conversation_list.header.self_team.accessibility_value" = "%@ Team.";
+"conversation_list.header.self_team.accessibility_value" = "%@ Konto.";
 "conversation_list.header.self_team.accessibility_value.inactive" = "Zum Aktivieren tippen.";
 "conversation_list.header.self_team.accessibility_value.active" = "Aktiv.";
 "conversation_list.header.self_team.accessibility_value.has_new_messages" = "Hat neue Nachrichten.";
@@ -94,22 +94,22 @@
 
 // Conversation list voiceover accessibility
 "conversation_list.voiceover.open_conversation.hint" = "Unterhaltung öffnen";
-"conversation_list.voiceover.status.pending_connection" = "pending";
-"conversation_list.voiceover.status.active_call" = "active call";
+"conversation_list.voiceover.status.pending_connection" = "wird überprüft";
+"conversation_list.voiceover.status.active_call" = "Aktiver Anruf";
 "conversation_list.voiceover.status.missed_call" = "Entgangener Anruf";
-"conversation_list.voiceover.status.pause_media" = "pause media";
-"conversation_list.voiceover.status.play_media" = "play media";
-"conversation_list.voiceover.status.silenced" = "silenced";
-"conversation_list.voiceover.status.typing" = "typing";
-"conversation_list.voiceover.status.ping" = "ping";
-"conversation_list.voiceover.bottom_bar.archived_button.label" = "archived";
-"conversation_list.voiceover.bottom_bar.archived_button.hint" = "list of archived conversations";
+"conversation_list.voiceover.status.pause_media" = "stoppe Medien";
+"conversation_list.voiceover.status.play_media" = "Medien abspielen";
+"conversation_list.voiceover.status.silenced" = "Schweigen";
+"conversation_list.voiceover.status.typing" = "tippt";
+"conversation_list.voiceover.status.ping" = "Ping";
+"conversation_list.voiceover.bottom_bar.archived_button.label" = "archivierte";
+"conversation_list.voiceover.bottom_bar.archived_button.hint" = "Liste der archivierten Unterhaltungen";
 "conversation_list.voiceover.bottom_bar.contacts_button.label" = "Kontakte";
-"conversation_list.voiceover.bottom_bar.contacts_button.hint" = "search for people on Wire";
-"conversation_list.voiceover.bottom_bar.compose_button.label" = "compose";
-"conversation_list.voiceover.bottom_bar.compose_button.hint" = "compose messages and save for later";
-"conversation_list.voiceover.bottom_bar.camera_button.label" = "camera";
-"conversation_list.voiceover.bottom_bar.camera_button.hint" = "take picture and send quickly";
+"conversation_list.voiceover.bottom_bar.contacts_button.hint" = "Suche nach Personen auf Wire";
+"conversation_list.voiceover.bottom_bar.compose_button.label" = "erstellen";
+"conversation_list.voiceover.bottom_bar.compose_button.hint" = "Nachrichten verfassen und für später speichern";
+"conversation_list.voiceover.bottom_bar.camera_button.label" = "Kamera";
+"conversation_list.voiceover.bottom_bar.camera_button.hint" = "Fotografieren und schnell senden";
 
 // Archived List
 "archived_list.title" = "Archiv";
@@ -146,7 +146,7 @@
 "list.archived_conversations" = "Archiv";
 "list.archived_conversations_close" = "Archiv schliessen";
 
-"conversation.voiceover.verified" = "Ok";
+"conversation.voiceover.verified" = "Überprüft";
 
 "conversation.status.call" = "Aktiver Anruf";
 "conversation.status.typing" = "Schreibt eine Nachricht…";
@@ -496,7 +496,6 @@
 "profile.details.title" = "Details";
 "profile.details.guest" = "Gast";
 
-"profile_view.team_name.in" = "in %@";
 "profile_view.accessibility.handle" = "Benutzername";
 "profile_view.accessibility.name" = "Angezeigter Name";
 "profile_view.accessibility.team_name" = "Name des Teams";
@@ -528,6 +527,7 @@
 
 "self.settings" = "Einstellungen";
 "self.profile" = "Profil";
+"self.account" = "Benutzerkonto";
 "self.help_center" = "Hilfe";
 "self.help_center.support_website" = "Wire-Support-Webseite";
 "self.help_center.contact_support" = "Kontaktiere den Support";
@@ -535,8 +535,8 @@
 "self.sign_out" = "Ausloggen";
 "self.report_abuse" = "Missbrauch melden";
 "self.voiceover.label" = "Profil";
-"self.voiceover.hint" = "Open profile and settings";
-"self.new-device.voiceover.label" = "Profile, new devices added";
+"self.voiceover.hint" = "Offenes Profil und Einstellungen";
+"self.new-device.voiceover.label" = "Profil, neue Geräte hinzugefügt";
 
 "self.add_phone_number" = "Telefonnummer hinzufügen";
 "self.add_email_password" = "E-Mail und Passwort hinzufügen";
@@ -559,8 +559,8 @@
 "self.new_device_alert.trust_devices" = "OK";
 
 // Settings - top level
-"self.settings.create_team.title" = "Create team";
-"self.settings.add_account.title" = "Add account";
+"self.settings.create_team.title" = "Team erstellen";
+"self.settings.add_account.title" = "Benutzerkonto hinzufügen";
 
 // Settings - Account details
 "self.settings.account_section" = "Benutzerkonto";
@@ -600,6 +600,10 @@
 
 "self.settings.account_details.delete_account.alert.title" = "Benutzerkonto löschen";
 "self.settings.account_details.delete_account.alert.message" = "In Kürze erhältst du eine Nachricht per E-Mail oder SMS. Folge dem Link darin, um dein Konto zu löschen.";
+
+"self.settings.account_details.log_out.alert.title" = "Ausloggen";
+"self.settings.account_details.log_out.alert.message" = "Der Nachrichtenverlauf wird auf diesem Gerät gelöscht.";
+
 
 // Change Username
 
@@ -659,7 +663,10 @@
 
 "self.settings.callkit.title" = "Anrufe";
 "self.settings.callkit.caption" = "Mit iOS teilen";
-"self.settings.callkit.description" = "Zeige Wire Anrufe auf dem Sperrbildschirm und in der iOS Anrufhistorie. Wenn iCloud aktiviert ist wird die Anrufhistorie mit Apple geteilt. Die Aktivierung dieser Einstellung erfordert einen Neustart von Wire.";
+"self.settings.callkit.description" = "Zeige Wire Anrufe auf dem Sperrbildschirm und in der iOS Anrufhistorie. Wenn iCloud aktiviert ist wird die Anrufhistorie mit Apple geteilt.";
+
+"self.settings.cbr.not_available" = "Constant Bit Rate Encoding";
+"self.settings.cbr.not_available.description" = "Die Option für Constant Bit Rate bei Anrufen ist vorübergehend nicht verfügbar, bedingt durch die neue Mehrkontenfähigkeit der App. CBR kommt aber bald wieder.";
 
 "self.settings.vbr.title" = "Variable Bitrate";
 "self.settings.vbr.description" = "Anrufe benötigen weniger Datenvolumen und funktionieren besser in Netzen mit geringer Bandbreite. Deaktivieren um eine konstante Bitrate zu benutzen.";
@@ -715,8 +722,8 @@
 "self.settings.privacy_security.lock_cancelled.description" = "Entsperre Wire mit Touch ID oder Passcode";
 "self.settings.privacy_security.lock_cancelled.action" = "Entsperren";
 
-"self.settings.privacy_security.disable_link_previews.title" = "Create Previews For Links You Send";
-"self.settings.privacy_security.disable_link_previews.footer" = "Vorschauen können weiterhin für von anderen Personen gesendete Links angezeigt werden.";
+"self.settings.privacy_security.disable_link_previews.title" = "Link-Vorschau erstellen";
+"self.settings.privacy_security.disable_link_previews.footer" = "Vorschauen für Links von anderen Personen können weiterhin angezeigt werden.";
 
 "self.settings.privacy_analytics_menu.devices.title" = "Geräte";
 
@@ -897,6 +904,7 @@
 "error.user.registration_unknown_error" = "Ein Fehler ist aufgetreten, bitte versuche es erneut.";
 "error.user.device_deleted_remotely" = "Du wurdest durch ein anderes Gerät abgemeldet.";
 "error.user.last_identity_cant_be_deleted" = "Es ist entweder eine E-Mail-Adresse oder eine Telefonnummer erforderlich.";
+"error.user.account_suspended" = "Benutzerkonto ist nicht mehr zum Login berechtigt.";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Those are caught by the UI without involving the SE validation. Basically very similar to ZMUserSessionErrorCode onces
@@ -974,6 +982,6 @@
 "compose.drafts.compose.delete.confirm.message" = "Diese Aktion wird die Nachricht dauerhaft löschen und kann nicht widerrufen werden.";
 "compose.drafts.compose.delete.confirm.action.title" = "Löschen";
 
-"compose.drafts.compose.dismiss.confirm.title" = "Save as draft";
+"compose.drafts.compose.dismiss.confirm.title" = "Als Entwurf speichern";
 "compose.drafts.compose.dismiss.confirm.action.title" = "Speichern";
 "compose.drafts.compose.dismiss.delete.action.title" = "Löschen";

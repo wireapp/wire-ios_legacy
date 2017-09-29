@@ -54,7 +54,7 @@ extension MessagePresenter {
             }
             self.modalTargetController?.dismiss(animated: true, completion: completion)
         }
-        return imagesController.wrapInNavigationController()
+        return imagesController
     }
     
     @objc func closeImagesButtonPressed(_ sender: AnyObject!) {

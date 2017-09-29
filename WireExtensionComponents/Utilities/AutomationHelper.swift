@@ -66,6 +66,9 @@ import WireSyncEngine
         if arguments.hasFlag(AutomationKey.LogNetwork.rawValue) {
             ZMSLog.set(level: .debug, tag: "Network")
         }
+        if arguments.hasFlag(AutomationKey.LogCalling.rawValue) {
+            ZMSLog.set(level: .debug, tag: "calling")
+        }
         AutomationHelper.enableLogTags(arguments)
         if let debugDataPath = arguments.flagValueIfPresent(AutomationKey.DebugDataToInstall.rawValue),
             FileManager.default.fileExists(atPath: debugDataPath)
@@ -83,6 +86,7 @@ import WireSyncEngine
         case Email = "loginemail"
         case Password = "loginpassword"
         case LogNetwork = "debug-log-network"
+        case LogCalling = "debug-log-calling"
         case LogTags = "debug-log"
         case DisableAutocorrection = "disable-autocorrection"
         case EnableAddressBookOnSimulator = "addressbook-on-simulator"

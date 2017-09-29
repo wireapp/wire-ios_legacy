@@ -21,5 +21,4 @@
 
 @interface DeveloperMenuState : NSObject
 + (BOOL)developerMenuEnabled;
-+ (BOOL)signOutEnabled;
 @end

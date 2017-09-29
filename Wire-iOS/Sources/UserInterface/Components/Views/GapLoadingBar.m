@@ -22,7 +22,7 @@
 #import "WAZUIMagic.h"
 #import "CAMediaTimingFunction+AdditionalEquations.h"
 
-
+static NSString *GapLoadingAnimationKey = @"gapLoadingAnimation";
 
 @interface GapLoadingBar ()
 
@@ -31,8 +31,6 @@
 @property (nonatomic, assign) NSTimeInterval animationDuration;
 
 @end
-
-
 
 @implementation GapLoadingBar
 
@@ -50,9 +48,18 @@
     if (self) {
         self.gapSize = gapSize;
         self.animationDuration = duration;
+        
         [self setupGapLoadingBar];
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationDidBecomeActive:) name:UIApplicationDidBecomeActiveNotification object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationDidEnterBackground:) name:UIApplicationDidEnterBackgroundNotification object:nil];
     }
     return self;
+}
+
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)setupGapLoadingBar
@@ -70,9 +77,47 @@
     
     // restart animation
     if (self.animating) {
-        self.animating = NO;
-        self.animating = YES;
+        [self startAnimation];
     }
+}
+
+- (void)applicationDidBecomeActive:(id)sender
+{
+    if (self.animating && ! self.isAnimationRunning) {
+        [self startAnimation];
+    }
+}
+
+- (void)applicationDidEnterBackground:(id)sender
+{
+    if (self.animating) {
+        [self stopAnimation];
+    }
+}
+
+- (BOOL)isAnimationRunning
+{
+    return [self.gapLayer animationForKey:GapLoadingAnimationKey] != nil;
+}
+
+- (void)startAnimation
+{
+    CABasicAnimation *anim = [CABasicAnimation animationWithKeyPath:NSStringFromSelector(@selector(gapPosition))];
+    anim.fromValue = @(- self.gapSize);
+    anim.toValue = @(self.bounds.size.width + self.gapSize);
+    anim.removedOnCompletion = NO;
+    anim.autoreverses = NO;
+    anim.fillMode = kCAFillModeForwards;
+    anim.repeatCount = HUGE_VALF;
+    
+    anim.duration = self.animationDuration;
+    anim.timingFunction = [CAMediaTimingFunction easeInOutQuart];
+    [self.gapLayer addAnimation:anim forKey:GapLoadingAnimationKey];
+}
+
+- (void)stopAnimation
+{
+    [self.gapLayer removeAnimationForKey:GapLoadingAnimationKey];
 }
 
 - (void)setAnimating:(BOOL)animating
@@ -84,21 +129,9 @@
     _animating = animating;
     
     if (self.animating) {
-        
-        CABasicAnimation *anim = [CABasicAnimation animationWithKeyPath:NSStringFromSelector(@selector(gapPosition))];
-        anim.fromValue = @(- self.gapSize);
-        anim.toValue = @(self.bounds.size.width + self.gapSize);
-        anim.removedOnCompletion = NO;
-        anim.autoreverses = NO;
-        anim.fillMode = kCAFillModeForwards;
-        anim.repeatCount = HUGE_VALF;
-        
-        anim.duration = self.animationDuration;
-        anim.timingFunction = [CAMediaTimingFunction easeInOutQuart];
-        [self.gapLayer addAnimation:anim forKey:@"anim"];
-    }
-    else {
-        [self.gapLayer removeAnimationForKey:@"anim"];
+        [self startAnimation];
+    } else {
+        [self stopAnimation];
     }
 }
 

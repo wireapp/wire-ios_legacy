@@ -74,19 +74,15 @@ const NSTimeInterval PermantentConversationListObserverObservationFinalTime = 20
     if (self.observing) {
         self.observationStartDate = [NSDate date];
 
-        
-        
         self.conversationListObserverToken = [ConversationListChangeInfo addObserver:self
-                                                                             forList:[ZMConversationList conversationsIncludingArchivedInUserSession:[ZMUserSession sharedSession]]];
-
+                                                                             forList:[ZMConversationList conversationsIncludingArchivedInUserSession:[ZMUserSession sharedSession]]
+                                                                         userSession:[ZMUserSession sharedSession]];
+        
         [self performSelector:@selector(probablyReceivedFullConversationList)
                    withObject:nil
                    afterDelay:PermantentConversationListObserverObservationFinalTime];
     } else {
-        if (self.conversationListObserverToken != nil) {
-            [ConversationListChangeInfo removeObserver:self.conversationListObserverToken
-                                               forList:[ZMConversationList conversationsIncludingArchivedInUserSession:[ZMUserSession sharedSession]]];
-        }
+        self.conversationListObserverToken = nil;
     }
 }
 

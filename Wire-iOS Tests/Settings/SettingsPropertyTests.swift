@@ -171,4 +171,48 @@ class SettingsPropertyTests: XCTestCase {
         try? saveAndCheck(property, value: 2)
     }
     
+    // MARK: - Accounts
+    
+    func testThatIntegerUserDefaultsSettingForAccountSave() {
+        // given
+        let settings = Settings()
+        let account = Account(userName: "bob", userIdentifier: UUID())
+        let key = "IntegerKey"
+        XCTAssertNil(settings.value(for: key, in: account))
+        
+        // when
+        settings.setValue(42, for: key, in: account)
+        
+        // then
+        let result: Int? = settings.value(for: key, in: account)
+        XCTAssertEqual(result, 42)
+    }
+    
+    func testThatBoolUserDefaultsSettingForAccountSave() {
+        // given
+        let settings = Settings()
+        let account = Account(userName: "bob", userIdentifier: UUID())
+        let key = "BooleanKey"
+        XCTAssertNil(settings.value(for: key, in: account))
+        
+        // when
+        settings.setValue(true, for: key, in: account)
+        
+        // then
+        let result: Bool? = settings.value(for: key, in: account)
+        XCTAssertEqual(result, true)
+    }
+    
+    func testThatSharedSettingIsMigratedToAccount() {
+        // given
+        let settings = Settings()
+        let account = Account(userName: "bob", userIdentifier: UUID())
+        let key = "IntegerKey"
+        settings.defaults().setValue(42, forKey: key)
+        
+        // when & then
+        let result: Int? = settings.value(for: key, in: account)
+        XCTAssertNil(settings.defaults().object(forKey: key))
+        XCTAssertEqual(result, 42)
+    }
 }

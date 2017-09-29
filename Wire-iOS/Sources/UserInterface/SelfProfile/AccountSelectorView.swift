@@ -44,7 +44,7 @@ internal class LineView: UIView {
         
         constrain(self, first) { selfView, first in
             first.leading == selfView.leading
-            first.top == selfView.top ~ LayoutPriority(750)
+            first.top == selfView.top
             first.bottom == selfView.bottom ~ LayoutPriority(750)
         }
         
@@ -53,8 +53,8 @@ internal class LineView: UIView {
         self.views.dropFirst().forEach {
             constrain(previous, $0, self) { previous, current, selfView in
                 current.leading == previous.trailing + inset
-                current.top == selfView.top ~ LayoutPriority(750)
-                current.bottom == selfView.bottom ~ LayoutPriority(750)
+                current.top == selfView.top
+                current.bottom == selfView.bottom
             }
             previous = $0
         }
@@ -75,13 +75,18 @@ final internal class AccountSelectorView: UIView {
 
     fileprivate var accounts: [Account]? = nil {
         didSet {
+            guard let _ = ZMUserSession.shared() else {
+                return
+            }
             
             accountViews = accounts?.map({ AccountViewFactory.viewFor(account: $0) }) ?? []
             
             accountViews.forEach { (accountView) in
                 accountView.onTap = { account in
                     if let account = account, account != SessionManager.shared?.accountManager.selectedAccount {
-                        SessionManager.shared?.select(account)
+                        ZClientViewController.shared().conversationListViewController.dismiss(animated: true, completion: {
+                            SessionManager.shared?.select(account)
+                        })
                     }
                 }
             }

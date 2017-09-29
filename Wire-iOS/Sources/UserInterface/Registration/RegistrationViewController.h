@@ -45,7 +45,7 @@ typedef NS_ENUM(NSUInteger, RegistrationFlow) {
 @interface RegistrationViewController : UIViewController
 
 @property (nonatomic, weak) id<RegistrationViewControllerDelegate> delegate;
-@property (nonatomic) ZMUserSessionErrorCode signInErrorCode;
+@property (nonatomic) NSError *signInError;
 
 + (RegistrationFlow)registrationFlow;
 

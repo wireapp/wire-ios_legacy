@@ -34,11 +34,27 @@
 #import "UIViewController+Orientation.h"
 #import "Wire-Swift.h"
 
+@interface UIViewController (Child)
+- (void)wr_removeFromParentViewController;
+@end
+
+@implementation UIViewController (Child)
+
+- (void)wr_removeFromParentViewController
+{
+    [self willMoveToParentViewController:nil];
+    [self.view removeFromSuperview];
+    [self removeFromParentViewController];
+}
+
+@end
+
 @interface NotificationWindowRootViewController ()
 
 @property (nonatomic) NetworkStatusViewController *networkStatusViewController;
 @property (nonatomic) NetworkActivityViewController *networkActivityViewController;
 @property (nonatomic) AppLockViewController *appLockViewController;
+@property (nonatomic) ChatHeadsViewController *chatHeadsViewController;
 
 @property (nonatomic, strong) NSLayoutConstraint *overlayContainerLeftMargin;
 @property (nonatomic, strong) NSLayoutConstraint *networkStatusRightMargin;
@@ -50,6 +66,13 @@
 
 @implementation NotificationWindowRootViewController
 
+- (void)dealloc
+{
+    if (self.appLockViewController.parentViewController == self) {
+        [self.appLockViewController wr_removeFromParentViewController];
+    }
+}
+    
 - (void)loadView
 {
     self.view = [PassthroughTouchesView new];
@@ -58,9 +81,17 @@
     self.networkStatusViewController.view.translatesAutoresizingMaskIntoConstraints = NO;
     [self addViewController:self.networkStatusViewController toView:self.view];
     
-    self.appLockViewController = [[AppLockViewController alloc] init];
+    self.appLockViewController = [AppLockViewController shared];
+    if (nil != self.appLockViewController.parentViewController) {
+        [self.appLockViewController wr_removeFromParentViewController];
+    }
+    
     self.appLockViewController.view.translatesAutoresizingMaskIntoConstraints = NO;
     [self addViewController:self.appLockViewController toView:self.view];
+    
+    self.chatHeadsViewController = [[ChatHeadsViewController alloc] init];
+    self.chatHeadsViewController.view.translatesAutoresizingMaskIntoConstraints = NO;
+    [self addViewController:self.chatHeadsViewController toView:self.view];
     
     [self setupConstraints];
     [self updateAppearanceForOrientation:[UIApplication sharedApplication].statusBarOrientation];
@@ -73,6 +104,7 @@
     self.networkStatusRightMargin = [self.networkStatusViewController.view autoPinEdgeToSuperviewEdge:ALEdgeRight];
     
     [self.appLockViewController.view autoPinEdgesToSuperviewEdges];
+    [self.chatHeadsViewController.view autoPinEdgesToSuperviewEdges];
 }
 
 - (BOOL)prefersStatusBarHidden
@@ -120,16 +152,33 @@
     [self.voiceChannelController.view autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero];
 }
 
-#pragma mark - Rotation handling (should match up with roort)
+#pragma mark - In app custom notifications
+
+- (void)showLocalNotification:(UILocalNotification*)notification
+{
+    [self.chatHeadsViewController tryToDisplayNotification:notification];
+}
+
+#pragma mark - Rotation handling (should match up with root)
 
 - (BOOL)shouldAutorotate
 {
-    return UIApplication.sharedApplication.wr_topmostViewController.shouldAutorotate;
+    // guard against a stack overflow
+    if (self != UIApplication.sharedApplication.wr_topmostViewController) {
+        return UIApplication.sharedApplication.wr_topmostViewController.supportedInterfaceOrientations;
+    } else {
+        return YES;
+    }
 }
 
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations
 {
-    return UIApplication.sharedApplication.wr_topmostViewController.supportedInterfaceOrientations;
+    // guard against a stack overflow
+    if (self != UIApplication.sharedApplication.wr_topmostViewController) {
+        return UIApplication.sharedApplication.wr_topmostViewController.supportedInterfaceOrientations;
+    } else {
+        return [UIViewController wr_supportedInterfaceOrientations];
+    }
 }
 
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator

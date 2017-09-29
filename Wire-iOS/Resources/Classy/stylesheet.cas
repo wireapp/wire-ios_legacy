@@ -373,12 +373,12 @@ ProfileView {
     
     handleLabel: @{
         textColor: $color-text-foreground-dark;
-        font: $font-normal-light;
+        font: $font-small;
     }
     
     teamNameLabel: @{
         textColor: $color-text-foreground-dark;
-        font: $font-normal-light;
+        font: $font-small;
     }
 }
 
@@ -523,13 +523,6 @@ ConversationRootViewController {
     }
 }
 
-NewDevicesDot {
-    backgroundColor: $color-accent-current;
-    layer: @{
-        cornerRadius: 4.0;
-    }
-}
-
 ConversationListAccessoryView {
     textLabel: @{
         font: $font-medium-semibold;
@@ -541,7 +534,7 @@ ConversationListBottomBarController {
         backgroundColor: clear;
     }
     
-    plusButton: @{
+    startUIButton: @{
         iconColor: $color-text-foreground-dark;
     }
 
@@ -779,7 +772,7 @@ BaseAccountView, PersonalAccountView, TeamAccountView {
     }
 }
 
-AccountImageView {
+TeamImageView {
     initialLabel: @{
         font: $font-small-semibold;
         textColor: $color-text-foreground-light;
@@ -787,7 +780,7 @@ AccountImageView {
     backgroundColor: $color-background-light;
 }
 
-AccountImageView.big {
+TeamImageView.big {
     initialLabel: @{
         font: $font-large-thin;
     }
