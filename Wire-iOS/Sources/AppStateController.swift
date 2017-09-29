@@ -120,6 +120,7 @@ extension AppStateController : SessionManagerDelegate {
     }
     
     func sessionManagerDidFailToLogin(error: Error) {
+        loadingAccount = nil
         authenticationError = error
         isLoggedIn = false
         isLoggedOut = true
@@ -136,9 +137,11 @@ extension AppStateController : SessionManagerDelegate {
         updateAppState()
     }
     
-    func sessionManagerWillOpenAccount(_ account: Account) {
+    func sessionManagerWillOpenAccount(_ account: Account, userSessionCanBeTornDown: @escaping () -> Void) {
         loadingAccount = account
-        updateAppState()
+        updateAppState { 
+            userSessionCanBeTornDown()
+        }
     }
     
     func sessionManagerCreated(userSession: ZMUserSession) {        
@@ -154,13 +157,6 @@ extension AppStateController : SessionManagerDelegate {
             self?.isMigrating = false
             self?.updateAppState()
         }
-    }
-    
-    func sessionManagerCreated(unauthenticatedSession: UnauthenticatedSession) {
-        isLoggedIn = false
-        isLoggedOut = true
-        loadingAccount = nil
-        updateAppState()
     }
     
 }
