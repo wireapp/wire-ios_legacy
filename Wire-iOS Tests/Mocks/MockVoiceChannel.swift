@@ -28,14 +28,18 @@ class MockVoiceChannel : NSObject, VoiceChannel {
     
     @objc
     public init(videoCall: Bool) {
-        self.isVideoCall = videoCall
+        self.mockIsVideoCall = videoCall
         
         super.init()
     }
     
     // MARK - Call Properties
     
-    var isVideoCall: Bool = false
+    var mockIsVideoCall: Bool = false
+    
+    var isVideoCall: Bool {
+        return mockIsVideoCall
+    }
     
     var state: CallState {
         return .incoming(video: false, shouldRing: true, degraded: false)
