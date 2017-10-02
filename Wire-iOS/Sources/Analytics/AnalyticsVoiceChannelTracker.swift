@@ -42,19 +42,15 @@ class AnalyticsVoiceChannelTracker : NSObject {
             return
         }
         
-        self.callStateObserverToken = WireCallCenterV3.addCallStateObserver(observer: self, context: userSession.managedObjectContext) // TODO jacob: don't access NSManagedObjectContext
+        self.callStateObserverToken = WireCallCenterV3.addCallStateObserver(observer: self, userSession: userSession)
     }
 }
 
 extension AnalyticsVoiceChannelTracker : WireCallCenterCallStateObserver {
     
-    func callCenterDidChange(callState: CallState, conversationId: UUID, userId: UUID?, timeStamp: Date?) {
+    func callCenterDidChange(callState: CallState, conversation: ZMConversation, user: ZMUser?, timeStamp: Date?) {
         
-        guard let managedObjectContext = ZMUserSession.shared()?.managedObjectContext,
-              let conversation = ZMConversation(remoteID: conversationId, createIfNeeded: false, in: managedObjectContext) else
-        {
-            return
-        }
+        let conversationId = conversation.remoteIdentifier!
         
         switch callState {
         case .outgoing:

@@ -31,13 +31,12 @@ class ProximityMonitorManager : NSObject {
     override init() {
         super.init()
         
-        
         guard let userSession = ZMUserSession.shared() else {
             zmLog.error("UserSession not available when initializing \(type(of: self))")
             return
         }
         
-        callStateObserverToken = WireCallCenterV3.addCallStateObserver(observer: self, context: userSession.managedObjectContext) // TODO jacob: don't access NSManagedObjectContext
+        callStateObserverToken = WireCallCenterV3.addCallStateObserver(observer: self, userSession: userSession)
         AVSMediaManagerClientChangeNotification.add(self)
         
         updateProximityMonitorState()
@@ -66,7 +65,7 @@ class ProximityMonitorManager : NSObject {
 
 extension ProximityMonitorManager : WireCallCenterCallStateObserver {
     
-    func callCenterDidChange(callState: CallState, conversationId: UUID, userId: UUID?, timeStamp: Date?) {
+    func callCenterDidChange(callState: CallState, conversation: ZMConversation, user: ZMUser?, timeStamp: Date?) {
         updateProximityMonitorState()
     }
     

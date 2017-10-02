@@ -42,7 +42,7 @@ class ActiveVoiceChannelViewController : UIViewController {
             return
         }
         
-        callStateObserverToken = WireCallCenterV3.addCallStateObserver(observer: self, context: userSession.managedObjectContext) // TODO jacob: don't access NSManagedObjectContext
+        callStateObserverToken = WireCallCenterV3.addCallStateObserver(observer: self, userSession: userSession)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -164,7 +164,7 @@ class ActiveVoiceChannelViewController : UIViewController {
 
 extension ActiveVoiceChannelViewController : WireCallCenterCallStateObserver {
     
-    func callCenterDidChange(callState: CallState, conversationId: UUID, userId: UUID?, timeStamp: Date?) {
+    func callCenterDidChange(callState: CallState, conversation: ZMConversation, user: ZMUser?, timeStamp: Date?) {
         updateVisibleVoiceChannelViewController()
     }
     
