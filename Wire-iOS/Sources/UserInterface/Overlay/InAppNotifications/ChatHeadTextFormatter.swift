@@ -41,7 +41,7 @@ class ChatHeadTextFormatter {
         // if team & background account
         if let teamName = teamName, !isAccountActive {
             // "in Team"
-            result.append(NSMutableAttributedString(string: "\(!result.string.isEmpty ? " " : "")in ", attributes: regularFont))
+            result.append(NSMutableAttributedString(string: "\(result.string.isEmpty ? "" : " ")in ", attributes: regularFont))
             result.append(NSAttributedString(string: teamName, attributes: mediumFont))
         }
         
