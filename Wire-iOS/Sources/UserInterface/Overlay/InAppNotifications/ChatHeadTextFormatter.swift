@@ -21,24 +21,31 @@ import WireDataModel
 
 class ChatHeadTextFormatter {
     
-    /// Returns the formatted title text for the given conversation and account.
+    /// Returns the formatted title text for the given components. Team name is only
+    /// display when the account is not active. If no components are to be display, nil
+    /// is returned.
     ///
-    static func titleText(conversation: ZMConversation, teamName: String?, isAccountActive: Bool) -> NSAttributedString {
+    static func titleText(conversationName: String?, teamName: String?, isAccountActive: Bool) -> NSAttributedString? {
         
         let regularFont: [String: AnyObject] = [NSFontAttributeName: FontSpec(.medium, .regular).font!.withSize(14)]
         let mediumFont: [String: AnyObject] = [NSFontAttributeName: FontSpec(.medium, .medium).font!.withSize(14)]
         
+        let result: NSMutableAttributedString
+        
+        if let conversationName = conversationName {
+            result = NSMutableAttributedString(string: conversationName, attributes: mediumFont)
+        } else {
+            result = NSMutableAttributedString(string: "")
+        }
+        
         // if team & background account
         if let teamName = teamName, !isAccountActive {
-            // "Name in Team"
-            let result = NSMutableAttributedString(string: conversation.displayName + " ", attributes: mediumFont)
-            result.append(NSMutableAttributedString(string: "in ", attributes: regularFont))
+            // "in Team"
+            result.append(NSMutableAttributedString(string: "\(result.string.isEmpty ? "" : " ")in ", attributes: regularFont))
             result.append(NSAttributedString(string: teamName, attributes: mediumFont))
-            return result
-            
-        } else {
-            return NSAttributedString(string: conversation.displayName, attributes: mediumFont)
         }
+        
+        return result.string.isEmpty ? nil : result
     }
 
     

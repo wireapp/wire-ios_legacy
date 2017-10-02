@@ -63,11 +63,9 @@ class ChatHeadsViewController: UIViewController {
             return
         }
         
-        let isSelfAccount: (Account) -> Bool = { return $0.userIdentifier == note.zm_selfUserUUID }
-        
         guard
-            let accountManager = SessionManager.shared?.accountManager,
-            let account = accountManager.accounts.first(where: isSelfAccount),
+            let selfID = note.zm_selfUserUUID,
+            let account = SessionManager.shared?.accountManager.account(with: selfID),
             let session = SessionManager.shared?.backgroundUserSessions[account.userIdentifier],
             let conversation = note.conversation(in: session.managedObjectContext),
             let sender = note.sender(in: session.managedObjectContext)
@@ -78,25 +76,37 @@ class ChatHeadsViewController: UIViewController {
         guard shouldDisplay(note: note, conversation: conversation, account: account) else {
             return
         }
-        
-        // format title
-        var title: NSAttributedString? = ChatHeadTextFormatter.titleText(conversation: conversation, teamName: account.teamName, isAccountActive: account.isActive)
 
-        // if call notification & not a team, no title
-        if [ZMIncomingCallCategory, ZMMissedCallCategory].contains(note.category ?? "") {
-            if account.teamName == nil {
-                title = nil
-            }
-        }
+        var title: NSAttributedString? = nil
+        var contentCandidate: NSAttributedString? = nil
         
-        let contentCandidate: NSAttributedString?
-        
-        // if it is a message, extract the content for formatting
+        // new messages and group participation notifications
         if let message = note.message(in: conversation, in: session.managedObjectContext) {
-            contentCandidate = ChatHeadTextFormatter.text(for: message, isAccountActive: account.isActive)
-        } else {
-            guard let noteText = ChatHeadTextFormatter.text(for: note) else { return }
-            contentCandidate = noteText
+            
+            // Currently, the only system messages are group participation notifications.
+            // Since the group name is in the content, we don't want it in the title too.
+            title = ChatHeadTextFormatter.titleText(
+                conversationName: message.isSystem ? nil : conversation.displayName,
+                teamName: account.teamName,
+                isAccountActive: account.isActive
+            )
+            
+            // group participation notifications have content in note, o/w extract it from message
+            contentCandidate = message.isSystem ? ChatHeadTextFormatter.text(for: note) : ChatHeadTextFormatter.text(for: message, isAccountActive: account.isActive)
+        }
+        else {
+            
+            // call notifications contain sender name & possibly group name in notification content,
+            // so we don't want to include these in the title.
+            let isCallNotification = note.category == ZMIncomingCallCategory || note.category == ZMMissedCallCategory
+            
+            title = ChatHeadTextFormatter.titleText(
+                conversationName: isCallNotification ? nil : conversation.displayName,
+                teamName: account.teamName,
+                isAccountActive: account.isActive
+            )
+
+            contentCandidate = ChatHeadTextFormatter.text(for: note)
         }
         
         guard let content = contentCandidate else {

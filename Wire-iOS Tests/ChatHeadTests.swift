@@ -51,16 +51,17 @@ class ChatHeadTests: CoreDataSnapshotTestCase {
     func test_ActiveAccount_Team_OneOnOne() {
         
         let titleText = ChatHeadTextFormatter.titleText(
-            conversation: message.conversation!,
+            conversationName: message.conversation!.displayName,
             teamName: account.teamName,
             isAccountActive: true
         )
         
-        let content = ChatHeadTextFormatter.text(for: message, isAccountActive: true)!
+        let content = ChatHeadTextFormatter.text(for: message, isAccountActive: true)
+        XCTAssertNotNil(content)
         
         let sut = ChatHeadView(
             title: titleText,
-            content: content,
+            content: content!,
             sender: otherUser,
             conversation: message.conversation!,
             account: account
@@ -75,15 +76,16 @@ class ChatHeadTests: CoreDataSnapshotTestCase {
         message.conversation!.userDefinedName = "Italy Trip"
         
         let titleText = ChatHeadTextFormatter.titleText(
-            conversation: message.conversation!,
+            conversationName: message.conversation!.displayName,
             teamName: account.teamName,
             isAccountActive: true
         )
-        let content = ChatHeadTextFormatter.text(for: message, isAccountActive: true)!
+        let content = ChatHeadTextFormatter.text(for: message, isAccountActive: true)
+        XCTAssertNotNil(content)
         
         let sut = ChatHeadView(
             title: titleText,
-            content: content,
+            content: content!,
             sender: otherUser,
             conversation: message.conversation!,
             account: account
@@ -97,15 +99,16 @@ class ChatHeadTests: CoreDataSnapshotTestCase {
         account.teamName = nil
         
         let titleText = ChatHeadTextFormatter.titleText(
-            conversation: message.conversation!,
+            conversationName: message.conversation!.displayName,
             teamName: account.teamName,
             isAccountActive: true
         )
-        let content = ChatHeadTextFormatter.text(for: message, isAccountActive: true)!
+        let content = ChatHeadTextFormatter.text(for: message, isAccountActive: true)
+        XCTAssertNotNil(content)
         
         let sut = ChatHeadView(
             title: titleText,
-            content: content,
+            content: content!,
             sender: otherUser,
             conversation: message.conversation!,
             account: account
@@ -121,16 +124,17 @@ class ChatHeadTests: CoreDataSnapshotTestCase {
         message.conversation!.userDefinedName = "Italy Trip"
         
         let titleText = ChatHeadTextFormatter.titleText(
-            conversation: message.conversation!,
+            conversationName: message.conversation!.displayName,
             teamName: account.teamName,
             isAccountActive: true
         )
         
-        let content = ChatHeadTextFormatter.text(for: message, isAccountActive: true)!
+        let content = ChatHeadTextFormatter.text(for: message, isAccountActive: true)
+        XCTAssertNotNil(content)
         
         let sut = ChatHeadView(
             title: titleText,
-            content: content,
+            content: content!,
             sender: otherUser,
             conversation: message.conversation!,
             account: account
@@ -142,16 +146,17 @@ class ChatHeadTests: CoreDataSnapshotTestCase {
     func test_InactiveAccount_Team_OneOnOne() {
         
         let titleText = ChatHeadTextFormatter.titleText(
-            conversation: message.conversation!,
+            conversationName: message.conversation!.displayName,
             teamName: account.teamName,
             isAccountActive: false
         )
         
-        let content = ChatHeadTextFormatter.text(for: message, isAccountActive: false)!
+        let content = ChatHeadTextFormatter.text(for: message, isAccountActive: false)
+        XCTAssertNotNil(content)
         
         let sut = ChatHeadView(
             title: titleText,
-            content: content,
+            content: content!,
             sender: otherUser,
             conversation: message.conversation!,
             account: account
@@ -166,16 +171,17 @@ class ChatHeadTests: CoreDataSnapshotTestCase {
         message.conversation!.userDefinedName = "Italy Trip"
         
         let titleText = ChatHeadTextFormatter.titleText(
-            conversation: message.conversation!,
+            conversationName: message.conversation!.displayName,
             teamName: account.teamName,
             isAccountActive: false
         )
         
-        let content = ChatHeadTextFormatter.text(for: message, isAccountActive: false)!
+        let content = ChatHeadTextFormatter.text(for: message, isAccountActive: false)
+        XCTAssertNotNil(content)
         
         let sut = ChatHeadView(
             title: titleText,
-            content: content,
+            content: content!,
             sender: otherUser,
             conversation: message.conversation!,
             account: account
@@ -189,16 +195,17 @@ class ChatHeadTests: CoreDataSnapshotTestCase {
         account.teamName = nil
         
         let titleText = ChatHeadTextFormatter.titleText(
-            conversation: message.conversation!,
+            conversationName: message.conversation!.displayName,
             teamName: account.teamName,
             isAccountActive: false
         )
         
-        let content = ChatHeadTextFormatter.text(for: message, isAccountActive: false)!
+        let content = ChatHeadTextFormatter.text(for: message, isAccountActive: false)
+        XCTAssertNotNil(content)
         
         let sut = ChatHeadView(
             title: titleText,
-            content: content,
+            content: content!,
             sender: otherUser,
             conversation: message.conversation!,
             account: account
@@ -214,16 +221,17 @@ class ChatHeadTests: CoreDataSnapshotTestCase {
         message.conversation!.userDefinedName = "Italy Trip"
         
         let titleText = ChatHeadTextFormatter.titleText(
-            conversation: message.conversation!,
+            conversationName: message.conversation!.displayName,
             teamName: account.teamName,
             isAccountActive: false
         )
         
-        let content = ChatHeadTextFormatter.text(for: message, isAccountActive: false)!
+        let content = ChatHeadTextFormatter.text(for: message, isAccountActive: false)
+        XCTAssertNotNil(content)
         
         let sut = ChatHeadView(
             title: titleText,
-            content: content,
+            content: content!,
             sender: otherUser,
             conversation: message.conversation!,
             account: account
@@ -240,16 +248,17 @@ class ChatHeadTests: CoreDataSnapshotTestCase {
         message.conversation = otherUserConversation!
         
         let titleText = ChatHeadTextFormatter.titleText(
-            conversation: message.conversation!,
+            conversationName: message.conversation!.displayName,
             teamName: account.teamName,
             isAccountActive: true
         )
         
-        let content = ChatHeadTextFormatter.text(for: message, isAccountActive: true)!
+        let content = ChatHeadTextFormatter.text(for: message, isAccountActive: true)
+        XCTAssertNotNil(content)
         
         let sut = ChatHeadView(
             title: titleText,
-            content: content,
+            content: content!,
             sender: otherUser,
             conversation: message.conversation!,
             account: account
@@ -258,39 +267,127 @@ class ChatHeadTests: CoreDataSnapshotTestCase {
         verify(view: sut.prepareForSnapshots())
     }
     
-    func test_CallNotification_NoTitle() {
+    // MARK: - Call Notifications
+    
+    func test_InActiveAccount_CallNotification_Team() {
         
         let note = UILocalNotification()
         note.alertBody = "Vytis is calling."
+        
+        let titleText = ChatHeadTextFormatter.titleText(
+            conversationName: nil,
+            teamName: account.teamName,
+            isAccountActive: false
+        )
+        
         let content = ChatHeadTextFormatter.text(for: note)
         XCTAssertNotNil(content)
         
         let sut = ChatHeadView(
-            title: nil,
+            title: titleText,
             content: content!,
             sender: otherUser,
             conversation: message.conversation!,
             account: account
         )
         
-         verify(view: sut.prepareForSnapshots())
+        verify(view: sut.prepareForSnapshots())
     }
+    
+    func test_InActiveACcount_CallNotification_NonTeam() {
+        
+        let note = UILocalNotification()
+        note.alertBody = "Vytis is calling."
+        account.teamName = nil
+        
+        let titleText = ChatHeadTextFormatter.titleText(
+            conversationName: nil,
+            teamName: account.teamName,
+            isAccountActive: false
+        )
+        
+        let content = ChatHeadTextFormatter.text(for: note)
+        XCTAssertNotNil(content)
+        
+        let sut = ChatHeadView(
+            title: titleText,
+            content: content!,
+            sender: otherUser,
+            conversation: message.conversation!,
+            account: account
+        )
+        
+        verify(view: sut.prepareForSnapshots())
+    }
+
+    // MARK: - Group Participation Notifications
+    
+    func test_InactiveAccount_AddedToGroup_Team() {
+        
+        let note = UILocalNotification()
+        note.alertBody = "Vytis added you to iOS Team"
+        
+        let titleText = ChatHeadTextFormatter.titleText(
+            conversationName: nil,
+            teamName: account.teamName,
+            isAccountActive: false
+        )
+        
+        let content = ChatHeadTextFormatter.text(for: note)
+        
+        let sut = ChatHeadView(
+            title: titleText,
+            content: content!,
+            sender: otherUser,
+            conversation: message.conversation!,
+            account: account
+        )
+        
+        verify(view: sut.prepareForSnapshots())
+    }
+    
+    func test_InActiveAccountAddedToGroup_NonTeam() {
+        
+        let note = UILocalNotification()
+        note.alertBody = "Vytis added you to iOS Team"
+        
+        let titleText = ChatHeadTextFormatter.titleText(
+            conversationName: nil,
+            teamName: nil,
+            isAccountActive: false
+        )
+        
+        let content = ChatHeadTextFormatter.text(for: note)
+        
+        let sut = ChatHeadView(
+            title: titleText,
+            content: content!,
+            sender: otherUser,
+            conversation: message.conversation!,
+            account: account
+        )
+        
+        verify(view: sut.prepareForSnapshots())
+    }
+    
+    // MARK: - Misc
     
     func test_Ephemeral() {
         
         message.isEphemeral = true
         
         let titleText = ChatHeadTextFormatter.titleText(
-            conversation: message.conversation!,
+            conversationName: message.conversation!.displayName,
             teamName: account.teamName,
             isAccountActive: true
         )
         
-        let content = ChatHeadTextFormatter.text(for: message, isAccountActive: true)!
+        let content = ChatHeadTextFormatter.text(for: message, isAccountActive: true)
+        XCTAssertNotNil(content)
         
         let sut = ChatHeadView(
             title: titleText,
-            content: content,
+            content: content!,
             sender: otherUser,
             conversation: message.conversation!,
             account: account
