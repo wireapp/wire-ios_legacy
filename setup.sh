@@ -43,7 +43,7 @@ XCODE_VERSION=( ${version//./ } )
 
 # SETUP
 echo "ℹ️  Carthage bootstrap. This might take a while..."
-carthage bootstrap --platform ios
+carthage bootstrap --platform ios --cache-builds
 echo ""
 
 echo "ℹ️  Downloading AVS library..."
