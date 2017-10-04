@@ -23,13 +23,13 @@
 
 @interface SoundEventRulesWatchDog : NSObject
 
-@property (nonatomic, strong) NSDate *startIgnoreDate;
+@property (nonatomic, nullable) NSDate *startIgnoreDate;
 @property (nonatomic, assign) NSTimeInterval ignoreTime;
 /// Enables/disables any sound playback.
 @property (nonatomic, assign, getter=isMuted) BOOL muted;
 /// Check this property when it is allowed to playback any sounds
 @property (nonatomic, assign, readonly) BOOL outputAllowed;
 
-- (instancetype)initWithIgnoreTime:(NSTimeInterval)ignoreTime;
+- (instancetype _Nonnull)initWithIgnoreTime:(NSTimeInterval)ignoreTime;
 
 @end

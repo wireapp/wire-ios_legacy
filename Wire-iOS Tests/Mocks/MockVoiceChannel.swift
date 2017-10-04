@@ -19,30 +19,27 @@
 import Foundation
 
 @objc
-class MockVoiceChannel : NSObject, VoiceChannel {
+class MockVoiceChannel : NSObject, CallProperties, VoiceChannel {
     var initiator: ZMUser?
 
     public func continueByDecreasingConversationSecurity(userSession: ZMUserSession) {}
     func leaveAndKeepDegradedConversationSecurity(userSession: ZMUserSession) {}
 
-    
-    @objc
-    public init(videoCall: Bool) {
-        self.isVideoCall = videoCall
-        
-        super.init()
+
+    required init(conversation: ZMConversation) {
+        self.conversation = conversation
     }
     
     // MARK - Call Properties
     
-    var callingProtocol: CallingProtocol {
-        return .version3
+    var mockIsVideoCall: Bool = false
+    
+    var isVideoCall: Bool {
+        return mockIsVideoCall
     }
     
-    var isVideoCall: Bool = false
-    
-    var state: VoiceChannelV2State {
-        return VoiceChannelV2State.incomingCall
+    var state: CallState {
+        return .incoming(video: false, shouldRing: true, degraded: false)
     }
     
     var conversation: ZMConversation?
@@ -51,11 +48,11 @@ class MockVoiceChannel : NSObject, VoiceChannel {
     
     var participants: NSOrderedSet = NSOrderedSet()
     
-    func state(forParticipant: ZMUser) -> VoiceChannelV2ParticipantState {
-        return VoiceChannelV2ParticipantState()
+    func state(forParticipant: ZMUser) -> CallParticipantState {
+        return .connected(muted: false, sendingVideo: false)
     }
     
-    var selfUserConnectionState: VoiceChannelV2ConnectionState = VoiceChannelV2ConnectionState.connected
+    var selfUserConnectionState: CallParticipantState = CallParticipantState.connected(muted: false, sendingVideo: false)
     
     func setVideoCaptureDevice(device: CaptureDevice) throws {
         
@@ -99,7 +96,7 @@ class MockVoiceChannel : NSObject, VoiceChannel {
         return NSObject()
     }
     
-    func addStateObserver(_ observer: VoiceChannelStateObserver) -> Any {
+    func addCallStateObserver(_ observer: WireCallCenterCallStateObserver) -> Any {
         return NSObject()
     }
     
@@ -111,7 +108,7 @@ class MockVoiceChannel : NSObject, VoiceChannel {
         return NSObject()
     }
     
-    static func addStateObserver(_ observer: VoiceChannelStateObserver, userSession: ZMUserSession) -> Any {
+    static func addCallStateObserver(_ observer: WireCallCenterCallStateObserver, userSession: ZMUserSession) -> Any {
         return NSObject()
     }
     

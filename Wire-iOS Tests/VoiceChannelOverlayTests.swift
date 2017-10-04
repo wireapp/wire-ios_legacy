@@ -86,6 +86,7 @@ fileprivate class MockDelegate: NSObject, VoiceChannelOverlayDelegate {
 
 class VoiceChannelOverlayTests: ZMSnapshotTestCase {
     var conversation: MockConversation!
+    var originalVoiceChannelClass : VoiceChannel.Type!
     
     func configure(view: UIView, isIpad: Bool) {
         let overlay = view as! VoiceChannelOverlay
@@ -98,15 +99,23 @@ class VoiceChannelOverlayTests: ZMSnapshotTestCase {
         conversation.conversationType = .oneOnOne
         conversation.displayName = "John Doe"
         conversation.connectedUser = MockUser.mockUsers().last!
+        originalVoiceChannelClass = WireCallCenterV3Factory.voiceChannelClass
+        WireCallCenterV3Factory.voiceChannelClass = MockVoiceChannel.self
+    }
+    
+    override func tearDown() {
+        WireCallCenterV3Factory.voiceChannelClass = originalVoiceChannelClass
+        originalVoiceChannelClass = nil
+        
+        super.tearDown()
     }
     
     private func voiceChannelOverlay(state: VoiceChannelOverlayState, videoCall: Bool = false, conversation: MockConversation, selfUntrusted: Bool = false) -> VoiceChannelOverlay {
         let mockUser = MockUser.mockSelf()
         mockUser?.untrusted = selfUntrusted
-        if videoCall {
-            conversation.voiceChannel = MockVoiceChannel(videoCall: true)
-        }
-        let overlay = VoiceChannelOverlay(frame: UIScreen.main.bounds, callingConversation: (conversation as Any) as! ZMConversation)
+        let callingConversation = (conversation as Any) as! ZMConversation
+        (callingConversation.voiceChannel as? MockVoiceChannel)?.mockIsVideoCall = videoCall
+        let overlay = VoiceChannelOverlay(frame: UIScreen.main.bounds, callingConversation: callingConversation)
         overlay.selfUser = (mockUser as Any) as! ZMUser
         overlay.transition(to: state)
         CASStyler.default().styleItem(overlay)

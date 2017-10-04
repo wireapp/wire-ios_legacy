@@ -82,7 +82,6 @@
 #import "ConversationListViewModel.h"
 #import "ConversationListViewModel+Private.h"
 #import "NotificationWindowRootViewController.h"
-#import "VoiceChannelController.h"
 #import "SplitViewController.h"
 #import "ConfirmAssetViewController.h"
 #import "ProfileSelfPictureViewController.h"
@@ -108,6 +107,8 @@
 #import "ContactsDataSource.h"
 #import "LaunchImageViewController.h"
 #import "NetworkStatusViewController.h"
+#import "VoiceUserImageView.h"
+#import "VoiceChannelParticipantCell.h"
 
 // Helper objects
 #import "PushTransition.h"
@@ -118,6 +119,7 @@
 #import "MediaAsset.h"
 #import "MagicConfig.h"
 #import "PassthroughWindow.h"
+#import "PassthroughTouchesView.h"
 #import "StopWatch.h"
 
 // Utils
@@ -158,6 +160,11 @@
 #import "CASStyler+Variables.h"
 #import "AVSLogObserver.h"
 #import "Analytics+Performance.h"
+#import "NSIndexSet+IndexPaths.h"
+#import "UIAlertController+Wire.h"
+#import "NetworkConditionHelper.h"
+#import "SoundEventRulesWatchDog.h"
+#import "Analytics+CallEvents.h"
 #import "UIScreen+Compact.h"
 #import "NSString+EmoticonSubstitution.h"
 

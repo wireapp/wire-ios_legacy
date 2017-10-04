@@ -22,10 +22,13 @@
 #import "WireSyncEngine+iOS.h"
 
 @class ZMUser;
+@class VoiceUserImageView;
 
 @interface VoiceChannelParticipantCell : UICollectionViewCell
 
-- (void)configureForUser:(ZMUser *)user participantState:(VoiceChannelV2ParticipantState *)participantState;
+@property (nonatomic, readonly) VoiceUserImageView *userImage;
+@property (nonatomic, readonly) UILabel *nameLabel;
+
 - (void)updateVoiceGain:(CGFloat)voiceGain;
 
 @end
