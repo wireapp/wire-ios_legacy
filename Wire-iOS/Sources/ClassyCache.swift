@@ -21,7 +21,7 @@ import Classy
 import Foundation
 import CocoaLumberjackSwift
 
-extension Dictionary where Key: Hashable, Value: Any
+extension Dictionary
 {
     func wr_keyValues() -> [[String: AnyObject]] {
         return self.keys.map({ ["key": $0 as AnyObject,
