@@ -140,9 +140,11 @@
 - (void)profileViewController:(ProfileViewController *)controller wantsToNavigateToConversation:(ZMConversation *)conversation
 {
     [self profileViewControllerWantsToBeDismissed:controller completion:^{
-        [[ZClientViewController sharedZClientViewController] selectConversation:conversation
-                                                                    focusOnView:YES
-                                                                       animated:YES];
+        [[[ZClientViewController sharedZClientViewController] conversationListViewController] dismissPeoplePickerWithCompletionBlock:^{
+            [[ZClientViewController sharedZClientViewController] selectConversation:conversation
+                                                                        focusOnView:YES
+                                                                           animated:YES];
+        }];
     }];
 }
 
