@@ -27,6 +27,7 @@
 - (instancetype)initWithJSONObject:(NSDictionary *)jsonObject
 {
     self = [super init];
+    
     if (self) {
         for (NSString *key in jsonObject.allKeys) {
             id value = jsonObject[key];
@@ -63,11 +64,6 @@
 - (NSTimeInterval)messageDestructionTimeout
 {
     return 15;
-}
-
-- (id)voiceChannelInternal
-{
-    return self.voiceChannel;
 }
 
 @end

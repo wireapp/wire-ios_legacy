@@ -31,6 +31,5 @@
 @property (nonatomic) ZMConversationSecurityLevel securityLevel;
 @property (nonatomic) NSTimeInterval messageDestructionTimeout;
 @property (nonatomic) ZMConnectionStatus relatedConnectionState;
-@property (nonatomic) id voiceChannel;
 
 @end

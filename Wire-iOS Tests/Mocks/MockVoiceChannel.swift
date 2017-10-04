@@ -19,18 +19,15 @@
 import Foundation
 
 @objc
-class MockVoiceChannel : NSObject, VoiceChannel {
+class MockVoiceChannel : NSObject, CallProperties, VoiceChannel {
     var initiator: ZMUser?
 
     public func continueByDecreasingConversationSecurity(userSession: ZMUserSession) {}
     func leaveAndKeepDegradedConversationSecurity(userSession: ZMUserSession) {}
 
-    
-    @objc
-    public init(videoCall: Bool) {
-        self.mockIsVideoCall = videoCall
-        
-        super.init()
+
+    required init(conversation: ZMConversation) {
+        self.conversation = conversation
     }
     
     // MARK - Call Properties
