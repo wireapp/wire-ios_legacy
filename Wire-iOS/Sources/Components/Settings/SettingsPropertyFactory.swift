@@ -29,7 +29,6 @@ extension Analytics: AnalyticsInterface {
 
 protocol AVSMediaManagerInterface {
     var intensityLevel : AVSIntensityLevel {get set}
-    func playMediaByName(_ name: String!)
 }
 
 extension AVSMediaManager: AVSMediaManagerInterface {

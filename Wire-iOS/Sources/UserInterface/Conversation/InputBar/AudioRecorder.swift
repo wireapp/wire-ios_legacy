@@ -292,7 +292,7 @@ final class AudioPlayerDelegate: NSObject, AVAudioPlayerDelegate {
 
 protocol PowerProvider {
     func updateMeters() /* call to refresh meter values */
-    func averagePowerForChannel(_ channelNumber: Int) -> Float
+    func averagePower(forChannel channelNumber: Int) -> Float
 }
 
 let minimumPower: Float = -160
@@ -300,7 +300,7 @@ let minimumPower: Float = -160
 extension PowerProvider {
     
     func averagePowerForFirstActiveChannel() -> Float {
-        for power in (0..<3).map(averagePowerForChannel) where power != minimumPower {
+        for power in (0..<3).map(averagePower) where power != minimumPower {
             return power
         }
         
