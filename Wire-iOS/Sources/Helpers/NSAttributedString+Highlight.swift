@@ -18,13 +18,6 @@
 
 import Foundation
 
-extension NSRange: Equatable {
-}
-
-public func ==(left: NSRange, right: NSRange) -> Bool {
-    return left.location == right.location && left.length == right.length
-}
-
 extension String {
     func nsRange(from range: Range<String.Index>) -> NSRange {
         let from = range.lowerBound.samePosition(in: utf16)
