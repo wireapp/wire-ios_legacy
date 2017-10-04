@@ -142,7 +142,10 @@ public extension ConversationViewController {
     }
     
     var hasUnreadMessagesInOtherConversations: Bool {
-        return ZMConversationList.conversations(inUserSession: ZMUserSession.shared()!).hasUnreadMessages(excluding: self.conversation)
+        guard let userSession = ZMUserSession.shared() else {
+            return false
+        }
+        return ZMConversationList.conversations(inUserSession: userSession).hasUnreadMessages(excluding: self.conversation)
     }
     
     public func rightNavigationItems(forConversation conversation: ZMConversation) -> [UIBarButtonItem] {

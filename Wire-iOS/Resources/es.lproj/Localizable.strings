@@ -84,7 +84,7 @@
 
 // Conversation List Indicator
 "conversation_list.right_accessory.join_button.title" = "Entrar";
-"conversation_list.header.self_team.accessibility_value" = "Equipo %@.";
+"conversation_list.header.self_team.accessibility_value" = "%@ account.";
 "conversation_list.header.self_team.accessibility_value.inactive" = "Toca para activar.";
 "conversation_list.header.self_team.accessibility_value.active" = "Activar ahora.";
 "conversation_list.header.self_team.accessibility_value.has_new_messages" = "Tiene mensajes nuevos.";
@@ -496,7 +496,6 @@
 "profile.details.title" = "Detalles";
 "profile.details.guest" = "Invitado";
 
-"profile_view.team_name.in" = "en %@";
 "profile_view.accessibility.handle" = "Nombre de usuario";
 "profile_view.accessibility.name" = "Nombre a mostrar";
 "profile_view.accessibility.team_name" = "Nombre del equipo";
@@ -528,6 +527,7 @@
 
 "self.settings" = "Ajustes";
 "self.profile" = "Perfil";
+"self.account" = "Cuenta";
 "self.help_center" = "Soporte";
 "self.help_center.support_website" = "Página de soporte de Wire";
 "self.help_center.contact_support" = "Contactar con Soporte";
@@ -559,8 +559,8 @@
 "self.new_device_alert.trust_devices" = "OK";
 
 // Settings - top level
-"self.settings.create_team.title" = "Crear equipo";
-"self.settings.add_account.title" = "Añadir cuenta";
+"self.settings.create_team.title" = "Crear Equipo";
+"self.settings.add_account.title" = "Añadir Cuenta";
 
 // Settings - Account details
 "self.settings.account_section" = "Cuenta";
@@ -600,6 +600,10 @@
 
 "self.settings.account_details.delete_account.alert.title" = "Eliminar Cuenta";
 "self.settings.account_details.delete_account.alert.message" = "Te enviaremos un mensaje por correo electrónico o SMS con un enlace. Pulsa en el enlace para eliminar tu cuenta.";
+
+"self.settings.account_details.log_out.alert.title" = "Cerrar sesión";
+"self.settings.account_details.log_out.alert.message" = "Tu historial de mensajes será borrado de este dispositivo.";
+
 
 // Change Username
 
@@ -659,7 +663,10 @@
 
 "self.settings.callkit.title" = "Notificaciones de (vídeo)llamadas";
 "self.settings.callkit.caption" = "A pantalla completa";
-"self.settings.callkit.description" = "Esta opción muestra las notificaciones de (vídeo)llamadas de Wire como una llamada normal en la pantalla bloqueada y en el historial de llamadas del teléfono. Con iCloud activado, el historial de llamadas se almacena en los servidores de Apple. Necesitas reiniciar Wire tras modificar esta opción.";
+"self.settings.callkit.description" = "Show Wire calls on the lock screen and in iOS call history. If iCloud is enabled, call history is shared with Apple.";
+
+"self.settings.cbr.not_available" = "Constant Bit Rate Encoding";
+"self.settings.cbr.not_available.description" = "Constant bit rate calls have been temporarily disabled with the introduction of multiple account support. CBR calls will be back soon.";
 
 "self.settings.vbr.title" = "Tasa de bits variable";
 "self.settings.vbr.description" = "Esta opción permite que las llamadas de audio utilicen menos datos y funcionen mejor en redes lentas. Al desactivar esta opción se usará la codificación de audio de tasa de bits constante que necesita más ancho de banda pero es más segura frente a ataques de terceros.";
@@ -715,7 +722,7 @@
 "self.settings.privacy_security.lock_cancelled.description" = "Desbloquea Wire con Touch ID o el código";
 "self.settings.privacy_security.lock_cancelled.action" = "Desbloquear";
 
-"self.settings.privacy_security.disable_link_previews.title" = "Crear vistas previas para los enlaces enviados";
+"self.settings.privacy_security.disable_link_previews.title" = "Create Link Previews";
 "self.settings.privacy_security.disable_link_previews.footer" = "Las vistas previas todavía pueden mostrarse para enlaces de otras personas.";
 
 "self.settings.privacy_analytics_menu.devices.title" = "Dispositivos";
@@ -897,6 +904,7 @@
 "error.user.registration_unknown_error" = "Algo salió mal. Por favor inténtalo de nuevo.";
 "error.user.device_deleted_remotely" = "Se ha cerrado la sesión en otro dispositivo.";
 "error.user.last_identity_cant_be_deleted" = "Wire necesita una dirección de email o un número de teléfono.";
+"error.user.account_suspended" = "Esta cuenta ya no está autorizada a iniciar sesión.";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Those are caught by the UI without involving the SE validation. Basically very similar to ZMUserSessionErrorCode onces

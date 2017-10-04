@@ -54,7 +54,7 @@ final class ChangeEmailViewController: SettingsBaseTableViewController {
 
     fileprivate weak var userProfile = ZMUserSession.shared()?.userProfile
     var state = ChangeEmailState()
-    private var observerToken: AnyObject?
+    private var observerToken: Any?
 
     init() {
         super.init(style: .grouped)
@@ -72,8 +72,7 @@ final class ChangeEmailViewController: SettingsBaseTableViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        guard let token = observerToken else { return }
-        _ = userProfile?.removeObserver(token: token)
+        observerToken = nil
     }
     
     internal func setupViews() {

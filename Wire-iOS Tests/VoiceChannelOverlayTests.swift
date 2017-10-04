@@ -242,13 +242,7 @@ class VoiceChannelOverlayTests: ZMSnapshotTestCase {
         let overlay = voiceChannelOverlay(state: .connected, conversation: conversation)
         verifyInAllDeviceSizes(view: overlay, configuration: configure)
     }
-    
-    func testOngoingAudioCallCBR() {
-        let overlay = voiceChannelOverlay(state: .connected, conversation: conversation)
-        overlay.constantBitRate = true
-        verifyInAllDeviceSizes(view: overlay, configuration: configure)
-    }
-    
+
     func testOngoingVideoCall() {
         let overlay = voiceChannelOverlay(state: .connected, videoCall: true, conversation: conversation)
         overlay.remoteIsSendingVideo = true

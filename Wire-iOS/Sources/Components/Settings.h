@@ -100,7 +100,6 @@ extern NSString * const UserDefaultDisableLinkPreviews;
 @property (nonatomic, readonly) BOOL skipFirstTimeUseChecks;
 @property (nonatomic) NSDate *lastPushAlertDate;
 
-@property (nonatomic) ZMConversation *lastViewedConversation;
 @property (nonatomic) SettingsLastScreen lastViewedScreen;
 @property (nonatomic) AVCaptureFlashMode preferredFlashMode;
 @property (nonatomic) CameraControllerCamera preferredCamera;
@@ -125,6 +124,7 @@ extern NSString * const UserDefaultDisableLinkPreviews;
 
 - (void)updateAVSCallingConstantBitRateValue;
 
+- (NSUserDefaults *)defaults;
 @end
 
 

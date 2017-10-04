@@ -56,7 +56,10 @@
 
 + (void)wr_warnAboutCameraPermissionWithCompletion:(dispatch_block_t)completion
 {
-    [(id)[UIResponder wr_currentFirstResponder] endEditing:YES];
+    id currentResponder = (id)[UIResponder wr_currentFirstResponder];
+    if ([currentResponder respondsToSelector:@selector(endEditing:)]) {
+        [currentResponder endEditing:YES];
+    }
     
     UIAlertController *noVideoAlert =
     [UIAlertController alertControllerWithTitle:NSLocalizedString(@"voice.alert.camera_warning.title", nil)

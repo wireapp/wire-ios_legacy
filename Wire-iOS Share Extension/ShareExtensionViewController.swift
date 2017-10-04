@@ -106,12 +106,19 @@ class ShareExtensionViewController: SLComposeServiceViewController {
 
     private func recreateSharingSession() {
         let infoDict = Bundle.main.infoDictionary
-
-        guard let applicationGroupIdentifier = infoDict?["ApplicationGroupIdentifier"] as? String,
-            let hostBundleIdentifier = infoDict?["HostBundleIdentifier"] as? String else { return }
+    
+        guard
+            let applicationGroupIdentifier = infoDict?["ApplicationGroupIdentifier"] as? String,
+            let hostBundleIdentifier = infoDict?["HostBundleIdentifier"] as? String
+        else { return }
+        
+        let sharedContainerURL = FileManager.sharedContainerDirectory(for: applicationGroupIdentifier)
+        let accountManager = AccountManager(sharedDirectory: sharedContainerURL)
+        guard let accountIdentifier = accountManager.selectedAccount?.userIdentifier else { return }
 
         sharingSession = try? SharingSession(
             applicationGroupIdentifier: applicationGroupIdentifier,
+            accountIdentifier: accountIdentifier,
             hostBundleIdentifier: hostBundleIdentifier
         )
     }

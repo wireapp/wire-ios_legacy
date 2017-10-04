@@ -22,34 +22,38 @@ import Cartography
 
 extension ConversationListViewController {
     
+    func currentAccountView() -> BaseAccountView {
+        guard let currentAccount = SessionManager.shared?.accountManager.selectedAccount else {
+            fatal("No account available")
+        }
+        let currentAccountView = AccountViewFactory.viewFor(account: currentAccount,
+                                                            user: ZMUser.selfUser(inUserSession: ZMUserSession.shared()!))
+        currentAccountView.invertUnreadMessagesCount = true
+        return currentAccountView
+    }
+    
     public func createTopBar() {
-        let profileButton = IconButton()
+        let profileAccountView = self.currentAccountView()
+        profileAccountView.selected = false
+        profileAccountView.autoupdateSelection = false
         
-        profileButton.setIcon(.selfProfile, with: .tiny, for: UIControlState())
-        profileButton.addTarget(self, action: #selector(presentSettings), for: .touchUpInside)
-        profileButton.accessibilityIdentifier = "bottomBarSettingsButton"
-        profileButton.setIconColor(.white, for: .normal)
-        profileButton.accessibilityLabel = "self.voiceover.label".localized
-        profileButton.accessibilityHint = "self.voiceover.hint".localized
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(presentSettings))
+        profileAccountView.addGestureRecognizer(tapGestureRecognizer)
         
-        if let imageView = profileButton.imageView, let user = ZMUser.selfUser() {
-            let newDevicesDot = NewDevicesDot(user: user)
-            profileButton.addSubview(newDevicesDot)
+        profileAccountView.accessibilityTraits = UIAccessibilityTraitButton
+        profileAccountView.accessibilityIdentifier = "bottomBarSettingsButton"
+        profileAccountView.accessibilityLabel = "self.voiceover.label".localized
+        profileAccountView.accessibilityHint = "self.voiceover.hint".localized
+        
+        if let user = ZMUser.selfUser() {
             if user.clientsRequiringUserAttention.count > 0 {
-                profileButton.accessibilityLabel = "self.new-device.voiceover.label".localized
-            }
-            
-            constrain(newDevicesDot, imageView) { newDevicesDot, imageView in
-                newDevicesDot.top == imageView.top - 3
-                newDevicesDot.trailing == imageView.trailing + 3
-                newDevicesDot.width == 8
-                newDevicesDot.height == 8
+                profileAccountView.accessibilityLabel = "self.new-device.voiceover.label".localized
             }
         }
         
         self.topBar = ConversationListTopBar()
+        self.topBar.layoutMargins = UIEdgeInsetsMake(0, 9, 0, 16)
         self.contentContainer.addSubview(self.topBar)
-        self.topBar.contentScrollView = self.listContentController.collectionView
-        self.topBar.leftView = profileButton
+        self.topBar.leftView = profileAccountView
     }
 }

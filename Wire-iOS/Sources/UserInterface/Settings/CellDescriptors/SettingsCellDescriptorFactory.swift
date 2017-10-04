@@ -36,11 +36,13 @@ import Foundation
     }
     
     func rootGroup() -> SettingsControllerGeneratorType & SettingsInternalGroupCellDescriptorType {
-        var rootElements = [self.devicesCell(), self.settingsGroup()]
+        var rootElements = [self.createTeamCell()]
         
-        if !self.settingsPropertyFactory.selfUser.isTeamMember {
-            rootElements.append(self.inviteButton())
+        if SessionManager.shared?.accountManager.accounts.count < SessionManager.maxAccounts {
+            rootElements.append(self.addAccountCell())
         }
+        
+        rootElements.append(self.settingsGroup())
         
         let topSection = SettingsSectionDescriptor(cellDescriptors: rootElements)
         
@@ -80,14 +82,15 @@ import Foundation
                                                     presentationStyle: PresentationStyle.navigation,
                                                     identifier: nil,
                                                     presentationAction: { () -> (UIViewController?) in
-                                                        return SignInViewController()
+                                                        SessionManager.shared?.addAccount()
+                                                        return nil
         },
                                                     previewGenerator: nil,
                                                     icon: .convMetaAddPerson)
     }
     
     func settingsGroup() -> SettingsControllerGeneratorType & SettingsInternalGroupCellDescriptorType {
-        var topLevelElements = [self.accountGroup(), self.optionsGroup(), self.advancedGroup(), self.helpSection(), self.aboutSection()]
+        var topLevelElements = [self.accountGroup(), self.devicesCell(), self.optionsGroup(), self.advancedGroup(), self.helpSection(), self.aboutSection()]
         
         if DeveloperMenuState.developerMenuEnabled() {
             topLevelElements.append(self.developerGroup())
@@ -235,6 +238,8 @@ import Foundation
         developerCellDescriptors.append(findUnreadConvoButton)
         let shareDatabase = SettingsShareDatabaseCellDescriptor()
         developerCellDescriptors.append(shareDatabase)
+        let shareCryptobox = SettingsShareCryptoboxCellDescriptor()
+        developerCellDescriptors.append(shareCryptobox)
         let reloadUIButton = SettingsButtonCellDescriptor(title: "Reload user interface", isDestructive: false, selectAction: SettingsCellDescriptorFactory.reloadUserInterface)
         developerCellDescriptors.append(reloadUIButton)
         
@@ -370,11 +375,11 @@ import Foundation
     }
     
     private static func reloadUserInterface(_ type: SettingsCellDescriptorType) {
-        guard let rootViewController = UIApplication.shared.keyWindow?.rootViewController as? RootViewController else {
+        guard let rootViewController = UIApplication.shared.keyWindow?.rootViewController as? AppRootViewController else {
             return
         }
         
-        rootViewController.reloadCurrentController()
+        rootViewController.reload()
     }
 }
 

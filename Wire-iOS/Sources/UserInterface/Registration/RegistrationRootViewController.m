@@ -35,6 +35,7 @@
 @property (nonatomic) TabBarController *registrationTabBarController;
 @property (nonatomic) ZMIncompleteRegistrationUser *unregisteredUser;
 @property (nonatomic, weak) SignInViewController *signInViewController;
+@property (nonatomic) IconButton *cancelButton;
 
 @end
 
@@ -60,6 +61,7 @@
     
     SignInViewController *signInViewController = [[SignInViewController alloc] init];
     signInViewController.analyticsTracker = [AnalyticsTracker analyticsTrackerWithContext:AnalyticsContextSignIn];
+    signInViewController.loginCredentials = self.loginCredentials;
     
     UIViewController *flowViewController = nil;
     if ([RegistrationViewController registrationFlow] == RegistrationFlowEmail) {
@@ -78,17 +80,23 @@
     self.registrationTabBarController = [[TabBarController alloc] initWithViewControllers:@[flowViewController, signInViewController]];
     self.signInViewController = signInViewController;
     
-    if (self.forceLogin) {
+    if (self.showLogin) {
         [self.registrationTabBarController selectIndex:1 animated:NO];
-        self.registrationTabBarController.enabled = ! self.forceLogin;
     }
     
     self.registrationTabBarController.style = TabBarStyleColored;
     self.registrationTabBarController.view.translatesAutoresizingMaskIntoConstraints = NO;
     
+    self.cancelButton = [[IconButton alloc] init];
+    [self.cancelButton setIcon:ZetaIconTypeCancel withSize:ZetaIconSizeTiny forState:UIControlStateNormal];
+    [self.cancelButton setIconColor:UIColor.whiteColor forState:UIControlStateNormal];
+    self.cancelButton.accessibilityLabel = @"cancelAddAccount";
+    [self.cancelButton addTarget:self action:@selector(cancelAddAccount) forControlEvents:UIControlEventTouchUpInside];
+    self.cancelButton.hidden = !SessionManager.shared.accountManager.selectedAccount.isAuthenticated || self.hasSignInError;
     
     [self addChildViewController:self.registrationTabBarController];
     [self.view addSubview:self.registrationTabBarController.view];
+    [self.view addSubview:self.cancelButton];
     [self.registrationTabBarController didMoveToParentViewController:self];
     
     [self createConstraints];
@@ -98,6 +106,8 @@
 {
     [self.registrationTabBarController.view autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero excludingEdge:ALEdgeTop];
     [self.registrationTabBarController.view autoSetDimension:ALDimensionHeight toSize:IS_IPAD ? 262 : 244];
+    [self.cancelButton autoPinEdgeToSuperviewEdge:ALEdgeTop withInset:32];
+    [self.cancelButton autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:16];
 }
 
 - (void)presentLoginTab
@@ -110,6 +120,12 @@
     [self.registrationTabBarController selectIndex:0 animated:YES];
 }
 
+- (void)cancelAddAccount
+{
+    SessionManager *sessionManager = SessionManager.shared;
+    [sessionManager select:sessionManager.accountManager.selectedAccount completion:nil tearDownCompletion:nil];
+}
+
 #pragma mark - FormStepDelegate
 
 - (void)didCompleteFormStep:(UIViewController *)viewController
@@ -117,9 +133,10 @@
     [self.formStepDelegate didCompleteFormStep:viewController];
 }
 
-- (void)registrationPhoneFlowViewControllerNeedsSignIn:(RegistrationPhoneFlowViewController *)viewController
+- (void)registrationPhoneFlowViewController:(RegistrationPhoneFlowViewController *)viewController needsToSignInWith:(LoginCredentials *)loginCredentials
 {
     [self presentLoginTab];
+    self.signInViewController.loginCredentials = loginCredentials;
     [self.signInViewController presentEmailSignInViewControllerToEnterPassword];
 }
 

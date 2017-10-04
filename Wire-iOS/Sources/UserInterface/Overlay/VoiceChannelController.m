@@ -200,6 +200,7 @@
         return conversation.voiceChannel.state == VoiceChannelV2StateOutgoingCall ||
         conversation.voiceChannel.state == VoiceChannelV2StateOutgoingCallInactive ||
         conversation.voiceChannel.state == VoiceChannelV2StateSelfIsJoiningActiveChannel ||
+        conversation.voiceChannel.state == VoiceChannelV2StateEstablishedDataChannel ||
         conversation.voiceChannel.state == VoiceChannelV2StateSelfConnectedToActiveChannel ||
         conversation.voiceChannel.state == VoiceChannelV2StateOutgoingCallDegraded ||
         conversation.voiceChannel.state == VoiceChannelV2StateSelfIsJoiningActiveChannelDegraded;

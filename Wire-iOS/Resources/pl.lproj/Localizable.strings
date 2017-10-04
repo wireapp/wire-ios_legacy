@@ -84,7 +84,7 @@
 
 // Conversation List Indicator
 "conversation_list.right_accessory.join_button.title" = "Dołącz";
-"conversation_list.header.self_team.accessibility_value" = "Zespół %@.";
+"conversation_list.header.self_team.accessibility_value" = "%@ account.";
 "conversation_list.header.self_team.accessibility_value.inactive" = "Dotknij, aby aktywować.";
 "conversation_list.header.self_team.accessibility_value.active" = "Aktywuj teraz.";
 "conversation_list.header.self_team.accessibility_value.has_new_messages" = "Ma nowe wiadomości.";
@@ -496,7 +496,6 @@
 "profile.details.title" = "Szczegóły";
 "profile.details.guest" = "Gość";
 
-"profile_view.team_name.in" = "w zespole %@";
 "profile_view.accessibility.handle" = "Nazwa użytkownika";
 "profile_view.accessibility.name" = "Nazwa wyświetlana";
 "profile_view.accessibility.team_name" = "Nazwa zespołu";
@@ -528,6 +527,7 @@
 
 "self.settings" = "Ustawienia";
 "self.profile" = "Profil";
+"self.account" = "Konto";
 "self.help_center" = "Wsparcie";
 "self.help_center.support_website" = "Witryna pomocy technicznej Wire";
 "self.help_center.contact_support" = "Kontakt z pomocą techniczną";
@@ -559,8 +559,8 @@
 "self.new_device_alert.trust_devices" = "OK";
 
 // Settings - top level
-"self.settings.create_team.title" = "Create team";
-"self.settings.add_account.title" = "Add account";
+"self.settings.create_team.title" = "Create Team";
+"self.settings.add_account.title" = "Add Account";
 
 // Settings - Account details
 "self.settings.account_section" = "Konto";
@@ -600,6 +600,10 @@
 
 "self.settings.account_details.delete_account.alert.title" = "Usuń konto";
 "self.settings.account_details.delete_account.alert.message" = "Wyślemy Tobie wiadomość e-mail lub SMS. Postępuj zgodnie z instrukcjami aby usunąć konto.";
+
+"self.settings.account_details.log_out.alert.title" = "Wyloguj";
+"self.settings.account_details.log_out.alert.message" = "Your message history will be erased on this device.";
+
 
 // Change Username
 
@@ -659,7 +663,10 @@
 
 "self.settings.callkit.title" = "Połączenia";
 "self.settings.callkit.caption" = "Udostępnij poprzez iOS";
-"self.settings.callkit.description" = "Pokaż połączenia Wire na ekranie blokady i w historii połączeń iOS. Jeśli iCloud jest aktywny, historia połączeń zostanie udostępnione dla Apple. Uruchom ponownie Wire aby zastosować ustawienia.";
+"self.settings.callkit.description" = "Show Wire calls on the lock screen and in iOS call history. If iCloud is enabled, call history is shared with Apple.";
+
+"self.settings.cbr.not_available" = "Constant Bit Rate Encoding";
+"self.settings.cbr.not_available.description" = "Constant bit rate calls have been temporarily disabled with the introduction of multiple account support. CBR calls will be back soon.";
 
 "self.settings.vbr.title" = "Kodowanie o zmiennej przepływności (VBR)";
 "self.settings.vbr.description" = "Zmniejsza ilość danych używanych przez połączenia głosowe, dzięki czemu działają one lepiej w powolnych sieciach. Wyłącz, aby używać kodowania o stałej przepływności (CBR).";
@@ -715,7 +722,7 @@
 "self.settings.privacy_security.lock_cancelled.description" = "Odblokuj Wire za pomocą Touch ID lub kodem";
 "self.settings.privacy_security.lock_cancelled.action" = "Odblokuj";
 
-"self.settings.privacy_security.disable_link_previews.title" = "Create Previews For Links You Send";
+"self.settings.privacy_security.disable_link_previews.title" = "Create Link Previews";
 "self.settings.privacy_security.disable_link_previews.footer" = "Podglądy linków otrzymanych od innych osób mogą być nadal wyświetlane.";
 
 "self.settings.privacy_analytics_menu.devices.title" = "Urządzenia";
@@ -897,6 +904,7 @@
 "error.user.registration_unknown_error" = "Coś poszło nie tak. Spróbuj ponownie.";
 "error.user.device_deleted_remotely" = "Zostałeś wylogowany na tym urządzeniu!";
 "error.user.last_identity_cant_be_deleted" = "Adres e-mail lub numer telefonu jest wymagany.";
+"error.user.account_suspended" = "This account is no longer authorized to log in.";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Those are caught by the UI without involving the SE validation. Basically very similar to ZMUserSessionErrorCode onces

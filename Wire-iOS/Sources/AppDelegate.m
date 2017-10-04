@@ -22,26 +22,12 @@
 #import "WireSyncEngine+iOS.h"
 #import "Wire-Swift.h"
 
-#import "Settings.h"
-#import "ColorScheme.h"
-
-// Other UI
-#import "RootViewController.h"
-#import <Classy/Classy.h>
-#import "UIColor+WAZExtensions.h"
-#import "CASStyler+Variables.h"
-
 // Helpers
-#import "AppController.h"
-#import "AppController+Internal.h"
 #import "Constants.h"
 #import "AppDelegate+Hockey.h"
 #import "Application+runDuration.h"
-
 #import "AppDelegate+Logging.h"
-
 #import "ZClientViewController.h"
-
 #import "Analytics+iOS.h"
 #import "AnalyticsTracker+Registration.h"
 #import "AnalyticsTracker+Permissions.h"
@@ -50,27 +36,17 @@
 #import "StopWatch.h"
 
 
+NSString *const ZMUserSessionDidBecomeAvailableNotification = @"ZMUserSessionDidBecomeAvailableNotification";
+
+
 static AppDelegate *sharedAppDelegate = nil;
-
-
-@interface AppDelegate (NetworkAvailabilityObserver) <ZMNetworkAvailabilityObserver>
-
-@end
-
 
 
 @interface AppDelegate ()
 
-
-@property (nonatomic) AppController *appController;
-
+@property (nonatomic) AppRootViewController *rootViewController;
 @property (nonatomic, assign) BOOL trackedResumeEvent;
-
 @property (nonatomic, assign, readwrite) ApplicationLaunchType launchType;
-
-/// This BOOL will be set to YES in case the app got launched via the @c applicationDidBecomeActive: method
-@property (nonatomic, assign) BOOL addressBookUploadShouldBeChecked;
-
 @property (nonatomic, copy) NSDictionary *launchOptions;
 
 @end
@@ -97,9 +73,25 @@ static AppDelegate *sharedAppDelegate = nil;
     self = [super init];
     if (self) {
         sharedAppDelegate = self;
-        self.appController = [[AppController alloc] init];
     }
     return self;
+}
+
+- (void)setupBackendEnvironment
+{
+    NSString *BackendEnvironmentTypeKey = @"ZMBackendEnvironmentType";
+    NSString *backendEnvironment = [[NSUserDefaults standardUserDefaults] stringForKey:BackendEnvironmentTypeKey];
+    [[NSUserDefaults sharedUserDefaults] setObject:backendEnvironment forKey:BackendEnvironmentTypeKey];
+    
+    if (backendEnvironment.length == 0 || [backendEnvironment isEqualToString:@"default"]) {
+        NSString *defaultBackend = @STRINGIZE(DEFAULT_BACKEND);
+        
+        DDLogInfo(@"Backend environment is <not defined>. Using '%@'.", defaultBackend);
+        [[NSUserDefaults standardUserDefaults] setObject:defaultBackend forKey:BackendEnvironmentTypeKey];
+        [[NSUserDefaults sharedUserDefaults] setObject:defaultBackend forKey:BackendEnvironmentTypeKey];
+    } else {
+        DDLogInfo(@"Using '%@' backend environment", backendEnvironment);
+    }
 }
 
 - (BOOL)application:(UIApplication *)application willFinishLaunchingWithOptions:(NSDictionary *)launchOptions
@@ -113,12 +105,18 @@ static AppDelegate *sharedAppDelegate = nil;
               [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"],
               [[[NSBundle mainBundle] infoDictionary] objectForKey:(NSString *) kCFBundleVersionKey]);
     
+    // Note: if we instantiate the root view controller (& windows) any earlier,
+    // the windows will not receive any info about device orientation.
+    self.rootViewController = [[AppRootViewController alloc] init];
+    
     return YES;
 }
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     DDLogInfo(@"application:didFinishLaunchingWithOptions START %@ (applicationState = %ld)", launchOptions, (long)application.applicationState);
+    
+    [self setupBackendEnvironment];
     
     BOOL containsConsoleAnalytics = [[[NSProcessInfo processInfo] arguments] indexOfObjectPassingTest:^BOOL(NSString * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         if ([obj isEqualToString:ZMConsoleAnalyticsArgumentKey]) {
@@ -138,7 +136,7 @@ static AppDelegate *sharedAppDelegate = nil;
                                                object:nil];
     
     [self setupHockeyWithCompletion:^() {
-        [self.appController application:application didFinishLaunchingWithOptions:launchOptions];
+        [self.rootViewController launchWith:launchOptions];
     }];
     self.launchOptions = launchOptions;
     
@@ -153,15 +151,11 @@ static AppDelegate *sharedAppDelegate = nil;
 - (void)applicationWillEnterForeground:(UIApplication *)application
 {
     DDLogInfo(@"applicationWillEnterForeground: (applicationState = %ld)", (long)application.applicationState);
-    [self.appController applicationWillEnterForeground:application];
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application;
 {
     DDLogInfo(@"applicationDidBecomeActive START (applicationState = %ld)", (long)application.applicationState);
-    
-    [self.appController applicationDidBecomeActive:application];
-    self.addressBookUploadShouldBeChecked = YES;
     
     switch (self.launchType) {
         case ApplicationLaunchURL:
@@ -184,17 +178,13 @@ static AppDelegate *sharedAppDelegate = nil;
 - (void)applicationWillResignActive:(UIApplication *)application
 {
     DDLogInfo(@"applicationWillResignActive:  (applicationState = %ld)", (long)application.applicationState);
-    [self.appController applicationWillResignActive:application];
 }
 
 - (void)applicationDidEnterBackground:(UIApplication *)application
 {
     DDLogInfo(@"applicationDidEnterBackground:  (applicationState = %ld)", (long)application.applicationState);
     
-    [self.appController applicationDidEnterBackground:application];
-
     self.launchType = ApplicationLaunchUnknown;
-    self.addressBookUploadShouldBeChecked = NO;
     
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
@@ -225,7 +215,6 @@ static AppDelegate *sharedAppDelegate = nil;
 
 - (void)userSessionDidBecomeAvailable:(NSNotification *)notification
 {
-    [ZMNetworkAvailabilityChangeNotification addNetworkAvailabilityObserver:self userSession:self.zetaUserSession];
     [self trackLaunchAnalyticsWithLaunchOptions:self.launchOptions];
     [self trackErrors];
 }
@@ -241,7 +230,7 @@ static AppDelegate *sharedAppDelegate = nil;
 - (BOOL)application:(UIApplication *)application continueUserActivity:(NSUserActivity *)userActivity restorationHandler:(void (^)(NSArray * _Nullable))restorationHandler
 {
     DDLogInfo(@"application:continueUserActivity:restorationHandler: %@", userActivity);
-    return [self.zetaUserSession application:application continueUserActivity:userActivity restorationHandler:restorationHandler];
+    return [[[SessionManager shared] activeUserSession] application:application continueUserActivity:userActivity restorationHandler:restorationHandler];
 }
 
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
@@ -264,10 +253,9 @@ static AppDelegate *sharedAppDelegate = nil;
             [[AnalyticsTracker analyticsTrackerWithContext:nil] tagAcceptedGenericInvite];
         }
         
-        [self.appController performAfterUserSessionIsInitialized:^{
+        [self.rootViewController performWhenAuthenticated:^{
             [[ZMUserSession sharedSession] didLaunchWithURL:url];
         }];
-    
     }
     
     if (! succeded) {
@@ -280,29 +268,24 @@ static AppDelegate *sharedAppDelegate = nil;
 
 #pragma mark - AppController
 
-- (ZMUserSession *)zetaUserSession
-{
-    return self.appController.zetaUserSession;
-}
-
 - (UnauthenticatedSession *)unauthenticatedSession
 {
-    return self.appController.unautenticatedUserSession;
+    return [[SessionManager shared] unauthenticatedSession];
 }
 
 - (NotificationWindowRootViewController *)notificationWindowController
 {
-    return self.appController.notificationWindowController;
+    return (NotificationWindowRootViewController *)self.rootViewController.overlayWindow.rootViewController;
 }
 
 - (SessionManager *)sessionManager
 {
-    return self.appController.sessionManager;
+    return self.rootViewController.sessionManager;
 }
 
 - (UIWindow *)window
 {
-    return self.appController.window;
+    return self.rootViewController.mainWindow;
 }
 
 - (void)setWindow:(UIWindow *)window
@@ -312,12 +295,17 @@ static AppDelegate *sharedAppDelegate = nil;
 
 - (UIWindow *)notificationsWindow
 {
-    return self.appController.notificationsWindow;
+    return self.rootViewController.overlayWindow;
 }
 
 - (MediaPlaybackManager *)mediaPlaybackManager
 {
-    return self.appController.mediaPlaybackManager;
+    if ([self.rootViewController.visibleViewController isKindOfClass:ZClientViewController.class]) {
+        ZClientViewController *clientViewController = (ZClientViewController *)self.rootViewController.visibleViewController;
+        return clientViewController.mediaPlaybackManager;
+    }
+    
+    return nil;
 }
 
 @end
@@ -336,8 +324,9 @@ static AppDelegate *sharedAppDelegate = nil;
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)newDeviceToken
 {
     DDLogWarn(@"Received APNS token: %@", newDeviceToken);
-    [self.appController performAfterUserSessionIsInitialized:^{
-        [[ZMUserSession sharedSession] application:application didRegisterForRemoteNotificationsWithDeviceToken:newDeviceToken];
+    
+    [self.rootViewController performWhenAuthenticated:^{
+        [[SessionManager shared] didRegisteredForRemoteNotificationsWith:newDeviceToken];
     }];
 }
 
@@ -365,8 +354,8 @@ static AppDelegate *sharedAppDelegate = nil;
         [[Analytics shared] tagAppLaunchWithType:ApplicationLaunchPush];
         self.trackedResumeEvent = YES;
     }
-    [self.appController performAfterUserSessionIsInitialized:^{
-        [[ZMUserSession sharedSession] application:application didReceiveRemoteNotification:userInfo fetchCompletionHandler:completionHandler];
+    [self.rootViewController performWhenAuthenticated:^{
+        [[SessionManager shared] didReceiveRemoteNotification:userInfo fetchCompletionHandler:completionHandler];
     }];
     
     self.launchType = (application.applicationState == UIApplicationStateInactive || application.applicationState == UIApplicationStateBackground) ? ApplicationLaunchPush: ApplicationLaunchDirect;
@@ -375,32 +364,52 @@ static AppDelegate *sharedAppDelegate = nil;
 - (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification
 {
     DDLogInfo(@"application:didReceiveLocalNotification: %@", notification);
-    [self.appController performAfterUserSessionIsInitialized:^{
-        [[ZMUserSession sharedSession] application:application didReceiveLocalNotification:notification];
+    
+    [self.rootViewController performWhenAuthenticated:^{
+        [[SessionManager shared] didReceiveLocalNotification:notification application:application];
     }];
+    
     self.launchType = (application.applicationState == UIApplicationStateInactive || application.applicationState == UIApplicationStateBackground) ? ApplicationLaunchPush: ApplicationLaunchDirect;
 }
 
-- (void)application:(UIApplication *)application handleActionWithIdentifier:(NSString *)identifier forLocalNotification:(UILocalNotification *)notification completionHandler:(void (^)())completionHandler
+- (void)application:(UIApplication *)application
+handleActionWithIdentifier:(NSString *)identifier
+forLocalNotification:(UILocalNotification *)notification
+  completionHandler:(void (^)())completionHandler
 {
     DDLogInfo(@"application:handleActionWithIdentifier:forLocalNotification: identifier: %@, notification: %@", identifier, notification);
-    [self.appController performAfterUserSessionIsInitialized:^{
-        [[ZMUserSession sharedSession] application:application handleActionWithIdentifier:identifier forLocalNotification:notification responseInfo:nil completionHandler:completionHandler];
+    
+    [self.rootViewController performWhenAuthenticated:^{
+        [[SessionManager shared] handleActionWithIdentifier:identifier
+                                       forLocalNotification:notification
+                                           withResponseInfo:[NSDictionary dictionary]
+                                          completionHandler:completionHandler
+                                                application:application];
     }];
 }
 
-- (void)application:(UIApplication *)application handleActionWithIdentifier:(NSString *)identifier forLocalNotification:(UILocalNotification *)notification withResponseInfo:(NSDictionary *)responseInfo completionHandler:(void(^)())completionHandler;
+- (void)application:(UIApplication *)application
+handleActionWithIdentifier:(NSString *)identifier
+forLocalNotification:(UILocalNotification *)notification
+   withResponseInfo:(NSDictionary *)responseInfo
+  completionHandler:(void(^)())completionHandler;
 {
     DDLogInfo(@"application:handleActionWithIdentifier:forLocalNotification: identifier: %@, notification: %@ responseInfo: %@", identifier, notification, responseInfo);
-    [self.appController performAfterUserSessionIsInitialized:^{
-        [[ZMUserSession sharedSession] application:application handleActionWithIdentifier:identifier forLocalNotification:notification responseInfo:responseInfo completionHandler:completionHandler];
+    
+    [self.rootViewController performWhenAuthenticated:^{
+        [[SessionManager shared] handleActionWithIdentifier:identifier
+                                       forLocalNotification:notification
+                                           withResponseInfo:responseInfo
+                                          completionHandler:completionHandler
+                                                application:application];
     }];
 }
 
 - (void)application:(UIApplication *)application performFetchWithCompletionHandler:(void (^)(UIBackgroundFetchResult result))completionHandler;
 {
     DDLogInfo(@"application:performFetchWithCompletionHandler:");
-    [self.appController performAfterUserSessionIsInitialized:^{
+    
+    [self.rootViewController performWhenAuthenticated:^{
         [[ZMUserSession sharedSession] application:application performFetchWithCompletionHandler:completionHandler];
     }];
 }
@@ -408,25 +417,10 @@ static AppDelegate *sharedAppDelegate = nil;
 - (void)application:(UIApplication *)application handleEventsForBackgroundURLSession:(NSString *)identifier completionHandler:(void (^)())completionHandler;
 {
     DDLogInfo(@"application:handleEventsForBackgroundURLSession:completionHandler: session identifier: %@", identifier);
-    [self.appController performAfterUserSessionIsInitialized:^{
+    
+    [self.rootViewController performWhenAuthenticated:^{
         [[ZMUserSession sharedSession] application:application handleEventsForBackgroundURLSession:identifier completionHandler:completionHandler];
     }];
-}
-
-@end
-
-@implementation AppDelegate (NetworkAvailabilityObserver)
-
-- (void)didChangeAvailability:(ZMNetworkAvailabilityChangeNotification *)note
-{
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [[self zetaUserSession] checkIfLoggedInWithCallback:^(BOOL isLoggedIn) {
-            if (note.networkState == ZMNetworkStateOnline && isLoggedIn && self.addressBookUploadShouldBeChecked) {
-                self.addressBookUploadShouldBeChecked = NO;
-                [self.appController uploadAddressBookIfNeeded];
-            }
-        }];
-    });
 }
 
 @end

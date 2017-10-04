@@ -90,7 +90,7 @@
 
 + (instancetype)wr_createTeamURL
 {
-    return [self URLWithString:@"https://teams.wire.com"];
+    return [self URLWithString:@"https://teams.wire.com?pk_campaign=client&pk_kwd=ios"];
 }
 
 @end

@@ -84,7 +84,7 @@
 
 // Conversation List Indicator
 "conversation_list.right_accessory.join_button.title" = "Katıl";
-"conversation_list.header.self_team.accessibility_value" = "%@ takım.";
+"conversation_list.header.self_team.accessibility_value" = "%@‘nin hesabı.";
 "conversation_list.header.self_team.accessibility_value.inactive" = "Etkinleştirilmek için dokun.";
 "conversation_list.header.self_team.accessibility_value.active" = "Şu an aktif.";
 "conversation_list.header.self_team.accessibility_value.has_new_messages" = "Yeni mesaj var.";
@@ -94,22 +94,22 @@
 
 // Conversation list voiceover accessibility
 "conversation_list.voiceover.open_conversation.hint" = "Konuşma aç";
-"conversation_list.voiceover.status.pending_connection" = "pending";
-"conversation_list.voiceover.status.active_call" = "active call";
+"conversation_list.voiceover.status.pending_connection" = "bekliyor";
+"conversation_list.voiceover.status.active_call" = "aktif çağrı";
 "conversation_list.voiceover.status.missed_call" = "cevapsız arama";
-"conversation_list.voiceover.status.pause_media" = "pause media";
-"conversation_list.voiceover.status.play_media" = "play media";
-"conversation_list.voiceover.status.silenced" = "silenced";
-"conversation_list.voiceover.status.typing" = "typing";
+"conversation_list.voiceover.status.pause_media" = "medyayı durdur";
+"conversation_list.voiceover.status.play_media" = "medyayı oynat";
+"conversation_list.voiceover.status.silenced" = "sessize alındı";
+"conversation_list.voiceover.status.typing" = "yazıyor";
 "conversation_list.voiceover.status.ping" = "ping";
-"conversation_list.voiceover.bottom_bar.archived_button.label" = "archived";
-"conversation_list.voiceover.bottom_bar.archived_button.hint" = "list of archived conversations";
+"conversation_list.voiceover.bottom_bar.archived_button.label" = "arşivlendi";
+"conversation_list.voiceover.bottom_bar.archived_button.hint" = "arşivlenmiş konuşmaların listesi";
 "conversation_list.voiceover.bottom_bar.contacts_button.label" = "kişiler";
-"conversation_list.voiceover.bottom_bar.contacts_button.hint" = "search for people on Wire";
-"conversation_list.voiceover.bottom_bar.compose_button.label" = "compose";
-"conversation_list.voiceover.bottom_bar.compose_button.hint" = "compose messages and save for later";
-"conversation_list.voiceover.bottom_bar.camera_button.label" = "camera";
-"conversation_list.voiceover.bottom_bar.camera_button.hint" = "take picture and send quickly";
+"conversation_list.voiceover.bottom_bar.contacts_button.hint" = "Wire'da insanları arayın";
+"conversation_list.voiceover.bottom_bar.compose_button.label" = "yaz";
+"conversation_list.voiceover.bottom_bar.compose_button.hint" = "mesaj yaz ve sonrası için kaydet";
+"conversation_list.voiceover.bottom_bar.camera_button.label" = "kamera";
+"conversation_list.voiceover.bottom_bar.camera_button.hint" = "fotoğraf çek ve hemen gönder";
 
 // Archived List
 "archived_list.title" = "arşiv";
@@ -146,7 +146,7 @@
 "list.archived_conversations" = "ARŞİVLE";
 "list.archived_conversations_close" = "Arşivi kapat";
 
-"conversation.voiceover.verified" = "verified";
+"conversation.voiceover.verified" = "onaylanmış";
 
 "conversation.status.call" = "Devam eden arama";
 "conversation.status.typing" = "Bir mesaj yazıyor…";
@@ -496,7 +496,6 @@
 "profile.details.title" = "Ayrıntılar";
 "profile.details.guest" = "Misafir";
 
-"profile_view.team_name.in" = "%@'de";
 "profile_view.accessibility.handle" = "Kullanıcı Adı";
 "profile_view.accessibility.name" = "Görünen İsim";
 "profile_view.accessibility.team_name" = "Takım Adı";
@@ -528,6 +527,7 @@
 
 "self.settings" = "Ayarlar";
 "self.profile" = "Profil";
+"self.account" = "Hesap";
 "self.help_center" = "Destek";
 "self.help_center.support_website" = "Wire Destek İnternet Sitesi";
 "self.help_center.contact_support" = "Destek Hizmetlerine Ulaşın";
@@ -535,8 +535,8 @@
 "self.sign_out" = "Çıkış Yap";
 "self.report_abuse" = "Kötüye Kullanımı Raporla";
 "self.voiceover.label" = "Profil";
-"self.voiceover.hint" = "Open profile and settings";
-"self.new-device.voiceover.label" = "Profile, new devices added";
+"self.voiceover.hint" = "Profili ve ayarları aç";
+"self.new-device.voiceover.label" = "Profil, yeni cihazlar eklendi";
 
 "self.add_phone_number" = "Telefon numarası ekleyin";
 "self.add_email_password" = "E-posta adresi ve parola ekleyin";
@@ -559,7 +559,7 @@
 "self.new_device_alert.trust_devices" = "TAMAM";
 
 // Settings - top level
-"self.settings.create_team.title" = "Takım oluştur";
+"self.settings.create_team.title" = "Takım Oluştur";
 "self.settings.add_account.title" = "Hesap ekle";
 
 // Settings - Account details
@@ -600,6 +600,10 @@
 
 "self.settings.account_details.delete_account.alert.title" = "Hesabı Sil";
 "self.settings.account_details.delete_account.alert.message" = "Size e-posta veya SMS üzerinden mesaj göndereceğiz. Hesabınızı kalıcı olarak silmek için bağlantıyı izleyin.";
+
+"self.settings.account_details.log_out.alert.title" = "Çıkış yap";
+"self.settings.account_details.log_out.alert.message" = "Bu aygıtta mesaj geçmişiniz silinecektir.";
+
 
 // Change Username
 
@@ -659,7 +663,10 @@
 
 "self.settings.callkit.title" = "Aramalar";
 "self.settings.callkit.caption" = "iOS ile Paylaş";
-"self.settings.callkit.description" = "Wire aramalarını kilit ekranında ve iOS arama geçmişinde göster. Eğer iCloud aktif ise, arama geçmişi Apple ile paylaşılacaktır. Bu ayarı uygulamak için Wire'ı yeniden başlatın.";
+"self.settings.callkit.description" = "Show Wire calls on the lock screen and in iOS call history. If iCloud is enabled, call history is shared with Apple.";
+
+"self.settings.cbr.not_available" = "Constant Bit Rate Encoding";
+"self.settings.cbr.not_available.description" = "Constant bit rate calls have been temporarily disabled with the introduction of multiple account support. CBR calls will be back soon.";
 
 "self.settings.vbr.title" = "Değişken Bit Hızı Kodlaması";
 "self.settings.vbr.description" = "Bu sesli aramaların daha az veri kullanmasını sağlar, ayrıca yavaş internet bağlantılarında daha iyi çalışır. Sabit Bit Hızı Kodlamasını kullanmak isterseniz devre dışı bırakın.";
@@ -715,7 +722,7 @@
 "self.settings.privacy_security.lock_cancelled.description" = "Lütfen Wire'ın Touch ID veya şifre ile kilidini açın";
 "self.settings.privacy_security.lock_cancelled.action" = "Kilidi aç";
 
-"self.settings.privacy_security.disable_link_previews.title" = "Gönderdiğin bağlantılar için ön izlemeler oluştur";
+"self.settings.privacy_security.disable_link_previews.title" = "Bağlantı Önizlemeleri Oluştur";
 "self.settings.privacy_security.disable_link_previews.footer" = "Ön izlemeler hala başkalarından gelen bağlantılar için görüntülenebilir olabilir.";
 
 "self.settings.privacy_analytics_menu.devices.title" = "Cihazlar";
@@ -897,6 +904,7 @@
 "error.user.registration_unknown_error" = "Bir şeyler ters gitti, lütfen tekrar deneyin.";
 "error.user.device_deleted_remotely" = "Başka bir cihaz tarafından oturumunuz kapatıldı.";
 "error.user.last_identity_cant_be_deleted" = "E-posta adresinizden veya telefon numaranızdan en az biri gerekli.";
+"error.user.account_suspended" = "Bu hesap artık giriş yapmak için yeterli yetkiye sahip değil.";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Those are caught by the UI without involving the SE validation. Basically very similar to ZMUserSessionErrorCode onces

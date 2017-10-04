@@ -57,11 +57,6 @@
 
 @implementation AddEmailPasswordViewController
 
-- (void)dealloc
-{
-    [self.userProfile removeObserverWithToken:self.userEditingToken];
-}
-
 - (instancetype)init
 {
     self = [super init];
@@ -69,7 +64,7 @@
     if (self) {
         self.userProfile = ZMUserSession.sharedSession.userProfile;
         self.userEditingToken = [self.userProfile addObserver:self];
-        self.userObserverToken = [UserChangeInfo addUserObserver:self forUser:[ZMUser selfUser]];
+        self.userObserverToken = [UserChangeInfo addObserver:self forUser:[ZMUser selfUser] userSession:[ZMUserSession sharedSession]];
     }
     
     return self;

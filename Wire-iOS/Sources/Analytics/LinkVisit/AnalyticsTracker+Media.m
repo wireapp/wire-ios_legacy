@@ -78,11 +78,7 @@
 + (NSString *)linkTypeForLinkAttachmentType:(LinkAttachmentType)linkAttachmentType
 {
     NSString *linkType = nil;
-    switch (linkAttachmentType) {
-        case LinkAttachmentTypeVimeoVideo:
-            linkType = AnalyticsEventMediaLinkTypeVimeo;
-            break;
-            
+    switch (linkAttachmentType) {            
         case LinkAttachmentTypeYoutubeVideo:
             linkType = AnalyticsEventMediaLinkTypeYouTube;
             break;

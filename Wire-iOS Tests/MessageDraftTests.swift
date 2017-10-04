@@ -37,7 +37,7 @@ class MessageDraftTests: XCTestCase {
     }
 
     private func removeDraftDatabase() {
-        let databaseURL = url.appendingPathComponent("MessageDraftStorage")
+        let databaseURL = url.appendingPathComponent("drafts")
         try? fileManager.removeItem(at: databaseURL)
         XCTAssertFalse(fileManager.fileExists(atPath: databaseURL.path))
     }
@@ -45,12 +45,12 @@ class MessageDraftTests: XCTestCase {
     func testThatItCreatesDraftStorageDirectory() {
         do {
             // when
-            _ = try MessageDraftStorage(sharedContainerURL: url)
+            _ = try MessageDraftStorage(accountContainerURL: url)
 
             // then
             var isDirectory = ObjCBool(booleanLiteral: false)
             withUnsafeMutablePointer(to: &isDirectory) {
-                XCTAssert(FileManager.default.fileExists(atPath: url.appendingPathComponent("MessageDraftStorage").path, isDirectory: $0))
+                XCTAssert(FileManager.default.fileExists(atPath: url.appendingPathComponent("drafts").path, isDirectory: $0))
             }
             XCTAssert(isDirectory.boolValue)
         } catch {
@@ -61,7 +61,7 @@ class MessageDraftTests: XCTestCase {
     func testThatItCanStoreAndRetrieveADraft() {
         do {
             // given
-            let sut = try MessageDraftStorage(sharedContainerURL: url)
+            let sut = try MessageDraftStorage(accountContainerURL: url)
             let lastModified = NSDate()
 
             // when
@@ -88,7 +88,7 @@ class MessageDraftTests: XCTestCase {
     func testThatItCanDeleteADraft() {
         do {
             // given
-            let sut = try MessageDraftStorage(sharedContainerURL: url)
+            let sut = try MessageDraftStorage(accountContainerURL: url)
             let lastModified = NSDate()
 
             // when
@@ -130,7 +130,7 @@ class MessageDraftTests: XCTestCase {
     func testThatItCanStoreMultipleDraftsAndSortsThemByLastModifiedDate() {
         do {
             // given
-            let sut = try MessageDraftStorage(sharedContainerURL: url)
+            let sut = try MessageDraftStorage(accountContainerURL: url)
             let now = NSDate()
             let future = now.addingTimeInterval(10)
 
@@ -182,7 +182,7 @@ class MessageDraftTests: XCTestCase {
     func testThatItReturnsTheNumberOfStoredDrafts() {
         do {
             // given
-            let sut = try MessageDraftStorage(sharedContainerURL: url)
+            let sut = try MessageDraftStorage(accountContainerURL: url)
 
             // when
             sut.perform { moc in

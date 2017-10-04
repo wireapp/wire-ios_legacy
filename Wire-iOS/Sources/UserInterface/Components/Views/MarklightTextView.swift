@@ -26,8 +26,6 @@ public class MarklightTextView: NextResponderTextView {
     public let style: MarklightStyle
     fileprivate let marklightTextStorage: MarklightTextStorage
     
-    fileprivate var nextListNumber = 1
-    fileprivate var nextListBullet = "-"
     fileprivate var needsNewNumberListItem = false
     fileprivate var needsNewBulletListItem = false
     
@@ -41,9 +39,6 @@ public class MarklightTextView: NextResponderTextView {
     public override var selectedTextRange: UITextRange? {
         didSet {
             NotificationCenter.default.post(name: Notification.Name(rawValue: MarklightTextViewDidChangeSelectionNotification), object: self)
-            // invalidate list item prefixes
-            nextListNumber = 1
-            nextListBullet = "-"
         }
     }
     
@@ -102,6 +97,7 @@ extension MarklightTextView {
             var text = self.text!
             var rangesToDelete = rangesOfEmptyMarkdownElements()
             rangesToDelete += rangesOfMarkdownWhitespace()
+            rangesToDelete += rangesOfSyntaxForMarkdownEmoji()
             
             // discard nested ranges, sort by location descending
             rangesToDelete = flattenRanges(rangesToDelete).sorted {
@@ -110,7 +106,7 @@ extension MarklightTextView {
             
             // strip empty markdown
             rangesToDelete.forEach {
-                text.removeSubrange(text.rangeFrom(range: $0))
+                text.deleteCharactersIn(range: $0)
             }
             
             // strip empty list items
@@ -146,7 +142,10 @@ extension MarklightTextView {
             
             insertPrefixSyntax(syntax, forSelection: selection)
             
-        case .numberList:   insertPrefixSyntax("\(nextListNumber). ", forSelection: selection)
+        case .numberList:
+            insertPrefixSyntax("\(nextListNumber). ", forSelection: selection)
+            renumberLists()
+            
         case .bulletList:   insertPrefixSyntax("\(nextListBullet) ", forSelection: selection)
         case .bold:         insertWrapSyntax("**", forSelection: selection)
         case .italic:       insertWrapSyntax("_", forSelection: selection)
@@ -214,7 +213,7 @@ extension MarklightTextView {
             else { return }
         
         let lineRange = (text as NSString).lineRange(for: selection)
-        text.removeSubrange(text.rangeFrom(range: preRange))
+        text.deleteCharactersIn(range: preRange)
         
         // shift selection location to account for removal, but don't exceed line start
         let location = max(lineRange.location, selection.location - preRange.length)
@@ -235,8 +234,8 @@ extension MarklightTextView {
             else { return }
         
         // remove postRange first so preRange is still valid
-        text.removeSubrange(text.rangeFrom(range: postRange))
-        text.removeSubrange(text.rangeFrom(range: preRange))
+        text.deleteCharactersIn(range: postRange)
+        text.deleteCharactersIn(range: preRange)
         
         // reposition caret:
         // if non zero selection or caret pos was within postRange
@@ -255,9 +254,46 @@ extension MarklightTextView {
     }
 }
 
-// MARK: - Range calculations
+// MARK: - Range Calculations
 
 extension MarklightTextView {
+    
+    /// Returns the text position indicating the start of the line containin the given
+    /// position.
+    ///
+    fileprivate func lineStartForTextAtPosition(_ pos: UITextPosition) -> UITextPosition {
+        
+        guard let caretPos = selectedTextRange?.start, caretPos != beginningOfDocument else {
+            return beginningOfDocument
+        }
+        
+        // if prev char is new line, then caret is at start of current line
+        if let prevPos = position(from: caretPos, offset: -1), text(in: textRange(from: prevPos, to: caretPos)!) == "\n" {
+            return caretPos
+        } else {
+            return tokenizer.position(from: caretPos, toBoundary: .paragraph, inDirection: UITextStorageDirection.backward.rawValue)!
+        }
+    }
+    
+    /// Returns the range of the line previous to the current selection if it exists, else nil.
+    ///
+    fileprivate func rangeOfPreviousLine() -> NSRange? {
+        
+        guard let caretPos = selectedTextRange?.start, caretPos != beginningOfDocument else { return nil }
+        
+        let currLineStart = lineStartForTextAtPosition(caretPos)
+        
+        // move back one char
+        if let prevPos = position(from: currLineStart, offset: -1) {
+            if let prevLineStart = tokenizer.position(from: prevPos, toBoundary: .paragraph, inDirection: UITextStorageDirection.backward.rawValue) {
+                return NSMakeRange(offset(from: beginningOfDocument, to: prevLineStart),
+                                   offset(from: prevLineStart, to: prevPos)
+                )
+            }
+        }
+        
+        return nil
+    }
     
     /// Returns all ranges of all markdown elements.
     ///
@@ -274,21 +310,6 @@ extension MarklightTextView {
         return ranges
     }
     
-    fileprivate func lineStartForTextAtPosition(_ pos: UITextPosition) -> UITextPosition {
-        
-        // check if last char is newline
-        if let prevPos = position(from: pos, offset: -1) {
-            if text(in: textRange(from: prevPos, to: pos)!) == "\n" {
-                return pos
-            }
-        }
-        
-        // if caret is at document beginning, position() returns nil
-        return tokenizer.position(from: pos,
-                                  toBoundary: .paragraph,
-                                  inDirection: UITextStorageDirection.backward.rawValue) ?? beginningOfDocument
-    }
-    
     fileprivate func rangeForMarkdownElement(type: MarkdownElementType, enclosingSelection selection: NSRange) -> MarkdownRange? {
         
         let groupStyler = marklightTextStorage.groupStyler
@@ -302,52 +323,39 @@ extension MarklightTextView {
         return nil
     }
     
-    public func markdownElementsForRange(_ range: NSRange?) -> [MarkdownElementType] {
-        
-        let selection = range ?? selectedRange
-        
-        let elementTypes: [MarkdownElementType] = [
-            .header(.h1), .header(.h2), .header(.h3),
-            .italic, .bold, .numberList, .bulletList,
-            .code, .quote
-        ]
-        
-        return elementTypes.filter { type -> Bool in
-            return self.isMarkdownElement(type: type, activeForSelection: selection)
-        }
-    }
-    
-    fileprivate func isMarkdownElement(type: MarkdownElementType, activeForSelection selection: NSRange) -> Bool {
-        return rangeForMarkdownElement(type: type, enclosingSelection: selection) != nil
-    }
-    
     /// Returns all ranges of leading/trailing whitespace exclusively contained
     /// within markdown elements.
     ///
     fileprivate func rangesOfMarkdownWhitespace() -> [NSRange] {
         
+        let text = self.text as NSString
         var rangesToDelete = [NSRange]()
+        let charSet = CharacterSet.whitespacesAndNewlines.inverted
         
         for range in allMarkdownRanges() {
             
-            let contentRange = text.rangeFrom(range: range.contentRange)
-            let charSet = CharacterSet.whitespacesAndNewlines.inverted
+            let contentRange = range.contentRange
             
-            // offset of first non whitespace char relative to contentRange start
-            if let start = text.rangeOfCharacter(from: charSet, options: [], range: contentRange)?.lowerBound {
-                let length = text.distance(from: contentRange.lowerBound, to: start)
-                let preRange = NSMakeRange(range.contentRange.location, length)
-                if preRange.length > 0 {
-                    rangesToDelete.append(preRange)
+            // range start of first non whitespace char in content range
+            let rangeOfFirstChar = text.rangeOfCharacter(from: charSet, options: [], range: contentRange)
+            
+            // if not found, then content range contains only whitespace
+            if rangeOfFirstChar.location == NSNotFound {
+                rangesToDelete.append(contentRange)
+                continue
+            } else {
+                let spaces = rangeOfFirstChar.location - contentRange.location
+                if spaces > 0 {
+                    rangesToDelete.append(NSMakeRange(contentRange.location, spaces))
                 }
             }
             
-            // as above, but relative to contentRange end
-            if let end = text.rangeOfCharacter(from: charSet, options: .backwards, range: contentRange)?.upperBound {
-                let length = text.distance(from: end, to: contentRange.upperBound)
-                let postRange = NSMakeRange(NSMaxRange(range.contentRange) - length , length)
-                if postRange.length > 0 {
-                    rangesToDelete.append(postRange)
+            // as above, but starting from end of content range
+            let rangeOfLastChar = text.rangeOfCharacter(from: charSet, options: .backwards, range: range.contentRange)
+            if rangeOfLastChar.location != NSNotFound{
+                let spaces = NSMaxRange(contentRange) - NSMaxRange(rangeOfLastChar)
+                if spaces > 0 {
+                    rangesToDelete.append(NSMakeRange(NSMaxRange(rangeOfLastChar), spaces))
                 }
             }
         }
@@ -362,42 +370,30 @@ extension MarklightTextView {
         
         var result = [NSRange]()
         
-        for range in allMarkdownRanges() {
-            if isEmptyMarkdownElement(range) {
-                result.append(range.wholeRange)
+        allMarkdownRanges().forEach {
+            if isEmptyMarkdownElement($0) {
+                result.append($0.wholeRange)
             }
         }
         
         return result
     }
     
-    /// Returns true if the markdown element specified by the given range has a
-    /// zero content range or the content text contains only whitespace and/or
-    /// other markdown syntax.
-    /// - parameter range: the range specifying the markdown element
+    /// Returns all syntax ranges of markdown elements that contain only whitespace and
+    /// at least one emoji.
     ///
-    fileprivate func isEmptyMarkdownElement(_ range: MarkdownRange) -> Bool {
+    fileprivate func rangesOfSyntaxForMarkdownEmoji() -> [NSRange] {
         
-        let contentRange = range.contentRange
-
-        if contentRange.length == 0 {
-            return true
-        }
+        var result = [NSRange]()
         
-        let syntaxColor = style.syntaxAttributes[NSForegroundColorAttributeName] as! UIColor
-        
-        for index in contentRange.location..<NSMaxRange(contentRange) {
-            let char = text[text.index(text.startIndex, offsetBy: index)]
-            let color = attributedText.attribute(NSForegroundColorAttributeName, at: index, effectiveRange: nil) as? UIColor
-            
-            if " \t\n\r".characters.contains(char) || color == syntaxColor {
-                continue
-            } else {
-                return false
+        allMarkdownRanges().forEach {
+            if isMarkdownEmoji($0) {
+                if let preRange = $0.preRange { result.append(preRange) }
+                if let postRange = $0.postRange { result.append(postRange) }
             }
         }
         
-        return true
+        return result
     }
     
     /// Filters the given array of ranges by discarding all ranges that are
@@ -429,6 +425,76 @@ extension MarklightTextView {
         
         return result
     }
+    
+    // MARK: - Determining Markdown
+    
+    public func markdownElementsForRange(_ range: NSRange?) -> [MarkdownElementType] {
+        
+        let selection = range ?? selectedRange
+        
+        let elementTypes: [MarkdownElementType] = [
+            .header(.h1), .header(.h2), .header(.h3),
+            .italic, .bold, .numberList, .bulletList,
+            .code, .quote
+        ]
+        
+        return elementTypes.filter { type -> Bool in
+            return self.isMarkdownElement(type: type, activeForSelection: selection)
+        }
+    }
+    
+    fileprivate func isMarkdownElement(type: MarkdownElementType, activeForSelection selection: NSRange) -> Bool {
+        return rangeForMarkdownElement(type: type, enclosingSelection: selection) != nil
+    }
+    
+    /// Returns true if the markdown element specified by the given range has a
+    /// zero content range or the content text contains only whitespace and/or
+    /// other markdown syntax.
+    /// - parameter range: the range specifying a markdown element
+    ///
+    fileprivate func isEmptyMarkdownElement(_ range: MarkdownRange) -> Bool {
+        
+        return  range.contentRange.length == 0 || markdown(range, containsOnlyCharactersIn: CharacterSet.whitespacesAndNewlines)
+    }
+    
+    /// Returns true if the markdown element specified by the given range contains
+    /// only emojis, whitespace and other markdown syntax.
+    /// - parameter range: the range specifying a markdown element
+    ///
+    fileprivate func isMarkdownEmoji(_ range: MarkdownRange) -> Bool {
+        
+        var emojisAndSpaces = CharacterSet.symbols.union(CharacterSet.whitespaces)
+        
+        // the zero-width joiner is used to combine multiple emojis into new ones
+        emojisAndSpaces.insert("\u{200D}")
+        // '+' is used for list items
+        emojisAndSpaces.remove("+")
+        
+        return markdown(range, containsOnlyCharactersIn: emojisAndSpaces)
+    }
+    
+    /// Returns true if the markdown element specified by the given range contains
+    /// only characters in the given set, other markdown syntax, or if the content is empty.
+    /// - parameter range: the range specifying a markdown element
+    /// - parameter set: the set of permissible characters
+    ///
+    fileprivate func markdown(_ range: MarkdownRange, containsOnlyCharactersIn set: CharacterSet) -> Bool {
+        
+        // we ignore markdown syntax to allow for nested markdown
+        let syntaxColor = style.syntaxAttributes[NSForegroundColorAttributeName] as! UIColor
+        let markdown = attributedText.attributedSubstring(from: range.wholeRange)
+        var violation = false
+        
+        markdown.enumerateAttribute(NSForegroundColorAttributeName, in: NSMakeRange(0, markdown.length)) { value, range, stop in
+            // not syntax and contains non permissable char
+            if value as? UIColor != syntaxColor && markdown.string.substring(with: range).containsCharacters(from: set.inverted) {
+                violation = true
+                stop.pointee = true
+            }
+        }
+
+        return !violation
+    }
 }
 
 
@@ -436,48 +502,57 @@ extension MarklightTextView {
 
 extension MarklightTextView {
     
-    public func handleNewLine() {
-        
-        guard let caretPos = selectedTextRange?.start else { return }
-        
-        let lineStart = lineStartForTextAtPosition(caretPos)
-        let lineTextRange = textRange(from: lineStart, to: caretPos)!
-        let location = offset(from: beginningOfDocument, to: lineTextRange.start)
-        let length = offset(from: lineTextRange.start, to: lineTextRange.end)
-        let lineRange = NSMakeRange(location, length)
-        
-        // if line is number list element
-        if isMarkdownElement(type: .numberList, activeForSelection: lineRange) {
-            // non empty number list item
-            let regex = try! NSRegularExpression(pattern: "(^\\d+)(?:[.][\\t ]+)(.|[\\t ])+", options: [.anchorsMatchLines])
-            
-            if let match = regex.firstMatch(in: text, options: [], range: lineRange) {
-                
-                let numberStr = text.substring(with: text.rangeFrom(range: match.rangeAt(1))) as NSString
-                nextListNumber = numberStr.integerValue + 1
-                needsNewNumberListItem = true
-
-            } else {
-                // replace empty list item with newline
-                text.removeSubrange(text.rangeFrom(range: lineRange))
-                nextListNumber = 1
-            }
-            
-        } else if isMarkdownElement(type: .bulletList, activeForSelection: lineRange) {
-            // non empty bullet list item
-            let regex = try! NSRegularExpression(pattern: "(^[*+-])(?:[\\t ]+)(.|[\\t ])+", options: [.anchorsMatchLines])
-            
-            if let match = regex.firstMatch(in: text, options: [], range: lineRange) {
-                nextListBullet = text.substring(with: text.rangeFrom(range: match.rangeAt(1)))
-                needsNewBulletListItem = true
-            } else {
-                // replace empty list item with newline
-                text.removeSubrange(text.rangeFrom(range: lineRange))
-                nextListBullet = "-"
+    fileprivate var nextListNumber: Int {
+        // if the line before the caret is a list item, return the next number
+        if let range = rangeOfPreviousLine() {
+            let regex = try! NSRegularExpression(pattern: "^\\d+", options: .anchorsMatchLines)
+            if let match = regex.firstMatch(in: text, range: range) {
+                return (text.substring(with: match.range) as NSString).integerValue + 1
             }
         }
+        
+        return 1
     }
     
+    fileprivate var nextListBullet: String {
+        // if line before the caret is a bullet item, return the same bullet
+        if let range = rangeOfPreviousLine() {
+            let regex = try! NSRegularExpression(pattern: "^[-+*]", options: .anchorsMatchLines)
+            if let match = regex.firstMatch(in: text, range: range) {
+                return text.substring(with: match.range)
+            }
+        }
+        
+        return "-"
+    }
+    
+    /// Checks if the caret is currently on a list item, if so, determines whether
+    /// the next item should be inserted or the current item should be deleted.
+    /// Note: this method should be called after the user enters a new line, but
+    /// before the new line is inserted.
+    ///
+    public func handleNewLine() {
+        
+        if let markdownRange = rangeForMarkdownElement(type: .numberList, enclosingSelection: selectedRange) {
+            
+            if isEmptyMarkdownElement(markdownRange) {
+                text.deleteCharactersIn(range: markdownRange.wholeRange)
+            } else {
+                needsNewNumberListItem = true
+            }
+            
+        } else if let markdownRange = rangeForMarkdownElement(type: .bulletList, enclosingSelection: selectedRange) {
+            
+            if isEmptyMarkdownElement(markdownRange) {
+                text.deleteCharactersIn(range: markdownRange.wholeRange)
+            } else {
+                needsNewBulletListItem = true
+            }
+        }
+        
+    }
+    
+    // Invoked when the text changes
     @objc fileprivate func textChangedHandler() {
         if needsNewNumberListItem {
             needsNewNumberListItem = false
@@ -486,6 +561,47 @@ extension MarklightTextView {
             needsNewBulletListItem = false
             insertSyntaxForMarkdownElement(type: .bulletList)
         }
+    }
+    
+    /// Ensures each sequential numbered list item from the current caret
+    /// position is correctly numbered.
+    ///
+    fileprivate func renumberLists() {
+        
+        let listPrefix = "(?:(\\d+)[.][\\t ]+)"
+        let listItemPattern = "(?:^\(listPrefix))(.)*"
+        let wholeListPattern = "(?:\(listItemPattern))(\\n\(listItemPattern))*"
+        let wholeRange = NSMakeRange(0, (text as NSString).length)
+        
+        let wholeListRegex = try! NSRegularExpression(pattern: wholeListPattern, options: .anchorsMatchLines)
+        let itemRegex = try! NSRegularExpression(pattern: listItemPattern, options: .anchorsMatchLines)
+        
+        let previousSelection = selectedRange
+        var index = self.nextListNumber
+        
+        wholeListRegex.enumerateMatches(in: text, options: [], range: wholeRange) { result, _, stop in
+            
+            // the range of the whole list enclosing the cursor
+            if let listRange = result?.range, NSEqualRanges(NSIntersectionRange(listRange, selectedRange), selectedRange) {
+                
+                let currentItemRange = (text as NSString).paragraphRange(for: previousSelection)
+                let itemsBelow = NSMakeRange(currentItemRange.location, listRange.length - (currentItemRange.location - listRange.location))
+                
+                // for each list item at or below cursor position
+                itemRegex.enumerateMatches(in: text, options: [], range: itemsBelow) { innerResult, _, _ in
+                    if let itemNumber = innerResult?.rangeAt(1) {
+                        text = (text as NSString).replacingCharacters(in: itemNumber, with: "\(index)")
+                        index += 1
+                    }
+                }
+                
+                // no need to reformat other lists
+                stop.pointee = true
+            }
+        }
+        
+        selectedRange = previousSelection
+        scrollRangeToVisible(selectedRange)
     }
     
     @objc public func resetTypingAttributes() {
@@ -547,9 +663,11 @@ extension MarklightTextView: MarkdownBarViewDelegate {
 
 extension String {
     
-    func rangeFrom(range: NSRange) -> Range<String.Index> {
-        let start = index(startIndex, offsetBy: range.location)
-        let end = index(startIndex, offsetBy: range.location + range.length)
-        return start..<end
+    mutating fileprivate func deleteCharactersIn(range: NSRange) {
+        self = (self as NSString).replacingCharacters(in: range, with: "")
+    }
+    
+    fileprivate func substring(with range: NSRange) -> String {
+        return (self as NSString).substring(with: range)
     }
 }

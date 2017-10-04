@@ -19,109 +19,6 @@
 import UIKit
 import Cartography
 
-@objc internal class ProfileView: UIView {
-    public let imageView = UserImageView(size: .big)
-    public let nameLabel = UILabel()
-    public let handleLabel = UILabel()
-    public let teamNameLabel = UILabel()
-    public var teamView: TeamImageView?
-    
-    init(user: ZMUser) {
-        super.init(frame: .zero)
-        imageView.accessibilityIdentifier = "user image"
-        imageView.user = user
-        
-        nameLabel.accessibilityLabel = "profile_view.accessibility.name".localized
-        nameLabel.accessibilityIdentifier = "name"
-        nameLabel.setContentHuggingPriority(UILayoutPriorityRequired, for: .vertical)
-        nameLabel.setContentCompressionResistancePriority(UILayoutPriorityRequired, for: .vertical)
-        handleLabel.accessibilityLabel = "profile_view.accessibility.handle".localized
-        handleLabel.accessibilityIdentifier = "username"
-        handleLabel.setContentHuggingPriority(UILayoutPriorityRequired, for: .vertical)
-        handleLabel.setContentCompressionResistancePriority(UILayoutPriorityRequired, for: .vertical)
-        teamNameLabel.accessibilityLabel = "profile_view.accessibility.team_name".localized
-        teamNameLabel.accessibilityIdentifier = "team name"
-        teamNameLabel.setContentHuggingPriority(UILayoutPriorityRequired, for: .vertical)
-        teamNameLabel.setContentCompressionResistancePriority(UILayoutPriorityRequired, for: .vertical)
-        
-        nameLabel.text = user.name
-        nameLabel.accessibilityValue = nameLabel.text
-        
-        if let team = user.team, let teamName = team.name {
-            teamNameLabel.text = "profile_view.team_name.in".localized(args: teamName)
-            teamNameLabel.accessibilityValue = teamNameLabel.text
-        }
-        else {
-            teamNameLabel.isHidden = true
-        }
-        
-        if let handle = user.handle, !handle.isEmpty {
-            handleLabel.text = "@" + handle
-            handleLabel.accessibilityValue = handleLabel.text
-        }
-        else {
-            handleLabel.isHidden = true
-        }
-        
-        [imageView, nameLabel, handleLabel, teamNameLabel].forEach(addSubview)
-        
-        if let team = user.team {
-            let teamView = TeamImageView(team: team)
-            teamView.style = .big
-            addSubview(teamView)
-            self.teamView = teamView
-        }
-        
-        self.createConstraints()
-    }
-    
-    private func createConstraints() {
-        constrain(self, imageView, nameLabel, handleLabel, teamNameLabel) { selfView, imageView, nameLabel, handleLabel, teamNameLabel in
-            
-            nameLabel.top == selfView.top
-            nameLabel.centerX == selfView.centerX
-            nameLabel.leading >= selfView.leading
-            nameLabel.trailing <= selfView.trailing
-            
-            handleLabel.top == nameLabel.bottom + 24 ~ LayoutPriority(750.0)
-            handleLabel.top >= nameLabel.bottom
-            handleLabel.centerX == selfView.centerX
-            handleLabel.leading >= selfView.leading
-            handleLabel.trailing <= selfView.trailing
-            
-            imageView.top == handleLabel.bottom + 32 ~ LayoutPriority(750.0)
-            imageView.top >= handleLabel.bottom
-            imageView.width == imageView.height
-            imageView.width <= 200
-            imageView.centerX == selfView.centerX
-            imageView.leading >= selfView.leading
-            imageView.trailing <= selfView.trailing
-            
-            imageView.bottom == teamNameLabel.top - 32 ~ LayoutPriority(750.0)
-            imageView.bottom <= teamNameLabel.top
-            
-            teamNameLabel.bottom == selfView.bottom
-            teamNameLabel.centerX == selfView.centerX
-            teamNameLabel.leading >= selfView.leading
-            teamNameLabel.trailing <= selfView.trailing
-        }
-        
-        if let teamView = self.teamView {
-            constrain(imageView, teamView) { imageView, teamView in
-                teamView.width == teamView.height
-                teamView.width == 64
-                
-                teamView.trailing == imageView.trailing
-                teamView.bottom == imageView.bottom
-            }
-        }
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-}
-
 extension IconButton {
     public static func closeButton() -> IconButton {
         let closeButton = IconButton.iconButtonDefaultLight()
@@ -135,8 +32,10 @@ extension IconButton {
 
 final internal class SelfProfileViewController: UIViewController {
     private let settingsController: SettingsTableViewController
+    private let accountSelectorController = AccountSelectorController()
     private let profileContainerView = UIView()
     private let profileView: ProfileView
+    private let accountLabel = UILabel()
     @objc var dismissAction: (() -> ())? = .none
 
     
@@ -149,12 +48,6 @@ final internal class SelfProfileViewController: UIViewController {
         settingsController.tableView.isScrollEnabled = false
         
         profileView.imageView.delegate = self
-
-        title = "self.profile".localized
-        
-        let closeButton = IconButton.closeButton()
-        closeButton.addTarget(self, action: #selector(onCloseTouchUpInside(_:)), for: .touchUpInside)
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: closeButton)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -171,16 +64,69 @@ final internal class SelfProfileViewController: UIViewController {
         view.addSubview(settingsController.view)
         addChildViewController(settingsController)
         
+        accountSelectorController.willMove(toParentViewController: self)
+        view.addSubview(accountSelectorController.view)
+        addChildViewController(accountSelectorController)
+        
+        view.addSubview(accountLabel)
+        
         settingsController.view.setContentHuggingPriority(UILayoutPriorityRequired, for: .vertical)
         settingsController.view.setContentCompressionResistancePriority(UILayoutPriorityRequired, for: .vertical)
         settingsController.tableView.setContentHuggingPriority(UILayoutPriorityRequired, for: .vertical)
         settingsController.tableView.setContentCompressionResistancePriority(UILayoutPriorityRequired, for: .vertical)
-        self.createConstraints()
+        
+        createCloseButton()
+        configureAccountLabel()
+        createConstraints()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        self.navigationController?.isNavigationBarHidden = true
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.navigationController?.isNavigationBarHidden = false
+    }
+    
+    private func createCloseButton() {
+        let closeButton = IconButton.closeButton()
+        closeButton.addTarget(self, action: #selector(onCloseTouchUpInside(_:)), for: .touchUpInside)
+        self.view.addSubview(closeButton)
+        constrain(closeButton, self.view) { closeButton, selfView in
+            closeButton.top == selfView.top + 12
+            closeButton.trailing == selfView.trailing - 24
+        }
+    }
+    
+    private func configureAccountLabel() {
+        accountLabel.textAlignment = .center
+        accountLabel.isHidden = SessionManager.shared?.accountManager.accounts.count > 1
+        accountLabel.text = "self.account".localized.uppercased()
+        accountLabel.accessibilityTraits = UIAccessibilityTraitHeader
+        accountLabel.textColor = ColorScheme.default().color(withName: ColorSchemeColorTextForeground, variant: .dark)
+        accountLabel.font = FontSpec(.medium, .semibold).font
     }
     
     private func createConstraints() {
+        constrain(view, accountSelectorController.view, profileContainerView, accountLabel) { selfView, accountSelectorControllerView, profileContainerView, accountLabel in
+            accountSelectorControllerView.leading >= selfView.leading
+            accountSelectorControllerView.trailing <= selfView.trailing
+            accountSelectorControllerView.top == selfView.top + 8
+            accountSelectorControllerView.centerX == selfView.centerX
+            accountSelectorControllerView.height == 46
+            
+            accountLabel.top == selfView.top + 8
+            accountLabel.leading >= selfView.leading
+            accountLabel.trailing >= selfView.trailing
+            accountLabel.centerX == selfView.centerX
+            accountLabel.height == 46
+            
+            profileContainerView.top == accountSelectorControllerView.bottom + 12   
+        }
+        
         constrain(view, settingsController.view, profileView, profileContainerView) { view, settingsControllerView, profileView, profileContainerView in
-            profileContainerView.top == self.topLayoutGuideCartography
             profileContainerView.leading == view.leading
             profileContainerView.trailing == view.trailing
             profileContainerView.bottom == settingsControllerView.top

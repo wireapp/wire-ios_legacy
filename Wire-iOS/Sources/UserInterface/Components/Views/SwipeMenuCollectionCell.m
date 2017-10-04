@@ -174,6 +174,7 @@ NSString * const SwipeMenuCollectionCellIDToCloseKey = @"IDToClose";
 
     switch (pan.state) {
         case UIGestureRecognizerStateBegan:
+            
             // reset gesture state
             [self drawerScrollingStarts];
             
@@ -194,7 +195,7 @@ NSString * const SwipeMenuCollectionCellIDToCloseKey = @"IDToClose";
         case UIGestureRecognizerStateEnded:
         case UIGestureRecognizerStateFailed:
         case UIGestureRecognizerStateCancelled:
-        {
+        {            
             [self drawerScrollingEndedWithOffset:offset.x];
             
             if (offset.x + self.initialDrawerOffset > self.bounds.size.width * self.overscrollFraction) { // overscrolled
@@ -423,20 +424,39 @@ NSString * const SwipeMenuCollectionCellIDToCloseKey = @"IDToClose";
 
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldBeRequiredToFailByGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer
 {
-    if (gestureRecognizer == self.revealDrawerGestureRecognizer) {
-        return YES;
-    }
-    return NO;
+    // all other recognizers require this pan recognizer to fail
+    return gestureRecognizer == self.revealDrawerGestureRecognizer;
 }
+
+// NOTE:
+// In iOS 11, the force touch gesture recognizer used for peek & pop was blocking
+// the pan gesture recognizer used for the swipeable cell. The fix to this problem
+// however broke the correct behaviour for iOS 10 (namely, the pan gesture recognizer
+// was now blocking the force touch recognizer). Although Apple documentation suggests
+// getting the reference to the force recognizer and using delegate methods to create
+// failure requirements, setting the delegate raised an exception (???). Here we
+// simply apply the fix for iOS 11 and above.
 
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRequireFailureOfGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer
 {
-    return ![gestureRecognizer isKindOfClass:[UIPanGestureRecognizer class]] || ![otherGestureRecognizer isKindOfClass:[UIPanGestureRecognizer class]];
+    // for iOS version >= 11
+    if ([[[UIDevice currentDevice] systemVersion] compare:@"11" options:NSNumericSearch] != NSOrderedAscending) {
+        // pan recognizer should not require failure of any other recognizer
+        return ![gestureRecognizer isKindOfClass:[UIPanGestureRecognizer class]];
+    } else {
+        return ![gestureRecognizer isKindOfClass:[UIPanGestureRecognizer class]] || ![otherGestureRecognizer isKindOfClass:[UIPanGestureRecognizer class]];
+    }
 }
 
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer
 {
-    return YES;
+    // iOS version >= 11
+    if ([[[UIDevice currentDevice] systemVersion] compare:@"11" options:NSNumericSearch] != NSOrderedAscending) {
+        // pan recognizer should not recognize simultaneously with any other recognizer
+        return ![gestureRecognizer isKindOfClass:[UIPanGestureRecognizer class]];
+    } else {
+        return YES;
+    }
 }
 
 @end

@@ -24,16 +24,30 @@ private let verifiedShieldImage = WireStyleKit.imageOfShieldverified()
 
 
 final class ShareDestinationCell<D: ShareDestination>: UITableViewCell, Reusable {
-    let checmarkSize: CGFloat = 24
+    let checkmarkSize: CGFloat = 24
+    let avatarSize: CGFloat = 32
     
     let titleLabel = UILabel()
     let checkImageView = UIImageView()
+    let avatarViewContainer = UIView()
+    var avatarView : UIView?
 
     var destination: D? {
         didSet {
             self.titleLabel.text = destination?.displayName
             self.accessoryView = destination?.securityLevel == .secure ? UIImageView(image: verifiedShieldImage) : nil
+            
+            if let avatarView = destination?.avatarView {
+                avatarView.frame = CGRect(x: 0, y: 0, width: avatarSize, height: avatarSize)
+                self.avatarViewContainer.addSubview(avatarView)
+                self.avatarView = avatarView
+            }
         }
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        avatarView?.removeFromSuperview()
     }
 
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
@@ -51,21 +65,30 @@ final class ShareDestinationCell<D: ShareDestination>: UITableViewCell, Reusable
         self.checkImageView.layer.borderColor = UIColor.white.cgColor
         self.checkImageView.layer.borderWidth = 2
         self.checkImageView.contentMode = .center
-        self.checkImageView.layer.cornerRadius = self.checmarkSize / 2.0
-
+        self.checkImageView.layer.cornerRadius = self.checkmarkSize / 2.0
+        
+        self.contentView.addSubview(self.avatarViewContainer)
         self.contentView.addSubview(self.titleLabel)
         self.contentView.addSubview(self.checkImageView)
         
-        constrain(self.contentView, self.titleLabel, self.checkImageView) { contentView, titleLabel, checkImageView in
-            checkImageView.centerY == contentView.centerY
-            checkImageView.left == contentView.left + 16
-            checkImageView.width == self.checmarkSize
-            checkImageView.height == checkImageView.width
+        constrain(self.contentView, self.avatarViewContainer, self.titleLabel, self.checkImageView) {
+            contentView, avatarView, titleLabel, checkImageView in
+
+            avatarView.left == contentView.left + 16
+            avatarView.centerY == contentView.centerY
+            avatarView.width == self.avatarSize
+            avatarView.height == avatarView.width
             
-            titleLabel.left == checkImageView.right + 24
+            titleLabel.left == avatarView.right + 16
             titleLabel.centerY == contentView.centerY
-            titleLabel.right <= contentView.right - 16
-        }
+            titleLabel.right <= checkImageView.left - 16
+            
+            checkImageView.centerY == contentView.centerY
+            checkImageView.right == contentView.right - 16
+            checkImageView.width == self.checkmarkSize
+            checkImageView.height == checkImageView.width
+         }
+        
     }
     
     required init?(coder aDecoder: NSCoder) {

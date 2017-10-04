@@ -283,7 +283,8 @@ private struct InputBarConstants {
     }
 
     public func updateReturnKey() {
-        textView.returnKeyType = Settings.shared().returnKeyType
+        textView.returnKeyType = isMarkingDown ? .default : Settings.shared().returnKeyType
+        textView.reloadInputViews()
     }
 
     func updatePlaceholder() {
@@ -336,6 +337,7 @@ private struct InputBarConstants {
     private func updateInputBar(withState state: InputBarState, oldState: InputBarState? = nil, animated: Bool = true) {
         updateEditViewState()
         updatePlaceholder()
+        updateReturnKey()
         rowTopInsetConstraint?.constant = state.isWriting ? -constants.buttonsBarHeight : 0
 
         let textViewChanges = {

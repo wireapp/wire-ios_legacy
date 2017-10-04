@@ -108,7 +108,6 @@ NSString *const AnalyticsEventTypePermissionsStateDenied = @"denied";
 NSString *const AnalyticsEventMediaLinkTypeKey = @"LinkType";
 NSString *const AnalyticsEventMediaLinkTypeNone = @"WWW";
 NSString *const AnalyticsEventMediaLinkTypeYouTube = @"YouTube";
-NSString *const AnalyticsEventMediaLinkTypeVimeo = @"Vimeo";
 NSString *const AnalyticsEventMediaLinkTypeSoundCloud = @"SoundClound";
 
 NSString *const AnalyticsEventMediaActionKey = @"action";

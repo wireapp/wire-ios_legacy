@@ -37,6 +37,7 @@ public final class AudioMessageCell: ConversationCell {
         self.containerView.clipsToBounds = true
         
         self.audioMessageView.delegate = self
+        self.audioMessageView.audioTrackPlayer = AppDelegate.shared().mediaPlaybackManager?.audioTrackPlayer
         self.obfuscationView.isHidden = true
         
         self.containerView.addSubview(self.audioMessageView)
@@ -58,10 +59,15 @@ public final class AudioMessageCell: ConversationCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    public var audioTrackPlayer : AudioTrackPlayer? {
+        set { self.audioMessageView.audioTrackPlayer = newValue}
+        get { return self.audioMessageView.audioTrackPlayer }
+    }
+    
     open func createConstraints() {
         constrain(self.messageContentView, self.containerView, self.audioMessageView, self.authorLabel) { (messageContentView: LayoutProxy, containerView: LayoutProxy, audioMessageView: LayoutProxy, authorLabel: LayoutProxy) -> () in
             
-            containerView.left == authorLabel.left
+            containerView.left == messageContentView.leftMargin
             containerView.right == messageContentView.rightMargin
             containerView.top == messageContentView.top
             containerView.bottom == messageContentView.bottom

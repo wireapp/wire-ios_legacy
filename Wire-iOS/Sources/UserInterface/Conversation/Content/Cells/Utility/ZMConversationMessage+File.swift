@@ -32,7 +32,7 @@ extension ZMConversationMessage {
         if self.isFileDownloaded(),
             let fileMessageData = self.fileMessageData,
             let fileURL = fileMessageData.fileURL,
-            UIVideoAtPathIsCompatibleWithSavedPhotosAlbum(fileURL.path) && fileMessageData.isVideo() {
+            UIVideoAtPathIsCompatibleWithSavedPhotosAlbum(fileURL.path) && fileMessageData.isVideo {
             return true
         }
         else {

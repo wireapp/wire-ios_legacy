@@ -76,10 +76,6 @@
         _conversation = conversation;
         _previousVoiceChannelState = VoiceChannelV2StateInvalid;
         self.remoteIsSendingVideo = conversation.voiceChannel.isVideoCall;
-        [[NSNotificationCenter defaultCenter] addObserver:self
-                                                 selector:@selector(voiceChannelEnabledCBR:)
-                                                     name:[WireCallCenterV3 cbrNotificationName]
-                                                   object:nil];
     }
     
     return self;
@@ -339,6 +335,7 @@
         case VoiceChannelV2StateOutgoingCallDegraded:
             overlayState = VoiceChannelOverlayStateOutgoingCallDegraded;
             break;
+        case VoiceChannelV2StateEstablishedDataChannel:
         case VoiceChannelV2StateSelfIsJoiningActiveChannel:
             if (previousVoiceChannelState == VoiceChannelV2StateOutgoingCall || previousVoiceChannelState == VoiceChannelV2StateOutgoingCallInactive) {
                 // Hide the media establishment phase for outgoing calls
@@ -537,13 +534,6 @@
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer
 {
     return YES;
-}
-
-#pragma mark - CBR State Observer
-
-- (void)voiceChannelEnabledCBR:(NSNotification *)notification
-{
-    self.overlayView.constantBitRate = YES;
 }
 
 @end

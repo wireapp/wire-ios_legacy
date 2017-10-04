@@ -37,8 +37,7 @@ import Classy
     }
     
     private func applyStyle() {
-        self.cas_styleClass = "separator"
-        CASStyler.default().styleItem(self)
+        self.backgroundColor = ColorScheme.default().color(withName: ColorSchemeColorSeparator)
         self.alpha = 0
     }
     

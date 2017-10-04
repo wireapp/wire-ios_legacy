@@ -21,11 +21,13 @@
 
 #import "FormFlowViewController.h"
 
-@class AnalyticsTracker, ZMIncompleteRegistrationUser;
+@class AnalyticsTracker, ZMIncompleteRegistrationUser, LoginCredentials;
 
 @interface RegistrationRootViewController : FormFlowViewController
 
-@property (nonatomic) BOOL forceLogin;
+@property (nonatomic) BOOL hasSignInError;
+@property (nonatomic) BOOL showLogin;
+@property (nonatomic) LoginCredentials *loginCredentials;
 
 - (instancetype)initWithUnregisteredUser:(ZMIncompleteRegistrationUser *)unregisteredUser;
 - (void)presentLoginTab;

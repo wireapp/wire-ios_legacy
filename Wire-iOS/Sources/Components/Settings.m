@@ -72,7 +72,6 @@ NSString * const UserDefaultDisableLinkPreviews = @"DisableLinkPreviews";
 @interface Settings ()
 
 @property (strong, readonly, nonatomic) NSUserDefaults *defaults;
-@property (nonatomic, strong) ZMConversation *lastViewedConversationInternal;
 @property (nonatomic) BOOL shouldSend500Messages;
 @property (nonatomic) NSTimeInterval maxRecordingDurationDebug;
 @property (nonatomic) ZMEmailCredentials *automationTestEmailCredentials;
@@ -220,29 +219,6 @@ NSString * const UserDefaultDisableLinkPreviews = @"DisableLinkPreviews";
 - (void)setLastPushAlertDate:(NSDate *)lastPushAlertDate
 {
     [self.defaults setObject:lastPushAlertDate forKey:UserDefaultLastPushAlertDate];
-    [self.defaults synchronize];
-}
-
-- (ZMConversation *)lastViewedConversation
-{
-    if (self.lastViewedConversationInternal == nil) {
-        NSString *convString = [self.defaults objectForKey:UserDefaultLastViewedConversation];
-        NSURL *rememberedConvUrl = [NSURL URLWithString:convString];
-        
-        ZMUserSession *session = [ZMUserSession sharedSession];
-        NSManagedObjectID *objectID = [ZMManagedObject objectIDForURIRepresentation:rememberedConvUrl inUserSession:session];
-        
-        ZMConversation *conversation = [ZMConversation existingObjectWithID:objectID inUserSession:session];
-        self.lastViewedConversationInternal = conversation;
-    }
-    return self.lastViewedConversationInternal;
-}
-
-- (void)setLastViewedConversation:(ZMConversation *)lastViewedConversation
-{
-    self.lastViewedConversationInternal = lastViewedConversation;
-    NSURL *selectedConversationURI = [lastViewedConversation.objectID URIRepresentation];
-    [self.defaults setObject:[selectedConversationURI absoluteString] forKey:UserDefaultLastViewedConversation];
     [self.defaults synchronize];
 }
 
@@ -409,6 +385,7 @@ NSString * const UserDefaultDisableLinkPreviews = @"DisableLinkPreviews";
 - (void)setDisableCallKit:(BOOL)disableCallKit
 {
     [self.defaults setBool:disableCallKit forKey:UserDefaultDisableCallKit];
+    [[SessionManager shared] updateCallNotificationStyleFromSettings];
 }
 
 - (BOOL)disableLinkPreviews
@@ -526,9 +503,9 @@ NSString * const UserDefaultDisableLinkPreviews = @"DisableLinkPreviews";
 
 - (void)updateAVSCallingConstantBitRateValue
 {
-    WireCallCenterV3 *callCenter = [WireCallCenterV3 activeInstance];
+    WireCallCenterV3 *callCenter = [[[SessionManager shared] activeUserSession] callCenter];
     if (nil != callCenter) {
-        callCenter.useAudioConstantBitRate = self.callingConstantBitRate;
+        callCenter.useAudioConstantBitRate = NO; // self.callingConstantBitRate;
     }
 }
 

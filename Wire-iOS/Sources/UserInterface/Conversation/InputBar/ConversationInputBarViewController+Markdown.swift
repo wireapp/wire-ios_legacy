@@ -52,5 +52,6 @@ extension ConversationInputBarViewController {
         }
         
         updateMarkdownButton()
+        updateRightAccessoryView()
     }
 }

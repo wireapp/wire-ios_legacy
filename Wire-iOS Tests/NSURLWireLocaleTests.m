@@ -77,4 +77,21 @@
     XCTAssertFalse([URL.absoluteString containsString:@"&&"]);
 }
 
+- (void)testThatLocaleParameterGetAppendedRightWithOtherParametersNoAndCharacter
+{
+    // given
+    NSURL *URL = [NSURL URLWithString:@"http://wire.com?test=1"];
+    
+    // when
+    NSURL *localizedURL = [URL wr_URLByAppendingLocaleParameter];
+    NSString *URLResult = [localizedURL absoluteString];
+    
+    // then
+    XCTAssertNotNil(URLResult);
+    BOOL contains = [URLResult containsString:[NSString stringWithFormat:@"&%@=", WireParameterKeyLocale]];
+    XCTAssertTrue(contains);
+    XCTAssertTrue([URLResult containsString:@"test=1"]);
+    XCTAssertFalse([URL.absoluteString containsString:@"&&"]);
+}
+
 @end

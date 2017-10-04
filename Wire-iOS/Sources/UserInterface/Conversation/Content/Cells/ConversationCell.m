@@ -32,6 +32,7 @@
 #import "Analytics+iOS.h"
 #import "UIResponder+FirstResponder.h"
 #import "UserImageView+Magic.h"
+#import "UIScreen+Compact.h"
 
 const CGFloat ConversationCellSelectedOpacity = 0.4;
 const NSTimeInterval ConversationCellSelectionAnimationDuration = 0.33;
@@ -92,6 +93,10 @@ static const CGFloat BurstContainerExpandedHeight = 40;
 @end
 
 @interface ConversationCell (MessageToolboxViewDelegate) <MessageToolboxViewDelegate>
+
+@end
+
+@interface ConversationCell (PreviewProvider) <PreviewProvider>
 
 @end
 
@@ -316,6 +321,8 @@ static const CGFloat BurstContainerExpandedHeight = 40;
     if (!self.countdownContainerViewHidden) {
         self.countdownContainerView.layer.cornerRadius = CGRectGetWidth(self.countdownContainerView.bounds) / 2;
     }
+    
+    [self.contentView layoutIfNeeded];
 }
 
 - (void)updateConstraintConstants
@@ -516,7 +523,8 @@ static const CGFloat BurstContainerExpandedHeight = 40;
 
 - (void)showMenu;
 {
-    if (self.message.isEphemeral) {
+    // ephemeral message's only possibility is to be deleted
+    if (self.message.isEphemeral && !self.message.canBeDeleted) {
         return;
     }
 
@@ -553,18 +561,22 @@ static const CGFloat BurstContainerExpandedHeight = 40;
     UIMenuController *menuController = UIMenuController.sharedMenuController;
     
     NSMutableArray <UIMenuItem *> *items = [NSMutableArray array];
-    [items addObjectsFromArray:menuConfigurationProperties.additionalItems];
-
-    if ([Message messageCanBeLiked:self.message]) {
-        UIMenuItem *likeItem = [UIMenuItem likeItemForMessage:self.message action:@selector(likeMessage:)];
+    
+    if (!self.message.isEphemeral) {
+        [items addObjectsFromArray:menuConfigurationProperties.additionalItems];
         
-        if (items.count > 0) {
-            [items insertObject:likeItem atIndex:menuConfigurationProperties.likeItemIndex];
-        } else {
-            [items addObject:likeItem];
+        if ([Message messageCanBeLiked:self.message]) {
+            UIMenuItem *likeItem = [UIMenuItem likeItemForMessage:self.message action:@selector(likeMessage:)];
+            
+            if (items.count > 0) {
+                [items insertObject:likeItem atIndex:menuConfigurationProperties.likeItemIndex];
+            } else {
+                [items addObject:likeItem];
+            }
         }
     }
 
+    // at this point, if message is ephemeral, then this will always be true
     if (self.message.canBeDeleted) {
         UIMenuItem *deleteItem = [UIMenuItem deleteItemWithAction:@selector(deleteMessage:)];
         [items addObject:deleteItem];
@@ -600,6 +612,10 @@ static const CGFloat BurstContainerExpandedHeight = 40;
     
     if (action == @selector(likeMessage:)) {
         return YES;
+    }
+    
+    if (action == @selector(copy:) && self.message.isEphemeral) {
+        return NO;
     }
     
     return [super canPerformAction:action withSender:sender];
@@ -638,6 +654,18 @@ static const CGFloat BurstContainerExpandedHeight = 40;
     if ([self.delegate respondsToSelector:@selector(conversationCell:userTapped:inView:)]) {
         [self.delegate conversationCell:self userTapped:BareUserToUser(userImageView.user) inView:userImageView];
     }
+}
+
+#pragma mark - Preview Provider delegate
+
+-(void)preparePreview
+{
+    self.contentLayoutMargins = UIEdgeInsetsZero;
+}
+
+-(CGFloat)getPreviewContentHeight
+{
+    return [CellSizesProvider compressedSizeForView: self.messageContentView];
 }
 
 #pragma mark - Message observation

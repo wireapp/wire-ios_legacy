@@ -81,6 +81,11 @@
     }
 }
 
+- (BOOL)prefersStatusBarHidden
+{
+    return YES;
+}
+
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations
 {
     return [self.class wr_supportedInterfaceOrientations];

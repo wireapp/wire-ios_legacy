@@ -41,6 +41,14 @@
 
 @implementation MediaBarViewController
 
+- (void)dealloc
+{
+    // Observer must be deallocated before `mediaPlaybackManager`
+    self.mediaTitleObserver = nil;
+    self.mediaPlaybackStateObserver = nil;
+    self.mediaPlaybackManager = nil;
+}
+
 - (instancetype)initWithMediaPlaybackManager:(MediaPlaybackManager *)mediaPlaybackManager
 {
     self = [super initWithNibName:nil bundle:nil];

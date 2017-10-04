@@ -36,7 +36,7 @@ class AudioEffectsPickerViewControllerTests: ZMSnapshotTestCase {
         let path = Bundle(for: type(of: self)).path(forResource: "audio_sample", ofType: "m4a")!
         self.sut = AudioEffectsPickerViewController(recordingPath: path, duration: TimeInterval(10.0))
         self.sut.normalizedLoudness = (0...100).map { Float($0) / 100.0 }
-        self.sut.progressView.samples = self.sut.normalizedLoudness as [NSNumber]
+        self.sut.progressView.samples = self.sut.normalizedLoudness
     }
     
     func prepareForSnapshot() -> UIView {

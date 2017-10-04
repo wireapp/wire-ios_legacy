@@ -46,10 +46,11 @@
 #import "KeyboardAvoidingViewController.h"
 
 #import "PhoneSignInViewController.h"
-#import "InvitationFlowViewController.h"
 
 #import "AnalyticsTracker+Registration.h"
 
+@interface RegistrationViewController (UserSessionObserver) <SessionManagerObserver, PostLoginAuthenticationObserver>
+@end
 
 @interface RegistrationViewController () <UINavigationControllerDelegate, FormStepDelegate, ZMInitialSyncCompletionObserver>
 
@@ -65,17 +66,15 @@
 @property (nonatomic) BOOL initialConstraintsCreated;
 @property (nonatomic) BOOL hasPushedPostRegistrationStep;
 @property (nonatomic) NSArray<UserClient *>* userClients;
+@property (nonatomic) id initialSyncObserverToken;
+@property (nonatomic) id postLoginToken;
+@property (nonatomic) id sessionCreationObserverToken;
 
 @end
 
 
 
 @implementation RegistrationViewController
-
-- (void)dealloc
-{
-    [ZMUserSession removeInitalSyncCompletionObserver:self];
-}
 
 - (void)viewDidLoad
 {
@@ -88,8 +87,8 @@
 
     self.unregisteredUser = [ZMIncompleteRegistrationUser new];
     self.unregisteredUser.accentColorValue = [UIColor indexedAccentColor];
-    
-    [ZMUserSession addInitalSyncCompletionObserver:self];
+    self.postLoginToken = [PostLoginAuthenticationNotification addObserver:self];
+    self.sessionCreationObserverToken = [[SessionManager shared] addSessionManagerObserver:self];
     
     [self setupBackgroundViewController];
     [self setupNavigationController];
@@ -110,15 +109,25 @@
 
 - (void)setupNavigationController
 {
+    ZMUserSessionErrorCode userSessionErrorCode = self.signInError.userSessionErrorCode;
+    
+    BOOL addingAdditionalAccount = userSessionErrorCode == ZMUserSessionAddAccountRequested;
+    
+    BOOL needsToReauthenticate = userSessionErrorCode == ZMUserSessionClientDeletedRemotely ||
+                                 userSessionErrorCode == ZMUserSessionAccessTokenExpired ||
+                                 userSessionErrorCode == ZMUserSessionNeedsPasswordToRegisterClient ||
+                                 userSessionErrorCode == ZMUserSessionCanNotRegisterMoreClients;
+    
     RegistrationRootViewController *registrationRootViewController = [[RegistrationRootViewController alloc] initWithUnregisteredUser:self.unregisteredUser];
     registrationRootViewController.formStepDelegate = self;
-    ZMUser *currentUser = [SessionManager shared].currentUser;
-    registrationRootViewController.forceLogin = currentUser.emailAddress.length > 0 || currentUser.phoneNumber.length > 0 || self.signInErrorCode == ZMUserSessionNeedsPasswordToRegisterClient;
+    registrationRootViewController.hasSignInError = self.signInError != nil && !addingAdditionalAccount;
+    registrationRootViewController.showLogin = needsToReauthenticate || addingAdditionalAccount;
+    registrationRootViewController.loginCredentials = [[LoginCredentials alloc] initWithError:self.signInError];
     self.registrationRootViewController = registrationRootViewController;
     
     UIViewController *rootViewController = registrationRootViewController;
 
-    if (self.signInErrorCode == ZMUserSessionNeedsToRegisterEmailToRegisterClient) {
+    if (userSessionErrorCode == ZMUserSessionNeedsToRegisterEmailToRegisterClient) {
         AddEmailPasswordViewController *addEmailPasswordViewController = [[AddEmailPasswordViewController alloc] init];
         addEmailPasswordViewController.analyticsTracker = [AnalyticsTracker analyticsTrackerWithContext:AnalyticsContextPostLogin];
         addEmailPasswordViewController.formStepDelegate = self;
@@ -155,14 +164,6 @@
 + (RegistrationFlow)registrationFlow
 {
     return IS_IPAD ? RegistrationFlowEmail : RegistrationFlowPhone;
-}
-
-- (void)presentInvitationToRegisterAsUser:(ZMIncompleteRegistrationUser *)unregisteredUser
-{
-    InvitationFlowViewController *invitationFlowViewController = [[InvitationFlowViewController alloc] initWithUnregisteredUser:unregisteredUser];
-    self.rootNavigationController.backButtonEnabled = NO;
-    self.rootNavigationController.logoEnabled = NO;
-    [self.rootNavigationController pushViewController:invitationFlowViewController animated:YES];
 }
 
 - (void)presentNoHistoryViewController:(ContextType)type
@@ -246,14 +247,9 @@
     DDLogDebug(@"Failed to fetch invitation with error: %@", error);
 }
 
-- (void)didReceiveInvitationToRegisterAsUser:(ZMIncompleteRegistrationUser *)user
-{
-    [self presentInvitationToRegisterAsUser:user];
-}
-
 #pragma mark - ZMInitialSyncCompletionObserver
 
-- (void)initialSyncCompleted:(NSNotification *)notification
+- (void)initialSyncCompleted
 {
     self.rootNavigationController.showLoadingView = NO;
     
@@ -295,6 +291,21 @@
 - (void)clientDeletionSucceeded
 {
     // nop
+}
+
+@end
+
+#pragma mark - Session observer
+
+@implementation RegistrationViewController (UserSessionObserver)
+
+- (void)sessionManagerCreatedWithUserSession:(ZMUserSession *)userSession {
+    self.initialSyncObserverToken = [ZMUserSession addInitialSyncCompletionObserver:self userSession:[ZMUserSession sharedSession]];
+}
+
+- (void)clientRegistrationDidSucceedWithAccountId:(NSUUID * _Nonnull)accountId
+{
+    self.initialSyncObserverToken = [ZMUserSession addInitialSyncCompletionObserver:self userSession:[ZMUserSession sharedSession]];
 }
 
 @end

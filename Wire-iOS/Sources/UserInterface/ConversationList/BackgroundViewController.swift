@@ -48,7 +48,9 @@ final public class BackgroundViewController: UIViewController {
         self.userSession = userSession
         super.init(nibName: .none, bundle: .none)
         
-        self.userObserverToken = UserChangeInfo.add(observer: self, forBareUser: self.user)
+        if let userSession = userSession {
+            self.userObserverToken = UserChangeInfo.add(observer: self, forBareUser: self.user, userSession: userSession)
+        }
         
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(statusBarStyleChanged(_:)),
@@ -81,6 +83,10 @@ final public class BackgroundViewController: UIViewController {
 
     open override var preferredStatusBarStyle : UIStatusBarStyle {
         return .lightContent
+    }
+    
+    public override func shouldDisplayNotification(from account: Account) -> Bool {
+        return !account.isActive
     }
     
     private func configureViews() {

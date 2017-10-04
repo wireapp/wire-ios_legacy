@@ -30,12 +30,4 @@
 #endif
 }
 
-+ (BOOL)signOutEnabled {
-#if ENABLE_SIGNOUT == 1
-    return YES;
-#else
-    return NO;
-#endif
-}
-
 @end

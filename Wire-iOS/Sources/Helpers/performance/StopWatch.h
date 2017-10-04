@@ -33,10 +33,10 @@ typedef NS_ENUM(NSUInteger, StopWatchEventState) {
 
 @property (nonatomic, readonly) NSUInteger startTime;
 @property (nonatomic, readonly) NSUInteger stopTime;
-@property (nonatomic, copy, readonly) NSString *name;
+@property (nonatomic, copy, readonly, nonnull) NSString *name;
 @property (nonatomic, assign) StopWatchEventState state;
 
-+ (instancetype)eventWithName:(NSString *) name;
++ (instancetype _Nonnull)eventWithName:(NSString * _Nonnull) name;
 - (NSUInteger)elapsedTime;
 
 @end
@@ -45,9 +45,9 @@ typedef NS_ENUM(NSUInteger, StopWatchEventState) {
 
 @interface StopWatch : NSObject
 
-+ (instancetype)stopWatch;
-- (StopWatchEvent *)startEvent:(NSString *)eventName;
-- (StopWatchEvent *)stopEvent:(NSString *)eventName;
-- (StopWatchEvent *)restartEvent:(NSString *)eventName;
++ (instancetype _Nonnull)stopWatch;
+- (StopWatchEvent * _Nullable)startEvent:(NSString * _Nonnull)eventName;
+- (StopWatchEvent * _Nullable)stopEvent:(NSString * _Nonnull)eventName;
+- (StopWatchEvent * _Nullable)restartEvent:(NSString * _Nonnull)eventName;
 
 @end

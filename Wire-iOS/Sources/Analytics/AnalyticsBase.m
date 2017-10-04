@@ -29,7 +29,6 @@
 #import "AnalyticsOptEvent.h"
 
 #import "ZMUser+Additions.h"
-#import "AppController.h"
 
 #if TARGET_IPHONE_SIMULATOR || TARGET_OS_IPHONE
 #import "WireSyncEngine+iOS.h"

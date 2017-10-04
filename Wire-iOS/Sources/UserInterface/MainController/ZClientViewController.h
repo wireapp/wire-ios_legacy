@@ -25,6 +25,7 @@
 @class SplitViewController;
 @class UserClient;
 @class ZMUser;
+@class MediaPlaybackManager;
 
 
 @interface ZClientViewController : UIViewController
@@ -38,6 +39,10 @@
 @property (nonatomic) BOOL isComingFromRegistration;
 
 @property (nonatomic, readonly) SplitViewController *splitViewController;
+
+@property (nonatomic, readonly) MediaPlaybackManager *mediaPlaybackManager;
+
+@property (nonatomic, readonly) ConversationListViewController *conversationListViewController;
 
 + (instancetype)sharedZClientViewController;
 

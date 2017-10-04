@@ -23,7 +23,7 @@ extension ZMConversationMessage {
     public func audioCanBeSaved() -> Bool {
         if let fileMessageData = self.fileMessageData,
             let _ = fileMessageData.fileURL,
-            fileMessageData.isAudio() {
+            fileMessageData.isAudio {
             return true
         }
         else {
@@ -33,7 +33,7 @@ extension ZMConversationMessage {
     
     func audioTrack() -> AudioTrack? {
         if let fileMessageData = self.fileMessageData
-            , fileMessageData.isAudio() {
+            , fileMessageData.isAudio {
             return self as? AudioTrack
         }
         else {

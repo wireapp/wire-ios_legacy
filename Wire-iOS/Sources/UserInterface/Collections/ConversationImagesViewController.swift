@@ -41,8 +41,33 @@ extension UIView {
     }
 }
 
-internal final class ConversationImagesViewController: UIViewController {
-    internal let collection: AssetCollectionWrapper
+final class ConversationImagesViewController: UIViewController {
+    
+    let collection: AssetCollectionWrapper
+    
+    fileprivate let navigationBar = UINavigationBar()
+    var pageViewController: UIPageViewController = UIPageViewController(transitionStyle:.scroll, navigationOrientation:.horizontal, options: [:])
+    var buttonsBar: InputBarButtonsView!
+    let deleteButton = IconButton.iconButtonDefault()
+    let overlay = FeedbackOverlayView()
+    let separator = UIView()
+    fileprivate let likeButton = IconButton.iconButtonDefault()
+    
+    internal let inverse: Bool
+    
+    public weak var messageActionDelegate: MessageActionResponder? = .none
+    
+    public var snapshotBackgroundView: UIView? = .none
+    
+    fileprivate var imageMessages: [ZMConversationMessage] = []
+    
+    internal var currentMessage: ZMConversationMessage {
+        didSet {
+            self.updateButtonsForMessage()
+            self.createNavigationTitle()
+        }
+    }
+    
     public var swipeToDismiss: Bool = false {
         didSet {
             if let currentController = self.currentController {
@@ -50,6 +75,7 @@ internal final class ConversationImagesViewController: UIViewController {
             }
         }
     }
+    
     public var dismissAction: DismissAction? = .none {
         didSet {
             if let currentController = self.currentController {
@@ -57,24 +83,10 @@ internal final class ConversationImagesViewController: UIViewController {
             }
         }
     }
-    public var snapshotBackgroundView: UIView? = .none
-    fileprivate var imageMessages: [ZMConversationMessage] = []
-    internal var currentMessage: ZMConversationMessage {
-        didSet {
-            self.updateButtonsForMessage()
-            self.createNavigationTitle()
-        }
+    
+    override open var prefersStatusBarHidden: Bool {
+        return false
     }
-    internal var pageViewController: UIPageViewController = UIPageViewController(transitionStyle:.scroll, navigationOrientation:.horizontal, options: [:])
-    internal var buttonsBar: InputBarButtonsView!
-    internal let deleteButton = IconButton.iconButtonDefault()
-    internal let overlay = FeedbackOverlayView()
-    internal let separator = UIView()
-    fileprivate let likeButton = IconButton.iconButtonDefault()
-    
-    internal let inverse: Bool
-    
-    public weak var messageActionDelegate: MessageActionResponder? = .none
     
     init(collection: AssetCollectionWrapper, initialMessage: ZMConversationMessage, inverse: Bool = false) {
         assert(initialMessage.isImage)
@@ -105,17 +117,25 @@ internal final class ConversationImagesViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        navigationBar.items = [navigationItem]
+        navigationBar.isTranslucent = false
+        navigationBar.barTintColor = ColorScheme.default().color(withName: ColorSchemeColorBarBackground)
+        
         self.createPageController()
         self.createControlsBar()
         view.addSubview(overlay)
         view.addSubview(separator)
+        view.addSubview(navigationBar)
+
+        constrain(view, pageViewController.view) { view, pageControllerView in
+            pageControllerView.edges == view.edges
+        }
         
-        constrain(self.view, self.pageViewController.view, self.buttonsBar, overlay, separator) { view, pageControllerView, buttonsBar, overlay, separator in
-            pageControllerView.top == view.top
-            pageControllerView.leading == view.leading
-            pageControllerView.trailing == view.trailing
-            
-            pageControllerView.bottom == buttonsBar.top
+        constrain(view, navigationBar, buttonsBar, overlay, separator) { view, navigationBar, buttonsBar, overlay, separator in
+            navigationBar.top == view.top
+            navigationBar.width == view.width
+            navigationBar.centerX == view.centerX
+            navigationBar.height == 64
             
             buttonsBar.leading == view.leading
             buttonsBar.trailing == view.trailing
@@ -129,10 +149,6 @@ internal final class ConversationImagesViewController: UIViewController {
             separator.leading == buttonsBar.leading
             separator.trailing == buttonsBar.trailing
         }
-    }
-    
-    override open var prefersStatusBarHidden: Bool {
-        return false
     }
     
     private func createPageController() {
@@ -183,49 +199,61 @@ internal final class ConversationImagesViewController: UIViewController {
     }
     
     private func createControlsBar() {
-        let copyButton = IconButton.iconButtonDefault()
-        copyButton.setIcon(.copy, with: .tiny, for: .normal)
-        copyButton.accessibilityLabel = "copy"
-        copyButton.addTarget(self, action: #selector(ConversationImagesViewController.copyCurrent(_:)), for: .touchUpInside)
-
-        likeButton.addTarget(self, action: #selector(likeCurrent), for: .touchUpInside)
-        updateLikeButton()
         
-        let saveButton = IconButton.iconButtonDefault()
-        saveButton.setIcon(.save, with: .tiny, for: .normal)
-        saveButton.accessibilityLabel = "save"
-        saveButton.addTarget(self, action: #selector(ConversationImagesViewController.saveCurrent(_:)), for: .touchUpInside)
+        var buttons = [IconButton]()
         
-        let shareButton = IconButton.iconButtonDefault()
-        shareButton.setIcon(.export, with: .tiny, for: .normal)
-        shareButton.accessibilityLabel = "share"
-        shareButton.addTarget(self, action: #selector(ConversationImagesViewController.shareCurrent(_:)), for: .touchUpInside)
+        // ephemermal images should not contain these buttons.
+        // if the current message is ephemeral, then it will be the only
+        // message b/c ephemeral messages are excluded in the collection.
+        if !currentMessage.isEphemeral {
+            
+            let copyButton = IconButton.iconButtonDefault()
+            copyButton.setIcon(.copy, with: .tiny, for: .normal)
+            copyButton.accessibilityLabel = "copy"
+            copyButton.addTarget(self, action: #selector(ConversationImagesViewController.copyCurrent(_:)), for: .touchUpInside)
+            
+            likeButton.addTarget(self, action: #selector(likeCurrent), for: .touchUpInside)
+            updateLikeButton()
+            
+            let saveButton = IconButton.iconButtonDefault()
+            saveButton.setIcon(.save, with: .tiny, for: .normal)
+            saveButton.accessibilityLabel = "save"
+            saveButton.addTarget(self, action: #selector(ConversationImagesViewController.saveCurrent(_:)), for: .touchUpInside)
+            
+            let shareButton = IconButton.iconButtonDefault()
+            shareButton.setIcon(.export, with: .tiny, for: .normal)
+            shareButton.accessibilityLabel = "share"
+            shareButton.addTarget(self, action: #selector(ConversationImagesViewController.shareCurrent(_:)), for: .touchUpInside)
+            
+            let sketchButton = IconButton.iconButtonDefault()
+            sketchButton.setIcon(.brush, with: .tiny, for: .normal)
+            sketchButton.accessibilityLabel = "sketch over image"
+            sketchButton.addTarget(self, action: #selector(ConversationImagesViewController.sketchCurrent(_:)), for: .touchUpInside)
+            
+            let emojiSketchButton = IconButton.iconButtonDefault()
+            emojiSketchButton.setIcon(.emoji, with: .tiny, for: .normal)
+            emojiSketchButton.accessibilityLabel = "sketch emoji over image"
+            emojiSketchButton.addTarget(self, action: #selector(ConversationImagesViewController.sketchCurrentEmoji(_:)), for: .touchUpInside)
+            
+            let revealButton = IconButton.iconButtonDefault()
+            revealButton.setIcon(.eye, with: .tiny, for: .normal)
+            revealButton.accessibilityLabel = "reveal in conversation"
+            revealButton.addTarget(self, action: #selector(ConversationImagesViewController.revealCurrent(_:)), for: .touchUpInside)
 
+            buttons = [likeButton, shareButton, sketchButton, emojiSketchButton, copyButton, saveButton, revealButton]
+        }
+        
         deleteButton.setIcon(.trash, with: .tiny, for: .normal)
         deleteButton.accessibilityLabel = "delete"
         deleteButton.addTarget(self, action: #selector(deleteCurrent), for: .touchUpInside)
         
-        let revealButton = IconButton.iconButtonDefault()
-        revealButton.setIcon(.eye, with: .tiny, for: .normal)
-        revealButton.accessibilityLabel = "reveal in conversation"
-        revealButton.addTarget(self, action: #selector(ConversationImagesViewController.revealCurrent(_:)), for: .touchUpInside)
-        
-        let sketchButton = IconButton.iconButtonDefault()
-        sketchButton.setIcon(.brush, with: .tiny, for: .normal)
-        sketchButton.accessibilityLabel = "sketch over image"
-        sketchButton.addTarget(self, action: #selector(ConversationImagesViewController.sketchCurrent(_:)), for: .touchUpInside)
-        
-        let emojiSketchButton = IconButton.iconButtonDefault()
-        emojiSketchButton.setIcon(.emoji, with: .tiny, for: .normal)
-        emojiSketchButton.accessibilityLabel = "sketch emoji over image"
-        emojiSketchButton.addTarget(self, action: #selector(ConversationImagesViewController.sketchCurrentEmoji(_:)), for: .touchUpInside)
-        
-        let buttons = [likeButton, shareButton, sketchButton, emojiSketchButton, copyButton, saveButton, revealButton, deleteButton]
+        buttons.append(deleteButton)
         buttons.forEach { $0.hitAreaPadding = .zero }
         
         self.buttonsBar = InputBarButtonsView(buttons: buttons)
         self.buttonsBar.clipsToBounds = true
         self.buttonsBar.expandRowButton.setIconColor(ColorScheme.default().color(withName: ColorSchemeColorTextForeground), for: .normal)
+        self.buttonsBar.backgroundColor = ColorScheme.default().color(withName: ColorSchemeColorBarBackground)
         self.view.addSubview(self.buttonsBar)
         
         self.updateButtonsForMessage()
@@ -405,3 +433,32 @@ extension ConversationImagesViewController: UIPageViewControllerDelegate, UIPage
         }
     }
 }
+
+
+extension ConversationImagesViewController: MenuVisibilityController {
+    
+    var menuVisible: Bool {
+        return  navigationBar.isHidden &&
+                buttonsBar.isHidden &&
+                separator.isHidden &&
+                UIApplication.shared.isStatusBarHidden
+    }
+    
+    func fadeAndHideMenu(_ hidden: Bool) {
+        let duration = UIApplication.shared.statusBarOrientationAnimationDuration
+        navigationBar.fadeAndHide(hidden, duration: duration)
+        buttonsBar.fadeAndHide(hidden, duration: duration)
+        separator.fadeAndHide(hidden, duration: duration)
+        UIApplication.shared.wr_setStatusBarHidden(hidden, with: .fade)
+    }
+}
+
+
+extension MenuVisibilityController {
+    
+    func toggleMenuVisibility() {
+        fadeAndHideMenu(!menuVisible)
+    }
+}
+
+

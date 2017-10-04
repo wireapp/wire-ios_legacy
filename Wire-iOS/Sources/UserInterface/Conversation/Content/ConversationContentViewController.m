@@ -93,6 +93,7 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
 @property (nonatomic) ConversationMessageWindowTableViewAdapter *conversationMessageWindowTableViewAdapter;
 @property (nonatomic, assign) BOOL wasScrolledToBottomAtStartOfUpdate;
 @property (nonatomic) NSObject *activeMediaPlayerObserver;
+@property (nonatomic) MediaPlaybackManager *mediaPlaybackManager;
 @property (nonatomic) BOOL conversationLoadStopwatchFired;
 @property (nonatomic) NSMutableDictionary *cachedRowHeights;
 @property (nonatomic) BOOL wasFetchingMessages;
@@ -125,6 +126,10 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
 
 - (void)dealloc
 {
+    // Observer must be deallocated before `mediaPlaybackManager`
+    self.activeMediaPlayerObserver = nil;
+    self.mediaPlaybackManager = nil;
+    
     if (nil != self.tableView) {
         self.tableView.delegate = nil;
         self.tableView.dataSource = nil;
@@ -183,8 +188,8 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
 {
     [super viewWillAppear:animated];
     self.onScreen = YES;
-    
-    self.activeMediaPlayerObserver = [KeyValueObserver observeObject:[AppDelegate sharedAppDelegate].mediaPlaybackManager
+    self.mediaPlaybackManager = [AppDelegate sharedAppDelegate].mediaPlaybackManager;
+    self.activeMediaPlayerObserver = [KeyValueObserver observeObject:self.mediaPlaybackManager
                                                              keyPath:@"activeMediaPlayer"
                                                               target:self
                                                             selector:@selector(activeMediaPlayerChanged:)
@@ -354,7 +359,9 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
                     if (self.presentedViewController && deleted) {
                         [self.presentedViewController dismissViewControllerAnimated:YES completion:nil];
                     }
-                    cell.beingEdited = NO;
+                    if (!deleted) {
+                        cell.beingEdited = NO;
+                    }
                 }];
             }
                 break;
@@ -873,9 +880,11 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
 {
     if (self.messagePresenter.waitingForFileDownload) {
         id<ZMConversationMessage> selectedMessage = self.conversationMessageWindowTableViewAdapter.selectedMessage;
-        if (([Message isVideoMessage:selectedMessage] ||
+        if (selectedMessage &&
+            ([Message isVideoMessage:selectedMessage] ||
              [Message isAudioMessage:selectedMessage] ||
-             [Message isFileTransferMessage:selectedMessage]) && selectedMessage.fileMessageData.transferState == ZMFileTransferStateDownloaded) {
+             [Message isFileTransferMessage:selectedMessage])
+            && selectedMessage.fileMessageData.transferState == ZMFileTransferStateDownloaded) {
             if ([self wr_isVisible]) {
                 NSUInteger indexOfFileMessage = [[[self messageWindow] messages] indexOfObject:selectedMessage];
                 
@@ -906,6 +915,11 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
 
 - (void)conversationWindowDidChange:(MessageWindowChangeInfo *)note
 {
+    // Clear selectedMessage if it is going to be deleted.
+    if ([note.deletedObjects containsObject:self.conversationMessageWindowTableViewAdapter.selectedMessage]) {
+        self.conversationMessageWindowTableViewAdapter.selectedMessage = nil;
+    }
+    
     if (note.insertedIndexes.count == 0) {
         return;
     }

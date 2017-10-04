@@ -21,6 +21,7 @@
 
 #import "AppDelegate.h"
 #import "StopWatch.h"
+#import "Wire-Swift.h"
 
 
 int main(int argc, char *argv[])
@@ -29,6 +30,6 @@ int main(int argc, char *argv[])
         StopWatch *stopWatch = [StopWatch stopWatch];
         [stopWatch startEvent:@"AppStart"];
         
-        return UIApplicationMain(argc, argv, nil, NSStringFromClass([AppDelegate class]));
+        return UIApplicationMain(argc, argv, NSStringFromClass([WireApplication class]), NSStringFromClass([AppDelegate class]));
     }
 }

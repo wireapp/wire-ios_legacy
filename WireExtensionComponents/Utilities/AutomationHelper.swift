@@ -49,6 +49,9 @@ import WireSyncEngine
     
     /// Delay in address book remote search override
     public let delayInAddressBookRemoteSearch : TimeInterval?
+    
+    /// Debug data to install in the share container
+    public let debugDataToInstall: URL?
 
     /// The name of the arguments file in the /tmp directory
     private let fileArgumentsName = "wire_arguments.txt"
@@ -63,7 +66,18 @@ import WireSyncEngine
         if arguments.hasFlag(AutomationKey.LogNetwork.rawValue) {
             ZMSLog.set(level: .debug, tag: "Network")
         }
+        if arguments.hasFlag(AutomationKey.LogCalling.rawValue) {
+            ZMSLog.set(level: .debug, tag: "calling")
+        }
         AutomationHelper.enableLogTags(arguments)
+        if let debugDataPath = arguments.flagValueIfPresent(AutomationKey.DebugDataToInstall.rawValue),
+            FileManager.default.fileExists(atPath: debugDataPath)
+        {
+            self.debugDataToInstall = URL(fileURLWithPath: debugDataPath)
+        } else {
+            self.debugDataToInstall = nil
+        }
+        
         self.delayInAddressBookRemoteSearch = AutomationHelper.addressBookSearchDelay(arguments)
         super.init()
     }
@@ -72,10 +86,12 @@ import WireSyncEngine
         case Email = "loginemail"
         case Password = "loginpassword"
         case LogNetwork = "debug-log-network"
+        case LogCalling = "debug-log-calling"
         case LogTags = "debug-log"
         case DisableAutocorrection = "disable-autocorrection"
         case EnableAddressBookOnSimulator = "addressbook-on-simulator"
         case AddressBookRemoteSearchDelay = "addressbook-search-delay"
+        case DebugDataToInstall = "debug-data-to-install"
     }
     
     /// Returns the login email and password credentials if set in the given arguments
@@ -158,4 +174,28 @@ private struct FileArguments: ArgumentsType {
         guard let argumentsString = try? String(contentsOfFile: url.path, encoding: .utf8) else { return nil }
         arguments = Set(argumentsString.components(separatedBy: .whitespaces))
     }
+}
+
+
+// MARK: - Debug
+extension AutomationHelper {
+    
+    /// Takes all files in the folder pointed at by `debugDataToInstall` and installs them
+    /// in the shared folder, erasing any other file in that folder.
+    public func installDebugDataIfNeeded() {
+        
+        guard let packageURL = self.debugDataToInstall,
+            let appGroupIdentifier = Bundle.main.appGroupIdentifier else { return }
+        let sharedContainerURL = FileManager.sharedContainerDirectory(for: appGroupIdentifier)
+        
+        // DELETE
+        let filesToDelete = try! FileManager.default.contentsOfDirectory(atPath: sharedContainerURL.path)
+        filesToDelete.forEach {
+            try! FileManager.default.removeItem(atPath: sharedContainerURL.appendingPathComponent($0).path)
+        }
+        
+        // COPY
+        try! FileManager.default.copyFolderRecursively(from: packageURL, to: sharedContainerURL, overwriteExistingFiles: true)
+    }
+    
 }

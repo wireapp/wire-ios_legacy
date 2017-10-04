@@ -31,7 +31,10 @@
 {
     if (self = [super init]) {
         _analytics = analytics;
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(conversationWasVerified:) name:ZMConversationIsVerifiedNotificationName object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(conversationWasVerified:)
+                                                     name:[ZMConversation isVerifiedNotificationName]
+                                                   object:nil];
     }
     return self;
 }

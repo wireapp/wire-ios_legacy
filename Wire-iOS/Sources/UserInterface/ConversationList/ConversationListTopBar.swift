@@ -21,135 +21,36 @@ import Cartography
 import WireExtensionComponents
 
 final class ConversationListTopBar: TopBar {
-
-    static let hideTeamSelector = true
-
-    private var teamsView: TeamSelectorView? = .none
-    public weak var contentScrollView: UIScrollView? = .none {
-        didSet {
-            self.setShowTeams(to: self.showTeams)
-        }
-    }
-    
-    private var selfUserObserverToken: NSObjectProtocol!
-    private var applicationDidBecomeActiveToken: NSObjectProtocol!
-    
-    public enum ImagesState: Int {
-        case collapsed
-        case visible
-    }
-
-    private var state: ImagesState = .visible
    
     override init(frame: CGRect) {
         super.init(frame: frame)
-        selfUserObserverToken = UserChangeInfo.add(observer: self, forBareUser: ZMUser.selfUser())
-        applicationDidBecomeActiveToken = NotificationCenter.default.addObserver(forName: Notification.Name.UIApplicationDidBecomeActive, object: nil, queue: nil, using: { [weak self] _ in
-            guard let `self` = self else {
-                return
-            }
-            self.updateShowTeamsIfNeeded()
-        })
-        setShowTeams(to: !ConversationListTopBar.hideTeamSelector && ZMUser.selfUser().hasTeam)
+        let titleLabel = UILabel()
+        
+        titleLabel.font = FontSpec(.medium, .semibold).font
+        titleLabel.textColor = ColorScheme.default().color(withName: ColorSchemeColorTextForeground, variant: .dark)
+        titleLabel.text = "list.title".localized.uppercased()
+        titleLabel.accessibilityTraits = UIAccessibilityTraitHeader
+        titleLabel.setContentCompressionResistancePriority(UILayoutPriorityRequired, for: .horizontal)
+        titleLabel.setContentCompressionResistancePriority(UILayoutPriorityRequired, for: .vertical)
+        titleLabel.setContentHuggingPriority(UILayoutPriorityRequired, for: .horizontal)
+        titleLabel.setContentHuggingPriority(UILayoutPriorityRequired, for: .vertical)
+        self.middleView = titleLabel
+        
+        self.splitSeparator = false
     }
+    
     
     required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    public func update(to newState: ImagesState, animated: Bool = false, force: Bool = false) {
-        if !force && (self.state == newState || !ZMUser.selfUser().hasTeam) {
-            return
-        }
-        
-        self.state = newState
-        let change = {
-            self.teamsView?.imagesCollapsed = self.state == .collapsed
-            self.splitSeparator = self.state == .visible
-        }
-        
-        if animated {
-            UIView.wr_animate(easing: RBBEasingFunctionEaseOutExpo, duration: 0.35, animations: change)
-        }
-        else {
-            change()
-        }
-    }
-    
-    fileprivate var showTeams: Bool = false
-    
-    internal func updateShowTeamsIfNeeded() {
-        let showTeams = !ConversationListTopBar.hideTeamSelector && ZMUser.selfUser().hasTeam
-        guard showTeams != self.showTeams else { return }
-        setShowTeams(to: showTeams)
-    }
-    
-    private func setShowTeams(to showTeams: Bool) {
-        self.showTeams = showTeams
-
-        UIView.performWithoutAnimation {
-            if showTeams {
-                self.teamsView?.removeFromSuperview()
-                self.teamsView = TeamSelectorView()
-                self.middleView = self.teamsView
-                self.leftSeparatorLineView.alpha = 1
-                self.rightSeparatorLineView.alpha = 1
-                
-                let topOffset: CGFloat = self.contentScrollView?.contentOffset.y ?? 0.0
-                let scrolledOffFromTop: Bool = topOffset > 0.0
-                let state: ImagesState = scrolledOffFromTop ? .collapsed : .visible
-                self.update(to: state, force: true)
-                
-                self.contentScrollView?.contentInset = UIEdgeInsets(top: 16, left: 0, bottom: 0, right: 0)
-                if !scrolledOffFromTop {
-                    self.contentScrollView?.contentOffset = CGPoint(x: 0, y: -16)
-                }
-            }
-            else {
-                let titleLabel = UILabel()
-                
-                titleLabel.font = FontSpec(.medium, .semibold).font
-                titleLabel.textColor = ColorScheme.default().color(withName: ColorSchemeColorTextForeground,
-                                                                   variant: .dark)
-                titleLabel.text = "list.title".localized.uppercased()
-                titleLabel.accessibilityTraits = UIAccessibilityTraitHeader
-                titleLabel.setContentCompressionResistancePriority(UILayoutPriorityRequired, for: .horizontal)
-                titleLabel.setContentCompressionResistancePriority(UILayoutPriorityRequired, for: .vertical)
-                titleLabel.setContentHuggingPriority(UILayoutPriorityRequired, for: .horizontal)
-                titleLabel.setContentHuggingPriority(UILayoutPriorityRequired, for: .vertical)
-                self.middleView = titleLabel
-                
-                self.contentScrollView?.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
-                self.splitSeparator = false
-            }
-        }
-        if let contentScrollView = self.contentScrollView {
-            self.scrollViewDidScroll(scrollView: contentScrollView)
-        }
-    }
-}
-
-extension ConversationListTopBar: ZMUserObserver {
-    public func userDidChange(_ changeInfo: UserChangeInfo) {
-        guard changeInfo.teamsChanged else {
-            return
-        }
-        updateShowTeamsIfNeeded()
-    }
 }
 
 extension ConversationListTopBar {
     @objc(scrollViewDidScroll:)
     public func scrollViewDidScroll(scrollView: UIScrollView!) {
-        
-        let state: ImagesState = scrollView.contentOffset.y > 0 ? .collapsed : .visible
-        
-        self.update(to: state, animated: true)
-        
-        if !self.showTeams {
-            self.leftSeparatorLineView.scrollViewDidScroll(scrollView: scrollView)
-            self.rightSeparatorLineView.scrollViewDidScroll(scrollView: scrollView)
-        }
+        self.leftSeparatorLineView.scrollViewDidScroll(scrollView: scrollView)
+        self.rightSeparatorLineView.scrollViewDidScroll(scrollView: scrollView)
     }
 }
 
@@ -165,7 +66,7 @@ open class TopBar: UIView {
             self.addSubview(new)
             
             constrain(self, new) { selfView, new in
-                new.leading == selfView.leading + 16
+                new.leading == selfView.leadingMargin
                 new.centerY == selfView.centerY
             }
         }
@@ -182,7 +83,7 @@ open class TopBar: UIView {
             self.addSubview(new)
             
             constrain(self, new) { selfView, new in
-                new.trailing == selfView.trailing - 16
+                new.trailing == selfView.trailingMargin
                 new.centerY == selfView.centerY
             }
         }
@@ -224,7 +125,7 @@ open class TopBar: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
+        self.layoutMargins = UIEdgeInsetsMake(0, 16, 0, 16)
         [leftSeparatorLineView, rightSeparatorLineView, middleViewContainer].forEach(self.addSubview)
         
         constrain(self, self.middleViewContainer, self.leftSeparatorLineView, self.rightSeparatorLineView) {

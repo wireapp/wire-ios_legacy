@@ -115,7 +115,9 @@
         _forcePortraitMode = NO;
         _swipeToDismiss = YES;
         _showCloseButton = YES;
-        self.messageObserverToken = [MessageChangeInfo addObserver:self forMessage:message];
+        if (nil != [ZMUserSession sharedSession]) {
+            self.messageObserverToken = [MessageChangeInfo addObserver:self forMessage:message userSession:[ZMUserSession sharedSession]];
+        }
     }
 
     return self;
@@ -165,7 +167,6 @@
     self.view.userInteractionEnabled = YES;
     [self setupGestureRecognizers];
     [self showChrome:YES];
-
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -204,7 +205,9 @@
     }
     snapshotBackgroundView.translatesAutoresizingMaskIntoConstraints = NO;
     [self.view addSubview:snapshotBackgroundView];
-    [snapshotBackgroundView autoPinEdgeToSuperviewEdge:ALEdgeTop];
+
+    const CGFloat topBarHeight = CGRectGetMaxY(self.navigationController.navigationBar.frame);
+    [snapshotBackgroundView autoPinEdgeToSuperviewEdge:ALEdgeTop withInset:-topBarHeight];
     [snapshotBackgroundView autoPinEdgeToSuperviewEdge:ALEdgeLeading];
     [snapshotBackgroundView autoSetDimensionsToSize:[[UIScreen mainScreen] bounds].size];
     snapshotBackgroundView.alpha = 0;
@@ -218,7 +221,7 @@
 
     [self.scrollView addConstraintsFittingToView:self.view];
 
-    self.automaticallyAdjustsScrollViewInsets = YES;
+    self.automaticallyAdjustsScrollViewInsets = NO;
     self.scrollView.delegate = self;
     self.scrollView.accessibilityIdentifier = @"fullScreenPage";
     
@@ -399,6 +402,11 @@
 
 #pragma mark - UIScrollViewDelegate
 
+- (void)scrollViewWillBeginZooming:(UIScrollView *)scrollView withView:(UIView *)view
+{
+    [self.delegate fadeAndHideMenu:YES];
+}
+
 - (void)scrollViewDidZoom:(UIScrollView *)scrollView
 {
     [self setSelectedByMenu:NO animated:NO];
@@ -436,6 +444,7 @@
     [self showChrome:!self.isShowingChrome];
     [self setSelectedByMenu:NO animated:NO];
     [[UIMenuController sharedMenuController] setMenuVisible:NO];
+    [self.delegate fadeAndHideMenu:!self.delegate.menuVisible];
 }
 
 - (void)handleDoubleTap:(UITapGestureRecognizer *)doubleTapper

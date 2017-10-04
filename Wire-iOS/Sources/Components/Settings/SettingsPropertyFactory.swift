@@ -35,7 +35,7 @@ protocol AVSMediaManagerInterface {
 extension AVSMediaManager: AVSMediaManagerInterface {
 }
 
-protocol ZMUserSessionInterface {
+protocol ZMUserSessionInterface: class {
     func performChanges(_ block: @escaping () -> ())
     func enqueueChanges(_ block: @escaping () -> ())
     
@@ -65,11 +65,12 @@ protocol CrashlogManager {
 
 extension BITHockeyManager: CrashlogManager {}
 
+
 class SettingsPropertyFactory {
     let userDefaults: UserDefaults
     var analytics: AnalyticsInterface?
     var mediaManager: AVSMediaManagerInterface?
-    var userSession: ZMUserSessionInterface
+    weak var userSession: ZMUserSessionInterface?
     let selfUser: SettingsSelfUser
     var crashlogManager: CrashlogManager?
     
@@ -85,7 +86,6 @@ class SettingsPropertyFactory {
         SettingsPropertyName.disableHockey              : UserDefaultDisableHockey,
         SettingsPropertyName.disableAnalytics           : UserDefaultDisableAnalytics,
         SettingsPropertyName.disableSendButton          : UserDefaultSendButtonDisabled,
-        SettingsPropertyName.disableCallKit             : UserDefaultDisableCallKit,
         SettingsPropertyName.mapsOpeningOption          : UserDefaultMapsOpeningRawValue,
         SettingsPropertyName.browserOpeningOption       : UserDefaultBrowserOpeningRawValue,
         SettingsPropertyName.tweetOpeningOption         : UserDefaultTwitterOpeningRawValue,
@@ -109,18 +109,18 @@ class SettingsPropertyFactory {
         switch(propertyName) {
             // Profile
         case .profileName:
-            let getAction : GetAction = { [unowned self] (property: SettingsBlockProperty) -> SettingsPropertyValue in
+            let getAction: GetAction = { [unowned self] (property: SettingsBlockProperty) -> SettingsPropertyValue in
                 return SettingsPropertyValue.string(value: self.selfUser.name)
             }
-            let setAction : SetAction = { (property: SettingsBlockProperty, value: SettingsPropertyValue) throws -> () in
+            let setAction: SetAction = { [unowned self] (property: SettingsBlockProperty, value: SettingsPropertyValue) throws -> () in
                 switch(value) {
                 case .string(let stringValue):
                     var inOutString: NSString? = stringValue as NSString
                     try type(of: self.selfUser).validateName(&inOutString)
-                    
-                    self.userSession.enqueueChanges({
-                        self.selfUser.name = stringValue
-                    })
+                    let selfUser = self.selfUser
+                    self.userSession?.enqueueChanges {
+                        selfUser.name = stringValue
+                    }
                 default:
                     throw SettingsPropertyError.WrongValue("Incorrect type \(value) for key \(propertyName)")
                 }
@@ -132,10 +132,10 @@ class SettingsPropertyFactory {
             let getAction : GetAction = { [unowned self] (property: SettingsBlockProperty) -> SettingsPropertyValue in
                 return SettingsPropertyValue(self.selfUser.accentColorValue.rawValue)
             }
-            let setAction : SetAction = { (property: SettingsBlockProperty, value: SettingsPropertyValue) throws -> () in
+            let setAction : SetAction = { [unowned self] (property: SettingsBlockProperty, value: SettingsPropertyValue) throws -> () in
                 switch(value) {
                 case .number(let number):
-                    self.userSession.enqueueChanges({
+                    self.userSession?.enqueueChanges({
                         self.selfUser.accentColorValue = ZMAccentColor(rawValue: number.int16Value)!
                     })
                 default:
@@ -148,7 +148,7 @@ class SettingsPropertyFactory {
             let getAction : GetAction = { [unowned self] (property: SettingsBlockProperty) -> SettingsPropertyValue in
                 return SettingsPropertyValue(self.userDefaults.string(forKey: UserDefaultColorScheme) == "dark")
             }
-            let setAction : SetAction = { (property: SettingsBlockProperty, value: SettingsPropertyValue) throws -> () in
+            let setAction : SetAction = { [unowned self] (property: SettingsBlockProperty, value: SettingsPropertyValue) throws -> () in
                 switch(value) {
                 case .number(let number):
                     self.userDefaults.set(number.boolValue ? "dark" : "light", forKey: UserDefaultColorScheme)
@@ -169,7 +169,7 @@ class SettingsPropertyFactory {
                     return SettingsPropertyValue(0)
                 }
             }
-            let setAction : SetAction = { (property: SettingsBlockProperty, value: SettingsPropertyValue) throws -> () in
+            let setAction : SetAction = { [unowned self] (property: SettingsBlockProperty, value: SettingsPropertyValue) throws -> () in
                 switch(value) {
                 case .number(let intValue):
                     if let intensivityLevel = AVSIntensityLevel(rawValue: UInt(intValue)),
@@ -194,7 +194,7 @@ class SettingsPropertyFactory {
                     return SettingsPropertyValue(false)
                 }
             }
-            let setAction : SetAction = { (property: SettingsBlockProperty, value: SettingsPropertyValue) throws -> () in
+            let setAction : SetAction = { [unowned self] (property: SettingsBlockProperty, value: SettingsPropertyValue) throws -> () in
                 if var analytics = self.analytics,
                     var crashlogManager = self.crashlogManager {
                     switch(value) {
@@ -210,14 +210,18 @@ class SettingsPropertyFactory {
             
         case .notificationContentVisible:
             let getAction : GetAction = { [unowned self] (property: SettingsBlockProperty) -> SettingsPropertyValue in
-                return .number(value: NSNumber(value: self.userSession.isNotificationContentHidden))
+                if let value = self.userSession?.isNotificationContentHidden {
+                    return SettingsPropertyValue.number(value: NSNumber(value: value))
+                } else {
+                    return .none
+                }
             }
             
-            let setAction : SetAction = { (property: SettingsBlockProperty, value: SettingsPropertyValue) throws -> () in
+            let setAction : SetAction = { [unowned self] (property: SettingsBlockProperty, value: SettingsPropertyValue) throws -> () in
                 switch value {
                     case .number(let number):
-                        self.userSession.performChanges {
-                            self.userSession.isNotificationContentHidden = number.boolValue
+                        self.userSession?.performChanges {
+                            self.userSession?.isNotificationContentHidden = number.boolValue
                         }
                     
                     default:
@@ -243,18 +247,12 @@ class SettingsPropertyFactory {
             return SettingsBlockProperty(
                 propertyName: propertyName,
                 getAction: { _ in
-                    guard let data = ZMKeychain.data(forAccount: SettingsPropertyName.lockApp.rawValue),
-                            data.count != 0 else {
-                        return SettingsPropertyValue(false)
-                    }
-                    
-                    return SettingsPropertyValue(String(data: data, encoding: .utf8) == "YES")
+                    return SettingsPropertyValue(AppLock.isActive)
             },
                 setAction: { _, value in
                     switch value {
                     case .number(value: let lockApp):
-                        let data = (lockApp.boolValue ? "YES" : "NO").data(using: .utf8)!
-                        ZMKeychain.setData(data, forAccount: SettingsPropertyName.lockApp.rawValue)
+                        AppLock.isActive = lockApp.boolValue
                     default: throw SettingsPropertyError.WrongValue("Incorrect type \(value) for key \(propertyName)")
                     }
             })
@@ -262,28 +260,12 @@ class SettingsPropertyFactory {
             return SettingsBlockProperty(
                 propertyName: propertyName,
                 getAction: { _ in
-                    guard let data = ZMKeychain.data(forAccount: SettingsPropertyName.lockAppLastDate.rawValue),
-                        data.count != 0 else {
-                            return SettingsPropertyValue(0)
-                    }
-                    
-                    let intBits = data.withUnsafeBytes({(bytePointer: UnsafePointer<UInt8>) -> UInt32 in
-                        bytePointer.withMemoryRebound(to: UInt32.self, capacity: 4) { pointer in
-                            return pointer.pointee
-                        }
-                    })
-                    
-                    return SettingsPropertyValue(UInt32(littleEndian: intBits))
+                    return SettingsPropertyValue(AppLock.lastUnlockDateAsInt)
             },
                 setAction: { _, value in
                     switch value {
                     case .number(value: let lockAppLastDate):
-                        var value: UInt32 = lockAppLastDate.uint32Value
-                        let data = withUnsafePointer(to: &value) {
-                            Data(bytes: UnsafePointer($0), count: MemoryLayout.size(ofValue: lockAppLastDate))
-                        }
-                        
-                        ZMKeychain.setData(data, forAccount: SettingsPropertyName.lockAppLastDate.rawValue)
+                        AppLock.lastUnlockDateAsInt = lockAppLastDate.uint32Value
                     default: throw SettingsPropertyError.WrongValue("Incorrect type \(value) for key \(propertyName)")
                     }
             })
@@ -308,6 +290,15 @@ class SettingsPropertyFactory {
                         Settings.shared().disableLinkPreviews = number.boolValue
                     default:
                         throw SettingsPropertyError.WrongValue("Incorrect type \(value) for key \(propertyName)")
+                    }
+            })
+        case .disableCallKit:
+            return SettingsBlockProperty(
+                propertyName: propertyName,
+                getAction: { _ in return SettingsPropertyValue(Settings.shared().disableCallKit) },
+                setAction: { _, value in
+                    if case .number(let disabled) = value {
+                        Settings.shared().disableCallKit = disabled.boolValue
                     }
             })
             

@@ -19,12 +19,13 @@
 
 #import "ZMUserSession+iOS.h"
 #import "AppDelegate.h"
+#import "Wire-Swift.h"
 
 @implementation ZMUserSession (iOS)
 
 + (instancetype)sharedSession
 {
-    return [AppDelegate sharedAppDelegate].zetaUserSession;
+    return [[SessionManager shared] activeUserSession];
 }
 
 @end

@@ -226,12 +226,19 @@
 
 - (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer
 {
-    if (!CGRectContainsRect(CGRectInset(self.view.bounds, -10, -10),
-                            [self.view convertRect:self.imageView.bounds fromView:self.imageView])) {
+    CGRect imageViewRect = [self.view convertRect:self.imageView.bounds fromView:self.imageView];
+    
+    // image view is not contained within view
+    if (!CGRectContainsRect(CGRectInset(self.view.bounds, -10, -10), imageViewRect)) {
         return NO;
     }
     
     if (gestureRecognizer == self.panRecognizer) {
+        // touch is not within image view
+        if (!CGRectContainsPoint(imageViewRect, [self.panRecognizer locationInView:self.view])) {
+            return NO;
+        }
+        
         CGPoint offset = [self.panRecognizer translationInView:self.view];
         
         return fabs(offset.y) > fabs(offset.x);

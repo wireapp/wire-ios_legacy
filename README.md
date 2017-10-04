@@ -2,7 +2,7 @@
 
 [![Wire logo](https://github.com/wireapp/wire/blob/master/assets/header-small.png?raw=true)](https://wire.com/jobs/)
 
-[![Build Status](https://travis-ci.org/wireapp/wire-ios.svg?branch=develop)](https://travis-ci.org/wireapp/wire-ios)
+[![CircleCI](https://circleci.com/gh/wireapp/wire-ios.svg?style=shield)](https://circleci.com/gh/wireapp/wire-ios)
 
 This repository is part of the source code of Wire. You can find more information at [wire.com](https://wire.com) or by contacting opensource@wire.com.
 
@@ -28,17 +28,8 @@ The sync engine itself is built on top of a few third-party frameworks, and uses
 
 ![Mobile app architecture](https://github.com/wireapp/wire/blob/master/assets/mobile-architecture.png?raw=true)
 
-
-The iOS application follows closely the overall mobile architecture, adding its layers of iOS and UI helpers.
-
-![iOS app architecture](https://github.com/wireapp/wire/blob/master/assets/ios-architecture.png?raw=true)
-
-*wire-ios-sync-engine* is the top-most layer of the iOS *sync engine*, and it is using a number of other frameworks itself.
-
-### Repositories
-
-- [wire-ios-sync-engine](https://github.com/wireapp/wire-ios-sync-engine): topmost layer that implements client-side business logic, caching, encryption and client-side backend communication protocol
-
+### Documentation
+Additional documentation is available in the [Wire iOS wiki](https://github.com/wireapp/wire-ios/wiki).
 
 ## How to build the open source client
 
@@ -52,12 +43,12 @@ These differences are:
 ### Prerequisites
 In order to build Wire for iOS locally, it is necessary to install the following tools on the local machine:
 - OS X 10.11 or newer
-- Xcode 8.3 (https://itunes.apple.com/en/app/xcode/id497799835?mt=12)
+- Xcode 8.3.2 (https://itunes.apple.com/en/app/xcode/id497799835?mt=12). We don't yet support Xcode 9.
 - Bundler (http://bundler.io)
 - Carthage 0.17.2 or newer (https://github.com/Carthage/Carthage)
-- CocoaPods 1.2.0 or newer (https://cocoapods.org/)
+- CocoaPods 1.3.1 or newer (https://cocoapods.org/)
 - Ruby 2.2.5
-- wget (https://www.gnu.org/software/wget/)
+- Python 2.7
 
 The setup script will automatically check for you that you satisfy these requirements
 

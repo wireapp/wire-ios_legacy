@@ -234,17 +234,5 @@ NS_ASSUME_NONNULL_END
     }
 }
 
-#pragma mark - Status update
-
-- (void)invitationStatusChanged:(ZMInvitationStatusChangedNotification * __nonnull)note
-{
-    if (note.newStatus == ZMInvitationStatusPending ||
-        note.newStatus == ZMInvitationStatusSent) {
-        [self.userImageView setBadgeIcon:ZetaIconTypeClock animated:YES];
-    } else if (note.newStatus == ZMInvitationStatusFailed) {
-        [self.userImageView setBadgeIcon:ZetaIconTypeNone animated:YES];
-    }
-}
-
 @end
 

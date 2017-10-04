@@ -63,7 +63,7 @@ import CoreData
     var canBeSent: Bool {
         return subject?.isEmpty == false || message?.isEmpty == false
     }
-
+    
 }
 
 
@@ -73,7 +73,7 @@ func ==(lhs: MessageDraft, rhs: MessageDraft) -> Bool {
 
 
 extension MessageDraft: Shareable {
-
+    
     public typealias I = ZMConversation
 
     public func share<ZMConversation>(to: [ZMConversation]) {
@@ -82,10 +82,19 @@ extension MessageDraft: Shareable {
         }
     }
 
+    /*
+        The MessageDraft object doesn't show a preview right now.
+        To implement a preview view, just return a UIView here.
+        Don't forget to return the height of the view in `height(forPreviewView:)`.
+     */
     public func previewView() -> UIView? {
         return nil
     }
-
+    
+    public func height(for previewView: UIView?) -> CGFloat {
+        return 0.0
+    }
+    
 }
 
 

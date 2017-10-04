@@ -76,13 +76,16 @@ void debugLogUpdate (ConversationListChangeInfo *note);
 - (void)setupObserversForActiveTeam
 {
     self.pendingConversationListObserverToken = [ConversationListChangeInfo addObserver:self
-                                                                                forList:[ZMConversationList pendingConnectionConversationsInUserSession:[ZMUserSession sharedSession]]];
+                                                                                forList:[ZMConversationList pendingConnectionConversationsInUserSession:[ZMUserSession sharedSession]]
+                                                                            userSession:[ZMUserSession sharedSession]];
     
     self.conversationListObserverToken = [ConversationListChangeInfo addObserver:self
-                                                                         forList:[ZMConversationList conversationsInUserSession:[ZMUserSession sharedSession]]];
+                                                                         forList:[ZMConversationList conversationsInUserSession:[ZMUserSession sharedSession]]
+                                                                     userSession:[ZMUserSession sharedSession]];
     
     self.clearedConversationListObserverToken = [ConversationListChangeInfo addObserver:self
-                                                                                forList:[ZMConversationList clearedConversationsInUserSession:[ZMUserSession sharedSession]]];
+                                                                                forList:[ZMConversationList clearedConversationsInUserSession:[ZMUserSession sharedSession]]
+                                                                            userSession:[ZMUserSession sharedSession]];
 }
 
 /**

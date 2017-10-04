@@ -38,6 +38,7 @@ static NSTimeInterval const SoundEventListenerIgnoreTimeForPushStart = 2.0;
 @property (nonatomic) id unreadMessageObserverToken;
 @property (nonatomic) id unreadKnockMessageObserverToken;
 @property (nonatomic) id voiceChannelStateObserverToken;
+@property (nonatomic) id initialSyncObserverToken;
 
 @property (nonatomic) ZMConversation *currentlyActiveVoiceChannelConversation;
 @property (nonatomic) NSMutableDictionary<NSManagedObjectID *, NSNumber *> *previousVoiceChannelState;
@@ -59,13 +60,13 @@ static NSTimeInterval const SoundEventListenerIgnoreTimeForPushStart = 2.0;
     self = [super init];
     if (self) {
         self.voiceChannelStateObserverToken = [VoiceChannelV3 addStateObserver:self userSession:[ZMUserSession sharedSession]];
-        self.unreadMessageObserverToken = [NewUnreadMessagesChangeInfo addNewMessageObserver:self];
-        self.unreadKnockMessageObserverToken = [NewUnreadKnockMessagesChangeInfo addNewKnockObserver:self];
+        self.unreadMessageObserverToken = [NewUnreadMessagesChangeInfo addNewMessageObserver:self forUserSession:[ZMUserSession sharedSession]];
+        self.unreadKnockMessageObserverToken = [NewUnreadKnockMessagesChangeInfo addNewKnockObserver:self forUserSession:[ZMUserSession sharedSession]];
         
         self.watchDog = [[SoundEventRulesWatchDog alloc] initWithIgnoreTime:SoundEventListenerIgnoreTimeForPushStart];
         self.watchDog.startIgnoreDate = [NSDate date];
         self.previousVoiceChannelState = [[NSMutableDictionary alloc] init];
-        [ZMUserSession addInitalSyncCompletionObserver:self];
+        self.initialSyncObserverToken = [ZMUserSession addInitialSyncCompletionObserver:self userSession:[ZMUserSession sharedSession]];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationWillEnterForeground:) name:UIApplicationWillEnterForegroundNotification object:nil];
     }
     return self;
@@ -73,7 +74,6 @@ static NSTimeInterval const SoundEventListenerIgnoreTimeForPushStart = 2.0;
 
 - (void)dealloc
 {
-    [ZMUserSession removeInitalSyncCompletionObserver:self];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
@@ -184,7 +184,8 @@ static NSTimeInterval const SoundEventListenerIgnoreTimeForPushStart = 2.0;
             break;
         }
         case VoiceChannelV2StateIncomingCall: {
-            if (![ZMUserSession useCallKit] && ! conversation.isSilenced) {
+            if ([[ZMUserSession sharedSession] callNotificationStyle] == ZMCallNotificationStylePushNotifications &&
+                ! conversation.isSilenced) {
                 
                 BOOL otherVoiceChannelIsActive = NO;
                 
@@ -214,6 +215,7 @@ static NSTimeInterval const SoundEventListenerIgnoreTimeForPushStart = 2.0;
         case VoiceChannelV2StateNoActiveUsers:
         case VoiceChannelV2StateSelfIsJoiningActiveChannel:
         case VoiceChannelV2StateSelfIsJoiningActiveChannelDegraded:
+        case VoiceChannelV2StateEstablishedDataChannel:
         case VoiceChannelV2StateDeviceTransferReady:
         case VoiceChannelV2StateInvalid: {
             break;
@@ -265,7 +267,7 @@ static NSTimeInterval const SoundEventListenerIgnoreTimeForPushStart = 2.0;
     }
 }
 
-- (void)initialSyncCompleted:(NSNotification *)notification
+- (void)initialSyncCompleted
 {
     // SE is done with the syncing, we can go on with the playing of the sounds again
     self.watchDog.muted = NO;

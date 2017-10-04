@@ -80,7 +80,9 @@ class FileTransferCellTests: ZMSnapshotTestCase {
     func testUploadedCell_fromThisDevice_longFileName() {
         let cell = self.wrappedCellWithConfig({
             $0.fileMessageData?.transferState = .uploaded
-            $0.fileMessageData?.filename = "Etiam lacus elit, tempor at blandit sit amet, faucibus in erat. Mauris faucibus scelerisque mattis.pdf"
+            if let messageData = $0.fileMessageData as? MockFileMessageData {
+                messageData.filename = "Etiam lacus elit, tempor at blandit sit amet, faucibus in erat. Mauris faucibus scelerisque mattis.pdf"
+            }
             $0.backingFileMessageData.fileURL = Bundle.main.bundleURL
         })
         verify(view: cell)
@@ -89,7 +91,9 @@ class FileTransferCellTests: ZMSnapshotTestCase {
     func testUploadedCell_fromThisDevice_bigFileSize() {
         let cell = self.wrappedCellWithConfig({
             $0.fileMessageData?.transferState = .uploaded
-            $0.fileMessageData?.size = UInt64(1024 * 1024 * 25)
+            if let messageData = $0.fileMessageData as? MockFileMessageData {
+                messageData.size = UInt64(1024 * 1024 * 25)
+            }
             $0.backingFileMessageData.fileURL = .none
         })
         verify(view: cell)

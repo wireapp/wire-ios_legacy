@@ -54,6 +54,7 @@ static NSString * const CellReuseIdConversation = @"CellId";
 @property (nonatomic, strong) ConversationListViewModel *listViewModel;
 
 @property (nonatomic) NSObject *activeMediaPlayerObserver;
+@property (nonatomic) MediaPlaybackManager *mediaPlaybackManager;
 @property (nonatomic) BOOL focusOnNextSelection;
 @property (nonatomic) BOOL animateNextSelection;
 @property (nonatomic, copy) dispatch_block_t selectConversationCompletion;
@@ -72,6 +73,9 @@ static NSString * const CellReuseIdConversation = @"CellId";
 
 - (void)dealloc
 {
+    // Observer must be deallocated before `mediaPlaybackManager`
+    self.activeMediaPlayerObserver = nil;
+    self.mediaPlaybackManager = nil;
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
@@ -112,11 +116,18 @@ static NSString * const CellReuseIdConversation = @"CellId";
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+
+    // viewWillAppear: can get called also when dismissing the controller above this one.
+    // The user session might not be there anymore in some cases, e.g. when logging out
+    if ([ZMUserSession sharedSession] == nil) {
+        return;
+    }
     [self updateVisibleCells];
     
     [self scrollToCurrentSelectionAnimated:NO];
-
-    self.activeMediaPlayerObserver = [KeyValueObserver observeObject:AppDelegate.sharedAppDelegate.mediaPlaybackManager
+    
+    self.mediaPlaybackManager = AppDelegate.sharedAppDelegate.mediaPlaybackManager;
+    self.activeMediaPlayerObserver = [KeyValueObserver observeObject:self.mediaPlaybackManager
                                                              keyPath:@"activeMediaPlayer"
                                                               target:self
                                                             selector:@selector(activeMediaPlayerChanged:)];
@@ -137,7 +148,7 @@ static NSString * const CellReuseIdConversation = @"CellId";
     self.collectionView.alwaysBounceVertical = YES;
     self.collectionView.allowsSelection = YES;
     self.collectionView.allowsMultipleSelection = NO;
-    self.collectionView.contentInset = UIEdgeInsetsMake(8, 0, 0, 0);
+    self.collectionView.contentInset = UIEdgeInsetsMake(0, 0, 0, 0);
     self.collectionView.delaysContentTouches = NO;
     self.collectionView.accessibilityIdentifier = @"conversation list";
     self.clearsSelectionOnViewWillAppear = NO;
@@ -477,6 +488,18 @@ static NSString * const CellReuseIdConversation = @"CellId";
   sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     return [self.layoutCell sizeInCollectionViewSize:collectionView.bounds.size];
+}
+
+- (UIEdgeInsets)collectionView:(UICollectionView *)collectionView
+                        layout:(UICollectionViewLayout *)collectionViewLayout
+        insetForSectionAtIndex:(NSInteger)section
+{
+    if (section == 0) {
+        return UIEdgeInsetsMake(12, 0, 0, 0);
+    }
+    else {
+        return UIEdgeInsetsMake(0, 0, 0, 0);
+    }
 }
 
 @end
