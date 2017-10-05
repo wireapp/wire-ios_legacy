@@ -254,11 +254,11 @@ final internal class CallingMatcher: ConversationStatusMatcher {
     }
     
     func icon(with status: ConversationStatus, conversation: ZMConversation) -> ConversationStatusIcon {
-        let state = conversation.voiceChannel?.state ?? .noActiveUsers
-        switch state {
-        case .selfConnectedToActiveChannel:
+        let state = conversation.voiceChannel?.state ?? .none
+        
+        if case CallState.established = state {
             return .activeCall(joined: true)
-        default:
+        } else {
             return .activeCall(joined: false)
         }
     }
@@ -670,7 +670,16 @@ extension ZMConversation {
             hasMessages = true
         }
         
-        let isOngoingCall: Bool = (self.voiceChannel?.state ?? .noActiveUsers) != .noActiveUsers
+        
+        var isOngoingCall = false
+        if let state = voiceChannel?.state {
+            switch state {
+            case .none, .terminating:
+                break
+            default:
+                isOngoingCall = true
+            }
+        }
         
         return ConversationStatus(isGroup: self.conversationType == .group,
                                   hasMessages: hasMessages,

@@ -87,6 +87,10 @@
             isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
+            argument = "--debug-data-to-install=/Users/xxxxxxx/Database2.41"
+            isEnabled = "NO">
+         </CommandLineArgument>
+         <CommandLineArgument
             argument = "--addressbook-on-simulator"
             isEnabled = "NO">
          </CommandLineArgument>

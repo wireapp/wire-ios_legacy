@@ -106,26 +106,6 @@
     [self.nameLabel autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero excludingEdge:ALEdgeTop];
 }
 
-- (void)configureForUser:(ZMUser *)user participantState:(VoiceChannelV2ParticipantState *)participantState
-{
-    if (! [self.userImage.user isEqual:user]) {        
-        self.userImage.user = user;
-    }
-    self.nameLabel.text = [user.displayName uppercasedWithCurrentLocale];
-    
-    if (participantState.connectionState == VoiceChannelV2ConnectionStateConnecting) {
-        self.userImage.state = VoiceUserImageViewStateConnecting;
-    } else {
-        self.userImage.state = VoiceUserImageViewStateTalking;
-    }
-    
-    if (participantState.muted) {
-        self.userImage.badgeIcon = ZetaIconTypeMicrophoneWithStrikethrough;
-    } else {
-        self.userImage.badgeIcon = ZetaIconTypeNone;
-    }
-}
-
 - (void)updateVoiceGain:(CGFloat)voiceGain
 {
     self.userImage.voiceGain = voiceGain;

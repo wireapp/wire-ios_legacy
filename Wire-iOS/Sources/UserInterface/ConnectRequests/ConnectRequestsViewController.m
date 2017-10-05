@@ -204,6 +204,9 @@ static NSString *ConnectionRequestCellIdentifier = @"ConnectionRequestCell";
                               atScrollPosition:UITableViewScrollPositionBottom
                                       animated:YES];
     }
+    else {
+        [[ZClientViewController sharedZClientViewController] hideIncomingContactRequestsWithCompletion:nil];
+    }
 }
 
 @end

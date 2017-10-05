@@ -34,7 +34,6 @@
 
 // model
 #import "WireSyncEngine+iOS.h"
-#import "VoiceChannelV2+Additions.h"
 #import "ConversationMessageWindowTableViewAdapter.h"
 
 // ui

@@ -196,7 +196,6 @@ class VoiceChannelOverlay: UIView {
     let degradationBottomLabel = UILabel.multiline
     let topStatusLabel = UILabel.multiline
     let centerStatusLabel = UILabel()
-    let callingProtocolLabel = UILabel()
     
     var statusLabelToTopUserImageInset: NSLayoutConstraint?
     var degradationTopConstraint: NSLayoutConstraint?
@@ -477,13 +476,7 @@ extension VoiceChannelOverlay {
         centerStatusLabel.numberOfLines = 2
         centerStatusLabel.text = "voice.status.video_not_available".localized.uppercasedWithCurrentLocale
         
-        if let callingProtocol = callingConversation.voiceChannel?.callingProtocol, callingProtocol == .version2 {
-            callingProtocolLabel.text = "V2";
-        } else {
-            callingProtocolLabel.isHidden = true
-        }
-
-        [topStatusLabel, centerStatusLabel, degradationTopLabel, degradationBottomLabel, callingProtocolLabel].forEach(contentContainer.addSubview)
+        [topStatusLabel, centerStatusLabel, degradationTopLabel, degradationBottomLabel].forEach(contentContainer.addSubview)
     }
     
     private func configureParticipantsCollectionViewLayout(layout: VoiceChannelCollectionViewLayout) {
@@ -541,7 +534,7 @@ extension VoiceChannelOverlay {
             degradationBottomLabel.bottom <= callButton.top - 16
         }
         
-        constrain(contentContainer, callingTopUserImage, topStatusLabel, centerStatusLabel, callingProtocolLabel) { contentContainer, callingTopUserImage, topStatusLabel, centerStatusLabel, callingProtocolLabel in
+        constrain(contentContainer, callingTopUserImage, topStatusLabel, centerStatusLabel) { contentContainer, callingTopUserImage, topStatusLabel, centerStatusLabel in
             
             topStatusLabel.leading == contentContainer.leadingMargin ~ 750
             topStatusLabel.trailing == contentContainer.trailingMargin
@@ -552,9 +545,6 @@ extension VoiceChannelOverlay {
             centerStatusLabel.leading == contentContainer.leadingMargin
             centerStatusLabel.trailing == contentContainer.trailingMargin
             centerStatusLabel.centerY == contentContainer.centerY
-            
-            callingProtocolLabel.leading == contentContainer.leading + 16
-            callingProtocolLabel.top == contentContainer.top + 16
         }
 
         constrain(contentContainer, avatarContainer, topStatusLabel, callingUserImage, shieldOverlay) { contentContainer, avatarContainer, topStatusLabel, callingUserImage, shieldOverlay in
@@ -701,7 +691,7 @@ extension VoiceChannelOverlay {
         } else if state == .outgoingCall || state == .outgoingCallDegraded {
             callingUser = ZMUser.selfUser()
         } else {
-            callingUser = self.callingConversation.firstActiveCallingParticipantOtherThanSelf()
+            callingUser = self.callingConversation.firstCallingParticipantOtherThanSelf
         }
         callingUserImage.user = callingUser
         callingTopUserImage.user = callingUser

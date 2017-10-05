@@ -67,7 +67,9 @@ class AppRootViewController : UIViewController {
         overlayWindow.rootViewController = NotificationWindowRootViewController()
         
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
-        
+
+        AutomationHelper.sharedHelper.installDebugDataIfNeeded()
+
         appStateController.delegate = self
         
         // Notification window has to be on top, so must be made visible last.  Changing the window level is
