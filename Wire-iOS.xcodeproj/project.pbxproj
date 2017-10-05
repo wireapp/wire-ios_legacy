@@ -467,7 +467,6 @@
 		875A23121ADEA1A200111C88 /* CountryCodes.plist in Resources */ = {isa = PBXBuildFile; fileRef = 875A230A1ADEA1A200111C88 /* CountryCodes.plist */; };
 		875A23131ADEA1A200111C88 /* CountryCodeTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 875A230C1ADEA1A200111C88 /* CountryCodeTableViewController.m */; };
 		875A23171ADEA1AD00111C88 /* CountryCodeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 875A23161ADEA1AD00111C88 /* CountryCodeView.m */; };
-		875B6B461C5953E2007C61E5 /* VideoToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 875B6B441C5953DA007C61E5 /* VideoToolbox.framework */; };
 		875D48D11A6D087F00BB17B5 /* ConversationListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 875D48A61A6D087F00BB17B5 /* ConversationListViewController.m */; };
 		875F89121D6DCD2C00D8748E /* MessageToolboxView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 875F89111D6DCD2C00D8748E /* MessageToolboxView.swift */; };
 		875F89141D6DD6D000D8748E /* ReactionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 875F89131D6DD6D000D8748E /* ReactionsView.swift */; };
@@ -1729,7 +1728,6 @@
 		875A230C1ADEA1A200111C88 /* CountryCodeTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CountryCodeTableViewController.m; sourceTree = "<group>"; };
 		875A23151ADEA1AD00111C88 /* CountryCodeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CountryCodeView.h; sourceTree = "<group>"; };
 		875A23161ADEA1AD00111C88 /* CountryCodeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CountryCodeView.m; sourceTree = "<group>"; };
-		875B6B441C5953DA007C61E5 /* VideoToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VideoToolbox.framework; path = System/Library/Frameworks/VideoToolbox.framework; sourceTree = SDKROOT; };
 		875D48A51A6D087F00BB17B5 /* ConversationListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConversationListViewController.h; sourceTree = "<group>"; };
 		875D48A61A6D087F00BB17B5 /* ConversationListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConversationListViewController.m; sourceTree = "<group>"; };
 		875F15C91ED5BDFC008E9A6D /* ConversationListViewModel+Private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ConversationListViewModel+Private.h"; sourceTree = "<group>"; };
@@ -2549,7 +2547,6 @@
 			files = (
 				873DC95C1D479A0500C1C9B0 /* AVFoundation.framework in Frameworks */,
 				873DC95A1D479A0000C1C9B0 /* Photos.framework in Frameworks */,
-				875B6B461C5953E2007C61E5 /* VideoToolbox.framework in Frameworks */,
 				8741DB621C1EFE2D00BDB470 /* CoreLocation.framework in Frameworks */,
 				1EB9BF411BC7F796002EF0F3 /* WireExtensionComponents.framework in Frameworks */,
 				878D65C71C84664A0067E3D9 /* WireSyncEngine.framework in Frameworks */,
@@ -4105,7 +4102,6 @@
 				87A418BD1C0CAB1A006FA803 /* Cartfile.private */,
 				1E88CC4D1BEB63020020B853 /* Cartfile.resolved */,
 				919064190C0D0A9268177FCC /* Pods */,
-				F145784C1F3CB846007FD97E /* Recovered References */,
 			);
 			sourceTree = "<group>";
 		};
@@ -5065,14 +5061,6 @@
 				F12CDAEA1E43886A00CEFCEB /* DecriptionHeaderView.swift */,
 			);
 			path = Views;
-			sourceTree = "<group>";
-		};
-		F145784C1F3CB846007FD97E /* Recovered References */ = {
-			isa = PBXGroup;
-			children = (
-				875B6B441C5953DA007C61E5 /* VideoToolbox.framework */,
-			);
-			name = "Recovered References";
 			sourceTree = "<group>";
 		};
 		F5F52F6F1B11D6DB0053F1C8 /* Sketchpad */ = {
