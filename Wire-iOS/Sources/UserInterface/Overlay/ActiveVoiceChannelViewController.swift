@@ -77,7 +77,11 @@ class ActiveVoiceChannelViewController : UIViewController {
         UIApplication.shared.keyWindow?.endEditing(true)
         
         if let toViewController = to, let fromViewController = from {
+            
+            toViewController.view.frame = view.bounds
+            toViewController.view.autoresizingMask = [.flexibleHeight, .flexibleWidth]
             addChildViewController(toViewController)
+            
             transition(from: fromViewController,
                        to: toViewController,
                        duration: 0.35,
