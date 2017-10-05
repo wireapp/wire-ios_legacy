@@ -245,6 +245,8 @@
 		8711A5A21E0D395A00043ACF /* CollectionCellHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8711A5A11E0D395A00043ACF /* CollectionCellHeader.swift */; };
 		8711A5A41E0D6C8800043ACF /* TwoLineTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8711A5A31E0D6C8800043ACF /* TwoLineTitleView.swift */; };
 		8714A9EC1E69E605006BBAE9 /* FLAnimatedImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8714A9EB1E69E605006BBAE9 /* FLAnimatedImage.framework */; };
+		8715F22D1F86758E006F3935 /* AnalyticsMixpanelProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8715F22C1F86758E006F3935 /* AnalyticsMixpanelProvider.swift */; };
+		8715F22F1F8677A2006F3935 /* Mixpanel.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8715F22E1F8677A2006F3935 /* Mixpanel.framework */; };
 		871608431E4DF7B000461934 /* HockeySDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 871608411E4DF7A900461934 /* HockeySDK.framework */; };
 		871878BD1C1ACA72001FFCC5 /* NSDate+WRFormat.h in Headers */ = {isa = PBXBuildFile; fileRef = 871878BB1C1ACA72001FFCC5 /* NSDate+WRFormat.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		871878BE1C1ACA72001FFCC5 /* NSDate+WRFormat.m in Sources */ = {isa = PBXBuildFile; fileRef = 871878BC1C1ACA72001FFCC5 /* NSDate+WRFormat.m */; };
@@ -257,7 +259,6 @@
 		871BC0011D34F56300DF0793 /* AnalyticsConversationVerifiedObserver.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BBFAD1D34F56300DF0793 /* AnalyticsConversationVerifiedObserver.m */; };
 		871BC0021D34F56300DF0793 /* AnalyticsDecryptionFailedObserver.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BBFAF1D34F56300DF0793 /* AnalyticsDecryptionFailedObserver.m */; };
 		871BC0031D34F56300DF0793 /* AnalyticsFileTransferObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 871BBFB01D34F56300DF0793 /* AnalyticsFileTransferObserver.swift */; };
-		871BC0041D34F56300DF0793 /* AnalyticsLocalyticsProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BBFB21D34F56300DF0793 /* AnalyticsLocalyticsProvider.m */; };
 		871BC0051D34F56300DF0793 /* AnalyticsTracker.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BBFB51D34F56300DF0793 /* AnalyticsTracker.m */; };
 		871BC0071D34F56300DF0793 /* Application+runDuration.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BBFB91D34F56300DF0793 /* Application+runDuration.m */; };
 		871BC0091D34F56300DF0793 /* DefaultIntegerClusterizer.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BBFC01D34F56300DF0793 /* DefaultIntegerClusterizer.m */; };
@@ -1338,6 +1339,8 @@
 		8711A5A11E0D395A00043ACF /* CollectionCellHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionCellHeader.swift; sourceTree = "<group>"; };
 		8711A5A31E0D6C8800043ACF /* TwoLineTitleView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TwoLineTitleView.swift; sourceTree = "<group>"; };
 		8714A9EB1E69E605006BBAE9 /* FLAnimatedImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FLAnimatedImage.framework; path = Carthage/Build/iOS/FLAnimatedImage.framework; sourceTree = "<group>"; };
+		8715F22C1F86758E006F3935 /* AnalyticsMixpanelProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnalyticsMixpanelProvider.swift; sourceTree = "<group>"; };
+		8715F22E1F8677A2006F3935 /* Mixpanel.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Mixpanel.framework; path = Carthage/Build/iOS/Mixpanel.framework; sourceTree = "<group>"; };
 		871608411E4DF7A900461934 /* HockeySDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HockeySDK.framework; path = Carthage/Build/iOS/HockeySDK.framework; sourceTree = "<group>"; };
 		871878BB1C1ACA72001FFCC5 /* NSDate+WRFormat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+WRFormat.h"; sourceTree = "<group>"; };
 		871878BC1C1ACA72001FFCC5 /* NSDate+WRFormat.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+WRFormat.m"; sourceTree = "<group>"; };
@@ -1358,8 +1361,6 @@
 		871BBFAE1D34F56300DF0793 /* AnalyticsDecryptionFailedObserver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnalyticsDecryptionFailedObserver.h; sourceTree = "<group>"; };
 		871BBFAF1D34F56300DF0793 /* AnalyticsDecryptionFailedObserver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AnalyticsDecryptionFailedObserver.m; sourceTree = "<group>"; };
 		871BBFB01D34F56300DF0793 /* AnalyticsFileTransferObserver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnalyticsFileTransferObserver.swift; sourceTree = "<group>"; };
-		871BBFB11D34F56300DF0793 /* AnalyticsLocalyticsProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnalyticsLocalyticsProvider.h; sourceTree = "<group>"; };
-		871BBFB21D34F56300DF0793 /* AnalyticsLocalyticsProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AnalyticsLocalyticsProvider.m; sourceTree = "<group>"; };
 		871BBFB31D34F56300DF0793 /* AnalyticsProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnalyticsProvider.h; sourceTree = "<group>"; };
 		871BBFB41D34F56300DF0793 /* AnalyticsTracker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnalyticsTracker.h; sourceTree = "<group>"; };
 		871BBFB51D34F56300DF0793 /* AnalyticsTracker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AnalyticsTracker.m; sourceTree = "<group>"; };
@@ -2518,6 +2519,7 @@
 				BFBC11E31ED84DB200502AF0 /* WireDataModel.framework in Frameworks */,
 				BFBC11E11ED84DB200502AF0 /* WireSyncEngine.framework in Frameworks */,
 				AF36C5A71E9F6F2000FADECC /* WireCanvas.framework in Frameworks */,
+				8715F22F1F8677A2006F3935 /* Mixpanel.framework in Frameworks */,
 				87AAE4291E43682E00E1D13A /* LocalAuthentication.framework in Frameworks */,
 				8714A9EC1E69E605006BBAE9 /* FLAnimatedImage.framework in Frameworks */,
 				87D7AF671DF5A158001A1CD7 /* Contacts.framework in Frameworks */,
@@ -2997,6 +2999,7 @@
 		8286E48D7CC440448CBD8F48 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				8715F22E1F8677A2006F3935 /* Mixpanel.framework */,
 				EE291BB41F0B9BF200142F31 /* Marklight.framework */,
 				F1CE2DEF1EF0337F00631D8A /* PureLayout.framework */,
 				BFBC11E41ED84DE400502AF0 /* WireMessageStrategy.framework */,
@@ -3087,8 +3090,6 @@
 				871BBFAE1D34F56300DF0793 /* AnalyticsDecryptionFailedObserver.h */,
 				871BBFAF1D34F56300DF0793 /* AnalyticsDecryptionFailedObserver.m */,
 				871BBFB01D34F56300DF0793 /* AnalyticsFileTransferObserver.swift */,
-				871BBFB11D34F56300DF0793 /* AnalyticsLocalyticsProvider.h */,
-				871BBFB21D34F56300DF0793 /* AnalyticsLocalyticsProvider.m */,
 				871BBFB31D34F56300DF0793 /* AnalyticsProvider.h */,
 				871BBFB41D34F56300DF0793 /* AnalyticsTracker.h */,
 				871BBFB51D34F56300DF0793 /* AnalyticsTracker.m */,
@@ -3096,6 +3097,7 @@
 				871BBFB81D34F56300DF0793 /* Application+runDuration.h */,
 				871BBFB91D34F56300DF0793 /* Application+runDuration.m */,
 				CE2402801E0A992200665A91 /* AnalyticsConsoleProvider.swift */,
+				8715F22C1F86758E006F3935 /* AnalyticsMixpanelProvider.swift */,
 				AFD4E7291E449925002A4732 /* Analytics+StorableTrackingEvent.swift */,
 				871BBFBD1D34F56300DF0793 /* Clusterizers */,
 				871BBFC31D34F56300DF0793 /* Events */,
@@ -5703,6 +5705,7 @@
 				"$(SRCROOT)/Carthage/Build/iOS/WireCanvas.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/PureLayout.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/Marklight.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/Mixpanel.framework",
 			);
 			name = "Copy Frameworks and DSYMs";
 			outputPaths = (
@@ -5867,7 +5870,6 @@
 				BFAF4CB71CEDB9FC00780537 /* AudioButtonOverlayState.swift in Sources */,
 				163BB8101EE1648100DF9384 /* ContactsDataSource+Searching.swift in Sources */,
 				87E56ED91E4E10CA0097D489 /* TextSearchResultCell.swift in Sources */,
-				871BC0041D34F56300DF0793 /* AnalyticsLocalyticsProvider.m in Sources */,
 				871BC2481D34F8F800DF0793 /* NSString+WAZUIMagic.m in Sources */,
 				871BC22A1D34F8F800DF0793 /* FullscreenImageViewController+PullToDismiss.m in Sources */,
 				879718981D1C767600163C07 /* AudioEffectsPickerViewController.swift in Sources */,
@@ -5974,6 +5976,7 @@
 				875A23101ADEA1A200111C88 /* CountryCodeBaseTableViewController.m in Sources */,
 				F12CDADE1E43868200CEFCEB /* ChangeEmailViewController.swift in Sources */,
 				87D679E81EBC8D1E005BEB4C /* ConversationListViewController+CameraPicker.swift in Sources */,
+				8715F22D1F86758E006F3935 /* AnalyticsMixpanelProvider.swift in Sources */,
 				8745476B1E9E54E600C206E5 /* SelfProfileViewController.swift in Sources */,
 				871BC2591D34F8F800DF0793 /* VerticalTransition.m in Sources */,
 				87A15FCC1E07E8EB00AED79B /* CollectionsSectionSet.swift in Sources */,
@@ -7020,28 +7023,7 @@
 					"DEBUG=1",
 					"$(inherited)",
 				);
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"${PODS_ROOT}/Headers/Public\"",
-					"\"${PODS_ROOT}/Headers/Public/1PasswordExtension\"",
-					"\"${PODS_ROOT}/Headers/Public/AFNetworking\"",
-					"\"${PODS_ROOT}/Headers/Public/AHEasing\"",
-					"\"${PODS_ROOT}/Headers/Public/ARCollectionViewMasonryLayout\"",
-					"\"${PODS_ROOT}/Headers/Public/CocoaSecurity\"",
-					"\"${PODS_ROOT}/Headers/Public/FiksuSDK\"",
-					"\"${PODS_ROOT}/Headers/Public/FormatterKit\"",
-					"\"${PODS_ROOT}/Headers/Public/Google-API-ObjectiveC-Client\"",
-					"\"${PODS_ROOT}/Headers/Public/HockeySDK\"",
-					"\"${PODS_ROOT}/Headers/Public/Localytics\"",
-					"\"${PODS_ROOT}/Headers/Public/NSObject-ObjectMap\"",
-					"\"${PODS_ROOT}/Headers/Public/PureLayout\"",
-					"\"${PODS_ROOT}/Headers/Public/RBBAnimation\"",
-					"\"${PODS_ROOT}/Headers/Public/UAObfuscatedString\"",
-					"\"${PODS_ROOT}/Headers/Public/UIResponder+KeyboardCache\"",
-					"\"${PODS_ROOT}/Headers/Public/VIMNetworking\"",
-					"\"${PODS_ROOT}/Headers/Public/VIMObjectMapper\"",
-					"\"$(TARGET_TEMP_DIR)/../$(PROJECT_NAME).build/DerivedSources\"",
-				);
+				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = "Wire-iOS Tests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
@@ -7067,28 +7049,7 @@
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
 				GCC_NO_COMMON_BLOCKS = YES;
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"${PODS_ROOT}/Headers/Public\"",
-					"\"${PODS_ROOT}/Headers/Public/1PasswordExtension\"",
-					"\"${PODS_ROOT}/Headers/Public/AFNetworking\"",
-					"\"${PODS_ROOT}/Headers/Public/AHEasing\"",
-					"\"${PODS_ROOT}/Headers/Public/ARCollectionViewMasonryLayout\"",
-					"\"${PODS_ROOT}/Headers/Public/CocoaSecurity\"",
-					"\"${PODS_ROOT}/Headers/Public/FiksuSDK\"",
-					"\"${PODS_ROOT}/Headers/Public/FormatterKit\"",
-					"\"${PODS_ROOT}/Headers/Public/Google-API-ObjectiveC-Client\"",
-					"\"${PODS_ROOT}/Headers/Public/HockeySDK\"",
-					"\"${PODS_ROOT}/Headers/Public/Localytics\"",
-					"\"${PODS_ROOT}/Headers/Public/NSObject-ObjectMap\"",
-					"\"${PODS_ROOT}/Headers/Public/PureLayout\"",
-					"\"${PODS_ROOT}/Headers/Public/RBBAnimation\"",
-					"\"${PODS_ROOT}/Headers/Public/UAObfuscatedString\"",
-					"\"${PODS_ROOT}/Headers/Public/UIResponder+KeyboardCache\"",
-					"\"${PODS_ROOT}/Headers/Public/VIMNetworking\"",
-					"\"${PODS_ROOT}/Headers/Public/VIMObjectMapper\"",
-					"\"$(TARGET_TEMP_DIR)/../$(PROJECT_NAME).build/DerivedSources\"",
-				);
+				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = "Wire-iOS Tests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = "$(inherited)";

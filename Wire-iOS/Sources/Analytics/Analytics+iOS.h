@@ -20,12 +20,18 @@
 #import <Foundation/Foundation.h>
 #import "Analytics.h"
 
+NS_ASSUME_NONNULL_BEGIN
 
-extern NSString * _Nonnull const ZMConsoleAnalyticsArgumentKey;
+extern NSString * const ZMConsoleAnalyticsArgumentKey;
+
+FOUNDATION_EXPORT NSString * AnalyticsAPIKey;
+
 @interface Analytics (iOS)
 
 + (void)setConsoleAnayltics:(BOOL)shouldUseConsoleAnalytics;
-+ (instancetype __nullable)setupSharedInstanceWithLaunchOptions:(NSDictionary * __nullable)launchOptions;
-+ (instancetype __nullable)shared;
++ (nullable instancetype)setupSharedInstanceWithLaunchOptions:(nullable NSDictionary *)launchOptions;
++ (nullable instancetype)shared;
 
 @end
+
+NS_ASSUME_NONNULL_END

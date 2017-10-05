@@ -19,7 +19,6 @@
 
 #import "Analytics+Metrics.h"
 #import "AnalyticsBase.h"
-#import "AnalyticsLocalyticsProvider.h"
 #import "avs+iOS.h"
 #import "Wire-Swift.h"
 
@@ -27,7 +26,7 @@
 
 @implementation Analytics (Metrics)
 
-+ (void)updateAVSMetricsSettingsWithActiveProvider:(AnalyticsLocalyticsProvider *)provider
++ (void)updateAVSMetricsSettingsWithActiveProvider:(id<AnalyticsProvider>)provider
 {
     BOOL uploadMetrics = provider ? !provider.isOptedOut : NO;
     

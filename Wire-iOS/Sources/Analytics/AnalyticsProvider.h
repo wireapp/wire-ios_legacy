@@ -16,12 +16,11 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 // 
 
+NS_ASSUME_NONNULL_BEGIN
 
 @protocol AnalyticsProvider <NSObject>
 
 @property (nonatomic, assign) BOOL isOptedOut;
-
-- (instancetype)initWithLaunchOptions:(NSDictionary *)launchOptions;
 
 /// Record a screen (page view).
 - (void)tagScreen:(NSString *)screen;
@@ -30,13 +29,11 @@
 - (void)tagEvent:(NSString *)event;
 
 /// Record an event with optional attributes.
-- (void)tagEvent:(NSString *)event attributes:(NSDictionary *)attributes;
+- (void)tagEvent:(NSString *)event attributes:(nullable NSDictionary *)attributes;
 
-/// Record an event with optional attributes and customer lifetime value increase
-- (void)tagEvent:(NSString *)event attributes:(NSDictionary *)attributes
-    customerValueIncrease:(NSNumber *)customerValueIncrease;
-
-/// Set a custom dimension-- this may be localytics specific
+/// Set a custom dimension
 - (void)setCustomDimension:(int)dimension value:(NSString *)value;
 
 @end
+
+NS_ASSUME_NONNULL_END

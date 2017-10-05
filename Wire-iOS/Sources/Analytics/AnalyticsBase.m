@@ -18,7 +18,6 @@
 
 
 #import "AnalyticsBase.h"
-#import "AnalyticsLocalyticsProvider.h"
 #import "Analytics+SessionEvents.h"
 #import "Analytics+Metrics.h"
 #import "AnalyticsConversationListObserver.h"
@@ -29,11 +28,7 @@
 
 #import "ZMUser+Additions.h"
 
-#if TARGET_IPHONE_SIMULATOR || TARGET_OS_IPHONE
 #import "WireSyncEngine+iOS.h"
-#else
-#import "WireSyncEngine+OS_X.h"
-#endif
 
 #import "ZMUser+Additions.h"
 #import "DefaultIntegerClusterizer.h"
@@ -159,11 +154,6 @@ static NSString *const AnalyticsUserDefaultsDisabledKey = @"AnalyticsUserDefault
 
 - (void)tagEvent:(NSString *)event attributes:(NSDictionary *)attributes source:(AnalyticsEventSource)source
 {
-    [self tagEvent:event attributes:attributes source:source customerValueIncrease:nil];
-}
-
-- (void)tagEvent:(NSString *)event attributes:(NSDictionary *)attributes source:(AnalyticsEventSource)source customerValueIncrease:(NSNumber *)customerValueIncrease
-{
     if (source != AnalyticsEventSourceUnspecified) {
         
         NSMutableDictionary *newAttrs = nil;
@@ -179,8 +169,9 @@ static NSString *const AnalyticsUserDefaultsDisabledKey = @"AnalyticsUserDefault
         attributes = newAttrs;
     }
     
-    [self.activeProvider tagEvent:event attributes:attributes customerValueIncrease:customerValueIncrease];
+    [self.activeProvider tagEvent:event attributes:attributes];
 }
+
 
 - (void)tagEventObject:(AnalyticsEvent *)event
 {
@@ -193,7 +184,7 @@ static NSString *const AnalyticsUserDefaultsDisabledKey = @"AnalyticsUserDefault
     
     NSAssert(tag != nil, @"analytics event object returned nil tag");
     
-    [self tagEvent:tag attributes:[event attributesDump] source:source customerValueIncrease:[event customerValueIncrease]];
+    [self tagEvent:tag attributes:[event attributesDump] source:source];
 }
 
 

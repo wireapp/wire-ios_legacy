@@ -19,8 +19,6 @@
 
 #import "AnalyticsBase.h"
 
-@class AnalyticsLocalyticsProvider;
-
 @interface Analytics (Metrics)
-+ (void)updateAVSMetricsSettingsWithActiveProvider:(AnalyticsLocalyticsProvider *)provider;
++ (void)updateAVSMetricsSettingsWithActiveProvider:(id<AnalyticsProvider>)provider;
 @end

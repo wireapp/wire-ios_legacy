@@ -144,7 +144,7 @@
 			<key>Type</key>
 			<string>PSToggleSwitchSpecifier</string>
 			<key>Title</key>
-			<string>Enable Debug Localytics Logs</string>
+			<string>Enable Debug Analytics Logs</string>
 			<key>Key</key>
 			<string>ZMEnableAnalyticsLog</string>
 			<key>DefaultValue</key>

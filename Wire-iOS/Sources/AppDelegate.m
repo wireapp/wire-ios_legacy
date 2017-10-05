@@ -128,7 +128,7 @@ static AppDelegate *sharedAppDelegate = nil;
     
     
     [Analytics setConsoleAnayltics:containsConsoleAnalytics];
-    [Analytics setupSharedInstanceWithLaunchOptions:launchOptions]; // preload analytics to listen to some notifications in time
+    [Analytics setupSharedInstanceWithLaunchOptions:launchOptions];
 
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(userSessionDidBecomeAvailable:)

@@ -19,7 +19,6 @@
 
 #import "Analytics+iOS.h"
 #import "Analytics+Metrics.h"
-#import "AnalyticsLocalyticsProvider.h"
 #import <avs/AVSFlowManager.h>
 #import "Settings.h"
 #import "Wire-Swift.h"
@@ -30,6 +29,7 @@ NSString * const ZMConsoleAnalyticsArgumentKey = @"-ConsoleAnalytics";
 static NSString * const ZMEnableConsoleLog = @"ZMEnableAnalyticsLog";
 static Analytics *sharedAnalytics = nil;
 
+NSString * AnalyticsAPIKey = @STRINGIZE(ANALYTICS_API_KEY);
 
 @implementation Analytics (iOS)
 
@@ -43,7 +43,7 @@ static Analytics *sharedAnalytics = nil;
     if (useConsoleAnalytics || [[NSUserDefaults standardUserDefaults] boolForKey:ZMEnableConsoleLog]) {
         static dispatch_once_t onceToken;
         dispatch_once(&onceToken, ^{
-            id <AnalyticsProvider> provider = [[AnalyticsConsoleProvider alloc] initWithLaunchOptions:launchOptions];
+            id <AnalyticsProvider> provider = [[AnalyticsConsoleProvider alloc] init];
             sharedAnalytics = [[Analytics alloc] initWithProvider:provider];
         });
         return sharedAnalytics;
@@ -54,7 +54,7 @@ static Analytics *sharedAnalytics = nil;
     if (useAnalytics && ![[Settings sharedSettings] disableAnalytics]) {
         static dispatch_once_t onceToken;
         dispatch_once(&onceToken, ^{
-            AnalyticsLocalyticsProvider *provider = [[AnalyticsLocalyticsProvider alloc] initWithLaunchOptions:launchOptions];
+            AnalyticsMixpanelProvider *provider = [[AnalyticsMixpanelProvider alloc] init];
             sharedAnalytics = [[Analytics alloc] initWithProvider:provider];
         });
     }
