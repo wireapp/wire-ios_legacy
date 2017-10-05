@@ -28,14 +28,14 @@ extension ConversationListViewController {
         }
         let currentAccountView = AccountViewFactory.viewFor(account: currentAccount,
                                                             user: ZMUser.selfUser(inUserSession: ZMUserSession.shared()!))
-        currentAccountView.invertUnreadMessagesCount = true
+        currentAccountView.unreadCountStyle = .others
         return currentAccountView
     }
     
     public func createTopBar() {
         let profileAccountView = self.currentAccountView()
         profileAccountView.selected = false
-        profileAccountView.autoupdateSelection = false
+        profileAccountView.autoUpdateSelection = false
         
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(presentSettings))
         profileAccountView.addGestureRecognizer(tapGestureRecognizer)

@@ -82,6 +82,8 @@ final internal class AccountSelectorView: UIView {
             accountViews = accounts?.map({ AccountViewFactory.viewFor(account: $0) }) ?? []
             
             accountViews.forEach { (accountView) in
+                
+                accountView.unreadCountStyle = accountView.account.isActive ? .none : .current
                 accountView.onTap = { account in
                     if let account = account, account != SessionManager.shared?.accountManager.selectedAccount {
                         ZClientViewController.shared().conversationListViewController.dismiss(animated: true, completion: {
