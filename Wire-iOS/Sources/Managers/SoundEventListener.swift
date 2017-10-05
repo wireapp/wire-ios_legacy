@@ -82,7 +82,7 @@ extension SoundEventListener : ZMNewUnreadMessagesObserver, ZMNewUnreadKnocksObs
             let isSentBySelfUser = message.sender?.isSelfUser ?? false
             let isSilencedConversation = message.conversation?.isSilenced ?? false
             
-            guard message.isNormal || message.isSystem &&
+            guard (message.isNormal || message.isSystem) &&
                   isRecentMessage &&
                   !isSentBySelfUser &&
                   !isFirstMessage &&
