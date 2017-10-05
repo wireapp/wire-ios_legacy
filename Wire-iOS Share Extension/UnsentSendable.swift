@@ -144,15 +144,18 @@ class UnsentImageSendable: UnsentSendableBase, UnsentSendable {
 /// `UnsentSendable` implementation to send file messages
 class UnsentFileSendable: UnsentSendableBase, UnsentSendable {
 
+    static let passkitUTI = "com.apple.pkpass"
     private let attachment: NSItemProvider
     private var metadata: ZMFileMetadata?
 
     private let typeURL: Bool
     private let typeData: Bool
+    private let typePass: Bool
 
     init?(conversation: Conversation, sharingSession: SharingSession, attachment: NSItemProvider) {
         self.typeURL = attachment.hasItemConformingToTypeIdentifier(kUTTypeURL as String)
-        self.typeData = attachment.hasItemConformingToTypeIdentifier(kUTTypeData as String) || attachment.hasItemConformingToTypeIdentifier("com.apple.pkpass")
+        self.typeData = attachment.hasItemConformingToTypeIdentifier(kUTTypeData as String)
+        self.typePass = attachment.hasItemConformingToTypeIdentifier(UnsentFileSendable.passkitUTI)
         self.attachment = attachment
         super.init(conversation: conversation, sharingSession: sharingSession)
         guard typeURL || typeData else { return nil }
@@ -172,12 +175,10 @@ class UnsentFileSendable: UnsentSendableBase, UnsentSendable {
                 }
                 self.prepareAsFileData(name: url?.lastPathComponent, completion: completion)
             }
+        } else if typePass {
+            prepareAsWalletPass(name: nil, completion: completion)
         } else if typeData {
-            if attachment.hasWalletPass {
-                prepareAsWalletPass(name: nil, completion: completion)
-            } else {
-                prepareAsFileData(name: nil, completion: completion)
-            }
+            prepareAsFileData(name: nil, completion: completion)
         }
     }
 
@@ -193,7 +194,7 @@ class UnsentFileSendable: UnsentSendableBase, UnsentSendable {
     }
     
     private func prepareAsWalletPass(name: String?, completion: @escaping () -> Void) {
-        self.prepareAsFile(name: nil, typeIdentifier: "com.apple.pkpass", completion: completion)
+        self.prepareAsFile(name: nil, typeIdentifier: UnsentFileSendable.passkitUTI, completion: completion)
     }
 
     private func prepareAsFile(name: String?, typeIdentifier: String, completion: @escaping () -> Void) {

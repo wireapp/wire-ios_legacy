@@ -143,6 +143,6 @@ extension NSItemProvider {
     }
     
     var hasWalletPass: Bool {
-        return hasItemConformingToTypeIdentifier("com.apple.pkpass")
+        return hasItemConformingToTypeIdentifier(UnsentFileSendable.passkitUTI)
     }
 }
