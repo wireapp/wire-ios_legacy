@@ -75,29 +75,15 @@ extension ZMConversation {
     func joinVoiceChannelWithoutAskingForPermission(video: Bool, completionHandler: ((_ joined: Bool) -> Void)?) {
         guard let userSession = ZMUserSession.shared() else { completionHandler?(false); return }
         
-        leaveOtherActiveCalls {
-            let joined = self.voiceChannel?.join(video: video, userSession: userSession) ?? false
-            
-            if joined {
-                Analytics.shared()?.tagMediaAction(video ? .videoCall : .audioCall, inConversation: self)
-            }
-            
-            completionHandler?(joined)
+        let joined = self.voiceChannel?.join(video: video, userSession: userSession) ?? false
+        
+        if joined {
+            Analytics.shared()?.tagMediaAction(video ? .videoCall : .audioCall, inConversation: self)
         }
+        
+        completionHandler?(joined)
     }
     
-    func leaveOtherActiveCalls(completionHandler: (() -> Void)?) -> Void {
-        guard let userSession = ZMUserSession.shared(), let callCenter = userSession.callCenter else { completionHandler?(); return }
-        
-        callCenter.nonIdleCallConversations(in: userSession).forEach({ (conversation) in
-            if conversation != self {
-                conversation.voiceChannel?.leave(userSession: userSession)
-            }
-        })
-        
-        completionHandler?()
-    }
-
     func warnAboutSlowConnection(handler : @escaping (_ abortCall : Bool) -> Void) {
         if NetworkConditionHelper.sharedInstance().qualityType() == .type2G {
             let badConnectionController = UIAlertController(title: "error.call.slow_connection.title".localized, message: "error.call.slow_connection".localized, preferredStyle: .alert)
