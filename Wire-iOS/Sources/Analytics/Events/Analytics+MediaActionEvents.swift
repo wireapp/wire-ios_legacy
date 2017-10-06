@@ -29,9 +29,9 @@
         case .gif:          return "giphy"
         case .sketch:       return "sketch"
         case .ping:         return "ping"
-        case .fileTransfer: return "file_transfer"
-        case .videoMessage: return "video_message"
-        case .audioMessage: return "audio_message"
+        case .fileTransfer: return "file"
+        case .videoMessage: return "video"
+        case .audioMessage: return "audio"
         case .location:     return "location"
         case .ephemeral:    return "ephemeral"
         }
@@ -168,7 +168,7 @@ extension AudioMessageContext {
 }
 
 let conversationMediaActionEventName                         = "media.opened_action"
-let conversationMediaCompleteActionEventName                 = "media.completed_media_action"
+let conversationMediaCompleteActionEventName                 = "contributed"
 let conversationMediaSentVideoMessageEventName               = "media.sent_video_message"
 let conversationMediaPlayedVideoMessageEventName             = "media.played_video_message"
 let conversationMediaStartedRecordingAudioEventName          = "media.started_recording_audio_message"
