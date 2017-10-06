@@ -85,8 +85,6 @@
 @property (nonatomic) id incomingApnsObserver;
 @property (nonatomic) id networkAvailabilityObserverToken;
 
-@property (nonatomic) ProximityMonitorManager *proximityMonitorManager;
-
 @property (nonatomic) BOOL pendingInitialStateRestore;
 @property (nonatomic) SplitViewController *splitViewController;
 @property (nonatomic) id userObserverToken;
@@ -445,10 +443,6 @@
 - (void)dismissClientListController:(id)sender
 {
     [self dismissViewControllerAnimated:YES completion:nil];
-}
-
-- (void)setUpdateProximityMonitorStatePause:(BOOL)isPause {
-    self.proximityMonitorManager.paused = isPause;
 }
 
 #pragma mark - Animated conversation switch

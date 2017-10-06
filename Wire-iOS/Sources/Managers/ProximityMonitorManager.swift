@@ -23,10 +23,23 @@ fileprivate let zmLog = ZMSLog(tag: "calling")
 class ProximityMonitorManager : NSObject {
     
     var callStateObserverToken : Any?
-    var paused : Bool = false
+
+    fileprivate(set) var raisedToEar: Bool = false {
+        didSet {
+            if oldValue != self.raisedToEar {
+                self.stateChanged?(self.raisedToEar)
+            }
+        }
+    }
+    
+    typealias RaisedToEarHandler = (_ raisedToEar: Bool) -> Void
+    
+    var stateChanged: RaisedToEarHandler? = nil
+    var listening: Bool = false
     
     deinit {
         AVSMediaManagerClientChangeNotification.remove(self)
+        self.stopListening()
     }
     
     override init() {
@@ -45,7 +58,7 @@ class ProximityMonitorManager : NSObject {
     
     func updateProximityMonitorState() {
         // Only do proximity monitoring on phones
-        guard UIDevice.current.userInterfaceIdiom == .phone, let callCenter = ZMUserSession.shared()?.callCenter, !paused else { return }
+        guard UIDevice.current.userInterfaceIdiom == .phone, let callCenter = ZMUserSession.shared()?.callCenter, !listening else { return }
         
         let ongoingCalls = callCenter.nonIdleCalls.filter({ (key: UUID, callState: CallState) -> Bool in
             switch callState {
@@ -64,6 +77,37 @@ class ProximityMonitorManager : NSObject {
 
         UIDevice.current.isProximityMonitoringEnabled = !speakerIsEnabled && hasOngoingCall
     }
+    
+    // MARK: - listening mode
+    
+    func startListening() {
+        guard !self.listening else {
+            return
+        }
+        
+        self.listening = true
+        
+        UIDevice.current.isProximityMonitoringEnabled = true
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(handleProximityChange),
+                                               name: NSNotification.Name.UIDeviceProximityStateDidChange,
+                                               object: nil)
+    }
+    
+    func stopListening() {
+        guard self.listening else {
+            return
+        }
+        self.listening = false
+        
+        UIDevice.current.isProximityMonitoringEnabled = false
+        NotificationCenter.default.removeObserver(self)
+    }
+    
+    func handleProximityChange(_ notification: Notification) {
+        self.raisedToEar = UIDevice.current.proximityState
+    }
+
     
 }
 

@@ -26,6 +26,7 @@
 @class UserClient;
 @class ZMUser;
 @class MediaPlaybackManager;
+@class ProximityMonitorManager;
 
 
 @interface ZClientViewController : UIViewController
@@ -43,6 +44,8 @@
 @property (nonatomic, readonly) MediaPlaybackManager *mediaPlaybackManager;
 
 @property (nonatomic, readonly) ConversationListViewController *conversationListViewController;
+
+@property (nonatomic) ProximityMonitorManager *proximityMonitorManager;
 
 + (instancetype)sharedZClientViewController;
 
@@ -86,15 +89,5 @@
 - (void)transitionToListAnimated:(BOOL)animated completion:(dispatch_block_t)completion;
 
 - (void)dismissAllModalControllersWithCallback:(dispatch_block_t)callback;
-
-
-/**
- Pause the ProximityMonitorState update. (e.g. a view want to control UIDevice.current.isProximityMonitoringEnabled)
- 
- Notice: remember to call this func again with isPause = false after you don't want to control UIDevice.current.isProximityMonitoringEnabled
-
- @param isPause true for pause the update
- */
-- (void)setUpdateProximityMonitorStatePause:(BOOL)isPause;
 
 @end
