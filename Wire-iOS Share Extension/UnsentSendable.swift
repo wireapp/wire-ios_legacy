@@ -144,15 +144,18 @@ class UnsentImageSendable: UnsentSendableBase, UnsentSendable {
 /// `UnsentSendable` implementation to send file messages
 class UnsentFileSendable: UnsentSendableBase, UnsentSendable {
 
+    static let passkitUTI = "com.apple.pkpass"
     private let attachment: NSItemProvider
     private var metadata: ZMFileMetadata?
 
     private let typeURL: Bool
     private let typeData: Bool
+    private let typePass: Bool
 
     init?(conversation: Conversation, sharingSession: SharingSession, attachment: NSItemProvider) {
         self.typeURL = attachment.hasItemConformingToTypeIdentifier(kUTTypeURL as String)
         self.typeData = attachment.hasItemConformingToTypeIdentifier(kUTTypeData as String)
+        self.typePass = attachment.hasItemConformingToTypeIdentifier(UnsentFileSendable.passkitUTI)
         self.attachment = attachment
         super.init(conversation: conversation, sharingSession: sharingSession)
         guard typeURL || typeData else { return nil }
@@ -170,11 +173,12 @@ class UnsentFileSendable: UnsentSendableBase, UnsentSendable {
                     self.error = .unsupportedAttachment
                     return completion()
                 }
-
-                self.prepareAsFile(name: url?.lastPathComponent, completion: completion)
+                self.prepareAsFileData(name: url?.lastPathComponent, completion: completion)
             }
+        } else if typePass {
+            prepareAsWalletPass(name: nil, completion: completion)
         } else if typeData {
-            prepareAsFile(name: nil, completion: completion)
+            prepareAsFileData(name: nil, completion: completion)
         }
     }
 
@@ -184,9 +188,17 @@ class UnsentFileSendable: UnsentSendableBase, UnsentSendable {
             completion(self.metadata.flatMap(self.conversation.appendFile))
         }
     }
+    
+    private func prepareAsFileData(name: String?, completion: @escaping () -> Void) {
+        self.prepareAsFile(name: name, typeIdentifier: kUTTypeData as String, completion: completion)
+    }
+    
+    private func prepareAsWalletPass(name: String?, completion: @escaping () -> Void) {
+        self.prepareAsFile(name: nil, typeIdentifier: UnsentFileSendable.passkitUTI, completion: completion)
+    }
 
-    private func prepareAsFile(name: String?, completion: @escaping () -> Void) {
-        self.attachment.loadItem(forTypeIdentifier: kUTTypeData as String, options: [:], dataCompletionHandler: { [weak self] (data, error) in
+    private func prepareAsFile(name: String?, typeIdentifier: String, completion: @escaping () -> Void) {
+        self.attachment.loadItem(forTypeIdentifier: typeIdentifier, options: [:], dataCompletionHandler: { [weak self] (data, error) in
             guard let data = data, let UTIString = self?.attachment.registeredTypeIdentifiers.first as? String, error == nil else {
                 error?.log(message: "Unable to load file from attachment")
                 return completion()

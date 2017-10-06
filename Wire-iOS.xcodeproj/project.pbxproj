@@ -660,7 +660,6 @@
 		87DCF4F11D34EA4500BB420F /* UIViewController+WR_Invite.m in Sources */ = {isa = PBXBuildFile; fileRef = 87DCF4D31D34EA4500BB420F /* UIViewController+WR_Invite.m */; };
 		87DCF4F31D34EA4500BB420F /* StartUIQuickActionsBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 87DCF4D81D34EA4500BB420F /* StartUIQuickActionsBar.m */; };
 		87DCF4F51D34EA4500BB420F /* StartUIViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 87DCF4DD1D34EA4500BB420F /* StartUIViewController.m */; };
-		87DE06B11D256CF50009411F /* DeviceProximityListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87DE06B01D256CF50009411F /* DeviceProximityListener.swift */; };
 		87DE06B41D2663960009411F /* AudioEffectsPickerViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87DE06B21D26632E0009411F /* AudioEffectsPickerViewControllerTests.swift */; };
 		87E0D6D51CD3978900C54196 /* AVKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87E0D6D41CD3978900C54196 /* AVKit.framework */; };
 		87E56ED91E4E10CA0097D489 /* TextSearchResultCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E56ED71E4E10CA0097D489 /* TextSearchResultCell.swift */; };
@@ -1989,7 +1988,6 @@
 		87DCF4DC1D34EA4500BB420F /* StartUIViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StartUIViewController.h; sourceTree = "<group>"; };
 		87DCF4DD1D34EA4500BB420F /* StartUIViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StartUIViewController.m; sourceTree = "<group>"; };
 		87DE06AF1D252B3D0009411F /* ConversationInputBarViewController+Private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ConversationInputBarViewController+Private.h"; sourceTree = "<group>"; };
-		87DE06B01D256CF50009411F /* DeviceProximityListener.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceProximityListener.swift; sourceTree = "<group>"; };
 		87DE06B21D26632E0009411F /* AudioEffectsPickerViewControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioEffectsPickerViewControllerTests.swift; sourceTree = "<group>"; };
 		87E0D6D41CD3978900C54196 /* AVKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVKit.framework; path = System/Library/Frameworks/AVKit.framework; sourceTree = SDKROOT; };
 		87E56ED71E4E10CA0097D489 /* TextSearchResultCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextSearchResultCell.swift; sourceTree = "<group>"; };
@@ -3681,7 +3679,6 @@
 				16D68E9A1CEF99C7003AB9E0 /* WaveformProgressView.swift */,
 				BF02CDC21D79A98000C87D38 /* SavableImage.swift */,
 				BF5090571DE3469700A5FEE0 /* UIView+LayoutMargins.swift */,
-				87DE06B01D256CF50009411F /* DeviceProximityListener.swift */,
 				875F89111D6DCD2C00D8748E /* MessageToolboxView.swift */,
 				BF69C6C21F0CEBC500649C55 /* EphemeralTimeoutFormatter.swift */,
 				875F89131D6DD6D000D8748E /* ReactionsView.swift */,
@@ -6176,7 +6173,6 @@
 				871BC0211D34F56300DF0793 /* AnalyticsTracker+SelfUser.m in Sources */,
 				87DCF48E1D34E9BA00BB420F /* ContactsDataSource.m in Sources */,
 				8710673E1C0DC5570035603B /* SettingsCellDescriptorFactory.swift in Sources */,
-				87DE06B11D256CF50009411F /* DeviceProximityListener.swift in Sources */,
 				BF69C6C31F0CEBC500649C55 /* EphemeralTimeoutFormatter.swift in Sources */,
 				871BC26E1D34F8F800DF0793 /* PassthroughWindow.m in Sources */,
 				EE4332491F1A67E500096D90 /* PopUpIconButton.swift in Sources */,

@@ -26,6 +26,7 @@
 @class UserClient;
 @class ZMUser;
 @class MediaPlaybackManager;
+@class ProximityMonitorManager;
 
 
 @interface ZClientViewController : UIViewController
@@ -43,6 +44,8 @@
 @property (nonatomic, readonly) MediaPlaybackManager *mediaPlaybackManager;
 
 @property (nonatomic, readonly) ConversationListViewController *conversationListViewController;
+
+@property (nonatomic) ProximityMonitorManager *proximityMonitorManager;
 
 + (instancetype)sharedZClientViewController;
 
