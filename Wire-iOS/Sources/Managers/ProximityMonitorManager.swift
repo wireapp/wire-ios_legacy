@@ -23,6 +23,7 @@ fileprivate let zmLog = ZMSLog(tag: "calling")
 class ProximityMonitorManager : NSObject {
     
     var callStateObserverToken : Any?
+    var paused : Bool = false
     
     deinit {
         AVSMediaManagerClientChangeNotification.remove(self)
@@ -44,7 +45,7 @@ class ProximityMonitorManager : NSObject {
     
     func updateProximityMonitorState() {
         // Only do proximity monitoring on phones
-        guard UIDevice.current.userInterfaceIdiom == .phone, let callCenter = ZMUserSession.shared()?.callCenter else { return }
+        guard UIDevice.current.userInterfaceIdiom == .phone, let callCenter = ZMUserSession.shared()?.callCenter, !paused else { return }
         
         let ongoingCalls = callCenter.nonIdleCalls.filter({ (key: UUID, callState: CallState) -> Bool in
             switch callState {
@@ -58,6 +59,9 @@ class ProximityMonitorManager : NSObject {
         let hasOngoingCall = ongoingCalls.count > 0
         let speakerIsEnabled = AVSProvider.shared.mediaManager?.isSpeakerEnabled ?? false
         
+        print("🎧 hasOngoingCall \(hasOngoingCall)")
+        print("🎧 speakerIsEnabled \(speakerIsEnabled)")
+
         UIDevice.current.isProximityMonitoringEnabled = !speakerIsEnabled && hasOngoingCall
     }
     

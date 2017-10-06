@@ -41,6 +41,8 @@ class DeviceProximityListener: NSObject {
         }
 
         self.listening = true
+        ZClientViewController.shared().setUpdateProximityMonitorStatePause(true)
+        
         UIDevice.current.isProximityMonitoringEnabled = true
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(handleProximityChange),
@@ -53,6 +55,8 @@ class DeviceProximityListener: NSObject {
             return
         }
         self.listening = false
+        ZClientViewController.shared().setUpdateProximityMonitorStatePause(false)
+
         UIDevice.current.isProximityMonitoringEnabled = false
         NotificationCenter.default.removeObserver(self)
     }

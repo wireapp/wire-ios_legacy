@@ -447,6 +447,10 @@
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
+- (void)setUpdateProximityMonitorStatePause:(BOOL)isPause {
+    self.proximityMonitorManager.paused = isPause;
+}
+
 #pragma mark - Animated conversation switch
 
 - (void)dismissAllModalControllersWithCallback:(dispatch_block_t)callback
