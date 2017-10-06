@@ -45,6 +45,8 @@ final class AnalyticsMixpanelProvider: NSObject, AnalyticsProvider {
     
     private let enabledSuperProperties = Set<String>([
         "app",
+        "city",
+        "region",
         "team.in_team",
         "team.size"
         ])
