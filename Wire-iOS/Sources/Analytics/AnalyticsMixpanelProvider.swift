@@ -46,7 +46,8 @@ final class AnalyticsMixpanelProvider: NSObject, AnalyticsProvider {
     private let enabledSuperProperties = Set<String>([
         "app",
         "team.in_team",
-        "team.size"])
+        "team.size"
+        ])
     
     override init() {
         if !AnalyticsAPIKey.isEmpty {
