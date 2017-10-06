@@ -105,6 +105,9 @@
             case ZMUserSessionAccountSuspended:
                 message = NSLocalizedString(@"error.user.account_suspended", @"");
                 break;
+            case ZMUserSessionAccountLimitReached:
+                message = NSLocalizedString(@"error.user.account_limit_reached", @"");
+                break;
                 
             default:
             case ZMUserSessionUnkownError:

@@ -277,7 +277,7 @@ public extension ConversationViewController {
         let navigationController = KeyboardAvoidingViewController(viewController: self.collectionController!).wrapInNavigationController(RotationAwareNavigationController.self)
         navigationController.transitioningDelegate = self.conversationDetailsTransitioningDelegate
 
-        ZClientViewController.shared().present(navigationController, animated: true, completion: {
+        ZClientViewController.shared()?.present(navigationController, animated: true, completion: {
             UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(true)
         })
     }

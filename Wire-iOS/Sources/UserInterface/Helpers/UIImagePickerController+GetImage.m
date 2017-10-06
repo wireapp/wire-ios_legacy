@@ -49,7 +49,7 @@
         [PHImageManager.defaultManager requestImageForAsset:resultAsset
                                                  targetSize:PHImageManagerMaximumSize
                                                 contentMode:PHImageContentModeDefault
-                                                    options:nil
+                                                    options:[UIImagePickerController pickingOptions]
                                               resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
                                                   dispatch_async(dispatch_get_main_queue(), ^{
                                                       callback(result);
@@ -76,7 +76,7 @@
 
     if (nil != resultAsset) {
         [PHImageManager.defaultManager requestImageDataForAsset:resultAsset
-                                                        options:nil
+                                                        options:[UIImagePickerController pickingOptions]
                                                   resultHandler:^(NSData * _Nullable imageData, NSString * _Nullable dataUTI, UIImageOrientation orientation, NSDictionary * _Nullable info) {
                                                       dispatch_async(dispatch_get_main_queue(), ^{
                                                           if (imageData != nil) {
@@ -102,6 +102,13 @@
     else if (info[UIImagePickerControllerOriginalImage]) {
         resultBlock(UIImageJPEGRepresentation(info[UIImagePickerControllerOriginalImage], 0.9));
     }
+}
+
++(PHImageRequestOptions*)pickingOptions
+{
+    PHImageRequestOptions *options = [[PHImageRequestOptions alloc] init];
+    options.deliveryMode = PHImageRequestOptionsDeliveryModeHighQualityFormat;
+    return options;
 }
 
 @end

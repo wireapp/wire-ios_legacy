@@ -72,7 +72,7 @@ class ConversationIgnoredDeviceCell : IconSystemCell {
                 let users = systemMessageData.users,
                 let firstUserClient = users.first
             {
-                ZClientViewController.shared().openClientListScreen(for: firstUserClient)
+                ZClientViewController.shared()?.openClientListScreen(for: firstUserClient)
             }
         }
     }

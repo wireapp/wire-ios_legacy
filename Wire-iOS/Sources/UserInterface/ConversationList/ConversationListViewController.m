@@ -168,6 +168,7 @@
     [self createViewConstraints];
     [self.listContentController.collectionView scrollRectToVisible:CGRectMake(0, 0, self.view.bounds.size.width, 1) animated:NO];
     
+    [self hideNoContactLabelAnimated:NO];
     [self updateNoConversationVisibility];
     [self updateArchiveButtonVisibility];
     
@@ -591,9 +592,9 @@
     }
 }
 
-- (void)hideNoContactLabel;
+- (void)hideNoContactLabelAnimated:(BOOL)animated;
 {
-    [UIView animateWithDuration:0.20
+    [UIView animateWithDuration:animated ? 0.20 : 0.0
                      animations:^{
                          self.noConversationLabel.alpha = 0.0f;
                      }];
@@ -604,7 +605,7 @@
     if (!self.hasConversations) {
         [self showNoContactLabel];
     } else {
-        [self hideNoContactLabel];
+        [self hideNoContactLabelAnimated:YES];
     }
 }
 

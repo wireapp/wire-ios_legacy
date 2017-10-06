@@ -256,7 +256,7 @@
 {
     if (self.navigationController.view.window) {
         
-        self.showLoadingView = NO;
+        self.navigationController.showLoadingView = NO;
         
         if (error.code != ZMUserSessionCodeRequestIsAlreadyPending) {
             

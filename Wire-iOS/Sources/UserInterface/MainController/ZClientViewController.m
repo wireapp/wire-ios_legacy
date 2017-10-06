@@ -85,8 +85,6 @@
 @property (nonatomic) id incomingApnsObserver;
 @property (nonatomic) id networkAvailabilityObserverToken;
 
-@property (nonatomic) ProximityMonitorManager *proximityMonitorManager;
-
 @property (nonatomic) BOOL pendingInitialStateRestore;
 @property (nonatomic) SplitViewController *splitViewController;
 @property (nonatomic) id userObserverToken;

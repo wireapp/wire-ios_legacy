@@ -24,10 +24,19 @@ import Classy
 final class AudioMessageView: UIView, TransferView {
     public var fileMessage: ZMConversationMessage?
     weak public var delegate: TransferViewDelegate?
-    public var audioTrackPlayer : AudioTrackPlayer? {
-        didSet {
-            audioPlayerProgressObserver = KeyValueObserver.observe(audioTrackPlayer, keyPath: "progress", target: self, selector: #selector(audioProgressChanged(_:)), options: [.initial, .new])
-            audioPlayerStateObserver = KeyValueObserver.observe(audioTrackPlayer, keyPath: "state", target: self, selector: #selector(audioPlayerStateChanged(_:)), options: [.initial, .new])
+    private var _audioTrackPlayer: AudioTrackPlayer?
+    public var audioTrackPlayer: AudioTrackPlayer? {
+        get {
+            if _audioTrackPlayer == nil {
+                _audioTrackPlayer = AppDelegate.shared().mediaPlaybackManager?.audioTrackPlayer
+                
+                setupAudioPlayerObservers()
+            }
+            return _audioTrackPlayer
+        }
+        set(newValue) {
+            _audioTrackPlayer = newValue
+            setupAudioPlayerObservers()
         }
     }
     
@@ -44,11 +53,12 @@ final class AudioMessageView: UIView, TransferView {
     
     private var expectingDownload: Bool = false
     
-    private let proximityListener = DeviceProximityListener()
+    private var proximityMonitorManager: ProximityMonitorManager? {
+        return ZClientViewController.shared()?.proximityMonitorManager
+    }
     
     public required override init(frame: CGRect) {
         super.init(frame: frame)
-                
         self.playButton.addTarget(self, action: #selector(AudioMessageView.onActionButtonPressed(_:)), for: .touchUpInside)
         self.playButton.accessibilityLabel = "AudioActionButton"
         self.playButton.layer.masksToBounds = true
@@ -97,7 +107,7 @@ final class AudioMessageView: UIView, TransferView {
     private func createConstraints() {
         constrain(self, self.playButton, self.timeLabel) { (selfView: LayoutProxy, playButton: LayoutProxy, timeLabel: LayoutProxy) -> () in
             selfView.height == 56
-
+            
             playButton.left == selfView.left + 12
             playButton.centerY == selfView.centerY
             playButton.width == 32
@@ -137,12 +147,12 @@ final class AudioMessageView: UIView, TransferView {
     }
     
     public func stopProximitySensor() {
-        self.proximityListener.stopListening()
+        self.proximityMonitorManager?.stopListening()
     }
-
+    
     public func configure(for message: ZMConversationMessage, isInitial: Bool) {
         self.fileMessage = message
-
+        
         guard let fileMessageData = message.fileMessageData else {
             return
         }
@@ -171,14 +181,14 @@ final class AudioMessageView: UIView, TransferView {
     }
     
     public func willDeleteMessage() {
-        proximityListener.stopListening()
+        proximityMonitorManager?.stopListening()
         guard let player = audioTrackPlayer, player.sourceMessage != nil && player.sourceMessage.isEqual(self.fileMessage) else { return }
         player.stop()
     }
     
     private func configureVisibleViews(forFileMessageData fileMessageData: ZMFileMessageData, isInitial: Bool) {
         guard let fileMessage = self.fileMessage,
-                let state = FileMessageViewState.fromConversationMessage(fileMessage) else { return }
+            let state = FileMessageViewState.fromConversationMessage(fileMessage) else { return }
         
         var visibleViews = [self.playButton, self.timeLabel]
         
@@ -299,7 +309,7 @@ final class AudioMessageView: UIView, TransferView {
             return
         }
         
-        self.proximityListener.stateChanged = proximityStateDidChange
+        self.proximityMonitorManager?.stateChanged = proximityStateDidChange
         
         let audioTrackPlayingSame = audioTrackPlayer.sourceMessage != nil && audioTrackPlayer.sourceMessage.isEqual(self.fileMessage)
         
@@ -308,7 +318,7 @@ final class AudioMessageView: UIView, TransferView {
                 if success {
                     self?.setAudioOutput(earpiece: false)
                     audioTrackPlayer.play()
-
+                    
                     let duration = TimeInterval(Float(fileMessageData.durationMilliseconds) / 1000.0)
                     Analytics.shared()?.tagPlayedAudioMessage(duration, extensionString: ((fileMessageData.filename ?? "") as NSString).pathExtension)
                 }
@@ -327,8 +337,8 @@ final class AudioMessageView: UIView, TransferView {
     
     private func isOwnTrackPlayingInAudioPlayer() -> Bool {
         guard let message = self.fileMessage,
-              let audioTrack = message.audioTrack(),
-              let audioTrackPlayer = self.audioTrackPlayer
+            let audioTrack = message.audioTrack(),
+            let audioTrackPlayer = self.audioTrackPlayer
             else {
                 return false
         }
@@ -337,6 +347,11 @@ final class AudioMessageView: UIView, TransferView {
         return audioTrackPlayingSame && audioTrackPlayer.audioTrack.isEqual(audioTrack)
     }
     
+    func setupAudioPlayerObservers() {
+        audioPlayerProgressObserver = KeyValueObserver.observe(_audioTrackPlayer, keyPath: "progress", target: self, selector: #selector(audioProgressChanged(_:)), options: [.initial, .new])
+        audioPlayerStateObserver = KeyValueObserver.observe(_audioTrackPlayer, keyPath: "state", target: self, selector: #selector(audioPlayerStateChanged(_:)), options: [.initial, .new])
+    }
+
     // MARK: - Actions
     
     dynamic private func onActionButtonPressed(_ sender: UIButton) {
@@ -373,7 +388,7 @@ final class AudioMessageView: UIView, TransferView {
             self.updateTimeLabel()
         }
     }
-
+    
     dynamic private func audioPlayerStateChanged(_ change: NSDictionary) {
         if self.isOwnTrackPlayingInAudioPlayer() {
             self.updateActivePlayButton()
@@ -394,12 +409,12 @@ final class AudioMessageView: UIView, TransferView {
         guard let audioTrackPlayer = self.audioTrackPlayer else { return }
         
         if audioTrackPlayer.isPlaying && isOwnTrackPlayingInAudioPlayer() {
-            proximityListener.startListening()
+            proximityMonitorManager?.startListening()
         } else {
-            proximityListener.stopListening()
+            proximityMonitorManager?.stopListening()
         }
     }
-
+    
     private func setAudioOutput(earpiece: Bool) {
         do {
             if earpiece {

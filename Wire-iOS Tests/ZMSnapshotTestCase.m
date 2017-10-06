@@ -31,7 +31,7 @@ static CGSize const ZMDeviceSizeIPhone6Plus = (CGSize){ .width = 414, .height = 
 static CGSize const ZMDeviceSizeIPadPortrait = (CGSize){ .width = 768, .height = 1024 };
 static CGSize const ZMDeviceSizeIPadLandscape = (CGSize){ .width = 1024, .height = 768 };
 
-static NSArray *phoneSizes(void) {
+static NSArray<NSValue *> *phoneSizes(void) {
     return @[
              [NSValue valueWithCGSize:ZMDeviceSizeIPhone4],
              [NSValue valueWithCGSize:ZMDeviceSizeIPhone5],
@@ -40,19 +40,19 @@ static NSArray *phoneSizes(void) {
              ];
 }
 
-static NSArray *tabletSizes(void) {
+static NSArray<NSValue *> *tabletSizes(void) {
     return @[
              [NSValue valueWithCGSize:ZMDeviceSizeIPadPortrait],
              [NSValue valueWithCGSize:ZMDeviceSizeIPadLandscape]
              ];
 }
 
-static NSArray *deviceSizes(void) {
+static NSArray<NSValue *> *deviceSizes(void) {
     return [phoneSizes() arrayByAddingObjectsFromArray:tabletSizes()];
 }
 
-static NSSet *phoneWidths(void) {
-    return [phoneSizes() mapWithBlock:^NSValue *(NSValue *boxedSize) {
+static NSSet<NSNumber *> *phoneWidths(void) {
+    return [phoneSizes() mapWithBlock:^NSNumber *(NSValue *boxedSize) {
         return @(boxedSize.CGSizeValue.width);
     }].set;
 }
@@ -221,8 +221,8 @@ static NSSet *phoneWidths(void) {
 - (void)verifyViewInAllPhoneWidths:(UIView *)view extraLayoutPass:(BOOL)extraLayoutPass file:(const char[])file line:(NSUInteger)line
 {
     [self assertAmbigousLayout:view file:file line:line];
-    for (NSValue *value in phoneWidths()) {
-        [self verifyView:view extraLayoutPass:extraLayoutPass width:value.CGSizeValue.width file:file line:line];
+    for (NSNumber *value in phoneWidths()) {
+        [self verifyView:view extraLayoutPass:extraLayoutPass width:value.floatValue file:file line:line];
     }
 }
 

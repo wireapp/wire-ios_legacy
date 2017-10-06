@@ -193,9 +193,10 @@ class ShareExtensionViewController: SLComposeServiceViewController {
         }
         let hasURL = self.allAttachments.contains { $0.hasURL }
         let hasEmptyText = self.textView.text.isEmpty
+        let isWalletPass = self.allAttachments.contains { $0.hasWalletPass }
         // I can not ask if it's a http:// or file://, because it's an async operation, so I rely on the fact that 
         // if it has no image, it has a URL and it has text, it must be a file
-        if  hasURL && hasEmptyText {
+        if (hasURL && hasEmptyText) || isWalletPass {
             return UIImageView(image: UIImage(for: .document, iconSize: .large, color: UIColor.black))
         }
         return nil

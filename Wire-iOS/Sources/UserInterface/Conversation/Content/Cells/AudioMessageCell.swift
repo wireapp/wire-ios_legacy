@@ -37,7 +37,6 @@ public final class AudioMessageCell: ConversationCell {
         self.containerView.clipsToBounds = true
         
         self.audioMessageView.delegate = self
-        self.audioMessageView.audioTrackPlayer = AppDelegate.shared().mediaPlaybackManager?.audioTrackPlayer
         self.obfuscationView.isHidden = true
         
         self.containerView.addSubview(self.audioMessageView)

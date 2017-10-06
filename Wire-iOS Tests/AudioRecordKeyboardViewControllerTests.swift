@@ -48,7 +48,7 @@ class MockAudioRecorder: AudioRecorderType {
     var recordTimerCallback: ((TimeInterval) -> Void)?
     var recordLevelCallBack: ((RecordingLevel) -> Void)?
     var playingStateCallback: ((PlayingState) -> Void)?
-    var recordStartedCallback: ((Void) -> Void)?
+    var recordStartedCallback: (() -> Void)?
     var recordEndedCallback: ((Bool) -> Void)?
     
     var startRecordingHitCount = 0

@@ -84,7 +84,7 @@ final class VideoMessageView: UIView, TransferView {
     
     open func createConstraints() {
         constrain(self, self.previewImageView, self.progressView, self.playButton, self.bottomGradientView) { selfView, previewImageView, progressView, playButton, bottomGradientView in
-            selfView.width == selfView.height * (4.0 / 3.0) ~ 750
+            (selfView.width == selfView.height * (4.0 / 3.0)) ~ 750
             previewImageView.edges == selfView.edges
             playButton.center == previewImageView.center
             playButton.width == 56
