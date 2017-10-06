@@ -24,8 +24,8 @@ import Classy
 final class AudioMessageView: UIView, TransferView {
     public var fileMessage: ZMConversationMessage?
     weak public var delegate: TransferViewDelegate?
-    private var _audioTrackPlayer:AudioTrackPlayer?
-    public var audioTrackPlayer : AudioTrackPlayer? {
+    private var _audioTrackPlayer: AudioTrackPlayer?
+    public var audioTrackPlayer: AudioTrackPlayer? {
         get {
             if _audioTrackPlayer == nil {
                 _audioTrackPlayer = AppDelegate.shared().mediaPlaybackManager?.audioTrackPlayer
