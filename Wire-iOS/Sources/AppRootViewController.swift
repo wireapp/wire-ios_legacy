@@ -189,6 +189,9 @@ class AppRootViewController : UIViewController {
             executeAuthenticatedBlocks()
             let clientViewController = ZClientViewController()
             clientViewController.isComingFromRegistration = completedRegistration
+            
+            Analytics.shared()?.team = ZMUser.selfUser().team
+            
             viewController = clientViewController
         case .headless:
             viewController = LaunchImageViewController()

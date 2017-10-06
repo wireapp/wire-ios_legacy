@@ -159,7 +159,6 @@
 #import "UIApplication+StatusBar.h"
 #import "CASStyler+Variables.h"
 #import "AVSLogObserver.h"
-#import "Analytics+Performance.h"
 #import "NSIndexSet+IndexPaths.h"
 #import "UIAlertController+Wire.h"
 #import "NetworkConditionHelper.h"

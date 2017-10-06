@@ -20,13 +20,13 @@
 #import "ProfileDetailsViewController.h"
 
 #import "WireSyncEngine+iOS.h"
-#import <WireDataModel/ZMBareUser.h>
 #import "avs+iOS.h"
 #import "Settings.h"
 
 
 @import WireExtensionComponents;
 @import PureLayout;
+@import WireDataModel;
 
 #import "IconButton.h"
 #import "WAZUIMagicIOS.h"
@@ -194,7 +194,6 @@ typedef NS_ENUM(NSUInteger, ProfileUserAction) {
         unblockFooterView.translatesAutoresizingMaskIntoConstraints = NO;
         [unblockFooterView.unblockButton addTarget:self action:@selector(unblockUser) forControlEvents:UIControlEventTouchUpInside];
         footerView = unblockFooterView;
-        [[Analytics shared]tagScreen:@"BLOCKED_USER"];
     }
     else if (mode == ProfileViewContentModeSendConnection && self.context != ProfileViewControllerContextGroupConversation) {
         ProfileSendConnectionRequestFooterView *sendConnectionRequestFooterView = [[ProfileSendConnectionRequestFooterView alloc] initForAutoLayout];
@@ -204,7 +203,6 @@ typedef NS_ENUM(NSUInteger, ProfileUserAction) {
     else {
         ProfileFooterView *userActionsFooterView = [[ProfileFooterView alloc] init];
         userActionsFooterView.translatesAutoresizingMaskIntoConstraints = NO;
-        [[Analytics shared]tagScreen:@"OTHER_USER_PROFILE"];
         
         [userActionsFooterView setIconTypeForLeftButton:[self iconTypeForUserAction:[self leftButtonAction]]];
         [userActionsFooterView setIconTypeForRightButton:[self iconTypeForUserAction:[self rightButtonAction]]];
@@ -421,7 +419,6 @@ typedef NS_ENUM(NSUInteger, ProfileUserAction) {
     addParticipantsViewController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
     
     [self presentViewController:addParticipantsViewController animated:YES completion:^{
-        [Analytics.shared tagScreenInviteContactList];
         [Analytics.shared tagOpenedPeoplePickerGroupAction];
     }];
     

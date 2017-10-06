@@ -83,6 +83,6 @@ FOUNDATION_EXTERN NSString *const AnalyticsEventAcceptedGenericInvite;
 + (instancetype)analyticsTrackerWithContext:(NSString *)context;
 
 - (void)tagEvent:(NSString *)event;
-- (void)tagEvent:(NSString *)event attributes:(NSDictionary *) attributes;
+- (void)tagEvent:(NSString *)event attributes:(NSDictionary *)attributes;
 
 @end

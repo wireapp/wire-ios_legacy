@@ -16,16 +16,14 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 // 
 
-
-#import <Foundation/Foundation.h>
 #import "AnalyticsProvider.h"
-#import <WireSyncEngine/WireSyncEngine.h>
+
+@import Foundation;
+@import WireSyncEngine;
 
 @class AnalyticsSessionSummaryEvent;
 @class AnalyticsRegistration;
 @class AnalyticsEvent;
-
-
 
 typedef NS_ENUM (NSUInteger, AnalyticsEventSource) {
     AnalyticsEventSourceUnspecified,
@@ -34,6 +32,7 @@ typedef NS_ENUM (NSUInteger, AnalyticsEventSource) {
     AnalyticsEventSourceShortcut
 };
 
+NS_ASSUME_NONNULL_BEGIN
 
 /// A simple vendor-independent interface to tracking analytics from the UIs.
 @interface Analytics : NSObject <AnalyticsType>
@@ -49,15 +48,15 @@ typedef NS_ENUM (NSUInteger, AnalyticsEventSource) {
 /// For tagging registration events
 @property (nonatomic, assign) BOOL observingConversationList;
 
+@property (nonatomic, nullable) Team* team;
+
 - (instancetype)init NS_UNAVAILABLE;
 - (instancetype)initWithProvider:(id<AnalyticsProvider>)provider NS_DESIGNATED_INITIALIZER;
-
-/// Record a screen (page view).
-- (void)tagScreen:(NSString *)screen;
 
 /// Record an event with no attributes
 - (void)tagEvent:(NSString *)event;
 - (void)tagEvent:(NSString *)event source:(AnalyticsEventSource)source;
+- (void)tagEvent:(NSString *)event source:(AnalyticsEventSource)source team:(nullable Team *)team;
 
 /// Record an event with optional attributes.
 - (void)tagEvent:(NSString *)event attributes:(NSDictionary *)attributes;
@@ -68,9 +67,8 @@ typedef NS_ENUM (NSUInteger, AnalyticsEventSource) {
 
 /// Set the custom dimensions values
 - (void)sendCustomDimensionsWithNumberOfContacts:(NSUInteger)contacts
-                              groupConversations:(NSUInteger)groupConv
-                                     accentColor:(NSInteger)accent
-                                     networkType:(NSString *)networkType
-                       notificationConfiguration:(NSString *)config;
+                              groupConversations:(NSUInteger)groupConv;
 
 @end
+
+NS_ASSUME_NONNULL_END

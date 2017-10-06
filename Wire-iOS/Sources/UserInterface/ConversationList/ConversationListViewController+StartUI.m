@@ -35,9 +35,7 @@
 #pragma mark - People picker delegate
 
 - (void)startUI:(StartUIViewController *)startUI didSelectUsers:(NSSet *)users forAction:(StartUIAction)action
-{
-    [[Analytics shared] tagScreen:@"MAIN"];
-    
+{    
     if (users.count == 0) {
         [[Analytics shared] tagSearchAbortedWithSource:AnalyticsEventSourceUnspecified];
         
@@ -174,7 +172,6 @@
 
 - (void)startUIDidCancel:(StartUIViewController *)startUI
 {
-    [[Analytics shared] tagScreen:@"MAIN"];
     [[Analytics shared] tagSearchAbortedWithSource:AnalyticsEventSourceUnspecified];
     
     [self dismissPeoplePickerWithCompletionBlock:nil];
@@ -185,7 +182,6 @@
     [Analytics.shared tagOpenedExistingConversationWithType:conversation.conversationType];
 
     [self dismissPeoplePickerWithCompletionBlock:^{
-        [[Analytics shared] tagScreen:@"MAIN"];
         [[ZClientViewController sharedZClientViewController] selectConversation:conversation
                                                                     focusOnView:YES
                                                                        animated:YES];

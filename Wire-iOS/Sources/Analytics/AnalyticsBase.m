@@ -117,6 +117,18 @@ static NSString *const AnalyticsUserDefaultsDisabledKey = @"AnalyticsUserDefault
     return self.disabled ? nil : self.provider;
 }
 
+- (void)setTeam:(Team *)team
+{
+    if (nil == team) {
+        [self.activeProvider setSuperProperty:@"team.size" value:nil];
+        [self.activeProvider setSuperProperty:@"team.in_team" value:@"false"];
+    }
+    else {
+        [self.activeProvider setSuperProperty:@"team.size" value:[NSString stringWithFormat:@"%lu", (unsigned long)[team.members count]]];
+        [self.activeProvider setSuperProperty:@"team.in_team" value:@"true"];
+    }
+}
+
 - (void)setObservingConversationList:(BOOL)observingConversationList
 {
     _observingConversationList = observingConversationList;
@@ -130,21 +142,23 @@ static NSString *const AnalyticsUserDefaultsDisabledKey = @"AnalyticsUserDefault
     self.decryptionFailedObserver       = [[AnalyticsDecryptionFailedObserver alloc] initWithAnalytics:self];
     self.fileTransferObserver           = [[AnalyticsFileTransferObserver alloc] init];
     self.conversationVerifiedObserver   = [[AnalyticsConversationVerifiedObserver alloc] initWithAnalytics:self];
-}
-
-- (void)tagScreen:(NSString *)screen
-{
-    [self.activeProvider tagScreen:screen];
+    
+    self.team = [[ZMUser selfUser] team];
 }
 
 - (void)tagEvent:(NSString *)event
 {
-    [self.activeProvider tagEvent:event];
+    [self.activeProvider tagEvent:event attributes:[NSDictionary dictionary]];
 }
 
 - (void)tagEvent:(NSString *)event source:(AnalyticsEventSource)source
 {
-    [self tagEvent:event attributes:nil source:source];
+    [self tagEvent:event attributes:[NSDictionary dictionary] source:source];
+}
+
+- (void)tagEvent:(NSString *)event source:(AnalyticsEventSource)source team:(nullable Team *)team
+{
+    
 }
 
 - (void)tagEvent:(NSString *)event attributes:(NSDictionary *)attributes
@@ -190,36 +204,15 @@ static NSString *const AnalyticsUserDefaultsDisabledKey = @"AnalyticsUserDefault
 
 - (void)sendCustomDimensionsWithNumberOfContacts:(NSUInteger)contacts
                               groupConversations:(NSUInteger)groupConv
-                                     accentColor:(NSInteger)accent
-                                     networkType:(NSString *)networkType
-                       notificationConfiguration:(NSString*)config
 {
-    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    dateFormatter.locale = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US"];
-    dateFormatter.dateFormat = @"EEEE";
-    NSString *dayString = [dateFormatter stringFromDate:[NSDate date]];
-    
-    [self.activeProvider setCustomDimension:0 value:dayString];
-    
-    NSDateFormatter *timeFormatter = [[NSDateFormatter alloc]init];
-    timeFormatter.locale = [[NSLocale alloc]initWithLocaleIdentifier:@"en_US"];
-    timeFormatter.dateFormat = @"H";
-    NSString *timeString = [timeFormatter stringFromDate:[NSDate date]];
-    
-    [self.activeProvider setCustomDimension:1 value:timeString];
-    
     IntRange r[] = {{0, 0}, {1, 1}, {2, 2}, {3, 3}, {4, 4}, {5, 10}, {11, 20}, {21, 30}, {31, 40}, {41, 50}, {51, 60}};
     RangeSet rSet = {r, 10};
     
     DefaultIntegerClusterizer *clusterizer = [DefaultIntegerClusterizer new];
     clusterizer.rangeSet = rSet;
     
-    [self.activeProvider setCustomDimension:2 value:@(contacts).stringValue];
-    [self.activeProvider setCustomDimension:3 value:[clusterizer clusterizeInteger:(int) groupConv]];
-    
-    NSString *composedConfigKey = [NSString stringWithFormat:@"%ld_%@_%@", (long)accent, config, networkType];
-    
-    [self.activeProvider setCustomDimension:4 value:composedConfigKey];
+    [self.activeProvider setSuperProperty:@"contacts" value:@(contacts).stringValue];
+    [self.activeProvider setSuperProperty:@"group_conversations" value:[clusterizer clusterizeInteger:(int) groupConv]];
 }
 
 + (NSString *)eventSourceToString:(AnalyticsEventSource) source

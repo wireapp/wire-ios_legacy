@@ -123,7 +123,7 @@ import HockeySDK.BITHockeyManager
         self.interactivePopGestureRecognizer?.isEnabled = false
         
         let rootViewController = SelfProfileViewController(rootGroup: rootGroup)
-        Analytics.shared()?.tagScreen("SETTINGS")
+
         self.pushViewController(rootViewController, animated: false)
         rootViewController.dismissAction = { [unowned self] _ in
             self.dismissAction?(self)

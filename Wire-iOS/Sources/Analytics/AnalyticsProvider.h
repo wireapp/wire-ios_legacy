@@ -22,17 +22,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, assign) BOOL isOptedOut;
 
-/// Record a screen (page view).
-- (void)tagScreen:(NSString *)screen;
-
-/// Record an event with no attributes
-- (void)tagEvent:(NSString *)event;
-
 /// Record an event with optional attributes.
-- (void)tagEvent:(NSString *)event attributes:(nullable NSDictionary *)attributes;
+- (void)tagEvent:(NSString *)event attributes:(NSDictionary *)attributes;
 
 /// Set a custom dimension
-- (void)setCustomDimension:(int)dimension value:(NSString *)value;
+- (void)setSuperProperty:(NSString *)name value:(nullable NSString *)value;
 
 @end
 

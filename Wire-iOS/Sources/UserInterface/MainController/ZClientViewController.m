@@ -191,12 +191,6 @@
     self.splitViewController.leftViewController = self.backgroundViewController;
 }
 
-- (void)viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:animated];
-    [[Analytics shared] tagScreen:@"MAIN"];
-}
-
 - (BOOL)shouldAutorotate
 {
     if (self.presentedViewController) {

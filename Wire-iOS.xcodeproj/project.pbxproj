@@ -268,9 +268,7 @@
 		871BC00D1D34F56300DF0793 /* Analytics+MediaActionEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 871BBFC81D34F56300DF0793 /* Analytics+MediaActionEvents.swift */; };
 		871BC00E1D34F56300DF0793 /* Analytics+Navigation.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BBFCA1D34F56300DF0793 /* Analytics+Navigation.m */; };
 		871BC00F1D34F56300DF0793 /* Analytics+OTREvents.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BBFCC1D34F56300DF0793 /* Analytics+OTREvents.m */; };
-		871BC0101D34F56300DF0793 /* Analytics+Performance.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BBFCE1D34F56300DF0793 /* Analytics+Performance.m */; };
 		871BC0111D34F56300DF0793 /* Analytics+ProfileEvents.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BBFD01D34F56300DF0793 /* Analytics+ProfileEvents.m */; };
-		871BC0121D34F56300DF0793 /* Analytics+Screens.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BBFD21D34F56300DF0793 /* Analytics+Screens.m */; };
 		871BC0131D34F56300DF0793 /* Analytics+SearchEvents.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BBFD41D34F56300DF0793 /* Analytics+SearchEvents.m */; };
 		871BC0141D34F56300DF0793 /* Analytics+SessionEvents.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BBFD61D34F56300DF0793 /* Analytics+SessionEvents.m */; };
 		871BC0151D34F56300DF0793 /* AnalyticsConnectionRequestEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BBFD81D34F56300DF0793 /* AnalyticsConnectionRequestEvent.m */; };
@@ -1358,7 +1356,6 @@
 		871BBFAE1D34F56300DF0793 /* AnalyticsDecryptionFailedObserver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnalyticsDecryptionFailedObserver.h; sourceTree = "<group>"; };
 		871BBFAF1D34F56300DF0793 /* AnalyticsDecryptionFailedObserver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AnalyticsDecryptionFailedObserver.m; sourceTree = "<group>"; };
 		871BBFB01D34F56300DF0793 /* AnalyticsFileTransferObserver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnalyticsFileTransferObserver.swift; sourceTree = "<group>"; };
-		871BBFB31D34F56300DF0793 /* AnalyticsProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnalyticsProvider.h; sourceTree = "<group>"; };
 		871BBFB41D34F56300DF0793 /* AnalyticsTracker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnalyticsTracker.h; sourceTree = "<group>"; };
 		871BBFB51D34F56300DF0793 /* AnalyticsTracker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AnalyticsTracker.m; sourceTree = "<group>"; };
 		871BBFB81D34F56300DF0793 /* Application+runDuration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Application+runDuration.h"; sourceTree = "<group>"; };
@@ -1377,12 +1374,8 @@
 		871BBFCA1D34F56300DF0793 /* Analytics+Navigation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Analytics+Navigation.m"; sourceTree = "<group>"; };
 		871BBFCB1D34F56300DF0793 /* Analytics+OTREvents.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Analytics+OTREvents.h"; sourceTree = "<group>"; };
 		871BBFCC1D34F56300DF0793 /* Analytics+OTREvents.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Analytics+OTREvents.m"; sourceTree = "<group>"; };
-		871BBFCD1D34F56300DF0793 /* Analytics+Performance.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Analytics+Performance.h"; sourceTree = "<group>"; };
-		871BBFCE1D34F56300DF0793 /* Analytics+Performance.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Analytics+Performance.m"; sourceTree = "<group>"; };
 		871BBFCF1D34F56300DF0793 /* Analytics+ProfileEvents.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Analytics+ProfileEvents.h"; sourceTree = "<group>"; };
 		871BBFD01D34F56300DF0793 /* Analytics+ProfileEvents.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Analytics+ProfileEvents.m"; sourceTree = "<group>"; };
-		871BBFD11D34F56300DF0793 /* Analytics+Screens.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Analytics+Screens.h"; sourceTree = "<group>"; };
-		871BBFD21D34F56300DF0793 /* Analytics+Screens.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Analytics+Screens.m"; sourceTree = "<group>"; };
 		871BBFD31D34F56300DF0793 /* Analytics+SearchEvents.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Analytics+SearchEvents.h"; sourceTree = "<group>"; };
 		871BBFD41D34F56300DF0793 /* Analytics+SearchEvents.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Analytics+SearchEvents.m"; sourceTree = "<group>"; };
 		871BBFD51D34F56300DF0793 /* Analytics+SessionEvents.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Analytics+SessionEvents.h"; sourceTree = "<group>"; };
@@ -1922,6 +1915,7 @@
 		87D679E71EBC8D1E005BEB4C /* ConversationListViewController+CameraPicker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ConversationListViewController+CameraPicker.swift"; sourceTree = "<group>"; };
 		87D7AF661DF5A158001A1CD7 /* Contacts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Contacts.framework; path = System/Library/Frameworks/Contacts.framework; sourceTree = SDKROOT; };
 		87D815191D6B40EC004FD258 /* SoundcloudService+Testing.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SoundcloudService+Testing.h"; sourceTree = "<group>"; };
+		87DCBE061F87C41300E0DEC7 /* AnalyticsProvider.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AnalyticsProvider.h; sourceTree = "<group>"; };
 		87DCF4751D34E95B00BB420F /* PermissionDeniedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PermissionDeniedViewController.h; sourceTree = "<group>"; };
 		87DCF4761D34E95B00BB420F /* PermissionDeniedViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PermissionDeniedViewController.m; sourceTree = "<group>"; };
 		87DCF4771D34E95B00BB420F /* ShareContactsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShareContactsViewController.h; sourceTree = "<group>"; };
@@ -3069,6 +3063,7 @@
 				871BBFA21D34F56300DF0793 /* Analytics+Events.h */,
 				871BBFA31D34F56300DF0793 /* Analytics+iOS.h */,
 				871BBFA41D34F56300DF0793 /* Analytics+iOS.m */,
+				87DCBE061F87C41300E0DEC7 /* AnalyticsProvider.h */,
 				871BBFA51D34F56300DF0793 /* Analytics+Metrics.h */,
 				871BBFA61D34F56300DF0793 /* Analytics+Metrics.m */,
 				871BBFA71D34F56300DF0793 /* Analytics.h */,
@@ -3081,7 +3076,6 @@
 				871BBFAE1D34F56300DF0793 /* AnalyticsDecryptionFailedObserver.h */,
 				871BBFAF1D34F56300DF0793 /* AnalyticsDecryptionFailedObserver.m */,
 				871BBFB01D34F56300DF0793 /* AnalyticsFileTransferObserver.swift */,
-				871BBFB31D34F56300DF0793 /* AnalyticsProvider.h */,
 				871BBFB41D34F56300DF0793 /* AnalyticsTracker.h */,
 				871BBFB51D34F56300DF0793 /* AnalyticsTracker.m */,
 				16E2A0A31F6BF0C6005F4DB1 /* AnalyticsVoiceChannelTracker.swift */,
@@ -3132,12 +3126,8 @@
 				871BBFCA1D34F56300DF0793 /* Analytics+Navigation.m */,
 				871BBFCB1D34F56300DF0793 /* Analytics+OTREvents.h */,
 				871BBFCC1D34F56300DF0793 /* Analytics+OTREvents.m */,
-				871BBFCD1D34F56300DF0793 /* Analytics+Performance.h */,
-				871BBFCE1D34F56300DF0793 /* Analytics+Performance.m */,
 				871BBFCF1D34F56300DF0793 /* Analytics+ProfileEvents.h */,
 				871BBFD01D34F56300DF0793 /* Analytics+ProfileEvents.m */,
-				871BBFD11D34F56300DF0793 /* Analytics+Screens.h */,
-				871BBFD21D34F56300DF0793 /* Analytics+Screens.m */,
 				871BBFD31D34F56300DF0793 /* Analytics+SearchEvents.h */,
 				871BBFD41D34F56300DF0793 /* Analytics+SearchEvents.m */,
 				871BBFD51D34F56300DF0793 /* Analytics+SessionEvents.h */,
@@ -5989,7 +5979,6 @@
 				8719FD671C88802C005FBEC0 /* Delay.swift in Sources */,
 				871BC0191D34F56300DF0793 /* AnalyticsSearchResultEvent.m in Sources */,
 				871BC2841D34F8F800DF0793 /* UIApplication+StatusBar.swift in Sources */,
-				871BC0101D34F56300DF0793 /* Analytics+Performance.m in Sources */,
 				871BC2611D34F8F800DF0793 /* IdentifiableColor.m in Sources */,
 				BF27AE4B1E9E4CED00809A2B /* MessageDraft.swift in Sources */,
 				8744489C1C22FCE500E7B947 /* LinkAttachment.m in Sources */,
@@ -6285,7 +6274,6 @@
 				54F7C2851D746F3F004D8087 /* AddressBookHelper+Automation.swift in Sources */,
 				8FC854A4199245770008B66B /* ParticipantsViewController.m in Sources */,
 				BF4D99BF1E78555700A7B08F /* ZMConversationMessageWindow+DaySeparator.swift in Sources */,
-				871BC0121D34F56300DF0793 /* Analytics+Screens.m in Sources */,
 				8FC8549B199245770008B66B /* NetworkActivityViewController.m in Sources */,
 				BF1D5D021E55BA3D0063B4B4 /* Analytics+LocalSearch.swift in Sources */,
 				BFAAB2391DEC6B2800CBC096 /* ConversationListViewController+Handles.swift in Sources */,

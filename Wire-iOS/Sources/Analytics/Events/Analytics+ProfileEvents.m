@@ -39,16 +39,6 @@ NSString *TOSOpenedFromTypeToString(TOSOpenedFromType tosType);
     [self tagEvent:@"viewedTOS" attributes:@{@"source" : TOSOpenedFromTypeToString(type)}];
 }
 
-- (void)tagViewedPrivacyPolicy
-{
-    [self tagEvent:@"viewedPrivacyPolicy"];
-}
-
-- (void)tagViewedLicenseInformation
-{
-    [self tagEvent:@"viewedLicenseInformation"];
-}
-
 - (void)tagViewedFingerprintLearnMore
 {
     [self tagEvent:@"viewedFingerprintLearnMore"];

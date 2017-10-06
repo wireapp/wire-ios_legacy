@@ -107,7 +107,6 @@
     inviteContactsViewController.analyticsTracker = [AnalyticsTracker analyticsTrackerWithContext:NSStringFromInviteContext(InviteContextConversationList)];
     inviteContactsViewController.modalPresentationStyle = UIModalPresentationOverCurrentContext;
     [self presentViewController:inviteContactsViewController animated:YES completion:^() {
-        [[Analytics shared] tagScreenInviteContactList];
         [inviteContactsViewController.analyticsTracker tagEvent:AnalyticsEventInviteContactListOpened];
     }];
 }

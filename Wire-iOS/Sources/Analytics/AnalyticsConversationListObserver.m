@@ -100,56 +100,12 @@ const NSTimeInterval PermantentConversationListObserverObservationFinalTime = 20
         }
     }
     
-    ZMAccentColor accentColor = [ZMUser selfUser].accentColorValue;
-    NSString *networkType = @"";
-
-    // Get network type: either wifi, 2G, 3G or 4G
-    CTTelephonyNetworkInfo *networkInfo = [[CTTelephonyNetworkInfo alloc] init];
-    
-    NSString *currentNetworkType = networkInfo.currentRadioAccessTechnology;
-    
-    if ([currentNetworkType isEqualToString:CTRadioAccessTechnologyGPRS] ||
-        [currentNetworkType isEqualToString:CTRadioAccessTechnologyEdge] ||
-        [currentNetworkType isEqualToString:CTRadioAccessTechnologyWCDMA]) {
-        networkType = @"2G";
-    }
-    else if ([currentNetworkType isEqualToString:CTRadioAccessTechnologyHSDPA] ||
-             [currentNetworkType isEqualToString:CTRadioAccessTechnologyHSUPA] ||
-             [currentNetworkType isEqualToString:CTRadioAccessTechnologyeHRPD]) {
-        networkType = @"3G";
-    }
-    else if ([currentNetworkType isEqualToString:CTRadioAccessTechnologyLTE]) {
-        networkType = @"4G";
-    }
-    else if ([NetworkStatus sharedStatus].reachability == ServerReachabilityOK) {
-        networkType = @"wifi";
-    }
-    
-    NSString *soundIntensityType = @"";
-    
-    switch ([[AVSProvider shared] mediaManager].intensityLevel) {
-        case AVSIntensityLevelFull:
-            soundIntensityType = @"alwaysPlay";
-            break;
-        case AVSIntensityLevelSome:
-            soundIntensityType = @"firstMessageOnly";
-            break;
-        case AVSIntensityLevelNone:
-            soundIntensityType = @"neverPlay";
-            break;
-        default:
-            break;
-    }
-    
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:[ZMUser entityName]];
     fetchRequest.predicate = [ZMUser predicateForConnectedNonBotUsers];
     NSUInteger contactsCount = [[ZMUserSession sharedSession].managedObjectContext countForFetchRequest:fetchRequest error:nil];
     
     [self.analytics sendCustomDimensionsWithNumberOfContacts:contactsCount
-                                          groupConversations:groupConvCount
-                                                 accentColor:accentColor
-                                                 networkType:networkType
-                                   notificationConfiguration:soundIntensityType];
+                                          groupConversations:groupConvCount];
 
     self.observing = NO;
 }

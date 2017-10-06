@@ -52,20 +52,9 @@ extension AnalyticsConsoleProvider: AnalyticsProvider {
         }
     }
     
-    func tagScreen(_ screen: String) {
-        print(loggingData:["screen" : screen])
-    }
-    
-    func tagEvent(_ event: String) {
-        tagEvent(event, attributes: [:])
-    }
-    
-    func tagEvent(_ event: String, attributes: [AnyHashable : Any]? = [:]) {
-        var printableAttributes = [AnyHashable : Any]()
+    func tagEvent(_ event: String, attributes: [AnyHashable : Any] = [:]) {
         
-        if attributes != nil {
-            printableAttributes = attributes!
-        }
+        let printableAttributes = attributes
         
         var loggingDict = [String : Any]()
         
@@ -84,8 +73,8 @@ extension AnalyticsConsoleProvider: AnalyticsProvider {
         print(loggingData: loggingDict)
     }
     
-    func setCustomDimension(_ dimension: Int32, value: String) {
-        print(loggingData: ["customeDimension_\(dimension)" : value])
+    func setSuperProperty(_ name: String, value: String?) {
+        print(loggingData: ["superProperty_\(name)" : value ?? "nil"])
     }
 
 }

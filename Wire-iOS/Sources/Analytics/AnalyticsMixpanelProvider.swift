@@ -19,15 +19,44 @@
 
 import Foundation
 import Mixpanel
+import CocoaLumberjackSwift
 
 final class AnalyticsMixpanelProvider: NSObject, AnalyticsProvider {
     private var mixpanelInstance: MixpanelInstance? = .none
+    private let enabledEvents = Set<String>([
+        "contributed",
+        "registration.opened_phone_signup",
+        "registration.opened_email_signup",
+        "registration.entered_phone",
+        "registration.entered_email_and_password",
+        "registration.verified_phone",
+        "registration.verified_email",
+        "registration.resent_phone_verification",
+        "registration.resent_email_verification",
+        "registration.entered_name",
+        "registration.succeeded",
+        "registration.added_photo",
+        "registration.entered_credentials",
+        "account.logged_in",
+        "settings.opted_in_tracking",
+        "settings.opted_out_tracking",
+        "e2ee.failed_message_decyption"
+        ])
+    
+    private let enabledSuperProperties = Set<String>([
+        "app",
+        "team.in_team",
+        "team.size"])
     
     override init() {
         if !AnalyticsAPIKey.isEmpty {
             mixpanelInstance = Mixpanel.initialize(token: AnalyticsAPIKey)
         }
         super.init()
+        
+        self.setSuperProperty("app", value: "ios")
+        self.setSuperProperty("city", value: nil)
+        self.setSuperProperty("region", value: nil)
     }
     
     public var isOptedOut : Bool {
@@ -40,23 +69,32 @@ final class AnalyticsMixpanelProvider: NSObject, AnalyticsProvider {
         }
     }
     
-    func tagScreen(_ screen: String) {
-        // TODO
-    }
-    
-    func tagEvent(_ event: String) {
-        tagEvent(event, attributes: [:])
-    }
-    
-    func tagEvent(_ event: String, attributes: [AnyHashable : Any]? = [:]) {
-        var attributes = attributes ?? [:]
-        attributes["app"] = "ios"
+    func tagEvent(_ event: String, attributes: [AnyHashable : Any] = [:]) {
+        guard let mixpanelInstance = self.mixpanelInstance else {
+            return
+        }
         
-        print("event: \(event), attributes: \(attributes)")
-        // mixpanelInstance?.track(event: event, properties: attributes)
+        guard enabledEvents.contains(event) else {
+            DDLogInfo("Analytics: event \(event) is disabled")
+            return
+        }
+        
+        let properties = attributes as! Properties
+        mixpanelInstance.track(event: event, properties: properties)
     }
     
-    func setCustomDimension(_ dimension: Int32, value: String) {
-        // TODO
+    func setSuperProperty(_ name: String, value: String?) {
+        guard let mixpanelInstance = self.mixpanelInstance else {
+            return
+        }
+        
+        guard enabledSuperProperties.contains(name) else {
+            DDLogInfo("Analytics: Super property \(name) is disabled")
+            return
+        }
+        
+        var currentSuperProperties: Properties = mixpanelInstance.currentSuperProperties() as! Properties
+        currentSuperProperties[name] = value
+        mixpanelInstance.registerSuperProperties(currentSuperProperties)
     }
 }

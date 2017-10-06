@@ -43,7 +43,6 @@ NSString *NSStringFromGenericInviteContext(GenericInviteContext logicalContext) 
 
 + (instancetype)shareInviteActivityViewControllerWithCompletion:(UIActivityViewControllerCompletionWithItemsHandler)completion logicalContext:(GenericInviteContext)logicalContext
 {
-    [[Analytics shared] tagScreenGenericInvite];
     [[Analytics shared] tagEvent:AnalyticsEventOpenedMenuForGenericInvite
                       attributes:@{AnalyticsContextKey: NSStringFromGenericInviteContext(logicalContext)}];
     
