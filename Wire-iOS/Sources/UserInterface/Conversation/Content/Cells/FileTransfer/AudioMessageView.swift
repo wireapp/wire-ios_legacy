@@ -53,12 +53,12 @@ final class AudioMessageView: UIView, TransferView {
     
     private var expectingDownload: Bool = false
     
-    private let proximityMonitorManager = ZClientViewController.shared().proximityMonitorManager
-
+    private var proximityMonitorManager: ProximityMonitorManager? {
+        return ZClientViewController.shared()?.proximityMonitorManager
+    }
     
     public required override init(frame: CGRect) {
         super.init(frame: frame)
-        
         self.playButton.addTarget(self, action: #selector(AudioMessageView.onActionButtonPressed(_:)), for: .touchUpInside)
         self.playButton.accessibilityLabel = "AudioActionButton"
         self.playButton.layer.masksToBounds = true
