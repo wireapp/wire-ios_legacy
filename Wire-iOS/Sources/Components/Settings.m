@@ -498,15 +498,7 @@ NSString * const UserDefaultDisableLinkPreviews = @"DisableLinkPreviews";
 - (void)setCallingConstantBitRate:(BOOL)callingConstantBitRate
 {
     [self.defaults setBool:callingConstantBitRate forKey:UserDefaultCallingConstantBitRate];
-    [self updateAVSCallingConstantBitRateValue];
-}
-
-- (void)updateAVSCallingConstantBitRateValue
-{
-    WireCallCenterV3 *callCenter = [[[SessionManager shared] activeUserSession] callCenter];
-    if (nil != callCenter) {
-        callCenter.useAudioConstantBitRate = NO; // self.callingConstantBitRate;
-    }
+    SessionManager.shared.useConstantBitRateAudio = callingConstantBitRate;
 }
 
 @end
@@ -522,8 +514,6 @@ NSString * const UserDefaultDisableLinkPreviews = @"DisableLinkPreviews";
     }
     
     [[AVSProvider shared] mediaManager].intensityLevel = level;
-    
-    [self updateAVSCallingConstantBitRateValue];
 }
 
 - (void)storeCurrentIntensityLevelAsLastUsed

@@ -122,9 +122,8 @@ extern NSString * const UserDefaultDisableLinkPreviews;
 
 - (void)reset;
 
-- (void)updateAVSCallingConstantBitRateValue;
-
 - (NSUserDefaults *)defaults;
+
 @end
 
 

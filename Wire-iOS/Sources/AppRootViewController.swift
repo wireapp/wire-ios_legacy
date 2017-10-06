@@ -127,6 +127,7 @@ class AppRootViewController : UIViewController {
             self.sessionManager?.localMessageNotificationResponder = self
             self.sessionManager?.requestToOpenViewDelegate = self
             sessionManager.updateCallNotificationStyleFromSettings()
+            sessionManager.useConstantBitRateAudio = Settings.shared().callingConstantBitRate
         }
     }
     
