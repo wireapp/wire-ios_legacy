@@ -2,7 +2,7 @@ machine:
   xcode:
     version: "9.0"
   environment:
-    DEPENDENCIES_BASE_URL: "https://raw.githubusercontent.com/wireapp/wire-ios-shared-resources/xcode9"
+    DEPENDENCIES_BASE_URL: "https://raw.githubusercontent.com/wireapp/wire-ios-shared-resources/master"
 
 checkout:
   post:
