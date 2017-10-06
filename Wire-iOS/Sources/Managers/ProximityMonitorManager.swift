@@ -22,6 +22,8 @@ fileprivate let zmLog = ZMSLog(tag: "calling")
 
 class ProximityMonitorManager : NSObject {
     
+    typealias RaisedToEarHandler = (_ raisedToEar: Bool) -> Void
+
     var callStateObserverToken : Any?
 
     fileprivate(set) var raisedToEar: Bool = false {
@@ -32,7 +34,6 @@ class ProximityMonitorManager : NSObject {
         }
     }
     
-    typealias RaisedToEarHandler = (_ raisedToEar: Bool) -> Void
     
     var stateChanged: RaisedToEarHandler? = nil
     var listening: Bool = false
@@ -72,9 +73,6 @@ class ProximityMonitorManager : NSObject {
         let hasOngoingCall = ongoingCalls.count > 0
         let speakerIsEnabled = AVSProvider.shared.mediaManager?.isSpeakerEnabled ?? false
         
-        print("🎧 hasOngoingCall \(hasOngoingCall)")
-        print("🎧 speakerIsEnabled \(speakerIsEnabled)")
-
         UIDevice.current.isProximityMonitoringEnabled = !speakerIsEnabled && hasOngoingCall
     }
     
