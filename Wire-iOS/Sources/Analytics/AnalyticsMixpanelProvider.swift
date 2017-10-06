@@ -53,7 +53,7 @@ final class AnalyticsMixpanelProvider: NSObject, AnalyticsProvider {
             mixpanelInstance = Mixpanel.initialize(token: AnalyticsAPIKey)
         }
         super.init()
-        
+        mixpanelInstance?.minimumSessionDuration = 2_000
         self.setSuperProperty("app", value: "ios")
         self.setSuperProperty("city", value: nil)
         self.setSuperProperty("region", value: nil)
