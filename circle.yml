@@ -18,7 +18,6 @@ dependencies:
   override:
     - bash dependencies.sh
   cache_directories:
-    - Carthage/Build
     - ~/.gem
 
 test:
