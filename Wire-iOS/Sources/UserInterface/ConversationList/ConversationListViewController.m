@@ -168,7 +168,7 @@
     [self createViewConstraints];
     [self.listContentController.collectionView scrollRectToVisible:CGRectMake(0, 0, self.view.bounds.size.width, 1) animated:NO];
     
-    [self hideNoContactLabelAnimated:FALSE];
+    [self hideNoContactLabelAnimated:NO];
     [self updateNoConversationVisibility];
     [self updateArchiveButtonVisibility];
     
