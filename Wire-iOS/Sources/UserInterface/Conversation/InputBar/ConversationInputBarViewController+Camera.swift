@@ -50,7 +50,8 @@ class StatusBarVideoEditorController: UIVideoEditorController {
 extension ConversationInputBarViewController: CameraKeyboardViewControllerDelegate {
     
     @objc public func createCameraKeyboardViewController() {
-        let cameraKeyboardViewController = CameraKeyboardViewController(splitLayoutObservable: ZClientViewController.shared().splitViewController)
+        guard let splitViewController = ZClientViewController.shared()?.splitViewController else { return }
+        let cameraKeyboardViewController = CameraKeyboardViewController(splitLayoutObservable: splitViewController)
         cameraKeyboardViewController.delegate = self
         
         self.cameraKeyboardViewController = cameraKeyboardViewController

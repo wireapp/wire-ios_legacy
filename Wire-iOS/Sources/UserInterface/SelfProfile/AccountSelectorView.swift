@@ -84,7 +84,7 @@ final internal class AccountSelectorView: UIView {
             accountViews.forEach { (accountView) in
                 accountView.onTap = { account in
                     if let account = account, account != SessionManager.shared?.accountManager.selectedAccount {
-                        ZClientViewController.shared().conversationListViewController.dismiss(animated: true, completion: {
+                        ZClientViewController.shared()?.conversationListViewController.dismiss(animated: true, completion: {
                             SessionManager.shared?.select(account)
                         })
                     }

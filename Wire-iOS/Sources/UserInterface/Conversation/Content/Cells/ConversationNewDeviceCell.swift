@@ -131,14 +131,14 @@ class ConversationNewDeviceCell: IconSystemCell {
                 let conversation = message.conversation,
                 let addedUsers = systemMessageData.addedUsers,
                 addedUsers.count > 0 {
-                ZClientViewController.shared().openDetailScreen(for: conversation)
+                ZClientViewController.shared()?.openDetailScreen(for: conversation)
             }
             else if let systemMessageData = message.systemMessageData,
                 let user = systemMessageData.users.first, systemMessageData.users.count == 1 {
-                    ZClientViewController.shared().openClientListScreen(for: user)
+                    ZClientViewController.shared()?.openClientListScreen(for: user)
             }
             else if let conversation = message.conversation {
-                ZClientViewController.shared().openDetailScreen(for: conversation)
+                ZClientViewController.shared()?.openDetailScreen(for: conversation)
             }
         }
     }
