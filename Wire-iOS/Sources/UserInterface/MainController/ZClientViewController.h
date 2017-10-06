@@ -28,6 +28,7 @@
 @class MediaPlaybackManager;
 @class ProximityMonitorManager;
 
+NS_ASSUME_NONNULL_BEGIN
 
 @interface ZClientViewController : UIViewController
 
@@ -47,7 +48,7 @@
 
 @property (nonatomic) ProximityMonitorManager *proximityMonitorManager;
 
-+ (instancetype)sharedZClientViewController;
++ (__nullable instancetype)sharedZClientViewController;
 
 /**
  * Select a conversation and move the focus to the conversation view.
@@ -58,7 +59,7 @@
 - (void)selectConversation:(ZMConversation *)conversation
                focusOnView:(BOOL)focus
                   animated:(BOOL)animated
-                completion:(dispatch_block_t)completion;
+                completion:(__nullable dispatch_block_t)completion;
 
 /**
  * Open the user clients detail screen
@@ -84,10 +85,12 @@
  * Exit the connection inbox.  This contains special logic for reselecting another conversation etc when you
  * have no more connection requests.
  */
-- (void)hideIncomingContactRequestsWithCompletion:(dispatch_block_t)completion;
+- (void)hideIncomingContactRequestsWithCompletion:(__nullable dispatch_block_t)completion;
 
-- (void)transitionToListAnimated:(BOOL)animated completion:(dispatch_block_t)completion;
+- (void)transitionToListAnimated:(BOOL)animated completion:(__nullable dispatch_block_t)completion;
 
-- (void)dismissAllModalControllersWithCallback:(dispatch_block_t)callback;
+- (void)dismissAllModalControllersWithCallback:(__nullable dispatch_block_t)callback;
 
 @end
+
+NS_ASSUME_NONNULL_END
