@@ -31,8 +31,6 @@
 #import "WireSyncEngine+iOS.h"
 #import "Wire-Swift.h"
 
-#import "AnalyticsTracker+Navigation.h"
-
 
 
 static CGFloat SelectCountryButtonHeight = 28;

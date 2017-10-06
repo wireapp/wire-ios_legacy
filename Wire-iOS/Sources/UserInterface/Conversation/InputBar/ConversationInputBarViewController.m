@@ -34,7 +34,6 @@
 
 #import "ZClientViewController.h"
 #import "Analytics+iOS.h"
-#import "AnalyticsTracker+Sketchpad.h"
 #import "AnalyticsTracker+FileTransfer.h"
 #import "Wire-Swift.h"
 

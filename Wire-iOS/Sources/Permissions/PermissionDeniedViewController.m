@@ -28,8 +28,6 @@
 #import "Wire-Swift.h"
 #import "Button.h"
 
-#import "AnalyticsTracker+Navigation.h"
-
 
 @interface PermissionDeniedViewController ()
 @property (nonatomic) BOOL initialConstraintsCreated;
@@ -169,9 +167,7 @@
 #pragma mark - Actions
 
 - (IBAction)openSettings:(id)sender
-{
-    [self.analyticsTracker tagEnteredOSSettings];
-    
+{   
     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]];
 }
 

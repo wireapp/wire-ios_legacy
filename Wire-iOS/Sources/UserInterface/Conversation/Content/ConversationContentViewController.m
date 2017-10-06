@@ -60,7 +60,6 @@
 #import "StopWatch.h"
 #import "ImageMessageCell.h"
 
-#import "AnalyticsTracker+Sketchpad.h"
 #import "AnalyticsTracker+FileTransfer.h"
 
 #import "Wire-Swift.h"
