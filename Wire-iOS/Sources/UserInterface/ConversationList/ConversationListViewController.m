@@ -605,7 +605,7 @@
     if (!self.hasConversations) {
         [self showNoContactLabel];
     } else {
-        [self hideNoContactLabelAnimated:TRUE];
+        [self hideNoContactLabelAnimated:YES];
     }
 }
 
