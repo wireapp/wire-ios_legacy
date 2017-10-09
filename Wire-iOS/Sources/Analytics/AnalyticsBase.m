@@ -60,6 +60,7 @@ static NSString *const AnalyticsUserDefaultsDisabledKey = @"AnalyticsUserDefault
 @implementation Analytics
 
 @synthesize disabled = _disabled;
+@synthesize team = _team;
 
 - (instancetype)initWithProvider:(id<AnalyticsProvider>)provider
 {
@@ -119,6 +120,7 @@ static NSString *const AnalyticsUserDefaultsDisabledKey = @"AnalyticsUserDefault
 
 - (void)setTeam:(Team *)team
 {
+    _team = team;
     if (nil == team) {
         [self.activeProvider setSuperProperty:@"team.size" value:nil];
         [self.activeProvider setSuperProperty:@"team.in_team" value:@"false"];
@@ -156,14 +158,19 @@ static NSString *const AnalyticsUserDefaultsDisabledKey = @"AnalyticsUserDefault
     [self tagEvent:event attributes:[NSDictionary dictionary] source:source];
 }
 
-- (void)tagEvent:(NSString *)event source:(AnalyticsEventSource)source team:(nullable Team *)team
+- (void)tagEvent:(NSString *)event attributes:(NSDictionary *)attributes team:(nullable Team *)team
 {
-    
+    Team *currentTeam = self.team;
+    self.team = team;
+    [self.activeProvider tagEvent:event attributes:attributes];
+    self.team = currentTeam;
 }
 
 - (void)tagEvent:(NSString *)event attributes:(NSDictionary *)attributes
-{    
-    [self.activeProvider tagEvent:event attributes:attributes];
+{
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.activeProvider tagEvent:event attributes:attributes];
+    });
 }
 
 - (void)tagEvent:(NSString *)event attributes:(NSDictionary *)attributes source:(AnalyticsEventSource)source

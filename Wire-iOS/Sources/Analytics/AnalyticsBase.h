@@ -56,7 +56,7 @@ NS_ASSUME_NONNULL_BEGIN
 /// Record an event with no attributes
 - (void)tagEvent:(NSString *)event;
 - (void)tagEvent:(NSString *)event source:(AnalyticsEventSource)source;
-- (void)tagEvent:(NSString *)event source:(AnalyticsEventSource)source team:(nullable Team *)team;
+- (void)tagEvent:(NSString *)event attributes:(NSDictionary *)attributes team:(nullable Team *)team;
 
 /// Record an event with optional attributes.
 - (void)tagEvent:(NSString *)event attributes:(NSDictionary *)attributes;

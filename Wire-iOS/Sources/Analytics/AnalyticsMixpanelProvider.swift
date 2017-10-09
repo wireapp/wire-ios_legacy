@@ -21,9 +21,27 @@ import Foundation
 import Mixpanel
 import CocoaLumberjackSwift
 
-extension Dictionary where Key == String, Value == String {
-    fileprivate func removingLocationAttributes() -> Properties {
-        var finalAttributes: Properties = self
+
+extension Dictionary where Key == String, Value == Any {
+    fileprivate static func bridgeOrDescription(for object: Any) -> MixpanelType? {
+        if object is MixpanelType {
+            return (object as! MixpanelType)
+        }
+        else if object is NSString {
+            return ((object as! NSString) as String)
+        }
+        else if object is CustomStringConvertible {
+            return (object as! CustomStringConvertible).description
+        }
+        else {
+            return nil
+        }
+    }
+
+    fileprivate func propertiesRemovingLocation() -> Properties {
+        var finalAttributes: Properties = self.mapKeysAndValues(keysMapping: identity) { key, value in
+            return type(of: self).bridgeOrDescription(for: value)!
+        }
         finalAttributes["$city"] = ""
         finalAttributes["$region"] = ""
         return finalAttributes
@@ -63,8 +81,9 @@ final class AnalyticsMixpanelProvider: NSObject, AnalyticsProvider {
             mixpanelInstance = Mixpanel.initialize(token: AnalyticsAPIKey)
         }
         super.init()
-        mixpanelInstance?.loggingEnabled = true
         mixpanelInstance?.minimumSessionDuration = 2_000
+        mixpanelInstance?.registerSuperProperties(["$city": "",
+                                                   "$region": ""])
         self.setSuperProperty("app", value: "ios")
     }
     
@@ -78,7 +97,7 @@ final class AnalyticsMixpanelProvider: NSObject, AnalyticsProvider {
         }
     }
     
-    func tagEvent(_ event: String, attributes: [String : String] = [:]) {
+    func tagEvent(_ event: String, attributes: [String: Any] = [:]) {
         guard let mixpanelInstance = self.mixpanelInstance else {
             return
         }
@@ -88,7 +107,7 @@ final class AnalyticsMixpanelProvider: NSObject, AnalyticsProvider {
             return
         }
         
-        mixpanelInstance.track(event: event, properties: attributes.removingLocationAttributes())
+        mixpanelInstance.track(event: event, properties: attributes.propertiesRemovingLocation())
     }
     
     func setSuperProperty(_ name: String, value: String?) {
