@@ -342,7 +342,7 @@ public final class TeamImageView: UIImageView {
     }
     
     func updateClippingLayer() {
-        guard bounds.size != .zero else {
+        guard bounds.size.height != 0 && bounds.size.width != 0 else {
             return
         }
         
