@@ -123,7 +123,7 @@ final internal class SelfProfileViewController: UIViewController {
             accountLabel.centerX == selfView.centerX
             accountLabel.height == 46
             
-            profileContainerView.top == accountSelectorControllerView.bottom + 12   
+            profileContainerView.top == accountSelectorControllerView.bottom + 12
         }
         
         constrain(view, settingsController.view, profileView, profileContainerView) { view, settingsControllerView, profileView, profileContainerView in
@@ -139,7 +139,7 @@ final internal class SelfProfileViewController: UIViewController {
 
             settingsControllerView.leading == view.leading
             settingsControllerView.trailing == view.trailing
-            settingsControllerView.bottom == view.bottom
+            settingsControllerView.bottom == view.bottom - UIScreen.safeArea.bottom
         }
     }
     
