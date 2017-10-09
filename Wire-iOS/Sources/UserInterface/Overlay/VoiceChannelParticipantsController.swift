@@ -67,7 +67,7 @@ extension VoiceChannelParticipantsController : UICollectionViewDataSource {
 extension VoiceChannelParticipantsController : VoiceChannelParticipantObserver {
     
     func voiceChannelParticipantsDidChange(_ changeInfo: VoiceChannelParticipantNotification) {
-        guard conversation.conversationType != .group else { return }
+        guard conversation.conversationType == .group else { return }
         
         collectionView.performBatchUpdates({ 
             self.collectionView.insertItems(at: (changeInfo.insertedIndexes as NSIndexSet).indexPaths())
