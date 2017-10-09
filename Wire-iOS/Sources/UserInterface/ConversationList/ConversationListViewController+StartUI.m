@@ -211,6 +211,7 @@
                 [[ZMUserSession sharedSession] enqueueChanges:^{
                     [oneToOneConversation appendMessageWithImageData:imageData];
                 } completionHandler:^{
+                    [[Analytics shared] tagMediaAction:ConversationMediaActionPhoto inConversation:oneToOneConversation];
                     [[Analytics shared] tagMediaActionCompleted:ConversationMediaActionPhoto inConversation:oneToOneConversation];
                     
                     [[Analytics shared] tagMediaSentPictureInConversation:oneToOneConversation
@@ -234,6 +235,7 @@
                         [[ZMUserSession sharedSession] enqueueChanges:^{
                             [conversation appendMessageWithImageData:imageData];
                         } completionHandler:^{
+                            [[Analytics shared] tagMediaAction:ConversationMediaActionPhoto inConversation:conversation];
                             [[Analytics shared] tagMediaActionCompleted:ConversationMediaActionPhoto inConversation:conversation];
                             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                                 [[ZClientViewController sharedZClientViewController] selectConversation:conversation

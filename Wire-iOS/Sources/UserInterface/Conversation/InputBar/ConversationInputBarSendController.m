@@ -57,6 +57,7 @@
             if (completionHandler){
                 completionHandler();
             }
+            [[Analytics shared] tagMediaAction:ConversationMediaActionPhoto inConversation:self.conversation];
             [[Analytics shared] tagMediaActionCompleted:ConversationMediaActionPhoto inConversation:self.conversation];
 
         }];
@@ -88,6 +89,7 @@
         }
         self.conversation.draftMessageText = @"";
     } completionHandler:^{
+        [[Analytics shared] tagMediaAction:ConversationMediaActionText inConversation:self.conversation];
         [[Analytics shared] tagMediaActionCompleted:ConversationMediaActionText inConversation:self.conversation];
         [self tagExternalLinkPostEventsForMessage:textMessage];
     }];
@@ -106,7 +108,9 @@
         [self.conversation appendMessageWithImageData:data];
         self.conversation.draftMessageText = @"";
     } completionHandler:^{
+        [[Analytics shared] tagMediaAction:ConversationMediaActionPhoto inConversation:self.conversation];
         [[Analytics shared] tagMediaActionCompleted:ConversationMediaActionPhoto inConversation:self.conversation];
+        [[Analytics shared] tagMediaAction:ConversationMediaActionText inConversation:self.conversation];
         [[Analytics shared] tagMediaActionCompleted:ConversationMediaActionText inConversation:self.conversation];
         [[Analytics shared] tagMediaSentPictureSourceOtherInConversation:self.conversation source:ConversationMediaPictureSourceGiphy];
         [self tagExternalLinkPostEventsForMessage:textMessage];

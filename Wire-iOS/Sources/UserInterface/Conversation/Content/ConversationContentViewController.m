@@ -582,6 +582,7 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
         [[ZMUserSession sharedSession] enqueueChanges:^{
             [self.conversation appendMessageWithImageData:imageData];
         } completionHandler:^{
+            [[Analytics shared] tagMediaAction:ConversationMediaActionPhoto inConversation:self.conversation];
             [[Analytics shared] tagMediaActionCompleted:ConversationMediaActionPhoto inConversation:self.conversation];
             [[Analytics shared] tagMediaSentPictureSourceSketchInConversation:self.conversation sketchSource:ConversationMediaSketchSourceImageFullView];
         }];
