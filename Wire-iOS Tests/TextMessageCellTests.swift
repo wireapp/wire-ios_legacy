@@ -166,15 +166,6 @@ class TextMessageCellTests: ZMSnapshotTestCase {
         sut.configure(for: mockMessage(), layoutProperties: layoutProperties)
         verify(view: sut.prepareForSnapshot())
     }
-    
-    func testThatItRendersATextMessage_LikeTooltipShownForOther() {
-        let message = mockMessage()
-        message.sender = self.otherUsers.first
-        
-        sut.setSelected(true, animated: false)
-        sut.configure(for: message, layoutProperties: layoutProperties)
-        verify(view: sut.prepareForSnapshot())
-    }
 
     func testThatItRendersMessageWithBurstTimestamp() {
         let props = layoutProperties
