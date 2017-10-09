@@ -36,13 +36,13 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     
-    if (self) {        
+    if (self) {
         self.colorSchemeVariant = ColorSchemeVariantDark;
         self.delegate = self;
         self.contentDelegate = self;
         self.dataSource = [[ContactsDataSource alloc] init];
         self.dataSource.searchQuery = @"";
-                
+        
         self.title = NSLocalizedString(@"contacts_ui.title", @"");
     }
     
@@ -57,21 +57,15 @@
 - (void)inviteUser:(ZMSearchUser *)user fromView:(UIView *)view
 {
     if (user.isConnected) {
-        [self dismissViewControllerAnimated:YES completion:^{
-            [[ZClientViewController sharedZClientViewController] selectConversation:user.user.oneToOneConversation
-                                                                        focusOnView:YES
-                                                                           animated:YES];
-        }];
+        [[ZClientViewController sharedZClientViewController] selectConversation:user.user.oneToOneConversation
+                                                                    focusOnView:YES
+                                                                       animated:YES];
     } else if (user.user.isPendingApprovalBySelfUser && ! user.user.isIgnored) {
-        [self dismissViewControllerAnimated:YES completion:^{
-            [[ZClientViewController sharedZClientViewController] selectIncomingContactRequestsAndFocusOnView:YES];
-        }];
+        [[ZClientViewController sharedZClientViewController] selectIncomingContactRequestsAndFocusOnView:YES];
     } else if (user.user.isPendingApprovalByOtherUser && ! user.user.isIgnored) {
-        [self dismissViewControllerAnimated:YES completion:^{
-            [[ZClientViewController sharedZClientViewController] selectConversation:user.user.oneToOneConversation
-                                                                        focusOnView:YES
-                                                                           animated:YES];
-        }];
+        [[ZClientViewController sharedZClientViewController] selectConversation:user.user.oneToOneConversation
+                                                                    focusOnView:YES
+                                                                       animated:YES];
         
     } else if (user.user != nil && ! user.user.isIgnored && ! user.user.isPendingApprovalByOtherUser) {
         NSString *messageText = [NSString stringWithFormat:NSLocalizedString(@"missive.connection_request.default_message",@"Default connect message to be shown"), user.user.displayName, [ZMUser selfUser].name];
