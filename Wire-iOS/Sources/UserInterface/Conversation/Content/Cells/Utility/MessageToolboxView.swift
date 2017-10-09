@@ -71,7 +71,6 @@ extension ZMSystemMessageData {
     open let reactionsView = ReactionsView()
     fileprivate let labelClipView = UIView()
     fileprivate var tapGestureRecogniser: UITapGestureRecognizer!
-    open let likeTooltipArrow = UILabel()
     
     open weak var delegate: MessageToolboxViewDelegate?
 
@@ -110,14 +109,12 @@ extension ZMSystemMessageData {
                                             NSForegroundColorAttributeName: UIColor(for: .vividRed).withAlphaComponent(0.5)]
         
         labelClipView.addSubview(statusLabel)
-        likeTooltipArrow.accessibilityIdentifier = "likeTooltipArrow"
-        likeTooltipArrow.text = "←"
         
-        [likeTooltipArrow, reactionsView, labelClipView].forEach(addSubview)
+        [reactionsView, labelClipView].forEach(addSubview)
     }
     
     private func createConstraints() {
-        constrain(self, reactionsView, statusLabel, labelClipView, likeTooltipArrow) { selfView, reactionsView, statusLabel, labelClipView, likeTooltipArrow in
+        constrain(self, reactionsView, statusLabel, labelClipView) { selfView, reactionsView, statusLabel, labelClipView in
 
             selfView.height >= 28 ~ LayoutPriority(750)
             
@@ -133,9 +130,6 @@ extension ZMSystemMessageData {
             
             reactionsView.trailing == selfView.trailingMargin
             reactionsView.centerY == selfView.centerY
-            
-            likeTooltipArrow.centerY == statusLabel.centerY
-            likeTooltipArrow.trailing == selfView.leadingMargin - 8
         }
     }
     
@@ -159,7 +153,6 @@ extension ZMSystemMessageData {
         self.forceShowTimestamp = forceShowTimestamp
         self.message = message
         
-        self.likeTooltipArrow.isHidden = true
         if !self.forceShowTimestamp && message.hasReactions() {
             self.configureLikedState(message)
             self.layoutIfNeeded()
