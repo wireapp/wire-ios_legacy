@@ -52,7 +52,7 @@ extension AnalyticsConsoleProvider: AnalyticsProvider {
         }
     }
     
-    func tagEvent(_ event: String, attributes: [AnyHashable : Any] = [:]) {
+    func tagEvent(_ event: String, attributes: [String : String] = [:]) {
         
         let printableAttributes = attributes
         
@@ -63,7 +63,7 @@ extension AnalyticsConsoleProvider: AnalyticsProvider {
         if !printableAttributes.isEmpty {
             var localAttributes = [String : String]()
             printableAttributes.map({ (key, value) -> (String, String) in
-                return (key as! String, (value as AnyObject).description!)
+                return (key, value)
             }).forEach({ (key, value) in
                 localAttributes[key] = value
             })

@@ -23,7 +23,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign) BOOL isOptedOut;
 
 /// Record an event with optional attributes.
-- (void)tagEvent:(NSString *)event attributes:(NSDictionary *)attributes;
+- (void)tagEvent:(NSString *)event attributes:(NSDictionary<NSString *, NSString *> *)attributes;
 
 /// Set a custom dimension
 - (void)setSuperProperty:(NSString *)name value:(nullable NSString *)value;

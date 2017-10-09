@@ -21,6 +21,15 @@ import Foundation
 import Mixpanel
 import CocoaLumberjackSwift
 
+extension Dictionary where Key == String, Value == String {
+    fileprivate func removingLocationAttributes() -> Properties {
+        var finalAttributes: Properties = self
+        finalAttributes["$city"] = ""
+        finalAttributes["$region"] = ""
+        return finalAttributes
+    }
+}
+
 final class AnalyticsMixpanelProvider: NSObject, AnalyticsProvider {
     private var mixpanelInstance: MixpanelInstance? = .none
     private let enabledEvents = Set<String>([
@@ -45,8 +54,6 @@ final class AnalyticsMixpanelProvider: NSObject, AnalyticsProvider {
     
     private let enabledSuperProperties = Set<String>([
         "app",
-        "city",
-        "region",
         "team.in_team",
         "team.size"
         ])
@@ -56,10 +63,9 @@ final class AnalyticsMixpanelProvider: NSObject, AnalyticsProvider {
             mixpanelInstance = Mixpanel.initialize(token: AnalyticsAPIKey)
         }
         super.init()
+        mixpanelInstance?.loggingEnabled = true
         mixpanelInstance?.minimumSessionDuration = 2_000
         self.setSuperProperty("app", value: "ios")
-        self.setSuperProperty("city", value: nil)
-        self.setSuperProperty("region", value: nil)
     }
     
     public var isOptedOut : Bool {
@@ -72,7 +78,7 @@ final class AnalyticsMixpanelProvider: NSObject, AnalyticsProvider {
         }
     }
     
-    func tagEvent(_ event: String, attributes: [AnyHashable : Any] = [:]) {
+    func tagEvent(_ event: String, attributes: [String : String] = [:]) {
         guard let mixpanelInstance = self.mixpanelInstance else {
             return
         }
@@ -82,8 +88,7 @@ final class AnalyticsMixpanelProvider: NSObject, AnalyticsProvider {
             return
         }
         
-        let properties = attributes as! Properties
-        mixpanelInstance.track(event: event, properties: properties)
+        mixpanelInstance.track(event: event, properties: attributes.removingLocationAttributes())
     }
     
     func setSuperProperty(_ name: String, value: String?) {
@@ -96,8 +101,11 @@ final class AnalyticsMixpanelProvider: NSObject, AnalyticsProvider {
             return
         }
         
-        var currentSuperProperties: Properties = mixpanelInstance.currentSuperProperties() as! Properties
-        currentSuperProperties[name] = value
-        mixpanelInstance.registerSuperProperties(currentSuperProperties)
+        if let valueNotNil = value {
+            mixpanelInstance.registerSuperProperties([name: valueNotNil])
+        }
+        else {
+            mixpanelInstance.unregisterSuperProperty(name)
+        }
     }
 }
