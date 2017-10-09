@@ -42,7 +42,6 @@ extern NSString * const SettingsColorSchemeChangedNotification;
 
 extern NSString * const UserDefaultDisableMarkdown;
 extern NSString * const UserDefaultChatHeadsDisabled;
-extern NSString * const UserDefaultLikeTutorialCompleted;
 extern NSString * const UserDefaultLastPushAlertDate;
 extern NSString * const UserDefaultContactTipWasDisplayed;
 
@@ -86,7 +85,6 @@ extern NSString * const UserDefaultDisableLinkPreviews;
 
 @property (nonatomic) BOOL chatHeadsDisabled;
 @property (nonatomic) BOOL contactTipWasDisplayed;
-@property (nonatomic) BOOL likeTutorialCompleted;
 @property (nonatomic) BOOL disableMarkdown;
 @property (nonatomic) BOOL shouldRegisterForVoIPNotificationsOnly;
 @property (nonatomic) BOOL disableSendButton;

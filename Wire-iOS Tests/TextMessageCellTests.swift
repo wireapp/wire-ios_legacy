@@ -33,7 +33,6 @@ class TextMessageCellTests: ZMSnapshotTestCase {
 
     override func setUp() {
         super.setUp()
-        Settings.shared().likeTutorialCompleted = true
         snapshotBackgroundColor = ColorScheme.default().color(withName: ColorSchemeColorConversationBackground)
         accentColor = .strongBlue
         sut = TextMessageCell(style: .default, reuseIdentifier: name!)
@@ -163,16 +162,12 @@ class TextMessageCellTests: ZMSnapshotTestCase {
     }
     
     func testThatItRendersATextMessage_LikeTooltipNotShownForSelf() {
-        Settings.shared().likeTutorialCompleted = false
-        
         sut.setSelected(true, animated: false)
         sut.configure(for: mockMessage(), layoutProperties: layoutProperties)
         verify(view: sut.prepareForSnapshot())
     }
     
     func testThatItRendersATextMessage_LikeTooltipShownForOther() {
-        Settings.shared().likeTutorialCompleted = false
-        
         let message = mockMessage()
         message.sender = self.otherUsers.first
         

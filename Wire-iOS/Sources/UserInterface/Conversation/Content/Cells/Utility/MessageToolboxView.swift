@@ -159,30 +159,19 @@ extension ZMSystemMessageData {
         self.forceShowTimestamp = forceShowTimestamp
         self.message = message
         
-        let canShowTooltip = !Settings.shared().likeTutorialCompleted && !message.hasReactions() && message.canBeLiked
-        
-        // Show like tip
-        if let sender = message.sender, !sender.isSelfUser && canShowTooltip {
-            showReactionsView(message.hasReactions(), animated: false)
-            self.likeTooltipArrow.isHidden = false
-            self.tapGestureRecogniser.isEnabled = message.hasReactions()
-            self.configureLikeTip(message, animated: animated)
+        self.likeTooltipArrow.isHidden = true
+        if !self.forceShowTimestamp && message.hasReactions() {
+            self.configureLikedState(message)
+            self.layoutIfNeeded()
+            showReactionsView(true, animated: animated)
+            self.configureReactions(message, animated: animated)
+            self.tapGestureRecogniser.isEnabled = true
         }
         else {
-            self.likeTooltipArrow.isHidden = true
-            if !self.forceShowTimestamp && message.hasReactions() {
-                self.configureLikedState(message)
-                self.layoutIfNeeded()
-                showReactionsView(true, animated: animated)
-                self.configureReactions(message, animated: animated)
-                self.tapGestureRecogniser.isEnabled = true
-            }
-            else {
-                self.layoutIfNeeded()
-                showReactionsView(false, animated: animated)
-                self.configureTimestamp(message, animated: animated)
-                self.tapGestureRecogniser.isEnabled = false
-            }
+            self.layoutIfNeeded()
+            showReactionsView(false, animated: animated)
+            self.configureTimestamp(message, animated: animated)
+            self.tapGestureRecogniser.isEnabled = false
         }
     }
     
