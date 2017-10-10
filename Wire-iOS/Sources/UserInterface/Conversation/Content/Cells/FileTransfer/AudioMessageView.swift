@@ -409,7 +409,7 @@ final class AudioMessageView: UIView, TransferView {
     private func updateProximityObserverState() {
         guard let audioTrackPlayer = self.audioTrackPlayer, isOwnTrackPlayingInAudioPlayer() else { return }
         
-        if audioTrackPlayer.isPlaying && isOwnTrackPlayingInAudioPlayer() {
+        if audioTrackPlayer.isPlaying {
             proximityMonitorManager?.startListening()
         } else {
             proximityMonitorManager?.stopListening()
