@@ -27,14 +27,24 @@ class ChatHeadView: UIView {
     private var subtitleLabel: UILabel!
     private var labelContainer: UIView!
     
-    private let title: NSAttributedString?
-    private let content: NSAttributedString
+    private let title: String?
+    private let body: String
     private let sender: ZMUser
     private let conversation: ZMConversation
     private let account: Account
+    private let isEphemeral: Bool
     
     private let imageDiameter: CGFloat = 28
     private let padding: CGFloat = 10
+    
+    private let regularFont: [String: AnyObject] = [NSFontAttributeName: FontSpec(.medium, .regular).font!.withSize(14)]
+    private let mediumFont: [String: AnyObject] = [NSFontAttributeName: FontSpec(.medium, .medium).font!.withSize(14)]
+    
+    private lazy var bodyFont: UIFont = {
+        let font = FontSpec(.medium, .regular).font!
+        if self.isEphemeral { return UIFont(name: "RedactedScript-Regular", size: font.pointSize)! }
+        else { return font }
+    }()
     
     public var onSelect: ((ZMConversation, Account) -> Void)?
     
@@ -47,12 +57,13 @@ class ChatHeadView: UIView {
         return ColorScheme.default().color(withName: name)
     }
     
-    init(title: NSAttributedString?, content: NSAttributedString, sender: ZMUser, conversation: ZMConversation, account: Account) {
+    init(title: String?, body: String, sender: ZMUser, conversation: ZMConversation, account: Account, isEphemeral: Bool = false) {
         self.title = title
-        self.content = content
+        self.body = body
         self.sender = sender
         self.conversation = conversation
         self.account = account
+        self.isEphemeral = isEphemeral
         super.init(frame: .zero)
         setup()
     }
@@ -84,7 +95,6 @@ class ChatHeadView: UIView {
     }
     
     private func createLabels() {
-        
         labelContainer = UIView()
         addSubview(labelContainer)
         
@@ -92,7 +102,7 @@ class ChatHeadView: UIView {
             titleLabel = UILabel()
             titleLabel!.backgroundColor = .clear
             titleLabel!.isUserInteractionEnabled = false
-            titleLabel!.attributedText = title
+            titleLabel!.attributedText = NSAttributedString(string: title, attributes: mediumFont)
             titleLabel!.textColor = color(withName: ColorSchemeColorChatHeadTitleText)
             titleLabel!.lineBreakMode = .byTruncatingTail
             labelContainer.addSubview(titleLabel!)
@@ -101,7 +111,7 @@ class ChatHeadView: UIView {
         subtitleLabel = UILabel()
         subtitleLabel.backgroundColor = .clear
         subtitleLabel.isUserInteractionEnabled = false
-        subtitleLabel.attributedText = content
+        subtitleLabel.attributedText = NSAttributedString(string: body, attributes: [NSFontAttributeName: bodyFont])
         subtitleLabel.textColor = color(withName: ColorSchemeColorChatHeadSubtitleText)
         subtitleLabel.lineBreakMode = .byTruncatingTail
         labelContainer.addSubview(subtitleLabel)
