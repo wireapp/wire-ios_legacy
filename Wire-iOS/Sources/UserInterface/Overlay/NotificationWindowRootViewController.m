@@ -153,7 +153,7 @@
 
 #pragma mark - In app custom notifications
 
-- (void)showLocalNotification:(UILocalNotification*)notification
+- (void)show:(ZMLocalNote*)notification
 {
     [self.chatHeadsViewController tryToDisplayNotification:notification];
 }

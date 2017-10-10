@@ -124,7 +124,7 @@ class AppRootViewController : UIViewController {
             blacklistDownloadInterval: Settings.shared().blacklistDownloadInterval)
         { sessionManager in
             self.sessionManager = sessionManager
-            self.sessionManager?.localMessageNotificationResponder = self
+            self.sessionManager?.localNotificationResponder = self
             self.sessionManager?.requestToOpenViewDelegate = self
             sessionManager.updateCallNotificationStyleFromSettings()
         }
@@ -403,9 +403,9 @@ extension AppRootViewController : ZMRequestsToOpenViewsDelegate {
 
 // MARK: - Application Icon Badge Number
 
-extension AppRootViewController : LocalMessageNotificationResponder {
+extension AppRootViewController : LocalNotificationResponder {
 
-    func processLocalMessage(_ notification: UILocalNotification, forSession session: ZMUserSession) {
+    func processLocal(_ notification: ZMLocalNote, forSession session: ZMUserSession) {
         (self.overlayWindow.rootViewController as! NotificationWindowRootViewController).show(notification)
     }
     

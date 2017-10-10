@@ -18,6 +18,7 @@
 
 
 @import UIKit;
+@import WireSyncEngine;
 
 @class NetworkStatusViewController;
 @class ActiveVoiceChannelViewController;
@@ -38,6 +39,6 @@
 @property (nonatomic) BOOL hideNetworkActivityView;
 
 - (void)transitionToLoggedInSession;
-- (void)showLocalNotification:(nonnull UILocalNotification *)notification;
+- (void)show:(nonnull ZMLocalNote *)notification;
 
 @end
