@@ -223,12 +223,13 @@ final class AudioMessageView: UIView, TransferView {
     }
     
     private func updateTimeLabel() {
-        guard let audioTrackPlayer = self.audioTrackPlayer else { return }
         
         var duration: Int? = .none
         
         if self.isOwnTrackPlayingInAudioPlayer() {
-            duration = Int(audioTrackPlayer.elapsedTime)
+            if let audioTrackPlayer = self.audioTrackPlayer {
+                duration = Int(audioTrackPlayer.elapsedTime)
+            }
         }
         else {
             guard let message = self.fileMessage,
