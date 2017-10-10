@@ -74,18 +74,32 @@ public final class AccountViewFactory {
     }
 }
 
+public enum AccountUnreadCountStyle {
+    /// Do not display an unread count.
+    case none
+    /// Display unread count only considering current account.
+    case current
+    /// Display unread count only considering other accounts.
+    case others
+}
+
 public class BaseAccountView: UIView, AccountViewType {
-    public var autoupdateSelection: Bool = true
+    public var autoUpdateSelection: Bool = true
     
     internal let imageViewContainer = UIView()
     fileprivate let outlineView = UIView()
     fileprivate let dotView : DotView
     fileprivate let selectionView = ShapeView()
     fileprivate var unreadCountToken : Any?
+    fileprivate var selfUserObserver: NSObjectProtocol!
     public let account: Account
     
-    private var selfUserObserver: NSObjectProtocol!
-
+    public var unreadCountStyle : AccountUnreadCountStyle = .none {
+        didSet {
+            updateAppearance()
+        }
+    }
+    
     public var selected: Bool = false {
         didSet {
             updateAppearance()
@@ -98,16 +112,16 @@ public class BaseAccountView: UIView, AccountViewType {
         }
     }
     
-    public var invertUnreadMessagesCount = false
-    
     public var hasUnreadMessages: Bool {
-        if invertUnreadMessagesCount{
-            return ((SessionManager.shared?.accountManager.totalUnreadCount ?? 0) - account.unreadConversationCount) > 0
-        } else {
+        switch unreadCountStyle {
+        case .none:
+            return false
+        case .current:
             return account.unreadConversationCount > 0
+        case .others:
+            return ((SessionManager.shared?.accountManager.totalUnreadCount ?? 0) - account.unreadConversationCount) > 0
         }
     }
-    
     
     func updateAppearance() {
         
@@ -189,7 +203,7 @@ public class BaseAccountView: UIView, AccountViewType {
     }
     
     public func update() {
-        if self.autoupdateSelection {
+        if self.autoUpdateSelection {
             self.selected = SessionManager.shared?.accountManager.selectedAccount == self.account
         }
     }
@@ -328,7 +342,7 @@ public final class TeamImageView: UIImageView {
     }
     
     func updateClippingLayer() {
-        guard bounds.size != .zero else {
+        guard bounds.size.height != 0 && bounds.size.width != 0 else {
             return
         }
         

@@ -47,8 +47,6 @@ public extension ConversationCell {
     
     @objc public func likeMessage(_ sender: AnyObject!) {
         guard message.canBeLiked else { return }
-
-        Settings.shared().likeTutorialCompleted = true
         
         let reactionType : ReactionType = message.liked ? .unlike : .like
         trackReaction(sender, reaction: reactionType)

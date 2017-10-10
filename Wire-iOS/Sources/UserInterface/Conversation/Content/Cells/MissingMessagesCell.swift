@@ -82,9 +82,9 @@ class MissingMessagesCell: IconSystemCell {
         if URL == type(of: self).userClientLink {
             if let systemMessageData = message.systemMessageData,
                 let user = systemMessageData.users.first , systemMessageData.users.count == 1 {
-                ZClientViewController.shared().openClientListScreen(for: user)
+                ZClientViewController.shared()?.openClientListScreen(for: user)
             } else if let conversation = message.conversation {
-                ZClientViewController.shared().openDetailScreen(for: conversation)
+                ZClientViewController.shared()?.openDetailScreen(for: conversation)
             }
         }
     }

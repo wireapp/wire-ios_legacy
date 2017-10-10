@@ -71,7 +71,6 @@ extension ZMSystemMessageData {
     open let reactionsView = ReactionsView()
     fileprivate let labelClipView = UIView()
     fileprivate var tapGestureRecogniser: UITapGestureRecognizer!
-    open let likeTooltipArrow = UILabel()
     
     open weak var delegate: MessageToolboxViewDelegate?
 
@@ -110,14 +109,12 @@ extension ZMSystemMessageData {
                                             NSForegroundColorAttributeName: UIColor(for: .vividRed).withAlphaComponent(0.5)]
         
         labelClipView.addSubview(statusLabel)
-        likeTooltipArrow.accessibilityIdentifier = "likeTooltipArrow"
-        likeTooltipArrow.text = "←"
         
-        [likeTooltipArrow, reactionsView, labelClipView].forEach(addSubview)
+        [reactionsView, labelClipView].forEach(addSubview)
     }
     
     private func createConstraints() {
-        constrain(self, reactionsView, statusLabel, labelClipView, likeTooltipArrow) { selfView, reactionsView, statusLabel, labelClipView, likeTooltipArrow in
+        constrain(self, reactionsView, statusLabel, labelClipView) { selfView, reactionsView, statusLabel, labelClipView in
 
             selfView.height >= 28 ~ LayoutPriority(750)
             
@@ -133,9 +130,6 @@ extension ZMSystemMessageData {
             
             reactionsView.trailing == selfView.trailingMargin
             reactionsView.centerY == selfView.centerY
-            
-            likeTooltipArrow.centerY == statusLabel.centerY
-            likeTooltipArrow.trailing == selfView.leadingMargin - 8
         }
     }
     
@@ -159,30 +153,18 @@ extension ZMSystemMessageData {
         self.forceShowTimestamp = forceShowTimestamp
         self.message = message
         
-        let canShowTooltip = !Settings.shared().likeTutorialCompleted && !message.hasReactions() && message.canBeLiked
-        
-        // Show like tip
-        if let sender = message.sender, !sender.isSelfUser && canShowTooltip {
-            showReactionsView(message.hasReactions(), animated: false)
-            self.likeTooltipArrow.isHidden = false
-            self.tapGestureRecogniser.isEnabled = message.hasReactions()
-            self.configureLikeTip(message, animated: animated)
+        if !self.forceShowTimestamp && message.hasReactions() {
+            self.configureLikedState(message)
+            self.layoutIfNeeded()
+            showReactionsView(true, animated: animated)
+            self.configureReactions(message, animated: animated)
+            self.tapGestureRecogniser.isEnabled = true
         }
         else {
-            self.likeTooltipArrow.isHidden = true
-            if !self.forceShowTimestamp && message.hasReactions() {
-                self.configureLikedState(message)
-                self.layoutIfNeeded()
-                showReactionsView(true, animated: animated)
-                self.configureReactions(message, animated: animated)
-                self.tapGestureRecogniser.isEnabled = true
-            }
-            else {
-                self.layoutIfNeeded()
-                showReactionsView(false, animated: animated)
-                self.configureTimestamp(message, animated: animated)
-                self.tapGestureRecogniser.isEnabled = false
-            }
+            self.layoutIfNeeded()
+            showReactionsView(false, animated: animated)
+            self.configureTimestamp(message, animated: animated)
+            self.tapGestureRecogniser.isEnabled = false
         }
     }
     

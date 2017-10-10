@@ -327,7 +327,16 @@
 
     switch (state) {
         case ConversationListStateConversationList: {
-            [self.presentedViewController dismissViewControllerAnimated:YES completion:completion];
+            self.view.alpha = 1;
+            
+            if (self.presentedViewController != nil) {
+                [self.presentedViewController dismissViewControllerAnimated:YES completion:completion];
+            }
+            else {
+                if (completion) {
+                    completion();
+                }
+            }
         }
             break;
         case ConversationListStatePeoplePicker: {

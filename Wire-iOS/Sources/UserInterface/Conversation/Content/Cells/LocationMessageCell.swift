@@ -181,7 +181,7 @@ public final class LocationMessageCell: ConversationCell {
     
     open override func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
         switch action {
-        case #selector(cut), #selector(paste), #selector(select), #selector(selectAll):
+        case #selector(cut), #selector(paste(_:)), #selector(select(_:)), #selector(selectAll(_:)):
             return false
         case #selector(copy(_:)), #selector(forward(_:)):
             return !self.message.isEphemeral

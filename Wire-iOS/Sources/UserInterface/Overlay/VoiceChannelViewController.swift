@@ -279,6 +279,7 @@ extension VoiceChannelViewController : WireCallCenterCallStateObserver, Received
         updateIdleTimer(for: callState)
         updateCallDurationTimer(for: callState)
         updateView(for: callState)
+        createParticipantsControllerIfNecessary()
     }
     
     func updateIdleTimer(for callState : CallState) {
@@ -318,7 +319,7 @@ extension VoiceChannelViewController : WireCallCenterCallStateObserver, Received
     
     func updateCallDuration() {
         if let callStartDate = self.conversation.voiceChannel?.callStartDate {
-            self.voiceChannelView.callDuration = callStartDate.timeIntervalSinceNow
+            self.voiceChannelView.callDuration = -callStartDate.timeIntervalSinceNow
         } else {
             self.voiceChannelView.callDuration = 0
         }

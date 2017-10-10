@@ -67,7 +67,7 @@ public protocol AudioRecorderType: class {
     var recordTimerCallback: ((TimeInterval) -> Void)? { get set }
     var recordLevelCallBack: ((RecordingLevel) -> Void)? { get set }
     var playingStateCallback: ((PlayingState) -> Void)? { get set }
-    var recordStartedCallback: ((Void) -> Void)? { get set }
+    var recordStartedCallback: (() -> Void)? { get set }
     var recordEndedCallback: ((Bool) -> Void)? { get set } // recordedToMaxDuration: Bool
     
     func startRecording()
@@ -111,7 +111,7 @@ public final class AudioRecorder: NSObject, AudioRecorderType {
     public var recordTimerCallback: ((TimeInterval) -> Void)?
     public var recordLevelCallBack: ((RecordingLevel) -> Void)?
     public var playingStateCallback: ((PlayingState) -> Void)?
-    public var recordStartedCallback: ((Void) -> Void)?
+    public var recordStartedCallback: (() -> Void)?
     public var recordEndedCallback: ((Bool) -> Void)? // recordedToMaxDuration: Bool
     public var fileURL: URL?
     
@@ -292,7 +292,7 @@ final class AudioPlayerDelegate: NSObject, AVAudioPlayerDelegate {
 
 protocol PowerProvider {
     func updateMeters() /* call to refresh meter values */
-    func averagePowerForChannel(_ channelNumber: Int) -> Float
+    func averagePower(forChannel channelNumber: Int) -> Float
 }
 
 let minimumPower: Float = -160
@@ -300,7 +300,7 @@ let minimumPower: Float = -160
 extension PowerProvider {
     
     func averagePowerForFirstActiveChannel() -> Float {
-        for power in (0..<3).map(averagePowerForChannel) where power != minimumPower {
+        for power in (0..<3).map(averagePower) where power != minimumPower {
             return power
         }
         

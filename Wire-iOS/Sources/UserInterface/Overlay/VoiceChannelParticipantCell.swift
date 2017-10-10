@@ -21,7 +21,7 @@ import Foundation
 extension VoiceChannelParticipantCell {
     
     func configure(for user: ZMUser, participantState: CallParticipantState) {
-        if let existingUser = userImage.user, !existingUser.isEqual(user) {
+        if !user.isEqual(userImage.user) {
             userImage.user = user
         }
         

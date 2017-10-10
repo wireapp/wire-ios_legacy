@@ -412,7 +412,9 @@ import CocoaLumberjackSwift
             DDLogError("No file to send")
             return
         }
-        
+
+        button?.isEnabled = false
+
         let effectName: String
         
         if self.currentEffect == .none {

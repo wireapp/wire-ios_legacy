@@ -53,12 +53,12 @@ final class AudioMessageView: UIView, TransferView {
     
     private var expectingDownload: Bool = false
     
-    private let proximityMonitorManager = ZClientViewController.shared().proximityMonitorManager
-
+    private var proximityMonitorManager: ProximityMonitorManager? {
+        return ZClientViewController.shared()?.proximityMonitorManager
+    }
     
     public required override init(frame: CGRect) {
         super.init(frame: frame)
-        
         self.playButton.addTarget(self, action: #selector(AudioMessageView.onActionButtonPressed(_:)), for: .touchUpInside)
         self.playButton.accessibilityLabel = "AudioActionButton"
         self.playButton.layer.masksToBounds = true
@@ -223,12 +223,13 @@ final class AudioMessageView: UIView, TransferView {
     }
     
     private func updateTimeLabel() {
-        guard let audioTrackPlayer = self.audioTrackPlayer else { return }
         
         var duration: Int? = .none
         
         if self.isOwnTrackPlayingInAudioPlayer() {
-            duration = Int(audioTrackPlayer.elapsedTime)
+            if let audioTrackPlayer = self.audioTrackPlayer {
+                duration = Int(audioTrackPlayer.elapsedTime)
+            }
         }
         else {
             guard let message = self.fileMessage,

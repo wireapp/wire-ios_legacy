@@ -28,7 +28,6 @@ NSString * const SettingsColorSchemeChangedNotification = @"SettingsColorSchemeC
 // NB!!! After adding the key here please make sure to add it to @m +allDefaultsKeys as well
 NSString * const UserDefaultDisableMarkdown = @"UserDefaultDisableMarkdown";
 NSString * const UserDefaultChatHeadsDisabled = @"ZDevOptionChatHeadsDisabled";
-NSString * const UserDefaultLikeTutorialCompleted = @"LikeTutorialCompleted";
 NSString * const UserDefaultLastPushAlertDate = @"LastPushAlertDate";
 NSString * const UserDefaultVoIPNotificationsOnly = @"VoIPNotificationsOnly";
 
@@ -95,7 +94,6 @@ NSString * const UserDefaultDisableLinkPreviews = @"DisableLinkPreviews";
 {
     return @[UserDefaultDisableMarkdown,
              UserDefaultChatHeadsDisabled,
-             UserDefaultLikeTutorialCompleted,
              UserDefaultLastViewedConversation,
              UserDefaultLastViewedScreen,
              AVSMediaManagerPersistentIntensity,
@@ -266,17 +264,6 @@ NSString * const UserDefaultDisableLinkPreviews = @"DisableLinkPreviews";
 - (void)setPreferredCamera:(CameraControllerCamera)preferredCamera
 {
     [self.defaults setInteger:preferredCamera forKey:UserDefaultPreferredCamera];
-}
-
-- (BOOL)likeTutorialCompleted
-{
-    return [self.defaults boolForKey:UserDefaultLikeTutorialCompleted];
-}
-
-- (void)setLikeTutorialCompleted:(BOOL)likeTutorialCompleted
-{
-    [self.defaults setBool:likeTutorialCompleted forKey:UserDefaultLikeTutorialCompleted];
-    [self.defaults synchronize];
 }
 
 - (void)synchronize
