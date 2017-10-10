@@ -553,7 +553,7 @@
     KeyboardAvoidingViewController *keyboardAvoidingWrapperController = [[KeyboardAvoidingViewController alloc] initWithViewController:settingsViewController];
     
     if (self.wr_splitViewController.layoutSize == SplitViewControllerLayoutSizeCompact) {
-        keyboardAvoidingWrapperController.topInset = 20;
+        keyboardAvoidingWrapperController.topInset = UIScreen.safeArea.top;
         @weakify(keyboardAvoidingWrapperController);
         settingsViewController.dismissAction = ^(SettingsNavigationController *controller) {
             @strongify(keyboardAvoidingWrapperController);

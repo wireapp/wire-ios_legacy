@@ -21,17 +21,11 @@ import UIKit
 extension UIScreen {
     
     static var safeArea: UIEdgeInsets {
-        if #available(iOS 11, *) {
-            if let window = UIApplication.shared.keyWindow {
-                let insets = window.safeAreaInsets
-                if insets.top > 0 {
-                    return insets
-                } else {
-                    return UIEdgeInsetsMake(20.0, 0.0, 0.0, 0.0)
-                }
-            }
+        if #available(iOS 11, *), hasNotch {
+            return UIApplication.shared.keyWindow!.safeAreaInsets
+        } else {
+            return UIEdgeInsetsMake(20.0, 0.0, 0.0, 0.0)
         }
-        return UIEdgeInsets.zero
     }
     
     static var navbarHeight : CGFloat {
@@ -39,6 +33,16 @@ extension UIScreen {
             return 44.0
         } else {
             return 64.0
+        }
+    }
+    
+    static var hasNotch: Bool {
+        if #available(iOS 11, *) {
+            guard let window = UIApplication.shared.keyWindow else { return false }
+            let insets = window.safeAreaInsets
+            return insets.top > 0 || insets.bottom > 0
+        } else {
+            return false
         }
     }
     

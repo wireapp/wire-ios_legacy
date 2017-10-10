@@ -248,7 +248,7 @@ final class MessageComposeViewController: UIViewController {
 
             markdownBarView.leading == view.leading
             markdownBarView.trailing == view.trailing
-            markdownBarView.bottom == view.bottom
+            markdownBarView.bottom == view.bottom - UIScreen.safeArea.bottom
             markdownBarView.height == 56
         }
     }

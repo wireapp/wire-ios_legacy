@@ -349,11 +349,12 @@ public final class TeamImageView: UIImageView {
         UIGraphicsBeginImageContextWithOptions(bounds.size, false, maskLayer.contentsScale)
         WireStyleKit.drawSpace(withFrame: bounds, resizing: WireStyleKitResizingBehaviorAspectFit, color: .black)
         
-        let image = UIGraphicsGetImageFromCurrentImageContext()!
-        UIGraphicsEndImageContext()
-        
-        maskLayer.frame = layer.bounds
-        maskLayer.contents = image.cgImage
+        if let image = UIGraphicsGetImageFromCurrentImageContext() {
+            UIGraphicsEndImageContext()
+            
+            maskLayer.frame = layer.bounds
+            maskLayer.contents = image.cgImage
+        }
     }
     
     override public func layoutSubviews() {

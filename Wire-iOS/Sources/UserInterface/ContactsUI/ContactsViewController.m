@@ -203,7 +203,7 @@ static NSString * const ContactsViewControllerSectionHeaderID = @"ContactsSectio
 
 - (void)setupLayout
 {
-    [self.topContainerView autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsMake(20, 0, 0, 0) excludingEdge:ALEdgeBottom];
+    [self.topContainerView autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero excludingEdge:ALEdgeBottom];
     [self.topContainerView autoPinEdge:ALEdgeBottom toEdge:ALEdgeTop ofView:self.separatorView];
     [NSLayoutConstraint autoSetPriority:UILayoutPriorityDefaultLow forConstraints:^{
         [self.topContainerView autoSetDimension:ALDimensionHeight toSize:62];
@@ -234,7 +234,7 @@ static NSString * const ContactsViewControllerSectionHeaderID = @"ContactsSectio
     [self.noContactsLabel autoPinEdge:ALEdgeLeading toEdge:ALEdgeLeading ofView:self.view withOffset:standardOffset];
     [self.noContactsLabel autoPinEdgeToSuperviewEdge:ALEdgeTrailing];
     
-    CGFloat bottomContainerHeight = 56.0f;
+    CGFloat bottomContainerHeight = 56.0f + UIScreen.safeArea.bottom;
     [self.bottomContainerView autoPinEdgeToSuperviewEdge:ALEdgeLeading];
     [self.bottomContainerView autoPinEdgeToSuperviewEdge:ALEdgeTrailing];
     [self.bottomContainerView autoSetDimension:ALDimensionHeight toSize:bottomContainerHeight];
@@ -267,7 +267,7 @@ static NSString * const ContactsViewControllerSectionHeaderID = @"ContactsSectio
     [self.inviteOthersButton autoPinEdgeToSuperviewEdge:ALEdgeLeading withInset:standardOffset];
     [self.inviteOthersButton autoPinEdgeToSuperviewEdge:ALEdgeTrailing withInset:standardOffset];
     [self.inviteOthersButton autoSetDimension:ALDimensionHeight toSize:28];
-    [self.inviteOthersButton autoAlignAxisToSuperviewAxis:ALAxisHorizontal];
+    [self.inviteOthersButton autoPinEdgeToSuperviewEdge:ALEdgeTop withInset:standardOffset / 2.0];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardFrameDidChange:) name:UIKeyboardWillChangeFrameNotification object:nil];
 }
