@@ -17,6 +17,7 @@
 //
 
 import UIKit
+import WireSyncEngine
 import Cartography
 
 public extension UIViewController {
@@ -54,7 +55,7 @@ class ChatHeadsViewController: UIViewController {
     
     // MARK: - Public Interface
     
-    public func tryToDisplayNotification(_ note: UILocalNotification) {
+    public func tryToDisplayNotification(_ note: ZMLocalNote) {
 
         // hide visible chat head and try again
         if chatHeadState != .hidden {
@@ -64,61 +65,21 @@ class ChatHeadsViewController: UIViewController {
         }
         
         guard
-            let selfID = note.zm_selfUserUUID,
+            let selfID = note.selfUserID,
             let account = SessionManager.shared?.accountManager.account(with: selfID),
             let session = SessionManager.shared?.backgroundUserSessions[account.userIdentifier],
             let conversation = note.conversation(in: session.managedObjectContext),
-            let sender = note.sender(in: session.managedObjectContext)
-            else {
-                return
-        }
-        
-        guard shouldDisplay(note: note, conversation: conversation, account: account) else {
-            return
-        }
-
-        var title: NSAttributedString? = nil
-        var contentCandidate: NSAttributedString? = nil
-        
-        // new messages and group participation notifications
-        if let message = note.message(in: conversation, in: session.managedObjectContext) {
-            
-            // Currently, the only system messages are group participation notifications.
-            // Since the group name is in the content, we don't want it in the title too.
-            title = ChatHeadTextFormatter.titleText(
-                conversationName: message.isSystem ? nil : conversation.displayName,
-                teamName: account.teamName,
-                isAccountActive: account.isActive
-            )
-            
-            // group participation notifications have content in note, o/w extract it from message
-            contentCandidate = message.isSystem ? ChatHeadTextFormatter.text(for: note) : ChatHeadTextFormatter.text(for: message, isAccountActive: account.isActive)
-        }
-        else {
-            
-            // call notifications contain sender name & possibly group name in notification content,
-            // so we don't want to include these in the title.
-            let isCallNotification = note.category == ZMIncomingCallCategory || note.category == ZMMissedCallCategory
-            
-            title = ChatHeadTextFormatter.titleText(
-                conversationName: isCallNotification ? nil : conversation.displayName,
-                teamName: account.teamName,
-                isAccountActive: account.isActive
-            )
-
-            contentCandidate = ChatHeadTextFormatter.text(for: note)
-        }
-        
-        guard let content = contentCandidate else {
-            return
-        }
-        
+            let sender = note.sender(in: session.managedObjectContext),
+            shouldDisplay(note: note, conversation: conversation, account: account)
+            else { return }
+                
         chatHeadView = ChatHeadView(
-            title: title,
-            content: content,
+            title: trimTitleIfNeeded(note.title ?? "", conversation: conversation, account: account),
+            body: note.body,
             sender: sender,
             conversation: conversation,
-            account: account
+            account: account,
+            isEphemeral: note.isEphemeral
         )
         
         chatHeadView!.onSelect = { conversation, account in
@@ -153,15 +114,15 @@ class ChatHeadsViewController: UIViewController {
     
     // MARK: - Private Helpers
     
-    private func shouldDisplay(note: UILocalNotification, conversation: ZMConversation, account: Account) -> Bool {
+    private func shouldDisplay(note: ZMLocalNote, conversation: ZMConversation, account: Account) -> Bool {
         
         guard let clientVC = ZClientViewController.shared() else { return false }
         
         // if call notification & in active account
-        if account.isActive && [ZMIncomingCallCategory, ZMMissedCallCategory].contains(note.category ?? "") {
+        if account.isActive && note.isCallingNotification {
             return false
         }
-
+        
         // if current conversation contains message & is visible
         if clientVC.currentConversation === conversation && clientVC.isConversationViewVisible {
             return false
@@ -172,6 +133,24 @@ class ChatHeadsViewController: UIViewController {
         }
 
         return clientVC.splitViewController.shouldDisplayNotification(from: account)
+    }
+    
+    /// If the given account is active, the title is trimmed to only include the
+    /// conversation name (i.e, trimming the possible team name). If no conversation
+    /// name is present then nil is returned.
+    ///
+    private func trimTitleIfNeeded(_ title: String, conversation: ZMConversation, account: Account) -> String? {
+        if account.isActive {
+            if title.hasPrefix(conversation.displayName) {
+                let idx = title.index(title.startIndex, offsetBy: conversation.displayName.count)
+                return title.substring(to: idx)
+            }
+            else {
+                return nil
+            }
+        }
+        
+        return title
     }
     
     fileprivate func revealChatHeadFromCurrentState() {
