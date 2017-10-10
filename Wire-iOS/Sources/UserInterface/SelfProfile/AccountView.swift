@@ -128,6 +128,7 @@ public class BaseAccountView: UIView, AccountViewType {
         selectionView.isHidden = !selected || collapsed
         dotView.hasUnreadMessages = hasUnreadMessages
         selectionView.hostedLayer.strokeColor = UIColor.accent().cgColor
+        self.layoutSubviews()
     }
     
     public var onTap: ((Account?) -> ())? = .none
@@ -344,6 +345,10 @@ public final class TeamImageView: UIImageView {
     func updateClippingLayer() {
         guard bounds.size != .zero else {
             return
+        }
+        
+        if bounds.size.height == 0 {
+            bounds.size.height = bounds.size.width
         }
         
         UIGraphicsBeginImageContextWithOptions(bounds.size, false, maskLayer.contentsScale)

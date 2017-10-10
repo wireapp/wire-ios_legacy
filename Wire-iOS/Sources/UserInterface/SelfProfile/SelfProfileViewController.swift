@@ -129,7 +129,7 @@ final internal class SelfProfileViewController: UIViewController {
         constrain(view, settingsController.view, profileView, profileContainerView, settingsController.tableView) { view, settingsControllerView, profileView, profileContainerView, tableView in
             profileContainerView.leading == view.leading
             profileContainerView.trailing == view.trailing
-            profileContainerView.bottom == settingsControllerView.top// - UIScreen.safeArea.bottom
+            profileContainerView.bottom == settingsControllerView.top
             
             profileView.top >= profileContainerView.top
             profileView.centerY == profileContainerView.centerY
