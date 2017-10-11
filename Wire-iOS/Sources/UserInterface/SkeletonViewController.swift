@@ -200,7 +200,7 @@ class ListSkeletonView  : UIView {
         constrain(self, accountView, titleLabel, buttonRowView, listContentView) { (containerView, accountView, titleLabel, buttonRowView, listContentView) in
             
             accountView.left == containerView.left + 9
-            accountView.top == containerView.top + 19
+            accountView.top == containerView.top + UIScreen.safeArea.top
             
             titleLabel.centerY == accountView.centerY
             titleLabel.centerX == containerView.centerX
@@ -209,10 +209,10 @@ class ListSkeletonView  : UIView {
             
             buttonRowView.left == containerView.left + 16
             buttonRowView.right == containerView.right - 16
-            buttonRowView.bottom == containerView.bottom
+            buttonRowView.bottom == containerView.bottom - UIScreen.safeArea.bottom
             buttonRowView.height == 55
             
-            listContentView.top == containerView.top + 76
+            listContentView.top == accountView.bottom + 10
             listContentView.left == containerView.left
             listContentView.right == containerView.right
             listContentView.bottom == buttonRowView.top

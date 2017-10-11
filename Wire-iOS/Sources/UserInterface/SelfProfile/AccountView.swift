@@ -51,8 +51,8 @@ class ShapeView: LayerHostView<CAShapeLayer> {
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        if lastBounds != self.bounds {
-           lastBounds = self.bounds
+        if !lastBounds.equalTo(self.bounds) {
+            lastBounds = self.bounds
             
             self.updatePath()
         }
@@ -262,9 +262,8 @@ public final class PersonalAccountView: BaseAccountView {
         }
         
         self.imageViewContainer.addSubview(userImageView)
-        self.imageViewContainer.layoutMargins = UIEdgeInsets(top: 2, left: 2, bottom: 2, right: 2)
         constrain(imageViewContainer, userImageView) { imageViewContainer, userImageView in
-            userImageView.edges == imageViewContainer.edgesWithinMargins
+            userImageView.edges == inset(imageViewContainer.edges, 2, 2)
         }
         
         update()
@@ -384,7 +383,7 @@ public final class TeamImageView: UIImageView {
 }
 
 @objc internal class TeamAccountView: BaseAccountView {
-
+    
     public override var collapsed: Bool {
         didSet {
             self.imageView.isHidden = collapsed
@@ -396,7 +395,7 @@ public final class TeamImageView: UIImageView {
     
     private var teamObserver: NSObjectProtocol!
     private var conversationListObserver: NSObjectProtocol!
-
+    
     override init(account: Account, user: ZMUser? = nil) {
         
         imageView = TeamImageView(account: account)
@@ -419,9 +418,8 @@ public final class TeamImageView: UIImageView {
             return path
         }
         
-        self.imageViewContainer.layoutMargins = UIEdgeInsets(top: 2, left: 2, bottom: 2, right: 2)
         constrain(imageViewContainer, imageView) { imageViewContainer, imageView in
-            imageView.edges == imageViewContainer.edgesWithinMargins
+            imageView.edges == inset(imageViewContainer.edges, 2, 2)
         }
 
         update()
