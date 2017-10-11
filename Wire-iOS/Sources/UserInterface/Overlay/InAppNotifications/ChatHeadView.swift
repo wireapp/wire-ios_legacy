@@ -30,8 +30,6 @@ class ChatHeadView: UIView {
     private let title: String?
     private let body: String
     private let sender: ZMUser
-    private let conversation: ZMConversation
-    private let account: Account
     private let isEphemeral: Bool
     
     private let imageDiameter: CGFloat = 28
@@ -46,7 +44,7 @@ class ChatHeadView: UIView {
         else { return font }
     }()
     
-    public var onSelect: ((ZMConversation, Account) -> Void)?
+    public var onSelect: (() -> Void)?
     
     override var intrinsicContentSize: CGSize {
         let height = imageDiameter + 2 * padding
@@ -57,12 +55,10 @@ class ChatHeadView: UIView {
         return ColorScheme.default().color(withName: name)
     }
     
-    init(title: String?, body: String, sender: ZMUser, conversation: ZMConversation, account: Account, isEphemeral: Bool = false) {
+    init(title: String?, body: String, sender: ZMUser, isEphemeral: Bool = false) {
         self.title = title
         self.body = body
         self.sender = sender
-        self.conversation = conversation
-        self.account = account
         self.isEphemeral = isEphemeral
         super.init(frame: .zero)
         setup()
@@ -167,8 +163,8 @@ class ChatHeadView: UIView {
     // MARK: - Actions
     
     @objc private func didTapInAppNotification(_ gestureRecognizer: UITapGestureRecognizer) {
-        if let onSelect = onSelect, gestureRecognizer.state == .recognized {
-            onSelect(conversation, account)
+        if gestureRecognizer.state == .recognized {
+            onSelect?()
         }
     }
 }

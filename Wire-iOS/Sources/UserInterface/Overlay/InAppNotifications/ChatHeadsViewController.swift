@@ -77,13 +77,10 @@ class ChatHeadsViewController: UIViewController {
             title: trimTitleIfNeeded(note.title ?? "", conversation: conversation, account: account),
             body: note.body,
             sender: sender,
-            conversation: conversation,
-            account: account,
             isEphemeral: note.isEphemeral
         )
         
-        chatHeadView!.onSelect = { conversation, account in
-            
+        chatHeadView!.onSelect = {
             SessionManager.shared?.withSession(for: account) { userSession in
                 SessionManager.shared?.userSession(userSession, show: conversation)
             }
