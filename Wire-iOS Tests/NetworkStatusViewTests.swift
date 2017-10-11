@@ -24,7 +24,6 @@ class NetworkStatusViewTests: ZMSnapshotTestCase {
     override func setUp() {
         super.setUp()
         accentColor = .violet
-        recordMode = true
     }
     
     func testOfflineExpandedState() {
@@ -38,7 +37,7 @@ class NetworkStatusViewTests: ZMSnapshotTestCase {
     func testOfflineCollapsedState() {
         // GIVEN
         let sut = NetworkStatusView()
-        sut.state = .offlineMinimized
+        sut.state = .offlineCollapsed
         // WHEN && THEN
         verifyInAllPhoneWidths(view: sut)
     }
