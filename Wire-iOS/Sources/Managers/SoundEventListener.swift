@@ -30,7 +30,7 @@ class SoundEventListener : NSObject {
     var unreadMessageObserverToken : NSObjectProtocol?
     var unreadKnockMessageObserverToken : NSObjectProtocol?
     var callStateObserverToken : Any?
-    var initialSyncObserverToken : Any?
+    var networkAvailabilityObserverToken : Any?
     
     deinit {
         NotificationCenter.default.removeObserver(self)
@@ -44,7 +44,7 @@ class SoundEventListener : NSObject {
             return
         }
         
-        initialSyncObserverToken = userSession.addInitialSyncCompletionObserver(self)
+        networkAvailabilityObserverToken = ZMNetworkAvailabilityChangeNotification.addNetworkAvailabilityObserver(self, userSession: userSession)
         callStateObserverToken = WireCallCenterV3.addCallStateObserver(observer: self, userSession: userSession)
         unreadMessageObserverToken = NewUnreadMessagesChangeInfo.add(observer: self, for: userSession)
         unreadKnockMessageObserverToken = NewUnreadKnockMessagesChangeInfo.add(observer: self, for: userSession)
@@ -216,10 +216,14 @@ extension SoundEventListener {
     }
 }
 
-extension SoundEventListener : ZMInitialSyncCompletionObserver {
+extension SoundEventListener : ZMNetworkAvailabilityObserver {
     
-    func initialSyncCompleted() {
-        soundEventWatchDog.isMuted = UIApplication.shared.applicationState == .background
-    }
+    func didChangeAvailability(newState: ZMNetworkState) {
+        guard UIApplication.shared.applicationState != .background else { return }
         
+        if newState == .online {
+            soundEventWatchDog.isMuted = false
+        }
+    }
+    
 }
