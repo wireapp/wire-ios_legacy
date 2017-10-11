@@ -74,7 +74,7 @@ class ChatHeadsViewController: UIViewController {
             else { return }
                 
         chatHeadView = ChatHeadView(
-            title: trimTitleIfNeeded(note.title ?? "", conversation: conversation, account: account),
+            title: note.title.flatMap { trimTitleIfNeeded($0, conversation: conversation, account: account) },
             body: note.body,
             sender: sender,
             isEphemeral: note.isEphemeral
