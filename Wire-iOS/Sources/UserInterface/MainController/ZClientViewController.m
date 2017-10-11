@@ -679,7 +679,12 @@
 
 - (void)userSession:(ZMUserSession *)userSession showConversation:(ZMConversation *)conversation
 {
-    [self selectConversation:conversation focusOnView:YES animated:YES];
+    if (conversation.conversationType == ZMConversationTypeConnection) {
+        [self selectIncomingContactRequestsAndFocusOnView:YES];
+    }
+    else {
+        [self selectConversation:conversation focusOnView:YES animated:YES];
+    }
 }
 
 - (void)userSession:(ZMUserSession *)userSession showMessage:(ZMMessage *)message inConversation:(ZMConversation *)conversation
