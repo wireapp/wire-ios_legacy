@@ -59,13 +59,14 @@
 {
     [super viewDidLoad];
     
+    [self setupBackButton];
+    [self setupRightButton];
+    [self setupLogo];
+    
     self.navigationBarHidden = YES;
     self.backButtonEnabled = YES;
     self.rightButtonEnabled = NO;
     
-    [self setupBackButton];
-    [self setupRightButton];
-    [self setupLogo];
     [self updateLogoAnimated:NO];
     [self updateBackButtonAnimated:NO];
     
@@ -119,22 +120,29 @@
     if (! self.initialConstraintsCreated) {
         self.initialConstraintsCreated = YES;
         
-        [self.logoImageView autoSetDimensionsToSize:CGSizeMake(76, 22)];
-        [self.logoImageView autoPinEdgeToSuperviewEdge:ALEdgeTop withInset:35];
-        [self.logoImageView autoPinEdgeToSuperviewEdge:ALEdgeLeading withInset:26];
+        UIEdgeInsets safeArea = UIScreen.safeArea;
         
-        [self.backButton autoSetDimension:ALDimensionHeight toSize:32];
-        [self.backButton autoSetDimension:ALDimensionWidth toSize:32 relation:NSLayoutRelationGreaterThanOrEqual];
-        [self.backButton autoPinEdgeToSuperviewEdge:ALEdgeTop withInset:32];
-        [self.backButton autoPinEdgeToSuperviewEdge:ALEdgeLeading withInset:28];
+        CGFloat topMargin = 32 + safeArea.top;
+        CGFloat leftMargin = 28 + safeArea.left;
+        CGFloat rightMargin = 28 + safeArea.right;
+        CGFloat buttonSize = 32;
+        
+        [self.logoImageView autoSetDimensionsToSize:CGSizeMake(76, 22)];
+        [self.logoImageView autoPinEdgeToSuperviewEdge:ALEdgeTop withInset:topMargin + 3];
+        [self.logoImageView autoPinEdgeToSuperviewEdge:ALEdgeLeading withInset:leftMargin - 2];
+        
+        [self.backButton autoSetDimension:ALDimensionHeight toSize:buttonSize];
+        [self.backButton autoSetDimension:ALDimensionWidth toSize:buttonSize relation:NSLayoutRelationGreaterThanOrEqual];
+        [self.backButton autoPinEdgeToSuperviewEdge:ALEdgeTop withInset:topMargin];
+        [self.backButton autoPinEdgeToSuperviewEdge:ALEdgeLeading withInset:leftMargin];
         
         [self.rightTitledButton autoSetDimension:ALDimensionHeight toSize:28];
-        [self.rightTitledButton autoPinEdgeToSuperviewEdge:ALEdgeTop withInset:32];
-        [self.rightTitledButton autoPinEdgeToSuperviewEdge:ALEdgeTrailing withInset:28];
+        [self.rightTitledButton autoPinEdgeToSuperviewEdge:ALEdgeTop withInset:topMargin];
+        [self.rightTitledButton autoPinEdgeToSuperviewEdge:ALEdgeTrailing withInset:leftMargin];
         
-        [self.rightIconedButton autoSetDimensionsToSize:CGSizeMake(32, 32)];
-        [self.rightIconedButton autoPinEdgeToSuperviewEdge:ALEdgeTop withInset:32];
-        [self.rightIconedButton autoPinEdgeToSuperviewEdge:ALEdgeTrailing withInset:28];
+        [self.rightIconedButton autoSetDimensionsToSize:CGSizeMake(buttonSize, buttonSize)];
+        [self.rightIconedButton autoPinEdgeToSuperviewEdge:ALEdgeTop withInset:topMargin];
+        [self.rightIconedButton autoPinEdgeToSuperviewEdge:ALEdgeTrailing withInset:rightMargin];
     }
 }
 
