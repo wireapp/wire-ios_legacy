@@ -158,7 +158,7 @@ public class BaseAccountView: UIView, AccountViewType {
         [imageViewContainer, outlineView, selectionView, dotView].forEach(self.addSubview)
         
         constrain(imageViewContainer, selectionView) { imageViewContainer, selectionView in
-            selectionView.edgesWithinMargins == imageViewContainer.edges
+            selectionView.edges == imageViewContainer.edges
         }
 
         let dotSize: CGFloat = 9
@@ -344,10 +344,6 @@ public final class TeamImageView: UIImageView {
     func updateClippingLayer() {
         guard bounds.size != .zero else {
             return
-        }
-        
-        if bounds.size.height == 0 {
-            bounds.size.height = bounds.size.width
         }
         
         UIGraphicsBeginImageContextWithOptions(bounds.size, false, maskLayer.contentsScale)
