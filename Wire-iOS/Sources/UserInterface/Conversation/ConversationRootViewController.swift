@@ -61,15 +61,18 @@ import Cartography
         self.view.addSubview(self.customNavBar)
         self.view.addSubview(self.contentView)
         
+        
         constrain(self.customNavBar, self.view, self.contentView, conversationViewController.view) { (customNavBar: LayoutProxy, view: LayoutProxy, contentView: LayoutProxy, conversationViewControllerView: LayoutProxy) -> () in
-            customNavBar.top == view.top
-            customNavBar.height == 64
+            
+            customNavBar.top == view.top + UIScreen.safeArea.top
+            customNavBar.height == UIScreen.navbarHeight
+            
             customNavBar.left == view.left
             customNavBar.right == view.right
             
             contentView.left == view.left
             contentView.right == view.right
-            contentView.bottom == view.bottom
+            contentView.bottom == view.bottom - UIScreen.safeArea.bottom
             contentView.top == customNavBar.bottom
             
             conversationViewControllerView.edges == contentView.edges

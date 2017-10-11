@@ -99,6 +99,12 @@ public final class AudioRecorder: NSObject, AudioRecorderType {
 
         audioRecorder?.isMeteringEnabled = true
         audioRecorder?.delegate = self
+        
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(handleInterruption),
+                                               name: .AVAudioSessionInterruption,
+                                               object: AVAudioSession.sharedInstance())
+
         return audioRecorder
     }()
     
@@ -128,6 +134,19 @@ public final class AudioRecorder: NSObject, AudioRecorderType {
     deinit {
         NotificationCenter.default.removeObserver(self)
         removeDisplayLink()
+    }
+    
+    // MARK: Audio Session Interruption handling
+    
+    func handleInterruption(_ notification: Notification) {
+        guard let info = notification.userInfo,
+            let typeValue = info[AVAudioSessionInterruptionTypeKey] as? UInt,
+            let type = AVAudioSessionInterruptionType(rawValue: typeValue) else {
+                return
+        }
+        if type == .began {
+            stopRecording()
+        }
     }
     
     // MARK: Recording

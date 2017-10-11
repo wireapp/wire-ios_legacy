@@ -384,7 +384,7 @@
     
     [self.topBar autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero excludingEdge:ALEdgeBottom];
     [self.topBar autoPinEdge:ALEdgeBottom toEdge:ALEdgeTop ofView:self.conversationListContainer];
-    [self.contentContainer autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsMake(20, 0, 0, 0)];
+    [self.contentContainer autoPinEdgesToSuperviewEdgesWithInsets:UIScreen.safeArea];
     
     [self.noConversationLabel autoCenterInSuperview];
     [self.noConversationLabel autoSetDimension:ALDimensionHeight toSize:120.0f];
@@ -562,7 +562,7 @@
     KeyboardAvoidingViewController *keyboardAvoidingWrapperController = [[KeyboardAvoidingViewController alloc] initWithViewController:settingsViewController];
     
     if (self.wr_splitViewController.layoutSize == SplitViewControllerLayoutSizeCompact) {
-        keyboardAvoidingWrapperController.topInset = 20;
+        keyboardAvoidingWrapperController.topInset = UIScreen.safeArea.top;
         @weakify(keyboardAvoidingWrapperController);
         settingsViewController.dismissAction = ^(SettingsNavigationController *controller) {
             @strongify(keyboardAvoidingWrapperController);

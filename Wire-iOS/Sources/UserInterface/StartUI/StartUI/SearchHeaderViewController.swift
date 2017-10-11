@@ -136,7 +136,7 @@ public class SearchHeaderViewController : UIViewController {
                 
         constrain(view, titleContainer, tokenFieldContainer, separatorView) { view, titleContainer, tokenFieldContainer, separatorView in
             
-            titleContainer.top == view.top + 20
+            titleContainer.top == view.top
             titleContainer.leading == view.leading
             titleContainer.trailing == view.trailing
             titleContainer.height == 44

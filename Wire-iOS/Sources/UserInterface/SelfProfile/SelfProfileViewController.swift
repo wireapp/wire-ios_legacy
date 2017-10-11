@@ -113,20 +113,20 @@ final internal class SelfProfileViewController: UIViewController {
         constrain(view, accountSelectorController.view, profileContainerView, accountLabel) { selfView, accountSelectorControllerView, profileContainerView, accountLabel in
             accountSelectorControllerView.leading >= selfView.leading
             accountSelectorControllerView.trailing <= selfView.trailing
-            accountSelectorControllerView.top == selfView.top + 8
+            accountSelectorControllerView.top == selfView.top
             accountSelectorControllerView.centerX == selfView.centerX
             accountSelectorControllerView.height == 46
             
-            accountLabel.top == selfView.top + 8
+            accountLabel.top == selfView.top
             accountLabel.leading >= selfView.leading
             accountLabel.trailing >= selfView.trailing
             accountLabel.centerX == selfView.centerX
             accountLabel.height == 46
             
-            profileContainerView.top == accountSelectorControllerView.bottom + 12   
+            profileContainerView.top == accountSelectorControllerView.bottom + 12
         }
         
-        constrain(view, settingsController.view, profileView, profileContainerView) { view, settingsControllerView, profileView, profileContainerView in
+        constrain(view, settingsController.view, profileView, profileContainerView, settingsController.tableView) { view, settingsControllerView, profileView, profileContainerView, tableView in
             profileContainerView.leading == view.leading
             profileContainerView.trailing == view.trailing
             profileContainerView.bottom == settingsControllerView.top
@@ -136,10 +136,16 @@ final internal class SelfProfileViewController: UIViewController {
             profileView.leading == profileContainerView.leading
             profileView.trailing == profileContainerView.trailing
             profileView.bottom <= profileContainerView.bottom
-
+            
+            settingsControllerView.height == 168
             settingsControllerView.leading == view.leading
             settingsControllerView.trailing == view.trailing
-            settingsControllerView.bottom == view.bottom
+            settingsControllerView.bottom == view.bottom - UIScreen.safeArea.bottom
+            
+            tableView.leading == settingsControllerView.leading
+            tableView.trailing == settingsControllerView.trailing
+            tableView.top == settingsControllerView.top
+            tableView.bottom == settingsControllerView.bottom
         }
     }
     
