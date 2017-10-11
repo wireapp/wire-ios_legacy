@@ -139,9 +139,12 @@ class NetworkStatusView : UIView {
     
     func createConstraints() {
         constrain(self, offlineView, connectingView) { containerView, offlineView, connectingView in
+            containerView.height == 20
+            
             offlineView.left == containerView.left
             offlineView.right == containerView.right
             offlineView.top == containerView.top
+            offlineView.bottom <= containerView.bottom
             
             connectingView.left == containerView.left
             connectingView.right == containerView.right
@@ -161,17 +164,25 @@ class NetworkStatusView : UIView {
         }
         
         if state == .offlineExpanded {
-            UIView.animate(withDuration: 0.35, delay: 0, options: [.curveEaseIn], animations: {
+            if animated {
+                UIView.animate(withDuration: 0.35, delay: 0, options: [.curveEaseIn, .beginFromCurrentState], animations: {
+                    self.offlineView.update(state: .expanded, animated: animated)
+                    self.layoutIfNeeded()
+                })
+            } else {
                 self.offlineView.update(state: .expanded, animated: animated)
-                self.layoutIfNeeded()
-            })
+            }
         }
             
         if state == .offlineCollapsed {
-            UIView.animate(withDuration: 0.35, delay: 0, options: [.curveEaseOut], animations: {
+            if animated {
+                UIView.animate(withDuration: 0.35, delay: 0, options: [.curveEaseOut, .beginFromCurrentState], animations: {
+                    self.offlineView.update(state: .minimized, animated: animated)
+                    self.layoutIfNeeded()
+                })
+            } else {
                 self.offlineView.update(state: .minimized, animated: animated)
-                self.layoutIfNeeded()
-            })
+            }
         }
     }
     
