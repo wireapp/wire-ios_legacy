@@ -174,8 +174,6 @@
         
         self.navigationController.showLoadingView = YES;
 
-        [AppDelegate checkNetworkAndFlashIndicatorIfNecessary];
-
         [[UnauthenticatedSession sharedSession] verifyPhoneNumberForRegistration:phoneVerificationStepViewController.phoneNumber
                                                        verificationCode:phoneVerificationStepViewController.verificationCode];
     }
@@ -192,12 +190,10 @@
         ProfilePictureStepViewController *step = (ProfilePictureStepViewController *)viewController;
         [self.analyticsTracker tagAddedPhotoFromSource:step.photoSource];
         
-        if (![AppDelegate checkNetworkAndFlashIndicatorIfNecessary]) {
-            ZMCompleteRegistrationUser *completeUser = [self.unregisteredUser completeRegistrationUser];
-            [[UnauthenticatedSession sharedSession] registerUser:completeUser];
-            
-            self.navigationController.showLoadingView = YES;
-        }
+        ZMCompleteRegistrationUser *completeUser = [self.unregisteredUser completeRegistrationUser];
+        [[UnauthenticatedSession sharedSession] registerUser:completeUser];
+        
+        self.navigationController.showLoadingView = YES;
     }
     else {
         [self.formStepDelegate didCompleteFormStep:self];

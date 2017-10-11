@@ -164,9 +164,7 @@
     }
     self.unregisteredUser.phoneNumber = self.phoneNumber;
 
-    if (![AppDelegate checkNetworkAndFlashIndicatorIfNecessary]) {
-        [self.formStepDelegate didCompleteFormStep:self];
-    }
+    [self.formStepDelegate didCompleteFormStep:self];
 }
 
 @end

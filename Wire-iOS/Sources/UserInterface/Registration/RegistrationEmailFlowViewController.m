@@ -150,18 +150,16 @@
         [[UIApplication sharedApplication] registerForRemoteNotifications];
         
         self.hasUserAcceptedTOS = YES;
-
-        if (![AppDelegate checkNetworkAndFlashIndicatorIfNecessary]) {
-            ZMCompleteRegistrationUser *completeUser = [self.unregisteredUser completeRegistrationUser];
-            [[UnauthenticatedSession sharedSession] registerUser:completeUser];
-
-            EmailVerificationStepViewController *emailVerificationStepViewController = [[EmailVerificationStepViewController alloc] initWithEmailAddress:self.unregisteredUser.emailAddress];
-            emailVerificationStepViewController.formStepDelegate = self;
-            emailVerificationStepViewController.delegate = self;
-            emailVerificationStepViewController.view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-            
-            [self.navigationController pushViewController:emailVerificationStepViewController.registrationFormViewController animated:YES];
-        }
+        
+        ZMCompleteRegistrationUser *completeUser = [self.unregisteredUser completeRegistrationUser];
+        [[UnauthenticatedSession sharedSession] registerUser:completeUser];
+        
+        EmailVerificationStepViewController *emailVerificationStepViewController = [[EmailVerificationStepViewController alloc] initWithEmailAddress:self.unregisteredUser.emailAddress];
+        emailVerificationStepViewController.formStepDelegate = self;
+        emailVerificationStepViewController.delegate = self;
+        emailVerificationStepViewController.view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+        
+        [self.navigationController pushViewController:emailVerificationStepViewController.registrationFormViewController animated:YES];
     }
     else if ([viewController isKindOfClass:[ProfilePictureStepViewController class]]) {
         ProfilePictureStepViewController *step = (ProfilePictureStepViewController *)viewController;

@@ -106,7 +106,6 @@
 #import "ProfileDetailsViewController.h"
 #import "ContactsDataSource.h"
 #import "LaunchImageViewController.h"
-#import "NetworkStatusViewController.h"
 #import "VoiceUserImageView.h"
 #import "VoiceChannelParticipantCell.h"
 
