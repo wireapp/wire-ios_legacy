@@ -86,7 +86,8 @@ public final class InputBarButtonsView: UIView {
             buttonRow.left == view.left
             buttonRow.right == view.right
             buttonRowHeight = buttonRow.height == 0
-            view.height == constants.buttonsBarHeight
+            buttonRow.bottom == view.bottom
+            self.buttonRowHeight = view.height == constants.buttonsBarHeight + UIScreen.safeArea.bottom
             view.width == 600 ~ LayoutPriority(750)
         }
     }
@@ -96,6 +97,17 @@ public final class InputBarButtonsView: UIView {
         guard bounds.size.width != lastLayoutWidth else { return }
         layoutAndConstrainButtonRows()
         lastLayoutWidth = bounds.size.width
+        layoutForOrientation()
+    }
+    
+    func layoutForOrientation() {
+        let orientation = UIDevice.current.orientation
+        let deviceType = UIDevice.current.userInterfaceIdiom
+        if(UIDeviceOrientationIsLandscape(orientation) && deviceType == .phone) {
+            self.buttonRowHeight.constant = 0.0
+        } else {
+            self.buttonRowHeight.constant = UIScreen.safeArea.bottom
+        }
     }
     
     
