@@ -144,9 +144,11 @@ class ClientUnregisterFlowViewController: FormFlowViewController, FormStepDelega
     
     override func navigationController(_ navigationController: UINavigationController, willShow viewController: UIViewController, animated: Bool) {
         if viewController is ClientListViewController {
-            navigationController.setNavigationBarHidden(false, animated: false)
+            UIApplication.shared.isStatusBarHidden = !UIScreen.hasNotch
+            navigationController.setNavigationBarHidden(false, animated: animated)
         }
         else {
+            UIApplication.shared.isStatusBarHidden = true
             navigationController.setNavigationBarHidden(true, animated: animated)
         }
     }

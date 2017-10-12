@@ -90,7 +90,8 @@ final public class BackgroundViewController: UIViewController {
     }
     
     private func configureViews() {
-        self.cropView.clipsToBounds = true
+        imageView.contentMode = .scaleAspectFill
+        cropView.clipsToBounds = true
         darkenOverlay.backgroundColor = UIColor(white: 0, alpha: 0.16)
         
         [imageView, blurView, statusBarBlurView, darkenOverlay].forEach(self.cropView.addSubview)

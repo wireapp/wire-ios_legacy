@@ -32,6 +32,7 @@
 @property (nonatomic, readwrite) IconButton *cameraButton;
 @property (nonatomic, readwrite) IconButton *callButton;
 @property (nonatomic, readwrite) IconButton *videoCallButton;
+@property (nonatomic) NSLayoutConstraint *bottomEdgeConstraint;
 @property (nonatomic) UIView *lineView;
 
 @end
@@ -39,6 +40,7 @@
 
 @implementation StartUIQuickActionsBar
 
+static const CGFloat padding = 12;
 
 - (instancetype)init
 {
@@ -54,8 +56,18 @@
         [self createCallButton];
         [self createVideoCallButton];
         [self createConstrains];
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(keyboardFrameWillChange:)
+                                                     name:UIKeyboardWillChangeFrameNotification
+                                                   object:nil];
     }
     return self;
+}
+
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)createInviteButton
@@ -146,23 +158,24 @@
 
 - (void)createConstrains
 {
-    [self.inviteButton autoAlignAxisToSuperviewAxis:ALAxisHorizontal];
-    [self.inviteButton autoPinEdgeToSuperviewEdge:ALEdgeLeading withInset: 24];
-    [self.inviteButton autoPinEdgeToSuperviewEdge:ALEdgeTrailing withInset: 24];
+    [self.inviteButton autoPinEdgeToSuperviewEdge:ALEdgeTop withInset: padding];
+    [self.inviteButton autoPinEdgeToSuperviewEdge:ALEdgeLeading withInset: padding*2];
+    [self.inviteButton autoPinEdgeToSuperviewEdge:ALEdgeTrailing withInset: padding*2];
     [self.inviteButton autoSetDimension:ALDimensionHeight toSize:28];
+    self.bottomEdgeConstraint = [self.inviteButton autoPinEdgeToSuperviewEdge:ALEdgeBottom withInset: padding + UIScreen.safeArea.bottom];
     
     [self.conversationButton autoAlignAxisToSuperviewAxis:ALAxisHorizontal];
-    [self.conversationButton autoPinEdgeToSuperviewEdge:ALEdgeLeading withInset: 24];
+    [self.conversationButton autoPinEdgeToSuperviewEdge:ALEdgeLeading withInset: padding*2];
         
     [self.cameraButton autoAlignAxisToSuperviewAxis:ALAxisHorizontal];
-    [self.cameraButton autoPinEdgeToSuperviewEdge:ALEdgeTrailing withInset:24];
-    [self autoPinEdge:ALEdgeTrailing toEdge:ALEdgeTrailing ofView:self.cameraButton withOffset:24];
+    [self.cameraButton autoPinEdgeToSuperviewEdge:ALEdgeTrailing withInset:padding*2];
+    [self autoPinEdge:ALEdgeTrailing toEdge:ALEdgeTrailing ofView:self.cameraButton withOffset:padding*2];
     
     [self.callButton autoAlignAxisToSuperviewAxis:ALAxisHorizontal];
-    [self.callButton autoPinEdge:ALEdgeTrailing toEdge:ALEdgeLeading ofView:self.cameraButton withOffset:-24];
+    [self.callButton autoPinEdge:ALEdgeTrailing toEdge:ALEdgeLeading ofView:self.cameraButton withOffset:-padding*2];
 
     [self.videoCallButton autoAlignAxisToSuperviewAxis:ALAxisHorizontal];
-    [self.videoCallButton autoPinEdge:ALEdgeTrailing toEdge:ALEdgeLeading ofView:self.callButton withOffset:-24];
+    [self.videoCallButton autoPinEdge:ALEdgeTrailing toEdge:ALEdgeLeading ofView:self.callButton withOffset:-padding*2];
     
     [self.lineView autoPinEdgeToSuperviewEdge:ALEdgeTop];
     [self.lineView autoPinEdgeToSuperviewEdge:ALEdgeLeft];
@@ -173,6 +186,17 @@
     [self.callButton autoSetDimensionsToSize:buttonSize];
     [self.cameraButton autoSetDimensionsToSize:buttonSize];
     [self.videoCallButton autoSetDimensionsToSize:buttonSize];
+}
+
+#pragma mark - UIKeyboard notifications
+
+- (void)keyboardFrameWillChange:(NSNotification *)notification
+{
+    CGSize endSize = [notification.userInfo[UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
+    [UIView animateWithKeyboardNotification:notification inView:self animations:^(CGRect keyboardFrameInView) {
+        self.bottomEdgeConstraint.constant = - (padding + (endSize.height == 0 ? 0 : UIScreen.safeArea.bottom));
+        [self layoutIfNeeded];
+    } completion:nil];
 }
 
 @end
