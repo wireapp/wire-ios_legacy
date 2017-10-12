@@ -74,6 +74,7 @@ public final class ConversationTitleView: UIView {
 
         titleButton.setAttributedTitle(titleWithColor(color), for: UIControlState())
         titleButton.setAttributedTitle(titleWithColor(selectedColor), for: .highlighted)
+        titleButton.titleLabel!.font = font
         titleButton.sizeToFit()
         titleButton.isEnabled = tappable
         updateAccessibilityValue(conversation)
