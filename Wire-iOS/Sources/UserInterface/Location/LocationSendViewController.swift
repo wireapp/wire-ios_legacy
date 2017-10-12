@@ -68,9 +68,9 @@ import Classy
             label.leading == container.leading
             label.trailing <= button.leading - 12 ~ LayoutPriority(1000)
             label.top == container.top
-            label.bottom == container.bottom
+            label.bottom == container.bottom - UIScreen.safeArea.bottom
             button.trailing == container.trailing
-            button.centerY == container.centerY
+            button.centerY == label.centerY
             button.height == 28
             separator.leading == view.leading
             separator.trailing == view.trailing

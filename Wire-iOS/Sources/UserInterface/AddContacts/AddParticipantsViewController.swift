@@ -125,7 +125,7 @@ public class AddParticipantsViewController : UIViewController {
     func createConstraints() {
         constrain(view, searchHeaderViewController.view, searchResultsViewController.view, confirmButton) { container, searchHeaderView, searchResultsView, confirmButton in
             
-            searchHeaderView.top == container.top
+            searchHeaderView.top == container.top + UIScreen.safeArea.top
             searchHeaderView.left == container.left
             searchHeaderView.right == container.right
             
@@ -134,7 +134,7 @@ public class AddParticipantsViewController : UIViewController {
             searchResultsView.right == container.right
             searchResultsView.bottom == container.bottom
             
-            confirmButton.height == CGFloat(55.0)
+            confirmButton.height == CGFloat(55.0 + UIScreen.safeArea.bottom)
         }
     }
         
