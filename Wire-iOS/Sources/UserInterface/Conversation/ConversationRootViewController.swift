@@ -65,7 +65,7 @@ import Cartography
         constrain(self.customNavBar, self.view, self.contentView, conversationViewController.view) { (customNavBar: LayoutProxy, view: LayoutProxy, contentView: LayoutProxy, conversationViewControllerView: LayoutProxy) -> () in
             
             customNavBar.top == view.top + UIScreen.safeArea.top
-            customNavBar.height == UIScreen.navbarHeight
+            customNavBar.height == 44.0
             
             customNavBar.left == view.left
             customNavBar.right == view.right

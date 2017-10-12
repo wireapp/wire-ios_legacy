@@ -27,13 +27,6 @@ extension UIScreen {
         return UIEdgeInsetsMake(20.0, 0.0, 0.0, 0.0)
     }
     
-    static var navbarHeight : CGFloat {
-        if #available(iOS 11, *) {
-            return 44.0
-        }
-        return 64.0
-    }
-    
     static var hasNotch: Bool {
         if #available(iOS 11, *) {
             guard let window = UIApplication.shared.keyWindow else { return false }
