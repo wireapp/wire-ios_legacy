@@ -104,7 +104,7 @@ class NetworkStatusViewController : UIViewController {
         }
     }
     
-    fileprivate func enque(state: NetworkStatusViewState) {
+    fileprivate func enqueue(state: NetworkStatusViewState) {
         pendingState = state
         NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(applyPendingState), object: nil)
         perform(#selector(applyPendingState), with: nil, afterDelay: 1)
@@ -129,7 +129,7 @@ class NetworkStatusViewController : UIViewController {
 extension NetworkStatusViewController : ZMNetworkAvailabilityObserver {
     
     func didChangeAvailability(newState: ZMNetworkState) {
-        enque(state: viewState(from: newState))
+        enqueue(state: viewState(from: newState))
     }
     
 }
