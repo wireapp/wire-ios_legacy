@@ -90,8 +90,13 @@
 
     [self.bottomOverlayView addSubview:self.cameraButton];
 
+    CGFloat bottomOffset = 0.0;
+    if(UIScreen.safeArea.bottom > 0) {
+        bottomOffset = - UIScreen.safeArea.bottom + 20.0;
+    }
+    
     [self.cameraButton addConstraintForAligningHorizontallyWithView:self.bottomOverlayView];
-    [self.cameraButton addConstraintForAligningVerticallyWithView:self.bottomOverlayView];
+    [self.cameraButton addConstraintForAligningVerticallyWithView:self.bottomOverlayView offset:bottomOffset];
 
     [self.cameraButton setImage:[UIImage imageForIcon:ZetaIconTypeCameraLens iconSize:ZetaIconSizeCamera color:[UIColor whiteColor]] forState:UIControlStateNormal];
     [self.cameraButton addTarget:self action:@selector(cameraButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
