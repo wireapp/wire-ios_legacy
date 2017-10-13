@@ -87,6 +87,10 @@ static NSString *ConnectionRequestCellIdentifier = @"ConnectionRequestCell";
     self.tableView.backgroundColor = [UIColor wr_colorFromColorScheme:ColorSchemeColorBackground];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
     self.tableView.separatorColor = [UIColor wr_colorFromColorScheme:ColorSchemeColorSeparator];
+    
+    self.tableView.estimatedRowHeight = 0;
+    self.tableView.estimatedSectionHeaderHeight = 0;
+    self.tableView.estimatedSectionFooterHeight = 0;
 }
 
 - (void)viewDidAppear:(BOOL)animated
