@@ -59,7 +59,7 @@ import Cartography
         let insets = UIScreen.safeArea
         constrain(self, titleLabel, dismissButton, separatorView) { view, label, button, separator in
             label.centerX == view.centerX
-            label.top == view.top + insets.top + (showsStatusBar && insets.top == 0 ? 20 : 0)
+            label.top == view.top + (showsStatusBar ? insets.top : 0) + (showsStatusBar && insets.top == 0 ? 20 : 0)
             label.bottom == view.bottom
             label.trailing <= button.leading - 12
             button.trailing == view.trailing - 16

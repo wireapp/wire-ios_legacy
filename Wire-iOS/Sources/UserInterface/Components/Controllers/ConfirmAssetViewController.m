@@ -36,7 +36,7 @@
 #import "UIImage+ImageUtilities.h"
 #import "MediaAsset.h"
 
-static const CGFloat TopBarHeight = 64;
+static const CGFloat TopBarHeight = 44;
 static const CGFloat BottomBarMinHeight = 88;
 static const CGFloat MarginInset = 24;
 
