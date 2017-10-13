@@ -105,8 +105,8 @@ static NSString *ConnectionRequestCellIdentifier = @"ConnectionRequestCell";
     if (!CGSizeEqualToSize(self.lastLayoutBounds.size, self.view.bounds.size)) {
         self.lastLayoutBounds = self.view.bounds;
         [self.tableView reloadData];
-        CGFloat xPos = MAX(self.tableView.bounds.size.height - self.tableView.contentSize.height, 0);
-        [self.tableView setContentInset:UIEdgeInsetsMake(xPos, 0, 0, 0)];
+        CGFloat yPos = self.tableView.contentSize.height - self.tableView.bounds.size.height + UIScreen.safeArea.bottom;
+        [self.tableView setContentOffset:CGPointMake(0, yPos)];
     }
 }
 
