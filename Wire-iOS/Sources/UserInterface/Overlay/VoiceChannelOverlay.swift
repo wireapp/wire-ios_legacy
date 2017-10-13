@@ -538,7 +538,7 @@ extension VoiceChannelOverlay {
             
             topStatusLabel.leading == contentContainer.leadingMargin ~ 750
             topStatusLabel.trailing == contentContainer.trailingMargin
-            topStatusLabel.top == contentContainer.top + 50
+            topStatusLabel.centerY == callingTopUserImage.centerY
             self.statusLabelToTopUserImageInset = topStatusLabel.leading == callingTopUserImage.trailing + 12
             self.statusLabelToTopUserImageInset?.isActive = false
             
