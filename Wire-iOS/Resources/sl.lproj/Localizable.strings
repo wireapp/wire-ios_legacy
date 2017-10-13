@@ -883,7 +883,6 @@
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Username takeover screen
-"registration.select_handle.takeover.title" = "Uporabniška imena so tukaj.";
 "registration.select_handle.takeover.subtitle" = "Zavzemite vaše unikatno ime na Wire.";
 "registration.select_handle.takeover.subtitle_link" = "Nauči se več";
 
@@ -905,6 +904,7 @@
 "error.user.device_deleted_remotely" = "Odjavljeni ste bili iz druge naprave.";
 "error.user.last_identity_cant_be_deleted" = "Zahtevan je ali e-poštni naslov ali telefonska številka.";
 "error.user.account_suspended" = "This account is no longer authorized to log in.";
+"error.user.account_limit_reached" = "You can't add more than 3 accounts.";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Those are caught by the UI without involving the SE validation. Basically very similar to ZMUserSessionErrorCode onces

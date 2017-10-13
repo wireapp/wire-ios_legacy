@@ -95,7 +95,7 @@
 // Conversation list voiceover accessibility
 "conversation_list.voiceover.open_conversation.hint" = "Открыть разговор";
 "conversation_list.voiceover.status.pending_connection" = "В обработке";
-"conversation_list.voiceover.status.active_call" = "активный звонок";
+"conversation_list.voiceover.status.active_call" = "активный вызов";
 "conversation_list.voiceover.status.missed_call" = "пропущенный вызов";
 "conversation_list.voiceover.status.pause_media" = "поставить на паузу";
 "conversation_list.voiceover.status.play_media" = "Воспроизведение медиа";
@@ -663,10 +663,10 @@
 
 "self.settings.callkit.title" = "Звонки";
 "self.settings.callkit.caption" = "Поделиться с iOS";
-"self.settings.callkit.description" = "Show Wire calls on the lock screen and in iOS call history. If iCloud is enabled, call history is shared with Apple.";
+"self.settings.callkit.description" = "Показывать звонки Wire на экране блокировки и в истории звонков iOS. Если Вы используете iCloud, история звонков будет передана Apple.";
 
-"self.settings.cbr.not_available" = "Constant Bit Rate Encoding";
-"self.settings.cbr.not_available.description" = "Constant bit rate calls have been temporarily disabled with the introduction of multiple account support. CBR calls will be back soon.";
+"self.settings.cbr.not_available" = "Кодирование с постоянным битрейтом";
+"self.settings.cbr.not_available.description" = "Кодирование с постоянным битрейтом отключено до введения поддержки нескольких учетных записей. Следите за обновлениями.";
 
 "self.settings.vbr.title" = "Кодирование с переменным битрейтом";
 "self.settings.vbr.description" = "Это позволяет аудиозвонкам использовать меньше трафика и работать лучше при медленном соединении. Выключите, чтобы использовать кодирование с постоянным битрейтом.";
@@ -883,7 +883,6 @@
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Username takeover screen
-"registration.select_handle.takeover.title" = "Имена пользователей здесь.";
 "registration.select_handle.takeover.subtitle" = "Зарезервируйте свое уникальное имя в Wire.";
 "registration.select_handle.takeover.subtitle_link" = "Подробнее";
 
@@ -904,7 +903,8 @@
 "error.user.registration_unknown_error" = "Что-то пошло не так. Пожалуйста, попробуйте еще раз.";
 "error.user.device_deleted_remotely" = "Вы вышли на другом устройстве.";
 "error.user.last_identity_cant_be_deleted" = "Необходимо оставить либо адрес электронной почты, либо номер телефона.";
-"error.user.account_suspended" = "Данный аккаунт заблокирован.";
+"error.user.account_suspended" = "У этой учетной записи истек срок действия авторизации.";
+"error.user.account_limit_reached" = "Нельзя добавить более трех учетных записей.";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Those are caught by the UI without involving the SE validation. Basically very similar to ZMUserSessionErrorCode onces

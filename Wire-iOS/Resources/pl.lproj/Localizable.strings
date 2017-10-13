@@ -883,7 +883,6 @@
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Username takeover screen
-"registration.select_handle.takeover.title" = "Nazwy użytkowników są tutaj.";
 "registration.select_handle.takeover.subtitle" = "Wybierz swoją unikalną nazwę w Wire.";
 "registration.select_handle.takeover.subtitle_link" = "Więcej informacji";
 
@@ -905,6 +904,7 @@
 "error.user.device_deleted_remotely" = "Zostałeś wylogowany na tym urządzeniu!";
 "error.user.last_identity_cant_be_deleted" = "Adres e-mail lub numer telefonu jest wymagany.";
 "error.user.account_suspended" = "This account is no longer authorized to log in.";
+"error.user.account_limit_reached" = "You can't add more than 3 accounts.";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Those are caught by the UI without involving the SE validation. Basically very similar to ZMUserSessionErrorCode onces
