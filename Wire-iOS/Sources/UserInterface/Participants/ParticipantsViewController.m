@@ -236,7 +236,7 @@ static NSString *const ParticipantHeaderReuseIdentifier = @"ParticipantListHeade
     
     [self.view addSubview:self.footerView];
     
-    [self.footerView addConstraintForBottomMargin:0 relativeToView:self.view];
+    [self.footerView addConstraintForBottomMargin:UIScreen.safeArea.bottom relativeToView:self.view];
     [self.footerView addConstraintsForRightMargin:0 leftMargin:0 relativeToView:self.view];
     
     if ([[ZMUser selfUser] canAddUserToConversation:self.conversation]) {
