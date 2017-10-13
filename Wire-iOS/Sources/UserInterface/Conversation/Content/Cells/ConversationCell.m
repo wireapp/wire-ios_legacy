@@ -715,7 +715,7 @@ static const CGFloat BurstContainerExpandedHeight = 40;
 
 - (BOOL)showDestructionCountdown
 {
-    return self.message.isEphemeral && !self.message.isObfuscated;
+    return !self.message.hasBeenDeleted && self.message.isEphemeral && !self.message.isObfuscated;
 }
 
 - (void)updateCountdownView

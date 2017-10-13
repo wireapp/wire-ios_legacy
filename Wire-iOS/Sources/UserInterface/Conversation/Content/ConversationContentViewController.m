@@ -95,7 +95,6 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
 @property (nonatomic) MediaPlaybackManager *mediaPlaybackManager;
 @property (nonatomic) BOOL conversationLoadStopwatchFired;
 @property (nonatomic) NSMutableDictionary *cachedRowHeights;
-@property (nonatomic) BOOL wasFetchingMessages;
 @property (nonatomic) BOOL hasDoneInitialLayout;
 @property (nonatomic) id messageWindowObserverToken;
 @property (nonatomic) BOOL onScreen;
@@ -207,7 +206,6 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    [AppDelegate sharedAppDelegate].notificationWindowController.showLoadMessages = self.wasFetchingMessages;
     
     [self updateVisibleMessagesWindow];
     
@@ -318,13 +316,6 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
 {
     return self.tableView.contentOffset.y + self.tableView.correctedContentInset.bottom <= 0;
 }
-
-- (void)setWasFetchingMessages:(BOOL)wasFetchingMessages
-{
-    _wasFetchingMessages = wasFetchingMessages;
-    [AppDelegate sharedAppDelegate].notificationWindowController.showLoadMessages = _wasFetchingMessages;
-}
-
 #pragma mark - Actions
 
 - (void)wantsToPerformAction:(MessageAction)actionId forMessage:(id<ZMConversationMessage>)message cell:(ConversationCell *)cell

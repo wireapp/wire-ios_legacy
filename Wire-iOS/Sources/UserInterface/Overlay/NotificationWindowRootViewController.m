@@ -21,9 +21,7 @@
 @import PureLayout;
 
 #import "NotificationWindowRootViewController.h"
-#import "NetworkStatusViewController.h"
 #import "PassthroughTouchesView.h"
-#import "NetworkActivityViewController.h"
 #import "AppDelegate.h"
 #import "UIView+Borders.h"
 #import "WAZUIMagicIOS.h"
@@ -51,17 +49,13 @@
 @interface NotificationWindowRootViewController ()
 
 @property (nonatomic) NetworkStatusViewController *networkStatusViewController;
-@property (nonatomic) NetworkActivityViewController *networkActivityViewController;
 @property (nonatomic) AppLockViewController *appLockViewController;
 @property (nonatomic) ChatHeadsViewController *chatHeadsViewController;
 
 @property (nonatomic, strong) NSLayoutConstraint *overlayContainerLeftMargin;
-@property (nonatomic, strong) NSLayoutConstraint *networkStatusRightMargin;
 @property (nonatomic, strong) NSLayoutConstraint *networkActivityRightMargin;
 
 @end
-
-
 
 @implementation NotificationWindowRootViewController
 
@@ -75,10 +69,6 @@
 - (void)loadView
 {
     self.view = [PassthroughTouchesView new];
-    
-    self.networkStatusViewController = [[NetworkStatusViewController alloc] init];
-    self.networkStatusViewController.view.translatesAutoresizingMaskIntoConstraints = NO;
-    [self addViewController:self.networkStatusViewController toView:self.view];
     
     self.appLockViewController = [AppLockViewController shared];
     if (nil != self.appLockViewController.parentViewController) {
@@ -98,10 +88,6 @@
 
 - (void)setupConstraints
 {
-    [self.networkStatusViewController.view autoPinEdgeToSuperviewEdge:ALEdgeTop];
-    [self.networkStatusViewController.view autoPinEdgeToSuperviewEdge:ALEdgeLeft];
-    self.networkStatusRightMargin = [self.networkStatusViewController.view autoPinEdgeToSuperviewEdge:ALEdgeRight];
-    
     [self.appLockViewController.view autoPinEdgesToSuperviewEdges];
     [self.chatHeadsViewController.view autoPinEdgesToSuperviewEdges];
 }
@@ -121,28 +107,16 @@
     [viewController didMoveToParentViewController:self];
 }
 
-- (void)setShowLoadMessages:(BOOL)showLoadingMessages
-{
-    _showLoadMessages = showLoadingMessages;
-    self.networkActivityViewController.isLoadingMessages = showLoadingMessages;
-}
-
-- (void)setHideNetworkActivityView:(BOOL)hideNetworkActivityView
-{
-    _hideNetworkActivityView = hideNetworkActivityView;
-    self.networkActivityViewController.view.hidden = hideNetworkActivityView;
-}
-
 - (void)transitionToLoggedInSession
 {
-    self.networkActivityViewController = [[NetworkActivityViewController alloc] init];
-    self.networkActivityViewController.view.translatesAutoresizingMaskIntoConstraints = NO;
-    [self addViewController:self.networkActivityViewController toView:self.view];
+    self.networkStatusViewController = [[NetworkStatusViewController alloc] init];
+    self.networkStatusViewController.view.translatesAutoresizingMaskIntoConstraints = NO;
+    [self addViewController:self.networkStatusViewController toView:self.view];
     
-    [self.networkActivityViewController.view autoPinEdgeToSuperviewEdge:ALEdgeTop];
-    [self.networkActivityViewController.view autoPinEdgeToSuperviewEdge:ALEdgeLeft];
-    self.networkActivityRightMargin = [self.networkActivityViewController.view autoPinEdgeToSuperviewEdge:ALEdgeRight];
-    [self.networkActivityViewController.view autoSetDimension:ALDimensionHeight toSize:2.0f];
+    [self.networkStatusViewController.view autoPinEdgeToSuperviewEdge:ALEdgeTop];
+    [self.networkStatusViewController.view autoPinEdgeToSuperviewEdge:ALEdgeLeft];
+    self.networkActivityRightMargin = [self.networkStatusViewController.view autoPinEdgeToSuperviewEdge:ALEdgeRight];
+    [self.networkStatusViewController.view autoPinEdgeToSuperviewEdge:ALEdgeBottom];
     
     _voiceChannelController = [[ActiveVoiceChannelViewController alloc] init];
     self.voiceChannelController.view.translatesAutoresizingMaskIntoConstraints = NO;
@@ -199,11 +173,9 @@
     if (traits.userInterfaceIdiom == UIUserInterfaceIdiomPad && UIInterfaceOrientationIsLandscape(orientation)) {
         CGFloat sidebarWidth = [WAZUIMagic cgFloatForIdentifier:@"framework.sidebar_width"];
         CGFloat rightMargin =  -([UIScreen mainScreen].bounds.size.width - sidebarWidth);
-        self.networkStatusRightMargin.constant = rightMargin;
         self.networkActivityRightMargin.constant = rightMargin;
     }
     else {
-        self.networkStatusRightMargin.constant = 0;
         self.networkActivityRightMargin.constant = 0;
     }
 }

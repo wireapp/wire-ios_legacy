@@ -387,7 +387,7 @@ extension VoiceChannelViewController : AVSMediaManagerClientObserver {
             voiceChannelView.muted = notification.manager.isMicrophoneMuted
         }
         
-        if notification.speakerMuteChanged {
+        if notification.speakerEnableChanged {
             voiceChannelView.speakerActive = notification.manager.isSpeakerEnabled
         }
     }
