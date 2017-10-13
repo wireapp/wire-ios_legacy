@@ -883,7 +883,6 @@
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Username takeover screen
-"registration.select_handle.takeover.title" = "Usernames are here.";
 "registration.select_handle.takeover.subtitle" = "Claim your unique name on Wire.";
 "registration.select_handle.takeover.subtitle_link" = "Learn more";
 
