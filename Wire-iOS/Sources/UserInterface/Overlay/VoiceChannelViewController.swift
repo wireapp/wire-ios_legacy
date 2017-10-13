@@ -35,7 +35,7 @@ class VoiceChannelViewController: UIViewController {
     fileprivate var isSwitchingCamera = false
     fileprivate var currentCaptureDevice: CaptureDevice = .front
     fileprivate var previousCallState : CallState = .none
-    fileprivate var callDurationTimer : Timer?
+    fileprivate weak var callDurationTimer : Timer?
     fileprivate var outgoingVideoWasActiveBeforeEnteringEnteringBackground = false
     
     override func loadView() {
@@ -310,7 +310,7 @@ extension VoiceChannelViewController : WireCallCenterCallStateObserver, Received
         callDurationTimer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(updateCallDuration), userInfo: nil, repeats: true)
     }
     
-    func stopCallDurationTimer() {
+    public func stopCallDurationTimer() {
         callDurationTimer?.invalidate()
         callDurationTimer = nil
     }

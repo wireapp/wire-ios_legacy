@@ -24,8 +24,13 @@ class ActiveVoiceChannelViewController : UIViewController {
     
     var callStateObserverToken : Any?
     
+    deinit {
+        visibleVoiceChannelViewController?.stopCallDurationTimer()
+    }
+    
     var visibleVoiceChannelViewController : VoiceChannelViewController? {
         didSet {
+            oldValue?.stopCallDurationTimer()
             transition(to: visibleVoiceChannelViewController, from: oldValue)
         }
     }
