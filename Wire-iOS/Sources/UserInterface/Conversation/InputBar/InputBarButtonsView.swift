@@ -79,10 +79,10 @@ public final class InputBarButtonsView: UIView {
         expandRowButton.setIcon(.ellipsis, with: .tiny, for: UIControlState())
         expandRowButton.addTarget(self, action: #selector(ellipsisButtonPressed), for: .touchUpInside)
         buttonOuterContainer.addSubview(buttonInnerContainer)
-        buttonOuterContainer.backgroundColor = ColorScheme.default().color(withName: ColorSchemeColorBarBackground)
         buttonOuterContainer.clipsToBounds = true
         addSubview(buttonOuterContainer)
         addSubview(expandRowButton)
+        self.backgroundColor = ColorScheme.default().color(withName: ColorSchemeColorBarBackground)
     }
     
     func createConstraints() {

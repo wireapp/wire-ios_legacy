@@ -45,7 +45,7 @@ final class ConversationImagesViewController: UIViewController {
     
     let collection: AssetCollectionWrapper
     
-    fileprivate var navBarContainer: UINavigationBarContainer?
+    fileprivate var navBarContainer: UINavigationBarContainer!
     var pageViewController: UIPageViewController = UIPageViewController(transitionStyle:.scroll, navigationOrientation:.horizontal, options: [:])
     var buttonsBar: InputBarButtonsView!
     let deleteButton = IconButton.iconButtonDefault()

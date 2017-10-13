@@ -80,7 +80,7 @@ import Cartography
     
     public override var intrinsicContentSize : CGSize {
         let insets = UIScreen.safeArea
-        if insets.top > 0 {
+        if insets.top > 20 {
             return CGSize(width: UIViewNoIntrinsicMetric, height: 44 + insets.top)
         }
         return CGSize(width: UIViewNoIntrinsicMetric, height: showsStatusBar ? 64 : 44)

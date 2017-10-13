@@ -54,9 +54,9 @@ class UINavigationBarContainer: UIView {
     override func layoutSubviews() {
         super.layoutSubviews()
         guard let topMargin = topMargin, let navHeight = navHeight else { return }
-        let orientation = UIDevice.current.orientation
+        let orientation = UIApplication.shared.statusBarOrientation
         let deviceType = UIDevice.current.userInterfaceIdiom
-        if(UIDeviceOrientationIsLandscape(orientation) && deviceType == .phone) {
+        if(UIInterfaceOrientationIsLandscape(orientation) && deviceType == .phone) {
             topMargin.constant = landscapeTopMargin
             navHeight.constant = landscapeNavbarHeight
         } else {
