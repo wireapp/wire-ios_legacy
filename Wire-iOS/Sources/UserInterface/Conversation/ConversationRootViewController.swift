@@ -58,6 +58,7 @@ import Cartography
         navbar.setBackgroundImage(UIImage(), for: .any, barMetrics: .default)
         navbar.shadowImage = UIImage()
         navbar.translatesAutoresizingMaskIntoConstraints = false
+        navbar.barTintColor = ColorScheme.default().color(withName: ColorSchemeColorBarBackground)
         
         self.customNavBar = UINavigationBarContainer(navbar)
         
@@ -68,13 +69,12 @@ import Cartography
         constrain(self.customNavBar!, self.view, self.contentView, conversationViewController.view) { (customNavBar: LayoutProxy, view: LayoutProxy, contentView: LayoutProxy, conversationViewControllerView: LayoutProxy) -> () in
             
             customNavBar.top == view.top
-            customNavBar.height == 44.0 + UIScreen.safeArea.top
             customNavBar.left == view.left
             customNavBar.right == view.right
             
             contentView.left == view.left
             contentView.right == view.right
-            contentView.bottom == view.bottom
+            contentView.bottom == view.bottom - UIScreen.safeArea.bottom
             contentView.top == customNavBar.bottom
             
             conversationViewControllerView.edges == contentView.edges

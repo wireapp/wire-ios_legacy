@@ -21,14 +21,19 @@ import Cartography
 
 class UINavigationBarContainer: UIView {
 
+    let landscapeTopMargin : CGFloat = 20.0
+    let landscapeNavbarHeight : CGFloat = 30.0
+    let portraitNavbarHeight : CGFloat = 44.0
+    
     var navigationBar: UINavigationBar!
     var topMargin : NSLayoutConstraint?
+    var navHeight : NSLayoutConstraint?
     
     init(_ navigationBar : UINavigationBar) {
         super.init(frame: .zero)
         self.navigationBar = navigationBar
         self.addSubview(navigationBar)
-        self.backgroundColor = ColorScheme.default().color(withName: ColorSchemeColorBackground)
+        self.backgroundColor = ColorScheme.default().color(withName: ColorSchemeColorBarBackground)
         createConstraints()
     }
 
@@ -39,7 +44,7 @@ class UINavigationBarContainer: UIView {
     func createConstraints() {
         constrain(navigationBar, self) { (navigationBar: LayoutProxy, view: LayoutProxy) -> () in
             self.topMargin = navigationBar.top == view.top + UIScreen.safeArea.top
-            navigationBar.height == 44.0
+            self.navHeight = navigationBar.height == portraitNavbarHeight
             navigationBar.left == view.left
             navigationBar.right == view.right
             navigationBar.bottom == view.bottom
@@ -48,13 +53,15 @@ class UINavigationBarContainer: UIView {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        guard let topMargin = topMargin else { return }
+        guard let topMargin = topMargin, let navHeight = navHeight else { return }
         let orientation = UIDevice.current.orientation
         let deviceType = UIDevice.current.userInterfaceIdiom
         if(UIDeviceOrientationIsLandscape(orientation) && deviceType == .phone) {
-            topMargin.constant = 0.0
+            topMargin.constant = landscapeTopMargin
+            navHeight.constant = landscapeNavbarHeight
         } else {
             topMargin.constant = UIScreen.safeArea.top
+            navHeight.constant = portraitNavbarHeight
         }
     }
 }

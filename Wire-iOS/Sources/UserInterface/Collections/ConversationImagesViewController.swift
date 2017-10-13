@@ -137,12 +137,10 @@ final class ConversationImagesViewController: UIViewController {
             navigationBar.top == view.top
             navigationBar.width == view.width
             navigationBar.centerX == view.centerX
-            navigationBar.height == 44 + UIScreen.safeArea.top
             
             buttonsBar.leading == view.leading
             buttonsBar.trailing == view.trailing
             buttonsBar.bottom == view.bottom
-            buttonsBar.height == 84 + UIScreen.safeArea.bottom
 
             overlay.edges == buttonsBar.edges
 
@@ -440,7 +438,7 @@ extension ConversationImagesViewController: UIPageViewControllerDelegate, UIPage
 extension ConversationImagesViewController: MenuVisibilityController {
     
     var menuVisible: Bool {
-        return  navBarContainer!.navigationBar.isHidden &&
+        return  navBarContainer!.isHidden &&
                 buttonsBar.isHidden &&
                 separator.isHidden &&
                 UIApplication.shared.isStatusBarHidden
@@ -448,7 +446,7 @@ extension ConversationImagesViewController: MenuVisibilityController {
     
     func fadeAndHideMenu(_ hidden: Bool) {
         let duration = UIApplication.shared.statusBarOrientationAnimationDuration
-        navBarContainer!.navigationBar.fadeAndHide(hidden, duration: duration)
+        navBarContainer!.fadeAndHide(hidden, duration: duration)
         buttonsBar.fadeAndHide(hidden, duration: duration)
         separator.fadeAndHide(hidden, duration: duration)
         UIApplication.shared.wr_setStatusBarHidden(hidden, with: .fade)
