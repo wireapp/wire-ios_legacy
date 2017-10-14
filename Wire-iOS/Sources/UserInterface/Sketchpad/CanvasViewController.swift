@@ -80,6 +80,7 @@ class CanvasViewController: UIViewController, UINavigationControllerDelegate {
         hintImageView.image = UIImage(for: .brush, fontSize: 172, color: ColorScheme.default().color(withName: ColorSchemeColorPlaceholderBackground))
         hintLabel.text = "sketchpad.initial_hint".localized.uppercased(with: Locale.current)
         hintLabel.numberOfLines = 0
+        self.view.backgroundColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorBarBackground)
         
         [canvas, hintLabel, hintImageView, toolbar].forEach(view.addSubview)
         
