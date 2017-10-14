@@ -92,7 +92,7 @@ protocol EmojiKeyboardViewControllerDelegate: class {
             collectionView.leading == view.leading
             collectionView.trailing == view.trailing
             collectionView.bottom == sectionView.top
-            sectionView.bottom == view.bottom
+            sectionView.bottom == view.bottom - UIScreen.safeArea.bottom
             sectionView.leading == view.leading
             sectionView.trailing == backButton.trailing - 32 ~ 750.0
             sectionView.width <= 400
