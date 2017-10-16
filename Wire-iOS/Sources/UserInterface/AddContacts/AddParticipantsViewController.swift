@@ -72,15 +72,16 @@ public class AddParticipantsViewController : UIViewController {
         confirmButton.setIconColor(UIColor.wr_color(fromColorScheme: ColorSchemeColorIconHighlighted, variant: .dark), for: .highlighted)
         confirmButton.setTitleColor(UIColor.wr_color(fromColorScheme: ColorSchemeColorIconNormal, variant: .dark), for: .normal)
         confirmButton.setTitleColor(UIColor.wr_color(fromColorScheme: ColorSchemeColorIconHighlighted, variant: .dark), for: .highlighted)
-        confirmButton.titleLabel?.font = FontSpec(.normal, .medium).font!
+        confirmButton.titleLabel?.font = FontSpec(.small, .medium).font!
         confirmButton.backgroundColor = UIColor.accent()
         confirmButton.contentHorizontalAlignment = .left
         confirmButton.setTitleImageSpacing(16, horizontalMargin: 24)
+        confirmButton.roundCorners = true
         
         if conversation.conversationType == .oneOnOne {
-            confirmButton.setTitle("peoplepicker.button.create_conversation".localized, for: .normal)
+            confirmButton.setTitle("peoplepicker.button.create_conversation".localized.uppercased(), for: .normal)
         } else {
-            confirmButton.setTitle("peoplepicker.button.add_to_conversation".localized, for: .normal)
+            confirmButton.setTitle("peoplepicker.button.add_to_conversation".localized.uppercased(), for: .normal)
         }
  
         searchHeaderViewController = SearchHeaderViewController(userSelection: userSelection, variant: ColorScheme.default().variant)
@@ -123,6 +124,7 @@ public class AddParticipantsViewController : UIViewController {
     }
     
     func createConstraints() {
+        
         constrain(view, searchHeaderViewController.view, searchResultsViewController.view, confirmButton) { container, searchHeaderView, searchResultsView, confirmButton in
             
             searchHeaderView.top == container.top + UIScreen.safeArea.top
@@ -134,7 +136,7 @@ public class AddParticipantsViewController : UIViewController {
             searchResultsView.right == container.right
             searchResultsView.bottom == container.bottom
             
-            confirmButton.height == CGFloat(55.0 + UIScreen.safeArea.bottom)
+            confirmButton.height == 46.0
         }
     }
         

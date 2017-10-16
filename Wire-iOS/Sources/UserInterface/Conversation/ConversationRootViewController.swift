@@ -52,6 +52,8 @@ import Cartography
             return
         }
         
+        self.view.backgroundColor = ColorScheme.default().color(withName: ColorSchemeColorBarBackground)
+        
         let navbar = UINavigationBar()
         navbar.isTranslucent = false
         navbar.isOpaque = true
@@ -64,7 +66,6 @@ import Cartography
         
         self.view.addSubview(self.customNavBar!)
         self.view.addSubview(self.contentView)
-        
         
         constrain(self.customNavBar!, self.view, self.contentView, conversationViewController.view) { (customNavBar: LayoutProxy, view: LayoutProxy, contentView: LayoutProxy, conversationViewControllerView: LayoutProxy) -> () in
             
