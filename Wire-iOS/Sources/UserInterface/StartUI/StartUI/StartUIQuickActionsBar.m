@@ -192,9 +192,9 @@ static const CGFloat padding = 12;
 
 - (void)keyboardFrameWillChange:(NSNotification *)notification
 {
-    CGSize endSize = [notification.userInfo[UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
+    CGSize beginSize = [notification.userInfo[UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
     [UIView animateWithKeyboardNotification:notification inView:self animations:^(CGRect keyboardFrameInView) {
-        self.bottomEdgeConstraint.constant = - (padding + (endSize.height == 0 ? 0 : UIScreen.safeArea.bottom));
+        self.bottomEdgeConstraint.constant = - (padding + (beginSize.height == 0 ? 0 : UIScreen.safeArea.bottom));
         [self layoutIfNeeded];
     } completion:nil];
 }
