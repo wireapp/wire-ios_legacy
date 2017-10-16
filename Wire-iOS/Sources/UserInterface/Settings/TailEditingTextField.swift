@@ -46,11 +46,15 @@ class TailEditingTextField: UITextField {
         self.addTarget(self, action: #selector(TailEditingTextField.replaceNonBreakingSpacesWithNormalSpaces), for: UIControlEvents.editingDidEnd)
     }
     
-    func replaceNormalSpacesWithNonBreakingSpaces() {
-        self.text = self.text?.replacingOccurrences(of: type(of: self).normalSpace, with: type(of: self).nonBreakingSpace)
+    func replaceNormalSpacesWithNonBreakingSpaces(_ sender: Any) {
+        if let isContainsNormalSpace = (self.text?.contains(type(of: self).normalSpace)), isContainsNormalSpace {
+            self.text = self.text?.replacingOccurrences(of: type(of: self).normalSpace, with: type(of: self).nonBreakingSpace)
+        }
     }
     
     func replaceNonBreakingSpacesWithNormalSpaces() {
-        self.text = self.text?.replacingOccurrences(of: type(of: self).nonBreakingSpace, with: type(of: self).normalSpace)
+        if let isContainsNonBreakingSpace = (self.text?.contains(type(of: self).nonBreakingSpace)), isContainsNonBreakingSpace {
+            self.text = self.text?.replacingOccurrences(of: type(of: self).nonBreakingSpace, with: type(of: self).normalSpace)
+        }
     }
 }
