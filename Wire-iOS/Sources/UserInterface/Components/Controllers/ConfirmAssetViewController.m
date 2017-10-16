@@ -218,7 +218,7 @@ static const CGFloat MarginInset = 24;
     [self.titleLabel autoAlignAxisToSuperviewAxis:ALAxisVertical];
     
     // Bottom panel
-    [self.bottomPanel autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero excludingEdge:ALEdgeTop];
+    [self.bottomPanel autoPinEdgesToSuperviewEdgesWithInsets:UIScreen.safeArea excludingEdge:ALEdgeTop];
     
     [self.imageToolbarView autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero excludingEdge:ALEdgeBottom];
     [self.imageToolbarView autoSetDimension:ALDimensionHeight toSize:48];
