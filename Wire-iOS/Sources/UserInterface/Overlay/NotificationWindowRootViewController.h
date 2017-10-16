@@ -39,6 +39,6 @@
 @property (nonatomic) BOOL hideNetworkActivityView;
 
 - (void)transitionToLoggedInSession;
-- (void)show:(nonnull ZMLocalNote *)notification;
+- (void)show:(nonnull ZMLocalNotification *)notification;
 
 @end

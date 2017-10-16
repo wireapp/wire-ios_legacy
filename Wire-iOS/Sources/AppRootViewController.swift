@@ -405,7 +405,7 @@ extension AppRootViewController : ZMRequestsToOpenViewsDelegate {
 
 extension AppRootViewController : LocalNotificationResponder {
 
-    func processLocal(_ notification: ZMLocalNote, forSession session: ZMUserSession) {
+    func processLocal(_ notification: ZMLocalNotification, forSession session: ZMUserSession) {
         (self.overlayWindow.rootViewController as! NotificationWindowRootViewController).show(notification)
     }
     

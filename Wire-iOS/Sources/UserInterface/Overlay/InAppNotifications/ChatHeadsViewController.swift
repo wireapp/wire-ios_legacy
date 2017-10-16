@@ -55,7 +55,7 @@ class ChatHeadsViewController: UIViewController {
     
     // MARK: - Public Interface
     
-    public func tryToDisplayNotification(_ note: ZMLocalNote) {
+    public func tryToDisplayNotification(_ note: ZMLocalNotification) {
 
         // hide visible chat head and try again
         if chatHeadState != .hidden {
@@ -111,7 +111,7 @@ class ChatHeadsViewController: UIViewController {
     
     // MARK: - Private Helpers
     
-    private func shouldDisplay(note: ZMLocalNote, conversation: ZMConversation, account: Account) -> Bool {
+    private func shouldDisplay(note: ZMLocalNotification, conversation: ZMConversation, account: Account) -> Bool {
         
         guard let clientVC = ZClientViewController.shared() else { return false }
         
