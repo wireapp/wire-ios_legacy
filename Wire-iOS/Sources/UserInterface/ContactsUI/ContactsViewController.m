@@ -211,7 +211,7 @@ static NSString * const ContactsViewControllerSectionHeaderID = @"ContactsSectio
     
     CGFloat standardOffset = 24.0f;
 
-    [self.titleLabel autoPinEdgeToSuperviewEdge:ALEdgeTop];
+    [self.titleLabel autoPinEdgeToSuperviewEdge:ALEdgeTop withInset:UIScreen.safeArea.top];
     [self.titleLabel autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:standardOffset];
     [self.titleLabel autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:standardOffset];
         
@@ -253,7 +253,7 @@ static NSString * const ContactsViewControllerSectionHeaderID = @"ContactsSectio
         [self.tokenField autoSetContentHuggingPriorityForAxis:ALAxisVertical];
     }];
     
-    self.closeButtonTopConstraint = [self.cancelButton autoPinEdgeToSuperviewEdge:ALEdgeTop withInset:16];
+    self.closeButtonTopConstraint = [self.cancelButton autoPinEdgeToSuperviewEdge:ALEdgeTop withInset:16 + UIScreen.safeArea.top];
     self.closeButtonTopConstraint.active = (self.titleLabel.text.length > 0);
     
     [NSLayoutConstraint autoSetPriority:UILayoutPriorityDefaultLow forConstraints:^{

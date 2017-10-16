@@ -45,7 +45,7 @@ final class ConversationImagesViewController: UIViewController {
     
     let collection: AssetCollectionWrapper
     
-    fileprivate let navigationBar = UINavigationBar()
+    fileprivate var navBarContainer: UINavigationBarContainer!
     var pageViewController: UIPageViewController = UIPageViewController(transitionStyle:.scroll, navigationOrientation:.horizontal, options: [:])
     var buttonsBar: InputBarButtonsView!
     let deleteButton = IconButton.iconButtonDefault()
@@ -117,6 +117,7 @@ final class ConversationImagesViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        let navigationBar = UINavigationBar()
         navigationBar.items = [navigationItem]
         navigationBar.isTranslucent = false
         navigationBar.barTintColor = ColorScheme.default().color(withName: ColorSchemeColorBarBackground)
@@ -125,22 +126,21 @@ final class ConversationImagesViewController: UIViewController {
         self.createControlsBar()
         view.addSubview(overlay)
         view.addSubview(separator)
-        view.addSubview(navigationBar)
+        navBarContainer = UINavigationBarContainer(navigationBar)
+        view.addSubview(navBarContainer!)
 
         constrain(view, pageViewController.view) { view, pageControllerView in
             pageControllerView.edges == view.edges
         }
         
-        constrain(view, navigationBar, buttonsBar, overlay, separator) { view, navigationBar, buttonsBar, overlay, separator in
+        constrain(view, navBarContainer!, buttonsBar, overlay, separator) { view, navigationBar, buttonsBar, overlay, separator in
             navigationBar.top == view.top
             navigationBar.width == view.width
             navigationBar.centerX == view.centerX
-            navigationBar.height == 64
             
             buttonsBar.leading == view.leading
             buttonsBar.trailing == view.trailing
             buttonsBar.bottom == view.bottom
-            buttonsBar.height == 84
 
             overlay.edges == buttonsBar.edges
 
@@ -438,7 +438,7 @@ extension ConversationImagesViewController: UIPageViewControllerDelegate, UIPage
 extension ConversationImagesViewController: MenuVisibilityController {
     
     var menuVisible: Bool {
-        return  navigationBar.isHidden &&
+        return  navBarContainer!.isHidden &&
                 buttonsBar.isHidden &&
                 separator.isHidden &&
                 UIApplication.shared.isStatusBarHidden
@@ -446,7 +446,7 @@ extension ConversationImagesViewController: MenuVisibilityController {
     
     func fadeAndHideMenu(_ hidden: Bool) {
         let duration = UIApplication.shared.statusBarOrientationAnimationDuration
-        navigationBar.fadeAndHide(hidden, duration: duration)
+        navBarContainer!.fadeAndHide(hidden, duration: duration)
         buttonsBar.fadeAndHide(hidden, duration: duration)
         separator.fadeAndHide(hidden, duration: duration)
         UIApplication.shared.wr_setStatusBarHidden(hidden, with: .fade)

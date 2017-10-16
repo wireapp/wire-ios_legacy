@@ -35,7 +35,7 @@
 			<key>NSStringFormatValueTypeKey</key>
 			<string>lu</string>
 			<key>zero</key>
-			<string>Everyone left</string>
+			<string>Kaikki poistuivat</string>
 			<key>one</key>
 			<string>Yksi käyttäjä</string>
 			<key>few</key>

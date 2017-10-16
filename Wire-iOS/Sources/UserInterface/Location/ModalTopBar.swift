@@ -56,9 +56,10 @@ import Cartography
     }
 
     fileprivate func createConstraints() {
+        let insets = UIScreen.safeArea
         constrain(self, titleLabel, dismissButton, separatorView) { view, label, button, separator in
             label.centerX == view.centerX
-            label.top == view.top + (showsStatusBar ? 20 : 0)
+            label.top == view.top + (showsStatusBar ? insets.top : 0) + (showsStatusBar && insets.top == 0 ? 20 : 0)
             label.bottom == view.bottom
             label.trailing <= button.leading - 12
             button.trailing == view.trailing - 16
@@ -78,6 +79,10 @@ import Cartography
     }
     
     public override var intrinsicContentSize : CGSize {
+        let insets = UIScreen.safeArea
+        if insets.top > 20 {
+            return CGSize(width: UIViewNoIntrinsicMetric, height: 44 + insets.top)
+        }
         return CGSize(width: UIViewNoIntrinsicMetric, height: showsStatusBar ? 64 : 44)
     }
     

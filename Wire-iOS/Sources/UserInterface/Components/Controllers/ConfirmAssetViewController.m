@@ -36,7 +36,7 @@
 #import "UIImage+ImageUtilities.h"
 #import "MediaAsset.h"
 
-static const CGFloat TopBarHeight = 64;
+static const CGFloat TopBarHeight = 44;
 static const CGFloat BottomBarMinHeight = 88;
 static const CGFloat MarginInset = 24;
 
@@ -207,11 +207,13 @@ static const CGFloat MarginInset = 24;
 
 - (void)createConstraints
 {
+    CGFloat safeTopBarHeight = TopBarHeight + UIScreen.safeArea.top;
+    
     // Top panel
     [self.topPanel autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero excludingEdge:ALEdgeBottom];
-    self.topBarHeightConstraint = [self.topPanel autoSetDimension:ALDimensionHeight toSize:TopBarHeight];
+    self.topBarHeightConstraint = [self.topPanel autoSetDimension:ALDimensionHeight toSize:safeTopBarHeight];
     
-    [self.titleLabel autoPinEdgeToSuperviewEdge:ALEdgeTop withInset:20];
+    [self.titleLabel autoPinEdgeToSuperviewEdge:ALEdgeTop withInset:UIScreen.safeArea.top];
     [self.titleLabel autoPinEdgeToSuperviewEdge:ALEdgeBottom];
     [self.titleLabel autoAlignAxisToSuperviewAxis:ALAxisVertical];
     
@@ -269,7 +271,7 @@ static const CGFloat MarginInset = 24;
     [self.playerViewController.view autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.topPanel];
     [self.playerViewController.view autoPinEdge:ALEdgeBottom toEdge:ALEdgeTop ofView:self.bottomPanel];
     
-    self.topBarHeightConstraint.constant = (self.titleLabel.text != nil) ? TopBarHeight : 0;
+    self.topBarHeightConstraint.constant = (self.titleLabel.text != nil) ? safeTopBarHeight : 0;
     
     // Image toolbar
     [self.imageToolbarViewInsideImage autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero excludingEdge:ALEdgeTop];
