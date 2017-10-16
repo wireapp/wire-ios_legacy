@@ -94,6 +94,7 @@ final class MessageComposeViewController: UIViewController {
         messageTextView.delegate = self
         messageTextView.indicatorStyle = ColorScheme.default().indicatorStyle
         messageTextView.accessibilityLabel = "messageTextField"
+        messageTextView.keyboardAppearance = ColorScheme.default().keyboardAppearance
         markdownBarView.delegate = messageTextView
     }
 
