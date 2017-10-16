@@ -45,7 +45,7 @@ final class ConversationImagesViewController: UIViewController {
     
     let collection: AssetCollectionWrapper
     
-    fileprivate var navBarContainer: UINavigationBarContainer!
+    fileprivate var navBarContainer: UINavigationBarContainer?
     var pageViewController: UIPageViewController = UIPageViewController(transitionStyle:.scroll, navigationOrientation:.horizontal, options: [:])
     var buttonsBar: InputBarButtonsView!
     let deleteButton = IconButton.iconButtonDefault()
@@ -117,26 +117,28 @@ final class ConversationImagesViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let navigationBar = UINavigationBar()
-        navigationBar.items = [navigationItem]
-        navigationBar.isTranslucent = false
-        navigationBar.barTintColor = ColorScheme.default().color(withName: ColorSchemeColorBarBackground)
+        if !(parent is UINavigationController) {
+            // Adds the navigation bar only if the parent view controller is not a navigation controller
+            let navigationBar = UINavigationBar()
+            navigationBar.items = [navigationItem]
+            navigationBar.isTranslucent = false
+            navigationBar.barTintColor = ColorScheme.default().color(withName: ColorSchemeColorBarBackground)
+            
+            navBarContainer = UINavigationBarContainer(navigationBar)
+            navBarContainer?.backgroundColor = ColorScheme.default().color(withName: ColorSchemeColorBarBackground)
+        }
+        
         
         self.createPageController()
         self.createControlsBar()
         view.addSubview(overlay)
         view.addSubview(separator)
-        navBarContainer = UINavigationBarContainer(navigationBar)
-        view.addSubview(navBarContainer!)
 
         constrain(view, pageViewController.view) { view, pageControllerView in
             pageControllerView.edges == view.edges
         }
         
-        constrain(view, navBarContainer!, buttonsBar, overlay, separator) { view, navigationBar, buttonsBar, overlay, separator in
-            navigationBar.top == view.top
-            navigationBar.width == view.width
-            navigationBar.centerX == view.centerX
+        constrain(view, buttonsBar, overlay, separator) { view, buttonsBar, overlay, separator in
             
             buttonsBar.leading == view.leading
             buttonsBar.trailing == view.trailing
@@ -148,6 +150,15 @@ final class ConversationImagesViewController: UIViewController {
             separator.top == buttonsBar.top
             separator.leading == buttonsBar.leading
             separator.trailing == buttonsBar.trailing
+        }
+        
+        if let navBarContainer = navBarContainer {
+            view.addSubview(navBarContainer)
+            constrain(view, navBarContainer) { view, navigationBar in
+                navigationBar.top == view.top
+                navigationBar.width == view.width
+                navigationBar.centerX == view.centerX
+            }
         }
     }
     
@@ -438,18 +449,23 @@ extension ConversationImagesViewController: UIPageViewControllerDelegate, UIPage
 extension ConversationImagesViewController: MenuVisibilityController {
     
     var menuVisible: Bool {
-        return  navBarContainer!.isHidden &&
-                buttonsBar.isHidden &&
-                separator.isHidden &&
-                UIApplication.shared.isStatusBarHidden
+        var isVisible = buttonsBar.isHidden && separator.isHidden
+        if !UIScreen.hasNotch {
+            isVisible = isVisible && UIApplication.shared.isStatusBarHidden
+        }
+        return  (navBarContainer?.isHidden ?? isVisible) && isVisible
     }
     
     func fadeAndHideMenu(_ hidden: Bool) {
         let duration = UIApplication.shared.statusBarOrientationAnimationDuration
-        navBarContainer!.fadeAndHide(hidden, duration: duration)
+        navBarContainer?.fadeAndHide(hidden, duration: duration)
         buttonsBar.fadeAndHide(hidden, duration: duration)
         separator.fadeAndHide(hidden, duration: duration)
-        UIApplication.shared.wr_setStatusBarHidden(hidden, with: .fade)
+        
+        // Don't hide the status bar on iPhone X, otherwise the navbar will go behind the notch
+        if !UIScreen.hasNotch {
+            UIApplication.shared.wr_setStatusBarHidden(hidden, with: .fade)
+        }
     }
 }
 
