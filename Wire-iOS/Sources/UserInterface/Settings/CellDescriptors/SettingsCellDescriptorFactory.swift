@@ -163,9 +163,9 @@ import Foundation
     func advancedGroup() -> SettingsCellDescriptorType {
         var items: [SettingsSectionDescriptor] = []
         
-        let sendDataToWire = SettingsPropertyToggleCellDescriptor(settingsProperty: self.settingsPropertyFactory.property(.analyticsOptOut), inverse: true)
+        let sendDataToWire = SettingsInfoCellDescriptor(title: "self.settings.privacy_analytics.title".localized)
         let usageLabel = "self.settings.privacy_analytics_section.title".localized
-        let usageInfo = "self.settings.privacy_analytics_menu.description.title".localized
+        let usageInfo = "Anonymous data collection is currently disabled."
         let sendUsageSection = SettingsSectionDescriptor(cellDescriptors: [sendDataToWire], header: usageLabel, footer: usageInfo)
         
         let troubleshootingSectionTitle = "self.settings.advanced.troubleshooting.title".localized
