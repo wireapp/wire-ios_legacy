@@ -120,6 +120,7 @@ class VoiceChannelOverlayTests: ZMSnapshotTestCase {
         overlay.transition(to: state)
         CASStyler.default().styleItem(overlay)
         overlay.backgroundColor = .darkGray
+        overlay.videoView?.backgroundColor = .clear
         return overlay
     }
     
