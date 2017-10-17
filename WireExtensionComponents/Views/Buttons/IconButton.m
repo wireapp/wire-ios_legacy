@@ -357,6 +357,8 @@
 {
     if(self.roundCorners) {
         self.layer.cornerRadius = 6.0;
+    } else {
+        self.layer.cornerRadius = 0.0;
     }
 }
 
