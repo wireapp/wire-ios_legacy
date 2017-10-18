@@ -47,10 +47,14 @@ class TailEditingTextField: UITextField {
     }
     
     func replaceNormalSpacesWithNonBreakingSpaces() {
+        guard let isContainsNormalSpace = (self.text?.contains(type(of: self).normalSpace)), isContainsNormalSpace else { return }
+        
         self.text = self.text?.replacingOccurrences(of: type(of: self).normalSpace, with: type(of: self).nonBreakingSpace)
     }
     
     func replaceNonBreakingSpacesWithNormalSpaces() {
+        guard let isContainsNonBreakingSpace = (self.text?.contains(type(of: self).nonBreakingSpace)), isContainsNonBreakingSpace else { return }
+        
         self.text = self.text?.replacingOccurrences(of: type(of: self).nonBreakingSpace, with: type(of: self).normalSpace)
     }
 }
