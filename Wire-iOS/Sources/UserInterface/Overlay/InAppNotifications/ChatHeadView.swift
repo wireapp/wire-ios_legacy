@@ -29,7 +29,7 @@ class ChatHeadView: UIView {
     
     private let title: String?
     private let body: String
-    private let sender: ZMUser
+    private let sender: ZMUser?
     private let isEphemeral: Bool
     
     private let imageDiameter: CGFloat = 28
@@ -55,7 +55,7 @@ class ChatHeadView: UIView {
         return ColorScheme.default().color(withName: name)
     }
     
-    init(title: String?, body: String, sender: ZMUser, isEphemeral: Bool = false) {
+    init(title: String?, body: String, sender: ZMUser?, isEphemeral: Bool = false) {
         self.title = title
         self.body = body
         self.sender = sender

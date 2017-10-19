@@ -69,14 +69,13 @@ class ChatHeadsViewController: UIViewController {
             let account = SessionManager.shared?.accountManager.account(with: selfID),
             let session = SessionManager.shared?.backgroundUserSessions[account.userIdentifier],
             let conversation = note.conversation(in: session.managedObjectContext),
-            let sender = note.sender(in: session.managedObjectContext),
             shouldDisplay(note: note, conversation: conversation, account: account)
             else { return }
                 
         chatHeadView = ChatHeadView(
             title: note.title.flatMap { trimTitleIfNeeded($0, conversation: conversation, account: account) },
             body: note.body,
-            sender: sender,
+            sender: note.sender(in: session.managedObjectContext),
             isEphemeral: note.isEphemeral
         )
         
