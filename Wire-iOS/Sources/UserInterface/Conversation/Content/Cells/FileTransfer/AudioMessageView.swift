@@ -336,6 +336,10 @@ final class AudioMessageView: UIView, TransferView {
         }
     }
     
+    
+    /// Check if the audioTrackPlayer is playing my track
+    ///
+    /// - Returns: true if audioTrackPlayer is playing the audio of this view (not other instance of AudioMessgeView or other audio playing object)
     private func isOwnTrackPlayingInAudioPlayer() -> Bool {
         guard let message = self.fileMessage,
             let audioTrack = message.audioTrack(),
@@ -384,24 +388,33 @@ final class AudioMessageView: UIView, TransferView {
     
     // MARK: - Audio state observer
     dynamic private func audioProgressChanged(_ change: NSDictionary) {
-        if self.isOwnTrackPlayingInAudioPlayer() {
-            self.updateActivePlayerProgressAnimated(false)
-            self.updateTimeLabel()
+        DispatchQueue.main.async {
+            if self.isOwnTrackPlayingInAudioPlayer() {
+                self.updateActivePlayerProgressAnimated(false)
+                self.updateTimeLabel()
+            }
         }
     }
     
+    
+    ///  Observer function for audioTrackPlayer's keyPath "state".
+    ///  This function updates the visual progress of the audio, play button icon image, time label and proximity sensor's sate.
+    ///  Notice: when there are more then 1 instance of this class exists, this function will be called in every instance.
+    ///          This function may called from background thread (in case incoming call).
+    ///
+    /// - Parameter change: a dictionary with KVP kind and new(enum MediaPlayerState: 0 = ready, 1 = pause, 2=paused, 3 = completed, 4 = error)
     dynamic private func audioPlayerStateChanged(_ change: NSDictionary) {
-        if self.isOwnTrackPlayingInAudioPlayer() {
-            self.updateActivePlayButton()
-            self.updateActivePlayerProgressAnimated(false)
-            self.updateTimeLabel()
+        DispatchQueue.main.async {
+            if self.isOwnTrackPlayingInAudioPlayer() {
+                self.updateActivePlayerProgressAnimated(false)
+                self.updateActivePlayButton()
+                self.updateTimeLabel()
+                self.updateProximityObserverState()
+            }
+            else {
+                self.updateInactivePlayer()
+            }
         }
-        else {
-            self.updateInactivePlayer()
-            self.updateTimeLabel()
-        }
-        
-        updateProximityObserverState()
     }
     
     // MARK: - Proximity Listener
