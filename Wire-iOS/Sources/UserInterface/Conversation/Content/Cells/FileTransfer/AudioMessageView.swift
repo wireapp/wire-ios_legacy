@@ -402,7 +402,7 @@ final class AudioMessageView: UIView, TransferView {
     ///  Notice: when there are more then 1 instance of this class exists, this function will be called in every instance.
     ///          This function may called from background thread (in case incoming call).
     ///
-    /// - Parameter change: a dictionary with KVP kind and new(enum MediaPlayerState: 0 = ready, 1 = pause, 2=paused, 3 = completed, 4 = error)
+    /// - Parameter change: a dictionary with KVP kind and new (enum MediaPlayerState: 0 = ready, 1 = play, 2 = pause, 3 = completed, 4 = error)
     dynamic private func audioPlayerStateChanged(_ change: NSDictionary) {
         DispatchQueue.main.async {
             if self.isOwnTrackPlayingInAudioPlayer() {
@@ -410,6 +410,10 @@ final class AudioMessageView: UIView, TransferView {
                 self.updateActivePlayButton()
                 self.updateTimeLabel()
                 self.updateProximityObserverState()
+            }
+            /// when state is completed, there is no info about it is own track or not. Update the time label in this case anyway (set to the length of own audio track)
+            else if let new = change["new"] as? Int, let state = MediaPlayerState(rawValue: new), state == .completed {
+                self.updateTimeLabel()
             }
             else {
                 self.updateInactivePlayer()
