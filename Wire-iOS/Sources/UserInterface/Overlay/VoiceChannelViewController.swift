@@ -276,8 +276,6 @@ extension VoiceChannelViewController : VoiceChannelOverlayDelegate {
 extension VoiceChannelViewController : WireCallCenterCallStateObserver, ReceivedVideoObserver, ConstantBitRateAudioObserver {
     
     func callCenterDidChange(callState: CallState, conversation: ZMConversation, user: ZMUser?, timeStamp: Date?) {
-        updateIdleTimer(for: callState)
-        updateCallDurationTimer(for: callState)
         updateView(for: callState)
         createParticipantsControllerIfNecessary()
     }
@@ -332,6 +330,9 @@ extension VoiceChannelViewController : WireCallCenterCallStateObserver, Received
         
         voiceChannelView.transition(to: viewState(for: callState, previousCallState: previousCallState))
         voiceChannelView.speakerActive = AVSProvider.shared.mediaManager?.isSpeakerEnabled ?? false
+        
+        updateCallDurationTimer(for: callState)
+        updateIdleTimer(for: callState)
     }
     
     func viewState(for callState : CallState, previousCallState : CallState) -> VoiceChannelOverlayState {
