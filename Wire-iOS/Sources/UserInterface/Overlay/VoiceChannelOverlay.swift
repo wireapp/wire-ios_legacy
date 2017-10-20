@@ -622,6 +622,7 @@ extension VoiceChannelOverlay: UICollectionViewDelegateFlowLayout {
         let numberOfItems: CGFloat = CGFloat(collectionView.numberOfItems(inSection: 0))
         let contentWidth: CGFloat = numberOfItems * participantsCollectionViewLayout.itemSize.width + max(numberOfItems - 1, 0) * participantsCollectionViewLayout.minimumLineSpacing
         let frameWidth = participantsCollectionView.frame.size.width
+        let frameWidth: CGFloat = participantsCollectionView.frame.size.width
         
         let insets: UIEdgeInsets
         
