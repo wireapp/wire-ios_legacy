@@ -6272,8 +6272,6 @@
 				54F7C2851D746F3F004D8087 /* AddressBookHelper+Automation.swift in Sources */,
 				8FC854A4199245770008B66B /* ParticipantsViewController.m in Sources */,
 				BF4D99BF1E78555700A7B08F /* ZMConversationMessageWindow+DaySeparator.swift in Sources */,
-				8FC8549B199245770008B66B /* NetworkActivityViewController.m in Sources */,
-				871BC0121D34F56300DF0793 /* Analytics+Screens.m in Sources */,
 				BF1D5D021E55BA3D0063B4B4 /* Analytics+LocalSearch.swift in Sources */,
 				BFAAB2391DEC6B2800CBC096 /* ConversationListViewController+Handles.swift in Sources */,
 				BF0BDF801DAB8923003C61DE /* EphemeralKeyboardViewController.swift in Sources */,

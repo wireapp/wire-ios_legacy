@@ -10,12 +10,14 @@ PODS:
   - GTMSessionFetcher/Core (1.1.8)
   - GTMSessionFetcher/Full (1.1.8):
     - GTMSessionFetcher/Core (= 1.1.8)
+  - Localytics (4.3.0)
   - RBBAnimation (0.4.0)
   - SCSiriWaveformView (1.0.3)
 
 DEPENDENCIES:
   - ARCollectionViewMasonryLayout (from `https://github.com/wireapp/ARCollectionViewMasonryLayout`, tag `2.3.0`)
   - GoogleAPIClient/YouTube (= 1.0.4)
+  - Localytics (= 4.3.0)
   - RBBAnimation (from `https://github.com/wireapp/RBBAnimation`, commit `7dd8d9a3cf610be5f7c1e4459692d555d70704c7`)
   - SCSiriWaveformView (from `https://github.com/wireapp/SCSiriWaveformView`, tag `v1.0.3`)
 
@@ -45,9 +47,10 @@ SPEC CHECKSUMS:
   ARCollectionViewMasonryLayout: 97cb468434b546b79a98c7c0908447ff803eb85e
   GoogleAPIClient: bde49b31072d3c296d051f58c37b27a66ca45936
   GTMSessionFetcher: 6f8d8b28b7e345549ac471071608170b31cb4977
+  Localytics: 45fc45f5600bdb151e839d14db1360c971f0b9de
   RBBAnimation: 74263069442b91350aa4264089c1c05c0395503e
   SCSiriWaveformView: b8b2756af42addcd31900c3945f24edafefb5395
 
-PODFILE CHECKSUM: 7fd8d2c0e2667df6f65cde0e829ab67e41259431
+PODFILE CHECKSUM: a2b99a120e86bb17595adfdde632f35288240fcf
 
 COCOAPODS: 1.3.1
