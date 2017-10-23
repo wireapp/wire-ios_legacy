@@ -192,6 +192,10 @@ static NSString* EmptyStringIfNil(NSString *string) {
         [self.avPlayer seekToTime:CMTimeMake(0, 1)];
     }
     
+    [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategorySoloAmbient error:nil];
+    
+    [[AVAudioSession sharedInstance] setActive:YES withOptions:AVAudioSessionSetActiveOptionNotifyOthersOnDeactivation error:nil];
+
     [self.avPlayer play];
 }
 
@@ -207,6 +211,8 @@ static NSString* EmptyStringIfNil(NSString *string) {
     self.artworkObserver = nil;
     self.audioTrack = nil;
     _sourceMessage = nil;
+    
+    [[AVAudioSession sharedInstance] setActive:NO error:nil];
 }
 
 - (BOOL)skipToNextTrack
@@ -420,8 +426,12 @@ static NSString* EmptyStringIfNil(NSString *string) {
             [self clearNowPlayingState];
             self.state = MediaPlayerStateCompleted;
             [self.mediaPlayerDelegate mediaPlayer:self didChangeToState:self.state];
+            
+            // resume system's audio session control
+            [[AVAudioSession sharedInstance] setActive:NO withOptions:AVAudioSessionSetActiveOptionNotifyOthersOnDeactivation error:nil];
         }
     });
 }
 
 @end
+
