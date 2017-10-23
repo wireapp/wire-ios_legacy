@@ -663,10 +663,10 @@
 
 "self.settings.callkit.title" = "Aramalar";
 "self.settings.callkit.caption" = "iOS ile Paylaş";
-"self.settings.callkit.description" = "Show Wire calls on the lock screen and in iOS call history. If iCloud is enabled, call history is shared with Apple.";
+"self.settings.callkit.description" = "Wire aramalarını, kilit ekranında ve iOS arama geçmişinde göster. Eğer iCloud aktifse, arama geçmişiniz Apple ile paylaşılır.";
 
-"self.settings.cbr.not_available" = "Constant Bit Rate Encoding";
-"self.settings.cbr.not_available.description" = "Constant bit rate calls have been temporarily disabled with the introduction of multiple account support. CBR calls will be back soon.";
+"self.settings.cbr.not_available" = "Sabit Bit Hızı Kodlaması";
+"self.settings.cbr.not_available.description" = "Sabit bit hızı aramaları, çoklu hesap desteğinin gelmesi nedeniyle geçici olarak devre dışı. SBH aramaları yakında tekrar gelecek.";
 
 "self.settings.vbr.title" = "Değişken Bit Hızı Kodlaması";
 "self.settings.vbr.description" = "Bu sesli aramaların daha az veri kullanmasını sağlar, ayrıca yavaş internet bağlantılarında daha iyi çalışır. Sabit Bit Hızı Kodlamasını kullanmak isterseniz devre dışı bırakın.";
@@ -883,7 +883,6 @@
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Username takeover screen
-"registration.select_handle.takeover.title" = "Kullanıcı adları burada.";
 "registration.select_handle.takeover.subtitle" = "Wire üzerinden size özel isminizi hemen alın.";
 "registration.select_handle.takeover.subtitle_link" = "Daha fazla bilgi";
 
@@ -905,6 +904,7 @@
 "error.user.device_deleted_remotely" = "Başka bir cihaz tarafından oturumunuz kapatıldı.";
 "error.user.last_identity_cant_be_deleted" = "E-posta adresinizden veya telefon numaranızdan en az biri gerekli.";
 "error.user.account_suspended" = "Bu hesap artık giriş yapmak için yeterli yetkiye sahip değil.";
+"error.user.account_limit_reached" = "3’ten fazla hesap ekleyemezsin.";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Those are caught by the UI without involving the SE validation. Basically very similar to ZMUserSessionErrorCode onces

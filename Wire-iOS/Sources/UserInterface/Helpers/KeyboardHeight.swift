@@ -33,6 +33,7 @@
         switch UIScreen.main.bounds.height {
         case 667: return 258
         case 736: return 271
+        case 812: return 253 + UIScreen.safeArea.bottom
         default: return 253
         }
     }

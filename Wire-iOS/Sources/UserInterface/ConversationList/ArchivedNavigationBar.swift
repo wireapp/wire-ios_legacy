@@ -64,11 +64,13 @@ import Cartography
             separator.bottom == view.bottom
             
             title.centerX == view.centerX
-            title.centerY == view.centerY + statusbarHeight / 2
+            title.centerY == view.centerY
             
             button.centerY == title.centerY
             button.right == view.right - 16
             button.left >= title.right + 8
+            
+            view.height == barHeight
         }
     }
     

@@ -105,7 +105,7 @@ open class CameraCell: UICollectionViewCell, Reusable {
             
             takePictureButton.width == 60
             takePictureButton.height == takePictureButton.width
-            takePictureButton.bottom == contentView.bottom - 6
+            takePictureButton.bottom == contentView.bottom - 6 - UIScreen.safeArea.bottom
             takePictureButton.centerX == contentView.centerX
             
             changeCameraButton.width == 40

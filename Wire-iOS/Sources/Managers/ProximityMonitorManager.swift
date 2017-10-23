@@ -76,7 +76,7 @@ class ProximityMonitorManager : NSObject {
         UIDevice.current.isProximityMonitoringEnabled = !speakerIsEnabled && hasOngoingCall
     }
     
-    // MARK: - listening mode
+    // MARK: - listening mode switching (for AudioMessageView)
     
     func startListening() {
         guard !self.listening else {

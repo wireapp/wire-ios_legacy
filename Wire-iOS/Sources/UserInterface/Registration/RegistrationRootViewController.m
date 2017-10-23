@@ -104,9 +104,9 @@
 
 - (void)createConstraints
 {
-    [self.registrationTabBarController.view autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero excludingEdge:ALEdgeTop];
+    [self.registrationTabBarController.view autoPinEdgesToSuperviewEdgesWithInsets:UIScreen.safeArea excludingEdge:ALEdgeTop];
     [self.registrationTabBarController.view autoSetDimension:ALDimensionHeight toSize:IS_IPAD ? 262 : 244];
-    [self.cancelButton autoPinEdgeToSuperviewEdge:ALEdgeTop withInset:32];
+    [self.cancelButton autoPinEdgeToSuperviewEdge:ALEdgeTop withInset:UIScreen.safeArea.top + 32];
     [self.cancelButton autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:16];
 }
 

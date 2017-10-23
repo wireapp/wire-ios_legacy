@@ -300,7 +300,6 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    [self updateLeftNavigationBarItems];
     self.isAppearing = YES;
 }
 

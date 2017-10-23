@@ -223,12 +223,13 @@ final class AudioMessageView: UIView, TransferView {
     }
     
     private func updateTimeLabel() {
-        guard let audioTrackPlayer = self.audioTrackPlayer else { return }
         
         var duration: Int? = .none
         
         if self.isOwnTrackPlayingInAudioPlayer() {
-            duration = Int(audioTrackPlayer.elapsedTime)
+            if let audioTrackPlayer = self.audioTrackPlayer {
+                duration = Int(audioTrackPlayer.elapsedTime)
+            }
         }
         else {
             guard let message = self.fileMessage,
@@ -335,6 +336,10 @@ final class AudioMessageView: UIView, TransferView {
         }
     }
     
+    
+    /// Check if the audioTrackPlayer is playing my track
+    ///
+    /// - Returns: true if audioTrackPlayer is playing the audio of this view (not other instance of AudioMessgeView or other audio playing object)
     private func isOwnTrackPlayingInAudioPlayer() -> Bool {
         guard let message = self.fileMessage,
             let audioTrack = message.audioTrack(),
@@ -383,32 +388,45 @@ final class AudioMessageView: UIView, TransferView {
     
     // MARK: - Audio state observer
     dynamic private func audioProgressChanged(_ change: NSDictionary) {
-        if self.isOwnTrackPlayingInAudioPlayer() {
-            self.updateActivePlayerProgressAnimated(false)
-            self.updateTimeLabel()
+        DispatchQueue.main.async {
+            if self.isOwnTrackPlayingInAudioPlayer() {
+                self.updateActivePlayerProgressAnimated(false)
+                self.updateTimeLabel()
+            }
         }
     }
     
+    
+    ///  Observer function for audioTrackPlayer's keyPath "state".
+    ///  This function updates the visual progress of the audio, play button icon image, time label and proximity sensor's sate.
+    ///  Notice: when there are more then 1 instance of this class exists, this function will be called in every instance.
+    ///          This function may called from background thread (in case incoming call).
+    ///
+    /// - Parameter change: a dictionary with KVP kind and new (enum MediaPlayerState: 0 = ready, 1 = play, 2 = pause, 3 = completed, 4 = error)
     dynamic private func audioPlayerStateChanged(_ change: NSDictionary) {
-        if self.isOwnTrackPlayingInAudioPlayer() {
-            self.updateActivePlayButton()
-            self.updateActivePlayerProgressAnimated(false)
-            self.updateTimeLabel()
+        DispatchQueue.main.async {
+            if self.isOwnTrackPlayingInAudioPlayer() {
+                self.updateActivePlayerProgressAnimated(false)
+                self.updateActivePlayButton()
+                self.updateTimeLabel()
+                self.updateProximityObserverState()
+            }
+            /// when state is completed, there is no info about it is own track or not. Update the time label in this case anyway (set to the length of own audio track)
+            else if let new = change["new"] as? Int, let state = MediaPlayerState(rawValue: new), state == .completed {
+                self.updateTimeLabel()
+            }
+            else {
+                self.updateInactivePlayer()
+            }
         }
-        else {
-            self.updateInactivePlayer()
-            self.updateTimeLabel()
-        }
-        
-        updateProximityObserverState()
     }
     
     // MARK: - Proximity Listener
     
     private func updateProximityObserverState() {
-        guard let audioTrackPlayer = self.audioTrackPlayer else { return }
+        guard let audioTrackPlayer = self.audioTrackPlayer, isOwnTrackPlayingInAudioPlayer() else { return }
         
-        if audioTrackPlayer.isPlaying && isOwnTrackPlayingInAudioPlayer() {
+        if audioTrackPlayer.isPlaying {
             proximityMonitorManager?.startListening()
         } else {
             proximityMonitorManager?.stopListening()

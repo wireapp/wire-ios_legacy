@@ -181,6 +181,14 @@ static CIContext *ciContext(void)
 
 - (void)updateUserImage
 {
+    // Check if user object is a zombie in terms of the core data objects.
+    if ([self.user isKindOfClass:[ZMManagedObject class]]) {
+        ZMManagedObject *userInDatabase = (ZMManagedObject *)self.user;
+        if ([userInDatabase isZombieObject]) {
+            return;
+        }
+    }
+    
     if (self.size == UserImageViewSizeBig &&
         self.user.imageMediumData == nil) {
         

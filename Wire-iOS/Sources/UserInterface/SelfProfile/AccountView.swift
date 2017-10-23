@@ -51,8 +51,8 @@ class ShapeView: LayerHostView<CAShapeLayer> {
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        if lastBounds != self.bounds {
-           lastBounds = self.bounds
+        if !lastBounds.equalTo(self.bounds) {
+            lastBounds = self.bounds
             
             self.updatePath()
         }
@@ -128,6 +128,7 @@ public class BaseAccountView: UIView, AccountViewType {
         selectionView.isHidden = !selected || collapsed
         dotView.hasUnreadMessages = hasUnreadMessages
         selectionView.hostedLayer.strokeColor = UIColor.accent().cgColor
+        self.layoutSubviews()
     }
     
     public var onTap: ((Account?) -> ())? = .none
@@ -152,12 +153,11 @@ public class BaseAccountView: UIView, AccountViewType {
         selectionView.hostedLayer.strokeColor = UIColor.accent().cgColor
         selectionView.hostedLayer.fillColor = UIColor.clear.cgColor
         selectionView.hostedLayer.lineWidth = 1.5
-        selectionView.layoutMargins = UIEdgeInsets(top: 1, left: 1, bottom: 1, right: 1)
         
         [imageViewContainer, outlineView, selectionView, dotView].forEach(self.addSubview)
         
         constrain(imageViewContainer, selectionView) { imageViewContainer, selectionView in
-            selectionView.edgesWithinMargins == imageViewContainer.edges
+            selectionView.edges == inset(imageViewContainer.edges, -1, -1)
         }
 
         let dotSize: CGFloat = 9
@@ -170,10 +170,10 @@ public class BaseAccountView: UIView, AccountViewType {
             dotView.height == dotSize
         }
         
-        let inset: CGFloat = 7
+        let containerInset: CGFloat = 7
         
         constrain(self, imageViewContainer, dotView) { selfView, imageViewContainer, dotView in
-            imageViewContainer.top == selfView.top + inset
+            imageViewContainer.top == selfView.top + containerInset
             imageViewContainer.centerX == selfView.centerX
             selfView.width >= imageViewContainer.width
             selfView.trailing >= dotView.trailing
@@ -181,9 +181,9 @@ public class BaseAccountView: UIView, AccountViewType {
             imageViewContainer.width == 32
             imageViewContainer.height == imageViewContainer.width
             
-            imageViewContainer.bottom == selfView.bottom - inset
-            imageViewContainer.leading == selfView.leading + inset
-            imageViewContainer.trailing == selfView.trailing - inset
+            imageViewContainer.bottom == selfView.bottom - containerInset
+            imageViewContainer.leading == selfView.leading + containerInset
+            imageViewContainer.trailing == selfView.trailing - containerInset
             selfView.width <= 128
         }
         
@@ -261,9 +261,8 @@ public final class PersonalAccountView: BaseAccountView {
         }
         
         self.imageViewContainer.addSubview(userImageView)
-        self.imageViewContainer.layoutMargins = UIEdgeInsets(top: 2, left: 2, bottom: 2, right: 2)
         constrain(imageViewContainer, userImageView) { imageViewContainer, userImageView in
-            userImageView.edges == imageViewContainer.edgesWithinMargins
+            userImageView.edges == inset(imageViewContainer.edges, 2, 2)
         }
         
         update()
@@ -349,11 +348,12 @@ public final class TeamImageView: UIImageView {
         UIGraphicsBeginImageContextWithOptions(bounds.size, false, maskLayer.contentsScale)
         WireStyleKit.drawSpace(withFrame: bounds, resizing: WireStyleKitResizingBehaviorAspectFit, color: .black)
         
-        let image = UIGraphicsGetImageFromCurrentImageContext()!
-        UIGraphicsEndImageContext()
-        
-        maskLayer.frame = layer.bounds
-        maskLayer.contents = image.cgImage
+        if let image = UIGraphicsGetImageFromCurrentImageContext() {
+            UIGraphicsEndImageContext()
+            
+            maskLayer.frame = layer.bounds
+            maskLayer.contents = image.cgImage
+        }
     }
     
     override public func layoutSubviews() {
@@ -378,7 +378,7 @@ public final class TeamImageView: UIImageView {
 }
 
 @objc internal class TeamAccountView: BaseAccountView {
-
+    
     public override var collapsed: Bool {
         didSet {
             self.imageView.isHidden = collapsed
@@ -390,7 +390,7 @@ public final class TeamImageView: UIImageView {
     
     private var teamObserver: NSObjectProtocol!
     private var conversationListObserver: NSObjectProtocol!
-
+    
     override init(account: Account, user: ZMUser? = nil) {
         
         imageView = TeamImageView(account: account)
@@ -413,9 +413,8 @@ public final class TeamImageView: UIImageView {
             return path
         }
         
-        self.imageViewContainer.layoutMargins = UIEdgeInsets(top: 2, left: 2, bottom: 2, right: 2)
         constrain(imageViewContainer, imageView) { imageViewContainer, imageView in
-            imageView.edges == imageViewContainer.edgesWithinMargins
+            imageView.edges == inset(imageViewContainer.edges, 2, 2)
         }
 
         update()

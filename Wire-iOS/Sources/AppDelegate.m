@@ -325,9 +325,7 @@ static AppDelegate *sharedAppDelegate = nil;
 {
     DDLogWarn(@"Received APNS token: %@", newDeviceToken);
     
-    [self.rootViewController performWhenAuthenticated:^{
-        [[SessionManager shared] didRegisteredForRemoteNotificationsWith:newDeviceToken];
-    }];
+    [[SessionManager shared] didRegisteredForRemoteNotificationsWith:newDeviceToken];
 }
 
 - (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error
@@ -354,9 +352,8 @@ static AppDelegate *sharedAppDelegate = nil;
         [[Analytics shared] tagAppLaunchWithType:ApplicationLaunchPush];
         self.trackedResumeEvent = YES;
     }
-    [self.rootViewController performWhenAuthenticated:^{
-        [[SessionManager shared] didReceiveRemoteNotification:userInfo fetchCompletionHandler:completionHandler];
-    }];
+    
+    [[SessionManager shared] didReceiveRemoteNotification:userInfo fetchCompletionHandler:completionHandler];
     
     self.launchType = (application.applicationState == UIApplicationStateInactive || application.applicationState == UIApplicationStateBackground) ? ApplicationLaunchPush: ApplicationLaunchDirect;
 }
@@ -365,9 +362,7 @@ static AppDelegate *sharedAppDelegate = nil;
 {
     DDLogInfo(@"application:didReceiveLocalNotification: %@", notification);
     
-    [self.rootViewController performWhenAuthenticated:^{
-        [[SessionManager shared] didReceiveLocalNotification:notification application:application];
-    }];
+    [[SessionManager shared] didReceiveLocalNotification:notification application:application];
     
     self.launchType = (application.applicationState == UIApplicationStateInactive || application.applicationState == UIApplicationStateBackground) ? ApplicationLaunchPush: ApplicationLaunchDirect;
 }
@@ -379,13 +374,11 @@ forLocalNotification:(UILocalNotification *)notification
 {
     DDLogInfo(@"application:handleActionWithIdentifier:forLocalNotification: identifier: %@, notification: %@", identifier, notification);
     
-    [self.rootViewController performWhenAuthenticated:^{
-        [[SessionManager shared] handleActionWithIdentifier:identifier
-                                       forLocalNotification:notification
-                                           withResponseInfo:[NSDictionary dictionary]
-                                          completionHandler:completionHandler
-                                                application:application];
-    }];
+    [[SessionManager shared] handleActionWithIdentifier:identifier
+                                   forLocalNotification:notification
+                                       withResponseInfo:[NSDictionary dictionary]
+                                      completionHandler:completionHandler
+                                            application:application];
 }
 
 - (void)application:(UIApplication *)application
@@ -396,13 +389,11 @@ forLocalNotification:(UILocalNotification *)notification
 {
     DDLogInfo(@"application:handleActionWithIdentifier:forLocalNotification: identifier: %@, notification: %@ responseInfo: %@", identifier, notification, responseInfo);
     
-    [self.rootViewController performWhenAuthenticated:^{
-        [[SessionManager shared] handleActionWithIdentifier:identifier
-                                       forLocalNotification:notification
-                                           withResponseInfo:responseInfo
-                                          completionHandler:completionHandler
-                                                application:application];
-    }];
+    [[SessionManager shared] handleActionWithIdentifier:identifier
+                                   forLocalNotification:notification
+                                       withResponseInfo:responseInfo
+                                      completionHandler:completionHandler
+                                            application:application];
 }
 
 - (void)application:(UIApplication *)application performFetchWithCompletionHandler:(void (^)(UIBackgroundFetchResult result))completionHandler;

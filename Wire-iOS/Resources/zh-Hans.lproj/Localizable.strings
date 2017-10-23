@@ -663,10 +663,10 @@
 
 "self.settings.callkit.title" = "通话";
 "self.settings.callkit.caption" = "与iOS分享";
-"self.settings.callkit.description" = "Show Wire calls on the lock screen and in iOS call history. If iCloud is enabled, call history is shared with Apple.";
+"self.settings.callkit.description" = "在锁屏界面与通话记录中显示Wire的来电信息。如果您已启动iCloud，您的来电记录也将同步到Apple服务器。";
 
-"self.settings.cbr.not_available" = "Constant Bit Rate Encoding";
-"self.settings.cbr.not_available.description" = "Constant bit rate calls have been temporarily disabled with the introduction of multiple account support. CBR calls will be back soon.";
+"self.settings.cbr.not_available" = "固定比特率编码";
+"self.settings.cbr.not_available.description" = "因为多帐户支持，固定比特率呼叫已被暂时禁用。 固定比特率呼叫不久将回归。";
 
 "self.settings.vbr.title" = "可变码率编码";
 "self.settings.vbr.description" = "使用较少的数据和更好地工作在较慢的网络上的音频呼叫。请关闭使用固定编码。";
@@ -883,7 +883,6 @@
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Username takeover screen
-"registration.select_handle.takeover.title" = "您的用户名显示在这里。";
 "registration.select_handle.takeover.subtitle" = "设置您在Wire上独一无二的用户名。";
 "registration.select_handle.takeover.subtitle_link" = "更多信息";
 
@@ -905,6 +904,7 @@
 "error.user.device_deleted_remotely" = "您的另一台设备已被登出。";
 "error.user.last_identity_cant_be_deleted" = "邮箱地址或手机号码是必填项。";
 "error.user.account_suspended" = "此账户不再被授权登录";
+"error.user.account_limit_reached" = "您最多添加3个账号";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Those are caught by the UI without involving the SE validation. Basically very similar to ZMUserSessionErrorCode onces

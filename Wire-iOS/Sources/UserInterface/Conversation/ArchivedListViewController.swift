@@ -64,7 +64,7 @@ import Cartography
         collectionView.alwaysBounceVertical = true
         collectionView.allowsSelection = true
         collectionView.allowsMultipleSelection = false
-        collectionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 16, right: 0)
+        collectionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 16 + UIScreen.safeArea.bottom, right: 0)
         collectionView.accessibilityIdentifier = "archived conversation list"
 
         [archivedNavigationBar, collectionView].forEach(view.addSubview)
@@ -75,7 +75,7 @@ import Cartography
     
     func createConstraints() {
         constrain(view, archivedNavigationBar, collectionView) { view, navigationBar, collectionView in
-            navigationBar.top == view.top
+            navigationBar.top == view.top + UIScreen.safeArea.top
             navigationBar.left == view.left
             navigationBar.right == view.right
             navigationBar.bottom == collectionView.top
