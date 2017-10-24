@@ -22,7 +22,7 @@ import Classy
 
 class SearchResultsView : UIView {
     
-    fileprivate let accessoryViewMargin : CGFloat = 16.0
+    let accessoryViewMargin : CGFloat = 16.0
     let emptyResultContainer = UIView()
     let collectionView : UICollectionView
     let collectionViewLayout : UICollectionViewFlowLayout
@@ -70,9 +70,9 @@ class SearchResultsView : UIView {
             collectionView.right == container.right
             
             accessoryContainer.top == collectionView.bottom
-            accessoryContainer.left == container.left + accessoryViewMargin
-            accessoryContainer.right == container.right - accessoryViewMargin
-            accessoryViewBottomOffsetConstraint = accessoryContainer.bottom == container.bottom - accessoryViewMargin - UIScreen.safeArea.bottom
+            accessoryContainer.left == container.left
+            accessoryContainer.right == container.right
+            accessoryViewBottomOffsetConstraint = accessoryContainer.bottom == container.bottom - UIScreen.safeArea.bottom
             
             emptyResultContainer.top == container.top + 64
             emptyResultContainer.centerX == container.centerX
@@ -133,11 +133,7 @@ class SearchResultsView : UIView {
         
         UIView.animate(withKeyboardNotification: notification, in: self, animations: { (keyboardFrameInView) in
             let keyboardHeight = keyboardFrameInView.size.height - inputAccessoryHeight
-            if keyboardHeight > 0 {
-                self.accessoryViewBottomOffsetConstraint?.constant = -keyboardHeight
-            } else {
-                self.accessoryViewBottomOffsetConstraint?.constant = -self.accessoryViewMargin - UIScreen.safeArea.bottom
-            }
+            self.accessoryViewBottomOffsetConstraint?.constant = -keyboardHeight
             self.layoutIfNeeded()
         }, completion: nil)
     }
