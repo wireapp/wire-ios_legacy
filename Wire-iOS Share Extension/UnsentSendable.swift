@@ -79,10 +79,10 @@ class UnsentTextSendable: UnsentSendableBase, UnsentSendable {
         sharingSession.enqueue { [weak self] in
             guard let `self` = self else { return }
             let fetchPreview = !ExtensionSettings.shared.disableLinkPreviews
-            completion(self.conversation.appendTextMessage(self.text, fetchLinkPreview: fetchPreview))
+            let message = self.conversation.appendTextMessage(self.text, fetchLinkPreview: fetchPreview)
+            completion(message)
         }
     }
-
 }
 
 

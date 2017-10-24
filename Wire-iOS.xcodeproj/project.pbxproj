@@ -987,6 +987,27 @@
 			remoteGlobalIDString = 1EE85C4F1B5F96FB008E084B;
 			remoteInfo = ZetaFramework;
 		};
+		7C771CF61F9F87C600AD8139 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 7C771CF01F9F87C500AD8139 /* WireShareEngine.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 5470D3E81D76E1B000FDE440;
+			remoteInfo = WireShareEngine;
+		};
+		7C771CF81F9F87C600AD8139 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 7C771CF01F9F87C500AD8139 /* WireShareEngine.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 5470D3F21D76E1B000FDE440;
+			remoteInfo = WireShareEngineTests;
+		};
+		7C771CFA1F9F87C600AD8139 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 7C771CF01F9F87C500AD8139 /* WireShareEngine.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = F154EE081F44826400CB8184;
+			remoteInfo = WireShareEngineTestHost;
+		};
 		87B7DAB31E696F5D005F5140 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 8F42C530199244A700288E4D /* Project object */;
@@ -1306,6 +1327,7 @@
 		7C17ECA61F74F7710056600C /* PreviewProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PreviewProvider.h; sourceTree = "<group>"; };
 		7C17ECA71F7508980056600C /* CellSizesProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CellSizesProvider.swift; sourceTree = "<group>"; };
 		7C4918A01F8BB1A20038AF4B /* UIScreen+SafeArea.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIScreen+SafeArea.swift"; sourceTree = "<group>"; };
+		7C771CF01F9F87C500AD8139 /* WireShareEngine.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = WireShareEngine.xcodeproj; path = "../wire-ios-share-engine/WireShareEngine.xcodeproj"; sourceTree = "<group>"; };
 		7CA540811F740B7C00457F4B /* UIScreen+Compact.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIScreen+Compact.h"; sourceTree = "<group>"; };
 		7CA540821F740B7C00457F4B /* UIScreen+Compact.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIScreen+Compact.m"; sourceTree = "<group>"; };
 		7CC085451F7AA30F0010F96B /* DotView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DotView.swift; sourceTree = "<group>"; };
@@ -2992,6 +3014,16 @@
 			name = Classy;
 			sourceTree = "<group>";
 		};
+		7C771CF11F9F87C500AD8139 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				7C771CF71F9F87C600AD8139 /* WireShareEngine.framework */,
+				7C771CF91F9F87C600AD8139 /* WireShareEngineTests.xctest */,
+				7C771CFB1F9F87C600AD8139 /* WireShareEngineTestHost.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		8286E48D7CC440448CBD8F48 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -4084,6 +4116,7 @@
 		8F42C52F199244A700288E4D = {
 			isa = PBXGroup;
 			children = (
+				7C771CF01F9F87C500AD8139 /* WireShareEngine.xcodeproj */,
 				87501FB21D40D6490056C042 /* ComponentsVersions.plist */,
 				87C8D7FB1BA8261C00B0530B /* Entitlements-Dev.entitlements */,
 				87C8D7FC1BA8261C00B0530B /* Entitlements-Prod.entitlements */,
@@ -5360,6 +5393,12 @@
 			mainGroup = 8F42C52F199244A700288E4D;
 			productRefGroup = 8F42C539199244A700288E4D /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 7C771CF11F9F87C500AD8139 /* Products */;
+					ProjectRef = 7C771CF01F9F87C500AD8139 /* WireShareEngine.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				8F42C537199244A700288E4D /* Wire-iOS */,
@@ -5371,6 +5410,30 @@
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		7C771CF71F9F87C600AD8139 /* WireShareEngine.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = WireShareEngine.framework;
+			remoteRef = 7C771CF61F9F87C600AD8139 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		7C771CF91F9F87C600AD8139 /* WireShareEngineTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = WireShareEngineTests.xctest;
+			remoteRef = 7C771CF81F9F87C600AD8139 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		7C771CFB1F9F87C600AD8139 /* WireShareEngineTestHost.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = WireShareEngineTestHost.app;
+			remoteRef = 7C771CFA1F9F87C600AD8139 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		168A16A71D9597C2005CFA6C /* Resources */ = {
@@ -5501,7 +5564,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "$SRCROOT/Scripts/copyExtraAudioNotifications";
+			shellScript = $SRCROOT/Scripts/copyExtraAudioNotifications;
 		};
 		193B0B9A94C0482E9B6C33B0 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -5694,7 +5757,7 @@
 				"$(SRCROOT)/Carthage/Build/iOS/WireRequestStrategy.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/WireMessageStrategy.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/avs.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/WireShareEngine.framework",
+				"$(BUILT_PRODUCTS_DIR)/WireShareEngine.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/HockeySDK.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/FLAnimatedImage.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/WireCanvas.framework",

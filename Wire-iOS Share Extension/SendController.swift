@@ -54,6 +54,11 @@ class SendController {
 
     init(text: String, attachments: [NSItemProvider], conversation: Conversation, sharingSession: SharingSession) {
         var sendables: [UnsentSendable] = attachments.flatMap {
+            
+            if text.isEmpty {
+                return UnsentTextSendable(conversation: conversation, sharingSession: sharingSession, text: text)
+            }
+            
             return UnsentImageSendable(conversation: conversation, sharingSession: sharingSession, attachment: $0)
                 ?? UnsentFileSendable(conversation: conversation, sharingSession: sharingSession, attachment: $0)
         }
