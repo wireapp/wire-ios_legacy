@@ -4,6 +4,15 @@
 <dict>
 	<key>com.apple.developer.ubiquity-kvstore-identifier</key>
 	<string>$(TeamIdentifierPrefix)$(CFBundleIdentifier)</string>
+	<key>com.apple.developer.associated-domains</key>
+	<array>
+		<string>webcredentials:app.wire.com</string>
+		<string>webcredentials:wire-webapp-staging.zinfra.io</string>
+		<string>webcredentials:wire-webapp-dev.zinfra.io</string>
+		<string>webcredentials:teams.wire.com</string>
+		<string>webcredentials:wire-admin-staging.zinfra.io</string>
+		<string>webcredentials:wire-admin-dev.zinfra.io</string>
+	</array>
 	<key>com.apple.developer.ubiquity-container-identifiers</key>
 	<array>
 		<string>iCloud.$(CFBundleIdentifier)</string>
