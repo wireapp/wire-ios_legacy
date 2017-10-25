@@ -36,6 +36,7 @@
 @property (nonatomic) ZMIncompleteRegistrationUser *unregisteredUser;
 @property (nonatomic, weak) SignInViewController *signInViewController;
 @property (nonatomic) IconButton *cancelButton;
+@property (nonatomic, readonly) Account *firstAuthenticatedAccount;
 
 @end
 
@@ -92,7 +93,7 @@
     [self.cancelButton setIconColor:UIColor.whiteColor forState:UIControlStateNormal];
     self.cancelButton.accessibilityLabel = @"cancelAddAccount";
     [self.cancelButton addTarget:self action:@selector(cancelAddAccount) forControlEvents:UIControlEventTouchUpInside];
-    self.cancelButton.hidden = !SessionManager.shared.accountManager.selectedAccount.isAuthenticated || self.hasSignInError;
+    self.cancelButton.hidden = self.firstAuthenticatedAccount == nil;
     
     [self addChildViewController:self.registrationTabBarController];
     [self.view addSubview:self.registrationTabBarController.view];
@@ -100,6 +101,22 @@
     [self.registrationTabBarController didMoveToParentViewController:self];
     
     [self createConstraints];
+}
+
+- (Account *)firstAuthenticatedAccount {
+    Account *selectedAccount = SessionManager.shared.accountManager.selectedAccount;
+    
+    if (selectedAccount.isAuthenticated && !self.hasSignInError) {
+        return selectedAccount;
+    }
+    
+    for (Account *account in SessionManager.shared.accountManager.accounts) {
+        if (account.isAuthenticated && account != selectedAccount) {
+            return account;
+        }
+    }
+    
+    return nil;
 }
 
 - (void)createConstraints
@@ -122,8 +139,7 @@
 
 - (void)cancelAddAccount
 {
-    SessionManager *sessionManager = SessionManager.shared;
-    [sessionManager select:sessionManager.accountManager.selectedAccount completion:nil tearDownCompletion:nil];
+    [SessionManager.shared select:self.firstAuthenticatedAccount completion:nil tearDownCompletion:nil];
 }
 
 #pragma mark - FormStepDelegate
