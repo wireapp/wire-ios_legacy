@@ -152,11 +152,9 @@ class ChatHeadView: UIView {
                 subtitleLabel.trailing == container.trailing
             }
         } else {
-            // subtitle centered
+            // subtitle fills container
             constrain(labelContainer, subtitleLabel) { container, subtitleLabel in
-                subtitleLabel.leading == container.leading
-                subtitleLabel.trailing == container.trailing
-                subtitleLabel.centerY == container.centerY
+                subtitleLabel.edges == container.edges
             }
         }
         
@@ -175,12 +173,9 @@ class ChatHeadView: UIView {
             }
         }
         else {
-            // labels left
+            // labels fills view
             constrain(self, labelContainer) { selfView, labelContainer in
-                labelContainer.leading == selfView.leading + padding
-                labelContainer.trailing == selfView.trailing - padding
-                labelContainer.height == selfView.height
-                labelContainer.centerY == selfView.centerY
+                labelContainer.edges == inset(selfView.edges, 0, padding, 0, padding)
             }
         }
     }
