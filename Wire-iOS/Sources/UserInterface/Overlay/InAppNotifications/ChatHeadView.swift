@@ -30,6 +30,8 @@ class ChatHeadView: UIView {
     private let title: String?
     private let body: String
     private let sender: ZMUser?
+    private let userID: UUID
+    private let teamName: String?
     private let isEphemeral: Bool
     
     private let imageDiameter: CGFloat = 28
@@ -55,10 +57,12 @@ class ChatHeadView: UIView {
         return ColorScheme.default().color(withName: name)
     }
     
-    init(title: String?, body: String, sender: ZMUser?, isEphemeral: Bool = false) {
+    init(title: String?, body: String, sender: ZMUser?, userID: UUID, teamName: String? = nil, isEphemeral: Bool = false) {
         self.title = title
         self.body = body
         self.sender = sender
+        self.userID = userID
+        self.teamName = teamName
         self.isEphemeral = isEphemeral
         super.init(frame: .zero)
         setup()
@@ -98,7 +102,7 @@ class ChatHeadView: UIView {
             titleLabel = UILabel()
             titleLabel!.backgroundColor = .clear
             titleLabel!.isUserInteractionEnabled = false
-            titleLabel!.attributedText = NSAttributedString(string: title, attributes: mediumFont)
+            titleLabel!.attributedText = attributedTitleText(title)
             titleLabel!.textColor = color(withName: ColorSchemeColorChatHeadTitleText)
             titleLabel!.lineBreakMode = .byTruncatingTail
             labelContainer.addSubview(titleLabel!)
@@ -159,6 +163,19 @@ class ChatHeadView: UIView {
         }
     }
     
+    private func attributedTitleText(_ title: String) -> NSAttributedString {
+        let attrText = NSMutableAttributedString(string: title, attributes: titleMediumAttributes)
+        
+        // if title contains "in [Team Name]", then we want "in" to be regular font
+        if let teamName = teamName {
+            if let teamRange = title.range(of: "in \(teamName)") {
+                let location = title.distance(from: title.startIndex, to: teamRange.lowerBound)
+                attrText.setAttributes(titleRegularAttributes, range: NSMakeRange(location, 2))
+            }
+        }
+        
+        return attrText
+    }
     
     // MARK: - Actions
     

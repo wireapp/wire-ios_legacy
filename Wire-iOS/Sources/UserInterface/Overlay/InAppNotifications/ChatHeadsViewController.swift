@@ -78,6 +78,8 @@ class ChatHeadsViewController: UIViewController {
             title: note.title.flatMap { trimTitleIfNeeded($0, account: account) },
             body: note.body,
             sender: note.sender(in: session.managedObjectContext),
+            userID: selfID,
+            teamName: account.teamName,
             isEphemeral: note.isEphemeral
         )
         
