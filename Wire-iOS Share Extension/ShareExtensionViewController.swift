@@ -131,7 +131,7 @@ class ShareExtensionViewController: SLComposeServiceViewController {
     /// invoked when the user wants to post
     func appendPostTapped() {
         navigationController?.navigationBar.items?.first?.rightBarButtonItem?.isEnabled = false
-        
+
         postContent?.send(text: contentText, sharingSession: sharingSession!) { [weak self] progress in
             guard let `self` = self, let postContent = self.postContent else { return }
 

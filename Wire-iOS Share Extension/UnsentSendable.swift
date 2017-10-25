@@ -96,21 +96,24 @@ class UnsentTextSendable: UnsentSendableBase, UnsentSendable {
         if let attachment = self.attachment, attachment.hasURL {
             
             self.attachment?.fetchURL(completion: { (url) in
-                
-                if let url = url?.absoluteString, !self.text.contains(url)  {
-                    var separator = ""
-                    
-                    if !self.text.isEmpty && self.text.characters.last != " " {
-                        separator = " "
-                    }
-                    
-                    self.text += separator + url
-                }
-                
+                self.appendURLToTextIfNotAlreadyPresent(url)
                 completion()
             })
         } else {
             completion()
+        }
+    }
+    
+    func appendURLToTextIfNotAlreadyPresent(_ url: URL?) {
+        
+        if let url = url?.absoluteString, !self.text.contains(url)  {
+            var separator = ""
+            
+            if !self.text.isEmpty && self.text.characters.last != " " {
+                separator = " "
+            }
+            
+            self.text += separator + url
         }
     }
 }
