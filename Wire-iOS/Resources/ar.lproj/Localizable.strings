@@ -665,8 +665,8 @@
 "self.settings.callkit.caption" = "مشاركة بواسطة iOS";
 "self.settings.callkit.description" = "إظهار مكالمات Wire على شاشة القفل وفي سجّل مكالمات الهاتف. في حال تفعيل iCloud، سيتم مشاركة سجّل المكالمات مع Apple.";
 
-"self.settings.cbr.not_available" = "Constant Bit Rate Encoding";
-"self.settings.cbr.not_available.description" = "Constant bit rate calls have been temporarily disabled with the introduction of multiple account support. CBR calls will be back soon.";
+"self.settings.cbr.not_available" = "ترميز معدل بت ثابت";
+"self.settings.cbr.not_available.description" = "مكالمات الBit Rate الثابت معطّلة مؤقتًا مع تقديم ميزة الحسابات المتعددة؛ وسوف تعود قريبًا.";
 
 "self.settings.vbr.title" = "ترميز بمعدل بت متغير";
 "self.settings.vbr.description" = "هذا يجعل المكالمات الصوتية تستهلك بيانات أقل وتعمل بشكل أفضل على الشبكات الأبطأ. أوقفه لتستخدم ترميز ذو معدل بت ثابت.";
@@ -883,7 +883,6 @@
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Username takeover screen
-"registration.select_handle.takeover.title" = "نقدِّم المعرّفات.";
 "registration.select_handle.takeover.subtitle" = "أعلن معرّفك الفريد على Wire.";
 "registration.select_handle.takeover.subtitle_link" = "معرفة المزيد";
 
@@ -905,6 +904,7 @@
 "error.user.device_deleted_remotely" = "قمت بتسجيل خروج من جهاز آخر.";
 "error.user.last_identity_cant_be_deleted" = "مطلوب إمّا عنوان بريد إلكتروني أو رقم هاتف.";
 "error.user.account_suspended" = "لم يعد مصرّحًا لهذا الحساب بتسجيل الدخول.";
+"error.user.account_limit_reached" = "لا يمكنك إضافة أكثر من ثلاث حسابات.";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Those are caught by the UI without involving the SE validation. Basically very similar to ZMUserSessionErrorCode onces

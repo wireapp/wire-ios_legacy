@@ -22,6 +22,7 @@ import Classy
 
 class SearchResultsView : UIView {
     
+    let accessoryViewMargin : CGFloat = 16.0
     let emptyResultContainer = UIView()
     let collectionView : UICollectionView
     let collectionViewLayout : UICollectionViewFlowLayout
@@ -61,6 +62,7 @@ class SearchResultsView : UIView {
     }
     
     func createConstraints() {
+        
         constrain(self, collectionView, accessoryContainer, emptyResultContainer) { container, collectionView, accessoryContainer, emptyResultContainer in
             
             collectionView.top == container.top
@@ -70,7 +72,7 @@ class SearchResultsView : UIView {
             accessoryContainer.top == collectionView.bottom
             accessoryContainer.left == container.left
             accessoryContainer.right == container.right
-            accessoryViewBottomOffsetConstraint = accessoryContainer.bottom == container.bottom
+            accessoryViewBottomOffsetConstraint = accessoryContainer.bottom == container.bottom - UIScreen.safeArea.bottom
             
             emptyResultContainer.top == container.top + 64
             emptyResultContainer.centerX == container.centerX

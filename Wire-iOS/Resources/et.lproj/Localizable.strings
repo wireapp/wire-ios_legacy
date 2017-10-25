@@ -559,8 +559,8 @@
 "self.new_device_alert.trust_devices" = "OK";
 
 // Settings - top level
-"self.settings.create_team.title" = "Create Team";
-"self.settings.add_account.title" = "Add Account";
+"self.settings.create_team.title" = "Loo tiimikonto";
+"self.settings.add_account.title" = "Lisa konto";
 
 // Settings - Account details
 "self.settings.account_section" = "Konto";
@@ -602,7 +602,7 @@
 "self.settings.account_details.delete_account.alert.message" = "Me saadame sulle sõnumi e-posti või SMS-ga. Külasta veebiaadressi, et oma konto lõplikult kustutada.";
 
 "self.settings.account_details.log_out.alert.title" = "Logi välja";
-"self.settings.account_details.log_out.alert.message" = "Your message history will be erased on this device.";
+"self.settings.account_details.log_out.alert.message" = "Kogu vestluste ajalugu kustutatakse.";
 
 
 // Change Username
@@ -663,10 +663,10 @@
 
 "self.settings.callkit.title" = "Kõned";
 "self.settings.callkit.caption" = "Jaga iOS-s";
-"self.settings.callkit.description" = "Show Wire calls on the lock screen and in iOS call history. If iCloud is enabled, call history is shared with Apple.";
+"self.settings.callkit.description" = "Näita Wire kõnesid lukustuskuval ja seadme kõnede ajaloos. Kui sul on iCloud sisse lülitatud, siis saadetakse kõnede ajalugu Apple'i serveritesse.";
 
-"self.settings.cbr.not_available" = "Constant Bit Rate Encoding";
-"self.settings.cbr.not_available.description" = "Constant bit rate calls have been temporarily disabled with the introduction of multiple account support. CBR calls will be back soon.";
+"self.settings.cbr.not_available" = "Püsiva bitikiirusega kodeering";
+"self.settings.cbr.not_available.description" = "Püsiva bitikiirusega kõned on ajutistelt välja lülitatud.";
 
 "self.settings.vbr.title" = "Muutuva bitisagedusega kodeering";
 "self.settings.vbr.description" = "Kõnede andmeside maht on väiksem ja kõnekvaliteet kehva ühenduse korral parem. Ühtlase bitisagedusega kodeeringu kasutamiseks lülita see valik välja.";
@@ -722,7 +722,7 @@
 "self.settings.privacy_security.lock_cancelled.description" = "Ava Wire Touch ID või parooliga";
 "self.settings.privacy_security.lock_cancelled.action" = "Vabasta lukust";
 
-"self.settings.privacy_security.disable_link_previews.title" = "Create Link Previews";
+"self.settings.privacy_security.disable_link_previews.title" = "Näita veebilinkide eelvaadet";
 "self.settings.privacy_security.disable_link_previews.footer" = "Eelvaateid võidakse siiski näidata teiste saadetud linkide puhul.";
 
 "self.settings.privacy_analytics_menu.devices.title" = "Seadmed";
@@ -883,7 +883,6 @@
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Username takeover screen
-"registration.select_handle.takeover.title" = "Siin on kasutajanimed.";
 "registration.select_handle.takeover.subtitle" = "Haara oma unikaalne nimi Wire’s.";
 "registration.select_handle.takeover.subtitle_link" = "Loe lähemalt";
 
@@ -905,6 +904,7 @@
 "error.user.device_deleted_remotely" = "Sind on teisest seadmest välja logitud.";
 "error.user.last_identity_cant_be_deleted" = "Kas meiliaadress või telefoninumber peab olema täidetud.";
 "error.user.account_suspended" = "See konto ei ole enam sisse logimiseks autoriseeritud.";
+"error.user.account_limit_reached" = "Üle kolme konto lisada ei saa.";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Those are caught by the UI without involving the SE validation. Basically very similar to ZMUserSessionErrorCode onces

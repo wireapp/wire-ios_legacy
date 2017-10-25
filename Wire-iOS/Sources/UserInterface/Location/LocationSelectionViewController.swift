@@ -96,11 +96,14 @@ import CoreLocation
 
     fileprivate func createConstraints() {
         constrain(view, mapView, sendViewController.view, annotationView, toolBar) { view, mapView, sendController, pin, toolBar in
-            mapView.edges == view.edges
+            mapView.trailing == view.trailing
+            mapView.leading == view.leading
+            mapView.top == view.top + UIScreen.safeArea.top
+            mapView.bottom == view.bottom  - UIScreen.safeArea.bottom
             sendController.leading == view.leading
             sendController.trailing == view.trailing
             sendController.bottom == view.bottom
-            sendController.height == 56
+            sendController.height == 56 + UIScreen.safeArea.bottom
             toolBar.leading == view.leading
             toolBar.top == view.top
             toolBar.trailing == view.trailing

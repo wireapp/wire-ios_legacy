@@ -559,8 +559,8 @@
 "self.new_device_alert.trust_devices" = "OK";
 
 // Settings - top level
-"self.settings.create_team.title" = "Create Team";
-"self.settings.add_account.title" = "Add Account";
+"self.settings.create_team.title" = "Creëer Team";
+"self.settings.add_account.title" = "Account toevoegen";
 
 // Settings - Account details
 "self.settings.account_section" = "Profiel";
@@ -602,7 +602,7 @@
 "self.settings.account_details.delete_account.alert.message" = "We sturen je een bericht via e-mail of SMS. Volg de instructies in de link op om je account te verwijderen.";
 
 "self.settings.account_details.log_out.alert.title" = "Uitloggen";
-"self.settings.account_details.log_out.alert.message" = "Your message history will be erased on this device.";
+"self.settings.account_details.log_out.alert.message" = "Je berichten history word verwijdert op dit apparaat.";
 
 
 // Change Username
@@ -663,10 +663,10 @@
 
 "self.settings.callkit.title" = "Oproepen";
 "self.settings.callkit.caption" = "Deel met iOS";
-"self.settings.callkit.description" = "Show Wire calls on the lock screen and in iOS call history. If iCloud is enabled, call history is shared with Apple.";
+"self.settings.callkit.description" = "Toon Wire-gesprekken op het toegangsscherm en in de iOS gespreksgeschiedenis. Als iCloud aan staat wordt de oproepgeschiedenis bewaard bij Apple.";
 
-"self.settings.cbr.not_available" = "Constant Bit Rate Encoding";
-"self.settings.cbr.not_available.description" = "Constant bit rate calls have been temporarily disabled with the introduction of multiple account support. CBR calls will be back soon.";
+"self.settings.cbr.not_available" = "Constante Bit Rate Codering";
+"self.settings.cbr.not_available.description" = "Constante Bit Rate Codering is tijdelijk uitgezet, met de introductie van de support van verschillende accounts. CBR zullen snel weer toegevoegd worden.";
 
 "self.settings.vbr.title" = "Variable Bit Rate codering";
 "self.settings.vbr.description" = "Hierdoor gebruik je minder data tijdens het bellen, en het werkt beter op trage netwerken. Zet dit uit om een constante Bitrate Encoding te gebruiken.";
@@ -722,7 +722,7 @@
 "self.settings.privacy_security.lock_cancelled.description" = "Ontgrendel Wire met Touch ID of Wachtwoord";
 "self.settings.privacy_security.lock_cancelled.action" = "Ontgrendel";
 
-"self.settings.privacy_security.disable_link_previews.title" = "Create Link Previews";
+"self.settings.privacy_security.disable_link_previews.title" = "Maak link voorvertoningen aan";
 "self.settings.privacy_security.disable_link_previews.footer" = "Linkvoorbeelden kunnen nog steeds getoond worden voor links van andere mensen.";
 
 "self.settings.privacy_analytics_menu.devices.title" = "Apparaten";
@@ -883,7 +883,6 @@
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Username takeover screen
-"registration.select_handle.takeover.title" = "Nieuw gebruikersnamen.";
 "registration.select_handle.takeover.subtitle" = "Claim je unieke gebruikers naam op Wire.";
 "registration.select_handle.takeover.subtitle_link" = "Leer meer";
 
@@ -904,7 +903,8 @@
 "error.user.registration_unknown_error" = "Er ging iets mis. Probeer het nogmaals.";
 "error.user.device_deleted_remotely" = "Je bent uitgelogd door een ander apparaat.";
 "error.user.last_identity_cant_be_deleted" = "Een email adres of een telefoon nummer is verplicht.";
-"error.user.account_suspended" = "This account is no longer authorized to log in.";
+"error.user.account_suspended" = "Dit account is niet langer geautoriseerd om in te loggen.";
+"error.user.account_limit_reached" = "You can't add more than 3 accounts.";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Those are caught by the UI without involving the SE validation. Basically very similar to ZMUserSessionErrorCode onces

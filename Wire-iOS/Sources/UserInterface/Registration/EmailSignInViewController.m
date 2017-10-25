@@ -114,7 +114,10 @@
 - (void)createEmailField
 {
     self.emailField = [[RegistrationTextField alloc] initForAutoLayout];
-    
+
+    if (@available(iOS 11, *)) {
+        self.emailField.textContentType = UITextContentTypeUsername;
+    }
     self.emailField.placeholder = NSLocalizedString(@"email.placeholder", nil);
     self.emailField.keyboardType = UIKeyboardTypeEmailAddress;
     self.emailField.returnKeyType = UIReturnKeyNext;
@@ -138,7 +141,10 @@
 - (void)createPasswordField
 {
     self.passwordField = [[RegistrationTextField alloc] initForAutoLayout];
-    
+
+    if (@available(iOS 11, *)) {
+        self.passwordField.textContentType = UITextContentTypePassword;
+    }
     self.passwordField.placeholder = NSLocalizedString(@"password.placeholder", nil);
     self.passwordField.secureTextEntry = YES;
     self.passwordField.keyboardAppearance = UIKeyboardAppearanceDark;

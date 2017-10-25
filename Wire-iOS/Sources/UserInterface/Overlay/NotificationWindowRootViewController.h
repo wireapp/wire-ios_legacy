@@ -20,12 +20,11 @@
 @import UIKit;
 @import WireSyncEngine;
 
-@class NetworkStatusViewController;
 @class ActiveVoiceChannelViewController;
-@class NetworkActivityViewController;
 @class BarController;
 @class AppLockViewController;
 @class ChatHeadsViewController;
+@class NetworkStatusViewController;
 
 @interface NotificationWindowRootViewController : UIViewController
 
@@ -33,10 +32,6 @@
 @property (nonatomic, readonly, nullable) ActiveVoiceChannelViewController *voiceChannelController;
 @property (nonatomic, readonly, nullable) AppLockViewController *appLockViewController;
 @property (nonatomic, readonly, nullable) ChatHeadsViewController *chatHeadsViewController;
-
-@property (nonatomic) BOOL showLoadMessages;
-
-@property (nonatomic) BOOL hideNetworkActivityView;
 
 - (void)transitionToLoggedInSession;
 - (void)show:(nonnull ZMLocalNotification *)notification;

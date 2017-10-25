@@ -665,8 +665,8 @@
 "self.settings.callkit.caption" = "Compartilhar com o iOS";
 "self.settings.callkit.description" = "Mostrar as chamadas do Wire na tela de bloqueio e no histórico de chamadas do iOS. Se o Icloud estiver ativado, o histórico de chamadas é compartilhado com a Apple.";
 
-"self.settings.cbr.not_available" = "Constant Bit Rate Encoding";
-"self.settings.cbr.not_available.description" = "Constant bit rate calls have been temporarily disabled with the introduction of multiple account support. CBR calls will be back soon.";
+"self.settings.cbr.not_available" = "Codificação com Taxa de Bits Constante";
+"self.settings.cbr.not_available.description" = "A taxa de bits constante foi desativada temporariamente com a introdução de suporte para várias contas. A TBC será reativada em breve.";
 
 "self.settings.vbr.title" = "Codificação com Taxa de Bits Variável";
 "self.settings.vbr.description" = "Isto faz chamadas de áudio usar menos dados e funcionam melhor em redes mais lentas. Desligue para usar a Codificação com Taxa de Bits Constante.";
@@ -883,7 +883,6 @@
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Username takeover screen
-"registration.select_handle.takeover.title" = "Nomes de usuário estão aqui.";
 "registration.select_handle.takeover.subtitle" = "Revindicar seu nome único no Wire.";
 "registration.select_handle.takeover.subtitle_link" = "Mais informação";
 
@@ -905,6 +904,7 @@
 "error.user.device_deleted_remotely" = "Você foi desconectado através de um outro aparelho.";
 "error.user.last_identity_cant_be_deleted" = "Um número de telefone ou um endereço de e-mail é necessário.";
 "error.user.account_suspended" = "Esta conta não está mais autorizada a entrar.";
+"error.user.account_limit_reached" = "Você não pode adicionar mais de 3 contas.";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Those are caught by the UI without involving the SE validation. Basically very similar to ZMUserSessionErrorCode onces

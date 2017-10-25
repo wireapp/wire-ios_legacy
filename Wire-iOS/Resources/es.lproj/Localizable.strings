@@ -666,7 +666,7 @@
 "self.settings.callkit.description" = "Show Wire calls on the lock screen and in iOS call history. If iCloud is enabled, call history is shared with Apple.";
 
 "self.settings.cbr.not_available" = "Constant Bit Rate Encoding";
-"self.settings.cbr.not_available.description" = "Constant bit rate calls have been temporarily disabled with the introduction of multiple account support. CBR calls will be back soon.";
+"self.settings.cbr.not_available.description" = "Llamadas en tasa de bits constante están temporalmente desactivadas con la introducción del soporte de varias cuentas. Las llamadas CBR volverán pronto.";
 
 "self.settings.vbr.title" = "Tasa de bits variable";
 "self.settings.vbr.description" = "Esta opción permite que las llamadas de audio utilicen menos datos y funcionen mejor en redes lentas. Al desactivar esta opción se usará la codificación de audio de tasa de bits constante que necesita más ancho de banda pero es más segura frente a ataques de terceros.";
@@ -883,7 +883,6 @@
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Username takeover screen
-"registration.select_handle.takeover.title" = "Wire con nombres de usuario.";
 "registration.select_handle.takeover.subtitle" = "Elige tu nombre de usuario en Wire.";
 "registration.select_handle.takeover.subtitle_link" = "Más información";
 
@@ -905,6 +904,7 @@
 "error.user.device_deleted_remotely" = "Se ha cerrado la sesión en otro dispositivo.";
 "error.user.last_identity_cant_be_deleted" = "Wire necesita una dirección de email o un número de teléfono.";
 "error.user.account_suspended" = "Esta cuenta ya no está autorizada a iniciar sesión.";
+"error.user.account_limit_reached" = "You can't add more than 3 accounts.";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Those are caught by the UI without involving the SE validation. Basically very similar to ZMUserSessionErrorCode onces

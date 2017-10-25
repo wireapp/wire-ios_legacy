@@ -23,7 +23,7 @@ import Cartography
 // This class wraps the conversation content view controller in order to display the navigation bar on the top
 @objc open class ConversationRootViewController: UIViewController {
     
-    fileprivate(set) var customNavBar = UINavigationBar()
+    fileprivate(set) var customNavBar : UINavigationBarContainer?
     fileprivate var contentView = UIView()
     
     open fileprivate(set) weak var conversationViewController: ConversationViewController?
@@ -52,30 +52,36 @@ import Cartography
             return
         }
         
-        self.customNavBar.isTranslucent = false
-        self.customNavBar.isOpaque = true
-        self.customNavBar.setBackgroundImage(UIImage(), for: .any, barMetrics: .default)
-        self.customNavBar.shadowImage = UIImage()
-        self.customNavBar.translatesAutoresizingMaskIntoConstraints = false
+        self.view.backgroundColor = ColorScheme.default().color(withName: ColorSchemeColorBarBackground)
         
-        self.view.addSubview(self.customNavBar)
+        let navbar = UINavigationBar()
+        navbar.isTranslucent = false
+        navbar.isOpaque = true
+        navbar.setBackgroundImage(UIImage(), for: .any, barMetrics: .default)
+        navbar.shadowImage = UIImage()
+        navbar.translatesAutoresizingMaskIntoConstraints = false
+        navbar.barTintColor = ColorScheme.default().color(withName: ColorSchemeColorBarBackground)
+        
+        self.customNavBar = UINavigationBarContainer(navbar)
+        
+        self.view.addSubview(self.customNavBar!)
         self.view.addSubview(self.contentView)
         
-        constrain(self.customNavBar, self.view, self.contentView, conversationViewController.view) { (customNavBar: LayoutProxy, view: LayoutProxy, contentView: LayoutProxy, conversationViewControllerView: LayoutProxy) -> () in
+        constrain(self.customNavBar!, self.view, self.contentView, conversationViewController.view) { (customNavBar: LayoutProxy, view: LayoutProxy, contentView: LayoutProxy, conversationViewControllerView: LayoutProxy) -> () in
+            
             customNavBar.top == view.top
-            customNavBar.height == 64
             customNavBar.left == view.left
             customNavBar.right == view.right
             
             contentView.left == view.left
             contentView.right == view.right
-            contentView.bottom == view.bottom
+            contentView.bottom == view.bottom - UIScreen.safeArea.bottom
             contentView.top == customNavBar.bottom
             
             conversationViewControllerView.edges == contentView.edges
         }
         
-        self.customNavBar.pushItem(conversationViewController.navigationItem, animated: false)
+        self.customNavBar!.navigationBar.pushItem(conversationViewController.navigationItem, animated: false)
     }
     
     override open func viewDidAppear(_ animated: Bool) {

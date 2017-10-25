@@ -30,7 +30,7 @@ class SoundEventListener : NSObject {
     var unreadMessageObserverToken : NSObjectProtocol?
     var unreadKnockMessageObserverToken : NSObjectProtocol?
     var callStateObserverToken : Any?
-    var initialSyncObserverToken : Any?
+    var networkAvailabilityObserverToken : Any?
     
     deinit {
         NotificationCenter.default.removeObserver(self)
@@ -44,13 +44,15 @@ class SoundEventListener : NSObject {
             return
         }
         
-        initialSyncObserverToken = userSession.addInitialSyncCompletionObserver(self)
+        networkAvailabilityObserverToken = ZMNetworkAvailabilityChangeNotification.addNetworkAvailabilityObserver(self, userSession: userSession)
         callStateObserverToken = WireCallCenterV3.addCallStateObserver(observer: self, userSession: userSession)
         unreadMessageObserverToken = NewUnreadMessagesChangeInfo.add(observer: self, for: userSession)
         unreadKnockMessageObserverToken = NewUnreadKnockMessagesChangeInfo.add(observer: self, for: userSession)
         NotificationCenter.default.addObserver(self, selector: #selector(applicationWillEnterForeground), name: NSNotification.Name.UIApplicationWillEnterForeground, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(applicationDidEnterBackground), name: NSNotification.Name.UIApplicationDidEnterBackground, object: nil)
         
         soundEventWatchDog.startIgnoreDate = Date()
+        soundEventWatchDog.isMuted = UIApplication.shared.applicationState == .background
     }
     
     func playSoundIfAllowed(_ name : String) {
@@ -146,12 +148,12 @@ extension SoundEventListener : WireCallCenterCallStateObserver {
         switch callState {
         case .outgoing:
             if callCenter.isVideoCall(conversationId: conversationId) {
-                mediaManager.playSound(MediaManagerSoundRingingFromMeVideoSound)
+                playSoundIfAllowed(MediaManagerSoundRingingFromMeVideoSound)
             } else {
-                mediaManager.playSound(MediaManagerSoundRingingFromMeSound)
+                playSoundIfAllowed(MediaManagerSoundRingingFromMeSound)
             }
         case .established:
-            mediaManager.playSound(MediaManagerSoundUserJoinsVoiceChannelSound)
+            playSoundIfAllowed(MediaManagerSoundUserJoinsVoiceChannelSound)
         case .incoming(video: _, shouldRing: true, degraded: _):
             guard userSession.callNotificationStyle != .callKit && !conversation.isSilenced else { return }
             
@@ -160,9 +162,9 @@ extension SoundEventListener : WireCallCenterCallStateObserver {
             })
             
             if otherNonIdleCalls.count > 0 {
-                mediaManager.playSound(MediaManagerSoundRingingFromThemInCallSound)
+                playSoundIfAllowed(MediaManagerSoundRingingFromThemInCallSound)
             } else {
-                mediaManager.playSound(MediaManagerSoundRingingFromThemSound)
+                playSoundIfAllowed(MediaManagerSoundRingingFromThemSound)
             }
         case .incoming(video: _, shouldRing: false, degraded: _):
             mediaManager.stopSound(MediaManagerSoundRingingFromThemInCallSound)
@@ -170,9 +172,9 @@ extension SoundEventListener : WireCallCenterCallStateObserver {
         case .terminating(reason: let reason):
             switch reason {
             case .normal, .canceled:
-                mediaManager.playSound(MediaManagerSoundUserLeavesVoiceChannelSound)
+                playSoundIfAllowed(MediaManagerSoundUserLeavesVoiceChannelSound)
             default:
-                mediaManager.playSound(MediaManagerSoundCallDropped)
+                playSoundIfAllowed(MediaManagerSoundCallDropped)
             }
         default:
             break
@@ -208,12 +210,20 @@ extension SoundEventListener {
             soundEventWatchDog.ignoreTime = 0.0
         }
     }
+    
+    func applicationDidEnterBackground() {
+        soundEventWatchDog.isMuted = true
+    }
 }
 
-extension SoundEventListener : ZMInitialSyncCompletionObserver {
+extension SoundEventListener : ZMNetworkAvailabilityObserver {
     
-    func initialSyncCompleted() {
-        soundEventWatchDog.isMuted = false
-    }
+    func didChangeAvailability(newState: ZMNetworkState) {
+        guard UIApplication.shared.applicationState != .background else { return }
         
+        if newState == .online {
+            soundEventWatchDog.isMuted = false
+        }
+    }
+    
 }

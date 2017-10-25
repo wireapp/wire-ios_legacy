@@ -72,16 +72,20 @@ public class AddParticipantsViewController : UIViewController {
         confirmButton.setIconColor(UIColor.wr_color(fromColorScheme: ColorSchemeColorIconHighlighted, variant: .dark), for: .highlighted)
         confirmButton.setTitleColor(UIColor.wr_color(fromColorScheme: ColorSchemeColorIconNormal, variant: .dark), for: .normal)
         confirmButton.setTitleColor(UIColor.wr_color(fromColorScheme: ColorSchemeColorIconHighlighted, variant: .dark), for: .highlighted)
-        confirmButton.titleLabel?.font = FontSpec(.normal, .medium).font!
+        confirmButton.titleLabel?.font = FontSpec(.small, .medium).font!
         confirmButton.backgroundColor = UIColor.accent()
         confirmButton.contentHorizontalAlignment = .left
         confirmButton.setTitleImageSpacing(16, horizontalMargin: 24)
+        confirmButton.roundCorners = true
         
         if conversation.conversationType == .oneOnOne {
-            confirmButton.setTitle("peoplepicker.button.create_conversation".localized, for: .normal)
+            confirmButton.setTitle("peoplepicker.button.create_conversation".localized.uppercased(), for: .normal)
         } else {
-            confirmButton.setTitle("peoplepicker.button.add_to_conversation".localized, for: .normal)
+            confirmButton.setTitle("peoplepicker.button.add_to_conversation".localized.uppercased(), for: .normal)
         }
+        
+        bottomContainer.backgroundColor = UIColor.clear
+        bottomContainer.addSubview(confirmButton)
  
         searchHeaderViewController = SearchHeaderViewController(userSelection: userSelection, variant: ColorScheme.default().variant)
         searchResultsViewController = SearchResultsViewController(userSelection: userSelection, team: ZMUser.selfUser().team, variant: ColorScheme.default().variant, isAddingParticipants: true)
@@ -123,9 +127,13 @@ public class AddParticipantsViewController : UIViewController {
     }
     
     func createConstraints() {
-        constrain(view, searchHeaderViewController.view, searchResultsViewController.view, confirmButton) { container, searchHeaderView, searchResultsView, confirmButton in
+        
+        let margin = (searchResultsViewController.view as! SearchResultsView).accessoryViewMargin
+        
+        constrain(view, searchHeaderViewController.view, searchResultsViewController.view, confirmButton, bottomContainer) {
+            container, searchHeaderView, searchResultsView, confirmButton, bottomContainer in
             
-            searchHeaderView.top == container.top
+            searchHeaderView.top == container.top + UIScreen.safeArea.top
             searchHeaderView.left == container.left
             searchHeaderView.right == container.right
             
@@ -134,7 +142,11 @@ public class AddParticipantsViewController : UIViewController {
             searchResultsView.right == container.right
             searchResultsView.bottom == container.bottom
             
-            confirmButton.height == CGFloat(55.0)
+            confirmButton.height == 46.0
+            confirmButton.top == bottomContainer.top
+            confirmButton.left == bottomContainer.left + margin
+            confirmButton.right == bottomContainer.right - margin
+            confirmButton.bottom == bottomContainer.bottom - margin
         }
     }
         
@@ -142,7 +154,7 @@ public class AddParticipantsViewController : UIViewController {
         if userSelection.users.isEmpty {
             searchResultsViewController.searchResultsView?.accessoryView = nil
         } else {
-            searchResultsViewController.searchResultsView?.accessoryView = confirmButton
+            searchResultsViewController.searchResultsView?.accessoryView = bottomContainer
         }
     }
     

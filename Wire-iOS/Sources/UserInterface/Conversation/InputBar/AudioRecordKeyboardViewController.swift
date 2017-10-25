@@ -204,7 +204,7 @@ import CocoaLumberjackSwift
             
             bottomToolbar.top == topContainer.bottom
             bottomToolbar.left == topContainer.left
-            bottomToolbar.bottom == view.bottom
+            bottomToolbar.bottom == view.bottom - UIScreen.safeArea.bottom
             bottomToolbar.right == topContainer.right
             bottomToolbar.height == 72
             bottomToolbar.centerX == topContainer.centerX
@@ -412,7 +412,9 @@ import CocoaLumberjackSwift
             DDLogError("No file to send")
             return
         }
-        
+
+        button?.isEnabled = false
+
         let effectName: String
         
         if self.currentEffect == .none {

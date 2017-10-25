@@ -37,13 +37,11 @@ class ConversationImagesViewControllerTests: CoreDataSnapshotTestCase {
     }
     
     func testThatItDisplaysCorrectToolbarForImage_Normal() {
-        
         sut.view.bounds.size = CGSize(width: 375.0, height: 667.0)
         verify(view: sut.view)
     }
     
     func testThatItDisplaysCorrectToolbarForImage_Ephemeral() {
-        
         let image = self.image(inTestBundleNamed: "unsplash_matterhorn.jpg")
         let message = MockMessageFactory.imageMessage(with: image)!
         message.isEphemeral = true

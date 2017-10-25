@@ -87,6 +87,10 @@ static NSString *ConnectionRequestCellIdentifier = @"ConnectionRequestCell";
     self.tableView.backgroundColor = [UIColor wr_colorFromColorScheme:ColorSchemeColorBackground];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
     self.tableView.separatorColor = [UIColor wr_colorFromColorScheme:ColorSchemeColorSeparator];
+    
+    self.tableView.estimatedRowHeight = 0;
+    self.tableView.estimatedSectionHeaderHeight = 0;
+    self.tableView.estimatedSectionFooterHeight = 0;
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -105,8 +109,8 @@ static NSString *ConnectionRequestCellIdentifier = @"ConnectionRequestCell";
     if (!CGSizeEqualToSize(self.lastLayoutBounds.size, self.view.bounds.size)) {
         self.lastLayoutBounds = self.view.bounds;
         [self.tableView reloadData];
-        CGFloat xPos = MAX(self.tableView.bounds.size.height - self.tableView.contentSize.height, 0);
-        [self.tableView setContentInset:UIEdgeInsetsMake(xPos, 0, 0, 0)];
+        CGFloat yPos = self.tableView.contentSize.height - self.tableView.bounds.size.height + UIScreen.safeArea.bottom;
+        [self.tableView setContentOffset:CGPointMake(0, yPos)];
     }
 }
 

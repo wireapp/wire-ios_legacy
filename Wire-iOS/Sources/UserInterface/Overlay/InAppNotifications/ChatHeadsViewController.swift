@@ -40,7 +40,7 @@ class ChatHeadsViewController: UIViewController {
     fileprivate let dismissDelayDuration = 5.0
     fileprivate let animationContainerInset : CGFloat = 48.0
     fileprivate let dragGestureDistanceThreshold : CGFloat = 75.0
-    fileprivate let containerInsets : UIEdgeInsets = UIEdgeInsets(top: 16, left: 16, bottom: 0, right: 16)
+    fileprivate let containerInsets : UIEdgeInsets = UIEdgeInsets(top: UIScreen.safeArea.top - 4.0, left: 16, bottom: 0, right: 16)
     
     fileprivate var chatHeadView: ChatHeadView?
     fileprivate var chatHeadViewLeftMarginConstraint: NSLayoutConstraint?

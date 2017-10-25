@@ -119,10 +119,21 @@ extension SettingsCellDescriptorFactory {
             cellDescriptors.append(callKitSection)
         }
         
+        
         let CBRDescriptor = SettingsInfoCellDescriptor(title: "self.settings.cbr.not_available".localized)
         let CBRDescription = "self.settings.cbr.not_available.description".localized
         let CBRSection = SettingsSectionDescriptor(cellDescriptors: [CBRDescriptor], header: .none, footer: CBRDescription, visibilityAction: .none)
         cellDescriptors.append(CBRSection)
+
+        // TODO re-enable
+//        let VBRDescriptor = SettingsPropertyToggleCellDescriptor(
+//            settingsProperty: settingsPropertyFactory.property(.callingConstantBitRate),
+//            inverse: true,
+//            identifier: "VBRSwitch"
+//        )
+//        let VBRDescription = "self.settings.vbr.description".localized
+//        let VBRSection = SettingsSectionDescriptor(cellDescriptors: [VBRDescriptor], header: .none, footer: VBRDescription, visibilityAction: .none)
+//        cellDescriptors.append(VBRSection)
         
         let soundsHeader = "self.settings.sound_menu.sounds.title".localized
 

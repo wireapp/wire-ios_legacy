@@ -220,7 +220,7 @@ static NSString *const ParticipantHeaderReuseIdentifier = @"ParticipantListHeade
     
     [self.view addSubview:self.headerView];
     
-    [self.headerView addConstraintForAligningTopToTopOfView:self.view distance:0];
+    [self.headerView addConstraintForAligningTopToTopOfView:self.view distance:-UIScreen.safeArea.top+20];
     [self.headerView addConstraintsForRightMargin:0 leftMargin:0 relativeToView:self.view];
     [self.headerView setCancelButtonAccessibilityIdentifier:@"metaControllerCancelButton"];
     
@@ -236,7 +236,7 @@ static NSString *const ParticipantHeaderReuseIdentifier = @"ParticipantListHeade
     
     [self.view addSubview:self.footerView];
     
-    [self.footerView addConstraintForBottomMargin:0 relativeToView:self.view];
+    [self.footerView addConstraintForBottomMargin:UIScreen.safeArea.bottom relativeToView:self.view];
     [self.footerView addConstraintsForRightMargin:0 leftMargin:0 relativeToView:self.view];
     
     if ([[ZMUser selfUser] canAddUserToConversation:self.conversation]) {

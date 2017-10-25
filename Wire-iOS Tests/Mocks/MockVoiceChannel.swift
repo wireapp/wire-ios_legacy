@@ -20,6 +20,8 @@ import Foundation
 
 @objc
 class MockVoiceChannel : NSObject, CallProperties, VoiceChannel {
+    
+    var isConstantBitRateAudioActive: Bool = false
     var initiator: ZMUser?
 
     public func continueByDecreasingConversationSecurity(userSession: ZMUserSession) {}
@@ -105,6 +107,10 @@ class MockVoiceChannel : NSObject, CallProperties, VoiceChannel {
     }
     
     func addParticipantObserver(_ observer: VoiceChannelParticipantObserver) -> Any {
+        return NSObject()
+    }
+    
+    func addConstantBitRateObserver(_ observer: ConstantBitRateAudioObserver) -> Any {
         return NSObject()
     }
     

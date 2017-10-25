@@ -21,7 +21,7 @@
 
 #import "CountryCodeResultsTableViewController.h"
 #import "Country.h"
-
+#import "Wire-Swift.h"
 
 
 @interface CountryCodeTableViewController () <UISearchBarDelegate, UISearchControllerDelegate, UISearchResultsUpdating>
@@ -62,9 +62,20 @@
     self.title = NSLocalizedString(@"registration.country_select.title", @"");
 }
 
-- (void)viewDidAppear:(BOOL)animated
+-(void)viewWillAppear:(BOOL)animated
 {
-    [super viewDidAppear:animated];
+    [super viewWillAppear:animated];
+    if(UIScreen.hasNotch) {
+        [[UIApplication sharedApplication] wr_updateStatusBarForCurrentControllerAnimated:YES];
+    }
+}
+
+-(void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
+    if(UIScreen.hasNotch) {
+        [[UIApplication sharedApplication] wr_updateStatusBarForCurrentControllerAnimated:NO];
+    }
 }
 
 - (void)createDataSource

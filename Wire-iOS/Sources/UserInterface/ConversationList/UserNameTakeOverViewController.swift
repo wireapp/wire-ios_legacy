@@ -41,7 +41,6 @@ final class UserNameTakeOverViewController: UIViewController {
 
     public let displayNameLabel = UILabel()
     public let suggestedHandleLabel = UILabel()
-    public let titleLabel = UILabel()
     public let subtitleLabel = TTTAttributedLabel(frame: .zero)
 
     private let chooseOwnButton = Button(style: .full)
@@ -77,14 +76,12 @@ final class UserNameTakeOverViewController: UIViewController {
     func setupViews() {
         view.addSubview(contentView)
         [displayNameLabel, suggestedHandleLabel].forEach(topContainer.addSubview)
-        [topContainer, titleLabel, subtitleLabel, chooseOwnButton, keepSuggestedButton].forEach(contentView.addSubview)
+        [topContainer, subtitleLabel, chooseOwnButton, keepSuggestedButton].forEach(contentView.addSubview)
         displayNameLabel.text = name
         suggestedHandleLabel.text = "@" + suggestedHandle
         displayNameLabel.textAlignment = .center
         suggestedHandleLabel.textAlignment = .center
-        titleLabel.textAlignment = .natural
 
-        titleLabel.text = "registration.select_handle.takeover.title".localized
         chooseOwnButton.setTitle("registration.select_handle.takeover.choose_own".localized, for: .normal)
         keepSuggestedButton.setTitle("registration.select_handle.takeover.keep_suggested".localized, for: .normal)
 
@@ -125,15 +122,12 @@ final class UserNameTakeOverViewController: UIViewController {
             handleLabel.top == container.centerY + 4
         }
 
-        constrain(view, contentView, topContainer, titleLabel, subtitleLabel) { view, contentView, container, titleLabel, subtitleLabel in
+        constrain(view, contentView, topContainer, subtitleLabel) { view, contentView, container, subtitleLabel in
             contentView.edges == view.edges
             container.top == contentView.topMargin
             container.leading == contentView.leading
             container.trailing == contentView.trailing
-            container.bottom == titleLabel.top
-            titleLabel.leading == contentView.leadingMargin
-            titleLabel.trailing == contentView.trailingMargin
-            titleLabel.bottom == subtitleLabel.top - 12
+            container.bottom == subtitleLabel.top
             subtitleLabel.leading == contentView.leadingMargin
             subtitleLabel.trailing == contentView.trailingMargin
         }
