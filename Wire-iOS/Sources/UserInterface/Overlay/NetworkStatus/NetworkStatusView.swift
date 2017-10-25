@@ -186,4 +186,8 @@ class NetworkStatusView : UIView {
         }
     }
     
+    // Detects when the view can be touchable
+    override func point(inside point: CGPoint, with event: UIEvent?) -> Bool {
+        return state == .offlineExpanded
+    }
 }
