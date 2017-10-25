@@ -37,8 +37,14 @@ class ChatHeadView: UIView {
     private let imageDiameter: CGFloat = 28
     private let padding: CGFloat = 10
     
-    private let regularFont: [String: AnyObject] = [NSFontAttributeName: FontSpec(.medium, .regular).font!.withSize(14)]
-    private let mediumFont: [String: AnyObject] = [NSFontAttributeName: FontSpec(.medium, .medium).font!.withSize(14)]
+    private let titleRegularAttributes: [String: AnyObject] = [
+        NSFontAttributeName: FontSpec(.medium, .none).font!.withSize(14),
+        NSForegroundColorAttributeName: ColorScheme.default().color(withName: ColorSchemeColorChatHeadTitleText)
+    ]
+    private let titleMediumAttributes: [String: AnyObject] = [
+        NSFontAttributeName: FontSpec(.medium, .medium).font!.withSize(14),
+        NSForegroundColorAttributeName: ColorScheme.default().color(withName: ColorSchemeColorChatHeadTitleText)
+    ]
     
     private lazy var bodyFont: UIFont = {
         let font = FontSpec(.medium, .regular).font!
@@ -111,8 +117,13 @@ class ChatHeadView: UIView {
         subtitleLabel = UILabel()
         subtitleLabel.backgroundColor = .clear
         subtitleLabel.isUserInteractionEnabled = false
-        subtitleLabel.attributedText = NSAttributedString(string: body, attributes: [NSFontAttributeName: bodyFont])
-        subtitleLabel.textColor = color(withName: ColorSchemeColorChatHeadSubtitleText)
+        
+        let bodyAttributes = (!isEphemeral && title == nil) ? titleMediumAttributes : [
+            NSFontAttributeName: bodyFont,
+            NSForegroundColorAttributeName: color(withName: ColorSchemeColorChatHeadSubtitleText)
+        ]
+        
+        subtitleLabel.attributedText = NSAttributedString(string: body, attributes: bodyAttributes)
         subtitleLabel.lineBreakMode = .byTruncatingTail
         labelContainer.addSubview(subtitleLabel)
     }
