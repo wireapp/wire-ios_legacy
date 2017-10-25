@@ -22,375 +22,60 @@ import Cartography
 
 class ChatHeadTests: CoreDataSnapshotTestCase {
     
-    var account: Account!
-    var message: MockMessage!
-    
     override func setUp() {
         super.setUp()
         snapshotBackgroundColor = .white
-        
-        account = Account(
-            userName: selfUser.name,
-            userIdentifier: selfUser.remoteIdentifier!,
-            teamName: "Wire",
-            imageData: nil,
-            unreadConversationCount: 0)
-        
-        message = MockMessageFactory.textMessage(withText: "Hey! How are you?")!
-        message.sender = otherUser
-        message.conversation = otherUserConversation!
     }
     
-    override func tearDown() {
-        account = nil
-        message = nil
-        super.tearDown()
-    }
-    
-    
-    func test_ActiveAccount_Team_OneOnOne() {
-        
-        let titleText = ChatHeadTextFormatter.titleText(
-            conversationName: message.conversation!.displayName,
-            teamName: account.teamName,
-            isAccountActive: true
-        )
-        
-        let content = ChatHeadTextFormatter.text(for: message, isAccountActive: true)
-        XCTAssertNotNil(content)
-        
-        let sut = ChatHeadView(
-            title: titleText,
-            content: content!,
+    func chatHead(title: String?, body: String, teamName: String = "Wire", ephemeral: Bool = false) -> ChatHeadView {
+        return ChatHeadView(
+            title: title == nil ? nil : "\(title!) in \(teamName)".trimmingCharacters(in: .whitespaces),
+            body: body,
             sender: otherUser,
-            conversation: message.conversation!,
-            account: account
+            userID: selfUser.remoteIdentifier!,
+            teamName: teamName,
+            isEphemeral: ephemeral
         )
+    }
+    
+    func testThatItDisplaysAShortMessage() {
         
+        let sut = chatHead(title: "iOS Team", body: "Bob: Hey everyone!")
         verify(view: sut.prepareForSnapshots())
     }
     
-    func test_ActiveAccount_Team_Group() {
-        
-        message.conversation!.conversationType = .group
-        message.conversation!.userDefinedName = "Italy Trip"
-        
-        let titleText = ChatHeadTextFormatter.titleText(
-            conversationName: message.conversation!.displayName,
-            teamName: account.teamName,
-            isAccountActive: true
-        )
-        let content = ChatHeadTextFormatter.text(for: message, isAccountActive: true)
-        XCTAssertNotNil(content)
-        
-        let sut = ChatHeadView(
-            title: titleText,
-            content: content!,
-            sender: otherUser,
-            conversation: message.conversation!,
-            account: account
-        )
-        
-        verify(view: sut.prepareForSnapshots())
-    }
-
-    func test_ActiveAccount_NonTeam_OneOnOne() {
-        
-        account.teamName = nil
-        
-        let titleText = ChatHeadTextFormatter.titleText(
-            conversationName: message.conversation!.displayName,
-            teamName: account.teamName,
-            isAccountActive: true
-        )
-        let content = ChatHeadTextFormatter.text(for: message, isAccountActive: true)
-        XCTAssertNotNil(content)
-        
-        let sut = ChatHeadView(
-            title: titleText,
-            content: content!,
-            sender: otherUser,
-            conversation: message.conversation!,
-            account: account
-        )
-        
-        verify(view: sut.prepareForSnapshots())
-    }
-
-    func test_ActiveAccount_NonTeam_Group() {
-        
-        account.teamName = nil
-        message.conversation!.conversationType = .group
-        message.conversation!.userDefinedName = "Italy Trip"
-        
-        let titleText = ChatHeadTextFormatter.titleText(
-            conversationName: message.conversation!.displayName,
-            teamName: account.teamName,
-            isAccountActive: true
-        )
-        
-        let content = ChatHeadTextFormatter.text(for: message, isAccountActive: true)
-        XCTAssertNotNil(content)
-        
-        let sut = ChatHeadView(
-            title: titleText,
-            content: content!,
-            sender: otherUser,
-            conversation: message.conversation!,
-            account: account
-        )
-        
+    func testThatItDisplaysALongMessage() {
+        let sut = chatHead(title: "iOS Team", body: "Bob: Hey everyone! Blah blah blah blah blah blah blah blah")
         verify(view: sut.prepareForSnapshots())
     }
     
-    func test_InactiveAccount_Team_OneOnOne() {
-        
-        let titleText = ChatHeadTextFormatter.titleText(
-            conversationName: message.conversation!.displayName,
-            teamName: account.teamName,
-            isAccountActive: false
-        )
-        
-        let content = ChatHeadTextFormatter.text(for: message, isAccountActive: false)
-        XCTAssertNotNil(content)
-        
-        let sut = ChatHeadView(
-            title: titleText,
-            content: content!,
-            sender: otherUser,
-            conversation: message.conversation!,
-            account: account
-        )
-        
+    func testThatItRendersCorrectAttributesForTitle_NoConversationName() {
+        let sut = chatHead(title: "", body: "Hey everyone!")
         verify(view: sut.prepareForSnapshots())
     }
     
-    func test_InactiveAccount_Team_Group() {
-        
-        message.conversation!.conversationType = .group
-        message.conversation!.userDefinedName = "Italy Trip"
-        
-        let titleText = ChatHeadTextFormatter.titleText(
-            conversationName: message.conversation!.displayName,
-            teamName: account.teamName,
-            isAccountActive: false
-        )
-        
-        let content = ChatHeadTextFormatter.text(for: message, isAccountActive: false)
-        XCTAssertNotNil(content)
-        
-        let sut = ChatHeadView(
-            title: titleText,
-            content: content!,
-            sender: otherUser,
-            conversation: message.conversation!,
-            account: account
-        )
-        
-        verify(view: sut.prepareForSnapshots())
-    }
-
-    func test_InactiveAccount_NonTeam_OneOnOne() {
-        
-        account.teamName = nil
-        
-        let titleText = ChatHeadTextFormatter.titleText(
-            conversationName: message.conversation!.displayName,
-            teamName: account.teamName,
-            isAccountActive: false
-        )
-        
-        let content = ChatHeadTextFormatter.text(for: message, isAccountActive: false)
-        XCTAssertNotNil(content)
-        
-        let sut = ChatHeadView(
-            title: titleText,
-            content: content!,
-            sender: otherUser,
-            conversation: message.conversation!,
-            account: account
-        )
-        
+    func testThatItRendersCorrectAttributesForTitle_MultipleOccurencesOfIn() {
+        let sut = chatHead(title: "Bob in Italy", body: "Hey everyone!", teamName: "Wire in Switzerland")
         verify(view: sut.prepareForSnapshots())
     }
     
-    func test_InactiveAccount_NonTeam_Group() {
-        
-        account.teamName = nil
-        message.conversation!.conversationType = .group
-        message.conversation!.userDefinedName = "Italy Trip"
-        
-        let titleText = ChatHeadTextFormatter.titleText(
-            conversationName: message.conversation!.displayName,
-            teamName: account.teamName,
-            isAccountActive: false
-        )
-        
-        let content = ChatHeadTextFormatter.text(for: message, isAccountActive: false)
-        XCTAssertNotNil(content)
-        
-        let sut = ChatHeadView(
-            title: titleText,
-            content: content!,
-            sender: otherUser,
-            conversation: message.conversation!,
-            account: account
-        )
-        
-        verify(view: sut.prepareForSnapshots())
-    }
-
-    
-    func test_Long_Message() {
-        
-        message = MockMessageFactory.textMessage(withText: String(repeating: "Hello! ", count: 20))!
-        message.sender = otherUser
-        message.conversation = otherUserConversation!
-        
-        let titleText = ChatHeadTextFormatter.titleText(
-            conversationName: message.conversation!.displayName,
-            teamName: account.teamName,
-            isAccountActive: true
-        )
-        
-        let content = ChatHeadTextFormatter.text(for: message, isAccountActive: true)
-        XCTAssertNotNil(content)
-        
-        let sut = ChatHeadView(
-            title: titleText,
-            content: content!,
-            sender: otherUser,
-            conversation: message.conversation!,
-            account: account
-        )
-        
+    func testThatItDisplaysSingleLineWhenTitleIsNil() {
+        let sut = chatHead(title: nil, body: "Bob is calling")
         verify(view: sut.prepareForSnapshots())
     }
     
-    // MARK: - Call Notifications
-    
-    func test_InActiveAccount_CallNotification_Team() {
-        
-        let note = UILocalNotification()
-        note.alertBody = "Vytis is calling."
-        
-        let titleText = ChatHeadTextFormatter.titleText(
-            conversationName: nil,
-            teamName: account.teamName,
-            isAccountActive: false
-        )
-        
-        let content = ChatHeadTextFormatter.text(for: note)
-        XCTAssertNotNil(content)
-        
-        let sut = ChatHeadView(
-            title: titleText,
-            content: content!,
-            sender: otherUser,
-            conversation: message.conversation!,
-            account: account
-        )
-        
+    func testThatItRendersEphemeralContent() {
+        let sut = chatHead(title: "iOS Team", body: "Bob: Hey everyone!", ephemeral: true)
         verify(view: sut.prepareForSnapshots())
     }
     
-    func test_InActiveACcount_CallNotification_NonTeam() {
-        
-        let note = UILocalNotification()
-        note.alertBody = "Vytis is calling."
-        account.teamName = nil
-        
-        let titleText = ChatHeadTextFormatter.titleText(
-            conversationName: nil,
-            teamName: account.teamName,
-            isAccountActive: false
-        )
-        
-        let content = ChatHeadTextFormatter.text(for: note)
-        XCTAssertNotNil(content)
-        
+    func testThatItDoesNotDisplayImageWhenThereIsNoSender() {
         let sut = ChatHeadView(
-            title: titleText,
-            content: content!,
-            sender: otherUser,
-            conversation: message.conversation!,
-            account: account
-        )
-        
-        verify(view: sut.prepareForSnapshots())
-    }
-
-    // MARK: - Group Participation Notifications
-    
-    func test_InactiveAccount_AddedToGroup_Team() {
-        
-        let note = UILocalNotification()
-        note.alertBody = "Vytis added you to iOS Team"
-        
-        let titleText = ChatHeadTextFormatter.titleText(
-            conversationName: nil,
-            teamName: account.teamName,
-            isAccountActive: false
-        )
-        
-        let content = ChatHeadTextFormatter.text(for: note)
-        
-        let sut = ChatHeadView(
-            title: titleText,
-            content: content!,
-            sender: otherUser,
-            conversation: message.conversation!,
-            account: account
-        )
-        
-        verify(view: sut.prepareForSnapshots())
-    }
-    
-    func test_InActiveAccountAddedToGroup_NonTeam() {
-        
-        let note = UILocalNotification()
-        note.alertBody = "Vytis added you to iOS Team"
-        
-        let titleText = ChatHeadTextFormatter.titleText(
-            conversationName: nil,
-            teamName: nil,
-            isAccountActive: false
-        )
-        
-        let content = ChatHeadTextFormatter.text(for: note)
-        
-        let sut = ChatHeadView(
-            title: titleText,
-            content: content!,
-            sender: otherUser,
-            conversation: message.conversation!,
-            account: account
-        )
-        
-        verify(view: sut.prepareForSnapshots())
-    }
-    
-    // MARK: - Misc
-    
-    func test_Ephemeral() {
-        
-        message.isEphemeral = true
-        
-        let titleText = ChatHeadTextFormatter.titleText(
-            conversationName: message.conversation!.displayName,
-            teamName: account.teamName,
-            isAccountActive: true
-        )
-        
-        let content = ChatHeadTextFormatter.text(for: message, isAccountActive: true)
-        XCTAssertNotNil(content)
-        
-        let sut = ChatHeadView(
-            title: titleText,
-            content: content!,
-            sender: otherUser,
-            conversation: message.conversation!,
-            account: account
+            title: "iOS Team in Wire",
+            body: "New message",
+            sender: nil,
+            userID: selfUser.remoteIdentifier!,
+            teamName: "Wire"
         )
         
         verify(view: sut.prepareForSnapshots())
