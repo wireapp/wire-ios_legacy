@@ -64,8 +64,6 @@ class ChatHeadsViewController: UIViewController {
             return
         }
         
-        // TODO: handle case where conversation not available
-        
         guard
             let selfID = note.selfUserID,
             let account = SessionManager.shared?.accountManager.account(with: selfID),
@@ -134,9 +132,6 @@ class ChatHeadsViewController: UIViewController {
 
         return clientVC.splitViewController.shouldDisplayNotification(from: account)
     }
-    
-    // FIXME: maybe it's a good idea to store the conversation name in the userinfo
-    // so we can just extract for these cases. but only if we localize the title.
     
     /// If the given account is active, the title is trimmed to only include the
     /// conversation name (i.e, trimming the possible team name). If no conversation
