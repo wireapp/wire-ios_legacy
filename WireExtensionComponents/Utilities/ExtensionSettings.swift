@@ -22,13 +22,12 @@ import Foundation
 
 private enum ExtensionSettingsKey: String {
 
-    case disableHockey = "disableHockey"
     case disableCrashAndAnalyticsSharing = "disableCrashAndAnalyticsSharing"
     case disableLinkPreviews = "disableLinkPreviews"
 
     static var all: [ExtensionSettingsKey] {
         return [
-            .disableHockey,
+            .disableLinkPreviews,
             .disableCrashAndAnalyticsSharing
         ]
     }
@@ -37,7 +36,6 @@ private enum ExtensionSettingsKey: String {
         switch self {
         // In case the user opted out and we did not yet migrate the opt out value
         // into the shared settings (which is only done from the main app).
-        case .disableHockey: return true
         case .disableCrashAndAnalyticsSharing: return true
         case .disableLinkPreviews: return false
         }
@@ -77,16 +75,6 @@ public class ExtensionSettings: NSObject {
 
         // As we purposely crash afterwards we manually call synchronize.
         defaults?.synchronize()
-    }
-
-    public var disableHockey: Bool {
-        get {
-            return defaults?.bool(forKey: ExtensionSettingsKey.disableHockey.rawValue) ?? false
-        }
-
-        set {
-            defaults?.set(newValue, forKey: ExtensionSettingsKey.disableHockey.rawValue)
-        }
     }
 
     public var disableCrashAndAnalyticsSharing: Bool {

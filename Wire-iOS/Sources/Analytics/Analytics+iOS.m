@@ -29,7 +29,8 @@ NSString * const ZMConsoleAnalyticsArgumentKey = @"-ConsoleAnalytics";
 static NSString * const ZMEnableConsoleLog = @"ZMEnableAnalyticsLog";
 static Analytics *sharedAnalytics = nil;
 
-NSString * AnalyticsAPIKey = @STRINGIZE(ANALYTICS_API_KEY);
+NSString * LocalyticsAPIKey = @STRINGIZE(ANALYTICS_API_KEY);
+NSString * MixpanelAPIKey = @STRINGIZE(MIXPANEL_API_KEY);
 
 @implementation Analytics (iOS)
 
@@ -51,7 +52,7 @@ NSString * AnalyticsAPIKey = @STRINGIZE(ANALYTICS_API_KEY);
 
     BOOL useAnalytics = USE_ANALYTICS;
     // Don’t track events in debug configuration.
-    if (useAnalytics && ![[Settings sharedSettings] disableAnalytics]) {
+    if (useAnalytics) {
         static dispatch_once_t onceToken;
         dispatch_once(&onceToken, ^{
             AnalyticsMixpanelProvider *provider = [[AnalyticsMixpanelProvider alloc] init];
@@ -65,6 +66,8 @@ NSString * AnalyticsAPIKey = @STRINGIZE(ANALYTICS_API_KEY);
         });
     }
 
+    sharedAnalytics.isOptedOut = [[TrackingManager shared] disableCrashAndAnalyticsSharing];
+    
     return sharedAnalytics;
 }
 

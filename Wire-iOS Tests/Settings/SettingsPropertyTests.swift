@@ -137,7 +137,7 @@ class SettingsPropertyTests: XCTestCase {
         
         let factory = SettingsPropertyFactory(userDefaults: self.userDefaults, analytics: analytics, mediaManager: mediaManager, userSession: userSession, selfUser: selfUser, crashlogManager: crashlogManager)
         
-        let property = factory.property(SettingsPropertyName.analyticsOptOut)
+        let property = factory.property(SettingsPropertyName.disableCrashAndAnalyticsSharing)
         // when & then
         try! self.saveAndCheck(property, value: true)
     }

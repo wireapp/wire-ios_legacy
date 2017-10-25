@@ -22,23 +22,13 @@ import Foundation
 @objc class AVSProvider: NSObject {
     var flowManager: AVSFlowManager? {
         get {
-            if UserDefaults.standard.bool(forKey: UserDefaultDisableAVS) {
-                return .none
-            }
-            else {
-                return AVSFlowManager.getInstance()
-            }
+            return AVSFlowManager.getInstance()
         }
     }
     
     var mediaManager: AVSMediaManager? {
         get {
-            if UserDefaults.standard.bool(forKey: UserDefaultDisableAVS) {
-                return .none
-            }
-            else {
-                return AVSMediaManager.default()
-            }
+            return AVSMediaManager.default()
         }
     }
     

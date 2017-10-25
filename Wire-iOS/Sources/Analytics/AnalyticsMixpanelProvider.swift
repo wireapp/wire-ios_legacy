@@ -77,13 +77,11 @@ final class AnalyticsMixpanelProvider: NSObject, AnalyticsProvider {
         ])
     
     override init() {
-        if !AnalyticsAPIKey.isEmpty {
-            mixpanelInstance = Mixpanel.initialize(token: AnalyticsAPIKey)
+        if !MixpanelAPIKey.isEmpty {
+            mixpanelInstance = Mixpanel.initialize(token: MixpanelAPIKey)
         }
         super.init()
         mixpanelInstance?.minimumSessionDuration = 2_000
-        mixpanelInstance?.registerSuperProperties(["$city": "",
-                                                   "$region": ""])
         self.setSuperProperty("app", value: "ios")
     }
     

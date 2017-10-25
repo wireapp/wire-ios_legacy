@@ -47,10 +47,6 @@ NSString * const UserDefaultMessageSoundName = @"ZMMessageSoundName";
 NSString * const UserDefaultCallSoundName = @"ZMCallSoundName";
 NSString * const UserDefaultPingSoundName = @"ZMPingSoundName";
 
-NSString * const UserDefaultDisableAVS = @"ZMDisableAVS";
-NSString * const UserDefaultDisableUI = @"ZMDisableUI";
-NSString * const UserDefaultDisableHockey = @"ZMDisableHockey";
-NSString * const UserDefaultDisableAnalytics = @"ZMDisableAnalytics";
 NSString * const UserDefaultSendButtonDisabled = @"SendButtonDisabled";
 NSString * const UserDefaultDisableCallKit = @"UserDefaultDisableCallKit";
 
@@ -74,7 +70,6 @@ NSString * const UserDefaultDisableLinkPreviews = @"DisableLinkPreviews";
 @property (nonatomic) BOOL shouldSend500Messages;
 @property (nonatomic) NSTimeInterval maxRecordingDurationDebug;
 @property (nonatomic) ZMEmailCredentials *automationTestEmailCredentials;
-
 @end
 
 
@@ -105,10 +100,6 @@ NSString * const UserDefaultDisableLinkPreviews = @"DisableLinkPreviews";
              UserDefaultMessageSoundName,
              UserDefaultCallSoundName,
              UserDefaultPingSoundName,
-             UserDefaultDisableAVS,
-             UserDefaultDisableUI,
-             UserDefaultDisableHockey,
-             UserDefaultDisableAnalytics,
              UserDefaultLastUserLocation,
              UserDefaultPreferredCamera,
              UserDefaultSendButtonDisabled,
@@ -146,7 +137,10 @@ NSString * const UserDefaultDisableLinkPreviews = @"DisableLinkPreviews";
         [self loadEnabledLogs];
 #endif
         
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationDidEnterBackground:) name:UIApplicationDidEnterBackgroundNotification object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(applicationDidEnterBackground:)
+                                                     name:UIApplicationDidEnterBackgroundNotification
+                                                   object:nil];
     }
     return self;
 }
@@ -164,8 +158,7 @@ NSString * const UserDefaultDisableLinkPreviews = @"DisableLinkPreviews";
 - (void)migrateHockeyAndOptOutSettingsToSharedDefaults
 {
     if (! [self.defaults boolForKey:UserDefaultDidMigrateHockeySettingInitially]) {
-        ExtensionSettings.shared.disableHockey = self.disableHockey;
-        ExtensionSettings.shared.disableCrashAndAnalyticsSharing = self.disableAnalytics;
+        ExtensionSettings.shared.disableCrashAndAnalyticsSharing = YES;
         ExtensionSettings.shared.disableLinkPreviews = self.disableLinkPreviews;
         [self.defaults setBool:YES forKey:UserDefaultDidMigrateHockeySettingInitially];
     }
@@ -377,63 +370,16 @@ NSString * const UserDefaultDisableLinkPreviews = @"DisableLinkPreviews";
 
 - (BOOL)disableLinkPreviews
 {
-    return [self.defaults boolForKey:UserDefaultDisableLinkPreviews];
+    return ExtensionSettings.shared.disableLinkPreviews;
 }
 
 - (void)setDisableLinkPreviews:(BOOL)disableLinkPreviews
 {
-    [self.defaults setBool:disableLinkPreviews forKey:UserDefaultDisableLinkPreviews];
     ExtensionSettings.shared.disableLinkPreviews = disableLinkPreviews;
     [self.defaults synchronize];
 }
 
 #pragma mark - Features disable keys
-
-- (BOOL)disableUI
-{
-    return [self.defaults boolForKey:UserDefaultDisableUI];
-}
-
-- (void)setDisableUI:(BOOL)disableUI
-{
-    [self.defaults setBool:disableUI forKey:UserDefaultDisableUI];
-    [self.defaults synchronize];
-}
-
-- (BOOL)disableAVS
-{
-    return [self.defaults boolForKey:UserDefaultDisableAVS];
-}
-
-- (void)setDisableAVS:(BOOL)disableAVS
-{
-    [self.defaults setBool:disableAVS forKey:UserDefaultDisableAVS];
-    [self.defaults synchronize];
-}
-
-- (BOOL)disableHockey
-{
-    return [self.defaults boolForKey:UserDefaultDisableHockey];
-}
-
-- (void)setDisableHockey:(BOOL)disableHockey
-{
-    [self.defaults setBool:disableHockey forKey:UserDefaultDisableHockey];
-    ExtensionSettings.shared.disableHockey = disableHockey;
-    [self.defaults synchronize];
-}
-
-- (BOOL)disableAnalytics
-{
-    return [self.defaults boolForKey:UserDefaultDisableAnalytics];
-}
-
-- (void)setDisableAnalytics:(BOOL)disableAnalytics
-{
-    [self.defaults setBool:disableAnalytics forKey:UserDefaultDisableAnalytics];
-    ExtensionSettings.shared.disableCrashAndAnalyticsSharing = disableAnalytics;
-    [self.defaults synchronize];
-}
 
 - (BOOL)enableBatchCollections
 {

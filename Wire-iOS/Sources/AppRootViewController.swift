@@ -289,9 +289,7 @@ class AppRootViewController : UIViewController {
         }
     }
     
-    func configureMediaManager() {
-        guard !Settings.shared().disableAVS else { return }
-        
+    func configureMediaManager() {        
         let mediaManager = AVSProvider.shared.mediaManager
         
         mediaManager?.configureSounds()

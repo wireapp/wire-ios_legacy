@@ -24,7 +24,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 extern NSString * const ZMConsoleAnalyticsArgumentKey;
 
-FOUNDATION_EXPORT NSString * AnalyticsAPIKey;
+FOUNDATION_EXPORT NSString * LocalyticsAPIKey;
+FOUNDATION_EXPORT NSString * MixpanelAPIKey;
 
 @interface Analytics (iOS)
 

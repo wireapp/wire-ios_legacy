@@ -116,6 +116,8 @@ static AppDelegate *sharedAppDelegate = nil;
 {
     DDLogInfo(@"application:didFinishLaunchingWithOptions START %@ (applicationState = %ld)", launchOptions, (long)application.applicationState);
     
+    // Migrate analytics settings
+    [[TrackingManager shared] migrateFromLocalytics];
     [self setupBackendEnvironment];
     
     BOOL containsConsoleAnalytics = [[[NSProcessInfo processInfo] arguments] indexOfObjectPassingTest:^BOOL(NSString * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
