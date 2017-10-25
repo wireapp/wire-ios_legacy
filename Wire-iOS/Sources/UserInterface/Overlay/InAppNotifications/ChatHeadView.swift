@@ -22,7 +22,7 @@ import PureLayout
 
 class ChatHeadView: UIView {
 
-    private var userImageView: ContrastUserImageView!
+    private var userImageView: ContrastUserImageView?
     private var titleLabel: UILabel?
     private var subtitleLabel: UILabel!
     private var labelContainer: UIView!
@@ -93,7 +93,7 @@ class ChatHeadView: UIView {
         layer.masksToBounds = false
         
         createLabels()
-        createImageView()
+        if sender != nil { createImageView() }
         createConstraints()
         
         let tap = UITapGestureRecognizer(target: self, action: #selector(didTapInAppNotification(_:)))
@@ -130,12 +130,12 @@ class ChatHeadView: UIView {
     
     private func createImageView() {
         userImageView = ContrastUserImageView(magicPrefix: "notifications")
-        userImageView.userSession = ZMUserSession.shared()
-        userImageView.isUserInteractionEnabled = false
-        userImageView.translatesAutoresizingMaskIntoConstraints = false
-        userImageView.user = self.sender
-        userImageView.accessibilityIdentifier = "ChatheadAvatarImage"
-        addSubview(userImageView)
+        userImageView!.userSession = SessionManager.shared?.backgroundUserSessions[userID]
+        userImageView!.isUserInteractionEnabled = false
+        userImageView!.translatesAutoresizingMaskIntoConstraints = false
+        userImageView!.user = self.sender
+        userImageView!.accessibilityIdentifier = "ChatheadAvatarImage"
+        addSubview(userImageView!)
     }
     
     private func createConstraints() {
@@ -160,17 +160,28 @@ class ChatHeadView: UIView {
             }
         }
         
-        // image view left, labels right
-        constrain(self, userImageView, labelContainer) { selfView, imageView, labelContainer in
-            imageView.height == imageDiameter
-            imageView.width == imageView.height
-            imageView.leading == selfView.leading + padding
-            imageView.centerY == selfView.centerY
-            
-            labelContainer.leading == imageView.trailing + padding
-            labelContainer.trailing == selfView.trailing - padding
-            labelContainer.height == selfView.height
-            labelContainer.centerY == selfView.centerY
+        if let userImageView = userImageView {
+            // image view left, labels right
+            constrain(self, userImageView, labelContainer) { selfView, imageView, labelContainer in
+                imageView.height == imageDiameter
+                imageView.width == imageView.height
+                imageView.leading == selfView.leading + padding
+                imageView.centerY == selfView.centerY
+                
+                labelContainer.leading == imageView.trailing + padding
+                labelContainer.trailing == selfView.trailing - padding
+                labelContainer.height == selfView.height
+                labelContainer.centerY == selfView.centerY
+            }
+        }
+        else {
+            // labels left
+            constrain(self, labelContainer) { selfView, labelContainer in
+                labelContainer.leading == selfView.leading + padding
+                labelContainer.trailing == selfView.trailing - padding
+                labelContainer.height == selfView.height
+                labelContainer.centerY == selfView.centerY
+            }
         }
     }
     
