@@ -174,7 +174,7 @@ class UnsentFileSendable: UnsentSendableBase, UnsentSendable {
         self.typePass = attachment.hasItemConformingToTypeIdentifier(UnsentFileSendable.passkitUTI)
         self.attachment = attachment
         super.init(conversation: conversation, sharingSession: sharingSession)
-        guard typeURL || typeData else { return nil }
+        guard typeURL || typeData || typePass else { return nil }
         needsPreparation = true
     }
 
