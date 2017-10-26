@@ -57,9 +57,8 @@ import HockeySDK.BITHockeyManager
         }
         
         ///FIXME: Is it a bug of iOS, viewDidAppear called too early?
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+        delay(2) {
             self.showUnlockIfNeeded()
-            
             self.resignKeyboardIfNeeded()
         }
     }
