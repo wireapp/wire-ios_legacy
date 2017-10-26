@@ -68,8 +68,8 @@ class ChatHeadsViewController: UIViewController {
             let selfID = note.selfUserID,
             let account = SessionManager.shared?.accountManager.account(with: selfID),
             let session = SessionManager.shared?.backgroundUserSessions[account.userIdentifier],
-            let conversation = note.conversation(in: session.managedObjectContext),
-            shouldDisplay(note: note, conversation: conversation, account: account)
+            let conversationID = note.conversationID,
+            shouldDisplay(note: note, conversationID: conversationID, account: account)
             else { return }
         
         chatHeadView = ChatHeadView(
@@ -83,7 +83,11 @@ class ChatHeadsViewController: UIViewController {
         
         chatHeadView!.onSelect = {
             SessionManager.shared?.withSession(for: account) { userSession in
-                SessionManager.shared?.userSession(userSession, show: conversation)
+                // save SYNC so we can fetch on UI
+                userSession.syncManagedObjectContext.saveOrRollback()
+                if let conversation = note.conversation(in: session.managedObjectContext) {
+                    SessionManager.shared?.userSession(userSession, show: conversation)
+                }
             }
             
             self.chatHeadView?.removeFromSuperview()
@@ -112,7 +116,7 @@ class ChatHeadsViewController: UIViewController {
     
     // MARK: - Private Helpers
     
-    private func shouldDisplay(note: ZMLocalNotification, conversation: ZMConversation, account: Account) -> Bool {
+    private func shouldDisplay(note: ZMLocalNotification, conversationID: UUID, account: Account) -> Bool {
         
         guard let clientVC = ZClientViewController.shared() else { return false }
         
@@ -122,7 +126,7 @@ class ChatHeadsViewController: UIViewController {
         }
         
         // if current conversation contains message & is visible
-        if clientVC.currentConversation === conversation && clientVC.isConversationViewVisible {
+        if clientVC.currentConversation.remoteIdentifier == conversationID && clientVC.isConversationViewVisible {
             return false
         }
         
