@@ -105,7 +105,7 @@ class ChatHeadView: UIView {
         addSubview(labelContainer)
         
         if let title = title {
-            let label = = UILabel()
+            let label = UILabel()
             label.backgroundColor = .clear
             label.isUserInteractionEnabled = false
             label.attributedText = attributedTitleText(title)
