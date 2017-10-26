@@ -105,13 +105,14 @@ class ChatHeadView: UIView {
         addSubview(labelContainer)
         
         if let title = title {
-            titleLabel = UILabel()
-            titleLabel!.backgroundColor = .clear
-            titleLabel!.isUserInteractionEnabled = false
-            titleLabel!.attributedText = attributedTitleText(title)
-            titleLabel!.textColor = color(withName: ColorSchemeColorChatHeadTitleText)
-            titleLabel!.lineBreakMode = .byTruncatingTail
-            labelContainer.addSubview(titleLabel!)
+            let label = = UILabel()
+            label.backgroundColor = .clear
+            label.isUserInteractionEnabled = false
+            label.attributedText = attributedTitleText(title)
+            label.textColor = color(withName: ColorSchemeColorChatHeadTitleText)
+            label.lineBreakMode = .byTruncatingTail
+            titleLabel = label
+            labelContainer.addSubview(label)
         }
         
         subtitleLabel = UILabel()
@@ -129,13 +130,14 @@ class ChatHeadView: UIView {
     }
     
     private func createImageView() {
-        userImageView = ContrastUserImageView(magicPrefix: "notifications")
-        userImageView!.userSession = SessionManager.shared?.backgroundUserSessions[userID]
-        userImageView!.isUserInteractionEnabled = false
-        userImageView!.translatesAutoresizingMaskIntoConstraints = false
-        userImageView!.user = self.sender
-        userImageView!.accessibilityIdentifier = "ChatheadAvatarImage"
-        addSubview(userImageView!)
+        let imageView = ContrastUserImageView(magicPrefix: "notifications")
+        imageView.userSession = SessionManager.shared?.backgroundUserSessions[userID]
+        imageView.isUserInteractionEnabled = false
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.user = self.sender
+        imageView.accessibilityIdentifier = "ChatheadAvatarImage"
+        addSubview(imageView)
+        userImageView = imageView
     }
     
     private func createConstraints() {
