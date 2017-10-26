@@ -56,9 +56,12 @@ import HockeySDK.BITHockeyManager
             lockView.edges == view.edges
         }
         
-        self.showUnlockIfNeeded()
-        
-        self.resignKeyboardIfNeeded()
+        ///FIXME: Is it a bug of iOS, viewDidAppear called too early?
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+            self.showUnlockIfNeeded()
+            
+            self.resignKeyboardIfNeeded()
+        }
     }
     
     fileprivate func resignKeyboardIfNeeded() {
