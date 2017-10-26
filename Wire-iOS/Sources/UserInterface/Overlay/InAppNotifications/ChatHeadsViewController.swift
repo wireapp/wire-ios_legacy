@@ -83,8 +83,6 @@ class ChatHeadsViewController: UIViewController {
         
         chatHeadView!.onSelect = {
             SessionManager.shared?.withSession(for: account) { userSession in
-                // save SYNC so we can fetch on UI
-                userSession.syncManagedObjectContext.saveOrRollback()
                 if let conversation = note.conversation(in: session.managedObjectContext) {
                     SessionManager.shared?.userSession(userSession, show: conversation)
                 }
