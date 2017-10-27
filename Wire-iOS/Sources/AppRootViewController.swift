@@ -24,42 +24,16 @@ import Classy
 class AppRootViewController : UIViewController {
     
     public let mainWindow : UIWindow
-    public lazy var overlayWindow : UIWindow = {
-        let _overlayWindow = PassthroughWindow()
-        _overlayWindow.backgroundColor = .clear
-        _overlayWindow.frame = UIScreen.main.bounds
-        _overlayWindow.windowLevel = UIWindowLevelStatusBar + 1
-        _overlayWindow.accessibilityIdentifier = "ZClientNotificationWindow"
-        _overlayWindow.rootViewController = NotificationWindowRootViewController()
-        
-        _overlayWindow.makeKeyAndVisible()
-
-        return _overlayWindow
-    }()
+    public let overlayWindow : UIWindow
     public fileprivate(set) var sessionManager : SessionManager?
     
     public fileprivate(set) var visibleViewController : UIViewController?
-    fileprivate lazy var appStateController : AppStateController = {
-        let _appStateController = AppStateController()
-        _appStateController.delegate = self
-
-        return _appStateController
-    }()
+    fileprivate let appStateController : AppStateController
     fileprivate lazy var classyCache : ClassyCache = {
         return ClassyCache()
     }()
-    fileprivate lazy var fileBackupExcluder : FileBackupExcluder = {
-        let _fileBackupExcluder = FileBackupExcluder()
-        if let appGroupIdentifier = Bundle.main.appGroupIdentifier {
-            let sharedContainerURL = FileManager.sharedContainerDirectory(for: appGroupIdentifier)
-            _fileBackupExcluder.excludeLibraryFolderInSharedContainer(sharedContainerURL: sharedContainerURL)
-        }
-
-        return _fileBackupExcluder
-    }()
-    fileprivate lazy var avsLogObserver : AVSLogObserver = {
-        return AVSLogObserver()
-    }()
+    fileprivate let fileBackupExcluder : FileBackupExcluder
+    fileprivate let avsLogObserver : AVSLogObserver
     fileprivate var authenticatedBlocks : [() -> Void] = []
     fileprivate let transitionQueue : DispatchQueue = DispatchQueue(label: "transitionQueue")
     fileprivate var isClassyInitialized = false
@@ -77,25 +51,41 @@ class AppRootViewController : UIViewController {
     
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+        appStateController = AppStateController()
+        fileBackupExcluder = FileBackupExcluder()
+        avsLogObserver = AVSLogObserver()
         MagicConfig.shared()
         
         mainWindow = UIWindow()
         mainWindow.frame = UIScreen.main.bounds
         mainWindow.accessibilityIdentifier = "ZClientMainWindow"
         
+        overlayWindow = PassthroughWindow()
+        overlayWindow.backgroundColor = .clear
+        overlayWindow.frame = UIScreen.main.bounds
+        overlayWindow.windowLevel = UIWindowLevelStatusBar + 1
+        overlayWindow.accessibilityIdentifier = "ZClientNotificationWindow"
+        overlayWindow.rootViewController = NotificationWindowRootViewController()
         
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
 
         AutomationHelper.sharedHelper.installDebugDataIfNeeded()
 
+        appStateController.delegate = self
         
         // Notification window has to be on top, so must be made visible last.  Changing the window level is
         // not possible because it has to be below the status bar.
         mainWindow.rootViewController = self
         mainWindow.makeKeyAndVisible()
+        overlayWindow.makeKeyAndVisible()
         mainWindow.makeKey()
         
         configureMediaManager()
+        
+        if let appGroupIdentifier = Bundle.main.appGroupIdentifier {
+            let sharedContainerURL = FileManager.sharedContainerDirectory(for: appGroupIdentifier)
+            fileBackupExcluder.excludeLibraryFolderInSharedContainer(sharedContainerURL: sharedContainerURL)
+        }
         
         NotificationCenter.default.addObserver(self, selector: #selector(onContentSizeCategoryChange), name: Notification.Name.UIContentSizeCategoryDidChange, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(applicationDidEnterBackground), name: Notification.Name.UIApplicationDidEnterBackground, object: nil)
