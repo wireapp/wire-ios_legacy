@@ -64,17 +64,6 @@ class AnalyticsTests : XCTestCase {
         XCTAssertTrue(BITHockeyManager.shared().isCrashManagerDisabled)
     }
     
-    func testThatItSetsOptOutOnMixpanel() {
-        // GIVEN
-        TrackingManager.shared.disableCrashAndAnalyticsSharing = false
-        // THEN
-        XCTAssertFalse(Analytics.shared()?.isOptedOut ?? false)
-        // WHEN
-        TrackingManager.shared.disableCrashAndAnalyticsSharing = true
-        // THEN
-        XCTAssertTrue(Analytics.shared()?.isOptedOut ?? false)
-    }
-    
     func testThatItSetsOptOutToSharedSettings() {
         // GIVEN
         TrackingManager.shared.disableCrashAndAnalyticsSharing = false
