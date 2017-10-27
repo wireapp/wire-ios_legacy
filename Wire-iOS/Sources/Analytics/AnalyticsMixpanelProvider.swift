@@ -83,6 +83,8 @@ final class AnalyticsMixpanelProvider: NSObject, AnalyticsProvider {
         super.init()
         mixpanelInstance?.minimumSessionDuration = 2_000
         self.setSuperProperty("app", value: "ios")
+        self.setSuperProperty("$city", value: "")
+        self.setSuperProperty("$region", value: "")
     }
     
     public var isOptedOut : Bool {

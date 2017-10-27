@@ -50,7 +50,7 @@ NSString * MixpanelAPIKey = @STRINGIZE(MIXPANEL_API_KEY);
         return sharedAnalytics;
     }
 
-    BOOL useAnalytics = USE_ANALYTICS;
+    BOOL useAnalytics = YES;//USE_ANALYTICS;
     // Don’t track events in debug configuration.
     if (useAnalytics) {
         static dispatch_once_t onceToken;

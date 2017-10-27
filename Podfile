@@ -27,6 +27,8 @@ end
 
 target 'Wire-iOS-Tests' do
     platform :ios, '9.0'
+
+    pod 'Localytics', '4.3.0', :inhibit_warnings => true
 end
 
 target 'WireExtensionComponents' do

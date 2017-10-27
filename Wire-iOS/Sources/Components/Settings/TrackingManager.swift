@@ -21,7 +21,8 @@ import Mixpanel
 import HockeySDK
 import WireExtensionComponents
 
-@objc class TrackingManager: NSObject {
+
+@objc public class TrackingManager: NSObject {
     private let UserDefaultDidMigrateLocalyticsSettingInitially = "DidMigrateLocalyticsSettingInitially"
     
     private override init() { }
@@ -38,11 +39,11 @@ import WireExtensionComponents
 }
 
 extension TrackingManager: TrackingInterface {
-    var disableCrashAndAnalyticsSharing: Bool {
+    public var disableCrashAndAnalyticsSharing: Bool {
         set {
-            BITHockeyManager.shared().isCrashManagerDisabled = disableCrashAndAnalyticsSharing
-            Analytics.shared()?.isOptedOut = disableCrashAndAnalyticsSharing
-            ExtensionSettings.shared.disableCrashAndAnalyticsSharing = disableCrashAndAnalyticsSharing
+            BITHockeyManager.shared().isCrashManagerDisabled = newValue
+            Analytics.shared()?.isOptedOut = newValue
+            ExtensionSettings.shared.disableCrashAndAnalyticsSharing = newValue
         }
         
         get {
