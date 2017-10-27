@@ -17,23 +17,24 @@
 //
 
 import UIKit
+import WireSyncEngine
 import Cartography
 import PureLayout
 
 class ChatHeadView: UIView {
-
+    
+    private let title: String?
+    private let body: String
+    private let userID: UUID
+    private let sender: ZMUser?
+    private let userInfo: [AnyHashable : Any]?
+    private let isEphemeral: Bool
+    
     private var userImageView: ContrastUserImageView?
     private var titleLabel: UILabel?
     private var subtitleLabel: UILabel!
     private var labelContainer: UIView!
-    
-    private let title: String?
-    private let body: String
-    private let sender: ZMUser?
-    private let userID: UUID
-    private let teamName: String?
-    private let isEphemeral: Bool
-    
+
     private let imageDiameter: CGFloat = 28
     private let padding: CGFloat = 10
     
@@ -63,12 +64,12 @@ class ChatHeadView: UIView {
         return ColorScheme.default().color(withName: name)
     }
     
-    init(title: String?, body: String, sender: ZMUser?, userID: UUID, teamName: String? = nil, isEphemeral: Bool = false) {
+    init(title: String?, body: String, userID: UUID, sender: ZMUser?, userInfo: [AnyHashable : Any]? = nil, isEphemeral: Bool = false) {
         self.title = title
         self.body = body
-        self.sender = sender
         self.userID = userID
-        self.teamName = teamName
+        self.sender = sender
+        self.userInfo = userInfo
         self.isEphemeral = isEphemeral
         super.init(frame: .zero)
         setup()
@@ -93,7 +94,7 @@ class ChatHeadView: UIView {
         layer.masksToBounds = false
         
         createLabels()
-        if sender != nil { createImageView() }
+        createImageView()
         createConstraints()
         
         let tap = UITapGestureRecognizer(target: self, action: #selector(didTapInAppNotification(_:)))
@@ -119,7 +120,7 @@ class ChatHeadView: UIView {
         subtitleLabel.backgroundColor = .clear
         subtitleLabel.isUserInteractionEnabled = false
         
-        let bodyAttributes = (!isEphemeral && title == nil) ? titleMediumAttributes : [
+        let bodyAttributes = (!isEphemeral && titleLabel == nil) ? titleMediumAttributes : [
             NSFontAttributeName: bodyFont,
             NSForegroundColorAttributeName: color(withName: ColorSchemeColorChatHeadSubtitleText)
         ]
@@ -130,14 +131,16 @@ class ChatHeadView: UIView {
     }
     
     private func createImageView() {
-        let imageView = ContrastUserImageView(magicPrefix: "notifications")
-        imageView.userSession = SessionManager.shared?.backgroundUserSessions[userID]
-        imageView.isUserInteractionEnabled = false
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.user = self.sender
-        imageView.accessibilityIdentifier = "ChatheadAvatarImage"
-        addSubview(imageView)
-        userImageView = imageView
+        if let sender = sender {
+            let imageView = ContrastUserImageView(magicPrefix: "notifications")
+            imageView.userSession = SessionManager.shared?.backgroundUserSessions[userID]
+            imageView.isUserInteractionEnabled = false
+            imageView.translatesAutoresizingMaskIntoConstraints = false
+            imageView.user = sender
+            imageView.accessibilityIdentifier = "ChatheadAvatarImage"
+            addSubview(imageView)
+            userImageView = imageView
+        }
     }
     
     private func createConstraints() {
@@ -183,14 +186,21 @@ class ChatHeadView: UIView {
     }
     
     private func attributedTitleText(_ title: String) -> NSAttributedString {
-        let attrText = NSMutableAttributedString(string: title, attributes: titleMediumAttributes)
+        let attrText = NSMutableAttributedString(string: title, attributes: titleRegularAttributes)
+        var ranges = [NSRange]()
         
-        // if title contains "in [Team Name]", then we want "in" to be regular font
-        if let teamName = teamName {
-            if let teamRange = title.range(of: "in \(teamName)") {
-                let location = title.distance(from: title.startIndex, to: teamRange.lowerBound)
-                attrText.setAttributes(titleRegularAttributes, range: NSMakeRange(location, 2))
-            }
+        // title contains at conversation name and/or team name, and these
+        // components should be rendered in medium font
+        if let conversationName = userInfo?[ConversationNameStringKey] as? String {
+            ranges.append((title as NSString).range(of: conversationName))
+        }
+        
+        if let teamName = userInfo?[TeamNameStringKey] as? String {
+            ranges.append((title as NSString).range(of: teamName))
+        }
+        
+        ranges.forEach {
+            if $0.location != NSNotFound { attrText.setAttributes(titleMediumAttributes, range: $0) }
         }
         
         return attrText

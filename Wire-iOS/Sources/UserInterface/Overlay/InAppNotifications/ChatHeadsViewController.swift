@@ -72,12 +72,15 @@ class ChatHeadsViewController: UIViewController {
             shouldDisplay(note: note, conversationID: conversationID, account: account)
             else { return }
         
+        // if notification is for active account, we only want to show the conversation name
+        let title = account.isActive ? note.userInfo?[ConversationNameStringKey] as? String : note.title
+        
         chatHeadView = ChatHeadView(
-            title: note.title.flatMap { trimTitleIfNeeded($0, account: account) },
+            title: title,
             body: note.body,
-            sender: note.sender(in: session.managedObjectContext),
             userID: selfID,
-            teamName: account.teamName,
+            sender: note.sender(in: session.managedObjectContext),
+            userInfo: note.userInfo,
             isEphemeral: note.isEphemeral
         )
         
@@ -133,19 +136,6 @@ class ChatHeadsViewController: UIViewController {
         }
 
         return clientVC.splitViewController.shouldDisplayNotification(from: account)
-    }
-    
-    /// If the given account is active, the title is trimmed to only include the
-    /// conversation name (i.e, trimming the possible team name). If no conversation
-    /// name is present then nil is returned.
-    ///
-    private func trimTitleIfNeeded(_ title: String, account: Account) -> String? {
-        var result = title
-        if let teamName = account.teamName, let range = title.range(of: "in \(teamName)"), account.isActive {
-            result.removeSubrange(range)
-        }
-        result = result.trimmingCharacters(in: .whitespaces)
-        return result.isEmpty ? nil : result
     }
     
     fileprivate func revealChatHeadFromCurrentState() {

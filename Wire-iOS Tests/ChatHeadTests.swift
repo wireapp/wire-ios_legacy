@@ -27,57 +27,56 @@ class ChatHeadTests: CoreDataSnapshotTestCase {
         snapshotBackgroundColor = .white
     }
     
-    func chatHead(title: String?, body: String, teamName: String = "Wire", ephemeral: Bool = false) -> ChatHeadView {
+    func chatHead(conversationName: String? = "iOS Team", body: String, teamName: String? = "Wire", ephemeral: Bool = false) -> ChatHeadView {
+        
+        var title = conversationName ?? ""
+        if let teamName = teamName {
+            title.append(" in \(teamName)")
+        }
+        
         return ChatHeadView(
-            title: title == nil ? nil : "\(title!) in \(teamName)".trimmingCharacters(in: .whitespaces),
+            title: title.isEmpty ? nil : title.trimmingCharacters(in: .whitespaces),
             body: body,
-            sender: otherUser,
             userID: selfUser.remoteIdentifier!,
-            teamName: teamName,
+            sender: otherUser,
+            userInfo: [ConversationNameStringKey: conversationName as Any, TeamNameStringKey: teamName as Any],
             isEphemeral: ephemeral
         )
     }
     
     func testThatItDisplaysAShortMessage() {
-        
-        let sut = chatHead(title: "iOS Team", body: "Bob: Hey everyone!")
+        let sut = chatHead(body: "Bob: Hey everyone!")
         verify(view: sut.prepareForSnapshots())
     }
     
     func testThatItDisplaysALongMessage() {
-        let sut = chatHead(title: "iOS Team", body: "Bob: Hey everyone! Blah blah blah blah blah blah blah blah")
+        let sut = chatHead(body: "Bob: Hey everyone! Blah blah blah blah blah blah blah blah")
         verify(view: sut.prepareForSnapshots())
     }
     
     func testThatItRendersCorrectAttributesForTitle_NoConversationName() {
-        let sut = chatHead(title: "", body: "Hey everyone!")
+        let sut = chatHead(conversationName: nil, body: "Hey everyone!")
         verify(view: sut.prepareForSnapshots())
     }
     
     func testThatItRendersCorrectAttributesForTitle_MultipleOccurencesOfIn() {
-        let sut = chatHead(title: "Bob in Italy", body: "Hey everyone!", teamName: "Wire in Switzerland")
+        let sut = chatHead(conversationName: "Bob in Italy", body: "Hey everyone!", teamName: "Wire in Switzerland")
         verify(view: sut.prepareForSnapshots())
     }
     
     func testThatItDisplaysSingleLineWhenTitleIsNil() {
-        let sut = chatHead(title: nil, body: "Bob is calling")
+        let sut = chatHead(conversationName: nil, body: "Bob is calling", teamName: nil)
         verify(view: sut.prepareForSnapshots())
     }
     
     func testThatItRendersEphemeralContent() {
-        let sut = chatHead(title: "iOS Team", body: "Bob: Hey everyone!", ephemeral: true)
+        let sut = chatHead(body: "Bob: Hey everyone!", ephemeral: true)
         verify(view: sut.prepareForSnapshots())
     }
     
     func testThatItDoesNotDisplayImageWhenThereIsNoSender() {
-        let sut = ChatHeadView(
-            title: "iOS Team in Wire",
-            body: "New message",
-            sender: nil,
-            userID: selfUser.remoteIdentifier!,
-            teamName: "Wire"
-        )
-        
+        otherUser = nil
+        let sut = chatHead(body: "New message")
         verify(view: sut.prepareForSnapshots())
     }
 }
