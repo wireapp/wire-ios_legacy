@@ -57,10 +57,6 @@ import HockeySDK.BITHockeyManager
                                                object: .none)
     }
     
-    deinit {
-        NotificationCenter.default.removeObserver(self)
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
