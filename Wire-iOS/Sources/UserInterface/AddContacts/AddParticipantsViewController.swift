@@ -83,6 +83,9 @@ public class AddParticipantsViewController : UIViewController {
         } else {
             confirmButton.setTitle("peoplepicker.button.add_to_conversation".localized.uppercased(), for: .normal)
         }
+        
+        bottomContainer.backgroundColor = UIColor.clear
+        bottomContainer.addSubview(confirmButton)
  
         searchHeaderViewController = SearchHeaderViewController(userSelection: userSelection, variant: ColorScheme.default().variant)
         searchResultsViewController = SearchResultsViewController(userSelection: userSelection, team: ZMUser.selfUser().team, variant: ColorScheme.default().variant, isAddingParticipants: true)
@@ -125,7 +128,10 @@ public class AddParticipantsViewController : UIViewController {
     
     func createConstraints() {
         
-        constrain(view, searchHeaderViewController.view, searchResultsViewController.view, confirmButton) { container, searchHeaderView, searchResultsView, confirmButton in
+        let margin = (searchResultsViewController.view as! SearchResultsView).accessoryViewMargin
+        
+        constrain(view, searchHeaderViewController.view, searchResultsViewController.view, confirmButton, bottomContainer) {
+            container, searchHeaderView, searchResultsView, confirmButton, bottomContainer in
             
             searchHeaderView.top == container.top + UIScreen.safeArea.top
             searchHeaderView.left == container.left
@@ -137,6 +143,10 @@ public class AddParticipantsViewController : UIViewController {
             searchResultsView.bottom == container.bottom
             
             confirmButton.height == 46.0
+            confirmButton.top == bottomContainer.top
+            confirmButton.left == bottomContainer.left + margin
+            confirmButton.right == bottomContainer.right - margin
+            confirmButton.bottom == bottomContainer.bottom - margin
         }
     }
         
@@ -144,7 +154,7 @@ public class AddParticipantsViewController : UIViewController {
         if userSelection.users.isEmpty {
             searchResultsViewController.searchResultsView?.accessoryView = nil
         } else {
-            searchResultsViewController.searchResultsView?.accessoryView = confirmButton
+            searchResultsViewController.searchResultsView?.accessoryView = bottomContainer
         }
     }
     

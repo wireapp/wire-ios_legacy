@@ -22,6 +22,7 @@ import Classy
 
 class SearchResultsView : UIView {
     
+    let accessoryViewMargin : CGFloat = 16.0
     let emptyResultContainer = UIView()
     let collectionView : UICollectionView
     let collectionViewLayout : UICollectionViewFlowLayout
