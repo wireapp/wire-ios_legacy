@@ -28,7 +28,6 @@ import HockeySDK.BITHockeyManager
     fileprivate static let authenticationPersistancePeriod: TimeInterval = 10
     fileprivate var localAuthenticationCancelled: Bool = false
     fileprivate var localAuthenticationNeeded: Bool = true
-    fileprivate var isFirstViewDidAppear = true
     
     fileprivate var dimContents: Bool = false {
         didSet {
@@ -80,18 +79,6 @@ import HockeySDK.BITHockeyManager
         
         constrain(self.view, self.lockView) { view, lockView in
             lockView.edges == view.edges
-        }
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        if isFirstViewDidAppear {
-            isFirstViewDidAppear = false
-            
-            ///Notice: viewDidAppear/viewDidLoad can be call before the view shows(splash still visible) (and "Touch to unlock" system screen would not show when the app is not ready)
-            delay(3) {
-                self.showUnlockIfNeeded()
-                self.resignKeyboardIfNeeded()
-            }
         }
     }
     
