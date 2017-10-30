@@ -59,19 +59,6 @@ final class AnalyticsMixpanelProvider: NSObject, AnalyticsProvider {
     
     private static let enabledEvents = Set<String>([
         conversationMediaCompleteActionEventName,
-        "registration.opened_phone_signup",
-        "registration.opened_email_signup",
-        "registration.entered_phone",
-        "registration.entered_email_and_password",
-        "registration.verified_phone",
-        "registration.verified_email",
-        "registration.resent_phone_verification",
-        "registration.resent_email_verification",
-        "registration.entered_name",
-        "registration.succeeded",
-        "registration.added_photo",
-        "registration.entered_credentials",
-        "account.logged_in",
         "settings.opted_in_tracking",
         "settings.opted_out_tracking",
         "e2ee.failed_message_decyption"
@@ -116,8 +103,6 @@ final class AnalyticsMixpanelProvider: NSObject, AnalyticsProvider {
             DDLogInfo("Analytics: event \(event) is disabled")
             return
         }
-        
-        DDLogDebug("Event: \(event), attributes: \(attributes)")
         
         mixpanelInstance.track(event: event, properties: attributes.propertiesRemovingLocation())
     }
