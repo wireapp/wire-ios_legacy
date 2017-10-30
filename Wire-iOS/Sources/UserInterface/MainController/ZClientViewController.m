@@ -112,7 +112,7 @@
         self.mediaPlaybackManager = [[MediaPlaybackManager alloc] initWithName:@"conversationMedia"];
         self.messageCountTracker = [[LegacyMessageTracker alloc] initWithManagedObjectContext:ZMUserSession.sharedSession.syncManagedObjectContext];
 
-        [AVSMediaManager.sharedInstanceregisterMedia:self.mediaPlaybackManager withOptions:@{ @"media" : @"external "}];
+        [AVSMediaManager.sharedInstance registerMedia:self.mediaPlaybackManager withOptions:@{ @"media" : @"external "}];
         
         AddressBookHelper.sharedHelper.configuration = AutomationHelper.sharedHelper;
         
