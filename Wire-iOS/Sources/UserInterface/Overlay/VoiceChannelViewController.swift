@@ -85,7 +85,7 @@ class VoiceChannelViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        guard let mediaManager = AVSProvider.shared.mediaManager else { return }
+        guard let mediaManager = AVSMediaManager.sharedInstance() else { return }
         
         voiceChannelView.muted = mediaManager.isMicrophoneMuted
         voiceChannelView.speakerActive = mediaManager.isSpeakerEnabled
@@ -212,7 +212,7 @@ extension VoiceChannelViewController : VoiceChannelOverlayDelegate {
     func muteButtonTapped() {
         zmLog.debug("muteButtonTapped")
         
-        guard let mediaManager = AVSProvider.shared.mediaManager else { return }
+        guard let mediaManager = AVSMediaManager.sharedInstance() else { return }
         
         mediaManager.isMicrophoneMuted = !mediaManager.isMicrophoneMuted
         voiceChannelView.muted = mediaManager.isMicrophoneMuted
@@ -221,7 +221,7 @@ extension VoiceChannelViewController : VoiceChannelOverlayDelegate {
     func speakerButtonTapped() {
         zmLog.debug("speakerButtonTapped")
         
-        guard let mediaManager = AVSProvider.shared.mediaManager else { return }
+        guard let mediaManager = AVSMediaManager.sharedInstance() else { return }
         
         mediaManager.isSpeakerEnabled = !mediaManager.isSpeakerEnabled
         voiceChannelView.speakerActive = mediaManager.isSpeakerEnabled
@@ -329,7 +329,7 @@ extension VoiceChannelViewController : WireCallCenterCallStateObserver, Received
         }
         
         voiceChannelView.transition(to: viewState(for: callState, previousCallState: previousCallState))
-        voiceChannelView.speakerActive = AVSProvider.shared.mediaManager?.isSpeakerEnabled ?? false
+        voiceChannelView.speakerActive = AVSMediaManager.sharedInstance()?.isSpeakerEnabled ?? false
         
         updateCallDurationTimer(for: callState)
         updateIdleTimer(for: callState)

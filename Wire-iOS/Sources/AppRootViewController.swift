@@ -287,12 +287,14 @@ class AppRootViewController : UIViewController {
     }
     
     func configureMediaManager() {        
-        let mediaManager = AVSProvider.shared.mediaManager
+        guard let mediaManager = AVSMediaManager.sharedInstance() else {
+            return
+        }
         
-        mediaManager?.configureSounds()
-        mediaManager?.observeSoundConfigurationChanges()
-        mediaManager?.isMicrophoneMuted = false
-        mediaManager?.isSpeakerEnabled = false
+        mediaManager.configureSounds()
+        mediaManager.observeSoundConfigurationChanges()
+        mediaManager.isMicrophoneMuted = false
+        mediaManager.isSpeakerEnabled = false
     }
     
     func setupClassy(with windows: [UIWindow]) {

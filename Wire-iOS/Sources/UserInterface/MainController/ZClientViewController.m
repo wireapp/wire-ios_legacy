@@ -99,7 +99,7 @@
 
 - (void)dealloc
 {
-    [AVSProvider.shared.mediaManager unregisterMedia:self.mediaPlaybackManager];
+    [AVSMediaManager.sharedInstance unregisterMedia:self.mediaPlaybackManager];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
@@ -112,7 +112,7 @@
         self.mediaPlaybackManager = [[MediaPlaybackManager alloc] initWithName:@"conversationMedia"];
         self.messageCountTracker = [[LegacyMessageTracker alloc] initWithManagedObjectContext:ZMUserSession.sharedSession.syncManagedObjectContext];
 
-        [AVSProvider.shared.mediaManager registerMedia:self.mediaPlaybackManager withOptions:@{ @"media" : @"external "}];
+        [AVSMediaManager.sharedInstanceregisterMedia:self.mediaPlaybackManager withOptions:@{ @"media" : @"external "}];
         
         AddressBookHelper.sharedHelper.configuration = AutomationHelper.sharedHelper;
         

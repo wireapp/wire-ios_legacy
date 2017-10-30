@@ -300,7 +300,7 @@ extension SettingsPropertyFactory {
         }
         let settingsPropertyFactory = SettingsPropertyFactory(userDefaults: UserDefaults.standard,
                                                               tracking: TrackingManager.shared,
-                                                              mediaManager: AVSProvider.shared.mediaManager,
+                                                              mediaManager: AVSMediaManager.sharedInstance(),
                                                               userSession: session,
                                                               selfUser: ZMUser.selfUser())
         

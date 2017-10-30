@@ -317,7 +317,7 @@ NSString * const UserDefaultDisableLinkPreviews = @"DisableLinkPreviews";
 - (void)setMessageSoundName:(NSString *)messageSoundName
 {
     [self.defaults setObject:messageSoundName forKey:UserDefaultMessageSoundName];
-    [[[AVSProvider shared] mediaManager] configureSounds];
+    [AVSMediaManager.sharedInstance configureSounds];
 }
 
 - (NSString *)messageSoundName
@@ -328,7 +328,7 @@ NSString * const UserDefaultDisableLinkPreviews = @"DisableLinkPreviews";
 - (void)setCallSoundName:(NSString *)callSoundName
 {
     [self.defaults setObject:callSoundName forKey:UserDefaultCallSoundName];
-    [[[AVSProvider shared] mediaManager] configureSounds];
+    [AVSMediaManager.sharedInstance configureSounds];
 }
 
 - (NSString *)callSoundName
@@ -339,7 +339,7 @@ NSString * const UserDefaultDisableLinkPreviews = @"DisableLinkPreviews";
 - (void)setPingSoundName:(NSString *)pingSoundName
 {
     [self.defaults setObject:pingSoundName forKey:UserDefaultPingSoundName];
-    [[[AVSProvider shared] mediaManager] configureSounds];
+    [AVSMediaManager.sharedInstance configureSounds];
 }
 
 - (NSString *)pingSoundName
@@ -446,12 +446,12 @@ NSString * const UserDefaultDisableLinkPreviews = @"DisableLinkPreviews";
         level = AVSIntensityLevelFull;
     }
     
-    [[AVSProvider shared] mediaManager].intensityLevel = level;
+    AVSMediaManager.sharedInstance.intensityLevel = level;
 }
 
 - (void)storeCurrentIntensityLevelAsLastUsed
 {
-    AVSIntensityLevel level = [[AVSProvider shared] mediaManager].intensityLevel;
+    AVSIntensityLevel level = AVSMediaManager.sharedInstance.intensityLevel;
     if (level >= AVSIntensityLevelNone && level <= AVSIntensityLevelFull) {
         [self.defaults setObject:[NSNumber numberWithInt:level] forKey:AVSMediaManagerPersistentIntensity];
     }

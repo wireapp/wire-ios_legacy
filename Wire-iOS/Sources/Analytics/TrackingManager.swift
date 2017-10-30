@@ -24,8 +24,17 @@ import WireExtensionComponents
 
 @objc public class TrackingManager: NSObject {
     private let UserDefaultDidMigrateLocalyticsSettingInitially = "DidMigrateLocalyticsSettingInitially"
+    private let flowManagerObserver: NSObjectProtocol
     
-    private override init() {}
+    private override init() {
+        AVSFlowManager.getInstance()?.setEnableMetrics(!ExtensionSettings.shared.disableCrashAndAnalyticsSharing)
+        
+        flowManagerObserver = NotificationCenter.default.addObserver(forName: FlowManager.AVSFlowManagerCreatedNotification, object: nil, queue: nil, using: { _ in
+            DispatchQueue.main.async {
+                AVSFlowManager.getInstance()?.setEnableMetrics(!ExtensionSettings.shared.disableCrashAndAnalyticsSharing)
+            }
+        })
+    }
     
     public static var shared = TrackingManager()
     
@@ -43,7 +52,7 @@ extension TrackingManager: TrackingInterface {
         set {
             BITHockeyManager.shared().isCrashManagerDisabled = newValue
             Analytics.shared()?.isOptedOut = newValue
-            AVSProvider.shared.flowManager?.setEnableMetrics(!newValue)
+            AVSFlowManager.getInstance()?.setEnableMetrics(!newValue)
             ExtensionSettings.shared.disableCrashAndAnalyticsSharing = newValue
         }
         

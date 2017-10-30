@@ -1063,7 +1063,7 @@
             [Analytics.shared tagMediaAction:ConversationMediaActionPing inConversation:self.conversation];
             [Analytics.shared tagMediaActionCompleted:ConversationMediaActionPing inConversation:self.conversation];
             
-            [[[AVSProvider shared] mediaManager] playSound:MediaManagerSoundOutgoingKnockSound];
+            [AVSMediaManager.sharedInstance playSound:MediaManagerSoundOutgoingKnockSound];
         }
     }];
     

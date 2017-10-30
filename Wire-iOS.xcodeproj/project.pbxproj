@@ -385,7 +385,6 @@
 		871BC3581D34F94200DF0793 /* AudioTrackPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC32B1D34F94200DF0793 /* AudioTrackPlayer.m */; };
 		871BC3591D34F94200DF0793 /* AudioTrackView.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC32D1D34F94200DF0793 /* AudioTrackView.m */; };
 		871BC35A1D34F94200DF0793 /* AudioTrackViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC32F1D34F94200DF0793 /* AudioTrackViewController.m */; };
-		871BC35B1D34F94200DF0793 /* AVSProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 871BC3301D34F94200DF0793 /* AVSProvider.swift */; };
 		871BC35C1D34F94200DF0793 /* Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC3321D34F94200DF0793 /* Constants.m */; };
 		871BC35E1D34F94200DF0793 /* NetworkConditionHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC3361D34F94200DF0793 /* NetworkConditionHelper.m */; };
 		871BC35F1D34F94200DF0793 /* SettingsProperty.swift in Sources */ = {isa = PBXBuildFile; fileRef = 871BC3381D34F94200DF0793 /* SettingsProperty.swift */; };
@@ -1607,7 +1606,6 @@
 		871BC32D1D34F94200DF0793 /* AudioTrackView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AudioTrackView.m; sourceTree = "<group>"; };
 		871BC32E1D34F94200DF0793 /* AudioTrackViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioTrackViewController.h; sourceTree = "<group>"; };
 		871BC32F1D34F94200DF0793 /* AudioTrackViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AudioTrackViewController.m; sourceTree = "<group>"; };
-		871BC3301D34F94200DF0793 /* AVSProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AVSProvider.swift; sourceTree = "<group>"; };
 		871BC3311D34F94200DF0793 /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
 		871BC3321D34F94200DF0793 /* Constants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Constants.m; sourceTree = "<group>"; };
 		871BC3351D34F94200DF0793 /* NetworkConditionHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NetworkConditionHelper.h; sourceTree = "<group>"; };
@@ -3499,7 +3497,6 @@
 				871BC31B1D34F94200DF0793 /* AggregateArray.h */,
 				871BC31C1D34F94200DF0793 /* AggregateArray.m */,
 				871BC31D1D34F94200DF0793 /* AudioPlayer */,
-				871BC3301D34F94200DF0793 /* AVSProvider.swift */,
 				871BC3311D34F94200DF0793 /* Constants.h */,
 				871BC3321D34F94200DF0793 /* Constants.m */,
 				871BC3351D34F94200DF0793 /* NetworkConditionHelper.h */,
@@ -6296,7 +6293,6 @@
 				8FC85498199245770008B66B /* MediaBar.m in Sources */,
 				16E2A0A61F6BF233005F4DB1 /* ZMConversation+Calling.swift in Sources */,
 				BFCF31DD1DA52ECE0039B3DC /* KeyboardHeight.swift in Sources */,
-				871BC35B1D34F94200DF0793 /* AVSProvider.swift in Sources */,
 				87A752171E002F6C004317DB /* ConversationRootViewController.swift in Sources */,
 				87CA886E1DDF0075004101B6 /* UserConnectionViewController.swift in Sources */,
 				87D21AD71D8A98620075AB7A /* AccentColorPickerController.swift in Sources */,
