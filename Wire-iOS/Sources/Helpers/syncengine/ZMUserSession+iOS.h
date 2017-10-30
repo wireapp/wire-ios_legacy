@@ -24,5 +24,6 @@ extern NSString * __nonnull const UserSessionDidRequestAuthenticationNotificatio
 @interface ZMUserSession (iOS)
 
 + (instancetype __nullable)sharedSession;
+- (unsigned long long)maxUploadFileSize;
 
 @end
