@@ -18,7 +18,6 @@
 
 
 #import "Analytics+iOS.h"
-#import "Analytics+Metrics.h"
 #import <avs/AVSFlowManager.h>
 #import "Settings.h"
 #import "Wire-Swift.h"
@@ -57,12 +56,6 @@ NSString * MixpanelAPIKey = @STRINGIZE(MIXPANEL_API_KEY);
         dispatch_once(&onceToken, ^{
             AnalyticsMixpanelProvider *provider = [[AnalyticsMixpanelProvider alloc] init];
             sharedAnalytics = [[Analytics alloc] initWithProvider:provider];
-        });
-    }
-    else {
-        static dispatch_once_t onceToken;
-        dispatch_once(&onceToken, ^{
-            [self updateAVSMetricsSettingsWithActiveProvider:nil];
         });
     }
 

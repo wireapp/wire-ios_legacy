@@ -42,15 +42,22 @@ extension Dictionary where Key == String, Value == Any {
         var finalAttributes: Properties = self.mapKeysAndValues(keysMapping: identity) { key, value in
             return type(of: self).bridgeOrDescription(for: value)!
         }
-        finalAttributes["$city"] = ""
-        finalAttributes["$region"] = ""
+        finalAttributes["$city"] = NSNull.init()
+        finalAttributes["$region"] = NSNull.init()
         return finalAttributes
     }
 }
 
 final class AnalyticsMixpanelProvider: NSObject, AnalyticsProvider {
     private var mixpanelInstance: MixpanelInstance? = .none
-    private let enabledEvents = Set<String>([
+    
+    enum MixpanelSuperProperties: String {
+        case city = "$city"
+        case region = "$region"
+        case ignore = "$ignore"
+    }
+    
+    private static let enabledEvents = Set<String>([
         "contributed",
         "registration.opened_phone_signup",
         "registration.opened_email_signup",
@@ -70,10 +77,12 @@ final class AnalyticsMixpanelProvider: NSObject, AnalyticsProvider {
         "e2ee.failed_message_decyption"
         ])
     
-    private let enabledSuperProperties = Set<String>([
+    private static let enabledSuperProperties = Set<String>([
         "app",
         "team.in_team",
-        "team.size"
+        "team.size",
+        MixpanelSuperProperties.city.rawValue,
+        MixpanelSuperProperties.region.rawValue
         ])
     
     override init() {
@@ -82,18 +91,19 @@ final class AnalyticsMixpanelProvider: NSObject, AnalyticsProvider {
         }
         super.init()
         mixpanelInstance?.minimumSessionDuration = 2_000
+        mixpanelInstance?.loggingEnabled = true
         self.setSuperProperty("app", value: "ios")
-        self.setSuperProperty("$city", value: "")
-        self.setSuperProperty("$region", value: "")
+        self.setSuperProperty(MixpanelSuperProperties.city.rawValue, value: nil)
+        self.setSuperProperty(MixpanelSuperProperties.region.rawValue, value: nil)
     }
     
     public var isOptedOut : Bool {
         get {
-            return !(mixpanelInstance?.loggingEnabled ?? false)
+            return mixpanelInstance?.currentSuperProperties()[MixpanelSuperProperties.ignore.rawValue] as? Bool ?? false
         }
         
         set {
-            mixpanelInstance?.loggingEnabled = !newValue
+            mixpanelInstance?.registerSuperProperties([MixpanelSuperProperties.ignore.rawValue: true])
         }
     }
     
@@ -102,10 +112,12 @@ final class AnalyticsMixpanelProvider: NSObject, AnalyticsProvider {
             return
         }
         
-        guard enabledEvents.contains(event) else {
+        guard AnalyticsMixpanelProvider.enabledEvents.contains(event) else {
             DDLogInfo("Analytics: event \(event) is disabled")
             return
         }
+        
+        DDLogInfo("Event: \(event), attributes: \(attributes)")
         
         mixpanelInstance.track(event: event, properties: attributes.propertiesRemovingLocation())
     }
@@ -115,7 +127,7 @@ final class AnalyticsMixpanelProvider: NSObject, AnalyticsProvider {
             return
         }
         
-        guard enabledSuperProperties.contains(name) else {
+        guard AnalyticsMixpanelProvider.enabledSuperProperties.contains(name) else {
             DDLogInfo("Analytics: Super property \(name) is disabled")
             return
         }

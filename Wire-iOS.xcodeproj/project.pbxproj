@@ -249,6 +249,7 @@
 		8711A5A01E0C320100043ACF /* FloatingPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8711A59F1E0C320100043ACF /* FloatingPoint.swift */; };
 		8711A5A21E0D395A00043ACF /* CollectionCellHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8711A5A11E0D395A00043ACF /* CollectionCellHeader.swift */; };
 		8711A5A41E0D6C8800043ACF /* TwoLineTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8711A5A31E0D6C8800043ACF /* TwoLineTitleView.swift */; };
+		8712134B1FA37882008B6767 /* TrackingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8712134A1FA37881008B6767 /* TrackingManager.swift */; };
 		8714A9EC1E69E605006BBAE9 /* FLAnimatedImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8714A9EB1E69E605006BBAE9 /* FLAnimatedImage.framework */; };
 		8715F22D1F86758E006F3935 /* AnalyticsMixpanelProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8715F22C1F86758E006F3935 /* AnalyticsMixpanelProvider.swift */; };
 		8715F22F1F8677A2006F3935 /* Mixpanel.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8715F22E1F8677A2006F3935 /* Mixpanel.framework */; };
@@ -258,7 +259,6 @@
 		8719FD671C88802C005FBEC0 /* Delay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8719FD661C88802C005FBEC0 /* Delay.swift */; };
 		8719FD691C888044005FBEC0 /* NSData+MD5.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8719FD681C888044005FBEC0 /* NSData+MD5.swift */; };
 		871BBFFD1D34F56300DF0793 /* Analytics+iOS.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BBFA41D34F56300DF0793 /* Analytics+iOS.m */; };
-		871BBFFE1D34F56300DF0793 /* Analytics+Metrics.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BBFA61D34F56300DF0793 /* Analytics+Metrics.m */; };
 		871BBFFF1D34F56300DF0793 /* AnalyticsBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BBFA91D34F56300DF0793 /* AnalyticsBase.m */; };
 		871BC0001D34F56300DF0793 /* AnalyticsConversationListObserver.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BBFAB1D34F56300DF0793 /* AnalyticsConversationListObserver.m */; };
 		871BC0011D34F56300DF0793 /* AnalyticsConversationVerifiedObserver.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BBFAD1D34F56300DF0793 /* AnalyticsConversationVerifiedObserver.m */; };
@@ -683,7 +683,6 @@
 		87F18BD21E03F13900C69D9B /* ZMLocationMessageData+Coordinates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F18BD11E03F13900C69D9B /* ZMLocationMessageData+Coordinates.swift */; };
 		87F18BD51E03FF9700C69D9B /* ConversationDetailsTransitioningDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 87F18BD41E03FF9700C69D9B /* ConversationDetailsTransitioningDelegate.m */; };
 		87F18BD71E04035500C69D9B /* CollectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F18BD61E04035500C69D9B /* CollectionHeaderView.swift */; };
-		87F1AAD21F9F493A00227569 /* TrackingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F1AAD11F9F493A00227569 /* TrackingManager.swift */; };
 		87F280AA1D080E8400F813CA /* AVSMediaManager+CustomSounds.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F280A91D080E8400F813CA /* AVSMediaManager+CustomSounds.swift */; };
 		87F61D1A1CD36F0900670794 /* GradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F61D191CD36F0900670794 /* GradientView.swift */; };
 		87F6B6361D2E9CF500F057A5 /* EmojiOnlyStringTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F6B6351D2E9CF500F057A5 /* EmojiOnlyStringTests.swift */; };
@@ -1341,6 +1340,7 @@
 		8711A59F1E0C320100043ACF /* FloatingPoint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FloatingPoint.swift; sourceTree = "<group>"; };
 		8711A5A11E0D395A00043ACF /* CollectionCellHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionCellHeader.swift; sourceTree = "<group>"; };
 		8711A5A31E0D6C8800043ACF /* TwoLineTitleView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TwoLineTitleView.swift; sourceTree = "<group>"; };
+		8712134A1FA37881008B6767 /* TrackingManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackingManager.swift; sourceTree = "<group>"; };
 		8714A9EB1E69E605006BBAE9 /* FLAnimatedImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FLAnimatedImage.framework; path = Carthage/Build/iOS/FLAnimatedImage.framework; sourceTree = "<group>"; };
 		8715F22C1F86758E006F3935 /* AnalyticsMixpanelProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnalyticsMixpanelProvider.swift; sourceTree = "<group>"; };
 		8715F22E1F8677A2006F3935 /* Mixpanel.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Mixpanel.framework; path = Carthage/Build/iOS/Mixpanel.framework; sourceTree = "<group>"; };
@@ -1352,8 +1352,6 @@
 		871BBFA21D34F56300DF0793 /* Analytics+Events.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Analytics+Events.h"; sourceTree = "<group>"; };
 		871BBFA31D34F56300DF0793 /* Analytics+iOS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Analytics+iOS.h"; sourceTree = "<group>"; };
 		871BBFA41D34F56300DF0793 /* Analytics+iOS.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Analytics+iOS.m"; sourceTree = "<group>"; };
-		871BBFA51D34F56300DF0793 /* Analytics+Metrics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Analytics+Metrics.h"; sourceTree = "<group>"; };
-		871BBFA61D34F56300DF0793 /* Analytics+Metrics.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Analytics+Metrics.m"; sourceTree = "<group>"; };
 		871BBFA71D34F56300DF0793 /* Analytics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Analytics.h; sourceTree = "<group>"; };
 		871BBFA81D34F56300DF0793 /* AnalyticsBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnalyticsBase.h; sourceTree = "<group>"; };
 		871BBFA91D34F56300DF0793 /* AnalyticsBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AnalyticsBase.m; sourceTree = "<group>"; };
@@ -2008,7 +2006,6 @@
 		87F18BD31E03FF9700C69D9B /* ConversationDetailsTransitioningDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConversationDetailsTransitioningDelegate.h; sourceTree = "<group>"; };
 		87F18BD41E03FF9700C69D9B /* ConversationDetailsTransitioningDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConversationDetailsTransitioningDelegate.m; sourceTree = "<group>"; };
 		87F18BD61E04035500C69D9B /* CollectionHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionHeaderView.swift; sourceTree = "<group>"; };
-		87F1AAD11F9F493A00227569 /* TrackingManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackingManager.swift; sourceTree = "<group>"; };
 		87F280A91D080E8400F813CA /* AVSMediaManager+CustomSounds.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AVSMediaManager+CustomSounds.swift"; sourceTree = "<group>"; };
 		87F61D191CD36F0900670794 /* GradientView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GradientView.swift; sourceTree = "<group>"; };
 		87F6B6351D2E9CF500F057A5 /* EmojiOnlyStringTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmojiOnlyStringTests.swift; sourceTree = "<group>"; };
@@ -3061,12 +3058,11 @@
 		871BBFA11D34F56300DF0793 /* Analytics */ = {
 			isa = PBXGroup;
 			children = (
+				8712134A1FA37881008B6767 /* TrackingManager.swift */,
 				871BBFA21D34F56300DF0793 /* Analytics+Events.h */,
 				871BBFA31D34F56300DF0793 /* Analytics+iOS.h */,
 				871BBFA41D34F56300DF0793 /* Analytics+iOS.m */,
 				87DCBE061F87C41300E0DEC7 /* AnalyticsProvider.h */,
-				871BBFA51D34F56300DF0793 /* Analytics+Metrics.h */,
-				871BBFA61D34F56300DF0793 /* Analytics+Metrics.m */,
 				871BBFA71D34F56300DF0793 /* Analytics.h */,
 				871BBFA81D34F56300DF0793 /* AnalyticsBase.h */,
 				871BBFA91D34F56300DF0793 /* AnalyticsBase.m */,
@@ -3556,7 +3552,6 @@
 				871BC3381D34F94200DF0793 /* SettingsProperty.swift */,
 				871BC3391D34F94200DF0793 /* SettingsPropertyFactory.swift */,
 				8778AAEC1F6BC6AD0022F53F /* AppLock.swift */,
-				87F1AAD11F9F493A00227569 /* TrackingManager.swift */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -5460,7 +5455,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "$SRCROOT/Scripts/copyExtraAudioNotifications";
+			shellScript = $SRCROOT/Scripts/copyExtraAudioNotifications;
 		};
 		193B0B9A94C0482E9B6C33B0 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -5868,7 +5863,6 @@
 				16063CEB1BCFCEB70097F62C /* InviteBannerViewController.m in Sources */,
 				1600E2051AD5799400C0DBA8 /* PhoneNumberStepViewController.m in Sources */,
 				DBACFF7A1B3C96E1004062E0 /* MentionsBubbleView.m in Sources */,
-				871BBFFE1D34F56300DF0793 /* Analytics+Metrics.m in Sources */,
 				16E6C1001A837C0300AA2F32 /* NSIndexSet+IndexPaths.m in Sources */,
 				87A15FCE1E07EAB400AED79B /* AssetCollectionWrapper.swift in Sources */,
 				871BC2821D34F8F800DF0793 /* UIAlertController+Wire.m in Sources */,
@@ -5910,6 +5904,7 @@
 				871BC0141D34F56300DF0793 /* Analytics+SessionEvents.m in Sources */,
 				871BC3621D34F94200DF0793 /* Settings.m in Sources */,
 				7C17ECA81F7508980056600C /* CellSizesProvider.swift in Sources */,
+				8712134B1FA37882008B6767 /* TrackingManager.swift in Sources */,
 				871BC3541D34F94200DF0793 /* AudioHeaderView.m in Sources */,
 				163BB6141BEAA52A00606381 /* InviteContactsViewController.m in Sources */,
 				167B3B491BB36F6C003F5104 /* ConversationMessageWindowTableViewAdapter.m in Sources */,
@@ -6089,7 +6084,6 @@
 				871BC22F1D34F8F800DF0793 /* WebViewController.m in Sources */,
 				871BC2771D34F8F800DF0793 /* VoiceGainLayer+MagicInit.m in Sources */,
 				16E2A09C1F6BCDAF005F4DB1 /* VoiceChannelParticipantsController.swift in Sources */,
-				87F1AAD21F9F493A00227569 /* TrackingManager.swift in Sources */,
 				871BC22E1D34F8F800DF0793 /* SplitViewController.m in Sources */,
 				871BC27C1D34F8F800DF0793 /* CALayer+EasyAnimation.m in Sources */,
 				BFAF4CB31CECA68200780537 /* AudioRecorder.swift in Sources */,

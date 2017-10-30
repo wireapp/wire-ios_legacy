@@ -19,7 +19,6 @@
 
 #import "AnalyticsBase.h"
 #import "Analytics+SessionEvents.h"
-#import "Analytics+Metrics.h"
 #import "AnalyticsConversationListObserver.h"
 #import "AnalyticsConversationVerifiedObserver.h"
 #import "AnalyticsDecryptionFailedObserver.h"
@@ -68,8 +67,6 @@ static NSString *const AnalyticsUserDefaultsDisabledKey = @"AnalyticsUserDefault
     if (self) {
         
         self.provider = provider;
-        [Analytics updateAVSMetricsSettingsWithActiveProvider:self.provider];
-
         NSNumber *isDisabledNumber = [[NSUserDefaults standardUserDefaults] valueForKey:AnalyticsUserDefaultsDisabledKey];
         _disabled = (isDisabledNumber == nil) ? NO : isDisabledNumber.boolValue;
         
@@ -109,8 +106,6 @@ static NSString *const AnalyticsUserDefaultsDisabledKey = @"AnalyticsUserDefault
     if (! isOptedOut) {
         [self tagEventObject:optEvent source:AnalyticsEventSourceUI];
     }
-
-    [Analytics updateAVSMetricsSettingsWithActiveProvider:self.activeProvider];
 }
 
 - (id<AnalyticsProvider>)activeProvider

@@ -20,7 +20,6 @@ import Foundation
 import Cartography
 import LocalAuthentication
 import CocoaLumberjackSwift
-import HockeySDK.BITHockeyManager
 
 
 @objc final class AppLockViewController: UIViewController {

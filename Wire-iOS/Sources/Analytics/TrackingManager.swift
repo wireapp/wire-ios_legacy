@@ -25,7 +25,7 @@ import WireExtensionComponents
 @objc public class TrackingManager: NSObject {
     private let UserDefaultDidMigrateLocalyticsSettingInitially = "DidMigrateLocalyticsSettingInitially"
     
-    private override init() { }
+    private override init() {}
     
     public static var shared = TrackingManager()
     
@@ -43,6 +43,7 @@ extension TrackingManager: TrackingInterface {
         set {
             BITHockeyManager.shared().isCrashManagerDisabled = newValue
             Analytics.shared()?.isOptedOut = newValue
+            AVSProvider.shared.flowManager?.setEnableMetrics(!newValue)
             ExtensionSettings.shared.disableCrashAndAnalyticsSharing = newValue
         }
         
