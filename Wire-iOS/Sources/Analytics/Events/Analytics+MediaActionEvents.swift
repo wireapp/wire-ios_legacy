@@ -165,8 +165,8 @@ extension AudioMessageContext {
     }
 }
 
-let conversationMediaActionEventName                         = "contributed"
-let conversationMediaCompleteActionEventName                 = "media.completed_media_action"
+let conversationMediaActionEventName                         = "media.opened_action"
+let conversationMediaCompleteActionEventName                 = "contributed"
 let conversationMediaSentVideoMessageEventName               = "media.sent_video_message"
 let conversationMediaPlayedVideoMessageEventName             = "media.played_video_message"
 let conversationMediaStartedRecordingAudioEventName          = "media.started_recording_audio_message"

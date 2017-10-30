@@ -58,7 +58,7 @@ final class AnalyticsMixpanelProvider: NSObject, AnalyticsProvider {
     }
     
     private static let enabledEvents = Set<String>([
-        "contributed",
+        conversationMediaCompleteActionEventName,
         "registration.opened_phone_signup",
         "registration.opened_email_signup",
         "registration.entered_phone",
@@ -91,7 +91,7 @@ final class AnalyticsMixpanelProvider: NSObject, AnalyticsProvider {
         }
         super.init()
         mixpanelInstance?.minimumSessionDuration = 2_000
-        mixpanelInstance?.loggingEnabled = true
+        mixpanelInstance?.loggingEnabled = false
         self.setSuperProperty("app", value: "ios")
         self.setSuperProperty(MixpanelSuperProperties.city.rawValue, value: nil)
         self.setSuperProperty(MixpanelSuperProperties.region.rawValue, value: nil)
@@ -117,7 +117,7 @@ final class AnalyticsMixpanelProvider: NSObject, AnalyticsProvider {
             return
         }
         
-        DDLogInfo("Event: \(event), attributes: \(attributes)")
+        DDLogDebug("Event: \(event), attributes: \(attributes)")
         
         mixpanelInstance.track(event: event, properties: attributes.propertiesRemovingLocation())
     }

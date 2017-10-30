@@ -96,6 +96,10 @@ static NSString *const AnalyticsUserDefaultsDisabledKey = @"AnalyticsUserDefault
 
 - (void)setIsOptedOut:(BOOL)isOptedOut
 {
+    if (isOptedOut && self.activeProvider.isOptedOut) {
+        return;
+    }
+    
     AnalyticsOptEvent *optEvent = [AnalyticsOptEvent eventForAnalyticsOptedOut:isOptedOut];
     if (isOptedOut) {
         [self tagEventObject:optEvent source:AnalyticsEventSourceUI];
