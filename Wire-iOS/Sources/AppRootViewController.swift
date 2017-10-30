@@ -29,7 +29,9 @@ class AppRootViewController : UIViewController {
     
     public fileprivate(set) var visibleViewController : UIViewController?
     fileprivate let appStateController : AppStateController
-    fileprivate let classyCache : ClassyCache
+    fileprivate lazy var classyCache : ClassyCache = {
+        return ClassyCache()
+    }()
     fileprivate let fileBackupExcluder : FileBackupExcluder
     fileprivate let avsLogObserver : AVSLogObserver
     fileprivate var authenticatedBlocks : [() -> Void] = []
@@ -50,7 +52,6 @@ class AppRootViewController : UIViewController {
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         appStateController = AppStateController()
-        classyCache = ClassyCache()
         fileBackupExcluder = FileBackupExcluder()
         avsLogObserver = AVSLogObserver()
         MagicConfig.shared()
@@ -94,10 +95,6 @@ class AppRootViewController : UIViewController {
         enqueueTransition(to: appStateController.appState)
     }
     
-    deinit {
-        NotificationCenter.default.removeObserver(self)
-    }
-    
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -124,7 +121,7 @@ class AppRootViewController : UIViewController {
             blacklistDownloadInterval: Settings.shared().blacklistDownloadInterval)
         { sessionManager in
             self.sessionManager = sessionManager
-            self.sessionManager?.localMessageNotificationResponder = self
+            self.sessionManager?.localNotificationResponder = self
             self.sessionManager?.requestToOpenViewDelegate = self
             sessionManager.updateCallNotificationStyleFromSettings()
             sessionManager.useConstantBitRateAudio = false //  Settings.shared().callingConstantBitRate TODO re-enable
@@ -405,9 +402,9 @@ extension AppRootViewController : ZMRequestsToOpenViewsDelegate {
 
 // MARK: - Application Icon Badge Number
 
-extension AppRootViewController : LocalMessageNotificationResponder {
+extension AppRootViewController : LocalNotificationResponder {
 
-    func processLocalMessage(_ notification: UILocalNotification, forSession session: ZMUserSession) {
+    func processLocal(_ notification: ZMLocalNotification, forSession session: ZMUserSession) {
         (self.overlayWindow.rootViewController as! NotificationWindowRootViewController).show(notification)
     }
     

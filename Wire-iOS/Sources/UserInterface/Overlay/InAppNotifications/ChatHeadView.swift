@@ -17,26 +17,43 @@
 //
 
 import UIKit
+import WireSyncEngine
 import Cartography
 import PureLayout
 
 class ChatHeadView: UIView {
-
-    private var userImageView: ContrastUserImageView!
+    
+    private let title: String?
+    private let body: String
+    private let userID: UUID
+    private let sender: ZMUser?
+    private let userInfo: [AnyHashable : Any]?
+    private let isEphemeral: Bool
+    
+    private var userImageView: ContrastUserImageView?
     private var titleLabel: UILabel?
     private var subtitleLabel: UILabel!
     private var labelContainer: UIView!
-    
-    private let title: NSAttributedString?
-    private let content: NSAttributedString
-    private let sender: ZMUser
-    private let conversation: ZMConversation
-    private let account: Account
-    
+
     private let imageDiameter: CGFloat = 28
     private let padding: CGFloat = 10
     
-    public var onSelect: ((ZMConversation, Account) -> Void)?
+    private let titleRegularAttributes: [String: AnyObject] = [
+        NSFontAttributeName: FontSpec(.medium, .none).font!.withSize(14),
+        NSForegroundColorAttributeName: ColorScheme.default().color(withName: ColorSchemeColorChatHeadTitleText)
+    ]
+    private let titleMediumAttributes: [String: AnyObject] = [
+        NSFontAttributeName: FontSpec(.medium, .medium).font!.withSize(14),
+        NSForegroundColorAttributeName: ColorScheme.default().color(withName: ColorSchemeColorChatHeadTitleText)
+    ]
+    
+    private lazy var bodyFont: UIFont = {
+        let font = FontSpec(.medium, .regular).font!
+        if self.isEphemeral { return UIFont(name: "RedactedScript-Regular", size: font.pointSize)! }
+        else { return font }
+    }()
+    
+    public var onSelect: (() -> Void)?
     
     override var intrinsicContentSize: CGSize {
         let height = imageDiameter + 2 * padding
@@ -47,12 +64,13 @@ class ChatHeadView: UIView {
         return ColorScheme.default().color(withName: name)
     }
     
-    init(title: NSAttributedString?, content: NSAttributedString, sender: ZMUser, conversation: ZMConversation, account: Account) {
+    init(title: String?, body: String, userID: UUID, sender: ZMUser?, userInfo: [AnyHashable : Any]? = nil, isEphemeral: Bool = false) {
         self.title = title
-        self.content = content
+        self.body = body
+        self.userID = userID
         self.sender = sender
-        self.conversation = conversation
-        self.account = account
+        self.userInfo = userInfo
+        self.isEphemeral = isEphemeral
         super.init(frame: .zero)
         setup()
     }
@@ -84,37 +102,45 @@ class ChatHeadView: UIView {
     }
     
     private func createLabels() {
-        
         labelContainer = UIView()
         addSubview(labelContainer)
         
         if let title = title {
-            titleLabel = UILabel()
-            titleLabel!.backgroundColor = .clear
-            titleLabel!.isUserInteractionEnabled = false
-            titleLabel!.attributedText = title
-            titleLabel!.textColor = color(withName: ColorSchemeColorChatHeadTitleText)
-            titleLabel!.lineBreakMode = .byTruncatingTail
-            labelContainer.addSubview(titleLabel!)
+            let label = UILabel()
+            label.backgroundColor = .clear
+            label.isUserInteractionEnabled = false
+            label.attributedText = attributedTitleText(title)
+            label.textColor = color(withName: ColorSchemeColorChatHeadTitleText)
+            label.lineBreakMode = .byTruncatingTail
+            titleLabel = label
+            labelContainer.addSubview(label)
         }
         
         subtitleLabel = UILabel()
         subtitleLabel.backgroundColor = .clear
         subtitleLabel.isUserInteractionEnabled = false
-        subtitleLabel.attributedText = content
-        subtitleLabel.textColor = color(withName: ColorSchemeColorChatHeadSubtitleText)
+        
+        let bodyAttributes = (!isEphemeral && titleLabel == nil) ? titleMediumAttributes : [
+            NSFontAttributeName: bodyFont,
+            NSForegroundColorAttributeName: color(withName: ColorSchemeColorChatHeadSubtitleText)
+        ]
+        
+        subtitleLabel.attributedText = NSAttributedString(string: body, attributes: bodyAttributes)
         subtitleLabel.lineBreakMode = .byTruncatingTail
         labelContainer.addSubview(subtitleLabel)
     }
     
     private func createImageView() {
-        userImageView = ContrastUserImageView(magicPrefix: "notifications")
-        userImageView.userSession = ZMUserSession.shared()
-        userImageView.isUserInteractionEnabled = false
-        userImageView.translatesAutoresizingMaskIntoConstraints = false
-        userImageView.user = self.sender
-        userImageView.accessibilityIdentifier = "ChatheadAvatarImage"
-        addSubview(userImageView)
+        if let sender = sender {
+            let imageView = ContrastUserImageView(magicPrefix: "notifications")
+            imageView.userSession = SessionManager.shared?.backgroundUserSessions[userID]
+            imageView.isUserInteractionEnabled = false
+            imageView.translatesAutoresizingMaskIntoConstraints = false
+            imageView.user = sender
+            imageView.accessibilityIdentifier = "ChatheadAvatarImage"
+            addSubview(imageView)
+            userImageView = imageView
+        }
     }
     
     private func createConstraints() {
@@ -131,34 +157,60 @@ class ChatHeadView: UIView {
                 subtitleLabel.trailing == container.trailing
             }
         } else {
-            // subtitle centered
+            // subtitle fills container
             constrain(labelContainer, subtitleLabel) { container, subtitleLabel in
-                subtitleLabel.leading == container.leading
-                subtitleLabel.trailing == container.trailing
-                subtitleLabel.centerY == container.centerY
+                subtitleLabel.edges == container.edges
             }
         }
         
-        // image view left, labels right
-        constrain(self, userImageView, labelContainer) { selfView, imageView, labelContainer in
-            imageView.height == imageDiameter
-            imageView.width == imageView.height
-            imageView.leading == selfView.leading + padding
-            imageView.centerY == selfView.centerY
-            
-            labelContainer.leading == imageView.trailing + padding
-            labelContainer.trailing == selfView.trailing - padding
-            labelContainer.height == selfView.height
-            labelContainer.centerY == selfView.centerY
+        if let userImageView = userImageView {
+            // image view left, labels right
+            constrain(self, userImageView, labelContainer) { selfView, imageView, labelContainer in
+                imageView.height == imageDiameter
+                imageView.width == imageView.height
+                imageView.leading == selfView.leading + padding
+                imageView.centerY == selfView.centerY
+                
+                labelContainer.leading == imageView.trailing + padding
+                labelContainer.trailing == selfView.trailing - padding
+                labelContainer.height == selfView.height
+                labelContainer.centerY == selfView.centerY
+            }
+        }
+        else {
+            // labels fills view
+            constrain(self, labelContainer) { selfView, labelContainer in
+                labelContainer.edges == inset(selfView.edges, 0, padding, 0, padding)
+            }
         }
     }
     
+    private func attributedTitleText(_ title: String) -> NSAttributedString {
+        let attrText = NSMutableAttributedString(string: title, attributes: titleRegularAttributes)
+        var ranges = [NSRange]()
+        
+        // title contains at conversation name and/or team name, and these
+        // components should be rendered in medium font
+        if let conversationName = userInfo?[ConversationNameStringKey] as? String {
+            ranges.append((title as NSString).range(of: conversationName))
+        }
+        
+        if let teamName = userInfo?[TeamNameStringKey] as? String {
+            ranges.append((title as NSString).range(of: teamName))
+        }
+        
+        ranges.forEach {
+            if $0.location != NSNotFound { attrText.setAttributes(titleMediumAttributes, range: $0) }
+        }
+        
+        return attrText
+    }
     
     // MARK: - Actions
     
     @objc private func didTapInAppNotification(_ gestureRecognizer: UITapGestureRecognizer) {
-        if let onSelect = onSelect, gestureRecognizer.state == .recognized {
-            onSelect(conversation, account)
+        if gestureRecognizer.state == .recognized {
+            onSelect?()
         }
     }
 }

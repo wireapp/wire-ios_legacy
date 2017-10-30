@@ -18,6 +18,7 @@
 
 
 @import UIKit;
+@import WireSyncEngine;
 
 @class ActiveVoiceChannelViewController;
 @class BarController;
@@ -33,6 +34,6 @@
 @property (nonatomic, readonly, nullable) ChatHeadsViewController *chatHeadsViewController;
 
 - (void)transitionToLoggedInSession;
-- (void)showLocalNotification:(nonnull UILocalNotification *)notification;
+- (void)show:(nonnull ZMLocalNotification *)notification;
 
 @end

@@ -31,6 +31,7 @@
 
 + (void)setMockSelfUser:(id<ZMBareUser>)newMockUser;
 
+@property (nonatomic, readwrite) NSString *filename;
 @property (nonatomic, readwrite) NSString *name;
 @property (nonatomic, readwrite) NSString *emailAddress;
 @property (nonatomic, readwrite) NSString *phoneNumber;
