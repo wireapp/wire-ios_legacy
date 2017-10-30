@@ -23,7 +23,7 @@
 @import WireSyncEngine;
 
 #import "Analytics.h"
-#import "Analytics+iOS.h"
+#import "Analytics.h"
 #import "NSString+Fingerprint.h"
 #import "ZMSnapshotTestCase.h"
 #import "MockUser.h"

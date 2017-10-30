@@ -72,6 +72,10 @@ final class AnalyticsMixpanelProvider: NSObject, AnalyticsProvider {
         MixpanelSuperProperties.region.rawValue
         ])
     
+    deinit {
+        DDLogInfo("AnalyticsMixpanelProvider \(self) deallocated")
+    }
+    
     override init() {
         if !MixpanelAPIKey.isEmpty {
             mixpanelInstance = Mixpanel.initialize(token: MixpanelAPIKey)
@@ -84,13 +88,11 @@ final class AnalyticsMixpanelProvider: NSObject, AnalyticsProvider {
         self.setSuperProperty(MixpanelSuperProperties.region.rawValue, value: nil)
     }
     
-    public var isOptedOut : Bool {
-        get {
-            return mixpanelInstance?.currentSuperProperties()[MixpanelSuperProperties.ignore.rawValue] as? Bool ?? false
-        }
-        
-        set {
-            mixpanelInstance?.registerSuperProperties([MixpanelSuperProperties.ignore.rawValue: true])
+    public var isOptedOut : Bool = false {
+        didSet {
+            if isOptedOut {
+                self.mixpanelInstance?.flush(completion: {})
+            }
         }
     }
     

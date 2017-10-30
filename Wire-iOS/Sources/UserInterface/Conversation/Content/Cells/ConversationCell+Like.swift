@@ -66,6 +66,6 @@ public extension ConversationCell {
         if sender is UITapGestureRecognizer {
             interactionMethod = .doubleTap
         }
-        Analytics.shared()?.tagReactedOnMessage(message, reactionType:reaction, method: interactionMethod)
+        Analytics.shared().tagReactedOnMessage(message, reactionType:reaction, method: interactionMethod)
     }
 }

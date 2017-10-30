@@ -18,7 +18,7 @@
 
 
 #import "AnalyticsTracker.h"
-#import "Analytics+iOS.h"
+#import "Analytics.h"
 
 NSString *const AnalyticsContextKey = @"context";
 NSString *const AnalyticsMethodKey = @"method";

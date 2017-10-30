@@ -37,7 +37,7 @@
 #import "ZetaIconTypes.h"
 #import "ProfileNavigationControllerDelegate.h"
 
-#import "Analytics+iOS.h"
+#import "Analytics.h"
 #import "AnalyticsTracker.h"
 #import "AnalyticsTracker+Invitations.h"
 

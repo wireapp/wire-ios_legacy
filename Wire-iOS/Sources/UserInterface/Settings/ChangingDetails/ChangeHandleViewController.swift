@@ -331,7 +331,7 @@ extension ChangeHandleViewController: UserProfileUpdateObserver {
     func didSetHandle() {
         showLoadingView = false
         state.availability = .taken
-        Analytics.shared()?.tag(UserNameEvent.Settings.setUsername(withLength: state.newHandle?.characters.count ?? 0))
+        Analytics.shared().tag(UserNameEvent.Settings.setUsername(withLength: state.newHandle?.characters.count ?? 0))
         guard popOnSuccess else { return }
         _ = navigationController?.popViewController(animated: true)
     }

@@ -22,7 +22,7 @@
 
 #import "ConversationInputBarSendController.h"
 #import "ZMUserSession+iOS.h"
-#import "Analytics+iOS.h"
+#import "Analytics.h"
 #import "AnalyticsTracker+Media.h"
 #import "Message+Formatting.h"
 #import "LinkAttachment.h"

@@ -25,7 +25,7 @@
 #import "UIFont+MagicAccess.h"
 #import "InviteContactsViewController.h"
 #import "UIViewController+WR_Invite.h"
-#import "Analytics+iOS.h"
+#import "Analytics.h"
 #import "AnalyticsTracker+Invitations.h"
 
 @interface InviteBannerViewController () <ContactsViewControllerDelegate>

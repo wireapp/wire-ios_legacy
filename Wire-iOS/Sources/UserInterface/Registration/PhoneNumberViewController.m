@@ -18,7 +18,7 @@
 
 
 #import "PhoneNumberViewController.h"
-#import "Analytics+iOS.h"
+#import "Analytics.h"
 
 @import PureLayout;
 

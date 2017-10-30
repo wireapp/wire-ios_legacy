@@ -46,7 +46,7 @@
 
 @import PureLayout;
 #import "UIView+Zeta.h"
-#import "Analytics+iOS.h"
+#import "Analytics.h"
 #import "UIViewController+Orientation.h"
 #import "AppDelegate.h"
 #import "MediaPlaybackManager.h"

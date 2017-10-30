@@ -34,7 +34,7 @@
 
 #import "ImagePickerConfirmationController.h"
 #import "CameraViewController.h"
-#import "Analytics+iOS.h"
+#import "Analytics.h"
 #import "Constants.h"
 #import "UserImageView.h"
 #import "AppDelegate.h"

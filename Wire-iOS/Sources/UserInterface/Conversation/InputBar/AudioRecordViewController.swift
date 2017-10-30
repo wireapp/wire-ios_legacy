@@ -152,7 +152,7 @@ private let margin = (CGFloat(WAZUIMagic.float(forIdentifier: "content.left_marg
             switch buttonType {
             case .send: self.sendAudio(.afterPreview)
             case .play:
-                Analytics.shared()?.tagPreviewedAudioMessageRecording(.minimised)
+                Analytics.shared().tagPreviewedAudioMessageRecording(.minimised)
                 self.recorder.playRecording()
             case .stop: self.recorder.stopPlaying()
             }
@@ -364,7 +364,7 @@ private let margin = (CGFloat(WAZUIMagic.float(forIdentifier: "content.left_marg
     }
     
     func cancelButtonPressed(_ sender: IconButton) {
-        Analytics.shared()?.tagCancelledAudioMessageRecording()
+        Analytics.shared().tagCancelledAudioMessageRecording()
         
         recorder.stopPlaying()
         stopAndDeleteRecordingIfNeeded()

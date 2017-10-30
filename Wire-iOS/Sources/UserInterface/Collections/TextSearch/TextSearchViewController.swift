@@ -125,7 +125,7 @@ extension TextSearchViewController: TextSearchQueryDelegate {
         }
 
         if !result.hasMore {
-            Analytics.shared()?.tag(searchEvent: .receivedResult(startedAt: self.searchStartedDate))
+            Analytics.shared().tag(searchEvent: .receivedResult(startedAt: self.searchStartedDate))
         }
     }
 }
@@ -162,7 +162,7 @@ extension TextSearchViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        Analytics.shared()?.tag(searchEvent: .selected)
+        Analytics.shared().tag(searchEvent: .selected)
         self.delegate?.wants(toPerform: .showInConversation, for: self.results[indexPath.row])
     }
 

@@ -33,7 +33,7 @@
 #import "UIViewController+Errors.h"
 
 #import "ZClientViewController.h"
-#import "Analytics+iOS.h"
+#import "Analytics.h"
 #import "AnalyticsTracker+FileTransfer.h"
 #import "Wire-Swift.h"
 

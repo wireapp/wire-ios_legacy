@@ -27,7 +27,7 @@
 #import "RegistrationFormController.h"
 #import "TermsOfUseStepViewController.h"
 #import "UIViewController+Errors.h"
-#import "Analytics+iOS.h"
+#import "Analytics.h"
 #import "NavigationController.h"
 #import "AppDelegate.h"
 

@@ -18,7 +18,7 @@
 
 
 #import "WireSyncEngine+iOS.h"
-#import "AnalyticsBase.h"
+#import "Analytics.h"
 
 
 @interface Analytics (CallEvents)

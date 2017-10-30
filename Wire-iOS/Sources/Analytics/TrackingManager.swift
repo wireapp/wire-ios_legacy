@@ -51,7 +51,7 @@ extension TrackingManager: TrackingInterface {
     public var disableCrashAndAnalyticsSharing: Bool {
         set {
             BITHockeyManager.shared().isCrashManagerDisabled = newValue
-            Analytics.shared()?.isOptedOut = newValue
+            Analytics.shared().isOptedOut = newValue
             AVSFlowManager.getInstance()?.setEnableMetrics(!newValue)
             ExtensionSettings.shared.disableCrashAndAnalyticsSharing = newValue
         }

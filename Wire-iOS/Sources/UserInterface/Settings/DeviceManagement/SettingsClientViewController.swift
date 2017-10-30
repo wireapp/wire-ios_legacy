@@ -139,7 +139,7 @@ class SettingsClientViewController: UIViewController, UITableViewDelegate, UITab
         sender.isOn = self.userClient.verified
         
         let verificationType : DeviceVerificationType = sender.isOn ? .verified : .unverified
-        Analytics.shared()?.tagChange(verificationType, deviceOwner: .self)
+        Analytics.shared().tagChange(verificationType, deviceOwner: .self)
     }
     
     func onDonePressed(_ sender: AnyObject!) {

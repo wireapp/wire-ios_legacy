@@ -34,7 +34,7 @@
 #import "ShareItemProvider.h"
 #import "ActionSheetController.h"
 #import "InviteContactsViewController.h"
-#import "Analytics+iOS.h"
+#import "Analytics.h"
 #import "AnalyticsTracker+Invitations.h"
 #import "WireSyncEngine+iOS.h"
 #import "ZMConversation+Additions.h"

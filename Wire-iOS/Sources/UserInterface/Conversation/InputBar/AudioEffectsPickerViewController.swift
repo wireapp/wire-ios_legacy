@@ -267,7 +267,7 @@ import Cartography
     }
     
     fileprivate func playMedia(_ atPath: String) {
-        Analytics.shared()?.tagPreviewedAudioMessageRecording(.keyboard)
+        Analytics.shared().tagPreviewedAudioMessageRecording(.keyboard)
         self.audioPlayer = try? AVAudioPlayer(contentsOf: URL(fileURLWithPath: atPath))
         self.audioPlayer?.delegate = self
         self.audioPlayer?.play()

@@ -216,7 +216,7 @@ class SettingsUserDefaultsProperty : SettingsProperty {
     }
 
     internal func trackNewValue() {
-        Analytics.shared()?.tagSettingsChanged(for: self.propertyName, to: self.value())
+        Analytics.shared().tagSettingsChanged(for: self.propertyName, to: self.value())
     }
     
     let propertyName : SettingsPropertyName
@@ -248,7 +248,7 @@ open class SettingsBlockProperty : SettingsProperty {
     }
     
     internal func trackNewValue() {
-        Analytics.shared()?.tagSettingsChanged(for: self.propertyName, to: self.value())
+        Analytics.shared().tagSettingsChanged(for: self.propertyName, to: self.value())
     }
     
     fileprivate let getAction : GetAction

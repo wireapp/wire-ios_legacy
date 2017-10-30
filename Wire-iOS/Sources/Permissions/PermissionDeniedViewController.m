@@ -23,7 +23,7 @@
 
 #import "WAZUIMagicIOS.h"
 #import "UIColor+WAZExtensions.h"
-#import "Analytics+iOS.h"
+#import "Analytics.h"
 #import "WebLinkTextView.h"
 #import "Wire-Swift.h"
 #import "Button.h"

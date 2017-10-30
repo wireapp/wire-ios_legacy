@@ -20,7 +20,7 @@
 #import "ConversationMessageWindowTableViewAdapter.h"
 #import "ZMConversationMessageWindow+Formatting.h"
 #import "NSIndexSet+IndexPaths.h"
-#import "Analytics+iOS.h"
+#import "Analytics.h"
 #import "NSIndexSet+IndexPaths.h"
 
 // Cells

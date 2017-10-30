@@ -188,7 +188,7 @@ class AppRootViewController : UIViewController {
             let clientViewController = ZClientViewController()
             clientViewController.isComingFromRegistration = completedRegistration
             
-            Analytics.shared()?.team = ZMUser.selfUser().team
+            Analytics.shared().team = ZMUser.selfUser().team
             
             viewController = clientViewController
         case .headless:

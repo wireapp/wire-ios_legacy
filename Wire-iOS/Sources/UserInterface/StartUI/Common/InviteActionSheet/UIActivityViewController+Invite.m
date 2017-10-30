@@ -20,7 +20,7 @@
 #import "UIActivityViewController+Invite.h"
 #import "ShareItemProvider.h"
 #import "Analytics+ProfileEvents.h"
-#import "Analytics+iOS.h"
+#import "Analytics.h"
 #import "AnalyticsTracker.h"
 
 NSString *NSStringFromGenericInviteContext(GenericInviteContext logicalContext);

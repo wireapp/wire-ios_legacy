@@ -39,7 +39,7 @@
 #import "TextView.h"
 #import "Button.h"
 #import "ContactsDataSource.h"
-#import "Analytics+iOS.h"
+#import "Analytics.h"
 #import "AnalyticsTracker.h"
 #import "AnalyticsTracker+Invitations.h"
 #import "Wire-Swift.h"

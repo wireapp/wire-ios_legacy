@@ -31,7 +31,7 @@
 #import "ImageCache.h"
 #import "UIImage+ImageUtilities.h"
 #import "MediaAsset.h"
-#import "Analytics+iOS.h"
+#import "Analytics.h"
 #import "Wire-Swift.h"
 #import "UIImage+ZetaIconsNeue.h"
 

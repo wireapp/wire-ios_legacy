@@ -134,7 +134,7 @@ extension SettingsCellDescriptorFactory {
 
     func handleElement() -> SettingsCellDescriptorType {
         let presentation: () -> ChangeHandleViewController = {
-            Analytics.shared()?.tag(UserNameEvent.Settings.enteredUsernameScreen)
+            Analytics.shared().tag(UserNameEvent.Settings.enteredUsernameScreen)
             return ChangeHandleViewController()
         }
 
@@ -188,7 +188,7 @@ extension SettingsCellDescriptorFactory {
         let resetPasswordTitle = "self.settings.password_reset_menu.title".localized
         return SettingsButtonCellDescriptor(title: resetPasswordTitle, isDestructive: false) { _ in
             UIApplication.shared.openURL(NSURL.wr_passwordReset().wr_URLByAppendingLocaleParameter() as URL)
-            Analytics.shared()?.tagResetPassword(true, from: ResetFromProfile)
+            Analytics.shared().tagResetPassword(true, from: ResetFromProfile)
         }
     }
 

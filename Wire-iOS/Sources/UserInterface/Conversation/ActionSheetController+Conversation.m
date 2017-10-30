@@ -23,7 +23,7 @@
 #import "ActionSheetController+Conversation.h"
 #import "ZMConversation+Actions.h"
 #import "WireSyncEngine+iOS.h"
-#import "Analytics+iOS.h"
+#import "Analytics.h"
 #import "UIImage+ZetaIconsNeue.h"
 #import "UIColor+WR_ColorScheme.h"
 #import "UIFont+MagicAccess.h"

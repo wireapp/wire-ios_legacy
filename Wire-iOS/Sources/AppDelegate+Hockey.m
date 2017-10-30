@@ -19,7 +19,7 @@
 
 #import "AppDelegate+Hockey.h"
 
-#import "Analytics+iOS.h"
+#import "Analytics.h"
 #import "Application+runDuration.h"
 #import "Settings.h"
 #import "Wire-Swift.h"

@@ -107,7 +107,7 @@ import Foundation
             presentationStyle: PresentationStyle.navigation,
             identifier: type(of: self).settingsDevicesCellIdentifier,
             presentationAction: { () -> (UIViewController?) in
-                Analytics.shared()?.tagSelfDeviceList()
+                Analytics.shared().tagSelfDeviceList()
                 return ClientListViewController(clientsList: .none, credentials: .none, detailedView: true)
             },
             previewGenerator: { _ -> SettingsCellPreview in
@@ -241,7 +241,7 @@ import Foundation
     func helpSection() -> SettingsCellDescriptorType {
         
         let supportButton = SettingsExternalScreenCellDescriptor(title: "self.help_center.support_website".localized, isDestructive: false, presentationStyle: .modal, presentationAction: { _ in
-            Analytics.shared()?.tagHelp()
+            Analytics.shared().tagHelp()
             return BrowserViewController(url: NSURL.wr_support().wr_URLByAppendingLocaleParameter() as URL!)
         }, previewGenerator: .none)
         

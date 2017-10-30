@@ -102,11 +102,11 @@ import Foundation
         if let intensivityLevel = soundProperty.rawValue() as? AVSIntensityLevel {
             switch(intensivityLevel) {
             case .full:
-                Analytics.shared()?.tagSoundIntensityPreference(SoundIntensityTypeAlways)
+                Analytics.shared().tagSoundIntensityPreference(SoundIntensityTypeAlways)
             case .some:
-                Analytics.shared()?.tagSoundIntensityPreference(SoundIntensityTypeFirstOnly)
+                Analytics.shared().tagSoundIntensityPreference(SoundIntensityTypeFirstOnly)
             case .none:
-                Analytics.shared()?.tagSoundIntensityPreference(SoundIntensityTypeNever)
+                Analytics.shared().tagSoundIntensityPreference(SoundIntensityTypeNever)
             }
         }
     }

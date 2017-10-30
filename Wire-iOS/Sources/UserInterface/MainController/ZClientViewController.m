@@ -44,7 +44,7 @@
 #import "AppDelegate.h"
 
 #import "Constants.h"
-#import "Analytics+iOS.h"
+#import "Analytics.h"
 #import "AnalyticsTracker.h"
 #import "Settings.h"
 #import "StopWatch.h"

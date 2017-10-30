@@ -30,7 +30,7 @@
 
 // helpers
 #import "WAZUIMagicIOS.h"
-#import "Analytics+iOS.h"
+#import "Analytics.h"
 
 
 // model
