@@ -36,8 +36,15 @@ extension SettingsCellDescriptorFactory {
     // MARK: - Sections
 
     func infoSection() -> SettingsSectionDescriptorType {
+        var cellDescriptors = [nameElement(), handleElement()]
+        
+        if !ZMUser.selfUser().hasTeam || !(ZMUser.selfUser().phoneNumber?.isEmpty ?? true) {
+            cellDescriptors.append(phoneElement())
+        }
+        
+        cellDescriptors.append(emailElement())
         return SettingsSectionDescriptor(
-            cellDescriptors: [nameElement(), handleElement(), phoneElement(), emailElement()],
+            cellDescriptors: cellDescriptors,
             header: "self.settings.account_details_group.info.title".localized,
             footer: nil
         )
