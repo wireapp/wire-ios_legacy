@@ -75,8 +75,6 @@ class VoiceChannelViewController: UIViewController {
         doubleTapRecognizer.delegate = self
         view.addGestureRecognizer(doubleTapRecognizer)
         
-        createParticipantsControllerIfNecessary()
-        
         if let callState = conversation.voiceChannel?.state {
             updateView(for: callState)
         }
@@ -90,6 +88,8 @@ class VoiceChannelViewController: UIViewController {
         voiceChannelView.muted = mediaManager.isMicrophoneMuted
         voiceChannelView.speakerActive = mediaManager.isSpeakerEnabled
         voiceChannelView.outgoingVideoActive = conversation.voiceChannel?.isVideoCall ?? false
+        
+        createParticipantsControllerIfNecessary()
     }
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
