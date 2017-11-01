@@ -536,17 +536,24 @@ NSString * const CameraSettingExposureTargetBias = @"exposureTargetBias";
     dispatch_async(self.sessionQueue, ^{
         AVCaptureConnection *connection = [self.stillCameraOutput connectionWithMediaType:AVMediaTypeVideo];
         UIDeviceOrientation deviceOrientation = [[DeviceOrientationObserver sharedInstance] deviceOrientation];
-        AVCaptureVideoOrientation videoOrientation = (AVCaptureVideoOrientation)deviceOrientation;
+        __block AVCaptureVideoOrientation videoOrientation = (AVCaptureVideoOrientation)deviceOrientation;
         
         if (deviceOrientation == UIDeviceOrientationFaceDown || deviceOrientation == UIDeviceOrientationFaceUp) {
             // Face up/down can't be translated into a video orientation so we fall back to the orientation of the user interface
-            videoOrientation = (AVCaptureVideoOrientation)[[UIApplication sharedApplication] statusBarOrientation];
+            dispatch_group_t group = dispatch_group_create();
+            dispatch_group_enter(group);
+            dispatch_async(dispatch_get_main_queue(), ^{
+                videoOrientation = (AVCaptureVideoOrientation)[[UIApplication sharedApplication] statusBarOrientation];
+                dispatch_group_leave(group);
+            });
+            dispatch_group_wait(group, DISPATCH_TIME_FOREVER);
         }
+        
         
         connection.videoOrientation = videoOrientation;
         connection.automaticallyAdjustsVideoMirroring = NO;
         connection.videoMirrored = NO;
-        
+
         [self.stillCameraOutput captureStillImageAsynchronouslyFromConnection:connection completionHandler:^(CMSampleBufferRef imageDataSampleBuffer, NSError *error) {
             if (error == nil) {
 
