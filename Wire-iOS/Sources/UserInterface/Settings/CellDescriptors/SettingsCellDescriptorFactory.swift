@@ -38,7 +38,7 @@ import Foundation
     func rootGroup() -> SettingsControllerGeneratorType & SettingsInternalGroupCellDescriptorType {
         var rootElements: [SettingsCellDescriptorType] = []
         
-        if ZMUser.selfUser().membership?.permissions.contains(.owner) ?? false || ZMUser.selfUser().membership?.permissions.contains(.admin) ?? false {
+        if ZMUser.selfUser().canManageTeam {
             rootElements.append(self.manageTeamCell())
         }
         
