@@ -71,8 +71,6 @@
 
 @interface ZClientViewController () <ZMUserObserver>
 
-@property (nonatomic, readwrite) SoundEventListener *soundEventListener;
-
 @property (nonatomic, readwrite) MediaPlaybackManager *mediaPlaybackManager;
 @property (nonatomic) ColorSchemeController *colorSchemeController;
 @property (nonatomic) BackgroundViewController *backgroundViewController;
@@ -107,7 +105,6 @@
 {
     self = [super init];
     if (self) {
-        self.soundEventListener = [SoundEventListener new];
         self.proximityMonitorManager = [ProximityMonitorManager new];
         self.mediaPlaybackManager = [[MediaPlaybackManager alloc] initWithName:@"conversationMedia"];
         self.messageCountTracker = [[LegacyMessageTracker alloc] initWithManagedObjectContext:ZMUserSession.sharedSession.syncManagedObjectContext];

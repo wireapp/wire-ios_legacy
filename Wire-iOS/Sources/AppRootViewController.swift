@@ -27,6 +27,9 @@ class AppRootViewController : UIViewController {
     public let overlayWindow : UIWindow
     public fileprivate(set) var sessionManager : SessionManager?
     
+    fileprivate var sessionManagerObserverToken: Any?
+    fileprivate var soundEventListeners = [UUID : SoundEventListener]()
+    
     public fileprivate(set) var visibleViewController : UIViewController?
     fileprivate let appStateController : AppStateController
     fileprivate lazy var classyCache : ClassyCache = {
@@ -121,6 +124,7 @@ class AppRootViewController : UIViewController {
             blacklistDownloadInterval: Settings.shared().blacklistDownloadInterval)
         { sessionManager in
             self.sessionManager = sessionManager
+            self .sessionManagerObserverToken = sessionManager.addSessionManagerObserver(self)
             self.sessionManager?.localNotificationResponder = self
             self.sessionManager?.requestToOpenViewDelegate = self
             sessionManager.updateCallNotificationStyleFromSettings()
@@ -410,5 +414,24 @@ extension AppRootViewController : LocalNotificationResponder {
     @objc fileprivate func applicationDidEnterBackground() {
         let unreadConversations = sessionManager?.accountManager.totalUnreadCount ?? 0
         UIApplication.shared.applicationIconBadgeNumber = unreadConversations
+    }
+}
+
+// MARK: - Session Manager Observer
+
+extension AppRootViewController : SessionManagerObserver {
+    
+    func sessionManagerCreated(userSession: ZMUserSession) {
+        guard let sessionManager = sessionManager else { return }
+        for (accountId, session) in sessionManager.backgroundUserSessions {
+            if session == userSession {
+                soundEventListeners[accountId] = SoundEventListener(userSession: userSession)
+                
+            }
+        }
+    }
+    
+    func sessionManagerDestroyedUserSession(for accountId: UUID) {
+        soundEventListeners[accountId] = nil
     }
 }
