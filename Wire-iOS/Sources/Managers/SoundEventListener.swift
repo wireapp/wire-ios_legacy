@@ -22,6 +22,8 @@ fileprivate let zmLog = ZMSLog(tag: "Sounds")
 
 class SoundEventListener : NSObject {
     
+    weak var userSession: ZMUserSession?
+    
     static let SoundEventListenerIgnoreTimeForPushStart = 2.0
     
     let soundEventWatchDog = SoundEventRulesWatchDog(ignoreTime: SoundEventListenerIgnoreTimeForPushStart)
@@ -36,14 +38,10 @@ class SoundEventListener : NSObject {
         NotificationCenter.default.removeObserver(self)
     }
     
-    override init() {
+    init(userSession: ZMUserSession) {
+        self.userSession = userSession
         super.init()
-        
-        guard let userSession = ZMUserSession.shared() else {
-            zmLog.error("UserSession not available when initializing \(type(of: self))")
-            return
-        }
-        
+ 
         networkAvailabilityObserverToken = ZMNetworkAvailabilityChangeNotification.addNetworkAvailabilityObserver(self, userSession: userSession)
         callStateObserverToken = WireCallCenterV3.addCallStateObserver(observer: self, userSession: userSession)
         unreadMessageObserverToken = NewUnreadMessagesChangeInfo.add(observer: self, for: userSession)
@@ -135,7 +133,7 @@ extension SoundEventListener : WireCallCenterCallStateObserver {
     func callCenterDidChange(callState: CallState, conversation: ZMConversation, user: ZMUser?, timeStamp: Date?) {
         
         guard let mediaManager = AVSProvider.shared.mediaManager,
-              let userSession = ZMUserSession.shared(),
+              let userSession = userSession,
               let callCenter = userSession.callCenter
         else {
             return
@@ -202,7 +200,7 @@ extension SoundEventListener {
     
     func applicationWillEnterForeground() {
         soundEventWatchDog.startIgnoreDate = Date()
-        soundEventWatchDog.isMuted = ZMUserSession.shared()?.networkState == .onlineSynchronizing
+        soundEventWatchDog.isMuted = userSession?.networkState == .onlineSynchronizing
         
         if AppDelegate.shared().launchType == ApplicationLaunchPush {
             soundEventWatchDog.ignoreTime = SoundEventListener.SoundEventListenerIgnoreTimeForPushStart
