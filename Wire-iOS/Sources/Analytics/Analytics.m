@@ -107,6 +107,7 @@ static Analytics *sharedAnalytics = nil;
     }
     else {
         self.provider = [[AnalyticsProviderFactory shared] analyticsProvider];
+        self.team = [[ZMUser selfUser] team];
         [self tagEventObject:optEvent source:AnalyticsEventSourceUI];
     }
 }
@@ -115,7 +116,7 @@ static Analytics *sharedAnalytics = nil;
 {
     _team = team;
     if (nil == team) {
-        [self.provider setSuperProperty:@"team.size" value:nil];
+        [self.provider setSuperProperty:@"team.size" value:@"0"];
         [self.provider setSuperProperty:@"team.in_team" value:@"false"];
     }
     else {

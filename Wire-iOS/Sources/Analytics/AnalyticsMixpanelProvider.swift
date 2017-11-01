@@ -42,8 +42,8 @@ extension Dictionary where Key == String, Value == Any {
         var finalAttributes: Properties = self.mapKeysAndValues(keysMapping: identity) { key, value in
             return type(of: self).bridgeOrDescription(for: value)!
         }
-        finalAttributes["$city"] = NSNull.init()
-        finalAttributes["$region"] = NSNull.init()
+        finalAttributes["$city"] = ""
+        finalAttributes["$region"] = ""
         return finalAttributes
     }
 }
@@ -84,8 +84,8 @@ final class AnalyticsMixpanelProvider: NSObject, AnalyticsProvider {
         mixpanelInstance?.minimumSessionDuration = 2_000
         mixpanelInstance?.loggingEnabled = false
         self.setSuperProperty("app", value: "ios")
-        self.setSuperProperty(MixpanelSuperProperties.city.rawValue, value: nil)
-        self.setSuperProperty(MixpanelSuperProperties.region.rawValue, value: nil)
+        self.setSuperProperty(MixpanelSuperProperties.city.rawValue, value: "")
+        self.setSuperProperty(MixpanelSuperProperties.region.rawValue, value: "")
     }
     
     public var isOptedOut : Bool = false {
