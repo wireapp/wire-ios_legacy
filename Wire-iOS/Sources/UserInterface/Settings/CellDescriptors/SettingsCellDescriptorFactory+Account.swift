@@ -105,7 +105,7 @@ extension SettingsCellDescriptorFactory {
                     return SettingsCellPreview.text("self.add_email_password".localized)
                 }
         },
-            hideAccesoryView: true
+            accessoryViewMode: .alwaysHide
         )
     }
 
@@ -134,7 +134,7 @@ extension SettingsCellDescriptorFactory {
                     return SettingsCellPreview.text("self.add_phone_number".localized)
                 }
         },
-            hideAccesoryView: true
+            accessoryViewMode: .alwaysHide
         )
 
     }
@@ -156,7 +156,7 @@ extension SettingsCellDescriptorFactory {
                 presentationStyle: .navigation,
                 presentationAction: presentation,
                 previewGenerator: preview,
-                hideAccesoryView: true
+                accessoryViewMode: .alwaysHide
             )
         }
 

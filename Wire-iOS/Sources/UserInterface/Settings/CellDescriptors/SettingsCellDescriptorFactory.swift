@@ -36,13 +36,14 @@ import Foundation
     }
     
     func rootGroup() -> SettingsControllerGeneratorType & SettingsInternalGroupCellDescriptorType {
-        var rootElements = [self.createTeamCell()]
+        var rootElements: [SettingsCellDescriptorType] = []
         
-        if SessionManager.shared?.accountManager.accounts.count < SessionManager.maxNumberAccounts {
-            rootElements.append(self.addAccountCell())
+        if ZMUser.selfUser().membership?.permissions.contains(.owner) ?? false || ZMUser.selfUser().membership?.permissions.contains(.admin) ?? false {
+            rootElements.append(self.manageTeamCell())
         }
         
         rootElements.append(self.settingsGroup())
+        rootElements.append(self.addAccountOrTeamCell())
         
         let topSection = SettingsSectionDescriptor(cellDescriptors: rootElements)
         
@@ -63,30 +64,60 @@ import Foundation
         
     }
     
-    func createTeamCell() -> SettingsCellDescriptorType {
-        return SettingsExternalScreenCellDescriptor(title: "self.settings.create_team.title".localized,
+    func manageTeamCell() -> SettingsCellDescriptorType {
+        return SettingsExternalScreenCellDescriptor(title: "self.settings.manage_team.title".localized,
                                                     isDestructive: false,
                                                     presentationStyle: PresentationStyle.navigation,
                                                     identifier: nil,
                                                     presentationAction: { () -> (UIViewController?) in
-                                                        NSURL.wr_createTeam().wr_URLByAppendingLocaleParameter().open()
+                                                        NSURL.wr_manageTeam().wr_URLByAppendingLocaleParameter().open()
                                                         return nil
                                                     },
                                                     previewGenerator: nil,
-                                                    icon: .createTeam)
+                                                    icon: .team)
     }
     
-    func addAccountCell() -> SettingsCellDescriptorType {
-        return SettingsExternalScreenCellDescriptor(title: "self.settings.add_account.title".localized,
+    static func addAccountController() -> UIViewController {
+        let actionSheet = UIAlertController(title: nil,
+                                            message: nil,
+                                            preferredStyle: .actionSheet)
+        
+        let createATeamAction = UIAlertAction(title: "self.settings.create_team.title".localized, style: .default, handler: { action in
+            NSURL.wr_createTeam().wr_URLByAppendingLocaleParameter().open()
+        })
+        actionSheet.addAction(createATeamAction)
+        let addAnAccountAction = UIAlertAction(title: "self.settings.add_account.title".localized, style: .default, handler: { action in
+            if SessionManager.shared?.accountManager.accounts.count < SessionManager.maxNumberAccounts {
+                SessionManager.shared?.addAccount()
+            }
+            else {
+                let alert = UIAlertController(title: "self.settings.add_account.error.title".localized,
+                                              message: "self.settings.add_account.error.message".localized,
+                                              cancelButtonTitle: "general.ok".localized)
+                
+                guard let controller = UIApplication.shared.wr_topmostController(onlyFullScreen: false) else { return }
+                controller.present(alert, animated: true, completion: nil)
+            }
+        })
+        actionSheet.addAction(addAnAccountAction)
+        let cancelAction = UIAlertAction(title: "general.cancel".localized, style: .cancel, handler: { action in
+            actionSheet.dismiss(animated: true, completion: nil)
+        })
+        actionSheet.addAction(cancelAction)
+        return actionSheet
+    }
+    
+    func addAccountOrTeamCell() -> SettingsCellDescriptorType {
+        return SettingsExternalScreenCellDescriptor(title: "self.settings.add_team_or_account.title".localized,
                                                     isDestructive: false,
-                                                    presentationStyle: PresentationStyle.navigation,
+                                                    presentationStyle: PresentationStyle.modal,
                                                     identifier: nil,
                                                     presentationAction: { () -> (UIViewController?) in
-                                                        SessionManager.shared?.addAccount()
-                                                        return nil
+                                                    return SettingsCellDescriptorFactory.addAccountController()
         },
                                                     previewGenerator: nil,
-                                                    icon: .convMetaAddPerson)
+                                                    icon: .plus,
+                                                    accessoryViewMode: .alwaysShow)
     }
     
     func settingsGroup() -> SettingsControllerGeneratorType & SettingsInternalGroupCellDescriptorType {
