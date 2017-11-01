@@ -21,6 +21,11 @@ import Foundation
 import Mixpanel
 import CocoaLumberjackSwift
 
+fileprivate enum MixpanelSuperProperties: String {
+    case city = "$city"
+    case region = "$region"
+    case ignore = "$ignore"
+}
 
 extension Dictionary where Key == String, Value == Any {
     fileprivate static func bridgeOrDescription(for object: Any) -> MixpanelType? {
@@ -42,8 +47,8 @@ extension Dictionary where Key == String, Value == Any {
         var finalAttributes: Properties = self.mapKeysAndValues(keysMapping: identity) { key, value in
             return type(of: self).bridgeOrDescription(for: value)!
         }
-        finalAttributes["$city"] = ""
-        finalAttributes["$region"] = ""
+        finalAttributes[MixpanelSuperProperties.city.rawValue] = ""
+        finalAttributes[MixpanelSuperProperties.region.rawValue] = ""
         return finalAttributes
     }
 }
@@ -51,11 +56,6 @@ extension Dictionary where Key == String, Value == Any {
 final class AnalyticsMixpanelProvider: NSObject, AnalyticsProvider {
     private var mixpanelInstance: MixpanelInstance? = .none
     
-    enum MixpanelSuperProperties: String {
-        case city = "$city"
-        case region = "$region"
-        case ignore = "$ignore"
-    }
     
     private static let enabledEvents = Set<String>([
         conversationMediaCompleteActionEventName,
