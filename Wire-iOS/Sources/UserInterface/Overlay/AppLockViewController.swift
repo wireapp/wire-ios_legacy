@@ -75,6 +75,8 @@ import CocoaLumberjackSwift
         constrain(self.view, self.lockView) { view, lockView in
             lockView.edges == view.edges
         }
+        
+        self.dimContents = false
     }
     
     fileprivate func resignKeyboardIfNeeded() {
