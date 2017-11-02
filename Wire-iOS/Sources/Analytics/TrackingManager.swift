@@ -36,7 +36,7 @@ import WireExtensionComponents
         })
     }
     
-    public static var shared = TrackingManager()
+    public static let shared = TrackingManager()
     
     @objc public func migrateFromLocalytics() {
         if !UserDefaults.shared().bool(forKey: UserDefaultDidMigrateLocalyticsSettingInitially) {

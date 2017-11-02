@@ -52,7 +52,7 @@ private enum ExtensionSettingsKey: String {
 }
 
 
-private let defaults = UserDefaults.shared()
+private let defaults = UserDefaults.shared()!
 
 
 public class ExtensionSettings: NSObject {
@@ -65,35 +65,35 @@ public class ExtensionSettings: NSObject {
     }
 
     private static func setupDefaultValues() {
-        defaults?.register(defaults: ExtensionSettingsKey.defaultValueDictionary)
+        defaults.register(defaults: ExtensionSettingsKey.defaultValueDictionary)
     }
 
     public func reset() {
         ExtensionSettingsKey.all.forEach {
-            defaults?.removeObject(forKey: $0.rawValue)
+            defaults.removeObject(forKey: $0.rawValue)
         }
 
         // As we purposely crash afterwards we manually call synchronize.
-        defaults?.synchronize()
+        defaults.synchronize()
     }
 
     public var disableCrashAndAnalyticsSharing: Bool {
         get {
-            return defaults?.bool(forKey: ExtensionSettingsKey.disableCrashAndAnalyticsSharing.rawValue) ?? false
+            return defaults.bool(forKey: ExtensionSettingsKey.disableCrashAndAnalyticsSharing.rawValue)
         }
 
         set {
-            defaults?.set(newValue, forKey: ExtensionSettingsKey.disableCrashAndAnalyticsSharing.rawValue)
+            defaults.set(newValue, forKey: ExtensionSettingsKey.disableCrashAndAnalyticsSharing.rawValue)
         }
     }
     
     public var disableLinkPreviews: Bool {
         get {
-            return defaults?.bool(forKey: ExtensionSettingsKey.disableLinkPreviews.rawValue) ?? false
+            return defaults.bool(forKey: ExtensionSettingsKey.disableLinkPreviews.rawValue)
         }
         
         set {
-            defaults?.set(newValue, forKey: ExtensionSettingsKey.disableLinkPreviews.rawValue)
+            defaults.set(newValue, forKey: ExtensionSettingsKey.disableLinkPreviews.rawValue)
         }
     }
 }
