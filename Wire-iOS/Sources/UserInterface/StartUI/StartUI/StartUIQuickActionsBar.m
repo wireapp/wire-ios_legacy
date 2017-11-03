@@ -83,7 +83,6 @@ static const CGFloat padding = 12;
     self.conversationButton = [Button buttonWithStyle:ButtonStyleFull];
     self.conversationButton.translatesAutoresizingMaskIntoConstraints = NO;
     [self addSubview:self.conversationButton];
-    [self.conversationButton setTitle:@"open" forState:UIControlStateNormal];
 }
 
 - (void)createCameraButton

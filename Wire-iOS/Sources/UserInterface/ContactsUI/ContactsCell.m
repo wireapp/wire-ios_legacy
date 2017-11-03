@@ -100,7 +100,7 @@ NS_ASSUME_NONNULL_END
     [self.userNameContainerView addSubview:self.userSubtitleLabel];
     
     self.actionButton = [Button buttonWithStyleClass:@"dialogue-button-full"];
-    [self.actionButton setTitle:@"INVITE" forState:UIControlStateNormal];
+    [self.actionButton setTitle:NSLocalizedString(@"contacts_ui.action_button.invite", @"") forState:UIControlStateNormal];
     [self.actionButton addTarget:self action:@selector(actionButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     [self.contentView addSubview:self.actionButton];
 }
