@@ -40,6 +40,7 @@ import WireExtensionComponents
     
     @objc public func migrateFromLocalytics() {
         if !UserDefaults.shared().bool(forKey: UserDefaultDidMigrateLocalyticsSettingInitially) {
+            Localytics.integrate(LocalyticsAPIKey)
             let isOptedOut = Localytics.isOptedOut()
             self.disableCrashAndAnalyticsSharing = isOptedOut
             UserDefaults.shared().set(true, forKey: UserDefaultDidMigrateLocalyticsSettingInitially)
