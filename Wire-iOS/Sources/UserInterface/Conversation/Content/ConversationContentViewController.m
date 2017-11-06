@@ -650,7 +650,7 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
         conversationCell = (ConversationCell *)cell;
     }
     
-    if ([Message isKnockMessage:conversationCell.message]) {
+    if (conversationCell.message != nil && [Message isKnockMessage:conversationCell.message]) {
         [self updatePingCellAppearance:(PingCell *)conversationCell];
     }
     
