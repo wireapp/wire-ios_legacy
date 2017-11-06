@@ -18,6 +18,8 @@
 
 import Foundation
 
+
+// MARK: - For Swift with suffix optional parameter support
 extension String {
 
     /// Return a file name with length <= 255 - 4(reserve for extension) - 37(reserve for WireDataModel UUID prefix) characters with a optional suffix
@@ -30,9 +32,10 @@ extension String {
 
 }
 
+// MARK: - For Obj-c without suffix support
 extension NSString {
     /// Return a file name with length <= 255 - 4(reserve for extension) - 37(reserve for WireDataModel UUID prefix) characters
-    /// Notice: this method is for objc, which does not support Swift optional parameter
+    /// Notice: this method is for objc only, which does not support Swift optional parameter
     ///
     /// - Returns: Returns: a filename <= 214 characters
     @objc static func filenameForSelfUser() -> NSString {
