@@ -87,12 +87,6 @@ static id<ZMBareUser> mockSelfUser = nil;
     return newClients;
 }
 
-- (NSString *)filename
-{
-    return @"dummy.txt";
-}
-
-
 - (NSString *)emailAddress
 {
     return @"test@email.com";
