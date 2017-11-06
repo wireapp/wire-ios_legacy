@@ -943,6 +943,7 @@
 		EEF28EED1F16692A007642E2 /* InputBarSecondaryButtonsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEF28EEC1F16692A007642E2 /* InputBarSecondaryButtonsView.swift */; };
 		EEF28EEF1F168039007642E2 /* ConversationInputBarViewController+Markdown.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEF28EEE1F168039007642E2 /* ConversationInputBarViewController+Markdown.swift */; };
 		EF18C7E41F9E4DA00085A832 /* NSString+FileNameForZMUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF18C7E31F9E4DA00085A832 /* NSString+FileNameForZMUser.swift */; };
+		EF1EA4651FB0AD9300B53063 /* SizeClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF1EA4641FB0AD9300B53063 /* SizeClass.swift */; };
 		F1141C971F5EB2DC005340B3 /* WireApplication.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1141C961F5EB2DC005340B3 /* WireApplication.swift */; };
 		F127BD571E262E9F0093B2F1 /* CollectionsViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F127BD561E262E9F0093B2F1 /* CollectionsViewControllerTests.swift */; };
 		F127BD5A1E2667170093B2F1 /* MockCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = F127BD581E265FB40093B2F1 /* MockCollection.swift */; };
@@ -2432,6 +2433,7 @@
 		EEF28EEC1F16692A007642E2 /* InputBarSecondaryButtonsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputBarSecondaryButtonsView.swift; sourceTree = "<group>"; };
 		EEF28EEE1F168039007642E2 /* ConversationInputBarViewController+Markdown.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ConversationInputBarViewController+Markdown.swift"; sourceTree = "<group>"; };
 		EF18C7E31F9E4DA00085A832 /* NSString+FileNameForZMUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSString+FileNameForZMUser.swift"; sourceTree = "<group>"; };
+		EF1EA4641FB0AD9300B53063 /* SizeClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SizeClass.swift; sourceTree = "<group>"; };
 		F1141C961F5EB2DC005340B3 /* WireApplication.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WireApplication.swift; sourceTree = "<group>"; };
 		F127BD561E262E9F0093B2F1 /* CollectionsViewControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionsViewControllerTests.swift; sourceTree = "<group>"; };
 		F127BD581E265FB40093B2F1 /* MockCollection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockCollection.swift; sourceTree = "<group>"; };
@@ -3508,6 +3510,7 @@
 				871BC3481D34F94200DF0793 /* WRFunctions.h */,
 				871BC3491D34F94200DF0793 /* WRFunctions.m */,
 				871BC34A1D34F94200DF0793 /* Youtube */,
+				EF1EA4641FB0AD9300B53063 /* SizeClass.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -5765,6 +5768,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EF1EA4651FB0AD9300B53063 /* SizeClass.swift in Sources */,
 				162ACDD11A696F21009025B3 /* ConnectionRequestCell.m in Sources */,
 				BF0BDF881DABEF3B003C61DE /* DestructionCountdownView.swift in Sources */,
 				87B8C33F1DF9788B0015EC89 /* BrowserOpening.swift in Sources */,
