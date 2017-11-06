@@ -42,7 +42,7 @@ typedef NS_ENUM(NSInteger, CameraControllerCamera) {
 
 @protocol CameraSettingValueObserver <NSObject>
 
-- (void)cameraSetting:(NSString *)setting changedValue:(id)value;
+- (void)cameraSetting:(NSString *)setting changedValue:(__nullable id)value;
 
 @end
 
