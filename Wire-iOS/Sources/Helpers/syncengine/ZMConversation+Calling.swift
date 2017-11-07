@@ -31,34 +31,41 @@ extension ZMConversation {
         }) as? ZMUser
     }
     
-    func startAudioCall(completionHandler: ((_ joined: Bool) -> Void)?) {
-        joinVoiceChannel(video: false, completionHandler: completionHandler)
+    func startAudioCall() {
+        if warnAboutNoInternetConnection() {
+            return
+        }
+        
+        joinVoiceChannel(video: false)
     }
     
-    func startVideoCall(completionHandler: ((_ joined: Bool) -> Void)?) {
+    func startVideoCall() {
+        if warnAboutNoInternetConnection() {
+            return
+        }
+        
         warnAboutSlowConnection { (abortCall) in
-            guard !abortCall else { completionHandler?(false); return }
-            
-            self.joinVoiceChannel(video: true, completionHandler: completionHandler)
+            guard !abortCall else { return }
+            self.joinVoiceChannel(video: true)
         }
     }
     
     func joinCall() {
-        joinVoiceChannel(video: voiceChannel?.isVideoCall ?? false, completionHandler: nil)
+        joinVoiceChannel(video: voiceChannel?.isVideoCall ?? false)
     }
     
-    func joinVoiceChannel(video: Bool, completionHandler: ((_ joined: Bool) -> Void)?) {
-        
-        if warnAboutNoInternetConnection() {
-            completionHandler?(false)
-            return
-        }
+    func joinVoiceChannel(video: Bool) {
+        guard let userSession = ZMUserSession.shared() else { return }
         
         let onGranted : (_ granted : Bool ) -> Void = { granted in
             if granted {
-                self.joinVoiceChannelWithoutAskingForPermission(video: video, completionHandler: completionHandler)
+                let joined = self.voiceChannel?.join(video: video, userSession: userSession) ?? false
+                
+                if joined {
+                    Analytics.shared().tagMediaActionCompleted(video ? .videoCall : .audioCall, inConversation: self)
+                }
             } else {
-                completionHandler?(false)
+                self.voiceChannel?.leave(userSession: userSession)
             }
         }
         
@@ -70,18 +77,6 @@ extension ZMConversation {
             }
         }
         
-    }
-    
-    func joinVoiceChannelWithoutAskingForPermission(video: Bool, completionHandler: ((_ joined: Bool) -> Void)?) {
-        guard let userSession = ZMUserSession.shared() else { completionHandler?(false); return }
-        
-        let joined = self.voiceChannel?.join(video: video, userSession: userSession) ?? false
-        
-        if joined {
-            Analytics.shared().tagMediaActionCompleted(video ? .videoCall : .audioCall, inConversation: self)
-        }
-        
-        completionHandler?(joined)
     }
     
     func warnAboutSlowConnection(handler : @escaping (_ abortCall : Bool) -> Void) {
