@@ -1,6 +1,6 @@
 //
 // Wire
-// Copyright (C) 2016 Wire Swiss GmbH
+// Copyright (C) 2017 Wire Swiss GmbH
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -20,11 +20,21 @@ import Foundation
 
 extension NSString {
 
-    /// Return a file name with length <= 255 - 4(reserve for extension) - 37(reserve for WireDataModel UUID prefix) characters
+    /// Return a file name with length <= 255 - 4(reserve for extension) - 37(reserve for WireDataModel UUID prefix) characters with a optional suffix
     ///
-    /// - Returns: a filename <= 214 characters
-    static func filenameForSelfUser() -> NSString {
-        return ZMUser.selfUser().filename
+    /// - Parameter suffix: suffix of the file name.
+    /// - Returns: a filename <= (214 + length of suffix) characters
+    static func filenameForSelfUser(suffix: NSString? = nil) -> NSString {
+        return ZMUser.selfUser().filename(suffix: suffix)
+    }
+
+    
+    /// Return a file name with length <= 255 - 4(reserve for extension) - 37(reserve for WireDataModel UUID prefix) characters
+    /// Notice: this method is for objc, which does not support Swift optional parameter
+    ///
+    /// - Returns: Returns: a filename <= 214 characters
+    @objc static func filenameForSelfUser() -> NSString {
+        return NSString.filenameForSelfUser(suffix: nil)
     }
 
 }

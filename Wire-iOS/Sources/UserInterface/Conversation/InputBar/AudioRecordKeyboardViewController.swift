@@ -424,7 +424,7 @@ import CocoaLumberjackSwift
             effectName = self.currentEffect.description
         }
         
-        let filename = (NSString.filenameForSelfUser().appending("-" + effectName) as NSString).appendingPathExtension("m4a")!
+        let filename = NSString.filenameForSelfUser(suffix: ("-" + effectName) as NSString).appendingPathExtension("m4a")!
         let convertedPath = (NSTemporaryDirectory() as NSString).appendingPathComponent(filename)
         convertedPath.deleteFileAtPath()
         
