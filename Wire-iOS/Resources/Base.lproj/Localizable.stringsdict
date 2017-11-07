@@ -49,37 +49,33 @@
 	<key>content.system.missing_messages.subtitle_added</key>
 	<dict>
 		<key>NSStringLocalizedFormatKey</key>
-		<string>%@ %#@lu_number_of_users@ been added</string>
+		<string>%@ %#@lu_number_of_users@</string>
 		<key>lu_number_of_users</key>
 		<dict>
 			<key>NSStringFormatSpecTypeKey</key>
 			<string>NSStringPluralRuleType</string>
 			<key>NSStringFormatValueTypeKey</key>
 			<string>lu</string>
-			<key>zero</key>
-			<string></string>
 			<key>one</key>
-			<string>has</string>
+			<string>has been added</string>
 			<key>other</key>
-			<string>have</string>
+			<string>have been added</string>
 		</dict>
 	</dict>
 	<key>content.system.missing_messages.subtitle_removed</key>
 	<dict>
 		<key>NSStringLocalizedFormatKey</key>
-		<string>%@ %#@lu_number_of_users@ been removed</string>
+		<string>%@ %#@lu_number_of_users@</string>
 		<key>lu_number_of_users</key>
 		<dict>
 			<key>NSStringFormatSpecTypeKey</key>
 			<string>NSStringPluralRuleType</string>
 			<key>NSStringFormatValueTypeKey</key>
 			<string>lu</string>
-			<key>zero</key>
-			<string></string>
 			<key>one</key>
-			<string>has</string>
+			<string>has been removed</string>
 			<key>other</key>
-			<string>have</string>
+			<string>have been removed</string>
 		</dict>
 	</dict>
 	<key>list.connect_request.people_waiting</key>

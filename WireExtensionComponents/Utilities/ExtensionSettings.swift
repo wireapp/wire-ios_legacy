@@ -22,13 +22,12 @@ import Foundation
 
 private enum ExtensionSettingsKey: String {
 
-    case disableHockey = "disableHockey"
     case disableCrashAndAnalyticsSharing = "disableCrashAndAnalyticsSharing"
     case disableLinkPreviews = "disableLinkPreviews"
 
     static var all: [ExtensionSettingsKey] {
         return [
-            .disableHockey,
+            .disableLinkPreviews,
             .disableCrashAndAnalyticsSharing
         ]
     }
@@ -37,8 +36,7 @@ private enum ExtensionSettingsKey: String {
         switch self {
         // In case the user opted out and we did not yet migrate the opt out value
         // into the shared settings (which is only done from the main app).
-        case .disableHockey: return true
-        case .disableCrashAndAnalyticsSharing: return true
+        case .disableCrashAndAnalyticsSharing: return false
         case .disableLinkPreviews: return false
         }
     }
@@ -54,7 +52,7 @@ private enum ExtensionSettingsKey: String {
 }
 
 
-private let defaults = UserDefaults.shared()
+private let defaults = UserDefaults.shared()!
 
 
 public class ExtensionSettings: NSObject {
@@ -67,45 +65,35 @@ public class ExtensionSettings: NSObject {
     }
 
     private static func setupDefaultValues() {
-        defaults?.register(defaults: ExtensionSettingsKey.defaultValueDictionary)
+        defaults.register(defaults: ExtensionSettingsKey.defaultValueDictionary)
     }
 
     public func reset() {
         ExtensionSettingsKey.all.forEach {
-            defaults?.removeObject(forKey: $0.rawValue)
+            defaults.removeObject(forKey: $0.rawValue)
         }
 
         // As we purposely crash afterwards we manually call synchronize.
-        defaults?.synchronize()
-    }
-
-    public var disableHockey: Bool {
-        get {
-            return defaults?.bool(forKey: ExtensionSettingsKey.disableHockey.rawValue) ?? false
-        }
-
-        set {
-            defaults?.set(newValue, forKey: ExtensionSettingsKey.disableHockey.rawValue)
-        }
+        defaults.synchronize()
     }
 
     public var disableCrashAndAnalyticsSharing: Bool {
         get {
-            return defaults?.bool(forKey: ExtensionSettingsKey.disableCrashAndAnalyticsSharing.rawValue) ?? false
+            return defaults.bool(forKey: ExtensionSettingsKey.disableCrashAndAnalyticsSharing.rawValue)
         }
 
         set {
-            defaults?.set(newValue, forKey: ExtensionSettingsKey.disableCrashAndAnalyticsSharing.rawValue)
+            defaults.set(newValue, forKey: ExtensionSettingsKey.disableCrashAndAnalyticsSharing.rawValue)
         }
     }
     
     public var disableLinkPreviews: Bool {
         get {
-            return defaults?.bool(forKey: ExtensionSettingsKey.disableLinkPreviews.rawValue) ?? false
+            return defaults.bool(forKey: ExtensionSettingsKey.disableLinkPreviews.rawValue)
         }
         
         set {
-            defaults?.set(newValue, forKey: ExtensionSettingsKey.disableLinkPreviews.rawValue)
+            defaults.set(newValue, forKey: ExtensionSettingsKey.disableLinkPreviews.rawValue)
         }
     }
 }

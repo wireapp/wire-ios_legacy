@@ -34,7 +34,7 @@
 #import "ShareItemProvider.h"
 #import "ActionSheetController.h"
 #import "InviteContactsViewController.h"
-#import "Analytics+iOS.h"
+#import "Analytics.h"
 #import "AnalyticsTracker+Invitations.h"
 #import "WireSyncEngine+iOS.h"
 #import "ZMConversation+Additions.h"
@@ -140,12 +140,6 @@ static NSUInteger const StartUIInitiallyShowsKeyboardConversationThreshold = 10;
     [self.searchResultsViewController.view autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.searchHeaderViewController.view];
 }
 
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-    [[Analytics shared] tagScreen:@"PEOPLE_PICKER"];
-}
-
 - (void)handleUploadAddressBookLogicIfNeeded
 {
     if (self.addressBookUploadLogicHandled) {
@@ -239,7 +233,6 @@ static NSUInteger const StartUIInitiallyShowsKeyboardConversationThreshold = 10;
     inviteContactsViewController.modalPresentationStyle = UIModalPresentationOverCurrentContext;
     inviteContactsViewController.delegate = self;
     [self presentViewController:inviteContactsViewController animated:YES completion:^() {
-        [[Analytics shared] tagScreenInviteContactList];
         [inviteContactsViewController.analyticsTracker tagEvent:AnalyticsEventInviteContactListOpened];
     }];
 }

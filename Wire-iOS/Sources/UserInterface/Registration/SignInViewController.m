@@ -32,8 +32,6 @@
 #import "WireSyncEngine+iOS.h"
 #import "Wire-Swift.h"
 
-#import "AnalyticsTracker+Navigation.h"
-
 
 
 @interface SignInViewController () <PhoneSignInViewControllerDelegate>

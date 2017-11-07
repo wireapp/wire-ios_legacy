@@ -19,7 +19,6 @@
 
 import Foundation
 import avs
-import HockeySDK.BITHockeyManager
 
 
 extension AVSMediaManager {

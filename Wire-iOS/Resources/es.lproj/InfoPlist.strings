@@ -20,3 +20,9 @@
 "NSMicrophoneUsageDescription" = "Permite a Wire acceder al micrófono para poder hacer llamadas y enviar notas de voz.";
 "NSLocationWhenInUseUsageDescription" = "Permite a Wire acceder a tu ubicación para compartirla con tus contactos.";
 "NSCameraUsageDescription" = "Permite el acceso a la cámara para poder hacer vídeo llamadas y enviar fotos.";
+/* Showed after taking a picture with camera, but only when NSPhotoLibraryUsageDescription permission was declined. Asks permission for only writing to photo library. */
+"NSPhotoLibraryAddUsageDescription" = "Allow Wire to store pictures you take in the photo library.";
+/* Showed when trying to send picture from conversaiton list. Asks permissions for reading and writing to photo library */
+"NSPhotoLibraryUsageDescription" = "Allow Wire to access pictures stored in photo library.";
+/* Is shown to the user when app is locked with AppLock feature on the phone that supports Face ID */
+"NSFaceIDUsageDescription" = "In order to authenticate in the app allow Wire to access the Face ID feature.";

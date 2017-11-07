@@ -21,11 +21,27 @@
 #import "AppDelegate.h"
 #import "Wire-Swift.h"
 
+const static unsigned long long MaxFileSize = 25 * 1024 * 1024 - 32; // 25 megabytes - 32 bytes for IV and padding
+
+// Temporarily set to have the same size as non-team.
+const static unsigned long long MaxTeamFileSize = 25 * 1024 * 1024 - 32; // 25 megabytes - 32 bytes for IV and padding
+
 @implementation ZMUserSession (iOS)
 
 + (instancetype)sharedSession
 {
     return [[SessionManager shared] activeUserSession];
+}
+
+- (unsigned long long)maxUploadFileSize
+{
+    ZMUser *selfUser = [ZMUser selfUserInUserSession:self];
+    if (selfUser.hasTeam) {
+        return MaxTeamFileSize;
+    }
+    else {
+        return MaxFileSize;
+    }
 }
 
 @end

@@ -24,12 +24,11 @@
 #import "ConversationInputBarViewController+Files.h"
 #import "UIViewController+Errors.h"
 #import "Analytics.h"
-#import "Analytics+iOS.h"
+#import "Analytics.h"
 #import "UIImage+ZetaIconsNeue.h"
 #import "AVAsset+VideoConvert.h"
 #import "Wire-Swift.h"
 
-const static unsigned long long ConversationUploadMaxFileSize = 25 * 1024 * 1024 - 32; // 25 megabytes - 32 bytes for IV and padding
 const NSTimeInterval ConversationUploadMaxVideoDuration = 4.0f * 60.0f; // 4 minutes
 
 @implementation ConversationInputBarViewController (Files)
@@ -85,7 +84,7 @@ const NSTimeInterval ConversationUploadMaxVideoDuration = 4.0f * 60.0f; // 4 min
             NSString *destLocationString = [basePath stringByAppendingPathComponent:@"BigFile.bin"];
             NSURL *destLocation = [NSURL fileURLWithPath:destLocationString];
             
-            NSData *randomData = [NSData secureRandomDataOfLength:ConversationUploadMaxFileSize + 1];
+            NSData *randomData = [NSData secureRandomDataOfLength:(NSUInteger)[[ZMUserSession sharedSession] maxUploadFileSize] + 1];
             [randomData writeToURL:destLocation atomically:YES];
             
             [self uploadFileAtURL:destLocation];
@@ -100,6 +99,20 @@ const NSTimeInterval ConversationUploadMaxVideoDuration = 4.0f * 60.0f; // 4 min
             NSURL *destLocation = [NSURL fileURLWithPath:destLocationString];
             
             NSData *randomData = [NSData secureRandomDataOfLength:20*1024*1024];
+            [randomData writeToURL:destLocation atomically:YES];
+            
+            [self uploadFileAtURL:destLocation];
+        }];
+    }];
+    [docController addOptionWithTitle:@"40 MB file" image:nil order:UIDocumentMenuOrderFirst handler:^{
+        [[ZMUserSession sharedSession] enqueueChanges:^{
+            
+            NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+            NSString *basePath = paths.firstObject;
+            NSString *destLocationString = [basePath stringByAppendingPathComponent:@"40MBFile.bin"];
+            NSURL *destLocation = [NSURL fileURLWithPath:destLocationString];
+            
+            NSData *randomData = [NSData secureRandomDataOfLength:40*1024*1024];
             [randomData writeToURL:destLocation atomically:YES];
             
             [self uploadFileAtURL:destLocation];
@@ -253,11 +266,11 @@ const NSTimeInterval ConversationUploadMaxVideoDuration = 4.0f * 60.0f; // 4 min
     }
     else {
         
-        if ([attributes[NSFileSize] unsignedLongLongValue] > ConversationUploadMaxFileSize) {
+        if ([attributes[NSFileSize] unsignedLongLongValue] > [[ZMUserSession sharedSession] maxUploadFileSize]) {
             // file exceeds maximum allowed upload size
             [self.parentViewController dismissViewControllerAnimated:NO completion:nil];
             
-            NSString *maxSizeString = [NSByteCountFormatter stringFromByteCount:ConversationUploadMaxFileSize countStyle:NSByteCountFormatterCountStyleBinary];
+            NSString *maxSizeString = [NSByteCountFormatter stringFromByteCount:[[ZMUserSession sharedSession] maxUploadFileSize] countStyle:NSByteCountFormatterCountStyleBinary];
             NSString *errorMessage = [NSString stringWithFormat:NSLocalizedString(@"content.file.too_big", @""), maxSizeString];
             [self showAlertForMessage:errorMessage];
             

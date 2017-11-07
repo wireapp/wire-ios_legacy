@@ -20,7 +20,7 @@
 #import "UIActivityViewController+Invite.h"
 #import "ShareItemProvider.h"
 #import "Analytics+ProfileEvents.h"
-#import "Analytics+iOS.h"
+#import "Analytics.h"
 #import "AnalyticsTracker.h"
 
 NSString *NSStringFromGenericInviteContext(GenericInviteContext logicalContext);
@@ -43,7 +43,6 @@ NSString *NSStringFromGenericInviteContext(GenericInviteContext logicalContext) 
 
 + (instancetype)shareInviteActivityViewControllerWithCompletion:(UIActivityViewControllerCompletionWithItemsHandler)completion logicalContext:(GenericInviteContext)logicalContext
 {
-    [[Analytics shared] tagScreenGenericInvite];
     [[Analytics shared] tagEvent:AnalyticsEventOpenedMenuForGenericInvite
                       attributes:@{AnalyticsContextKey: NSStringFromGenericInviteContext(logicalContext)}];
     

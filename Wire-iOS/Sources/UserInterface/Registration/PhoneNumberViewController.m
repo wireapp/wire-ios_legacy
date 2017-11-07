@@ -18,7 +18,7 @@
 
 
 #import "PhoneNumberViewController.h"
-#import "Analytics+iOS.h"
+#import "Analytics.h"
 
 @import PureLayout;
 
@@ -30,8 +30,6 @@
 #import "UIImage+ZetaIconsNeue.h"
 #import "WireSyncEngine+iOS.h"
 #import "Wire-Swift.h"
-
-#import "AnalyticsTracker+Navigation.h"
 
 
 

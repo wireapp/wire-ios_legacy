@@ -37,7 +37,7 @@ NSString *ApplicationLaunchTypeToString(ApplicationLaunchType type);
 {
     [self tagEvent:@"App Error" attributes:@{@"error" : error,
                                              @"timeInSession_clusterized" : [[TimeIntervalClusterizer defaultClusterizer] clusterizeTimeInterval:time],
-                                             @"timeInSession" : @(time)}];
+                                             @"timeInSession" : [NSString stringWithFormat:@"%.02f", time]}];
 }
 
 - (void)tagAppException:(NSString *)error screen:(NSString *)screen timeInSession:(NSTimeInterval)time
@@ -45,7 +45,7 @@ NSString *ApplicationLaunchTypeToString(ApplicationLaunchType type);
     [self tagEvent:@"App Exception" attributes:@{@"exception" : error,
                                                  @"screen" : screen,
                                                  @"timeInSession_clusterized" : [[TimeIntervalClusterizer defaultClusterizer] clusterizeTimeInterval:time],
-                                                 @"timeInSession" : @(time)}];
+                                                 @"timeInSession" : [NSString stringWithFormat:@"%.02f", time]}];
 }
 
 @end

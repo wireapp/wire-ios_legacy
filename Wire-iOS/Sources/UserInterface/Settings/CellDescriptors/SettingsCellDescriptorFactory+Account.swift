@@ -36,8 +36,15 @@ extension SettingsCellDescriptorFactory {
     // MARK: - Sections
 
     func infoSection() -> SettingsSectionDescriptorType {
+        var cellDescriptors = [nameElement(), handleElement()]
+        
+        if !ZMUser.selfUser().hasTeam || !(ZMUser.selfUser().phoneNumber?.isEmpty ?? true) {
+            cellDescriptors.append(phoneElement())
+        }
+        
+        cellDescriptors.append(emailElement())
         return SettingsSectionDescriptor(
-            cellDescriptors: [nameElement(), handleElement(), phoneElement(), emailElement()],
+            cellDescriptors: cellDescriptors,
             header: "self.settings.account_details_group.info.title".localized,
             footer: nil
         )
@@ -98,7 +105,7 @@ extension SettingsCellDescriptorFactory {
                     return SettingsCellPreview.text("self.add_email_password".localized)
                 }
         },
-            hideAccesoryView: true
+            accessoryViewMode: .alwaysHide
         )
     }
 
@@ -127,14 +134,14 @@ extension SettingsCellDescriptorFactory {
                     return SettingsCellPreview.text("self.add_phone_number".localized)
                 }
         },
-            hideAccesoryView: true
+            accessoryViewMode: .alwaysHide
         )
 
     }
 
     func handleElement() -> SettingsCellDescriptorType {
         let presentation: () -> ChangeHandleViewController = {
-            Analytics.shared()?.tag(UserNameEvent.Settings.enteredUsernameScreen)
+            Analytics.shared().tag(UserNameEvent.Settings.enteredUsernameScreen)
             return ChangeHandleViewController()
         }
 
@@ -149,7 +156,7 @@ extension SettingsCellDescriptorFactory {
                 presentationStyle: .navigation,
                 presentationAction: presentation,
                 previewGenerator: preview,
-                hideAccesoryView: true
+                accessoryViewMode: .alwaysHide
             )
         }
 
@@ -188,7 +195,7 @@ extension SettingsCellDescriptorFactory {
         let resetPasswordTitle = "self.settings.password_reset_menu.title".localized
         return SettingsButtonCellDescriptor(title: resetPasswordTitle, isDestructive: false) { _ in
             UIApplication.shared.openURL(NSURL.wr_passwordReset().wr_URLByAppendingLocaleParameter() as URL)
-            Analytics.shared()?.tagResetPassword(true, from: ResetFromProfile)
+            Analytics.shared().tagResetPassword(true, from: ResetFromProfile)
         }
     }
 

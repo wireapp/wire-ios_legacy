@@ -2,6 +2,8 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>NSFaceIDUsageDescription</key>
+	<string>In order to authenticate in the app allow Wire to access the Face ID feature.</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>RedactedScript-Regular.ttf</string>
@@ -9,7 +11,7 @@
 	<key>NSCameraUsageDescription</key>
 	<string>In order to take and send pictures Wire needs access to your camera.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>In order to send stored pictures Wire needs access to your  photo library.</string>
+	<string>In order to send stored pictures Wire needs access to your photo library.</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
@@ -45,14 +47,6 @@
 	<string>????</string>
 	<key>CFBundleURLTypes</key>
 	<array>
-		<dict>
-			<key>CFBundleURLName</key>
-			<string>${WIRE_BUNDLE_ID}</string>
-			<key>CFBundleURLSchemes</key>
-			<array>
-				<string>amp${ANALYTICS_KEY}</string>
-			</array>
-		</dict>
 		<dict>
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
@@ -91,6 +85,8 @@
 	</dict>
 	<key>NSContactsUsageDescription</key>
 	<string>We’d like to access your Contacts so we can connect you with people you might know. Your data is safely stored with us and not shared with anyone else.</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>In order to store pictures you take Wire needs access to your photo library.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>In order to send your location you have to authorize Wire to use it</string>
 	<key>NSMicrophoneUsageDescription</key>

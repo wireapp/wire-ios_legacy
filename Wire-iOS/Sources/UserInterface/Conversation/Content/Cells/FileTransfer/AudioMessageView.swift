@@ -321,7 +321,7 @@ final class AudioMessageView: UIView, TransferView {
                     audioTrackPlayer.play()
                     
                     let duration = TimeInterval(Float(fileMessageData.durationMilliseconds) / 1000.0)
-                    Analytics.shared()?.tagPlayedAudioMessage(duration, extensionString: ((fileMessageData.filename ?? "") as NSString).pathExtension)
+                    Analytics.shared().tagPlayedAudioMessage(duration, extensionString: ((fileMessageData.filename ?? "") as NSString).pathExtension)
                 }
                 else {
                     DDLogWarn("Cannot load track \(track): \(String(describing: error))")

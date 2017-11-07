@@ -51,6 +51,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (instancetype)wr_createTeamURL;
 
++ (instancetype)wr_manageTeamURL;
+
 @end
 
 NS_ASSUME_NONNULL_END

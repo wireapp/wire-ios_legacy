@@ -559,8 +559,13 @@
 "self.new_device_alert.trust_devices" = "OK";
 
 // Settings - top level
-"self.settings.create_team.title" = "Create Team";
-"self.settings.add_account.title" = "Add Account";
+"self.settings.create_team.title" = "Crea un team";
+"self.settings.manage_team.title" = "Gestione Team";
+"self.settings.add_team_or_account.title" = "Nuovo team o account";
+"self.settings.add_account.title" = "Aggiungi account";
+
+"self.settings.add_account.error.title" = "Tre account attivi";
+"self.settings.add_account.error.message" = "Puoi connetterti solamente con tre account per volta. Esci da un account per aggiungerne un altro.";
 
 // Settings - Account details
 "self.settings.account_section" = "Account";
@@ -602,7 +607,7 @@
 "self.settings.account_details.delete_account.alert.message" = "Ti invieremo un SMS o una email. Segui il link per eliminare definitivamente il tuo account.";
 
 "self.settings.account_details.log_out.alert.title" = "Logout";
-"self.settings.account_details.log_out.alert.message" = "Your message history will be erased on this device.";
+"self.settings.account_details.log_out.alert.message" = "La tua cronologia dei messaggi sarà cancellata su questo dispositivo.";
 
 
 // Change Username
@@ -663,7 +668,7 @@
 
 "self.settings.callkit.title" = "Chiamate";
 "self.settings.callkit.caption" = "Condividi con iOS";
-"self.settings.callkit.description" = "Show Wire calls on the lock screen and in iOS call history. If iCloud is enabled, call history is shared with Apple.";
+"self.settings.callkit.description" = "Mostra le chiamate di Wire nella schermata di blocco e nella cronologia delle chiamate su iOS. Se iCloud è abilitato, la cronologia delle chiamate verrà condivisa con Apple. Riavvia Wire per applicare questa impostazione.";
 
 "self.settings.cbr.not_available" = "Constant Bit Rate Encoding";
 "self.settings.cbr.not_available.description" = "Constant bit rate calls have been temporarily disabled with the introduction of multiple account support. CBR calls will be back soon.";
@@ -722,7 +727,7 @@
 "self.settings.privacy_security.lock_cancelled.description" = "Sblocca Wire con Touch ID o Passcode";
 "self.settings.privacy_security.lock_cancelled.action" = "Sblocca";
 
-"self.settings.privacy_security.disable_link_previews.title" = "Create Link Previews";
+"self.settings.privacy_security.disable_link_previews.title" = "Crea anteprime dei link";
 "self.settings.privacy_security.disable_link_previews.footer" = "È possibile che vengano comunque mostrate delle anteprime per i link inviati dagli altri utenti.";
 
 "self.settings.privacy_analytics_menu.devices.title" = "Dispositivi";
@@ -903,8 +908,8 @@
 "error.user.registration_unknown_error" = "Qualcosa è andato storto. Si prega di riprovare.";
 "error.user.device_deleted_remotely" = "Sei stato disconnesso da un altro dispositivo.";
 "error.user.last_identity_cant_be_deleted" = "È richiesto un numero di telefono oppure un'indirizzo email.";
-"error.user.account_suspended" = "This account is no longer authorized to log in.";
-"error.user.account_limit_reached" = "You can't add more than 3 accounts.";
+"error.user.account_suspended" = "Questo account non è più autorizzato ad accedere.";
+"error.user.account_limit_reached" = "Non puoi aggiungere più di 3 account.";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Those are caught by the UI without involving the SE validation. Basically very similar to ZMUserSessionErrorCode onces

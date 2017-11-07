@@ -17,7 +17,6 @@
 //
 
 
-// ZIOS-8041
 enum LocalSearchEvent {
 
     case receivedResult(startedAt: Date?)
@@ -46,7 +45,7 @@ enum LocalSearchEvent {
 extension Analytics {
 
     func tag(searchEvent: LocalSearchEvent) {
-        tagEvent(searchEvent.name, attributes: searchEvent.attributes)
+        tagEvent(searchEvent.name, attributes: searchEvent.attributes ?? [:])
     }
 
 }

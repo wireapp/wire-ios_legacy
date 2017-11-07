@@ -33,8 +33,7 @@
 #import "UIViewController+Errors.h"
 
 #import "ZClientViewController.h"
-#import "Analytics+iOS.h"
-#import "AnalyticsTracker+Sketchpad.h"
+#import "Analytics.h"
 #import "AnalyticsTracker+FileTransfer.h"
 #import "Wire-Swift.h"
 
@@ -965,7 +964,7 @@
 - (void)sketchButtonPressed:(id)sender
 {
     [self.inputBar.textView resignFirstResponder];
-    [Analytics.shared tagMediaAction:ConversationMediaActionSketch inConversation:self.conversation];
+    [Analytics.shared tagMediaAction:ConversationMediaActionPhoto inConversation:self.conversation];
     
     CanvasViewController *viewController = [[CanvasViewController alloc] init];
     viewController.delegate = self;
@@ -1064,7 +1063,7 @@
             [Analytics.shared tagMediaAction:ConversationMediaActionPing inConversation:self.conversation];
             [Analytics.shared tagMediaActionCompleted:ConversationMediaActionPing inConversation:self.conversation];
             
-            [[[AVSProvider shared] mediaManager] playSound:MediaManagerSoundOutgoingKnockSound];
+            [AVSMediaManager.sharedInstance playSound:MediaManagerSoundOutgoingKnockSound];
         }
     }];
     

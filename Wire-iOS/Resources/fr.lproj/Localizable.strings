@@ -560,7 +560,12 @@
 
 // Settings - top level
 "self.settings.create_team.title" = "Créer une équipe";
+"self.settings.manage_team.title" = "Gérer l’équipe";
+"self.settings.add_team_or_account.title" = "Nouvelle équipe ou nouveau compte";
 "self.settings.add_account.title" = "Ajouter un compte";
+
+"self.settings.add_account.error.title" = "Trois comptes actifs";
+"self.settings.add_account.error.message" = "Vous ne pouvez vous connecter qu'à trois comptes à la fois. Déconnectez-vous de l'un d'entre eux pour en ajouter un autre.";
 
 // Settings - Account details
 "self.settings.account_section" = "Compte";

@@ -227,17 +227,9 @@ func SettingsPropertyLabelText(_ name: SettingsPropertyName) -> String {
         return "self.settings.sound_menu.title".localized
         
         // Analytics
-    case .analyticsOptOut:
+    case .disableCrashAndAnalyticsSharing:
         return "self.settings.privacy_analytics.title".localized
-        
-    case .disableUI:
-        return "Disable UI (Restart needed)"
-    case .disableHockey:
-        return "Disable Hockey (Restart needed)"
-    case .disableAVS:
-        return "Disable AVS (Restart needed)"
-    case .disableAnalytics:
-        return "Disable Analytics (Restart needed)"
+    
     case .messageSoundName:
         return "self.settings.sound_menu.message.title".localized
     case .callSoundName:

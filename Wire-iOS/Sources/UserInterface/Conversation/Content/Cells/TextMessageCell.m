@@ -33,7 +33,7 @@
 #import "LinkAttachmentViewControllerFactory.h"
 #import "LinkAttachment.h"
 #import "Wire-Swift.h"
-#import "Analytics+iOS.h"
+#import "Analytics.h"
 
 @import WireLinkPreview;
 

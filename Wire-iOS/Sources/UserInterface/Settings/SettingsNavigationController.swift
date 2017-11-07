@@ -18,8 +18,6 @@
 
 
 import Foundation
-import HockeySDK.BITHockeyManager
-
 
 @objc class SettingsNavigationController: UINavigationController {
 
@@ -104,11 +102,11 @@ import HockeySDK.BITHockeyManager
         if let intensivityLevel = soundProperty.rawValue() as? AVSIntensityLevel {
             switch(intensivityLevel) {
             case .full:
-                Analytics.shared()?.tagSoundIntensityPreference(SoundIntensityTypeAlways)
+                Analytics.shared().tagSoundIntensityPreference(SoundIntensityTypeAlways)
             case .some:
-                Analytics.shared()?.tagSoundIntensityPreference(SoundIntensityTypeFirstOnly)
+                Analytics.shared().tagSoundIntensityPreference(SoundIntensityTypeFirstOnly)
             case .none:
-                Analytics.shared()?.tagSoundIntensityPreference(SoundIntensityTypeNever)
+                Analytics.shared().tagSoundIntensityPreference(SoundIntensityTypeNever)
             }
         }
     }
@@ -123,7 +121,7 @@ import HockeySDK.BITHockeyManager
         self.interactivePopGestureRecognizer?.isEnabled = false
         
         let rootViewController = SelfProfileViewController(rootGroup: rootGroup)
-        Analytics.shared()?.tagScreen("SETTINGS")
+
         self.pushViewController(rootViewController, animated: false)
         rootViewController.dismissAction = { [unowned self] _ in
             self.dismissAction?(self)

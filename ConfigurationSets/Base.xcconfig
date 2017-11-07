@@ -46,7 +46,7 @@ DEBUG_INFORMATION_FORMAT = dwarf-with-dsym
 LIBRARY_SEARCH_PATHS_common = $(inherited)
 LIBRARY_SEARCH_PATHS = $(inherited) $(LIBRARY_SEARCH_PATHS_common)
 
-HEADER_SEARCH_PATHS_common = "$(TARGET_BUILD_DIR)/usr/local/lib/include" "$(OBJROOT)/UninstalledProducts/include" "$(SDKROOT)/usr/include/libxml2"
+HEADER_SEARCH_PATHS_common = "$(TARGET_TEMP_DIR)/../$(PROJECT_NAME).build/DerivedSources"
 HEADER_SEARCH_PATHS = $(inherited) $(HEADER_SEARCH_PATHS_common)
 
 

@@ -41,7 +41,7 @@
 #import "Wire-Swift.h"
 
 #import "AnalyticsTracker+Registration.h"
-#import "Analytics+iOS.h"
+#import "Analytics.h"
 #import "StopWatch.h"
 #import "NSLayoutConstraint+Helpers.h"
 

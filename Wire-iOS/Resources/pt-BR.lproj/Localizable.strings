@@ -559,8 +559,13 @@
 "self.new_device_alert.trust_devices" = "OK";
 
 // Settings - top level
-"self.settings.create_team.title" = "Criar uma Equipe";
-"self.settings.add_account.title" = "Adicionar conta";
+"self.settings.create_team.title" = "Criar uma equipe";
+"self.settings.manage_team.title" = "Gerenciar Equipe";
+"self.settings.add_team_or_account.title" = "Nova Equipe ou Conta";
+"self.settings.add_account.title" = "Adicionar uma conta";
+
+"self.settings.add_account.error.title" = "Três contas de ativas";
+"self.settings.add_account.error.message" = "Você apenas pode estar conectado com três contas de uma vez. Saia de uma para adicionar outra.";
 
 // Settings - Account details
 "self.settings.account_section" = "Conta";
