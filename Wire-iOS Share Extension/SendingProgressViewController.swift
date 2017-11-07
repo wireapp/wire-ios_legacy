@@ -86,7 +86,7 @@ class SendingProgressViewController : UIViewController {
         connectionStatusLabel.font = UIFont.systemFont(ofSize: UIFont.smallSystemFontSize)
         connectionStatusLabel.textAlignment = .center
         connectionStatusLabel.isHidden = true
-        connectionStatusLabel.text = "voice.network_error.title".localized
+        connectionStatusLabel.text = "share_extension.no_internet_connection.title".localized
         
         view.addSubview(circularShadow)
         view.addSubview(circularProgress)
