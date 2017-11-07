@@ -30,65 +30,11 @@ FOUNDATION_EXTERN NSString *const AnalyticsContextPostLogin;
 FOUNDATION_EXTERN NSString *const AnalyticsContextConversation;
 FOUNDATION_EXTERN NSString *const AnalyticsContextRegistrationPhone;
 FOUNDATION_EXTERN NSString *const AnalyticsContextRegistrationEmail;
-FOUNDATION_EXTERN NSString *const AnalyticsContextRegistrationGenericInvitePhone;
-FOUNDATION_EXTERN NSString *const AnalyticsContextRegistrationGenericInviteEmail;
-FOUNDATION_EXTERN NSString *const AnalyticsContextRegistrationPersonalInvitePhone;
-FOUNDATION_EXTERN NSString *const AnalyticsContextRegistrationPersonalInviteEmail;
-
-#pragma mark - AnalyticsTrigger
-FOUNDATION_EXTERN NSString *const AnalyticsTriggerKey;
-FOUNDATION_EXTERN NSString *const AnalyticsTriggerTypeCLI;
-FOUNDATION_EXTERN NSString *const AnalyticsTriggerTypeButton;
 
 #pragma mark - AnalyticsEventTypes
 
-FOUNDATION_EXTERN NSString *const AnalyticsEventTypeEditSelfUser;
-FOUNDATION_EXTERN NSString *const AnalyticsEventTypeNavigation;
 FOUNDATION_EXTERN NSString *const AnalyticsEventTypePermissions;
-FOUNDATION_EXTERN NSString *const AnalyticsEventTypeMessage;
 FOUNDATION_EXTERN NSString *const AnalyticsEventTypeMedia;
-
-#pragma mark - AnalyticsEventTypeEditSelfUser
-
-FOUNDATION_EXTERN NSString *const AnalyticsEventTypeEditSelfUserFieldKey;
-FOUNDATION_EXTERN NSString *const AnalyticsEventTypeEditSelfUserComponentsKey;
-FOUNDATION_EXTERN NSString *const AnalyticsEventTypeEditSelfUserActionKey;
-FOUNDATION_EXTERN NSString *const AnalyticsEventTypeEditSelfUserSourceKey;
-
-FOUNDATION_EXTERN NSString *const AnalyticsEventTypeEditSelfUserFieldName;
-FOUNDATION_EXTERN NSString *const AnalyticsEventTypeEditSelfUserFieldEmail;
-FOUNDATION_EXTERN NSString *const AnalyticsEventTypeEditSelfUserFieldPassword;
-FOUNDATION_EXTERN NSString *const AnalyticsEventTypeEditSelfUserFieldPhoneNumber;
-FOUNDATION_EXTERN NSString *const AnalyticsEventTypeEditSelfUserFieldPicture;
-FOUNDATION_EXTERN NSString *const AnalyticsEventTypeEditSelfUserFielTermsOfUse;
-
-FOUNDATION_EXTERN NSString *const AnalyticsEventTypeEditSelfUserActionAdded;
-FOUNDATION_EXTERN NSString *const AnalyticsEventTypeEditSelfUserActionModified;
-
-#pragma mark - AnalyticsEventTypeTheme
-
-FOUNDATION_EXTERN NSString *const AnalyticsEventTypeTheme;
-FOUNDATION_EXTERN NSString *const AnalyticsEventTypeThemeSelectedKey;
-FOUNDATION_EXTERN NSString *const AnalyticsEventTypeThemeLight;
-FOUNDATION_EXTERN NSString *const AnalyticsEventTypeThemeDark;
-
-#pragma mark - AnalyticsEventTypeMessage
-
-FOUNDATION_EXTERN NSString *const AnalyticsEventTypeMessageKeyState;
-FOUNDATION_EXTERN NSString *const AnalyticsEventTypeMessageKeyKind;
-FOUNDATION_EXTERN NSString *const AnalyticsEventTypeMessageKeySource;
-
-#pragma mark - AnalyticsEventTypeNavigation
-
-FOUNDATION_EXTERN NSString *const AnalyticsEventTypeNavigationActionKey;
-FOUNDATION_EXTERN NSString *const AnalyticsEventTypeNavigationViewKey;
-
-FOUNDATION_EXTERN NSString *const AnalyticsEventTypeNavigationActionEntered;
-FOUNDATION_EXTERN NSString *const AnalyticsEventTypeNavigationActionExited;
-FOUNDATION_EXTERN NSString *const AnalyticsEventTypeNavigationActionSkipped;
-
-FOUNDATION_EXTERN NSString *const AnalyticsEventTypeNavigationViewFindFriends;
-FOUNDATION_EXTERN NSString *const AnalyticsEventTypeNavigationViewOSSettings;
 
 #pragma mark - AnalyticsEventTypePermissions
 
@@ -96,7 +42,6 @@ FOUNDATION_EXTERN NSString *const AnalyticsEventTypePermissionsCategoryKey;
 FOUNDATION_EXTERN NSString *const AnalyticsEventTypePermissionsStateKey;
 
 FOUNDATION_EXTERN NSString *const AnalyticsEventTypePermissionsCategoryCamera;
-FOUNDATION_EXTERN NSString *const AnalyticsEventTypePermissionsCategoryPhotoLibrary;
 FOUNDATION_EXTERN NSString *const AnalyticsEventTypePermissionsCategoryPushNotifications;
 
 FOUNDATION_EXTERN NSString *const AnalyticsEventTypePermissionsStateAllowed;
@@ -127,7 +72,6 @@ FOUNDATION_EXTERN NSString *const AnalyticsEventInviteContactListOpened;
 FOUNDATION_EXTERN NSString *const AnalyticsEventInvitationSentToAddressBook;
 FOUNDATION_EXTERN NSString *const AnalyticsEventInvitationSentToAddressBookMethodEmail;
 FOUNDATION_EXTERN NSString *const AnalyticsEventInvitationSentToAddressBookMethodPhone;
-FOUNDATION_EXTERN NSString *const AnalyticsEventInvitationSentToAddressBookIsResend;
 FOUNDATION_EXTERN NSString *const AnalyticsEventInvitationSentToAddressBookFromSearch;
 FOUNDATION_EXTERN NSString *const AnalyticsEventOpenedMenuForGenericInvite;
 FOUNDATION_EXTERN NSString *const AnalyticsEventAcceptedGenericInvite;
@@ -138,8 +82,7 @@ FOUNDATION_EXTERN NSString *const AnalyticsEventAcceptedGenericInvite;
 
 + (instancetype)analyticsTrackerWithContext:(NSString *)context;
 
-- (void)tagEventOnlyOnce:(NSString *)event attributes:(NSDictionary *)attributes;
 - (void)tagEvent:(NSString *)event;
-- (void)tagEvent:(NSString *)event attributes:(NSDictionary *) attributes;
+- (void)tagEvent:(NSString *)event attributes:(NSDictionary *)attributes;
 
 @end

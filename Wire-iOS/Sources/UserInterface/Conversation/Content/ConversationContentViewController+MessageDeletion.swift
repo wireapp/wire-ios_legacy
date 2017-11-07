@@ -113,7 +113,7 @@ extension CollectionCell: SelectableView {
         let conversationType: ConversationType = (message.conversation?.conversationType == .group) ? .group : .oneToOne
         let messageType = Message.messageType(message)
         let timeElapsed = message.serverTimestamp?.timeIntervalSinceNow ?? 0
-        Analytics.shared()?.tagDeletedMessage(messageType, messageDeletionType: deletionType.analyticsType, conversationType:conversationType, timeElapsed: 0 - timeElapsed)
+        Analytics.shared().tagDeletedMessage(messageType, messageDeletionType: deletionType.analyticsType, conversationType:conversationType, timeElapsed: 0 - timeElapsed)
     }
 
 }

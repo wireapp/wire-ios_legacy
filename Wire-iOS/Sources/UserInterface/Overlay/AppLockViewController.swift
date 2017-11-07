@@ -20,7 +20,6 @@ import Foundation
 import Cartography
 import LocalAuthentication
 import CocoaLumberjackSwift
-import HockeySDK.BITHockeyManager
 
 
 @objc final class AppLockViewController: UIViewController {
@@ -76,6 +75,8 @@ import HockeySDK.BITHockeyManager
         constrain(self.view, self.lockView) { view, lockView in
             lockView.edges == view.edges
         }
+        
+        self.dimContents = false
     }
     
     fileprivate func resignKeyboardIfNeeded() {

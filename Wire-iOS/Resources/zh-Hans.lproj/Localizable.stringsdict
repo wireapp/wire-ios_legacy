@@ -147,7 +147,7 @@
 	<key>content.system.people_started_using</key>
 	<dict>
 		<key>NSStringLocalizedFormatKey</key>
-		<string>%@%#@d_number_of_others@ started using %#@d_new_devices@</string>
+		<string>%#@d_number_of_others@ 开始使用 %#@d_new_devices@</string>
 		<key>d_number_of_others</key>
 		<dict>
 			<key>NSStringFormatSpecTypeKey</key>
@@ -294,9 +294,9 @@
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>one</key>
-			<string>new ping</string>
+			<string>新招呼</string>
 			<key>other</key>
-			<string>%d new pings</string>
+			<string>%d 个新招呼</string>
 		</dict>
 	</dict>
 	<key>conversation.silenced.status.message.missedcall</key>

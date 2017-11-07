@@ -560,7 +560,12 @@
 
 // Settings - top level
 "self.settings.create_team.title" = "Creëer Team";
-"self.settings.add_account.title" = "Account toevoegen";
+"self.settings.manage_team.title" = "Manage Team";
+"self.settings.add_team_or_account.title" = "New Team or Account";
+"self.settings.add_account.title" = "Voeg een account toe";
+
+"self.settings.add_account.error.title" = "Three accounts active";
+"self.settings.add_account.error.message" = "You can only be logged in with three accounts at once. Log out from one to add another.";
 
 // Settings - Account details
 "self.settings.account_section" = "Profiel";
@@ -904,7 +909,7 @@
 "error.user.device_deleted_remotely" = "Je bent uitgelogd door een ander apparaat.";
 "error.user.last_identity_cant_be_deleted" = "Een email adres of een telefoon nummer is verplicht.";
 "error.user.account_suspended" = "Dit account is niet langer geautoriseerd om in te loggen.";
-"error.user.account_limit_reached" = "You can't add more than 3 accounts.";
+"error.user.account_limit_reached" = "Je kan niet meer dan 3 accounts toevoegen.";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Those are caught by the UI without involving the SE validation. Basically very similar to ZMUserSessionErrorCode onces

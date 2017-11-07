@@ -16,22 +16,9 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 // 
 
-
-#if TARGET_OS_IPHONE
-
 #import <UIKit/UIKit.h>
 
 @interface UIApplication (runDuration)
-
-
-#else
-
-#import <Foundation/Foundation.h>
-
-@interface NSApplication (runDuration)
-
-#endif
-
 - (void)setupRunDurationCalculation;
 - (NSTimeInterval)lastApplicationRunDuration;
 - (void)resetRunDuration;

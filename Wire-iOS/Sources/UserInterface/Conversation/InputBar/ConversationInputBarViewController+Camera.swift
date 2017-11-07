@@ -79,7 +79,7 @@ extension ConversationInputBarViewController: CameraKeyboardViewControllerDelega
             confirmVideoViewController.previewTitle = self.conversation.displayName.uppercased()
             confirmVideoViewController.onConfirm = { [unowned self] (editedImage: UIImage?)in
                 self.dismiss(animated: true, completion: .none)
-                Analytics.shared()?.tagSentVideoMessage(inConversation: self.conversation, context: .cameraKeyboard, duration: duration)
+                Analytics.shared().tagSentVideoMessage(inConversation: self.conversation, context: .cameraKeyboard, duration: duration)
                 self.uploadFile(at: videoURL as URL!)
             }
             
@@ -145,7 +145,7 @@ extension ConversationInputBarViewController: CameraKeyboardViewControllerDelega
                 self.sendController.sendMessage(withImageData: imageData as Data!, completion: .none)
             }
             
-            Analytics.shared()?.tagMediaSentPicture(inConversation: self.conversation, metadata: metadata)
+            Analytics.shared().tagMediaSentPicture(inConversation: self.conversation, metadata: metadata)
         }
         
         confirmImageViewController.onCancel = { [unowned self] in
@@ -214,7 +214,7 @@ extension ConversationInputBarViewController: UIVideoEditorControllerDelegate {
                 return
             }
             
-            Analytics.shared()?.tagSentVideoMessage(inConversation: self.conversation, context: .cameraKeyboard, duration: duration)
+            Analytics.shared().tagSentVideoMessage(inConversation: self.conversation, context: .cameraKeyboard, duration: duration)
             self.uploadFile(at: NSURL(fileURLWithPath: path) as URL!)
         }
     }
@@ -234,7 +234,7 @@ extension ConversationInputBarViewController : CanvasViewControllerDelegate {
             self.dismiss(animated: true, completion: {
                 let imageData = UIImagePNGRepresentation(image)
                 self.sendController.sendMessage(withImageData: imageData, completion: {
-                    Analytics.shared()?.tagMediaSentPictureSourceSketch(inConversation: self.conversation, sketchSource: canvasViewController.source)
+                    Analytics.shared().tagMediaSentPictureSourceSketch(inConversation: self.conversation, sketchSource: canvasViewController.source)
                 })
             })
         }

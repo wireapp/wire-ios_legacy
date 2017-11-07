@@ -20,7 +20,8 @@
 #import "ZMUser+Additions.h"
 #import "WireSyncEngine+iOS.h"
 #import "UIColor+WAZExtensions.h"
-#import "Analytics+iOS.h"
+#import "Analytics.h"
+#import "Analytics+SearchEvents.h"
 #import "ColorScheme.h"
 
 ZMUser *BareUserToUser(id bareUser) {

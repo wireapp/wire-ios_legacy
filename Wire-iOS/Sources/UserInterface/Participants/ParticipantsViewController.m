@@ -37,7 +37,7 @@
 #import "ZetaIconTypes.h"
 #import "ProfileNavigationControllerDelegate.h"
 
-#import "Analytics+iOS.h"
+#import "Analytics.h"
 #import "AnalyticsTracker.h"
 #import "AnalyticsTracker+Invitations.h"
 
@@ -166,7 +166,6 @@ static NSString *const ParticipantHeaderReuseIdentifier = @"ParticipantListHeade
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    [[Analytics shared] tagScreen:@"CONVERSATION_PARTICIPANTS"];
     self.headerView.topButtonsHidden = NO;
     [[UIApplication sharedApplication] wr_updateStatusBarForCurrentControllerAnimated:YES];
 }
@@ -270,7 +269,6 @@ static NSString *const ParticipantHeaderReuseIdentifier = @"ParticipantListHeade
     } else {
         [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
     }
-    [[Analytics shared] tagScreen:@"MAIN"];
 }
 
 - (void)setConversation:(ZMConversation *)conversation
@@ -529,9 +527,7 @@ static NSString *const ParticipantHeaderReuseIdentifier = @"ParticipantListHeade
     addParticipantsViewController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
     addParticipantsViewController.delegate = self;
     
-    [self presentViewController:addParticipantsViewController animated:YES completion:^{
-        [[Analytics shared] tagScreenInviteContactList];
-    }];
+    [self presentViewController:addParticipantsViewController animated:YES completion:nil];
 }
 
 /// Returns whether the conversation name was valid and could be set as the new name.

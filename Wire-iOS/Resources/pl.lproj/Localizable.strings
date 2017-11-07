@@ -559,8 +559,13 @@
 "self.new_device_alert.trust_devices" = "OK";
 
 // Settings - top level
-"self.settings.create_team.title" = "Create Team";
-"self.settings.add_account.title" = "Add Account";
+"self.settings.create_team.title" = "Utwórz nowy zespół";
+"self.settings.manage_team.title" = "Zarządzaj zespołem";
+"self.settings.add_team_or_account.title" = "Nowy zespół lub konto";
+"self.settings.add_account.title" = "Dodaj konto";
+
+"self.settings.add_account.error.title" = "Three accounts active";
+"self.settings.add_account.error.message" = "You can only be logged in with three accounts at once. Log out from one to add another.";
 
 // Settings - Account details
 "self.settings.account_section" = "Konto";
@@ -666,7 +671,7 @@
 "self.settings.callkit.description" = "Show Wire calls on the lock screen and in iOS call history. If iCloud is enabled, call history is shared with Apple.";
 
 "self.settings.cbr.not_available" = "Constant Bit Rate Encoding";
-"self.settings.cbr.not_available.description" = "Constant bit rate calls have been temporarily disabled with the introduction of multiple account support. CBR calls will be back soon.";
+"self.settings.cbr.not_available.description" = "Stała przepływność (CBR) połączenia zostały tymczasowo wyłączone wraz z wprowadzeniem obsługi wielu kont. Połączenia CBR będą przywrócone wkrótce.";
 
 "self.settings.vbr.title" = "Kodowanie o zmiennej przepływności (VBR)";
 "self.settings.vbr.description" = "Zmniejsza ilość danych używanych przez połączenia głosowe, dzięki czemu działają one lepiej w powolnych sieciach. Wyłącz, aby używać kodowania o stałej przepływności (CBR).";
@@ -903,7 +908,7 @@
 "error.user.registration_unknown_error" = "Coś poszło nie tak. Spróbuj ponownie.";
 "error.user.device_deleted_remotely" = "Zostałeś wylogowany na tym urządzeniu!";
 "error.user.last_identity_cant_be_deleted" = "Adres e-mail lub numer telefonu jest wymagany.";
-"error.user.account_suspended" = "This account is no longer authorized to log in.";
+"error.user.account_suspended" = "To konto jest już uprawnione do zalogowania się.";
 "error.user.account_limit_reached" = "You can't add more than 3 accounts.";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++

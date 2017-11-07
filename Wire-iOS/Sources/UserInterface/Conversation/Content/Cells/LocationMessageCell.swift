@@ -160,7 +160,7 @@ public final class LocationMessageCell: ConversationCell {
         message?.locationMessageData?.openInMaps(with: mapView.region.span)
         guard let conversation = message.conversation else { return }
         let sentBySelf = message.sender?.isSelfUser ?? false
-        Analytics.shared()?.tagMediaOpened(.location, inConversation: conversation, sentBySelf: sentBySelf)
+        Analytics.shared().tagMediaOpened(.location, inConversation: conversation, sentBySelf: sentBySelf)
     }
     
     open override func messageType() -> MessageType {

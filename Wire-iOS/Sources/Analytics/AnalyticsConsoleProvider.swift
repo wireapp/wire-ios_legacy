@@ -25,7 +25,7 @@ fileprivate let tag = "<ANALYTICS>:"
     let zmLog = ZMSLog(tag: tag)
     var optedOut = false
 
-    public required init!(launchOptions: [AnyHashable : Any]! = [:]) {
+    public required override init() {
         super.init()
         ZMSLog.set(level: .info, tag: tag)
     }
@@ -52,51 +52,29 @@ extension AnalyticsConsoleProvider: AnalyticsProvider {
         }
     }
     
-    func tagScreen(_ screen: String!) {
-        if screen != nil {
-            print(loggingData:["screen" : screen])
-        }
-    }
-    
-    func tagEvent(_ event: String!) {
-        tagEvent(event, attributes: [:])
-    }
-    
-    func tagEvent(_ event: String!, attributes: [AnyHashable : Any]! = [:]) {
-        tagEvent(event, attributes: attributes, customerValueIncrease: nil)
-    }
-    
-    func tagEvent(_ event: String!, attributes: [AnyHashable : Any]! = [:], customerValueIncrease: NSNumber!) {
-        var printableAttributes = [AnyHashable : Any]()
+    func tagEvent(_ event: String, attributes: [String : Any] = [:]) {
         
-        if attributes != nil {
-            printableAttributes = attributes
-        }
+        let printableAttributes = attributes
         
         var loggingDict = [String : Any]()
         
-        if event != nil {
-            loggingDict["event"] = event
-        }
+        loggingDict["event"] = event
         
         if !printableAttributes.isEmpty {
             var localAttributes = [String : String]()
             printableAttributes.map({ (key, value) -> (String, String) in
-                return (key as! String, (value as AnyObject).description!)
+                return (key, (value as AnyObject).description!)
             }).forEach({ (key, value) in
                 localAttributes[key] = value
             })
             loggingDict["attributes"] = localAttributes
         }
         
-        if customerValueIncrease != nil {
-            loggingDict["customerValueIncrease"] = customerValueIncrease.description
-        }
         print(loggingData: loggingDict)
     }
     
-    func setCustomDimension(_ dimension: Int32, value: String!) {
-        print(loggingData: ["customeDimension_\(dimension)" : value])
+    func setSuperProperty(_ name: String, value: String?) {
+        print(loggingData: ["superProperty_\(name)" : value ?? "nil"])
     }
 
 }

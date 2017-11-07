@@ -95,7 +95,7 @@
 
 - (NSDictionary *)attributesParticipantsInConversation:(ZMConversation *)conversation
 {
-    return @{ @"conversation_participants" : @(conversation.activeParticipants.count) };
+    return @{ @"conversation_participants" : [NSString stringWithFormat:@"%lu", (unsigned long)conversation.activeParticipants.count] };
 }
 
 - (NSDictionary *)attributesForConversation:(ZMConversation *)conversation
@@ -124,7 +124,7 @@
     TimeIntervalClusterizer *clusterizer = [TimeIntervalClusterizer callSetupDurationClusterizer];
     
     return @{ @"setup_time" : [clusterizer clusterizeTimeInterval:duration],
-              @"setup_time_actual" : @(ceil(duration)) };
+              @"setup_time_actual" : [NSString stringWithFormat:@"%.02f", duration]};
 }
 
 - (NSDictionary *)attributesForCallDuration:(NSTimeInterval)duration

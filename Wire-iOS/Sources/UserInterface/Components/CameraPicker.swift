@@ -106,7 +106,7 @@ extension CameraPicker: UIImagePickerControllerDelegate, UINavigationControllerD
                 return
             }
             
-            let videoTempPath = NSTemporaryDirectory().appendingPathComponent(NSString.filenameForSelfUser() as String).appendingPathExtension(videoURL.pathExtension)!
+            let videoTempPath = NSTemporaryDirectory().appendingPathComponent(String.filenameForSelfUser()).appendingPathExtension(videoURL.pathExtension)!
             let videoTempURL = URL(fileURLWithPath: videoTempPath)
             let fileManager = FileManager.default
             

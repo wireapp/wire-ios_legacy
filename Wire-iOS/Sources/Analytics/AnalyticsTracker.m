@@ -18,7 +18,7 @@
 
 
 #import "AnalyticsTracker.h"
-#import "Analytics+iOS.h"
+#import "Analytics.h"
 
 NSString *const AnalyticsContextKey = @"context";
 NSString *const AnalyticsMethodKey = @"method";
@@ -32,64 +32,11 @@ NSString *const AnalyticsContextPostLogin = @"post_login";
 NSString *const AnalyticsContextConversation = @"conversation";
 NSString *const AnalyticsContextRegistrationPhone = @"phone";
 NSString *const AnalyticsContextRegistrationEmail = @"email";
-NSString *const AnalyticsContextRegistrationGenericInvitePhone = @"generic_invite_phone";
-NSString *const AnalyticsContextRegistrationGenericInviteEmail = @"generic_invite_email";
-NSString *const AnalyticsContextRegistrationPersonalInvitePhone = @"personal_invite_phone";
-NSString *const AnalyticsContextRegistrationPersonalInviteEmail = @"personal_invite_email";
-
-
-#pragma mark - AnalyticsTrigger
-NSString *const AnalyticsTriggerKey = @"trigger";
-NSString *const AnalyticsTriggerTypeCLI = @"cli";
-NSString *const AnalyticsTriggerTypeButton = @"button";
 
 #pragma mark - AnalyticsEventTypes
 
-NSString *const AnalyticsEventTypeEditSelfUser = @"EditSelfUser";
-NSString *const AnalyticsEventTypeNavigation = @"Navigation";
 NSString *const AnalyticsEventTypePermissions = @"PermissionRequested";
 NSString *const AnalyticsEventTypeMedia = @"Media";
-
-#pragma mark - AnalyticsEventTypeEditSelfUser
-
-NSString *const AnalyticsEventTypeEditSelfUserFieldKey = @"field";
-NSString *const AnalyticsEventTypeEditSelfUserActionKey = @"action";
-NSString *const AnalyticsEventTypeEditSelfUserComponentsKey = @"components";
-
-NSString *const AnalyticsEventTypeEditSelfUserFieldName = @"name";
-NSString *const AnalyticsEventTypeEditSelfUserFieldEmail = @"email";
-NSString *const AnalyticsEventTypeEditSelfUserFieldPassword = @"password";
-NSString *const AnalyticsEventTypeEditSelfUserFieldPhoneNumber = @"phoneNumber";
-NSString *const AnalyticsEventTypeEditSelfUserFieldPicture = @"picture";
-NSString *const AnalyticsEventTypeEditSelfUserFielTermsOfUse = @"termsOfUse";
-
-NSString *const AnalyticsEventTypeEditSelfUserActionAdded = @"added";
-NSString *const AnalyticsEventTypeEditSelfUserActionModified = @"modified";
-
-#pragma mark - AnalyticsEventTypeTheme
-
-NSString *const AnalyticsEventTypeTheme = @"Theme";
-NSString *const AnalyticsEventTypeThemeSelectedKey = @"selected";
-NSString *const AnalyticsEventTypeThemeLight = @"light";
-NSString *const AnalyticsEventTypeThemeDark = @"dark";
-
-#pragma mark - AnalyticsEventTypeMessage
-
-NSString *const AnalyticsEventTypeMessageKeyState = @"state";
-NSString *const AnalyticsEventTypeMessageKeyKind = @"kind";
-NSString *const AnalyticsEventTypeMessageKeySource= @"source";
-
-#pragma mark - AnalyticsEventTypeNavigation
-
-NSString *const AnalyticsEventTypeNavigationActionKey = @"action";
-NSString *const AnalyticsEventTypeNavigationViewKey = @"view";
-
-NSString *const AnalyticsEventTypeNavigationActionEntered = @"entered";
-NSString *const AnalyticsEventTypeNavigationActionExited = @"exited";
-NSString *const AnalyticsEventTypeNavigationActionSkipped = @"skipped";
-
-NSString *const AnalyticsEventTypeNavigationViewFindFriends = @"findFriends";
-NSString *const AnalyticsEventTypeNavigationViewOSSettings = @"osSettings";
 
 #pragma mark - AnalyticsEventTypePermissions
 
@@ -97,7 +44,6 @@ NSString *const AnalyticsEventTypePermissionsCategoryKey = @"category";
 NSString *const AnalyticsEventTypePermissionsStateKey = @"state";
 
 NSString *const AnalyticsEventTypePermissionsCategoryCamera = @"camera";
-NSString *const AnalyticsEventTypePermissionsCategoryPhotoLibrary = @"photoLibrary";
 NSString *const AnalyticsEventTypePermissionsCategoryPushNotifications = @"pushNotifications";
 
 NSString *const AnalyticsEventTypePermissionsStateAllowed = @"allowed";
@@ -125,7 +71,6 @@ NSString *const AnalyticsEventInviteContactListOpened = @"connect.opened_invite_
 NSString *const AnalyticsEventInvitationSentToAddressBook = @"connect.sent_invite_to_contact";
 NSString *const AnalyticsEventInvitationSentToAddressBookMethodEmail = @"email";
 NSString *const AnalyticsEventInvitationSentToAddressBookMethodPhone = @"phone";
-NSString *const AnalyticsEventInvitationSentToAddressBookIsResend = @"is_resend";
 NSString *const AnalyticsEventInvitationSentToAddressBookFromSearch = @"from_search";
 NSString *const AnalyticsEventOpenedMenuForGenericInvite = @"connect.opened_generic_invite_menu";
 NSString *const AnalyticsEventAcceptedGenericInvite = @"connect.accepted_generic_invite";
@@ -133,7 +78,6 @@ NSString *const AnalyticsEventAcceptedGenericInvite = @"connect.accepted_generic
 
 @interface AnalyticsTracker ()
 
-@property (nonatomic, strong) NSMutableSet *sentEvents;
 @property (nonatomic, copy) NSString *context;
 
 @end
@@ -160,13 +104,6 @@ NSString *const AnalyticsEventAcceptedGenericInvite = @"connect.accepted_generic
 
 #pragma mark - Tagging Methods
 
-- (void)tagEventOnlyOnce:(NSString *) event attributes:(NSDictionary *)attributes
-{
-    if (! [self checkEventWasTaggedAndMarkTagged:event]) {
-        [self tagEvent:event attributes:attributes];
-    }
-}
-
 - (void)tagEvent:(NSString *) event
 {
     [self tagEvent:event attributes:@{}];
@@ -186,17 +123,6 @@ NSString *const AnalyticsEventAcceptedGenericInvite = @"connect.accepted_generic
     }
         
     [[Analytics shared] tagEvent:event attributes:[contextAttributes copy]];
-}
-
-- (BOOL)checkEventWasTaggedAndMarkTagged:(NSString *) event
-{
-    if ([self.sentEvents containsObject:event]) {
-        return YES;
-    }
-    else {
-        [self.sentEvents addObject:event];
-        return NO;
-    }
 }
 
 @end

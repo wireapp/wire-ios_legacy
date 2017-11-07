@@ -41,7 +41,7 @@ NSString *const MediaManagerSoundCamera = @"camera";
 NSString *const MediaManagerSoundSomeoneLeavesVoiceChannelSound = @"talk_later";
 
 void MediaManagerPlayAlert(void) {
-    [[[AVSProvider shared] mediaManager] playSound:MediaManagerSoundAlert];
+    [AVSMediaManager.sharedInstance playSound:MediaManagerSoundAlert];
 }
 
 static NSDictionary *MediaManagerSoundConfig = nil;
@@ -86,7 +86,7 @@ static NSDictionary *MediaManagerSoundConfig = nil;
         MediaManagerSoundConfig = soundConfig;
     }
     
-    AVSMediaManager *mediaManager = [[AVSProvider shared] mediaManager];
+    AVSMediaManager *mediaManager = AVSMediaManager.sharedInstance;
     
     [mediaManager registerUrl:nil forMedia:MediaManagerSoundFirstMessageReceivedSound];
     [mediaManager registerUrl:nil forMedia:MediaManagerSoundMessageReceivedSound];

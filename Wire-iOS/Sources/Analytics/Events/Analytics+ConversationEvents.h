@@ -18,7 +18,7 @@
 
 
 #import <Foundation/Foundation.h>
-#import "AnalyticsBase.h"
+#import "Analytics.h"
 
 typedef NS_ENUM(NSUInteger, SelectionType) {
     SelectionTypeSingle,

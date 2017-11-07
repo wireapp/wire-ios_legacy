@@ -18,7 +18,7 @@
 
 
 #import <Foundation/Foundation.h>
-#import "AnalyticsBase.h"
+#import "Analytics.h"
 
 
 
@@ -53,8 +53,6 @@ NSString *PictureUploadTypeToString(PictureUploadType uploadType);
 - (void)tagHelp;
 - (void)tagProfilePictureFromSource:(PictureUploadType)type;
 - (void)tagViewedTOSFromPage:(TOSOpenedFromType)type;
-- (void)tagViewedPrivacyPolicy;
-- (void)tagViewedLicenseInformation;
 - (void)tagViewedFingerprintLearnMore;
 - (void)tagSendInviteViaMethod:(NSString *)method;
 - (void)tagSendInviteCanceled;

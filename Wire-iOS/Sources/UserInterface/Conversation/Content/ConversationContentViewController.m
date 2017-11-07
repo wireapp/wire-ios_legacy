@@ -46,7 +46,7 @@
 
 @import PureLayout;
 #import "UIView+Zeta.h"
-#import "Analytics+iOS.h"
+#import "Analytics.h"
 #import "UIViewController+Orientation.h"
 #import "AppDelegate.h"
 #import "MediaPlaybackManager.h"
@@ -60,7 +60,6 @@
 #import "StopWatch.h"
 #import "ImageMessageCell.h"
 
-#import "AnalyticsTracker+Sketchpad.h"
 #import "AnalyticsTracker+FileTransfer.h"
 
 #import "Wire-Swift.h"
@@ -574,7 +573,8 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
         [[ZMUserSession sharedSession] enqueueChanges:^{
             [self.conversation appendMessageWithImageData:imageData];
         } completionHandler:^{
-            [[Analytics shared] tagMediaActionCompleted:ConversationMediaActionSketch inConversation:self.conversation];
+            [[Analytics shared] tagMediaAction:ConversationMediaActionPhoto inConversation:self.conversation];
+            [[Analytics shared] tagMediaActionCompleted:ConversationMediaActionPhoto inConversation:self.conversation];
             [[Analytics shared] tagMediaSentPictureSourceSketchInConversation:self.conversation sketchSource:ConversationMediaSketchSourceImageFullView];
         }];
     }

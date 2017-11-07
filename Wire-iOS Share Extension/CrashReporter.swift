@@ -45,10 +45,10 @@ class CrashReporter {
     private static var hockeyEnabled: Bool {
         let configUseHockey = wr_useHockey() // The preprocessor macro USE_HOCKEY (from the .xcconfig files)
         let automationUseHockey = AutomationHelper.sharedHelper.useHockey // Command line argument used by automation
-        let settingsDisableHockey = ExtensionSettings.shared.disableHockey // Developer option menu toggle
+        let settingsDisableCrashAndAnalyticsSharing = ExtensionSettings.shared.disableCrashAndAnalyticsSharing // Developer option menu toggle
 
         return (automationUseHockey || (!automationUseHockey && configUseHockey))
-            && !settingsDisableHockey
+            && !settingsDisableCrashAndAnalyticsSharing
     }
     
 }

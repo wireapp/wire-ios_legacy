@@ -220,7 +220,7 @@ import CocoaLumberjackSwift
     func finishedDeleting(_ remainingClients: [UserClient]!) {
         self.showLoadingView = false
         self.clients = remainingClients
-        Analytics.shared()?.tagDeleteDevice()
+        Analytics.shared().tagDeleteDevice()
     }
     
     func failedToDeleteClientsWithError(_ error: Error!) {

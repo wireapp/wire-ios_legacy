@@ -20,7 +20,6 @@
 #import <UIKit/UIKit.h>
 
 #import "CountryCodeBaseTableViewController.h"
-#import "AnalyticsTracker+Navigation.h"
 
 
 @protocol CountryCodeTableViewControllerDelegate <NSObject>

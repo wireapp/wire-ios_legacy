@@ -30,7 +30,7 @@
 
 // helpers
 #import "WAZUIMagicIOS.h"
-#import "Analytics+iOS.h"
+#import "Analytics.h"
 
 
 // model
@@ -599,9 +599,7 @@
     popoverPresentationController.sourceRect = button.bounds;
     popoverPresentationController.delegate = addParticipantsViewController;
 
-    [self presentViewController:addParticipantsViewController animated:YES completion:^() {
-        [[Analytics shared] tagScreenInviteContactList];
-    }];
+    [self presentViewController:addParticipantsViewController animated:YES completion:nil];
 }
 
 - (void)conversationContentViewController:(ConversationContentViewController *)contentViewController didTriggerResendingMessage:(id <ZMConversationMessage>)message
@@ -788,14 +786,11 @@
 
 - (void)profileViewControllerWantsToBeDismissed:(ProfileViewController *)profileViewController completion:(dispatch_block_t)completion
 {
-    [[Analytics shared] tagScreen:@"MAIN"];
     [self dismissViewControllerAnimated:YES completion:completion];
 }
 
 - (void)profileViewController:(ProfileViewController *)controller wantsToNavigateToConversation:(ZMConversation *)conversation
 {
-    [[Analytics shared] tagScreen:@"MAIN"];
-
     [self dismissViewControllerAnimated:YES completion:^{
         [self.zClientViewController selectConversation:conversation
                                            focusOnView:YES
@@ -805,8 +800,6 @@
 
 - (void)profileViewController:(ProfileViewController *)controller wantsToAddUsers:(NSSet *)users toConversation:(ZMConversation *)conversation
 {
-    [[Analytics shared] tagScreen:@"MAIN"];
-
     [self dismissViewControllerAnimated:YES completion:^{
         [self addParticipants:users];
     }];

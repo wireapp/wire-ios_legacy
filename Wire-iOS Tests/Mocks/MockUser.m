@@ -87,12 +87,6 @@ static id<ZMBareUser> mockSelfUser = nil;
     return newClients;
 }
 
-- (NSString *)filename
-{
-    return @"dummy.txt";
-}
-
-
 - (NSString *)emailAddress
 {
     return @"test@email.com";
@@ -199,17 +193,13 @@ static id<ZMBareUser> mockSelfUser = nil;
     // no-op
 }
 
-- (NSSet *)teams
-{
-    return [NSSet set];
-}
-
- - (Team *)activeTeam
+- (Team *)team
 {
     return nil;
 }
-    
-- (BOOL)isPendingApproval {
+
+- (BOOL)isPendingApproval
+{
     return false;
 }
 

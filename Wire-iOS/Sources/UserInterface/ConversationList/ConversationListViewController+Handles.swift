@@ -41,7 +41,7 @@ extension ConversationListViewController {
             takeover.edges == view.edges
         }
 
-        Analytics.shared()?.tag(UserNameEvent.Takeover.shown)
+        Analytics.shared().tag(UserNameEvent.Takeover.shown)
 
         guard traitCollection.userInterfaceIdiom == .pad else { return }
         ZClientViewController.shared()?.loadPlaceholderConversationController(animated: false)
@@ -99,7 +99,7 @@ extension ConversationListViewController: UserNameTakeOverViewControllerDelegate
     }
 
     private func tagEvent(for action: UserNameTakeOverViewControllerAction) {
-        Analytics.shared()?.tag(event(for: action))
+        Analytics.shared().tag(event(for: action))
     }
 
     private func event(for action: UserNameTakeOverViewControllerAction) -> UserNameEvent.Takeover {

@@ -165,7 +165,7 @@ open class CollectionCell: UICollectionViewCell, Reusable {
         menuController.setTargetRect(menuConfigurationProperties.targetRect, in: menuConfigurationProperties.targetView)
         menuController.setMenuVisible(true, animated: true)
         
-        Analytics.shared()?.tagCollectionOpenItemMenu(for: message.conversation!, itemType: CollectionItemType(message: message))
+        Analytics.shared().tagCollectionOpenItemMenu(for: message.conversation!, itemType: CollectionItemType(message: message))
     }
     
     override open var canBecomeFirstResponder: Bool {
@@ -205,7 +205,7 @@ open class CollectionCell: UICollectionViewCell, Reusable {
         guard let message = self.message else {
             return
         }
-        Analytics.shared()?.tagCollectionDidItemAction(for: message.conversation!, itemType: CollectionItemType(message: message), action: .forward)
+        Analytics.shared().tagCollectionDidItemAction(for: message.conversation!, itemType: CollectionItemType(message: message), action: .forward)
     }
     
     func showInConversation(_ sender: AnyObject!) {
@@ -213,7 +213,7 @@ open class CollectionCell: UICollectionViewCell, Reusable {
         guard let message = self.message else {
             return
         }
-        Analytics.shared()?.tagCollectionDidItemAction(for: message.conversation!, itemType: CollectionItemType(message: message), action: .goto)
+        Analytics.shared().tagCollectionDidItemAction(for: message.conversation!, itemType: CollectionItemType(message: message), action: .goto)
     }
 }
 

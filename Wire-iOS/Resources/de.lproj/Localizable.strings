@@ -97,7 +97,7 @@
 "conversation_list.voiceover.status.pending_connection" = "wird überprüft";
 "conversation_list.voiceover.status.active_call" = "Aktiver Anruf";
 "conversation_list.voiceover.status.missed_call" = "Entgangener Anruf";
-"conversation_list.voiceover.status.pause_media" = "stoppe Medien";
+"conversation_list.voiceover.status.pause_media" = "pausiere Medien";
 "conversation_list.voiceover.status.play_media" = "Medien abspielen";
 "conversation_list.voiceover.status.silenced" = "Schweigen";
 "conversation_list.voiceover.status.typing" = "tippt";
@@ -560,7 +560,12 @@
 
 // Settings - top level
 "self.settings.create_team.title" = "Team erstellen";
-"self.settings.add_account.title" = "Benutzerkonto hinzufügen";
+"self.settings.manage_team.title" = "Team verwalten";
+"self.settings.add_team_or_account.title" = "Neues Team oder Konto";
+"self.settings.add_account.title" = "Konto hinzufügen";
+
+"self.settings.add_account.error.title" = "Drei Benutzerkonten sind aktiv";
+"self.settings.add_account.error.message" = "Du kannst zugleich mit drei Benutzerkonten angemeldet sein. Logge dich aus einem aus, um ein neues Konto hinzuzufügen.";
 
 // Settings - Account details
 "self.settings.account_section" = "Benutzerkonto";
@@ -663,7 +668,7 @@
 
 "self.settings.callkit.title" = "Anrufe";
 "self.settings.callkit.caption" = "Mit iOS teilen";
-"self.settings.callkit.description" = "Zeige Wire Anrufe auf dem Sperrbildschirm und in der iOS Anrufhistorie. Wenn iCloud aktiviert ist wird die Anrufhistorie mit Apple geteilt.";
+"self.settings.callkit.description" = "Zeige Wire Anrufe auf dem Sperrbildschirm und in der iOS-Anrufhistorie. Wenn iCloud aktiviert ist, wird die Anrufhistorie mit Apple geteilt.";
 
 "self.settings.cbr.not_available" = "Constant Bit Rate Encoding";
 "self.settings.cbr.not_available.description" = "Die Option für Constant Bit Rate bei Anrufen ist vorübergehend nicht verfügbar, bedingt durch die neue Mehrkontenfähigkeit der App. CBR kommt aber bald wieder.";
@@ -904,7 +909,7 @@
 "error.user.device_deleted_remotely" = "Du wurdest durch ein anderes Gerät abgemeldet.";
 "error.user.last_identity_cant_be_deleted" = "Es ist entweder eine E-Mail-Adresse oder eine Telefonnummer erforderlich.";
 "error.user.account_suspended" = "Benutzerkonto ist nicht mehr zum Login berechtigt.";
-"error.user.account_limit_reached" = "You can't add more than 3 accounts.";
+"error.user.account_limit_reached" = "Du kannst nicht mehr als 3 Benutzerkonten hinzufügen.";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Those are caught by the UI without involving the SE validation. Basically very similar to ZMUserSessionErrorCode onces

@@ -25,7 +25,7 @@
 #import "UIFont+MagicAccess.h"
 #import "InviteContactsViewController.h"
 #import "UIViewController+WR_Invite.h"
-#import "Analytics+iOS.h"
+#import "Analytics.h"
 #import "AnalyticsTracker+Invitations.h"
 
 @interface InviteBannerViewController () <ContactsViewControllerDelegate>
@@ -107,7 +107,6 @@
     inviteContactsViewController.analyticsTracker = [AnalyticsTracker analyticsTrackerWithContext:NSStringFromInviteContext(InviteContextConversationList)];
     inviteContactsViewController.modalPresentationStyle = UIModalPresentationOverCurrentContext;
     [self presentViewController:inviteContactsViewController animated:YES completion:^() {
-        [[Analytics shared] tagScreenInviteContactList];
         [inviteContactsViewController.analyticsTracker tagEvent:AnalyticsEventInviteContactListOpened];
     }];
 }

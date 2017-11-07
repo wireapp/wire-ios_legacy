@@ -16,15 +16,26 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-import WireDataModel
-import WireExtensionComponents
+import Foundation
 
-extension ZMUser {
-    var pov: PointOfView {
-        return self.isSelfUser ? .secondPerson : .thirdPerson
-    }
-    
-    var canManageTeam: Bool {
-        return self.membership?.permissions.contains(.owner) ?? false || self.membership?.permissions.contains(.admin) ?? false
+fileprivate let ZMEnableConsoleLog = "ZMEnableAnalyticsLog"
+
+@objc class AnalyticsProviderFactory: NSObject {
+    @objc public static let shared = AnalyticsProviderFactory()
+    @objc public static let ZMConsoleAnalyticsArgumentKey = "-ConsoleAnalytics"
+
+    @objc public var useConsoleAnalytics: Bool = false
+  
+    @objc public func analyticsProvider() -> AnalyticsProvider? {
+        if self.useConsoleAnalytics || UserDefaults.standard.bool(forKey: ZMEnableConsoleLog) {
+            return AnalyticsConsoleProvider()
+        }
+        else if UseAnalytics.boolValue {
+            return AnalyticsMixpanelProvider()
+        }
+        else {
+            return nil
+        }
     }
 }
+

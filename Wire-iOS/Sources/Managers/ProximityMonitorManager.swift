@@ -71,7 +71,7 @@ class ProximityMonitorManager : NSObject {
         })
         
         let hasOngoingCall = ongoingCalls.count > 0
-        let speakerIsEnabled = AVSProvider.shared.mediaManager?.isSpeakerEnabled ?? false
+        let speakerIsEnabled = AVSMediaManager.sharedInstance()?.isSpeakerEnabled ?? false
         
         UIDevice.current.isProximityMonitoringEnabled = !speakerIsEnabled && hasOngoingCall
     }

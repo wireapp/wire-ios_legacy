@@ -20,3 +20,9 @@
 "NSMicrophoneUsageDescription" = "Дозволити Wire доступ до вашого мікрофону для здійснення дзвінків та надсилання аудіоповідомлень.";
 "NSLocationWhenInUseUsageDescription" = "Дозволити Wire доступ до визначення вашого розташування, щоб можна було поділитися ним з іншими користувачами.";
 "NSCameraUsageDescription" = "Дозволити Wire доступ до вашої камери для здійснення відеодзвінків та надсилання фотографій.";
+/* Showed after taking a picture with camera, but only when NSPhotoLibraryUsageDescription permission was declined. Asks permission for only writing to photo library. */
+"NSPhotoLibraryAddUsageDescription" = "Дозволити Wire зберігати картинки у вашій фототеці.";
+/* Showed when trying to send picture from conversaiton list. Asks permissions for reading and writing to photo library */
+"NSPhotoLibraryUsageDescription" = "Надати Wire доступ до картинок, збережених у вашій фототеці.";
+/* Is shown to the user when app is locked with AppLock feature on the phone that supports Face ID */
+"NSFaceIDUsageDescription" = "Дозволити Wire доступ до функції Face ID, щоб авторизуватися в додатку.";

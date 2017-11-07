@@ -44,7 +44,7 @@
 #import "AppDelegate.h"
 
 #import "Constants.h"
-#import "Analytics+iOS.h"
+#import "Analytics.h"
 #import "AnalyticsTracker.h"
 #import "Settings.h"
 #import "StopWatch.h"
@@ -97,7 +97,7 @@
 
 - (void)dealloc
 {
-    [AVSProvider.shared.mediaManager unregisterMedia:self.mediaPlaybackManager];
+    [AVSMediaManager.sharedInstance unregisterMedia:self.mediaPlaybackManager];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
@@ -109,7 +109,7 @@
         self.mediaPlaybackManager = [[MediaPlaybackManager alloc] initWithName:@"conversationMedia"];
         self.messageCountTracker = [[LegacyMessageTracker alloc] initWithManagedObjectContext:ZMUserSession.sharedSession.syncManagedObjectContext];
 
-        [AVSProvider.shared.mediaManager registerMedia:self.mediaPlaybackManager withOptions:@{ @"media" : @"external "}];
+        [AVSMediaManager.sharedInstance registerMedia:self.mediaPlaybackManager withOptions:@{ @"media" : @"external "}];
         
         AddressBookHelper.sharedHelper.configuration = AutomationHelper.sharedHelper;
         
@@ -181,12 +181,6 @@
     self.conversationListViewController.view.frame = self.backgroundViewController.view.bounds;
     
     self.splitViewController.leftViewController = self.backgroundViewController;
-}
-
-- (void)viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:animated];
-    [[Analytics shared] tagScreen:@"MAIN"];
 }
 
 - (BOOL)shouldAutorotate

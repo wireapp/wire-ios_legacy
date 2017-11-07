@@ -18,7 +18,7 @@
 
 
 #import "Analytics+SearchEvents.h"
-#import "AnalyticsBase.h"
+#import "Analytics.h"
 #import "AnalyticsSearchResultEvent.h"
 #import "AnalyticsConnectionRequestEvent.h"
 

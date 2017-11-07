@@ -22,8 +22,8 @@
 #import "WireSyncEngine+iOS.h"
 #import "ZMUserSession+iOS.h"
 #import <AVFoundation/AVFoundation.h>
-#import "Analytics+iOS.h"
-#import "AnalyticsBase.h"
+#import "Analytics.h"
+#import "Analytics.h"
 #import "UIAlertController+Wire.h"
 #import "AppDelegate.h"
 #import "NotificationWindowRootViewController.h"

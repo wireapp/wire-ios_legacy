@@ -560,7 +560,12 @@
 
 // Settings - top level
 "self.settings.create_team.title" = "Створити команду";
+"self.settings.manage_team.title" = "Керування командою";
+"self.settings.add_team_or_account.title" = "New Team or Account";
 "self.settings.add_account.title" = "Додати акаунт";
+
+"self.settings.add_account.error.title" = "Three accounts active";
+"self.settings.add_account.error.message" = "You can only be logged in with three accounts at once. Log out from one to add another.";
 
 // Settings - Account details
 "self.settings.account_section" = "Акаунт";
@@ -904,7 +909,7 @@
 "error.user.device_deleted_remotely" = "Ви вийшли на іншому пристрої.";
 "error.user.last_identity_cant_be_deleted" = "Необхідна або email-адреса або номер телефону.";
 "error.user.account_suspended" = "Даний акаунт був заблокований.";
-"error.user.account_limit_reached" = "You can't add more than 3 accounts.";
+"error.user.account_limit_reached" = "Ви не можете додати більше трьох акаунтів.";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Those are caught by the UI without involving the SE validation. Basically very similar to ZMUserSessionErrorCode onces

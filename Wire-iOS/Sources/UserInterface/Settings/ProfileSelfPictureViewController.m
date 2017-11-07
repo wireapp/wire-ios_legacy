@@ -34,13 +34,12 @@
 
 #import "ImagePickerConfirmationController.h"
 #import "CameraViewController.h"
-#import "Analytics+iOS.h"
+#import "Analytics.h"
 #import "Constants.h"
 #import "UserImageView.h"
 #import "AppDelegate.h"
 
 #import "AnalyticsTracker.h"
-#import "AnalyticsTracker+SelfUser.h"
 
 #import "Wire-Swift.h"
 
@@ -172,8 +171,6 @@
 /// This should be called when the user has confirmed their intent to set their image to this data. No custom presentations should be in flight, all previous presentations should be completed by this point.
 - (void)setSelfImageToData:(NSData *)selfImageData
 {
-    [self.analyticsTracker tagPictureChanged];
-    
     // iOS11 uses HEIF image format, but BE expects JPEG
     NSData *jpegData = selfImageData.isJPEG ? selfImageData : UIImageJPEGRepresentation([UIImage imageWithData:selfImageData], 1.0);
     

@@ -32,7 +32,7 @@
 #import "ColorScheme.h"
 #import "UITableView+RowCount.h"
 #import "ContactsEmptyResultView.h"
-#import "Analytics+iOS.h"
+#import "Analytics.h"
 #import "AnalyticsTracker.h"
 #import "WireSyncEngine+iOS.h"
 #import "UIViewController+WR_Invite.h"

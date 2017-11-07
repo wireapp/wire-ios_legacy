@@ -173,7 +173,7 @@
 "conversation.status.removed_multiple" = "联系人已删除";
 "conversation.status.you_were_removed" = "你被删除";
 "conversation.status.you_left" = "您退出了";
-"conversation.status.started_conversation" = "%@正在输入";
+"conversation.status.started_conversation" = "%@开始了对话";
 "conversation.status.removed_users" = "%@移除了%@";
 "conversation.status.everyone_left" = "所有人都已离开";
 
@@ -501,7 +501,7 @@
 "profile_view.accessibility.team_name" = "团队名称";
 
 // Device list
-"profile.devices.title" = "設備";
+"profile.devices.title" = "设备";
 "profile.devices.fingerprint_message_unencrypted" = "%@使用旧版本的Wire，无法显示设备。";
 "profile.devices.fingerprint_message" = "Wire 给每一台设备一组唯一的指纹，并比较它与%@来验证您的对话。为什么要验证？";
 "profile.devices.fingerprint_message.link" = "为什么要验证对话？";
@@ -560,7 +560,12 @@
 
 // Settings - top level
 "self.settings.create_team.title" = "创建团队";
+"self.settings.manage_team.title" = "管理团队";
+"self.settings.add_team_or_account.title" = "新团队或帐户";
 "self.settings.add_account.title" = "添加帐户";
+
+"self.settings.add_account.error.title" = "Three accounts active";
+"self.settings.add_account.error.message" = "You can only be logged in with three accounts at once. Log out from one to add another.";
 
 // Settings - Account details
 "self.settings.account_section" = "帐户";
@@ -725,7 +730,7 @@
 "self.settings.privacy_security.disable_link_previews.title" = "创建链接预览";
 "self.settings.privacy_security.disable_link_previews.footer" = "仍会为其他人的链接显示预览";
 
-"self.settings.privacy_analytics_menu.devices.title" = "設備";
+"self.settings.privacy_analytics_menu.devices.title" = "设备";
 
 "self.settings.privacy_analytics_section.title" = "使用与崩溃报告";
 "self.settings.privacy_analytics.title" = "发送匿名数据";
@@ -849,7 +854,7 @@
 "registration.signin.email_button.title" = "电邮箱地址";
 "registration.signin.phone_button.title" = "电话";
 
-"registration.devices.title" = "設備";
+"registration.devices.title" = "设备";
 "registration.devices.active_list_header" = "其他已启用的设备";
 "registration.devices.current_list_header" = "当前设备";
 "registration.devices.active_list_subtitle" = "如果您不能识别以上设备，请立即移除并重设密码。";

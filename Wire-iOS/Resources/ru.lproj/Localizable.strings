@@ -560,7 +560,12 @@
 
 // Settings - top level
 "self.settings.create_team.title" = "Создать команду";
+"self.settings.manage_team.title" = "Управлять командой";
+"self.settings.add_team_or_account.title" = "Новая команда или аккаунт";
 "self.settings.add_account.title" = "Добавить аккаунт";
+
+"self.settings.add_account.error.title" = "Три активных аккаунта";
+"self.settings.add_account.error.message" = "Можно авторизоваться не более чем в трех аккаунтах одновременно. Выйдите из одного для добавления другого.";
 
 // Settings - Account details
 "self.settings.account_section" = "Аккаунт";

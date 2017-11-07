@@ -152,7 +152,7 @@ private let margin = (CGFloat(WAZUIMagic.float(forIdentifier: "content.left_marg
             switch buttonType {
             case .send: self.sendAudio(.afterPreview)
             case .play:
-                Analytics.shared()?.tagPreviewedAudioMessageRecording(.minimised)
+                Analytics.shared().tagPreviewedAudioMessageRecording(.minimised)
                 self.recorder.playRecording()
             case .stop: self.recorder.stopPlaying()
             }
@@ -364,7 +364,7 @@ private let margin = (CGFloat(WAZUIMagic.float(forIdentifier: "content.left_marg
     }
     
     func cancelButtonPressed(_ sender: IconButton) {
-        Analytics.shared()?.tagCancelledAudioMessageRecording()
+        Analytics.shared().tagCancelledAudioMessageRecording()
         
         recorder.stopPlaying()
         stopAndDeleteRecordingIfNeeded()
@@ -388,7 +388,7 @@ private let margin = (CGFloat(WAZUIMagic.float(forIdentifier: "content.left_marg
         AVSAudioEffectType.none.apply(url.path, outPath: effectPath) {
             url.path.deleteFileAtPath()
             
-            let filename = (NSString.filenameForSelfUser() as NSString).appendingPathExtension("m4a")!
+            let filename = String.filenameForSelfUser().appendingPathExtension("m4a")!
             let convertedPath = (NSTemporaryDirectory() as NSString).appendingPathComponent(filename)
             convertedPath.deleteFileAtPath()
             

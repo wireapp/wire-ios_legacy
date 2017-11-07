@@ -31,7 +31,7 @@ extension AppDelegate {
             ] as [String: Any]
             
             DispatchQueue.main.async {
-                Analytics.shared()?.tagEvent(name, attributes: attributes)
+                Analytics.shared().tagEvent(name, attributes: attributes)
             }
         })
     }

@@ -191,6 +191,9 @@ class AppRootViewController : UIViewController {
             executeAuthenticatedBlocks()
             let clientViewController = ZClientViewController()
             clientViewController.isComingFromRegistration = completedRegistration
+            
+            Analytics.shared().team = ZMUser.selfUser().team
+            
             viewController = clientViewController
         case .headless:
             viewController = LaunchImageViewController()
@@ -287,15 +290,15 @@ class AppRootViewController : UIViewController {
         }
     }
     
-    func configureMediaManager() {
-        guard !Settings.shared().disableAVS else { return }
+    func configureMediaManager() {        
+        guard let mediaManager = AVSMediaManager.sharedInstance() else {
+            return
+        }
         
-        let mediaManager = AVSProvider.shared.mediaManager
-        
-        mediaManager?.configureSounds()
-        mediaManager?.observeSoundConfigurationChanges()
-        mediaManager?.isMicrophoneMuted = false
-        mediaManager?.isSpeakerEnabled = false
+        mediaManager.configureSounds()
+        mediaManager.observeSoundConfigurationChanges()
+        mediaManager.isMicrophoneMuted = false
+        mediaManager.isSpeakerEnabled = false
     }
     
     func setupClassy(with windows: [UIWindow]) {

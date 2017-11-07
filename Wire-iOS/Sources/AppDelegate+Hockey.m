@@ -19,7 +19,7 @@
 
 #import "AppDelegate+Hockey.h"
 
-#import "Analytics+iOS.h"
+#import "Analytics.h"
 #import "Application+runDuration.h"
 #import "Settings.h"
 #import "Wire-Swift.h"
@@ -29,12 +29,12 @@
 - (void)setupHockeyWithCompletion:(dispatch_block_t)completed
 {
     BOOL userDefaultsUseHockey = AutomationHelper.sharedHelper.useHockey;
-    if ((userDefaultsUseHockey || (!userDefaultsUseHockey && USE_HOCKEY)) && ![[Settings sharedSettings] disableHockey]) {
+    if ((userDefaultsUseHockey || (!userDefaultsUseHockey && USE_HOCKEY))) {
         // see https://github.com/bitstadium/HockeySDK-iOS/releases/tag/4.0.1
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"kBITExcludeApplicationSupportFromBackup"];
         
         BITHockeyManager *hockeyManager = [BITHockeyManager sharedHockeyManager];
-        hockeyManager.disableCrashManager = [Analytics.shared isOptedOut];
+        hockeyManager.disableCrashManager = [[TrackingManager shared] disableCrashAndAnalyticsSharing];
         [hockeyManager configureWithIdentifier:@STRINGIZE(HOCKEY_APP_ID_KEY) delegate:self];
         [hockeyManager.authenticator setIdentificationType:BITAuthenticatorIdentificationTypeAnonymous];
         if (! [BITHockeyManager sharedHockeyManager].crashManager.didCrashInLastSession) {

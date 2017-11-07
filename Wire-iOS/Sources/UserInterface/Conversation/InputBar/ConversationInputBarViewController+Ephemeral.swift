@@ -44,7 +44,6 @@ extension ConversationInputBarViewController {
 
         // presenting
         if compactNotPresenting || regularNotPresenting {
-            trackEphemeralIfNeeded()
             if showPopover {
                 presentEphemeralControllerAsPopover()
             } else {
@@ -63,12 +62,6 @@ extension ConversationInputBarViewController {
         }
     }
     
-    fileprivate func trackEphemeralIfNeeded() {
-        if (conversation.messageDestructionTimeout == 0) {
-            Analytics.shared()?.tagMediaAction(.ephemeral, inConversation: conversation)
-        }
-    }
-
     private func presentEphemeralControllerAsPopover() {
         createEphemeralKeyboardViewController()
         ephemeralKeyboardViewController?.modalPresentationStyle = .popover
