@@ -33,7 +33,7 @@
 
 @interface UIViewController (RegistrationFormController)
 
-// Max size for iPad
+// Max size for iPad for full screen mode
 @property (nonatomic, readonly) CGSize maximumFormSize;
 - (RegistrationFormController *)registrationFormViewController;
 - (UIViewController *)registrationFormUnwrappedController;
