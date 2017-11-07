@@ -48,6 +48,8 @@ class ShareExtensionViewController: SLComposeServiceViewController {
     private var observer: SendableBatchObserver? = nil
     private weak var progressViewController: SendingProgressViewController? = nil
     
+    var netObserver = ShareExtensionNetworkObserver()
+    
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         setupObserver()
@@ -71,6 +73,8 @@ class ShareExtensionViewController: SLComposeServiceViewController {
         let activity = ExtensionActivity(attachments: allAttachments)
         sharingSession?.analyticsEventPersistence.add(activity.openedEvent())
         extensionActivity = activity
+        
+        NetworkStatus.add(netObserver)
     }
 
     override func viewWillAppear(_ animated: Bool) {
