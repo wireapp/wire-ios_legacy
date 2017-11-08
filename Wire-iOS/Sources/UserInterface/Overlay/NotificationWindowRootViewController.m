@@ -169,8 +169,7 @@
 
 - (void)updateAppearanceForOrientation:(UIInterfaceOrientation)orientation
 {
-    UITraitCollection *traits = [UIScreen mainScreen].traitCollection;
-    if (traits.userInterfaceIdiom == UIUserInterfaceIdiomPad && UIInterfaceOrientationIsLandscape(orientation)) {
+    if ([SizeClass isIPadLandscapeLayoutInFullScreenMode]) {
         CGFloat sidebarWidth = [WAZUIMagic cgFloatForIdentifier:@"framework.sidebar_width"];
         CGFloat rightMargin =  -([UIScreen mainScreen].bounds.size.width - sidebarWidth);
         self.networkActivityRightMargin.constant = rightMargin;
