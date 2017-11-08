@@ -59,7 +59,7 @@
             confirmImageViewController.image = image;
             confirmImageViewController.previewTitle = self.previewTitle;
             
-            if ([SizeClass isIPadInFullScreenMode]) {
+            if (IS_IPAD_FULLSCREEN) {
                 [confirmImageViewController.view setPopoverBorderEnabled:YES];
             }
             

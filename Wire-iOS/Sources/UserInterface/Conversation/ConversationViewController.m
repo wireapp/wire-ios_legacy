@@ -308,7 +308,7 @@
     [super viewDidAppear:animated];
     [self updateLeftNavigationBarItems];
 
-    if ([SizeClass isIPadInFullScreenMode]) {
+    if (IS_IPAD_FULLSCREEN) {
         [self becomeFirstResponder];
     }
     else if (self.isFocused) {
@@ -568,7 +568,7 @@
     // solves us the problem of the repositioning the popover after the keyboard destroys the layout and the we would re-position
     // the popover again
 
-    if (! [SizeClass isIPad] || [SizeClass isIPadLandscapeLayoutInFullScreenMode]) {
+    if (! IS_IPAD || IS_IPAD_LANDSCAPE_LAYOUT) {
         return;
     }
 

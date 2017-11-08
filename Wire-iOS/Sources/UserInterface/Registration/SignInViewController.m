@@ -113,7 +113,7 @@
 - (void)setupConstraints
 {
     [self.buttonContainer autoPinEdgeToSuperviewEdge:ALEdgeTop];
-    [self.buttonContainer autoSetDimension:ALDimensionHeight toSize:[SizeClass isIPadInFullScreenMode] ? 80 : 64];
+    [self.buttonContainer autoSetDimension:ALDimensionHeight toSize:IS_IPAD_FULLSCREEN ? 80 : 64];
     [self.buttonContainer autoAlignAxisToSuperviewAxis:ALAxisVertical];
     
     [self.emailSignInButton autoPinEdgeToSuperviewEdge:ALEdgeLeft];

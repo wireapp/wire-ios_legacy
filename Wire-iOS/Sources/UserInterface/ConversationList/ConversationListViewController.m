@@ -202,7 +202,7 @@
 {
     [super viewDidAppear:animated];
 
-    if (! [SizeClass isIPadInFullScreenMode]) {
+    if (! IS_IPAD_FULLSCREEN) {
         [Settings sharedSettings].lastViewedScreen = SettingsLastScreenList;
     }
     
@@ -663,7 +663,7 @@
 
 - (void)conversationList:(ConversationListContentController *)controller willSelectIndexPathAfterSelectionDeleted:(NSIndexPath *)conv
 {
-    if ([SizeClass isIPadPortraitLayoutInFullScreenMode]) {
+    if (IS_IPAD_PORTRAIT_LAYOUT) {
         [[ZClientViewController sharedZClientViewController] transitionToListAnimated:YES completion:nil];
     }
 }

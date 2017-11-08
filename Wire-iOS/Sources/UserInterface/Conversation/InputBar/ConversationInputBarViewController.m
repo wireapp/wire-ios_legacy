@@ -982,7 +982,7 @@
 {
     [[Analytics shared] tagMediaAction:ConversationMediaActionLocation inConversation:self.conversation];
     
-    LocationSelectionViewController *locationSelectionViewController = [[LocationSelectionViewController alloc] initForPopoverPresentation:[SizeClass isIPadInFullScreenMode]];
+    LocationSelectionViewController *locationSelectionViewController = [[LocationSelectionViewController alloc] initForPopoverPresentation:IS_IPAD_FULLSCREEN];
     locationSelectionViewController.modalPresentationStyle = UIModalPresentationPopover;
     UIPopoverPresentationController* popoverPresentationController = locationSelectionViewController.popoverPresentationController;
     popoverPresentationController.sourceView = sender.superview;

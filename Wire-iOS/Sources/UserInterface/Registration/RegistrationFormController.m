@@ -65,7 +65,7 @@
 
 - (void)createInitialConstraints
 {
-    if ([SizeClass isIPadInFullScreenMode]) {
+    if (IS_IPAD_FULLSCREEN) {
         
         [NSLayoutConstraint autoSetPriority:UILayoutPriorityDefaultHigh + 1 forConstraints:^{
             [self.viewController.view autoSetDimension:ALDimensionWidth toSize:self.viewController.maximumFormSize.width];

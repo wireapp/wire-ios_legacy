@@ -816,7 +816,7 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
 - (void)conversationCellDidTapOpenLikers:(ConversationCell *)cell
 {
     if ([Message hasLikers:cell.message]) {
-        ReactionsListViewController *reactionsListController = [[ReactionsListViewController alloc] initWithMessage:cell.message showsStatusBar:![SizeClass isIPadInFullScreenMode]];
+        ReactionsListViewController *reactionsListController = [[ReactionsListViewController alloc] initWithMessage:cell.message showsStatusBar:!IS_IPAD_FULLSCREEN];
         [self.parentViewController presentViewController:reactionsListController animated:YES completion:nil];
     }
 }

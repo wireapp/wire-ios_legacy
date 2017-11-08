@@ -189,7 +189,7 @@
     imagePickerController.mediaTypes = @[(__bridge NSString *) kUTTypeImage];
     imagePickerController.delegate = self.imagePickerConfirmationController;
     
-    if ([SizeClass isIPadInFullScreenMode]) {
+    if (IS_IPAD_FULLSCREEN) {
         imagePickerController.modalPresentationStyle = UIModalPresentationPopover;
         UIPopoverPresentationController *popover = imagePickerController.popoverPresentationController;
         popover.sourceRect = CGRectInset([sender bounds], 4, 4);

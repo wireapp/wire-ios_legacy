@@ -81,7 +81,7 @@
 
 - (void)deviceOrientationChanged:(NSNotification *)notification
 {
-    if ([SizeClass isIPadInFullScreenMode] && self.controllerToPresentOn != nil) {
+    if (IS_IPAD_FULLSCREEN && self.controllerToPresentOn != nil) {
         [[ZClientViewController sharedZClientViewController] transitionToListAnimated:NO completion:nil];
 
         if (self.viewToPresentOn != nil) {

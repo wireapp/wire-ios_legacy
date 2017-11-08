@@ -267,7 +267,7 @@ NSString *SplitLayoutObservableDidChangeToLayoutSizeNotification = @"SplitLayout
     if (traitCollection.horizontalSizeClass == UIUserInterfaceSizeClassCompact) {
         self.layoutSize = SplitViewControllerLayoutSizeCompact;
     }
-    else if ([SizeClass isIPadPortraitLayoutInFullScreenMode]) {
+    else if (IS_IPAD_PORTRAIT_LAYOUT) {
         self.layoutSize = SplitViewControllerLayoutSizeRegularPortrait;
     }
     else {
@@ -568,7 +568,7 @@ NSString *SplitLayoutObservableDidChangeToLayoutSizeNotification = @"SplitLayout
         return NO;
     }
     
-    if (self.leftViewControllerRevealed && ! [SizeClass isIPadInFullScreenMode]) {
+    if (self.leftViewControllerRevealed && ! IS_IPAD_FULLSCREEN) {
         return NO;
     }
     
@@ -581,7 +581,7 @@ NSString *SplitLayoutObservableDidChangeToLayoutSizeNotification = @"SplitLayout
         return;
     }
     
-    if (self.leftViewControllerRevealed && ! [SizeClass isIPadInFullScreenMode]) {
+    if (self.leftViewControllerRevealed && ! IS_IPAD_FULLSCREEN) {
         return;
     }
     

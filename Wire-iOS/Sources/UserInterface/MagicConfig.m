@@ -154,7 +154,7 @@ static NSString *const MagicConfigFileIPhone4           = @"iphone4.plist";
     
     NSArray *deviceConfig = nil;
     
-    if ([SizeClass isIPad]) {
+    if (IS_IPAD) {
         deviceConfig = [self configForIPad];
     }
     else if (IS_IPHONE_6 || IS_IPHONE_6_PLUS_OR_BIGGER) {
