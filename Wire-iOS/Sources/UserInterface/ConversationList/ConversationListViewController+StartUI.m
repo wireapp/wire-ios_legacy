@@ -128,10 +128,10 @@
                     [conversation onCreatedRemotely:^{
                         @strongify(self);
                         if (videoCall) {
-                            [conversation startVideoCallWithCompletionHandler:nil];
+                            [conversation startVideoCall];
                         }
                         else {
-                            [conversation startAudioCallWithCompletionHandler:nil];
+                            [conversation startAudioCall];
                         }
                         self.startCallToken = nil;
                     }];
@@ -155,7 +155,7 @@
                     self.startCallToken =
                     [conversation onCreatedRemotely:^{
                         @strongify(self);
-                        [conversation startAudioCallWithCompletionHandler:nil];
+                        [conversation startAudioCall];
                         self.startCallToken = nil;
                     }];
                     

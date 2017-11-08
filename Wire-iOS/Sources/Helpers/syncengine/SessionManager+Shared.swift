@@ -18,6 +18,7 @@
 
 import Foundation
 import WireSyncEngine
+import AVFoundation
 
 extension SessionManager {
     @objc static var shared : SessionManager? {
@@ -33,8 +34,9 @@ extension SessionManager {
         
         // TODO: CallKit only with 1 account
         let hasMultipleAccounts = self.accountManager.accounts.count > 1
+        let hasAudioPermissions = AVCaptureDevice.authorizationStatus(forMediaType: AVMediaTypeAudio) == AVAuthorizationStatus.authorized
     
-        if isCallKitEnabled && isCallKitSupported && !hasMultipleAccounts {
+        if isCallKitEnabled && isCallKitSupported && !hasMultipleAccounts && hasAudioPermissions {
             self.callNotificationStyle = .callKit
         }
         else {

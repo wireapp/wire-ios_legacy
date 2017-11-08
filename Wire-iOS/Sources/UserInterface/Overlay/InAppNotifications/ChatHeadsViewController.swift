@@ -119,6 +119,7 @@ class ChatHeadsViewController: UIViewController {
     
     private func shouldDisplay(note: ZMLocalNotification, conversationID: UUID, account: Account) -> Bool {
         
+        guard !Settings.shared().chatHeadsDisabled else { return false }
         guard let clientVC = ZClientViewController.shared() else { return false }
         
         // if call notification & in active account

@@ -153,13 +153,17 @@ final public class CollectionImageCell: CollectionCell {
         UIPasteboard.general.setMediaAsset(UIImage(data: imageData))
     }
     
+    var saveableImage : SavableImage?
+    
     func save(_ sender: AnyObject!) {
         guard let imageData = self.message?.imageMessageData?.imageData, let orientation = self.imageView.image?.imageOrientation else {
             return
         }
         
-        let savableImage = SavableImage(data: imageData, orientation: orientation)
-        savableImage.saveToLibrary()
+        saveableImage = SavableImage(data: imageData, orientation: orientation)
+        saveableImage?.saveToLibrary(withCompletion: { [weak self] in
+            self?.saveableImage = nil
+        })
     }
     
     fileprivate func loadImage() {

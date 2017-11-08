@@ -944,6 +944,7 @@
 		EEF28EEF1F168039007642E2 /* ConversationInputBarViewController+Markdown.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEF28EEE1F168039007642E2 /* ConversationInputBarViewController+Markdown.swift */; };
 		EF048ECF1FB2152E009D1A6F /* SizeClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF048ECE1FB2152E009D1A6F /* SizeClass.swift */; };
 		EF18C7E41F9E4DA00085A832 /* NSString+FileNameForZMUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF18C7E31F9E4DA00085A832 /* NSString+FileNameForZMUser.swift */; };
+		EF1EA4631FB0937000B53063 /* MockUser+filename.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF1EA4611FB0934D00B53063 /* MockUser+filename.swift */; };
 		F1141C971F5EB2DC005340B3 /* WireApplication.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1141C961F5EB2DC005340B3 /* WireApplication.swift */; };
 		F127BD571E262E9F0093B2F1 /* CollectionsViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F127BD561E262E9F0093B2F1 /* CollectionsViewControllerTests.swift */; };
 		F127BD5A1E2667170093B2F1 /* MockCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = F127BD581E265FB40093B2F1 /* MockCollection.swift */; };
@@ -2434,6 +2435,7 @@
 		EEF28EEE1F168039007642E2 /* ConversationInputBarViewController+Markdown.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ConversationInputBarViewController+Markdown.swift"; sourceTree = "<group>"; };
 		EF048ECE1FB2152E009D1A6F /* SizeClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SizeClass.swift; sourceTree = "<group>"; };
 		EF18C7E31F9E4DA00085A832 /* NSString+FileNameForZMUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSString+FileNameForZMUser.swift"; sourceTree = "<group>"; };
+		EF1EA4611FB0934D00B53063 /* MockUser+filename.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MockUser+filename.swift"; sourceTree = "<group>"; };
 		F1141C961F5EB2DC005340B3 /* WireApplication.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WireApplication.swift; sourceTree = "<group>"; };
 		F127BD561E262E9F0093B2F1 /* CollectionsViewControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionsViewControllerTests.swift; sourceTree = "<group>"; };
 		F127BD581E265FB40093B2F1 /* MockCollection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockCollection.swift; sourceTree = "<group>"; };
@@ -3809,6 +3811,7 @@
 				87D553661C86F0450026573C /* MockUserClient.h */,
 				87D553671C86F0450026573C /* MockUserClient.m */,
 				F127BD581E265FB40093B2F1 /* MockCollection.swift */,
+				EF1EA4611FB0934D00B53063 /* MockUser+filename.swift */,
 			);
 			path = Mocks;
 			sourceTree = "<group>";
@@ -6434,6 +6437,7 @@
 				1E18C2BC1AFBB7E00043F3CF /* EmoticonSubstitutionConfigurationTests.m in Sources */,
 				87DE06B41D2663960009411F /* AudioEffectsPickerViewControllerTests.swift in Sources */,
 				1E4B89E11B01E9DD0011BF43 /* NSString+EmoticonSubstitutionTests.m in Sources */,
+				EF1EA4631FB0937000B53063 /* MockUser+filename.swift in Sources */,
 				AF65A25C1D7E202D00EBA38E /* ReactionsListViewControllerTests.swift in Sources */,
 				874B5DB21CEDF7B80010474C /* AudioMessageCellTests.swift in Sources */,
 				87F6B6361D2E9CF500F057A5 /* EmojiOnlyStringTests.swift in Sources */,
