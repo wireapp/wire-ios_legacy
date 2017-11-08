@@ -61,7 +61,7 @@ class SoundEventListener : NSObject {
             return
         }
         
-        AVSProvider.shared.mediaManager?.playSound(name)
+        AVSMediaManager.sharedInstance()?.playSound(name)
     }
     
 }
@@ -132,7 +132,7 @@ extension SoundEventListener : WireCallCenterCallStateObserver {
     
     func callCenterDidChange(callState: CallState, conversation: ZMConversation, user: ZMUser?, timeStamp: Date?) {
         
-        guard let mediaManager = AVSProvider.shared.mediaManager,
+        guard let mediaManager = AVSMediaManager.sharedInstance(),
               let userSession = userSession,
               let callCenter = userSession.callCenter
         else {
