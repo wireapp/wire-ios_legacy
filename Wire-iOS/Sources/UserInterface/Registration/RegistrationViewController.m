@@ -300,7 +300,11 @@
 @implementation RegistrationViewController (UserSessionObserver)
 
 - (void)sessionManagerCreatedWithUserSession:(ZMUserSession *)userSession {
-    self.initialSyncObserverToken = [ZMUserSession addInitialSyncCompletionObserver:self userSession:[ZMUserSession sharedSession]];
+    // this method is called when a ZMUserSession is created, including background
+    // sessions. In this latter case, the active user session is not set, and may be nil.
+    if ([ZMUserSession sharedSession] != nil) {
+        self.initialSyncObserverToken = [ZMUserSession addInitialSyncCompletionObserver:self userSession:[ZMUserSession sharedSession]];
+    }
 }
 
 - (void)clientRegistrationDidSucceedWithAccountId:(NSUUID * _Nonnull)accountId
