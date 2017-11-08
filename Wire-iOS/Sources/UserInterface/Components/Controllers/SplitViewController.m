@@ -180,11 +180,14 @@ NSString *SplitLayoutObservableDidChangeToLayoutSizeNotification = @"SplitLayout
 {
     [super viewDidLoad];
 
-    self.leftView = [[UIView alloc] initWithFrame:[UIScreen mainScreen].bounds];
+    UIWindow * window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen]
+                                                         bounds]];
+
+    self.leftView = [[UIView alloc] initWithFrame:window.bounds];
     self.leftView.translatesAutoresizingMaskIntoConstraints = NO;
     [self.view addSubview:self.leftView];
     
-    self.rightView = [[UIView alloc] initWithFrame:[UIScreen mainScreen].bounds];
+    self.rightView = [[UIView alloc] initWithFrame:window.bounds];
     self.rightView.translatesAutoresizingMaskIntoConstraints = NO;
     self.rightView.backgroundColor = [UIColor wr_colorFromColorScheme:ColorSchemeColorBackground];
     [self.view addSubview:self.rightView];
@@ -568,7 +571,7 @@ NSString *SplitLayoutObservableDidChangeToLayoutSizeNotification = @"SplitLayout
         return NO;
     }
     
-    if (self.leftViewControllerRevealed && ! IS_IPAD) {
+    if (self.leftViewControllerRevealed && ! [SizeClass isIPadInFullScreenMode]) {
         return NO;
     }
     
@@ -581,7 +584,7 @@ NSString *SplitLayoutObservableDidChangeToLayoutSizeNotification = @"SplitLayout
         return;
     }
     
-    if (self.leftViewControllerRevealed && ! IS_IPAD) {
+    if (self.leftViewControllerRevealed && ! [SizeClass isIPadInFullScreenMode]) {
         return;
     }
     

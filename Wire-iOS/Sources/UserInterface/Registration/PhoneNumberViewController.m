@@ -258,7 +258,7 @@ static CGFloat PhoneNumberFieldTopMargin = 16;
     
     UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:countryCodeTableViewController];
     
-    if (IS_IPAD) {
+    if ([SizeClass isIPadInFullScreenMode]) {
         countryCodeTableViewController.modalPresentationStyle = UIModalPresentationFormSheet;
     }
     

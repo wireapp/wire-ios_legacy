@@ -472,7 +472,7 @@
 
 - (BOOL)isConversationViewVisible
 {
-    if (IS_IPAD_LANDSCAPE_LAYOUT) {
+    if ([SizeClass isIPadLandscapeLayoutInFullScreenMode]) {
         return [self.splitViewController.rightViewController isKindOfClass:[ConversationViewController class]];
     }
     else if (self.splitViewController.leftViewControllerRevealed) {

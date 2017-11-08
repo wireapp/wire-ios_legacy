@@ -22,6 +22,7 @@
 #import "UIColor+WAZExtensions.h"
 #import "Settings.h"
 #import "Constants.h"
+#import "Wire-Swift.h"
 
 // Base config files (no overlap)
 static NSString *const MagicConfigFileBaseStyles        = @"style.plist";
@@ -153,7 +154,7 @@ static NSString *const MagicConfigFileIPhone4           = @"iphone4.plist";
     
     NSArray *deviceConfig = nil;
     
-    if (IS_IPAD) {
+    if ([SizeClass isIPad]) {
         deviceConfig = [self configForIPad];
     }
     else if (IS_IPHONE_6 || IS_IPHONE_6_PLUS_OR_BIGGER) {

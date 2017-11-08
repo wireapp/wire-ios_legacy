@@ -20,8 +20,21 @@
 import Foundation
 
 @objc open class SizeClass: NSObject {
+
+    @objc static var isIPad: Bool {
+        return UIDevice.current.userInterfaceIdiom == .pad
+    }
+
     @objc static var isIPadInFullScreenMode: Bool {
-        return UIDevice.current.userInterfaceIdiom == .pad && UIApplication.shared.keyWindow?.traitCollection.horizontalSizeClass == .regular
+        return isIPad && UIApplication.shared.keyWindow?.traitCollection.horizontalSizeClass == .regular
+    }
+
+    @objc static var isIPadLandscapeLayoutInFullScreenMode: Bool {
+        return isIPadInFullScreenMode && UIInterfaceOrientationIsLandscape(UIApplication.shared.statusBarOrientation)
+    }
+    
+    @objc static var isIPadPortraitLayoutInFullScreenMode: Bool {
+        return isIPadInFullScreenMode && UIInterfaceOrientationIsPortrait(UIApplication.shared.statusBarOrientation)
     }
 }
 

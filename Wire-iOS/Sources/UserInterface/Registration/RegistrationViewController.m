@@ -163,7 +163,7 @@
 
 + (RegistrationFlow)registrationFlow
 {
-    return IS_IPAD ? RegistrationFlowEmail : RegistrationFlowPhone;
+    return [SizeClass isIPadInFullScreenMode] ? RegistrationFlowEmail : RegistrationFlowPhone;
 }
 
 - (void)presentNoHistoryViewController:(ContextType)type

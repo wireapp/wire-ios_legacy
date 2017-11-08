@@ -210,7 +210,7 @@ static CameraControllerCamera CameraViewControllerToCameraControllerCamera(Camer
         connection.videoOrientation = statusBarOrientation;
     }
     
-    if (IS_IPAD) {
+    if ([SizeClass isIPadInFullScreenMode]) {
         self.cameraController.snapshotVideoOrientation = statusBarOrientation;
     } else {
         self.cameraController.snapshotVideoOrientation = AVCaptureVideoOrientationPortrait;
@@ -417,7 +417,7 @@ static CameraControllerCamera CameraViewControllerToCameraControllerCamera(Camer
 
 - (CameraViewControllerPreviewSize)previewSize
 {
-    if (IS_IPAD || IS_IPHONE_4) {
+    if ([SizeClass isIPadInFullScreenMode] || IS_IPHONE_4) {
         return CameraViewControllerPreviewSizeFullscreen;
     } else {
         return self.preferedPreviewSize;

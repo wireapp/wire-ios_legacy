@@ -367,7 +367,7 @@
 {
     [[UIMenuController sharedMenuController] setMenuVisible:NO];
     
-    if (! IS_IPAD) {
+    if (! [SizeClass isIPadInFullScreenMode]) {
         self.forcePortraitMode = YES;
     }
     [self dismissWithCompletion:nil];
