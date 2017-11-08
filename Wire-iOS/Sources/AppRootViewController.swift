@@ -425,11 +425,9 @@ extension AppRootViewController : LocalNotificationResponder {
 extension AppRootViewController : SessionManagerObserver {
     
     func sessionManagerCreated(userSession: ZMUserSession) {
-        guard let sessionManager = sessionManager else { return }
-        for (accountId, session) in sessionManager.backgroundUserSessions {
+        for (accountId, session) in sessionManager?.backgroundUserSessions ?? [:] {
             if session == userSession {
                 soundEventListeners[accountId] = SoundEventListener(userSession: userSession)
-                
             }
         }
     }
