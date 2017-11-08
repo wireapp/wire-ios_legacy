@@ -114,7 +114,7 @@ import CocoaLumberjackSwift
         self.view.addSubview(self.topSeparator)
         self.createConstraints()
         
-        if self.traitCollection.userInterfaceIdiom == .pad {
+        if SizeClass.isIPadInFullScreenMode {
             self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.cancel, target: self, action: #selector(ClientListViewController.backPressed(_:)))
         }
         
