@@ -55,12 +55,6 @@ class SoundEventListener : NSObject {
     
     func playSoundIfAllowed(_ name : String) {
         guard !name.isEmpty, soundEventWatchDog.outputAllowed else { return }
-        
-        // TODO this should be handled by AVS
-        guard AVAudioSession.sharedInstance().category != AVAudioSessionCategoryPlayAndRecord else {
-            return
-        }
-        
         AVSMediaManager.sharedInstance()?.playSound(name)
     }
     
