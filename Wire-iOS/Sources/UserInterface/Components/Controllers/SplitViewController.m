@@ -176,18 +176,15 @@ NSString *SplitLayoutObservableDidChangeToLayoutSizeNotification = @"SplitLayout
 
 @implementation SplitViewController
 
-- (void)viewDidLoad
+- (void)viewDidLoad 
 {
     [super viewDidLoad];
 
-    UIWindow * window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen]
-                                                         bounds]];
-
-    self.leftView = [[UIView alloc] initWithFrame:window.bounds];
+    self.leftView = [[UIView alloc] initWithFrame:[UIScreen mainScreen].bounds];
     self.leftView.translatesAutoresizingMaskIntoConstraints = NO;
     [self.view addSubview:self.leftView];
     
-    self.rightView = [[UIView alloc] initWithFrame:window.bounds];
+    self.rightView = [[UIView alloc] initWithFrame:[UIScreen mainScreen].bounds];
     self.rightView.translatesAutoresizingMaskIntoConstraints = NO;
     self.rightView.backgroundColor = [UIColor wr_colorFromColorScheme:ColorSchemeColorBackground];
     [self.view addSubview:self.rightView];
@@ -270,7 +267,7 @@ NSString *SplitLayoutObservableDidChangeToLayoutSizeNotification = @"SplitLayout
     if (traitCollection.horizontalSizeClass == UIUserInterfaceSizeClassCompact) {
         self.layoutSize = SplitViewControllerLayoutSizeCompact;
     }
-    else if (traitCollection.userInterfaceIdiom ==  UIUserInterfaceIdiomPad && size.height > size.width) {
+    else if ([SizeClass isIPadPortraitLayoutInFullScreenMode]) {
         self.layoutSize = SplitViewControllerLayoutSizeRegularPortrait;
     }
     else {
