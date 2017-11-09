@@ -28,6 +28,7 @@ class SearchResultsView : UIView {
     let collectionViewLayout : UICollectionViewFlowLayout
     let accessoryContainer = UIView()
     var lastLayoutBounds : CGRect = CGRect.zero
+    var accessoryContainerHeightConstraint: NSLayoutConstraint?
     var accessoryViewBottomOffsetConstraint : NSLayoutConstraint?
     var isContainedInPopover : Bool = false
     
@@ -72,6 +73,7 @@ class SearchResultsView : UIView {
             accessoryContainer.top == collectionView.bottom
             accessoryContainer.left == container.left
             accessoryContainer.right == container.right
+            accessoryContainerHeightConstraint = accessoryContainer.height == 0
             accessoryViewBottomOffsetConstraint = accessoryContainer.bottom == container.bottom - UIScreen.safeArea.bottom
             
             emptyResultContainer.top == container.top + 64
@@ -99,10 +101,13 @@ class SearchResultsView : UIView {
             
             if let accessoryView = accessoryView {
                 accessoryContainer.addSubview(accessoryView)
-                
+                accessoryContainerHeightConstraint?.isActive = false
                 constrain(accessoryContainer, accessoryView) { container, accessoryView in
                     accessoryView.edges == container.edges
                 }
+            }
+            else {
+                accessoryContainerHeightConstraint?.isActive = true
             }
         }
     }
