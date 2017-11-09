@@ -22,7 +22,7 @@
 @import PureLayout;
 
 #import "Constants.h"
-
+#import "Wire-Swift.h"
 
 
 @interface RegistrationFormController ()
@@ -65,7 +65,7 @@
 
 - (void)createInitialConstraints
 {
-    if (IS_IPAD) {
+    if ([SizeClass isIPadInFullScreenMode]) {
         
         [NSLayoutConstraint autoSetPriority:UILayoutPriorityDefaultHigh + 1 forConstraints:^{
             [self.viewController.view autoSetDimension:ALDimensionWidth toSize:self.viewController.maximumFormSize.width];

@@ -16,12 +16,18 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-import UIKit
 
+import Foundation
 
-// MARK: - Check app language is left to right layout
-extension UIApplication {
-    @objc static var isLeftToRightLayout: Bool {
-        return UIApplication.shared.userInterfaceLayoutDirection == .leftToRight
+extension MockUser {
+    
+    
+    /// For mocking filename(suffix:) function of ZMUser
+    ///
+    /// - Parameter suffix: a mocking input
+    /// - Returns: a mocking output
+    func filename(suffix: String? = nil)-> String {
+        return "dummy.txt"
     }
+    
 }

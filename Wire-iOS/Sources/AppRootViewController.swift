@@ -48,21 +48,23 @@ class AppRootViewController : UIViewController {
     }
     
     fileprivate var performWhenRequestsToOpenViewsDelegateAvailable: ((ZMRequestsToOpenViewsDelegate)->())?
-    
-    
+
+    override public func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        mainWindow.frame.size = size
+        overlayWindow.frame.size = size
+    }
+
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         appStateController = AppStateController()
         fileBackupExcluder = FileBackupExcluder()
         avsLogObserver = AVSLogObserver()
         MagicConfig.shared()
-        
-        mainWindow = UIWindow()
-        mainWindow.frame = UIScreen.main.bounds
+
+        mainWindow = UIWindow(frame: UIScreen.main.bounds)
         mainWindow.accessibilityIdentifier = "ZClientMainWindow"
         
-        overlayWindow = PassthroughWindow()
+        overlayWindow = PassthroughWindow(frame: UIScreen.main.bounds)
         overlayWindow.backgroundColor = .clear
-        overlayWindow.frame = UIScreen.main.bounds
         overlayWindow.windowLevel = UIWindowLevelStatusBar + 1
         overlayWindow.accessibilityIdentifier = "ZClientNotificationWindow"
         overlayWindow.rootViewController = NotificationWindowRootViewController()

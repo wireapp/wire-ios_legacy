@@ -83,6 +83,13 @@ final class AnalyticsMixpanelProvider: NSObject, AnalyticsProvider {
         super.init()
         mixpanelInstance?.minimumSessionDuration = 2_000
         mixpanelInstance?.loggingEnabled = false
+        DDLogInfo("AnalyticsMixpanelProvider \(self) started")
+        
+        if DeveloperMenuState.developerMenuEnabled(),
+            let uuidString = mixpanelInstance?.distinctId {
+            DDLogInfo("distinctId = `\(uuidString)`")
+        }
+        
         self.setSuperProperty("app", value: "ios")
         self.setSuperProperty(MixpanelSuperProperties.city.rawValue, value: "")
         self.setSuperProperty(MixpanelSuperProperties.region.rawValue, value: "")

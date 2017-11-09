@@ -1,20 +1,20 @@
 //
 // Wire
 // Copyright (C) 2016 Wire Swiss GmbH
-// 
+//
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
-// 
+//
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 // GNU General Public License for more details.
-// 
+//
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see http://www.gnu.org/licenses/.
-// 
+//
 
 
 import Foundation
@@ -35,14 +35,14 @@ import CocoaLumberjackSwift
     fileprivate var recordTapGestureRecognizer: UITapGestureRecognizer!
     internal let recordButton = IconButton()
     internal let stopRecordButton = IconButton()
-
+    
     fileprivate let audioPreviewView = WaveFormView()
     fileprivate let timeLabel = UILabel()
     
     internal let confirmButton = IconButton()
     internal let redoButton = IconButton()
     internal let cancelButton = IconButton()
-
+    
     fileprivate var accentColorChangeHandler: AccentColorChangeHandler?
     fileprivate var effectPickerViewController: AudioEffectsPickerViewController?
     
@@ -111,44 +111,44 @@ import CocoaLumberjackSwift
         self.timeLabel.textColor = colorScheme.color(withName: ColorSchemeColorTextForeground)
         
         [self.audioPreviewView, self.timeLabel, self.tipLabel].forEach(self.topContainer.addSubview)
-
+        
         self.recordButton.setIcon(.recordDot, with: .tiny, for: UIControlState())
         self.recordButton.accessibilityLabel = "record"
         self.recordButton.addTarget(self, action: #selector(recordButtonPressed(_:)), for: .touchUpInside)
         self.recordButton.setBackgroundImageColor(UIColor(for: .vividRed), for: .normal)
         self.recordButton.setIconColor(UIColor.white, for: UIControlState())
         self.recordButton.layer.masksToBounds = true
-
+        
         self.stopRecordButton.setIcon(.stopRecording, with: .tiny, for: UIControlState())
         self.stopRecordButton.accessibilityLabel = "stopRecording"
         self.stopRecordButton.addTarget(self, action: #selector(stopRecordButtonPressed(_:)), for: .touchUpInside)
         self.stopRecordButton.setBackgroundImageColor(UIColor(for: .vividRed), for: .normal)
         self.stopRecordButton.setIconColor(UIColor.white, for: UIControlState())
         self.stopRecordButton.layer.masksToBounds = true
-
+        
         self.confirmButton.setIcon(.checkmark, with: .tiny, for: UIControlState())
         self.confirmButton.accessibilityLabel = "confirmRecording"
         self.confirmButton.addTarget(self, action: #selector(confirmButtonPressed(_:)), for: .touchUpInside)
         self.confirmButton.setBackgroundImageColor(UIColor(for: .strongLimeGreen), for: .normal)
         self.confirmButton.setIconColor(UIColor.white, for: UIControlState())
         self.confirmButton.layer.masksToBounds = true
-
+        
         self.redoButton.setIcon(.undo, with: .tiny, for: UIControlState())
         self.redoButton.accessibilityLabel = "redoRecording"
         self.redoButton.addTarget(self, action: #selector(redoButtonPressed(_:)), for: .touchUpInside)
         self.redoButton.setIconColor(UIColor.white, for: UIControlState())
-
+        
         self.cancelButton.setIcon(.cancel, with: .tiny, for: UIControlState())
         self.cancelButton.accessibilityLabel = "cancelRecording"
         self.cancelButton.addTarget(self, action: #selector(cancelButtonPressed(_:)), for: .touchUpInside)
         self.cancelButton.setIconColor(UIColor.white, for: UIControlState())
-
+        
         [self.recordButton, self.stopRecordButton, self.confirmButton, self.redoButton, self.cancelButton].forEach(self.bottomToolbar.addSubview)
         
         [self.bottomToolbar, self.topContainer, self.topSeparator].forEach(self.view.addSubview)
         
         self.timeLabel.accessibilityLabel = "recordingTime"
-
+        
         updateRecordingState(self.state)
     }
     
@@ -168,7 +168,7 @@ import CocoaLumberjackSwift
             let maxEffect : UInt32 = UInt32(suitableEffects.count)
             let randomEffect = suitableEffects[Int(arc4random_uniform(maxEffect))]
             let randomEffectImage = UIImage(for: randomEffect.icon, iconSize: .searchBar, color: colorScheme.color(withName: ColorSchemeColorTextDimmed))
-
+            
             let tipEffectImageAttachment = NSTextAttachment()
             tipEffectImageAttachment.image = randomEffectImage
             
@@ -178,7 +178,7 @@ import CocoaLumberjackSwift
         }
         let style = NSMutableParagraphStyle()
         style.lineSpacing = 8
-       
+        
         attributedTipText.addAttribute(NSParagraphStyleAttributeName, value: style, range: NSMakeRange(0, (attributedTipText.string as NSString).length))
         self.tipLabel.attributedText = NSAttributedString(attributedString: attributedTipText)
         self.tipLabel.numberOfLines = 2
@@ -194,11 +194,11 @@ import CocoaLumberjackSwift
             topContainer.left >= view.left + 16
             topContainer.top >= view.top + 16
             topContainer.right <= view.right - 16
-
+            
             topContainer.left == view.left + 16 ~ LayoutPriority(750)
             topContainer.top == view.top + 16 ~ LayoutPriority(750)
             topContainer.right == view.right - 16 ~ LayoutPriority(750)
-
+            
             topContainer.width <= 400
             topContainer.centerX == view.centerX
             
@@ -354,7 +354,7 @@ import CocoaLumberjackSwift
     
     fileprivate func openEffectsPicker() {
         guard let url = recorder.fileURL else { return DDLogWarn("Nil url passed to add effect to audio file") }
-
+        
         let noizeReducePath = (NSTemporaryDirectory() as NSString).appendingPathComponent("noize-reduce.wav")
         noizeReducePath.deleteFileAtPath()
         // To apply noize reduction filter
@@ -412,9 +412,9 @@ import CocoaLumberjackSwift
             DDLogError("No file to send")
             return
         }
-
+        
         button?.isEnabled = false
-
+        
         let effectName: String
         
         if self.currentEffect == .none {
@@ -424,7 +424,7 @@ import CocoaLumberjackSwift
             effectName = self.currentEffect.description
         }
         
-        let filename = (NSString.filenameForSelfUser().appending("-" + effectName) as NSString).appendingPathExtension("m4a")!
+        let filename = String.filenameForSelfUser(suffix: "-" + effectName).appendingPathExtension("m4a")!
         let convertedPath = (NSTemporaryDirectory() as NSString).appendingPathComponent(filename)
         convertedPath.deleteFileAtPath()
         
@@ -451,3 +451,4 @@ extension AudioRecordKeyboardViewController: AudioEffectsPickerDelegate {
         self.currentEffect = effect
     }
 }
+
