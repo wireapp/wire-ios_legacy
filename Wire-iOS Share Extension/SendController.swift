@@ -53,14 +53,21 @@ class SendController {
     public var sentAllSendables = false
 
     init(text: String, attachments: [NSItemProvider], conversation: Conversation, sharingSession: SharingSession) {
+        
+        var linkAttachment : NSItemProvider?
+        
         var sendables: [UnsentSendable] = attachments.flatMap {
-            return UnsentImageSendable(conversation: conversation, sharingSession: sharingSession, attachment: $0)
-                ?? UnsentFileSendable(conversation: conversation, sharingSession: sharingSession, attachment: $0)
+            if $0.hasImage {
+                return UnsentImageSendable(conversation: conversation, sharingSession: sharingSession, attachment: $0)
+            } else if $0.hasURL {
+                linkAttachment = $0
+                return nil
+            } else {
+                return UnsentFileSendable(conversation: conversation, sharingSession: sharingSession, attachment: $0)
+            }
         }
 
-        if !text.isEmpty {
-            sendables.insert(UnsentTextSendable(conversation: conversation, sharingSession: sharingSession, text: text), at: 0)
-        }
+        sendables.insert(UnsentTextSendable(conversation: conversation, sharingSession: sharingSession, text: text, attachment: linkAttachment), at: 0)
 
         self.sharingSession = sharingSession
         unsentSendables = sendables

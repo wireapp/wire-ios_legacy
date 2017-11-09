@@ -28,7 +28,7 @@
 #import "Application+runDuration.h"
 #import "AppDelegate+Logging.h"
 #import "ZClientViewController.h"
-#import "Analytics+iOS.h"
+#import "Analytics.h"
 #import "AnalyticsTracker+Registration.h"
 #import "AnalyticsTracker+Permissions.h"
 
@@ -116,20 +116,10 @@ static AppDelegate *sharedAppDelegate = nil;
 {
     DDLogInfo(@"application:didFinishLaunchingWithOptions START %@ (applicationState = %ld)", launchOptions, (long)application.applicationState);
     
+    
     [self setupBackendEnvironment];
-    
-    BOOL containsConsoleAnalytics = [[[NSProcessInfo processInfo] arguments] indexOfObjectPassingTest:^BOOL(NSString * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        if ([obj isEqualToString:ZMConsoleAnalyticsArgumentKey]) {
-            *stop = YES;
-            return YES;
-        }
-        return NO;
-    }] != NSNotFound;
-    
-    
-    [Analytics setConsoleAnayltics:containsConsoleAnalytics];
-    [Analytics setupSharedInstanceWithLaunchOptions:launchOptions]; // preload analytics to listen to some notifications in time
 
+    [self setupTracking];
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(userSessionDidBecomeAvailable:)
                                                  name:ZMUserSessionDidBecomeAvailableNotification
@@ -139,8 +129,6 @@ static AppDelegate *sharedAppDelegate = nil;
         [self.rootViewController launchWith:launchOptions];
     }];
     self.launchOptions = launchOptions;
-    
-    
     
     DDLogInfo(@"application:didFinishLaunchingWithOptions END %@", launchOptions);
     DDLogInfo(@"Application was launched with arguments: %@",[[NSProcessInfo processInfo]arguments]);
@@ -195,6 +183,23 @@ static AppDelegate *sharedAppDelegate = nil;
     
     // In case of normal termination we do not need the run duration to persist
     [[UIApplication sharedApplication] resetRunDuration];
+}
+
+- (void)setupTracking
+{
+    // Migrate analytics settings
+    [[TrackingManager shared] migrateFromLocalytics];
+    
+    BOOL containsConsoleAnalytics = [[[NSProcessInfo processInfo] arguments] indexOfObjectPassingTest:^BOOL(NSString * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        if ([obj isEqualToString:AnalyticsProviderFactory.ZMConsoleAnalyticsArgumentKey]) {
+            *stop = YES;
+            return YES;
+        }
+        return NO;
+    }] != NSNotFound;
+    
+    [AnalyticsProviderFactory shared].useConsoleAnalytics = containsConsoleAnalytics;
+    [Analytics loadSharedWithOptedOut:[[TrackingManager shared] disableCrashAndAnalyticsSharing]];
 }
 
 - (void)trackLaunchAnalyticsWithLaunchOptions:(NSDictionary *)launchOptions

@@ -67,9 +67,7 @@ static const NSTimeInterval OverscrollRatio = 2.5;
 
 - (void)dealloc
 {
-    if (![[Settings sharedSettings] disableAVS]) {
-        [AVSMediaManagerClientChangeNotification removeObserver:self];
-    }
+    [AVSMediaManagerClientChangeNotification removeObserver:self];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
@@ -102,9 +100,7 @@ static const NSTimeInterval OverscrollRatio = 2.5;
     
     [self setNeedsUpdateConstraints];
     
-    if (![[Settings sharedSettings] disableAVS]) {
-        [AVSMediaManagerClientChangeNotification addObserver:self];
-    }
+    [AVSMediaManagerClientChangeNotification addObserver:self];
     
     self.isAccessibilityElement = NO;
 }

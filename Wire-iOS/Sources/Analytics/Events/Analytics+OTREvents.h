@@ -17,7 +17,7 @@
 // 
 
 
-#import "AnalyticsBase.h"
+#import "Analytics.h"
 
 typedef NS_ENUM(NSUInteger, DeviceVerificationType) {
     DeviceVerificationTypeVerified,

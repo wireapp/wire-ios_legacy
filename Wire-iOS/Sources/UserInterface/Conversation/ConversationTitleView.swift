@@ -72,6 +72,7 @@ public final class ConversationTitleView: UIView {
             return attributed && $0
         }
 
+        titleButton.titleLabel!.font = font
         titleButton.setAttributedTitle(titleWithColor(color), for: UIControlState())
         titleButton.setAttributedTitle(titleWithColor(selectedColor), for: .highlighted)
         titleButton.sizeToFit()

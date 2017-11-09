@@ -11,7 +11,7 @@ end
     
 target 'Wire-iOS' do
 
-    platform :ios, '8.0'
+    platform :ios, '9.0'
     ios_pods
 
     post_install do |installer_representation|
@@ -26,11 +26,13 @@ end
 
 
 target 'Wire-iOS-Tests' do
-    platform :ios, '8.0'
+    platform :ios, '9.0'
+
+    pod 'Localytics', '4.3.0', :inhibit_warnings => true
 end
 
 target 'WireExtensionComponents' do
-    platform :ios, '8.0'
+    platform :ios, '9.0'
 end
 
     

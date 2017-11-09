@@ -48,6 +48,7 @@
     if (self) {
         self.backgroundColor = UIColor.clearColor;
         self.separatorInset = UIEdgeInsetsMake(0, 24, 0, 24);
+        self.selectionStyle = UITableViewCellSelectionStyleNone;
         [self createViews];
         [self setupConstraints];
         [[CASStyler defaultStyler] styleItem:self];

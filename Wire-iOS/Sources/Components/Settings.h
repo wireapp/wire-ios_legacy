@@ -60,10 +60,6 @@ extern NSString * const UserDefaultMessageSoundName;
 extern NSString * const UserDefaultCallSoundName;
 extern NSString * const UserDefaultPingSoundName;
 
-extern NSString * const UserDefaultDisableAVS;
-extern NSString * const UserDefaultDisableUI;
-extern NSString * const UserDefaultDisableHockey;
-extern NSString * const UserDefaultDisableAnalytics;
 extern NSString * const UserDefaultDisableCallKit;
 
 extern NSString * const UserDefaultEnableBatchCollections;
@@ -120,9 +116,8 @@ extern NSString * const UserDefaultDisableLinkPreviews;
 
 - (void)reset;
 
-- (void)updateAVSCallingConstantBitRateValue;
-
 - (NSUserDefaults *)defaults;
+
 @end
 
 
@@ -134,10 +129,5 @@ extern NSString * const UserDefaultDisableLinkPreviews;
 
 // Max audio recording duration in seconds
 @property (nonatomic) NSTimeInterval maxRecordingDurationDebug;
-
-@property (nonatomic) BOOL disableAVS;
-@property (nonatomic) BOOL disableUI;
-@property (nonatomic) BOOL disableHockey;
-@property (nonatomic) BOOL disableAnalytics;
 
 @end

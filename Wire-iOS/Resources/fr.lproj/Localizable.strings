@@ -560,7 +560,12 @@
 
 // Settings - top level
 "self.settings.create_team.title" = "Créer une équipe";
+"self.settings.manage_team.title" = "Gérer l’équipe";
+"self.settings.add_team_or_account.title" = "Nouvelle équipe ou nouveau compte";
 "self.settings.add_account.title" = "Ajouter un compte";
+
+"self.settings.add_account.error.title" = "Trois comptes actifs";
+"self.settings.add_account.error.message" = "Vous ne pouvez vous connecter qu'à trois comptes à la fois. Déconnectez-vous de l'un d'entre eux pour en ajouter un autre.";
 
 // Settings - Account details
 "self.settings.account_section" = "Compte";
@@ -883,7 +888,6 @@
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Username takeover screen
-"registration.select_handle.takeover.title" = "Les identifiants sont arrivés.";
 "registration.select_handle.takeover.subtitle" = "Choisissez votre nom d’utilisateur unique sur Wire.";
 "registration.select_handle.takeover.subtitle_link" = "En savoir plus";
 
@@ -905,6 +909,7 @@
 "error.user.device_deleted_remotely" = "Vous avez été déconnecté depuis un autre appareil.";
 "error.user.last_identity_cant_be_deleted" = "Une adresse e-mail ou un numéro de téléphone est nécessaire.";
 "error.user.account_suspended" = "Ce compte n'est plus autorisé à se connecter.";
+"error.user.account_limit_reached" = "Vous ne pouvez pas ajouter plus de 3 comptes.";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Those are caught by the UI without involving the SE validation. Basically very similar to ZMUserSessionErrorCode onces

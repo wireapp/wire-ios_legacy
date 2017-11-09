@@ -29,7 +29,8 @@
 #import "Wire-Swift.h"
 #import "UserImageView.h"
 #import "AccentColorChangeHandler.h"
-#import "Analytics+iOS.h"
+#import "Analytics.h"
+#import "Analytics+ConversationEvents.h"
 #import "UIResponder+FirstResponder.h"
 #import "UserImageView+Magic.h"
 #import "UIScreen+Compact.h"
@@ -715,7 +716,7 @@ static const CGFloat BurstContainerExpandedHeight = 40;
 
 - (BOOL)showDestructionCountdown
 {
-    return self.message.isEphemeral && !self.message.isObfuscated;
+    return !self.message.hasBeenDeleted && self.message.isEphemeral && !self.message.isObfuscated;
 }
 
 - (void)updateCountdownView

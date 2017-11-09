@@ -55,15 +55,10 @@
     self.loadingScreenLabel = [[UILabel alloc] initForAutoLayout];
     self.loadingScreenLabel.font = [UIFont systemFontOfSize:12];
     self.loadingScreenLabel.textColor = [UIColor whiteColor];
-    if ([[Settings sharedSettings] disableUI]) {
-        self.loadingScreenLabel.text = @"UI is disabled";
-        self.loadingScreenLabel.hidden = NO;
-    }
-    else {
-        self.loadingScreenLabel.text = [NSLocalizedString(@"migration.please_wait_message", @"") uppercaseStringWithLocale:[NSLocale currentLocale]];
-        self.loadingScreenLabel.hidden = YES;
-    }
     
+    self.loadingScreenLabel.text = [NSLocalizedString(@"migration.please_wait_message", @"") uppercaseStringWithLocale:[NSLocale currentLocale]];
+    self.loadingScreenLabel.hidden = YES;
+
     [self.view addSubview:self.loadingScreenLabel];
     
     // Constraints

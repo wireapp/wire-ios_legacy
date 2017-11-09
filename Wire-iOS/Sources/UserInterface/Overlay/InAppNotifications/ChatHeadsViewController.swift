@@ -17,6 +17,7 @@
 //
 
 import UIKit
+import WireSyncEngine
 import Cartography
 
 public extension UIViewController {
@@ -39,7 +40,7 @@ class ChatHeadsViewController: UIViewController {
     fileprivate let dismissDelayDuration = 5.0
     fileprivate let animationContainerInset : CGFloat = 48.0
     fileprivate let dragGestureDistanceThreshold : CGFloat = 75.0
-    fileprivate let containerInsets : UIEdgeInsets = UIEdgeInsets(top: 16, left: 16, bottom: 0, right: 16)
+    fileprivate let containerInsets : UIEdgeInsets = UIEdgeInsets(top: UIScreen.safeArea.top - 4.0, left: 16, bottom: 0, right: 16)
     
     fileprivate var chatHeadView: ChatHeadView?
     fileprivate var chatHeadViewLeftMarginConstraint: NSLayoutConstraint?
@@ -54,7 +55,7 @@ class ChatHeadsViewController: UIViewController {
     
     // MARK: - Public Interface
     
-    public func tryToDisplayNotification(_ note: UILocalNotification) {
+    public func tryToDisplayNotification(_ note: ZMLocalNotification) {
 
         // hide visible chat head and try again
         if chatHeadState != .hidden {
@@ -64,67 +65,30 @@ class ChatHeadsViewController: UIViewController {
         }
         
         guard
-            let selfID = note.zm_selfUserUUID,
+            let selfID = note.selfUserID,
             let account = SessionManager.shared?.accountManager.account(with: selfID),
             let session = SessionManager.shared?.backgroundUserSessions[account.userIdentifier],
-            let conversation = note.conversation(in: session.managedObjectContext),
-            let sender = note.sender(in: session.managedObjectContext)
-            else {
-                return
-        }
+            let conversationID = note.conversationID,
+            shouldDisplay(note: note, conversationID: conversationID, account: account)
+            else { return }
         
-        guard shouldDisplay(note: note, conversation: conversation, account: account) else {
-            return
-        }
-
-        var title: NSAttributedString? = nil
-        var contentCandidate: NSAttributedString? = nil
-        
-        // new messages and group participation notifications
-        if let message = note.message(in: conversation, in: session.managedObjectContext) {
-            
-            // Currently, the only system messages are group participation notifications.
-            // Since the group name is in the content, we don't want it in the title too.
-            title = ChatHeadTextFormatter.titleText(
-                conversationName: message.isSystem ? nil : conversation.displayName,
-                teamName: account.teamName,
-                isAccountActive: account.isActive
-            )
-            
-            // group participation notifications have content in note, o/w extract it from message
-            contentCandidate = message.isSystem ? ChatHeadTextFormatter.text(for: note) : ChatHeadTextFormatter.text(for: message, isAccountActive: account.isActive)
-        }
-        else {
-            
-            // call notifications contain sender name & possibly group name in notification content,
-            // so we don't want to include these in the title.
-            let isCallNotification = note.category == ZMIncomingCallCategory || note.category == ZMMissedCallCategory
-            
-            title = ChatHeadTextFormatter.titleText(
-                conversationName: isCallNotification ? nil : conversation.displayName,
-                teamName: account.teamName,
-                isAccountActive: account.isActive
-            )
-
-            contentCandidate = ChatHeadTextFormatter.text(for: note)
-        }
-        
-        guard let content = contentCandidate else {
-            return
-        }
+        // if notification is for active account, we only want to show the conversation name
+        let title = account.isActive ? note.userInfo?[ConversationNameStringKey] as? String : note.title
         
         chatHeadView = ChatHeadView(
             title: title,
-            content: content,
-            sender: sender,
-            conversation: conversation,
-            account: account
+            body: note.body,
+            userID: selfID,
+            sender: note.sender(in: session.managedObjectContext),
+            userInfo: note.userInfo,
+            isEphemeral: note.isEphemeral
         )
         
-        chatHeadView!.onSelect = { conversation, account in
-            
+        chatHeadView!.onSelect = {
             SessionManager.shared?.withSession(for: account) { userSession in
-                SessionManager.shared?.userSession(userSession, show: conversation)
+                if let conversation = note.conversation(in: session.managedObjectContext) {
+                    SessionManager.shared?.userSession(userSession, show: conversation)
+                }
             }
             
             self.chatHeadView?.removeFromSuperview()
@@ -153,17 +117,18 @@ class ChatHeadsViewController: UIViewController {
     
     // MARK: - Private Helpers
     
-    private func shouldDisplay(note: UILocalNotification, conversation: ZMConversation, account: Account) -> Bool {
+    private func shouldDisplay(note: ZMLocalNotification, conversationID: UUID, account: Account) -> Bool {
         
+        guard !Settings.shared().chatHeadsDisabled else { return false }
         guard let clientVC = ZClientViewController.shared() else { return false }
         
         // if call notification & in active account
-        if account.isActive && [ZMIncomingCallCategory, ZMMissedCallCategory].contains(note.category ?? "") {
+        if account.isActive && note.isCallingNotification {
             return false
         }
-
+        
         // if current conversation contains message & is visible
-        if clientVC.currentConversation === conversation && clientVC.isConversationViewVisible {
+        if clientVC.currentConversation.remoteIdentifier == conversationID && clientVC.isConversationViewVisible {
             return false
         }
         

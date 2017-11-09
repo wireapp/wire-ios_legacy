@@ -28,7 +28,7 @@
 #import "ImagePickerConfirmationController.h"
 #import "WAZUIMagicIOS.h"
 #import "UIImage+ZetaIconsNeue.h"
-#import "Analytics+iOS.h"
+#import "Analytics.h"
 #import "DeviceOrientationObserver.h"
 #import "WRFunctions.h"
 #import "Wire-Swift.h"

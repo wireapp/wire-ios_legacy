@@ -126,6 +126,8 @@ final internal class SelfProfileViewController: UIViewController {
             profileContainerView.top == accountSelectorControllerView.bottom + 12
         }
         
+        let height = CGFloat(56 * settingsController.tableView.numberOfRows(inSection: 0))
+        
         constrain(view, settingsController.view, profileView, profileContainerView, settingsController.tableView) { view, settingsControllerView, profileView, profileContainerView, tableView in
             profileContainerView.leading == view.leading
             profileContainerView.trailing == view.trailing
@@ -137,15 +139,12 @@ final internal class SelfProfileViewController: UIViewController {
             profileView.trailing == profileContainerView.trailing
             profileView.bottom <= profileContainerView.bottom
             
-            settingsControllerView.height == 168
+            settingsControllerView.height == height
             settingsControllerView.leading == view.leading
             settingsControllerView.trailing == view.trailing
             settingsControllerView.bottom == view.bottom - UIScreen.safeArea.bottom
             
-            tableView.leading == settingsControllerView.leading
-            tableView.trailing == settingsControllerView.trailing
-            tableView.top == settingsControllerView.top
-            tableView.bottom == settingsControllerView.bottom
+            tableView.edges == settingsControllerView.edges
         }
     }
     

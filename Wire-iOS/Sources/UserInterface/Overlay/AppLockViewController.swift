@@ -20,7 +20,6 @@ import Foundation
 import Cartography
 import LocalAuthentication
 import CocoaLumberjackSwift
-import HockeySDK.BITHockeyManager
 
 
 @objc final class AppLockViewController: UIViewController {
@@ -28,6 +27,7 @@ import HockeySDK.BITHockeyManager
     fileprivate static let authenticationPersistancePeriod: TimeInterval = 10
     fileprivate var localAuthenticationCancelled: Bool = false
     fileprivate var localAuthenticationNeeded: Bool = true
+    
     fileprivate var dimContents: Bool = false {
         didSet {
             self.view.isHidden = !self.dimContents
@@ -35,6 +35,26 @@ import HockeySDK.BITHockeyManager
     }
     
     static let shared = AppLockViewController()
+    
+
+    convenience init() {
+        self.init(nibName:nil, bundle:nil)
+        
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(AppLockViewController.applicationWillResignActive),
+                                               name: .UIApplicationWillResignActive,
+                                               object: .none)
+        
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(AppLockViewController.applicationDidEnterBackground),
+                                               name: .UIApplicationDidEnterBackground,
+                                               object: .none)
+        
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(AppLockViewController.applicationDidBecomeActive),
+                                               name: .UIApplicationDidBecomeActive,
+                                               object: .none)
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -56,9 +76,7 @@ import HockeySDK.BITHockeyManager
             lockView.edges == view.edges
         }
         
-        self.showUnlockIfNeeded()
-        
-        self.resignKeyboardIfNeeded()
+        self.dimContents = false
     }
     
     fileprivate func resignKeyboardIfNeeded() {
@@ -139,15 +157,17 @@ import HockeySDK.BITHockeyManager
     }
 }
 
-extension AppLockViewController: UIApplicationDelegate {
-    func applicationWillResignActive(_ application: UIApplication) {
+// MARK: - Application state observators
+
+extension AppLockViewController {
+    func applicationWillResignActive() {
         if AppLock.isActive {
             self.resignKeyboard()
             self.dimContents = true
         }
     }
     
-    func applicationDidEnterBackground(_ application: UIApplication) {
+    func applicationDidEnterBackground() {
         if !self.localAuthenticationNeeded {
             AppLock.lastUnlockedDate = Date()
         }
@@ -158,7 +178,7 @@ extension AppLockViewController: UIApplicationDelegate {
         }
     }
     
-    func applicationDidBecomeActive(_ application: UIApplication) {
+    func applicationDidBecomeActive() {
         self.showUnlockIfNeeded()
         self.resignKeyboardIfNeeded()
     }

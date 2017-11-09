@@ -64,7 +64,7 @@ static NSString *const OTRTrackingPrefix = @"e2ee.";
 
 - (void)tagCannotDecryptMessageWithAttributes:(NSDictionary *)userInfo;
 {
-    [self tagOTREvent:@"cannot_decrypt_message" attributes:userInfo];
+    [self tagOTREvent:@"e2ee.failed_message_decyption" attributes:userInfo];
 }
 
 @end

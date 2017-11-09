@@ -23,4 +23,8 @@ extension ZMUser {
     var pov: PointOfView {
         return self.isSelfUser ? .secondPerson : .thirdPerson
     }
+    
+    var canManageTeam: Bool {
+        return self.membership?.permissions.contains(.owner) ?? false || self.membership?.permissions.contains(.admin) ?? false
+    }
 }

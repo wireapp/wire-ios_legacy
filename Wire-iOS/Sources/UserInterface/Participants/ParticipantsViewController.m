@@ -37,7 +37,7 @@
 #import "ZetaIconTypes.h"
 #import "ProfileNavigationControllerDelegate.h"
 
-#import "Analytics+iOS.h"
+#import "Analytics.h"
 #import "AnalyticsTracker.h"
 #import "AnalyticsTracker+Invitations.h"
 
@@ -166,7 +166,6 @@ static NSString *const ParticipantHeaderReuseIdentifier = @"ParticipantListHeade
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    [[Analytics shared] tagScreen:@"CONVERSATION_PARTICIPANTS"];
     self.headerView.topButtonsHidden = NO;
     [[UIApplication sharedApplication] wr_updateStatusBarForCurrentControllerAnimated:YES];
 }
@@ -220,7 +219,7 @@ static NSString *const ParticipantHeaderReuseIdentifier = @"ParticipantListHeade
     
     [self.view addSubview:self.headerView];
     
-    [self.headerView addConstraintForAligningTopToTopOfView:self.view distance:0];
+    [self.headerView addConstraintForAligningTopToTopOfView:self.view distance:-UIScreen.safeArea.top+20];
     [self.headerView addConstraintsForRightMargin:0 leftMargin:0 relativeToView:self.view];
     [self.headerView setCancelButtonAccessibilityIdentifier:@"metaControllerCancelButton"];
     
@@ -236,7 +235,7 @@ static NSString *const ParticipantHeaderReuseIdentifier = @"ParticipantListHeade
     
     [self.view addSubview:self.footerView];
     
-    [self.footerView addConstraintForBottomMargin:0 relativeToView:self.view];
+    [self.footerView addConstraintForBottomMargin:UIScreen.safeArea.bottom relativeToView:self.view];
     [self.footerView addConstraintsForRightMargin:0 leftMargin:0 relativeToView:self.view];
     
     if ([[ZMUser selfUser] canAddUserToConversation:self.conversation]) {
@@ -270,7 +269,6 @@ static NSString *const ParticipantHeaderReuseIdentifier = @"ParticipantListHeade
     } else {
         [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
     }
-    [[Analytics shared] tagScreen:@"MAIN"];
 }
 
 - (void)setConversation:(ZMConversation *)conversation
@@ -529,9 +527,7 @@ static NSString *const ParticipantHeaderReuseIdentifier = @"ParticipantListHeade
     addParticipantsViewController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
     addParticipantsViewController.delegate = self;
     
-    [self presentViewController:addParticipantsViewController animated:YES completion:^{
-        [[Analytics shared] tagScreenInviteContactList];
-    }];
+    [self presentViewController:addParticipantsViewController animated:YES completion:nil];
 }
 
 /// Returns whether the conversation name was valid and could be set as the new name.

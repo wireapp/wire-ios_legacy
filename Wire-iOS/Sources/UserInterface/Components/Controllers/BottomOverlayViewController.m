@@ -21,6 +21,7 @@
 #import "BottomOverlayViewController.h"
 #import "BottomOverlayViewController+Private.h"
 #import "WAZUIMagicIOS.h"
+#import "Wire-Swift.h"
 @import WireExtensionComponents;
 
 
@@ -55,7 +56,7 @@
     self.bottomOverlayView.translatesAutoresizingMaskIntoConstraints = NO;
     [self.view addSubview:self.bottomOverlayView];
 
-    [self.bottomOverlayView addConstraintForHeight:self.overlayHeight];
+    [self.bottomOverlayView addConstraintForHeight:self.overlayHeight + UIScreen.safeArea.bottom];
     [self.bottomOverlayView addConstraintForLeftMargin:0 relativeToView:self.view];
     [self.bottomOverlayView addConstraintForRightMargin:0 relativeToView:self.view];
     [self.bottomOverlayView addConstraintForBottomMargin:0 relativeToView:self.view];

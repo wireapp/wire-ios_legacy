@@ -31,8 +31,6 @@
 
 - (NSString *)eventTag;
 
-- (NSNumber *)customerValueIncrease;
-
 - (void)dumpIntegerClusterizedValueForKey:(NSString *)key toDictionary:(NSMutableDictionary *)dict;
 - (void)dumpIntegerClusterizedValueForKey:(NSString *)key toDictionary:(NSMutableDictionary *)dict forClusterizer:(DefaultIntegerClusterizer *)clusterizer;
 

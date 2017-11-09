@@ -75,11 +75,6 @@ static NSMapTable *currentMeta = nil;
     return nil;
 }
 
-- (NSNumber *)customerValueIncrease
-{
-    return nil;
-}
-
 - (void)dumpIntegerClusterizedValueForKey:(NSString *)key toDictionary:(NSMutableDictionary *)dict
 {
     [self dumpIntegerClusterizedValueForKey:key toDictionary:dict forClusterizer:DefaultIntegerClusterizer.defaultClusterizer];

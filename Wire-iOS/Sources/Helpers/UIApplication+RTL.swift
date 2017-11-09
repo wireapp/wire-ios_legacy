@@ -18,6 +18,8 @@
 
 import UIKit
 
+
+// MARK: - Check app language is left to right layout
 extension UIApplication {
     @objc static var isLeftToRightLayout: Bool {
         return UIApplication.shared.userInterfaceLayoutDirection == .leftToRight

@@ -45,7 +45,7 @@
 #import "UIImage+ZetaIconsNeue.h"
 @import PureLayout;
 
-#import "Analytics+iOS.h"
+#import "Analytics.h"
 
 // model
 #import "WireSyncEngine+iOS.h"

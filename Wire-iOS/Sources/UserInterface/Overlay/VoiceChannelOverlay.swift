@@ -283,7 +283,10 @@ extension VoiceChannelOverlay {
             return labelText(withFormat: statusText, name: conversationName)
         case .connected:
             guard let duration = callDurationFormatter.string(from: callDuration) else { return nil }
-            let statusText = String(format:"%%@\n%@", duration)
+            var statusText = String(format:"%%@\n%@", duration)
+            if self.constantBitRate {
+                statusText = statusText + "\n" + "voice.status.cbr".localized.uppercasedWithCurrentLocale
+            }
             
             return labelText(withFormat: statusText, name: conversationName)
         case .invalid, .incomingCallInactive:
@@ -297,6 +300,11 @@ extension VoiceChannelOverlay {
         let attributedString = NSMutableAttributedString(string: string, attributes: messageAttributes)
         let nameRange = (string as NSString).range(of: name)
         attributedString.addAttributes(nameAttributes, range: nameRange)
+        let cbrRange = (string as NSString).range(of: "voice.status.cbr".localized.uppercasedWithCurrentLocale)
+        if cbrRange.location != NSNotFound {
+            let font = UIFont(magicIdentifier: "style.text.small.font_spec")!
+            attributedString.addAttributes([NSFontAttributeName: font], range: cbrRange)
+        }
         
         return attributedString
     }
@@ -538,7 +546,7 @@ extension VoiceChannelOverlay {
             
             topStatusLabel.leading == contentContainer.leadingMargin ~ 750
             topStatusLabel.trailing == contentContainer.trailingMargin
-            topStatusLabel.top == contentContainer.top + 50
+            topStatusLabel.centerY == callingTopUserImage.centerY
             self.statusLabelToTopUserImageInset = topStatusLabel.leading == callingTopUserImage.trailing + 12
             self.statusLabelToTopUserImageInset?.isActive = false
             
@@ -611,15 +619,15 @@ extension VoiceChannelOverlay {
 extension VoiceChannelOverlay: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         
-        let numberOfItems = CGFloat(collectionView.numberOfItems(inSection: 0))
-        let contentWidth = numberOfItems * participantsCollectionViewLayout.itemSize.width + max(numberOfItems - 1, 0) * participantsCollectionViewLayout.minimumLineSpacing
-        let frameWidth = participantsCollectionView.frame.size.width
+        let numberOfItems: CGFloat = max(CGFloat(collectionView.numberOfItems(inSection: 0)), 1)
+        let contentWidth: CGFloat = numberOfItems * participantsCollectionViewLayout.itemSize.width + (numberOfItems - 1) * participantsCollectionViewLayout.minimumLineSpacing
+        let frameWidth: CGFloat = participantsCollectionView.frame.size.width
         
         let insets: UIEdgeInsets
         
         if contentWidth < frameWidth {
             // Align content in center of frame
-            let horizontalInset = frameWidth - contentWidth
+            let horizontalInset: CGFloat = frameWidth - contentWidth
             insets = UIEdgeInsets(top: 0, left: horizontalInset / 2, bottom: 0, right: horizontalInset / 2)
         } else {
             insets = UIEdgeInsets(top: 0, left: 24, bottom: 0, right: 24)

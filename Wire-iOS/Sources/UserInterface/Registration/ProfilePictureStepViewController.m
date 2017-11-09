@@ -167,8 +167,8 @@ NSString * const UnsplashRandomImageLowQualityURL = @"https://source.unsplash.co
     
     [self.profilePictureImageView autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero];
     [self.overlayView autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero];
-    
-    if (self.traitCollection.userInterfaceIdiom == UIUserInterfaceIdiomPad) {
+
+    if ([SizeClass isIPadInFullScreenMode]) {
         [self.contentView autoSetDimension:ALDimensionWidth toSize:self.parentViewController.maximumFormSize.width];
         [self.contentView autoSetDimension:ALDimensionHeight toSize:self.parentViewController.maximumFormSize.height];
         [self.contentView autoCenterInSuperview];
@@ -293,7 +293,6 @@ NSString * const UnsplashRandomImageLowQualityURL = @"https://source.unsplash.co
     if (imageData != nil) {
         // iOS11 uses HEIF image format, but BE expects JPEG
         NSData *jpegData = imageData.isJPEG ? imageData : UIImageJPEGRepresentation([UIImage imageWithData:imageData], 1.0);
-        [AppDelegate checkNetworkAndFlashIndicatorIfNecessary];
         [[UnauthenticatedSession sharedSession] setProfileImage:jpegData];
         [self.formStepDelegate didCompleteFormStep:self];
     }

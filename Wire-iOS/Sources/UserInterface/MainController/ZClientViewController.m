@@ -44,7 +44,7 @@
 #import "AppDelegate.h"
 
 #import "Constants.h"
-#import "Analytics+iOS.h"
+#import "Analytics.h"
 #import "AnalyticsTracker.h"
 #import "Settings.h"
 #import "StopWatch.h"
@@ -99,7 +99,7 @@
 
 - (void)dealloc
 {
-    [AVSProvider.shared.mediaManager unregisterMedia:self.mediaPlaybackManager];
+    [AVSMediaManager.sharedInstance unregisterMedia:self.mediaPlaybackManager];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
@@ -112,7 +112,7 @@
         self.mediaPlaybackManager = [[MediaPlaybackManager alloc] initWithName:@"conversationMedia"];
         self.messageCountTracker = [[LegacyMessageTracker alloc] initWithManagedObjectContext:ZMUserSession.sharedSession.syncManagedObjectContext];
 
-        [AVSProvider.shared.mediaManager registerMedia:self.mediaPlaybackManager withOptions:@{ @"media" : @"external "}];
+        [AVSMediaManager.sharedInstance registerMedia:self.mediaPlaybackManager withOptions:@{ @"media" : @"external "}];
         
         AddressBookHelper.sharedHelper.configuration = AutomationHelper.sharedHelper;
         
@@ -128,10 +128,7 @@
         [[NSNotificationCenter defaultCenter] postNotificationName:ZMUserSessionDidBecomeAvailableNotification object:nil];
         
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(contentSizeCategoryDidChange:) name:UIContentSizeCategoryDidChangeNotification object:nil];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationDidBecomeActive:) name:UIApplicationDidBecomeActiveNotification object:nil];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationWillResignActive:) name:UIApplicationWillResignActiveNotification object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationWillEnterForeground:) name:UIApplicationWillEnterForegroundNotification object:nil];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationDidEnterBackground:) name:UIApplicationDidEnterBackgroundNotification object:nil];
     }
     return self;
 }
@@ -187,12 +184,6 @@
     self.conversationListViewController.view.frame = self.backgroundViewController.view.bounds;
     
     self.splitViewController.leftViewController = self.backgroundViewController;
-}
-
-- (void)viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:animated];
-    [[Analytics shared] tagScreen:@"MAIN"];
 }
 
 - (BOOL)shouldAutorotate
@@ -499,26 +490,11 @@
 
 #pragma mark - Application State
 
-- (void)applicationDidBecomeActive:(NSNotification *)notification
-{
-    [AppDelegate.sharedAppDelegate.notificationWindowController.appLockViewController applicationDidBecomeActive:notification.object];
-}
-
-- (void)applicationWillResignActive:(NSNotification *)notification
-{
-    [AppDelegate.sharedAppDelegate.notificationWindowController.appLockViewController applicationWillResignActive:notification.object];
-}
-
 - (void)applicationWillEnterForeground:(NSNotification *)notification
 {
     [self uploadAddressBookIfNeeded];
     [self trackShareExtensionEventsIfNeeded];
     [self.messageCountTracker trackLegacyMessageCount];
-}
-
-- (void)applicationDidEnterBackground:(NSNotification *)notification
-{
-    [AppDelegate.sharedAppDelegate.notificationWindowController.appLockViewController applicationDidEnterBackground:notification.object];
 }
 
 #pragma mark - Adressbook Upload
@@ -679,7 +655,12 @@
 
 - (void)userSession:(ZMUserSession *)userSession showConversation:(ZMConversation *)conversation
 {
-    [self selectConversation:conversation focusOnView:YES animated:YES];
+    if (conversation.conversationType == ZMConversationTypeConnection) {
+        [self selectIncomingContactRequestsAndFocusOnView:YES];
+    }
+    else {
+        [self selectConversation:conversation focusOnView:YES animated:YES];
+    }
 }
 
 - (void)userSession:(ZMUserSession *)userSession showMessage:(ZMMessage *)message inConversation:(ZMConversation *)conversation

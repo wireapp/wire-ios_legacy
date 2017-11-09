@@ -23,7 +23,8 @@
 #import "WAZUIMagicIOS.h"
 #import "WireSyncEngine+iOS.h"
 #import "SearchResultCell.h"
-#import "Analytics+iOS.h"
+#import "Analytics.h"
+#import "AnalyticsConnectionRequestEvent.h"
 
 NSString *const PeoplePickerUsersInDirectoryCellReuseIdentifier = @"PeoplePickerUsersInDirectoryCellReuseIdentifier";
 

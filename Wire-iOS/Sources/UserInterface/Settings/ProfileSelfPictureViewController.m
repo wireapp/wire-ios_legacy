@@ -34,13 +34,12 @@
 
 #import "ImagePickerConfirmationController.h"
 #import "CameraViewController.h"
-#import "Analytics+iOS.h"
+#import "Analytics.h"
 #import "Constants.h"
 #import "UserImageView.h"
 #import "AppDelegate.h"
 
 #import "AnalyticsTracker.h"
-#import "AnalyticsTracker+SelfUser.h"
 
 #import "Wire-Swift.h"
 
@@ -90,8 +89,13 @@
 
     [self.bottomOverlayView addSubview:self.cameraButton];
 
+    CGFloat bottomOffset = 0.0;
+    if(UIScreen.safeArea.bottom > 0) {
+        bottomOffset = - UIScreen.safeArea.bottom + 20.0;
+    }
+    
     [self.cameraButton addConstraintForAligningHorizontallyWithView:self.bottomOverlayView];
-    [self.cameraButton addConstraintForAligningVerticallyWithView:self.bottomOverlayView];
+    [self.cameraButton addConstraintForAligningVerticallyWithView:self.bottomOverlayView offset:bottomOffset];
 
     [self.cameraButton setImage:[UIImage imageForIcon:ZetaIconTypeCameraLens iconSize:ZetaIconSizeCamera color:[UIColor whiteColor]] forState:UIControlStateNormal];
     [self.cameraButton addTarget:self action:@selector(cameraButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
@@ -167,8 +171,6 @@
 /// This should be called when the user has confirmed their intent to set their image to this data. No custom presentations should be in flight, all previous presentations should be completed by this point.
 - (void)setSelfImageToData:(NSData *)selfImageData
 {
-    [self.analyticsTracker tagPictureChanged];
-    
     // iOS11 uses HEIF image format, but BE expects JPEG
     NSData *jpegData = selfImageData.isJPEG ? selfImageData : UIImageJPEGRepresentation([UIImage imageWithData:selfImageData], 1.0);
     

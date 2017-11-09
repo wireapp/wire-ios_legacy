@@ -104,47 +104,7 @@
 			<key>Type</key>
 			<string>PSToggleSwitchSpecifier</string>
 			<key>Title</key>
-			<string>Disable UI</string>
-			<key>Key</key>
-			<string>ZMDisableUI</string>
-			<key>DefaultValue</key>
-			<false/>
-		</dict>
-		<dict>
-			<key>Type</key>
-			<string>PSToggleSwitchSpecifier</string>
-			<key>Title</key>
-			<string>Disable AVS</string>
-			<key>Key</key>
-			<string>ZMDisableAVS</string>
-			<key>DefaultValue</key>
-			<false/>
-		</dict>
-		<dict>
-			<key>Type</key>
-			<string>PSToggleSwitchSpecifier</string>
-			<key>Title</key>
-			<string>Disable Analytics</string>
-			<key>Key</key>
-			<string>ZMDisableAnalytics</string>
-			<key>DefaultValue</key>
-			<false/>
-		</dict>
-		<dict>
-			<key>Type</key>
-			<string>PSToggleSwitchSpecifier</string>
-			<key>Title</key>
-			<string>Disable Hockey</string>
-			<key>Key</key>
-			<string>ZMDisableHockey</string>
-			<key>DefaultValue</key>
-			<false/>
-		</dict>
-		<dict>
-			<key>Type</key>
-			<string>PSToggleSwitchSpecifier</string>
-			<key>Title</key>
-			<string>Enable Debug Localytics Logs</string>
+			<string>Enable Debug Analytics Logs</string>
 			<key>Key</key>
 			<string>ZMEnableAnalyticsLog</string>
 			<key>DefaultValue</key>

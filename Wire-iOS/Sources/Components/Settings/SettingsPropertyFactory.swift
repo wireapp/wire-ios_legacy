@@ -20,15 +20,12 @@
 import HockeySDK.BITHockeyManager
 
 
-protocol AnalyticsInterface {
-    var isOptedOut : Bool {get set}
-}
-
-extension Analytics: AnalyticsInterface {
+protocol TrackingInterface {
+    var disableCrashAndAnalyticsSharing : Bool { get set }
 }
 
 protocol AVSMediaManagerInterface {
-    var intensityLevel : AVSIntensityLevel {get set}
+    var intensityLevel : AVSIntensityLevel { get set }
 }
 
 extension AVSMediaManager: AVSMediaManagerInterface {
@@ -58,20 +55,12 @@ enum SettingsPropertyError: Error {
     case WrongValue(String)
 }
 
-protocol CrashlogManager {
-   var isCrashManagerDisabled: Bool { get set }
-}
-
-extension BITHockeyManager: CrashlogManager {}
-
-
 class SettingsPropertyFactory {
     let userDefaults: UserDefaults
-    var analytics: AnalyticsInterface?
+    var tracking: TrackingInterface?
     var mediaManager: AVSMediaManagerInterface?
     weak var userSession: ZMUserSessionInterface?
     let selfUser: SettingsSelfUser
-    var crashlogManager: CrashlogManager?
     
     static let userDefaultsPropertiesToKeys: [SettingsPropertyName: String] = [
         SettingsPropertyName.disableMarkdown            : UserDefaultDisableMarkdown,
@@ -80,10 +69,6 @@ class SettingsPropertyFactory {
         SettingsPropertyName.messageSoundName           : UserDefaultMessageSoundName,
         SettingsPropertyName.callSoundName              : UserDefaultCallSoundName,
         SettingsPropertyName.pingSoundName              : UserDefaultPingSoundName,
-        SettingsPropertyName.disableUI                  : UserDefaultDisableUI,
-        SettingsPropertyName.disableAVS                 : UserDefaultDisableAVS,
-        SettingsPropertyName.disableHockey              : UserDefaultDisableHockey,
-        SettingsPropertyName.disableAnalytics           : UserDefaultDisableAnalytics,
         SettingsPropertyName.disableSendButton          : UserDefaultSendButtonDisabled,
         SettingsPropertyName.mapsOpeningOption          : UserDefaultMapsOpeningRawValue,
         SettingsPropertyName.browserOpeningOption       : UserDefaultBrowserOpeningRawValue,
@@ -94,13 +79,12 @@ class SettingsPropertyFactory {
         SettingsPropertyName.disableLinkPreviews        : UserDefaultDisableLinkPreviews,
     ]
     
-    init(userDefaults: UserDefaults, analytics: AnalyticsInterface?, mediaManager: AVSMediaManagerInterface?, userSession: ZMUserSessionInterface, selfUser: SettingsSelfUser, crashlogManager: CrashlogManager? = .none) {
+    init(userDefaults: UserDefaults, tracking: TrackingInterface?, mediaManager: AVSMediaManagerInterface?, userSession: ZMUserSessionInterface, selfUser: SettingsSelfUser) {
         self.userDefaults = userDefaults
-        self.analytics = analytics
+        self.tracking = tracking
         self.mediaManager = mediaManager
         self.userSession = userSession
         self.selfUser = selfUser
-        self.crashlogManager = crashlogManager
     }
     
     func property(_ propertyName: SettingsPropertyName) -> SettingsProperty {
@@ -184,22 +168,20 @@ class SettingsPropertyFactory {
             }
             return SettingsBlockProperty(propertyName: propertyName, getAction: getAction, setAction: setAction)
             
-        case .analyticsOptOut:
+        case .disableCrashAndAnalyticsSharing:
             let getAction : GetAction = { [unowned self] (property: SettingsBlockProperty) -> SettingsPropertyValue in
-                if let analytics = self.analytics {
-                    return SettingsPropertyValue(analytics.isOptedOut)
+                if let tracking = self.tracking {
+                    return SettingsPropertyValue(tracking.disableCrashAndAnalyticsSharing)
                 }
                 else {
                     return SettingsPropertyValue(false)
                 }
             }
             let setAction : SetAction = { [unowned self] (property: SettingsBlockProperty, value: SettingsPropertyValue) throws -> () in
-                if var analytics = self.analytics,
-                    var crashlogManager = self.crashlogManager {
+                if var tracking = self.tracking {
                     switch(value) {
                     case .number(let number):
-                        analytics.isOptedOut = number.boolValue
-                        crashlogManager.isCrashManagerDisabled = number.boolValue
+                        tracking.disableCrashAndAnalyticsSharing = number.boolValue
                     default:
                         throw SettingsPropertyError.WrongValue("Incorrect type \(value) for key \(propertyName)")
                     }
@@ -317,11 +299,10 @@ extension SettingsPropertyFactory {
             return .none
         }
         let settingsPropertyFactory = SettingsPropertyFactory(userDefaults: UserDefaults.standard,
-                                                              analytics: Analytics.shared(),
-                                                              mediaManager: AVSProvider.shared.mediaManager,
+                                                              tracking: TrackingManager.shared,
+                                                              mediaManager: AVSMediaManager.sharedInstance(),
                                                               userSession: session,
-                                                              selfUser: ZMUser.selfUser(),
-                                                              crashlogManager: BITHockeyManager.shared())
+                                                              selfUser: ZMUser.selfUser())
         
         return settingsPropertyFactory
     }

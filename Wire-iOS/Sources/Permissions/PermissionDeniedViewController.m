@@ -23,12 +23,10 @@
 
 #import "WAZUIMagicIOS.h"
 #import "UIColor+WAZExtensions.h"
-#import "Analytics+iOS.h"
+#import "Analytics.h"
 #import "WebLinkTextView.h"
 #import "Wire-Swift.h"
 #import "Button.h"
-
-#import "AnalyticsTracker+Navigation.h"
 
 
 @interface PermissionDeniedViewController ()
@@ -169,9 +167,7 @@
 #pragma mark - Actions
 
 - (IBAction)openSettings:(id)sender
-{
-    [self.analyticsTracker tagEnteredOSSettings];
-    
+{   
     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]];
 }
 

@@ -41,7 +41,7 @@
 #import "Wire-Swift.h"
 
 #import "AnalyticsTracker+Registration.h"
-#import "Analytics+iOS.h"
+#import "Analytics.h"
 #import "StopWatch.h"
 #import "NSLayoutConstraint+Helpers.h"
 
@@ -208,6 +208,12 @@
 
 - (void)takeFirstResponder
 {
+    if (@available(iOS 11, *)) {
+        // A workaround for iOS11 not autofilling the password textfield (https://wearezeta.atlassian.net/browse/ZIOS-9080).
+        // We need to put focus on the textfield as it seems to force iOS to "see" this texfield
+        [self.passwordField becomeFirstResponder];
+    }
+
     if (self.emailField.isEnabled) {
         [self.emailField becomeFirstResponder];
     } else {

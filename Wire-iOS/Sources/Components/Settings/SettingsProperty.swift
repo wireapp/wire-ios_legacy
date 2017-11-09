@@ -28,7 +28,7 @@ Available settings
 - DarkMode:               Dark mode for conversation
 - PriofileName:           User name
 - SoundAlerts:            Sound alerts level
-- AnalyticsOptOut:        Opt-Out analytics
+- DisableCrashAndAnalyticsSharing: Opt-Out analytics and Hockey
 - DisableSendButton:      Opt-Out of new send button
 - DisableLinkPreviews:    Disable link previews for links you send
 - Disable(.*):            Disable some app features (debug)
@@ -59,7 +59,7 @@ enum SettingsPropertyName: String, CustomStringConvertible {
     case callingConstantBitRate = "constantBitRate"
     
     // Analytics
-    case analyticsOptOut = "AnalyticsOptOut"
+    case disableCrashAndAnalyticsSharing = "DisableCrashAndAnalyticsSharing"
 
     // Sounds
     case messageSoundName = "MessageSoundName"
@@ -72,11 +72,6 @@ enum SettingsPropertyName: String, CustomStringConvertible {
     case browserOpeningOption = "BrowserOpeningOption"
     
     // Debug
-    
-    case disableUI = "DisableUI"
-    case disableAVS = "DisableAVS"
-    case disableHockey = "DisableHockey"
-    case disableAnalytics = "DisableAnalytics"
     case disableCallKit = "DisableCallKit"
     case callingProtocolStrategy = "CallingProtcolStrategy"
     case enableBatchCollections = "EnableBatchCollections"
@@ -221,7 +216,7 @@ class SettingsUserDefaultsProperty : SettingsProperty {
     }
 
     internal func trackNewValue() {
-        Analytics.shared()?.tagSettingsChanged(for: self.propertyName, to: self.value())
+        Analytics.shared().tagSettingsChanged(for: self.propertyName, to: self.value())
     }
     
     let propertyName : SettingsPropertyName
@@ -253,7 +248,7 @@ open class SettingsBlockProperty : SettingsProperty {
     }
     
     internal func trackNewValue() {
-        Analytics.shared()?.tagSettingsChanged(for: self.propertyName, to: self.value())
+        Analytics.shared().tagSettingsChanged(for: self.propertyName, to: self.value())
     }
     
     fileprivate let getAction : GetAction

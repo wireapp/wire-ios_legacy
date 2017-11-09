@@ -68,21 +68,54 @@ class UnsentSendableBase {
 /// `UnsentSendable` implementation to send text messages
 class UnsentTextSendable: UnsentSendableBase, UnsentSendable {
 
-    private let text: String
+    private var text: String
+    private let attachment: NSItemProvider?
 
-    init(conversation: Conversation, sharingSession: SharingSession, text: String) {
+    init(conversation: Conversation, sharingSession: SharingSession, text: String, attachment: NSItemProvider? = nil) {
         self.text = text
+        self.attachment = attachment
         super.init(conversation: conversation, sharingSession: sharingSession)
+        if attachment != nil {
+            needsPreparation = true
+        }
     }
 
     func send(completion: @escaping (Sendable?) -> Void) {
         sharingSession.enqueue { [weak self] in
             guard let `self` = self else { return }
             let fetchPreview = !ExtensionSettings.shared.disableLinkPreviews
-            completion(self.conversation.appendTextMessage(self.text, fetchLinkPreview: fetchPreview))
+            let message = self.conversation.appendTextMessage(self.text, fetchLinkPreview: fetchPreview)
+            completion(message)
         }
     }
-
+    
+    func prepare(completion: @escaping () -> Void) {
+        precondition(needsPreparation, "Ensure this objects needs preparation, c.f. `needsPreparation`")
+        needsPreparation = false
+        
+        if let attachment = self.attachment, attachment.hasURL {
+            
+            self.attachment?.fetchURL(completion: { (url) in
+                self.appendURLToTextIfNotAlreadyPresent(url)
+                completion()
+            })
+        } else {
+            completion()
+        }
+    }
+    
+    func appendURLToTextIfNotAlreadyPresent(_ url: URL?) {
+        
+        if let url = url?.absoluteString, !self.text.contains(url)  {
+            var separator = ""
+            
+            if !self.text.isEmpty && self.text.characters.last != " " {
+                separator = " "
+            }
+            
+            self.text += separator + url
+        }
+    }
 }
 
 
@@ -113,9 +146,11 @@ class UnsentImageSendable: UnsentSendableBase, UnsentSendable {
         // rely on UIImage are too expensive (eg. 12MP image -> approx 48MB UIImage), so we make the system scale the images
         // for us ('free' of charge) by using the image URL & ImageIO library.
         //
+        
         self.attachment.loadItem(forTypeIdentifier: kUTTypeImage as String, options: options, urlCompletionHandler: { [weak self] (url, error) in
             error?.log(message: "Unable to load image from attachment")
             
+            //Tries to load the content from local URL...
             if let url = url, let imageSource = CGImageSourceCreateWithURL(url as CFURL, nil) {
                 let options: [NSString : Any] = [
                     kCGImageSourceThumbnailMaxPixelSize: longestDimension,
@@ -126,10 +161,27 @@ class UnsentImageSendable: UnsentSendableBase, UnsentSendable {
                 if let scaledImage = CGImageSourceCreateThumbnailAtIndex(imageSource, 0, options as CFDictionary) {
                     self?.imageData = UIImageJPEGRepresentation(UIImage(cgImage: scaledImage), 0.9)
                 }
+                
+                completion()
+                
+            } else {
+                
+                // if it fails, it will attach the content directly
+                
+                self?.attachment.loadItem(forTypeIdentifier: kUTTypeImage as String, options: options, imageCompletionHandler: { [weak self] (image, error) in
+                    
+                    error?.log(message: "Unable to load image from attachment")
+                    
+                    if let image = image {
+                        self?.imageData = UIImageJPEGRepresentation(image, 0.9)
+                    }
+                    
+                    completion()
+                })
             }
             
-            completion()
         })
+        
     }
 
     func send(completion: @escaping (Sendable?) -> Void) {
@@ -158,7 +210,7 @@ class UnsentFileSendable: UnsentSendableBase, UnsentSendable {
         self.typePass = attachment.hasItemConformingToTypeIdentifier(UnsentFileSendable.passkitUTI)
         self.attachment = attachment
         super.init(conversation: conversation, sharingSession: sharingSession)
-        guard typeURL || typeData else { return nil }
+        guard typeURL || typeData || typePass else { return nil }
         needsPreparation = true
     }
 

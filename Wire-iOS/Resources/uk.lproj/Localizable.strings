@@ -560,7 +560,12 @@
 
 // Settings - top level
 "self.settings.create_team.title" = "Створити команду";
+"self.settings.manage_team.title" = "Керування командою";
+"self.settings.add_team_or_account.title" = "New Team or Account";
 "self.settings.add_account.title" = "Додати акаунт";
+
+"self.settings.add_account.error.title" = "Three accounts active";
+"self.settings.add_account.error.message" = "You can only be logged in with three accounts at once. Log out from one to add another.";
 
 // Settings - Account details
 "self.settings.account_section" = "Акаунт";
@@ -663,7 +668,7 @@
 
 "self.settings.callkit.title" = "Дзвінки";
 "self.settings.callkit.caption" = "Ділитися інформацією з iOS";
-"self.settings.callkit.description" = "Show Wire calls on the lock screen and in iOS call history. If iCloud is enabled, call history is shared with Apple.";
+"self.settings.callkit.description" = "Показувати дзвінки Wire на екрані блокування та в історії дзвінків iOS. Історія дзвінків буде доступна для Apple, якщо служба iCloud активована.";
 
 "self.settings.cbr.not_available" = "Сталий бітрейт";
 "self.settings.cbr.not_available.description" = "Сталий бітрейт було тимчасово вимкнуто через введення підтримки декількох акаунтів. Дана функціональність невдовзі буде доступна.";
@@ -883,7 +888,6 @@
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Username takeover screen
-"registration.select_handle.takeover.title" = "Ніки вже тут.";
 "registration.select_handle.takeover.subtitle" = "Зарезервуйте свій унікальний нік в Wire.";
 "registration.select_handle.takeover.subtitle_link" = "Дізнатися більше";
 
@@ -905,6 +909,7 @@
 "error.user.device_deleted_remotely" = "Ви вийшли на іншому пристрої.";
 "error.user.last_identity_cant_be_deleted" = "Необхідна або email-адреса або номер телефону.";
 "error.user.account_suspended" = "Даний акаунт був заблокований.";
+"error.user.account_limit_reached" = "Ви не можете додати більше трьох акаунтів.";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Those are caught by the UI without involving the SE validation. Basically very similar to ZMUserSessionErrorCode onces

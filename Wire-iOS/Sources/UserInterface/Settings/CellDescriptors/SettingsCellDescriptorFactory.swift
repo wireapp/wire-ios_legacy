@@ -36,13 +36,14 @@ import Foundation
     }
     
     func rootGroup() -> SettingsControllerGeneratorType & SettingsInternalGroupCellDescriptorType {
-        var rootElements = [self.createTeamCell()]
+        var rootElements: [SettingsCellDescriptorType] = []
         
-        if SessionManager.shared?.accountManager.accounts.count < SessionManager.maxNumberAccounts {
-            rootElements.append(self.addAccountCell())
+        if ZMUser.selfUser().canManageTeam {
+            rootElements.append(self.manageTeamCell())
         }
         
         rootElements.append(self.settingsGroup())
+        rootElements.append(self.addAccountOrTeamCell())
         
         let topSection = SettingsSectionDescriptor(cellDescriptors: rootElements)
         
@@ -63,30 +64,60 @@ import Foundation
         
     }
     
-    func createTeamCell() -> SettingsCellDescriptorType {
-        return SettingsExternalScreenCellDescriptor(title: "self.settings.create_team.title".localized,
+    func manageTeamCell() -> SettingsCellDescriptorType {
+        return SettingsExternalScreenCellDescriptor(title: "self.settings.manage_team.title".localized,
                                                     isDestructive: false,
                                                     presentationStyle: PresentationStyle.navigation,
                                                     identifier: nil,
                                                     presentationAction: { () -> (UIViewController?) in
-                                                        NSURL.wr_createTeam().wr_URLByAppendingLocaleParameter().open()
+                                                        NSURL.wr_manageTeam().wr_URLByAppendingLocaleParameter().open()
                                                         return nil
                                                     },
                                                     previewGenerator: nil,
-                                                    icon: .createTeam)
+                                                    icon: .team)
     }
     
-    func addAccountCell() -> SettingsCellDescriptorType {
-        return SettingsExternalScreenCellDescriptor(title: "self.settings.add_account.title".localized,
+    static func addAccountController() -> UIViewController {
+        let actionSheet = UIAlertController(title: nil,
+                                            message: nil,
+                                            preferredStyle: .actionSheet)
+        
+        let createATeamAction = UIAlertAction(title: "self.settings.create_team.title".localized, style: .default, handler: { action in
+            NSURL.wr_createTeam().wr_URLByAppendingLocaleParameter().open()
+        })
+        actionSheet.addAction(createATeamAction)
+        let addAnAccountAction = UIAlertAction(title: "self.settings.add_account.title".localized, style: .default, handler: { action in
+            if SessionManager.shared?.accountManager.accounts.count < SessionManager.maxNumberAccounts {
+                SessionManager.shared?.addAccount()
+            }
+            else {
+                let alert = UIAlertController(title: "self.settings.add_account.error.title".localized,
+                                              message: "self.settings.add_account.error.message".localized,
+                                              cancelButtonTitle: "general.ok".localized)
+                
+                guard let controller = UIApplication.shared.wr_topmostController(onlyFullScreen: false) else { return }
+                controller.present(alert, animated: true, completion: nil)
+            }
+        })
+        actionSheet.addAction(addAnAccountAction)
+        let cancelAction = UIAlertAction(title: "general.cancel".localized, style: .cancel, handler: { action in
+            actionSheet.dismiss(animated: true, completion: nil)
+        })
+        actionSheet.addAction(cancelAction)
+        return actionSheet
+    }
+    
+    func addAccountOrTeamCell() -> SettingsCellDescriptorType {
+        return SettingsExternalScreenCellDescriptor(title: "self.settings.add_team_or_account.title".localized,
                                                     isDestructive: false,
-                                                    presentationStyle: PresentationStyle.navigation,
+                                                    presentationStyle: PresentationStyle.modal,
                                                     identifier: nil,
                                                     presentationAction: { () -> (UIViewController?) in
-                                                        SessionManager.shared?.addAccount()
-                                                        return nil
+                                                    return SettingsCellDescriptorFactory.addAccountController()
         },
                                                     previewGenerator: nil,
-                                                    icon: .convMetaAddPerson)
+                                                    icon: .plus,
+                                                    accessoryViewMode: .alwaysShow)
     }
     
     func settingsGroup() -> SettingsControllerGeneratorType & SettingsInternalGroupCellDescriptorType {
@@ -107,7 +138,7 @@ import Foundation
             presentationStyle: PresentationStyle.navigation,
             identifier: type(of: self).settingsDevicesCellIdentifier,
             presentationAction: { () -> (UIViewController?) in
-                Analytics.shared()?.tagSelfDeviceList()
+                Analytics.shared().tagSelfDeviceList()
                 return ClientListViewController(clientsList: .none, credentials: .none, detailedView: true)
             },
             previewGenerator: { _ -> SettingsCellPreview in
@@ -163,7 +194,7 @@ import Foundation
     func advancedGroup() -> SettingsCellDescriptorType {
         var items: [SettingsSectionDescriptor] = []
         
-        let sendDataToWire = SettingsPropertyToggleCellDescriptor(settingsProperty: self.settingsPropertyFactory.property(.analyticsOptOut), inverse: true)
+        let sendDataToWire = SettingsPropertyToggleCellDescriptor(settingsProperty: self.settingsPropertyFactory.property(.disableCrashAndAnalyticsSharing), inverse: true)
         let usageLabel = "self.settings.privacy_analytics_section.title".localized
         let usageInfo = "self.settings.privacy_analytics_menu.description.title".localized
         let sendUsageSection = SettingsSectionDescriptor(cellDescriptors: [sendDataToWire], header: usageLabel, footer: usageInfo)
@@ -222,14 +253,6 @@ import Foundation
         
         developerCellDescriptors.append(devController)
         
-        let diableAVSSetting = SettingsPropertyToggleCellDescriptor(settingsProperty: self.settingsPropertyFactory.property(.disableAVS))
-        developerCellDescriptors.append(diableAVSSetting)
-        let diableUISetting = SettingsPropertyToggleCellDescriptor(settingsProperty: self.settingsPropertyFactory.property(.disableUI))
-        developerCellDescriptors.append(diableUISetting)
-        let diableHockeySetting = SettingsPropertyToggleCellDescriptor(settingsProperty: self.settingsPropertyFactory.property(.disableHockey))
-        developerCellDescriptors.append(diableHockeySetting)
-        let diableAnalyticsSetting = SettingsPropertyToggleCellDescriptor(settingsProperty: self.settingsPropertyFactory.property(.disableAnalytics))
-        developerCellDescriptors.append(diableAnalyticsSetting)
         let enableBatchCollections = SettingsPropertyToggleCellDescriptor(settingsProperty: self.settingsPropertyFactory.property(.enableBatchCollections))
         developerCellDescriptors.append(enableBatchCollections)
         let sendBrokenMessageButton = SettingsButtonCellDescriptor(title: "Send broken message", isDestructive: true, selectAction: SettingsCellDescriptorFactory.sendBrokenMessage)
@@ -249,7 +272,7 @@ import Foundation
     func helpSection() -> SettingsCellDescriptorType {
         
         let supportButton = SettingsExternalScreenCellDescriptor(title: "self.help_center.support_website".localized, isDestructive: false, presentationStyle: .modal, presentationAction: { _ in
-            Analytics.shared()?.tagHelp()
+            Analytics.shared().tagHelp()
             return BrowserViewController(url: NSURL.wr_support().wr_URLByAppendingLocaleParameter() as URL!)
         }, previewGenerator: .none)
         

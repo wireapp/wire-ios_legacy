@@ -173,12 +173,18 @@
     if (circular) {
         self.layer.masksToBounds = YES;
         self.layer.borderWidth = self.borderWidth;
-        [self updateCornerRadius];
+        [self updateCircularCornerRadius];
     } else {
         self.layer.masksToBounds = NO;
         self.layer.borderWidth = 0.0f;
         self.layer.cornerRadius = 0;
     }
+}
+
+-(void)setRoundCorners:(BOOL)roundCorners
+{
+    _roundCorners = roundCorners;
+    [self updateCustomCornerRadius];
 }
 
 - (void)setTitleImageSpacing:(CGFloat)titleImageSpacing
@@ -219,7 +225,7 @@
 {
     [super setBounds:bounds];
     
-    [self updateCornerRadius];
+    [self updateCircularCornerRadius];
 }
 
 - (void)setBackgroundImageColor:(UIColor *)color forState:(UIControlState)state
@@ -340,10 +346,19 @@
     self.tintColor = [self iconColorForState:self.state];
 }
 
-- (void)updateCornerRadius
+- (void)updateCircularCornerRadius
 {
     if (self.circular) {
         self.layer.cornerRadius = self.bounds.size.height / 2;
+    }
+}
+
+- (void)updateCustomCornerRadius
+{
+    if(self.roundCorners) {
+        self.layer.cornerRadius = 6.0;
+    } else {
+        self.layer.cornerRadius = 0.0;
     }
 }
 

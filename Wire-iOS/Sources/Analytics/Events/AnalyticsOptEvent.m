@@ -41,12 +41,12 @@
 
 - (NSString *)eventTag
 {
-    return @"analyticsOpted";
+    return self.optedOut ? @"settings.opted_out_tracking" : @"settings.opted_in_tracking";
 }
 
 - (NSDictionary *)attributesDump
 {
-    return @{ @"newValue": self.optedOut ? @"opt-out" : @"opt-in" };
+    return @{};
 }
 
 @end

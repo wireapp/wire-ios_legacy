@@ -22,7 +22,8 @@
 #import "UserImageView.h"
 #import "WireSyncEngine+iOS.h"
 #import "PreviewProvider.h"
-#import "Analytics+iOS.h"
+#import "Analytics.h"
+#import "Analytics+ConversationEvents.h"
 #import "MessageAction.h"
 
 @class ConversationCell;

@@ -136,7 +136,7 @@ open class CameraKeyboardViewController: UIViewController {
             goBackButton.width == 36
             goBackButton.height == goBackButton.width
             goBackButton.leading == view.leading + self.sideMargin
-            goBackButton.bottom == view.bottom - 18
+            goBackButton.bottom == view.bottom - 18 - UIScreen.safeArea.bottom
 
             cameraRollButton.width == 36
             cameraRollButton.height == goBackButton.width

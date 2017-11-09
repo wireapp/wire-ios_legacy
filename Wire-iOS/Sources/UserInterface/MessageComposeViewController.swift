@@ -37,6 +37,7 @@ final class MessageComposeViewController: UIViewController {
     private let color = ColorScheme.default().color(withName:)
     private let sendButtonView = DraftSendInputAccessoryView()
     fileprivate let markdownBarView = MarkdownBarView()
+    private var bottomEdgeConstraint : NSLayoutConstraint?
 
     private var draft: MessageDraft?
     private let persistence: MessageDraftStorage
@@ -48,6 +49,15 @@ final class MessageComposeViewController: UIViewController {
         loadDraft()
         setupViews()
         createConstraints()
+        
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(MessageComposeViewController.keyboardFrameWillChange(_:)),
+                                               name: NSNotification.Name.UIKeyboardWillChangeFrame,
+                                               object: nil)
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardWillChangeFrame, object: nil)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -94,6 +104,7 @@ final class MessageComposeViewController: UIViewController {
         messageTextView.delegate = self
         messageTextView.indicatorStyle = ColorScheme.default().indicatorStyle
         messageTextView.accessibilityLabel = "messageTextField"
+        messageTextView.keyboardAppearance = ColorScheme.default().keyboardAppearance
         markdownBarView.delegate = messageTextView
     }
 
@@ -112,6 +123,7 @@ final class MessageComposeViewController: UIViewController {
         subjectTextField.bounds = CGRect(x: 0, y: 0, width: 200, height: 44)
         subjectTextField.accessibilityLabel = "subjectTextField"
         subjectTextField.alpha = 0
+        subjectTextField.keyboardAppearance = ColorScheme.default().keyboardAppearance
         navigationItem.titleView = subjectTextField
     }
 
@@ -248,7 +260,7 @@ final class MessageComposeViewController: UIViewController {
 
             markdownBarView.leading == view.leading
             markdownBarView.trailing == view.trailing
-            markdownBarView.bottom == view.bottom - UIScreen.safeArea.bottom
+            self.bottomEdgeConstraint = markdownBarView.bottom == view.bottom - UIScreen.safeArea.bottom
             markdownBarView.height == 56
         }
     }
@@ -259,6 +271,16 @@ final class MessageComposeViewController: UIViewController {
         updateButtonStates()
     }
 
+    func keyboardFrameWillChange(_ notification: Notification) {
+        guard let endSize = notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? CGRect else {
+            return
+        }
+        UIView.animate(withKeyboardNotification: notification, in: self.view, animations: { (keyboardFrame) in
+            let keyboardIsClosed = endSize.origin.y == UIScreen.main.bounds.height
+            self.bottomEdgeConstraint?.constant = -(keyboardIsClosed ? UIScreen.safeArea.bottom : 0)
+            self.view.layoutIfNeeded()
+        }, completion: nil)
+    }
 }
 
 

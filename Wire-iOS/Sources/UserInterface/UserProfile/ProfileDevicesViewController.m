@@ -22,7 +22,7 @@
 #import "ParticipantsDeviceHeaderView.h"
 #import "ParticipantDeviceCell.h"
 
-#import "Analytics+iOS.h"
+#import "Analytics.h"
 @import PureLayout;
 #import "Wire-Swift.h"
 

@@ -31,11 +31,12 @@ class VoiceChannelViewController: UIViewController {
     
     var callStateObserverToken : Any?
     var receivedVideoObserverToken : Any?
+    var constantBitRateObserverToken : Any?
     
     fileprivate var isSwitchingCamera = false
     fileprivate var currentCaptureDevice: CaptureDevice = .front
     fileprivate var previousCallState : CallState = .none
-    fileprivate var callDurationTimer : Timer?
+    fileprivate weak var callDurationTimer : Timer?
     fileprivate var outgoingVideoWasActiveBeforeEnteringEnteringBackground = false
     
     override func loadView() {
@@ -59,21 +60,20 @@ class VoiceChannelViewController: UIViewController {
         
         voiceChannelView.callDuration = 0
         voiceChannelView.remoteIsSendingVideo = conversation.voiceChannel?.isVideoCall ?? false
+        voiceChannelView.constantBitRate = conversation.voiceChannel?.isConstantBitRateAudioActive ?? false
         
         callStateObserverToken = conversation.voiceChannel?.addCallStateObserver(self)
         receivedVideoObserverToken = conversation.voiceChannel?.addReceivedVideoObserver(self)
+        constantBitRateObserverToken = conversation.voiceChannel?.addConstantBitRateObserver(self)
         AVSMediaManagerClientChangeNotification.add(self)
         
         NotificationCenter.default.addObserver(self, selector: #selector(applicationWillResignActive), name: NSNotification.Name.UIApplicationWillResignActive, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(applicationDidBecomeActive), name: NSNotification.Name.UIApplicationDidBecomeActive, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(voiceChannelEnabledCBR), name: WireCallCenterV3.cbrNotificationName, object: nil)
         
         let doubleTapRecognizer = UITapGestureRecognizer(target: self, action: #selector(onDoubleTap(_:)))
         doubleTapRecognizer.numberOfTapsRequired = 2
         doubleTapRecognizer.delegate = self
         view.addGestureRecognizer(doubleTapRecognizer)
-        
-        createParticipantsControllerIfNecessary()
         
         if let callState = conversation.voiceChannel?.state {
             updateView(for: callState)
@@ -83,11 +83,13 @@ class VoiceChannelViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        guard let mediaManager = AVSProvider.shared.mediaManager else { return }
+        guard let mediaManager = AVSMediaManager.sharedInstance() else { return }
         
         voiceChannelView.muted = mediaManager.isMicrophoneMuted
         voiceChannelView.speakerActive = mediaManager.isSpeakerEnabled
         voiceChannelView.outgoingVideoActive = conversation.voiceChannel?.isVideoCall ?? false
+        
+        createParticipantsControllerIfNecessary()
     }
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
@@ -210,7 +212,7 @@ extension VoiceChannelViewController : VoiceChannelOverlayDelegate {
     func muteButtonTapped() {
         zmLog.debug("muteButtonTapped")
         
-        guard let mediaManager = AVSProvider.shared.mediaManager else { return }
+        guard let mediaManager = AVSMediaManager.sharedInstance() else { return }
         
         mediaManager.isMicrophoneMuted = !mediaManager.isMicrophoneMuted
         voiceChannelView.muted = mediaManager.isMicrophoneMuted
@@ -219,7 +221,7 @@ extension VoiceChannelViewController : VoiceChannelOverlayDelegate {
     func speakerButtonTapped() {
         zmLog.debug("speakerButtonTapped")
         
-        guard let mediaManager = AVSProvider.shared.mediaManager else { return }
+        guard let mediaManager = AVSMediaManager.sharedInstance() else { return }
         
         mediaManager.isSpeakerEnabled = !mediaManager.isSpeakerEnabled
         voiceChannelView.speakerActive = mediaManager.isSpeakerEnabled
@@ -271,11 +273,9 @@ extension VoiceChannelViewController : VoiceChannelOverlayDelegate {
     
 }
 
-extension VoiceChannelViewController : WireCallCenterCallStateObserver, ReceivedVideoObserver {
+extension VoiceChannelViewController : WireCallCenterCallStateObserver, ReceivedVideoObserver, ConstantBitRateAudioObserver {
     
     func callCenterDidChange(callState: CallState, conversation: ZMConversation, user: ZMUser?, timeStamp: Date?) {
-        updateIdleTimer(for: callState)
-        updateCallDurationTimer(for: callState)
         updateView(for: callState)
         createParticipantsControllerIfNecessary()
     }
@@ -310,7 +310,7 @@ extension VoiceChannelViewController : WireCallCenterCallStateObserver, Received
         callDurationTimer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(updateCallDuration), userInfo: nil, repeats: true)
     }
     
-    func stopCallDurationTimer() {
+    public func stopCallDurationTimer() {
         callDurationTimer?.invalidate()
         callDurationTimer = nil
     }
@@ -329,7 +329,10 @@ extension VoiceChannelViewController : WireCallCenterCallStateObserver, Received
         }
         
         voiceChannelView.transition(to: viewState(for: callState, previousCallState: previousCallState))
-        voiceChannelView.speakerActive = AVSProvider.shared.mediaManager?.isSpeakerEnabled ?? false
+        voiceChannelView.speakerActive = AVSMediaManager.sharedInstance()?.isSpeakerEnabled ?? false
+        
+        updateCallDurationTimer(for: callState)
+        updateIdleTimer(for: callState)
     }
     
     func viewState(for callState : CallState, previousCallState : CallState) -> VoiceChannelOverlayState {
@@ -372,6 +375,10 @@ extension VoiceChannelViewController : WireCallCenterCallStateObserver, Received
         voiceChannelView.lowBandwidth = receivedVideoState == .badConnection       
     }
     
+    func callCenterDidChange(constantAudioBitRateAudioEnabled enabled: Bool) {
+        voiceChannelView.constantBitRate = enabled
+    }
+    
 }
 
 extension VoiceChannelViewController : AVSMediaManagerClientObserver {
@@ -381,7 +388,7 @@ extension VoiceChannelViewController : AVSMediaManagerClientObserver {
             voiceChannelView.muted = notification.manager.isMicrophoneMuted
         }
         
-        if notification.speakerMuteChanged {
+        if notification.speakerEnableChanged {
             voiceChannelView.speakerActive = notification.manager.isSpeakerEnabled
         }
     }
@@ -406,8 +413,4 @@ extension VoiceChannelViewController {
         }
     }
     
-    func voiceChannelEnabledCBR() {
-        voiceChannelView.constantBitRate = true
-    }
-        
 }

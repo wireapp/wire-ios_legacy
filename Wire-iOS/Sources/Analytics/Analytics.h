@@ -16,10 +16,63 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 // 
 
+#import "AnalyticsProvider.h"
 
-#import <Foundation/Foundation.h>
+@import Foundation;
+@import WireSyncEngine;
 
-#import "AnalyticsEvent.h"
-#import "AnalyticsBase.h"
-#import "Analytics+Events.h"
-#import "Application+runDuration.h"
+@class AnalyticsSessionSummaryEvent;
+@class AnalyticsRegistration;
+@class AnalyticsEvent;
+
+typedef NS_ENUM (NSUInteger, AnalyticsEventSource) {
+    AnalyticsEventSourceUnspecified,
+    AnalyticsEventSourceUI,
+    AnalyticsEventSourceMenu,
+    AnalyticsEventSourceShortcut
+};
+
+NS_ASSUME_NONNULL_BEGIN
+
+FOUNDATION_EXPORT NSString * LocalyticsAPIKey;
+FOUNDATION_EXPORT NSString * MixpanelAPIKey;
+FOUNDATION_EXPORT BOOL UseAnalytics;
+
+/// A simple vendor-independent interface to tracking analytics from the UIs.
+@interface Analytics : NSObject <AnalyticsType>
+
+/// Opt the user out of sending analytics data
+@property (nonatomic, assign) BOOL isOptedOut;
+
+@property (nonatomic, readonly) AnalyticsSessionSummaryEvent *sessionSummary;
+
+/// For tagging registration events
+@property (nonatomic, assign) BOOL observingConversationList;
+
+@property (nonatomic, nullable) Team* team;
+
++ (void)loadSharedWithOptedOut:(BOOL)optedOut;
++ (instancetype)shared;
+
+- (instancetype)init NS_UNAVAILABLE;
+- (instancetype)initWithOptedOut:(BOOL)optedOut NS_DESIGNATED_INITIALIZER;
+
+/// Record an event with no attributes
+- (void)tagEvent:(NSString *)event;
+- (void)tagEvent:(NSString *)event source:(AnalyticsEventSource)source;
+- (void)tagEvent:(NSString *)event attributes:(NSDictionary *)attributes team:(nullable Team *)team;
+
+/// Record an event with optional attributes.
+- (void)tagEvent:(NSString *)event attributes:(NSDictionary *)attributes;
+- (void)tagEvent:(NSString *)event attributes:(NSDictionary *)attributes source:(AnalyticsEventSource)source;
+
+- (void)tagEventObject:(AnalyticsEvent *)event;
+- (void)tagEventObject:(AnalyticsEvent *)event source:(AnalyticsEventSource)source;
+
+/// Set the custom dimensions values
+- (void)sendCustomDimensionsWithNumberOfContacts:(NSUInteger)contacts
+                              groupConversations:(NSUInteger)groupConv;
+
+@end
+
+NS_ASSUME_NONNULL_END

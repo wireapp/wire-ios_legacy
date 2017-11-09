@@ -120,6 +120,7 @@ class VoiceChannelOverlayTests: ZMSnapshotTestCase {
         overlay.transition(to: state)
         CASStyler.default().styleItem(overlay)
         overlay.backgroundColor = .darkGray
+        overlay.videoView?.backgroundColor = .clear
         return overlay
     }
     
@@ -251,7 +252,13 @@ class VoiceChannelOverlayTests: ZMSnapshotTestCase {
         let overlay = voiceChannelOverlay(state: .connected, conversation: conversation)
         verifyInAllDeviceSizes(view: overlay, configuration: configure)
     }
-
+    
+    func testOngoingAudioCallCBR() {
+        let overlay = voiceChannelOverlay(state: .connected, conversation: conversation)
+        overlay.constantBitRate = true
+        verifyInAllDeviceSizes(view: overlay, configuration: configure)
+    }
+    
     func testOngoingVideoCall() {
         let overlay = voiceChannelOverlay(state: .connected, videoCall: true, conversation: conversation)
         overlay.remoteIsSendingVideo = true

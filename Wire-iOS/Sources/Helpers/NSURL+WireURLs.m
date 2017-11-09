@@ -93,4 +93,9 @@
     return [self URLWithString:@"https://wire.com/create-team?pk_campaign=client&pk_kwd=ios"];
 }
 
++ (instancetype)wr_manageTeamURL
+{
+    return [self URLWithString:@"https://teams.wire.com/login?pk_campaign=client&pk_kwd=ios"];
+}
+
 @end

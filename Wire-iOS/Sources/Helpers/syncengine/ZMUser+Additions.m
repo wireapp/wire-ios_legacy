@@ -20,7 +20,8 @@
 #import "ZMUser+Additions.h"
 #import "WireSyncEngine+iOS.h"
 #import "UIColor+WAZExtensions.h"
-#import "Analytics+iOS.h"
+#import "Analytics.h"
+#import "Analytics+SearchEvents.h"
 #import "ColorScheme.h"
 
 ZMUser *BareUserToUser(id bareUser) {
@@ -70,6 +71,12 @@ ZMUser *BareUserToUser(id bareUser) {
     return [UIColor nameColorForZMAccentColor:self.accentColorValue variant:[[ColorScheme defaultColorScheme] variant]];
 }
 
+
+/**
+ Return self's User object (a subclass of ZMBareUser)
+
+ @return a ZMUser<ZMEditableUser> object for app target, or a MockUser object for test.
+ */
 + (instancetype)selfUser
 {
     Class mockUserClass = NSClassFromString(@"MockUser");

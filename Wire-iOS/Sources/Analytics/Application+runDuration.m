@@ -22,11 +22,7 @@
 NSString *const ApplicationTimerKey = @"ApplicationTimerKey";
 
 
-#if TARGET_OS_IPHONE
 @implementation UIApplication (runDuration)
-#else
-@implementation NSApplication (runDuration)
-#endif
 
 - (void)setupRunDurationCalculation
 {

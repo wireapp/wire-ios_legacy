@@ -49,12 +49,8 @@ class ZMMockAVSMediaManager: AVSMediaManagerInterface {
     func playMediaByName(_ name: String!) { }
 }
 
-class ZMMockAnalytics: AnalyticsInterface {
-    var isOptedOut: Bool = false
-}
-
-class ZMMockCrashlogManager: CrashlogManager {
-    var isCrashManagerDisabled: Bool = false
+class ZMMockTracking: TrackingInterface {
+    var disableCrashAndAnalyticsSharing: Bool = false
 }
 
 class SettingsPropertyTests: XCTestCase {
@@ -104,9 +100,9 @@ class SettingsPropertyTests: XCTestCase {
         let selfUser = MockZMEditableUser()
         let userSession = MockZMUserSession()
         let mediaManager = ZMMockAVSMediaManager()
-        let analytics = ZMMockAnalytics()
+        let tracking = ZMMockTracking()
         
-        let factory = SettingsPropertyFactory(userDefaults: self.userDefaults, analytics: analytics, mediaManager: mediaManager, userSession: userSession, selfUser: selfUser)
+        let factory = SettingsPropertyFactory(userDefaults: self.userDefaults, tracking: tracking, mediaManager: mediaManager, userSession: userSession, selfUser: selfUser)
         
         let property = factory.property(SettingsPropertyName.profileName)
         // when & then
@@ -118,9 +114,9 @@ class SettingsPropertyTests: XCTestCase {
         let selfUser = MockZMEditableUser()
         let userSession = MockZMUserSession()
         let mediaManager = ZMMockAVSMediaManager()
-        let analytics = ZMMockAnalytics()
+        let tracking = ZMMockTracking()
 
-        let factory = SettingsPropertyFactory(userDefaults: self.userDefaults, analytics: analytics, mediaManager: mediaManager, userSession: userSession, selfUser: selfUser)
+        let factory = SettingsPropertyFactory(userDefaults: self.userDefaults, tracking: tracking, mediaManager: mediaManager, userSession: userSession, selfUser: selfUser)
         
         let property = factory.property(SettingsPropertyName.soundAlerts)
         // when & then
@@ -132,12 +128,11 @@ class SettingsPropertyTests: XCTestCase {
         let selfUser = MockZMEditableUser()
         let userSession = MockZMUserSession()
         let mediaManager = ZMMockAVSMediaManager()
-        let analytics = ZMMockAnalytics()
-        let crashlogManager = ZMMockCrashlogManager()
+        let tracking = ZMMockTracking()
         
-        let factory = SettingsPropertyFactory(userDefaults: self.userDefaults, analytics: analytics, mediaManager: mediaManager, userSession: userSession, selfUser: selfUser, crashlogManager: crashlogManager)
+        let factory = SettingsPropertyFactory(userDefaults: self.userDefaults, tracking: tracking, mediaManager: mediaManager, userSession: userSession, selfUser: selfUser)
         
-        let property = factory.property(SettingsPropertyName.analyticsOptOut)
+        let property = factory.property(SettingsPropertyName.disableCrashAndAnalyticsSharing)
         // when & then
         try! self.saveAndCheck(property, value: true)
     }
@@ -147,9 +142,9 @@ class SettingsPropertyTests: XCTestCase {
         let selfUser = MockZMEditableUser()
         let userSession = MockZMUserSession()
         let mediaManager = ZMMockAVSMediaManager()
-        let analytics = ZMMockAnalytics()
+        let tracking = ZMMockTracking()
 
-        let factory = SettingsPropertyFactory(userDefaults: self.userDefaults, analytics: analytics, mediaManager: mediaManager, userSession : userSession, selfUser: selfUser)
+        let factory = SettingsPropertyFactory(userDefaults: self.userDefaults, tracking: tracking, mediaManager: mediaManager, userSession : userSession, selfUser: selfUser)
 
         let property = factory.property(SettingsPropertyName.soundAlerts)
         // when & then
@@ -160,7 +155,7 @@ class SettingsPropertyTests: XCTestCase {
         // given
         let factory = SettingsPropertyFactory(
             userDefaults: userDefaults,
-            analytics: ZMMockAnalytics(),
+            tracking: ZMMockTracking(),
             mediaManager: ZMMockAVSMediaManager(),
             userSession : MockZMUserSession(),
             selfUser: MockZMEditableUser()

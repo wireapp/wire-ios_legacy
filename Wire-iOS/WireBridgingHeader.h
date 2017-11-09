@@ -106,7 +106,6 @@
 #import "ProfileDetailsViewController.h"
 #import "ContactsDataSource.h"
 #import "LaunchImageViewController.h"
-#import "NetworkStatusViewController.h"
 #import "VoiceUserImageView.h"
 #import "VoiceChannelParticipantCell.h"
 
@@ -126,7 +125,9 @@
 #import "UIFont+MagicAccess.h"
 #import "UIColor+MagicAccess.h"
 #import "Analytics.h"
-#import "Analytics+iOS.h"
+#import "AnalyticsEvent.h"
+#import "Analytics+Events.h"
+#import "Application+runDuration.h"
 #import "NSURL+WireURLs.h"
 #import "NSURL+WireLocale.h"
 #import "Analytics+ProfileEvents.h"
@@ -159,7 +160,6 @@
 #import "UIApplication+StatusBar.h"
 #import "CASStyler+Variables.h"
 #import "AVSLogObserver.h"
-#import "Analytics+Performance.h"
 #import "NSIndexSet+IndexPaths.h"
 #import "UIAlertController+Wire.h"
 #import "NetworkConditionHelper.h"
@@ -176,4 +176,5 @@
 #import "AudioTrackPlayer.h"
 #import "MediaPlaybackManager.h"
 
+#import <Localytics/Localytics.h>
 

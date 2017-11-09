@@ -559,8 +559,13 @@
 "self.new_device_alert.trust_devices" = "V redu";
 
 // Settings - top level
-"self.settings.create_team.title" = "Create Team";
-"self.settings.add_account.title" = "Add Account";
+"self.settings.create_team.title" = "Ustvari novo ekipo";
+"self.settings.manage_team.title" = "Manage Team";
+"self.settings.add_team_or_account.title" = "New Team or Account";
+"self.settings.add_account.title" = "Dodaj račun";
+
+"self.settings.add_account.error.title" = "Three accounts active";
+"self.settings.add_account.error.message" = "You can only be logged in with three accounts at once. Log out from one to add another.";
 
 // Settings - Account details
 "self.settings.account_section" = "Račun";
@@ -883,7 +888,6 @@
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Username takeover screen
-"registration.select_handle.takeover.title" = "Uporabniška imena so tukaj.";
 "registration.select_handle.takeover.subtitle" = "Zavzemite vaše unikatno ime na Wire.";
 "registration.select_handle.takeover.subtitle_link" = "Nauči se več";
 
@@ -905,6 +909,7 @@
 "error.user.device_deleted_remotely" = "Odjavljeni ste bili iz druge naprave.";
 "error.user.last_identity_cant_be_deleted" = "Zahtevan je ali e-poštni naslov ali telefonska številka.";
 "error.user.account_suspended" = "This account is no longer authorized to log in.";
+"error.user.account_limit_reached" = "You can't add more than 3 accounts.";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Those are caught by the UI without involving the SE validation. Basically very similar to ZMUserSessionErrorCode onces

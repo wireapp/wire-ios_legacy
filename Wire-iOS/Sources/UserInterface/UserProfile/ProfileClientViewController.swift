@@ -277,16 +277,18 @@ class ProfileClientViewController: UIViewController {
         constrain(contentView, fullIDLabel, verifiedToggle, verifiedToggleLabel, resetButton) { contentView, fullIDLabel, verifiedToggle, verifiedToggleLabel, resetButton in
             verifiedToggle.left == contentView.left
             verifiedToggle.top == fullIDLabel.bottom + 32
-            verifiedToggle.bottom == contentView.bottom
+            verifiedToggle.bottom == contentView.bottom - UIScreen.safeArea.bottom
             verifiedToggleLabel.left == verifiedToggle.right + 10
             verifiedToggleLabel.centerY == verifiedToggle.centerY
             resetButton.right == contentView.right
             resetButton.centerY == verifiedToggle.centerY
         }
 
+        let topMargin = UIScreen.safeArea.top > 0 ? UIScreen.safeArea.top : 26.0
+        
         constrain(contentView, backButton, showMyDeviceButton, view) { contentView, backButton, showMyDeviceButton, selfView in
             backButton.left == contentView.left - 8
-            backButton.top == selfView.top + 26
+            backButton.top == selfView.top + topMargin
             backButton.width == 32
             backButton.height == 32
             showMyDeviceButton.centerY == backButton.centerY
@@ -334,7 +336,7 @@ class ProfileClientViewController: UIViewController {
             self.verifiedToggle.isOn = self.userClient.verified
             
             let verificationType: DeviceVerificationType = self.verifiedToggle.isOn ? .verified : .unverified
-            Analytics.shared()?.tagChange(verificationType, deviceOwner: .other)
+            Analytics.shared().tagChange(verificationType, deviceOwner: .other)
         })
     }
 

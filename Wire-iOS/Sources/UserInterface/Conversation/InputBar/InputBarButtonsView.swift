@@ -51,7 +51,8 @@ public final class InputBarButtonsView: UIView {
     
     public let expandRowButton = IconButton()
     public let buttons: [UIButton]
-    fileprivate let buttonContainer = UIView()
+    fileprivate let buttonInnerContainer = UIView()
+    fileprivate let buttonOuterContainer = UIView()
     fileprivate let constants = InputBarRowConstants()
     
     required public init(buttons: [UIButton]) {
@@ -66,27 +67,39 @@ public final class InputBarButtonsView: UIView {
     }
     
     func configureViews() {
-        addSubview(buttonContainer)
+        addSubview(buttonInnerContainer)
         
         buttons.forEach {
             $0.addTarget(self, action: #selector(anyButtonPressed), for: .touchUpInside)
-            buttonContainer.addSubview($0)
+            buttonInnerContainer.addSubview($0)
         }
         
-        buttonContainer.clipsToBounds = true
+        buttonInnerContainer.clipsToBounds = true
         expandRowButton.accessibilityIdentifier = "showOtherRowButton"
         expandRowButton.setIcon(.ellipsis, with: .tiny, for: UIControlState())
         expandRowButton.addTarget(self, action: #selector(ellipsisButtonPressed), for: .touchUpInside)
+        buttonOuterContainer.addSubview(buttonInnerContainer)
+        buttonOuterContainer.clipsToBounds = true
+        addSubview(buttonOuterContainer)
         addSubview(expandRowButton)
+        self.backgroundColor = ColorScheme.default().color(withName: ColorSchemeColorBarBackground)
     }
     
     func createConstraints() {
-        constrain(self, buttonContainer)  { view, buttonRow in
-            self.buttonRowTopInset = view.top == buttonRow.top
-            buttonRow.left == view.left
-            buttonRow.right == view.right
-            buttonRowHeight = buttonRow.height == 0
-            view.height == constants.buttonsBarHeight
+        constrain(self, buttonInnerContainer, buttonOuterContainer)  { view, innerContainer, outerContainer in
+            self.buttonRowTopInset = outerContainer.top == innerContainer.top
+            innerContainer.leading == outerContainer.leading
+            innerContainer.trailing == outerContainer.trailing
+            innerContainer.bottom == outerContainer.bottom
+            buttonRowHeight = innerContainer.height == 0
+            
+            outerContainer.height == constants.buttonsBarHeight
+            outerContainer.bottom == view.bottom - UIScreen.safeArea.bottom
+            outerContainer.leading == view.leading
+            outerContainer.trailing == view.trailing
+            outerContainer.top == view.top
+            
+            view.height == outerContainer.height + UIScreen.safeArea.bottom
             view.width == 600 ~ LayoutPriority(750)
         }
     }
@@ -97,7 +110,6 @@ public final class InputBarButtonsView: UIView {
         layoutAndConstrainButtonRows()
         lastLayoutWidth = bounds.size.width
     }
-    
     
     func showRow(_ rowIndex: RowIndex, animated: Bool) {
         guard rowIndex != currentRow else { return }
@@ -114,7 +126,7 @@ public final class InputBarButtonsView: UIView {
         // Drop existing constraints
         buttons.forEach {
             $0.removeFromSuperview()
-            buttonContainer.addSubview($0)
+            buttonInnerContainer.addSubview($0)
         }
         
         let minButtonWidth = constants.minimumButtonWidth(forWidth: bounds.width)
@@ -159,7 +171,7 @@ public final class InputBarButtonsView: UIView {
                     button.height == constants.buttonsBarHeight
                 }
             } else {
-                constrain(button, buttonContainer) { button, container in
+                constrain(button, buttonInnerContainer) { button, container in
                     button.top == container.top + inset
                     button.height == constants.buttonsBarHeight
                 }

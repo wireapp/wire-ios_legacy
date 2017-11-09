@@ -29,7 +29,9 @@ class AppRootViewController : UIViewController {
     
     public fileprivate(set) var visibleViewController : UIViewController?
     fileprivate let appStateController : AppStateController
-    fileprivate let classyCache : ClassyCache
+    fileprivate lazy var classyCache : ClassyCache = {
+        return ClassyCache()
+    }()
     fileprivate let fileBackupExcluder : FileBackupExcluder
     fileprivate let avsLogObserver : AVSLogObserver
     fileprivate var authenticatedBlocks : [() -> Void] = []
@@ -46,22 +48,23 @@ class AppRootViewController : UIViewController {
     }
     
     fileprivate var performWhenRequestsToOpenViewsDelegateAvailable: ((ZMRequestsToOpenViewsDelegate)->())?
-    
-    
+
+    override public func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        mainWindow.frame.size = size
+        overlayWindow.frame.size = size
+    }
+
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         appStateController = AppStateController()
-        classyCache = ClassyCache()
         fileBackupExcluder = FileBackupExcluder()
         avsLogObserver = AVSLogObserver()
         MagicConfig.shared()
-        
-        mainWindow = UIWindow()
-        mainWindow.frame = UIScreen.main.bounds
+
+        mainWindow = UIWindow(frame: UIScreen.main.bounds)
         mainWindow.accessibilityIdentifier = "ZClientMainWindow"
         
-        overlayWindow = PassthroughWindow()
+        overlayWindow = PassthroughWindow(frame: UIScreen.main.bounds)
         overlayWindow.backgroundColor = .clear
-        overlayWindow.frame = UIScreen.main.bounds
         overlayWindow.windowLevel = UIWindowLevelStatusBar + 1
         overlayWindow.accessibilityIdentifier = "ZClientNotificationWindow"
         overlayWindow.rootViewController = NotificationWindowRootViewController()
@@ -99,10 +102,6 @@ class AppRootViewController : UIViewController {
         mainWindow.rootViewController?.present(baseQualityController, animated: true, completion: nil)
     }
     
-    deinit {
-        NotificationCenter.default.removeObserver(self)
-    }
-    
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -129,9 +128,10 @@ class AppRootViewController : UIViewController {
             blacklistDownloadInterval: Settings.shared().blacklistDownloadInterval)
         { sessionManager in
             self.sessionManager = sessionManager
-            self.sessionManager?.localMessageNotificationResponder = self
+            self.sessionManager?.localNotificationResponder = self
             self.sessionManager?.requestToOpenViewDelegate = self
             sessionManager.updateCallNotificationStyleFromSettings()
+            sessionManager.useConstantBitRateAudio = false //  Settings.shared().callingConstantBitRate TODO re-enable
         }
     }
     
@@ -194,6 +194,9 @@ class AppRootViewController : UIViewController {
             executeAuthenticatedBlocks()
             let clientViewController = ZClientViewController()
             clientViewController.isComingFromRegistration = completedRegistration
+            
+            Analytics.shared().team = ZMUser.selfUser().team
+            
             viewController = clientViewController
         case .headless:
             viewController = LaunchImageViewController()
@@ -290,15 +293,15 @@ class AppRootViewController : UIViewController {
         }
     }
     
-    func configureMediaManager() {
-        guard !Settings.shared().disableAVS else { return }
+    func configureMediaManager() {        
+        guard let mediaManager = AVSMediaManager.sharedInstance() else {
+            return
+        }
         
-        let mediaManager = AVSProvider.shared.mediaManager
-        
-        mediaManager?.configureSounds()
-        mediaManager?.observeSoundConfigurationChanges()
-        mediaManager?.isMicrophoneMuted = false
-        mediaManager?.isSpeakerEnabled = false
+        mediaManager.configureSounds()
+        mediaManager.observeSoundConfigurationChanges()
+        mediaManager.isMicrophoneMuted = false
+        mediaManager.isSpeakerEnabled = false
     }
     
     func setupClassy(with windows: [UIWindow]) {
@@ -408,9 +411,9 @@ extension AppRootViewController : ZMRequestsToOpenViewsDelegate {
 
 // MARK: - Application Icon Badge Number
 
-extension AppRootViewController : LocalMessageNotificationResponder {
+extension AppRootViewController : LocalNotificationResponder {
 
-    func processLocalMessage(_ notification: UILocalNotification, forSession session: ZMUserSession) {
+    func processLocal(_ notification: ZMLocalNotification, forSession session: ZMUserSession) {
         (self.overlayWindow.rootViewController as! NotificationWindowRootViewController).show(notification)
     }
     
