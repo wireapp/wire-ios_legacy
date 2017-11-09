@@ -147,37 +147,40 @@ class UnsentImageSendable: UnsentSendableBase, UnsentSendable {
         // for us ('free' of charge) by using the image URL & ImageIO library.
         //
         
-        if self.attachment.hasURL {
+        self.attachment.loadItem(forTypeIdentifier: kUTTypeImage as String, options: options, urlCompletionHandler: { [weak self] (url, error) in
+            error?.log(message: "Unable to load image from attachment")
             
-            self.attachment.loadItem(forTypeIdentifier: kUTTypeImage as String, options: options, urlCompletionHandler: { [weak self] (url, error) in
-                error?.log(message: "Unable to load image from attachment")
+            //Tries to load the content from local URL...
+            if let url = url, let imageSource = CGImageSourceCreateWithURL(url as CFURL, nil) {
+                let options: [NSString : Any] = [
+                    kCGImageSourceThumbnailMaxPixelSize: longestDimension,
+                    kCGImageSourceCreateThumbnailFromImageAlways: true,
+                    kCGImageSourceCreateThumbnailWithTransform: true
+                ]
                 
-                if let url = url, let imageSource = CGImageSourceCreateWithURL(url as CFURL, nil) {
-                    let options: [NSString : Any] = [
-                        kCGImageSourceThumbnailMaxPixelSize: longestDimension,
-                        kCGImageSourceCreateThumbnailFromImageAlways: true,
-                        kCGImageSourceCreateThumbnailWithTransform: true
-                    ]
+                if let scaledImage = CGImageSourceCreateThumbnailAtIndex(imageSource, 0, options as CFDictionary) {
+                    self?.imageData = UIImageJPEGRepresentation(UIImage(cgImage: scaledImage), 0.9)
+                }
+                
+                completion()
+                
+            } else {
+                
+                // if it fails, it will attach the content directly
+                
+                self?.attachment.loadItem(forTypeIdentifier: kUTTypeImage as String, options: options, imageCompletionHandler: { [weak self] (image, error) in
                     
-                    if let scaledImage = CGImageSourceCreateThumbnailAtIndex(imageSource, 0, options as CFDictionary) {
-                        self?.imageData = UIImageJPEGRepresentation(UIImage(cgImage: scaledImage), 0.9)
+                    error?.log(message: "Unable to load image from attachment")
+                    
+                    if let image = image {
+                        self?.imageData = UIImageJPEGRepresentation(image, 0.9)
                     }
-                }
-                
-                completion()
-            })
-        } else {
-            self.attachment.loadItem(forTypeIdentifier: kUTTypeImage as String, options: options, imageCompletionHandler: { [weak self] (image, error) in
-                
-                error?.log(message: "Unable to load image from attachment")
-                
-                if let image = image {
-                    self?.imageData = UIImageJPEGRepresentation(image, 0.9)
-                }
-                
-                completion()
-            })
-        }
+                    
+                    completion()
+                })
+            }
+            
+        })
         
     }
 
