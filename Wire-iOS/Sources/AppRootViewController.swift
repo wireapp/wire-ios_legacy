@@ -92,6 +92,11 @@ class AppRootViewController : UIViewController {
         transition(to: .headless)
         
         enqueueTransition(to: appStateController.appState)
+        
+        // TODO
+        let baseQualityController = BaseCallQualityViewController()
+        
+        mainWindow.rootViewController?.present(baseQualityController, animated: true, completion: nil)
     }
     
     deinit {

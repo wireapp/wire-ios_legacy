@@ -209,6 +209,9 @@
 		54F7C2831D7467FA004D8087 /* AutomationHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4A15D11D4900930051E8BA /* AutomationHelper.swift */; };
 		54F7C2851D746F3F004D8087 /* AddressBookHelper+Automation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54F7C2841D746F3F004D8087 /* AddressBookHelper+Automation.swift */; };
 		54FF9E281E813BA500323D2E /* DebugAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54FF9E271E813BA500323D2E /* DebugAlert.swift */; };
+		55A3C7EC1FB477770078C968 /* scoreButtonSelectedState.png in Resources */ = {isa = PBXBuildFile; fileRef = 55A3C7EA1FB477760078C968 /* scoreButtonSelectedState.png */; };
+		55A3C7ED1FB477770078C968 /* scoreButtonNormalState.png in Resources */ = {isa = PBXBuildFile; fileRef = 55A3C7EB1FB477770078C968 /* scoreButtonNormalState.png */; };
+		55DD5C341FA236F60082170C /* CallQualityController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55DD5C331FA236F60082170C /* CallQualityController.swift */; };
 		6DC7310EF4FE22057C3A6DC8 /* libPods-Wire-iOS-Tests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CC9C38FFEE2CB1B4A68D125E /* libPods-Wire-iOS-Tests.a */; };
 		7C17ECA51F74F4540056600C /* ConversationCell+Preview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C17ECA41F74F4540056600C /* ConversationCell+Preview.swift */; };
 		7C17ECA81F7508980056600C /* CellSizesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C17ECA71F7508980056600C /* CellSizesProvider.swift */; };
@@ -1294,6 +1297,9 @@
 		54F7C27E1D74367E004D8087 /* AddressBookHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddressBookHelper.swift; sourceTree = "<group>"; };
 		54F7C2841D746F3F004D8087 /* AddressBookHelper+Automation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AddressBookHelper+Automation.swift"; sourceTree = "<group>"; };
 		54FF9E271E813BA500323D2E /* DebugAlert.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DebugAlert.swift; sourceTree = "<group>"; };
+		55A3C7EA1FB477760078C968 /* scoreButtonSelectedState.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = scoreButtonSelectedState.png; sourceTree = "<group>"; };
+		55A3C7EB1FB477770078C968 /* scoreButtonNormalState.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = scoreButtonNormalState.png; sourceTree = "<group>"; };
+		55DD5C331FA236F60082170C /* CallQualityController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallQualityController.swift; sourceTree = "<group>"; };
 		597184FEC66FBCEC21973EDC /* Pods-WireExtensionComponents.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WireExtensionComponents.release.xcconfig"; path = "Pods/Target Support Files/Pods-WireExtensionComponents/Pods-WireExtensionComponents.release.xcconfig"; sourceTree = "<group>"; };
 		64D671EBEE8C57217EB00733 /* Pods-Wire-iOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Wire-iOS.release.xcconfig"; path = "Pods/Target Support Files/Pods-Wire-iOS/Pods-Wire-iOS.release.xcconfig"; sourceTree = "<group>"; };
 		7190BAB91AC2BC0874284A71 /* Pods-WireExtensionComponents.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WireExtensionComponents.debug.xcconfig"; path = "Pods/Target Support Files/Pods-WireExtensionComponents/Pods-WireExtensionComponents.debug.xcconfig"; sourceTree = "<group>"; };
@@ -2990,6 +2996,14 @@
 			name = Classy;
 			sourceTree = "<group>";
 		};
+		55DD5C321FA231000082170C /* CallQualityController */ = {
+			isa = PBXGroup;
+			children = (
+				55DD5C331FA236F60082170C /* CallQualityController.swift */,
+			);
+			path = CallQualityController;
+			sourceTree = "<group>";
+		};
 		8286E48D7CC440448CBD8F48 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -3263,6 +3277,7 @@
 		871BC1281D34F8F800DF0793 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				55DD5C321FA231000082170C /* CallQualityController */,
 				871BC1291D34F8F800DF0793 /* ActionSheetController */,
 				871BC1321D34F8F800DF0793 /* BottomOverlayViewController+Private.h */,
 				871BC1331D34F8F800DF0793 /* BottomOverlayViewController.h */,
@@ -4198,6 +4213,8 @@
 		8FC85089199245760008B66B /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				55A3C7EB1FB477770078C968 /* scoreButtonNormalState.png */,
+				55A3C7EA1FB477760078C968 /* scoreButtonSelectedState.png */,
 				87AEDB241DBA619D00010451 /* logo.png */,
 				87AEDB251DBA619D00010451 /* logo@2x.png */,
 				87AEDB261DBA619D00010451 /* logo@3x.png */,
@@ -5414,6 +5431,7 @@
 				8773160E1B970A82007BA779 /* people_picker.plist in Resources */,
 				8773160F1B970A82007BA779 /* profile.plist in Resources */,
 				BF732A7A1D9C14C7003077DB /* emoji_travel.plist in Resources */,
+				55A3C7EC1FB477770078C968 /* scoreButtonSelectedState.png in Resources */,
 				1658D2061D3E742A00249609 /* ringing_from_them_long.caf in Resources */,
 				16A2024C1B66505B0095BBD1 /* soundcloud.png in Resources */,
 				8773160C1B970A82007BA779 /* misc.plist in Resources */,
@@ -5432,6 +5450,7 @@
 				877316091B970A82007BA779 /* iphone4.plist in Resources */,
 				1ED28CD91A94E26D00B96189 /* group-icon@3x.png in Resources */,
 				BF0BDF721DA7A9D8003C61DE /* RedactedScript-Regular.ttf in Resources */,
+				55A3C7ED1FB477770078C968 /* scoreButtonNormalState.png in Resources */,
 				DB3E943A1B96EDBD00990482 /* LaunchScreen.xib in Resources */,
 				8FC853BF199245770008B66B /* Images.xcassets in Resources */,
 				1EF42D411B1889B300A3145D /* stylesheet.cas in Resources */,
@@ -5817,6 +5836,7 @@
 				87B8C33F1DF9788B0015EC89 /* BrowserOpening.swift in Sources */,
 				87DCF49F1D34E9E600BB420F /* NSUserDefaults+Location.swift in Sources */,
 				8744489E1C22FCE500E7B947 /* LinkAttachmentViewControllerFactory.m in Sources */,
+				55DD5C341FA236F60082170C /* CallQualityController.swift in Sources */,
 				87AEF9351ECF38B0008CB9D9 /* WireStyleKit+Additions.m in Sources */,
 				BF7ED2DA1DF1B5ED003A4397 /* OutgoingConnectionBottomBar.swift in Sources */,
 				871BC2911D34F8F800DF0793 /* UIView+RemoveAnimations.m in Sources */,
