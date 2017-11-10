@@ -96,6 +96,12 @@
 
 @implementation UIViewController (RegistrationFormController)
 
+
+/**
+ Maximum form size for iPad (not for split/slide over mode)
+
+ @return a CGSize for maximum form size
+ */
 - (CGSize)maximumFormSize
 {
     return CGSizeMake(414, 736);
