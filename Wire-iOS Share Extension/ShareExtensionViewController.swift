@@ -171,6 +171,11 @@ class ShareExtensionViewController: SLComposeServiceViewController {
                     change: ConversationDegradationInfo(conversation: postContent.target!, users: users),
                     callback: strategyChoice
                 )
+            case .timedOut:
+                self.popConfigurationViewController()
+                let alert = UIAlertController(title: "Your connection has timed out.", message: "Check your Internet connection and try again.", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+                self.present(alert, animated: true, completion: nil)
             }
         }
     }

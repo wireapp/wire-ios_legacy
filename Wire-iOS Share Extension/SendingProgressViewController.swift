@@ -117,7 +117,6 @@ class SendingProgressViewController : UIViewController {
     }
     
     func networkStatusDidChange(_ notification: Notification) {
-        print(notification)
         if let status = notification.object as? NetworkStatus {
             setReachability(from: status.reachability())
         }
