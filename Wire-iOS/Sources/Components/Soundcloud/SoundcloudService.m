@@ -63,9 +63,32 @@
     return ^(NSData *data, NSURLResponse *response, NSError *error) {
         id audioObject = nil;
         
-        if (! error) {
-            audioObject = [self audioObjectFromData:data response:response];
+        void (^reportError)() = ^{
+            DDLogError(@"Error: %@, %@", response, error);
+            
+            if (completionHandler) {
+                completionHandler(audioObject, error);
+            }
+        };
+        
+        if (![response isKindOfClass:[NSHTTPURLResponse class]] || error != nil) {
+            reportError();
+            return;
         }
+        
+        NSHTTPURLResponse *HTTPResponse = (NSHTTPURLResponse *)response;
+        
+        if (HTTPResponse.statusCode >= 300 || HTTPResponse.statusCode < 200) {
+            reportError();
+            return;
+        }
+        
+        if (data == nil) {
+            reportError();
+            return;
+        }
+        
+        audioObject = [self audioObjectFromData:data response:response];
         
         NSArray *tracks = nil;
         if ([audioObject isKindOfClass:[SoundcloudAudioTrack class]]) {
