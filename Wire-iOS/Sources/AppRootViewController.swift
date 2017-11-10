@@ -182,8 +182,6 @@ class AppRootViewController : UIViewController {
             registrationViewController.signInError = error
             viewController = registrationViewController
         case .authenticated(completedRegistration: let completedRegistration):
-            // TODO: CallKit only with 1 account
-            sessionManager?.updateCallNotificationStyleFromSettings()
             UIColor.setAccentOverride(.undefined)
             mainWindow.tintColor = UIColor.accent()
             executeAuthenticatedBlocks()

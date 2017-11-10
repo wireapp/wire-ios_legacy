@@ -27,16 +27,14 @@ extension SessionManager {
     
     public func updateCallNotificationStyleFromSettings() {
         let isCallKitEnabled = !Settings.shared().disableCallKit
+        let hasAudioPermissions = AVCaptureDevice.authorizationStatus(forMediaType: AVMediaTypeAudio) == AVAuthorizationStatus.authorized
+        
         var isCallKitSupported = false
         if #available(iOS 10, *) {
             isCallKitSupported = TARGET_OS_SIMULATOR == 0
         }
         
-        // TODO: CallKit only with 1 account
-        let hasMultipleAccounts = self.accountManager.accounts.count > 1
-        let hasAudioPermissions = AVCaptureDevice.authorizationStatus(forMediaType: AVMediaTypeAudio) == AVAuthorizationStatus.authorized
-    
-        if isCallKitEnabled && isCallKitSupported && !hasMultipleAccounts && hasAudioPermissions {
+        if isCallKitEnabled && isCallKitSupported && hasAudioPermissions {
             self.callNotificationStyle = .callKit
         }
         else {
