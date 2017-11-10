@@ -126,7 +126,7 @@ class AppRootViewController : UIViewController {
             self.sessionManager?.localNotificationResponder = self
             self.sessionManager?.requestToOpenViewDelegate = self
             sessionManager.updateCallNotificationStyleFromSettings()
-            sessionManager.useConstantBitRateAudio = false //  Settings.shared().callingConstantBitRate TODO re-enable
+            sessionManager.useConstantBitRateAudio = Settings.shared().callingConstantBitRate
         }
     }
     
