@@ -157,6 +157,10 @@
 
 - (id)audioObjectFromData:(NSData *)data response:(NSURLResponse *)response
 {
+    if (data.length == 0) {
+        return nil;
+    }
+    
     NSError *error = nil;
     NSDictionary *JSON = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
     
