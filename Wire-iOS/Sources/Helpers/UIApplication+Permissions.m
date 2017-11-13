@@ -30,7 +30,7 @@ NSString * const UserGrantedAudioPermissionsNotification = @"UserGrantedAudioPer
 
 + (void)wr_requestOrWarnAboutMicrophoneAccess:(void(^)(BOOL granted))grantedHandler
 {
-    BOOL audioPermissionNotDetermined = [AVCaptureDevice authorizationStatusForMediaType:AVMediaTypeAudio] == AVAuthorizationStatusNotDetermined;
+    BOOL audioPermissionsWereNotDetermined = [AVCaptureDevice authorizationStatusForMediaType:AVMediaTypeAudio] == AVAuthorizationStatusNotDetermined;
     
     [[AVAudioSession sharedInstance] requestRecordPermission:^(BOOL granted) {
         
@@ -39,7 +39,7 @@ NSString * const UserGrantedAudioPermissionsNotification = @"UserGrantedAudioPer
                 [self wr_warnAboutMicrophonePermission];
             }
             
-            if (audioPermissionNotDetermined && granted) {
+            if (audioPermissionsWereNotDetermined && granted) {
                 [[NSNotificationCenter defaultCenter] postNotificationName:UserGrantedAudioPermissionsNotification object:nil];
             }
             
