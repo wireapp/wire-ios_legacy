@@ -51,7 +51,6 @@ class SendController {
     private var isCancelled = false
     private var unsentSendables: [UnsentSendable]
     private weak var sharingSession: SharingSession?
-    private var shouldTimeout = false
     private var progress : SendingStateCallback?
     
     public var sentAllSendables = false
@@ -81,7 +80,6 @@ class SendController {
     
     @objc func networkStatusDidChange(_ notification: Notification) {
         if let status = notification.object as? NetworkStatus, status.reachability() == .OK {
-            shouldTimeout = true
             self.tryToTimeout()
         }
     }
@@ -102,7 +100,7 @@ class SendController {
             }
 
             self.observer?.sentHandler = { [weak self] in
-                self?.shouldTimeout = false
+                //self?.cancelTimeout()
                 self?.sentAllSendables = true
                 progress(.done)
             }
@@ -123,14 +121,20 @@ class SendController {
     }
     
     func tryToTimeout() {
-        let timeout = 30.0
-        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + timeout, execute: { [weak self] in
-            guard let `self` = self, self.shouldTimeout else { return }
-            self.cancel {
-                self.progress!(.timedOut)
-                self.shouldTimeout = false
-            }
-        })
+        /*let timeout = 30.0
+        cancelTimeout()
+        NSObject.perform(#selector(SendController.timeout), with: nil, afterDelay: timeout)
+         */
+    }
+    
+    func cancelTimeout() {
+        NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(SendController.timeout), object: nil)
+    }
+    
+    @objc func timeout() {
+        self.cancel {
+            self.progress!(.timedOut)
+        }
     }
     
     
@@ -140,7 +144,7 @@ class SendController {
         isCancelled = true
 
         let sendablesToCancel = self.observer?.sendables.lazy.filter { !$0.isSent }
-
+        
         sharingSession?.enqueue(changes: {
             sendablesToCancel?.forEach {
                 $0.cancel()
