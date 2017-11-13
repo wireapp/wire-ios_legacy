@@ -308,7 +308,7 @@
     [super viewDidAppear:animated];
     [self updateLeftNavigationBarItems];
 
-    if (IS_IPAD) {
+    if (IS_IPAD_FULLSCREEN) {
         [self becomeFirstResponder];
     }
     else if (self.isFocused) {

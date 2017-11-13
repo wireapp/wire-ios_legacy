@@ -18,6 +18,10 @@
 
 #import "SoundcloudService.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface SoundcloudService ()
-- (id)audioObjectFromData:(NSData *)data response:(NSURLResponse *)response;
+- (nullable id)audioObjectFromData:(NSData *)data response:(NSURLResponse *)response;
 @end
+
+NS_ASSUME_NONNULL_END

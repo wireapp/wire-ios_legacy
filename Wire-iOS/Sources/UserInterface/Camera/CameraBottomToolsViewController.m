@@ -194,7 +194,7 @@
     picker.delegate = self.imagePickerConfirmationController;
     self.imagePickerConfirmationController.previewTitle = self.previewTitle;
     
-    if (IS_IPAD) {
+    if (IS_IPAD_FULLSCREEN) {
         picker.modalPresentationStyle = UIModalPresentationPopover;
         UIPopoverPresentationController *popover = picker.popoverPresentationController;
         popover.sourceRect = CGRectInset(self.libraryButton.bounds, 4, 4);
