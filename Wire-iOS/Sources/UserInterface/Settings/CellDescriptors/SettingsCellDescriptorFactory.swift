@@ -156,7 +156,7 @@ import Foundation
             }
             
             let propertyValue = item == defaultSound ? SettingsPropertyValue.none : SettingsPropertyValue.string(value: item.rawValue)
-            return SettingsPropertySelectValueCellDescriptor(settingsProperty: settingsProperty, value: propertyValue, title: item.description.localized, identifier: .none, selectAction: playSoundAction)
+            return SettingsPropertySelectValueCellDescriptor(settingsProperty: settingsProperty, value: propertyValue, title: item.descriptionLocalizationKey.localized, identifier: .none, selectAction: playSoundAction)
         }
         
         let section = SettingsSectionDescriptor(cellDescriptors: cells.map { $0 as SettingsCellDescriptorType }, header: "self.settings.sound_menu.ringtones.title".localized)
@@ -166,10 +166,10 @@ import Foundation
             
             if let stringValue = value.value() as? String,
                 let enumValue = ZMSound(rawValue: stringValue) {
-                return .text(enumValue.description.localized)
+                return .text(enumValue.descriptionLocalizationKey.localized)
             }
             else {
-                return .text(defaultSound.description.localized)
+                return .text(defaultSound.descriptionLocalizationKey.localized)
             }
         }
         
