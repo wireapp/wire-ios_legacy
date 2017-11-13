@@ -32,6 +32,6 @@ class FilePreviewGeneratorTests : XCTestCase {
             expectation.fulfill()
         }
         // then
-        self.waitForExpectations(timeout: 0.5, handler: nil)
+        self.waitForExpectations(timeout: 2, handler: nil)
     }
 }
