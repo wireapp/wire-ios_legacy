@@ -18,8 +18,6 @@
 
 import Foundation
 
-fileprivate let zmLog = ZMSLog(tag: "Sounds")
-
 class SoundEventListener : NSObject {
     
     weak var userSession: ZMUserSession?
@@ -33,10 +31,6 @@ class SoundEventListener : NSObject {
     var unreadKnockMessageObserverToken : NSObjectProtocol?
     var callStateObserverToken : Any?
     var networkAvailabilityObserverToken : Any?
-    
-    deinit {
-        NotificationCenter.default.removeObserver(self)
-    }
     
     init(userSession: ZMUserSession) {
         self.userSession = userSession
