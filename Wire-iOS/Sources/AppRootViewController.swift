@@ -177,10 +177,10 @@ class AppRootViewController : UIViewController {
         case .unauthenticated(error: let error):
             UIColor.setAccentOverride(ZMUser.pickRandomAccentColor())
             mainWindow.tintColor = UIColor.accent()
-            let registrationViewController = RegistrationViewController()
-            registrationViewController.delegate = appStateController
-            registrationViewController.signInError = error
-            viewController = registrationViewController
+            let landingViewController = LandingViewController()
+//            registrationViewController.delegate = appStateController TODO
+            landingViewController.signInError = error
+            viewController = landingViewController
         case .authenticated(completedRegistration: let completedRegistration):
             // TODO: CallKit only with 1 account
             sessionManager?.updateCallNotificationStyleFromSettings()
