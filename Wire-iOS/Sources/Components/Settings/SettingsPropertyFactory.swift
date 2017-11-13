@@ -102,7 +102,7 @@ class SettingsPropertyFactory {
             let setAction: SetAction = { [unowned self] (property: SettingsBlockProperty, value: SettingsPropertyValue) throws -> () in
                 switch(value) {
                 case .string(let stringValue):
-                    guard let selfUser = self.selfUser else { break }
+                    guard let selfUser = self.selfUser else { requireInternal(false, "Attempt to modify a user property without a self user"); break }
                     
                     var inOutString: NSString? = stringValue as NSString
                     try type(of: selfUser).validateName(&inOutString)
