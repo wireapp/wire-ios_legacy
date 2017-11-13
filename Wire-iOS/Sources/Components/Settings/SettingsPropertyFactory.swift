@@ -79,11 +79,11 @@ class SettingsPropertyFactory {
         SettingsPropertyName.disableLinkPreviews        : UserDefaultDisableLinkPreviews,
     ]
     
-    convenience init(userSession: ZMUserSessionInterface? = nil, selfUser: SettingsSelfUser? = nil) {
+    convenience init(userSession: ZMUserSessionInterface?, selfUser: SettingsSelfUser?) {
         self.init(userDefaults: UserDefaults.standard, tracking: TrackingManager.shared, mediaManager: AVSMediaManager.sharedInstance(), userSession: userSession, selfUser: selfUser)
     }
     
-    init(userDefaults: UserDefaults, tracking: TrackingInterface?, mediaManager: AVSMediaManagerInterface?, userSession: ZMUserSessionInterface? = nil, selfUser: SettingsSelfUser? = nil) {
+    init(userDefaults: UserDefaults, tracking: TrackingInterface?, mediaManager: AVSMediaManagerInterface?, userSession: ZMUserSessionInterface?, selfUser: SettingsSelfUser?) {
         self.userDefaults = userDefaults
         self.tracking = tracking
         self.mediaManager = mediaManager
