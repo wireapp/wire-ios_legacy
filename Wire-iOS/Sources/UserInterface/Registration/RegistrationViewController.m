@@ -49,7 +49,7 @@
 
 #import "AnalyticsTracker+Registration.h"
 
-@interface RegistrationViewController (UserSessionObserver) <SessionManagerObserver, PostLoginAuthenticationObserver>
+@interface RegistrationViewController (UserSessionObserver) <SessionManagerCreatedSessionObserver, PostLoginAuthenticationObserver>
 @end
 
 @interface RegistrationViewController () <UINavigationControllerDelegate, FormStepDelegate, ZMInitialSyncCompletionObserver>
@@ -88,7 +88,7 @@
     self.unregisteredUser = [ZMIncompleteRegistrationUser new];
     self.unregisteredUser.accentColorValue = [UIColor indexedAccentColor];
     self.postLoginToken = [PostLoginAuthenticationNotification addObserver:self];
-    self.sessionCreationObserverToken = [[SessionManager shared] addSessionManagerObserver:self];
+    self.sessionCreationObserverToken = [[SessionManager shared] addSessionManagerCreatedSessionObserver:self];
     
     [self setupBackgroundViewController];
     [self setupNavigationController];
