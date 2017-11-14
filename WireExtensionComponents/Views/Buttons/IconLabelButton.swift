@@ -8,13 +8,13 @@
 
 import PureLayout
 
-class IconLabelButton: ButtonWithLargerHitArea {
+open class IconLabelButtonSwift: ButtonWithLargerHitArea {
     var priorState: UIControlState?
 
-    var iconButton: IconButton!
-    var subtitleLabel: UILabel!
+    public var iconButton: IconButton!
+    public var subtitleLabel: UILabel!
 
-    init() {
+    public init() {
         super.init(frame: CGRect.zero)
         iconButton = IconButton.iconButtonCircularLight()
         iconButton.translatesAutoresizingMaskIntoConstraints = false
@@ -31,17 +31,17 @@ class IconLabelButton: ButtonWithLargerHitArea {
         subtitleLabel.autoPinEdge(toSuperviewEdge: .bottom)
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    override func didMoveToWindow() {
+    override open func didMoveToWindow() {
         super.didMoveToWindow()
         updateForNewState()
     }
 
     // MARK: - Observing state
-    override var isHighlighted: Bool {
+    override open var isHighlighted: Bool {
         didSet {
             priorState = state
             super.isHighlighted = isHighlighted
@@ -51,7 +51,7 @@ class IconLabelButton: ButtonWithLargerHitArea {
         }
     }
 
-    override var isSelected: Bool {
+    override open var isSelected: Bool {
         didSet {
             priorState = state
             super.isSelected = isSelected
@@ -60,7 +60,7 @@ class IconLabelButton: ButtonWithLargerHitArea {
         }
     }
 
-    override var isEnabled: Bool {
+    override open var isEnabled: Bool {
         didSet {
             priorState = state
             super.isEnabled = isEnabled

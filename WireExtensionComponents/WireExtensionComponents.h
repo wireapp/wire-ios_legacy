@@ -36,6 +36,7 @@ FOUNDATION_EXPORT const unsigned char WireExtensionComponentsVersionString[];
 #import <WireExtensionComponents/Token.h>
 #import <WireExtensionComponents/CheckBoxButton.h>
 #import <WireExtensionComponents/IconButton.h>
+#import <WireExtensionComponents/IconLabelButton.h>
 #import <WireExtensionComponents/Button.h>
 #import <WireExtensionComponents/ButtonWithLargerHitArea.h>
 #import <WireExtensionComponents/FlexibleNavigationBar.h>
@@ -75,4 +76,5 @@ FOUNDATION_EXPORT const unsigned char WireExtensionComponentsVersionString[];
 #import <WireExtensionComponents/AVAsset+VideoConvert.h>
 #import <WireExtensionComponents/AccentColorProvider.h>
 #import <WireExtensionComponents/UIColor+WR_ColorScheme.h>
+#import <WireExtensionComponents/UILabel+TextTransform.h>
 

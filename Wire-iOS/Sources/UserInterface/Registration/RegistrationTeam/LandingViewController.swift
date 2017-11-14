@@ -29,7 +29,7 @@ fileprivate extension UIColor {
     static let textColor = UIColor(red:0.20, green:0.22, blue:0.23, alpha:1.0)
 }
 
-@objc class LandingButton: IconLabelButton {
+@objc class LandingButton: IconLabelButtonSwift {
 
     convenience init(title: NSAttributedString, icon: ZetaIconType, iconBackgroundColor: UIColor) {
         self.init()

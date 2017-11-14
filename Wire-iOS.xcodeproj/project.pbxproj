@@ -489,6 +489,8 @@
 		8784D4551E817D13007A6867 /* ConversationListTopBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8784D4541E817D13007A6867 /* ConversationListTopBar.swift */; };
 		8784D4571E81832F007A6867 /* ConversationListViewController+TopBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8784D4561E81832F007A6867 /* ConversationListViewController+TopBar.swift */; };
 		8784D4591E818AA4007A6867 /* CGFloat+Hairline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8784D4581E818AA4007A6867 /* CGFloat+Hairline.swift */; };
+		8785CA5C1C567FCD00FD671C /* IconLabelButton.h in Headers */ = {isa = PBXBuildFile; fileRef = 8785CA5A1C567FCD00FD671C /* IconLabelButton.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		8785CA5D1C567FCD00FD671C /* IconLabelButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 8785CA5B1C567FCD00FD671C /* IconLabelButton.m */; };
 		8786071B1D33E3FF00971A19 /* Geometry.h in Headers */ = {isa = PBXBuildFile; fileRef = 878607021D33E3FF00971A19 /* Geometry.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8786071C1D33E3FF00971A19 /* Geometry.m in Sources */ = {isa = PBXBuildFile; fileRef = 878607031D33E3FF00971A19 /* Geometry.m */; };
 		8786071D1D33E3FF00971A19 /* KeyValueObserver.h in Headers */ = {isa = PBXBuildFile; fileRef = 878607041D33E3FF00971A19 /* KeyValueObserver.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -869,7 +871,6 @@
 		CE8E4FB11DF0668F0009F437 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 873DC95B1D479A0500C1C9B0 /* AVFoundation.framework */; };
 		CE8E4FB31DF066EE0009F437 /* AudioProcessing.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE8E4FB21DF066EE0009F437 /* AudioProcessing.swift */; };
 		CE8E4FBD1DF17BBE0009F437 /* CASStyler+Variables.m in Sources */ = {isa = PBXBuildFile; fileRef = CE8E4FB51DF17BBE0009F437 /* CASStyler+Variables.m */; };
-		CE8E4FBF1DF17BBE0009F437 /* UILabel+TextTransform.m in Sources */ = {isa = PBXBuildFile; fileRef = CE8E4FBA1DF17BBE0009F437 /* UILabel+TextTransform.m */; };
 		CE8E4FC01DF17BBE0009F437 /* UITextView+TextTransform.m in Sources */ = {isa = PBXBuildFile; fileRef = CE8E4FBC1DF17BBE0009F437 /* UITextView+TextTransform.m */; };
 		CE8E4FC21DF17C7C0009F437 /* TextTransform.h in Headers */ = {isa = PBXBuildFile; fileRef = CE8E4FC11DF17C240009F437 /* TextTransform.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		CE8E4FC51DF17CFE0009F437 /* NSString+TextTransform.h in Headers */ = {isa = PBXBuildFile; fileRef = CE8E4FC31DF17CFE0009F437 /* NSString+TextTransform.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -908,7 +909,9 @@
 		EEF28EEF1F168039007642E2 /* ConversationInputBarViewController+Markdown.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEF28EEE1F168039007642E2 /* ConversationInputBarViewController+Markdown.swift */; };
 		EF18C7E41F9E4DA00085A832 /* NSString+FileNameForZMUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF18C7E31F9E4DA00085A832 /* NSString+FileNameForZMUser.swift */; };
 		EF1EA4631FB0937000B53063 /* MockUser+filename.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF1EA4611FB0934D00B53063 /* MockUser+filename.swift */; };
-		EF1F99EE1FBAED5B00969DD1 /* IconLabelButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF195E561FB9FE5B00A3BCC8 /* IconLabelButton.swift */; };
+		EF1F99F61FBB05E600969DD1 /* IconLabelButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF195E561FB9FE5B00A3BCC8 /* IconLabelButton.swift */; };
+		EF1F99F71FBB06C000969DD1 /* UILabel+TextTransform.m in Sources */ = {isa = PBXBuildFile; fileRef = CE8E4FBA1DF17BBE0009F437 /* UILabel+TextTransform.m */; };
+		EF1F99F81FBB06D400969DD1 /* UILabel+TextTransform.h in Headers */ = {isa = PBXBuildFile; fileRef = CE8E4FB91DF17BBE0009F437 /* UILabel+TextTransform.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		EF2127031FB9DFE300625A9B /* CheckmarkView.m in Sources */ = {isa = PBXBuildFile; fileRef = EF2126B71FB9DFE300625A9B /* CheckmarkView.m */; };
 		EF2127041FB9DFE300625A9B /* RegistrationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF2126B81FB9DFE300625A9B /* RegistrationViewController.m */; };
 		EF2127051FB9DFE300625A9B /* RegistrationTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = EF2126B91FB9DFE300625A9B /* RegistrationTextField.m */; };
@@ -1726,6 +1729,8 @@
 		8784D4541E817D13007A6867 /* ConversationListTopBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConversationListTopBar.swift; sourceTree = "<group>"; };
 		8784D4561E81832F007A6867 /* ConversationListViewController+TopBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ConversationListViewController+TopBar.swift"; sourceTree = "<group>"; };
 		8784D4581E818AA4007A6867 /* CGFloat+Hairline.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CGFloat+Hairline.swift"; sourceTree = "<group>"; };
+		8785CA5A1C567FCD00FD671C /* IconLabelButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IconLabelButton.h; sourceTree = "<group>"; };
+		8785CA5B1C567FCD00FD671C /* IconLabelButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IconLabelButton.m; sourceTree = "<group>"; };
 		878607021D33E3FF00971A19 /* Geometry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Geometry.h; sourceTree = "<group>"; };
 		878607031D33E3FF00971A19 /* Geometry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Geometry.m; sourceTree = "<group>"; };
 		878607041D33E3FF00971A19 /* KeyValueObserver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeyValueObserver.h; sourceTree = "<group>"; };
@@ -2722,6 +2727,8 @@
 				16F9EB331BCBB0270021EF39 /* CheckBoxButton.m */,
 				1E05C2411B6F7E0600616A66 /* Button.h */,
 				1E05C2421B6F7E0600616A66 /* Button.m */,
+				8785CA5A1C567FCD00FD671C /* IconLabelButton.h */,
+				8785CA5B1C567FCD00FD671C /* IconLabelButton.m */,
 				EF195E561FB9FE5B00A3BCC8 /* IconLabelButton.swift */,
 			);
 			path = Buttons;
@@ -5059,6 +5066,7 @@
 				1E5E0CB21B6B83C6003B0CAC /* IconButton.h in Headers */,
 				87B7DAB81E6973B0005F5140 /* UserImageView.h in Headers */,
 				1E5E0D021B6B8EDB003B0CAC /* UIColor+Mixing.h in Headers */,
+				8785CA5C1C567FCD00FD671C /* IconLabelButton.h in Headers */,
 				1E5E0D041B6B8EDB003B0CAC /* UIControl+Wire.h in Headers */,
 				1E5E0CB01B6B83C6003B0CAC /* ButtonWithLargerHitArea.h in Headers */,
 				87B7DAEB1E697C11005F5140 /* AccentColorProvider.h in Headers */,
@@ -5069,6 +5077,7 @@
 				8786071D1D33E3FF00971A19 /* KeyValueObserver.h in Headers */,
 				8786071F1D33E3FF00971A19 /* LineNumberLogFormatter.h in Headers */,
 				8786072F1D33E3FF00971A19 /* metamacros.h in Headers */,
+				EF1F99F81FBB06D400969DD1 /* UILabel+TextTransform.h in Headers */,
 				8795A5CC1D34D09E0024101B /* VoiceGainLayer.h in Headers */,
 				878607301D33E3FF00971A19 /* weakify.h in Headers */,
 				8786071B1D33E3FF00971A19 /* Geometry.h in Headers */,
@@ -5733,6 +5742,7 @@
 				1EE9DCC81B5F9A6D00E347DF /* TokenTextAttachment.m in Sources */,
 				BFB332681E3A2D95003B0CD2 /* ExtensionSettings.swift in Sources */,
 				870533FF1DD6162400A7F822 /* OverflowSeparatorView.swift in Sources */,
+				8785CA5D1C567FCD00FD671C /* IconLabelButton.m in Sources */,
 				870534011DD6265100A7F822 /* AttributedStringOperators.swift in Sources */,
 				87831A9B1E69B6D000DDF3C3 /* UIColor+WR_ColorScheme.m in Sources */,
 				8763768A1E8413D900B2CCF0 /* RawRepresentable+AllValues.swift in Sources */,
@@ -5752,9 +5762,11 @@
 				879D6AFC1E69E20900DC07A1 /* ImageMessageView.swift in Sources */,
 				878607201D33E3FF00971A19 /* LineNumberLogFormatter.m in Sources */,
 				1E5E0D051B6B8EDB003B0CAC /* UIControl+Wire.m in Sources */,
+				EF1F99F61FBB05E600969DD1 /* IconLabelButton.swift in Sources */,
 				1EE9DCC61B5F9A6D00E347DF /* TokenField.m in Sources */,
 				876CC8991E966C5C00F6BABC /* IteratorProtocol+Histogram.swift in Sources */,
 				CE06C9401DF5C3D900497685 /* AVAsset+VideoConvert.m in Sources */,
+				EF1F99F71FBB06C000969DD1 /* UILabel+TextTransform.m in Sources */,
 				871878BE1C1ACA72001FFCC5 /* NSDate+WRFormat.m in Sources */,
 				1677FD341BBC19A400491481 /* ColorScheme.m in Sources */,
 				1E05C2441B6F7E0600616A66 /* Button.m in Sources */,
@@ -5782,7 +5794,6 @@
 				BF7ED2DA1DF1B5ED003A4397 /* OutgoingConnectionBottomBar.swift in Sources */,
 				871BC2911D34F8F800DF0793 /* UIView+RemoveAnimations.m in Sources */,
 				EEF28EED1F16692A007642E2 /* InputBarSecondaryButtonsView.swift in Sources */,
-				CE8E4FBF1DF17BBE0009F437 /* UILabel+TextTransform.m in Sources */,
 				871BC23B1D34F8F800DF0793 /* KeyboardFrameObserver.m in Sources */,
 				BF515F941D9D1C1900C786FB /* EmojiSectionViewController.swift in Sources */,
 				878D7C8E1E65DB6500770E84 /* ConversationContentViewController+PinchZoom.m in Sources */,
@@ -6076,7 +6087,6 @@
 				871BC2951D34F8F800DF0793 /* UIViewController+Errors.m in Sources */,
 				EF18C7E41F9E4DA00085A832 /* NSString+FileNameForZMUser.swift in Sources */,
 				871BC22F1D34F8F800DF0793 /* WebViewController.m in Sources */,
-				EF1F99EE1FBAED5B00969DD1 /* IconLabelButton.swift in Sources */,
 				871BC2771D34F8F800DF0793 /* VoiceGainLayer+MagicInit.m in Sources */,
 				16E2A09C1F6BCDAF005F4DB1 /* VoiceChannelParticipantsController.swift in Sources */,
 				871BC22E1D34F8F800DF0793 /* SplitViewController.m in Sources */,
