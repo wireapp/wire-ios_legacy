@@ -441,6 +441,7 @@ extension AppRootViewController : SessionManagerCreatedSessionObserver, SessionM
     func sessionManagerDestroyedUserSession(for accountId: UUID) {
         soundEventListeners[accountId] = nil
     }
+}
 
   
 // MARK: - Audio Permissions granted
