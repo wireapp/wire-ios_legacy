@@ -19,6 +19,8 @@
 
 #import <UIKit/UIKit.h>
 
+extern NSString * const UserGrantedAudioPermissionsNotification;
+
 @interface UIApplication (Permissions)
 
 + (void)wr_requestOrWarnAboutMicrophoneAccess:(void(^)(BOOL granted))grantedHandler;

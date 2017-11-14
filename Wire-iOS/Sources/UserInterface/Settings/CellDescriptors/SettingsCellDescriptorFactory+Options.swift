@@ -131,13 +131,13 @@ extension SettingsCellDescriptorFactory {
         let soundsHeader = "self.settings.sound_menu.sounds.title".localized
 
         let callSoundProperty = self.settingsPropertyFactory.property(.callSoundName)
-        let callSoundGroup = self.soundGroupForSetting(callSoundProperty, title: SettingsPropertyLabelText(callSoundProperty.propertyName), callSound: true, fallbackSoundName: MediaManagerSoundRingingFromThemSound, defaultSoundTitle: "self.settings.sound_menu.sounds.wire_call".localized)
+        let callSoundGroup = self.soundGroupForSetting(callSoundProperty, title: SettingsPropertyLabelText(callSoundProperty.propertyName), customSounds: ZMSound.ringtones, defaultSound: ZMSound.WireCall)
 
         let messageSoundProperty = self.settingsPropertyFactory.property(.messageSoundName)
-        let messageSoundGroup = self.soundGroupForSetting(messageSoundProperty, title: SettingsPropertyLabelText(messageSoundProperty.propertyName), callSound: false, fallbackSoundName: MediaManagerSoundMessageReceivedSound, defaultSoundTitle: "self.settings.sound_menu.sounds.wire_message".localized)
+        let messageSoundGroup = self.soundGroupForSetting(messageSoundProperty, title: SettingsPropertyLabelText(messageSoundProperty.propertyName), customSounds: ZMSound.soundEffects, defaultSound: ZMSound.WireText)
 
         let pingSoundProperty = self.settingsPropertyFactory.property(.pingSoundName)
-        let pingSoundGroup = self.soundGroupForSetting(pingSoundProperty, title: SettingsPropertyLabelText(pingSoundProperty.propertyName), callSound: false, fallbackSoundName: MediaManagerSoundIncomingKnockSound, defaultSoundTitle: "self.settings.sound_menu.sounds.wire_ping".localized)
+        let pingSoundGroup = self.soundGroupForSetting(pingSoundProperty, title: SettingsPropertyLabelText(pingSoundProperty.propertyName), customSounds: ZMSound.soundEffects, defaultSound: ZMSound.WirePing)
 
         let soundsSection = SettingsSectionDescriptor(cellDescriptors: [callSoundGroup, messageSoundGroup, pingSoundGroup], header: soundsHeader)
         cellDescriptors.append(soundsSection)
