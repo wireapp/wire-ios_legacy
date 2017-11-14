@@ -32,10 +32,11 @@ class LandingButton: ButtonWithLargerHitArea {
         iconButton.translatesAutoresizingMaskIntoConstraints = false
         iconButton.isUserInteractionEnabled = false
         addSubview(iconButton)
+        
         iconButton.autoMatch(.width, to: .height, of: iconButton)
         iconButton.autoPinEdge(toSuperviewEdge: .top)
         iconButton.autoSetDimensions(to: CGSize(width:72, height:72))
-        iconButton.autoCenterInSuperview()
+        iconButton.autoAlignAxis(toSuperviewAxis: .vertical)
 
 
         subtitleLabel = UILabel()
@@ -45,7 +46,12 @@ class LandingButton: ButtonWithLargerHitArea {
         subtitleLabel.autoPinEdge(toSuperviewEdge: .bottom)
         subtitleLabel.autoAlignAxis(toSuperviewAxis: .vertical)
         self.subtitleLabel.autoPinEdge(.top, to: .bottom, of: self.iconButton, withOffset: 16)
-        subtitleLabel.autoSetDimension(.height, toSize: 48)
+
+        ///label hieght can be resize
+        NSLayoutConstraint.autoSetPriority(UILayoutPriorityDefaultLow, forConstraints: {() -> Void in
+            self.subtitleLabel.autoSetDimension(.height, toSize: 48)
+        })
+
     }
 
     convenience init(title: NSAttributedString, icon: ZetaIconType, iconBackgroundColor: UIColor) {
