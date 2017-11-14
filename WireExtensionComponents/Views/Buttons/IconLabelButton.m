@@ -44,7 +44,7 @@
         
         self.subtitleLabel = [[UILabel alloc] init];
         self.subtitleLabel.translatesAutoresizingMaskIntoConstraints = NO;
-        self.subtitleLabel.textTransform = TextTransformUpper;
+        self.subtitleLabel.textTransform = TextTransformUpper; ///FIXME: make an option
         [self addSubview:self.subtitleLabel];
         
         [self.subtitleLabel autoPinEdgeToSuperviewEdge:ALEdgeBottom];
@@ -102,7 +102,7 @@
 {
     // Update for new state (selected, highlighted, disabled) here if needed
     self.subtitleLabel.font = self.titleLabel.font;
-    self.subtitleLabel.textColor = [self titleColorForState:self.state];
+    self.subtitleLabel.textColor = [self titleColorForState:self.state]; ///FIXME: option
 }
 
 @end

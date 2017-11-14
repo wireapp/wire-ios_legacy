@@ -35,9 +35,13 @@ fileprivate extension UIColor {
         super.init()
 
         subtitleLabel.numberOfLines = 2
-        self.subtitleLabel.attributedText = title
+        subtitleLabel.text = nil
+        subtitleLabel.attributedText = title
         self.iconButton.setIcon(icon, with: ZetaIconSize.medium, for: .normal)
         self.iconButton.setBackgroundImageColor(iconBackgroundColor, for: .normal)
+
+        ///TODO: no capitalize
+        ///TODO: rm text
         constrain(self.iconButton) { iconButton in
             iconButton.width == 72
             iconButton.width == iconButton.height
@@ -68,15 +72,16 @@ final class LandingViewController: UIViewController {
         return label
     }()
 
-    let createAccountButton: UIButton = {
+    let createAccountButton: LandingButton = {
         let title = "Create an account".localized && [NSForegroundColorAttributeName: UIColor.textColor]
         let subtitle = "\nfor personal use".localized && [NSForegroundColorAttributeName: UIColor.textColor] ///FIXME: thin font
+        let twoLineTitle = title + subtitle
 
-        let button = LandingButton(title: title + subtitle, icon: .selfProfile, iconBackgroundColor: .createAccountBlue)
+        let button = LandingButton(title: twoLineTitle, icon: .selfProfile, iconBackgroundColor: .createAccountBlue)
         return button
     }()
 
-    let createTeamtButton: UIButton = {
+    let createTeamtButton: LandingButton = {
         let title = "Create team".localized && [NSForegroundColorAttributeName: UIColor.textColor]
         let subtitle = "\nfor work".localized && [NSForegroundColorAttributeName: UIColor.textColor] ///FIXME: thin font
 
@@ -94,6 +99,7 @@ final class LandingViewController: UIViewController {
     let loginButton: UIButton = {
         let button = UIButton()
         button.setTitle("LOGIN".localized, for: .normal)
+        button.setTitleColor(.textColor, for: .normal)
         return button
     }()
 

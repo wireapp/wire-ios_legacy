@@ -910,6 +910,7 @@
 		EEF28EEF1F168039007642E2 /* ConversationInputBarViewController+Markdown.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEF28EEE1F168039007642E2 /* ConversationInputBarViewController+Markdown.swift */; };
 		EF18C7E41F9E4DA00085A832 /* NSString+FileNameForZMUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF18C7E31F9E4DA00085A832 /* NSString+FileNameForZMUser.swift */; };
 		EF1EA4631FB0937000B53063 /* MockUser+filename.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF1EA4611FB0934D00B53063 /* MockUser+filename.swift */; };
+		EF1F99EE1FBAED5B00969DD1 /* IconLabelButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF195E561FB9FE5B00A3BCC8 /* IconLabelButton.swift */; };
 		EF2127031FB9DFE300625A9B /* CheckmarkView.m in Sources */ = {isa = PBXBuildFile; fileRef = EF2126B71FB9DFE300625A9B /* CheckmarkView.m */; };
 		EF2127041FB9DFE300625A9B /* RegistrationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF2126B81FB9DFE300625A9B /* RegistrationViewController.m */; };
 		EF2127051FB9DFE300625A9B /* RegistrationTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = EF2126B91FB9DFE300625A9B /* RegistrationTextField.m */; };
@@ -2366,6 +2367,7 @@
 		EEF28EEC1F16692A007642E2 /* InputBarSecondaryButtonsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputBarSecondaryButtonsView.swift; sourceTree = "<group>"; };
 		EEF28EEE1F168039007642E2 /* ConversationInputBarViewController+Markdown.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ConversationInputBarViewController+Markdown.swift"; sourceTree = "<group>"; };
 		EF18C7E31F9E4DA00085A832 /* NSString+FileNameForZMUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSString+FileNameForZMUser.swift"; sourceTree = "<group>"; };
+		EF195E561FB9FE5B00A3BCC8 /* IconLabelButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconLabelButton.swift; sourceTree = "<group>"; };
 		EF1EA4611FB0934D00B53063 /* MockUser+filename.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MockUser+filename.swift"; sourceTree = "<group>"; };
 		EF2126B71FB9DFE300625A9B /* CheckmarkView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CheckmarkView.m; sourceTree = "<group>"; };
 		EF2126B81FB9DFE300625A9B /* RegistrationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegistrationViewController.m; sourceTree = "<group>"; };
@@ -2726,6 +2728,7 @@
 				1E05C2421B6F7E0600616A66 /* Button.m */,
 				8785CA5A1C567FCD00FD671C /* IconLabelButton.h */,
 				8785CA5B1C567FCD00FD671C /* IconLabelButton.m */,
+				EF195E561FB9FE5B00A3BCC8 /* IconLabelButton.swift */,
 			);
 			path = Buttons;
 			sourceTree = "<group>";
@@ -6081,6 +6084,7 @@
 				871BC2951D34F8F800DF0793 /* UIViewController+Errors.m in Sources */,
 				EF18C7E41F9E4DA00085A832 /* NSString+FileNameForZMUser.swift in Sources */,
 				871BC22F1D34F8F800DF0793 /* WebViewController.m in Sources */,
+				EF1F99EE1FBAED5B00969DD1 /* IconLabelButton.swift in Sources */,
 				871BC2771D34F8F800DF0793 /* VoiceGainLayer+MagicInit.m in Sources */,
 				16E2A09C1F6BCDAF005F4DB1 /* VoiceChannelParticipantsController.swift in Sources */,
 				871BC22E1D34F8F800DF0793 /* SplitViewController.m in Sources */,

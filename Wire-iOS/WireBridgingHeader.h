@@ -167,6 +167,8 @@
 #import "Analytics+CallEvents.h"
 #import "UIScreen+Compact.h"
 #import "NSString+EmoticonSubstitution.h"
+#import "UILabel+TextTransform.h"
+#import "NSString+TextTransform.h"
 
 // Camera
 #import "CameraController.h"
