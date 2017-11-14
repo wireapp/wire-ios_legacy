@@ -49,8 +49,11 @@ final class LandingViewController: UIViewController {
     }()
 
     let createAccountButton: LandingButton = {
-        let title = "Create an account".localized && [NSForegroundColorAttributeName: UIColor.textColor]
-        let subtitle = "\nfor personal use".localized && [NSForegroundColorAttributeName: UIColor.textColor] ///FIXME: thin font
+        let alignCenterStyle = NSMutableParagraphStyle()
+        alignCenterStyle.alignment = NSTextAlignment.center
+
+        let title = "Create an account".localized && [NSForegroundColorAttributeName: UIColor.textColor, NSParagraphStyleAttributeName: alignCenterStyle]
+        let subtitle = "\nfor personal use".localized && [NSForegroundColorAttributeName: UIColor.textColor, NSParagraphStyleAttributeName: alignCenterStyle] ///FIXME: thin font
         let twoLineTitle = title + subtitle
 
         let button = LandingButton(title: twoLineTitle, icon: .selfProfile, iconBackgroundColor: .createAccountBlue)
@@ -58,8 +61,11 @@ final class LandingViewController: UIViewController {
     }()
 
     let createTeamtButton: LandingButton = {
-        let title = "Create team".localized && [NSForegroundColorAttributeName: UIColor.textColor]
-        let subtitle = "\nfor work".localized && [NSForegroundColorAttributeName: UIColor.textColor] ///FIXME: thin font
+        let alignCenterStyle = NSMutableParagraphStyle()
+        alignCenterStyle.alignment = NSTextAlignment.center
+
+        let title = "Create team".localized && [NSForegroundColorAttributeName: UIColor.textColor, NSParagraphStyleAttributeName: alignCenterStyle]
+        let subtitle = "\nfor work".localized && [NSForegroundColorAttributeName: UIColor.textColor, NSParagraphStyleAttributeName: alignCenterStyle] ///FIXME: thin font
 
         let button = LandingButton(title: title + subtitle, icon: .team, iconBackgroundColor: .createTeamGreen)
         return button
@@ -74,7 +80,7 @@ final class LandingViewController: UIViewController {
 
     let loginButton: UIButton = {
         let button = UIButton()
-        button.setTitle("LOGIN".localized, for: .normal)
+        button.setTitle("Log in".localized, for: .normal) ///FIXME: font
         button.setTitleColor(.textColor, for: .normal)
         return button
     }()
@@ -84,37 +90,40 @@ final class LandingViewController: UIViewController {
 
         self.view.backgroundColor = .background
 
-        [logoView, headline, createAccountButton, createTeamtButton, loginHintsLabel, loginButton].forEach(view.addSubview)
+        [logoView, headline, createAccountButton, //createTeamtButton,
+         loginHintsLabel, loginButton].forEach(view.addSubview)
 
         self.createConstraints()
     }
 
     private func createConstraints() {
-        let inset: CGFloat = 32
 
         constrain(self.view, logoView, headline, createAccountButton, createTeamtButton) { selfView, logoView, headline, createAccountButton, createTeamtButton in
-            logoView.top == selfView.top + inset ~ LayoutPriority(750)
+            logoView.top == selfView.top + 72 ~ LayoutPriority(750)
             logoView.centerX == selfView.centerX
 
-            headline.top == logoView.bottom + inset
+            headline.top == logoView.bottom + 16
             headline.centerX == selfView.centerX
 
-            createAccountButton.top == headline.bottom + inset
+            createAccountButton.top == headline.bottom + 16 ///FIXME: put in a view
             createAccountButton.centerX == selfView.centerX
+            createAccountButton.width == selfView.width
+            createAccountButton.height == createAccountButton.width * 0.75
 
-            createTeamtButton.top == createAccountButton.bottom + inset
-            createTeamtButton.centerX == selfView.centerX
-
-            createAccountButton.height == createTeamtButton.height
+//            createTeamtButton.top == createAccountButton.bottom + 24
+//            createTeamtButton.centerX == selfView.centerX
+//            createTeamtButton.width == selfView.width
+//
+//            createAccountButton.height == createTeamtButton.height
         }
 
         constrain(self.view, createTeamtButton, loginHintsLabel, loginButton) { selfView, createTeamtButton, loginHintsLabel, loginButton in
-            loginHintsLabel.top == createTeamtButton.bottom + inset
+            loginHintsLabel.top == loginButton.top - 16
             loginHintsLabel.centerX == selfView.centerX
 
             loginButton.top == loginHintsLabel.bottom
             loginButton.centerX == selfView.centerX
-            loginButton.bottom == selfView.bottom - inset
+            loginButton.bottom == selfView.bottom - 32
         }
     }
 }

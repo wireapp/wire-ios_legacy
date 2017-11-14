@@ -44,7 +44,7 @@
         
         self.subtitleLabel = [[UILabel alloc] init];
         self.subtitleLabel.translatesAutoresizingMaskIntoConstraints = NO;
-        self.subtitleLabel.textTransform = TextTransformUpper; ///FIXME: make an option
+        self.subtitleLabel.textTransform = TextTransformUpper;
         [self addSubview:self.subtitleLabel];
         
         [self.subtitleLabel autoPinEdgeToSuperviewEdge:ALEdgeBottom];
