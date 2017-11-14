@@ -64,14 +64,28 @@
     // given
     NSArray *responseStructure = @[@"some", @"test", @{@"some": @1}];
     NSData *jsonResponseData = [NSJSONSerialization dataWithJSONObject:responseStructure options:NSJSONWritingPrettyPrinted error:NULL];
-    
+    NSURLResponse *response = nil;
+
     // when
-    id result = [self.service audioObjectFromData:jsonResponseData response:nil];
+    id result = [self.service audioObjectFromData:jsonResponseData response:response];
     
     // then
     // No crash happened and
     XCTAssertNil(result);
 }
 
+- (void)testThatItIgnoresNilResponse
+{
+    // given
+    NSData *responseData = nil;
+    NSURLResponse *response = nil;
+    
+    // when
+    id result = [self.service audioObjectFromData:responseData response:response];
+    
+    // then
+    // No crash happened and
+    XCTAssertNil(result);
+}
 
 @end

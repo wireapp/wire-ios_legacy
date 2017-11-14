@@ -27,6 +27,10 @@ class AppRootViewController : UIViewController {
     public let overlayWindow : UIWindow
     public fileprivate(set) var sessionManager : SessionManager?
     
+    fileprivate var sessionManagerCreatedSessionObserverToken: Any?
+    fileprivate var sessionManagerDestroyedSessionObserverToken: Any?
+    fileprivate var soundEventListeners = [UUID : SoundEventListener]()
+    
     public fileprivate(set) var visibleViewController : UIViewController?
     fileprivate let appStateController : AppStateController
     fileprivate lazy var classyCache : ClassyCache = {
@@ -48,21 +52,23 @@ class AppRootViewController : UIViewController {
     }
     
     fileprivate var performWhenRequestsToOpenViewsDelegateAvailable: ((ZMRequestsToOpenViewsDelegate)->())?
-    
-    
+
+    override public func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        mainWindow.frame.size = size
+        overlayWindow.frame.size = size
+    }
+
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         appStateController = AppStateController()
         fileBackupExcluder = FileBackupExcluder()
         avsLogObserver = AVSLogObserver()
         MagicConfig.shared()
-        
-        mainWindow = UIWindow()
-        mainWindow.frame = UIScreen.main.bounds
+
+        mainWindow = UIWindow(frame: UIScreen.main.bounds)
         mainWindow.accessibilityIdentifier = "ZClientMainWindow"
         
-        overlayWindow = PassthroughWindow()
+        overlayWindow = PassthroughWindow(frame: UIScreen.main.bounds)
         overlayWindow.backgroundColor = .clear
-        overlayWindow.frame = UIScreen.main.bounds
         overlayWindow.windowLevel = UIWindowLevelStatusBar + 1
         overlayWindow.accessibilityIdentifier = "ZClientNotificationWindow"
         overlayWindow.rootViewController = NotificationWindowRootViewController()
@@ -89,6 +95,7 @@ class AppRootViewController : UIViewController {
         
         NotificationCenter.default.addObserver(self, selector: #selector(onContentSizeCategoryChange), name: Notification.Name.UIContentSizeCategoryDidChange, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(applicationDidEnterBackground), name: Notification.Name.UIApplicationDidEnterBackground, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(onUserGrantedAudioPermissions), name: Notification.Name.UserGrantedAudioPermissions, object: nil)
         
         transition(to: .headless)
         
@@ -121,10 +128,12 @@ class AppRootViewController : UIViewController {
             blacklistDownloadInterval: Settings.shared().blacklistDownloadInterval)
         { sessionManager in
             self.sessionManager = sessionManager
+            self.sessionManagerCreatedSessionObserverToken = sessionManager.addSessionManagerCreatedSessionObserver(self)
+            self.sessionManagerDestroyedSessionObserverToken = sessionManager.addSessionManagerDestroyedSessionObserver(self)
             self.sessionManager?.localNotificationResponder = self
             self.sessionManager?.requestToOpenViewDelegate = self
             sessionManager.updateCallNotificationStyleFromSettings()
-            sessionManager.useConstantBitRateAudio = false //  Settings.shared().callingConstantBitRate TODO re-enable
+            sessionManager.useConstantBitRateAudio = Settings.shared().callingConstantBitRate
         }
     }
     
@@ -413,5 +422,33 @@ extension AppRootViewController : LocalNotificationResponder {
     @objc fileprivate func applicationDidEnterBackground() {
         let unreadConversations = sessionManager?.accountManager.totalUnreadCount ?? 0
         UIApplication.shared.applicationIconBadgeNumber = unreadConversations
+    }
+}
+
+
+// MARK: - Session Manager Observer
+
+extension AppRootViewController : SessionManagerCreatedSessionObserver, SessionManagerDestroyedSessionObserver {
+    
+    func sessionManagerCreated(userSession: ZMUserSession) {
+        for (accountId, session) in sessionManager?.backgroundUserSessions ?? [:] {
+            if session == userSession {
+                soundEventListeners[accountId] = SoundEventListener(userSession: userSession)
+            }
+        }
+    }
+    
+    func sessionManagerDestroyedUserSession(for accountId: UUID) {
+        soundEventListeners[accountId] = nil
+    }
+}
+
+  
+// MARK: - Audio Permissions granted
+
+extension AppRootViewController  {
+    
+    func onUserGrantedAudioPermissions() {
+        sessionManager?.updateCallNotificationStyleFromSettings()
     }
 }

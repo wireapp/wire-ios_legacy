@@ -18,9 +18,9 @@
 
 import Foundation
 
-fileprivate let zmLog = ZMSLog(tag: "Sounds")
-
 class SoundEventListener : NSObject {
+    
+    weak var userSession: ZMUserSession?
     
     static let SoundEventListenerIgnoreTimeForPushStart = 2.0
     
@@ -32,18 +32,10 @@ class SoundEventListener : NSObject {
     var callStateObserverToken : Any?
     var networkAvailabilityObserverToken : Any?
     
-    deinit {
-        NotificationCenter.default.removeObserver(self)
-    }
-    
-    override init() {
+    init(userSession: ZMUserSession) {
+        self.userSession = userSession
         super.init()
-        
-        guard let userSession = ZMUserSession.shared() else {
-            zmLog.error("UserSession not available when initializing \(type(of: self))")
-            return
-        }
-        
+ 
         networkAvailabilityObserverToken = ZMNetworkAvailabilityChangeNotification.addNetworkAvailabilityObserver(self, userSession: userSession)
         callStateObserverToken = WireCallCenterV3.addCallStateObserver(observer: self, userSession: userSession)
         unreadMessageObserverToken = NewUnreadMessagesChangeInfo.add(observer: self, for: userSession)
@@ -57,12 +49,6 @@ class SoundEventListener : NSObject {
     
     func playSoundIfAllowed(_ name : String) {
         guard !name.isEmpty, soundEventWatchDog.outputAllowed else { return }
-        
-        // TODO this should be handled by AVS
-        guard AVAudioSession.sharedInstance().category != AVAudioSessionCategoryPlayAndRecord else {
-            return
-        }
-        
         AVSMediaManager.sharedInstance()?.playSound(name)
     }
     
@@ -135,7 +121,7 @@ extension SoundEventListener : WireCallCenterCallStateObserver {
     func callCenterDidChange(callState: CallState, conversation: ZMConversation, user: ZMUser?, timeStamp: Date?) {
         
         guard let mediaManager = AVSMediaManager.sharedInstance(),
-              let userSession = ZMUserSession.shared(),
+              let userSession = userSession,
               let callCenter = userSession.callCenter
         else {
             return
@@ -202,7 +188,7 @@ extension SoundEventListener {
     
     func applicationWillEnterForeground() {
         soundEventWatchDog.startIgnoreDate = Date()
-        soundEventWatchDog.isMuted = ZMUserSession.shared()?.networkState == .onlineSynchronizing
+        soundEventWatchDog.isMuted = userSession?.networkState == .onlineSynchronizing
         
         if AppDelegate.shared().launchType == ApplicationLaunchPush {
             soundEventWatchDog.ignoreTime = SoundEventListener.SoundEventListenerIgnoreTimeForPushStart

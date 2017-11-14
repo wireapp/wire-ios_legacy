@@ -86,7 +86,7 @@ public final class AudioRecorder: NSObject, AudioRecorderType {
     
     lazy var audioRecorder : AVAudioRecorder? = { [weak self] in
         guard let `self` = self else { return nil }
-        let fileName = NSString.filenameForSelfUser().appendingPathExtension(self.format.fileExtension())!
+        let fileName = String.filenameForSelfUser().appendingPathExtension(self.format.fileExtension())!
         let fileURL = NSURL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent(fileName)
 
         let settings = [

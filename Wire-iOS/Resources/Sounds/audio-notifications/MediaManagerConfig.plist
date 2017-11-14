@@ -88,7 +88,7 @@
 			<key>loopAllowed</key>
 			<integer>0</integer>
 			<key>mixingAllowed</key>
-			<integer>0</integer>
+			<integer>1</integer>
 			<key>incallAllowed</key>
 			<integer>1</integer>
 			<key>intensity</key>
@@ -137,7 +137,7 @@
 			<key>incallAllowed</key>
 			<integer>1</integer>
 			<key>intensity</key>
-			<integer>100</integer>
+			<integer>0</integer>
 		</dict>
 		<key>call_drop</key>
 		<dict>
@@ -148,11 +148,11 @@
 			<key>loopAllowed</key>
 			<integer>0</integer>
 			<key>mixingAllowed</key>
-			<integer>0</integer>
+			<integer>1</integer>
 			<key>incallAllowed</key>
 			<integer>1</integer>
 			<key>intensity</key>
-			<integer>50</integer>
+			<integer>0</integer>
 		</dict>
 		<key>new_message_apns</key>
 		<dict>
@@ -163,7 +163,7 @@
 			<key>loopAllowed</key>
 			<integer>0</integer>
 			<key>mixingAllowed</key>
-			<integer>100</integer>
+			<integer>1</integer>
 			<key>incallAllowed</key>
 			<integer>0</integer>
 			<key>intensity</key>
@@ -178,7 +178,7 @@
 			<key>loopAllowed</key>
 			<integer>0</integer>
 			<key>mixingAllowed</key>
-			<integer>100</integer>
+			<integer>1</integer>
 			<key>incallAllowed</key>
 			<integer>0</integer>
 			<key>intensity</key>
@@ -193,7 +193,7 @@
 			<key>loopAllowed</key>
 			<integer>0</integer>
 			<key>mixingAllowed</key>
-			<integer>100</integer>
+			<integer>1</integer>
 			<key>incallAllowed</key>
 			<integer>0</integer>
 			<key>intensity</key>
@@ -208,7 +208,7 @@
 			<key>loopAllowed</key>
 			<integer>0</integer>
 			<key>mixingAllowed</key>
-			<integer>100</integer>
+			<integer>1</integer>
 			<key>incallAllowed</key>
 			<integer>0</integer>
 			<key>intensity</key>
@@ -223,7 +223,7 @@
 			<key>loopAllowed</key>
 			<integer>0</integer>
 			<key>mixingAllowed</key>
-			<integer>100</integer>
+			<integer>1</integer>
 			<key>incallAllowed</key>
 			<integer>0</integer>
 			<key>intensity</key>
@@ -238,7 +238,7 @@
 			<key>loopAllowed</key>
 			<integer>0</integer>
 			<key>mixingAllowed</key>
-			<integer>100</integer>
+			<integer>1</integer>
 			<key>incallAllowed</key>
 			<integer>0</integer>
 			<key>intensity</key>

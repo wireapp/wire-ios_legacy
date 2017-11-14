@@ -53,7 +53,7 @@ class SettingsPropertySelectValueCellDescriptor: SettingsPropertyCellDescriptorT
     
     func select(_ value: SettingsPropertyValue?) {
         do {
-            try self.settingsProperty << self.value
+            try self.settingsProperty.set(newValue: self.value)
         }
         catch (let e) {
             DDLogError("Cannot set property: \(e)")

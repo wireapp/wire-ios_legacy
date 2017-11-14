@@ -197,7 +197,7 @@ typedef NS_ENUM(NSUInteger, ProfileViewControllerTabBarIndex) {
 - (ProfileHeaderViewModel *)headerViewModelWithUser:(id<ZMBareUser>)user
 {
     ProfileHeaderStyle headerStyle = ProfileHeaderStyleCancelButton;
-    if (IS_IPAD) {
+    if (IS_IPAD_FULLSCREEN) {
         if (self.navigationController.viewControllers.count > 1) {
             headerStyle = ProfileHeaderStyleBackButton;
         } else if (self.context != ProfileViewControllerContextDeviceList) {

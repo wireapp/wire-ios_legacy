@@ -222,7 +222,7 @@ public extension ConversationViewController {
     func voiceCallItemTapped(_ sender: UIBarButtonItem) {
         let startCall = {
             ConversationInputBarViewController.endEditingMessage()
-            self.conversation.startAudioCall(completionHandler: nil)
+            self.conversation.startAudioCall()
         }
         
         if self.conversation.activeParticipants.count <= 4 {
@@ -239,7 +239,7 @@ public extension ConversationViewController {
     
     func videoCallItemTapped(_ sender: UIBarButtonItem) {
         ConversationInputBarViewController.endEditingMessage()
-        conversation.startVideoCall(completionHandler: nil)
+        conversation.startVideoCall()
     }
 
     private dynamic func joinCallButtonTapped(_sender: UIBarButtonItem) {

@@ -110,7 +110,7 @@
                 break;
                 
             default:
-            case ZMUserSessionUnkownError:
+            case ZMUserSessionUnknownError:
                 message = NSLocalizedString(@"error.user.unkown_error", @"");
                 break;
         }

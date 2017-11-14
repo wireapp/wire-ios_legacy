@@ -40,6 +40,9 @@ extension NSURL {
 
 func ScaleToAspectFitRectInRect(_ fit: CGRect, into: CGRect) -> CGFloat
 {
+    guard fit.width != 0, fit.height != 0 else {
+        return 1
+    }
     // first try to match width
     let s = into.width / fit.width
     // if we scale the height to make the widths equal, does it still fit?
@@ -75,7 +78,9 @@ func AspectFitRectInRect(_ fit: CGRect, into: CGRect) -> CGRect
         let movieGenerator = MovieFilePreviewGenerator(callbackQueue: resultQueue, thumbnailSize: thumbnailSizeVideo)
         let pdfGenerator = PDFFilePreviewGenerator(callbackQueue: resultQueue, thumbnailSize: thumbnailSizeDefault)
         
-        return AggregateFilePreviewGenerator(subGenerators: [imageGenerator, movieGenerator, pdfGenerator], callbackQueue: resultQueue, thumbnailSize: thumbnailSizeDefault)
+        return AggregateFilePreviewGenerator(subGenerators: [imageGenerator, movieGenerator, pdfGenerator],
+                                             callbackQueue: resultQueue,
+                                             thumbnailSize: thumbnailSizeDefault)
     }()
 }
 
@@ -188,25 +193,35 @@ func AspectFitRectInRect(_ fit: CGRect, into: CGRect) -> CGRect
         
         let time = CMTimeMakeWithSeconds(asset.duration.seconds * 0.1, 60)
         var actualTime = kCMTimeZero
-        guard let cgImage = try? generator.copyCGImage(at: time, actualTime:&actualTime) else {
+        guard let cgImage = try? generator.copyCGImage(at: time, actualTime:&actualTime),
+            let colorSpace = cgImage.colorSpace else {
             return
         }
         
         let bitsPerComponent = cgImage.bitsPerComponent
-        let colorSpace = cgImage.colorSpace
+        
         let bitmapInfo = cgImage.bitmapInfo
         
         let width = cgImage.width
         let height = cgImage.height
         
-        let renderRect = AspectFitRectInRect(CGRect(x: 0, y: 0, width: CGFloat(width), height: CGFloat(height)), into: CGRect(x: 0, y: 0, width: self.thumbnailSize.width, height: self.thumbnailSize.height))
+        let renderRect = AspectFitRectInRect(CGRect(x: 0, y: 0, width: CGFloat(width), height: CGFloat(height)),
+                                             into: CGRect(x: 0, y: 0, width: self.thumbnailSize.width, height: self.thumbnailSize.height))
         
-        let context = CGContext(data: nil, width: Int(renderRect.size.width), height: Int(renderRect.size.height), bitsPerComponent: bitsPerComponent, bytesPerRow: Int(renderRect.size.width) * 4, space: colorSpace!, bitmapInfo: bitmapInfo.rawValue)
+        guard let context = CGContext(data: nil,
+                                      width: Int(renderRect.size.width),
+                                      height: Int(renderRect.size.height),
+                                      bitsPerComponent: bitsPerComponent,
+                                      bytesPerRow: Int(renderRect.size.width) * 4,
+                                      space: colorSpace,
+                                      bitmapInfo: bitmapInfo.rawValue) else {
+            return
+        }
         
-        context!.interpolationQuality = CGInterpolationQuality.high
-        context?.draw(cgImage, in: renderRect)
+        context.interpolationQuality = CGInterpolationQuality.high
+        context.draw(cgImage, in: renderRect)
         
-        result = context?.makeImage().flatMap { UIImage(cgImage: $0) }
+        result = context.makeImage().flatMap { UIImage(cgImage: $0) }
     }
     
 }
@@ -217,7 +232,7 @@ func AspectFitRectInRect(_ fit: CGRect, into: CGRect) -> CGRect
     open let thumbnailSize: CGSize
     open let callbackQueue: OperationQueue
     
-    init(callbackQueue: OperationQueue, thumbnailSize: CGSize) {
+    public init(callbackQueue: OperationQueue, thumbnailSize: CGSize) {
         self.thumbnailSize = thumbnailSize
         self.callbackQueue = callbackQueue
         super.init()
@@ -237,19 +252,26 @@ func AspectFitRectInRect(_ fit: CGRect, into: CGRect) -> CGRect
         }
         
         UIGraphicsBeginImageContext(thumbnailSize)
-        let pdfRef = CGPDFDocument(CGDataProvider(url: fileURL as CFURL)!)
-        let pageRef = pdfRef?.page(at: 1)
+        guard let dataProvider = CGDataProvider(url: fileURL as CFURL),
+                let pdfRef = CGPDFDocument(dataProvider),
+                let pageRef = pdfRef.page(at: 1),
+                let contextRef = UIGraphicsGetCurrentContext() else {
+            return
+        }
         
-        let contextRef = UIGraphicsGetCurrentContext()
-        contextRef?.setAllowsAntialiasing(true)
+        contextRef.setAllowsAntialiasing(true)
+        let cropBox = pageRef.getBoxRect(CGPDFBox.cropBox)
         
-        let cropBox = pageRef?.getBoxRect(CGPDFBox.cropBox)
-        let xScale = self.thumbnailSize.width / (cropBox?.size.width)!
-        let yScale = self.thumbnailSize.height / (cropBox?.size.height)!
+        guard cropBox.size.width != 0, cropBox.size.height != 0 else {
+            return
+        }
+        
+        let xScale = self.thumbnailSize.width / cropBox.size.width
+        let yScale = self.thumbnailSize.height / cropBox.size.height
         let scaleToApply = xScale < yScale ? xScale : yScale
         
-        contextRef?.concatenate(CGAffineTransform(scaleX: scaleToApply, y: scaleToApply))
-        contextRef?.drawPDFPage(pageRef!)
+        contextRef.concatenate(CGAffineTransform(scaleX: scaleToApply, y: scaleToApply))
+        contextRef.drawPDFPage(pageRef)
 
         result = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
