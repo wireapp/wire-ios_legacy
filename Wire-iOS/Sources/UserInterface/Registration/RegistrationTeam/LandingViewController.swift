@@ -29,30 +29,6 @@ fileprivate extension UIColor {
     static let textColor = UIColor(red:0.20, green:0.22, blue:0.23, alpha:1.0)
 }
 
-@objc class LandingButton: IconLabelButtonSwift {
-
-    convenience init(title: NSAttributedString, icon: ZetaIconType, iconBackgroundColor: UIColor) {
-        self.init()
-
-        subtitleLabel.numberOfLines = 2
-        subtitleLabel.text = nil
-        subtitleLabel.attributedText = title
-        self.iconButton.setIcon(icon, with: ZetaIconSize.medium, for: .normal)
-        self.iconButton.setBackgroundImageColor(iconBackgroundColor, for: .normal)
-
-        ///TODO: no capitalize
-        ///TODO: rm text
-        constrain(self.iconButton) { iconButton in
-            iconButton.width == 72
-            iconButton.width == iconButton.height
-        }
-        self.setup()
-    }
-
-    private func setup() {
-        self.iconButton.circular = true
-    }
-}
 
 final class LandingViewController: UIViewController {
     var signInError: Error? // TODO: use it
@@ -128,6 +104,8 @@ final class LandingViewController: UIViewController {
 
             createTeamtButton.top == createAccountButton.bottom + inset
             createTeamtButton.centerX == selfView.centerX
+
+            createAccountButton.height == createTeamtButton.height
         }
 
         constrain(self.view, createTeamtButton, loginHintsLabel, loginButton) { selfView, createTeamtButton, loginHintsLabel, loginButton in

@@ -1,14 +1,15 @@
 //
-//  IconLabelButton.swift
-//  WireExtensionComponents
+//  LandingButton.swift
+//  Wire-iOS
 //
-//  Created by Bill Chan on 13.11.17.
+//  Created by Bill Chan on 14.11.17.
 //  Copyright © 2017 Zeta Project Germany GmbH. All rights reserved.
 //
 
+import Foundation
 import PureLayout
 
-open class IconLabelButtonSwift: ButtonWithLargerHitArea {
+@objc class LandingButton: ButtonWithLargerHitArea {
     var priorState: UIControlState?
 
     public var iconButton: IconButton!
@@ -26,7 +27,7 @@ open class IconLabelButtonSwift: ButtonWithLargerHitArea {
         iconButton.autoPinEdge(toSuperviewEdge: .top)
         subtitleLabel = UILabel()
         subtitleLabel.translatesAutoresizingMaskIntoConstraints = false
-        subtitleLabel.textTransform = .upper ///FIXME:
+        //        subtitleLabel.textTransform = .upper ///FIXME:
         addSubview(subtitleLabel)
         subtitleLabel.autoPinEdge(toSuperviewEdge: .bottom)
     }
@@ -79,7 +80,27 @@ open class IconLabelButtonSwift: ButtonWithLargerHitArea {
     func updateForNewState() {
         // Update for new state (selected, highlighted, disabled) here if needed
         subtitleLabel.font = titleLabel?.font
-        subtitleLabel.textColor = titleColor(for: state) ?? UIColor.clear  ///FIXME:
+        //        subtitleLabel.textColor = titleColor(for: state) ?? UIColor.clear  ///FIXME:
+    }
+    convenience init(title: NSAttributedString, icon: ZetaIconType, iconBackgroundColor: UIColor) {
+        self.init()
+
+        subtitleLabel.numberOfLines = 2
+        subtitleLabel.text = nil
+        subtitleLabel.attributedText = title
+        self.iconButton.setIcon(icon, with: ZetaIconSize.medium, for: .normal)
+        self.iconButton.setBackgroundImageColor(iconBackgroundColor, for: .normal)
+
+        ///TODO: no capitalize
+        ///TODO: rm text
+        constrain(self.iconButton) { iconButton in
+            iconButton.width == 72
+            iconButton.width == iconButton.height
+        }
+        self.setup()
     }
 
+    private func setup() {
+        self.iconButton.circular = true
+    }
 }

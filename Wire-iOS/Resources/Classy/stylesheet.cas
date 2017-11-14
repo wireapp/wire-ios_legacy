@@ -1740,13 +1740,3 @@ TextSearchResultCell RoundedTextBadge {
         font: $font-small-semibold;
     }
 }
-
-// Example code
-
-TestView {
-    backgroundColor: green;
-    testLabel: @{
-        textColor: $color-text-foreground;
-        font: $font-small-semibold;
-    }
-}
