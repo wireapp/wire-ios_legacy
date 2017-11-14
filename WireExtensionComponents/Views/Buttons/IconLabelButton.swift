@@ -8,7 +8,7 @@
 
 import PureLayout
 
-class IconLabelButton2: ButtonWithLargerHitArea {
+class IconLabelButton: ButtonWithLargerHitArea {
     var priorState: UIControlState?
 
     var iconButton: IconButton!
@@ -26,7 +26,7 @@ class IconLabelButton2: ButtonWithLargerHitArea {
         iconButton.autoPinEdge(toSuperviewEdge: .top)
         subtitleLabel = UILabel()
         subtitleLabel.translatesAutoresizingMaskIntoConstraints = false
-        subtitleLabel.textTransform = .upper
+        subtitleLabel.textTransform = .upper ///FIXME:
         addSubview(subtitleLabel)
         subtitleLabel.autoPinEdge(toSuperviewEdge: .bottom)
     }
@@ -79,7 +79,7 @@ class IconLabelButton2: ButtonWithLargerHitArea {
     func updateForNewState() {
         // Update for new state (selected, highlighted, disabled) here if needed
         subtitleLabel.font = titleLabel?.font
-        subtitleLabel.textColor = titleColor(for: state) ?? UIColor.clear
+        subtitleLabel.textColor = titleColor(for: state) ?? UIColor.clear  ///FIXME:
     }
 
 }

@@ -31,8 +31,8 @@ fileprivate extension UIColor {
 
 @objc class LandingButton: IconLabelButton {
 
-    init(title: NSAttributedString, icon: ZetaIconType, iconBackgroundColor: UIColor) {
-        super.init()
+    convenience init(title: NSAttributedString, icon: ZetaIconType, iconBackgroundColor: UIColor) {
+        self.init()
 
         subtitleLabel.numberOfLines = 2
         subtitleLabel.text = nil
