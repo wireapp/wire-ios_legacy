@@ -18,7 +18,7 @@ _If there are some other pull requests related to this one (e.g. new releases of
 
 Needs releases with:
 
-- [ ] GitHub link to the issue
+- [ ] GitHub link to the pull request
 
 ## Notes
 
