@@ -90,8 +90,7 @@ final class LandingViewController: UIViewController {
 
         self.view.backgroundColor = .background
 
-        [logoView, headline, createAccountButton, //createTeamtButton,
-         loginHintsLabel, loginButton].forEach(view.addSubview)
+        [logoView, headline, createAccountButton, createTeamtButton, loginHintsLabel, loginButton].forEach(view.addSubview)
 
         self.createConstraints()
     }
@@ -108,13 +107,12 @@ final class LandingViewController: UIViewController {
             createAccountButton.top == headline.bottom + 16 ///FIXME: put in a view
             createAccountButton.centerX == selfView.centerX
             createAccountButton.width == selfView.width
-            createAccountButton.height == createAccountButton.width * 0.75
 
-//            createTeamtButton.top == createAccountButton.bottom + 24
-//            createTeamtButton.centerX == selfView.centerX
-//            createTeamtButton.width == selfView.width
-//
-//            createAccountButton.height == createTeamtButton.height
+            createTeamtButton.top == createAccountButton.bottom + 24
+            createTeamtButton.centerX == selfView.centerX
+            createTeamtButton.width == selfView.width
+
+            createAccountButton.height == createTeamtButton.height
         }
 
         constrain(self.view, createTeamtButton, loginHintsLabel, loginButton) { selfView, createTeamtButton, loginHintsLabel, loginButton in
