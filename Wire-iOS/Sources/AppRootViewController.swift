@@ -95,6 +95,7 @@ class AppRootViewController : UIViewController {
         
         NotificationCenter.default.addObserver(self, selector: #selector(onContentSizeCategoryChange), name: Notification.Name.UIContentSizeCategoryDidChange, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(applicationDidEnterBackground), name: Notification.Name.UIApplicationDidEnterBackground, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(onUserGrantedAudioPermissions), name: Notification.Name.UserGrantedAudioPermissions, object: nil)
         
         transition(to: .headless)
         
@@ -424,6 +425,7 @@ extension AppRootViewController : LocalNotificationResponder {
     }
 }
 
+
 // MARK: - Session Manager Observer
 
 extension AppRootViewController : SessionManagerCreatedSessionObserver, SessionManagerDestroyedSessionObserver {
@@ -438,5 +440,14 @@ extension AppRootViewController : SessionManagerCreatedSessionObserver, SessionM
     
     func sessionManagerDestroyedUserSession(for accountId: UUID) {
         soundEventListeners[accountId] = nil
+    }
+
+  
+// MARK: - Audio Permissions granted
+
+extension AppRootViewController  {
+    
+    func onUserGrantedAudioPermissions() {
+        sessionManager?.updateCallNotificationStyleFromSettings()
     }
 }

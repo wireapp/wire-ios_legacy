@@ -59,7 +59,7 @@ extension SettingsCellDescriptorFactory {
 
     func actionsSection() -> SettingsSectionDescriptorType {
         var cellDescriptors = [ressetPasswordElement()]
-        if !self.settingsPropertyFactory.selfUser.isTeamMember {
+        if let selfUser = self.settingsPropertyFactory.selfUser, !selfUser.isTeamMember {
             cellDescriptors.append(deleteAccountButtonElement())
         }
         

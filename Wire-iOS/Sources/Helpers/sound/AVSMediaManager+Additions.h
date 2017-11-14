@@ -47,8 +47,6 @@ FOUNDATION_EXPORT void MediaManagerPlayAlert(void);
 
 @interface AVSMediaManager (Additions)
 
-+ (NSURL *)URLForSound:(NSString *)sound;
-
 - (void)configureSounds;
 - (void)configureDefaultSounds;
 
