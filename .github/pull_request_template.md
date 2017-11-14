@@ -14,9 +14,9 @@ _Briefly describe the solutions you have implemented for the issues explained ab
 
 ## Dependencies
 
-_If this issue depends from other issues available on GitHub, specify them here. (Optional)_
+_If there are some other pull requests related to this one (e.g. new releases of frameworks), specify them here. (Optional)_
 
-This issue depends on:
+Needs releases with:
 
 - [ ] GitHub link to the issue
 
