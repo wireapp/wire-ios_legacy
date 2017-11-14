@@ -100,7 +100,7 @@ class SendController {
             }
 
             self.observer?.sentHandler = { [weak self] in
-                //self?.cancelTimeout()
+                self?.cancelTimeout()
                 self?.sentAllSendables = true
                 progress(.done)
             }
@@ -120,20 +120,21 @@ class SendController {
         }
     }
     
+    
     func tryToTimeout() {
-        /*let timeout = 30.0
+        let seconds = 30.0
         cancelTimeout()
-        NSObject.perform(#selector(SendController.timeout), with: nil, afterDelay: timeout)
-         */
+        NSObject.perform(#selector(timeout), with: nil, afterDelay: seconds)
     }
     
     func cancelTimeout() {
-        NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(SendController.timeout), object: nil)
+        NSObject.cancelPreviousPerformRequests(withTarget: self)
+        //NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(timeout), object: nil)
     }
     
     @objc func timeout() {
         self.cancel {
-            self.progress!(.timedOut)
+            self.progress?(.timedOut)
         }
     }
     
@@ -144,7 +145,7 @@ class SendController {
         isCancelled = true
 
         let sendablesToCancel = self.observer?.sendables.lazy.filter { !$0.isSent }
-        
+
         sharingSession?.enqueue(changes: {
             sendablesToCancel?.forEach {
                 $0.cancel()

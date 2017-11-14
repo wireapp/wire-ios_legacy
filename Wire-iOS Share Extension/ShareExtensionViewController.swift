@@ -173,7 +173,7 @@ class ShareExtensionViewController: SLComposeServiceViewController {
                 )
             case .timedOut:
                 self.popConfigurationViewController()
-                let alert = UIAlertController(title: "Your connection has timed out.", message: "Check your Internet connection and try again.", preferredStyle: .alert)
+                let alert = UIAlertController(title: "Your connection has timed out.", message: "Check your Internet connection and try again. Your attachments were saved in the conversation.", preferredStyle: .alert)
                 alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
                 self.present(alert, animated: true, completion: nil)
             }
