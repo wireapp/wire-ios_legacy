@@ -33,10 +33,32 @@ fileprivate extension UIColor {
 final class LandingViewController: UIViewController {
     var signInError: Error? // TODO: use it
 
+    static let semiboldFont = FontSpec(.normal, .semibold).font!
+    static let regularFont = FontSpec(.normal, .regular).font!
+
+    static let buttonTitleAttribute: [String : Any] = {
+        let alignCenterStyle = NSMutableParagraphStyle()
+        alignCenterStyle.alignment = NSTextAlignment.center
+
+        let semiboldFont = FontSpec(.large, .semibold).font!
+
+        return [NSForegroundColorAttributeName: UIColor.textColor, NSParagraphStyleAttributeName: alignCenterStyle, NSFontAttributeName:semiboldFont]
+    }()
+
+    static let buttonSubtitleAttribute: [String : Any] = {
+        let alignCenterStyle = NSMutableParagraphStyle()
+        alignCenterStyle.alignment = NSTextAlignment.center
+
+        let lightFont = FontSpec(.large, .light).font!
+
+        return [NSForegroundColorAttributeName: UIColor.textColor, NSParagraphStyleAttributeName: alignCenterStyle, NSFontAttributeName:lightFont]
+    }()
+
+
     let logoView: UIImageView = {
         let image = UIImage(named: "wire-logo-long")!
         let imageView = UIImageView(image: image.withRenderingMode(.alwaysTemplate))
-        imageView.contentMode = .scaleAspectFit
+        imageView.contentMode = .scaleAspectFill
         imageView.tintColor = UIColor.textColor
         return imageView
     }()
@@ -44,16 +66,14 @@ final class LandingViewController: UIViewController {
     let headline: UILabel = {
         let label = UILabel()
         label.text = "Secure messenger for everyone.".localized
+        label.font = LandingViewController.regularFont
 
         return label
     }()
 
     let createAccountButton: LandingButton = {
-        let alignCenterStyle = NSMutableParagraphStyle()
-        alignCenterStyle.alignment = NSTextAlignment.center
-
-        let title = "Create an account".localized && [NSForegroundColorAttributeName: UIColor.textColor, NSParagraphStyleAttributeName: alignCenterStyle]
-        let subtitle = "\nfor personal use".localized && [NSForegroundColorAttributeName: UIColor.textColor, NSParagraphStyleAttributeName: alignCenterStyle] ///FIXME: thin font
+        let title = "Create an account".localized && LandingViewController.buttonTitleAttribute
+        let subtitle = "\nfor personal use".localized && LandingViewController.buttonSubtitleAttribute
         let twoLineTitle = title + subtitle
 
         let button = LandingButton(title: twoLineTitle, icon: .selfProfile, iconBackgroundColor: .createAccountBlue)
@@ -64,24 +84,29 @@ final class LandingViewController: UIViewController {
         let alignCenterStyle = NSMutableParagraphStyle()
         alignCenterStyle.alignment = NSTextAlignment.center
 
-        let title = "Create team".localized && [NSForegroundColorAttributeName: UIColor.textColor, NSParagraphStyleAttributeName: alignCenterStyle]
-        let subtitle = "\nfor work".localized && [NSForegroundColorAttributeName: UIColor.textColor, NSParagraphStyleAttributeName: alignCenterStyle] ///FIXME: thin font
+        let title = "Create team".localized && LandingViewController.buttonTitleAttribute
+        let subtitle = "\nfor work".localized && LandingViewController.buttonSubtitleAttribute
 
         let button = LandingButton(title: title + subtitle, icon: .team, iconBackgroundColor: .createTeamGreen)
         return button
     }()
 
+    let containerView = UIView()
+
     let loginHintsLabel: UILabel = {
         let label = UILabel()
         label.text = "Already have an account?".localized
+        label.font = LandingViewController.regularFont
 
         return label
     }()
 
     let loginButton: UIButton = {
         let button = UIButton()
-        button.setTitle("Log in".localized, for: .normal) ///FIXME: font
+        button.setTitle("Log in".localized, for: .normal)
         button.setTitleColor(.textColor, for: .normal)
+        button.titleLabel?.font = LandingViewController.semiboldFont
+
         return button
     }()
 
@@ -90,29 +115,26 @@ final class LandingViewController: UIViewController {
 
         self.view.backgroundColor = .background
 
-        [logoView, headline, createAccountButton, createTeamtButton, loginHintsLabel, loginButton].forEach(view.addSubview)
+        [logoView, headline, containerView, loginHintsLabel, loginButton].forEach(view.addSubview)
+
+        [createAccountButton, createTeamtButton].forEach(containerView.addSubview)
 
         self.createConstraints()
     }
 
     private func createConstraints() {
 
-        constrain(self.view, logoView, headline, createAccountButton, createTeamtButton) { selfView, logoView, headline, createAccountButton, createTeamtButton in
+        constrain(self.view, logoView, headline, containerView) { selfView, logoView, headline, containerView in
             logoView.top == selfView.top + 72 ~ LayoutPriority(750)
             logoView.centerX == selfView.centerX
+            logoView.width == 96
+            logoView.height == 30.6
 
             headline.top == logoView.bottom + 16
             headline.centerX == selfView.centerX
 
-            createAccountButton.top == headline.bottom + 16 ///FIXME: put in a view
-            createAccountButton.centerX == selfView.centerX
-            createAccountButton.width == selfView.width
-
-            createTeamtButton.top == createAccountButton.bottom + 24
-            createTeamtButton.centerX == selfView.centerX
-            createTeamtButton.width == selfView.width
-
-            createAccountButton.height == createTeamtButton.height
+            containerView.centerX == selfView.centerX
+            containerView.centerY == selfView.centerY
         }
 
         constrain(self.view, createTeamtButton, loginHintsLabel, loginButton) { selfView, createTeamtButton, loginHintsLabel, loginButton in
@@ -122,6 +144,21 @@ final class LandingViewController: UIViewController {
             loginButton.top == loginHintsLabel.bottom
             loginButton.centerX == selfView.centerX
             loginButton.bottom == selfView.bottom - 32
+        }
+
+        constrain(containerView, createAccountButton, createTeamtButton) { containerView, createAccountButton, createTeamtButton in
+
+            createAccountButton.top == containerView.top
+            createTeamtButton.bottom == containerView.bottom
+
+            createAccountButton.centerX == containerView.centerX
+            createAccountButton.width == containerView.width
+
+            createTeamtButton.top == createAccountButton.bottom + 24
+            createTeamtButton.centerX == containerView.centerX
+            createTeamtButton.width == containerView.width
+
+            createAccountButton.height == createTeamtButton.height
         }
     }
 }

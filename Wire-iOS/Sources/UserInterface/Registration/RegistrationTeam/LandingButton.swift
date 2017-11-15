@@ -116,9 +116,6 @@ class LandingButton: ButtonWithLargerHitArea {
     }
 
     func updateForNewState() {
-        // Update for new state (selected, highlighted, disabled) here if needed
-        subtitleLabel.font = titleLabel?.font
-        //        subtitleLabel.textColor = titleColor(for: state) ?? UIColor.clear  ///FIXME:
     }
 
 }
