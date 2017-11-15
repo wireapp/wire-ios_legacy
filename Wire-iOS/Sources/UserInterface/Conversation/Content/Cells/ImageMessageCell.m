@@ -594,4 +594,11 @@ static const CGFloat ImageToolbarMinimumSize = 192;
     return [CellSizesProvider heightForImage: [self.fullImageView image]];
 }
 
+- (void)traitCollectionDidChange:(nullable UITraitCollection *)previousTraitCollection {
+    [super traitCollectionDidChange:previousTraitCollection];
+
+    self.defaultLayoutMargins = [ImageMessageCell layoutDirectionAwareLayoutMargins];
+    [self updateImageMessageConstraintConstants];
+}
+
 @end
