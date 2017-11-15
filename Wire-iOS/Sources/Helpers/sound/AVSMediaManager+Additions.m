@@ -69,7 +69,15 @@ static NSDictionary *MediaManagerSoundConfig = nil;
     }
     
     AVSMediaManager *mediaManager = AVSMediaManager.sharedInstance;
-        
+    
+    // Unregister all previous custom sounds
+    [mediaManager registerUrl:nil forMedia:MediaManagerSoundFirstMessageReceivedSound];
+    [mediaManager registerUrl:nil forMedia:MediaManagerSoundMessageReceivedSound];
+    [mediaManager registerUrl:nil forMedia:MediaManagerSoundRingingFromThemInCallSound];
+    [mediaManager registerUrl:nil forMedia:MediaManagerSoundRingingFromThemSound];
+    [mediaManager registerUrl:nil forMedia:MediaManagerSoundOutgoingKnockSound];
+    [mediaManager registerUrl:nil forMedia:MediaManagerSoundIncomingKnockSound];
+    
     [mediaManager registerMediaFromConfiguration:MediaManagerSoundConfig
                                      inDirectory:audioDir];
 }
