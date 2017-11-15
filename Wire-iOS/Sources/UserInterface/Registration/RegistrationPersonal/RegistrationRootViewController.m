@@ -34,6 +34,7 @@
 
 @property (nonatomic) TabBarController *registrationTabBarController;
 @property (nonatomic) ZMIncompleteRegistrationUser *unregisteredUser;
+@property (nonatomic) AuthenticationFlowType flowType;
 @property (nonatomic, weak) SignInViewController *signInViewController;
 @property (nonatomic) IconButton *cancelButton;
 @property (nonatomic, readonly) Account *firstAuthenticatedAccount;
@@ -42,14 +43,15 @@
 
 @implementation RegistrationRootViewController
 
-- (instancetype)initWithUnregisteredUser:(ZMIncompleteRegistrationUser *)unregisteredUser
+- (instancetype)initWithUnregisteredUser:(ZMIncompleteRegistrationUser *)unregisteredUser authenticationFlow:(AuthenticationFlowType)flow
 {
     self = [super initWithNibName:nil bundle:nil];
-    
+
     if (self) {
         self.unregisteredUser = unregisteredUser;
+        self.flowType = flow;
     }
-    
+
     return self;
 }
 
@@ -66,7 +68,6 @@
     
     UIViewController *flowViewController = nil;
     if ([RegistrationViewController registrationFlow] == RegistrationFlowEmail) {
-        
         RegistrationEmailFlowViewController *emailFlowViewController = [[RegistrationEmailFlowViewController alloc] initWithUnregisteredUser:self.unregisteredUser];
         emailFlowViewController.formStepDelegate = self;
         flowViewController = emailFlowViewController;
@@ -77,8 +78,20 @@
         phoneFlowViewController.registrationDelegate = self;
         flowViewController = phoneFlowViewController;
     }
-    
-    self.registrationTabBarController = [[TabBarController alloc] initWithViewControllers:@[flowViewController, signInViewController]];
+
+    NSArray *controllers;
+    switch (self.flowType) {
+        case AuthenticationFlowRegular:
+            controllers = @[flowViewController, signInViewController];
+            break;
+        case AuthenticationFlowOnlyLogin:
+            controllers = @[signInViewController];
+            break;
+        case AuthenticationFlowOnlyRegistration:
+            controllers = @[flowViewController];
+            break;
+    }
+    self.registrationTabBarController = [[TabBarController alloc] initWithViewControllers:controllers];
     self.signInViewController = signInViewController;
     
     if (self.showLogin) {
