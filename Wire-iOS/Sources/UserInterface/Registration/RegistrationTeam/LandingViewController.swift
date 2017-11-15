@@ -98,7 +98,6 @@ final class LandingViewController: UIViewController {
 
     let containerView = UIView()
     let headerContainerView = UIView()
-    let footerContainerView = UIView()
 
     let loginHintsLabel: UILabel = {
         let label = UILabel()
@@ -123,7 +122,7 @@ final class LandingViewController: UIViewController {
 
         self.view.backgroundColor = .background
 
-        [headerContainerView, containerView, footerContainerView, loginHintsLabel, loginButton].forEach(view.addSubview)
+        [headerContainerView, containerView, loginHintsLabel, loginButton].forEach(view.addSubview)
 
         [logoView, headline].forEach(headerContainerView.addSubview)
 
@@ -135,14 +134,17 @@ final class LandingViewController: UIViewController {
     private func createConstraints() {
 
         constrain(logoView, headline, headerContainerView) { logoView, headline, headerContainerView in
+            ///reserver space for status bar(20pt)
+            logoView.top >= headerContainerView.top + (16 + 20)
             logoView.top == headerContainerView.top + 72 ~ LayoutPriority(500)
             logoView.centerX == headerContainerView.centerX
             logoView.width == 96
             logoView.height == 31
 
-            headline.top == logoView.bottom + 16 ~ LayoutPriority(1000)
+            headline.top == logoView.bottom + 16
             headline.centerX == headerContainerView.centerX
-            headline.bottom <= headerContainerView.bottom - 16 ~ LayoutPriority(1000)
+            headline.height >= 18
+            headline.bottom <= headerContainerView.bottom - 16
 
         }
 
@@ -161,7 +163,7 @@ final class LandingViewController: UIViewController {
         }
 
         constrain(self.view, containerView, loginHintsLabel, loginButton) { selfView, containerView, loginHintsLabel, loginButton in
-            containerView.bottom >= loginHintsLabel.top + 16 ~ LayoutPriority(1000)
+            containerView.bottom <= loginHintsLabel.top - 16
 
             loginHintsLabel.top == loginButton.top - 16
             loginHintsLabel.centerX == selfView.centerX
