@@ -37,6 +37,19 @@ class ArticleViewTests: ZMSnapshotTestCase {
         return textMessageData
     }
     
+    func articleWithNilPicture() -> MockTextMessageData {
+        let article = Article(originalURLString: "https://www.example.com/article/1", permamentURLString: "https://www.example.com/article/1", offset: 0)
+        article.title = "Title with some words in it"
+        article.summary = "Summary summary summary summary summary summary summary summary summary summary summary summary summary summary summary"
+        
+        let textMessageData = MockTextMessageData()
+        textMessageData.linkPreview = article
+        textMessageData.imageDataIdentifier = "image-id-2"
+        textMessageData.imageData = Data()
+        textMessageData.hasImageData = true
+        return textMessageData
+    }
+    
     func articleWithPicture() -> MockTextMessageData {
         let article = Article(originalURLString: "https://www.example.com/article/1", permamentURLString: "https://www.example.com/article/1", offset: 0)
         article.title = "Title with some words in it"
@@ -92,14 +105,38 @@ class ArticleViewTests: ZMSnapshotTestCase {
         
         verifyInAllPhoneWidths(view: sut)
     }
-        
+
     func testArticleViewWithPicture() {
         sut = ArticleView(withImagePlaceholder: true)
         sut.translatesAutoresizingMaskIntoConstraints = false
         sut.configure(withTextMessageData: articleWithPicture(), obfuscated: false)
         sut.layoutIfNeeded()
+
+        let expectation = self.expectation(description: "Wait for image to load")
         
-        verifyInAllPhoneWidths(view: sut)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+            expectation.fulfill()
+            self.verifyInAllPhoneWidths(view: self.sut)
+        }
+        
+        self.waitForExpectations(timeout: 2, handler: nil)
+    }
+    
+    func testArticleWithNilPicture() {
+        sut = ArticleView(withImagePlaceholder: true)
+        sut.translatesAutoresizingMaskIntoConstraints = false
+        sut.configure(withTextMessageData: articleWithNilPicture(), obfuscated: false)
+        sut.layoutIfNeeded()
+        
+        
+        let expectation = self.expectation(description: "Wait for image to load")
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            expectation.fulfill()
+            self.verifyInAllPhoneWidths(view: self.sut)
+        }
+        
+        self.waitForExpectations(timeout: 2, handler: nil)
     }
     
     func testArticleViewWithPictureStillDownloading() {

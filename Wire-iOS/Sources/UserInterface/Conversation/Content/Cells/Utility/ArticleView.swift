@@ -192,6 +192,7 @@ class ArticleView: UIView {
                 imageView.image = UIImage.init(for: .link, iconSize: .tiny, color: ColorScheme.default().color(withName: ColorSchemeColorBackground))
                 imageView.contentMode = .center
             } else {
+                imageView.image = nil
                 imageView.contentMode = .scaleAspectFill
                 loadingView?.isHidden = true
                 ArticleView.imageCache.image(for: imageData, cacheKey: imageDataIdentifier, creationBlock: { data -> Any? in
