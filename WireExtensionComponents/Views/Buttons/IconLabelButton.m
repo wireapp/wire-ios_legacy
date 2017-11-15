@@ -30,7 +30,7 @@
 
 - (instancetype)init
 {
-    self = [super initWithFrame:CGRectZero];
+    self = [super init];
     if (nil != self) {
         self.iconButton = [IconButton iconButtonCircularLight];
         self.iconButton.translatesAutoresizingMaskIntoConstraints = NO;
@@ -102,7 +102,7 @@
 {
     // Update for new state (selected, highlighted, disabled) here if needed
     self.subtitleLabel.font = self.titleLabel.font;
-    self.subtitleLabel.textColor = [self titleColorForState:self.state]; ///FIXME: option
+    self.subtitleLabel.textColor = [self titleColorForState:self.state];
 }
 
 @end
