@@ -66,7 +66,7 @@ open class TabBarController: UIViewController {
     fileprivate var tabBar : TabBar?
     fileprivate var contentView : UIView!
     
-    required public init( viewControllers: [UIViewController]) {
+    required public init(viewControllers: [UIViewController]) {
         self.viewControllers = viewControllers
         self.selectedIndex = 0
         super.init(nibName: nil, bundle: nil)
@@ -88,14 +88,12 @@ open class TabBarController: UIViewController {
         self.contentView = UIView(frame: self.view.bounds)
         self.contentView!.translatesAutoresizingMaskIntoConstraints = false
         self.view.addSubview(self.contentView)
-        
-        if self.viewControllers.count > 1 {
-            let items = self.viewControllers.map({ viewController in viewController.tabBarItem! })
-            self.tabBar = TabBar(items: items, style: self.style, selectedIndex: selectedIndex)
-            self.tabBar?.delegate = self
-            self.tabBar?.isUserInteractionEnabled = self.enabled
-            self.view.addSubview(self.tabBar!)
-        }
+
+        let items = self.viewControllers.map({ viewController in viewController.tabBarItem! })
+        self.tabBar = TabBar(items: items, style: self.style, selectedIndex: selectedIndex)
+        self.tabBar?.delegate = self
+        self.tabBar?.isUserInteractionEnabled = self.enabled && items.count > 1
+        self.view.addSubview(self.tabBar!)
     }
     
     fileprivate func createConstraints() {
