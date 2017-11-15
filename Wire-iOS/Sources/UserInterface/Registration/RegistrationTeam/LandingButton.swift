@@ -42,6 +42,7 @@ class LandingButton: ButtonWithLargerHitArea {
         subtitleLabel.numberOfLines = 2
         subtitleLabel.text = nil
         subtitleLabel.attributedText = title
+        ///TODO: small icon size for iPhone 4s
         self.iconButton.setIcon(icon, with: ZetaIconSize.actionButton, for: .normal)
         self.iconButton.setBackgroundImageColor(iconBackgroundColor, for: .normal)
 
@@ -51,7 +52,8 @@ class LandingButton: ButtonWithLargerHitArea {
     private func createConstraints() {
         constrain(self, iconButton, subtitleLabel) { selfView, iconButton, subtitleLabel in
             iconButton.width == iconButton.height
-            // small size for iPhone4s
+
+            // smaller button for iPhone4s screen size
             iconButton.width == 72 ~ LayoutPriority(750)
             iconButton.top == selfView.top
             iconButton.centerX == selfView.centerX
