@@ -358,7 +358,7 @@
         self.passwordField.rightAccessoryView = RegistrationTextFieldRightAccessoryViewGuidanceDot;
     }
     
-    if (error.code == ZMUserSessionUnkownError) {
+    if (error.code == ZMUserSessionUnknownError) {
         NSString *email = self.emailField.text;
         NSString *password = self.passwordField.text;
         

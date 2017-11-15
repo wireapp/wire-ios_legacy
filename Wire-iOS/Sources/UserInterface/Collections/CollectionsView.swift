@@ -87,9 +87,9 @@ import Cartography
     public static func closeButton() -> IconButton {
         let button = IconButton.iconButtonDefault()
         button.setIcon(.X, with: .tiny, for: .normal)
-        button.frame = CGRect(x: 0, y: 0, width: 32, height: 20)
+        button.frame = CGRect(x: 0, y: 0, width: 48, height: 32)
         button.accessibilityIdentifier = "close"
-        button.imageEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: -16)
+        button.imageEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: -24)
         return button
     }
     

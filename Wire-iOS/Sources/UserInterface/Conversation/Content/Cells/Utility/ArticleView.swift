@@ -192,10 +192,10 @@ class ArticleView: UIView {
                 imageView.image = UIImage.init(for: .link, iconSize: .tiny, color: ColorScheme.default().color(withName: ColorSchemeColorBackground))
                 imageView.contentMode = .center
             } else {
-                imageView.image = UIImage(data: imageData)
+                imageView.image = nil
                 imageView.contentMode = .scaleAspectFill
                 loadingView?.isHidden = true
-                ArticleView.imageCache.image(for: imageData, cacheKey: imageDataIdentifier, creationBlock: { data -> Any in
+                ArticleView.imageCache.image(for: imageData, cacheKey: imageDataIdentifier, creationBlock: { data -> Any? in
                     return UIImage.deviceOptimizedImage(from: data)
                     }, completion: { [weak self] (image, _) in
                         if let image = image as? UIImage {

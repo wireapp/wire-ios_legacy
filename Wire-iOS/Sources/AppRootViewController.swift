@@ -27,6 +27,10 @@ class AppRootViewController : UIViewController {
     public let overlayWindow : UIWindow
     public fileprivate(set) var sessionManager : SessionManager?
     
+    fileprivate var sessionManagerCreatedSessionObserverToken: Any?
+    fileprivate var sessionManagerDestroyedSessionObserverToken: Any?
+    fileprivate var soundEventListeners = [UUID : SoundEventListener]()
+    
     public fileprivate(set) var visibleViewController : UIViewController?
     fileprivate let appStateController : AppStateController
     fileprivate lazy var classyCache : ClassyCache = {
@@ -124,6 +128,8 @@ class AppRootViewController : UIViewController {
             blacklistDownloadInterval: Settings.shared().blacklistDownloadInterval)
         { sessionManager in
             self.sessionManager = sessionManager
+            self.sessionManagerCreatedSessionObserverToken = sessionManager.addSessionManagerCreatedSessionObserver(self)
+            self.sessionManagerDestroyedSessionObserverToken = sessionManager.addSessionManagerDestroyedSessionObserver(self)
             self.sessionManager?.localNotificationResponder = self
             self.sessionManager?.requestToOpenViewDelegate = self
             sessionManager.updateCallNotificationStyleFromSettings()
@@ -419,6 +425,25 @@ extension AppRootViewController : LocalNotificationResponder {
     }
 }
 
+
+// MARK: - Session Manager Observer
+
+extension AppRootViewController : SessionManagerCreatedSessionObserver, SessionManagerDestroyedSessionObserver {
+    
+    func sessionManagerCreated(userSession: ZMUserSession) {
+        for (accountId, session) in sessionManager?.backgroundUserSessions ?? [:] {
+            if session == userSession {
+                soundEventListeners[accountId] = SoundEventListener(userSession: userSession)
+            }
+        }
+    }
+    
+    func sessionManagerDestroyedUserSession(for accountId: UUID) {
+        soundEventListeners[accountId] = nil
+    }
+}
+
+  
 // MARK: - Audio Permissions granted
 
 extension AppRootViewController  {
@@ -426,5 +451,4 @@ extension AppRootViewController  {
     func onUserGrantedAudioPermissions() {
         sessionManager?.updateCallNotificationStyleFromSettings()
     }
-    
 }

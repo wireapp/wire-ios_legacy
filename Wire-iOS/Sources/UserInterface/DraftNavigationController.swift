@@ -29,7 +29,7 @@ final class DraftNavigationController: UINavigationController {
         let textColor = ColorScheme.default().color(withName: ColorSchemeColorTextForeground)
         navigationBar.tintColor = textColor
 
-        let image = UIImage.shadowImage(withInset: 0, color: ColorScheme.default().color(withName: ColorSchemeColorSeparator))!
+        let image = UIImage.shadowImage(withInset: 0, color: ColorScheme.default().color(withName: ColorSchemeColorSeparator))
         let scaleImage = UIImage(cgImage: image.cgImage!, scale: UIScreen.main.scale, orientation: .up)
         navigationBar.shadowImage = scaleImage.stretchableImage(withLeftCapWidth: 20, topCapHeight: 0)
 
