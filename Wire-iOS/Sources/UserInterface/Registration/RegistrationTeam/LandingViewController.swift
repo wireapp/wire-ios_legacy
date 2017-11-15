@@ -31,8 +31,13 @@ fileprivate extension UIColor {
 }
 
 
+@objc protocol LandingViewControllerDelegate {
+    func landingViewControllerDidChooseCreateAccount()
+}
+
 final class LandingViewController: UIViewController {
     var signInError: Error? // TODO: use it
+    weak var delegate: LandingViewControllerDelegate?
 
     //MARK:- UI styles
 
@@ -69,6 +74,7 @@ final class LandingViewController: UIViewController {
 
     let headline: UILabel = {
         let label = UILabel()
+        ///FIXME: localization
         label.text = "Secure messenger for everyone.".localized
         label.font = LandingViewController.regularFont
         label.textColor = .subtitleColor
@@ -82,10 +88,13 @@ final class LandingViewController: UIViewController {
         let twoLineTitle = title + subtitle
 
         let button = LandingButton(title: twoLineTitle, icon: .selfProfile, iconBackgroundColor: .createAccountBlue)
+
+        button.addTarget(self, action: #selector(LandingViewController.createAccountTapped(_:)), for: .touchUpInside)
+
         return button
     }()
 
-    let createTeamtButton: LandingButton = {
+    let createTeamButton: LandingButton = {
         let alignCenterStyle = NSMutableParagraphStyle()
         alignCenterStyle.alignment = NSTextAlignment.center
 
@@ -126,9 +135,12 @@ final class LandingViewController: UIViewController {
 
         [logoView, headline].forEach(headerContainerView.addSubview)
 
-        [createAccountButton, createTeamtButton].forEach(containerView.addSubview)
+        [createAccountButton, createTeamButton].forEach(containerView.addSubview)
 
         self.createConstraints()
+
+
+
     }
 
     private func createConstraints() {
@@ -173,7 +185,7 @@ final class LandingViewController: UIViewController {
             loginButton.bottom == selfView.bottomMargin - 32 ~ LayoutPriority(500)
         }
 
-        constrain(containerView, createAccountButton, createTeamtButton) { containerView, createAccountButton, createTeamtButton in
+        constrain(containerView, createAccountButton, createTeamButton) { containerView, createAccountButton, createTeamtButton in
 
             createAccountButton.top == containerView.top
             createTeamtButton.bottom == containerView.bottom
@@ -188,4 +200,9 @@ final class LandingViewController: UIViewController {
             createAccountButton.height == createTeamtButton.height
         }
     }
+
+    @objc public func createAccountTapped(_ sender: AnyObject!) {
+        delegate?.landingViewControllerDidChooseCreateAccount()
+    }
+
 }

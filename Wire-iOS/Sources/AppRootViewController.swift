@@ -185,7 +185,8 @@ class AppRootViewController : UIViewController {
             UIColor.setAccentOverride(ZMUser.pickRandomAccentColor())
             mainWindow.tintColor = UIColor.accent()
             let landingViewController = LandingViewController()
-//            registrationViewController.delegate = appStateController TODO
+            landingViewController.delegate = self
+
             landingViewController.signInError = error
             viewController = landingViewController
         case .authenticated(completedRegistration: let completedRegistration):
@@ -450,5 +451,18 @@ extension AppRootViewController  {
     
     func onUserGrantedAudioPermissions() {
         sessionManager?.updateCallNotificationStyleFromSettings()
+    }
+}
+
+// MARK: - Transition form LandingViewController to RegistrationViewController
+
+extension AppRootViewController : LandingViewControllerDelegate {
+    func landingViewControllerDidChooseCreateAccount() {
+        let viewController = RegistrationViewController()
+        viewController.delegate = appStateController
+
+        transition(to: viewController, animated: true) {
+            self.requestToOpenViewDelegate = viewController as? ZMRequestsToOpenViewsDelegate
+        }
     }
 }
