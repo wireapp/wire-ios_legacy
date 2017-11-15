@@ -99,11 +99,11 @@
 		<key>left_margin</key>
 		<integer>96</integer>
 		<key>left_margin_compact</key>
-		<integer>96</integer>
+		<integer>50</integer>
 		<key>right_margin</key>
 		<integer>96</integer>
 		<key>right_margin_compact</key>
-		<string></string>
+		<integer>16</integer>
 	</dict>
 	<key>participants</key>
 	<dict>

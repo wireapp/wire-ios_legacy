@@ -93,9 +93,15 @@ static const CGFloat ImageToolbarMinimumSize = 192;
         _autoStretchVertically = YES;
         [self createImageMessageViews];
         [self createConstraints];
-        
+        ///TODO: put  this in super class, check other cell type
+        if (IS_IPAD && [UIApplication sharedApplication].keyWindow.traitCollection.horizontalSizeClass == UIUserInterfaceSizeClassCompact) {
+            self.defaultLayoutMargins = UIEdgeInsetsMake(0, [WAZUIMagic floatForIdentifier:@"content.left_margin_compact"],
+                                                         0, [WAZUIMagic floatForIdentifier:@"content.right_margin_compact"]);
+        }
+        else {
         self.defaultLayoutMargins = UIEdgeInsetsMake(0, [WAZUIMagic floatForIdentifier:@"content.left_margin"],
                                                      0, [WAZUIMagic floatForIdentifier:@"content.right_margin"]);
+        }
         
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(applicationDidEnterBackground:)
