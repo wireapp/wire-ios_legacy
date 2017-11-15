@@ -34,9 +34,6 @@ fileprivate extension UIColor {
 final class LandingViewController: UIViewController {
     var signInError: Error? // TODO: use it
 
-
-
-
     //MARK:- UI styles
 
     static let semiboldFont = FontSpec(.large, .semibold).font!
@@ -100,6 +97,8 @@ final class LandingViewController: UIViewController {
     }()
 
     let containerView = UIView()
+    let headerContainerView = UIView()
+    let footerContainerView = UIView()
 
     let loginHintsLabel: UILabel = {
         let label = UILabel()
@@ -124,7 +123,9 @@ final class LandingViewController: UIViewController {
 
         self.view.backgroundColor = .background
 
-        [logoView, headline, containerView, loginHintsLabel, loginButton].forEach(view.addSubview)
+        [headerContainerView, containerView, footerContainerView, loginHintsLabel, loginButton].forEach(view.addSubview)
+
+        [logoView, headline].forEach(headerContainerView.addSubview)
 
         [createAccountButton, createTeamtButton].forEach(containerView.addSubview)
 
@@ -133,28 +134,41 @@ final class LandingViewController: UIViewController {
 
     private func createConstraints() {
 
-        constrain(self.view, logoView, headline, containerView) { selfView, logoView, headline, containerView in
-            logoView.top == selfView.top + 72 ~ LayoutPriority(750)
-            logoView.centerX == selfView.centerX
+        constrain(logoView, headline, headerContainerView) { logoView, headline, headerContainerView in
+            logoView.top == headerContainerView.top + 72 ~ LayoutPriority(500)
+            logoView.centerX == headerContainerView.centerX
             logoView.width == 96
             logoView.height == 31
 
-            headline.top == logoView.bottom + 16
-            headline.centerX == selfView.centerX
-//            headline.bottom >= containerView.top + 16
+            headline.top == logoView.bottom + 16 ~ LayoutPriority(1000)
+            headline.centerX == headerContainerView.centerX
+            headline.bottom <= headerContainerView.bottom - 16 ~ LayoutPriority(1000)
 
-            containerView.centerX == selfView.centerX
-            containerView.centerY == selfView.centerY
         }
 
-        constrain(self.view, createTeamtButton, loginHintsLabel, loginButton) { selfView, createTeamtButton, loginHintsLabel, loginButton in
+        constrain(self.view, headerContainerView, containerView) { selfView, headerContainerView, containerView in
+
+
+            headerContainerView.width == selfView.width
+            headerContainerView.centerX == selfView.centerX
+            headerContainerView.top == selfView.top
+
+            containerView.width == selfView.width
+            containerView.centerX == selfView.centerX
+            containerView.centerY == selfView.centerY
+
+            headerContainerView.bottom == containerView.top
+        }
+
+        constrain(self.view, containerView, loginHintsLabel, loginButton) { selfView, containerView, loginHintsLabel, loginButton in
+            containerView.bottom >= loginHintsLabel.top + 16 ~ LayoutPriority(1000)
+
             loginHintsLabel.top == loginButton.top - 16
             loginHintsLabel.centerX == selfView.centerX
 
             loginButton.top == loginHintsLabel.bottom
             loginButton.centerX == selfView.centerX
-            loginButton.bottom == selfView.bottom - 32 ~ LayoutPriority(750)
-            ///TODO: save area for iPhone X
+            loginButton.bottom == selfView.bottomMargin - 32 ~ LayoutPriority(500)
         }
 
         constrain(containerView, createAccountButton, createTeamtButton) { containerView, createAccountButton, createTeamtButton in
