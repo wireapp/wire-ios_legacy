@@ -25,6 +25,10 @@ extension UITableViewCell {
     class var layoutDirectionAwareLayoutMargins: UIEdgeInsets {
         var left = WAZUIMagic.cgFloat(forIdentifier: "content.left_margin")
         var right = WAZUIMagic.cgFloat(forIdentifier: "content.right_margin")
+        if UIDevice.current.userInterfaceIdiom == .pad && UIApplication.shared.keyWindow?.traitCollection.horizontalSizeClass == .compact {
+            left = WAZUIMagic.cgFloat(forIdentifier: "content.left_margin_compact")
+            right = WAZUIMagic.cgFloat(forIdentifier: "content.right_margin_compact")
+        }
 
         if UIApplication.shared.userInterfaceLayoutDirection == .rightToLeft {
             (left, right) = (right, left)
