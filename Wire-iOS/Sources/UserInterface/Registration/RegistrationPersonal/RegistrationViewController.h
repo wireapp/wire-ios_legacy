@@ -46,6 +46,7 @@ typedef NS_ENUM(NSUInteger, RegistrationFlow) {
 
 @property (nonatomic, weak) id<RegistrationViewControllerDelegate> delegate;
 @property (nonatomic) NSError *signInError;
+@property (nonatomic) BOOL showLogin;
 
 + (RegistrationFlow)registrationFlow;
 

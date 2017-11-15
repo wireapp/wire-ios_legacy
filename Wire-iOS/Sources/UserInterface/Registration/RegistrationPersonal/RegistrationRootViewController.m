@@ -103,6 +103,10 @@
     [self createConstraints];
 }
 
+- (void)setShowLogin: (BOOL)newValue{
+    [self.registrationTabBarController selectIndex:1 animated:YES];
+}
+
 - (Account *)firstAuthenticatedAccount {
     Account *selectedAccount = SessionManager.shared.accountManager.selectedAccount;
     

@@ -76,6 +76,10 @@
 
 @implementation RegistrationViewController
 
+- (void)setShowLogin: (BOOL)newValue{
+    self.registrationRootViewController.showLogin = newValue;
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];

@@ -457,12 +457,27 @@ extension AppRootViewController  {
 // MARK: - Transition form LandingViewController to RegistrationViewController
 
 extension AppRootViewController : LandingViewControllerDelegate {
-    func landingViewControllerDidChooseCreateAccount() {
-        let viewController = RegistrationViewController()
-        viewController.delegate = appStateController
+    func landingViewControllerDidChooseCreateTeam() {
+        ///TODO: transit to create team UI
+    }
 
-        transition(to: viewController, animated: true) {
-            self.requestToOpenViewDelegate = viewController as? ZMRequestsToOpenViewsDelegate
+    func landingViewControllerDidChooseLogin() {
+        let registrationViewController = RegistrationViewController()
+        registrationViewController.delegate = appStateController
+
+
+        transition(to: registrationViewController, animated: true) {
+            self.requestToOpenViewDelegate = registrationViewController as? ZMRequestsToOpenViewsDelegate
+            registrationViewController.showLogin = true
+        }
+    }
+
+    func landingViewControllerDidChooseCreateAccount() {
+        let registrationViewController = RegistrationViewController()
+        registrationViewController.delegate = appStateController
+
+        transition(to: registrationViewController, animated: true) {
+            self.requestToOpenViewDelegate = registrationViewController as? ZMRequestsToOpenViewsDelegate
         }
     }
 }

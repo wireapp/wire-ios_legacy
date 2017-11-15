@@ -33,6 +33,8 @@ fileprivate extension UIColor {
 
 @objc protocol LandingViewControllerDelegate {
     func landingViewControllerDidChooseCreateAccount()
+    func landingViewControllerDidChooseCreateTeam()
+    func landingViewControllerDidChooseLogin()
 }
 
 final class LandingViewController: UIViewController {
@@ -89,7 +91,7 @@ final class LandingViewController: UIViewController {
 
         let button = LandingButton(title: twoLineTitle, icon: .selfProfile, iconBackgroundColor: .createAccountBlue)
 
-        button.addTarget(self, action: #selector(LandingViewController.createAccountTapped(_:)), for: .touchUpInside)
+        button.addTarget(self, action: #selector(LandingViewController.createAccountButtonTapped(_:)), for: .touchUpInside)
 
         return button
     }()
@@ -102,6 +104,9 @@ final class LandingViewController: UIViewController {
         let subtitle = "\nfor work".localized && LandingViewController.buttonSubtitleAttribute
 
         let button = LandingButton(title: title + subtitle, icon: .team, iconBackgroundColor: .createTeamGreen)
+
+        button.addTarget(self, action: #selector(LandingViewController.createTeamButtonTapped(_:)), for: .touchUpInside)
+
         return button
     }()
 
@@ -122,6 +127,8 @@ final class LandingViewController: UIViewController {
         button.setTitle("Log in".localized, for: .normal)
         button.setTitleColor(.textColor, for: .normal)
         button.titleLabel?.font = LandingViewController.semiboldFont
+
+        button.addTarget(self, action: #selector(LandingViewController.loginButtonTapped(_:)), for: .touchUpInside)
 
         return button
     }()
@@ -201,8 +208,18 @@ final class LandingViewController: UIViewController {
         }
     }
 
-    @objc public func createAccountTapped(_ sender: AnyObject!) {
+    // MARK:- Button tapped target
+
+    @objc public func createAccountButtonTapped(_ sender: AnyObject!) {
         delegate?.landingViewControllerDidChooseCreateAccount()
+    }
+
+    @objc public func createTeamButtonTapped(_ sender: AnyObject!) {
+        delegate?.landingViewControllerDidChooseCreateTeam()
+    }
+
+    @objc public func loginButtonTapped(_ sender: AnyObject!) {
+        delegate?.landingViewControllerDidChooseLogin()
     }
 
 }
