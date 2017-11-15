@@ -17,7 +17,7 @@
 //
 
 import Foundation
-import PureLayout
+import Cartography
 
 
 class LandingButton: ButtonWithLargerHitArea {
@@ -29,29 +29,11 @@ class LandingButton: ButtonWithLargerHitArea {
     public init() {
         super.init(frame: CGRect.zero)
         iconButton = IconButton.iconButtonCircularLight()
-        iconButton.translatesAutoresizingMaskIntoConstraints = false
         iconButton.isUserInteractionEnabled = false
         addSubview(iconButton)
-        
-        iconButton.autoMatch(.width, to: .height, of: iconButton)
-        iconButton.autoPinEdge(toSuperviewEdge: .top)
-        iconButton.autoSetDimensions(to: CGSize(width:72, height:72))
-        iconButton.autoAlignAxis(toSuperviewAxis: .vertical)
-
 
         subtitleLabel = UILabel()
-        subtitleLabel.translatesAutoresizingMaskIntoConstraints = false
         addSubview(subtitleLabel)
-
-        subtitleLabel.autoPinEdge(toSuperviewEdge: .bottom)
-        subtitleLabel.autoAlignAxis(toSuperviewAxis: .vertical)
-        self.subtitleLabel.autoPinEdge(.top, to: .bottom, of: self.iconButton, withOffset: 16)
-
-        ///label hieght can be resize
-        NSLayoutConstraint.autoSetPriority(UILayoutPriorityDefaultLow, forConstraints: {() -> Void in
-            self.subtitleLabel.autoSetDimension(.height, toSize: 48)
-        })
-
     }
 
     convenience init(title: NSAttributedString, icon: ZetaIconType, iconBackgroundColor: UIColor) {
@@ -60,10 +42,26 @@ class LandingButton: ButtonWithLargerHitArea {
         subtitleLabel.numberOfLines = 2
         subtitleLabel.text = nil
         subtitleLabel.attributedText = title
-        self.iconButton.setIcon(icon, with: ZetaIconSize.medium, for: .normal)
+        self.iconButton.setIcon(icon, with: ZetaIconSize.actionButton, for: .normal)
         self.iconButton.setBackgroundImageColor(iconBackgroundColor, for: .normal)
 
         self.setup()
+    }
+
+    private func createConstraints() {
+        constrain(self, iconButton, subtitleLabel) { selfView, iconButton, subtitleLabel in
+            iconButton.width == iconButton.height
+            // small size for iPhone4s
+            iconButton.width == 72 ~ LayoutPriority(750)
+            iconButton.top == selfView.top
+            iconButton.centerX == selfView.centerX
+
+            subtitleLabel.bottom == selfView.bottom
+            subtitleLabel.centerX == selfView.centerX
+
+            subtitleLabel.top == iconButton.bottom + 16
+        }
+
     }
 
     required public init?(coder aDecoder: NSCoder) {
@@ -72,6 +70,8 @@ class LandingButton: ButtonWithLargerHitArea {
 
     private func setup() {
         self.iconButton.circular = true
+
+        createConstraints()
     }
 
     override open func didMoveToWindow() {

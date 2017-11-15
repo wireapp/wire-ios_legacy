@@ -27,13 +27,19 @@ fileprivate extension UIColor {
     static let createAccountBlue = UIColor(for: .strongBlue)!
     static let createTeamGreen = UIColor(for: .strongLimeGreen)!
     static let textColor = UIColor(red:0.20, green:0.22, blue:0.23, alpha:1.0)
+    static let subtitleColor = UIColor(red:0.20, green:0.22, blue:0.23, alpha:0.56)
 }
 
 
 final class LandingViewController: UIViewController {
     var signInError: Error? // TODO: use it
 
-    static let semiboldFont = FontSpec(.normal, .semibold).font!
+
+
+
+    //MARK:- UI styles
+
+    static let semiboldFont = FontSpec(.large, .semibold).font!
     static let regularFont = FontSpec(.normal, .regular).font!
 
     static let buttonTitleAttribute: [String : Any] = {
@@ -54,11 +60,12 @@ final class LandingViewController: UIViewController {
         return [NSForegroundColorAttributeName: UIColor.textColor, NSParagraphStyleAttributeName: alignCenterStyle, NSFontAttributeName:lightFont]
     }()
 
+    //MARK:- subviews
 
     let logoView: UIImageView = {
-        let image = UIImage(named: "wire-logo-long")!
-        let imageView = UIImageView(image: image.withRenderingMode(.alwaysTemplate))
-        imageView.contentMode = .scaleAspectFill
+        let image = UIImage(named: "wire-logo-black")!
+        let imageView = UIImageView(image: image)
+        imageView.contentMode = .center
         imageView.tintColor = UIColor.textColor
         return imageView
     }()
@@ -67,6 +74,7 @@ final class LandingViewController: UIViewController {
         let label = UILabel()
         label.text = "Secure messenger for everyone.".localized
         label.font = LandingViewController.regularFont
+        label.textColor = .subtitleColor
 
         return label
     }()
@@ -84,7 +92,7 @@ final class LandingViewController: UIViewController {
         let alignCenterStyle = NSMutableParagraphStyle()
         alignCenterStyle.alignment = NSTextAlignment.center
 
-        let title = "Create team".localized && LandingViewController.buttonTitleAttribute
+        let title = "Create a team".localized && LandingViewController.buttonTitleAttribute
         let subtitle = "\nfor work".localized && LandingViewController.buttonSubtitleAttribute
 
         let button = LandingButton(title: title + subtitle, icon: .team, iconBackgroundColor: .createTeamGreen)
@@ -97,6 +105,7 @@ final class LandingViewController: UIViewController {
         let label = UILabel()
         label.text = "Already have an account?".localized
         label.font = LandingViewController.regularFont
+        label.textColor = .subtitleColor
 
         return label
     }()
@@ -128,10 +137,11 @@ final class LandingViewController: UIViewController {
             logoView.top == selfView.top + 72 ~ LayoutPriority(750)
             logoView.centerX == selfView.centerX
             logoView.width == 96
-            logoView.height == 30.6
+            logoView.height == 31
 
             headline.top == logoView.bottom + 16
             headline.centerX == selfView.centerX
+//            headline.bottom >= containerView.top + 16
 
             containerView.centerX == selfView.centerX
             containerView.centerY == selfView.centerY
@@ -143,7 +153,8 @@ final class LandingViewController: UIViewController {
 
             loginButton.top == loginHintsLabel.bottom
             loginButton.centerX == selfView.centerX
-            loginButton.bottom == selfView.bottom - 32
+            loginButton.bottom == selfView.bottom - 32 ~ LayoutPriority(750)
+            ///TODO: save area for iPhone X
         }
 
         constrain(containerView, createAccountButton, createTeamtButton) { containerView, createAccountButton, createTeamtButton in
