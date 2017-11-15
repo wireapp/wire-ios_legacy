@@ -77,7 +77,7 @@ final class LandingViewController: UIViewController {
     let headline: UILabel = {
         let label = UILabel()
         ///FIXME: localization
-        label.text = "Secure messenger for everyone.".localized
+        label.text = "landing.title".localized
         label.font = LandingViewController.regularFont
         label.textColor = .subtitleColor
 
@@ -85,8 +85,8 @@ final class LandingViewController: UIViewController {
     }()
 
     let createAccountButton: LandingButton = {
-        let title = "Create an account".localized && LandingViewController.buttonTitleAttribute
-        let subtitle = "\nfor personal use".localized && LandingViewController.buttonSubtitleAttribute
+        let title = "landing.create_account.title".localized && LandingViewController.buttonTitleAttribute
+        let subtitle = ("\n" + "landing.create_account.subtitle".localized) && LandingViewController.buttonSubtitleAttribute
         let twoLineTitle = title + subtitle
 
         let button = LandingButton(title: twoLineTitle, icon: .selfProfile, iconBackgroundColor: .createAccountBlue)
@@ -100,8 +100,8 @@ final class LandingViewController: UIViewController {
         let alignCenterStyle = NSMutableParagraphStyle()
         alignCenterStyle.alignment = NSTextAlignment.center
 
-        let title = "Create a team".localized && LandingViewController.buttonTitleAttribute
-        let subtitle = "\nfor work".localized && LandingViewController.buttonSubtitleAttribute
+        let title = "landing.create_team.title".localized && LandingViewController.buttonTitleAttribute
+        let subtitle = ("\n" + "landing.create_team.subtitle".localized) && LandingViewController.buttonSubtitleAttribute
 
         let button = LandingButton(title: title + subtitle, icon: .team, iconBackgroundColor: .createTeamGreen)
 
@@ -115,7 +115,7 @@ final class LandingViewController: UIViewController {
 
     let loginHintsLabel: UILabel = {
         let label = UILabel()
-        label.text = "Already have an account?".localized
+        label.text = "landing.login.hints".localized
         label.font = LandingViewController.regularFont
         label.textColor = .subtitleColor
 
@@ -124,7 +124,7 @@ final class LandingViewController: UIViewController {
 
     let loginButton: UIButton = {
         let button = UIButton()
-        button.setTitle("Log in".localized, for: .normal)
+        button.setTitle("landing.login.button.title".localized, for: .normal)
         button.setTitleColor(.textColor, for: .normal)
         button.titleLabel?.font = LandingViewController.semiboldFont
 
