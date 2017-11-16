@@ -168,7 +168,8 @@ public extension ConversationViewController {
     
     public func leftNavigationItems(forConversation conversation: ZMConversation) -> [UIBarButtonItem] {
         var items: [UIBarButtonItem] = []
-        
+
+        ///FIXME: do this again in trait did change
         if self.parent?.wr_splitViewController?.layoutSize != .regularLandscape {
             let backButton = self.backButton
             backButton.hitAreaPadding = CGSize(width: 28, height: 20)
@@ -323,6 +324,23 @@ extension ConversationViewController : WireCallCenterCallStateObserver {
         updateRightNavigationItemsButtons()
     }
     
+}
+
+// MARK:- update Left NavigationBar Items
+
+extension ConversationListViewController {
+
+    @objc func updateLeftNavigationBarItems() {
+        // FIXME: iOS8 - we can use UIView's semanticContentAttribute on navigation bar
+        if UIApplication.isLeftToRightLayout {
+            self.navigationItem.leftBarButtonItems = leftNavigationItems(forConversation: self.conversation)
+        }
+        else {
+            self.navigationItem.leftBarButtonItems = rightNavigationItems(forConversation: conversation)
+        }
+        ///TODO: slide mode, call leftNavigationItems
+    }
+
 }
 
 

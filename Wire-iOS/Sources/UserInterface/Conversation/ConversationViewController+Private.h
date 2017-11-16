@@ -38,7 +38,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)onBackButtonPressed:(UIButton *)backButton;
 - (void)updateRightNavigationItemsButtons;
-- (void)updateLeftNavigationBarItems;
 
 @end
 
