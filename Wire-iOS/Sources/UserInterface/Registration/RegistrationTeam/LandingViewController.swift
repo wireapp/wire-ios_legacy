@@ -222,4 +222,11 @@ final class LandingViewController: UIViewController {
         delegate?.landingViewControllerDidChooseLogin()
     }
 
+    //MARK:- disable status bar
+
+    ///prevent snapshots test fail with init screen with status bar
+    override var prefersStatusBarHidden: Bool {
+        return true
+    }
+
 }
