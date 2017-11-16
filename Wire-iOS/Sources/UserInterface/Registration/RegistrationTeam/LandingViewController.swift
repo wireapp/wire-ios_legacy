@@ -78,7 +78,6 @@ final class LandingViewController: UIViewController {
 
     let headline: UILabel = {
         let label = UILabel()
-        ///FIXME: localization
         label.text = "landing.title".localized
         label.font = LandingViewController.regularFont
         label.textColor = .subtitleColor
