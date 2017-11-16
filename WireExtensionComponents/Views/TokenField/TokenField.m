@@ -604,7 +604,7 @@ CGFloat const accessoryButtonSize = 32.0f;
 
 - (NSAttributedString *)collapsedString
 {
-    NSString *collapsedText = @" ...";
+    NSString *collapsedText = NSLocalizedString(@" ...", nil);
     if ([self.delegate respondsToSelector:@selector(tokenFieldStringForCollapsedState:)]) {
         collapsedText = [self.delegate tokenFieldStringForCollapsedState:self];
     }
@@ -890,13 +890,13 @@ NS_INLINE BOOL RangeIncludesRange(NSRange range, NSRange includedRange)
 
 - (void)prepareForInterfaceBuilder
 {
-    Token *token = [[Token alloc] initWithTitle:@"Obi wan Kenobi" representedObject:[NSObject new]];
+    Token *token = [[Token alloc] initWithTitle:NSLocalizedString(@"Obi wan Kenobi", nil) representedObject:[NSObject new]];
     [self addToken:token];
-    token = [[Token alloc] initWithTitle:@"Mace Windu" representedObject:[NSObject new]];
+    token = [[Token alloc] initWithTitle:NSLocalizedString(@"Mace Windu", nil) representedObject:[NSObject new]];
     [self addToken:token];
     
     NSMutableAttributedString *string = [self.textView.attributedText mutableCopy];
-    [string appendAttributedString:[[NSAttributedString alloc] initWithString:@"Skywalker"
+    [string appendAttributedString:[[NSAttributedString alloc] initWithString:NSLocalizedString(@"Skywalker", nil)
                                                                    attributes:self.textAttributes]];
     self.textView.attributedText = string;
     

@@ -175,7 +175,7 @@
     id<ZMConversationMessage>previousMessage = nil;
 
     // Find a previous message, and use it for time calculation
-    while (previousIndex > 0 && self.messages.count > 1 && ! [Message isNormalMessage:previousMessage] && ! [Message isSystemMessage:previousMessage]) {
+    while (previousIndex > 0 && self.messages.count > 1 && previousMessage != nil && ! [Message isNormalMessage:previousMessage] && ! [Message isSystemMessage:previousMessage]) {
         previousMessage = [self.messages objectAtIndex:previousIndex--];
     }
 

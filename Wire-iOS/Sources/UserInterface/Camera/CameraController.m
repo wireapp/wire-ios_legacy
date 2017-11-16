@@ -297,8 +297,10 @@ NSString * const CameraSettingExposureTargetBias = @"exposureTargetBias";
     else if ([keyPath isEqualToString:CameraSettingExposureTargetBias]) {
         key = CameraControllerObservableSettingExposureTargetBias;
     }
-    
-    [self notifyObserversForSetting:key value:newValue];
+
+    if (key != nil) {
+        [self notifyObserversForSetting:key value:newValue];
+    }
 }
 
 - (void)subjectAreaDidChangeNotification:(NSNotification *)notification

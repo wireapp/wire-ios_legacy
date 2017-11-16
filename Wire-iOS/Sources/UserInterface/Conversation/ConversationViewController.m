@@ -449,23 +449,29 @@
 {
     UIViewController *viewController = nil;
 
-    if (self.conversation.conversationType == ZMConversationTypeGroup) {
-
-        ParticipantsViewController *participantsViewController = [[ParticipantsViewController alloc] initWithConversation:self.conversation];
-        participantsViewController.delegate = self;
-        participantsViewController.zClientViewController = [ZClientViewController sharedZClientViewController];
-        participantsViewController.shouldDrawTopSeparatorLineDuringPresentation = YES;
-        viewController = participantsViewController;
-    }
-    else if (self.conversation.conversationType == ZMConversationTypeSelf ||
-             self.conversation.conversationType == ZMConversationTypeOneOnOne ||
-             self.conversation.conversationType == ZMConversationTypeConnection) {
-
-        ProfileViewController *profileViewController = [[ProfileViewController alloc] initWithUser:self.conversation.firstActiveParticipantOtherThanSelf
-                                                                                      conversation:self.conversation];
-        profileViewController.delegate = self;
-        profileViewController.shouldDrawTopSeparatorLineDuringPresentation = YES;
-        viewController = profileViewController;
+    switch (self.conversation.conversationType) {
+        case ZMConversationTypeGroup: {
+            ParticipantsViewController *participantsViewController = [[ParticipantsViewController alloc] initWithConversation:self.conversation];
+            participantsViewController.delegate = self;
+            participantsViewController.zClientViewController = [ZClientViewController sharedZClientViewController];
+            participantsViewController.shouldDrawTopSeparatorLineDuringPresentation = YES;
+            viewController = participantsViewController;
+            break;
+        }
+        case ZMConversationTypeSelf:
+        case ZMConversationTypeOneOnOne:
+        case ZMConversationTypeConnection:
+        {
+            ProfileViewController *profileViewController = [[ProfileViewController alloc] initWithUser:self.conversation.firstActiveParticipantOtherThanSelf
+                                                                                          conversation:self.conversation];
+            profileViewController.delegate = self;
+            profileViewController.shouldDrawTopSeparatorLineDuringPresentation = YES;
+            viewController = profileViewController;
+            break;
+        }
+        case ZMConversationTypeInvalid:
+            RequireString(false, "Trying to open invalid conversation");
+            break;
     }
 
     RotationAwareNavigationController *navigationController = [[RotationAwareNavigationController alloc] initWithRootViewController:viewController];
