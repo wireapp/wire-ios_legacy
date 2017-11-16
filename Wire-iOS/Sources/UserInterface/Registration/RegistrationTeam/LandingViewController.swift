@@ -37,6 +37,8 @@ fileprivate extension UIColor {
     func landingViewControllerDidChooseLogin()
 }
 
+
+/// Landing screen for choosing create team or personal account
 final class LandingViewController: UIViewController {
     var signInError: Error? // TODO: use it
     weak var delegate: LandingViewControllerDelegate?
