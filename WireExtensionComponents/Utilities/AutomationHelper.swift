@@ -28,9 +28,14 @@ import WireSyncEngine
     
     static public let sharedHelper = AutomationHelper()
     
-    ///  Whether Hockeyapp should be used
+    /// Whether Hockeyapp should be used
     public var useHockey: Bool {
         return UserDefaults.standard.bool(forKey: "UseHockey")
+    }
+    
+    /// Whether analytics should be used
+    public var useAnalytics: Bool {
+        return UserDefaults.standard.bool(forKey: "UseAnalytics")
     }
     
     /// Whether to skip the first login alert

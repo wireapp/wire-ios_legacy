@@ -54,7 +54,11 @@ static DDFileLogger *VoiceFileLogger = nil;
 - (void)setupLogging
 {
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
-    NSString *baseDir = ([paths count] > 0) ? [paths objectAtIndex:0] : nil;
+    NSString *baseDir = paths.firstObject;
+    if (baseDir == nil) {
+        NSLog(@"Error: cannot create DD logs directory");
+        return;
+    }
     NSString *logsDirectory = [baseDir stringByAppendingPathComponent:@"Logs"];
     
     // Clean logs directory

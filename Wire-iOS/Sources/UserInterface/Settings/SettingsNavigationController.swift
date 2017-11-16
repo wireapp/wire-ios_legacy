@@ -32,7 +32,7 @@ import Foundation
     fileprivate var dismissGestureRecognizer: UIScreenEdgePanGestureRecognizer!
     
     static func settingsNavigationController() -> SettingsNavigationController {
-        let settingsPropertyFactory = SettingsPropertyFactory.shared!
+        let settingsPropertyFactory = SettingsPropertyFactory(userSession: SessionManager.shared?.activeUserSession, selfUser: ZMUser.selfUser())
         
         let settingsCellDescriptorFactory = SettingsCellDescriptorFactory(settingsPropertyFactory: settingsPropertyFactory)
         

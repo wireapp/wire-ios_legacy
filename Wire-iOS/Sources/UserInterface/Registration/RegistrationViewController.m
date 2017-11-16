@@ -49,7 +49,7 @@
 
 #import "AnalyticsTracker+Registration.h"
 
-@interface RegistrationViewController (UserSessionObserver) <SessionManagerObserver, PostLoginAuthenticationObserver>
+@interface RegistrationViewController (UserSessionObserver) <SessionManagerCreatedSessionObserver, PostLoginAuthenticationObserver>
 @end
 
 @interface RegistrationViewController () <UINavigationControllerDelegate, FormStepDelegate, ZMInitialSyncCompletionObserver>
@@ -88,7 +88,7 @@
     self.unregisteredUser = [ZMIncompleteRegistrationUser new];
     self.unregisteredUser.accentColorValue = [UIColor indexedAccentColor];
     self.postLoginToken = [PostLoginAuthenticationNotification addObserver:self];
-    self.sessionCreationObserverToken = [[SessionManager shared] addSessionManagerObserver:self];
+    self.sessionCreationObserverToken = [[SessionManager shared] addSessionManagerCreatedSessionObserver:self];
     
     [self setupBackgroundViewController];
     [self setupNavigationController];
@@ -300,7 +300,11 @@
 @implementation RegistrationViewController (UserSessionObserver)
 
 - (void)sessionManagerCreatedWithUserSession:(ZMUserSession *)userSession {
-    self.initialSyncObserverToken = [ZMUserSession addInitialSyncCompletionObserver:self userSession:[ZMUserSession sharedSession]];
+    // this method is called when a ZMUserSession is created, including background
+    // sessions. In this latter case, the active user session is not set, and may be nil.
+    if ([ZMUserSession sharedSession] != nil) {
+        self.initialSyncObserverToken = [ZMUserSession addInitialSyncCompletionObserver:self userSession:[ZMUserSession sharedSession]];
+    }
 }
 
 - (void)clientRegistrationDidSucceedWithAccountId:(NSUUID * _Nonnull)accountId

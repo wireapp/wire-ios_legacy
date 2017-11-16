@@ -337,6 +337,8 @@ extension VoiceChannelViewController : WireCallCenterCallStateObserver, Received
     
     func viewState(for callState : CallState, previousCallState : CallState) -> VoiceChannelOverlayState {
         
+        zmLog.debug("Updating view state from: \(previousCallState) to: \(callState)")
+        
         switch callState {
         case .incoming(video: _, shouldRing: _, degraded: let degraded):
             if degraded {

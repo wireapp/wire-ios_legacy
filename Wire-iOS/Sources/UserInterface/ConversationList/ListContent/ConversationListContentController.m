@@ -446,6 +446,8 @@ static NSString * const CellReuseIdConversation = @"CellId";
         listCell.mutuallyExclusiveSwipeIdentifier = @"ConversationList";
         listCell.conversation = item;
         cell = listCell;
+    } else {
+        RequireString(false, "Unknown cell type");
     }
 
     cell.autoresizingMask = UIViewAutoresizingFlexibleWidth;
