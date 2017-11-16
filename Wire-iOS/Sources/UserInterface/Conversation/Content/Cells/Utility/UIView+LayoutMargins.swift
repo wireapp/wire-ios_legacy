@@ -26,7 +26,7 @@ extension UITableViewCell {
         var left: CGFloat = CGFloat.nan
         var right: CGFloat = CGFloat.nan
 
-        // keyWindow can be nil, in case for tests or the view is not added to view hierachy
+        // keyWindow can be nil, in case when running tests or the view is not added to view hierachy
         switch (UIApplication.shared.keyWindow?.traitCollection.horizontalSizeClass) {
         case (.compact?):
             left = 56
