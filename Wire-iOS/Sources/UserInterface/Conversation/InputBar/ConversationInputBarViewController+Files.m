@@ -46,7 +46,7 @@ const NSTimeInterval ConversationUploadMaxVideoDuration = 4.0f * 60.0f; // 4 min
     docController.delegate = self;
     
 #if (TARGET_OS_SIMULATOR)
-    [docController addOptionWithTitle:@"CountryCodes.plist" image:nil order:UIDocumentMenuOrderFirst handler:^{
+    [docController addOptionWithTitle:NSLocalizedString(@"CountryCodes.plist", nil) image:nil order:UIDocumentMenuOrderFirst handler:^{
         [[ZMUserSession sharedSession] enqueueChanges:^{
             NSURL *sourceLocation = [[NSBundle bundleForClass:self.class] URLForResource:@"CountryCodes" withExtension:@"plist"];
             
@@ -61,7 +61,7 @@ const NSTimeInterval ConversationUploadMaxVideoDuration = 4.0f * 60.0f; // 4 min
             [self uploadFileAtURL:destLocation];
         }];
     }];
-    [docController addOptionWithTitle:@"group-icon@3x.png" image:nil order:UIDocumentMenuOrderFirst handler:^{
+    [docController addOptionWithTitle:NSLocalizedString(@"group-icon@3x.png", nil) image:nil order:UIDocumentMenuOrderFirst handler:^{
         [[ZMUserSession sharedSession] enqueueChanges:^{
             NSURL *sourceLocation = [[NSBundle bundleForClass:self.class] URLForResource:@"group-icon@3x" withExtension:@"png"];
             
@@ -76,7 +76,7 @@ const NSTimeInterval ConversationUploadMaxVideoDuration = 4.0f * 60.0f; // 4 min
             [self uploadFileAtURL:destLocation];
         }];
     }];
-    [docController addOptionWithTitle:@"Big file" image:nil order:UIDocumentMenuOrderFirst handler:^{
+    [docController addOptionWithTitle:NSLocalizedString(@"Big file", nil) image:nil order:UIDocumentMenuOrderFirst handler:^{
         [[ZMUserSession sharedSession] enqueueChanges:^{
             
             NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
@@ -90,7 +90,7 @@ const NSTimeInterval ConversationUploadMaxVideoDuration = 4.0f * 60.0f; // 4 min
             [self uploadFileAtURL:destLocation];
         }];
     }];
-    [docController addOptionWithTitle:@"20 MB file" image:nil order:UIDocumentMenuOrderFirst handler:^{
+    [docController addOptionWithTitle:NSLocalizedString(@"20 MB file", nil) image:nil order:UIDocumentMenuOrderFirst handler:^{
         [[ZMUserSession sharedSession] enqueueChanges:^{
             
             NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
@@ -104,7 +104,7 @@ const NSTimeInterval ConversationUploadMaxVideoDuration = 4.0f * 60.0f; // 4 min
             [self uploadFileAtURL:destLocation];
         }];
     }];
-    [docController addOptionWithTitle:@"40 MB file" image:nil order:UIDocumentMenuOrderFirst handler:^{
+    [docController addOptionWithTitle:NSLocalizedString(@"40 MB file", nil) image:nil order:UIDocumentMenuOrderFirst handler:^{
         [[ZMUserSession sharedSession] enqueueChanges:^{
             
             NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);

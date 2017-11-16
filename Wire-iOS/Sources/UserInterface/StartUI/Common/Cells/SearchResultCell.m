@@ -435,7 +435,7 @@
     if (nil != correlation) {
         if (nil != attributedHandle) {
             NSDictionary *delimiterAttributes = @{ NSFontAttributeName: self.class.lightFont, NSForegroundColorAttributeName: self.subtitleColor };
-            [subtitle appendAttributedString:[[NSAttributedString alloc] initWithString:@" · " attributes:delimiterAttributes]];
+            [subtitle appendAttributedString:[[NSAttributedString alloc] initWithString:NSLocalizedString(@" · ", nil) attributes:delimiterAttributes]];
         }
         [subtitle appendAttributedString:correlation];
     }
