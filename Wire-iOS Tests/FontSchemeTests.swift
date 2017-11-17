@@ -24,6 +24,27 @@ import XCTest
 
 class FontSchemeTests: XCTestCase {
    
+    fileprivate func insertTitle1FontSizeItem(allFontSizeTuples: [(fontSize: FontSize, point: CGFloat)], fixedFontNames: inout [FontSpec : String]) {
+        let allFontWeightTuples: [(fontWeight: FontWeight?, name: String)] = [(fontWeight: .ultraLight, name: "Ultralight"),
+                                                                              (fontWeight: .thin, name: "Thin"),
+                                                                              (fontWeight: .light, name: "Light"),
+                                                                              (fontWeight: .regular, name: "Regular"),
+                                                                              (fontWeight: .medium, name: "Medium"),
+                                                                              (fontWeight: .semibold, name: "Semibold"),
+                                                                              (fontWeight: .bold, name: "Bold"),
+                                                                              (fontWeight: .heavy, name: "Heavy"),
+                                                                              (fontWeight: .black, name: "Black"),
+                                                                              (fontWeight: .none, name: "Light"),
+                                                                              ]
+
+
+        for fontWeightTuple in allFontWeightTuples {
+            for fontSizeTuple in allFontSizeTuples {
+                fixedFontNames[FontSpec(fontSizeTuple.fontSize, fontWeightTuple.fontWeight, .title1)] = "System-\(fontWeightTuple.name) \(fontSizeTuple.point)"
+            }
+        }
+    }
+
     func testThatItConvertsFontToClassyName() {
         var fixedFontNames: [FontSpec: String] = [:]
 
@@ -56,29 +77,12 @@ class FontSchemeTests: XCTestCase {
 
         /// insert item for fontTextStyle = title1
 
-        let allFontWeightTuples: [(fontWeight: FontWeight?, name: String)] = [(fontWeight: .ultraLight, name: "Ultralight"),
-                                                                             (fontWeight: .thin, name: "Thin"),
-                                                                             (fontWeight: .light, name: "Light"),
-                                                                             (fontWeight: .regular, name: "Regular"),
-                                                                             (fontWeight: .medium, name: "Medium"),
-                                                                             (fontWeight: .semibold, name: "Semibold"),
-                                                                             (fontWeight: .bold, name: "Bold"),
-                                                                             (fontWeight: .heavy, name: "Heavy"),
-                                                                             (fontWeight: .black, name: "Black"),
-                                                                             (fontWeight: .none, name: "Light"),
-                                                                             ]
-
-        // The ratio is following 11:12:16:24, same as default case
         let allFontSizeTuples: [(fontSize: FontSize, point: CGFloat)] = [(fontSize: .large,  point: 40),
                                                                          (fontSize: .normal, point: 26),
                                                                          (fontSize: .medium, point: 20),
                                                                          (fontSize: .small,  point: 18)]
 
-        for fontWeightTuple in allFontWeightTuples {
-            for fontSizeTuple in allFontSizeTuples {
-                fixedFontNames[FontSpec(fontSizeTuple.fontSize, fontWeightTuple.fontWeight, .title1)] = "System-\(fontWeightTuple.name) \(fontSizeTuple.point)"
-            }
-        }
+        insertTitle1FontSizeItem(allFontSizeTuples: allFontSizeTuples, fixedFontNames: &fixedFontNames)
 
         // WHEN
         var fontNames: [FontSpec: String] = [:]
@@ -120,7 +124,15 @@ class FontSchemeTests: XCTestCase {
         fixedFontNames[FontSpec(.small, .semibold)]  = "System-Semibold 15.0"
         fixedFontNames[FontSpec(.small, .regular)]   = "System-Regular 15.0"
         fixedFontNames[FontSpec(.small, .light)]     = "System-Light 15.0"
-        
+
+        let multipler : CGFloat = 22.0 / 16.0
+        let allFontSizeTuples: [(fontSize: FontSize, point: CGFloat)] = [(fontSize: .large,  point: round(40 * multipler)),
+                                                                         (fontSize: .normal, point: round(26 * multipler)),
+                                                                         (fontSize: .medium, point: round(20 * multipler)),
+                                                                         (fontSize: .small,  point: round(18 * multipler))]
+
+        insertTitle1FontSizeItem(allFontSizeTuples: allFontSizeTuples, fixedFontNames: &fixedFontNames)
+
         // WHEN
         var fontNames: [FontSpec: String] = [:]
         
@@ -129,7 +141,11 @@ class FontSchemeTests: XCTestCase {
         }
         
         // THEN
-        
+
+        (Array(fontNames).sorted{$0.1 < $1.1}).forEach{(k,v) in print("\(k):\(v)")}
+        print("==========================")
+        (Array(fixedFontNames).sorted{$0.1 < $1.1}).forEach{(k,v) in print("\(k):\(v)")}
+
         XCTAssertEqual(fontNames, fixedFontNames)
     }
 
