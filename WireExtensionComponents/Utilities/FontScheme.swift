@@ -135,7 +135,6 @@ extension FontSpec: Hashable {
 extension FontSpec: CustomStringConvertible {
     public var description: String {
         get {
-            ///fixme:
             var descriptionString = "\(self.size)"
 
             if let weight = self.weight {
