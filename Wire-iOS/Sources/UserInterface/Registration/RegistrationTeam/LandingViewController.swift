@@ -223,4 +223,8 @@ final class LandingViewController: UIViewController {
         delegate?.landingViewControllerDidChooseLogin()
     }
 
+    override var prefersStatusBarHidden: Bool {
+        return true
+    }
+
 }

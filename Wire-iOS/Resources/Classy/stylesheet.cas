@@ -1112,8 +1112,6 @@ LocationSendViewController {
     view: @{
         backgroundColor: $color-background;
     }
-    
-    buttonFont: $font-medium-semibold;
 }
 
 /* Camera */

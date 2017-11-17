@@ -112,10 +112,6 @@ final class UserNameTakeOverViewController: UIViewController {
         subtitleLabel.delegate = self
     }
 
-    override var prefersStatusBarHidden: Bool {
-        return false
-    }
-
     func createConstraints() {
         constrain(displayNameLabel, suggestedHandleLabel, topContainer) { nameLabel, handleLabel, container in
             nameLabel.leading == container.leading
