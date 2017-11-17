@@ -55,7 +55,9 @@ void ReachabilityCallback(SCNetworkReachabilityRef target, SCNetworkReachability
 {
     self = [super init];
     if (self) {
+        #ifndef __clang_analyzer__
         self.reachabilityRef = SCNetworkReachabilityCreateWithName(NULL, hostURL.host.UTF8String);
+        #endif
         [self startReachabilityObserving];
     }
     return self;
@@ -69,9 +71,9 @@ void ReachabilityCallback(SCNetworkReachabilityRef target, SCNetworkReachability
         bzero(&zeroAddress, sizeof(zeroAddress));
         zeroAddress.sin_len = sizeof(zeroAddress);
         zeroAddress.sin_family = AF_INET;
-        
+        #ifndef __clang_analyzer__
         self.reachabilityRef = SCNetworkReachabilityCreateWithAddress(kCFAllocatorDefault, (const struct sockaddr *)&zeroAddress);
-        
+        #endif
         [self startReachabilityObserving];
     }
     return self;

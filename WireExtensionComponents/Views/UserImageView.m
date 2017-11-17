@@ -271,7 +271,7 @@ static CIContext *ciContext(void)
                 image = [UIImage imageFromData:data withMaxSize:PixelSizeForUserImageSize(self.size)];
             }
             image = [image desaturatedImageWithContext:ciContext()
-                                            saturation:0];
+                                            saturation:@0];
           
             return image;
             

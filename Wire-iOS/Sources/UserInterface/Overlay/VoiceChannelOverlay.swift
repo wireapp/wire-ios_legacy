@@ -22,6 +22,8 @@ import UIKit
 import CocoaLumberjackSwift
 import Classy
 
+fileprivate let zmLog = ZMSLog(tag: "calling")
+
 fileprivate let CameraPreviewContainerSize: CGFloat = 72.0;
 fileprivate let OverlayButtonWidth: CGFloat = 56.0;
 fileprivate let GroupCallAvatarSize: CGFloat = 120.0;
@@ -44,7 +46,7 @@ fileprivate let VoiceChannelOverlayVideoFeedPositionKey = "VideoFeedPosition"
     func switchCameraButtonTapped()
 }
 
-@objc enum VoiceChannelOverlayState: Int {
+@objc enum VoiceChannelOverlayState: Int, CustomStringConvertible {
     case invalid
     case incomingCall
     case incomingCallInactive
@@ -53,6 +55,28 @@ fileprivate let VoiceChannelOverlayVideoFeedPositionKey = "VideoFeedPosition"
     case outgoingCall
     case outgoingCallDegraded
     case connected
+    
+    var description: String {
+        switch self {
+        case .invalid:
+            return "invalid"
+        case .incomingCall:
+            return "incomingCall"
+        case .incomingCallInactive:
+            return "incomingCallInactive"
+        case .incomingCallDegraded:
+            return "incomingCallDegraded"
+        case .joiningCall:
+            return "joiningCall"
+        case .outgoingCall:
+            return "outgoingCall"
+        case .outgoingCallDegraded:
+            return "outgoingCallDegraded"
+        case .connected:
+            return "connected"
+        }
+    }
+    
 }
 
 fileprivate extension IconLabelButton {
@@ -651,6 +675,9 @@ extension VoiceChannelOverlay {
     @objc(transitionToState:)
     public func transition(to state: VoiceChannelOverlayState) {
         guard state != self.state else { return }
+        
+        zmLog.debug("transitioning to view state: \(state)")
+        
         self.state = state
         updateVisibleViewsForCurrentState()
     }

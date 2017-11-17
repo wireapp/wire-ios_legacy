@@ -87,7 +87,7 @@ final class AnalyticsMixpanelProvider: NSObject, AnalyticsProvider {
         
         if DeveloperMenuState.developerMenuEnabled(),
             let uuidString = mixpanelInstance?.distinctId {
-            DDLogInfo("distinctId = `\(uuidString)`")
+            DDLogError("Mixpanel distinctId = `\(uuidString)`")
         }
         
         self.setSuperProperty("app", value: "ios")

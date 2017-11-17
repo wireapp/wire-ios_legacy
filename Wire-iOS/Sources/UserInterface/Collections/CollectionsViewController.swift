@@ -300,7 +300,7 @@ final public class CollectionsViewController: UIViewController {
         }
         
         if let navBar = self.navigationController?.navigationBar {
-            let imageToStretch = UIImage.shadowImage(withInset: 16.0 * UIScreen.main.scale, color: ColorScheme.default().color(withName: ColorSchemeColorSeparator))!
+            let imageToStretch = UIImage.shadowImage(withInset: 16.0 * UIScreen.main.scale, color: ColorScheme.default().color(withName: ColorSchemeColorSeparator))
             let scaleImageToStretch = UIImage(cgImage: imageToStretch.cgImage!, scale: UIScreen.main.scale, orientation: .up)
             navBar.shadowImage = scaleImageToStretch.stretchableImage(withLeftCapWidth: 20, topCapHeight: 0)
         }

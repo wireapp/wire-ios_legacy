@@ -271,7 +271,7 @@ static NSUInteger const StartUIInitiallyShowsKeyboardConversationThreshold = 10;
                                                   inController:self
                                                       fromRect:[self.view convertRect:cell.bounds fromView:cell]
                                                      onDismiss:^{
-        if (IS_IPAD) {
+        if (IS_IPAD_FULLSCREEN) {
             [self.searchResultsViewController.searchResultsView.collectionView reloadItemsAtIndexPaths:self.searchResultsViewController.searchResultsView.collectionView.indexPathsForVisibleItems];
         }
         else {
