@@ -24,13 +24,13 @@ class TeamNameStepViewController: UIViewController {
     //MARK:- UI styles
 
     static let headlineFont = FontSpec(.large, .light, .title1).font!
-    static let regularFont = FontSpec(.normal, .regular).font!
+    static let subheadlineFont = FontSpec(.normal, .regular).font!
 
     let headline: UILabel = {
         let label = UILabel()
         label.text = "team.name.headline".localized
         label.font = TeamNameStepViewController.headlineFont
-//        label.textColor = .textColor
+        label.textColor = .textColor
 
         return label
     }()
@@ -38,8 +38,8 @@ class TeamNameStepViewController: UIViewController {
     let subheadline: UILabel = {
         let label = UILabel()
         label.text = "team.name.subheadline".localized
-//        label.font = TeamNameStepViewController.subheadlineFont
-//        label.textColor = .subtitleColor
+        label.font = TeamNameStepViewController.subheadlineFont
+        label.textColor = .subtitleColor
 
         return label
     }()
