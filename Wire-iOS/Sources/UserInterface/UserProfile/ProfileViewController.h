@@ -18,9 +18,8 @@
 
 
 #import <UIKit/UIKit.h>
-@import WireExtensionComponents;
 
-
+@protocol AccentColorProvider;
 @protocol ZMSearchableUser;
 @class ZMConversation;
 @class ZMUser;

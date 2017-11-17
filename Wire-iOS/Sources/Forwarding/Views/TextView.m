@@ -21,11 +21,10 @@
 
 #import "TextView.h"
 #import "Logging.h"
-
 @import PureLayout;
 #import "MediaAsset.h"
 #import "UILabel+TextTransform.h"
-#import <WireExtensionComponents/WireExtensionComponents-Swift.h>
+#import "Wire-Swift.h"
 @import Classy;
 
 @interface TextView ()

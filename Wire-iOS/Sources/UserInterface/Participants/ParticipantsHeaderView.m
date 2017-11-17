@@ -18,7 +18,6 @@
 
 
 #import "ParticipantsHeaderView.h"
-@import WireExtensionComponents;
 
 #import "IconButton.h"
 #import "WAZUIMagicIOS.h"
@@ -29,6 +28,7 @@
 #import "UIImage+ZetaIconsNeue.h"
 #import "ColorScheme.h"
 #import "Wire-Swift.h"
+#import "NSLayoutConstraint+Helpers.h"
 
 
 static NSTimeInterval const ParticipantsHeaderViewEditHintDismissTimeout = 10.0f;

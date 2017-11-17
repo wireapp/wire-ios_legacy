@@ -21,13 +21,13 @@ import XCTest
 import Classy
 @testable import Wire
 
-fileprivate extension UIButton {
+private extension UIButton {
     func tap() {
         sendActions(for: .touchUpInside)
     }
 }
 
-fileprivate class MockDelegate: NSObject, VoiceChannelOverlayDelegate {
+private class MockDelegate: NSObject, VoiceChannelOverlayDelegate {
     var cancel = false
     func cancelButtonTapped() {
         cancel = true

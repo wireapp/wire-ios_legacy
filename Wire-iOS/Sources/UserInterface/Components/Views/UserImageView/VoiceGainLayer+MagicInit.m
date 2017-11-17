@@ -19,8 +19,8 @@
 
 #import "VoiceGainLayer+MagicInit.h"
 #import "WAZUIMagicIOS.h"
+#import "PulseLayer.h"
 
-@import WireExtensionComponents;
 
 @implementation VoiceGainLayer (MagicInit)
 

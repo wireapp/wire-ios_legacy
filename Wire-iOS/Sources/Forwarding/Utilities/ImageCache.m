@@ -22,9 +22,6 @@
 
 @import CocoaLumberjack;
 
-
-static const int ddLogLevel = LOG_LEVEL_CONFIG;
-
 @interface ImageCache ()
 
 @property (nonatomic, strong) NSCache *cache;

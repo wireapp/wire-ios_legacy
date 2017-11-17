@@ -22,10 +22,10 @@
 @import PureLayout;
 #import <Classy/Classy.h>
 
-@import WireExtensionComponents;
 #import "UIImage+ZetaIconsNeue.h"
 #import "WAZUIMagicIOS.h"
 #import "Constants.h"
+#import "IconButton.h"
 
 @interface MediaBar ()
 

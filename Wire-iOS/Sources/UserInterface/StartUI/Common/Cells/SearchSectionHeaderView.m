@@ -24,6 +24,7 @@
 #import "UIFont+MagicAccess.h"
 #import "UIColor+MagicAccess.h"
 #import "Wire-Swift.h"
+#import "ColorScheme.h"
 
 #import "UIView+Borders.h"
 

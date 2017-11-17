@@ -22,7 +22,6 @@
 
 #import "MediaPreviewViewController.h"
 #import "MediaPreviewView.h"
-@import WireExtensionComponents;
 #import "BrowserViewController.h"
 #import "MediaPreviewData.h"
 #import "MediaThumbnail.h"
@@ -31,6 +30,7 @@
 #import "LinkAttachmentCache.h"
 #import "YoutubeService.h"
 #import <Classy/Classy.h>
+#import "IconButton.h"
 
 
 

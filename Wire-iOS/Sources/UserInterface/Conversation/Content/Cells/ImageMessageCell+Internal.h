@@ -16,9 +16,8 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-
+@protocol MediaAsset;
 #import "ImageMessageCell.h"
-@import WireExtensionComponents;
 
 @interface ImageMessageCell (Interal)
 

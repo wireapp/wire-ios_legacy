@@ -22,7 +22,6 @@
 #import "UIColor+WR_ColorScheme.h"
 @import PureLayout;
 #import <Classy/Classy.h>
-@import WireExtensionComponents;
 #import "Wire-Swift.h"
 
 @interface StartUIQuickActionsBar ()

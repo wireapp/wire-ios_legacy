@@ -19,7 +19,6 @@
 
 import Foundation
 import CocoaLumberjackSwift
-import WireExtensionComponents
 
 
 final internal class FileBackupExcluder: NSObject {

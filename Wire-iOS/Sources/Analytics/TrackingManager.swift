@@ -19,7 +19,6 @@
 import Foundation
 import Mixpanel
 import HockeySDK
-import WireExtensionComponents
 
 
 @objc public class TrackingManager: NSObject {

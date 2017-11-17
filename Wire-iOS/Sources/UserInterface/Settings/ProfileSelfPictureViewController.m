@@ -29,7 +29,6 @@
 
 #import "UIImage+ZetaIconsNeue.h"
 #import "BottomOverlayViewController+Private.h"
-@import WireExtensionComponents;
 #import "WAZUIMagicIOS.h"
 
 #import "ImagePickerConfirmationController.h"
@@ -38,6 +37,7 @@
 #import "Constants.h"
 #import "UserImageView.h"
 #import "AppDelegate.h"
+#import "NSLayoutConstraint+Helpers.h"
 
 #import "AnalyticsTracker.h"
 

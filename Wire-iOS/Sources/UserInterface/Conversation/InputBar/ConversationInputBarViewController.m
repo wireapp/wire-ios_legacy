@@ -25,7 +25,6 @@
 #import "ConversationInputBarViewController+Private.h"
 #import "ConversationInputBarViewController+Files.h"
 #import "Analytics+Events.h"
-@import WireExtensionComponents;
 #import "ConfirmAssetViewController.h"
 #import "TextView.h"
 #import "CameraViewController.h"

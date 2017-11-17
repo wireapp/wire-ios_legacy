@@ -19,8 +19,8 @@
 
 
 #import <UIKit/UIKit.h>
+#import "ColorScheme.h"
 
-@import WireExtensionComponents;
 
 FOUNDATION_EXPORT NSString *const PeoplePickerHeaderReuseIdentifier;
 

@@ -20,7 +20,6 @@
 #import "WebViewController.h"
 @import WebKit;
 
-@import WireExtensionComponents;
 #import "WAZUIMagicIOS.h"
 #import "UIColor+WAZExtensions.h"
 #import "Constants.h"
@@ -28,7 +27,8 @@
 #import "UIImage+ZetaIconsNeue.h"
 @import PureLayout;
 #import "NSLayoutConstraint+Helpers.h"
-
+#import "ButtonWithLargerHitArea.h"
+#import "UIViewController+LoadingView.h"
 
 @interface WebViewController () <WKNavigationDelegate>
 

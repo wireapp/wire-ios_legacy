@@ -32,7 +32,6 @@
 #import "UIFont+MagicAccess.h"
 #import "UIViewController+Errors.h"
 #import "UIImage+ZetaIconsNeue.h"
-@import WireExtensionComponents;
 #import "Wire-Swift.h"
 
 #import "RegistrationFormController.h"

@@ -18,7 +18,6 @@
 
 import Foundation
 import UIKit
-import WireExtensionComponents
 import WireShareEngine
 import MobileCoreServices
 

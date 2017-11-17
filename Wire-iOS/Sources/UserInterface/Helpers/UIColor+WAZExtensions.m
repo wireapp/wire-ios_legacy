@@ -25,7 +25,6 @@
 #import "ColorScheme.h"
 #import "Wire-Swift.h"
 
-@import WireExtensionComponents;
 
 static ZMAccentColor overridenAccentColor = ZMAccentColorUndefined;
 

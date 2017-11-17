@@ -19,7 +19,6 @@
 
 @import AssetsLibrary;
 @import MobileCoreServices;
-@import WireExtensionComponents;
 
 #import "FullscreenImageViewController.h"
 #import "FullscreenImageViewController+PullToDismiss.h"
@@ -44,6 +43,7 @@
 #import "Constants.h"
 #import "UIImage+ZetaIconsNeue.h"
 @import PureLayout;
+#import "NSLayoutConstraint+Helpers.h"
 
 #import "Analytics.h"
 

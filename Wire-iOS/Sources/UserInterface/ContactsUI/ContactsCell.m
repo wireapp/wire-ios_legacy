@@ -22,8 +22,8 @@
 @import PureLayout;
 #import "WireSyncEngine+iOS.h"
 #import "UserImageView+Magic.h"
-@import WireExtensionComponents;
-
+#import "Button.h"
+#import "NSString+TextTransform.h"
 
 
 NS_ASSUME_NONNULL_BEGIN

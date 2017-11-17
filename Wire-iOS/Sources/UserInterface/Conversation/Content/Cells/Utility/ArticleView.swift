@@ -21,7 +21,6 @@ import UIKit
 import Cartography
 import WireLinkPreview
 import TTTAttributedLabel
-import WireExtensionComponents
 import Classy
 
 @objc protocol ArticleViewDelegate: class {

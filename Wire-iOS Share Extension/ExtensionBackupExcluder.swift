@@ -18,9 +18,8 @@
 
 
 import Foundation
-import WireExtensionComponents
 import CocoaLumberjackSwift
-
+import WireExtensionComponents
 
 class ExtensionBackupExcluder {
 

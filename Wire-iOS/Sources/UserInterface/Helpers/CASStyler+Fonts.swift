@@ -18,7 +18,6 @@
 
 import Foundation
 import Classy
-import WireExtensionComponents
 
 extension FontSpec {
     internal var classyName: String {

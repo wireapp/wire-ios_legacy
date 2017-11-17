@@ -19,7 +19,6 @@
 
 #import <UIKit/UIKit.h>
 #import "ZetaIconTypes.h"
-@import WireExtensionComponents;
 
 @class CheckBoxButton;
 

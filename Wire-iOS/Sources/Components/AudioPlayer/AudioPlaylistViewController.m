@@ -19,7 +19,6 @@
 
 @import PureLayout;
 @import Classy;
-@import WireExtensionComponents;
 
 #import "AudioPlaylistViewController.h"
 #import "AudioHeaderView.h"

@@ -23,7 +23,6 @@
 
 @class ParticipantsFooterView;
 
-@import WireExtensionComponents;
 
 @protocol ParticipantsFooterDelegate <NSObject>
 

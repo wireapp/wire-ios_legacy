@@ -19,7 +19,6 @@
 
 #import <Classy/Classy.h>
 
-@import WireExtensionComponents;
 #import "ActionSheetController+Conversation.h"
 #import "ZMConversation+Actions.h"
 #import "WireSyncEngine+iOS.h"
@@ -29,6 +28,7 @@
 #import "UIFont+MagicAccess.h"
 #import "Wire-Swift.h"
 #import "ZClientViewController.h"
+#import "CheckBoxButton.h"
 
 @import WireUtilities;
 

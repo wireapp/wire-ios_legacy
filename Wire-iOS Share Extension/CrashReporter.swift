@@ -17,8 +17,8 @@
 //
 
 
-import WireExtensionComponents
 import HockeySDK.BITHockeyManager
+import WireExtensionComponents
 
 
 /// Flag to determine if the HockeySDK has alreday been initialized (https://github.com/bitstadium/HockeySDK-iOS#34-ios-extensions)
@@ -44,7 +44,7 @@ class CrashReporter {
 
     private static var hockeyEnabled: Bool {
         let configUseHockey = wr_useHockey() // The preprocessor macro USE_HOCKEY (from the .xcconfig files)
-        let automationUseHockey = AutomationHelper.sharedHelper.useHockey // Command line argument used by automation
+        let automationUseHockey = UserDefaults.standard.bool(forKey: "UseHockey") // Command line argument used by automation
         let settingsDisableCrashAndAnalyticsSharing = ExtensionSettings.shared.disableCrashAndAnalyticsSharing // Developer option menu toggle
 
         return (automationUseHockey || (!automationUseHockey && configUseHockey))

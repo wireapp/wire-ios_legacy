@@ -22,7 +22,7 @@ import XCTest
 @testable import Wire
 
 
-class MockAudioRecordKeyboardDelegate: AudioRecordViewControllerDelegate {
+private class MockAudioRecordKeyboardDelegate: AudioRecordViewControllerDelegate {
     var didCancelHitCount = 0
     @objc func audioRecordViewControllerDidCancel(_ audioRecordViewController: AudioRecordBaseViewController) {
         didCancelHitCount = didCancelHitCount + 1
@@ -90,7 +90,7 @@ class MockAudioRecorder: AudioRecorderType {
 class AudioRecordKeyboardViewControllerTests: XCTestCase {
     var sut: AudioRecordKeyboardViewController!
     var audioRecorder = MockAudioRecorder()
-    var mockDelegate = MockAudioRecordKeyboardDelegate()
+    private var mockDelegate = MockAudioRecordKeyboardDelegate()
     
     override func setUp() {
         super.setUp()

@@ -20,7 +20,6 @@
 import Foundation
 import Photos
 import Cartography
-import WireExtensionComponents
 import CocoaLumberjackSwift
 import AVFoundation
 

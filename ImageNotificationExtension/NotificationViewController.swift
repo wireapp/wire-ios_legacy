@@ -19,7 +19,6 @@
 import UIKit
 import UserNotifications
 import UserNotificationsUI
-import WireExtensionComponents
 import NotificationFetchComponents
 import Cartography
 

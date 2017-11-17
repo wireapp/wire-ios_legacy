@@ -21,7 +21,9 @@
 #import "AudioTrackPlayer.h"
 #import "AudioTrack.h"
 #import "AudioPlaylist.h"
-@import WireExtensionComponents;
+@import WireUtilities;
+#import "KeyValueObserver.h"
+#import "NetworkStatus.h"
 
 static NSString* EmptyStringIfNil(NSString *string) {
     return string == nil ? @"" : string;

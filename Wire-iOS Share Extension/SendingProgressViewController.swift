@@ -17,9 +17,9 @@
 //
 
 import Foundation
-import WireExtensionComponents
 import WireShareEngine
 import Cartography
+import WireExtensionComponents
 
 class SendingProgressViewController : UIViewController {
 

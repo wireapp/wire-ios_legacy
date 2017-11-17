@@ -21,7 +21,6 @@
 
 @import PureLayout;
 @import Photos;
-@import WireExtensionComponents;
 
 #import "Constants.h"
 #import "CameraController.h"

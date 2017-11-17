@@ -22,7 +22,7 @@
 
 #import "NSString+WAZUIMagic.h"
 #import "Button.h"
-@import WireExtensionComponents;
+#import "NSLayoutConstraint+Helpers.h"
 
 @interface ProfileUnblockFooterView ()
 @property (nonatomic, strong, readwrite) UIButton *unblockButton;

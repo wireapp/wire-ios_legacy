@@ -18,6 +18,8 @@
 
 #import "IconLabelButton.h"
 #import "UILabel+TextTransform.h"
+#import "NSLayoutConstraint+Helpers.h"
+#import "IconButton.h"
 
 @import PureLayout;
 

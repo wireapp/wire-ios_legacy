@@ -29,7 +29,6 @@
 #import "Wire-Swift.h"
 
 
-@import WireExtensionComponents;
 @import WireLinkPreview;
 @import Marklight;
 

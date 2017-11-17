@@ -17,7 +17,6 @@
 // 
 
 
-@import WireExtensionComponents;
 
 
 #import "ConversationInputBarSendController.h"

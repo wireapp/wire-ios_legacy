@@ -25,7 +25,7 @@
 #import "ColorBandsView.h"
 #import "IdentifiableColor.h"
 #import "UIColor+WAZExtensions.h"
-@import WireExtensionComponents;
+#import "Geometry.h"
 
 
 

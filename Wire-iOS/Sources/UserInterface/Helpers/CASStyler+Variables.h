@@ -18,7 +18,6 @@
 
 
 @import Classy;
-@import WireExtensionComponents;
 
 #import "ColorScheme.h"
 

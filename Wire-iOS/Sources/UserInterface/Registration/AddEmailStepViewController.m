@@ -20,16 +20,16 @@
 #import "AddEmailStepViewController.h"
 
 @import PureLayout;
-@import WireExtensionComponents;
 
 #import "EmailFormViewController.h"
 #import "UIImage+ZetaIconsNeue.h"
 #import "WAZUIMagicIOS.h"
-#import <WireExtensionComponents/ProgressSpinner.h>
+#import "ProgressSpinner.h"
 #import "RegistrationTextField.h"
 #import "GuidanceLabel.h"
 #import "WireSyncEngine+iOS.h"
 #import "Constants.h"
+#import "IconButton.h"
 
 
 @interface AddEmailStepViewController ()

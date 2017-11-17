@@ -24,7 +24,6 @@
 #import "Settings.h"
 
 
-@import WireExtensionComponents;
 @import PureLayout;
 @import WireDataModel;
 

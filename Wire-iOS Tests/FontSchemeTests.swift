@@ -21,7 +21,6 @@ import XCTest
 @testable import Wire
 @testable import WireExtensionComponents
 
-
 class FontSchemeTests: XCTestCase {
    
     func testThatItConvertsFontToClassyName() {

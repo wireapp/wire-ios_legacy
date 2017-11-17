@@ -19,7 +19,6 @@
 
 @import PureLayout;
 
-@import WireExtensionComponents;
 
 #import "StartUIViewController.h"
 #import "ProfilePresenter.h"

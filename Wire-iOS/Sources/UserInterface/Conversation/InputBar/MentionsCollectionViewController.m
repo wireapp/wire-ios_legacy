@@ -26,6 +26,7 @@
 #import "UIView+Borders.h"
 #import "MentionsCollectionView.h"
 #import "Wire-Swift.h"
+#import "Geometry.h"
 
 @import PureLayout;
 

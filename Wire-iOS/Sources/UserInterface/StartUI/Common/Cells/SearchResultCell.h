@@ -17,11 +17,13 @@
 // 
 
 @import UIKit;
-@import WireExtensionComponents;
+#import "ColorScheme.h"
 #import "SwipeMenuCollectionCell.h"
 
 @protocol ZMBareUser;
 @protocol ZMSearchableUser;
+@protocol AccentColorProvider;
+
 @class ZMConversation, Team;
 
 @interface SearchResultCell : SwipeMenuCollectionCell

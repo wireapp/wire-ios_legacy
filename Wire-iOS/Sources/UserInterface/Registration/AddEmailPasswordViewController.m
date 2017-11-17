@@ -20,7 +20,7 @@
 #import "AddEmailPasswordViewController.h"
 
 @import PureLayout;
-#import <WireExtensionComponents/UIViewController+LoadingView.h>
+#import "UIViewController+LoadingView.h"
 
 
 #import "AddEmailStepViewController.h"

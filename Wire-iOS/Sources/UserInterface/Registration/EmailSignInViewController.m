@@ -20,7 +20,6 @@
 #import "EmailSignInViewController.h"
 
 @import PureLayout;
-@import WireExtensionComponents;
 
 #import "WireSyncEngine+iOS.h"
 @import OnePasswordExtension;
@@ -29,7 +28,7 @@
 #import "GuidanceLabel.h"
 #import "Guidance.h"
 #import "WebLinkTextView.h"
-#import <WireExtensionComponents/ProgressSpinner.h>
+#import "ProgressSpinner.h"
 #import "UIImage+ImageUtilities.h"
 #import "UIColor+WAZExtensions.h"
 #import "UIColor+MagicAccess.h"

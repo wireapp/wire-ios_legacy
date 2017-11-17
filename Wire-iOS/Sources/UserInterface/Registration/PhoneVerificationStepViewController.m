@@ -31,7 +31,6 @@
 
 #import "WireSyncEngine+iOS.h"
 #import "UIViewController+Errors.h"
-@import WireExtensionComponents;
 @import WireUtilities;
 
 

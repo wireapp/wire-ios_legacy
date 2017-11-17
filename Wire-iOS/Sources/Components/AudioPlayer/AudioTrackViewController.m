@@ -32,7 +32,6 @@
 #import "LinkAttachment.h"
 #import "SoundcloudService.h"
 
-@import WireExtensionComponents;
 @import AVFoundation;
 
 @interface AudioTrackViewController ()

@@ -20,7 +20,6 @@
 import UIKit
 import WireSyncEngine
 import Cartography
-import WireExtensionComponents
 import CocoaLumberjackSwift
 
 

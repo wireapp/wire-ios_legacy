@@ -19,7 +19,7 @@
 
 @import UIKit;
 @import WireExtensionComponents;
-
+@class IconButton;
 
 @interface NavigationController : UINavigationController
 

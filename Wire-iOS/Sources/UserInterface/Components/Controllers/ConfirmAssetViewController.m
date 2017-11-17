@@ -31,7 +31,6 @@
 #import "Constants.h"
 #import "AppDelegate.h"
 #import "UIView+Borders.h"
-@import WireExtensionComponents;
 #import "UIViewController+Orientation.h"
 #import "UIImage+ImageUtilities.h"
 #import "MediaAsset.h"

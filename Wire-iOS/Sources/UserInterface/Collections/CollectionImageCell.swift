@@ -20,7 +20,6 @@
 import Foundation
 import Cartography
 import CocoaLumberjackSwift
-import WireExtensionComponents
 
 final public class CollectionImageCell: CollectionCell {
     public static var imageCache: ImageCache = {

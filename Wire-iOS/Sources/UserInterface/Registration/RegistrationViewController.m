@@ -20,7 +20,6 @@
 #import "RegistrationViewController.h"
 
 @import PureLayout;
-@import WireExtensionComponents;
 
 #import "WireSyncEngine+iOS.h"
 #import "RegistrationStepViewController.h"

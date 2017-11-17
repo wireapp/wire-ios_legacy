@@ -30,13 +30,8 @@
 #import <CoreTelephony/CTTelephonyNetworkInfo.h>
 #import <CocoaLumberjack/CocoaLumberjack.h>
 
-
-
-static const int ddLogLevel = DDLogLevelError;
 static NSString *NetworkStatusNotificationName = @"NetworkStatusNotification";
 void ReachabilityCallback(SCNetworkReachabilityRef target, SCNetworkReachabilityFlags flags, void* info);
-
-
 
 @interface NetworkStatus ()
 

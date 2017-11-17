@@ -18,7 +18,6 @@
 
 
 @import MobileCoreServices;
-@import WireExtensionComponents;
 @import ZipArchive;
 #import "ConversationInputBarViewController.h"
 #import "ConversationInputBarViewController+Files.h"

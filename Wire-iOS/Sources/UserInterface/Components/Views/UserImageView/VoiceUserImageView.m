@@ -25,8 +25,9 @@
 #import "WAZUIMagic.h"
 #import "CALayer+EasyAnimation.h"
 #import "UIColor+WAZExtensions.h"
+#import "VoiceIndicatorLayer.h"
+#import "UserConnectingLayer.h"
 
-@import WireExtensionComponents;
 
 @interface VoiceUserImageView ()
 

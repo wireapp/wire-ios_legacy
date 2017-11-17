@@ -18,7 +18,6 @@
 
 
 import WireShareEngine
-import WireExtensionComponents
 import MobileCoreServices
 import WireDataModel
 

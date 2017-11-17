@@ -18,7 +18,6 @@
 
 
 @import UIKit;
-@import WireExtensionComponents;
 #import "ProfileViewController.h"
 
 

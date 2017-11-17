@@ -17,7 +17,7 @@
 //
 
 
-#import <WireExtensionComponents/WireExtensionComponents.h>
+#import "UserImageView.h"
 
 NS_ASSUME_NONNULL_BEGIN
 

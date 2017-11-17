@@ -18,6 +18,7 @@
 
 #import "MockConversation.h"
 #import "MockConversationFactory.h"
+#import "MockLoader.h"
 
 @implementation MockConversationFactory
 

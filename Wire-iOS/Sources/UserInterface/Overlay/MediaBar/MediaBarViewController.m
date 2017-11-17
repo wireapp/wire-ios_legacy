@@ -23,7 +23,6 @@
 #import "MediaBar.h"
 #import "MediaPlaybackManager.h"
 #import "Wire-Swift.h"
-@import WireExtensionComponents;
 
 #import "Constants.h"
 

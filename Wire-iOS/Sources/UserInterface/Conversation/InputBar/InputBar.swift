@@ -20,7 +20,6 @@
 import UIKit
 import Cartography
 import Classy
-import WireExtensionComponents
 import Marklight
 
 extension Settings {

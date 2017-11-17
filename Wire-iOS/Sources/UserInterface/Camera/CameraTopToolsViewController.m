@@ -23,12 +23,12 @@
 
 #import "CameraController.h"
 #import "Constants.h"
-@import WireExtensionComponents;
 #import "WAZUIMagicIOS.h"
 #import "UIImage+ZetaIconsNeue.h"
 #import "Settings.h"
 #import "DeviceOrientationObserver.h"
 #import "WRFunctions.h"
+#import "ButtonWithLargerHitArea.h"
 
 
 

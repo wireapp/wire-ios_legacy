@@ -20,8 +20,10 @@
 import UIKit
 import WireShareEngine
 import MobileCoreServices
-import WireExtensionComponents
+import WireDataModel
+import AVFoundation
 import ImageIO
+import WireExtensionComponents
 
 /// Error that can happen during the preparation or sending operation
 enum UnsentSendableError: Error {

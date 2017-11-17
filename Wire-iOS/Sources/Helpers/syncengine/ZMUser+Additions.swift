@@ -17,7 +17,6 @@
 //
 
 import WireDataModel
-import WireExtensionComponents
 
 extension ZMUser {
     var pov: PointOfView {

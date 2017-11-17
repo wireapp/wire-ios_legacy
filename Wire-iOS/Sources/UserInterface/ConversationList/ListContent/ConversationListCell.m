@@ -22,7 +22,6 @@
 @import PureLayout;
 
 #import "ConversationListItemView.h"
-@import WireExtensionComponents;
 
 #import "Constants.h"
 #import "WAZUIMagicIOS.h"

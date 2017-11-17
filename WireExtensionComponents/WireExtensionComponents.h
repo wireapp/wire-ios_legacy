@@ -27,53 +27,9 @@ FOUNDATION_EXPORT const unsigned char WireExtensionComponentsVersionString[];
 
 // In this header, you should import all the public headers of your framework using statements like #import <WireExtensionComponents/PublicHeader.h>
 
-// Views
-#import <WireExtensionComponents/AvatarImageView.h>
-#import <WireExtensionComponents/UserImageView.h>
-#import <WireExtensionComponents/PageControl.h>
-#import <WireExtensionComponents/TextView.h>
-#import <WireExtensionComponents/TokenField.h>
-#import <WireExtensionComponents/Token.h>
-#import <WireExtensionComponents/CheckBoxButton.h>
-#import <WireExtensionComponents/IconButton.h>
-#import <WireExtensionComponents/IconLabelButton.h>
-#import <WireExtensionComponents/Button.h>
-#import <WireExtensionComponents/ButtonWithLargerHitArea.h>
-#import <WireExtensionComponents/FlexibleNavigationBar.h>
-#import <WireExtensionComponents/ProgressSpinner.h>
-#import <WireExtensionComponents/UIViewController+LoadingView.h>
-#import <WireExtensionComponents/TokenTextAttachment.h>
-#import <WireExtensionComponents/TokenizedTextView.h>
-#import <WireExtensionComponents/DeveloperMenuState.h>
-
-// Layers
-#import <WireExtensionComponents/AnimatedLayer.h>
-#import <WireExtensionComponents/PulseLayer.h>
-#import <WireExtensionComponents/UserConnectingLayer.h>
-#import <WireExtensionComponents/VoiceGainLayer.h>
-#import <WireExtensionComponents/VoiceIndicatorLayer.h>
-
-// Icons
 #import <WireExtensionComponents/ZetaIconTypes.h>
 #import <WireExtensionComponents/WireStyleKit.h>
 #import <WireExtensionComponents/UIImage+ZetaIconsNeue.h>
-
-// Utils
-#import <WireExtensionComponents/UIImage+ImageUtilities.h>
-#import <WireExtensionComponents/UIColor+Mixing.h>
-#import <WireExtensionComponents/UIControl+Wire.h>
-#import <WireExtensionComponents/ColorScheme.h>
-#import <WireExtensionComponents/NSDate+WRFormat.h>
-#import <WireExtensionComponents/Geometry.h>
-#import <WireExtensionComponents/KeyValueObserver.h>
-#import <WireExtensionComponents/LineNumberLogFormatter.h>
-#import <WireExtensionComponents/NetworkStatus.h>
 #import <WireExtensionComponents/metamacros.h>
 #import <WireExtensionComponents/weakify.h>
-#import <WireExtensionComponents/NSLayoutConstraint+Helpers.h>
-#import <WireExtensionComponents/TextTransform.h>
-#import <WireExtensionComponents/NSString+TextTransform.h>
 #import <WireExtensionComponents/AVAsset+VideoConvert.h>
-#import <WireExtensionComponents/AccentColorProvider.h>
-#import <WireExtensionComponents/UIColor+WR_ColorScheme.h>
-

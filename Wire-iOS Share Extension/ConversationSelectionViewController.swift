@@ -17,9 +17,8 @@
 //
 
 import Foundation
-import WireExtensionComponents
 import WireShareEngine
-
+import WireExtensionComponents
 
 private let cellReuseIdentifier = "ConversationCell"
 

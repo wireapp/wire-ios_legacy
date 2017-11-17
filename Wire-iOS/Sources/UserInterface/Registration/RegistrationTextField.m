@@ -19,7 +19,6 @@
 
 #import "RegistrationTextField.h"
 
-@import WireExtensionComponents;
 
 
 #import "WAZUIMagicIOS.h"

@@ -17,27 +17,11 @@
 // 
 
 
-#import <WireExtensionComponents/TextView.h>
+#import "ButtonWithLargerHitArea.h"
 
+@class IconButton;
 
-
-@class TokenizedTextView;
-
-
-
-@protocol TokenizedTextViewDelegate <UITextViewDelegate>
-
-- (void)tokenizedTextView:(TokenizedTextView *)textView didTapTextRange:(NSRange)range fraction:(float)fraction;
-- (void)tokenizedTextView:(TokenizedTextView *)textView textContainerInsetChanged:(UIEdgeInsets)textContainerInset;
-
-@end
-                          
-                          
-                          
-//! Custom UITextView subclass to be used in TokenField.
-//! Shouldn't be used anywhere else.
-@interface TokenizedTextView : TextView
-
-@property (weak, nonatomic) id< TokenizedTextViewDelegate > delegate;
-
+@interface IconLabelButton : ButtonWithLargerHitArea
+@property (nonatomic) IconButton *iconButton;
+@property (nonatomic) UILabel *subtitleLabel;
 @end
