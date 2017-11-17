@@ -20,6 +20,7 @@ import Foundation
 import UIKit
 import Cartography
 
+///FIXME: mv to new file
 fileprivate extension UIColor {
     static let background = UIColor(red:0.97, green:0.97, blue:0.97, alpha:1.0)
     static let inactiveButton = UIColor(red:0.20, green:0.22, blue:0.23, alpha:0.16)
