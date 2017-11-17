@@ -44,7 +44,7 @@ extension BaseCallQualityViewController: CallQualityViewControllerDelegate {
     func controller(_ controller: CallQualityViewController, didSelect score: Int) {
         if controller == root {
             ratingState.rating1 = score
-            let next = CallQualityViewController(questionLabelText: "2.How satisfied are you with the call set up?", buttonText: "Done")
+            let next = CallQualityViewController(questionLabelText: "2.How satisfied are you with the overall quality of the call?", buttonText: "Done")
             next.delegate = self
             baseNavigationController.pushViewController(next, animated: true)
         }
@@ -170,7 +170,7 @@ class QualityScoreSelectorView : UIView {
                 button.width == 40
                 button.height == 40
             }
-            
+    
             return button
         }
         addSubview(scoreStackView)
@@ -178,7 +178,6 @@ class QualityScoreSelectorView : UIView {
             scoreStackView.edges == selfView.edges
         }
     }
-    
     
     func onClick(_ sender: UIButton) {
         for sender in scoreButtons{

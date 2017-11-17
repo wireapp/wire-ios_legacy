@@ -175,6 +175,12 @@ extension ActiveVoiceChannelViewController : WireCallCenterCallStateObserver {
     
     func callCenterDidChange(callState: CallState, conversation: ZMConversation, user: ZMUser?, timeStamp: Date?) {
         updateVisibleVoiceChannelViewController()
+        
+        
+        if case .terminating = callState {
+            let baseQualityController = BaseCallQualityViewController()
+            present(baseQualityController, animated: true)
+        }
     }
     
 }

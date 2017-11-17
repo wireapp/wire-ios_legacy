@@ -97,9 +97,9 @@ class AppRootViewController : UIViewController {
         enqueueTransition(to: appStateController.appState)
         
         // TODO
-        let baseQualityController = BaseCallQualityViewController()
-        
-        mainWindow.rootViewController?.present(baseQualityController, animated: true, completion: nil)
+//        let baseQualityController = BaseCallQualityViewController()
+//        
+//        mainWindow.rootViewController?.present(baseQualityController, animated: true, completion: nil)
     }
     
     required init?(coder aDecoder: NSCoder) {
