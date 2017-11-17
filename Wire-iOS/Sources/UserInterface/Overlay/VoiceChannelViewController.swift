@@ -275,7 +275,7 @@ extension VoiceChannelViewController : VoiceChannelOverlayDelegate {
 
 extension VoiceChannelViewController : WireCallCenterCallStateObserver, ReceivedVideoObserver, ConstantBitRateAudioObserver {
     
-    func callCenterDidChange(callState: CallState, conversation: ZMConversation, user: ZMUser?, timeStamp: Date?) {
+    func callCenterDidChange(callState: CallState, conversation: ZMConversation, caller: ZMUser, timestamp: Date?) {
         updateView(for: callState)
         createParticipantsControllerIfNecessary()
     }
