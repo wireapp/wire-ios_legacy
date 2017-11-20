@@ -56,6 +56,7 @@
 @interface ZClientViewController (InitialState) <SplitViewControllerDelegate>
 
 - (void)restoreStartupState;
+- (BOOL)attemptToLoadLastViewedConversationWithFocus:(BOOL)focus animated:(BOOL)animated;
 
 @end
 
@@ -556,8 +557,6 @@
 {
     BOOL stateRestored = NO;
 
-    Account *currentAccount = SessionManager.shared.accountManager.selectedAccount;
-    
     SettingsLastScreen lastViewedScreen = [Settings sharedSettings].lastViewedScreen;
     switch (lastViewedScreen) {
             
@@ -565,47 +564,54 @@
             
             [self transitionToListAnimated:NO completion:nil];
             
-            ZMConversation *conversation = [[Settings sharedSettings] lastViewedConversationFor:currentAccount];
-            if (conversation != nil) {
-                // Select the last viewed conversation without giving it focus
-                [self selectConversation:conversation];
-                
-                // dispatch async here because it has to happen after the collection view has finished
-                // laying out for the first time
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    [self.conversationListViewController scrollToCurrentSelectionAnimated:NO];
-                });
-                stateRestored = YES;
+            // only attempt to show content vc if it would be visible
+            if (self.isConversationViewVisible) {
+                stateRestored = [self attemptToLoadLastViewedConversationWithFocus:NO animated:NO];
             }
-            else {
-                [self selectListItemWhenNoPreviousItemSelected];
-            }
+            
             break;
         }
         case SettingsLastScreenConversation: {
             
-            ZMConversation *conversation = [[Settings sharedSettings] lastViewedConversationFor:currentAccount];
-            if (conversation != nil) {
-                [self selectConversation:conversation
-                             focusOnView:YES 
-                                animated:NO];
-                
-                // dispatch async here because it has to happen after the collection view has finished
-                // laying out for the first time
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    [self.conversationListViewController scrollToCurrentSelectionAnimated:NO];
-                });
-                stateRestored = YES;
-            }
+            stateRestored = [self attemptToLoadLastViewedConversationWithFocus:YES animated:NO];
             break;
         }
         default: {
-            // If there's no previously selected screen,
-            [self selectListItemWhenNoPreviousItemSelected];
+            // If there's no previously selected screen
+            if (self.isConversationViewVisible) {
+                [self selectListItemWhenNoPreviousItemSelected];
+            }
+            
             break;
         }
     }
     return stateRestored;
+}
+
+/// Attempt to load the last viewed conversation associated with the current account.
+/// If no info is available, we attempt to load the first conversation in the list.
+/// In the first case, YES is returned, otherwise NO.
+///
+- (BOOL)attemptToLoadLastViewedConversationWithFocus:(BOOL)focus animated:(BOOL)animated
+{
+    Account *currentAccount = SessionManager.shared.accountManager.selectedAccount;
+    ZMConversation *conversation = [[Settings sharedSettings] lastViewedConversationFor:currentAccount];
+    
+    if (conversation != nil) {
+        [self selectConversation:conversation focusOnView:focus animated:animated];
+        
+        // dispatch async here because it has to happen after the collection view has finished
+        // laying out for the first time
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.conversationListViewController scrollToCurrentSelectionAnimated:NO];
+        });
+        
+        return YES;
+    }
+    else {
+        [self selectListItemWhenNoPreviousItemSelected];
+        return NO;
+    }
 }
 
 /**
