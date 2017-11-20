@@ -235,7 +235,12 @@
     // if changing from compact width to regular width, make sure current conversation is loaded
     if (previousTraitCollection.horizontalSizeClass == UIUserInterfaceSizeClassCompact
         && self.traitCollection.horizontalSizeClass == UIUserInterfaceSizeClassRegular) {
-        [self reloadCurrentConversation];
+        if (self.currentConversation) {
+            [self selectConversation:self.currentConversation];
+        }
+        else {
+            [self attemptToLoadLastViewedConversationWithFocus:NO animated:NO];
+        }
     }
     
     [self.view setNeedsLayout];
