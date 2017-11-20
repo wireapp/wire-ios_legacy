@@ -52,8 +52,11 @@ class SendController {
     private var unsentSendables: [UnsentSendable]
     private weak var sharingSession: SharingSession?
     private var progress : SendingStateCallback?
+    private var timeoutWorkItem : DispatchWorkItem?
+    private var timedOut = false
     
     public var sentAllSendables = false
+    
 
     init(text: String, attachments: [NSItemProvider], conversation: Conversation, sharingSession: SharingSession) {
         
@@ -80,6 +83,7 @@ class SendController {
     
     @objc func networkStatusDidChange(_ notification: Notification) {
         if let status = notification.object as? NetworkStatus, status.reachability() == .OK {
+            print("tryToTimeout from networkStatusDidChange")
             self.tryToTimeout()
         }
     }
@@ -88,6 +92,7 @@ class SendController {
     /// The passed in `SendingStateCallback` closure will be called multiple times with the current state of the operation.
     func send(progress: @escaping SendingStateCallback) {
         
+        self.timedOut = false
         self.progress = progress
         
         let completion: ([Sendable]) -> Void = { [weak self] sendables in
@@ -96,6 +101,7 @@ class SendController {
             self.observer = SendableBatchObserver(sendables: sendables)
             self.observer?.progressHandler = { [weak self] in
                 progress(.sending($0))
+                print("tryToTimeout from progress handler \($0)")
                 self?.tryToTimeout()
             }
 
@@ -120,21 +126,28 @@ class SendController {
         }
     }
     
-    
     func tryToTimeout() {
-        let seconds = 30.0
+        if timedOut { return }
+        
         cancelTimeout()
-        NSObject.perform(#selector(timeout), with: nil, afterDelay: seconds)
+        timeoutWorkItem = DispatchWorkItem { [weak self] in
+            self?.timeout()
+        }
+        
+        if let workItem = timeoutWorkItem {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 10.0, execute: workItem)
+        }
     }
     
     func cancelTimeout() {
-        NSObject.cancelPreviousPerformRequests(withTarget: self)
-        //NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(timeout), object: nil)
+        timeoutWorkItem?.cancel()
     }
     
     @objc func timeout() {
-        self.cancel {
-            self.progress?(.timedOut)
+        self.cancel { [weak self] in
+            self?.cancelTimeout()
+            self?.timedOut = true
+            self?.progress?(.timedOut)
         }
     }
     
