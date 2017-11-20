@@ -484,6 +484,7 @@
 		87831A971E69B5E600DDF3C3 /* ThreeDotsLoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87831A961E69B5E600DDF3C3 /* ThreeDotsLoadingView.swift */; };
 		87831A9A1E69B6D000DDF3C3 /* UIColor+WR_ColorScheme.h in Headers */ = {isa = PBXBuildFile; fileRef = 87831A981E69B6D000DDF3C3 /* UIColor+WR_ColorScheme.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		87831A9B1E69B6D000DDF3C3 /* UIColor+WR_ColorScheme.m in Sources */ = {isa = PBXBuildFile; fileRef = 87831A991E69B6D000DDF3C3 /* UIColor+WR_ColorScheme.m */; };
+		8784AE3E1FC2DE5300AAEAB8 /* MediaManagerLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8784AE3D1FC2DE5300AAEAB8 /* MediaManagerLoader.swift */; };
 		8784B6291D89448700AB71BD /* ProfileSelfPictureViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8784B6261D89448700AB71BD /* ProfileSelfPictureViewController.m */; };
 		8784B62A1D89448700AB71BD /* UIAlertController+NewSelfClients.m in Sources */ = {isa = PBXBuildFile; fileRef = 8784B6281D89448700AB71BD /* UIAlertController+NewSelfClients.m */; };
 		8784D4551E817D13007A6867 /* ConversationListTopBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8784D4541E817D13007A6867 /* ConversationListTopBar.swift */; };
@@ -1724,6 +1725,7 @@
 		87831A961E69B5E600DDF3C3 /* ThreeDotsLoadingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThreeDotsLoadingView.swift; sourceTree = "<group>"; };
 		87831A981E69B6D000DDF3C3 /* UIColor+WR_ColorScheme.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+WR_ColorScheme.h"; sourceTree = "<group>"; };
 		87831A991E69B6D000DDF3C3 /* UIColor+WR_ColorScheme.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+WR_ColorScheme.m"; sourceTree = "<group>"; };
+		8784AE3D1FC2DE5300AAEAB8 /* MediaManagerLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaManagerLoader.swift; sourceTree = "<group>"; };
 		8784B6251D89448700AB71BD /* ProfileSelfPictureViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfileSelfPictureViewController.h; sourceTree = "<group>"; };
 		8784B6261D89448700AB71BD /* ProfileSelfPictureViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileSelfPictureViewController.m; sourceTree = "<group>"; };
 		8784B6271D89448700AB71BD /* UIAlertController+NewSelfClients.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIAlertController+NewSelfClients.h"; sourceTree = "<group>"; };
@@ -3987,6 +3989,7 @@
 				8F5A3E9B19AE2C9E00D0E9DA /* AVSMediaManager+Additions.h */,
 				8F5A3E9C19AE2C9E00D0E9DA /* AVSMediaManager+Additions.m */,
 				87F280A91D080E8400F813CA /* AVSMediaManager+CustomSounds.swift */,
+				8784AE3D1FC2DE5300AAEAB8 /* MediaManagerLoader.swift */,
 			);
 			path = sound;
 			sourceTree = "<group>";
@@ -5941,6 +5944,7 @@
 				BF3A3DCA1EA642AB005477F8 /* MessageDraftStorage.swift in Sources */,
 				87DCF4F11D34EA4500BB420F /* UIViewController+WR_Invite.m in Sources */,
 				871067401C0DC5570035603B /* SettingsPropertyTextValueCellDescriptor.swift in Sources */,
+				8784AE3E1FC2DE5300AAEAB8 /* MediaManagerLoader.swift in Sources */,
 				876EECB31F5078D200E269F3 /* AccountSelectorController.swift in Sources */,
 				871BC2811D34F8F800DF0793 /* NSString+Fingerprint.m in Sources */,
 				BF989D081E896D210052BF8F /* ConversationCellBurstTimestampView.swift in Sources */,
