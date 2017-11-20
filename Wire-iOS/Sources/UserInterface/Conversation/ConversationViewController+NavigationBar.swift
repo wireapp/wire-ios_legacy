@@ -195,7 +195,6 @@ public extension ConversationViewController {
     }
 
     public func updateRightNavigationItemsButtons() {
-        // FIXME: iOS8 - we can use UIView's semanticContentAttribute on navigation bar
         if UIApplication.isLeftToRightLayout {
             navigationItem.rightBarButtonItems = rightNavigationItems(forConversation: conversation)
         }
