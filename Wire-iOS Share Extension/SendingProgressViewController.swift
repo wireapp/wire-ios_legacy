@@ -74,7 +74,10 @@ class SendingProgressViewController : UIViewController {
         self.navigationItem.hidesBackButton = true
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(onCancelTapped))
         
-        NotificationCenter.default.addObserver(self, selector: #selector(SendingProgressViewController.networkStatusDidChange(_:)), name: NSNotification.Name(rawValue: "networkStatusChange"), object: nil)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(SendingProgressViewController.networkStatusDidChange(_:)),
+                                               name: ShareExtensionNetworkObserver.statusChangeNotificationName,
+                                               object: nil)
         
         circularShadow.lineWidth = 2
         circularShadow.setProgress(1, animated: false)

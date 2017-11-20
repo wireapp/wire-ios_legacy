@@ -78,12 +78,14 @@ class SendController {
         self.sharingSession = sharingSession
         unsentSendables = sendables
         
-        NotificationCenter.default.addObserver(self, selector: #selector(SendController.networkStatusDidChange(_:)), name: NSNotification.Name(rawValue: "networkStatusChange"), object: nil)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(SendController.networkStatusDidChange(_:)),
+                                               name: ShareExtensionNetworkObserver.statusChangeNotificationName,
+                                               object: nil)
     }
     
     @objc func networkStatusDidChange(_ notification: Notification) {
         if let status = notification.object as? NetworkStatus, status.reachability() == .OK {
-            print("tryToTimeout from networkStatusDidChange")
             self.tryToTimeout()
         }
     }
@@ -101,7 +103,6 @@ class SendController {
             self.observer = SendableBatchObserver(sendables: sendables)
             self.observer?.progressHandler = { [weak self] in
                 progress(.sending($0))
-                print("tryToTimeout from progress handler \($0)")
                 self?.tryToTimeout()
             }
 
