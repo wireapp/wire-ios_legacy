@@ -228,6 +228,19 @@
     }
 }
 
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection
+{
+    [super traitCollectionDidChange:previousTraitCollection];
+    
+    // if changing from compact width to regular width, make sure current conversation is loaded
+    if (previousTraitCollection.horizontalSizeClass == UIUserInterfaceSizeClassCompact
+        && self.traitCollection.horizontalSizeClass == UIUserInterfaceSizeClassRegular) {
+        [self reloadCurrentConversation];
+    }
+    
+    [self.view setNeedsLayout];
+}
+
 #pragma mark - Setup methods
 
 - (void)setupConversationListViewController
@@ -506,8 +519,13 @@
 - (void)reloadCurrentConversation
 {
     // Need to reload conversation to apply color scheme changes
-    ConversationRootViewController *currentConversationViewController = [self conversationRootControllerForConversation:self.currentConversation];
-    [self pushContentViewController:currentConversationViewController focusOnView:NO animated:NO completion:nil];
+    if (self.currentConversation != nil) {
+        ConversationRootViewController *currentConversationViewController = [self conversationRootControllerForConversation:self.currentConversation];
+        [self pushContentViewController:currentConversationViewController focusOnView:NO animated:NO completion:nil];
+    }
+    else {
+        [self attemptToLoadLastViewedConversationWithFocus:NO animated:NO];
+    }
 }
 
 - (void)colorSchemeControllerDidApplyChanges:(NSNotification *)notification
