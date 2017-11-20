@@ -136,7 +136,7 @@ class SendController {
         }
         
         if let workItem = timeoutWorkItem {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 10.0, execute: workItem)
+            DispatchQueue.main.asyncAfter(deadline: .now() + 30.0, execute: workItem)
         }
     }
     
