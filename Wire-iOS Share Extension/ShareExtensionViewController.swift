@@ -23,6 +23,7 @@ import Cartography
 import MobileCoreServices
 import WireDataModel
 import WireExtensionComponents
+import LocalAuthentication
 import Classy
 
 /// The delay after which a progess view controller will be displayed if all messages are not yet sent.
@@ -249,8 +250,19 @@ class ShareExtensionViewController: SLComposeServiceViewController {
     }
     
     private func presentChooseConversation() {
-        guard let sharingSession = sharingSession else { return }
+        
+            requireLocalAuthenticationIfNeeded(with: { [weak self] (granted) in
+                if granted == nil || (granted != nil && granted!) {
+                    self?.showChooseConversation()
+                }
+            })
 
+    }
+    
+    func showChooseConversation() {
+        
+        guard let sharingSession = sharingSession else { return }
+        
         let allConversations = sharingSession.writeableNonArchivedConversations + sharingSession.writebleArchivedConversations
         let conversationSelectionViewController = ConversationSelectionViewController(conversations: allConversations)
         
@@ -262,6 +274,37 @@ class ShareExtensionViewController: SLComposeServiceViewController {
         
         pushConfigurationViewController(conversationSelectionViewController)
     }
+
+    /// @param callback confirmation; if the auth is not needed or is not possible on the current device called with '.none'
+    func requireLocalAuthenticationIfNeeded(with callback: @escaping (Bool?)->()) {
+        
+        guard #available(iOS 9.0, *), AppLock.isActive else {
+            callback(.none)
+            return
+        }
+        
+        guard let session = sharingSession, !session.isAuthenticated else {
+            callback(true)
+            return
+        }
+        
+        let context: LAContext = LAContext()
+        var error: NSError?
+        let description = "self.settings.privacy_security.lock_app.description".localized
+        
+        if context.canEvaluatePolicy(LAPolicy.deviceOwnerAuthentication, error: &error) {
+            context.evaluatePolicy(LAPolicy.deviceOwnerAuthentication, localizedReason: description, reply: { (success, error) -> Void in
+                DispatchQueue.main.async {
+                    session.isAuthenticated = success
+                    callback(success)
+                }
+            })
+        }
+        else {
+            callback(.none)
+        }
+    }
+    
     
     private func conversationDidDegrade(change: ConversationDegradationInfo, callback: @escaping DegradationStrategyChoice) {
         let title = titleForMissingClients(users: change.users)

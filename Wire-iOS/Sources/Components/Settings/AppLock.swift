@@ -17,6 +17,7 @@
 //
 
 import Foundation
+import WireDataModel
 
 class AppLock {
     // Returns true if user enabled the app lock feature.
