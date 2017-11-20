@@ -469,15 +469,7 @@
 
 - (BOOL)isConversationViewVisible
 {
-    if (IS_IPAD_LANDSCAPE_LAYOUT) {
-        return [self.splitViewController.rightViewController isKindOfClass:[ConversationViewController class]];
-    }
-    else if (self.splitViewController.leftViewControllerRevealed) {
-        return NO;
-    }
-    else {
-        return YES;
-    }
+    return IS_IPAD_LANDSCAPE_LAYOUT || !self.splitViewController.leftViewControllerRevealed;
 }
 
 - (ZMUserSession *)context
