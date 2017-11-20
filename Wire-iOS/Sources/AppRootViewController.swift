@@ -461,18 +461,17 @@ extension AppRootViewController : LandingViewControllerDelegate {
     }
 
     func landingViewControllerDidChooseLogin() {
-        let registrationViewController = RegistrationViewController()
+        let registrationViewController = RegistrationViewController(authenticationFlow: .onlyLogin)
         registrationViewController.delegate = appStateController
 
 
         transition(to: registrationViewController, animated: true) {
             self.requestToOpenViewDelegate = registrationViewController as? ZMRequestsToOpenViewsDelegate
-            registrationViewController.showLogin = true
         }
     }
 
     func landingViewControllerDidChooseCreateAccount() {
-        let registrationViewController = RegistrationViewController()
+        let registrationViewController = RegistrationViewController(authenticationFlow: .onlyRegistration)
         registrationViewController.delegate = appStateController
 
         transition(to: registrationViewController, animated: true) {
