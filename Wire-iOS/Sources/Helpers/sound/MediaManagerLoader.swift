@@ -21,7 +21,7 @@ import CocoaLumberjackSwift
 import avs
 
 
-// The AVS libarary consists of several components, those are:
+// The AVS library consists of several components, those are:
 // - FlowManager: the component for establishing the network media flows.
 // - MediaManager: the part responsible for audio routing on the device.
 // - wcall: the Calling3 implementation.
