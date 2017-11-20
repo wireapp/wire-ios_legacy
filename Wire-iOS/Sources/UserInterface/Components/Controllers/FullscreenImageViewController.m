@@ -199,10 +199,10 @@
 - (void)setupSnapshotBackgroundView
 {
     UIView *snapshotBackgroundView = [self.delegate respondsToSelector:@selector(backgroundScreenshotForController:)] ? [self.delegate backgroundScreenshotForController:self] : nil;
-    self.snapshotBackgroundView = snapshotBackgroundView;
     if (nil == snapshotBackgroundView) {
         return;
     }
+    self.snapshotBackgroundView = snapshotBackgroundView;
     snapshotBackgroundView.translatesAutoresizingMaskIntoConstraints = NO;
     [self.view addSubview:snapshotBackgroundView];
 
@@ -367,7 +367,7 @@
 {
     [[UIMenuController sharedMenuController] setMenuVisible:NO];
     
-    if (! IS_IPAD) {
+    if (! IS_IPAD_FULLSCREEN) {
         self.forcePortraitMode = YES;
     }
     [self dismissWithCompletion:nil];

@@ -24,15 +24,25 @@
 
 #import <AVFoundation/AVFoundation.h>
 
+NSString * const UserGrantedAudioPermissionsNotification = @"UserGrantedAudioPermissionsNotification";
+
 @implementation UIApplication (Permissions)
 
 + (void)wr_requestOrWarnAboutMicrophoneAccess:(void(^)(BOOL granted))grantedHandler
 {
+    BOOL audioPermissionsWereNotDetermined = [AVCaptureDevice authorizationStatusForMediaType:AVMediaTypeAudio] == AVAuthorizationStatusNotDetermined;
+    
     [[AVAudioSession sharedInstance] requestRecordPermission:^(BOOL granted) {
+        
         dispatch_async(dispatch_get_main_queue(), ^{
             if (! granted) {
                 [self wr_warnAboutMicrophonePermission];
             }
+            
+            if (audioPermissionsWereNotDetermined && granted) {
+                [[NSNotificationCenter defaultCenter] postNotificationName:UserGrantedAudioPermissionsNotification object:nil];
+            }
+            
             if (grantedHandler != nil) grantedHandler(granted);
         });
     }];

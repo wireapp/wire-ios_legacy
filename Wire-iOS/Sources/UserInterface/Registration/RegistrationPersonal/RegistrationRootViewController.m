@@ -103,6 +103,17 @@
     [self createConstraints];
 }
 
+
+/**
+ Setter of showLogin. When this is set to true, switch to login tab animatied. Else animates to register tab
+
+ @param newValue showLogin's new value
+ */
+- (void)setShowLogin: (BOOL)newValue{
+    _showLogin = newValue;
+    [self.registrationTabBarController selectIndex:_showLogin ? 1 : 0 animated:YES];
+}
+
 - (Account *)firstAuthenticatedAccount {
     Account *selectedAccount = SessionManager.shared.accountManager.selectedAccount;
     
@@ -122,7 +133,7 @@
 - (void)createConstraints
 {
     [self.registrationTabBarController.view autoPinEdgesToSuperviewEdgesWithInsets:UIScreen.safeArea excludingEdge:ALEdgeTop];
-    [self.registrationTabBarController.view autoSetDimension:ALDimensionHeight toSize:[SizeClass isIPadInFullScreenMode] ? 262 : 244];
+    [self.registrationTabBarController.view autoSetDimension:ALDimensionHeight toSize:IS_IPAD_FULLSCREEN ? 262 : 244];
     [self.cancelButton autoPinEdgeToSuperviewEdge:ALEdgeTop withInset:UIScreen.safeArea.top + 32];
     [self.cancelButton autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:16];
 }

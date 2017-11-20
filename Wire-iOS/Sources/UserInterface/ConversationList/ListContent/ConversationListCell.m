@@ -122,7 +122,7 @@ static const NSTimeInterval OverscrollRatio = 2.5;
 - (void)setSelected:(BOOL)selected
 {
     [super setSelected:selected];
-    if (IS_IPAD) {
+    if (IS_IPAD_FULLSCREEN) {
         self.itemView.selected  = self.selected || self.highlighted;
     }
 }
@@ -130,7 +130,7 @@ static const NSTimeInterval OverscrollRatio = 2.5;
 - (void)setHighlighted:(BOOL)highlighted
 {
     [super setHighlighted:highlighted];
-    if (IS_IPAD) {
+    if (IS_IPAD_FULLSCREEN) {
         self.itemView.selected  = self.selected || self.highlighted;
     } else {
         self.itemView.selected = self.highlighted;

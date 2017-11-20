@@ -22,6 +22,7 @@
 #import "UIColor+WAZExtensions.h"
 #import "Settings.h"
 #import "Constants.h"
+#import "Wire-Swift.h"
 
 // Base config files (no overlap)
 static NSString *const MagicConfigFileBaseStyles        = @"style.plist";

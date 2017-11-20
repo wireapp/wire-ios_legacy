@@ -173,7 +173,7 @@ class ActiveVoiceChannelViewController : UIViewController {
 
 extension ActiveVoiceChannelViewController : WireCallCenterCallStateObserver {
     
-    func callCenterDidChange(callState: CallState, conversation: ZMConversation, user: ZMUser?, timeStamp: Date?) {
+    func callCenterDidChange(callState: CallState, conversation: ZMConversation, caller: ZMUser, timestamp: Date?) {
         updateVisibleVoiceChannelViewController()
     }
     

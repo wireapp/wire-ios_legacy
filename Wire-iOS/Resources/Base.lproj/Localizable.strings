@@ -665,13 +665,11 @@
 "self.settings.sound_menu.ping.title" = "Ping";
 "self.settings.sound_menu.ringtones.title" = "Ringtones";
 "self.settings.sound_menu.sounds.wire_sound" = "Wire";
+"self.settings.sound_menu.sounds.none" = "None";
 
 "self.settings.callkit.title" = "Calls";
 "self.settings.callkit.caption" = "Share with iOS";
 "self.settings.callkit.description" = "Show Wire calls on the lock screen and in iOS call history. If iCloud is enabled, call history is shared with Apple.";
-
-"self.settings.cbr.not_available" = "Constant Bit Rate Encoding";
-"self.settings.cbr.not_available.description" = "Constant bit rate calls have been temporarily disabled with the introduction of multiple account support. CBR calls will be back soon.";
 
 "self.settings.vbr.title" = "Variable Bit Rate Encoding";
 "self.settings.vbr.description" = "This makes audio calls use less data and work better on slower networks. Turn off to use Constant Bitrate Encoding.";
@@ -783,6 +781,18 @@
 "password.placeholder" = "Password";
 "password.guidance.tooshort" = "At least 8 characters";
 "password.guidance.toolong" = "Too many characters";
+
+// Landing screen
+
+"landing.title" = "Secure messenger for everyone.";
+"landing.create_account.title" = "Create an account";
+"landing.create_account.subtitle" = "for personal use";
+"landing.create_team.title" = "Create a team";
+"landing.create_team.subtitle" = "for personal use";
+"landing.login.hints" = "Already have an account?";
+"landing.login.button.title" = "Log in";
+
+// Registration
 
 "registration.title" = "Registration";
 "registration.close_email_invitation_button.email_title" = "Use another email";

@@ -79,7 +79,7 @@
 - (void)setSelected:(BOOL)selected
 {
     [super setSelected:selected];
-    if (IS_IPAD) {
+    if (IS_IPAD_FULLSCREEN) {
         self.itemView.selected  = self.selected || self.highlighted;
     }
 }
@@ -87,7 +87,7 @@
 - (void)setHighlighted:(BOOL)highlighted
 {
     [super setHighlighted:highlighted];
-    if (IS_IPAD) {
+    if (IS_IPAD_FULLSCREEN) {
         self.itemView.selected  = self.selected || self.highlighted;
     } else {
         self.itemView.selected  = self.highlighted;

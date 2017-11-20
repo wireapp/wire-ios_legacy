@@ -44,5 +44,6 @@ FOUNDATION_EXPORT NSString *const UserPrefKeyAccentColorTipCompleted;
 #define IS_IPHONE_6_PLUS_OR_BIGGER (IS_IPHONE && [[UIScreen mainScreen] nativeBounds].size.height >= 1920.0f)
 
 #define IS_IPAD ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad)
-#define IS_IPAD_LANDSCAPE_LAYOUT (([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) && UIInterfaceOrientationIsLandscape([UIApplication sharedApplication].statusBarOrientation))
-#define IS_IPAD_PORTRAIT_LAYOUT (([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) && UIInterfaceOrientationIsPortrait([UIApplication sharedApplication].statusBarOrientation))
+#define IS_IPAD_FULLSCREEN (IS_IPAD && [UIApplication sharedApplication].keyWindow.traitCollection.horizontalSizeClass == UIUserInterfaceSizeClassRegular)
+#define IS_IPAD_LANDSCAPE_LAYOUT (IS_IPAD_FULLSCREEN && UIInterfaceOrientationIsLandscape([UIApplication sharedApplication].statusBarOrientation))
+#define IS_IPAD_PORTRAIT_LAYOUT (IS_IPAD_FULLSCREEN && UIInterfaceOrientationIsPortrait([UIApplication sharedApplication].statusBarOrientation))

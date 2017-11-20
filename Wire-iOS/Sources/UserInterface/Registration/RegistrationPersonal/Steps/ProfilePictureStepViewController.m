@@ -168,7 +168,7 @@ NSString * const UnsplashRandomImageLowQualityURL = @"https://source.unsplash.co
     [self.profilePictureImageView autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero];
     [self.overlayView autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero];
 
-    if ([SizeClass isIPadInFullScreenMode]) {
+    if (IS_IPAD_FULLSCREEN) {
         [self.contentView autoSetDimension:ALDimensionWidth toSize:self.parentViewController.maximumFormSize.width];
         [self.contentView autoSetDimension:ALDimensionHeight toSize:self.parentViewController.maximumFormSize.height];
         [self.contentView autoCenterInSuperview];

@@ -19,6 +19,8 @@
 
 #import <UIKit/UIKit.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface UIImage (ImageUtilities)
 
 - (UIImage *)imageScaledWithFactor:(CGFloat)scaleFactor;
@@ -33,10 +35,10 @@
 + (UIImage *)shadowImageWithInset:(CGFloat)inset color:(UIColor *)color;
 - (UIImage *)blurredImageWithContext:(CIContext *)context
                           blurRadius:(CGFloat)radius;
-+ (UIImage *)deviceOptimizedImageFromData:(NSData *)imageData;
-+ (UIImage *)imageFromData:(NSData *)imageData withMaxSize:(CGFloat)maxSize;
++ (nullable UIImage *)deviceOptimizedImageFromData:(NSData *)imageData;
++ (nullable UIImage *)imageFromData:(NSData *)imageData withMaxSize:(CGFloat)maxSize;
 
 + (UIImage *)imageWithColor:(UIColor *)color andSize:(CGSize)size;
-
 @end
 
+NS_ASSUME_NONNULL_END

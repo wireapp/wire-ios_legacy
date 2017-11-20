@@ -117,7 +117,7 @@
     [self.OKButton autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsMake(0, 28, 28, 28) excludingEdge:ALEdgeTop];
     [self.OKButton autoSetDimension:ALDimensionHeight toSize:40];
     
-    if ([SizeClass isIPadInFullScreenMode]) {
+    if (IS_IPAD_FULLSCREEN) {
         [self.contentView autoSetDimension:ALDimensionWidth toSize:self.parentViewController.maximumFormSize.width];
         [self.contentView autoSetDimension:ALDimensionHeight toSize:self.parentViewController.maximumFormSize.height];
         [self.contentView autoCenterInSuperview];

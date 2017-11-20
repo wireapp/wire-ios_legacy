@@ -60,7 +60,7 @@ class SettingsPropertyFactory {
     var tracking: TrackingInterface?
     var mediaManager: AVSMediaManagerInterface?
     weak var userSession: ZMUserSessionInterface?
-    let selfUser: SettingsSelfUser
+    var selfUser: SettingsSelfUser?
     
     static let userDefaultsPropertiesToKeys: [SettingsPropertyName: String] = [
         SettingsPropertyName.disableMarkdown            : UserDefaultDisableMarkdown,
@@ -79,7 +79,11 @@ class SettingsPropertyFactory {
         SettingsPropertyName.disableLinkPreviews        : UserDefaultDisableLinkPreviews,
     ]
     
-    init(userDefaults: UserDefaults, tracking: TrackingInterface?, mediaManager: AVSMediaManagerInterface?, userSession: ZMUserSessionInterface, selfUser: SettingsSelfUser) {
+    convenience init(userSession: ZMUserSessionInterface?, selfUser: SettingsSelfUser?) {
+        self.init(userDefaults: UserDefaults.standard, tracking: TrackingManager.shared, mediaManager: AVSMediaManager.sharedInstance(), userSession: userSession, selfUser: selfUser)
+    }
+    
+    init(userDefaults: UserDefaults, tracking: TrackingInterface?, mediaManager: AVSMediaManagerInterface?, userSession: ZMUserSessionInterface?, selfUser: SettingsSelfUser?) {
         self.userDefaults = userDefaults
         self.tracking = tracking
         self.mediaManager = mediaManager
@@ -93,14 +97,15 @@ class SettingsPropertyFactory {
             // Profile
         case .profileName:
             let getAction: GetAction = { [unowned self] (property: SettingsBlockProperty) -> SettingsPropertyValue in
-                return SettingsPropertyValue.string(value: self.selfUser.name)
+                return SettingsPropertyValue.string(value: self.selfUser?.name ?? "")
             }
             let setAction: SetAction = { [unowned self] (property: SettingsBlockProperty, value: SettingsPropertyValue) throws -> () in
                 switch(value) {
                 case .string(let stringValue):
+                    guard let selfUser = self.selfUser else { requireInternal(false, "Attempt to modify a user property without a self user"); break }
+                    
                     var inOutString: NSString? = stringValue as NSString
-                    try type(of: self.selfUser).validateName(&inOutString)
-                    let selfUser = self.selfUser
+                    try type(of: selfUser).validateName(&inOutString)
                     self.userSession?.enqueueChanges {
                         selfUser.name = stringValue
                     }
@@ -113,13 +118,13 @@ class SettingsPropertyFactory {
 
         case .accentColor:
             let getAction : GetAction = { [unowned self] (property: SettingsBlockProperty) -> SettingsPropertyValue in
-                return SettingsPropertyValue(self.selfUser.accentColorValue.rawValue)
+                return SettingsPropertyValue(self.selfUser?.accentColorValue.rawValue ?? ZMAccentColor.undefined.rawValue)
             }
             let setAction : SetAction = { [unowned self] (property: SettingsBlockProperty, value: SettingsPropertyValue) throws -> () in
                 switch(value) {
                 case .number(let number):
                     self.userSession?.enqueueChanges({
-                        self.selfUser.accentColorValue = ZMAccentColor(rawValue: number.int16Value)!
+                        self.selfUser?.accentColorValue = ZMAccentColor(rawValue: number.int16Value)!
                     })
                 default:
                     throw SettingsPropertyError.WrongValue("Incorrect type \(value) for key \(propertyName)")
@@ -293,17 +298,3 @@ class SettingsPropertyFactory {
     }
 }
 
-extension SettingsPropertyFactory {
-    static var shared: SettingsPropertyFactory? {
-        guard let manager = SessionManager.shared, let session = manager.isUserSessionActive ? ZMUserSession.shared() : nil else {
-            return .none
-        }
-        let settingsPropertyFactory = SettingsPropertyFactory(userDefaults: UserDefaults.standard,
-                                                              tracking: TrackingManager.shared,
-                                                              mediaManager: AVSMediaManager.sharedInstance(),
-                                                              userSession: session,
-                                                              selfUser: ZMUser.selfUser())
-        
-        return settingsPropertyFactory
-    }
-}

@@ -65,7 +65,7 @@
 
 - (void)createInitialConstraints
 {
-    if ([SizeClass isIPadInFullScreenMode]) {
+    if (IS_IPAD_FULLSCREEN) {
         
         [NSLayoutConstraint autoSetPriority:UILayoutPriorityDefaultHigh + 1 forConstraints:^{
             [self.viewController.view autoSetDimension:ALDimensionWidth toSize:self.viewController.maximumFormSize.width];
@@ -96,6 +96,12 @@
 
 @implementation UIViewController (RegistrationFormController)
 
+
+/**
+ Maximum form size for iPad (not for split/slide over mode)
+
+ @return a CGSize for maximum form size
+ */
 - (CGSize)maximumFormSize
 {
     return CGSizeMake(414, 736);

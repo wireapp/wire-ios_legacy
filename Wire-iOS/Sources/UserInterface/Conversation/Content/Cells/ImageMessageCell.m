@@ -93,10 +93,9 @@ static const CGFloat ImageToolbarMinimumSize = 192;
         _autoStretchVertically = YES;
         [self createImageMessageViews];
         [self createConstraints];
-        
-        self.defaultLayoutMargins = UIEdgeInsetsMake(0, [WAZUIMagic floatForIdentifier:@"content.left_margin"],
-                                                     0, [WAZUIMagic floatForIdentifier:@"content.right_margin"]);
-        
+
+        self.defaultLayoutMargins = [ImageMessageCell layoutDirectionAwareLayoutMargins];
+
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(applicationDidEnterBackground:)
                                                      name:UIApplicationDidEnterBackgroundNotification
@@ -593,6 +592,13 @@ static const CGFloat ImageToolbarMinimumSize = 192;
 -(CGFloat)getPreviewContentHeight
 {
     return [CellSizesProvider heightForImage: [self.fullImageView image]];
+}
+
+- (void)traitCollectionDidChange:(nullable UITraitCollection *)previousTraitCollection {
+    [super traitCollectionDidChange:previousTraitCollection];
+
+    self.defaultLayoutMargins = [ImageMessageCell layoutDirectionAwareLayoutMargins];
+    [self updateImageMessageConstraintConstants];
 }
 
 @end

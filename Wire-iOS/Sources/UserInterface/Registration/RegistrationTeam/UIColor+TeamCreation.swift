@@ -16,12 +16,14 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-
 import Foundation
 
-@objc open class SizeClass: NSObject {
-    @objc static var isIPadInFullScreenMode: Bool {
-        return UIDevice.current.userInterfaceIdiom == .pad && UIApplication.shared.keyWindow?.traitCollection.horizontalSizeClass == .regular
-    }
+extension UIColor {
+    static let background = UIColor(red:0.97, green:0.97, blue:0.97, alpha:1.0)
+    static let inactiveButton = UIColor(red:0.20, green:0.22, blue:0.23, alpha:0.16)
+    static let activeButton = UIColor(red:0.14, green:0.57, blue:0.83, alpha:1.0)
+    static let createAccountBlue = UIColor(for: .strongBlue)!
+    static let createTeamGreen = UIColor(for: .strongLimeGreen)!
+    static let textColor = UIColor(red:0.20, green:0.22, blue:0.23, alpha:1.0)
+    static let subtitleColor = UIColor(red:0.20, green:0.22, blue:0.23, alpha:0.56)
 }
-

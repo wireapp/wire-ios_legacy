@@ -457,6 +457,20 @@ static const CGFloat BurstContainerExpandedHeight = 40;
     else {
         self.countdownContainerView.hidden = countdownContainerViewHidden;
     }
+    
+}
+
+#pragma mark - Size class
+
+/**
+ When iPad switches form/to slide over/fullscreen/split mode, update contentLayoutMargins
+
+ @param previousTraitCollection previousTraitCollection
+ */
+- (void)traitCollectionDidChange:(nullable UITraitCollection *)previousTraitCollection {
+    [super traitCollectionDidChange:previousTraitCollection];
+
+    self.contentLayoutMargins = self.class.layoutDirectionAwareLayoutMargins;
 }
 
 #pragma mark - Long press management
