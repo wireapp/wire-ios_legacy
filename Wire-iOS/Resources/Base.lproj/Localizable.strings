@@ -788,7 +788,7 @@
 "landing.create_account.title" = "Create an account";
 "landing.create_account.subtitle" = "for personal use";
 "landing.create_team.title" = "Create a team";
-"landing.create_team.subtitle" = "for personal use";
+"landing.create_team.subtitle" = "for work";
 "landing.login.hints" = "Already have an account?";
 "landing.login.button.title" = "Log in";
 
