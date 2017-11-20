@@ -41,6 +41,7 @@ class AppRootViewController : UIViewController {
     fileprivate var authenticatedBlocks : [() -> Void] = []
     fileprivate let transitionQueue : DispatchQueue = DispatchQueue(label: "transitionQueue")
     fileprivate var isClassyInitialized = false
+    fileprivate let mediaManagerLoader = MediaManagerLoader()
     
     fileprivate weak var requestToOpenViewDelegate: ZMRequestsToOpenViewsDelegate? {
         didSet {
@@ -296,15 +297,8 @@ class AppRootViewController : UIViewController {
         }
     }
     
-    func configureMediaManager() {        
-        guard let mediaManager = AVSMediaManager.sharedInstance() else {
-            return
-        }
-        
-        mediaManager.configureSounds()
-        mediaManager.observeSoundConfigurationChanges()
-        mediaManager.isMicrophoneMuted = false
-        mediaManager.isSpeakerEnabled = false
+    func configureMediaManager() {
+        self.mediaManagerLoader.send(message: .appStart)
     }
     
     func setupClassy(with windows: [UIWindow]) {
