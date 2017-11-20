@@ -117,6 +117,13 @@ public struct FontSpec {
     public let weight: FontWeight?
     public let fontTextStyle: UIFontTextStyle?
 
+
+    /// init method of FontSpec
+    ///
+    /// - Parameters:
+    ///   - size: a FontSize enum
+    ///   - weight: a FontWeight enum, if weight == nil, then apply the default value .light
+    ///   - fontTextStyle: a UIFontTextStyle enum, if fontTextStyle == nil, then apply the default style. Possible values: .none or .title1
     public init(_ size: FontSize, _ weight: FontWeight?, _ fontTextStyle: UIFontTextStyle? = .none) {
         self.size = size
         self.weight = weight
