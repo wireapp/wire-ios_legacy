@@ -519,20 +519,15 @@
 - (void)reloadCurrentConversation
 {
     // Need to reload conversation to apply color scheme changes
-    if (self.currentConversation != nil) {
+    if (self.currentConversation) {
         ConversationRootViewController *currentConversationViewController = [self conversationRootControllerForConversation:self.currentConversation];
         [self pushContentViewController:currentConversationViewController focusOnView:NO animated:NO completion:nil];
-    }
-    else {
-        [self attemptToLoadLastViewedConversationWithFocus:NO animated:NO];
     }
 }
 
 - (void)colorSchemeControllerDidApplyChanges:(NSNotification *)notification
 {
-    if (self.currentConversation) {
-        [self reloadCurrentConversation];
-    }
+    [self reloadCurrentConversation];
 }
 
 - (void)contentSizeCategoryDidChange:(NSNotification *)notification
