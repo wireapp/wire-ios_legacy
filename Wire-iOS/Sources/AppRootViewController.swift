@@ -56,7 +56,10 @@ class AppRootViewController : UIViewController {
 
     override public func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         mainWindow.frame.size = size
-        overlayWindow.frame.size = size
+
+        coordinator.animate(alongsideTransition: nil, completion: { _ in
+            self.overlayWindow.frame = UIScreen.main.bounds
+        })
     }
 
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
@@ -95,8 +98,8 @@ class AppRootViewController : UIViewController {
         }
         
         NotificationCenter.default.addObserver(self, selector: #selector(onContentSizeCategoryChange), name: Notification.Name.UIContentSizeCategoryDidChange, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(applicationWillEnterForeground), name: Notification.Name.UIApplicationWillEnterForeground, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(applicationDidEnterBackground), name: Notification.Name.UIApplicationDidEnterBackground, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(applicationDidBecomeActive), name: Notification.Name.UIApplicationDidBecomeActive, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(onUserGrantedAudioPermissions), name: Notification.Name.UserGrantedAudioPermissions, object: nil)
         
         transition(to: .headless)
@@ -414,14 +417,18 @@ extension AppRootViewController : LocalNotificationResponder {
     func processLocal(_ notification: ZMLocalNotification, forSession session: ZMUserSession) {
         (self.overlayWindow.rootViewController as! NotificationWindowRootViewController).show(notification)
     }
-    
+
+
+
+
+    @objc fileprivate func applicationWillEnterForeground() {
+        self.overlayWindow.frame = UIScreen.main.bounds
+    }
+
     @objc fileprivate func applicationDidEnterBackground() {
         let unreadConversations = sessionManager?.accountManager.totalUnreadCount ?? 0
         UIApplication.shared.applicationIconBadgeNumber = unreadConversations
-    }
 
-    @objc fileprivate func applicationDidBecomeActive() {
-        overlayWindow.frame.size = UIScreen.main.bounds.size
     }
 }
 
