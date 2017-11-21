@@ -74,6 +74,11 @@
     [self updateViewConstraints];
 }
 
+- (BOOL)prefersStatusBarHidden
+{
+    return self.topViewController.prefersStatusBarHidden;
+}
+
 - (void)setupBackButton
 {
     self.backButton = [[IconButton alloc] initForAutoLayout];
