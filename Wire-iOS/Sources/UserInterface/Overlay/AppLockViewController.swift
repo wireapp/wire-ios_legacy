@@ -18,7 +18,6 @@
 
 import Foundation
 import Cartography
-import LocalAuthentication
 import CocoaLumberjackSwift
 
 
@@ -132,27 +131,15 @@ import CocoaLumberjackSwift
             return
         }
         
-        let context: LAContext = LAContext()
-        var error: NSError?
-        let description = "self.settings.privacy_security.lock_app.description".localized
-        
-        if context.canEvaluatePolicy(LAPolicy.deviceOwnerAuthentication, error: &error) {
-            context.evaluatePolicy(LAPolicy.deviceOwnerAuthentication, localizedReason: description, reply: { (success, error) -> Void in
-                DispatchQueue.main.async {
-                    callback(success)
-                    
-                    if !success {
-                        DDLogError("Local authentication error: \(String(describing: error?.localizedDescription))")
-                    }
-                    else {
-                        AppLock.lastUnlockedDate = Date()
-                    }
+        AppLock.evaluateAuthentication(description: "self.settings.privacy_security.lock_app.description".localized) { (success, error) in
+            DispatchQueue.main.async {
+                callback(success)
+                if let success = success, success {
+                    AppLock.lastUnlockedDate = Date()
+                } else {
+                    DDLogError("Local authentication error: \(String(describing: error?.localizedDescription))")
                 }
-            })
-        }
-        else {
-            DDLogError("Local authentication error: \(String(describing: error?.localizedDescription))")
-            callback(.none)
+            }
         }
     }
 }

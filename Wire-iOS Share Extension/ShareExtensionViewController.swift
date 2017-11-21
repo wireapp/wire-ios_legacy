@@ -23,7 +23,7 @@ import Cartography
 import MobileCoreServices
 import WireDataModel
 import WireExtensionComponents
-import LocalAuthentication
+import CocoaLumberjackSwift
 import Classy
 
 /// The delay after which a progess view controller will be displayed if all messages are not yet sent.
@@ -250,13 +250,11 @@ class ShareExtensionViewController: SLComposeServiceViewController {
     }
     
     private func presentChooseConversation() {
-        
-            requireLocalAuthenticationIfNeeded(with: { [weak self] (granted) in
-                if granted == nil || (granted != nil && granted!) {
-                    self?.showChooseConversation()
-                }
-            })
-
+        requireLocalAuthenticationIfNeeded(with: { [weak self] (granted) in
+            if granted == nil || (granted != nil && granted!) {
+                self?.showChooseConversation()
+            }
+        })
     }
     
     func showChooseConversation() {
@@ -288,20 +286,15 @@ class ShareExtensionViewController: SLComposeServiceViewController {
             return
         }
         
-        let context: LAContext = LAContext()
-        var error: NSError?
-        let description = "self.settings.privacy_security.lock_app.description".localized
-        
-        if context.canEvaluatePolicy(LAPolicy.deviceOwnerAuthentication, error: &error) {
-            context.evaluatePolicy(LAPolicy.deviceOwnerAuthentication, localizedReason: description, reply: { (success, error) -> Void in
-                DispatchQueue.main.async {
+        AppLock.evaluateAuthentication(description: "share_extension.privacy_security.lock_app.description".localized) { (success, error) in
+            DispatchQueue.main.async {
+                callback(success)
+                if let success = success, success {
                     session.isAuthenticated = success
-                    callback(success)
+                } else {
+                    DDLogError("Local authentication error: \(String(describing: error?.localizedDescription))")
                 }
-            })
-        }
-        else {
-            callback(.none)
+            }
         }
     }
     

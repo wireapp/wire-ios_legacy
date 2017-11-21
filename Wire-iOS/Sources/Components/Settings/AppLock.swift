@@ -18,6 +18,7 @@
 
 import Foundation
 import WireDataModel
+import LocalAuthentication
 
 class AppLock {
     // Returns true if user enabled the app lock feature.
@@ -72,4 +73,22 @@ class AppLock {
             self.lastUnlockDateAsInt = UInt32(newValue.timeIntervalSinceReferenceDate)
         }
     }
+    
+    // Creates a new LAContext and evaluates the authentication settings of the user.
+    static func evaluateAuthentication(description: String, with callback: @escaping (Bool?, Error?)->()) {
+    
+        let context: LAContext = LAContext()
+        var error: NSError?
+    
+        if context.canEvaluatePolicy(LAPolicy.deviceOwnerAuthentication, error: &error) {
+            context.evaluatePolicy(LAPolicy.deviceOwnerAuthentication,
+                                   localizedReason: description,
+                                   reply: { (success, error) -> Void in
+                callback(success, error)
+            })
+        } else {
+            callback(.none, error)
+        }
+    }
+    
 }
