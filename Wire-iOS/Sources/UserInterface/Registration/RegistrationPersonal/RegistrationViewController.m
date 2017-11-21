@@ -156,7 +156,7 @@
     self.rootNavigationController.view.opaque = NO;
     self.rootNavigationController.delegate = self;
     self.rootNavigationController.navigationBarHidden = YES;
-    self.rootNavigationController.logoEnabled = ! IS_IPHONE_4;
+    self.rootNavigationController.logoEnabled = !IS_IPHONE_4 && (self.signInError != nil);
     
     self.keyboardAvoidingViewController = [[KeyboardAvoidingViewController alloc] initWithViewController:self.rootNavigationController];
     self.keyboardAvoidingViewController.view.translatesAutoresizingMaskIntoConstraints = NO;
