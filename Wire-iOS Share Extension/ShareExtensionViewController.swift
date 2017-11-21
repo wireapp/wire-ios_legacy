@@ -276,12 +276,12 @@ class ShareExtensionViewController: SLComposeServiceViewController {
     /// @param callback confirmation; if the auth is not needed or is not possible on the current device called with '.none'
     func requireLocalAuthenticationIfNeeded(with callback: @escaping (Bool?)->()) {
         
-        guard #available(iOS 9.0, *), AppLock.isActive else {
+        guard AppLock.isActive else {
             callback(.none)
             return
         }
         
-        guard let session = sharingSession, !session.isAuthenticated else {
+        guard let session = sharingSession, !session.isLocalAuthenticationGranted else {
             callback(true)
             return
         }
@@ -290,7 +290,7 @@ class ShareExtensionViewController: SLComposeServiceViewController {
             DispatchQueue.main.async {
                 callback(success)
                 if let success = success, success {
-                    session.isAuthenticated = success
+                    session.isLocalAuthenticationGranted = success
                 } else {
                     DDLogError("Local authentication error: \(String(describing: error?.localizedDescription))")
                 }

@@ -18,6 +18,7 @@
 
 import Foundation
 import Cartography
+import WireExtensionComponents
 
 @objc internal final class AppLockView: UIView {
     public var onReauthRequested: (()->())?

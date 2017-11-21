@@ -15,7 +15,7 @@
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
-
+import Foundation
 
 
 /**
@@ -33,7 +33,7 @@
  - DisableLinkPreviews:    Disable link previews for links you send
  - Disable(.*):            Disable some app features (debug)
  */
-enum SettingsPropertyName: String, CustomStringConvertible {
+public enum SettingsPropertyName: String, CustomStringConvertible {
     
     // User defaults
     case chatHeadsDisabled = "ChatHeadsDisabled"
@@ -79,11 +79,11 @@ enum SettingsPropertyName: String, CustomStringConvertible {
     case lockApp = "lockApp"
     case lockAppLastDate = "lockAppLastDate"
     
-    var changeNotificationName: String {
+    public var changeNotificationName: String {
         return self.description + "ChangeNotification"
     }
     
-    var description: String {
+    public var description: String {
         return self.rawValue;
     }
 }

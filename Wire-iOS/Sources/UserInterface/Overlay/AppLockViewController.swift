@@ -19,6 +19,7 @@
 import Foundation
 import Cartography
 import CocoaLumberjackSwift
+import WireExtensionComponents
 
 
 @objc final class AppLockViewController: UIViewController {
@@ -117,7 +118,7 @@ import CocoaLumberjackSwift
 
     /// @param callback confirmation; if the auth is not needed or is not possible on the current device called with '.none'
     func requireLocalAuthenticationIfNeeded(with callback: @escaping (Bool?)->()) {
-        guard #available(iOS 9.0, *), AppLock.isActive else {
+        guard AppLock.isActive else {
             callback(.none)
             return
         }
