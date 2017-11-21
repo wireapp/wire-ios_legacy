@@ -186,12 +186,9 @@ class AppRootViewController : UIViewController {
         case .unauthenticated(error: let error):
             UIColor.setAccentOverride(ZMUser.pickRandomAccentColor())
             mainWindow.tintColor = UIColor.accent()
-            if let error = error {
-                let registrationViewController = RegistrationViewController()
-                registrationViewController.delegate = appStateController
-                registrationViewController.signInError = error
-                viewController = registrationViewController
-            } else {
+            let authenticatedAccounts = SessionManager.shared?.accountManager.accounts.filter { $0.isAuthenticated } ?? []
+
+            if error == nil && authenticatedAccounts.isEmpty {
                 // When we show the landing controller we want it to be nested in navigation controller
                 let landingViewController = LandingViewController()
                 landingViewController.delegate = self
@@ -200,6 +197,11 @@ class AppRootViewController : UIViewController {
                 navigationController.logoEnabled = false
                 navigationController.isNavigationBarHidden = true
                 viewController = navigationController
+            } else {
+                let registrationViewController = RegistrationViewController()
+                registrationViewController.delegate = appStateController
+                registrationViewController.signInError = error
+                viewController = registrationViewController
             }
         case .authenticated(completedRegistration: let completedRegistration):
             // TODO: CallKit only with 1 account
