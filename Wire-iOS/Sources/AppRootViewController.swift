@@ -196,7 +196,7 @@ class AppRootViewController : UIViewController {
                 let landingViewController = LandingViewController()
                 landingViewController.delegate = self
                 let navigationController = NavigationController(rootViewController: landingViewController)
-                navigationController.backButtonEnabled = true
+                navigationController.backButtonEnabled = false
                 navigationController.logoEnabled = false
                 navigationController.isNavigationBarHidden = true
                 viewController = navigationController
