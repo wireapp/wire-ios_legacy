@@ -23,7 +23,7 @@ import Cartography
 class TeamNameStepViewController: UIViewController {
     //MARK:- UI styles
 
-    static let headlineFont = FontSpec(.large, .light, .title1).font!
+    static let headlineFont = FontSpec(.large, .light, .largeTitle).font!
     static let subheadlineFont = FontSpec(.normal, .regular).font!
 
     let headline: UILabel = {
