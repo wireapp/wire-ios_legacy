@@ -43,15 +43,41 @@ class AccessoryTextFieldTests: ZMSnapshotTestCase {
     func testThatItShowsPlaceHolderText() {
         // GIVEN
         let sut = prepareForSnapshots()
+
+        // WHEN
         sut.placeholder = "team name"
-        // WHEN && THEN
+
+        // THEN
         self.verify(view: sut.snapshotView())
     }
 
     func testThatItShowsDisabledConfirmButton() {
         // GIVEN
         let sut = prepareForSnapshots()
+
+        // WHEN
         sut.confirmButton.isEnabled = false
+
+        // THEN
+        self.verify(view: sut.snapshotView())
+    }
+
+    func testThatItShowsTextInputed() {
+        // GIVEN
+        let sut = prepareForSnapshots()
+
+        // WHEN
+        sut.text = "Wire Team"
+
+        // THEN
+        self.verify(view: sut.snapshotView())
+    }
+
+    func testThatItShowsPasswordInputed() {
+        // GIVEN
+        let sut = prepareForSnapshots()
+        sut.isSecureTextEntry = true
+        sut.text = "Password"
 
         // WHEN && THEN
         self.verify(view: sut.snapshotView())

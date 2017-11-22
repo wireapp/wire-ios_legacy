@@ -20,7 +20,7 @@
 import Foundation
 
 class AccessoryTextField : UITextField {
-    static let enteredTextFont = FontSpec(.small, .regular, .inputText).font!
+    static let enteredTextFont = FontSpec(.normal, .regular, .inputText).font!
     static let placeholderFont = FontSpec(.small, .semibold).font!
     private let ConfirmButtonWidth: CGFloat = 32
 
@@ -45,12 +45,14 @@ class AccessoryTextField : UITextField {
     override init(frame: CGRect) {
         let os = ProcessInfo().operatingSystemVersion
 
+        let leftInset: CGFloat = 16 + 8
+
         if os.majorVersion < 11 {
             // Placeholder frame calculation is changed in iOS 11, therefore the TOP inset is not necessary
-            placeholderInsets = UIEdgeInsets(top: 8, left: 16, bottom: 0, right: 16)
+            placeholderInsets = UIEdgeInsets(top: 8, left: leftInset, bottom: 0, right: 16)
         }
         else {
-            placeholderInsets = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
+            placeholderInsets = UIEdgeInsets(top: 0, left: leftInset, bottom: 0, right: 16)
         }
 
         super.init(frame: frame)
@@ -140,5 +142,5 @@ class AccessoryTextField : UITextField {
 
 ///TODO: delegate
 ///TODO: type: email, name....
-///TODO: valid (ZMUser)
-///TODO: snapshot test
+///TODO: textFieldDidChange->valid (ZMUser)
+
