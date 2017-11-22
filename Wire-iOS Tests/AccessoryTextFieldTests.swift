@@ -24,25 +24,23 @@ import XCTest
 class AccessoryTextFieldTests: ZMSnapshotTestCase {
     override func setUp() {
         super.setUp()
-
-        recordMode = true
     }
 
-    func prepareForSnapshots() -> AccessoryTextField {
+    func textFieldForSnapshots() -> AccessoryTextField {
         let accessoryTextField = AccessoryTextField(frame: CGRect(x: 0, y: 0, width: 375, height: 56))
         return accessoryTextField
     }
 
     func testThatItShowsEmptyTextField() {
         // GIVEN
-        let sut = prepareForSnapshots()
+        let sut = textFieldForSnapshots()
         // WHEN && THEN
         self.verify(view: sut.snapshotView())
     }
 
     func testThatItShowsPlaceHolderText() {
         // GIVEN
-        let sut = prepareForSnapshots()
+        let sut = textFieldForSnapshots()
 
         // WHEN
         sut.placeholder = "team name"
@@ -53,7 +51,7 @@ class AccessoryTextFieldTests: ZMSnapshotTestCase {
 
     func testThatItShowsDisabledConfirmButton() {
         // GIVEN
-        let sut = prepareForSnapshots()
+        let sut = textFieldForSnapshots()
 
         // WHEN
         sut.confirmButton.isEnabled = false
@@ -64,7 +62,7 @@ class AccessoryTextFieldTests: ZMSnapshotTestCase {
 
     func testThatItShowsTextInputed() {
         // GIVEN
-        let sut = prepareForSnapshots()
+        let sut = textFieldForSnapshots()
 
         // WHEN
         sut.text = "Wire Team"
@@ -75,7 +73,7 @@ class AccessoryTextFieldTests: ZMSnapshotTestCase {
 
     func testThatItShowsPasswordInputed() {
         // GIVEN
-        let sut = prepareForSnapshots()
+        let sut = textFieldForSnapshots()
         sut.isSecureTextEntry = true
         sut.text = "Password"
 

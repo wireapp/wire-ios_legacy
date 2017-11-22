@@ -19,10 +19,22 @@
 
 import Foundation
 
+//enum
+
 class AccessoryTextField : UITextField {
+
+    enum TextFieldType {
+        case email
+        case name
+        case password
+        case unknown
+    }
+
     static let enteredTextFont = FontSpec(.normal, .regular, .inputText).font!
     static let placeholderFont = FontSpec(.small, .semibold).font!
     private let ConfirmButtonWidth: CGFloat = 32
+
+    var textFieldType: TextFieldType = .unknown
 
     let confirmButton: IconButton = {
         let iconButton = IconButton.iconButtonCircularLight()
@@ -41,6 +53,14 @@ class AccessoryTextField : UITextField {
 
     let textInsets: UIEdgeInsets = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 8)
     let placeholderInsets: UIEdgeInsets
+
+    convenience init(frame: CGRect, textFieldType: TextFieldType? = .unknown) {
+        self.init(frame: frame)
+
+        if let textFieldType = textFieldType {
+            self.textFieldType = textFieldType
+        }
+    }
 
     override init(frame: CGRect) {
         let os = ProcessInfo().operatingSystemVersion
@@ -138,9 +158,3 @@ class AccessoryTextField : UITextField {
     ///TODO: leftViewRectForBounds
     ///TODO: paste. select
 }
-
-
-///TODO: delegate
-///TODO: type: email, name....
-///TODO: textFieldDidChange->valid (ZMUser)
-
