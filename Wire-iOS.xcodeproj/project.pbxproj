@@ -975,6 +975,9 @@
 		F1B025641E574B3C00900C65 /* VoiceChannelOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1B025631E574B3C00900C65 /* VoiceChannelOverlay.swift */; };
 		F1C9E3601EAE008C006438D7 /* TestSetup.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1C9E35E1EADFFB8006438D7 /* TestSetup.swift */; };
 		F1CE2DF01EF0337F00631D8A /* PureLayout.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F1CE2DEF1EF0337F00631D8A /* PureLayout.framework */; };
+		F1DFA4D01FC4671B00AAEE63 /* TeamCreationFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1DFA4CE1FC4671A00AAEE63 /* TeamCreationFlowController.swift */; };
+		F1DFA4D11FC4671B00AAEE63 /* TeamCreationStepController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1DFA4CF1FC4671A00AAEE63 /* TeamCreationStepController.swift */; };
+		F1DFA4D31FC4709F00AAEE63 /* TextFieldDescription.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1DFA4D21FC4709F00AAEE63 /* TextFieldDescription.swift */; };
 		F93D58431D7D9184003AE972 /* Analytics+ConversationEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = F93D58421D7D9184003AE972 /* Analytics+ConversationEvents.swift */; };
 		F93D58451D7DA865003AE972 /* ZMConversation+Analytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = F93D58441D7DA865003AE972 /* ZMConversation+Analytics.swift */; };
 		F93D58471D7DA876003AE972 /* ZMMessage+Analytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = F93D58461D7DA876003AE972 /* ZMMessage+Analytics.swift */; };
@@ -2478,6 +2481,9 @@
 		F1C9E35E1EADFFB8006438D7 /* TestSetup.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestSetup.swift; sourceTree = "<group>"; };
 		F1CE2DEF1EF0337F00631D8A /* PureLayout.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PureLayout.framework; path = Carthage/Build/iOS/PureLayout.framework; sourceTree = "<group>"; };
 		F1D0445E1ED8675200EAC1DA /* TeamSelectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TeamSelectionViewController.swift; sourceTree = "<group>"; };
+		F1DFA4CE1FC4671A00AAEE63 /* TeamCreationFlowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TeamCreationFlowController.swift; sourceTree = "<group>"; };
+		F1DFA4CF1FC4671A00AAEE63 /* TeamCreationStepController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TeamCreationStepController.swift; sourceTree = "<group>"; };
+		F1DFA4D21FC4709F00AAEE63 /* TextFieldDescription.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldDescription.swift; sourceTree = "<group>"; };
 		F93D58421D7D9184003AE972 /* Analytics+ConversationEvents.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Analytics+ConversationEvents.swift"; sourceTree = "<group>"; };
 		F93D58441D7DA865003AE972 /* ZMConversation+Analytics.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ZMConversation+Analytics.swift"; sourceTree = "<group>"; };
 		F93D58461D7DA876003AE972 /* ZMMessage+Analytics.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ZMMessage+Analytics.swift"; sourceTree = "<group>"; };
@@ -4899,6 +4905,7 @@
 		EF2126B41FB9DFE300625A9B /* Registration */ = {
 			isa = PBXGroup;
 			children = (
+				F1DFA4CD1FC4671A00AAEE63 /* TeamCreation */,
 				EF2126B51FB9DFE300625A9B /* RegistrationTeam */,
 				EF2126B61FB9DFE300625A9B /* RegistrationPersonal */,
 			);
@@ -5055,6 +5062,16 @@
 				F12CDAEA1E43886A00CEFCEB /* DecriptionHeaderView.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		F1DFA4CD1FC4671A00AAEE63 /* TeamCreation */ = {
+			isa = PBXGroup;
+			children = (
+				F1DFA4CE1FC4671A00AAEE63 /* TeamCreationFlowController.swift */,
+				F1DFA4D21FC4709F00AAEE63 /* TextFieldDescription.swift */,
+				F1DFA4CF1FC4671A00AAEE63 /* TeamCreationStepController.swift */,
+			);
+			path = TeamCreation;
 			sourceTree = "<group>";
 		};
 		F5F52F6F1B11D6DB0053F1C8 /* Sketchpad */ = {
@@ -5892,6 +5909,7 @@
 				871BC0051D34F56300DF0793 /* AnalyticsTracker.m in Sources */,
 				EF2127241FB9DFE300625A9B /* CountryCodeView.m in Sources */,
 				87DCF4F31D34EA4500BB420F /* StartUIQuickActionsBar.m in Sources */,
+				F1DFA4D31FC4709F00AAEE63 /* TextFieldDescription.swift in Sources */,
 				BFA25DC71D9A8C7B0086DEBD /* ConversationInputBarViewController+Emoji.swift in Sources */,
 				87AC77DB1DE48C01009F6D56 /* Copyable.swift in Sources */,
 				87371C1A1B7355C400807499 /* ConversationListViewController+StartUI.m in Sources */,
@@ -5899,6 +5917,7 @@
 				BFD9B9561DEDEE0400E47534 /* ProfileHeaderView.swift in Sources */,
 				871BC3611D34F94200DF0793 /* Settings+ColorScheme.m in Sources */,
 				87DCF49E1D34E9E600BB420F /* ModalTopBar.swift in Sources */,
+				F1DFA4D11FC4671B00AAEE63 /* TeamCreationStepController.swift in Sources */,
 				BF5090581DE3469700A5FEE0 /* UIView+LayoutMargins.swift in Sources */,
 				87F18BBE1E015BBB00C69D9B /* TransferView.swift in Sources */,
 				164C29AD1ED446660026562A /* UserSelection.swift in Sources */,
@@ -6308,6 +6327,7 @@
 				8744489F1C22FCE500E7B947 /* Message+Formatting.m in Sources */,
 				166390D61DC8AC0C00D7BF1C /* String+Image.swift in Sources */,
 				87F6D1BB1C1590B7000AB4D2 /* RequestPasswordViewController.swift in Sources */,
+				F1DFA4D01FC4671B00AAEE63 /* TeamCreationFlowController.swift in Sources */,
 				87DCF4E01D34EA4500BB420F /* TopPeopleCell.m in Sources */,
 				8F5A3E9D19AE2C9E00D0E9DA /* AVSMediaManager+Additions.m in Sources */,
 				BF3A3DCE1EA75290005477F8 /* RotatingKeyboardAvoidingViewController.swift in Sources */,

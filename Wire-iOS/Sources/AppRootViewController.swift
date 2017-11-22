@@ -42,6 +42,8 @@ class AppRootViewController : UIViewController {
     fileprivate let transitionQueue : DispatchQueue = DispatchQueue(label: "transitionQueue")
     fileprivate var isClassyInitialized = false
     fileprivate let mediaManagerLoader = MediaManagerLoader()
+
+    var flowController: TeamCreationFlowController!
     
     fileprivate weak var requestToOpenViewDelegate: ZMRequestsToOpenViewsDelegate? {
         didSet {
@@ -196,6 +198,9 @@ class AppRootViewController : UIViewController {
                 navigationController.backButtonEnabled = false
                 navigationController.logoEnabled = false
                 navigationController.isNavigationBarHidden = true
+
+                flowController = TeamCreationFlowController(navigationController: navigationController)
+
                 viewController = navigationController
             } else {
                 let registrationViewController = RegistrationViewController()
@@ -469,7 +474,7 @@ extension AppRootViewController  {
 
 extension AppRootViewController : LandingViewControllerDelegate {
     func landingViewControllerDidChooseCreateTeam() {
-        ///TODO: transit to create team UI
+        flowController.startFlow()
     }
 
     func landingViewControllerDidChooseLogin() {
