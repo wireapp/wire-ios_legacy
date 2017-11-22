@@ -23,6 +23,7 @@ import Cartography
 import MobileCoreServices
 import WireDataModel
 import WireExtensionComponents
+import CocoaLumberjackSwift
 import Classy
 
 /// The delay after which a progess view controller will be displayed if all messages are not yet sent.
@@ -249,8 +250,17 @@ class ShareExtensionViewController: SLComposeServiceViewController {
     }
     
     private func presentChooseConversation() {
+        requireLocalAuthenticationIfNeeded(with: { [weak self] (granted) in
+            if granted == nil || (granted != nil && granted!) {
+                self?.showChooseConversation()
+            }
+        })
+    }
+    
+    func showChooseConversation() {
+        
         guard let sharingSession = sharingSession else { return }
-
+        
         let allConversations = sharingSession.writeableNonArchivedConversations + sharingSession.writebleArchivedConversations
         let conversationSelectionViewController = ConversationSelectionViewController(conversations: allConversations)
         
@@ -262,6 +272,32 @@ class ShareExtensionViewController: SLComposeServiceViewController {
         
         pushConfigurationViewController(conversationSelectionViewController)
     }
+
+    /// @param callback confirmation; if the auth is not needed or is not possible on the current device called with '.none'
+    func requireLocalAuthenticationIfNeeded(with callback: @escaping (Bool?)->()) {
+        
+        guard AppLock.isActive else {
+            callback(.none)
+            return
+        }
+        
+        guard let session = sharingSession, !session.isLocalAuthenticationGranted else {
+            callback(true)
+            return
+        }
+        
+        AppLock.evaluateAuthentication(description: "share_extension.privacy_security.lock_app.description".localized) { (success, error) in
+            DispatchQueue.main.async {
+                callback(success)
+                if let success = success, success {
+                    session.isLocalAuthenticationGranted = success
+                } else {
+                    DDLogError("Local authentication error: \(String(describing: error?.localizedDescription))")
+                }
+            }
+        }
+    }
+    
     
     private func conversationDidDegrade(change: ConversationDegradationInfo, callback: @escaping DegradationStrategyChoice) {
         let title = titleForMissingClients(users: change.users)
