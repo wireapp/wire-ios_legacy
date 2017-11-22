@@ -31,6 +31,7 @@ class AVPlayerViewControllerWithoutStatusBar: AVPlayerViewController {
     
     deinit {
         AVAudioSession.sharedInstance().removeObserver(self, forKeyPath: outputVolumeKeyPath)
+        try? AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryAmbient)
     }
     
     override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
