@@ -199,6 +199,7 @@
 		7C4918A11F8BB1A20038AF4B /* UIScreen+SafeArea.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C4918A01F8BB1A20038AF4B /* UIScreen+SafeArea.swift */; };
 		7CA540831F740B7C00457F4B /* UIScreen+Compact.m in Sources */ = {isa = PBXBuildFile; fileRef = 7CA540821F740B7C00457F4B /* UIScreen+Compact.m */; };
 		7CC085461F7AA30F0010F96B /* DotView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CC085451F7AA30F0010F96B /* DotView.swift */; };
+		7CCA120F1FC595750008DE00 /* AVPlayerViewControllerWithoutStatusBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CCA120E1FC595750008DE00 /* AVPlayerViewControllerWithoutStatusBar.swift */; };
 		7CE71D8D1FC453E300C43E19 /* SettingsPropertyName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C98DCFF1FC32F41005C0042 /* SettingsPropertyName.swift */; };
 		7CE71D8E1FC454AA00C43E19 /* AppLock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8778AAEC1F6BC6AD0022F53F /* AppLock.swift */; };
 		7CEB45281F8FAAC400D772D5 /* UINavigationBarContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CEB45271F8FAAC400D772D5 /* UINavigationBarContainer.swift */; };
@@ -1276,6 +1277,7 @@
 		7CA540811F740B7C00457F4B /* UIScreen+Compact.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIScreen+Compact.h"; sourceTree = "<group>"; };
 		7CA540821F740B7C00457F4B /* UIScreen+Compact.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIScreen+Compact.m"; sourceTree = "<group>"; };
 		7CC085451F7AA30F0010F96B /* DotView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DotView.swift; sourceTree = "<group>"; };
+		7CCA120E1FC595750008DE00 /* AVPlayerViewControllerWithoutStatusBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVPlayerViewControllerWithoutStatusBar.swift; sourceTree = "<group>"; };
 		7CEB45271F8FAAC400D772D5 /* UINavigationBarContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UINavigationBarContainer.swift; sourceTree = "<group>"; };
 		848DE12A1A83D20000E154B1 /* emoticons.min.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = emoticons.min.json; path = ../Sources/emoticons.min.json; sourceTree = "<group>"; };
 		8571A3524311D898C8012582 /* libPods-WireExtensionComponents.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-WireExtensionComponents.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -3445,6 +3447,7 @@
 				871BC3481D34F94200DF0793 /* WRFunctions.h */,
 				871BC3491D34F94200DF0793 /* WRFunctions.m */,
 				871BC34A1D34F94200DF0793 /* Youtube */,
+				7CCA120E1FC595750008DE00 /* AVPlayerViewControllerWithoutStatusBar.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -6186,6 +6189,7 @@
 				872CB8B919E58816006752B4 /* ProfileUnblockFooterView.m in Sources */,
 				BFFE943A1E782FD70025AD75 /* ConversationRenamedCell.swift in Sources */,
 				DB3A47E01B4AD96C00391B5C /* MentionsCollectionViewCell.m in Sources */,
+				7CCA120F1FC595750008DE00 /* AVPlayerViewControllerWithoutStatusBar.swift in Sources */,
 				AF36C5A11E9F67E400FADECC /* MessageComposeViewController.swift in Sources */,
 				8711A5A41E0D6C8800043ACF /* TwoLineTitleView.swift in Sources */,
 				87DCF4E51D34EA4500BB420F /* ActionSheetController+Invite.m in Sources */,

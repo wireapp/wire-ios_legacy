@@ -24,23 +24,6 @@
 #import "Wire-Swift.h"
 #import "UIViewController+WR_Additions.h"
 
-@import AVKit;
-@import AVFoundation;
-
-
-@interface AVPlayerViewControllerWithoutStatusBar : AVPlayerViewController
-@end
-
-@implementation AVPlayerViewControllerWithoutStatusBar
-
-- (BOOL)prefersStatusBarHidden
-{
-    return YES;
-}
-
-@end
-
-
 @interface MessagePresenter (UIDocumentInteractionController) <UIDocumentInteractionControllerDelegate>
 @end
 
