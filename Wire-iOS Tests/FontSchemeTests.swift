@@ -24,7 +24,7 @@ import XCTest
 
 class FontSchemeTests: XCTestCase {
    
-    fileprivate func insertTitle1FontSizeItems(multiplier: CGFloat, fixedFontNames: inout [FontSpec : String]) {
+    fileprivate func insertLargeTitleFontSizeItems(multiplier: CGFloat, fixedFontNames: inout [FontSpec : String]) {
         let allFontSizeTuples: [(fontSize: FontSize, point: CGFloat)] = [(fontSize: .large,  point: round(40 * multiplier)),
                                                                          (fontSize: .normal, point: round(26 * multiplier)),
                                                                          (fontSize: .medium, point: round(20 * multiplier)),
@@ -45,7 +45,7 @@ class FontSchemeTests: XCTestCase {
 
         for fontWeightTuple in allFontWeightTuples {
             for fontSizeTuple in allFontSizeTuples {
-                fixedFontNames[FontSpec(fontSizeTuple.fontSize, fontWeightTuple.fontWeight, .title1)] = "System-\(fontWeightTuple.name) \(fontSizeTuple.point)"
+                fixedFontNames[FontSpec(fontSizeTuple.fontSize, fontWeightTuple.fontWeight, .largeTitle)] = "System-\(fontWeightTuple.name) \(fontSizeTuple.point)"
             }
         }
     }
@@ -80,8 +80,8 @@ class FontSchemeTests: XCTestCase {
         fixedFontNames[FontSpec(.small, .regular)]    = "System-Regular 11.0"
         fixedFontNames[FontSpec(.small, .light)]      = "System-Light 11.0"
 
-        /// insert item for fontTextStyle = title1
-        insertTitle1FontSizeItems(multiplier: 1, fixedFontNames: &fixedFontNames)
+        /// insert item for fontTextStyle = LargeTitle
+        insertLargeTitleFontSizeItems(multiplier: 1, fixedFontNames: &fixedFontNames)
 
         // WHEN
         var fontNames: [FontSpec: String] = [:]
@@ -124,7 +124,7 @@ class FontSchemeTests: XCTestCase {
         fixedFontNames[FontSpec(.small, .light)]     = "System-Light 15.0"
 
         let multipler : CGFloat = 22.0 / 16.0
-        insertTitle1FontSizeItems(multiplier: multipler, fixedFontNames: &fixedFontNames)
+        insertLargeTitleFontSizeItems(multiplier: multipler, fixedFontNames: &fixedFontNames)
 
         // WHEN
         var fontNames: [FontSpec: String] = [:]
@@ -167,7 +167,7 @@ class FontSchemeTests: XCTestCase {
         fixedFontNames[FontSpec(.small, .light)]      = "System-Light 9.0"
 
         let multipler : CGFloat = 13.0 / 16.0
-        insertTitle1FontSizeItems(multiplier: multipler, fixedFontNames: &fixedFontNames)
+        insertLargeTitleFontSizeItems(multiplier: multipler, fixedFontNames: &fixedFontNames)
 
         // WHEN
         var fontNames: [FontSpec: String] = [:]

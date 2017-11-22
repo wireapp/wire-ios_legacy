@@ -22,15 +22,19 @@ import Foundation
 class AccessoryTextField : UITextField {
     static let enteredTextFont = FontSpec(.small, .regular, .inputText).font!
     static let placeholderFont = FontSpec(.small, .semibold).font!
+    private let ConfirmButtonWidth: CGFloat = 32
 
     let confirmButton: IconButton = {
         let iconButton = IconButton.iconButtonCircularLight()
 
-        iconButton.setIcon(UIApplication.isLeftToRightLayout ? .chevronRight : .chevronLeft, with: ZetaIconSize.actionButton, for: .normal) ///TODO: < 32? or .Medium?
+        iconButton.setIcon(UIApplication.isLeftToRightLayout ? .chevronRight : .chevronLeft, with: ZetaIconSize.searchBar, for: .normal) ///TODO: < 32? or .Medium?
+        iconButton.setIconColor(.textColor, for: .normal)
+
         iconButton.setBackgroundImageColor(.activeButtonColor, for: .normal)
         iconButton.setBackgroundImageColor(.inactiveButtonColor, for: .disabled)
 
         iconButton.circular = true
+        iconButton.accessibilityIdentifier = "AccessoryTextFieldConfirmButton"
 
         return iconButton
     }()
@@ -39,9 +43,11 @@ class AccessoryTextField : UITextField {
     let placeholderInsets: UIEdgeInsets
 
     override init(frame: CGRect) {
-        if Float(UIDevice.current.systemVersion) ?? 0.0 < 11.0 {
+        let os = ProcessInfo().operatingSystemVersion
+
+        if os.majorVersion < 11 {
             // Placeholder frame calculation is changed in iOS 11, therefore the TOP inset is not necessary
-            placeholderInsets = UIEdgeInsets(top: 16, left: 16, bottom: 0, right: 16)
+            placeholderInsets = UIEdgeInsets(top: 8, left: 16, bottom: 0, right: 16)
         }
         else {
             placeholderInsets = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
@@ -78,6 +84,7 @@ class AccessoryTextField : UITextField {
     }
 
 
+    ///MARK:- placeholder
     func attributedPlaceholderString(placeholder: String) -> NSAttributedString {
         let attribute : [String : Any] = [NSForegroundColorAttributeName: UIColor.placeholderColor,
                                           NSFontAttributeName: AccessoryTextField.placeholderFont]
@@ -98,7 +105,35 @@ class AccessoryTextField : UITextField {
     override func drawPlaceholder(in rect: CGRect) {
         super.drawPlaceholder(in: UIEdgeInsetsInsetRect(rect, placeholderInsets))
     }
-    ///TODO: rightViewRectForBounds, leftViewRectForBounds
+
+    ///MARK:- right accessory
+    func rightAccessoryViewRect(forBounds bounds: CGRect, leftToRight: Bool) -> CGRect {
+        var rightViewRect: CGRect
+        let newY = bounds.origin.y + (bounds.size.height -  ConfirmButtonWidth) / 2
+        let xOffset: CGFloat = 16
+
+        if leftToRight {
+            rightViewRect = CGRect(x: CGFloat(bounds.maxX - ConfirmButtonWidth - xOffset), y: newY, width: ConfirmButtonWidth, height: ConfirmButtonWidth)
+        }
+        else {
+            rightViewRect = CGRect(x: bounds.origin.x + xOffset, y: newY, width: ConfirmButtonWidth, height: ConfirmButtonWidth)
+        }
+
+        return rightViewRect
+    }
+
+    override func rightViewRect(forBounds bounds: CGRect) -> CGRect {
+        let leftToRight: Bool = UIApplication.isLeftToRightLayout
+        if leftToRight {
+            return rightAccessoryViewRect(forBounds: bounds, leftToRight: leftToRight)
+        }
+        else {
+            return .zero
+        }
+
+    }
+
+    ///TODO: leftViewRectForBounds
     ///TODO: paste. select
 }
 
