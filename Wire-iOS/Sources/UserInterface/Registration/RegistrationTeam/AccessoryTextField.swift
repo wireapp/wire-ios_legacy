@@ -18,8 +18,7 @@
 
 
 import Foundation
-
-//enum
+import Cartography
 
 class AccessoryTextField : UITextField {
 
@@ -32,21 +31,25 @@ class AccessoryTextField : UITextField {
 
     static let enteredTextFont = FontSpec(.normal, .regular, .inputText).font!
     static let placeholderFont = FontSpec(.small, .semibold).font!
-    private let ConfirmButtonWidth: CGFloat = 32
+    static private let ConfirmButtonWidth: CGFloat = 32
 
     var textFieldType: TextFieldType = .unknown
 
     let confirmButton: IconButton = {
         let iconButton = IconButton.iconButtonCircularLight()
+        iconButton.frame.size = CGSize(width: AccessoryTextField.ConfirmButtonWidth, height: AccessoryTextField.ConfirmButtonWidth)
+        iconButton.circular = true
 
-        iconButton.setIcon(UIApplication.isLeftToRightLayout ? .chevronRight : .chevronLeft, with: ZetaIconSize.searchBar, for: .normal) ///TODO: < 32? or .Medium?
+        iconButton.setIcon(UIApplication.isLeftToRightLayout ? .chevronRight : .chevronLeft, with: ZetaIconSize.searchBar, for: .normal)
         iconButton.setIconColor(.textColor, for: .normal)
+        iconButton.setIconColor(.textfieldColor, for: .disabled)
 
         iconButton.setBackgroundImageColor(.activeButtonColor, for: .normal)
         iconButton.setBackgroundImageColor(.inactiveButtonColor, for: .disabled)
 
-        iconButton.circular = true
         iconButton.accessibilityIdentifier = "AccessoryTextFieldConfirmButton"
+
+        iconButton.isEnabled = false
 
         return iconButton
     }()
@@ -93,10 +96,26 @@ class AccessoryTextField : UITextField {
         }
         layer.masksToBounds = true
         backgroundColor = .textfieldColor
+
+        ///TODO: blue blinking cursor
+
+        self.setup()
     }
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    private func setup() {
+        createConstraints()
+    }
+
+    private func createConstraints() {
+        constrain(confirmButton) { confirmButton in
+            confirmButton.width == confirmButton.height
+
+            confirmButton.width == 32
+        }
     }
 
     override func textRect(forBounds bounds: CGRect) -> CGRect {
@@ -131,14 +150,14 @@ class AccessoryTextField : UITextField {
     ///MARK:- right accessory
     func rightAccessoryViewRect(forBounds bounds: CGRect, leftToRight: Bool) -> CGRect {
         var rightViewRect: CGRect
-        let newY = bounds.origin.y + (bounds.size.height -  ConfirmButtonWidth) / 2
+        let newY = bounds.origin.y + (bounds.size.height -  AccessoryTextField.ConfirmButtonWidth) / 2
         let xOffset: CGFloat = 16
 
         if leftToRight {
-            rightViewRect = CGRect(x: CGFloat(bounds.maxX - ConfirmButtonWidth - xOffset), y: newY, width: ConfirmButtonWidth, height: ConfirmButtonWidth)
+            rightViewRect = CGRect(x: CGFloat(bounds.maxX - AccessoryTextField.ConfirmButtonWidth - xOffset), y: newY, width: AccessoryTextField.ConfirmButtonWidth, height: AccessoryTextField.ConfirmButtonWidth)
         }
         else {
-            rightViewRect = CGRect(x: bounds.origin.x + xOffset, y: newY, width: ConfirmButtonWidth, height: ConfirmButtonWidth)
+            rightViewRect = CGRect(x: bounds.origin.x + xOffset, y: newY, width: AccessoryTextField.ConfirmButtonWidth, height: AccessoryTextField.ConfirmButtonWidth)
         }
 
         return rightViewRect

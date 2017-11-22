@@ -469,7 +469,12 @@ extension AppRootViewController  {
 
 extension AppRootViewController : LandingViewControllerDelegate {
     func landingViewControllerDidChooseCreateTeam() {
-        ///TODO: transit to create team UI
+        if let navigationController = self.visibleViewController as? NavigationController {
+            let teamNameStepViewController = TeamNameStepViewController()
+            ///FIXME: do something after team created
+//            teamNameStepViewController.delegate = appStateController
+            navigationController.pushViewController(teamNameStepViewController, animated: true)
+        }
     }
 
     func landingViewControllerDidChooseLogin() {

@@ -25,12 +25,16 @@ class TeamNameStepViewController: UIViewController {
 
     static let headlineFont = FontSpec(.large, .light, .largeTitle).font!
     static let subheadlineFont = FontSpec(.normal, .regular).font!
+    static let textButtonFont = FontSpec(.small, .semibold).font!
+
+    let containerView = UIView()
 
     let headline: UILabel = {
         let label = UILabel()
         label.text = "team.name.headline".localized
         label.font = TeamNameStepViewController.headlineFont
         label.textColor = .textColor
+        label.textAlignment = .center
 
         return label
     }()
@@ -40,8 +44,137 @@ class TeamNameStepViewController: UIViewController {
         label.text = "team.name.subheadline".localized
         label.font = TeamNameStepViewController.subheadlineFont
         label.textColor = .subtitleColor
+        label.textAlignment = .center
 
         return label
     }()
+
+    let teamNameTextField: AccessoryTextField = {
+        let accssoryTextField = AccessoryTextField()
+        accssoryTextField.placeholder = "team.name.textfield.placeholder".localized
+
+        return accssoryTextField
+    }()
+
+
+    let errorLabel: UILabel = {
+        let label = UILabel()
+        label.text = ""
+        label.font = TeamNameStepViewController.textButtonFont
+        label.textColor = .errorMessageColor
+        label.textAlignment = .center
+
+        return label
+    }()
+
+    ///TODO: clickable
+    let linkTappable: UILabel = {
+        let label = UILabel()
+        label.text = "team.name.whatiswireforteams".localized.uppercased()
+        label.font = TeamNameStepViewController.textButtonFont
+        label.textColor = .textColor
+        label.textAlignment = .center
+
+        return label
+    }()
+
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+        self.view.backgroundColor = .background
+
+        [containerView].forEach(view.addSubview)
+
+        [headline, subheadline, teamNameTextField, errorLabel, linkTappable].forEach(containerView.addSubview)
+
+        self.createConstraints()
+    }
+
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+
+        UIApplication.shared.wr_setStatusBarHidden(false, with: .fade)
+
+        // black back arrow
+        if let navigationController = self.navigationController as! NavigationController? {
+            navigationController.backButton.setIconColor(.textColor, for: .normal) ///TODO: no change?
+            //            navigationController.backButton.isHidden = false
+            navigationController.backButton.tintColor = .textColor
+            //            navigationController.backButton.alpha = 1
+            navigationController.backButtonEnabled = true
+            //            navigationController.updateBackButtonAnimated(true)
+        }
+
+    }
+
+    private func createConstraints() {
+
+        constrain(self.view, containerView) { selfView, containerView in
+            ///FIXME: ipad width = 375
+            containerView.width == selfView.width
+            containerView.centerX == selfView.centerX
+            containerView.centerY == selfView.centerY
+        }
+
+        constrain(containerView, headline, subheadline, teamNameTextField, linkTappable) { containerView, headline, subheadline, teamNameTextField, linkTappable in
+
+            align(centerX: containerView, headline, subheadline, teamNameTextField, linkTappable)
+            align(left: containerView, headline, subheadline, teamNameTextField, linkTappable)
+            align(right: containerView, headline, subheadline, teamNameTextField, linkTappable)
+
+            headline.top == containerView.top
+            subheadline.top == headline.bottom + 24
+
+            ///FIXME: teamNameTextField always align center?
+            teamNameTextField.top == subheadline.bottom + 24
+            teamNameTextField.height == 56
+            teamNameTextField.centerY == containerView.centerY
+
+            ///FIXME: error message?
+            linkTappable.top == teamNameTextField.bottom + 32
+
+            linkTappable.bottom == containerView.bottom ~ 750
+        }
+
+        /*
+         constrain(containerView, headline, subheadline, teamNameTextField, errorLabel, linkTappable, replace: nil) { containerView, headline, subheadline, teamNameTextField, linkTappable in
+
+         align(centerX: containerView, headline, subheadline, teamNameTextField, errorLabel, linkTappable)
+         align(left: containerView, headline, subheadline, teamNameTextField, errorLabel, linkTappable)
+         align(right: containerView, headline, subheadline, teamNameTextField, errorLabel, linkTappable)
+
+         headline.top == containerView.top
+         subheadline.top == headline.bottom + 24
+
+         ///FIXME: teamNameTextField always align center?
+         teamNameTextField.top == subheadline.bottom + 24
+         teamNameTextField.height == 56
+         teamNameTextField.centerY == containerView.centerY
+
+         errorLabel.top == teamNameTextField.bottom + 16
+
+         linkTappable.top == errorLabel.bottom + 16
+
+         linkTappable.bottom == containerView.bottom ~ 750
+         }
+
+         */
+    }
+
+    @objc public func confrimButtonTapped(_ sender: AnyObject!) {
+//        delegate?.
+        ///FIXME
+    }
+
+    @objc public func whatIsWireTapped(_ sender: AnyObject!) {
+        //        delegate?.
+        ///FIXME
+    }
+
+    override var prefersStatusBarHidden: Bool {
+        return false
+    }
 
 }

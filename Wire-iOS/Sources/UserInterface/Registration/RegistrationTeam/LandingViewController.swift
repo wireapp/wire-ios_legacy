@@ -135,9 +135,11 @@ final class LandingViewController: UIViewController {
         [createAccountButton, createTeamButton].forEach(containerView.addSubview)
 
         self.createConstraints()
+    }
 
-
-
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+    UIApplication.shared.wr_setStatusBarHidden(true, with: .fade)
     }
 
     private func createConstraints() {

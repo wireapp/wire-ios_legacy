@@ -4892,6 +4892,8 @@
 		EF2126B41FB9DFE300625A9B /* Registration */ = {
 			isa = PBXGroup;
 			children = (
+				EF2126C01FB9DFE300625A9B /* NavigationController.h */,
+				EF2126F81FB9DFE300625A9B /* NavigationController.m */,
 				EF2126B51FB9DFE300625A9B /* RegistrationTeam */,
 				EF2126B61FB9DFE300625A9B /* RegistrationPersonal */,
 			);
@@ -4926,7 +4928,6 @@
 				EF2126BD1FB9DFE300625A9B /* PhoneNumberViewController.m */,
 				EF2126BE1FB9DFE300625A9B /* EmailFormViewController.m */,
 				EF2126BF1FB9DFE300625A9B /* GuidanceLabel.h */,
-				EF2126C01FB9DFE300625A9B /* NavigationController.h */,
 				EF2126C11FB9DFE300625A9B /* RegistrationPhoneFlowViewController.h */,
 				EF2126C21FB9DFE300625A9B /* CountryCodeView.h */,
 				EF2126C31FB9DFE300625A9B /* RegistrationFormController.h */,
@@ -4937,7 +4938,6 @@
 				EF2126D21FB9DFE300625A9B /* RegistrationTextField.h */,
 				EF2126D31FB9DFE300625A9B /* RegistrationViewController.h */,
 				EF2126D41FB9DFE300625A9B /* CheckmarkView.h */,
-				EF2126F81FB9DFE300625A9B /* NavigationController.m */,
 				EF2126F91FB9DFE300625A9B /* GuidanceLabel.m */,
 				EF2126FA1FB9DFE300625A9B /* EmailFormViewController.h */,
 				EF2126FB1FB9DFE300625A9B /* PhoneNumberViewController.h */,
