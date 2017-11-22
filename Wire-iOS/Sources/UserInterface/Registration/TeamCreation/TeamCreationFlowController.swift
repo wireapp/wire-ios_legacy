@@ -21,7 +21,6 @@ import Foundation
 typealias ValueSubmitted = (String) -> ()
 
 protocol ViewDescriptor: class {
-    var valueSubmitted: ValueSubmitted? { get set }
     func create() -> UIView
 }
 
@@ -31,7 +30,15 @@ enum TeamCreationState {
 }
 
 extension TeamCreationState {
-    var mainViewDescription: ViewDescriptor {
+
+    var backButtonDescription: BackButtonDescription? {
+        switch self {
+        case .enterName, .setEmail:
+            return BackButtonDescription()
+        }
+    }
+
+    var mainViewDescription: TextFieldDescription {
         switch self {
         case .enterName:
             return TextFieldDescription(placeholder: "Set team name")
@@ -70,11 +77,9 @@ final class TeamCreationFlowController: NSObject {
     init(navigationController: UINavigationController) {
         self.navigationController = navigationController
         super.init()
-        self.navigationController.delegate = self
     }
 
     func startFlow() {
-        navigationController.isNavigationBarHidden = false
         pushCurrentController()
     }
 
@@ -84,7 +89,12 @@ final class TeamCreationFlowController: NSObject {
             self?.advanceState(with: value)
         }
 
-        let controller = TeamCreationStepController(headline: currentState.headline, subtext: currentState.subtext, mainView: mainView, secondaryViews: currentState.secondaryViews)
+        let backButton = currentState.backButtonDescription
+        backButton?.buttonTapped = { [weak self] in
+            self?.rewindState()
+        }
+
+        let controller = TeamCreationStepController(headline: currentState.headline, subtext: currentState.subtext, mainView: mainView, backButton: backButton, secondaryViews: currentState.secondaryViews)
         return controller
     }
 
@@ -110,12 +120,6 @@ final class TeamCreationFlowController: NSObject {
         case .setEmail:
             currentState = .enterName
         }
+        self.navigationController.popViewController(animated: true)
     }
 }
-
-extension TeamCreationFlowController: UINavigationControllerDelegate {
-    func navigationController(_ navigationController: UINavigationController, willShow viewController: UIViewController, animated: Bool) {
-
-    }
-}
-

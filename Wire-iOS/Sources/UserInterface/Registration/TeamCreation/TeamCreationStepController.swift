@@ -23,6 +23,7 @@ final class TeamCreationStepController: UIViewController {
 
     let headline: String
     let subtext: String?
+    let backButtonDescriptor: ViewDescriptor?
     let mainViewDescriptor: ViewDescriptor
     let secondaryViewDescriptors: [ViewDescriptor]
 
@@ -35,13 +36,16 @@ final class TeamCreationStepController: UIViewController {
     private var errorViewContainer: UIView!
     private var mainViewContainer: UIView!
 
+    private var backButton: UIView?
+
     private var mainView: UIView!
     private var secondaryViews: [UIView] = []
 
-    init(headline: String, subtext: String? = nil, mainView: ViewDescriptor, secondaryViews: [ViewDescriptor] = []) {
+    init(headline: String, subtext: String? = nil, mainView: ViewDescriptor, backButton: ViewDescriptor? = nil, secondaryViews: [ViewDescriptor] = []) {
         self.headline = headline
         self.subtext = subtext
         self.mainViewDescriptor = mainView
+        self.backButtonDescriptor = backButton
         self.secondaryViewDescriptors = secondaryViews
         super.init(nibName: nil, bundle: nil)
     }
@@ -50,10 +54,31 @@ final class TeamCreationStepController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
 
+    override var prefersStatusBarHidden: Bool {
+        return false
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        view.backgroundColor = .white
+        view.backgroundColor = #colorLiteral(red: 0.9724436402, green: 0.972609818, blue: 0.9724331498, alpha: 1)
+
+        createViews()
+        createConstraints()
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(animated)
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(animated)
+    }
+
+    private func createViews() {
+        backButton = backButtonDescriptor?.create()
 
         headlineLabel = UILabel()
         headlineLabel.backgroundColor = .yellow
@@ -89,12 +114,18 @@ final class TeamCreationStepController: UIViewController {
         secondaryViews = secondaryViewDescriptors.map { $0.create() }
         secondaryViews.forEach { self.secondaryViewsContainer.addSubview($0) }
 
-        [headlineLabel, subtextLabel, mainViewContainer, errorViewContainer, secondaryViewsContainer].forEach { self.view.addSubview($0) }
-
-        createConstraints()
+        [backButton, headlineLabel, subtextLabel, mainViewContainer, errorViewContainer, secondaryViewsContainer].flatMap {$0}.forEach { self.view.addSubview($0) }
     }
 
     private func createConstraints() {
+
+        if let backButton = backButton {
+            constrain(view, backButton) { view, backButton in
+                backButton.leading == view.leading
+                backButton.top == view.topMargin
+            }
+        }
+
         constrain(view, secondaryViewsContainer, errorViewContainer, mainViewContainer) { view, secondaryViewsContainer, errorViewContainer, mainViewContainer in
             secondaryViewsContainer.bottom == view.bottom - (258 + 10)
             secondaryViewsContainer.leading == view.leading
@@ -133,5 +164,4 @@ final class TeamCreationStepController: UIViewController {
         }
 
     }
-
 }

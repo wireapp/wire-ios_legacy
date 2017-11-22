@@ -978,6 +978,7 @@
 		F1DFA4D01FC4671B00AAEE63 /* TeamCreationFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1DFA4CE1FC4671A00AAEE63 /* TeamCreationFlowController.swift */; };
 		F1DFA4D11FC4671B00AAEE63 /* TeamCreationStepController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1DFA4CF1FC4671A00AAEE63 /* TeamCreationStepController.swift */; };
 		F1DFA4D31FC4709F00AAEE63 /* TextFieldDescription.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1DFA4D21FC4709F00AAEE63 /* TextFieldDescription.swift */; };
+		F1FDC2E61FC5C05600DA4D2B /* BackButtonDescription.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1FDC2E51FC5C05600DA4D2B /* BackButtonDescription.swift */; };
 		F93D58431D7D9184003AE972 /* Analytics+ConversationEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = F93D58421D7D9184003AE972 /* Analytics+ConversationEvents.swift */; };
 		F93D58451D7DA865003AE972 /* ZMConversation+Analytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = F93D58441D7DA865003AE972 /* ZMConversation+Analytics.swift */; };
 		F93D58471D7DA876003AE972 /* ZMMessage+Analytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = F93D58461D7DA876003AE972 /* ZMMessage+Analytics.swift */; };
@@ -2484,6 +2485,7 @@
 		F1DFA4CE1FC4671A00AAEE63 /* TeamCreationFlowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TeamCreationFlowController.swift; sourceTree = "<group>"; };
 		F1DFA4CF1FC4671A00AAEE63 /* TeamCreationStepController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TeamCreationStepController.swift; sourceTree = "<group>"; };
 		F1DFA4D21FC4709F00AAEE63 /* TextFieldDescription.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldDescription.swift; sourceTree = "<group>"; };
+		F1FDC2E51FC5C05600DA4D2B /* BackButtonDescription.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackButtonDescription.swift; sourceTree = "<group>"; };
 		F93D58421D7D9184003AE972 /* Analytics+ConversationEvents.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Analytics+ConversationEvents.swift"; sourceTree = "<group>"; };
 		F93D58441D7DA865003AE972 /* ZMConversation+Analytics.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ZMConversation+Analytics.swift"; sourceTree = "<group>"; };
 		F93D58461D7DA876003AE972 /* ZMMessage+Analytics.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ZMMessage+Analytics.swift"; sourceTree = "<group>"; };
@@ -5069,6 +5071,7 @@
 			children = (
 				F1DFA4CE1FC4671A00AAEE63 /* TeamCreationFlowController.swift */,
 				F1DFA4D21FC4709F00AAEE63 /* TextFieldDescription.swift */,
+				F1FDC2E51FC5C05600DA4D2B /* BackButtonDescription.swift */,
 				F1DFA4CF1FC4671A00AAEE63 /* TeamCreationStepController.swift */,
 			);
 			path = TeamCreation;
@@ -6384,6 +6387,7 @@
 				16CB8DB91DC0F777000C5F47 /* DefaultNavigationBar.swift in Sources */,
 				F15E9BFD1E4878AC00EA207F /* UINavigationController+PopToPrevious.swift in Sources */,
 				8708158A1BF4EADE00D321BC /* SettingsNavigationController.swift in Sources */,
+				F1FDC2E61FC5C05600DA4D2B /* BackButtonDescription.swift in Sources */,
 				877A32621E892F950017DD9A /* ConversationListItemView+Update.swift in Sources */,
 				874B5DAE1CEDEB990010474C /* ZMConversationMessage+AudioMessage.swift in Sources */,
 				BF2A74731CEB4882002608BF /* AudioButtonOverlay.swift in Sources */,
