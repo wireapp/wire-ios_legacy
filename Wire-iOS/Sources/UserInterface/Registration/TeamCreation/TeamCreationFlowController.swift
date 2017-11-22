@@ -24,52 +24,6 @@ protocol ViewDescriptor: class {
     func create() -> UIView
 }
 
-enum TeamCreationState {
-    case enterName
-    case setEmail(teamName: String)
-}
-
-extension TeamCreationState {
-
-    var backButtonDescription: BackButtonDescription? {
-        switch self {
-        case .enterName, .setEmail:
-            return BackButtonDescription()
-        }
-    }
-
-    var mainViewDescription: TextFieldDescription {
-        switch self {
-        case .enterName:
-            return TextFieldDescription(placeholder: "Set team name")
-        case .setEmail:
-            return TextFieldDescription(placeholder: "Set emal")
-        }
-    }
-
-    var headline: String {
-        switch self {
-        case .enterName:
-            return "Set team name"
-        case .setEmail:
-            return "Set email"
-        }
-    }
-
-    var subtext: String? {
-        switch self {
-        case .enterName:
-            return "You can always change it later"
-        case .setEmail:
-            return nil
-        }
-    }
-
-    var secondaryViews: [ViewDescriptor] {
-        return []
-    }
-}
-
 final class TeamCreationFlowController: NSObject {
     var currentState: TeamCreationState = .enterName
     let navigationController: UINavigationController

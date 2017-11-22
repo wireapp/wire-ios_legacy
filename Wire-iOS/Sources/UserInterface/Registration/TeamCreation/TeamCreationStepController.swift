@@ -70,6 +70,7 @@ final class TeamCreationStepController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(animated)
+        mainView.becomeFirstResponder()
     }
 
     override func viewWillDisappear(_ animated: Bool) {
