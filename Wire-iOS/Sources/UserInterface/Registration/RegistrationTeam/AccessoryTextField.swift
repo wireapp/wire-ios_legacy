@@ -66,17 +66,19 @@ class AccessoryTextField : UITextField {
     }
 
     override init(frame: CGRect) {
-        let os = ProcessInfo().operatingSystemVersion
+        let leftInset: CGFloat = 24
 
-        let leftInset: CGFloat = 16 + 8
+        var topInset: CGFloat = 0
 
-        if os.majorVersion < 11 {
-            // Placeholder frame calculation is changed in iOS 11, therefore the TOP inset is not necessary
-            placeholderInsets = UIEdgeInsets(top: 8, left: leftInset, bottom: 0, right: 16)
+        if #available(iOS 11, *) {
+            leftInset = 0
         }
         else {
-            placeholderInsets = UIEdgeInsets(top: 0, left: leftInset, bottom: 0, right: 16)
+            // Placeholder frame calculation is changed in iOS 11, therefore the TOP inset is not necessary
+            leftInset = 8
         }
+
+        placeholderInsets = UIEdgeInsets(top: topInset, left: leftInset, bottom: 0, right: 16)
 
         super.init(frame: frame)
 
@@ -97,8 +99,6 @@ class AccessoryTextField : UITextField {
         layer.masksToBounds = true
         backgroundColor = .textfieldColor
 
-        ///TODO: blue blinking cursor
-
         self.setup()
     }
 
@@ -113,7 +113,7 @@ class AccessoryTextField : UITextField {
     }
 
     func textFieldDidChange(textField: UITextField){
-        if  let text = textField.text {
+        if let text = textField.text {
             confirmButton.isEnabled = text.count > 0
         }
 
