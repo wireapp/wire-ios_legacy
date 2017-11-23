@@ -64,8 +64,12 @@ extension TeamCreationFlowController {
     func secondaryViews(for state: TeamCreationState) -> [ViewDescriptor] {
         switch state  {
         case .enterName:
-            let whatIsWire = ButtonDescription(title: "Wire?", accessibilityIdentifier: "wire_for_teams_button")
-            return [whatIsWire, ButtonDescription(title: "teams?", accessibilityIdentifier: "wire_for_teams_button")]
+            let whatIsWire = ButtonDescription(title: "What is Wire for teams?", accessibilityIdentifier: "wire_for_teams_button")
+            whatIsWire.buttonTapped = { [weak self] in
+                let webview = WebViewController(url: URL(string: "https://wire.com")!)
+                self?.navigationController.present(webview, animated: true, completion: nil)
+            }
+            return [whatIsWire]
         case .setEmail:
             return []
         case .verifyEmail:

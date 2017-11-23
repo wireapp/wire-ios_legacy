@@ -20,13 +20,15 @@
 #import <UIKit/UIKit.h>
 
 @import WebKit;
-
+NS_ASSUME_NONNULL_BEGIN
 
 @interface WebViewController : UIViewController
 
-@property (nonatomic) NSURL *URL;
+@property (nonatomic, nullable) NSURL *URL;
 @property (nonatomic, readonly) WKWebView *webView;
 
 + (instancetype)webViewControllerWithURL:(NSURL *)URL;
 
 @end
+
+NS_ASSUME_NONNULL_END
