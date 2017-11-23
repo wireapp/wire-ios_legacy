@@ -49,35 +49,28 @@ class AccessoryTextFieldTests: ZMSnapshotTestCase {
         self.verify(view: sut.snapshotView())
     }
 
-    func testThatItShowsDisabledConfirmButton() {
-        // GIVEN
-        let sut = textFieldForSnapshots()
-
-        // WHEN
-        sut.confirmButton.isEnabled = false
-
-        // THEN
-        self.verify(view: sut.snapshotView())
-    }
-
-    func testThatItShowsTextInputed() {
+    func testThatItShowsTextInputedAndConfrimButtonIsEnabled() {
         // GIVEN
         let sut = textFieldForSnapshots()
 
         // WHEN
         sut.text = "Wire Team"
+        sut.textFieldDidChange(textField: sut)
 
         // THEN
         self.verify(view: sut.snapshotView())
     }
 
-    func testThatItShowsPasswordInputed() {
+    func testThatItShowsPasswordInputedAndConfrimButtonIsEnabled() {
         // GIVEN
         let sut = textFieldForSnapshots()
+
+        // WHEN
         sut.isSecureTextEntry = true
         sut.text = "Password"
+        sut.textFieldDidChange(textField: sut)
 
-        // WHEN && THEN
+        // THEN
         self.verify(view: sut.snapshotView())
     }
 }

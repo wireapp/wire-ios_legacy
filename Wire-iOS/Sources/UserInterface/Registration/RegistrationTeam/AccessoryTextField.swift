@@ -71,19 +71,19 @@ class AccessoryTextField : UITextField {
         var topInset: CGFloat = 0
 
         if #available(iOS 11, *) {
-            leftInset = 0
+            topInset = 0
         }
         else {
             // Placeholder frame calculation is changed in iOS 11, therefore the TOP inset is not necessary
-            leftInset = 8
+            topInset = 8
         }
 
         placeholderInsets = UIEdgeInsets(top: topInset, left: leftInset, bottom: 0, right: 16)
 
         super.init(frame: frame)
 
-        self.rightView = self.confirmButton;
-        self.rightViewMode = .always;
+        self.rightView = self.confirmButton
+        self.rightViewMode = .always
 
         self.font = AccessoryTextField.enteredTextFont
         self.textColor = .textColor
