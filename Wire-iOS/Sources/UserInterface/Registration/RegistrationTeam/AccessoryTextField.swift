@@ -121,13 +121,14 @@ class AccessoryTextField : UITextField {
 
         switch textFieldType {
         case .email:
-            confirmButton.isEnabled = text.isEmail
-        case .password: ///FIXME: upper limit
-            confirmButton.isEnabled = text.count >= 8
-        case .name:     ///FIXME: upper limit
-            confirmButton.isEnabled = text.count > 0
-        case .unknown:  ///FIXME: upper limit
-            confirmButton.isEnabled = text.count > 0
+            confirmButton.isEnabled = text.isEmail && text.count <= 254
+        ///TODO: error delegate
+        case .password:
+            confirmButton.isEnabled = text.count >= 8 && text.count <= 120
+        case .name:
+            confirmButton.isEnabled = text.count >= 1 && text.count <= 64
+        case .unknown:
+            confirmButton.isEnabled = true
         }
     }
 
