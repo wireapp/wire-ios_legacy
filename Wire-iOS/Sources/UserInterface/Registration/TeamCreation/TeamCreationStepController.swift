@@ -185,7 +185,7 @@ final class TeamCreationStepController: UIViewController {
         }
 
         constrain(errorViewContainer, errorLabel) { errorViewContainer, errorLabel in
-            errorLabel.top == errorViewContainer.top + 16
+            errorLabel.centerY == errorViewContainer.centerY
             errorLabel.leading == errorViewContainer.leadingMargin
             errorLabel.trailing == errorViewContainer.trailingMargin
         }
