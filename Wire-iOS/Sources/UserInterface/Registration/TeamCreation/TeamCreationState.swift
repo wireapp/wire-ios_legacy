@@ -68,15 +68,4 @@ extension TeamCreationState {
             return "Enter the verification code we sent to \(email)"
         }
     }
-
-    var secondaryViews: [ViewDescriptor] {
-        switch self {
-        case .enterName:
-            return []
-        case .setEmail:
-            return []
-        case .verifyEmail:
-            return []
-        }
-    }
 }

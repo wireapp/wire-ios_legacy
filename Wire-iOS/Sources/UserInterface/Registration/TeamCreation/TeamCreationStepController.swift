@@ -32,7 +32,7 @@ final class TeamCreationStepController: UIViewController {
     private var subtextLabel: UILabel!
     private var errorLabel: UILabel!
 
-    private var secondaryViewsContainer: UIView!
+    private var secondaryViewsStackView: UIStackView!
     private var errorViewContainer: UIView!
     private var mainViewContainer: UIView!
 
@@ -133,14 +133,14 @@ final class TeamCreationStepController: UIViewController {
         errorLabel.translatesAutoresizingMaskIntoConstraints = false
         errorViewContainer.addSubview(errorLabel)
 
-        secondaryViewsContainer = UIView()
-        secondaryViewsContainer.backgroundColor = .lightGray
-        secondaryViewsContainer.translatesAutoresizingMaskIntoConstraints = false
-
         secondaryViews = secondaryViewDescriptors.map { $0.create() }
-        secondaryViews.forEach { self.secondaryViewsContainer.addSubview($0) }
 
-        [backButton, headlineLabel, subtextLabel, mainViewContainer, errorViewContainer, secondaryViewsContainer].flatMap {$0}.forEach { self.view.addSubview($0) }
+        secondaryViewsStackView = UIStackView(arrangedSubviews: secondaryViews)
+        secondaryViewsStackView.distribution = .equalCentering
+        secondaryViewsStackView.spacing = 24
+        secondaryViewsStackView.translatesAutoresizingMaskIntoConstraints = false
+
+        [backButton, headlineLabel, subtextLabel, mainViewContainer, errorViewContainer, secondaryViewsStackView].flatMap {$0}.forEach { self.view.addSubview($0) }
     }
 
     private func createConstraints() {
@@ -151,14 +151,15 @@ final class TeamCreationStepController: UIViewController {
             }
         }
 
-        constrain(view, secondaryViewsContainer, errorViewContainer, mainViewContainer) { view, secondaryViewsContainer, errorViewContainer, mainViewContainer in
+        constrain(view, secondaryViewsStackView, errorViewContainer, mainViewContainer) { view, secondaryViewsStackView, errorViewContainer, mainViewContainer in
             let keyboardHeight = KeyboardFrameObserver.shared().keyboardFrame().height
-            self.keyboardOffset = secondaryViewsContainer.bottom == view.bottom - (keyboardHeight + 10)
-            secondaryViewsContainer.leading == view.leading
-            secondaryViewsContainer.trailing == view.trailing
-            secondaryViewsContainer.height == 42
+            self.keyboardOffset = secondaryViewsStackView.bottom == view.bottom - (keyboardHeight + 10)
+            secondaryViewsStackView.leading >= view.leading
+            secondaryViewsStackView.trailing <= view.trailing
+            secondaryViewsStackView.height == 42
+            secondaryViewsStackView.centerX == view.centerX
 
-            errorViewContainer.bottom == secondaryViewsContainer.top
+            errorViewContainer.bottom == secondaryViewsStackView.top
             errorViewContainer.leading == view.leading
             errorViewContainer.trailing == view.trailing
             errorViewContainer.height == 30
@@ -188,6 +189,5 @@ final class TeamCreationStepController: UIViewController {
             errorLabel.leading == errorViewContainer.leadingMargin
             errorLabel.trailing == errorViewContainer.trailingMargin
         }
-
     }
 }

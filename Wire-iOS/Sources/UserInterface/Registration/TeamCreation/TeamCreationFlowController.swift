@@ -37,6 +37,10 @@ final class TeamCreationFlowController: NSObject {
         pushCurrentController()
     }
 
+}
+
+// MARK: - Creating step controller
+extension TeamCreationFlowController {
     func createViewController() -> UIViewController {
         let mainView = currentState.mainViewDescription
         mainView.valueSubmitted = { [weak self] (value: String) in
@@ -48,15 +52,33 @@ final class TeamCreationFlowController: NSObject {
             self?.rewindState()
         }
 
+        let secondaryViews = self.secondaryViews(for: currentState)
         let controller = TeamCreationStepController(headline: currentState.headline,
                                                     subtext: currentState.subtext,
                                                     mainView: mainView,
                                                     backButton: backButton,
-                                                    secondaryViews: currentState.secondaryViews)
+                                                    secondaryViews: secondaryViews)
         return controller
     }
 
-    func advanceState(with value: String) {
+    func secondaryViews(for state: TeamCreationState) -> [ViewDescriptor] {
+        switch state  {
+        case .enterName:
+            let whatIsWire = ButtonDescription(title: "Wire?", accessibilityIdentifier: "wire_for_teams_button")
+            return [whatIsWire, ButtonDescription(title: "teams?", accessibilityIdentifier: "wire_for_teams_button")]
+        case .setEmail:
+            return []
+        case .verifyEmail:
+            let resendCode = ButtonDescription(title: "Resend code", accessibilityIdentifier: "resend_button")
+            let changeEmail = ButtonDescription(title: "Change Email", accessibilityIdentifier: "change_email_button")
+            return [resendCode, changeEmail]
+        }
+    }
+}
+
+// MARK: - State changes
+extension TeamCreationFlowController {
+    fileprivate func advanceState(with value: String) {
         switch currentState {
         case .enterName:
             currentState = .setEmail(teamName: value)
@@ -68,19 +90,19 @@ final class TeamCreationFlowController: NSObject {
         pushCurrentController()
     }
 
-    func pushCurrentController() {
+    fileprivate func pushCurrentController() {
         let nextController = createViewController()
         self.navigationController.pushViewController(nextController, animated: true)
     }
 
-    func rewindState() {
+    fileprivate func rewindState() {
         switch currentState {
         case .enterName:
             break
         case .setEmail:
             currentState = .enterName
         case let .verifyEmail(teamName: teamName, email: _):
-             currentState = .setEmail(teamName: teamName)
+            currentState = .setEmail(teamName: teamName)
         }
         self.navigationController.popViewController(animated: true)
     }
