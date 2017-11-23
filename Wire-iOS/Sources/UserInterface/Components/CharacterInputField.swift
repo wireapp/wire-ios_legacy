@@ -76,11 +76,11 @@ public class CharacterInputField: UIControl, UITextInputTraits {
     
     fileprivate func notifyingDelegate(_ action: ()->()) {
         let wasFilled = self.isFilled
-        let previosText = self.storage
+        let previousText = self.storage
         
         action()
         
-        if previosText != storage {
+        if previousText != storage {
             self.delegate?.didChangeText(self, to: storage)
         }
         
