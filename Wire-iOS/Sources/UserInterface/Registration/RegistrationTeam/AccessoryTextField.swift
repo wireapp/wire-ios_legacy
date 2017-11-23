@@ -197,13 +197,12 @@ class AccessoryTextField : UITextField {
 
     }
 
-
-    // MARK:- Email valida
-
     ///TODO: leftViewRectForBounds
     ///TODO: paste. select
 }
 
+
+// MARK:- Email validator
 
 extension String {
     public var isEmail: Bool {
