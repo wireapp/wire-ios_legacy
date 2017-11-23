@@ -159,38 +159,28 @@ class AccessoryTextField : UITextField {
         case .email:
             if text.count > 254 {
                 accessoryTextFieldDelegate?.validationErrorDidOccur(accessoryTextField: self, error:.tooLong)
-
                 isError = true
             }
             else if !text.isEmail {
                 accessoryTextFieldDelegate?.validationErrorDidOccur(accessoryTextField: self, error:.invalidEmail)
-
                 isError = true
             }
-
-            confirmButton.isEnabled = !isError
-
         case .password:
             if text.count > 120 {
                 accessoryTextFieldDelegate?.validationErrorDidOccur(accessoryTextField: self, error:.tooLong)
-
                 isError = true
             }
             else if text.count < 8 {
                 accessoryTextFieldDelegate?.validationErrorDidOccur(accessoryTextField: self, error:.tooShort)
-
                 isError = true
             }
-
         case .name:
             if text.count > 64 {
                 accessoryTextFieldDelegate?.validationErrorDidOccur(accessoryTextField: self, error:.tooLong)
-
                 isError = true
             }
             else if text.count < 2 {
                 accessoryTextFieldDelegate?.validationErrorDidOccur(accessoryTextField: self, error:.tooShort)
-
                 isError = true
             }
         case .unknown:
