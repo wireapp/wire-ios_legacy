@@ -27,50 +27,25 @@ extension UIColor {
     /// entered text/headline, entered text #33373A
     static let textColor = UIColor(red:0.20, green:0.22, blue:0.23, alpha:1.0)
     static let subtitleColor = UIColor(red:0.20, green:0.22, blue:0.23, alpha:0.56)
-    static let activeButtonColor = UIColor(hexString: "#2391D3")!
-    static let errorMessageColor = UIColor(hexString: "#FB0807")!
-    static let inactiveButtonColor = UIColor(hexString: "#33373A40")!
-    static let textfieldColor = UIColor.white
-    static let placeholderColor = UIColor(hexString: "#8D989F")!
+    static let activeButtonColor    = UIColor(rgb: 0x2391D3)
+    static let errorMessageColor    = UIColor(rgb: 0xFB0807)
+    static let inactiveButtonColor  = UIColor(rgb: 0x33373A, alpha:0.16)
+    static let textfieldColor       = UIColor.white
+    static let placeholderColor     = UIColor(rgb: 0x8D989F)
 
 
-    public convenience init?(hexString: String) {
-        let r, g, b, a: CGFloat
 
-        if hexString.hasPrefix("#") {
-            let start = hexString.index(hexString.startIndex, offsetBy: 1)
-            let hexColor = String(hexString[start...])
+    /// Init a UIColor with RGB 24-bit value and alpha value
+    ///
+    /// - Parameters:
+    ///   - rgb: a unsigned integer value form 0x000000 to 0xFFFFFF, e.g. 0x112233
+    ///   - alpha: alpha value form 0 to 1
+    public convenience init(rgb: UInt, alpha: CGFloat = 1.0) {
+        let r, g, b: CGFloat
+        r = CGFloat(rgb >> 16 & 0xFF) / 255.0
+        g = CGFloat(rgb >> 8 & 0xFF) / 255.0
+        b = CGFloat(rgb & 0xFF) / 255.0
 
-            if hexColor.count == 8 {
-                let scanner = Scanner(string: hexColor)
-                var hexNumber: UInt64 = 0
-
-                if scanner.scanHexInt64(&hexNumber) {
-                    r = CGFloat((hexNumber & 0xff000000) >> 24) / 255
-                    g = CGFloat((hexNumber & 0x00ff0000) >> 16) / 255
-                    b = CGFloat((hexNumber & 0x0000ff00) >> 8) / 255
-                    a = CGFloat(hexNumber & 0x000000ff) / 255
-
-                    self.init(red: r, green: g, blue: b, alpha: a)
-                    return
-                }
-            }
-            else if hexColor.count == 6 {
-                let scanner = Scanner(string: hexColor)
-                var hexNumber: UInt64 = 0
-
-                if scanner.scanHexInt64(&hexNumber) {
-                    r = CGFloat((hexNumber & 0xff0000) >> 16) / 255
-                    g = CGFloat((hexNumber & 0x00ff00) >> 8) / 255
-                    b = CGFloat((hexNumber & 0x0000ff)) / 255
-                    a = CGFloat(1.0)
-
-                    self.init(red: r, green: g, blue: b, alpha: a)
-                    return
-                }
-            }
-        }
-
-        return nil
+        self.init(red: r, green: g, blue: b, alpha: alpha)
     }
 }
