@@ -1037,6 +1037,13 @@
 
 - (void)sendButtonPressed:(id)sender
 {
+    [self checkMessageLength];
+    [self.inputBar.textView autocorrectLastWord];
+    [self sendOrEditText:self.inputBar.textView.preparedText];
+    [self.inputBar.textView resetTypingAttributes];
+}
+
+-(void)checkMessageLength{
     if(self.inputBar.textView.text.length > 8000) {
         UIAlertController *alert = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"conversation.input_bar.message_too_long.title", nil)
                                                                        message:NSLocalizedString(@"conversation.input_bar.message_too_long.message", nil)
@@ -1045,10 +1052,6 @@
         [self presentViewController:alert animated:YES completion:nil];
         return;
     }
-    
-    [self.inputBar.textView autocorrectLastWord];
-    [self sendOrEditText:self.inputBar.textView.preparedText];
-    [self.inputBar.textView resetTypingAttributes];
 }
 
 @end

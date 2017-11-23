@@ -49,6 +49,8 @@ class ShareExtensionViewController: SLComposeServiceViewController {
     private var observer: SendableBatchObserver? = nil
     private weak var progressViewController: SendingProgressViewController? = nil
     
+    private let maxTextLength = 8_000
+    
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         setupObserver()
@@ -72,6 +74,7 @@ class ShareExtensionViewController: SLComposeServiceViewController {
         let activity = ExtensionActivity(attachments: allAttachments)
         sharingSession?.analyticsEventPersistence.add(activity.openedEvent())
         extensionActivity = activity
+        self.charactersRemaining = maxTextLength as NSNumber
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -126,7 +129,9 @@ class ShareExtensionViewController: SLComposeServiceViewController {
 
     override func isContentValid() -> Bool {
         // Do validation of contentText and/or NSExtensionContext attachments here
-        return sharingSession != nil && self.postContent?.target != nil
+        let textLength = self.contentText.trimmingCharacters(in: .whitespaces).characters.count
+        self.charactersRemaining = maxTextLength - textLength as NSNumber
+        return sharingSession != nil && self.postContent?.target != nil && self.charactersRemaining.intValue >= 0
     }
 
     /// invoked when the user wants to post
