@@ -19,34 +19,24 @@
 
 #import <UIKit/UIKit.h>
 
-#import "FormStepDelegate.h"
+#import "FormFlowViewController.h"
 
-#import "WireSyncEngine+iOS.h"
-
-@class AnalyticsTracker;
-@class ZMEmailCredentials;
-
-
-typedef NS_ENUM(NSUInteger, RegistrationFlow) {
-    RegistrationFlowEmail,
-    RegistrationFlowPhone
+typedef NS_ENUM(NSUInteger, AuthenticationFlowType) {
+    AuthenticationFlowRegular,
+    AuthenticationFlowOnlyLogin,
+    AuthenticationFlowOnlyRegistration
 };
 
+@class AnalyticsTracker, ZMIncompleteRegistrationUser, LoginCredentials;
 
-@protocol RegistrationViewControllerDelegate <NSObject>
+@interface RegistrationRootViewController : FormFlowViewController
 
-- (void)registrationViewControllerDidCompleteRegistration;
-- (void)registrationViewControllerDidSignIn;
+@property (nonatomic) BOOL hasSignInError;
+@property (nonatomic) BOOL showLogin;
+@property (nonatomic) LoginCredentials *loginCredentials;
 
-@end
-
-
-
-@interface RegistrationViewController : UIViewController
-
-@property (nonatomic, weak) id<RegistrationViewControllerDelegate> delegate;
-@property (nonatomic) NSError *signInError;
-
-+ (RegistrationFlow)registrationFlow;
+- (instancetype)initWithUnregisteredUser:(ZMIncompleteRegistrationUser *)unregisteredUser authenticationFlow:(AuthenticationFlowType)flow;
+- (void)presentLoginTab;
+- (void)presentRegistrationTab;
 
 @end

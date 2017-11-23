@@ -240,9 +240,10 @@ NSString *SplitLayoutObservableDidChangeToLayoutSizeNotification = @"SplitLayout
 - (void)willTransitionToTraitCollection:(UITraitCollection *)newCollection withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator
 {
     self.futureTraitCollection = newCollection;
+    [self updateLayoutSizeForTraitCollection:newCollection size:self.view.bounds.size];
+
     [super willTransitionToTraitCollection:newCollection withTransitionCoordinator:coordinator];
     
-    [self updateLayoutSizeForTraitCollection:newCollection size:self.view.bounds.size];
     [self updateActiveConstraints];
     
     [self updateLeftViewVisibility];

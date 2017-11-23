@@ -26,7 +26,6 @@ import Classy
 
 @objc public final class LocationSendViewController: UIViewController {
     
-    public var buttonFont: UIFont? = nil
     public let sendButton = Button(style: .full)
     public let addressLabel = UILabel()
     public let separatorView = UIView()
@@ -45,12 +44,6 @@ import Classy
         CASStyler.default().styleItem(self)
         configureViews()
         createConstraints()
-    }
-    
-    public override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        guard let font = buttonFont else { return }
-        sendButton.titleLabel?.font = font
     }
     
     fileprivate func configureViews() {

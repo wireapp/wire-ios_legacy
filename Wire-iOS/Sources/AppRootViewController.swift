@@ -41,6 +41,7 @@ class AppRootViewController : UIViewController {
     fileprivate var authenticatedBlocks : [() -> Void] = []
     fileprivate let transitionQueue : DispatchQueue = DispatchQueue(label: "transitionQueue")
     fileprivate var isClassyInitialized = false
+    fileprivate let mediaManagerLoader = MediaManagerLoader()
     
     fileprivate weak var requestToOpenViewDelegate: ZMRequestsToOpenViewsDelegate? {
         didSet {
@@ -95,6 +96,7 @@ class AppRootViewController : UIViewController {
         
         NotificationCenter.default.addObserver(self, selector: #selector(onContentSizeCategoryChange), name: Notification.Name.UIContentSizeCategoryDidChange, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(applicationDidEnterBackground), name: Notification.Name.UIApplicationDidEnterBackground, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(applicationDidBecomeActive), name: Notification.Name.UIApplicationDidBecomeActive, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(onUserGrantedAudioPermissions), name: Notification.Name.UserGrantedAudioPermissions, object: nil)
         
         transition(to: .headless)
@@ -189,10 +191,23 @@ class AppRootViewController : UIViewController {
         case .unauthenticated(error: let error):
             UIColor.setAccentOverride(ZMUser.pickRandomAccentColor())
             mainWindow.tintColor = UIColor.accent()
-            let registrationViewController = RegistrationViewController()
-            registrationViewController.delegate = appStateController
-            registrationViewController.signInError = error
-            viewController = registrationViewController
+            let authenticatedAccounts = SessionManager.shared?.accountManager.accounts.filter { $0.isAuthenticated } ?? []
+
+            if error == nil && authenticatedAccounts.isEmpty {
+                // When we show the landing controller we want it to be nested in navigation controller
+                let landingViewController = LandingViewController()
+                landingViewController.delegate = self
+                let navigationController = NavigationController(rootViewController: landingViewController)
+                navigationController.backButtonEnabled = false
+                navigationController.logoEnabled = false
+                navigationController.isNavigationBarHidden = true
+                viewController = navigationController
+            } else {
+                let registrationViewController = RegistrationViewController()
+                registrationViewController.delegate = appStateController
+                registrationViewController.signInError = error
+                viewController = registrationViewController
+            }
         case .authenticated(completedRegistration: let completedRegistration):
             // TODO: CallKit only with 1 account
             sessionManager?.updateCallNotificationStyleFromSettings()
@@ -300,15 +315,8 @@ class AppRootViewController : UIViewController {
         }
     }
     
-    func configureMediaManager() {        
-        guard let mediaManager = AVSMediaManager.sharedInstance() else {
-            return
-        }
-        
-        mediaManager.configureSounds()
-        mediaManager.observeSoundConfigurationChanges()
-        mediaManager.isMicrophoneMuted = false
-        mediaManager.isSpeakerEnabled = false
+    func configureMediaManager() {
+        self.mediaManagerLoader.send(message: .appStart)
     }
     
     func setupClassy(with windows: [UIWindow]) {
@@ -428,6 +436,10 @@ extension AppRootViewController : LocalNotificationResponder {
         let unreadConversations = sessionManager?.accountManager.totalUnreadCount ?? 0
         UIApplication.shared.applicationIconBadgeNumber = unreadConversations
     }
+
+    @objc fileprivate func applicationDidBecomeActive() {
+        overlayWindow.frame.size = UIScreen.main.bounds.size
+    }
 }
 
 
@@ -455,5 +467,29 @@ extension AppRootViewController  {
     
     func onUserGrantedAudioPermissions() {
         sessionManager?.updateCallNotificationStyleFromSettings()
+    }
+}
+
+// MARK: - Transition form LandingViewController to RegistrationViewController
+
+extension AppRootViewController : LandingViewControllerDelegate {
+    func landingViewControllerDidChooseCreateTeam() {
+        ///TODO: transit to create team UI
+    }
+
+    func landingViewControllerDidChooseLogin() {
+        if let navigationController = self.visibleViewController as? NavigationController {
+            let loginViewController = RegistrationViewController(authenticationFlow: .onlyLogin)
+            loginViewController.delegate = appStateController
+            navigationController.pushViewController(loginViewController, animated: true)
+        }
+    }
+
+    func landingViewControllerDidChooseCreateAccount() {
+        if let navigationController = self.visibleViewController as? NavigationController {
+            let registrationViewController = RegistrationViewController(authenticationFlow: .onlyRegistration)
+            registrationViewController.delegate = appStateController
+            navigationController.pushViewController(registrationViewController, animated: true)
+        }
     }
 }

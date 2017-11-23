@@ -34,22 +34,25 @@
 
 @property (nonatomic) TabBarController *registrationTabBarController;
 @property (nonatomic) ZMIncompleteRegistrationUser *unregisteredUser;
+@property (nonatomic) AuthenticationFlowType flowType;
 @property (nonatomic, weak) SignInViewController *signInViewController;
 @property (nonatomic) IconButton *cancelButton;
+@property (nonatomic) IconButton *backButton;
 @property (nonatomic, readonly) Account *firstAuthenticatedAccount;
 
 @end
 
 @implementation RegistrationRootViewController
 
-- (instancetype)initWithUnregisteredUser:(ZMIncompleteRegistrationUser *)unregisteredUser
+- (instancetype)initWithUnregisteredUser:(ZMIncompleteRegistrationUser *)unregisteredUser authenticationFlow:(AuthenticationFlowType)flow
 {
     self = [super initWithNibName:nil bundle:nil];
-    
+
     if (self) {
         self.unregisteredUser = unregisteredUser;
+        self.flowType = flow;
     }
-    
+
     return self;
 }
 
@@ -66,7 +69,6 @@
     
     UIViewController *flowViewController = nil;
     if ([RegistrationViewController registrationFlow] == RegistrationFlowEmail) {
-        
         RegistrationEmailFlowViewController *emailFlowViewController = [[RegistrationEmailFlowViewController alloc] initWithUnregisteredUser:self.unregisteredUser];
         emailFlowViewController.formStepDelegate = self;
         flowViewController = emailFlowViewController;
@@ -77,8 +79,22 @@
         phoneFlowViewController.registrationDelegate = self;
         flowViewController = phoneFlowViewController;
     }
-    
-    self.registrationTabBarController = [[TabBarController alloc] initWithViewControllers:@[flowViewController, signInViewController]];
+
+    NSArray *controllers;
+    switch (self.flowType) {
+        case AuthenticationFlowRegular:
+            controllers = @[flowViewController, signInViewController];
+            break;
+        case AuthenticationFlowOnlyLogin:
+            [self setupBackButton];
+            controllers = @[signInViewController];
+            break;
+        case AuthenticationFlowOnlyRegistration:
+            [self setupBackButton];
+            controllers = @[flowViewController];
+            break;
+    }
+    self.registrationTabBarController = [[TabBarController alloc] initWithViewControllers:controllers];
     self.signInViewController = signInViewController;
     
     if (self.showLogin) {
@@ -103,6 +119,31 @@
     [self createConstraints];
 }
 
+- (void)setupBackButton
+{
+    self.backButton = [[IconButton alloc] initForAutoLayout];
+    self.backButton.cas_styleClass = @"navigation";
+
+    ZetaIconType iconType = [UIApplication isLeftToRightLayout] ? ZetaIconTypeChevronLeft : ZetaIconTypeChevronRight;
+
+    [self.backButton setIcon:iconType withSize:ZetaIconSizeSmall forState:UIControlStateNormal];
+    self.backButton.accessibilityIdentifier = @"BackToLaunchScreenButton";
+    [self.view addSubview:self.backButton];
+
+    [self.backButton addTarget:self action:@selector(backButtonTapped) forControlEvents:UIControlEventTouchUpInside];
+}
+
+
+/**
+ Setter of showLogin. When this is set to true, switch to login tab animatied. Else animates to register tab
+
+ @param newValue showLogin's new value
+ */
+- (void)setShowLogin: (BOOL)newValue{
+    _showLogin = newValue;
+    [self.registrationTabBarController selectIndex:_showLogin ? 1 : 0 animated:YES];
+}
+
 - (Account *)firstAuthenticatedAccount {
     Account *selectedAccount = SessionManager.shared.accountManager.selectedAccount;
     
@@ -125,6 +166,17 @@
     [self.registrationTabBarController.view autoSetDimension:ALDimensionHeight toSize:IS_IPAD_FULLSCREEN ? 262 : 244];
     [self.cancelButton autoPinEdgeToSuperviewEdge:ALEdgeTop withInset:UIScreen.safeArea.top + 32];
     [self.cancelButton autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:16];
+
+    if (self.backButton) {
+        CGFloat topMargin = 32 + UIScreen.safeArea.top;
+        CGFloat leftMargin = 28 + UIScreen.safeArea.left;
+        CGFloat buttonSize = 32;
+
+        [self.backButton autoSetDimension:ALDimensionHeight toSize:buttonSize];
+        [self.backButton autoSetDimension:ALDimensionWidth toSize:buttonSize relation:NSLayoutRelationGreaterThanOrEqual];
+        [self.backButton autoPinEdgeToSuperviewEdge:ALEdgeTop withInset:topMargin];
+        [self.backButton autoPinEdgeToSuperviewEdge:ALEdgeLeading withInset:leftMargin];
+    }
 }
 
 - (void)presentLoginTab
@@ -135,6 +187,11 @@
 - (void)presentRegistrationTab
 {
     [self.registrationTabBarController selectIndex:0 animated:YES];
+}
+
+- (void)backButtonTapped
+{
+    [self.navigationController.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)cancelAddAccount

@@ -1112,8 +1112,6 @@ LocationSendViewController {
     view: @{
         backgroundColor: $color-background;
     }
-    
-    buttonFont: $font-medium-semibold;
 }
 
 /* Camera */
@@ -1737,16 +1735,6 @@ SearchResultLabel {
 TextSearchResultCell RoundedTextBadge {
     textLabel: @{
         textColor: $color-background;
-        font: $font-small-semibold;
-    }
-}
-
-// Example code
-
-TestView {
-    backgroundColor: green;
-    testLabel: @{
-        textColor: $color-text-foreground;
         font: $font-small-semibold;
     }
 }

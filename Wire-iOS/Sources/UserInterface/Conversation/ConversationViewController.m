@@ -419,26 +419,6 @@
     [self updateRightNavigationItemsButtons];
 }
 
-- (void)updateRightNavigationItemsButtons
-{
-    // FIXME: iOS8 - we can use UIView's semanticContentAttribute on navigation bar
-    if ([UIApplication isLeftToRightLayout]) {
-        self.navigationItem.rightBarButtonItems = [self rightNavigationItemsForConversation:self.conversation];
-    } else {
-        self.navigationItem.rightBarButtonItems = [self leftNavigationItemsForConversation:self.conversation];
-    }
-}
-
-- (void)updateLeftNavigationBarItems
-{
-    // FIXME: iOS8 - we can use UIView's semanticContentAttribute on navigation bar
-    if ([UIApplication isLeftToRightLayout]) {
-        self.navigationItem.leftBarButtonItems = [self leftNavigationItemsForConversation:self.conversation];
-    } else {
-        self.navigationItem.leftBarButtonItems = [self rightNavigationItemsForConversation:self.conversation];
-    }
-}
-
 - (void)updateInputBarVisibility
 {
     self.inputBarZeroHeight.active = self.conversation.isReadOnly;

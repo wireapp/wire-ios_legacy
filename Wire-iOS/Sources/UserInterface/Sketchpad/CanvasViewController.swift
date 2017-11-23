@@ -62,9 +62,21 @@ class CanvasViewController: UIViewController, UINavigationControllerDelegate {
     
     let emojiKeyboardViewController =  EmojiKeyboardViewController()
     let colorPickerController = SketchColorPickerController()
-    
+
+
     override var shouldAutorotate: Bool {
-        return false
+        switch UIDevice.current.userInterfaceIdiom {
+        case .pad:
+            return true
+        default:
+            return false
+        }
+    }
+
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+
+        canvas.setNeedsDisplay()
     }
 
     override func viewDidLoad() {
