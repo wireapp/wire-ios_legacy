@@ -112,6 +112,8 @@ final class TeamCreationStepController: UIViewController {
         subtextLabel = UILabel()
         subtextLabel.backgroundColor = .gray
         subtextLabel.text = subtext
+        subtextLabel.numberOfLines = 0
+        subtextLabel.lineBreakMode = .byWordWrapping
         subtextLabel.translatesAutoresizingMaskIntoConstraints = false
 
         mainViewContainer = UIView()
@@ -168,7 +170,7 @@ final class TeamCreationStepController: UIViewController {
         }
 
         constrain(view, mainViewContainer, subtextLabel, headlineLabel) { view, inputViewsContainer, subtextLabel, headlineLabel in
-            headlineLabel.bottom == inputViewsContainer.top - 58
+            headlineLabel.bottom == subtextLabel.top - 24
             headlineLabel.leading == view.leadingMargin
             headlineLabel.trailing == view.trailingMargin
 
