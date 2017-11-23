@@ -142,11 +142,10 @@ final class TeamCreationStepController: UIViewController {
     }
 
     private func createConstraints() {
-
         if let backButton = backButton {
             constrain(view, backButton) { view, backButton in
-                backButton.leading == view.leading
-                backButton.top == view.topMargin
+                backButton.leading == view.leading + 16
+                backButton.top == view.topMargin + 12
             }
         }
 

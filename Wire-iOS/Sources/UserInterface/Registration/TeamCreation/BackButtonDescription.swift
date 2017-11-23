@@ -26,8 +26,6 @@ extension BackButtonDescription: ViewDescriptor {
     func create() -> UIView {
         let button = IconButton()
         button.tintColor = .black
-        button.backgroundColor = .gray
-        button.contentEdgeInsets = UIEdgeInsets(top: 16, left: 16, bottom: 16, right: 16)
         button.translatesAutoresizingMaskIntoConstraints = false
         let iconType: ZetaIconType = UIApplication.isLeftToRightLayout ? .chevronLeft : .chevronRight
         button.setIcon(iconType, with: .small, for: .normal)
