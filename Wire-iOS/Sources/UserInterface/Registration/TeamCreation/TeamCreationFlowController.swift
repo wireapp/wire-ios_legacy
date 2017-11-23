@@ -27,9 +27,11 @@ protocol ViewDescriptor: class {
 final class TeamCreationFlowController: NSObject {
     var currentState: TeamCreationState = .enterName
     let navigationController: UINavigationController
+    let registrationStatus: RegistrationStatus
 
-    init(navigationController: UINavigationController) {
+    init(navigationController: UINavigationController, registrationStatus: RegistrationStatus) {
         self.navigationController = navigationController
+        self.registrationStatus = registrationStatus
         super.init()
     }
 
@@ -72,9 +74,15 @@ extension TeamCreationFlowController {
             return [whatIsWire]
         case .setEmail:
             return []
-        case .verifyEmail:
+        case let .verifyEmail(teamName: _, email: email):
             let resendCode = ButtonDescription(title: "Resend code", accessibilityIdentifier: "resend_button")
+            resendCode.buttonTapped = { [weak self] in
+                self?.registrationStatus.sendActivationCode(to: email)
+            }
             let changeEmail = ButtonDescription(title: "Change Email", accessibilityIdentifier: "change_email_button")
+            changeEmail.buttonTapped = { [weak self] in
+                self?.rewindState()
+            }
             return [resendCode, changeEmail]
         }
     }
@@ -88,6 +96,7 @@ extension TeamCreationFlowController {
             currentState = .setEmail(teamName: value)
         case let .setEmail(teamName: teamName):
             currentState = .verifyEmail(teamName: teamName, email: value)
+            registrationStatus.sendActivationCode(to: value)
         case .verifyEmail(teamName: _, email: _):
             break
         }

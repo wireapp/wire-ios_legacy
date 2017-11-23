@@ -199,7 +199,9 @@ class AppRootViewController : UIViewController {
                 navigationController.logoEnabled = false
                 navigationController.isNavigationBarHidden = true
 
-                flowController = TeamCreationFlowController(navigationController: navigationController)
+                guard let registrationStatus = SessionManager.shared?.unauthenticatedSession?.registrationStatus else { fatal("Could not get registration status") }
+
+                flowController = TeamCreationFlowController(navigationController: navigationController, registrationStatus: registrationStatus)
 
                 viewController = navigationController
             } else {
