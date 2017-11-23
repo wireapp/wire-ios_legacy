@@ -56,8 +56,8 @@ class AccessoryTextField : UITextField {
     let textInsets: UIEdgeInsets = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 8)
     let placeholderInsets: UIEdgeInsets
 
-    convenience init(frame: CGRect, textFieldType: TextFieldType? = .unknown) {
-        self.init(frame: frame)
+    convenience init(textFieldType: TextFieldType?) {
+        self.init(frame: .zero)
 
         if let textFieldType = textFieldType {
             self.textFieldType = textFieldType
@@ -117,11 +117,20 @@ class AccessoryTextField : UITextField {
     }
 
     func textFieldDidChange(textField: UITextField){
-        if let text = textField.text {
+        guard let text = textField.text else { return }
+
+        switch textFieldType {
+        case .email:
+            confirmButton.isEnabled = text.isEmail
+        case .password: ///FIXME: upper limit
+            confirmButton.isEnabled = text.count >= 8
+        case .name:     ///FIXME: upper limit
+            confirmButton.isEnabled = text.count > 0
+        case .unknown:  ///FIXME: upper limit
             confirmButton.isEnabled = text.count > 0
         }
-
     }
+
     private func createConstraints() {
         constrain(confirmButton) { confirmButton in
             confirmButton.width == confirmButton.height
@@ -188,6 +197,18 @@ class AccessoryTextField : UITextField {
 
     }
 
+
+    // MARK:- Email valida
+
     ///TODO: leftViewRectForBounds
     ///TODO: paste. select
+}
+
+
+extension String {
+    public var isEmail: Bool {
+        let dataDetector = try? NSDataDetector(types: NSTextCheckingResult.CheckingType.link.rawValue)
+        let firstMatch = dataDetector?.firstMatch(in: self, options: NSRegularExpression.MatchingOptions.reportCompletion, range: NSRange(location: 0, length: self.characters.count))
+        return (firstMatch?.range.location != NSNotFound && firstMatch?.url?.scheme == "mailto")
+    }
 }
