@@ -91,7 +91,7 @@ class AccessoryTextField : UITextField {
             topInset = 0
         }
         else {
-            // Placeholder frame calculation is changed in iOS 11, therefore the TOP inset is not necessary
+            /// Placeholder frame calculation is changed in iOS 11, therefore the TOP inset is not necessary
             topInset = 8
         }
 
@@ -149,7 +149,9 @@ class AccessoryTextField : UITextField {
     }
 
     func textFieldDidChange(textField: UITextField){
-        guard let text = textField.text else { return }
+        guard let text = textField.text else {
+            return            
+        }
 
         var isError = false
 

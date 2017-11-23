@@ -21,14 +21,28 @@ import Foundation
 import XCTest
 @testable import Wire
 
-class AccessoryTextFieldUnitTests: XCTestCase {
+final class AccessoryTextFieldUnitTests: XCTestCase {
+    var mockViewController: MockViewController!
 
-    class MockViewController : UIViewController, AccessoryTextFieldDelegate {
+    override func setUp() {
+        super.setUp()
+        mockViewController = MockViewController()
+    }
+
+    override func tearDown() {
+        super.tearDown()
+        mockViewController = nil
+    }
+
+    class MockViewController : AccessoryTextFieldDelegate {
         var errorCounter = 0
         var successCounter = 0
 
+        var lastError : TextFieldValidationError?
+
         func validationErrorDidOccur(accessoryTextField: AccessoryTextField, error: TextFieldValidationError?) {
             errorCounter += 1
+            lastError = error
         }
 
         func validationSucceed(accessoryTextField: AccessoryTextField, length: Int?) {
@@ -38,38 +52,148 @@ class AccessoryTextFieldUnitTests: XCTestCase {
 
     }
 
-    func testThatSucceedAfterSendEditingChangedForDefaultTextField() {
-        // GIVEN
-        let sut = AccessoryTextField()
-        let mockViewController = MockViewController()
+    @discardableResult fileprivate func checkNoErrorAndOneSucceed(textFieldType: AccessoryTextField.TextFieldType, text: String) -> AccessoryTextField {
+        let sut = AccessoryTextField(textFieldType: textFieldType)
 
         sut.accessoryTextFieldDelegate = mockViewController
 
         // WHEN
-        sut.text = "blah"
+        sut.text = text
         sut.sendActions(for: .editingChanged)
 
         // THEN
-        XCTAssertTrue(mockViewController.errorCounter == 0 && mockViewController.successCounter == 1)
+        XCTAssert(mockViewController.errorCounter == 0)
+        XCTAssert(mockViewController.successCounter == 1)
+        XCTAssert(sut.confirmButton.isEnabled)
+        XCTAssertNil(mockViewController.lastError)
+
+        return sut
+    }
+
+    @discardableResult fileprivate func checkOneErrorAndZeroSucceed(textFieldType: AccessoryTextField.TextFieldType, text: String?, expectedError: TextFieldValidationError) -> AccessoryTextField{
+        let sut = AccessoryTextField(textFieldType: textFieldType)
+
+        sut.accessoryTextFieldDelegate = mockViewController
+
+        // WHEN
+        sut.text = text
+        sut.sendActions(for: .editingChanged)
+
+        // THEN
+        XCTAssert(mockViewController.errorCounter == 1)
+        XCTAssert(mockViewController.successCounter == 0)
+        XCTAssertFalse(sut.confirmButton.isEnabled)
+        XCTAssertEqual(expectedError, mockViewController.lastError)
+
+        return sut
+    }
+
+    // MARK:- happy cases
+
+    func testThatSucceedAfterSendEditingChangedForDefaultTextField() {
+        // GIVEN
+        let type: AccessoryTextField.TextFieldType = .unknown
+        let text = "blah"
+
+        // WHEN & THEN
+        checkNoErrorAndOneSucceed(textFieldType: type, text: text)
     }
 
     func testThatPasswordIsSecuredWhenSetToPasswordType() {
         // GIVEN
-        let sut = AccessoryTextField(textFieldType: .password)
-        let mockViewController = MockViewController()
+        let type: AccessoryTextField.TextFieldType = .password
+        let text = "blahblah"
 
-        sut.accessoryTextFieldDelegate = mockViewController
-
-        // WHEN
-        sut.text = "blahblah"
-        sut.sendActions(for: .editingChanged)
-
-        // THEN
-        XCTAssertTrue(sut.isSecureTextEntry && mockViewController.errorCounter == 0 && mockViewController.successCounter == 1)
+        // WHEN & THEN
+        let sut = checkNoErrorAndOneSucceed(textFieldType: type, text: text)
+        XCTAssertTrue(sut.isSecureTextEntry)
     }
+
+    func testThatEmailIsValidatedWhenSetToEmailType() {
+        // GIVEN
+        let type: AccessoryTextField.TextFieldType = .email
+        let text = "blahblah@wire.com"
+
+        // WHEN & THEN
+        checkNoErrorAndOneSucceed(textFieldType: type, text: text)
+    }
+
+    func testThatNameIsValidWhenSetToNameType() {
+        // GIVEN
+        let type: AccessoryTextField.TextFieldType = .name
+        let text = "foo bar"
+
+        // WHEN & THEN
+        checkNoErrorAndOneSucceed(textFieldType: type, text: text)
+    }
+
+    // MARK:- unhappy cases
+    func testThatOneCharacterNameIsInvalid() {
+        // GIVEN
+        let type: AccessoryTextField.TextFieldType = .name
+        let text = "a"
+
+        // WHEN & THEN
+        checkOneErrorAndZeroSucceed(textFieldType: type, text: text, expectedError: .tooShort)
+    }
+
+    func testThat65CharacterNameIsInvalid() {
+        // GIVEN
+        let type: AccessoryTextField.TextFieldType = .name
+        let text = String(repeating: "a", count: 65)
+
+        // WHEN & THEN
+        checkOneErrorAndZeroSucceed(textFieldType: type, text: text, expectedError: .tooLong)
+    }
+
+    func testThatNilNameIsInvalid() {
+        // GIVEN
+        let type: AccessoryTextField.TextFieldType = .name
+
+        // WHEN & THEN
+        checkOneErrorAndZeroSucceed(textFieldType: type, text: nil, expectedError: .tooShort)
+    }
+
+    func testThatInvalidEmailDoesNotPassValidation() {
+        // GIVEN
+        let type: AccessoryTextField.TextFieldType = .email
+        let text = "This is not a valid email address"
+
+        // WHEN & THEN
+        checkOneErrorAndZeroSucceed(textFieldType: type, text: text, expectedError: .invalidEmail)
+    }
+
+    func testThat255CharactersEmailDoesNotPassValidation() {
+        // GIVEN
+        let type: AccessoryTextField.TextFieldType = .email
+        let suffix = "@wire.com"
+        let text = String(repeating: "b", count: 255 - suffix.count) + suffix
+
+        // WHEN & THEN
+        checkOneErrorAndZeroSucceed(textFieldType: type, text: text, expectedError: .tooLong)
+    }
+
+    func testThat7CharacterPasswordIsInvalid() {
+        // GIVEN
+        let type: AccessoryTextField.TextFieldType = .password
+        let text = String(repeating: "a", count: 7)
+
+        // WHEN & THEN
+        checkOneErrorAndZeroSucceed(textFieldType: type, text: text, expectedError: .tooShort)
+    }
+
+    func testThat129CharacterPasswordIsInvalid() {
+        // GIVEN
+        let type: AccessoryTextField.TextFieldType = .password
+        let text = String(repeating: "a", count: 129)
+
+        // WHEN & THEN
+        checkOneErrorAndZeroSucceed(textFieldType: type, text: text, expectedError: .tooLong)
+    }
+
 }
 
-class AccessoryTextFieldTests: ZMSnapshotTestCase {
+final class AccessoryTextFieldTests: ZMSnapshotTestCase {
     override func setUp() {
         super.setUp()
     }
