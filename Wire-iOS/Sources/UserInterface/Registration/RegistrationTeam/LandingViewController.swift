@@ -137,9 +137,9 @@ final class LandingViewController: UIViewController {
         self.createConstraints()
     }
 
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-    UIApplication.shared.wr_setStatusBarHidden(true, with: .fade)
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        UIApplication.shared.wr_setStatusBarHidden(true, with: .fade)
     }
 
     private func createConstraints() {

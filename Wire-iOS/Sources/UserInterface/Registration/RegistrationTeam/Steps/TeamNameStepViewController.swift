@@ -59,7 +59,7 @@ class TeamNameStepViewController: UIViewController {
 
     let errorLabel: UILabel = {
         let label = UILabel()
-        label.text = ""
+        label.text = "dummy" ///FIXME:
         label.font = TeamNameStepViewController.textButtonFont
         label.textColor = .errorMessageColor
         label.textAlignment = .center
@@ -92,19 +92,16 @@ class TeamNameStepViewController: UIViewController {
     }
 
 
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
 
         UIApplication.shared.wr_setStatusBarHidden(false, with: .fade)
 
         // black back arrow
         if let navigationController = self.navigationController as! NavigationController? {
             navigationController.backButton.setIconColor(.textColor, for: .normal) ///TODO: no change?
-            //            navigationController.backButton.isHidden = false
             navigationController.backButton.tintColor = .textColor
-            //            navigationController.backButton.alpha = 1
             navigationController.backButtonEnabled = true
-            //            navigationController.updateBackButtonAnimated(true)
         }
 
     }
@@ -118,49 +115,31 @@ class TeamNameStepViewController: UIViewController {
             containerView.centerY == selfView.centerY
         }
 
-        constrain(containerView, headline, subheadline, teamNameTextField, linkTappable) { containerView, headline, subheadline, teamNameTextField, linkTappable in
+        constrain(containerView, headline, subheadline, teamNameTextField, linkTappable) {
+            containerView, headline, subheadline, teamNameTextField, linkTappable in
 
             align(centerX: containerView, headline, subheadline, teamNameTextField, linkTappable)
             align(left: containerView, headline, subheadline, teamNameTextField, linkTappable)
             align(right: containerView, headline, subheadline, teamNameTextField, linkTappable)
 
-            headline.top == containerView.top
             subheadline.top == headline.bottom + 24
 
-            ///FIXME: teamNameTextField always align center?
             teamNameTextField.top == subheadline.bottom + 24
             teamNameTextField.height == 56
             teamNameTextField.centerY == containerView.centerY
-
-            ///FIXME: error message?
-            linkTappable.top == teamNameTextField.bottom + 32
-
-            linkTappable.bottom == containerView.bottom ~ 750
         }
 
-        /*
-         constrain(containerView, headline, subheadline, teamNameTextField, errorLabel, linkTappable, replace: nil) { containerView, headline, subheadline, teamNameTextField, linkTappable in
+        constrain(containerView, errorLabel, teamNameTextField, linkTappable) { containerView, errorLabel, teamNameTextField, linkTappable in
+            align(centerX: containerView, errorLabel)
+            align(left: containerView, errorLabel)
+            align(right: containerView, errorLabel)
 
-         align(centerX: containerView, headline, subheadline, teamNameTextField, errorLabel, linkTappable)
-         align(left: containerView, headline, subheadline, teamNameTextField, errorLabel, linkTappable)
-         align(right: containerView, headline, subheadline, teamNameTextField, errorLabel, linkTappable)
+            errorLabel.top == teamNameTextField.bottom + 16
 
-         headline.top == containerView.top
-         subheadline.top == headline.bottom + 24
+            linkTappable.top == errorLabel.bottom + 16
 
-         ///FIXME: teamNameTextField always align center?
-         teamNameTextField.top == subheadline.bottom + 24
-         teamNameTextField.height == 56
-         teamNameTextField.centerY == containerView.centerY
-
-         errorLabel.top == teamNameTextField.bottom + 16
-
-         linkTappable.top == errorLabel.bottom + 16
-
-         linkTappable.bottom == containerView.bottom ~ 750
-         }
-
-         */
+            linkTappable.bottom == containerView.bottom + 24
+        }
     }
 
     @objc public func confrimButtonTapped(_ sender: AnyObject!) {
