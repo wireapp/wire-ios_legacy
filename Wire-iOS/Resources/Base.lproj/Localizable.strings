@@ -216,7 +216,7 @@
 "conversation.input_bar.shortcut.send" = "Send Message";
 
 "conversation.input_bar.message_too_long.title" = "Message too long";
-"conversation.input_bar.message_too_long.message" = "You can send messages up to 8000 characters long.";
+"conversation.input_bar.message_too_long.message" = "You can send messages up to %d characters long.";
 
 // Image confirmation dialogue
 "image_confirmer.confirm" = "OK";
