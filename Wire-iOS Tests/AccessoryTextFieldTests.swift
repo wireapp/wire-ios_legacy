@@ -27,7 +27,8 @@ class AccessoryTextFieldTests: ZMSnapshotTestCase {
     }
 
     func textFieldForSnapshots() -> AccessoryTextField {
-        let accessoryTextField = AccessoryTextField(frame: CGRect(x: 0, y: 0, width: 375, height: 56))
+        let accessoryTextField = AccessoryTextField()
+        accessoryTextField.frame = CGRect(x: 0, y: 0, width: 375, height: 56)
         return accessoryTextField
     }
 
@@ -63,10 +64,10 @@ class AccessoryTextFieldTests: ZMSnapshotTestCase {
 
     func testThatItShowsPasswordInputedAndConfrimButtonIsEnabled() {
         // GIVEN
-        let sut = textFieldForSnapshots()
+        let sut = AccessoryTextField(textFieldType: .password)
+        sut.frame = CGRect(x: 0, y: 0, width: 375, height: 56)
 
         // WHEN
-        sut.isSecureTextEntry = true
         sut.text = "Password"
         sut.textFieldDidChange(textField: sut)
 

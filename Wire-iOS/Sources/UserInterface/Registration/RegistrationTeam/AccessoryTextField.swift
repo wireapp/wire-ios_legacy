@@ -21,7 +21,7 @@ import Foundation
 import Cartography
 
 enum TextFieldValidationError: Error {
-    case tooShort, tooLong, invalidCharacter, invalidEmail
+    case tooShort, tooLong, invalidEmail
 }
 
 protocol AccessoryTextFieldDelegate: class {
@@ -67,15 +67,22 @@ class AccessoryTextField : UITextField {
     let textInsets: UIEdgeInsets = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 8)
     let placeholderInsets: UIEdgeInsets
 
+
+    /// init with textFieldType for keyboard style and validator type
+    ///
+    /// - Parameter textFieldType: the type for text field. If not set, default value .unknown is applied.
     convenience init(textFieldType: TextFieldType?) {
-        self.init(frame: .zero)
+
+        self.init()
 
         if let textFieldType = textFieldType {
             self.textFieldType = textFieldType
         }
+
+        setupTextFieldProperties()
     }
 
-    override init(frame: CGRect) {
+    init() {
         let leftInset: CGFloat = 24
 
         var topInset: CGFloat = 0
@@ -90,7 +97,7 @@ class AccessoryTextField : UITextField {
 
         placeholderInsets = UIEdgeInsets(top: topInset, left: leftInset, bottom: 0, right: 16)
 
-        super.init(frame: frame)
+        super.init(frame: .zero)
 
         self.rightView = self.confirmButton
         self.rightViewMode = .always
@@ -109,7 +116,8 @@ class AccessoryTextField : UITextField {
         layer.masksToBounds = true
         backgroundColor = .textfieldColor
 
-        self.setup()
+        setup()
+        setupTextFieldProperties()
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -119,6 +127,19 @@ class AccessoryTextField : UITextField {
     override func layoutSubviews() {
         super.layoutSubviews()
         confirmButton.setNeedsLayout()
+    }
+
+    private func setupTextFieldProperties() {
+        switch textFieldType {
+        case .email:
+            break
+        case .password:
+            isSecureTextEntry = true
+        case .name:
+            break
+        case .unknown:
+            break
+        }
     }
 
     private func setup() {
