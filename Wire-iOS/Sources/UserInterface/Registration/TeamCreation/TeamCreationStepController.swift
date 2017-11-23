@@ -41,6 +41,8 @@ final class TeamCreationStepController: UIViewController {
     private var mainView: UIView!
     private var secondaryViews: [UIView] = []
 
+    private var keyboardOffset: NSLayoutConstraint!
+
     init(headline: String, subtext: String? = nil, mainView: ViewDescriptor, backButton: ViewDescriptor? = nil, secondaryViews: [ViewDescriptor] = []) {
         self.headline = headline
         self.subtext = subtext
@@ -69,6 +71,10 @@ final class TeamCreationStepController: UIViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillChangeFrame(_:)), name: NSNotification.Name.UIKeyboardWillChangeFrame, object: nil)
+
         UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(animated)
         mainView.becomeFirstResponder()
     }
@@ -76,6 +82,23 @@ final class TeamCreationStepController: UIViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(animated)
+        NotificationCenter.default.removeObserver(self)
+    }
+
+    dynamic func keyboardWillShow(_ notification: Notification) {
+        animateViewsToAccomodateKeyboard(with: notification)
+    }
+
+    dynamic func keyboardWillChangeFrame(_ notification: Notification) {
+        animateViewsToAccomodateKeyboard(with: notification)
+    }
+
+    func animateViewsToAccomodateKeyboard(with notification: Notification) {
+        if let keyboardFrame = notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue {
+            let keyboardHeight = keyboardFrame.cgRectValue.height
+            self.keyboardOffset.constant = -(keyboardHeight + 10)
+            self.view.setNeedsLayout()
+        }
     }
 
     private func createViews() {
@@ -128,7 +151,8 @@ final class TeamCreationStepController: UIViewController {
         }
 
         constrain(view, secondaryViewsContainer, errorViewContainer, mainViewContainer) { view, secondaryViewsContainer, errorViewContainer, mainViewContainer in
-            secondaryViewsContainer.bottom == view.bottom - (258 + 10)
+            let keyboardHeight = KeyboardFrameObserver.shared().keyboardFrame().height
+            self.keyboardOffset = secondaryViewsContainer.bottom == view.bottom - (keyboardHeight + 10)
             secondaryViewsContainer.leading == view.leading
             secondaryViewsContainer.trailing == view.trailing
             secondaryViewsContainer.height == 42

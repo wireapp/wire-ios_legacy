@@ -169,6 +169,7 @@
 #import "NSString+EmoticonSubstitution.h"
 #import "UILabel+TextTransform.h"
 #import "NSString+TextTransform.h"
+#import "KeyboardFrameObserver+iOS.h"
 
 // Camera
 #import "CameraController.h"
