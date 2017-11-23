@@ -50,7 +50,7 @@ class TeamNameStepViewController: UIViewController {
     }()
 
     let teamNameTextField: AccessoryTextField = {
-        let accssoryTextField = AccessoryTextField()
+        let accssoryTextField = AccessoryTextField(textFieldType: .name)
         accssoryTextField.placeholder = "team.name.textfield.placeholder".localized
 
         return accssoryTextField
@@ -59,7 +59,7 @@ class TeamNameStepViewController: UIViewController {
 
     let errorLabel: UILabel = {
         let label = UILabel()
-        label.text = "dummy" ///FIXME:
+        label.text = ""
         label.font = TeamNameStepViewController.textButtonFont
         label.textColor = .errorMessageColor
         label.textAlignment = .center
@@ -81,6 +81,8 @@ class TeamNameStepViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        teamNameTextField.accessoryTextFieldDelegate = self
 
         self.view.backgroundColor = .background
 
@@ -154,6 +156,28 @@ class TeamNameStepViewController: UIViewController {
 
     override var prefersStatusBarHidden: Bool {
         return false
+    }
+
+}
+
+extension TeamNameStepViewController: AccessoryTextFieldDelegate {
+    func validationSucceed(accessoryTextField: AccessoryTextField, length: Int?) {
+        errorLabel.text = nil
+    }
+
+
+    func validationErrorDidOccur(accessoryTextField: AccessoryTextField, error: TextFieldValidationError?) {
+        if let error = error {
+        switch error {
+        case .tooLong:
+            errorLabel.text = "name.guidance.toolong".localized
+        case .tooShort:
+            errorLabel.text = "name.guidance.tooshort".localized
+        default:
+            errorLabel.text = "unknown error".localized
+            break
+        }
+        }
     }
 
 }
