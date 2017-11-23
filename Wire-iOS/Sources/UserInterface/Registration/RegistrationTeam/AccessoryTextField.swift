@@ -37,7 +37,6 @@ class AccessoryTextField : UITextField {
 
     let confirmButton: IconButton = {
         let iconButton = IconButton.iconButtonCircularLight()
-        iconButton.frame.size = CGSize(width: AccessoryTextField.ConfirmButtonWidth, height: AccessoryTextField.ConfirmButtonWidth)
         iconButton.circular = true
 
         iconButton.setIcon(UIApplication.isLeftToRightLayout ? .chevronRight : .chevronLeft, with: ZetaIconSize.searchBar, for: .normal)
@@ -106,6 +105,11 @@ class AccessoryTextField : UITextField {
         fatalError("init(coder:) has not been implemented")
     }
 
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        confirmButton.setNeedsLayout()
+    }
+
     private func setup() {
         createConstraints()
 
@@ -122,7 +126,7 @@ class AccessoryTextField : UITextField {
         constrain(confirmButton) { confirmButton in
             confirmButton.width == confirmButton.height
 
-            confirmButton.width == 32
+            confirmButton.width == AccessoryTextField.ConfirmButtonWidth
         }
     }
 
@@ -133,7 +137,8 @@ class AccessoryTextField : UITextField {
     }
 
 
-    ///MARK:- placeholder
+    // MARK:- placeholder
+
     func attributedPlaceholderString(placeholder: String) -> NSAttributedString {
         let attribute : [String : Any] = [NSForegroundColorAttributeName: UIColor.placeholderColor,
                                           NSFontAttributeName: AccessoryTextField.placeholderFont]
@@ -155,7 +160,8 @@ class AccessoryTextField : UITextField {
         super.drawPlaceholder(in: UIEdgeInsetsInsetRect(rect, placeholderInsets))
     }
 
-    ///MARK:- right accessory
+    // MARK:- right accessory
+
     func rightAccessoryViewRect(forBounds bounds: CGRect, leftToRight: Bool) -> CGRect {
         var rightViewRect: CGRect
         let newY = bounds.origin.y + (bounds.size.height -  AccessoryTextField.ConfirmButtonWidth) / 2
@@ -167,6 +173,8 @@ class AccessoryTextField : UITextField {
         else {
             rightViewRect = CGRect(x: bounds.origin.x + xOffset, y: newY, width: AccessoryTextField.ConfirmButtonWidth, height: AccessoryTextField.ConfirmButtonWidth)
         }
+
+        confirmButton.updateCircularCornerRadius()
 
         return rightViewRect
     }

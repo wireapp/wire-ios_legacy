@@ -49,6 +49,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)setBackgroundImageColor:(UIColor *)color forState:(UIControlState)state;
 - (void)setBorderColor:(UIColor *)color forState:(UIControlState)state;
 - (void)setTitleImageSpacing:(CGFloat)titleImageSpacing horizontalMargin:(CGFloat)horizontalMargin;
+- (void)updateCircularCornerRadius;
 
 @end
 
