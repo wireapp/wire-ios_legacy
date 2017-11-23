@@ -108,8 +108,16 @@ class AccessoryTextField : UITextField {
 
     private func setup() {
         createConstraints()
+
+        self.addTarget(self, action: #selector(textFieldDidChange(textField:)), for: .editingChanged)
     }
 
+    func textFieldDidChange(textField: UITextField){
+        if  let text = textField.text {
+            confirmButton.isEnabled = text.count > 0
+        }
+
+    }
     private func createConstraints() {
         constrain(confirmButton) { confirmButton in
             confirmButton.width == confirmButton.height

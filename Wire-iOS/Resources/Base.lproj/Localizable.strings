@@ -795,7 +795,7 @@
 // Create team
 
 "team.name.headline" = "Name your team";
-"team.name.subheadline" = "You can always change it later";
+"team.name.subheadline" = "You can always change it later.";
 "team.name.textfield.placeholder" = "team name";
 "team.name.whatiswireforteams" = "What is Wire for teams?";
 
