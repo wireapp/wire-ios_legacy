@@ -21,6 +21,8 @@ import Foundation
 enum TeamCreationState {
     case enterName
     case setEmail(teamName: String)
+    case verifyEmail(teamName: String, email: String)
+
 }
 
 extension TeamCreationState {
@@ -29,6 +31,8 @@ extension TeamCreationState {
         switch self {
         case .enterName, .setEmail:
             return BackButtonDescription()
+        case .verifyEmail:
+            return nil
         }
     }
 
@@ -38,6 +42,8 @@ extension TeamCreationState {
             return TextFieldDescription(placeholder: "Set team name")
         case .setEmail:
             return TextFieldDescription(placeholder: "Set email")
+        case .verifyEmail:
+            return TextFieldDescription(placeholder: "Code")
         }
     }
 
@@ -47,6 +53,8 @@ extension TeamCreationState {
             return "Set team name"
         case .setEmail:
             return "Set email"
+        case .verifyEmail:
+            return "You've got mail"
         }
     }
 
@@ -56,10 +64,19 @@ extension TeamCreationState {
             return "You can always change it later"
         case .setEmail:
             return nil
+        case let .verifyEmail(teamName: _, email: email):
+            return "Enter the verification code we sent to \(email)"
         }
     }
 
     var secondaryViews: [ViewDescriptor] {
-        return []
+        switch self {
+        case .enterName:
+            return []
+        case .setEmail:
+            return []
+        case .verifyEmail:
+            return []
+        }
     }
 }

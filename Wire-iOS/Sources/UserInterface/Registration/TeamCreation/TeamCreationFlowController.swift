@@ -48,7 +48,11 @@ final class TeamCreationFlowController: NSObject {
             self?.rewindState()
         }
 
-        let controller = TeamCreationStepController(headline: currentState.headline, subtext: currentState.subtext, mainView: mainView, backButton: backButton, secondaryViews: currentState.secondaryViews)
+        let controller = TeamCreationStepController(headline: currentState.headline,
+                                                    subtext: currentState.subtext,
+                                                    mainView: mainView,
+                                                    backButton: backButton,
+                                                    secondaryViews: currentState.secondaryViews)
         return controller
     }
 
@@ -56,7 +60,9 @@ final class TeamCreationFlowController: NSObject {
         switch currentState {
         case .enterName:
             currentState = .setEmail(teamName: value)
-        case .setEmail:
+        case let .setEmail(teamName: teamName):
+            currentState = .verifyEmail(teamName: teamName, email: value)
+        case .verifyEmail(teamName: _, email: _):
             break
         }
         pushCurrentController()
@@ -73,6 +79,8 @@ final class TeamCreationFlowController: NSObject {
             break
         case .setEmail:
             currentState = .enterName
+        case let .verifyEmail(teamName: teamName, email: _):
+             currentState = .setEmail(teamName: teamName)
         }
         self.navigationController.popViewController(animated: true)
     }
