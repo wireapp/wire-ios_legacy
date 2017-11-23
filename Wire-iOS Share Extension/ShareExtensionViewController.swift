@@ -74,7 +74,6 @@ class ShareExtensionViewController: SLComposeServiceViewController {
         let activity = ExtensionActivity(attachments: allAttachments)
         sharingSession?.analyticsEventPersistence.add(activity.openedEvent())
         extensionActivity = activity
-        self.charactersRemaining = maxTextLength as NSNumber
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -130,7 +129,12 @@ class ShareExtensionViewController: SLComposeServiceViewController {
     override func isContentValid() -> Bool {
         // Do validation of contentText and/or NSExtensionContext attachments here
         let textLength = self.contentText.trimmingCharacters(in: .whitespaces).characters.count
-        self.charactersRemaining = maxTextLength - textLength as NSNumber
+        let remaining = maxTextLength - textLength
+        if remaining <= 30 {
+            self.charactersRemaining = remaining as NSNumber
+        } else {
+            self.charactersRemaining = nil
+        }
         return sharingSession != nil && self.postContent?.target != nil && self.charactersRemaining.intValue >= 0
     }
 
