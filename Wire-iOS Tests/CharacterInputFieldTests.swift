@@ -1,6 +1,6 @@
 //
 // Wire
-// Copyright (C) 2016 Wire Swiss GmbH
+// Copyright (C) 2017 Wire Swiss GmbH
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -25,6 +25,10 @@ class TestCharacterInputFieldDelegate: NSObject, CharacterInputFieldDelegate {
     var didChangeText: [String] = []
     func didChangeText(_ inputField: CharacterInputField, to: String) {
         didChangeText.append(to)
+    }
+    var didFillInput: Int = 0
+    func didFillInput(inputField: CharacterInputField) {
+        didFillInput = didFillInput + 1
     }
 }
 
@@ -67,6 +71,7 @@ final class CharacterInputFieldTests: XCTestCase {
         XCTAssertEqual(delegate.didChangeText, [])
         XCTAssertEqual(sut.text, "1234")
         XCTAssertFalse(sut.isFilled)
+        XCTAssertEqual(delegate.didFillInput, 0)
     }
     
     func testThatItAppendsOneSymbolAndCallsDelegate() {
@@ -76,6 +81,7 @@ final class CharacterInputFieldTests: XCTestCase {
         XCTAssertEqual(delegate.didChangeText, ["1"])
         XCTAssertEqual(sut.text, "1")
         XCTAssertFalse(sut.isFilled)
+        XCTAssertEqual(delegate.didFillInput, 0)
     }
     
     func testThatItDeletesSymbolAndCallsDelegate() {
@@ -87,6 +93,7 @@ final class CharacterInputFieldTests: XCTestCase {
         XCTAssertEqual(delegate.didChangeText, ["123"])
         XCTAssertEqual(sut.text, "123")
         XCTAssertFalse(sut.isFilled)
+        XCTAssertEqual(delegate.didFillInput, 0)
     }
     
     func testThatItAllowsToPasteAndCallsDelegate() {
@@ -99,6 +106,7 @@ final class CharacterInputFieldTests: XCTestCase {
         XCTAssertEqual(delegate.didChangeText, ["567"])
         XCTAssertEqual(sut.text, "567")
         XCTAssertFalse(sut.isFilled)
+        XCTAssertEqual(delegate.didFillInput, 0)
     }
     
     func testThatItForbidsIncompatibleCharacters() {
@@ -109,6 +117,7 @@ final class CharacterInputFieldTests: XCTestCase {
         XCTAssertEqual(delegate.didChangeText, [])
         XCTAssertEqual(sut.text, "1234")
         XCTAssertFalse(sut.isFilled)
+        XCTAssertEqual(delegate.didFillInput, 0)
     }
     
     func testThatItAllowsEnteringCharactersUpToMax() {
@@ -118,6 +127,7 @@ final class CharacterInputFieldTests: XCTestCase {
         XCTAssertEqual(delegate.didChangeText, ["12345678"])
         XCTAssertEqual(sut.text, "12345678")
         XCTAssertTrue(sut.isFilled)
+        XCTAssertEqual(delegate.didFillInput, 1)
     }
     
     func testThatItWorksWithOtherSymbols() {
@@ -136,6 +146,7 @@ final class CharacterInputFieldTests: XCTestCase {
         // then
         XCTAssertEqual(delegate.didChangeText, ["HELLOWORLD"])
         XCTAssertEqual(sut.text, "HELLOWORLD")
+        XCTAssertEqual(delegate.didFillInput, 0)
     }
 }
 

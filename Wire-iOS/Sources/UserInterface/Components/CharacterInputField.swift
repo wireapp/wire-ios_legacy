@@ -1,6 +1,6 @@
 //
 // Wire
-// Copyright (C) 2016 Wire Swiss GmbH
+// Copyright (C) 2017 Wire Swiss GmbH
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -21,6 +21,7 @@ import Cartography
 
 public protocol CharacterInputFieldDelegate: NSObjectProtocol {
     func didChangeText(_ inputField: CharacterInputField, to: String)
+    func didFillInput(inputField: CharacterInputField)
 }
 
 /// Custom input field implementation. Allows entering the characters from @c characterSet up to @c maxLength characters
@@ -70,6 +71,21 @@ public class CharacterInputField: UIControl, UITextInputTraits {
             else {
                 characterView.character = .none
             }
+        }
+    }
+    
+    fileprivate func notifyingDelegate(_ action: ()->()) {
+        let wasFilled = self.isFilled
+        let previosText = self.storage
+        
+        action()
+        
+        if previosText != storage {
+            self.delegate?.didChangeText(self, to: storage)
+        }
+        
+        if !wasFilled && self.isFilled {
+            self.delegate?.didFillInput(inputField: self)
         }
     }
     
@@ -142,7 +158,7 @@ public class CharacterInputField: UIControl, UITextInputTraits {
                 animation.keyTimes = [0, 0.4, 0.7, 0.9]
                 animation.duration = 0.64
                 animation.autoreverses = true
-                animation.repeatCount =  .greatestFiniteMagnitude
+                animation.repeatCount = .greatestFiniteMagnitude
                 cursorView.layer.add(animation, forKey: "blinkAnimation")
             }
         }
@@ -219,8 +235,9 @@ public class CharacterInputField: UIControl, UITextInputTraits {
             return
         }
         
-        self.text = valueToPaste
-        self.delegate?.didChangeText(self, to: storage)
+        notifyingDelegate {
+            self.text = valueToPaste
+        }
     }
     
     public override func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
@@ -263,13 +280,15 @@ extension CharacterInputField: UIKeyInput {
             return
         }
         
-        storage.append(String(allowedChars))
-        self.delegate?.didChangeText(self, to: storage)
+        notifyingDelegate {
+            self.storage.append(String(allowedChars))
+        }
     }
     
     public func deleteBackward() {
-        storage.removeLast()
-        self.delegate?.didChangeText(self, to: storage)
+        notifyingDelegate {
+            self.storage.removeLast()
+        }
     }
     
     public var hasText: Bool {
