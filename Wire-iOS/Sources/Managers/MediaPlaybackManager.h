@@ -31,7 +31,7 @@ FOUNDATION_EXPORT NSString *const MediaPlaybackManagerPlayerStateChangedNotifica
 @interface MediaPlaybackManager : NSObject <AVSMedia, MediaPlayerDelegate>
 
 @property (nonatomic, readonly) AudioTrackPlayer *audioTrackPlayer;
-@property (nonatomic, readonly) id<MediaPlayer> activeMediaPlayer;
+@property (nonatomic, weak, readonly) id<MediaPlayer> activeMediaPlayer;
 
 - (instancetype)initWithName:(NSString *)name;
 
