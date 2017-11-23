@@ -221,6 +221,13 @@
     }
 }
 
+- (void)setFrame:(CGRect)frame
+{
+    [super setFrame:frame];
+
+    [self updateCircularCornerRadius];
+}
+
 - (void)setBounds:(CGRect)bounds
 {
     [super setBounds:bounds];

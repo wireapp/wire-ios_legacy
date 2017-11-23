@@ -174,8 +174,6 @@ class AccessoryTextField : UITextField {
             rightViewRect = CGRect(x: bounds.origin.x + xOffset, y: newY, width: AccessoryTextField.ConfirmButtonWidth, height: AccessoryTextField.ConfirmButtonWidth)
         }
 
-        confirmButton.updateCircularCornerRadius()
-
         return rightViewRect
     }
 
