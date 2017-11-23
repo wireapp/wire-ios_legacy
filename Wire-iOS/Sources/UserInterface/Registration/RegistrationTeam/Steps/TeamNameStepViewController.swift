@@ -99,7 +99,6 @@ class TeamNameStepViewController: UIViewController {
 
         UIApplication.shared.wr_setStatusBarHidden(false, with: .fade)
 
-        // black back arrow
         if let navigationController = self.navigationController as! NavigationController? {
             navigationController.backButton.setIconColor(.textColor, for: .normal) ///TODO: no change?
             navigationController.backButton.tintColor = .textColor

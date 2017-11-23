@@ -242,7 +242,7 @@ class AccessoryTextField : UITextField {
         super.drawPlaceholder(in: UIEdgeInsetsInsetRect(rect, placeholderInsets))
     }
 
-    // MARK:- right accessory
+    // MARK:- right and left accessory
 
     func rightAccessoryViewRect(forBounds bounds: CGRect, leftToRight: Bool) -> CGRect {
         var rightViewRect: CGRect
@@ -267,11 +267,17 @@ class AccessoryTextField : UITextField {
         else {
             return .zero
         }
-
     }
 
-    ///TODO: leftViewRectForBounds
-    ///TODO: paste. select
+    override func leftViewRect(forBounds bounds: CGRect) -> CGRect {
+        let leftToRight: Bool = UIApplication.isLeftToRightLayout
+        if leftToRight {
+            return .zero
+        }
+        else {
+            return rightAccessoryViewRect(forBounds: bounds, leftToRight: leftToRight)
+        }
+    }
 }
 
 
