@@ -21,6 +21,54 @@ import Foundation
 import XCTest
 @testable import Wire
 
+class AccessoryTextFieldUnitTests: XCTestCase {
+
+    class MockViewController : UIViewController, AccessoryTextFieldDelegate {
+        var errorCounter = 0
+        var successCounter = 0
+
+        func validationErrorDidOccur(accessoryTextField: AccessoryTextField, error: TextFieldValidationError?) {
+            errorCounter += 1
+        }
+
+        func validationSucceed(accessoryTextField: AccessoryTextField, length: Int?) {
+            successCounter += 1
+        }
+
+
+    }
+
+    func testThatSucceedAfterSendEditingChangedForDefaultTextField() {
+        // GIVEN
+        let sut = AccessoryTextField()
+        let mockViewController = MockViewController()
+
+        sut.accessoryTextFieldDelegate = mockViewController
+
+        // WHEN
+        sut.text = "blah"
+        sut.sendActions(for: .editingChanged)
+
+        // THEN
+        XCTAssertTrue(mockViewController.errorCounter == 0 && mockViewController.successCounter == 1)
+    }
+
+    func testThatPasswordIsSecuredWhenSetToPasswordType() {
+        // GIVEN
+        let sut = AccessoryTextField(textFieldType: .password)
+        let mockViewController = MockViewController()
+
+        sut.accessoryTextFieldDelegate = mockViewController
+
+        // WHEN
+        sut.text = "blahblah"
+        sut.sendActions(for: .editingChanged)
+
+        // THEN
+        XCTAssertTrue(sut.isSecureTextEntry && mockViewController.errorCounter == 0 && mockViewController.successCounter == 1)
+    }
+}
+
 class AccessoryTextFieldTests: ZMSnapshotTestCase {
     override func setUp() {
         super.setUp()
