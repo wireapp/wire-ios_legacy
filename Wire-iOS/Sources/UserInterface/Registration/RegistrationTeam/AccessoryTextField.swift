@@ -33,7 +33,7 @@ class AccessoryTextField : UITextField {
     static let placeholderFont = FontSpec(.small, .semibold).font!
     static private let ConfirmButtonWidth: CGFloat = 32
 
-    var kind: Kind = .unknown {
+    var kind: Kind {
         didSet{
             setupTextFieldProperties()
         }
@@ -64,13 +64,7 @@ class AccessoryTextField : UITextField {
     /// init with type for keyboard style and validator type
     ///
     /// - Parameter kind: the type for text field
-    convenience init(kind: Kind) {
-        self.init()
-
-        self.kind = kind
-    }
-
-    init() {
+    init(kind: Kind = .unknown) {
         let leftInset: CGFloat = 24
 
         var topInset: CGFloat = 0
@@ -84,6 +78,7 @@ class AccessoryTextField : UITextField {
         }
 
         placeholderInsets = UIEdgeInsets(top: topInset, left: leftInset, bottom: 0, right: 16)
+        self.kind = kind
 
         super.init(frame: .zero)
 
@@ -119,13 +114,13 @@ class AccessoryTextField : UITextField {
     private func setupTextFieldProperties() {
         switch kind {
         case .email:
-            break
+            keyboardType = .emailAddress
         case .password:
             isSecureTextEntry = true
         case .name:
-            break
+            keyboardType = .asciiCapable
         case .unknown:
-            break
+            keyboardType = .asciiCapable
         }
     }
 
@@ -133,6 +128,7 @@ class AccessoryTextField : UITextField {
         createConstraints()
 
         self.addTarget(self, action: #selector(textFieldDidChange(textField:)), for: .editingChanged)
+        setupTextFieldProperties()
     }
 
     private func createConstraints() {
