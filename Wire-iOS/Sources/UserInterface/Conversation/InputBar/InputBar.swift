@@ -272,13 +272,7 @@ private struct InputBarConstants {
     
     fileprivate func startCursorBlinkAnimation() {
         if fakeCursor.layer.animation(forKey: "blinkAnimation") == nil {
-            let animation = CAKeyframeAnimation(keyPath: "opacity")
-            animation.values = [1, 1, 0, 0]
-            animation.keyTimes = [0, 0.4, 0.7, 0.9]
-            animation.duration = 0.64
-            animation.autoreverses = true
-            animation.repeatCount =  .greatestFiniteMagnitude
-            fakeCursor.layer.add(animation, forKey: "blinkAnimation")
+            fakeCursor.layer.add(.cursorBlinkAnimation(), forKey: "blinkAnimation")
         }
     }
 

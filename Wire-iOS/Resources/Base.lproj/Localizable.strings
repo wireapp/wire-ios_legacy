@@ -795,6 +795,13 @@
 "landing.login.hints" = "Already have an account?";
 "landing.login.button.title" = "Log in";
 
+// Create team
+
+"team.name.headline" = "Name your team";
+"team.name.subheadline" = "You can always change it later.";
+"team.name.textfield.placeholder" = "team name";
+"team.name.whatiswireforteams" = "What is Wire for teams?";
+
 // Registration
 
 "registration.title" = "Registration";

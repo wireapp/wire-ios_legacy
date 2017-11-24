@@ -153,13 +153,7 @@ public class CharacterInputField: UIControl, UITextInputTraits {
         
         private func startCursorAnimationIfNeeded() {
             if !cursorView.isHidden && cursorView.layer.animation(forKey: "blinkAnimation") == nil {
-                let animation = CAKeyframeAnimation(keyPath: "opacity")
-                animation.values = [1, 1, 0, 0]
-                animation.keyTimes = [0, 0.4, 0.7, 0.9]
-                animation.duration = 0.64
-                animation.autoreverses = true
-                animation.repeatCount = .greatestFiniteMagnitude
-                cursorView.layer.add(animation, forKey: "blinkAnimation")
+                cursorView.layer.add(.cursorBlinkAnimation(), forKey: "blinkAnimation")
             }
         }
         
