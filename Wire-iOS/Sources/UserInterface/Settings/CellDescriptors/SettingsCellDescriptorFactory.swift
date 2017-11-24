@@ -70,6 +70,7 @@ import Foundation
                                                     presentationStyle: PresentationStyle.navigation,
                                                     identifier: nil,
                                                     presentationAction: { () -> (UIViewController?) in
+                                                        Analytics.shared().tagOpenManageTeamURL()
                                                         NSURL.wr_manageTeam().wr_URLByAppendingLocaleParameter().open()
                                                         return nil
                                                     },

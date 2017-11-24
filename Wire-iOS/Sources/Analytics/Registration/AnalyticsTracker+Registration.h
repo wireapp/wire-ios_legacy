@@ -31,7 +31,6 @@ NSString *NSStringFromAnalyticsPhotoSource(AnalyticsPhotoSource source);
 
 #pragma mark - Phone
 
-- (void)tagOpenedPhoneRegistration;
 - (void)tagEnteredPhone;
 - (void)tagEnteredPhoneFailedWithError:(NSError *)error;
 - (void)tagVerifiedPhone;
@@ -42,7 +41,6 @@ NSString *NSStringFromAnalyticsPhotoSource(AnalyticsPhotoSource source);
 
 #pragma mark - Email
 
-- (void)tagOpenedEmailRegistration;
 - (void)tagEnteredEmailAndPassword;
 - (void)tagVerifiedEmail;
 - (void)tagVerifiedEmailFailedWithError:(NSError *)error;
