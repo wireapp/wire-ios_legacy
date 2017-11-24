@@ -142,6 +142,7 @@ class SendController {
     
     func cancelTimeout() {
         timeoutWorkItem?.cancel()
+        timeoutWorkItem = nil
     }
     
     @objc func timeout() {
