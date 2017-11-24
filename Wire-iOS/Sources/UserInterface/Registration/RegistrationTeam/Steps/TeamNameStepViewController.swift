@@ -82,8 +82,6 @@ class TeamNameStepViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        teamNameTextField.accessoryTextFieldDelegate = self
-
         self.view.backgroundColor = .background
 
         [containerView].forEach(view.addSubview)
@@ -159,24 +157,4 @@ class TeamNameStepViewController: UIViewController {
 
 }
 
-extension TeamNameStepViewController: AccessoryTextFieldDelegate {
-    func validationSucceed(accessoryTextField: AccessoryTextField, length: Int?) {
-        errorLabel.text = nil
-    }
 
-
-    func validationErrorDidOccur(accessoryTextField: AccessoryTextField, error: TextFieldValidationError?) {
-        if let error = error {
-        switch error {
-        case .tooLong:
-            errorLabel.text = "name.guidance.toolong".localized
-        case .tooShort:
-            errorLabel.text = "name.guidance.tooshort".localized
-        default:
-            errorLabel.text = "unknown error".localized
-            break
-        }
-        }
-    }
-
-}

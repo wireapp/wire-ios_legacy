@@ -20,18 +20,7 @@
 import Foundation
 import Cartography
 
-enum TextFieldValidationError: Error {
-    case tooShort, tooLong, invalidEmail
-}
-
-protocol AccessoryTextFieldDelegate: class {
-
-    func validationErrorDidOccur(accessoryTextField: AccessoryTextField, error: TextFieldValidationError?)
-    func validationSucceed(accessoryTextField: AccessoryTextField, length: Int?)
-}
-
 class AccessoryTextField : UITextField {
-    weak var accessoryTextFieldDelegate: AccessoryTextFieldDelegate?
 
     enum TextFieldType {
         case email
@@ -148,52 +137,6 @@ class AccessoryTextField : UITextField {
         self.addTarget(self, action: #selector(textFieldDidChange(textField:)), for: .editingChanged)
     }
 
-    func textFieldDidChange(textField: UITextField){
-        guard let text = textField.text else {
-            return            
-        }
-
-        var isError = false
-
-        switch textFieldType {
-        case .email:
-            if text.count > 254 {
-                accessoryTextFieldDelegate?.validationErrorDidOccur(accessoryTextField: self, error:.tooLong)
-                isError = true
-            }
-            else if !text.isEmail {
-                accessoryTextFieldDelegate?.validationErrorDidOccur(accessoryTextField: self, error:.invalidEmail)
-                isError = true
-            }
-        case .password:
-            if text.count > 120 {
-                accessoryTextFieldDelegate?.validationErrorDidOccur(accessoryTextField: self, error:.tooLong)
-                isError = true
-            }
-            else if text.count < 8 {
-                accessoryTextFieldDelegate?.validationErrorDidOccur(accessoryTextField: self, error:.tooShort)
-                isError = true
-            }
-        case .name:
-            if text.count > 64 {
-                accessoryTextFieldDelegate?.validationErrorDidOccur(accessoryTextField: self, error:.tooLong)
-                isError = true
-            }
-            else if text.count < 2 {
-                accessoryTextFieldDelegate?.validationErrorDidOccur(accessoryTextField: self, error:.tooShort)
-                isError = true
-            }
-        case .unknown:
-            break
-        }
-
-        if !isError {
-            accessoryTextFieldDelegate?.validationSucceed(accessoryTextField: self, length: self.text?.count)
-        }
-
-        confirmButton.isEnabled = !isError
-    }
-
     private func createConstraints() {
         constrain(confirmButton) { confirmButton in
             confirmButton.width == confirmButton.height
@@ -208,6 +151,11 @@ class AccessoryTextField : UITextField {
         return UIEdgeInsetsInsetRect(textRect, self.textInsets);
     }
 
+    // MARK:- text validation
+
+    func textFieldDidChange(textField: UITextField){
+        confirmButton.isEnabled = true
+    }
 
     // MARK:- placeholder
 
