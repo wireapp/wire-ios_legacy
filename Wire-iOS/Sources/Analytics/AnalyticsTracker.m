@@ -25,7 +25,6 @@ NSString *const AnalyticsMethodKey = @"method";
 
 #pragma mark - AnalyticsContext
 
-NSString *const AnalyticsContextRegistration = @"registration";
 NSString *const AnalyticsContextSignIn = @"sign_in";
 NSString *const AnalyticsContextProfile = @"profile";
 NSString *const AnalyticsContextPostLogin = @"post_login";
