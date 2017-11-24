@@ -18,8 +18,8 @@
 
 import Foundation
 import Cartography
-import LocalAuthentication
 import CocoaLumberjackSwift
+import WireExtensionComponents
 
 
 @objc final class AppLockViewController: UIViewController {
@@ -118,7 +118,7 @@ import CocoaLumberjackSwift
 
     /// @param callback confirmation; if the auth is not needed or is not possible on the current device called with '.none'
     func requireLocalAuthenticationIfNeeded(with callback: @escaping (Bool?)->()) {
-        guard #available(iOS 9.0, *), AppLock.isActive else {
+        guard AppLock.isActive else {
             callback(.none)
             return
         }
@@ -132,27 +132,15 @@ import CocoaLumberjackSwift
             return
         }
         
-        let context: LAContext = LAContext()
-        var error: NSError?
-        let description = "self.settings.privacy_security.lock_app.description".localized
-        
-        if context.canEvaluatePolicy(LAPolicy.deviceOwnerAuthentication, error: &error) {
-            context.evaluatePolicy(LAPolicy.deviceOwnerAuthentication, localizedReason: description, reply: { (success, error) -> Void in
-                DispatchQueue.main.async {
-                    callback(success)
-                    
-                    if !success {
-                        DDLogError("Local authentication error: \(String(describing: error?.localizedDescription))")
-                    }
-                    else {
-                        AppLock.lastUnlockedDate = Date()
-                    }
+        AppLock.evaluateAuthentication(description: "self.settings.privacy_security.lock_app.description".localized) { (success, error) in
+            DispatchQueue.main.async {
+                callback(success)
+                if let success = success, success {
+                    AppLock.lastUnlockedDate = Date()
+                } else {
+                    DDLogError("Local authentication error: \(String(describing: error?.localizedDescription))")
                 }
-            })
-        }
-        else {
-            DDLogError("Local authentication error: \(String(describing: error?.localizedDescription))")
-            callback(.none)
+            }
         }
     }
 }

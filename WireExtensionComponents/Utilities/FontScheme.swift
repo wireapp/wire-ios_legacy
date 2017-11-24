@@ -18,6 +18,11 @@
 
 import Foundation
 
+public enum FontTextStyle: String {
+    case largeTitle  = "largeTitle"
+    case inputText   = "inputText"
+}
+
 public enum FontSize: String {
     case large  = "large"
     case normal = "normal"
@@ -115,7 +120,7 @@ extension UIFont {
 public struct FontSpec {
     public let size: FontSize
     public let weight: FontWeight?
-    public let fontTextStyle: UIFontTextStyle?
+    public let fontTextStyle: FontTextStyle?
 
 
     /// init method of FontSpec
@@ -123,8 +128,8 @@ public struct FontSpec {
     /// - Parameters:
     ///   - size: a FontSize enum
     ///   - weight: a FontWeight enum, if weight == nil, then apply the default value .light
-    ///   - fontTextStyle: a UIFontTextStyle enum, if fontTextStyle == nil, then apply the default style. Possible values: .none or .title1
-    public init(_ size: FontSize, _ weight: FontWeight?, _ fontTextStyle: UIFontTextStyle? = .none) {
+    ///   - fontTextStyle: FontTextStyle enum value, if fontTextStyle == nil, then apply the default style.
+    public init(_ size: FontSize, _ weight: FontWeight?, _ fontTextStyle: FontTextStyle? = .none) {
         self.size = size
         self.weight = weight
         self.fontTextStyle = fontTextStyle
@@ -166,26 +171,34 @@ public func==(left: FontSpec, right: FontSpec) -> Bool {
     
     public var fontMapping: FontMapping = [:]
     
+    fileprivate static func mapFontTextStyleAndFontSizeAndPoint(fintSizeTuples allFontSizes: [(fontSize: FontSize, point: CGFloat)], mapping: inout [FontSpec : UIFont], fontTextStyle: FontTextStyle, contentSizeCategory: UIContentSizeCategory) {
+        let allFontWeights: [FontWeight] = [.ultraLight, .thin, .light, .regular, .medium, .semibold, .bold, .heavy, .black]
+        for fontWeight in allFontWeights {
+            for fontSizeTuple in allFontSizes {
+                mapping[FontSpec(fontSizeTuple.fontSize, .none, fontTextStyle)]      = UIFont.systemFont(ofSize: fontSizeTuple.point, contentSizeCategory: contentSizeCategory, weight: .light)
+
+                mapping[FontSpec(fontSizeTuple.fontSize, fontWeight, fontTextStyle)] = UIFont.systemFont(ofSize: fontSizeTuple.point, contentSizeCategory: contentSizeCategory, weight: fontWeight)
+            }
+        }
+    }
+
     public static func defaultFontMapping(with contentSizeCategory: UIContentSizeCategory) -> FontMapping {
         var mapping: FontMapping = [:]
 
-        /// fontTextStyle: title1
-
-        let allFontWeights: [FontWeight] = [.ultraLight, .thin, .light, .regular, .medium, .semibold, .bold, .heavy, .black]
 
         // The ratio is following 11:12:16:24, same as default case
-        let allFontSizes: [(fontSize: FontSize, point: CGFloat)] = [(fontSize: .large,  point: 40),
-                                                                    (fontSize: .normal, point: 26),
-                                                                    (fontSize: .medium, point: 20),
-                                                                    (fontSize: .small,  point: 18)]
+        let largeTitleFontSizeTuples: [(fontSize: FontSize, point: CGFloat)] = [(fontSize: .large,  point: 40),
+                                                                                (fontSize: .normal, point: 26),
+                                                                                (fontSize: .medium, point: 20),
+                                                                                (fontSize: .small,  point: 18)]
+        mapFontTextStyleAndFontSizeAndPoint(fintSizeTuples: largeTitleFontSizeTuples, mapping: &mapping, fontTextStyle: .largeTitle, contentSizeCategory: contentSizeCategory)
 
-        for fontWeight in allFontWeights {
-            for fontSizeTuple in allFontSizes {
-                mapping[FontSpec(fontSizeTuple.fontSize, .none, .title1)]      = UIFont.systemFont(ofSize: fontSizeTuple.point, contentSizeCategory: contentSizeCategory, weight: .light)
 
-                mapping[FontSpec(fontSizeTuple.fontSize, fontWeight, .title1)] = UIFont.systemFont(ofSize: fontSizeTuple.point, contentSizeCategory: contentSizeCategory, weight: fontWeight)
-            }
-        }
+        let inputTextFontSizeTuples: [(fontSize: FontSize, point: CGFloat)] = [(fontSize: .large,  point: 21),
+                                                                               (fontSize: .normal, point: 14),
+                                                                               (fontSize: .medium, point: 11),
+                                                                               (fontSize: .small,  point: 10)]
+        mapFontTextStyleAndFontSizeAndPoint(fintSizeTuples: inputTextFontSizeTuples, mapping: &mapping, fontTextStyle: .inputText, contentSizeCategory: contentSizeCategory)
 
         /// fontTextStyle: none
 

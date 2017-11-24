@@ -32,6 +32,8 @@ final class LandingViewController: UIViewController {
     var signInError: Error? // TODO: use it
     weak var delegate: LandingViewControllerDelegate?
 
+    private let tracker = AnalyticsTracker(context: AnalyticsContextRegistrationEmail)
+    
     //MARK:- UI styles
 
     static let semiboldFont = FontSpec(.large, .semibold).font!
@@ -126,6 +128,8 @@ final class LandingViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        tracker?.tagOpenedLandingScreen()
+        
         self.view.backgroundColor = .background
 
         [headerContainerView, containerView, loginHintsLabel, loginButton].forEach(view.addSubview)
@@ -135,9 +139,6 @@ final class LandingViewController: UIViewController {
         [createAccountButton, createTeamButton].forEach(containerView.addSubview)
 
         self.createConstraints()
-
-
-
     }
 
     private func createConstraints() {
@@ -201,14 +202,17 @@ final class LandingViewController: UIViewController {
     // MARK:- Button tapped target
 
     @objc public func createAccountButtonTapped(_ sender: AnyObject!) {
+        tracker?.tagOpenedUserRegistration()
         delegate?.landingViewControllerDidChooseCreateAccount()
     }
 
     @objc public func createTeamButtonTapped(_ sender: AnyObject!) {
+        tracker?.tagOpenedTeamCreation()
         delegate?.landingViewControllerDidChooseCreateTeam()
     }
 
     @objc public func loginButtonTapped(_ sender: AnyObject!) {
+        tracker?.tagOpenedLogin()
         delegate?.landingViewControllerDidChooseLogin()
     }
 

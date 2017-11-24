@@ -215,6 +215,9 @@
 
 "conversation.input_bar.shortcut.send" = "Send Message";
 
+"conversation.input_bar.message_too_long.title" = "Message too long";
+"conversation.input_bar.message_too_long.message" = "You can send messages up to %d characters long.";
+
 // Image confirmation dialogue
 "image_confirmer.confirm" = "OK";
 "image_confirmer.cancel" = "Cancel";
@@ -788,9 +791,16 @@
 "landing.create_account.title" = "Create an account";
 "landing.create_account.subtitle" = "for personal use";
 "landing.create_team.title" = "Create a team";
-"landing.create_team.subtitle" = "for personal use";
+"landing.create_team.subtitle" = "for work";
 "landing.login.hints" = "Already have an account?";
 "landing.login.button.title" = "Log in";
+
+// Create team
+
+"team.name.headline" = "Name your team";
+"team.name.subheadline" = "You can always change it later.";
+"team.name.textfield.placeholder" = "team name";
+"team.name.whatiswireforteams" = "What is Wire for teams?";
 
 // Registration
 

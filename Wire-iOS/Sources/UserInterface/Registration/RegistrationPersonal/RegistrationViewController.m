@@ -69,6 +69,7 @@
 @property (nonatomic) id initialSyncObserverToken;
 @property (nonatomic) id postLoginToken;
 @property (nonatomic) id sessionCreationObserverToken;
+@property (nonatomic) AuthenticationFlowType flowType;
 
 @end
 
@@ -76,8 +77,20 @@
 
 @implementation RegistrationViewController
 
-- (void)setShowLogin: (BOOL)newValue{
-    self.registrationRootViewController.showLogin = newValue;
+- (instancetype)init
+{
+    return [self initWithAuthenticationFlow:AuthenticationFlowRegular];
+}
+
+- (instancetype)initWithAuthenticationFlow:(AuthenticationFlowType)flow
+{
+    self = [super initWithNibName:nil bundle:nil];
+
+    if (self) {
+        self.flowType = flow;
+    }
+
+    return self;
 }
 
 - (void)viewDidLoad
@@ -122,7 +135,7 @@
                                  userSessionErrorCode == ZMUserSessionNeedsPasswordToRegisterClient ||
                                  userSessionErrorCode == ZMUserSessionCanNotRegisterMoreClients;
     
-    RegistrationRootViewController *registrationRootViewController = [[RegistrationRootViewController alloc] initWithUnregisteredUser:self.unregisteredUser];
+    RegistrationRootViewController *registrationRootViewController = [[RegistrationRootViewController alloc] initWithUnregisteredUser:self.unregisteredUser authenticationFlow:self.flowType];
     registrationRootViewController.formStepDelegate = self;
     registrationRootViewController.hasSignInError = self.signInError != nil && !addingAdditionalAccount;
     registrationRootViewController.showLogin = needsToReauthenticate || addingAdditionalAccount;
@@ -143,7 +156,7 @@
     self.rootNavigationController.view.opaque = NO;
     self.rootNavigationController.delegate = self;
     self.rootNavigationController.navigationBarHidden = YES;
-    self.rootNavigationController.logoEnabled = ! IS_IPHONE_4;
+    self.rootNavigationController.logoEnabled = !IS_IPHONE_4 && (self.signInError != nil);
     
     self.keyboardAvoidingViewController = [[KeyboardAvoidingViewController alloc] initWithViewController:self.rootNavigationController];
     self.keyboardAvoidingViewController.view.translatesAutoresizingMaskIntoConstraints = NO;

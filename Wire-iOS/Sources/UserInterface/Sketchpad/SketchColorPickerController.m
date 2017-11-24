@@ -54,6 +54,12 @@ static NSUInteger const SketchColorPickerDefaultBrushWidth = 6;
     [self setUpColorsCollectionView];
 }
 
+- (void)viewDidLayoutSubviews
+{
+    [super viewDidLayoutSubviews];
+    [self.colorsCollectionViewLayout invalidateLayout];
+}
+
 - (void)setUpColorsCollectionView
 {
     UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];

@@ -138,7 +138,7 @@
 {
     // guard against a stack overflow
     if (self != UIApplication.sharedApplication.wr_topmostViewController) {
-        return UIApplication.sharedApplication.wr_topmostViewController.supportedInterfaceOrientations;
+        return UIApplication.sharedApplication.wr_topmostViewController.shouldAutorotate;
     } else {
         return YES;
     }
