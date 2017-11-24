@@ -133,6 +133,10 @@ extension TeamCreationFlowController {
             currentState = nextState
             self.nextState = nil
             self.navigationController.popViewController(animated: true)
+        } else {
+            currentState = .enterName
+            self.nextState = nil
+            self.navigationController.popToRootViewController(animated: true)
         }
     }
 }

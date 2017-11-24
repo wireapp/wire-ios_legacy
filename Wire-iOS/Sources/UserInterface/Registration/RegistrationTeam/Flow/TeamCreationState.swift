@@ -39,9 +39,9 @@ extension TeamCreationState {
     var mainViewDescription: ViewDescriptor & ValueSubmission {
         switch self {
         case .enterName:
-            return TextFieldDescription(placeholder: "Set team name")
+            return TextFieldDescription(placeholder: "Set team name", kind: .name)
         case .setEmail:
-            return TextFieldDescription(placeholder: "Set email")
+            return TextFieldDescription(placeholder: "Set email", kind: .email)
         case .verifyEmail:
             return VerificationCodeFieldDescription()
         }

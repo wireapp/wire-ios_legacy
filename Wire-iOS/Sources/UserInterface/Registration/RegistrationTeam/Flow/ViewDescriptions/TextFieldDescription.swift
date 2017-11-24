@@ -19,27 +19,44 @@
 import Foundation
 
 final class TextFieldDescription: NSObject, ValueSubmission {
-    var placeholder: String
+    let placeholder: String
+    let kind: AccessoryTextField.Kind
     var valueSubmitted: ValueSubmitted?
 
-    init(placeholder: String) {
+    fileprivate var currentValue: String = ""
+
+    init(placeholder: String, kind: AccessoryTextField.Kind) {
         self.placeholder = placeholder
+        self.kind = kind
         super.init()
     }
 }
 
 extension TextFieldDescription: ViewDescriptor {
     func create() -> UIView {
-        let textField = UITextField()
+        let textField = AccessoryTextField(kind: kind)
         textField.enablesReturnKeyAutomatically = true
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.placeholder = self.placeholder
         textField.delegate = self
+        textField.confirmButton.addTarget(self, action: #selector(TextFieldDescription.confirmButtonTapped(_:)), for: .touchUpInside)
         return textField
     }
 }
 
 extension TextFieldDescription: UITextFieldDelegate {
+
+    func confirmButtonTapped(_ sender: AnyObject) {
+        self.valueSubmitted?(currentValue)
+    }
+
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        let oldValue = textField.text as NSString?
+        let result = oldValue?.replacingCharacters(in: range, with: string)
+        currentValue = (result as String?) ?? ""
+        return true
+    }
+
     func textFieldDidEndEditing(_ textField: UITextField) {
     }
 
