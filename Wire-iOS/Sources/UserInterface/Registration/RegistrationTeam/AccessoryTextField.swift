@@ -22,7 +22,7 @@ import Cartography
 
 class AccessoryTextField : UITextField {
 
-    enum TextFieldType {
+    enum Kind {
         case email
         case name
         case password
@@ -33,7 +33,7 @@ class AccessoryTextField : UITextField {
     static let placeholderFont = FontSpec(.small, .semibold).font!
     static private let ConfirmButtonWidth: CGFloat = 32
 
-    var textFieldType: TextFieldType = .unknown {
+    var kind: Kind = .unknown {
         didSet{
             setupTextFieldProperties()
         }
@@ -61,13 +61,13 @@ class AccessoryTextField : UITextField {
     let placeholderInsets: UIEdgeInsets
 
 
-    /// init with textFieldType for keyboard style and validator type
+    /// init with type for keyboard style and validator type
     ///
-    /// - Parameter textFieldType: the type for text field
-    convenience init(textFieldType: TextFieldType) {
+    /// - Parameter kind: the type for text field
+    convenience init(kind: Kind) {
         self.init()
 
-        self.textFieldType = textFieldType
+        self.kind = kind
     }
 
     init() {
@@ -117,7 +117,7 @@ class AccessoryTextField : UITextField {
     }
 
     private func setupTextFieldProperties() {
-        switch textFieldType {
+        switch kind {
         case .email:
             break
         case .password:

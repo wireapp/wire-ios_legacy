@@ -50,7 +50,7 @@ class TeamNameStepViewController: UIViewController {
     }()
 
     let teamNameTextField: AccessoryTextField = {
-        let accssoryTextField = AccessoryTextField(textFieldType: .name)
+        let accssoryTextField = AccessoryTextField(kind: .name)
         accssoryTextField.placeholder = "team.name.textfield.placeholder".localized
 
         return accssoryTextField
