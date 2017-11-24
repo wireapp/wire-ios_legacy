@@ -959,6 +959,7 @@
 		EFFF9E851FBF335700491F9A /* UIColor+TeamCreation.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFFF9E841FBF335700491F9A /* UIColor+TeamCreation.swift */; };
 		F1141C971F5EB2DC005340B3 /* WireApplication.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1141C961F5EB2DC005340B3 /* WireApplication.swift */; };
 		F1199CFD1FC6FEDC0070FAC3 /* ButtonDescriptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1199CFC1FC6FEDC0070FAC3 /* ButtonDescriptor.swift */; };
+		F1199CFF1FC82F8C0070FAC3 /* VerificationCodeFieldDescription.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1199CFE1FC82F8C0070FAC3 /* VerificationCodeFieldDescription.swift */; };
 		F127BD571E262E9F0093B2F1 /* CollectionsViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F127BD561E262E9F0093B2F1 /* CollectionsViewControllerTests.swift */; };
 		F127BD5A1E2667170093B2F1 /* MockCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = F127BD581E265FB40093B2F1 /* MockCollection.swift */; };
 		F12CDADE1E43868200CEFCEB /* ChangeEmailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F12CDADA1E43868200CEFCEB /* ChangeEmailViewController.swift */; };
@@ -2467,6 +2468,7 @@
 		EFFF9E841FBF335700491F9A /* UIColor+TeamCreation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+TeamCreation.swift"; sourceTree = "<group>"; };
 		F1141C961F5EB2DC005340B3 /* WireApplication.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WireApplication.swift; sourceTree = "<group>"; };
 		F1199CFC1FC6FEDC0070FAC3 /* ButtonDescriptor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonDescriptor.swift; sourceTree = "<group>"; };
+		F1199CFE1FC82F8C0070FAC3 /* VerificationCodeFieldDescription.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerificationCodeFieldDescription.swift; sourceTree = "<group>"; };
 		F127BD561E262E9F0093B2F1 /* CollectionsViewControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionsViewControllerTests.swift; sourceTree = "<group>"; };
 		F127BD581E265FB40093B2F1 /* MockCollection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockCollection.swift; sourceTree = "<group>"; };
 		F12CDADA1E43868200CEFCEB /* ChangeEmailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChangeEmailViewController.swift; sourceTree = "<group>"; };
@@ -5076,6 +5078,7 @@
 				F19F26621FC5D79200F9955E /* TeamCreationState.swift */,
 				F1DFA4CE1FC4671A00AAEE63 /* TeamCreationFlowController.swift */,
 				F1DFA4D21FC4709F00AAEE63 /* TextFieldDescription.swift */,
+				F1199CFE1FC82F8C0070FAC3 /* VerificationCodeFieldDescription.swift */,
 				F1199CFC1FC6FEDC0070FAC3 /* ButtonDescriptor.swift */,
 				F1FDC2E51FC5C05600DA4D2B /* BackButtonDescription.swift */,
 				F1DFA4CF1FC4671A00AAEE63 /* TeamCreationStepController.swift */,
@@ -6219,6 +6222,7 @@
 				871BC2921D34F8F800DF0793 /* UIView+WR_ExtendedBlockAnimations.m in Sources */,
 				CE8E4FC01DF17BBE0009F437 /* UITextView+TextTransform.m in Sources */,
 				87D56DF61E003A5300DFF722 /* CollectionsViewController.swift in Sources */,
+				F1199CFF1FC82F8C0070FAC3 /* VerificationCodeFieldDescription.swift in Sources */,
 				F12CDAE11E43868200CEFCEB /* ConfirmPhoneViewController.swift in Sources */,
 				EF2127191FB9DFE300625A9B /* EmailVerificationStepViewController.m in Sources */,
 				871BC2271D34F8F800DF0793 /* CameraAccessMessageViewController.m in Sources */,

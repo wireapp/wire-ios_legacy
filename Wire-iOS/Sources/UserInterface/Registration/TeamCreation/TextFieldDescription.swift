@@ -18,10 +18,7 @@
 
 import Foundation
 
-final class TextFieldDescription: NSObject {
-
-    typealias ValueSubmitted = (String) -> ()
-
+final class TextFieldDescription: NSObject, ValueSubmission {
     var placeholder: String
     var valueSubmitted: ValueSubmitted?
 

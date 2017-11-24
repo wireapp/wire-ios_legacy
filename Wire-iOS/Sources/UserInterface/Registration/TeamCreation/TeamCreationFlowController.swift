@@ -24,6 +24,10 @@ protocol ViewDescriptor: class {
     func create() -> UIView
 }
 
+protocol ValueSubmission: class {
+    var valueSubmitted: ValueSubmitted? { get set }
+}
+
 final class TeamCreationFlowController: NSObject {
     var currentState: TeamCreationState = .enterName
     let navigationController: UINavigationController

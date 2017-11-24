@@ -36,14 +36,14 @@ extension TeamCreationState {
         }
     }
 
-    var mainViewDescription: TextFieldDescription {
+    var mainViewDescription: ViewDescriptor & ValueSubmission {
         switch self {
         case .enterName:
             return TextFieldDescription(placeholder: "Set team name")
         case .setEmail:
             return TextFieldDescription(placeholder: "Set email")
         case .verifyEmail:
-            return TextFieldDescription(placeholder: "Code")
+            return VerificationCodeFieldDescription()
         }
     }
 
