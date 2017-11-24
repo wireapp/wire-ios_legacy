@@ -958,6 +958,7 @@
 		EF2127281FB9E06300625A9B /* LandingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF2127271FB9E06300625A9B /* LandingViewController.swift */; };
 		EF25F7DE1FC45F8E0040C3CC /* AccessoryTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF25F7DD1FC45F8E0040C3CC /* AccessoryTextField.swift */; };
 		EF25F8871FC57F320040C3CC /* AccessoryTextFieldTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF25F8851FC57EE90040C3CC /* AccessoryTextFieldTests.swift */; };
+		EF61B33B1FC8429B00D8E631 /* TextFieldValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF61B33A1FC8429A00D8E631 /* TextFieldValidator.swift */; };
 		EFFF9E831FBEFD4400491F9A /* TeamNameStepViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFFF9E821FBEFD4400491F9A /* TeamNameStepViewController.swift */; };
 		EFFF9E851FBF335700491F9A /* UIColor+TeamCreation.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFFF9E841FBF335700491F9A /* UIColor+TeamCreation.swift */; };
 		F1141C971F5EB2DC005340B3 /* WireApplication.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1141C961F5EB2DC005340B3 /* WireApplication.swift */; };
@@ -2463,6 +2464,7 @@
 		EF2127271FB9E06300625A9B /* LandingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LandingViewController.swift; sourceTree = "<group>"; };
 		EF25F7DD1FC45F8E0040C3CC /* AccessoryTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessoryTextField.swift; sourceTree = "<group>"; };
 		EF25F8851FC57EE90040C3CC /* AccessoryTextFieldTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessoryTextFieldTests.swift; sourceTree = "<group>"; };
+		EF61B33A1FC8429A00D8E631 /* TextFieldValidator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextFieldValidator.swift; sourceTree = "<group>"; };
 		EFFF9E821FBEFD4400491F9A /* TeamNameStepViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamNameStepViewController.swift; sourceTree = "<group>"; };
 		EFFF9E841FBF335700491F9A /* UIColor+TeamCreation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+TeamCreation.swift"; sourceTree = "<group>"; };
 		F1141C961F5EB2DC005340B3 /* WireApplication.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WireApplication.swift; sourceTree = "<group>"; };
@@ -4918,6 +4920,7 @@
 		EF2126B51FB9DFE300625A9B /* RegistrationTeam */ = {
 			isa = PBXGroup;
 			children = (
+				EF61B33A1FC8429A00D8E631 /* TextFieldValidator.swift */,
 				EFFF9E811FBEF9A000491F9A /* Steps */,
 				EF2127271FB9E06300625A9B /* LandingViewController.swift */,
 				EF1F9A011FBB1FD800969DD1 /* LandingButton.swift */,
@@ -6178,6 +6181,7 @@
 				87DCF4941D34E9BA00BB420F /* ZMAddressBookContact+LocalInvitation.swift in Sources */,
 				EFFF9E831FBEFD4400491F9A /* TeamNameStepViewController.swift in Sources */,
 				87AAE4231E43234A00E1D13A /* MessagePresenter+ConversationImages.swift in Sources */,
+				EF61B33B1FC8429B00D8E631 /* TextFieldValidator.swift in Sources */,
 				16271BC61D9EB12E00689486 /* TypingIndicatorView.swift in Sources */,
 				EF21270A1FB9DFE300625A9B /* CheckmarkViewController.m in Sources */,
 				871BC2321D34F8F800DF0793 /* StyledTextField.m in Sources */,

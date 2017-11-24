@@ -21,13 +21,7 @@ import Foundation
 import Cartography
 
 class AccessoryTextField : UITextField {
-
-    enum TextFieldType {
-        case email
-        case name
-        case password
-        case unknown
-    }
+    let textFieldValidator: TextFieldValidator
 
     static let enteredTextFont = FontSpec(.normal, .regular, .inputText).font!
     static let placeholderFont = FontSpec(.small, .semibold).font!
@@ -63,18 +57,19 @@ class AccessoryTextField : UITextField {
 
     /// init with textFieldType for keyboard style and validator type
     ///
-    /// - Parameter textFieldType: the type for text field
-    convenience init(textFieldType: TextFieldType) {
+    /// - Parameter textFieldType: the type for text field. If not set, default value .unknown is applied.
+    convenience init(textFieldType: TextFieldType?) {
         self.init()
 
-        self.textFieldType = textFieldType
+        if let textFieldType = textFieldType {
+            self.textFieldType = textFieldType
+        }
     }
 
     init() {
         let leftInset: CGFloat = 24
 
         var topInset: CGFloat = 0
-
         if #available(iOS 11, *) {
             topInset = 0
         }
@@ -84,6 +79,7 @@ class AccessoryTextField : UITextField {
         }
 
         placeholderInsets = UIEdgeInsets(top: topInset, left: leftInset, bottom: 0, right: 16)
+        textFieldValidator = TextFieldValidator()
 
         super.init(frame: .zero)
 
@@ -103,6 +99,8 @@ class AccessoryTextField : UITextField {
         }
         layer.masksToBounds = true
         backgroundColor = .textfieldColor
+
+        textFieldValidator.delegate = self
 
         setup()
     }
@@ -152,7 +150,7 @@ class AccessoryTextField : UITextField {
     // MARK:- text validation
 
     func textFieldDidChange(textField: UITextField){
-        confirmButton.isEnabled = true
+        textFieldValidator.textDidChange(text: textField.text, textFieldType: self.textFieldType)
     }
 
     // MARK:- placeholder
@@ -216,13 +214,12 @@ class AccessoryTextField : UITextField {
     }
 }
 
+extension AccessoryTextField: TextFieldValidatorDelegate {
+    func validationErrorDidOccur(sender: Any, error: TextFieldValidationError?) {
+        self.confirmButton.isEnabled = false
+    }
 
-// MARK:- Email validator
-
-extension String {
-    public var isEmail: Bool {
-        let dataDetector = try? NSDataDetector(types: NSTextCheckingResult.CheckingType.link.rawValue)
-        let firstMatch = dataDetector?.firstMatch(in: self, options: NSRegularExpression.MatchingOptions.reportCompletion, range: NSRange(location: 0, length: self.characters.count))
-        return (firstMatch?.range.location != NSNotFound && firstMatch?.url?.scheme == "mailto")
+    func validationSucceed(sender: Any, length: Int?) {
+        self.confirmButton.isEnabled = true
     }
 }
