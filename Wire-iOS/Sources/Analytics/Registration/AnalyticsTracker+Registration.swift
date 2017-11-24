@@ -35,4 +35,36 @@ extension AnalyticsTracker {
     func tagOpenedLogin() {
         self.tagEvent("start.opened_login")
     }
+    
+    func tagTeamCreationEmailVerified() {
+        self.tagEvent("team.verified")
+    }
+    
+    func tagTeamCreationAcceptedTerms() {
+        self.tagEvent("team.accepted_terms")
+    }
+    
+    func tagTeamCreated() {
+        self.tagEvent("team.created")
+    }
+    
+    enum InviteResult {
+        case none
+        case invited(invitesCount: Int)
+    }
+    
+    func tagTeamFinishedInviteStep(with result: InviteResult) {
+        let attributes: [AnyHashable: Any]
+        
+        switch(result) {
+        case .none:
+            attributes = ["invited": false,
+                          "invites:": 0]
+        case .invited(let invitesCount):
+            attributes = ["invited": true,
+                          "invites:": invitesCount]
+        }
+        
+        self.tagEvent("team.finished_invite_step", attributes: attributes)
+    }
 }

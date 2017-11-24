@@ -65,7 +65,12 @@ final class AnalyticsMixpanelProvider: NSObject, AnalyticsProvider {
         "start.opened_start_screen",
         "start.opened_person_registration",
         "start.opened_team_registration",
-        "start.opened_login"
+        "start.opened_login",
+        "team.verified",
+        "team.accepted_terms",
+        "team.created",
+        "team.finished_invite_step",
+        "settings.opened_manage_team"
         ])
     
     private static let enabledSuperProperties = Set<String>([
