@@ -63,13 +63,11 @@ class AccessoryTextField : UITextField {
 
     /// init with textFieldType for keyboard style and validator type
     ///
-    /// - Parameter textFieldType: the type for text field. If not set, default value .unknown is applied.
-    convenience init(textFieldType: TextFieldType?) {
+    /// - Parameter textFieldType: the type for text field
+    convenience init(textFieldType: TextFieldType) {
         self.init()
 
-        if let textFieldType = textFieldType {
-            self.textFieldType = textFieldType
-        }
+        self.textFieldType = textFieldType
     }
 
     init() {
