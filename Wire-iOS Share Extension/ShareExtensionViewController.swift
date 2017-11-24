@@ -126,7 +126,18 @@ class ShareExtensionViewController: SLComposeServiceViewController {
 
     override func isContentValid() -> Bool {
         // Do validation of contentText and/or NSExtensionContext attachments here
-        return sharingSession != nil && self.postContent?.target != nil
+        let textLength = self.contentText.trimmingCharacters(in: .whitespaces).characters.count
+        let remaining = SharedConstants.maximumMessageLength - textLength
+        let remainingCharactersThreshold = 30
+        
+        if remaining <= remainingCharactersThreshold {
+            self.charactersRemaining = remaining as NSNumber
+        } else {
+            self.charactersRemaining = nil
+        }
+        
+        let conditions = sharingSession != nil && self.postContent?.target != nil
+        return self.charactersRemaining == nil ? conditions : conditions && self.charactersRemaining.intValue >= 0
     }
 
     /// invoked when the user wants to post
