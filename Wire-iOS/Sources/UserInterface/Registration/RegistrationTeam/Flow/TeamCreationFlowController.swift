@@ -29,7 +29,7 @@ protocol ValueSubmission: class {
 }
 
 final class TeamCreationFlowController: NSObject {
-    var currentState: TeamCreationState = .enterName
+    var currentState: TeamCreationState = .setTeamName
     let navigationController: UINavigationController
     let registrationStatus: RegistrationStatus
     var nextState: TeamCreationState?
@@ -72,15 +72,13 @@ extension TeamCreationFlowController {
 
     func secondaryViews(for state: TeamCreationState) -> [ViewDescriptor] {
         switch state  {
-        case .enterName:
+        case .setTeamName:
             let whatIsWire = ButtonDescription(title: "What is Wire for teams?", accessibilityIdentifier: "wire_for_teams_button")
             whatIsWire.buttonTapped = { [weak self] in
                 let webview = WebViewController(url: URL(string: "https://wire.com")!)
                 self?.navigationController.present(webview, animated: true, completion: nil)
             }
             return [whatIsWire]
-        case .setEmail:
-            return []
         case let .verifyEmail(teamName: _, email: email):
             let resendCode = ButtonDescription(title: "Resend code", accessibilityIdentifier: "resend_button")
             resendCode.buttonTapped = { [weak self] in
@@ -91,6 +89,8 @@ extension TeamCreationFlowController {
                 self?.rewindState()
             }
             return [resendCode, changeEmail]
+        case .setEmail, .setFullName, .setPassword:
+            return []
         }
     }
 }
@@ -105,12 +105,16 @@ extension TeamCreationFlowController {
     fileprivate func advanceIfNeeded() {
         if let next = self.nextState {
             switch next {
-            case .enterName:
+            case .setTeamName:
                 nextState = nil // Nothing to do
             case .setEmail:
                 pushNext() // Pushing email step
             case let .verifyEmail(teamName: _, email: email):
                 registrationStatus.sendActivationCode(to: email) // Sending activation code to email
+            case let .setFullName(teamName: _, email: email, activationCode: activationCode):
+                registrationStatus.checkActivationCode(email: email, code: activationCode)
+            case .setPassword:
+                pushNext()
             }
         }
     }
@@ -134,7 +138,7 @@ extension TeamCreationFlowController {
             self.nextState = nil
             self.navigationController.popViewController(animated: true)
         } else {
-            currentState = .enterName
+            currentState = .setTeamName
             self.nextState = nil
             self.navigationController.popToRootViewController(animated: true)
         }
@@ -143,10 +147,11 @@ extension TeamCreationFlowController {
 
 extension TeamCreationFlowController: RegistrationStatusDelegate {
     public func teamRegistered() {
-
+        pushNext()
     }
 
     public func teamRegistrationFailed(with error: Error) {
+        currentController.displayError(error)
     }
 
     public func emailActivationCodeSent() {
@@ -158,11 +163,11 @@ extension TeamCreationFlowController: RegistrationStatusDelegate {
     }
 
     public func emailActivationCodeValidated() {
-
+        pushNext()
     }
 
     public func emailActivationCodeValidationFailed(with error: Error) {
-
+        currentController.displayError(error)
     }
 
 }
