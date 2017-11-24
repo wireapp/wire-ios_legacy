@@ -30,7 +30,7 @@ final class TeamCreationStepController: UIViewController {
     private var stackView: UIStackView!
     private var headlineLabel: UILabel!
     private var subtextLabel: UILabel!
-    private var errorLabel: UILabel!
+    fileprivate var errorLabel: UILabel!
 
     private var secondaryViewsStackView: UIStackView!
     private var errorViewContainer: UIView!
@@ -190,4 +190,14 @@ final class TeamCreationStepController: UIViewController {
             errorLabel.trailing == errorViewContainer.trailingMargin
         }
     }
+}
+
+// MARK: - Error handling
+extension TeamCreationStepController {
+
+    func displayError(_ error: Error) {
+        let nsError = error as NSError
+        errorLabel.text = nsError.localizedDescription
+    }
+
 }

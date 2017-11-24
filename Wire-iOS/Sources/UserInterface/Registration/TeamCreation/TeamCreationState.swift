@@ -69,3 +69,30 @@ extension TeamCreationState {
         }
     }
 }
+
+
+// MARK: - State transitions
+extension TeamCreationState {
+    var previousState: TeamCreationState? {
+        switch self {
+        case .enterName:
+            return nil
+        case .setEmail:
+            return .enterName
+        case let .verifyEmail(teamName: teamName, email: _):
+            return .setEmail(teamName: teamName)
+        }
+    }
+
+    func nextState(with value: String) -> TeamCreationState? {
+        switch self {
+        case .enterName:
+            return .setEmail(teamName: value)
+        case let .setEmail(teamName: teamName):
+            return .verifyEmail(teamName: teamName, email: value)
+        case .verifyEmail(teamName: _, email: _):
+            return nil
+        }
+    }
+
+}

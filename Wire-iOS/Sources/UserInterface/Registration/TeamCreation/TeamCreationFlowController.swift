@@ -28,33 +28,36 @@ final class TeamCreationFlowController: NSObject {
     var currentState: TeamCreationState = .enterName
     let navigationController: UINavigationController
     let registrationStatus: RegistrationStatus
+    var nextState: TeamCreationState?
+    var currentController: TeamCreationStepController!
 
     init(navigationController: UINavigationController, registrationStatus: RegistrationStatus) {
         self.navigationController = navigationController
         self.registrationStatus = registrationStatus
         super.init()
+        registrationStatus.delegate = self
     }
 
     func startFlow() {
-        pushCurrentController()
+        pushController(for: currentState)
     }
 
 }
 
 // MARK: - Creating step controller
 extension TeamCreationFlowController {
-    func createViewController() -> UIViewController {
-        let mainView = currentState.mainViewDescription
+    func createViewController(for state: TeamCreationState) -> TeamCreationStepController {
+        let mainView = state.mainViewDescription
         mainView.valueSubmitted = { [weak self] (value: String) in
             self?.advanceState(with: value)
         }
 
-        let backButton = currentState.backButtonDescription
+        let backButton = state.backButtonDescription
         backButton?.buttonTapped = { [weak self] in
             self?.rewindState()
         }
 
-        let secondaryViews = self.secondaryViews(for: currentState)
+        let secondaryViews = self.secondaryViews(for: state)
         let controller = TeamCreationStepController(headline: currentState.headline,
                                                     subtext: currentState.subtext,
                                                     mainView: mainView,
@@ -91,32 +94,67 @@ extension TeamCreationFlowController {
 // MARK: - State changes
 extension TeamCreationFlowController {
     fileprivate func advanceState(with value: String) {
-        switch currentState {
-        case .enterName:
-            currentState = .setEmail(teamName: value)
-        case let .setEmail(teamName: teamName):
-            currentState = .verifyEmail(teamName: teamName, email: value)
-            registrationStatus.sendActivationCode(to: value)
-        case .verifyEmail(teamName: _, email: _):
-            break
-        }
-        pushCurrentController()
+        self.nextState = currentState.nextState(with: value) // Calculate next state
+        advanceIfNeeded()
     }
 
-    fileprivate func pushCurrentController() {
-        let nextController = createViewController()
-        self.navigationController.pushViewController(nextController, animated: true)
+    fileprivate func advanceIfNeeded() {
+        if let next = self.nextState {
+            switch next {
+            case .enterName:
+                nextState = nil // Nothing to do
+            case .setEmail:
+                pushNext() // Pushing email step
+            case let .verifyEmail(teamName: _, email: email):
+                registrationStatus.sendActivationCode(to: email) // Sending activation code to email
+            }
+        }
+    }
+
+    fileprivate func pushController(for state: TeamCreationState) {
+        currentController = createViewController(for: state)
+        navigationController.pushViewController(currentController, animated: true)
+    }
+
+    fileprivate func pushNext() {
+        if let next = self.nextState {
+            currentState = next
+            nextState = nil
+            pushController(for: next)
+        }
     }
 
     fileprivate func rewindState() {
-        switch currentState {
-        case .enterName:
-            break
-        case .setEmail:
-            currentState = .enterName
-        case let .verifyEmail(teamName: teamName, email: _):
-            currentState = .setEmail(teamName: teamName)
+        if let nextState = currentState.previousState {
+            currentState = nextState
+            self.nextState = nil
+            self.navigationController.popViewController(animated: true)
         }
-        self.navigationController.popViewController(animated: true)
     }
+}
+
+extension TeamCreationFlowController: RegistrationStatusDelegate {
+    public func teamRegistered() {
+
+    }
+
+    public func teamRegistrationFailed(with error: Error) {
+    }
+
+    public func emailActivationCodeSent() {
+        pushNext()
+    }
+
+    public func emailActivationCodeSendingFailed(with error: Error) {
+        currentController.displayError(error)
+    }
+
+    public func emailActivationCodeValidated() {
+
+    }
+
+    public func emailActivationCodeValidationFailed(with error: Error) {
+
+    }
+
 }
