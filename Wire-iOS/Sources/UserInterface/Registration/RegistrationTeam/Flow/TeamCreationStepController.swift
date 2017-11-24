@@ -21,6 +21,11 @@ import Cartography
 
 final class TeamCreationStepController: UIViewController {
 
+    static let headlineFont = FontSpec(.large, .light, .largeTitle).font!
+    static let subtextFont = FontSpec(.normal, .regular).font!
+    static let errorFont = FontSpec(.small, .semibold).font!
+    static let textButtonFont = FontSpec(.small, .semibold).font!
+
     let headline: String
     let subtext: String?
     let backButtonDescriptor: ViewDescriptor?
@@ -63,7 +68,7 @@ final class TeamCreationStepController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        view.backgroundColor = #colorLiteral(red: 0.9724436402, green: 0.972609818, blue: 0.9724331498, alpha: 1)
+        view.backgroundColor = UIColor(rgb: 0xF8F8F8)
 
         createViews()
         createConstraints()
@@ -105,31 +110,34 @@ final class TeamCreationStepController: UIViewController {
         backButton = backButtonDescriptor?.create()
 
         headlineLabel = UILabel()
-        headlineLabel.backgroundColor = .yellow
+        headlineLabel.textAlignment = .center
+        headlineLabel.font = TeamCreationStepController.headlineFont
+        headlineLabel.textColor = UIColor(rgb: 0x33373A)
         headlineLabel.text = headline
         headlineLabel.translatesAutoresizingMaskIntoConstraints = false
 
         subtextLabel = UILabel()
-        subtextLabel.backgroundColor = .gray
+        subtextLabel.textAlignment = .center
         subtextLabel.text = subtext
+        subtextLabel.font = TeamCreationStepController.subtextFont
+        subtextLabel.textColor = UIColor(rgb: 0x272A2C, alpha: 0.56)
         subtextLabel.numberOfLines = 0
         subtextLabel.lineBreakMode = .byWordWrapping
         subtextLabel.translatesAutoresizingMaskIntoConstraints = false
 
         mainViewContainer = UIView()
-        mainViewContainer.backgroundColor = .gray
         mainViewContainer.translatesAutoresizingMaskIntoConstraints = false
 
         mainView = mainViewDescriptor.create()
         mainViewContainer.addSubview(mainView)
 
         errorViewContainer = UIView()
-        errorViewContainer.backgroundColor = .red
         errorViewContainer.translatesAutoresizingMaskIntoConstraints = false
 
         errorLabel = UILabel()
-        errorLabel.backgroundColor = .gray
-        errorLabel.text = "SOME ERROR OCCURED"
+        errorLabel.textAlignment = .center
+        errorLabel.font = TeamCreationStepController.errorFont.allCaps()
+        errorLabel.textColor = UIColor(rgb: 0xFB0807)
         errorLabel.translatesAutoresizingMaskIntoConstraints = false
         errorViewContainer.addSubview(errorLabel)
 

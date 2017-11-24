@@ -30,6 +30,7 @@ extension VerificationCodeFieldDescription: ViewDescriptor {
 
         containerView.translatesAutoresizingMaskIntoConstraints = false
         let inputField = CharacterInputField(maxLength: 6, characterSet: .decimalDigits)
+        inputField.keyboardType = .decimalPad
         inputField.translatesAutoresizingMaskIntoConstraints = false
         inputField.delegate = self
         containerView.addSubview(inputField)

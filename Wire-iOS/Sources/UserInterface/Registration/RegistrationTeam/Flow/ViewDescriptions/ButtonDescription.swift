@@ -35,7 +35,6 @@ extension ButtonDescription: ViewDescriptor {
         button.contentEdgeInsets = UIEdgeInsetsMake(4, 12, 4, 12)
         button.tintColor = .black
         button.setContentCompressionResistancePriority(UILayoutPriorityRequired, for: .horizontal)
-        button.backgroundColor = .red
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitle(title, for: .normal)
         button.accessibilityIdentifier = self.accessibilityIdentifier
