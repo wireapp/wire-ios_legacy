@@ -16,29 +16,32 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-
 import Foundation
 import XCTest
 @testable import Wire
 
 final class AccessoryTextFieldUnitTests: XCTestCase {
+    var sut: AccessoryTextField!
     var mockViewController: MockViewController!
 
     override func setUp() {
         super.setUp()
+        sut = AccessoryTextField()
         mockViewController = MockViewController()
+        sut.accessoryTextFieldDelegate = mockViewController
     }
 
     override func tearDown() {
         super.tearDown()
         mockViewController = nil
+        sut = nil
     }
 
-    class MockViewController : AccessoryTextFieldDelegate {
+    class MockViewController: AccessoryTextFieldDelegate {
         var errorCounter = 0
         var successCounter = 0
 
-        var lastError : TextFieldValidationError?
+        var lastError: TextFieldValidationError?
 
         func validationErrorDidOccur(accessoryTextField: AccessoryTextField, error: TextFieldValidationError?) {
             errorCounter += 1
@@ -49,15 +52,12 @@ final class AccessoryTextFieldUnitTests: XCTestCase {
             successCounter += 1
         }
 
-
     }
 
-    @discardableResult fileprivate func checkNoErrorAndOneSucceed(textFieldType: AccessoryTextField.TextFieldType, text: String) -> AccessoryTextField {
-        let sut = AccessoryTextField(textFieldType: textFieldType)
-
-        sut.accessoryTextFieldDelegate = mockViewController
+    fileprivate func checkNoErrorAndOneSucceed(textFieldType: AccessoryTextField.TextFieldType, text: String) {
 
         // WHEN
+        sut.textFieldType = textFieldType
         sut.text = text
         sut.sendActions(for: .editingChanged)
 
@@ -66,16 +66,12 @@ final class AccessoryTextFieldUnitTests: XCTestCase {
         XCTAssert(mockViewController.successCounter == 1)
         XCTAssert(sut.confirmButton.isEnabled)
         XCTAssertNil(mockViewController.lastError)
-
-        return sut
     }
 
-    @discardableResult fileprivate func checkOneErrorAndZeroSucceed(textFieldType: AccessoryTextField.TextFieldType, text: String?, expectedError: TextFieldValidationError) -> AccessoryTextField{
-        let sut = AccessoryTextField(textFieldType: textFieldType)
-
-        sut.accessoryTextFieldDelegate = mockViewController
+    fileprivate func checkOneErrorAndZeroSucceed(textFieldType: AccessoryTextField.TextFieldType, text: String?, expectedError: TextFieldValidationError) {
 
         // WHEN
+        sut.textFieldType = textFieldType
         sut.text = text
         sut.sendActions(for: .editingChanged)
 
@@ -84,11 +80,9 @@ final class AccessoryTextFieldUnitTests: XCTestCase {
         XCTAssert(mockViewController.successCounter == 0)
         XCTAssertFalse(sut.confirmButton.isEnabled)
         XCTAssertEqual(expectedError, mockViewController.lastError)
-
-        return sut
     }
 
-    // MARK:- happy cases
+    // MARK: - happy cases
 
     func testThatSucceedAfterSendEditingChangedForDefaultTextField() {
         // GIVEN
@@ -105,7 +99,7 @@ final class AccessoryTextFieldUnitTests: XCTestCase {
         let text = "blahblah"
 
         // WHEN & THEN
-        let sut = checkNoErrorAndOneSucceed(textFieldType: type, text: text)
+        checkNoErrorAndOneSucceed(textFieldType: type, text: text)
         XCTAssertTrue(sut.isSecureTextEntry)
     }
 
@@ -127,7 +121,7 @@ final class AccessoryTextFieldUnitTests: XCTestCase {
         checkNoErrorAndOneSucceed(textFieldType: type, text: text)
     }
 
-    // MARK:- unhappy cases
+    // MARK: - unhappy cases
     func testThatOneCharacterNameIsInvalid() {
         // GIVEN
         let type: AccessoryTextField.TextFieldType = .name
@@ -194,26 +188,28 @@ final class AccessoryTextFieldUnitTests: XCTestCase {
 }
 
 final class AccessoryTextFieldTests: ZMSnapshotTestCase {
+    var sut: AccessoryTextField!
+    
     override func setUp() {
         super.setUp()
+        sut = AccessoryTextField()
+        sut.frame = CGRect(x: 0, y: 0, width: 375, height: 56)
     }
 
-    func textFieldForSnapshots() -> AccessoryTextField {
-        let accessoryTextField = AccessoryTextField()
-        accessoryTextField.frame = CGRect(x: 0, y: 0, width: 375, height: 56)
-        return accessoryTextField
+    override func tearDown() {
+        super.tearDown()
+        sut = nil
     }
 
     func testThatItShowsEmptyTextField() {
         // GIVEN
-        let sut = textFieldForSnapshots()
+
         // WHEN && THEN
         self.verify(view: sut.snapshotView())
     }
 
     func testThatItShowsPlaceHolderText() {
         // GIVEN
-        let sut = textFieldForSnapshots()
 
         // WHEN
         sut.placeholder = "team name"
@@ -224,7 +220,6 @@ final class AccessoryTextFieldTests: ZMSnapshotTestCase {
 
     func testThatItShowsTextInputedAndConfrimButtonIsEnabled() {
         // GIVEN
-        let sut = textFieldForSnapshots()
 
         // WHEN
         sut.text = "Wire Team"
@@ -236,8 +231,7 @@ final class AccessoryTextFieldTests: ZMSnapshotTestCase {
 
     func testThatItShowsPasswordInputedAndConfrimButtonIsEnabled() {
         // GIVEN
-        let sut = AccessoryTextField(textFieldType: .password)
-        sut.frame = CGRect(x: 0, y: 0, width: 375, height: 56)
+        sut.textFieldType = .password
 
         // WHEN
         sut.text = "Password"
@@ -256,5 +250,3 @@ fileprivate extension UIView {
         return self
     }
 }
-
-

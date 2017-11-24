@@ -44,7 +44,11 @@ class AccessoryTextField : UITextField {
     static let placeholderFont = FontSpec(.small, .semibold).font!
     static private let ConfirmButtonWidth: CGFloat = 32
 
-    var textFieldType: TextFieldType = .unknown
+    var textFieldType: TextFieldType = .unknown {
+        didSet{
+            setupTextFieldProperties()
+        }
+    }
 
     let confirmButton: IconButton = {
         let iconButton = IconButton.iconButtonCircularLight()
@@ -72,14 +76,11 @@ class AccessoryTextField : UITextField {
     ///
     /// - Parameter textFieldType: the type for text field. If not set, default value .unknown is applied.
     convenience init(textFieldType: TextFieldType?) {
-
         self.init()
 
         if let textFieldType = textFieldType {
             self.textFieldType = textFieldType
         }
-
-        setupTextFieldProperties()
     }
 
     init() {
@@ -117,7 +118,6 @@ class AccessoryTextField : UITextField {
         backgroundColor = .textfieldColor
 
         setup()
-        setupTextFieldProperties()
     }
 
     required init?(coder aDecoder: NSCoder) {
