@@ -31,14 +31,12 @@ extension UIAlertController {
         }
         alert.addAction(viewAction)
         
-        let cancelAction = UIAlertAction(title: "general.cancel".localized, style: .default) { [weak alert] action in
-            alert?.dismiss(animated: true)
+        let cancelAction = UIAlertAction(title: "general.cancel".localized, style: .default) { action in
             completion(false)
         }
         alert.addAction(cancelAction)
         
-        let acceptAction = UIAlertAction(title: "registration.terms_of_use.accept".localized, style: .cancel) { [weak alert] action in
-            alert?.dismiss(animated: true)
+        let acceptAction = UIAlertAction(title: "registration.terms_of_use.accept".localized, style: .cancel) { action in
             completion(true)
         }
         alert.addAction(acceptAction)
