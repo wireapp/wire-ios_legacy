@@ -32,8 +32,12 @@ final class ButtonDescription {
 extension ButtonDescription: ViewDescriptor {
     func create() -> UIView {
         let button = UIButton()
+        button.titleLabel?.font = FontSpec(.small, .semibold).font?.allCaps()
+        let color = UIColor(rgb: 0x33373A)
+        button.setTitleColor(color, for: .normal)
+        button.setTitleColor(color.withAlphaComponent(0.6), for: .highlighted)
+
         button.contentEdgeInsets = UIEdgeInsetsMake(4, 12, 4, 12)
-        button.tintColor = .black
         button.setContentCompressionResistancePriority(UILayoutPriorityRequired, for: .horizontal)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitle(title, for: .normal)

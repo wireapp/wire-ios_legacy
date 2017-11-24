@@ -61,7 +61,7 @@ extension TeamCreationState {
     var subtext: String? {
         switch self {
         case .enterName:
-            return "You can always\n change \nit later"
+            return "You can always change it later"
         case .setEmail:
             return nil
         case let .verifyEmail(teamName: _, email: email):
