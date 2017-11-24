@@ -221,17 +221,10 @@
     }
 }
 
-- (void)setFrame:(CGRect)frame
+- (void)layoutSubviews
 {
-    [super setFrame:frame];
+    [super layoutSubviews];
 
-    [self updateCircularCornerRadius];
-}
-
-- (void)setBounds:(CGRect)bounds
-{
-    [super setBounds:bounds];
-    
     [self updateCircularCornerRadius];
 }
 
