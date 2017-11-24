@@ -960,6 +960,7 @@
 		EF25F8871FC57F320040C3CC /* AccessoryTextFieldTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF25F8851FC57EE90040C3CC /* AccessoryTextFieldTests.swift */; };
 		EFB23D0A1FC852380055B866 /* TextFieldValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF61B3411FC8508400D8E631 /* TextFieldValidator.swift */; };
 		EFB23D0B1FC853CF0055B866 /* AccessoryTextFieldValidateionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF61B33F1FC84B0100D8E631 /* AccessoryTextFieldValidateionTests.swift */; };
+		EFB23D101FC863050055B866 /* EmailValidatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFB23D0F1FC863050055B866 /* EmailValidatorTests.swift */; };
 		EFFF9E831FBEFD4400491F9A /* TeamNameStepViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFFF9E821FBEFD4400491F9A /* TeamNameStepViewController.swift */; };
 		EFFF9E851FBF335700491F9A /* UIColor+TeamCreation.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFFF9E841FBF335700491F9A /* UIColor+TeamCreation.swift */; };
 		F1141C971F5EB2DC005340B3 /* WireApplication.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1141C961F5EB2DC005340B3 /* WireApplication.swift */; };
@@ -2467,6 +2468,7 @@
 		EF25F8851FC57EE90040C3CC /* AccessoryTextFieldTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessoryTextFieldTests.swift; sourceTree = "<group>"; };
 		EF61B33F1FC84B0100D8E631 /* AccessoryTextFieldValidateionTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccessoryTextFieldValidateionTests.swift; sourceTree = "<group>"; };
 		EF61B3411FC8508400D8E631 /* TextFieldValidator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextFieldValidator.swift; sourceTree = "<group>"; };
+		EFB23D0F1FC863050055B866 /* EmailValidatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailValidatorTests.swift; sourceTree = "<group>"; };
 		EFFF9E821FBEFD4400491F9A /* TeamNameStepViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamNameStepViewController.swift; sourceTree = "<group>"; };
 		EFFF9E841FBF335700491F9A /* UIColor+TeamCreation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+TeamCreation.swift"; sourceTree = "<group>"; };
 		F1141C961F5EB2DC005340B3 /* WireApplication.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WireApplication.swift; sourceTree = "<group>"; };
@@ -5046,6 +5048,7 @@
 			children = (
 				EF61B33F1FC84B0100D8E631 /* AccessoryTextFieldValidateionTests.swift */,
 				EF25F8851FC57EE90040C3CC /* AccessoryTextFieldTests.swift */,
+				EFB23D0F1FC863050055B866 /* EmailValidatorTests.swift */,
 			);
 			path = AccessoryTextField;
 			sourceTree = "<group>";
@@ -6569,6 +6572,7 @@
 				BF808B511DE605DF00718076 /* ChangeHandleViewControllerTests.swift in Sources */,
 				873DC9591D4796C100C1C9B0 /* CameraKeyboardViewControllerTests.swift in Sources */,
 				BFAF4CAF1CEB791B00780537 /* AudioRecordViewControllerTests.swift in Sources */,
+				EFB23D101FC863050055B866 /* EmailValidatorTests.swift in Sources */,
 				F194CA1B1E7179C2004C5E56 /* VoiceChannelOverlayTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
