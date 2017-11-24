@@ -61,7 +61,8 @@ final class AnalyticsMixpanelProvider: NSObject, AnalyticsProvider {
         conversationMediaCompleteActionEventName,
         "settings.opted_in_tracking",
         "settings.opted_out_tracking",
-        "e2ee.failed_message_decyption"
+        "e2ee.failed_message_decyption",
+        "calling.avs_metrics_ended_call"
         ])
     
     private static let enabledSuperProperties = Set<String>([

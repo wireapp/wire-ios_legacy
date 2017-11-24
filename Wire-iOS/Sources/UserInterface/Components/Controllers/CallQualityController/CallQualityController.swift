@@ -52,6 +52,8 @@ extension BaseCallQualityViewController: CallQualityViewControllerDelegate {
             ratingState.rating2 = score
             print("Rating: \(ratingState)")
             self.dismiss(animated: true, completion: nil)
+            
+            CallQualityScoreProvider.shared.userScore = ratingState
         }
     }
 }
