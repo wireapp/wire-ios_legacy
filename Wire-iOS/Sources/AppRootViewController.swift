@@ -102,11 +102,6 @@ class AppRootViewController : UIViewController {
         transition(to: .headless)
         
         enqueueTransition(to: appStateController.appState)
-        
-        // TODO
-        let baseQualityController = BaseCallQualityViewController()
-        
-        mainWindow.rootViewController?.present(baseQualityController, animated: true, completion: nil)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -125,10 +120,12 @@ class AppRootViewController : UIViewController {
         let mediaManager = AVSMediaManager.sharedInstance()
         let analytics = Analytics.shared()
         
+        CallQualityScoreProvider.shared.nextProvider = analytics
+        
         SessionManager.create(
             appVersion: appVersion!,
             mediaManager: mediaManager!,
-            analytics: analytics,
+            analytics: CallQualityScoreProvider.shared,
             delegate: appStateController,
             application: UIApplication.shared,
             launchOptions: launchOptions,
