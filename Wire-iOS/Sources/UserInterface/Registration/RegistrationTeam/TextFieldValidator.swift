@@ -16,7 +16,6 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-
 import Foundation
 
 enum TextFieldType {
@@ -31,9 +30,8 @@ enum TextFieldValidationError: Error {
 }
 
 protocol TextFieldValidatorDelegate: class {
-
-    func validationErrorDidOccur(sender: Any, error: TextFieldValidationError?)
-    func validationSucceed(sender: Any, length: Int?)
+    func validationErrorDidOccur(error: TextFieldValidationError?)
+    func validationSucceed()
 }
 
 class TextFieldValidator {
@@ -49,29 +47,29 @@ class TextFieldValidator {
         switch textFieldType {
         case .email:
             if text.count > 254 {
-                delegate?.validationErrorDidOccur(sender: self, error:.tooLong)
+                delegate?.validationErrorDidOccur(error:.tooLong)
                 isError = true
             }
             else if !text.isEmail {
-                delegate?.validationErrorDidOccur(sender: self, error:.invalidEmail)
+                delegate?.validationErrorDidOccur(error:.invalidEmail)
                 isError = true
             }
         case .password:
             if text.count > 120 {
-                delegate?.validationErrorDidOccur(sender: self, error:.tooLong)
+                delegate?.validationErrorDidOccur(error:.tooLong)
                 isError = true
             }
             else if text.count < 8 {
-                delegate?.validationErrorDidOccur(sender: self, error:.tooShort)
+                delegate?.validationErrorDidOccur(error:.tooShort)
                 isError = true
             }
         case .name:
             if text.count > 64 {
-                delegate?.validationErrorDidOccur(sender: self, error:.tooLong)
+                delegate?.validationErrorDidOccur(error:.tooLong)
                 isError = true
             }
             else if text.count < 2 {
-                delegate?.validationErrorDidOccur(sender: self, error:.tooShort)
+                delegate?.validationErrorDidOccur(error:.tooShort)
                 isError = true
             }
         case .unknown:
@@ -79,12 +77,9 @@ class TextFieldValidator {
         }
 
         if !isError {
-            delegate?.validationSucceed(sender: self, length: text.count)
+            delegate?.validationSucceed()
         }
-
-//        confirmButton.isEnabled = !isError
     }
-
 }
 
 // MARK:- Email validator
@@ -96,6 +91,6 @@ extension String {
 
         return (firstMatch?.range.location != NSNotFound &&
             firstMatch?.url?.scheme == "mailto" &&
-            self.hasPrefix("mailto:"))
+            !self.hasPrefix("mailto:"))
     }
 }

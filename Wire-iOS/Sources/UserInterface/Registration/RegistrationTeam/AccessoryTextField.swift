@@ -20,8 +20,14 @@
 import Foundation
 import Cartography
 
+protocol AccessoryTextFieldDelegate: class {
+    func validationErrorDidOccur(sender: UITextField, error: TextFieldValidationError?)
+    func validationSucceed(sender: UITextField)
+}
+
 class AccessoryTextField : UITextField {
     let textFieldValidator: TextFieldValidator
+    public var textFieldValidationDelegate: AccessoryTextFieldDelegate?
 
     static let enteredTextFont = FontSpec(.normal, .regular, .inputText).font!
     static let placeholderFont = FontSpec(.small, .semibold).font!
@@ -215,11 +221,13 @@ class AccessoryTextField : UITextField {
 }
 
 extension AccessoryTextField: TextFieldValidatorDelegate {
-    func validationErrorDidOccur(sender: Any, error: TextFieldValidationError?) {
+    func validationErrorDidOccur(error: TextFieldValidationError?) {
         self.confirmButton.isEnabled = false
+        textFieldValidationDelegate?.validationErrorDidOccur(sender: self, error: error)
     }
 
-    func validationSucceed(sender: Any, length: Int?) {
+    func validationSucceed() {
         self.confirmButton.isEnabled = true
+        textFieldValidationDelegate?.validationSucceed(sender: self)
     }
 }
