@@ -61,9 +61,9 @@ class AccessoryTextField : UITextField {
     let placeholderInsets: UIEdgeInsets
 
 
-    /// init with type for keyboard style and validator type
+    /// Init with kind for keyboard style and validator type. Default is .unknown
     ///
-    /// - Parameter kind: the type for text field
+    /// - Parameter kind: the type of text field
     init(kind: Kind = .unknown) {
         let leftInset: CGFloat = 24
 
