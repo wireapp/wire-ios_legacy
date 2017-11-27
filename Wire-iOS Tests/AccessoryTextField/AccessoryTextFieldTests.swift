@@ -22,7 +22,7 @@ import XCTest
 
 final class AccessoryTextFieldTests: ZMSnapshotTestCase {
     var sut: AccessoryTextField!
-    
+
     override func setUp() {
         super.setUp()
         sut = AccessoryTextField()

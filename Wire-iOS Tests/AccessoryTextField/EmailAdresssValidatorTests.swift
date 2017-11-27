@@ -16,13 +16,12 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-
 import XCTest
 @testable import Wire
 
 final class EmailAdresssValidatorTests: XCTestCase {
-    
-    func testThatValidEmailsPassValidation(){
+
+    func testThatValidEmailsPassValidation() {
         // GIVEN
         let validEmailAddresses =
         [
@@ -40,7 +39,7 @@ final class EmailAdresssValidatorTests: XCTestCase {
             "meep.moop@example.com",
             /// edge case: detector removes leading "=" but say this is a valid email address
             /// "=?iso-8859-1?q?keld_j=f8rn_simonsen?=@example.com",
-            "x@something_odd.example.com",
+            "x@something_odd.example.com"
         ]
 
         // WHEN & THEN
@@ -50,7 +49,7 @@ final class EmailAdresssValidatorTests: XCTestCase {
         }
     }
 
-    func testThatInvalidEmailsDoNotPassValidation(){
+    func testThatInvalidEmailsDoNotPassValidation() {
         // GIVEN
         let invalidEmailAddresses =
         ["Abc.example.com", // (an @ character must separate the local and domain parts)
@@ -82,8 +81,8 @@ final class EmailAdresssValidatorTests: XCTestCase {
         "<Meep.Moop@EXample.com>",
         "abc.\"defghi\".xyz@example.com",
         "\"abcdefghixyz\"@example.com",
-        "user@localserver",
-        ];
+        "user@localserver"
+        ]
 
         // WHEN & THEN
 

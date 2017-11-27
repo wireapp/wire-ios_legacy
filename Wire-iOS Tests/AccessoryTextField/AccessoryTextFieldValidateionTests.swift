@@ -16,7 +16,6 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-
 import XCTest
 @testable import Wire
 
@@ -89,7 +88,6 @@ final class AccessoryTextFieldValidateionTests: XCTestCase {
         XCTAssertEqual(mockViewController.successCounter, 0, file: file, line: line)
         XCTAssertFalse(sut.confirmButton.isEnabled, file: file, line: line)
         XCTAssertEqual(expectedError, mockViewController.lastError, file: file, line: line)
-
 
         /// check for localied error description
         switch mockViewController.lastError {
@@ -224,7 +222,7 @@ final class AccessoryTextFieldValidateionTests: XCTestCase {
         checkError(textFieldType: type, text: text, expectedError: .tooLong(kind: type))
     }
 
-    // MARK:- keyboard properties
+    // MARK: - keyboard properties
 
     func testThatPasswordIsSecuredWhenSetToPasswordType() {
         // GIVEN
