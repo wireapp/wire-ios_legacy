@@ -20,6 +20,7 @@
 import Foundation
 import WireShareEngine
 import WireDataModel
+import WireExtensionComponents
 
 
 typealias DegradationStrategyChoice = (DegradationStrategy) -> ()
@@ -32,6 +33,7 @@ enum SendingState {
     case preparing // Some attachments need to be prepared, this case is not always invoked.
     case startingSending // The messages are about to be appended, the callback will always be invoked axecatly once.
     case sending(Float) // The progress of the sending operation.
+    case timedOut // Fired when the connection is lost, e.g. with bad network connection
     case conversationDidDegrade((Set<ZMUser>, DegradationStrategyChoice)) // In case the conversation degrades this case will be passed.
     case done // Sending either was cancelled (due to degradation for example) or finished.
 }
@@ -49,8 +51,12 @@ class SendController {
     private var isCancelled = false
     private var unsentSendables: [UnsentSendable]
     private weak var sharingSession: SharingSession?
-
+    private var progress : SendingStateCallback?
+    private var timeoutWorkItem : DispatchWorkItem?
+    private var timedOut = false
+    
     public var sentAllSendables = false
+    
 
     init(text: String, attachments: [NSItemProvider], conversation: Conversation, sharingSession: SharingSession) {
         
@@ -71,19 +77,37 @@ class SendController {
 
         self.sharingSession = sharingSession
         unsentSendables = sendables
+        
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(SendController.networkStatusDidChange(_:)),
+                                               name: ShareExtensionNetworkObserver.statusChangeNotificationName,
+                                               object: nil)
     }
-
+    
+    @objc func networkStatusDidChange(_ notification: Notification) {
+        if let status = notification.object as? NetworkStatus, status.reachability() == .OK {
+            self.tryToTimeout()
+        }
+    }
+    
     /// Send (and prepare if needed) the text and attachment items passed into the initializer.
     /// The passed in `SendingStateCallback` closure will be called multiple times with the current state of the operation.
     func send(progress: @escaping SendingStateCallback) {
+        
+        self.timedOut = false
+        self.progress = progress
+        
         let completion: ([Sendable]) -> Void = { [weak self] sendables in
             guard let `self` = self else { return }
+            
             self.observer = SendableBatchObserver(sendables: sendables)
-            self.observer?.progressHandler = {
+            self.observer?.progressHandler = { [weak self] in
                 progress(.sending($0))
+                self?.tryToTimeout()
             }
 
             self.observer?.sentHandler = { [weak self] in
+                self?.cancelTimeout()
                 self?.sentAllSendables = true
                 progress(.done)
             }
@@ -102,7 +126,34 @@ class SendController {
             append(unsentSendables: unsentSendables, completion: completion)
         }
     }
-
+    
+    func tryToTimeout() {
+        if timedOut { return }
+        
+        cancelTimeout()
+        timeoutWorkItem = DispatchWorkItem { [weak self] in
+            self?.timeout()
+        }
+        
+        if let workItem = timeoutWorkItem {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 30.0, execute: workItem)
+        }
+    }
+    
+    func cancelTimeout() {
+        timeoutWorkItem?.cancel()
+        timeoutWorkItem = nil
+    }
+    
+    @objc func timeout() {
+        self.cancel { [weak self] in
+            self?.cancelTimeout()
+            self?.timedOut = true
+            self?.progress?(.timedOut)
+        }
+    }
+    
+    
     /// Cancels the sending operation. In case the current state is preparing,
     /// a flag will be set to abort sending after the preparation is done.
     func cancel(completion: @escaping () -> Void) {
@@ -110,7 +161,7 @@ class SendController {
 
         let sendablesToCancel = self.observer?.sendables.lazy.filter { !$0.isSent }
 
-        sharingSession?.enqueue(changes: { 
+        sharingSession?.enqueue(changes: {
             sendablesToCancel?.forEach {
                 $0.cancel()
             }

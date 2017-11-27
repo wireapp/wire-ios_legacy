@@ -845,6 +845,11 @@
 "registration.terms_of_use.terms.link" = "Terms of Use";
 "registration.terms_of_use.agree" = "I agree";
 
+"registration.terms_of_use.terms.title" = "Terms of Use";
+"registration.terms_of_use.terms.message" = "Please accept the Terms of Use to continue.";
+"registration.terms_of_use.terms.view" = "View";
+"registration.terms_of_use.accept" = "Accept";
+
 "registration.email_flow.title" = "Register by Email";
 "registration.email_flow.email_step.title" = "Edit Details";
 

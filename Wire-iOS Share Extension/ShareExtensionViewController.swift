@@ -49,6 +49,8 @@ class ShareExtensionViewController: SLComposeServiceViewController {
     private var observer: SendableBatchObserver? = nil
     private weak var progressViewController: SendingProgressViewController? = nil
     
+    var netObserver = ShareExtensionNetworkObserver()
+    
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         setupObserver()
@@ -72,6 +74,8 @@ class ShareExtensionViewController: SLComposeServiceViewController {
         let activity = ExtensionActivity(attachments: allAttachments)
         sharingSession?.analyticsEventPersistence.add(activity.openedEvent())
         extensionActivity = activity
+        
+        NetworkStatus.add(netObserver)
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -179,6 +183,14 @@ class ShareExtensionViewController: SLComposeServiceViewController {
                     change: ConversationDegradationInfo(conversation: postContent.target!, users: users),
                     callback: strategyChoice
                 )
+            case .timedOut:
+                self.popConfigurationViewController()
+                
+                let title = "share_extension.timeout.title".localized
+                let message = "share_extension.timeout.message".localized
+                let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+                self.present(alert, animated: true, completion: nil)
             }
         }
     }

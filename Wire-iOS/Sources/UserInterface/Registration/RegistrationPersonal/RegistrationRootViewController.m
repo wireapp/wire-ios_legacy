@@ -80,21 +80,20 @@
         flowViewController = phoneFlowViewController;
     }
 
-    NSArray *controllers;
     switch (self.flowType) {
         case AuthenticationFlowRegular:
-            controllers = @[flowViewController, signInViewController];
             break;
         case AuthenticationFlowOnlyLogin:
+            self.showLogin = true;
             [self setupBackButton];
-            controllers = @[signInViewController];
             break;
         case AuthenticationFlowOnlyRegistration:
+            self.showLogin = false;
             [self setupBackButton];
-            controllers = @[flowViewController];
             break;
     }
-    self.registrationTabBarController = [[TabBarController alloc] initWithViewControllers:controllers];
+    
+    self.registrationTabBarController = [[TabBarController alloc] initWithViewControllers:@[flowViewController, signInViewController]];
     self.signInViewController = signInViewController;
     
     if (self.showLogin) {

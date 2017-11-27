@@ -26,8 +26,11 @@
 "share_extension.input.placeholder" = "Type a message";
 "share_extension.sending_progress.title" = "Sending…";
 "share_extension.preparing.title" = "Preparing…";
+"share_extension.no_internet_connection.title" = "No Internet Connection";
 "share_extension.not_signed_in.title" = "You need to sign into Wire before you can share anything";
 "share_extension.not_signed_in.close_button" = "Close";
+"share_extension.timeout.title" = "The connection has timed out.";
+"share_extension.timeout.message" = "Check your Internet connection and try again. The attachments were saved in the conversation.";
 "share_extension.privacy_security.lock_app.description" = "Unlock Wire";
 
 "conversation.displayname.emptygroup" = "Empty group conversation";
