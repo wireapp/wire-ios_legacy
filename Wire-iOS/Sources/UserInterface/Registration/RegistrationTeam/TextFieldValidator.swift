@@ -20,25 +20,48 @@ import Foundation
 
 class TextFieldValidator {
 
-    enum ValidationError: Error {
-        case tooShort
+    enum ValidationError: Error, Equatable {
+        case tooShort(kind: AccessoryTextField.Kind)
         case tooLong
         case invalidEmail
         case none
 
-//        var localizedDescription: String {
-//            switch self {
-//            case .tooShort:
-//                return "Error with status \(status) and message \(message) was thrown"
-//            }
+        var localizedDescription: String {
+            switch self {
+            case .tooShort(kind: let kind):
+                switch kind {
+                case .name:
+                    return "name.guidance.tooshort".localized
+                default:
+                    return "TODO"
+                }
+            default:
+                return "TODO" ///TODO:
+            }
+        }
+
+        static func ==(lhs: ValidationError, rhs: ValidationError) -> Bool {
+            switch (lhs, rhs) {
+            case let (.tooShort(l), .tooShort(r)):
+                return l == r
+//            case (.tooLong, .tooLong):
+//                return true
+//            case (.invalidEmail, .invalidEmail):
+//                return true
+//            case (.none, .none):
+//                return true
+            default:
+                return lhs == rhs
+            }
+        }
     }
 
-    func textDidChange(text: String?, textFieldType: AccessoryTextField.Kind) -> TextFieldValidator.ValidationError {
+    func textDidChange(text: String?, kind: AccessoryTextField.Kind) -> TextFieldValidator.ValidationError {
         guard let text = text else {
             return .none
         }
 
-        switch textFieldType {
+        switch kind {
         case .email:
             if text.count > 254 {
                 return .tooLong
@@ -51,14 +74,14 @@ class TextFieldValidator {
                 return .tooLong
             }
             else if text.count < 8 {
-                return .tooShort
+                return .tooShort(kind: kind)
             }
         case .name:
             if text.count > 64 {
                 return .tooLong
             }
             else if text.count < 2 {
-                return .tooShort
+                return .tooShort(kind: kind)
             }
         case .unknown:
             break

@@ -27,7 +27,7 @@ protocol TextFieldValidationDelegate: class {
     /// - Parameters:
     ///   - sender: the sender is the textfield needs to validate
     ///   - error: An error object that indicates why the request failed, or nil if the request was successful.
-    func validationUpdated(sender: UITextField, error: TextFieldValidator.ValidationError?)
+    func validationUpdated(sender: UITextField, error: TextFieldValidator.ValidationError)
 }
 
 class AccessoryTextField : UITextField {
@@ -56,11 +56,11 @@ class AccessoryTextField : UITextField {
         iconButton.circular = true
 
         iconButton.setIcon(UIApplication.isLeftToRightLayout ? .chevronRight : .chevronLeft, with: ZetaIconSize.searchBar, for: .normal)
-        iconButton.setIconColor(.textColor, for: .normal)
-        iconButton.setIconColor(.textfieldColor, for: .disabled)
+        iconButton.setIconColor(UIColor.Team.textColor, for: .normal)
+        iconButton.setIconColor(UIColor.Team.textfieldColor, for: .disabled)
 
-        iconButton.setBackgroundImageColor(.activeButtonColor, for: .normal)
-        iconButton.setBackgroundImageColor(.inactiveButtonColor, for: .disabled)
+        iconButton.setBackgroundImageColor(UIColor.Team.activeButtonColor, for: .normal)
+        iconButton.setBackgroundImageColor(UIColor.Team.inactiveButtonColor, for: .disabled)
 
         iconButton.accessibilityIdentifier = "AccessoryTextFieldConfirmButton"
 
@@ -73,9 +73,9 @@ class AccessoryTextField : UITextField {
     let placeholderInsets: UIEdgeInsets
 
 
-    /// init with type for keyboard style and validator type
+    /// Init with kind for keyboard style and validator type. Default is .unknown
     ///
-    /// - Parameter kind: the type for text field
+    /// - Parameter kind: the type of text field
     init(kind: Kind = .unknown) {
         let leftInset: CGFloat = 8
 
@@ -99,7 +99,7 @@ class AccessoryTextField : UITextField {
         self.rightViewMode = .always
 
         self.font = AccessoryTextField.enteredTextFont
-        self.textColor = .textColor
+        self.textColor = UIColor.Team.textColor
 
         autocorrectionType = .no
         contentVerticalAlignment = .center
@@ -110,7 +110,7 @@ class AccessoryTextField : UITextField {
             break
         }
         layer.masksToBounds = true
-        backgroundColor = .textfieldColor
+        backgroundColor = UIColor.Team.textfieldColor
 
         setup()
     }
@@ -168,7 +168,7 @@ class AccessoryTextField : UITextField {
     // MARK:- text validation
 
     func textFieldDidChange(textField: UITextField){
-        let error = textFieldValidator.textDidChange(text: textField.text, textFieldType: self.kind)
+        let error = textFieldValidator.textDidChange(text: textField.text, kind: self.kind)
 
         switch error {
         case .tooLong:
@@ -187,7 +187,7 @@ class AccessoryTextField : UITextField {
     // MARK:- placeholder
 
     func attributedPlaceholderString(placeholder: String) -> NSAttributedString {
-        let attribute : [String : Any] = [NSForegroundColorAttributeName: UIColor.placeholderColor,
+        let attribute : [String : Any] = [NSForegroundColorAttributeName: UIColor.Team.placeholderColor,
                                           NSFontAttributeName: AccessoryTextField.placeholderFont]
         return placeholder && attribute
     }

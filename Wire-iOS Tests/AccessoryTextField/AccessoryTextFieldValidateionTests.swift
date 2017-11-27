@@ -32,7 +32,7 @@ final class AccessoryTextFieldValidateionTests: XCTestCase {
 
         var lastError: TextFieldValidator.ValidationError?
 
-        func validationUpdated(sender: UITextField, error: TextFieldValidator.ValidationError?) {
+        func validationUpdated(sender: UITextField, error: TextFieldValidator.ValidationError) {
 
             if error == .none {
                 successCounter += 1
@@ -58,7 +58,10 @@ final class AccessoryTextFieldValidateionTests: XCTestCase {
         super.tearDown()
     }
 
-    fileprivate func checkSucceed(textFieldType: AccessoryTextField.Kind, text: String, file: StaticString = #file, line: UInt = #line) {
+    fileprivate func checkSucceed(textFieldType: AccessoryTextField.Kind,
+                                  text: String,
+                                  file: StaticString = #file,
+                                  line: UInt = #line) {
 
         // WHEN
         sut.kind = textFieldType
@@ -72,7 +75,10 @@ final class AccessoryTextFieldValidateionTests: XCTestCase {
         XCTAssertNil(mockViewController.lastError, file: file, line: line)
     }
 
-    fileprivate func checkError(textFieldType: AccessoryTextField.Kind, text: String?, expectedError: TextFieldValidator.ValidationError, file: StaticString = #file, line: UInt = #line) {
+    fileprivate func checkError(textFieldType: AccessoryTextField.Kind,
+                                text: String?, expectedError: TextFieldValidator.ValidationError,
+                                file: StaticString = #file,
+                                line: UInt = #line) {
 
         // WHEN
         sut.kind = textFieldType
@@ -132,7 +138,7 @@ final class AccessoryTextFieldValidateionTests: XCTestCase {
         let text = "a"
 
         // WHEN & THEN
-        checkError(textFieldType: type, text: text, expectedError: .tooShort)
+        checkError(textFieldType: type, text: text, expectedError: .tooShort(kind: type))
     }
 
     func testThat65CharacterNameIsInvalid() {
@@ -149,7 +155,7 @@ final class AccessoryTextFieldValidateionTests: XCTestCase {
         let type: AccessoryTextField.Kind = .name
 
         // WHEN & THEN
-        checkError(textFieldType: type, text: nil, expectedError: .tooShort)
+        checkError(textFieldType: type, text: nil, expectedError: .tooShort(kind: type))
     }
 
     func testThatInvalidEmailDoesNotPassValidation() {
@@ -177,7 +183,7 @@ final class AccessoryTextFieldValidateionTests: XCTestCase {
         let text = String(repeating: "a", count: 7)
 
         // WHEN & THEN
-        checkError(textFieldType: type, text: text, expectedError: .tooShort)
+        checkError(textFieldType: type, text: text, expectedError: .tooShort(kind: type))
     }
 
     func testThat129CharacterPasswordIsInvalid() {

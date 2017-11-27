@@ -69,7 +69,7 @@ extension TextFieldDescription: UITextFieldDelegate {
 }
 
 extension TextFieldDescription: TextFieldValidationDelegate {
-    func validationUpdated(sender: UITextField, error: TextFieldValidator.ValidationError?) {
+    func validationUpdated(sender: UITextField, error: TextFieldValidator.ValidationError) {
         ///
     }
 }
