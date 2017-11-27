@@ -17,6 +17,7 @@
 //
 
 import Foundation
+import WireSyncEngine
 
 typealias ValueSubmitted = (String) -> ()
 
@@ -34,6 +35,7 @@ final class TeamCreationFlowController: NSObject {
     let registrationStatus: RegistrationStatus
     var nextState: TeamCreationState?
     var currentController: TeamCreationStepController!
+    weak var registrationDelegate: RegistrationViewControllerDelegate?
 
     init(navigationController: UINavigationController, registrationStatus: RegistrationStatus) {
         self.navigationController = navigationController
@@ -91,6 +93,9 @@ extension TeamCreationFlowController {
             registrationStatus.checkActivationCode(email: email, code: activationCode)
         case .setPassword:
             pushNext()
+        case let .createTeam(teamName: teamName, email: email, activationCode: activationCode, fullName: fullName, password: password):
+            let teamToRegister = TeamToRegister(teamName: teamName, email: email, emailCode:activationCode, fullName: fullName, password: password, accentColor: ZMUser.pickRandomAccentColor())
+            registrationStatus.create(team: teamToRegister)
         }
     }
 
@@ -109,6 +114,8 @@ extension TeamCreationFlowController {
             stepDescription = SetFullNameStepDescription()
         case .setPassword:
             stepDescription = SetPasswordStepDescription()
+        case .createTeam:
+            fatal("No controller should be pushed, we have already registered a team!")
         }
 
         if let description = stepDescription {
@@ -150,7 +157,7 @@ extension TeamCreationFlowController: VerifyEmailStepDescriptionDelegate {
 
 extension TeamCreationFlowController: RegistrationStatusDelegate {
     public func teamRegistered() {
-        pushNext()
+        registrationDelegate?.registrationViewControllerDidCompleteRegistration()
     }
 
     public func teamRegistrationFailed(with error: Error) {

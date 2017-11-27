@@ -24,6 +24,7 @@ enum TeamCreationState {
     case verifyEmail(teamName: String, email: String)
     case setFullName(teamName: String, email: String, activationCode: String)
     case setPassword(teamName: String, email: String, activationCode: String, fullName: String)
+    case createTeam(teamName: String, email: String, activationCode: String, fullName: String, password: String)
 }
 
 // MARK: - State transitions
@@ -37,9 +38,11 @@ extension TeamCreationState {
         case let .verifyEmail(teamName: teamName, email: _):
             return .setEmail(teamName: teamName)
         case let .setFullName(teamName: teamName, email: _, activationCode: _):
-            return .setEmail(teamName: teamName)
+            return .setEmail(teamName: teamName) // We skip the verify email step when coming back
         case let .setPassword(teamName: teamName, email: email, activationCode: activationCode, fullName: _):
             return .setFullName(teamName: teamName, email: email, activationCode: activationCode)
+        case let .createTeam(teamName: teamName, email: email, activationCode: activationCode, fullName: fullname, password: _):
+            return .setPassword(teamName: teamName, email: email, activationCode: activationCode, fullName: fullname)
         }
     }
 
@@ -53,7 +56,9 @@ extension TeamCreationState {
             return .setFullName(teamName: teamName, email: email, activationCode: value)
         case let .setFullName(teamName: teamName, email: email, activationCode: activationCode):
             return .setPassword(teamName: teamName, email: email, activationCode: activationCode, fullName: value)
-        case .setPassword:
+        case let .setPassword(teamName: teamName, email: email, activationCode: activationCode, fullName: fullName):
+            return .createTeam(teamName: teamName, email: email, activationCode: activationCode, fullName: fullName, password: value)
+        case .createTeam:
             return nil
         }
     }

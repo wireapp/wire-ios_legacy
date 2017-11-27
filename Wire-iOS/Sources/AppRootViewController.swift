@@ -202,7 +202,7 @@ class AppRootViewController : UIViewController {
                 guard let registrationStatus = SessionManager.shared?.unauthenticatedSession?.registrationStatus else { fatal("Could not get registration status") }
 
                 flowController = TeamCreationFlowController(navigationController: navigationController, registrationStatus: registrationStatus)
-
+                flowController.registrationDelegate = appStateController
                 viewController = navigationController
             } else {
                 let registrationViewController = RegistrationViewController()
