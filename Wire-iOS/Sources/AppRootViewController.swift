@@ -42,6 +42,8 @@ class AppRootViewController : UIViewController {
     fileprivate let transitionQueue : DispatchQueue = DispatchQueue(label: "transitionQueue")
     fileprivate var isClassyInitialized = false
     fileprivate let mediaManagerLoader = MediaManagerLoader()
+
+    var flowController: TeamCreationFlowController!
     
     fileprivate weak var requestToOpenViewDelegate: ZMRequestsToOpenViewsDelegate? {
         didSet {
@@ -196,6 +198,11 @@ class AppRootViewController : UIViewController {
                 navigationController.backButtonEnabled = false
                 navigationController.logoEnabled = false
                 navigationController.isNavigationBarHidden = true
+
+                guard let registrationStatus = SessionManager.shared?.unauthenticatedSession?.registrationStatus else { fatal("Could not get registration status") }
+
+                flowController = TeamCreationFlowController(navigationController: navigationController, registrationStatus: registrationStatus)
+
                 viewController = navigationController
             } else {
                 let registrationViewController = RegistrationViewController()
@@ -469,12 +476,7 @@ extension AppRootViewController  {
 
 extension AppRootViewController : LandingViewControllerDelegate {
     func landingViewControllerDidChooseCreateTeam() {
-        if let navigationController = self.visibleViewController as? NavigationController {
-            let teamNameStepViewController = TeamNameStepViewController()
-            ///FIXME: do something after team created
-//            teamNameStepViewController.delegate = appStateController
-            navigationController.pushViewController(teamNameStepViewController, animated: true)
-        }
+        flowController.startFlow()
     }
 
     func landingViewControllerDidChooseLogin() {

@@ -26,6 +26,13 @@ protocol AccessoryTextFieldDelegate: class {
 }
 
 class AccessoryTextField : UITextField {
+    enum Kind {
+        case email
+        case name
+        case password
+        case unknown
+    }
+
     let textFieldValidator: TextFieldValidator
     public var textFieldValidationDelegate: AccessoryTextFieldDelegate?
 
@@ -33,7 +40,7 @@ class AccessoryTextField : UITextField {
     static let placeholderFont = FontSpec(.small, .semibold).font!
     static private let ConfirmButtonWidth: CGFloat = 32
 
-    var textFieldType: TextFieldType = .unknown {
+    var kind: Kind {
         didSet{
             setupTextFieldProperties()
         }
@@ -61,18 +68,10 @@ class AccessoryTextField : UITextField {
     let placeholderInsets: UIEdgeInsets
 
 
-    /// init with textFieldType for keyboard style and validator type
+    /// init with type for keyboard style and validator type
     ///
-    /// - Parameter textFieldType: the type for text field. If not set, default value .unknown is applied.
-    convenience init(textFieldType: TextFieldType?) {
-        self.init()
-
-        if let textFieldType = textFieldType {
-            self.textFieldType = textFieldType
-        }
-    }
-
-    init() {
+    /// - Parameter kind: the type for text field
+    init(kind: Kind = .unknown) {
         let leftInset: CGFloat = 24
 
         var topInset: CGFloat = 0
@@ -86,6 +85,8 @@ class AccessoryTextField : UITextField {
 
         placeholderInsets = UIEdgeInsets(top: topInset, left: leftInset, bottom: 0, right: 16)
         textFieldValidator = TextFieldValidator()
+
+        self.kind = kind
 
         super.init(frame: .zero)
 
@@ -121,15 +122,15 @@ class AccessoryTextField : UITextField {
     }
 
     private func setupTextFieldProperties() {
-        switch textFieldType {
+        switch kind {
         case .email:
-            break
+            keyboardType = .emailAddress
         case .password:
             isSecureTextEntry = true
         case .name:
-            break
+            keyboardType = .asciiCapable
         case .unknown:
-            break
+            keyboardType = .asciiCapable
         }
     }
 
@@ -137,6 +138,7 @@ class AccessoryTextField : UITextField {
         createConstraints()
 
         self.addTarget(self, action: #selector(textFieldDidChange(textField:)), for: .editingChanged)
+        setupTextFieldProperties()
     }
 
     private func createConstraints() {
@@ -156,7 +158,7 @@ class AccessoryTextField : UITextField {
     // MARK:- text validation
 
     func textFieldDidChange(textField: UITextField){
-        textFieldValidator.textDidChange(text: textField.text, textFieldType: self.textFieldType)
+        textFieldValidator.textDidChange(text: textField.text, textFieldType: self.kind)
     }
 
     // MARK:- placeholder

@@ -18,13 +18,6 @@
 
 import Foundation
 
-enum TextFieldType {
-    case email
-    case name
-    case password
-    case unknown
-}
-
 enum TextFieldValidationError: Error {
     case tooShort, tooLong, invalidEmail
 }
@@ -37,7 +30,7 @@ protocol TextFieldValidatorDelegate: class {
 class TextFieldValidator {
     weak var delegate: TextFieldValidatorDelegate?
 
-    func textDidChange(text: String?, textFieldType: TextFieldType){
+    func textDidChange(text: String?, textFieldType: AccessoryTextField.Kind){
         guard let text = text else {
             return
         }
