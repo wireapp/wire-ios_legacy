@@ -96,6 +96,18 @@ final class CharacterInputFieldTests: XCTestCase {
         XCTAssertEqual(delegate.didFillInput, 0)
     }
     
+    func testThatItDoesNotDeleteWhenNoSymbols() {
+        // given
+        sut.text = ""
+        // when
+        sut.deleteBackward()
+        // then
+        XCTAssertEqual(delegate.didChangeText, [])
+        XCTAssertEqual(sut.text, "")
+        XCTAssertFalse(sut.isFilled)
+        XCTAssertEqual(delegate.didFillInput, 0)
+    }
+    
     func testThatItAllowsToPasteAndCallsDelegate() {
         // given
         sut.text = "1234"

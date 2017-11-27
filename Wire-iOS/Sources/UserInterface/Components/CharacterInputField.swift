@@ -280,6 +280,9 @@ extension CharacterInputField: UIKeyInput {
     }
     
     public func deleteBackward() {
+        guard !self.storage.isEmpty else {
+            return
+        }
         notifyingDelegate {
             self.storage.removeLast()
         }
