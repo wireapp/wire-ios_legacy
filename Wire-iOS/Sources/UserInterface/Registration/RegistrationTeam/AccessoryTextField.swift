@@ -72,7 +72,7 @@ class AccessoryTextField : UITextField {
     ///
     /// - Parameter kind: the type for text field
     init(kind: Kind = .unknown) {
-        let leftInset: CGFloat = 24
+        let leftInset: CGFloat = 8
 
         var topInset: CGFloat = 0
         if #available(iOS 11, *) {
