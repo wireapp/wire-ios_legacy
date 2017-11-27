@@ -45,7 +45,7 @@ final class LandingViewController: UIViewController {
 
         let semiboldFont = FontSpec(.large, .semibold).font!
 
-        return [NSForegroundColorAttributeName: UIColor.textColor, NSParagraphStyleAttributeName: alignCenterStyle, NSFontAttributeName:semiboldFont]
+        return [NSForegroundColorAttributeName: UIColor.Team.textColor, NSParagraphStyleAttributeName: alignCenterStyle, NSFontAttributeName:semiboldFont]
     }()
 
     static let buttonSubtitleAttribute: [String : Any] = {
@@ -54,7 +54,7 @@ final class LandingViewController: UIViewController {
 
         let lightFont = FontSpec(.large, .light).font!
 
-        return [NSForegroundColorAttributeName: UIColor.textColor, NSParagraphStyleAttributeName: alignCenterStyle, NSFontAttributeName:lightFont]
+        return [NSForegroundColorAttributeName: UIColor.Team.textColor, NSParagraphStyleAttributeName: alignCenterStyle, NSFontAttributeName:lightFont]
     }()
 
     //MARK:- subviews
@@ -63,7 +63,7 @@ final class LandingViewController: UIViewController {
         let image = UIImage(named: "wire-logo-black")!
         let imageView = UIImageView(image: image)
         imageView.contentMode = .center
-        imageView.tintColor = UIColor.textColor
+        imageView.tintColor = UIColor.Team.textColor
         return imageView
     }()
 
@@ -71,7 +71,7 @@ final class LandingViewController: UIViewController {
         let label = UILabel()
         label.text = "landing.title".localized
         label.font = LandingViewController.regularFont
-        label.textColor = .subtitleColor
+        label.textColor = UIColor.Team.subtitleColor
 
         return label
     }()
@@ -81,7 +81,7 @@ final class LandingViewController: UIViewController {
         let subtitle = ("\n" + "landing.create_account.subtitle".localized) && LandingViewController.buttonSubtitleAttribute
         let twoLineTitle = title + subtitle
 
-        let button = LandingButton(title: twoLineTitle, icon: .selfProfile, iconBackgroundColor: .createAccountBlue)
+        let button = LandingButton(title: twoLineTitle, icon: .selfProfile, iconBackgroundColor: UIColor.Team.createAccountBlue)
 
         button.addTarget(self, action: #selector(LandingViewController.createAccountButtonTapped(_:)), for: .touchUpInside)
 
@@ -95,7 +95,7 @@ final class LandingViewController: UIViewController {
         let title = "landing.create_team.title".localized && LandingViewController.buttonTitleAttribute
         let subtitle = ("\n" + "landing.create_team.subtitle".localized) && LandingViewController.buttonSubtitleAttribute
 
-        let button = LandingButton(title: title + subtitle, icon: .team, iconBackgroundColor: .createTeamGreen)
+        let button = LandingButton(title: title + subtitle, icon: .team, iconBackgroundColor: UIColor.Team.createTeamGreen)
 
         button.addTarget(self, action: #selector(LandingViewController.createTeamButtonTapped(_:)), for: .touchUpInside)
 
@@ -109,7 +109,7 @@ final class LandingViewController: UIViewController {
         let label = UILabel()
         label.text = "landing.login.hints".localized
         label.font = LandingViewController.regularFont
-        label.textColor = .subtitleColor
+        label.textColor = UIColor.Team.subtitleColor
 
         return label
     }()
@@ -117,7 +117,7 @@ final class LandingViewController: UIViewController {
     let loginButton: UIButton = {
         let button = UIButton()
         button.setTitle("landing.login.button.title".localized, for: .normal)
-        button.setTitleColor(.textColor, for: .normal)
+        button.setTitleColor(UIColor.Team.textColor, for: .normal)
         button.titleLabel?.font = LandingViewController.semiboldFont
 
         button.addTarget(self, action: #selector(LandingViewController.loginButtonTapped(_:)), for: .touchUpInside)
@@ -129,8 +129,8 @@ final class LandingViewController: UIViewController {
         super.viewDidLoad()
 
         tracker?.tagOpenedLandingScreen()
-        
-        self.view.backgroundColor = .background
+
+        self.view.backgroundColor = UIColor.Team.background
 
         [headerContainerView, containerView, loginHintsLabel, loginButton].forEach(view.addSubview)
 

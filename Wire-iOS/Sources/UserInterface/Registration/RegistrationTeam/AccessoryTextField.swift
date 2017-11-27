@@ -44,11 +44,11 @@ class AccessoryTextField : UITextField {
         iconButton.circular = true
 
         iconButton.setIcon(UIApplication.isLeftToRightLayout ? .chevronRight : .chevronLeft, with: ZetaIconSize.searchBar, for: .normal)
-        iconButton.setIconColor(.textColor, for: .normal)
-        iconButton.setIconColor(.textfieldColor, for: .disabled)
+        iconButton.setIconColor(UIColor.Team.textColor, for: .normal)
+        iconButton.setIconColor(UIColor.Team.textfieldColor, for: .disabled)
 
-        iconButton.setBackgroundImageColor(.activeButtonColor, for: .normal)
-        iconButton.setBackgroundImageColor(.inactiveButtonColor, for: .disabled)
+        iconButton.setBackgroundImageColor(UIColor.Team.activeButtonColor, for: .normal)
+        iconButton.setBackgroundImageColor(UIColor.Team.inactiveButtonColor, for: .disabled)
 
         iconButton.accessibilityIdentifier = "AccessoryTextFieldConfirmButton"
 
@@ -86,7 +86,7 @@ class AccessoryTextField : UITextField {
         self.rightViewMode = .always
 
         self.font = AccessoryTextField.enteredTextFont
-        self.textColor = .textColor
+        self.textColor = UIColor.Team.textColor
 
         autocorrectionType = .no
         contentVerticalAlignment = .center
@@ -97,7 +97,7 @@ class AccessoryTextField : UITextField {
             break
         }
         layer.masksToBounds = true
-        backgroundColor = .textfieldColor
+        backgroundColor = UIColor.Team.textfieldColor
 
         setup()
     }
@@ -154,7 +154,7 @@ class AccessoryTextField : UITextField {
     // MARK:- placeholder
 
     func attributedPlaceholderString(placeholder: String) -> NSAttributedString {
-        let attribute : [String : Any] = [NSForegroundColorAttributeName: UIColor.placeholderColor,
+        let attribute : [String : Any] = [NSForegroundColorAttributeName: UIColor.Team.placeholderColor,
                                           NSFontAttributeName: AccessoryTextField.placeholderFont]
         return placeholder && attribute
     }
