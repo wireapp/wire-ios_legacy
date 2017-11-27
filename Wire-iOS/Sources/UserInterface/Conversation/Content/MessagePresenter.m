@@ -30,7 +30,7 @@
 
 @interface AVPlayerViewControllerWithoutStatusBar : AVPlayerViewController
 
-@property (nonatomic) MediaPlayerController *playerController;
+@property (nonatomic) MediaPlayerController *wr_playerController;
 
 @end
 
@@ -109,7 +109,7 @@
         
         AVPlayerViewControllerWithoutStatusBar *playerViewController = [[AVPlayerViewControllerWithoutStatusBar alloc] init];
         playerViewController.player = player;
-        playerViewController.playerController = playerController;
+        playerViewController.wr_playerController = playerController;
         [self.targetViewController presentViewController:playerViewController animated:YES completion:^() {
             [[UIApplication sharedApplication] wr_updateStatusBarForCurrentControllerAnimated:YES];
             [player play];
