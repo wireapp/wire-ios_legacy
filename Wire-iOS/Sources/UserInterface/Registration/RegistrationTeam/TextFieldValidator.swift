@@ -18,60 +18,48 @@
 
 import Foundation
 
-enum TextFieldValidationError: Error {
-    case tooShort, tooLong, invalidEmail
-}
-
-protocol TextFieldValidatorDelegate: class {
-    func validationErrorDidOccur(error: TextFieldValidationError?)
-    func validationSucceed()
-}
-
 class TextFieldValidator {
-    weak var delegate: TextFieldValidatorDelegate?
 
-    func textDidChange(text: String?, textFieldType: AccessoryTextField.Kind){
+    enum Error {
+        case tooShort
+        case tooLong
+        case invalidEmail
+        case none
+    }
+
+    func textDidChange(text: String?, textFieldType: AccessoryTextField.Kind) -> TextFieldValidator.Error {
         guard let text = text else {
-            return
+            return .none
         }
-
-        var isError = false
 
         switch textFieldType {
         case .email:
             if text.count > 254 {
-                delegate?.validationErrorDidOccur(error:.tooLong)
-                isError = true
+                return .tooLong
             }
             else if !text.isEmail {
-                delegate?.validationErrorDidOccur(error:.invalidEmail)
-                isError = true
+                return .invalidEmail
             }
         case .password:
             if text.count > 120 {
-                delegate?.validationErrorDidOccur(error:.tooLong)
-                isError = true
+                return .tooLong
             }
             else if text.count < 8 {
-                delegate?.validationErrorDidOccur(error:.tooShort)
-                isError = true
+                return .tooShort
             }
         case .name:
             if text.count > 64 {
-                delegate?.validationErrorDidOccur(error:.tooLong)
-                isError = true
+                return .tooLong
             }
             else if text.count < 2 {
-                delegate?.validationErrorDidOccur(error:.tooShort)
-                isError = true
+                return .tooShort
             }
         case .unknown:
             break
         }
 
-        if !isError {
-            delegate?.validationSucceed()
-        }
+        return .none
+
     }
 }
 

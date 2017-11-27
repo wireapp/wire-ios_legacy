@@ -21,8 +21,7 @@ import Foundation
 import Cartography
 
 protocol AccessoryTextFieldDelegate: class {
-    func validationErrorDidOccur(sender: UITextField, error: TextFieldValidationError?)
-    func validationSucceed(sender: UITextField)
+    func validationUpdated(sender: UITextField, error: TextFieldValidator.Error)
 }
 
 class AccessoryTextField : UITextField {
@@ -107,8 +106,6 @@ class AccessoryTextField : UITextField {
         layer.masksToBounds = true
         backgroundColor = .textfieldColor
 
-        textFieldValidator.delegate = self
-
         setup()
     }
 
@@ -165,7 +162,20 @@ class AccessoryTextField : UITextField {
     // MARK:- text validation
 
     func textFieldDidChange(textField: UITextField){
-        textFieldValidator.textDidChange(text: textField.text, textFieldType: self.kind)
+        let error = textFieldValidator.textDidChange(text: textField.text, textFieldType: self.kind)
+
+        switch error {
+        case .tooLong:
+            self.confirmButton.isEnabled = false
+        case .tooShort:
+            self.confirmButton.isEnabled = false
+        case .invalidEmail:
+            self.confirmButton.isEnabled = false
+        case .none:
+            self.confirmButton.isEnabled = true
+        }
+
+        textFieldValidationDelegate?.validationUpdated(sender: self, error: error)
     }
 
     // MARK:- placeholder
@@ -226,17 +236,5 @@ class AccessoryTextField : UITextField {
         else {
             return rightAccessoryViewRect(forBounds: bounds, leftToRight: leftToRight)
         }
-    }
-}
-
-extension AccessoryTextField: TextFieldValidatorDelegate {
-    func validationErrorDidOccur(error: TextFieldValidationError?) {
-        self.confirmButton.isEnabled = false
-        textFieldValidationDelegate?.validationErrorDidOccur(sender: self, error: error)
-    }
-
-    func validationSucceed() {
-        self.confirmButton.isEnabled = true
-        textFieldValidationDelegate?.validationSucceed(sender: self)
     }
 }

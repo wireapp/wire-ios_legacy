@@ -30,20 +30,22 @@ final class AccessoryTextFieldValidateionTests: XCTestCase {
         var errorCounter = 0
         var successCounter = 0
 
-        var lastError: TextFieldValidationError?
+        var lastError: TextFieldValidator.Error?
 
-        func validationErrorDidOccur(sender: UITextField, error: TextFieldValidationError?) {
-            errorCounter += 1
-            lastError = error
-        }
+        func validationUpdated(sender: UITextField, error: TextFieldValidator.Error) {
 
-        func validationSucceed(sender: UITextField) {
-            successCounter += 1
+            if error == .none {
+                successCounter += 1
+            } else {
+                errorCounter += 1
+                lastError = error
+            }
         }
     }
 
     override func setUp() {
         super.setUp()
+
         sut = AccessoryTextField()
         mockViewController = MockViewController()
         sut.textFieldValidationDelegate = mockViewController
@@ -52,10 +54,11 @@ final class AccessoryTextFieldValidateionTests: XCTestCase {
     override func tearDown() {
         mockViewController = nil
         sut = nil
+
         super.tearDown()
     }
 
-    fileprivate func checkSucceed(textFieldType: AccessoryTextField.Kind, text: String) {
+    fileprivate func checkSucceed(textFieldType: AccessoryTextField.Kind, text: String, file: StaticString = #file, line: UInt = #line) {
 
         // WHEN
         sut.kind = textFieldType
@@ -63,13 +66,13 @@ final class AccessoryTextFieldValidateionTests: XCTestCase {
         sut.sendActions(for: .editingChanged)
 
         // THEN
-        XCTAssert(mockViewController.errorCounter == 0)
-        XCTAssert(mockViewController.successCounter == 1)
-        XCTAssert(sut.confirmButton.isEnabled)
-        XCTAssertNil(mockViewController.lastError)
+        XCTAssertEqual(mockViewController.errorCounter, 0, file: file, line: line)
+        XCTAssertEqual(mockViewController.successCounter, 1, file: file, line: line)
+        XCTAssert(sut.confirmButton.isEnabled, file: file, line: line)
+        XCTAssertNil(mockViewController.lastError, file: file, line: line)
     }
 
-    fileprivate func checkError(textFieldType: AccessoryTextField.Kind, text: String?, expectedError: TextFieldValidationError) {
+    fileprivate func checkError(textFieldType: AccessoryTextField.Kind, text: String?, expectedError: TextFieldValidator.Error, file: StaticString = #file, line: UInt = #line) {
 
         // WHEN
         sut.kind = textFieldType
@@ -77,10 +80,10 @@ final class AccessoryTextFieldValidateionTests: XCTestCase {
         sut.sendActions(for: .editingChanged)
 
         // THEN
-        XCTAssert(mockViewController.errorCounter == 1)
-        XCTAssert(mockViewController.successCounter == 0)
-        XCTAssertFalse(sut.confirmButton.isEnabled)
-        XCTAssertEqual(expectedError, mockViewController.lastError)
+        XCTAssertEqual(mockViewController.errorCounter, 1, file: file, line: line)
+        XCTAssertEqual(mockViewController.successCounter, 0, file: file, line: line)
+        XCTAssertFalse(sut.confirmButton.isEnabled, file: file, line: line)
+        XCTAssertEqual(expectedError, mockViewController.lastError, file: file, line: line)
     }
 
     // MARK: - happy cases
