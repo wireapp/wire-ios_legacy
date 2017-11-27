@@ -16,7 +16,6 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-
 import Foundation
 import Cartography
 
@@ -30,7 +29,7 @@ protocol TextFieldValidationDelegate: class {
     func validationUpdated(sender: UITextField, error: TextFieldValidator.ValidationError)
 }
 
-class AccessoryTextField : UITextField {
+class AccessoryTextField: UITextField {
     enum Kind {
         case email
         case name
@@ -46,7 +45,7 @@ class AccessoryTextField : UITextField {
     static private let ConfirmButtonWidth: CGFloat = 32
 
     var kind: Kind {
-        didSet{
+        didSet {
             setupTextFieldProperties()
         }
     }
@@ -72,7 +71,6 @@ class AccessoryTextField : UITextField {
     let textInsets: UIEdgeInsets = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 8)
     let placeholderInsets: UIEdgeInsets
 
-
     /// Init with kind for keyboard style and validator type. Default is .unknown
     ///
     /// - Parameter kind: the type of text field
@@ -82,8 +80,7 @@ class AccessoryTextField : UITextField {
         var topInset: CGFloat = 0
         if #available(iOS 11, *) {
             topInset = 0
-        }
-        else {
+        } else {
             /// Placeholder frame calculation is changed in iOS 11, therefore the TOP inset is not necessary
             topInset = 8
         }
@@ -162,12 +159,12 @@ class AccessoryTextField : UITextField {
     override func textRect(forBounds bounds: CGRect) -> CGRect {
         let textRect = super.textRect(forBounds: bounds)
 
-        return UIEdgeInsetsInsetRect(textRect, self.textInsets);
+        return UIEdgeInsetsInsetRect(textRect, self.textInsets)
     }
 
-    // MARK:- text validation
+    // MARK: - text validation
 
-    func textFieldDidChange(textField: UITextField){
+    func textFieldDidChange(textField: UITextField) {
         let error = textFieldValidator.textDidChange(text: textField.text, kind: self.kind)
 
         switch error {
@@ -184,15 +181,15 @@ class AccessoryTextField : UITextField {
         textFieldValidationDelegate?.validationUpdated(sender: self, error: error)
     }
 
-    // MARK:- placeholder
+    // MARK: - placeholder
 
     func attributedPlaceholderString(placeholder: String) -> NSAttributedString {
-        let attribute : [String : Any] = [NSForegroundColorAttributeName: UIColor.Team.placeholderColor,
+        let attribute: [String: Any] = [NSForegroundColorAttributeName: UIColor.Team.placeholderColor,
                                           NSFontAttributeName: AccessoryTextField.placeholderFont]
         return placeholder && attribute
     }
 
-    override open var placeholder: String?  {
+    override open var placeholder: String? {
         set {
             if let newValue = newValue {
                 attributedPlaceholder = attributedPlaceholderString(placeholder: newValue.uppercased())
@@ -207,7 +204,7 @@ class AccessoryTextField : UITextField {
         super.drawPlaceholder(in: UIEdgeInsetsInsetRect(rect, placeholderInsets))
     }
 
-    // MARK:- right and left accessory
+    // MARK: - right and left accessory
 
     func rightAccessoryViewRect(forBounds bounds: CGRect, leftToRight: Bool) -> CGRect {
         var rightViewRect: CGRect
@@ -216,8 +213,7 @@ class AccessoryTextField : UITextField {
 
         if leftToRight {
             rightViewRect = CGRect(x: CGFloat(bounds.maxX - AccessoryTextField.ConfirmButtonWidth - xOffset), y: newY, width: AccessoryTextField.ConfirmButtonWidth, height: AccessoryTextField.ConfirmButtonWidth)
-        }
-        else {
+        } else {
             rightViewRect = CGRect(x: bounds.origin.x + xOffset, y: newY, width: AccessoryTextField.ConfirmButtonWidth, height: AccessoryTextField.ConfirmButtonWidth)
         }
 
@@ -228,8 +224,7 @@ class AccessoryTextField : UITextField {
         let leftToRight: Bool = UIApplication.isLeftToRightLayout
         if leftToRight {
             return rightAccessoryViewRect(forBounds: bounds, leftToRight: leftToRight)
-        }
-        else {
+        } else {
             return .zero
         }
     }
@@ -238,8 +233,7 @@ class AccessoryTextField : UITextField {
         let leftToRight: Bool = UIApplication.isLeftToRightLayout
         if leftToRight {
             return .zero
-        }
-        else {
+        } else {
             return rightAccessoryViewRect(forBounds: bounds, leftToRight: leftToRight)
         }
     }

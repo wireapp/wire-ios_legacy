@@ -84,7 +84,6 @@ extension TeamCreationState {
     }
 }
 
-
 // MARK: - State transitions
 extension TeamCreationState {
     var previousState: TeamCreationState? {

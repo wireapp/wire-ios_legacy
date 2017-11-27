@@ -37,7 +37,7 @@ extension ButtonDescription: ViewDescriptor {
         button.setTitleColor(color, for: .normal)
         button.setTitleColor(color.withAlphaComponent(0.6), for: .highlighted)
 
-        button.contentEdgeInsets = UIEdgeInsetsMake(4, 12, 4, 12)
+        button.contentEdgeInsets = UIEdgeInsets(top: 4, left: 12, bottom: 4, right: 12)
         button.setContentCompressionResistancePriority(UILayoutPriorityRequired, for: .horizontal)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitle(title, for: .normal)

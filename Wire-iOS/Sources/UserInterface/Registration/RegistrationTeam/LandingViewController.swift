@@ -26,19 +26,18 @@ import Cartography
     func landingViewControllerDidChooseLogin()
 }
 
-
 /// Landing screen for choosing create team or personal account
 final class LandingViewController: UIViewController {
     weak var delegate: LandingViewControllerDelegate?
 
     private let tracker = AnalyticsTracker(context: AnalyticsContextRegistrationEmail)
-    
-    //MARK:- UI styles
+
+    // MARK: - UI styles
 
     static let semiboldFont = FontSpec(.large, .semibold).font!
     static let regularFont = FontSpec(.normal, .regular).font!
 
-    static let buttonTitleAttribute: [String : Any] = {
+    static let buttonTitleAttribute: [String: Any] = {
         let alignCenterStyle = NSMutableParagraphStyle()
         alignCenterStyle.alignment = NSTextAlignment.center
 
@@ -47,7 +46,7 @@ final class LandingViewController: UIViewController {
         return [NSForegroundColorAttributeName: UIColor.Team.textColor, NSParagraphStyleAttributeName: alignCenterStyle, NSFontAttributeName:semiboldFont]
     }()
 
-    static let buttonSubtitleAttribute: [String : Any] = {
+    static let buttonSubtitleAttribute: [String: Any] = {
         let alignCenterStyle = NSMutableParagraphStyle()
         alignCenterStyle.alignment = NSTextAlignment.center
 
@@ -56,7 +55,7 @@ final class LandingViewController: UIViewController {
         return [NSForegroundColorAttributeName: UIColor.Team.textColor, NSParagraphStyleAttributeName: alignCenterStyle, NSFontAttributeName:lightFont]
     }()
 
-    //MARK:- subviews
+    // MARK: - subviews
 
     let logoView: UIImageView = {
         let image = UIImage(named: "wire-logo-black")!
@@ -159,7 +158,6 @@ final class LandingViewController: UIViewController {
 
         constrain(self.view, headerContainerView, containerView) { selfView, headerContainerView, containerView in
 
-
             headerContainerView.width == selfView.width
             headerContainerView.centerX == selfView.centerX
             headerContainerView.top == selfView.top
@@ -198,7 +196,7 @@ final class LandingViewController: UIViewController {
         }
     }
 
-    // MARK:- Button tapped target
+    // MARK: - Button tapped target
 
     @objc public func createAccountButtonTapped(_ sender: AnyObject!) {
         tracker?.tagOpenedUserRegistration()

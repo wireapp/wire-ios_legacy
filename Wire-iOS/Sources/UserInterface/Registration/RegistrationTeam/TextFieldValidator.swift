@@ -80,22 +80,19 @@ class TextFieldValidator {
         case .email:
             if text.count > 254 {
                 return .tooLong(kind: kind)
-            }
-            else if !text.isEmail {
+            } else if !text.isEmail {
                 return .invalidEmail
             }
         case .password:
             if text.count > 120 {
                 return .tooLong(kind: kind)
-            }
-            else if text.count < 8 {
+            } else if text.count < 8 {
                 return .tooShort(kind: kind)
             }
         case .name:
             if text.count > 64 {
                 return .tooLong(kind: kind)
-            }
-            else if text.count < 2 {
+            } else if text.count < 2 {
                 return .tooShort(kind: kind)
             }
         case .unknown:
@@ -107,17 +104,18 @@ class TextFieldValidator {
     }
 }
 
-// MARK:- Email validator
+// MARK: - Email validator
 
 extension String {
     public var isEmail: Bool {
         guard !self.hasPrefix("mailto:") else { return false }
 
-        let dataDetector = try? NSDataDetector(types: NSTextCheckingResult.CheckingType.link.rawValue)
-        let range = NSRange(location: 0, length: self.characters.count)
-        let firstMatch = dataDetector?.firstMatch(in: self, options: NSRegularExpression.MatchingOptions.reportCompletion, range: range)
+        guard let dataDetector = try? NSDataDetector(types: NSTextCheckingResult.CheckingType.link.rawValue) else { return false }
 
-        let numberOfMatches = dataDetector?.numberOfMatches(in: self, options: NSRegularExpression.MatchingOptions.reportCompletion, range: range)
+        let range = NSRange(location: 0, length: self.characters.count)
+        let firstMatch = dataDetector.firstMatch(in: self, options: NSRegularExpression.MatchingOptions.reportCompletion, range: range)
+
+        let numberOfMatches = dataDetector.numberOfMatches(in: self, options: NSRegularExpression.MatchingOptions.reportCompletion, range: range)
 
         if firstMatch?.range.location == NSNotFound { return false }
         if firstMatch?.url?.scheme != "mailto" { return false }
