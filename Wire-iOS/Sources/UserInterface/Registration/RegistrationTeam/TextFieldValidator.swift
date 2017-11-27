@@ -86,6 +86,8 @@ class TextFieldValidator {
 
 extension String {
     public var isEmail: Bool {
+        guard !self.hasPrefix("mailto:") else { return false }
+
         let dataDetector = try? NSDataDetector(types: NSTextCheckingResult.CheckingType.link.rawValue)
         let range = NSRange(location: 0, length: self.characters.count)
         let firstMatch = dataDetector?.firstMatch(in: self, options: NSRegularExpression.MatchingOptions.reportCompletion, range: range)
@@ -95,10 +97,9 @@ extension String {
         if firstMatch?.range.location == NSNotFound { return false }
         if firstMatch?.url?.scheme != "mailto" { return false }
         if firstMatch?.url?.absoluteString.hasSuffix(self) == false { return false }
-        if self.hasPrefix("mailto:") { return false }
         if numberOfMatches != 1 { return false }
 
-        /// patch the NSDataDetector false positive cases
+        /// patch the NSDataDetector for its false-positive cases
         if self.contains("..") { return false }
 
         return true
