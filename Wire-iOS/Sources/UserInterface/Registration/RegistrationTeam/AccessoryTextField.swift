@@ -122,13 +122,21 @@ class AccessoryTextField : UITextField {
     }
 
     private func setupTextFieldProperties() {
+        self.returnKeyType = .next
+
         switch kind {
         case .email:
             keyboardType = .emailAddress
+            autocorrectionType = .no
+            autocapitalizationType = .none
+            accessibilityIdentifier = "EmailField"
         case .password:
             isSecureTextEntry = true
+            accessibilityIdentifier = "PasswordField"
         case .name:
             keyboardType = .asciiCapable
+            autocapitalizationType = .words
+            accessibilityIdentifier = "NameField"
         case .unknown:
             keyboardType = .asciiCapable
         }
@@ -138,7 +146,6 @@ class AccessoryTextField : UITextField {
         createConstraints()
 
         self.addTarget(self, action: #selector(textFieldDidChange(textField:)), for: .editingChanged)
-        setupTextFieldProperties()
     }
 
     private func createConstraints() {
