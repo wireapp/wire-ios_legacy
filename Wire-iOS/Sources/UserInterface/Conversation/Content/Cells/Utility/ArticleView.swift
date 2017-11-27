@@ -67,8 +67,6 @@ class ArticleView: UIView {
             imageView.isAccessibilityElement = true
             imageView.accessibilityIdentifier = "linkPreviewImage"
             self.loadingView = loadingView
-        } else {
-            print("nop")
         }
         
         CASStyler.default().styleItem(self)
