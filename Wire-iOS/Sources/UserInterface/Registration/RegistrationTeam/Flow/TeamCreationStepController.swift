@@ -68,7 +68,7 @@ final class TeamCreationStepController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        view.backgroundColor = UIColor(rgb: 0xF8F8F8)
+        view.backgroundColor = UIColor.Team.background
 
         createViews()
         createConstraints()
@@ -112,7 +112,7 @@ final class TeamCreationStepController: UIViewController {
         headlineLabel = UILabel()
         headlineLabel.textAlignment = .center
         headlineLabel.font = TeamCreationStepController.headlineFont
-        headlineLabel.textColor = UIColor(rgb: 0x33373A)
+        headlineLabel.textColor = UIColor.Team.textColor
         headlineLabel.text = headline
         headlineLabel.translatesAutoresizingMaskIntoConstraints = false
 
@@ -120,7 +120,7 @@ final class TeamCreationStepController: UIViewController {
         subtextLabel.textAlignment = .center
         subtextLabel.text = subtext
         subtextLabel.font = TeamCreationStepController.subtextFont
-        subtextLabel.textColor = UIColor(rgb: 0x272A2C, alpha: 0.56)
+        subtextLabel.textColor = UIColor.Team.subtitleColor
         subtextLabel.numberOfLines = 0
         subtextLabel.lineBreakMode = .byWordWrapping
         subtextLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -137,7 +137,7 @@ final class TeamCreationStepController: UIViewController {
         errorLabel = UILabel()
         errorLabel.textAlignment = .center
         errorLabel.font = TeamCreationStepController.errorFont.allCaps()
-        errorLabel.textColor = UIColor(rgb: 0xFB0807)
+        errorLabel.textColor = UIColor.Team.errorMessageColor
         errorLabel.translatesAutoresizingMaskIntoConstraints = false
         errorViewContainer.addSubview(errorLabel)
 
