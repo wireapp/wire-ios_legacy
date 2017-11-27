@@ -22,14 +22,6 @@ import XCTest
 
 final class EmailAdresssValidatorTests: XCTestCase {
     
-    override func setUp() {
-        super.setUp()
-    }
-    
-    override func tearDown() {
-        super.tearDown()        
-    }
-    
     func testThatValidEmailsPassValidation(){
         // GIVEN
         let validEmailAddresses =

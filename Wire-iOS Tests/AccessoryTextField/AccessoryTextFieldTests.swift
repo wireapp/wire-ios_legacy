@@ -30,8 +30,8 @@ final class AccessoryTextFieldTests: ZMSnapshotTestCase {
     }
 
     override func tearDown() {
-        super.tearDown()
         sut = nil
+        super.tearDown()
     }
 
     func testThatItShowsEmptyTextField() {
