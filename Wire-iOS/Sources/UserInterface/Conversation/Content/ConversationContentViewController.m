@@ -826,6 +826,10 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
     return self.onScreen;
 }
 
+-(void)conversationCellShouldUpdateCellHeight:(ConversationCell *)cell {
+    [self.tableView reloadRowsAtIndexPaths:@[[self.tableView indexPathForCell:cell]] withRowAnimation:UITableViewRowAnimationNone];
+}
+
 @end
 
 

@@ -485,4 +485,9 @@
     [self showMenu];
 }
 
+
+- (void)articleViewAsksToRecalculateHeight {
+    [self.delegate conversationCellShouldUpdateCellHeight:self];
+}
+
 @end
