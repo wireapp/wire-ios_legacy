@@ -22,7 +22,7 @@ class TextFieldValidator {
 
     enum ValidationError: Error, Equatable {
         case tooShort(kind: AccessoryTextField.Kind)
-        case tooLong
+        case tooLong(kind: AccessoryTextField.Kind)
         case invalidEmail
         case none
 
@@ -32,26 +32,41 @@ class TextFieldValidator {
                 switch kind {
                 case .name:
                     return "name.guidance.tooshort".localized
-                default:
-                    return "TODO"
+                case .email:
+                    return "email.guidance.tooshort".localized
+                case .password:
+                    return "password.guidance.tooshort".localized
+                case .unknown:
+                    return "unknown.guidance.tooshort".localized
                 }
-            default:
-                return "TODO" ///TODO:
+            case .tooLong(kind: let kind):
+                switch kind {
+                case .name:
+                    return "name.guidance.toolong".localized
+                case .email:
+                    return "email.guidance.toolong".localized
+                case .password:
+                    return "password.guidance.toolong".localized
+                case .unknown:
+                    return "unknown.guidance.toolong".localized
+                }
+            case .invalidEmail:
+                return "email.guidance.invalid".localized
+            case .none:
+                return ""
             }
         }
 
         static func ==(lhs: ValidationError, rhs: ValidationError) -> Bool {
             switch (lhs, rhs) {
-            case let (.tooShort(l), .tooShort(r)):
+            case let (.tooShort(l), .tooShort(r)),
+                 let (.tooLong(l), .tooLong(r)):
                 return l == r
-//            case (.tooLong, .tooLong):
-//                return true
-//            case (.invalidEmail, .invalidEmail):
-//                return true
-//            case (.none, .none):
-//                return true
+            case (.invalidEmail, .invalidEmail),
+                 (.none, .none):
+                return true
             default:
-                return lhs == rhs
+                return false
             }
         }
     }
@@ -64,21 +79,21 @@ class TextFieldValidator {
         switch kind {
         case .email:
             if text.count > 254 {
-                return .tooLong
+                return .tooLong(kind: kind)
             }
             else if !text.isEmail {
                 return .invalidEmail
             }
         case .password:
             if text.count > 120 {
-                return .tooLong
+                return .tooLong(kind: kind)
             }
             else if text.count < 8 {
                 return .tooShort(kind: kind)
             }
         case .name:
             if text.count > 64 {
-                return .tooLong
+                return .tooLong(kind: kind)
             }
             else if text.count < 2 {
                 return .tooShort(kind: kind)

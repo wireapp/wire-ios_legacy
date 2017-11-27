@@ -20,7 +20,6 @@
 import XCTest
 @testable import Wire
 
-
 final class AccessoryTextFieldValidateionTests: XCTestCase {
     var sut: AccessoryTextField!
     var mockViewController: MockViewController!
@@ -30,7 +29,7 @@ final class AccessoryTextFieldValidateionTests: XCTestCase {
         var errorCounter = 0
         var successCounter = 0
 
-        var lastError: TextFieldValidator.ValidationError?
+        var lastError: TextFieldValidator.ValidationError = .none
 
         func validationUpdated(sender: UITextField, error: TextFieldValidator.ValidationError) {
 
@@ -72,7 +71,7 @@ final class AccessoryTextFieldValidateionTests: XCTestCase {
         XCTAssertEqual(mockViewController.errorCounter, 0, file: file, line: line)
         XCTAssertEqual(mockViewController.successCounter, 1, file: file, line: line)
         XCTAssert(sut.confirmButton.isEnabled, file: file, line: line)
-        XCTAssertNil(mockViewController.lastError, file: file, line: line)
+        XCTAssertEqual(mockViewController.lastError, .none, file: file, line: line)
     }
 
     fileprivate func checkError(textFieldType: AccessoryTextField.Kind,
@@ -90,6 +89,37 @@ final class AccessoryTextFieldValidateionTests: XCTestCase {
         XCTAssertEqual(mockViewController.successCounter, 0, file: file, line: line)
         XCTAssertFalse(sut.confirmButton.isEnabled, file: file, line: line)
         XCTAssertEqual(expectedError, mockViewController.lastError, file: file, line: line)
+
+
+        /// check for localied error description
+        switch mockViewController.lastError {
+        case .tooShort(kind: let kind):
+            switch kind {
+            case .name:
+                XCTAssertEqual(mockViewController.lastError.localizedDescription, "At least 2 characters", file: file, line: line)
+            case .password:
+                XCTAssertEqual(mockViewController.lastError.localizedDescription, "At least 8 characters", file: file, line: line)
+            case .email:
+                XCTAssertEqual(mockViewController.lastError.localizedDescription, "Email is too short", file: file, line: line)
+            case .unknown:
+                XCTAssert(false, "Should not come to this line", file: file, line: line)
+            }
+        case .tooLong(kind: let kind):
+            switch kind {
+            case .name:
+                XCTAssertEqual(mockViewController.lastError.localizedDescription, "Too many characters", file: file, line: line)
+            case .password:
+                XCTAssertEqual(mockViewController.lastError.localizedDescription, "Too many characters", file: file, line: line)
+            case .email:
+                XCTAssertEqual(mockViewController.lastError.localizedDescription, "Too many characters", file: file, line: line)
+            case .unknown:
+                XCTAssert(false, "Should not come to this line", file: file, line: line)
+            }
+        case .invalidEmail:
+            XCTAssertEqual(mockViewController.lastError.localizedDescription, "Invalid email address", file: file, line: line)
+        case .none:
+            XCTAssert(false, "Should not come to this line", file: file, line: line)
+        }
     }
 
     // MARK: - happy cases
@@ -103,14 +133,13 @@ final class AccessoryTextFieldValidateionTests: XCTestCase {
         checkSucceed(textFieldType: type, text: text)
     }
 
-    func testThatPasswordIsSecuredWhenSetToPasswordType() {
+    func testThatSucceedAfterSendEditingChangedForPasswordTextField() {
         // GIVEN
         let type: AccessoryTextField.Kind = .password
         let text = "blahblah"
 
         // WHEN & THEN
         checkSucceed(textFieldType: type, text: text)
-        XCTAssertTrue(sut.isSecureTextEntry)
     }
 
     func testThatEmailIsValidatedWhenSetToEmailType() {
@@ -147,7 +176,7 @@ final class AccessoryTextFieldValidateionTests: XCTestCase {
         let text = String(repeating: "a", count: 65)
 
         // WHEN & THEN
-        checkError(textFieldType: type, text: text, expectedError: .tooLong)
+        checkError(textFieldType: type, text: text, expectedError: .tooLong(kind: type))
     }
 
     func testThatNilNameIsInvalid() {
@@ -174,7 +203,7 @@ final class AccessoryTextFieldValidateionTests: XCTestCase {
         let text = String(repeating: "b", count: 255 - suffix.count) + suffix
 
         // WHEN & THEN
-        checkError(textFieldType: type, text: text, expectedError: .tooLong)
+        checkError(textFieldType: type, text: text, expectedError: .tooLong(kind: type))
     }
 
     func testThat7CharacterPasswordIsInvalid() {
@@ -192,7 +221,22 @@ final class AccessoryTextFieldValidateionTests: XCTestCase {
         let text = String(repeating: "a", count: 129)
 
         // WHEN & THEN
-        checkError(textFieldType: type, text: text, expectedError: .tooLong)
+        checkError(textFieldType: type, text: text, expectedError: .tooLong(kind: type))
     }
 
+    // MARK:- keyboard properties
+
+    func testThatPasswordIsSecuredWhenSetToPasswordType() {
+        // GIVEN
+        let kind: AccessoryTextField.Kind = .password
+        let text = "This is a valid password"
+
+        // WHEN
+        sut.kind = kind
+        sut.text = text
+        sut.sendActions(for: .editingChanged)
+
+        // THEN
+        XCTAssertTrue(sut.isSecureTextEntry)
+    }
 }

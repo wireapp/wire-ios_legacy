@@ -780,6 +780,9 @@
 "name.guidance.toolong" = "Too many characters";
 
 "email.placeholder" = "Email";
+"email.guidance.invalid" = "Invalid email address";
+"email.guidance.tooshort" = "Email is too short";
+"email.guidance.toolong" = "Too many characters";
 
 "password.placeholder" = "Password";
 "password.guidance.tooshort" = "At least 8 characters";
