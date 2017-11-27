@@ -485,8 +485,7 @@
     [self showMenu];
 }
 
-
-- (void)articleViewAsksToRecalculateHeight {
+- (void)articleViewAsksToRecalculateHeight:(ArticleView * _Nonnull)articleView {
     [self.delegate conversationCellShouldUpdateCellHeight:self];
 }
 
