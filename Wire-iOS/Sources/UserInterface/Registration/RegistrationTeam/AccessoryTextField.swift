@@ -145,6 +145,7 @@ class AccessoryTextField: UITextField {
     private func setup() {
         createConstraints()
 
+        self.confirmButton.addTarget(self, action: #selector(confirmButtonTapped(button:)), for: .touchUpInside)
         self.addTarget(self, action: #selector(textFieldDidChange(textField:)), for: .editingChanged)
     }
 
@@ -162,21 +163,17 @@ class AccessoryTextField: UITextField {
         return UIEdgeInsetsInsetRect(textRect, self.textInsets)
     }
 
+    func textFieldDidChange(textField: UITextField) {
+        /// enable button after first key tapped
+        confirmButton.isEnabled = true
+    }
+
     // MARK: - text validation
 
-    func textFieldDidChange(textField: UITextField) {
-        let error = textFieldValidator.textDidChange(text: textField.text, kind: self.kind)
+    func confirmButtonTapped(button: UIButton) {
+        let error = textFieldValidator.validate(text: text, kind: kind)
 
-        switch error {
-        case .tooLong:
-            self.confirmButton.isEnabled = false
-        case .tooShort:
-            self.confirmButton.isEnabled = false
-        case .invalidEmail:
-            self.confirmButton.isEnabled = false
-        case .none:
-            self.confirmButton.isEnabled = true
-        }
+        confirmButton.isEnabled = (error == .none)
 
         textFieldValidationDelegate?.validationUpdated(sender: self, error: error)
     }

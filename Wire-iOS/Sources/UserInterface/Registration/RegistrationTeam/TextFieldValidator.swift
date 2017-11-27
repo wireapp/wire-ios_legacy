@@ -71,7 +71,7 @@ class TextFieldValidator {
         }
     }
 
-    func textDidChange(text: String?, kind: AccessoryTextField.Kind) -> TextFieldValidator.ValidationError {
+    func validate(text: String?, kind: AccessoryTextField.Kind) -> TextFieldValidator.ValidationError {
         guard let text = text else {
             return .none
         }
