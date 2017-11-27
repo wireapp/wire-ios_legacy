@@ -20,8 +20,14 @@
 import Foundation
 import Cartography
 
-protocol AccessoryTextFieldDelegate: class {
-    func validationUpdated(sender: UITextField, error: TextFieldValidator.Error)
+protocol TextFieldValidationDelegate: class {
+
+    /// Delegate for validation. It is called when every time .editingChanged event fires
+    ///
+    /// - Parameters:
+    ///   - sender: the sender is the textfield needs to validate
+    ///   - error: An error object that indicates why the request failed, or nil if the request was successful.
+    func validationUpdated(sender: UITextField, error: TextFieldValidator.ValidationError?)
 }
 
 class AccessoryTextField : UITextField {
@@ -33,7 +39,7 @@ class AccessoryTextField : UITextField {
     }
 
     let textFieldValidator: TextFieldValidator
-    public var textFieldValidationDelegate: AccessoryTextFieldDelegate?
+    public var textFieldValidationDelegate: TextFieldValidationDelegate?
 
     static let enteredTextFont = FontSpec(.normal, .regular, .inputText).font!
     static let placeholderFont = FontSpec(.small, .semibold).font!

@@ -39,6 +39,7 @@ extension TextFieldDescription: ViewDescriptor {
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.placeholder = self.placeholder
         textField.delegate = self
+        textField.textFieldValidationDelegate = self
         textField.confirmButton.addTarget(self, action: #selector(TextFieldDescription.confirmButtonTapped(_:)), for: .touchUpInside)
         return textField
     }
@@ -66,3 +67,10 @@ extension TextFieldDescription: UITextFieldDelegate {
         return true
     }
 }
+
+extension TextFieldDescription: TextFieldValidationDelegate {
+    func validationUpdated(sender: UITextField, error: TextFieldValidator.ValidationError?) {
+        ///
+    }
+}
+

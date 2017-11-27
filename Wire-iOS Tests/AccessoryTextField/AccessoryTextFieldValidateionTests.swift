@@ -25,14 +25,14 @@ final class AccessoryTextFieldValidateionTests: XCTestCase {
     var sut: AccessoryTextField!
     var mockViewController: MockViewController!
 
-    class MockViewController: UIViewController, AccessoryTextFieldDelegate {
+    class MockViewController: UIViewController, TextFieldValidationDelegate {
 
         var errorCounter = 0
         var successCounter = 0
 
-        var lastError: TextFieldValidator.Error?
+        var lastError: TextFieldValidator.ValidationError?
 
-        func validationUpdated(sender: UITextField, error: TextFieldValidator.Error) {
+        func validationUpdated(sender: UITextField, error: TextFieldValidator.ValidationError?) {
 
             if error == .none {
                 successCounter += 1
@@ -72,7 +72,7 @@ final class AccessoryTextFieldValidateionTests: XCTestCase {
         XCTAssertNil(mockViewController.lastError, file: file, line: line)
     }
 
-    fileprivate func checkError(textFieldType: AccessoryTextField.Kind, text: String?, expectedError: TextFieldValidator.Error, file: StaticString = #file, line: UInt = #line) {
+    fileprivate func checkError(textFieldType: AccessoryTextField.Kind, text: String?, expectedError: TextFieldValidator.ValidationError, file: StaticString = #file, line: UInt = #line) {
 
         // WHEN
         sut.kind = textFieldType

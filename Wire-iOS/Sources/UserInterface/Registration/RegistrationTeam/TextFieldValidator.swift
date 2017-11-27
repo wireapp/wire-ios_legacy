@@ -20,14 +20,20 @@ import Foundation
 
 class TextFieldValidator {
 
-    enum Error {
+    enum ValidationError: Error {
         case tooShort
         case tooLong
         case invalidEmail
         case none
+
+//        var localizedDescription: String {
+//            switch self {
+//            case .tooShort:
+//                return "Error with status \(status) and message \(message) was thrown"
+//            }
     }
 
-    func textDidChange(text: String?, textFieldType: AccessoryTextField.Kind) -> TextFieldValidator.Error {
+    func textDidChange(text: String?, textFieldType: AccessoryTextField.Kind) -> TextFieldValidator.ValidationError {
         guard let text = text else {
             return .none
         }
