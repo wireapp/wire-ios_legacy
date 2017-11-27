@@ -26,64 +26,6 @@ enum TeamCreationState {
     case setPassword(teamName: String, email: String, activationCode: String, fullName: String)
 }
 
-extension TeamCreationState {
-
-    var backButtonDescription: BackButtonDescription? {
-        switch self {
-        case .setTeamName, .setEmail, .setFullName, .setPassword:
-            return BackButtonDescription()
-        case .verifyEmail:
-            return nil
-        }
-    }
-
-    var mainViewDescription: ViewDescriptor & ValueSubmission {
-        switch self {
-        case .setTeamName:
-            return TextFieldDescription(placeholder: "Team name", kind: .name)
-        case .setEmail:
-            return TextFieldDescription(placeholder: "Email address", kind: .email)
-        case .verifyEmail:
-            return VerificationCodeFieldDescription()
-        case .setFullName:
-            return TextFieldDescription(placeholder: "Name", kind: .name)
-        case .setPassword:
-            return TextFieldDescription(placeholder: "Password", kind: .password)
-        }
-    }
-
-    var headline: String {
-        switch self {
-        case .setTeamName:
-            return "Set team name"
-        case .setEmail:
-            return "Set email"
-        case .verifyEmail:
-            return "You've got mail"
-        case .setFullName:
-            return "Set name"
-        case .setPassword:
-            return "Set password"
-        }
-    }
-
-    var subtext: String? {
-        switch self {
-        case .setTeamName:
-            return "You can always change it later"
-        case .setEmail:
-            return nil
-        case let .verifyEmail(teamName: _, email: email):
-            return "Enter the verification code we sent to \(email)"
-        case .setFullName:
-            return "This should be your real name"
-        case .setPassword:
-            return "Please choose a decent password"
-
-        }
-    }
-}
-
 // MARK: - State transitions
 extension TeamCreationState {
     var previousState: TeamCreationState? {
