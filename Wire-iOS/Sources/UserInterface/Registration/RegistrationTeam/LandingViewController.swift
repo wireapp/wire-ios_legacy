@@ -29,7 +29,6 @@ import Cartography
 
 /// Landing screen for choosing create team or personal account
 final class LandingViewController: UIViewController {
-    var signInError: Error? // TODO: use it
     weak var delegate: LandingViewControllerDelegate?
 
     private let tracker = AnalyticsTracker(context: AnalyticsContextRegistrationEmail)
