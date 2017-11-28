@@ -166,16 +166,15 @@ class AccessoryTextField: UITextField {
     }
 
     func textFieldDidChange(textField: UITextField) {
-        /// enable button after first key tapped
-        confirmButton.isEnabled = true
+        /// enable button if we have some text entered
+        let text = textField.text ?? ""
+        confirmButton.isEnabled = !text.isEmpty
     }
 
     // MARK: - text validation
 
     func confirmButtonTapped(button: UIButton) {
         let error = textFieldValidator.validate(text: text, kind: kind)
-
-        confirmButton.isEnabled = (error == .none)
 
         textFieldValidationDelegate?.validationUpdated(sender: self, error: error)
     }

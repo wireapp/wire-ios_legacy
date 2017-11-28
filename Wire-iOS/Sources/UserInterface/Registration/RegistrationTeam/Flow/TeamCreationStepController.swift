@@ -38,7 +38,7 @@ final class TeamCreationStepController: UIViewController {
     fileprivate var errorLabel: UILabel!
 
     private var secondaryViewsStackView: UIStackView!
-    private var errorViewContainer: UIView!
+    fileprivate var errorViewContainer: UIView!
     private var mainViewContainer: UIView!
 
     private var backButton: UIView?
@@ -205,10 +205,12 @@ extension TeamCreationStepController {
 
     func clearError() {
         errorLabel.text = nil
+        self.errorViewContainer.setNeedsLayout()
     }
 
     func displayError(_ error: Error) {
         errorLabel.text = error.localizedDescription
+        self.errorViewContainer.setNeedsLayout()
     }
 
 }

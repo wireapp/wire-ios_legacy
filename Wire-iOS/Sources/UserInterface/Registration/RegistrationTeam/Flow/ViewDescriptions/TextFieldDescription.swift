@@ -61,9 +61,7 @@ extension TextFieldDescription: UITextFieldDelegate {
         let oldValue = textField.text as NSString?
         let result = oldValue?.replacingCharacters(in: range, with: string)
         currentValue = (result as String?) ?? ""
-        if !currentValue.isEmpty {
-            self.valueValidated?(.none)
-        }
+        self.valueValidated?(.none)
         return true
     }
 
