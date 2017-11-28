@@ -130,8 +130,15 @@ extension TeamCreationFlowController {
 
         if let description = stepDescription {
             let controller = createViewController(for: description)
-            currentController = controller
-            navigationController.pushViewController(controller, animated: true)
+            if let current = currentController, current.stepDescription.shouldSkipFromNavigation() {
+                currentController = controller
+                let withoutLast = navigationController.viewControllers.dropLast()
+                let controllers = withoutLast + [controller]
+                navigationController.setViewControllers(Array(controllers), animated: true)
+            } else {
+                currentController = controller
+                navigationController.pushViewController(controller, animated: true)
+            }
         }
     }
 
