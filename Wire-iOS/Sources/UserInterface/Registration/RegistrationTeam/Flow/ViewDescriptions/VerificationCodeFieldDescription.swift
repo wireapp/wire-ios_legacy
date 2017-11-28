@@ -24,7 +24,7 @@ final class VerificationCodeFieldDescription: NSObject, ValueSubmission {
     var constraints: [NSLayoutConstraint] = []
 }
 
-fileprivate final class RepsonderContainer: UIView {
+fileprivate final class ResponderContainer: UIView {
     private let responder: UIView
     
     init(responder: UIView) {
@@ -59,7 +59,7 @@ extension VerificationCodeFieldDescription: ViewDescriptor {
         inputField.accessibilityIdentifier = "VerificationCode"
         inputField.accessibilityLabel = "team.email_code.input_field.accessbility_label".localized
 
-        let containerView = RepsonderContainer(responder: inputField)
+        let containerView = ResponderContainer(responder: inputField)
         containerView.translatesAutoresizingMaskIntoConstraints = false
         
         inputField.heightAnchor.constraint(equalTo: containerView.heightAnchor).isActive = true
