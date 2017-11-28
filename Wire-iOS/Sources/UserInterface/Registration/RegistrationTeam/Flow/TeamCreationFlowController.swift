@@ -36,12 +36,15 @@ final class TeamCreationFlowController: NSObject {
     var nextState: TeamCreationState?
     var currentController: TeamCreationStepController!
     weak var registrationDelegate: RegistrationViewControllerDelegate?
+    var syncToken: Any?
+    var sessionManagerToken: Any?
 
     init(navigationController: UINavigationController, registrationStatus: RegistrationStatus) {
         self.navigationController = navigationController
         self.registrationStatus = registrationStatus
         super.init()
         registrationStatus.delegate = self
+        sessionManagerToken = SessionManager.shared?.addSessionManagerCreatedSessionObserver(self)
     }
 
     func startFlow() {
@@ -155,9 +158,21 @@ extension TeamCreationFlowController: VerifyEmailStepDescriptionDelegate {
     }
 }
 
+extension TeamCreationFlowController: SessionManagerCreatedSessionObserver {
+    func sessionManagerCreated(userSession : ZMUserSession) {
+        self.sessionManagerToken = ZMUserSession.addInitialSyncCompletionObserver(self, userSession: userSession)
+    }
+}
+
+extension TeamCreationFlowController: ZMInitialSyncCompletionObserver {
+    func initialSyncCompleted() {
+        registrationDelegate?.registrationViewControllerDidCompleteRegistration()
+    }
+}
+
 extension TeamCreationFlowController: RegistrationStatusDelegate {
     public func teamRegistered() {
-        registrationDelegate?.registrationViewControllerDidCompleteRegistration()
+
     }
 
     public func teamRegistrationFailed(with error: Error) {
