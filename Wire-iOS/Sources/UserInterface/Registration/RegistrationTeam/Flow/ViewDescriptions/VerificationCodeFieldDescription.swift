@@ -24,23 +24,48 @@ final class VerificationCodeFieldDescription: NSObject, ValueSubmission {
     var constraints: [NSLayoutConstraint] = []
 }
 
+fileprivate final class RepsonderContainer: UIView {
+    private let responder: UIView
+    
+    init(responder: UIView) {
+        self.responder = responder
+        super.init(frame: .zero)
+        self.addSubview(self.responder)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    override var canBecomeFirstResponder: Bool {
+        return self.responder.canBecomeFirstResponder
+    }
+    
+    override func becomeFirstResponder() -> Bool {
+        return self.responder.becomeFirstResponder()
+    }
+    
+    override func resignFirstResponder() -> Bool {
+        return self.responder.resignFirstResponder()
+    }
+}
+
 extension VerificationCodeFieldDescription: ViewDescriptor {
     func create() -> UIView {
-        let containerView = UIView()
-
-        containerView.translatesAutoresizingMaskIntoConstraints = false
         let inputField = CharacterInputField(maxLength: 6, characterSet: .decimalDigits)
         inputField.keyboardType = .decimalPad
         inputField.translatesAutoresizingMaskIntoConstraints = false
         inputField.delegate = self
         inputField.accessibilityIdentifier = "VerificationCode"
         inputField.accessibilityLabel = "team.email_code.input_field.accessbility_label".localized
-        containerView.addSubview(inputField)
 
+        let containerView = RepsonderContainer(responder: inputField)
+        containerView.translatesAutoresizingMaskIntoConstraints = false
+        
         inputField.heightAnchor.constraint(equalTo: containerView.heightAnchor).isActive = true
         inputField.centerXAnchor.constraint(equalTo: containerView.centerXAnchor).isActive = true
         inputField.centerYAnchor.constraint(equalTo: containerView.centerYAnchor).isActive = true
-
+        
         return containerView
     }
 
