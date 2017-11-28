@@ -203,9 +203,12 @@ final class TeamCreationStepController: UIViewController {
 // MARK: - Error handling
 extension TeamCreationStepController {
 
+    func clearError() {
+        errorLabel.text = nil
+    }
+
     func displayError(_ error: Error) {
-        let nsError = error as NSError
-        errorLabel.text = nsError.localizedDescription
+        errorLabel.text = error.localizedDescription
     }
 
 }

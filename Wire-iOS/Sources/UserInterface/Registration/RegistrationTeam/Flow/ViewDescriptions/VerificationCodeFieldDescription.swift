@@ -21,6 +21,7 @@ import Cartography
 
 final class VerificationCodeFieldDescription: NSObject, ValueSubmission {
     var valueSubmitted: ValueSubmitted?
+    var valueValidated: ValueValidated?
     var constraints: [NSLayoutConstraint] = []
 }
 

@@ -23,6 +23,8 @@ final class TextFieldDescription: NSObject, ValueSubmission {
     let actionDescription: String
     let kind: AccessoryTextField.Kind
     var valueSubmitted: ValueSubmitted?
+    var valueValidated: ValueValidated?
+    var validationError: TextFieldValidator.ValidationError
 
     fileprivate var currentValue: String = ""
 
@@ -30,6 +32,7 @@ final class TextFieldDescription: NSObject, ValueSubmission {
         self.placeholder = placeholder
         self.actionDescription = actionDescription
         self.kind = kind
+        validationError = .tooShort(kind: kind)
         super.init()
     }
 }
@@ -51,29 +54,39 @@ extension TextFieldDescription: ViewDescriptor {
 extension TextFieldDescription: UITextFieldDelegate {
 
     func confirmButtonTapped(_ sender: AnyObject) {
-        self.valueSubmitted?(currentValue)
+        submitValue(with: currentValue)
     }
 
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         let oldValue = textField.text as NSString?
         let result = oldValue?.replacingCharacters(in: range, with: string)
         currentValue = (result as String?) ?? ""
+        if !currentValue.isEmpty {
+            self.valueValidated?(.none)
+        }
         return true
-    }
-
-    func textFieldDidEndEditing(_ textField: UITextField) {
     }
 
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         guard let text = textField.text else { return true }
-        self.valueSubmitted?(text)
+        submitValue(with: text)
         return true
+    }
+
+    func submitValue(with text: String) {
+        switch validationError {
+        case .none:
+            self.valueValidated?(.none)
+            self.valueSubmitted?(text)
+        default:
+            self.valueValidated?(validationError)
+        }
     }
 }
 
 extension TextFieldDescription: TextFieldValidationDelegate {
     func validationUpdated(sender: UITextField, error: TextFieldValidator.ValidationError) {
-        ///
+        self.validationError = error
     }
 }
 

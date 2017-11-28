@@ -26,36 +26,6 @@ class TextFieldValidator {
         case invalidEmail
         case none
 
-        var localizedDescription: String {
-            switch self {
-            case .tooShort(kind: let kind):
-                switch kind {
-                case .name:
-                    return "name.guidance.tooshort".localized
-                case .email:
-                    return "email.guidance.tooshort".localized
-                case .password:
-                    return "password.guidance.tooshort".localized
-                case .unknown:
-                    return "unknown.guidance.tooshort".localized
-                }
-            case .tooLong(kind: let kind):
-                switch kind {
-                case .name:
-                    return "name.guidance.toolong".localized
-                case .email:
-                    return "email.guidance.toolong".localized
-                case .password:
-                    return "password.guidance.toolong".localized
-                case .unknown:
-                    return "unknown.guidance.toolong".localized
-                }
-            case .invalidEmail:
-                return "email.guidance.invalid".localized
-            case .none:
-                return ""
-            }
-        }
 
         static func ==(lhs: ValidationError, rhs: ValidationError) -> Bool {
             switch (lhs, rhs) {
@@ -102,6 +72,40 @@ class TextFieldValidator {
         return .none
 
     }
+}
+
+extension TextFieldValidator.ValidationError: LocalizedError {
+    var errorDescription: String? {
+        switch self {
+        case .tooShort(kind: let kind):
+            switch kind {
+            case .name:
+                return "name.guidance.tooshort".localized
+            case .email:
+                return "email.guidance.tooshort".localized
+            case .password:
+                return "password.guidance.tooshort".localized
+            case .unknown:
+                return "unknown.guidance.tooshort".localized
+            }
+        case .tooLong(kind: let kind):
+            switch kind {
+            case .name:
+                return "name.guidance.toolong".localized
+            case .email:
+                return "email.guidance.toolong".localized
+            case .password:
+                return "password.guidance.toolong".localized
+            case .unknown:
+                return "unknown.guidance.toolong".localized
+            }
+        case .invalidEmail:
+            return "email.guidance.invalid".localized
+        case .none:
+            return ""
+        }
+    }
+
 }
 
 // MARK: - Email validator

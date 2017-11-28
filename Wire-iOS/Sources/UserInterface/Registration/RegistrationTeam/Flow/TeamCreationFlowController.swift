@@ -20,6 +20,7 @@ import Foundation
 import WireSyncEngine
 
 typealias ValueSubmitted = (String) -> ()
+typealias ValueValidated = (TextFieldValidator.ValidationError) -> ()
 
 protocol ViewDescriptor: class {
     func create() -> UIView
@@ -27,6 +28,7 @@ protocol ViewDescriptor: class {
 
 protocol ValueSubmission: class {
     var valueSubmitted: ValueSubmitted? { get set }
+    var valueValidated: ValueValidated? { get set }
 }
 
 final class TeamCreationFlowController: NSObject {
@@ -59,6 +61,15 @@ extension TeamCreationFlowController {
         let mainView = description.mainViewDescription
         mainView.valueSubmitted = { [weak self] (value: String) in
             self?.advanceState(with: value)
+        }
+
+        mainView.valueValidated = { [weak self] (error: TextFieldValidator.ValidationError) in
+            switch error {
+            case .none:
+                self?.currentController?.clearError()
+            default:
+                self?.currentController?.displayError(error)
+            }
         }
 
         let backButton = description.backButtonDescription
