@@ -70,6 +70,7 @@ final class CharacterInputFieldTests: XCTestCase {
         // then
         XCTAssertEqual(delegate.didChangeText, [])
         XCTAssertEqual(sut.text, "1234")
+        XCTAssertEqual(sut.accessibilityValue, "1234")
         XCTAssertFalse(sut.isFilled)
         XCTAssertEqual(delegate.didFillInput, 0)
     }
@@ -80,6 +81,7 @@ final class CharacterInputFieldTests: XCTestCase {
         // then
         XCTAssertEqual(delegate.didChangeText, ["1"])
         XCTAssertEqual(sut.text, "1")
+        XCTAssertEqual(sut.accessibilityValue, "1")
         XCTAssertFalse(sut.isFilled)
         XCTAssertEqual(delegate.didFillInput, 0)
     }
@@ -92,6 +94,7 @@ final class CharacterInputFieldTests: XCTestCase {
         // then
         XCTAssertEqual(delegate.didChangeText, ["123"])
         XCTAssertEqual(sut.text, "123")
+        XCTAssertEqual(sut.accessibilityValue, "123")
         XCTAssertFalse(sut.isFilled)
         XCTAssertEqual(delegate.didFillInput, 0)
     }
@@ -104,6 +107,7 @@ final class CharacterInputFieldTests: XCTestCase {
         // then
         XCTAssertEqual(delegate.didChangeText, [])
         XCTAssertEqual(sut.text, "")
+        XCTAssertEqual(sut.accessibilityValue, "")
         XCTAssertFalse(sut.isFilled)
         XCTAssertEqual(delegate.didFillInput, 0)
     }
@@ -117,6 +121,7 @@ final class CharacterInputFieldTests: XCTestCase {
         // then
         XCTAssertEqual(delegate.didChangeText, ["567"])
         XCTAssertEqual(sut.text, "567")
+        XCTAssertEqual(sut.accessibilityValue, "567")
         XCTAssertFalse(sut.isFilled)
         XCTAssertEqual(delegate.didFillInput, 0)
     }
@@ -128,6 +133,7 @@ final class CharacterInputFieldTests: XCTestCase {
         // then
         XCTAssertEqual(delegate.didChangeText, [])
         XCTAssertEqual(sut.text, "1234")
+        XCTAssertEqual(sut.accessibilityValue, "1234")
         XCTAssertFalse(sut.isFilled)
         XCTAssertEqual(delegate.didFillInput, 0)
     }
@@ -138,6 +144,7 @@ final class CharacterInputFieldTests: XCTestCase {
         // then
         XCTAssertEqual(delegate.didChangeText, ["12345678"])
         XCTAssertEqual(sut.text, "12345678")
+        XCTAssertEqual(sut.accessibilityValue, "12345678")
         XCTAssertTrue(sut.isFilled)
         XCTAssertEqual(delegate.didFillInput, 1)
     }

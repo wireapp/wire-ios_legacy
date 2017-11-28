@@ -24,7 +24,7 @@ final class SetFullNameStepDescription: TeamCreationStepDescription {
     }
 
     var mainViewDescription: ViewDescriptor & ValueSubmission {
-        return TextFieldDescription(placeholder: "Name", kind: .name)
+        return TextFieldDescription(placeholder: "Name", actionDescription: "Set full name", kind: .name)
     }
 
     var headline: String {

@@ -24,7 +24,7 @@ final class SetPasswordStepDescription: TeamCreationStepDescription {
     }
 
     var mainViewDescription: ViewDescriptor & ValueSubmission {
-        return TextFieldDescription(placeholder: "Password", kind: .password)
+        return TextFieldDescription(placeholder: "Password", actionDescription: "Set password", kind: .password)
     }
 
     var headline: String {

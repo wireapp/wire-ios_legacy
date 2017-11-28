@@ -31,7 +31,7 @@ final class SetTeamNameStepDescription: TeamCreationStepDescription {
     }
 
     var mainViewDescription: ViewDescriptor & ValueSubmission {
-        return TextFieldDescription(placeholder: "Team name", kind: .name)
+        return TextFieldDescription(placeholder: "Team name", actionDescription: "Set team name", kind: .name)
     }
 
     var headline: String {

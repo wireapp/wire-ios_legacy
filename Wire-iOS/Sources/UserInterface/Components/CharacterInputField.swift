@@ -34,6 +34,7 @@ public class CharacterInputField: UIControl, UITextInputTraits {
             }
             
             self.updateCharacterViews(isFirstResponder: self.isFirstResponder)
+            self.accessibilityValue = storage
         }
     }
     
@@ -89,6 +90,12 @@ public class CharacterInputField: UIControl, UITextInputTraits {
         }
     }
     
+    fileprivate func showMenu() {
+        let menuController = UIMenuController.shared
+        menuController.setTargetRect(bounds, in: self)
+        menuController.setMenuVisible(true, animated: true)
+    }
+    
     class CharacterView: UIView {
         private let label = UILabel()
         private let cursorView = UIView()
@@ -119,6 +126,7 @@ public class CharacterInputField: UIControl, UITextInputTraits {
         
         init() {
             super.init(frame: .zero)
+            
             self.layer.cornerRadius = 4
             self.backgroundColor = .white
             
@@ -170,6 +178,10 @@ public class CharacterInputField: UIControl, UITextInputTraits {
         characterViews = (0..<maxLength).map { _ in CharacterView() }
 
         super.init(frame: .zero)
+        
+        self.isAccessibilityElement = true
+        self.shouldGroupAccessibilityChildren = true
+        
         stackView.spacing = 8
         stackView.axis = .horizontal
         
@@ -216,12 +228,20 @@ public class CharacterInputField: UIControl, UITextInputTraits {
         self.becomeFirstResponder()
     }
     
+    public override func accessibilityElementIsFocused() -> Bool {
+        return self.becomeFirstResponder()
+    }
+    
+    public override func accessibilityActivate() -> Bool {
+        self.showMenu()
+        
+        return true
+    }
+    
     // MARK: - Paste support
     
     @objc fileprivate func onLongPress(_ sender: Any?) {
-        let menuController = UIMenuController.shared
-        menuController.setTargetRect(bounds, in: self)
-        menuController.setMenuVisible(true, animated: true)
+        self.showMenu()
     }
     
     public override func paste(_ sender: Any?) {
@@ -292,3 +312,4 @@ extension CharacterInputField: UIKeyInput {
         return !storage.isEmpty
     }
 }
+

@@ -31,7 +31,7 @@ final class SetEmailStepDescription: TeamCreationStepDescription {
     }
 
     var mainViewDescription: ViewDescriptor & ValueSubmission {
-        return TextFieldDescription(placeholder: "Email address", kind: .email)
+        return TextFieldDescription(placeholder: "Email address", actionDescription: "Set e-mail", kind: .email)
     }
 
     var headline: String {

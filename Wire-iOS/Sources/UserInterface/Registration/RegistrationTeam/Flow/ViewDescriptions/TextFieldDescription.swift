@@ -20,13 +20,15 @@ import Foundation
 
 final class TextFieldDescription: NSObject, ValueSubmission {
     let placeholder: String
+    let actionDescription: String
     let kind: AccessoryTextField.Kind
     var valueSubmitted: ValueSubmitted?
 
     fileprivate var currentValue: String = ""
 
-    init(placeholder: String, kind: AccessoryTextField.Kind) {
+    init(placeholder: String, actionDescription: String, kind: AccessoryTextField.Kind) {
         self.placeholder = placeholder
+        self.actionDescription = actionDescription
         self.kind = kind
         super.init()
     }
@@ -41,6 +43,7 @@ extension TextFieldDescription: ViewDescriptor {
         textField.delegate = self
         textField.textFieldValidationDelegate = self
         textField.confirmButton.addTarget(self, action: #selector(TextFieldDescription.confirmButtonTapped(_:)), for: .touchUpInside)
+        textField.confirmButton.accessibilityLabel = self.actionDescription
         return textField
     }
 }
