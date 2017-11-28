@@ -36,7 +36,8 @@ final class TeamCreationFlowController: NSObject {
     let navigationController: UINavigationController
     let registrationStatus: RegistrationStatus
     var nextState: TeamCreationState?
-    var currentController: TeamCreationStepController?
+    var currentController: TeamCreationStepController? 
+    var currentStepDescription: TeamCreationStepDescription?
     weak var registrationDelegate: RegistrationViewControllerDelegate?
     var syncToken: Any?
     var sessionManagerToken: Any?
@@ -135,6 +136,7 @@ extension TeamCreationFlowController {
         if let description = stepDescription {
             let controller = createViewController(for: description)
             currentController = controller
+            currentStepDescription = description
             navigationController.pushViewController(controller, animated: true)
         }
     }
@@ -157,6 +159,7 @@ extension TeamCreationFlowController {
             currentState = .setTeamName
             self.nextState = nil
             self.currentController = nil
+            self.currentStepDescription = nil
             self.navigationController.popToRootViewController(animated: true)
         }
     }
