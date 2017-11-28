@@ -22,34 +22,24 @@ import SafariServices
 final class SetTeamNameStepDescription: TeamCreationStepDescription {
 
     let controller: UIViewController
+    let backButton: BackButtonDescription?
+    let mainView: ViewDescriptor & ValueSubmission
+    let headline: String
+    let subtext: String?
+    let secondaryViews: [ViewDescriptor]
 
     init(controller: UIViewController) {
         self.controller = controller
-    }
-
-    var backButtonDescription: BackButtonDescription? {
-        return BackButtonDescription()
-    }
-
-    var mainViewDescription: ViewDescriptor & ValueSubmission {
-        return TextFieldDescription(placeholder: "Team name", actionDescription: "Set team name", kind: .name)
-    }
-
-    var headline: String {
-        return "Set team name"
-    }
-
-    var subtext: String? {
-        return "You can always change it later"
-    }
-
-    var secondaryViews: [ViewDescriptor] {
+        backButton = BackButtonDescription()
+        mainView = TextFieldDescription(placeholder: "Team name", actionDescription: "Set team name", kind: .name)
+        headline = "Set team name"
+        subtext = "You can always change it later"
         let whatIsWire = ButtonDescription(title: "What is Wire for teams?", accessibilityIdentifier: "wire_for_teams_button")
-        whatIsWire.buttonTapped = { [weak self] in
+        whatIsWire.buttonTapped = { [weak controller] in
             let webview = SFSafariViewController(url: URL(string: "https://wire.com/en/create-team/")!)
-            self?.controller.present(webview, animated: true, completion: nil)
+            controller?.present(webview, animated: true, completion: nil)
         }
-        return [whatIsWire]
+        secondaryViews = [whatIsWire]
     }
 }
 

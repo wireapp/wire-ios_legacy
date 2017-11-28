@@ -19,24 +19,19 @@
 import Foundation
 
 final class SetFullNameStepDescription: TeamCreationStepDescription {
-    var backButtonDescription: BackButtonDescription? {
-        return BackButtonDescription()
-    }
 
-    var mainViewDescription: ViewDescriptor & ValueSubmission {
-        return TextFieldDescription(placeholder: "Name", actionDescription: "Set full name", kind: .name)
-    }
+    let backButton: BackButtonDescription?
+    let mainView: ViewDescriptor & ValueSubmission
+    let headline: String
+    let subtext: String?
+    let secondaryViews: [ViewDescriptor]
 
-    var headline: String {
-        return "Set name"
-    }
-
-    var subtext: String? {
-        return "This should be your real name"
-    }
-
-    var secondaryViews: [ViewDescriptor] {
-        return []
+    init() {
+        backButton = BackButtonDescription()
+        mainView = TextFieldDescription(placeholder: "Name", actionDescription: "Set full name", kind: .name)
+        headline = "Set name"
+        subtext = "This should be your real name"
+        secondaryViews = []
     }
 }
 

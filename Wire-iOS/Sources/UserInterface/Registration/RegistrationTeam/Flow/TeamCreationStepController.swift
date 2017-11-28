@@ -26,11 +26,7 @@ final class TeamCreationStepController: UIViewController {
     static let errorFont = FontSpec(.small, .semibold).font!
     static let textButtonFont = FontSpec(.small, .semibold).font!
 
-    let headline: String
-    let subtext: String?
-    let backButtonDescriptor: ViewDescriptor?
-    let mainViewDescriptor: ViewDescriptor
-    let secondaryViewDescriptors: [ViewDescriptor]
+    let stepDescription: TeamCreationStepDescription
 
     private var stackView: UIStackView!
     private var headlineLabel: UILabel!
@@ -50,12 +46,8 @@ final class TeamCreationStepController: UIViewController {
     private var keyboardOffset: NSLayoutConstraint!
     private var mainViewAlignVerticalCenter: NSLayoutConstraint!
 
-    init(headline: String, subtext: String? = nil, mainView: ViewDescriptor, backButton: ViewDescriptor? = nil, secondaryViews: [ViewDescriptor] = []) {
-        self.headline = headline
-        self.subtext = subtext
-        self.mainViewDescriptor = mainView
-        self.backButtonDescriptor = backButton
-        self.secondaryViewDescriptors = secondaryViews
+    init(description: TeamCreationStepDescription) {
+        self.stepDescription = description
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -130,18 +122,18 @@ final class TeamCreationStepController: UIViewController {
     }
 
     private func createViews() {
-        backButton = backButtonDescriptor?.create()
+        backButton = stepDescription.backButton?.create()
 
         headlineLabel = UILabel()
         headlineLabel.textAlignment = .center
         headlineLabel.font = TeamCreationStepController.headlineFont
         headlineLabel.textColor = UIColor.Team.textColor
-        headlineLabel.text = headline
+        headlineLabel.text = stepDescription.headline
         headlineLabel.translatesAutoresizingMaskIntoConstraints = false
 
         subtextLabel = UILabel()
         subtextLabel.textAlignment = .center
-        subtextLabel.text = subtext
+        subtextLabel.text = stepDescription.subtext
         subtextLabel.font = TeamCreationStepController.subtextFont
         subtextLabel.textColor = UIColor.Team.subtitleColor
         subtextLabel.numberOfLines = 0
@@ -151,7 +143,7 @@ final class TeamCreationStepController: UIViewController {
         mainViewContainer = UIView()
         mainViewContainer.translatesAutoresizingMaskIntoConstraints = false
 
-        mainView = mainViewDescriptor.create()
+        mainView = stepDescription.mainView.create()
         mainViewContainer.addSubview(mainView)
 
         errorViewContainer = UIView()
@@ -164,7 +156,7 @@ final class TeamCreationStepController: UIViewController {
         errorLabel.translatesAutoresizingMaskIntoConstraints = false
         errorViewContainer.addSubview(errorLabel)
 
-        secondaryViews = secondaryViewDescriptors.map { $0.create() }
+        secondaryViews = stepDescription.secondaryViews.map { $0.create() }
 
         secondaryViewsStackView = UIStackView(arrangedSubviews: secondaryViews)
         secondaryViewsStackView.distribution = .equalCentering
