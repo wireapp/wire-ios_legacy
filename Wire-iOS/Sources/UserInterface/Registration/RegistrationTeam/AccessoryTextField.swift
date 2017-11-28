@@ -111,6 +111,7 @@ class AccessoryTextField: UITextField {
         backgroundColor = UIColor.Team.textfieldColor
 
         setup()
+        setupTextFieldProperties()
     }
 
     required init?(coder aDecoder: NSCoder) {
