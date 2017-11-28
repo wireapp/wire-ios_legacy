@@ -43,10 +43,12 @@ final class TeamCreationStepController: UIViewController {
 
     private var backButton: UIView?
 
+    /// Text Field
     private var mainView: UIView!
     private var secondaryViews: [UIView] = []
 
     private var keyboardOffset: NSLayoutConstraint!
+    private var mainViewAlignVerticalCenter: NSLayoutConstraint!
 
     init(headline: String, subtext: String? = nil, mainView: ViewDescriptor, backButton: ViewDescriptor? = nil, secondaryViews: [ViewDescriptor] = []) {
         self.headline = headline
@@ -72,16 +74,21 @@ final class TeamCreationStepController: UIViewController {
 
         createViews()
         createConstraints()
+
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(_:)), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillChangeFrame(_:)), name: NSNotification.Name.UIKeyboardWillChangeFrame, object: nil)
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillChangeFrame(_:)), name: NSNotification.Name.UIKeyboardWillChangeFrame, object: nil)
-
         UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(animated)
         mainView.becomeFirstResponder()
+
+        let keyboardHeight = KeyboardFrameObserver.shared().keyboardFrame().height
+        updateKeyboardOffset(keyboardHeight: keyboardHeight)
     }
 
     override func viewWillDisappear(_ animated: Bool) {
@@ -90,7 +97,24 @@ final class TeamCreationStepController: UIViewController {
         NotificationCenter.default.removeObserver(self)
     }
 
+    // MARK: - Keyboard shown/hide
+
+    func updateKeyboardOffset(keyboardHeight: CGFloat){
+        self.keyboardOffset.constant = -(keyboardHeight + 10)
+        self.view.layoutIfNeeded()
+    }
+
     dynamic func keyboardWillShow(_ notification: Notification) {
+        self.keyboardOffset.isActive = true
+        self.mainViewAlignVerticalCenter.isActive = false
+
+        animateViewsToAccomodateKeyboard(with: notification)
+    }
+
+    dynamic func keyboardWillHide(_ notification: Notification) {
+        self.keyboardOffset.isActive = false
+        self.mainViewAlignVerticalCenter.isActive = true
+
         animateViewsToAccomodateKeyboard(with: notification)
     }
 
@@ -99,10 +123,9 @@ final class TeamCreationStepController: UIViewController {
     }
 
     func animateViewsToAccomodateKeyboard(with notification: Notification) {
-        if let keyboardFrame = notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue {
+        if let userInfo = notification.userInfo, let keyboardFrame = userInfo[UIKeyboardFrameEndUserInfoKey] as? NSValue {
             let keyboardHeight = keyboardFrame.cgRectValue.height
-            self.keyboardOffset.constant = -(keyboardHeight + 10)
-            self.view.setNeedsLayout()
+            updateKeyboardOffset(keyboardHeight: keyboardHeight)
         }
     }
 
@@ -153,10 +176,22 @@ final class TeamCreationStepController: UIViewController {
 
     private func createConstraints() {
         if let backButton = backButton {
-            constrain(view, backButton) { view, backButton in
-                backButton.leading == view.leading + 16
-                backButton.top == view.topMargin + 12
+
+            var backButtonTopMargin: CGFloat = 12 + 20
+            if #available(iOS 10.0, *) {
+                backButtonTopMargin = 12
             }
+
+            constrain(view, backButton, headlineLabel) { view, backButton, headlineLabel in
+                backButton.leading == view.leading + 16
+                backButton.top == view.topMargin + backButtonTopMargin
+                backButton.height == 20
+
+
+                headlineLabel.top >= backButton.bottomMargin + 20
+            }
+
+
         }
 
         constrain(view, secondaryViewsStackView, errorViewContainer, mainViewContainer) { view, secondaryViewsStackView, errorViewContainer, mainViewContainer in
@@ -164,7 +199,8 @@ final class TeamCreationStepController: UIViewController {
             self.keyboardOffset = secondaryViewsStackView.bottom == view.bottom - (keyboardHeight + 10)
             secondaryViewsStackView.leading >= view.leading
             secondaryViewsStackView.trailing <= view.trailing
-            secondaryViewsStackView.height == 42
+            secondaryViewsStackView.height == 42 ~ LayoutPriority(500)
+            secondaryViewsStackView.height >= 13
             secondaryViewsStackView.centerX == view.centerX
 
             errorViewContainer.bottom == secondaryViewsStackView.top
@@ -173,30 +209,56 @@ final class TeamCreationStepController: UIViewController {
             errorViewContainer.height == 30
 
             mainViewContainer.bottom == errorViewContainer.top
-            mainViewContainer.leading == view.leading
-            mainViewContainer.trailing == view.trailing
-            mainViewContainer.height == 2 * 56 // Space for two text fields
+            self.mainViewAlignVerticalCenter = mainViewContainer.centerY == view.centerY
+            self.mainViewAlignVerticalCenter.isActive = false
+
+            mainViewContainer.centerX == view.centerX
+            switch UIApplication.shared.keyWindow?.traitCollection.horizontalSizeClass {
+            case .regular?:
+                mainViewContainer.width == 375
+            default:
+                mainViewContainer.width == view.width
+                break
+            }
+
+            mainViewContainer.height >= 56
+            mainViewContainer.height == 2 * 56 ~ LayoutPriority(500) // Space for two text fields, compressed for iPhone 4s
         }
 
         constrain(view, mainViewContainer, subtextLabel, headlineLabel) { view, inputViewsContainer, subtextLabel, headlineLabel in
-            headlineLabel.bottom == subtextLabel.top - 24
+            headlineLabel.top >= view.topMargin + 20
+            headlineLabel.bottom == subtextLabel.top - 24 ~ LayoutPriority(750)
+            headlineLabel.bottom <= subtextLabel.top - 5
             headlineLabel.leading == view.leadingMargin
             headlineLabel.trailing == view.trailingMargin
 
-            subtextLabel.bottom == inputViewsContainer.top - 24
+            subtextLabel.bottom == inputViewsContainer.top - 24 ~ LayoutPriority(750)
+            subtextLabel.bottom <= inputViewsContainer.top - 5
             subtextLabel.leading == view.leadingMargin
             subtextLabel.trailing == view.trailingMargin
         }
 
         constrain(mainViewContainer, mainView) { mainViewContainer, mainView in
-            mainView.edges == inset(mainViewContainer.edges, 56, 0, 0, 0)
+            mainView.height == 56
+            mainView.top == mainViewContainer.top + 56 ~ LayoutPriority(500)
+            mainView.top <= mainViewContainer.top + 5
+
+            mainView.leading == mainViewContainer.leadingMargin
+            mainView.trailing == mainViewContainer.trailingMargin
         }
 
         constrain(errorViewContainer, errorLabel) { errorViewContainer, errorLabel in
             errorLabel.centerY == errorViewContainer.centerY
             errorLabel.leading == errorViewContainer.leadingMargin
             errorLabel.trailing == errorViewContainer.trailingMargin
+            errorLabel.topMargin == errorViewContainer.topMargin
+            errorLabel.bottomMargin == errorViewContainer.bottomMargin
         }
+
+
+        headlineLabel.setContentCompressionResistancePriority(UILayoutPriorityRequired, for: .vertical)
+        subtextLabel.setContentCompressionResistancePriority(UILayoutPriorityRequired, for: .vertical)
+        errorLabel.setContentCompressionResistancePriority(UILayoutPriorityRequired, for: .vertical)
     }
 }
 
@@ -209,3 +271,4 @@ extension TeamCreationStepController {
     }
 
 }
+
