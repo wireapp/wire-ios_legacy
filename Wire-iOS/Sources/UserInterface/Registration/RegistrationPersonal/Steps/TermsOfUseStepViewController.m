@@ -20,11 +20,11 @@
 #import "TermsOfUseStepViewController.h"
 
 @import PureLayout;
+@import SafariServices;
 
 #import "WAZUIMagicIOS.h"
 #import "UIColor+WAZExtensions.h"
 #import "Analytics.h"
-#import "WebViewController.h"
 #import "WebLinkTextView.h"
 
 #import "NSURL+WireLocale.h"
@@ -94,8 +94,11 @@
     self.termsOfUseText = [[WebLinkTextView alloc] initForAutoLayout];
     self.termsOfUseText.delegate = self;
     self.termsOfUseText.attributedText = [[NSAttributedString alloc] initWithAttributedString:attributedTerms];
-    
     [self.view addSubview:self.termsOfUseText];
+    
+    UITapGestureRecognizer *openURLGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self
+                                                                                               action:@selector(openTOS:)];
+    [self.termsOfUseText addGestureRecognizer:openURLGestureRecognizer];
 }
 
 - (void)createAgreeButton
@@ -130,7 +133,13 @@
 
 #pragma mark - Actions
 
-- (IBAction)agreeToTerms:(id)sender
+- (void)openTOS:(id)sender
+{
+    SFSafariViewController *webViewController = [[SFSafariViewController alloc] initWithURL:[NSURL.wr_termsOfServicesURL wr_URLByAppendingLocaleParameter]];
+    [self presentViewController:webViewController animated:YES completion:nil];
+}
+
+- (void)agreeToTerms:(id)sender
 {
     [self.formStepDelegate didCompleteFormStep:self];
 }
@@ -139,11 +148,15 @@
 
 - (BOOL)textView:(UITextView *)textView shouldInteractWithURL:(NSURL *)URL inRange:(NSRange)characterRange
 {
+    return [self textView:textView shouldInteractWithURL:URL inRange:characterRange interaction:0];
+}
+
+- (BOOL)textView:(UITextView *)textView shouldInteractWithURL:(NSURL *)URL inRange:(NSRange)characterRange interaction:(UITextItemInteraction)interaction
+{
     if (! URL) {
         return NO;
     }
-    WebViewController *webViewController = [WebViewController webViewControllerWithURL:[URL wr_URLByAppendingLocaleParameter]];
-    [self presentViewController:webViewController animated:YES completion:nil];
+    [self openTOS:nil];
     
     return NO;
 }

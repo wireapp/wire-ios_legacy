@@ -17,6 +17,7 @@
 //
 
 import Foundation
+import SafariServices
 
 typealias ValueSubmitted = (String) -> ()
 
@@ -75,7 +76,7 @@ extension TeamCreationFlowController {
         case .setTeamName:
             let whatIsWire = ButtonDescription(title: "What is Wire for teams?", accessibilityIdentifier: "wire_for_teams_button")
             whatIsWire.buttonTapped = { [weak self] in
-                let webview = WebViewController(url: URL(string: "https://wire.com")!)
+                let webview = SFSafariViewController(url: URL(string: "https://wire.com/en/create-team/")!)
                 self?.navigationController.present(webview, animated: true, completion: nil)
             }
             return [whatIsWire]
