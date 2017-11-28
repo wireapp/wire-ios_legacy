@@ -64,7 +64,7 @@ final class AccessoryTextFieldValidateionTests: XCTestCase {
         // WHEN
         sut.kind = textFieldType
         sut.text = text
-        sut.sendActions(for: .editingChanged)
+        sut.confirmButton.sendActions(for: .touchUpInside)
 
         // THEN
         XCTAssertEqual(mockViewController.errorCounter, 0, file: file, line: line)
@@ -81,43 +81,13 @@ final class AccessoryTextFieldValidateionTests: XCTestCase {
         // WHEN
         sut.kind = textFieldType
         sut.text = text
-        sut.sendActions(for: .editingChanged)
+        sut.confirmButton.sendActions(for: .touchUpInside)
 
         // THEN
         XCTAssertEqual(mockViewController.errorCounter, 1, file: file, line: line)
         XCTAssertEqual(mockViewController.successCounter, 0, file: file, line: line)
         XCTAssertFalse(sut.confirmButton.isEnabled, file: file, line: line)
         XCTAssertEqual(expectedError, mockViewController.lastError, file: file, line: line)
-
-        /// check for localied error description
-        switch mockViewController.lastError {
-        case .tooShort(kind: let kind):
-            switch kind {
-            case .name:
-                XCTAssertEqual(mockViewController.lastError.localizedDescription, "At least 2 characters", file: file, line: line)
-            case .password:
-                XCTAssertEqual(mockViewController.lastError.localizedDescription, "At least 8 characters", file: file, line: line)
-            case .email:
-                XCTAssertEqual(mockViewController.lastError.localizedDescription, "Email is too short", file: file, line: line)
-            case .unknown:
-                XCTAssert(false, "Should not come to this line", file: file, line: line)
-            }
-        case .tooLong(kind: let kind):
-            switch kind {
-            case .name:
-                XCTAssertEqual(mockViewController.lastError.localizedDescription, "Too many characters", file: file, line: line)
-            case .password:
-                XCTAssertEqual(mockViewController.lastError.localizedDescription, "Too many characters", file: file, line: line)
-            case .email:
-                XCTAssertEqual(mockViewController.lastError.localizedDescription, "Too many characters", file: file, line: line)
-            case .unknown:
-                XCTAssert(false, "Should not come to this line", file: file, line: line)
-            }
-        case .invalidEmail:
-            XCTAssertEqual(mockViewController.lastError.localizedDescription, "Invalid email address", file: file, line: line)
-        case .none:
-            XCTAssert(false, "Should not come to this line", file: file, line: line)
-        }
     }
 
     // MARK: - happy cases
