@@ -17,6 +17,7 @@
 //
 
 import Foundation
+import SafariServices
 
 final class SetTeamNameStepDescription: TeamCreationStepDescription {
 
@@ -45,7 +46,7 @@ final class SetTeamNameStepDescription: TeamCreationStepDescription {
     var secondaryViews: [ViewDescriptor] {
         let whatIsWire = ButtonDescription(title: "What is Wire for teams?", accessibilityIdentifier: "wire_for_teams_button")
         whatIsWire.buttonTapped = { [weak self] in
-            let webview = WebViewController(url: URL(string: "https://wire.com")!)
+            let webview = SFSafariViewController(url: URL(string: "https://wire.com/en/create-team/")!)
             self?.controller.present(webview, animated: true, completion: nil)
         }
         return [whatIsWire]

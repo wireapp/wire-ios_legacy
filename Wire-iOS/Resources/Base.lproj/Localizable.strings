@@ -771,9 +771,6 @@
 "system_status_bar.poor_connectivity.title" = "Slow Internet, can’t call now";
 "system_status_bar.poor_connectivity.explanation" = "We can’t guarantee voice quality. Connect to Wi-Fi or try changing your location.";
 
-// Common connections on profile view
-"profile_other.common_connections" = "You both know";
-
 // View user profile and options menu
 "name.placeholder" = "Your full name";
 "name.guidance.tooshort" = "At least 2 characters";

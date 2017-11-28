@@ -325,56 +325,6 @@
 			</array>
 		</dict>
 	</dict>
-	<key>about_zeta</key>
-	<dict>
-		<key>legal_font</key>
-		<dict>
-			<key>font</key>
-			<string>System-Regular</string>
-			<key>size</key>
-			<integer>11</integer>
-			<key>number_spacing</key>
-			<string>proportional</string>
-			<key>number_style</key>
-			<string>regular</string>
-		</dict>
-		<key>copyright_font</key>
-		<dict>
-			<key>font</key>
-			<string>System-Regular</string>
-			<key>size</key>
-			<integer>11</integer>
-			<key>number_spacing</key>
-			<string>proportional</string>
-			<key>number_style</key>
-			<string>regular</string>
-		</dict>
-		<key>website_font</key>
-		<dict>
-			<key>font</key>
-			<string>System-Regular</string>
-			<key>size</key>
-			<integer>11</integer>
-			<key>number_spacing</key>
-			<string>proportional</string>
-			<key>number_style</key>
-			<string>regular</string>
-		</dict>
-	</dict>
-	<key>webcontroller</key>
-	<dict>
-		<key>cancel_button_size</key>
-		<integer>20</integer>
-		<key>cancel_button_color</key>
-		<array>
-			<integer>0</integer>
-			<integer>0</integer>
-			<integer>0</integer>
-			<integer>1</integer>
-		</array>
-		<key>cancel_button_bgradius</key>
-		<integer>50</integer>
-	</dict>
 	<key>camera_overlay</key>
 	<dict>
 		<key>margin</key>
@@ -420,43 +370,6 @@
 			<integer>0</integer>
 			<real>0.8</real>
 		</array>
-	</dict>
-	<key>common_connections</key>
-	<dict>
-		<key>header_transform</key>
-		<string>UPPER</string>
-		<key>avatars_horizontal_offset</key>
-		<integer>8</integer>
-		<key>avatars_left_margin</key>
-		<integer>20</integer>
-		<key>avatars_right_margin</key>
-		<integer>20</integer>
-		<key>avatars_top_margin</key>
-		<integer>12</integer>
-		<key>connection</key>
-		<dict>
-			<key>avatar_size</key>
-			<array>
-				<integer>36</integer>
-				<integer>36</integer>
-			</array>
-			<key>label_size</key>
-			<array>
-				<integer>50</integer>
-				<integer>24</integer>
-			</array>
-			<key>name_transform</key>
-			<string>UPPER</string>
-			<key>more_font</key>
-			<dict>
-				<key>font</key>
-				<string>System-Light</string>
-				<key>size</key>
-				<integer>16</integer>
-			</dict>
-			<key>more_transform</key>
-			<string>UPPER</string>
-		</dict>
 	</dict>
 </dict>
 </plist>
