@@ -36,7 +36,7 @@ final class TeamCreationFlowController: NSObject {
     let navigationController: UINavigationController
     let registrationStatus: RegistrationStatus
     var nextState: TeamCreationState?
-    var currentController: TeamCreationStepController!
+    var currentController: TeamCreationStepController?
     weak var registrationDelegate: RegistrationViewControllerDelegate?
     var syncToken: Any?
     var sessionManagerToken: Any?
@@ -133,8 +133,9 @@ extension TeamCreationFlowController {
         }
 
         if let description = stepDescription {
-            currentController = createViewController(for: description)
-            navigationController.pushViewController(currentController, animated: true)
+            let controller = createViewController(for: description)
+            currentController = controller
+            navigationController.pushViewController(controller, animated: true)
         }
     }
 
@@ -151,9 +152,11 @@ extension TeamCreationFlowController {
             currentState = nextState
             self.nextState = nil
             self.navigationController.popViewController(animated: true)
+            self.currentController = navigationController.viewControllers.last as? TeamCreationStepController
         } else {
             currentState = .setTeamName
             self.nextState = nil
+            self.currentController = nil
             self.navigationController.popToRootViewController(animated: true)
         }
     }
@@ -187,7 +190,7 @@ extension TeamCreationFlowController: RegistrationStatusDelegate {
     }
 
     public func teamRegistrationFailed(with error: Error) {
-        currentController.displayError(error)
+        currentController?.displayError(error)
     }
 
     public func emailActivationCodeSent() {
@@ -195,7 +198,7 @@ extension TeamCreationFlowController: RegistrationStatusDelegate {
     }
 
     public func emailActivationCodeSendingFailed(with error: Error) {
-        currentController.displayError(error)
+        currentController?.displayError(error)
     }
 
     public func emailActivationCodeValidated() {
@@ -203,7 +206,7 @@ extension TeamCreationFlowController: RegistrationStatusDelegate {
     }
 
     public func emailActivationCodeValidationFailed(with error: Error) {
-        currentController.displayError(error)
+        currentController?.displayError(error)
     }
 
 }
