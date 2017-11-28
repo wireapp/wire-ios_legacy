@@ -33,6 +33,8 @@ extension VerificationCodeFieldDescription: ViewDescriptor {
         inputField.keyboardType = .decimalPad
         inputField.translatesAutoresizingMaskIntoConstraints = false
         inputField.delegate = self
+        inputField.accessibilityIdentifier = "VerificationCode"
+        inputField.accessibilityLabel = "team.email_code.input_field.accessbility_label".localized
         containerView.addSubview(inputField)
 
         inputField.heightAnchor.constraint(equalTo: containerView.heightAnchor).isActive = true
