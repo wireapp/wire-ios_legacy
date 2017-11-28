@@ -91,6 +91,7 @@ class AccessoryTextField: UITextField {
         self.kind = kind
 
         super.init(frame: .zero)
+        self.setupTextFieldProperties()
 
         self.rightView = self.confirmButton
         self.rightViewMode = .always
