@@ -21,6 +21,8 @@ import Foundation
 import Mixpanel
 import CocoaLumberjackSwift
 
+let MixpanelDistinctIdKey = "MixpanelDistinctIdKey"
+
 fileprivate enum MixpanelSuperProperties: String {
     case city = "$city"
     case region = "$region"
@@ -90,6 +92,7 @@ final class AnalyticsMixpanelProvider: NSObject, AnalyticsProvider {
             mixpanelInstance = Mixpanel.initialize(token: MixpanelAPIKey)
         }
         super.init()
+        mixpanelInstance?.distinctId = mixpanelDistinctId
         mixpanelInstance?.minimumSessionDuration = 2_000
         mixpanelInstance?.loggingEnabled = false
         DDLogInfo("AnalyticsMixpanelProvider \(self) started")
@@ -102,6 +105,18 @@ final class AnalyticsMixpanelProvider: NSObject, AnalyticsProvider {
         self.setSuperProperty("app", value: "ios")
         self.setSuperProperty(MixpanelSuperProperties.city.rawValue, value: "")
         self.setSuperProperty(MixpanelSuperProperties.region.rawValue, value: "")
+    }
+    
+    var mixpanelDistinctId: String {
+        if let id = UserDefaults.shared().string(forKey: MixpanelDistinctIdKey) {
+            return id
+        }
+        else {
+            let id = UUID().transportString()
+            UserDefaults.shared().set(id, forKey: MixpanelDistinctIdKey)
+            UserDefaults.shared().synchronize()
+            return id
+        }
     }
     
     public var isOptedOut : Bool = false {
