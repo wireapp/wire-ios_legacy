@@ -57,7 +57,7 @@ class AccessoryTextField: UITextField {
         iconButton.setIcon(UIApplication.isLeftToRightLayout ? .chevronRight : .chevronLeft, with: ZetaIconSize.searchBar, for: .normal)
         iconButton.setIconColor(UIColor.Team.textColor, for: .normal)
         iconButton.setIconColor(UIColor.Team.textfieldColor, for: .disabled)
-
+        iconButton.adjustsImageWhenDisabled = false
         iconButton.setBackgroundImageColor(UIColor.Team.activeButtonColor, for: .normal)
         iconButton.setBackgroundImageColor(UIColor.Team.inactiveButtonColor, for: .disabled)
 
