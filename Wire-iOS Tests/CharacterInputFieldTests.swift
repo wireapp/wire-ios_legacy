@@ -82,6 +82,22 @@ final class CharacterInputFieldTests: XCTestCase {
         XCTAssertEqual(delegate.didChangeText, [])
         XCTAssertEqual(sut.text, "")
     }
+
+    func testThatItIgnoresDeleteWhenDelegateSaysItShouldNotAcceptInput() {
+        // given
+        let text = "12"
+        sut.text = text
+        XCTAssertEqual(delegate.didChangeText, [])
+
+        // when
+        delegate.shouldAccept = false
+        sut.deleteBackward()
+
+        // then
+        XCTAssertEqual(delegate.didChangeText, [])
+        XCTAssertEqual(sut.text, text)
+    }
+
     
     func testThatItDoesNotCallDelegateForSettingTextDirectly() {
         // when
