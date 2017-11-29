@@ -74,12 +74,11 @@ final class TeamCreationStepController: UIViewController {
 
         createViews()
         createConstraints()
-        observeKeyboard()
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-
+        observeKeyboard()
         UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(animated)
         mainView.becomeFirstResponder()
 
