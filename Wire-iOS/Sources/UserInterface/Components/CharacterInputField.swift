@@ -65,10 +65,7 @@ public class CharacterInputField: UIControl, UITextInputTraits {
             let characterView = characterViews[index]
             
             if let character = storage.characters.count > index ? storage[storage.index(storage.startIndex, offsetBy: index)] : nil {
-                characterView.character = .char(character)
-            }
-            else if storage.characters.count == index && isFirstResponder {
-                characterView.character = .cursor
+                characterView.character = character
             }
             else {
                 characterView.character = .none
@@ -99,28 +96,15 @@ public class CharacterInputField: UIControl, UITextInputTraits {
     
     class CharacterView: UIView {
         private let label = UILabel()
-        private let cursorView = UIView()
         
-        enum CharacterInView {
-            case char(Character)
-            case cursor
-            case none
-        }
-        
-        var character: CharacterInView = .none {
+        var character: Character? = .none {
             didSet {
-                switch character {
-                case .char(let character):
+                if let character = self.character {
                     label.text = String(character)
                     label.isHidden = false
-                    cursorView.isHidden = true
-                case .cursor:
+                }
+                else {
                     label.isHidden = true
-                    cursorView.isHidden = false
-                    self.startCursorAnimationIfNeeded()
-                case .none:
-                    label.isHidden = true
-                    cursorView.isHidden = true
                 }
             }
         }
@@ -133,18 +117,10 @@ public class CharacterInputField: UIControl, UITextInputTraits {
             
             label.font = UIFont.systemFont(ofSize: 32)
             self.addSubview(label)
-            cursorView.backgroundColor = .accent()
-            self.addSubview(cursorView)
-            cursorView.isHidden = true
             
-            constrain(self, label, cursorView) { selfView, label, cursorView in
+            constrain(self, label) { selfView, label in
                 label.center == selfView.center
-                cursorView.width == 2
-                cursorView.height == 36
-                cursorView.center == selfView.center
             }
-            
-            NotificationCenter.default.addObserver(self, selector: #selector(applicationDidBecomeActive), name: NSNotification.Name.UIApplicationDidBecomeActive, object: nil)
         }
         
         required init?(coder aDecoder: NSCoder) {
@@ -153,21 +129,6 @@ public class CharacterInputField: UIControl, UITextInputTraits {
         
         override var intrinsicContentSize: CGSize {
             return CGSize(width: 50, height: 56)
-        }
-        
-        override func didMoveToWindow() {
-            super.didMoveToWindow()
-            self.startCursorAnimationIfNeeded()
-        }
-        
-        private func startCursorAnimationIfNeeded() {
-            if !cursorView.isHidden && cursorView.layer.animation(forKey: "blinkAnimation") == nil {
-                cursorView.layer.add(.cursorBlinkAnimation(), forKey: "blinkAnimation")
-            }
-        }
-        
-        @objc fileprivate func applicationDidBecomeActive(_ sender: Any?) {
-            self.startCursorAnimationIfNeeded()
         }
     }
     
