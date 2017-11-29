@@ -172,7 +172,7 @@ final class TeamCreationStepController: UIViewController {
 
         errorLabel = UILabel()
         errorLabel.textAlignment = .center
-        errorLabel.font = TeamCreationStepController.errorFont.allCaps()
+        errorLabel.font = TeamCreationStepController.errorFont
         errorLabel.textColor = UIColor.Team.errorMessageColor
         errorLabel.translatesAutoresizingMaskIntoConstraints = false
         errorViewContainer.addSubview(errorLabel)
@@ -298,7 +298,7 @@ extension TeamCreationStepController {
     }
 
     func displayError(_ error: Error) {
-        errorLabel.text = error.localizedDescription
+        errorLabel.text = error.localizedDescription.uppercased()
         self.errorViewContainer.setNeedsLayout()
     }
 

@@ -32,7 +32,7 @@ final class ButtonDescription {
 extension ButtonDescription: ViewDescriptor {
     func create() -> UIView {
         let button = UIButton()
-        button.titleLabel?.font = FontSpec(.small, .semibold).font?.allCaps()
+        button.titleLabel?.font = TeamCreationStepController.textButtonFont
         let color = UIColor.Team.textColor
         button.setTitleColor(color, for: .normal)
         button.setTitleColor(color.withAlphaComponent(0.6), for: .highlighted)
@@ -40,7 +40,7 @@ extension ButtonDescription: ViewDescriptor {
         button.contentEdgeInsets = UIEdgeInsets(top: 4, left: 12, bottom: 4, right: 12)
         button.setContentCompressionResistancePriority(UILayoutPriorityRequired, for: .horizontal)
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.setTitle(title, for: .normal)
+        button.setTitle(title.uppercased(), for: .normal)
         button.accessibilityIdentifier = self.accessibilityIdentifier
         button.addTarget(self, action: #selector(ButtonDescription.buttonTapped(_:)), for: .touchUpInside)
         return button
