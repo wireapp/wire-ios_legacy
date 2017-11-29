@@ -36,7 +36,7 @@ final class SetTeamNameStepDescription: TeamCreationStepDescription {
         subtext = "You can always change it later"
         let whatIsWire = ButtonDescription(title: "What is Wire for teams?", accessibilityIdentifier: "wire_for_teams_button")
         whatIsWire.buttonTapped = { [weak controller] in
-            let webview = SFSafariViewController(url: URL(string: "https://wire.com/en/create-team/")!)
+            let webview = SFSafariViewController(url: NSURL.wr_createTeamFeatures().wr_URLByAppendingLocaleParameter() as URL)
             controller?.present(webview, animated: true, completion: nil)
         }
         secondaryViews = [whatIsWire]

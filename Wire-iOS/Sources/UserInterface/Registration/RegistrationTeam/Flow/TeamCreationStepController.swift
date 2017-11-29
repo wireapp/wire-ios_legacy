@@ -61,6 +61,12 @@ final class TeamCreationStepController: UIViewController {
         return false
     }
 
+    override var showLoadingView: Bool {
+        didSet {
+            stepDescription.mainView.acceptsInput = !showLoadingView
+        }
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
