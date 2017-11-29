@@ -25,6 +25,7 @@ final class TeamCreationStepController: UIViewController {
     static let subtextFont = FontSpec(.normal, .regular).font!
     static let errorFont = FontSpec(.small, .semibold).font!
     static let textButtonFont = FontSpec(.small, .semibold).font!
+    let minimumSpacing: CGFloat = 5
 
     let stepDescription: TeamCreationStepDescription
 
@@ -39,7 +40,7 @@ final class TeamCreationStepController: UIViewController {
 
     private var backButton: UIView?
 
-    /// Text Field
+    /// Text Field or CharacterView
     private var mainView: UIView!
     private var secondaryViews: [UIView] = []
 
@@ -214,28 +215,27 @@ final class TeamCreationStepController: UIViewController {
                 mainViewContainer.width == view.width
                 break
             }
-
-            mainViewContainer.height >= 56
-            mainViewContainer.height == 2 * 56 ~ LayoutPriority(500) // Space for two text fields, compressed for iPhone 4s
         }
 
         constrain(view, mainViewContainer, subtextLabel, headlineLabel) { view, inputViewsContainer, subtextLabel, headlineLabel in
             headlineLabel.top >= view.topMargin + 20
             headlineLabel.bottom == subtextLabel.top - 24 ~ LayoutPriority(750)
-            headlineLabel.bottom <= subtextLabel.top - 5
+            headlineLabel.bottom <= subtextLabel.top - minimumSpacing
             headlineLabel.leading == view.leadingMargin
             headlineLabel.trailing == view.trailingMargin
 
             subtextLabel.bottom == inputViewsContainer.top - 24 ~ LayoutPriority(750)
-            subtextLabel.bottom <= inputViewsContainer.top - 5
+            subtextLabel.bottom <= inputViewsContainer.top - minimumSpacing
             subtextLabel.leading == view.leadingMargin
             subtextLabel.trailing == view.trailingMargin
         }
 
         constrain(mainViewContainer, mainView) { mainViewContainer, mainView in
+            mainViewContainer.height >= 56 + minimumSpacing
+            mainViewContainer.height == 2 * 56 ~ LayoutPriority(500) // Space for two text fields, compressed for iPhone 4s
+
             mainView.height == 56
             mainView.top == mainViewContainer.top + 56 ~ LayoutPriority(500)
-            mainView.top <= mainViewContainer.top + 5
 
             mainView.leading == mainViewContainer.leadingMargin
             mainView.trailing == mainViewContainer.trailingMargin
@@ -250,10 +250,9 @@ final class TeamCreationStepController: UIViewController {
             errorLabel.bottomMargin == errorViewContainer.bottomMargin
         }
 
-
-        headlineLabel.setContentCompressionResistancePriority(UILayoutPriorityRequired, for: .vertical)
-        subtextLabel.setContentCompressionResistancePriority(UILayoutPriorityRequired, for: .vertical)
-        errorLabel.setContentCompressionResistancePriority(UILayoutPriorityRequired, for: .vertical)
+        [headlineLabel, subtextLabel, mainView, errorLabel].forEach { view in
+            view.setContentCompressionResistancePriority(UILayoutPriorityRequired, for: .vertical)
+            }
     }
 }
 
