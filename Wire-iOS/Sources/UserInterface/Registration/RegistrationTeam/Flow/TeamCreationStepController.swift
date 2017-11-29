@@ -93,7 +93,9 @@ final class TeamCreationStepController: UIViewController {
 
     func updateKeyboardOffset(keyboardHeight: CGFloat){
         self.keyboardOffset.constant = -(keyboardHeight + 10)
-        self.view.layoutIfNeeded()
+        UIView.performWithoutAnimation {
+            self.view.layoutIfNeeded()
+        }
     }
 
     dynamic func keyboardWillShow(_ notification: Notification) {
