@@ -290,8 +290,8 @@
 "content.system.failedtosend_message_timestamp_resend" = "Resend";
 "content.system.failedtosend_message_timestamp_delete" = "Delete";
 "content.system.like_tooltip" = "Tap to like";
-"content.system.deleted_message_prefix_timestamp" = "Deleted on %@";
-"content.system.edited_message_prefix_timestamp" = "Edited on %@";
+"content.system.deleted_message_prefix_timestamp" = "Deleted: %@";
+"content.system.edited_message_prefix_timestamp" = "Edited: %@";
 "content.system.connecting_to" = "Connecting to %@.\nStart a conversation";
 "content.system.connected_to" = "Connected to %@\nStart a conversation";
 "content.system.other_wanted_to_talk" = "%@ called";
