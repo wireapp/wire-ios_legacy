@@ -27,7 +27,6 @@ import Classy
 @objc protocol ArticleViewDelegate: class {
     func articleViewWantsToOpenURL(_ articleView: ArticleView, url: URL)
     func articleViewDidLongPressView(_ articleView: ArticleView)
-    func articleViewAsksToRecalculateHeight(_ articleView: ArticleView)
 }
 
 class ArticleView: UIView {
@@ -199,15 +198,8 @@ class ArticleView: UIView {
                 ArticleView.imageCache.image(for: imageData, cacheKey: imageDataIdentifier, creationBlock: { data -> Any? in
                     return UIImage.deviceOptimizedImage(from: data)
                     }, completion: { [weak self] (image, _) in
-                        guard let `self` = self else { return }
                         if let image = image as? UIImage {
-                            self.imageView.image = image
-                            
-                            //If the link has an image, but it's not shown yet...
-                            if self.imageHeightConstraint.constant != self.imageHeight {
-                                // ... update the cell!
-                                self.delegate?.articleViewAsksToRecalculateHeight(self)
-                            }
+                            self?.imageView.image = image
                         }
                     })
             }
