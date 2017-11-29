@@ -19,7 +19,7 @@
 import XCTest
 @testable import Wire
 
-final class AccessoryTextFieldValidateionTests: XCTestCase {
+final class AccessoryTextFieldValidationTests: XCTestCase {
     var sut: AccessoryTextField!
     var mockViewController: MockViewController!
 
