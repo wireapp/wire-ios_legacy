@@ -58,7 +58,7 @@ final class TeamCreationFlowController: NSObject {
 // MARK: - Creating step controller
 extension TeamCreationFlowController {
     func createViewController(for description: TeamCreationStepDescription) -> TeamCreationStepController {
-        let mainView = description.mainViewDescription
+        let mainView = description.mainView
         mainView.valueSubmitted = { [weak self] (value: String) in
             self?.advanceState(with: value)
         }
@@ -72,16 +72,12 @@ extension TeamCreationFlowController {
             }
         }
 
-        let backButton = description.backButtonDescription
+        let backButton = description.backButton
         backButton?.buttonTapped = { [weak self] in
             self?.rewindState()
         }
 
-        let controller = TeamCreationStepController(headline: description.headline,
-                                                    subtext: description.subtext,
-                                                    mainView: mainView,
-                                                    backButton: backButton,
-                                                    secondaryViews: description.secondaryViews)
+        let controller = TeamCreationStepController(description: description)
         return controller
     }
 }
@@ -134,8 +130,15 @@ extension TeamCreationFlowController {
 
         if let description = stepDescription {
             let controller = createViewController(for: description)
-            currentController = controller
-            navigationController.pushViewController(controller, animated: true)
+            if let current = currentController, current.stepDescription.shouldSkipFromNavigation() {
+                currentController = controller
+                let withoutLast = navigationController.viewControllers.dropLast()
+                let controllers = withoutLast + [controller]
+                navigationController.setViewControllers(Array(controllers), animated: true)
+            } else {
+                currentController = controller
+                navigationController.pushViewController(controller, animated: true)
+            }
         }
     }
 

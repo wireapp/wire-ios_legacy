@@ -19,9 +19,16 @@
 import Foundation
 
 protocol TeamCreationStepDescription {
-    var backButtonDescription: BackButtonDescription? { get }
-    var mainViewDescription: ViewDescriptor & ValueSubmission { get }
+    var backButton: BackButtonDescription? { get }
+    var mainView: ViewDescriptor & ValueSubmission { get }
     var headline: String { get }
     var subtext: String? { get }
     var secondaryViews: [ViewDescriptor] { get }
+    func shouldSkipFromNavigation() -> Bool
+}
+
+extension TeamCreationStepDescription {
+    func shouldSkipFromNavigation() -> Bool {
+        return false
+    }
 }

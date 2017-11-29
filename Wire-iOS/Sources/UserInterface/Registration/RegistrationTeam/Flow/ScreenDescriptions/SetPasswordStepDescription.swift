@@ -19,23 +19,18 @@
 import Foundation
 
 final class SetPasswordStepDescription: TeamCreationStepDescription {
-    var backButtonDescription: BackButtonDescription? {
-        return BackButtonDescription()
-    }
 
-    var mainViewDescription: ViewDescriptor & ValueSubmission {
-        return TextFieldDescription(placeholder: "Password", actionDescription: "Set password", kind: .password)
-    }
+    let backButton: BackButtonDescription?
+    let mainView: ViewDescriptor & ValueSubmission
+    let headline: String
+    let subtext: String?
+    let secondaryViews: [ViewDescriptor]
 
-    var headline: String {
-        return "Set password"
-    }
-
-    var subtext: String? {
-        return "Please choose a decent password"
-    }
-
-    var secondaryViews: [ViewDescriptor] {
-        return []
+    init() {
+        backButton = BackButtonDescription()
+        mainView = TextFieldDescription(placeholder: "Password", actionDescription: "Set password", kind: .password)
+        headline = "Set password"
+        subtext = "Please choose a decent password"
+        secondaryViews = []
     }
 }
