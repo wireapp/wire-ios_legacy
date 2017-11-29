@@ -64,12 +64,13 @@ final class AccessoryTextFieldValidationTests: XCTestCase {
         // WHEN
         sut.kind = textFieldType
         sut.text = text
+
+        sut.sendActions(for: .editingChanged)
         sut.confirmButton.sendActions(for: .touchUpInside)
 
         // THEN
         XCTAssertEqual(mockViewController.errorCounter, 0, file: file, line: line)
         XCTAssertEqual(mockViewController.successCounter, 1, file: file, line: line)
-        XCTAssert(sut.confirmButton.isEnabled, file: file, line: line)
         XCTAssertEqual(mockViewController.lastError, .none, file: file, line: line)
     }
 
@@ -81,13 +82,14 @@ final class AccessoryTextFieldValidationTests: XCTestCase {
         // WHEN
         sut.kind = textFieldType
         sut.text = text
+
+        sut.sendActions(for: .editingChanged)
         sut.confirmButton.sendActions(for: .touchUpInside)
 
         // THEN
         XCTAssertEqual(mockViewController.errorCounter, 1, file: file, line: line)
         XCTAssertEqual(mockViewController.successCounter, 0, file: file, line: line)
-        XCTAssertFalse(sut.confirmButton.isEnabled, file: file, line: line)
-        XCTAssertEqual(expectedError, mockViewController.lastError, file: file, line: line)
+        XCTAssertEqual(expectedError, mockViewController.lastError, "expectedError = \(expectedError), mockViewController.lastError = \(mockViewController.lastError)", file: file, line: line)
     }
 
     // MARK: - happy cases
