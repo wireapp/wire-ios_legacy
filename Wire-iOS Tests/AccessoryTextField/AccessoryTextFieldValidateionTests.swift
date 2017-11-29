@@ -67,10 +67,9 @@ final class AccessoryTextFieldValidateionTests: XCTestCase {
         sut.confirmButton.sendActions(for: .touchUpInside)
 
         // THEN
-        XCTAssertEqual(mockViewController.errorCounter, 0, file: file, line: line)
-        XCTAssertEqual(mockViewController.successCounter, 1, file: file, line: line)
-        XCTAssert(sut.confirmButton.isEnabled, file: file, line: line)
-        XCTAssertEqual(mockViewController.lastError, .none, file: file, line: line)
+        XCTAssertEqual(mockViewController.errorCounter, 0, "Should not have an error", file: file, line: line)
+        XCTAssertEqual(mockViewController.successCounter, 1, "Should have been success", file: file, line: line)
+        XCTAssertEqual(mockViewController.lastError, .none, "Should not have error", file: file, line: line)
     }
 
     fileprivate func checkError(textFieldType: AccessoryTextField.Kind,
@@ -84,13 +83,23 @@ final class AccessoryTextFieldValidateionTests: XCTestCase {
         sut.confirmButton.sendActions(for: .touchUpInside)
 
         // THEN
-        XCTAssertEqual(mockViewController.errorCounter, 1, file: file, line: line)
-        XCTAssertEqual(mockViewController.successCounter, 0, file: file, line: line)
-        XCTAssertFalse(sut.confirmButton.isEnabled, file: file, line: line)
-        XCTAssertEqual(expectedError, mockViewController.lastError, file: file, line: line)
+        XCTAssertEqual(mockViewController.errorCounter, 1, "Should have an error", file: file, line: line)
+        XCTAssertEqual(mockViewController.successCounter, 0, "Should not have been success", file: file, line: line)
+        XCTAssertEqual(expectedError, mockViewController.lastError, "Error should be \(expectedError), was \(mockViewController.lastError)", file: file, line: line)
     }
 
     // MARK: - happy cases
+
+    func testThatConfirmButtonIsEnabledWhenThereIsText() {
+        // GIVEN
+        XCTAssertFalse(sut.confirmButton.isEnabled)
+
+        // WHEN
+        sut.insertText("some")
+
+        // THEN
+        XCTAssertTrue(sut.confirmButton.isEnabled)
+    }
 
     func testThatSucceedAfterSendEditingChangedForDefaultTextField() {
         // GIVEN
