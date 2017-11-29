@@ -92,7 +92,7 @@ final class AnalyticsMixpanelProvider: NSObject, AnalyticsProvider {
             mixpanelInstance = Mixpanel.initialize(token: MixpanelAPIKey)
         }
         super.init()
-        mixpanelInstance?.distinctId = distinctId
+        mixpanelInstance?.distinctId = mixpanelDistinctId
         mixpanelInstance?.minimumSessionDuration = 2_000
         mixpanelInstance?.loggingEnabled = false
         DDLogInfo("AnalyticsMixpanelProvider \(self) started")
@@ -107,7 +107,7 @@ final class AnalyticsMixpanelProvider: NSObject, AnalyticsProvider {
         self.setSuperProperty(MixpanelSuperProperties.region.rawValue, value: "")
     }
     
-    private var distinctId: String {
+    var mixpanelDistinctId: String {
         if let id = UserDefaults.shared().string(forKey: MixpanelDistinctIdKey) {
             return id
         }
