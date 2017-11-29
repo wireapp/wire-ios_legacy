@@ -21,29 +21,19 @@ import Foundation
 final class SetEmailStepDescription: TeamCreationStepDescription {
 
     let controller: UIViewController
+    let backButton: BackButtonDescription?
+    let mainView: ViewDescriptor & ValueSubmission
+    let headline: String
+    let subtext: String?
+    let secondaryViews: [ViewDescriptor]
 
     init(controller: UIViewController) {
         self.controller = controller
-    }
-
-    var backButtonDescription: BackButtonDescription? {
-        return BackButtonDescription()
-    }
-
-    var mainViewDescription: ViewDescriptor & ValueSubmission {
-        return TextFieldDescription(placeholder: "Email address", actionDescription: "Set e-mail", kind: .email)
-    }
-
-    var headline: String {
-        return "Set email"
-    }
-
-    var subtext: String? {
-        return nil
-    }
-
-    var secondaryViews: [ViewDescriptor] {
-        return []
+        backButton = BackButtonDescription()
+        mainView = TextFieldDescription(placeholder: "Email address", actionDescription: "Set e-mail", kind: .email)
+        headline = "Set email"
+        subtext = nil
+        secondaryViews = []
     }
 }
 

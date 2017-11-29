@@ -19,7 +19,7 @@
 import XCTest
 @testable import Wire
 
-final class AccessoryTextFieldValidationTests: XCTestCase {
+final class AccessoryTextFieldValidateionTests: XCTestCase {
     var sut: AccessoryTextField!
     var mockViewController: MockViewController!
 
@@ -64,14 +64,12 @@ final class AccessoryTextFieldValidationTests: XCTestCase {
         // WHEN
         sut.kind = textFieldType
         sut.text = text
-
-        sut.sendActions(for: .editingChanged)
         sut.confirmButton.sendActions(for: .touchUpInside)
 
         // THEN
-        XCTAssertEqual(mockViewController.errorCounter, 0, file: file, line: line)
-        XCTAssertEqual(mockViewController.successCounter, 1, file: file, line: line)
-        XCTAssertEqual(mockViewController.lastError, .none, file: file, line: line)
+        XCTAssertEqual(mockViewController.errorCounter, 0, "Should not have an error", file: file, line: line)
+        XCTAssertEqual(mockViewController.successCounter, 1, "Should have been success", file: file, line: line)
+        XCTAssertEqual(mockViewController.lastError, .none, "Should not have error", file: file, line: line)
     }
 
     fileprivate func checkError(textFieldType: AccessoryTextField.Kind,
@@ -82,17 +80,26 @@ final class AccessoryTextFieldValidationTests: XCTestCase {
         // WHEN
         sut.kind = textFieldType
         sut.text = text
-
-        sut.sendActions(for: .editingChanged)
         sut.confirmButton.sendActions(for: .touchUpInside)
 
         // THEN
-        XCTAssertEqual(mockViewController.errorCounter, 1, file: file, line: line)
-        XCTAssertEqual(mockViewController.successCounter, 0, file: file, line: line)
-        XCTAssertEqual(expectedError, mockViewController.lastError, "expectedError = \(expectedError), mockViewController.lastError = \(mockViewController.lastError)", file: file, line: line)
+        XCTAssertEqual(mockViewController.errorCounter, 1, "Should have an error", file: file, line: line)
+        XCTAssertEqual(mockViewController.successCounter, 0, "Should not have been success", file: file, line: line)
+        XCTAssertEqual(expectedError, mockViewController.lastError, "Error should be \(expectedError), was \(mockViewController.lastError)", file: file, line: line)
     }
 
     // MARK: - happy cases
+
+    func testThatConfirmButtonIsEnabledWhenThereIsText() {
+        // GIVEN
+        XCTAssertFalse(sut.confirmButton.isEnabled)
+
+        // WHEN
+        sut.insertText("some")
+
+        // THEN
+        XCTAssertTrue(sut.confirmButton.isEnabled)
+    }
 
     func testThatSucceedAfterSendEditingChangedForDefaultTextField() {
         // GIVEN

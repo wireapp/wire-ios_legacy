@@ -26,38 +26,32 @@ protocol VerifyEmailStepDescriptionDelegate: class {
 final class VerifyEmailStepDescription: TeamCreationStepDescription {
     let email: String
     weak var delegate: VerifyEmailStepDescriptionDelegate?
+    let backButton: BackButtonDescription?
+    let mainView: ViewDescriptor & ValueSubmission
+    let headline: String
+    let subtext: String?
+    let secondaryViews: [ViewDescriptor]
 
     init(email: String, delegate: VerifyEmailStepDescriptionDelegate) {
         self.email = email
         self.delegate = delegate
-    }
+        backButton = nil
+        mainView = VerificationCodeFieldDescription()
+        headline = "You've got mail"
+        subtext = "Enter the verification code we sent to \(email)"
 
-    var backButtonDescription: BackButtonDescription? {
-        return nil
-    }
-
-    var mainViewDescription: ViewDescriptor & ValueSubmission {
-        return VerificationCodeFieldDescription()
-    }
-
-    var headline: String {
-        return "You've got mail"
-    }
-
-    var subtext: String? {
-        return "Enter the verification code we sent to \(email)"
-    }
-
-    var secondaryViews: [ViewDescriptor] {
         let resendCode = ButtonDescription(title: "Resend code", accessibilityIdentifier: "resend_button")
-        resendCode.buttonTapped = { [weak self] in
-            guard let `self` = self else { return }
-            self.delegate?.resendActivationCode(to: self.email)
+        resendCode.buttonTapped = { [weak delegate] in
+            delegate?.resendActivationCode(to: email)
         }
         let changeEmail = ButtonDescription(title: "Change Email", accessibilityIdentifier: "change_email_button")
-        changeEmail.buttonTapped = { [weak self] in
-            self?.delegate?.changeEmail()
+        changeEmail.buttonTapped = { [weak delegate] in
+            delegate?.changeEmail()
         }
-        return [resendCode, changeEmail]
+        secondaryViews = [resendCode, changeEmail]
+    }
+
+    func shouldSkipFromNavigation() -> Bool {
+        return true
     }
 }
