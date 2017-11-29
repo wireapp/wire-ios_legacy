@@ -156,7 +156,7 @@ public class CharacterInputField: UIControl, UITextInputTraits {
         }
         
         override var intrinsicContentSize: CGSize {
-            return CGSize(width: parentWidth > 320 ? 50 : 44, height: 56)///TODO: test again on iPhone SE
+            return CGSize(width: parentWidth > 320 ? 50 : 44, height: 56)
         }
         
         override func didMoveToWindow() {
