@@ -41,6 +41,7 @@ final class TeamCreationFlowController: NSObject {
     weak var registrationDelegate: RegistrationViewControllerDelegate?
     var syncToken: Any?
     var sessionManagerToken: Any?
+    let tracker = AnalyticsTracker(context: AnalyticsContextRegistrationEmail)!
 
     init(navigationController: UINavigationController, registrationStatus: RegistrationStatus) {
         self.navigationController = navigationController
@@ -112,6 +113,7 @@ extension TeamCreationFlowController {
                     self?.currentController?.showLoadingView = true
                     let teamToRegister = TeamToRegister(teamName: teamName, email: email, emailCode:activationCode, fullName: fullName, password: password, accentColor: ZMUser.pickRandomAccentColor())
                     self?.registrationStatus.create(team: teamToRegister)
+                    self?.tracker.tagTeamCreationAcceptedTerms()
                 }
             }
         }
@@ -199,7 +201,7 @@ extension TeamCreationFlowController: ZMInitialSyncCompletionObserver {
 
 extension TeamCreationFlowController: RegistrationStatusDelegate {
     public func teamRegistered() {
-
+        tracker.tagTeamCreated()
     }
 
     public func teamRegistrationFailed(with error: Error) {
@@ -220,6 +222,7 @@ extension TeamCreationFlowController: RegistrationStatusDelegate {
     public func emailActivationCodeValidated() {
         currentController?.showLoadingView = false
         pushNext()
+        tracker.tagTeamCreationEmailVerified()
     }
 
     public func emailActivationCodeValidationFailed(with error: Error) {
