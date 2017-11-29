@@ -136,7 +136,7 @@ class AccessoryTextField: UITextField {
             isSecureTextEntry = true
             accessibilityIdentifier = "PasswordField"
         case .name:
-            keyboardType = .asciiCapable
+//            keyboardType = .asciiCapable
             autocapitalizationType = .words
             accessibilityIdentifier = "NameField"
         case .unknown:
