@@ -20,6 +20,7 @@ import Foundation
 import Cartography
 
 public protocol CharacterInputFieldDelegate: NSObjectProtocol {
+    func shouldAcceptChanges(_ inputField: CharacterInputField) -> Bool
     func didChangeText(_ inputField: CharacterInputField, to: String)
     func didFillInput(inputField: CharacterInputField)
 }
@@ -284,6 +285,9 @@ public class CharacterInputField: UIControl, UITextInputTraits {
 
 extension CharacterInputField: UIKeyInput {
     public func insertText(_ text: String) {
+        let shouldInsert = delegate?.shouldAcceptChanges(self) ?? true
+        guard shouldInsert else { return }
+        
         if let _ = text.rangeOfCharacter(from: CharacterSet.newlines) {
             self.resignFirstResponder()
             return
@@ -303,6 +307,10 @@ extension CharacterInputField: UIKeyInput {
         guard !self.storage.isEmpty else {
             return
         }
+
+        let shouldDelete = delegate?.shouldAcceptChanges(self) ?? true
+        guard shouldDelete else { return }
+
         notifyingDelegate {
             self.storage.removeLast()
         }

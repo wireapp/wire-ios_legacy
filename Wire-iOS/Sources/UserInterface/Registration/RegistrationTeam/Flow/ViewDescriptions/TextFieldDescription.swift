@@ -24,6 +24,7 @@ final class TextFieldDescription: NSObject, ValueSubmission {
     let kind: AccessoryTextField.Kind
     var valueSubmitted: ValueSubmitted?
     var valueValidated: ValueValidated?
+    var acceptsInput: Bool = true
     var validationError: TextFieldValidator.ValidationError
 
     fileprivate var currentValue: String = ""
@@ -58,14 +59,17 @@ extension TextFieldDescription: UITextFieldDelegate {
     }
 
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        guard acceptsInput else { return false }
         let oldValue = textField.text as NSString?
         let result = oldValue?.replacingCharacters(in: range, with: string)
         currentValue = (result as String?) ?? ""
         self.valueValidated?(.none)
+        self.validationError = .none
         return true
     }
 
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        guard acceptsInput else { return false }
         guard let text = textField.text else { return true }
         submitValue(with: text)
         return true

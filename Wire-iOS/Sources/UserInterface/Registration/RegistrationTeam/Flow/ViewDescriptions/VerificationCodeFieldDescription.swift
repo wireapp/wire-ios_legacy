@@ -22,6 +22,7 @@ import Cartography
 final class VerificationCodeFieldDescription: NSObject, ValueSubmission {
     var valueSubmitted: ValueSubmitted?
     var valueValidated: ValueValidated?
+    var acceptsInput: Bool = true
     var constraints: [NSLayoutConstraint] = []
 }
 
@@ -76,6 +77,11 @@ extension VerificationCodeFieldDescription: ViewDescriptor {
 }
 
 extension VerificationCodeFieldDescription: CharacterInputFieldDelegate {
+
+    func shouldAcceptChanges(_ inputField: CharacterInputField) -> Bool {
+        return acceptsInput
+    }
+
     func didChangeText(_ inputField: CharacterInputField, to: String) {
 
     }
