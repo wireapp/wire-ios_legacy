@@ -183,15 +183,15 @@ final class TeamCreationStepController: UIViewController {
             mainViewWidthRegular.isActive = false
             mainViewWidthCompact.isActive = true
         default:
-            mainViewWidthRegular.isActive = true
             mainViewWidthCompact.isActive = false
+            mainViewWidthRegular.isActive = true
         }
     }
 
     private func createConstraints() {
         if let backButton = backButton {
 
-            var backButtonTopMargin: CGFloat = .nan
+            var backButtonTopMargin: CGFloat
             if #available(iOS 10.0, *) {
                 backButtonTopMargin = 12
             } else {
