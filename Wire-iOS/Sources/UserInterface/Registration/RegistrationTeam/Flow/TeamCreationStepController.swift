@@ -21,10 +21,12 @@ import Cartography
 
 final class TeamCreationStepController: UIViewController {
 
-    static let headlineFont = FontSpec(.large, .light, .largeTitle).font!
-    static let subtextFont = FontSpec(.normal, .regular).font!
-    static let errorFont = FontSpec(.small, .semibold).font!
-    static let textButtonFont = FontSpec(.small, .semibold).font!
+
+    /// headline font size is fixed and not affected by dynamic type setting
+    static let headlineFont = UIFont.systemFont(ofSize: 40)
+    static let subtextFont      = FontSpec(.normal, .regular).font!
+    static let errorFont        = FontSpec(.small, .semibold).font!
+    static let textButtonFont   = FontSpec(.small, .semibold).font!
 
     let stepDescription: TeamCreationStepDescription
 
@@ -146,6 +148,9 @@ final class TeamCreationStepController: UIViewController {
         headlineLabel.textColor = UIColor.Team.textColor
         headlineLabel.text = stepDescription.headline
         headlineLabel.translatesAutoresizingMaskIntoConstraints = false
+        if #available(iOS 10.0, *) {
+            headlineLabel.adjustsFontForContentSizeCategory = false
+        } 
 
         subtextLabel = UILabel()
         subtextLabel.textAlignment = .center

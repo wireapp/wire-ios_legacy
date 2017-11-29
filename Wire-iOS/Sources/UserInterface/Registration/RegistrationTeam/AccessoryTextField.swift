@@ -40,8 +40,10 @@ class AccessoryTextField: UITextField {
     let textFieldValidator: TextFieldValidator
     public var textFieldValidationDelegate: TextFieldValidationDelegate?
 
+    // MARK:- UI constants
+
     static let enteredTextFont = FontSpec(.normal, .regular, .inputText).font!
-    static let placeholderFont = FontSpec(.small, .semibold).font!
+    static let placeholderFont = FontSpec(.small, .regular).font!
     static private let ConfirmButtonWidth: CGFloat = 32
 
     var kind: Kind {
