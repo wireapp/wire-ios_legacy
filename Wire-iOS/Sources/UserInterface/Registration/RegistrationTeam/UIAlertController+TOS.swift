@@ -17,17 +17,36 @@
 //
 
 import Foundation
+import SafariServices
+
+private final class SafariViewControllerBlockAPI: SFSafariViewController, SFSafariViewControllerDelegate {
+    public var onDismiss: (()->())? = nil
+    
+    override init(url: URL, entersReaderIfAvailable: Bool) {
+        super.init(url: url, entersReaderIfAvailable: entersReaderIfAvailable)
+        
+        self.delegate = self
+    }
+    
+    func safariViewControllerDidFinish(_ controller: SFSafariViewController) {
+        self.onDismiss?()
+    }
+}
 
 extension UIAlertController {
-    static func presentTOS(over controller: UIViewController, completion: @escaping (_ approved: Bool)->()) {
+    static func requestTOSApproval(over controller: UIViewController, completion: @escaping (_ approved: Bool)->()) {
         let alert = UIAlertController(title: "registration.terms_of_use.terms.title".localized,
                                       message: "registration.terms_of_use.terms.message".localized,
                                       preferredStyle: .alert)
-        let viewAction = UIAlertAction(title: "registration.terms_of_use.terms.view".localized, style: .default) { [weak alert, weak controller] action in
-            NSURL.wr_termsOfServices().open()
-            if let controller = controller, let alert = alert {
-                controller.present(alert, animated: true, completion: nil)
+        let viewAction = UIAlertAction(title: "registration.terms_of_use.terms.view".localized, style: .default) { [weak controller] action in
+            
+            let webViewController = SafariViewControllerBlockAPI(url: NSURL.wr_termsOfServices().wr_URLByAppendingLocaleParameter() as URL, entersReaderIfAvailable: true)
+            webViewController.onDismiss = { [weak controller] in
+                if let controller = controller {
+                    UIAlertController.requestTOSApproval(over: controller, completion: completion)
+                }
             }
+            controller?.present(webViewController, animated: true)
         }
         alert.addAction(viewAction)
         
