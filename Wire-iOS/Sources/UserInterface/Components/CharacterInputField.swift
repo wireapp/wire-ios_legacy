@@ -151,7 +151,7 @@ public class CharacterInputField: UIControl, UITextInputTraits {
         }
         
         override var intrinsicContentSize: CGSize {
-            return CGSize(width: 50, height: 56)
+            return CGSize(width: 50, height: 56)///TODO: test again on iPhone SE
         }
         
         override func didMoveToWindow() {
@@ -172,10 +172,10 @@ public class CharacterInputField: UIControl, UITextInputTraits {
     
     // MARK: - Overrides
     
-    init(maxLength: Int, characterSet: CharacterSet) {
+    init(maxLength: Int, characterSet: CharacterSet) {///TODO: width of digits
         self.maxLength = maxLength
         self.characterSet = characterSet
-        characterViews = (0..<maxLength).map { _ in CharacterView() }
+        characterViews = (0..<maxLength).map { _ in CharacterView() }///TODO: pass size to CharacterView
 
         super.init(frame: .zero)
         
