@@ -32,7 +32,7 @@ final class SetEmailStepDescription: TeamCreationStepDescription {
         backButton = BackButtonDescription()
         mainView = TextFieldDescription(placeholder: "Email address", actionDescription: "Set e-mail", kind: .email)
         headline = "Set email"
-        subtext = nil
+        subtext = " "
         secondaryViews = []
     }
 }
