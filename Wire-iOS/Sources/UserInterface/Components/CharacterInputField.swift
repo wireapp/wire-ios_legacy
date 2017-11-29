@@ -41,7 +41,6 @@ public class CharacterInputField: UIControl, UITextInputTraits {
     
     public let maxLength: Int
     public let characterSet: CharacterSet
-    public let width: CGFloat
 
     public weak var delegate: CharacterInputFieldDelegate? = .none
     private let characterViews: [CharacterView]
@@ -177,13 +176,19 @@ public class CharacterInputField: UIControl, UITextInputTraits {
     }
     
     // MARK: - Overrides
-    
-    init(maxLength: Int, characterSet: CharacterSet, width: CGFloat) {
+
+
+    /// init method with custom settings
+    ///
+    /// - Parameters:
+    ///   - maxLength: number of textfield will be created
+    ///   - characterSet: characterSet accepted
+    ///   - size: size of the view to be created (we take the width to calculate the size of each textField)
+    init(maxLength: Int, characterSet: CharacterSet, size: CGSize) {
         self.maxLength = maxLength
         self.characterSet = characterSet
-        self.width = width
 
-        characterViews = (0..<maxLength).map { _ in CharacterView(parentWidth: width) }
+        characterViews = (0..<maxLength).map { _ in CharacterView(parentWidth: size.width) }
 
         super.init(frame: .zero)
         

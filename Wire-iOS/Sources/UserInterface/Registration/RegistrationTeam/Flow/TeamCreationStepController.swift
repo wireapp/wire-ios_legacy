@@ -107,7 +107,7 @@ final class TeamCreationStepController: UIViewController {
     func updateKeyboardOffset(keyboardHeight: CGFloat) {
         self.keyboardOffset.constant = -(keyboardHeight + 10)
         UIView.performWithoutAnimation {
-            self.view.setNeedsLayout()
+            self.view.layoutIfNeeded()
         }
     }
 
@@ -282,7 +282,7 @@ final class TeamCreationStepController: UIViewController {
 
         [headlineLabel, subtextLabel, mainView, errorLabel].forEach { view in
             view.setContentCompressionResistancePriority(UILayoutPriorityRequired, for: .vertical)
-            }
+        }
         updateMainViewWidthConstraint()
     }
 }
