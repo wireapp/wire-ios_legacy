@@ -83,7 +83,7 @@ extension VerificationCodeFieldDescription: CharacterInputFieldDelegate {
     }
 
     func didChangeText(_ inputField: CharacterInputField, to: String) {
-
+        self.valueValidated?(.none)
     }
 
     func didFillInput(inputField: CharacterInputField) {
