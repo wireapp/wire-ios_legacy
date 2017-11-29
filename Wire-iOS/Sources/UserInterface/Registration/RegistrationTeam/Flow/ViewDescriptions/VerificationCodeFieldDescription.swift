@@ -53,7 +53,7 @@ fileprivate final class ResponderContainer: UIView {
 
 extension VerificationCodeFieldDescription: ViewDescriptor {
     func create() -> UIView {
-        let inputField = CharacterInputField(maxLength: 6, characterSet: .decimalDigits)
+        let inputField = CharacterInputField(maxLength: 6, characterSet: .decimalDigits, width: UIScreen.main.bounds.width)
         inputField.keyboardType = .decimalPad
         inputField.translatesAutoresizingMaskIntoConstraints = false
         inputField.delegate = self

@@ -40,6 +40,8 @@ public class CharacterInputField: UIControl, UITextInputTraits {
     
     public let maxLength: Int
     public let characterSet: CharacterSet
+    public let width: CGFloat
+
     public weak var delegate: CharacterInputFieldDelegate? = .none
     private let characterViews: [CharacterView]
     private let stackView = UIStackView()
@@ -99,7 +101,8 @@ public class CharacterInputField: UIControl, UITextInputTraits {
     class CharacterView: UIView {
         private let label = UILabel()
         private let cursorView = UIView()
-        
+        public let parentWidth: CGFloat
+
         enum CharacterInView {
             case char(Character)
             case cursor
@@ -124,7 +127,9 @@ public class CharacterInputField: UIControl, UITextInputTraits {
             }
         }
         
-        init() {
+        init(parentWidth: CGFloat) {
+            self.parentWidth = parentWidth
+
             super.init(frame: .zero)
             
             self.layer.cornerRadius = 4
@@ -151,7 +156,7 @@ public class CharacterInputField: UIControl, UITextInputTraits {
         }
         
         override var intrinsicContentSize: CGSize {
-            return CGSize(width: 50, height: 56)///TODO: test again on iPhone SE
+            return CGSize(width: parentWidth > 320 ? 50 : 44, height: 56)///TODO: test again on iPhone SE
         }
         
         override func didMoveToWindow() {
@@ -172,10 +177,12 @@ public class CharacterInputField: UIControl, UITextInputTraits {
     
     // MARK: - Overrides
     
-    init(maxLength: Int, characterSet: CharacterSet) {///TODO: width of digits
+    init(maxLength: Int, characterSet: CharacterSet, width: CGFloat) {
         self.maxLength = maxLength
         self.characterSet = characterSet
-        characterViews = (0..<maxLength).map { _ in CharacterView() }///TODO: pass size to CharacterView
+        self.width = width
+
+        characterViews = (0..<maxLength).map { _ in CharacterView(parentWidth: width) }
 
         super.init(frame: .zero)
         
