@@ -259,6 +259,7 @@ final class TeamCreationStepController: UIViewController {
 
             mainView.leading == mainViewContainer.leading
             mainView.trailing == mainViewContainer.trailing
+            mainView.bottom == mainViewContainer.bottom
         }
 
         constrain(errorViewContainer, errorLabel) { errorViewContainer, errorLabel in
