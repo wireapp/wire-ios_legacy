@@ -28,9 +28,9 @@ final class SetFullNameStepDescription: TeamCreationStepDescription {
 
     init() {
         backButton = BackButtonDescription()
-        mainView = TextFieldDescription(placeholder: "Name", actionDescription: "Set full name", kind: .name)
-        headline = "Set name"
-        subtext = "This should be your real name"
+        mainView = TextFieldDescription(placeholder: "team.full_name.textfield.placeholder".localized, actionDescription: "team.full_name.textfield.accessibility".localized, kind: .name)
+        headline = "team.full_name.headline".localized
+        subtext = nil
         secondaryViews = []
     }
 }
