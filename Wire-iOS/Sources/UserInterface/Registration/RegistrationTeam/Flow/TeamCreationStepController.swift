@@ -29,7 +29,6 @@ final class TeamCreationStepController: UIViewController {
 
     let stepDescription: TeamCreationStepDescription
 
-    private var stackView: UIStackView!
     private var headlineLabel: UILabel!
     private var subtextLabel: UILabel!
     fileprivate var errorLabel: UILabel!
@@ -102,7 +101,7 @@ final class TeamCreationStepController: UIViewController {
     func updateKeyboardOffset(keyboardHeight: CGFloat) {
         self.keyboardOffset.constant = -(keyboardHeight + 10)
         UIView.performWithoutAnimation {
-            self.view.layoutIfNeeded()
+            self.view.setNeedsLayout()
         }
     }
 
@@ -216,6 +215,7 @@ final class TeamCreationStepController: UIViewController {
             secondaryViewsStackView.height == 42 ~ LayoutPriority(500)
             secondaryViewsStackView.height >= 13
             secondaryViewsStackView.centerX == view.centerX
+            secondaryViewsStackView.width >= 0
 
             errorViewContainer.bottom == secondaryViewsStackView.top
             errorViewContainer.leading == view.leading
@@ -248,11 +248,14 @@ final class TeamCreationStepController: UIViewController {
             subtextLabel.bottom <= inputViewsContainer.top - minimumSpacing
             subtextLabel.leading == view.leadingMargin
             subtextLabel.trailing == view.trailingMargin
+            subtextLabel.height >= 19
         }
 
         constrain(mainViewContainer, mainView) { mainViewContainer, mainView in
             mainViewContainer.height >= 56 + minimumSpacing
             mainViewContainer.height == 2 * 56 ~ LayoutPriority(500) // Space for two text fields, compressed for iPhone 4s
+
+            mainViewContainer.height >= mainView.height
 
             mainView.height == 56
             mainView.top == mainViewContainer.top + 56 ~ LayoutPriority(500)
@@ -263,6 +266,7 @@ final class TeamCreationStepController: UIViewController {
         }
 
         constrain(errorViewContainer, errorLabel) { errorViewContainer, errorLabel in
+            errorLabel.height >= 30
             errorLabel.centerY == errorViewContainer.centerY
             errorLabel.leading == errorViewContainer.leadingMargin
             errorLabel.trailing == errorViewContainer.trailingMargin
