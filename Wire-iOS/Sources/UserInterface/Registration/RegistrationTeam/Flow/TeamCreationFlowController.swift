@@ -98,12 +98,15 @@ extension TeamCreationFlowController {
         case .setEmail:
             pushNext() // Pushing email step
         case let .verifyEmail(teamName: _, email: email):
+            currentController?.showLoadingView = true
             registrationStatus.sendActivationCode(to: email) // Sending activation code to email
         case let .setFullName(teamName: _, email: email, activationCode: activationCode):
+            currentController?.showLoadingView = true
             registrationStatus.checkActivationCode(email: email, code: activationCode)
         case .setPassword:
             pushNext()
         case let .createTeam(teamName: teamName, email: email, activationCode: activationCode, fullName: fullName, password: password):
+            currentController?.showLoadingView = true
             let teamToRegister = TeamToRegister(teamName: teamName, email: email, emailCode:activationCode, fullName: fullName, password: password, accentColor: ZMUser.pickRandomAccentColor())
             registrationStatus.create(team: teamToRegister)
         }
@@ -167,6 +170,7 @@ extension TeamCreationFlowController {
 
 extension TeamCreationFlowController: VerifyEmailStepDescriptionDelegate {
     func resendActivationCode(to email: String) {
+        currentController?.showLoadingView = true
         registrationStatus.sendActivationCode(to: email)
     }
 
@@ -183,6 +187,7 @@ extension TeamCreationFlowController: SessionManagerCreatedSessionObserver {
 
 extension TeamCreationFlowController: ZMInitialSyncCompletionObserver {
     func initialSyncCompleted() {
+        currentController?.showLoadingView = false
         registrationDelegate?.registrationViewControllerDidCompleteRegistration()
     }
 }
@@ -193,22 +198,27 @@ extension TeamCreationFlowController: RegistrationStatusDelegate {
     }
 
     public func teamRegistrationFailed(with error: Error) {
+        currentController?.showLoadingView = false
         currentController?.displayError(error)
     }
 
     public func emailActivationCodeSent() {
+        currentController?.showLoadingView = false
         pushNext()
     }
 
     public func emailActivationCodeSendingFailed(with error: Error) {
+        currentController?.showLoadingView = false
         currentController?.displayError(error)
     }
 
     public func emailActivationCodeValidated() {
+        currentController?.showLoadingView = false
         pushNext()
     }
 
     public func emailActivationCodeValidationFailed(with error: Error) {
+        currentController?.showLoadingView = false
         currentController?.displayError(error)
     }
 
