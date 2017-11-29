@@ -263,8 +263,8 @@ final class TeamCreationStepController: UIViewController {
             mainView.top == mainViewContainer.top + 56 ~ LayoutPriority(500)
             mainView.top <= mainViewContainer.top + 5
 
-            mainView.leading == mainViewContainer.leadingMargin
-            mainView.trailing == mainViewContainer.trailingMargin
+            mainView.leading == mainViewContainer.leading
+            mainView.trailing == mainViewContainer.trailing
         }
 
         constrain(errorViewContainer, errorLabel) { errorViewContainer, errorLabel in
