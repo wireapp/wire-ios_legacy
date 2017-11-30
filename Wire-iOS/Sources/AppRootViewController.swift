@@ -186,7 +186,7 @@ class AppRootViewController : UIViewController {
             launchImageViewController.showLoadingScreen()
             viewController = launchImageViewController
         case .unauthenticated(error: let error):
-            UIColor.setAccentOverride(ZMUser.pickRandomAccentColor())
+            UIColor.setAccentOverride(ZMUser.pickRandomAcceptableAccentColor())
             mainWindow.tintColor = UIColor.accent()
             let authenticatedAccounts = SessionManager.shared?.accountManager.accounts.filter { $0.isAuthenticated } ?? []
 
