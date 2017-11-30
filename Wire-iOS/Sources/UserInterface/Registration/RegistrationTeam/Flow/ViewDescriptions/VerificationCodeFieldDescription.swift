@@ -55,7 +55,9 @@ fileprivate final class ResponderContainer: UIView {
 extension VerificationCodeFieldDescription: ViewDescriptor {
     func create() -> UIView {
 
-        let size = CGSize(width: UIScreen.main.bounds.size.width, height: TeamCreationStepController.mainViewHeight)
+        /// get the with from keyWindow for iPad non full screen modes.
+        let width = UIApplication.shared.keyWindow?.frame.width ?? UIScreen.main.bounds.size.width
+        let size = CGSize(width: width, height: TeamCreationStepController.mainViewHeight)
 
         let inputField = CharacterInputField(maxLength: 6, characterSet: .decimalDigits, size: size)
         inputField.keyboardType = .decimalPad
