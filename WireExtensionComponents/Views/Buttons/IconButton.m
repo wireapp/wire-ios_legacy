@@ -53,7 +53,7 @@
     
     IconDefinition *objectIconDefinition = (IconDefinition *)object;
     
-    if (objectIconDefinition.iconType == self.iconType && 
+    if (objectIconDefinition.iconType == self.iconType &&
         objectIconDefinition.iconSize == self.iconSize &&
         objectIconDefinition.renderingMode == self.renderingMode) {
         return YES;
@@ -363,7 +363,13 @@
 
         self.layer.mask = maskLayer;
 
-        self.layer.cornerRadius = radius;
+        /// When the button has border, set self.layer.cornerRadius to prevent border is covered by icon
+        if (self.borderWidth > 0) {
+            self.layer.cornerRadius = radius;
+        }
+        else {
+            self.layer.cornerRadius = 0;
+        }
     }
 }
 

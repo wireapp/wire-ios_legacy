@@ -27,6 +27,8 @@ final class AccessoryTextFieldTests: ZMSnapshotTestCase {
         super.setUp()
         sut = AccessoryTextField()
         sut.frame = CGRect(x: 0, y: 0, width: 375, height: 56)
+
+//        recordMode = true
     }
 
     override func tearDown() {
