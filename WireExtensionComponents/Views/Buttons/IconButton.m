@@ -362,6 +362,8 @@
         maskLayer.path = maskPath.CGPath;
 
         self.layer.mask = maskLayer;
+
+        self.layer.cornerRadius = radius;
     }
 }
 
