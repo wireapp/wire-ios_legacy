@@ -23,7 +23,7 @@ final class TeamCreationStepController: UIViewController {
 
 
     /// headline font size is fixed and not affected by dynamic type setting
-    static let headlineFont = UIFont.systemFont(ofSize: 40)
+    static let headlineFont     = UIFont.systemFont(ofSize: 40, weight: UIFontWeightLight)
     static let subtextFont      = FontSpec(.normal, .regular).font!
     static let errorFont        = FontSpec(.small, .semibold).font!
     static let textButtonFont   = FontSpec(.small, .semibold).font!

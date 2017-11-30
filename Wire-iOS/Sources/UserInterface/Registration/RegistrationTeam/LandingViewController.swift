@@ -50,7 +50,7 @@ final class LandingViewController: UIViewController {
         let alignCenterStyle = NSMutableParagraphStyle()
         alignCenterStyle.alignment = NSTextAlignment.center
 
-        let lightFont = FontSpec(.large, .light).font!
+        let lightFont = FontSpec(.normal, .light).font!
 
         return [NSForegroundColorAttributeName: UIColor.Team.textColor, NSParagraphStyleAttributeName: alignCenterStyle, NSFontAttributeName:lightFont]
     }()
