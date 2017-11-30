@@ -83,13 +83,13 @@ class TextMessageCellTests: ZMSnapshotTestCase {
         verify(view: sut.prepareForSnapshot())
     }
 
-    func DISABLED_testThatItRendersEditedTimestampCorrectly_Selected() {
+    func testThatItRendersEditedTimestampCorrectly_Selected() {
         sut.setSelected(true, animated: false)
         sut.configure(for: mockMessage(edited: true), layoutProperties: layoutProperties)
         verify(view: sut.prepareForSnapshot())
     }
     
-    func DISABLED_testThatItRendersEditedTimestampCorrectly_Selected_LongText() {
+    func testThatItRendersEditedTimestampCorrectly_Selected_LongText() {
         let text = "".padding(toLength: 70, withPad: "Hello ", startingAt: 0)
         sut.setSelected(true, animated: false)
         sut.configure(for: mockMessage(text, edited: true), layoutProperties: layoutProperties)
