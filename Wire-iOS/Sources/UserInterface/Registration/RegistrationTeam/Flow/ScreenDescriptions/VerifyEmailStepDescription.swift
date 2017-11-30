@@ -37,14 +37,14 @@ final class VerifyEmailStepDescription: TeamCreationStepDescription {
         self.delegate = delegate
         backButton = nil
         mainView = VerificationCodeFieldDescription()
-        headline = "You've got mail"
-        subtext = "Enter the verification code we sent to \(email)"
+        headline = "team.activation_code.headline".localized
+        subtext = "team.activation_code.subheadline".localized(args: email)
 
-        let resendCode = ButtonDescription(title: "Resend code", accessibilityIdentifier: "resend_button")
+        let resendCode = ButtonDescription(title: "team.activation_code.button.resend".localized, accessibilityIdentifier: "resend_button")
         resendCode.buttonTapped = { [weak delegate] in
             delegate?.resendActivationCode(to: email)
         }
-        let changeEmail = ButtonDescription(title: "Change Email", accessibilityIdentifier: "change_email_button")
+        let changeEmail = ButtonDescription(title: "team.activation_code.button.change_email".localized, accessibilityIdentifier: "change_email_button")
         changeEmail.buttonTapped = { [weak delegate] in
             delegate?.changeEmail()
         }

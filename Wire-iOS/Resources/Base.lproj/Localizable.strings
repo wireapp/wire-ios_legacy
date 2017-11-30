@@ -800,7 +800,26 @@
 "team.name.headline" = "Name your team";
 "team.name.subheadline" = "You can always change it later.";
 "team.name.textfield.placeholder" = "team name";
+"team.name.textfield.accessibility" = "Set team name";
 "team.name.whatiswireforteams" = "What is Wire for teams?";
+
+"team.email.headline" = "Your account";
+"team.email.textfield.placeholder" = "you@yourcompany.com";
+"team.email.textfield.accessibility" = "Your company email";
+
+"team.activation_code.headline" = "You've got mail";
+"team.activation_code.subheadline" = "Enter the verification code we sent to %@";
+"team.activation_code.button.resend" = "Resend code";
+"team.activation_code.button.change_email" = "Change email";
+
+"team.full_name.headline" = "Your name";
+"team.full_name.textfield.placeholder" = "Full name";
+"team.full_name.textfield.accessibility" = "Set full name";
+
+"team.password.headline" = "Set password";
+"team.password.textfield.placeholder" = "At least 8 characters";
+"team.password.textfield.accessibility" = "Set password, at least 8 characters";
+
 
 "team.email_code.input_field.accessbility_label" = "Please enter the six-digit code from the email.";
 

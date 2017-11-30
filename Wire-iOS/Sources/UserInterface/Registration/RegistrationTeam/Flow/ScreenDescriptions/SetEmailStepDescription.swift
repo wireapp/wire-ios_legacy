@@ -30,8 +30,8 @@ final class SetEmailStepDescription: TeamCreationStepDescription {
     init(controller: UIViewController) {
         self.controller = controller
         backButton = BackButtonDescription()
-        mainView = TextFieldDescription(placeholder: "Email address", actionDescription: "Set e-mail", kind: .email)
-        headline = "Set email"
+        mainView = TextFieldDescription(placeholder: "team.email.textfield.placeholder".localized, actionDescription: "team.email.textfield.accessibility".localized, kind: .email)
+        headline = "team.email.headline".localized
         subtext = nil
         secondaryViews = []
     }
