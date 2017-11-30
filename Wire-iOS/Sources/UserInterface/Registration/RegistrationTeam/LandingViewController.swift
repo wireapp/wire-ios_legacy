@@ -49,6 +49,7 @@ final class LandingViewController: UIViewController {
     static let buttonSubtitleAttribute: [String: Any] = {
         let alignCenterStyle = NSMutableParagraphStyle()
         alignCenterStyle.alignment = NSTextAlignment.center
+        alignCenterStyle.paragraphSpacingBefore = 4
 
         let lightFont = FontSpec(.normal, .light).font!
 
@@ -77,9 +78,8 @@ final class LandingViewController: UIViewController {
     let createAccountButton: LandingButton = {
         let title = "landing.create_account.title".localized && LandingViewController.buttonTitleAttribute
         let subtitle = ("\n" + "landing.create_account.subtitle".localized) && LandingViewController.buttonSubtitleAttribute
-        let twoLineTitle = title + subtitle
 
-        let button = LandingButton(title: twoLineTitle, icon: .selfProfile, iconBackgroundColor: UIColor.Team.createAccountBlue)
+        let button = LandingButton(title: title + subtitle, icon: .selfProfile, iconBackgroundColor: UIColor.Team.createAccountBlue)
         button.accessibilityIdentifier = "CreateAccountButton"
         button.addTarget(self, action: #selector(LandingViewController.createAccountButtonTapped(_:)), for: .touchUpInside)
 
@@ -176,7 +176,7 @@ final class LandingViewController: UIViewController {
             loginHintsLabel.top == loginButton.top - 16
             loginHintsLabel.centerX == selfView.centerX
 
-            loginButton.top == loginHintsLabel.bottom
+            loginButton.top == loginHintsLabel.bottom + 4
             loginButton.centerX == selfView.centerX
             loginButton.bottom == selfView.bottomMargin - 32 ~ LayoutPriority(500)
         }
