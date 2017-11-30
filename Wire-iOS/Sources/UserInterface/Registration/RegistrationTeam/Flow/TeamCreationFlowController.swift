@@ -111,7 +111,7 @@ extension TeamCreationFlowController {
             UIAlertController.requestTOSApproval(over: navigationController) { [weak self] accepted in
                 if accepted {
                     self?.currentController?.showLoadingView = true
-                    let teamToRegister = TeamToRegister(teamName: teamName, email: email, emailCode:activationCode, fullName: fullName, password: password, accentColor: ZMUser.pickRandomAccentColor())
+                    let teamToRegister = TeamToRegister(teamName: teamName, email: email, emailCode:activationCode, fullName: fullName, password: password, accentColor: ZMUser.pickRandomAcceptableAccentColor())
                     self?.registrationStatus.create(team: teamToRegister)
                     self?.tracker.tagTeamCreationAcceptedTerms()
                 }
