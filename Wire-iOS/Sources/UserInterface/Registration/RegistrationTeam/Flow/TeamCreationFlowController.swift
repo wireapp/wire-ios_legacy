@@ -211,7 +211,15 @@ extension TeamCreationFlowController: RegistrationStatusDelegate {
 
     public func emailActivationCodeSent() {
         currentController?.showLoadingView = false
-        pushNext()
+
+        switch currentState {
+        case .setEmail:
+            pushNext()
+        case .verifyEmail:
+            currentController?.clearError()
+        default:
+            break
+        }
     }
 
     public func emailActivationCodeSendingFailed(with error: Error) {
