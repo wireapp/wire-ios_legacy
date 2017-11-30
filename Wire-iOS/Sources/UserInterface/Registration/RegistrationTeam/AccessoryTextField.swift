@@ -54,7 +54,7 @@ class AccessoryTextField: UITextField {
     }
 
     let confirmButton: IconButton = {
-        let iconButton = IconButton.iconButtonCircular()
+        let iconButton = IconButton.iconButtonCircularLight()
         iconButton.circular = true
 
         iconButton.setIcon(UIApplication.isLeftToRightLayout ? .chevronRight : .chevronLeft, with: ZetaIconSize.tiny, for: .normal)
