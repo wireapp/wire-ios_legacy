@@ -142,7 +142,7 @@ public class CharacterInputField: UIControl, UITextInputTraits {
     /// - Parameters:
     ///   - maxLength: number of textfield will be created
     ///   - characterSet: characterSet accepted
-    ///   - size: size of the view to be created (we take the width to calculate the size of each textField)
+    ///   - size: size of the view to be created (we take the width to calculate the size of each textField, the height for each textField's height)
     init(maxLength: Int, characterSet: CharacterSet, size: CGSize) {
         self.maxLength = maxLength
         self.characterSet = characterSet
