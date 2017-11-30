@@ -349,7 +349,19 @@
 - (void)updateCircularCornerRadius
 {
     if (self.circular) {
-        self.layer.cornerRadius = self.bounds.size.height / 2;
+
+        /// Create a circular mask. It would also mask subviews.
+
+        CGFloat radius = self.bounds.size.height / 2;
+        UIBezierPath *maskPath = [UIBezierPath bezierPathWithRoundedRect:self.bounds
+                                                       byRoundingCorners:UIRectCornerAllCorners
+                                                             cornerRadii:CGSizeMake(radius, radius)];
+
+        CAShapeLayer *maskLayer = [CAShapeLayer layer];
+        maskLayer.frame = self.bounds;
+        maskLayer.path = maskPath.CGPath;
+
+        self.layer.mask = maskLayer;
     }
 }
 
