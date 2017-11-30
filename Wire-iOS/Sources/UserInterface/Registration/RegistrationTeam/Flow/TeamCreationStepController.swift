@@ -216,10 +216,13 @@ final class TeamCreationStepController: UIViewController {
                 backButtonTopMargin = 32
             }
 
+            let backButtonSize = UIImage.size(for: .tiny)
+
             constrain(view, backButton, headlineLabel) { view, backButton, headlineLabel in
                 backButton.leading == view.leading + 16
                 backButton.top == view.topMargin + backButtonTopMargin
-                backButton.height == 20
+                backButton.height == backButtonSize
+                backButton.height == backButton.width
 
                 headlineLabel.top >= backButton.bottomMargin + 20
             }
