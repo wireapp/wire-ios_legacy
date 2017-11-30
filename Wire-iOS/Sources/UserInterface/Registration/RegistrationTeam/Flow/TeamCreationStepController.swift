@@ -21,14 +21,18 @@ import Cartography
 
 final class TeamCreationStepController: UIViewController {
 
-    static let headlineFont = FontSpec(.large, .light, .largeTitle).font!
-    static let subtextFont = FontSpec(.normal, .regular).font!
-    static let errorFont = FontSpec(.small, .semibold).font!
-    static let textButtonFont = FontSpec(.small, .semibold).font!
-    let minimumSpacing: CGFloat = 5
+
+    /// headline font size is fixed and not affected by dynamic type setting
+    static let headlineFont = UIFont.systemFont(ofSize: 40)
+    static let subtextFont      = FontSpec(.normal, .regular).font!
+    static let errorFont        = FontSpec(.small, .semibold).font!
+    static let textButtonFont   = FontSpec(.small, .semibold).font!
+
+    static let mainViewHeight: CGFloat = 56
 
     let stepDescription: TeamCreationStepDescription
 
+    private var stackView: UIStackView!
     private var headlineLabel: UILabel!
     private var subtextLabel: UILabel!
     fileprivate var errorLabel: UILabel!
@@ -39,7 +43,7 @@ final class TeamCreationStepController: UIViewController {
 
     private var backButton: UIView?
 
-    /// Text Field or CharacterView
+    /// Text Field
     private var mainView: UIView!
     private var secondaryViews: [UIView] = []
 
@@ -74,16 +78,11 @@ final class TeamCreationStepController: UIViewController {
 
         createViews()
         createConstraints()
-
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(_:)), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
-
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillChangeFrame(_:)), name: NSNotification.Name.UIKeyboardWillChangeFrame, object: nil)
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-
+        observeKeyboard()
         UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(animated)
         mainView.becomeFirstResponder()
 
@@ -103,6 +102,12 @@ final class TeamCreationStepController: UIViewController {
     }
 
     // MARK: - Keyboard shown/hide
+    
+    private func observeKeyboard() {
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(_:)), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillChangeFrame(_:)), name: NSNotification.Name.UIKeyboardWillChangeFrame, object: nil)
+    }
 
     func updateKeyboardOffset(keyboardHeight: CGFloat) {
         self.keyboardOffset.constant = -(keyboardHeight + 10)
@@ -145,6 +150,9 @@ final class TeamCreationStepController: UIViewController {
         headlineLabel.textColor = UIColor.Team.textColor
         headlineLabel.text = stepDescription.headline
         headlineLabel.translatesAutoresizingMaskIntoConstraints = false
+        if #available(iOS 10.0, *) {
+            headlineLabel.adjustsFontForContentSizeCategory = false
+        } 
 
         subtextLabel = UILabel()
         subtextLabel.textAlignment = .center
@@ -166,7 +174,7 @@ final class TeamCreationStepController: UIViewController {
 
         errorLabel = UILabel()
         errorLabel.textAlignment = .center
-        errorLabel.font = TeamCreationStepController.errorFont.allCaps()
+        errorLabel.font = TeamCreationStepController.errorFont
         errorLabel.textColor = UIColor.Team.errorMessageColor
         errorLabel.translatesAutoresizingMaskIntoConstraints = false
         errorViewContainer.addSubview(errorLabel)
@@ -221,7 +229,6 @@ final class TeamCreationStepController: UIViewController {
             secondaryViewsStackView.height == 42 ~ LayoutPriority(500)
             secondaryViewsStackView.height >= 13
             secondaryViewsStackView.centerX == view.centerX
-            secondaryViewsStackView.width >= 0
 
             errorViewContainer.bottom == secondaryViewsStackView.top
             errorViewContainer.leading == view.leading
@@ -241,48 +248,46 @@ final class TeamCreationStepController: UIViewController {
             default:
                 mainViewContainer.width == view.width
             }
+
         }
 
         constrain(view, mainViewContainer, subtextLabel, headlineLabel) { view, inputViewsContainer, subtextLabel, headlineLabel in
             headlineLabel.top >= view.topMargin + 20
             headlineLabel.bottom == subtextLabel.top - 24 ~ LayoutPriority(750)
-            headlineLabel.bottom <= subtextLabel.top - minimumSpacing
             headlineLabel.leading == view.leadingMargin
             headlineLabel.trailing == view.trailingMargin
 
-            subtextLabel.bottom == inputViewsContainer.top - 24 ~ LayoutPriority(750)
-            subtextLabel.bottom <= inputViewsContainer.top - minimumSpacing
+            subtextLabel.top >= headlineLabel.bottom + 5
             subtextLabel.leading == view.leadingMargin
             subtextLabel.trailing == view.trailingMargin
             subtextLabel.height >= 19
+
+            inputViewsContainer.top >= subtextLabel.bottom + 5
+            inputViewsContainer.top == subtextLabel.bottom + 80 ~ LayoutPriority(800)
         }
 
         constrain(mainViewContainer, mainView) { mainViewContainer, mainView in
-            mainViewContainer.height >= 56 + minimumSpacing
-            mainViewContainer.height == 2 * 56 ~ LayoutPriority(500) // Space for two text fields, compressed for iPhone 4s
+            mainView.height == TeamCreationStepController.mainViewHeight
 
-            mainViewContainer.height >= mainView.height
-
-            mainView.height == 56
-            mainView.top == mainViewContainer.top + 56 ~ LayoutPriority(500)
-
+            mainView.top == mainViewContainer.top
             mainView.leading == mainViewContainer.leading
             mainView.trailing == mainViewContainer.trailing
             mainView.bottom == mainViewContainer.bottom
         }
 
         constrain(errorViewContainer, errorLabel) { errorViewContainer, errorLabel in
-            errorLabel.height >= 30
             errorLabel.centerY == errorViewContainer.centerY
             errorLabel.leading == errorViewContainer.leadingMargin
             errorLabel.trailing == errorViewContainer.trailingMargin
             errorLabel.topMargin == errorViewContainer.topMargin
             errorLabel.bottomMargin == errorViewContainer.bottomMargin
+            errorLabel.height >= 19
         }
 
-        [headlineLabel, subtextLabel, mainView, errorLabel].forEach { view in
-            view.setContentCompressionResistancePriority(UILayoutPriorityRequired, for: .vertical)
-        }
+        headlineLabel.setContentCompressionResistancePriority(UILayoutPriorityRequired, for: .vertical)
+        subtextLabel.setContentCompressionResistancePriority(UILayoutPriorityRequired, for: .vertical)
+        errorLabel.setContentCompressionResistancePriority(UILayoutPriorityRequired, for: .vertical)
+
         updateMainViewWidthConstraint()
     }
 }
@@ -295,7 +300,7 @@ extension TeamCreationStepController {
     }
 
     func displayError(_ error: Error) {
-        errorLabel.text = error.localizedDescription
+        errorLabel.text = error.localizedDescription.uppercased()
         self.errorViewContainer.setNeedsLayout()
     }
 

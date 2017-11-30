@@ -41,7 +41,6 @@ public class CharacterInputField: UIControl, UITextInputTraits {
     
     public let maxLength: Int
     public let characterSet: CharacterSet
-
     public weak var delegate: CharacterInputFieldDelegate? = .none
     private let characterViews: [CharacterView]
     private let stackView = UIStackView()
@@ -66,10 +65,7 @@ public class CharacterInputField: UIControl, UITextInputTraits {
             let characterView = characterViews[index]
             
             if let character = storage.characters.count > index ? storage[storage.index(storage.startIndex, offsetBy: index)] : nil {
-                characterView.character = .char(character)
-            }
-            else if storage.characters.count == index && isFirstResponder {
-                characterView.character = .cursor
+                characterView.character = character
             }
             else {
                 characterView.character = .none
@@ -100,35 +96,22 @@ public class CharacterInputField: UIControl, UITextInputTraits {
     
     class CharacterView: UIView {
         private let label = UILabel()
-        private let cursorView = UIView()
-        public let parentWidth: CGFloat
+        public let parentSize: CGSize
 
-        enum CharacterInView {
-            case char(Character)
-            case cursor
-            case none
-        }
-        
-        var character: CharacterInView = .none {
+        var character: Character? = .none {
             didSet {
-                switch character {
-                case .char(let character):
+                if let character = self.character {
                     label.text = String(character)
                     label.isHidden = false
-                    cursorView.isHidden = true
-                case .cursor:
+                }
+                else {
                     label.isHidden = true
-                    cursorView.isHidden = false
-                    self.startCursorAnimationIfNeeded()
-                case .none:
-                    label.isHidden = true
-                    cursorView.isHidden = true
                 }
             }
         }
         
-        init(parentWidth: CGFloat) {
-            self.parentWidth = parentWidth
+        init(parentSize: CGSize) {
+            self.parentSize = parentSize
 
             super.init(frame: .zero)
             
@@ -137,18 +120,10 @@ public class CharacterInputField: UIControl, UITextInputTraits {
             
             label.font = UIFont.systemFont(ofSize: 32)
             self.addSubview(label)
-            cursorView.backgroundColor = .accent()
-            self.addSubview(cursorView)
-            cursorView.isHidden = true
             
-            constrain(self, label, cursorView) { selfView, label, cursorView in
+            constrain(self, label) { selfView, label in
                 label.center == selfView.center
-                cursorView.width == 2
-                cursorView.height == 36
-                cursorView.center == selfView.center
             }
-            
-            NotificationCenter.default.addObserver(self, selector: #selector(applicationDidBecomeActive), name: NSNotification.Name.UIApplicationDidBecomeActive, object: nil)
         }
         
         required init?(coder aDecoder: NSCoder) {
@@ -156,28 +131,12 @@ public class CharacterInputField: UIControl, UITextInputTraits {
         }
         
         override var intrinsicContentSize: CGSize {
-            return CGSize(width: parentWidth > 320 ? 50 : 44, height: 56)
-        }
-        
-        override func didMoveToWindow() {
-            super.didMoveToWindow()
-            self.startCursorAnimationIfNeeded()
-        }
-        
-        private func startCursorAnimationIfNeeded() {
-            if !cursorView.isHidden && cursorView.layer.animation(forKey: "blinkAnimation") == nil {
-                cursorView.layer.add(.cursorBlinkAnimation(), forKey: "blinkAnimation")
-            }
-        }
-        
-        @objc fileprivate func applicationDidBecomeActive(_ sender: Any?) {
-            self.startCursorAnimationIfNeeded()
+            return CGSize(width: parentSize.width > 320 ? 50 : 44, height: parentSize.height)
         }
     }
     
     // MARK: - Overrides
-
-
+    
     /// init method with custom settings
     ///
     /// - Parameters:
@@ -187,8 +146,7 @@ public class CharacterInputField: UIControl, UITextInputTraits {
     init(maxLength: Int, characterSet: CharacterSet, size: CGSize) {
         self.maxLength = maxLength
         self.characterSet = characterSet
-
-        characterViews = (0..<maxLength).map { _ in CharacterView(parentWidth: size.width) }
+        characterViews = (0..<maxLength).map { _ in CharacterView(parentSize: size) }
 
         super.init(frame: .zero)
         

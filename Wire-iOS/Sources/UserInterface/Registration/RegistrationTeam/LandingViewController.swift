@@ -80,7 +80,7 @@ final class LandingViewController: UIViewController {
         let twoLineTitle = title + subtitle
 
         let button = LandingButton(title: twoLineTitle, icon: .selfProfile, iconBackgroundColor: UIColor.Team.createAccountBlue)
-
+        button.accessibilityIdentifier = "CreateAccountButton"
         button.addTarget(self, action: #selector(LandingViewController.createAccountButtonTapped(_:)), for: .touchUpInside)
 
         return button
@@ -94,7 +94,7 @@ final class LandingViewController: UIViewController {
         let subtitle = ("\n" + "landing.create_team.subtitle".localized) && LandingViewController.buttonSubtitleAttribute
 
         let button = LandingButton(title: title + subtitle, icon: .team, iconBackgroundColor: UIColor.Team.createTeamGreen)
-
+        button.accessibilityIdentifier = "CreateTeamButton"
         button.addTarget(self, action: #selector(LandingViewController.createTeamButtonTapped(_:)), for: .touchUpInside)
 
         return button
@@ -115,6 +115,7 @@ final class LandingViewController: UIViewController {
     let loginButton: UIButton = {
         let button = UIButton()
         button.setTitle("landing.login.button.title".localized, for: .normal)
+        button.accessibilityIdentifier = "LoginButton"
         button.setTitleColor(UIColor.Team.textColor, for: .normal)
         button.titleLabel?.font = LandingViewController.semiboldFont
 

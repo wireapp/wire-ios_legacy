@@ -31,10 +31,10 @@ final class SetTeamNameStepDescription: TeamCreationStepDescription {
     init(controller: UIViewController) {
         self.controller = controller
         backButton = BackButtonDescription()
-        mainView = TextFieldDescription(placeholder: "Team name", actionDescription: "Set team name", kind: .name)
-        headline = "Set team name"
-        subtext = "You can always change it later"
-        let whatIsWire = ButtonDescription(title: "What is Wire for teams?", accessibilityIdentifier: "wire_for_teams_button")
+        mainView = TextFieldDescription(placeholder: "team.name.textfield.placeholder".localized, actionDescription: "team.name.textfield.accessibility".localized, kind: .name)
+        headline = "team.name.headline".localized
+        subtext = "team.name.subheadline".localized
+        let whatIsWire = ButtonDescription(title: "team.name.whatiswireforteams".localized, accessibilityIdentifier: "wire_for_teams_button")
         whatIsWire.buttonTapped = { [weak controller] in
             let webview = SFSafariViewController(url: NSURL.wr_createTeamFeatures().wr_URLByAppendingLocaleParameter() as URL)
             controller?.present(webview, animated: true, completion: nil)

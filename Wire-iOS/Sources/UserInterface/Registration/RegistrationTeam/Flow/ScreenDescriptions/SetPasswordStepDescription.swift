@@ -28,9 +28,9 @@ final class SetPasswordStepDescription: TeamCreationStepDescription {
 
     init() {
         backButton = BackButtonDescription()
-        mainView = TextFieldDescription(placeholder: "Password", actionDescription: "Set password", kind: .password)
-        headline = "Set password"
-        subtext = "Please choose a decent password"
+        mainView = TextFieldDescription(placeholder: "team.password.textfield.placeholder".localized, actionDescription: "team.password.textfield.accessibility".localized, kind: .password)
+        headline = "team.password.headline".localized
+        subtext = nil
         secondaryViews = []
     }
 }

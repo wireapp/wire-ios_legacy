@@ -40,12 +40,12 @@ class AccessoryTextField: UITextField {
     let textFieldValidator: TextFieldValidator
     public var textFieldValidationDelegate: TextFieldValidationDelegate?
 
+    // MARK:- UI constants
+
     static let enteredTextFont = FontSpec(.normal, .regular, .inputText).font!
-    static let placeholderFont = FontSpec(.small, .semibold).font!
+    static let placeholderFont = FontSpec(.small, .regular).font!
     static private let ConfirmButtonWidth: CGFloat = 32
-    let buttonXOffset: CGFloat = 16
-    let textInsets: UIEdgeInsets = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 8)
-    let placeholderInsets: UIEdgeInsets
+    private var allCaps: Bool = true
 
     var kind: Kind {
         didSet {
@@ -60,7 +60,7 @@ class AccessoryTextField: UITextField {
         iconButton.setIcon(UIApplication.isLeftToRightLayout ? .chevronRight : .chevronLeft, with: ZetaIconSize.searchBar, for: .normal)
         iconButton.setIconColor(UIColor.Team.textColor, for: .normal)
         iconButton.setIconColor(UIColor.Team.textfieldColor, for: .disabled)
-
+        iconButton.adjustsImageWhenDisabled = false
         iconButton.setBackgroundImageColor(UIColor.Team.activeButtonColor, for: .normal)
         iconButton.setBackgroundImageColor(UIColor.Team.inactiveButtonColor, for: .disabled)
 
@@ -70,6 +70,9 @@ class AccessoryTextField: UITextField {
 
         return iconButton
     }()
+
+    let textInsets: UIEdgeInsets = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 8)
+    let placeholderInsets: UIEdgeInsets
 
     /// Init with kind for keyboard style and validator type. Default is .unknown
     ///
@@ -132,11 +135,11 @@ class AccessoryTextField: UITextField {
             autocorrectionType = .no
             autocapitalizationType = .none
             accessibilityIdentifier = "EmailField"
+            allCaps = false
         case .password:
             isSecureTextEntry = true
             accessibilityIdentifier = "PasswordField"
         case .name:
-            keyboardType = .asciiCapable
             autocapitalizationType = .words
             accessibilityIdentifier = "NameField"
         case .unknown:
@@ -145,8 +148,18 @@ class AccessoryTextField: UITextField {
     }
 
     private func setup() {
+        createConstraints()
+
         self.confirmButton.addTarget(self, action: #selector(confirmButtonTapped(button:)), for: .touchUpInside)
         self.addTarget(self, action: #selector(textFieldDidChange(textField:)), for: .editingChanged)
+    }
+
+    private func createConstraints() {
+        constrain(confirmButton) { confirmButton in
+            confirmButton.width == confirmButton.height
+
+            confirmButton.width == AccessoryTextField.ConfirmButtonWidth
+        }
     }
 
     override func textRect(forBounds bounds: CGRect) -> CGRect {
@@ -180,7 +193,8 @@ class AccessoryTextField: UITextField {
     override open var placeholder: String? {
         set {
             if let newValue = newValue {
-                attributedPlaceholder = attributedPlaceholderString(placeholder: newValue.uppercased())
+                let result = allCaps ? newValue.uppercased() : newValue
+                attributedPlaceholder = attributedPlaceholderString(placeholder: result)
             }
         }
         get {
@@ -197,11 +211,12 @@ class AccessoryTextField: UITextField {
     func rightAccessoryViewRect(forBounds bounds: CGRect, leftToRight: Bool) -> CGRect {
         var rightViewRect: CGRect
         let newY = bounds.origin.y + (bounds.size.height -  AccessoryTextField.ConfirmButtonWidth) / 2
+        let xOffset: CGFloat = 16
 
         if leftToRight {
-            rightViewRect = CGRect(x: CGFloat(bounds.maxX - AccessoryTextField.ConfirmButtonWidth - buttonXOffset), y: newY, width: AccessoryTextField.ConfirmButtonWidth, height: AccessoryTextField.ConfirmButtonWidth)
+            rightViewRect = CGRect(x: CGFloat(bounds.maxX - AccessoryTextField.ConfirmButtonWidth - xOffset), y: newY, width: AccessoryTextField.ConfirmButtonWidth, height: AccessoryTextField.ConfirmButtonWidth)
         } else {
-            rightViewRect = CGRect(x: bounds.origin.x + buttonXOffset, y: newY, width: AccessoryTextField.ConfirmButtonWidth, height: AccessoryTextField.ConfirmButtonWidth)
+            rightViewRect = CGRect(x: bounds.origin.x + xOffset, y: newY, width: AccessoryTextField.ConfirmButtonWidth, height: AccessoryTextField.ConfirmButtonWidth)
         }
 
         return rightViewRect
