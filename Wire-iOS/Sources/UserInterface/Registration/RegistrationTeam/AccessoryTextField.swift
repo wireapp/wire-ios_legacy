@@ -45,7 +45,6 @@ class AccessoryTextField: UITextField {
     static let enteredTextFont = FontSpec(.normal, .regular, .inputText).font!
     static let placeholderFont = FontSpec(.small, .regular).font!
     static private let ConfirmButtonWidth: CGFloat = 32
-    private var allCaps: Bool = true
 
     var kind: Kind {
         didSet {
@@ -134,7 +133,6 @@ class AccessoryTextField: UITextField {
             autocorrectionType = .no
             autocapitalizationType = .none
             accessibilityIdentifier = "EmailField"
-            allCaps = false
         case .password:
             isSecureTextEntry = true
             accessibilityIdentifier = "PasswordField"
@@ -192,8 +190,7 @@ class AccessoryTextField: UITextField {
     override open var placeholder: String? {
         set {
             if let newValue = newValue {
-                let result = allCaps ? newValue.uppercased() : newValue
-                attributedPlaceholder = attributedPlaceholderString(placeholder: result)
+                attributedPlaceholder = attributedPlaceholderString(placeholder: newValue.uppercased())
             }
         }
         get {
