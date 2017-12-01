@@ -34,7 +34,6 @@ final class TeamCreationStepController: UIViewController {
 
     let stepDescription: TeamCreationStepDescription
 
-    private var stackView: UIStackView!
     private var headlineLabel: UILabel!
     private var subtextLabel: UILabel!
     fileprivate var errorLabel: UILabel!
@@ -249,7 +248,6 @@ final class TeamCreationStepController: UIViewController {
 
             mainViewContainer.bottom == errorViewContainer.top
             self.mainViewAlignVerticalCenter = mainViewContainer.centerY == view.centerY
-            self.mainViewAlignVerticalCenter.isActive = false
 
             mainViewContainer.centerX == view.centerX
 
@@ -295,6 +293,8 @@ final class TeamCreationStepController: UIViewController {
             errorLabel.bottomMargin == errorViewContainer.bottomMargin
             errorLabel.height >= 19
         }
+
+        self.mainViewAlignVerticalCenter.isActive = false
 
         headlineLabel.setContentCompressionResistancePriority(UILayoutPriorityRequired, for: .vertical)
         subtextLabel.setContentCompressionResistancePriority(UILayoutPriorityRequired, for: .vertical)
