@@ -806,6 +806,7 @@
 "team.email.headline" = "Your account";
 "team.email.textfield.placeholder" = "you@yourcompany.com";
 "team.email.textfield.accessibility" = "Your company email";
+"team.email.button.learn_more" = "Learn More";
 
 "team.activation_code.headline" = "You've got mail";
 "team.activation_code.subheadline" = "Enter the verification code we sent to %@";
