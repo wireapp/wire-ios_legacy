@@ -39,7 +39,7 @@ final class TeamCreationStepController: UIViewController {
     private var subtextLabel: UILabel!
     fileprivate var errorLabel: UILabel!
 
-    private var secondaryViewsStackView: UIStackView!
+    fileprivate var secondaryViewsStackView: UIStackView!
     fileprivate var errorViewContainer: UIView!
     private var mainViewContainer: UIView!
 
@@ -48,6 +48,7 @@ final class TeamCreationStepController: UIViewController {
     /// Text Field
     private var mainView: UIView!
     private var secondaryViews: [UIView] = []
+    fileprivate var secondaryErrorView: UIView?
 
     private var keyboardOffset: NSLayoutConstraint!
     private var mainViewAlignVerticalCenter: NSLayoutConstraint!
@@ -307,12 +308,30 @@ final class TeamCreationStepController: UIViewController {
 extension TeamCreationStepController {
     func clearError() {
         errorLabel.text = nil
+        showSecondaryView(for: nil)
         self.errorViewContainer.setNeedsLayout()
     }
 
     func displayError(_ error: Error) {
         errorLabel.text = error.localizedDescription.uppercased()
+        showSecondaryView(for: error)
         self.errorViewContainer.setNeedsLayout()
+    }
+
+    func showSecondaryView(for error: Error?) {
+        if let view = self.secondaryErrorView {
+            secondaryViewsStackView.removeArrangedSubview(view)
+            view.removeFromSuperview()
+            secondaryViewsStackView.arrangedSubviews.forEach { $0.isHidden = false }
+            self.secondaryErrorView = nil
+        }
+
+        if let error = error, let errorDescription = stepDescription.secondaryView?.display(on: error) {
+            let view = errorDescription.create()
+            self.secondaryErrorView = view
+            secondaryViewsStackView.arrangedSubviews.forEach { $0.isHidden = true }
+            secondaryViewsStackView.addArrangedSubview(view)
+        }
     }
 
 }
