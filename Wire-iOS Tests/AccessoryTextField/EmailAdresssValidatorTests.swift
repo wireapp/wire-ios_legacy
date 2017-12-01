@@ -37,6 +37,7 @@ final class EmailAdresssValidatorTests: XCTestCase {
             "a@b3-c.d4.example.com",
             "a@b-4c.d-c4.example.com",
             "meep.moop@example.com",
+            "  some@email.com  ",
             /// edge case: detector removes leading "=" but say this is a valid email address
             /// "=?iso-8859-1?q?keld_j=f8rn_simonsen?=@example.com",
             "x@something_odd.example.com"
