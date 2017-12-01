@@ -190,7 +190,7 @@ class ArticleView: UIView {
             if obfuscated {
                 ArticleView.imageCache.removeImage(forCacheKey: imageDataIdentifier)
                 imageView.image = UIImage.init(for: .link, iconSize: .tiny, color: ColorScheme.default().color(withName: ColorSchemeColorBackground))
-                imageView.contentMode = .center
+                setContentMode(isObfuscated: true)
             } else {
                 imageView.image = nil
                 imageView.contentMode = .scaleAspectFill
@@ -200,9 +200,23 @@ class ArticleView: UIView {
                     }, completion: { [weak self] (image, _) in
                         if let image = image as? UIImage {
                             self?.imageView.image = image
+                            self?.setContentMode(isObfuscated: false)
                         }
                     })
             }
+        }
+    }
+    
+    func setContentMode(isObfuscated: Bool) {
+        
+        guard let image = self.imageView.image else { return }
+        let width = image.size.width * image.scale
+        let height = image.size.height * image.scale
+        
+        if isObfuscated || width < 480.0 || height < 160.0 {
+            self.imageView.contentMode = .center
+        } else {
+            self.imageView.contentMode = .scaleAspectFill
         }
     }
     
