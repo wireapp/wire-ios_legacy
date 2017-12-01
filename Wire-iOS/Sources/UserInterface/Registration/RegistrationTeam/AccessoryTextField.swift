@@ -57,7 +57,7 @@ class AccessoryTextField: UITextField {
         let iconButton = IconButton.iconButtonCircularLight()
         iconButton.circular = true
 
-        iconButton.setIcon(UIApplication.isLeftToRightLayout ? .chevronRight : .chevronLeft, with: ZetaIconSize.searchBar, for: .normal)
+        iconButton.setIcon(UIApplication.isLeftToRightLayout ? .chevronRight : .chevronLeft, with: ZetaIconSize.tiny, for: .normal)
         iconButton.setIconColor(UIColor.Team.textColor, for: .normal)
         iconButton.setIconColor(UIColor.Team.textfieldColor, for: .disabled)
         iconButton.adjustsImageWhenDisabled = false
