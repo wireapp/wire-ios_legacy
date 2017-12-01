@@ -185,7 +185,9 @@ final class TeamCreationStepController: UIViewController {
         errorLabel.translatesAutoresizingMaskIntoConstraints = false
         errorViewContainer.addSubview(errorLabel)
 
-        secondaryViews = stepDescription.secondaryViews.map { $0.create() }
+        if let secondaryView = stepDescription.secondaryView {
+            secondaryViews = secondaryView.views.map { $0.create() }
+        }
 
         secondaryViewsStackView = UIStackView(arrangedSubviews: secondaryViews)
         secondaryViewsStackView.distribution = .equalCentering

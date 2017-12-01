@@ -24,14 +24,14 @@ final class SetFullNameStepDescription: TeamCreationStepDescription {
     let mainView: ViewDescriptor & ValueSubmission
     let headline: String
     let subtext: String?
-    let secondaryViews: [ViewDescriptor]
+    let secondaryView: SecondaryViewDescription?
 
     init() {
         backButton = BackButtonDescription()
         mainView = TextFieldDescription(placeholder: "team.full_name.textfield.placeholder".localized, actionDescription: "team.full_name.textfield.accessibility".localized, kind: .name)
         headline = "team.full_name.headline".localized
         subtext = nil
-        secondaryViews = []
+        secondaryView = nil
     }
 }
 

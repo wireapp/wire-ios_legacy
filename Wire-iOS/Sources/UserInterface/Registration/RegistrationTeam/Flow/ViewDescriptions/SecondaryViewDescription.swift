@@ -18,19 +18,11 @@
 
 import Foundation
 
-final class SetPasswordStepDescription: TeamCreationStepDescription {
+protocol SecondaryViewDescription {
+    var views: [ViewDescriptor] { get }
+    func display(on error: Error) -> ViewDescriptor?
+}
 
-    let backButton: BackButtonDescription?
-    let mainView: ViewDescriptor & ValueSubmission
-    let headline: String
-    let subtext: String?
-    let secondaryView: SecondaryViewDescription?
-
-    init() {
-        backButton = BackButtonDescription()
-        mainView = TextFieldDescription(placeholder: "team.password.textfield.placeholder".localized, actionDescription: "team.password.textfield.accessibility".localized, kind: .password)
-        headline = "team.password.headline".localized
-        subtext = nil
-        secondaryView = nil
-    }
+extension SecondaryViewDescription {
+    func display(on error: Error) -> ViewDescriptor? { return nil }
 }
