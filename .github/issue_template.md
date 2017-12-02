@@ -1,6 +1,6 @@
 ## Checklist (please check before submitting)
 
-[ ] - I checked the existing issues, and the issue was not reported before.
+* [ ] I checked the existing issues, and the issue was not reported before.
 
 ## The problem
 
