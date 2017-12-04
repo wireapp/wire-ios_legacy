@@ -145,18 +145,8 @@ class AccessoryTextField: UITextField {
     }
 
     private func setup() {
-        createConstraints()
-
         self.confirmButton.addTarget(self, action: #selector(confirmButtonTapped(button:)), for: .touchUpInside)
         self.addTarget(self, action: #selector(textFieldDidChange(textField:)), for: .editingChanged)
-    }
-
-    private func createConstraints() {
-        constrain(confirmButton) { confirmButton in
-            confirmButton.width == confirmButton.height
-
-            confirmButton.width == AccessoryTextField.ConfirmButtonWidth
-        }
     }
 
     override func textRect(forBounds bounds: CGRect) -> CGRect {
@@ -183,7 +173,7 @@ class AccessoryTextField: UITextField {
 
     func attributedPlaceholderString(placeholder: String) -> NSAttributedString {
         let attribute: [String: Any] = [NSForegroundColorAttributeName: UIColor.Team.placeholderColor,
-                                          NSFontAttributeName: AccessoryTextField.placeholderFont]
+                                        NSFontAttributeName: AccessoryTextField.placeholderFont]
         return placeholder && attribute
     }
 
