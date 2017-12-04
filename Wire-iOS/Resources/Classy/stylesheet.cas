@@ -510,6 +510,12 @@ ConversationTitleView {
     titleFont: $font-medium-semibold;
 }
 
+AvailabilityTitleView {
+    titleColor: $color-text-foreground;
+    titleColorSelected: $color-text-dimmed;
+    titleFont: $font-medium-semibold;
+}
+
 PlaceholderConversationViewController {
     view: @{
         backgroundColor: white;
