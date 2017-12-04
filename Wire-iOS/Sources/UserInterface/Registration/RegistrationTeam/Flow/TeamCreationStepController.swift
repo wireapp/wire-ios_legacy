@@ -51,7 +51,7 @@ final class TeamCreationStepController: UIViewController {
     private var secondaryViews: [UIView] = []
     fileprivate var secondaryErrorView: UIView?
 
-//    private var keyboardOffset: NSLayoutConstraint!
+    //    private var keyboardOffset: NSLayoutConstraint!
     private var mainViewWidthRegular: NSLayoutConstraint!
     private var mainViewWidthCompact: NSLayoutConstraint!
     private var topSpacerHeight: NSLayoutConstraint!
@@ -117,27 +117,39 @@ final class TeamCreationStepController: UIViewController {
     }
 
     func updateKeyboardOffset(keyboardHeight: CGFloat) {
-//        self.keyboardOffset.constant = -keyboardHeight
-        bottomSpacerHeight.constant = 24 + keyboardHeight
+        if UIDevice.current.userInterfaceIdiom == .pad {
+            spacerEqualHeight.constant = keyboardHeight
+        }
+        else {
+            bottomSpacerHeight.constant = 24 + keyboardHeight
+        }
+
         UIView.performWithoutAnimation {
             self.view.layoutIfNeeded()
         }
     }
 
     dynamic func keyboardWillShow(_ notification: Notification) {
-//        self.keyboardOffset.isActive = true
-        ///TODO iPad case
+        if UIDevice.current.userInterfaceIdiom == .pad {
+        }
+        else {
         spacerEqualHeight.isActive = false
         topSpacerHeight.isActive = true
         bottomSpacerHeight.isActive = true
+        }
+
         animateViewsToAccomodateKeyboard(with: notification)
     }
 
     dynamic func keyboardWillHide(_ notification: Notification) {
-//        self.keyboardOffset.isActive = false
-        topSpacerHeight.isActive = false
-        bottomSpacerHeight.isActive = false
-        spacerEqualHeight.isActive = true
+        if UIDevice.current.userInterfaceIdiom == .pad {
+        }
+        else {
+            topSpacerHeight.isActive = false
+            bottomSpacerHeight.isActive = false
+            spacerEqualHeight.isActive = true
+        }
+
 
         animateViewsToAccomodateKeyboard(with: notification)
     }
@@ -255,8 +267,9 @@ final class TeamCreationStepController: UIViewController {
         let keyboardHeight = KeyboardFrameObserver.shared().keyboardFrame().height
 
         constrain(view, topSpacer, bottomSpacer) { view, topSpacer, bottomSpacer in
-            spacerEqualHeight = bottomSpacer.height == topSpacer.height
-            topSpacerHeight = topSpacer.height >= 20
+            spacerEqualHeight = bottomSpacer.height == topSpacer.height + keyboardHeight
+            
+            topSpacerHeight = topSpacer.height >= 24
             bottomSpacerHeight = bottomSpacer.height == 24 + keyboardHeight
 
             topSpacer.centerX == view.centerX
@@ -265,7 +278,14 @@ final class TeamCreationStepController: UIViewController {
             bottomSpacer.width == view.width
         }
 
-        spacerEqualHeight.isActive = false
+
+        if UIDevice.current.userInterfaceIdiom == .pad {
+            topSpacerHeight.isActive = false
+            bottomSpacerHeight.isActive = false
+        }
+        else {
+            spacerEqualHeight.isActive = false
+        }
 
         constrain(view, secondaryViewsStackView, errorViewContainer, mainViewContainer, bottomSpacer) { view, secondaryViewsStackView, errorViewContainer, mainViewContainer, bottomSpacer in
 
