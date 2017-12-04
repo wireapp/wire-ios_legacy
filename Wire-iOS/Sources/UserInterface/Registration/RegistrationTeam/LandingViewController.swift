@@ -56,6 +56,13 @@ final class LandingViewController: UIViewController {
         return [NSForegroundColorAttributeName: UIColor.Team.textColor, NSParagraphStyleAttributeName: alignCenterStyle, NSFontAttributeName:lightFont]
     }()
 
+    // MARK: - constraints for iPad
+
+    private var logoAlignTop: NSLayoutConstraint!
+    private var loginButtonAlignBottom: NSLayoutConstraint!
+    private var loginHintAlignTop: NSLayoutConstraint!
+    private var headlineAlignBottom: NSLayoutConstraint!
+
     // MARK: - subviews
 
     let logoView: UIImageView = {
@@ -75,6 +82,14 @@ final class LandingViewController: UIViewController {
         return label
     }()
 
+    fileprivate let buttonStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.distribution = .fillEqually
+        stackView.spacing = 24
+
+        return stackView
+    }()
+
     let createAccountButton: LandingButton = {
         let title = "landing.create_account.title".localized && LandingViewController.buttonTitleAttribute
         let subtitle = ("\n" + "landing.create_account.subtitle".localized) && LandingViewController.buttonSubtitleAttribute
@@ -87,9 +102,6 @@ final class LandingViewController: UIViewController {
     }()
 
     let createTeamButton: LandingButton = {
-        let alignCenterStyle = NSMutableParagraphStyle()
-        alignCenterStyle.alignment = NSTextAlignment.center
-
         let title = "landing.create_team.title".localized && LandingViewController.buttonTitleAttribute
         let subtitle = ("\n" + "landing.create_team.subtitle".localized) && LandingViewController.buttonSubtitleAttribute
 
@@ -100,7 +112,6 @@ final class LandingViewController: UIViewController {
         return button
     }()
 
-    let containerView = UIView()
     let headerContainerView = UIView()
 
     let loginHintsLabel: UILabel = {
@@ -131,21 +142,33 @@ final class LandingViewController: UIViewController {
 
         self.view.backgroundColor = UIColor.Team.background
 
-        [headerContainerView, containerView, loginHintsLabel, loginButton].forEach(view.addSubview)
+        [headerContainerView, buttonStackView, loginHintsLabel, loginButton].forEach(view.addSubview)
 
         [logoView, headline].forEach(headerContainerView.addSubview)
 
-        [createAccountButton, createTeamButton].forEach(containerView.addSubview)
+        [createAccountButton, createTeamButton].forEach() { button in
+            buttonStackView.addArrangedSubview(button)
+        }
 
         self.createConstraints()
+
+        updateStackViewAxis()
+        updateConstraintsForIPad()
+    }
+
+    public override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+
+        updateStackViewAxis()
+        updateConstraintsForIPad()
     }
 
     private func createConstraints() {
 
         constrain(logoView, headline, headerContainerView) { logoView, headline, headerContainerView in
             ///reserver space for status bar(20pt)
-            logoView.top >= headerContainerView.top + (16 + 20)
-            logoView.top == headerContainerView.top + 72 ~ LayoutPriority(500)
+            logoView.top >= headerContainerView.top + 36
+            logoAlignTop = logoView.top == headerContainerView.top + 72 ~ LayoutPriority(500)
             logoView.centerX == headerContainerView.centerX
             logoView.width == 96
             logoView.height == 31
@@ -155,45 +178,70 @@ final class LandingViewController: UIViewController {
             headline.height >= 18
             headline.bottom <= headerContainerView.bottom - 16
 
+            if UIDevice.current.userInterfaceIdiom == .pad {
+                headlineAlignBottom = headline.bottom == headerContainerView.bottom - 80
+            }
         }
 
-        constrain(self.view, headerContainerView, containerView) { selfView, headerContainerView, containerView in
+        constrain(self.view, headerContainerView, buttonStackView) { selfView, headerContainerView, buttonStackView in
 
             headerContainerView.width == selfView.width
             headerContainerView.centerX == selfView.centerX
             headerContainerView.top == selfView.top
 
-            containerView.width == selfView.width
-            containerView.centerX == selfView.centerX
-            containerView.centerY == selfView.centerY
+            buttonStackView.centerX == selfView.centerX
+            buttonStackView.centerY == selfView.centerY
 
-            headerContainerView.bottom == containerView.top
+            headerContainerView.bottom == buttonStackView.top
         }
 
-        constrain(self.view, containerView, loginHintsLabel, loginButton) { selfView, containerView, loginHintsLabel, loginButton in
-            containerView.bottom <= loginHintsLabel.top - 16
+        constrain(self.view, buttonStackView, loginHintsLabel, loginButton) {
+            selfView, buttonStackView, loginHintsLabel, loginButton in
+            buttonStackView.bottom <= loginHintsLabel.top - 16
 
-            loginHintsLabel.top == loginButton.top - 16
+            loginHintsLabel.bottom == loginButton.top - 16
             loginHintsLabel.centerX == selfView.centerX
+            if UIDevice.current.userInterfaceIdiom == .pad {
+                loginHintAlignTop = loginHintsLabel.top == buttonStackView.bottom + 80
+            }
+
 
             loginButton.top == loginHintsLabel.bottom + 4
             loginButton.centerX == selfView.centerX
-            loginButton.bottom == selfView.bottomMargin - 32 ~ LayoutPriority(500)
+            loginButtonAlignBottom = loginButton.bottom == selfView.bottomMargin - 32 ~ LayoutPriority(500)
         }
 
-        constrain(containerView, createAccountButton, createTeamButton) { containerView, createAccountButton, createTeamtButton in
+        [createAccountButton, createTeamButton].forEach() { button in
+            button.setContentCompressionResistancePriority(UILayoutPriorityRequired, for: .vertical)
+            button.setContentCompressionResistancePriority(UILayoutPriorityRequired, for: .horizontal)
+        }
+    }
 
-            createAccountButton.top == containerView.top
-            createTeamtButton.bottom == containerView.bottom
+    fileprivate func updateConstraintsForIPad() {
+        guard UIDevice.current.userInterfaceIdiom == .pad else { return }
 
-            createAccountButton.centerX == containerView.centerX
-            createAccountButton.width == containerView.width
+        switch self.traitCollection.horizontalSizeClass {
+        case .compact:
+            loginHintAlignTop.isActive = false
+            headlineAlignBottom.isActive = false
+            logoAlignTop.isActive = true
+            loginButtonAlignBottom.isActive = true
+        default:
+            logoAlignTop.isActive = false
+            loginButtonAlignBottom.isActive = false
+            loginHintAlignTop.isActive = true
+            headlineAlignBottom.isActive = true
+        }
+    }
 
-            createTeamtButton.top == createAccountButton.bottom + 24
-            createTeamtButton.centerX == containerView.centerX
-            createTeamtButton.width == containerView.width
+    func updateStackViewAxis() {
+        guard UIDevice.current.userInterfaceIdiom == .pad else { return }
 
-            createAccountButton.height == createTeamtButton.height
+        switch self.traitCollection.horizontalSizeClass {
+        case .regular:
+            buttonStackView.axis = .horizontal
+        default:
+            buttonStackView.axis = .vertical
         }
     }
 
@@ -219,3 +267,4 @@ final class LandingViewController: UIViewController {
     }
 
 }
+

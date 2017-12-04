@@ -61,6 +61,9 @@ class LandingButton: ButtonWithLargerHitArea {
             subtitleLabel.centerX == selfView.centerX
 
             subtitleLabel.top == iconButton.bottom + 16
+
+            selfView.width >= subtitleLabel.width
+            selfView.width >= iconButton.width
         }
 
     }
@@ -120,3 +123,4 @@ class LandingButton: ButtonWithLargerHitArea {
     }
 
 }
+
