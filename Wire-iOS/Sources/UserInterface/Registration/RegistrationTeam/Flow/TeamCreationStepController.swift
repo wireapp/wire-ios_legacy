@@ -242,7 +242,7 @@ final class TeamCreationStepController: UIViewController {
         if let backButton = backButton {
 
             var backButtonTopMargin: CGFloat
-            if #available(iOS 10.0, *) {
+            if #available(iOS 11.0, *) {
                 backButtonTopMargin = 12
             } else {
                 backButtonTopMargin = 32
