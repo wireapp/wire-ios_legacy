@@ -45,7 +45,7 @@ final class TeamCreationStepController: UIViewController {
 
     private var backButton: UIView?
 
-    /// mainView is a textField or CharacterInputField in team createion screens
+    /// mainView is a textField or CharacterInputField in team creation screens
     private var mainView: UIView!
     private var secondaryViews: [UIView] = []
     fileprivate var secondaryErrorView: UIView?
