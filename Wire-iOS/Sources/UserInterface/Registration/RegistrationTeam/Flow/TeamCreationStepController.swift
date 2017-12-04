@@ -218,8 +218,16 @@ final class TeamCreationStepController: UIViewController {
         secondaryViewsStackView.spacing = 24
         secondaryViewsStackView.translatesAutoresizingMaskIntoConstraints = false
 
-        [topSpacer, bottomSpacer, backButton, headlineLabel, subtextLabel, mainViewContainer, errorViewContainer, secondaryViewsStackView, topSpacer, bottomSpacer].flatMap {$0}.forEach { self.view.addSubview($0) }
-        
+        [topSpacer,
+         bottomSpacer,
+         backButton,
+         headlineLabel,
+         subtextLabel,
+         mainViewContainer,
+         errorViewContainer,
+         secondaryViewsStackView].flatMap {$0}.forEach {
+            self.view.addSubview($0)
+        }
     }
 
     fileprivate func updateMainViewWidthConstraint() {
