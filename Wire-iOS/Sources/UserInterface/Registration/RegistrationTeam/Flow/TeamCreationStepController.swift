@@ -34,7 +34,6 @@ final class TeamCreationStepController: UIViewController {
 
     let stepDescription: TeamCreationStepDescription
 
-    private var stackView: UIStackView!
     private var headlineLabel: UILabel!
     private var subtextLabel: UILabel!
     fileprivate var errorLabel: UILabel!
@@ -42,18 +41,22 @@ final class TeamCreationStepController: UIViewController {
     fileprivate var secondaryViewsStackView: UIStackView!
     fileprivate var errorViewContainer: UIView!
     private var mainViewContainer: UIView!
+    private var topSpacer: UIView!
+    private var bottomSpacer: UIView!
 
     private var backButton: UIView?
 
-    /// Text Field
+    /// mainView is a textField or CharacterInputField in team createion screens
     private var mainView: UIView!
     private var secondaryViews: [UIView] = []
     fileprivate var secondaryErrorView: UIView?
 
-    private var keyboardOffset: NSLayoutConstraint!
-    private var mainViewAlignVerticalCenter: NSLayoutConstraint!
+//    private var keyboardOffset: NSLayoutConstraint!
     private var mainViewWidthRegular: NSLayoutConstraint!
     private var mainViewWidthCompact: NSLayoutConstraint!
+    private var topSpacerHeight: NSLayoutConstraint!
+    private var bottomSpacerHeight: NSLayoutConstraint!
+    private var spacerEqualHeight: NSLayoutConstraint!
 
     init(description: TeamCreationStepDescription) {
         self.stepDescription = description
@@ -114,22 +117,27 @@ final class TeamCreationStepController: UIViewController {
     }
 
     func updateKeyboardOffset(keyboardHeight: CGFloat) {
-        self.keyboardOffset.constant = -(keyboardHeight + 10)
+//        self.keyboardOffset.constant = -keyboardHeight
+        bottomSpacerHeight.constant = 24 + keyboardHeight
         UIView.performWithoutAnimation {
             self.view.layoutIfNeeded()
         }
     }
 
     dynamic func keyboardWillShow(_ notification: Notification) {
-        self.keyboardOffset.isActive = true
-        self.mainViewAlignVerticalCenter.isActive = false
-
+//        self.keyboardOffset.isActive = true
+        ///TODO iPad case
+        spacerEqualHeight.isActive = false
+        topSpacerHeight.isActive = true
+        bottomSpacerHeight.isActive = true
         animateViewsToAccomodateKeyboard(with: notification)
     }
 
     dynamic func keyboardWillHide(_ notification: Notification) {
-        self.keyboardOffset.isActive = false
-        self.mainViewAlignVerticalCenter.isActive = true
+//        self.keyboardOffset.isActive = false
+        topSpacerHeight.isActive = false
+        bottomSpacerHeight.isActive = false
+        spacerEqualHeight.isActive = true
 
         animateViewsToAccomodateKeyboard(with: notification)
     }
@@ -173,6 +181,13 @@ final class TeamCreationStepController: UIViewController {
         mainViewContainer = UIView()
         mainViewContainer.translatesAutoresizingMaskIntoConstraints = false
 
+        topSpacer = UIView()
+        bottomSpacer = UIView()
+
+        [topSpacer, bottomSpacer].forEach(){ view in
+            view.translatesAutoresizingMaskIntoConstraints = false
+        }
+
         mainView = stepDescription.mainView.create()
         mainViewContainer.addSubview(mainView)
 
@@ -195,7 +210,11 @@ final class TeamCreationStepController: UIViewController {
         secondaryViewsStackView.spacing = 24
         secondaryViewsStackView.translatesAutoresizingMaskIntoConstraints = false
 
-        [backButton, headlineLabel, subtextLabel, mainViewContainer, errorViewContainer, secondaryViewsStackView].flatMap {$0}.forEach { self.view.addSubview($0) }
+        [backButton, headlineLabel, subtextLabel, mainViewContainer, errorViewContainer, secondaryViewsStackView, topSpacer, bottomSpacer].flatMap {$0}.forEach { self.view.addSubview($0) }
+
+        [topSpacer, bottomSpacer].forEach(){ view in
+            self.view.sendSubview(toBack: view)
+        }
     }
 
     fileprivate func updateMainViewWidthConstraint() {
@@ -233,9 +252,26 @@ final class TeamCreationStepController: UIViewController {
             }
         }
 
-        constrain(view, secondaryViewsStackView, errorViewContainer, mainViewContainer) { view, secondaryViewsStackView, errorViewContainer, mainViewContainer in
-            let keyboardHeight = KeyboardFrameObserver.shared().keyboardFrame().height
-            self.keyboardOffset = secondaryViewsStackView.bottom == view.bottom - (keyboardHeight + 10)
+        let keyboardHeight = KeyboardFrameObserver.shared().keyboardFrame().height
+
+        constrain(view, topSpacer, bottomSpacer) { view, topSpacer, bottomSpacer in
+            spacerEqualHeight = bottomSpacer.height == topSpacer.height
+            topSpacerHeight = topSpacer.height >= 20
+            bottomSpacerHeight = bottomSpacer.height == 24 + keyboardHeight
+
+            topSpacer.centerX == view.centerX
+            bottomSpacer.centerX == view.centerX
+            topSpacer.width == view.width
+            bottomSpacer.width == view.width
+        }
+
+        spacerEqualHeight.isActive = false
+
+        constrain(view, secondaryViewsStackView, errorViewContainer, mainViewContainer, bottomSpacer) { view, secondaryViewsStackView, errorViewContainer, mainViewContainer, bottomSpacer in
+
+            secondaryViewsStackView.bottom == bottomSpacer.top
+            bottomSpacer.bottom == view.bottom
+
             secondaryViewsStackView.leading >= view.leading
             secondaryViewsStackView.trailing <= view.trailing
             secondaryViewsStackView.height == 42 ~ LayoutPriority(500)
@@ -248,8 +284,6 @@ final class TeamCreationStepController: UIViewController {
             errorViewContainer.height == 30
 
             mainViewContainer.bottom == errorViewContainer.top
-            self.mainViewAlignVerticalCenter = mainViewContainer.centerY == view.centerY
-            self.mainViewAlignVerticalCenter.isActive = false
 
             mainViewContainer.centerX == view.centerX
 
@@ -263,8 +297,11 @@ final class TeamCreationStepController: UIViewController {
 
         }
 
-        constrain(view, mainViewContainer, subtextLabel, headlineLabel) { view, inputViewsContainer, subtextLabel, headlineLabel in
-            headlineLabel.top >= view.topMargin + 20
+        constrain(view, mainViewContainer, subtextLabel, headlineLabel, topSpacer) { view, inputViewsContainer, subtextLabel, headlineLabel, topSpacer in
+
+            topSpacer.top == view.top
+            headlineLabel.top == topSpacer.bottom
+
             headlineLabel.bottom == subtextLabel.top - 24 ~ LayoutPriority(750)
             headlineLabel.leading == view.leadingMargin
             headlineLabel.trailing == view.trailingMargin
