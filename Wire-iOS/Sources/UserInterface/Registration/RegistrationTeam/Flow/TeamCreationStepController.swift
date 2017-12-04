@@ -21,7 +21,6 @@ import Cartography
 
 final class TeamCreationStepController: UIViewController {
 
-
     /// headline font size is fixed and not affected by dynamic type setting,
     static let headlineFont         = UIFont.systemFont(ofSize: 40, weight: UIFontWeightLight)
     /// For 320 pt width screen
@@ -108,7 +107,7 @@ final class TeamCreationStepController: UIViewController {
     }
 
     // MARK: - Keyboard shown/hide
-    
+
     private func observeKeyboard() {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(_:)), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
@@ -122,14 +121,13 @@ final class TeamCreationStepController: UIViewController {
         bottomSpacerHeight.constant = 24 + keyboardHeight
 
         UIView.performWithoutAnimation {
-            self.view.layoutIfNeeded()
+            self.view.setNeedsLayout()
         }
     }
 
     dynamic func keyboardWillShow(_ notification: Notification) {
         if UIDevice.current.userInterfaceIdiom == .pad {
-        }
-        else {
+        } else {
             spacerEqualHeight.isActive = false
             topSpacerHeight.isActive = true
             bottomSpacerHeight.isActive = true
@@ -140,8 +138,7 @@ final class TeamCreationStepController: UIViewController {
 
     dynamic func keyboardWillHide(_ notification: Notification) {
         if UIDevice.current.userInterfaceIdiom == .pad {
-        }
-        else {
+        } else {
             topSpacerHeight.isActive = false
             bottomSpacerHeight.isActive = false
             spacerEqualHeight.isActive = true
@@ -192,7 +189,7 @@ final class TeamCreationStepController: UIViewController {
         topSpacer = UIView()
         bottomSpacer = UIView()
 
-        [topSpacer, bottomSpacer].forEach(){ view in
+        [topSpacer, bottomSpacer].forEach() { view in
             view.translatesAutoresizingMaskIntoConstraints = false
         }
 
@@ -220,7 +217,7 @@ final class TeamCreationStepController: UIViewController {
 
         [backButton, headlineLabel, subtextLabel, mainViewContainer, errorViewContainer, secondaryViewsStackView, topSpacer, bottomSpacer].flatMap {$0}.forEach { self.view.addSubview($0) }
 
-        [topSpacer, bottomSpacer].forEach(){ view in
+        [topSpacer, bottomSpacer].forEach() { view in
             self.view.sendSubview(toBack: view)
         }
     }
@@ -264,7 +261,7 @@ final class TeamCreationStepController: UIViewController {
 
         constrain(view, topSpacer, bottomSpacer) { view, topSpacer, bottomSpacer in
             spacerEqualHeight = bottomSpacer.height == topSpacer.height + keyboardHeight
-            
+
             topSpacerHeight = topSpacer.height >= 24
             bottomSpacerHeight = bottomSpacer.height == 24 + keyboardHeight
 
@@ -274,12 +271,10 @@ final class TeamCreationStepController: UIViewController {
             bottomSpacer.width == view.width
         }
 
-
         if UIDevice.current.userInterfaceIdiom == .pad {
             topSpacerHeight.isActive = false
             bottomSpacerHeight.isActive = false
-        }
-        else {
+        } else {
             spacerEqualHeight.isActive = false
         }
 
