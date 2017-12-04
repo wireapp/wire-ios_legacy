@@ -123,6 +123,34 @@ final class LandingViewController: UIViewController {
 
         return button
     }()
+    
+    let cancelButton: IconButton = {
+        let button = IconButton()
+        button.setIcon(.cancel, with: .small, for: .normal)
+        button.tintColor = .black
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.accessibilityIdentifier = "CancelButton"
+        button.addTarget(self, action: #selector(LandingViewController.cancelButtonTapped(_:)), for: .touchUpInside)
+        return button
+    }()
+    
+    private var firstAuthenticatedAccount: Account? {
+        guard let accountManager = SessionManager.shared?.accountManager else { return nil }
+        
+        if let selectedAccount = accountManager.selectedAccount {
+            if selectedAccount.isAuthenticated {
+                return selectedAccount
+            }
+        }
+        
+        for account in accountManager.accounts {
+            if account.isAuthenticated && account != accountManager.selectedAccount {
+                return account
+            }
+        }
+        
+        return nil
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -133,16 +161,18 @@ final class LandingViewController: UIViewController {
 
         [headerContainerView, containerView, loginHintsLabel, loginButton].forEach(view.addSubview)
 
-        [logoView, headline].forEach(headerContainerView.addSubview)
+        [logoView, headline, cancelButton].forEach(headerContainerView.addSubview)
 
         [createAccountButton, createTeamButton].forEach(containerView.addSubview)
+        
+        cancelButton.isHidden = firstAuthenticatedAccount == nil
 
         self.createConstraints()
     }
 
     private func createConstraints() {
 
-        constrain(logoView, headline, headerContainerView) { logoView, headline, headerContainerView in
+        constrain(logoView, headline, cancelButton, headerContainerView) { logoView, headline, cancelButton, headerContainerView in
             ///reserver space for status bar(20pt)
             logoView.top >= headerContainerView.top + (16 + 20)
             logoView.top == headerContainerView.top + 72 ~ LayoutPriority(500)
@@ -154,7 +184,11 @@ final class LandingViewController: UIViewController {
             headline.centerX == headerContainerView.centerX
             headline.height >= 18
             headline.bottom <= headerContainerView.bottom - 16
-
+            
+            cancelButton.top == headerContainerView.top + (16 + 20)
+            cancelButton.trailing == headerContainerView.trailing - 16
+            cancelButton.width == UIImage.size(for: .tiny)
+            cancelButton.height == cancelButton.width
         }
 
         constrain(self.view, headerContainerView, containerView) { selfView, headerContainerView, containerView in
@@ -212,6 +246,11 @@ final class LandingViewController: UIViewController {
     @objc public func loginButtonTapped(_ sender: AnyObject!) {
         tracker?.tagOpenedLogin()
         delegate?.landingViewControllerDidChooseLogin()
+    }
+    
+    @objc public func cancelButtonTapped(_ sender: AnyObject!) {
+        guard let account = self.firstAuthenticatedAccount else { return }
+        SessionManager.shared?.select(account)
     }
 
     override var prefersStatusBarHidden: Bool {
