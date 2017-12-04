@@ -4692,7 +4692,6 @@
 			isa = PBXGroup;
 			children = (
 				EEA747A71FCEBAD1000B529E /* AnalyticsMixpanelProviderTests.swift */,
-				EF159F361FD59556006E0A9C /* TextFieldValidatorTests.swift */,
 				EF61B33E1FC8461200D8E631 /* AccessoryTextField */,
 				EE3A5B0C1F7A7BD400733045 /* ChatHeadTests.swift */,
 				EEBE8C5D1F68171F009D78C9 /* NSData_ImageTypeTests.swift */,
@@ -5085,6 +5084,7 @@
 		EF61B33E1FC8461200D8E631 /* AccessoryTextField */ = {
 			isa = PBXGroup;
 			children = (
+				EF159F361FD59556006E0A9C /* TextFieldValidatorTests.swift */,
 				EF61B33F1FC84B0100D8E631 /* AccessoryTextFieldValidationTests.swift */,
 				EF25F8851FC57EE90040C3CC /* AccessoryTextFieldTests.swift */,
 				EF7F74021FCC01140059C13F /* EmailAdresssValidatorTests.swift */,

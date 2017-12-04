@@ -47,4 +47,43 @@ final class TextFieldValidatorTests: XCTestCase {
         // THEN
         XCTAssertEqual(expectedError, error, "Error should be \(expectedError), was \(error)")
     }
+
+    func testOneCharacterNameWithLeadingAndTrailingSpaceIsNotAccepted(){
+        // GIVEN
+        let text = " a "
+        let type: AccessoryTextField.Kind = .name
+        let expectedError: TextFieldValidator.ValidationError = .tooShort(kind: type)
+
+        // WHEN
+        let error = sut.validate(text: text, kind: type)
+
+        // THEN
+        XCTAssertEqual(expectedError, error, "Error should be \(expectedError), was \(error)")
+    }
+
+    func testNameWithTenSpaceIsNotAccepted(){
+        // GIVEN
+        let text = String(repeating: " ", count: 10)
+        let type: AccessoryTextField.Kind = .name
+        let expectedError: TextFieldValidator.ValidationError = .tooShort(kind: type)
+
+        // WHEN
+        let error = sut.validate(text: text, kind: type)
+
+        // THEN
+        XCTAssertEqual(expectedError, error, "Error should be \(expectedError), was \(error)")
+    }
+
+    func testTwoCharacterNameIsAccepted(){
+        // GIVEN
+        let text = "aa"
+        let type: AccessoryTextField.Kind = .name
+        let expectedError: TextFieldValidator.ValidationError = .none
+
+        // WHEN
+        let error = sut.validate(text: text, kind: type)
+
+        // THEN
+        XCTAssertEqual(expectedError, error, "Error should be \(expectedError), was \(error)")
+    }
 }
