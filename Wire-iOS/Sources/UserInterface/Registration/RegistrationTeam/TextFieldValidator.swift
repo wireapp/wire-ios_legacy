@@ -60,9 +60,11 @@ class TextFieldValidator {
                 return .tooShort(kind: kind)
             }
         case .name:
-            if text.count > 64 {
+            /// We should ignore leading/trailing whitespace when counting the number of characters in the string
+            let stringToValidate = text.trimmingCharacters(in: .whitespacesAndNewlines)
+            if stringToValidate.count > 64 {
                 return .tooLong(kind: kind)
-            } else if text.count < 2 {
+            } else if stringToValidate.count < 2 {
                 return .tooShort(kind: kind)
             }
         case .unknown:

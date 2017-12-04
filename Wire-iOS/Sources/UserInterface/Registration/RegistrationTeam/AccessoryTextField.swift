@@ -165,7 +165,6 @@ class AccessoryTextField: UITextField {
 
     func confirmButtonTapped(button: UIButton) {
         let error = textFieldValidator.validate(text: text, kind: kind)
-
         textFieldValidationDelegate?.validationUpdated(sender: self, error: error)
     }
 
