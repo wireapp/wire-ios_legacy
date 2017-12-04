@@ -92,8 +92,7 @@ final class TeamCreationStepController: UIViewController {
         UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(animated)
         mainView.becomeFirstResponder()
 
-        let keyboardHeight = KeyboardFrameObserver.shared().keyboardFrame().height
-        updateKeyboardOffset(keyboardHeight: keyboardHeight)
+        updateKeyboardOffset(keyboardFrame: KeyboardFrameObserver.shared().keyboardFrame())
     }
 
     override func viewWillDisappear(_ animated: Bool) {
@@ -116,13 +115,11 @@ final class TeamCreationStepController: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillChangeFrame(_:)), name: NSNotification.Name.UIKeyboardWillChangeFrame, object: nil)
     }
 
-    func updateKeyboardOffset(keyboardHeight: CGFloat) {
-        if UIDevice.current.userInterfaceIdiom == .pad {
-            spacerEqualHeight.constant = keyboardHeight
-        }
-        else {
-            bottomSpacerHeight.constant = 24 + keyboardHeight
-        }
+    func updateKeyboardOffset(keyboardFrame: CGRect) {
+        let keyboardHeight = keyboardFrame.height
+
+        spacerEqualHeight.constant = self.view.frame.size.height - keyboardFrame.origin.y
+        bottomSpacerHeight.constant = 24 + keyboardHeight
 
         UIView.performWithoutAnimation {
             self.view.layoutIfNeeded()
@@ -133,9 +130,9 @@ final class TeamCreationStepController: UIViewController {
         if UIDevice.current.userInterfaceIdiom == .pad {
         }
         else {
-        spacerEqualHeight.isActive = false
-        topSpacerHeight.isActive = true
-        bottomSpacerHeight.isActive = true
+            spacerEqualHeight.isActive = false
+            topSpacerHeight.isActive = true
+            bottomSpacerHeight.isActive = true
         }
 
         animateViewsToAccomodateKeyboard(with: notification)
@@ -150,7 +147,6 @@ final class TeamCreationStepController: UIViewController {
             spacerEqualHeight.isActive = true
         }
 
-
         animateViewsToAccomodateKeyboard(with: notification)
     }
 
@@ -160,8 +156,8 @@ final class TeamCreationStepController: UIViewController {
 
     func animateViewsToAccomodateKeyboard(with notification: Notification) {
         if let userInfo = notification.userInfo, let keyboardFrame = userInfo[UIKeyboardFrameEndUserInfoKey] as? NSValue {
-            let keyboardHeight = keyboardFrame.cgRectValue.height
-            updateKeyboardOffset(keyboardHeight: keyboardHeight)
+
+            updateKeyboardOffset(keyboardFrame: keyboardFrame.cgRectValue)
         }
     }
 
