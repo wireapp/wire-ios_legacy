@@ -78,6 +78,7 @@ pushd $CARTHAGE_BUILD_PATH > /dev/null
 
 # remove previous, will unzip new
 rm -fr $AVS_FRAMEWORK_NAME > /dev/null
+rm -fr "${AVS_FRAMEWORK_NAME}.dSYM" > /dev/null
 
 ##################################
 # DOWNLOAD
