@@ -363,9 +363,9 @@
         NSString *password = self.passwordField.text;
         
         if (![ZMUser validateEmailAddress:&email error:nil]) {
-            [self showAlertForError:[NSError errorWithDomain:ZMUserSessionErrorDomain code:ZMUserSessionInvalidEmail userInfo:nil]];
+            [self showAlertForError:[NSError errorWithDomain:NSError.ZMUserSessionErrorDomain code:ZMUserSessionInvalidEmail userInfo:nil]];
         } else if (![ZMUser validatePassword:&password error:nil]) {
-            [self showAlertForError:[NSError errorWithDomain:ZMUserSessionErrorDomain code:ZMUserSessionInvalidCredentials userInfo:nil]];
+            [self showAlertForError:[NSError errorWithDomain:NSError.ZMUserSessionErrorDomain code:ZMUserSessionInvalidCredentials userInfo:nil]];
         } else {
             [self showAlertForError:error];
         }

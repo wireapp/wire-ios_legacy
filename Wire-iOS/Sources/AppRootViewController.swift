@@ -42,6 +42,8 @@ class AppRootViewController : UIViewController {
     fileprivate let transitionQueue : DispatchQueue = DispatchQueue(label: "transitionQueue")
     fileprivate var isClassyInitialized = false
     fileprivate let mediaManagerLoader = MediaManagerLoader()
+
+    var flowController: TeamCreationFlowController!
     
     fileprivate weak var requestToOpenViewDelegate: ZMRequestsToOpenViewsDelegate? {
         didSet {
@@ -187,13 +189,30 @@ class AppRootViewController : UIViewController {
             launchImageViewController.showLoadingScreen()
             viewController = launchImageViewController
         case .unauthenticated(error: let error):
-            UIColor.setAccentOverride(ZMUser.pickRandomAccentColor())
+            UIColor.setAccentOverride(ZMUser.pickRandomAcceptableAccentColor())
             mainWindow.tintColor = UIColor.accent()
-            let landingViewController = LandingViewController()
-            landingViewController.delegate = self
+            let authenticatedAccounts = SessionManager.shared?.accountManager.accounts.filter { $0.isAuthenticated } ?? []
 
-            landingViewController.signInError = error
-            viewController = landingViewController
+            if error == nil && authenticatedAccounts.isEmpty {
+                // When we show the landing controller we want it to be nested in navigation controller
+                let landingViewController = LandingViewController()
+                landingViewController.delegate = self
+                let navigationController = NavigationController(rootViewController: landingViewController)
+                navigationController.backButtonEnabled = false
+                navigationController.logoEnabled = false
+                navigationController.isNavigationBarHidden = true
+
+                guard let registrationStatus = SessionManager.shared?.unauthenticatedSession?.registrationStatus else { fatal("Could not get registration status") }
+
+                flowController = TeamCreationFlowController(navigationController: navigationController, registrationStatus: registrationStatus)
+                flowController.registrationDelegate = appStateController
+                viewController = navigationController
+            } else {
+                let registrationViewController = RegistrationViewController()
+                registrationViewController.delegate = appStateController
+                registrationViewController.signInError = error
+                viewController = registrationViewController
+            }
         case .authenticated(completedRegistration: let completedRegistration):
             // TODO: CallKit only with 1 account
             sessionManager?.updateCallNotificationStyleFromSettings()
@@ -464,26 +483,22 @@ extension AppRootViewController  {
 
 extension AppRootViewController : LandingViewControllerDelegate {
     func landingViewControllerDidChooseCreateTeam() {
-        ///TODO: transit to create team UI
+        flowController.startFlow()
     }
 
     func landingViewControllerDidChooseLogin() {
-        let registrationViewController = RegistrationViewController()
-        registrationViewController.delegate = appStateController
-
-
-        transition(to: registrationViewController, animated: true) {
-            self.requestToOpenViewDelegate = registrationViewController as? ZMRequestsToOpenViewsDelegate
-            registrationViewController.showLogin = true
+        if let navigationController = self.visibleViewController as? NavigationController {
+            let loginViewController = RegistrationViewController(authenticationFlow: .onlyLogin)
+            loginViewController.delegate = appStateController
+            navigationController.pushViewController(loginViewController, animated: true)
         }
     }
 
     func landingViewControllerDidChooseCreateAccount() {
-        let registrationViewController = RegistrationViewController()
-        registrationViewController.delegate = appStateController
-
-        transition(to: registrationViewController, animated: true) {
-            self.requestToOpenViewDelegate = registrationViewController as? ZMRequestsToOpenViewsDelegate
+        if let navigationController = self.visibleViewController as? NavigationController {
+            let registrationViewController = RegistrationViewController(authenticationFlow: .onlyRegistration)
+            registrationViewController.delegate = appStateController
+            navigationController.pushViewController(registrationViewController, animated: true)
         }
     }
 }

@@ -73,11 +73,6 @@ NSString *NSStringFromAnalyticsPhotoSource(AnalyticsPhotoSource source)
 
 #pragma mark - Phone
 
-- (void)tagOpenedPhoneRegistration
-{
-    [self tagEvent:@"registration.opened_phone_signup"];
-}
-
 - (void)tagEnteredPhone
 {
     [self tagEnteredPhoneFailedWithError:nil];
@@ -114,11 +109,6 @@ NSString *NSStringFromAnalyticsPhotoSource(AnalyticsPhotoSource source)
 }
 
 #pragma mark - Email
-
-- (void)tagOpenedEmailRegistration
-{
-    [self tagEvent:@"registration.opened_email_signup"];
-}
 
 - (void)tagEnteredEmailAndPassword
 {

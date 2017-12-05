@@ -108,6 +108,7 @@
 #import "LaunchImageViewController.h"
 #import "VoiceUserImageView.h"
 #import "VoiceChannelParticipantCell.h"
+#import "ProfilePictureStepViewController.h"
 
 // Helper objects
 #import "PushTransition.h"
@@ -169,6 +170,7 @@
 #import "NSString+EmoticonSubstitution.h"
 #import "UILabel+TextTransform.h"
 #import "NSString+TextTransform.h"
+#import "KeyboardFrameObserver+iOS.h"
 
 // Camera
 #import "CameraController.h"

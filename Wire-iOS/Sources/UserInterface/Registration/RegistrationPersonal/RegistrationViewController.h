@@ -20,12 +20,13 @@
 #import <UIKit/UIKit.h>
 
 #import "FormStepDelegate.h"
-
+#import "RegistrationRootViewController.h"
 #import "WireSyncEngine+iOS.h"
 
 @class AnalyticsTracker;
 @class ZMEmailCredentials;
 
+NS_ASSUME_NONNULL_BEGIN
 
 typedef NS_ENUM(NSUInteger, RegistrationFlow) {
     RegistrationFlowEmail,
@@ -44,10 +45,13 @@ typedef NS_ENUM(NSUInteger, RegistrationFlow) {
 
 @interface RegistrationViewController : UIViewController
 
-@property (nonatomic, weak) id<RegistrationViewControllerDelegate> delegate;
-@property (nonatomic) NSError *signInError;
-@property (nonatomic) BOOL showLogin;
+- (instancetype)initWithAuthenticationFlow:(AuthenticationFlowType)flow;
+
+@property (nonatomic, weak) __nullable id<RegistrationViewControllerDelegate> delegate;
+@property (nonatomic)  NSError * __nullable signInError;
 
 + (RegistrationFlow)registrationFlow;
 
 @end
+
+NS_ASSUME_NONNULL_END

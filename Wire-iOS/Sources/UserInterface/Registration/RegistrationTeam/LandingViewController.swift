@@ -26,42 +26,43 @@ import Cartography
     func landingViewControllerDidChooseLogin()
 }
 
-
 /// Landing screen for choosing create team or personal account
 final class LandingViewController: UIViewController {
-    var signInError: Error? // TODO: use it
     weak var delegate: LandingViewControllerDelegate?
 
-    //MARK:- UI styles
+    private let tracker = AnalyticsTracker(context: AnalyticsContextRegistrationEmail)
+
+    // MARK: - UI styles
 
     static let semiboldFont = FontSpec(.large, .semibold).font!
     static let regularFont = FontSpec(.normal, .regular).font!
 
-    static let buttonTitleAttribute: [String : Any] = {
+    static let buttonTitleAttribute: [String: Any] = {
         let alignCenterStyle = NSMutableParagraphStyle()
         alignCenterStyle.alignment = NSTextAlignment.center
 
         let semiboldFont = FontSpec(.large, .semibold).font!
 
-        return [NSForegroundColorAttributeName: UIColor.textColor, NSParagraphStyleAttributeName: alignCenterStyle, NSFontAttributeName:semiboldFont]
+        return [NSForegroundColorAttributeName: UIColor.Team.textColor, NSParagraphStyleAttributeName: alignCenterStyle, NSFontAttributeName:semiboldFont]
     }()
 
-    static let buttonSubtitleAttribute: [String : Any] = {
+    static let buttonSubtitleAttribute: [String: Any] = {
         let alignCenterStyle = NSMutableParagraphStyle()
         alignCenterStyle.alignment = NSTextAlignment.center
+        alignCenterStyle.paragraphSpacingBefore = 4
 
-        let lightFont = FontSpec(.large, .light).font!
+        let lightFont = FontSpec(.normal, .light).font!
 
-        return [NSForegroundColorAttributeName: UIColor.textColor, NSParagraphStyleAttributeName: alignCenterStyle, NSFontAttributeName:lightFont]
+        return [NSForegroundColorAttributeName: UIColor.Team.textColor, NSParagraphStyleAttributeName: alignCenterStyle, NSFontAttributeName:lightFont]
     }()
 
-    //MARK:- subviews
+    // MARK: - subviews
 
     let logoView: UIImageView = {
         let image = UIImage(named: "wire-logo-black")!
         let imageView = UIImageView(image: image)
         imageView.contentMode = .center
-        imageView.tintColor = UIColor.textColor
+        imageView.tintColor = UIColor.Team.textColor
         return imageView
     }()
 
@@ -69,7 +70,7 @@ final class LandingViewController: UIViewController {
         let label = UILabel()
         label.text = "landing.title".localized
         label.font = LandingViewController.regularFont
-        label.textColor = .subtitleColor
+        label.textColor = UIColor.Team.subtitleColor
 
         return label
     }()
@@ -77,10 +78,9 @@ final class LandingViewController: UIViewController {
     let createAccountButton: LandingButton = {
         let title = "landing.create_account.title".localized && LandingViewController.buttonTitleAttribute
         let subtitle = ("\n" + "landing.create_account.subtitle".localized) && LandingViewController.buttonSubtitleAttribute
-        let twoLineTitle = title + subtitle
 
-        let button = LandingButton(title: twoLineTitle, icon: .selfProfile, iconBackgroundColor: .createAccountBlue)
-
+        let button = LandingButton(title: title + subtitle, icon: .selfProfile, iconBackgroundColor: UIColor.Team.createAccountBlue)
+        button.accessibilityIdentifier = "CreateAccountButton"
         button.addTarget(self, action: #selector(LandingViewController.createAccountButtonTapped(_:)), for: .touchUpInside)
 
         return button
@@ -93,8 +93,8 @@ final class LandingViewController: UIViewController {
         let title = "landing.create_team.title".localized && LandingViewController.buttonTitleAttribute
         let subtitle = ("\n" + "landing.create_team.subtitle".localized) && LandingViewController.buttonSubtitleAttribute
 
-        let button = LandingButton(title: title + subtitle, icon: .team, iconBackgroundColor: .createTeamGreen)
-
+        let button = LandingButton(title: title + subtitle, icon: .team, iconBackgroundColor: UIColor.Team.createTeamGreen)
+        button.accessibilityIdentifier = "CreateTeamButton"
         button.addTarget(self, action: #selector(LandingViewController.createTeamButtonTapped(_:)), for: .touchUpInside)
 
         return button
@@ -107,7 +107,7 @@ final class LandingViewController: UIViewController {
         let label = UILabel()
         label.text = "landing.login.hints".localized
         label.font = LandingViewController.regularFont
-        label.textColor = .subtitleColor
+        label.textColor = UIColor.Team.subtitleColor
 
         return label
     }()
@@ -115,7 +115,8 @@ final class LandingViewController: UIViewController {
     let loginButton: UIButton = {
         let button = UIButton()
         button.setTitle("landing.login.button.title".localized, for: .normal)
-        button.setTitleColor(.textColor, for: .normal)
+        button.accessibilityIdentifier = "LoginButton"
+        button.setTitleColor(UIColor.Team.textColor, for: .normal)
         button.titleLabel?.font = LandingViewController.semiboldFont
 
         button.addTarget(self, action: #selector(LandingViewController.loginButtonTapped(_:)), for: .touchUpInside)
@@ -126,7 +127,9 @@ final class LandingViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.view.backgroundColor = .background
+        tracker?.tagOpenedLandingScreen()
+
+        self.view.backgroundColor = UIColor.Team.background
 
         [headerContainerView, containerView, loginHintsLabel, loginButton].forEach(view.addSubview)
 
@@ -135,9 +138,6 @@ final class LandingViewController: UIViewController {
         [createAccountButton, createTeamButton].forEach(containerView.addSubview)
 
         self.createConstraints()
-
-
-
     }
 
     private func createConstraints() {
@@ -159,7 +159,6 @@ final class LandingViewController: UIViewController {
 
         constrain(self.view, headerContainerView, containerView) { selfView, headerContainerView, containerView in
 
-
             headerContainerView.width == selfView.width
             headerContainerView.centerX == selfView.centerX
             headerContainerView.top == selfView.top
@@ -177,7 +176,7 @@ final class LandingViewController: UIViewController {
             loginHintsLabel.top == loginButton.top - 16
             loginHintsLabel.centerX == selfView.centerX
 
-            loginButton.top == loginHintsLabel.bottom
+            loginButton.top == loginHintsLabel.bottom + 4
             loginButton.centerX == selfView.centerX
             loginButton.bottom == selfView.bottomMargin - 32 ~ LayoutPriority(500)
         }
@@ -198,17 +197,20 @@ final class LandingViewController: UIViewController {
         }
     }
 
-    // MARK:- Button tapped target
+    // MARK: - Button tapped target
 
     @objc public func createAccountButtonTapped(_ sender: AnyObject!) {
+        tracker?.tagOpenedUserRegistration()
         delegate?.landingViewControllerDidChooseCreateAccount()
     }
 
     @objc public func createTeamButtonTapped(_ sender: AnyObject!) {
+        tracker?.tagOpenedTeamCreation()
         delegate?.landingViewControllerDidChooseCreateTeam()
     }
 
     @objc public func loginButtonTapped(_ sender: AnyObject!) {
+        tracker?.tagOpenedLogin()
         delegate?.landingViewControllerDidChooseLogin()
     }
 

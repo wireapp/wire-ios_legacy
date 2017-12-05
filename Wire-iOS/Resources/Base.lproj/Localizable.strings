@@ -215,6 +215,9 @@
 
 "conversation.input_bar.shortcut.send" = "Send Message";
 
+"conversation.input_bar.message_too_long.title" = "Message too long";
+"conversation.input_bar.message_too_long.message" = "You can send messages up to %d characters long.";
+
 // Image confirmation dialogue
 "image_confirmer.confirm" = "OK";
 "image_confirmer.cancel" = "Cancel";
@@ -287,8 +290,8 @@
 "content.system.failedtosend_message_timestamp_resend" = "Resend";
 "content.system.failedtosend_message_timestamp_delete" = "Delete";
 "content.system.like_tooltip" = "Tap to like";
-"content.system.deleted_message_prefix_timestamp" = "Deleted on %@";
-"content.system.edited_message_prefix_timestamp" = "Edited on %@";
+"content.system.deleted_message_prefix_timestamp" = "Deleted: %@";
+"content.system.edited_message_prefix_timestamp" = "Edited: %@";
 "content.system.connecting_to" = "Connecting to %@.\nStart a conversation";
 "content.system.connected_to" = "Connected to %@\nStart a conversation";
 "content.system.other_wanted_to_talk" = "%@ called";
@@ -768,15 +771,15 @@
 "system_status_bar.poor_connectivity.title" = "Slow Internet, can’t call now";
 "system_status_bar.poor_connectivity.explanation" = "We can’t guarantee voice quality. Connect to Wi-Fi or try changing your location.";
 
-// Common connections on profile view
-"profile_other.common_connections" = "You both know";
-
-// View user profile and options menu
+// View user profile and options menu & text field validation
 "name.placeholder" = "Your full name";
 "name.guidance.tooshort" = "At least 2 characters";
 "name.guidance.toolong" = "Too many characters";
 
 "email.placeholder" = "Email";
+"email.guidance.invalid" = "Invalid email address";
+"email.guidance.tooshort" = "Email is too short";
+"email.guidance.toolong" = "Too many characters";
 
 "password.placeholder" = "Password";
 "password.guidance.tooshort" = "At least 8 characters";
@@ -791,6 +794,36 @@
 "landing.create_team.subtitle" = "for work";
 "landing.login.hints" = "Already have an account?";
 "landing.login.button.title" = "Log in";
+
+// Create team
+
+"team.name.headline" = "Name your team";
+"team.name.subheadline" = "You can always change it later.";
+"team.name.textfield.placeholder" = "team name";
+"team.name.textfield.accessibility" = "Set team name";
+"team.name.whatiswireforteams" = "What is Wire for teams?";
+
+"team.email.headline" = "Your account";
+"team.email.subheadline" = "Enter your work email address.";
+"team.email.textfield.placeholder" = "you@yourcompany.com";
+"team.email.textfield.accessibility" = "Your company email";
+"team.email.button.learn_more" = "Learn More";
+
+"team.activation_code.headline" = "You've got mail";
+"team.activation_code.subheadline" = "Enter the verification code we sent to %@";
+"team.activation_code.button.resend" = "Resend code";
+"team.activation_code.button.change_email" = "Change email";
+
+"team.full_name.headline" = "Your name";
+"team.full_name.textfield.placeholder" = "Full name";
+"team.full_name.textfield.accessibility" = "Set full name";
+
+"team.password.headline" = "Set password";
+"team.password.textfield.placeholder" = "At least 8 characters";
+"team.password.textfield.accessibility" = "Set password, at least 8 characters";
+
+
+"team.email_code.input_field.accessbility_label" = "Please enter the six-digit code from the email.";
 
 // Registration
 
@@ -834,6 +867,11 @@
 "registration.terms_of_use.terms" = "By continuing you agree to the Wire Terms of Use.";
 "registration.terms_of_use.terms.link" = "Terms of Use";
 "registration.terms_of_use.agree" = "I agree";
+
+"registration.terms_of_use.terms.title" = "Terms of Use";
+"registration.terms_of_use.terms.message" = "Please accept the Terms of Use to continue.";
+"registration.terms_of_use.terms.view" = "View";
+"registration.terms_of_use.accept" = "Accept";
 
 "registration.email_flow.title" = "Register by Email";
 "registration.email_flow.email_step.title" = "Edit Details";

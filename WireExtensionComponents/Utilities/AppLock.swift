@@ -17,10 +17,12 @@
 //
 
 import Foundation
+import WireDataModel
+import LocalAuthentication
 
-class AppLock {
+public class AppLock {
     // Returns true if user enabled the app lock feature.
-    static var isActive: Bool {
+    public static var isActive: Bool {
         get {
             guard let data = ZMKeychain.data(forAccount: SettingsPropertyName.lockApp.rawValue),
                 data.count != 0 else {
@@ -36,7 +38,7 @@ class AppLock {
     }
     
     // Returns the time since last lock happened as number of seconds since the reference date.
-    static var lastUnlockDateAsInt: UInt32 {
+    public static var lastUnlockDateAsInt: UInt32 {
         get {
             guard let data = ZMKeychain.data(forAccount: SettingsPropertyName.lockAppLastDate.rawValue),
                 data.count != 0 else {
@@ -62,7 +64,7 @@ class AppLock {
     }
     
     // Returns the time since last lock happened.
-    static var lastUnlockedDate: Date {
+    public static var lastUnlockedDate: Date {
         get {
             return Date(timeIntervalSinceReferenceDate: TimeInterval(self.lastUnlockDateAsInt))
         }
@@ -71,4 +73,22 @@ class AppLock {
             self.lastUnlockDateAsInt = UInt32(newValue.timeIntervalSinceReferenceDate)
         }
     }
+    
+    // Creates a new LAContext and evaluates the authentication settings of the user.
+    public static func evaluateAuthentication(description: String, with callback: @escaping (Bool?, Error?)->()) {
+    
+        let context: LAContext = LAContext()
+        var error: NSError?
+    
+        if context.canEvaluatePolicy(LAPolicy.deviceOwnerAuthentication, error: &error) {
+            context.evaluatePolicy(LAPolicy.deviceOwnerAuthentication,
+                                   localizedReason: description,
+                                   reply: { (success, error) -> Void in
+                callback(success, error)
+            })
+        } else {
+            callback(.none, error)
+        }
+    }
+    
 }

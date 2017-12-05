@@ -69,8 +69,6 @@
         self.unregisteredUser = unregisteredUser;
         
         self.analyticsTracker = [AnalyticsTracker analyticsTrackerWithContext:AnalyticsContextRegistrationEmail];
-        
-        [self.analyticsTracker tagOpenedEmailRegistration];
     }
 
     return self;

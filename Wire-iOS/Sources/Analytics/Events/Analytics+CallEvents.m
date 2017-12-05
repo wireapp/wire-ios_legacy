@@ -69,7 +69,7 @@
     [attributes addEntriesFromDictionary:[self attributesForInitiatedCall:initiatedCall]];
     [attributes addEntriesFromDictionary:[self attributesForCallSetupDuration:setupDuration]];
     
-    [self tagEvent:video ? @"calling.established_successful_video_call" : @"calling.established_successful_call" attributes:attributes];
+    [self tagEvent:video ? @"calling.established_video_call" : @"calling.established_call" attributes:attributes];
 }
 
 - (void)tagEndedCallInConversation:(ZMConversation *)conversation video:(BOOL)video initiatedCall:(BOOL)initiatedCall duration:(NSTimeInterval)duration callEndReason:(NSString *)callEndReason

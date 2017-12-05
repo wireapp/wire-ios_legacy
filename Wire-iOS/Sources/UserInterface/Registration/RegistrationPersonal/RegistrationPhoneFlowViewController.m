@@ -74,8 +74,6 @@
         self.unregisteredUser = unregisteredUser;
    
         self.analyticsTracker = [AnalyticsTracker analyticsTrackerWithContext:AnalyticsContextRegistrationPhone];
-        
-        [self.analyticsTracker tagOpenedPhoneRegistration];
     }
 
     return self;
