@@ -57,7 +57,7 @@ final class SetEmailStepDescription: TeamCreationStepDescription {
         backButton = BackButtonDescription()
         mainView = TextFieldDescription(placeholder: "team.email.textfield.placeholder".localized, actionDescription: "team.email.textfield.accessibility".localized, kind: .email)
         headline = "team.email.headline".localized
-        subtext = nil
+        subtext = "team.email.subheadline".localized
         secondaryView = SetEmailStepSecondaryView(controller: controller)
     }
 }

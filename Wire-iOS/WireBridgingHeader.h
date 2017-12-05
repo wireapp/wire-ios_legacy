@@ -108,6 +108,7 @@
 #import "LaunchImageViewController.h"
 #import "VoiceUserImageView.h"
 #import "VoiceChannelParticipantCell.h"
+#import "ProfilePictureStepViewController.h"
 
 // Helper objects
 #import "PushTransition.h"

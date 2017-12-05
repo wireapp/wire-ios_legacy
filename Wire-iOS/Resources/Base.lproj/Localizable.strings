@@ -804,6 +804,7 @@
 "team.name.whatiswireforteams" = "What is Wire for teams?";
 
 "team.email.headline" = "Your account";
+"team.email.subheadline" = "Enter your work email address.";
 "team.email.textfield.placeholder" = "you@yourcompany.com";
 "team.email.textfield.accessibility" = "Your company email";
 "team.email.button.learn_more" = "Learn More";
