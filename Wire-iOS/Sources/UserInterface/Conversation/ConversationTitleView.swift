@@ -21,26 +21,16 @@ import UIKit
 import Cartography
 import Classy
 
-public final class ConversationTitleView: UIView {
-    
-    var titleColor, titleColorSelected: UIColor?
-    var titleFont: UIFont?
-    let titleButton = UIButton()
-    public var tapHandler: ((UIButton) -> Void)? = nil
+class ConversationTitleView: AbstractTitleView {
+    var conversation: ZMConversation
     
     init(conversation: ZMConversation, interactive: Bool = true) {
-        super.init(frame: CGRect.zero)
-        self.isAccessibilityElement = true
-        self.accessibilityLabel = conversation.displayName
-        self.accessibilityIdentifier = "Name"
-        createViews(conversation)
-        CASStyler.default().styleItem(self)
-
-        // The attachments contain images which break the centering of the text inside the button.
-        // If there is an attachment in the text we need to adjust the constraints accordingly.
-        let hasAttachment = configure(conversation, interactive: interactive)
-        frame = titleButton.bounds
-        createConstraints(hasAttachment)
+        self.conversation = conversation
+        super.init(interactive: interactive)
+    }
+    
+    public required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
     private func createViews(_ conversation: ZMConversation) {
@@ -48,43 +38,25 @@ public final class ConversationTitleView: UIView {
         addSubview(titleButton)
     }
 
-    /// Configures the title view for the given conversation
-    /// - parameter conversation: The conversation for which the view should be configured
-    /// - parameter interactive: Whether the view should react to user interaction events
-    /// - return: Whether the view contains any `NSTextAttachments`
-    private func configure(_ conversation: ZMConversation, interactive: Bool) -> Bool {
-        guard let font = titleFont, let color = titleColor, let selectedColor = titleColorSelected else { return false }
-        let title = conversation.displayName.uppercased() && font
-        let tappable = interactive && conversation.relatedConnectionState != .sent
+    override func generateAttributedTitle(interactive: Bool, color: UIColor) -> (text: NSAttributedString, hasAttachments: Bool) {
+        
+        var title = conversation.displayName.uppercased().attributedString
+        
         var hasAttachment = false
-
-        let titleWithColor: (UIColor) -> NSAttributedString = {
-            var attributed = title
-
-            if tappable {
-                attributed += "  " + NSAttributedString(attachment: .downArrow(color: $0))
-                hasAttachment = true
-            }
-            if conversation.securityLevel == .secure {
-                attributed = NSAttributedString(attachment: .verifiedShield()) + "  " + attributed
-                hasAttachment = true
-            }
-            return attributed && $0
+        
+        if tappableCondition(interactive: interactive) {
+            title += "  " + NSAttributedString(attachment: .downArrow(color: color))
+            hasAttachment = true
         }
-
-        titleButton.titleLabel!.font = font
-        titleButton.setAttributedTitle(titleWithColor(color), for: UIControlState())
-        titleButton.setAttributedTitle(titleWithColor(selectedColor), for: .highlighted)
-        titleButton.sizeToFit()
-        titleButton.isEnabled = tappable
-        updateAccessibilityValue(conversation)
-        setNeedsLayout()
-        layoutIfNeeded()
-
-        return hasAttachment
+        if conversation.securityLevel == .secure {
+            title = NSAttributedString(attachment: .verifiedShield()) + "  " + title
+            hasAttachment = true
+        }
+        
+        return (text: title && color, hasAttachments: hasAttachment)
     }
-    
-    private func updateAccessibilityValue(_ conversation: ZMConversation) {
+
+    override func updateAccessibilityLabel() {
         if conversation.securityLevel == .secure {
             self.accessibilityLabel = conversation.displayName.uppercased() + ", " + "conversation.voiceover.verified".localized
         } else {
@@ -92,33 +64,12 @@ public final class ConversationTitleView: UIView {
         }
     }
     
-    private func createConstraints(_ hasAttachment: Bool) {
-        constrain(self, titleButton) { view, button in
-            button.leading == view.leading
-            button.trailing == view.trailing
-            button.top == view.top
-            button.bottom == view.bottom - (hasAttachment ? 4 : 0)
-        }
+    override func tappableCondition(interactive: Bool) -> Bool {
+        return interactive && conversation.relatedConnectionState != .sent
     }
-    
-    func titleButtonTapped(_ sender: UIButton) {
-        tapHandler?(sender)
-    }
-    
-    public required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
 }
 
-fileprivate extension NSTextAttachment {
-
-    static func downArrow(color: UIColor) -> NSTextAttachment {
-        let attachment = NSTextAttachment()
-        attachment.image = UIImage(for: .downArrow, fontSize: 8, color: color)
-        return attachment
-    }
-
+extension NSTextAttachment {
     static func verifiedShield() -> NSTextAttachment {
         let attachment = NSTextAttachment()
         let shield = WireStyleKit.imageOfShieldverified()!
@@ -129,3 +80,4 @@ fileprivate extension NSTextAttachment {
         return attachment
     }
 }
+

@@ -10,140 +10,74 @@ import UIKit
 import Cartography
 import Classy
 
-public final class AvailabilityTitleView: UIView {
+enum Availability {
+    case none, available, away, busy
+}
+
+class AvailabilityTitleView: AbstractTitleView {
     
-    var titleColor, titleColorSelected: UIColor?
-    var titleFont: UIFont?
-    let titleButton = UIButton()
-    public var tapHandler: ((UIButton) -> Void)? = nil
+    private var availability: Availability
+    private var user: ZMUser
     
-    init(availability: Availability, interactive: Bool = true) {
-        super.init(frame: CGRect.zero)
-        self.isAccessibilityElement = true
-        //self.accessibilityLabel = conversation.displayName
-        self.accessibilityIdentifier = "Availability"
-        createViews()
-        CASStyler.default().styleItem(self)
-        
-        // The attachments contain images which break the centering of the text inside the button.
-        // If there is an attachment in the text we need to adjust the constraints accordingly.
-        let hasAttachment = configure(availability, interactive: interactive)
-        frame = titleButton.bounds
-        createConstraints(hasAttachment)
-    }
-    
-    private func createViews() {
-        titleButton.addTarget(self, action: #selector(titleButtonTapped), for: .touchUpInside)
-        addSubview(titleButton)
-    }
-    
-    /// Configures the title view for the given conversation
-    /// - parameter conversation: The conversation for which the view should be configured
-    /// - parameter interactive: Whether the view should react to user interaction events
-    /// - return: Whether the view contains any `NSTextAttachments`
-    private func configure(_ availability: Availability, interactive: Bool) -> Bool {
-        guard let font = titleFont, let color = titleColor, let selectedColor = titleColorSelected else { return false }
-        let title = availability.name.uppercased() && font
-        var hasAttachment = false
-        
-        let titleWithColor: (UIColor) -> NSAttributedString = {
-            
-            var attributed = title
-            
-            if interactive {
-                attributed += "  " + NSAttributedString(attachment: .downArrow(color: $0))
-                hasAttachment = true
-            }
-            
-            if availability != .none {
-                attributed = NSAttributedString(attachment: .availabilityIcon(availability)) + "  " + attributed
-                hasAttachment = true
-            }
-            
-            return attributed && $0
-        }
-        
-        titleButton.titleLabel!.font = font
-        titleButton.setAttributedTitle(titleWithColor(color), for: UIControlState())
-        titleButton.setAttributedTitle(titleWithColor(selectedColor), for: .highlighted)
-        titleButton.sizeToFit()
-        titleButton.isEnabled = interactive
-        updateAccessibilityValue(availability)
-        setNeedsLayout()
-        layoutIfNeeded()
-        
-        return hasAttachment
-    }
-    
-    private func updateAccessibilityValue(_ availability: Availability) {
-        /// TODO
-        self.accessibilityLabel = availability.name.uppercased()
-        // Other labels should be added + check on "None" case.
-    }
-    
-    private func createConstraints(_ hasAttachment: Bool) {
-        constrain(self, titleButton) { view, button in
-            button.leading == view.leading
-            button.trailing == view.trailing
-            button.top == view.top
-            button.bottom == view.bottom - (hasAttachment ? 4 : 0)
-        }
-    }
-    
-    func titleButtonTapped(_ sender: UIButton) {
-        tapHandler?(sender)
+    init(user: ZMUser, availability: Availability, interactive: Bool = true) {
+        self.user = user
+        self.availability = availability
+        super.init(interactive: interactive)
     }
     
     public required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-}
-
-fileprivate extension NSTextAttachment {
-    
-    static func downArrow(color: UIColor) -> NSTextAttachment {
-        let attachment = NSTextAttachment()
-        attachment.image = UIImage(for: .downArrow, fontSize: 8, color: color)
-        return attachment
-    }
-    
-    static func availabilityIcon(_ availability: Availability) -> NSTextAttachment {
-        let attachment = NSTextAttachment()
+    override func generateAttributedTitle(interactive: Bool, color: UIColor) -> (text: NSAttributedString, hasAttachments: Bool) {
         
-        switch availability {
-        default: do {
-            /// TODO Check Color
-            attachment.image = UIImage(for: .delete, fontSize: 12, color: .black)
-            }
+        var title = user.displayName.uppercased().attributedString
+        var hasAttachment = false
+            
+        if interactive {
+            title += "  " + NSAttributedString(attachment: .downArrow(color: color))
+            hasAttachment = true
         }
-        
-        return attachment
+
+        if availability != .none {
+            title = NSAttributedString(attachment: .availabilityIcon(availability)) + "  " + title
+            hasAttachment = true
+        }
+            
+        return (text: title, hasAttachments: hasAttachment)
+    }
+
+    override func updateAccessibilityLabel() {
+        self.accessibilityLabel = "\(user.displayName) is \(availability.name)".localized
     }
     
-    static func verifiedShield() -> NSTextAttachment {
-        let attachment = NSTextAttachment()
-        let shield = WireStyleKit.imageOfShieldverified()!
-        attachment.image = shield
-        let ratio = shield.size.width / shield.size.height
-        let height: CGFloat = 12
-        attachment.bounds = CGRect(x: 0, y: -2, width: height * ratio, height: height)
-        return attachment
-    }
 }
 
 extension Availability {
-    
     var name: String {
         switch self {
-            case .none: return "availability.none".localized
-        /// TODO: Change to ".available"
-            case .vacation: return "availability.available".localized
-        /// TODO: Change to ".away"
-            case .sick: return "availability.away".localized
-        /// TODO: Change to ".busy"
-            case .workFromHome: return "availability.busy".localized
+            case .none, .available: return "availability.available".localized
+            case .away: return "availability.away".localized
+            case .busy: return "availability.busy".localized
         }
     }
     
+    var imageEnum: ZetaIconType? {
+        switch self {
+            case .none, .available: return nil
+            case .away: return .contactsCircle
+            case .busy: return .delete
+        }
+    }
+}
+
+extension NSTextAttachment {
+    static func availabilityIcon(_ availability: Availability) -> NSTextAttachment {
+        let attachment = NSTextAttachment()
+        if let imageEnum = availability.imageEnum {
+             /// TODO check colors
+            attachment.image = UIImage(for: imageEnum, fontSize: 12, color: .black)
+        }
+        return attachment
+    }
 }
