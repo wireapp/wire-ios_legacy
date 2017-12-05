@@ -14,9 +14,10 @@ protocol AbstractTitleViewTemplate {
     func updateAccessibilityLabel()
     func generateAttributedTitle(interactive: Bool, color: UIColor) -> (text: NSAttributedString, hasAttachments: Bool)
     func tappableCondition(interactive: Bool) -> Bool
+    func colorsStrategy()
 }
 
-class AbstractTitleView: UIView, AbstractTitleViewTemplate {
+@objc public class AbstractTitleView: UIView, AbstractTitleViewTemplate {
     
     var titleColor, titleColorSelected: UIColor?
     var titleFont: UIFont?
@@ -30,7 +31,7 @@ class AbstractTitleView: UIView, AbstractTitleViewTemplate {
         self.updateAccessibilityLabel()
         
         createViews()
-        CASStyler.default().styleItem(self)
+        colorsStrategy()
         
         let hasAttachment = configure(interactive: interactive)
         frame = titleButton.bounds
@@ -62,15 +63,15 @@ class AbstractTitleView: UIView, AbstractTitleViewTemplate {
     private func configure(interactive: Bool) -> Bool {
     
         guard let font = titleFont, let color = titleColor, let selectedColor = titleColorSelected else { return false }
-        
-        let normalLabel = generateAttributedTitle(interactive: interactive, color: color)
-        let selectedLabel = generateAttributedTitle(interactive: interactive, color: selectedColor)
+        let tappable = tappableCondition(interactive: interactive)
+        let normalLabel = generateAttributedTitle(interactive: tappable, color: color)
+        let selectedLabel = generateAttributedTitle(interactive: tappable, color: selectedColor)
         
         titleButton.titleLabel!.font = font
         titleButton.setAttributedTitle(normalLabel.text, for: UIControlState())
         titleButton.setAttributedTitle(selectedLabel.text, for: .highlighted)
         titleButton.sizeToFit()
-        titleButton.isEnabled = tappableCondition(interactive: interactive)
+        titleButton.isEnabled = tappable
         updateAccessibilityLabel()
         setNeedsLayout()
         layoutIfNeeded()
@@ -83,11 +84,14 @@ class AbstractTitleView: UIView, AbstractTitleViewTemplate {
     }
     
     func updateAccessibilityLabel() {
+    }
+    
+    func colorsStrategy() {
         fatalError("This method should be implemented by its subclasses")
     }
     
     func tappableCondition(interactive: Bool) -> Bool {
-        fatalError("This method should be implemented by its subclasses")
+        return interactive
     }
     
     func generateAttributedTitle(interactive: Bool, color: UIColor) -> (text: NSAttributedString, hasAttachments: Bool) {

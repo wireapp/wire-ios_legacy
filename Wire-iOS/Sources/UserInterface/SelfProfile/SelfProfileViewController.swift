@@ -35,15 +35,12 @@ final internal class SelfProfileViewController: UIViewController {
     private let accountSelectorController = AccountSelectorController()
     private let profileContainerView = UIView()
     private let profileView: ProfileView
-    //private let availabilityView: AvailabilityTitleView
     private let accountLabel = UILabel()
     @objc var dismissAction: (() -> ())? = .none
 
     
     init(rootGroup: SettingsControllerGeneratorType & SettingsInternalGroupCellDescriptorType) {
         settingsController = rootGroup.generateViewController()! as! SettingsTableViewController
-        
-        //availabilityView = AvailabilityTitleView(availability: .workFromHome, interactive: true)
         
         profileView = ProfileView(user: ZMUser.selfUser())
         super.init(nibName: .none, bundle: .none)
@@ -61,7 +58,6 @@ final internal class SelfProfileViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        //profileContainerView.addSubview(availabilityView)
         profileContainerView.addSubview(profileView)
         view.addSubview(profileContainerView)
         

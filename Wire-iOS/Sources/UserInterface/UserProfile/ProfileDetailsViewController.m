@@ -86,6 +86,7 @@ typedef NS_ENUM(NSUInteger, ProfileUserAction) {
 @property (nonatomic) UIView *footerView;
 @property (nonatomic) UILabel *teamsGuestLabel;
 @property (nonatomic) BOOL showGuestLabel;
+@property (nonatomic) AvailabilityTitleView *availabilityView;
 
 @end
 
@@ -100,8 +101,8 @@ typedef NS_ENUM(NSUInteger, ProfileUserAction) {
         _bareUser = user;
         _conversation = conversation;
         _showGuestLabel = [user isGuestInConversation:conversation];
+        _availabilityView = [[AvailabilityTitleView alloc] initWithUser:[ZMUser selfUser] availability:AvailabilityAway variant:ColorSchemeVariantLight interactive:FALSE];
     }
-    
     return self;
 }
 
@@ -115,6 +116,7 @@ typedef NS_ENUM(NSUInteger, ProfileUserAction) {
 {
     [self createUserImageView];
     [self createFooter];
+    [self createAvailabilityView];
     if (self.showGuestLabel) {
         [self createTeamsGuestLabel];
     }
@@ -128,14 +130,18 @@ typedef NS_ENUM(NSUInteger, ProfileUserAction) {
     [self.userImageView autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:48 relation:NSLayoutRelationGreaterThanOrEqual];
     [self.userImageView autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:48 relation:NSLayoutRelationGreaterThanOrEqual];
     [self.userImageView autoPinEdgeToSuperviewEdge:ALEdgeTop withInset:0 relation:NSLayoutRelationGreaterThanOrEqual];
+    
 
     if (self.showGuestLabel) {
         [self.teamsGuestLabel autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.userImageView withOffset:15];
-        [self.teamsGuestLabel autoPinEdgeToSuperviewEdge:ALEdgeBottom withInset:0 relation:NSLayoutRelationGreaterThanOrEqual];
         [self.teamsGuestLabel autoPinEdge:ALEdgeLeft toEdge:ALEdgeLeft ofView:self.userImageView];
         [self.teamsGuestLabel autoPinEdge:ALEdgeRight toEdge:ALEdgeRight ofView:self.userImageView];
+        [self.availabilityView autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.teamsGuestLabel withOffset:40.0];
+    } else {
+        [self.availabilityView autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.userImageView withOffset:40.0];
     }
     
+    [self.availabilityView autoAlignAxisToSuperviewAxis:ALAxisVertical];
     [self.userImageView autoAlignAxisToSuperviewAxis:ALAxisVertical];
     [NSLayoutConstraint autoSetPriority:UILayoutPriorityDefaultLow forConstraints:^{
         [self.userImageView autoAlignAxisToSuperviewAxis:ALAxisHorizontal];
@@ -146,6 +152,10 @@ typedef NS_ENUM(NSUInteger, ProfileUserAction) {
 }
 
 #pragma mark - User Image
+
+- (void)createAvailabilityView {
+    [self.userImageViewContainer addSubview:self.availabilityView];
+}
 
 - (void)createUserImageView
 {

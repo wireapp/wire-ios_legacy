@@ -44,7 +44,7 @@ class ConversationTitleView: AbstractTitleView {
         
         var hasAttachment = false
         
-        if tappableCondition(interactive: interactive) {
+        if interactive {
             title += "  " + NSAttributedString(attachment: .downArrow(color: color))
             hasAttachment = true
         }
@@ -66,6 +66,10 @@ class ConversationTitleView: AbstractTitleView {
     
     override func tappableCondition(interactive: Bool) -> Bool {
         return interactive && conversation.relatedConnectionState != .sent
+    }
+    
+    override func colorsStrategy() {
+        CASStyler.default().styleItem(self)
     }
 }
 
