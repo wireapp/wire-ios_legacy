@@ -150,6 +150,11 @@ final class LandingViewController: UIViewController {
         cancelButton.isHidden = SessionManager.shared?.firstAuthenticatedAccount == nil
 
         self.createConstraints()
+        
+        NotificationCenter.default.addObserver(
+            forName: AccountManagerDidUpdateAccountsNotificationName,
+            object: SessionManager.shared?.accountManager,
+            queue: nil) { _ in self.cancelButton.isHidden = SessionManager.shared?.firstAuthenticatedAccount == nil }
     }
 
     private func createConstraints() {
