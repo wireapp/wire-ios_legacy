@@ -86,6 +86,7 @@ final class LandingViewController: UIViewController {
         let stackView = UIStackView()
         stackView.distribution = .fillEqually
         stackView.spacing = 24
+        stackView.axis = .vertical
 
         return stackView
     }()
