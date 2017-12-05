@@ -36,7 +36,9 @@
 @property (nonatomic) ZMIncompleteRegistrationUser *unregisteredUser;
 @property (nonatomic) AuthenticationFlowType flowType;
 @property (nonatomic, weak) SignInViewController *signInViewController;
+@property (nonatomic) IconButton *cancelButton;
 @property (nonatomic) IconButton *backButton;
+@property (nonatomic, readonly) Account *firstAuthenticatedAccount;
 
 @end
 
@@ -101,8 +103,16 @@
     self.registrationTabBarController.style = TabBarStyleColored;
     self.registrationTabBarController.view.translatesAutoresizingMaskIntoConstraints = NO;
     
+    self.cancelButton = [[IconButton alloc] init];
+    [self.cancelButton setIcon:ZetaIconTypeCancel withSize:ZetaIconSizeTiny forState:UIControlStateNormal];
+    [self.cancelButton setIconColor:UIColor.whiteColor forState:UIControlStateNormal];
+    self.cancelButton.accessibilityLabel = @"cancelAddAccount";
+    [self.cancelButton addTarget:self action:@selector(cancelAddAccount) forControlEvents:UIControlEventTouchUpInside];
+    self.cancelButton.hidden = self.firstAuthenticatedAccount == nil;
+    
     [self addChildViewController:self.registrationTabBarController];
     [self.view addSubview:self.registrationTabBarController.view];
+    [self.view addSubview:self.cancelButton];
     [self.registrationTabBarController didMoveToParentViewController:self];
     
     [self createConstraints];
@@ -133,10 +143,28 @@
     [self.registrationTabBarController selectIndex:_showLogin ? 1 : 0 animated:YES];
 }
 
+- (Account *)firstAuthenticatedAccount {
+    Account *selectedAccount = SessionManager.shared.accountManager.selectedAccount;
+    
+    if (selectedAccount.isAuthenticated && !self.hasSignInError) {
+        return selectedAccount;
+    }
+    
+    for (Account *account in SessionManager.shared.accountManager.accounts) {
+        if (account.isAuthenticated && account != selectedAccount) {
+            return account;
+        }
+    }
+    
+    return nil;
+}
+
 - (void)createConstraints
 {
     [self.registrationTabBarController.view autoPinEdgesToSuperviewEdgesWithInsets:UIScreen.safeArea excludingEdge:ALEdgeTop];
     [self.registrationTabBarController.view autoSetDimension:ALDimensionHeight toSize:IS_IPAD_FULLSCREEN ? 262 : 244];
+    [self.cancelButton autoPinEdgeToSuperviewEdge:ALEdgeTop withInset:UIScreen.safeArea.top + 32];
+    [self.cancelButton autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:16];
 
     if (self.backButton) {
         CGFloat topMargin = 32 + UIScreen.safeArea.top;
@@ -165,6 +193,10 @@
     [self.navigationController.navigationController popViewControllerAnimated:YES];
 }
 
+- (void)cancelAddAccount
+{
+    [SessionManager.shared select:self.firstAuthenticatedAccount completion:nil tearDownCompletion:nil];
+}
 
 #pragma mark - FormStepDelegate
 
