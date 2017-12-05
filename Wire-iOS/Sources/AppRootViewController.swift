@@ -510,3 +510,23 @@ extension AppRootViewController : LandingViewControllerDelegate {
         }
     }
 }
+
+public extension SessionManager {
+    
+    var firstAuthenticatedAccount: Account? {
+        
+        if let selectedAccount = accountManager.selectedAccount {
+            if selectedAccount.isAuthenticated {
+                return selectedAccount
+            }
+        }
+        
+        for account in accountManager.accounts {
+            if account.isAuthenticated && account != accountManager.selectedAccount {
+                return account
+            }
+        }
+        
+        return nil
+    }
+}

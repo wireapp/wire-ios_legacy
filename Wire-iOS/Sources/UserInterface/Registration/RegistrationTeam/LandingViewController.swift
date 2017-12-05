@@ -133,24 +133,6 @@ final class LandingViewController: UIViewController {
         button.addTarget(self, action: #selector(LandingViewController.cancelButtonTapped(_:)), for: .touchUpInside)
         return button
     }()
-    
-    private var firstAuthenticatedAccount: Account? {
-        guard let accountManager = SessionManager.shared?.accountManager else { return nil }
-        
-        if let selectedAccount = accountManager.selectedAccount {
-            if selectedAccount.isAuthenticated {
-                return selectedAccount
-            }
-        }
-        
-        for account in accountManager.accounts {
-            if account.isAuthenticated && account != accountManager.selectedAccount {
-                return account
-            }
-        }
-        
-        return nil
-    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -165,7 +147,7 @@ final class LandingViewController: UIViewController {
 
         [createAccountButton, createTeamButton].forEach(containerView.addSubview)
         
-        cancelButton.isHidden = firstAuthenticatedAccount == nil
+        cancelButton.isHidden = SessionManager.shared?.firstAuthenticatedAccount == nil
 
         self.createConstraints()
     }
@@ -249,8 +231,8 @@ final class LandingViewController: UIViewController {
     }
     
     @objc public func cancelButtonTapped(_ sender: AnyObject!) {
-        guard let account = self.firstAuthenticatedAccount else { return }
-        SessionManager.shared?.select(account)
+        guard let account = SessionManager.shared?.firstAuthenticatedAccount else { return }
+        SessionManager.shared!.select(account)
     }
 
     override var prefersStatusBarHidden: Bool {
