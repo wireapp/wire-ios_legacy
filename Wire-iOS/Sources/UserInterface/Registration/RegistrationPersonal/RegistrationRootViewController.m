@@ -108,7 +108,7 @@
     [self.cancelButton setIconColor:UIColor.whiteColor forState:UIControlStateNormal];
     self.cancelButton.accessibilityLabel = @"cancelAddAccount";
     [self.cancelButton addTarget:self action:@selector(cancelAddAccount) forControlEvents:UIControlEventTouchUpInside];
-    self.cancelButton.hidden = self.firstAuthenticatedAccount == nil;
+    self.cancelButton.hidden = self.shouldHideCancelButton || self.firstAuthenticatedAccount == nil;
     
     [self addChildViewController:self.registrationTabBarController];
     [self.view addSubview:self.registrationTabBarController.view];

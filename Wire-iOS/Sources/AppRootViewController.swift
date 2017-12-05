@@ -496,6 +496,7 @@ extension AppRootViewController : LandingViewControllerDelegate {
         if let navigationController = self.visibleViewController as? NavigationController {
             let loginViewController = RegistrationViewController(authenticationFlow: .onlyLogin)
             loginViewController.delegate = appStateController
+            loginViewController.shouldHideCancelButton = true
             navigationController.pushViewController(loginViewController, animated: true)
         }
     }
@@ -504,6 +505,7 @@ extension AppRootViewController : LandingViewControllerDelegate {
         if let navigationController = self.visibleViewController as? NavigationController {
             let registrationViewController = RegistrationViewController(authenticationFlow: .onlyRegistration)
             registrationViewController.delegate = appStateController
+            registrationViewController.shouldHideCancelButton = true
             navigationController.pushViewController(registrationViewController, animated: true)
         }
     }
