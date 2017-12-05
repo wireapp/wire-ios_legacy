@@ -188,28 +188,41 @@ class AppRootViewController : UIViewController {
         case .unauthenticated(error: let error):
             UIColor.setAccentOverride(ZMUser.pickRandomAcceptableAccentColor())
             mainWindow.tintColor = UIColor.accent()
-            let authenticatedAccounts = SessionManager.shared?.accountManager.accounts.filter { $0.isAuthenticated } ?? []
-
-            if error == nil && authenticatedAccounts.isEmpty {
-                // When we show the landing controller we want it to be nested in navigation controller
-                let landingViewController = LandingViewController()
-                landingViewController.delegate = self
-                let navigationController = NavigationController(rootViewController: landingViewController)
-                navigationController.backButtonEnabled = false
-                navigationController.logoEnabled = false
-                navigationController.isNavigationBarHidden = true
-
-                guard let registrationStatus = SessionManager.shared?.unauthenticatedSession?.registrationStatus else { fatal("Could not get registration status") }
-
-                flowController = TeamCreationFlowController(navigationController: navigationController, registrationStatus: registrationStatus)
-                flowController.registrationDelegate = appStateController
-                viewController = navigationController
-            } else {
+            
+            // check if needs to reauthenticate
+            var needsToReauthenticate = false
+            if let error = error {
+                let errorCode = (error as NSError).userSessionErrorCode
+                needsToReauthenticate = [ZMUserSessionErrorCode.clientDeletedRemotely,
+                    .accessTokenExpired,
+                    .needsPasswordToRegisterClient,
+                    .canNotRegisterMoreClients
+                ].contains(errorCode)
+            }
+            
+            if needsToReauthenticate {
                 let registrationViewController = RegistrationViewController()
                 registrationViewController.delegate = appStateController
                 registrationViewController.signInError = error
                 viewController = registrationViewController
             }
+            else {
+                // When we show the landing controller we want it to be nested in navigation controller
+                let landingViewController = LandingViewController()
+                landingViewController.delegate = self
+                
+                let navigationController = NavigationController(rootViewController: landingViewController)
+                navigationController.backButtonEnabled = false
+                navigationController.logoEnabled = false
+                navigationController.isNavigationBarHidden = true
+                
+                guard let registrationStatus = SessionManager.shared?.unauthenticatedSession?.registrationStatus else { fatal("Could not get registration status") }
+                
+                flowController = TeamCreationFlowController(navigationController: navigationController, registrationStatus: registrationStatus)
+                flowController.registrationDelegate = appStateController
+                viewController = navigationController
+            }
+
         case .authenticated(completedRegistration: let completedRegistration):
             // TODO: CallKit only with 1 account
             sessionManager?.updateCallNotificationStyleFromSettings()
@@ -483,6 +496,7 @@ extension AppRootViewController : LandingViewControllerDelegate {
         if let navigationController = self.visibleViewController as? NavigationController {
             let loginViewController = RegistrationViewController(authenticationFlow: .onlyLogin)
             loginViewController.delegate = appStateController
+            loginViewController.shouldHideCancelButton = true
             navigationController.pushViewController(loginViewController, animated: true)
         }
     }
@@ -491,7 +505,28 @@ extension AppRootViewController : LandingViewControllerDelegate {
         if let navigationController = self.visibleViewController as? NavigationController {
             let registrationViewController = RegistrationViewController(authenticationFlow: .onlyRegistration)
             registrationViewController.delegate = appStateController
+            registrationViewController.shouldHideCancelButton = true
             navigationController.pushViewController(registrationViewController, animated: true)
         }
+    }
+}
+
+public extension SessionManager {
+    
+    var firstAuthenticatedAccount: Account? {
+        
+        if let selectedAccount = accountManager.selectedAccount {
+            if selectedAccount.isAuthenticated {
+                return selectedAccount
+            }
+        }
+        
+        for account in accountManager.accounts {
+            if account.isAuthenticated && account != accountManager.selectedAccount {
+                return account
+            }
+        }
+        
+        return nil
     }
 }

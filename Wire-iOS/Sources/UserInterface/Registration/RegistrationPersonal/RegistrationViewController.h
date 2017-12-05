@@ -49,6 +49,7 @@ typedef NS_ENUM(NSUInteger, RegistrationFlow) {
 
 @property (nonatomic, weak) __nullable id<RegistrationViewControllerDelegate> delegate;
 @property (nonatomic)  NSError * __nullable signInError;
+@property (nonatomic) BOOL shouldHideCancelButton;
 
 + (RegistrationFlow)registrationFlow;
 

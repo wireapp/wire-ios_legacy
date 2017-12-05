@@ -34,6 +34,7 @@ typedef NS_ENUM(NSUInteger, AuthenticationFlowType) {
 @property (nonatomic) BOOL hasSignInError;
 @property (nonatomic) BOOL showLogin;
 @property (nonatomic) LoginCredentials *loginCredentials;
+@property (nonatomic) BOOL shouldHideCancelButton;
 
 - (instancetype)initWithUnregisteredUser:(ZMIncompleteRegistrationUser *)unregisteredUser authenticationFlow:(AuthenticationFlowType)flow;
 - (void)presentLoginTab;
