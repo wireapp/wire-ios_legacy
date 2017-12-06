@@ -305,7 +305,15 @@
     self.gifButton.hitAreaPadding = CGSizeZero;
     self.gifButton.accessibilityIdentifier = @"gifButton";
     
-    self.inputBar = [[InputBar alloc] initWithButtons:@[self.photoButton, self.videoButton, self.sketchButton, self.gifButton, self.audioButton, self.pingButton, self.uploadFileButton, self.locationButton]];
+    ZMUser *otherUser = nil;
+    if(self.conversation.conversationType == ZMConversationTypeOneOnOne) {
+        ZMUser *user = self.conversation.otherActiveParticipants.firstObject;
+        if(user.isTeamMember) {
+            otherUser = user;
+        }
+    }
+    
+    self.inputBar = [[InputBar alloc] initWithButtons:@[self.photoButton, self.videoButton, self.sketchButton, self.gifButton, self.audioButton, self.pingButton, self.uploadFileButton, self.locationButton] otherUser: otherUser];
     self.inputBar.translatesAutoresizingMaskIntoConstraints = NO;
     self.inputBar.textView.delegate = self;
     

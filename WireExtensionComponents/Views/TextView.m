@@ -97,6 +97,13 @@
     [self showOrHidePlaceholder];
 }
 
+- (void)setAttributedPlaceholder:(NSAttributedString *)attributedPlaceholder {
+    _attributedPlaceholder = attributedPlaceholder;
+    self.placeholderLabel.attributedText = attributedPlaceholder;
+    [self.placeholderLabel sizeToFit];
+    [self showOrHidePlaceholder];
+}
+
 - (void)setPlaceholderTextAlignment:(NSTextAlignment)placeholderTextAlignment
 {
     _placeholderTextAlignment = placeholderTextAlignment;
@@ -154,7 +161,7 @@
 
 - (void)drawRect:(CGRect)rect
 {
-    if(self.placeholder.length > 0) {
+    if(self.placeholder.length > 0 || self.attributedPlaceholder.length > 0) {
         if(self.placeholderLabel == nil) {
             
             float linePadding = self.textContainer.lineFragmentPadding;
@@ -171,7 +178,12 @@
             self.placeholderLabel.textAlignment = self.placeholderTextAlignment;
             [self addSubview:self.placeholderLabel];
             
-            self.placeholderLabel.text = self.placeholder;
+            if(self.attributedPlaceholder && self.attributedPlaceholder.length > 0) {
+                self.placeholderLabel.attributedText = self.attributedPlaceholder;
+            } else {
+                self.placeholderLabel.text = self.placeholder;
+            }
+            
             if (self.textAlignment == NSTextAlignmentLeft) {
                 [self.placeholderLabel sizeToFit];
             }

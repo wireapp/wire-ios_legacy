@@ -107,7 +107,7 @@
         
         self.currentConnectionRequestsCount = newCount;
         NSString *title = [NSString stringWithFormat:NSLocalizedString(@"list.connect_request.people_waiting", @""), newCount];
-        [self.itemView configureWith:title
+        [self.itemView configureWith:[[NSAttributedString alloc] initWithString:title]
                             subtitle:[[NSAttributedString alloc] init]
                                users:connectionUsers];
     }

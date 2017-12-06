@@ -25,7 +25,7 @@ import Cartography
     public let nameLabel = UILabel()
     public let handleLabel = UILabel()
     public let teamNameLabel = UILabel()
-    public let availabilityView = AvailabilityTitleView(user: ZMUser.selfUser(), availability: .busy, variant: .dark, interactive: true)
+    public let availabilityView = AvailabilityTitleView(user: ZMUser.selfUser(), availability: .busy, variant: .dark, style: .profiles, interactive: true)
     var userObserverToken: NSObjectProtocol?
     
     init(user: ZMUser) {

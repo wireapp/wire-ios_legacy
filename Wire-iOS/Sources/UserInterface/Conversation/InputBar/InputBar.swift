@@ -112,6 +112,7 @@ private struct InputBarConstants {
     fileprivate let buttonRowSeparator = UIView()
     fileprivate let constants = InputBarConstants()
     fileprivate let notificationCenter = NotificationCenter.default
+    fileprivate var otherUser: ZMUser?
     
     var isEditing: Bool {
         return inputBarState.isEditing
@@ -150,12 +151,13 @@ private struct InputBarConstants {
         notificationCenter.removeObserver(self)
     }
 
-    required public init(buttons: [UIButton]) {
+    required public init(buttons: [UIButton], otherUser: ZMUser? = nil) {
         buttonsView = InputBarButtonsView(buttons: buttons)
         secondaryButtonsView = InputBarSecondaryButtonsView(editBarView: editingView, markdownBarView: markdownView)
         
         super.init(frame: CGRect.zero)
         
+        self.otherUser = otherUser
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(didTapBackground))
         addGestureRecognizer(tapGestureRecognizer)
         buttonsView.clipsToBounds = true
@@ -282,7 +284,12 @@ private struct InputBarConstants {
     }
 
     func updatePlaceholder() {
-        textView.placeholder = placeholderText(for: inputBarState)
+        
+        if let otherUser = otherUser, otherUser.isTeamMember {
+            textView.attributedPlaceholder = UILabel.composeStringText(availability: .away, color: .black, style: .placeholder, interactive: false, title: otherUser.name)
+        } else {
+            textView.placeholder = placeholderText(for: inputBarState)
+        }
         textView.setNeedsLayout()
         textView.layoutIfNeeded()
     }

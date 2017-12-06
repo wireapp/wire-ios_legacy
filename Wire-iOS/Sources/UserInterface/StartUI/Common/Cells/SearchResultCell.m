@@ -356,8 +356,12 @@
 - (void)setDisplayName:(NSString *)displayName
 {
     _displayName = [displayName copy];
-
-    self.nameLabel.text = [_displayName transformStringWithMagicKey:@"people_picker.search_results_mode.name_label_text_transform"];
+    
+    if(self.user && [self.user isTeamMember]) {
+        self.nameLabel.attributedText = [UILabel composeStringTextWithAvailability:AvailabilityAvailable color:[UIColor whiteColor] style:AvailabilityStyleLists interactive:NO title:_displayName];
+    } else {
+        self.nameLabel.text = [_displayName transformStringWithMagicKey:@"people_picker.search_results_mode.name_label_text_transform"];
+    }
 }
 
 - (void)setSelected:(BOOL)selected

@@ -170,10 +170,10 @@ NSString * const ConversationListItemDidScrollNotification = @"ConversationListI
     }];
 }
 
-- (void)setTitleText:(NSString *)titleText
+- (void)setTitleText:(NSAttributedString *)titleText
 {
     _titleText = titleText;
-    self.titleField.text = titleText;
+    self.titleField.attributedText = titleText;
 }
 
 - (void)setSubtitleAttributedText:(NSAttributedString *)subtitleAttributedText
@@ -215,7 +215,7 @@ NSString * const ConversationListItemDidScrollNotification = @"ConversationListI
 
 - (void)updateAppearance
 {
-    self.titleField.text = self.titleText;
+    self.titleField.attributedText = self.titleText;
 }
 
 - (void)accessibilityContentsDidChange

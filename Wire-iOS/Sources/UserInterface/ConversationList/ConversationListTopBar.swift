@@ -24,17 +24,23 @@ final class ConversationListTopBar: TopBar {
    
     override init(frame: CGRect) {
         super.init(frame: frame)
-        let titleLabel = UILabel()
         
-        titleLabel.font = FontSpec(.medium, .semibold).font
-        titleLabel.textColor = ColorScheme.default().color(withName: ColorSchemeColorTextForeground, variant: .dark)
-        titleLabel.text = "list.title".localized.uppercased()
-        titleLabel.accessibilityTraits = UIAccessibilityTraitHeader
-        titleLabel.setContentCompressionResistancePriority(UILayoutPriorityRequired, for: .horizontal)
-        titleLabel.setContentCompressionResistancePriority(UILayoutPriorityRequired, for: .vertical)
-        titleLabel.setContentHuggingPriority(UILayoutPriorityRequired, for: .horizontal)
-        titleLabel.setContentHuggingPriority(UILayoutPriorityRequired, for: .vertical)
-        self.middleView = titleLabel
+        if ZMUser.selfUser().isTeamMember {
+            let availabilityView = AvailabilityTitleView(user: ZMUser.selfUser(), availability: .busy, variant: .dark, style: .headers, interactive: true)
+            self.middleView = availabilityView
+        } else {
+            let titleLabel = UILabel()
+            
+            titleLabel.font = FontSpec(.medium, .semibold).font
+            titleLabel.textColor = ColorScheme.default().color(withName: ColorSchemeColorTextForeground, variant: .dark)
+            titleLabel.text = "list.title".localized.uppercased()
+            titleLabel.accessibilityTraits = UIAccessibilityTraitHeader
+            titleLabel.setContentCompressionResistancePriority(UILayoutPriorityRequired, for: .horizontal)
+            titleLabel.setContentCompressionResistancePriority(UILayoutPriorityRequired, for: .vertical)
+            titleLabel.setContentHuggingPriority(UILayoutPriorityRequired, for: .horizontal)
+            titleLabel.setContentHuggingPriority(UILayoutPriorityRequired, for: .vertical)
+            self.middleView = titleLabel
+        }
         
         self.splitSeparator = false
     }

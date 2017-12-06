@@ -1,33 +1,41 @@
 //
-//  AvailabilityTitleView.swift
-//  Wire-iOS
+// Wire
+// Copyright (C) 2017 Wire Swiss GmbH
 //
-//  Created by Nicola Giancecchi on 04.12.17.
-//  Copyright © 2017 Zeta Project Germany GmbH. All rights reserved.
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
 //
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this program. If not, see http://www.gnu.org/licenses/.
+//
+
 
 import UIKit
 import Cartography
 import Classy
 import WireExtensionComponents
-
-//Temporary enum replacement, waiting for the official implementation
-@objc public enum Availability: Int {
-    case none, available, away, busy
-    static let allValues = [none, available, away, busy]
-}
+import WireDataModel
 
 @objc public class AvailabilityTitleView: AbstractTitleView {
     
     private var availability: Availability
     private var user: ZMUser
     private var variant: ColorSchemeVariant
+    private var style: AvailabilityStyle
     //private var container: UIViewController
     
-    public init(user: ZMUser, availability: Availability, variant: ColorSchemeVariant, interactive: Bool = true) {
+    public init(user: ZMUser, availability: Availability, variant: ColorSchemeVariant, style: AvailabilityStyle, interactive: Bool = true) {
         self.user = user
         self.availability = availability
         self.variant = variant
+        self.style = style
         //self.container = container
         super.init(interactive: interactive)
         
@@ -41,8 +49,11 @@ import WireExtensionComponents
                 }))
             }
             
-            alert.addAction(UIAlertAction(title: "availability.message.cancel", style: .destructive, handler: nil))
-            //container.present(alert, animated: true, completion: nil)
+            alert.addAction(UIAlertAction(title: "availability.message.cancel", style: .cancel, handler: nil))
+            
+            if let root = UIApplication.shared.keyWindow?.rootViewController {
+                root.present(alert, animated: true, completion: nil)
+            }
         }
     }
     
@@ -55,29 +66,8 @@ import WireExtensionComponents
     }
     
     override func generateAttributedTitle(interactive: Bool, color: UIColor) -> (text: NSAttributedString, hasAttachments: Bool) {
-        
-        var title = availability.name.uppercased().attributedString
-        var hasAttachment = false
-        
-        if interactive {
-            
-            let arrow = NSAttributedString(attachment: .downArrow(color: color))
-            
-            if availability == .none {
-                title = "availability.message.set_status".localized + "  " + arrow
-            } else {
-                title += "  " + arrow
-            }
-            
-            hasAttachment = true
-        }
-
-        if availability != .none {
-            title = NSAttributedString(attachment: .availabilityIcon(availability, color: color)) + "  " + title
-            hasAttachment = true
-        }
-
-        return (text: title && color, hasAttachments: hasAttachment)
+        let title = UILabel.composeString(availability: availability, color: color, style: style, interactive: interactive, title: user.name)
+        return (text: title.text && color, hasAttachments: title.hasAttachments)
     }
 
     override func updateAccessibilityLabel() {
@@ -87,29 +77,14 @@ import WireExtensionComponents
     override func colorsStrategy() {
         self.titleColor = ColorScheme.default().color(withName: ColorSchemeColorTextForeground, variant: variant)
         self.titleColorSelected = ColorScheme.default().color(withName: ColorSchemeColorTextDimmed, variant: variant)
-        self.titleFont = UIFont(magicIdentifier: "style.text.small.font_spec_bold")
-    }
-    
-}
-
-extension Availability {
-    var name: String {
-        switch self {
-            case .none:         return ""
-            case .available:    return "availability.available".localized
-            case .away:         return "availability.away".localized
-            case .busy:         return "availability.busy".localized
+        
+        if style == .headers {
+            self.titleFont = FontSpec(.medium, .semibold).font
+        } else {
+            self.titleFont = FontSpec(.small, .semibold).font
         }
     }
     
-    var imageEnum: ZetaIconType? {
-        switch self {
-            case .none:         return nil
-            case .available:    return .availabilityAvailable
-            case .away:         return .availabilityAway
-            case .busy:         return .availabilityBusy
-        }
-    }
 }
 
 extension NSTextAttachment {

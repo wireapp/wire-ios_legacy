@@ -30,7 +30,7 @@ FOUNDATION_EXPORT NSString * const ConversationListItemDidScrollNotification;
 // Please use `updateForConversation:` to set conversation.
 @property (nonatomic) ZMConversation *conversation;
 
-@property (nonatomic, copy) NSString *titleText;
+@property (nonatomic, copy) NSAttributedString *titleText;
 @property (nonatomic, copy) NSAttributedString *subtitleAttributedText;
 
 @property (nonatomic, strong, readonly) UILabel *titleField;
