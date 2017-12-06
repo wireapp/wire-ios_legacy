@@ -174,6 +174,8 @@ final public class CollectionsViewController: UIViewController {
 
     // MARK:- device orientation
 
+
+    /// Notice: for iPad with iOS9 in landscape mode, horizontalSizeClass is .unspecified (.regular in iOS11).
     override public var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         switch (self.traitCollection.horizontalSizeClass) {
         case .compact:
@@ -192,16 +194,6 @@ final public class CollectionsViewController: UIViewController {
         }
     }
 
-    override public var preferredInterfaceOrientationForPresentation: UIInterfaceOrientation {
-        /// Notice: for iPad with iOS9 in landscape mode, horizontalSizeClass is .unspecified (.regular in iOS11).
-        switch (self.traitCollection.horizontalSizeClass) {
-        case .compact:
-            return .portrait
-        default:
-            return super.preferredInterfaceOrientationForPresentation
-        }
-    }
-    
     private func flushLayout() {
         for cell in self.contentView.collectionView.visibleCells {
             guard let cell = cell as? CollectionCell else {
