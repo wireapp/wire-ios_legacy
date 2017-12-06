@@ -98,8 +98,10 @@
 }
 
 - (void)setAttributedPlaceholder:(NSAttributedString *)attributedPlaceholder {
-    _attributedPlaceholder = attributedPlaceholder;
-    self.placeholderLabel.attributedText = attributedPlaceholder;
+    NSMutableAttributedString *mutableCopy = attributedPlaceholder.mutableCopy;
+    [mutableCopy addAttribute:NSForegroundColorAttributeName value:_placeholderTextColor range:NSMakeRange(0, mutableCopy.length)];
+    _attributedPlaceholder = mutableCopy;
+    self.placeholderLabel.attributedText = mutableCopy;
     [self.placeholderLabel sizeToFit];
     [self showOrHidePlaceholder];
 }

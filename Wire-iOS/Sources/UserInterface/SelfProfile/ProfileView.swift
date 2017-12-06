@@ -25,7 +25,7 @@ import Cartography
     public let nameLabel = UILabel()
     public let handleLabel = UILabel()
     public let teamNameLabel = UILabel()
-    public let availabilityView = AvailabilityTitleView(user: ZMUser.selfUser(), availability: .busy, variant: .dark, style: .profiles, interactive: true)
+    public var availabilityView : AvailabilityTitleView?
     var userObserverToken: NSObjectProtocol?
     
     init(user: ZMUser) {
@@ -58,6 +58,7 @@ import Cartography
         if let team = user.team, let teamName = team.name {
             teamNameLabel.text = teamName.uppercased()
             teamNameLabel.accessibilityValue = teamNameLabel.text
+            availabilityView = AvailabilityTitleView(user: ZMUser.selfUser(), availability: .busy, variant: .dark, style: .profiles, interactive: true)
         }
         else {
             teamNameLabel.isHidden = true
@@ -65,7 +66,11 @@ import Cartography
         
         updateHandleLabel(user: user)
         
-        [imageView, nameLabel, handleLabel, teamNameLabel, availabilityView].forEach(addSubview)
+        [imageView, nameLabel, handleLabel, teamNameLabel].forEach(addSubview)
+        
+        if let availabilityView = availabilityView {
+            self.addSubview(availabilityView)
+        }
         
         self.createConstraints()
     }
@@ -81,7 +86,7 @@ import Cartography
     }
     
     private func createConstraints() {
-        constrain(self, imageView, nameLabel, handleLabel, teamNameLabel) { selfView, imageView, nameLabel, handleLabel, teamNameLabel in
+        constrain(self, imageView, nameLabel, handleLabel, teamNameLabel) { [weak self] selfView, imageView, nameLabel, handleLabel, teamNameLabel in
             
             nameLabel.top >= selfView.top
             nameLabel.centerX == selfView.centerX
@@ -106,17 +111,18 @@ import Cartography
             imageView.leading >= selfView.leading
             imageView.trailing <= selfView.trailing
             
-            //imageView.bottom == selfView.bottom - 32 ~ LayoutPriority(750.0)
-            //imageView.bottom <= selfView.bottom - 24
-            
+            if self?.availabilityView == nil {
+                imageView.bottom == selfView.bottom - 32 ~ LayoutPriority(750.0)
+                imageView.bottom <= selfView.bottom - 24
+            }
         }
         
-        constrain(self, imageView, availabilityView) { (selfView, imageView, availabilityView) in
-            
-            availabilityView.top == imageView.bottom + 40
-            availabilityView.centerX == selfView.centerX
-            availabilityView.bottom == selfView.bottom
-            
+        if let availabilityView = availabilityView {
+            constrain(self, imageView, availabilityView) { (selfView, imageView, availabilityView) in
+                availabilityView.top == imageView.bottom + 40
+                availabilityView.centerX == selfView.centerX
+                availabilityView.bottom == selfView.bottom
+            }
         }
     }
     

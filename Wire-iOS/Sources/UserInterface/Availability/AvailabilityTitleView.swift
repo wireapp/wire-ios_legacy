@@ -71,7 +71,7 @@ import WireDataModel
     }
 
     override func updateAccessibilityLabel() {
-        self.accessibilityLabel = "\(user.displayName) is \(availability.name)".localized
+        self.accessibilityLabel = "\(user.displayName)_is_\(availability.name)".localized
     }
     
     override func colorsStrategy() {

@@ -60,7 +60,7 @@ extension UILabel {
         case .profiles:             formattedTitle = availability.name.uppercased()
         case .headers:              formattedTitle = title.uppercased()
         case .lists:                formattedTitle = title
-        case .placeholder:          formattedTitle = "\(title) is \(availability.name)".uppercased()
+        case .placeholder:          formattedTitle = "\(title)_is_\(availability.name)".localized.uppercased()
         }
         
         var attributedTitle = formattedTitle.attributedString
