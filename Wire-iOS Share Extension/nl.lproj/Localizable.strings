@@ -26,8 +26,12 @@
 "share_extension.input.placeholder" = "Typ een bericht";
 "share_extension.sending_progress.title" = "Verzenden…";
 "share_extension.preparing.title" = "Voorbereiden…";
+"share_extension.no_internet_connection.title" = "Geen verbinding met internet";
 "share_extension.not_signed_in.title" = "Je moet bij Wire ingelogd zijn voordat je iets kan delen";
 "share_extension.not_signed_in.close_button" = "Sluiten";
+"share_extension.timeout.title" = "Er is een time-out in de verbinding met de server.";
+"share_extension.timeout.message" = "Controleer je internet connectie en probeer opniew. De bijlagen zijn opgeslagen in de conversatie.";
+"share_extension.privacy_security.lock_app.description" = "Ontgrendel Wire";
 
 "conversation.displayname.emptygroup" = "Leeg groep gesprek";
 "meta.degraded.degradation_reason_message.singular" = "%@ is een ander apparaat gaan gebruiken.";

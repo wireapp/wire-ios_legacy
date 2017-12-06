@@ -26,8 +26,12 @@
 "share_extension.input.placeholder" = "Napiši sporočilo";
 "share_extension.sending_progress.title" = "Pošiljanje…";
 "share_extension.preparing.title" = "Priprava…";
+"share_extension.no_internet_connection.title" = "Ni spletne povezave";
 "share_extension.not_signed_in.title" = "Preden lahko karkoli delite, se morate prijaviti v Wire";
 "share_extension.not_signed_in.close_button" = "Zapri";
+"share_extension.timeout.title" = "The connection has timed out.";
+"share_extension.timeout.message" = "Check your Internet connection and try again. The attachments were saved in the conversation.";
+"share_extension.privacy_security.lock_app.description" = "Odkleni Wire";
 
 "conversation.displayname.emptygroup" = "Prazen skupinski pogovor";
 "meta.degraded.degradation_reason_message.singular" = "%@ je začel(-a) z uporabo nove naprave.";

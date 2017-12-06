@@ -96,7 +96,7 @@
 "conversation_list.voiceover.open_conversation.hint" = "Unterhaltung öffnen";
 "conversation_list.voiceover.status.pending_connection" = "wird überprüft";
 "conversation_list.voiceover.status.active_call" = "Aktiver Anruf";
-"conversation_list.voiceover.status.missed_call" = "Entgangener Anruf";
+"conversation_list.voiceover.status.missed_call" = "verpasster Anruf";
 "conversation_list.voiceover.status.pause_media" = "pausiere Medien";
 "conversation_list.voiceover.status.play_media" = "Medien abspielen";
 "conversation_list.voiceover.status.silenced" = "Schweigen";
@@ -215,6 +215,9 @@
 
 "conversation.input_bar.shortcut.send" = "Nachricht senden";
 
+"conversation.input_bar.message_too_long.title" = "Nachricht zu lang";
+"conversation.input_bar.message_too_long.message" = "Du kannst Nachrichten mit bist zu %d Zeichen senden.";
+
 // Image confirmation dialogue
 "image_confirmer.confirm" = "OK";
 "image_confirmer.cancel" = "Abbrechen";
@@ -287,8 +290,8 @@
 "content.system.failedtosend_message_timestamp_resend" = "Erneut senden";
 "content.system.failedtosend_message_timestamp_delete" = "Löschen";
 "content.system.like_tooltip" = "Gefällt mir";
-"content.system.deleted_message_prefix_timestamp" = "Gelöscht am %@";
-"content.system.edited_message_prefix_timestamp" = "Bearbeitet am %@";
+"content.system.deleted_message_prefix_timestamp" = "Entfernt: %@";
+"content.system.edited_message_prefix_timestamp" = "Bearbeitet: %@";
 "content.system.connecting_to" = "Warte auf Bestätigung deiner Kontaktanfrage an %@";
 "content.system.connected_to" = "Verbunden mit %@. Beginne eine Unterhaltung.";
 "content.system.other_wanted_to_talk" = "%@ hat versucht dich anzurufen";
@@ -562,7 +565,7 @@
 "self.settings.create_team.title" = "Team erstellen";
 "self.settings.manage_team.title" = "Team verwalten";
 "self.settings.add_team_or_account.title" = "Neues Team oder Konto";
-"self.settings.add_account.title" = "Konto hinzufügen";
+"self.settings.add_account.title" = "Ein Konto hinzufügen";
 
 "self.settings.add_account.error.title" = "Drei Benutzerkonten sind aktiv";
 "self.settings.add_account.error.message" = "Du kannst zugleich mit drei Benutzerkonten angemeldet sein. Logge dich aus einem aus, um ein neues Konto hinzuzufügen.";
@@ -665,13 +668,11 @@
 "self.settings.sound_menu.ping.title" = "Ping";
 "self.settings.sound_menu.ringtones.title" = "Klingeltöne";
 "self.settings.sound_menu.sounds.wire_sound" = "Wire";
+"self.settings.sound_menu.sounds.none" = "Keine";
 
 "self.settings.callkit.title" = "Anrufe";
 "self.settings.callkit.caption" = "Mit iOS teilen";
 "self.settings.callkit.description" = "Zeige Wire Anrufe auf dem Sperrbildschirm und in der iOS-Anrufhistorie. Wenn iCloud aktiviert ist, wird die Anrufhistorie mit Apple geteilt.";
-
-"self.settings.cbr.not_available" = "Constant Bit Rate Encoding";
-"self.settings.cbr.not_available.description" = "Die Option für Constant Bit Rate bei Anrufen ist vorübergehend nicht verfügbar, bedingt durch die neue Mehrkontenfähigkeit der App. CBR kommt aber bald wieder.";
 
 "self.settings.vbr.title" = "Variable Bitrate";
 "self.settings.vbr.description" = "Anrufe benötigen weniger Datenvolumen und funktionieren besser in Netzen mit geringer Bandbreite. Deaktivieren um eine konstante Bitrate zu benutzen.";
@@ -707,7 +708,7 @@
 "self.settings.sound_menu.title" = "Benachrichtigungen";
 "self.settings.sound_menu.no_sounds.title" = "Keine";
 "self.settings.sound_menu.all_sounds.title" = "Alle";
-"self.settings.sound_menu.mute_while_talking.title" = "Erste Nachricht, Ping und Anrufe";
+"self.settings.sound_menu.mute_while_talking.title" = "Erste Nachricht und Pings";
 
 // Developer options
 "self.settings.developer_options.title" = "Entwickleroptionen";
@@ -770,19 +771,61 @@
 "system_status_bar.poor_connectivity.title" = "Schlechte Internetverbindung, Anrufen derzeit nicht möglich";
 "system_status_bar.poor_connectivity.explanation" = "Wir können keine gute Sprachqualität garantieren. Verbinde dich mit Wi-Fi oder gehe an einen anderen Ort.";
 
-// Common connections on profile view
-"profile_other.common_connections" = "Ihr beide kennt";
-
-// View user profile and options menu
+// View user profile and options menu & text field validation
 "name.placeholder" = "Dein vollständiger Name";
 "name.guidance.tooshort" = "Mindestens 2 Zeichen";
 "name.guidance.toolong" = "Zu viele Zeichen";
 
 "email.placeholder" = "E-Mail";
+"email.guidance.invalid" = "Gib eine gültige E-Mail-Adresse ein";
+"email.guidance.tooshort" = "E-Mail-Adresse ist zu kurz";
+"email.guidance.toolong" = "Zu viele Zeichen";
 
 "password.placeholder" = "Passwort";
 "password.guidance.tooshort" = "Mindestens 8 Zeichen";
 "password.guidance.toolong" = "Zu viele Zeichen";
+
+// Landing screen
+
+"landing.title" = "Sicherer Messenger für alle.";
+"landing.create_account.title" = "Konto erstellen";
+"landing.create_account.subtitle" = "für den persönlichen Gebrauch";
+"landing.create_team.title" = "Team erstellen";
+"landing.create_team.subtitle" = "für die Arbeit";
+"landing.login.hints" = "Hast du bereits ein Benutzerkonto?";
+"landing.login.button.title" = "Login";
+
+// Create team
+
+"team.name.headline" = "Benenne dein Team";
+"team.name.subheadline" = "Der Name kann später jederzeit geändert werden.";
+"team.name.textfield.placeholder" = "Team-Name";
+"team.name.textfield.accessibility" = "Team benennen";
+"team.name.whatiswireforteams" = "Was ist Wire für Teams?";
+
+"team.email.headline" = "Dein Benutzerkonto";
+"team.email.subheadline" = "Deine Unternehmens-E-Mail-Adresse eingeben.";
+"team.email.textfield.placeholder" = "name@unternehmen.de";
+"team.email.textfield.accessibility" = "Deine Unternehmens-E-Mail-Adresse";
+"team.email.button.learn_more" = "Erfahre mehr";
+
+"team.activation_code.headline" = "Du hast Post";
+"team.activation_code.subheadline" = "Bitte gib den Bestätigungs-Code ein, den wir an %@ gesendet haben";
+"team.activation_code.button.resend" = "Code erneut senden";
+"team.activation_code.button.change_email" = "E-Mail-Adresse ändern";
+
+"team.full_name.headline" = "Dein Name";
+"team.full_name.textfield.placeholder" = "Vollständiger Name";
+"team.full_name.textfield.accessibility" = "Dein vollständiger Name";
+
+"team.password.headline" = "Passwort festlegen";
+"team.password.textfield.placeholder" = "Mindestens 8 Zeichen";
+"team.password.textfield.accessibility" = "Passwort (min. 8 Zeichen)";
+
+
+"team.email_code.input_field.accessbility_label" = "Bitte den 6-stelligen Code aus der E-Mail eingeben.";
+
+// Registration
 
 "registration.title" = "Registrierung";
 "registration.close_email_invitation_button.email_title" = "Andere E-Mail verwenden";
@@ -824,6 +867,11 @@
 "registration.terms_of_use.terms" = "Wenn du fortfährst, \nerklärst du dich \nmit den AGB \neinverstanden.";
 "registration.terms_of_use.terms.link" = "AGB";
 "registration.terms_of_use.agree" = "Einverstanden";
+
+"registration.terms_of_use.terms.title" = "Nutzungsbedingungen";
+"registration.terms_of_use.terms.message" = "Bitte akzeptieren Sie die Nutzungsbedingungen, um fortzufahren.";
+"registration.terms_of_use.terms.view" = "Ansicht";
+"registration.terms_of_use.accept" = "Annehmen";
 
 "registration.email_flow.title" = "Mit E-Mail registrieren";
 "registration.email_flow.email_step.title" = "Eingaben bearbeiten";

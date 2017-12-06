@@ -26,8 +26,12 @@
 "share_extension.input.placeholder" = "Bir mesaj yazın";
 "share_extension.sending_progress.title" = "Gönderiliyor…";
 "share_extension.preparing.title" = "Hazırlanıyor…";
+"share_extension.no_internet_connection.title" = "Internet bağlantısı yok";
 "share_extension.not_signed_in.title" = "Bir şey paylaşabilmek için Wire'a giriş yapmanız gerekir";
 "share_extension.not_signed_in.close_button" = "Kapat";
+"share_extension.timeout.title" = "The connection has timed out.";
+"share_extension.timeout.message" = "Check your Internet connection and try again. The attachments were saved in the conversation.";
+"share_extension.privacy_security.lock_app.description" = "Wire'ın kilidini aç";
 
 "conversation.displayname.emptygroup" = "Boş grup konuşması";
 "meta.degraded.degradation_reason_message.singular" = "%@ yeni bir cihaz kullanmaya başladı.";

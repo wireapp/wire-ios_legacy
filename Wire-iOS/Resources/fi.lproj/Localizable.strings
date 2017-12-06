@@ -215,6 +215,9 @@
 
 "conversation.input_bar.shortcut.send" = "Lähetä Viesti";
 
+"conversation.input_bar.message_too_long.title" = "Message too long";
+"conversation.input_bar.message_too_long.message" = "You can send messages up to %d characters long.";
+
 // Image confirmation dialogue
 "image_confirmer.confirm" = "OK";
 "image_confirmer.cancel" = "Peruuta";
@@ -287,8 +290,8 @@
 "content.system.failedtosend_message_timestamp_resend" = "Lähetä uudelleen";
 "content.system.failedtosend_message_timestamp_delete" = "Poista";
 "content.system.like_tooltip" = "Napauta tykkääksesi";
-"content.system.deleted_message_prefix_timestamp" = "Poistettiin %@";
-"content.system.edited_message_prefix_timestamp" = "Muokattiin %@";
+"content.system.deleted_message_prefix_timestamp" = "Deleted: %@";
+"content.system.edited_message_prefix_timestamp" = "Edited: %@";
 "content.system.connecting_to" = "Yhdistetään %@ een.\nAloita keskustelu";
 "content.system.connected_to" = "Yhdistetty %@ een\nAloita keskustelu";
 "content.system.other_wanted_to_talk" = "%@ soitti";
@@ -665,13 +668,11 @@
 "self.settings.sound_menu.ping.title" = "Pinggaa";
 "self.settings.sound_menu.ringtones.title" = "Soittoäänet";
 "self.settings.sound_menu.sounds.wire_sound" = "Wire";
+"self.settings.sound_menu.sounds.none" = "Ei mitään";
 
 "self.settings.callkit.title" = "Soittaa";
 "self.settings.callkit.caption" = "Jaa iOS: lle";
 "self.settings.callkit.description" = "Näytä Wiren puhelut lukitusnäytössä ja iOS: n puheluhistoriassa. Jos iCloud on käytössä, puheluhistoria jaetaan Applelle.";
-
-"self.settings.cbr.not_available" = "Jatkuva bittinopeus salaus";
-"self.settings.cbr.not_available.description" = "Vakiobittitaajuudet ovat väliaikaisesti poistettu käytöstä monitilituen johdosta. Ne palaavat pian.";
 
 "self.settings.vbr.title" = "Vaihteleva bittitaajuus";
 "self.settings.vbr.description" = "Tämä vähentää äänipuheluiden datan käyttöä ja toimii paremmin hitaammilla yhteyksillä. Poista käytöstä käyttääksesi vakiobittitaajuutta.";
@@ -707,7 +708,7 @@
 "self.settings.sound_menu.title" = "Äänimerkit";
 "self.settings.sound_menu.no_sounds.title" = "Ei mitään";
 "self.settings.sound_menu.all_sounds.title" = "Kaikki";
-"self.settings.sound_menu.mute_while_talking.title" = "Ensimmäinen viesti, pingit, puhelut";
+"self.settings.sound_menu.mute_while_talking.title" = "First message and pings";
 
 // Developer options
 "self.settings.developer_options.title" = "Kehittäjäasetukset";
@@ -770,19 +771,61 @@
 "system_status_bar.poor_connectivity.title" = "Hidas internet, ei voi soittaa nyt";
 "system_status_bar.poor_connectivity.explanation" = "Emme voi taata äänenlaatua. Yhdistä Wi-fiin tai yritä vaihtaa sijaintiasi.";
 
-// Common connections on profile view
-"profile_other.common_connections" = "Te molemmat tunnette";
-
-// View user profile and options menu
+// View user profile and options menu & text field validation
 "name.placeholder" = "Koko nimesi";
 "name.guidance.tooshort" = "Vähintään 2 merkkiä";
 "name.guidance.toolong" = "Liian monta merkkiä";
 
 "email.placeholder" = "Sähköposti";
+"email.guidance.invalid" = "Invalid email address";
+"email.guidance.tooshort" = "Email is too short";
+"email.guidance.toolong" = "Liian monta merkkiä";
 
 "password.placeholder" = "Salasana";
 "password.guidance.tooshort" = "Vähintään 8 merkkiä";
 "password.guidance.toolong" = "Liian monta merkkiä";
+
+// Landing screen
+
+"landing.title" = "Secure messenger for everyone.";
+"landing.create_account.title" = "Create an account";
+"landing.create_account.subtitle" = "for personal use";
+"landing.create_team.title" = "Luo tiimi";
+"landing.create_team.subtitle" = "for work";
+"landing.login.hints" = "Already have an account?";
+"landing.login.button.title" = "Log in";
+
+// Create team
+
+"team.name.headline" = "Name your team";
+"team.name.subheadline" = "You can always change it later.";
+"team.name.textfield.placeholder" = "team name";
+"team.name.textfield.accessibility" = "Set team name";
+"team.name.whatiswireforteams" = "What is Wire for teams?";
+
+"team.email.headline" = "Your account";
+"team.email.subheadline" = "Enter your work email address.";
+"team.email.textfield.placeholder" = "you@yourcompany.com";
+"team.email.textfield.accessibility" = "Your company email";
+"team.email.button.learn_more" = "Lisätietoja";
+
+"team.activation_code.headline" = "You've got mail";
+"team.activation_code.subheadline" = "Syötä vahvistuskoodi jonka lähetimme numeroon: %@";
+"team.activation_code.button.resend" = "Resend code";
+"team.activation_code.button.change_email" = "Change email";
+
+"team.full_name.headline" = "Your name";
+"team.full_name.textfield.placeholder" = "Full name";
+"team.full_name.textfield.accessibility" = "Set full name";
+
+"team.password.headline" = "Set password";
+"team.password.textfield.placeholder" = "Vähintään 8 merkkiä";
+"team.password.textfield.accessibility" = "Set password, at least 8 characters";
+
+
+"team.email_code.input_field.accessbility_label" = "Please enter the six-digit code from the email.";
+
+// Registration
 
 "registration.title" = "Rekisteröityminen";
 "registration.close_email_invitation_button.email_title" = "Käytä toista sähköpostiosoitetta";
@@ -824,6 +867,11 @@
 "registration.terms_of_use.terms" = "Jatkamalla hyväksyt Wiren käyttöehdot.";
 "registration.terms_of_use.terms.link" = "Käyttöehdot";
 "registration.terms_of_use.agree" = "Hyväksyn";
+
+"registration.terms_of_use.terms.title" = "Käyttöehdot";
+"registration.terms_of_use.terms.message" = "Please accept the Terms of Use to continue.";
+"registration.terms_of_use.terms.view" = "View";
+"registration.terms_of_use.accept" = "Hyväksy";
 
 "registration.email_flow.title" = "Rekisteröidy sähköpostilla";
 "registration.email_flow.email_step.title" = "Muokkaa tietoja";
