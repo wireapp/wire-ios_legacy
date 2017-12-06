@@ -70,6 +70,22 @@
     return [self.viewController supportedInterfaceOrientations];
 }
 
+- (UIInterfaceOrientation)preferredInterfaceOrientationForPresentation
+{
+    if (self.viewController != nil)
+    {
+        return [self.viewController preferredInterfaceOrientationForPresentation];
+    }
+
+    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone)
+    {
+        return UIInterfaceOrientationPortrait;
+    }
+    else {
+        return super.preferredInterfaceOrientationForPresentation;
+    }
+}
+
 - (UINavigationItem *)navigationItem
 {
     return [self.viewController navigationItem];
