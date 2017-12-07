@@ -47,7 +47,9 @@ class ConversationTitleView: TitleView {
         if conversation.securityLevel == .secure {
             attachment = .verifiedShield()
         }
-        _ = super.configure(icon: attachment, title: conversation.displayName.uppercased(), interactive: conversation.relatedConnectionState != .sent)
+        super.configure(icon: attachment,
+                        title: conversation.displayName.uppercased(),
+                        interactive: conversation.relatedConnectionState != .sent)
     }
 
     override func updateAccessibilityLabel() {

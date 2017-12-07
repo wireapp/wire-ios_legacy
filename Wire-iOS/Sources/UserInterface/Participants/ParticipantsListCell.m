@@ -78,7 +78,7 @@
     self.guestLabel.hidden = ![user isGuestInConversation:conversation];
 
     if([user hasTeam]) {
-        self.nameLabel.attributedText = [UILabel composeStringTextWithAvailability:AvailabilityBusy color:self.nameLabel.textColor style:AvailabilityLabelStyleList interactive:NO title:user.displayName.uppercaseString];
+        self.nameLabel.attributedText = [AvailabilityStringBuilder stringFor:user with:AvailabilityLabelStyleParticipants color:nil];
     } else {
         self.nameLabel.text = [user.displayName uppercaseString];
     }

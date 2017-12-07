@@ -42,10 +42,6 @@ import Classy
         }
         
         createViews()
-        
-        //let hasAttachment = configure(interactive: interactive)
-        frame = titleButton.bounds
-        createConstraints(true)
     }
     
     private func createConstraints(_ hasAttachment: Bool) {
@@ -70,11 +66,11 @@ import Classy
     /// - parameter conversation: The conversation for which the view should be configured
     /// - parameter interactive: Whether the view should react to user interaction events
     /// - return: Whether the view contains any `NSTextAttachments`
-    internal func configure(icon: NSTextAttachment?, title: String, interactive: Bool) -> Bool {
+    internal func configure(icon: NSTextAttachment?, title: String, interactive: Bool) {
     
-        guard let font = titleFont, let color = titleColor, let selectedColor = titleColorSelected else { return false }
-        let normalLabel = iconString(with: icon, title: title, interactive: interactive, color: color)
-        let selectedLabel = iconString(with: icon, title: title, interactive: interactive, color: selectedColor)
+        guard let font = titleFont, let color = titleColor, let selectedColor = titleColorSelected else { return }
+        let normalLabel = IconStringsBuilder.iconString(with: icon, title: title, interactive: interactive, color: color)
+        let selectedLabel = IconStringsBuilder.iconString(with: icon, title: title, interactive: interactive, color: selectedColor)
         
         titleButton.titleLabel!.font = font
         titleButton.setAttributedTitle(normalLabel.text, for: UIControlState())
@@ -85,7 +81,8 @@ import Classy
         setNeedsLayout()
         layoutIfNeeded()
         
-        return normalLabel.hasAttachments
+        frame = titleButton.bounds
+        createConstraints(normalLabel.hasAttachments)
     }
     
     public required init?(coder aDecoder: NSCoder) {
@@ -105,31 +102,4 @@ extension NSTextAttachment {
         attachment.image = UIImage(for: .downArrow, fontSize: 8, color: color)
         return attachment
     }
-}
-
-extension TitleView {
-    
-// Logic for composing attributed strings with:
-// - an icon (optional)
-// - a title
-// - an down arrow for tappable strings (optional)
-
-    func iconString(with icon: NSTextAttachment?, title: String, interactive: Bool, color: UIColor) -> (text: NSAttributedString, hasAttachments: Bool) {
-    
-        var hasAttachment = false
-        var title = title.attributedString
-        
-        if interactive {
-            title += "  " + NSAttributedString(attachment: .downArrow(color: color))
-            hasAttachment = true
-        }
-        
-        if let icon = icon {
-            title = NSAttributedString(attachment: icon) + "  " + title
-            hasAttachment = true
-        }
-        
-        return (text: title && color, hasAttachments: hasAttachment)
-    }
-    
 }

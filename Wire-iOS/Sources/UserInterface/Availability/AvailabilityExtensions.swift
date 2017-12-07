@@ -18,79 +18,32 @@
 
 import Foundation
 
-
 @objc public enum AvailabilityTitleViewStyle: Int {
     case selfProfile, otherProfile, header
 }
 
 @objc public enum AvailabilityLabelStyle: Int {
-    case list, placeholder
+    case list, participants, placeholder
 }
 
 extension Availability {
     var localizedName: String {
         switch self {
-        case .none:         return "availability.none".localized
-        case .available:    return "availability.available".localized
-        case .away:         return "availability.away".localized
-        case .busy:         return "availability.busy".localized
+            case .none:         return "availability.none".localized
+            case .available:    return "availability.available".localized
+            case .away:         return "availability.away".localized
+            case .busy:         return "availability.busy".localized
         }
     }
     
     var iconType: ZetaIconType? {
         switch self {
-        case .none:         return nil
-        case .available:    return .availabilityAvailable
-        case .away:         return .availabilityAway
-        case .busy:         return .availabilityBusy
+            case .none:         return nil
+            case .available:    return .availabilityAvailable
+            case .away:         return .availabilityAway
+            case .busy:         return .availabilityBusy
         }
     }
     
 }
 
-extension UILabel {
-    
-    
-    @objc static func composeStringText(availability: Availability, color: UIColor, style: AvailabilityLabelStyle, interactive: Bool, title: String) -> NSAttributedString {
-        return "".attributedString // composeString(availability: availability, color: color, style: style, interactive: interactive, title: title).text
-    }
-    
-    static func composeString(availability: Availability, color: UIColor, style: AvailabilityLabelStyle, interactive: Bool, title: String) -> (text: NSAttributedString, hasAttachments: Bool){
-        
-        return (text: "".attributedString, hasAttachments: false)
-        
-        /*
-        var formattedTitle = ""
-        var hasAttachment = false
-        
-        switch style {
-        case .profiles:             formattedTitle = availability.name.uppercased()
-        case .headers:              formattedTitle = title.uppercased()
-        case .lists:                formattedTitle = title
-        case .placeholder:          formattedTitle = "\(title)_is_\(availability.name)".localized.uppercased()
-        }
-        
-        var attributedTitle = formattedTitle.attributedString
-        
-        if interactive {
-            
-            let arrow = NSAttributedString(attachment: .downArrow(color: color))
-            
-            if availability == .none {
-                attributedTitle = "availability.message.set_status".localized + "  " + arrow
-            } else {
-                attributedTitle += "  " + arrow
-            }
-            
-            hasAttachment = true
-        }
-        
-        if availability != .none {
-            attributedTitle = NSAttributedString(attachment: .availabilityIcon(availability, color: color)) + "  " + attributedTitle
-            hasAttachment = true
-        }
-        
-        return (text: attributedTitle && color, hasAttachments: hasAttachment)
- */
-    }
-}

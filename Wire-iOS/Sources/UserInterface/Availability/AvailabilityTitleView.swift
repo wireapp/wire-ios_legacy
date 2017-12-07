@@ -84,19 +84,20 @@ import WireDataModel
     }
     
     func configure() {
-        let icon = self.availabilityIcon(self.user.availability, color: self.titleColor!)
+        let availability = self.user.availability
+        let icon = AvailabilityStringBuilder.icon(for: availability, with: self.titleColor!)
         let interactive = (style == .selfProfile || style == .header)
         var title = ""
         
         if self.style == .header {
             title = self.user.name.uppercased()
-        } else if self.user == ZMUser.selfUser() && self.user.availability == .none {
-            title = "availability.message.set_status".localized
-        } else {
-            title = self.user.availability.localizedName.uppercased()
+        } else if self.user == ZMUser.selfUser() && availability == .none {
+            title = "availability.message.set_status".localized.uppercased()
+        } else if availability != .none {
+            title = availability.localizedName.uppercased()
         }
         
-        _ = super.configure(icon: icon, title: title, interactive: interactive)
+        super.configure(icon: icon, title: title, interactive: interactive)
     }
     
     override func updateAccessibilityLabel() {
@@ -105,15 +106,3 @@ import WireDataModel
     
 }
 
-extension AvailabilityTitleView {
-    func availabilityIcon(_ availability: Availability, color: UIColor) -> NSTextAttachment {
-        let attachment = NSTextAttachment()
-        if let iconType = availability.iconType, let image = UIImage(for: iconType, fontSize: 10, color: color) {
-            attachment.image = image
-            let ratio = image.size.width / image.size.height
-            let height: CGFloat = 10
-            attachment.bounds = CGRect(x: 0, y: 0, width: height * ratio, height: height)
-        }
-        return attachment
-    }
-}

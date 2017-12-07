@@ -285,8 +285,8 @@ private struct InputBarConstants {
 
     func updatePlaceholder() {
         
-        if let otherUser = otherUser, otherUser.isTeamMember {
-            textView.attributedPlaceholder = UILabel.composeStringText(availability: .away, color: .black, style: .placeholder, interactive: false, title: otherUser.name)
+        if let otherUser = otherUser, otherUser.isTeamMember, otherUser.availability != .none {
+            textView.attributedPlaceholder = AvailabilityStringBuilder.string(for: otherUser, with: .placeholder, color: placeholderColor)
         } else {
             textView.placeholder = placeholderText(for: inputBarState)
         }

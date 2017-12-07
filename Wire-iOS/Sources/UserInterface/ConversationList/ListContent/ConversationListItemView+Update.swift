@@ -49,8 +49,9 @@ extension ConversationListItemView {
         
         var title = "".attributedString
         
-        if conversation.conversationType == .oneOnOne && conversation.team != nil {
-            title = UILabel.composeString(availability: .away, color: .white, style: .list, interactive: false, title: conversation.displayName).text
+        if conversation.conversationType == .oneOnOne && conversation.team != nil,
+            let user = conversation.otherActiveParticipants.firstObject as? ZMUser {
+            title = AvailabilityStringBuilder.string(for: user, with: .list)
         } else {
             title = conversation.displayName.attributedString
         }
