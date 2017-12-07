@@ -560,8 +560,12 @@
              [UIKeyCommand keyCommandWithInput:@"\r"
                                  modifierFlags:UIKeyModifierCommand
                                         action:@selector(commandReturnPressed)
-                          discoverabilityTitle:NSLocalizedString(@"conversation.input_bar.shortcut.send", nil)]
-             ];
+                          discoverabilityTitle:NSLocalizedString(@"conversation.input_bar.shortcut.send", nil)],
+             [UIKeyCommand keyCommandWithInput:UIKeyInputUpArrow
+                                 modifierFlags:0
+                                        action:@selector(upArrowPressed)
+                         discoverabilityTitle:NSLocalizedString(@"conversation.input_bar.shortcut.edit_last_message", nil)]
+            ];
 }
 
 - (BOOL)canBecomeFirstResponder
@@ -574,6 +578,13 @@
     NSString *candidateText = self.inputBar.textView.preparedText;
     if (nil != candidateText) {
         [self sendOrEditText:candidateText];
+    }
+}
+
+- (void)upArrowPressed
+{
+    if ([self.delegate respondsToSelector:@selector(conversationInputBarViewControllerEditLastMessage)]) {
+        [self.delegate conversationInputBarViewControllerEditLastMessage];
     }
 }
 

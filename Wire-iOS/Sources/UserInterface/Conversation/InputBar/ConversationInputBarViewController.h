@@ -44,6 +44,7 @@ typedef NS_ENUM(NSUInteger, ConversationInputBarViewControllerMode) {
 - (void)conversationInputBarViewControllerDidNotSendMessageConversationDegraded:(ConversationInputBarViewController *)controller;
 - (void)conversationInputBarViewControllerDidFinishEditingMessage:(id <ZMConversationMessage>)message withText:(NSString *)newText;
 - (void)conversationInputBarViewControllerDidCancelEditingMessage:(id <ZMConversationMessage>)message;
+- (void)conversationInputBarViewControllerEditLastMessage;
 
 @end
 
