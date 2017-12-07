@@ -62,7 +62,7 @@ import WireDataModel
         /// TODO change!
         tapHandler = { button in
             
-            let alert = UIAlertController(title: "availability.message.title", message: nil, preferredStyle: .actionSheet)
+            let alert = UIAlertController(title: "availability.message.title".localized, message: nil, preferredStyle: .actionSheet)
             
             for type in Availability.allValues {
                 alert.addAction(UIAlertAction(title: type.localizedName, style: .default, handler: { [weak self] (action) in
@@ -70,7 +70,7 @@ import WireDataModel
                 }))
             }
             
-            alert.addAction(UIAlertAction(title: "availability.message.cancel", style: .cancel, handler: nil))
+            alert.addAction(UIAlertAction(title: "availability.message.cancel".localized, style: .cancel, handler: nil))
             
             if let root = UIApplication.shared.keyWindow?.rootViewController {
                 root.present(alert, animated: true, completion: nil)

@@ -27,13 +27,18 @@ import Foundation
 }
 
 extension Availability {
-    var localizedName: String {
+    var canonicalName : String {
         switch self {
-            case .none:         return "availability.none".localized
-            case .available:    return "availability.available".localized
-            case .away:         return "availability.away".localized
-            case .busy:         return "availability.busy".localized
+            case .none:         return "none"
+            case .available:    return "available"
+            case .away:         return "away"
+            case .busy:         return "busy"
         }
+    }
+    
+    
+    var localizedName: String {
+        return "availability.\(canonicalName)".localized
     }
     
     var iconType: ZetaIconType? {

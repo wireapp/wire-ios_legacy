@@ -34,7 +34,7 @@
                 color = ColorScheme.default().color(withName: ColorSchemeColorTextForeground)
             }
             case .placeholder: do {
-                title = "\(user.name!)_is_\(availability.localizedName)".localized.uppercased()
+                title = "availability.\(availability.canonicalName).placeholder".localized(args: user.displayName).uppercased()
             }
         }
         
