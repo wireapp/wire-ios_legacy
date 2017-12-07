@@ -37,6 +37,12 @@ extension ConversationViewController {
         super.willTransition(to: newCollection, with: coordinator)
         self.updateLeftNavigationBarItems()
     }
+
+    override open func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+
+        self.updateLeftNavigationBarItems()
+    }
 }
 
 public extension ConversationViewController {
