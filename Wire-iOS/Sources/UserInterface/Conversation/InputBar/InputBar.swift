@@ -112,7 +112,6 @@ private struct InputBarConstants {
     fileprivate let buttonRowSeparator = UIView()
     fileprivate let constants = InputBarConstants()
     fileprivate let notificationCenter = NotificationCenter.default
-    fileprivate var otherUser: ZMUser?
     
     var isEditing: Bool {
         return inputBarState.isEditing
@@ -127,6 +126,12 @@ private struct InputBarConstants {
     public var invisibleInputAccessoryView : InvisibleInputAccessoryView? = nil  {
         didSet {
             textView.inputAccessoryView = invisibleInputAccessoryView
+        }
+    }
+    
+    public var availabilityPlaceholder : NSAttributedString? {
+        didSet {
+            updatePlaceholder()
         }
     }
     
@@ -151,13 +156,12 @@ private struct InputBarConstants {
         notificationCenter.removeObserver(self)
     }
 
-    required public init(buttons: [UIButton], otherUser: ZMUser? = nil) {
+    required public init(buttons: [UIButton]) {
         buttonsView = InputBarButtonsView(buttons: buttons)
         secondaryButtonsView = InputBarSecondaryButtonsView(editBarView: editingView, markdownBarView: markdownView)
         
         super.init(frame: CGRect.zero)
         
-        self.otherUser = otherUser
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(didTapBackground))
         addGestureRecognizer(tapGestureRecognizer)
         buttonsView.clipsToBounds = true
@@ -284,25 +288,25 @@ private struct InputBarConstants {
     }
 
     func updatePlaceholder() {
-        
-        if let otherUser = otherUser, otherUser.isTeamMember, otherUser.availability != .none {
-            textView.attributedPlaceholder = AvailabilityStringBuilder.string(for: otherUser, with: .placeholder, color: placeholderColor)
-        } else {
-            textView.placeholder = placeholderText(for: inputBarState)
-        }
+        textView.attributedPlaceholder = placeholderText(for: inputBarState)
         textView.setNeedsLayout()
         textView.layoutIfNeeded()
     }
 
-    func placeholderText(for state: InputBarState) -> String? {
-        switch inputBarState {
-        case .writing(ephemeral: let ephemeral):
-            if ephemeral {
-                return "conversation.input_bar.placeholder_ephemeral".localized
-            }
-            return "conversation.input_bar.placeholder".localized
-        case .editing: return nil
-        case .markingDown: return "conversation.input_bar.placeholder".localized
+    func placeholderText(for state: InputBarState) -> NSAttributedString? {
+        
+        var placeholder = NSAttributedString(string: "conversation.input_bar.placeholder".localized)
+        
+        if let availabilityPlaceholder = availabilityPlaceholder {
+            placeholder = availabilityPlaceholder
+        } else if inputBarState.isEphemeral {
+            placeholder  = NSAttributedString(string: "conversation.input_bar.placeholder_ephemeral".localized)
+        }
+        
+        if case .editing = state {
+            return nil
+        } else {
+            return placeholder
         }
     }
     
@@ -389,7 +393,7 @@ private struct InputBarConstants {
     fileprivate func updateColors() {
         backgroundColor = backgroundColor(forInputBarState: inputBarState)
         buttonRowSeparator.backgroundColor = writingSeparatorColor
-        textView.placeholderTextColor = self.inputBarState.isEphemeral ? ephemeralColor : placeholderColor
+        textView.placeholderTextColor = self.inputBarState.isEphemeral && self.availabilityPlaceholder == nil ? ephemeralColor : placeholderColor
         fakeCursor.backgroundColor = .accent()
         textView.tintColor = .accent()
         

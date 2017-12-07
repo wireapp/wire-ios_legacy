@@ -222,6 +222,7 @@
     [self updateTypingIndicatorVisibility];
     [self updateWritingStateAnimated:NO];
     [self updateButtonIconsForEphemeral];
+    [self updateAvailabilityPlaceholder];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -305,15 +306,7 @@
     self.gifButton.hitAreaPadding = CGSizeZero;
     self.gifButton.accessibilityIdentifier = @"gifButton";
     
-    ZMUser *otherUser = nil;
-    if(self.conversation.conversationType == ZMConversationTypeOneOnOne) {
-        ZMUser *user = self.conversation.otherActiveParticipants.firstObject;
-        if(user.isTeamMember) {
-            otherUser = user;
-        }
-    }
-    
-    self.inputBar = [[InputBar alloc] initWithButtons:@[self.photoButton, self.videoButton, self.sketchButton, self.gifButton, self.audioButton, self.pingButton, self.uploadFileButton, self.locationButton] otherUser: otherUser];
+    self.inputBar = [[InputBar alloc] initWithButtons:@[self.photoButton, self.videoButton, self.sketchButton, self.gifButton, self.audioButton, self.pingButton, self.uploadFileButton, self.locationButton]];
     self.inputBar.translatesAutoresizingMaskIntoConstraints = NO;
     self.inputBar.textView.delegate = self;
     
@@ -446,6 +439,24 @@
     [self.typingIndicatorView autoAlignAxisToSuperviewAxis:ALAxisVertical];
     [self.typingIndicatorView autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:48 relation:NSLayoutRelationGreaterThanOrEqual];
     [self.typingIndicatorView autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:48 relation:NSLayoutRelationGreaterThanOrEqual];
+}
+
+- (void)updateAvailabilityPlaceholder
+{
+    if (!ZMUser.selfUser.hasTeam || self.conversation.conversationType != ZMConversationTypeOneOnOne) {
+        return;
+    }
+    
+    Availability connectedUserAvailability = self.conversation.connectedUser.availability;
+    
+    if (connectedUserAvailability == AvailabilityNone) {
+        self.inputBar.availabilityPlaceholder = nil;
+    } else {
+        self.inputBar.availabilityPlaceholder = [AvailabilityStringBuilder stringFor:self.conversation.connectedUser
+                                                                                with:AvailabilityLabelStylePlaceholder
+                                                                               color:_inputBar.placeholderColor];
+    }
+    
 }
 
 - (void)updateNewButtonTitleLabel
