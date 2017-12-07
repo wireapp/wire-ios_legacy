@@ -27,6 +27,7 @@ import WireDataModel
     
     private var user: ZMUser
     private var style: AvailabilityTitleViewStyle
+    private var observerToken: Any?
     
     public init(user: ZMUser, style: AvailabilityTitleViewStyle) {
         self.user = user
@@ -54,6 +55,8 @@ import WireDataModel
         
         super.init(color: titleColor!, selectedColor: titleColorSelected!, font: titleFont!)
         
+        self.observerToken = UserChangeInfo.add(observer: self, for: user, userSession: ZMUserSession.shared()!)
+        
         configure()
         
         /// TODO change!
@@ -76,7 +79,9 @@ import WireDataModel
     }
     
     func didSelectAvailability(_ availability: Availability) {
-        print("Selected availability: \(availability)")
+        ZMUserSession.shared()?.performChanges {
+            ZMUser.selfUser().availability = availability
+        }
     }
     
     public required init?(coder aDecoder: NSCoder) {
@@ -104,5 +109,14 @@ import WireDataModel
         self.accessibilityLabel = "\(user.name)_is_\(user.availability.localizedName)".localized
     }
     
+}
+
+extension AvailabilityTitleView: ZMUserObserver {
+    
+    public func userDidChange(_ changeInfo: UserChangeInfo) {
+        guard changeInfo.availabilityChanged else { return }
+        
+        configure()
+    }
 }
 
