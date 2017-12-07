@@ -361,7 +361,7 @@
 "content.message.forward.to" = "搜索";
 "content.message.open" = "开启";
 
-"content.reactions_list.likers" = "\n赞好";
+"content.reactions_list.likers" = "赞好";
 
 "content.file.too_big" = "您可以发送最大%@的文件。";
 // Someone pinged

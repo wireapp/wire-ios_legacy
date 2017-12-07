@@ -16,14 +16,13 @@
  *  along with this program. If not, see http://www.gnu.org/licenses/.
  */
 
-"NSContactsUsageDescription" = "Allow Wire to access your contacts to connect you with others. We anonymize all information and do not share it with anyone else.";
-"NSMicrophoneUsageDescription" = "Allow Wire to access your microphone so you can talk to people and send audio messages.";
-"NSLocationWhenInUseUsageDescription" = "Allow Wire to access your location so you can send your location to others.";
-"NSCameraUsageDescription" = "Allow Wire to access your camera so you can place video calls and send photos.";
+"NSContactsUsageDescription" = "Leiskite Wire gauti prieigą prie jūsų konktaktų, kad galėtume sujungti jus su kitais. Mes anonimizuojame visą informaciją ir nesidaliname ja su trečiomis šalimis.";
+"NSMicrophoneUsageDescription" = "Leiskite Wire gauti prieigą prie jūsų mikrofono, kad galėtumėte kalbėti su kitais žmonėmis ir siųsti garso žinutes.";
+"NSLocationWhenInUseUsageDescription" = "Leiskite Wire gauti prieigą prie jūsų buvimo vietos, kad galėtumėte ją siųsti kitiems.";
+"NSCameraUsageDescription" = "Leiskite Wire gauti prieigą prie jūsų kameros, kad galėtumėte skambinti su vaizdu ir siųsti nuotraukas.";
 /* Showed after taking a picture with camera, but only when NSPhotoLibraryUsageDescription permission was declined. Asks permission for only writing to photo library. */
-"NSPhotoLibraryAddUsageDescription" = "Allow Wire to store pictures you take in the photo library.";
+"NSPhotoLibraryAddUsageDescription" = "Suteikite „Wire“ galimybę išsaugoti padarytas nuotraukas paveikslėlių bibliotekoje.";
 /* Showed when trying to send picture from conversaiton list. Asks permissions for reading and writing to photo library */
-"NSPhotoLibraryUsageDescription" = "Allow Wire to access pictures stored in photo library.";
+"NSPhotoLibraryUsageDescription" = "Suteikite „Wire“ galimybę prisijungti prie paveikslėlių saugomų bibliotekoje.";
 /* Is shown to the user when app is locked with AppLock feature on the phone that supports Face ID */
-"NSFaceIDUsageDescription" = "In order to authenticate in the app allow Wire to access the Face ID feature.";
-
+"NSFaceIDUsageDescription" = "Norėdami nustatyti tapatybę programėlėje leiskite „Wire“ naudoti „Face ID“ galimybę.";
