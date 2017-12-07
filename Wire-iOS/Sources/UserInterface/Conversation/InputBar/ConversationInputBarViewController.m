@@ -80,6 +80,9 @@
 @interface ConversationInputBarViewController (ZMConversationObserver) <ZMConversationObserver>
 @end
 
+@interface ConversationInputBarViewController (ZMUserObserver) <ZMUserObserver>
+@end
+
 @interface ConversationInputBarViewController (ZMTypingChangeObserver) <ZMTypingChangeObserver>
 @end
 
@@ -137,6 +140,7 @@
 
 @property (nonatomic) NSSet *typingUsers;
 @property (nonatomic) id conversationObserverToken;
+@property (nonatomic) id userObserverToken;
 
 @property (nonatomic) UIViewController *inputController;
 
@@ -215,6 +219,10 @@
     
     if (self.conversationObserverToken == nil) {
         self.conversationObserverToken = [ConversationChangeInfo addObserver:self forConversation:self.conversation];
+    }
+    
+    if (self.userObserverToken == nil && self.conversation.connectedUser != nil) {
+        self.userObserverToken = [UserChangeInfo addObserver:self forUser:self.conversation.connectedUser userSession:ZMUserSession.sharedSession];
     }
     
     [self updateAccessoryViews];
@@ -1119,6 +1127,17 @@
 {    
     if (change.participantsChanged || change.connectionStateChanged) {
         [self updateInputBarVisibility];
+    }
+}
+
+@end
+
+@implementation ConversationInputBarViewController (ZMUserObserver)
+
+- (void)userDidChange:(UserChangeInfo *)changeInfo
+{
+    if (changeInfo.availabilityChanged) {
+        [self updateAvailabilityPlaceholder];
     }
 }
 
