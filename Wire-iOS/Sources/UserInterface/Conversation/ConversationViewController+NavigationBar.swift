@@ -38,9 +38,8 @@ extension ConversationViewController {
         self.updateLeftNavigationBarItems()
     }
 
-    override open func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-
+    override open func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
         self.updateLeftNavigationBarItems()
     }
 }
