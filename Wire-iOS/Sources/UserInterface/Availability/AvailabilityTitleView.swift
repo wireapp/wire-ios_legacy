@@ -23,28 +23,46 @@ import Classy
 import WireExtensionComponents
 import WireDataModel
 
-@objc public class AvailabilityTitleView: AbstractTitleView {
+@objc public class AvailabilityTitleView: TitleView {
     
-    private var availability: Availability
     private var user: ZMUser
-    private var variant: ColorSchemeVariant
-    private var style: AvailabilityStyle
-    //private var container: UIViewController
+    private var style: AvailabilityTitleViewStyle
     
-    public init(user: ZMUser, availability: Availability, variant: ColorSchemeVariant, style: AvailabilityStyle, interactive: Bool = true) {
+    public init(user: ZMUser, style: AvailabilityTitleViewStyle) {
         self.user = user
-        self.availability = availability
-        self.variant = variant
         self.style = style
-        //self.container = container
-        super.init(interactive: interactive)
         
+        var titleColor: UIColor?
+        var titleColorSelected: UIColor?
+        
+        if style == .selfProfile || style == .header {
+            let variant = ColorSchemeVariant.dark
+            titleColor = ColorScheme.default().color(withName: ColorSchemeColorTextForeground, variant: variant)
+            titleColorSelected = ColorScheme.default().color(withName: ColorSchemeColorTextDimmed, variant: variant)
+        } else {
+            //otherwise, take the default variant
+            titleColor = ColorScheme.default().color(withName: ColorSchemeColorTextForeground)
+            titleColorSelected = ColorScheme.default().color(withName: ColorSchemeColorTextDimmed)
+        }
+        
+        var titleFont : UIFont?
+        if style == .header {
+            titleFont = FontSpec(.medium, .semibold).font
+        } else {
+            titleFont = FontSpec(.small, .semibold).font
+        }
+        
+        super.init(color: titleColor!, selectedColor: titleColorSelected!, font: titleFont!)
+        
+        configure()
+        
+        /// TODO change!
         tapHandler = { button in
             
             let alert = UIAlertController(title: "availability.message.title", message: nil, preferredStyle: .actionSheet)
             
             for type in Availability.allValues {
-                alert.addAction(UIAlertAction(title: type.name, style: .default, handler: { [weak self] (action) in
+                alert.addAction(UIAlertAction(title: type.localizedName, style: .default, handler: { [weak self] (action) in
                     self?.didSelectAvailability(type)
                 }))
             }
@@ -65,32 +83,32 @@ import WireDataModel
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func generateAttributedTitle(interactive: Bool, color: UIColor) -> (text: NSAttributedString, hasAttachments: Bool) {
-        let title = UILabel.composeString(availability: availability, color: color, style: style, interactive: interactive, title: user.name)
-        return (text: title.text && color, hasAttachments: title.hasAttachments)
-    }
-
-    override func updateAccessibilityLabel() {
-        self.accessibilityLabel = "\(user.displayName)_is_\(availability.name)".localized
+    func configure() {
+        let icon = self.availabilityIcon(self.user.availability, color: self.titleColor!)
+        let interactive = (style == .selfProfile || style == .header)
+        var title = ""
+        
+        if self.style == .header {
+            title = self.user.name.uppercased()
+        } else if self.user == ZMUser.selfUser() && self.user.availability == .none {
+            title = "availability.message.set_status".localized
+        } else {
+            title = self.user.availability.localizedName.uppercased()
+        }
+        
+        _ = super.configure(icon: icon, title: title, interactive: interactive)
     }
     
-    override func colorsStrategy() {
-        self.titleColor = ColorScheme.default().color(withName: ColorSchemeColorTextForeground, variant: variant)
-        self.titleColorSelected = ColorScheme.default().color(withName: ColorSchemeColorTextDimmed, variant: variant)
-        
-        if style == .headers {
-            self.titleFont = FontSpec(.medium, .semibold).font
-        } else {
-            self.titleFont = FontSpec(.small, .semibold).font
-        }
+    override func updateAccessibilityLabel() {
+        self.accessibilityLabel = "\(user.name)_is_\(user.availability.localizedName)".localized
     }
     
 }
 
-extension NSTextAttachment {
-    static func availabilityIcon(_ availability: Availability, color: UIColor) -> NSTextAttachment {
+extension AvailabilityTitleView {
+    func availabilityIcon(_ availability: Availability, color: UIColor) -> NSTextAttachment {
         let attachment = NSTextAttachment()
-        if let imageEnum = availability.imageEnum, let image = UIImage(for: imageEnum, fontSize: 10, color: color) {
+        if let iconType = availability.iconType, let image = UIImage(for: iconType, fontSize: 10, color: color) {
             attachment.image = image
             let ratio = image.size.width / image.size.height
             let height: CGFloat = 10

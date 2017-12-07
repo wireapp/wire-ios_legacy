@@ -19,12 +19,16 @@
 import Foundation
 
 
-@objc public enum AvailabilityStyle: Int {
-    case profiles, lists, headers, placeholder
+@objc public enum AvailabilityTitleViewStyle: Int {
+    case selfProfile, otherProfile, header
+}
+
+@objc public enum AvailabilityLabelStyle: Int {
+    case list, placeholder
 }
 
 extension Availability {
-    var name: String {
+    var localizedName: String {
         switch self {
         case .none:         return "availability.none".localized
         case .available:    return "availability.available".localized
@@ -33,7 +37,7 @@ extension Availability {
         }
     }
     
-    var imageEnum: ZetaIconType? {
+    var iconType: ZetaIconType? {
         switch self {
         case .none:         return nil
         case .available:    return .availabilityAvailable
@@ -47,12 +51,15 @@ extension Availability {
 extension UILabel {
     
     
-    @objc static func composeStringText(availability: Availability, color: UIColor, style: AvailabilityStyle, interactive: Bool, title: String) -> NSAttributedString {
-        return composeString(availability: availability, color: color, style: style, interactive: interactive, title: title).text
+    @objc static func composeStringText(availability: Availability, color: UIColor, style: AvailabilityLabelStyle, interactive: Bool, title: String) -> NSAttributedString {
+        return "".attributedString // composeString(availability: availability, color: color, style: style, interactive: interactive, title: title).text
     }
     
-    static func composeString(availability: Availability, color: UIColor, style: AvailabilityStyle, interactive: Bool, title: String) -> (text: NSAttributedString, hasAttachments: Bool){
+    static func composeString(availability: Availability, color: UIColor, style: AvailabilityLabelStyle, interactive: Bool, title: String) -> (text: NSAttributedString, hasAttachments: Bool){
         
+        return (text: "".attributedString, hasAttachments: false)
+        
+        /*
         var formattedTitle = ""
         var hasAttachment = false
         
@@ -84,5 +91,6 @@ extension UILabel {
         }
         
         return (text: attributedTitle && color, hasAttachments: hasAttachment)
+ */
     }
 }

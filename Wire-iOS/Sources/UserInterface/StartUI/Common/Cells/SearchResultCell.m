@@ -358,7 +358,7 @@
     _displayName = [displayName copy];
     
     if(self.user && [self.user isTeamMember]) {
-        self.nameLabel.attributedText = [UILabel composeStringTextWithAvailability:AvailabilityAvailable color:[UIColor whiteColor] style:AvailabilityStyleLists interactive:NO title:_displayName];
+        self.nameLabel.attributedText = [UILabel composeStringTextWithAvailability:AvailabilityAvailable color:[UIColor whiteColor] style:AvailabilityLabelStyleList interactive:NO title:_displayName];
     } else {
         self.nameLabel.text = [_displayName transformStringWithMagicKey:@"people_picker.search_results_mode.name_label_text_transform"];
     }

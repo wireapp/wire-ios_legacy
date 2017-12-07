@@ -58,7 +58,7 @@ import Cartography
         if let team = user.team, let teamName = team.name {
             teamNameLabel.text = teamName.uppercased()
             teamNameLabel.accessibilityValue = teamNameLabel.text
-            availabilityView = AvailabilityTitleView(user: ZMUser.selfUser(), availability: .busy, variant: .dark, style: .profiles, interactive: true)
+            availabilityView = AvailabilityTitleView(user: ZMUser.selfUser(), style: .selfProfile)
         }
         else {
             teamNameLabel.isHidden = true

@@ -50,7 +50,7 @@ extension ConversationListItemView {
         var title = "".attributedString
         
         if conversation.conversationType == .oneOnOne && conversation.team != nil {
-            title = UILabel.composeString(availability: .away, color: .white, style: .lists, interactive: false, title: conversation.displayName).text
+            title = UILabel.composeString(availability: .away, color: .white, style: .list, interactive: false, title: conversation.displayName).text
         } else {
             title = conversation.displayName.attributedString
         }

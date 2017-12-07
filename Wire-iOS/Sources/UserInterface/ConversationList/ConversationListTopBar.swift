@@ -26,7 +26,7 @@ final class ConversationListTopBar: TopBar {
         super.init(frame: frame)
         
         if ZMUser.selfUser().isTeamMember {
-            let availabilityView = AvailabilityTitleView(user: ZMUser.selfUser(), availability: .busy, variant: .dark, style: .headers, interactive: true)
+            let availabilityView = AvailabilityTitleView(user: ZMUser.selfUser(), style: .header)
             self.middleView = availabilityView
         } else {
             let titleLabel = UILabel()

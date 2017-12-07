@@ -21,39 +21,33 @@ import UIKit
 import Cartography
 import Classy
 
-class ConversationTitleView: AbstractTitleView {
+class ConversationTitleView: TitleView {
     var conversation: ZMConversation
+    var interactive: Bool = true
     
     init(conversation: ZMConversation, interactive: Bool = true) {
         self.conversation = conversation
-        super.init(interactive: interactive)
+        self.interactive = interactive
+        super.init()
+        CASStyler.default().styleItem(self)
+        
+        configure()
+        
+        self.tapHandler = { button in
+            
+        }
     }
     
     public required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func createViews(_ conversation: ZMConversation) {
-        titleButton.addTarget(self, action: #selector(titleButtonTapped), for: .touchUpInside)
-        addSubview(titleButton)
-    }
-
-    override func generateAttributedTitle(interactive: Bool, color: UIColor) -> (text: NSAttributedString, hasAttachments: Bool) {
-        
-        var title = conversation.displayName.uppercased().attributedString
-        
-        var hasAttachment = false
-        
-        if interactive {
-            title += "  " + NSAttributedString(attachment: .downArrow(color: color))
-            hasAttachment = true
-        }
+    func configure() {
+        var attachment : NSTextAttachment?
         if conversation.securityLevel == .secure {
-            title = NSAttributedString(attachment: .verifiedShield()) + "  " + title
-            hasAttachment = true
+            attachment = .verifiedShield()
         }
-        
-        return (text: title && color, hasAttachments: hasAttachment)
+        _ = super.configure(icon: attachment, title: conversation.displayName.uppercased(), interactive: conversation.relatedConnectionState != .sent)
     }
 
     override func updateAccessibilityLabel() {
@@ -64,13 +58,6 @@ class ConversationTitleView: AbstractTitleView {
         }
     }
     
-    override func tappableCondition(interactive: Bool) -> Bool {
-        return interactive && conversation.relatedConnectionState != .sent
-    }
-    
-    override func colorsStrategy() {
-        CASStyler.default().styleItem(self)
-    }
 }
 
 extension NSTextAttachment {

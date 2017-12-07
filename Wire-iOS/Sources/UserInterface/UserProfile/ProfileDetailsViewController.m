@@ -101,7 +101,7 @@ typedef NS_ENUM(NSUInteger, ProfileUserAction) {
         _bareUser = user;
         _conversation = conversation;
         _showGuestLabel = [user isGuestInConversation:conversation];
-        _availabilityView = [[AvailabilityTitleView alloc] initWithUser:[ZMUser selfUser] availability:AvailabilityAway variant:ColorSchemeVariantLight style: AvailabilityStyleProfiles interactive:FALSE];
+        _availabilityView = [[AvailabilityTitleView alloc] initWithUser:[self fullUser] style:AvailabilityTitleViewStyleOtherProfile];
     }
     return self;
 }
