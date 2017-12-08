@@ -290,8 +290,8 @@
 "content.system.failedtosend_message_timestamp_resend" = "Siųsti iš naujo";
 "content.system.failedtosend_message_timestamp_delete" = "Ištrinti";
 "content.system.like_tooltip" = "Bakstelėję pažymėsite, kad patinka";
-"content.system.deleted_message_prefix_timestamp" = "Deleted: %@";
-"content.system.edited_message_prefix_timestamp" = "Edited: %@";
+"content.system.deleted_message_prefix_timestamp" = "Ištrinta: %@";
+"content.system.edited_message_prefix_timestamp" = "Pakeista: %@";
 "content.system.connecting_to" = "Susijungiama su %@.\nPradėkite bendrauti";
 "content.system.connected_to" = "Susijungta su %@\nPradėkite bendrauti";
 "content.system.other_wanted_to_talk" = "%@ skambino";
@@ -599,7 +599,7 @@
 
 "self.settings.device_details.fingerprint.subtitle" = "Wire kiekvienam įrenginiui suteikia unikalų kontrolinį kodą. Palyginkite juos ir patvirtinkite savo įrenginius ir pokalbius.";
 "self.settings.device_details.reset_session.subtitle" = "Jeigu kontroliniai kodai nesutampa, atstatykite seansą, kad abiejose pusėse būtų sugeneruoti nauji šifravimo raktai.";
-"self.settings.device_details.remove_device.subtitle" = "Jeigu nebenaudojate šį įrenginį, pašalinkite jį. Jūs būsite nedelsiant atjungti iš šio įrenginio.";
+"self.settings.device_details.remove_device.subtitle" = "Jeigu nebenaudojate šio įrenginio, pašalinkite jį. Jūs būsite nedelsiant atjungti iš šio įrenginio.";
 "self.settings.device_details.reset_session.success" = "Seansas buvo atstatytas";
 
 "self.settings.account_details.actions.title" = "Veiksmai";
@@ -777,8 +777,8 @@
 "name.guidance.toolong" = "Per daug simbolių";
 
 "email.placeholder" = "El. paštas";
-"email.guidance.invalid" = "Invalid email address";
-"email.guidance.tooshort" = "Email is too short";
+"email.guidance.invalid" = "Neteisingas el. pašto adresas";
+"email.guidance.tooshort" = "El. pašto adresas per trumpas";
 "email.guidance.toolong" = "Per daug simbolių";
 
 "password.placeholder" = "Slaptažodis";
@@ -800,30 +800,30 @@
 "team.name.headline" = "Pavadinkite komandą";
 "team.name.subheadline" = "Bet kada vėliau galėsite pakeisti.";
 "team.name.textfield.placeholder" = "komandos pavadinimas";
-"team.name.textfield.accessibility" = "Set team name";
+"team.name.textfield.accessibility" = "Suteikite komandai pavadinimą";
 "team.name.whatiswireforteams" = "Kas yra „Wire“ komandoms?";
 
-"team.email.headline" = "Your account";
-"team.email.subheadline" = "Enter your work email address.";
-"team.email.textfield.placeholder" = "you@yourcompany.com";
-"team.email.textfield.accessibility" = "Your company email";
+"team.email.headline" = "Jūsų paskyra";
+"team.email.subheadline" = "Įrašykite darbo el. pašto adresą.";
+"team.email.textfield.placeholder" = "tu@tavoorganizacija.lt";
+"team.email.textfield.accessibility" = "Jūsų darbo el. pašto adresas";
 "team.email.button.learn_more" = "Sužinokite daugiau";
 
-"team.activation_code.headline" = "You've got mail";
+"team.activation_code.headline" = "Gavote el. laišką";
 "team.activation_code.subheadline" = "Įrašykite patvirtinimo kodą, kuris buvo išsiųstas į %@";
-"team.activation_code.button.resend" = "Resend code";
-"team.activation_code.button.change_email" = "Change email";
+"team.activation_code.button.resend" = "Siųsti kodą dar kartą";
+"team.activation_code.button.change_email" = "Pakeisti el. pašto adresą";
 
-"team.full_name.headline" = "Your name";
-"team.full_name.textfield.placeholder" = "Full name";
-"team.full_name.textfield.accessibility" = "Set full name";
+"team.full_name.headline" = "Jūsų vardas";
+"team.full_name.textfield.placeholder" = "Vardas pavardė";
+"team.full_name.textfield.accessibility" = "Įrašykite vardą ir pavardę";
 
-"team.password.headline" = "Set password";
+"team.password.headline" = "Įrašykite slaptažodį";
 "team.password.textfield.placeholder" = "Bent 8 simbolių";
-"team.password.textfield.accessibility" = "Set password, at least 8 characters";
+"team.password.textfield.accessibility" = "Įrašykite slaptažodį, mažiausiai 8 simbolių";
 
 
-"team.email_code.input_field.accessbility_label" = "Please enter the six-digit code from the email.";
+"team.email_code.input_field.accessbility_label" = "Įrašykite šešių skaitmenų kodą, kurį gavote el. laišku.";
 
 // Registration
 
@@ -903,7 +903,7 @@
 "registration.signin.phone_button.title" = "Telefonas";
 
 "registration.devices.title" = "Įrenginiai";
-"registration.devices.active_list_header" = "Aktyvus";
+"registration.devices.active_list_header" = "Aktyvūs";
 "registration.devices.current_list_header" = "Esamas";
 "registration.devices.active_list_subtitle" = "Jeigu jūs neatpažįstate aukščiau esančio įrenginio, pašalinkite jį ir atstatykite savo slaptažodį.";
 "registration.devices.activated_in" = "Aktyvuota";

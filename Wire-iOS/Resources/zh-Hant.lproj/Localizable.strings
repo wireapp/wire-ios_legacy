@@ -173,7 +173,7 @@
 "conversation.status.removed_multiple" = "聯絡人已删除";
 "conversation.status.you_were_removed" = "您被移除了";
 "conversation.status.you_left" = "您 離開了";
-"conversation.status.started_conversation" = "%@開始了對話";
+"conversation.status.started_conversation" = "%@開啓了聊天室";
 "conversation.status.removed_users" = "%@ 移除了 %@";
 "conversation.status.everyone_left" = "所有人都已經離開了";
 
@@ -299,7 +299,7 @@
 "content.system.ephemeral_time_remaining" = "%@ 離開了";
 
 "content.system.you_started" = "您";
-"content.system.this_device" = "此設備";
+"content.system.this_device" = "這個設備";
 
 "content.system.call.you" = "您";
 "content.system.call.called" = "%@ 曾來電";
@@ -573,7 +573,7 @@
 // Settings - Account details
 "self.settings.account_section" = "帳號";
 
-"self.settings.account_details_group.info.title" = "資訊";
+"self.settings.account_details_group.info.title" = "個人資訊";
 "self.settings.account_details_group.personal.title" = "個人信息";
 
 "self.settings.account_section.name.title" = "名稱";
@@ -593,13 +593,13 @@
 
 "self.settings.account_appearance_group.title" = "外觀";
 "self.settings.account_picture_group.picture" = "大頭照";
-"self.settings.account_picture_group.color" = "主題色";
+"self.settings.account_picture_group.color" = "主色調";
 
 "self.settings.account_picture_group.theme" = "暗色系主題";
 
 "self.settings.device_details.fingerprint.subtitle" = "Wire為每個設備設置了一個獨特的指紋。您可以透過指紋比對來驗證您的設備和聊天室。";
 "self.settings.device_details.reset_session.subtitle" = "如果設備指紋比對結果不吻合，請重設session以產生兩方新的加密金鎖。";
-"self.settings.device_details.remove_device.subtitle" = "如果您已經不再使用此設備的話，請把它移除，此設備將會被立即登出您的帳號。";
+"self.settings.device_details.remove_device.subtitle" = "如果您已經不再使用此設備的話，請把它移除，您將會立即登出此設備。";
 "self.settings.device_details.reset_session.success" = "Session已被重設";
 
 "self.settings.account_details.actions.title" = "操作";
@@ -905,7 +905,7 @@
 "registration.devices.title" = "設備";
 "registration.devices.active_list_header" = "其他已啟用的設備";
 "registration.devices.current_list_header" = "此設備";
-"registration.devices.active_list_subtitle" = "如果您不認識該設備，請到設定>帳號，刪除它並且重設您的密碼。";
+"registration.devices.active_list_subtitle" = "如果您不認識該設備，請將它移除並且重設您的密碼。";
 "registration.devices.activated_in" = "啟動於";
 "registration.devices.id" = "ID:";
 
@@ -1015,7 +1015,7 @@
 "collections.section.links.title" = "連結：";
 "collections.section.all.button" = "顯示所有%d→";
 "collections.section.no_items" = "沒有資料";
-"collections.image_viewer.copied.title" = "圖片已複製";
+"collections.image_viewer.copied.title" = "照片已複製";
 
 "collections.search.field.placeholder" = "搜尋訊息中的文字";
 "collections.search.no_items" = "沒有找到";
