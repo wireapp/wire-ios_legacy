@@ -17,7 +17,7 @@ struct RatingState {
 
 class BaseCallQualityViewController :  UIViewController {
 
-    let root = CallQualityViewController(questionLabelText: "1.How satisfied are you with the call set up?", buttonText: "Next")
+    let root = CallQualityViewController(questionLabelText: "1. How do you rate the call set up?")
     let baseNavigationController : UINavigationController
 
     var ratingState: RatingState = RatingState(rating1: nil, rating2: nil)
@@ -44,7 +44,7 @@ extension BaseCallQualityViewController: CallQualityViewControllerDelegate {
     func controller(_ controller: CallQualityViewController, didSelect score: Int) {
         if controller == root {
             ratingState.rating1 = score
-            let next = CallQualityViewController(questionLabelText: "2.How satisfied are you with the overall quality of the call?", buttonText: "Done")
+            let next = CallQualityViewController(questionLabelText: "2. How do you rate the overall quality of the call?")
             next.delegate = self
             baseNavigationController.pushViewController(next, animated: true)
         }
@@ -69,19 +69,19 @@ class CallQualityViewController : UIViewController {
     let questionText : UILabel
     let descriptionText : UILabel
     let scoreSelectorView : QualityScoreSelectorView
-    let bigButton : Button
+//    let bigButton : Button
     var questionLabelText = String()
     var buttonText = String()
     weak var delegate: CallQualityViewControllerDelegate?
     
-    init(questionLabelText: String , buttonText: String){
+    init(questionLabelText: String){
         callQualityView.axis = .vertical
         
         self.titleLabel = UILabel()
         self.questionText = UILabel()
         self.descriptionText = UILabel()
         self.scoreSelectorView = QualityScoreSelectorView()
-        self.bigButton = Button()
+//        self.bigButton = Button()
         
         super.init(nibName: nil, bundle: nil)
         
@@ -100,19 +100,20 @@ class CallQualityViewController : UIViewController {
         descriptionText.numberOfLines = 0
      
         
-        bigButton.setTitle(buttonText.uppercased(), for: UIControlState.normal)
-        bigButton.setBackgroundImageColor(UIColor.green, for: UIControlState.normal)
-        bigButton.isEnabled = false
-        bigButton.addTarget(self, action: #selector(onClick), for: .primaryActionTriggered)
-        
+//        bigButton.setTitle(buttonText.uppercased(), for: UIControlState.normal)
+//        bigButton.setBackgroundImageColor(UIColor.green, for: UIControlState.normal)
+//        bigButton.isEnabled = false
+//        bigButton.addTarget(self, action: #selector(onClick), for: .primaryActionTriggered)
+//
         scoreSelectorView.onScoreSet = { [weak self] _ in
-            self?.bigButton.isEnabled = true
+//            self?.bigButton.isEnabled = true
+             self?.delegate?.controller(self!, didSelect: (self?.scoreSelectorView.score)!)
         }
         callQualityView.addArrangedSubview(titleLabel)
         callQualityView.addArrangedSubview(questionText)
         callQualityView.addArrangedSubview(descriptionText)
         callQualityView.addArrangedSubview(scoreSelectorView)
-        callQualityView.addArrangedSubview(bigButton)
+//        callQualityView.addArrangedSubview(bigButton)
         callQualityView.spacing = 40
     }
     
@@ -130,9 +131,9 @@ class CallQualityViewController : UIViewController {
         }
     }
     
-    func onClick(_ sender: Button) {
-        delegate?.controller(self, didSelect: scoreSelectorView.score)
-    }
+//    func onClick(_ sender: Button) {
+//        delegate?.controller(self, didSelect: scoreSelectorView.score)
+//    }
 
 }
 
@@ -141,6 +142,7 @@ class QualityScoreSelectorView : UIView {
     private var scoreButtons: [UIButton] = []
     let imageNormal = UIImage(named: "scoreButtonNormalState.png")
     let imageSelected = UIImage(named: "scoreButtonSelectedState.png")
+    weak var delegate: CallQualityViewControllerDelegate?
     
     public var onScoreSet: ((Int)->())? = nil
     
@@ -187,6 +189,7 @@ class QualityScoreSelectorView : UIView {
         }
         self.score = sender.tag
         sender.isSelected = true
+//        delegate?.controller(CallQualityViewController, didSelect: scoreStackView.score)
     }
     
     required init?(coder aDecoder: NSCoder) {
