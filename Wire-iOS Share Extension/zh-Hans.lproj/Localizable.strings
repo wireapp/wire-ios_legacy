@@ -26,8 +26,12 @@
 "share_extension.input.placeholder" = "键入一条消息";
 "share_extension.sending_progress.title" = "正在发送...";
 "share_extension.preparing.title" = "准备中...";
+"share_extension.no_internet_connection.title" = "没有互联网讯号";
 "share_extension.not_signed_in.title" = "您在登录Wire后才可以使用分享功能";
 "share_extension.not_signed_in.close_button" = "关闭";
+"share_extension.timeout.title" = "连接已超时。";
+"share_extension.timeout.message" = "请检查您的互联网连接并重试。附件会保存在对话中。";
+"share_extension.privacy_security.lock_app.description" = "解锁Wire";
 
 "conversation.displayname.emptygroup" = "空聊天室";
 "meta.degraded.degradation_reason_message.singular" = "%@ 开始使用新的设备。";

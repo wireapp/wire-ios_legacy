@@ -26,8 +26,12 @@
 "share_extension.input.placeholder" = "Kirjuta sõnum";
 "share_extension.sending_progress.title" = "Saadab…";
 "share_extension.preparing.title" = "Valmistan ette…";
+"share_extension.no_internet_connection.title" = "Ühendus puudub";
 "share_extension.not_signed_in.title" = "Enne jagamist logi Wire’sse sisse";
 "share_extension.not_signed_in.close_button" = "Sulge";
+"share_extension.timeout.title" = "Ühendus aegus.";
+"share_extension.timeout.message" = "Kontrollige internetiühendust ja proovige uuesti. Saadetu on vestlusesse salvestatud.";
+"share_extension.privacy_security.lock_app.description" = "Tee lukust lahti";
 
 "conversation.displayname.emptygroup" = "Tühi grupivestlus";
 "meta.degraded.degradation_reason_message.singular" = "%@ hakkas uut seadet kasutama.";

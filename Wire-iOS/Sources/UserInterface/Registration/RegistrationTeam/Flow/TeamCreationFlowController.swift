@@ -48,7 +48,6 @@ final class TeamCreationFlowController: NSObject {
         self.registrationStatus = registrationStatus
         super.init()
         registrationStatus.delegate = self
-        sessionManagerToken = SessionManager.shared?.addSessionManagerCreatedSessionObserver(self)
     }
 
     func startFlow() {
@@ -188,7 +187,7 @@ extension TeamCreationFlowController: VerifyEmailStepDescriptionDelegate {
 
 extension TeamCreationFlowController: SessionManagerCreatedSessionObserver {
     func sessionManagerCreated(userSession : ZMUserSession) {
-        self.sessionManagerToken = ZMUserSession.addInitialSyncCompletionObserver(self, userSession: userSession)
+        syncToken = ZMUserSession.addInitialSyncCompletionObserver(self, userSession: userSession)
         URLSession.shared.dataTask(with: URL(string: UnsplashRandomImageHiQualityURL)!) { (data, _, error) in
             if let data = data, error == nil {
                 DispatchQueue.main.async {
@@ -196,6 +195,7 @@ extension TeamCreationFlowController: SessionManagerCreatedSessionObserver {
                 }
             }
         }.resume()
+        sessionManagerToken = nil
     }
 }
 
@@ -203,11 +203,13 @@ extension TeamCreationFlowController: ZMInitialSyncCompletionObserver {
     func initialSyncCompleted() {
         currentController?.showLoadingView = false
         registrationDelegate?.registrationViewControllerDidCompleteRegistration()
+        syncToken = nil
     }
 }
 
 extension TeamCreationFlowController: RegistrationStatusDelegate {
     public func teamRegistered() {
+        sessionManagerToken = SessionManager.shared?.addSessionManagerCreatedSessionObserver(self)
         tracker.tagTeamCreated()
     }
 

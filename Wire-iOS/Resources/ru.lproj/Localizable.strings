@@ -215,6 +215,9 @@
 
 "conversation.input_bar.shortcut.send" = "Отправить сообщение";
 
+"conversation.input_bar.message_too_long.title" = "Сообщение слишком длинное";
+"conversation.input_bar.message_too_long.message" = "Вы можете отправлять сообщения длиной до %d символов.";
+
 // Image confirmation dialogue
 "image_confirmer.confirm" = "OK";
 "image_confirmer.cancel" = "Отменить";
@@ -287,8 +290,8 @@
 "content.system.failedtosend_message_timestamp_resend" = "Отправить повторно";
 "content.system.failedtosend_message_timestamp_delete" = "Удалить";
 "content.system.like_tooltip" = "Нажмите, чтобы лайкнуть";
-"content.system.deleted_message_prefix_timestamp" = "Удалено %@";
-"content.system.edited_message_prefix_timestamp" = "Отредактировано %@";
+"content.system.deleted_message_prefix_timestamp" = "Удалено: %@";
+"content.system.edited_message_prefix_timestamp" = "Изменено: %@";
 "content.system.connecting_to" = "Подключение к %@.\nНачните разговор";
 "content.system.connected_to" = "Добавил(-а) %@.\nНачните разговор";
 "content.system.other_wanted_to_talk" = "%@ звонил";
@@ -665,13 +668,11 @@
 "self.settings.sound_menu.ping.title" = "Пинг";
 "self.settings.sound_menu.ringtones.title" = "Рингтоны";
 "self.settings.sound_menu.sounds.wire_sound" = "Wire";
+"self.settings.sound_menu.sounds.none" = "Отключены";
 
 "self.settings.callkit.title" = "Звонки";
 "self.settings.callkit.caption" = "Поделиться с iOS";
 "self.settings.callkit.description" = "Показывать звонки Wire на экране блокировки и в истории звонков iOS. Если Вы используете iCloud, история звонков будет передана Apple.";
-
-"self.settings.cbr.not_available" = "Кодирование с постоянным битрейтом";
-"self.settings.cbr.not_available.description" = "Кодирование с постоянным битрейтом отключено до введения поддержки нескольких учетных записей. Следите за обновлениями.";
 
 "self.settings.vbr.title" = "Кодирование с переменным битрейтом";
 "self.settings.vbr.description" = "Это позволяет аудиозвонкам использовать меньше трафика и работать лучше при медленном соединении. Выключите, чтобы использовать кодирование с постоянным битрейтом.";
@@ -707,7 +708,7 @@
 "self.settings.sound_menu.title" = "Звуковые уведомления";
 "self.settings.sound_menu.no_sounds.title" = "Отключены";
 "self.settings.sound_menu.all_sounds.title" = "Все";
-"self.settings.sound_menu.mute_while_talking.title" = "Первое сообщение, пинги, звонки";
+"self.settings.sound_menu.mute_while_talking.title" = "Первое сообщение и пинги";
 
 // Developer options
 "self.settings.developer_options.title" = "Опции для разработчиков";
@@ -770,19 +771,61 @@
 "system_status_bar.poor_connectivity.title" = "Медленный интернет, невозможно позвонить прямо сейчас";
 "system_status_bar.poor_connectivity.explanation" = "Мы не можем гарантировать качество передачи голоса. Подключитесь к Wi-Fi или попробуйте изменить ваше местоположение.";
 
-// Common connections on profile view
-"profile_other.common_connections" = "Вы оба знаете";
-
-// View user profile and options menu
+// View user profile and options menu & text field validation
 "name.placeholder" = "Ваше полное имя";
 "name.guidance.tooshort" = "Нужно минимум 2 символа";
 "name.guidance.toolong" = "Слишком много символов";
 
 "email.placeholder" = "Email";
+"email.guidance.invalid" = "Недопустимый адрес email";
+"email.guidance.tooshort" = "Email слишком короткий";
+"email.guidance.toolong" = "Слишком много символов";
 
 "password.placeholder" = "Пароль";
 "password.guidance.tooshort" = "Необходимо минимум 8 символов";
 "password.guidance.toolong" = "Слишком много символов";
+
+// Landing screen
+
+"landing.title" = "Защищенный мессенджер для всех.";
+"landing.create_account.title" = "Создать аккаунт";
+"landing.create_account.subtitle" = "для личного пользования";
+"landing.create_team.title" = "Создать команду";
+"landing.create_team.subtitle" = "для работы";
+"landing.login.hints" = "Уже зарегистрированы?";
+"landing.login.button.title" = "Вход";
+
+// Create team
+
+"team.name.headline" = "Назовите команду";
+"team.name.subheadline" = "Вы всегда можете изменить название позже.";
+"team.name.textfield.placeholder" = "название команды";
+"team.name.textfield.accessibility" = "Задать имя команды";
+"team.name.whatiswireforteams" = "Что такое Wire для команд?";
+
+"team.email.headline" = "Ваш аккаунт";
+"team.email.subheadline" = "Введите свой рабочий адрес email.";
+"team.email.textfield.placeholder" = "you@yourcompany.com";
+"team.email.textfield.accessibility" = "Email вашей компании";
+"team.email.button.learn_more" = "Подробнее";
+
+"team.activation_code.headline" = "Вам письмо";
+"team.activation_code.subheadline" = "Введите код подтверждения, который мы отправили на %@";
+"team.activation_code.button.resend" = "Запросить код повторно";
+"team.activation_code.button.change_email" = "Изменить email";
+
+"team.full_name.headline" = "Ваше имя";
+"team.full_name.textfield.placeholder" = "Полное имя";
+"team.full_name.textfield.accessibility" = "Укажите полное имя";
+
+"team.password.headline" = "Установить пароль";
+"team.password.textfield.placeholder" = "Необходимо минимум 8 символов";
+"team.password.textfield.accessibility" = "Задать пароль, не менее 8 символов";
+
+
+"team.email_code.input_field.accessbility_label" = "Введите шестизначный код из письма.";
+
+// Registration
 
 "registration.title" = "Регистрация";
 "registration.close_email_invitation_button.email_title" = "Используйте другой email";
@@ -824,6 +867,11 @@
 "registration.terms_of_use.terms" = "Продолжая, вы соглашаетесь с Условия использования Wire.";
 "registration.terms_of_use.terms.link" = "Условия использования";
 "registration.terms_of_use.agree" = "Принимаю";
+
+"registration.terms_of_use.terms.title" = "Условия использования";
+"registration.terms_of_use.terms.message" = "Для продолжения, пожалуйста, примите условия использования.";
+"registration.terms_of_use.terms.view" = "Вид";
+"registration.terms_of_use.accept" = "Принять";
 
 "registration.email_flow.title" = "Регистрация по email";
 "registration.email_flow.email_step.title" = "Изменить детали";

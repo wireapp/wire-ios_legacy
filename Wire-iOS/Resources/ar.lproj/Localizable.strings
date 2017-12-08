@@ -215,6 +215,9 @@
 
 "conversation.input_bar.shortcut.send" = "إرسال رسالة";
 
+"conversation.input_bar.message_too_long.title" = "Message too long";
+"conversation.input_bar.message_too_long.message" = "You can send messages up to %d characters long.";
+
 // Image confirmation dialogue
 "image_confirmer.confirm" = "موافق";
 "image_confirmer.cancel" = "إلغاء";
@@ -287,8 +290,8 @@
 "content.system.failedtosend_message_timestamp_resend" = "إعادة الإرسال";
 "content.system.failedtosend_message_timestamp_delete" = "حذف";
 "content.system.like_tooltip" = "انقر للإعجاب";
-"content.system.deleted_message_prefix_timestamp" = "حُذِفت في %@";
-"content.system.edited_message_prefix_timestamp" = "عُدّلت في %@";
+"content.system.deleted_message_prefix_timestamp" = "Deleted: %@";
+"content.system.edited_message_prefix_timestamp" = "Edited: %@";
 "content.system.connecting_to" = "التواصل مع %@\nبدأ مُحادثة";
 "content.system.connected_to" = "تم التواصل مع %@\nبدأ مُحادثة";
 "content.system.other_wanted_to_talk" = "اتصل %@";
@@ -560,12 +563,12 @@
 
 // Settings - top level
 "self.settings.create_team.title" = "إنشاء فريق";
-"self.settings.manage_team.title" = "Manage Team";
-"self.settings.add_team_or_account.title" = "New Team or Account";
+"self.settings.manage_team.title" = "إدارة الفريق";
+"self.settings.add_team_or_account.title" = "فريق أو حساب جديد";
 "self.settings.add_account.title" = "إضافة حساب";
 
-"self.settings.add_account.error.title" = "Three accounts active";
-"self.settings.add_account.error.message" = "You can only be logged in with three accounts at once. Log out from one to add another.";
+"self.settings.add_account.error.title" = "ثلاث حساب نشطة";
+"self.settings.add_account.error.message" = "بإمكانك تسجيل الدخول بثلاث حسابات في المرة الواحدة. اخرج من أحدهم لتضيف آخر.";
 
 // Settings - Account details
 "self.settings.account_section" = "الحساب";
@@ -665,13 +668,11 @@
 "self.settings.sound_menu.ping.title" = "بينغ";
 "self.settings.sound_menu.ringtones.title" = "النغمات";
 "self.settings.sound_menu.sounds.wire_sound" = "Wire";
+"self.settings.sound_menu.sounds.none" = "لا شيء";
 
 "self.settings.callkit.title" = "المكالمات";
 "self.settings.callkit.caption" = "مشاركة بواسطة iOS";
 "self.settings.callkit.description" = "إظهار مكالمات Wire على شاشة القفل وفي سجّل مكالمات الهاتف. في حال تفعيل iCloud، سيتم مشاركة سجّل المكالمات مع Apple.";
-
-"self.settings.cbr.not_available" = "ترميز معدل بت ثابت";
-"self.settings.cbr.not_available.description" = "مكالمات الBit Rate الثابت معطّلة مؤقتًا مع تقديم ميزة الحسابات المتعددة؛ وسوف تعود قريبًا.";
 
 "self.settings.vbr.title" = "ترميز بمعدل بت متغير";
 "self.settings.vbr.description" = "هذا يجعل المكالمات الصوتية تستهلك بيانات أقل وتعمل بشكل أفضل على الشبكات الأبطأ. أوقفه لتستخدم ترميز ذو معدل بت ثابت.";
@@ -707,7 +708,7 @@
 "self.settings.sound_menu.title" = "التنبيهات الصوتية";
 "self.settings.sound_menu.no_sounds.title" = "لا شيء";
 "self.settings.sound_menu.all_sounds.title" = "الجميع";
-"self.settings.sound_menu.mute_while_talking.title" = "أول رسالة ، بنغ أو مكالمة";
+"self.settings.sound_menu.mute_while_talking.title" = "First message and pings";
 
 // Developer options
 "self.settings.developer_options.title" = "خيارات مطور البرامج";
@@ -770,19 +771,61 @@
 "system_status_bar.poor_connectivity.title" = "اتصال سيّء، لا يمكن إجراء مُكالمة الآن";
 "system_status_bar.poor_connectivity.explanation" = "لا نستطيع أن نضمن لك جودة الاتصال. اتصل من خلال Wi-Fi او حاول تغيير موقعك.";
 
-// Common connections on profile view
-"profile_other.common_connections" = "كلاكما تعرفان";
-
-// View user profile and options menu
+// View user profile and options menu & text field validation
 "name.placeholder" = "اسمك الكامل";
 "name.guidance.tooshort" = "استخدام على الأقل حرفين";
 "name.guidance.toolong" = "حروف كثيرة عن الحد";
 
 "email.placeholder" = "البريد الإلكتروني";
+"email.guidance.invalid" = "Invalid email address";
+"email.guidance.tooshort" = "Email is too short";
+"email.guidance.toolong" = "حروف كثيرة عن الحد";
 
 "password.placeholder" = "كلمة المرور";
 "password.guidance.tooshort" = "8 أحرف على الأقل";
 "password.guidance.toolong" = "حروف كثيرة عن الحد";
+
+// Landing screen
+
+"landing.title" = "Secure messenger for everyone.";
+"landing.create_account.title" = "Create an account";
+"landing.create_account.subtitle" = "for personal use";
+"landing.create_team.title" = "إنشاء فريق";
+"landing.create_team.subtitle" = "for work";
+"landing.login.hints" = "Already have an account?";
+"landing.login.button.title" = "Log in";
+
+// Create team
+
+"team.name.headline" = "Name your team";
+"team.name.subheadline" = "You can always change it later.";
+"team.name.textfield.placeholder" = "team name";
+"team.name.textfield.accessibility" = "Set team name";
+"team.name.whatiswireforteams" = "What is Wire for teams?";
+
+"team.email.headline" = "Your account";
+"team.email.subheadline" = "Enter your work email address.";
+"team.email.textfield.placeholder" = "you@yourcompany.com";
+"team.email.textfield.accessibility" = "Your company email";
+"team.email.button.learn_more" = "معرفة المزيد";
+
+"team.activation_code.headline" = "You've got mail";
+"team.activation_code.subheadline" = "أدخل رمز التّحقق الذي أُرسل لـ%@";
+"team.activation_code.button.resend" = "Resend code";
+"team.activation_code.button.change_email" = "Change email";
+
+"team.full_name.headline" = "Your name";
+"team.full_name.textfield.placeholder" = "Full name";
+"team.full_name.textfield.accessibility" = "Set full name";
+
+"team.password.headline" = "Set password";
+"team.password.textfield.placeholder" = "8 أحرف على الأقل";
+"team.password.textfield.accessibility" = "Set password, at least 8 characters";
+
+
+"team.email_code.input_field.accessbility_label" = "Please enter the six-digit code from the email.";
+
+// Registration
 
 "registration.title" = "تسجيل";
 "registration.close_email_invitation_button.email_title" = "استخدام بريد إلكتروني آخر";
@@ -824,6 +867,11 @@
 "registration.terms_of_use.terms" = "في حال الاستمرار أنت توافق على شروط استخدام Wire.";
 "registration.terms_of_use.terms.link" = "شروط الاستخدام";
 "registration.terms_of_use.agree" = "أُوافق";
+
+"registration.terms_of_use.terms.title" = "شروط الاستخدام";
+"registration.terms_of_use.terms.message" = "Please accept the Terms of Use to continue.";
+"registration.terms_of_use.terms.view" = "View";
+"registration.terms_of_use.accept" = "قبول";
 
 "registration.email_flow.title" = "تسجيل بواسطة بريد إلكتروني";
 "registration.email_flow.email_step.title" = "تعديل التفاصيل";

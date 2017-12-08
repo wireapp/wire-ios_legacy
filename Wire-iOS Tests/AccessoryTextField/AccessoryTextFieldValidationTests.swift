@@ -73,7 +73,8 @@ final class AccessoryTextFieldValidateionTests: XCTestCase {
     }
 
     fileprivate func checkError(textFieldType: AccessoryTextField.Kind,
-                                text: String?, expectedError: TextFieldValidator.ValidationError,
+                                text: String?,
+                                expectedError: TextFieldValidator.ValidationError,
                                 file: StaticString = #file,
                                 line: UInt = #line) {
 

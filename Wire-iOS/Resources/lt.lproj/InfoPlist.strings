@@ -16,13 +16,13 @@
  *  along with this program. If not, see http://www.gnu.org/licenses/.
  */
 
-"NSContactsUsageDescription" = "Geef Wire toegang tot je contacten om je te verbinden met andere mensen. We anonimiseren deze gegevens en delen het met niemand anders.";
-"NSMicrophoneUsageDescription" = "Geef Wire toegang tot je microfoon zodat je met andere mensen kunt praten en audio-berichten kunt sturen.";
-"NSLocationWhenInUseUsageDescription" = "Geef Wire toegang tot je locatie, zodat je je locatie kunt versturen naar anderen.";
-"NSCameraUsageDescription" = "Geef Wire toegang tot je camera zodat je videogesprekken kunt voeren en foto's kunt sturen.";
+"NSContactsUsageDescription" = "Leiskite Wire gauti prieigą prie jūsų konktaktų, kad galėtume sujungti jus su kitais. Mes anonimizuojame visą informaciją ir nesidaliname ja su trečiomis šalimis.";
+"NSMicrophoneUsageDescription" = "Leiskite Wire gauti prieigą prie jūsų mikrofono, kad galėtumėte kalbėti su kitais žmonėmis ir siųsti garso žinutes.";
+"NSLocationWhenInUseUsageDescription" = "Leiskite Wire gauti prieigą prie jūsų buvimo vietos, kad galėtumėte ją siųsti kitiems.";
+"NSCameraUsageDescription" = "Leiskite Wire gauti prieigą prie jūsų kameros, kad galėtumėte skambinti su vaizdu ir siųsti nuotraukas.";
 /* Showed after taking a picture with camera, but only when NSPhotoLibraryUsageDescription permission was declined. Asks permission for only writing to photo library. */
-"NSPhotoLibraryAddUsageDescription" = "Sta Wire toe om afbeeldingen op te slaan in je foto bibliotheek.";
+"NSPhotoLibraryAddUsageDescription" = "Suteikite „Wire“ galimybę išsaugoti padarytas nuotraukas paveikslėlių bibliotekoje.";
 /* Showed when trying to send picture from conversaiton list. Asks permissions for reading and writing to photo library */
-"NSPhotoLibraryUsageDescription" = "Sta Wire toe om de afbeeldingen in je foto bibliotheek te zien.";
+"NSPhotoLibraryUsageDescription" = "Suteikite „Wire“ galimybę prisijungti prie paveikslėlių saugomų bibliotekoje.";
 /* Is shown to the user when app is locked with AppLock feature on the phone that supports Face ID */
-"NSFaceIDUsageDescription" = "Voor het ontgrendelen van de Wire app met Face ID, heeft wire toegang nodig tot Face ID.";
+"NSFaceIDUsageDescription" = "Norėdami nustatyti tapatybę programėlėje leiskite „Wire“ naudoti „Face ID“ galimybę.";

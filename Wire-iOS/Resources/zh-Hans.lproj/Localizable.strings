@@ -215,6 +215,9 @@
 
 "conversation.input_bar.shortcut.send" = "发送消息";
 
+"conversation.input_bar.message_too_long.title" = "消息过长。";
+"conversation.input_bar.message_too_long.message" = "您可以发送最长 %d 字符的信息。";
+
 // Image confirmation dialogue
 "image_confirmer.confirm" = "好";
 "image_confirmer.cancel" = "取消";
@@ -276,7 +279,7 @@
 "content.system.conversation.you.added" = "%@加了%@";
 "content.system.conversation.you.removed" = "%@移除了%@";
 "content.system.conversation.you.left" = "%@ 离开了";
-"content.system.conversation.team.member-leave" = "%@ 是从团队中移除。";
+"content.system.conversation.team.member-leave" = "%@从团队中被移除了";
 
 "content.system.other_renamed_conv_to_nothing" = "%@ 删除聊天名称";
 "content.system.you_renamed_conv_to_nothing" = "您已删除聊天室名称";
@@ -287,8 +290,8 @@
 "content.system.failedtosend_message_timestamp_resend" = "重新发送";
 "content.system.failedtosend_message_timestamp_delete" = "删除";
 "content.system.like_tooltip" = "点击赞我";
-"content.system.deleted_message_prefix_timestamp" = "在 %@ 上删除";
-"content.system.edited_message_prefix_timestamp" = "在 %@ 上进行修改";
+"content.system.deleted_message_prefix_timestamp" = "已删除: %@";
+"content.system.edited_message_prefix_timestamp" = "已编辑: %@";
 "content.system.connecting_to" = "正在连接%@。开始聊天";
 "content.system.connected_to" = "已连接%@为好友\n开始对话";
 "content.system.other_wanted_to_talk" = "%@ 发送过通话请求";
@@ -358,7 +361,7 @@
 "content.message.forward.to" = "搜索";
 "content.message.open" = "开启";
 
-"content.reactions_list.likers" = "被赞";
+"content.reactions_list.likers" = "赞好";
 
 "content.file.too_big" = "您可以发送最大%@的文件。";
 // Someone pinged
@@ -564,8 +567,8 @@
 "self.settings.add_team_or_account.title" = "新团队或帐户";
 "self.settings.add_account.title" = "添加帐户";
 
-"self.settings.add_account.error.title" = "Three accounts active";
-"self.settings.add_account.error.message" = "You can only be logged in with three accounts at once. Log out from one to add another.";
+"self.settings.add_account.error.title" = "已啓動三個帐户";
+"self.settings.add_account.error.message" = "您只能同时登录三个帐户。请先登出任何一个帐户，然后加入新帐户。";
 
 // Settings - Account details
 "self.settings.account_section" = "帐户";
@@ -665,13 +668,11 @@
 "self.settings.sound_menu.ping.title" = "打招呼";
 "self.settings.sound_menu.ringtones.title" = "铃声";
 "self.settings.sound_menu.sounds.wire_sound" = "Wire";
+"self.settings.sound_menu.sounds.none" = "无";
 
 "self.settings.callkit.title" = "通话";
 "self.settings.callkit.caption" = "与iOS分享";
 "self.settings.callkit.description" = "在锁屏界面与通话记录中显示Wire的来电信息。如果您已启动iCloud，您的来电记录也将同步到Apple服务器。";
-
-"self.settings.cbr.not_available" = "固定比特率编码";
-"self.settings.cbr.not_available.description" = "因为多帐户支持，固定比特率呼叫已被暂时禁用。 固定比特率呼叫不久将回归。";
 
 "self.settings.vbr.title" = "可变码率编码";
 "self.settings.vbr.description" = "使用较少的数据和更好地工作在较慢的网络上的音频呼叫。请关闭使用固定编码。";
@@ -707,7 +708,7 @@
 "self.settings.sound_menu.title" = "音效通知";
 "self.settings.sound_menu.no_sounds.title" = "无";
 "self.settings.sound_menu.all_sounds.title" = "所有";
-"self.settings.sound_menu.mute_while_talking.title" = "首条信息，招呼，通话";
+"self.settings.sound_menu.mute_while_talking.title" = "首个消息或招呼";
 
 // Developer options
 "self.settings.developer_options.title" = "开发人员选项";
@@ -770,19 +771,61 @@
 "system_status_bar.poor_connectivity.title" = "网速慢，现在不能进行通话";
 "system_status_bar.poor_connectivity.explanation" = "我们无法保证语音通话质量。连接到Wi-Fi或尝试改变您的连线位置。";
 
-// Common connections on profile view
-"profile_other.common_connections" = "共同的朋友";
-
-// View user profile and options menu
+// View user profile and options menu & text field validation
 "name.placeholder" = "您的全名";
 "name.guidance.tooshort" = "至少2个字符";
 "name.guidance.toolong" = "超出字符限制";
 
 "email.placeholder" = "电邮箱地址";
+"email.guidance.invalid" = "无效的邮箱地址";
+"email.guidance.tooshort" = "电子邮件地址太短";
+"email.guidance.toolong" = "超出字符限制";
 
 "password.placeholder" = "密码";
 "password.guidance.tooshort" = "至少8个字符";
 "password.guidance.toolong" = "超出字符限制";
+
+// Landing screen
+
+"landing.title" = "所有人的保安通訊工具。";
+"landing.create_account.title" = "新增帐户";
+"landing.create_account.subtitle" = "供个人使用";
+"landing.create_team.title" = "创建团队";
+"landing.create_team.subtitle" = "在工作中使用";
+"landing.login.hints" = "已有帐户？";
+"landing.login.button.title" = "登录";
+
+// Create team
+
+"team.name.headline" = "为你的团队命名";
+"team.name.subheadline" = "您之后可以在变更。";
+"team.name.textfield.placeholder" = "团队名称";
+"team.name.textfield.accessibility" = "设置团队名称";
+"team.name.whatiswireforteams" = "什么是Wire团队？";
+
+"team.email.headline" = "你的账户";
+"team.email.subheadline" = "请输入您的工作电子邮件地址。";
+"team.email.textfield.placeholder" = "you@yourcompany.com";
+"team.email.textfield.accessibility" = "您公司的电子邮箱";
+"team.email.button.learn_more" = "了解更多信息";
+
+"team.activation_code.headline" = "您有新邮件";
+"team.activation_code.subheadline" = "输入我们发送到%@的验证码";
+"team.activation_code.button.resend" = "重新发送验证码";
+"team.activation_code.button.change_email" = "更改电邮地址";
+
+"team.full_name.headline" = "您的名字";
+"team.full_name.textfield.placeholder" = "全名";
+"team.full_name.textfield.accessibility" = "设定您的全名";
+
+"team.password.headline" = "设置密码";
+"team.password.textfield.placeholder" = "至少8个字符";
+"team.password.textfield.accessibility" = "设定密码，最少要有八个字元";
+
+
+"team.email_code.input_field.accessbility_label" = "请输入电子邮件中之六位验证码。";
+
+// Registration
 
 "registration.title" = "注册";
 "registration.close_email_invitation_button.email_title" = "使用其他邮箱地址";
@@ -803,7 +846,7 @@
 
 "registration.select_picture.subtitle" = "Wire有了您的头像图片就更酷炫了。";
 "registration.select_picture.button_title" = "自行选择";
-"registration.keep_picture.button_title" = "使用当前";
+"registration.keep_picture.button_title" = "使用预设名称";
 "registration.camera_action.title" = "拍张照片";
 "registration.photo_gallery_action.title" = "选择照片";
 "registration.cancel_action.title" = "取消";
@@ -824,6 +867,11 @@
 "registration.terms_of_use.terms" = "继续下一步表示您同意Wire的使用条款。";
 "registration.terms_of_use.terms.link" = "使用条款";
 "registration.terms_of_use.agree" = "我同意";
+
+"registration.terms_of_use.terms.title" = "使用条款";
+"registration.terms_of_use.terms.message" = "请接受我们的服务条款以继续。";
+"registration.terms_of_use.terms.view" = "查看";
+"registration.terms_of_use.accept" = "接听";
 
 "registration.email_flow.title" = "通过电邮箱地址注册";
 "registration.email_flow.email_step.title" = "编辑详细信息";
@@ -891,7 +939,7 @@
 "registration.select_handle.takeover.subtitle" = "设置您在Wire上独一无二的用户名。";
 "registration.select_handle.takeover.subtitle_link" = "更多信息";
 
-"registration.select_handle.takeover.choose_own" = "选择您的";
+"registration.select_handle.takeover.choose_own" = "重新选择";
 "registration.select_handle.takeover.keep_suggested" = "使用当前";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++

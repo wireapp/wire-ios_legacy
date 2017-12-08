@@ -215,6 +215,9 @@
 
 "conversation.input_bar.shortcut.send" = "Pošlji sporočilo";
 
+"conversation.input_bar.message_too_long.title" = "Message too long";
+"conversation.input_bar.message_too_long.message" = "You can send messages up to %d characters long.";
+
 // Image confirmation dialogue
 "image_confirmer.confirm" = "V redu";
 "image_confirmer.cancel" = "Prekliči";
@@ -287,8 +290,8 @@
 "content.system.failedtosend_message_timestamp_resend" = "Ponovno pošlji";
 "content.system.failedtosend_message_timestamp_delete" = "Izbriši";
 "content.system.like_tooltip" = "Tapnite za všečkanje";
-"content.system.deleted_message_prefix_timestamp" = "Izbrisano ob %@";
-"content.system.edited_message_prefix_timestamp" = "Urejeno ob %@";
+"content.system.deleted_message_prefix_timestamp" = "Deleted: %@";
+"content.system.edited_message_prefix_timestamp" = "Edited: %@";
 "content.system.connecting_to" = "Povezujem s/z %@.\nZačni pogovor";
 "content.system.connected_to" = "Povezan s/z %@\nZačni pogovor";
 "content.system.other_wanted_to_talk" = "%@ je klical(-a)";
@@ -665,13 +668,11 @@
 "self.settings.sound_menu.ping.title" = "Ping";
 "self.settings.sound_menu.ringtones.title" = "Melodije zvonjenja";
 "self.settings.sound_menu.sounds.wire_sound" = "Wire";
+"self.settings.sound_menu.sounds.none" = "Nič";
 
 "self.settings.callkit.title" = "Klici";
 "self.settings.callkit.caption" = "Deli z iOS";
 "self.settings.callkit.description" = "Show Wire calls on the lock screen and in iOS call history. If iCloud is enabled, call history is shared with Apple.";
-
-"self.settings.cbr.not_available" = "Constant Bit Rate Encoding";
-"self.settings.cbr.not_available.description" = "Constant bit rate calls have been temporarily disabled with the introduction of multiple account support. CBR calls will be back soon.";
 
 "self.settings.vbr.title" = "Spremenljiva bitna hitrost kodiranja";
 "self.settings.vbr.description" = "Omogoča manjšo porabo podatkov v avdio klicih in bolje delovanje na počasnejših omrežjih. Izklopite za uporabo Stalne bitne hitrosti kodiranja.";
@@ -707,7 +708,7 @@
 "self.settings.sound_menu.title" = "Zvočna opozorila";
 "self.settings.sound_menu.no_sounds.title" = "Nič";
 "self.settings.sound_menu.all_sounds.title" = "Vsi";
-"self.settings.sound_menu.mute_while_talking.title" = "Prvo sporočilo, pingi, klici";
+"self.settings.sound_menu.mute_while_talking.title" = "First message and pings";
 
 // Developer options
 "self.settings.developer_options.title" = "Možnosti za razvijalce";
@@ -770,19 +771,61 @@
 "system_status_bar.poor_connectivity.title" = "Počasna spletna povezava, klic zdaj ni mogoč";
 "system_status_bar.poor_connectivity.explanation" = "Ne moremo zagotoviti kakovosti zvoka. Povežite se z Wi-Fi ali poskusite spremeniti vašo lokacijo.";
 
-// Common connections on profile view
-"profile_other.common_connections" = "Oba poznata";
-
-// View user profile and options menu
+// View user profile and options menu & text field validation
 "name.placeholder" = "Vaše polno ime";
 "name.guidance.tooshort" = "Vsaj 2 znaka";
 "name.guidance.toolong" = "Preveč znakov";
 
 "email.placeholder" = "E-pošta";
+"email.guidance.invalid" = "Invalid email address";
+"email.guidance.tooshort" = "Email is too short";
+"email.guidance.toolong" = "Preveč znakov";
 
 "password.placeholder" = "Geslo";
 "password.guidance.tooshort" = "Vsaj 8 znakov";
 "password.guidance.toolong" = "Preveč znakov";
+
+// Landing screen
+
+"landing.title" = "Secure messenger for everyone.";
+"landing.create_account.title" = "Create an account";
+"landing.create_account.subtitle" = "for personal use";
+"landing.create_team.title" = "Ustvari novo ekipo";
+"landing.create_team.subtitle" = "for work";
+"landing.login.hints" = "Already have an account?";
+"landing.login.button.title" = "Log in";
+
+// Create team
+
+"team.name.headline" = "Name your team";
+"team.name.subheadline" = "You can always change it later.";
+"team.name.textfield.placeholder" = "team name";
+"team.name.textfield.accessibility" = "Set team name";
+"team.name.whatiswireforteams" = "What is Wire for teams?";
+
+"team.email.headline" = "Your account";
+"team.email.subheadline" = "Enter your work email address.";
+"team.email.textfield.placeholder" = "you@yourcompany.com";
+"team.email.textfield.accessibility" = "Your company email";
+"team.email.button.learn_more" = "Nauči se več";
+
+"team.activation_code.headline" = "You've got mail";
+"team.activation_code.subheadline" = "Vnesite verifikacijsko kodo, ki smo jo poslali na %@";
+"team.activation_code.button.resend" = "Resend code";
+"team.activation_code.button.change_email" = "Change email";
+
+"team.full_name.headline" = "Your name";
+"team.full_name.textfield.placeholder" = "Full name";
+"team.full_name.textfield.accessibility" = "Set full name";
+
+"team.password.headline" = "Set password";
+"team.password.textfield.placeholder" = "Vsaj 8 znakov";
+"team.password.textfield.accessibility" = "Set password, at least 8 characters";
+
+
+"team.email_code.input_field.accessbility_label" = "Please enter the six-digit code from the email.";
+
+// Registration
 
 "registration.title" = "Registracija";
 "registration.close_email_invitation_button.email_title" = "Uporabi drugi e-poštni naslov";
@@ -824,6 +867,11 @@
 "registration.terms_of_use.terms" = "Z nadaljevanjem se strinjati s pogoji uporabe Wire.";
 "registration.terms_of_use.terms.link" = "Pogoji uporabe";
 "registration.terms_of_use.agree" = "Strinjam se";
+
+"registration.terms_of_use.terms.title" = "Pogoji uporabe";
+"registration.terms_of_use.terms.message" = "Please accept the Terms of Use to continue.";
+"registration.terms_of_use.terms.view" = "View";
+"registration.terms_of_use.accept" = "Sprejmi";
 
 "registration.email_flow.title" = "Registriraj po e-pošti";
 "registration.email_flow.email_step.title" = "Uredi podrobnosti";

@@ -336,6 +336,8 @@
     [self updateLeftNavigationBarItems];
 }
 
+#pragma mark - Device orientation
+
 - (BOOL)shouldAutorotate
 {
     return YES;
@@ -343,7 +345,13 @@
 
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations
 {
-    return UIInterfaceOrientationMaskPortrait;
+    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone)
+    {
+        return UIInterfaceOrientationMaskPortrait;
+    }
+    else {
+        return UIInterfaceOrientationMaskAll;
+    }
 }
 
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator

@@ -95,7 +95,7 @@
 
 + (instancetype)wr_createTeamFeaturesURL
 {
-    return [self URLWithString:@"https://wire.com/create-team/#features?pk_campaign=client&pk_kwd=ios"];
+    return [self URLWithString:@"https://wire.com/create-team?pk_campaign=client&pk_kwd=ios#features"];
 }
 
 + (instancetype)wr_manageTeamURL
