@@ -93,9 +93,19 @@
     return [self URLWithString:@"https://wire.com/create-team?pk_campaign=client&pk_kwd=ios"];
 }
 
++ (instancetype)wr_createTeamFeaturesURL
+{
+    return [self URLWithString:@"https://wire.com/create-team?pk_campaign=client&pk_kwd=ios#features"];
+}
+
 + (instancetype)wr_manageTeamURL
 {
     return [self URLWithString:@"https://teams.wire.com/login?pk_campaign=client&pk_kwd=ios"];
+}
+
++ (instancetype)wr_emailInUseLearnMoreURL
+{
+    return [self URLWithString:@"https://wire.com/support/email-in-use"];
 }
 
 @end

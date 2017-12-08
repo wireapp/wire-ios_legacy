@@ -26,8 +26,12 @@
 "share_extension.input.placeholder" = "Digite uma mensagem";
 "share_extension.sending_progress.title" = "Enviando…";
 "share_extension.preparing.title" = "Preparando…";
+"share_extension.no_internet_connection.title" = "Sem conexão de internet";
 "share_extension.not_signed_in.title" = "É necessário inscrever-se no Wire antes que você possa compartilhar qualquer coisa";
 "share_extension.not_signed_in.close_button" = "Fechar";
+"share_extension.timeout.title" = "A conexão expirou.";
+"share_extension.timeout.message" = "Verifique sua conexão de Internet e tente novamente. Os anexos foram salvos na conversa.";
+"share_extension.privacy_security.lock_app.description" = "Desbloquear Wire";
 
 "conversation.displayname.emptygroup" = "Conversa em grupo vazia";
 "meta.degraded.degradation_reason_message.singular" = "%@ começou a usar um novo dispositivo.";

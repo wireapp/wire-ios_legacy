@@ -19,7 +19,6 @@
 import Foundation
 import Cartography
 
-
 class LandingButton: ButtonWithLargerHitArea {
     var priorState: UIControlState?
 
@@ -42,8 +41,8 @@ class LandingButton: ButtonWithLargerHitArea {
         subtitleLabel.numberOfLines = 2
         subtitleLabel.text = nil
         subtitleLabel.attributedText = title
-        ///TODO: small icon size for iPhone 4s
-        self.iconButton.setIcon(icon, with: ZetaIconSize.actionButton, for: .normal)
+        // smaller icon for iPhone4s screen size
+        self.iconButton.setIcon(icon, with: UIScreen.main.bounds.size.height <= 480 ? ZetaIconSize.small : ZetaIconSize.registrationButton, for: .normal)
         self.iconButton.setBackgroundImageColor(iconBackgroundColor, for: .normal)
 
         self.setup()
@@ -62,6 +61,9 @@ class LandingButton: ButtonWithLargerHitArea {
             subtitleLabel.centerX == selfView.centerX
 
             subtitleLabel.top == iconButton.bottom + 16
+
+            selfView.width >= subtitleLabel.width
+            selfView.width >= iconButton.width
         }
 
     }
@@ -121,3 +123,4 @@ class LandingButton: ButtonWithLargerHitArea {
     }
 
 }
+

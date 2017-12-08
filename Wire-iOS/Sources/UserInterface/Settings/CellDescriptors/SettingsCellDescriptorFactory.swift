@@ -70,6 +70,7 @@ import Foundation
                                                     presentationStyle: PresentationStyle.navigation,
                                                     identifier: nil,
                                                     presentationAction: { () -> (UIViewController?) in
+                                                        Analytics.shared().tagOpenManageTeamURL()
                                                         NSURL.wr_manageTeam().wr_URLByAppendingLocaleParameter().open()
                                                         return nil
                                                     },
@@ -77,44 +78,31 @@ import Foundation
                                                     icon: .team)
     }
     
-    static func addAccountController() -> UIViewController {
-        let actionSheet = UIAlertController(title: nil,
-                                            message: nil,
-                                            preferredStyle: .actionSheet)
+    func addAccountOrTeamCell() -> SettingsCellDescriptorType {
         
-        let createATeamAction = UIAlertAction(title: "self.settings.create_team.title".localized, style: .default, handler: { action in
-            NSURL.wr_createTeam().wr_URLByAppendingLocaleParameter().open()
-        })
-        actionSheet.addAction(createATeamAction)
-        let addAnAccountAction = UIAlertAction(title: "self.settings.add_account.title".localized, style: .default, handler: { action in
+        let presentationAction: () -> UIViewController? = {
             if SessionManager.shared?.accountManager.accounts.count < SessionManager.maxNumberAccounts {
                 SessionManager.shared?.addAccount()
             }
             else {
-                let alert = UIAlertController(title: "self.settings.add_account.error.title".localized,
-                                              message: "self.settings.add_account.error.message".localized,
-                                              cancelButtonTitle: "general.ok".localized)
-                
-                guard let controller = UIApplication.shared.wr_topmostController(onlyFullScreen: false) else { return }
-                controller.present(alert, animated: true, completion: nil)
+                if let controller = UIApplication.shared.wr_topmostController(onlyFullScreen: false) {
+                    let alert = UIAlertController(
+                        title: "self.settings.add_account.error.title".localized,
+                        message: "self.settings.add_account.error.message".localized,
+                        cancelButtonTitle: "general.ok".localized
+                    )
+                    controller.present(alert, animated: true, completion: nil)
+                }
             }
-        })
-        actionSheet.addAction(addAnAccountAction)
-        let cancelAction = UIAlertAction(title: "general.cancel".localized, style: .cancel, handler: { action in
-            actionSheet.dismiss(animated: true, completion: nil)
-        })
-        actionSheet.addAction(cancelAction)
-        return actionSheet
-    }
-    
-    func addAccountOrTeamCell() -> SettingsCellDescriptorType {
+            
+            return nil
+        }
+        
         return SettingsExternalScreenCellDescriptor(title: "self.settings.add_team_or_account.title".localized,
                                                     isDestructive: false,
                                                     presentationStyle: PresentationStyle.modal,
                                                     identifier: nil,
-                                                    presentationAction: { () -> (UIViewController?) in
-                                                    return SettingsCellDescriptorFactory.addAccountController()
-        },
+                                                    presentationAction: presentationAction,
                                                     previewGenerator: nil,
                                                     icon: .plus,
                                                     accessoryViewMode: .alwaysShow)

@@ -20,10 +20,9 @@
 #import "RegistrationStepViewController.h"
 #import "AnalyticsTracker+Registration.h"
 
+extern NSString * const UnsplashRandomImageHiQualityURL;
 
 @class ZMIncompleteRegistrationUser;
-
-
 
 @interface ProfilePictureStepViewController : RegistrationStepViewController
 

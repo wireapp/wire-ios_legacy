@@ -81,7 +81,7 @@ import Classy
     }
     
     override open var supportedInterfaceOrientations : UIInterfaceOrientationMask {
-        return type(of: self).wr_supportedInterfaceOrientations()
+        return self.wr_supportedInterfaceOrientations
     }
 }
 

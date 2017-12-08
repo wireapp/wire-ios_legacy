@@ -80,21 +80,20 @@
         flowViewController = phoneFlowViewController;
     }
 
-    NSArray *controllers;
     switch (self.flowType) {
         case AuthenticationFlowRegular:
-            controllers = @[flowViewController, signInViewController];
             break;
         case AuthenticationFlowOnlyLogin:
+            self.showLogin = true;
             [self setupBackButton];
-            controllers = @[signInViewController];
             break;
         case AuthenticationFlowOnlyRegistration:
+            self.showLogin = false;
             [self setupBackButton];
-            controllers = @[flowViewController];
             break;
     }
-    self.registrationTabBarController = [[TabBarController alloc] initWithViewControllers:controllers];
+    
+    self.registrationTabBarController = [[TabBarController alloc] initWithViewControllers:@[flowViewController, signInViewController]];
     self.signInViewController = signInViewController;
     
     if (self.showLogin) {
@@ -109,7 +108,7 @@
     [self.cancelButton setIconColor:UIColor.whiteColor forState:UIControlStateNormal];
     self.cancelButton.accessibilityLabel = @"cancelAddAccount";
     [self.cancelButton addTarget:self action:@selector(cancelAddAccount) forControlEvents:UIControlEventTouchUpInside];
-    self.cancelButton.hidden = self.firstAuthenticatedAccount == nil;
+    self.cancelButton.hidden = self.shouldHideCancelButton || self.firstAuthenticatedAccount == nil;
     
     [self addChildViewController:self.registrationTabBarController];
     [self.view addSubview:self.registrationTabBarController.view];

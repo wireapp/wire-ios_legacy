@@ -215,6 +215,9 @@
 
 "conversation.input_bar.shortcut.send" = "Надіслати повідомлення";
 
+"conversation.input_bar.message_too_long.title" = "Повідомлення занадто довге";
+"conversation.input_bar.message_too_long.message" = "Можна надсилати повідомлення довжиною до %d символів.";
+
 // Image confirmation dialogue
 "image_confirmer.confirm" = "OK";
 "image_confirmer.cancel" = "Скасувати";
@@ -287,8 +290,8 @@
 "content.system.failedtosend_message_timestamp_resend" = "Надіслати ще раз";
 "content.system.failedtosend_message_timestamp_delete" = "Видалити";
 "content.system.like_tooltip" = "Торкніться, якщо сподобалося";
-"content.system.deleted_message_prefix_timestamp" = "Видалено %@";
-"content.system.edited_message_prefix_timestamp" = "Відредаговано %@";
+"content.system.deleted_message_prefix_timestamp" = "Видалено: %@";
+"content.system.edited_message_prefix_timestamp" = "Відредаговано: %@";
 "content.system.connecting_to" = "%@ доданий(-на) до контактів.\nМожете починати розмову";
 "content.system.connected_to" = "%@ доданий(-на) до контактів\nМожете починати розмову";
 "content.system.other_wanted_to_talk" = "%@ дзвонив(-ла)";
@@ -561,11 +564,11 @@
 // Settings - top level
 "self.settings.create_team.title" = "Створити команду";
 "self.settings.manage_team.title" = "Керування командою";
-"self.settings.add_team_or_account.title" = "New Team or Account";
+"self.settings.add_team_or_account.title" = "Нова команда або акаунт";
 "self.settings.add_account.title" = "Додати акаунт";
 
-"self.settings.add_account.error.title" = "Three accounts active";
-"self.settings.add_account.error.message" = "You can only be logged in with three accounts at once. Log out from one to add another.";
+"self.settings.add_account.error.title" = "Три акаунти вже активні";
+"self.settings.add_account.error.message" = "Тільки три акаунти можуть одночасно бути активними. Вийдіть з одного активного акаунта, щоб додати наступний.";
 
 // Settings - Account details
 "self.settings.account_section" = "Акаунт";
@@ -665,13 +668,11 @@
 "self.settings.sound_menu.ping.title" = "Пінг";
 "self.settings.sound_menu.ringtones.title" = "Рингтони";
 "self.settings.sound_menu.sounds.wire_sound" = "Wire";
+"self.settings.sound_menu.sounds.none" = "Все вимкнено";
 
 "self.settings.callkit.title" = "Дзвінки";
 "self.settings.callkit.caption" = "Ділитися інформацією з iOS";
 "self.settings.callkit.description" = "Показувати дзвінки Wire на екрані блокування та в історії дзвінків iOS. Історія дзвінків буде доступна для Apple, якщо служба iCloud активована.";
-
-"self.settings.cbr.not_available" = "Сталий бітрейт";
-"self.settings.cbr.not_available.description" = "Сталий бітрейт було тимчасово вимкнуто через введення підтримки декількох акаунтів. Дана функціональність невдовзі буде доступна.";
 
 "self.settings.vbr.title" = "Змінний бітрейт";
 "self.settings.vbr.description" = "Дана опція дозволяє аудіодзвінкам економити трафік та покращує їх якість а мережах з низькою швидкістю передачі даних. Ви можете деактивувати її, увімкнувши сталий бітрейт.";
@@ -707,7 +708,7 @@
 "self.settings.sound_menu.title" = "Звукові сповіщення";
 "self.settings.sound_menu.no_sounds.title" = "Все вимкнено";
 "self.settings.sound_menu.all_sounds.title" = "Всі";
-"self.settings.sound_menu.mute_while_talking.title" = "Перше повідомлення, пінг, дзвінок";
+"self.settings.sound_menu.mute_while_talking.title" = "Найперше повідомлення та пінги";
 
 // Developer options
 "self.settings.developer_options.title" = "Налаштування розробника";
@@ -770,19 +771,61 @@
 "system_status_bar.poor_connectivity.title" = "Повільний інтернет, не вдається додзвонитись";
 "system_status_bar.poor_connectivity.explanation" = "Ми не в змозі гарантувати якість передачі голосу. Спробуйте підключитись до мережі Wi-Fi або змінити ваше місце розташування.";
 
-// Common connections on profile view
-"profile_other.common_connections" = "Ви обидва знайомі з";
-
-// View user profile and options menu
+// View user profile and options menu & text field validation
 "name.placeholder" = "Ваше повне ім'я";
 "name.guidance.tooshort" = "Не менше 2 символів";
 "name.guidance.toolong" = "Занадто багато символів";
 
 "email.placeholder" = "Email";
+"email.guidance.invalid" = "Невірна адреса електронної пошти";
+"email.guidance.tooshort" = "Email-адреса закоротка";
+"email.guidance.toolong" = "Занадто багато символів";
 
 "password.placeholder" = "Пароль";
 "password.guidance.tooshort" = "Не менше 8 символів";
 "password.guidance.toolong" = "Занадто багато символів";
+
+// Landing screen
+
+"landing.title" = "Безпечний месенджер для кожного.";
+"landing.create_account.title" = "Створити акаунт";
+"landing.create_account.subtitle" = "для особистого користування";
+"landing.create_team.title" = "Створити команду";
+"landing.create_team.subtitle" = "для роботи";
+"landing.login.hints" = "Вже зареєстровані?";
+"landing.login.button.title" = "Увійти";
+
+// Create team
+
+"team.name.headline" = "Назвіть свою команду";
+"team.name.subheadline" = "Команду завжди можна перейменувати пізніше.";
+"team.name.textfield.placeholder" = "назва команди";
+"team.name.textfield.accessibility" = "Задайте ім'я команди";
+"team.name.whatiswireforteams" = "Що таке Wire для команд?";
+
+"team.email.headline" = "Ваш акаунт";
+"team.email.subheadline" = "Введіть робочу адресу електронної пошти.";
+"team.email.textfield.placeholder" = "ви@вашаКомпанія.com";
+"team.email.textfield.accessibility" = "Електронна пошта вашої компанії";
+"team.email.button.learn_more" = "Дізнатися більше";
+
+"team.activation_code.headline" = "Ви отримали нового листа";
+"team.activation_code.subheadline" = "Введіть код, який ми вислали на %@";
+"team.activation_code.button.resend" = "Надіслати код повторно";
+"team.activation_code.button.change_email" = "Змінити електронну пошту";
+
+"team.full_name.headline" = "Ваше ім’я";
+"team.full_name.textfield.placeholder" = "Повне ім'я";
+"team.full_name.textfield.accessibility" = "Задати ім'я";
+
+"team.password.headline" = "Задати пароль";
+"team.password.textfield.placeholder" = "Не менше 8 символів";
+"team.password.textfield.accessibility" = "Задайте пароль, мінімум 8 символів";
+
+
+"team.email_code.input_field.accessbility_label" = "Будь ласка, введіть шестизначний код з емейлу.";
+
+// Registration
 
 "registration.title" = "Реєстрація";
 "registration.close_email_invitation_button.email_title" = "Використати інший email";
@@ -824,6 +867,11 @@
 "registration.terms_of_use.terms" = "Продовжуючи, ви погоджуєтесь з Умовами користування Wire.";
 "registration.terms_of_use.terms.link" = "Умови використання";
 "registration.terms_of_use.agree" = "Я згоден";
+
+"registration.terms_of_use.terms.title" = "Умови використання";
+"registration.terms_of_use.terms.message" = "Будь ласка, прийміть Умови користування додатком для продовження.";
+"registration.terms_of_use.terms.view" = "Вигляд";
+"registration.terms_of_use.accept" = "Прийняти";
 
 "registration.email_flow.title" = "Реєстрація з Email";
 "registration.email_flow.email_step.title" = "Редагувати деталі";

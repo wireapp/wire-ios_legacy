@@ -48,7 +48,7 @@
                 break;
         }
     }
-    else if ([error.domain isEqualToString:ZMUserSessionErrorDomain]) {
+    else if ([error.domain isEqualToString:NSError.ZMUserSessionErrorDomain]) {
         switch (error.code) {
             case ZMUserSessionNoError:
                 message = @"";

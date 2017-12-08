@@ -215,6 +215,9 @@
 
 "conversation.input_bar.shortcut.send" = "Mesaj Gönder";
 
+"conversation.input_bar.message_too_long.title" = "Message too long";
+"conversation.input_bar.message_too_long.message" = "You can send messages up to %d characters long.";
+
 // Image confirmation dialogue
 "image_confirmer.confirm" = "TAMAM";
 "image_confirmer.cancel" = "İptal";
@@ -287,8 +290,8 @@
 "content.system.failedtosend_message_timestamp_resend" = "Yeniden gönder";
 "content.system.failedtosend_message_timestamp_delete" = "Sil";
 "content.system.like_tooltip" = "Beğenmek için dokunun";
-"content.system.deleted_message_prefix_timestamp" = "%@'de silinmiş";
-"content.system.edited_message_prefix_timestamp" = "%@'de düzenlenmiş0";
+"content.system.deleted_message_prefix_timestamp" = "Deleted: %@";
+"content.system.edited_message_prefix_timestamp" = "Edited: %@";
 "content.system.connecting_to" = "%@'e bağlanılıyor.\nBir konuşma başlat";
 "content.system.connected_to" = "%@'e bağlanıldı.\nBir konuşma başlat";
 "content.system.other_wanted_to_talk" = "%@ aradı";
@@ -665,13 +668,11 @@
 "self.settings.sound_menu.ping.title" = "Ping";
 "self.settings.sound_menu.ringtones.title" = "Zil Sesleri";
 "self.settings.sound_menu.sounds.wire_sound" = "Wire";
+"self.settings.sound_menu.sounds.none" = "Hiçbiri";
 
 "self.settings.callkit.title" = "Aramalar";
 "self.settings.callkit.caption" = "iOS ile Paylaş";
 "self.settings.callkit.description" = "Wire aramalarını, kilit ekranında ve iOS arama geçmişinde göster. Eğer iCloud aktifse, arama geçmişiniz Apple ile paylaşılır.";
-
-"self.settings.cbr.not_available" = "Sabit Bit Hızı Kodlaması";
-"self.settings.cbr.not_available.description" = "Sabit bit hızı aramaları, çoklu hesap desteğinin gelmesi nedeniyle geçici olarak devre dışı. SBH aramaları yakında tekrar gelecek.";
 
 "self.settings.vbr.title" = "Değişken Bit Hızı Kodlaması";
 "self.settings.vbr.description" = "Bu sesli aramaların daha az veri kullanmasını sağlar, ayrıca yavaş internet bağlantılarında daha iyi çalışır. Sabit Bit Hızı Kodlamasını kullanmak isterseniz devre dışı bırakın.";
@@ -707,7 +708,7 @@
 "self.settings.sound_menu.title" = "Sesli Uyarılar";
 "self.settings.sound_menu.no_sounds.title" = "Hiçbiri";
 "self.settings.sound_menu.all_sounds.title" = "Hepsi";
-"self.settings.sound_menu.mute_while_talking.title" = "İlk mesaj, seslenmeler, aramalar";
+"self.settings.sound_menu.mute_while_talking.title" = "First message and pings";
 
 // Developer options
 "self.settings.developer_options.title" = "Geliştiri Seçenekleri";
@@ -770,19 +771,61 @@
 "system_status_bar.poor_connectivity.title" = "İnternetim yavaş, şuan arayamıyorum";
 "system_status_bar.poor_connectivity.explanation" = "Ses kalitesi garanti edemiyoruz. Wi-Fİ'a bağlanın veya konumunuzu değiştirmeyi deneyin.";
 
-// Common connections on profile view
-"profile_other.common_connections" = "Ortak tanıdıklarınız";
-
-// View user profile and options menu
+// View user profile and options menu & text field validation
 "name.placeholder" = "Tam adınız";
 "name.guidance.tooshort" = "En az 2 karakter";
 "name.guidance.toolong" = "Çok fazla karakter";
 
 "email.placeholder" = "E-posta";
+"email.guidance.invalid" = "Invalid email address";
+"email.guidance.tooshort" = "Email is too short";
+"email.guidance.toolong" = "Çok fazla karakter";
 
 "password.placeholder" = "Parola";
 "password.guidance.tooshort" = "En az 8 karakter";
 "password.guidance.toolong" = "Çok fazla karakter";
+
+// Landing screen
+
+"landing.title" = "Secure messenger for everyone.";
+"landing.create_account.title" = "Create an account";
+"landing.create_account.subtitle" = "for personal use";
+"landing.create_team.title" = "Bir takım oluştur";
+"landing.create_team.subtitle" = "for work";
+"landing.login.hints" = "Already have an account?";
+"landing.login.button.title" = "Log in";
+
+// Create team
+
+"team.name.headline" = "Name your team";
+"team.name.subheadline" = "You can always change it later.";
+"team.name.textfield.placeholder" = "team name";
+"team.name.textfield.accessibility" = "Set team name";
+"team.name.whatiswireforteams" = "What is Wire for teams?";
+
+"team.email.headline" = "Your account";
+"team.email.subheadline" = "Enter your work email address.";
+"team.email.textfield.placeholder" = "you@yourcompany.com";
+"team.email.textfield.accessibility" = "Your company email";
+"team.email.button.learn_more" = "Daha Fazla";
+
+"team.activation_code.headline" = "You've got mail";
+"team.activation_code.subheadline" = "%@'na gönderdiğimiz doğrulama kodunu girin";
+"team.activation_code.button.resend" = "Resend code";
+"team.activation_code.button.change_email" = "Change email";
+
+"team.full_name.headline" = "Your name";
+"team.full_name.textfield.placeholder" = "Full name";
+"team.full_name.textfield.accessibility" = "Set full name";
+
+"team.password.headline" = "Set password";
+"team.password.textfield.placeholder" = "En az 8 karakter";
+"team.password.textfield.accessibility" = "Set password, at least 8 characters";
+
+
+"team.email_code.input_field.accessbility_label" = "Please enter the six-digit code from the email.";
+
+// Registration
 
 "registration.title" = "Kayıt";
 "registration.close_email_invitation_button.email_title" = "Başka bir e-posta kullanın";
@@ -824,6 +867,11 @@
 "registration.terms_of_use.terms" = "Devam ederek Wire Kullanım Şartlarını kabul ediyorsunuz.";
 "registration.terms_of_use.terms.link" = "Kullanım Şartları";
 "registration.terms_of_use.agree" = "Kabul ediyorum";
+
+"registration.terms_of_use.terms.title" = "Kullanım Şartları";
+"registration.terms_of_use.terms.message" = "Please accept the Terms of Use to continue.";
+"registration.terms_of_use.terms.view" = "View";
+"registration.terms_of_use.accept" = "Kabul et";
 
 "registration.email_flow.title" = "E-posta ile kaydol";
 "registration.email_flow.email_step.title" = "Ayrıntıları Düzenle";

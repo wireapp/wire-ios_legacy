@@ -215,6 +215,9 @@
 
 "conversation.input_bar.shortcut.send" = "Envoyer un message";
 
+"conversation.input_bar.message_too_long.title" = "Message trop long";
+"conversation.input_bar.message_too_long.message" = "Vous pouvez envoyer des messages de %d caractères maximum.";
+
 // Image confirmation dialogue
 "image_confirmer.confirm" = "OK";
 "image_confirmer.cancel" = "Annuler";
@@ -287,8 +290,8 @@
 "content.system.failedtosend_message_timestamp_resend" = "Renvoyer";
 "content.system.failedtosend_message_timestamp_delete" = "Supprimer";
 "content.system.like_tooltip" = "Appuyez pour aimer";
-"content.system.deleted_message_prefix_timestamp" = "Supprimé le %@";
-"content.system.edited_message_prefix_timestamp" = "Modifié le %@";
+"content.system.deleted_message_prefix_timestamp" = "Supprimé : %@";
+"content.system.edited_message_prefix_timestamp" = "Modifié : %@";
 "content.system.connecting_to" = "Connexion à %@. \nCommencer une conversation";
 "content.system.connected_to" = "Connecté à %@. \nCommencer une conversation";
 "content.system.other_wanted_to_talk" = "%@ a appelé";
@@ -665,13 +668,11 @@
 "self.settings.sound_menu.ping.title" = "Signe";
 "self.settings.sound_menu.ringtones.title" = "Sonneries";
 "self.settings.sound_menu.sounds.wire_sound" = "Wire";
+"self.settings.sound_menu.sounds.none" = "Aucune";
 
 "self.settings.callkit.title" = "Appels";
 "self.settings.callkit.caption" = "Partager avec iOS";
 "self.settings.callkit.description" = "Affiche les appels Wire sur l'écran de verrouillage et dans le journal des appels iOS. Si iCloud est activé, le journal des appels est partagé avec Apple.";
-
-"self.settings.cbr.not_available" = "Encodage en échantillonnage constant";
-"self.settings.cbr.not_available.description" = "Les appels en échantillonnage constant ont été désactivés temporairement avec l'ajout de la prise en charge de plusieurs comptes. Ils reviendront bientôt.";
 
 "self.settings.vbr.title" = "Échantillonnage variable (VBR)";
 "self.settings.vbr.description" = "Les appels audio utiliseront moins de données et fonctionneront mieux sur des réseaux plus lents. Désactiver pour utiliser un échantillonnage constant (CBR).";
@@ -707,7 +708,7 @@
 "self.settings.sound_menu.title" = "Alertes sonores";
 "self.settings.sound_menu.no_sounds.title" = "Aucune";
 "self.settings.sound_menu.all_sounds.title" = "Toutes";
-"self.settings.sound_menu.mute_while_talking.title" = "Premier message, signes, appels";
+"self.settings.sound_menu.mute_while_talking.title" = "Premier message et signes";
 
 // Developer options
 "self.settings.developer_options.title" = "Options du développeur";
@@ -770,19 +771,61 @@
 "system_status_bar.poor_connectivity.title" = "Connexion Internet lente, impossible d’effectuer un appel";
 "system_status_bar.poor_connectivity.explanation" = "Nous ne pouvons garantir la qualité de la voix. Connectez-vous à un réseau Wi-Fi ou essayez de vous déplacer.";
 
-// Common connections on profile view
-"profile_other.common_connections" = "Vous connaissez tous les deux";
-
-// View user profile and options menu
+// View user profile and options menu & text field validation
 "name.placeholder" = "Votre nom complet";
 "name.guidance.tooshort" = "Au moins 2 caractères";
 "name.guidance.toolong" = "Trop de caractères";
 
 "email.placeholder" = "E-mail";
+"email.guidance.invalid" = "Adresse e-mail non valide";
+"email.guidance.tooshort" = "L'adresse e-mail est trop courte";
+"email.guidance.toolong" = "Trop de caractères";
 
 "password.placeholder" = "Mot de passe";
 "password.guidance.tooshort" = "Au moins 8 caractères";
 "password.guidance.toolong" = "Trop de caractères";
+
+// Landing screen
+
+"landing.title" = "Messagerie sécurisée pour tous.";
+"landing.create_account.title" = "Créer un compte";
+"landing.create_account.subtitle" = "pour un usage personnel";
+"landing.create_team.title" = "Créer une équipe";
+"landing.create_team.subtitle" = "pour un usage professionnel";
+"landing.login.hints" = "Vous avez déjà un compte ?";
+"landing.login.button.title" = "Se connecter";
+
+// Create team
+
+"team.name.headline" = "Nommez votre équipe";
+"team.name.subheadline" = "Vous pourrez toujours le modifier plus tard.";
+"team.name.textfield.placeholder" = "nom de l'équipe";
+"team.name.textfield.accessibility" = "Définir le nom de l'équipe";
+"team.name.whatiswireforteams" = "Qu'est-ce que Wire pour les équipes ?";
+
+"team.email.headline" = "Votre compte";
+"team.email.subheadline" = "Saisissez votre adresse e-mail professionnelle.";
+"team.email.textfield.placeholder" = "vous@votreentreprise.com";
+"team.email.textfield.accessibility" = "Votre adresse e-mail professionnelle";
+"team.email.button.learn_more" = "En savoir plus";
+
+"team.activation_code.headline" = "Vous avez du courrier";
+"team.activation_code.subheadline" = "Saisissez le code de vérification que nous avons envoyé au %@";
+"team.activation_code.button.resend" = "Renvoyer le code";
+"team.activation_code.button.change_email" = "Modifier l’adresse e-mail";
+
+"team.full_name.headline" = "Votre nom";
+"team.full_name.textfield.placeholder" = "Nom complet";
+"team.full_name.textfield.accessibility" = "Définir le nom complet";
+
+"team.password.headline" = "Définir le mot de passe";
+"team.password.textfield.placeholder" = "Au moins 8 caractères";
+"team.password.textfield.accessibility" = "Définir le mot de passe, au moins 8 caractères";
+
+
+"team.email_code.input_field.accessbility_label" = "Veuillez entrer le code à six chiffres qui se trouve dans l’e-mail.";
+
+// Registration
 
 "registration.title" = "Inscription";
 "registration.close_email_invitation_button.email_title" = "Utiliser une autre adresse e-mail";
@@ -824,6 +867,11 @@
 "registration.terms_of_use.terms" = "En continuant, vous acceptez les conditions d’utilisation de Wire.";
 "registration.terms_of_use.terms.link" = "Conditions d'utilisation";
 "registration.terms_of_use.agree" = "J'accepte";
+
+"registration.terms_of_use.terms.title" = "Conditions d'utilisation";
+"registration.terms_of_use.terms.message" = "Veuillez accepter les conditions d’utilisation pour continuer.";
+"registration.terms_of_use.terms.view" = "Voir";
+"registration.terms_of_use.accept" = "Accepter";
 
 "registration.email_flow.title" = "S’inscrire avec l'e-mail";
 "registration.email_flow.email_step.title" = "Modifier les informations";

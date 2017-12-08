@@ -26,8 +26,12 @@
 "share_extension.input.placeholder" = "Skriv en besked";
 "share_extension.sending_progress.title" = "Sender…";
 "share_extension.preparing.title" = "Forbereder…";
+"share_extension.no_internet_connection.title" = "Ingen internetforbindelse";
 "share_extension.not_signed_in.title" = "Du skal logge på Wire, før du kan dele noget";
 "share_extension.not_signed_in.close_button" = "Luk";
+"share_extension.timeout.title" = "The connection has timed out.";
+"share_extension.timeout.message" = "Check your Internet connection and try again. The attachments were saved in the conversation.";
+"share_extension.privacy_security.lock_app.description" = "Åben Wire";
 
 "conversation.displayname.emptygroup" = "Tom gruppechat";
 "meta.degraded.degradation_reason_message.singular" = "%@ begyndte at bruge en ny enhed.";

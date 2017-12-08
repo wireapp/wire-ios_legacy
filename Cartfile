@@ -4,8 +4,8 @@ github "wireapp/CocoaLumberjack" ~> 3.3
 github "wireapp/Cartography" ~> 1.1
 github "wireapp/TTTAttributedLabel" "2.0.0-swift3.0.2"
 github "wireapp/ZipArchive" ~> 2.0
-github "wireapp/wire-ios-share-engine" ~> 54.0
-github "wireapp/wire-ios-sync-engine" ~> 131.0
+github "wireapp/wire-ios-share-engine" ~> 55.0
+github "wireapp/wire-ios-sync-engine" ~> 134.0
 github "wireapp/onepassword-app-extension" "framework/1.8.2-wire-swift3.0.2"
 github "wireapp/FormatterKit" "1.8.1-swift3.0.2"
 github "wireapp/AFNetworking" "2.6.3-iOS8"

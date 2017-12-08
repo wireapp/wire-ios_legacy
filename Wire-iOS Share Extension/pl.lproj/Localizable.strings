@@ -26,8 +26,12 @@
 "share_extension.input.placeholder" = "Wpisz wiadomość";
 "share_extension.sending_progress.title" = "Wysyłanie…";
 "share_extension.preparing.title" = "Przygotowywanie...";
+"share_extension.no_internet_connection.title" = "Brak połączenia z Internetem";
 "share_extension.not_signed_in.title" = "Musisz się zalogować zanim coś udostępnisz";
 "share_extension.not_signed_in.close_button" = "Zamknij";
+"share_extension.timeout.title" = "The connection has timed out.";
+"share_extension.timeout.message" = "Check your Internet connection and try again. The attachments were saved in the conversation.";
+"share_extension.privacy_security.lock_app.description" = "Odblokuj Wire";
 
 "conversation.displayname.emptygroup" = "Pusta grupa konwersacji";
 "meta.degraded.degradation_reason_message.singular" = "%@ rozpoczął korzystanie z nowego urządzenia.";

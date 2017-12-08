@@ -37,7 +37,7 @@ class Message_FormattingTests: XCTestCase {
         let offset = textMessageData.messageText.characters.distance(from: textMessageData.messageText.startIndex, to: range.lowerBound)
         
         if (messageTemplate.contains("{preview-url}")) {
-            textMessageData.linkPreview = Article(originalURLString: previewURL, permamentURLString: previewURL, offset: offset)
+            textMessageData.linkPreview = Article(originalURLString: previewURL, permanentURLString: previewURL, resolvedURLString: previewURL, offset: offset)
         }
         
         return textMessageData

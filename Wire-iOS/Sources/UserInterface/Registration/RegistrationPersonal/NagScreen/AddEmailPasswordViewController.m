@@ -229,7 +229,7 @@
     
     [self showAlertForError:error handler:^(UIAlertAction *action) {
         @strongify(self);
-        if ([error.domain isEqualToString:ZMUserSessionErrorDomain] && error.code == ZMUserSessionEmailIsAlreadyRegistered) {
+        if ([error.domain isEqualToString:NSError.ZMUserSessionErrorDomain] && error.code == ZMUserSessionEmailIsAlreadyRegistered) {
             [self.addEmailStepViewController clearFields:nil];
         }
     }];

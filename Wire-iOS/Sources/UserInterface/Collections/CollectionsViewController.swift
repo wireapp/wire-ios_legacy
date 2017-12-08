@@ -170,25 +170,25 @@ final public class CollectionsViewController: UIViewController {
         super.viewWillDisappear(animated)
         self.textSearchController.teardown()
     }
-    
+
+
+    // MARK:- device orientation
+
+
+    /// Notice: for iPad with iOS9 in landscape mode, horizontalSizeClass is .unspecified (.regular in iOS11).
     override public var supportedInterfaceOrientations: UIInterfaceOrientationMask {
-        if self.traitCollection.horizontalSizeClass == .regular {
-            return .all
-        }
-        else {
-            return .portrait
-        }
+        return wr_supportedInterfaceOrientations
     }
     
     override public var shouldAutorotate: Bool {
-        if self.traitCollection.horizontalSizeClass == .regular {
+        switch (self.traitCollection.horizontalSizeClass) {
+        case .compact:
+            return false
+        default:
             return true
         }
-        else {
-            return false
-        }
     }
-    
+
     private func flushLayout() {
         for cell in self.contentView.collectionView.visibleCells {
             guard let cell = cell as? CollectionCell else {

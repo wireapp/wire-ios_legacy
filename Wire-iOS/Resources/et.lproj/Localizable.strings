@@ -215,6 +215,9 @@
 
 "conversation.input_bar.shortcut.send" = "Saada teade";
 
+"conversation.input_bar.message_too_long.title" = "Liiga pikk sõnum";
+"conversation.input_bar.message_too_long.message" = "Sõnum võib olla kuni %d tähemärki.";
+
 // Image confirmation dialogue
 "image_confirmer.confirm" = "OK";
 "image_confirmer.cancel" = "Tühista";
@@ -287,8 +290,8 @@
 "content.system.failedtosend_message_timestamp_resend" = "Saada uuesti";
 "content.system.failedtosend_message_timestamp_delete" = "Kustuta";
 "content.system.like_tooltip" = "Vajuta, kui meeldib";
-"content.system.deleted_message_prefix_timestamp" = "Kustutatud %@";
-"content.system.edited_message_prefix_timestamp" = "Muudetud %@";
+"content.system.deleted_message_prefix_timestamp" = "Deleted: %@";
+"content.system.edited_message_prefix_timestamp" = "Edited: %@";
 "content.system.connecting_to" = "Ühendatakse kasutajaga %@. Alusta vestlust";
 "content.system.connected_to" = "Ühendatatud kasutajaga %@. Alusta vestlust";
 "content.system.other_wanted_to_talk" = "%@ helistas";
@@ -561,11 +564,11 @@
 // Settings - top level
 "self.settings.create_team.title" = "Loo meeskond";
 "self.settings.manage_team.title" = "Halda meeskonda";
-"self.settings.add_team_or_account.title" = "New Team or Account";
+"self.settings.add_team_or_account.title" = "Uus meeskond või konto";
 "self.settings.add_account.title" = "Lisa konto";
 
-"self.settings.add_account.error.title" = "Three accounts active";
-"self.settings.add_account.error.message" = "You can only be logged in with three accounts at once. Log out from one to add another.";
+"self.settings.add_account.error.title" = "Kolm aktiivset kontot";
+"self.settings.add_account.error.message" = "Korraga saad kasutada kolme kontot. Lisakonto kasutamiseks pead ühega olemasolevatest välja logima.";
 
 // Settings - Account details
 "self.settings.account_section" = "Konto";
@@ -665,13 +668,11 @@
 "self.settings.sound_menu.ping.title" = "Ping";
 "self.settings.sound_menu.ringtones.title" = "Helinad";
 "self.settings.sound_menu.sounds.wire_sound" = "Wire";
+"self.settings.sound_menu.sounds.none" = "Puudub";
 
 "self.settings.callkit.title" = "Kõned";
 "self.settings.callkit.caption" = "Jaga iOS-s";
 "self.settings.callkit.description" = "Näita Wire kõnesid lukustuskuval ja seadme kõnede ajaloos. Kui sul on iCloud sisse lülitatud, siis saadetakse kõnede ajalugu Apple'i serveritesse.";
-
-"self.settings.cbr.not_available" = "Püsiva bitikiirusega kodeering";
-"self.settings.cbr.not_available.description" = "Püsiva bitikiirusega kõned on ajutistelt välja lülitatud.";
 
 "self.settings.vbr.title" = "Muutuva bitisagedusega kodeering";
 "self.settings.vbr.description" = "Kõnede andmeside maht on väiksem ja kõnekvaliteet kehva ühenduse korral parem. Ühtlase bitisagedusega kodeeringu kasutamiseks lülita see valik välja.";
@@ -707,7 +708,7 @@
 "self.settings.sound_menu.title" = "Heli seadistus";
 "self.settings.sound_menu.no_sounds.title" = "Puudub";
 "self.settings.sound_menu.all_sounds.title" = "Kõik";
-"self.settings.sound_menu.mute_while_talking.title" = "Esimene sõnum, ping, kõne";
+"self.settings.sound_menu.mute_while_talking.title" = "Esimene sõnum ja ping";
 
 // Developer options
 "self.settings.developer_options.title" = "Arendaja Valikud";
@@ -770,19 +771,61 @@
 "system_status_bar.poor_connectivity.title" = "Internetiühendus on aeglane, ei saa helistada";
 "system_status_bar.poor_connectivity.explanation" = "Me ei saa tagada helikvaliteeti. Ühendu Wi-Fi võrku või proovi muuta oma asukohta.";
 
-// Common connections on profile view
-"profile_other.common_connections" = "Ühised kontaktid:";
-
-// View user profile and options menu
+// View user profile and options menu & text field validation
 "name.placeholder" = "Sinu nimi";
 "name.guidance.tooshort" = "Vähemalt 2 tähte";
 "name.guidance.toolong" = "Liiga pikk nimi";
 
 "email.placeholder" = "E-post";
+"email.guidance.invalid" = "Vale meiliaadress";
+"email.guidance.tooshort" = "Liiga lühike meiliaadress";
+"email.guidance.toolong" = "Liiga pikk nimi";
 
 "password.placeholder" = "Parool";
 "password.guidance.tooshort" = "Vähemalt 8 tähte";
 "password.guidance.toolong" = "Liiga pikk nimi";
+
+// Landing screen
+
+"landing.title" = "Turvaline sõnumside kõigile";
+"landing.create_account.title" = "Konto loomine";
+"landing.create_account.subtitle" = "isiklikuks kasutuseks";
+"landing.create_team.title" = "Loo meeskond";
+"landing.create_team.subtitle" = "töö jaoks";
+"landing.login.hints" = "Konto juba olemas?";
+"landing.login.button.title" = "Logi sisse";
+
+// Create team
+
+"team.name.headline" = "Lisa meeskonna nimi";
+"team.name.subheadline" = "Saad seda hiljem muuta.";
+"team.name.textfield.placeholder" = "Meeskonna nimi";
+"team.name.textfield.accessibility" = "Set team name";
+"team.name.whatiswireforteams" = "Mis on Wire meeskonna versioon?";
+
+"team.email.headline" = "Your account";
+"team.email.subheadline" = "Enter your work email address.";
+"team.email.textfield.placeholder" = "you@yourcompany.com";
+"team.email.textfield.accessibility" = "Your company email";
+"team.email.button.learn_more" = "Loe lähemalt";
+
+"team.activation_code.headline" = "You've got mail";
+"team.activation_code.subheadline" = "Sisesta kinnituskood, mille saatsime numbrile %@";
+"team.activation_code.button.resend" = "Resend code";
+"team.activation_code.button.change_email" = "Change email";
+
+"team.full_name.headline" = "Your name";
+"team.full_name.textfield.placeholder" = "Full name";
+"team.full_name.textfield.accessibility" = "Set full name";
+
+"team.password.headline" = "Set password";
+"team.password.textfield.placeholder" = "Vähemalt 8 tähte";
+"team.password.textfield.accessibility" = "Set password, at least 8 characters";
+
+
+"team.email_code.input_field.accessbility_label" = "Sisestage e-postiga saabunud 6-kohaline kood.";
+
+// Registration
 
 "registration.title" = "Registreerimine";
 "registration.close_email_invitation_button.email_title" = "Kasuta teist e-posti aadressi";
@@ -824,6 +867,11 @@
 "registration.terms_of_use.terms" = "Jätkates nõustud Wire Kasutustingimustega.";
 "registration.terms_of_use.terms.link" = "Kasutustingimused";
 "registration.terms_of_use.agree" = "Nõustun";
+
+"registration.terms_of_use.terms.title" = "Kasutustingimused";
+"registration.terms_of_use.terms.message" = "Palun nõustuge kasutustingimustega.";
+"registration.terms_of_use.terms.view" = "Vaata";
+"registration.terms_of_use.accept" = "Vasta";
 
 "registration.email_flow.title" = "Registreeru e-postiga";
 "registration.email_flow.email_step.title" = "Muuda andmeid";

@@ -215,6 +215,9 @@
 
 "conversation.input_bar.shortcut.send" = "Send Message";
 
+"conversation.input_bar.message_too_long.title" = "Message too long";
+"conversation.input_bar.message_too_long.message" = "You can send messages up to %d characters long.";
+
 // Image confirmation dialogue
 "image_confirmer.confirm" = "OK";
 "image_confirmer.cancel" = "キャンセル";
@@ -287,8 +290,8 @@
 "content.system.failedtosend_message_timestamp_resend" = "再送する";
 "content.system.failedtosend_message_timestamp_delete" = "削除";
 "content.system.like_tooltip" = "タップしていいね！";
-"content.system.deleted_message_prefix_timestamp" = "%@を削除";
-"content.system.edited_message_prefix_timestamp" = "%@を編集";
+"content.system.deleted_message_prefix_timestamp" = "Deleted: %@";
+"content.system.edited_message_prefix_timestamp" = "Edited: %@";
 "content.system.connecting_to" = "%@につながり、会話を始めます";
 "content.system.connected_to" = "%@につながり、会話をはじめます";
 "content.system.other_wanted_to_talk" = "%@ からの着信";
@@ -665,13 +668,11 @@
 "self.settings.sound_menu.ping.title" = "Ping";
 "self.settings.sound_menu.ringtones.title" = "着信音";
 "self.settings.sound_menu.sounds.wire_sound" = "Wire";
+"self.settings.sound_menu.sounds.none" = "なし";
 
 "self.settings.callkit.title" = "通話";
 "self.settings.callkit.caption" = "iOSで共有する";
 "self.settings.callkit.description" = "Show Wire calls on the lock screen and in iOS call history. If iCloud is enabled, call history is shared with Apple.";
-
-"self.settings.cbr.not_available" = "Constant Bit Rate Encoding";
-"self.settings.cbr.not_available.description" = "Constant bit rate calls have been temporarily disabled with the introduction of multiple account support. CBR calls will be back soon.";
 
 "self.settings.vbr.title" = "可変ビットレートエンコーディング";
 "self.settings.vbr.description" = "これは通話でのデータ量を削減し、低速なネットワークにおける通話をより良くします。これをオフにすることで固定ビットレートエンコーディングを利用することができます。";
@@ -707,7 +708,7 @@
 "self.settings.sound_menu.title" = "アラートのサウンド";
 "self.settings.sound_menu.no_sounds.title" = "なし";
 "self.settings.sound_menu.all_sounds.title" = "すべて";
-"self.settings.sound_menu.mute_while_talking.title" = "最初のメッセージ、ping、通話";
+"self.settings.sound_menu.mute_while_talking.title" = "First message and pings";
 
 // Developer options
 "self.settings.developer_options.title" = "開発者向けオプション";
@@ -770,19 +771,61 @@
 "system_status_bar.poor_connectivity.title" = "インターネット接続が遅いため、いまは通話はできません。";
 "system_status_bar.poor_connectivity.explanation" = "音声品質を保証できません。Wi-Fiに接続するか、場所を変えて接続してください。";
 
-// Common connections on profile view
-"profile_other.common_connections" = "あなたが両方知っている";
-
-// View user profile and options menu
+// View user profile and options menu & text field validation
 "name.placeholder" = "あなたの氏名";
 "name.guidance.tooshort" = "少なくとも2文字";
 "name.guidance.toolong" = "文字が多すぎます";
 
 "email.placeholder" = "メール";
+"email.guidance.invalid" = "Invalid email address";
+"email.guidance.tooshort" = "Email is too short";
+"email.guidance.toolong" = "文字が多すぎます";
 
 "password.placeholder" = "パスワード";
 "password.guidance.tooshort" = "8 文字以上";
 "password.guidance.toolong" = "文字が多すぎます";
+
+// Landing screen
+
+"landing.title" = "Secure messenger for everyone.";
+"landing.create_account.title" = "Create an account";
+"landing.create_account.subtitle" = "for personal use";
+"landing.create_team.title" = "新しいチームを作成";
+"landing.create_team.subtitle" = "for work";
+"landing.login.hints" = "Already have an account?";
+"landing.login.button.title" = "Log in";
+
+// Create team
+
+"team.name.headline" = "Name your team";
+"team.name.subheadline" = "You can always change it later.";
+"team.name.textfield.placeholder" = "team name";
+"team.name.textfield.accessibility" = "Set team name";
+"team.name.whatiswireforteams" = "What is Wire for teams?";
+
+"team.email.headline" = "Your account";
+"team.email.subheadline" = "Enter your work email address.";
+"team.email.textfield.placeholder" = "you@yourcompany.com";
+"team.email.textfield.accessibility" = "Your company email";
+"team.email.button.learn_more" = "もっと知る";
+
+"team.activation_code.headline" = "You've got mail";
+"team.activation_code.subheadline" = "%@に送信された認証コードを入力してください。";
+"team.activation_code.button.resend" = "Resend code";
+"team.activation_code.button.change_email" = "Change email";
+
+"team.full_name.headline" = "Your name";
+"team.full_name.textfield.placeholder" = "Full name";
+"team.full_name.textfield.accessibility" = "Set full name";
+
+"team.password.headline" = "Set password";
+"team.password.textfield.placeholder" = "8 文字以上";
+"team.password.textfield.accessibility" = "Set password, at least 8 characters";
+
+
+"team.email_code.input_field.accessbility_label" = "Please enter the six-digit code from the email.";
+
+// Registration
 
 "registration.title" = "登録";
 "registration.close_email_invitation_button.email_title" = "別のメール アドレスを使う";
@@ -824,6 +867,11 @@
 "registration.terms_of_use.terms" = "継続することによってあなたはWireの利用規約に同意したことになります。";
 "registration.terms_of_use.terms.link" = "利用規約";
 "registration.terms_of_use.agree" = "同意する";
+
+"registration.terms_of_use.terms.title" = "利用規約";
+"registration.terms_of_use.terms.message" = "Please accept the Terms of Use to continue.";
+"registration.terms_of_use.terms.view" = "View";
+"registration.terms_of_use.accept" = "承諾";
 
 "registration.email_flow.title" = "メールで登録する。";
 "registration.email_flow.email_step.title" = "詳細を編集する";

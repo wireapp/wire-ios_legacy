@@ -31,6 +31,7 @@ class SendingProgressViewController : UIViewController {
     
     private var circularShadow = CircularProgressView()
     private var circularProgress = CircularProgressView()
+    private var connectionStatusLabel = UILabel()
     private let minimumProgress : Float = 0.125
     
     var progress: Float = 0 {
@@ -73,17 +74,29 @@ class SendingProgressViewController : UIViewController {
         self.navigationItem.hidesBackButton = true
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(onCancelTapped))
         
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(SendingProgressViewController.networkStatusDidChange(_:)),
+                                               name: ShareExtensionNetworkObserver.statusChangeNotificationName,
+                                               object: nil)
+        
         circularShadow.lineWidth = 2
         circularShadow.setProgress(1, animated: false)
         circularShadow.alpha = 0.2
         
         circularProgress.lineWidth = 2
         circularProgress.setProgress(0, animated: false)
-    
+        
+        connectionStatusLabel.font = UIFont.systemFont(ofSize: UIFont.smallSystemFontSize)
+        connectionStatusLabel.textAlignment = .center
+        connectionStatusLabel.isHidden = true
+        connectionStatusLabel.text = "share_extension.no_internet_connection.title".localized
+        
         view.addSubview(circularShadow)
         view.addSubview(circularProgress)
+        view.addSubview(connectionStatusLabel)
         
-        constrain(view, circularShadow, circularProgress) { container, circularShadow, circularProgress in
+        constrain(view, circularShadow, circularProgress, connectionStatusLabel) {
+            container, circularShadow, circularProgress, connectionStatus in
             circularShadow.width == 48
             circularShadow.height == 48
             circularShadow.center == container.center
@@ -91,13 +104,33 @@ class SendingProgressViewController : UIViewController {
             circularProgress.width == 48
             circularProgress.height == 48
             circularProgress.center == container.center
+            
+            connectionStatus.bottom == container.bottom - 5
+            connectionStatus.centerX == container.centerX
         }
 
         updateProgressMode()
+        
+        let reachability = NetworkStatus.shared().reachability()
+        setReachability(from: reachability)
     }
     
     func onCancelTapped() {
         cancelHandler?()
+    }
+    
+    func networkStatusDidChange(_ notification: Notification) {
+        if let status = notification.object as? NetworkStatus {
+            setReachability(from: status.reachability())
+        }
+    }
+    
+    func setReachability(from reachability: ServerReachability) {
+        
+        switch reachability {
+            case .OK: connectionStatusLabel.isHidden = true; break;
+            case .unreachable: connectionStatusLabel.isHidden = false; break;
+        }
     }
 
 }

@@ -47,7 +47,6 @@
 @import PureLayout;
 #import "UIView+Zeta.h"
 #import "Analytics.h"
-#import "UIViewController+Orientation.h"
 #import "AppDelegate.h"
 #import "MediaPlaybackManager.h"
 #import "UIColor+WR_ColorScheme.h"
@@ -242,7 +241,7 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
 
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations
 {
-    return [self.class wr_supportedInterfaceOrientations];
+    return self.wr_supportedInterfaceOrientations;
 }
 
 - (void)didReceiveMemoryWarning

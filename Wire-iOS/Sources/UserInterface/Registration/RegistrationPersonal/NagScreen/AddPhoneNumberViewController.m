@@ -37,7 +37,6 @@
 
 #import "RegistrationFormController.h"
 #import "CheckmarkViewController.h"
-#import "UIViewController+Orientation.h"
 
 #import "AnalyticsTracker+Registration.h"
 
@@ -85,7 +84,7 @@
 
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations
 {
-    return self.class.wr_supportedInterfaceOrientations;
+    return self.wr_supportedInterfaceOrientations;
 }
 
 - (void)viewDidLoad

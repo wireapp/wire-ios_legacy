@@ -21,6 +21,8 @@ import Foundation
 import Mixpanel
 import CocoaLumberjackSwift
 
+let MixpanelDistinctIdKey = "MixpanelDistinctIdKey"
+
 fileprivate enum MixpanelSuperProperties: String {
     case city = "$city"
     case region = "$region"
@@ -62,7 +64,27 @@ final class AnalyticsMixpanelProvider: NSObject, AnalyticsProvider {
         "settings.opted_in_tracking",
         "settings.opted_out_tracking",
         "e2ee.failed_message_decyption",
-        "calling.avs_metrics_ended_call"
+        "start.opened_start_screen",
+        "start.opened_person_registration",
+        "start.opened_team_registration",
+        "start.opened_login",
+        "team.verified",
+        "team.accepted_terms",
+        "team.created",
+        "team.finished_invite_step",
+        "settings.opened_manage_team",
+        "registration.succeeded",
+        "calling.joined_call",
+        "calling.joined_video_call",
+        "calling.established_call",
+        "calling.established_video_call",
+        "calling.ended_call",
+        "calling.ended_video_call",
+        "calling.initiated_call",
+        "calling.initiated_video_call",
+        "calling.received_call",
+        "calling.received_video_call",
+        "calling.avs_metrics_ended_call",
         ])
     
     private static let enabledSuperProperties = Set<String>([
@@ -82,6 +104,7 @@ final class AnalyticsMixpanelProvider: NSObject, AnalyticsProvider {
             mixpanelInstance = Mixpanel.initialize(token: MixpanelAPIKey)
         }
         super.init()
+        mixpanelInstance?.distinctId = mixpanelDistinctId
         mixpanelInstance?.minimumSessionDuration = 2_000
         mixpanelInstance?.loggingEnabled = false
         DDLogInfo("AnalyticsMixpanelProvider \(self) started")
@@ -94,6 +117,18 @@ final class AnalyticsMixpanelProvider: NSObject, AnalyticsProvider {
         self.setSuperProperty("app", value: "ios")
         self.setSuperProperty(MixpanelSuperProperties.city.rawValue, value: "")
         self.setSuperProperty(MixpanelSuperProperties.region.rawValue, value: "")
+    }
+    
+    var mixpanelDistinctId: String {
+        if let id = UserDefaults.shared().string(forKey: MixpanelDistinctIdKey) {
+            return id
+        }
+        else {
+            let id = UUID().transportString()
+            UserDefaults.shared().set(id, forKey: MixpanelDistinctIdKey)
+            UserDefaults.shared().synchronize()
+            return id
+        }
     }
     
     public var isOptedOut : Bool = false {
