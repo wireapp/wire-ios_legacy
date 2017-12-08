@@ -41,6 +41,7 @@ extension ConversationListItemView {
     @objc(updateForConversation:)
     internal func update(for conversation: ZMConversation?) {
         self.conversation = conversation
+        self.userObserverToken = nil
         
         guard let conversation = conversation else {
             self.configure(with: "" && [:], subtitle: "" && [:])
@@ -49,9 +50,9 @@ extension ConversationListItemView {
         
         var title = "".attributedString
         
-        if conversation.conversationType == .oneOnOne && conversation.team != nil,
-            let user = conversation.otherActiveParticipants.firstObject as? ZMUser {
-            title = AvailabilityStringBuilder.string(for: user, with: .list)
+        if ZMUser.selfUser().hasTeam, let connectedUser = conversation.connectedUser, let userSession = ZMUserSession.shared() {
+            title = AvailabilityStringBuilder.string(for: connectedUser, with: .list)
+            userObserverToken = UserChangeInfo.add(observer: self, for: connectedUser, userSession: userSession)
         } else {
             title = conversation.displayName.attributedString
         }
@@ -72,6 +73,16 @@ extension ConversationListItemView {
 
         self.configure(with: title, subtitle: status.description(for: conversation))
     }
+}
+
+extension ConversationListItemView : ZMUserObserver {
+    
+    public func userDidChange(_ changeInfo: UserChangeInfo) {
+        guard changeInfo.availabilityChanged else { return }
+        
+        update(for: conversation)
+    }
+    
 }
 
 

@@ -33,12 +33,14 @@ FOUNDATION_EXPORT NSString * const ConversationListItemDidScrollNotification;
 @property (nonatomic, copy) NSAttributedString *titleText;
 @property (nonatomic, copy) NSAttributedString *subtitleAttributedText;
 
-@property (nonatomic, strong, readonly) UILabel *titleField;
-@property (nonatomic, strong, readonly) ConversationAvatarView *avatarView;
-@property (nonatomic, strong, readonly) ConversationListAccessoryView *rightAccessory;
+@property (nonatomic, readonly) UILabel *titleField;
+@property (nonatomic, readonly) ConversationAvatarView *avatarView;
+@property (nonatomic, readonly) ConversationListAccessoryView *rightAccessory;
 
-@property (nonatomic, assign) BOOL selected;
-@property (nonatomic, assign) CGFloat visualDrawerOffset;
+@property (nonatomic) BOOL selected;
+@property (nonatomic) CGFloat visualDrawerOffset;
+
+@property (nonatomic) id userObserverToken;
 
 - (void)setVisualDrawerOffset:(CGFloat)visualDrawerOffset notify:(BOOL)notify;
 - (void)accessibilityContentsDidChange;
