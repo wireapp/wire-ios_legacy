@@ -40,8 +40,6 @@ FOUNDATION_EXPORT NSString * const ConversationListItemDidScrollNotification;
 @property (nonatomic) BOOL selected;
 @property (nonatomic) CGFloat visualDrawerOffset;
 
-@property (nonatomic) id userObserverToken;
-
 - (void)setVisualDrawerOffset:(CGFloat)visualDrawerOffset notify:(BOOL)notify;
 - (void)accessibilityContentsDidChange;
 
