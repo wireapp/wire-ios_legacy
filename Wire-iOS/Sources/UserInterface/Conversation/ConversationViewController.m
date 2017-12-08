@@ -65,7 +65,6 @@
 #import "AnalyticsTracker.h"
 #import "AnalyticsTracker+Invitations.h"
 #import "UIViewController+Errors.h"
-#import "UIViewController+Orientation.h"
 #import "SplitViewController.h"
 #import "UIColor+WR_ColorScheme.h"
 #import "ActionSheetController+Conversation.h"

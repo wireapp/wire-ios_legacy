@@ -42,7 +42,6 @@
 #import "AnalyticsTracker+Invitations.h"
 
 #import "ProfileViewController.h"
-#import "UIViewController+Orientation.h"
 
 // model
 #import "WireSyncEngine+iOS.h"
@@ -190,7 +189,7 @@ static NSString *const ParticipantHeaderReuseIdentifier = @"ParticipantListHeade
 
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations
 {
-    return [UIViewController wr_supportedInterfaceOrientations];
+    return self.wr_supportedInterfaceOrientations;
 }
 
 - (void)viewWillAppearCustomPresentationAnimated:(BOOL)animated isInteractive:(BOOL)interactive

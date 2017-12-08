@@ -177,7 +177,7 @@ final public class CollectionsViewController: UIViewController {
 
     /// Notice: for iPad with iOS9 in landscape mode, horizontalSizeClass is .unspecified (.regular in iOS11).
     override public var supportedInterfaceOrientations: UIInterfaceOrientationMask {
-        return UIViewController.wr_supportedInterfaceOrientations
+        return wr_supportedInterfaceOrientations
     }
     
     override public var shouldAutorotate: Bool {
