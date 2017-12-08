@@ -194,7 +194,7 @@ class AppRootViewController: UIViewController {
         case .unauthenticated(error: let error):
             UIColor.setAccentOverride(ZMUser.pickRandomAcceptableAccentColor())
             mainWindow.tintColor = UIColor.accent()
-
+            
             // check if needs to reauthenticate
             var needsToReauthenticate = false
             if let error = error {
@@ -205,25 +205,25 @@ class AppRootViewController: UIViewController {
                     .canNotRegisterMoreClients
                 ].contains(errorCode)
             }
-
+            
             if needsToReauthenticate {
                 let registrationViewController = RegistrationViewController()
                 registrationViewController.delegate = appStateController
                 registrationViewController.signInError = error
                 viewController = registrationViewController
-            } else {
+            }
+            else {
                 // When we show the landing controller we want it to be nested in navigation controller
                 let landingViewController = LandingViewController()
                 landingViewController.delegate = self
-
+                
                 let navigationController = NavigationController(rootViewController: landingViewController)
                 navigationController.backButtonEnabled = false
                 navigationController.logoEnabled = false
                 navigationController.isNavigationBarHidden = true
-
-                guard let registrationStatus = SessionManager.shared?.unauthenticatedSession?.registrationStatus else {
-                    fatal("Could not get registration status") }
-
+                
+                guard let registrationStatus = SessionManager.shared?.unauthenticatedSession?.registrationStatus else { fatal("Could not get registration status") }
+                
                 flowController = TeamCreationFlowController(navigationController: navigationController, registrationStatus: registrationStatus)
                 flowController.registrationDelegate = appStateController
                 viewController = navigationController
@@ -518,22 +518,21 @@ extension AppRootViewController: LandingViewControllerDelegate {
 }
 
 public extension SessionManager {
-
+    
     var firstAuthenticatedAccount: Account? {
-
+        
         if let selectedAccount = accountManager.selectedAccount {
             if selectedAccount.isAuthenticated {
                 return selectedAccount
             }
         }
-
+        
         for account in accountManager.accounts {
             if account.isAuthenticated && account != accountManager.selectedAccount {
                 return account
             }
         }
-
+        
         return nil
     }
 }
-
