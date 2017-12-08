@@ -44,12 +44,12 @@ import Classy
         createViews()
     }
     
-    private func createConstraints(_ hasAttachment: Bool) {
+    private func createConstraints() {
         constrain(self, titleButton) { view, button in
             button.leading == view.leading
             button.trailing == view.trailing
             button.top == view.top
-            button.bottom == view.bottom - (hasAttachment ? 4 : 0)
+            button.bottom == view.bottom
         }
     }
     
@@ -66,23 +66,23 @@ import Classy
     /// - parameter conversation: The conversation for which the view should be configured
     /// - parameter interactive: Whether the view should react to user interaction events
     /// - return: Whether the view contains any `NSTextAttachments`
-    internal func configure(icon: NSTextAttachment?, title: String, interactive: Bool) {
+    internal func configure(icon: NSTextAttachment?, title: String, interactive: Bool, showInteractiveIcon: Bool = true) {
     
         guard let font = titleFont, let color = titleColor, let selectedColor = titleColorSelected else { return }
-        let normalLabel = IconStringsBuilder.iconString(with: icon, title: title, interactive: interactive, color: color)
-        let selectedLabel = IconStringsBuilder.iconString(with: icon, title: title, interactive: interactive, color: selectedColor)
+        let shouldShowInteractiveIcon = interactive && showInteractiveIcon
+        let normalLabel = IconStringsBuilder.iconString(with: icon, title: title, interactive: shouldShowInteractiveIcon, color: color)
+        let selectedLabel = IconStringsBuilder.iconString(with: icon, title: title, interactive: shouldShowInteractiveIcon, color: selectedColor)
         
         titleButton.titleLabel!.font = font
-        titleButton.setAttributedTitle(normalLabel.text, for: UIControlState())
-        titleButton.setAttributedTitle(selectedLabel.text, for: .highlighted)
+        titleButton.setAttributedTitle(normalLabel, for: UIControlState())
+        titleButton.setAttributedTitle(selectedLabel, for: .highlighted)
         titleButton.sizeToFit()
         titleButton.isEnabled = interactive
         updateAccessibilityLabel()
+        frame = titleButton.bounds
+        createConstraints()
         setNeedsLayout()
         layoutIfNeeded()
-        
-        frame = titleButton.bounds
-        createConstraints(normalLabel.hasAttachments)
     }
     
     public required init?(coder aDecoder: NSCoder) {

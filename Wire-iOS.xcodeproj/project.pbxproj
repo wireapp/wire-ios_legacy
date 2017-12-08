@@ -210,6 +210,7 @@
 		7CEB45281F8FAAC400D772D5 /* UINavigationBarContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CEB45271F8FAAC400D772D5 /* UINavigationBarContainer.swift */; };
 		7CED30721FD97748009F0DAC /* IconStringsBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CED30711FD97748009F0DAC /* IconStringsBuilder.swift */; };
 		7CED307C1FD97895009F0DAC /* AvailabilityStringBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CED307B1FD97895009F0DAC /* AvailabilityStringBuilder.swift */; };
+		7CF651861FDA837D00D6B9F4 /* AvailabilityTitleViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CFDC2801FD9A98100285047 /* AvailabilityTitleViewTests.swift */; };
 		848DE12B1A83D20000E154B1 /* emoticons.min.json in Resources */ = {isa = PBXBuildFile; fileRef = 848DE12A1A83D20000E154B1 /* emoticons.min.json */; };
 		87023D7B1D76E4E2007B667E /* AFNetworking.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87023D7A1D76E4E2007B667E /* AFNetworking.framework */; };
 		870533FF1DD6162400A7F822 /* OverflowSeparatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 870533FE1DD6162400A7F822 /* OverflowSeparatorView.swift */; };
@@ -1317,6 +1318,7 @@
 		7CEB45271F8FAAC400D772D5 /* UINavigationBarContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UINavigationBarContainer.swift; sourceTree = "<group>"; };
 		7CED30711FD97748009F0DAC /* IconStringsBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconStringsBuilder.swift; sourceTree = "<group>"; };
 		7CED307B1FD97895009F0DAC /* AvailabilityStringBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvailabilityStringBuilder.swift; sourceTree = "<group>"; };
+		7CFDC2801FD9A98100285047 /* AvailabilityTitleViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvailabilityTitleViewTests.swift; sourceTree = "<group>"; };
 		848DE12A1A83D20000E154B1 /* emoticons.min.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = emoticons.min.json; path = ../Sources/emoticons.min.json; sourceTree = "<group>"; };
 		8571A3524311D898C8012582 /* libPods-WireExtensionComponents.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-WireExtensionComponents.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		87023D7A1D76E4E2007B667E /* AFNetworking.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AFNetworking.framework; path = Carthage/Build/iOS/AFNetworking.framework; sourceTree = "<group>"; };
@@ -4728,6 +4730,7 @@
 				BF606D721CAA9EEE002BAC94 /* ConversationListBottomBarTests.m */,
 				BFAD3A181CD1011100F0FBED /* ProfilePictureStepViewControllerTests.m */,
 				BFAD3A161CD0F14800F0FBED /* ConversationTitleViewTests.m */,
+				7CFDC2801FD9A98100285047 /* AvailabilityTitleViewTests.swift */,
 				F127BD561E262E9F0093B2F1 /* CollectionsViewControllerTests.swift */,
 				BF0BDF891DABF32B003C61DE /* DestructionCountdownViewTests.swift */,
 				BF27AE4D1E9E513400809A2B /* MessageDraftTests.swift */,
@@ -6657,6 +6660,7 @@
 				BF735D011E716816003BC61F /* CallSystemMessageTests.swift in Sources */,
 				87BEB0DD1C734D710094BFE9 /* MockUser.m in Sources */,
 				16D453C71B6F9CB000675246 /* LinkAttachmentTests.m in Sources */,
+				7CF651861FDA837D00D6B9F4 /* AvailabilityTitleViewTests.swift in Sources */,
 				87D5E4401C3E797A00EB8289 /* UserClientFingerprintTests.swift in Sources */,
 				BF0BDF8A1DABF32B003C61DE /* DestructionCountdownViewTests.swift in Sources */,
 				8742FB801E8BD18900D046BC /* ConversationListAccessoryViewTests.swift in Sources */,

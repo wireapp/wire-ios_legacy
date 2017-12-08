@@ -41,7 +41,7 @@
         guard let textColor = color, let titleText = title else { return "".attributedString }
         let icon = AvailabilityStringBuilder.icon(for: availability, with: textColor)
         let attributedText = IconStringsBuilder.iconString(with: icon, title: titleText, interactive: false, color: textColor)
-        return attributedText.text
+        return attributedText
     }
     
     static func icon(for availability: Availability, with color: UIColor) -> NSTextAttachment? {
@@ -52,7 +52,7 @@
         attachment.image = image
         let ratio = image.size.width / image.size.height
         let height: CGFloat = 10
-        attachment.bounds = CGRect(x: 0, y: 0, width: height * ratio, height: height)
+        attachment.bounds = CGRect(x: 0, y: -1, width: height * ratio, height: height)
         return attachment
     }
 }

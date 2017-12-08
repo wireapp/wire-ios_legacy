@@ -36,7 +36,6 @@ extension Availability {
         }
     }
     
-    
     var localizedName: String {
         return "availability.\(canonicalName)".localized
     }
@@ -49,6 +48,5 @@ extension Availability {
             case .busy:         return .availabilityBusy
         }
     }
-    
 }
 

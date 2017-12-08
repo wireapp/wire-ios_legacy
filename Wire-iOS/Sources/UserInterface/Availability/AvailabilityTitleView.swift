@@ -55,7 +55,9 @@ import WireDataModel
         
         super.init(color: titleColor!, selectedColor: titleColorSelected!, font: titleFont!)
         
-        self.observerToken = UserChangeInfo.add(observer: self, for: user, userSession: ZMUserSession.shared()!)
+        if let sharedSession = ZMUserSession.shared() {
+            self.observerToken = UserChangeInfo.add(observer: self, for: user, userSession: sharedSession)
+        }
         
         configure()
         
@@ -88,21 +90,22 @@ import WireDataModel
         fatalError("init(coder:) has not been implemented")
     }
     
-    func configure() {
+    func configure(context: NSManagedObjectContext? = nil) {
         let availability = self.user.availability
         let icon = AvailabilityStringBuilder.icon(for: availability, with: self.titleColor!)
         let interactive = (style == .selfProfile || style == .header)
         var title = ""
+        let selfUser = context == nil ? ZMUser.selfUser() : ZMUser.selfUser(in: context!)
         
         if self.style == .header {
             title = self.user.name.uppercased()
-        } else if self.user == ZMUser.selfUser() && availability == .none {
+        } else if self.user == selfUser && availability == .none {
             title = "availability.message.set_status".localized.uppercased()
         } else if availability != .none {
             title = availability.localizedName.uppercased()
         }
         
-        super.configure(icon: icon, title: title, interactive: interactive)
+        super.configure(icon: icon, title: title, interactive: interactive, showInteractiveIcon: style == .selfProfile)
     }
     
     override func updateAccessibilityLabel() {

@@ -24,23 +24,19 @@ public class IconStringsBuilder {
     // - an down arrow for tappable strings (optional)
     // - and, obviously, a color
     
-    static func iconString(with icon: NSTextAttachment?, title: String, interactive: Bool, color: UIColor) -> (text: NSAttributedString, hasAttachments: Bool) {
+    static func iconString(with icon: NSTextAttachment?, title: String, interactive: Bool, color: UIColor) -> NSAttributedString {
         
-        var hasAttachment = false
         var title = title.attributedString
         
         if interactive {
             title += "  " + NSAttributedString(attachment: .downArrow(color: color))
-            hasAttachment = true
         }
         
         if let icon = icon {
             title = NSAttributedString(attachment: icon) + "  " + title
-            hasAttachment = true
         }
         
-        return (text: title && color, hasAttachments: hasAttachment)
+        return title && color
     }
-    
 }
 

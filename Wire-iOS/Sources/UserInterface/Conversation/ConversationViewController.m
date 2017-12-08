@@ -412,6 +412,7 @@
                                                            fromView:self.titleView.superview
                                               contentViewController:participantsController];
     };
+    [self.titleView configure];
     
     self.navigationItem.titleView = self.titleView;
     self.navigationItem.leftItemsSupplementBackButton = NO;
