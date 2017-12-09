@@ -995,7 +995,6 @@
 "force.update.ok_button" = "到App Store";
 
 // Third Party
-"giphy.conversation.message" = "%@ · 来源 giphy.com";
 "giphy.conversation.random_message" = "来源 giphy.com";
 "giphy.error.no_more_results" = "没有更多的gif图片";
 "giphy.error.no_result" = "找不到gif图片";

@@ -995,7 +995,6 @@
 "force.update.ok_button" = "Pojdi na App Store";
 
 // Third Party
-"giphy.conversation.message" = "%@ · preko giphy.com";
 "giphy.conversation.random_message" = "preko giphy.com";
 "giphy.error.no_more_results" = "ni več gifov";
 "giphy.error.no_result" = "noben gif najden";

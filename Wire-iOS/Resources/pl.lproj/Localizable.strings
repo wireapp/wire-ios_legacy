@@ -995,7 +995,6 @@
 "force.update.ok_button" = "Przejdź do sklepu App Store";
 
 // Third Party
-"giphy.conversation.message" = "%@ · dzięki giphy.com";
 "giphy.conversation.random_message" = "dzięki giphy.com";
 "giphy.error.no_more_results" = "nie ma więcej GIFów";
 "giphy.error.no_result" = "nie znaleziono GIFa";

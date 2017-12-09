@@ -995,7 +995,6 @@
 "force.update.ok_button" = "Siirry App Storeen";
 
 // Third Party
-"giphy.conversation.message" = "%@ · giphy.com:in kautta";
 "giphy.conversation.random_message" = "giphy.com:in kautta";
 "giphy.error.no_more_results" = "ei enempää giffejä";
 "giphy.error.no_result" = "giffiä ei löytynyt";

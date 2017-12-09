@@ -995,7 +995,6 @@
 "force.update.ok_button" = "اذهب لـApp Store";
 
 // Third Party
-"giphy.conversation.message" = "%@ · عبر giphy.com";
 "giphy.conversation.random_message" = "عبر giphy.com";
 "giphy.error.no_more_results" = "لا مزيد من gifs";
 "giphy.error.no_result" = "لم يتم العثور على أي gif";

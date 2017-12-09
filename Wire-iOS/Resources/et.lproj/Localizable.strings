@@ -995,7 +995,6 @@
 "force.update.ok_button" = "Mine App Store’i";
 
 // Third Party
-"giphy.conversation.message" = "%@ · via giphy.com";
 "giphy.conversation.random_message" = "via giphy.com";
 "giphy.error.no_more_results" = "rohkem gif’e pole";
 "giphy.error.no_result" = "gif’i ei leitud";
