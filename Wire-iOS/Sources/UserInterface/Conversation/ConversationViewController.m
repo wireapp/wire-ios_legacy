@@ -65,7 +65,6 @@
 #import "AnalyticsTracker.h"
 #import "AnalyticsTracker+Invitations.h"
 #import "UIViewController+Errors.h"
-#import "UIViewController+Orientation.h"
 #import "SplitViewController.h"
 #import "UIColor+WR_ColorScheme.h"
 #import "ActionSheetController+Conversation.h"
@@ -758,6 +757,11 @@
 - (void)conversationInputBarViewControllerDidCancelEditingMessage:(id<ZMConversationMessage>)message
 {
     [self.contentViewController didFinishEditingMessage:message];
+}
+
+- (void)conversationInputBarViewControllerEditLastMessage
+{
+    [self.contentViewController editLastMessage];
 }
 
 @end

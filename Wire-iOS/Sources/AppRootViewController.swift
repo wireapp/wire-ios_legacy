@@ -390,7 +390,7 @@ extension AppRootViewController {
     }
 
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
-        return UIViewController.wr_supportedInterfaceOrientations()
+        return wr_supportedInterfaceOrientations
     }
 
     override var prefersStatusBarHidden: Bool {

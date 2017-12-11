@@ -27,7 +27,6 @@
 
 #import "AppDelegate.h"
 #import "NotificationWindowRootViewController.h"
-#import "UIViewController+Orientation.h"
 
 #import "WAZUIMagicIOS.h"
 
@@ -197,7 +196,7 @@
 
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations
 {
-    return [self.class wr_supportedInterfaceOrientations];
+    return self.wr_supportedInterfaceOrientations;
 }
 
 - (UIStatusBarStyle)preferredStatusBarStyle

@@ -41,7 +41,6 @@
 #import "DeviceOrientationObserver.h"
 
 #import "AnalyticsTracker+Permissions.h"
-#import "UIViewController+Orientation.h"
 
 #import "Wire-Swift.h"
 
@@ -198,7 +197,7 @@ static CameraControllerCamera CameraViewControllerToCameraControllerCamera(Camer
 
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations
 {
-    return [self.class wr_supportedInterfaceOrientations];
+    return self.wr_supportedInterfaceOrientations;
 }
 
 - (void)updateVideoOrientation

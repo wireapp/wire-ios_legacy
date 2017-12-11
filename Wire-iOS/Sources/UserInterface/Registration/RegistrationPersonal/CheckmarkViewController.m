@@ -23,8 +23,7 @@
 
 #import "Constants.h"
 #import "CheckmarkView.h"
-#import "UIViewController+Orientation.h"
-
+#import "Wire-Swift.h"
 
 @interface CheckmarkViewController ()
 
@@ -77,7 +76,7 @@
 
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations
 {
-    return [self.class wr_supportedInterfaceOrientations];
+    return self.wr_supportedInterfaceOrientations;
 }
 
 - (void)createCheckmarkView

@@ -32,7 +32,6 @@
 
 #import "AppDelegate.h"
 #import "NotificationWindowRootViewController.h"
-#import "UIViewController+Orientation.h"
 
 // helpers
 

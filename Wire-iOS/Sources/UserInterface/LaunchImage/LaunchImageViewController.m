@@ -22,9 +22,8 @@
 @import PureLayout;
 #import "Constants.h"
 @import WireExtensionComponents;
-#import "UIViewController+Orientation.h"
 #import "Settings.h"
-
+#import "Wire-Swift.h"
 
 @interface LaunchImageViewController ()
 
@@ -83,7 +82,7 @@
 
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations
 {
-    return [self.class wr_supportedInterfaceOrientations];
+    return self.wr_supportedInterfaceOrientations;
 }
 
 - (void)showLoadingScreen
