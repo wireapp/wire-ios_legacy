@@ -215,6 +215,7 @@
 
 "conversation.input_bar.shortcut.send" = "Send Message";
 "conversation.input_bar.shortcut.edit_last_message" = "Edit Last Message";
+"conversation.input_bar.shortcut.cancel_editing_message" = "Cancel";
 
 "conversation.input_bar.message_too_long.title" = "Message too long";
 "conversation.input_bar.message_too_long.message" = "You can send messages up to %d characters long.";
