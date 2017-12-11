@@ -87,7 +87,7 @@ class GiphySearchViewController: UICollectionViewController {
     var pendingTimer: Timer?
     var pendingSearchtask: CancelableTask?
     var pendingFetchTask: CancelableTask?
-    var needsToConfigureLayout: Bool = false
+    fileprivate var lastLayoutSize: CGSize = .zero
 
     public init(withSearchTerm searchTerm: String, conversation: ZMConversation) {
         self.conversation = conversation
@@ -133,26 +133,33 @@ class GiphySearchViewController: UICollectionViewController {
         }
     }
 
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        needsToConfigureLayout = true
-    }
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
 
-    override func viewWillLayoutSubviews() {
-        super.viewWillLayoutSubviews()
-
-        if needsToConfigureLayout {
-            self.configureMasonryLayout(withSize: view.bounds.size)
-            self.collectionView?.collectionViewLayout.invalidateLayout()
-            needsToConfigureLayout = false
+        if self.lastLayoutSize != self.view.bounds.size {
+            self.lastLayoutSize = self.view.bounds.size
+            flushLayout()
         }
     }
 
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         coordinator.animate(alongsideTransition: { (context) in
-            self.configureMasonryLayout(withSize: size)
-            self.collectionView?.collectionViewLayout.invalidateLayout()
+            self.flushLayout()
         })
+    }
+
+    override public func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.flushLayout()
+    }
+
+    private func flushLayout() {
+        self.configureMasonryLayout(withSize: view.bounds.size)
+        self.collectionView?.collectionViewLayout.invalidateLayout()
+
+        if let frame = self.navigationController?.navigationItem.titleView?.frame {
+            self.searchBar.frame = frame
+        }
     }
 
     public func wrapInsideNavigationController() -> UINavigationController {
