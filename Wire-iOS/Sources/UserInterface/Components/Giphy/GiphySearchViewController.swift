@@ -114,23 +114,11 @@ class GiphySearchViewController: UICollectionViewController {
 
         configureMasonryLayout(withSize: view.bounds.size)
 
-        searchBar.text = searchTerm
-        searchBar.delegate = self
-        searchBar.tintColor = .accent()
-        searchBar.placeholder = "giphy.search_placeholder".localized
-        searchBar.barStyle = ColorScheme.default().variant == .dark ? .black : .default
-        searchBar.searchBarStyle = .minimal
-        navigationItem.titleView = searchBar
-
-        let closeImage = UIImage(for: .X, iconSize: .tiny, color: .black)
-        navigationItem.rightBarButtonItem = UIBarButtonItem(image: closeImage, style: .plain, target: self, action: #selector(GiphySearchViewController.onDismiss))
-
         collectionView?.accessibilityIdentifier = "giphyCollectionView"
         collectionView?.register(GiphyCollectionViewCell.self, forCellWithReuseIdentifier: GiphyCollectionViewCell.CellIdentifier)
 
-        constrain(view, noResultsLabel) { container, noResultsLabel in
-            noResultsLabel.center == container.center
-        }
+        setupNavigationItem()
+        createConstraints()
     }
 
     override func viewDidLayoutSubviews() {
@@ -153,13 +141,31 @@ class GiphySearchViewController: UICollectionViewController {
         self.flushLayout()
     }
 
+    private func createConstraints() {
+        constrain(view, noResultsLabel) { container, noResultsLabel in
+            noResultsLabel.center == container.center
+        }
+    }
+
+    private func setupNavigationItem() {
+        searchBar.text = searchTerm
+        searchBar.delegate = self
+        searchBar.tintColor = .accent()
+        searchBar.placeholder = "giphy.search_placeholder".localized
+        searchBar.barStyle = ColorScheme.default().variant == .dark ? .black : .default
+        searchBar.searchBarStyle = .minimal
+
+        let closeImage = UIImage(for: .X, iconSize: .tiny, color: .black)
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: closeImage, style: .plain, target: self, action: #selector(GiphySearchViewController.onDismiss))
+
+        self.navigationItem.titleView = searchBar//titleViewWrapper
+    }
+
     private func flushLayout() {
         self.configureMasonryLayout(withSize: view.bounds.size)
         self.collectionView?.collectionViewLayout.invalidateLayout()
 
-        if let frame = self.navigationController?.navigationItem.titleView?.frame {
-            self.searchBar.frame = frame
-        }
+        self.navigationItem.titleView?.setNeedsLayout()
     }
 
     public func wrapInsideNavigationController() -> UINavigationController {
