@@ -25,7 +25,6 @@ class AvailabilityLabelTests: ZMSnapshotTestCase {
     
     override func setUp() {
         super.setUp()
-        self.recordMode = true
     }
     
     // MARK: - List labels
