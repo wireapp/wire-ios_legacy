@@ -26,7 +26,7 @@ extension Date {
 
     /// Create a NSDateFormatter depends on the date is in this year or not
     ///
-    /// - Parameter locale: this parameter is for Unit tests
+    /// - Parameter locale: locale of the DateFormatter. If not provided, defautl is Locale.current. (this parameter is for Unit tests)
     /// - Returns: a NSDateFormatter object. If the date's year is same as today,
     ///            return a NSDateFormatter without year component, otherwise return a NSDateFormatter with year component.
     public func localizedDateFormatter(locale: Locale? = Locale.current) -> DateFormatter {
