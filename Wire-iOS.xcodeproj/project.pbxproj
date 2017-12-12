@@ -61,6 +61,7 @@
 		1670AFE81B2095B1002BF0AE /* VoiceChannelCollectionViewLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 1670AFE71B2095B1002BF0AE /* VoiceChannelCollectionViewLayout.m */; };
 		16719A101D99647D00AA6B63 /* GiphySearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16719A0F1D99647D00AA6B63 /* GiphySearchViewController.swift */; };
 		16719A1D1D9ABB7C00AA6B63 /* GiphyConfirmationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16719A1C1D9ABB7C00AA6B63 /* GiphyConfirmationViewController.swift */; };
+		1671DD5E1FDFED280096FBDB /* UIStackView+CustomSpacing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1671DD5D1FDFED280096FBDB /* UIStackView+CustomSpacing.swift */; };
 		1677FD331BBC19A400491481 /* ColorScheme.h in Headers */ = {isa = PBXBuildFile; fileRef = 1677FD311BBC19A400491481 /* ColorScheme.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		1677FD341BBC19A400491481 /* ColorScheme.m in Sources */ = {isa = PBXBuildFile; fileRef = 1677FD321BBC19A400491481 /* ColorScheme.m */; };
 		167AEA101B16031900890435 /* VoiceChannelParticipantCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 167AEA0F1B16031900890435 /* VoiceChannelParticipantCell.m */; };
@@ -1145,6 +1146,7 @@
 		1670AFE71B2095B1002BF0AE /* VoiceChannelCollectionViewLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VoiceChannelCollectionViewLayout.m; sourceTree = "<group>"; };
 		16719A0F1D99647D00AA6B63 /* GiphySearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GiphySearchViewController.swift; sourceTree = "<group>"; };
 		16719A1C1D9ABB7C00AA6B63 /* GiphyConfirmationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GiphyConfirmationViewController.swift; sourceTree = "<group>"; };
+		1671DD5D1FDFED280096FBDB /* UIStackView+CustomSpacing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStackView+CustomSpacing.swift"; sourceTree = "<group>"; };
 		1677FD311BBC19A400491481 /* ColorScheme.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ColorScheme.h; sourceTree = "<group>"; };
 		1677FD321BBC19A400491481 /* ColorScheme.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ColorScheme.m; sourceTree = "<group>"; };
 		167AEA0E1B16031900890435 /* VoiceChannelParticipantCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VoiceChannelParticipantCell.h; sourceTree = "<group>"; };
@@ -4248,6 +4250,7 @@
 				EEBE8C5B1F681694009D78C9 /* NSData+ImageType.swift */,
 				7C4918A01F8BB1A20038AF4B /* UIScreen+SafeArea.swift */,
 				F194AD791E3F3BBC00B0049B /* UIApplication+RTL.swift */,
+				1671DD5D1FDFED280096FBDB /* UIStackView+CustomSpacing.swift */,
 				BF8ECC2C1E570A920015177D /* UIActivityViewController+FileSaving.swift */,
 				1693D9661CEDB26200D1F13C /* UIApplication+Permissions.h */,
 				1693D9671CEDB26200D1F13C /* UIApplication+Permissions.m */,
@@ -6358,6 +6361,7 @@
 				870A8C6B1CF719C400874B16 /* RecordingDotView.swift in Sources */,
 				BFBB03081D61AF8D0065AF4F /* InputBarEditView.swift in Sources */,
 				160DECE01AB3347B000FB575 /* CameraExposureSlider.m in Sources */,
+				1671DD5E1FDFED280096FBDB /* UIStackView+CustomSpacing.swift in Sources */,
 				87A773CF1DD0B48400ACAA73 /* ObfuscationView.swift in Sources */,
 				7C17ECA51F74F4540056600C /* ConversationCell+Preview.swift in Sources */,
 				871BC22D1D34F8F800DF0793 /* RotationAwareNavigationController.swift in Sources */,

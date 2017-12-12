@@ -33,7 +33,7 @@ final class ConversationListTopBar: TopBar {
             
             titleLabel.font = FontSpec(.medium, .semibold).font
             titleLabel.textColor = ColorScheme.default().color(withName: ColorSchemeColorTextForeground, variant: .dark)
-            titleLabel.text = "list.title".localized.uppercased()
+            titleLabel.text = ZMUser.selfUser().name.uppercased()
             titleLabel.accessibilityTraits = UIAccessibilityTraitHeader
             titleLabel.setContentCompressionResistancePriority(UILayoutPriorityRequired, for: .horizontal)
             titleLabel.setContentCompressionResistancePriority(UILayoutPriorityRequired, for: .vertical)

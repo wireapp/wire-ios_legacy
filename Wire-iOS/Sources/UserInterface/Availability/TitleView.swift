@@ -78,6 +78,7 @@ import Classy
         titleButton.setAttributedTitle(selectedLabel, for: .highlighted)
         titleButton.sizeToFit()
         titleButton.isEnabled = interactive
+        titleButton.setContentCompressionResistancePriority(1000, for: .vertical)
         updateAccessibilityLabel()
         frame = titleButton.bounds
         createConstraints()
