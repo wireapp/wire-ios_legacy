@@ -28,7 +28,6 @@
 #import "UIView+Borders.h"
 #import "Constants.h"
 #import "WireSyncEngine+iOS.h"
-#import "UIViewController+Orientation.h"
 #import "Wire-Swift.h"
 
 @interface UIViewController (Child)
@@ -169,7 +168,7 @@
     if (topViewController != nil) {
         return topViewController.supportedInterfaceOrientations;
     } else {
-        return [UIViewController wr_supportedInterfaceOrientations];
+        return self.wr_supportedInterfaceOrientations;
     }
 }
 

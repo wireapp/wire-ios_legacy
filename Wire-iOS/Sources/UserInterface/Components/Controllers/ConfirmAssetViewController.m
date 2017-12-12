@@ -32,7 +32,6 @@
 #import "AppDelegate.h"
 #import "UIView+Borders.h"
 @import WireExtensionComponents;
-#import "UIViewController+Orientation.h"
 #import "UIImage+ImageUtilities.h"
 #import "MediaAsset.h"
 
@@ -84,7 +83,7 @@ static const CGFloat MarginInset = 24;
 
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations
 {
-    return [self.class wr_supportedInterfaceOrientations];
+    return self.wr_supportedInterfaceOrientations;
 }
 
 

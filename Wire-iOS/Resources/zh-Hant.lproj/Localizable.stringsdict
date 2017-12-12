@@ -216,7 +216,7 @@
 			<key>one</key>
 			<string>新連結</string>
 			<key>other</key>
-			<string>%d新連結</string>
+			<string>%d個新連結</string>
 		</dict>
 	</dict>
 	<key>conversation.silenced.status.message.image</key>
@@ -230,9 +230,9 @@
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>one</key>
-			<string>新增影像</string>
+			<string>新增圖片</string>
 			<key>other</key>
-			<string>%d新圖像</string>
+			<string>%d幀新圖片</string>
 		</dict>
 	</dict>
 	<key>conversation.silenced.status.message.location</key>
