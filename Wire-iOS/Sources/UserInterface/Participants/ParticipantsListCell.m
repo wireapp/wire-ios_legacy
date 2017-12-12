@@ -77,7 +77,7 @@
     self.userImageView.user = user;
     self.guestLabel.hidden = ![user isGuestInConversation:conversation];
 
-    if([user hasTeam]) {
+    if (ZMUser.selfUser.isTeamMember) {
         self.nameLabel.attributedText = [AvailabilityStringBuilder stringFor:user with:AvailabilityLabelStyleParticipants color:nil];
     } else {
         self.nameLabel.text = [user.displayName uppercaseString];
