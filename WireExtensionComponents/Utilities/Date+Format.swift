@@ -26,4 +26,23 @@ extension Date {
         return (self as NSDate).wr_formattedDate()
     }
 
+    /// Create a NSDateFormatter depends on the date is in this year or not
+    ///
+    /// - Parameter date: reference date to create date formatter
+    /// - Returns: a NSDateFormatter object. If the date param' s year is same as today, return a NSDateFormatter without year component, otherwise return a NSDateFormatter with year component.
+    public static func localizedDateFormatter(date: Date) -> DateFormatter {
+        let today = Date()
+        let isThisYear = Calendar.current.isDate(date, equalTo: today, toGranularity: .year)
+        let locale = NSLocale.current
+
+        var formatString: String?
+        if isThisYear {
+            formatString = DateFormatter.dateFormat(fromTemplate: "EEEEdMMMM", options: 0, locale: locale)
+        } else {
+            formatString = DateFormatter.dateFormat(fromTemplate: "EEEEdMMMMYYYY", options: 0, locale: locale)
+        }
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = formatString
+        return dateFormatter
+    }
 }

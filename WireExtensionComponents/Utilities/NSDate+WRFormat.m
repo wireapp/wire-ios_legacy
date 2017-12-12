@@ -28,7 +28,6 @@ static NSCalendarUnit const WeekMonthYearUnits = NSCalendarUnitWeekOfMonth | NSC
 
 @implementation NSDate (WRFormat)
 
-
 - (NSString *)wr_formattedDate
 {
     NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
