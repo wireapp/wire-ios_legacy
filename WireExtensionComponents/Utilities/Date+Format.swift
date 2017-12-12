@@ -16,9 +16,7 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-
 import Foundation
-
 
 extension Date {
 
@@ -31,9 +29,9 @@ extension Date {
     /// - Parameter date: reference date to create date formatter
     /// - Returns: a NSDateFormatter object. If the date param' s year is same as today,
     ///            return a NSDateFormatter without year component, otherwise return a NSDateFormatter with year component.
-    public static func localizedDateFormatter(date: Date, locale: Locale? = Locale.current) -> DateFormatter {
+    public func localizedDateFormatter(locale: Locale? = Locale.current) -> DateFormatter {
         let today = Date()
-        let isThisYear = Calendar.current.isDate(date, equalTo: today, toGranularity: .year)
+        let isThisYear = Calendar.current.isDate(self, equalTo: today, toGranularity: .year)
 
         var formatString: String?
 
@@ -48,3 +46,4 @@ extension Date {
         return dateFormatter
     }
 }
+

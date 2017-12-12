@@ -19,8 +19,7 @@
 import Foundation
 
 extension NSDate {
-    @objc public static func localizedDateFormatter(date: Date) -> DateFormatter {
-        return Date.localizedDateFormatter(date:date)
+    @objc public func localizedDateFormatter() -> DateFormatter {
+        return self.localizedDateFormatter()
     }
 }
-

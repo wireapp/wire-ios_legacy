@@ -123,7 +123,7 @@
     static NSDateFormatter *dayFormatter = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        dayFormatter = [NSDate localizedDateFormatterWithDate:date];
+        dayFormatter = [date localizedDateFormatter];
     });
 
     return dayFormatter;

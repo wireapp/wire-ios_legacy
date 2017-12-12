@@ -119,7 +119,7 @@ static NSCalendarUnit const WeekMonthYearUnits = NSCalendarUnitWeekOfMonth | NSC
         static NSDateFormatter *elseFormatter;
         static dispatch_once_t elseToken;
         dispatch_once(&elseToken, ^{
-            elseFormatter = [NSDate localizedDateFormatterWithDate: self];
+            elseFormatter = [self localizedDateFormatter];
         });
         
         dateString = [NSString stringWithFormat:@"%@ %@", [elseFormatter stringFromDate:self], [clockTimeFormatter stringFromDate:self]];
