@@ -81,8 +81,17 @@ import WireDataModel
     }
     
     func didSelectAvailability(_ availability: Availability) {
-        ZMUserSession.shared()?.performChanges {
+        ZMUserSession.shared()?.performChanges { [weak self] in
             ZMUser.selfUser().availability = availability
+            self?.trackChanges(with: availability)
+        }
+    }
+    
+    func trackChanges(with availability: Availability) {
+        switch style {
+            case .header:       do { Analytics.shared().tagAvailabilityChanged(to: availability, source: .listHeader)   }
+            case .selfProfile:  do { Analytics.shared().tagAvailabilityChanged(to: availability, source: .settings)     }
+            default: break
         }
     }
     
