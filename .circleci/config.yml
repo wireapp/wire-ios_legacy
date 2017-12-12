@@ -7,7 +7,6 @@ defaults: &defaults
   shell: /bin/bash --login -eo pipefail
 
 # ----------------CACHING----------------
-
 # Gems
 gems_cache: &gems_cache
   key: v4-{{ checksum "Gemfile.lock" }}
