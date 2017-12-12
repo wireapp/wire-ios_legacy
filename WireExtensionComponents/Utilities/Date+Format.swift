@@ -29,13 +29,15 @@ extension Date {
     /// Create a NSDateFormatter depends on the date is in this year or not
     ///
     /// - Parameter date: reference date to create date formatter
-    /// - Returns: a NSDateFormatter object. If the date param' s year is same as today, return a NSDateFormatter without year component, otherwise return a NSDateFormatter with year component.
-    public static func localizedDateFormatter(date: Date) -> DateFormatter {
+    /// - Returns: a NSDateFormatter object. If the date param' s year is same as today,
+    ///            return a NSDateFormatter without year component, otherwise return a NSDateFormatter with year component.
+    public static func localizedDateFormatter(date: Date, locale: Locale? = Locale.current) -> DateFormatter {
         let today = Date()
         let isThisYear = Calendar.current.isDate(date, equalTo: today, toGranularity: .year)
-        let locale = NSLocale.current
 
         var formatString: String?
+
+        /// The order of the components in fromTemplate do not affect the output of DateFormatter.dateFormat()
         if isThisYear {
             formatString = DateFormatter.dateFormat(fromTemplate: "EEEEdMMMM", options: 0, locale: locale)
         } else {
