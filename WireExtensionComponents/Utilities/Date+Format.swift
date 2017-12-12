@@ -29,7 +29,8 @@ extension Date {
     /// - Parameter locale: this parameter is for Unit tests
     /// - Returns: a NSDateFormatter object. If the date's year is same as today,
     ///            return a NSDateFormatter without year component, otherwise return a NSDateFormatter with year component.
-    public func localizedDateFormatter(locale: Locale? = Locale.current) -> DateFormatter {
+    public func localizedDateFormatter() -> DateFormatter {
+        let locale = Locale.current
         let today = Date()
         let isThisYear = Calendar.current.isDate(self, equalTo: today, toGranularity: .year)
 
