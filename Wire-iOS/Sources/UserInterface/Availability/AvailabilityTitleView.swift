@@ -48,7 +48,7 @@ import WireDataModel
         
         var titleFont : UIFont?
         if style == .header {
-            titleFont = FontSpec(.medium, .semibold).font
+            titleFont = FontSpec(.normal, .semibold).font
         } else {
             titleFont = FontSpec(.small, .semibold).font
         }
@@ -90,16 +90,16 @@ import WireDataModel
         fatalError("init(coder:) has not been implemented")
     }
     
-    func configure(context: NSManagedObjectContext? = nil) {
+    func configure() {
         let availability = self.user.availability
-        let icon = AvailabilityStringBuilder.icon(for: availability, with: self.titleColor!)
+        let fontStyle: FontSize = (style == .header) ? .normal : .small
+        let icon = AvailabilityStringBuilder.icon(for: availability, with: self.titleColor!, and: fontStyle)
         let interactive = (style == .selfProfile || style == .header)
         var title = ""
-        let selfUser = context == nil ? ZMUser.selfUser() : ZMUser.selfUser(in: context!)
         
         if self.style == .header {
-            title = self.user.name.uppercased()
-        } else if self.user == selfUser && availability == .none {
+            title = self.user.name
+        } else if self.user == ZMUser.selfUser() && availability == .none {
             title = "availability.message.set_status".localized.uppercased()
         } else if availability != .none {
             title = availability.localizedName.uppercased()

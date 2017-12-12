@@ -21,19 +21,16 @@ import XCTest
 import Classy
 import Cartography
 
-class AvailabilityTitleViewTests: CoreDataSnapshotTestCase {
+class AvailabilityTitleViewTests: ZMSnapshotTestCase {
 
     var sut: AvailabilityTitleView?
+    var selfUser: ZMUser = ZMUser.selfUser()
+    var otherUser: ZMUser?
     
     override func setUp() {
         super.setUp()
-    }
-
-    // MARK: – Setup
-    
-    private func setAvailability(availability: Availability, for user: ZMUser) {
-        user.availability = availability
-        moc.saveOrRollback()
+        otherUser = ZMUser.insertNewObject(in: self.uiMOC)
+        otherUser?.name = "Giovanni"
     }
     
     // MARK: - Self profile
@@ -71,41 +68,56 @@ class AvailabilityTitleViewTests: CoreDataSnapshotTestCase {
     func testThatItRendersCorrectly_Header_BusyAvailability() {
         createTest(for: .header, with: .busy, on: selfUser)
     }
-    
+
     // MARK: - Other profile
     
     func testThatItRendersCorrectly_OtherProfile_NoneAvailability() {
-        createTest(for: .otherProfile, with: .none, on: selfUser)
+        createTest(for: .otherProfile, with: .none, on: otherUser!)
     }
     
     func testThatItRendersCorrectly_OtherProfile_AvailableAvailability() {
-        createTest(for: .otherProfile, with: .available, on: selfUser)
+        createTest(for: .otherProfile, with: .available, on: otherUser!)
     }
     
     func testThatItRendersCorrectly_OtherProfile_AwayAvailability() {
-        createTest(for: .otherProfile, with: .away, on: selfUser)
+        createTest(for: .otherProfile, with: .away, on: otherUser!)
     }
     
     func testThatItRendersCorrectly_OtherProfile_BusyAvailability() {
-        createTest(for: .otherProfile, with: .busy, on: selfUser)
+        createTest(for: .otherProfile, with: .busy, on: otherUser!)
     }
     
     // MARK: - Common methods
     
     private func createTest(for style: AvailabilityTitleViewStyle, with availability: Availability, on user: ZMUser) {
-        /*setAvailability(availability: availability, for: user)
+        updateAvailability(for: user, newValue: availability)
         self.sut = AvailabilityTitleView(user: user, style: style)
         guard let sut = self.sut else { XCTFail(); return }
-        sut.configure(context: moc)
+        sut.configure()
         
         switch style {
             case .header, .selfProfile:     sut.backgroundColor = .black
             case .otherProfile:             sut.backgroundColor = .white
         }
-        verify(view: sut)*/
+        verify(view: sut)
     }
     
+    func updateAvailability(for user: ZMUser, newValue: Availability) {
+        if user == ZMUser.selfUser() {
+            user.availability = newValue
+        } else {
+            // if the user is not self, force the update of the availability
+            user.updateAvailability(newValue)
+        }
+    }
     
-    
+}
+
+extension ZMUser {
+    internal func updateAvailability(_ newValue : Availability) {
+        self.willChangeValue(forKey: AvailabilityKey)
+        self.setPrimitiveValue(NSNumber(value: newValue.rawValue), forKey: AvailabilityKey)
+        self.didChangeValue(forKey: AvailabilityKey)
+    }
 }
 

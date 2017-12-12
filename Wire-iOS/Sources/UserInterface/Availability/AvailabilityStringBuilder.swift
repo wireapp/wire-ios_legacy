@@ -39,12 +39,12 @@
         }
         
         guard let textColor = color, let titleText = title else { return "".attributedString }
-        let icon = AvailabilityStringBuilder.icon(for: availability, with: textColor)
+        let icon = AvailabilityStringBuilder.icon(for: availability, with: textColor, and: .small)
         let attributedText = IconStringsBuilder.iconString(with: icon, title: titleText, interactive: false, color: textColor)
         return attributedText
     }
     
-    static func icon(for availability: Availability, with color: UIColor) -> NSTextAttachment? {
+    static func icon(for availability: Availability, with color: UIColor, and size: FontSize) -> NSTextAttachment? {
         guard availability != .none, let iconType = availability.iconType, let image = UIImage(for: iconType, fontSize: 10, color: color)
             else { return nil }
         
@@ -52,7 +52,8 @@
         attachment.image = image
         let ratio = image.size.width / image.size.height
         let height: CGFloat = 10
-        attachment.bounds = CGRect(x: 0, y: -1, width: height * ratio, height: height)
+        let verticalOffset : CGFloat = (size == .small) ? -1.0 : 0.0
+        attachment.bounds = CGRect(x: 0, y: verticalOffset, width: height * ratio, height: height)
         return attachment
     }
 }
