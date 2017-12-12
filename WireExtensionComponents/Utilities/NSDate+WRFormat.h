@@ -21,5 +21,5 @@
 
 @interface NSDate (WRFormat)
 - (NSString *)wr_formattedDate;
-
++ (NSDateFormatter *)localizedDateFormatter:(NSDate *)date;
 @end

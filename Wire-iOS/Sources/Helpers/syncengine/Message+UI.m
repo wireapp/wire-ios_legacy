@@ -117,13 +117,12 @@
     return longVersionTimeFormatter;
 }
 
-+ (NSDateFormatter *)dayFormatter
++ (NSDateFormatter *)dayFormatter:(NSDate *)date
 {
     static NSDateFormatter *dayFormatter = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        dayFormatter = [[NSDateFormatter alloc] init];
-        dayFormatter.dateFormat = @"d MMMM, EEEE";
+        dayFormatter = [NSDate localizedDateFormatter:date];
     });
 
     return dayFormatter;
