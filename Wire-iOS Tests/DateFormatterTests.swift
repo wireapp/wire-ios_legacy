@@ -30,16 +30,30 @@ final class DateFormatterTests: XCTestCase {
         super.tearDown()
     }
 
-    func testThatDateStringDoNotContainsYearIfDateIsToday(){
+    func testThatDateStringDoesNotContainYearIfDateIsToday(){
         // GIVEN
         let date = Date()
         let dateFormatter = Date.localizedDateFormatter(date: date)
         let dateString = dateFormatter.string(from: date)
 
         let calendar = Calendar.current
-        let year = calendar.component(.year, from: date)
+        let year = calendar.component(.year, from: Date())
 
         // WHEN & THEN
         XCTAssertFalse(dateString.contains(String(year)))
+    }
+
+    func testThatDateStringContainsYearIfDateIsOneYearBeforeToday(){
+        // GIVEN
+        let oneYearBefore = Calendar.current.date(byAdding: .year, value: -1, to: Date())
+
+        let dateFormatter = Date.localizedDateFormatter(date: oneYearBefore!)
+        let dateString = dateFormatter.string(from: oneYearBefore!)
+
+        let calendar = Calendar.current
+        let year = calendar.component(.year, from: Date()) - 1
+
+        // WHEN & THEN
+        XCTAssert(dateString.contains(String(year)), "dateString is \(dateString)")
     }
 }
