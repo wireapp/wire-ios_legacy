@@ -21,6 +21,7 @@
 #import "Message+Formatting.h"
 #import "Constants.h"
 #import "Settings.h"
+#import "Wire-Swift.h"
 
 @import WireExtensionComponents;
 
@@ -122,7 +123,7 @@
     static NSDateFormatter *dayFormatter = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        dayFormatter = [NSDate localizedDateFormatter:date];
+        dayFormatter = [NSDate localizedDateFormatterWithDate:date];
     });
 
     return dayFormatter;

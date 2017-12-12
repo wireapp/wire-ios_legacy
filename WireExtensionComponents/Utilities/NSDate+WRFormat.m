@@ -19,46 +19,15 @@
 
 #import "NSDate+WRFormat.h"
 @import FormatterKit;
+#import <WireExtensionComponents/WireExtensionComponents-Swift.h>
 
 #define NSTimeIntervalOneHour 3600.0
 
 static NSCalendarUnit const DayMonthYearUnits = NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear;
 static NSCalendarUnit const WeekMonthYearUnits = NSCalendarUnitWeekOfMonth | NSCalendarUnitMonth | NSCalendarUnitYear;
 
-
 @implementation NSDate (WRFormat)
 
-
-/**
- Create a NSDateFormatter depends on the date is in this year or not
-
- @param date NSDate object
- @return a NSDateFormatter object. If the date param' s year is same as today, return a NSDateFormatter without year component, otherwise return a NSDateFormatter with year component.
- */
-+ (NSDateFormatter *)localizedDateFormatter:(NSDate *)date
-{
-    NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
-    NSDate *today = [NSDate new];
-    NSDateComponents *todayYearComponents = [gregorian components:NSCalendarUnitYear fromDate:today];
-    NSDateComponents *yearComponents = [gregorian components:NSCalendarUnitYear fromDate:date];
-    BOOL isThisYear = [todayYearComponents isEqual:yearComponents];
-
-    NSLocale *locale = [NSLocale currentLocale];
-
-    NSString *formatString = nil;
-
-    if (isThisYear) {
-        formatString = [NSDateFormatter dateFormatFromTemplate:@"EEEEdMMMM" options:0 locale:locale];
-    }
-    else {
-        formatString = [NSDateFormatter dateFormatFromTemplate:@"EEEEdMMMMYYYY" options:0 locale:locale];
-    }
-
-    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    [dateFormatter setDateFormat:formatString];
-
-    return dateFormatter;
-}
 
 - (NSString *)wr_formattedDate
 {
@@ -151,7 +120,7 @@ static NSCalendarUnit const WeekMonthYearUnits = NSCalendarUnitWeekOfMonth | NSC
         static NSDateFormatter *elseFormatter;
         static dispatch_once_t elseToken;
         dispatch_once(&elseToken, ^{
-            elseFormatter = [NSDate localizedDateFormatter:self];
+            elseFormatter = [NSDate localizedDateFormatterWithDate: self];
         });
         
         dateString = [NSString stringWithFormat:@"%@ %@", [elseFormatter stringFromDate:self], [clockTimeFormatter stringFromDate:self]];
