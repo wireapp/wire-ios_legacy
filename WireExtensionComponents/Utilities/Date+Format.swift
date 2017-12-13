@@ -26,25 +26,32 @@ extension Date {
 
     /// Create a NSDateFormatter depends on the date is in this year or not
     ///
-    /// - Parameter locale: locale of the DateFormatter. If not provided, defautl is Locale.current. (this parameter is for Unit tests)
     /// - Returns: a NSDateFormatter object. If the date's year is same as today,
     ///            return a NSDateFormatter without year component, otherwise return a NSDateFormatter with year component.
     public func localizedDateFormatter() -> DateFormatter {
-        let locale = Locale.current
+        let formatString = localizedDateFormatString()
+
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = formatString
+        return dateFormatter
+    }
+
+    public func localizedDateFormatString(locale: Locale? = Locale.current) -> String {
         let today = Date()
+
         let isThisYear = Calendar.current.isDate(self, equalTo: today, toGranularity: .year)
 
-        var formatString: String?
-
         /// The order of the components in fromTemplate do not affect the output of DateFormatter.dateFormat()
+
+        var formatString:String?
+
         if isThisYear {
             formatString = DateFormatter.dateFormat(fromTemplate: "EEEEdMMMM", options: 0, locale: locale)
         } else {
             formatString = DateFormatter.dateFormat(fromTemplate: "EEEEdMMMMYYYY", options: 0, locale: locale)
         }
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = formatString
-        return dateFormatter
+
+        return formatString!
     }
 }
 
