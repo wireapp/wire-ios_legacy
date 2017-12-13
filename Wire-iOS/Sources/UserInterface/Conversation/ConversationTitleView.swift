@@ -30,12 +30,7 @@ class ConversationTitleView: TitleView {
         self.interactive = interactive
         super.init()
         CASStyler.default().styleItem(self)
-        
         configure()
-        
-        self.tapHandler = { button in
-            
-        }
     }
     
     public required init?(coder aDecoder: NSCoder) {

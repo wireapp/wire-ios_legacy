@@ -88,7 +88,7 @@ class AvailabilityLabelTests: ZMSnapshotTestCase {
     // MARK: - Placeholder labels
 
     func testThatItRendersCorrectly_Placeholder_NoneAvailability() {
-        verify(view: createLabelForPlaceholder(.none))
+        XCTAssertTrue(createLabelForPlaceholder(.none).frame.size.width == 0.0)
     }
     
     func testThatItRendersCorrectly_Placeholder_AvailableAvailability() {

@@ -46,17 +46,15 @@ extension UIStackView {
      - custom spacing can't be smaller than 2x the minimum spacing
      */
     func wr_addCustomSpacing(_ customSpacing: CGFloat, after view: UIView) {
-        if let spacerIndex = subviews.index(of: view)?.advanced(by: 1) {
-            if let spacer = subviews[spacerIndex] as? SpacingView {
-                if view.isHidden || customSpacing < (spacing * 2) {
-                    spacer.isHidden = true
-                } else {
-                    spacer.size = customSpacing - spacing
-                }
-            }
+        guard let spacerIndex = subviews.index(of: view)?.advanced(by: 1),
+        let spacer = subviews[spacerIndex] as? SpacingView else { return }
+        
+        if view.isHidden || customSpacing < (spacing * 2) {
+            spacer.isHidden = true
+        } else {
+            spacer.size = customSpacing - spacing
         }
     }
-    
 }
 
 fileprivate class SpacingView : UIView {

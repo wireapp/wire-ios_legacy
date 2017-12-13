@@ -46,10 +46,7 @@ import Classy
     
     private func createConstraints() {
         constrain(self, titleButton) { view, button in
-            button.leading == view.leading
-            button.trailing == view.trailing
-            button.top == view.top
-            button.bottom == view.bottom
+            button.edges == view.edges
         }
     }
     

@@ -33,8 +33,8 @@ import WireDataModel
         self.user = user
         self.style = style
         
-        var titleColor: UIColor?
-        var titleColorSelected: UIColor?
+        var titleColor: UIColor
+        var titleColorSelected: UIColor
         
         if style == .selfProfile || style == .header {
             let variant = ColorSchemeVariant.dark
@@ -53,7 +53,7 @@ import WireDataModel
             titleFont = FontSpec(.small, .semibold).font
         }
         
-        super.init(color: titleColor!, selectedColor: titleColorSelected!, font: titleFont!)
+        super.init(color: titleColor, selectedColor: titleColorSelected, font: titleFont)
         
         if let sharedSession = ZMUserSession.shared() {
             self.observerToken = UserChangeInfo.add(observer: self, for: user, userSession: sharedSession)

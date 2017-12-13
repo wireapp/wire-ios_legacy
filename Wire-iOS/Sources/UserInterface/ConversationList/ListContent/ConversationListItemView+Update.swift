@@ -49,7 +49,7 @@ extension ConversationListItemView {
         
         var title = "".attributedString
         
-        if ZMUser.selfUser().hasTeam, let connectedUser = conversation.connectedUser {
+        if ZMUser.selfUser().isTeamMember, let connectedUser = conversation.connectedUser {
             title = AvailabilityStringBuilder.string(for: connectedUser, with: .list)
         } else {
             title = conversation.displayName.attributedString

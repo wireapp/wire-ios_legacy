@@ -462,7 +462,7 @@
     } else {
         self.inputBar.availabilityPlaceholder = [AvailabilityStringBuilder stringFor:self.conversation.connectedUser
                                                                                 with:AvailabilityLabelStylePlaceholder
-                                                                               color:_inputBar.placeholderColor];
+                                                                               color:self.inputBar.placeholderColor];
     }
     
 }

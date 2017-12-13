@@ -20,7 +20,7 @@
 
     static func string(for user: ZMUser, with style: AvailabilityLabelStyle, color: UIColor? = nil) -> NSAttributedString {
         
-        var title: String?
+        var title: String = ""
         var color = color
         let availability = user.availability
         var fontSize: FontSize = .normal
@@ -35,14 +35,17 @@
                 color = ColorScheme.default().color(withName: ColorSchemeColorTextForeground)
             }
             case .placeholder: do {
-                title = "availability.\(availability.canonicalName).placeholder".localized(args: user.displayName).uppercased()
+                if availability != .none { //Should use the default placeholder string
+                    title = "availability.\(availability.canonicalName).placeholder".localized(args: user.displayName).uppercased()
+                }
+                
                 fontSize = .small
             }
         }
         
-        guard let textColor = color, let titleText = title else { return "".attributedString }
+        guard let textColor = color else { return "".attributedString }
         let icon = AvailabilityStringBuilder.icon(for: availability, with: textColor, and: fontSize)
-        let attributedText = IconStringsBuilder.iconString(with: icon, title: titleText, interactive: false, color: textColor)
+        let attributedText = IconStringsBuilder.iconString(with: icon, title: title, interactive: false, color: textColor)
         return attributedText
     }
     
