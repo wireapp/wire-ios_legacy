@@ -22,6 +22,7 @@
 class TextMessageCellTests: ZMSnapshotTestCase {
 
     var sut: TextMessageCell!
+    let dummyServerTimestamp = Date(timeIntervalSince1970: 1234567230)
 
     var layoutProperties: ConversationCellLayoutProperties {
         let layoutProperties = ConversationCellLayoutProperties()
@@ -41,6 +42,8 @@ class TextMessageCellTests: ZMSnapshotTestCase {
             $0.locale = NSLocale(localeIdentifier: "en_US") as Locale!
             $0.timeZone = NSTimeZone(forSecondsFromGMT: 0) as TimeZone!
         }
+
+        recordMode = true
     }
     
     func testThatItRendersATextMessage_Sent() {
@@ -170,7 +173,7 @@ class TextMessageCellTests: ZMSnapshotTestCase {
     func testThatItRendersMessageWithBurstTimestamp() {
         let props = layoutProperties
         props.showBurstTimestamp = true
-        sut.configure(for: mockMessage(state: .sent), layoutProperties: props)
+        sut.configure(for: mockMessage(state: .sent), layoutProperties: props) ///TODO: locale is not passed to the function
         verify(view: sut.prepareForSnapshot())
     }
 
@@ -196,14 +199,36 @@ class TextMessageCellTests: ZMSnapshotTestCase {
         sut.configure(for: mockMessage(state: .sent), layoutProperties: props)
         verify(view: sut.prepareForSnapshot())
     }
+
+
+    func testThatItRendersMessageWithDayTimestampWithDELocale() {
+        Message.dayFormatter(dummyServerTimestamp).dateFormat = dummyServerTimestamp.localizedDateFormatString(locale: Locale(identifier: "de"))
+
+        let props = layoutProperties
+        props.showDayBurstTimestamp = true
+        sut.configure(for: mockMessage(state: .sent), layoutProperties: props)
+        verify(view: sut.prepareForSnapshot())
+    }
+
+    func testThatItRendersMessageWithDayTimestamp_UnreadWithDELocale() {
+        [Message.shortVersionDateFormatter(), Message.longVersionTimeFormatter()].forEach {
+            $0.locale = Locale(identifier: "de") ///FIXME, set locale not work??
+        }
+
+        let props = layoutProperties
+        props.showDayBurstTimestamp = true
+        props.showUnreadMarker = true
+        sut.configure(for: mockMessage(state: .sent), layoutProperties: props)
+        verify(view: sut.prepareForSnapshot())
+    }
     
     // MARK: - Helper
-    
+
     func mockMessage(_ text: String? = "Hello World", edited: Bool = false, state: ZMDeliveryState = .delivered, obfuscated: Bool = false) -> MockMessage {
         let message = MockMessageFactory.textMessage(withText: text)
         message?.deliveryState = state
         message?.isObfuscated = obfuscated
-        message?.serverTimestamp = Date(timeIntervalSince1970: 1234567230)
+        message?.serverTimestamp = dummyServerTimestamp
         message?.updatedAt = edited ? Date(timeIntervalSince1970: 0) : nil
         return message!
     }
