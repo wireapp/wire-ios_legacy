@@ -164,7 +164,7 @@
     
     if ([DeveloperMenuState developerMenuEnabled]) { //better way of dealing with this?
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(requestLoopNotification:) name:ZMTransportRequestLoopNotificationName object:nil];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(potentialErrorNotification:) name:ZMPotentialErrorDetectedNotificationName object:nil];
+//        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(potentialErrorNotification:) name:ZMPotentialErrorDetectedNotificationName object:nil]; // TODO enable
     }
     
     self.userObserverToken = [UserChangeInfo addObserver:self forUser:[ZMUser selfUser] userSession:[ZMUserSession sharedSession]];
