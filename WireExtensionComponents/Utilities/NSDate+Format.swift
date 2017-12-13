@@ -20,6 +20,6 @@ import Foundation
 
 extension NSDate {
     @objc public func localizedDateFormatter() -> DateFormatter {
-        return self.localizedDateFormatter()
+        return (self as Date).localizedDateFormatter()
     }
 }
