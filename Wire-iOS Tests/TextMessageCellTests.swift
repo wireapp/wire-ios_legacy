@@ -207,7 +207,7 @@ class TextMessageCellTests: ZMSnapshotTestCase {
     }
 
     func testThatItRendersMessageWithDayTimestampButNoYearWithDELocale() {
-        setDayFormatterLocale(identifier: "de", date: Date().startOfYear())
+        setDayFormatterLocale(identifier: "de_DE", date: Date().startOfYear())
 
         let props = layoutProperties
         props.showDayBurstTimestamp = true
@@ -216,7 +216,7 @@ class TextMessageCellTests: ZMSnapshotTestCase {
     }
 
     func testThatItRendersMessageWithDayTimestampWithDELocale() {
-        setDayFormatterLocale(identifier: "de", date: dummyServerTimestamp)
+        setDayFormatterLocale(identifier: "de_DE", date: dummyServerTimestamp)
 
         let props = layoutProperties
         props.showDayBurstTimestamp = true

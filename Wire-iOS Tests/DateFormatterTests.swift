@@ -63,8 +63,7 @@ final class DateFormatterTests: XCTestCase {
         let localeIdentifier = "en-US"
         let dateString = dateStringFromLocaleIdentifier(localeIdentifier: localeIdentifier)
 
-        // WHEN
-        // THEN
+        // WHEN & THEN
         let calendar = Calendar.current
         let day = calendar.component(.day, from: Date())
 
@@ -78,8 +77,7 @@ final class DateFormatterTests: XCTestCase {
         let localeIdentifier = "zh-TW"
         let dateString = dateStringFromLocaleIdentifier(localeIdentifier: localeIdentifier, date: oneYearBefore)
 
-        // WHEN
-        // THEN
+        // WHEN & THEN
         let year = Calendar.current.component(.year, from: Date()) - 1
 
         XCTAssert(dateString.hasPrefix(String(year)), "dateString is \(dateString)")
@@ -88,11 +86,10 @@ final class DateFormatterTests: XCTestCase {
     /// DM date format
     func testThatDateStringIsLocalizedToDEFormatWithMonthSuffix() {
         // GIVEN
-        let localeIdentifier = "de"
+        let localeIdentifier = "de_DE"
         let dateString = dateStringFromLocaleIdentifier(localeIdentifier: localeIdentifier)
 
-        // WHEN
-        // THEN
+        // WHEN & THEN
         let monthDateFormatter = DateFormatter()
         monthDateFormatter.dateFormat = "MMMM"
         let nameOfMonth = monthDateFormatter.string(from: Date())
@@ -106,8 +103,7 @@ final class DateFormatterTests: XCTestCase {
         let localeIdentifier = "zh-HK"
         let dateString = dateStringFromLocaleIdentifier(localeIdentifier: localeIdentifier)
 
-        // WHEN
-        // THEN
+        // WHEN & THEN
         let month = Calendar.current.component(.month, from: Date())
 
         XCTAssert(dateString.hasPrefix(String(month)), "dateString is \(dateString)")
