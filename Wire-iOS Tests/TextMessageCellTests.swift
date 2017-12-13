@@ -16,7 +16,6 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-
 @testable import Wire
 
 class TextMessageCellTests: ZMSnapshotTestCase {
@@ -43,9 +42,9 @@ class TextMessageCellTests: ZMSnapshotTestCase {
             $0.timeZone = NSTimeZone(forSecondsFromGMT: 0) as TimeZone!
         }
 
-//        recordMode = true
+        recordMode = true
     }
-    
+
     func testThatItRendersATextMessage_Sent() {
         sut.setSelected(true, animated: false)
         sut.configure(for: mockMessage(state: .sent), layoutProperties: layoutProperties)
@@ -56,32 +55,32 @@ class TextMessageCellTests: ZMSnapshotTestCase {
         sut.configure(for: mockMessage(state: .sent, obfuscated: true), layoutProperties: layoutProperties)
         verify(view: sut.prepareForSnapshot())
     }
-    
+
     func testThatItRendersATextMessage_Delivered() {
         sut.setSelected(true, animated: false)
         sut.configure(for: mockMessage(state: .delivered), layoutProperties: layoutProperties)
         verify(view: sut.prepareForSnapshot())
     }
-    
+
     func testThatItRendersATextMessage_Expired() {
         sut.configure(for: mockMessage(state: .failedToSend), layoutProperties: layoutProperties)
         verify(view: sut.prepareForSnapshot())
     }
-    
+
     func testThatItRendersATextMessage_Selected() {
         sut.setSelected(true, animated: false)
         sut.configure(for: mockMessage(), layoutProperties: layoutProperties)
         verify(view: sut.prepareForSnapshot())
     }
-    
+
     func testThatItRendersATextMessage_Pending_Selected() {
         sut.setSelected(true, animated: false)
         sut.configure(for: mockMessage(state: .pending), layoutProperties: layoutProperties)
         verify(view: sut.prepareForSnapshot())
     }
-    
+
     func testThatItRendersATextMessage_LongText() {
-        let text = "".padding(toLength: 71,  withPad: "Hello ", startingAt: 0)
+        let text = "".padding(toLength: 71, withPad: "Hello ", startingAt: 0)
         sut.configure(for: mockMessage(text), layoutProperties: layoutProperties)
         verify(view: sut.prepareForSnapshot())
     }
@@ -91,28 +90,28 @@ class TextMessageCellTests: ZMSnapshotTestCase {
         sut.configure(for: mockMessage(edited: true), layoutProperties: layoutProperties)
         verify(view: sut.prepareForSnapshot())
     }
-    
+
     func testThatItRendersEditedTimestampCorrectly_Selected_LongText() {
         let text = "".padding(toLength: 70, withPad: "Hello ", startingAt: 0)
         sut.setSelected(true, animated: false)
         sut.configure(for: mockMessage(text, edited: true), layoutProperties: layoutProperties)
         verify(view: sut.prepareForSnapshot())
     }
-    
+
     func testThatItRendersEditedTimestampCorrectly_Selected_LongText_Pending() {
         let text = "".padding(toLength: 70, withPad: "Hello ", startingAt: 0)
         sut.setSelected(true, animated: false)
         sut.configure(for: mockMessage(text, edited: true, state: .pending), layoutProperties: layoutProperties)
         verify(view: sut.prepareForSnapshot())
     }
-    
+
     func testThatRenderLastSentMessageWithoutLikeIcon() {
         let layoutProperties = self.layoutProperties
         layoutProperties.alwaysShowDeliveryState = true
         sut.configure(for: mockMessage(state: .sent), layoutProperties: layoutProperties)
         verify(view: sut.prepareForSnapshot())
     }
-    
+
     func testThatRenderLastSentMessageWithLikeIcon_whenSelected() {
         let layoutProperties = self.layoutProperties
         layoutProperties.alwaysShowDeliveryState = true
@@ -149,7 +148,7 @@ class TextMessageCellTests: ZMSnapshotTestCase {
         sut.configure(for: message, layoutProperties: layoutProperties)
         verify(view: sut.prepareForSnapshot())
     }
-    
+
     func testThatItRendersATextMessage_LikedByTwoPeopleIncludingSelf() {
         let message = mockMessage(state: .sent)
         message.backingUsersReaction = [MessageReaction.like.unicodeValue: [selfUser] + [otherUsers.first!]]
@@ -163,7 +162,7 @@ class TextMessageCellTests: ZMSnapshotTestCase {
         sut.configure(for: message, layoutProperties: layoutProperties)
         verify(view: sut.prepareForSnapshot())
     }
-    
+
     func testThatItRendersATextMessage_LikeTooltipNotShownForSelf() {
         sut.setSelected(true, animated: false)
         sut.configure(for: mockMessage(), layoutProperties: layoutProperties)
@@ -200,19 +199,26 @@ class TextMessageCellTests: ZMSnapshotTestCase {
         verify(view: sut.prepareForSnapshot())
     }
 
+    func testThatItRendersMessageWithDayTimestampButNoYearWithEN_USLocale() {
+        setDayFormatterLocale(identifier: "en_US", date: Date().startOfYear())
 
-    func setDayFormatterLocale(identifier: String) {
-        Message.dayFormatter(dummyServerTimestamp).dateFormat = dummyServerTimestamp.localizedDateFormatString(locale: Locale(identifier: identifier))
+        let props = layoutProperties
+        props.showDayBurstTimestamp = true
+        sut.configure(for: mockMessage(state: .sent), layoutProperties: props)
+        verify(view: sut.prepareForSnapshot())
     }
 
-//    func setDayFormatterLocaleToFirstDayOfThisYear(identifier: String) {
-//        Message.dayFormatter(dummyServerTimestamp).dateFormat = dummyServerTimestamp.localizedDateFormatString(locale: Locale(identifier: identifier))
-//    }
+    func testThatItRendersMessageWithDayTimestampButNoYearWithDELocale() {
+        setDayFormatterLocale(identifier: "de", date: Date().startOfYear())
 
-    ///TODO: snspshots for date of 1st of this year (no year component)
+        let props = layoutProperties
+        props.showDayBurstTimestamp = true
+        sut.configure(for: mockMessage(state: .sent), layoutProperties: props)
+        verify(view: sut.prepareForSnapshot())
+    }
 
     func testThatItRendersMessageWithDayTimestampWithDELocale() {
-        setDayFormatterLocale(identifier: "de")
+        setDayFormatterLocale(identifier: "de", date: dummyServerTimestamp)
 
         let props = layoutProperties
         props.showDayBurstTimestamp = true
@@ -220,31 +226,11 @@ class TextMessageCellTests: ZMSnapshotTestCase {
         verify(view: sut.prepareForSnapshot())
     }
 
-    func testThatItRendersMessageWithDayTimestamp_UnreadWithDELocale() {
-        setDayFormatterLocale(identifier: "de")
-
-        let props = layoutProperties
-        props.showDayBurstTimestamp = true
-        props.showUnreadMarker = true
-        sut.configure(for: mockMessage(state: .sent), layoutProperties: props)
-        verify(view: sut.prepareForSnapshot())
-    }
-    
     func testThatItRendersMessageWithDayTimestampWithHKLocale() {
-        setDayFormatterLocale(identifier: "zh-HK")
+        setDayFormatterLocale(identifier: "zh-HK", date: dummyServerTimestamp)
 
         let props = layoutProperties
         props.showDayBurstTimestamp = true
-        sut.configure(for: mockMessage(state: .sent), layoutProperties: props)
-        verify(view: sut.prepareForSnapshot())
-    }
-
-    func testThatItRendersMessageWithDayTimestamp_UnreadWithHKLocale() {
-        setDayFormatterLocale(identifier: "zh-HK")
-
-        let props = layoutProperties
-        props.showDayBurstTimestamp = true
-        props.showUnreadMarker = true
         sut.configure(for: mockMessage(state: .sent), layoutProperties: props)
         verify(view: sut.prepareForSnapshot())
     }
@@ -259,13 +245,17 @@ class TextMessageCellTests: ZMSnapshotTestCase {
         message?.updatedAt = edited ? Date(timeIntervalSince1970: 0) : nil
         return message!
     }
-    
+
     var selfUser: ZMUser {
         return (MockUser.mockSelf() as AnyObject) as! ZMUser
     }
 
     var otherUsers: [ZMUser] {
         return MockUser.mockUsers().map { $0 }
+    }
+
+    func setDayFormatterLocale(identifier: String, date: Date) {
+        Message.dayFormatter(date).dateFormat = date.localizedDateFormatString(locale: Locale(identifier: identifier))
     }
 
 }
@@ -278,3 +268,16 @@ private extension TextMessageCell {
     }
 
 }
+
+extension Date {
+    func startOfYear() -> Date {
+        var components = DateComponents()
+        components.year = Calendar.current.component(.year, from: self)
+        components.month = 1
+        components.day = 1
+        components.hour = 1
+        components.minute = 0
+        return Calendar.current.date(from: components)!
+    }
+}
+
