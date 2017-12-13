@@ -41,23 +41,21 @@ class MediaPlayerController : NSObject {
     }
     
     deinit {
-        delegate?.mediaPlayer(self, didChangeTo: MediaPlayerState.completed)
-        
         self.playerRateObserver = nil
+        delegate?.mediaPlayer(self, didChangeTo: MediaPlayerState.completed)        
     }
-    
 }
 
 extension MediaPlayerController : MediaPlayer {
-    
+
     var title: String {
         return message.fileMessageData?.filename ?? ""
     }
-    
+
     var sourceMessage: ZMConversationMessage! {
         return message
     }
-    
+
     var state: MediaPlayerState {
         if player?.rate > 0 {
             return MediaPlayerState.playing
@@ -65,27 +63,27 @@ extension MediaPlayerController : MediaPlayer {
             return MediaPlayerState.paused
         }
     }
-    
+
     var error: Error! {
         return nil
     }
-    
+
     func play() {
         player?.play()
     }
-    
+
     func stop() {
         player?.pause()
     }
-    
+
     func pause() {
         player?.pause()
     }
-    
+
 }
 
 extension MediaPlayerController {
-    
+
     func playerRateChanged() {
         if player?.rate > 0 {
             delegate?.mediaPlayer(self, didChangeTo: MediaPlayerState.playing)
@@ -93,6 +91,6 @@ extension MediaPlayerController {
             delegate?.mediaPlayer(self, didChangeTo: MediaPlayerState.paused)
         }
     }
-    
+
 }
 

@@ -39,4 +39,3 @@ extension AVPlayerViewControllerWithoutStatusBar {
         return true
     }
 }
-
