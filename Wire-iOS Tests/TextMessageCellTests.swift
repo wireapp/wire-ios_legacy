@@ -41,8 +41,6 @@ class TextMessageCellTests: ZMSnapshotTestCase {
             $0.locale = NSLocale(localeIdentifier: "en_US") as Locale!
             $0.timeZone = NSTimeZone(forSecondsFromGMT: 0) as TimeZone!
         }
-
-        recordMode = true
     }
 
     func testThatItRendersATextMessage_Sent() {
