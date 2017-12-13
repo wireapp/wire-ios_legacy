@@ -26,6 +26,7 @@ buildfiles_cache: &buildfiles_cache
 setup_environment: &setup_environment
   name: "Setup environment"
   command: |
+    mkdir -p build
     curl -O "${DEPENDENCIES_BASE_URL}/environment.sh"
     bash environment.sh
 
