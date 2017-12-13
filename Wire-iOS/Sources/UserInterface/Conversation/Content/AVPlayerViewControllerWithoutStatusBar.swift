@@ -16,7 +16,6 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-
 import AVKit
 
 final class AVPlayerViewControllerWithoutStatusBar: AVPlayerViewController {
@@ -32,7 +31,6 @@ final class AVPlayerViewControllerWithoutStatusBar: AVPlayerViewController {
     }
 }
 
-
 // MARK: - Status Bar
 
 extension AVPlayerViewControllerWithoutStatusBar {
@@ -41,3 +39,4 @@ extension AVPlayerViewControllerWithoutStatusBar {
         return true
     }
 }
+
