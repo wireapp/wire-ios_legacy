@@ -170,7 +170,7 @@ class TextMessageCellTests: ZMSnapshotTestCase {
     func testThatItRendersMessageWithBurstTimestamp() {
         let props = layoutProperties
         props.showBurstTimestamp = true
-        sut.configure(for: mockMessage(state: .sent), layoutProperties: props) ///TODO: locale is not passed to the function
+        sut.configure(for: mockMessage(state: .sent), layoutProperties: props)
         verify(view: sut.prepareForSnapshot())
     }
 
