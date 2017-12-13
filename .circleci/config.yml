@@ -45,22 +45,6 @@ jobs:
     - run: 
         name: "Build"
         command: bash build.sh
-    - save_cache: *gems_cache
-    - save_cache: *carthage_cache
-    - persist_to_workspace:
-        root: .
-        paths: 
-          - DerivedData/Build/Products/*
-
-  test:
-    <<: *defaults
-    steps:
-    - checkout
-    - attach_workspace:
-        at: .
-    - run: *setup_environment
-    - restore_cache: *gems_cache
-    - restore_cache: *carthage_cache
     - run: 
         name: "Test"
         command: bash test.sh
@@ -71,14 +55,5 @@ jobs:
         path: SnapshotResults
     - store_test_results:
         path: junit
-
-
-# ----------------WORKFLOWS----------------
-workflows:
-  version: 2
-  build-and-test:
-    jobs:
-      - build
-      - test:
-          requires:
-            - build
+    - save_cache: *gems_cache
+    - save_cache: *carthage_cache
