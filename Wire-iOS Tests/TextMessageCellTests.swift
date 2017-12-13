@@ -43,7 +43,7 @@ class TextMessageCellTests: ZMSnapshotTestCase {
             $0.timeZone = NSTimeZone(forSecondsFromGMT: 0) as TimeZone!
         }
 
-        recordMode = true
+//        recordMode = true
     }
     
     func testThatItRendersATextMessage_Sent() {
@@ -201,14 +201,18 @@ class TextMessageCellTests: ZMSnapshotTestCase {
     }
 
 
-    func setDayFormatterLocal(identifier: String) {
+    func setDayFormatterLocale(identifier: String) {
         Message.dayFormatter(dummyServerTimestamp).dateFormat = dummyServerTimestamp.localizedDateFormatString(locale: Locale(identifier: identifier))
     }
+
+//    func setDayFormatterLocaleToFirstDayOfThisYear(identifier: String) {
+//        Message.dayFormatter(dummyServerTimestamp).dateFormat = dummyServerTimestamp.localizedDateFormatString(locale: Locale(identifier: identifier))
+//    }
 
     ///TODO: snspshots for date of 1st of this year (no year component)
 
     func testThatItRendersMessageWithDayTimestampWithDELocale() {
-        setDayFormatterLocal(identifier: "de")
+        setDayFormatterLocale(identifier: "de")
 
         let props = layoutProperties
         props.showDayBurstTimestamp = true
@@ -217,7 +221,7 @@ class TextMessageCellTests: ZMSnapshotTestCase {
     }
 
     func testThatItRendersMessageWithDayTimestamp_UnreadWithDELocale() {
-        setDayFormatterLocal(identifier: "de")
+        setDayFormatterLocale(identifier: "de")
 
         let props = layoutProperties
         props.showDayBurstTimestamp = true
@@ -227,7 +231,7 @@ class TextMessageCellTests: ZMSnapshotTestCase {
     }
     
     func testThatItRendersMessageWithDayTimestampWithHKLocale() {
-        setDayFormatterLocal(identifier: "zh-HK")
+        setDayFormatterLocale(identifier: "zh-HK")
 
         let props = layoutProperties
         props.showDayBurstTimestamp = true
@@ -236,7 +240,7 @@ class TextMessageCellTests: ZMSnapshotTestCase {
     }
 
     func testThatItRendersMessageWithDayTimestamp_UnreadWithHKLocale() {
-        setDayFormatterLocal(identifier: "zh-HK")
+        setDayFormatterLocale(identifier: "zh-HK")
 
         let props = layoutProperties
         props.showDayBurstTimestamp = true
