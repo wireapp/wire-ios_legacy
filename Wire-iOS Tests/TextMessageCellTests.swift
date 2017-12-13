@@ -201,8 +201,12 @@ class TextMessageCellTests: ZMSnapshotTestCase {
     }
 
 
-    func testThatItRendersMessageWithDayTimestampWithDELocale() {
+    func setDayFormatterLocal() {
         Message.dayFormatter(dummyServerTimestamp).dateFormat = dummyServerTimestamp.localizedDateFormatString(locale: Locale(identifier: "de"))
+    }
+
+    func testThatItRendersMessageWithDayTimestampWithDELocale() {
+        setDayFormatterLocal()
 
         let props = layoutProperties
         props.showDayBurstTimestamp = true
@@ -211,9 +215,7 @@ class TextMessageCellTests: ZMSnapshotTestCase {
     }
 
     func testThatItRendersMessageWithDayTimestamp_UnreadWithDELocale() {
-        [Message.shortVersionDateFormatter(), Message.longVersionTimeFormatter()].forEach {
-            $0.locale = Locale(identifier: "de") ///FIXME, set locale not work??
-        }
+        setDayFormatterLocal()
 
         let props = layoutProperties
         props.showDayBurstTimestamp = true
