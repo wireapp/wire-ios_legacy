@@ -17,14 +17,16 @@
 //
 
 import UIKit
+import Cartography
 
-extension UIStackView {
+class UICustomSpacingStackView: UIView {
+
+    private var stackView: UIStackView
     
     /**
      This initializer must be used if you intend to call wr_addCustomSpacing.
      */
-    convenience init(customSpacedArrangedSubviews subviews : [UIView]) {
-        
+    init(customSpacedArrangedSubviews subviews : [UIView]) {
         var subviewsWithSpacers : [UIView] = []
         
         subviews.forEach { view in
@@ -32,7 +34,17 @@ extension UIStackView {
             subviewsWithSpacers.append(SpacingView(0))
         }
         
-        self.init(arrangedSubviews: subviewsWithSpacers)
+        stackView = UIStackView(arrangedSubviews: subviewsWithSpacers)
+        
+        super.init(frame: .zero)
+        
+        addSubview(stackView)
+        createConstraints()
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        stackView = UIStackView()
+        super.init(coder: aDecoder)
     }
     
     /**
@@ -46,15 +58,37 @@ extension UIStackView {
      - custom spacing can't be smaller than 2x the minimum spacing
      */
     func wr_addCustomSpacing(_ customSpacing: CGFloat, after view: UIView) {
-        guard let spacerIndex = subviews.index(of: view)?.advanced(by: 1),
-        let spacer = subviews[spacerIndex] as? SpacingView else { return }
+        guard let spacerIndex = stackView.subviews.index(of: view)?.advanced(by: 1),
+            let spacer = stackView.subviews[spacerIndex] as? SpacingView else { return }
         
-        if view.isHidden || customSpacing < (spacing * 2) {
+        if view.isHidden || customSpacing < (stackView.spacing * 2) {
             spacer.isHidden = true
         } else {
-            spacer.size = customSpacing - spacing
+            spacer.size = customSpacing - stackView.spacing
         }
     }
+    
+    private func createConstraints() {
+        constrain(self, stackView) { view, stackView in
+            stackView.edges == view.edges
+        }
+    }
+    
+    var alignment: UIStackViewAlignment {
+        get { return stackView.alignment }
+        set { stackView.alignment = newValue }
+    }
+    
+    var axis: UILayoutConstraintAxis {
+        get { return stackView.axis }
+        set { stackView.axis = newValue }
+    }
+    
+    var spacing: CGFloat {
+        get { return stackView.spacing }
+        set { stackView.spacing = newValue }
+    }
+    
 }
 
 fileprivate class SpacingView : UIView {
@@ -79,3 +113,4 @@ fileprivate class SpacingView : UIView {
     }
     
 }
+

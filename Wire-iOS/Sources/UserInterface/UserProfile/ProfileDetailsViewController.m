@@ -86,7 +86,7 @@ typedef NS_ENUM(NSUInteger, ProfileUserAction) {
 @property (nonatomic) UILabel *teamsGuestLabel;
 @property (nonatomic) BOOL showGuestLabel;
 @property (nonatomic) AvailabilityTitleView *availabilityView;
-@property (nonatomic) UIStackView *stackView;
+@property (nonatomic) UICustomSpacingStackView *stackView;
 
 @end
 
@@ -121,7 +121,7 @@ typedef NS_ENUM(NSUInteger, ProfileUserAction) {
     self.teamsGuestLabel.hidden = !self.showGuestLabel;
     self.availabilityView.hidden = !ZMUser.selfUser.isTeamMember || self.fullUser.availability == AvailabilityNone;
 
-    self.stackView = [[UIStackView alloc] initWithCustomSpacedArrangedSubviews:@[self.userImageView, self.teamsGuestLabel, self.availabilityView]];
+    self.stackView = [[UICustomSpacingStackView alloc] initWithCustomSpacedArrangedSubviews:@[self.userImageView, self.teamsGuestLabel, self.availabilityView]];
     self.stackView.axis = UILayoutConstraintAxisVertical;
     self.stackView.spacing = 0;
     self.stackView.alignment = UIStackViewAlignmentCenter;

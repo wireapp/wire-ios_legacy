@@ -25,7 +25,7 @@ import Cartography
     public let handleLabel = UILabel()
     public let teamNameLabel = UILabel()
     public var availabilityView = AvailabilityTitleView(user: ZMUser.selfUser(), style: .selfProfile)
-    var stackView : UIStackView!
+    var stackView : UICustomSpacingStackView!
     var userObserverToken: NSObjectProtocol?
     
     init(user: ZMUser) {
@@ -65,7 +65,7 @@ import Cartography
         
         updateHandleLabel(user: user)
         
-        stackView = UIStackView(customSpacedArrangedSubviews: [nameLabel, handleLabel, teamNameLabel, imageView, availabilityView])
+        stackView = UICustomSpacingStackView(customSpacedArrangedSubviews: [nameLabel, handleLabel, teamNameLabel, imageView, availabilityView])
         stackView.alignment = .center
         stackView.axis = .vertical
         stackView.spacing = 2
