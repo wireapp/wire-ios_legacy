@@ -201,12 +201,14 @@ class TextMessageCellTests: ZMSnapshotTestCase {
     }
 
 
-    func setDayFormatterLocal() {
-        Message.dayFormatter(dummyServerTimestamp).dateFormat = dummyServerTimestamp.localizedDateFormatString(locale: Locale(identifier: "de"))
+    func setDayFormatterLocal(identifier: String) {
+        Message.dayFormatter(dummyServerTimestamp).dateFormat = dummyServerTimestamp.localizedDateFormatString(locale: Locale(identifier: identifier))
     }
 
+    ///TODO: snspshots for date of 1st of this year (no year component)
+
     func testThatItRendersMessageWithDayTimestampWithDELocale() {
-        setDayFormatterLocal()
+        setDayFormatterLocal(identifier: "de")
 
         let props = layoutProperties
         props.showDayBurstTimestamp = true
@@ -215,7 +217,7 @@ class TextMessageCellTests: ZMSnapshotTestCase {
     }
 
     func testThatItRendersMessageWithDayTimestamp_UnreadWithDELocale() {
-        setDayFormatterLocal()
+        setDayFormatterLocal(identifier: "de")
 
         let props = layoutProperties
         props.showDayBurstTimestamp = true
@@ -224,6 +226,25 @@ class TextMessageCellTests: ZMSnapshotTestCase {
         verify(view: sut.prepareForSnapshot())
     }
     
+    func testThatItRendersMessageWithDayTimestampWithHKLocale() {
+        setDayFormatterLocal(identifier: "zh-HK")
+
+        let props = layoutProperties
+        props.showDayBurstTimestamp = true
+        sut.configure(for: mockMessage(state: .sent), layoutProperties: props)
+        verify(view: sut.prepareForSnapshot())
+    }
+
+    func testThatItRendersMessageWithDayTimestamp_UnreadWithHKLocale() {
+        setDayFormatterLocal(identifier: "zh-HK")
+
+        let props = layoutProperties
+        props.showDayBurstTimestamp = true
+        props.showUnreadMarker = true
+        sut.configure(for: mockMessage(state: .sent), layoutProperties: props)
+        verify(view: sut.prepareForSnapshot())
+    }
+
     // MARK: - Helper
 
     func mockMessage(_ text: String? = "Hello World", edited: Bool = false, state: ZMDeliveryState = .delivered, obfuscated: Bool = false) -> MockMessage {
