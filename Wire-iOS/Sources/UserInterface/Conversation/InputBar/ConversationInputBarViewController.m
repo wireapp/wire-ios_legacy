@@ -556,12 +556,25 @@
 
 - (NSArray<UIKeyCommand *> *)keyCommands
 {
-    return @[
-             [UIKeyCommand keyCommandWithInput:@"\r"
-                                 modifierFlags:UIKeyModifierCommand
-                                        action:@selector(commandReturnPressed)
-                          discoverabilityTitle:NSLocalizedString(@"conversation.input_bar.shortcut.send", nil)]
-             ];
+    NSMutableArray *commands = [[NSMutableArray alloc] init];
+    [commands addObject:[UIKeyCommand keyCommandWithInput:@"\r"
+                                            modifierFlags:UIKeyModifierCommand
+                                                   action:@selector(commandReturnPressed)
+                                     discoverabilityTitle:NSLocalizedString(@"conversation.input_bar.shortcut.send", nil)]];
+    
+    if (self.inputBar.isEditing) {
+        [commands addObject:[UIKeyCommand keyCommandWithInput:UIKeyInputEscape
+                                                modifierFlags:0
+                                                       action:@selector(escapePressed)
+                                         discoverabilityTitle:NSLocalizedString(@"conversation.input_bar.shortcut.cancel_editing_message", nil)]];
+    } else {
+        [commands addObject:[UIKeyCommand keyCommandWithInput:UIKeyInputUpArrow
+                                                modifierFlags:0
+                                                       action:@selector(upArrowPressed)
+                                         discoverabilityTitle:NSLocalizedString(@"conversation.input_bar.shortcut.edit_last_message", nil)]];
+    }
+    
+    return commands;
 }
 
 - (BOOL)canBecomeFirstResponder
@@ -575,6 +588,18 @@
     if (nil != candidateText) {
         [self sendOrEditText:candidateText];
     }
+}
+
+- (void)upArrowPressed
+{
+    if ([self.delegate respondsToSelector:@selector(conversationInputBarViewControllerEditLastMessage)]) {
+        [self.delegate conversationInputBarViewControllerEditLastMessage];
+    }
+}
+
+-(void)escapePressed
+{
+    [self endEditingMessageIfNeeded];
 }
 
 #pragma mark - Input views handling

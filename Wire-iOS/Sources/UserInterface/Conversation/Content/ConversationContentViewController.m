@@ -830,6 +830,14 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
 
 @implementation ConversationContentViewController (EditMessages)
 
+- (void)editLastMessage
+{
+    ZMMessage *lastEditableMessage = self.conversation.lastEditableMessage;
+    if (lastEditableMessage != nil) {
+        [self wantsToPerformAction:MessageActionEdit forMessage:lastEditableMessage];
+    }
+}
+
 - (void)didFinishEditingMessage:(id<ZMConversationMessage>)message
 {
     self.conversationMessageWindowTableViewAdapter.editingMessage = nil;

@@ -214,6 +214,8 @@
 "conversation.connection_view.in_address_book" = "in Contacts";
 
 "conversation.input_bar.shortcut.send" = "Send Message";
+"conversation.input_bar.shortcut.edit_last_message" = "Edit Last Message";
+"conversation.input_bar.shortcut.cancel_editing_message" = "Cancel";
 
 "conversation.input_bar.message_too_long.title" = "Message too long";
 "conversation.input_bar.message_too_long.message" = "You can send messages up to %d characters long.";
@@ -332,7 +334,7 @@
 
 "content.system.cannot_decrypt.identity" = "%@ device identity changed. Undelivered message.";
 "content.system.cannot_decrypt.identity.you_part" = "Your";
-"content.system.cannot_decrypt.identity.otherUser_part" = "%@’s"; // posessive apostrophe - might differ in different languages
+"content.system.cannot_decrypt.identity.otherUser_part" = "%@’s"; // possessive apostrophe - might differ in different languages
 "content.system.cannot_decrypt.identity.why_part" = "Learn More";
 "content.system.cannot_decrypt.otherDevice_part" = "(device %@)"; // example " (device d1b23c54f34a)".
                                                                             // Full sentence: "A message from %@ was not received. [...] (device d1b23c54f34a). This is a debug information.
@@ -787,7 +789,7 @@
 
 // Landing screen
 
-"landing.title" = "Secure messenger for everyone.";
+"landing.title" = "Secure messaging for everyone.";
 "landing.create_account.title" = "Create an account";
 "landing.create_account.subtitle" = "for personal use";
 "landing.create_team.title" = "Create a team";
@@ -810,7 +812,7 @@
 "team.email.button.learn_more" = "Learn More";
 
 "team.activation_code.headline" = "You've got mail";
-"team.activation_code.subheadline" = "Enter the verification code we sent to %@";
+"team.activation_code.subheadline" = "Enter the verification code we sent to %@.";
 "team.activation_code.button.resend" = "Resend code";
 "team.activation_code.button.change_email" = "Change email";
 
@@ -1032,7 +1034,7 @@
 "compose.drafts.compose.subject.placeholder" = "Tap to set a subject";
 
 "compose.drafts.compose.delete.confirm.title" = "Confirm Deletion";
-"compose.drafts.compose.delete.confirm.message" = "This action will permamently delete this draft and cannot be undone.";
+"compose.drafts.compose.delete.confirm.message" = "This action will permanently delete this draft and cannot be undone.";
 "compose.drafts.compose.delete.confirm.action.title" = "Delete";
 
 "compose.drafts.compose.dismiss.confirm.title" = "Save as draft";

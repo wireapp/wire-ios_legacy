@@ -234,7 +234,6 @@ NSString *SplitLayoutObservableDidChangeToLayoutSizeNotification = @"SplitLayout
     [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
     
     [self updateForSize:size];
-    [self updateLeftViewVisibility];
 }
 
 - (void)willTransitionToTraitCollection:(UITraitCollection *)newCollection withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator
@@ -259,7 +258,8 @@ NSString *SplitLayoutObservableDidChangeToLayoutSizeNotification = @"SplitLayout
     
     [self updateConstraintsForSize:size];
     [self updateActiveConstraints];
-    
+    [self updateLeftViewVisibility];
+
     self.futureTraitCollection = nil;
 }
 

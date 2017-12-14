@@ -164,6 +164,7 @@
     
     if ([DeveloperMenuState developerMenuEnabled]) { //better way of dealing with this?
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(requestLoopNotification:) name:ZMTransportRequestLoopNotificationName object:nil];
+//        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(potentialErrorNotification:) name:ZMPotentialErrorDetectedNotificationName object:nil]; // TODO enable
     }
     
     self.userObserverToken = [UserChangeInfo addObserver:self forUser:[ZMUser selfUser] userSession:[ZMUserSession sharedSession]];
@@ -545,6 +546,13 @@
 {
     NSString *path = notification.userInfo[@"path"];
     [DebugAlert showWithMessage:[NSString stringWithFormat:@"A request loop is going on at %@", path] sendLogs:YES];
+}
+
+#pragma mark - SE inconsistency notification
+
+- (void)potentialErrorNotification:(NSNotification *)notification;
+{
+    [DebugAlert showWithMessage:[NSString stringWithFormat:@"We detected a potential error, please send logs"] sendLogs:YES];
 }
 
 #pragma mark -  Share extension analytics

@@ -759,6 +759,11 @@
     [self.contentViewController didFinishEditingMessage:message];
 }
 
+- (void)conversationInputBarViewControllerEditLastMessage
+{
+    [self.contentViewController editLastMessage];
+}
+
 @end
 
 @implementation ConversationViewController (ParticipantsViewController)

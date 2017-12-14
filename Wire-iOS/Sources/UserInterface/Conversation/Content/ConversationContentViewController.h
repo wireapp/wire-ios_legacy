@@ -51,6 +51,7 @@
 
 @interface ConversationContentViewController (EditMessages)
 
+- (void)editLastMessage;
 - (void)didFinishEditingMessage:(id<ZMConversationMessage>)message;
 
 @end
