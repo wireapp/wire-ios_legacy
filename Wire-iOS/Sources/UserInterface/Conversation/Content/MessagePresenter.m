@@ -27,23 +27,6 @@
 @import AVKit;
 @import AVFoundation;
 
-
-@interface AVPlayerViewControllerWithoutStatusBar : AVPlayerViewController
-
-@property (nonatomic) MediaPlayerController *wr_playerController;
-
-@end
-
-@implementation AVPlayerViewControllerWithoutStatusBar
-
-- (BOOL)prefersStatusBarHidden
-{
-    return YES;
-}
-
-@end
-
-
 @interface MessagePresenter (UIDocumentInteractionController) <UIDocumentInteractionControllerDelegate>
 @end
 
@@ -104,12 +87,11 @@
                                    fileExtension:[message.fileMessageData.filename pathExtension]];
     
     if (message.fileMessageData.isVideo) {
-        AVPlayer *player = [[AVPlayer alloc] initWithURL:message.fileMessageData.fileURL];
-        MediaPlayerController *playerController = [[MediaPlayerController alloc]  initWithPlayer:player message:message delegate: AppDelegate.sharedAppDelegate.mediaPlaybackManager];
-        
-        AVPlayerViewControllerWithoutStatusBar *playerViewController = [[AVPlayerViewControllerWithoutStatusBar alloc] init];
+        MediaPlayerControllerAVPlayer *player = [[MediaPlayerControllerAVPlayer alloc] initWithUrl:message.fileMessageData.fileURL message:message delegate:AppDelegate.sharedAppDelegate.mediaPlaybackManager];
+
+        AVPlayerViewController *playerViewController = [AVPlayerViewController new];
         playerViewController.player = player;
-        playerViewController.wr_playerController = playerController;
+
         [self.targetViewController presentViewController:playerViewController animated:YES completion:^() {
             [[UIApplication sharedApplication] wr_updateStatusBarForCurrentControllerAnimated:YES];
             [player play];
