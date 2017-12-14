@@ -149,7 +149,7 @@ typedef NS_ENUM(NSUInteger, ProfileUserAction) {
     self.userImageView = [[UserImageView alloc] initWithMagicPrefix:@"profile.user_image"];
     self.userImageView.userSession = [ZMUserSession sharedSession];
     self.userImageView.translatesAutoresizingMaskIntoConstraints = NO;
-    self.userImageView.size = IS_IPAD_FULLSCREEN ? UserImageViewSizeGiant : UserImageViewSizeBig;
+    self.userImageView.size = UserImageViewSizeBig;
     self.userImageView.user = self.bareUser;
 }
 

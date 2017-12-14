@@ -48,10 +48,7 @@ CGFloat PointSizeForUserImageSize(UserImageViewSize size)
             return 64.0f;
             break;
         case UserImageViewSizeBig:
-            return 240.0f;
-            break;
-        case UserImageViewSizeGiant:
-            return 280.0f;
+            return 320.0f;
             break;
         default:
             break;
