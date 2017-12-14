@@ -134,9 +134,10 @@ typedef NS_ENUM(NSUInteger, ProfileUserAction) {
 
 - (void)setupConstraints
 {
+    [self.stackView autoPinEdgeToSuperviewEdge:ALEdgeTop withInset:32];
     [self.stackView autoPinEdgeToSuperviewEdge:ALEdgeLeading];
     [self.stackView autoPinEdgeToSuperviewEdge:ALEdgeTrailing];
-    [self.stackView autoAlignAxisToSuperviewAxis:ALAxisVertical];
+    [self.stackView autoPinEdge:ALEdgeBottom toEdge:ALEdgeTop ofView:self.footerView withOffset:0 relation:NSLayoutRelationLessThanOrEqual];
     
     [self.footerView autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero excludingEdge:ALEdgeTop];
 }
