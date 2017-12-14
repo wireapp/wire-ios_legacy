@@ -55,7 +55,7 @@
                 if (users.count == 1) {
                     ZMUser *user = users.anyObject;
                     [[ZMUserSession sharedSession] enqueueChanges:^{
-                        conversation = user.oneToOneConversation;
+                        conversation = user.oneToOneConversation; ///FIXME: check user has oneToOneConversation! user can be ZMSearchUser
                     } completionHandler:^{
                         [Analytics.shared tagOpenedExistingConversationWithType:conversation.conversationType];
                         [[ZClientViewController sharedZClientViewController] selectConversation:conversation

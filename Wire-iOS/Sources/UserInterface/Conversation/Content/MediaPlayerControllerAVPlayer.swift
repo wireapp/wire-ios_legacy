@@ -16,37 +16,46 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
+
 import Foundation
+import AVKit
 
 /**
- Controls and observe the state of a AVPlayer instance for integration with the AVSMediaManager
+ an AVPlayer instance for integration with the AVSMediaManager
  */
-@objc
-class MediaPlayerController : NSObject {
-    
-    let message : ZMConversationMessage
-    var player : AVPlayer?
+@objc class MediaPlayerControllerAVPlayer: AVPlayer {
+
+    var message : ZMConversationMessage!
     weak var delegate : MediaPlayerDelegate?
-    
+
     fileprivate var playerRateObserver : Any?
-    
-    init(player: AVPlayer, message: ZMConversationMessage, delegate: MediaPlayerDelegate) {
-        self.player = player
+
+    init(url: URL, message: ZMConversationMessage, delegate: MediaPlayerDelegate) {
         self.message = message
         self.delegate = delegate
-        
+
+        super.init(url: url)
+
+        NotificationCenter.default.addObserver(self, selector: #selector(playerRateChanged), name:NSNotification.Name(rawValue: "rate"), object: .none)
+    }
+
+
+    required override init(playerItem item: AVPlayerItem?) {
+        super.init(playerItem: item)
+    }
+
+    required override init() {
         super.init()
-        
-        self.playerRateObserver = KeyValueObserver.observe(player, keyPath: "rate", target: self, selector: #selector(playerRateChanged))
     }
-    
+
     deinit {
-        self.playerRateObserver = nil
-        delegate?.mediaPlayer(self, didChangeTo: MediaPlayerState.completed)        
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name(rawValue: "rate"), object: nil)
+        delegate?.mediaPlayer(self, didChangeTo: MediaPlayerState.completed)
     }
+
 }
 
-extension MediaPlayerController : MediaPlayer {
+extension MediaPlayerControllerAVPlayer : MediaPlayer {
 
     var title: String {
         return message.fileMessageData?.filename ?? ""
@@ -57,35 +66,22 @@ extension MediaPlayerController : MediaPlayer {
     }
 
     var state: MediaPlayerState {
-        if player?.rate > 0 {
+        if self.rate > 0 {
             return MediaPlayerState.playing
         } else {
             return MediaPlayerState.paused
         }
     }
 
-    var error: Error! {
-        return nil
-    }
-
-    func play() {
-        player?.play()
-    }
-
     func stop() {
-        player?.pause()
+        self.pause()
     }
-
-    func pause() {
-        player?.pause()
-    }
-
 }
 
-extension MediaPlayerController {
+extension MediaPlayerControllerAVPlayer {
 
     func playerRateChanged() {
-        if player?.rate > 0 {
+        if self.rate > 0 {
             delegate?.mediaPlayer(self, didChangeTo: MediaPlayerState.playing)
         } else {
             delegate?.mediaPlayer(self, didChangeTo: MediaPlayerState.paused)
@@ -93,4 +89,3 @@ extension MediaPlayerController {
     }
 
 }
-

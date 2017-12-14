@@ -24,6 +24,7 @@
 #import "Wire-Swift.h"
 #import "UIViewController+WR_Additions.h"
 
+@import AVKit;
 @import AVFoundation;
 
 @interface MessagePresenter (UIDocumentInteractionController) <UIDocumentInteractionControllerDelegate>
@@ -86,11 +87,11 @@
                                    fileExtension:[message.fileMessageData.filename pathExtension]];
     
     if (message.fileMessageData.isVideo) {
-        AVPlayer *player = [[AVPlayer alloc] initWithURL:message.fileMessageData.fileURL];
-        MediaPlayerController *playerController = [[MediaPlayerController alloc]  initWithPlayer:player message:message delegate: AppDelegate.sharedAppDelegate.mediaPlaybackManager];
-        
-        AVPlayerViewControllerWithoutStatusBar *playerViewController = [[AVPlayerViewControllerWithoutStatusBar alloc] initWithWr_playerController:playerController];
+        MediaPlayerControllerAVPlayer *player = [[MediaPlayerControllerAVPlayer alloc] initWithUrl:message.fileMessageData.fileURL message:message delegate:AppDelegate.sharedAppDelegate.mediaPlaybackManager];
+
+        AVPlayerViewController *playerViewController = [AVPlayerViewController new];
         playerViewController.player = player;
+
         [self.targetViewController presentViewController:playerViewController animated:YES completion:^() {
             [[UIApplication sharedApplication] wr_updateStatusBarForCurrentControllerAnimated:YES];
             [player play];
