@@ -27,6 +27,7 @@ import Cartography
     public var availabilityView = AvailabilityTitleView(user: ZMUser.selfUser(), style: .selfProfile)
     var stackView : UICustomSpacingStackView!
     var userObserverToken: NSObjectProtocol?
+    var source: UIViewController?
     
     init(user: ZMUser) {
         super.init(frame: .zero)
@@ -34,6 +35,14 @@ import Cartography
         imageView.accessibilityIdentifier = "user image"
         imageView.userSession = session
         imageView.user = user
+        
+        availabilityView.tapHandler = { [weak self] button in
+            guard let `self` = self else { return }
+            let alert = self.availabilityView.actionSheet
+            alert.popoverPresentationController?.sourceView = self
+            alert.popoverPresentationController?.sourceRect = self.availabilityView.frame
+            self.source?.present(alert, animated: true, completion: nil)
+        }
         
         if let session = session {
             userObserverToken = UserChangeInfo.add(observer: self, for: user, userSession: session)

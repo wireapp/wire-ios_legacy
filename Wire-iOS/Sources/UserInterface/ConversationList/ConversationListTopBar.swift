@@ -27,6 +27,12 @@ final class ConversationListTopBar: TopBar {
         
         if ZMUser.selfUser().isTeamMember {
             let availabilityView = AvailabilityTitleView(user: ZMUser.selfUser(), style: .header)
+            availabilityView.tapHandler = { button in
+                let alert = availabilityView.actionSheet
+                alert.popoverPresentationController?.sourceView = button
+                alert.popoverPresentationController?.sourceRect = button.frame
+                UIApplication.shared.keyWindow?.rootViewController?.present(alert, animated: true, completion: nil)
+            }
             self.middleView = availabilityView
         } else {
             let titleLabel = UILabel()

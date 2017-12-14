@@ -25,9 +25,9 @@ import WireDataModel
 
 @objc public class AvailabilityTitleView: TitleView {
     
-    private var user: ZMUser
-    private var style: AvailabilityTitleViewStyle
-    private var observerToken: Any?
+    internal var user: ZMUser
+    internal var style: AvailabilityTitleViewStyle
+    internal var observerToken: Any?
     
     public init(user: ZMUser, style: AvailabilityTitleViewStyle) {
         self.user = user
@@ -60,39 +60,6 @@ import WireDataModel
         }
         
         configure()
-        
-        /// TODO change!
-        tapHandler = { button in
-            
-            let alert = UIAlertController(title: "availability.message.title".localized, message: nil, preferredStyle: .actionSheet)
-            
-            for type in Availability.allValues {
-                alert.addAction(UIAlertAction(title: type.localizedName, style: .default, handler: { [weak self] (action) in
-                    self?.didSelectAvailability(type)
-                }))
-            }
-            
-            alert.addAction(UIAlertAction(title: "availability.message.cancel".localized, style: .cancel, handler: nil))
-            
-            if let root = UIApplication.shared.keyWindow?.rootViewController {
-                root.present(alert, animated: true, completion: nil)
-            }
-        }
-    }
-    
-    func didSelectAvailability(_ availability: Availability) {
-        ZMUserSession.shared()?.performChanges { [weak self] in
-            ZMUser.selfUser().availability = availability
-            self?.trackChanges(with: availability)
-        }
-    }
-    
-    func trackChanges(with availability: Availability) {
-        switch style {
-            case .header:       do { Analytics.shared().tagAvailabilityChanged(to: availability, source: .listHeader)   }
-            case .selfProfile:  do { Analytics.shared().tagAvailabilityChanged(to: availability, source: .settings)     }
-            default: break
-        }
     }
     
     public required init?(coder aDecoder: NSCoder) {
@@ -132,3 +99,35 @@ extension AvailabilityTitleView: ZMUserObserver {
     }
 }
 
+extension AvailabilityTitleView {
+    
+    var actionSheet: UIAlertController {
+        get {
+            let alert = UIAlertController(title: "availability.message.title".localized, message: nil, preferredStyle: .actionSheet)
+            for type in Availability.allValues {
+                alert.addAction(UIAlertAction(title: type.localizedName, style: .default, handler: { [weak self] (action) in
+                    self?.didSelectAvailability(type)
+                }))
+            }
+            alert.popoverPresentationController?.permittedArrowDirections = [ .up ]
+            alert.addAction(UIAlertAction(title: "availability.message.cancel".localized, style: .cancel, handler: nil))
+            return alert
+        }
+    }
+    
+    private func didSelectAvailability(_ availability: Availability) {
+        ZMUserSession.shared()?.performChanges { [weak self] in
+            ZMUser.selfUser().availability = availability
+            self?.trackChanges(with: availability)
+        }
+    }
+    
+    private func trackChanges(with availability: Availability) {
+        switch style {
+            case .header:       do { Analytics.shared().tagAvailabilityChanged(to: availability, source: .listHeader)   }
+            case .selfProfile:  do { Analytics.shared().tagAvailabilityChanged(to: availability, source: .settings)     }
+            default: break
+        }
+    }
+    
+}

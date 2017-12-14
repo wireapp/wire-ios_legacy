@@ -134,10 +134,9 @@ typedef NS_ENUM(NSUInteger, ProfileUserAction) {
 
 - (void)setupConstraints
 {
-    [self.stackView autoPinEdgeToSuperviewEdge:ALEdgeTop withInset:32];
     [self.stackView autoPinEdgeToSuperviewEdge:ALEdgeLeading];
     [self.stackView autoPinEdgeToSuperviewEdge:ALEdgeTrailing];
-    [self.stackView autoPinEdge:ALEdgeBottom toEdge:ALEdgeTop ofView:self.footerView withOffset:0 relation:NSLayoutRelationLessThanOrEqual];
+    [self.stackView autoAlignAxisToSuperviewAxis:ALAxisVertical];
     
     [self.footerView autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero excludingEdge:ALEdgeTop];
 }
@@ -149,7 +148,7 @@ typedef NS_ENUM(NSUInteger, ProfileUserAction) {
     self.userImageView = [[UserImageView alloc] initWithMagicPrefix:@"profile.user_image"];
     self.userImageView.userSession = [ZMUserSession sharedSession];
     self.userImageView.translatesAutoresizingMaskIntoConstraints = NO;
-    self.userImageView.size = UserImageViewSizeBig;
+    self.userImageView.size = IS_IPAD ? UserImageViewSizeGiant : UserImageViewSizeBig;
     self.userImageView.user = self.bareUser;
 }
 
