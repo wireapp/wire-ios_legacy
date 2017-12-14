@@ -17,7 +17,7 @@ struct RatingState {
 
 class BaseCallQualityViewController :  UIViewController {
 
-    let root = CallQualityViewController(questionLabelText: "1. How do you rate the call set up?")
+    let root = CallQualityViewController(questionLabelText: "How do you rate the call set up?")
     let baseNavigationController : UINavigationController
 
     var ratingState: RatingState = RatingState(rating1: nil, rating2: nil)
@@ -44,7 +44,7 @@ extension BaseCallQualityViewController: CallQualityViewControllerDelegate {
     func controller(_ controller: CallQualityViewController, didSelect score: Int) {
         if controller == root {
             ratingState.rating1 = score
-            let next = CallQualityViewController(questionLabelText: "2. How do you rate the overall quality of the call?")
+            let next = CallQualityViewController(questionLabelText: "How do you rate the overall quality of the call?")
             next.delegate = self
             baseNavigationController.pushViewController(next, animated: true)
         }
