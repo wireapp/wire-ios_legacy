@@ -55,6 +55,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (instancetype)wr_manageTeamURL;
 
++ (instancetype)wr_emailInUseLearnMoreURL;
+
 @end
 
 NS_ASSUME_NONNULL_END

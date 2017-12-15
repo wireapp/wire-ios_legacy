@@ -310,9 +310,9 @@
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>one</key>
-			<string>Entgangener Anruf</string>
+			<string>verpasster Anruf</string>
 			<key>other</key>
-			<string>%d entgangene Anrufe</string>
+			<string>%d verpasste Anrufe</string>
 		</dict>
 	</dict>
 	<key>conversation.silenced.status.message.file</key>

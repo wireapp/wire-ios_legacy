@@ -23,7 +23,7 @@ protocol TeamCreationStepDescription {
     var mainView: ViewDescriptor & ValueSubmission { get }
     var headline: String { get }
     var subtext: String? { get }
-    var secondaryViews: [ViewDescriptor] { get }
+    var secondaryView: SecondaryViewDescription? { get }
     func shouldSkipFromNavigation() -> Bool
 }
 

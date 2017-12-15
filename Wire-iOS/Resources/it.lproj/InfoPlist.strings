@@ -21,8 +21,8 @@
 "NSLocationWhenInUseUsageDescription" = "Consenti a Wire di accedere alla tua posizione in modo da poter inviare la tua posizione agli altri.";
 "NSCameraUsageDescription" = "Consentire a Wire di accedere alla tua fotocamera in modo da poter effettuare videochiamate e inviare foto.";
 /* Showed after taking a picture with camera, but only when NSPhotoLibraryUsageDescription permission was declined. Asks permission for only writing to photo library. */
-"NSPhotoLibraryAddUsageDescription" = "Allow Wire to store pictures you take in the photo library.";
+"NSPhotoLibraryAddUsageDescription" = "Consenti a Wire di memorizzare le foto scattate nella libreria foto.";
 /* Showed when trying to send picture from conversaiton list. Asks permissions for reading and writing to photo library */
-"NSPhotoLibraryUsageDescription" = "Allow Wire to access pictures stored in photo library.";
+"NSPhotoLibraryUsageDescription" = "Consenti a Wire di accedere alle foto memorizzate nella libreria foto.";
 /* Is shown to the user when app is locked with AppLock feature on the phone that supports Face ID */
-"NSFaceIDUsageDescription" = "In order to authenticate in the app allow Wire to access the Face ID feature.";
+"NSFaceIDUsageDescription" = "Al fine di autenticarsi nell'app consenti a Wire di accedere alla funzione Face ID.";

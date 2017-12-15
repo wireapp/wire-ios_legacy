@@ -418,6 +418,17 @@ final internal class FailedSendMatcher: ConversationStatusMatcher {
     var combinesWith: [ConversationStatusMatcher] = []
 }
 
+extension ZMUser {
+    func nameAsSender(in conversation: ZMConversation) -> String {
+        if self.isSelfUser {
+            return "conversation.status.you".localized
+        }
+        else {
+            return self.displayName(in: conversation) ?? self.displayName
+        }
+    }
+}
+
 // "[You|User] [added|removed|left] [_|users|you]"
 final internal class GroupActivityMatcher: TypedConversationStatusMatcher {
     let matchedTypes: [StatusMessageType] = [.addParticipants, .removeParticipants]
@@ -437,10 +448,10 @@ final internal class GroupActivityMatcher: TypedConversationStatusMatcher {
             }
             else {
                 let usersList = systemMessage.users.map { $0.displayName(in: conversation) }.joined(separator: ", ")
-                let sender = sender.isSelfUser ? "conversation.status.you".localized : sender.displayName(in: conversation)!
-                let result = String(format: "conversation.status.added_users".localized, sender, usersList) && type(of: self).regularStyle
                 
-                return self.addEmphasis(to: result, for: sender)
+                let result = String(format: "conversation.status.added_users".localized, sender.nameAsSender(in: conversation), usersList) && type(of: self).regularStyle
+                
+                return self.addEmphasis(to: result, for: sender.nameAsSender(in: conversation))
             }
         }
         return .none
@@ -476,9 +487,8 @@ final internal class GroupActivityMatcher: TypedConversationStatusMatcher {
                 }
                 else if type(of: self).indicate3rdPartiesRemoval {
                     let usersList = systemMessage.users.map { $0.displayName(in: conversation) }.joined(separator: ", ")
-                    let sender = sender.isSelfUser ? "conversation.status.you".localized : sender.displayName(in: conversation)!
-                    let result = "conversation.status.removed_users".localized(args: sender, usersList) && type(of: self).regularStyle
-                    return self.addEmphasis(to: result, for: sender)
+                    let result = "conversation.status.removed_users".localized(args: sender.nameAsSender(in: conversation), usersList) && type(of: self).regularStyle
+                    return self.addEmphasis(to: result, for: sender.nameAsSender(in: conversation))
                 }
                 else {
                     return .none

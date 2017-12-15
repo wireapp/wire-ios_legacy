@@ -65,7 +65,6 @@
 #import "AnalyticsTracker.h"
 #import "AnalyticsTracker+Invitations.h"
 #import "UIViewController+Errors.h"
-#import "UIViewController+Orientation.h"
 #import "SplitViewController.h"
 #import "UIColor+WR_ColorScheme.h"
 #import "ActionSheetController+Conversation.h"
@@ -336,6 +335,8 @@
     [self updateLeftNavigationBarItems];
 }
 
+#pragma mark - Device orientation
+
 - (BOOL)shouldAutorotate
 {
     return YES;
@@ -343,7 +344,13 @@
 
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations
 {
-    return UIInterfaceOrientationMaskPortrait;
+    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone)
+    {
+        return UIInterfaceOrientationMaskPortrait;
+    }
+    else {
+        return UIInterfaceOrientationMaskAll;
+    }
 }
 
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator
@@ -412,6 +419,7 @@
                                                            fromView:self.titleView.superview
                                               contentViewController:participantsController];
     };
+    [self.titleView configure];
     
     self.navigationItem.titleView = self.titleView;
     self.navigationItem.leftItemsSupplementBackButton = NO;
@@ -750,6 +758,11 @@
 - (void)conversationInputBarViewControllerDidCancelEditingMessage:(id<ZMConversationMessage>)message
 {
     [self.contentViewController didFinishEditingMessage:message];
+}
+
+- (void)conversationInputBarViewControllerEditLastMessage
+{
+    [self.contentViewController editLastMessage];
 }
 
 @end

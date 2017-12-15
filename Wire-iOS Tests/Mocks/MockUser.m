@@ -115,6 +115,7 @@ static id<ZMBareUser> mockSelfUser = nil;
 @synthesize smallProfileImageCacheKey;
 @synthesize mediumProfileImageCacheKey;
 
+
 - (void)connectWithMessageText:(NSString *)text completionHandler:(dispatch_block_t)handler
 {
     if (handler) {

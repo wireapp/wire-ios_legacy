@@ -54,14 +54,18 @@
                 
                 if (users.count == 1) {
                     ZMUser *user = users.anyObject;
-                    [[ZMUserSession sharedSession] enqueueChanges:^{
-                        conversation = user.oneToOneConversation;
-                    } completionHandler:^{
-                        [Analytics.shared tagOpenedExistingConversationWithType:conversation.conversationType];
-                        [[ZClientViewController sharedZClientViewController] selectConversation:conversation
-                                                                                    focusOnView:YES
-                                                                                       animated:YES];
-                    }];
+
+                    /// user can be a ZMSearchUser, do not have oneToOneConversation method
+                    if ([user respondsToSelector:@selector(oneToOneConversation)]) {
+                        [[ZMUserSession sharedSession] enqueueChanges:^{
+                            conversation = user.oneToOneConversation;
+                        } completionHandler:^{
+                            [Analytics.shared tagOpenedExistingConversationWithType:conversation.conversationType];
+                            [[ZClientViewController sharedZClientViewController] selectConversation:conversation
+                                                                                        focusOnView:YES
+                                                                                           animated:YES];
+                        }];
+                    }
                 }
                 else {
                     

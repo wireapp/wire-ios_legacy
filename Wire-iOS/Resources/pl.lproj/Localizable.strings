@@ -215,6 +215,9 @@
 
 "conversation.input_bar.shortcut.send" = "Wyślij wiadomość";
 
+"conversation.input_bar.message_too_long.title" = "Message too long";
+"conversation.input_bar.message_too_long.message" = "You can send messages up to %d characters long.";
+
 // Image confirmation dialogue
 "image_confirmer.confirm" = "OK";
 "image_confirmer.cancel" = "Anuluj";
@@ -287,8 +290,8 @@
 "content.system.failedtosend_message_timestamp_resend" = "Wyślij ponownie";
 "content.system.failedtosend_message_timestamp_delete" = "Usuń";
 "content.system.like_tooltip" = "Dotknij, aby polubić";
-"content.system.deleted_message_prefix_timestamp" = "Usunięto z %@";
-"content.system.edited_message_prefix_timestamp" = "Edytuj w %@";
+"content.system.deleted_message_prefix_timestamp" = "Deleted: %@";
+"content.system.edited_message_prefix_timestamp" = "Edited: %@";
 "content.system.connecting_to" = "Łączenie z %@.\nRozpocznij konwersację";
 "content.system.connected_to" = "Połączono z %@\nRozpocznij konwersację";
 "content.system.other_wanted_to_talk" = "%@ dzwoni";
@@ -665,13 +668,11 @@
 "self.settings.sound_menu.ping.title" = "Ping";
 "self.settings.sound_menu.ringtones.title" = "Dzwonki";
 "self.settings.sound_menu.sounds.wire_sound" = "Wire";
+"self.settings.sound_menu.sounds.none" = "Żaden";
 
 "self.settings.callkit.title" = "Połączenia";
 "self.settings.callkit.caption" = "Udostępnij poprzez iOS";
 "self.settings.callkit.description" = "Show Wire calls on the lock screen and in iOS call history. If iCloud is enabled, call history is shared with Apple.";
-
-"self.settings.cbr.not_available" = "Constant Bit Rate Encoding";
-"self.settings.cbr.not_available.description" = "Stała przepływność (CBR) połączenia zostały tymczasowo wyłączone wraz z wprowadzeniem obsługi wielu kont. Połączenia CBR będą przywrócone wkrótce.";
 
 "self.settings.vbr.title" = "Kodowanie o zmiennej przepływności (VBR)";
 "self.settings.vbr.description" = "Zmniejsza ilość danych używanych przez połączenia głosowe, dzięki czemu działają one lepiej w powolnych sieciach. Wyłącz, aby używać kodowania o stałej przepływności (CBR).";
@@ -707,7 +708,7 @@
 "self.settings.sound_menu.title" = "Alarm dźwiękowy";
 "self.settings.sound_menu.no_sounds.title" = "Żaden";
 "self.settings.sound_menu.all_sounds.title" = "Wszystko";
-"self.settings.sound_menu.mute_while_talking.title" = "Pierwsza wiadomość, zaczepka, połączenie";
+"self.settings.sound_menu.mute_while_talking.title" = "First message and pings";
 
 // Developer options
 "self.settings.developer_options.title" = "Opcje programistyczne";
@@ -770,19 +771,61 @@
 "system_status_bar.poor_connectivity.title" = "Internet jest zbyt wolny aby móc wykonać połączenie głosowe";
 "system_status_bar.poor_connectivity.explanation" = "Nie możemy zagwarantować jakość głosu. Podłączyć się do sieci Wi-Fi lub spróbuj zmienić swoją lokalizację.";
 
-// Common connections on profile view
-"profile_other.common_connections" = "Oboje wiecie";
-
-// View user profile and options menu
+// View user profile and options menu & text field validation
 "name.placeholder" = "Twoje pełne imię i nazwisko";
 "name.guidance.tooshort" = "Minimum 2 znaki";
 "name.guidance.toolong" = "Zbyt wiele znaków";
 
 "email.placeholder" = "Adres e-mail";
+"email.guidance.invalid" = "Invalid email address";
+"email.guidance.tooshort" = "Email is too short";
+"email.guidance.toolong" = "Zbyt wiele znaków";
 
 "password.placeholder" = "Hasło";
 "password.guidance.tooshort" = "Co najmniej 8 znaków";
 "password.guidance.toolong" = "Zbyt wiele znaków";
+
+// Landing screen
+
+"landing.title" = "Secure messenger for everyone.";
+"landing.create_account.title" = "Create an account";
+"landing.create_account.subtitle" = "for personal use";
+"landing.create_team.title" = "Utwórz nowy zespół";
+"landing.create_team.subtitle" = "for work";
+"landing.login.hints" = "Already have an account?";
+"landing.login.button.title" = "Log in";
+
+// Create team
+
+"team.name.headline" = "Name your team";
+"team.name.subheadline" = "You can always change it later.";
+"team.name.textfield.placeholder" = "team name";
+"team.name.textfield.accessibility" = "Set team name";
+"team.name.whatiswireforteams" = "What is Wire for teams?";
+
+"team.email.headline" = "Your account";
+"team.email.subheadline" = "Enter your work email address.";
+"team.email.textfield.placeholder" = "you@yourcompany.com";
+"team.email.textfield.accessibility" = "Your company email";
+"team.email.button.learn_more" = "Dowiedz się więcej";
+
+"team.activation_code.headline" = "You've got mail";
+"team.activation_code.subheadline" = "Wpisz kod weryfikacyjny, który wysłaliśmy do %@";
+"team.activation_code.button.resend" = "Resend code";
+"team.activation_code.button.change_email" = "Change email";
+
+"team.full_name.headline" = "Your name";
+"team.full_name.textfield.placeholder" = "Full name";
+"team.full_name.textfield.accessibility" = "Set full name";
+
+"team.password.headline" = "Set password";
+"team.password.textfield.placeholder" = "Co najmniej 8 znaków";
+"team.password.textfield.accessibility" = "Set password, at least 8 characters";
+
+
+"team.email_code.input_field.accessbility_label" = "Please enter the six-digit code from the email.";
+
+// Registration
 
 "registration.title" = "Rejestracja";
 "registration.close_email_invitation_button.email_title" = "Wykorzystaj inne konto e-mail";
@@ -824,6 +867,11 @@
 "registration.terms_of_use.terms" = "Aby kontynuować musisz zaakceptować regulamin";
 "registration.terms_of_use.terms.link" = "Zasady korzystania z usługi";
 "registration.terms_of_use.agree" = "Zgadzam się";
+
+"registration.terms_of_use.terms.title" = "Zasady korzystania z usługi";
+"registration.terms_of_use.terms.message" = "Please accept the Terms of Use to continue.";
+"registration.terms_of_use.terms.view" = "View";
+"registration.terms_of_use.accept" = "Odbierz";
 
 "registration.email_flow.title" = "Rejestracja przez e-mail";
 "registration.email_flow.email_step.title" = "Edytuj szczegóły";

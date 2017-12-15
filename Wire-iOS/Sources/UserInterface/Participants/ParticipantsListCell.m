@@ -19,6 +19,7 @@
 
 #import "ParticipantsListCell.h"
 @import PureLayout;
+@import WireDataModel;
 #import "BadgeUserImageView.h"
 #import "WireSyncEngine+iOS.h"
 #import "UserImageView+Magic.h"
@@ -74,8 +75,13 @@
 - (void)updateForUser:(ZMUser *)user inConversation:(ZMConversation *)conversation
 {
     self.userImageView.user = user;
-    self.nameLabel.text = [user.displayName uppercaseString];
     self.guestLabel.hidden = ![user isGuestInConversation:conversation];
+
+    if (ZMUser.selfUser.isTeamMember) {
+        self.nameLabel.attributedText = [AvailabilityStringBuilder stringFor:user with:AvailabilityLabelStyleParticipants color:nil];
+    } else {
+        self.nameLabel.text = [user.displayName uppercaseString];
+    }
 }
 
 @end

@@ -24,13 +24,13 @@ final class SetPasswordStepDescription: TeamCreationStepDescription {
     let mainView: ViewDescriptor & ValueSubmission
     let headline: String
     let subtext: String?
-    let secondaryViews: [ViewDescriptor]
+    let secondaryView: SecondaryViewDescription?
 
     init() {
         backButton = BackButtonDescription()
         mainView = TextFieldDescription(placeholder: "team.password.textfield.placeholder".localized, actionDescription: "team.password.textfield.accessibility".localized, kind: .password)
         headline = "team.password.headline".localized
         subtext = nil
-        secondaryViews = []
+        secondaryView = nil
     }
 }

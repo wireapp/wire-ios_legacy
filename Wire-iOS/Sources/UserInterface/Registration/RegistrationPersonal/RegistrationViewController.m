@@ -140,6 +140,7 @@
     registrationRootViewController.hasSignInError = self.signInError != nil && !addingAdditionalAccount;
     registrationRootViewController.showLogin = needsToReauthenticate || addingAdditionalAccount;
     registrationRootViewController.loginCredentials = [[LoginCredentials alloc] initWithError:self.signInError];
+    registrationRootViewController.shouldHideCancelButton = self.shouldHideCancelButton;
     self.registrationRootViewController = registrationRootViewController;
     
     UIViewController *rootViewController = registrationRootViewController;

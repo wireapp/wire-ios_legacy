@@ -23,23 +23,11 @@ protocol VerifyEmailStepDescriptionDelegate: class {
     func changeEmail()
 }
 
-final class VerifyEmailStepDescription: TeamCreationStepDescription {
-    let email: String
-    weak var delegate: VerifyEmailStepDescriptionDelegate?
-    let backButton: BackButtonDescription?
-    let mainView: ViewDescriptor & ValueSubmission
-    let headline: String
-    let subtext: String?
-    let secondaryViews: [ViewDescriptor]
+class VerifyEmailStepSecondaryView: SecondaryViewDescription {
+
+    let views: [ViewDescriptor]
 
     init(email: String, delegate: VerifyEmailStepDescriptionDelegate) {
-        self.email = email
-        self.delegate = delegate
-        backButton = nil
-        mainView = VerificationCodeFieldDescription()
-        headline = "team.activation_code.headline".localized
-        subtext = "team.activation_code.subheadline".localized(args: email)
-
         let resendCode = ButtonDescription(title: "team.activation_code.button.resend".localized, accessibilityIdentifier: "resend_button")
         resendCode.buttonTapped = { [weak delegate] in
             delegate?.resendActivationCode(to: email)
@@ -48,7 +36,27 @@ final class VerifyEmailStepDescription: TeamCreationStepDescription {
         changeEmail.buttonTapped = { [weak delegate] in
             delegate?.changeEmail()
         }
-        secondaryViews = [resendCode, changeEmail]
+        views = [resendCode, changeEmail]
+    }
+}
+
+final class VerifyEmailStepDescription: TeamCreationStepDescription {
+    let email: String
+    weak var delegate: VerifyEmailStepDescriptionDelegate?
+    let backButton: BackButtonDescription?
+    let mainView: ViewDescriptor & ValueSubmission
+    let headline: String
+    let subtext: String?
+    let secondaryView: SecondaryViewDescription?
+
+    init(email: String, delegate: VerifyEmailStepDescriptionDelegate) {
+        self.email = email
+        self.delegate = delegate
+        backButton = nil
+        mainView = VerificationCodeFieldDescription()
+        headline = "team.activation_code.headline".localized
+        subtext = "team.activation_code.subheadline".localized(args: email)
+        secondaryView = VerifyEmailStepSecondaryView(email: email, delegate: delegate)
     }
 
     func shouldSkipFromNavigation() -> Bool {

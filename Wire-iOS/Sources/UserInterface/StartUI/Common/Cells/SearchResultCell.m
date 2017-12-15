@@ -245,7 +245,13 @@
 
 - (void)updateForUser
 {
-    self.displayName = self.user.name;
+    ZMUser *fullUser = BareUserToUser(self.user);
+    
+    if (fullUser != nil && ZMUser.selfUser.isTeamMember) {
+        self.nameLabel.attributedText = [AvailabilityStringBuilder stringFor:fullUser with:AvailabilityLabelStyleList color:nil];
+    } else {
+        self.nameLabel.text = self.user.name;
+    }
     
     [self updateSubtitle];
     [self updateGuestLabel];
@@ -255,8 +261,7 @@
     if (self.user == nil) {
         canBeConnected = NO;
     }
-    else if (BareUserToUser(self.user) != nil) {
-        ZMUser *fullUser = BareUserToUser(self.user);
+    else if (fullUser != nil) {
         canBeConnected = fullUser.canBeConnected && ! fullUser.isBlocked && ! fullUser.isPendingApproval && !fullUser.isTeamMember;
     }
     else {
@@ -349,15 +354,8 @@
         self.conversationImageView.conversation = self.conversation;
         self.badgeUserImageView.hidden = YES;
         self.user = nil;
-        self.displayName = conversation.displayName;
+        self.nameLabel.text = conversation.displayName;
     }
-}
-
-- (void)setDisplayName:(NSString *)displayName
-{
-    _displayName = [displayName copy];
-
-    self.nameLabel.text = [_displayName transformStringWithMagicKey:@"people_picker.search_results_mode.name_label_text_transform"];
 }
 
 - (void)setSelected:(BOOL)selected

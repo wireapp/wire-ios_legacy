@@ -215,6 +215,9 @@
 
 "conversation.input_bar.shortcut.send" = "Verstuur bericht";
 
+"conversation.input_bar.message_too_long.title" = "Bericht te lang";
+"conversation.input_bar.message_too_long.message" = "Je kan berichten verzenden van maximaal %d tekens lang.";
+
 // Image confirmation dialogue
 "image_confirmer.confirm" = "OK";
 "image_confirmer.cancel" = "Annuleer";
@@ -287,8 +290,8 @@
 "content.system.failedtosend_message_timestamp_resend" = "Opnieuw sturen";
 "content.system.failedtosend_message_timestamp_delete" = "Verwijderen";
 "content.system.like_tooltip" = "Tap om leuk te vinden";
-"content.system.deleted_message_prefix_timestamp" = "Verwijderd op %@";
-"content.system.edited_message_prefix_timestamp" = "Gewijzigd op %@";
+"content.system.deleted_message_prefix_timestamp" = "Verwijderde: %@";
+"content.system.edited_message_prefix_timestamp" = "Wijzigde: %@";
 "content.system.connecting_to" = "Verbinden met %@.\nBegin een gesprek";
 "content.system.connected_to" = "Verbonden met %@.\nBegin een gesprek";
 "content.system.other_wanted_to_talk" = "%@ belde";
@@ -560,12 +563,12 @@
 
 // Settings - top level
 "self.settings.create_team.title" = "Creëer Team";
-"self.settings.manage_team.title" = "Manage Team";
-"self.settings.add_team_or_account.title" = "New Team or Account";
+"self.settings.manage_team.title" = "Beheer Team";
+"self.settings.add_team_or_account.title" = "Nieuw Team of Account";
 "self.settings.add_account.title" = "Voeg een account toe";
 
-"self.settings.add_account.error.title" = "Three accounts active";
-"self.settings.add_account.error.message" = "You can only be logged in with three accounts at once. Log out from one to add another.";
+"self.settings.add_account.error.title" = "Drie accounts zijn actief";
+"self.settings.add_account.error.message" = "Je kan maximaal met 3 accounts te gelijk inloggen. Log op een ander account uit, om een nieuw account toe te voegen.";
 
 // Settings - Account details
 "self.settings.account_section" = "Profiel";
@@ -665,13 +668,11 @@
 "self.settings.sound_menu.ping.title" = "Ping";
 "self.settings.sound_menu.ringtones.title" = "Beltonen";
 "self.settings.sound_menu.sounds.wire_sound" = "Wire";
+"self.settings.sound_menu.sounds.none" = "Geen";
 
 "self.settings.callkit.title" = "Oproepen";
 "self.settings.callkit.caption" = "Deel met iOS";
 "self.settings.callkit.description" = "Toon Wire-gesprekken op het toegangsscherm en in de iOS gespreksgeschiedenis. Als iCloud aan staat wordt de oproepgeschiedenis bewaard bij Apple.";
-
-"self.settings.cbr.not_available" = "Constante Bit Rate Codering";
-"self.settings.cbr.not_available.description" = "Constante Bit Rate Codering is tijdelijk uitgezet, met de introductie van de support van verschillende accounts. CBR zullen snel weer toegevoegd worden.";
 
 "self.settings.vbr.title" = "Variable Bit Rate codering";
 "self.settings.vbr.description" = "Hierdoor gebruik je minder data tijdens het bellen, en het werkt beter op trage netwerken. Zet dit uit om een constante Bitrate Encoding te gebruiken.";
@@ -707,7 +708,7 @@
 "self.settings.sound_menu.title" = "Geluidswaarschuwing";
 "self.settings.sound_menu.no_sounds.title" = "Geen";
 "self.settings.sound_menu.all_sounds.title" = "Alle";
-"self.settings.sound_menu.mute_while_talking.title" = "Eerste bericht, pings, oproepen";
+"self.settings.sound_menu.mute_while_talking.title" = "Eerste bericht en pings";
 
 // Developer options
 "self.settings.developer_options.title" = "Opties voor ontwikkelaars";
@@ -770,19 +771,61 @@
 "system_status_bar.poor_connectivity.title" = "De verbinding is traag, je kunt nu niet bellen";
 "system_status_bar.poor_connectivity.explanation" = "We kunnen je geen goede geluidskwaliteit garanderen. Verbind met WiFi of zoek een locatie met betere ontvangst.";
 
-// Common connections on profile view
-"profile_other.common_connections" = "Julie kennen allebei";
-
-// View user profile and options menu
+// View user profile and options menu & text field validation
 "name.placeholder" = "Je volledige naam";
 "name.guidance.tooshort" = "Minimaal 2 tekens";
 "name.guidance.toolong" = "Te veel tekens";
 
 "email.placeholder" = "E-mail";
+"email.guidance.invalid" = "Ongeldig emailadres";
+"email.guidance.tooshort" = "Email adres is te kort";
+"email.guidance.toolong" = "Te veel tekens";
 
 "password.placeholder" = "Wachtwoord";
 "password.guidance.tooshort" = "Minimaal 8 tekens";
 "password.guidance.toolong" = "Te veel tekens";
+
+// Landing screen
+
+"landing.title" = "Veilige berichten voor iedereen.";
+"landing.create_account.title" = "Account aanmaken";
+"landing.create_account.subtitle" = "voor persoonlijk gebruik";
+"landing.create_team.title" = "Creëer Team";
+"landing.create_team.subtitle" = "voor werk";
+"landing.login.hints" = "Heeft u al een account?";
+"landing.login.button.title" = "Log in";
+
+// Create team
+
+"team.name.headline" = "Geef uw team een naam";
+"team.name.subheadline" = "Dit kun je later altijd nog aanpassen.";
+"team.name.textfield.placeholder" = "team naam";
+"team.name.textfield.accessibility" = "Stel je team naam in";
+"team.name.whatiswireforteams" = "Wat is Wire voor teams?";
+
+"team.email.headline" = "Je account";
+"team.email.subheadline" = "Enter your work email address.";
+"team.email.textfield.placeholder" = "jij@joubedrijf.nl";
+"team.email.textfield.accessibility" = "Je bedrijfs email";
+"team.email.button.learn_more" = "Leer meer";
+
+"team.activation_code.headline" = "Je hebt een email ontvangen";
+"team.activation_code.subheadline" = "Voer de verificatiecode in die we naar %@ gestuurd hebben";
+"team.activation_code.button.resend" = "Code opnieuw versturen";
+"team.activation_code.button.change_email" = "Email wijzigen";
+
+"team.full_name.headline" = "Jouw naam";
+"team.full_name.textfield.placeholder" = "Volledige naam";
+"team.full_name.textfield.accessibility" = "Je volledige naam";
+
+"team.password.headline" = "Wachtwoord instellen";
+"team.password.textfield.placeholder" = "Minimaal 8 tekens";
+"team.password.textfield.accessibility" = "Kies een wachtwoord van minimaal 8 tekens";
+
+
+"team.email_code.input_field.accessbility_label" = "Vul hier je 6 caracter code in van je email.";
+
+// Registration
 
 "registration.title" = "Registratie";
 "registration.close_email_invitation_button.email_title" = "Gebruik een ander e-mailadres";
@@ -824,6 +867,11 @@
 "registration.terms_of_use.terms" = "Wanner je doorgaat accepteer je de voorwaarden van Wire.";
 "registration.terms_of_use.terms.link" = "Gebruikersvoorwaarden";
 "registration.terms_of_use.agree" = "Ik ga akkoord";
+
+"registration.terms_of_use.terms.title" = "Gebruikersvoorwaarden";
+"registration.terms_of_use.terms.message" = "Om verder te gaan moet u de algemene voorwaarden accepteren.";
+"registration.terms_of_use.terms.view" = "Bekijk";
+"registration.terms_of_use.accept" = "Neem op";
 
 "registration.email_flow.title" = "Registreer via e-mail";
 "registration.email_flow.email_step.title" = "Details bewerken";

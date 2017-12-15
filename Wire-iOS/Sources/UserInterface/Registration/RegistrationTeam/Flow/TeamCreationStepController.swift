@@ -21,7 +21,6 @@ import Cartography
 
 final class TeamCreationStepController: UIViewController {
 
-
     /// headline font size is fixed and not affected by dynamic type setting,
     static let headlineFont         = UIFont.systemFont(ofSize: 40, weight: UIFontWeightLight)
     /// For 320 pt width screen
@@ -34,25 +33,28 @@ final class TeamCreationStepController: UIViewController {
 
     let stepDescription: TeamCreationStepDescription
 
-    private var stackView: UIStackView!
     private var headlineLabel: UILabel!
     private var subtextLabel: UILabel!
     fileprivate var errorLabel: UILabel!
 
-    private var secondaryViewsStackView: UIStackView!
+    fileprivate var secondaryViewsStackView: UIStackView!
     fileprivate var errorViewContainer: UIView!
     private var mainViewContainer: UIView!
+    private var topSpacer: UIView!
+    private var bottomSpacer: UIView!
 
     private var backButton: UIView?
 
-    /// Text Field
+    /// mainView is a textField or CharacterInputField in team creation screens
     private var mainView: UIView!
     private var secondaryViews: [UIView] = []
+    fileprivate var secondaryErrorView: UIView?
 
-    private var keyboardOffset: NSLayoutConstraint!
-    private var mainViewAlignVerticalCenter: NSLayoutConstraint!
     private var mainViewWidthRegular: NSLayoutConstraint!
     private var mainViewWidthCompact: NSLayoutConstraint!
+    private var topSpacerHeight: NSLayoutConstraint!
+    private var bottomSpacerHeight: NSLayoutConstraint!
+    private var spacerEqualHeight: NSLayoutConstraint!
 
     init(description: TeamCreationStepDescription) {
         self.stepDescription = description
@@ -88,8 +90,7 @@ final class TeamCreationStepController: UIViewController {
         UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(animated)
         mainView.becomeFirstResponder()
 
-        let keyboardHeight = KeyboardFrameObserver.shared().keyboardFrame().height
-        updateKeyboardOffset(keyboardHeight: keyboardHeight)
+        updateKeyboardOffset(keyboardFrame: KeyboardFrameObserver.shared().keyboardFrame())
     }
 
     override func viewWillDisappear(_ animated: Bool) {
@@ -105,30 +106,46 @@ final class TeamCreationStepController: UIViewController {
     }
 
     // MARK: - Keyboard shown/hide
-    
+
     private func observeKeyboard() {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(_:)), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillChangeFrame(_:)), name: NSNotification.Name.UIKeyboardWillChangeFrame, object: nil)
     }
 
-    func updateKeyboardOffset(keyboardHeight: CGFloat) {
-        self.keyboardOffset.constant = -(keyboardHeight + 10)
+    func updateKeyboardOffset(keyboardFrame: CGRect) {
+        let keyboardHeight = keyboardFrame.height
+
+        spacerEqualHeight.constant = self.view.frame.size.height - keyboardFrame.origin.y
+        bottomSpacerHeight.constant = 24 + keyboardHeight
+
         UIView.performWithoutAnimation {
-            self.view.layoutIfNeeded()
+            self.view.setNeedsLayout()
         }
     }
 
     dynamic func keyboardWillShow(_ notification: Notification) {
-        self.keyboardOffset.isActive = true
-        self.mainViewAlignVerticalCenter.isActive = false
+        switch UIDevice.current.userInterfaceIdiom {
+        case .pad:
+            break
+        default:
+            spacerEqualHeight.isActive = false
+            topSpacerHeight.isActive = true
+            bottomSpacerHeight.isActive = true
+        }
 
         animateViewsToAccomodateKeyboard(with: notification)
     }
 
     dynamic func keyboardWillHide(_ notification: Notification) {
-        self.keyboardOffset.isActive = false
-        self.mainViewAlignVerticalCenter.isActive = true
+        switch UIDevice.current.userInterfaceIdiom {
+        case .pad:
+            break
+        default:
+            topSpacerHeight.isActive = false
+            bottomSpacerHeight.isActive = false
+            spacerEqualHeight.isActive = true
+        }
 
         animateViewsToAccomodateKeyboard(with: notification)
     }
@@ -139,8 +156,8 @@ final class TeamCreationStepController: UIViewController {
 
     func animateViewsToAccomodateKeyboard(with notification: Notification) {
         if let userInfo = notification.userInfo, let keyboardFrame = userInfo[UIKeyboardFrameEndUserInfoKey] as? NSValue {
-            let keyboardHeight = keyboardFrame.cgRectValue.height
-            updateKeyboardOffset(keyboardHeight: keyboardHeight)
+
+            updateKeyboardOffset(keyboardFrame: keyboardFrame.cgRectValue)
         }
     }
 
@@ -172,6 +189,13 @@ final class TeamCreationStepController: UIViewController {
         mainViewContainer = UIView()
         mainViewContainer.translatesAutoresizingMaskIntoConstraints = false
 
+        topSpacer = UIView()
+        bottomSpacer = UIView()
+
+        [topSpacer, bottomSpacer].forEach() { view in
+            view.translatesAutoresizingMaskIntoConstraints = false
+        }
+
         mainView = stepDescription.mainView.create()
         mainViewContainer.addSubview(mainView)
 
@@ -185,14 +209,25 @@ final class TeamCreationStepController: UIViewController {
         errorLabel.translatesAutoresizingMaskIntoConstraints = false
         errorViewContainer.addSubview(errorLabel)
 
-        secondaryViews = stepDescription.secondaryViews.map { $0.create() }
+        if let secondaryView = stepDescription.secondaryView {
+            secondaryViews = secondaryView.views.map { $0.create() }
+        }
 
         secondaryViewsStackView = UIStackView(arrangedSubviews: secondaryViews)
         secondaryViewsStackView.distribution = .equalCentering
         secondaryViewsStackView.spacing = 24
         secondaryViewsStackView.translatesAutoresizingMaskIntoConstraints = false
 
-        [backButton, headlineLabel, subtextLabel, mainViewContainer, errorViewContainer, secondaryViewsStackView].flatMap {$0}.forEach { self.view.addSubview($0) }
+        [topSpacer,
+         bottomSpacer,
+         backButton,
+         headlineLabel,
+         subtextLabel,
+         mainViewContainer,
+         errorViewContainer,
+         secondaryViewsStackView].flatMap {$0}.forEach {
+            self.view.addSubview($0)
+        }
     }
 
     fileprivate func updateMainViewWidthConstraint() {
@@ -212,7 +247,7 @@ final class TeamCreationStepController: UIViewController {
         if let backButton = backButton {
 
             var backButtonTopMargin: CGFloat
-            if #available(iOS 10.0, *) {
+            if #available(iOS 11.0, *) {
                 backButtonTopMargin = 12
             } else {
                 backButtonTopMargin = 32
@@ -230,9 +265,32 @@ final class TeamCreationStepController: UIViewController {
             }
         }
 
-        constrain(view, secondaryViewsStackView, errorViewContainer, mainViewContainer) { view, secondaryViewsStackView, errorViewContainer, mainViewContainer in
-            let keyboardHeight = KeyboardFrameObserver.shared().keyboardFrame().height
-            self.keyboardOffset = secondaryViewsStackView.bottom == view.bottom - (keyboardHeight + 10)
+        let keyboardHeight = KeyboardFrameObserver.shared().keyboardFrame().height
+
+        constrain(view, topSpacer, bottomSpacer) { view, topSpacer, bottomSpacer in
+            spacerEqualHeight = bottomSpacer.height == topSpacer.height + keyboardHeight
+
+            topSpacerHeight = topSpacer.height >= 24
+            bottomSpacerHeight = bottomSpacer.height == 24 + keyboardHeight
+
+            topSpacer.centerX == view.centerX
+            bottomSpacer.centerX == view.centerX
+            topSpacer.width == view.width
+            bottomSpacer.width == view.width
+        }
+
+        if UIDevice.current.userInterfaceIdiom == .pad {
+            topSpacerHeight.isActive = false
+            bottomSpacerHeight.isActive = false
+        } else {
+            spacerEqualHeight.isActive = false
+        }
+
+        constrain(view, secondaryViewsStackView, errorViewContainer, mainViewContainer, bottomSpacer) { view, secondaryViewsStackView, errorViewContainer, mainViewContainer, bottomSpacer in
+
+            secondaryViewsStackView.bottom == bottomSpacer.top
+            bottomSpacer.bottom == view.bottom
+
             secondaryViewsStackView.leading >= view.leading
             secondaryViewsStackView.trailing <= view.trailing
             secondaryViewsStackView.height == 42 ~ LayoutPriority(500)
@@ -245,8 +303,6 @@ final class TeamCreationStepController: UIViewController {
             errorViewContainer.height == 30
 
             mainViewContainer.bottom == errorViewContainer.top
-            self.mainViewAlignVerticalCenter = mainViewContainer.centerY == view.centerY
-            self.mainViewAlignVerticalCenter.isActive = false
 
             mainViewContainer.centerX == view.centerX
 
@@ -260,8 +316,11 @@ final class TeamCreationStepController: UIViewController {
 
         }
 
-        constrain(view, mainViewContainer, subtextLabel, headlineLabel) { view, inputViewsContainer, subtextLabel, headlineLabel in
-            headlineLabel.top >= view.topMargin + 20
+        constrain(view, mainViewContainer, subtextLabel, headlineLabel, topSpacer) { view, inputViewsContainer, subtextLabel, headlineLabel, topSpacer in
+
+            topSpacer.top == view.top
+            headlineLabel.top == topSpacer.bottom
+
             headlineLabel.bottom == subtextLabel.top - 24 ~ LayoutPriority(750)
             headlineLabel.leading == view.leadingMargin
             headlineLabel.trailing == view.trailingMargin
@@ -305,12 +364,30 @@ final class TeamCreationStepController: UIViewController {
 extension TeamCreationStepController {
     func clearError() {
         errorLabel.text = nil
+        showSecondaryView(for: nil)
         self.errorViewContainer.setNeedsLayout()
     }
 
     func displayError(_ error: Error) {
         errorLabel.text = error.localizedDescription.uppercased()
+        showSecondaryView(for: error)
         self.errorViewContainer.setNeedsLayout()
+    }
+
+    func showSecondaryView(for error: Error?) {
+        if let view = self.secondaryErrorView {
+            secondaryViewsStackView.removeArrangedSubview(view)
+            view.removeFromSuperview()
+            secondaryViewsStackView.arrangedSubviews.forEach { $0.isHidden = false }
+            self.secondaryErrorView = nil
+        }
+
+        if let error = error, let errorDescription = stepDescription.secondaryView?.display(on: error) {
+            let view = errorDescription.create()
+            self.secondaryErrorView = view
+            secondaryViewsStackView.arrangedSubviews.forEach { $0.isHidden = true }
+            secondaryViewsStackView.addArrangedSubview(view)
+        }
     }
 
 }

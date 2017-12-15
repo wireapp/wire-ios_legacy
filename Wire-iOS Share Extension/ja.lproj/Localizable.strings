@@ -26,8 +26,12 @@
 "share_extension.input.placeholder" = "メッセージを入力";
 "share_extension.sending_progress.title" = "送信中…";
 "share_extension.preparing.title" = "準備中…";
+"share_extension.no_internet_connection.title" = "インターネット接続がありません";
 "share_extension.not_signed_in.title" = "共有するためにはWireにサインインする必要があります";
 "share_extension.not_signed_in.close_button" = "閉じる";
+"share_extension.timeout.title" = "The connection has timed out.";
+"share_extension.timeout.message" = "Check your Internet connection and try again. The attachments were saved in the conversation.";
+"share_extension.privacy_security.lock_app.description" = "Wireのロックを解除する";
 
 "conversation.displayname.emptygroup" = "誰もいないグループ";
 "meta.degraded.degradation_reason_message.singular" = "%@が新しいデバイスを使い始めました。";

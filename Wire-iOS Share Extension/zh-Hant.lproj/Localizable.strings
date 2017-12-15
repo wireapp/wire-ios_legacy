@@ -1,0 +1,41 @@
+//
+// Wire
+// Copyright (C) 2016 Wire Swiss GmbH
+//
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this program. If not, see http://www.gnu.org/licenses/.
+//
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Share Extension
+
+
+
+"share_extension.conversation_selection.title" = "討論";
+"share_extension.send_button.title" = "發送";
+"share_extension.conversation_selection.empty.value" = "選擇";
+"share_extension.input.placeholder" = "請輸入訊息";
+"share_extension.sending_progress.title" = "正在發送...";
+"share_extension.preparing.title" = "準備中...";
+"share_extension.no_internet_connection.title" = "沒有網路連線";
+"share_extension.not_signed_in.title" = "您在登錄Wire後才可以使用分享功能";
+"share_extension.not_signed_in.close_button" = "關閉";
+"share_extension.timeout.title" = "連線逾時。";
+"share_extension.timeout.message" = "請檢查您的互聯網連接並重試。附件會保存在對話中。";
+"share_extension.privacy_security.lock_app.description" = "解鎖Wire";
+
+"conversation.displayname.emptygroup" = "無人的聊天室";
+"meta.degraded.degradation_reason_message.singular" = "%@ 開始使用新的設備。";
+"meta.degraded.degradation_reason_message.plural" = "%@ 開始使用新的設備。";
+"meta.degraded.dialog_message" = "您仍然要發送您的訊息嗎？";
+"meta.degraded.cancel_sending_button" = "不要傳送";
+"meta.degraded.send_anyway_button" = "確定發送";

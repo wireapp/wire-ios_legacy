@@ -1,0 +1,28 @@
+/*
+ *  Wire
+ *  Copyright (C) 2016 Wire Swiss GmbH
+ *
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program. If not, see http://www.gnu.org/licenses/.
+ */
+
+"NSContactsUsageDescription" = "Leiskite Wire gauti prieigą prie jūsų konktaktų, kad galėtume sujungti jus su kitais. Mes anonimizuojame visą informaciją ir nesidaliname ja su trečiomis šalimis.";
+"NSMicrophoneUsageDescription" = "Leiskite Wire gauti prieigą prie jūsų mikrofono, kad galėtumėte kalbėti su kitais žmonėmis ir siųsti garso žinutes.";
+"NSLocationWhenInUseUsageDescription" = "Leiskite Wire gauti prieigą prie jūsų buvimo vietos, kad galėtumėte ją siųsti kitiems.";
+"NSCameraUsageDescription" = "Leiskite Wire gauti prieigą prie jūsų kameros, kad galėtumėte skambinti su vaizdu ir siųsti nuotraukas.";
+/* Showed after taking a picture with camera, but only when NSPhotoLibraryUsageDescription permission was declined. Asks permission for only writing to photo library. */
+"NSPhotoLibraryAddUsageDescription" = "Suteikite „Wire“ galimybę išsaugoti padarytas nuotraukas paveikslėlių bibliotekoje.";
+/* Showed when trying to send picture from conversaiton list. Asks permissions for reading and writing to photo library */
+"NSPhotoLibraryUsageDescription" = "Suteikite „Wire“ galimybę prisijungti prie paveikslėlių saugomų bibliotekoje.";
+/* Is shown to the user when app is locked with AppLock feature on the phone that supports Face ID */
+"NSFaceIDUsageDescription" = "Norėdami nustatyti tapatybę programėlėje leiskite „Wire“ naudoti „Face ID“ galimybę.";

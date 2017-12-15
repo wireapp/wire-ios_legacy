@@ -215,6 +215,9 @@
 
 "conversation.input_bar.shortcut.send" = "Envía Mensaje";
 
+"conversation.input_bar.message_too_long.title" = "Message too long";
+"conversation.input_bar.message_too_long.message" = "You can send messages up to %d characters long.";
+
 // Image confirmation dialogue
 "image_confirmer.confirm" = "OK";
 "image_confirmer.cancel" = "Cancelar";
@@ -287,8 +290,8 @@
 "content.system.failedtosend_message_timestamp_resend" = "Reenviar";
 "content.system.failedtosend_message_timestamp_delete" = "Eliminar";
 "content.system.like_tooltip" = "Pulsa para dar un 'like'";
-"content.system.deleted_message_prefix_timestamp" = "Eliminado en %@";
-"content.system.edited_message_prefix_timestamp" = "Editado en %@";
+"content.system.deleted_message_prefix_timestamp" = "Deleted: %@";
+"content.system.edited_message_prefix_timestamp" = "Edited: %@";
 "content.system.connecting_to" = "Conectando con %@. \nInicia un chat";
 "content.system.connected_to" = "Conectado con %@\nInicia un chat";
 "content.system.other_wanted_to_talk" = "%@ llamó";
@@ -665,13 +668,11 @@
 "self.settings.sound_menu.ping.title" = "Ping";
 "self.settings.sound_menu.ringtones.title" = "Tonos de llamada";
 "self.settings.sound_menu.sounds.wire_sound" = "Wire";
+"self.settings.sound_menu.sounds.none" = "Ninguna";
 
 "self.settings.callkit.title" = "Notificaciones de (vídeo)llamadas";
 "self.settings.callkit.caption" = "A pantalla completa";
 "self.settings.callkit.description" = "Show Wire calls on the lock screen and in iOS call history. If iCloud is enabled, call history is shared with Apple.";
-
-"self.settings.cbr.not_available" = "Constant Bit Rate Encoding";
-"self.settings.cbr.not_available.description" = "Llamadas en tasa de bits constante están temporalmente desactivadas con la introducción del soporte de varias cuentas. Las llamadas CBR volverán pronto.";
 
 "self.settings.vbr.title" = "Tasa de bits variable";
 "self.settings.vbr.description" = "Esta opción permite que las llamadas de audio utilicen menos datos y funcionen mejor en redes lentas. Al desactivar esta opción se usará la codificación de audio de tasa de bits constante que necesita más ancho de banda pero es más segura frente a ataques de terceros.";
@@ -707,7 +708,7 @@
 "self.settings.sound_menu.title" = "Notificaciones sonoras";
 "self.settings.sound_menu.no_sounds.title" = "Ninguna";
 "self.settings.sound_menu.all_sounds.title" = "Todas";
-"self.settings.sound_menu.mute_while_talking.title" = "Primer mensaje, pings y llamadas";
+"self.settings.sound_menu.mute_while_talking.title" = "First message and pings";
 
 // Developer options
 "self.settings.developer_options.title" = "Opciones para desarrolladores";
@@ -770,19 +771,61 @@
 "system_status_bar.poor_connectivity.title" = "Internet lento, las llamadas no funcionarán";
 "system_status_bar.poor_connectivity.explanation" = "No podemos garantizar la calidad de voz. Conéctate a Wi-Fi o trata de cambiar tu ubicación.";
 
-// Common connections on profile view
-"profile_other.common_connections" = "Ambos conocéis a";
-
-// View user profile and options menu
+// View user profile and options menu & text field validation
 "name.placeholder" = "Tu nombre completo";
 "name.guidance.tooshort" = "Al menos 2 caracteres";
 "name.guidance.toolong" = "Demasiados caracteres";
 
 "email.placeholder" = "Email";
+"email.guidance.invalid" = "Invalid email address";
+"email.guidance.tooshort" = "Email is too short";
+"email.guidance.toolong" = "Demasiados caracteres";
 
 "password.placeholder" = "Contraseña";
 "password.guidance.tooshort" = "Al menos 8 caracteres";
 "password.guidance.toolong" = "Demasiados caracteres";
+
+// Landing screen
+
+"landing.title" = "Secure messenger for everyone.";
+"landing.create_account.title" = "Create an account";
+"landing.create_account.subtitle" = "for personal use";
+"landing.create_team.title" = "Crear equipo";
+"landing.create_team.subtitle" = "for work";
+"landing.login.hints" = "Already have an account?";
+"landing.login.button.title" = "Log in";
+
+// Create team
+
+"team.name.headline" = "Name your team";
+"team.name.subheadline" = "You can always change it later.";
+"team.name.textfield.placeholder" = "team name";
+"team.name.textfield.accessibility" = "Set team name";
+"team.name.whatiswireforteams" = "What is Wire for teams?";
+
+"team.email.headline" = "Your account";
+"team.email.subheadline" = "Enter your work email address.";
+"team.email.textfield.placeholder" = "you@yourcompany.com";
+"team.email.textfield.accessibility" = "Your company email";
+"team.email.button.learn_more" = "Más información";
+
+"team.activation_code.headline" = "You've got mail";
+"team.activation_code.subheadline" = "Introduce el código de verificación que hemos enviado a %@";
+"team.activation_code.button.resend" = "Resend code";
+"team.activation_code.button.change_email" = "Change email";
+
+"team.full_name.headline" = "Your name";
+"team.full_name.textfield.placeholder" = "Full name";
+"team.full_name.textfield.accessibility" = "Set full name";
+
+"team.password.headline" = "Set password";
+"team.password.textfield.placeholder" = "Al menos 8 caracteres";
+"team.password.textfield.accessibility" = "Set password, at least 8 characters";
+
+
+"team.email_code.input_field.accessbility_label" = "Please enter the six-digit code from the email.";
+
+// Registration
 
 "registration.title" = "Registro";
 "registration.close_email_invitation_button.email_title" = "Utilizar otro cemail";
@@ -824,6 +867,11 @@
 "registration.terms_of_use.terms" = "Al continuar aceptas los términos de uso de Wire.";
 "registration.terms_of_use.terms.link" = "Términos de uso";
 "registration.terms_of_use.agree" = "De acuerdo";
+
+"registration.terms_of_use.terms.title" = "Términos de uso";
+"registration.terms_of_use.terms.message" = "Please accept the Terms of Use to continue.";
+"registration.terms_of_use.terms.view" = "View";
+"registration.terms_of_use.accept" = "Aceptar";
 
 "registration.email_flow.title" = "Registrarse por email";
 "registration.email_flow.email_step.title" = "Editar detalles";

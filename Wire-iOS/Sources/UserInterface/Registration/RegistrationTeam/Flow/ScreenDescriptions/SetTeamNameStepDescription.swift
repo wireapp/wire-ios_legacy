@@ -19,6 +19,21 @@
 import Foundation
 import SafariServices
 
+class SetTeamNameStepSecondaryView: SecondaryViewDescription {
+    let controller: UIViewController
+    let views: [ViewDescriptor]
+    
+    init(controller: UIViewController) {
+        self.controller = controller
+        let whatIsWire = ButtonDescription(title: "team.name.whatiswireforteams".localized, accessibilityIdentifier: "wire_for_teams_button")
+        whatIsWire.buttonTapped = { [weak controller] in
+            let webview = SFSafariViewController(url: NSURL.wr_createTeamFeatures().wr_URLByAppendingLocaleParameter() as URL)
+            controller?.present(webview, animated: true, completion: nil)
+        }
+        views = [whatIsWire]
+    }
+}
+
 final class SetTeamNameStepDescription: TeamCreationStepDescription {
 
     let controller: UIViewController
@@ -26,7 +41,7 @@ final class SetTeamNameStepDescription: TeamCreationStepDescription {
     let mainView: ViewDescriptor & ValueSubmission
     let headline: String
     let subtext: String?
-    let secondaryViews: [ViewDescriptor]
+    let secondaryView: SecondaryViewDescription?
 
     init(controller: UIViewController) {
         self.controller = controller
@@ -34,12 +49,7 @@ final class SetTeamNameStepDescription: TeamCreationStepDescription {
         mainView = TextFieldDescription(placeholder: "team.name.textfield.placeholder".localized, actionDescription: "team.name.textfield.accessibility".localized, kind: .name)
         headline = "team.name.headline".localized
         subtext = "team.name.subheadline".localized
-        let whatIsWire = ButtonDescription(title: "team.name.whatiswireforteams".localized, accessibilityIdentifier: "wire_for_teams_button")
-        whatIsWire.buttonTapped = { [weak controller] in
-            let webview = SFSafariViewController(url: NSURL.wr_createTeamFeatures().wr_URLByAppendingLocaleParameter() as URL)
-            controller?.present(webview, animated: true, completion: nil)
-        }
-        secondaryViews = [whatIsWire]
+        secondaryView = SetTeamNameStepSecondaryView(controller: controller)
     }
 }
 

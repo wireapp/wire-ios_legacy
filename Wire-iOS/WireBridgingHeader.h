@@ -108,6 +108,7 @@
 #import "LaunchImageViewController.h"
 #import "VoiceUserImageView.h"
 #import "VoiceChannelParticipantCell.h"
+#import "ProfilePictureStepViewController.h"
 
 // Helper objects
 #import "PushTransition.h"
@@ -141,7 +142,6 @@
 #import "UIColor+WR_ColorScheme.h"
 #import "UIApplication+Permissions.h"
 #import "UIView+WR_ExtendedBlockAnimations.h"
-#import "UIViewController+Orientation.h"
 #import "UIView+Zeta.h"
 #import "NSString+Emoji.h"
 #import "Message+Formatting.h"
