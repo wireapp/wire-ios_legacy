@@ -69,7 +69,7 @@ class ArticleViewTests: ZMSnapshotTestCase {
         
         let textMessageData = MockTextMessageData()
         textMessageData.linkPreview = article
-        textMessageData.imageDataIdentifier = "image-id"
+        textMessageData.imageDataIdentifier = "image-id-\(imageNamed)"
         textMessageData.imageData = UIImageJPEGRepresentation(image(inTestBundleNamed: imageNamed), 0.9)
         textMessageData.hasImageData = true
         
@@ -175,7 +175,14 @@ class ArticleViewTests: ZMSnapshotTestCase {
         sut.configure(withTextMessageData: articleWithLongURL(), obfuscated: false)
         sut.layoutIfNeeded()
         
-        verifyInAllPhoneWidths(view: sut)
+        let expectation = self.expectation(description: "Wait for image to load")
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            expectation.fulfill()
+            self.verifyInAllPhoneWidths(view: self.sut)
+        }
+        
+        self.waitForExpectations(timeout: 2, handler: nil)
     }
     
     func testArticleViewWithTwitterStatusWithoutPicture() {
