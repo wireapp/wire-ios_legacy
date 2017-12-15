@@ -67,7 +67,8 @@ class CallQualityViewController : UIViewController {
     let callQualityView = UIStackView()
     let titleLabel : UILabel
     let questionText : UILabel
-    let descriptionText : UILabel
+//    let descriptionText : UILabel
+    let mosTextView : MOSQualityScoreTextView
     let scoreSelectorView : QualityScoreSelectorView
 //    let bigButton : Button
     var questionLabelText = String()
@@ -79,7 +80,8 @@ class CallQualityViewController : UIViewController {
         
         self.titleLabel = UILabel()
         self.questionText = UILabel()
-        self.descriptionText = UILabel()
+//        self.descriptionText = UILabel()
+        self.mosTextView = MOSQualityScoreTextView()
         self.scoreSelectorView = QualityScoreSelectorView()
 //        self.bigButton = Button()
         
@@ -94,10 +96,10 @@ class CallQualityViewController : UIViewController {
         questionText.textColor = UIColor.black
         questionText.numberOfLines = 0
         
-        descriptionText.text = "The scale ranges: bad(1) - poor(2) - fair(3) - good(4) - excellent(5)"
-        descriptionText.font = FontSpec(.medium, .regular).font
-        descriptionText.textColor = UIColor.black
-        descriptionText.numberOfLines = 0
+//        descriptionText.text = "The scale ranges: bad(1) - poor(2) - fair(3) - good(4) - excellent(5)"
+//        descriptionText.font = FontSpec(.medium, .regular).font
+//        descriptionText.textColor = UIColor.black
+//        descriptionText.numberOfLines = 0
      
         
 //        bigButton.setTitle(buttonText.uppercased(), for: UIControlState.normal)
@@ -111,7 +113,8 @@ class CallQualityViewController : UIViewController {
         }
         callQualityView.addArrangedSubview(titleLabel)
         callQualityView.addArrangedSubview(questionText)
-        callQualityView.addArrangedSubview(descriptionText)
+//        callQualityView.addArrangedSubview(descriptionText)
+        callQualityView.addArrangedSubview(mosTextView)
         callQualityView.addArrangedSubview(scoreSelectorView)
 //        callQualityView.addArrangedSubview(bigButton)
         callQualityView.spacing = 40
@@ -196,4 +199,57 @@ class QualityScoreSelectorView : UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
+}
+
+class MOSQualityScoreTextView : UIView {
+    
+    private let mosTextStackView = UIStackView()
+    let mos1Label = UILabel()
+    let mos2Label = UILabel()
+    let mos3Label = UILabel()
+    let mos4Label = UILabel()
+    let mos5Label = UILabel()
+    
+    override init(frame: CGRect) {
+        
+        super.init(frame: frame)
+        
+        mosTextStackView.axis = .horizontal
+        mosTextStackView.distribution = .equalCentering
+        
+        mos1Label.text = "Bad"
+        mos1Label.font = FontSpec(.medium, .regular).font
+        mos1Label.textColor = UIColor.black
+        
+        mos2Label.text = "Poor"
+        mos2Label.font = FontSpec(.medium, .regular).font
+        mos2Label.textColor = UIColor.black
+        
+        mos3Label.text = "Fair"
+        mos3Label.font = FontSpec(.medium, .regular).font
+        mos3Label.textColor = UIColor.black
+        
+        mos4Label.text = "Good"
+        mos4Label.font = FontSpec(.medium, .regular).font
+        mos4Label.textColor = UIColor.black
+        
+        mos5Label.text = "Excellent"
+        mos5Label.font = FontSpec(.medium, .regular).font
+        mos5Label.textColor = UIColor.black
+        
+        self.mosTextStackView.addArrangedSubview(mos1Label)
+        self.mosTextStackView.addArrangedSubview(mos2Label)
+        self.mosTextStackView.addArrangedSubview(mos3Label)
+        self.mosTextStackView.addArrangedSubview(mos4Label)
+        self.mosTextStackView.addArrangedSubview(mos5Label)
+
+        addSubview(mosTextStackView)
+        constrain(self, mosTextStackView) { selfView, mosTextStackView in
+            mosTextStackView.edges == selfView.edges
+        }
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 }
