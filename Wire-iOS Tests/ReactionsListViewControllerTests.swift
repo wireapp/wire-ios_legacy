@@ -20,7 +20,6 @@
 @testable import Wire
 import Cartography
 
-
 class ReactionsListViewControllerTests: ZMSnapshotTestCase {
     
 

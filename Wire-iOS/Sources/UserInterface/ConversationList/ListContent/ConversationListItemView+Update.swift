@@ -23,13 +23,13 @@ extension ConversationListItemView {
         self.titleField.font = FontSpec(.normal, .light).font!
     }
     
-    internal func configure(with title: String, subtitle: NSAttributedString) {
+    internal func configure(with title: NSAttributedString, subtitle: NSAttributedString) {
         self.titleText = title
         self.subtitleAttributedText = subtitle
         self.accessibilityContentsDidChange()
     }
     
-    internal func configure(with title: String, subtitle: NSAttributedString, users: [ZMUser]) {
+    internal func configure(with title: NSAttributedString, subtitle: NSAttributedString, users: [ZMUser]) {
         self.titleText = title
         self.subtitleAttributedText = subtitle
         self.rightAccessory.icon = .pendingConnection
@@ -43,11 +43,18 @@ extension ConversationListItemView {
         self.conversation = conversation
         
         guard let conversation = conversation else {
-            self.configure(with: "", subtitle: "" && [:])
+            self.configure(with: "" && [:], subtitle: "" && [:])
             return
         }
         
-        let title = conversation.displayName
+        var title = "".attributedString
+        
+        if ZMUser.selfUser().isTeamMember, let connectedUser = conversation.connectedUser {
+            title = AvailabilityStringBuilder.string(for: connectedUser, with: .list)
+        } else {
+            title = conversation.displayName.attributedString
+        }
+        
         self.avatarView.conversation = conversation
         
         let status = conversation.status
@@ -65,5 +72,3 @@ extension ConversationListItemView {
         self.configure(with: title, subtitle: status.description(for: conversation))
     }
 }
-
-

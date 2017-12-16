@@ -22,42 +22,40 @@ import Foundation
  Controls and observe the state of a AVPlayer instance for integration with the AVSMediaManager
  */
 @objc
-class MediaPlayerController : NSObject {
-    
-    let message : ZMConversationMessage
-    var player : AVPlayer?
-    weak var delegate : MediaPlayerDelegate?
-    
-    fileprivate var playerRateObserver : Any?
-    
+class MediaPlayerController: NSObject {
+
+    let message: ZMConversationMessage
+    var player: AVPlayer?
+    weak var delegate: MediaPlayerDelegate?
+
     init(player: AVPlayer, message: ZMConversationMessage, delegate: MediaPlayerDelegate) {
         self.player = player
         self.message = message
         self.delegate = delegate
-        
+
         super.init()
-        
-        self.playerRateObserver = KeyValueObserver.observe(player, keyPath: "rate", target: self, selector: #selector(playerRateChanged))
+
+        NotificationCenter.default.addObserver(self, selector: #selector(playerRateChanged), name:NSNotification.Name(rawValue: "rate"), object: .none)
     }
-    
+
     deinit {
+        NotificationCenter.default.removeObserver(self)
+
         delegate?.mediaPlayer(self, didChangeTo: MediaPlayerState.completed)
-        
-        self.playerRateObserver = nil
     }
-    
+
 }
 
-extension MediaPlayerController : MediaPlayer {
-    
+extension MediaPlayerController: MediaPlayer {
+
     var title: String {
         return message.fileMessageData?.filename ?? ""
     }
-    
+
     var sourceMessage: ZMConversationMessage! {
         return message
     }
-    
+
     var state: MediaPlayerState {
         if player?.rate > 0 {
             return MediaPlayerState.playing
@@ -65,27 +63,27 @@ extension MediaPlayerController : MediaPlayer {
             return MediaPlayerState.paused
         }
     }
-    
+
     var error: Error! {
         return nil
     }
-    
+
     func play() {
         player?.play()
     }
-    
+
     func stop() {
         player?.pause()
     }
-    
+
     func pause() {
         player?.pause()
     }
-    
+
 }
 
 extension MediaPlayerController {
-    
+
     func playerRateChanged() {
         if player?.rate > 0 {
             delegate?.mediaPlayer(self, didChangeTo: MediaPlayerState.playing)
@@ -93,6 +91,5 @@ extension MediaPlayerController {
             delegate?.mediaPlayer(self, didChangeTo: MediaPlayerState.paused)
         }
     }
-    
-}
 
+}
