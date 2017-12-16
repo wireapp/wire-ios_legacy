@@ -17,7 +17,7 @@ struct RatingState {
 
 class BaseCallQualityViewController :  UIViewController {
 
-    let root = CallQualityViewController(questionLabelText: "How do you rate the call set up?")
+    let root = CallQualityViewController(questionLabelText: "1. How do you rate the call set up?")
     let baseNavigationController : UINavigationController
 
     var ratingState: RatingState = RatingState(rating1: nil, rating2: nil)
@@ -44,7 +44,7 @@ extension BaseCallQualityViewController: CallQualityViewControllerDelegate {
     func controller(_ controller: CallQualityViewController, didSelect score: Int) {
         if controller == root {
             ratingState.rating1 = score
-            let next = CallQualityViewController(questionLabelText: "How do you rate the overall quality of the call?")
+            let next = CallQualityViewController(questionLabelText: "2. How do you rate the overall quality of the call?")
             next.delegate = self
             baseNavigationController.pushViewController(next, animated: true)
         }
@@ -67,57 +67,49 @@ class CallQualityViewController : UIViewController {
     let callQualityView = UIStackView()
     let titleLabel : UILabel
     let questionText : UILabel
-//    let descriptionText : UILabel
     let mosTextView : MOSQualityScoreTextView
     let scoreSelectorView : QualityScoreSelectorView
-//    let bigButton : Button
     var questionLabelText = String()
-    var buttonText = String()
     weak var delegate: CallQualityViewControllerDelegate?
     
     init(questionLabelText: String){
         callQualityView.axis = .vertical
+        callQualityView.alignment = .center
         
         self.titleLabel = UILabel()
         self.questionText = UILabel()
-//        self.descriptionText = UILabel()
         self.mosTextView = MOSQualityScoreTextView()
         self.scoreSelectorView = QualityScoreSelectorView()
-//        self.bigButton = Button()
         
         super.init(nibName: nil, bundle: nil)
         
-        titleLabel.textColor = UIColor.black
-        titleLabel.font = FontSpec(.large, .semibold).font
-        titleLabel.text = "Call Quality Survey".uppercased()
+        titleLabel.textColor = UIColor.cas_color(withHex: "#323639").withAlphaComponent(1.0)
+        titleLabel.font = FontSpec(.large, .medium).font
+        titleLabel.text = "Call Quality Survey"
         
-        questionText.text = questionLabelText.uppercased()
-        questionText.font = FontSpec(.normal, .medium).font
-        questionText.textColor = UIColor.black
+        questionText.text = questionLabelText
+        questionText.font = FontSpec(.normal, .regular).font
+        questionText.textColor = UIColor.cas_color(withHex: "#323639").withAlphaComponent(0.56)
         questionText.numberOfLines = 0
-        
-//        descriptionText.text = "The scale ranges: bad(1) - poor(2) - fair(3) - good(4) - excellent(5)"
-//        descriptionText.font = FontSpec(.medium, .regular).font
-//        descriptionText.textColor = UIColor.black
-//        descriptionText.numberOfLines = 0
-     
-        
-//        bigButton.setTitle(buttonText.uppercased(), for: UIControlState.normal)
-//        bigButton.setBackgroundImageColor(UIColor.green, for: UIControlState.normal)
-//        bigButton.isEnabled = false
-//        bigButton.addTarget(self, action: #selector(onClick), for: .primaryActionTriggered)
-//
+
         scoreSelectorView.onScoreSet = { [weak self] _ in
-//            self?.bigButton.isEnabled = true
              self?.delegate?.controller(self!, didSelect: (self?.scoreSelectorView.score)!)
         }
         callQualityView.addArrangedSubview(titleLabel)
+        if #available(iOS 11.0, *) {
+            callQualityView.setCustomSpacing(24, after: titleLabel)
+        } else {
+            // Fallback on earlier versions
+        }
         callQualityView.addArrangedSubview(questionText)
-//        callQualityView.addArrangedSubview(descriptionText)
+        if #available(iOS 11.0, *) {
+            callQualityView.setCustomSpacing(48, after: questionText)
+        } else {
+            // Fallback on earlier versions
+        }
         callQualityView.addArrangedSubview(mosTextView)
         callQualityView.addArrangedSubview(scoreSelectorView)
-//        callQualityView.addArrangedSubview(bigButton)
-        callQualityView.spacing = 40
+        callQualityView.spacing = 10
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -125,26 +117,19 @@ class CallQualityViewController : UIViewController {
     }
     
     override func viewDidLoad() {
-        view.backgroundColor = UIColor.white
+        view.backgroundColor = UIColor.cas_color(withHex: "#F8F8F8")
         view.addSubview(callQualityView)
         
         constrain(callQualityView) { callQualityView in
             callQualityView.center == callQualityView.superview!.center
-            callQualityView.width <= callQualityView.superview!.width - 100
+            callQualityView.width <= callQualityView.superview!.width - 32
         }
     }
-    
-//    func onClick(_ sender: Button) {
-//        delegate?.controller(self, didSelect: scoreSelectorView.score)
-//    }
-
 }
 
 class QualityScoreSelectorView : UIView {
     private let scoreStackView = UIStackView()
-    private var scoreButtons: [UIButton] = []
-    let imageNormal = UIImage(named: "scoreButtonNormalState.png")
-    let imageSelected = UIImage(named: "scoreButtonSelectedState.png")
+    private var scoreButtons: [Button] = []
     weak var delegate: CallQualityViewControllerDelegate?
     
     public var onScoreSet: ((Int)->())? = nil
@@ -161,21 +146,23 @@ class QualityScoreSelectorView : UIView {
         
         scoreStackView.axis = .horizontal
         scoreStackView.distribution = .equalCentering
+        scoreStackView.spacing = 20
         let scoreValues = [1,2,3,4,5]
         scoreButtons = scoreValues.map { (scoreValue) in
-            let button = UIButton()
+            let button = Button()
             button.tag = scoreValue
+            button.circular = true
             button.setTitle(String(scoreValue), for: .normal)
-            button.setTitleColor(.white, for: .normal)
+            button.setTitleColor(UIColor.cas_color(withHex: "#272A2C"), for: .normal)
             button.setTitleColor(.white, for: .selected)
 
             button.addTarget(self, action: #selector(onClick), for: .primaryActionTriggered)
-            button.setBackgroundImage(imageNormal, for: UIControlState.normal)
-            button.setBackgroundImage(imageSelected, for: UIControlState.selected)
+            button.setBackgroundImageColor(.white, for: UIControlState.normal)
+            button.setBackgroundImageColor(UIColor.blue , for: UIControlState.selected)
             self.scoreStackView.addArrangedSubview(button)
             constrain(button){button in
-                button.width == 40
-                button.height == 40
+                button.width == 56
+                button.height == 56
             }
     
             return button
@@ -192,7 +179,6 @@ class QualityScoreSelectorView : UIView {
         }
         self.score = sender.tag
         sender.isSelected = true
-//        delegate?.controller(CallQualityViewController, didSelect: scoreStackView.score)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -216,26 +202,27 @@ class MOSQualityScoreTextView : UIView {
         
         mosTextStackView.axis = .horizontal
         mosTextStackView.distribution = .equalCentering
+        mosTextStackView.spacing = 35
         
         mos1Label.text = "Bad"
         mos1Label.font = FontSpec(.medium, .regular).font
-        mos1Label.textColor = UIColor.black
+        mos1Label.textColor = UIColor.cas_color(withHex: "#272A2C")
         
         mos2Label.text = "Poor"
         mos2Label.font = FontSpec(.medium, .regular).font
-        mos2Label.textColor = UIColor.black
+        mos2Label.textColor = UIColor.cas_color(withHex: "#272A2C")
         
         mos3Label.text = "Fair"
         mos3Label.font = FontSpec(.medium, .regular).font
-        mos3Label.textColor = UIColor.black
+        mos3Label.textColor = UIColor.cas_color(withHex: "#272A2C")
         
         mos4Label.text = "Good"
         mos4Label.font = FontSpec(.medium, .regular).font
-        mos4Label.textColor = UIColor.black
+        mos4Label.textColor = UIColor.cas_color(withHex: "#272A2C")
         
         mos5Label.text = "Excellent"
         mos5Label.font = FontSpec(.medium, .regular).font
-        mos5Label.textColor = UIColor.black
+        mos5Label.textColor = UIColor.cas_color(withHex: "#272A2C")
         
         self.mosTextStackView.addArrangedSubview(mos1Label)
         self.mosTextStackView.addArrangedSubview(mos2Label)
