@@ -45,7 +45,9 @@ class GiphyCollectionViewCell: UICollectionViewCell {
 
     static let CellIdentifier = "GiphyCollectionViewCell"
 
-    let imageView = FLAnimatedImageView()
+    //let imageView = FLAnimatedImageView()
+    let playerLayer = AVPlayerLayer()
+    var playerLooper: Any?
     var ziph: Ziph?
     var representation: ZiphyImageRep?
 
@@ -53,12 +55,14 @@ class GiphyCollectionViewCell: UICollectionViewCell {
         super.init(frame: frame)
 
         clipsToBounds = true
-        imageView.contentMode = .scaleAspectFill
-        contentView.addSubview(imageView)
+        //imageView.contentMode = .scaleAspectFill
+        //contentView.addSubview(imageView)
+        contentView.layer.addSublayer(playerLayer)
+        playerLayer.frame = contentView.frame
 
-        constrain(self.contentView, self.imageView) { contentView, imageView in
-            imageView.edges == contentView.edges
-        }
+//        constrain(self.contentView, self.imageView) { contentView, imageView in
+//            imageView.edges == contentView.edges
+//        }
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -66,7 +70,8 @@ class GiphyCollectionViewCell: UICollectionViewCell {
     }
 
     override func prepareForReuse() {
-        self.imageView.animatedImage = nil
+        //self.imageView.player = nil
+        self.playerLayer.player = nil
         self.ziph = nil
         self.representation = nil
         self.backgroundColor = nil
@@ -240,14 +245,23 @@ class GiphySearchViewController: UICollectionViewController {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: GiphyCollectionViewCell.CellIdentifier, for: indexPath) as! GiphyCollectionViewCell
         let ziph = searchResultsController.results[indexPath.row]
 
-        if let representation = ziph.ziphyImages[ZiphyClient.fromZiphyImageTypeToString(.fixedWidthDownsampled)] {
+        if let representation = ziph.ziphyImages[ZiphyClient.fromZiphyImageTypeToString(.fixedWidth)] {
             cell.ziph = ziph
             cell.representation = representation
             cell.backgroundColor = UIColor(for: ZMUser.pickRandomAccentColor())
 
             searchResultsController.fetchImageData(forZiph: ziph, imageType: representation.imageType) { (imageData, imageRepresentation, error) in
                 if cell.representation == imageRepresentation {
-                    cell.imageView.animatedImage = FLAnimatedImage(animatedGIFData: imageData)
+                    //cell.imageView.animatedImage = FLAnimatedImage(animatedGIFData: imageData)
+                    let playerItem = AVPlayerItem(url: URL(string: imageRepresentation!.mp4)!)
+                    cell.playerLayer.player = AVQueuePlayer(items: [playerItem]);                    cell.playerLayer.frame = cell.contentView.bounds
+                    if #available(iOS 10.0, *) {
+                        cell.playerLooper = AVPlayerLooper(player: cell.playerLayer.player as! AVQueuePlayer, templateItem: playerItem)
+                    } else {
+                        // Loop via notification
+                    }
+
+                    cell.playerLayer.player!.play()
                 }
             }
         }
@@ -261,17 +275,17 @@ class GiphySearchViewController: UICollectionViewController {
     }
 
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let ziph = searchResultsController.results[indexPath.row]
-        var previewImage: FLAnimatedImage?
-
-        if let cell = collectionView.cellForItem(at: indexPath) as? GiphyCollectionViewCell {
-            previewImage = cell.imageView.animatedImage
-        }
-
-        let confirmationController = GiphyConfirmationViewController(withZiph: ziph, previewImage: previewImage, searchResultController: searchResultsController)
-        confirmationController.title = conversation.displayName.uppercased()
-        confirmationController.delegate = self
-        navigationController?.pushViewController(confirmationController, animated: true)
+//        let ziph = searchResultsController.results[indexPath.row]
+//        var previewImage: FLAnimatedImage?
+//
+//        if let cell = collectionView.cellForItem(at: indexPath) as? GiphyCollectionViewCell {
+//            previewImage = cell.imageView.animatedImage
+//        }
+//
+//        let confirmationController = GiphyConfirmationViewController(withZiph: ziph, previewImage: previewImage, searchResultController: searchResultsController)
+//        confirmationController.title = conversation.displayName.uppercased()
+//        confirmationController.delegate = self
+//        navigationController?.pushViewController(confirmationController, animated: true)
     }
 
     override func scrollViewDidScroll(_ scrollView: UIScrollView) {
@@ -305,7 +319,7 @@ extension GiphySearchViewController: ARCollectionViewMasonryLayoutDelegate {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: ARCollectionViewMasonryLayout, variableDimensionForItemAt indexPath: IndexPath) -> CGFloat {
         let ziph = searchResultsController.results[indexPath.row]
 
-        guard let representation = ziph.ziphyImages[ZiphyClient.fromZiphyImageTypeToString(.fixedWidthDownsampled)] else {
+        guard let representation = ziph.ziphyImages[ZiphyClient.fromZiphyImageTypeToString(.fixedWidth)] else {
             return 0
         }
 
