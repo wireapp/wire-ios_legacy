@@ -4838,11 +4838,8 @@
 				87B0ACA91FA20D7C001B2B9D /* AnalyticsTests.swift */,
 				87656FD01FB5FF0300D5286C /* FilePreviewGeneratorTests.swift */,
 				87FC0AE91FC719E80036E029 /* CharacterInputFieldTests.swift */,
-<<<<<<< HEAD
 				EFE8062E1FE005A7006A0EE7 /* DateFormatterTests.swift */,
-=======
 				7C6A69041FDFD80E007EBE41 /* AvailabilityLabelTests.swift */,
->>>>>>> develop
 			);
 			path = "Wire-iOS Tests";
 			sourceTree = "<group>";
