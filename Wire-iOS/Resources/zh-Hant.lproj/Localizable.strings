@@ -24,7 +24,7 @@
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // People picker/start UI
-"peoplepicker.search_placeholder" = "用戶名";
+"peoplepicker.search_placeholder" = "搜尋使用者名稱或名字";
 "peoplepicker.header.top_people" = "常用連絡人";
 "peoplepicker.button.create_conversation" = "建立群組";
 "peoplepicker.button.add_to_conversation" = "邀請聯繫人加入群組";
@@ -67,7 +67,7 @@
 // Contacts UI
 "contacts_ui.search_placeholder" = "按名稱搜尋";
 "contacts_ui.invite_others" = "邀請其他人";
-"contacts_ui.name_in_contacts" = "%@在聯絡人中";
+"contacts_ui.name_in_contacts" = "%@在連絡人中";
 "contacts_ui.connection_request" = "邀請加為連絡人";
 "contacts_ui.action_button.invite" = "邀請";
 "contacts_ui.action_button.open" = "開啟";
@@ -132,10 +132,10 @@
 // In-app notifications (chat heads)
 "notifications.shared_a_photo" = "分享了一張圖片";
 "notifications.pinged" = "打了聲招呼";
-"notifications.sent_file" = "分享了檔案";
-"notifications.sent_location" = "分享了位置";
-"notifications.sent_video" = "分享了影片";
-"notifications.sent_audio" = "分享了語音訊息";
+"notifications.sent_file" = "分享了一個檔案";
+"notifications.sent_location" = "分享了一個位置";
+"notifications.sent_video" = "分享了一段影片";
+"notifications.sent_audio" = "分享了一則語音訊息";
 "notifications.in_conversation" = "%@－%@";
 "notifications.this_conversation" = "%@在聊天室中";
 
@@ -150,17 +150,17 @@
 
 "conversation.status.call" = "通話中";
 "conversation.status.typing" = "輸入訊息中...";
-"conversation.status.typing.group" = "%@：輸入訊息中...";
+"conversation.status.typing.group" = "%@：輸入訊息中…";
 "conversation.status.silenced" = "已靜音";
 "conversation.status.blocked" = "已封鎖";
 
 "conversation.status.message.text" = "%@";
-"conversation.status.message.link" = "分享連結";
+"conversation.status.message.link" = "分享一條連結";
 "conversation.status.message.image" = "分享了一張圖片";
-"conversation.status.message.location" = "分享了位置";
-"conversation.status.message.audio" = "分享了語音訊息";
-"conversation.status.message.video" = "分享了影片";
-"conversation.status.message.file" = "分享了檔案";
+"conversation.status.message.location" = "分享了一個位置";
+"conversation.status.message.audio" = "分享了一則語音訊息";
+"conversation.status.message.video" = "分享了一段影片";
+"conversation.status.message.file" = "分享了一個檔案";
 "conversation.status.message.knock" = "打了聲招呼";
 "conversation.status.message.missedcall" = "未接來電";
 "conversation.status.message.ephemeral" = "限時訊息";
@@ -168,8 +168,8 @@
 "conversation.status.unsent" = "⚠️ 未發信息";
 "conversation.status.you" = "您";
 "conversation.status.added_multiple" = "聯絡人已加入";
-"conversation.status.you_was_added" = "%@ 新增了 您";
-"conversation.status.added_users" = "%@ 新增了 %@";
+"conversation.status.you_was_added" = "%@加入了您";
+"conversation.status.added_users" = "%@加了%@到對話";
 "conversation.status.removed_multiple" = "聯絡人已删除";
 "conversation.status.you_were_removed" = "您被移除了";
 "conversation.status.you_left" = "您 離開了";
@@ -189,7 +189,7 @@
 "conversation.invite_more_people.title" = "請大家告訴大家！";
 "conversation.invite_more_people.description" = "新增參與者到聊天室";
 "conversation.invite_more_people.explanation_url" = "https://support.wire.com";
-"conversation.invite_more_people.button_title" = "新增連絡人";
+"conversation.invite_more_people.button_title" = "加入連絡人";
 
 // Conversation names
 "conversation.displayname.emptygroup" = "無人的聊天室";
@@ -214,6 +214,8 @@
 "conversation.connection_view.in_address_book" = "在連絡人中";
 
 "conversation.input_bar.shortcut.send" = "發送訊息";
+"conversation.input_bar.shortcut.edit_last_message" = "編輯最新訊息";
+"conversation.input_bar.shortcut.cancel_editing_message" = "取消";
 
 "conversation.input_bar.message_too_long.title" = "訊息過長";
 "conversation.input_bar.message_too_long.message" = "每則訊息最多只能包含%d個字元。";
@@ -256,9 +258,9 @@
 "content.system.other_started_conversation" = "%@ 和 %@ 開啓了聊天室";
 "content.system.you_started_conversation" = "您 開啟了和 %@ 的聊天室";
 
-"content.system.you_added_participant" = "您 新增了 %@";
-"content.system.other_added_participant" = "%@ 新增了 %@";
-"content.system.other_added_you" = "%@ 新增了 您";
+"content.system.you_added_participant" = "您加了%@到對話";
+"content.system.other_added_participant" = "%@加了%@到對話";
+"content.system.other_added_you" = "%@加了您到對話";
 
 "content.system.participants_you" = "您";
 "content.system.participants_1_other" = "%@ 和 %@";
@@ -270,13 +272,13 @@
 
 // New conversation participants added / removed / started system message
 
-"content.system.conversation.other.started" = "%@ 和 %@ 開啓了聊天室";
-"content.system.conversation.other.added" = "%@ 新增了 %@";
+"content.system.conversation.other.started" = "%@和%@開始了對話";
+"content.system.conversation.other.added" = "%@加了%@到對話";
 "content.system.conversation.other.removed" = "%@ 移除了 %@";
 "content.system.conversation.other.left" = "%@ 離開了";
 
 "content.system.conversation.you.started" = "%@ 和 %@ 開啓了聊天室";
-"content.system.conversation.you.added" = "%@ 新增了 %@";
+"content.system.conversation.you.added" = "%@加了%@到對話";
 "content.system.conversation.you.removed" = "%@ 移除了 %@";
 "content.system.conversation.you.left" = "%@ 離開了";
 "content.system.conversation.team.member-leave" = "%@從團隊中被移除了";
@@ -285,11 +287,11 @@
 "content.system.you_renamed_conv_to_nothing" = "您刪除了聊天室名稱";
 "content.system.pending_message_timestamp" = "正在發送...";
 "content.system.message_sent_timestamp" = "已送出";
-"content.system.message_delivered_timestamp" = "已傳達";
+"content.system.message_delivered_timestamp" = "已傳送";
 "content.system.failedtosend_message_timestamp" = "發送失敗。";
 "content.system.failedtosend_message_timestamp_resend" = "重新發送";
 "content.system.failedtosend_message_timestamp_delete" = "刪除";
-"content.system.like_tooltip" = "點一下來按讚";
+"content.system.like_tooltip" = "點一下讚好";
 "content.system.deleted_message_prefix_timestamp" = "已刪除: %@";
 "content.system.edited_message_prefix_timestamp" = "已編輯: %@";
 "content.system.connecting_to" = "和 %@ 成為連絡人。開始聊天吧";
@@ -302,7 +304,7 @@
 "content.system.this_device" = "這個設備";
 
 "content.system.call.you" = "您";
-"content.system.call.called" = "%@ 曾來電";
+"content.system.call.called" = "%@打電話";
 "content.system.call.called-you" = "%@ 曾來電";
 
 "content.system.renamed_conv.title" = "%@ 重新命名了聊天室";
@@ -322,7 +324,7 @@
 "content.system.your_devices" = "您的設備";
 "content.system.other_devices" = "%@的設備";
 
-"content.system.missing_messages.title" = "您已經有一段時間沒有使用此設備了，可能有部分訊息不會顯示出來。";
+"content.system.missing_messages.title" = "您已經有一段時間沒有使用此設備，可能有部分訊息不會顯示。";
 "content.system.missing_messages.subtitle_start" = "同時，";
 
 "content.system.cannot_decrypt" = "從 %@ 的訊息未被接收。";
@@ -332,7 +334,7 @@
 
 "content.system.cannot_decrypt.identity" = "%@ 的設備識別已更改。信息無法送達。";
 "content.system.cannot_decrypt.identity.you_part" = "您的";
-"content.system.cannot_decrypt.identity.otherUser_part" = "%@的"; // posessive apostrophe - might differ in different languages
+"content.system.cannot_decrypt.identity.otherUser_part" = "%@的"; // possessive apostrophe - might differ in different languages
 "content.system.cannot_decrypt.identity.why_part" = "瞭解更多";
 "content.system.cannot_decrypt.otherDevice_part" = "(設備 %@)"; // example " (device d1b23c54f34a)".
 // Full sentence: "A message from %@ was not received. [...] (device d1b23c54f34a). This is a debug information.
@@ -354,8 +356,8 @@
 "content.message.delete" = "刪除";
 "content.message.save" = "儲存";
 
-"content.message.like" = "Like";
-"content.message.unlike" = "象";
+"content.message.like" = "讚好";
+"content.message.unlike" = "收回讚好";
 "content.message.forward" = "分享";
 "content.message.go_to_conversation" = "顯示";
 "content.message.forward.to" = "搜索...";
@@ -375,7 +377,7 @@
 
 // Connecting (NEW IMPLEMENTATION, REVIEW LATER)
 "connection_request.title" = "連接到 %@"; // check UPPERCASE implementation in code
-"missive.connection_request.default_message" = "Hi %@，\n加入我的Wire連絡人吧。\n%@";
+"missive.connection_request.default_message" = "%@您好，\n在Wire和我一起聊天吧。\n%@";
 
 "connection_request.send_button_title" = "加為連絡人";
 "inbox.connection_request.connect_button_title" = "加為連絡人";
@@ -384,7 +386,7 @@
 // Voice
 "voice.status.one_to_one.incoming" = "%@\n來電";
 "voice.status.group_call.incoming" = "%@\n撥號中";
-"voice.status.one_to_one.outgoing" = "%@\n群組來電";
+"voice.status.one_to_one.outgoing" = "%@\n來電";
 "voice.status.joining" = "%@\n連接中";
 "voice.status.video_not_available" = "視訊關閉";
 "voice.status.low_connection" = "連線品質不佳";
@@ -418,7 +420,7 @@
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Profile and Participants
 
-"participants.add_people_button_title" = "新增連絡人";
+"participants.add_people_button_title" = "加入連絡人";
 "participants.avatar.guest.title" = "訪客";
 
 // Meta Menu
@@ -467,10 +469,10 @@
 "profile.block_dialog.button_block" = "封鎖";
 
 // Delete message dialog
-"message.delete_dialog.message" = "此操作將不能被復原。";
+"message.delete_dialog.message" = "此資料將永久刪除，不能還原。";
 "message.delete_dialog.action.cancel" = "取消";
-"message.delete_dialog.action.hide" = "為自己刪除";
-"message.delete_dialog.action.delete" = "為每個人刪除";
+"message.delete_dialog.action.hide" = "在我方刪除";
+"message.delete_dialog.action.delete" = "全體刪除";
 
 // Edit message
 "message.menu.edit.title" = "編輯";
@@ -518,7 +520,7 @@
 "device.class.desktop" = "桌面";
 "device.class.tablet" = "平板電腦";
 "device.class.phone" = "手機";
-"profile.devices.detail.reset_session.title" = "重設session";
+"profile.devices.detail.reset_session.title" = "重設工作階段";
 
 // General strings
 "general.confirm" = "確認";
@@ -552,19 +554,19 @@
 "about.copyright.title" = "© Wire Swiss GmbH";
 
 // Self new devices
-"self.new_device_alert.title" = "您已經連接%@到您的 Wire 帳號";
+"self.new_device_alert.title" = "您已經連接%@到您的Wire帳號";
 "self.new_device_alert.title_prefix.tablet" = "一台平板電腦";
 "self.new_device_alert.title_prefix.phone" = "一台手機";
 "self.new_device_alert.title_prefix.devices" = "%d 裝置";
-"self.new_device_alert.message" = "%@ 如果您沒有這麼做 ，請移除此裝置並重新設定您的密碼。";
-"self.new_device_alert.message_plural" = "%@ 如果您沒有這麼做 ，請移除那些裝置並重新設定您的密碼。";
+"self.new_device_alert.message" = "%@如果您沒有這麼做，請移除此裝置並重新設定您的密碼。";
+"self.new_device_alert.message_plural" = "%@如果您沒有這麼做，請移除那些裝置並重新設定您的密碼。";
 "self.new_device_alert.manage_devices" = "管理設備";
 "self.new_device_alert.trust_devices" = "確認";
 
 // Settings - top level
 "self.settings.create_team.title" = "建立團隊";
 "self.settings.manage_team.title" = "管理團隊";
-"self.settings.add_team_or_account.title" = "新團隊或帳號";
+"self.settings.add_team_or_account.title" = "新建團隊或帳號";
 "self.settings.add_account.title" = "新增帳號";
 
 "self.settings.add_account.error.title" = "已啓動三個賬號";
@@ -598,9 +600,9 @@
 "self.settings.account_picture_group.theme" = "暗色系主題";
 
 "self.settings.device_details.fingerprint.subtitle" = "Wire為每個設備設置了一個獨特的指紋。您可以透過指紋比對來驗證您的設備和聊天室。";
-"self.settings.device_details.reset_session.subtitle" = "如果設備指紋比對結果不吻合，請重設session以產生兩方新的加密金鎖。";
+"self.settings.device_details.reset_session.subtitle" = "如果設備指紋比對結果不吻合，請重設工作階段以產生兩方新的加密金鎖。";
 "self.settings.device_details.remove_device.subtitle" = "如果您已經不再使用此設備的話，請把它移除，您將會立即登出此設備。";
-"self.settings.device_details.reset_session.success" = "Session已被重設";
+"self.settings.device_details.reset_session.success" = "工作階段已被重設";
 
 "self.settings.account_details.actions.title" = "操作";
 
@@ -660,12 +662,12 @@
 "self.settings.notifications.push_notification.footer" = "發送者名稱和訊息內容顯示於螢幕鎖定和通知中心。";
 
 "self.settings.notifications.chat_alerts.toggle" = "訊息橫幅";
-"self.settings.notifications.chat_alerts.footer" = "其他對話的新訊息。";
+"self.settings.notifications.chat_alerts.footer" = "接收來自其他對話的新訊息。";
 
 "self.settings.sound_menu.sounds.title" = "音效";
 "self.settings.sound_menu.ringtone.title" = "鈴聲";
 "self.settings.sound_menu.message.title" = "訊息音效";
-"self.settings.sound_menu.ping.title" = "打招呼";
+"self.settings.sound_menu.ping.title" = "招呼";
 "self.settings.sound_menu.ringtones.title" = "鈴聲";
 "self.settings.sound_menu.sounds.wire_sound" = "Wire";
 "self.settings.sound_menu.sounds.none" = "無";
@@ -679,7 +681,7 @@
 
 "self.settings.sound_menu.sounds.wire_call" = "Wire 鈴聲";
 "self.settings.sound_menu.sounds.wire_message" = "Wire 訊息";
-"self.settings.sound_menu.sounds.wire_ping" = "Wire 打招呼";
+"self.settings.sound_menu.sounds.wire_ping" = "Wire 招呼";
 
 // By popular demand
 "self.settings.popular_demand.title" = "推薦選項";
@@ -787,7 +789,7 @@
 
 // Landing screen
 
-"landing.title" = "所有人的保安通訊工具。";
+"landing.title" = "保密每個人之通訊。";
 "landing.create_account.title" = "新增帳號";
 "landing.create_account.subtitle" = "供個人使用";
 "landing.create_team.title" = "建立團隊";
@@ -798,7 +800,7 @@
 // Create team
 
 "team.name.headline" = "為您的團隊命名";
-"team.name.subheadline" = "您之後可以在變更。";
+"team.name.subheadline" = "之後您可隨時更改。";
 "team.name.textfield.placeholder" = "團隊名稱";
 "team.name.textfield.accessibility" = "設定團隊名稱";
 "team.name.whatiswireforteams" = "什麼是Wire團隊？";
@@ -810,7 +812,7 @@
 "team.email.button.learn_more" = "瞭解更多";
 
 "team.activation_code.headline" = "您收到新郵件";
-"team.activation_code.subheadline" = "輸入我們發送到 %@的驗證碼";
+"team.activation_code.subheadline" = "輸入我們發送到%@的驗證碼。";
 "team.activation_code.button.resend" = "重新發送驗證碼";
 "team.activation_code.button.change_email" = "更改電子郵件地址";
 
@@ -995,8 +997,8 @@
 "force.update.ok_button" = "到App Store";
 
 // Third Party
-"giphy.conversation.message" = "%@ · 來源 giphy.com";
-"giphy.conversation.random_message" = "來源 giphy.com";
+"giphy.conversation.message" = "%@ · 來自giphy.com";
+"giphy.conversation.random_message" = "來自giphy.com";
 "giphy.error.no_more_results" = "沒有更多的gif圖像";
 "giphy.error.no_result" = "找不到gif圖像";
 
@@ -1038,3 +1040,14 @@
 "compose.drafts.compose.dismiss.confirm.title" = "儲存為草稿";
 "compose.drafts.compose.dismiss.confirm.action.title" = "儲存";
 "compose.drafts.compose.dismiss.delete.action.title" = "刪除";
+
+"availability.message.cancel" = "取消";
+"availability.message.set_status" = "設定狀態";
+
+"availability.none" = "沒有狀態";
+"availability.available" = "在線";
+"availability.away" = "離開";
+"availability.busy" = "忙碌";
+"availability.available.placeholder" = "%@在線";
+"availability.away.placeholder" = "%@已離開";
+"availability.busy.placeholder" = "%@忙碌中";

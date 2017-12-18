@@ -214,6 +214,8 @@
 "conversation.connection_view.in_address_book" = "in Contatti";
 
 "conversation.input_bar.shortcut.send" = "Invia un messaggio";
+"conversation.input_bar.shortcut.edit_last_message" = "Modifica l'ultimo messaggio";
+"conversation.input_bar.shortcut.cancel_editing_message" = "Annulla";
 
 "conversation.input_bar.message_too_long.title" = "Il messaggio è troppo lungo";
 "conversation.input_bar.message_too_long.message" = "Puoi inviare messaggi lunghi al massimo %d caratteri.";
@@ -332,7 +334,7 @@
 
 "content.system.cannot_decrypt.identity" = "%@ ha cambiato identità del dispositivo. Messaggio non recapitato.";
 "content.system.cannot_decrypt.identity.you_part" = "Il tuo";
-"content.system.cannot_decrypt.identity.otherUser_part" = "di %@"; // posessive apostrophe - might differ in different languages
+"content.system.cannot_decrypt.identity.otherUser_part" = "di %@"; // possessive apostrophe - might differ in different languages
 "content.system.cannot_decrypt.identity.why_part" = "Ulteriori informazioni";
 "content.system.cannot_decrypt.otherDevice_part" = "(dispositivo %@)"; // example " (device d1b23c54f34a)".
 // Full sentence: "A message from %@ was not received. [...] (device d1b23c54f34a). This is a debug information.
@@ -568,7 +570,7 @@
 "self.settings.add_account.title" = "Aggiungi account";
 
 "self.settings.add_account.error.title" = "Tre account attivi";
-"self.settings.add_account.error.message" = "Puoi connetterti solamente con tre account per volta. Esci da un account per aggiungerne un altro.";
+"self.settings.add_account.error.message" = "Puoi connetterti solo con tre account per volta. Esci da un account per aggiungerne un altro.";
 
 // Settings - Account details
 "self.settings.account_section" = "Account";
@@ -610,7 +612,7 @@
 "self.settings.account_details.delete_account.alert.message" = "Ti invieremo un SMS o una email. Segui il link per eliminare definitivamente il tuo account.";
 
 "self.settings.account_details.log_out.alert.title" = "Logout";
-"self.settings.account_details.log_out.alert.message" = "La tua cronologia dei messaggi sarà cancellata su questo dispositivo.";
+"self.settings.account_details.log_out.alert.message" = "La tua cronologia dei messaggi sarà cancellata da questo dispositivo.";
 
 
 // Change Username
@@ -672,7 +674,7 @@
 
 "self.settings.callkit.title" = "Chiamate";
 "self.settings.callkit.caption" = "Condividi con iOS";
-"self.settings.callkit.description" = "Mostra le chiamate di Wire nella schermata di blocco e nella cronologia delle chiamate su iOS. Se iCloud è abilitato, la cronologia delle chiamate verrà condivisa con Apple. Riavvia Wire per applicare questa impostazione.";
+"self.settings.callkit.description" = "Mostra le chiamate di Wire nella schermata di blocco e nella cronologia delle chiamate su iOS. Se iCloud è abilitato, la cronologia delle chiamate verrà condivisa con Apple.";
 
 "self.settings.vbr.title" = "Codifica con Bit Rate variabile";
 "self.settings.vbr.description" = "Con questa modalità le chiamate utilizzano meno dati e funzionano meglio su reti con larghezza di banda minima. Disattiva per utilizzare la codifica Bit Rate costante.";
@@ -787,7 +789,7 @@
 
 // Landing screen
 
-"landing.title" = "Secure messenger for everyone.";
+"landing.title" = "Messaggistica sicura per tutti.";
 "landing.create_account.title" = "Crea un account";
 "landing.create_account.subtitle" = "per uso personale";
 "landing.create_team.title" = "Crea un team";
@@ -798,25 +800,25 @@
 // Create team
 
 "team.name.headline" = "Dai un nome al tuo team";
-"team.name.subheadline" = "Potrai sempre cambiarlo in seguito.";
+"team.name.subheadline" = "Potrai cambiarlo in seguito.";
 "team.name.textfield.placeholder" = "nome del team";
 "team.name.textfield.accessibility" = "Inserisci il nome del team";
-"team.name.whatiswireforteams" = "What is Wire for teams?";
+"team.name.whatiswireforteams" = "Cos'è Wire per Teams?";
 
 "team.email.headline" = "Il tuo account";
-"team.email.subheadline" = "Enter your work email address.";
-"team.email.textfield.placeholder" = "you@yourcompany.com";
+"team.email.subheadline" = "Inserisci il tuo indirizzo email di lavoro.";
+"team.email.textfield.placeholder" = "nome@organizzazione.it";
 "team.email.textfield.accessibility" = "Email dell'azienda";
 "team.email.button.learn_more" = "Ulteriori informazioni";
 
-"team.activation_code.headline" = "You've got mail";
-"team.activation_code.subheadline" = "Inserisci il codice di verifica che abbiamo inviato a %@";
+"team.activation_code.headline" = "È arrivata una mail";
+"team.activation_code.subheadline" = "Inserisci il codice di verifica che abbiamo inviato a %@.";
 "team.activation_code.button.resend" = "Invia di nuovo il codice";
 "team.activation_code.button.change_email" = "Cambia email";
 
 "team.full_name.headline" = "Il tuo nome";
 "team.full_name.textfield.placeholder" = "Nome e cognome";
-"team.full_name.textfield.accessibility" = "Set full name";
+"team.full_name.textfield.accessibility" = "Nome e cognome";
 
 "team.password.headline" = "Imposta una password";
 "team.password.textfield.placeholder" = "Almeno 8 caratteri";
@@ -870,7 +872,7 @@
 
 "registration.terms_of_use.terms.title" = "Termini di utilizzo";
 "registration.terms_of_use.terms.message" = "Accetta termini condizioni per continuare.";
-"registration.terms_of_use.terms.view" = "View";
+"registration.terms_of_use.terms.view" = "Visualizza";
 "registration.terms_of_use.accept" = "Accetta";
 
 "registration.email_flow.title" = "Registrati con l'email";
@@ -1038,3 +1040,14 @@
 "compose.drafts.compose.dismiss.confirm.title" = "Salvare come bozza";
 "compose.drafts.compose.dismiss.confirm.action.title" = "Salva";
 "compose.drafts.compose.dismiss.delete.action.title" = "Elimina";
+
+"availability.message.cancel" = "Annulla";
+"availability.message.set_status" = "Imposta uno stato";
+
+"availability.none" = "Nessuno";
+"availability.available" = "Disponibile";
+"availability.away" = "Assente";
+"availability.busy" = "Occupato";
+"availability.available.placeholder" = "%@ è disponibile";
+"availability.away.placeholder" = "%@ è assente";
+"availability.busy.placeholder" = "%@ è occupato";

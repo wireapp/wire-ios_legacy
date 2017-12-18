@@ -16,16 +16,18 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-
 import Foundation
 import Cartography
 
 @objc internal class ProfileView: UIView {
-    public let imageView = UserImageView(size: .big)
+    public let imageView =  UserImageView(size: .big)
     public let nameLabel = UILabel()
     public let handleLabel = UILabel()
     public let teamNameLabel = UILabel()
+    public var availabilityView = AvailabilityTitleView(user: ZMUser.selfUser(), style: .selfProfile)
+    var stackView : UICustomSpacingStackView!
     var userObserverToken: NSObjectProtocol?
+    var source: UIViewController?
     
     init(user: ZMUser) {
         super.init(frame: .zero)
@@ -33,6 +35,14 @@ import Cartography
         imageView.accessibilityIdentifier = "user image"
         imageView.userSession = session
         imageView.user = user
+        
+        availabilityView.tapHandler = { [weak self] button in
+            guard let `self` = self else { return }
+            let alert = self.availabilityView.actionSheet
+            alert.popoverPresentationController?.sourceView = self
+            alert.popoverPresentationController?.sourceRect = self.availabilityView.frame
+            self.source?.present(alert, animated: true, completion: nil)
+        }
         
         if let session = session {
             userObserverToken = UserChangeInfo.add(observer: self, for: user, userSession: session)
@@ -57,14 +67,22 @@ import Cartography
         if let team = user.team, let teamName = team.name {
             teamNameLabel.text = teamName.uppercased()
             teamNameLabel.accessibilityValue = teamNameLabel.text
-        }
-        else {
+        } else {
             teamNameLabel.isHidden = true
+            availabilityView.isHidden = true
         }
         
         updateHandleLabel(user: user)
         
-        [imageView, nameLabel, handleLabel, teamNameLabel].forEach(addSubview)
+        stackView = UICustomSpacingStackView(customSpacedArrangedSubviews: [nameLabel, handleLabel, teamNameLabel, imageView, availabilityView])
+        stackView.alignment = .center
+        stackView.axis = .vertical
+        stackView.spacing = 2
+        stackView.wr_addCustomSpacing(32, after: handleLabel)
+        stackView.wr_addCustomSpacing(32, after: teamNameLabel)
+        stackView.wr_addCustomSpacing(32, after: imageView)
+        stackView.wr_addCustomSpacing(32, after: availabilityView)
+        addSubview(stackView)
         
         self.createConstraints()
     }
@@ -80,34 +98,11 @@ import Cartography
     }
     
     private func createConstraints() {
-        constrain(self, imageView, nameLabel, handleLabel, teamNameLabel) { selfView, imageView, nameLabel, handleLabel, teamNameLabel in
-            
-            nameLabel.top >= selfView.top
-            nameLabel.centerX == selfView.centerX
-            nameLabel.leading >= selfView.leading
-            nameLabel.trailing <= selfView.trailing
-            
-            handleLabel.top == nameLabel.bottom + 4
-            handleLabel.centerX == selfView.centerX
-            handleLabel.leading >= selfView.leading
-            handleLabel.trailing <= selfView.trailing
-            
-            teamNameLabel.bottom == handleLabel.bottom + 24
-            teamNameLabel.centerX == selfView.centerX
-            teamNameLabel.leading >= selfView.leading
-            teamNameLabel.trailing <= selfView.trailing
-            
-            imageView.top == teamNameLabel.bottom + 32 ~ LayoutPriority(750.0)
-            imageView.top >= teamNameLabel.bottom + 16
-            imageView.width == imageView.height
-            imageView.width <= 240
-            imageView.centerX == selfView.centerX
-            imageView.leading >= selfView.leading
-            imageView.trailing <= selfView.trailing
-            
-            imageView.bottom == selfView.bottom - 32 ~ LayoutPriority(750.0)
-            imageView.bottom <= selfView.bottom - 24
-            
+        constrain(self, stackView) { selfView, stackView in
+            stackView.top == selfView.top
+            stackView.bottom <= selfView.bottom
+            stackView.leading == selfView.leading
+            stackView.trailing == selfView.trailing
         }
     }
     

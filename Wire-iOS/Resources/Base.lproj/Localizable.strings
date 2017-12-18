@@ -1040,3 +1040,14 @@
 "compose.drafts.compose.dismiss.confirm.title" = "Save as draft";
 "compose.drafts.compose.dismiss.confirm.action.title" = "Save";
 "compose.drafts.compose.dismiss.delete.action.title" = "Delete";
+
+"availability.message.cancel" = "Cancel";
+"availability.message.set_status" = "Set a status";
+
+"availability.none" = "None";
+"availability.available" = "Available";
+"availability.away" = "Away";
+"availability.busy" = "Busy";
+"availability.available.placeholder" = "%@ is available";
+"availability.away.placeholder" = "%@ is away";
+"availability.busy.placeholder" = "%@ is busy";

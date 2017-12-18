@@ -168,6 +168,9 @@ static CIContext *ciContext(void)
 
 - (void)createConstraints
 {
+    [self setContentHuggingPriority:1000 forAxis:UILayoutConstraintAxisVertical];
+    [self setContentHuggingPriority:1000 forAxis:UILayoutConstraintAxisHorizontal];
+    
     [self.indicator autoPinEdgeToSuperviewEdge:ALEdgeTop];
     [self.indicator autoPinEdgeToSuperviewEdge:ALEdgeRight];
     [self.indicator autoMatchDimension:ALDimensionWidth toDimension:ALDimensionWidth ofView:self.containerView withMultiplier:1.0f / 3.0f];

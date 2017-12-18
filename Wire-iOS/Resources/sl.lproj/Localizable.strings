@@ -214,6 +214,8 @@
 "conversation.connection_view.in_address_book" = "v stikih";
 
 "conversation.input_bar.shortcut.send" = "Pošlji sporočilo";
+"conversation.input_bar.shortcut.edit_last_message" = "Edit Last Message";
+"conversation.input_bar.shortcut.cancel_editing_message" = "Prekliči";
 
 "conversation.input_bar.message_too_long.title" = "Message too long";
 "conversation.input_bar.message_too_long.message" = "You can send messages up to %d characters long.";
@@ -332,7 +334,7 @@
 
 "content.system.cannot_decrypt.identity" = "Identita naprave od %@ je bila spremenjena. Sporočilo ni dostavljeno.";
 "content.system.cannot_decrypt.identity.you_part" = "Tvoja";
-"content.system.cannot_decrypt.identity.otherUser_part" = "%@"; // posessive apostrophe - might differ in different languages
+"content.system.cannot_decrypt.identity.otherUser_part" = "%@"; // possessive apostrophe - might differ in different languages
 "content.system.cannot_decrypt.identity.why_part" = "Nauči se več";
 "content.system.cannot_decrypt.otherDevice_part" = "(naprava%@)"; // example " (device d1b23c54f34a)".
 // Full sentence: "A message from %@ was not received. [...] (device d1b23c54f34a). This is a debug information.
@@ -787,7 +789,7 @@
 
 // Landing screen
 
-"landing.title" = "Secure messenger for everyone.";
+"landing.title" = "Secure messaging for everyone.";
 "landing.create_account.title" = "Create an account";
 "landing.create_account.subtitle" = "for personal use";
 "landing.create_team.title" = "Ustvari novo ekipo";
@@ -810,7 +812,7 @@
 "team.email.button.learn_more" = "Nauči se več";
 
 "team.activation_code.headline" = "You've got mail";
-"team.activation_code.subheadline" = "Vnesite verifikacijsko kodo, ki smo jo poslali na %@";
+"team.activation_code.subheadline" = "Enter the verification code we sent to %@.";
 "team.activation_code.button.resend" = "Resend code";
 "team.activation_code.button.change_email" = "Change email";
 
@@ -1032,9 +1034,20 @@
 "compose.drafts.compose.subject.placeholder" = "Tapnite, če želite določiti zadevo";
 
 "compose.drafts.compose.delete.confirm.title" = "Potrdi brisanje";
-"compose.drafts.compose.delete.confirm.message" = "To dejanje bo za vedno izbrisalo ta osnutek in ga ni mogoče razveljaviti.";
+"compose.drafts.compose.delete.confirm.message" = "This action will permanently delete this draft and cannot be undone.";
 "compose.drafts.compose.delete.confirm.action.title" = "Izbriši";
 
 "compose.drafts.compose.dismiss.confirm.title" = "Save as draft";
 "compose.drafts.compose.dismiss.confirm.action.title" = "Shrani";
 "compose.drafts.compose.dismiss.delete.action.title" = "Izbriši";
+
+"availability.message.cancel" = "Prekliči";
+"availability.message.set_status" = "Set a status";
+
+"availability.none" = "Nič";
+"availability.available" = "Available";
+"availability.away" = "Away";
+"availability.busy" = "Busy";
+"availability.available.placeholder" = "%@ is available";
+"availability.away.placeholder" = "%@ is away";
+"availability.busy.placeholder" = "%@ is busy";

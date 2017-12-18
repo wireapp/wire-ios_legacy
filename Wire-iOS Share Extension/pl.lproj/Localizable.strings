@@ -20,6 +20,7 @@
 
 
 
+"share_extension.conversation_selection.account" = "Account:";
 "share_extension.conversation_selection.title" = "Rozmowa:";
 "share_extension.send_button.title" = "Wyślij";
 "share_extension.conversation_selection.empty.value" = "Wybierz";

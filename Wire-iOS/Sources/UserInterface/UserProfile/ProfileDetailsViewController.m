@@ -82,10 +82,11 @@ typedef NS_ENUM(NSUInteger, ProfileUserAction) {
 @property (nonatomic) ZMConversation *conversation;
 
 @property (nonatomic) UserImageView *userImageView;
-@property (nonatomic) UIView *userImageViewContainer;
 @property (nonatomic) UIView *footerView;
 @property (nonatomic) UILabel *teamsGuestLabel;
 @property (nonatomic) BOOL showGuestLabel;
+@property (nonatomic) AvailabilityTitleView *availabilityView;
+@property (nonatomic) UICustomSpacingStackView *stackView;
 
 @end
 
@@ -100,8 +101,8 @@ typedef NS_ENUM(NSUInteger, ProfileUserAction) {
         _bareUser = user;
         _conversation = conversation;
         _showGuestLabel = [user isGuestInConversation:conversation];
+        _availabilityView = [[AvailabilityTitleView alloc] initWithUser:[self fullUser] style:AvailabilityTitleViewStyleOtherProfile];
     }
-    
     return self;
 }
 
@@ -115,33 +116,29 @@ typedef NS_ENUM(NSUInteger, ProfileUserAction) {
 {
     [self createUserImageView];
     [self createFooter];
-    if (self.showGuestLabel) {
-        [self createTeamsGuestLabel];
-    }
+    [self createTeamsGuestLabel];
+    
+    self.teamsGuestLabel.hidden = !self.showGuestLabel;
+    self.availabilityView.hidden = !ZMUser.selfUser.isTeamMember || self.fullUser.availability == AvailabilityNone;
+
+    self.stackView = [[UICustomSpacingStackView alloc] initWithCustomSpacedArrangedSubviews:@[self.userImageView, self.teamsGuestLabel, self.availabilityView]];
+    self.stackView.axis = UILayoutConstraintAxisVertical;
+    self.stackView.spacing = 0;
+    self.stackView.alignment = UIStackViewAlignmentCenter;
+    [self.view addSubview:self.stackView];
+    
+    [self.stackView wr_addCustomSpacing:(self.teamsGuestLabel.isHidden ? 32 : 4) after:self.userImageView];
+    [self.stackView wr_addCustomSpacing:(self.availabilityView.isHidden ? 40 : 32) after:self.teamsGuestLabel];
+    [self.stackView wr_addCustomSpacing:32 after:self.availabilityView];
 }
 
 - (void)setupConstraints
 {
-    [self.userImageViewContainer autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero excludingEdge:ALEdgeBottom];
+    [self.stackView autoPinEdgeToSuperviewEdge:ALEdgeTop withInset:32];
+    [self.stackView autoPinEdgeToSuperviewEdge:ALEdgeLeading];
+    [self.stackView autoPinEdgeToSuperviewEdge:ALEdgeTrailing];
+    [self.stackView autoPinEdge:ALEdgeBottom toEdge:ALEdgeTop ofView:self.footerView withOffset:0 relation:NSLayoutRelationLessThanOrEqual];
     
-    [self.userImageView autoMatchDimension:ALDimensionHeight toDimension:ALDimensionWidth ofView:self.userImageView];
-    [self.userImageView autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:48 relation:NSLayoutRelationGreaterThanOrEqual];
-    [self.userImageView autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:48 relation:NSLayoutRelationGreaterThanOrEqual];
-    [self.userImageView autoPinEdgeToSuperviewEdge:ALEdgeTop withInset:0 relation:NSLayoutRelationGreaterThanOrEqual];
-
-    if (self.showGuestLabel) {
-        [self.teamsGuestLabel autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.userImageView withOffset:15];
-        [self.teamsGuestLabel autoPinEdgeToSuperviewEdge:ALEdgeBottom withInset:0 relation:NSLayoutRelationGreaterThanOrEqual];
-        [self.teamsGuestLabel autoPinEdge:ALEdgeLeft toEdge:ALEdgeLeft ofView:self.userImageView];
-        [self.teamsGuestLabel autoPinEdge:ALEdgeRight toEdge:ALEdgeRight ofView:self.userImageView];
-    }
-    
-    [self.userImageView autoAlignAxisToSuperviewAxis:ALAxisVertical];
-    [NSLayoutConstraint autoSetPriority:UILayoutPriorityDefaultLow forConstraints:^{
-        [self.userImageView autoAlignAxisToSuperviewAxis:ALAxisHorizontal];
-    }];
-
-    [self.footerView autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.userImageViewContainer];
     [self.footerView autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero excludingEdge:ALEdgeTop];
 }
 
@@ -149,15 +146,11 @@ typedef NS_ENUM(NSUInteger, ProfileUserAction) {
 
 - (void)createUserImageView
 {
-    self.userImageViewContainer = [[UIView alloc] initForAutoLayout];
-    [self.view addSubview:self.userImageViewContainer];
-    
     self.userImageView = [[UserImageView alloc] initWithMagicPrefix:@"profile.user_image"];
     self.userImageView.userSession = [ZMUserSession sharedSession];
     self.userImageView.translatesAutoresizingMaskIntoConstraints = NO;
     self.userImageView.size = UserImageViewSizeBig;
     self.userImageView.user = self.bareUser;
-    [self.userImageViewContainer addSubview:self.userImageView];
 }
 
 - (void)createTeamsGuestLabel
@@ -165,7 +158,7 @@ typedef NS_ENUM(NSUInteger, ProfileUserAction) {
     self.teamsGuestLabel = [[UILabel alloc] initForAutoLayout];
     self.teamsGuestLabel.numberOfLines = 0;
     self.teamsGuestLabel.textAlignment = NSTextAlignmentCenter;
-    [self.userImageViewContainer addSubview:self.teamsGuestLabel];
+    [self.teamsGuestLabel setContentCompressionResistancePriority:1000 forAxis:UILayoutConstraintAxisVertical];
     self.teamsGuestLabel.text = NSLocalizedString(@"profile.details.guest", nil);
 }
 

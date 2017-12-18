@@ -20,11 +20,25 @@ import UIKit
 import Cartography
 import WireUtilities
 
+class ListSkeletonCellNameItemView: UIView {
+    
+    init() {
+        super.init(frame: CGRect.zero)
+        
+        layer.cornerRadius = 4
+        backgroundColor = .white
+        alpha = 0.16
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+}
 
 class ListSkeletonCellView : UIView {
     
     let avatarView : UIView
-    let lineView : UIView
+    let lineView : ListSkeletonCellNameItemView
     
     var lineConstraint : NSLayoutConstraint?
     
@@ -43,17 +57,13 @@ class ListSkeletonCellView : UIView {
     
     init() {
         self.avatarView = UIView()
-        self.lineView = UIView()
+        self.lineView = ListSkeletonCellNameItemView()
         
         super.init(frame: CGRect.zero)
         
         avatarView.layer.cornerRadius = 14
         avatarView.backgroundColor = .white
         avatarView.alpha = 0.16
-        
-        lineView.layer.cornerRadius = 4
-        lineView.backgroundColor = .white
-        lineView.alpha = 0.16
         
         [avatarView, lineView].forEach(addSubview)
         
@@ -156,13 +166,13 @@ class ListSkeletonContentView : UITableView, UITableViewDataSource {
 
 class ListSkeletonView  : UIView {
     
-    let titleLabel : UILabel
+    let titleItem: ListSkeletonCellNameItemView
     let accountView : BaseAccountView
     let listContentView : ListSkeletonContentView
     var buttonRowView : UIStackView!
 
     init(_ account: Account) {
-        self.titleLabel = UILabel()
+        self.titleItem = ListSkeletonCellNameItemView()
         self.accountView = AccountViewFactory.viewFor(account: account) as BaseAccountView
         self.listContentView = ListSkeletonContentView()
         
@@ -170,14 +180,10 @@ class ListSkeletonView  : UIView {
         
         accountView.selected = false
         
-        titleLabel.textColor = .white
-        titleLabel.font = FontSpec(.medium, .semibold).font
-        titleLabel.text = "list.title".localized.uppercased()
-        
         buttonRowView = UIStackView(arrangedSubviews: disabledButtons(with: [.person, .archive]))
         buttonRowView.distribution = .equalCentering
 
-        [accountView, titleLabel, listContentView, buttonRowView].forEach(addSubview)
+        [accountView, titleItem, listContentView, buttonRowView].forEach(addSubview)
         
         createConstraints()
     }
@@ -197,15 +203,17 @@ class ListSkeletonView  : UIView {
     }
     
     func createConstraints() {
-        constrain(self, accountView, titleLabel, buttonRowView, listContentView) { (containerView, accountView, titleLabel, buttonRowView, listContentView) in
+        constrain(self, accountView, titleItem, buttonRowView, listContentView) { (containerView, accountView, titleItem, buttonRowView, listContentView) in
             
             accountView.left == containerView.left + 9
             accountView.top == containerView.top + UIScreen.safeArea.top
             
-            titleLabel.centerY == accountView.centerY
-            titleLabel.centerX == containerView.centerX
-            titleLabel.left >= accountView.right
-            titleLabel.right <= containerView.right
+            titleItem.centerY == accountView.centerY
+            titleItem.centerX == containerView.centerX
+            titleItem.left >= accountView.right
+            titleItem.right <= containerView.right
+            titleItem.width == 140.0
+            titleItem.height == CGFloat(14)
             
             buttonRowView.left == containerView.left + 16
             buttonRowView.right == containerView.right - 16

@@ -65,6 +65,7 @@
     
     [self.containerView autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero];
     [self.imageView autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero];
+    [self.imageView autoMatchDimension:ALDimensionWidth toDimension:ALDimensionHeight ofView:self.imageView];
     [self.initials autoCenterInSuperview];
     
     [self updateCornerRadius];
@@ -73,7 +74,7 @@
 - (void)updateCornerRadius
 {
     if (self.circular) {
-        self.containerView.layer.cornerRadius = self.bounds.size.width / 2;
+        self.containerView.layer.cornerRadius = MIN(self.bounds.size.width, self.bounds.size.height) / 2;
     }
 }
 

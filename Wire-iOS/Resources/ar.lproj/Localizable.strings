@@ -214,8 +214,10 @@
 "conversation.connection_view.in_address_book" = "في جهات الاتصال";
 
 "conversation.input_bar.shortcut.send" = "إرسال رسالة";
+"conversation.input_bar.shortcut.edit_last_message" = "Edit Last Message";
+"conversation.input_bar.shortcut.cancel_editing_message" = "إلغاء";
 
-"conversation.input_bar.message_too_long.title" = "Message too long";
+"conversation.input_bar.message_too_long.title" = "الرسالة طويلة جداً";
 "conversation.input_bar.message_too_long.message" = "You can send messages up to %d characters long.";
 
 // Image confirmation dialogue
@@ -332,7 +334,7 @@
 
 "content.system.cannot_decrypt.identity" = "تغيّرت هوية جهاز %@. رسالة غير مُستلمة.";
 "content.system.cannot_decrypt.identity.you_part" = "الخاص بك";
-"content.system.cannot_decrypt.identity.otherUser_part" = "خاص بـ%@"; // posessive apostrophe - might differ in different languages
+"content.system.cannot_decrypt.identity.otherUser_part" = "خاص بـ%@"; // possessive apostrophe - might differ in different languages
 "content.system.cannot_decrypt.identity.why_part" = "معرفة المزيد";
 "content.system.cannot_decrypt.otherDevice_part" = "(جهاز %@)"; // example " (device d1b23c54f34a)".
 // Full sentence: "A message from %@ was not received. [...] (device d1b23c54f34a). This is a debug information.
@@ -777,7 +779,7 @@
 "name.guidance.toolong" = "حروف كثيرة عن الحد";
 
 "email.placeholder" = "البريد الإلكتروني";
-"email.guidance.invalid" = "Invalid email address";
+"email.guidance.invalid" = "عنوان البريد إلكتروني غير فعال";
 "email.guidance.tooshort" = "Email is too short";
 "email.guidance.toolong" = "حروف كثيرة عن الحد";
 
@@ -787,35 +789,35 @@
 
 // Landing screen
 
-"landing.title" = "Secure messenger for everyone.";
-"landing.create_account.title" = "Create an account";
+"landing.title" = "Secure messaging for everyone.";
+"landing.create_account.title" = "إنشاء حساب";
 "landing.create_account.subtitle" = "for personal use";
 "landing.create_team.title" = "إنشاء فريق";
 "landing.create_team.subtitle" = "for work";
-"landing.login.hints" = "Already have an account?";
-"landing.login.button.title" = "Log in";
+"landing.login.hints" = "لديك حساب بالفعل ؟";
+"landing.login.button.title" = "تسجيل الدخول";
 
 // Create team
 
 "team.name.headline" = "Name your team";
 "team.name.subheadline" = "You can always change it later.";
-"team.name.textfield.placeholder" = "team name";
+"team.name.textfield.placeholder" = "اسم الفريق";
 "team.name.textfield.accessibility" = "Set team name";
 "team.name.whatiswireforteams" = "What is Wire for teams?";
 
-"team.email.headline" = "Your account";
+"team.email.headline" = "حسابك";
 "team.email.subheadline" = "Enter your work email address.";
 "team.email.textfield.placeholder" = "you@yourcompany.com";
 "team.email.textfield.accessibility" = "Your company email";
 "team.email.button.learn_more" = "معرفة المزيد";
 
 "team.activation_code.headline" = "You've got mail";
-"team.activation_code.subheadline" = "أدخل رمز التّحقق الذي أُرسل لـ%@";
-"team.activation_code.button.resend" = "Resend code";
-"team.activation_code.button.change_email" = "Change email";
+"team.activation_code.subheadline" = "Enter the verification code we sent to %@.";
+"team.activation_code.button.resend" = "إعادة إرسال الرمز";
+"team.activation_code.button.change_email" = "تغيير البريد الإلكتروني";
 
-"team.full_name.headline" = "Your name";
-"team.full_name.textfield.placeholder" = "Full name";
+"team.full_name.headline" = "اسمُك";
+"team.full_name.textfield.placeholder" = "الاسم الكامل";
 "team.full_name.textfield.accessibility" = "Set full name";
 
 "team.password.headline" = "Set password";
@@ -1032,9 +1034,20 @@
 "compose.drafts.compose.subject.placeholder" = "انقر لتعيين موضوع";
 
 "compose.drafts.compose.delete.confirm.title" = "تأكيد الحذف";
-"compose.drafts.compose.delete.confirm.message" = "سيتم حذف هذه المسودّة بشكل دائم، ولن يمكن إرجاعها.";
+"compose.drafts.compose.delete.confirm.message" = "This action will permanently delete this draft and cannot be undone.";
 "compose.drafts.compose.delete.confirm.action.title" = "حذف";
 
 "compose.drafts.compose.dismiss.confirm.title" = "حفظ كمسودة";
 "compose.drafts.compose.dismiss.confirm.action.title" = "حفظ";
 "compose.drafts.compose.dismiss.delete.action.title" = "حذف";
+
+"availability.message.cancel" = "إلغاء";
+"availability.message.set_status" = "Set a status";
+
+"availability.none" = "لا شيء";
+"availability.available" = "Available";
+"availability.away" = "Away";
+"availability.busy" = "Busy";
+"availability.available.placeholder" = "%@ is available";
+"availability.away.placeholder" = "%@ is away";
+"availability.busy.placeholder" = "%@ is busy";

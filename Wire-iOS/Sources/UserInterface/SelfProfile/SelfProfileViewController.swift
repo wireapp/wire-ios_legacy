@@ -44,10 +44,12 @@ final internal class SelfProfileViewController: UIViewController {
         
         profileView = ProfileView(user: ZMUser.selfUser())
         super.init(nibName: .none, bundle: .none)
+        profileView.source = self
         
         settingsController.tableView.isScrollEnabled = false
         
         profileView.imageView.delegate = self
+        
     }
     
     required init?(coder aDecoder: NSCoder) {

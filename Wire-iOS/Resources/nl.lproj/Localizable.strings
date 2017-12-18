@@ -214,6 +214,8 @@
 "conversation.connection_view.in_address_book" = "in Contacten";
 
 "conversation.input_bar.shortcut.send" = "Verstuur bericht";
+"conversation.input_bar.shortcut.edit_last_message" = "Edit Last Message";
+"conversation.input_bar.shortcut.cancel_editing_message" = "Annuleer";
 
 "conversation.input_bar.message_too_long.title" = "Bericht te lang";
 "conversation.input_bar.message_too_long.message" = "Je kan berichten verzenden van maximaal %d tekens lang.";
@@ -332,7 +334,7 @@
 
 "content.system.cannot_decrypt.identity" = "%@'s apparaatidentiteit is veranderd. Het bericht is niet afgeleverd.";
 "content.system.cannot_decrypt.identity.you_part" = "Jouw";
-"content.system.cannot_decrypt.identity.otherUser_part" = "%@’s"; // posessive apostrophe - might differ in different languages
+"content.system.cannot_decrypt.identity.otherUser_part" = "%@’s"; // possessive apostrophe - might differ in different languages
 "content.system.cannot_decrypt.identity.why_part" = "Leer meer";
 "content.system.cannot_decrypt.otherDevice_part" = "(Apparaat %@)"; // example " (device d1b23c54f34a)".
 // Full sentence: "A message from %@ was not received. [...] (device d1b23c54f34a). This is a debug information.
@@ -787,7 +789,7 @@
 
 // Landing screen
 
-"landing.title" = "Veilige berichten voor iedereen.";
+"landing.title" = "Secure messaging for everyone.";
 "landing.create_account.title" = "Account aanmaken";
 "landing.create_account.subtitle" = "voor persoonlijk gebruik";
 "landing.create_team.title" = "Creëer Team";
@@ -810,7 +812,7 @@
 "team.email.button.learn_more" = "Leer meer";
 
 "team.activation_code.headline" = "Je hebt een email ontvangen";
-"team.activation_code.subheadline" = "Voer de verificatiecode in die we naar %@ gestuurd hebben";
+"team.activation_code.subheadline" = "Enter the verification code we sent to %@.";
 "team.activation_code.button.resend" = "Code opnieuw versturen";
 "team.activation_code.button.change_email" = "Email wijzigen";
 
@@ -1032,9 +1034,20 @@
 "compose.drafts.compose.subject.placeholder" = "Tap om een onderwerp toe te voegen";
 
 "compose.drafts.compose.delete.confirm.title" = "Verwijderen bevestigen";
-"compose.drafts.compose.delete.confirm.message" = "Hiermee zullen alle concepten verwijdert worden, dit kan niet ongedaan gemaakt worden.";
+"compose.drafts.compose.delete.confirm.message" = "This action will permanently delete this draft and cannot be undone.";
 "compose.drafts.compose.delete.confirm.action.title" = "Verwijderen";
 
 "compose.drafts.compose.dismiss.confirm.title" = "Sla op als concept";
 "compose.drafts.compose.dismiss.confirm.action.title" = "Opslaan";
 "compose.drafts.compose.dismiss.delete.action.title" = "Verwijderen";
+
+"availability.message.cancel" = "Annuleer";
+"availability.message.set_status" = "Set a status";
+
+"availability.none" = "Geen";
+"availability.available" = "Available";
+"availability.away" = "Away";
+"availability.busy" = "Busy";
+"availability.available.placeholder" = "%@ is available";
+"availability.away.placeholder" = "%@ is away";
+"availability.busy.placeholder" = "%@ is busy";

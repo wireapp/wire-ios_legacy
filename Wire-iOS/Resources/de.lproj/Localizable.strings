@@ -214,6 +214,8 @@
 "conversation.connection_view.in_address_book" = "in Kontakte";
 
 "conversation.input_bar.shortcut.send" = "Nachricht senden";
+"conversation.input_bar.shortcut.edit_last_message" = "Letzte Nachricht bearbeiten";
+"conversation.input_bar.shortcut.cancel_editing_message" = "Abbrechen";
 
 "conversation.input_bar.message_too_long.title" = "Nachricht zu lang";
 "conversation.input_bar.message_too_long.message" = "Du kannst Nachrichten mit bist zu %d Zeichen senden.";
@@ -332,7 +334,7 @@
 
 "content.system.cannot_decrypt.identity" = "%@ Geräte-Identität hat sich geändert. Nachricht kann nicht entschlüsselt werden.";
 "content.system.cannot_decrypt.identity.you_part" = "Deine";
-"content.system.cannot_decrypt.identity.otherUser_part" = "%@s"; // posessive apostrophe - might differ in different languages
+"content.system.cannot_decrypt.identity.otherUser_part" = "%@s"; // possessive apostrophe - might differ in different languages
 "content.system.cannot_decrypt.identity.why_part" = "Erfahre mehr";
 "content.system.cannot_decrypt.otherDevice_part" = "(Gerät %@)"; // example " (device d1b23c54f34a)".
 // Full sentence: "A message from %@ was not received. [...] (device d1b23c54f34a). This is a debug information.
@@ -810,7 +812,7 @@
 "team.email.button.learn_more" = "Erfahre mehr";
 
 "team.activation_code.headline" = "Du hast Post";
-"team.activation_code.subheadline" = "Bitte gib den Bestätigungs-Code ein, den wir an %@ gesendet haben";
+"team.activation_code.subheadline" = "Bitte gib den Verifizierungscode ein, den wir an %@ gesendet haben.";
 "team.activation_code.button.resend" = "Code erneut senden";
 "team.activation_code.button.change_email" = "E-Mail-Adresse ändern";
 
@@ -1038,3 +1040,14 @@
 "compose.drafts.compose.dismiss.confirm.title" = "Als Entwurf speichern";
 "compose.drafts.compose.dismiss.confirm.action.title" = "Speichern";
 "compose.drafts.compose.dismiss.delete.action.title" = "Löschen";
+
+"availability.message.cancel" = "Abbrechen";
+"availability.message.set_status" = "Wähle einen Status";
+
+"availability.none" = "Kein Status";
+"availability.available" = "Verfügbar";
+"availability.away" = "Abwesend";
+"availability.busy" = "Beschäftigt";
+"availability.available.placeholder" = "%@ ist verfügbar";
+"availability.away.placeholder" = "%@ ist abwesend";
+"availability.busy.placeholder" = "%@ ist beschäftigt";

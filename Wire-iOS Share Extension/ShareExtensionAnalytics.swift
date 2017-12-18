@@ -134,7 +134,7 @@ extension NSItemProvider {
     }
 
     var hasURL: Bool {
-        return hasItemConformingToTypeIdentifier(kUTTypeURL as String)
+        return hasItemConformingToTypeIdentifier(kUTTypeURL as String) && registeredTypeIdentifiers.count == 1
     }
 
     var hasVideo: Bool {

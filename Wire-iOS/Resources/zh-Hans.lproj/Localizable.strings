@@ -214,6 +214,8 @@
 "conversation.connection_view.in_address_book" = "在联系人中";
 
 "conversation.input_bar.shortcut.send" = "发送消息";
+"conversation.input_bar.shortcut.edit_last_message" = "编辑最新消息";
+"conversation.input_bar.shortcut.cancel_editing_message" = "取消";
 
 "conversation.input_bar.message_too_long.title" = "消息过长。";
 "conversation.input_bar.message_too_long.message" = "您可以发送最长 %d 字符的信息。";
@@ -332,7 +334,7 @@
 
 "content.system.cannot_decrypt.identity" = "%@ 设备标识改变。未送达的信息。";
 "content.system.cannot_decrypt.identity.you_part" = "你";
-"content.system.cannot_decrypt.identity.otherUser_part" = "%@的"; // posessive apostrophe - might differ in different languages
+"content.system.cannot_decrypt.identity.otherUser_part" = "%@的"; // possessive apostrophe - might differ in different languages
 "content.system.cannot_decrypt.identity.why_part" = "了解更多信息";
 "content.system.cannot_decrypt.otherDevice_part" = "(设备 %@)"; // example " (device d1b23c54f34a)".
 // Full sentence: "A message from %@ was not received. [...] (device d1b23c54f34a). This is a debug information.
@@ -787,7 +789,7 @@
 
 // Landing screen
 
-"landing.title" = "所有人的保安通訊工具。";
+"landing.title" = "保密每个人之通讯。";
 "landing.create_account.title" = "新增帐户";
 "landing.create_account.subtitle" = "供个人使用";
 "landing.create_team.title" = "创建团队";
@@ -810,7 +812,7 @@
 "team.email.button.learn_more" = "了解更多信息";
 
 "team.activation_code.headline" = "您有新邮件";
-"team.activation_code.subheadline" = "输入我们发送到%@的验证码";
+"team.activation_code.subheadline" = "输入我们发送到 %@ 的验证码";
 "team.activation_code.button.resend" = "重新发送验证码";
 "team.activation_code.button.change_email" = "更改电邮地址";
 
@@ -1032,9 +1034,20 @@
 "compose.drafts.compose.subject.placeholder" = "点击设置主题";
 
 "compose.drafts.compose.delete.confirm.title" = "确认删除";
-"compose.drafts.compose.delete.confirm.message" = "此操作将永久删除，且该操作不可恢复。";
+"compose.drafts.compose.delete.confirm.message" = "此操作将永久删除草稿，且不可恢复。";
 "compose.drafts.compose.delete.confirm.action.title" = "删除";
 
 "compose.drafts.compose.dismiss.confirm.title" = "保存为草稿";
 "compose.drafts.compose.dismiss.confirm.action.title" = "保存";
 "compose.drafts.compose.dismiss.delete.action.title" = "删除";
+
+"availability.message.cancel" = "取消";
+"availability.message.set_status" = "设置状态";
+
+"availability.none" = "无";
+"availability.available" = "在线";
+"availability.away" = "离开";
+"availability.busy" = "忙碌";
+"availability.available.placeholder" = "%@ 在线";
+"availability.away.placeholder" = "%@ 离开";
+"availability.busy.placeholder" = "%@ 正忙";
