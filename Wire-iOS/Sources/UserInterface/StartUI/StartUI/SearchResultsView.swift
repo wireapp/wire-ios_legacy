@@ -65,12 +65,9 @@ class SearchResultsView : UIView {
     func createConstraints() {
         
         constrain(self, collectionView, accessoryContainer, emptyResultContainer) { container, collectionView, accessoryContainer, emptyResultContainer in
-            
-            collectionView.top == container.top
-            collectionView.left == container.left
-            collectionView.right == container.right
-            collectionView.bottom == container.bottom
-            
+
+            collectionView.edges == container.edges
+
             accessoryContainer.left == container.left
             accessoryContainer.right == container.right
             accessoryContainerHeightConstraint = accessoryContainer.height == 0
