@@ -20,6 +20,7 @@
 
 
 
+"share_extension.conversation_selection.account" = "Account:";
 "share_extension.conversation_selection.title" = "Pokalbis:";
 "share_extension.send_button.title" = "Siųsti";
 "share_extension.conversation_selection.empty.value" = "Pasirinkti";

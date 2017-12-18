@@ -20,6 +20,7 @@
 
 
 
+"share_extension.conversation_selection.account" = "账户：";
 "share_extension.conversation_selection.title" = "对话：";
 "share_extension.send_button.title" = "发送";
 "share_extension.conversation_selection.empty.value" = "选择";

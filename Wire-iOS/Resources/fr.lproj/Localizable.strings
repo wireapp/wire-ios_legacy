@@ -214,6 +214,8 @@
 "conversation.connection_view.in_address_book" = "dans les contacts";
 
 "conversation.input_bar.shortcut.send" = "Envoyer un message";
+"conversation.input_bar.shortcut.edit_last_message" = "Modifier le dernier message";
+"conversation.input_bar.shortcut.cancel_editing_message" = "Annuler";
 
 "conversation.input_bar.message_too_long.title" = "Message trop long";
 "conversation.input_bar.message_too_long.message" = "Vous pouvez envoyer des messages de %d caractères maximum.";
@@ -332,7 +334,7 @@
 
 "content.system.cannot_decrypt.identity" = "L'identité de l'appareil %@ a changé. Message non distribué.";
 "content.system.cannot_decrypt.identity.you_part" = "Votre";
-"content.system.cannot_decrypt.identity.otherUser_part" = "de %@"; // posessive apostrophe - might differ in different languages
+"content.system.cannot_decrypt.identity.otherUser_part" = "de %@"; // possessive apostrophe - might differ in different languages
 "content.system.cannot_decrypt.identity.why_part" = "En savoir plus";
 "content.system.cannot_decrypt.otherDevice_part" = "(appareil %@)"; // example " (device d1b23c54f34a)".
 // Full sentence: "A message from %@ was not received. [...] (device d1b23c54f34a). This is a debug information.
@@ -810,7 +812,7 @@
 "team.email.button.learn_more" = "En savoir plus";
 
 "team.activation_code.headline" = "Vous avez du courrier";
-"team.activation_code.subheadline" = "Saisissez le code de vérification que nous avons envoyé au %@";
+"team.activation_code.subheadline" = "Saisir le code de vérification que nous avons envoyé à %@.";
 "team.activation_code.button.resend" = "Renvoyer le code";
 "team.activation_code.button.change_email" = "Modifier l’adresse e-mail";
 
@@ -1032,9 +1034,20 @@
 "compose.drafts.compose.subject.placeholder" = "Appuyez pour définir le sujet";
 
 "compose.drafts.compose.delete.confirm.title" = "Confirmer la suppression";
-"compose.drafts.compose.delete.confirm.message" = "Cette action supprimera définitivement le brouillon et sera irréversible.";
+"compose.drafts.compose.delete.confirm.message" = "Cette action supprimera définitivement ce brouillon et ne pourra pas être annulée.";
 "compose.drafts.compose.delete.confirm.action.title" = "Supprimer";
 
 "compose.drafts.compose.dismiss.confirm.title" = "Enregistrer le brouillon";
 "compose.drafts.compose.dismiss.confirm.action.title" = "Enregistrer";
 "compose.drafts.compose.dismiss.delete.action.title" = "Supprimer";
+
+"availability.message.cancel" = "Annuler";
+"availability.message.set_status" = "Définir un statut";
+
+"availability.none" = "Aucune";
+"availability.available" = "Disponible";
+"availability.away" = "Absent(e)";
+"availability.busy" = "Occupé(e)";
+"availability.available.placeholder" = "%@ est disponible";
+"availability.away.placeholder" = "%@ est absent(e)";
+"availability.busy.placeholder" = "%@ est occupé(e)";

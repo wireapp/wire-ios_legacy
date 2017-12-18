@@ -49,7 +49,7 @@
 	<key>content.system.missing_messages.subtitle_added</key>
 	<dict>
 		<key>NSStringLocalizedFormatKey</key>
-		<string>%@ %#@lu_number_of_users@ 已被加入</string>
+		<string>已加入%@ %#@lu_number_of_users@個參加者</string>
 		<key>lu_number_of_users</key>
 		<dict>
 			<key>NSStringFormatSpecTypeKey</key>

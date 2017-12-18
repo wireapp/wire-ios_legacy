@@ -103,7 +103,7 @@ extension AvailabilityTitleView {
     
     var actionSheet: UIAlertController {
         get {
-            let alert = UIAlertController(title: "availability.message.title".localized, message: nil, preferredStyle: .actionSheet)
+            let alert = UIAlertController(title: "availability.message.set_status".localized, message: nil, preferredStyle: .actionSheet)
             for type in Availability.allValues {
                 alert.addAction(UIAlertAction(title: type.localizedName, style: .default, handler: { [weak self] (action) in
                     self?.didSelectAvailability(type)

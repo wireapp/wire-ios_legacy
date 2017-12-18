@@ -214,6 +214,8 @@
 "conversation.connection_view.in_address_book" = "konktaktuose";
 
 "conversation.input_bar.shortcut.send" = "Siųsti žinutę";
+"conversation.input_bar.shortcut.edit_last_message" = "Keisti naujausią žinutę";
+"conversation.input_bar.shortcut.cancel_editing_message" = "Atsisakyti";
 
 "conversation.input_bar.message_too_long.title" = "Žinutė per ilga";
 "conversation.input_bar.message_too_long.message" = "Galite siųsti žinutes, kurių ilgis iki %d simbolių.";
@@ -332,7 +334,7 @@
 
 "content.system.cannot_decrypt.identity" = "Pasikeitė %@ įrenginio tapatybė. Žinutė nenusiųsta.";
 "content.system.cannot_decrypt.identity.you_part" = "Jūsų";
-"content.system.cannot_decrypt.identity.otherUser_part" = "%@"; // posessive apostrophe - might differ in different languages
+"content.system.cannot_decrypt.identity.otherUser_part" = "%@"; // possessive apostrophe - might differ in different languages
 "content.system.cannot_decrypt.identity.why_part" = "Sužinokite daugiau";
 "content.system.cannot_decrypt.otherDevice_part" = "(įrenginys %@)"; // example " (device d1b23c54f34a)".
 // Full sentence: "A message from %@ was not received. [...] (device d1b23c54f34a). This is a debug information.
@@ -810,7 +812,7 @@
 "team.email.button.learn_more" = "Sužinokite daugiau";
 
 "team.activation_code.headline" = "Gavote el. laišką";
-"team.activation_code.subheadline" = "Įrašykite patvirtinimo kodą, kuris buvo išsiųstas į %@";
+"team.activation_code.subheadline" = "Įrašykite patvirtinimo kodą, kuris buvo išsiųstas į %@.";
 "team.activation_code.button.resend" = "Siųsti kodą dar kartą";
 "team.activation_code.button.change_email" = "Pakeisti el. pašto adresą";
 
@@ -1038,3 +1040,14 @@
 "compose.drafts.compose.dismiss.confirm.title" = "Išsaugoti kaip juodraštį";
 "compose.drafts.compose.dismiss.confirm.action.title" = "Įrašyti";
 "compose.drafts.compose.dismiss.delete.action.title" = "Ištrinti";
+
+"availability.message.cancel" = "Atsisakyti";
+"availability.message.set_status" = "Nurodykite būseną";
+
+"availability.none" = "Jokių";
+"availability.available" = "Prisijungęs";
+"availability.away" = "Pasišalinęs";
+"availability.busy" = "Užsiėmęs";
+"availability.available.placeholder" = "%@ yra prisijungęs";
+"availability.away.placeholder" = "%@ yra pasišalinęs";
+"availability.busy.placeholder" = "%@ yra užsiėmęs";

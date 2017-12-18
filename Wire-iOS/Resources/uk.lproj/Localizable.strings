@@ -214,6 +214,8 @@
 "conversation.connection_view.in_address_book" = "в Контактах";
 
 "conversation.input_bar.shortcut.send" = "Надіслати повідомлення";
+"conversation.input_bar.shortcut.edit_last_message" = "Редагувати останнє повідомлення";
+"conversation.input_bar.shortcut.cancel_editing_message" = "Скасувати";
 
 "conversation.input_bar.message_too_long.title" = "Повідомлення занадто довге";
 "conversation.input_bar.message_too_long.message" = "Можна надсилати повідомлення довжиною до %d символів.";
@@ -332,7 +334,7 @@
 
 "content.system.cannot_decrypt.identity" = "%@ ідентифікатор пристрою змінився. Повідомлення не доставлено.";
 "content.system.cannot_decrypt.identity.you_part" = "Ваш";
-"content.system.cannot_decrypt.identity.otherUser_part" = "%@"; // posessive apostrophe - might differ in different languages
+"content.system.cannot_decrypt.identity.otherUser_part" = "%@"; // possessive apostrophe - might differ in different languages
 "content.system.cannot_decrypt.identity.why_part" = "Дізнатися більше";
 "content.system.cannot_decrypt.otherDevice_part" = "(пристрій %@)"; // example " (device d1b23c54f34a)".
 // Full sentence: "A message from %@ was not received. [...] (device d1b23c54f34a). This is a debug information.
@@ -787,7 +789,7 @@
 
 // Landing screen
 
-"landing.title" = "Безпечний месенджер для кожного.";
+"landing.title" = "Безпечний обмін повідомленнями для всіх.";
 "landing.create_account.title" = "Створити акаунт";
 "landing.create_account.subtitle" = "для особистого користування";
 "landing.create_team.title" = "Створити команду";
@@ -810,7 +812,7 @@
 "team.email.button.learn_more" = "Дізнатися більше";
 
 "team.activation_code.headline" = "Ви отримали нового листа";
-"team.activation_code.subheadline" = "Введіть код, який ми вислали на %@";
+"team.activation_code.subheadline" = "Введіть код, який ми вислали на %@.";
 "team.activation_code.button.resend" = "Надіслати код повторно";
 "team.activation_code.button.change_email" = "Змінити електронну пошту";
 
@@ -1038,3 +1040,14 @@
 "compose.drafts.compose.dismiss.confirm.title" = "Зберегти як чернетку";
 "compose.drafts.compose.dismiss.confirm.action.title" = "Зберегти";
 "compose.drafts.compose.dismiss.delete.action.title" = "Видалити";
+
+"availability.message.cancel" = "Скасувати";
+"availability.message.set_status" = "Set a status";
+
+"availability.none" = "Все вимкнено";
+"availability.available" = "Available";
+"availability.away" = "Away";
+"availability.busy" = "Busy";
+"availability.available.placeholder" = "%@ is available";
+"availability.away.placeholder" = "%@ is away";
+"availability.busy.placeholder" = "%@ is busy";

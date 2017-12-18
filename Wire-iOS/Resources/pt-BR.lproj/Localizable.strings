@@ -214,6 +214,8 @@
 "conversation.connection_view.in_address_book" = "nos Contatos";
 
 "conversation.input_bar.shortcut.send" = "Enviar mensagem";
+"conversation.input_bar.shortcut.edit_last_message" = "Editar Última Mensagem";
+"conversation.input_bar.shortcut.cancel_editing_message" = "Cancelar";
 
 "conversation.input_bar.message_too_long.title" = "Mensagem muito longa";
 "conversation.input_bar.message_too_long.message" = "Você pode enviar mensagens até %d caracteres.";
@@ -332,7 +334,7 @@
 
 "content.system.cannot_decrypt.identity" = "%@ identidade do dispositivo alterada. Mensagem não entregue.";
 "content.system.cannot_decrypt.identity.you_part" = "Seu";
-"content.system.cannot_decrypt.identity.otherUser_part" = "de %@"; // posessive apostrophe - might differ in different languages
+"content.system.cannot_decrypt.identity.otherUser_part" = "de %@"; // possessive apostrophe - might differ in different languages
 "content.system.cannot_decrypt.identity.why_part" = "Saiba Mais";
 "content.system.cannot_decrypt.otherDevice_part" = "(dispositivo %@)"; // example " (device d1b23c54f34a)".
 // Full sentence: "A message from %@ was not received. [...] (device d1b23c54f34a). This is a debug information.
@@ -810,7 +812,7 @@
 "team.email.button.learn_more" = "Saiba Mais";
 
 "team.activation_code.headline" = "Você tem um e-mail";
-"team.activation_code.subheadline" = "Digite o código de verificação que nós enviamos para %@";
+"team.activation_code.subheadline" = "Digite o código de verificação que enviamos para %@.";
 "team.activation_code.button.resend" = "Reenviar código";
 "team.activation_code.button.change_email" = "Alterar e-mail";
 
@@ -1032,9 +1034,20 @@
 "compose.drafts.compose.subject.placeholder" = "Toque para definir um assunto";
 
 "compose.drafts.compose.delete.confirm.title" = "Confirmar Exclusão";
-"compose.drafts.compose.delete.confirm.message" = "Esta ação irá excluir definitivamente esse rascunho e não pode ser desfeita.";
+"compose.drafts.compose.delete.confirm.message" = "Esta ação irá apagar permanentemente esse rascunho e não pode ser desfeita.";
 "compose.drafts.compose.delete.confirm.action.title" = "Apagar";
 
 "compose.drafts.compose.dismiss.confirm.title" = "Salvar como rascunho";
 "compose.drafts.compose.dismiss.confirm.action.title" = "Salvar";
 "compose.drafts.compose.dismiss.delete.action.title" = "Apagar";
+
+"availability.message.cancel" = "Cancelar";
+"availability.message.set_status" = "Set a status";
+
+"availability.none" = "Nenhum";
+"availability.available" = "Available";
+"availability.away" = "Away";
+"availability.busy" = "Busy";
+"availability.available.placeholder" = "%@ is available";
+"availability.away.placeholder" = "%@ is away";
+"availability.busy.placeholder" = "%@ is busy";

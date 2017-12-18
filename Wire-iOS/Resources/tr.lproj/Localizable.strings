@@ -214,9 +214,11 @@
 "conversation.connection_view.in_address_book" = "Kişilerde";
 
 "conversation.input_bar.shortcut.send" = "Mesaj Gönder";
+"conversation.input_bar.shortcut.edit_last_message" = "Son Mesajı Düzenle";
+"conversation.input_bar.shortcut.cancel_editing_message" = "İptal";
 
-"conversation.input_bar.message_too_long.title" = "Message too long";
-"conversation.input_bar.message_too_long.message" = "You can send messages up to %d characters long.";
+"conversation.input_bar.message_too_long.title" = "Mesaj çok uzun";
+"conversation.input_bar.message_too_long.message" = "%d karakter uzunluğuna kadar mesaj gönderebilirsiniz.";
 
 // Image confirmation dialogue
 "image_confirmer.confirm" = "TAMAM";
@@ -290,8 +292,8 @@
 "content.system.failedtosend_message_timestamp_resend" = "Yeniden gönder";
 "content.system.failedtosend_message_timestamp_delete" = "Sil";
 "content.system.like_tooltip" = "Beğenmek için dokunun";
-"content.system.deleted_message_prefix_timestamp" = "Deleted: %@";
-"content.system.edited_message_prefix_timestamp" = "Edited: %@";
+"content.system.deleted_message_prefix_timestamp" = "%@ Silindi";
+"content.system.edited_message_prefix_timestamp" = "%@ Düzenlendi";
 "content.system.connecting_to" = "%@'e bağlanılıyor.\nBir konuşma başlat";
 "content.system.connected_to" = "%@'e bağlanıldı.\nBir konuşma başlat";
 "content.system.other_wanted_to_talk" = "%@ aradı";
@@ -332,7 +334,7 @@
 
 "content.system.cannot_decrypt.identity" = "%@ cihazı kimlik değiştirdi. Teslim edilmeyen mesaj.";
 "content.system.cannot_decrypt.identity.you_part" = "Senin";
-"content.system.cannot_decrypt.identity.otherUser_part" = "%@'ın"; // posessive apostrophe - might differ in different languages
+"content.system.cannot_decrypt.identity.otherUser_part" = "%@'ın"; // possessive apostrophe - might differ in different languages
 "content.system.cannot_decrypt.identity.why_part" = "Daha Fazla";
 "content.system.cannot_decrypt.otherDevice_part" = "(cihaz %@)"; // example " (device d1b23c54f34a)".
 // Full sentence: "A message from %@ was not received. [...] (device d1b23c54f34a). This is a debug information.
@@ -562,13 +564,13 @@
 "self.new_device_alert.trust_devices" = "TAMAM";
 
 // Settings - top level
-"self.settings.create_team.title" = "Bir takım oluştur";
-"self.settings.manage_team.title" = "Manage Team";
-"self.settings.add_team_or_account.title" = "New Team or Account";
-"self.settings.add_account.title" = "Bir hesap ekle";
+"self.settings.create_team.title" = "Bir takım oluşturun";
+"self.settings.manage_team.title" = "Takımı Yönet";
+"self.settings.add_team_or_account.title" = "Yeni Takım veya Hesap";
+"self.settings.add_account.title" = "Bir hesap ekleyin";
 
-"self.settings.add_account.error.title" = "Three accounts active";
-"self.settings.add_account.error.message" = "You can only be logged in with three accounts at once. Log out from one to add another.";
+"self.settings.add_account.error.title" = "Üç hesap aktif";
+"self.settings.add_account.error.message" = "Tek seferde üç hesapla giriş yapabilirsiniz. Başka bir tane eklemek için birinden çıkış yapın.";
 
 // Settings - Account details
 "self.settings.account_section" = "Hesap";
@@ -708,7 +710,7 @@
 "self.settings.sound_menu.title" = "Sesli Uyarılar";
 "self.settings.sound_menu.no_sounds.title" = "Hiçbiri";
 "self.settings.sound_menu.all_sounds.title" = "Hepsi";
-"self.settings.sound_menu.mute_while_talking.title" = "First message and pings";
+"self.settings.sound_menu.mute_while_talking.title" = "İlk mesaj ve pingler";
 
 // Developer options
 "self.settings.developer_options.title" = "Geliştiri Seçenekleri";
@@ -777,8 +779,8 @@
 "name.guidance.toolong" = "Çok fazla karakter";
 
 "email.placeholder" = "E-posta";
-"email.guidance.invalid" = "Invalid email address";
-"email.guidance.tooshort" = "Email is too short";
+"email.guidance.invalid" = "Geçeriz e-posta adresi";
+"email.guidance.tooshort" = "E-posta çok kısa";
 "email.guidance.toolong" = "Çok fazla karakter";
 
 "password.placeholder" = "Parola";
@@ -787,43 +789,43 @@
 
 // Landing screen
 
-"landing.title" = "Secure messenger for everyone.";
-"landing.create_account.title" = "Create an account";
-"landing.create_account.subtitle" = "for personal use";
-"landing.create_team.title" = "Bir takım oluştur";
-"landing.create_team.subtitle" = "for work";
-"landing.login.hints" = "Already have an account?";
-"landing.login.button.title" = "Log in";
+"landing.title" = "Herkes için güvenli mesajlaşma.";
+"landing.create_account.title" = "Bir hesap oluştur";
+"landing.create_account.subtitle" = "kişisel kullanım için";
+"landing.create_team.title" = "Bir takım oluşturun";
+"landing.create_team.subtitle" = "iş için";
+"landing.login.hints" = "Zaten bir hesabınız var mı?";
+"landing.login.button.title" = "Giriş yap";
 
 // Create team
 
-"team.name.headline" = "Name your team";
-"team.name.subheadline" = "You can always change it later.";
-"team.name.textfield.placeholder" = "team name";
-"team.name.textfield.accessibility" = "Set team name";
-"team.name.whatiswireforteams" = "What is Wire for teams?";
+"team.name.headline" = "Takımınızı adlandırın";
+"team.name.subheadline" = "Bunu istediğiniz zaman değiştirebilirsiniz.";
+"team.name.textfield.placeholder" = "takım adı";
+"team.name.textfield.accessibility" = "Takım adınızı ayarlayın";
+"team.name.whatiswireforteams" = "Takımlar için Wire nedir?";
 
-"team.email.headline" = "Your account";
-"team.email.subheadline" = "Enter your work email address.";
-"team.email.textfield.placeholder" = "you@yourcompany.com";
-"team.email.textfield.accessibility" = "Your company email";
+"team.email.headline" = "Sizin heabınız";
+"team.email.subheadline" = "İş e-postanızı girin.";
+"team.email.textfield.placeholder" = "siz@sizinisletmeniz.com";
+"team.email.textfield.accessibility" = "İşletmenizin e-postası";
 "team.email.button.learn_more" = "Daha Fazla";
 
-"team.activation_code.headline" = "You've got mail";
-"team.activation_code.subheadline" = "%@'na gönderdiğimiz doğrulama kodunu girin";
-"team.activation_code.button.resend" = "Resend code";
-"team.activation_code.button.change_email" = "Change email";
+"team.activation_code.headline" = "E-posta aldınız";
+"team.activation_code.subheadline" = "%@'a gönderdiğimiz doğrulama kodunu girin.";
+"team.activation_code.button.resend" = "Kodu yeniden gönder";
+"team.activation_code.button.change_email" = "E-postayı değiştir";
 
-"team.full_name.headline" = "Your name";
-"team.full_name.textfield.placeholder" = "Full name";
-"team.full_name.textfield.accessibility" = "Set full name";
+"team.full_name.headline" = "Adınız";
+"team.full_name.textfield.placeholder" = "Tam adınız";
+"team.full_name.textfield.accessibility" = "Tam adınızı ayarlayın";
 
-"team.password.headline" = "Set password";
+"team.password.headline" = "Şifre ayarlayın";
 "team.password.textfield.placeholder" = "En az 8 karakter";
-"team.password.textfield.accessibility" = "Set password, at least 8 characters";
+"team.password.textfield.accessibility" = "En az 8 karakterlik şifre ayarlayın";
 
 
-"team.email_code.input_field.accessbility_label" = "Please enter the six-digit code from the email.";
+"team.email_code.input_field.accessbility_label" = "E-postanıza gönderilen altı haneli kodu girin.";
 
 // Registration
 
@@ -869,8 +871,8 @@
 "registration.terms_of_use.agree" = "Kabul ediyorum";
 
 "registration.terms_of_use.terms.title" = "Kullanım Şartları";
-"registration.terms_of_use.terms.message" = "Please accept the Terms of Use to continue.";
-"registration.terms_of_use.terms.view" = "View";
+"registration.terms_of_use.terms.message" = "Lütfen devam etmek için Kullanım Şartlarını kabul edin.";
+"registration.terms_of_use.terms.view" = "Görüntüle";
 "registration.terms_of_use.accept" = "Kabul et";
 
 "registration.email_flow.title" = "E-posta ile kaydol";
@@ -1032,9 +1034,20 @@
 "compose.drafts.compose.subject.placeholder" = "Bir konu belirlemek için dokunun";
 
 "compose.drafts.compose.delete.confirm.title" = "Silmeyi Onayla";
-"compose.drafts.compose.delete.confirm.message" = "Bu işlem taslağı kalıcı olarak silecektir ve geri alınamaz.";
+"compose.drafts.compose.delete.confirm.message" = "Bu işlem, taslağı kalıcı olarak silecektir ve geri alınamaz.";
 "compose.drafts.compose.delete.confirm.action.title" = "Sil";
 
 "compose.drafts.compose.dismiss.confirm.title" = "Taslak olarak kaydet";
 "compose.drafts.compose.dismiss.confirm.action.title" = "Kaydet";
 "compose.drafts.compose.dismiss.delete.action.title" = "Sil";
+
+"availability.message.cancel" = "İptal";
+"availability.message.set_status" = "Bir durum ayarlayın";
+
+"availability.none" = "Hiçbiri";
+"availability.available" = "Müsait";
+"availability.away" = "Uzakta";
+"availability.busy" = "Meşgul";
+"availability.available.placeholder" = "%@ müsait";
+"availability.away.placeholder" = "%@ uzakta";
+"availability.busy.placeholder" = "%@ meşgul";

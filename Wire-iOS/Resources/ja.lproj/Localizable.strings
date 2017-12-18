@@ -214,6 +214,8 @@
 "conversation.connection_view.in_address_book" = "連絡先";
 
 "conversation.input_bar.shortcut.send" = "Send Message";
+"conversation.input_bar.shortcut.edit_last_message" = "Edit Last Message";
+"conversation.input_bar.shortcut.cancel_editing_message" = "キャンセル";
 
 "conversation.input_bar.message_too_long.title" = "Message too long";
 "conversation.input_bar.message_too_long.message" = "You can send messages up to %d characters long.";
@@ -332,7 +334,7 @@
 
 "content.system.cannot_decrypt.identity" = "%@のデバイスIDが変更されました。配信不能なメッセージです。";
 "content.system.cannot_decrypt.identity.you_part" = "あなたの";
-"content.system.cannot_decrypt.identity.otherUser_part" = "%@ のデバイス"; // posessive apostrophe - might differ in different languages
+"content.system.cannot_decrypt.identity.otherUser_part" = "%@ のデバイス"; // possessive apostrophe - might differ in different languages
 "content.system.cannot_decrypt.identity.why_part" = "もっと知る";
 "content.system.cannot_decrypt.otherDevice_part" = "(デバイス %@)"; // example " (device d1b23c54f34a)".
 // Full sentence: "A message from %@ was not received. [...] (device d1b23c54f34a). This is a debug information.
@@ -787,7 +789,7 @@
 
 // Landing screen
 
-"landing.title" = "Secure messenger for everyone.";
+"landing.title" = "Secure messaging for everyone.";
 "landing.create_account.title" = "Create an account";
 "landing.create_account.subtitle" = "for personal use";
 "landing.create_team.title" = "新しいチームを作成";
@@ -810,7 +812,7 @@
 "team.email.button.learn_more" = "もっと知る";
 
 "team.activation_code.headline" = "You've got mail";
-"team.activation_code.subheadline" = "%@に送信された認証コードを入力してください。";
+"team.activation_code.subheadline" = "Enter the verification code we sent to %@.";
 "team.activation_code.button.resend" = "Resend code";
 "team.activation_code.button.change_email" = "Change email";
 
@@ -1032,9 +1034,20 @@
 "compose.drafts.compose.subject.placeholder" = "タップして件名をセット";
 
 "compose.drafts.compose.delete.confirm.title" = "削除を確認する";
-"compose.drafts.compose.delete.confirm.message" = "これは下書きを完全に削除します。この操作を元に戻すことはできません。";
+"compose.drafts.compose.delete.confirm.message" = "This action will permanently delete this draft and cannot be undone.";
 "compose.drafts.compose.delete.confirm.action.title" = "削除";
 
 "compose.drafts.compose.dismiss.confirm.title" = "Save as draft";
 "compose.drafts.compose.dismiss.confirm.action.title" = "保存";
 "compose.drafts.compose.dismiss.delete.action.title" = "削除";
+
+"availability.message.cancel" = "キャンセル";
+"availability.message.set_status" = "Set a status";
+
+"availability.none" = "なし";
+"availability.available" = "Available";
+"availability.away" = "Away";
+"availability.busy" = "Busy";
+"availability.available.placeholder" = "%@ is available";
+"availability.away.placeholder" = "%@ is away";
+"availability.busy.placeholder" = "%@ is busy";

@@ -214,6 +214,8 @@
 "conversation.connection_view.in_address_book" = "в контактах";
 
 "conversation.input_bar.shortcut.send" = "Отправить сообщение";
+"conversation.input_bar.shortcut.edit_last_message" = "Изм. последнее сообщение";
+"conversation.input_bar.shortcut.cancel_editing_message" = "Отменить";
 
 "conversation.input_bar.message_too_long.title" = "Сообщение слишком длинное";
 "conversation.input_bar.message_too_long.message" = "Вы можете отправлять сообщения длиной до %d символов.";
@@ -332,7 +334,7 @@
 
 "content.system.cannot_decrypt.identity" = "Идентификатор устройства %@ изменился. Сообщение не доставлено.";
 "content.system.cannot_decrypt.identity.you_part" = "Ваш";
-"content.system.cannot_decrypt.identity.otherUser_part" = "%@"; // posessive apostrophe - might differ in different languages
+"content.system.cannot_decrypt.identity.otherUser_part" = "%@"; // possessive apostrophe - might differ in different languages
 "content.system.cannot_decrypt.identity.why_part" = "Подробнее";
 "content.system.cannot_decrypt.otherDevice_part" = "(устройство %@)"; // example " (device d1b23c54f34a)".
 // Full sentence: "A message from %@ was not received. [...] (device d1b23c54f34a). This is a debug information.
@@ -787,7 +789,7 @@
 
 // Landing screen
 
-"landing.title" = "Защищенный мессенджер для всех.";
+"landing.title" = "Безопасный обмен сообщениями для всех.";
 "landing.create_account.title" = "Создать аккаунт";
 "landing.create_account.subtitle" = "для личного пользования";
 "landing.create_team.title" = "Создать команду";
@@ -810,7 +812,7 @@
 "team.email.button.learn_more" = "Подробнее";
 
 "team.activation_code.headline" = "Вам письмо";
-"team.activation_code.subheadline" = "Введите код подтверждения, который мы отправили на %@";
+"team.activation_code.subheadline" = "Введите код подтверждения, отправленный на номер %@.";
 "team.activation_code.button.resend" = "Запросить код повторно";
 "team.activation_code.button.change_email" = "Изменить email";
 
@@ -1038,3 +1040,14 @@
 "compose.drafts.compose.dismiss.confirm.title" = "Сохранить как черновик";
 "compose.drafts.compose.dismiss.confirm.action.title" = "Сохранить";
 "compose.drafts.compose.dismiss.delete.action.title" = "Удалить";
+
+"availability.message.cancel" = "Отменить";
+"availability.message.set_status" = "Установить статус";
+
+"availability.none" = "Отключены";
+"availability.available" = "Доступен";
+"availability.away" = "Отошел";
+"availability.busy" = "Занят";
+"availability.available.placeholder" = "%@ доступен";
+"availability.away.placeholder" = "%@ отошел";
+"availability.busy.placeholder" = "%@ занят";

@@ -214,6 +214,8 @@
 "conversation.connection_view.in_address_book" = "w kontaktach";
 
 "conversation.input_bar.shortcut.send" = "Wyślij wiadomość";
+"conversation.input_bar.shortcut.edit_last_message" = "Edit Last Message";
+"conversation.input_bar.shortcut.cancel_editing_message" = "Anuluj";
 
 "conversation.input_bar.message_too_long.title" = "Message too long";
 "conversation.input_bar.message_too_long.message" = "You can send messages up to %d characters long.";
@@ -332,7 +334,7 @@
 
 "content.system.cannot_decrypt.identity" = "Urządzenie %@ zostało zmienione. Wiadomość nie została dostarczona.";
 "content.system.cannot_decrypt.identity.you_part" = "Ty";
-"content.system.cannot_decrypt.identity.otherUser_part" = "%@"; // posessive apostrophe - might differ in different languages
+"content.system.cannot_decrypt.identity.otherUser_part" = "%@"; // possessive apostrophe - might differ in different languages
 "content.system.cannot_decrypt.identity.why_part" = "Dowiedz się więcej";
 "content.system.cannot_decrypt.otherDevice_part" = "(urządzenie %@)"; // example " (device d1b23c54f34a)".
 // Full sentence: "A message from %@ was not received. [...] (device d1b23c54f34a). This is a debug information.
@@ -787,7 +789,7 @@
 
 // Landing screen
 
-"landing.title" = "Secure messenger for everyone.";
+"landing.title" = "Secure messaging for everyone.";
 "landing.create_account.title" = "Create an account";
 "landing.create_account.subtitle" = "for personal use";
 "landing.create_team.title" = "Utwórz nowy zespół";
@@ -810,7 +812,7 @@
 "team.email.button.learn_more" = "Dowiedz się więcej";
 
 "team.activation_code.headline" = "You've got mail";
-"team.activation_code.subheadline" = "Wpisz kod weryfikacyjny, który wysłaliśmy do %@";
+"team.activation_code.subheadline" = "Enter the verification code we sent to %@.";
 "team.activation_code.button.resend" = "Resend code";
 "team.activation_code.button.change_email" = "Change email";
 
@@ -1032,9 +1034,20 @@
 "compose.drafts.compose.subject.placeholder" = "Naciśnij, aby ustawić temat";
 
 "compose.drafts.compose.delete.confirm.title" = "Potwierdź usunięcie";
-"compose.drafts.compose.delete.confirm.message" = "To spowoduje nieodwracalne usunięcie szkicu. Operacji nie będzie można cofnąć.";
+"compose.drafts.compose.delete.confirm.message" = "This action will permanently delete this draft and cannot be undone.";
 "compose.drafts.compose.delete.confirm.action.title" = "Usuń";
 
 "compose.drafts.compose.dismiss.confirm.title" = "Save as draft";
 "compose.drafts.compose.dismiss.confirm.action.title" = "Zapisz";
 "compose.drafts.compose.dismiss.delete.action.title" = "Usuń";
+
+"availability.message.cancel" = "Anuluj";
+"availability.message.set_status" = "Set a status";
+
+"availability.none" = "Żaden";
+"availability.available" = "Available";
+"availability.away" = "Away";
+"availability.busy" = "Busy";
+"availability.available.placeholder" = "%@ is available";
+"availability.away.placeholder" = "%@ is away";
+"availability.busy.placeholder" = "%@ is busy";
