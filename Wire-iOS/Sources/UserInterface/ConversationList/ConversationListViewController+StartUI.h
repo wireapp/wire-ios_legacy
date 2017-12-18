@@ -21,5 +21,4 @@
 #import "CameraViewController.h"
 
 @interface ConversationListViewController ()
-@property (nonatomic) NSSet *startUISelectedUsers;
 @end

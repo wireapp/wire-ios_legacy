@@ -30,6 +30,8 @@ enum CameraPickerResult {
 final public class CameraPicker: NSObject {
     weak var target: UIViewController? = .none
     var didPickResult: ((CameraPickerResult)->())? = .none
+    var didPickImage: ((UIImage)->())? = .none
+    var didPickVideo: ((URL)->())? = .none
     
     init(target: UIViewController) {
         self.target = target
@@ -134,6 +136,7 @@ extension CameraPicker: UIImagePickerControllerDelegate, UINavigationControllerD
             
                 self.target?.dismiss(animated: true) {
                     self.didPickResult?(.video(url))
+                    self.didPickVideo?(url)
                     self.finishPicking()
                 }
             }
@@ -145,6 +148,7 @@ extension CameraPicker: UIImagePickerControllerDelegate, UINavigationControllerD
             
             target?.dismiss(animated: true) {
                 self.didPickResult?(.image(image))
+                self.didPickImage?(image)
                 self.finishPicking()
             }
         default:
