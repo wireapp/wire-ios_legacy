@@ -157,24 +157,25 @@ static const CGFloat padding = 12;
 
 - (void)createConstrains
 {
-    [self.inviteButton autoPinEdgeToSuperviewEdge:ALEdgeTop withInset: padding];
+    [self.cameraButton autoPinEdgeToSuperviewEdge:ALEdgeTop withInset: padding];
+    [self.cameraButton autoPinEdgeToSuperviewEdge:ALEdgeTrailing withInset:padding*2];
+    [self autoPinEdge:ALEdgeTrailing toEdge:ALEdgeTrailing ofView:self.cameraButton withOffset:padding*2];
+    
+    [self.callButton autoPinEdgeToSuperviewEdge:ALEdgeTop withInset: padding];
+    [self.callButton autoPinEdge:ALEdgeTrailing toEdge:ALEdgeLeading ofView:self.cameraButton withOffset:-padding*2];
+    
+    [self.videoCallButton autoPinEdgeToSuperviewEdge:ALEdgeTop withInset: padding];
+    [self.videoCallButton autoPinEdge:ALEdgeTrailing toEdge:ALEdgeLeading ofView:self.callButton withOffset:-padding*2];
+    
+    [self.inviteButton autoAlignAxis:ALAxisHorizontal toSameAxisOfView:self.cameraButton];
     [self.inviteButton autoPinEdgeToSuperviewEdge:ALEdgeLeading withInset: padding*2];
     [self.inviteButton autoPinEdgeToSuperviewEdge:ALEdgeTrailing withInset: padding*2];
     [self.inviteButton autoSetDimension:ALDimensionHeight toSize:28];
     self.bottomEdgeConstraint = [self.inviteButton autoPinEdgeToSuperviewEdge:ALEdgeBottom withInset: padding + UIScreen.safeArea.bottom];
     
-    [self.conversationButton autoAlignAxisToSuperviewAxis:ALAxisHorizontal];
+    [self.conversationButton autoAlignAxis:ALAxisHorizontal toSameAxisOfView:self.cameraButton];
     [self.conversationButton autoPinEdgeToSuperviewEdge:ALEdgeLeading withInset: padding*2];
-        
-    [self.cameraButton autoAlignAxisToSuperviewAxis:ALAxisHorizontal];
-    [self.cameraButton autoPinEdgeToSuperviewEdge:ALEdgeTrailing withInset:padding*2];
-    [self autoPinEdge:ALEdgeTrailing toEdge:ALEdgeTrailing ofView:self.cameraButton withOffset:padding*2];
-    
-    [self.callButton autoAlignAxisToSuperviewAxis:ALAxisHorizontal];
-    [self.callButton autoPinEdge:ALEdgeTrailing toEdge:ALEdgeLeading ofView:self.cameraButton withOffset:-padding*2];
-
-    [self.videoCallButton autoAlignAxisToSuperviewAxis:ALAxisHorizontal];
-    [self.videoCallButton autoPinEdge:ALEdgeTrailing toEdge:ALEdgeLeading ofView:self.callButton withOffset:-padding*2];
+    [self.conversationButton autoSetDimension:ALDimensionHeight toSize:28];
     
     [self.lineView autoPinEdgeToSuperviewEdge:ALEdgeTop];
     [self.lineView autoPinEdgeToSuperviewEdge:ALEdgeLeft];
