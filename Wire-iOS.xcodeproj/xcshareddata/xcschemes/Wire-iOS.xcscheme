@@ -127,7 +127,7 @@
          </CommandLineArgument>
          <CommandLineArgument
             argument = "-UseAnalytics 1"
-            isEnabled = "YES">
+            isEnabled = "NO">
          </CommandLineArgument>
          <CommandLineArgument
             argument = "-ConsoleAnalytics"
