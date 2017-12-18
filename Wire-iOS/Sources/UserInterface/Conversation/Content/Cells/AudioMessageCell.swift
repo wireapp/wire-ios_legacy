@@ -142,6 +142,8 @@ public final class AudioMessageCell: ConversationCell {
     }
     
     override open func menuConfigurationProperties() -> MenuConfigurationProperties! {
+        guard let _ = message else {return nil}
+
         let properties = MenuConfigurationProperties()
         properties.targetRect = selectionRect
         properties.targetView = selectionView
