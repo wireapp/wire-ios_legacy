@@ -40,7 +40,6 @@ class AccountSelectionViewController : UITableViewController {
         
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellReuseIdentifier)
         
-        //preferredContentSize = UIScreen.main.bounds.size
         definesPresentationContext = true
     }
     

@@ -33,7 +33,7 @@ class ShareExtensionViewController: SLComposeServiceViewController {
     
     lazy var accountItem : SLComposeSheetConfigurationItem = { [weak self] in
         let item = SLComposeSheetConfigurationItem()!
-        let accountName = self?.accountManager?.selectedAccount?.userName
+        let accountName = self?.currentAccount?.userName
         
         item.title = "share_extension.conversation_selection.account".localized
         item.value = accountName ?? "share_extension.conversation_selection.empty.value".localized
@@ -57,6 +57,7 @@ class ShareExtensionViewController: SLComposeServiceViewController {
     fileprivate var postContent: PostContent?
     fileprivate var sharingSession: SharingSession? = nil
     fileprivate var extensionActivity: ExtensionActivity? = nil
+    fileprivate var currentAccount: Account? = nil
 
     private var observer: SendableBatchObserver? = nil
     private weak var progressViewController: SendingProgressViewController? = nil
@@ -79,6 +80,7 @@ class ShareExtensionViewController: SLComposeServiceViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        currentAccount = accountManager?.selectedAccount
         ExtensionBackupExcluder.exclude()
         CrashReporter.setupHockeyIfNeeded()
         navigationController?.view.backgroundColor = .white
@@ -132,7 +134,7 @@ class ShareExtensionViewController: SLComposeServiceViewController {
     private func recreateSharingSession() {
         guard let applicationGroupIdentifier = applicationGroupIdentifier,
             let hostBundleIdentifier = hostBundleIdentifier,
-            let accountIdentifier = accountManager?.selectedAccount?.userIdentifier
+            let accountIdentifier = currentAccount?.userIdentifier
         else { return }
         
         sharingSession = try? SharingSession(
@@ -297,10 +299,9 @@ class ShareExtensionViewController: SLComposeServiceViewController {
     }
     
     func updateAccount(_ account: Account?) {
-        guard let accountManager = self.accountManager, let account = account,
-            account != accountManager.selectedAccount else { return }
+        guard let account = account, account != currentAccount else { return }
         
-        accountManager.select(account)
+        currentAccount = account
         accountItem.value = account.userName
         conversationItem.value = "share_extension.conversation_selection.empty.value".localized
         postContent?.target = nil
@@ -344,7 +345,7 @@ class ShareExtensionViewController: SLComposeServiceViewController {
         
         guard let accountManager = accountManager else { return }
         let accountSelectionViewController = AccountSelectionViewController(accounts: accountManager.accounts,
-                                                                                 current: accountManager.selectedAccount)
+                                                                            current: currentAccount)
         
         accountSelectionViewController.selectionHandler = { [weak self] account in
             self?.updateAccount(account)
