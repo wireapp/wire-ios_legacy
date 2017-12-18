@@ -1041,7 +1041,6 @@
 "compose.drafts.compose.dismiss.confirm.action.title" = "Сохранить";
 "compose.drafts.compose.dismiss.delete.action.title" = "Удалить";
 
-"availability.message.title" = "Выберите статус";
 "availability.message.cancel" = "Отменить";
 "availability.message.set_status" = "Установить статус";
 

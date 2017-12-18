@@ -20,6 +20,7 @@
 
 
 
+"share_extension.conversation_selection.account" = "Account:";
 "share_extension.conversation_selection.title" = "会話";
 "share_extension.send_button.title" = "送信";
 "share_extension.conversation_selection.empty.value" = "選択する";

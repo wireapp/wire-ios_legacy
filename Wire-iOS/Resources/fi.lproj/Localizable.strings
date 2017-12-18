@@ -1041,7 +1041,6 @@
 "compose.drafts.compose.dismiss.confirm.action.title" = "Tallenna";
 "compose.drafts.compose.dismiss.delete.action.title" = "Poista";
 
-"availability.message.title" = "Choose a status";
 "availability.message.cancel" = "Peruuta";
 "availability.message.set_status" = "Set a status";
 

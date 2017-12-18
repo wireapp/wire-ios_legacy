@@ -1041,7 +1041,6 @@
 "compose.drafts.compose.dismiss.confirm.action.title" = "Enregistrer";
 "compose.drafts.compose.dismiss.delete.action.title" = "Supprimer";
 
-"availability.message.title" = "Choisir un statut";
 "availability.message.cancel" = "Annuler";
 "availability.message.set_status" = "Définir un statut";
 
