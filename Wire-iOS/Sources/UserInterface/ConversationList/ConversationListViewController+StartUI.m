@@ -58,9 +58,7 @@ typedef void (^ConversationCreatedBlock)(ZMConversation *);
                                                                      withParticipants:users.allObjects
                                                                                inTeam:team];
             } completionHandler:^{
-                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                    onConversationCreated(conversation);
-                });
+                onConversationCreated(conversation);
                 
                 AnalyticsGroupConversationEvent *event = [AnalyticsGroupConversationEvent eventForCreatedGroupWithContext:CreatedGroupContextStartUI
                                                                                                          participantCount:conversation.activeParticipants.count]; // Include self
