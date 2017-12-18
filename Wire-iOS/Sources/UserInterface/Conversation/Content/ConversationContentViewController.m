@@ -47,7 +47,6 @@
 @import PureLayout;
 #import "UIView+Zeta.h"
 #import "Analytics.h"
-#import "UIViewController+Orientation.h"
 #import "AppDelegate.h"
 #import "MediaPlaybackManager.h"
 #import "UIColor+WR_ColorScheme.h"
@@ -242,7 +241,7 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
 
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations
 {
-    return [self.class wr_supportedInterfaceOrientations];
+    return self.wr_supportedInterfaceOrientations;
 }
 
 - (void)didReceiveMemoryWarning
@@ -650,7 +649,7 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
         conversationCell = (ConversationCell *)cell;
     }
     
-    if ([Message isKnockMessage:conversationCell.message]) {
+    if (conversationCell.message != nil && [Message isKnockMessage:conversationCell.message]) {
         [self updatePingCellAppearance:(PingCell *)conversationCell];
     }
     
@@ -816,7 +815,7 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
 - (void)conversationCellDidTapOpenLikers:(ConversationCell *)cell
 {
     if ([Message hasLikers:cell.message]) {
-        ReactionsListViewController *reactionsListController = [[ReactionsListViewController alloc] initWithMessage:cell.message showsStatusBar:!IS_IPAD];
+        ReactionsListViewController *reactionsListController = [[ReactionsListViewController alloc] initWithMessage:cell.message showsStatusBar:!IS_IPAD_FULLSCREEN];
         [self.parentViewController presentViewController:reactionsListController animated:YES completion:nil];
     }
 }
@@ -830,6 +829,14 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
 
 
 @implementation ConversationContentViewController (EditMessages)
+
+- (void)editLastMessage
+{
+    ZMMessage *lastEditableMessage = self.conversation.lastEditableMessage;
+    if (lastEditableMessage != nil) {
+        [self wantsToPerformAction:MessageActionEdit forMessage:lastEditableMessage];
+    }
+}
 
 - (void)didFinishEditingMessage:(id<ZMConversationMessage>)message
 {

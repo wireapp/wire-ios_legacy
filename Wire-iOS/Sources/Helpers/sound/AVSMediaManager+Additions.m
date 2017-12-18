@@ -48,24 +48,6 @@ static NSDictionary *MediaManagerSoundConfig = nil;
 
 @implementation AVSMediaManager (Additions)
 
-+ (NSURL *)URLForSound:(NSString *)soundName
-{
-    assert(MediaManagerSoundConfig != nil);
-    
-    NSDictionary *sound = MediaManagerSoundConfig[@"sounds"][soundName];
-    
-    NSString *path = sound[@"path"];
-    NSString *format = sound[@"format"];
-    NSString *audioDir = @"audio-notifications";
-    
-    NSString *soundPath = [[NSBundle mainBundle] pathForResource:path ofType:format inDirectory:audioDir];
-    
-    NSURL *soundURL = [NSURL fileURLWithPath:soundPath];
-    assert(soundURL != nil);
-    
-    return soundURL;
-}
-
 // Configure default sounds
 - (void)configureDefaultSounds
 {
@@ -88,6 +70,7 @@ static NSDictionary *MediaManagerSoundConfig = nil;
     
     AVSMediaManager *mediaManager = AVSMediaManager.sharedInstance;
     
+    // Unregister all previous custom sounds
     [mediaManager registerUrl:nil forMedia:MediaManagerSoundFirstMessageReceivedSound];
     [mediaManager registerUrl:nil forMedia:MediaManagerSoundMessageReceivedSound];
     [mediaManager registerUrl:nil forMedia:MediaManagerSoundRingingFromThemInCallSound];

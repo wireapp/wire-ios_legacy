@@ -129,6 +129,12 @@ private struct InputBarConstants {
         }
     }
     
+    public var availabilityPlaceholder : NSAttributedString? {
+        didSet {
+            updatePlaceholder()
+        }
+    }
+    
     override public var bounds: CGRect {
         didSet {
             invisibleInputAccessoryView?.intrinsicContentSize = CGSize(width: UIViewNoIntrinsicMetric, height: bounds.height)
@@ -272,13 +278,7 @@ private struct InputBarConstants {
     
     fileprivate func startCursorBlinkAnimation() {
         if fakeCursor.layer.animation(forKey: "blinkAnimation") == nil {
-            let animation = CAKeyframeAnimation(keyPath: "opacity")
-            animation.values = [1, 1, 0, 0]
-            animation.keyTimes = [0, 0.4, 0.7, 0.9]
-            animation.duration = 0.64
-            animation.autoreverses = true
-            animation.repeatCount =  .greatestFiniteMagnitude
-            fakeCursor.layer.add(animation, forKey: "blinkAnimation")
+            fakeCursor.layer.add(.cursorBlinkAnimation(), forKey: "blinkAnimation")
         }
     }
 
@@ -288,20 +288,25 @@ private struct InputBarConstants {
     }
 
     func updatePlaceholder() {
-        textView.placeholder = placeholderText(for: inputBarState)
+        textView.attributedPlaceholder = placeholderText(for: inputBarState)
         textView.setNeedsLayout()
         textView.layoutIfNeeded()
     }
 
-    func placeholderText(for state: InputBarState) -> String? {
-        switch inputBarState {
-        case .writing(ephemeral: let ephemeral):
-            if ephemeral {
-                return "conversation.input_bar.placeholder_ephemeral".localized
-            }
-            return "conversation.input_bar.placeholder".localized
-        case .editing: return nil
-        case .markingDown: return "conversation.input_bar.placeholder".localized
+    func placeholderText(for state: InputBarState) -> NSAttributedString? {
+        
+        var placeholder = NSAttributedString(string: "conversation.input_bar.placeholder".localized)
+        
+        if let availabilityPlaceholder = availabilityPlaceholder {
+            placeholder = availabilityPlaceholder
+        } else if inputBarState.isEphemeral {
+            placeholder  = NSAttributedString(string: "conversation.input_bar.placeholder_ephemeral".localized)
+        }
+        
+        if case .editing = state {
+            return nil
+        } else {
+            return placeholder
         }
     }
     
@@ -388,7 +393,7 @@ private struct InputBarConstants {
     fileprivate func updateColors() {
         backgroundColor = backgroundColor(forInputBarState: inputBarState)
         buttonRowSeparator.backgroundColor = writingSeparatorColor
-        textView.placeholderTextColor = self.inputBarState.isEphemeral ? ephemeralColor : placeholderColor
+        textView.placeholderTextColor = self.inputBarState.isEphemeral && self.availabilityPlaceholder == nil ? ephemeralColor : placeholderColor
         fakeCursor.backgroundColor = .accent()
         textView.tintColor = .accent()
         

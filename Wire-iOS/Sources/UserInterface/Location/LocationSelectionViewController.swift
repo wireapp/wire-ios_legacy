@@ -139,7 +139,7 @@ import CoreLocation
     }
     
     public override var supportedInterfaceOrientations : UIInterfaceOrientationMask {
-        return UIViewController.wr_supportedInterfaceOrientations()
+        return wr_supportedInterfaceOrientations
     }
     
     fileprivate func presentUnauthorizedAlert() {

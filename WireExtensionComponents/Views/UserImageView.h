@@ -28,7 +28,8 @@ typedef NS_ENUM(NSUInteger, UserImageViewSize) {
     UserImageViewSizeSmall,
     UserImageViewSizeNormal,
     UserImageViewSizeBig,
-    UserImageViewSizeLast = UserImageViewSizeBig
+    UserImageViewSizeGiant,
+    UserImageViewSizeLast = UserImageViewSizeGiant
 };
 
 @class UserImageView, ZMUserSession, Team;

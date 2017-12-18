@@ -131,15 +131,19 @@ class SettingsClientViewController: UIViewController, UITableViewDelegate, UITab
     
     func onVerifiedChanged(_ sender: UISwitch!) {
         let selfClient = ZMUserSession.shared()!.selfUserClient()
-        if(sender.isOn) {
-            selfClient?.trustClient(self.userClient)
-        } else {
-            selfClient?.ignoreClient(self.userClient)
-        }
-        sender.isOn = self.userClient.verified
         
-        let verificationType : DeviceVerificationType = sender.isOn ? .verified : .unverified
-        Analytics.shared().tagChange(verificationType, deviceOwner: .self)
+        ZMUserSession.shared()?.enqueueChanges({
+            if (sender.isOn) {
+                selfClient?.trustClient(self.userClient)
+            } else {
+                selfClient?.ignoreClient(self.userClient)
+            }
+        }, completionHandler: {
+            sender.isOn = self.userClient.verified
+            
+            let verificationType : DeviceVerificationType = sender.isOn ? .verified : .unverified
+            Analytics.shared().tagChange(verificationType, deviceOwner: .self)
+        })
     }
     
     func onDonePressed(_ sender: AnyObject!) {

@@ -29,6 +29,7 @@ IB_DESIGNABLE
 @interface TextView : UITextView
 
 @property (nonatomic, copy) IBInspectable NSString *placeholder;
+@property (nonatomic, copy) IBInspectable NSAttributedString *attributedPlaceholder;
 @property (nonatomic) IBInspectable UIColor  *placeholderTextColor;
 @property (nonatomic) IBInspectable UIFont   *placeholderFont;
 @property (nonatomic) TextTransform placeholderTextTransform;

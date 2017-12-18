@@ -51,7 +51,6 @@
 #import "NotificationWindowRootViewController.h"
 #import "PassthroughTouchesView.h"
 
-#import "UIViewController+Orientation.h"
 
 #import "ActionSheetController.h"
 #import "ActionSheetController+Conversation.h"
@@ -202,7 +201,7 @@
 {
     [super viewDidAppear:animated];
 
-    if (! IS_IPAD) {
+    if (! IS_IPAD_FULLSCREEN) {
         [Settings sharedSettings].lastViewedScreen = SettingsLastScreenList;
     }
     

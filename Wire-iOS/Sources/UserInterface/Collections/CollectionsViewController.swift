@@ -170,25 +170,25 @@ final public class CollectionsViewController: UIViewController {
         super.viewWillDisappear(animated)
         self.textSearchController.teardown()
     }
-    
+
+
+    // MARK:- device orientation
+
+
+    /// Notice: for iPad with iOS9 in landscape mode, horizontalSizeClass is .unspecified (.regular in iOS11).
     override public var supportedInterfaceOrientations: UIInterfaceOrientationMask {
-        if self.traitCollection.horizontalSizeClass == .regular {
-            return .all
-        }
-        else {
-            return .portrait
-        }
+        return wr_supportedInterfaceOrientations
     }
     
     override public var shouldAutorotate: Bool {
-        if self.traitCollection.horizontalSizeClass == .regular {
+        switch (self.traitCollection.horizontalSizeClass) {
+        case .compact:
+            return false
+        default:
             return true
         }
-        else {
-            return false
-        }
     }
-    
+
     private func flushLayout() {
         for cell in self.contentView.collectionView.visibleCells {
             guard let cell = cell as? CollectionCell else {
@@ -300,7 +300,7 @@ final public class CollectionsViewController: UIViewController {
         }
         
         if let navBar = self.navigationController?.navigationBar {
-            let imageToStretch = UIImage.shadowImage(withInset: 16.0 * UIScreen.main.scale, color: ColorScheme.default().color(withName: ColorSchemeColorSeparator))!
+            let imageToStretch = UIImage.shadowImage(withInset: 16.0 * UIScreen.main.scale, color: ColorScheme.default().color(withName: ColorSchemeColorSeparator))
             let scaleImageToStretch = UIImage(cgImage: imageToStretch.cgImage!, scale: UIScreen.main.scale, orientation: .up)
             navBar.shadowImage = scaleImageToStretch.stretchableImage(withLeftCapWidth: 20, topCapHeight: 0)
         }

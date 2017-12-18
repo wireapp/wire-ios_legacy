@@ -214,6 +214,11 @@
 "conversation.connection_view.in_address_book" = "in Contacts";
 
 "conversation.input_bar.shortcut.send" = "Send Message";
+"conversation.input_bar.shortcut.edit_last_message" = "Edit Last Message";
+"conversation.input_bar.shortcut.cancel_editing_message" = "Cancel";
+
+"conversation.input_bar.message_too_long.title" = "Message too long";
+"conversation.input_bar.message_too_long.message" = "You can send messages up to %d characters long.";
 
 // Image confirmation dialogue
 "image_confirmer.confirm" = "OK";
@@ -287,8 +292,8 @@
 "content.system.failedtosend_message_timestamp_resend" = "Resend";
 "content.system.failedtosend_message_timestamp_delete" = "Delete";
 "content.system.like_tooltip" = "Tap to like";
-"content.system.deleted_message_prefix_timestamp" = "Deleted on %@";
-"content.system.edited_message_prefix_timestamp" = "Edited on %@";
+"content.system.deleted_message_prefix_timestamp" = "Deleted: %@";
+"content.system.edited_message_prefix_timestamp" = "Edited: %@";
 "content.system.connecting_to" = "Connecting to %@.\nStart a conversation";
 "content.system.connected_to" = "Connected to %@\nStart a conversation";
 "content.system.other_wanted_to_talk" = "%@ called";
@@ -329,7 +334,7 @@
 
 "content.system.cannot_decrypt.identity" = "%@ device identity changed. Undelivered message.";
 "content.system.cannot_decrypt.identity.you_part" = "Your";
-"content.system.cannot_decrypt.identity.otherUser_part" = "%@’s"; // posessive apostrophe - might differ in different languages
+"content.system.cannot_decrypt.identity.otherUser_part" = "%@’s"; // possessive apostrophe - might differ in different languages
 "content.system.cannot_decrypt.identity.why_part" = "Learn More";
 "content.system.cannot_decrypt.otherDevice_part" = "(device %@)"; // example " (device d1b23c54f34a)".
                                                                             // Full sentence: "A message from %@ was not received. [...] (device d1b23c54f34a). This is a debug information.
@@ -665,13 +670,11 @@
 "self.settings.sound_menu.ping.title" = "Ping";
 "self.settings.sound_menu.ringtones.title" = "Ringtones";
 "self.settings.sound_menu.sounds.wire_sound" = "Wire";
+"self.settings.sound_menu.sounds.none" = "None";
 
 "self.settings.callkit.title" = "Calls";
 "self.settings.callkit.caption" = "Share with iOS";
 "self.settings.callkit.description" = "Show Wire calls on the lock screen and in iOS call history. If iCloud is enabled, call history is shared with Apple.";
-
-"self.settings.cbr.not_available" = "Constant Bit Rate Encoding";
-"self.settings.cbr.not_available.description" = "Constant bit rate calls have been temporarily disabled with the introduction of multiple account support. CBR calls will be back soon.";
 
 "self.settings.vbr.title" = "Variable Bit Rate Encoding";
 "self.settings.vbr.description" = "This makes audio calls use less data and work better on slower networks. Turn off to use Constant Bitrate Encoding.";
@@ -770,19 +773,61 @@
 "system_status_bar.poor_connectivity.title" = "Slow Internet, can’t call now";
 "system_status_bar.poor_connectivity.explanation" = "We can’t guarantee voice quality. Connect to Wi-Fi or try changing your location.";
 
-// Common connections on profile view
-"profile_other.common_connections" = "You both know";
-
-// View user profile and options menu
+// View user profile and options menu & text field validation
 "name.placeholder" = "Your full name";
 "name.guidance.tooshort" = "At least 2 characters";
 "name.guidance.toolong" = "Too many characters";
 
 "email.placeholder" = "Email";
+"email.guidance.invalid" = "Invalid email address";
+"email.guidance.tooshort" = "Email is too short";
+"email.guidance.toolong" = "Too many characters";
 
 "password.placeholder" = "Password";
 "password.guidance.tooshort" = "At least 8 characters";
 "password.guidance.toolong" = "Too many characters";
+
+// Landing screen
+
+"landing.title" = "Secure messaging for everyone.";
+"landing.create_account.title" = "Create an account";
+"landing.create_account.subtitle" = "for personal use";
+"landing.create_team.title" = "Create a team";
+"landing.create_team.subtitle" = "for work";
+"landing.login.hints" = "Already have an account?";
+"landing.login.button.title" = "Log in";
+
+// Create team
+
+"team.name.headline" = "Name your team";
+"team.name.subheadline" = "You can always change it later.";
+"team.name.textfield.placeholder" = "team name";
+"team.name.textfield.accessibility" = "Set team name";
+"team.name.whatiswireforteams" = "What is Wire for teams?";
+
+"team.email.headline" = "Your account";
+"team.email.subheadline" = "Enter your work email address.";
+"team.email.textfield.placeholder" = "you@yourcompany.com";
+"team.email.textfield.accessibility" = "Your company email";
+"team.email.button.learn_more" = "Learn More";
+
+"team.activation_code.headline" = "You've got mail";
+"team.activation_code.subheadline" = "Enter the verification code we sent to %@.";
+"team.activation_code.button.resend" = "Resend code";
+"team.activation_code.button.change_email" = "Change email";
+
+"team.full_name.headline" = "Your name";
+"team.full_name.textfield.placeholder" = "Full name";
+"team.full_name.textfield.accessibility" = "Set full name";
+
+"team.password.headline" = "Set password";
+"team.password.textfield.placeholder" = "At least 8 characters";
+"team.password.textfield.accessibility" = "Set password, at least 8 characters";
+
+
+"team.email_code.input_field.accessbility_label" = "Please enter the six-digit code from the email.";
+
+// Registration
 
 "registration.title" = "Registration";
 "registration.close_email_invitation_button.email_title" = "Use another email";
@@ -824,6 +869,11 @@
 "registration.terms_of_use.terms" = "By continuing you agree to the Wire Terms of Use.";
 "registration.terms_of_use.terms.link" = "Terms of Use";
 "registration.terms_of_use.agree" = "I agree";
+
+"registration.terms_of_use.terms.title" = "Terms of Use";
+"registration.terms_of_use.terms.message" = "Please accept the Terms of Use to continue.";
+"registration.terms_of_use.terms.view" = "View";
+"registration.terms_of_use.accept" = "Accept";
 
 "registration.email_flow.title" = "Register by Email";
 "registration.email_flow.email_step.title" = "Edit Details";
@@ -984,9 +1034,21 @@
 "compose.drafts.compose.subject.placeholder" = "Tap to set a subject";
 
 "compose.drafts.compose.delete.confirm.title" = "Confirm Deletion";
-"compose.drafts.compose.delete.confirm.message" = "This action will permamently delete this draft and cannot be undone.";
+"compose.drafts.compose.delete.confirm.message" = "This action will permanently delete this draft and cannot be undone.";
 "compose.drafts.compose.delete.confirm.action.title" = "Delete";
 
 "compose.drafts.compose.dismiss.confirm.title" = "Save as draft";
 "compose.drafts.compose.dismiss.confirm.action.title" = "Save";
 "compose.drafts.compose.dismiss.delete.action.title" = "Delete";
+
+"availability.message.title" = "Choose a status";
+"availability.message.cancel" = "Cancel";
+"availability.message.set_status" = "Set a status";
+
+"availability.none" = "None";
+"availability.available" = "Available";
+"availability.away" = "Away";
+"availability.busy" = "Busy";
+"availability.available.placeholder" = "%@ is available";
+"availability.away.placeholder" = "%@ is away";
+"availability.busy.placeholder" = "%@ is busy";

@@ -37,16 +37,16 @@ NSString * const ConversationListItemDidScrollNotification = @"ConversationListI
 
 @interface ConversationListItemView ()
 
-@property (nonatomic, strong, readwrite) ConversationAvatarView *avatarView;
-@property (nonatomic, strong, readwrite) ConversationListAccessoryView *rightAccessory;
-@property (nonatomic, strong) UIView *avatarContainer;
-@property (nonatomic, strong) UIView *labelsContainer;
-@property (nonatomic, strong) UILabel *titleField;
-@property (nonatomic, strong) UILabel *subtitleField;
-@property (nonatomic, strong) UIView *lineView;
+@property (nonatomic, readwrite) ConversationAvatarView *avatarView;
+@property (nonatomic, readwrite) ConversationListAccessoryView *rightAccessory;
+@property (nonatomic) UIView *avatarContainer;
+@property (nonatomic) UIView *labelsContainer;
+@property (nonatomic) UILabel *titleField;
+@property (nonatomic) UILabel *subtitleField;
+@property (nonatomic) UIView *lineView;
 
-@property (nonatomic, strong) NSLayoutConstraint *titleTwoLineConstraint;
-@property (nonatomic, strong) NSLayoutConstraint *titleOneLineConstraint;
+@property (nonatomic) NSLayoutConstraint *titleTwoLineConstraint;
+@property (nonatomic) NSLayoutConstraint *titleOneLineConstraint;
 
 @end
 
@@ -124,6 +124,7 @@ NSString * const ConversationListItemDidScrollNotification = @"ConversationListI
                                              selector:@selector(otherConversationListItemDidScroll:)
                                                  name:ConversationListItemDidScrollNotification
                                                object:nil];
+    
     self.isAccessibilityElement = NO;
 }
 
@@ -170,10 +171,10 @@ NSString * const ConversationListItemDidScrollNotification = @"ConversationListI
     }];
 }
 
-- (void)setTitleText:(NSString *)titleText
+- (void)setTitleText:(NSAttributedString *)titleText
 {
     _titleText = titleText;
-    self.titleField.text = titleText;
+    self.titleField.attributedText = titleText;
 }
 
 - (void)setSubtitleAttributedText:(NSAttributedString *)subtitleAttributedText
@@ -215,7 +216,7 @@ NSString * const ConversationListItemDidScrollNotification = @"ConversationListI
 
 - (void)updateAppearance
 {
-    self.titleField.text = self.titleText;
+    self.titleField.attributedText = self.titleText;
 }
 
 - (void)accessibilityContentsDidChange

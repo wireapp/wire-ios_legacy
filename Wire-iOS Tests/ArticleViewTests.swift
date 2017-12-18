@@ -28,7 +28,11 @@ class ArticleViewTests: ZMSnapshotTestCase {
     /// MARK - Fixture
     
     func articleWithoutPicture() -> MockTextMessageData {
-        let article = Article(originalURLString: "https://www.example.com/article/1", permamentURLString: "https://www.example.com/article/1", offset: 0)
+        let article = Article(originalURLString: "https://www.example.com/article/1",
+                              permanentURLString: "https://www.example.com/article/1",
+                              resolvedURLString: "https://www.example.com/article/1",
+                              offset: 0)
+        
         article.title = "Title with some words in it"
         article.summary = "Summary summary summary summary summary summary summary summary summary summary summary summary summary summary summary"
         
@@ -37,15 +41,36 @@ class ArticleViewTests: ZMSnapshotTestCase {
         return textMessageData
     }
     
-    func articleWithPicture() -> MockTextMessageData {
-        let article = Article(originalURLString: "https://www.example.com/article/1", permamentURLString: "https://www.example.com/article/1", offset: 0)
+    func articleWithNilPicture() -> MockTextMessageData {
+        let article = Article(originalURLString: "https://www.example.com/article/1",
+                              permanentURLString: "https://www.example.com/article/1",
+                              resolvedURLString: "https://www.example.com/article/1",
+                              offset: 0)
+        
         article.title = "Title with some words in it"
         article.summary = "Summary summary summary summary summary summary summary summary summary summary summary summary summary summary summary"
         
         let textMessageData = MockTextMessageData()
         textMessageData.linkPreview = article
-        textMessageData.imageDataIdentifier = "image-id"
-        textMessageData.imageData = UIImageJPEGRepresentation(image(inTestBundleNamed: "unsplash_matterhorn.jpg"), 0.9)
+        textMessageData.imageDataIdentifier = "image-id-2"
+        textMessageData.imageData = Data()
+        textMessageData.hasImageData = true
+        return textMessageData
+    }
+    
+    func articleWithPicture(imageNamed: String = "unsplash_matterhorn.jpg") -> MockTextMessageData {
+        let article = Article(originalURLString: "https://www.example.com/article/1",
+                              permanentURLString: "https://www.example.com/article/1",
+                              resolvedURLString: "https://www.example.com/article/1",
+                              offset: 0)
+        
+        article.title = "Title with some words in it"
+        article.summary = "Summary summary summary summary summary summary summary summary summary summary summary summary summary summary summary"
+        
+        let textMessageData = MockTextMessageData()
+        textMessageData.linkPreview = article
+        textMessageData.imageDataIdentifier = "image-id-\(imageNamed)"
+        textMessageData.imageData = UIImageJPEGRepresentation(image(inTestBundleNamed: imageNamed), 0.9)
         textMessageData.hasImageData = true
         
         return textMessageData
@@ -53,7 +78,10 @@ class ArticleViewTests: ZMSnapshotTestCase {
     
     func articleWithLongURL() -> MockTextMessageData {
         let article = Article(originalURLString: "https://www.example.com/verylooooooooooooooooooooooooooooooooooooongpath/article/1/",
-                              permamentURLString: "https://www.example.com/veryloooooooooooooooooooooooooooooooooooongpath/article/1/", offset: 0)
+                              permanentURLString: "https://www.example.com/veryloooooooooooooooooooooooooooooooooooongpath/article/1/",
+                              resolvedURLString: "https://www.example.com/veryloooooooooooooooooooooooooooooooooooongpath/article/1/",
+                              offset: 0)
+        
         article.title = "Title with some words in it"
         article.summary = "Summary summary summary summary summary summary summary summary summary summary summary summary summary summary summary"
         
@@ -69,7 +97,8 @@ class ArticleViewTests: ZMSnapshotTestCase {
     func twitterStatusWithoutPicture() -> MockTextMessageData {
         let twitterStatus = TwitterStatus(
             originalURLString: "https://www.example.com/twitter/status/12345",
-            permamentURLString: "https://www.example.com/twitter/status/12345/permanent",
+            permanentURLString: "https://www.example.com/twitter/status/12345/permanent",
+            resolvedURLString: "https://www.example.com/twitter/status/12345/permanent",
             offset: 0
         )
         twitterStatus.author = "John Doe"
@@ -92,14 +121,38 @@ class ArticleViewTests: ZMSnapshotTestCase {
         
         verifyInAllPhoneWidths(view: sut)
     }
-        
+
     func testArticleViewWithPicture() {
         sut = ArticleView(withImagePlaceholder: true)
         sut.translatesAutoresizingMaskIntoConstraints = false
         sut.configure(withTextMessageData: articleWithPicture(), obfuscated: false)
         sut.layoutIfNeeded()
+
+        let expectation = self.expectation(description: "Wait for image to load")
         
-        verifyInAllPhoneWidths(view: sut)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+            expectation.fulfill()
+            self.verifyInAllPhoneWidths(view: self.sut)
+        }
+        
+        self.waitForExpectations(timeout: 2, handler: nil)
+    }
+    
+    func testArticleWithNilPicture() {
+        sut = ArticleView(withImagePlaceholder: true)
+        sut.translatesAutoresizingMaskIntoConstraints = false
+        sut.configure(withTextMessageData: articleWithNilPicture(), obfuscated: false)
+        sut.layoutIfNeeded()
+        
+        
+        let expectation = self.expectation(description: "Wait for image to load")
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            expectation.fulfill()
+            self.verifyInAllPhoneWidths(view: self.sut)
+        }
+        
+        self.waitForExpectations(timeout: 2, handler: nil)
     }
     
     func testArticleViewWithPictureStillDownloading() {
@@ -122,7 +175,14 @@ class ArticleViewTests: ZMSnapshotTestCase {
         sut.configure(withTextMessageData: articleWithLongURL(), obfuscated: false)
         sut.layoutIfNeeded()
         
-        verifyInAllPhoneWidths(view: sut)
+        let expectation = self.expectation(description: "Wait for image to load")
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            expectation.fulfill()
+            self.verifyInAllPhoneWidths(view: self.sut)
+        }
+        
+        self.waitForExpectations(timeout: 2, handler: nil)
     }
     
     func testArticleViewWithTwitterStatusWithoutPicture() {
@@ -142,5 +202,39 @@ class ArticleViewTests: ZMSnapshotTestCase {
         sut.layoutIfNeeded()
 
         verifyInAllPhoneWidths(view: sut)
+    }
+    
+    /// MARK: - ArticleView images aspect
+    
+    func testArticleViewWithImageHavingSmallSize() {
+        self.createTestForArticleViewWithImage(named: "unsplash_matterhorn_small_size.jpg")
+    }
+    
+    func testArticleViewWithImageHavingSmallHeight() {
+        self.createTestForArticleViewWithImage(named: "unsplash_matterhorn_small_height.jpg")
+    }
+    
+    func testArticleViewWithImageHavingSmallWidth() {
+        self.createTestForArticleViewWithImage(named: "unsplash_matterhorn_small_width.jpg")
+    }
+    
+    func testArticleViewWithImageHavingExactSize() {
+        self.createTestForArticleViewWithImage(named: "unsplash_matterhorn_exact_size.jpg")
+    }
+    
+    func createTestForArticleViewWithImage(named: String) {
+        sut = ArticleView(withImagePlaceholder: true)
+        sut.translatesAutoresizingMaskIntoConstraints = false
+        sut.configure(withTextMessageData: articleWithPicture(imageNamed: named), obfuscated: false)
+        sut.layoutIfNeeded()
+        
+        let expectation = self.expectation(description: "Wait for image to load")
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+            expectation.fulfill()
+            self.verifyInAllPhoneWidths(view: self.sut)
+        }
+        
+        self.waitForExpectations(timeout: 2, handler: nil)
     }
 }

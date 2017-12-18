@@ -30,7 +30,7 @@ fileprivate let ZMEnableConsoleLog = "ZMEnableAnalyticsLog"
         if self.useConsoleAnalytics || UserDefaults.standard.bool(forKey: ZMEnableConsoleLog) {
             return AnalyticsConsoleProvider()
         }
-        else if UseAnalytics.boolValue {
+        else if UseAnalytics.boolValue || AutomationHelper.sharedHelper.useAnalytics {
             return AnalyticsMixpanelProvider()
         }
         else {

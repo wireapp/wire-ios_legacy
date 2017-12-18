@@ -176,7 +176,7 @@ NSString *SplitLayoutObservableDidChangeToLayoutSizeNotification = @"SplitLayout
 
 @implementation SplitViewController
 
-- (void)viewDidLoad
+- (void)viewDidLoad 
 {
     [super viewDidLoad];
 
@@ -234,15 +234,15 @@ NSString *SplitLayoutObservableDidChangeToLayoutSizeNotification = @"SplitLayout
     [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
     
     [self updateForSize:size];
-    [self updateLeftViewVisibility];
 }
 
 - (void)willTransitionToTraitCollection:(UITraitCollection *)newCollection withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator
 {
     self.futureTraitCollection = newCollection;
+    [self updateLayoutSizeForTraitCollection:newCollection size:self.view.bounds.size];
+
     [super willTransitionToTraitCollection:newCollection withTransitionCoordinator:coordinator];
     
-    [self updateLayoutSizeForTraitCollection:newCollection size:self.view.bounds.size];
     [self updateActiveConstraints];
     
     [self updateLeftViewVisibility];
@@ -258,7 +258,8 @@ NSString *SplitLayoutObservableDidChangeToLayoutSizeNotification = @"SplitLayout
     
     [self updateConstraintsForSize:size];
     [self updateActiveConstraints];
-    
+    [self updateLeftViewVisibility];
+
     self.futureTraitCollection = nil;
 }
 
@@ -267,7 +268,7 @@ NSString *SplitLayoutObservableDidChangeToLayoutSizeNotification = @"SplitLayout
     if (traitCollection.horizontalSizeClass == UIUserInterfaceSizeClassCompact) {
         self.layoutSize = SplitViewControllerLayoutSizeCompact;
     }
-    else if (traitCollection.userInterfaceIdiom ==  UIUserInterfaceIdiomPad && size.height > size.width) {
+    else if (IS_IPAD_PORTRAIT_LAYOUT) {
         self.layoutSize = SplitViewControllerLayoutSizeRegularPortrait;
     }
     else {
@@ -568,7 +569,7 @@ NSString *SplitLayoutObservableDidChangeToLayoutSizeNotification = @"SplitLayout
         return NO;
     }
     
-    if (self.leftViewControllerRevealed && ! IS_IPAD) {
+    if (self.leftViewControllerRevealed && ! IS_IPAD_FULLSCREEN) {
         return NO;
     }
     
@@ -581,7 +582,7 @@ NSString *SplitLayoutObservableDidChangeToLayoutSizeNotification = @"SplitLayout
         return;
     }
     
-    if (self.leftViewControllerRevealed && ! IS_IPAD) {
+    if (self.leftViewControllerRevealed && ! IS_IPAD_FULLSCREEN) {
         return;
     }
     

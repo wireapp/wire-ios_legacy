@@ -48,7 +48,7 @@
                 break;
         }
     }
-    else if ([error.domain isEqualToString:ZMUserSessionErrorDomain]) {
+    else if ([error.domain isEqualToString:NSError.ZMUserSessionErrorDomain]) {
         switch (error.code) {
             case ZMUserSessionNoError:
                 message = @"";
@@ -110,7 +110,7 @@
                 break;
                 
             default:
-            case ZMUserSessionUnkownError:
+            case ZMUserSessionUnknownError:
                 message = NSLocalizedString(@"error.user.unkown_error", @"");
                 break;
         }

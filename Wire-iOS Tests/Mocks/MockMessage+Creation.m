@@ -75,7 +75,7 @@
     conversation.activeParticipants = [[NSOrderedSet alloc] initWithObjects:message.sender, nil];
 
     MockTextMessageData *textData = [[MockTextMessageData alloc] init];
-    Article *article = [[Article alloc] initWithOriginalURLString:@"http://foo.bar/baz" permamentURLString:@"http://foo.bar/baz" offset:0];
+    Article *article = [[Article alloc] initWithOriginalURLString:@"http://foo.bar/baz" permanentURLString:@"http://foo.bar/baz" resolvedURLString:@"http://foo.bar/baz" offset:0];
     textData.linkPreview = article;
     message.backingTextMessageData = textData;
     

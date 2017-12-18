@@ -65,7 +65,6 @@
 #import "AnalyticsTracker.h"
 #import "AnalyticsTracker+Invitations.h"
 #import "UIViewController+Errors.h"
-#import "UIViewController+Orientation.h"
 #import "SplitViewController.h"
 #import "UIColor+WR_ColorScheme.h"
 #import "ActionSheetController+Conversation.h"
@@ -308,7 +307,7 @@
     [super viewDidAppear:animated];
     [self updateLeftNavigationBarItems];
 
-    if (IS_IPAD) {
+    if (IS_IPAD_FULLSCREEN) {
         [self becomeFirstResponder];
     }
     else if (self.isFocused) {
@@ -336,6 +335,8 @@
     [self updateLeftNavigationBarItems];
 }
 
+#pragma mark - Device orientation
+
 - (BOOL)shouldAutorotate
 {
     return YES;
@@ -343,7 +344,13 @@
 
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations
 {
-    return UIInterfaceOrientationMaskPortrait;
+    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone)
+    {
+        return UIInterfaceOrientationMaskPortrait;
+    }
+    else {
+        return UIInterfaceOrientationMaskAll;
+    }
 }
 
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator
@@ -412,31 +419,12 @@
                                                            fromView:self.titleView.superview
                                               contentViewController:participantsController];
     };
+    [self.titleView configure];
     
     self.navigationItem.titleView = self.titleView;
     self.navigationItem.leftItemsSupplementBackButton = NO;
 
     [self updateRightNavigationItemsButtons];
-}
-
-- (void)updateRightNavigationItemsButtons
-{
-    // FIXME: iOS8 - we can use UIView's semanticContentAttribute on navigation bar
-    if ([UIApplication isLeftToRightLayout]) {
-        self.navigationItem.rightBarButtonItems = [self rightNavigationItemsForConversation:self.conversation];
-    } else {
-        self.navigationItem.rightBarButtonItems = [self leftNavigationItemsForConversation:self.conversation];
-    }
-}
-
-- (void)updateLeftNavigationBarItems
-{
-    // FIXME: iOS8 - we can use UIView's semanticContentAttribute on navigation bar
-    if ([UIApplication isLeftToRightLayout]) {
-        self.navigationItem.leftBarButtonItems = [self leftNavigationItemsForConversation:self.conversation];
-    } else {
-        self.navigationItem.leftBarButtonItems = [self rightNavigationItemsForConversation:self.conversation];
-    }
 }
 
 - (void)updateInputBarVisibility
@@ -449,23 +437,29 @@
 {
     UIViewController *viewController = nil;
 
-    if (self.conversation.conversationType == ZMConversationTypeGroup) {
-
-        ParticipantsViewController *participantsViewController = [[ParticipantsViewController alloc] initWithConversation:self.conversation];
-        participantsViewController.delegate = self;
-        participantsViewController.zClientViewController = [ZClientViewController sharedZClientViewController];
-        participantsViewController.shouldDrawTopSeparatorLineDuringPresentation = YES;
-        viewController = participantsViewController;
-    }
-    else if (self.conversation.conversationType == ZMConversationTypeSelf ||
-             self.conversation.conversationType == ZMConversationTypeOneOnOne ||
-             self.conversation.conversationType == ZMConversationTypeConnection) {
-
-        ProfileViewController *profileViewController = [[ProfileViewController alloc] initWithUser:self.conversation.firstActiveParticipantOtherThanSelf
-                                                                                      conversation:self.conversation];
-        profileViewController.delegate = self;
-        profileViewController.shouldDrawTopSeparatorLineDuringPresentation = YES;
-        viewController = profileViewController;
+    switch (self.conversation.conversationType) {
+        case ZMConversationTypeGroup: {
+            ParticipantsViewController *participantsViewController = [[ParticipantsViewController alloc] initWithConversation:self.conversation];
+            participantsViewController.delegate = self;
+            participantsViewController.zClientViewController = [ZClientViewController sharedZClientViewController];
+            participantsViewController.shouldDrawTopSeparatorLineDuringPresentation = YES;
+            viewController = participantsViewController;
+            break;
+        }
+        case ZMConversationTypeSelf:
+        case ZMConversationTypeOneOnOne:
+        case ZMConversationTypeConnection:
+        {
+            ProfileViewController *profileViewController = [[ProfileViewController alloc] initWithUser:self.conversation.firstActiveParticipantOtherThanSelf
+                                                                                          conversation:self.conversation];
+            profileViewController.delegate = self;
+            profileViewController.shouldDrawTopSeparatorLineDuringPresentation = YES;
+            viewController = profileViewController;
+            break;
+        }
+        case ZMConversationTypeInvalid:
+            RequireString(false, "Trying to open invalid conversation");
+            break;
     }
 
     RotationAwareNavigationController *navigationController = [[RotationAwareNavigationController alloc] initWithRootViewController:viewController];
@@ -764,6 +758,11 @@
 - (void)conversationInputBarViewControllerDidCancelEditingMessage:(id<ZMConversationMessage>)message
 {
     [self.contentViewController didFinishEditingMessage:message];
+}
+
+- (void)conversationInputBarViewControllerEditLastMessage
+{
+    [self.contentViewController editLastMessage];
 }
 
 @end

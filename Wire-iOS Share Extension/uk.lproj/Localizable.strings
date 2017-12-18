@@ -26,8 +26,12 @@
 "share_extension.input.placeholder" = "Напишіть повідомлення";
 "share_extension.sending_progress.title" = "Надсилання…";
 "share_extension.preparing.title" = "Підготовка…";
+"share_extension.no_internet_connection.title" = "Відстунє з'єднання з Інтернетом";
 "share_extension.not_signed_in.title" = "Ви повинні увійти в Wire, щоб поділитися чим-небудь";
 "share_extension.not_signed_in.close_button" = "Закрити";
+"share_extension.timeout.title" = "Перевищено термін очікування з’єднання.";
+"share_extension.timeout.message" = "Перевірте підключення до Інтернету і повторіть спробу. Вкладення були збережені в розмові.";
+"share_extension.privacy_security.lock_app.description" = "Розблокувати Wire";
 
 "conversation.displayname.emptygroup" = "Групова розмова без учасників";
 "meta.degraded.degradation_reason_message.singular" = "%@ почав(-ла) використовувати новий пристрій.";

@@ -37,8 +37,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, nullable) CollectionsViewController *collectionController;
 
 - (void)onBackButtonPressed:(UIButton *)backButton;
-- (void)updateRightNavigationItemsButtons;
-- (void)updateLeftNavigationBarItems;
 
 @end
 

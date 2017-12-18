@@ -21,7 +21,15 @@
 
 @class IconButton;
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface IconLabelButton : ButtonWithLargerHitArea
+- (instancetype)init NS_DESIGNATED_INITIALIZER;
+- (instancetype)initWithFrame:(CGRect)frame NS_UNAVAILABLE;
+- (instancetype)initWithCoder:(NSCoder *)coder NS_UNAVAILABLE;
+
 @property (nonatomic) IconButton *iconButton;
 @property (nonatomic) UILabel *subtitleLabel;
 @end
+
+NS_ASSUME_NONNULL_END

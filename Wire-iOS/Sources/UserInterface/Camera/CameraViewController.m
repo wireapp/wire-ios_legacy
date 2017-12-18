@@ -41,7 +41,6 @@
 #import "DeviceOrientationObserver.h"
 
 #import "AnalyticsTracker+Permissions.h"
-#import "UIViewController+Orientation.h"
 
 #import "Wire-Swift.h"
 
@@ -198,7 +197,7 @@ static CameraControllerCamera CameraViewControllerToCameraControllerCamera(Camer
 
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations
 {
-    return [self.class wr_supportedInterfaceOrientations];
+    return self.wr_supportedInterfaceOrientations;
 }
 
 - (void)updateVideoOrientation
@@ -210,7 +209,7 @@ static CameraControllerCamera CameraViewControllerToCameraControllerCamera(Camer
         connection.videoOrientation = statusBarOrientation;
     }
     
-    if (IS_IPAD) {
+    if (IS_IPAD_FULLSCREEN) {
         self.cameraController.snapshotVideoOrientation = statusBarOrientation;
     } else {
         self.cameraController.snapshotVideoOrientation = AVCaptureVideoOrientationPortrait;
@@ -417,7 +416,7 @@ static CameraControllerCamera CameraViewControllerToCameraControllerCamera(Camer
 
 - (CameraViewControllerPreviewSize)previewSize
 {
-    if (IS_IPAD || IS_IPHONE_4) {
+    if (IS_IPAD_FULLSCREEN || IS_IPHONE_4) {
         return CameraViewControllerPreviewSizeFullscreen;
     } else {
         return self.preferedPreviewSize;

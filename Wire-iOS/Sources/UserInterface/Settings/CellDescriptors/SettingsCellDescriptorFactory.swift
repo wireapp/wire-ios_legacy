@@ -70,6 +70,7 @@ import Foundation
                                                     presentationStyle: PresentationStyle.navigation,
                                                     identifier: nil,
                                                     presentationAction: { () -> (UIViewController?) in
+                                                        Analytics.shared().tagOpenManageTeamURL()
                                                         NSURL.wr_manageTeam().wr_URLByAppendingLocaleParameter().open()
                                                         return nil
                                                     },
@@ -77,44 +78,31 @@ import Foundation
                                                     icon: .team)
     }
     
-    static func addAccountController() -> UIViewController {
-        let actionSheet = UIAlertController(title: nil,
-                                            message: nil,
-                                            preferredStyle: .actionSheet)
+    func addAccountOrTeamCell() -> SettingsCellDescriptorType {
         
-        let createATeamAction = UIAlertAction(title: "self.settings.create_team.title".localized, style: .default, handler: { action in
-            NSURL.wr_createTeam().wr_URLByAppendingLocaleParameter().open()
-        })
-        actionSheet.addAction(createATeamAction)
-        let addAnAccountAction = UIAlertAction(title: "self.settings.add_account.title".localized, style: .default, handler: { action in
+        let presentationAction: () -> UIViewController? = {
             if SessionManager.shared?.accountManager.accounts.count < SessionManager.maxNumberAccounts {
                 SessionManager.shared?.addAccount()
             }
             else {
-                let alert = UIAlertController(title: "self.settings.add_account.error.title".localized,
-                                              message: "self.settings.add_account.error.message".localized,
-                                              cancelButtonTitle: "general.ok".localized)
-                
-                guard let controller = UIApplication.shared.wr_topmostController(onlyFullScreen: false) else { return }
-                controller.present(alert, animated: true, completion: nil)
+                if let controller = UIApplication.shared.wr_topmostController(onlyFullScreen: false) {
+                    let alert = UIAlertController(
+                        title: "self.settings.add_account.error.title".localized,
+                        message: "self.settings.add_account.error.message".localized,
+                        cancelButtonTitle: "general.ok".localized
+                    )
+                    controller.present(alert, animated: true, completion: nil)
+                }
             }
-        })
-        actionSheet.addAction(addAnAccountAction)
-        let cancelAction = UIAlertAction(title: "general.cancel".localized, style: .cancel, handler: { action in
-            actionSheet.dismiss(animated: true, completion: nil)
-        })
-        actionSheet.addAction(cancelAction)
-        return actionSheet
-    }
-    
-    func addAccountOrTeamCell() -> SettingsCellDescriptorType {
+            
+            return nil
+        }
+        
         return SettingsExternalScreenCellDescriptor(title: "self.settings.add_team_or_account.title".localized,
                                                     isDestructive: false,
                                                     presentationStyle: PresentationStyle.modal,
                                                     identifier: nil,
-                                                    presentationAction: { () -> (UIViewController?) in
-                                                    return SettingsCellDescriptorFactory.addAccountController()
-        },
+                                                    presentationAction: presentationAction,
                                                     previewGenerator: nil,
                                                     icon: .plus,
                                                     accessoryViewMode: .alwaysShow)
@@ -147,31 +135,16 @@ import Foundation
            icon: .settingsDevices)
     }
 
-    func soundGroupForSetting(_ settingsProperty: SettingsProperty, title: String, callSound: Bool, fallbackSoundName: String, defaultSoundTitle : String = "self.settings.sound_menu.sounds.wire_sound".localized) -> SettingsCellDescriptorType {
-        var items: [ZMSound?] = [.none]
-        if callSound {
-            items.append(contentsOf: ZMSound.ringtones.map { $0 as ZMSound? } )
-        }
-        else {
-            items.append(contentsOf: ZMSound.allValues.filter { !ZMSound.ringtones.contains($0) }.map { $0 as ZMSound? } )
-        }
+    func soundGroupForSetting(_ settingsProperty: SettingsProperty, title: String, customSounds: [ZMSound], defaultSound: ZMSound) -> SettingsCellDescriptorType {
+        let items: [ZMSound] = [ZMSound.None, defaultSound] + customSounds
         
-        let cells: [SettingsPropertySelectValueCellDescriptor] = items.map {
-            if let item = $0 {
-                
-                let playSoundAction: SettingsPropertySelectValueCellDescriptor.SelectActionType = { cellDescriptor in
-                    item.playPreview()
-                }
-                
-                return SettingsPropertySelectValueCellDescriptor(settingsProperty: settingsProperty, value: SettingsPropertyValue.string(value: item.rawValue), title: item.description, identifier: .none, selectAction: playSoundAction)
+        let cells: [SettingsPropertySelectValueCellDescriptor] = items.map { item in
+            let playSoundAction: SettingsPropertySelectValueCellDescriptor.SelectActionType = { cellDescriptor in
+                item.playPreview()
             }
-            else {
-                let playSoundAction: (SettingsPropertySelectValueCellDescriptor) -> () = { cellDescriptor in
-                    ZMSound.playPreviewForURL(AVSMediaManager.url(forSound: fallbackSoundName))
-                }
-                
-                return SettingsPropertySelectValueCellDescriptor(settingsProperty: settingsProperty, value: SettingsPropertyValue.none, title: defaultSoundTitle, identifier: .none, selectAction: playSoundAction)
-            }
+            
+            let propertyValue = item == defaultSound ? SettingsPropertyValue.none : SettingsPropertyValue.string(value: item.rawValue)
+            return SettingsPropertySelectValueCellDescriptor(settingsProperty: settingsProperty, value: propertyValue, title: item.descriptionLocalizationKey.localized, identifier: .none, selectAction: playSoundAction)
         }
         
         let section = SettingsSectionDescriptor(cellDescriptors: cells.map { $0 as SettingsCellDescriptorType }, header: "self.settings.sound_menu.ringtones.title".localized)
@@ -181,10 +154,10 @@ import Foundation
             
             if let stringValue = value.value() as? String,
                 let enumValue = ZMSound(rawValue: stringValue) {
-                return .text(enumValue.description)
+                return .text(enumValue.descriptionLocalizationKey.localized)
             }
             else {
-                return .text(defaultSoundTitle)
+                return .text(defaultSound.descriptionLocalizationKey.localized)
             }
         }
         

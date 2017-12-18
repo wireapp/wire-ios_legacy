@@ -23,12 +23,25 @@ import Cartography
 import MobileCoreServices
 import WireDataModel
 import WireExtensionComponents
+import CocoaLumberjackSwift
 import Classy
 
 /// The delay after which a progess view controller will be displayed if all messages are not yet sent.
 private let progressDisplayDelay: TimeInterval = 0.5
 
 class ShareExtensionViewController: SLComposeServiceViewController {
+    
+    lazy var accountItem : SLComposeSheetConfigurationItem = { [weak self] in
+        let item = SLComposeSheetConfigurationItem()!
+        let accountName = self?.currentAccount?.userName
+        
+        item.title = "share_extension.conversation_selection.account".localized
+        item.value = accountName ?? "share_extension.conversation_selection.empty.value".localized
+        item.tapHandler = { [weak self] in
+            self?.presentChooseAccount()
+        }
+        return item
+    }()
     
     lazy var conversationItem : SLComposeSheetConfigurationItem = {
         let item = SLComposeSheetConfigurationItem()!
@@ -44,9 +57,12 @@ class ShareExtensionViewController: SLComposeServiceViewController {
     fileprivate var postContent: PostContent?
     fileprivate var sharingSession: SharingSession? = nil
     fileprivate var extensionActivity: ExtensionActivity? = nil
+    fileprivate var currentAccount: Account? = nil
 
     private var observer: SendableBatchObserver? = nil
     private weak var progressViewController: SendingProgressViewController? = nil
+    
+    var netObserver = ShareExtensionNetworkObserver()
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -64,6 +80,7 @@ class ShareExtensionViewController: SLComposeServiceViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        currentAccount = accountManager?.selectedAccount
         ExtensionBackupExcluder.exclude()
         CrashReporter.setupHockeyIfNeeded()
         navigationController?.view.backgroundColor = .white
@@ -71,6 +88,8 @@ class ShareExtensionViewController: SLComposeServiceViewController {
         let activity = ExtensionActivity(attachments: allAttachments)
         sharingSession?.analyticsEventPersistence.add(activity.openedEvent())
         extensionActivity = activity
+        
+        NetworkStatus.add(netObserver)
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -104,28 +123,47 @@ class ShareExtensionViewController: SLComposeServiceViewController {
         }
     }
 
-    private func recreateSharingSession() {
-        let infoDict = Bundle.main.infoDictionary
+    private var applicationGroupIdentifier: String? {
+        return Bundle.main.infoDictionary?["ApplicationGroupIdentifier"] as? String
+    }
     
-        guard
-            let applicationGroupIdentifier = infoDict?["ApplicationGroupIdentifier"] as? String,
-            let hostBundleIdentifier = infoDict?["HostBundleIdentifier"] as? String
+    private var hostBundleIdentifier: String? {
+        return Bundle.main.infoDictionary?["HostBundleIdentifier"] as? String
+    }
+    
+    private func recreateSharingSession() {
+        guard let applicationGroupIdentifier = applicationGroupIdentifier,
+            let hostBundleIdentifier = hostBundleIdentifier,
+            let accountIdentifier = currentAccount?.userIdentifier
         else { return }
         
-        let sharedContainerURL = FileManager.sharedContainerDirectory(for: applicationGroupIdentifier)
-        let accountManager = AccountManager(sharedDirectory: sharedContainerURL)
-        guard let accountIdentifier = accountManager.selectedAccount?.userIdentifier else { return }
-
         sharingSession = try? SharingSession(
             applicationGroupIdentifier: applicationGroupIdentifier,
             accountIdentifier: accountIdentifier,
             hostBundleIdentifier: hostBundleIdentifier
         )
     }
+    
+    private var accountManager: AccountManager? {
+        guard let applicationGroupIdentifier = applicationGroupIdentifier else { return nil }
+        let sharedContainerURL = FileManager.sharedContainerDirectory(for: applicationGroupIdentifier)
+        return AccountManager(sharedDirectory: sharedContainerURL)
+    }
 
     override func isContentValid() -> Bool {
         // Do validation of contentText and/or NSExtensionContext attachments here
-        return sharingSession != nil && self.postContent?.target != nil
+        let textLength = self.contentText.trimmingCharacters(in: .whitespaces).characters.count
+        let remaining = SharedConstants.maximumMessageLength - textLength
+        let remainingCharactersThreshold = 30
+        
+        if remaining <= remainingCharactersThreshold {
+            self.charactersRemaining = remaining as NSNumber
+        } else {
+            self.charactersRemaining = nil
+        }
+        
+        let conditions = sharingSession != nil && self.postContent?.target != nil
+        return self.charactersRemaining == nil ? conditions : conditions && self.charactersRemaining.intValue >= 0
     }
 
     /// invoked when the user wants to post
@@ -167,6 +205,14 @@ class ShareExtensionViewController: SLComposeServiceViewController {
                     change: ConversationDegradationInfo(conversation: postContent.target!, users: users),
                     callback: strategyChoice
                 )
+            case .timedOut:
+                self.popConfigurationViewController()
+                
+                let title = "share_extension.timeout.title".localized
+                let message = "share_extension.timeout.message".localized
+                let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+                self.present(alert, animated: true, completion: nil)
             }
         }
     }
@@ -215,7 +261,11 @@ class ShareExtensionViewController: SLComposeServiceViewController {
     }
     
     override func configurationItems() -> [Any]! {
-        return [conversationItem]
+        if accountManager?.accounts.count > 1 {
+            return [accountItem, conversationItem]
+        } else {
+            return [conversationItem]
+        }
     }
     
     private func presentSendingProgress(mode: SendingProgressViewController.ProgressMode) {
@@ -248,9 +298,37 @@ class ShareExtensionViewController: SLComposeServiceViewController {
         extensionActivity?.conversation = conversation
     }
     
+    func updateAccount(_ account: Account?) {
+        guard let account = account, account != currentAccount else { return }
+        
+        currentAccount = account
+        accountItem.value = account.userName
+        conversationItem.value = "share_extension.conversation_selection.empty.value".localized
+        postContent?.target = nil
+        extensionActivity?.conversation = nil
+        recreateSharingSession()
+    }
+    
+    private func presentChooseAccount() {
+        requireLocalAuthenticationIfNeeded(with: { [weak self] (granted) in
+            if granted == nil || (granted != nil && granted!) {
+                self?.showChooseAccount()
+            }
+        })
+    }
+    
     private func presentChooseConversation() {
+        requireLocalAuthenticationIfNeeded(with: { [weak self] (granted) in
+            if granted == nil || (granted != nil && granted!) {
+                self?.showChooseConversation()
+            }
+        })
+    }
+    
+    func showChooseConversation() {
+        
         guard let sharingSession = sharingSession else { return }
-
+        
         let allConversations = sharingSession.writeableNonArchivedConversations + sharingSession.writebleArchivedConversations
         let conversationSelectionViewController = ConversationSelectionViewController(conversations: allConversations)
         
@@ -262,6 +340,47 @@ class ShareExtensionViewController: SLComposeServiceViewController {
         
         pushConfigurationViewController(conversationSelectionViewController)
     }
+    
+    func showChooseAccount() {
+        
+        guard let accountManager = accountManager else { return }
+        let accountSelectionViewController = AccountSelectionViewController(accounts: accountManager.accounts,
+                                                                            current: currentAccount)
+        
+        accountSelectionViewController.selectionHandler = { [weak self] account in
+            self?.updateAccount(account)
+            self?.popConfigurationViewController()
+            self?.validateContent()
+        }
+        
+        pushConfigurationViewController(accountSelectionViewController)
+    }
+
+    /// @param callback confirmation; if the auth is not needed or is not possible on the current device called with '.none'
+    func requireLocalAuthenticationIfNeeded(with callback: @escaping (Bool?)->()) {
+        
+        guard AppLock.isActive else {
+            callback(.none)
+            return
+        }
+        
+        guard let session = sharingSession, !session.isLocalAuthenticationGranted else {
+            callback(true)
+            return
+        }
+        
+        AppLock.evaluateAuthentication(description: "share_extension.privacy_security.lock_app.description".localized) { (success, error) in
+            DispatchQueue.main.async {
+                callback(success)
+                if let success = success, success {
+                    session.isLocalAuthenticationGranted = success
+                } else {
+                    DDLogError("Local authentication error: \(String(describing: error?.localizedDescription))")
+                }
+            }
+        }
+    }
+    
     
     private func conversationDidDegrade(change: ConversationDegradationInfo, callback: @escaping DegradationStrategyChoice) {
         let title = titleForMissingClients(users: change.users)

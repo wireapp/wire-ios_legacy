@@ -21,8 +21,8 @@
 "NSLocationWhenInUseUsageDescription" = "Разрешить Wire доступ к вашему местоположению, чтобы вы могли отправлять ваше местоположение другим людям.";
 "NSCameraUsageDescription" = "Разрешить Wire доступ к камере для размещения видео звонков и отправки фотографий.";
 /* Showed after taking a picture with camera, but only when NSPhotoLibraryUsageDescription permission was declined. Asks permission for only writing to photo library. */
-"NSPhotoLibraryAddUsageDescription" = "Allow Wire to store pictures you take in the photo library.";
+"NSPhotoLibraryAddUsageDescription" = "Разрешить Wire сохранять снимки в библиотеку фотографий.";
 /* Showed when trying to send picture from conversaiton list. Asks permissions for reading and writing to photo library */
-"NSPhotoLibraryUsageDescription" = "Allow Wire to access pictures stored in photo library.";
+"NSPhotoLibraryUsageDescription" = "Разрешить Wire открывать изображения из библиотеки фотографий.";
 /* Is shown to the user when app is locked with AppLock feature on the phone that supports Face ID */
 "NSFaceIDUsageDescription" = "Чтобы выполнить проверку подлинности, Wire должен получить доступ к Face ID.";

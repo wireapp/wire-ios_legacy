@@ -68,7 +68,6 @@ static NSString* EmptyStringIfNil(NSString *string) {
     self = [super init];
     
     if (self) {
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(itemDidPlayToEndTime:) name:AVPlayerItemDidPlayToEndTimeNotification object:nil];
         [self configureRemoteCommandCenter];
     }
     
@@ -106,6 +105,9 @@ static NSString* EmptyStringIfNil(NSString *string) {
             self.loadAudioTrackCompletionHandler(YES, nil);
         }
     }
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:AVPlayerItemDidPlayToEndTimeNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(itemDidPlayToEndTime:) name:AVPlayerItemDidPlayToEndTimeNotification object:self.avPlayer.currentItem];
     
     if (self.timeObserverToken != nil) {
         [self.avPlayer removeTimeObserver:self.timeObserverToken];

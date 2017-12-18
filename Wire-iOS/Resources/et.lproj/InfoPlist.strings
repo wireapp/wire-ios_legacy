@@ -25,4 +25,4 @@
 /* Showed when trying to send picture from conversaiton list. Asks permissions for reading and writing to photo library */
 "NSPhotoLibraryUsageDescription" = "Luba Wire’le ligipääs sinu pildikogus olevatele fotodele.";
 /* Is shown to the user when app is locked with AppLock feature on the phone that supports Face ID */
-"NSFaceIDUsageDescription" = "In order to authenticate in the app allow Wire to access the Face ID feature.";
+"NSFaceIDUsageDescription" = "Audentimiseks luba Wire'e juurdepääs Face ID funktsioonile.";

@@ -29,6 +29,9 @@
 
 
 @interface AVPlayerViewControllerWithoutStatusBar : AVPlayerViewController
+
+@property (nonatomic) MediaPlayerController *wr_playerController;
+
 @end
 
 @implementation AVPlayerViewControllerWithoutStatusBar
@@ -102,10 +105,12 @@
     
     if (message.fileMessageData.isVideo) {
         AVPlayer *player = [[AVPlayer alloc] initWithURL:message.fileMessageData.fileURL];
+        MediaPlayerController *playerController = [[MediaPlayerController alloc]  initWithPlayer:player message:message delegate: AppDelegate.sharedAppDelegate.mediaPlaybackManager];
         
-        AVPlayerViewController *playerController = [[AVPlayerViewControllerWithoutStatusBar alloc] init];
-        playerController.player = player;
-        [self.targetViewController presentViewController:playerController animated:YES completion:^() {
+        AVPlayerViewControllerWithoutStatusBar *playerViewController = [[AVPlayerViewControllerWithoutStatusBar alloc] init];
+        playerViewController.player = player;
+        playerViewController.wr_playerController = playerController;
+        [self.targetViewController presentViewController:playerViewController animated:YES completion:^() {
             [[UIApplication sharedApplication] wr_updateStatusBarForCurrentControllerAnimated:YES];
             [player play];
             [Analytics.shared tagPlayedVideoMessage:CMTimeGetSeconds(player.currentItem.duration)];

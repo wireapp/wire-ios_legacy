@@ -21,8 +21,8 @@
 "NSLocationWhenInUseUsageDescription" = "Wire'ın konumunuza erişmesine izin verin, bu sayede konumunuzu başkalarıyla paylaşabilirsiniz.";
 "NSCameraUsageDescription" = "Wire'ın kameranıza erişmesine izin verin bu sayede görüntülü görüşmeler yapabilir ve fotoğraf yollayabilirsiniz.";
 /* Showed after taking a picture with camera, but only when NSPhotoLibraryUsageDescription permission was declined. Asks permission for only writing to photo library. */
-"NSPhotoLibraryAddUsageDescription" = "Allow Wire to store pictures you take in the photo library.";
+"NSPhotoLibraryAddUsageDescription" = "Wire'ın fotoğraf galerinde resim depolamasına izin ver.";
 /* Showed when trying to send picture from conversaiton list. Asks permissions for reading and writing to photo library */
-"NSPhotoLibraryUsageDescription" = "Allow Wire to access pictures stored in photo library.";
+"NSPhotoLibraryUsageDescription" = "Wire'ın fotoğraf galerinde resim depolama erişimine izin ver.";
 /* Is shown to the user when app is locked with AppLock feature on the phone that supports Face ID */
-"NSFaceIDUsageDescription" = "In order to authenticate in the app allow Wire to access the Face ID feature.";
+"NSFaceIDUsageDescription" = "Uygulamada kimlik doğrulaması için Wire'ın Face ID özelliğine erişmesine izin ver.";

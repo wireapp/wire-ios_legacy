@@ -42,7 +42,7 @@ NS_ASSUME_NONNULL_BEGIN
 /// or retrieves it from the cache.  Takes a block that actually creates the image from the
 /// passed in data.
 - (void)imageForData:(NSData *)imageData cacheKey:(NSString *)cacheKey
-       creationBlock:(id (^)(NSData *data)) creation
+       creationBlock:(nullable id (^)(NSData *data)) creation
           completion:(nullable void (^)(id image, NSString *cacheKey)) completion;
 
 - (nullable UIImage *)imageForCacheKey:(NSString *)cacheKey;

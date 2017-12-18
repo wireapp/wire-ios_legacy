@@ -16,7 +16,6 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 // 
 
-
 import UIKit
 import WireSyncEngine
 import Cartography
@@ -25,18 +24,31 @@ public extension ZMConversationList {
     func hasUnreadMessages(excluding: ZMConversation) -> Bool {
         return self.conversations().filter { $0 != excluding }.map { $0.estimatedUnreadCount }.reduce(0, +) > 0
     }
-    
+
     func conversations() -> [ZMConversation] {
         return self.flatMap { $0 as? ZMConversation }
     }
 }
 
+// MARK: - Update left navigator bar item when size class changes
+extension ConversationViewController {
+    override open func willTransition(to newCollection: UITraitCollection,
+                                      with coordinator: UIViewControllerTransitionCoordinator) {
+        super.willTransition(to: newCollection, with: coordinator)
+        self.updateLeftNavigationBarItems()
+    }
+
+    override open func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        self.updateLeftNavigationBarItems()
+    }
+}
+
 public extension ConversationViewController {
-    
     func addCallStateObserver() -> Any? {
         return conversation.voiceChannel?.addCallStateObserver(self)
     }
-    
+
     func barButtonItem(withType type: ZetaIconType, target: AnyObject?, action: Selector, accessibilityIdentifier: String?, width: CGFloat = 30, imageEdgeInsets: UIEdgeInsets = .zero) -> IconButton {
         let button = IconButton.iconButtonDefault()
         button.setIcon(type, with: .tiny, for: .normal)
@@ -46,7 +58,7 @@ public extension ConversationViewController {
         button.imageEdgeInsets = imageEdgeInsets
         return button
     }
-    
+
     func accentBarButtonItem(withType type: ZetaIconType, target: AnyObject?, action: Selector, accessibilityIdentifier: String?, width: CGFloat = 30, imageEdgeInsets: UIEdgeInsets = .zero) -> IconButton {
         let button = IconButton()
         button.setIconColor(UIColor.accent(), for: .normal)
@@ -57,24 +69,24 @@ public extension ConversationViewController {
         button.imageEdgeInsets = imageEdgeInsets
         return button
     }
-    
+
     var audioCallButton: IconButton {
         let button = barButtonItem(withType: .callAudio,
                                    target: self,
                                    action: #selector(ConversationViewController.voiceCallItemTapped(_:)),
                                    accessibilityIdentifier: "audioCallBarButton",
                                    width: 38,
-                                   imageEdgeInsets: UIEdgeInsetsMake(0, 0, 0, -16))
+                                   imageEdgeInsets: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: -16))
         return button
     }
-    
+
     var videoCallButton: IconButton {
         let button = barButtonItem(withType: .callVideo,
                                    target: self,
                                    action: #selector(ConversationViewController.videoCallItemTapped(_:)),
                                    accessibilityIdentifier: "videoCallBarButton",
                                    width: 30,
-                                   imageEdgeInsets: UIEdgeInsetsMake(0, 0, 0, -8))
+                                   imageEdgeInsets: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: -8))
         return button
     }
 
@@ -91,18 +103,18 @@ public extension ConversationViewController {
         button.layer.cornerRadius = button.bounds.height / 2
         return button
     }
-    
+
     var backButton: IconButton {
         let hasUnreadInOtherConversations = self.hasUnreadMessagesInOtherConversations
         let arrowIcon: ZetaIconType = hasUnreadInOtherConversations ? .backArrowWithDot : .backArrow
-        
+
         let leftButtonIcon: ZetaIconType = (self.parent?.wr_splitViewController?.layoutSize == .compact) ? arrowIcon : .hamburger
 
         let action = #selector(ConversationViewController.onBackButtonPressed(_:))
         let accessibilityId = "ConversationBackButton"
         let width: CGFloat = 38
-        let imageEdgeInsets = UIEdgeInsetsMake(0, -16, 0, 0)
-        
+        let imageEdgeInsets = UIEdgeInsets(top: 0, left: -16, bottom: 0, right: 0)
+
         if hasUnreadInOtherConversations {
             return accentBarButtonItem(withType: leftButtonIcon,
                                  target: self,
@@ -110,8 +122,7 @@ public extension ConversationViewController {
                                  accessibilityIdentifier: accessibilityId,
                                  width: width,
                                  imageEdgeInsets: imageEdgeInsets)
-        }
-        else {
+        } else {
             return barButtonItem(withType: leftButtonIcon,
                                  target: self,
                                  action: action,
@@ -120,13 +131,13 @@ public extension ConversationViewController {
                                  imageEdgeInsets: imageEdgeInsets)
         }
     }
-    
+
     var collectionsBarButtonItem: IconButton {
         let showingSearchResults = (self.collectionController?.isShowingSearchResults ?? false)
         let action = #selector(ConversationViewController.onCollectionButtonPressed(_:))
         let accessibilityIdentifier = "collection"
-        let imageEdgeInsets = UIEdgeInsetsMake(0, -8, 0, 0)
-        
+        let imageEdgeInsets = UIEdgeInsets(top: 0, left: -8, bottom: 0, right: 0)
+
         if showingSearchResults {
             return accentBarButtonItem(withType:.searchOngoing,
                                        target: self,
@@ -134,8 +145,7 @@ public extension ConversationViewController {
                                        accessibilityIdentifier: accessibilityIdentifier,
                                        width: 30,
                                        imageEdgeInsets: imageEdgeInsets)
-        }
-        else {
+        } else {
             return barButtonItem(withType:.search,
                                        target: self,
                                        action: action,
@@ -144,14 +154,14 @@ public extension ConversationViewController {
                                        imageEdgeInsets: imageEdgeInsets)
         }
     }
-    
+
     var hasUnreadMessagesInOtherConversations: Bool {
         guard let userSession = ZMUserSession.shared() else {
             return false
         }
         return ZMConversationList.conversations(inUserSession: userSession).hasUnreadMessages(excluding: self.conversation)
     }
-    
+
     public func rightNavigationItems(forConversation conversation: ZMConversation) -> [UIBarButtonItem] {
         guard !conversation.isReadOnly else { return [] }
 
@@ -165,23 +175,40 @@ public extension ConversationViewController {
 
         return [UIBarButtonItem(customView: audioCallButton)]
     }
-    
+
     public func leftNavigationItems(forConversation conversation: ZMConversation) -> [UIBarButtonItem] {
         var items: [UIBarButtonItem] = []
-        
+
         if self.parent?.wr_splitViewController?.layoutSize != .regularLandscape {
             let backButton = self.backButton
             backButton.hitAreaPadding = CGSize(width: 28, height: 20)
             items.append(UIBarButtonItem(customView: backButton))
         }
-        
+
         if self.shouldShowCollectionsButton() {
             let collectionsButton = collectionsBarButtonItem
             collectionsButton.hitAreaPadding = CGSize(width: 0, height: 20)
             items.append(UIBarButtonItem(customView: collectionsButton))
         }
-        
+
         return items
+    }
+
+    public func updateRightNavigationItemsButtons() {
+        if UIApplication.isLeftToRightLayout {
+            navigationItem.rightBarButtonItems = rightNavigationItems(forConversation: conversation)
+        } else {
+            navigationItem.rightBarButtonItems = leftNavigationItems(forConversation: conversation)
+        }
+    }
+
+    /// Update left navigation bar items
+    func updateLeftNavigationBarItems() {
+        if UIApplication.isLeftToRightLayout {
+            self.navigationItem.leftBarButtonItems = leftNavigationItems(forConversation: conversation)
+        } else {
+            self.navigationItem.leftBarButtonItems = rightNavigationItems(forConversation: conversation)
+        }
     }
 
     private func shouldShowCollectionsButton() -> Bool {
@@ -197,38 +224,37 @@ public extension ConversationViewController {
         default: return false
         }
     }
-    
+
     private func confirmCallInGroup(completion: @escaping (_ accepted: Bool) -> ()) {
         let participantsCount = self.conversation.activeParticipants.count - 1
         let message = "conversation.call.many_participants_confirmation.message".localized(args: participantsCount)
-        
+
         let confirmation = UIAlertController(title: "conversation.call.many_participants_confirmation.title".localized,
                                              message: message,
                                              preferredStyle: .alert)
-        
+
         let actionCancel = UIAlertAction(title: "general.cancel".localized, style: .cancel) { _ in
             completion(false)
         }
         confirmation.addAction(actionCancel)
-        
+
         let actionSend = UIAlertAction(title: "conversation.call.many_participants_confirmation.call".localized, style: .default) { _ in
             completion(true)
         }
         confirmation.addAction(actionSend)
-        
+
         self.present(confirmation, animated: true, completion: .none)
     }
-    
+
     func voiceCallItemTapped(_ sender: UIBarButtonItem) {
         let startCall = {
             ConversationInputBarViewController.endEditingMessage()
             self.conversation.startAudioCall()
         }
-        
+
         if self.conversation.activeParticipants.count <= 4 {
             startCall()
-        }
-        else {
+        } else {
             self.confirmCallInGroup { accepted in
                 if accepted {
                     startCall()
@@ -236,7 +262,7 @@ public extension ConversationViewController {
             }
         }
     }
-    
+
     func videoCallItemTapped(_ sender: UIBarButtonItem) {
         ConversationInputBarViewController.endEditingMessage()
         conversation.startVideoCall()
@@ -248,25 +274,24 @@ public extension ConversationViewController {
         // This will result in joining an ongoing call.
         conversation.joinCall()
     }
-    
+
     func onCollectionButtonPressed(_ sender: AnyObject!) {
         if self.collectionController == .none {
             let collections = CollectionsViewController(conversation: conversation)
             collections.delegate = self
-            
+
             collections.onDismiss = { [weak self] _ in
-                
+
                 guard let `self` = self, let collectionController = self.collectionController else {
                     return
                 }
-                
+
                 collectionController.dismiss(animated: true, completion: {
                     UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(true)
                 })
             }
             self.collectionController = collections
-        }
-        else {
+        } else {
             self.collectionController?.refetchCollection()
         }
 
@@ -279,7 +304,7 @@ public extension ConversationViewController {
             UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(true)
         })
     }
-    
+
     internal func dismissCollectionIfNecessary() {
         if let collectionController = self.collectionController {
             collectionController.dismiss(animated: false)
@@ -299,8 +324,7 @@ extension ConversationViewController: CollectionsViewControllerDelegate {
                     self.contentViewController.showForwardFor(message: message, fromCell: cell)
                 }
             }
-            
-            
+
         case .showInConversation:
             viewController.dismiss(animated: true) { [weak self] in
                 guard let `self` = self else {
@@ -317,21 +341,20 @@ extension ConversationViewController: CollectionsViewControllerDelegate {
     }
 }
 
-extension ConversationViewController : WireCallCenterCallStateObserver {
-    
-    public func callCenterDidChange(callState: CallState, conversation: ZMConversation, user: ZMUser?, timeStamp: Date?) {
+extension ConversationViewController: WireCallCenterCallStateObserver {
+
+    public func callCenterDidChange(callState: CallState, conversation: ZMConversation, caller: ZMUser, timestamp: Date?) {
         updateRightNavigationItemsButtons()
     }
-    
-}
 
+}
 
 extension ZMConversation {
 
     /// Whether there is an incoming or inactive incoming call that can be joined.
     var canJoinCall: Bool {
         guard let state = voiceChannel?.state else { return false }
-        
+
         if case .incoming = state {
             return true
         } else {

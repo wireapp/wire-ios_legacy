@@ -30,7 +30,7 @@
 
 - (instancetype)init
 {
-    self = [super init];
+    self = [super initWithFrame:CGRectZero];
     if (nil != self) {
         self.iconButton = [IconButton iconButtonCircularLight];
         self.iconButton.translatesAutoresizingMaskIntoConstraints = NO;

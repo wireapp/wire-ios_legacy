@@ -96,9 +96,9 @@ static AppDelegate *sharedAppDelegate = nil;
 
 - (BOOL)application:(UIApplication *)application willFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    DDLogInfo(@"application:willFinishLaunchingWithOptions %@ (applicationState = %ld)", launchOptions, (long)application.applicationState);
-    
     [self setupLogging];
+
+    DDLogInfo(@"application:willFinishLaunchingWithOptions %@ (applicationState = %ld)", launchOptions, (long)application.applicationState);
     
     // Initial log line to indicate the client version and build
     DDLogInfo(@"Wire-ios version %@ (%@)",

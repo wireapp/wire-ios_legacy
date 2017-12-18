@@ -23,8 +23,21 @@ import UIKit
 extension UITableViewCell {
 
     class var layoutDirectionAwareLayoutMargins: UIEdgeInsets {
-        var left = WAZUIMagic.cgFloat(forIdentifier: "content.left_margin")
-        var right = WAZUIMagic.cgFloat(forIdentifier: "content.right_margin")
+        var left: CGFloat = CGFloat.nan
+        var right: CGFloat = CGFloat.nan
+
+        // keyWindow can be nil, in case when running tests or the view is not added to view hierachy
+        switch (UIApplication.shared.keyWindow?.traitCollection.horizontalSizeClass) {
+        case (.compact?):
+            left = 56
+            right = 16
+        case (.regular?):
+            left = 96
+            right = 96
+        default:
+            left = 56
+            right = 16
+        }
 
         if UIApplication.shared.userInterfaceLayoutDirection == .rightToLeft {
             (left, right) = (right, left)

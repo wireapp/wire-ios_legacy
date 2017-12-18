@@ -159,8 +159,8 @@ static NSTimeInterval const ParticipantsHeaderViewEditHintDismissTimeout = 10.0f
 
 	[self.cancelButton addTarget:self action:@selector(buttonTapped:) forControlEvents:UIControlEventTouchUpInside];
 	
-	if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
-		// Don’t show the button in iPad popovers.
+	if (IS_IPAD_FULLSCREEN) {
+		// Don’t show the button in iPad popovers (Full screen mode).
 		self.cancelButton.hidden = YES;
 	}
 }

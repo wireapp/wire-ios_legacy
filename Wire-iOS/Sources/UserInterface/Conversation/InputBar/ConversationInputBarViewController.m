@@ -80,6 +80,9 @@
 @interface ConversationInputBarViewController (ZMConversationObserver) <ZMConversationObserver>
 @end
 
+@interface ConversationInputBarViewController (ZMUserObserver) <ZMUserObserver>
+@end
+
 @interface ConversationInputBarViewController (ZMTypingChangeObserver) <ZMTypingChangeObserver>
 @end
 
@@ -137,6 +140,7 @@
 
 @property (nonatomic) NSSet *typingUsers;
 @property (nonatomic) id conversationObserverToken;
+@property (nonatomic) id userObserverToken;
 
 @property (nonatomic) UIViewController *inputController;
 
@@ -217,11 +221,16 @@
         self.conversationObserverToken = [ConversationChangeInfo addObserver:self forConversation:self.conversation];
     }
     
+    if (self.userObserverToken == nil && self.conversation.connectedUser != nil) {
+        self.userObserverToken = [UserChangeInfo addObserver:self forUser:self.conversation.connectedUser userSession:ZMUserSession.sharedSession];
+    }
+    
     [self updateAccessoryViews];
     [self updateInputBarVisibility];
     [self updateTypingIndicatorVisibility];
     [self updateWritingStateAnimated:NO];
     [self updateButtonIconsForEphemeral];
+    [self updateAvailabilityPlaceholder];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -440,6 +449,24 @@
     [self.typingIndicatorView autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:48 relation:NSLayoutRelationGreaterThanOrEqual];
 }
 
+- (void)updateAvailabilityPlaceholder
+{
+    if (!ZMUser.selfUser.hasTeam || self.conversation.conversationType != ZMConversationTypeOneOnOne) {
+        return;
+    }
+    
+    Availability connectedUserAvailability = self.conversation.connectedUser.availability;
+    
+    if (connectedUserAvailability == AvailabilityNone) {
+        self.inputBar.availabilityPlaceholder = nil;
+    } else {
+        self.inputBar.availabilityPlaceholder = [AvailabilityStringBuilder stringFor:self.conversation.connectedUser
+                                                                                with:AvailabilityLabelStylePlaceholder
+                                                                               color:self.inputBar.placeholderColor];
+    }
+    
+}
+
 - (void)updateNewButtonTitleLabel
 {
     self.photoButton.titleLabel.hidden = self.inputBar.textView.isFirstResponder;
@@ -556,12 +583,25 @@
 
 - (NSArray<UIKeyCommand *> *)keyCommands
 {
-    return @[
-             [UIKeyCommand keyCommandWithInput:@"\r"
-                                 modifierFlags:UIKeyModifierCommand
-                                        action:@selector(commandReturnPressed)
-                          discoverabilityTitle:NSLocalizedString(@"conversation.input_bar.shortcut.send", nil)]
-             ];
+    NSMutableArray *commands = [[NSMutableArray alloc] init];
+    [commands addObject:[UIKeyCommand keyCommandWithInput:@"\r"
+                                            modifierFlags:UIKeyModifierCommand
+                                                   action:@selector(commandReturnPressed)
+                                     discoverabilityTitle:NSLocalizedString(@"conversation.input_bar.shortcut.send", nil)]];
+    
+    if (self.inputBar.isEditing) {
+        [commands addObject:[UIKeyCommand keyCommandWithInput:UIKeyInputEscape
+                                                modifierFlags:0
+                                                       action:@selector(escapePressed)
+                                         discoverabilityTitle:NSLocalizedString(@"conversation.input_bar.shortcut.cancel_editing_message", nil)]];
+    } else {
+        [commands addObject:[UIKeyCommand keyCommandWithInput:UIKeyInputUpArrow
+                                                modifierFlags:0
+                                                       action:@selector(upArrowPressed)
+                                         discoverabilityTitle:NSLocalizedString(@"conversation.input_bar.shortcut.edit_last_message", nil)]];
+    }
+    
+    return commands;
 }
 
 - (BOOL)canBecomeFirstResponder
@@ -575,6 +615,18 @@
     if (nil != candidateText) {
         [self sendOrEditText:candidateText];
     }
+}
+
+- (void)upArrowPressed
+{
+    if ([self.delegate respondsToSelector:@selector(conversationInputBarViewControllerEditLastMessage)]) {
+        [self.delegate conversationInputBarViewControllerEditLastMessage];
+    }
+}
+
+-(void)escapePressed
+{
+    [self endEditingMessageIfNeeded];
 }
 
 #pragma mark - Input views handling
@@ -982,7 +1034,7 @@
 {
     [[Analytics shared] tagMediaAction:ConversationMediaActionLocation inConversation:self.conversation];
     
-    LocationSelectionViewController *locationSelectionViewController = [[LocationSelectionViewController alloc] initForPopoverPresentation:IS_IPAD];
+    LocationSelectionViewController *locationSelectionViewController = [[LocationSelectionViewController alloc] initForPopoverPresentation:IS_IPAD_FULLSCREEN];
     locationSelectionViewController.modalPresentationStyle = UIModalPresentationPopover;
     UIPopoverPresentationController* popoverPresentationController = locationSelectionViewController.popoverPresentationController;
     popoverPresentationController.sourceView = sender.superview;
@@ -1038,8 +1090,26 @@
 - (void)sendButtonPressed:(id)sender
 {
     [self.inputBar.textView autocorrectLastWord];
-    [self sendOrEditText:self.inputBar.textView.preparedText];
-    [self.inputBar.textView resetTypingAttributes];
+    if([self checkMessageLength]){
+        [self sendOrEditText:self.inputBar.textView.preparedText];
+        [self.inputBar.textView resetTypingAttributes];
+    }
+}
+
+-(BOOL)checkMessageLength{
+    
+    BOOL allowed = self.inputBar.textView.text.length <= (NSUInteger)SharedConstants.maximumMessageLength;
+    
+    if(!allowed) {
+        NSString *message = [NSString stringWithFormat:NSLocalizedString(@"conversation.input_bar.message_too_long.message", nil), SharedConstants.maximumMessageLength];
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"conversation.input_bar.message_too_long.title", nil)
+                                                                       message:message
+                                                                preferredStyle:UIAlertControllerStyleAlert];
+        [alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"general.ok", nil) style:UIAlertActionStyleCancel handler:nil]];
+        [self presentViewController:alert animated:YES completion:nil];
+    }
+    
+    return allowed;
 }
 
 @end
@@ -1082,6 +1152,17 @@
 {    
     if (change.participantsChanged || change.connectionStateChanged) {
         [self updateInputBarVisibility];
+    }
+}
+
+@end
+
+@implementation ConversationInputBarViewController (ZMUserObserver)
+
+- (void)userDidChange:(UserChangeInfo *)changeInfo
+{
+    if (changeInfo.availabilityChanged) {
+        [self updateAvailabilityPlaceholder];
     }
 }
 

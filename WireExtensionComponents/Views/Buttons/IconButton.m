@@ -53,7 +53,7 @@
     
     IconDefinition *objectIconDefinition = (IconDefinition *)object;
     
-    if (objectIconDefinition.iconType == self.iconType && 
+    if (objectIconDefinition.iconType == self.iconType &&
         objectIconDefinition.iconSize == self.iconSize &&
         objectIconDefinition.renderingMode == self.renderingMode) {
         return YES;
@@ -221,10 +221,10 @@
     }
 }
 
-- (void)setBounds:(CGRect)bounds
+- (void)layoutSubviews
 {
-    [super setBounds:bounds];
-    
+    [super layoutSubviews];
+
     [self updateCircularCornerRadius];
 }
 
@@ -349,7 +349,27 @@
 - (void)updateCircularCornerRadius
 {
     if (self.circular) {
-        self.layer.cornerRadius = self.bounds.size.height / 2;
+
+        /// Create a circular mask. It would also mask subviews.
+
+        CGFloat radius = self.bounds.size.height / 2;
+        UIBezierPath *maskPath = [UIBezierPath bezierPathWithRoundedRect:self.bounds
+                                                       byRoundingCorners:UIRectCornerAllCorners
+                                                             cornerRadii:CGSizeMake(radius, radius)];
+
+        CAShapeLayer *maskLayer = [CAShapeLayer layer];
+        maskLayer.frame = self.bounds;
+        maskLayer.path = maskPath.CGPath;
+
+        self.layer.mask = maskLayer;
+
+        /// When the button has border, set self.layer.cornerRadius to prevent border is covered by icon
+        if (self.borderWidth > 0) {
+            self.layer.cornerRadius = radius;
+        }
+        else {
+            self.layer.cornerRadius = 0;
+        }
     }
 }
 

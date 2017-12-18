@@ -1,0 +1,335 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>self.new_device_alert.title_prefix.devices</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@device_count@</string>
+		<key>device_count</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>lu</string>
+			<key>zero</key>
+			<string></string>
+			<key>one</key>
+			<string>įrenginys</string>
+			<key>few</key>
+			<string>%lu įrenginiai</string>
+			<key>many</key>
+			<string>%lu įrenginių</string>
+			<key>other</key>
+			<string>%lu įrenginių</string>
+		</dict>
+	</dict>
+	<key>participants.people.count</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@lu_number_of_people@</string>
+		<key>lu_number_of_people</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>lu</string>
+			<key>zero</key>
+			<string>Visi išėjo</string>
+			<key>one</key>
+			<string>Vienas žmogus</string>
+			<key>few</key>
+			<string>%lu žmonės</string>
+			<key>many</key>
+			<string>%lu žmonių</string>
+			<key>other</key>
+			<string>%lu žmonių</string>
+		</dict>
+	</dict>
+	<key>content.system.missing_messages.subtitle_added</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%@ %#@lu_number_of_users@ pridėtas</string>
+		<key>lu_number_of_users</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>lu</string>
+			<key>zero</key>
+			<string></string>
+			<key>one</key>
+			<string>buvo</string>
+			<key>other</key>
+			<string>buvo</string>
+		</dict>
+	</dict>
+	<key>content.system.missing_messages.subtitle_removed</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%@ %#@lu_number_of_users@ pašalintas</string>
+		<key>lu_number_of_users</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>lu</string>
+			<key>zero</key>
+			<string></string>
+			<key>one</key>
+			<string>buvo</string>
+			<key>other</key>
+			<string>buvo</string>
+		</dict>
+	</dict>
+	<key>list.connect_request.people_waiting</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@d_number_of_people@ laukia</string>
+		<key>d_number_of_people</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>zero</key>
+			<string></string>
+			<key>one</key>
+			<string>Vienas žmogus</string>
+			<key>few</key>
+			<string>%d žmogus</string>
+			<key>many</key>
+			<string>%d žmogus</string>
+			<key>other</key>
+			<string>%d žmogus</string>
+		</dict>
+	</dict>
+	<key>content.system.participants_n_others</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%@ %#@and_number_of_others@</string>
+		<key>and_number_of_others</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>zero</key>
+			<string></string>
+			<key>one</key>
+			<string>ir dar vienas</string>
+			<key>few</key>
+			<string>ir dar %d</string>
+			<key>many</key>
+			<string>ir dar %d</string>
+			<key>other</key>
+			<string>ir dar %d</string>
+		</dict>
+	</dict>
+	<key>peoplepicker.suggested.knows_more</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>Pažįsta %@ ir %#@d_number_of_others@</string>
+		<key>d_number_of_others</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>few</key>
+			<string>dar %d</string>
+			<key>many</key>
+			<string>dar %d</string>
+			<key>other</key>
+			<string>dar %d</string>
+		</dict>
+	</dict>
+	<key>content.system.people_started_using</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%@%#@d_number_of_others@ pradėjo naudotis %#@d_new_devices@</string>
+		<key>d_number_of_others</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string></string>
+			<key>other</key>
+			<string> ir dar %d</string>
+		</dict>
+		<key>d_new_devices</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>naujas įrenginys</string>
+			<key>other</key>
+			<string>nauji įrenginiai</string>
+		</dict>
+	</dict>
+	<key>content.system.new_devices</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@d_new_devices@</string>
+		<key>d_new_devices</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>naujas įrenginys</string>
+			<key>other</key>
+			<string>nauji įrenginiai</string>
+		</dict>
+	</dict>
+	<key>conversation.silenced.status.message.text</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@d_number_of_new@</string>
+		<key>d_number_of_new</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>nauja žinutė</string>
+			<key>other</key>
+			<string>%d naujos žinutės</string>
+		</dict>
+	</dict>
+	<key>conversation.silenced.status.message.link</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@d_number_of_new@</string>
+		<key>d_number_of_new</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>nauja nuoroda</string>
+			<key>other</key>
+			<string>%d naujos nuorodos</string>
+		</dict>
+	</dict>
+	<key>conversation.silenced.status.message.image</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@d_number_of_new@</string>
+		<key>d_number_of_new</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>naujas paveikslėlis</string>
+			<key>other</key>
+			<string>%d nauji paveikslėliai</string>
+		</dict>
+	</dict>
+	<key>conversation.silenced.status.message.location</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@d_number_of_new@</string>
+		<key>d_number_of_new</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>nauja vieta</string>
+			<key>other</key>
+			<string>%d naujos vietos</string>
+		</dict>
+	</dict>
+	<key>conversation.silenced.status.message.audio</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@d_number_of_new@</string>
+		<key>d_number_of_new</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>naujas garso įrašas</string>
+			<key>other</key>
+			<string>%d nauji garso įrašai</string>
+		</dict>
+	</dict>
+	<key>conversation.silenced.status.message.video</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@d_number_of_new@</string>
+		<key>d_number_of_new</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>naujas vaizdo įrašas</string>
+			<key>other</key>
+			<string>%d nauji vaizdo įrašai</string>
+		</dict>
+	</dict>
+	<key>conversation.silenced.status.message.knock</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@d_number_of_new@</string>
+		<key>d_number_of_new</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>naujas skambtelėjimas</string>
+			<key>other</key>
+			<string>%d nauji skambtelėjimai</string>
+		</dict>
+	</dict>
+	<key>conversation.silenced.status.message.missedcall</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@d_number_of_new@</string>
+		<key>d_number_of_new</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>praleistas skambutis</string>
+			<key>other</key>
+			<string>%d praleisti skambučiai</string>
+		</dict>
+	</dict>
+	<key>conversation.silenced.status.message.file</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@d_number_of_new@</string>
+		<key>d_number_of_new</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>naujas failas</string>
+			<key>other</key>
+			<string>%d nauji failai</string>
+		</dict>
+	</dict>
+</dict>
+</plist>

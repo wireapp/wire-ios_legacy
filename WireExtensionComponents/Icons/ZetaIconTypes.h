@@ -194,6 +194,11 @@ typedef NS_ENUM(NSInteger, ZetaIconType)
     ZetaIconTypeMarkdownBulletList              = 0x745,
     ZetaIconTypeMarkdownNumberList              = 0x746,
     ZetaIconTypeMarkdownCode                    = 0x747,
+    
+    // Availability
+    ZetaIconTypeAvailabilityBusy                = 0x748,
+    ZetaIconTypeAvailabilityAway                = 0x749,
+    ZetaIconTypeAvailabilityAvailable           = 0x750,
 };
 
 typedef NS_ENUM(NSInteger, ZetaIconSize) {
@@ -204,6 +209,7 @@ typedef NS_ENUM(NSInteger, ZetaIconSize) {
     ZetaIconSizeSmall,  // 20
     ZetaIconSizeMedium, // 24
     ZetaIconSizeActionButton, // 28
+    ZetaIconSizeRegistrationButton, // 32
     ZetaIconSizeCamera, // 40
     ZetaIconSizeLarge,   // 48
 };

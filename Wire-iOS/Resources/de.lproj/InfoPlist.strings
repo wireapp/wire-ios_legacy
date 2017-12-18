@@ -23,6 +23,6 @@
 /* Showed after taking a picture with camera, but only when NSPhotoLibraryUsageDescription permission was declined. Asks permission for only writing to photo library. */
 "NSPhotoLibraryAddUsageDescription" = "Erlaube Wire aufgenommene Bilder in deiner Galerie zu speichern.";
 /* Showed when trying to send picture from conversaiton list. Asks permissions for reading and writing to photo library */
-"NSPhotoLibraryUsageDescription" = "Erlaube Wire auf deine in der Galerie gespeicherten Bilder zuzugreifen.";
+"NSPhotoLibraryUsageDescription" = "Erlaube Wire Zugriff auf die gespeicherten Bilder in deiner Galerie.";
 /* Is shown to the user when app is locked with AppLock feature on the phone that supports Face ID */
-"NSFaceIDUsageDescription" = "Um dich in der App zu authentifizieren, erlaube Wire auf Face ID zuzugreifen.";
+"NSFaceIDUsageDescription" = "Um dich in der App zu authentifizieren, erlaube Wire Zugriff auf die Face ID Funktion.";

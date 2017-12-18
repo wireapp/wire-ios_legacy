@@ -155,6 +155,10 @@ static NSParagraphStyle *cachedParagraphStyle;
             size = 28;
             break;
 
+        case ZetaIconSizeRegistrationButton:
+            size = 32;
+            break;
+
         case ZetaIconSizeLarge:
             size = 48;
             break;

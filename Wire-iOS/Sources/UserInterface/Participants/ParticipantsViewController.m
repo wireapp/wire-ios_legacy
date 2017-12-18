@@ -42,7 +42,6 @@
 #import "AnalyticsTracker+Invitations.h"
 
 #import "ProfileViewController.h"
-#import "UIViewController+Orientation.h"
 
 // model
 #import "WireSyncEngine+iOS.h"
@@ -190,7 +189,7 @@ static NSString *const ParticipantHeaderReuseIdentifier = @"ParticipantListHeade
 
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations
 {
-    return [UIViewController wr_supportedInterfaceOrientations];
+    return self.wr_supportedInterfaceOrientations;
 }
 
 - (void)viewWillAppearCustomPresentationAnimated:(BOOL)animated isInteractive:(BOOL)interactive
@@ -256,7 +255,7 @@ static NSString *const ParticipantHeaderReuseIdentifier = @"ParticipantListHeade
     
     NSString *subtitle = [NSString stringWithFormat:NSLocalizedString(@"participants.people.count", @""),
                           (unsigned long)self.conversation.otherActiveParticipants.count, nil];
-    if (IS_IPAD) {
+    if (IS_IPAD_FULLSCREEN) {
         subtitle = [subtitle uppercaseString];
     }
     self.headerView.subtitle = subtitle;
@@ -416,7 +415,7 @@ static NSString *const ParticipantHeaderReuseIdentifier = @"ParticipantListHeade
 - (BOOL)participantsHeaderView:(ParticipantsHeaderView *)headerView textViewShouldBeginEditing:(UITextView *)textView
 {
     if ([self.conversation.activeParticipants containsObject:[ZMUser selfUser]]) {
-        if (! IS_IPAD) {
+        if (! IS_IPAD_FULLSCREEN) {
             self.collectionView.hidden = YES;
             self.headerView.topButtonsHidden = YES;
             self.headerView.subtitleHidden = YES;
@@ -440,7 +439,7 @@ static NSString *const ParticipantHeaderReuseIdentifier = @"ParticipantListHeade
 
 - (BOOL)participantsHeaderView:(ParticipantsHeaderView *)headerView textViewDidEndEditing:(UITextView *)textView
 {
-    if (! IS_IPAD) {
+    if (! IS_IPAD_FULLSCREEN) {
         self.collectionView.hidden = NO;
         self.headerView.topButtonsHidden = NO;
         self.headerView.subtitleHidden = NO;
@@ -482,7 +481,7 @@ static NSString *const ParticipantHeaderReuseIdentifier = @"ParticipantListHeade
 
 - (void)participantsFooterView:(ParticipantsFooterView *)footerView rightButtonTapped:(UIButton *)rightButton
 {
-    if (IS_IPAD && [self.headerView.titleView isFirstResponder]) {
+    if (IS_IPAD_FULLSCREEN && [self.headerView.titleView isFirstResponder]) {
         
         [self.headerView.titleView resignFirstResponder];
         return;
@@ -493,7 +492,7 @@ static NSString *const ParticipantHeaderReuseIdentifier = @"ParticipantListHeade
 
 - (void)participantsFooterView:(ParticipantsFooterView *)footerView leftButtonTapped:(UIButton *)leftButton
 {
-    if (IS_IPAD && [self.headerView.titleView isFirstResponder]) {
+    if (IS_IPAD_FULLSCREEN && [self.headerView.titleView isFirstResponder]) {
         
         [self.headerView.titleView resignFirstResponder];
         return;

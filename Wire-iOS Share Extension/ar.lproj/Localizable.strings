@@ -26,8 +26,12 @@
 "share_extension.input.placeholder" = "اكتب الرسالة";
 "share_extension.sending_progress.title" = "جاري الإرسال...";
 "share_extension.preparing.title" = "جارٍ الإعداد…";
+"share_extension.no_internet_connection.title" = "لا يوجد اتصال بالإنترنت";
 "share_extension.not_signed_in.title" = "لِج لـ Wire لتستطيع مشاركة أي شيء";
 "share_extension.not_signed_in.close_button" = "إغلاق";
+"share_extension.timeout.title" = "The connection has timed out.";
+"share_extension.timeout.message" = "Check your Internet connection and try again. The attachments were saved in the conversation.";
+"share_extension.privacy_security.lock_app.description" = "إلغاء تأمين Wire";
 
 "conversation.displayname.emptygroup" = "محادثة جماعية";
 "meta.degraded.degradation_reason_message.singular" = "%@ بدأ باستخدام جهاز جديد.";
