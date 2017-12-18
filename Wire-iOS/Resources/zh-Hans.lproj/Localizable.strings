@@ -214,7 +214,7 @@
 "conversation.connection_view.in_address_book" = "在联系人中";
 
 "conversation.input_bar.shortcut.send" = "发送消息";
-"conversation.input_bar.shortcut.edit_last_message" = "编辑消息";
+"conversation.input_bar.shortcut.edit_last_message" = "编辑最新消息";
 "conversation.input_bar.shortcut.cancel_editing_message" = "取消";
 
 "conversation.input_bar.message_too_long.title" = "消息过长。";
@@ -789,7 +789,7 @@
 
 // Landing screen
 
-"landing.title" = "为每个人提供安全消息。";
+"landing.title" = "保密每个人之通讯。";
 "landing.create_account.title" = "新增帐户";
 "landing.create_account.subtitle" = "供个人使用";
 "landing.create_team.title" = "创建团队";
@@ -1034,7 +1034,7 @@
 "compose.drafts.compose.subject.placeholder" = "点击设置主题";
 
 "compose.drafts.compose.delete.confirm.title" = "确认删除";
-"compose.drafts.compose.delete.confirm.message" = "此操作将永久删除，且不可恢复。";
+"compose.drafts.compose.delete.confirm.message" = "此操作将永久删除草稿，且不可恢复。";
 "compose.drafts.compose.delete.confirm.action.title" = "删除";
 
 "compose.drafts.compose.dismiss.confirm.title" = "保存为草稿";
@@ -1046,9 +1046,9 @@
 "availability.message.set_status" = "设置状态";
 
 "availability.none" = "无";
-"availability.available" = "可用";
+"availability.available" = "在线";
 "availability.away" = "离开";
 "availability.busy" = "忙碌";
-"availability.available.placeholder" = "%@ 可用";
+"availability.available.placeholder" = "%@ 在线";
 "availability.away.placeholder" = "%@ 离开";
 "availability.busy.placeholder" = "%@ 正忙";

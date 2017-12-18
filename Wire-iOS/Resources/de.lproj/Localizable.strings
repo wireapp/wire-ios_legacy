@@ -1041,14 +1041,14 @@
 "compose.drafts.compose.dismiss.confirm.action.title" = "Speichern";
 "compose.drafts.compose.dismiss.delete.action.title" = "Löschen";
 
-"availability.message.title" = "Choose a status";
+"availability.message.title" = "Wähle einen Status";
 "availability.message.cancel" = "Abbrechen";
-"availability.message.set_status" = "Set a status";
+"availability.message.set_status" = "Wähle einen Status";
 
-"availability.none" = "Keine";
-"availability.available" = "Available";
-"availability.away" = "Away";
-"availability.busy" = "Busy";
-"availability.available.placeholder" = "%@ is available";
-"availability.away.placeholder" = "%@ is away";
-"availability.busy.placeholder" = "%@ is busy";
+"availability.none" = "Kein Status";
+"availability.available" = "Verfügbar";
+"availability.away" = "Abwesend";
+"availability.busy" = "Beschäftigt";
+"availability.available.placeholder" = "%@ ist verfügbar";
+"availability.away.placeholder" = "%@ ist abwesend";
+"availability.busy.placeholder" = "%@ ist beschäftigt";

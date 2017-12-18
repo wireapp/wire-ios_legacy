@@ -287,7 +287,7 @@
 "content.system.you_renamed_conv_to_nothing" = "您刪除了聊天室名稱";
 "content.system.pending_message_timestamp" = "正在發送...";
 "content.system.message_sent_timestamp" = "已送出";
-"content.system.message_delivered_timestamp" = "已傳達";
+"content.system.message_delivered_timestamp" = "已傳送";
 "content.system.failedtosend_message_timestamp" = "發送失敗。";
 "content.system.failedtosend_message_timestamp_resend" = "重新發送";
 "content.system.failedtosend_message_timestamp_delete" = "刪除";
