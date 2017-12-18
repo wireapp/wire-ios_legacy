@@ -58,7 +58,7 @@ open class TabBarController: UIViewController {
     fileprivate var presentedTabBarViewController: UIViewController?
     fileprivate var tabBar: TabBar?
     fileprivate var contentView: UIView!
-    fileprivate var isTransiting: Bool = false
+    fileprivate var isTransitioning: Bool = false
 
     required public init(viewControllers: [UIViewController]) {
         self.viewControllers = viewControllers
@@ -117,7 +117,7 @@ open class TabBarController: UIViewController {
 
         guard toViewController != fromViewController &&
             self.contentView != nil &&
-            !isTransiting
+            !isTransitioning
             else {
             return
         }
@@ -139,12 +139,12 @@ open class TabBarController: UIViewController {
             addChildViewController(toViewController)
 
             self.transition(from: fromViewController!, to: toViewController, duration: 0.35, options: .transitionCrossDissolve, animations: {
-                self.isTransiting = true
+                self.isTransitioning = true
                 if toViewController.responds(to: #selector(UIViewController.takeFirstResponder)) {
                     toViewController.perform(#selector(UIViewController.takeFirstResponder))
                 }
             }, completion: { (finished) in
-                self.isTransiting = false
+                self.isTransitioning = false
                 fromViewController?.removeFromParentViewController()
                 toViewController.didMove(toParentViewController: self)
             }
