@@ -995,7 +995,6 @@
 "force.update.ok_button" = "Перейти в App Store";
 
 // Third Party
-"giphy.conversation.message" = "%@ · через giphy.com";
 "giphy.conversation.random_message" = "через giphy.com";
 "giphy.error.no_more_results" = "Больше нет gif'ок";
 "giphy.error.no_result" = "gif не найдена";

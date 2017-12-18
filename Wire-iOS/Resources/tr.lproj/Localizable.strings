@@ -995,7 +995,6 @@
 "force.update.ok_button" = "App Store'a git";
 
 // Third Party
-"giphy.conversation.message" = "%@ · giphy.com aracılığıyla";
 "giphy.conversation.random_message" = "giphy.com aracılığıyla";
 "giphy.error.no_more_results" = "daha fazla gif yok";
 "giphy.error.no_result" = "gif bulunamadı";

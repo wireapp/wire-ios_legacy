@@ -995,7 +995,6 @@
 "force.update.ok_button" = "Eiti į „App Store“";
 
 // Third Party
-"giphy.conversation.message" = "%@ · iš giphy.com";
 "giphy.conversation.random_message" = "iš giphy.com";
 "giphy.error.no_more_results" = "daugiau jokių gif";
 "giphy.error.no_result" = "gif nerasta";
