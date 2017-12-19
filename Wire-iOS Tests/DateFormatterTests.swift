@@ -23,7 +23,7 @@ final class DateFormatterTests: XCTestCase {
     func testThatDateStringDoesNotContainYearIfDateIsToday() {
         // GIVEN
         let date = Date()
-        let dateFormatter = date.olderThenOneWeekdateFormatter
+        let dateFormatter = date.olderThanOneWeekdateFormatter
         let dateString = dateFormatter.string(from: date)
 
         let calendar = Calendar.current
@@ -38,7 +38,7 @@ final class DateFormatterTests: XCTestCase {
         // GIVEN
         let oneYearBefore = Calendar.current.date(byAdding: .year, value: -1, to: Date())
 
-        let dateFormatter = oneYearBefore!.olderThenOneWeekdateFormatter
+        let dateFormatter = oneYearBefore!.olderThanOneWeekdateFormatter
         let dateString = dateFormatter.string(from: oneYearBefore!)
 
         let calendar = Calendar.current
@@ -105,7 +105,7 @@ final class DateFormatterTests: XCTestCase {
     }
 
     func dateStringFromLocaleIdentifier(localeIdentifier: String, date: Date = Date()) -> String {
-        let dateFormatter = date.olderThenOneWeekdateFormatter
+        let dateFormatter = date.olderThanOneWeekdateFormatter
         let locale = Locale(identifier: localeIdentifier)
         let formatString = DateFormatter.dateFormat(fromTemplate: dateFormatter.dateFormat, options: 0, locale: locale)
 

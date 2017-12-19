@@ -85,7 +85,7 @@ public class WRDateFormatter {
 }
 
 extension Date {
-    public var olderThenOneWeekdateFormatter: DateFormatter {
+    public var olderThanOneWeekdateFormatter: DateFormatter {
         let today = Date()
 
         let isThisYear = Calendar.current.isDate(self, equalTo: today, toGranularity: .year)
@@ -133,7 +133,7 @@ extension Date {
         } else if isThisWeek {
             dateString = "\(WRDateFormatter.thisWeekFormatter.string(from: self)) \(WRDateFormatter.clockTimeFormatter.string(from: self))"
         } else {
-            let dateFormatter = self.olderThenOneWeekdateFormatter
+            let dateFormatter = self.olderThanOneWeekdateFormatter
             dateString = "\(dateFormatter.string(from: self)) \(WRDateFormatter.clockTimeFormatter.string(from: self))"
         }
 

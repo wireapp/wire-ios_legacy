@@ -20,7 +20,7 @@ import Foundation
 
 extension Message {
     @objc static func dayFormatter(date: Date) -> DateFormatter {
-        return date.olderThenOneWeekdateFormatter
+        return date.olderThanOneWeekdateFormatter
     }
 }
 
