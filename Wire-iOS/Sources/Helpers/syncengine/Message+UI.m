@@ -118,18 +118,6 @@
     return longVersionTimeFormatter;
 }
 
-///FIXME: 2 day foramtter
-+ (NSDateFormatter *)dayFormatter:(NSDate *)date
-{
-    static NSDateFormatter *dayFormatter = nil;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        dayFormatter = [date localizedDateFormatter];
-    });
-
-    return dayFormatter;
-}
-
 + (BOOL)isPresentableAsNotification:(id<ZMConversationMessage>)message
 {
     BOOL isChatHeadsDisabled = [[Settings sharedSettings] chatHeadsDisabled];

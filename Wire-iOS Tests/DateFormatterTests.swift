@@ -130,14 +130,21 @@ final class DateFormatterTests: XCTestCase {
     func testWr_formattedDateForTwoHourBefore() {
         // GIVEN
         let twoHourBefore = Calendar.current.date(byAdding: .hour, value: -2, to: Date())!
-        let hour = Calendar.current.component(.hour, from: twoHourBefore)
+        var hour = Calendar.current.component(.hour, from: twoHourBefore)
+        var meridiem = "AM"
+        // to fit US 12hr format
+        if hour > 12 {
+            hour -= 12
+            meridiem = "PM"
+        }
 
         // WHEN
         let dateString = twoHourBefore.formattedDate
 
         // THEN
         XCTAssertFalse(dateString.contains("just now"), "dateString is \(dateString)")
-        XCTAssert(dateString.contains(String(hour)), "dateString is \(dateString)")
+        XCTAssert(dateString.hasPrefix(String(hour)), "hour is \(hour), dateString is \(dateString)")
+        XCTAssert(dateString.hasSuffix(meridiem), "meridiem is \(meridiem), dateString is \(dateString)")
     }
 
     ///FIXME: this test fails if runs on Sunday...

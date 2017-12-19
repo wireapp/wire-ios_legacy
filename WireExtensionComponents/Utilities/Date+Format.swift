@@ -19,13 +19,13 @@
 import Foundation
 import FormatterKit
 
-fileprivate class WRDateFormatter {
+// Creating and configuring date formatters is insanely expensive.
+// This is why there’s a bunch of statically configured ones here that are reused.
+public class WRDateFormatter {
     static let NSTimeIntervalOneHour = 3600.0
     static let DayMonthYearUnits = Set<Calendar.Component>([.day, .month, .year])
     static let WeekMonthYearUnits = Set<Calendar.Component>([.weekOfMonth, .month, .year])
 
-    // Creating and configuring date formatters is insanely expensive.
-    // This is why there’s a bunch of statically configured ones here that are reused.
     /// use this to format clock times, so they are correctly formatted to 12/24 hours according to locale
     static var clockTimeFormatter: DateFormatter = {
         let timeFormatter = DateFormatter()
@@ -65,7 +65,7 @@ fileprivate class WRDateFormatter {
         return timeFormatter
     }()
 
-    static var thisYearFormatter: DateFormatter = {
+    public static var thisYearFormatter: DateFormatter = {
         let locale = Locale.current
         let formatString = DateFormatter.dateFormat(fromTemplate: "EEEEdMMMM", options: 0, locale: locale)
 
@@ -74,7 +74,7 @@ fileprivate class WRDateFormatter {
         return dateFormatter
     }()
 
-    static var otherYearFormatter: DateFormatter = {
+    public static var otherYearFormatter: DateFormatter = {
         let locale = Locale.current
         let formatString = DateFormatter.dateFormat(fromTemplate: "EEEEdMMMMYYYY", options: 0, locale: locale)
 
@@ -85,37 +85,20 @@ fileprivate class WRDateFormatter {
 }
 
 extension Date {
-    /// Create a NSDateFormatter depends on the date is in this year or not
-    ///
-    /// - Returns: a NSDateFormatter object. If the date's year is same as today,
-    ///            return a NSDateFormatter without year component, otherwise return a NSDateFormatter with year component.
-    public func localizedDateFormatter() -> DateFormatter {
-        let formatString = localizedDateFormatString()
 
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = formatString
-        return dateFormatter
-    }
-
-    public func localizedDateFormatString(locale: Locale? = Locale.current) -> String {
+    public var olderThenOneWeekdateFormatter: DateFormatter {
         let today = Date()
 
         let isThisYear = Calendar.current.isDate(self, equalTo: today, toGranularity: .year)
 
-        /// The order of the components in fromTemplate do not affect the output of DateFormatter.dateFormat()
-
-        var formatString: String?
-
         if isThisYear {
-            formatString = DateFormatter.dateFormat(fromTemplate: "EEEEdMMMM", options: 0, locale: locale)
+            return WRDateFormatter.thisYearFormatter
         } else {
-            formatString = DateFormatter.dateFormat(fromTemplate: "EEEEdMMMMYYYY", options: 0, locale: locale)
+            return WRDateFormatter.otherYearFormatter
         }
-
-        return formatString!
     }
 
-    public var formattedDate : String {
+    public var formattedDate: String {
         let gregorian = Calendar(identifier: .gregorian)
         // Today's date
         let today = Date()
@@ -136,28 +119,26 @@ extension Date {
         let isToday: Bool = todayDateComponents == dateComponents
         let isYesterday: Bool = yesterdayComponents == dateComponents
         let isThisWeek: Bool = thisWeekComponents == weekComponents
-        let isThisYear = Calendar.current.isDate(self, equalTo: today, toGranularity: .year)
+        //        let isThisYear = Calendar.current.isDate(self, equalTo: today, toGranularity: .year)
         var dateString = String()
 
         // Date is within the last hour
         if (intervalSinceDate < WRDateFormatter.NSTimeIntervalOneHour) {
             dateString = WRDateFormatter.timeIntervalFormatter.string(forTimeInterval: -intervalSinceDate)
         }
-        // Date is from today or yesterday
-        else if (isToday || isYesterday) {
+            // Date is from today or yesterday
+        else if isToday || isYesterday {
             let dateStyle: DateFormatter.Style = isToday ? .none : .medium
             WRDateFormatter.todayYesterdayFormatter.dateStyle = dateStyle
             dateString = WRDateFormatter.todayYesterdayFormatter.string(from: self)
-        }
-        else if (isThisWeek) {
+        } else if isThisWeek {
             dateString = "\(WRDateFormatter.thisWeekFormatter.string(from: self)) \(WRDateFormatter.clockTimeFormatter.string(from: self))"
-        }
-        else if isThisYear {
-            dateString = "\(WRDateFormatter.thisYearFormatter.string(from: self)) \(WRDateFormatter.clockTimeFormatter.string(from: self))"
         } else {
-            dateString = "\(WRDateFormatter.otherYearFormatter.string(from: self)) \(WRDateFormatter.clockTimeFormatter.string(from: self))"
+            let dateFormatter = self.olderThenOneWeekdateFormatter
+            dateString = "\(dateFormatter.string(from: self)) \(WRDateFormatter.clockTimeFormatter.string(from: self))"
         }
 
         return dateString
     }
 }
+
