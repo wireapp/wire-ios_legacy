@@ -333,11 +333,10 @@ static CameraControllerCamera CameraViewControllerToCameraControllerCamera(Camer
         self.bottomToolsViewAlignAxisConstraint = [self.cameraBottomToolsViewController.view autoPinEdgeToSuperviewEdge:ALEdgeBottom withInset:UIScreen.safeArea.bottom];
         
         // Accept/Reject panel
-        self.cameraConfirmationViewAlignAxisConstraint = [self.cameraConfirmationView autoAlignAxis:ALAxisHorizontal toSameAxisOfView:self.bottomPanel withOffset:self.bottomBarHeight];
+        self.cameraConfirmationViewAlignAxisConstraint = [self.cameraConfirmationView autoPinEdgeToSuperviewEdge:ALEdgeBottom withInset: -self.bottomBarHeight];
         [self.cameraConfirmationView autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:0 relation:NSLayoutRelationGreaterThanOrEqual];
         [self.cameraConfirmationView autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:0 relation:NSLayoutRelationGreaterThanOrEqual];
-        [self.cameraConfirmationView autoAlignAxisToSuperviewAxis:ALAxisVertical];
-        [self.cameraConfirmationView autoMatchDimension:ALDimensionHeight toDimension:ALDimensionHeight ofView:self.bottomPanel];
+        [self.cameraConfirmationView autoSetDimension:ALDimensionHeight toSize:self.bottomBarHeight];
         
         // Preview image
         [self.imagePreviewView autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero excludingEdge:ALEdgeBottom];
@@ -443,7 +442,7 @@ static CameraControllerCamera CameraViewControllerToCameraControllerCamera(Camer
     [UIView animateWithDuration:0.25 animations:^{
         [self.view layoutIfNeeded];
     } completion:^(BOOL finished) {
-        self.cameraConfirmationViewAlignAxisConstraint.constant = 0;
+        self.cameraConfirmationViewAlignAxisConstraint.constant = - UIScreen.safeArea.bottom;
         self.titleLabelAlignAxisConstraint.constant = 0;
         
         [UIView animateWithDuration:0.25 animations:^{
@@ -469,7 +468,7 @@ static CameraControllerCamera CameraViewControllerToCameraControllerCamera(Camer
         [self.view layoutIfNeeded];
     } completion:^(BOOL finished) {
         self.topToolsViewAlignAxisConstraint.constant = UIScreen.safeArea.top;
-        self.bottomToolsViewAlignAxisConstraint.constant = UIScreen.safeArea.bottom;
+        self.bottomToolsViewAlignAxisConstraint.constant = -UIScreen.safeArea.bottom;
         
         [UIView animateWithDuration:0.25 animations:^{
             [self.view layoutIfNeeded];

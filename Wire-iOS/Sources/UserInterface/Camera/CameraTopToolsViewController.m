@@ -101,11 +101,13 @@
     if (! self.initialConstraintsCreated) {
         const CGFloat Margin = [WAZUIMagic floatForIdentifier:@"camera_overlay.margin"];
         
-        [self.toggleFlashButton autoAlignAxisToSuperviewAxis:ALAxisHorizontal];
-        [self.toggleFlashButton autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:Margin];
+        [self.toggleFlashButton autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:Margin/2];
+        [self.toggleFlashButton autoPinEdgeToSuperviewEdge:ALEdgeTop];
+        [self.toggleFlashButton autoPinEdgeToSuperviewEdge:ALEdgeBottom];
         
-        [self.toggleCameraButton autoAlignAxisToSuperviewAxis:ALAxisHorizontal];
-        [self.toggleCameraButton autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:Margin];
+        [self.toggleCameraButton autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:Margin/2];
+        [self.toggleCameraButton autoPinEdgeToSuperviewEdge:ALEdgeTop];
+        [self.toggleCameraButton autoPinEdgeToSuperviewEdge:ALEdgeBottom];
         
         self.initialConstraintsCreated = YES;
     }
