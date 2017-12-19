@@ -124,5 +124,41 @@ final class DateFormatterTests: XCTestCase {
 
         return dateString
     }
+
+    //MARK:- wr_formattedDate tests
+
+    ///TODO: test for today and this week for coverage
+    func testWr_formattedDateWouldChangeAfterDateChangeToThisYear() {
+        // GIVEN
+        let oneYearBefore = Calendar.current.date(byAdding: .year, value: -1, to: Date())!
+        let thisYear = Calendar.current.component(.year, from: Date())
+        let lastYear = Calendar.current.component(.year, from: Date()) - 1
+
+        // WHEN
+        let dateString = oneYearBefore.wr_formattedDate()
+        let startOfYearDateString = Date().startOfYear().wr_formattedDate()
+
+        // THEN
+        XCTAssert(dateString.contains(String(lastYear)), "dateString is \(dateString)")
+
+        // change the date to today to see the date format changes (no year component)
+        XCTAssertFalse(startOfYearDateString.contains(String(thisYear)), "startOfYearDateString is \(startOfYearDateString)")
+    }
+
+    func testWr_formattedDateWouldChangeAfterDateChangeToOneYearBefore() {
+        // GIVEN
+        let oneYearBefore = Calendar.current.date(byAdding: .year, value: -1, to: Date())!
+        let thisYear = Calendar.current.component(.year, from: Date())
+        let lastYear = Calendar.current.component(.year, from: Date()) - 1
+
+        // WHEN
+        let startOfYearDateString = Date().startOfYear().wr_formattedDate()
+        let dateString = oneYearBefore.wr_formattedDate()
+
+        // THEN
+        XCTAssertFalse(startOfYearDateString.contains(String(thisYear)), "startOfYearDateString is \(startOfYearDateString)")
+        XCTAssert(dateString.contains(String(lastYear)), "dateString is \(dateString)")
+
+    }
 }
 

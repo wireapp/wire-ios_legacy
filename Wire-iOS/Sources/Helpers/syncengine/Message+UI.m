@@ -118,6 +118,7 @@
     return longVersionTimeFormatter;
 }
 
+///FIXME: 2 day foramtter
 + (NSDateFormatter *)dayFormatter:(NSDate *)date
 {
     static NSDateFormatter *dayFormatter = nil;
