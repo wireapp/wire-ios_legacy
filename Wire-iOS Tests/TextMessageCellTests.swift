@@ -281,5 +281,10 @@ extension Date {
         components.minute = 0
         return Calendar.current.date(from: components)!
     }
+
+    func startOfWeek() -> Date {
+        let components = Calendar.current.dateComponents([.yearForWeekOfYear, .weekOfYear], from: self)
+        return Calendar.current.date(from: components)!
+    }
 }
 

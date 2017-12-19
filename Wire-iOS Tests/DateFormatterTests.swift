@@ -128,6 +128,31 @@ final class DateFormatterTests: XCTestCase {
     //MARK:- wr_formattedDate tests
 
     ///TODO: test for today and this week for coverage
+    func testWr_formattedDateForTwoHourBefore() {
+        // GIVEN
+        let twoHourBefore = Calendar.current.date(byAdding: .hour, value: -2, to: Date())!
+        let hour = Calendar.current.component(.hour, from: twoHourBefore)
+
+        // WHEN
+        let dateString = twoHourBefore.wr_formattedDate()
+
+        // THEN
+        XCTAssertFalse(dateString.contains("just now"), "dateString is \(dateString)")
+        XCTAssert(dateString.contains(String(hour)), "dateString is \(dateString)")
+    }
+
+    ///FIXME: this test fails if runs on Sunday...
+    func testWr_formattedDateForStartOfThisWeek() {
+        // GIVEN
+        let startOfWeek = Date().startOfWeek()
+
+        // WHEN
+        let dateString = startOfWeek.wr_formattedDate()
+
+        // THEN
+        XCTAssert(dateString.contains("Sunday"), "dateString is \(dateString)")
+    }
+
     func testWr_formattedDateWouldChangeAfterDateChangeToThisYear() {
         // GIVEN
         let oneYearBefore = Calendar.current.date(byAdding: .year, value: -1, to: Date())!
