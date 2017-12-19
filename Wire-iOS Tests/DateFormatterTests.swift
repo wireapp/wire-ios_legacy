@@ -20,19 +20,10 @@ import XCTest
 @testable import Wire
 
 final class DateFormatterTests: XCTestCase {
-
-    override func setUp() {
-        super.setUp()
-    }
-
-    override func tearDown() {
-        super.tearDown()
-    }
-
     func testThatDateStringDoesNotContainYearIfDateIsToday() {
         // GIVEN
         let date = Date()
-        let dateFormatter = date.localizedDateFormatter()
+        let dateFormatter = date.olderThenOneWeekdateFormatter
         let dateString = dateFormatter.string(from: date)
 
         let calendar = Calendar.current
@@ -47,7 +38,7 @@ final class DateFormatterTests: XCTestCase {
         // GIVEN
         let oneYearBefore = Calendar.current.date(byAdding: .year, value: -1, to: Date())
 
-        let dateFormatter = oneYearBefore!.localizedDateFormatter()
+        let dateFormatter = oneYearBefore!.olderThenOneWeekdateFormatter
         let dateString = dateFormatter.string(from: oneYearBefore!)
 
         let calendar = Calendar.current
@@ -114,10 +105,10 @@ final class DateFormatterTests: XCTestCase {
     }
 
     func dateStringFromLocaleIdentifier(localeIdentifier: String, date: Date = Date()) -> String {
+        let dateFormatter = date.olderThenOneWeekdateFormatter
         let locale = Locale(identifier: localeIdentifier)
+        let formatString = DateFormatter.dateFormat(fromTemplate: dateFormatter.dateFormat, options: 0, locale: locale)
 
-        let dateFormatter = date.localizedDateFormatter()
-        let formatString = date.localizedDateFormatString(locale: locale)
         dateFormatter.dateFormat = formatString
 
         let dateString = dateFormatter.string(from: date)
@@ -145,18 +136,6 @@ final class DateFormatterTests: XCTestCase {
         XCTAssertFalse(dateString.contains("just now"), "dateString is \(dateString)")
         XCTAssert(dateString.hasPrefix(String(hour)), "hour is \(hour), dateString is \(dateString)")
         XCTAssert(dateString.hasSuffix(meridiem), "meridiem is \(meridiem), dateString is \(dateString)")
-    }
-
-    ///FIXME: this test fails if runs on Sunday...
-    func testWr_formattedDateForStartOfThisWeek() {
-        // GIVEN
-        let startOfWeek = Date().startOfWeek()
-
-        // WHEN
-        let dateString = startOfWeek.formattedDate
-
-        // THEN
-        XCTAssert(dateString.contains("Sunday"), "dateString is \(dateString)")
     }
 
     func testWr_formattedDateWouldChangeAfterDateChangeToThisYear() {

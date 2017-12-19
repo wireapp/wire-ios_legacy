@@ -21,7 +21,7 @@
 class TextMessageCellTests: ZMSnapshotTestCase {
 
     var sut: TextMessageCell!
-    let dummyServerTimestamp = Date(timeIntervalSince1970: 1234567230)
+    static let dummyServerTimestamp = Date(timeIntervalSince1970: 1234567230)
 
     var layoutProperties: ConversationCellLayoutProperties {
         let layoutProperties = ConversationCellLayoutProperties()
@@ -197,26 +197,8 @@ class TextMessageCellTests: ZMSnapshotTestCase {
         verify(view: sut.prepareForSnapshot())
     }
 
-    func testThatItRendersMessageWithDayTimestampButNoYearWithEN_USLocale() {
-        setDayFormatterLocale(identifier: "en_US", date: Date().startOfYear())
-
-        let props = layoutProperties
-        props.showDayBurstTimestamp = true
-        sut.configure(for: mockMessage(state: .sent), layoutProperties: props)
-        verify(view: sut.prepareForSnapshot())
-    }
-
-    func testThatItRendersMessageWithDayTimestampButNoYearWithDELocale() {
-        setDayFormatterLocale(identifier: "de_DE", date: Date().startOfYear())
-
-        let props = layoutProperties
-        props.showDayBurstTimestamp = true
-        sut.configure(for: mockMessage(state: .sent), layoutProperties: props)
-        verify(view: sut.prepareForSnapshot())
-    }
-
     func testThatItRendersMessageWithDayTimestampWithDELocale() {
-        setDayFormatterLocale(identifier: "de_DE", date: dummyServerTimestamp)
+        setDayFormatterLocale(identifier: "de_DE", date: TextMessageCellTests.dummyServerTimestamp)
 
         let props = layoutProperties
         props.showDayBurstTimestamp = true
@@ -225,7 +207,7 @@ class TextMessageCellTests: ZMSnapshotTestCase {
     }
 
     func testThatItRendersMessageWithDayTimestampWithHKLocale() {
-        setDayFormatterLocale(identifier: "zh-HK", date: dummyServerTimestamp)
+        setDayFormatterLocale(identifier: "zh-HK", date: TextMessageCellTests.dummyServerTimestamp)
 
         let props = layoutProperties
         props.showDayBurstTimestamp = true
@@ -235,11 +217,11 @@ class TextMessageCellTests: ZMSnapshotTestCase {
 
     // MARK: - Helper
 
-    func mockMessage(_ text: String? = "Hello World", edited: Bool = false, state: ZMDeliveryState = .delivered, obfuscated: Bool = false) -> MockMessage {
+    func mockMessage(_ text: String? = "Hello World", edited: Bool = false, state: ZMDeliveryState = .delivered, obfuscated: Bool = false, date: Date = TextMessageCellTests.dummyServerTimestamp) -> MockMessage {
         let message = MockMessageFactory.textMessage(withText: text)
         message?.deliveryState = state
         message?.isObfuscated = obfuscated
-        message?.serverTimestamp = dummyServerTimestamp
+        message?.serverTimestamp = date
         message?.updatedAt = edited ? Date(timeIntervalSince1970: 0) : nil
         return message!
     }
@@ -253,7 +235,12 @@ class TextMessageCellTests: ZMSnapshotTestCase {
     }
 
     func setDayFormatterLocale(identifier: String, date: Date) {
-        Message.dayFormatter(date).dateFormat = date.localizedDateFormatString(locale: Locale(identifier: identifier))
+        let dayFormatter = Message.dayFormatter(date: date)
+
+        let locale = Locale(identifier: identifier)
+        let formatString = DateFormatter.dateFormat(fromTemplate: dayFormatter.dateFormat, options: 0, locale: locale)
+
+        dayFormatter.dateFormat = formatString
     }
 
 }

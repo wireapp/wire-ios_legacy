@@ -85,7 +85,6 @@ public class WRDateFormatter {
 }
 
 extension Date {
-
     public var olderThenOneWeekdateFormatter: DateFormatter {
         let today = Date()
 
