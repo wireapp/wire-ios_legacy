@@ -33,6 +33,7 @@ class TextMessageCellTests: ZMSnapshotTestCase {
 
     override func setUp() {
         super.setUp()
+        resetDayFormatter()
         snapshotBackgroundColor = ColorScheme.default().color(withName: ColorSchemeColorConversationBackground)
         accentColor = .strongBlue
         sut = TextMessageCell(style: .default, reuseIdentifier: name!)
@@ -234,6 +235,15 @@ class TextMessageCellTests: ZMSnapshotTestCase {
         return MockUser.mockUsers().map { $0 }
     }
 
+    func resetDayFormatter() {
+        setDayFormatterLocale(identifier: "en_US", date: Date())
+    }
+
+    /// change the locale of the DateFormatter for snapshot
+    ///
+    /// - Parameters:
+    ///   - identifier: locale identifier
+    ///   - date: date to determine in with or without yera component
     func setDayFormatterLocale(identifier: String, date: Date) {
         let dayFormatter = Message.dayFormatter(date: date)
 
