@@ -22,4 +22,8 @@ extension NSDate {
     @objc public func localizedDateFormatter() -> DateFormatter {
         return (self as Date).localizedDateFormatter()
     }
+
+    @objc public func wr_formattedDate() -> NSString? {
+        return (self as Date).formattedDate as NSString?
+    }
 }

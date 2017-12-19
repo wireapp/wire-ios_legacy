@@ -301,7 +301,7 @@ final class ConversationImagesViewController: UIViewController {
         guard let sender = currentMessage.sender, let serverTimestamp = currentMessage.serverTimestamp else {
             return
         }
-        self.navigationItem.titleView = TwoLineTitleView(first: sender.displayName.uppercased(), second: serverTimestamp.wr_formattedDate())
+        self.navigationItem.titleView = TwoLineTitleView(first: sender.displayName.uppercased(), second: serverTimestamp.formattedDate)
     }
     
     private func updateButtonsForMessage() {

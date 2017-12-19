@@ -127,14 +127,13 @@ final class DateFormatterTests: XCTestCase {
 
     //MARK:- wr_formattedDate tests
 
-    ///TODO: test for today and this week for coverage
     func testWr_formattedDateForTwoHourBefore() {
         // GIVEN
         let twoHourBefore = Calendar.current.date(byAdding: .hour, value: -2, to: Date())!
         let hour = Calendar.current.component(.hour, from: twoHourBefore)
 
         // WHEN
-        let dateString = twoHourBefore.wr_formattedDate()
+        let dateString = twoHourBefore.formattedDate
 
         // THEN
         XCTAssertFalse(dateString.contains("just now"), "dateString is \(dateString)")
@@ -147,7 +146,7 @@ final class DateFormatterTests: XCTestCase {
         let startOfWeek = Date().startOfWeek()
 
         // WHEN
-        let dateString = startOfWeek.wr_formattedDate()
+        let dateString = startOfWeek.formattedDate
 
         // THEN
         XCTAssert(dateString.contains("Sunday"), "dateString is \(dateString)")
@@ -160,8 +159,8 @@ final class DateFormatterTests: XCTestCase {
         let lastYear = Calendar.current.component(.year, from: Date()) - 1
 
         // WHEN
-        let dateString = oneYearBefore.wr_formattedDate()
-        let startOfYearDateString = Date().startOfYear().wr_formattedDate()
+        let dateString = oneYearBefore.formattedDate
+        let startOfYearDateString = Date().startOfYear().formattedDate
 
         // THEN
         XCTAssert(dateString.contains(String(lastYear)), "dateString is \(dateString)")
@@ -177,8 +176,8 @@ final class DateFormatterTests: XCTestCase {
         let lastYear = Calendar.current.component(.year, from: Date()) - 1
 
         // WHEN
-        let startOfYearDateString = Date().startOfYear().wr_formattedDate()
-        let dateString = oneYearBefore.wr_formattedDate()
+        let startOfYearDateString = Date().startOfYear().formattedDate
+        let dateString = oneYearBefore.formattedDate
 
         // THEN
         XCTAssertFalse(startOfYearDateString.contains(String(thisYear)), "startOfYearDateString is \(startOfYearDateString)")
