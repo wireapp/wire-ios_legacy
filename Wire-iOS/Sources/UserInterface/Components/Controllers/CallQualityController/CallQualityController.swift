@@ -72,7 +72,7 @@ protocol CallQualityViewControllerDelegate: class {
 
 class CallQualityViewController : UIViewController {
     
-    let callQualityView = UIStackView()
+    var callQualityStackView : UICustomSpacingStackView!
     let titleLabel : UILabel
     let questionText : UILabel
     let mosTextView : MOSQualityScoreTextView
@@ -81,8 +81,6 @@ class CallQualityViewController : UIViewController {
     weak var delegate: CallQualityViewControllerDelegate?
     
     init(questionLabelText: String){
-        callQualityView.axis = .vertical
-        callQualityView.alignment = .center
         
         self.titleLabel = UILabel()
         self.questionText = UILabel()
@@ -91,8 +89,8 @@ class CallQualityViewController : UIViewController {
         
         super.init(nibName: nil, bundle: nil)
         
-        titleLabel.textColor = UIColor.cas_color(withHex: "#323639").withAlphaComponent(1.0)
-        titleLabel.font = FontSpec(.large, .medium).font
+        titleLabel.textColor = UIColor.cas_color(withHex: "#323639")
+        titleLabel.font = UIFont.systemFont(ofSize: 40, weight: UIFontWeightLight)
         titleLabel.text = "Call Quality Survey"
         
         questionText.text = questionLabelText
@@ -103,21 +101,13 @@ class CallQualityViewController : UIViewController {
         scoreSelectorView.onScoreSet = { [weak self] _ in
              self?.delegate?.controller(self!, didSelect: (self?.scoreSelectorView.score)!)
         }
-        callQualityView.addArrangedSubview(titleLabel)
-        if #available(iOS 11.0, *) {
-            callQualityView.setCustomSpacing(24, after: titleLabel)
-        } else {
-            // Fallback on earlier versions
-        }
-        callQualityView.addArrangedSubview(questionText)
-        if #available(iOS 11.0, *) {
-            callQualityView.setCustomSpacing(48, after: questionText)
-        } else {
-            // Fallback on earlier versions
-        }
-        callQualityView.addArrangedSubview(mosTextView)
-        callQualityView.addArrangedSubview(scoreSelectorView)
-        callQualityView.spacing = 10
+        
+        callQualityStackView = UICustomSpacingStackView(customSpacedArrangedSubviews: [titleLabel, questionText, mosTextView, scoreSelectorView])
+        callQualityStackView.alignment = .center
+        callQualityStackView.axis = .vertical
+        callQualityStackView.spacing = 10
+        callQualityStackView.wr_addCustomSpacing(24, after: titleLabel)
+        callQualityStackView.wr_addCustomSpacing(48, after: questionText)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -126,11 +116,11 @@ class CallQualityViewController : UIViewController {
     
     override func viewDidLoad() {
         view.backgroundColor = UIColor.cas_color(withHex: "#F8F8F8")
-        view.addSubview(callQualityView)
+        view.addSubview(callQualityStackView)
         
-        constrain(callQualityView) { callQualityView in
+        constrain(callQualityStackView) { callQualityView in
             callQualityView.center == callQualityView.superview!.center
-            callQualityView.width <= callQualityView.superview!.width - 32
+            callQualityView.width <= callQualityView.superview!.width
         }
     }
 }
@@ -154,7 +144,7 @@ class QualityScoreSelectorView : UIView {
         
         scoreStackView.axis = .horizontal
         scoreStackView.distribution = .equalCentering
-        scoreStackView.spacing = 20
+        scoreStackView.spacing = 18
         let scoreValues = [1,2,3,4,5]
         scoreButtons = scoreValues.map { (scoreValue) in
             let button = Button()
@@ -166,7 +156,8 @@ class QualityScoreSelectorView : UIView {
 
             button.addTarget(self, action: #selector(onClick), for: .primaryActionTriggered)
             button.setBackgroundImageColor(.white, for: UIControlState.normal)
-            button.setBackgroundImageColor(UIColor.blue , for: UIControlState.selected)
+            button.setBackgroundImageColor(UIColor(for: .strongBlue) , for: UIControlState.highlighted)
+            button.setBackgroundImageColor(UIColor(for: .strongBlue) , for: UIControlState.selected)
             self.scoreStackView.addArrangedSubview(button)
             constrain(button){button in
                 button.width == 56

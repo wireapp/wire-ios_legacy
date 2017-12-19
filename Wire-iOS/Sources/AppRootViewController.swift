@@ -129,13 +129,19 @@ class AppRootViewController: UIViewController {
         let appVersion = bundle.infoDictionary?[kCFBundleVersionKey as String] as? String
         let mediaManager = AVSMediaManager.sharedInstance()
         let analytics = Analytics.shared()
+        let sessionManagerAnalytics: AnalyticsType
         
-        CallQualityScoreProvider.shared.nextProvider = analytics
-        
+        if DeveloperMenuState.developerMenuEnabled(){
+            CallQualityScoreProvider.shared.nextProvider = analytics
+            sessionManagerAnalytics = CallQualityScoreProvider.shared
+        }
+        else {
+            sessionManagerAnalytics = analytics
+        }
         SessionManager.create(
             appVersion: appVersion!,
             mediaManager: mediaManager!,
-            analytics: CallQualityScoreProvider.shared,
+            analytics: sessionManagerAnalytics,
             delegate: appStateController,
             application: UIApplication.shared,
             launchOptions: launchOptions,

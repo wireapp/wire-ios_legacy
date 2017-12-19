@@ -177,6 +177,10 @@ extension ActiveVoiceChannelViewController : WireCallCenterCallStateObserver {
     func callCenterDidChange(callState: CallState, conversation: ZMConversation, caller: ZMUser, timestamp: Date?) {
         updateVisibleVoiceChannelViewController()
     
+        guard DeveloperMenuState.developerMenuEnabled() else {
+            return
+        }
+        
         if case .answered = callState {
             answeredCalls.insert(conversation.remoteIdentifier!)
         }
