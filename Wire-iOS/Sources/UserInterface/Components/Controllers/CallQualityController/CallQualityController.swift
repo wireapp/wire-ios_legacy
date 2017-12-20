@@ -1,6 +1,6 @@
 //
 // Wire
-// Copyright (C) 2016 Wire Swiss GmbH
+// Copyright (C) 2017 Wire Swiss GmbH
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -26,7 +26,7 @@ struct RatingState {
 
 class BaseCallQualityViewController :  UIViewController {
 
-    let root = CallQualityViewController(questionLabelText: "1. How do you rate the call set up?")
+    let root = CallQualityViewController(questionLabelText: "1/2 How do you rate the call set up time?")
     let baseNavigationController : UINavigationController
 
     var ratingState: RatingState = RatingState(rating1: nil, rating2: nil)
@@ -53,7 +53,7 @@ extension BaseCallQualityViewController: CallQualityViewControllerDelegate {
     func controller(_ controller: CallQualityViewController, didSelect score: Int) {
         if controller == root {
             ratingState.rating1 = score
-            let next = CallQualityViewController(questionLabelText: "2. How do you rate the overall quality of the call?")
+            let next = CallQualityViewController(questionLabelText: "2/2 How do you rate the overall\nquality of the call?")
             next.delegate = self
             baseNavigationController.pushViewController(next, animated: true)
         }
@@ -75,8 +75,7 @@ class CallQualityViewController : UIViewController {
     var callQualityStackView : UICustomSpacingStackView!
     let titleLabel : UILabel
     let questionText : UILabel
-    let mosTextView : MOSQualityScoreTextView
-    let scoreSelectorView : QualityScoreSelectorView
+    var scoreSelectorView : QualityScoreSelectorView!
     var questionLabelText = String()
     weak var delegate: CallQualityViewControllerDelegate?
     
@@ -84,10 +83,12 @@ class CallQualityViewController : UIViewController {
         
         self.titleLabel = UILabel()
         self.questionText = UILabel()
-        self.mosTextView = MOSQualityScoreTextView()
-        self.scoreSelectorView = QualityScoreSelectorView()
-        
+
         super.init(nibName: nil, bundle: nil)
+        
+        self.scoreSelectorView = QualityScoreSelectorView(onScoreSet: { [weak self] score in
+            self?.delegate?.controller(self!, didSelect: score)
+        })
         
         titleLabel.textColor = UIColor.cas_color(withHex: "#323639")
         titleLabel.font = UIFont.systemFont(ofSize: 40, weight: UIFontWeightLight)
@@ -96,13 +97,10 @@ class CallQualityViewController : UIViewController {
         questionText.text = questionLabelText
         questionText.font = FontSpec(.normal, .regular).font
         questionText.textColor = UIColor.cas_color(withHex: "#323639").withAlphaComponent(0.56)
+        questionText.textAlignment = .center
         questionText.numberOfLines = 0
-
-        scoreSelectorView.onScoreSet = { [weak self] _ in
-             self?.delegate?.controller(self!, didSelect: (self?.scoreSelectorView.score)!)
-        }
         
-        callQualityStackView = UICustomSpacingStackView(customSpacedArrangedSubviews: [titleLabel, questionText, mosTextView, scoreSelectorView])
+        callQualityStackView = UICustomSpacingStackView(customSpacedArrangedSubviews: [titleLabel, questionText, scoreSelectorView])
         callQualityStackView.alignment = .center
         callQualityStackView.axis = .vertical
         callQualityStackView.spacing = 10
@@ -125,117 +123,83 @@ class CallQualityViewController : UIViewController {
     }
 }
 
-class QualityScoreSelectorView : UIView {
-    private let scoreStackView = UIStackView()
-    private var scoreButtons: [Button] = []
-    weak var delegate: CallQualityViewControllerDelegate?
+class CallQualityView : UIStackView {
+    let scoreLabel = UILabel()
+    let scoreButton = Button()
+    let callback: (Int)->()
+    let labelText: String
+    let buttonScore: Int
     
-    public var onScoreSet: ((Int)->())? = nil
-    
-    var score: Int = 0 {
-        didSet {
-            onScoreSet?(score)
+    init(labelText: String, buttonScore: Int, callback: @escaping (Int)->()){
+        self.callback = callback
+        self.buttonScore = buttonScore
+        self.labelText = labelText
+        
+        super.init(frame: .zero)
+        axis = .vertical
+        spacing = 16
+        scoreLabel.text = labelText
+        scoreLabel.font = FontSpec(.medium, .regular).font
+        scoreLabel.textAlignment = .center
+        scoreLabel.textColor = UIColor.cas_color(withHex: "#272A2C")
+        
+        scoreButton.tag = buttonScore
+        scoreButton.circular = true
+        scoreButton.setTitle(String(buttonScore), for: .normal)
+        scoreButton.setTitleColor(UIColor.cas_color(withHex: "#272A2C"), for: .normal)
+        scoreButton.setTitleColor(.white, for: .highlighted)
+        scoreButton.setTitleColor(.white, for: .selected)
+        scoreButton.addTarget(self, action: #selector(onClick), for: .primaryActionTriggered)
+        scoreButton.setBackgroundImageColor(.white, for: UIControlState.normal)
+        scoreButton.setBackgroundImageColor(UIColor(for: .strongBlue) , for: UIControlState.highlighted)
+        scoreButton.setBackgroundImageColor(UIColor(for: .strongBlue) , for: UIControlState.selected)
+        constrain(scoreButton){scoreButton in
+            scoreButton.width == 56
+            scoreButton.height == 56
         }
+        
+        addArrangedSubview(scoreLabel)
+        addArrangedSubview(scoreButton)
+       
     }
     
-    override init(frame: CGRect) {
+    required init(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    func onClick(_ sender: UIButton) {
+        callback(buttonScore)
+    }
+}
 
-        super.init(frame: frame)
+class QualityScoreSelectorView : UIView {
+    private let scoreStackView = UIStackView()
+    
+    weak var delegate: CallQualityViewControllerDelegate?
+    
+    public let onScoreSet: ((Int)->())
+    
+    init(onScoreSet: @escaping (Int)->()) {
+        self.onScoreSet = onScoreSet
+        super.init(frame: .zero)
         
         scoreStackView.axis = .horizontal
         scoreStackView.distribution = .equalCentering
-        scoreStackView.spacing = 18
-        let scoreValues = [1,2,3,4,5]
-        scoreButtons = scoreValues.map { (scoreValue) in
-            let button = Button()
-            button.tag = scoreValue
-            button.circular = true
-            button.setTitle(String(scoreValue), for: .normal)
-            button.setTitleColor(UIColor.cas_color(withHex: "#272A2C"), for: .normal)
-            button.setTitleColor(.white, for: .selected)
-
-            button.addTarget(self, action: #selector(onClick), for: .primaryActionTriggered)
-            button.setBackgroundImageColor(.white, for: UIControlState.normal)
-            button.setBackgroundImageColor(UIColor(for: .strongBlue) , for: UIControlState.highlighted)
-            button.setBackgroundImageColor(UIColor(for: .strongBlue) , for: UIControlState.selected)
-            self.scoreStackView.addArrangedSubview(button)
-            constrain(button){button in
-                button.width == 56
-                button.height == 56
-            }
-    
-            return button
-        }
+        scoreStackView.spacing = 8
+        
+        [("Bad", 1), ("Poor", 2), ("Fair", 3), ("Good", 4), ("Excellent", 5)]
+            .map { CallQualityView( labelText: $0.0, buttonScore: $0.1, callback: onScoreSet) }
+            .forEach(scoreStackView.addArrangedSubview)
+        
         addSubview(scoreStackView)
         constrain(self, scoreStackView) { selfView, scoreStackView in
             scoreStackView.edges == selfView.edges
         }
     }
     
-    func onClick(_ sender: UIButton) {
-        for sender in scoreButtons{
-            sender.isSelected = false
-        }
-        self.score = sender.tag
-        sender.isSelected = true
-    }
-    
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
 }
 
-class MOSQualityScoreTextView : UIView {
-    
-    private let mosTextStackView = UIStackView()
-    let mos1Label = UILabel()
-    let mos2Label = UILabel()
-    let mos3Label = UILabel()
-    let mos4Label = UILabel()
-    let mos5Label = UILabel()
-    
-    override init(frame: CGRect) {
-        
-        super.init(frame: frame)
-        
-        mosTextStackView.axis = .horizontal
-        mosTextStackView.distribution = .equalCentering
-        mosTextStackView.spacing = 35
-        
-        mos1Label.text = "Bad"
-        mos1Label.font = FontSpec(.medium, .regular).font
-        mos1Label.textColor = UIColor.cas_color(withHex: "#272A2C")
-        
-        mos2Label.text = "Poor"
-        mos2Label.font = FontSpec(.medium, .regular).font
-        mos2Label.textColor = UIColor.cas_color(withHex: "#272A2C")
-        
-        mos3Label.text = "Fair"
-        mos3Label.font = FontSpec(.medium, .regular).font
-        mos3Label.textColor = UIColor.cas_color(withHex: "#272A2C")
-        
-        mos4Label.text = "Good"
-        mos4Label.font = FontSpec(.medium, .regular).font
-        mos4Label.textColor = UIColor.cas_color(withHex: "#272A2C")
-        
-        mos5Label.text = "Excellent"
-        mos5Label.font = FontSpec(.medium, .regular).font
-        mos5Label.textColor = UIColor.cas_color(withHex: "#272A2C")
-        
-        self.mosTextStackView.addArrangedSubview(mos1Label)
-        self.mosTextStackView.addArrangedSubview(mos2Label)
-        self.mosTextStackView.addArrangedSubview(mos3Label)
-        self.mosTextStackView.addArrangedSubview(mos4Label)
-        self.mosTextStackView.addArrangedSubview(mos5Label)
-
-        addSubview(mosTextStackView)
-        constrain(self, mosTextStackView) { selfView, mosTextStackView in
-            mosTextStackView.edges == selfView.edges
-        }
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-}
