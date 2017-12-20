@@ -21,6 +21,8 @@
 class TextMessageCellTests: ZMSnapshotTestCase {
 
     var sut: TextMessageCell!
+
+    /// "Saturday, February 14, 2009 at 12:20:30 AM Central European Standard Time"
     static let dummyServerTimestamp = Date(timeIntervalSince1970: 1234567230)
 
     var layoutProperties: ConversationCellLayoutProperties {
@@ -37,14 +39,15 @@ class TextMessageCellTests: ZMSnapshotTestCase {
         accentColor = .strongBlue
         sut = TextMessageCell(style: .default, reuseIdentifier: name!)
         sut.layer.speed = 0
-        [Message.shortVersionDateFormatter(), Message.longVersionTimeFormatter()].forEach {
-            $0.locale = NSLocale(localeIdentifier: "en_US") as Locale!
-            $0.timeZone = NSTimeZone(forSecondsFromGMT: 0) as TimeZone!
+        [Message.shortVersionDateFormatter(), Message.longVersionTimeFormatter(), Message.dayFormatter(date: Date()), Message.dayFormatter(date: TextMessageCellTests.dummyServerTimestamp)].forEach {
+            $0.locale = Locale(identifier: "en_US")
+            $0.timeZone = TimeZone(abbreviation: "CET")
         }
-    }
 
+        recordMode = true
+    }
     override func tearDown() {
-        resetDayFormatter()
+//        resetDayFormatter()
         super.tearDown()
     }
 
@@ -251,9 +254,11 @@ class TextMessageCellTests: ZMSnapshotTestCase {
     ///   - date: date to determine in with or without yera component
     func setDayFormatterLocale(identifier: String, date: Date) {
         let dayFormatter = Message.dayFormatter(date: date)
+//        dayFormatter.timeZone = TimeZone(secondsFromGMT: 0)
 
         let locale = Locale(identifier: identifier)
         let formatString = DateFormatter.dateFormat(fromTemplate: dayFormatter.dateFormat, options: 0, locale: locale)
+
         dayFormatter.locale = locale
         dayFormatter.dateFormat = formatString
     }
@@ -289,3 +294,4 @@ extension Date {
         return Calendar.current.date(from: components)!
     }
 }
+
