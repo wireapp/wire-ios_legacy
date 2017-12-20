@@ -43,12 +43,6 @@ class TextMessageCellTests: ZMSnapshotTestCase {
             $0.locale = Locale(identifier: "en_US")
             $0.timeZone = TimeZone(abbreviation: "CET")
         }
-
-        recordMode = true
-    }
-    override func tearDown() {
-//        resetDayFormatter()
-        super.tearDown()
     }
 
     func testThatItRendersATextMessage_Sent() {
@@ -294,4 +288,3 @@ extension Date {
         return Calendar.current.date(from: components)!
     }
 }
-
