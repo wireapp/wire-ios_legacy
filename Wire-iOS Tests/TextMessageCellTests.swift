@@ -240,8 +240,9 @@ class TextMessageCellTests: ZMSnapshotTestCase {
     }
 
     func resetDayFormatter() {
-        setDayFormatterLocale(identifier: "en_US", date: Date())
-        setDayFormatterLocale(identifier: "en_US", date: TextMessageCellTests.dummyServerTimestamp)
+        let locale = Locale(identifier: "en_US")
+        WRDateFormatter.thisYearFormatter.dateFormat = DateFormatter.dateFormat(fromTemplate: "EEEEdMMMM", options: 0, locale: locale)
+        WRDateFormatter.otherYearFormatter.dateFormat = DateFormatter.dateFormat(fromTemplate: "EEEEdMMMMYYYY", options: 0, locale: locale)
     }
 
     /// change the locale of the DateFormatter for snapshot
@@ -282,11 +283,6 @@ extension Date {
         components.day = 1
         components.hour = 8
         components.minute = 0
-        return Calendar.current.date(from: components)!
-    }
-
-    func startOfWeek() -> Date {
-        let components = Calendar.current.dateComponents([.yearForWeekOfYear, .weekOfYear], from: self)
         return Calendar.current.date(from: components)!
     }
 }
