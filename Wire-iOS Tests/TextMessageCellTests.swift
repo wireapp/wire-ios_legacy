@@ -33,7 +33,6 @@ class TextMessageCellTests: ZMSnapshotTestCase {
 
     override func setUp() {
         super.setUp()
-        resetDayFormatter()
         snapshotBackgroundColor = ColorScheme.default().color(withName: ColorSchemeColorConversationBackground)
         accentColor = .strongBlue
         sut = TextMessageCell(style: .default, reuseIdentifier: name!)
@@ -42,6 +41,11 @@ class TextMessageCellTests: ZMSnapshotTestCase {
             $0.locale = NSLocale(localeIdentifier: "en_US") as Locale!
             $0.timeZone = NSTimeZone(forSecondsFromGMT: 0) as TimeZone!
         }
+    }
+
+    override func tearDown() {
+        resetDayFormatter()
+        super.tearDown()
     }
 
     func testThatItRendersATextMessage_Sent() {
@@ -208,7 +212,7 @@ class TextMessageCellTests: ZMSnapshotTestCase {
     }
 
     func testThatItRendersMessageWithDayTimestampWithHKLocale() {
-        setDayFormatterLocale(identifier: "zh-HK", date: TextMessageCellTests.dummyServerTimestamp)
+        setDayFormatterLocale(identifier: "zh_HK", date: TextMessageCellTests.dummyServerTimestamp)
 
         let props = layoutProperties
         props.showDayBurstTimestamp = true
@@ -237,6 +241,7 @@ class TextMessageCellTests: ZMSnapshotTestCase {
 
     func resetDayFormatter() {
         setDayFormatterLocale(identifier: "en_US", date: Date())
+        setDayFormatterLocale(identifier: "en_US", date: TextMessageCellTests.dummyServerTimestamp)
     }
 
     /// change the locale of the DateFormatter for snapshot
@@ -249,7 +254,7 @@ class TextMessageCellTests: ZMSnapshotTestCase {
 
         let locale = Locale(identifier: identifier)
         let formatString = DateFormatter.dateFormat(fromTemplate: dayFormatter.dateFormat, options: 0, locale: locale)
-
+        dayFormatter.locale = locale
         dayFormatter.dateFormat = formatString
     }
 
@@ -284,4 +289,3 @@ extension Date {
         return Calendar.current.date(from: components)!
     }
 }
-
