@@ -174,9 +174,8 @@ typedef NS_ENUM(NSUInteger, ProfileViewControllerTabBarIndex) {
     }
     
     [self.headerView autoPinEdgesToSuperviewEdgesWithInsets:edges excludingEdge:ALEdgeBottom];
-    [self.tabsController.view autoPinEdgesToSuperviewEdgesWithInsets:UIScreen.safeArea excludingEdge:ALEdgeTop];
+    [self.tabsController.view autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero excludingEdge:ALEdgeTop];
     [self.tabsController.view autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.headerView];
-    
 }
 
 #pragma mark - Header

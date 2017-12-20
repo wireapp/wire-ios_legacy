@@ -74,7 +74,7 @@ class SearchResultsView : UIView {
             accessoryContainer.left == container.left
             accessoryContainer.right == container.right
             accessoryContainerHeightConstraint = accessoryContainer.height == 0
-            accessoryViewBottomOffsetConstraint = accessoryContainer.bottom == container.bottom - UIScreen.safeArea.bottom
+            accessoryViewBottomOffsetConstraint = accessoryContainer.bottom == container.bottom
             
             emptyResultContainer.top == container.top + 64
             emptyResultContainer.centerX == container.centerX

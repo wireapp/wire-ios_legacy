@@ -311,12 +311,12 @@ static CameraControllerCamera CameraViewControllerToCameraControllerCamera(Camer
         
         // Top panel
         [self.topPanel autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero excludingEdge:ALEdgeBottom];
-        [self.topPanel autoSetDimension:ALDimensionHeight toSize:self.topBarHeight];
+        [self.topPanel autoSetDimension:ALDimensionHeight toSize:self.topBarHeight + UIScreen.safeArea.top];
         
-        self.topToolsViewAlignAxisConstraint = [self.cameraTopToolsViewController.view autoAlignAxis:ALAxisHorizontal toSameAxisOfView:self.topPanel withOffset:0];
         [self.cameraTopToolsViewController.view autoPinEdgeToSuperviewEdge:ALEdgeLeft];
         [self.cameraTopToolsViewController.view autoPinEdgeToSuperviewEdge:ALEdgeRight];
-        [self.cameraTopToolsViewController.view autoMatchDimension:ALDimensionHeight toDimension:ALDimensionHeight ofView:self.topPanel];
+        [self.cameraTopToolsViewController.view autoSetDimension:ALDimensionHeight toSize:self.topBarHeight];
+        self.topToolsViewAlignAxisConstraint = [self.cameraTopToolsViewController.view autoPinEdgeToSuperviewEdge:ALEdgeTop withInset:UIScreen.safeArea.top];
         
         self.titleLabelAlignAxisConstraint = [self.titleLabel autoAlignAxis:ALAxisHorizontal toSameAxisOfView:self.topPanel withOffset:-self.topBarHeight];
         [self.titleLabel autoAlignAxisToSuperviewAxis:ALAxisVertical];
@@ -324,20 +324,19 @@ static CameraControllerCamera CameraViewControllerToCameraControllerCamera(Camer
         // Bottom panel
         [self.bottomPanel autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero excludingEdge:ALEdgeTop];
         [NSLayoutConstraint autoSetPriority:UILayoutPriorityDefaultLow forConstraints:^{
-            [self.bottomPanel autoSetDimension:ALDimensionHeight toSize:self.bottomBarHeight];
+            [self.bottomPanel autoSetDimension:ALDimensionHeight toSize:self.bottomBarHeight + UIScreen.safeArea.bottom];
         }];
         
-        self.bottomToolsViewAlignAxisConstraint = [self.cameraBottomToolsViewController.view autoAlignAxis:ALAxisHorizontal toSameAxisOfView:self.bottomPanel withOffset:0];
         [self.cameraBottomToolsViewController.view autoPinEdgeToSuperviewEdge:ALEdgeLeft];
         [self.cameraBottomToolsViewController.view autoPinEdgeToSuperviewEdge:ALEdgeRight];
-        [self.cameraBottomToolsViewController.view autoMatchDimension:ALDimensionHeight toDimension:ALDimensionHeight ofView:self.bottomPanel];
+        [self.cameraBottomToolsViewController.view autoSetDimension:ALDimensionHeight toSize:self.bottomBarHeight];
+        self.bottomToolsViewAlignAxisConstraint = [self.cameraBottomToolsViewController.view autoPinEdgeToSuperviewEdge:ALEdgeBottom withInset:UIScreen.safeArea.bottom];
         
         // Accept/Reject panel
-        self.cameraConfirmationViewAlignAxisConstraint = [self.cameraConfirmationView autoAlignAxis:ALAxisHorizontal toSameAxisOfView:self.bottomPanel withOffset:self.bottomBarHeight];
+        self.cameraConfirmationViewAlignAxisConstraint = [self.cameraConfirmationView autoPinEdgeToSuperviewEdge:ALEdgeBottom withInset: -self.bottomBarHeight];
         [self.cameraConfirmationView autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:0 relation:NSLayoutRelationGreaterThanOrEqual];
         [self.cameraConfirmationView autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:0 relation:NSLayoutRelationGreaterThanOrEqual];
-        [self.cameraConfirmationView autoAlignAxisToSuperviewAxis:ALAxisVertical];
-        [self.cameraConfirmationView autoMatchDimension:ALDimensionHeight toDimension:ALDimensionHeight ofView:self.bottomPanel];
+        [self.cameraConfirmationView autoSetDimension:ALDimensionHeight toSize:self.bottomBarHeight];
         
         // Preview image
         [self.imagePreviewView autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero excludingEdge:ALEdgeBottom];
@@ -437,13 +436,13 @@ static CameraControllerCamera CameraViewControllerToCameraControllerCamera(Camer
     // FLAnimatedImageView doesn't draw the normal background color so we need set it on the layer.
     self.imagePreviewView.layer.backgroundColor = UIColor.blackColor.CGColor;
     
-    self.topToolsViewAlignAxisConstraint.constant = -self.topBarHeight;
-    self.bottomToolsViewAlignAxisConstraint.constant = self.bottomBarHeight;
+    self.topToolsViewAlignAxisConstraint.constant = -self.topBarHeight - UIScreen.safeArea.top;
+    self.bottomToolsViewAlignAxisConstraint.constant = self.bottomBarHeight + UIScreen.safeArea.bottom;
     
     [UIView animateWithDuration:0.25 animations:^{
         [self.view layoutIfNeeded];
     } completion:^(BOOL finished) {
-        self.cameraConfirmationViewAlignAxisConstraint.constant = 0;
+        self.cameraConfirmationViewAlignAxisConstraint.constant = - UIScreen.safeArea.bottom;
         self.titleLabelAlignAxisConstraint.constant = 0;
         
         [UIView animateWithDuration:0.25 animations:^{
@@ -468,8 +467,8 @@ static CameraControllerCamera CameraViewControllerToCameraControllerCamera(Camer
     [UIView animateWithDuration:0.25 animations:^{
         [self.view layoutIfNeeded];
     } completion:^(BOOL finished) {
-        self.topToolsViewAlignAxisConstraint.constant = 0;
-        self.bottomToolsViewAlignAxisConstraint.constant = 0;
+        self.topToolsViewAlignAxisConstraint.constant = UIScreen.safeArea.top;
+        self.bottomToolsViewAlignAxisConstraint.constant = -UIScreen.safeArea.bottom;
         
         [UIView animateWithDuration:0.25 animations:^{
             [self.view layoutIfNeeded];

@@ -28,8 +28,10 @@
         switch style {
             case .list: do {
                 title = user.name
-                color = ColorScheme.default().color(withName: ColorSchemeColorTextForeground, variant: .dark)
                 fontSize = .normal
+                if color == nil {
+                    color = ColorScheme.default().color(withName: ColorSchemeColorTextForeground, variant: .dark)
+                }
             }
             case .participants: do {
                 title = user.displayName.uppercased()
