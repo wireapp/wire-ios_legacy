@@ -128,6 +128,9 @@ final class DateFormatterTests: XCTestCase {
             hour -= 12
             meridiem = "PM"
         }
+        else if hour == 12 {
+            meridiem = "PM"
+        }
 
         // WHEN
         let dateString = twoHourBefore.formattedDate
