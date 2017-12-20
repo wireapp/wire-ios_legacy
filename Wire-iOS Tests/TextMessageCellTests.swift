@@ -39,7 +39,10 @@ class TextMessageCellTests: ZMSnapshotTestCase {
         accentColor = .strongBlue
         sut = TextMessageCell(style: .default, reuseIdentifier: name!)
         sut.layer.speed = 0
-        [Message.shortVersionDateFormatter(), Message.longVersionTimeFormatter(), Message.dayFormatter(date: Date()), Message.dayFormatter(date: TextMessageCellTests.dummyServerTimestamp)].forEach {
+
+        resetDayFormatter()
+
+        [Message.shortVersionDateFormatter(), Message.longVersionTimeFormatter()].forEach {
             $0.locale = Locale(identifier: "en_US")
             $0.timeZone = TimeZone(abbreviation: "CET")
         }
@@ -248,7 +251,6 @@ class TextMessageCellTests: ZMSnapshotTestCase {
     ///   - date: date to determine in with or without yera component
     func setDayFormatterLocale(identifier: String, date: Date) {
         let dayFormatter = Message.dayFormatter(date: date)
-//        dayFormatter.timeZone = TimeZone(secondsFromGMT: 0)
 
         let locale = Locale(identifier: identifier)
         let formatString = DateFormatter.dateFormat(fromTemplate: dayFormatter.dateFormat, options: 0, locale: locale)
