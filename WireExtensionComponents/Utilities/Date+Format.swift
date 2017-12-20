@@ -118,7 +118,6 @@ extension Date {
         let isToday: Bool = todayDateComponents == dateComponents
         let isYesterday: Bool = yesterdayComponents == dateComponents
         let isThisWeek: Bool = thisWeekComponents == weekComponents
-        //        let isThisYear = Calendar.current.isDate(self, equalTo: today, toGranularity: .year)
         var dateString = String()
 
         // Date is within the last hour
