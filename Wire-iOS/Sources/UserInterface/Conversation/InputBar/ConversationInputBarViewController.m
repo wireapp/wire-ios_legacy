@@ -594,7 +594,7 @@
                                                 modifierFlags:0
                                                        action:@selector(escapePressed)
                                          discoverabilityTitle:NSLocalizedString(@"conversation.input_bar.shortcut.cancel_editing_message", nil)]];
-    } else {
+    } else if(self.inputBar.textView.text.length == 0) {
         [commands addObject:[UIKeyCommand keyCommandWithInput:UIKeyInputUpArrow
                                                 modifierFlags:0
                                                        action:@selector(upArrowPressed)
