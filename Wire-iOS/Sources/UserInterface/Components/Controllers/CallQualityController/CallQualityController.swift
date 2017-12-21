@@ -71,7 +71,7 @@ protocol CallQualityViewControllerDelegate: class {
 }
 
 class CallQualityViewController : UIViewController {
-    
+
     var callQualityStackView : UICustomSpacingStackView!
     let titleLabel : UILabel
     let questionText : UILabel
@@ -111,7 +111,7 @@ class CallQualityViewController : UIViewController {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+  
     override func viewDidLoad() {
         view.backgroundColor = UIColor.cas_color(withHex: "#F8F8F8")
         view.addSubview(callQualityStackView)
@@ -136,6 +136,7 @@ class CallQualityView : UIStackView {
         self.labelText = labelText
         
         super.init(frame: .zero)
+
         axis = .vertical
         spacing = 16
         scoreLabel.text = labelText
@@ -153,6 +154,7 @@ class CallQualityView : UIStackView {
         scoreButton.setBackgroundImageColor(.white, for: UIControlState.normal)
         scoreButton.setBackgroundImageColor(UIColor(for: .strongBlue) , for: UIControlState.highlighted)
         scoreButton.setBackgroundImageColor(UIColor(for: .strongBlue) , for: UIControlState.selected)
+        scoreButton.accessibilityIdentifier = "score_\(buttonScore)"
         constrain(scoreButton){scoreButton in
             scoreButton.width == 56
             scoreButton.height == 56
@@ -160,7 +162,6 @@ class CallQualityView : UIStackView {
         
         addArrangedSubview(scoreLabel)
         addArrangedSubview(scoreButton)
-       
     }
     
     required init(coder aDecoder: NSCoder) {
@@ -200,6 +201,5 @@ class QualityScoreSelectorView : UIView {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
 }
 

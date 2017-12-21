@@ -177,7 +177,10 @@ extension ActiveVoiceChannelViewController : WireCallCenterCallStateObserver {
     func callCenterDidChange(callState: CallState, conversation: ZMConversation, caller: ZMUser, timestamp: Date?) {
         updateVisibleVoiceChannelViewController()
     
-        guard DeveloperMenuState.developerMenuEnabled(), AutomationHelper.sharedHelper.useAnalytics else {
+        guard DeveloperMenuState.developerMenuEnabled(),
+            (UseAnalytics.boolValue || AutomationHelper.sharedHelper.useAnalytics),
+            !TrackingManager.shared.disableCrashAndAnalyticsSharing
+        else {
             return
         }
         
