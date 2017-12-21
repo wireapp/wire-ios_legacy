@@ -155,7 +155,7 @@ class CallQualityView : UIStackView {
         scoreButton.setBackgroundImageColor(UIColor(for: .strongBlue) , for: UIControlState.highlighted)
         scoreButton.setBackgroundImageColor(UIColor(for: .strongBlue) , for: UIControlState.selected)
         scoreButton.accessibilityIdentifier = "score_\(buttonScore)"
-        scoreButton.accessibilityLabel = "button_\(buttonScore)"
+        scoreButton.accessibilityLabel = labelText
         constrain(scoreButton){scoreButton in
             scoreButton.width == 56
             scoreButton.height == 56
