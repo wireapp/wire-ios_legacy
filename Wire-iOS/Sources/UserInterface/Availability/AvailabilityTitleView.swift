@@ -95,6 +95,10 @@ extension AvailabilityTitleView: ZMUserObserver {
     public func userDidChange(_ changeInfo: UserChangeInfo) {
         guard changeInfo.availabilityChanged else { return }
         
+        if #available(iOS 10, *) {
+            UIImpactFeedbackGenerator(style: .medium).impactOccurred()
+        }
+        
         configure()
     }
 }

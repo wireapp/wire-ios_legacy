@@ -70,6 +70,16 @@ extension SoundEventListener : ZMNewUnreadMessagesObserver, ZMNewUnreadKnocksObs
             let isSentBySelfUser = message.sender?.isSelfUser ?? false
             let isSilencedConversation = message.conversation?.isSilenced ?? false
             
+            if #available(iOS 10, *),
+                message.isNormal,
+                isRecentMessage,
+                isSentBySelfUser,
+                let localMessage = message as? ZMMessage,
+                localMessage.deliveryState == .pending
+            {
+                UIImpactFeedbackGenerator(style: .medium).impactOccurred()
+            }
+            
             guard (message.isNormal || message.isSystem) &&
                   isRecentMessage &&
                   !isSentBySelfUser &&
