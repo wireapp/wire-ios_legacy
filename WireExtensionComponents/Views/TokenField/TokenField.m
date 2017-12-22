@@ -106,7 +106,6 @@ CGFloat const accessoryButtonSize = 32.0f;
     self.tokenSelectedBackgroundColor = [UIColor whiteColor];
     self.tokenBorderColor = [UIColor colorWithRed:0.118 green:0.467 blue:0.745 alpha:1.000];
     self.tokenSelectedBorderColor = [UIColor colorWithRed:0.118 green:0.467 blue:0.745 alpha:1.000];
-    self.tokenHeight = 0.0f;
     self.tokenTextTransform = TextTransformUpper;
 }
 
@@ -293,15 +292,6 @@ CGFloat const accessoryButtonSize = 32.0f;
         return;
     }
     _tokenSelectedBorderColor = color;
-    [self updateTokenAttachments];
-}
-
-- (void)setTokenHeight:(CGFloat)tokenHeight
-{
-    if (_tokenHeight == tokenHeight) {
-        return;
-    }
-    _tokenHeight = tokenHeight;
     [self updateTokenAttachments];
 }
 

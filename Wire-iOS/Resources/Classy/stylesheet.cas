@@ -1327,21 +1327,21 @@ InviteContactsViewController ContactsSectionHeaderView {
 }
 
 TokenField {
-    font: $font-normal-light;
-    tokenTitleFont: $font-small-semibold;
+    font: $font-normal-regular;
+    tokenTitleFont: $font-small-regular;
     numberOfLines: 3;
     lineSpacing: 8;
     tokenOffset: 4;
-    tokenHeight: 20;
     tokenTitleVerticalAdjustment: 0;
+    dotColor: $color-text-dimmed;
 
     textView: @{
         tintColor: $color-accent-current;
         autocorrectionType: no;
         returnKeyType: go;
-        placeholderFont: $font-small-light;
-        placeholderTextContainerInset: 13 10;
-        placeholderTextTransform: upper;
+        placeholderFont: $font-normal-regular;
+        placeholderTextContainerInset: 16 10;
+        placeholderTextTransform: none;
         lineFragmentPadding: 0;
     }
 }
@@ -1354,15 +1354,13 @@ StartUIViewController SearchHeaderViewController {
 
 TokenField.search {
     textView: @{
-        placeholderFont: $font-small-semibold;
-        placeholderTextContainerInset: 0 0;
+        placeholderTextContainerInset: 16 0;
     }
-    tokenTitleFont: $font-medium-semibold;
-    tokenTitleColor: black;
-    tokenBackgroundColor: white;
-    tokenBorderColor: white;
-    tokenSelectedTitleColor: white;
-    tokenSelectedBackgroundColor: clear;
+    tokenTitleColor: $color-text-foreground;
+    tokenSelectedTitleColor: $color-text-foreground;
+    tokenBackgroundColor: clear;
+    tokenBorderColor: clear;
+    tokenSelectedBackgroundColor: white;
     tokenSelectedBorderColor: white;
 }
 
@@ -1604,19 +1602,16 @@ ReactionCell {
 
 TokenField.share {
     textView: @{
-        placeholderFont: $font-medium-semibold;
         placeholderTextContainerInset: 0 0;
         placeholderTextColor: rgb(255, 255, 255, 0.6);
         keyboardAppearance: dark;
     }
     backgroundColor: clear;
-    tokenTitleFont: $font-medium-semibold;
     textColor: white;
-    tokenTitleColor: black;
-    tokenBackgroundColor: white;
-    tokenBorderColor: white;
-    tokenSelectedTitleColor: white;
-    tokenSelectedBackgroundColor: clear;
+    tokenTitleColor: white;
+    tokenBackgroundColor: clear;
+    tokenBorderColor: clear;
+    tokenSelectedBackgroundColor: white;
     tokenSelectedBorderColor: white;
 }
 

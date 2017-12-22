@@ -224,7 +224,6 @@ static NSString* light(NSString *colorString) {
     UIColor *whiteAlpha40 = [UIColor wr_colorFromString:@"rgb(255, 255, 255, 0.40)"];
     UIColor *whiteAlpha80 = [UIColor wr_colorFromString:@"rgb(255, 255, 255, 0.80)"];
     UIColor *black = [UIColor blackColor];
-    UIColor *blackAlpha4 = [UIColor wr_colorFromString:@"rgb(0, 0, 0, 0.04)"];
     UIColor *blackAlpha8 = [UIColor wr_colorFromString:@"rgb(0, 0, 0, 0.08)"];
     UIColor *blackAlpha24 = [UIColor wr_colorFromString:@"rgb(0, 0, 0, 0.24)"];
     UIColor *blackAlpha48 = [UIColor wr_colorFromString:@"rgb(0, 0, 0, 0.48)"];
@@ -287,7 +286,7 @@ static NSString* light(NSString *colorString) {
                                    ColorSchemeColorListAvatarInitials: blackAlpha40,
                                    ColorSchemeColorSectionBackground: UIColor.clearColor,
                                    ColorSchemeColorSectionText: blackAlpha40,
-                                   ColorSchemeColorTokenFieldBackground: blackAlpha4,
+                                   ColorSchemeColorTokenFieldBackground: clear,
                                    ColorSchemeColorTokenFieldTextPlaceHolder: graphiteAlpha40
                                    }];
     
@@ -342,7 +341,7 @@ static NSString* light(NSString *colorString) {
                                   ColorSchemeColorListAvatarInitials: blackAlpha40,
                                   ColorSchemeColorSectionBackground: UIColor.clearColor,
                                   ColorSchemeColorSectionText: whiteAlpha40,
-                                  ColorSchemeColorTokenFieldBackground: whiteAlpha16,
+                                  ColorSchemeColorTokenFieldBackground: clear,
                                   ColorSchemeColorTokenFieldTextPlaceHolder: whiteAlpha40
                                   }];
 
