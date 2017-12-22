@@ -57,14 +57,8 @@ static const CGFloat BurstContainerExpandedHeight = 40;
 @property (nonatomic, readwrite) UILabel *authorLabel;
 @property (nonatomic, readwrite) NSParagraphStyle *authorParagraphStyle;
 
-@property (nonatomic) NSTimer *burstTimestampTimer;
-
-@property (nonatomic, readwrite) ConversationCellBurstTimestampView *burstTimestampView;
-
 @property (nonatomic, readwrite) UserImageView *authorImageView;
 @property (nonatomic, readwrite) UIView *authorImageContainer;
-@property (nonatomic) UIFont *burstNormalFont;
-@property (nonatomic) UIFont *burstBoldFont;
 
 @property (nonatomic) MessageToolboxView *toolboxView;
 
@@ -422,20 +416,6 @@ static const CGFloat BurstContainerExpandedHeight = 40;
     self.authorLabel.textColor = [[ColorScheme defaultColorScheme] nameAccentForColor:message.sender.accentColorValue
                                                                               variant:[ColorScheme defaultColorScheme].variant];
     self.authorImageView.user = message.sender;
-}
-
-- (void)updateBurstTimestamp
-{
-    if (self.layoutProperties.showDayBurstTimestamp) {
-        self.burstTimestampView.label.text = [[Message dayFormatterWithDate: self.message.serverTimestamp] stringFromDate:self.message.serverTimestamp].uppercaseString;
-        self.burstTimestampView.label.font = self.burstBoldFont;
-    } else {
-        self.burstTimestampView.label.text = [Message formattedReceivedDateForMessage:self.message].uppercaseString;
-        self.burstTimestampView.label.font = self.burstNormalFont;
-    }
-
-    BOOL hidden = !self.layoutProperties.showBurstTimestamp && !self.layoutProperties.showDayBurstTimestamp;
-    self.burstTimestampView.isSeparatorHidden = hidden;
 }
 
 - (void)setCountdownContainerViewHidden:(BOOL)countdownContainerViewHidden

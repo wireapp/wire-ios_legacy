@@ -24,12 +24,31 @@ public extension ConversationCell {
             burstTimestampTimer = Timer.scheduledTimer(timeInterval: 60, target: self, selector: #selector(self.updateBurstTimestamp), userInfo: nil, repeats: true)
         }
         contentView.bringSubview(toFront: likeButton)
-        if delegate.responds(to: #selector(ConversationCellDelegate.conversationCellShouldStartDestructionTimer)) && delegate.conversationCellShouldStartDestructionTimer!(self) {
+
+        if delegate != nil &&
+            delegate.responds(to: #selector(ConversationCellDelegate.conversationCellShouldStartDestructionTimer)) &&
+            delegate.conversationCellShouldStartDestructionTimer!(self) {
             updateCountdownView()
             if message.startSelfDestructionIfNeeded() {
                 startCountdownAnimationIfNeeded(message)
             }
         }
         messageContentView.bringSubview(toFront: countdownContainerView)
+    }
+
+    @objc public func updateBurstTimestamp() {
+        if layoutProperties.showDayBurstTimestamp {
+            let serverTimestamp: Date? = message.serverTimestamp
+            if serverTimestamp != nil {
+                burstTimestampView.label.text = Message.dayFormatter(date: message.serverTimestamp!).string(from: message.serverTimestamp!).uppercased()
+            }
+            burstTimestampView.label.font = burstBoldFont
+        }
+        else {
+            burstTimestampView.label.text = Message.formattedReceivedDate(for: message).uppercased()
+            burstTimestampView.label.font = burstNormalFont
+        }
+        let hidden: Bool = !layoutProperties.showBurstTimestamp && !layoutProperties.showDayBurstTimestamp
+        burstTimestampView.isSeparatorHidden = hidden
     }
 }
