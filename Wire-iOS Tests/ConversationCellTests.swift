@@ -22,18 +22,28 @@ import XCTest
 
 final class ConversationCellTests: XCTestCase {
 
-    func testConversationCellCanBeReleased(){
-        // GIVEN
-        weak var sut : ConversationCell?
+    weak var sut : ConversationCell?
 
-        // WHEN
+    override func setUp() {
+        super.setUp()
+        sut = nil
+    }
+
+    override func tearDown() {
+        sut = nil
+        super.tearDown()
+    }
+
+    func testConversationCellCanBeReleased(){
         autoreleasepool{
+            // GIVEN
             let cellInTable = ConversationCell()
             sut = cellInTable
 
             var tableView : UITableView! = cellInTable.wrapInTableView()
             tableView.reloadData()
 
+            // WHEN
             tableView = nil
         }
 
@@ -42,11 +52,8 @@ final class ConversationCellTests: XCTestCase {
     }
 
     func testConversationCellIsNotRetainedAfterTimerIsScheduled(){
-        // GIVEN
-        weak var sut : ConversationCell?
-
-        // WHEN
         autoreleasepool{
+            // GIVEN
             let cellInTable = ConversationCell()
             sut = cellInTable
 
@@ -57,6 +64,7 @@ final class ConversationCellTests: XCTestCase {
             var tableView : UITableView! = cellInTable.wrapInTableView()
             tableView.reloadData()
 
+            // WHEN
             /// schedule a timer
             cellInTable.willDisplayInTableView()
             tableView = nil
