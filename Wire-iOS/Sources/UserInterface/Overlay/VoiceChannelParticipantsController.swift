@@ -43,6 +43,18 @@ class VoiceChannelParticipantsController : NSObject {
         collectionView.performBatchUpdates(nil)
     }
     
+    fileprivate func playHapticFeedback(for changeInfo: VoiceChannelParticipantNotification) {
+        guard #available(iOS 10, *) else {
+            return
+        }
+        
+        if changeInfo.insertedIndexes.count > 0 {
+            UINotificationFeedbackGenerator().notificationOccurred(.success)
+        }
+        else if changeInfo.deletedIndexes.count > 0 {
+            UINotificationFeedbackGenerator().notificationOccurred(.warning)
+        }
+    }
 }
 
 extension VoiceChannelParticipantsController : UICollectionViewDataSource {
@@ -72,6 +84,8 @@ extension VoiceChannelParticipantsController : VoiceChannelParticipantObserver {
         collectionView.performBatchUpdates({ 
             self.collectionView.insertItems(at: (changeInfo.insertedIndexes as NSIndexSet).indexPaths())
             self.collectionView.deleteItems(at: (changeInfo.deletedIndexes as NSIndexSet).indexPaths())
+            
+            self.playHapticFeedback(for: changeInfo)
             
             for moved in changeInfo.zm_movedIndexPairs {
                 let from = IndexPath(row: Int(moved.from), section: 0)
