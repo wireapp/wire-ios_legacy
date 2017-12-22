@@ -23,18 +23,16 @@ public extension ConversationCell {
     @objc func scheduledTimerForUpdateBurstTimestamp() {
         if layoutProperties.showBurstTimestamp {
 
-            if #available(iOS 10.0, *) {
-                burstTimestampTimer = Timer.scheduledTimer(withTimeInterval: 60, repeats: true,
-                                                           block:{[weak self] _ in                                                                        self?.updateBurstTimestamp()
-                    }
-                )
+            let block:  (Timer) -> Void = {[weak self] _ in                                                                        self?.updateBurstTimestamp()
             }
-            else
-            {
-                burstTimestampTimer = .xxx_scheduledTimerWithTimeInterval(timeInterval: 60, repeats: true,
-                                                                          callback:{
-                                                                            self.updateBurstTimestamp()
-                }
+
+            if #available(iOS 10.0, *) {
+                burstTimestampTimer = .scheduledTimer(withTimeInterval: 60, repeats: true,
+                                                      block: block
+                )
+            } else {
+                burstTimestampTimer = .scheduledTimer(withTimeInterval: 60, repeats: true,
+                                                      callback: block
                 )
             }
         }
@@ -60,14 +58,12 @@ public extension ConversationCell {
         if layoutProperties.showDayBurstTimestamp {
             if let serverTimestamp = message.serverTimestamp {
                 burstTimestampView.label.text = Message.dayFormatter(date: serverTimestamp).string(from: serverTimestamp).uppercased()
-            }
-            else {
+            } else {
                 burstTimestampView.label.text = nil
             }
 
             burstTimestampView.label.font = burstBoldFont
-        }
-        else {
+        } else {
             burstTimestampView.label.text = Message.formattedReceivedDate(for: message).uppercased()
             burstTimestampView.label.font = burstNormalFont
         }
@@ -75,3 +71,4 @@ public extension ConversationCell {
         burstTimestampView.isSeparatorHidden = hidden
     }
 }
+

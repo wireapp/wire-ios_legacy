@@ -26,14 +26,14 @@ private class Block<T> {
 }
 
 extension Timer {
-    static func xxx_scheduledTimerWithTimeInterval(timeInterval: TimeInterval, repeats: Bool, callback: ()->()) -> Timer {
-        return self.scheduledTimer(timeInterval: timeInterval, target:
-            self, selector: Selector(("xxx_blcokInvoke:")), userInfo: Block(callback), repeats: repeats)
+    static func scheduledTimer(withTimeInterval: TimeInterval, repeats: Bool, callback: (Timer) -> Void) -> Timer {
+        return self.scheduledTimer(timeInterval: withTimeInterval, target:
+            self, selector: #selector(xxx_blcokInvoke), userInfo: Block(callback), repeats: repeats)
     }
 
     static func xxx_blcokInvoke(timer: Timer) {
-        if let block = timer.userInfo as? Block<()->()> {
-            block.f()
+        if let block = timer.userInfo as? Block<(Timer) -> Void> {
+            block.f(timer)
         }
     }
 }
