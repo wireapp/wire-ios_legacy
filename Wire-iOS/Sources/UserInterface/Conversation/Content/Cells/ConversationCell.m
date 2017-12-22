@@ -136,9 +136,7 @@ static const CGFloat BurstContainerExpandedHeight = 40;
     [super willMoveToWindow:newWindow];
     
     if (newWindow != nil) {
-        if (self.layoutProperties.showBurstTimestamp) {
-            self.burstTimestampTimer = [NSTimer scheduledTimerWithTimeInterval:60 target:self selector:@selector(updateBurstTimestamp) userInfo:nil repeats:YES];
-        }
+        [self scheduledTimerForUpdateBurstTimestamp];
     } else {
         [self.burstTimestampTimer invalidate];
         self.burstTimestampTimer = nil;

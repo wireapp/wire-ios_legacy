@@ -19,8 +19,8 @@
 import Foundation
 
 public extension ConversationCell {
-    
-    func willDisplayInTableView() {
+
+    @objc func scheduledTimerForUpdateBurstTimestamp() {
         if layoutProperties.showBurstTimestamp {
 
             if #available(iOS 10.0, *) {
@@ -38,6 +38,11 @@ public extension ConversationCell {
                 )
             }
         }
+    }
+
+    func willDisplayInTableView() {
+        scheduledTimerForUpdateBurstTimestamp()
+
         contentView.bringSubview(toFront: likeButton)
 
         if delegate != nil &&
