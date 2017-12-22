@@ -19,9 +19,24 @@
 import Foundation
 
 public extension ConversationCell {
+    
     func willDisplayInTableView() {
         if layoutProperties.showBurstTimestamp {
-            burstTimestampTimer = Timer.scheduledTimer(timeInterval: 60, target: self, selector: #selector(self.updateBurstTimestamp), userInfo: nil, repeats: true)
+
+            if #available(iOS 10.0, *) {
+                burstTimestampTimer = Timer.scheduledTimer(withTimeInterval: 60, repeats: true,
+                                                           block:{[weak self] _ in                                                                        self?.updateBurstTimestamp()
+                    }
+                )
+            }
+            else
+            {
+                burstTimestampTimer = .xxx_scheduledTimerWithTimeInterval(timeInterval: 60, repeats: true,
+                                                                          callback:{
+                                                                            self.updateBurstTimestamp()
+                }
+                )
+            }
         }
         contentView.bringSubview(toFront: likeButton)
 
@@ -38,10 +53,13 @@ public extension ConversationCell {
 
     @objc public func updateBurstTimestamp() {
         if layoutProperties.showDayBurstTimestamp {
-            let serverTimestamp: Date? = message.serverTimestamp
-            if serverTimestamp != nil {
-                burstTimestampView.label.text = Message.dayFormatter(date: message.serverTimestamp!).string(from: message.serverTimestamp!).uppercased()
+            if let serverTimestamp = message.serverTimestamp {
+                burstTimestampView.label.text = Message.dayFormatter(date: serverTimestamp).string(from: serverTimestamp).uppercased()
             }
+            else {
+                burstTimestampView.label.text = nil
+            }
+
             burstTimestampView.label.font = burstBoldFont
         }
         else {

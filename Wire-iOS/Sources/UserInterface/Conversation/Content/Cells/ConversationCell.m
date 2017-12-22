@@ -126,6 +126,11 @@ static const CGFloat BurstContainerExpandedHeight = 40;
     return self;
 }
 
+- (void)dealloc {
+    [self.burstTimestampTimer invalidate];
+    self.burstTimestampTimer = nil;
+}
+
 - (void)willMoveToWindow:(UIWindow *)newWindow
 {
     [super willMoveToWindow:newWindow];
@@ -216,25 +221,6 @@ static const CGFloat BurstContainerExpandedHeight = 40;
     self.authorImageTopMarginConstraint.constant = 0;
     self.beingEdited = NO;
     [self updateCountdownView];
-}
-
-- (void)willDisplayInTableView
-{
-    if (self.layoutProperties.showBurstTimestamp) {
-        self.burstTimestampTimer = [NSTimer scheduledTimerWithTimeInterval:60 target:self selector:@selector(updateBurstTimestamp) userInfo:nil repeats:YES];
-    }
-    
-    [self.contentView bringSubviewToFront:self.likeButton];
-
-    if ([self.delegate respondsToSelector:@selector(conversationCellShouldStartDestructionTimer:)] &&
-        [self.delegate conversationCellShouldStartDestructionTimer:self]) {
-        [self updateCountdownView];
-        if ([self.message startSelfDestructionIfNeeded]) {
-            [self startCountdownAnimationIfNeeded:self.message];
-        }
-    }
-
-    [self.messageContentView bringSubviewToFront:self.countdownContainerView];
 }
 
 - (void)didEndDisplayingInTableView
