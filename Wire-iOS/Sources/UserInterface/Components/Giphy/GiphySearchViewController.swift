@@ -229,6 +229,7 @@ class GiphySearchViewController: UICollectionViewController {
         pendingSearchtask = nil
         pendingTimer?.invalidate()
 
+        ///FIXME:
         pendingTimer = Timer.scheduledTimer(timeInterval: delay, target: self, selector: #selector(GiphySearchViewController.performSearch), userInfo: nil, repeats: false)
     }
 

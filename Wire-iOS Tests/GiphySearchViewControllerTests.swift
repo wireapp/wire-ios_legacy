@@ -16,44 +16,45 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-
 import XCTest
 @testable import Wire
 
-final class ConversationCellTests: XCTestCase {
-
-    weak var sut : ConversationCell?
+final class GiphySearchViewControllerTests: XCTestCase {
+    
+    var sut: GiphySearchViewController!
+    var mockConversation: MockConversation!
 
     override func setUp() {
         super.setUp()
-        sut = nil
-    }
 
+        mockConversation = MockConversation()
+        mockConversation.conversationType = .oneOnOne
+        mockConversation.displayName = "John Doe"
+        mockConversation.connectedUser = MockUser.mockUsers().last!
+    }
+    
     override func tearDown() {
         sut = nil
+        mockConversation = nil
         super.tearDown()
     }
 
-    func testConversationCellIsNotRetainedAfterTimerIsScheduled(){
+    func testGiphySearchViewControllerIsNotRetainedAfterTimerIsScheduled(){
         autoreleasepool{
             // GIVEN
-            let cellInTable = ConversationCell()
-            sut = cellInTable
+            let searchTerm: String = "apple"
 
-            let layoutProperties = ConversationCellLayoutProperties()
-            layoutProperties.showBurstTimestamp = true
-            let mockMessage = MockMessageFactory.locationMessage()
-            cellInTable.configure(for: mockMessage, layoutProperties: layoutProperties)
-            var tableView : UITableView! = cellInTable.wrapInTableView()
-            tableView.reloadData()
+            let giphySearchViewController = GiphySearchViewController(withSearchTerm: searchTerm, conversation: (mockConversation as Any) as! ZMConversation)
+            sut = giphySearchViewController
+
 
             // WHEN
             /// schedule a timer
-            cellInTable.willDisplayInTableView()
-            tableView = nil
+            giphySearchViewController.performSearchAfter(delay: 0.1)
         }
 
         // THEN
         XCTAssertEqual(sut, nil)
     }
+
 }
