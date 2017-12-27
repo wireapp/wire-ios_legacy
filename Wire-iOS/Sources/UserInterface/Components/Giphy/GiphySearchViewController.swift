@@ -111,6 +111,13 @@ class GiphySearchViewController: UICollectionViewController {
         cleanPendingTaskAndTimer()
     }
 
+    func cleanPendingTaskAndTimer() {
+        pendingSearchtask?.cancel()
+        pendingSearchtask = nil
+        pendingTimer?.invalidate()
+        pendingTimer = nil
+    }
+
     override func viewDidLoad() {
         noResultsLabel.text = "giphy.error.no_result".localized.uppercased()
         noResultsLabel.isHidden = true
@@ -227,12 +234,6 @@ class GiphySearchViewController: UICollectionViewController {
             self?.collectionView?.reloadData()
             self?.pendingFetchTask = nil
         }
-    }
-
-    func cleanPendingTaskAndTimer() {
-        pendingSearchtask?.cancel()
-        pendingSearchtask = nil
-        pendingTimer?.invalidate()
     }
 
     func performSearchAfter(delay: TimeInterval) {

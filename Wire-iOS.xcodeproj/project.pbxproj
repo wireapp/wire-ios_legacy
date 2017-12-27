@@ -2524,6 +2524,7 @@
 		EF2C189C1FED0D3000E9F2FD /* ConversationCellTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationCellTests.swift; sourceTree = "<group>"; };
 		EF2C189F1FED435600E9F2FD /* ConversationCell+BurstTimestamp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConversationCell+BurstTimestamp.swift"; sourceTree = "<group>"; };
 		EF2C18A11FED541F00E9F2FD /* Timer+iOS9ScheduledTimer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Timer+iOS9ScheduledTimer.swift"; sourceTree = "<group>"; };
+		EF2CC33C1FF3C567009FFE4C /* ConversationCell+Private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ConversationCell+Private.h"; sourceTree = "<group>"; };
 		EF6163A41FE9583400C6F5A9 /* Message+dayFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Message+dayFormatter.swift"; sourceTree = "<group>"; };
 		EF61B33F1FC84B0100D8E631 /* AccessoryTextFieldValidationTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccessoryTextFieldValidationTests.swift; sourceTree = "<group>"; };
 		EF61B3411FC8508400D8E631 /* TextFieldValidator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextFieldValidator.swift; sourceTree = "<group>"; };
@@ -4484,6 +4485,7 @@
 			children = (
 				8781C94E1E2687590024F3F6 /* MessageAction.h */,
 				16E311C11A5FEA2B00FF2C9E /* ConversationCell.h */,
+				EF2CC33C1FF3C567009FFE4C /* ConversationCell+Private.h */,
 				16E311C21A5FEA2B00FF2C9E /* ConversationCell.m */,
 				EF2C189F1FED435600E9F2FD /* ConversationCell+BurstTimestamp.swift */,
 				BF989D071E896D210052BF8F /* ConversationCellBurstTimestampView.swift */,
@@ -5683,7 +5685,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "$SRCROOT/Scripts/copyExtraAudioNotifications";
+			shellScript = $SRCROOT/Scripts/copyExtraAudioNotifications;
 		};
 		193B0B9A94C0482E9B6C33B0 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;

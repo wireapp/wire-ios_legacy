@@ -101,21 +101,12 @@ typedef void (^SelectedMenuBlock)(BOOL selected, BOOL animated);
 @property (nonatomic) UILongPressGestureRecognizer *longPressGestureRecognizer;
 @property (nonatomic, readonly) UITapGestureRecognizer *doubleTapGestureRecognizer;
 
-@property (nonatomic) NSTimer *burstTimestampTimer;
-@property (nonatomic, readwrite) ConversationCellBurstTimestampView *burstTimestampView;
-@property (nonatomic) UIFont *burstNormalFont;
-@property (nonatomic) UIFont *burstBoldFont;
-
 - (void)configureForMessage:(id<ZMConversationMessage>)message layoutProperties:(ConversationCellLayoutProperties *)layoutProperties;
 /// Update cell due since the message content has changed. Return True if the change requires the cell to be re-sized.
 - (BOOL)updateForMessage:(MessageChangeInfo *)changeInfo;
 - (void)didEndDisplayingInTableView;
 
 - (void)forward:(id)sender;
-
-///TODO: private method
-- (void)updateCountdownView;
-- (void)startCountdownAnimationIfNeeded:(id<ZMConversationMessage>)message;
 
 #pragma mark - For deleted menu, meant to be implmented by subclass
 
