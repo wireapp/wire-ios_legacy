@@ -100,6 +100,7 @@ typedef void (^SelectedMenuBlock)(BOOL selected, BOOL animated);
 @property (nonatomic) AnalyticsTracker *analyticsTracker;
 @property (nonatomic) UILongPressGestureRecognizer *longPressGestureRecognizer;
 @property (nonatomic, readonly) UITapGestureRecognizer *doubleTapGestureRecognizer;
+@property (nonatomic, readwrite) ConversationCellBurstTimestampView *burstTimestampView;
 
 - (void)configureForMessage:(id<ZMConversationMessage>)message layoutProperties:(ConversationCellLayoutProperties *)layoutProperties;
 /// Update cell due since the message content has changed. Return True if the change requires the cell to be re-sized.
