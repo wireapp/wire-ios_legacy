@@ -21,7 +21,7 @@ import XCTest
 
 final class GiphySearchViewControllerTests: XCTestCase {
     
-    var sut: GiphySearchViewController!
+    weak var sut: GiphySearchViewController!
     var mockConversation: MockConversation!
 
     override func setUp() {
@@ -45,12 +45,13 @@ final class GiphySearchViewControllerTests: XCTestCase {
             let searchTerm: String = "apple"
 
             var giphySearchViewController: GiphySearchViewController! = GiphySearchViewController(withSearchTerm: searchTerm, conversation: (mockConversation as Any) as! ZMConversation)
+//            var giphySearchViewController: UIViewController! = UIViewController()
             sut = giphySearchViewController
 
 
             // WHEN
             /// schedule a timer
-//            giphySearchViewController.performSearchAfter(delay: 0.1)
+            giphySearchViewController.performSearchAfter(delay: 0.1)
             giphySearchViewController = nil
         }
 

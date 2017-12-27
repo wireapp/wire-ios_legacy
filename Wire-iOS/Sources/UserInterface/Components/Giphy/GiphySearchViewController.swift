@@ -202,6 +202,7 @@ class GiphySearchViewController: UICollectionViewController {
     }
 
     func performSearch() {
+        pendingTimer?.invalidate()
         pendingTimer = nil
 
         if searchTerm.isEmpty {
