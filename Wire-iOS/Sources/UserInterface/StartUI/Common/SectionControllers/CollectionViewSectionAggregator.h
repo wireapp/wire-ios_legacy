@@ -36,5 +36,6 @@
 @property (nonatomic, weak, nullable) id <CollectionViewSectionAggregatorDelegate> delegate;
 
 - (void)reloadData;
+- (void)updateCollectionViewWithControllers;
 
 @end

@@ -271,7 +271,7 @@
 
     self.instantConnectButton.hidden = ! canBeConnected;
     [self setNeedsUpdateConstraints];
-    self.badgeUserImageView.user = self.user;
+    self.badgeUserImageView.user = (id)self.user;
 }
 
 #pragma mark - Public API
@@ -384,7 +384,7 @@
 
 - (void)updateSubtitle
 {
-    NSAttributedString *subtitle = [self attributedSubtitleWithUser:self.user];
+    NSAttributedString *subtitle = [self attributedSubtitleWithUser:(id)self.user];
 
     if (nil == subtitle) {
         self.subtitleLabel.text = @"";

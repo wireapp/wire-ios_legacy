@@ -22,6 +22,7 @@
 @protocol CollectionViewSectionController;
 
 @protocol CollectionViewSectionDelegate <NSObject>
+- (void)collectionViewSectionControllerDidChangeVisibility:(id<CollectionViewSectionController>)controller;
 
 - (void)collectionViewSectionController:(id<CollectionViewSectionController>)controller
                           didSelectItem:(id)item

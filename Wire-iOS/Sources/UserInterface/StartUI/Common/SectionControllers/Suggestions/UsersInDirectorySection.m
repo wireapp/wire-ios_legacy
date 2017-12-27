@@ -232,32 +232,6 @@ NSString *const PeoplePickerUsersInDirectoryCellReuseIdentifier = @"PeoplePicker
 #pragma mark - Single item animation
 
 /**
- *  This method checks if the single item was deleted from the dataset
- *
- *  @param from initial dataset state
- *  @param to   new dataset state
- *
- *  @return If the update is possible
- */
-+ (BOOL)canDoSingleDeleteAnimationFrom:(NSArray *)from to:(NSArray *)to
-{
-    if (to.count + 1 == from.count) { // single element is removed
-        BOOL allUsersWasDisplayed = YES;
-        for (id resultItem in to) {
-            if ([from indexOfObject:resultItem] == NSNotFound) {
-                allUsersWasDisplayed = NO;
-                break;
-            }
-        }
-
-        return allUsersWasDisplayed;
-    }
-    else {
-        return NO;
-    }
-}
-
-/**
  *  Method to animate single item deletion
  *
  *  @param from initial dataset state

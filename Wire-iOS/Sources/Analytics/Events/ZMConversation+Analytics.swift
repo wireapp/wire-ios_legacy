@@ -49,9 +49,9 @@ extension ZMConversation {
         return conversationType.analyticsTypeString
     }
     
-    public var isBotConversation : Bool {
+    public var isServiceConversation : Bool {
         guard conversationType == .oneOnOne,
-              let otherUser = firstActiveParticipantOtherThanSelf() , otherUser.isBot
+              let otherUser = firstActiveParticipantOtherThanSelf() , otherUser.isService
         else { return false }
         
         return true

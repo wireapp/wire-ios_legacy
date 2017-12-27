@@ -88,7 +88,7 @@ public class AddParticipantsViewController : UIViewController {
         bottomContainer.addSubview(confirmButton)
  
         searchHeaderViewController = SearchHeaderViewController(userSelection: userSelection, variant: ColorScheme.default().variant)
-        searchResultsViewController = SearchResultsViewController(userSelection: userSelection, team: ZMUser.selfUser().team, variant: ColorScheme.default().variant, isAddingParticipants: true)
+        searchResultsViewController = SearchResultsViewController(userSelection: userSelection, variant: ColorScheme.default().variant, isAddingParticipants: true)
 
         super.init(nibName: nil, bundle: nil)
         

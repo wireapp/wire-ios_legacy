@@ -104,7 +104,7 @@ static NSUInteger const StartUIInitiallyShowsKeyboardConversationThreshold = 10;
     [self.view addSubview:self.searchHeaderViewController.view];
     [self.searchHeaderViewController didMoveToParentViewController:self];
     
-    self.searchResultsViewController = [[SearchResultsViewController alloc] initWithUserSelection:self.userSelection team:team variant:ColorSchemeVariantDark isAddingParticipants:NO];
+    self.searchResultsViewController = [[SearchResultsViewController alloc] initWithUserSelection:self.userSelection variant:ColorSchemeVariantDark isAddingParticipants:NO];
     self.searchResultsViewController.mode = SearchResultsViewControllerModeList;
     self.searchResultsViewController.delegate = self;
     [self addChildViewController:self.searchResultsViewController];

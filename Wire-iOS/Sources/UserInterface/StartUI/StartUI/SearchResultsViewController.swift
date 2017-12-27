@@ -43,6 +43,7 @@ public enum SearchResultsViewControllerSection : Int {
     case teamMembers
     case conversations
     case directory
+    case services
 }
 
 
@@ -90,26 +91,26 @@ extension UIViewController {
 
 public class SearchResultsViewController : UIViewController {
     
-    var searchResultsView : SearchResultsView?
-    let searchDirectory : SearchDirectory
+    var searchResultsView: SearchResultsView?
+    let searchDirectory: SearchDirectory
     let userSelection: UserSelection
     
-    let sectionAggregator : CollectionViewSectionAggregator
-    let contactsSection : UsersInContactsSection
-    let teamMemberAndContactsSection : UsersInContactsSection
-    let directorySection : UsersInDirectorySection
-    let conversationsSection : GroupConversationsSection
-    let topPeopleSection : TopPeopleLineSection
+    let sectionAggregator: CollectionViewSectionAggregator
+    let contactsSection: UsersInContactsSection
+    let teamMemberAndContactsSection: UsersInContactsSection
+    let directorySection = UsersInDirectorySection()
+    let conversationsSection: GroupConversationsSection
+    let topPeopleSection: TopPeopleLineSection
+    let servicesSection = ServicesSection()
     
-    var team: Team?
-    var pendingSearchTask : SearchTask? = nil
-    var isAddingParticipants : Bool
+    var pendingSearchTask: SearchTask? = nil
+    var isAddingParticipants: Bool
     
-    public var filterConversation : ZMConversation? = nil
+    public var filterConversation: ZMConversation? = nil
     
-    public weak var delegate : SearchResultsViewControllerDelegate? = nil
+    public weak var delegate: SearchResultsViewControllerDelegate? = nil
     
-    public var mode : SearchResultsViewControllerMode = .search {
+    public var mode: SearchResultsViewControllerMode = .search {
         didSet{
             updateVisibleSections()
         }
@@ -120,14 +121,14 @@ public class SearchResultsViewController : UIViewController {
     }
     
     @objc
-    public init(userSelection: UserSelection, team: Team?, variant: ColorSchemeVariant, isAddingParticipants : Bool = false) {
+    public init(userSelection: UserSelection, variant: ColorSchemeVariant, isAddingParticipants : Bool = false) {
         self.searchDirectory = SearchDirectory(userSession: ZMUserSession.shared()!)
         self.userSelection = userSelection
         self.isAddingParticipants = isAddingParticipants
-        self.team = team
         self.mode = .list
         
-        let teamName = team?.name ?? ""
+        let team = ZMUser.selfUser().team
+        let teamName = team?.name
     
         sectionAggregator = CollectionViewSectionAggregator()
         contactsSection = UsersInContactsSection()
@@ -139,9 +140,8 @@ public class SearchResultsViewController : UIViewController {
         teamMemberAndContactsSection.title = "peoplepicker.header.contacts".localized
         teamMemberAndContactsSection.team = team
         teamMemberAndContactsSection.colorSchemeVariant = variant
-        directorySection = UsersInDirectorySection()
         conversationsSection = GroupConversationsSection()
-        conversationsSection.title = team != nil ? "peoplepicker.header.team_conversations".localized(args: teamName) : "peoplepicker.header.conversations".localized
+        conversationsSection.title = team != nil ? "peoplepicker.header.team_conversations".localized(args: teamName ?? "") : "peoplepicker.header.conversations".localized
         topPeopleSection = TopPeopleLineSection()
         topPeopleSection.userSelection = userSelection
         topPeopleSection.topConversationDirectory = ZMUserSession.shared()?.topConversationsDirectory
@@ -153,6 +153,7 @@ public class SearchResultsViewController : UIViewController {
         directorySection.delegate = self
         topPeopleSection.delegate = self
         conversationsSection.delegate = self
+        servicesSection.delegate = self
     }
     
     required public init?(coder aDecoder: NSCoder) {
@@ -183,8 +184,8 @@ public class SearchResultsViewController : UIViewController {
     public func search(withQuery query: String, local: Bool = false) {
         pendingSearchTask?.cancel()
         
-        let searchOptions : SearchOptions = local ? [.contacts, .teamMembers] : [.conversations, .contacts, .teamMembers, .directory]
-        let request = SearchRequest(query: query, searchOptions:searchOptions, team: team)
+        let searchOptions : SearchOptions = local ? [.contacts, .teamMembers] : [.conversations, .contacts, .teamMembers, .directory, .services]
+        let request = SearchRequest(query: query, searchOptions:searchOptions, team: ZMUser.selfUser().team)
         let task = searchDirectory.perform(request)
         
         task.onResult({ [weak self] in self?.handleSearchResult(result: $0, isCompleted: $1)})
@@ -197,7 +198,7 @@ public class SearchResultsViewController : UIViewController {
     func searchContactList() {
         pendingSearchTask?.cancel()
         
-        let request = SearchRequest(query: "", searchOptions: [.contacts, .teamMembers], team: team)
+        let request = SearchRequest(query: "", searchOptions: [.contacts, .teamMembers], team: ZMUser.selfUser().team)
         let task = searchDirectory.perform(request)
         
         task.onResult({ [weak self] in self?.handleSearchResult(result: $0, isCompleted: $1)})
@@ -216,6 +217,7 @@ public class SearchResultsViewController : UIViewController {
     
     func updateVisibleSections() {
         var sections : [CollectionViewSectionController]
+        let team = ZMUser.selfUser().team
         
         if isAddingParticipants {
             switch (mode, team != nil) {
@@ -235,9 +237,9 @@ public class SearchResultsViewController : UIViewController {
         } else {
             switch (mode, team != nil) {
             case (.search, false):
-                sections = [contactsSection, conversationsSection, directorySection]
+                sections = [contactsSection, conversationsSection, directorySection, servicesSection] // TODO: disable services
             case (.search, true):
-                sections = [teamMemberAndContactsSection, conversationsSection, directorySection]
+                sections = [teamMemberAndContactsSection, conversationsSection, directorySection, servicesSection]
             case (.selection, false):
                 sections = [contactsSection]
             case (.selection, true):
@@ -266,6 +268,7 @@ public class SearchResultsViewController : UIViewController {
         teamMemberAndContactsSection.contacts = Set(teamContacts + contacts).sorted { $0.name.compare($1.name) == .orderedAscending }
         directorySection.suggestions = searchResult.directory
         conversationsSection.groupConversations = searchResult.conversations
+        servicesSection.services = searchResult.services
         
         searchResultsView?.collectionView.reloadData()
     }
@@ -281,6 +284,8 @@ public class SearchResultsViewController : UIViewController {
             return .conversations
         } else if controller === directorySection {
             return .directory
+        } else if controller === servicesSection {
+            return .services
         } else {
             return .unknown
         }
@@ -290,6 +295,11 @@ public class SearchResultsViewController : UIViewController {
 
 extension SearchResultsViewController : CollectionViewSectionDelegate {
     
+    public func collectionViewSectionControllerDidChangeVisibility(_ controller: CollectionViewSectionController!) {
+        sectionAggregator.updateCollectionViewWithControllers()
+        sectionAggregator.reloadData()
+    }
+    
     public func collectionViewSectionController(_ controller: CollectionViewSectionController!, indexPathForItemIndex itemIndex: UInt) -> IndexPath! {
         let section = sectionAggregator.visibleSectionControllers.index(where: { $0 === controller }) ?? 0
         return IndexPath(row: Int(itemIndex), section: section)
@@ -298,6 +308,15 @@ extension SearchResultsViewController : CollectionViewSectionDelegate {
     public func collectionViewSectionController(_ controller: CollectionViewSectionController!, didSelectItem item: Any!, at indexPath: IndexPath!) {
         if let user = item as? ZMUser {
             delegate?.searchResultsViewController(self, didTapOnUser: user, indexPath: indexPath, section: sectionFor(controller: controller))
+        }
+        else if let service = item as? ServiceUser {
+            guard let userSession = ZMUserSession.shared() else {
+                return
+            }
+            
+            service.startConversation(in: userSession) { conversation in
+                self.delegate?.searchResultsViewController(self, didTapOnConversation: conversation)
+            }
         }
         else if let searchUser = item as? ZMSearchUser {
             delegate?.searchResultsViewController(self, didTapOnUser: searchUser, indexPath: indexPath, section: sectionFor(controller: controller))
