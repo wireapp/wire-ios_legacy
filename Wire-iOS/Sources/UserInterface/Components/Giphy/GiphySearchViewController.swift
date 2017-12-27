@@ -76,7 +76,7 @@ class GiphyCollectionViewCell: UICollectionViewCell {
 
 class GiphySearchViewController: UICollectionViewController {
 
-    public var delegate: GiphySearchViewControllerDelegate?
+    public weak var delegate: GiphySearchViewControllerDelegate?
 
     let searchResultsController: ZiphySearchResultsController
     let masonrylayout: ARCollectionViewMasonryLayout
@@ -105,6 +105,10 @@ class GiphySearchViewController: UICollectionViewController {
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    deinit {
+        cleanPendingTaskAndTimer()
     }
 
     override func viewDidLoad() {
@@ -224,13 +228,19 @@ class GiphySearchViewController: UICollectionViewController {
         }
     }
 
-    func performSearchAfter(delay: TimeInterval) {
+    func cleanPendingTaskAndTimer() {
         pendingSearchtask?.cancel()
         pendingSearchtask = nil
         pendingTimer?.invalidate()
+    }
 
-        ///FIXME:
-        pendingTimer = Timer.scheduledTimer(timeInterval: delay, target: self, selector: #selector(GiphySearchViewController.performSearch), userInfo: nil, repeats: false)
+    func performSearchAfter(delay: TimeInterval) {
+        cleanPendingTaskAndTimer()
+
+        let block: (Timer) -> Void = {[weak self] _ in                                                                        self?.performSearch()
+        }
+
+        pendingTimer = .allVersionCompatibleScheduledTimer(withTimeInterval: delay, repeats: false, block: block)
     }
 
     public override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

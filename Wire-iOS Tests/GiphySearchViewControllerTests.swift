@@ -44,13 +44,14 @@ final class GiphySearchViewControllerTests: XCTestCase {
             // GIVEN
             let searchTerm: String = "apple"
 
-            let giphySearchViewController = GiphySearchViewController(withSearchTerm: searchTerm, conversation: (mockConversation as Any) as! ZMConversation)
+            var giphySearchViewController: GiphySearchViewController! = GiphySearchViewController(withSearchTerm: searchTerm, conversation: (mockConversation as Any) as! ZMConversation)
             sut = giphySearchViewController
 
 
             // WHEN
             /// schedule a timer
-            giphySearchViewController.performSearchAfter(delay: 0.1)
+//            giphySearchViewController.performSearchAfter(delay: 0.1)
+            giphySearchViewController = nil
         }
 
         // THEN

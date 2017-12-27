@@ -39,6 +39,16 @@ extension Timer {
             self, selector: #selector(timerBlcokInvoke), userInfo: Block(block), repeats: repeats)
     }
 
+
+    static func allVersionCompatibleScheduledTimer(withTimeInterval: TimeInterval, repeats: Bool, block: @escaping (Timer) -> Void) -> Timer {
+        if #available(iOS 10.0, *) {
+            return .scheduledTimer(withTimeInterval: withTimeInterval, repeats: true,
+                                                  block: block)
+        } else {
+            return .iOS9ScheduledTimer(withTimeInterval: withTimeInterval, repeats: true, block: block)
+        }
+    }
+
     static func timerBlcokInvoke(timer: Timer) {
         if let block = timer.userInfo as? Block<(Timer) -> Void> {
             block.f(timer)

@@ -16,13 +16,12 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-
 import XCTest
 @testable import Wire
 
 final class ConversationCellTests: XCTestCase {
 
-    weak var sut : ConversationCell?
+    weak var sut: ConversationCell?
 
     override func setUp() {
         super.setUp()
@@ -34,8 +33,8 @@ final class ConversationCellTests: XCTestCase {
         super.tearDown()
     }
 
-    func testConversationCellIsNotRetainedAfterTimerIsScheduled(){
-        autoreleasepool{
+    func testConversationCellIsNotRetainedAfterTimerIsScheduled() {
+        autoreleasepool {
             // GIVEN
             let cellInTable = ConversationCell()
             sut = cellInTable
@@ -44,7 +43,7 @@ final class ConversationCellTests: XCTestCase {
             layoutProperties.showBurstTimestamp = true
             let mockMessage = MockMessageFactory.locationMessage()
             cellInTable.configure(for: mockMessage, layoutProperties: layoutProperties)
-            var tableView : UITableView! = cellInTable.wrapInTableView()
+            var tableView: UITableView! = cellInTable.wrapInTableView()
             tableView.reloadData()
 
             // WHEN
@@ -57,3 +56,4 @@ final class ConversationCellTests: XCTestCase {
         XCTAssertEqual(sut, nil)
     }
 }
+
