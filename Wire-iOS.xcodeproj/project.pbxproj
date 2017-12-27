@@ -5683,7 +5683,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = $SRCROOT/Scripts/copyExtraAudioNotifications;
+			shellScript = "$SRCROOT/Scripts/copyExtraAudioNotifications";
 		};
 		193B0B9A94C0482E9B6C33B0 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -5821,12 +5821,10 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-Wire-iOS/Pods-Wire-iOS-frameworks.sh",
-				"${PODS_ROOT}/Inapptics/Inapptics.framework",
 				"${PODS_ROOT}/Localytics/Localytics-iOS-4.3.0/Localytics.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Inapptics.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Localytics.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
