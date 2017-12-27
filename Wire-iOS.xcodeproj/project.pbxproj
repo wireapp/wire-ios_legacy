@@ -977,7 +977,7 @@
 		EF25F8871FC57F320040C3CC /* AccessoryTextFieldTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF25F8851FC57EE90040C3CC /* AccessoryTextFieldTests.swift */; };
 		EF2C189E1FED0D6900E9F2FD /* ConversationCellTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF2C189C1FED0D3000E9F2FD /* ConversationCellTests.swift */; };
 		EF2C18A01FED435600E9F2FD /* ConversationCell+BurstTimestamp.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF2C189F1FED435600E9F2FD /* ConversationCell+BurstTimestamp.swift */; };
-		EF2C18A21FED541F00E9F2FD /* Timer+iOS9ScheduledTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF2C18A11FED541F00E9F2FD /* Timer+iOS9ScheduledTimer.swift */; };
+		EF2C18A21FED541F00E9F2FD /* Timer+allVersionCompatibleScheduledTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF2C18A11FED541F00E9F2FD /* Timer+allVersionCompatibleScheduledTimer.swift */; };
 		EF6163A51FE9583400C6F5A9 /* Message+dayFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF6163A41FE9583400C6F5A9 /* Message+dayFormatter.swift */; };
 		EF6163A61FE9682700C6F5A9 /* TextMessageCellTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8EE5591D636F4600B0D6D7 /* TextMessageCellTests.swift */; };
 		EF7F74041FCC033D0059C13F /* EmailAdresssValidatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF7F74021FCC01140059C13F /* EmailAdresssValidatorTests.swift */; };
@@ -2523,7 +2523,7 @@
 		EF25F8851FC57EE90040C3CC /* AccessoryTextFieldTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessoryTextFieldTests.swift; sourceTree = "<group>"; };
 		EF2C189C1FED0D3000E9F2FD /* ConversationCellTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationCellTests.swift; sourceTree = "<group>"; };
 		EF2C189F1FED435600E9F2FD /* ConversationCell+BurstTimestamp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConversationCell+BurstTimestamp.swift"; sourceTree = "<group>"; };
-		EF2C18A11FED541F00E9F2FD /* Timer+iOS9ScheduledTimer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Timer+iOS9ScheduledTimer.swift"; sourceTree = "<group>"; };
+		EF2C18A11FED541F00E9F2FD /* Timer+allVersionCompatibleScheduledTimer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Timer+allVersionCompatibleScheduledTimer.swift"; sourceTree = "<group>"; };
 		EF2CC33C1FF3C567009FFE4C /* ConversationCell+Private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ConversationCell+Private.h"; sourceTree = "<group>"; };
 		EF6163A41FE9583400C6F5A9 /* Message+dayFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Message+dayFormatter.swift"; sourceTree = "<group>"; };
 		EF61B33F1FC84B0100D8E631 /* AccessoryTextFieldValidationTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccessoryTextFieldValidationTests.swift; sourceTree = "<group>"; };
@@ -4314,7 +4314,7 @@
 				8742C2E91E5309FC00329FB6 /* NSAttributedString+Highlight.swift */,
 				7CA540811F740B7C00457F4B /* UIScreen+Compact.h */,
 				7CA540821F740B7C00457F4B /* UIScreen+Compact.m */,
-				EF2C18A11FED541F00E9F2FD /* Timer+iOS9ScheduledTimer.swift */,
+				EF2C18A11FED541F00E9F2FD /* Timer+allVersionCompatibleScheduledTimer.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -6383,7 +6383,7 @@
 				EE4332491F1A67E500096D90 /* PopUpIconButton.swift in Sources */,
 				871BC2201D34F8F800DF0793 /* ActionSheetAlertView.m in Sources */,
 				16B2DE2E1CCFB3B0000D7C30 /* InputBar.swift in Sources */,
-				EF2C18A21FED541F00E9F2FD /* Timer+iOS9ScheduledTimer.swift in Sources */,
+				EF2C18A21FED541F00E9F2FD /* Timer+allVersionCompatibleScheduledTimer.swift in Sources */,
 				871BC22B1D34F8F800DF0793 /* FullscreenImageViewController.m in Sources */,
 				871BC28E1D34F8F800DF0793 /* UITableViewCell+Reuse.swift in Sources */,
 				87F18BD71E04035500C69D9B /* CollectionHeaderView.swift in Sources */,

@@ -21,9 +21,6 @@
 
 @interface ConversationCell (Private)
 
-@property (nonatomic) UIFont *burstNormalFont;
-@property (nonatomic) UIFont *burstBoldFont;
-
 - (void)updateCountdownView;
 - (void)startCountdownAnimationIfNeeded:(id<ZMConversationMessage>)message;
 

@@ -103,6 +103,9 @@ typedef void (^SelectedMenuBlock)(BOOL selected, BOOL animated);
 @property (nonatomic, readwrite) ConversationCellBurstTimestampView *burstTimestampView;
 @property (nonatomic) NSTimer *burstTimestampTimer;
 
+@property (nonatomic) UIFont *burstNormalFont;
+@property (nonatomic) UIFont *burstBoldFont;
+
 - (void)configureForMessage:(id<ZMConversationMessage>)message layoutProperties:(ConversationCellLayoutProperties *)layoutProperties;
 /// Update cell due since the message content has changed. Return True if the change requires the cell to be re-sized.
 - (BOOL)updateForMessage:(MessageChangeInfo *)changeInfo;

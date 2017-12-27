@@ -21,6 +21,8 @@ import Foundation
 public extension ConversationCell {
 
     @objc func scheduledTimerForUpdateBurstTimestamp() {
+        guard let _ = layoutProperties else {return}
+
         if layoutProperties.showBurstTimestamp {
 
             let block: (Timer) -> Void = {[weak self] _ in                                                                        self?.updateBurstTimestamp()
@@ -43,6 +45,7 @@ public extension ConversationCell {
                 startCountdownAnimationIfNeeded(message)
             }
         }
+
         messageContentView.bringSubview(toFront: countdownContainerView)
     }
 

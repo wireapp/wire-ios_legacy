@@ -36,19 +36,24 @@ final class ConversationCellTests: XCTestCase {
     func testConversationCellIsNotRetainedAfterTimerIsScheduled() {
         autoreleasepool {
             // GIVEN
-            let cellInTable = ConversationCell()
+            var cellInTable: ConversationCell! = ConversationCell()
             sut = cellInTable
 
-            let layoutProperties = ConversationCellLayoutProperties()
+            var layoutProperties: ConversationCellLayoutProperties! = ConversationCellLayoutProperties()
             layoutProperties.showBurstTimestamp = true
-            let mockMessage = MockMessageFactory.locationMessage()
+            var mockMessage: MockMessage! = MockMessageFactory.textMessage(withText: "foo")
+
             cellInTable.configure(for: mockMessage, layoutProperties: layoutProperties)
+
             var tableView: UITableView! = cellInTable.wrapInTableView()
             tableView.reloadData()
 
             // WHEN
             cellInTable.willDisplayInTableView()
             tableView = nil
+            cellInTable = nil
+            layoutProperties = nil
+            mockMessage = nil
         }
 
         // THEN
