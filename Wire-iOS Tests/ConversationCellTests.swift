@@ -47,13 +47,12 @@ final class ConversationCellTests: XCTestCase {
             tableView.reloadData()
 
             // WHEN
-            /// schedule a timer
             cellInTable.willDisplayInTableView()
             tableView = nil
         }
 
         // THEN
-        XCTAssertEqual(sut, nil)
+        XCTAssertNil(sut)
     }
 }
 

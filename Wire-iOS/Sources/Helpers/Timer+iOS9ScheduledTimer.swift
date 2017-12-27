@@ -20,26 +20,26 @@
 import Foundation
 
 
-private class Block<T> {
+fileprivate class Block<T> {
     let f : T
     init (_ f: T) { self.f = f }
 }
 
 extension Timer {
 
-    /// ScheduledTimer with block for iOS9.
+    fileprivate static func iOS9ScheduledTimer(withTimeInterval: TimeInterval, repeats: Bool, block: (Timer) -> Void) -> Timer {
+        return self.scheduledTimer(timeInterval: withTimeInterval, target:
+            self, selector: #selector(timerBlcokInvoke), userInfo: Block(block), repeats: repeats)
+    }
+
+
+    /// ScheduledTimer with block for iOS10+ and iOS9.
     ///
     /// - Parameters:
     ///   - withTimeInterval: The number of seconds between firings of the timer. If seconds is less than or equal to 0.0, this method chooses the nonnegative value of 0.1 milliseconds instead
     ///   - repeats: repeats  If YES, the timer will repeatedly reschedule itself until invalidated. If NO, the timer will be invalidated after it fires.
     ///   - block: The execution body of the timer; the timer itself is passed as the parameter to this block when executed to aid in avoiding cyclical references
     /// - Returns: a new NSTimer object initialized with the specified block object and schedules it on the current run loop in the default mode.
-    static func iOS9ScheduledTimer(withTimeInterval: TimeInterval, repeats: Bool, block: (Timer) -> Void) -> Timer {
-        return self.scheduledTimer(timeInterval: withTimeInterval, target:
-            self, selector: #selector(timerBlcokInvoke), userInfo: Block(block), repeats: repeats)
-    }
-
-
     static func allVersionCompatibleScheduledTimer(withTimeInterval: TimeInterval, repeats: Bool, block: @escaping (Timer) -> Void) -> Timer {
         if #available(iOS 10.0, *) {
             return .scheduledTimer(withTimeInterval: withTimeInterval, repeats: true,
@@ -49,7 +49,7 @@ extension Timer {
         }
     }
 
-    static func timerBlcokInvoke(timer: Timer) {
+    @objc fileprivate static func timerBlcokInvoke(timer: Timer) {
         if let block = timer.userInfo as? Block<(Timer) -> Void> {
             block.f(timer)
         }
