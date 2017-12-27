@@ -21,7 +21,6 @@
 
 @interface ConversationCell (Private)
 
-@property (nonatomic) NSTimer *burstTimestampTimer;
 @property (nonatomic) UIFont *burstNormalFont;
 @property (nonatomic) UIFont *burstBoldFont;
 
