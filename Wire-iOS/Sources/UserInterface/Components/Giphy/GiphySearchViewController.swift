@@ -108,12 +108,16 @@ class GiphySearchViewController: UICollectionViewController {
     }
 
     deinit {
-        cleanPendingTaskAndTimer()
+        cleanUpPendingTask()
+        cleanUpPendingTimer()
     }
 
-    func cleanPendingTaskAndTimer() {
+    func cleanUpPendingTask() {
         pendingSearchtask?.cancel()
         pendingSearchtask = nil
+    }
+
+    func cleanUpPendingTimer() {
         pendingTimer?.invalidate()
         pendingTimer = nil
     }
@@ -209,8 +213,7 @@ class GiphySearchViewController: UICollectionViewController {
     }
 
     func performSearch() {
-        pendingTimer?.invalidate()
-        pendingTimer = nil
+        cleanUpPendingTimer()
 
         if searchTerm.isEmpty {
             pendingSearchtask = searchResultsController.trending() { [weak self] (success, error) in
@@ -237,7 +240,8 @@ class GiphySearchViewController: UICollectionViewController {
     }
 
     func performSearchAfter(delay: TimeInterval) {
-        cleanPendingTaskAndTimer()
+        cleanUpPendingTask()
+        cleanUpPendingTimer()
 
         pendingTimer = .allVersionCompatibleScheduledTimer(withTimeInterval: delay, repeats: false) { [weak self] _ in
             self?.performSearch()
