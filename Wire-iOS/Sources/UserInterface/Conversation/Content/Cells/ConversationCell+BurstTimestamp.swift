@@ -23,7 +23,7 @@ public extension ConversationCell {
     @objc func scheduledTimerForUpdateBurstTimestamp() {
         if layoutProperties.showBurstTimestamp {
 
-            let block:  (Timer) -> Void = {[weak self] _ in                                                                        self?.updateBurstTimestamp()
+            let block: (Timer) -> Void = {[weak self] _ in                                                                        self?.updateBurstTimestamp()
             }
 
             if #available(iOS 10.0, *) {
@@ -31,8 +31,8 @@ public extension ConversationCell {
                                                       block: block
                 )
             } else {
-                burstTimestampTimer = .scheduledTimer(withTimeInterval: 60, repeats: true,
-                                                      callback: block
+                burstTimestampTimer = .iOS9ScheduledTimer(withTimeInterval: 60, repeats: true,
+                                                      block: block
                 )
             }
         }
@@ -71,4 +71,3 @@ public extension ConversationCell {
         burstTimestampView.isSeparatorHidden = hidden
     }
 }
-
