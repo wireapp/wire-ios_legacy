@@ -239,10 +239,9 @@ class GiphySearchViewController: UICollectionViewController {
     func performSearchAfter(delay: TimeInterval) {
         cleanPendingTaskAndTimer()
 
-        let block: (Timer) -> Void = {[weak self] _ in                                                                        self?.performSearch()
+        pendingTimer = .allVersionCompatibleScheduledTimer(withTimeInterval: delay, repeats: false) { [weak self] _ in
+            self?.performSearch()
         }
-
-        pendingTimer = .allVersionCompatibleScheduledTimer(withTimeInterval: delay, repeats: false, block: block)
     }
 
     public override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -326,4 +325,3 @@ extension GiphySearchViewController: ARCollectionViewMasonryLayoutDelegate {
     }
 
 }
-

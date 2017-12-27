@@ -25,10 +25,8 @@ public extension ConversationCell {
 
         if layoutProperties.showBurstTimestamp {
 
-            let block: (Timer) -> Void = {[weak self] _ in                                                                        self?.updateBurstTimestamp()
+            burstTimestampTimer = .allVersionCompatibleScheduledTimer(withTimeInterval: 60, repeats: true) { [weak self] _ in                                                                        self?.updateBurstTimestamp()
             }
-
-            burstTimestampTimer = .allVersionCompatibleScheduledTimer(withTimeInterval: 60, repeats: true, block: block)
         }
     }
 
