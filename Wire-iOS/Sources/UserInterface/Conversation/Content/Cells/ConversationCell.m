@@ -427,7 +427,11 @@ static const CGFloat BurstContainerExpandedHeight = 40;
 - (void)updateBurstTimestamp
 {
     if (self.layoutProperties.showDayBurstTimestamp) {
-        self.burstTimestampView.label.text = [[Message dayFormatterWithDate: self.message.serverTimestamp] stringFromDate:self.message.serverTimestamp].uppercaseString;
+        NSDate * serverTimestamp = self.message.serverTimestamp;
+        if (serverTimestamp != nil) {
+            self.burstTimestampView.label.text = [[Message dayFormatterWithDate: serverTimestamp] stringFromDate: serverTimestamp].uppercaseString;
+        }
+
         self.burstTimestampView.label.font = self.burstBoldFont;
     } else {
         self.burstTimestampView.label.text = [Message formattedReceivedDateForMessage:self.message].uppercaseString;
