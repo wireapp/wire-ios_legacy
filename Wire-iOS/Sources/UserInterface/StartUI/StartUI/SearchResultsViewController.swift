@@ -331,9 +331,18 @@ extension SearchResultsViewController : CollectionViewSectionDelegate {
             guard let userSession = ZMUserSession.shared() else {
                 return
             }
+            self.showLoadingView = true
             
             service.startConversation(in: userSession) { conversation in
-                self.delegate?.searchResultsViewController(self, didTapOnConversation: conversation)
+                defer {
+                    self.showLoadingView = false
+                }
+                
+                guard let createdConversation = conversation else {
+                    return
+                }
+                
+                self.delegate?.searchResultsViewController(self, didTapOnConversation: createdConversation)
             }
         }
         else if let searchUser = item as? ZMSearchUser {
