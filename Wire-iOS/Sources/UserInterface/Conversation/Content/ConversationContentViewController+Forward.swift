@@ -135,7 +135,9 @@ extension ZMConversationList {
 }
 
 extension ConversationContentViewController: UIAdaptivePresentationControllerDelegate {
-    @objc public func showForwardFor(message: ZMConversationMessage, fromCell: ConversationCell?) {
+    @objc public func showForwardFor(message: ZMConversationMessage?, fromCell: ConversationCell?) {
+        guard let message = message else { return }
+
         if let window = self.view.window {
             window.endEditing(true)
         }
