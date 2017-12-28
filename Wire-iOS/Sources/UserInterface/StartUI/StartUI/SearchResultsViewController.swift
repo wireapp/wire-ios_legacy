@@ -25,7 +25,7 @@ public protocol SearchResultsViewControllerDelegate {
     func searchResultsViewController(_ searchResultsViewController: SearchResultsViewController, didTapOnUser user: ZMSearchableUser, indexPath: IndexPath, section: SearchResultsViewControllerSection)
     func searchResultsViewController(_ searchResultsViewController: SearchResultsViewController, didDoubleTapOnUser user: ZMSearchableUser, indexPath: IndexPath)
     func searchResultsViewController(_ searchResultsViewController: SearchResultsViewController, didTapOnConversation conversation: ZMConversation)
-    
+    func searchResultsViewController(_ searchResultsViewController: SearchResultsViewController, didTapOnSeviceUser user: ServiceUser)
 }
 
 @objc
@@ -101,7 +101,7 @@ public class SearchResultsViewController : UIViewController {
     let directorySection = UsersInDirectorySection()
     let conversationsSection: GroupConversationsSection
     let topPeopleSection: TopPeopleLineSection
-    let servicesSection = ServicesSection()
+    let servicesSection: ServicesSection
     
     var pendingSearchTask: SearchTask? = nil
     var isAddingParticipants: Bool
@@ -140,6 +140,9 @@ public class SearchResultsViewController : UIViewController {
         teamMemberAndContactsSection.title = "peoplepicker.header.contacts".localized
         teamMemberAndContactsSection.team = team
         teamMemberAndContactsSection.colorSchemeVariant = variant
+        
+        servicesSection = ServicesSection(colorSchemeVariant: variant)
+        
         conversationsSection = GroupConversationsSection()
         conversationsSection.title = team != nil ? "peoplepicker.header.team_conversations".localized(args: teamName ?? "") : "peoplepicker.header.conversations".localized
         topPeopleSection = TopPeopleLineSection()
@@ -184,7 +187,7 @@ public class SearchResultsViewController : UIViewController {
     public func search(withQuery query: String, local: Bool = false) {
         pendingSearchTask?.cancel()
         
-        let searchOptions : SearchOptions = local ? [.contacts, .teamMembers] : [.conversations, .contacts, .teamMembers, .directory, .services]
+        let searchOptions : SearchOptions = local && !shouldShowBotResults ? [.contacts, .teamMembers] : [.conversations, .contacts, .teamMembers, .directory, .services]
         let request = SearchRequest(query: query, searchOptions:searchOptions, team: ZMUser.selfUser().team)
         let task = searchDirectory.perform(request)
         
@@ -215,6 +218,10 @@ public class SearchResultsViewController : UIViewController {
         }
     }
     
+    private var shouldShowBotResults: Bool {
+        return ZMUser.selfUser().team != nil && DeveloperMenuState.developerMenuEnabled()
+    }
+    
     func updateVisibleSections() {
         var sections : [CollectionViewSectionController]
         let team = ZMUser.selfUser().team
@@ -225,21 +232,21 @@ public class SearchResultsViewController : UIViewController {
                 sections = [contactsSection]
             case (.search, true):
                 sections = [teamMemberAndContactsSection]
-                if DeveloperMenuState.developerMenuEnabled() {
+                if shouldShowBotResults {
                     sections.append(servicesSection)
                 }
             case (.selection, false):
                 sections = [contactsSection]
             case (.selection, true):
                 sections = [teamMemberAndContactsSection]
-                if DeveloperMenuState.developerMenuEnabled() {
+                if shouldShowBotResults {
                     sections.append(servicesSection)
                 }
             case (.list, false):
                 sections = [contactsSection]
             case (.list, true):
                 sections = [teamMemberAndContactsSection]
-                if DeveloperMenuState.developerMenuEnabled() {
+                if shouldShowBotResults {
                     sections.append(servicesSection)
                 }
             }
@@ -249,21 +256,21 @@ public class SearchResultsViewController : UIViewController {
                 sections = [contactsSection, conversationsSection, directorySection]
             case (.search, true):
                 sections = [teamMemberAndContactsSection, conversationsSection, directorySection]
-                if DeveloperMenuState.developerMenuEnabled() {
+                if shouldShowBotResults {
                     sections.append(servicesSection)
                 }
             case (.selection, false):
                 sections = [contactsSection]
             case (.selection, true):
                 sections = [teamMemberAndContactsSection]
-                if DeveloperMenuState.developerMenuEnabled() {
+                if shouldShowBotResults {
                     sections.append(servicesSection)
                 }
             case (.list, false):
                 sections = [topPeopleSection, contactsSection]
             case (.list, true):
                 sections = [teamMemberAndContactsSection]
-                if DeveloperMenuState.developerMenuEnabled() {
+                if shouldShowBotResults {
                     sections.append(servicesSection)
                 }
             }
@@ -288,7 +295,8 @@ public class SearchResultsViewController : UIViewController {
         conversationsSection.groupConversations = searchResult.conversations
         servicesSection.services = searchResult.services
         
-        searchResultsView?.collectionView.reloadData()
+        sectionAggregator.updateCollectionViewWithControllers()
+        sectionAggregator.reloadData()
     }
     
     func sectionFor(controller: CollectionViewSectionController) -> SearchResultsViewControllerSection {
@@ -312,12 +320,6 @@ public class SearchResultsViewController : UIViewController {
 }
 
 extension SearchResultsViewController : CollectionViewSectionDelegate {
-    
-    public func collectionViewSectionControllerDidChangeVisibility(_ controller: CollectionViewSectionController!) {
-        sectionAggregator.updateCollectionViewWithControllers()
-        sectionAggregator.reloadData()
-    }
-    
     public func collectionViewSectionController(_ controller: CollectionViewSectionController!, indexPathForItemIndex itemIndex: UInt) -> IndexPath! {
         let section = sectionAggregator.visibleSectionControllers.index(where: { $0 === controller }) ?? 0
         return IndexPath(row: Int(itemIndex), section: section)
@@ -328,22 +330,7 @@ extension SearchResultsViewController : CollectionViewSectionDelegate {
             delegate?.searchResultsViewController(self, didTapOnUser: user, indexPath: indexPath, section: sectionFor(controller: controller))
         }
         else if let service = item as? ServiceUser {
-            guard let userSession = ZMUserSession.shared() else {
-                return
-            }
-            self.showLoadingView = true
-            
-            service.startConversation(in: userSession) { conversation in
-                defer {
-                    self.showLoadingView = false
-                }
-                
-                guard let createdConversation = conversation else {
-                    return
-                }
-                
-                self.delegate?.searchResultsViewController(self, didTapOnConversation: createdConversation)
-            }
+            delegate?.searchResultsViewController(self, didTapOnSeviceUser: service)
         }
         else if let searchUser = item as? ZMSearchUser {
             delegate?.searchResultsViewController(self, didTapOnUser: searchUser, indexPath: indexPath, section: sectionFor(controller: controller))

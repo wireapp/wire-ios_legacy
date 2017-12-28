@@ -352,6 +352,22 @@ static NSUInteger const StartUIInitiallyShowsKeyboardConversationThreshold = 10;
     }
 }
 
+- (void)searchResultsViewController:(SearchResultsViewController * _Nonnull)searchResultsViewController didTapOnSeviceUser:(id<ServiceUser> _Nonnull)serviceUser
+{
+    [self setShowLoadingView:YES];
+    
+    [ZMUserSession.sharedSession startConversationWith:serviceUser
+                                            completion:^(ZMConversation * _Nullable conversation) {
+                                                [self setShowLoadingView:NO];
+                                                
+                                                if (nil != conversation) {
+                                                    if ([self.delegate respondsToSelector:@selector(startUI:didSelectConversation:)]) {
+                                                        [self.delegate startUI:self didSelectConversation:conversation];
+                                                    }
+                                                }
+                                            }];
+}
+
 #pragma mark - SearchHeaderViewControllerDelegate
 
 - (void)searchHeaderViewControllerDidCancelAction:(SearchHeaderViewController *)searchHeaderViewController

@@ -33,19 +33,9 @@ NSString *const PeoplePickerGroupConversationsReuseIdentifier = @"PeoplePickerGr
 @synthesize collectionView = _collectionView;
 @synthesize delegate = _delegate;
 
-- (BOOL)hasSearchResults
-{
-    return (self.groupConversations.count > 0);
-}
-
 - (BOOL)isHidden
 {
     return (self.groupConversations.count == 0);
-}
-
-+ (NSSet *)keyPathsForValuesAffectingIsHidden
-{
-    return [NSSet setWithObject:NSStringFromSelector(@selector(groupConversations))];
 }
 
 - (void)setCollectionView:(UICollectionView *)collectionView

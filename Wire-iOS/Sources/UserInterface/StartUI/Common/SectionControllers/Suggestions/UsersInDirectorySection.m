@@ -40,11 +40,6 @@ NSString *const PeoplePickerUsersInDirectoryCellReuseIdentifier = @"PeoplePicker
 @synthesize collectionView = _collectionView;
 @synthesize delegate = _delegate;
 
-- (BOOL)hasSearchResults
-{
-    return (self.suggestions.count > 0);
-}
-
 - (void)setCollectionView:(UICollectionView *)collectionView
 {
     _collectionView = collectionView;
@@ -60,8 +55,6 @@ NSString *const PeoplePickerUsersInDirectoryCellReuseIdentifier = @"PeoplePicker
         // We only need to subscribe once for all searchUsers
         self.userObserverToken = [UserChangeInfo addObserver:self forSearchUser:nil userSession:[ZMUserSession sharedSession]];
     }
-    
-    [self.delegate collectionViewSectionControllerDidChangeVisibility:self];
 }
 
 - (BOOL)isHidden

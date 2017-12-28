@@ -101,6 +101,7 @@ public class AddParticipantsViewController : UIViewController {
         searchResultsViewController.filterConversation = conversation.conversationType == .group ? conversation : nil
         searchResultsViewController.mode = .list
         searchResultsViewController.searchContactList()
+        searchResultsViewController.delegate = self
         
         userSelection.add(observer: self)
         
@@ -223,5 +224,34 @@ extension AddParticipantsViewController: CollectionViewSectionAggregatorDelegate
     
     public func scrollViewDidScroll(_ scrollView: UIScrollView) {
         searchHeaderViewController.separatorView.scrollViewDidScroll(scrollView: scrollView)
+    }
+}
+
+extension AddParticipantsViewController: SearchResultsViewControllerDelegate {
+    public func searchResultsViewController(_ searchResultsViewController: SearchResultsViewController, didTapOnUser user: ZMSearchableUser, indexPath: IndexPath, section: SearchResultsViewControllerSection)
+    {
+        // no-op
+    }
+    
+    public func searchResultsViewController(_ searchResultsViewController: SearchResultsViewController, didDoubleTapOnUser user: ZMSearchableUser, indexPath: IndexPath)
+    {
+        // no-op
+    }
+    
+    public func searchResultsViewController(_ searchResultsViewController: SearchResultsViewController, didTapOnConversation conversation: ZMConversation)
+    {
+        // no-op
+    }
+    
+    public func searchResultsViewController(_ searchResultsViewController: SearchResultsViewController, didTapOnSeviceUser user: ServiceUser)
+    {
+        guard let userSession = ZMUserSession.shared() else {
+            return
+        }
+        self.showLoadingView = true
+        self.conversation.add(serviceUser: user, in: userSession) {
+            self.delegate?.addParticipantsViewControllerDidCancel(self)
+            self.showLoadingView = false
+        }
     }
 }

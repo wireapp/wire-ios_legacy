@@ -93,11 +93,6 @@ NSString *const StartUICollectionViewCellReuseIdentifier = @"StartUICollectionVi
     [self.innerCollectionView registerClass:[TopPeopleCell class] forCellWithReuseIdentifier:CellReuseIdentifier];
 }
 
-- (BOOL)hasSearchResults
-{
-    return NO;
-}
-
 - (void)setUserSelection:(UserSelection *)userSelection
 {
     _userSelection = userSelection;
@@ -155,11 +150,6 @@ NSString *const StartUICollectionViewCellReuseIdentifier = @"StartUICollectionVi
 - (BOOL)isHidden
 {
     return (self.topPeople.count == 0);
-}
-
-+ (NSSet *)keyPathsForValuesAffectingIsHidden
-{
-    return [NSSet setWithObject:NSStringFromSelector(@selector(topPeople))];
 }
 
 #pragma mark - UICollectionViewDelegate, UICollectionViewDataSource

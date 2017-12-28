@@ -24,7 +24,6 @@ public class ServicesSection: NSObject, CollectionViewSectionController {
     public var services: [ServiceUser] = [] {
         didSet {
             self.isHidden = services.isEmpty
-            self.delegate?.collectionViewSectionControllerDidChangeVisibility(self)
         }
     }
     
@@ -49,8 +48,11 @@ public class ServicesSection: NSObject, CollectionViewSectionController {
     
     public var isHidden: Bool = false
     
-    public func hasSearchResults() -> Bool {
-        return !services.isEmpty
+    public let colorSchemeVariant: ColorSchemeVariant
+    
+    public init(colorSchemeVariant: ColorSchemeVariant) {
+        self.colorSchemeVariant = colorSchemeVariant
+        super.init()
     }
     
     public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -67,6 +69,7 @@ public class ServicesSection: NSObject, CollectionViewSectionController {
         }
         headerView.title = "peoplepicker.header.services".localized
         headerView.clipsToBounds = true
+        headerView.colorSchemeVariant = colorSchemeVariant
         return headerView
     }
     
@@ -80,6 +83,7 @@ public class ServicesSection: NSObject, CollectionViewSectionController {
         
         let user = self.services[indexPath.item]
         cell.user = user
+        cell.colorSchemeVariant = colorSchemeVariant
         cell.doubleTapAction = { [weak self] _ in
             guard let `self` = self else {
                 return

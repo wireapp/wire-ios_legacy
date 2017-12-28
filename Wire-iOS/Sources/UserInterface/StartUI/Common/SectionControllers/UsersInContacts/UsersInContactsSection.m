@@ -39,19 +39,9 @@ NSString *const PeoplePickerUsersInContactsReuseIdentifier = @"PeoplePickerUsers
     [self.userSelection removeObserver:self];
 }
 
-- (BOOL)hasSearchResults
-{
-    return (self.contacts.count > 0);
-}
-
 - (BOOL)isHidden
 {
     return (self.contacts.count == 0);
-}
-
-+ (NSSet *)keyPathsForValuesAffectingIsHidden
-{
-    return [NSSet setWithObject:NSStringFromSelector(@selector(contacts))];
 }
 
 - (void)setCollectionView:(UICollectionView *)collectionView
