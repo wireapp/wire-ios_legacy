@@ -219,7 +219,7 @@ public class SearchResultsViewController : UIViewController {
     }
     
     private var shouldShowBotResults: Bool {
-        return ZMUser.selfUser().team != nil && DeveloperMenuState.developerMenuEnabled()
+        return DeveloperMenuState.developerMenuEnabled() // TODO: check team users ZMUser.selfUser().team != nil &&
     }
     
     func updateVisibleSections() {
@@ -232,23 +232,14 @@ public class SearchResultsViewController : UIViewController {
                 sections = [contactsSection]
             case (.search, true):
                 sections = [teamMemberAndContactsSection]
-                if shouldShowBotResults {
-                    sections.append(servicesSection)
-                }
             case (.selection, false):
                 sections = [contactsSection]
             case (.selection, true):
                 sections = [teamMemberAndContactsSection]
-                if shouldShowBotResults {
-                    sections.append(servicesSection)
-                }
             case (.list, false):
                 sections = [contactsSection]
             case (.list, true):
                 sections = [teamMemberAndContactsSection]
-                if shouldShowBotResults {
-                    sections.append(servicesSection)
-                }
             }
         } else {
             switch (mode, team != nil) {
@@ -256,24 +247,19 @@ public class SearchResultsViewController : UIViewController {
                 sections = [contactsSection, conversationsSection, directorySection]
             case (.search, true):
                 sections = [teamMemberAndContactsSection, conversationsSection, directorySection]
-                if shouldShowBotResults {
-                    sections.append(servicesSection)
-                }
             case (.selection, false):
                 sections = [contactsSection]
             case (.selection, true):
                 sections = [teamMemberAndContactsSection]
-                if shouldShowBotResults {
-                    sections.append(servicesSection)
-                }
             case (.list, false):
                 sections = [topPeopleSection, contactsSection]
             case (.list, true):
                 sections = [teamMemberAndContactsSection]
-                if shouldShowBotResults {
-                    sections.append(servicesSection)
-                }
             }
+        }
+        
+        if shouldShowBotResults {
+            sections.append(servicesSection)
         }
         
         sectionAggregator.sectionControllers = sections
