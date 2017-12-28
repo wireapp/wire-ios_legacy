@@ -57,14 +57,8 @@ static const CGFloat BurstContainerExpandedHeight = 40;
 @property (nonatomic, readwrite) UILabel *authorLabel;
 @property (nonatomic, readwrite) NSParagraphStyle *authorParagraphStyle;
 
-@property (nonatomic) NSTimer *burstTimestampTimer;
-
-@property (nonatomic, readwrite) ConversationCellBurstTimestampView *burstTimestampView;
-
 @property (nonatomic, readwrite) UserImageView *authorImageView;
 @property (nonatomic, readwrite) UIView *authorImageContainer;
-@property (nonatomic) UIFont *burstNormalFont;
-@property (nonatomic) UIFont *burstBoldFont;
 
 @property (nonatomic) MessageToolboxView *toolboxView;
 
@@ -132,14 +126,18 @@ static const CGFloat BurstContainerExpandedHeight = 40;
     return self;
 }
 
+- (void)dealloc
+{
+    [self.burstTimestampTimer invalidate];
+    self.burstTimestampTimer = nil;
+}
+
 - (void)willMoveToWindow:(UIWindow *)newWindow
 {
     [super willMoveToWindow:newWindow];
     
     if (newWindow != nil) {
-        if (self.layoutProperties.showBurstTimestamp) {
-            self.burstTimestampTimer = [NSTimer scheduledTimerWithTimeInterval:60 target:self selector:@selector(updateBurstTimestamp) userInfo:nil repeats:YES];
-        }
+        [self scheduledTimerForUpdateBurstTimestamp];
     } else {
         [self.burstTimestampTimer invalidate];
         self.burstTimestampTimer = nil;
@@ -222,25 +220,6 @@ static const CGFloat BurstContainerExpandedHeight = 40;
     self.authorImageTopMarginConstraint.constant = 0;
     self.beingEdited = NO;
     [self updateCountdownView];
-}
-
-- (void)willDisplayInTableView
-{
-    if (self.layoutProperties.showBurstTimestamp) {
-        self.burstTimestampTimer = [NSTimer scheduledTimerWithTimeInterval:60 target:self selector:@selector(updateBurstTimestamp) userInfo:nil repeats:YES];
-    }
-    
-    [self.contentView bringSubviewToFront:self.likeButton];
-
-    if ([self.delegate respondsToSelector:@selector(conversationCellShouldStartDestructionTimer:)] &&
-        [self.delegate conversationCellShouldStartDestructionTimer:self]) {
-        [self updateCountdownView];
-        if ([self.message startSelfDestructionIfNeeded]) {
-            [self startCountdownAnimationIfNeeded:self.message];
-        }
-    }
-
-    [self.messageContentView bringSubviewToFront:self.countdownContainerView];
 }
 
 - (void)didEndDisplayingInTableView
@@ -422,24 +401,6 @@ static const CGFloat BurstContainerExpandedHeight = 40;
     self.authorLabel.textColor = [[ColorScheme defaultColorScheme] nameAccentForColor:message.sender.accentColorValue
                                                                               variant:[ColorScheme defaultColorScheme].variant];
     self.authorImageView.user = message.sender;
-}
-
-- (void)updateBurstTimestamp
-{
-    if (self.layoutProperties.showDayBurstTimestamp) {
-        NSDate * serverTimestamp = self.message.serverTimestamp;
-        if (serverTimestamp != nil) {
-            self.burstTimestampView.label.text = [[Message dayFormatterWithDate: serverTimestamp] stringFromDate: serverTimestamp].uppercaseString;
-        }
-
-        self.burstTimestampView.label.font = self.burstBoldFont;
-    } else {
-        self.burstTimestampView.label.text = [Message formattedReceivedDateForMessage:self.message].uppercaseString;
-        self.burstTimestampView.label.font = self.burstNormalFont;
-    }
-
-    BOOL hidden = !self.layoutProperties.showBurstTimestamp && !self.layoutProperties.showDayBurstTimestamp;
-    self.burstTimestampView.isSeparatorHidden = hidden;
 }
 
 - (void)setCountdownContainerViewHidden:(BOOL)countdownContainerViewHidden

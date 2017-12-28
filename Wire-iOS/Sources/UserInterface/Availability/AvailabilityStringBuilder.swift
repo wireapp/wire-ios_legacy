@@ -27,7 +27,10 @@
         
         switch style {
             case .list: do {
-                title = user.name
+                if let name = user.name {
+                    title = name
+                }
+
                 fontSize = .normal
                 if color == nil {
                     color = ColorScheme.default().color(withName: ColorSchemeColorTextForeground, variant: .dark)
