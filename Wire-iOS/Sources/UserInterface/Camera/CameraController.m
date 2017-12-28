@@ -535,10 +535,15 @@ NSString * const CameraSettingExposureTargetBias = @"exposureTargetBias";
 
 - (void)captureStillImageWithCompletionHandler:(void (^)(NSData * _Nullable imageData, NSDictionary * _Nullable metaData, NSError * _Nullable error))completionHandler;
 {
+    ///for iPad split/slide over mode, the session is not running
+    if (!self.session.isRunning) {
+        return;
+    }
+
     dispatch_async(self.sessionQueue, ^{
         AVCaptureConnection *connection = [self.stillCameraOutput connectionWithMediaType:AVMediaTypeVideo];
         UIDeviceOrientation deviceOrientation = [[DeviceOrientationObserver sharedInstance] deviceOrientation];
-        __block AVCaptureVideoOrientation videoOrientation = AVCaptureVideoOrientationPortrait;
+        __block AVCaptureVideoOrientation videoOrientation = (AVCaptureVideoOrientation)deviceOrientation;
 
 
         if (deviceOrientation == UIDeviceOrientationFaceDown || deviceOrientation == UIDeviceOrientationFaceUp) {
@@ -556,28 +561,22 @@ NSString * const CameraSettingExposureTargetBias = @"exposureTargetBias";
         connection.videoOrientation = videoOrientation;
         connection.automaticallyAdjustsVideoMirroring = NO;
         connection.videoMirrored = NO;
-        @try {
-            [self.stillCameraOutput captureStillImageAsynchronouslyFromConnection:connection completionHandler:^(CMSampleBufferRef imageDataSampleBuffer, NSError *error) {
-                if (error == nil) {
 
-                    NSData *imageData = [AVCaptureStillImageOutput jpegStillImageNSDataRepresentation:imageDataSampleBuffer];
 
-                    NSDictionary *metaData = (__bridge NSDictionary *)(CMCopyDictionaryOfAttachments(nil, imageDataSampleBuffer, kCMAttachmentMode_ShouldPropagate));
+        [self.stillCameraOutput captureStillImageAsynchronouslyFromConnection:connection completionHandler:^(CMSampleBufferRef imageDataSampleBuffer, NSError *error) {
+            if (error == nil) {
 
-                    dispatch_async(dispatch_get_main_queue(), ^{
-                        completionHandler(imageData, metaData, nil);
-                    });
-                } else {
-                    completionHandler(nil, nil, error);
-                }
-            }];
-        }
+                NSData *imageData = [AVCaptureStillImageOutput jpegStillImageNSDataRepresentation:imageDataSampleBuffer];
 
-        @catch (NSException *exception) {
-            ///with iPad split mode, app crashes
-            /// catch for [AVCaptureStillImageOutput captureStillImageAsynchronouslyFromConnection:completionHandler:] Inconsistent state
+                NSDictionary *metaData = (__bridge NSDictionary *)(CMCopyDictionaryOfAttachments(nil, imageDataSampleBuffer, kCMAttachmentMode_ShouldPropagate));
 
-        }
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    completionHandler(imageData, metaData, nil);
+                });
+            } else {
+                completionHandler(nil, nil, error);
+            }
+        }];
     });
 }
 
