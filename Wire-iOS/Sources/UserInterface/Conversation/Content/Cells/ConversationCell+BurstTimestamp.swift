@@ -21,12 +21,11 @@ import Foundation
 public extension ConversationCell {
 
     @objc func scheduledTimerForUpdateBurstTimestamp() {
-        guard let _ = layoutProperties else {return}
+        guard let _ = layoutProperties, layoutProperties.showBurstTimestamp else { return }
 
-        if layoutProperties.showBurstTimestamp {
-
-            burstTimestampTimer = .allVersionCompatibleScheduledTimer(withTimeInterval: 60, repeats: true) { [weak self] _ in                                                                        self?.updateBurstTimestamp()
-            }
+        burstTimestampTimer = .allVersionCompatibleScheduledTimer(withTimeInterval: 60, repeats: true) {
+            [weak self] _ in
+            self?.updateBurstTimestamp()
         }
     }
 
@@ -64,4 +63,3 @@ public extension ConversationCell {
         burstTimestampView.isSeparatorHidden = hidden
     }
 }
-
