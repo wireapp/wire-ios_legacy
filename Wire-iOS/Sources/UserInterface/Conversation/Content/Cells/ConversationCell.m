@@ -126,7 +126,8 @@ static const CGFloat BurstContainerExpandedHeight = 40;
     return self;
 }
 
-- (void)dealloc {
+- (void)dealloc
+{
     [self.burstTimestampTimer invalidate];
     self.burstTimestampTimer = nil;
 }

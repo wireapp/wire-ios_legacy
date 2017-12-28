@@ -16,22 +16,14 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-
 import Foundation
 
-
-fileprivate class Block<T> {
-    let f : T
+private class Box<T> {
+    let f: T
     init (_ f: T) { self.f = f }
 }
 
 extension Timer {
-
-    fileprivate static func iOS9ScheduledTimer(withTimeInterval: TimeInterval, repeats: Bool, block: (Timer) -> Void) -> Timer {
-        return self.scheduledTimer(timeInterval: withTimeInterval, target:
-            self, selector: #selector(timerBlcokInvoke), userInfo: Block(block), repeats: repeats)
-    }
-
 
     /// ScheduledTimer with block for iOS10+ and iOS9.
     ///
@@ -43,15 +35,21 @@ extension Timer {
     static func allVersionCompatibleScheduledTimer(withTimeInterval: TimeInterval, repeats: Bool, block: @escaping (Timer) -> Void) -> Timer {
         if #available(iOS 10.0, *) {
             return .scheduledTimer(withTimeInterval: withTimeInterval, repeats: true,
-                                                  block: block)
+                                   block: block)
         } else {
             return .iOS9ScheduledTimer(withTimeInterval: withTimeInterval, repeats: true, block: block)
         }
     }
 
-    @objc fileprivate static func timerBlcokInvoke(timer: Timer) {
-        if let block = timer.userInfo as? Block<(Timer) -> Void> {
-            block.f(timer)
+    fileprivate static func iOS9ScheduledTimer(withTimeInterval: TimeInterval, repeats: Bool, block: (Timer) -> Void) -> Timer {
+        return self.scheduledTimer(timeInterval: withTimeInterval, target:
+            self, selector: #selector(timerBlockInvoke), userInfo: Box(block), repeats: repeats)
+    }
+
+    @objc fileprivate static func timerBlockInvoke(timer: Timer) {
+        if let box = timer.userInfo as? Box<(Timer) -> Void> {
+            box.f(timer)
         }
     }
 }
+
