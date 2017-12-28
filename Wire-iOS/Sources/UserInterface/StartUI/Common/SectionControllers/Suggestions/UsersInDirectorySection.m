@@ -60,16 +60,13 @@ NSString *const PeoplePickerUsersInDirectoryCellReuseIdentifier = @"PeoplePicker
         // We only need to subscribe once for all searchUsers
         self.userObserverToken = [UserChangeInfo addObserver:self forSearchUser:nil userSession:[ZMUserSession sharedSession]];
     }
+    
+    [self.delegate collectionViewSectionControllerDidChangeVisibility:self];
 }
 
 - (BOOL)isHidden
 {
     return (self.suggestions.count == 0);
-}
-
-+ (NSSet *)keyPathsForValuesAffectingIsHidden
-{
-    return [NSSet setWithObject:NSStringFromSelector(@selector(suggestions))];
 }
 
 /// Creates the map (memory address)->(index) in array for @p searchResultUsersInDirectory

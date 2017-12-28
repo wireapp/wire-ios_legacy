@@ -49,12 +49,8 @@ extension ZMConversation {
         return conversationType.analyticsTypeString
     }
     
-    public var isServiceConversation : Bool {
-        guard conversationType == .oneOnOne,
-              let otherUser = firstActiveParticipantOtherThanSelf() , otherUser.isService
-        else { return false }
-        
-        return true
+    public var isServiceUserConversation : Bool {
+        return false // TODO
     }
 }
 

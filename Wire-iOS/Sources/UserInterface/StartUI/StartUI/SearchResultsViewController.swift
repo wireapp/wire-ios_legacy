@@ -225,29 +225,47 @@ public class SearchResultsViewController : UIViewController {
                 sections = [contactsSection]
             case (.search, true):
                 sections = [teamMemberAndContactsSection]
+                if DeveloperMenuState.developerMenuEnabled() {
+                    sections.append(servicesSection)
+                }
             case (.selection, false):
                 sections = [contactsSection]
             case (.selection, true):
                 sections = [teamMemberAndContactsSection]
+                if DeveloperMenuState.developerMenuEnabled() {
+                    sections.append(servicesSection)
+                }
             case (.list, false):
                 sections = [contactsSection]
             case (.list, true):
                 sections = [teamMemberAndContactsSection]
+                if DeveloperMenuState.developerMenuEnabled() {
+                    sections.append(servicesSection)
+                }
             }
         } else {
             switch (mode, team != nil) {
             case (.search, false):
-                sections = [contactsSection, conversationsSection, directorySection, servicesSection] // TODO: disable services
+                sections = [contactsSection, conversationsSection, directorySection]
             case (.search, true):
-                sections = [teamMemberAndContactsSection, conversationsSection, directorySection, servicesSection]
+                sections = [teamMemberAndContactsSection, conversationsSection, directorySection]
+                if DeveloperMenuState.developerMenuEnabled() {
+                    sections.append(servicesSection)
+                }
             case (.selection, false):
                 sections = [contactsSection]
             case (.selection, true):
                 sections = [teamMemberAndContactsSection]
+                if DeveloperMenuState.developerMenuEnabled() {
+                    sections.append(servicesSection)
+                }
             case (.list, false):
                 sections = [topPeopleSection, contactsSection]
             case (.list, true):
                 sections = [teamMemberAndContactsSection]
+                if DeveloperMenuState.developerMenuEnabled() {
+                    sections.append(servicesSection)
+                }
             }
         }
         

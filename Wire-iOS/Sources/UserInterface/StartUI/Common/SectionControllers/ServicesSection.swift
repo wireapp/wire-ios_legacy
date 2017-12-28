@@ -23,7 +23,6 @@ public class ServicesSection: NSObject, CollectionViewSectionController {
 
     public var services: [ServiceUser] = [] {
         didSet {
-            print("new sevices: \(services.count)")
             self.isHidden = services.isEmpty
             self.delegate?.collectionViewSectionControllerDidChangeVisibility(self)
         }
@@ -31,6 +30,10 @@ public class ServicesSection: NSObject, CollectionViewSectionController {
     
     public var collectionView: UICollectionView! = nil {
         didSet {
+            guard let collectionView = self.collectionView else {
+                return
+            }
+            
             collectionView.register(SearchResultCell.self,
                                     forCellWithReuseIdentifier: ServicesSection.ServicesSectionCellReuseIdentifier)
 
