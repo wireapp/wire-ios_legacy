@@ -221,19 +221,10 @@ public final class AudioRecorder: NSObject, AudioRecorderType {
             DDLogError("Failed to set session activity to \(active): \(error)")
         }
         
-        if active {
-            do {
-                try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayAndRecord)
-            } catch let error {
-                DDLogError("Failed change audio category for recording: \(error)")
-            }
-        }
-        else {
-            do {
-                try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategorySoloAmbient)
-            } catch let error {
-                DDLogError("Failed change audio category for recording: \(error)")
-            }
+        do {
+            try AVAudioSession.sharedInstance().setCategory(active ? AVAudioSessionCategoryPlayAndRecord : AVAudioSessionCategorySoloAmbient)
+        } catch let error {
+            DDLogError("Failed change audio category for recording: \(error)")
         }
     }
     
