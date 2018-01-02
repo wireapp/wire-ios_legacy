@@ -85,7 +85,9 @@
                                                                                      ConversationActionUnarchive,
                                                                                      ConversationActionArchive,
                                                                                      ConversationActionUnsilence,
-                                                                                     ConversationActionSilence]];
+                                                                                     ConversationActionSilence,
+                                                                                     ConversationActionMarkAsRead,
+                                                                                     ConversationActionMarkAsUnread]];
     [allowedActions intersectOrderedSet:conversation.availableActions];
     
     for (ConversationAction *action in allowedActions) {
@@ -257,7 +259,30 @@
 
         }];
     }
-    
+    else if ([conversationAction isEqualToString:ConversationActionMarkAsUnread]) {
+        action =
+        [SheetAction actionWithTitle:NSLocalizedString(@"meta.menu.mark_unread", @"")
+                            iconType:ZetaIconTypeNone
+                             handler:^(SheetAction *action) {
+                                 dismissAndEnqueue(^{
+                                     [[ZMUserSession sharedSession] performChanges:^{
+                                         [conversation markAsUnread];
+                                     }];
+                                 });
+                             }];
+    }
+    else if ([conversationAction isEqualToString:ConversationActionMarkAsRead]) {
+        action =
+        [SheetAction actionWithTitle:NSLocalizedString(@"meta.menu.mark_read", @"")
+                            iconType:ZetaIconTypeNone
+                             handler:^(SheetAction *action) {
+                                 dismissAndEnqueue(^{
+                                     [[ZMUserSession sharedSession] performChanges:^{
+                                         [conversation markAsRead];
+                                     }];
+                                 });
+                             }];
+    }
     return action;
 }
 
