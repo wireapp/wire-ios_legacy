@@ -18,6 +18,38 @@
 
 @testable import Wire
 
+extension TextMessageCellTests {
+
+    func snapshotLikedTextCell(width: CGFloat) {
+        let message = mockMessage(state: .sent)
+        message.backingUsersReaction = [MessageReaction.like.unicodeValue: [selfUser]]
+
+        var frame = sut.frame
+        ///Set the frame to iPad Pro width
+        frame = CGRect(x: 0, y: 0, width: width, height: frame.height)
+        sut.frame = frame
+
+        sut.configure(for: message, layoutProperties: layoutProperties)
+
+        sut.needsUpdateConstraints()
+        sut.setNeedsLayout()
+
+        verify(view: sut.prepareForSnapshot())
+    }
+
+    func testThatItRendersATextMessage_LikedSender_ForiPadPro() {
+        snapshotLikedTextCell(width: 1024)
+    }
+
+    func testThatItRendersATextMessage_LikedSender_ForiPad() {
+        snapshotLikedTextCell(width: 768)
+    }
+
+    func testThatItRendersATextMessage_LikedSender_ForiPhone5_5Inch() {
+        snapshotLikedTextCell(width: 414)
+    }
+}
+
 class TextMessageCellTests: ZMSnapshotTestCase {
 
     var sut: TextMessageCell!
@@ -46,6 +78,8 @@ class TextMessageCellTests: ZMSnapshotTestCase {
             $0.locale = Locale(identifier: "en_US")
             $0.timeZone = TimeZone(abbreviation: "CET")
         }
+
+        recordMode = true
     }
 
     func testThatItRendersATextMessage_Sent() {
