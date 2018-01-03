@@ -265,20 +265,8 @@ public class SearchResultsViewController : UIViewController {
         contactsSection.contacts = contacts
 
         teamMemberAndContactsSection.contacts = Set(teamContacts + contacts).sorted {
-            var name0, name1: String
-            if let _ = $0.name {
-                name0 = $0.name
-            }
-            else {
-                name0 = ""
-            }
-
-            if let _ = $1.name {
-                name1 = $1.name
-            }
-            else {
-                name1 = ""
-            }
+            let name0 = $0.name ?? ""
+            let name1 = $1.name ?? ""
 
             return name0.compare(name1) == .orderedAscending
          }
