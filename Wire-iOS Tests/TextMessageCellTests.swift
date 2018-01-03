@@ -265,7 +265,7 @@ class TextMessageCellTests: ZMSnapshotTestCase {
 // MARK: - iPad Pro snapshot test
 extension TextMessageCellTests {
 
-    func snapshotLikedTextCell(width: CGFloat) {
+    func verifySnapshotLikedTextCell(width: CGFloat) {
         let message = mockMessage(state: .sent)
         message.backingUsersReaction = [MessageReaction.like.unicodeValue: [selfUser]]
 
@@ -283,7 +283,7 @@ extension TextMessageCellTests {
     }
 
     func testThatItRendersATextMessage_LikedSender_ForiPadPro12Inch() {
-        snapshotLikedTextCell(width: 1024)
+        verifySnapshotLikedTextCell(width: 1024)
     }
 }
 
