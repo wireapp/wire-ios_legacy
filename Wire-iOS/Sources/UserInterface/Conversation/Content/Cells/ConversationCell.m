@@ -168,7 +168,7 @@ static const CGFloat BurstContainerExpandedHeight = 40;
 
     self.authorImageContainer = [[UIView alloc] init];
     self.authorImageContainer.translatesAutoresizingMaskIntoConstraints = NO;
-    [self.contentView addSubview:self.authorImageContainer];
+    [self.authorLabelContentView addSubview:self.authorImageContainer];
     
     self.authorImageView = [[UserImageView alloc] initWithMagicPrefix:@"content.author_image"];
     self.authorImageView.userSession = [ZMUserSession sharedSession];
@@ -248,7 +248,7 @@ static const CGFloat BurstContainerExpandedHeight = 40;
         self.burstTimestampHeightConstraint = [self.burstTimestampView autoSetDimension:ALDimensionHeight toSize:0];
     }];
 
-    [self.authorLabelContentView autoPinEdgeToSuperviewEdge:ALEdgeLeading];
+    [self.authorLabelContentView autoPinEdgesToSuperviewEdges];
     [self.authorLabel autoPinEdgeToSuperviewMargin:ALEdgeLeading];
 
     self.authorHeightConstraint = [self.authorLabel autoSetDimension:ALDimensionHeight toSize:0];
@@ -265,7 +265,7 @@ static const CGFloat BurstContainerExpandedHeight = 40;
     
     self.authorImageTopMarginConstraint = [self.authorImageContainer autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.burstTimestampView];
     [self.authorImageContainer autoPinEdgeToSuperviewEdge:ALEdgeLeading];
-    [self.authorImageContainer autoPinEdge:ALEdgeTrailing toEdge:ALEdgeLeading ofView:self.authorLabelContentView];
+    [self.authorImageContainer autoPinEdge:ALEdgeTrailing toEdge:ALEdgeLeading ofView:self.authorLabel];
 
     [self.messageContentView autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.authorImageView];
     [self.messageContentView autoPinEdgeToSuperviewEdge:ALEdgeLeading];
