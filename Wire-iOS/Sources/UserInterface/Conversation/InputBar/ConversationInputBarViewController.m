@@ -796,9 +796,10 @@
 
 - (void)keyboardDidHide:(NSNotification *)notification
 {
-    if (!self.inRotation) {
-        self.mode = ConversationInputBarViewControllerModeTextInput;
-    }
+//    return;
+//    if (!self.inRotation) {///FIXME: iPad rotates
+//        self.mode = ConversationInputBarViewControllerModeTextInput;
+//    }
 }
 
 - (void)sendOrEditText:(NSString *)text
