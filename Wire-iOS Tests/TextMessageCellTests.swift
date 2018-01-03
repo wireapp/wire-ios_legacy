@@ -40,14 +40,6 @@ extension TextMessageCellTests {
     func testThatItRendersATextMessage_LikedSender_ForiPadPro() {
         snapshotLikedTextCell(width: 1024)
     }
-
-    func testThatItRendersATextMessage_LikedSender_ForiPad() {
-        snapshotLikedTextCell(width: 768)
-    }
-
-    func testThatItRendersATextMessage_LikedSender_ForiPhone5_5Inch() {
-        snapshotLikedTextCell(width: 414)
-    }
 }
 
 class TextMessageCellTests: ZMSnapshotTestCase {
