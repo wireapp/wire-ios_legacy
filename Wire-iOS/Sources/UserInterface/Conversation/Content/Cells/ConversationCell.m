@@ -55,7 +55,7 @@ static const CGFloat BurstContainerExpandedHeight = 40;
 @property (nonatomic, readwrite) UIView *messageContentView;
 
 @property (nonatomic, readwrite) UILabel *authorLabel;
-@property (nonatomic, readwrite) UIView *authorLabelContentView;
+@property (nonatomic, readwrite) UIView *marginContainer;
 @property (nonatomic, readwrite) NSParagraphStyle *authorParagraphStyle;
 
 @property (nonatomic, readwrite) UserImageView *authorImageView;
@@ -158,17 +158,17 @@ static const CGFloat BurstContainerExpandedHeight = 40;
     [self.contentView addSubview:self.messageContentView];
     
     
-    self.authorLabelContentView = [[UIView alloc] init];
-    self.authorLabelContentView.translatesAutoresizingMaskIntoConstraints = NO;
-    [self.contentView addSubview:self.authorLabelContentView];
+    self.marginContainer = [[UIView alloc] init];
+    self.marginContainer.translatesAutoresizingMaskIntoConstraints = NO;
+    [self.contentView addSubview:self.marginContainer];
 
     self.authorLabel = [[UILabel alloc] init];
     self.authorLabel.translatesAutoresizingMaskIntoConstraints = NO;
-    [self.authorLabelContentView addSubview:self.authorLabel];
+    [self.marginContainer addSubview:self.authorLabel];
 
     self.authorImageContainer = [[UIView alloc] init];
     self.authorImageContainer.translatesAutoresizingMaskIntoConstraints = NO;
-    [self.authorLabelContentView addSubview:self.authorImageContainer];
+    [self.marginContainer addSubview:self.authorImageContainer];
     
     self.authorImageView = [[UserImageView alloc] initWithMagicPrefix:@"content.author_image"];
     self.authorImageView.userSession = [ZMUserSession sharedSession];
@@ -248,7 +248,7 @@ static const CGFloat BurstContainerExpandedHeight = 40;
         self.burstTimestampHeightConstraint = [self.burstTimestampView autoSetDimension:ALDimensionHeight toSize:0];
     }];
 
-    [self.authorLabelContentView autoPinEdgesToSuperviewEdges];
+    [self.marginContainer autoPinEdgesToSuperviewEdges];
     [self.authorLabel autoPinEdgeToSuperviewMargin:ALEdgeLeading];
 
     self.authorHeightConstraint = [self.authorLabel autoSetDimension:ALDimensionHeight toSize:0];
@@ -301,7 +301,7 @@ static const CGFloat BurstContainerExpandedHeight = 40;
     // NOTE Layout margins are not being preserved beyond the UITableViewCell.contentView so we must re-apply them
     // here until we re-factor the the ConversationCell
 
-    self.authorLabelContentView.layoutMargins = contentLayoutMargins;
+    self.marginContainer.layoutMargins = contentLayoutMargins;
     self.messageContentView.layoutMargins = contentLayoutMargins;
     self.toolboxView.layoutMargins = contentLayoutMargins;
     self.burstTimestampView.layoutMargins = contentLayoutMargins;
