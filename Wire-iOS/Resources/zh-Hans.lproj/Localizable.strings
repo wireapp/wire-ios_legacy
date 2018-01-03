@@ -116,7 +116,7 @@
 
 // Add contact tool tip
 "tool_tip.contacts.title" = "从这里开始对话";
-"tool_tip.contacts.message" = "开始一段对话。电话、 邮件和份额在私营或与团体。";
+"tool_tip.contacts.message" = "开启新的聊天室。尽情在个人或群组聊天室中传达讯息、通话和分享。";
 
 // "Knows" subtitle in cell: "Knows Indrek", "Knows Indrek and Jane", "Knows Indrek and 5 others"
 "peoplepicker.suggested.knows_one" = "认识 %@";
@@ -298,7 +298,7 @@
 "content.system.connected_to" = "已连接%@为好友\n开始对话";
 "content.system.other_wanted_to_talk" = "%@ 发送过通话请求";
 "content.system.you_wanted_to_talk" = "您发送的通话要求结束";
-"content.system.ephemeral_time_remaining" = "%@ 离开了";
+"content.system.ephemeral_time_remaining" = "还余%@";
 
 "content.system.you_started" = "你";
 "content.system.this_device" = "此设备";

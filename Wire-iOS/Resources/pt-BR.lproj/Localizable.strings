@@ -1042,12 +1042,12 @@
 "compose.drafts.compose.dismiss.delete.action.title" = "Apagar";
 
 "availability.message.cancel" = "Cancelar";
-"availability.message.set_status" = "Set a status";
+"availability.message.set_status" = "Definir status";
 
 "availability.none" = "Nenhum";
-"availability.available" = "Available";
-"availability.away" = "Away";
-"availability.busy" = "Busy";
-"availability.available.placeholder" = "%@ is available";
-"availability.away.placeholder" = "%@ is away";
-"availability.busy.placeholder" = "%@ is busy";
+"availability.available" = "Disponível";
+"availability.away" = "Ausente";
+"availability.busy" = "Ocupado";
+"availability.available.placeholder" = "%@ está disponível";
+"availability.away.placeholder" = "%@ está ausente";
+"availability.busy.placeholder" = "%@ está ocupado";

@@ -218,7 +218,7 @@
 "conversation.input_bar.shortcut.cancel_editing_message" = "إلغاء";
 
 "conversation.input_bar.message_too_long.title" = "الرسالة طويلة جداً";
-"conversation.input_bar.message_too_long.message" = "You can send messages up to %d characters long.";
+"conversation.input_bar.message_too_long.message" = "يمكنك إرسال رسائل حتى %d حرفاً.";
 
 // Image confirmation dialogue
 "image_confirmer.confirm" = "موافق";
@@ -808,11 +808,11 @@
 "team.email.headline" = "حسابك";
 "team.email.subheadline" = "Enter your work email address.";
 "team.email.textfield.placeholder" = "you@yourcompany.com";
-"team.email.textfield.accessibility" = "Your company email";
+"team.email.textfield.accessibility" = "ايميل الشركه";
 "team.email.button.learn_more" = "معرفة المزيد";
 
-"team.activation_code.headline" = "You've got mail";
-"team.activation_code.subheadline" = "Enter the verification code we sent to %@.";
+"team.activation_code.headline" = "لديك رسالة";
+"team.activation_code.subheadline" = "أدخل رمز التحقق الذي أرسلناه إلى: %@.";
 "team.activation_code.button.resend" = "إعادة إرسال الرمز";
 "team.activation_code.button.change_email" = "تغيير البريد الإلكتروني";
 
@@ -820,7 +820,7 @@
 "team.full_name.textfield.placeholder" = "الاسم الكامل";
 "team.full_name.textfield.accessibility" = "Set full name";
 
-"team.password.headline" = "Set password";
+"team.password.headline" = "تعيين كلمة السر";
 "team.password.textfield.placeholder" = "8 أحرف على الأقل";
 "team.password.textfield.accessibility" = "Set password, at least 8 characters";
 
@@ -872,7 +872,7 @@
 
 "registration.terms_of_use.terms.title" = "شروط الاستخدام";
 "registration.terms_of_use.terms.message" = "Please accept the Terms of Use to continue.";
-"registration.terms_of_use.terms.view" = "View";
+"registration.terms_of_use.terms.view" = "عرض";
 "registration.terms_of_use.accept" = "قبول";
 
 "registration.email_flow.title" = "تسجيل بواسطة بريد إلكتروني";
@@ -1034,7 +1034,7 @@
 "compose.drafts.compose.subject.placeholder" = "انقر لتعيين موضوع";
 
 "compose.drafts.compose.delete.confirm.title" = "تأكيد الحذف";
-"compose.drafts.compose.delete.confirm.message" = "This action will permanently delete this draft and cannot be undone.";
+"compose.drafts.compose.delete.confirm.message" = "سيتم حذف هذه المسودّة بشكل دائم، ولن يمكن إرجاعها.";
 "compose.drafts.compose.delete.confirm.action.title" = "حذف";
 
 "compose.drafts.compose.dismiss.confirm.title" = "حفظ كمسودة";
@@ -1042,7 +1042,7 @@
 "compose.drafts.compose.dismiss.delete.action.title" = "حذف";
 
 "availability.message.cancel" = "إلغاء";
-"availability.message.set_status" = "Set a status";
+"availability.message.set_status" = "تعيين الحالة";
 
 "availability.none" = "لا شيء";
 "availability.available" = "Available";
