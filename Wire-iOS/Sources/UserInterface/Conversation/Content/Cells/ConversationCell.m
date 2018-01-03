@@ -295,9 +295,6 @@ static const CGFloat BurstContainerExpandedHeight = 40;
 {
     _contentLayoutMargins = contentLayoutMargins;
     
-//    self.contentView.layoutMargins = contentLayoutMargins;
-//    self.layoutMargins = contentLayoutMargins;
-
     // NOTE Layout margins are not being preserved beyond the UITableViewCell.contentView so we must re-apply them
     // here until we re-factor the the ConversationCell
 
@@ -305,8 +302,6 @@ static const CGFloat BurstContainerExpandedHeight = 40;
     self.messageContentView.layoutMargins = contentLayoutMargins;
     self.toolboxView.layoutMargins = contentLayoutMargins;
     self.burstTimestampView.layoutMargins = contentLayoutMargins;
-
-    [self.contentView layoutIfNeeded];
 }
 
 - (void)layoutSubviews
