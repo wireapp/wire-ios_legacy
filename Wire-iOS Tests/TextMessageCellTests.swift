@@ -282,7 +282,7 @@ extension TextMessageCellTests {
         verify(view: sut.prepareForSnapshot())
     }
 
-    func testThatItRendersATextMessage_LikedSender_ForiPadPro() {
+    func testThatItRendersATextMessage_LikedSender_ForiPadPro12Inch() {
         snapshotLikedTextCell(width: 1024)
     }
 }
