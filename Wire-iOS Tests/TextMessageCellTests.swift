@@ -287,6 +287,9 @@ extension TextMessageCellTests {
     }
 }
 
+
+// MARK: - Helpers
+
 private extension TextMessageCell {
 
     func prepareForSnapshot() -> UIView {
