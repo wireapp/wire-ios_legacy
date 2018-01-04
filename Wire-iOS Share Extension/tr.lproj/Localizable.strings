@@ -20,7 +20,7 @@
 
 
 
-"share_extension.conversation_selection.account" = "Account:";
+"share_extension.conversation_selection.account" = "Hesap:";
 "share_extension.conversation_selection.title" = "Konuşma:";
 "share_extension.send_button.title" = "Gönder";
 "share_extension.conversation_selection.empty.value" = "Seç";

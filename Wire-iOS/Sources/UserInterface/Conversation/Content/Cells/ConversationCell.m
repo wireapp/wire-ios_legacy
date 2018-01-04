@@ -55,16 +55,11 @@ static const CGFloat BurstContainerExpandedHeight = 40;
 @property (nonatomic, readwrite) UIView *messageContentView;
 
 @property (nonatomic, readwrite) UILabel *authorLabel;
+@property (nonatomic, readwrite) UIView *marginContainer;
 @property (nonatomic, readwrite) NSParagraphStyle *authorParagraphStyle;
-
-@property (nonatomic) NSTimer *burstTimestampTimer;
-
-@property (nonatomic, readwrite) ConversationCellBurstTimestampView *burstTimestampView;
 
 @property (nonatomic, readwrite) UserImageView *authorImageView;
 @property (nonatomic, readwrite) UIView *authorImageContainer;
-@property (nonatomic) UIFont *burstNormalFont;
-@property (nonatomic) UIFont *burstBoldFont;
 
 @property (nonatomic) MessageToolboxView *toolboxView;
 
@@ -115,6 +110,9 @@ static const CGFloat BurstContainerExpandedHeight = 40;
         self.burstTimestampSpacing = 16;
         
         [self createViews];
+
+        self.contentLayoutMargins = self.class.layoutDirectionAwareLayoutMargins;
+
         [NSLayoutConstraint autoCreateAndInstallConstraints:^{
             [self createBaseConstraints];
         }];
@@ -126,10 +124,15 @@ static const CGFloat BurstContainerExpandedHeight = 40;
             cell.tintColor = newColor;
         }];
         
-        self.contentLayoutMargins = self.class.layoutDirectionAwareLayoutMargins;
     }
     
     return self;
+}
+
+- (void)dealloc
+{
+    [self.burstTimestampTimer invalidate];
+    self.burstTimestampTimer = nil;
 }
 
 - (void)willMoveToWindow:(UIWindow *)newWindow
@@ -137,9 +140,7 @@ static const CGFloat BurstContainerExpandedHeight = 40;
     [super willMoveToWindow:newWindow];
     
     if (newWindow != nil) {
-        if (self.layoutProperties.showBurstTimestamp) {
-            self.burstTimestampTimer = [NSTimer scheduledTimerWithTimeInterval:60 target:self selector:@selector(updateBurstTimestamp) userInfo:nil repeats:YES];
-        }
+        [self scheduledTimerForUpdateBurstTimestamp];
     } else {
         [self.burstTimestampTimer invalidate];
         self.burstTimestampTimer = nil;
@@ -157,13 +158,17 @@ static const CGFloat BurstContainerExpandedHeight = 40;
     [self.contentView addSubview:self.messageContentView];
     
     
+    self.marginContainer = [[UIView alloc] init];
+    self.marginContainer.translatesAutoresizingMaskIntoConstraints = NO;
+    [self.contentView addSubview:self.marginContainer];
+
     self.authorLabel = [[UILabel alloc] init];
     self.authorLabel.translatesAutoresizingMaskIntoConstraints = NO;
-    [self.contentView addSubview:self.authorLabel];
-    
+    [self.marginContainer addSubview:self.authorLabel];
+
     self.authorImageContainer = [[UIView alloc] init];
     self.authorImageContainer.translatesAutoresizingMaskIntoConstraints = NO;
-    [self.contentView addSubview:self.authorImageContainer];
+    [self.marginContainer addSubview:self.authorImageContainer];
     
     self.authorImageView = [[UserImageView alloc] initWithMagicPrefix:@"content.author_image"];
     self.authorImageView.userSession = [ZMUserSession sharedSession];
@@ -224,25 +229,6 @@ static const CGFloat BurstContainerExpandedHeight = 40;
     [self updateCountdownView];
 }
 
-- (void)willDisplayInTableView
-{
-    if (self.layoutProperties.showBurstTimestamp) {
-        self.burstTimestampTimer = [NSTimer scheduledTimerWithTimeInterval:60 target:self selector:@selector(updateBurstTimestamp) userInfo:nil repeats:YES];
-    }
-    
-    [self.contentView bringSubviewToFront:self.likeButton];
-
-    if ([self.delegate respondsToSelector:@selector(conversationCellShouldStartDestructionTimer:)] &&
-        [self.delegate conversationCellShouldStartDestructionTimer:self]) {
-        [self updateCountdownView];
-        if ([self.message startSelfDestructionIfNeeded]) {
-            [self startCountdownAnimationIfNeeded:self.message];
-        }
-    }
-
-    [self.messageContentView bringSubviewToFront:self.countdownContainerView];
-}
-
 - (void)didEndDisplayingInTableView
 {
     [self.burstTimestampTimer invalidate];
@@ -261,8 +247,10 @@ static const CGFloat BurstContainerExpandedHeight = 40;
     [NSLayoutConstraint autoSetPriority:UILayoutPriorityRequired forConstraints:^{
         self.burstTimestampHeightConstraint = [self.burstTimestampView autoSetDimension:ALDimensionHeight toSize:0];
     }];
-    
+
+    [self.marginContainer autoPinEdgesToSuperviewEdges];
     [self.authorLabel autoPinEdgeToSuperviewMargin:ALEdgeLeading];
+
     self.authorHeightConstraint = [self.authorLabel autoSetDimension:ALDimensionHeight toSize:0];
     [self.authorLabel autoAlignAxis:ALAxisHorizontal toSameAxisOfView:self.authorImageContainer];
     [self.authorLabel setContentCompressionResistancePriority:UILayoutPriorityRequired forAxis:UILayoutConstraintAxisVertical];
@@ -278,7 +266,7 @@ static const CGFloat BurstContainerExpandedHeight = 40;
     self.authorImageTopMarginConstraint = [self.authorImageContainer autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.burstTimestampView];
     [self.authorImageContainer autoPinEdgeToSuperviewEdge:ALEdgeLeading];
     [self.authorImageContainer autoPinEdge:ALEdgeTrailing toEdge:ALEdgeLeading ofView:self.authorLabel];
-    
+
     [self.messageContentView autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.authorImageView];
     [self.messageContentView autoPinEdgeToSuperviewEdge:ALEdgeLeading];
     [self.messageContentView autoPinEdgeToSuperviewEdge:ALEdgeTrailing];
@@ -307,10 +295,10 @@ static const CGFloat BurstContainerExpandedHeight = 40;
 {
     _contentLayoutMargins = contentLayoutMargins;
     
-    self.contentView.layoutMargins = contentLayoutMargins;
-    
     // NOTE Layout margins are not being preserved beyond the UITableViewCell.contentView so we must re-apply them
     // here until we re-factor the the ConversationCell
+
+    self.marginContainer.layoutMargins = contentLayoutMargins;
     self.messageContentView.layoutMargins = contentLayoutMargins;
     self.toolboxView.layoutMargins = contentLayoutMargins;
     self.burstTimestampView.layoutMargins = contentLayoutMargins;
@@ -422,20 +410,6 @@ static const CGFloat BurstContainerExpandedHeight = 40;
     self.authorLabel.textColor = [[ColorScheme defaultColorScheme] nameAccentForColor:message.sender.accentColorValue
                                                                               variant:[ColorScheme defaultColorScheme].variant];
     self.authorImageView.user = message.sender;
-}
-
-- (void)updateBurstTimestamp
-{
-    if (self.layoutProperties.showDayBurstTimestamp) {
-        self.burstTimestampView.label.text = [[Message dayFormatterWithDate: self.message.serverTimestamp] stringFromDate:self.message.serverTimestamp].uppercaseString;
-        self.burstTimestampView.label.font = self.burstBoldFont;
-    } else {
-        self.burstTimestampView.label.text = [Message formattedReceivedDateForMessage:self.message].uppercaseString;
-        self.burstTimestampView.label.font = self.burstNormalFont;
-    }
-
-    BOOL hidden = !self.layoutProperties.showBurstTimestamp && !self.layoutProperties.showDayBurstTimestamp;
-    self.burstTimestampView.isSeparatorHidden = hidden;
 }
 
 - (void)setCountdownContainerViewHidden:(BOOL)countdownContainerViewHidden

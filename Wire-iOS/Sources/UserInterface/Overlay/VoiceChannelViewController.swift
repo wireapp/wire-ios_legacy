@@ -306,8 +306,12 @@ extension VoiceChannelViewController : WireCallCenterCallStateObserver, Received
     }
     
     func startCallDurationTimer() {
-        callDurationTimer?.invalidate()
-        callDurationTimer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(updateCallDuration), userInfo: nil, repeats: true)
+        stopCallDurationTimer()
+
+        callDurationTimer = .allVersionCompatibleScheduledTimer(withTimeInterval: 0.1, repeats: true) {
+            [weak self] _ in
+            self?.updateCallDuration()
+        }
     }
     
     public func stopCallDurationTimer() {
