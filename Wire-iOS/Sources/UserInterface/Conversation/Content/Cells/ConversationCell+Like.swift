@@ -18,7 +18,6 @@
 
 import UIKit
 
-
 public extension ConversationCell {
 
     public func createLikeButton() {
@@ -34,28 +33,29 @@ public extension ConversationCell {
         self.likeButton.hitAreaPadding = CGSize(width: 20, height: 20)
         self.contentView.addSubview(self.likeButton)
     }
-    
+
     @objc public func configureLikeButtonForMessage(_ message: ZMConversationMessage?) {
         let liked = message?.liked ?? false
-        
+
         self.likeButton?.setSelected(liked, animated: false)
     }
-    
+
     @objc public func didDoubleTapMessage(_ sender: AnyObject!) {
         self.likeMessage(sender)
     }
-    
+
     @objc public func likeMessage(_ sender: AnyObject!) {
+        guard let _ = message else { return }
         guard message.canBeLiked else { return }
-        
-        let reactionType : ReactionType = message.liked ? .unlike : .like
+
+        let reactionType: ReactionType = message.liked ? .unlike : .like
         trackReaction(sender, reaction: reactionType)
 
         self.likeButton.setSelected(!self.message.liked, animated: true)
         delegate.conversationCell!(self, didSelect: .like)
     }
-    
-    func trackReaction(_ sender: AnyObject, reaction: ReactionType){
+
+    func trackReaction(_ sender: AnyObject, reaction: ReactionType) {
         var interactionMethod = InteractionMethod.undefined
         if sender is LikeButton {
             interactionMethod = .button
@@ -69,3 +69,4 @@ public extension ConversationCell {
         Analytics.shared().tagReactedOnMessage(message, reactionType:reaction, method: interactionMethod)
     }
 }
+

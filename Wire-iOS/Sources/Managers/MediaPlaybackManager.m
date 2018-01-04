@@ -85,6 +85,13 @@ NSString *const MediaPlaybackManagerPlayerStateChangedNotification = @"MediaPlay
     [self.activeMediaPlayer play];
 }
 
+- (void)reset {
+    [self.audioTrackPlayer stop];
+    
+    self.audioTrackPlayer = [[AudioTrackPlayer alloc] init];
+    self.audioTrackPlayer.mediaPlayerDelegate = self;
+}
+
 - (BOOL)looping
 {
     return NO;

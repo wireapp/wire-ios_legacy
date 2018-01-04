@@ -347,7 +347,7 @@
 "content.file.upload_failed" = "Hochladen fehlgeschlagen";
 "content.file.upload_cancelled" = "Hochladen abgebrochen";
 "content.file.upload_video" = "Videos";
-"content.file.take_video" = "Video aufnehmen und hochladen";
+"content.file.take_video" = "Video aufnehmen & hochladen";
 
 "content.file.save_video" = "Speichern";
 "content.file.save_audio" = "Speichern";
@@ -801,20 +801,20 @@
 
 "team.name.headline" = "Benenne dein Team";
 "team.name.subheadline" = "Der Name kann später jederzeit geändert werden.";
-"team.name.textfield.placeholder" = "Team-Name";
+"team.name.textfield.placeholder" = "Team Name";
 "team.name.textfield.accessibility" = "Team benennen";
 "team.name.whatiswireforteams" = "Was ist Wire für Teams?";
 
-"team.email.headline" = "Dein Benutzerkonto";
+"team.email.headline" = "Dein Konto";
 "team.email.subheadline" = "Deine Unternehmens-E-Mail-Adresse eingeben.";
 "team.email.textfield.placeholder" = "name@unternehmen.de";
 "team.email.textfield.accessibility" = "Deine Unternehmens-E-Mail-Adresse";
 "team.email.button.learn_more" = "Erfahre mehr";
 
 "team.activation_code.headline" = "Du hast Post";
-"team.activation_code.subheadline" = "Bitte gib den Verifizierungscode ein, den wir an %@ gesendet haben.";
+"team.activation_code.subheadline" = "Bitte gib den Verifizierungs-Code ein, den wir an %@ gesendet haben.";
 "team.activation_code.button.resend" = "Code erneut senden";
-"team.activation_code.button.change_email" = "E-Mail-Adresse ändern";
+"team.activation_code.button.change_email" = "E-Mail ändern";
 
 "team.full_name.headline" = "Dein Name";
 "team.full_name.textfield.placeholder" = "Vollständiger Name";

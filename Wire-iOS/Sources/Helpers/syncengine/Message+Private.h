@@ -22,7 +22,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface Message (Private)
 
-+ (NSDateFormatter *)dayFormatter;
 + (NSDateFormatter *)shortVersionDateFormatter;
 + (NSDateFormatter *)longVersionTimeFormatter;
 

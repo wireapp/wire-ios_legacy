@@ -31,6 +31,7 @@
 @import WireExtensionComponents;
 #import "UIColor+WAZExtensions.h"
 #import "ConversationCell.h"
+#import "ConversationCell+Private.h"
 #import "TextMessageCell.h"
 #import "TextMessageCell+Internal.h"
 #import "ImageMessageCell.h"

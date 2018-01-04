@@ -59,6 +59,8 @@ static NSString * const CellReuseIdConversation = @"CellId";
 @property (nonatomic) BOOL animateNextSelection;
 @property (nonatomic, copy) dispatch_block_t selectConversationCompletion;
 @property (nonatomic) ConversationListCell *layoutCell;
+
+@property (nonatomic) UISelectionFeedbackGenerator *selectionFeedbackGenerator;
 @end
 
 @interface ConversationListContentController (ConversationListCellDelegate) <ConversationListCellDelegate>
@@ -91,6 +93,10 @@ static NSString * const CellReuseIdConversation = @"CellId";
         StopWatchEvent *loadContactListEvent = [stopWatch stopEvent:@"LoadContactList"];
         if (loadContactListEvent) {
             DDLogDebug(@"Contact List load after %lums", (unsigned long)loadContactListEvent.elapsedTime);
+        }
+        
+        if (nil != [UISelectionFeedbackGenerator class]) {
+            self.selectionFeedbackGenerator = [[UISelectionFeedbackGenerator alloc] init];
         }
     }
     return self;
@@ -461,8 +467,16 @@ static NSString * const CellReuseIdConversation = @"CellId";
 
 @implementation ConversationListContentController (UICollectionViewDelegate)
 
+- (BOOL)collectionView:(UICollectionView *)collectionView shouldHighlightItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    [self.selectionFeedbackGenerator prepare];
+    return YES;
+}
+
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
+    [self.selectionFeedbackGenerator selectionChanged];
+    
     id item = [self.listViewModel itemForIndexPath:indexPath];
     
     self.focusOnNextSelection = YES;

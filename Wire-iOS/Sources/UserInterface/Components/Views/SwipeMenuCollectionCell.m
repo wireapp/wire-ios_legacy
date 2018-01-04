@@ -30,25 +30,27 @@ NSString * const SwipeMenuCollectionCellIDToCloseKey = @"IDToClose";
 
 @interface SwipeMenuCollectionCell () <UIGestureRecognizerDelegate>
 
-@property (nonatomic, strong) UIView *swipeView;
-@property (nonatomic, strong) UIView *menuView;
-@property (nonatomic, strong) UIView *separatorLine;
+@property (nonatomic) UIView *swipeView;
+@property (nonatomic) UIView *menuView;
+@property (nonatomic) UIView *separatorLine;
 
-@property (nonatomic, assign) BOOL hasCreatedSwipeMenuConstraints;
+@property (nonatomic) BOOL hasCreatedSwipeMenuConstraints;
 
-@property (nonatomic, assign) CGFloat initialDrawerWidth;
+@property (nonatomic) CGFloat initialDrawerWidth;
 
-@property (nonatomic, assign) CGFloat initialDrawerOffset;
-@property (nonatomic, assign) CGPoint initialDragPoint;
-@property (nonatomic, assign) BOOL revealDrawerOverscrolled;
-@property (nonatomic, assign) BOOL revealAnimationPerforming;
-@property (nonatomic, assign) CGFloat scrollingFraction;
-@property (nonatomic, assign) CGFloat userInteractionHorizontalOffset;
+@property (nonatomic) CGFloat initialDrawerOffset;
+@property (nonatomic) CGPoint initialDragPoint;
+@property (nonatomic) BOOL revealDrawerOverscrolled;
+@property (nonatomic) BOOL revealAnimationPerforming;
+@property (nonatomic) CGFloat scrollingFraction;
+@property (nonatomic) CGFloat userInteractionHorizontalOffset;
 
-@property (nonatomic, strong) UIPanGestureRecognizer *revealDrawerGestureRecognizer;
-@property (nonatomic, strong) NSLayoutConstraint *swipeViewHorizontalConstraint;
-@property (nonatomic, strong) NSLayoutConstraint *menuViewToSwipeViewLeftConstraint;
-@property (nonatomic, strong) NSLayoutConstraint *maxMenuViewToSwipeViewLeftConstraint;
+@property (nonatomic) UIPanGestureRecognizer *revealDrawerGestureRecognizer;
+@property (nonatomic) NSLayoutConstraint *swipeViewHorizontalConstraint;
+@property (nonatomic) NSLayoutConstraint *menuViewToSwipeViewLeftConstraint;
+@property (nonatomic) NSLayoutConstraint *maxMenuViewToSwipeViewLeftConstraint;
+
+@property (nonatomic) UIImpactFeedbackGenerator *openedFeedbackGenerator;
 
 @end
 
@@ -117,6 +119,10 @@ NSString * const SwipeMenuCollectionCellIDToCloseKey = @"IDToClose";
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(closeDrawer:) name:SwipeMenuCollectionCellCloseDrawerNotification object:nil];
 
     [self setNeedsUpdateConstraints];
+    
+    if (nil != [UIImpactFeedbackGenerator class]) {
+        self.openedFeedbackGenerator = [[UIImpactFeedbackGenerator alloc] initWithStyle:UIImpactFeedbackStyleLight];
+    }
 }
 
 - (void)setSeparatorLineViewDisabled:(BOOL)separatorLineViewDisabled
@@ -191,6 +197,8 @@ NSString * const SwipeMenuCollectionCellIDToCloseKey = @"IDToClose";
                 self.initialDrawerWidth = self.menuView.bounds.size.width;
             }
 
+            [self.openedFeedbackGenerator prepare];
+            
             break;
         case UIGestureRecognizerStateEnded:
         case UIGestureRecognizerStateFailed:
@@ -209,6 +217,7 @@ NSString * const SwipeMenuCollectionCellIDToCloseKey = @"IDToClose";
             }
             else {
                 if (self.visualDrawerOffset > self.drawerWidth / 2.0f) {
+                    [self.openedFeedbackGenerator impactOccurred];
                     [self setDrawerOpen:YES animated:YES];
                 }
                 else {

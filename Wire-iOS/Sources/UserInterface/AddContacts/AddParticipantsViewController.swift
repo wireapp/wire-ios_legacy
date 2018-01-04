@@ -146,7 +146,7 @@ public class AddParticipantsViewController : UIViewController {
             confirmButton.top == bottomContainer.top
             confirmButton.left == bottomContainer.left + margin
             confirmButton.right == bottomContainer.right - margin
-            confirmButton.bottom == bottomContainer.bottom - margin
+            confirmButton.bottom == bottomContainer.bottom - margin - UIScreen.safeArea.bottom
         }
     }
         

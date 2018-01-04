@@ -65,13 +65,16 @@ class SearchResultsView : UIView {
     func createConstraints() {
         
         constrain(self, collectionView, accessoryContainer, emptyResultContainer) { container, collectionView, accessoryContainer, emptyResultContainer in
-
-            collectionView.edges == container.edges
-
+            
+            collectionView.top == container.top
+            collectionView.left == container.left
+            collectionView.right == container.right
+            
+            accessoryContainer.top == collectionView.bottom
             accessoryContainer.left == container.left
             accessoryContainer.right == container.right
             accessoryContainerHeightConstraint = accessoryContainer.height == 0
-            accessoryViewBottomOffsetConstraint = accessoryContainer.bottom == container.bottom - UIScreen.safeArea.bottom
+            accessoryViewBottomOffsetConstraint = accessoryContainer.bottom == container.bottom
             
             emptyResultContainer.top == container.top + 64
             emptyResultContainer.centerX == container.centerX

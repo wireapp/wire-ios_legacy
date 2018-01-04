@@ -29,7 +29,7 @@ import Cartography
             
             self.nameLabel.textColor = sender.nameAccentColor
             self.nameLabel.text = sender.displayName
-            self.dateLabel.text = serverTimestamp.wr_formattedDate()
+            self.dateLabel.text = serverTimestamp.formattedDate
         }
     }
     

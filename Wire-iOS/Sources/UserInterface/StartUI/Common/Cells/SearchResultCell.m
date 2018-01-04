@@ -248,7 +248,8 @@
     ZMUser *fullUser = BareUserToUser(self.user);
     
     if (fullUser != nil && ZMUser.selfUser.isTeamMember) {
-        self.nameLabel.attributedText = [AvailabilityStringBuilder stringFor:fullUser with:AvailabilityLabelStyleList color:nil];
+        UIColor *textColor = [[ColorScheme defaultColorScheme] colorWithName:ColorSchemeColorTextForeground variant:self.colorSchemeVariant];
+        self.nameLabel.attributedText = [AvailabilityStringBuilder stringFor:fullUser with:AvailabilityLabelStyleList color:textColor];
     } else {
         self.nameLabel.text = self.user.name;
     }

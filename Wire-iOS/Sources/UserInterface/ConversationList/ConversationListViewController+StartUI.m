@@ -43,9 +43,14 @@ typedef void (^ConversationCreatedBlock)(ZMConversation *);
             
             ZMUser *user = users.anyObject;
             if ([user respondsToSelector:@selector(oneToOneConversation)]) {
-                ZMConversation *oneToOneConversation = user.oneToOneConversation;
-                
-                onConversationCreated(oneToOneConversation);
+                ZMConversation __block *oneToOneConversation = nil;
+                [[ZMUserSession sharedSession] enqueueChanges:^{
+                    oneToOneConversation = user.oneToOneConversation;
+                } completionHandler:^{
+                    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                        onConversationCreated(oneToOneConversation);
+                    });
+                }];
             }
         }
         else if (users.count > 1) {

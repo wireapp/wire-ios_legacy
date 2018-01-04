@@ -214,7 +214,7 @@
 "conversation.connection_view.in_address_book" = "in Contacten";
 
 "conversation.input_bar.shortcut.send" = "Verstuur bericht";
-"conversation.input_bar.shortcut.edit_last_message" = "Edit Last Message";
+"conversation.input_bar.shortcut.edit_last_message" = "Bewerkt laaste bericht";
 "conversation.input_bar.shortcut.cancel_editing_message" = "Annuleer";
 
 "conversation.input_bar.message_too_long.title" = "Bericht te lang";
@@ -789,7 +789,7 @@
 
 // Landing screen
 
-"landing.title" = "Secure messaging for everyone.";
+"landing.title" = "Veilig communiceren voor iedereen.";
 "landing.create_account.title" = "Account aanmaken";
 "landing.create_account.subtitle" = "voor persoonlijk gebruik";
 "landing.create_team.title" = "Creëer Team";
@@ -806,13 +806,13 @@
 "team.name.whatiswireforteams" = "Wat is Wire voor teams?";
 
 "team.email.headline" = "Je account";
-"team.email.subheadline" = "Enter your work email address.";
+"team.email.subheadline" = "Voer je werk-e-mailadres in.";
 "team.email.textfield.placeholder" = "jij@joubedrijf.nl";
 "team.email.textfield.accessibility" = "Je bedrijfs email";
 "team.email.button.learn_more" = "Leer meer";
 
 "team.activation_code.headline" = "Je hebt een email ontvangen";
-"team.activation_code.subheadline" = "Enter the verification code we sent to %@.";
+"team.activation_code.subheadline" = "Voer de verificatiecode in die we naar %@ gestuurde hebben.";
 "team.activation_code.button.resend" = "Code opnieuw versturen";
 "team.activation_code.button.change_email" = "Email wijzigen";
 
@@ -1042,12 +1042,12 @@
 "compose.drafts.compose.dismiss.delete.action.title" = "Verwijderen";
 
 "availability.message.cancel" = "Annuleer";
-"availability.message.set_status" = "Set a status";
+"availability.message.set_status" = "Een status instellen";
 
 "availability.none" = "Geen";
-"availability.available" = "Available";
-"availability.away" = "Away";
-"availability.busy" = "Busy";
-"availability.available.placeholder" = "%@ is available";
-"availability.away.placeholder" = "%@ is away";
-"availability.busy.placeholder" = "%@ is busy";
+"availability.available" = "Beschikbaar";
+"availability.away" = "Afwezig";
+"availability.busy" = "Bezet";
+"availability.available.placeholder" = "%@ is beschikbaar";
+"availability.away.placeholder" = "%@ is afwezig";
+"availability.busy.placeholder" = "%@ is bezet";
