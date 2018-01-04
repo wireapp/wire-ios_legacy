@@ -85,15 +85,15 @@ open class AssetCell: UICollectionViewCell, Reusable {
             let maxDimensionRetina = max(self.bounds.size.width, self.bounds.size.height) * (self.window ?? UIApplication.shared.keyWindow!).screen.scale
 
             representedAssetIdentifier = asset.localIdentifier
-            self.imageRequestTag = manager.requestImage(for: asset,
-                                                        targetSize: CGSize(width: maxDimensionRetina, height: maxDimensionRetina),
-                                                        contentMode: .aspectFill,
-                                                        options: type(of: self).imageFetchOptions,
-                                                        resultHandler: { [weak self] result, info -> Void in
-                                                            guard let `self` = self,
-                                                                asset.localIdentifier == self.representedAssetIdentifier
-                                                                else { return }
-                                                            self.imageView.image = result
+            imageRequestTag = manager.requestImage(for: asset,
+                                                   targetSize: CGSize(width: maxDimensionRetina, height: maxDimensionRetina),
+                                                   contentMode: .aspectFill,
+                                                   options: type(of: self).imageFetchOptions,
+                                                   resultHandler: { [weak self] result, info -> Void in
+                                                    guard let `self` = self,
+                                                        self.representedAssetIdentifier == asset.localIdentifier
+                                                        else { return }
+                                                    self.imageView.image = result
             })
             
             if asset.mediaType == .video {
