@@ -26,7 +26,7 @@ open class AssetCell: UICollectionViewCell, Reusable {
     let imageView = UIImageView()
     let durationView = UILabel()
     
-    var imageRequestTag: PHImageRequestID = 0
+    var imageRequestTag: PHImageRequestID = PHInvalidImageRequestID
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -70,9 +70,9 @@ open class AssetCell: UICollectionViewCell, Reusable {
 
             let manager = PHImageManager.default()
             
-            if self.imageRequestTag != 0 {
+            if self.imageRequestTag != PHInvalidImageRequestID {
                 manager.cancelImageRequest(self.imageRequestTag)
-                self.imageRequestTag = 0
+                self.imageRequestTag = PHInvalidImageRequestID
             }
             
             guard let asset = self.asset else {
@@ -90,12 +90,14 @@ open class AssetCell: UICollectionViewCell, Reusable {
                                                                  options: type(of: self).imageFetchOptions,
                                                                  resultHandler: { [weak self] result, info -> Void in
                                                                     guard let `self` = self,
-                                                                        let requesId = info?[PHImageResultRequestIDKey] as? Int//,
+                                                                        let requesId = info?[PHImageResultRequestIDKey] as? PHImageRequestID//,
 //                                                                        Int(self.imageRequestTag) == requesId
                                                                         else {
                                                                         return
                                                                     }
-                                                                    if Int(self.imageRequestTag) == requesId || self.imageRequestTag == 0 {
+                                                                    if self.imageRequestTag == requesId
+                                                                        //|| self.imageRequestTag == 0
+                                                                    {
                                                                     self.imageView.image = result
                                                                     }
             })
