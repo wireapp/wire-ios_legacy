@@ -82,19 +82,21 @@ open class AssetCell: UICollectionViewCell, Reusable {
             }
             
             let maxDimensionRetina = max(self.bounds.size.width, self.bounds.size.height) * (self.window ?? UIApplication.shared.keyWindow!).screen.scale
+
+            ///TODO: imageRequestTag assigned after the block is done? try call this in bg thread
             self.imageRequestTag = manager.requestImage(for: asset,
                                                                  targetSize: CGSize(width: maxDimensionRetina, height: maxDimensionRetina),
                                                                  contentMode: .aspectFill,
                                                                  options: type(of: self).imageFetchOptions,
                                                                  resultHandler: { [weak self] result, info -> Void in
                                                                     guard let `self` = self,
-                                                                        let requesId = info?[PHImageResultRequestIDKey] as? Int
+                                                                        let requesId = info?[PHImageResultRequestIDKey] as? Int//,
+//                                                                        Int(self.imageRequestTag) == requesId
                                                                         else {
                                                                         return
                                                                     }
-                                                                    
-                                                                    if requesId == Int(self.imageRequestTag) {
-                                                                        self.imageView.image = result
+                                                                    if Int(self.imageRequestTag) == requesId || self.imageRequestTag == 0 {
+                                                                    self.imageView.image = result
                                                                     }
             })
             
