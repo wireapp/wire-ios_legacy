@@ -27,7 +27,8 @@ open class AssetCell: UICollectionViewCell, Reusable {
     let durationView = UILabel()
     
     var imageRequestTag: PHImageRequestID = PHInvalidImageRequestID
-    
+    var representedAssetIdentifier: String!
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         
@@ -83,23 +84,16 @@ open class AssetCell: UICollectionViewCell, Reusable {
             
             let maxDimensionRetina = max(self.bounds.size.width, self.bounds.size.height) * (self.window ?? UIApplication.shared.keyWindow!).screen.scale
 
-            ///TODO: imageRequestTag assigned after the block is done? try call this in bg thread
+            representedAssetIdentifier = asset.localIdentifier
             self.imageRequestTag = manager.requestImage(for: asset,
-                                                                 targetSize: CGSize(width: maxDimensionRetina, height: maxDimensionRetina),
-                                                                 contentMode: .aspectFill,
-                                                                 options: type(of: self).imageFetchOptions,
-                                                                 resultHandler: { [weak self] result, info -> Void in
-                                                                    guard let `self` = self,
-                                                                        let requesId = info?[PHImageResultRequestIDKey] as? PHImageRequestID//,
-//                                                                        Int(self.imageRequestTag) == requesId
-                                                                        else {
-                                                                        return
-                                                                    }
-                                                                    if self.imageRequestTag == requesId
-                                                                        //|| self.imageRequestTag == 0
-                                                                    {
-                                                                    self.imageView.image = result
-                                                                    }
+                                                        targetSize: CGSize(width: maxDimensionRetina, height: maxDimensionRetina),
+                                                        contentMode: .aspectFill,
+                                                        options: type(of: self).imageFetchOptions,
+                                                        resultHandler: { [weak self] result, info -> Void in
+                                                            guard let `self` = self,
+                                                                asset.localIdentifier == self.representedAssetIdentifier
+                                                                else { return }
+                                                            self.imageView.image = result
             })
             
             if asset.mediaType == .video {
