@@ -203,9 +203,9 @@
 
 - (void)cameraButtonTapped:(id)sender
 {
-    /*if (! [UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
+    if (! [UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
         return;
-    }*/
+    }
     
     CameraViewController *cameraViewController = [[CameraViewController alloc] init];
     cameraViewController.analyticsTracker = self.analyticsTracker;
