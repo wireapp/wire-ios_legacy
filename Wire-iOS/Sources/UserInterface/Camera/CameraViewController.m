@@ -101,6 +101,7 @@ static CameraControllerCamera CameraViewControllerToCameraControllerCamera(Camer
 @property (nonatomic) CGFloat bottomBarHeight;
 
 @property (nonatomic) CIContext *ciContext;
+@property (nonatomic) CGFloat bottomToolsVerticalAdjustment;
 
 @end
 
@@ -111,6 +112,7 @@ static CameraControllerCamera CameraViewControllerToCameraControllerCamera(Camer
 
 - (instancetype)init
 {
+    self.bottomToolsVerticalAdjustment = UIScreen.hasNotch ? 2.0 : 0.0;
     return [self initWithCameraController:[[CameraController alloc] init]];
 }
 
@@ -330,7 +332,7 @@ static CameraControllerCamera CameraViewControllerToCameraControllerCamera(Camer
         [self.cameraBottomToolsViewController.view autoPinEdgeToSuperviewEdge:ALEdgeLeft];
         [self.cameraBottomToolsViewController.view autoPinEdgeToSuperviewEdge:ALEdgeRight];
         [self.cameraBottomToolsViewController.view autoSetDimension:ALDimensionHeight toSize:self.bottomBarHeight];
-        self.bottomToolsViewAlignAxisConstraint = [self.cameraBottomToolsViewController.view autoPinEdgeToSuperviewEdge:ALEdgeBottom withInset:UIScreen.safeArea.bottom];
+        self.bottomToolsViewAlignAxisConstraint = [self.cameraBottomToolsViewController.view autoPinEdgeToSuperviewEdge:ALEdgeBottom withInset:UIScreen.safeArea.bottom - self.bottomToolsVerticalAdjustment];
         
         // Accept/Reject panel
         self.cameraConfirmationViewAlignAxisConstraint = [self.cameraConfirmationView autoPinEdgeToSuperviewEdge:ALEdgeBottom withInset: -self.bottomBarHeight];
@@ -437,7 +439,7 @@ static CameraControllerCamera CameraViewControllerToCameraControllerCamera(Camer
     self.imagePreviewView.layer.backgroundColor = UIColor.blackColor.CGColor;
     
     self.topToolsViewAlignAxisConstraint.constant = -self.topBarHeight - UIScreen.safeArea.top;
-    self.bottomToolsViewAlignAxisConstraint.constant = self.bottomBarHeight + UIScreen.safeArea.bottom;
+    self.bottomToolsViewAlignAxisConstraint.constant = self.bottomBarHeight + UIScreen.safeArea.bottom - self.bottomToolsVerticalAdjustment;
     
     [UIView animateWithDuration:0.25 animations:^{
         [self.view layoutIfNeeded];
@@ -468,7 +470,7 @@ static CameraControllerCamera CameraViewControllerToCameraControllerCamera(Camer
         [self.view layoutIfNeeded];
     } completion:^(BOOL finished) {
         self.topToolsViewAlignAxisConstraint.constant = UIScreen.safeArea.top;
-        self.bottomToolsViewAlignAxisConstraint.constant = -UIScreen.safeArea.bottom;
+        self.bottomToolsViewAlignAxisConstraint.constant = -UIScreen.safeArea.bottom + self.bottomToolsVerticalAdjustment;
         
         [UIView animateWithDuration:0.25 animations:^{
             [self.view layoutIfNeeded];
