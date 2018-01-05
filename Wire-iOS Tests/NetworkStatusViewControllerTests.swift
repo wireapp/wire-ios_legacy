@@ -33,23 +33,20 @@ final class NetworkStatusViewControllerTests: XCTestCase {
         super.tearDown()
     }
 
+    func testNetworkStatusViewControllerIsNotRetainedAfterTimerIsScheduled(){
+        autoreleasepool{
+            // GIVEN
+            var networkStatusViewController: NetworkStatusViewController! = NetworkStatusViewController()
+            sut = networkStatusViewController
 
 
-    /// Example checker method which can be reused in different tests
-    ///
-    /// - Parameters:
-    ///   - file: optional, for XCTAssert logging error source
-    ///   - line: optional, for XCTAssert logging error source
-    fileprivate func checkerExample(file: StaticString = #file, line: UInt = #line) {
-        XCTAssert(true, file: file, line: line)
-    }
-
-    func testExample(){
-        // GIVEN
-
-        // WHEN
+            // WHEN
+            networkStatusViewController.viewDidLoad()
+            let _ = networkStatusViewController.notifyWhenOffline()
+            networkStatusViewController = nil
+        }
 
         // THEN
-        checkerExample()
+        XCTAssertNil(sut)
     }
 }
