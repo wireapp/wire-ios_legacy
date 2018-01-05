@@ -59,8 +59,12 @@ class OfflineBar : UIView {
         offlineLabel = UILabel()
         
         super.init(frame: frame)
-        
-        backgroundColor = UIColor(red: 1.0, green: 0.6863, blue: 0, alpha: 1)
+        ///TODO:, margins left/right: 16pt. margin to top of screen: 28pt (iPhone 8 and older), 44pt (iPhone X), margin to navigation bar: 10pt, height: 24pt
+        backgroundColor = UIColor(rgb:0xFEBF02, alpha: 1)///TODO share with Syncing bar
+
+        layer.cornerRadius = 6
+        layer.masksToBounds = true
+
         offlineLabel.font = FontSpec(FontSize.small, .medium).font
         offlineLabel.textColor = UIColor.white
         offlineLabel.text = "system_status_bar.no_internet.title".localized.uppercased()
