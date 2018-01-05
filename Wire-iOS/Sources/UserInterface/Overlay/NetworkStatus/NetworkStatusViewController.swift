@@ -25,7 +25,7 @@ class NetworkStatusViewController : UIViewController {
     fileprivate var networkStatusView : NetworkStatusView!
     fileprivate var networkStatusObserverToken : Any?
     fileprivate var pendingState : NetworkStatusViewState?
-    fileprivate weak var offlineBarTimer : Timer?
+    fileprivate var offlineBarTimer : Timer?
     
     override func loadView() {
         let passthroughTouchesView = PassthroughTouchesView()
@@ -35,6 +35,9 @@ class NetworkStatusViewController : UIViewController {
     
     deinit {
         NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(applyPendingState), object: nil)
+
+        offlineBarTimer?.invalidate()
+        offlineBarTimer = nil
     }
     
     override func viewDidLoad() {
@@ -95,7 +98,10 @@ class NetworkStatusViewController : UIViewController {
     }
     
     fileprivate func startOfflineBarTimer() {
-        offlineBarTimer = Timer.scheduledTimer(timeInterval: 2.0, target: self, selector: #selector(collapseOfflineBar), userInfo: nil, repeats: false)
+        offlineBarTimer = .allVersionCompatibleScheduledTimer(withTimeInterval: 2.0, repeats: false) {
+            [weak self] _ in
+            self?.collapseOfflineBar()
+        }
     }
     
     internal func collapseOfflineBar() {

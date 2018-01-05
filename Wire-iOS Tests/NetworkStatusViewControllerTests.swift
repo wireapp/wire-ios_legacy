@@ -21,7 +21,7 @@ import XCTest
 
 final class NetworkStatusViewControllerTests: XCTestCase {
     
-    var sut: NetworkStatusViewController!
+    weak var sut: NetworkStatusViewController!
     
     override func setUp() {
         super.setUp()
