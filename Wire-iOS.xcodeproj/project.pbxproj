@@ -339,7 +339,6 @@
 		871BC2601D34F8F800DF0793 /* IdentifiableColor+AccentColors.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC1B41D34F8F800DF0793 /* IdentifiableColor+AccentColors.m */; };
 		871BC2611D34F8F800DF0793 /* IdentifiableColor.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC1B61D34F8F800DF0793 /* IdentifiableColor.m */; };
 		871BC26B1D34F8F800DF0793 /* GapLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC1CB1D34F8F800DF0793 /* GapLayer.m */; };
-		871BC26C1D34F8F800DF0793 /* GapLoadingBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC1CD1D34F8F800DF0793 /* GapLoadingBar.m */; };
 		871BC26D1D34F8F800DF0793 /* PassthroughTouchesView.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC1CF1D34F8F800DF0793 /* PassthroughTouchesView.m */; };
 		871BC26E1D34F8F800DF0793 /* PassthroughWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC1D11D34F8F800DF0793 /* PassthroughWindow.m */; };
 		871BC26F1D34F8F800DF0793 /* ResizingTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC1D31D34F8F800DF0793 /* ResizingTextView.m */; };
@@ -983,6 +982,7 @@
 		EF7F74041FCC033D0059C13F /* EmailAdresssValidatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF7F74021FCC01140059C13F /* EmailAdresssValidatorTests.swift */; };
 		EF91A0561FF3A05A00FE2F53 /* GiphySearchViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF91A0541FF3A04700FE2F53 /* GiphySearchViewControllerTests.swift */; };
 		EF9965E61FFF8B1800A574DF /* GapLoadingBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF9965E51FFF8B1800A574DF /* GapLoadingBar.swift */; };
+		EF9965EA1FFFA6AB00A574DF /* NetworkStatusViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF9965E91FFFA6AB00A574DF /* NetworkStatusViewControllerTests.swift */; };
 		EFB23D0A1FC852380055B866 /* TextFieldValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF61B3411FC8508400D8E631 /* TextFieldValidator.swift */; };
 		EFB23D0B1FC853CF0055B866 /* AccessoryTextFieldValidationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF61B33F1FC84B0100D8E631 /* AccessoryTextFieldValidationTests.swift */; };
 		EFC530A61FF3F277004D2B31 /* VoiceChannelViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFC530A31FF3F26D004D2B31 /* VoiceChannelViewControllerTests.swift */; };
@@ -1554,8 +1554,6 @@
 		871BC1B61D34F8F800DF0793 /* IdentifiableColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IdentifiableColor.m; sourceTree = "<group>"; };
 		871BC1CA1D34F8F800DF0793 /* GapLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GapLayer.h; sourceTree = "<group>"; };
 		871BC1CB1D34F8F800DF0793 /* GapLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GapLayer.m; sourceTree = "<group>"; };
-		871BC1CC1D34F8F800DF0793 /* GapLoadingBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GapLoadingBar.h; sourceTree = "<group>"; };
-		871BC1CD1D34F8F800DF0793 /* GapLoadingBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GapLoadingBar.m; sourceTree = "<group>"; };
 		871BC1CE1D34F8F800DF0793 /* PassthroughTouchesView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PassthroughTouchesView.h; sourceTree = "<group>"; };
 		871BC1CF1D34F8F800DF0793 /* PassthroughTouchesView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PassthroughTouchesView.m; sourceTree = "<group>"; };
 		871BC1D01D34F8F800DF0793 /* PassthroughWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PassthroughWindow.h; sourceTree = "<group>"; };
@@ -2533,6 +2531,7 @@
 		EF7F74021FCC01140059C13F /* EmailAdresssValidatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailAdresssValidatorTests.swift; sourceTree = "<group>"; };
 		EF91A0541FF3A04700FE2F53 /* GiphySearchViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GiphySearchViewControllerTests.swift; sourceTree = "<group>"; };
 		EF9965E51FFF8B1800A574DF /* GapLoadingBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GapLoadingBar.swift; sourceTree = "<group>"; };
+		EF9965E91FFFA6AB00A574DF /* NetworkStatusViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkStatusViewControllerTests.swift; sourceTree = "<group>"; };
 		EFC530A31FF3F26D004D2B31 /* VoiceChannelViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoiceChannelViewControllerTests.swift; sourceTree = "<group>"; };
 		EFE8062A1FDFF24C006A0EE7 /* NSDate+Format.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSDate+Format.swift"; sourceTree = "<group>"; };
 		EFE8062E1FE005A7006A0EE7 /* DateFormatterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateFormatterTests.swift; sourceTree = "<group>"; };
@@ -3423,8 +3422,6 @@
 				871BC1A71D34F8F800DF0793 /* AccentColorPicker */,
 				871BC1CA1D34F8F800DF0793 /* GapLayer.h */,
 				871BC1CB1D34F8F800DF0793 /* GapLayer.m */,
-				871BC1CC1D34F8F800DF0793 /* GapLoadingBar.h */,
-				871BC1CD1D34F8F800DF0793 /* GapLoadingBar.m */,
 				EF9965E51FFF8B1800A574DF /* GapLoadingBar.swift */,
 				871BC1CE1D34F8F800DF0793 /* PassthroughTouchesView.h */,
 				871BC1CF1D34F8F800DF0793 /* PassthroughTouchesView.m */,
@@ -4871,6 +4868,7 @@
 				EFC530A31FF3F26D004D2B31 /* VoiceChannelViewControllerTests.swift */,
 				EF2C189C1FED0D3000E9F2FD /* ConversationCellTests.swift */,
 				EF91A0541FF3A04700FE2F53 /* GiphySearchViewControllerTests.swift */,
+				EF9965E91FFFA6AB00A574DF /* NetworkStatusViewControllerTests.swift */,
 			);
 			path = "Wire-iOS Tests";
 			sourceTree = "<group>";
@@ -6236,7 +6234,6 @@
 				8710673F1C0DC5570035603B /* SettingsPropertySelectValueCellDescriptor.swift in Sources */,
 				87C1A7BC1D8FDFD8002630BB /* VersionInfoViewController.m in Sources */,
 				BF8ECC2D1E570A920015177D /* UIActivityViewController+FileSaving.swift in Sources */,
-				871BC26C1D34F8F800DF0793 /* GapLoadingBar.m in Sources */,
 				8708B8331DDDFF0D00310A53 /* UserConnectionView.swift in Sources */,
 				8FC8543D199245770008B66B /* ConnectRequestsViewController.m in Sources */,
 				F16426F61FCC0FE200D2ABFC /* UIColor+Hex.swift in Sources */,
@@ -6720,6 +6717,7 @@
 				EF7F74041FCC033D0059C13F /* EmailAdresssValidatorTests.swift in Sources */,
 				1E4B89E11B01E9DD0011BF43 /* NSString+EmoticonSubstitutionTests.m in Sources */,
 				EF1EA4631FB0937000B53063 /* MockUser+filename.swift in Sources */,
+				EF9965EA1FFFA6AB00A574DF /* NetworkStatusViewControllerTests.swift in Sources */,
 				AF65A25C1D7E202D00EBA38E /* ReactionsListViewControllerTests.swift in Sources */,
 				874B5DB21CEDF7B80010474C /* AudioMessageCellTests.swift in Sources */,
 				87F6B6361D2E9CF500F057A5 /* EmojiOnlyStringTests.swift in Sources */,

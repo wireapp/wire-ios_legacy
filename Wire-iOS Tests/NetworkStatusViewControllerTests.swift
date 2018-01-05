@@ -1,6 +1,6 @@
 //
 // Wire
-// Copyright (C) 2017 Wire Swiss GmbH
+// Copyright (C) 2018 Wire Swiss GmbH
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -16,45 +16,40 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-import Foundation
 import XCTest
 @testable import Wire
 
-class NetworkStatusViewTests: ZMSnapshotTestCase {
-
-    var sut: NetworkStatusView!
-
+final class NetworkStatusViewControllerTests: XCTestCase {
+    
+    var sut: NetworkStatusViewController!
+    
     override func setUp() {
         super.setUp()
-        accentColor = .violet
-        sut = NetworkStatusView()
+        sut = NetworkStatusViewController()
     }
-
+    
     override func tearDown() {
         sut = nil
         super.tearDown()
     }
 
-    func testOfflineExpandedState() {
-        // GIVEN
-        sut.state = .offlineExpanded
-        // WHEN && THEN
-        verifyInAllPhoneWidths(view: sut)
+
+
+    /// Example checker method which can be reused in different tests
+    ///
+    /// - Parameters:
+    ///   - file: optional, for XCTAssert logging error source
+    ///   - line: optional, for XCTAssert logging error source
+    fileprivate func checkerExample(file: StaticString = #file, line: UInt = #line) {
+        XCTAssert(true, file: file, line: line)
     }
-    
-    func testOfflineCollapsedState() {
+
+    func testExample(){
         // GIVEN
-        sut.state = .offlineCollapsed
-        // WHEN && THEN
-        verifyInAllPhoneWidths(view: sut)
+
+        // WHEN
+
+        // THEN
+        checkerExample()
     }
-    
-    func testOnlineSynchronizing() {
-        // GIVEN
-        sut.state = .onlineSynchronizing
-        sut.layer.speed = 0 // freeze animations for deterministic tests
-        // WHEN && THEN
-        verifyInAllPhoneWidths(view: sut)
-    }
-    
 }

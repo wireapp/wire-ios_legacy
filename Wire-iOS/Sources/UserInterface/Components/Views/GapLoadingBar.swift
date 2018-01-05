@@ -18,22 +18,22 @@
 
 import UIKit
 
-class GapLoadingBar_swift: UIView {
+class GapLoadingBar: UIView {
+
     public var animating: Bool = false {
         didSet {
             guard animating != oldValue else { return}
 
             if animating {
                 startAnimation()
-            }
-            else {
+            } else {
                 stopAnimation()
             }
 
         }
     }
 
-    private let GapLoadingAnimationKey :String = "gapLoadingAnimation"
+    private let GapLoadingAnimationKey: String = "gapLoadingAnimation"
 
     let gapLayer: GapLayer
     var gapSize: CGFloat = 0.0
@@ -110,10 +110,8 @@ class GapLoadingBar_swift: UIView {
         ///FIXME: do not use magic
         let gapSize: CGFloat = WAZUIMagic.cgFloat(forIdentifier: "system_status_bar.loading_gap_size")
         let animationDuration: TimeInterval = TimeInterval(WAZUIMagic.cgFloat(forIdentifier: "system_status_bar.loading_gap_animation_duration"))
-        let gapLoadingBar = GapLoadingBar(gapSize: gapSize, animationDuration: animationDuration)
-
-        return gapLoadingBar!
+        return GapLoadingBar(gapSize: gapSize, animationDuration: animationDuration)
     }
 
-    
 }
+
