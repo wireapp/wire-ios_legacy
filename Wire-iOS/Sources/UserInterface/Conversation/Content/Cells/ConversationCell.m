@@ -152,15 +152,14 @@ static const CGFloat BurstContainerExpandedHeight = 40;
     self.clipsToBounds = NO;
     self.contentView.clipsToBounds = NO;
     
+    self.marginContainer = [[UIView alloc] init];
+    self.marginContainer.translatesAutoresizingMaskIntoConstraints = NO;
+    [self.contentView addSubview:self.marginContainer];
+
     self.messageContentView = [[UIView alloc] init];
     self.messageContentView.translatesAutoresizingMaskIntoConstraints = NO;
     self.messageContentView.accessibilityElementsHidden = NO;
     [self.contentView addSubview:self.messageContentView];
-    
-    
-    self.marginContainer = [[UIView alloc] init];
-    self.marginContainer.translatesAutoresizingMaskIntoConstraints = NO;
-    [self.contentView addSubview:self.marginContainer];
 
     self.authorLabel = [[UILabel alloc] init];
     self.authorLabel.translatesAutoresizingMaskIntoConstraints = NO;
