@@ -67,6 +67,8 @@
 #import "VoiceChannelCollectionViewLayout.h"
 #import "ContrastUserImageView.h"
 #import "PassthroughTouchesView.h"
+#import "GapLayer.h"
+#import "CAMediaTimingFunction+AdditionalEquations.h"
 
 // View Controllers
 #import "ZClientViewController.h"
