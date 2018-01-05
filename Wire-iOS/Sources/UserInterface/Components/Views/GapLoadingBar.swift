@@ -19,7 +19,19 @@
 import UIKit
 
 class GapLoadingBar_swift: UIView {
-    public var animating: Bool
+    public var animating: Bool = false {
+        didSet {
+            guard animating != oldValue else { return}
+
+            if animating {
+                startAnimation()
+            }
+            else {
+                stopAnimation()
+            }
+
+        }
+    }
 
     private let GapLoadingAnimationKey :String = "gapLoadingAnimation"
 
@@ -51,6 +63,20 @@ class GapLoadingBar_swift: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
+
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        gapLayer.bounds = CGRect(origin: .zero, size: bounds.size)
+        gapLayer.position = CGPoint(x: self.bounds.size.width / 2, y: self.bounds.size.height / 2)
+        // restart animation
+        if animating {
+            startAnimation()
+        }
+    }
+
     func applicationDidBecomeActive(_ sender: Any) {
         if animating && !isAnimationRunning {
             startAnimation()
@@ -80,8 +106,13 @@ class GapLoadingBar_swift: UIView {
         gapLayer.removeAnimation(forKey: GapLoadingAnimationKey)
     }
 
-    public func withDefaultGapSizeAndAnimationDuration() {
-        
+    static public func withDefaultGapSizeAndAnimationDuration() -> GapLoadingBar {
+        ///FIXME: do not use magic
+        let gapSize: CGFloat = WAZUIMagic.cgFloat(forIdentifier: "system_status_bar.loading_gap_size")
+        let animationDuration: TimeInterval = TimeInterval(WAZUIMagic.cgFloat(forIdentifier: "system_status_bar.loading_gap_animation_duration"))
+        let gapLoadingBar = GapLoadingBar(gapSize: gapSize, animationDuration: animationDuration)
+
+        return gapLoadingBar!
     }
 
     
