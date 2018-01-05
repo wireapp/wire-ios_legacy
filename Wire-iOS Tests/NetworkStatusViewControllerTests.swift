@@ -41,10 +41,13 @@ final class NetworkStatusViewControllerTests: XCTestCase {
 
             // WHEN
             networkStatusViewController.viewDidLoad()
-            //            networkStatusViewController.didChangeAvailability(newState: .offline)
-            networkStatusViewController.pendingState = .offlineExpanded
+            networkStatusViewController.didChangeAvailability(newState: .offline)
+            //            networkStatusViewController.pendingState = .offlineExpanded
             networkStatusViewController.applyPendingState()
             let _ = networkStatusViewController.notifyWhenOffline()
+
+            NSObject.cancelPreviousPerformRequests(withTarget: networkStatusViewController, selector: #selector(NetworkStatusViewController.applyPendingState), object: nil)
+
             networkStatusViewController = nil
         }
 
