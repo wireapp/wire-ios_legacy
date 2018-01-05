@@ -25,7 +25,6 @@ final class NetworkStatusViewControllerTests: XCTestCase {
     
     override func setUp() {
         super.setUp()
-        sut = NetworkStatusViewController()
     }
     
     override func tearDown() {
@@ -42,6 +41,9 @@ final class NetworkStatusViewControllerTests: XCTestCase {
 
             // WHEN
             networkStatusViewController.viewDidLoad()
+            //            networkStatusViewController.didChangeAvailability(newState: .offline)
+            networkStatusViewController.pendingState = .offlineExpanded
+            networkStatusViewController.applyPendingState()
             let _ = networkStatusViewController.notifyWhenOffline()
             networkStatusViewController = nil
         }
