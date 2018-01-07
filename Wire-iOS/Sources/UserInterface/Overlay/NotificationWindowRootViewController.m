@@ -106,16 +106,18 @@
     [viewController didMoveToParentViewController:self];
 }
 
+///TODO: swift
 - (void)transitionToLoggedInSession
 {
     self.networkStatusViewController = [[NetworkStatusViewController alloc] init];
     self.networkStatusViewController.view.translatesAutoresizingMaskIntoConstraints = NO;
     [self addViewController:self.networkStatusViewController toView:self.view];
 
-    [self.networkStatusViewController.view autoPinEdgeToSuperviewEdge:ALEdgeTop];
-    [self.networkStatusViewController.view autoPinEdgeToSuperviewEdge:ALEdgeLeft];
-    self.networkActivityRightMargin = [self.networkStatusViewController.view autoPinEdgeToSuperviewEdge:ALEdgeRight];
-    [self.networkStatusViewController.view autoPinEdgeToSuperviewEdge:ALEdgeBottom];
+    [self createNotificationWindowRootViewControllerConstraints];
+//    [self.networkStatusViewController.view autoPinEdgeToSuperviewEdge:ALEdgeTop];
+//    [self.networkStatusViewController.view autoPinEdgeToSuperviewEdge:ALEdgeLeft];
+//    self.networkActivityRightMargin = [self.networkStatusViewController.view autoPinEdgeToSuperviewEdge:ALEdgeRight];
+//    [self.networkStatusViewController.view autoPinEdgeToSuperviewEdge:ALEdgeBottom];
 
     _voiceChannelController = [[ActiveVoiceChannelViewController alloc] init];
     self.voiceChannelController.view.translatesAutoresizingMaskIntoConstraints = NO;
