@@ -18,6 +18,8 @@
 
 import UIKit
 
+
+///TODO: rename to breathLoadingBar
 class GapLoadingBar: UIView {
 
     public var animating: Bool = false {
@@ -49,7 +51,8 @@ class GapLoadingBar: UIView {
 
         super.init(frame: .zero)
 
-        gapLayer.gapSize = gapSize
+//        gapLayer.gapSize = gapSize
+        gapLayer.alpha = 0
         layer.mask = gapLayer
 
         self.gapSize = gapSize
@@ -71,6 +74,7 @@ class GapLoadingBar: UIView {
         super.layoutSubviews()
         gapLayer.bounds = CGRect(origin: .zero, size: bounds.size)
         gapLayer.position = CGPoint(x: self.bounds.size.width / 2, y: self.bounds.size.height / 2)
+        
         // restart animation
         if animating {
             startAnimation()
@@ -90,9 +94,9 @@ class GapLoadingBar: UIView {
     }
 
     func startAnimation() {
-        let anim = CABasicAnimation(keyPath: NSStringFromSelector(#selector(getter: GapLayer.gapPosition)))
-        anim.fromValue = -gapSize
-        anim.toValue = bounds.size.width + gapSize
+        let anim = CABasicAnimation(keyPath: NSStringFromSelector(#selector(getter: GapLayer.alpha)))
+        anim.fromValue = 0
+        anim.toValue = 1
         anim.isRemovedOnCompletion = false
         anim.autoreverses = false
         anim.fillMode = kCAFillModeForwards

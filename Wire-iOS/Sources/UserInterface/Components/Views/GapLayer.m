@@ -30,16 +30,25 @@
 
 @implementation GapLayer
 
+-(void)updatePath
+{
+    UIBezierPath *path = [UIBezierPath bezierPathWithRect:CGRectMake(0, 0, self.bounds.size.width, self.bounds.size.height)];
+
+    self.path = path;
+}
+
 - (id)initWithLayer:(id)layer
 {
     self = [super initWithLayer:layer];
 
     if (nil != self) {
-        if ([layer isKindOfClass:[GapLayer class]]) {
-            GapLayer *other = layer;
-            self.gapPosition = other.gapPosition;
-            self.gapSize = other.gapSize;
-        }
+//        if ([layer isKindOfClass:[GapLayer class]]) {
+//            GapLayer *other = layer;
+//            self.gapPosition = other.gapPosition;
+//            self.gapSize = other.gapSize;
+//        }
+
+        [self updatePath];
     }
     return self;
 }
@@ -56,7 +65,7 @@
 
 + (BOOL)needsDisplayForKey:(NSString *)key
 {
-    if ([key isEqualToString:NSStringFromSelector(@selector(gapPosition))]) {
+    if ([key isEqualToString:NSStringFromSelector(@selector(alpha))]) {
         return YES;
     }
 
@@ -65,34 +74,39 @@
 
 - (id <CAAction>)actionForKey:(NSString *)event
 {
-    NSString *gapKey = NSStringFromSelector(@selector(gapPosition));
-    NSString *gapSizeKey = NSStringFromSelector(@selector(gapSize));
-    if ([event isEqualToString:gapKey] ||
-            [event isEqualToString:gapSizeKey]) {
+    NSString *gapKey = NSStringFromSelector(@selector(alpha));
+//    NSString *gapSizeKey = NSStringFromSelector(@selector(gapSize));
+    if ([event isEqualToString:gapKey]) {
         return [self makeAnimationForKey:gapKey];
     }
 
     return [super actionForKey:event];
 }
 
-- (void)setGapPosition:(CGFloat)gapPosition
-{
-    _gapPosition = gapPosition;
-
-    UIBezierPath *path = [UIBezierPath bezierPath];
-
-    UIBezierPath *pathLeft = [UIBezierPath bezierPathWithRect:CGRectMake(0, 0, self.gapPosition - self.gapSize / 2.0f, self.bounds.size.height)];
-    UIBezierPath *pathRight = [UIBezierPath bezierPathWithRect:CGRectMake(self.gapPosition + self.gapSize / 2.0f, 0, self.bounds.size.width - self.gapPosition - self.gapSize / 2.0f, self.bounds.size.height)];
-
-    [path appendPath:pathLeft];
-    [path appendPath:pathRight];
-
-    self.path = path;
-    [self setNeedsDisplay];
+- (void)setAlpha:(CGFloat)alpha {
+    _alpha = alpha;
 }
+
+//- (void)setGapPosition:(CGFloat)gapPosition
+//{
+//    _gapPosition = gapPosition;
+//
+////    UIBezierPath *path = [UIBezierPath bezierPath];
+//    UIBezierPath *path = [UIBezierPath bezierPathWithRect:CGRectMake(0, 0, self.bounds.size.width, self.bounds.size.height)];
+//
+////    UIBezierPath *pathLeft = [UIBezierPath bezierPathWithRect:CGRectMake(0, 0, self.gapPosition - self.gapSize / 2.0f, self.bounds.size.height)];
+////    UIBezierPath *pathRight = [UIBezierPath bezierPathWithRect:CGRectMake(self.gapPosition + self.gapSize / 2.0f, 0, self.bounds.size.width - self.gapPosition - self.gapSize / 2.0f, self.bounds.size.height)];
+//
+////    [path appendPath:pathLeft];
+////    [path appendPath:pathRight];
+//
+//    self.path = path;
+//    [self setNeedsDisplay];
+//}
 
 - (BOOL)needsDisplayOnBoundsChange
 {
+    [self updatePath];
     return YES;
 }
 

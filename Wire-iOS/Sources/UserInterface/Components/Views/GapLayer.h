@@ -23,6 +23,7 @@
 
 @interface GapLayer : CALayer
 
-@property (assign, nonatomic) CGFloat gapPosition;
-@property (assign, nonatomic) CGFloat gapSize;
+@property (assign, nonatomic) CGFloat alpha;
+//@property (assign, nonatomic) CGFloat gapPosition;
+//@property (assign, nonatomic) CGFloat gapSize;
 @end
