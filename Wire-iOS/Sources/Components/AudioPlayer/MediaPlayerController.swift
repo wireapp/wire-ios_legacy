@@ -49,7 +49,7 @@ class MediaPlayerController: NSObject {
 extension MediaPlayerController: MediaPlayer {
 
     var title: String? {
-        return message.fileMessageData?.filename ?? ""
+        return message.fileMessageData?.filename
     }
 
     var sourceMessage: ZMConversationMessage? {
