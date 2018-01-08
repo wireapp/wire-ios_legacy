@@ -68,7 +68,8 @@ class BreathLoadingBar: UIView {
     override func layoutSubviews() {
         super.layoutSubviews()
         breathLayer.bounds = CGRect(origin: .zero, size: bounds.size)
-        breathLayer.position = CGPoint(x: self.bounds.size.width / 2, y: self.bounds.size.height / 2)
+        breathLayer.position = CGPoint(x: self.bounds.size.width / 2, y: self.bounds.size.height / 2) ///TODO: self. position?
+
         // restart animation
         if animating {
             startAnimation()
@@ -104,7 +105,7 @@ class BreathLoadingBar: UIView {
         breathLayer.removeAnimation(forKey: BreathLoadingAnimationKey)
     }
 
-    static public func withDefaultBreathSizeAndAnimationDuration() -> BreathLoadingBar {
+    static public func withDefaultAnimationDuration() -> BreathLoadingBar {
         let animationDuration: TimeInterval = 1
         return BreathLoadingBar(animationDuration: animationDuration)
     }
