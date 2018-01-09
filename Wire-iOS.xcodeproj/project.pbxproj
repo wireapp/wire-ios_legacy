@@ -770,7 +770,6 @@
 		BF3A3DCA1EA642AB005477F8 /* MessageDraftStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF3A3DC91EA642AB005477F8 /* MessageDraftStorage.swift */; };
 		BF3A3DCE1EA75290005477F8 /* RotatingKeyboardAvoidingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF3A3DCD1EA75290005477F8 /* RotatingKeyboardAvoidingViewController.swift */; };
 		BF3A3DD41EAA09C6005477F8 /* UIAlertController+DraftDeletion.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF3A3DD31EAA09C6005477F8 /* UIAlertController+DraftDeletion.swift */; };
-		BF3A3DD61EAE2F7A005477F8 /* UIView+AnimationGroups.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF3A3DD51EAE2F7A005477F8 /* UIView+AnimationGroups.swift */; };
 		BF415B271C3C354C00DF57B7 /* MissingMessagesCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF415B261C3C354C00DF57B7 /* MissingMessagesCell.swift */; };
 		BF4D99BF1E78555700A7B08F /* ZMConversationMessageWindow+DaySeparator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4D99BE1E78555700A7B08F /* ZMConversationMessageWindow+DaySeparator.swift */; };
 		BF4D99CC1E79AAD400A7B08F /* ParticipantsCells.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4D99C91E79AAD400A7B08F /* ParticipantsCells.swift */; };
@@ -6078,7 +6077,6 @@
 				87AAE4251E4347F000E1D13A /* ConversationContentViewController+PeekPop.swift in Sources */,
 				871BC2881D34F8F800DF0793 /* UIImage+Dotted.swift in Sources */,
 				871BC00C1D34F56300DF0793 /* Analytics+ConversationEvents.m in Sources */,
-				BF3A3DD61EAE2F7A005477F8 /* UIView+AnimationGroups.swift in Sources */,
 				16A2C6691AA7752F00DC2905 /* CameraController.m in Sources */,
 				871BC35E1D34F94200DF0793 /* NetworkConditionHelper.m in Sources */,
 				879489E51E54500A0071B2C1 /* TextSearchResultsView.swift in Sources */,
