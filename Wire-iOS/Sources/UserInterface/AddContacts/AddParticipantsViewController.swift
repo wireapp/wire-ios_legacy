@@ -249,7 +249,7 @@ extension AddParticipantsViewController: SearchResultsViewControllerDelegate {
             return
         }
         self.showLoadingView = true
-        self.conversation.add(serviceUser: user, in: userSession) {
+        self.conversation.add(serviceUser: user, in: userSession) { _ in
             self.delegate?.addParticipantsViewControllerDidCancel(self)
             self.showLoadingView = false
         }
