@@ -100,8 +100,9 @@ import WireDataModel
 extension AvailabilityTitleView: ZMUserObserver {
     
     public func userDidChange(_ changeInfo: UserChangeInfo) {
-        guard changeInfo.availabilityChanged else { return }
-        
+        guard changeInfo.availabilityChanged || changeInfo.nameChanged,
+            let user = changeInfo.user as? ZMUser else { return }
+        self.user = user
         provideHapticFeedback()
         configure()
     }
