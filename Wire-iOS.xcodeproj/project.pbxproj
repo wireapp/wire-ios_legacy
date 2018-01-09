@@ -338,8 +338,6 @@
 		871BC25F1D34F8F800DF0793 /* ColorPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC1B21D34F8F800DF0793 /* ColorPickerView.m */; };
 		871BC2601D34F8F800DF0793 /* IdentifiableColor+AccentColors.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC1B41D34F8F800DF0793 /* IdentifiableColor+AccentColors.m */; };
 		871BC2611D34F8F800DF0793 /* IdentifiableColor.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC1B61D34F8F800DF0793 /* IdentifiableColor.m */; };
-		871BC26B1D34F8F800DF0793 /* GapLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC1CB1D34F8F800DF0793 /* GapLayer.m */; };
-		871BC26C1D34F8F800DF0793 /* GapLoadingBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC1CD1D34F8F800DF0793 /* GapLoadingBar.m */; };
 		871BC26D1D34F8F800DF0793 /* PassthroughTouchesView.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC1CF1D34F8F800DF0793 /* PassthroughTouchesView.m */; };
 		871BC26E1D34F8F800DF0793 /* PassthroughWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC1D11D34F8F800DF0793 /* PassthroughWindow.m */; };
 		871BC26F1D34F8F800DF0793 /* ResizingTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC1D31D34F8F800DF0793 /* ResizingTextView.m */; };
@@ -1551,10 +1549,6 @@
 		871BC1B41D34F8F800DF0793 /* IdentifiableColor+AccentColors.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "IdentifiableColor+AccentColors.m"; sourceTree = "<group>"; };
 		871BC1B51D34F8F800DF0793 /* IdentifiableColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IdentifiableColor.h; sourceTree = "<group>"; };
 		871BC1B61D34F8F800DF0793 /* IdentifiableColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IdentifiableColor.m; sourceTree = "<group>"; };
-		871BC1CA1D34F8F800DF0793 /* GapLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GapLayer.h; sourceTree = "<group>"; };
-		871BC1CB1D34F8F800DF0793 /* GapLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GapLayer.m; sourceTree = "<group>"; };
-		871BC1CC1D34F8F800DF0793 /* GapLoadingBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GapLoadingBar.h; sourceTree = "<group>"; };
-		871BC1CD1D34F8F800DF0793 /* GapLoadingBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GapLoadingBar.m; sourceTree = "<group>"; };
 		871BC1CE1D34F8F800DF0793 /* PassthroughTouchesView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PassthroughTouchesView.h; sourceTree = "<group>"; };
 		871BC1CF1D34F8F800DF0793 /* PassthroughTouchesView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PassthroughTouchesView.m; sourceTree = "<group>"; };
 		871BC1D01D34F8F800DF0793 /* PassthroughWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PassthroughWindow.h; sourceTree = "<group>"; };
@@ -3420,11 +3414,7 @@
 			isa = PBXGroup;
 			children = (
 				871BC1A71D34F8F800DF0793 /* AccentColorPicker */,
-				871BC1CA1D34F8F800DF0793 /* GapLayer.h */,
-				871BC1CB1D34F8F800DF0793 /* GapLayer.m */,
 				EF266C602003B75C00A8C136 /* BreathLoadingBar.swift */,
-				871BC1CC1D34F8F800DF0793 /* GapLoadingBar.h */,
-				871BC1CD1D34F8F800DF0793 /* GapLoadingBar.m */,
 				871BC1CE1D34F8F800DF0793 /* PassthroughTouchesView.h */,
 				871BC1CF1D34F8F800DF0793 /* PassthroughTouchesView.m */,
 				871BC1D01D34F8F800DF0793 /* PassthroughWindow.h */,
@@ -6044,7 +6034,6 @@
 				871BC2291D34F8F800DF0793 /* ConfirmAssetViewController.m in Sources */,
 				F16427001FCC5B3C00D2ABFC /* SetTeamNameStepDescription.swift in Sources */,
 				1E6579981B8F3632002E0869 /* UIImage+ZetaIconsNeue.m in Sources */,
-				871BC26B1D34F8F800DF0793 /* GapLayer.m in Sources */,
 				163B5EF21B4C209C009B4629 /* MediaBarViewController.m in Sources */,
 				8F41CFC319926B7A00E3B032 /* ZMUser+Additions.m in Sources */,
 				871BC2891D34F8F800DF0793 /* UIImage+Transform.m in Sources */,
@@ -6234,7 +6223,6 @@
 				8710673F1C0DC5570035603B /* SettingsPropertySelectValueCellDescriptor.swift in Sources */,
 				87C1A7BC1D8FDFD8002630BB /* VersionInfoViewController.m in Sources */,
 				BF8ECC2D1E570A920015177D /* UIActivityViewController+FileSaving.swift in Sources */,
-				871BC26C1D34F8F800DF0793 /* GapLoadingBar.m in Sources */,
 				8708B8331DDDFF0D00310A53 /* UserConnectionView.swift in Sources */,
 				8FC8543D199245770008B66B /* ConnectRequestsViewController.m in Sources */,
 				F16426F61FCC0FE200D2ABFC /* UIColor+Hex.swift in Sources */,
