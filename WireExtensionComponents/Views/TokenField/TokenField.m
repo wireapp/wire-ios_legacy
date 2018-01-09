@@ -65,18 +65,12 @@ CGFloat const accessoryButtonSize = 32.0f;
 - (instancetype)initWithCoder:(NSCoder *)coder
 {
     self = [super initWithCoder:coder];
-    if (self) {
-        [self setup];
-    }
     return self;
 }
 
 - (instancetype)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
-    if (self) {
-        [self setup];
-    }
     return self;
 }
 

@@ -1339,9 +1339,9 @@ TokenField {
         tintColor: $color-accent-current;
         autocorrectionType: no;
         returnKeyType: go;
-        placeholderFont: $font-normal-regular;
-        placeholderTextContainerInset: 16 10;
-        placeholderTextTransform: none;
+        placeholderFont: $font-small-light;
+        placeholderTextContainerInset: 13 10;
+        placeholderTextTransform: upper;
         lineFragmentPadding: 0;
     }
 }
@@ -1354,7 +1354,7 @@ StartUIViewController SearchHeaderViewController {
 
 TokenField.search {
     textView: @{
-        placeholderTextContainerInset: 16 0;
+        placeholderTextContainerInset: 0 48;
     }
     tokenTitleColor: $color-text-foreground;
     tokenSelectedTitleColor: $color-text-foreground;
