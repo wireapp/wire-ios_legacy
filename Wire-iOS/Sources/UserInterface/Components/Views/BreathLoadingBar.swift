@@ -36,20 +36,16 @@ class BreathLoadingBar: UIView {
 
     private let BreathLoadingAnimationKey: String = "breathLoadingAnimation"
 
-    let breathLayer: CALayer
     var animationDuration: TimeInterval = 0.0
 
     var isAnimationRunning: Bool {
-        return breathLayer.animation(forKey: BreathLoadingAnimationKey) != nil
+        return animating
     }
 
     init(animationDuration duration: TimeInterval) {
-        breathLayer = CALayer()
         animating = false
 
         super.init(frame: .zero)
-
-        layer.mask = breathLayer
 
         animationDuration = duration
         NotificationCenter.default.addObserver(self, selector: #selector(self.applicationDidBecomeActive), name: .UIApplicationDidBecomeActive, object: nil)
@@ -67,8 +63,6 @@ class BreathLoadingBar: UIView {
 
     override func layoutSubviews() {
         super.layoutSubviews()
-        breathLayer.bounds = CGRect(origin: .zero, size: bounds.size)
-        breathLayer.position = CGPoint(x: self.bounds.size.width / 2, y: self.bounds.size.height / 2) ///TODO: self. position?
 
         // restart animation
         if animating {
@@ -89,20 +83,19 @@ class BreathLoadingBar: UIView {
     }
 
     func startAnimation() {
-        let anim = CABasicAnimation(keyPath: "opacity")
-        anim.fromValue = 0.4
-        anim.toValue = 1
+        let anim = CAKeyframeAnimation(keyPath: "opacity")
+        anim.values = [0.4, 1, 0.4]
         anim.isRemovedOnCompletion = false
         anim.autoreverses = false
         anim.fillMode = kCAFillModeForwards
         anim.repeatCount = .infinity
         anim.duration = animationDuration
         anim.timingFunction = CAMediaTimingFunction.easeInOutQuart()
-        breathLayer.add(anim, forKey: BreathLoadingAnimationKey)
+        self.layer.add(anim, forKey: BreathLoadingAnimationKey)
     }
 
     func stopAnimation() {
-        breathLayer.removeAnimation(forKey: BreathLoadingAnimationKey)
+        self.layer.removeAnimation(forKey: BreathLoadingAnimationKey)
     }
 
     static public func withDefaultAnimationDuration() -> BreathLoadingBar {
