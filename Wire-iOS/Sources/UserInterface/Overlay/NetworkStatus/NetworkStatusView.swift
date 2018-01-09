@@ -29,7 +29,8 @@ class OfflineBar : UIView {
     
     private let collapsedHeight : CGFloat = 2
     private let expandedHeight: CGFloat = 20
-    
+    private let expandedCornerRadius: CGFloat = 6
+
     private let offlineLabel : UILabel
     private var heightConstraint : NSLayoutConstraint?
     private var _state : OfflineBarState = .minimized
@@ -65,10 +66,9 @@ class OfflineBar : UIView {
         offlineLabel.textColor = UIColor.white
         offlineLabel.text = "system_status_bar.no_internet.title".localized.uppercased()
 
-        layer.cornerRadius = 6
+        layer.cornerRadius = expandedCornerRadius
         layer.masksToBounds = true
 
-        
         addSubview(offlineLabel)
         
         createConstraints()
@@ -92,6 +92,7 @@ class OfflineBar : UIView {
     private func updateViews(animated: Bool = true) {
         heightConstraint?.constant = state == .expanded ? expandedHeight : collapsedHeight
         offlineLabel.alpha = state == .expanded ? 1 : 0
+        layer.cornerRadius = state == .expanded ? expandedCornerRadius : 1
     }
     
 }
