@@ -286,11 +286,6 @@ static NSString* EmptyStringIfNil(NSString *string) {
     return [NSSet setWithObjects:@"avPlayer.error", nil];
 }
 
-- (NSError *)error
-{
-    return self.avPlayer.error;
-}
-
 - (void)setAudioTrack:(NSObject<AudioTrack> *)audioTrack
 {
     if (_audioTrack == audioTrack) {

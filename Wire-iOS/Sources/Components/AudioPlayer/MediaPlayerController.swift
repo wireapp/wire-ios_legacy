@@ -48,11 +48,11 @@ class MediaPlayerController: NSObject {
 
 extension MediaPlayerController: MediaPlayer {
 
-    var title: String {
-        return message.fileMessageData?.filename ?? ""
+    var title: String? {
+        return message.fileMessageData?.filename
     }
 
-    var sourceMessage: ZMConversationMessage! {
+    var sourceMessage: ZMConversationMessage? {
         return message
     }
 
@@ -62,10 +62,6 @@ extension MediaPlayerController: MediaPlayer {
         } else {
             return MediaPlayerState.paused
         }
-    }
-
-    var error: Error! {
-        return nil
     }
 
     func play() {
