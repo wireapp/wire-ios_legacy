@@ -44,7 +44,7 @@ class ConversationTitleView: TitleView {
         }
         super.configure(icon: attachment,
                         title: conversation.displayName.uppercased(),
-                        interactive: conversation.relatedConnectionState != .sent)
+                        interactive: self.interactive && conversation.relatedConnectionState != .sent)
     }
 
     override func updateAccessibilityLabel() {
