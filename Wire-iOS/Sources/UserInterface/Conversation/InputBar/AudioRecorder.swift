@@ -289,12 +289,12 @@ public final class AudioRecorder: NSObject, AudioRecorderType {
 
 extension AudioRecorder: AVAudioRecorderDelegate {
     public func audioRecorderDidFinishRecording(_ recorder: AVAudioRecorder, successfully flag: Bool) {
-        let recordedToMaxDuration: Bool
+        
+        var recordedToMaxDuration = false
+        
         if let maxRecordingDuration = self.maxRecordingDuration {
-            recordedToMaxDuration = currentDuration >= maxRecordingDuration
-        }
-        else {
-            recordedToMaxDuration = false
+            let duration = AVURLAsset(url: recorder.url).duration.seconds
+            recordedToMaxDuration = duration >= maxRecordingDuration
         }
         
         self.recordEndedCallback?(recordedToMaxDuration)
