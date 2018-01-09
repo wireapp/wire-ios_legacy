@@ -39,7 +39,7 @@ class BreathLoadingBar: UIView {
     var animationDuration: TimeInterval = 0.0
 
     var isAnimationRunning: Bool {
-        return animating
+        return layer.animation(forKey: BreathLoadingAnimationKey) != nil
     }
 
     init(animationDuration duration: TimeInterval) {
