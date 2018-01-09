@@ -214,7 +214,7 @@
 "conversation.connection_view.in_address_book" = "seadme kontaktides";
 
 "conversation.input_bar.shortcut.send" = "Saada teade";
-"conversation.input_bar.shortcut.edit_last_message" = "Edit Last Message";
+"conversation.input_bar.shortcut.edit_last_message" = "Viimase sõnumi muutmine";
 "conversation.input_bar.shortcut.cancel_editing_message" = "Tühista";
 
 "conversation.input_bar.message_too_long.title" = "Liiga pikk sõnum";
@@ -292,8 +292,8 @@
 "content.system.failedtosend_message_timestamp_resend" = "Saada uuesti";
 "content.system.failedtosend_message_timestamp_delete" = "Kustuta";
 "content.system.like_tooltip" = "Vajuta, kui meeldib";
-"content.system.deleted_message_prefix_timestamp" = "Deleted: %@";
-"content.system.edited_message_prefix_timestamp" = "Edited: %@";
+"content.system.deleted_message_prefix_timestamp" = "Kustutatud: %@";
+"content.system.edited_message_prefix_timestamp" = "Muudetud: %@";
 "content.system.connecting_to" = "Ühendatakse kasutajaga %@. Alusta vestlust";
 "content.system.connected_to" = "Ühendatatud kasutajaga %@. Alusta vestlust";
 "content.system.other_wanted_to_talk" = "%@ helistas";
@@ -503,7 +503,7 @@
 
 "profile_view.accessibility.handle" = "Kasutajanimi";
 "profile_view.accessibility.name" = "Kuvatav nimi";
-"profile_view.accessibility.team_name" = "Meeskonna nimi";
+"profile_view.accessibility.team_name" = "Tiimi nimi";
 
 // Device list
 "profile.devices.title" = "Seadmed";
@@ -564,9 +564,9 @@
 "self.new_device_alert.trust_devices" = "OK";
 
 // Settings - top level
-"self.settings.create_team.title" = "Loo meeskond";
-"self.settings.manage_team.title" = "Halda meeskonda";
-"self.settings.add_team_or_account.title" = "Uus meeskond või konto";
+"self.settings.create_team.title" = "Loo uus tiim";
+"self.settings.manage_team.title" = "Tiimi haldus";
+"self.settings.add_team_or_account.title" = "Uus tiim või erakonto";
 "self.settings.add_account.title" = "Lisa konto";
 
 "self.settings.add_account.error.title" = "Kolm aktiivset kontot";
@@ -761,7 +761,7 @@
 "self.settings.technical_report.privacy_warning" = "Detailsed logid võivad sisaldada personaalseid andmeid";
 
 // Password reset
-"self.settings.password_reset_menu.title" = "Lähtesta salasõna";
+"self.settings.password_reset_menu.title" = "Lähtesta parool";
 
 // Invite from Settings
 "self.settings.invite_friends.title" = "Jaga teistega";
@@ -789,40 +789,40 @@
 
 // Landing screen
 
-"landing.title" = "Secure messaging for everyone.";
+"landing.title" = "Turvaline sõnumside kõigile.";
 "landing.create_account.title" = "Konto loomine";
 "landing.create_account.subtitle" = "isiklikuks kasutuseks";
-"landing.create_team.title" = "Loo meeskond";
+"landing.create_team.title" = "Loo uus tiim";
 "landing.create_team.subtitle" = "töö jaoks";
 "landing.login.hints" = "Konto juba olemas?";
 "landing.login.button.title" = "Logi sisse";
 
 // Create team
 
-"team.name.headline" = "Lisa meeskonna nimi";
+"team.name.headline" = "Lisa tiimi nimi";
 "team.name.subheadline" = "Saad seda hiljem muuta.";
-"team.name.textfield.placeholder" = "Meeskonna nimi";
-"team.name.textfield.accessibility" = "Set team name";
-"team.name.whatiswireforteams" = "Mis on Wire meeskonna versioon?";
+"team.name.textfield.placeholder" = "tiimi nimi";
+"team.name.textfield.accessibility" = "Määra tiimi nimi";
+"team.name.whatiswireforteams" = "Mis on Wire versioon tiimidele?";
 
-"team.email.headline" = "Your account";
-"team.email.subheadline" = "Enter your work email address.";
-"team.email.textfield.placeholder" = "you@yourcompany.com";
-"team.email.textfield.accessibility" = "Your company email";
+"team.email.headline" = "Sinu konto";
+"team.email.subheadline" = "Sinu töö meiliaadress.";
+"team.email.textfield.placeholder" = "sina@sinufirma.ee";
+"team.email.textfield.accessibility" = "Sinu töö meiliaadress";
 "team.email.button.learn_more" = "Loe lähemalt";
 
-"team.activation_code.headline" = "You've got mail";
-"team.activation_code.subheadline" = "Enter the verification code we sent to %@.";
-"team.activation_code.button.resend" = "Resend code";
-"team.activation_code.button.change_email" = "Change email";
+"team.activation_code.headline" = "Sulle tuli kiri";
+"team.activation_code.subheadline" = "Sisesta kinnituskood, mille saatsime aadressile %@";
+"team.activation_code.button.resend" = "Saada kood uuesti";
+"team.activation_code.button.change_email" = "Muuda e-posti aadress";
 
-"team.full_name.headline" = "Your name";
-"team.full_name.textfield.placeholder" = "Full name";
-"team.full_name.textfield.accessibility" = "Set full name";
+"team.full_name.headline" = "Sinu nimi";
+"team.full_name.textfield.placeholder" = "Täisnimi";
+"team.full_name.textfield.accessibility" = "Sinu täisnimi";
 
-"team.password.headline" = "Set password";
+"team.password.headline" = "Määra parool";
 "team.password.textfield.placeholder" = "Vähemalt 8 tähte";
-"team.password.textfield.accessibility" = "Set password, at least 8 characters";
+"team.password.textfield.accessibility" = "Sisesta vähemalt 8-märgiline parool";
 
 
 "team.email_code.input_field.accessbility_label" = "Sisestage e-postiga saabunud 6-kohaline kood.";
@@ -1034,7 +1034,7 @@
 "compose.drafts.compose.subject.placeholder" = "Vajuta teema määramiseks";
 
 "compose.drafts.compose.delete.confirm.title" = "Kinnita kustutamine";
-"compose.drafts.compose.delete.confirm.message" = "This action will permanently delete this draft and cannot be undone.";
+"compose.drafts.compose.delete.confirm.message" = "Antud toiming kustutab visandi jäädavalt.";
 "compose.drafts.compose.delete.confirm.action.title" = "Kustuta";
 
 "compose.drafts.compose.dismiss.confirm.title" = "Salvesta mustand";
@@ -1042,12 +1042,12 @@
 "compose.drafts.compose.dismiss.delete.action.title" = "Kustuta";
 
 "availability.message.cancel" = "Tühista";
-"availability.message.set_status" = "Set a status";
+"availability.message.set_status" = "Määra staatus";
 
 "availability.none" = "Puudub";
-"availability.available" = "Available";
-"availability.away" = "Away";
-"availability.busy" = "Busy";
-"availability.available.placeholder" = "%@ is available";
-"availability.away.placeholder" = "%@ is away";
-"availability.busy.placeholder" = "%@ is busy";
+"availability.available" = "Saadaval";
+"availability.away" = "Eemal";
+"availability.busy" = "Hõivatud";
+"availability.available.placeholder" = "%@ on saadaval";
+"availability.away.placeholder" = "%@ on eemal";
+"availability.busy.placeholder" = "%@ on hõivatud";

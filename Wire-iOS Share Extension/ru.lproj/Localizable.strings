@@ -20,7 +20,7 @@
 
 
 
-"share_extension.conversation_selection.account" = "Account:";
+"share_extension.conversation_selection.account" = "Аккаунт:";
 "share_extension.conversation_selection.title" = "Разговор:";
 "share_extension.send_button.title" = "Отправить";
 "share_extension.conversation_selection.empty.value" = "Выбрать";

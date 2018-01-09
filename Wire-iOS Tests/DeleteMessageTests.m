@@ -20,6 +20,7 @@
 
 #import "ZMSnapshotTestCase.h"
 #import "ConversationCell.h"
+#import "ConversationCell+Private.h"
 #import "TextMessageCell.h"
 #import "ImageMessageCell.h"
 #import "PingCell.h"

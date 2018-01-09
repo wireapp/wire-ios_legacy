@@ -184,13 +184,21 @@ extension ActiveVoiceChannelViewController : WireCallCenterCallStateObserver {
             return
         }
         
+        
+        if case .answered = callState,
+            let presentedController = self.presentedViewController,
+            presentedController is BaseCallQualityViewController {
+            
+            presentedController.dismiss(animated: true, completion: nil)
+        }
+        
         if case .answered = callState {
             answeredCalls.insert(conversation.remoteIdentifier!)
         }
         
         if case .terminating = callState, answeredCalls.contains(conversation.remoteIdentifier!) {
-            answeredCalls.remove(conversation.remoteIdentifier!)
             let baseQualityController = BaseCallQualityViewController()
+            answeredCalls.remove(conversation.remoteIdentifier!)
             present(baseQualityController, animated: true)
         }
     }

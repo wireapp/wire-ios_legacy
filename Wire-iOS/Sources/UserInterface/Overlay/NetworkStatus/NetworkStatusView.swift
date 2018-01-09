@@ -101,7 +101,7 @@ enum NetworkStatusViewState {
 
 class NetworkStatusView : UIView {
     
-    private let connectingView : GapLoadingBar
+    private let connectingView : BreathLoadingBar
     private let offlineView : OfflineBar
     private var _state : NetworkStatusViewState = .online
     
@@ -120,7 +120,7 @@ class NetworkStatusView : UIView {
     }
     
     override init(frame: CGRect) {
-        connectingView = GapLoadingBar.withDefaultGapSizeAndAnimationDuration()
+        connectingView = BreathLoadingBar.withDefaultAnimationDuration()
         connectingView.accessibilityIdentifier = "LoadBar"
         connectingView.backgroundColor = UIColor.accent()
         offlineView = OfflineBar()

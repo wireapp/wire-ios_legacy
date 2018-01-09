@@ -779,7 +779,7 @@
 "name.guidance.toolong" = "Trop de caractères";
 
 "email.placeholder" = "E-mail";
-"email.guidance.invalid" = "Adresse e-mail non valide";
+"email.guidance.invalid" = "Adresse e-mail invalide";
 "email.guidance.tooshort" = "L'adresse e-mail est trop courte";
 "email.guidance.toolong" = "Trop de caractères";
 

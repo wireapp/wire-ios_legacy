@@ -34,9 +34,9 @@
 "share_extension.timeout.message" = "請檢查您的互聯網連接並重試。附件會保存在對話中。";
 "share_extension.privacy_security.lock_app.description" = "解鎖Wire";
 
-"conversation.displayname.emptygroup" = "無人的聊天室";
-"meta.degraded.degradation_reason_message.singular" = "%@ 開始使用新的設備。";
-"meta.degraded.degradation_reason_message.plural" = "%@ 開始使用新的設備。";
+"conversation.displayname.emptygroup" = "空聊天室";
+"meta.degraded.degradation_reason_message.singular" = "%@開始使用新設備。";
+"meta.degraded.degradation_reason_message.plural" = "%@開始使用新設備。";
 "meta.degraded.dialog_message" = "您仍然要發送您的訊息嗎？";
 "meta.degraded.cancel_sending_button" = "不要傳送";
 "meta.degraded.send_anyway_button" = "確定發送";

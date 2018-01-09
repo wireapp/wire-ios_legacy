@@ -161,7 +161,7 @@
     
     [closeButton addConstraintsForSize:CGSizeMake(32, 32)];
     [closeButton addConstraintForAligningVerticallyWithView:self.cameraButton];
-    [closeButton addConstraintForRightMargin:24 relativeToView:self.bottomOverlayView];
+    [closeButton addConstraintForRightMargin:18 relativeToView:self.bottomOverlayView];
     
     [closeButton setImage:[UIImage imageForIcon:ZetaIconTypeX iconSize:ZetaIconSizeSmall color:[UIColor whiteColor]] forState:UIControlStateNormal];
     

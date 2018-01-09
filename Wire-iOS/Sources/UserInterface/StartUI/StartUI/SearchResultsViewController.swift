@@ -263,7 +263,13 @@ public class SearchResultsViewController : UIViewController {
         }
         
         contactsSection.contacts = contacts
-        teamMemberAndContactsSection.contacts = Set(teamContacts + contacts).sorted { $0.name.compare($1.name) == .orderedAscending }
+
+        teamMemberAndContactsSection.contacts = Set(teamContacts + contacts).sorted {
+            let name0 = $0.name ?? ""
+            let name1 = $1.name ?? ""
+
+            return name0.compare(name1) == .orderedAscending
+         }
         directorySection.suggestions = searchResult.directory
         conversationsSection.groupConversations = searchResult.conversations
         

@@ -38,17 +38,16 @@ typedef NS_ENUM(NSInteger, MediaPlayerState)
 
 @protocol MediaPlayerDelegate <NSObject>
 
-- (void)mediaPlayer:(id<MediaPlayer>)mediaPlayer didChangeToState:(MediaPlayerState)state;
+- (void)mediaPlayer:(_Nonnull id<MediaPlayer>)mediaPlayer didChangeToState:(MediaPlayerState)state;
 
 @end
 
 
 @protocol MediaPlayer <NSObject>
 
-@property (nonatomic, readonly) NSString *title;
-@property (nonatomic, readonly) id<ZMConversationMessage>sourceMessage;
+@property (nonatomic, readonly, nullable) NSString *title;
+@property (nonatomic, readonly, nullable) id<ZMConversationMessage>sourceMessage;
 @property (nonatomic, readonly) MediaPlayerState state;
-@property (nonatomic, readonly) NSError *error;
 
 - (void)play;
 - (void)pause;

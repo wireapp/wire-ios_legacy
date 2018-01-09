@@ -62,8 +62,9 @@ extension VoiceChannelParticipantsController : UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "VoiceChannelParticipantCell", for: indexPath)
         
-        if let user = conversation.voiceChannel?.participants.object(at: indexPath.row) as? ZMUser,
-           let participantState = conversation.voiceChannel?.state(forParticipant: user) {
+        if let participants = conversation.voiceChannel?.participants,
+            let user = participants.object(at: indexPath.row) as? ZMUser,
+            let participantState = conversation.voiceChannel?.state(forParticipant: user) {
             (cell as? VoiceChannelParticipantCell)?.configure(for: user, participantState: participantState)
         }
         

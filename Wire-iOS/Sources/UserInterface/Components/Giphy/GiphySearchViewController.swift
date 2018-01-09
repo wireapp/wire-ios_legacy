@@ -76,7 +76,7 @@ class GiphyCollectionViewCell: UICollectionViewCell {
 
 class GiphySearchViewController: UICollectionViewController {
 
-    public var delegate: GiphySearchViewControllerDelegate?
+    public weak var delegate: GiphySearchViewControllerDelegate?
 
     let searchResultsController: ZiphySearchResultsController
     let masonrylayout: ARCollectionViewMasonryLayout
@@ -105,6 +105,21 @@ class GiphySearchViewController: UICollectionViewController {
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    deinit {
+        cleanUpPendingTask()
+        cleanUpPendingTimer()
+    }
+
+    func cleanUpPendingTask() {
+        pendingSearchtask?.cancel()
+        pendingSearchtask = nil
+    }
+
+    func cleanUpPendingTimer() {
+        pendingTimer?.invalidate()
+        pendingTimer = nil
     }
 
     override func viewDidLoad() {
@@ -198,7 +213,7 @@ class GiphySearchViewController: UICollectionViewController {
     }
 
     func performSearch() {
-        pendingTimer = nil
+        cleanUpPendingTimer()
 
         if searchTerm.isEmpty {
             pendingSearchtask = searchResultsController.trending() { [weak self] (success, error) in
@@ -225,11 +240,12 @@ class GiphySearchViewController: UICollectionViewController {
     }
 
     func performSearchAfter(delay: TimeInterval) {
-        pendingSearchtask?.cancel()
-        pendingSearchtask = nil
-        pendingTimer?.invalidate()
+        cleanUpPendingTask()
+        cleanUpPendingTimer()
 
-        pendingTimer = Timer.scheduledTimer(timeInterval: delay, target: self, selector: #selector(GiphySearchViewController.performSearch), userInfo: nil, repeats: false)
+        pendingTimer = .allVersionCompatibleScheduledTimer(withTimeInterval: delay, repeats: false) { [weak self] _ in
+            self?.performSearch()
+        }
     }
 
     public override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -313,4 +329,3 @@ extension GiphySearchViewController: ARCollectionViewMasonryLayoutDelegate {
     }
 
 }
-

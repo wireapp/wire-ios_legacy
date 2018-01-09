@@ -61,6 +61,8 @@ class AppRootViewController: UIViewController {
     }
 
     override public func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
+        
         mainWindow.frame.size = size
 
         coordinator.animate(alongsideTransition: nil, completion: { _ in
