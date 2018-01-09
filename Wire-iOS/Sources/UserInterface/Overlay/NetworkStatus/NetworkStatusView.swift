@@ -60,10 +60,14 @@ class OfflineBar : UIView {
         
         super.init(frame: frame)
         
-        backgroundColor = UIColor(red: 1.0, green: 0.6863, blue: 0, alpha: 1)
+        backgroundColor = UIColor(rgb:0xFEBF02, alpha: 1)
         offlineLabel.font = FontSpec(FontSize.small, .medium).font
         offlineLabel.textColor = UIColor.white
         offlineLabel.text = "system_status_bar.no_internet.title".localized.uppercased()
+
+        layer.cornerRadius = 6
+        layer.masksToBounds = true
+
         
         addSubview(offlineLabel)
         

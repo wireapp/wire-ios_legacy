@@ -58,6 +58,8 @@
 
 @implementation NotificationWindowRootViewController
 
+static const CGFloat NetworkStatusViewControllerLeftRightInset = 16;
+
 - (void)dealloc
 {
     if (self.appLockViewController.parentViewController == self) {
@@ -113,8 +115,8 @@
     [self addViewController:self.networkStatusViewController toView:self.view];
 
     [self.networkStatusViewController.view autoPinEdgeToSuperviewEdge:ALEdgeTop];
-    [self.networkStatusViewController.view autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:16];
-    self.networkActivityRightMargin = [self.networkStatusViewController.view autoPinEdgeToSuperviewEdge:ALEdgeRight];
+    [self.networkStatusViewController.view autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:NetworkStatusViewControllerLeftRightInset];
+    self.networkActivityRightMargin = [self.networkStatusViewController.view autoPinEdgeToSuperviewEdge:ALEdgeRight  withInset:NetworkStatusViewControllerLeftRightInset];
     [self.networkStatusViewController.view autoPinEdgeToSuperviewEdge:ALEdgeBottom];
 
     _voiceChannelController = [[ActiveVoiceChannelViewController alloc] init];
