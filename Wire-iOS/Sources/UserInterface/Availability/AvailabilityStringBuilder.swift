@@ -23,12 +23,18 @@
         var title: String = ""
         var color = color
         let availability = user.availability
-        var fontSize: FontSize = .normal
+        var fontSize: FontSize = .small
         
         switch style {
             case .list: do {
-                title = user.name
-                color = ColorScheme.default().color(withName: ColorSchemeColorTextForeground, variant: .dark)
+                if let name = user.name {
+                    title = name
+                }
+
+                fontSize = .normal
+                if color == nil {
+                    color = ColorScheme.default().color(withName: ColorSchemeColorTextForeground, variant: .dark)
+                }
             }
             case .participants: do {
                 title = user.displayName.uppercased()
@@ -38,8 +44,6 @@
                 if availability != .none { //Should use the default placeholder string
                     title = "availability.\(availability.canonicalName).placeholder".localized(args: user.displayName).uppercased()
                 }
-                
-                fontSize = .small
             }
         }
         

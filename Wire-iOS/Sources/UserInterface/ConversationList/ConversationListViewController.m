@@ -122,7 +122,6 @@
 
 
 @implementation ConversationListViewController
-@synthesize startUISelectedUsers;
 
 - (void)dealloc
 {

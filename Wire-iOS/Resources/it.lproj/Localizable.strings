@@ -1041,7 +1041,6 @@
 "compose.drafts.compose.dismiss.confirm.action.title" = "Salva";
 "compose.drafts.compose.dismiss.delete.action.title" = "Elimina";
 
-"availability.message.title" = "Scegli uno stato";
 "availability.message.cancel" = "Annulla";
 "availability.message.set_status" = "Imposta uno stato";
 

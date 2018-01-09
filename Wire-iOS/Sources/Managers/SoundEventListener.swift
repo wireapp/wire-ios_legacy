@@ -18,6 +18,20 @@
 
 import Foundation
 
+extension ZMConversationMessage {
+    var isSentBySelfUser: Bool {
+        return self.sender?.isSelfUser ?? false
+    }
+    
+    var isRecentMessage: Bool {
+        return (self.serverTimestamp?.timeIntervalSinceNow ?? -Double.infinity) >= -1.0
+    }
+    
+    var isFirstMessage: Bool {
+        return (self.conversation?.messages.count ?? 0) == 1
+    }
+}
+
 class SoundEventListener : NSObject {
     
     weak var userSession: ZMUserSession?
@@ -52,6 +66,20 @@ class SoundEventListener : NSObject {
         AVSMediaManager.sharedInstance()?.playSound(name)
     }
     
+    func provideHapticFeedback(for message: ZMConversationMessage) {
+        guard #available(iOS 10, *) else {
+            return
+        }
+
+        if message.isNormal,
+            message.isRecentMessage,
+            message.isSentBySelfUser,
+            let localMessage = message as? ZMMessage,
+            localMessage.deliveryState == .pending
+        {
+            UIImpactFeedbackGenerator(style: .medium).impactOccurred()
+        }
+    }
 }
 
 extension SoundEventListener : ZMNewUnreadMessagesObserver, ZMNewUnreadKnocksObserver {
@@ -65,15 +93,14 @@ extension SoundEventListener : ZMNewUnreadMessagesObserver, ZMNewUnreadKnocksObs
             // * If this is the first message in the conversation, don't play the sound
             // * Message is new (recently sent)
             
-            let isRecentMessage = (message.serverTimestamp?.timeIntervalSinceNow ?? -Double.infinity) >= -1.0
-            let isFirstMessage = (message.conversation?.messages.count ?? 0) == 1
-            let isSentBySelfUser = message.sender?.isSelfUser ?? false
             let isSilencedConversation = message.conversation?.isSilenced ?? false
             
+            provideHapticFeedback(for: message)
+            
             guard (message.isNormal || message.isSystem) &&
-                  isRecentMessage &&
-                  !isSentBySelfUser &&
-                  !isFirstMessage &&
+                  message.isRecentMessage &&
+                  !message.isSentBySelfUser &&
+                  !message.isFirstMessage &&
                   !isSilencedConversation else {
                 continue
             }

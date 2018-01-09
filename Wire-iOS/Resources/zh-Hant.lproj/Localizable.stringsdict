@@ -35,7 +35,7 @@
 			<key>NSStringFormatValueTypeKey</key>
 			<string>lu</string>
 			<key>zero</key>
-			<string>所有人都已經離開了</string>
+			<string>所有人都已離開</string>
 			<key>one</key>
 			<string>一位連絡人</string>
 			<key>few</key>

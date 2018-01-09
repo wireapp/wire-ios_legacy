@@ -165,7 +165,7 @@ NSString * const CameraSettingExposureTargetBias = @"exposureTargetBias";
 
 - (BOOL)isCameraAvailable:(CameraControllerCamera)camera
 {
-     NSArray *availableCameraDevices = [AVCaptureDevice devicesWithMediaType:AVMediaTypeVideo];
+    NSArray *availableCameraDevices = [AVCaptureDevice devicesWithMediaType:AVMediaTypeVideo];
     AVCaptureDevicePosition devicePosition = camera == CameraControllerCameraFront ? AVCaptureDevicePositionFront : AVCaptureDevicePositionBack;
     
     for (AVCaptureDevice *device in availableCameraDevices) {
@@ -535,11 +535,17 @@ NSString * const CameraSettingExposureTargetBias = @"exposureTargetBias";
 
 - (void)captureStillImageWithCompletionHandler:(void (^)(NSData * _Nullable imageData, NSDictionary * _Nullable metaData, NSError * _Nullable error))completionHandler;
 {
+    ///for iPad split/slide over mode, the session is not running
+    if (!self.session.isRunning) {
+        return;
+    }
+
     dispatch_async(self.sessionQueue, ^{
         AVCaptureConnection *connection = [self.stillCameraOutput connectionWithMediaType:AVMediaTypeVideo];
         UIDeviceOrientation deviceOrientation = [[DeviceOrientationObserver sharedInstance] deviceOrientation];
         __block AVCaptureVideoOrientation videoOrientation = (AVCaptureVideoOrientation)deviceOrientation;
-        
+
+
         if (deviceOrientation == UIDeviceOrientationFaceDown || deviceOrientation == UIDeviceOrientationFaceUp) {
             // Face up/down can't be translated into a video orientation so we fall back to the orientation of the user interface
             dispatch_group_t group = dispatch_group_create();
@@ -556,13 +562,14 @@ NSString * const CameraSettingExposureTargetBias = @"exposureTargetBias";
         connection.automaticallyAdjustsVideoMirroring = NO;
         connection.videoMirrored = NO;
 
+
         [self.stillCameraOutput captureStillImageAsynchronouslyFromConnection:connection completionHandler:^(CMSampleBufferRef imageDataSampleBuffer, NSError *error) {
             if (error == nil) {
 
                 NSData *imageData = [AVCaptureStillImageOutput jpegStillImageNSDataRepresentation:imageDataSampleBuffer];
-                
+
                 NSDictionary *metaData = (__bridge NSDictionary *)(CMCopyDictionaryOfAttachments(nil, imageDataSampleBuffer, kCMAttachmentMode_ShouldPropagate));
-                
+
                 dispatch_async(dispatch_get_main_queue(), ^{
                     completionHandler(imageData, metaData, nil);
                 });

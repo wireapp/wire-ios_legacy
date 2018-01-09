@@ -48,7 +48,7 @@ class AvailabilityLabelTests: ZMSnapshotTestCase {
     func createLabelForList(_ availability: Availability) -> UILabel {
         guard let user = ZMUser.selfUser() else { return UILabel() }
         user.availability = availability
-        let attributedString = AvailabilityStringBuilder.string(for: user, with: .participants)
+        let attributedString = AvailabilityStringBuilder.string(for: user, with: .list)
         let label = UILabel()
         label.attributedText = attributedString
         label.font = FontSpec(.normal, .regular).font
@@ -80,7 +80,7 @@ class AvailabilityLabelTests: ZMSnapshotTestCase {
         let attributedString = AvailabilityStringBuilder.string(for: user, with: .participants)
         let label = UILabel()
         label.attributedText = attributedString
-        label.font = FontSpec(.medium, .regular).font
+        label.font = FontSpec(.small, .regular).font
         label.sizeToFit()
         return label
     }

@@ -182,7 +182,7 @@ final class AudioMessageView: UIView, TransferView {
     
     public func willDeleteMessage() {
         proximityMonitorManager?.stopListening()
-        guard let player = audioTrackPlayer, player.sourceMessage != nil && player.sourceMessage.isEqual(self.fileMessage) else { return }
+        guard let player = audioTrackPlayer, let source = player.sourceMessage, source.isEqual(self.fileMessage) else { return }
         player.stop()
     }
     
@@ -301,7 +301,7 @@ final class AudioMessageView: UIView, TransferView {
     }
     
     public func stopPlaying() {
-        guard let player = self.audioTrackPlayer, player.sourceMessage != nil && player.sourceMessage.isEqual(self.fileMessage) else { return }
+        guard let player = self.audioTrackPlayer, let source = player.sourceMessage, source.isEqual(self.fileMessage) else { return }
         player.pause()
     }
     
@@ -312,7 +312,7 @@ final class AudioMessageView: UIView, TransferView {
         
         self.proximityMonitorManager?.stateChanged = proximityStateDidChange
         
-        let audioTrackPlayingSame = audioTrackPlayer.sourceMessage != nil && audioTrackPlayer.sourceMessage.isEqual(self.fileMessage)
+        let audioTrackPlayingSame = audioTrackPlayer.sourceMessage?.isEqual(self.fileMessage) ?? false
         
         if let track = fileMessage.audioTrack(), !audioTrackPlayingSame {
             audioTrackPlayer.load(track, sourceMessage: fileMessage) { [weak self] success, error in
@@ -348,7 +348,7 @@ final class AudioMessageView: UIView, TransferView {
                 return false
         }
         
-        let audioTrackPlayingSame = audioTrackPlayer.sourceMessage != nil && audioTrackPlayer.sourceMessage.isEqual(self.fileMessage)
+        let audioTrackPlayingSame = audioTrackPlayer.sourceMessage?.isEqual(self.fileMessage) ?? false
         return audioTrackPlayingSame && audioTrackPlayer.audioTrack.isEqual(audioTrack)
     }
     

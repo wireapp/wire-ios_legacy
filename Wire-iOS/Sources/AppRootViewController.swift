@@ -61,6 +61,8 @@ class AppRootViewController: UIViewController {
     }
 
     override public func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
+        
         mainWindow.frame.size = size
 
         coordinator.animate(alongsideTransition: nil, completion: { _ in
@@ -129,11 +131,19 @@ class AppRootViewController: UIViewController {
         let appVersion = bundle.infoDictionary?[kCFBundleVersionKey as String] as? String
         let mediaManager = AVSMediaManager.sharedInstance()
         let analytics = Analytics.shared()
-
+        let sessionManagerAnalytics: AnalyticsType
+        
+        if DeveloperMenuState.developerMenuEnabled(){
+            CallQualityScoreProvider.shared.nextProvider = analytics
+            sessionManagerAnalytics = CallQualityScoreProvider.shared
+        }
+        else {
+            sessionManagerAnalytics = analytics
+        }
         SessionManager.create(
             appVersion: appVersion!,
             mediaManager: mediaManager!,
-            analytics: analytics,
+            analytics: sessionManagerAnalytics,
             delegate: appStateController,
             application: UIApplication.shared,
             launchOptions: launchOptions,

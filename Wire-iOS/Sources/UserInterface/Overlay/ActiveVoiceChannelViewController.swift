@@ -23,6 +23,7 @@ fileprivate let zmLog = ZMSLog(tag: "calling")
 class ActiveVoiceChannelViewController : UIViewController {
     
     var callStateObserverToken : Any?
+    var answeredCalls : Set<UUID> = Set()
     
     deinit {
         visibleVoiceChannelViewController?.stopCallDurationTimer()
@@ -175,6 +176,31 @@ extension ActiveVoiceChannelViewController : WireCallCenterCallStateObserver {
     
     func callCenterDidChange(callState: CallState, conversation: ZMConversation, caller: ZMUser, timestamp: Date?) {
         updateVisibleVoiceChannelViewController()
+    
+        guard DeveloperMenuState.developerMenuEnabled(),
+            (UseAnalytics.boolValue || AutomationHelper.sharedHelper.useAnalytics),
+            !TrackingManager.shared.disableCrashAndAnalyticsSharing
+        else {
+            return
+        }
+        
+        
+        if case .answered = callState,
+            let presentedController = self.presentedViewController,
+            presentedController is BaseCallQualityViewController {
+            
+            presentedController.dismiss(animated: true, completion: nil)
+        }
+        
+        if case .answered = callState {
+            answeredCalls.insert(conversation.remoteIdentifier!)
+        }
+        
+        if case .terminating = callState, answeredCalls.contains(conversation.remoteIdentifier!) {
+            let baseQualityController = BaseCallQualityViewController()
+            answeredCalls.remove(conversation.remoteIdentifier!)
+            present(baseQualityController, animated: true)
+        }
     }
     
 }

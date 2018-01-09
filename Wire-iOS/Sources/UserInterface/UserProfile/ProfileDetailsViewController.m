@@ -139,7 +139,8 @@ typedef NS_ENUM(NSUInteger, ProfileUserAction) {
     [self.stackView autoPinEdgeToSuperviewEdge:ALEdgeTrailing];
     [self.stackView autoPinEdge:ALEdgeBottom toEdge:ALEdgeTop ofView:self.footerView withOffset:0 relation:NSLayoutRelationLessThanOrEqual];
     
-    [self.footerView autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero excludingEdge:ALEdgeTop];
+    UIEdgeInsets bottomInset = UIEdgeInsetsMake(0, 0, UIScreen.safeArea.bottom, 0);
+    [self.footerView autoPinEdgesToSuperviewEdgesWithInsets:bottomInset excludingEdge:ALEdgeTop];
 }
 
 #pragma mark - User Image

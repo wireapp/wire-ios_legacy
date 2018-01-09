@@ -1,0 +1,65 @@
+//
+// Wire
+// Copyright (C) 2017 Wire Swiss GmbH
+//
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this program. If not, see http://www.gnu.org/licenses/.
+//
+
+import Foundation
+
+public extension ConversationCell {
+
+    @objc func scheduledTimerForUpdateBurstTimestamp() {
+        guard let _ = layoutProperties, layoutProperties.showBurstTimestamp else { return }
+
+        burstTimestampTimer = .allVersionCompatibleScheduledTimer(withTimeInterval: 60, repeats: true) {
+            [weak self] _ in
+            self?.updateBurstTimestamp()
+        }
+    }
+
+    func willDisplayInTableView() {
+        scheduledTimerForUpdateBurstTimestamp()
+
+        contentView.bringSubview(toFront: likeButton)
+
+        if delegate != nil &&
+            delegate.responds(to: #selector(ConversationCellDelegate.conversationCellShouldStartDestructionTimer)) &&
+            delegate.conversationCellShouldStartDestructionTimer!(self) {
+            updateCountdownView()
+            if message.startSelfDestructionIfNeeded() {
+                startCountdownAnimationIfNeeded(message)
+            }
+        }
+
+        messageContentView.bringSubview(toFront: countdownContainerView)
+    }
+
+    @objc public func updateBurstTimestamp() {
+        if layoutProperties.showDayBurstTimestamp {
+            if let serverTimestamp = message.serverTimestamp {
+                burstTimestampView.label.text = Message.dayFormatter(date: serverTimestamp).string(from: serverTimestamp).uppercased()
+            } else {
+                burstTimestampView.label.text = nil
+            }
+
+            burstTimestampView.label.font = burstBoldFont
+        } else {
+            burstTimestampView.label.text = Message.formattedReceivedDate(for: message).uppercased()
+            burstTimestampView.label.font = burstNormalFont
+        }
+        let hidden: Bool = !layoutProperties.showBurstTimestamp && !layoutProperties.showDayBurstTimestamp
+        burstTimestampView.isSeparatorHidden = hidden
+    }
+}

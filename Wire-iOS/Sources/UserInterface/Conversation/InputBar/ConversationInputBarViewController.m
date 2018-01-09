@@ -147,6 +147,8 @@
 @property (nonatomic) BOOL inRotation;
 
 @property (nonatomic) id typingObserverToken;
+
+@property (nonatomic) UINotificationFeedbackGenerator* feedbackGenerator;
 @end
 
 
@@ -165,6 +167,10 @@
         
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidHide:) name:UIKeyboardDidHideNotification object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didEnterBackground:) name:UIApplicationDidEnterBackgroundNotification object:nil];
+        
+        if (nil != [UINotificationFeedbackGenerator class]) {
+            self.feedbackGenerator = [[UINotificationFeedbackGenerator alloc] init];
+        }
     }
     return self;
 }
@@ -594,7 +600,7 @@
                                                 modifierFlags:0
                                                        action:@selector(escapePressed)
                                          discoverabilityTitle:NSLocalizedString(@"conversation.input_bar.shortcut.cancel_editing_message", nil)]];
-    } else {
+    } else if(self.inputBar.textView.text.length == 0) {
         [commands addObject:[UIKeyCommand keyCommandWithInput:UIKeyInputUpArrow
                                                 modifierFlags:0
                                                        action:@selector(upArrowPressed)
@@ -1134,6 +1140,8 @@
             [Analytics.shared tagMediaActionCompleted:ConversationMediaActionPing inConversation:self.conversation];
             
             [AVSMediaManager.sharedInstance playSound:MediaManagerSoundOutgoingKnockSound];
+            
+            [self.feedbackGenerator notificationOccurred:UINotificationFeedbackTypeSuccess];
         }
     }];
     

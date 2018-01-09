@@ -80,14 +80,14 @@ class ClientTableViewCell: UITableViewCell {
                         localClient == self.userClient &&
                             error == nil {
                         
-                        self.activationLabel.text = "\("registration.devices.activated_in".localized) \(addressCity), \(addressCountry.uppercased()) — \(activationDate.wr_formattedDate())"
+                        self.activationLabel.text = "\("registration.devices.activated_in".localized) \(addressCity), \(addressCountry.uppercased()) — \(String(describing: activationDate.formattedDate))"
                     }
                 })
                 
-                self.activationLabel.text = activationDate.wr_formattedDate()
+                self.activationLabel.text = activationDate.formattedDate
             }
             else if let activationDate = userClient.activationDate {
-                self.activationLabel.text = activationDate.wr_formattedDate()
+                self.activationLabel.text = activationDate.formattedDate
             }
             else {
                 self.activationLabel.text = ""

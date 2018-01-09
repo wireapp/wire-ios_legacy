@@ -26,8 +26,9 @@ open class AssetCell: UICollectionViewCell, Reusable {
     let imageView = UIImageView()
     let durationView = UILabel()
     
-    var imageRequestTag: PHImageRequestID = 0
-    
+    var imageRequestTag: PHImageRequestID = PHInvalidImageRequestID
+    var representedAssetIdentifier: String!
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         
@@ -70,9 +71,9 @@ open class AssetCell: UICollectionViewCell, Reusable {
 
             let manager = PHImageManager.default()
             
-            if self.imageRequestTag != 0 {
+            if self.imageRequestTag != PHInvalidImageRequestID {
                 manager.cancelImageRequest(self.imageRequestTag)
-                self.imageRequestTag = 0
+                self.imageRequestTag = PHInvalidImageRequestID
             }
             
             guard let asset = self.asset else {
@@ -82,20 +83,17 @@ open class AssetCell: UICollectionViewCell, Reusable {
             }
             
             let maxDimensionRetina = max(self.bounds.size.width, self.bounds.size.height) * (self.window ?? UIApplication.shared.keyWindow!).screen.scale
-            self.imageRequestTag = manager.requestImage(for: asset,
-                                                                 targetSize: CGSize(width: maxDimensionRetina, height: maxDimensionRetina),
-                                                                 contentMode: .aspectFill,
-                                                                 options: type(of: self).imageFetchOptions,
-                                                                 resultHandler: { [weak self] result, info -> Void in
-                                                                    guard let `self` = self,
-                                                                        let requesId = info?[PHImageResultRequestIDKey] as? Int
-                                                                        else {
-                                                                        return
-                                                                    }
-                                                                    
-                                                                    if requesId == Int(self.imageRequestTag) {
-                                                                        self.imageView.image = result
-                                                                    }
+
+            representedAssetIdentifier = asset.localIdentifier
+            imageRequestTag = manager.requestImage(for: asset,
+                                                   targetSize: CGSize(width: maxDimensionRetina, height: maxDimensionRetina),
+                                                   contentMode: .aspectFill,
+                                                   options: type(of: self).imageFetchOptions,
+                                                   resultHandler: { [weak self] result, info -> Void in
+                                                    guard let `self` = self,
+                                                        self.representedAssetIdentifier == asset.localIdentifier
+                                                        else { return }
+                                                    self.imageView.image = result
             })
             
             if asset.mediaType == .video {

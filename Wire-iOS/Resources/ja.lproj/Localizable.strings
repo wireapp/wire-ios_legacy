@@ -1041,7 +1041,6 @@
 "compose.drafts.compose.dismiss.confirm.action.title" = "保存";
 "compose.drafts.compose.dismiss.delete.action.title" = "削除";
 
-"availability.message.title" = "Choose a status";
 "availability.message.cancel" = "キャンセル";
 "availability.message.set_status" = "Set a status";
 

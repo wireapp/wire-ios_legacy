@@ -20,6 +20,7 @@
 
 
 
+"share_extension.conversation_selection.account" = "Konto:";
 "share_extension.conversation_selection.title" = "Unterhaltung:";
 "share_extension.send_button.title" = "Senden";
 "share_extension.conversation_selection.empty.value" = "Auswählen";

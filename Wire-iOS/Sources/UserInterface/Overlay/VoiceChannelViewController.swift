@@ -306,8 +306,12 @@ extension VoiceChannelViewController : WireCallCenterCallStateObserver, Received
     }
     
     func startCallDurationTimer() {
-        callDurationTimer?.invalidate()
-        callDurationTimer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(updateCallDuration), userInfo: nil, repeats: true)
+        stopCallDurationTimer()
+
+        callDurationTimer = .allVersionCompatibleScheduledTimer(withTimeInterval: 0.1, repeats: true) {
+            [weak self] _ in
+            self?.updateCallDuration()
+        }
     }
     
     public func stopCallDurationTimer() {
@@ -323,6 +327,20 @@ extension VoiceChannelViewController : WireCallCenterCallStateObserver, Received
         }
     }
     
+    func provideHapticFeedback(for callState: CallState, previousCallState: CallState) {
+        guard #available(iOS 10, *) else {
+            return
+        }
+        switch callState {
+        case .established, .establishedDataChannel:
+            if previousCallState != callState {
+                UINotificationFeedbackGenerator().notificationOccurred(.success)
+            }
+        default:
+            break
+        }
+    }
+    
     func updateView(for callState : CallState) {
         defer {
             previousCallState = callState
@@ -331,6 +349,7 @@ extension VoiceChannelViewController : WireCallCenterCallStateObserver, Received
         voiceChannelView.transition(to: viewState(for: callState, previousCallState: previousCallState))
         voiceChannelView.speakerActive = AVSMediaManager.sharedInstance()?.isSpeakerEnabled ?? false
         
+        provideHapticFeedback(for: callState, previousCallState: previousCallState)
         updateCallDurationTimer(for: callState)
         updateIdleTimer(for: callState)
     }

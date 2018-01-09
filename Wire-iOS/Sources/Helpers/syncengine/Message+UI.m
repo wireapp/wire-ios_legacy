@@ -21,6 +21,7 @@
 #import "Message+Formatting.h"
 #import "Constants.h"
 #import "Settings.h"
+#import "Wire-Swift.h"
 
 @import WireExtensionComponents;
 
@@ -115,18 +116,6 @@
     });
     
     return longVersionTimeFormatter;
-}
-
-+ (NSDateFormatter *)dayFormatter
-{
-    static NSDateFormatter *dayFormatter = nil;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        dayFormatter = [[NSDateFormatter alloc] init];
-        dayFormatter.dateFormat = @"d MMMM, EEEE";
-    });
-
-    return dayFormatter;
 }
 
 + (BOOL)isPresentableAsNotification:(id<ZMConversationMessage>)message

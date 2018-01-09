@@ -88,6 +88,13 @@ import WireDataModel
         self.accessibilityLabel = "\(user.name)_is_\(user.availability.localizedName)".localized
     }
     
+    func provideHapticFeedback() {
+        guard #available(iOS 10, *) else {
+            return
+        }
+        
+        UIImpactFeedbackGenerator(style: .medium).impactOccurred()
+    }
 }
 
 extension AvailabilityTitleView: ZMUserObserver {
@@ -95,6 +102,7 @@ extension AvailabilityTitleView: ZMUserObserver {
     public func userDidChange(_ changeInfo: UserChangeInfo) {
         guard changeInfo.availabilityChanged else { return }
         
+        provideHapticFeedback()
         configure()
     }
 }
@@ -103,7 +111,7 @@ extension AvailabilityTitleView {
     
     var actionSheet: UIAlertController {
         get {
-            let alert = UIAlertController(title: "availability.message.title".localized, message: nil, preferredStyle: .actionSheet)
+            let alert = UIAlertController(title: "availability.message.set_status".localized, message: nil, preferredStyle: .actionSheet)
             for type in Availability.allValues {
                 alert.addAction(UIAlertAction(title: type.localizedName, style: .default, handler: { [weak self] (action) in
                     self?.didSelectAvailability(type)
