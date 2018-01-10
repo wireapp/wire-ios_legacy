@@ -253,8 +253,16 @@ class GiphySearchViewController: UICollectionViewController {
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: GiphyCollectionViewCell.CellIdentifier, for: indexPath) as! GiphyCollectionViewCell
-        let ziph = searchResultsController.results[indexPath.row]
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: GiphyCollectionViewCell.CellIdentifier,
+                                                            for: indexPath) as? GiphyCollectionViewCell
+            else {
+                fatal("cannot dequeue cell")
+        }
+
+        var ziph: ziphy.Ziph! = nil
+        if indexPath.row < searchResultsController.results.count {
+            ziph = searchResultsController.results[indexPath.row]
+        }
 
         if let representation = ziph.ziphyImages[ZiphyClient.fromZiphyImageTypeToString(.fixedWidthDownsampled)] {
             cell.ziph = ziph
