@@ -25,6 +25,15 @@
 @class TokenField;
 
 
+@interface TokenSeparatorAttachment : NSTextAttachment
+
+@property (nonatomic) Token *token;
+@property (weak, nonatomic) TokenField *tokenField;
+
+- (instancetype)initWithToken:(Token *)token tokenField:(TokenField *)tokenField;
+
+@end
+
 
 @interface TokenTextAttachment : NSTextAttachment
 

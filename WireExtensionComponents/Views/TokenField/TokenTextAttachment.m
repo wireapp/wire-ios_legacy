@@ -22,6 +22,75 @@
 #import "TokenField.h"
 #import "NSString+TextTransform.h"
 
+@implementation TokenSeparatorAttachment
+
+- (instancetype)initWithToken:(Token *)token tokenField:(TokenField *)tokenField
+{
+    if (self = [super init]) {
+        self.token = token;
+        self.tokenField = tokenField;
+        [self refreshImage];
+    }
+    return self;
+}
+
+- (void)refreshImage
+{
+    self.image = [self imageForCurrentToken];
+}
+
+- (UIImage *)imageForCurrentToken
+{
+    const CGFloat dotSize = 4.0f;
+    const CGFloat dotSpacing = 8.0f;
+    const CGFloat lineHeight = ceilf(self.tokenField.font.lineHeight);
+    
+    CGSize imageSize = CGSizeMake(dotSize + dotSpacing * 2, lineHeight);
+    
+    self.bounds = CGRectMake(0, 0, imageSize.width, imageSize.height);
+    
+    UIGraphicsBeginImageContextWithOptions(self.bounds.size, NO, 0.0);
+    
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    CFRetain(context);
+    
+    CGContextSaveGState(context);
+    
+    CGContextSetFillColorWithColor(context, self.backgroundColor.CGColor);
+    CGContextSetLineJoin(context, kCGLineJoinRound);
+    CGContextSetLineWidth(context, 1);
+    
+    // draw dot
+    UIBezierPath *dotPath = [UIBezierPath bezierPathWithOvalInRect:CGRectMake(dotSpacing,
+                                                                              ceilf((imageSize.height + dotSize) / 2.0f),
+                                                                              dotSize,
+                                                                              dotSize)];
+    
+    CGContextSetFillColorWithColor(context, self.dotColor.CGColor);
+    CGContextAddPath(context, dotPath.CGPath);
+    CGContextFillPath(context);
+    
+    UIImage *i = UIGraphicsGetImageFromCurrentImageContext();
+    
+    CGContextRestoreGState(context);
+    UIGraphicsEndImageContext();
+    CFRelease(context);
+    
+    return i;
+}
+
+- (UIColor *)dotColor
+{
+    return self.tokenField.dotColor;
+}
+
+- (UIColor *)backgroundColor
+{
+    return self.tokenField.tokenBackgroundColor;
+}
+
+@end
+
 @implementation TokenTextAttachment
 
 - (instancetype)initWithToken:(Token *)token tokenField:(TokenField *)tokenField
@@ -65,10 +134,6 @@
     CGSize size = attributedName.size;
     
     CGSize imageSize = size;
-    const CGFloat dotSize = 4.0f;
-    const CGFloat dotRightSpace = 8.0f;
-    
-    imageSize.width += ceilf(self.tokenField.tokenOffset + imageHeight + dotRightSpace);
     imageSize.height = imageHeight;
     
     const CGFloat delta = ceilf((self.tokenField.font.capHeight - imageHeight) * 0.5f);
@@ -86,34 +151,6 @@
     CGContextSetStrokeColorWithColor(context, self.borderColor.CGColor);
     CGContextSetLineJoin(context, kCGLineJoinRound);
     CGContextSetLineWidth(context, 1);
-
-    // draw the caps at either end
-    
-//    CGMutablePathRef path = CGPathCreateMutable();
-//    
-//    // when you have a rect with stroke line width = 1, 0.5 of line is inside of rect, 0.5 is inside,
-//    // so we draw rect with width/height less by 1, with origin (0.5, 0.5) to compensate this.
-//    CGFloat radius = (imageHeight - 1.0f) * 0.5f;
-//    CGPathAddRoundedRect(path, NULL, CGRectMake(0.5f, 0.5f, size.width + imageHeight - 1.0f, imageHeight - 1.0f), radius, radius);
-//    
-//    CGContextAddPath(context, path);
-//    CGContextFillPath(context);
-//    
-//    CGContextAddPath(context, path);
-//    CGContextStrokePath(context);
-//    
-//    CFRelease(path);
-    
-    // draw dot
-    UIBezierPath *dotPath = [UIBezierPath bezierPathWithOvalInRect:CGRectMake(imageSize.width - dotRightSpace * 2 - 2,
-                                                                              ceilf((imageSize.height - dotSize) / 2.0f),
-                                                                              dotSize,
-                                                                              dotSize)];
-    
-    CGContextSetFillColorWithColor(context, self.dotColor.CGColor);
-    CGContextAddPath(context, dotPath.CGPath);
-    CGContextFillPath(context);
-    // draw text on top
     
     [attributedName drawAtPoint:CGPointMake(0, (imageHeight - size.height) / 2.0f - self.tokenField.tokenTitleVerticalAdjustment)];
     
