@@ -98,7 +98,7 @@ import CocoaLumberjackSwift
             self.audioPreviewView.color = color
         }
         
-        [self.audioPreviewView, self.timeLabel, self.tipLabel, self.recordButton, self.stopRecordButton, self.confirmButton, self.redoButton, self.cancelButton, self.tipLabel, self.bottomToolbar, self.topContainer, self.topSeparator].forEach { $0.translatesAutoresizingMaskIntoConstraints = false }
+        [self.audioPreviewView, self.timeLabel, self.tipLabel, self.recordButton, self.stopRecordButton, self.confirmButton, self.redoButton, self.cancelButton, self.bottomToolbar, self.topContainer, self.topSeparator].forEach { $0.translatesAutoresizingMaskIntoConstraints = false }
         
         self.audioPreviewView.gradientWidth = 20
         self.audioPreviewView.gradientColor = colorScheme.color(withName: ColorSchemeColorTextForeground)
@@ -108,7 +108,7 @@ import CocoaLumberjackSwift
         self.createTipLabel()
         
         self.timeLabel.font = UIFont(magicIdentifier: "style.text.small.font_spec_light")
-        self.timeLabel.textColor = colorScheme.color(withName: ColorSchemeColorTextForeground)
+        self.timeLabel.textColor = colorScheme.color(withName: ColorSchemeColorTextForeground, variant: .dark)
         
         [self.audioPreviewView, self.timeLabel, self.tipLabel].forEach(self.topContainer.addSubview)
         
