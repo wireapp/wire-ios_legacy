@@ -182,6 +182,12 @@ import Cartography
         }
     }
     
+    public override func removeFromParentViewController() {
+        self.audioPlayerController?.stop()
+        self.audioPlayerController = nil
+        super.removeFromParentViewController()
+    }
+    
     public override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.selectCurrentFilter()
@@ -190,12 +196,6 @@ import Cartography
                 self.setState(.tip, animated: true)
             }
         }
-    }
-    
-    public override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
-        self.audioPlayerController?.stop()
-        self.audioPlayerController = nil
     }
     
     public override func viewDidLayoutSubviews() {
