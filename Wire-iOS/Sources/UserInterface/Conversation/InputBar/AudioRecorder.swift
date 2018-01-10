@@ -176,6 +176,10 @@ public final class AudioRecorder: NSObject, AudioRecorderType {
     
     @discardableResult public func stopRecording() -> Bool {
         audioRecorder?.stop()
+        return postRecordingCleanUp()
+    }
+    
+    fileprivate func postRecordingCleanUp() -> Bool {
         recordLevelCallBack?(0)
         removeDisplayLink()
         guard let filePath = audioRecorder?.url.path , fm.fileExists(atPath: filePath) else { return false }
@@ -296,6 +300,10 @@ extension AudioRecorder: AVAudioRecorderDelegate {
             let duration = AVURLAsset(url: recorder.url).duration.seconds
             recordedToMaxDuration = duration >= maxRecordingDuration
         }
+        
+        // in the case that the recording finished due to the maxRecordingDuration
+        // reached, we should still clean up afterwards
+        if recordedToMaxDuration { _ = postRecordingCleanUp() }
         
         self.recordEndedCallback?(recordedToMaxDuration)
     }
