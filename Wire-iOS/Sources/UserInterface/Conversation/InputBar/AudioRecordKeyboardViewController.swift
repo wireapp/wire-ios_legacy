@@ -276,17 +276,16 @@ import CocoaLumberjackSwift
                 
                 let duration = Int(ceil(self.recorder.maxRecordingDuration ?? 0))
                 let (seconds, minutes) = (duration % 60, duration / 60)
-                
                 let durationLimit = String(format: "%d:%02d", minutes, seconds)
                 
-                let alertController = UIAlertController(title: "conversation.input_bar.audio_message.too_long.title".localized, message: "conversation.input_bar.audio_message.too_long.message".localized(args: durationLimit), preferredStyle: .alert)
-                let actionCancel = UIAlertAction(title: "general.cancel".localized, style: .cancel, handler: nil)
-                alertController.addAction(actionCancel)
+                let alertController = UIAlertController(
+                    title: "conversation.input_bar.audio_message.too_long.title".localized,
+                    message: "conversation.input_bar.audio_message.too_long.message".localized(args: durationLimit),
+                    preferredStyle: .alert
+                )
                 
-                let actionSend = UIAlertAction(title: "conversation.input_bar.audio_message.send".localized, style: .default, handler: { action in
-                    self.sendAudioAsIs(.afterPreview)
-                })
-                alertController.addAction(actionSend)
+                let actionOk = UIAlertAction(title: "general.ok".localized, style: .default, handler: nil)
+                alertController.addAction(actionOk)
                 
                 self.present(alertController, animated: true, completion: .none)
             }
