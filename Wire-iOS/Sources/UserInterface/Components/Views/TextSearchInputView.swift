@@ -68,7 +68,7 @@ public final class TextSearchInputView: UIView {
         searchInput.accessibilityIdentifier = "search input"
         searchInput.keyboardAppearance = ColorScheme.default().keyboardAppearance
         
-        placeholderLabel.textAlignment = .center
+        placeholderLabel.textAlignment = .natural
         placeholderLabel.isAccessibilityElement = false
         
         cancelButton.setIcon(.clearInput, with: .tiny, for: .normal)

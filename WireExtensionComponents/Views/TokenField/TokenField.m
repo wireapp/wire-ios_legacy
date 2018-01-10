@@ -906,7 +906,8 @@ NS_INLINE BOOL RangeIncludesRange(NSRange range, NSRange includedRange)
 {
     DDLogDebug(@"Selection changed: %@", NSStringFromRange(textView.selectedRange));
     
-    __block NSRange filteredSelectionRange = NSMakeRange(0, 0);
+    __block NSRange modifiedSelectionRange = NSMakeRange(0, 0);
+    __block BOOL hasModifiedSelection = NO;
     
     [textView.attributedText enumerateAttribute:NSAttachmentAttributeName
                                         inRange:NSMakeRange(0, textView.attributedText.length)
@@ -917,15 +918,16 @@ NS_INLINE BOOL RangeIncludesRange(NSRange range, NSRange includedRange)
                                              [textView.layoutManager invalidateDisplayForCharacterRange:range];
                                              
                                              if (RangeIncludesRange(textView.selectedRange, range)) {
-                                                 filteredSelectionRange = NSUnionRange(filteredSelectionRange.length == 0 ? range : filteredSelectionRange, range);
+                                                 modifiedSelectionRange = NSUnionRange(hasModifiedSelection ? modifiedSelectionRange : range, range);
+                                                 hasModifiedSelection = YES;
                                              }
                                              DDLogVerbose(@"    person attachement: %@ at range: %@ selected: %d", tokenAttachment.token.title,  NSStringFromRange(range), tokenAttachment.selected);
                                          }
                                      }];
     
     
-    if (textView.selectedRange.length > 0 && !NSEqualRanges(textView.selectedRange, filteredSelectionRange)) {
-        textView.selectedRange = filteredSelectionRange;
+    if (hasModifiedSelection && !NSEqualRanges(textView.selectedRange, modifiedSelectionRange)) {
+        textView.selectedRange = modifiedSelectionRange;
     }
 }
 

@@ -1259,7 +1259,7 @@ AddParticipantsViewController SearchHeaderViewController {
 
 AddParticipantsViewController {
     view: @{
-        backgroundColor: $color-background;
+        backgroundColor: $color-bar-background;
     }
 }
 
@@ -1354,14 +1354,10 @@ StartUIViewController SearchHeaderViewController {
 
 TokenField.search {
     textView: @{
-        placeholderTextContainerInset: 0 48;
+        placeholderTextContainerInset: 0 42;
     }
-    tokenTitleColor: $color-text-foreground;
-    tokenSelectedTitleColor: $color-text-foreground;
     tokenBackgroundColor: clear;
     tokenBorderColor: clear;
-    tokenSelectedBackgroundColor: white;
-    tokenSelectedBorderColor: white;
 }
 
 /* Ephemeral Keyboard */
@@ -1598,27 +1594,10 @@ ReactionCell {
     }
 }
 
-/* Share View Controller */
-
-TokenField.share {
-    textView: @{
-        placeholderTextContainerInset: 0 0;
-        placeholderTextColor: rgb(255, 255, 255, 0.6);
-        keyboardAppearance: dark;
-    }
-    backgroundColor: clear;
-    textColor: white;
-    tokenTitleColor: white;
-    tokenBackgroundColor: clear;
-    tokenBorderColor: clear;
-    tokenSelectedBackgroundColor: white;
-    tokenSelectedBorderColor: white;
-}
-
 /* Collections */
 
 CollectionsView {
-    backgroundColor: $color-conversation-background;
+    backgroundColor: $color-content-background;
 }
 
 NoResultsView {
@@ -1697,7 +1676,7 @@ AppLockView {
 }
 
 TextSearchInputView {
-    backgroundColor: $color-background;
+    backgroundColor: $color-bar-background;
     
     searchInput: @{
         font: $font-normal;
@@ -1710,12 +1689,12 @@ TextSearchInputView {
 }
 
 TextSearchResultsView {
-    backgroundColor: $color-background;
+    backgroundColor: $color-content-background;
 }
 
 TextSearchResultCell {
     contentView: @{
-        backgroundColor: $color-background;
+        backgroundColor: $color-content-background;
     }
     resultCountView: @{
         backgroundColor: $color-graphite-light;
