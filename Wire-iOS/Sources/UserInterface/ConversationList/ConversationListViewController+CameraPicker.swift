@@ -96,21 +96,24 @@ extension URL: Shareable {
 extension ConversationListViewController {
 
     @objc public func showCameraPicker() {
-        let cameraPicker = CameraPicker(target: self)
-        cameraPicker.didPickResult = { [weak self] result in
-            guard let `self` = self else {
-                return
-            }
-            
-            switch result {
-            case .image(let image):
-                self.showShareControllerFor(image: image)
-            case .video(let videoURL):
-                self.showShareControllerFor(videoAtURL: videoURL)
+        UIApplication.wr_requestOrWarnAboutVideoAccess { (granted) in
+            if granted {
+                let cameraPicker = CameraPicker(target: self)
+                cameraPicker.didPickResult = { [weak self] result in
+                    guard let `self` = self else {
+                        return
+                    }
+                    
+                    switch result {
+                    case .image(let image):
+                        self.showShareControllerFor(image: image)
+                    case .video(let videoURL):
+                        self.showShareControllerFor(videoAtURL: videoURL)
+                    }
+                }
+                cameraPicker.pick()
             }
         }
-        
-        cameraPicker.pick()
     }
     
     public func showShareControllerFor(image: UIImage) {
