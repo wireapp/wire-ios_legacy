@@ -24,6 +24,7 @@
 @class ConversationListAccessoryView;
 
 FOUNDATION_EXPORT NSString * const ConversationListItemDidScrollNotification;
+extern CGFloat const ConversationListItemViewCellHeight;
 
 @interface ConversationListItemView : UIView
 

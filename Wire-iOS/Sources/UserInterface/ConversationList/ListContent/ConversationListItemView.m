@@ -32,8 +32,7 @@
 @import Classy;
 
 NSString * const ConversationListItemDidScrollNotification = @"ConversationListItemDidScrollNotification";
-
-
+CGFloat const ConversationListItemViewCellHeight = 64.0;
 
 @interface ConversationListItemView ()
 
@@ -141,7 +140,7 @@ NSString * const ConversationListItemDidScrollNotification = @"ConversationListI
 {
     [NSLayoutConstraint autoCreateAndInstallConstraints:^{
         
-        [self autoSetDimension:ALDimensionHeight toSize:64.0 relation:NSLayoutRelationGreaterThanOrEqual];
+        [self autoSetDimension:ALDimensionHeight toSize:ConversationListItemViewCellHeight relation:NSLayoutRelationGreaterThanOrEqual];
         CGFloat leftMargin = 64.0;
         [self.avatarContainer autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero excludingEdge:ALEdgeTrailing];
         [self.avatarContainer autoPinEdge:ALEdgeTrailing toEdge:ALEdgeLeading ofView:self.titleField];

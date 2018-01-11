@@ -751,6 +751,13 @@
 {
     [self updateNoConversationVisibility];
     [self updateArchiveButtonVisibility];
+    
+    NSArray *calling = [changeInfo.conversationList listWithIncomingCalls:YES];
+    if(calling.count > 0) {
+        [self.topBar pinConversations:calling];
+    } else {
+        [self.topBar unpinConversations];
+    }
 }
 
 - (void)updateArchiveButtonVisibility

@@ -21,7 +21,10 @@ import Cartography
 import WireExtensionComponents
 
 final class ConversationListTopBar: TopBar {
-   
+    
+    private var pinnedItem = ConversationListPinnedItemView()
+    private var pinnedItemHeight: NSLayoutConstraint?
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         
@@ -49,8 +52,46 @@ final class ConversationListTopBar: TopBar {
         }
         
         self.splitSeparator = false
+        
+        self.addSubview(pinnedItem)
+        
+        constrain(self, containerView, pinnedItem) { (selfView, containerView, pinnedItem) in
+            containerView.bottom == pinnedItem.top
+            pinnedItem.left == selfView.left
+            pinnedItem.right == selfView.right
+            pinnedItem.bottom == selfView.bottom
+            pinnedItemHeight = pinnedItem.height == 0.0
+        }
+        
+        self.containerViewBottomConstraint.isActive = false
+        
     }
     
+    
+    func pinConversations(_ conversations: [ZMConversation]?) {
+        guard let conversations = conversations else { unpinConversations(); return }
+        self.pinnedItem.items = conversations
+        self.pinnedItem.isHidden = false
+        self.pinnedItemHeight?.constant = heightForPinnedItems(count: conversations.count)
+        invalidateIntrinsicContentSize()
+    }
+    
+    func unpinConversations() {
+        self.pinnedItem.items = nil
+        self.pinnedItem.isHidden = true
+        self.pinnedItemHeight?.constant = 0.0
+        invalidateIntrinsicContentSize()
+    }
+    
+    override open var intrinsicContentSize: CGSize {
+        let defaultHeight: CGFloat = 44.0
+        guard let conversations = self.pinnedItem.items, conversations.count > 0 else { return CGSize(width: UIViewNoIntrinsicMetric, height: defaultHeight) }
+        return CGSize(width: UIViewNoIntrinsicMetric, height: defaultHeight + heightForPinnedItems(count: conversations.count))
+    }
+    
+    private func heightForPinnedItems(count: Int) -> CGFloat {
+        return ConversationListItemViewCellHeight * CGFloat(count)
+    }
     
     required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -67,6 +108,9 @@ extension ConversationListTopBar {
 }
 
 open class TopBar: UIView {
+    
+    internal var containerView = UIView()
+    
     public var leftView: UIView? = .none {
         didSet {
             oldValue?.removeFromSuperview()
@@ -75,11 +119,11 @@ open class TopBar: UIView {
                 return
             }
             
-            self.addSubview(new)
+            containerView.addSubview(new)
             
-            constrain(self, new) { selfView, new in
-                new.leading == selfView.leadingMargin
-                new.centerY == selfView.centerY
+            constrain(containerView, new) { containerView, new in
+                new.leading == containerView.leadingMargin
+                new.centerY == containerView.centerY
             }
         }
     }
@@ -92,11 +136,11 @@ open class TopBar: UIView {
                 return
             }
             
-            self.addSubview(new)
+            containerView.addSubview(new)
             
-            constrain(self, new) { selfView, new in
-                new.trailing == selfView.trailingMargin
-                new.centerY == selfView.centerY
+            constrain(containerView, new) { containerView, new in
+                new.trailing == containerView.trailingMargin
+                new.centerY == containerView.centerY
             }
         }
     }
@@ -133,15 +177,18 @@ open class TopBar: UIView {
     
     private var leftSeparatorInsetConstraint: NSLayoutConstraint!
     private var rightSeparatorInsetConstraint: NSLayoutConstraint!
+    internal var containerViewBottomConstraint: NSLayoutConstraint!
     
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.layoutMargins = UIEdgeInsetsMake(0, 16, 0, 16)
-        [leftSeparatorLineView, rightSeparatorLineView, middleViewContainer].forEach(self.addSubview)
+        containerView.backgroundColor = .clear
+        self.addSubview(containerView)
+        [leftSeparatorLineView, rightSeparatorLineView, middleViewContainer].forEach(containerView.addSubview)
         
-        constrain(self, self.middleViewContainer, self.leftSeparatorLineView, self.rightSeparatorLineView) {
-            selfView, middleViewContainer, leftSeparatorLineView, rightSeparatorLineView in
+        constrain(self, self.containerView, self.middleViewContainer, self.leftSeparatorLineView, self.rightSeparatorLineView) {
+            selfView, containerView, middleViewContainer, leftSeparatorLineView, rightSeparatorLineView in
             
             leftSeparatorLineView.leading == selfView.leading
             leftSeparatorLineView.bottom == selfView.bottom
@@ -149,11 +196,16 @@ open class TopBar: UIView {
             rightSeparatorLineView.trailing == selfView.trailing
             rightSeparatorLineView.bottom == selfView.bottom
             
-            middleViewContainer.center == selfView.center
+            middleViewContainer.center == containerView.center
             leftSeparatorLineView.trailing == selfView.centerX ~ LayoutPriority(750)
             rightSeparatorLineView.leading == selfView.centerX ~ LayoutPriority(750)
             self.leftSeparatorInsetConstraint = leftSeparatorLineView.trailing == middleViewContainer.leading - 7
             self.rightSeparatorInsetConstraint = rightSeparatorLineView.leading == middleViewContainer.trailing + 7
+            
+            self.containerViewBottomConstraint = containerView.bottom == selfView.bottom
+            containerView.left == selfView.left
+            containerView.right == selfView.right
+            containerView.top == selfView.top
         }
     }
     
