@@ -202,7 +202,7 @@ extension AddParticipantsViewController : SearchHeaderViewControllerDelegate {
         } else {
             emptyResultLabel.text = emptySearchResultText
             searchResultsViewController.mode = .search
-            searchResultsViewController.search(withQuery: query, local: true)
+            searchResultsViewController.searchForUsersLocal(withQuery: query)
         }
     }
     
@@ -223,7 +223,7 @@ extension AddParticipantsViewController : UIPopoverPresentationControllerDelegat
 extension AddParticipantsViewController: CollectionViewSectionAggregatorDelegate {
     
     public func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        searchHeaderViewController.separatorView.scrollViewDidScroll(scrollView: scrollView)
+        searchResultsViewController.searchResultsView?.separatorView.scrollViewDidScroll(scrollView: scrollView)
     }
 }
 

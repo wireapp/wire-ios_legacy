@@ -19,6 +19,24 @@
 import Foundation
 import WireSyncEngine
 
+@objc enum SearchGroup: Int {
+    case people
+    case services
+}
+
+extension SearchGroup {
+    static let all: [SearchGroup] = [.people, .services]
+    
+    var name: String {
+        switch self {
+        case .people:
+            return "peoplepicker.header.people".localized
+        case .services:
+            return "peoplepicker.header.services".localized
+        }
+    }
+}
+
 @objc
 public protocol SearchResultsViewControllerDelegate {
     
@@ -94,7 +112,7 @@ public class SearchResultsViewController : UIViewController {
     var searchResultsView: SearchResultsView?
     let searchDirectory: SearchDirectory
     let userSelection: UserSelection
-    
+
     let sectionAggregator: CollectionViewSectionAggregator
     let contactsSection: UsersInContactsSection
     let teamMemberAndContactsSection: UsersInContactsSection
@@ -105,13 +123,18 @@ public class SearchResultsViewController : UIViewController {
     
     var pendingSearchTask: SearchTask? = nil
     var isAddingParticipants: Bool
+    var searchGroup: SearchGroup = .people {
+        didSet {
+            updateVisibleSections()
+        }
+    }
     
     public var filterConversation: ZMConversation? = nil
     
     public weak var delegate: SearchResultsViewControllerDelegate? = nil
     
     public var mode: SearchResultsViewControllerMode = .search {
-        didSet{
+        didSet {
             updateVisibleSections()
         }
     }
@@ -183,18 +206,31 @@ public class SearchResultsViewController : UIViewController {
         pendingSearchTask = nil
     }
     
-    @objc
-    public func search(withQuery query: String, local: Bool = false) {
+    private func performSearch(query: String, options: SearchOptions) {
         pendingSearchTask?.cancel()
         
-        let searchOptions : SearchOptions = local && !shouldShowBotResults ? [.contacts, .teamMembers] : [.conversations, .contacts, .teamMembers, .directory, .services]
-        let request = SearchRequest(query: query, searchOptions:searchOptions, team: ZMUser.selfUser().team)
+        let request = SearchRequest(query: query, searchOptions: options, team: ZMUser.selfUser().team)
         let task = searchDirectory.perform(request)
         
         task.onResult({ [weak self] in self?.handleSearchResult(result: $0, isCompleted: $1)})
         task.start()
         
         pendingSearchTask = task
+    }
+    
+    @objc
+    public func searchForUsers(withQuery query: String) {
+        self.performSearch(query: query, options: [.conversations, .contacts, .teamMembers, .directory])
+    }
+
+    @objc
+    public func searchForUsersLocal(withQuery query: String) {
+        self.performSearch(query: query, options: [.contacts, .teamMembers])
+    }
+
+    @objc
+    public func searchForServices(withQuery query: String) {
+        self.performSearch(query: query, options: [.services])
     }
     
     @objc
@@ -218,15 +254,14 @@ public class SearchResultsViewController : UIViewController {
         }
     }
     
-    private var shouldShowBotResults: Bool {
-        return DeveloperMenuState.developerMenuEnabled() // TODO: check team users ZMUser.selfUser().team != nil &&
-    }
-    
     func updateVisibleSections() {
         var sections : [CollectionViewSectionController]
         let team = ZMUser.selfUser().team
         
-        if isAddingParticipants {
+        switch(self.searchGroup, isAddingParticipants) {
+        case (.services, _):
+            sections = [servicesSection]
+        case (.people, true):
             switch (mode, team != nil) {
             case (.search, false):
                 sections = [contactsSection]
@@ -241,7 +276,7 @@ public class SearchResultsViewController : UIViewController {
             case (.list, true):
                 sections = [teamMemberAndContactsSection]
             }
-        } else {
+        case (.people, false):
             switch (mode, team != nil) {
             case (.search, false):
                 sections = [contactsSection, conversationsSection, directorySection]
@@ -256,10 +291,6 @@ public class SearchResultsViewController : UIViewController {
             case (.list, true):
                 sections = [teamMemberAndContactsSection]
             }
-        }
-        
-        if shouldShowBotResults {
-            sections.append(servicesSection)
         }
         
         sectionAggregator.sectionControllers = sections

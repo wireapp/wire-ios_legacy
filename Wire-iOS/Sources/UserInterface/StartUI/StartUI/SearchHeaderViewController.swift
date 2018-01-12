@@ -41,7 +41,6 @@ public class SearchHeaderViewController : UIViewController {
     let clearButton: IconButton
     let userSelection : UserSelection
     let colorSchemeVariant : ColorSchemeVariant
-    let separatorView = OverflowSeparatorView()
     
     @objc
     public weak var delegate : SearchHeaderViewControllerDelegate? = nil
@@ -99,7 +98,7 @@ public class SearchHeaderViewController : UIViewController {
         
         [titleLabel, closeButton].forEach(titleContainer.addSubview)
         [tokenField, searchIcon, clearButton].forEach(tokenFieldContainer.addSubview)
-        [titleContainer, tokenFieldContainer, separatorView].forEach(view.addSubview)
+        [titleContainer, tokenFieldContainer].forEach(view.addSubview)
         
         createConstraints()
     }
@@ -134,7 +133,7 @@ public class SearchHeaderViewController : UIViewController {
             tokenField.centerY == container.centerY
         }
                 
-        constrain(view, titleContainer, tokenFieldContainer, separatorView) { view, titleContainer, tokenFieldContainer, separatorView in
+        constrain(view, titleContainer, tokenFieldContainer) { view, titleContainer, tokenFieldContainer in
             
             titleContainer.top == view.top
             titleContainer.leading == view.leading
@@ -146,10 +145,6 @@ public class SearchHeaderViewController : UIViewController {
             tokenFieldContainer.leading == view.leading
             tokenFieldContainer.trailing == view.trailing
             tokenFieldContainer.height == 48
-            
-            separatorView.leading == view.leading
-            separatorView.trailing == view.trailing
-            separatorView.bottom == view.bottom
         }
     }
     

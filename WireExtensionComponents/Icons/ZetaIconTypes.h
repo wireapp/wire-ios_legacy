@@ -199,6 +199,8 @@ typedef NS_ENUM(NSInteger, ZetaIconType)
     ZetaIconTypeAvailabilityBusy                = 0x748,
     ZetaIconTypeAvailabilityAway                = 0x749,
     ZetaIconTypeAvailabilityAvailable           = 0x750,
+    
+    ZetaIconTypeBot                             = 0x752,
 };
 
 typedef NS_ENUM(NSInteger, ZetaIconSize) {

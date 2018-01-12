@@ -35,6 +35,8 @@ extern CGRect WireStyleKitResizingBehaviorApply(WireStyleKitResizingBehavior beh
 @interface WireStyleKit : NSObject
 
 // iOS Controls Customization Outlets
+@property (strong, nonatomic) IBOutletCollection(NSObject) NSArray* icon_0x748_10ptTargets;
+@property (strong, nonatomic) IBOutletCollection(NSObject) NSArray* icon_0x749_10ptTargets;
 @property (strong, nonatomic) IBOutletCollection(NSObject) NSArray* ongoingcallTargets;
 @property (strong, nonatomic) IBOutletCollection(NSObject) NSArray* shieldverifiedTargets;
 @property (strong, nonatomic) IBOutletCollection(NSObject) NSArray* shieldnotverifiedTargets;
@@ -175,9 +177,14 @@ extern CGRect WireStyleKitResizingBehaviorApply(WireStyleKitResizingBehavior beh
 + (void)drawIcon_0x746_32ptWithColor: (UIColor*)color;
 + (void)drawIcon_0x747_32ptWithColor: (UIColor*)color;
 + (void)drawIcon_0x269_32ptWithColor: (UIColor*)color;
-+ (void)drawIcon_0x748_32ptWithColor: (UIColor*)color;
-+ (void)drawIcon_0x749_32ptWithColor: (UIColor*)color;
-+ (void)drawIcon_0x750_32ptWithColor: (UIColor*)color;
++ (void)drawIcon_0x748_10pt;
++ (void)drawIcon_0x748_10ptWithFrame: (CGRect)targetFrame resizing: (WireStyleKitResizingBehavior)resizing;
++ (void)drawIcon_0x749_10pt;
++ (void)drawIcon_0x749_10ptWithFrame: (CGRect)targetFrame resizing: (WireStyleKitResizingBehavior)resizing;
++ (void)drawIcon_0x750_10ptWithFillColor3: (UIColor*)fillColor3;
++ (void)drawIcon_0x750_10ptWithFrame: (CGRect)targetFrame resizing: (WireStyleKitResizingBehavior)resizing fillColor3: (UIColor*)fillColor3;
++ (void)drawIcon_0x751_32ptWithColor: (UIColor*)color;
++ (void)drawIcon_0x752_256ptWithColor: (UIColor*)color;
 + (void)drawMissedcallWithAccent: (UIColor*)accent;
 + (void)drawYoutubeWithColor: (UIColor*)color;
 + (void)drawMissedcalllastWithAccent: (UIColor*)accent;
@@ -306,10 +313,12 @@ extern CGRect WireStyleKitResizingBehaviorApply(WireStyleKitResizingBehavior beh
 + (UIImage*)imageOfIcon_0x745_32ptWithColor: (UIColor*)color;
 + (UIImage*)imageOfIcon_0x746_32ptWithColor: (UIColor*)color;
 + (UIImage*)imageOfIcon_0x747_32ptWithColor: (UIColor*)color;
-+ (UIImage*)imageOfIcon_0x748_32ptWithColor: (UIColor*)color;
-+ (UIImage*)imageOfIcon_0x749_32ptWithColor: (UIColor*)color;
-+ (UIImage*)imageOfIcon_0x750_32ptWithColor: (UIColor*)color;
 + (UIImage*)imageOfIcon_0x269_32ptWithColor: (UIColor*)color;
++ (UIImage*)imageOfIcon_0x748_10pt;
++ (UIImage*)imageOfIcon_0x749_10pt;
++ (UIImage*)imageOfIcon_0x750_10ptWithFillColor3: (UIColor*)fillColor3;
++ (UIImage*)imageOfIcon_0x751_32ptWithColor: (UIColor*)color;
++ (UIImage*)imageOfIcon_0x752_256ptWithColor: (UIColor*)color;
 + (UIImage*)imageOfMissedcallWithAccent: (UIColor*)accent;
 + (UIImage*)imageOfYoutubeWithColor: (UIColor*)color;
 + (UIImage*)imageOfMissedcalllastWithAccent: (UIColor*)accent;
