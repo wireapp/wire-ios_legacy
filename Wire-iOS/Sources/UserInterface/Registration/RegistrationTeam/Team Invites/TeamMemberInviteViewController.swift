@@ -99,12 +99,11 @@ final class TeamMemberInviteViewController: UIViewController, TeamInviteTopbarDe
     
     private func sendInvite(to email: String) {
         guard let userSession = ZMUserSession.shared() else { return }
-        
         showLoadingView = true
         
-        ZMUser.selfUser().team?.invite(email: email, in: userSession, completion: { [weak self] (result) in
+        ZMUser.selfUser().team?.invite(email: email, in: userSession) { [weak self] result in
             self?.handle(inviteResult: result, from:  .manualInput)
-        })
+        }
     }
     
     private func handle(inviteResult result: InviteResult, from source: InviteSource) {
