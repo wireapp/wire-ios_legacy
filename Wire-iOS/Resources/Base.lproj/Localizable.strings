@@ -839,7 +839,8 @@
 
 // Team Invite Errors
 "team.invite.error.generic" = "Something went wrong, please try again.";
-"team.invite.error.already_registered" = "This email address is already registered on Wire.";
+"team.invite.error.already_registered" = "This mail address is already registered on Wire.";
+"team.invite.error.already_invited" = "This mail has already been invited.";
 "team.invite.error.too_many_invitations" = "You have reached the maximum amount of invitations.";
 
 // Registration

@@ -58,6 +58,7 @@ final class TeamInviteTopBar: UIView {
         backgroundColor = UIColor.Team.background
         addSubview(actionButton)
         actionButton.titleLabel?.font = FontSpec(.medium, .semibold).font!
+        actionButton.accessibilityLabel = "continue"
         actionButton.setTitleColor(.black, for: .normal)
         actionButton.setTitleColor(.darkGray, for: .highlighted)
         actionButton.addTarget(self, action: #selector(didTapButton), for: .touchUpInside)
