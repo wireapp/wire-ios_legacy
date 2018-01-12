@@ -126,7 +126,7 @@ final public class BackgroundViewController: UIViewController {
         self.updateStatusBarBlurStyle()
         
         let factor = BackgroundViewController.backgroundScaleFactor
-        self.blurView.transform = CGAffineTransform(scaleX: factor, y: factor)
+        //self.blurView.transform = CGAffineTransform(scaleX: factor, y: factor)
         self.imageView.transform = CGAffineTransform(scaleX: factor, y: factor)
     }
     
@@ -186,7 +186,7 @@ final public class BackgroundViewController: UIViewController {
     static let backgroundScaleFactor: CGFloat = 1.4
     
     static func blurredAppBackground(with imageData: Data) -> UIImage? {
-        return UIImage(from: imageData, withMaxSize: 100)?.desaturatedImage(with: BackgroundViewController.ciContext, saturation: 2)
+        return UIImage(from: imageData, withMaxSize: 40)?.desaturatedImage(with: BackgroundViewController.ciContext, saturation: 2)
     }
     
     fileprivate func setBackground(imageData: Data) {

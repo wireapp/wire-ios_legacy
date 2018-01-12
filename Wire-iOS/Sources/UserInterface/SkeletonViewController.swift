@@ -257,7 +257,6 @@ class SkeletonViewController: UIViewController {
         
         let factor = BackgroundViewController.backgroundScaleFactor
         backgroundImageView.transform = CGAffineTransform(scaleX: factor, y: factor)
-        blurEffectView.transform = CGAffineTransform(scaleX: factor, y: factor)
         
         if let imageData = account.imageData, let image = BackgroundViewController.blurredAppBackground(with: imageData) {
             backgroundImageView.image = image
