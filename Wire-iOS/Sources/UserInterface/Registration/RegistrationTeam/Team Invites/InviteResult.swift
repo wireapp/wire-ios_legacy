@@ -18,11 +18,6 @@
 
 import Foundation
 
-enum InviteResult {
-    case success(email: String)
-    case failure(email: String, errorMessage: String)
-}
-
 enum InviteSource {
     case manualInput, addressBook
 }

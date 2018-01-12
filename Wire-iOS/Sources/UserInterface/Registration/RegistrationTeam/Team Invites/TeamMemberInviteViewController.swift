@@ -98,12 +98,13 @@ final class TeamMemberInviteViewController: UIViewController, TeamInviteTopbarDe
     }
     
     private func sendInvite(to email: String) {
+        guard let userSession = ZMUserSession.shared() else { return }
+        
         showLoadingView = true
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-            let result = self.generateInviteResult(with: email)
-            self.handle(inviteResult: result, from:  .manualInput)
-        }
+        ZMUser.selfUser().team?.invite(email: email, in: userSession, completion: { [weak self] (result) in
+            self?.handle(inviteResult: result, from:  .manualInput)
+        })
     }
     
     private func handle(inviteResult result: InviteResult, from source: InviteSource) {
@@ -121,8 +122,8 @@ final class TeamMemberInviteViewController: UIViewController, TeamInviteTopbarDe
         case .success:
             dataSource.append(result)
             footerTextFieldView.clearInput()
-        case let .failure(_, errorMessage: errorMessage):
-            footerTextFieldView.errorMessage = errorMessage
+        case let .failure(_, error: error):
+            footerTextFieldView.errorMessage = error.localizedDescription
         }
     }
     
@@ -130,20 +131,7 @@ final class TeamMemberInviteViewController: UIViewController, TeamInviteTopbarDe
         dataSource.append(result)
         footerTextFieldView.clearInput()
     }
-    
-    // TEST HELPER
-    var counter = 0
-
-    func generateInviteResult(with email: String) -> InviteResult {
-        counter += 1
-        if counter % 2 != 0 {
-            return .success(email: email)
-        } else {
-            return .failure(email: email, errorMessage: "This email is already registered on Wire")
-        }
-    }
-    // END TEST HELPER
-    
+        
     func teamInviteTopBarDidTapButton(_ topBar: TeamInviteTopBar) {
         // TODO: Tracking
         delegate?.teamInviteViewControllerDidFinish(self)

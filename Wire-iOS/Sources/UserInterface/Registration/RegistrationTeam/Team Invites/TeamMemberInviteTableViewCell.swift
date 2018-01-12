@@ -41,10 +41,10 @@ final class TeamMemberInviteTableViewCell: UITableViewCell {
             case let .success(email)?:
                 errorLabel.isHidden = true
                 emailLabel.text = email
-            case let .failure(email, errorMessage)?:
+            case let .failure(email, error)?:
                 errorLabel.isHidden = false
                 emailLabel.text = email
-                errorLabel.text = errorMessage
+                errorLabel.text = error.localizedDescription
             default: break
             }
             
