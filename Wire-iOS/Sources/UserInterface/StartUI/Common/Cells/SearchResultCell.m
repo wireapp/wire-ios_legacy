@@ -187,8 +187,7 @@
         [self.conversationImageView autoPinEdgeToSuperviewEdge:ALEdgeTop];
 
         [self.instantConnectButton autoAlignAxis:ALAxisHorizontal toSameAxisOfView:self.avatarContainer];
-        [self.instantConnectButton autoPinEdgeToSuperviewEdge:ALEdgeTrailing withInset:0];
-        [self.instantConnectButton autoSetDimensionsToSize:CGSizeMake(64, 64)];
+        [self.instantConnectButton autoPinEdgeToSuperviewEdge:ALEdgeTrailing withInset:16];
 
         self.initialConstraintsCreated = YES;
         [self updateForContext];

@@ -120,7 +120,9 @@ public class AddParticipantsViewController : UIViewController {
         view.addSubview(searchResultsViewController.view)
         searchResultsViewController.didMove(toParentViewController: self)
         searchResultsViewController.searchResultsView?.emptyResultView = emptyResultLabel
+        searchResultsViewController.searchResultsView?.backgroundColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorContentBackground);
         searchResultsViewController.sectionAggregator.delegate = self
+        
         
         createConstraints()
         updateConfirmButtonVisibility()

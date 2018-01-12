@@ -80,17 +80,17 @@ public class SearchHeaderViewController : UIViewController {
         
         tokenField.cas_styleClass = "search"
         tokenField.textColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorTextForeground, variant: colorSchemeVariant)
-        tokenField.layer.cornerRadius = 4
+        tokenField.tokenTitleColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorTextForeground, variant: colorSchemeVariant)
+        tokenField.tokenSelectedTitleColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorTextForeground, variant: colorSchemeVariant)
         tokenField.clipsToBounds = true
         tokenField.textView.placeholderTextColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorTokenFieldTextPlaceHolder, variant: colorSchemeVariant)
-        tokenField.textView.placeholderTextAlignment = .center
         tokenField.textView.backgroundColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorTokenFieldBackground, variant: colorSchemeVariant)
         tokenField.textView.accessibilityLabel = "textViewSearch"
         tokenField.textView.placeholder = "peoplepicker.search_placeholder".localized.uppercased()
         tokenField.textView.keyboardAppearance = ColorScheme.keyboardAppearance(for: colorSchemeVariant)
         tokenField.textView.returnKeyType = .done
         tokenField.textView.autocorrectionType = .no
-        tokenField.textView.textContainerInset = UIEdgeInsets(top: 6, left: 32, bottom: 6, right: 32)
+        tokenField.textView.textContainerInset = UIEdgeInsets(top: 6, left: 40, bottom: 6, right: 32)
         tokenField.delegate = self
         
         closeButton.accessibilityLabel = "close"
