@@ -227,7 +227,8 @@ class AppRootViewController: UIViewController {
                 let landingViewController = LandingViewController()
                 landingViewController.delegate = self
                 
-                let navigationController = NavigationController(rootViewController: landingViewController)
+                let navigationController = NavigationController(rootViewController: TeamMemberInviteViewController())
+//                 let navigationController = NavigationController(rootViewController: landingViewController)
                 navigationController.backButtonEnabled = false
                 navigationController.logoEnabled = false
                 navigationController.isNavigationBarHidden = true

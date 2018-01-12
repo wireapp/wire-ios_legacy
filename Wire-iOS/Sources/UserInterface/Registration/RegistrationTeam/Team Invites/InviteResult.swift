@@ -18,19 +18,22 @@
 
 import Foundation
 
-public protocol Reusable {
-    static var reuseIdentifier: String { get }
-    var reuseIdentifier: String? { get }
+enum InviteResult {
+    case success(email: String)
+    case failure(email: String, errorMessage: String)
 }
 
-public extension Reusable {
-    static var reuseIdentifier: String {
-        return "\(self)"
-    }
-    
-    var reuseIdentifier: String? {
-        return type(of: self).reuseIdentifier
-    }
+enum InviteSource {
+    case manualInput, addressBook
 }
 
-extension UITableViewCell: Reusable {}
+extension Sequence where Element == InviteResult {
+    var emails: [String] {
+        return map {
+            switch $0 {
+            case .success(email: let email): return email
+            case .failure(email: let email, _): return email
+            }
+        }
+    }
+}

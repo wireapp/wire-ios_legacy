@@ -127,7 +127,7 @@ public protocol ColorPickerControllerDelegate {
         }
     }
     
-    fileprivate class PickerCell: UITableViewCell, Reusable {
+    fileprivate class PickerCell: UITableViewCell {
         fileprivate let checkmarkView = UIImageView()
         fileprivate let colorView = UIView()
     

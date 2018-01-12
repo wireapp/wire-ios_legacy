@@ -24,14 +24,17 @@ final class TextFieldDescription: NSObject, ValueSubmission {
     let kind: AccessoryTextField.Kind
     var valueSubmitted: ValueSubmitted?
     var valueValidated: ValueValidated?
+    var shouldReturn: ((String) -> Bool)?
     var acceptsInput: Bool = true
     var validationError: TextFieldValidator.ValidationError
+    let uppercasePlaceholder: Bool
 
     fileprivate var currentValue: String = ""
 
-    init(placeholder: String, actionDescription: String, kind: AccessoryTextField.Kind) {
+    init(placeholder: String, actionDescription: String, kind: AccessoryTextField.Kind, uppercasePlaceholder: Bool = true) {
         self.placeholder = placeholder
         self.actionDescription = actionDescription
+        self.uppercasePlaceholder = uppercasePlaceholder
         self.kind = kind
         validationError = .tooShort(kind: kind)
         super.init()
@@ -43,7 +46,7 @@ extension TextFieldDescription: ViewDescriptor {
         let textField = AccessoryTextField(kind: kind)
         textField.enablesReturnKeyAutomatically = true
         textField.translatesAutoresizingMaskIntoConstraints = false
-        textField.placeholder = self.placeholder
+        textField.placeholder = uppercasePlaceholder ? self.placeholder.uppercased() : self.placeholder
         textField.delegate = self
         textField.textFieldValidationDelegate = self
         textField.confirmButton.addTarget(self, action: #selector(TextFieldDescription.confirmButtonTapped(_:)), for: .touchUpInside)
@@ -71,6 +74,12 @@ extension TextFieldDescription: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         guard acceptsInput else { return false }
         guard let text = textField.text else { return true }
+        (textField as? AccessoryTextField)?.validateInput()
+        
+        if let shouldReturnOverride = shouldReturn?(text), !shouldReturnOverride {
+            return false
+        }
+        
         submitValue(with: text)
         return true
     }

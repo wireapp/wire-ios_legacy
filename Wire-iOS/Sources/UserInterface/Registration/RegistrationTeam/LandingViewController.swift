@@ -41,9 +41,7 @@ final class LandingViewController: UIViewController {
         let alignCenterStyle = NSMutableParagraphStyle()
         alignCenterStyle.alignment = NSTextAlignment.center
 
-        let semiboldFont = FontSpec(.large, .semibold).font!
-
-        return [NSForegroundColorAttributeName: UIColor.Team.textColor, NSParagraphStyleAttributeName: alignCenterStyle, NSFontAttributeName:semiboldFont]
+        return [NSForegroundColorAttributeName: UIColor.Team.textColor, NSParagraphStyleAttributeName: alignCenterStyle, NSFontAttributeName: semiboldFont]
     }()
 
     static let buttonSubtitleAttribute: [String: Any] = {
@@ -53,7 +51,7 @@ final class LandingViewController: UIViewController {
 
         let lightFont = FontSpec(.normal, .light).font!
 
-        return [NSForegroundColorAttributeName: UIColor.Team.textColor, NSParagraphStyleAttributeName: alignCenterStyle, NSFontAttributeName:lightFont]
+        return [NSForegroundColorAttributeName: UIColor.Team.textColor, NSParagraphStyleAttributeName: alignCenterStyle, NSFontAttributeName: lightFont]
     }()
 
     // MARK: - constraints for iPad
