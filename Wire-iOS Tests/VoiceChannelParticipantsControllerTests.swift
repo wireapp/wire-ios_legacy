@@ -22,36 +22,46 @@ import XCTest
 final class VoiceChannelParticipantsControllerTests: XCTestCase {
     
     var sut: VoiceChannelParticipantsController!
-    
+    var originalVoiceChannelClass : VoiceChannel.Type!
+    var conversation:MockConversation!
+
     override func setUp() {
         super.setUp()
+
+        conversation = MockConversation()
+        conversation.conversationType = .oneOnOne
+        conversation.displayName = "John Doe"
+        conversation.connectedUser = MockUser.mockUsers().last!
+        originalVoiceChannelClass = WireCallCenterV3Factory.voiceChannelClass
+        WireCallCenterV3Factory.voiceChannelClass = MockVoiceChannel.self
     }
     
     override func tearDown() {
         sut = nil
+        WireCallCenterV3Factory.voiceChannelClass = originalVoiceChannelClass
+        originalVoiceChannelClass = nil
         super.tearDown()
-    }
-
-
-
-    /// Example checker method which can be reused in different tests
-    ///
-    /// - Parameters:
-    ///   - file: optional, for XCTAssert logging error source
-    ///   - line: optional, for XCTAssert logging error source
-    fileprivate func checkerExample(file: StaticString = #file, line: UInt = #line) {
-        XCTAssert(true, file: file, line: line)
     }
 
     func testExample(){
         // GIVEN
-        let mockCollectionView : UICollectionView
-        let mockConversation = ZMConversation()
-        sut = VoiceChannelParticipantsController(conversation: mockConversation, collectionView: mockCollectionView)
+        let mockCollectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: UICollectionViewFlowLayout.init())
+
+        let callingConversation = (conversation as Any) as! ZMConversation
+
+        (callingConversation.voiceChannel as? MockVoiceChannel)?.participants = NSOrderedSet(array: [MockUser.mockUsers().last!])
+
+        let participants = (callingConversation.voiceChannel as? MockVoiceChannel)?.participants
+
+        let count = participants?.count
+
+        XCTAssertEqual(1, count)
+
+        sut = VoiceChannelParticipantsController(conversation: (conversation as Any) as! ZMConversation, collectionView: mockCollectionView)
 
         // WHEN
 
         // THEN
-        checkerExample()
+//        checkerExample()
     }
 }
