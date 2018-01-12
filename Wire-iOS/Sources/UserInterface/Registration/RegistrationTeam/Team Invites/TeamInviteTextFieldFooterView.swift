@@ -79,6 +79,7 @@ final class TeamInviteTextFieldFooterView: UIView {
         contactsButton.setTitleColor(.black, for: .normal)
         contactsButton.setTitleColor(.darkGray, for: .highlighted)
         contactsButton.addTarget(self, action: #selector(didTapContactsButton), for: .touchUpInside)
+        // Uncomment when address book button should be visible
         [textField, errorLabel, /* contactsButton */].forEach(addSubview)
         backgroundColor = .clear
     }
@@ -95,7 +96,7 @@ final class TeamInviteTextFieldFooterView: UIView {
             
             errorLabel.bottom == view.bottom - 12
             
-            /*
+            /* Uncomment when address book button should be visible
             contactsButton.centerX == view.centerX
             contactsButton.top == errorLabel.bottom + 24
             contactsButton.bottom == view.bottom - 12

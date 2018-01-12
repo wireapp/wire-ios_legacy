@@ -837,6 +837,11 @@
 "team.invite.top_bar.skip" = "Skip";
 "team.invite.top_bar.done" = "Done";
 
+// Team Invite Errors
+"team.invite.error.generic" = "Something went wrong, please try again.";
+"team.invite.error.already_registered" = "This email address is already registered on Wire.";
+"team.invite.error.too_many_invitations" = "You have reached the maximum amount of invitations.";
+
 // Registration
 
 "registration.title" = "Registration";

@@ -32,3 +32,17 @@ extension Sequence where Element == InviteResult {
         }
     }
 }
+
+extension InviteError {
+    var errorDescription: String {
+        return errorDescriptionLocalizationKey.localized
+    }
+    
+    private var errorDescriptionLocalizationKey: String {
+        switch self {
+        case .alreadyRegistered: return "team.invite.error.already_registered"
+        case .tooManyTeamInvitations: return "team.invite.error.too_many_invitations"
+        default: return "team.invite.error.generic"
+        }
+    }
+}
