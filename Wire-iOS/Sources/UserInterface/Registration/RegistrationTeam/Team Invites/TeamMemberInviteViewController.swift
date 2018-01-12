@@ -29,11 +29,12 @@ final class TeamMemberInviteViewController: UIViewController, TeamInviteTopbarDe
     private let topBarSpacerView = UIView()
     private let topBar = TeamInviteTopBar()
     private let tableView = UpsideDownTableView() // So the insertion animation pushes content to the top.
-    private let compactWidth: CGFloat = 375
+    private let compactWidth: CGFloat = 375, topOffset: CGFloat = 60, bottomOffset: CGFloat = 300
     private let headerView = TeamMemberInviteHeaderView()
     private let footerTextFieldView = TeamInviteTextFieldFooterView()
     private var regularWidthConstraint: NSLayoutConstraint?, compactWidthConstraint: NSLayoutConstraint?
     private lazy var dataSource = ArrayDataSource<TeamMemberInviteTableViewCell, InviteResult>(for: self.tableView)
+    private var keyboardObserver: KeyboardBlockObserver?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -53,8 +54,9 @@ final class TeamMemberInviteViewController: UIViewController, TeamInviteTopbarDe
         setupHeaderView()
         setupFooterView()
         updateScrollIndicatorInsets()
+        setupKeyboardObserver()
         tableView.clipsToBounds = false
-        tableView.contentInset = UIEdgeInsets(top: 300, left: 0, bottom: 60, right: 0)
+        tableView.correctedContentInset = UIEdgeInsets(top: topOffset, left: 0, bottom: bottomOffset, right: 0)
         dataSource.configure = { cell, content in cell.content = content }
     }
     
@@ -75,6 +77,16 @@ final class TeamMemberInviteViewController: UIViewController, TeamInviteTopbarDe
                 compactWidthConstraint = tableView.width == view.width
             } else {
                 tableView.width == view.width
+            }
+        }
+    }
+    
+    private func setupKeyboardObserver() {
+        keyboardObserver = KeyboardBlockObserver { [weak self] info in
+            info.animate {
+                guard let `self` = self else { return }
+                self.tableView.correctedContentInset.adjust(bottom: info.kind == .hide ? self.bottomOffset : info.frame.height)
+                self.tableView.correctedScrollIndicatorInsets.adjust(bottom: info.frame.height)
             }
         }
     }
@@ -130,7 +142,7 @@ final class TeamMemberInviteViewController: UIViewController, TeamInviteTopbarDe
         dataSource.append(result)
         footerTextFieldView.clearInput()
     }
-        
+    
     func teamInviteTopBarDidTapButton(_ topBar: TeamInviteTopBar) {
         // TODO: Tracking
         delegate?.teamInviteViewControllerDidFinish(self)
@@ -148,8 +160,7 @@ final class TeamMemberInviteViewController: UIViewController, TeamInviteTopbarDe
     }
     
     private func updateScrollIndicatorInsets() {
-        let inset = -(view.bounds.width - tableView.bounds.width) / 2
-        tableView.scrollIndicatorInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: inset)
+        tableView.correctedScrollIndicatorInsets.adjust(right: -(view.bounds.width - tableView.bounds.width) / 2)
     }
     
     private func updateMainViewWidthConstraint() {
