@@ -20,11 +20,11 @@ import XCTest
 @testable import Wire
 
 final class VoiceChannelParticipantsControllerTests: XCTestCase {
-    
+
     weak var sut: VoiceChannelParticipantsController!
 
-    var originalVoiceChannelClass : VoiceChannel.Type!
-    var conversation:MockConversation!
+    var originalVoiceChannelClass: VoiceChannel.Type!
+    var conversation: MockConversation!
 
     override func setUp() {
         super.setUp()
@@ -36,7 +36,7 @@ final class VoiceChannelParticipantsControllerTests: XCTestCase {
         originalVoiceChannelClass = WireCallCenterV3Factory.voiceChannelClass
         WireCallCenterV3Factory.voiceChannelClass = MockVoiceChannel.self
     }
-    
+
     override func tearDown() {
         sut = nil
         WireCallCenterV3Factory.voiceChannelClass = originalVoiceChannelClass
@@ -44,24 +44,24 @@ final class VoiceChannelParticipantsControllerTests: XCTestCase {
         super.tearDown()
     }
 
-    func testVoiceChannelParticipantsControllerIsNotRetained(){
+    func testVoiceChannelParticipantsControllerIsNotRetained() {
         weak var sutUICollectionView: UICollectionView! = nil
-        var mockCollectionView : UICollectionView! = UICollectionView(frame: CGRect.zero, collectionViewLayout: UICollectionViewFlowLayout.init())
+        var mockCollectionView: UICollectionView! = UICollectionView(frame: CGRect.zero, collectionViewLayout: UICollectionViewFlowLayout.init())
         sutUICollectionView = mockCollectionView
 
-        autoreleasepool{
+        autoreleasepool {
             // GIVEN
 
             let mackConversation = (conversation as Any) as! ZMConversation
 
             (mackConversation.voiceChannel as? MockVoiceChannel)?.participants = NSOrderedSet(array: [MockUser.mockUsers().last!])
 
-            var voiceChannelParticipantsController : VoiceChannelParticipantsController! = VoiceChannelParticipantsController(conversation: (conversation as Any) as! ZMConversation, collectionView: mockCollectionView)
+            var voiceChannelParticipantsController: VoiceChannelParticipantsController! = VoiceChannelParticipantsController(conversation: (conversation as Any) as! ZMConversation, collectionView: mockCollectionView)
             sut = voiceChannelParticipantsController
-
 
             // WHEN
 //            mockCollectionView.reloadItems(at: [IndexPath(item:0, section:0)])
+            mockCollectionView.reloadData()
             voiceChannelParticipantsController = nil
             mockCollectionView = nil
         }
@@ -72,3 +72,4 @@ final class VoiceChannelParticipantsControllerTests: XCTestCase {
 
     }
 }
+
