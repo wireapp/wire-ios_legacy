@@ -21,7 +21,9 @@ import XCTest
 
 final class VoiceChannelParticipantsControllerTests: XCTestCase {
     
-    var sut: VoiceChannelParticipantsController!
+    weak var sut: VoiceChannelParticipantsController!
+    weak var sutUICollectionView: UICollectionView!
+
     var originalVoiceChannelClass : VoiceChannel.Type!
     var conversation:MockConversation!
 
@@ -43,25 +45,29 @@ final class VoiceChannelParticipantsControllerTests: XCTestCase {
         super.tearDown()
     }
 
-    func testExample(){
-        // GIVEN
-        let mockCollectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: UICollectionViewFlowLayout.init())
+    func testVoiceChannelParticipantsControllerIsNotRetained(){
+        autoreleasepool{
+            // GIVEN
+            var mockCollectionView : UICollectionView! = UICollectionView(frame: CGRect.zero, collectionViewLayout: UICollectionViewFlowLayout.init())
+            sutUICollectionView = mockCollectionView
 
-        let callingConversation = (conversation as Any) as! ZMConversation
+            let mackConversation = (conversation as Any) as! ZMConversation
 
-        (callingConversation.voiceChannel as? MockVoiceChannel)?.participants = NSOrderedSet(array: [MockUser.mockUsers().last!])
+            (mackConversation.voiceChannel as? MockVoiceChannel)?.participants = NSOrderedSet(array: [MockUser.mockUsers().last!])
 
-        let participants = (callingConversation.voiceChannel as? MockVoiceChannel)?.participants
+            var voiceChannelParticipantsController : VoiceChannelParticipantsController! = VoiceChannelParticipantsController(conversation: (conversation as Any) as! ZMConversation, collectionView: mockCollectionView)
+            sut = voiceChannelParticipantsController
 
-        let count = participants?.count
 
-        XCTAssertEqual(1, count)
-
-        sut = VoiceChannelParticipantsController(conversation: (conversation as Any) as! ZMConversation, collectionView: mockCollectionView)
-
-        // WHEN
+            // WHEN
+            mockCollectionView.reloadItems(at: [IndexPath(item:0, section:0)])
+            voiceChannelParticipantsController = nil
+            mockCollectionView = nil
+        }
 
         // THEN
-//        checkerExample()
+        XCTAssertNil(sut)
+        XCTAssertNil(sutUICollectionView)
+
     }
 }
