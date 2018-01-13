@@ -21,7 +21,7 @@ import Foundation
 class VoiceChannelParticipantsController : NSObject {
     
     let conversation : ZMConversation
-    let collectionView : UICollectionView
+    unowned let collectionView : UICollectionView
     
     var voiceGainObserverToken : Any?
     var participantObserverToken : Any?
@@ -40,9 +40,10 @@ class VoiceChannelParticipantsController : NSObject {
         
         // Force the collection view to sync with the datasource since we might get notifications before
         // the next layout pass, which is when the collection view normally queries the data source.
-        collectionView.performBatchUpdates(nil)
+//        collectionView.performBatchUpdates(nil)
+        collectionView.reloadData()
     }
-    
+
     fileprivate func playHapticFeedback(for changeInfo: VoiceChannelParticipantNotification) {
         guard #available(iOS 10, *) else {
             return
