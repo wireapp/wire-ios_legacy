@@ -22,7 +22,6 @@ import XCTest
 final class VoiceChannelParticipantsControllerTests: XCTestCase {
     
     weak var sut: VoiceChannelParticipantsController!
-    weak var sutUICollectionView: UICollectionView!
 
     var originalVoiceChannelClass : VoiceChannel.Type!
     var conversation:MockConversation!
@@ -46,10 +45,12 @@ final class VoiceChannelParticipantsControllerTests: XCTestCase {
     }
 
     func testVoiceChannelParticipantsControllerIsNotRetained(){
+        weak var sutUICollectionView: UICollectionView! = nil
+        var mockCollectionView : UICollectionView! = UICollectionView(frame: CGRect.zero, collectionViewLayout: UICollectionViewFlowLayout.init())
+        sutUICollectionView = mockCollectionView
+
         autoreleasepool{
             // GIVEN
-            var mockCollectionView : UICollectionView! = UICollectionView(frame: CGRect.zero, collectionViewLayout: UICollectionViewFlowLayout.init())
-            sutUICollectionView = mockCollectionView
 
             let mackConversation = (conversation as Any) as! ZMConversation
 
@@ -60,7 +61,7 @@ final class VoiceChannelParticipantsControllerTests: XCTestCase {
 
 
             // WHEN
-            mockCollectionView.reloadItems(at: [IndexPath(item:0, section:0)])
+//            mockCollectionView.reloadItems(at: [IndexPath(item:0, section:0)])
             voiceChannelParticipantsController = nil
             mockCollectionView = nil
         }
