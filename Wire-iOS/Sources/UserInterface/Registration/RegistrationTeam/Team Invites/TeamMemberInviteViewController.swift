@@ -108,6 +108,7 @@ final class TeamMemberInviteViewController: UIViewController, TeamInviteTopbarDe
     
     private func sendInvite(to email: String) {
         guard let userSession = ZMUserSession.shared() else { return }
+        Analytics.shared().tag(TeamInviteEvent.sentInvite(.teamCreation))
         showLoadingView = true
         
         ZMUser.selfUser().team?.invite(email: email, in: userSession) { [weak self] result in
@@ -141,7 +142,6 @@ final class TeamMemberInviteViewController: UIViewController, TeamInviteTopbarDe
     }
     
     func teamInviteTopBarDidTapButton(_ topBar: TeamInviteTopBar) {
-        Analytics.shared().tag(TeamInviteEvent.sentInvite(.teamCreation))
         delegate?.teamInviteViewControllerDidFinish(self)
     }
     
