@@ -298,7 +298,7 @@ import CocoaLumberjackSwift
     }
     
     func updateTimeLabel(_ durationInSeconds: TimeInterval) {
-        let duration = Int(ceil(durationInSeconds))
+        let duration = Int(floor(durationInSeconds))
         let (seconds, minutes) = (duration % 60, duration / 60)
         timeLabel.text = String(format: "%d:%02d", minutes, seconds)
         timeLabel.accessibilityValue = timeLabel.text
