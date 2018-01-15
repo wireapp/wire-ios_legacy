@@ -19,6 +19,28 @@
 import XCTest
 @testable import Wire
 
+fileprivate class MockView : UIView {
+    let collectionView : UICollectionView
+    let layout: UICollectionViewFlowLayout
+
+    init() {
+        layout = UICollectionViewFlowLayout.init()
+        collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: layout)
+
+        super.init(frame: .zero)
+
+        addSubview(collectionView)
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    deinit {
+        print("deinit")
+    }
+}
+
 final class VoiceChannelParticipantsControllerTests: XCTestCase {
 
     weak var sut: VoiceChannelParticipantsController!
@@ -46,33 +68,34 @@ final class VoiceChannelParticipantsControllerTests: XCTestCase {
     }
 
     func testThatVoiceChannelParticipantsControllerAndUICollectionViewAreNotRetained() {
-        var mockViewController: UIViewController! = UIViewController()
-        weak var weakMockViewController: UIViewController! = nil
+        var mockView: MockView! = MockView()
+        weak var weakMockView: MockView! = nil
 
-        weakMockViewController = mockViewController
 
         autoreleasepool {
             // GIVEN
-            let mockCollectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: UICollectionViewFlowLayout.init())
-            mockViewController.view.addSubview(mockCollectionView)
-
             let mackConversation = (conversation as Any) as! ZMConversation
-
             // insert one mock participant
             (mackConversation.voiceChannel as? MockVoiceChannel)?.participants = NSOrderedSet(array: [MockUser.mockUsers().last!])
 
-            var voiceChannelParticipantsController: VoiceChannelParticipantsController! = VoiceChannelParticipantsController(conversation: (conversation as Any) as! ZMConversation, collectionView: mockCollectionView)
+            var voiceChannelParticipantsController: VoiceChannelParticipantsController! = VoiceChannelParticipantsController(conversation: (conversation as Any) as! ZMConversation, collectionView: mockView.collectionView)
             sut = voiceChannelParticipantsController
+            weakMockView = mockView
 
             // WHEN
-            mockCollectionView.performBatchUpdates(nil)
+            mockView.layoutSubviews()
+            mockView.collectionView.performBatchUpdates(nil)
+
+            ///simulate recreate VoiceChannelParticipantsController
+            voiceChannelParticipantsController = VoiceChannelParticipantsController(conversation: (conversation as Any) as! ZMConversation, collectionView: mockView.collectionView)
+
             voiceChannelParticipantsController = nil
-            mockViewController = nil
+            mockView = nil
         }
 
         // THEN
         XCTAssertNil(sut)
-        XCTAssertNil(weakMockViewController)
+        XCTAssertNil(weakMockView)
     }
 }
 
