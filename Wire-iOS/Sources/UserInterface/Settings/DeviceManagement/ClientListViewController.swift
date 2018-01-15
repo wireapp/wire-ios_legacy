@@ -340,7 +340,7 @@ import CocoaLumberjackSwift
                             self.deleteUserClient(userClient, credentials: newCredentials)
                         } else {
                             if DeveloperMenuState.developerMenuEnabled() {
-                                DebugAlert.show(message: "No email set!")
+                                DebugAlert.showGeneric(message: "No email set!")
                             }
                         }
                     case .right(let error):

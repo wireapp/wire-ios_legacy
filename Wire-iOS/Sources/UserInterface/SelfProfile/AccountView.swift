@@ -366,8 +366,8 @@ public final class TeamImageView: UIImageView {
     }
     
     fileprivate func updateImage() {
-        if let imageData = self.account.imageData {
-            self.image = UIImage(data: imageData)
+        if let teamImageData = self.account.teamImageData {
+            self.image = UIImage(data: teamImageData)
             self.initialLabel.text = ""
         }
         else if let name = self.account.teamName {

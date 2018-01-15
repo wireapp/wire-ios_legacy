@@ -121,9 +121,7 @@ public class AddParticipantsViewController : UIViewController {
         searchResultsViewController.didMove(toParentViewController: self)
         searchResultsViewController.searchResultsView?.emptyResultView = emptyResultLabel
         searchResultsViewController.searchResultsView?.backgroundColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorContentBackground);
-        searchResultsViewController.sectionAggregator.delegate = self
-        
-        
+
         createConstraints()
         updateConfirmButtonVisibility()
     }
@@ -221,9 +219,3 @@ extension AddParticipantsViewController : UIPopoverPresentationControllerDelegat
     
 }
 
-extension AddParticipantsViewController: CollectionViewSectionAggregatorDelegate {
-    
-    public func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        searchHeaderViewController.separatorView.scrollViewDidScroll(scrollView: scrollView)
-    }
-}
