@@ -141,7 +141,7 @@ final class TeamMemberInviteViewController: UIViewController, TeamInviteTopbarDe
     }
     
     func teamInviteTopBarDidTapButton(_ topBar: TeamInviteTopBar) {
-        // TODO: Tracking
+        Analytics.shared().tag(TeamInviteEvent.sentInvite(.teamCreation))
         delegate?.teamInviteViewControllerDidFinish(self)
     }
     
