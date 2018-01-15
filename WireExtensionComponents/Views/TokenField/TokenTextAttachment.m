@@ -43,11 +43,12 @@
 {
     const CGFloat dotSize = 4.0f;
     const CGFloat dotSpacing = 8.0f;
-    const CGFloat lineHeight = ceilf(self.tokenField.font.lineHeight);
+    const CGFloat imageHeight = ceilf(self.tokenField.font.capHeight);
     
-    CGSize imageSize = CGSizeMake(dotSize + dotSpacing * 2, lineHeight);
+    CGSize imageSize = CGSizeMake(dotSize + dotSpacing * 2, imageHeight);
     
-    self.bounds = CGRectMake(0, 0, imageSize.width, imageSize.height);
+    const CGFloat delta = ceilf((self.tokenField.font.lineHeight - imageHeight) * 0.5f);
+    self.bounds = CGRectMake(0, delta, imageSize.width, imageSize.height);
     
     UIGraphicsBeginImageContextWithOptions(self.bounds.size, NO, 0.0);
     
