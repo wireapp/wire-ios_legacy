@@ -126,7 +126,6 @@ final public class BackgroundViewController: UIViewController {
         self.updateStatusBarBlurStyle()
         
         let factor = BackgroundViewController.backgroundScaleFactor
-        //self.blurView.transform = CGAffineTransform(scaleX: factor, y: factor)
         self.imageView.transform = CGAffineTransform(scaleX: factor, y: factor)
     }
     
