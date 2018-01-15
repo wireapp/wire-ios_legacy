@@ -161,21 +161,20 @@ public final class AudioRecorder: NSObject, AudioRecorderType {
         recordTimerCallback?(0)
         fileURL = nil
         setupDisplayLink()
+        
+        var successfullyStarted = false
+        
         if let maxDuration = self.maxRecordingDuration {
-            if !audioRecorder.record(forDuration: maxDuration) {
-                DDLogError("Failed to start audio recording")
-            }
-            else {
-                self.recordStartedCallback?()
-            }
+            successfullyStarted = audioRecorder.record(forDuration: maxDuration)
+            if !successfullyStarted { DDLogError("Failed to start audio recording") }
+            else { self.recordStartedCallback?() }
         }
         else {
-            if !audioRecorder.record() { // 25 minutes max recording
-                DDLogError("Failed to start audio recording")
-            }
+            successfullyStarted = audioRecorder.record()
+            if !successfullyStarted { DDLogError("Failed to start audio recording") }
         }
         
-        recordingStartTime = audioRecorder.deviceCurrentTime
+        recordingStartTime = successfullyStarted ? audioRecorder.deviceCurrentTime : nil
     }
     
     @discardableResult public func stopRecording() -> Bool {
