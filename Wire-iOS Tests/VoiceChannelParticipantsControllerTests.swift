@@ -41,26 +41,27 @@ final class VoiceChannelParticipantsControllerTests: XCTestCase {
         sut = nil
         WireCallCenterV3Factory.voiceChannelClass = originalVoiceChannelClass
         originalVoiceChannelClass = nil
+        conversation = nil
         super.tearDown()
     }
 
-    func testVoiceChannelParticipantsControllerIsNotRetained() {
-        weak var sutUICollectionView: UICollectionView! = nil
+    func testThatVoiceChannelParticipantsControllerAndUICollectionViewAreNotRetained() {
+        weak var weakMockCollectionView: UICollectionView! = nil
         var mockCollectionView: UICollectionView! = UICollectionView(frame: CGRect.zero, collectionViewLayout: UICollectionViewFlowLayout.init())
-        sutUICollectionView = mockCollectionView
+        weakMockCollectionView = mockCollectionView
 
         autoreleasepool {
             // GIVEN
 
             let mackConversation = (conversation as Any) as! ZMConversation
 
+            // insert one mock participant
             (mackConversation.voiceChannel as? MockVoiceChannel)?.participants = NSOrderedSet(array: [MockUser.mockUsers().last!])
 
             var voiceChannelParticipantsController: VoiceChannelParticipantsController! = VoiceChannelParticipantsController(conversation: (conversation as Any) as! ZMConversation, collectionView: mockCollectionView)
             sut = voiceChannelParticipantsController
 
             // WHEN
-//            mockCollectionView.reloadItems(at: [IndexPath(item:0, section:0)])
             mockCollectionView.reloadData()
             voiceChannelParticipantsController = nil
             mockCollectionView = nil
@@ -68,7 +69,7 @@ final class VoiceChannelParticipantsControllerTests: XCTestCase {
 
         // THEN
         XCTAssertNil(sut)
-        XCTAssertNil(sutUICollectionView)
+        XCTAssertNil(weakMockCollectionView)
 
     }
 }
