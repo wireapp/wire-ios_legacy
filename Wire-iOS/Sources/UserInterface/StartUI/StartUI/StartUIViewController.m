@@ -139,6 +139,12 @@ static NSUInteger const StartUIInitiallyShowsKeyboardConversationThreshold = 10;
     self.searchResultsViewController.sectionAggregator.delegate = self;
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [self.navigationController setNavigationBarHidden:YES animated:animated];
+}
+
 - (void)createConstraints
 {
     [self.searchHeaderViewController.view autoPinEdgeToSuperviewEdge:ALEdgeTop withInset:UIScreen.safeArea.top];
@@ -375,18 +381,17 @@ static NSUInteger const StartUIInitiallyShowsKeyboardConversationThreshold = 10;
 
 - (void)searchResultsViewController:(SearchResultsViewController * _Nonnull)searchResultsViewController didTapOnSeviceUser:(id<ServiceUser> _Nonnull)serviceUser
 {
-    [self setShowLoadingView:YES];
+    ServiceDetailViewController *serviceDetail = [[ServiceDetailViewController alloc] initWithServiceUser:serviceUser];
     
-    [ZMUserSession.sharedSession startConversationWith:serviceUser
-                                            completion:^(ZMConversation * _Nullable conversation) {
-                                                [self setShowLoadingView:NO];
-                                                
-                                                if (nil != conversation) {
-                                                    if ([self.delegate respondsToSelector:@selector(startUI:didSelectConversation:)]) {
-                                                        [self.delegate startUI:self didSelectConversation:conversation];
-                                                    }
-                                                }
-                                            }];
+    serviceDetail.completion = ^(ZMConversation *conversation) {
+        if (nil != conversation) {
+            if ([self.delegate respondsToSelector:@selector(startUI:didSelectConversation:)]) {
+                [self.delegate startUI:self didSelectConversation:conversation];
+            }
+        }
+    };
+    
+    [self.navigationController pushViewController:serviceDetail animated:YES];
 }
 
 #pragma mark - SearchHeaderViewControllerDelegate
