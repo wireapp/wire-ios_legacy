@@ -89,6 +89,7 @@ import Cartography
                 }
             }
             else {
+                self.delegate?.audioEffectsPickerDidPickEffect(self, effect: .none, resultFilePath: self.recordingPath)
                 self.playMedia(self.recordingPath)
             }
         }
