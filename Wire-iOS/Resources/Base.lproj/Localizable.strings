@@ -231,6 +231,12 @@
 "camera_access.denied.instruction" = "";
 "camera_access.denied.open_settings" = "Enable it in Wire Settings";
 
+// Camera and photos access, keyboard
+"keyboard_photos_access.denied.keyboard.settings" = "Settings";
+"keyboard_photos_access.denied.keyboard.camera_and_photos" = "Wire needs access to your camera and photos.";
+"keyboard_photos_access.denied.keyboard.photos" = "Wire needs access to your photos.";
+"keyboard_photos_access.denied.keyboard.camera" = "Wire needs access to your camera.";
+
 // Camera Controls
 "camera_controls.aeaf_lock" = "AE/AF Lock";
 
