@@ -24,7 +24,6 @@ final class TextFieldDescription: NSObject, ValueSubmission {
     let kind: AccessoryTextField.Kind
     var valueSubmitted: ValueSubmitted?
     var valueValidated: ValueValidated?
-    var shouldReturn: ((String) -> Bool)?
     var acceptsInput: Bool = true
     var validationError: TextFieldValidator.ValidationError
     let uppercasePlaceholder: Bool
@@ -75,11 +74,7 @@ extension TextFieldDescription: UITextFieldDelegate {
         guard acceptsInput else { return false }
         guard let text = textField.text else { return true }
         (textField as? AccessoryTextField)?.validateInput()
-        
-        if let shouldReturnOverride = shouldReturn?(text), !shouldReturnOverride {
-            return false
-        }
-        
+
         submitValue(with: text)
         return true
     }

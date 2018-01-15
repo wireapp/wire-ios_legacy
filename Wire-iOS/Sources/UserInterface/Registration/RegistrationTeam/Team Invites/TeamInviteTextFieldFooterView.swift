@@ -44,7 +44,6 @@ final class TeamInviteTextFieldFooterView: UIView {
     var onConfirm: ((String) -> Void)? {
         didSet {
             textFieldDescriptor.valueSubmitted = onConfirm
-            textFieldDescriptor.shouldReturn = shouldConfirm
         }
     }
     

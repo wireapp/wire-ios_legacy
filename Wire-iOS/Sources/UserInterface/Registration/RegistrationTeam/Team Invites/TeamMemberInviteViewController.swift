@@ -72,13 +72,10 @@ final class TeamMemberInviteViewController: UIViewController, TeamInviteTopbarDe
             tableView.top == topBar.bottom
             tableView.bottom == view.bottom
             tableView.centerX == view.centerX
-            if case .pad = traitCollection.userInterfaceIdiom {
-                regularWidthConstraint = tableView.width == compactWidth
-                compactWidthConstraint = tableView.width == view.width
-            } else {
-                tableView.width == view.width
-            }
+            regularWidthConstraint = tableView.width == compactWidth
+            compactWidthConstraint = tableView.width == view.width
         }
+        updateMainViewWidthConstraint()
     }
     
     private func setupKeyboardObserver() {
@@ -164,7 +161,6 @@ final class TeamMemberInviteViewController: UIViewController, TeamInviteTopbarDe
     }
     
     private func updateMainViewWidthConstraint() {
-        guard traitCollection.userInterfaceIdiom == .pad else { return }
         compactWidthConstraint?.isActive = traitCollection.horizontalSizeClass == .compact
         regularWidthConstraint?.isActive = traitCollection.horizontalSizeClass != .compact
     }
