@@ -40,7 +40,7 @@ class VoiceChannelParticipantsController : NSObject {
         
         // Force the collection view to sync with the datasource since we might get notifications before
         // the next layout pass, which is when the collection view normally queries the data source.
-        collectionView.reloadData()
+        collectionView.performBatchUpdates(nil)
     }
 
     fileprivate func playHapticFeedback(for changeInfo: VoiceChannelParticipantNotification) {

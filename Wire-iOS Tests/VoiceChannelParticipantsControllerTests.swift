@@ -46,12 +46,15 @@ final class VoiceChannelParticipantsControllerTests: XCTestCase {
     }
 
     func testThatVoiceChannelParticipantsControllerAndUICollectionViewAreNotRetained() {
-        weak var weakMockCollectionView: UICollectionView! = nil
-        var mockCollectionView: UICollectionView! = UICollectionView(frame: CGRect.zero, collectionViewLayout: UICollectionViewFlowLayout.init())
-        weakMockCollectionView = mockCollectionView
+        var mockViewController: UIViewController! = UIViewController()
+        weak var weakMockViewController: UIViewController! = nil
+
+        weakMockViewController = mockViewController
 
         autoreleasepool {
             // GIVEN
+            let mockCollectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: UICollectionViewFlowLayout.init())
+            mockViewController.view.addSubview(mockCollectionView)
 
             let mackConversation = (conversation as Any) as! ZMConversation
 
@@ -62,15 +65,14 @@ final class VoiceChannelParticipantsControllerTests: XCTestCase {
             sut = voiceChannelParticipantsController
 
             // WHEN
-            mockCollectionView.reloadData()
+            mockCollectionView.performBatchUpdates(nil)
             voiceChannelParticipantsController = nil
-            mockCollectionView = nil
+            mockViewController = nil
         }
 
         // THEN
         XCTAssertNil(sut)
-        XCTAssertNil(weakMockCollectionView)
-
+        XCTAssertNil(weakMockViewController)
     }
 }
 
