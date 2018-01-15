@@ -179,6 +179,7 @@ open class CameraKeyboardViewController: UIViewController {
         self.collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: collectionViewLayout)
         self.collectionView.register(CameraCell.self, forCellWithReuseIdentifier: CameraCell.reuseIdentifier)
         self.collectionView.register(AssetCell.self, forCellWithReuseIdentifier: AssetCell.reuseIdentifier)
+        self.collectionView.register(CameraKeyboardPermissionsCell.self, forCellWithReuseIdentifier: CameraKeyboardPermissionsCell.reuseIdentifier)
         self.collectionView.delegate = self
         self.collectionView.dataSource = self
         self.collectionView.translatesAutoresizingMaskIntoConstraints = false
@@ -310,41 +311,75 @@ extension CameraKeyboardViewController: UICollectionViewDelegateFlowLayout, UICo
     }
     
     public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        guard UserAuthorizations.cameraOrPhotoLibrary else { return 1 }
+        
         switch CameraKeyboardSection(rawValue: UInt(section))! {
         case .camera:
             return 1
         case .photos:
-            return Int(assetLibrary.count)
+            return UserAuthorizations.photoLibrary ? Int(assetLibrary.count) : 1
         }
     }
     
     public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard UserAuthorizations.cameraOrPhotoLibrary else {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CameraKeyboardPermissionsCell.reuseIdentifier,
+                                                          for: indexPath) as! CameraKeyboardPermissionsCell
+            cell.configure(deniedClass: .cameraAndPhotos)
+            return cell
+        }
+        
         switch CameraKeyboardSection(rawValue: UInt((indexPath as NSIndexPath).section))! {
         case .camera:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CameraCell.reuseIdentifier, for: indexPath) as! CameraCell
-            cell.delegate = self
-            return cell
-        case .photos:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: AssetCell.reuseIdentifier, for: indexPath) as! AssetCell
-            if let asset = try? assetLibrary.asset(atIndex: UInt((indexPath as NSIndexPath).row)) {
-                cell.asset = asset
+            
+            if UserAuthorizations.camera {
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CameraCell.reuseIdentifier, for: indexPath) as! CameraCell
+                cell.delegate = self
+                return cell
+            } else {
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CameraKeyboardPermissionsCell.reuseIdentifier,
+                                                              for: indexPath) as! CameraKeyboardPermissionsCell
+                cell.configure(deniedClass: .camera)
+                return cell
             }
-            return cell
+            
+        case .photos:
+            if UserAuthorizations.photoLibrary {
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: AssetCell.reuseIdentifier, for: indexPath) as! AssetCell
+                if let asset = try? assetLibrary.asset(atIndex: UInt((indexPath as NSIndexPath).row)) {
+                    cell.asset = asset
+                }
+                return cell
+            } else {
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CameraKeyboardPermissionsCell.reuseIdentifier,
+                                                              for: indexPath) as! CameraKeyboardPermissionsCell
+                cell.configure(deniedClass: .photos)
+                return cell
+            }
         }
     }
     
     public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        guard UserAuthorizations.cameraOrPhotoLibrary else { return collectionView.frame.size }
+        
         switch CameraKeyboardSection(rawValue: UInt((indexPath as NSIndexPath).section))! {
-        case .camera:
-            switch self.splitLayoutObservable.layoutSize {
-            case .compact:
-                return CGSize(width: self.view.bounds.size.width / 2, height: self.view.bounds.size.height)
-            case .regularPortrait, .regularLandscape:
-                return CGSize(width: self.splitLayoutObservable.leftViewControllerWidth, height: self.view.bounds.size.height)
-            }
+        case .camera: return cameraCellSize
         case .photos:
-            let photoSize = self.view.bounds.size.height / 2 - 0.5
-            return CGSize(width: photoSize, height: photoSize)
+            if UserAuthorizations.photoLibrary {
+                let photoSize = self.view.bounds.size.height / 2 - 0.5
+                return CGSize(width: photoSize, height: photoSize)
+            } else {
+                return CGSize(width: self.view.bounds.size.width - cameraCellSize.width - 1, height: self.view.bounds.size.height)
+            }
+        }
+    }
+    
+    private var cameraCellSize: CGSize {
+        switch self.splitLayoutObservable.layoutSize {
+        case .compact:
+            return CGSize(width: self.view.bounds.size.width / 2, height: self.view.bounds.size.height)
+        case .regularPortrait, .regularLandscape:
+            return CGSize(width: self.splitLayoutObservable.leftViewControllerWidth, height: self.view.bounds.size.height)
         }
     }
     

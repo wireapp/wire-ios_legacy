@@ -1389,6 +1389,7 @@ ProfileDetailsViewController {
         font: $font-normal-light;
     }
 }
+
 /* Profile Devices */
 
 ProfileDevicesViewController {

@@ -27,7 +27,7 @@ public enum DeniedPhotoAccessClass {
     case cameraAndPhotos
 }
 
-open class CameraKeyboardPermissionsView: UIView {
+open class CameraKeyboardPermissionsCell: UICollectionViewCell, Reusable {
 
     let settingsButton = UIButton()
     let descriptionLabel = UILabel()
@@ -38,17 +38,22 @@ open class CameraKeyboardPermissionsView: UIView {
         super.init(frame: frame)
         self.backgroundColor = ColorScheme.default().color(withName: ColorSchemeColorGraphite)
         
+        let size: CGFloat = 15.0
+        
         descriptionLabel.backgroundColor = .clear
         descriptionLabel.textColor = .white
-        descriptionLabel.font = UIFont.systemFont(ofSize: 17)
+        descriptionLabel.font = UIFont.systemFont(ofSize: size)
         descriptionLabel.numberOfLines = 0
+        descriptionLabel.textAlignment = .center
         
-        settingsButton.backgroundColor = ColorScheme.default().color(withName: ColorSchemeColorGraphite)
+        settingsButton.backgroundColor = ColorScheme.default().color(withName: ColorSchemeColorLightGraphite)
         settingsButton.setTitleColor(.white, for: .normal)
-        settingsButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 17)
+        settingsButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: size)
         settingsButton.setTitle("keyboard_photos_access.denied.keyboard.settings".localized, for: .normal)
         settingsButton.contentEdgeInsets = UIEdgeInsetsMake(10, 30, 10, 30)
-        settingsButton.addTarget(self, action: #selector(CameraKeyboardPermissionsView.openSettings), for: .touchUpInside)
+        settingsButton.layer.cornerRadius = 5.0
+        settingsButton.layer.masksToBounds = true
+        settingsButton.addTarget(self, action: #selector(CameraKeyboardPermissionsCell.openSettings), for: .touchUpInside)
         
         containerView.backgroundColor = .clear
         
@@ -64,10 +69,10 @@ open class CameraKeyboardPermissionsView: UIView {
     
     public convenience init(frame: CGRect, deniedAccessClass: DeniedPhotoAccessClass) {
         self.init(frame: frame)
-        configure()
+        configure(deniedClass: deniedAccessClass)
     }
     
-    func configure() {
+    func configure(deniedClass: DeniedPhotoAccessClass) {
         var title = ""
         
         switch deniedClass {
@@ -88,21 +93,19 @@ open class CameraKeyboardPermissionsView: UIView {
         
         constrain(self, containerView, descriptionLabel, settingsButton) { (selfView, container, description, settings) in
             
-            description.leading == container.leading
-            description.trailing == container.trailing
+            description.leading == container.leading + 15
+            description.trailing == container.trailing - 15
             description.top == container.top
-            description.bottom == settings.top + 30
             
             settings.height == 44.0
             settings.centerX == container.centerX
             settings.bottom == container.bottom
+            settings.top == description.bottom + 30
             
             container.centerY == selfView.centerY
             container.leading == selfView.leading
             container.trailing == selfView.trailing
         }
-        
     }
-    
-    
+
 }

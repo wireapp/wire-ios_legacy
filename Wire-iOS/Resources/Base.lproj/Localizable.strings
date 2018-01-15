@@ -233,7 +233,7 @@
 
 // Camera and photos access, keyboard
 "keyboard_photos_access.denied.keyboard.settings" = "Settings";
-"keyboard_photos_access.denied.keyboard.camera_and_photos" = "Wire needs access to your camera and photos.";
+"keyboard_photos_access.denied.keyboard.camera_and_photos" = "Wire needs access to your\ncamera and photos.";
 "keyboard_photos_access.denied.keyboard.photos" = "Wire needs access to your photos.";
 "keyboard_photos_access.denied.keyboard.camera" = "Wire needs access to your camera.";
 

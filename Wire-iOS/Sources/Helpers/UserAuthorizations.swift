@@ -1,6 +1,6 @@
 //
 // Wire
-// Copyright (C) 2016 Wire Swiss GmbH
+// Copyright (C) 2018 Wire Swiss GmbH
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -17,15 +17,26 @@
 //
 
 import Foundation
-import XCTest
 import Photos
-import Cartography
-import AVFoundation
-@testable import Wire
 
-final class CameraKeyboardPermissionsViewTests: ZMSnapshotTestCase {
-
-    var sut: CameraKeyboardPermissionsView!
+open class UserAuthorizations {
     
-
+    
+    static var camera: Bool {
+        switch AVCaptureDevice.authorizationStatus(forMediaType: AVMediaTypeVideo) {
+            case .authorized: return true
+            default: return false
+        }
+    }
+    
+    static var photoLibrary: Bool {
+        switch PHPhotoLibrary.authorizationStatus() {
+            case .authorized: return true
+            default: return false
+        }
+    }
+    
+    static var cameraOrPhotoLibrary: Bool {
+        return camera || photoLibrary
+    }
 }

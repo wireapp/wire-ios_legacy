@@ -50,11 +50,7 @@ extension ZMConversation {
     }
     
     public var isBotConversation : Bool {
-        guard conversationType == .oneOnOne,
-              let otherUser = firstActiveParticipantOtherThanSelf() , otherUser.isBot
-        else { return false }
-        
-        return true
+        return false
     }
 }
 
