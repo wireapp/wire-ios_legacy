@@ -99,7 +99,6 @@ extension ShareViewController {
         }
         
         if self.showPreview {
-            
             constrain(self.containerView, self.shareablePreviewWrapper!, self.shareablePreviewView!, self.tokenField) { view, shareablePreviewWrapper, shareablePreviewView, tokenField in
                 
                 shareablePreviewWrapper.top == view.topMargin + 28
@@ -121,7 +120,11 @@ extension ShareViewController {
         constrain(self.tokenField, self.searchIcon) { tokenField, searchIcon in
             searchIcon.centerY == tokenField.centerY
             searchIcon.left == tokenField.left + 5.5 // the search icon glyph has whitespaces
+            if !self.allowsMultiselect {
+                tokenField.height == 0
+            }
         }
+        
         
         constrain(self.view, self.destinationsTableView, self.topSeparatorView) { view, destinationsTableView, topSeparatorView in
             topSeparatorView.left == view.left

@@ -136,7 +136,15 @@ final public class ShareViewController<D: ShareDestination, S: Shareable>: UIVie
     
     public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let destination = self.filteredDestinations[indexPath.row]
-
+        
+        if !self.allowsMultiselect && self.selectedDestinations.count > 0 {
+            if let indexPathForSelectedRow = tableView.indexPathForSelectedRow {
+                tableView.deselectRow(at: indexPathForSelectedRow, animated: true)
+            }
+            self.selectedDestinations.removeAll()
+            self.tokenField.removeAllTokens()
+        }
+        
         self.tokenField.addToken(forTitle: destination.displayName, representedObject: destination)
         
         self.selectedDestinations.insert(destination)
