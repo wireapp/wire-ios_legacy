@@ -132,7 +132,7 @@ final class TeamMemberInviteViewController: UIViewController, TeamInviteTopbarDe
             dataSource.append(result)
             footerTextFieldView.clearInput()
         case let .failure(_, error: error):
-            footerTextFieldView.errorMessage = error.errorDescription
+            footerTextFieldView.errorMessage = error.errorDescription.uppercased()
         }
     }
     

@@ -35,7 +35,7 @@ final class TeamInviteTextFieldFooterView: UIView {
     var shouldConfirm: ((String) -> Bool)? {
         didSet {
             textField.textFieldValidator.customValidator = { [weak self] email in
-                (self?.shouldConfirm?(email) ?? true) ? nil : .custom("team.invite.error.already_invited".localized)
+                (self?.shouldConfirm?(email) ?? true) ? nil : .custom("team.invite.error.already_invited".localized.uppercased())
             }
         }
     }
