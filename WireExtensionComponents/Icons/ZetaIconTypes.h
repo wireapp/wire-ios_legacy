@@ -80,6 +80,7 @@ typedef NS_ENUM(NSInteger, ZetaIconType)
     ZetaIconTypeLocation                        = 0x149,
     ZetaIconTypeCopy                            = 0x234,
     ZetaIconTypeCompose                         = 0x268,
+    ZetaIconTypeLongDownArrow                   = 0x753,
     
     ZetaIconTypeLeave                           = 0x205,
     ZetaIconTypeConvMetaAddPerson               = 0x215,

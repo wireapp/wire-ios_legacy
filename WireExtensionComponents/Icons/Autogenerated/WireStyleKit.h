@@ -26,7 +26,7 @@ typedef enum : NSInteger
     WireStyleKitResizingBehaviorAspectFill, //!< The content is proportionally resized to completely fill the target rectangle.
     WireStyleKitResizingBehaviorStretch, //!< The content is stretched to match the entire target rectangle.
     WireStyleKitResizingBehaviorCenter, //!< The content is centered in the target rectangle, but it is NOT resized.
-    
+
 } WireStyleKitResizingBehavior;
 
 extern CGRect WireStyleKitResizingBehaviorApply(WireStyleKitResizingBehavior behavior, CGRect rect, CGRect target);
@@ -177,13 +177,12 @@ extern CGRect WireStyleKitResizingBehaviorApply(WireStyleKitResizingBehavior beh
 + (void)drawIcon_0x746_32ptWithColor: (UIColor*)color;
 + (void)drawIcon_0x747_32ptWithColor: (UIColor*)color;
 + (void)drawIcon_0x269_32ptWithColor: (UIColor*)color;
-+ (void)drawIcon_0x748_10pt;
-+ (void)drawIcon_0x748_10ptWithFrame: (CGRect)targetFrame resizing: (WireStyleKitResizingBehavior)resizing;
-+ (void)drawIcon_0x749_10pt;
-+ (void)drawIcon_0x749_10ptWithFrame: (CGRect)targetFrame resizing: (WireStyleKitResizingBehavior)resizing;
-+ (void)drawIcon_0x750_10ptWithFillColor3: (UIColor*)fillColor3;
-+ (void)drawIcon_0x750_10ptWithFrame: (CGRect)targetFrame resizing: (WireStyleKitResizingBehavior)resizing fillColor3: (UIColor*)fillColor3;
++ (void)drawIcon_0x748_32ptWithColor: (UIColor*)color;
++ (void)drawIcon_0x749_32ptWithColor: (UIColor*)color;
++ (void)drawIcon_0x750_32ptWithColor: (UIColor*)color;
 + (void)drawIcon_0x751_32ptWithColor: (UIColor*)color;
++ (void)drawIcon_0x752_32ptWithColor: (UIColor*)color;
++ (void)drawIcon_0x753_32ptWithColor: (UIColor*)color;
 + (void)drawMissedcallWithAccent: (UIColor*)accent;
 + (void)drawYoutubeWithColor: (UIColor*)color;
 + (void)drawMissedcalllastWithAccent: (UIColor*)accent;
@@ -313,10 +312,12 @@ extern CGRect WireStyleKitResizingBehaviorApply(WireStyleKitResizingBehavior beh
 + (UIImage*)imageOfIcon_0x746_32ptWithColor: (UIColor*)color;
 + (UIImage*)imageOfIcon_0x747_32ptWithColor: (UIColor*)color;
 + (UIImage*)imageOfIcon_0x269_32ptWithColor: (UIColor*)color;
-+ (UIImage*)imageOfIcon_0x748_10pt;
-+ (UIImage*)imageOfIcon_0x749_10pt;
-+ (UIImage*)imageOfIcon_0x750_10ptWithFillColor3: (UIColor*)fillColor3;
++ (UIImage*)imageOfIcon_0x748_32ptWithColor: (UIColor*)color;
++ (UIImage*)imageOfIcon_0x749_32ptWithColor: (UIColor*)color;
++ (UIImage*)imageOfIcon_0x750_32ptWithColor: (UIColor*)color;
 + (UIImage*)imageOfIcon_0x751_32ptWithColor: (UIColor*)color;
++ (UIImage*)imageOfIcon_0x752_32ptWithColor: (UIColor*)color;
++ (UIImage*)imageOfIcon_0x753_32ptWithColor: (UIColor*)color;
 + (UIImage*)imageOfMissedcallWithAccent: (UIColor*)accent;
 + (UIImage*)imageOfYoutubeWithColor: (UIColor*)color;
 + (UIImage*)imageOfMissedcalllastWithAccent: (UIColor*)accent;
@@ -331,4 +332,3 @@ extern CGRect WireStyleKitResizingBehaviorApply(WireStyleKitResizingBehavior beh
 + (UIImage*)imageOfTabWithColor: (UIColor*)color;
 
 @end
-

@@ -98,7 +98,7 @@ import CocoaLumberjackSwift
             self.audioPreviewView.color = color
         }
         
-        [self.audioPreviewView, self.timeLabel, self.tipLabel, self.recordButton, self.stopRecordButton, self.confirmButton, self.redoButton, self.cancelButton, self.tipLabel, self.bottomToolbar, self.topContainer, self.topSeparator].forEach { $0.translatesAutoresizingMaskIntoConstraints = false }
+        [self.audioPreviewView, self.timeLabel, self.tipLabel, self.recordButton, self.stopRecordButton, self.confirmButton, self.redoButton, self.cancelButton, self.bottomToolbar, self.topContainer, self.topSeparator].forEach { $0.translatesAutoresizingMaskIntoConstraints = false }
         
         self.audioPreviewView.gradientWidth = 20
         self.audioPreviewView.gradientColor = colorScheme.color(withName: ColorSchemeColorTextForeground)
@@ -108,7 +108,7 @@ import CocoaLumberjackSwift
         self.createTipLabel()
         
         self.timeLabel.font = UIFont(magicIdentifier: "style.text.small.font_spec_light")
-        self.timeLabel.textColor = colorScheme.color(withName: ColorSchemeColorTextForeground)
+        self.timeLabel.textColor = colorScheme.color(withName: ColorSchemeColorTextForeground, variant: .dark)
         
         [self.audioPreviewView, self.timeLabel, self.tipLabel].forEach(self.topContainer.addSubview)
         
@@ -276,17 +276,16 @@ import CocoaLumberjackSwift
                 
                 let duration = Int(ceil(self.recorder.maxRecordingDuration ?? 0))
                 let (seconds, minutes) = (duration % 60, duration / 60)
-                
                 let durationLimit = String(format: "%d:%02d", minutes, seconds)
                 
-                let alertController = UIAlertController(title: "conversation.input_bar.audio_message.too_long.title".localized, message: "conversation.input_bar.audio_message.too_long.message".localized(args: durationLimit), preferredStyle: .alert)
-                let actionCancel = UIAlertAction(title: "general.cancel".localized, style: .cancel, handler: nil)
-                alertController.addAction(actionCancel)
+                let alertController = UIAlertController(
+                    title: "conversation.input_bar.audio_message.too_long.title".localized,
+                    message: "conversation.input_bar.audio_message.too_long.message".localized(args: durationLimit),
+                    preferredStyle: .alert
+                )
                 
-                let actionSend = UIAlertAction(title: "conversation.input_bar.audio_message.send".localized, style: .default, handler: { action in
-                    self.sendAudioAsIs(.afterPreview)
-                })
-                alertController.addAction(actionSend)
+                let actionOk = UIAlertAction(title: "general.ok".localized, style: .default, handler: nil)
+                alertController.addAction(actionOk)
                 
                 self.present(alertController, animated: true, completion: .none)
             }

@@ -23,21 +23,41 @@ import MessageUI
 @objc public class DebugAlert: NSObject {
     
     /// Presents an alert, if in developer mode, otherwise do nothing
-    static func show(message: String, sendLogs: Bool = true) {
+    static func showGeneric(message: String) {
+        self.show(message: message)
+    }
+    
+    /// Presents an alert to send logs, if in developer mode, otherwise do nothing
+    static func showSendLogsMessage(message: String) {
+        self.show(message: message,
+                  OKText: "Send",
+                  OKAction: { _ in DebugLogSender.sendLogsByEmail(message: message) },
+                  OKType: .destructive,
+                  title: "Send debug logs"
+        )
+    }
+    
+    /// Presents a debug alert with configurable messages and events.
+    /// If not in developer mode, does nothing.
+    private static func show(message: String,
+                             OKText: String = "OK",
+                             OKAction: ((Any) -> ())? = nil,
+                             OKType: UIAlertActionStyle = .default,
+                             title: String = "DEBUG MESSAGE",
+                             cancelText: String? = "Cancel")
+    {
         guard DeveloperMenuState.developerMenuEnabled() else { return }
         guard let controller = UIApplication.shared.wr_topmostController(onlyFullScreen: false) else { return }
-        let alert = UIAlertController(title: "DEBUG MESSAGE",
+        let alert = UIAlertController(title: title,
                                       message: message,
                                       preferredStyle: .alert)
-        if sendLogs {
-            let sendLogAction = UIAlertAction(title: "Send logs", style: .cancel, handler: {
-                _ in
-                DebugLogSender.sendLogsByEmail(message: message)
-            })
-            alert.addAction(sendLogAction)
+        let okAlertAction = UIAlertAction(title: OKText,
+                                     style: OKType,
+                                     handler: OKAction)
+        alert.addAction(okAlertAction)
+        if let cancelText = cancelText {
+            alert.addAction(UIAlertAction(title: cancelText, style: .cancel, handler: nil))
         }
-        let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
-        alert.addAction(okAction)
         controller.present(alert, animated: true, completion: nil)
     }
 }
@@ -56,12 +76,12 @@ import MessageUI
         let alert = DebugLogSender()
         let logs = ZMSLog.recordedContent
         guard !logs.isEmpty else {
-            DebugAlert.show(message: "There are no logs to send, have you enabled them from the debug menu > log settings BEFORE the issue happened?\nWARNING: restarting the app will discard all collected logs", sendLogs: false)
+            DebugAlert.showGeneric(message: "There are no logs to send, have you enabled them from the debug menu > log settings BEFORE the issue happened?\nWARNING: restarting the app will discard all collected logs")
             return
         }
         
         guard MFMailComposeViewController.canSendMail() else {
-            DebugAlert.show(message: "You do not have an email account set up", sendLogs: false)
+            DebugAlert.showGeneric(message: "You do not have an email account set up")
             return
         }
         

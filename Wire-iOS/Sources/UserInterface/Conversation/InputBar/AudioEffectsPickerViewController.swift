@@ -182,6 +182,12 @@ import Cartography
         }
     }
     
+    public override func removeFromParentViewController() {
+        self.audioPlayerController?.stop()
+        self.audioPlayerController = nil
+        super.removeFromParentViewController()
+    }
+    
     public override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.selectCurrentFilter()
