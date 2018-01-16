@@ -51,7 +51,7 @@ open class CameraKeyboardPermissionsCell: UICollectionViewCell, Reusable {
         settingsButton.titleLabel?.font = UIFont.systemFont(ofSize: textSize, weight: UIFontWeightSemibold)
         settingsButton.setTitle("keyboard_photos_access.denied.keyboard.settings".localized, for: .normal)
         settingsButton.contentEdgeInsets = UIEdgeInsetsMake(10, 30, 10, 30)
-        settingsButton.layer.cornerRadius = 5.0
+        settingsButton.layer.cornerRadius = 4.0
         settingsButton.layer.masksToBounds = true
         settingsButton.addTarget(self, action: #selector(CameraKeyboardPermissionsCell.openSettings), for: .touchUpInside)
         
