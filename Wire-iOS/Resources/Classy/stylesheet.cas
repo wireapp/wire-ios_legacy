@@ -1332,15 +1332,16 @@ TokenField {
     numberOfLines: 3;
     lineSpacing: 8;
     tokenOffset: 4;
-    tokenTitleVerticalAdjustment: 0;
     dotColor: $color-text-dimmed;
+    tokenBackgroundColor: clear;
+    tokenBorderColor: clear;
 
     textView: @{
         tintColor: $color-accent-current;
         autocorrectionType: no;
         returnKeyType: go;
-        placeholderFont: $font-small-light;
-        placeholderTextContainerInset: 13 10;
+        placeholderFont: $font-small-regular;
+        placeholderTextContainerInset: 0 48;
         placeholderTextTransform: upper;
         lineFragmentPadding: 0;
     }
@@ -1350,14 +1351,6 @@ StartUIViewController SearchHeaderViewController {
     titleLabel: @{
         font: $font-small-semibold;
     }
-}
-
-TokenField.search {
-    textView: @{
-        placeholderTextContainerInset: 0 42;
-    }
-    tokenBackgroundColor: clear;
-    tokenBorderColor: clear;
 }
 
 /* Ephemeral Keyboard */
@@ -1683,7 +1676,7 @@ TextSearchInputView {
         textColor: $color-text-foreground;
     }
     placeholderLabel: @{
-        font: $font-small-light;
+        font: $font-small-regular;
         textColor: $color-text-dimmed;
     }
 }
