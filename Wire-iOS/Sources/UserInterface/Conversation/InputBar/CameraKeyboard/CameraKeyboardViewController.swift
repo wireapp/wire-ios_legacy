@@ -33,47 +33,44 @@ public protocol CameraKeyboardViewControllerDelegate: class {
 
 
 open class CameraKeyboardViewController: UIViewController {
-    internal let assetLibrary: AssetLibrary
     
-    fileprivate let collectionViewLayout = UICollectionViewFlowLayout()
-    internal var collectionView: UICollectionView!
-    
-    internal let goBackButton = IconButton()
-    internal let cameraRollButton = IconButton()
+    fileprivate var permissions: PhotoPermissionsController!
     fileprivate var lastLayoutSize = CGSize.zero
-    
+    fileprivate let collectionViewLayout = UICollectionViewFlowLayout()
     fileprivate let sideMargin: CGFloat = 14
-    
     fileprivate var viewWasHidden: Bool = false
-    
     fileprivate var goBackButtonRevealed: Bool = false {
         didSet {
             if goBackButtonRevealed {
                 UIView.animate(withDuration: 0.35, animations: {
                     self.goBackButton.alpha = self.goBackButtonRevealed ? 1 : 0
-                }) 
+                })
             }
             else {
                 self.goBackButton.alpha = 0
             }
         }
     }
-    
-    open let splitLayoutObservable: SplitLayoutObservable
-    
     fileprivate enum CameraKeyboardSection: UInt {
         case camera = 0, photos = 1
     }
-
+    
+    internal let assetLibrary: AssetLibrary
+    internal var collectionView: UICollectionView!
+    internal let goBackButton = IconButton()
+    internal let cameraRollButton = IconButton()
+    
+    open let splitLayoutObservable: SplitLayoutObservable
     open weak var delegate: CameraKeyboardViewControllerDelegate?
 
     deinit {
         NotificationCenter.default.removeObserver(self)
     }
     
-    init(splitLayoutObservable: SplitLayoutObservable, assetLibrary: AssetLibrary = AssetLibrary()) {
+    init(splitLayoutObservable: SplitLayoutObservable, assetLibrary: AssetLibrary = AssetLibrary(), permissions: PhotoPermissionsController = PhotoPermissionsControllerStrategy()) {
         self.splitLayoutObservable = splitLayoutObservable
         self.assetLibrary = assetLibrary
+        self.permissions = permissions
         super.init(nibName: nil, bundle: nil)
         self.assetLibrary.delegate = self
         NotificationCenter.default.addObserver(self, selector: #selector(splitLayoutChanged(_:)), name: NSNotification.Name.SplitLayoutObservableDidChangeToLayoutSize, object: self.splitLayoutObservable)
@@ -301,13 +298,13 @@ open class CameraKeyboardViewController: UIViewController {
     
     fileprivate func setupPhotoKeyboardAppearance() {
         
-        if areCameraAndPhotoLibraryAuthorized {
+        if permissions.areCameraAndPhotoLibraryAuthorized {
             self.view.backgroundColor = .white
         } else {
             self.view.backgroundColor = ColorScheme.default().color(withName: ColorSchemeColorGraphite)
         }
         
-        if isPhotoLibraryAuthorized {
+        if permissions.isPhotoLibraryAuthorized {
             self.collectionViewLayout.minimumLineSpacing = 1
             self.collectionViewLayout.minimumInteritemSpacing = 0.5
             self.collectionViewLayout.sectionInset = UIEdgeInsetsMake(0, 0, 0, 1)
@@ -326,32 +323,32 @@ open class CameraKeyboardViewController: UIViewController {
 extension CameraKeyboardViewController: UICollectionViewDelegateFlowLayout, UICollectionViewDelegate, UICollectionViewDataSource {
     public func numberOfSections(in collectionView: UICollectionView) -> Int {
         defer { setupPhotoKeyboardAppearance() }
-        guard areCameraOrPhotoLibraryAuthorized else {
+        guard permissions.areCameraOrPhotoLibraryAuthorized else {
             return 1
         }
         return 2
     }
     
     public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        guard areCameraOrPhotoLibraryAuthorized else { return 1 }
+        guard permissions.areCameraOrPhotoLibraryAuthorized else { return 1 }
         
         switch CameraKeyboardSection(rawValue: UInt(section))! {
         case .camera:
             return 1
         case .photos:
-            return isPhotoLibraryAuthorized ? Int(assetLibrary.count) : 1
+            return permissions.isPhotoLibraryAuthorized ? Int(assetLibrary.count) : 1
         }
     }
     
     public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard areCameraOrPhotoLibraryAuthorized else {
+        guard permissions.areCameraOrPhotoLibraryAuthorized else {
             return deniedAuthorizationCell(for: .cameraAndPhotos, collectionView: collectionView, indexPath: indexPath)
         }
         
         switch CameraKeyboardSection(rawValue: UInt((indexPath as NSIndexPath).section))! {
         case .camera:
             
-            guard isCameraAuthorized else {
+            guard permissions.isCameraAuthorized else {
                 return deniedAuthorizationCell(for: .camera, collectionView: collectionView, indexPath: indexPath)
             }
             
@@ -361,7 +358,7 @@ extension CameraKeyboardViewController: UICollectionViewDelegateFlowLayout, UICo
             
         case .photos:
             
-            guard isPhotoLibraryAuthorized else {
+            guard permissions.isPhotoLibraryAuthorized else {
                 return deniedAuthorizationCell(for: .photos, collectionView: collectionView, indexPath: indexPath)
             }
             
@@ -381,12 +378,12 @@ extension CameraKeyboardViewController: UICollectionViewDelegateFlowLayout, UICo
     }
     
     public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        guard areCameraOrPhotoLibraryAuthorized else { return collectionView.frame.size }
+        guard permissions.areCameraOrPhotoLibraryAuthorized else { return collectionView.frame.size }
         
         switch CameraKeyboardSection(rawValue: UInt((indexPath as NSIndexPath).section))! {
         case .camera: return cameraCellSize
         case .photos:
-            guard isPhotoLibraryAuthorized else {
+            guard permissions.isPhotoLibraryAuthorized else {
                 return CGSize(width: self.view.bounds.size.width - cameraCellSize.width, height: self.view.bounds.size.height)
             }
             
@@ -406,13 +403,13 @@ extension CameraKeyboardViewController: UICollectionViewDelegateFlowLayout, UICo
     
     public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
-        guard areCameraOrPhotoLibraryAuthorized else { return }
+        guard permissions.areCameraOrPhotoLibraryAuthorized else { return }
         
         switch CameraKeyboardSection(rawValue: UInt((indexPath as NSIndexPath).section))! {
         case .camera:
             break
         case .photos:
-            guard isPhotoLibraryAuthorized else { return }
+            guard permissions.isPhotoLibraryAuthorized else { return }
             
             let asset = try! assetLibrary.asset(atIndex: UInt((indexPath as NSIndexPath).row))
             
@@ -474,30 +471,3 @@ extension CameraKeyboardViewController: AssetLibraryDelegate {
     }
 }
 
-extension CameraKeyboardViewController {
-
-    // `unauthorized` state happens the first time before opening the keyboard,
-    // so we don't need to check it for our purposes.
-    
-    var isCameraAuthorized: Bool {
-        switch AVCaptureDevice.authorizationStatus(forMediaType: AVMediaTypeVideo) {
-        case .authorized: return true
-        default: return false
-        }
-    }
-    
-    var isPhotoLibraryAuthorized: Bool {
-        switch PHPhotoLibrary.authorizationStatus() {
-        case .authorized: return true
-        default: return false
-        }
-    }
-    
-    var areCameraOrPhotoLibraryAuthorized: Bool {
-        return isCameraAuthorized || isPhotoLibraryAuthorized
-    }
-
-    var areCameraAndPhotoLibraryAuthorized: Bool {
-        return isCameraAuthorized && isPhotoLibraryAuthorized
-    }
-}

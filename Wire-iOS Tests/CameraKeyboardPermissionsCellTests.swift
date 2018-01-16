@@ -28,7 +28,7 @@ final class CameraKeyboardPermissionsCellTests: ZMSnapshotTestCase {
     var sut: CameraKeyboardPermissionsCell!
     
     override func setUp() {
-        //self.recordMode = true
+        self.recordMode = true
         self.sut = CameraKeyboardPermissionsCell()
     }
     

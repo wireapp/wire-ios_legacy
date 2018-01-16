@@ -93,14 +93,14 @@ open class CameraKeyboardPermissionsCell: UICollectionViewCell, Reusable {
         
         constrain(self, containerView, descriptionLabel, settingsButton) { (selfView, container, description, settings) in
             
-            description.leading == container.leading + 15
-            description.trailing == container.trailing - 15
+            description.leading == container.leading + 16
+            description.trailing == container.trailing - 16
             description.top == container.top
             
             settings.height == 44.0
             settings.centerX == container.centerX
             settings.bottom == container.bottom
-            settings.top == description.bottom + 30
+            settings.top == description.bottom + 24
             
             container.centerY == selfView.centerY
             container.leading == selfView.leading
