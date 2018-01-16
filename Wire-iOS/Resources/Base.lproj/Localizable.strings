@@ -832,15 +832,14 @@
 "team.invite.header.subtitle" = "Invite your colleagues to join.";
 "team.invite.textfield.placeholder" = "colleague@yourcompany.com";
 "team.invite.textfield.accesibility" = "Enter e-mail address for colleague to invite.";
-"team.invite.contacts_button.title" = "Add from Addressbook";
+"team.invite.learn_more.title" = "Learn more";
 "team.invite.top_bar.skip" = "Skip";
 "team.invite.top_bar.done" = "Done";
 
 // Team Invite Errors
 "team.invite.error.generic" = "Something went wrong, please try again.";
-"team.invite.error.already_registered" = "This email is already registered on Wire.";
-"team.invite.error.already_invited" = "This email has already been invited.";
-"team.invite.error.too_many_invitations" = "You have reached the maximum amount of invitations.";
+"team.invite.error.already_registered" = "This email address is already in use.";
+"team.invite.error.too_many_invitations" = "The maximum number of invitations has been sent.";
 
 // Registration
 

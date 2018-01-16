@@ -101,10 +101,6 @@ final class TeamMemberInviteViewController: UIViewController, TeamInviteTopbarDe
     
     private func setupFooterView() {
         footerTextFieldView.onConfirm = sendInvite
-        footerTextFieldView.shouldConfirm = { [weak self] email in
-            guard let `self` = self else { return true }
-            return !self.dataSource.data.emails.contains(email)
-        }
         footerTextFieldView.onAddFromAddressbook = {
             // TODO: Present address book picker
         }
@@ -138,6 +134,7 @@ final class TeamMemberInviteViewController: UIViewController, TeamInviteTopbarDe
             footerTextFieldView.clearInput()
         case let .failure(_, error: error):
             footerTextFieldView.errorMessage = error.errorDescription.uppercased()
+            footerTextFieldView.errorButton.isHidden = error != .alreadyRegistered
         }
     }
     
