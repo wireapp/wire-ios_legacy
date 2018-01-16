@@ -16,21 +16,23 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-import Foundation
+enum TeamInviteEvent: Event {
 
-public protocol Reusable {
-    static var reuseIdentifier: String { get }
-    var reuseIdentifier: String? { get }
-}
-
-public extension Reusable {
-    static var reuseIdentifier: String {
-        return "\(self)"
+    enum InviteMethod: String {
+        case teamCreation = "team_creation"
     }
     
-    var reuseIdentifier: String? {
-        return type(of: self).reuseIdentifier
+    case sentInvite(InviteMethod)
+    
+    var name: String {
+        switch self {
+        case .sentInvite: return "team.sent_invite"
+        }
+    }
+    
+    var attributes: [AnyHashable : Any]? {
+        switch self {
+        case .sentInvite(let method): return ["method": method.rawValue]
+        }
     }
 }
-
-extension UITableViewCell: Reusable {}

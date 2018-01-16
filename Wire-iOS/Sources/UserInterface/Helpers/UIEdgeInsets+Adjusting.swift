@@ -1,6 +1,6 @@
 //
 // Wire
-// Copyright (C) 2016 Wire Swiss GmbH
+// Copyright (C) 2017 Wire Swiss GmbH
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -16,21 +16,19 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-import Foundation
+import UIKit
 
-public protocol Reusable {
-    static var reuseIdentifier: String { get }
-    var reuseIdentifier: String? { get }
-}
-
-public extension Reusable {
-    static var reuseIdentifier: String {
-        return "\(self)"
+extension UIEdgeInsets {
+    func adjusting(top: CGFloat? = nil, left: CGFloat? = nil, bottom: CGFloat? = nil, right: CGFloat? = nil) -> UIEdgeInsets {
+        var copy = self
+        copy.adjust(top: top, left: left, bottom: bottom, right: right)
+        return copy
     }
     
-    var reuseIdentifier: String? {
-        return type(of: self).reuseIdentifier
+    mutating func adjust(top: CGFloat? = nil, left: CGFloat? = nil, bottom: CGFloat? = nil, right: CGFloat? = nil) {
+        top.apply { self.top = $0 }
+        left.apply{ self.left = $0 }
+        bottom.apply { self.bottom = $0 }
+        right.apply { self.right = $0 }
     }
 }
-
-extension UITableViewCell: Reusable {}

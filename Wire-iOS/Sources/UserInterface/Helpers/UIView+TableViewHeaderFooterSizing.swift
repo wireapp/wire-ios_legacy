@@ -1,6 +1,6 @@
 //
 // Wire
-// Copyright (C) 2016 Wire Swiss GmbH
+// Copyright (C) 2017 Wire Swiss GmbH
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -16,21 +16,15 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-import Foundation
+import UIKit
 
-public protocol Reusable {
-    static var reuseIdentifier: String { get }
-    var reuseIdentifier: String? { get }
-}
-
-public extension Reusable {
-    static var reuseIdentifier: String {
-        return "\(self)"
-    }
-    
-    var reuseIdentifier: String? {
-        return type(of: self).reuseIdentifier
+extension UIView {
+    func sized(fittingWidth width: CGFloat) -> UIView {
+        frame.size = systemLayoutSizeFitting(
+            CGSize(width: width, height: UIViewNoIntrinsicMetric),
+            withHorizontalFittingPriority: UILayoutPriorityRequired,
+            verticalFittingPriority: UILayoutPriorityFittingSizeLevel
+        )
+        return self
     }
 }
-
-extension UITableViewCell: Reusable {}

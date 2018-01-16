@@ -254,9 +254,11 @@ class SkeletonViewController: UIViewController {
         super.init(nibName: nil, bundle: nil)
         
         backgroundImageView.contentMode = .scaleAspectFill
-        backgroundImageView.transform = CGAffineTransform(scaleX: 1.4, y: 1.4)
         
-        if let imageData = account.imageData, let image = UIImage(data: imageData) {
+        let factor = BackgroundViewController.backgroundScaleFactor
+        backgroundImageView.transform = CGAffineTransform(scaleX: factor, y: factor)
+        
+        if let imageData = account.imageData, let image = BackgroundViewController.blurredAppBackground(with: imageData) {
             backgroundImageView.image = image
         }
     }
