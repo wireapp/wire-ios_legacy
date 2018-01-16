@@ -21,7 +21,7 @@ import Foundation
 import Cartography
 import UIKit
 
-public enum DeniedPhotoAccessClass {
+public enum DeniedAuthorizationType {
     case camera
     case photos
     case cameraAndPhotos
@@ -38,17 +38,17 @@ open class CameraKeyboardPermissionsCell: UICollectionViewCell, Reusable {
         super.init(frame: frame)
         self.backgroundColor = ColorScheme.default().color(withName: ColorSchemeColorGraphite)
         
-        let size: CGFloat = 15.0
+        let textSize: CGFloat = 16.0
         
         descriptionLabel.backgroundColor = .clear
         descriptionLabel.textColor = .white
-        descriptionLabel.font = UIFont.systemFont(ofSize: size)
+        descriptionLabel.font = UIFont.systemFont(ofSize: textSize, weight: UIFontWeightLight)
         descriptionLabel.numberOfLines = 0
         descriptionLabel.textAlignment = .center
         
-        settingsButton.backgroundColor = ColorScheme.default().color(withName: ColorSchemeColorLightGraphite)
+        settingsButton.backgroundColor = UIColor.white.withAlphaComponent(0.16)
         settingsButton.setTitleColor(.white, for: .normal)
-        settingsButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: size)
+        settingsButton.titleLabel?.font = UIFont.systemFont(ofSize: textSize, weight: UIFontWeightSemibold)
         settingsButton.setTitle("keyboard_photos_access.denied.keyboard.settings".localized, for: .normal)
         settingsButton.contentEdgeInsets = UIEdgeInsetsMake(10, 30, 10, 30)
         settingsButton.layer.cornerRadius = 5.0
@@ -67,15 +67,15 @@ open class CameraKeyboardPermissionsCell: UICollectionViewCell, Reusable {
         super.init(coder: aDecoder)
     }
     
-    public convenience init(frame: CGRect, deniedAccessClass: DeniedPhotoAccessClass) {
+    public convenience init(frame: CGRect, deniedAuthorization: DeniedAuthorizationType) {
         self.init(frame: frame)
-        configure(deniedClass: deniedAccessClass)
+        configure(deniedAuthorization: deniedAuthorization)
     }
     
-    func configure(deniedClass: DeniedPhotoAccessClass) {
+    func configure(deniedAuthorization: DeniedAuthorizationType) {
         var title = ""
         
-        switch deniedClass {
+        switch deniedAuthorization {
         case .camera:           title = "keyboard_photos_access.denied.keyboard.camera"
         case .photos:           title = "keyboard_photos_access.denied.keyboard.photos"
         case .cameraAndPhotos:  title = "keyboard_photos_access.denied.keyboard.camera_and_photos"

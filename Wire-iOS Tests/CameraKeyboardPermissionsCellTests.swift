@@ -53,7 +53,7 @@ final class CameraKeyboardPermissionsCellTests: ZMSnapshotTestCase {
         // given
         
         // when
-        self.sut.configure(deniedClass: .camera)
+        self.sut.configure(deniedAuthorization: .camera)
         let view = self.prepareForSnapshot()
         
         // then
@@ -64,7 +64,7 @@ final class CameraKeyboardPermissionsCellTests: ZMSnapshotTestCase {
         // given
         
         // when
-        self.sut.configure(deniedClass: .photos)
+        self.sut.configure(deniedAuthorization: .photos)
         let view = self.prepareForSnapshot()
         
         // then
@@ -76,7 +76,7 @@ final class CameraKeyboardPermissionsCellTests: ZMSnapshotTestCase {
         // given
         
         // when
-        self.sut.configure(deniedClass: .cameraAndPhotos)
+        self.sut.configure(deniedAuthorization: .cameraAndPhotos)
         let view = self.prepareForSnapshot()
         
         // then
