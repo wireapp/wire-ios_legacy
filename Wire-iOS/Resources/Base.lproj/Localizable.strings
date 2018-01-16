@@ -826,6 +826,21 @@
 
 "team.email_code.input_field.accessbility_label" = "Please enter the six-digit code from the email.";
 
+// Invite Team Members
+
+"team.invite.header.title" = "Build your team";
+"team.invite.header.subtitle" = "Invite your colleagues to join.";
+"team.invite.textfield.placeholder" = "colleague@yourcompany.com";
+"team.invite.textfield.accesibility" = "Enter e-mail address for colleague to invite.";
+"team.invite.learn_more.title" = "Learn more";
+"team.invite.top_bar.skip" = "Skip";
+"team.invite.top_bar.done" = "Done";
+
+// Team Invite Errors
+"team.invite.error.generic" = "Something went wrong, please try again.";
+"team.invite.error.already_registered" = "This email address is already in use.";
+"team.invite.error.too_many_invitations" = "The maximum number of invitations has been sent.";
+
 // Registration
 
 "registration.title" = "Registration";
