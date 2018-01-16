@@ -43,21 +43,15 @@ final class TeamMemberInviteViewController: UIViewController, TeamInviteTopbarDe
     }
     
     private func setupViews() {
-        tableView.backgroundColor = .clear
-        tableView.allowsSelection = false
-        tableView.separatorStyle = .none
-        tableView.rowHeight = 56
         [tableView, topBar, topBarSpacerView].forEach(view.addSubview)
         topBarSpacerView.backgroundColor = UIColor.Team.background
         topBar.delegate = self
         view.backgroundColor = UIColor.Team.background
+        setupTableView()
         setupHeaderView()
         setupFooterView()
         updateScrollIndicatorInsets()
         setupKeyboardObserver()
-        tableView.clipsToBounds = false
-        tableView.alwaysBounceVertical = false
-        tableView.correctedContentInset = UIEdgeInsets(top: topOffset, left: 0, bottom: bottomOffset, right: 0)
         dataSource.configure = { cell, content in cell.content = content }
     }
     
@@ -87,6 +81,16 @@ final class TeamMemberInviteViewController: UIViewController, TeamInviteTopbarDe
                 self.tableView.correctedScrollIndicatorInsets.adjust(bottom: info.frame.height)
             }
         }
+    }
+    
+    private func setupTableView() {
+        tableView.clipsToBounds = false
+        tableView.alwaysBounceVertical = false
+        tableView.backgroundColor = .clear
+        tableView.allowsSelection = false
+        tableView.separatorStyle = .none
+        tableView.rowHeight = 56
+        tableView.correctedContentInset = UIEdgeInsets(top: topOffset, left: 0, bottom: bottomOffset, right: 0)
     }
     
     private func setupHeaderView() {
