@@ -50,11 +50,8 @@ extension ZMConversation {
     }
     
     public var isBotConversation : Bool {
-        guard conversationType == .oneOnOne,
-              let otherUser = firstActiveParticipantOtherThanSelf() , otherUser.isBot
-        else { return false }
-        
-        return true
+        // TODO: we need to check here if the current user is a bot or not. Check history for the previous implementation.
+        return false
     }
 }
 

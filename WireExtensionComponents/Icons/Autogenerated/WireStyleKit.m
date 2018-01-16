@@ -5119,6 +5119,7 @@ static UIImage* _imageOfShieldnotverified = nil;
 
 + (void)drawIcon_0x748_32ptWithColor: (UIColor*)color
 {
+
     //// Bezier Drawing
     UIBezierPath* bezierPath = [UIBezierPath bezierPath];
     [bezierPath moveToPoint: CGPointMake(32, 64)];
@@ -5140,6 +5141,7 @@ static UIImage* _imageOfShieldnotverified = nil;
 
 + (void)drawIcon_0x749_32ptWithColor: (UIColor*)color
 {
+
     //// Bezier Drawing
     UIBezierPath* bezierPath = [UIBezierPath bezierPath];
     [bezierPath moveToPoint: CGPointMake(32, 64)];
@@ -5161,6 +5163,7 @@ static UIImage* _imageOfShieldnotverified = nil;
 
 + (void)drawIcon_0x750_32ptWithColor: (UIColor*)color
 {
+
     //// Bezier Drawing
     UIBezierPath* bezierPath = [UIBezierPath bezierPath];
     [bezierPath moveToPoint: CGPointMake(32, 64)];
@@ -5172,6 +5175,114 @@ static UIImage* _imageOfShieldnotverified = nil;
     bezierPath.usesEvenOddFillRule = YES;
     [color setFill];
     [bezierPath fill];
+}
+
++ (void)drawIcon_0x751_32ptWithColor: (UIColor*)color
+{
+
+    //// Alert Drawing
+    UIBezierPath* alertPath = [UIBezierPath bezierPath];
+    [alertPath moveToPoint: CGPointMake(32, 64)];
+    [alertPath addCurveToPoint: CGPointMake(0, 32) controlPoint1: CGPointMake(14.33, 64) controlPoint2: CGPointMake(0, 49.67)];
+    [alertPath addCurveToPoint: CGPointMake(32, 0) controlPoint1: CGPointMake(0, 14.33) controlPoint2: CGPointMake(14.33, 0)];
+    [alertPath addCurveToPoint: CGPointMake(64, 32) controlPoint1: CGPointMake(49.67, 0) controlPoint2: CGPointMake(64, 14.33)];
+    [alertPath addCurveToPoint: CGPointMake(32, 64) controlPoint1: CGPointMake(64, 49.67) controlPoint2: CGPointMake(49.67, 64)];
+    [alertPath closePath];
+    [alertPath moveToPoint: CGPointMake(32, 12)];
+    [alertPath addCurveToPoint: CGPointMake(28, 16) controlPoint1: CGPointMake(29.79, 12) controlPoint2: CGPointMake(28, 13.79)];
+    [alertPath addLineToPoint: CGPointMake(28, 36)];
+    [alertPath addCurveToPoint: CGPointMake(32, 40) controlPoint1: CGPointMake(28, 38.21) controlPoint2: CGPointMake(29.79, 40)];
+    [alertPath addCurveToPoint: CGPointMake(36, 36) controlPoint1: CGPointMake(34.21, 40) controlPoint2: CGPointMake(36, 38.21)];
+    [alertPath addLineToPoint: CGPointMake(36, 16)];
+    [alertPath addCurveToPoint: CGPointMake(32, 12) controlPoint1: CGPointMake(36, 13.79) controlPoint2: CGPointMake(34.21, 12)];
+    [alertPath closePath];
+    [alertPath moveToPoint: CGPointMake(32, 52)];
+    [alertPath addCurveToPoint: CGPointMake(36, 48) controlPoint1: CGPointMake(34.21, 52) controlPoint2: CGPointMake(36, 50.21)];
+    [alertPath addCurveToPoint: CGPointMake(32, 44) controlPoint1: CGPointMake(36, 45.79) controlPoint2: CGPointMake(34.21, 44)];
+    [alertPath addCurveToPoint: CGPointMake(28, 48) controlPoint1: CGPointMake(29.79, 44) controlPoint2: CGPointMake(28, 45.79)];
+    [alertPath addCurveToPoint: CGPointMake(32, 52) controlPoint1: CGPointMake(28, 50.21) controlPoint2: CGPointMake(29.79, 52)];
+    [alertPath closePath];
+    alertPath.usesEvenOddFillRule = YES;
+    [color setFill];
+    [alertPath fill];
+}
+
++ (void)drawIcon_0x752_32ptWithColor: (UIColor*)color
+{
+
+    //// Service Drawing
+    UIBezierPath* servicePath = [UIBezierPath bezierPath];
+    [servicePath moveToPoint: CGPointMake(20.44, 23.59)];
+    [servicePath addCurveToPoint: CGPointMake(7.11, 36.78) controlPoint1: CGPointMake(13.08, 23.59) controlPoint2: CGPointMake(7.11, 29.49)];
+    [servicePath addLineToPoint: CGPointMake(7.11, 48.21)];
+    [servicePath addCurveToPoint: CGPointMake(8.89, 49.97) controlPoint1: CGPointMake(7.11, 49.18) controlPoint2: CGPointMake(7.91, 49.97)];
+    [servicePath addLineToPoint: CGPointMake(55.11, 49.97)];
+    [servicePath addCurveToPoint: CGPointMake(56.89, 48.21) controlPoint1: CGPointMake(56.09, 49.97) controlPoint2: CGPointMake(56.89, 49.18)];
+    [servicePath addLineToPoint: CGPointMake(56.89, 36.78)];
+    [servicePath addCurveToPoint: CGPointMake(43.55, 23.59) controlPoint1: CGPointMake(56.89, 29.49) controlPoint2: CGPointMake(50.92, 23.59)];
+    [servicePath addLineToPoint: CGPointMake(20.44, 23.59)];
+    [servicePath closePath];
+    [servicePath moveToPoint: CGPointMake(57.67, 22.14)];
+    [servicePath addCurveToPoint: CGPointMake(64, 36.78) controlPoint1: CGPointMake(61.57, 25.83) controlPoint2: CGPointMake(64, 31.02)];
+    [servicePath addLineToPoint: CGPointMake(64, 48.21)];
+    [servicePath addCurveToPoint: CGPointMake(55.11, 57) controlPoint1: CGPointMake(64, 53.06) controlPoint2: CGPointMake(60.02, 57)];
+    [servicePath addLineToPoint: CGPointMake(8.89, 57)];
+    [servicePath addCurveToPoint: CGPointMake(0, 48.21) controlPoint1: CGPointMake(3.98, 57) controlPoint2: CGPointMake(0, 53.06)];
+    [servicePath addLineToPoint: CGPointMake(0, 36.78)];
+    [servicePath addCurveToPoint: CGPointMake(6.33, 22.14) controlPoint1: CGPointMake(0, 31.02) controlPoint2: CGPointMake(2.43, 25.83)];
+    [servicePath addLineToPoint: CGPointMake(0.42, 11.17)];
+    [servicePath addCurveToPoint: CGPointMake(1.88, 6.41) controlPoint1: CGPointMake(-0.51, 9.46) controlPoint2: CGPointMake(0.15, 7.33)];
+    [servicePath addCurveToPoint: CGPointMake(6.69, 7.86) controlPoint1: CGPointMake(3.62, 5.5) controlPoint2: CGPointMake(5.77, 6.15)];
+    [servicePath addLineToPoint: CGPointMake(12.28, 18.23)];
+    [servicePath addCurveToPoint: CGPointMake(20.44, 16.55) controlPoint1: CGPointMake(14.78, 17.15) controlPoint2: CGPointMake(17.54, 16.55)];
+    [servicePath addLineToPoint: CGPointMake(43.55, 16.55)];
+    [servicePath addCurveToPoint: CGPointMake(51.72, 18.23) controlPoint1: CGPointMake(46.46, 16.55) controlPoint2: CGPointMake(49.22, 17.15)];
+    [servicePath addLineToPoint: CGPointMake(57.31, 7.86)];
+    [servicePath addCurveToPoint: CGPointMake(62.12, 6.41) controlPoint1: CGPointMake(58.23, 6.15) controlPoint2: CGPointMake(60.38, 5.5)];
+    [servicePath addCurveToPoint: CGPointMake(63.58, 11.17) controlPoint1: CGPointMake(63.85, 7.33) controlPoint2: CGPointMake(64.51, 9.46)];
+    [servicePath addLineToPoint: CGPointMake(57.67, 22.14)];
+    [servicePath closePath];
+    [servicePath moveToPoint: CGPointMake(21.33, 37.66)];
+    [servicePath addCurveToPoint: CGPointMake(17.78, 41.17) controlPoint1: CGPointMake(21.33, 39.6) controlPoint2: CGPointMake(19.74, 41.17)];
+    [servicePath addCurveToPoint: CGPointMake(14.22, 37.66) controlPoint1: CGPointMake(15.81, 41.17) controlPoint2: CGPointMake(14.22, 39.6)];
+    [servicePath addCurveToPoint: CGPointMake(17.78, 34.14) controlPoint1: CGPointMake(14.22, 35.71) controlPoint2: CGPointMake(15.81, 34.14)];
+    [servicePath addCurveToPoint: CGPointMake(21.33, 37.66) controlPoint1: CGPointMake(19.74, 34.14) controlPoint2: CGPointMake(21.33, 35.71)];
+    [servicePath closePath];
+    [servicePath moveToPoint: CGPointMake(35.55, 37.66)];
+    [servicePath addCurveToPoint: CGPointMake(32, 41.17) controlPoint1: CGPointMake(35.55, 39.6) controlPoint2: CGPointMake(33.96, 41.17)];
+    [servicePath addCurveToPoint: CGPointMake(28.44, 37.66) controlPoint1: CGPointMake(30.04, 41.17) controlPoint2: CGPointMake(28.44, 39.6)];
+    [servicePath addCurveToPoint: CGPointMake(32, 34.14) controlPoint1: CGPointMake(28.44, 35.71) controlPoint2: CGPointMake(30.04, 34.14)];
+    [servicePath addCurveToPoint: CGPointMake(35.55, 37.66) controlPoint1: CGPointMake(33.96, 34.14) controlPoint2: CGPointMake(35.55, 35.71)];
+    [servicePath closePath];
+    [servicePath moveToPoint: CGPointMake(46.22, 41.17)];
+    [servicePath addCurveToPoint: CGPointMake(42.67, 37.66) controlPoint1: CGPointMake(44.26, 41.17) controlPoint2: CGPointMake(42.67, 39.6)];
+    [servicePath addCurveToPoint: CGPointMake(46.22, 34.14) controlPoint1: CGPointMake(42.67, 35.71) controlPoint2: CGPointMake(44.26, 34.14)];
+    [servicePath addCurveToPoint: CGPointMake(49.78, 37.66) controlPoint1: CGPointMake(48.18, 34.14) controlPoint2: CGPointMake(49.78, 35.71)];
+    [servicePath addCurveToPoint: CGPointMake(46.22, 41.17) controlPoint1: CGPointMake(49.78, 39.6) controlPoint2: CGPointMake(48.18, 41.17)];
+    [servicePath closePath];
+    [color setFill];
+    [servicePath fill];
+}
+
++ (void)drawIcon_0x753_32ptWithColor: (UIColor*)color
+{
+
+    //// DownArrow Drawing
+    UIBezierPath* downArrowPath = [UIBezierPath bezierPath];
+    [downArrowPath moveToPoint: CGPointMake(40.25, 52.03)];
+    [downArrowPath addLineToPoint: CGPointMake(42, 53.74)];
+    [downArrowPath addLineToPoint: CGPointMake(32.5, 63)];
+    [downArrowPath addLineToPoint: CGPointMake(23, 53.74)];
+    [downArrowPath addLineToPoint: CGPointMake(24.75, 52.03)];
+    [downArrowPath addLineToPoint: CGPointMake(31.26, 58.36)];
+    [downArrowPath addLineToPoint: CGPointMake(31.26, 0)];
+    [downArrowPath addLineToPoint: CGPointMake(33.74, 0)];
+    [downArrowPath addLineToPoint: CGPointMake(33.74, 58.37)];
+    [downArrowPath addLineToPoint: CGPointMake(40.25, 52.03)];
+    [downArrowPath closePath];
+    downArrowPath.usesEvenOddFillRule = YES;
+    [color setFill];
+    [downArrowPath fill];
 }
 
 + (void)drawMissedcallWithAccent: (UIColor*)accent
@@ -9074,37 +9185,70 @@ static UIImage* _imageOfShieldnotverified = nil;
     return imageOfIcon_0x269_32pt;
 }
 
-+ (UIImage*)imageOfIcon_0x748_32ptWithColor: (UIColor*)color {
-    
++ (UIImage*)imageOfIcon_0x748_32ptWithColor: (UIColor*)color
+{
     UIGraphicsBeginImageContextWithOptions(CGSizeMake(64, 64), NO, 0);
     [WireStyleKit drawIcon_0x748_32ptWithColor: color];
-    
+
     UIImage* imageOfIcon_0x748_32pt = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
-    
+
     return imageOfIcon_0x748_32pt;
 }
 
-+ (UIImage*)imageOfIcon_0x749_32ptWithColor: (UIColor*)color {
-    
++ (UIImage*)imageOfIcon_0x749_32ptWithColor: (UIColor*)color
+{
     UIGraphicsBeginImageContextWithOptions(CGSizeMake(64, 64), NO, 0);
     [WireStyleKit drawIcon_0x749_32ptWithColor: color];
-    
+
     UIImage* imageOfIcon_0x749_32pt = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
-    
+
     return imageOfIcon_0x749_32pt;
 }
 
-+ (UIImage*)imageOfIcon_0x750_32ptWithColor: (UIColor*)color {
-    
++ (UIImage*)imageOfIcon_0x750_32ptWithColor: (UIColor*)color
+{
     UIGraphicsBeginImageContextWithOptions(CGSizeMake(64, 64), NO, 0);
     [WireStyleKit drawIcon_0x750_32ptWithColor: color];
-    
+
     UIImage* imageOfIcon_0x750_32pt = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
-    
+
     return imageOfIcon_0x750_32pt;
+}
+
++ (UIImage*)imageOfIcon_0x751_32ptWithColor: (UIColor*)color
+{
+    UIGraphicsBeginImageContextWithOptions(CGSizeMake(64, 64), NO, 0);
+    [WireStyleKit drawIcon_0x751_32ptWithColor: color];
+
+    UIImage* imageOfIcon_0x751_32pt = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+
+    return imageOfIcon_0x751_32pt;
+}
+
++ (UIImage*)imageOfIcon_0x752_32ptWithColor: (UIColor*)color
+{
+    UIGraphicsBeginImageContextWithOptions(CGSizeMake(64, 64), NO, 0);
+    [WireStyleKit drawIcon_0x752_32ptWithColor: color];
+
+    UIImage* imageOfIcon_0x752_32pt = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+
+    return imageOfIcon_0x752_32pt;
+}
+
++ (UIImage*)imageOfIcon_0x753_32ptWithColor: (UIColor*)color
+{
+    UIGraphicsBeginImageContextWithOptions(CGSizeMake(64, 64), NO, 0);
+    [WireStyleKit drawIcon_0x753_32ptWithColor: color];
+
+    UIImage* imageOfIcon_0x753_32pt = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+
+    return imageOfIcon_0x753_32pt;
 }
 
 + (UIImage*)imageOfMissedcallWithAccent: (UIColor*)accent

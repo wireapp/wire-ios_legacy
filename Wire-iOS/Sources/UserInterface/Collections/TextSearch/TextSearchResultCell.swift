@@ -127,7 +127,7 @@ import Cartography
     override func setHighlighted(_ highlighted: Bool, animated: Bool)  {
         super.setHighlighted(highlighted, animated: animated)
         
-        let backgroundColor = ColorScheme.default().color(withName: ColorSchemeColorBackground)
+        let backgroundColor = ColorScheme.default().color(withName: ColorSchemeColorContentBackground)
         let foregroundColor = ColorScheme.default().color(withName: ColorSchemeColorTextForeground)
         
         self.contentView.backgroundColor = highlighted ? backgroundColor.mix(foregroundColor, amount: 0.1) : backgroundColor

@@ -40,21 +40,23 @@ extension ShareViewController {
             self.shareablePreviewWrapper = shareablePreviewWrapper
         }
 
-        self.tokenField.cas_styleClass = "share"
+        self.tokenField.cas_styleClass = "search"
         self.tokenField.textColor = .white
-        self.tokenField.layer.cornerRadius = 4
         self.tokenField.clipsToBounds = true
-        self.tokenField.textView.placeholderTextAlignment = .center
-        self.tokenField.textView.backgroundColor = UIColor(white: 1, alpha: 0.1)
+        self.tokenField.layer.cornerRadius = 4
+        self.tokenField.tokenTitleColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorTextForeground, variant: .dark)
+        self.tokenField.tokenSelectedTitleColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorTextForeground, variant: .dark)
+        self.tokenField.textView.placeholderTextAlignment = .natural
         self.tokenField.textView.accessibilityLabel = "textViewSearch"
         self.tokenField.textView.placeholder = "content.message.forward.to".localized.uppercased()
         self.tokenField.textView.keyboardAppearance = .dark
         self.tokenField.textView.returnKeyType = .done
         self.tokenField.textView.autocorrectionType = .no
-        self.tokenField.textView.textContainerInset = UIEdgeInsets(top: 6, left: 48, bottom: 6, right: 12)
+        self.tokenField.textView.textContainerInset = UIEdgeInsets(top: 10, left: 32, bottom: 10, right: 12)
+        self.tokenField.textView.backgroundColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorTokenFieldBackground, variant: .dark)
         self.tokenField.delegate = self
 
-        self.searchIcon.image = UIImage(for: .search, iconSize: .small, color: .white)
+        self.searchIcon.image = UIImage(for: .search, iconSize: .tiny, color: .white)
 
         self.destinationsTableView.backgroundColor = .clear
         self.destinationsTableView.register(ShareDestinationCell<D>.self, forCellReuseIdentifier: ShareDestinationCell<D>.reuseIdentifier)
@@ -124,7 +126,7 @@ extension ShareViewController {
         
         constrain(self.tokenField, self.searchIcon) { tokenField, searchIcon in
             searchIcon.centerY == tokenField.centerY
-            searchIcon.left == tokenField.left + 5.5 // the search icon glyph has whitespaces
+            searchIcon.left == tokenField.left + 8 // the search icon glyph has whitespaces
         }
         
         constrain(self.view, self.destinationsTableView, self.topSeparatorView) { view, destinationsTableView, topSeparatorView in
@@ -139,7 +141,7 @@ extension ShareViewController {
             
             tokenField.left == view.left + 8
             tokenField.right == -8 + view.right
-            tokenField.height >= 32
+            tokenField.height >= 40
             
             tableView.left == view.left
             tableView.right == view.right

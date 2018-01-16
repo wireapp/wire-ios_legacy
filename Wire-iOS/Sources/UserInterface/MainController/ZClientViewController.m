@@ -545,14 +545,14 @@
 - (void)requestLoopNotification:(NSNotification *)notification;
 {
     NSString *path = notification.userInfo[@"path"];
-    [DebugAlert showWithMessage:[NSString stringWithFormat:@"A request loop is going on at %@", path] sendLogs:YES];
+    [DebugAlert showSendLogsMessageWithMessage:[NSString stringWithFormat:@"A request loop is going on at %@", path]];
 }
 
 #pragma mark - SE inconsistency notification
 
 - (void)potentialErrorNotification:(NSNotification *)notification;
 {
-    [DebugAlert showWithMessage:[NSString stringWithFormat:@"We detected a potential error, please send logs"] sendLogs:YES];
+    [DebugAlert showSendLogsMessageWithMessage:[NSString stringWithFormat:@"We detected a potential error, please send logs"]];
 }
 
 #pragma mark -  Share extension analytics
