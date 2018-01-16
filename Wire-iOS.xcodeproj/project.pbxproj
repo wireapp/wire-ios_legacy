@@ -3514,6 +3514,9 @@
 				EF18C7E31F9E4DA00085A832 /* NSString+FileNameForZMUser.swift */,
 				CE8E4FB41DF17BBE0009F437 /* CASStyler+Variables.h */,
 				CE8E4FB51DF17BBE0009F437 /* CASStyler+Variables.m */,
+				D5168F292008F3EF00F8222A /* UIEdgeInsets+Adjusting.swift */,
+				D5168F272008ED0700F8222A /* KeyboardBlockObserver.swift */,
+				D5F8BFF32007AC84008F8C3D /* UIView+TableViewHeaderFooterSizing.swift */,
 				87AAE41E1E423C2A00E1D13A /* CASStyler+Fonts.swift */,
 				CE8E4FB61DF17BBE0009F437 /* TextTransform */,
 				871BC1ED1D34F8F800DF0793 /* CALayer+EasyAnimation.h */,
@@ -5032,15 +5035,12 @@
 			isa = PBXGroup;
 			children = (
 				D5490A1C20050AAA0057EAA8 /* TeamMemberInviteViewController.swift */,
-				D5168F292008F3EF00F8222A /* UIEdgeInsets+Adjusting.swift */,
-				D5168F272008ED0700F8222A /* KeyboardBlockObserver.swift */,
 				D5F8BFF52007C2DE008F8C3D /* TeamInviteTopBar.swift */,
 				D5DBAAAF20064E3B00E9F65B /* TeamMemberInviteTableViewCell.swift */,
 				D5DBAAAB20064DD700E9F65B /* TeamMemberInviteHeaderView.swift */,
 				D5DBAAAD20064DFC00E9F65B /* TeamInviteTextFieldFooterView.swift */,
 				D5DBAAA620064D5600E9F65B /* ArrayDataSource.swift */,
 				D5DBAAA920064D8800E9F65B /* InviteResult.swift */,
-				D5F8BFF32007AC84008F8C3D /* UIView+TableViewHeaderFooterSizing.swift */,
 			);
 			path = "Team Invites";
 			sourceTree = "<group>";
