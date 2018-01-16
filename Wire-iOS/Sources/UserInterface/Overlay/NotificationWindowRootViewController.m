@@ -58,6 +58,8 @@
 
 @implementation NotificationWindowRootViewController
 
+static const CGFloat NetworkStatusViewControllerLeftRightInset = 16;
+
 - (void)dealloc
 {
     if (self.appLockViewController.parentViewController == self) {
@@ -113,8 +115,8 @@
     [self addViewController:self.networkStatusViewController toView:self.view];
 
     [self.networkStatusViewController.view autoPinEdgeToSuperviewEdge:ALEdgeTop];
-    [self.networkStatusViewController.view autoPinEdgeToSuperviewEdge:ALEdgeLeft];
-    self.networkActivityRightMargin = [self.networkStatusViewController.view autoPinEdgeToSuperviewEdge:ALEdgeRight];
+    [self.networkStatusViewController.view autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:NetworkStatusViewControllerLeftRightInset];
+    self.networkActivityRightMargin = [self.networkStatusViewController.view autoPinEdgeToSuperviewEdge:ALEdgeRight  withInset:NetworkStatusViewControllerLeftRightInset];
     [self.networkStatusViewController.view autoPinEdgeToSuperviewEdge:ALEdgeBottom];
 
     _voiceChannelController = [[ActiveVoiceChannelViewController alloc] init];
@@ -187,6 +189,7 @@
 
 - (void)updateAppearanceForOrientation:(UIInterfaceOrientation)orientation
 {
+    ///FIXME: in next PR, put networkActivityStatusBar inside navi bar
     if (IS_IPAD_LANDSCAPE_LAYOUT) {
         CGFloat sidebarWidth = [WAZUIMagic cgFloatForIdentifier:@"framework.sidebar_width"];
         CGFloat rightMargin =  -([UIScreen mainScreen].bounds.size.width - sidebarWidth);
