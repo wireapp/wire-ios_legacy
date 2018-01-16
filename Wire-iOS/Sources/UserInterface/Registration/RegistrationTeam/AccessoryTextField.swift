@@ -38,7 +38,7 @@ class AccessoryTextField: UITextField {
     }
 
     let textFieldValidator: TextFieldValidator
-    public var textFieldValidationDelegate: TextFieldValidationDelegate?
+    public weak var textFieldValidationDelegate: TextFieldValidationDelegate?
 
     // MARK:- UI constants
 
@@ -51,12 +51,16 @@ class AccessoryTextField: UITextField {
             setupTextFieldProperties()
         }
     }
+    
+    var overrideButtonIcon: ZetaIconType? {
+        didSet {
+            updateButtonIcon()
+        }
+    }
 
     let confirmButton: IconButton = {
         let iconButton = IconButton.iconButtonCircularLight()
         iconButton.circular = true
-
-        iconButton.setIcon(UIApplication.isLeftToRightLayout ? .chevronRight : .chevronLeft, with: ZetaIconSize.tiny, for: .normal)
         iconButton.setIconColor(UIColor.Team.textColor, for: .normal)
         iconButton.setIconColor(UIColor.Team.textfieldColor, for: .disabled)
         iconButton.adjustsImageWhenDisabled = false
@@ -113,6 +117,7 @@ class AccessoryTextField: UITextField {
 
         setup()
         setupTextFieldProperties()
+        updateButtonIcon()
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -143,6 +148,14 @@ class AccessoryTextField: UITextField {
             keyboardType = .asciiCapable
         }
     }
+    
+    private func updateButtonIcon() {
+        if let overrideIcon = overrideButtonIcon {
+            confirmButton.setIcon(overrideIcon, with: .tiny, for: .normal)
+        } else {
+            confirmButton.setIcon(UIApplication.isLeftToRightLayout ? .chevronRight : .chevronLeft, with: .tiny, for: .normal)
+        }
+    }
 
     private func setup() {
         self.confirmButton.addTarget(self, action: #selector(confirmButtonTapped(button:)), for: .touchUpInside)
@@ -164,6 +177,10 @@ class AccessoryTextField: UITextField {
     // MARK: - text validation
 
     func confirmButtonTapped(button: UIButton) {
+        validateInput()
+    }
+    
+    func validateInput() {
         let error = textFieldValidator.validate(text: text, kind: kind)
         textFieldValidationDelegate?.validationUpdated(sender: self, error: error)
     }
@@ -179,7 +196,7 @@ class AccessoryTextField: UITextField {
     override open var placeholder: String? {
         set {
             if let newValue = newValue {
-                attributedPlaceholder = attributedPlaceholderString(placeholder: newValue.uppercased())
+                attributedPlaceholder = attributedPlaceholderString(placeholder: newValue)
             }
         }
         get {

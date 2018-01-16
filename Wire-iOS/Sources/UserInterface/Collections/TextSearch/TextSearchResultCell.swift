@@ -19,7 +19,7 @@
 import Foundation
 import Cartography
 
-@objc internal class TextSearchResultCell: UITableViewCell, Reusable {
+@objc internal class TextSearchResultCell: UITableViewCell {
     fileprivate let messageTextLabel = SearchResultLabel()
     fileprivate let footerView = TextSearchResultFooter()
     fileprivate let userImageViewContainer = UIView()
@@ -127,7 +127,7 @@ import Cartography
     override func setHighlighted(_ highlighted: Bool, animated: Bool)  {
         super.setHighlighted(highlighted, animated: animated)
         
-        let backgroundColor = ColorScheme.default().color(withName: ColorSchemeColorBackground)
+        let backgroundColor = ColorScheme.default().color(withName: ColorSchemeColorContentBackground)
         let foregroundColor = ColorScheme.default().color(withName: ColorSchemeColorTextForeground)
         
         self.contentView.backgroundColor = highlighted ? backgroundColor.mix(foregroundColor, amount: 0.1) : backgroundColor

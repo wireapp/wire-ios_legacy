@@ -25,12 +25,11 @@ import WireDataModel
 
 @objc public class AvailabilityTitleView: TitleView {
     
-    internal var user: ZMUser
-    internal var style: AvailabilityTitleViewStyle
-    internal var observerToken: Any?
+    private var user: ZMUser?
+    fileprivate var style: AvailabilityTitleViewStyle
+    private var observerToken: Any?
     
     public init(user: ZMUser, style: AvailabilityTitleViewStyle) {
-        self.user = user
         self.style = style
         
         var titleColor: UIColor
@@ -59,32 +58,34 @@ import WireDataModel
             self.observerToken = UserChangeInfo.add(observer: self, for: user, userSession: sharedSession)
         }
         
-        configure()
+        configure(user: user)
     }
     
     public required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func configure() {
-        let availability = self.user.availability
+    func configure(user: ZMUser) {
+        let availability = user.availability
         let fontStyle: FontSize = (style == .header) ? .normal : .small
         let icon = AvailabilityStringBuilder.icon(for: availability, with: self.titleColor!, and: fontStyle)
         let interactive = (style == .selfProfile || style == .header)
         var title = ""
         
         if self.style == .header {
-            title = self.user.name
-        } else if self.user == ZMUser.selfUser() && availability == .none {
+            title = user.name
+        } else if user == ZMUser.selfUser() && availability == .none {
             title = "availability.message.set_status".localized.uppercased()
         } else if availability != .none {
             title = availability.localizedName.uppercased()
         }
         
+        self.user = user
         super.configure(icon: icon, title: title, interactive: interactive, showInteractiveIcon: style == .selfProfile)
     }
     
     override func updateAccessibilityLabel() {
+        guard let user = user else { return }
         self.accessibilityLabel = "\(user.name)_is_\(user.availability.localizedName)".localized
     }
     
@@ -100,10 +101,10 @@ import WireDataModel
 extension AvailabilityTitleView: ZMUserObserver {
     
     public func userDidChange(_ changeInfo: UserChangeInfo) {
-        guard changeInfo.availabilityChanged else { return }
-        
+        guard changeInfo.availabilityChanged || changeInfo.nameChanged,
+            let user = changeInfo.user as? ZMUser else { return }
         provideHapticFeedback()
-        configure()
+        configure(user: user)
     }
 }
 

@@ -65,6 +65,7 @@
 "peoplepicker.send_invitation.dialog.ok" = "OK";
 
 "peoplepicker.invite_more_people" = "Invite more people";
+"peoplepicker.invite_team_members" = "Invite people to join the team";
 "peoplepicker.quick-action.open-conversation" = "Open";
 "peoplepicker.quick-action.create-conversation" = "Create group";
 
@@ -82,10 +83,8 @@
 "contacts_ui.notification.invitation_failed" = "Failed to send invitation";
 "contacts_ui.title" = "Invite people";
 
-"contacts_ui.no_contact.title" = "No conversations yet\n";
-"contacts_ui.no_contact.message" = "Start a conversation or create a group.";
-
-"contacts_ui.no_contact.archived.title" = "Everything archived";
+"conversation_list.empty.all_archived.message" = "Everything archived";
+"conversation_list.empty.no_contacts.message" = "Start a conversation or\ncreate a group.";
 
 
 // Conversation List Indicator
@@ -207,7 +206,7 @@
 "conversation.input_bar.audio_message.tooltip.pull_send" = "Swipe up to send";
 "conversation.input_bar.audio_message.tooltip.tap_send" = "Tap to send";
 "conversation.input_bar.audio_message.too_long.title" = "Recording Stopped";
-"conversation.input_bar.audio_message.too_long.message" = "Audio messages are limited to %@. Send this message?";
+"conversation.input_bar.audio_message.too_long.message" = "Audio messages are limited to %@.";
 "conversation.input_bar.audio_message.send" = "Send";
 
 "conversation.input_bar.audio_message.keyboard.record_tip" = "Tap to record\nYou can  %@  it after that";
@@ -832,6 +831,22 @@
 
 
 "team.email_code.input_field.accessbility_label" = "Please enter the six-digit code from the email.";
+
+// Invite Team Members
+
+"team.invite.header.title" = "Build your team";
+"team.invite.header.subtitle" = "Invite your colleagues to join.";
+"team.invite.textfield.placeholder" = "colleague@yourcompany.com";
+"team.invite.textfield.accesibility" = "Enter e-mail address for colleague to invite.";
+"team.invite.contacts_button.title" = "Add from Addressbook";
+"team.invite.top_bar.skip" = "Skip";
+"team.invite.top_bar.done" = "Done";
+
+// Team Invite Errors
+"team.invite.error.generic" = "Something went wrong, please try again.";
+"team.invite.error.already_registered" = "This email is already registered on Wire.";
+"team.invite.error.already_invited" = "This email has already been invited.";
+"team.invite.error.too_many_invitations" = "You have reached the maximum amount of invitations.";
 
 // Registration
 

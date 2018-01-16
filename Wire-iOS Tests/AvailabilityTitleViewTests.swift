@@ -93,7 +93,7 @@ class AvailabilityTitleViewTests: ZMSnapshotTestCase {
         updateAvailability(for: user, newValue: availability)
         self.sut = AvailabilityTitleView(user: user, style: style)
         guard let sut = self.sut else { XCTFail(); return }
-        sut.configure()
+        sut.configure(user: user)
         
         switch style {
             case .header, .selfProfile:     sut.backgroundColor = .black

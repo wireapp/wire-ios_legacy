@@ -23,7 +23,7 @@ import Cartography
 private let verifiedShieldImage = WireStyleKit.imageOfShieldverified()
 
 
-final class ShareDestinationCell<D: ShareDestination>: UITableViewCell, Reusable {
+final class ShareDestinationCell<D: ShareDestination>: UITableViewCell {
     let checkmarkSize: CGFloat = 24
     let avatarSize: CGFloat = 32
     

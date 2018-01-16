@@ -109,12 +109,15 @@ extension TeamCreationFlowController {
         case let .createTeam(teamName: teamName, email: email, activationCode: activationCode, fullName: fullName, password: password):
             UIAlertController.requestTOSApproval(over: navigationController) { [weak self] accepted in
                 if accepted {
+                    self?.currentState = next
                     self?.currentController?.showLoadingView = true
                     let teamToRegister = TeamToRegister(teamName: teamName, email: email, emailCode:activationCode, fullName: fullName, password: password, accentColor: ZMUser.pickRandomAcceptableAccentColor())
                     self?.registrationStatus.create(team: teamToRegister)
                     self?.tracker.tagTeamCreationAcceptedTerms()
                 }
             }
+        case .inviteMembers:
+            pushNext()
         }
     }
 
@@ -135,6 +138,11 @@ extension TeamCreationFlowController {
             stepDescription = SetPasswordStepDescription()
         case .createTeam:
             fatal("No controller should be pushed, we have already registered a team!")
+        case .inviteMembers:
+            let teamMemberInviteViewController = TeamMemberInviteViewController()
+            teamMemberInviteViewController.delegate = self
+            navigationController.pushViewController(teamMemberInviteViewController, animated: true)
+            return
         }
 
         if let description = stepDescription {
@@ -203,7 +211,7 @@ extension TeamCreationFlowController: SessionManagerCreatedSessionObserver {
 extension TeamCreationFlowController: ZMInitialSyncCompletionObserver {
     func initialSyncCompleted() {
         currentController?.showLoadingView = false
-        registrationDelegate?.registrationViewControllerDidCompleteRegistration()
+        advanceState(with: "")
         syncToken = nil
     }
 }
@@ -248,4 +256,12 @@ extension TeamCreationFlowController: RegistrationStatusDelegate {
         currentController?.displayError(error)
     }
 
+}
+
+extension TeamCreationFlowController: TeamMemberInviteViewControllerDelegate {
+    
+    func teamInviteViewControllerDidFinish(_ controller: TeamMemberInviteViewController) {
+        registrationDelegate?.registrationViewControllerDidCompleteRegistration()
+    }
+    
 }

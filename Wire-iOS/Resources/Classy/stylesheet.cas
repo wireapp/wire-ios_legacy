@@ -1259,7 +1259,7 @@ AddParticipantsViewController SearchHeaderViewController {
 
 AddParticipantsViewController {
     view: @{
-        backgroundColor: $color-background;
+        backgroundColor: $color-bar-background;
     }
 }
 
@@ -1327,13 +1327,13 @@ InviteContactsViewController ContactsSectionHeaderView {
 }
 
 TokenField {
-    font: $font-normal-light;
-    tokenTitleFont: $font-small-semibold;
+    font: $font-normal-regular;
+    tokenTitleFont: $font-small-regular;
     numberOfLines: 3;
     lineSpacing: 8;
     tokenOffset: 4;
-    tokenHeight: 20;
     tokenTitleVerticalAdjustment: 0;
+    dotColor: $color-text-dimmed;
 
     textView: @{
         tintColor: $color-accent-current;
@@ -1354,16 +1354,10 @@ StartUIViewController SearchHeaderViewController {
 
 TokenField.search {
     textView: @{
-        placeholderFont: $font-small-semibold;
-        placeholderTextContainerInset: 0 0;
+        placeholderTextContainerInset: 0 42;
     }
-    tokenTitleFont: $font-medium-semibold;
-    tokenTitleColor: black;
-    tokenBackgroundColor: white;
-    tokenBorderColor: white;
-    tokenSelectedTitleColor: white;
-    tokenSelectedBackgroundColor: clear;
-    tokenSelectedBorderColor: white;
+    tokenBackgroundColor: clear;
+    tokenBorderColor: clear;
 }
 
 /* Ephemeral Keyboard */
@@ -1600,30 +1594,10 @@ ReactionCell {
     }
 }
 
-/* Share View Controller */
-
-TokenField.share {
-    textView: @{
-        placeholderFont: $font-medium-semibold;
-        placeholderTextContainerInset: 0 0;
-        placeholderTextColor: rgb(255, 255, 255, 0.6);
-        keyboardAppearance: dark;
-    }
-    backgroundColor: clear;
-    tokenTitleFont: $font-medium-semibold;
-    textColor: white;
-    tokenTitleColor: black;
-    tokenBackgroundColor: white;
-    tokenBorderColor: white;
-    tokenSelectedTitleColor: white;
-    tokenSelectedBackgroundColor: clear;
-    tokenSelectedBorderColor: white;
-}
-
 /* Collections */
 
 CollectionsView {
-    backgroundColor: $color-conversation-background;
+    backgroundColor: $color-content-background;
 }
 
 NoResultsView {
@@ -1702,7 +1676,7 @@ AppLockView {
 }
 
 TextSearchInputView {
-    backgroundColor: $color-background;
+    backgroundColor: $color-bar-background;
     
     searchInput: @{
         font: $font-normal;
@@ -1715,12 +1689,12 @@ TextSearchInputView {
 }
 
 TextSearchResultsView {
-    backgroundColor: $color-background;
+    backgroundColor: $color-content-background;
 }
 
 TextSearchResultCell {
     contentView: @{
-        backgroundColor: $color-background;
+        backgroundColor: $color-content-background;
     }
     resultCountView: @{
         backgroundColor: $color-graphite-light;
