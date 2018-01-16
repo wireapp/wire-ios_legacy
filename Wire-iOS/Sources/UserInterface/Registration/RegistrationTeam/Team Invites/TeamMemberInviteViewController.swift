@@ -56,6 +56,7 @@ final class TeamMemberInviteViewController: UIViewController, TeamInviteTopbarDe
         updateScrollIndicatorInsets()
         setupKeyboardObserver()
         tableView.clipsToBounds = false
+        tableView.alwaysBounceVertical = false
         tableView.correctedContentInset = UIEdgeInsets(top: topOffset, left: 0, bottom: bottomOffset, right: 0)
         dataSource.configure = { cell, content in cell.content = content }
     }
