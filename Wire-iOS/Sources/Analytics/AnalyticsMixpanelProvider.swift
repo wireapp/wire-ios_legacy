@@ -97,7 +97,7 @@ final class AnalyticsMixpanelProvider: NSObject, AnalyticsProvider {
         "calling.received_call",
         "calling.received_video_call",
         "calling.avs_metrics_ended_call",
-        "notifications.processing"
+        "notifications.processing",
         TeamInviteEvent.sentInvite(.teamCreation).name
         ])
     
