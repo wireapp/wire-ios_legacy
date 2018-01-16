@@ -19,7 +19,7 @@
 
 import Foundation
 
-@objc class SettingsNavigationController: ClearBackgorundNavigationController {
+@objc class SettingsNavigationController: ClearBackgroundNavigationController {
 
     let rootGroup: SettingsControllerGeneratorType & SettingsInternalGroupCellDescriptorType
     static let dismissNotificationName = "SettingsNavigationControllerDismissNotificationName"

@@ -19,7 +19,7 @@
 
 import Foundation
 
-class ClearBackgorundNavigationController: UINavigationController {
+class ClearBackgroundNavigationController: UINavigationController {
     fileprivate let pushTransition = PushTransition()
     fileprivate let popTransition = PopTransition()
     
@@ -77,7 +77,7 @@ class ClearBackgorundNavigationController: UINavigationController {
 }
 
 
-extension ClearBackgorundNavigationController: UINavigationControllerDelegate {
+extension ClearBackgroundNavigationController: UINavigationControllerDelegate {
     func navigationController(_ navigationController: UINavigationController,
                               animationControllerFor operation: UINavigationControllerOperation,
                               from fromVC: UIViewController,
@@ -93,7 +93,7 @@ extension ClearBackgorundNavigationController: UINavigationControllerDelegate {
     }
 }
 
-extension ClearBackgorundNavigationController: UIViewControllerTransitioningDelegate {
+extension ClearBackgroundNavigationController: UIViewControllerTransitioningDelegate {
     
     public func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         let transition = SwizzleTransition()
@@ -108,7 +108,7 @@ extension ClearBackgorundNavigationController: UIViewControllerTransitioningDele
     }
 }
 
-extension ClearBackgorundNavigationController: UIGestureRecognizerDelegate {
+extension ClearBackgroundNavigationController: UIGestureRecognizerDelegate {
     func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
         return true
     }

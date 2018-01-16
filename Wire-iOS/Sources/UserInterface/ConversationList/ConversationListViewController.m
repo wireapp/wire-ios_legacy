@@ -333,7 +333,7 @@
             break;
         case ConversationListStatePeoplePicker: {
             StartUIViewController *startUIViewController = self.createPeoplePickerController;
-            UINavigationController *navigationWrapper = [startUIViewController wrapInNavigationController:[ClearBackgorundNavigationController class]];
+            UINavigationController *navigationWrapper = [startUIViewController wrapInNavigationController:[ClearBackgroundNavigationController class]];
             
             [self showViewController:navigationWrapper animated:YES completion:^{
                 [startUIViewController showKeyboardIfNeeded];
