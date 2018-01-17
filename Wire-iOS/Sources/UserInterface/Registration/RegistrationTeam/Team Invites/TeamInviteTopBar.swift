@@ -67,7 +67,7 @@ final class TeamInviteTopBar: UIView {
     
     private func createConstraints() {
         constrain(self, actionButton) { view, actionButton in
-            actionButton.trailing == view.trailing - 24
+            actionButton.trailing == view.trailing - 16
             actionButton.bottom == view.bottom - 12
             view.height == 44
         }
