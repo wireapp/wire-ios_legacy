@@ -840,6 +840,7 @@
 "team.invite.error.generic" = "Something went wrong, please try again.";
 "team.invite.error.already_registered" = "This email address is already in use.";
 "team.invite.error.too_many_invitations" = "The maximum number of invitations has been sent.";
+"team.invite.error.no_internet" = "No internet connection.";
 
 // Registration
 

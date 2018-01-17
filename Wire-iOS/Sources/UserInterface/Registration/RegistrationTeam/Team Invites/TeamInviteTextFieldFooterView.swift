@@ -31,8 +31,6 @@ final class TeamInviteTextFieldFooterView: UIView {
     let errorButton = Button()
     private let textField: AccessoryTextField
     private let errorLabel = UILabel()
-
-    var onAddFromAddressbook: (() -> Void)?
     
     var onConfirm: ((String) -> Void)? {
         didSet {
@@ -44,6 +42,10 @@ final class TeamInviteTextFieldFooterView: UIView {
         didSet {
             errorLabel.text = errorMessage
         }
+    }
+    
+    @discardableResult override func becomeFirstResponder() -> Bool {
+        return textField.becomeFirstResponder()
     }
     
     init() {
@@ -76,11 +78,11 @@ final class TeamInviteTextFieldFooterView: UIView {
         errorButton.titleLabel?.font = FontSpec(.medium, .semibold).font!
         errorButton.setTitleColor(.black, for: .normal)
         errorButton.setTitleColor(.darkGray, for: .highlighted)
-        errorButton.addTarget(self, action: #selector(didTapContactsButton), for: .touchUpInside)
         errorButton.accessibilityIdentifier = "LearnMoreButton"
         errorButton.addTarget(self, action: #selector(showLearnMorePage), for: .touchUpInside)
         [textField, errorLabel, errorButton].forEach(addSubview)
         backgroundColor = .clear
+        
     }
     
     private func createConstraints() {
@@ -102,10 +104,6 @@ final class TeamInviteTextFieldFooterView: UIView {
     func clearInput() {
         textField.text = ""
         textField.textFieldDidChange(textField: textField)
-    }
-    
-    @objc private func didTapContactsButton(_ sender: Button) {
-        onAddFromAddressbook?()
     }
     
     @objc private func showLearnMorePage() {
