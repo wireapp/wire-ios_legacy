@@ -316,16 +316,16 @@ class ShareExtensionViewController: SLComposeServiceViewController {
     }
     
     private func presentChooseAccount() {
-        requireLocalAuthenticationIfNeeded(with: { [weak self] in
-            if self?.localAuthenticationStatus != .denied {
+        requireLocalAuthenticationIfNeeded(with: { [weak self] (status) in
+            if let status = status, status != .denied {
                 self?.showChooseAccount()
             }
         })
     }
     
     private func presentChooseConversation() {
-        requireLocalAuthenticationIfNeeded(with: { [weak self] in
-            if self?.localAuthenticationStatus != .denied {
+        requireLocalAuthenticationIfNeeded(with: { [weak self] (status) in
+            if let status = status, status != .denied {
                 self?.showChooseConversation()
             }
         })
@@ -363,18 +363,18 @@ class ShareExtensionViewController: SLComposeServiceViewController {
     }
 
     /// @param callback confirmation; called when authentication evaluation is completed.
-    func requireLocalAuthenticationIfNeeded(with callback: @escaping ()->()) {
+    fileprivate func requireLocalAuthenticationIfNeeded(with callback: @escaping (LocalAuthenticationStatus?)->()) {
         
         // I need to store the current authentication in order to avoid future authentication requests in the same Share Extension session
         
         guard AppLock.isActive else {
             localAuthenticationStatus = .disabled
-            callback()
+            callback(localAuthenticationStatus)
             return
         }
         
         guard localAuthenticationStatus != .granted else {
-            callback()
+            callback(localAuthenticationStatus)
             return
         }
         
@@ -386,7 +386,7 @@ class ShareExtensionViewController: SLComposeServiceViewController {
                     self?.localAuthenticationStatus = .denied
                     DDLogError("Local authentication error: \(String(describing: error?.localizedDescription))")
                 }
-                callback()
+                callback(self?.localAuthenticationStatus)
             }
         }
     }
