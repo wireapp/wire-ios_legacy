@@ -20,7 +20,8 @@
 #import "ProgressSpinner.h"
 #import "UIImage+ZetaIconsNeue.h"
 #import "NSLayoutConstraint+Helpers.h"
-
+#import "NSLayoutConstraint+Helpers.h"
+#import "CABasicAnimation+Rotation.h"
 @import QuartzCore;
 
 
@@ -142,7 +143,7 @@
     self.hidden = NO;
     [self stopAnimationInternal];
     if (self.window != nil) {
-        [self.spinner.layer addAnimation:[self rotateAnimationWithRotationSpeed:1.4 beginTime:0] forKey:@"rotateAnimation"];
+        [self.spinner.layer addAnimation:[CABasicAnimation rotateAnimationWithRotationSpeed:1.4 beginTime:0 delegate:self] forKey:@"rotateAnimation"];
     }
 }
 
@@ -164,25 +165,6 @@
 - (void)stopAnimation:(id)sender
 {
     self.animating = NO;
-}
-
-- (CABasicAnimation *)rotateAnimationWithRotationSpeed:(CGFloat)rotationSpeed beginTime:(CGFloat)beginTime
-{
-    CABasicAnimation* rotate =  [CABasicAnimation animationWithKeyPath: @"transform.rotation.z"];
-    rotate.fillMode = kCAFillModeForwards;
-    rotate.delegate = self;
-    
-    // Do a series of 5 quarter turns for a total of a 1.25 turns
-    // (2PI is a full turn, so pi/2 is a quarter turn)
-    [rotate setToValue: [NSNumber numberWithFloat: M_PI / 2]];
-    rotate.repeatCount = HUGE_VALF;
-    
-    rotate.duration = rotationSpeed / 4;
-    rotate.beginTime = beginTime;
-    rotate.cumulative = YES;
-    rotate.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear];
-    
-    return rotate;
 }
 
 - (void)animationDidStop:(CAAnimation *)anim finished:(BOOL)flag

@@ -28,6 +28,12 @@ final class TeamInviteTextFieldFooterView: UIView {
         uppercasePlaceholder: false
     )
     
+    var isLoading = false {
+        didSet {
+            updateLoadingState()
+        }
+    }
+    
     let errorButton = Button()
     private let textField: AccessoryTextField
     private let errorLabel = UILabel()
@@ -109,5 +115,10 @@ final class TeamInviteTextFieldFooterView: UIView {
     @objc private func showLearnMorePage() {
         let url = URL(string: "https://support.wire.com/hc/en-us/articles/115004082129-My-email-address-is-already-in-use-and-I-cannot-create-an-account-What-can-I-do-")!
         UIApplication.shared.openURL(url)
+    }
+    
+    private func updateLoadingState() {
+        textField.isLoading = isLoading
+        textFieldDescriptor.acceptsInput = !isLoading
     }
 }
