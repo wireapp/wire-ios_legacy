@@ -288,7 +288,7 @@ static NSString* light(NSString *colorString) {
                                    ColorSchemeColorSectionBackground: UIColor.clearColor,
                                    ColorSchemeColorSectionText: blackAlpha40,
                                    ColorSchemeColorTokenFieldBackground: blackAlpha4,
-                                   ColorSchemeColorTokenFieldTextPlaceHolder: graphiteAlpha40
+                                   ColorSchemeColorTokenFieldTextPlaceHolder: lightGraphite
                                    }];
     
     for (ZMAccentColor color = ZMAccentColorMin; color <= ZMAccentColorMax; color++) {

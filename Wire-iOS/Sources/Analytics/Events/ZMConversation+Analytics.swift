@@ -50,7 +50,6 @@ extension ZMConversation {
     }
     
     public var isBotConversation : Bool {
-        // TODO: we need to check here if the current user is a bot or not. Check history for the previous implementation.
         return false
     }
 }

@@ -55,4 +55,12 @@ final class CallQualityScoreProvider: NSObject, AnalyticsType {
             }
         }
     }
+
+    func setPersistedAttributes(_ attributes: [String : NSObject]?, for event: String) {
+        nextProvider?.setPersistedAttributes(attributes, for: event)
+    }
+
+    func persistedAttributes(for event: String) -> [String : NSObject]? {
+        return nextProvider?.persistedAttributes(for: event)
+    }
 }

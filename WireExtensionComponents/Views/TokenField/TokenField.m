@@ -590,12 +590,10 @@ CGFloat const accessoryButtonSize = 32.0f;
         
         [string appendAttributedString:tokenString];
         
-        if (token != tokens.lastObject) {
-            TokenSeparatorAttachment *separatorAttachment = [[TokenSeparatorAttachment alloc] initWithToken:token tokenField:self];
-            NSMutableAttributedString* separatorString = [[NSAttributedString attributedStringWithAttachment:separatorAttachment] mutableCopy];
-            
-            [string appendAttributedString:separatorString];
-        }
+        TokenSeparatorAttachment *separatorAttachment = [[TokenSeparatorAttachment alloc] initWithToken:token tokenField:self];
+        NSMutableAttributedString* separatorString = [[NSAttributedString attributedStringWithAttachment:separatorAttachment] mutableCopy];
+        
+        [string appendAttributedString:separatorString];
     }
     [string addAttributes:self.textAttributes range:NSMakeRange(0, string.length)];
     return string;
@@ -813,7 +811,6 @@ CGFloat const accessoryButtonSize = 32.0f;
     
     [self filterUnwantedAttachments];
     [self notifyIfFilterTextChanged];
-    [self filterTrailingTokenSeparator];
     [self invalidateIntrinsicContentSize];
 }
 
@@ -835,10 +832,8 @@ CGFloat const accessoryButtonSize = 32.0f;
                                                   [updatedCurrentSeparatorTokens addObject:((TokenSeparatorAttachment *) textAttachment).token];
                                               }
                                           }];
-    if (updatedCurrentTokens.count > 0) {
-        [updatedCurrentSeparatorTokens addObject:updatedCurrentTokens.lastObject];
-        [updatedCurrentTokens intersectSet:updatedCurrentSeparatorTokens];
-    }
+    
+    [updatedCurrentTokens intersectSet:updatedCurrentSeparatorTokens];
     
     NSMutableSet *deletedTokens = [NSMutableSet setWithArray:self.currentTokens];
     [deletedTokens minusSet:updatedCurrentTokens.set];
@@ -851,22 +846,6 @@ CGFloat const accessoryButtonSize = 32.0f;
     if ([self.delegate respondsToSelector:@selector(tokenField:changedTokensTo:)]) {
         [self.delegate tokenField:self changedTokensTo:self.currentTokens];
     }
-}
-
-- (void)filterTrailingTokenSeparator
-{
-    [self.textView.attributedText enumerateAttribute:NSAttachmentAttributeName
-                                             inRange:NSMakeRange(0, self.textView.text.length)
-                                             options:NSAttributedStringEnumerationReverse
-                                          usingBlock:^(NSTextAttachment *textAttachment, NSRange range, BOOL *stop) {
-                                              *stop = YES;
-                                              
-                                              if ([textAttachment isKindOfClass:[TokenSeparatorAttachment class]]) {
-                                                  [self.textView.textStorage beginEditing];
-                                                  [self.textView.textStorage deleteCharactersInRange:range];
-                                                  [self.textView.textStorage endEditing];
-                                              }
-                                          }];
 }
 
 - (void)notifyIfFilterTextChanged

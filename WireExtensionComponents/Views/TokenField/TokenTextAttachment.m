@@ -47,7 +47,7 @@
     
     CGSize imageSize = CGSizeMake(dotSize + dotSpacing * 2, imageHeight);
     
-    const CGFloat delta = ceilf((self.tokenField.font.lineHeight - imageHeight) * 0.5f);
+    const CGFloat delta = ceilf((self.tokenField.font.lineHeight - imageHeight) * 0.5f - self.tokenField.tokenTitleVerticalAdjustment);
     self.bounds = CGRectMake(0, delta, imageSize.width, imageSize.height);
     
     UIGraphicsBeginImageContextWithOptions(self.bounds.size, NO, 0.0);
@@ -146,14 +146,13 @@
     CFRetain(context);
 
     CGContextSaveGState(context);
-    CGContextTranslateCTM(context, 0, ceilf((self.bounds.size.height - imageSize.height) / 2.0f));
 
     CGContextSetFillColorWithColor(context, self.backgroundColor.CGColor);
     CGContextSetStrokeColorWithColor(context, self.borderColor.CGColor);
     CGContextSetLineJoin(context, kCGLineJoinRound);
     CGContextSetLineWidth(context, 1);
     
-    [attributedName drawAtPoint:CGPointMake(0, (imageHeight - size.height) / 2.0f - self.tokenField.tokenTitleVerticalAdjustment)];
+    [attributedName drawAtPoint:CGPointMake(0, -delta + self.tokenField.tokenTitleVerticalAdjustment)];
     
     UIImage *i = UIGraphicsGetImageFromCurrentImageContext();
     

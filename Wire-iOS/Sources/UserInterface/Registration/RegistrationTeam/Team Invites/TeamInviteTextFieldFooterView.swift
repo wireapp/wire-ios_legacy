@@ -28,18 +28,15 @@ final class TeamInviteTextFieldFooterView: UIView {
         uppercasePlaceholder: false
     )
     
-    private let textField: AccessoryTextField
-    private let contactsButton = Button()
-    private let errorLabel = UILabel()
-
-    var shouldConfirm: ((String) -> Bool)? {
+    var isLoading = false {
         didSet {
-            textField.textFieldValidator.customValidator = { [weak self] email in
-                (self?.shouldConfirm?(email) ?? true) ? nil : .custom("team.invite.error.already_invited".localized.uppercased())
-            }
+            updateLoadingState()
         }
     }
-    var onAddFromAddressbook: (() -> Void)?
+    
+    let errorButton = Button()
+    private let textField: AccessoryTextField
+    private let errorLabel = UILabel()
     
     var onConfirm: ((String) -> Void)? {
         didSet {
@@ -53,11 +50,17 @@ final class TeamInviteTextFieldFooterView: UIView {
         }
     }
     
+    @discardableResult override func becomeFirstResponder() -> Bool {
+        return textField.becomeFirstResponder()
+    }
+    
     init() {
         textField = textFieldDescriptor.create() as! AccessoryTextField
         super.init(frame: .zero)
         setupViews()
         createConstraints()
+        isAccessibilityElement = false
+        accessibilityElements = [textField, errorLabel, errorButton]
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -65,26 +68,31 @@ final class TeamInviteTextFieldFooterView: UIView {
     }
     
     private func setupViews() {
+        errorButton.isHidden = true
         errorLabel.textAlignment = .center
         errorLabel.font = TeamCreationStepController.errorFont
         errorLabel.textColor = UIColor.Team.errorMessageColor
         textField.overrideButtonIcon = .send
         textFieldDescriptor.valueValidated = { [weak self] error in
             self?.errorMessage = error.errorDescription
+            if error == .none {
+                self?.errorButton.isHidden = true
+            }
         }
 
-        contactsButton.setTitle("team.invite.contacts_button.title".localized.uppercased(), for: .normal)
-        contactsButton.titleLabel?.font = FontSpec(.medium, .semibold).font!
-        contactsButton.setTitleColor(.black, for: .normal)
-        contactsButton.setTitleColor(.darkGray, for: .highlighted)
-        contactsButton.addTarget(self, action: #selector(didTapContactsButton), for: .touchUpInside)
-        // Uncomment when address book button should be visible
-        [textField, errorLabel, /* contactsButton */].forEach(addSubview)
+        errorButton.setTitle("team.invite.learn_more.title".localized.uppercased(), for: .normal)
+        errorButton.titleLabel?.font = FontSpec(.medium, .semibold).font!
+        errorButton.setTitleColor(.black, for: .normal)
+        errorButton.setTitleColor(.darkGray, for: .highlighted)
+        errorButton.accessibilityIdentifier = "LearnMoreButton"
+        errorButton.addTarget(self, action: #selector(showLearnMorePage), for: .touchUpInside)
+        [textField, errorLabel, errorButton].forEach(addSubview)
         backgroundColor = .clear
+        
     }
     
     private func createConstraints() {
-        constrain(self, textField, errorLabel, contactsButton) { view, textField, errorLabel, contactsButton in
+        constrain(self, textField, errorLabel, errorButton) { view, textField, errorLabel, errorButton in
             textField.leading == view.leading
             textField.trailing == view.trailing
             textField.top == view.top + 4
@@ -92,14 +100,10 @@ final class TeamInviteTextFieldFooterView: UIView {
             errorLabel.centerX == view.centerX
             errorLabel.top == textField.bottom + 8
             errorLabel.height == 20
-            
-            errorLabel.bottom == view.bottom - 12
-            
-            /* Uncomment when address book button should be visible
-            contactsButton.centerX == view.centerX
-            contactsButton.top == errorLabel.bottom + 24
-            contactsButton.bottom == view.bottom - 12
-             */
+
+            errorButton.centerX == view.centerX
+            errorButton.top == errorLabel.bottom + 24
+            errorButton.bottom == view.bottom - 12
         }
     }
     
@@ -108,7 +112,13 @@ final class TeamInviteTextFieldFooterView: UIView {
         textField.textFieldDidChange(textField: textField)
     }
     
-    @objc private func didTapContactsButton(_ sender: Button) {
-        onAddFromAddressbook?()
+    @objc private func showLearnMorePage() {
+        let url = URL(string: "https://support.wire.com/hc/en-us/articles/115004082129-My-email-address-is-already-in-use-and-I-cannot-create-an-account-What-can-I-do-")!
+        UIApplication.shared.openURL(url)
+    }
+    
+    private func updateLoadingState() {
+        textField.isLoading = isLoading
+        textFieldDescriptor.acceptsInput = !isLoading
     }
 }

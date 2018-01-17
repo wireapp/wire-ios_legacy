@@ -90,6 +90,7 @@ open class CameraCell: UICollectionViewCell, Reusable {
         self.changeCameraButton.accessibilityIdentifier = "changeCameraButton"
         self.contentView.addSubview(self.changeCameraButton)
         
+        
         [self.takePictureButton, self.expandButton, self.changeCameraButton].forEach { button in
             button.layer.shadowColor = UIColor.black.cgColor
             button.layer.shadowOffset = CGSize(width: 0, height: 0)
@@ -97,7 +98,8 @@ open class CameraCell: UICollectionViewCell, Reusable {
             button.layer.shadowOpacity = 0.5
         }
         
-        constrain(self.contentView, self.expandButton, self.takePictureButton, self.changeCameraButton) { contentView, expandButton, takePictureButton, changeCameraButton in
+        constrain(self.contentView, self.expandButton, self.takePictureButton, self.changeCameraButton) {
+            contentView, expandButton, takePictureButton, changeCameraButton in
             expandButton.width == 40
             expandButton.height == expandButton.width
             expandButton.right == contentView.right - 12
