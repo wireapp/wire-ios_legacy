@@ -97,7 +97,8 @@ final class CameraKeyboardViewControllerTests: ZMSnapshotTestCase {
     
     func testThatFirstSectionContainsCameraCellOnly() {
         // given
-        self.sut = CameraKeyboardViewController(splitLayoutObservable: self.splitView, assetLibrary: assetLibrary)
+        let permissions = MockPhotoPermissionsController(camera: true, library: true)
+        self.sut = CameraKeyboardViewController(splitLayoutObservable: self.splitView, assetLibrary: assetLibrary, permissions: permissions)
         self.sut.delegate = self.delegateMock
         self.prepareForSnapshot()
         
@@ -109,10 +110,26 @@ final class CameraKeyboardViewControllerTests: ZMSnapshotTestCase {
         XCTAssertEqual(self.sut.collectionView.numberOfSections, 2)
         XCTAssertEqual(self.sut.collectionView.numberOfItems(inSection: 0), 1)
     }
+    
+    func testThatTableViewContainsPermissionsCellOnly_CameraAndLibraryAccessNotGranted() {
+        let permissions = MockPhotoPermissionsController(camera: false, library: false)
+        self.sut = CameraKeyboardViewController(splitLayoutObservable: self.splitView, assetLibrary: assetLibrary, permissions: permissions)
+        self.sut.delegate = self.delegateMock
+        self.prepareForSnapshot()
+        
+        // when
+        let cameraCell = self.sut.collectionView.cellForItem(at: IndexPath(item: 0, section: 0))
+        
+        // then
+        XCTAssertTrue(cameraCell is CameraKeyboardPermissionsCell)
+        XCTAssertEqual(self.sut.collectionView.numberOfSections, 1)
+        XCTAssertEqual(self.sut.collectionView.numberOfItems(inSection: 0), 1)
+    }
 
     func testThatSecondSectionContainsCameraRollElements() {
         // given
-        self.sut = CameraKeyboardViewController(splitLayoutObservable: self.splitView, assetLibrary: assetLibrary)
+        let permissions = MockPhotoPermissionsController(camera: true, library: true)
+        self.sut = CameraKeyboardViewController(splitLayoutObservable: self.splitView, assetLibrary: assetLibrary, permissions: permissions)
         self.sut.delegate = self.delegateMock
         self.prepareForSnapshot()
         
@@ -123,40 +140,100 @@ final class CameraKeyboardViewControllerTests: ZMSnapshotTestCase {
         XCTAssertTrue(itemCell is AssetCell)
         XCTAssertEqual(self.sut.collectionView.numberOfSections, 2)
     }
-
-    func testInitialStateLayoutSizeCompact() {
+    
+    func initialStateLayoutSizeCompact(with permissions: PhotoPermissionsController) {
         // given
         self.splitView?.layoutSize = .compact
         // when
-        self.sut = CameraKeyboardViewController(splitLayoutObservable: self.splitView, assetLibrary: assetLibrary)
+        self.sut = CameraKeyboardViewController(splitLayoutObservable: self.splitView, assetLibrary: assetLibrary, permissions: permissions)
         // then
         self.verify(view: self.prepareForSnapshot())
     }
     
-    func testInitialStateLayoutSizeRegularPortrait() {
+    func testInitialStateLayoutSizeCompact() {
+        let permissions = MockPhotoPermissionsController(camera: true, library: true)
+        initialStateLayoutSizeCompact(with: permissions)
+    }
+    
+    func testInitialStateLayoutSizeCompact_CameraAndLibraryAccessNotGranted() {
+        let permissions = MockPhotoPermissionsController(camera: false, library: false)
+        initialStateLayoutSizeCompact(with: permissions)
+    }
+    
+    func testInitialStateLayoutSizeCompact_CameraAccessGranted() {
+        let permissions = MockPhotoPermissionsController(camera: true, library: false)
+        initialStateLayoutSizeCompact(with: permissions)
+    }
+    
+    func testInitialStateLayoutSizeCompact_LibraryAccessGranted() {
+        let permissions = MockPhotoPermissionsController(camera: false, library: true)
+        initialStateLayoutSizeCompact(with: permissions)
+    }
+    
+    func initialStateLayoutSizeRegularPortrait(with permissions: PhotoPermissionsController) {
         // given
         self.splitView?.layoutSize = .regularPortrait
         self.splitView?.leftViewControllerWidth = 216
         // when
-        self.sut = CameraKeyboardViewController(splitLayoutObservable: self.splitView, assetLibrary: assetLibrary)
+        self.sut = CameraKeyboardViewController(splitLayoutObservable: self.splitView, assetLibrary: assetLibrary, permissions: permissions)
         // then
         self.verify(view: self.prepareForSnapshot(CGSize(width: 768, height: 264)))
     }
     
-    func testInitialStateLayoutSizeRegularLandscape() {
+    func testInitialStateLayoutSizeRegularPortrait() {
+        let permissions = MockPhotoPermissionsController(camera: true, library: true)
+        initialStateLayoutSizeRegularPortrait(with: permissions)
+    }
+    
+    func testInitialStateLayoutSizeRegularPortrait_CameraAndLibraryAccessNotGranted() {
+        let permissions = MockPhotoPermissionsController(camera: false, library: false)
+        initialStateLayoutSizeRegularPortrait(with: permissions)
+    }
+    
+    func testInitialStateLayoutSizeRegularPortrait_CameraAccessGranted() {
+        let permissions = MockPhotoPermissionsController(camera: true, library: false)
+        initialStateLayoutSizeRegularPortrait(with: permissions)
+    }
+    
+    func testInitialStateLayoutSizeRegularPortrait_LibraryAccessGranted() {
+        let permissions = MockPhotoPermissionsController(camera: false, library: true)
+        initialStateLayoutSizeRegularPortrait(with: permissions)
+    }
+    
+    func initialStateLayoutSizeRegularLandscape(with permissions: PhotoPermissionsController) {
         // given
         self.splitView?.layoutSize = .regularLandscape
         self.splitView?.leftViewControllerWidth = 216
         // when
-        self.sut = CameraKeyboardViewController(splitLayoutObservable: self.splitView, assetLibrary: assetLibrary)
+        self.sut = CameraKeyboardViewController(splitLayoutObservable: self.splitView, assetLibrary: assetLibrary, permissions: permissions)
         // then
         self.verify(view: self.prepareForSnapshot(CGSize(width: 1024, height: 352)))
     }
     
-    func testCameraScrolledHorisontallySomePercent() {
+    func testInitialStateLayoutSizeRegularLandscape() {
+        let permissions = MockPhotoPermissionsController(camera: true, library: true)
+        initialStateLayoutSizeRegularLandscape(with: permissions)
+    }
+    
+    func testInitialStateLayoutSizeRegularLandscape_CameraAndLibraryAccessNotGranted() {
+        let permissions = MockPhotoPermissionsController(camera: false, library: false)
+        initialStateLayoutSizeRegularLandscape(with: permissions)
+    }
+    
+    func testInitialStateLayoutSizeRegularLandscape_CameraAccessGranted() {
+        let permissions = MockPhotoPermissionsController(camera: true, library: false)
+        initialStateLayoutSizeRegularLandscape(with: permissions)
+    }
+    
+    func testInitialStateLayoutSizeRegularLandscape_LibraryAccessGranted() {
+        let permissions = MockPhotoPermissionsController(camera: false, library: true)
+        initialStateLayoutSizeRegularLandscape(with: permissions)
+    }
+    
+    func cameraScrolledHorizontallySomePercent(with permissions: PhotoPermissionsController) {
         // given
         self.splitView?.layoutSize = .compact
-        self.sut = CameraKeyboardViewController(splitLayoutObservable: self.splitView, assetLibrary: assetLibrary)
+        self.sut = CameraKeyboardViewController(splitLayoutObservable: self.splitView, assetLibrary: assetLibrary, permissions: permissions)
         self.prepareForSnapshot()
         // when
         self.sut.collectionView.scrollRectToVisible(CGRect(x: 300, y: 0, width: 160, height: 10), animated: false)
@@ -164,10 +241,29 @@ final class CameraKeyboardViewControllerTests: ZMSnapshotTestCase {
         self.verify(view: self.prepareForSnapshot())
     }
     
-    func testCameraScrolledHorisontallyAwayPercent() {
+    func testCameraScrolledHorizontallySomePercent() {
+        let permissions = MockPhotoPermissionsController(camera: true, library: true)
+        cameraScrolledHorizontallySomePercent(with: permissions)
+    }
+    
+    func testCameraScrolledHorizontallySomePercent_CameraAndLibraryAccessNotGranted() {
+        let permissions = MockPhotoPermissionsController(camera: false, library: false)
+        cameraScrolledHorizontallySomePercent(with: permissions)
+    }
+    
+    func testCameraScrolledHorizontallySomePercent_CameraAccessGranted() {
+        let permissions = MockPhotoPermissionsController(camera: true, library: false)
+        cameraScrolledHorizontallySomePercent(with: permissions)
+    }
+    
+    func testCameraScrolledHorizontallySomePercent_LibraryAccessGranted() {
+        let permissions = MockPhotoPermissionsController(camera: false, library: true)
+        cameraScrolledHorizontallySomePercent(with: permissions)
+    }
+    func cameraScrolledHorizontallyAwayPercent(with permissions: PhotoPermissionsController) {
         // given
         self.splitView?.layoutSize = .compact
-        self.sut = CameraKeyboardViewController(splitLayoutObservable: self.splitView, assetLibrary: assetLibrary)
+        self.sut = CameraKeyboardViewController(splitLayoutObservable: self.splitView, assetLibrary: assetLibrary, permissions: permissions)
         self.prepareForSnapshot()
         // when
         self.sut.collectionView.scrollRectToVisible(CGRect(x: 320, y: 0, width: 160, height: 10), animated: false)
@@ -175,9 +271,30 @@ final class CameraKeyboardViewControllerTests: ZMSnapshotTestCase {
         self.verify(view: self.prepareForSnapshot())
     }
     
+    func testCameraScrolledHorizontallyAwayPercent() {
+        let permissions = MockPhotoPermissionsController(camera: true, library: true)
+        cameraScrolledHorizontallyAwayPercent(with: permissions)
+    }
+    
+    func testCameraScrolledHorizontallyAwayPercent_CameraAndLibraryAccessNotGranted() {
+        let permissions = MockPhotoPermissionsController(camera: false, library: false)
+        cameraScrolledHorizontallyAwayPercent(with: permissions)
+    }
+    
+    func testCameraScrolledHorizontallyAwayPercent_CameraAccessGranted() {
+        let permissions = MockPhotoPermissionsController(camera: true, library: false)
+        cameraScrolledHorizontallyAwayPercent(with: permissions)
+    }
+    
+    func testCameraScrolledHorizontallyAwayPercent_LibraryAccessGranted() {
+        let permissions = MockPhotoPermissionsController(camera: false, library: true)
+        cameraScrolledHorizontallyAwayPercent(with: permissions)
+    }
+    
     func testThatItCallsDelegateCameraRollWhenCameraRollButtonPressed() {
         // given
-        self.sut = CameraKeyboardViewController(splitLayoutObservable: self.splitView, assetLibrary: assetLibrary)
+        let permissions = MockPhotoPermissionsController(camera: true, library: true)
+        self.sut = CameraKeyboardViewController(splitLayoutObservable: self.splitView, assetLibrary: assetLibrary, permissions: permissions)
         self.sut.delegate = self.delegateMock
         self.prepareForSnapshot()
         
@@ -193,7 +310,8 @@ final class CameraKeyboardViewControllerTests: ZMSnapshotTestCase {
     
     func testThatItCallsDelegateWhenWantsToOpenFullScreenCamera() {
         // given
-        self.sut = CameraKeyboardViewController(splitLayoutObservable: self.splitView, assetLibrary: assetLibrary)
+        let permissions = MockPhotoPermissionsController(camera: true, library: true)
+        self.sut = CameraKeyboardViewController(splitLayoutObservable: self.splitView, assetLibrary: assetLibrary, permissions: permissions)
         self.sut.delegate = self.delegateMock
         self.prepareForSnapshot()
         

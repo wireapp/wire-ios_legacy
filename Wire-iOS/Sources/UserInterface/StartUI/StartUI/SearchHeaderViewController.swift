@@ -78,10 +78,10 @@ public class SearchHeaderViewController : UIViewController {
         titleLabel.textColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorTextForeground, variant: colorSchemeVariant)
         
         tokenField.layer.cornerRadius = 4
-        tokenField.cas_styleClass = "search"
         tokenField.textColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorTextForeground, variant: colorSchemeVariant)
         tokenField.tokenTitleColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorTextForeground, variant: colorSchemeVariant)
         tokenField.tokenSelectedTitleColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorTextForeground, variant: colorSchemeVariant)
+        tokenField.tokenTitleVerticalAdjustment = 1
         tokenField.clipsToBounds = true
         tokenField.textView.placeholderTextColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorTokenFieldTextPlaceHolder, variant: colorSchemeVariant)
         tokenField.textView.backgroundColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorTokenFieldBackground, variant: colorSchemeVariant)
@@ -90,7 +90,7 @@ public class SearchHeaderViewController : UIViewController {
         tokenField.textView.keyboardAppearance = ColorScheme.keyboardAppearance(for: colorSchemeVariant)
         tokenField.textView.returnKeyType = .done
         tokenField.textView.autocorrectionType = .no
-        tokenField.textView.textContainerInset = UIEdgeInsets(top: 10, left: 32, bottom: 10, right: 32)
+        tokenField.textView.textContainerInset = UIEdgeInsets(top: 9, left: 40, bottom: 11, right: 32)
         tokenField.delegate = self
         
         closeButton.accessibilityLabel = "close"

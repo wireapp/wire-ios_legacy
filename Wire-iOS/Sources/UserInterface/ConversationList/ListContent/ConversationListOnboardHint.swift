@@ -29,11 +29,11 @@ class ConversationListOnboardingHint : UIView {
         
         super.init(frame: frame)
         
-        arrowView.image = UIImage(for: .longDownArrow, iconSize: .large, color: UIColor.wr_color(fromColorScheme: ColorSchemeColorTextPlaceholder, variant: .dark))
+        arrowView.image = UIImage(for: .longDownArrow, iconSize: .large, color: UIColor.white.withAlphaComponent(0.4))
         messageLabel.numberOfLines = 0
         messageLabel.textColor = .white
         messageLabel.textAlignment = .center
-        messageLabel.font = FontSpec(.large, .medium).font
+        messageLabel.font = FontSpec(.large, .light).font
         messageLabel.text = "conversation_list.empty.no_contacts.message".localized
         
         [arrowView, messageLabel].forEach(self.addSubview)
