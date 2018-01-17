@@ -1060,48 +1060,6 @@
 			remoteGlobalIDString = 1EE85C4F1B5F96FB008E084B;
 			remoteInfo = ZetaFramework;
 		};
-		872A2ED01FFE760100900B22 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 872A2ECA1FFE760000900B22 /* WireSyncEngine.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 549815931A43232400A7CE2E;
-			remoteInfo = "WireSyncEngine-ios";
-		};
-		872A2ED21FFE760100900B22 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 872A2ECA1FFE760000900B22 /* WireSyncEngine.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 3E1860C3191A649D000FE027;
-			remoteInfo = "WireSyncEngine-iOS-Tests";
-		};
-		872A2ED41FFE760100900B22 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 872A2ECA1FFE760000900B22 /* WireSyncEngine.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 3E186088191A56F6000FE027;
-			remoteInfo = "WireSyncEngine Test Host";
-		};
-		873491FC20066F780022C033 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 873491F620066F780022C033 /* WireTransport.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 3E88BCA71B1F35DF00232589;
-			remoteInfo = "WireTransport-ios";
-		};
-		873491FE20066F780022C033 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 873491F620066F780022C033 /* WireTransport.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 3E88BCB21B1F35DF00232589;
-			remoteInfo = "WireTransport-ios-tests";
-		};
-		8734920020066F780022C033 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 873491F620066F780022C033 /* WireTransport.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 09A218661B790D330076547A;
-			remoteInfo = "WireTransport-tests-host";
-		};
 		87B7DAB31E696F5D005F5140 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 8F42C530199244A700288E4D /* Project object */;
@@ -1724,7 +1682,6 @@
 		871BE9561CD0C2DD002267E8 /* OCMock.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OCMock.framework; path = Carthage/Build/iOS/OCMock.framework; sourceTree = "<group>"; };
 		872334291CD0D8F000CF8B11 /* VideoMessageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoMessageCell.swift; sourceTree = "<group>"; };
 		872786CA1D38EE2000CC3C15 /* OnePasswordExtension.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OnePasswordExtension.framework; path = Carthage/Build/iOS/OnePasswordExtension.framework; sourceTree = "<group>"; };
-		872A2ECA1FFE760000900B22 /* WireSyncEngine.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = WireSyncEngine.xcodeproj; path = "../wire-ios-sync-engine/WireSyncEngine.xcodeproj"; sourceTree = "<group>"; };
 		872AC9C21B397E6A00575CF3 /* Cartfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Cartfile; sourceTree = "<group>"; };
 		872C2B7E1DD9C22B0086A574 /* ShareViewController+Views.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ShareViewController+Views.swift"; sourceTree = "<group>"; };
 		872C99111DB0EA54006A3BDE /* Intents.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Intents.framework; path = System/Library/Frameworks/Intents.framework; sourceTree = SDKROOT; };
@@ -1742,7 +1699,6 @@
 		8732670C1D2D0C49005A62C1 /* AudioRecordKeyboardViewControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioRecordKeyboardViewControllerTests.swift; sourceTree = "<group>"; };
 		873337891DF5B43A006AE609 /* SwiftDependencies.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftDependencies.swift; sourceTree = "<group>"; };
 		873478061D34EE5100CB200F /* libstdc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libstdc++.tbd"; path = "usr/lib/libstdc++.tbd"; sourceTree = SDKROOT; };
-		873491F620066F780022C033 /* WireTransport.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = WireTransport.xcodeproj; path = "../wire-ios-transport/WireTransport.xcodeproj"; sourceTree = "<group>"; };
 		8736F1831E4B67F0001CBA62 /* AppLockView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppLockView.swift; sourceTree = "<group>"; };
 		8736F1C11E4DCEB8001CBA62 /* AppLockViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppLockViewController.swift; sourceTree = "<group>"; };
 		87371C181B7355C400807499 /* ConversationListViewController+StartUI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ConversationListViewController+StartUI.h"; sourceTree = "<group>"; };
@@ -3724,16 +3680,6 @@
 			path = Youtube;
 			sourceTree = "<group>";
 		};
-		872A2ECB1FFE760000900B22 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				872A2ED11FFE760100900B22 /* WireSyncEngine.framework */,
-				872A2ED31FFE760100900B22 /* WireSyncEngine-iOS-Tests.xctest */,
-				872A2ED51FFE760100900B22 /* WireSyncEngine Test Host.app */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		872CB8A019E58816006752B4 /* Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -3753,16 +3699,6 @@
 				872CB8B019E58816006752B4 /* ProfileUnblockFooterView.m */,
 			);
 			path = Views;
-			sourceTree = "<group>";
-		};
-		873491F720066F780022C033 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				873491FD20066F780022C033 /* WireTransport.framework */,
-				873491FF20066F780022C033 /* WireTransport-ios-tests.xctest */,
-				8734920120066F780022C033 /* WireTransport-tests-host.app */,
-			);
-			name = Products;
 			sourceTree = "<group>";
 		};
 		873C5FE21C10426A00D5132A /* DeviceManagement */ = {
@@ -4197,8 +4133,6 @@
 		8F42C52F199244A700288E4D = {
 			isa = PBXGroup;
 			children = (
-				873491F620066F780022C033 /* WireTransport.xcodeproj */,
-				872A2ECA1FFE760000900B22 /* WireSyncEngine.xcodeproj */,
 				87501FB21D40D6490056C042 /* ComponentsVersions.plist */,
 				87C8D7FB1BA8261C00B0530B /* Entitlements-Dev.entitlements */,
 				87C8D7FC1BA8261C00B0530B /* Entitlements-Prod.entitlements */,
@@ -5673,16 +5607,6 @@
 			mainGroup = 8F42C52F199244A700288E4D;
 			productRefGroup = 8F42C539199244A700288E4D /* Products */;
 			projectDirPath = "";
-			projectReferences = (
-				{
-					ProductGroup = 872A2ECB1FFE760000900B22 /* Products */;
-					ProjectRef = 872A2ECA1FFE760000900B22 /* WireSyncEngine.xcodeproj */;
-				},
-				{
-					ProductGroup = 873491F720066F780022C033 /* Products */;
-					ProjectRef = 873491F620066F780022C033 /* WireTransport.xcodeproj */;
-				},
-			);
 			projectRoot = "";
 			targets = (
 				8F42C537199244A700288E4D /* Wire-iOS */,
@@ -5694,51 +5618,6 @@
 			);
 		};
 /* End PBXProject section */
-
-/* Begin PBXReferenceProxy section */
-		872A2ED11FFE760100900B22 /* WireSyncEngine.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = WireSyncEngine.framework;
-			remoteRef = 872A2ED01FFE760100900B22 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		872A2ED31FFE760100900B22 /* WireSyncEngine-iOS-Tests.xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = "WireSyncEngine-iOS-Tests.xctest";
-			remoteRef = 872A2ED21FFE760100900B22 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		872A2ED51FFE760100900B22 /* WireSyncEngine Test Host.app */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.application;
-			path = "WireSyncEngine Test Host.app";
-			remoteRef = 872A2ED41FFE760100900B22 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		873491FD20066F780022C033 /* WireTransport.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = WireTransport.framework;
-			remoteRef = 873491FC20066F780022C033 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		873491FF20066F780022C033 /* WireTransport-ios-tests.xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = "WireTransport-ios-tests.xctest";
-			remoteRef = 873491FE20066F780022C033 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		8734920120066F780022C033 /* WireTransport-tests-host.app */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.application;
-			path = "WireTransport-tests-host.app";
-			remoteRef = 8734920020066F780022C033 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		168A16A71D9597C2005CFA6C /* Resources */ = {
@@ -6050,13 +5929,13 @@
 				"$(SRCROOT)/Carthage/Build/iOS/CocoaLumberjack.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/WireSystem.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/WireUtilities.framework",
-				"$(BUILT_PRODUCTS_DIR)/WireTransport.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/WireTransport.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/WireImages.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/WireCryptobox.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/WireProtos.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/ProtocolBuffers.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/Cartography.framework",
-				"$(BUILT_PRODUCTS_DIR)/WireSyncEngine.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/WireSyncEngine.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/CocoaLumberjackSwift.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/TTTAttributedLabel.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/libPhoneNumberiOS.framework",
