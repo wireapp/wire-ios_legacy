@@ -116,7 +116,7 @@ final class TeamMemberInviteViewController: UIViewController, TeamInviteTopbarDe
         
         guard let userSession = ZMUserSession.shared() else { return }
         Analytics.shared().tag(TeamInviteEvent.sentInvite(.teamCreation))
-        showLoadingView = true
+        footerTextFieldView.isLoading = true
         
         ZMUser.selfUser().team?.invite(email: email, in: userSession) { [weak self] result in
             self?.handle(inviteResult: result, from:  .manualInput)
@@ -129,7 +129,7 @@ final class TeamMemberInviteViewController: UIViewController, TeamInviteTopbarDe
         case.addressBook: handleAddressBookResult(result)
         }
         
-        showLoadingView = false
+        footerTextFieldView.isLoading = false
         topBar.mode = dataSource.data.count == 0 ? .skip : .done
     }
     

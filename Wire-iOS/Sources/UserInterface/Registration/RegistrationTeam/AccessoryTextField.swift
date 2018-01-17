@@ -46,6 +46,12 @@ class AccessoryTextField: UITextField {
     static let placeholderFont = FontSpec(.small, .regular).font!
     static private let ConfirmButtonWidth: CGFloat = 32
 
+    var isLoading = false {
+        didSet {
+            updateLoadingState()
+        }
+    }
+    
     var kind: Kind {
         didSet {
             setupTextFieldProperties()
@@ -61,15 +67,8 @@ class AccessoryTextField: UITextField {
     let confirmButton: IconButton = {
         let iconButton = IconButton.iconButtonCircularLight()
         iconButton.circular = true
-        iconButton.setIconColor(UIColor.Team.textColor, for: .normal)
-        iconButton.setIconColor(UIColor.Team.textfieldColor, for: .disabled)
-        iconButton.adjustsImageWhenDisabled = false
-        iconButton.setBackgroundImageColor(UIColor.Team.activeButtonColor, for: .normal)
-        iconButton.setBackgroundImageColor(UIColor.Team.inactiveButtonColor, for: .disabled)
-
         iconButton.accessibilityIdentifier = "AccessoryTextFieldConfirmButton"
         iconButton.isEnabled = false
-
         return iconButton
     }()
 
@@ -149,12 +148,42 @@ class AccessoryTextField: UITextField {
         }
     }
     
-    private func updateButtonIcon() {
-        if let overrideIcon = overrideButtonIcon {
-            confirmButton.setIcon(overrideIcon, with: .tiny, for: .normal)
+    private func updateLoadingState() {
+        updateButtonIcon()
+        let animationKey = "rotation_animation"
+        if isLoading {
+            let animation = CABasicAnimation.rotateAnimation(withRotationSpeed: 1.4, beginTime: 0, delegate: nil)
+            confirmButton.layer.add(animation, forKey: animationKey)
         } else {
-            confirmButton.setIcon(UIApplication.isLeftToRightLayout ? .chevronRight : .chevronLeft, with: .tiny, for: .normal)
+            confirmButton.layer.removeAnimation(forKey: animationKey)
         }
+    }
+    
+    private var buttonIcon: ZetaIconType {
+        return isLoading
+        ? .spinner
+        : overrideButtonIcon ?? (UIApplication.isLeftToRightLayout ? .chevronRight : .chevronLeft)
+    }
+    
+    private var iconSize: ZetaIconSize {
+        return isLoading ? .medium : .tiny
+    }
+    
+    private func updateButtonIcon() {
+        confirmButton.setIcon(buttonIcon, with: iconSize, for: .normal)
+        
+        if isLoading {
+            confirmButton.setIconColor(UIColor.Team.inactiveButtonColor, for: .normal)
+            confirmButton.setBackgroundImageColor(.clear, for: .normal)
+            confirmButton.setBackgroundImageColor(.clear, for: .disabled)
+        } else {
+            confirmButton.setIconColor(UIColor.Team.textfieldColor, for: .normal)
+            confirmButton.setIconColor(UIColor.Team.textfieldColor, for: .disabled)
+            confirmButton.setBackgroundImageColor(UIColor.Team.activeButtonColor, for: .normal)
+            confirmButton.setBackgroundImageColor(UIColor.Team.inactiveButtonColor, for: .disabled)
+        }
+
+        confirmButton.adjustsImageWhenDisabled = false
     }
 
     private func setup() {
