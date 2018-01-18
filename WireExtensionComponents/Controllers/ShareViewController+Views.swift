@@ -56,7 +56,12 @@ extension ShareViewController {
         self.tokenField.textView.backgroundColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorTokenFieldBackground, variant: .dark)
         self.tokenField.delegate = self
 
-        self.searchIcon.image = UIImage(for: .search, iconSize: .tiny, color: .white)
+        if self.allowsMultiselect {
+            self.searchIcon.image = UIImage(for: .search, iconSize: .tiny, color: .white)
+        }
+        else {
+            self.searchIcon.isHidden = true
+        }
 
         self.destinationsTableView.backgroundColor = .clear
         self.destinationsTableView.register(ShareDestinationCell<D>.self, forCellReuseIdentifier: ShareDestinationCell<D>.reuseIdentifier)
