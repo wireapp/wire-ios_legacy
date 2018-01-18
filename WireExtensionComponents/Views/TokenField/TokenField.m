@@ -23,6 +23,7 @@
 #import "TokenTextAttachment.h"
 #import "IconButton.h"
 #import "Logging.h"
+#import "ColorScheme.h"
 
 
 CGFloat const accessoryButtonSize = 32.0f;
@@ -101,6 +102,7 @@ CGFloat const accessoryButtonSize = 32.0f;
     self.tokenBorderColor = [UIColor colorWithRed:0.118 green:0.467 blue:0.745 alpha:1.000];
     self.tokenSelectedBorderColor = [UIColor colorWithRed:0.118 green:0.467 blue:0.745 alpha:1.000];
     self.tokenTextTransform = TextTransformUpper;
+    self.dotColor = [ColorScheme.defaultColorScheme colorWithName:ColorSchemeColorTextDimmed];
 }
 
 - (void)setupSubviews
