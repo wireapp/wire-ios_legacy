@@ -220,13 +220,6 @@ extension AddParticipantsViewController : UIPopoverPresentationControllerDelegat
     
 }
 
-extension AddParticipantsViewController: CollectionViewSectionAggregatorDelegate {
-    
-    public func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        searchResultsViewController.searchResultsView?.separatorView.scrollViewDidScroll(scrollView: scrollView)
-    }
-}
-
 extension AddParticipantsViewController: SearchResultsViewControllerDelegate {
     public func searchResultsViewController(_ searchResultsViewController: SearchResultsViewController, didTapOnUser user: ZMSearchableUser, indexPath: IndexPath, section: SearchResultsViewControllerSection)
     {

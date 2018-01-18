@@ -23,7 +23,6 @@ import Classy
 class SearchResultsView : UIView {
     
     let accessoryViewMargin : CGFloat = 16.0
-    let separatorView = OverflowSeparatorView()
     let emptyResultContainer = UIView()
     let collectionView : UICollectionView
     let collectionViewLayout : UICollectionViewFlowLayout
@@ -48,7 +47,7 @@ class SearchResultsView : UIView {
         
         super.init(frame: CGRect.zero)
         
-        [emptyResultContainer, collectionView, accessoryContainer, separatorView].forEach(addSubview)
+        [emptyResultContainer, collectionView, accessoryContainer].forEach(addSubview)
         
         createConstraints()
         
@@ -64,7 +63,7 @@ class SearchResultsView : UIView {
     
     func createConstraints() {
         
-        constrain(self, collectionView, accessoryContainer, emptyResultContainer, separatorView) { container, collectionView, accessoryContainer, emptyResultContainer, separatorView in
+        constrain(self, collectionView, accessoryContainer, emptyResultContainer) { container, collectionView, accessoryContainer, emptyResultContainer in
             
             collectionView.top == container.top
             collectionView.left == container.left
@@ -80,10 +79,6 @@ class SearchResultsView : UIView {
             emptyResultContainer.centerX == container.centerX
             emptyResultContainer.leading >= container.leading
             emptyResultContainer.trailing <= container.trailing
-            
-            separatorView.leading == container.leading
-            separatorView.trailing == container.trailing
-            separatorView.bottom == container.top
         }
     }
     

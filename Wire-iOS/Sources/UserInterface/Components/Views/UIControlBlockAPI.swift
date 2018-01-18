@@ -34,11 +34,11 @@ private final class CallbackObject<T: Interactable>: NSObject {
     init(callback: @escaping Callback<T>, interactable: T, for event: UIControlEvents) {
         self.callback = callback
         super.init()
-        interactable.addTarget(self, action: #selector(CallbackObject.onTouchUpInside(_:)), for: event)
+        interactable.addTarget(self, action: #selector(CallbackObject.onEvent(_:)), for: event)
     }
     
-    @objc func onTouchUpInside(_ sender: Any!) {
-        callback(sender as! T)
+    @objc func onEvent(_ sender: T!) {
+        callback(sender)
     }
 }
 
