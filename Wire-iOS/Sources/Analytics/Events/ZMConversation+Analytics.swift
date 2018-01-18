@@ -50,8 +50,13 @@ extension ZMConversation {
     }
     
     public var isServiceUserConversation : Bool {
-        // TODO: we need to check here if the current user is a bot or not. Check history for the previous implementation.
-        return false
+        guard self.activeParticipants.count == 2,
+             let otherUser = self.firstActiveParticipantOtherThanSelf() else {
+            return false
+        }
+        
+        return otherUser.serviceIdentifier != nil &&
+                otherUser.providerIdentifier != nil
     }
 }
 

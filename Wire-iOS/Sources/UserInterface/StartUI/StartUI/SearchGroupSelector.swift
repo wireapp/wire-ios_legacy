@@ -73,7 +73,7 @@ final class SearchGroupSelector: UIView {
     @objc public var onGroupSelected: ((SearchGroup)->())? = nil
     
     private static var shouldShowBotResults: Bool {
-        return DeveloperMenuState.developerMenuEnabled()// TODO: check team users ZMUser.selfUser().team != nil &&
+        return DeveloperMenuState.developerMenuEnabled() && ZMUser.selfUser().team != nil
     }
     
     init() {
