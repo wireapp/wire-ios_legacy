@@ -141,7 +141,7 @@ NSString *const PeoplePickerUsersInContactsReuseIdentifier = @"PeoplePickerUsers
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.row == 0 && self.displaysInviteTeamMemberRow) {
-        [NSURL.wr_manageTeamURL.wr_URLByAppendingLocaleParameter open];
+        [[NSURL manageTeamWithSource:TeamSourceOnboarding] open];
         return;
     }
     
