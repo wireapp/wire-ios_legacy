@@ -390,7 +390,7 @@ extension VoiceChannelViewController : WireCallCenterCallStateObserver, Received
         
     }
     
-    func callCenterDidChange(receivedVideoState: ReceivedVideoState) {
+    func callCenterDidChange(receivedVideoState: ReceivedVideoState, user: ZMUser) {
         voiceChannelView.incomingVideoActive = receivedVideoState == .started
         voiceChannelView.remoteIsSendingVideo = receivedVideoState == .started
         voiceChannelView.lowBandwidth = receivedVideoState == .badConnection       
