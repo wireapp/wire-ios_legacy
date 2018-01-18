@@ -66,7 +66,7 @@ final class ServiceDetailView: UIView {
 }
 
 final class ServiceView: UIView {
-    private let logoView = UserImageView(size: .big)
+    private let logoView = UserImageView(size: .normal)
     private let nameLabel = UILabel()
     private let providerLabel = UILabel()
     
@@ -114,7 +114,7 @@ final class ServiceView: UIView {
     }
     
     private func updateForService() {
-        logoView.user = service.serviceUser as? (ZMSearchUser & AccentColorProvider)
+        logoView.user = service.serviceUser
         nameLabel.text = service.serviceUser.name
         providerLabel.text = service.provider?.name
     }
