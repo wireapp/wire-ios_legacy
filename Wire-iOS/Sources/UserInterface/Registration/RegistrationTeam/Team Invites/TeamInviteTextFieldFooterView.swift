@@ -37,6 +37,14 @@ final class TeamInviteTextFieldFooterView: UIView {
     let errorButton = Button()
     private let textField: AccessoryTextField
     private let errorLabel = UILabel()
+
+    var shouldConfirm: ((String) -> Bool)? {
+        didSet {
+            textField.textFieldValidator.customValidator = { [weak self] email in
+                (self?.shouldConfirm?(email) ?? true) ? nil : .custom("team.invite.error.already_invited".localized.uppercased())
+            }
+        }
+    }
     
     var onConfirm: ((String) -> Void)? {
         didSet {
@@ -86,9 +94,9 @@ final class TeamInviteTextFieldFooterView: UIView {
         errorButton.setTitleColor(.darkGray, for: .highlighted)
         errorButton.accessibilityIdentifier = "LearnMoreButton"
         errorButton.addTarget(self, action: #selector(showLearnMorePage), for: .touchUpInside)
+        textField.accessibilityLabel = "EmailInputField"
         [textField, errorLabel, errorButton].forEach(addSubview)
         backgroundColor = .clear
-        
     }
     
     private func createConstraints() {

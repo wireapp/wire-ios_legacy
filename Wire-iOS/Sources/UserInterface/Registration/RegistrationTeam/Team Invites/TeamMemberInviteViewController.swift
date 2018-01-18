@@ -106,6 +106,10 @@ final class TeamMemberInviteViewController: UIViewController, TeamInviteTopbarDe
     
     private func setupFooterView() {
         footerTextFieldView.onConfirm = sendInvite
+        footerTextFieldView.shouldConfirm = { [weak self] email in
+            guard let `self` = self else { return true }
+            return !self.dataSource.data.emails.contains(email)
+        }
         tableView.tableFooterView = footerTextFieldView.sized(fittingWidth: tableView.bounds.width)
     }
     
