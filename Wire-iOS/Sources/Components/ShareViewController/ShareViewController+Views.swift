@@ -40,9 +40,6 @@ extension ShareViewController {
             self.shareablePreviewWrapper = shareablePreviewWrapper
         }
 
-        let scheme = FontScheme(contentSizeCategory: .medium)
-        self.tokenField.font = scheme.font(for: .init(.normal, .regular))
-        self.tokenField.tokenTitleFont = scheme.font(for: .init(.small, .regular))
         self.tokenField.textColor = .white
         self.tokenField.clipsToBounds = true
         self.tokenField.layer.cornerRadius = 4

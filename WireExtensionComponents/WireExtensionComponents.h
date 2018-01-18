@@ -32,8 +32,6 @@ FOUNDATION_EXPORT const unsigned char WireExtensionComponentsVersionString[];
 #import <WireExtensionComponents/UserImageView.h>
 #import <WireExtensionComponents/PageControl.h>
 #import <WireExtensionComponents/TextView.h>
-#import <WireExtensionComponents/TokenField.h>
-#import <WireExtensionComponents/Token.h>
 #import <WireExtensionComponents/CheckBoxButton.h>
 #import <WireExtensionComponents/IconButton.h>
 #import <WireExtensionComponents/IconLabelButton.h>
@@ -42,8 +40,6 @@ FOUNDATION_EXPORT const unsigned char WireExtensionComponentsVersionString[];
 #import <WireExtensionComponents/FlexibleNavigationBar.h>
 #import <WireExtensionComponents/ProgressSpinner.h>
 #import <WireExtensionComponents/UIViewController+LoadingView.h>
-#import <WireExtensionComponents/TokenTextAttachment.h>
-#import <WireExtensionComponents/TokenizedTextView.h>
 #import <WireExtensionComponents/DeveloperMenuState.h>
 
 // Layers
