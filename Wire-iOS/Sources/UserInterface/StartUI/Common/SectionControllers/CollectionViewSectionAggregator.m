@@ -131,11 +131,4 @@
     return [sectionController collectionView:collectionView layout:collectionViewLayout insetForSectionAtIndex:0];
 }
 
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView
-{
-    if (self.delegate) {
-        [self.delegate scrollViewDidScroll:scrollView];
-    }
-}
-
 @end

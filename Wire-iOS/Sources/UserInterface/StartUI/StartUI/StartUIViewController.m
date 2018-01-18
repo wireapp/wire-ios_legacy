@@ -49,7 +49,7 @@
 static NSUInteger const StartUIInitiallyShowsKeyboardConversationThreshold = 10;
 
 
-@interface StartUIViewController () <ContactsViewControllerDelegate, UserSelectionObserver, SearchResultsViewControllerDelegate, SearchHeaderViewControllerDelegate, CollectionViewSectionAggregatorDelegate>
+@interface StartUIViewController () <ContactsViewControllerDelegate, UserSelectionObserver, SearchResultsViewControllerDelegate, SearchHeaderViewControllerDelegate>
 
 @property (nonatomic) ProfilePresenter *profilePresenter;
 @property (nonatomic) StartUIQuickActionsBar *quickActionsBar;
@@ -136,7 +136,6 @@ static NSUInteger const StartUIInitiallyShowsKeyboardConversationThreshold = 10;
     [self updateActionBar];
     [self handleUploadAddressBookLogicIfNeeded];
     [self.searchResultsViewController searchContactList];
-    self.searchResultsViewController.sectionAggregator.delegate = self;
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -431,13 +430,6 @@ static NSUInteger const StartUIInitiallyShowsKeyboardConversationThreshold = 10;
     [self dismissViewControllerAnimated:YES completion:^{
         [self wr_presentInviteActivityViewControllerWithSourceView:self.quickActionsBar logicalContext:GenericInviteContextStartUIBanner];
     }];
-}
-
-#pragma mark - CollectionViewSectionAggregatorDelegate
-
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView
-{
-    [self.searchResultsViewController.searchResultsView.separatorView scrollViewDidScroll:scrollView];
 }
 
 @end

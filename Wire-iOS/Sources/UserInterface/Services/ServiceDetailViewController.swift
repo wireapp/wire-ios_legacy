@@ -168,7 +168,7 @@ final class ServiceDetailViewController: UIViewController {
             confirmButton.height == 48
             confirmButton.leading == selfView.leading + 16
             confirmButton.trailing == selfView.trailing - 16
-            confirmButton.bottom == selfView.bottom - 16
+            confirmButton.bottom == selfView.bottom - 16 - 
         }
         
         guard let userSession = ZMUserSession.shared() else {

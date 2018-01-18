@@ -37,8 +37,8 @@ private final class CallbackObject<T: Interactable>: NSObject {
         interactable.addTarget(self, action: #selector(CallbackObject.onEvent(_:)), for: event)
     }
     
-    @objc func onEvent(_ sender: T!) {
-        callback(sender)
+    @objc func onEvent(_ sender: Any!) {
+        callback(sender as! T)
     }
 }
 
