@@ -202,7 +202,7 @@ extension AddParticipantsViewController : SearchHeaderViewControllerDelegate {
         } else {
             emptyResultLabel.text = emptySearchResultText
             searchResultsViewController.mode = .search
-            searchResultsViewController.searchForUsersLocal(withQuery: query)
+            searchResultsViewController.searchForLocalUsers(withQuery: query)
         }
     }
     

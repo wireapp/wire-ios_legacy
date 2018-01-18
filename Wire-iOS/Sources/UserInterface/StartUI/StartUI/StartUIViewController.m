@@ -238,7 +238,7 @@ static NSUInteger const StartUIInitiallyShowsKeyboardConversationThreshold = 10;
             [Analytics.shared tagEnteredSearchWithLeadingAtSign:leadingAt context:SearchContextStartUI];
             self.searchResultsViewController.mode = hasSelection ? SearchResultsViewControllerModeSelection : SearchResultsViewControllerModeSearch;
             if (hasSelection) {
-                [self.searchResultsViewController searchForUsersLocalWithQuery:searchString];
+                [self.searchResultsViewController searchForLocalUsersWithQuery:searchString];
             }
             else {
                 [self.searchResultsViewController searchForUsersWithQuery:searchString];

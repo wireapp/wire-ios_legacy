@@ -224,7 +224,7 @@ public class SearchResultsViewController : UIViewController {
     }
 
     @objc
-    public func searchForUsersLocal(withQuery query: String) {
+    public func searchForLocalUsers(withQuery query: String) {
         self.performSearch(query: query, options: [.contacts, .teamMembers])
     }
 
