@@ -167,9 +167,9 @@ open class CameraKeyboardViewController: UIViewController {
     }
     
     fileprivate func createCollectionView() {
+        self.setupPhotoKeyboardAppearance()
         self.collectionViewLayout.scrollDirection = .horizontal
         self.collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: collectionViewLayout)
-        self.setupPhotoKeyboardAppearance()
         self.collectionView.register(CameraCell.self, forCellWithReuseIdentifier: CameraCell.reuseIdentifier)
         self.collectionView.register(AssetCell.self, forCellWithReuseIdentifier: AssetCell.reuseIdentifier)
         self.collectionView.register(CameraKeyboardPermissionsCell.self, forCellWithReuseIdentifier: CameraKeyboardPermissionsCell.reuseIdentifier)
@@ -180,6 +180,7 @@ open class CameraKeyboardViewController: UIViewController {
         self.collectionView.allowsSelection = true
         self.collectionView.backgroundColor = UIColor.clear
         self.collectionView.bounces = false
+        self.setupContentTouches()
     }
     
     func scrollToCamera(animated: Bool) {
@@ -300,10 +301,8 @@ open class CameraKeyboardViewController: UIViewController {
         
         if permissions.areCameraAndPhotoLibraryAuthorized {
             self.view.backgroundColor = .white
-            self.collectionView.delaysContentTouches = true
         } else {
             self.view.backgroundColor = ColorScheme.default().color(withName: ColorSchemeColorGraphite)
-            self.collectionView.delaysContentTouches = false
         }
         
         if permissions.isPhotoLibraryAuthorized {
@@ -319,12 +318,23 @@ open class CameraKeyboardViewController: UIViewController {
         }
     }
     
+    fileprivate func setupContentTouches() {
+        if permissions.areCameraAndPhotoLibraryAuthorized {
+            self.collectionView.delaysContentTouches = true
+        } else {
+            self.collectionView.delaysContentTouches = false
+        }
+    }
+    
 }
 
 
 extension CameraKeyboardViewController: UICollectionViewDelegateFlowLayout, UICollectionViewDelegate, UICollectionViewDataSource {
     public func numberOfSections(in collectionView: UICollectionView) -> Int {
-        defer { setupPhotoKeyboardAppearance() }
+        defer {
+            setupPhotoKeyboardAppearance()
+            setupContentTouches()
+        }
         guard permissions.areCameraOrPhotoLibraryAuthorized else {
             return 1
         }
