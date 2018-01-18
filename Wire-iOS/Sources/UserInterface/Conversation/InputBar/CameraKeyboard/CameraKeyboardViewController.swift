@@ -167,9 +167,9 @@ open class CameraKeyboardViewController: UIViewController {
     }
     
     fileprivate func createCollectionView() {
-        self.setupPhotoKeyboardAppearance()
         self.collectionViewLayout.scrollDirection = .horizontal
         self.collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: collectionViewLayout)
+        self.setupPhotoKeyboardAppearance()
         self.collectionView.register(CameraCell.self, forCellWithReuseIdentifier: CameraCell.reuseIdentifier)
         self.collectionView.register(AssetCell.self, forCellWithReuseIdentifier: AssetCell.reuseIdentifier)
         self.collectionView.register(CameraKeyboardPermissionsCell.self, forCellWithReuseIdentifier: CameraKeyboardPermissionsCell.reuseIdentifier)
@@ -300,8 +300,10 @@ open class CameraKeyboardViewController: UIViewController {
         
         if permissions.areCameraAndPhotoLibraryAuthorized {
             self.view.backgroundColor = .white
+            self.collectionView.delaysContentTouches = true
         } else {
             self.view.backgroundColor = ColorScheme.default().color(withName: ColorSchemeColorGraphite)
+            self.collectionView.delaysContentTouches = false
         }
         
         if permissions.isPhotoLibraryAuthorized {

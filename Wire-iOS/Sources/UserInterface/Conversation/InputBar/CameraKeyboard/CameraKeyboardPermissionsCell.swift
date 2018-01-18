@@ -29,7 +29,7 @@ public enum DeniedAuthorizationType {
 
 open class CameraKeyboardPermissionsCell: UICollectionViewCell, Reusable {
 
-    let settingsButton = UIButton()
+    let settingsButton = Button()
     let descriptionLabel = UILabel()
     
     private let containerView = UIView()
@@ -46,7 +46,6 @@ open class CameraKeyboardPermissionsCell: UICollectionViewCell, Reusable {
         descriptionLabel.numberOfLines = 0
         descriptionLabel.textAlignment = .center
         
-        settingsButton.backgroundColor = UIColor.white.withAlphaComponent(0.16)
         settingsButton.setTitleColor(.white, for: .normal)
         settingsButton.titleLabel?.font = UIFont.systemFont(ofSize: textSize, weight: UIFontWeightSemibold)
         settingsButton.setTitle("keyboard_photos_access.denied.keyboard.settings".localized, for: .normal)
@@ -54,7 +53,8 @@ open class CameraKeyboardPermissionsCell: UICollectionViewCell, Reusable {
         settingsButton.layer.cornerRadius = 4.0
         settingsButton.layer.masksToBounds = true
         settingsButton.addTarget(self, action: #selector(CameraKeyboardPermissionsCell.openSettings), for: .touchUpInside)
-        
+        settingsButton.setBackgroundImageColor(UIColor.white.withAlphaComponent(0.16), for: .normal)
+        settingsButton.setBackgroundImageColor(UIColor.white.withAlphaComponent(0.24), for: .highlighted)
         containerView.backgroundColor = .clear
         
         [descriptionLabel, settingsButton].forEach(containerView.addSubview)
