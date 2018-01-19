@@ -208,8 +208,8 @@ class GiphySearchViewController: UICollectionViewController {
         masonrylayout.itemMargins = CGSize(width: 1, height: 1)
     }
 
-    func onDismiss() {
-        self.navigationController?.dismiss(animated: true, completion: nil)
+    func onDismiss(completion: (() -> Swift.Void)? = nil) {
+        self.navigationController?.dismiss(animated: true, completion: completion)
     }
 
     func performSearch() {

@@ -26,6 +26,7 @@ final class GiphySearchViewControllerTests: XCTestCase {
 
     override func setUp() {
         super.setUp()
+        UIView.setAnimationsEnabled(false)
 
         mockConversation = MockConversation()
         mockConversation.conversationType = .oneOnOne
@@ -57,4 +58,28 @@ final class GiphySearchViewControllerTests: XCTestCase {
         XCTAssertNil(sut)
     }
 
+    func testGiphySearchViewControllerIsNotRetainedPresentAndDismiss(){
+        autoreleasepool{
+            // GIVEN
+            let searchTerm: String = "apple"
+            
+            let giphySearchViewController: GiphySearchViewController = GiphySearchViewController(withSearchTerm: searchTerm, conversation: (mockConversation as Any) as! ZMConversation)
+            sut = giphySearchViewController
+            
+            let mockViewController = UIViewController()
+            
+            // WHEN
+            mockViewController.present(giphySearchViewController.wrapInsideNavigationController(), animated: false) {
+                XCTAssertNotNil(self.sut)
+                
+                giphySearchViewController.onDismiss(){ _ in
+                    XCTAssertNil(self.sut)
+                }
+            }
+        }
+        
+        // THEN
+        XCTAssertNil(sut)
+
+    }
 }
