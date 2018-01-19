@@ -101,7 +101,7 @@
 - (NSDictionary *)attributesForConversation:(ZMConversation *)conversation
 {
     return @{ @"conversation_type" : [self stringForConversationType:conversation.conversationType],
-              @"with_bot"          : conversation.isBotConversation ? @"true" : @"false" };
+              @"with_bot"          : conversation.isServiceUserConversation ? @"true" : @"false" };
 }
 
 - (NSDictionary *)attributesForInitiatedCall:(BOOL)initiatedCall

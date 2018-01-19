@@ -32,10 +32,6 @@ class SearchResultsView : UIView {
     var accessoryViewBottomOffsetConstraint : NSLayoutConstraint?
     var isContainedInPopover : Bool = false
     
-    deinit {
-        NotificationCenter.default.removeObserver(self)
-    }
-    
     init() {
         collectionViewLayout = UICollectionViewFlowLayout()
         collectionViewLayout.scrollDirection = .vertical
@@ -55,7 +51,10 @@ class SearchResultsView : UIView {
         
         createConstraints()
         
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardFrameDidChange(notification:)), name: NSNotification.Name.UIKeyboardWillChangeFrame, object: nil)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(keyboardFrameDidChange(notification:)),
+                                               name: NSNotification.Name.UIKeyboardWillChangeFrame,
+                                               object: nil)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -74,7 +73,7 @@ class SearchResultsView : UIView {
             accessoryContainer.left == container.left
             accessoryContainer.right == container.right
             accessoryContainerHeightConstraint = accessoryContainer.height == 0
-            accessoryViewBottomOffsetConstraint = accessoryContainer.bottom == container.bottom
+            accessoryViewBottomOffsetConstraint = accessoryContainer.bottom == container.bottom - UIScreen.safeArea.bottom
             
             emptyResultContainer.top == container.top + 64
             emptyResultContainer.centerX == container.centerX
@@ -138,7 +137,7 @@ class SearchResultsView : UIView {
         
         UIView.animate(withKeyboardNotification: notification, in: self, animations: { (keyboardFrameInView) in
             let keyboardHeight = keyboardFrameInView.size.height - inputAccessoryHeight
-            self.accessoryViewBottomOffsetConstraint?.constant = -keyboardHeight
+            self.accessoryViewBottomOffsetConstraint?.constant = -keyboardHeight - UIScreen.safeArea.bottom
             self.layoutIfNeeded()
         }, completion: nil)
     }

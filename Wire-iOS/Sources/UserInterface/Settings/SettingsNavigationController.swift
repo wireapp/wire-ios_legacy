@@ -19,17 +19,13 @@
 
 import Foundation
 
-@objc class SettingsNavigationController: UINavigationController {
+@objc class SettingsNavigationController: ClearBackgroundNavigationController {
 
     let rootGroup: SettingsControllerGeneratorType & SettingsInternalGroupCellDescriptorType
     static let dismissNotificationName = "SettingsNavigationControllerDismissNotificationName"
     
     let settingsPropertyFactory: SettingsPropertyFactory
     @objc var dismissAction: ((SettingsNavigationController) -> ())? = .none
-    
-    fileprivate let pushTransition = PushTransition()
-    fileprivate let popTransition = PopTransition()
-    fileprivate var dismissGestureRecognizer: UIScreenEdgePanGestureRecognizer!
     
     static func settingsNavigationController() -> SettingsNavigationController {
         let settingsPropertyFactory = SettingsPropertyFactory(userSession: SessionManager.shared?.activeUserSession, selfUser: ZMUser.selfUser())
@@ -46,7 +42,6 @@ import Foundation
         super.init(nibName: nil, bundle: nil)
         self.delegate = self
         
-        self.transitioningDelegate = self
         NotificationCenter.default.addObserver(self, selector: #selector(SettingsNavigationController.soundIntensityChanged(_:)), name: NSNotification.Name(rawValue: SettingsPropertyName.soundAlerts.changeNotificationName), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(SettingsNavigationController.dismissNotification(_:)), name: NSNotification.Name(rawValue: type(of: self).dismissNotificationName), object: nil)
     }
@@ -92,10 +87,6 @@ import Foundation
         fatalError()
     }
     
-    deinit {
-        NotificationCenter.default.removeObserver(self)
-    }
-    
     func soundIntensityChanged(_ notification: Notification) {
         let soundProperty = self.settingsPropertyFactory.property(.soundAlerts)
         
@@ -117,8 +108,6 @@ import Foundation
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = UIColor.clear
-        self.interactivePopGestureRecognizer?.isEnabled = false
         
         let rootViewController = SelfProfileViewController(rootGroup: rootGroup)
 
@@ -126,34 +115,11 @@ import Foundation
         rootViewController.dismissAction = { [unowned self] _ in
             self.dismissAction?(self)
         }
-
-        self.navigationBar.tintColor = .white
-        self.navigationBar.setBackgroundImage(UIImage(), for:.default)
-        self.navigationBar.shadowImage = UIImage()
-        self.navigationBar.isTranslucent = true
-        self.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.white, NSFontAttributeName: UIFont(magicIdentifier: "style.text.normal.font_spec_bold").allCaps()]
-        
-        let navButtonAppearance = UIBarButtonItem.appearance(whenContainedInInstancesOf: [UINavigationBar.self])
-        
-        let attributes = [NSFontAttributeName : UIFont(magicIdentifier: "style.text.normal.font_spec").allCaps()]
-        navButtonAppearance.setTitleTextAttributes(attributes, for: UIControlState.normal)
-        navButtonAppearance.setTitleTextAttributes(attributes, for: UIControlState.highlighted)
-        
-        self.dismissGestureRecognizer = UIScreenEdgePanGestureRecognizer(target: self, action: #selector(SettingsNavigationController.onEdgeSwipe(gestureRecognizer:)))
-        self.dismissGestureRecognizer.edges = [.left]
-        self.dismissGestureRecognizer.delegate = self
-        self.view.addGestureRecognizer(self.dismissGestureRecognizer)
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         self.presentNewLoginAlertControllerIfNeeded()
-    }
-    
-    func onEdgeSwipe(gestureRecognizer: UIScreenEdgePanGestureRecognizer) {
-        if gestureRecognizer.state == .recognized {
-            self.popViewController(animated: true)
-        }
     }
     
     fileprivate func presentNewLoginAlertControllerIfNeeded() {
@@ -192,43 +158,3 @@ import Foundation
 
 }
 
-extension SettingsNavigationController: UINavigationControllerDelegate {
-    func navigationController(_ navigationController: UINavigationController,
-         animationControllerFor operation: UINavigationControllerOperation,
-                         from fromVC: UIViewController,
-                             to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        switch operation {
-        case .push:
-            return self.pushTransition
-        case .pop:
-            return self.popTransition
-        default:
-            fatalError()
-        }
-    }
-}
-
-extension SettingsNavigationController: UIViewControllerTransitioningDelegate {
-    
-    public func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        let transition = SwizzleTransition()
-        transition.direction = .vertical
-        return transition
-    }
-    
-    public func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        let transition = SwizzleTransition()
-        transition.direction = .vertical
-        return transition
-    }
-}
-
-extension SettingsNavigationController: UIGestureRecognizerDelegate {
-    func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
-        return true
-    }
-    
-    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
-        return true
-    }
-}

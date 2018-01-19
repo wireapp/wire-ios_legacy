@@ -291,8 +291,9 @@ static CIContext *ciContext(void)
     if (userImage) {
         self.containerView.backgroundColor = UIColor.clearColor;
     }
-    else if (self.user.isConnected || self.user.isSelfUser || self.user.isTeamMember) {
-        self.containerView.backgroundColor = [self.user accentColor];
+    else if ([self.user respondsToSelector:@selector(accentColor)] &&
+             (self.user.isConnected || self.user.isSelfUser || self.user.isTeamMember)) {
+        self.containerView.backgroundColor = [(id)self.user accentColor];
     }
     else {
         self.containerView.backgroundColor = [UIColor colorWithWhite:0.8 alpha:1];
