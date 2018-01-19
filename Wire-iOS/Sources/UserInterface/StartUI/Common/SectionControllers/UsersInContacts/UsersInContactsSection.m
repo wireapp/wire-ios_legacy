@@ -48,12 +48,7 @@ NSString *const PeoplePickerUsersInContactsReuseIdentifier = @"PeoplePickerUsers
 
 - (BOOL)isHidden
 {
-    return (self.contacts.count == 0 && !self.displaysInviteTeamMemberRow);
-}
-
-- (BOOL)displaysInviteTeamMemberRow
-{
-    return self.team != nil && self.team.members.count == 1;
+    return self.contacts.count == 0;
 }
 
 + (NSSet *)keyPathsForValuesAffectingIsHidden
@@ -65,7 +60,6 @@ NSString *const PeoplePickerUsersInContactsReuseIdentifier = @"PeoplePickerUsers
 {
     _collectionView = collectionView;
     [self.collectionView registerClass:[SearchResultCell class] forCellWithReuseIdentifier:PeoplePickerUsersInContactsReuseIdentifier];
-    [self.collectionView registerClass:[InviteTeamMemberCell class] forCellWithReuseIdentifier:InviteTeamMemberCell.zm_reuseIdentifier];
     [self.collectionView registerClass:[SearchSectionHeaderView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:PeoplePickerHeaderReuseIdentifier];
 }
 
@@ -80,11 +74,7 @@ NSString *const PeoplePickerUsersInContactsReuseIdentifier = @"PeoplePickerUsers
 
 - (NSInteger)collectionView:(UICollectionView *)view numberOfItemsInSection:(NSInteger)section
 {
-    if (self.displaysInviteTeamMemberRow) {
-        return 1;
-    } else  {
-        return self.contacts.count;
-    }
+    return self.contacts.count;
 }
 
 - (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath
@@ -104,12 +94,6 @@ NSString *const PeoplePickerUsersInContactsReuseIdentifier = @"PeoplePickerUsers
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (self.displaysInviteTeamMemberRow && indexPath.row == 0) {
-        UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:InviteTeamMemberCell.zm_reuseIdentifier
-                                                                                      forIndexPath:indexPath];
-        return cell;
-    }
-    
     UICollectionViewCell *genericCell = [collectionView dequeueReusableCellWithReuseIdentifier:PeoplePickerUsersInContactsReuseIdentifier
                                                                                   forIndexPath:indexPath];
     
@@ -140,11 +124,6 @@ NSString *const PeoplePickerUsersInContactsReuseIdentifier = @"PeoplePickerUsers
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.row == 0 && self.displaysInviteTeamMemberRow) {
-        [[NSURL manageTeamWithSource:TeamSourceOnboarding] open];
-        return;
-    }
-    
     ZMUser *modelObject = self.contacts[indexPath.item];
     
     [self.userSelection add:modelObject];
@@ -156,10 +135,6 @@ NSString *const PeoplePickerUsersInContactsReuseIdentifier = @"PeoplePickerUsers
 
 - (void)collectionView:(UICollectionView *)collectionView didDeselectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.row == 0 && self.displaysInviteTeamMemberRow) {
-        return;
-    }
-    
     ZMUser *modelObject = self.contacts[indexPath.item];
     
     [self.userSelection remove:modelObject];

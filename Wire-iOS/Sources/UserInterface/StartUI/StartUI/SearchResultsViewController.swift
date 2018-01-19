@@ -100,6 +100,7 @@ public class SearchResultsViewController : UIViewController {
     let directorySection : UsersInDirectorySection
     let conversationsSection : GroupConversationsSection
     let topPeopleSection : TopPeopleLineSection
+    let inviteTeamMemberSection : InviteTeamMemberSection
     
     var team: Team?
     var pendingSearchTask : SearchTask? = nil
@@ -145,6 +146,7 @@ public class SearchResultsViewController : UIViewController {
         topPeopleSection = TopPeopleLineSection()
         topPeopleSection.userSelection = userSelection
         topPeopleSection.topConversationDirectory = ZMUserSession.shared()?.topConversationsDirectory
+        inviteTeamMemberSection = InviteTeamMemberSection(team: team)
         
         super.init(nibName: nil, bundle: nil)
         
@@ -245,7 +247,7 @@ public class SearchResultsViewController : UIViewController {
             case (.list, false):
                 sections = [topPeopleSection, contactsSection]
             case (.list, true):
-                sections = [teamMemberAndContactsSection]
+                sections = [inviteTeamMemberSection, teamMemberAndContactsSection]
             }
         }
         
