@@ -93,7 +93,7 @@
     ColorScheme *scheme = ColorScheme.defaultColorScheme;
     self.messageTextView.editable = NO;
     self.messageTextView.selectable = YES;
-    self.messageTextView.backgroundColor = [scheme colorWithName:ColorSchemeColorConversationBackground];
+    self.messageTextView.backgroundColor = [scheme colorWithName:ColorSchemeColorContentBackground];
     self.messageTextView.scrollEnabled = NO;
     self.messageTextView.textContainerInset = UIEdgeInsetsZero;
     self.messageTextView.textContainer.lineFragmentPadding = 0;
@@ -456,9 +456,9 @@
 
 #pragma mark - Preview Provider delegate
 
--(void)preparePreview
+- (CGFloat)prepareLayoutForPreviewWithMessage:(ZMMessage *)message
 {
-    [super preparePreview];
+    CGFloat height = [super prepareLayoutForPreviewWithMessage:message];
     self.smallLinkAttachments = YES;
     self.linkAttachmentContainer.layoutMargins = UIEdgeInsetsZero;
     self.messageTextView.backgroundColor = [UIColor wr_colorFromColorScheme:ColorSchemeColorBackground];
@@ -467,6 +467,7 @@
     self.messageTextView.textContainerInset = UIEdgeInsetsMake(8, 8, 10, 8);
     self.messageTextView.textContainer.lineBreakMode = NSLineBreakByTruncatingTail;
     self.messageTextView.textContainer.maximumNumberOfLines = 2;
+    return height;
 }
 
 @end

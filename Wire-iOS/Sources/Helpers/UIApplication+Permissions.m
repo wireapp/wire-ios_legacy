@@ -50,7 +50,7 @@ NSString * const UserGrantedAudioPermissionsNotification = @"UserGrantedAudioPer
 
 + (void)wr_requestOrWarnAboutVideoAccess:(void(^)(BOOL granted))grantedHandler
 {
-    [AVCaptureDevice requestAccessForMediaType:AVMediaTypeVideo completionHandler:^(BOOL granted) {
+    [UIApplication wr_requestVideoAccess:^(BOOL granted) {
         dispatch_async(dispatch_get_main_queue(), ^{
             if (! granted) {
                 [self wr_warnAboutCameraPermissionWithCompletion:^{
@@ -60,6 +60,15 @@ NSString * const UserGrantedAudioPermissionsNotification = @"UserGrantedAudioPer
             else {
                 if (grantedHandler != nil) grantedHandler(granted);
             }
+        });
+    }];
+}
+
++ (void)wr_requestVideoAccess:(void(^)(BOOL granted))grantedHandler
+{
+    [AVCaptureDevice requestAccessForMediaType:AVMediaTypeVideo completionHandler:^(BOOL granted) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if (grantedHandler != nil) grantedHandler(granted);
         });
     }];
 }

@@ -87,7 +87,7 @@ extension ZMConversation {
                 handler(false)
             }))
             
-            badConnectionController.addAction(UIAlertAction(title: "general.cancel", style: .cancel, handler: { (_) in
+            badConnectionController.addAction(UIAlertAction(title: "general.cancel".localized, style: .cancel, handler: { (_) in
                 handler(true)
             }))
             

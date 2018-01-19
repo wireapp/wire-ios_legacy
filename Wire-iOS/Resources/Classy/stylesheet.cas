@@ -1259,7 +1259,7 @@ AddParticipantsViewController SearchHeaderViewController {
 
 AddParticipantsViewController {
     view: @{
-        backgroundColor: $color-background;
+        backgroundColor: $color-bar-background;
     }
 }
 
@@ -1327,20 +1327,18 @@ InviteContactsViewController ContactsSectionHeaderView {
 }
 
 TokenField {
-    font: $font-normal-light;
-    tokenTitleFont: $font-small-semibold;
     numberOfLines: 3;
     lineSpacing: 8;
     tokenOffset: 4;
-    tokenHeight: 20;
-    tokenTitleVerticalAdjustment: 0;
+    tokenBackgroundColor: clear;
+    tokenBorderColor: clear;
 
     textView: @{
         tintColor: $color-accent-current;
         autocorrectionType: no;
         returnKeyType: go;
-        placeholderFont: $font-small-light;
-        placeholderTextContainerInset: 13 10;
+        placeholderFont: $font-small-regular;
+        placeholderTextContainerInset: 0 48;
         placeholderTextTransform: upper;
         lineFragmentPadding: 0;
     }
@@ -1350,20 +1348,6 @@ StartUIViewController SearchHeaderViewController {
     titleLabel: @{
         font: $font-small-semibold;
     }
-}
-
-TokenField.search {
-    textView: @{
-        placeholderFont: $font-small-semibold;
-        placeholderTextContainerInset: 0 0;
-    }
-    tokenTitleFont: $font-medium-semibold;
-    tokenTitleColor: black;
-    tokenBackgroundColor: white;
-    tokenBorderColor: white;
-    tokenSelectedTitleColor: white;
-    tokenSelectedBackgroundColor: clear;
-    tokenSelectedBorderColor: white;
 }
 
 /* Ephemeral Keyboard */
@@ -1395,6 +1379,7 @@ ProfileDetailsViewController {
         font: $font-normal-light;
     }
 }
+
 /* Profile Devices */
 
 ProfileDevicesViewController {
@@ -1600,30 +1585,10 @@ ReactionCell {
     }
 }
 
-/* Share View Controller */
-
-TokenField.share {
-    textView: @{
-        placeholderFont: $font-medium-semibold;
-        placeholderTextContainerInset: 0 0;
-        placeholderTextColor: rgb(255, 255, 255, 0.6);
-        keyboardAppearance: dark;
-    }
-    backgroundColor: clear;
-    tokenTitleFont: $font-medium-semibold;
-    textColor: white;
-    tokenTitleColor: black;
-    tokenBackgroundColor: white;
-    tokenBorderColor: white;
-    tokenSelectedTitleColor: white;
-    tokenSelectedBackgroundColor: clear;
-    tokenSelectedBorderColor: white;
-}
-
 /* Collections */
 
 CollectionsView {
-    backgroundColor: $color-conversation-background;
+    backgroundColor: $color-content-background;
 }
 
 NoResultsView {
@@ -1702,25 +1667,25 @@ AppLockView {
 }
 
 TextSearchInputView {
-    backgroundColor: $color-background;
+    backgroundColor: $color-bar-background;
     
     searchInput: @{
         font: $font-normal;
         textColor: $color-text-foreground;
     }
     placeholderLabel: @{
-        font: $font-small-light;
+        font: $font-small-regular;
         textColor: $color-text-dimmed;
     }
 }
 
 TextSearchResultsView {
-    backgroundColor: $color-background;
+    backgroundColor: $color-content-background;
 }
 
 TextSearchResultCell {
     contentView: @{
-        backgroundColor: $color-background;
+        backgroundColor: $color-content-background;
     }
     resultCountView: @{
         backgroundColor: $color-graphite-light;

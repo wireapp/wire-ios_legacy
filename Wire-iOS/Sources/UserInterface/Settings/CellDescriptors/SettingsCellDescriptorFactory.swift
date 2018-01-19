@@ -71,7 +71,7 @@ import Foundation
                                                     identifier: nil,
                                                     presentationAction: { () -> (UIViewController?) in
                                                         Analytics.shared().tagOpenManageTeamURL()
-                                                        NSURL.wr_manageTeam().wr_URLByAppendingLocaleParameter().open()
+                                                        URL.manageTeam(source: .settings).open()
                                                         return nil
                                                     },
                                                     previewGenerator: nil,
@@ -202,7 +202,14 @@ import Foundation
 
         let versionTitle =  "self.settings.advanced.version_technical_details.title".localized
         let versionCell = SettingsButtonCellDescriptor(title: versionTitle, isDestructive: false) { _ in
-            UIApplication.shared.keyWindow?.rootViewController?.present(VersionInfoViewController(), animated: true, completion: .none)
+            let versionInfoViewController = VersionInfoViewController()
+            var superViewController = UIApplication.shared.keyWindow?.rootViewController
+            if let presentedViewController = superViewController?.presentedViewController {
+                superViewController = presentedViewController
+                versionInfoViewController.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
+                versionInfoViewController.navigationController?.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
+            }
+            superViewController?.present(versionInfoViewController, animated: true, completion: .none)
         }
 
         let versionSection = SettingsSectionDescriptor(cellDescriptors: [versionCell])

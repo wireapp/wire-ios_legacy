@@ -82,11 +82,11 @@ IB_DESIGNABLE
 @property (nonatomic, nullable) IBInspectable UIColor *tokenSelectedBackgroundColor;
 @property (nonatomic, nullable) IBInspectable UIColor *tokenBorderColor;
 @property (nonatomic, nullable) IBInspectable UIColor *tokenSelectedBorderColor;
+@property (nonatomic, nullable) IBInspectable UIColor *dotColor;
 @property (nonatomic) TextTransform tokenTextTransform;
 
 @property (nonatomic) IBInspectable CGFloat lineSpacing;
 @property (nonatomic) IBInspectable CGFloat tokenOffset;    // horisontal distance between tokens, and btw "To:" and first token
-@property (nonatomic) IBInspectable CGFloat tokenHeight;    // if set to 0.0 or bigger than tokenField.font.leading, tokenField.font.leading value is used
 @property (nonatomic) IBInspectable CGFloat tokenTitleVerticalAdjustment;
 
 // Utils

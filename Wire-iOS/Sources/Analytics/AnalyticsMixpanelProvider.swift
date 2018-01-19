@@ -31,7 +31,18 @@ fileprivate enum MixpanelSuperProperties: String {
 
 extension Dictionary where Key == String, Value == Any {
     fileprivate static func bridgeOrDescription(for object: Any) -> MixpanelType? {
-        if object is MixpanelType {
+        if let object = object as? NSNumber {
+            let numberType = CFNumberGetType(object)
+
+            switch numberType {
+            case .charType:
+                return object.boolValue
+            case .sInt8Type, .sInt16Type, .sInt32Type, .sInt64Type, .shortType, .intType, .longType, .longLongType, .cfIndexType, .nsIntegerType:
+                return object.intValue
+            case .float32Type, .float64Type, .floatType, .doubleType, .cgFloatType:
+                return object.floatValue
+            }
+        } else if object is MixpanelType {
             return (object as! MixpanelType)
         }
         else if object is NSString {
@@ -86,6 +97,8 @@ final class AnalyticsMixpanelProvider: NSObject, AnalyticsProvider {
         "calling.received_call",
         "calling.received_video_call",
         "calling.avs_metrics_ended_call",
+        "notifications.processing",
+        TeamInviteEvent.sentInvite(.teamCreation).name
         ])
     
     private static let enabledSuperProperties = Set<String>([

@@ -20,18 +20,6 @@
 #import <Foundation/Foundation.h>
 #import "CollectionViewSectionController.h"
 
-FOUNDATION_EXPORT NSString *const PeoplePickerUsersInDirectoryCellReuseIdentifier;
-
-typedef NS_ENUM(NSUInteger, PeoplePickerSuggestionsState) {
-    PeoplePickerSuggestionsStateInitial,
-    PeoplePickerSuggestionsStateLoaded,
-    PeoplePickerSuggestionsStateLoading,
-    PeoplePickerSuggestionsStateNotAvailable,
-};
-
-@class UsersInDirectorySection;
-
 @interface UsersInDirectorySection : NSObject <CollectionViewSectionController>
-@property (nonatomic) PeoplePickerSuggestionsState suggestionsState;
 @property (nonatomic, copy) NSArray *suggestions;
 @end

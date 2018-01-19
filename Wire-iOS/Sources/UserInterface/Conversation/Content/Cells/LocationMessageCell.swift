@@ -211,8 +211,9 @@ public final class LocationMessageCell: ConversationCell {
         }
     }
     
-    public override func preparePreview() {
-        super.preparePreview()
+    public override func prepareLayoutForPreview(message: ZMMessage?) -> CGFloat {
+        let height = super.prepareLayoutForPreview(message: message)
         self.containerHeightConstraint.constant = 160
+        return height
     }
 }

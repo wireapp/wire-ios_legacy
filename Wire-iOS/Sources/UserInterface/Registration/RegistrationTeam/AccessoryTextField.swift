@@ -38,7 +38,7 @@ class AccessoryTextField: UITextField {
     }
 
     let textFieldValidator: TextFieldValidator
-    public var textFieldValidationDelegate: TextFieldValidationDelegate?
+    public weak var textFieldValidationDelegate: TextFieldValidationDelegate?
 
     // MARK:- UI constants
 
@@ -46,26 +46,29 @@ class AccessoryTextField: UITextField {
     static let placeholderFont = FontSpec(.small, .regular).font!
     static private let ConfirmButtonWidth: CGFloat = 32
 
+    var isLoading = false {
+        didSet {
+            updateLoadingState()
+        }
+    }
+    
     var kind: Kind {
         didSet {
             setupTextFieldProperties()
+        }
+    }
+    
+    var overrideButtonIcon: ZetaIconType? {
+        didSet {
+            updateButtonIcon()
         }
     }
 
     let confirmButton: IconButton = {
         let iconButton = IconButton.iconButtonCircularLight()
         iconButton.circular = true
-
-        iconButton.setIcon(UIApplication.isLeftToRightLayout ? .chevronRight : .chevronLeft, with: ZetaIconSize.tiny, for: .normal)
-        iconButton.setIconColor(UIColor.Team.textColor, for: .normal)
-        iconButton.setIconColor(UIColor.Team.textfieldColor, for: .disabled)
-        iconButton.adjustsImageWhenDisabled = false
-        iconButton.setBackgroundImageColor(UIColor.Team.activeButtonColor, for: .normal)
-        iconButton.setBackgroundImageColor(UIColor.Team.inactiveButtonColor, for: .disabled)
-
         iconButton.accessibilityIdentifier = "AccessoryTextFieldConfirmButton"
         iconButton.isEnabled = false
-
         return iconButton
     }()
 
@@ -113,6 +116,7 @@ class AccessoryTextField: UITextField {
 
         setup()
         setupTextFieldProperties()
+        updateButtonIcon()
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -143,6 +147,44 @@ class AccessoryTextField: UITextField {
             keyboardType = .asciiCapable
         }
     }
+    
+    private func updateLoadingState() {
+        updateButtonIcon()
+        let animationKey = "rotation_animation"
+        if isLoading {
+            let animation = CABasicAnimation.rotateAnimation(withRotationSpeed: 1.4, beginTime: 0, delegate: nil)
+            confirmButton.layer.add(animation, forKey: animationKey)
+        } else {
+            confirmButton.layer.removeAnimation(forKey: animationKey)
+        }
+    }
+    
+    private var buttonIcon: ZetaIconType {
+        return isLoading
+        ? .spinner
+        : overrideButtonIcon ?? (UIApplication.isLeftToRightLayout ? .chevronRight : .chevronLeft)
+    }
+    
+    private var iconSize: ZetaIconSize {
+        return isLoading ? .medium : .tiny
+    }
+    
+    private func updateButtonIcon() {
+        confirmButton.setIcon(buttonIcon, with: iconSize, for: .normal)
+        
+        if isLoading {
+            confirmButton.setIconColor(UIColor.Team.inactiveButtonColor, for: .normal)
+            confirmButton.setBackgroundImageColor(.clear, for: .normal)
+            confirmButton.setBackgroundImageColor(.clear, for: .disabled)
+        } else {
+            confirmButton.setIconColor(UIColor.Team.textfieldColor, for: .normal)
+            confirmButton.setIconColor(UIColor.Team.textfieldColor, for: .disabled)
+            confirmButton.setBackgroundImageColor(UIColor.Team.activeButtonColor, for: .normal)
+            confirmButton.setBackgroundImageColor(UIColor.Team.inactiveButtonColor, for: .disabled)
+        }
+
+        confirmButton.adjustsImageWhenDisabled = false
+    }
 
     private func setup() {
         self.confirmButton.addTarget(self, action: #selector(confirmButtonTapped(button:)), for: .touchUpInside)
@@ -164,6 +206,10 @@ class AccessoryTextField: UITextField {
     // MARK: - text validation
 
     func confirmButtonTapped(button: UIButton) {
+        validateInput()
+    }
+    
+    func validateInput() {
         let error = textFieldValidator.validate(text: text, kind: kind)
         textFieldValidationDelegate?.validationUpdated(sender: self, error: error)
     }
@@ -179,7 +225,7 @@ class AccessoryTextField: UITextField {
     override open var placeholder: String? {
         set {
             if let newValue = newValue {
-                attributedPlaceholder = attributedPlaceholderString(placeholder: newValue.uppercased())
+                attributedPlaceholder = attributedPlaceholderString(placeholder: newValue)
             }
         }
         get {

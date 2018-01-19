@@ -28,7 +28,7 @@ public protocol TextSearchInputViewDelegate: class {
 
 public final class TextSearchInputView: UIView {
     public let iconView = UIImageView()
-    public let searchInput = UITextField()
+    public let searchInput = UITextView()
     public let placeholderLabel = UILabel()
     public let cancelButton = IconButton.iconButtonDefault()
 
@@ -61,14 +61,16 @@ public final class TextSearchInputView: UIView {
         iconView.image = UIImage(for: .search, iconSize: .tiny, color: colorScheme.color(withName: ColorSchemeColorTextForeground))
         iconView.contentMode = .center
         
-        searchInput.borderStyle = .none
         searchInput.delegate = self
         searchInput.autocorrectionType = .no
         searchInput.accessibilityLabel = "Search"
         searchInput.accessibilityIdentifier = "search input"
         searchInput.keyboardAppearance = ColorScheme.default().keyboardAppearance
+        searchInput.layer.cornerRadius = 4
+        searchInput.backgroundColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorTokenFieldBackground)
+        searchInput.textContainerInset = UIEdgeInsetsMake(10, 40, 10, 8)
         
-        placeholderLabel.textAlignment = .center
+        placeholderLabel.textAlignment = .natural
         placeholderLabel.isAccessibilityElement = false
         
         cancelButton.setIcon(.clearInput, with: .tiny, for: .normal)
@@ -85,20 +87,17 @@ public final class TextSearchInputView: UIView {
     
     private func createConstraints() {
         constrain(self, iconView, searchInput, placeholderLabel, cancelButton) { selfView, iconView, searchInput, placeholderLabel, cancelButton in
-            iconView.leading == selfView.leading
-            iconView.width == 48
-            iconView.height >= 48
+            iconView.leading == searchInput.leading + 8
+            iconView.centerY == searchInput.centerY
             
             iconView.top == selfView.top
             iconView.bottom == selfView.bottom
             
             selfView.height <= 100
             
-            searchInput.leading == iconView.trailing
-            searchInput.top == selfView.top
-            searchInput.bottom == selfView.bottom
+            searchInput.edges == inset(selfView.edges, UIEdgeInsetsMake(8, 8, 8, 8))
 
-            placeholderLabel.leading == searchInput.leading
+            placeholderLabel.leading == searchInput.leading + 48
             placeholderLabel.top == searchInput.top
             placeholderLabel.bottom == searchInput.bottom
             placeholderLabel.trailing == cancelButton.leading
@@ -106,15 +105,13 @@ public final class TextSearchInputView: UIView {
 
         constrain(self, searchInput, cancelButton, spinner) { view, searchInput, cancelButton, spinner in
             cancelButton.centerY == view.centerY
-            cancelButton.trailing == view.trailing
-            cancelButton.width == 48
-            cancelButton.height == 48
+            cancelButton.trailing == searchInput.trailing - 8
+            cancelButton.width == UIImage.size(for: .tiny)
+            cancelButton.height == UIImage.size(for: .tiny)
 
             spinner.trailing == cancelButton.leading - 6
             spinner.centerY == cancelButton.centerY
-            spinner.width == CGFloat(ZetaIconSize.tiny.rawValue)
-
-            searchInput.trailing == spinner.leading - 6
+            spinner.width == UIImage.size(for: .tiny)
         }
     }
     
@@ -129,7 +126,7 @@ public final class TextSearchInputView: UIView {
     }
     
     fileprivate func updatePlaceholderLabel() {
-        self.placeholderLabel.isHidden = !self.query.isEmpty || self.searchInput.isEditing
+        self.placeholderLabel.isHidden = !self.query.isEmpty
     }
     
     fileprivate func updateForSearchQuery() {
@@ -138,32 +135,33 @@ public final class TextSearchInputView: UIView {
     }
 }
 
-extension TextSearchInputView: UITextFieldDelegate {
-    public func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        guard let text = textField.text else {
+extension TextSearchInputView: UITextViewDelegate {
+    
+    public func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        guard let currentText = textView.text else {
             return true
         }
-        let containsReturn = string.rangeOfCharacter(from: .newlines, options: [], range: .none) != .none
+        let containsReturn = text.rangeOfCharacter(from: .newlines, options: [], range: .none) != .none
         
-        let newText = (text as NSString).replacingCharacters(in: range, with: string)
-        self.query = containsReturn ? text : newText
+        let newText = (currentText as NSString).replacingCharacters(in: range, with: text)
+        self.query = containsReturn ? currentText : newText
+        
+        if containsReturn {
+            let shouldReturn = delegate?.searchViewShouldReturn(self) ?? true
+            if shouldReturn {
+                textView.resignFirstResponder()
+            }
+        }
         
         return !containsReturn
     }
+        
+    public func textViewDidBeginEditing(_ textView: UITextView) {
+        self.updatePlaceholderLabel()
+    }
 
-    public func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        let shouldReturn = delegate?.searchViewShouldReturn(self) ?? true
-        if shouldReturn {
-            textField.resignFirstResponder()
-        }
-        return shouldReturn
-    }
-    
-    public func textFieldDidBeginEditing(_ textField: UITextField) {
+    public func textViewDidEndEditing(_ textView: UITextView) {
         self.updatePlaceholderLabel()
     }
-    
-    public func textFieldDidEndEditing(_ textField: UITextField) {
-        self.updatePlaceholderLabel()
-    }
+
 }

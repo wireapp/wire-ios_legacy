@@ -25,24 +25,9 @@
 
 @implementation CollectionViewSectionAggregator
 
-- (void)dealloc
-{
-    for (NSObject<CollectionViewSectionController> *oldSection in _sectionControllers) {
-        [oldSection removeObserver:self forKeyPath:NSStringFromSelector(@selector(isHidden))];
-    }
-}
-
 - (void)setSectionControllers:(NSArray *)sectionControllers
 {
-    for (NSObject<CollectionViewSectionController> *oldSection in _sectionControllers) {
-        [oldSection removeObserver:self forKeyPath:NSStringFromSelector(@selector(isHidden))];
-    }
-    
     _sectionControllers = sectionControllers;
-    
-    for (NSObject<CollectionViewSectionController> *newSection in _sectionControllers) {
-        [newSection addObserver:self forKeyPath:NSStringFromSelector(@selector(isHidden)) options:NSKeyValueObservingOptionNew context:NULL];
-    }
     
     [self updateCollectionViewWithControllers];
 }
@@ -80,14 +65,6 @@
         if ([controller respondsToSelector:@selector(reloadData)]) {            
             [controller reloadData];
         }
-    }
-}
-
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
-{
-    if ([keyPath isEqualToString:NSStringFromSelector(@selector(isHidden))]) {
-        [self updateCollectionViewWithControllers];
-        [self reloadData];
     }
 }
 
@@ -152,13 +129,6 @@
     id <CollectionViewSectionController> sectionController = self.visibleSectionControllers[section];
     
     return [sectionController collectionView:collectionView layout:collectionViewLayout insetForSectionAtIndex:0];
-}
-
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView
-{
-    if (self.delegate) {
-        [self.delegate scrollViewDidScroll:scrollView];
-    }
 }
 
 @end

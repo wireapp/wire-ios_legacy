@@ -26,7 +26,7 @@ private let emojiKeyboardEvent = "media.opened_emoji_keyboard"
 extension Analytics {
 
     @objc public func tagEmojiKeyboardOpenend(_ conversation: ZMConversation) {
-        let isBot = conversation.isBotConversation ? "true" : "false"
+        let isBot = conversation.isServiceUserConversation ? "true" : "false"
         tagEvent(emojiKeyboardEvent, attributes: ["with_bot": isBot])
     }
 

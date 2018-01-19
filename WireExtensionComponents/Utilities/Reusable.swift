@@ -24,16 +24,13 @@ public protocol Reusable {
 }
 
 public extension Reusable {
-    
     static var reuseIdentifier: String {
-        get {
-            return "\(self)"
-        }
+        return "\(self)"
     }
     
     var reuseIdentifier: String? {
-        get {
-            return type(of: self).reuseIdentifier
-        }
+        return type(of: self).reuseIdentifier
     }
 }
+
+extension UITableViewCell: Reusable {}

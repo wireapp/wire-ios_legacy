@@ -1,4 +1,4 @@
-// 
+//
 // Wire
 // Copyright (C) 2016 Wire Swiss GmbH
 // 
@@ -174,7 +174,6 @@
                                                 rect.size.height - self.placeholderTextContainerInset.top - self.placeholderTextContainerInset.bottom);
             self.placeholderLabel = [[UILabel alloc] initWithFrame:placeholderRect];
             self.placeholderLabel.font = self.placeholderFont;
-            self.placeholderLabel.textAlignment = self.textAlignment;
             self.placeholderLabel.textColor = self.placeholderTextColor;
             self.placeholderLabel.textTransform = self.placeholderTextTransform;
             self.placeholderLabel.textAlignment = self.placeholderTextAlignment;

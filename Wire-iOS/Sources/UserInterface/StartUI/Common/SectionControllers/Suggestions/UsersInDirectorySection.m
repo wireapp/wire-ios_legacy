@@ -40,11 +40,6 @@ NSString *const PeoplePickerUsersInDirectoryCellReuseIdentifier = @"PeoplePicker
 @synthesize collectionView = _collectionView;
 @synthesize delegate = _delegate;
 
-- (BOOL)hasSearchResults
-{
-    return (self.suggestions.count > 0);
-}
-
 - (void)setCollectionView:(UICollectionView *)collectionView
 {
     _collectionView = collectionView;
@@ -65,11 +60,6 @@ NSString *const PeoplePickerUsersInDirectoryCellReuseIdentifier = @"PeoplePicker
 - (BOOL)isHidden
 {
     return (self.suggestions.count == 0);
-}
-
-+ (NSSet *)keyPathsForValuesAffectingIsHidden
-{
-    return [NSSet setWithObject:NSStringFromSelector(@selector(suggestions))];
 }
 
 /// Creates the map (memory address)->(index) in array for @p searchResultUsersInDirectory
@@ -230,32 +220,6 @@ NSString *const PeoplePickerUsersInDirectoryCellReuseIdentifier = @"PeoplePicker
 }
 
 #pragma mark - Single item animation
-
-/**
- *  This method checks if the single item was deleted from the dataset
- *
- *  @param from initial dataset state
- *  @param to   new dataset state
- *
- *  @return If the update is possible
- */
-+ (BOOL)canDoSingleDeleteAnimationFrom:(NSArray *)from to:(NSArray *)to
-{
-    if (to.count + 1 == from.count) { // single element is removed
-        BOOL allUsersWasDisplayed = YES;
-        for (id resultItem in to) {
-            if ([from indexOfObject:resultItem] == NSNotFound) {
-                allUsersWasDisplayed = NO;
-                break;
-            }
-        }
-
-        return allUsersWasDisplayed;
-    }
-    else {
-        return NO;
-    }
-}
 
 /**
  *  Method to animate single item deletion

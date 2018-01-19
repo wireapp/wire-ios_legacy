@@ -45,7 +45,7 @@ final class AccessoryTextFieldTests: ZMSnapshotTestCase {
         // GIVEN
 
         // WHEN
-        sut.placeholder = "team name"
+        sut.placeholder = "TEAM NAME"
 
         // THEN
         self.verify(view: sut.snapshotView())

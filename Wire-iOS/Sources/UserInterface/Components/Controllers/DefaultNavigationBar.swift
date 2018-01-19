@@ -35,8 +35,8 @@ class DefaultNavigationBar : UINavigationBar {
     func configure() {
         isTranslucent = false
         tintColor = ColorScheme.default().color(withName: ColorSchemeColorTextForeground)
-        barTintColor = ColorScheme.default().color(withName: ColorSchemeColorBackground)
-        setBackgroundImage(UIImage.singlePixelImage(with: ColorScheme.default().color(withName: ColorSchemeColorBackground)), for: .default)
+        barTintColor = ColorScheme.default().color(withName: ColorSchemeColorBarBackground)
+        setBackgroundImage(UIImage.singlePixelImage(with: ColorScheme.default().color(withName: ColorSchemeColorBarBackground)), for: .default)
         titleTextAttributes = [NSFontAttributeName: UIFont(magicIdentifier: "style.text.title.font_spec"),
                                NSForegroundColorAttributeName: ColorScheme.default().color(withName: ColorSchemeColorTextForeground)]
         setTitleVerticalPositionAdjustment(-2.0, for: .default)

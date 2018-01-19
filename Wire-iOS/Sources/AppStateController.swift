@@ -133,7 +133,14 @@ extension AppStateController : SessionManagerDelegate {
         updateAppState()
     }
     
-    func sessionManagerWillStartMigratingLocalStore() {
+    func sessionManagerWillMigrateLegacyAccount() {
+        isMigrating = true
+        updateAppState()
+    }
+    
+    func sessionManagerWillMigrateAccount(_ account: Account) {
+        guard account == loadingAccount else { return }
+        
         isMigrating = true
         updateAppState()
     }
