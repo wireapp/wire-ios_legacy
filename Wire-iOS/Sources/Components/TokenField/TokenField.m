@@ -23,6 +23,8 @@
 #import "TokenTextAttachment.h"
 #import "IconButton.h"
 #import "Logging.h"
+#import "ColorScheme.h"
+#import "Wire-Swift.h"
 
 
 CGFloat const accessoryButtonSize = 32.0f;
@@ -88,12 +90,12 @@ CGFloat const accessoryButtonSize = 32.0f;
 
 - (void)setupDefaultAppearance
 {
-    _font = [UIFont systemFontOfSize:[UIFont systemFontSize]];
+    [self setupFonts];
     _textColor = [UIColor blackColor];
     _lineSpacing = 8.0f;
     _hasAccessoryButton = NO;
-    
-    self.tokenTitleFont = [UIFont boldSystemFontOfSize:[UIFont systemFontSize] - 2];
+    _tokenTitleVerticalAdjustment = 1;
+
     self.tokenTitleColor = [UIColor whiteColor];
     self.tokenSelectedTitleColor = [UIColor colorWithRed:0.103 green:0.382 blue:0.691 alpha:1.000];
     self.tokenBackgroundColor = [UIColor colorWithRed:0.118 green:0.467 blue:0.745 alpha:1.000];
@@ -101,6 +103,7 @@ CGFloat const accessoryButtonSize = 32.0f;
     self.tokenBorderColor = [UIColor colorWithRed:0.118 green:0.467 blue:0.745 alpha:1.000];
     self.tokenSelectedBorderColor = [UIColor colorWithRed:0.118 green:0.467 blue:0.745 alpha:1.000];
     self.tokenTextTransform = TextTransformUpper;
+    self.dotColor = [ColorScheme.defaultColorScheme colorWithName:ColorSchemeColorTextDimmed];
 }
 
 - (void)setupSubviews

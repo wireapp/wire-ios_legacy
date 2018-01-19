@@ -82,7 +82,7 @@ final class TeamInviteTextFieldFooterView: UIView {
         errorLabel.textColor = UIColor.Team.errorMessageColor
         textField.overrideButtonIcon = .send
         textFieldDescriptor.valueValidated = { [weak self] error in
-            self?.errorMessage = error.errorDescription
+            self?.errorMessage = error.errorDescription?.uppercased()
             if error == .none {
                 self?.errorButton.isHidden = true
             }

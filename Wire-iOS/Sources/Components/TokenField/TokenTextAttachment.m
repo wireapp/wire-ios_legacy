@@ -43,7 +43,7 @@
 {
     const CGFloat dotSize = 4.0f;
     const CGFloat dotSpacing = 8.0f;
-    const CGFloat imageHeight = ceilf(self.tokenField.font.capHeight);
+    const CGFloat imageHeight = ceilf(self.tokenField.font.pointSize);
     
     CGSize imageSize = CGSizeMake(dotSize + dotSpacing * 2, imageHeight);
     

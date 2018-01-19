@@ -1327,12 +1327,9 @@ InviteContactsViewController ContactsSectionHeaderView {
 }
 
 TokenField {
-    font: $font-normal-regular;
-    tokenTitleFont: $font-small-regular;
     numberOfLines: 3;
     lineSpacing: 8;
     tokenOffset: 4;
-    dotColor: $color-text-dimmed;
     tokenBackgroundColor: clear;
     tokenBorderColor: clear;
 
