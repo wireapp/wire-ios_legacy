@@ -20,7 +20,10 @@ import UIKit
 
 extension TokenField {
     func setupFonts() {
-        font = FontSpec(.normal, .regular).font
-        tokenTitleFont = FontSpec(.small, .regular).font
+        // Dynamic Type is disabled for now until the separator dots
+        // vertical alignment has been fixed for larger fonts.
+        let schema = FontScheme(contentSizeCategory: .medium)
+        font = schema.font(for: .init(.normal, .regular))
+        tokenTitleFont = schema.font(for: .init(.small, .regular))
     }
 }

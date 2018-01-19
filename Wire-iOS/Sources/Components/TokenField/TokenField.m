@@ -400,6 +400,7 @@ CGFloat const accessoryButtonSize = 32.0f;
 - (void)removeAllTokens
 {
     [self removeTokens:[self.currentTokens copy]];
+    [self.textView showOrHidePlaceholder];
 }
 
 - (void)removeTokens:(NSArray *)tokensToRemove
