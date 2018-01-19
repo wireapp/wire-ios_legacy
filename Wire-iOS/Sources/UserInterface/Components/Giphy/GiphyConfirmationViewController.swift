@@ -19,7 +19,7 @@
 import UIKit
 import Cartography
 
-protocol GiphyConfirmationViewControllerDelegate {
+protocol GiphyConfirmationViewControllerDelegate: class {
     
     func giphyConfirmationViewController(_ giphyConfirmationViewController: GiphyConfirmationViewController, didConfirmImageData imageData: Data)
     
