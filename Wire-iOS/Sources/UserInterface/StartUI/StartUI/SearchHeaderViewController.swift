@@ -62,8 +62,6 @@ public class SearchHeaderViewController : UIViewController {
         super.init(nibName: nil, bundle: nil)
         
         userSelection.add(observer: self)
-        tokenField.font = FontSpec(.normal, .regular).font
-        tokenField.tokenTitleFont = FontSpec(.small, .regular).font
     }
     
     public override func viewDidLoad() {
