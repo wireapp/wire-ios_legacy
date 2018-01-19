@@ -31,8 +31,8 @@ class GiphyConfirmationViewController: UIViewController {
     var acceptButton = Button(style: .full)
     var cancelButton = Button(style: .empty)
     var buttonContainer = UIView()
-    var delegate : GiphyConfirmationViewControllerDelegate?
-    let searchResultController : ZiphySearchResultsController
+    weak var delegate : GiphyConfirmationViewControllerDelegate?
+    unowned let searchResultController : ZiphySearchResultsController
     let ziph : Ziph
     var imageData : Data?
     

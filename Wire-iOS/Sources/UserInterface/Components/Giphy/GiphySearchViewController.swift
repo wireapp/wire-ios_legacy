@@ -257,13 +257,10 @@ class GiphySearchViewController: UICollectionViewController {
                                                             for: indexPath) as? GiphyCollectionViewCell
             else {
                 fatal("cannot dequeue cell")
-        }
+            }
 
-        var ziph: ziphy.Ziph! = nil
-        if indexPath.row < searchResultsController.results.count {
-            ziph = searchResultsController.results[indexPath.row]
-        }
-
+        let ziph = searchResultsController.results[indexPath.row]
+        
         if let representation = ziph.ziphyImages[ZiphyClient.fromZiphyImageTypeToString(.fixedWidthDownsampled)] {
             cell.ziph = ziph
             cell.representation = representation
