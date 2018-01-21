@@ -23,6 +23,7 @@ final class GiphySearchViewControllerTests: XCTestCase {
     
     weak var sut: GiphySearchViewController!
     var mockConversation: MockConversation!
+    let searchTerm: String = "apple"
 
     override func setUp() {
         super.setUp()
@@ -43,7 +44,6 @@ final class GiphySearchViewControllerTests: XCTestCase {
     func testGiphySearchViewControllerIsNotRetainedAfterTimerIsScheduled(){
         autoreleasepool{
             // GIVEN
-            let searchTerm: String = "apple"
 
             var giphySearchViewController: GiphySearchViewController! = GiphySearchViewController(withSearchTerm: searchTerm, conversation: (mockConversation as Any) as! ZMConversation)
             sut = giphySearchViewController
@@ -58,28 +58,53 @@ final class GiphySearchViewControllerTests: XCTestCase {
         XCTAssertNil(sut)
     }
 
-    func testGiphySearchViewControllerIsNotRetainedPresentAndDismiss(){
+    func testThatRootViewControllerPresentAndDismissNavigationControllerDoesNotRetain() {
+        
+        weak var sutNavi: UINavigationController!
+        var strongGiphySearchViewController:GiphySearchViewController!
+        
         autoreleasepool{
             // GIVEN
-            let searchTerm: String = "apple"
+            let window = (UIApplication.shared.delegate as! AppDelegate).window
+            window.rootViewController = UIViewController()
             
-            let giphySearchViewController: GiphySearchViewController = GiphySearchViewController(withSearchTerm: searchTerm, conversation: (mockConversation as Any) as! ZMConversation)
+            let giphySearchViewController: GiphySearchViewController! = GiphySearchViewController(withSearchTerm: searchTerm, conversation: (mockConversation as Any) as! ZMConversation)
             sut = giphySearchViewController
+            strongGiphySearchViewController = giphySearchViewController
             
-            let mockViewController = UIViewController()
+            
+            let navigationController = giphySearchViewController.wrapInsideNavigationController()
+            sutNavi = navigationController
+            
+            
+            window.makeKeyAndVisible()
+            window.rootViewController?.viewDidAppear(false)
+            
+            let exp = expectation(description: "Wait for present and dismiss")
             
             // WHEN
-            mockViewController.present(giphySearchViewController.wrapInsideNavigationController(), animated: false) {
+            window.rootViewController?.present(navigationController, animated: false){
+                XCTAssertNotNil(giphySearchViewController.view)
+                giphySearchViewController.viewDidAppear(false)
+                
+                XCTAssertNotNil(sutNavi)
                 XCTAssertNotNil(self.sut)
                 
-                giphySearchViewController.onDismiss(){ _ in
-                    XCTAssertNil(self.sut)
+                navigationController.dismiss(animated: false){
+                    window.rootViewController?.viewDidAppear(false)
+                    XCTAssertNotNil(sutNavi)
+                    XCTAssertNotNil(self.sut)
+                    exp.fulfill()
                 }
             }
         }
         
+        waitForExpectations(timeout: 1.0, handler: nil)
+        
         // THEN
+        XCTAssertNotNil(strongGiphySearchViewController)
+        strongGiphySearchViewController = nil
+        XCTAssertNil(sutNavi)
         XCTAssertNil(sut)
-
     }
 }

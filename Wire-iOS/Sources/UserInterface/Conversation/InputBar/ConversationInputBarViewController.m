@@ -1233,6 +1233,7 @@
 
 @implementation ConversationInputBarViewController (GiphySearchViewControllerDelegate)
 
+///TODO: check this func retains giphySearchViewController?
 - (void)giphySearchViewController:(GiphySearchViewController *)giphySearchViewController didSelectImageData:(NSData *)imageData searchTerm:(NSString *)searchTerm
 {
     [[Analytics shared] tagMediaSentPictureSourceOtherInConversation:self.conversation source:ConversationMediaPictureSourceGiphy];
