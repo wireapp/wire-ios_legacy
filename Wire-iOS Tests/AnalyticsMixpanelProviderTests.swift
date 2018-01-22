@@ -23,8 +23,13 @@ class AnalyticsMixpanelProviderTests: XCTestCase {
     
     override func setUp() {
         super.setUp()
+    }
+    
+    override func tearDown() {
         UserDefaults.shared().set(nil, forKey: MixpanelDistinctIdKey)
         UserDefaults.shared().synchronize()
+        
+        super.tearDown()
     }
     
     func testThatItGeneratesAndStoresUniqueMixpanelId() {

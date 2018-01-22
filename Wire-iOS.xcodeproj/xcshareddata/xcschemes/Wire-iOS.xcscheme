@@ -107,7 +107,7 @@
          </CommandLineArgument>
          <CommandLineArgument
             argument = "OPTIN_STDERR YES"
-            isEnabled = "NO">
+            isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
             argument = "-DisableHockeyUpdates 1"

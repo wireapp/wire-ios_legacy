@@ -42,7 +42,7 @@ class AppStateController : NSObject {
     fileprivate var hasCompletedRegistration = false
     fileprivate var loadingAccount : Account?
     fileprivate var authenticationError : Error?
-    fileprivate let isRunningTests = ProcessInfo.processInfo.environment["XCTestConfigurationFilePath"] != nil
+    fileprivate let isRunningTests = ProcessInfo.processInfo.isRunningTests
     
     override init() {
         super.init()

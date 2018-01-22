@@ -24,6 +24,7 @@
 		161541BC1E28FFAE00AC2FFB /* CircularProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 161541BB1E28FFAE00AC2FFB /* CircularProgressView.swift */; };
 		16271BC61D9EB12E00689486 /* TypingIndicatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16271BC51D9EB12E00689486 /* TypingIndicatorView.swift */; };
 		16271BC81DA5213400689486 /* TypingIndicatorViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16271BC71DA5213400689486 /* TypingIndicatorViewTests.swift */; };
+		162836142016574D0027082D /* ProcessInfo+Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 162836132016574D0027082D /* ProcessInfo+Tests.swift */; };
 		162917C91F8BB991000F3E92 /* NetworkStatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 162917C81F8BB991000F3E92 /* NetworkStatusView.swift */; };
 		162917CC1F8CC176000F3E92 /* NetworkStatusViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 162917CA1F8CC0B0000F3E92 /* NetworkStatusViewTests.swift */; };
 		162917CE1F8CD327000F3E92 /* NetworkStatusViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 162917CD1F8CD327000F3E92 /* NetworkStatusViewController.swift */; };
@@ -1143,6 +1144,7 @@
 		1621AFDA1C0DEE1500FAE41A /* TabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		16271BC51D9EB12E00689486 /* TypingIndicatorView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TypingIndicatorView.swift; sourceTree = "<group>"; };
 		16271BC71DA5213400689486 /* TypingIndicatorViewTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TypingIndicatorViewTests.swift; sourceTree = "<group>"; };
+		162836132016574D0027082D /* ProcessInfo+Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ProcessInfo+Tests.swift"; sourceTree = "<group>"; };
 		162917C81F8BB991000F3E92 /* NetworkStatusView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkStatusView.swift; sourceTree = "<group>"; };
 		162917CA1F8CC0B0000F3E92 /* NetworkStatusViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkStatusViewTests.swift; sourceTree = "<group>"; };
 		162917CD1F8CD327000F3E92 /* NetworkStatusViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkStatusViewController.swift; sourceTree = "<group>"; };
@@ -4392,6 +4394,7 @@
 				8711A59F1E0C320100043ACF /* FloatingPoint.swift */,
 				BF8ECC321E5AED6C0015177D /* UIMenuItem+MessageActions.swift */,
 				8742C2E91E5309FC00329FB6 /* NSAttributedString+Highlight.swift */,
+				162836132016574D0027082D /* ProcessInfo+Tests.swift */,
 				7CA540811F740B7C00457F4B /* UIScreen+Compact.h */,
 				7CA540821F740B7C00457F4B /* UIScreen+Compact.m */,
 				EF2C18A11FED541F00E9F2FD /* Timer+allVersionCompatibleScheduledTimer.swift */,
@@ -6217,6 +6220,7 @@
 				EF2127101FB9DFE300625A9B /* SignInViewController.m in Sources */,
 				871BC2391D34F8F800DF0793 /* KeyboardAvoidingViewController.m in Sources */,
 				8F89140D1A9F287E0056AB0C /* ConnectRequestsCell.m in Sources */,
+				162836142016574D0027082D /* ProcessInfo+Tests.swift in Sources */,
 				8736F1C21E4DCEB8001CBA62 /* AppLockViewController.swift in Sources */,
 				871BC28A1D34F8F800DF0793 /* UIImagePickerController+GetImage.m in Sources */,
 				7CA540831F740B7C00457F4B /* UIScreen+Compact.m in Sources */,

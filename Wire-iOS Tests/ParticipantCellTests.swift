@@ -82,7 +82,7 @@ class ParticipantsCellTests: CoreDataSnapshotTestCase {
     // MARK: - Helper
 
     private func cell(for type: ZMSystemMessageType, fromSelf: Bool, manyUsers: Bool = false, left: Bool = false) -> IconSystemCell {
-        let message = ZMSystemMessage.insertNewObject(in: moc)
+        let message = ZMSystemMessage.insertNewObject(in: uiMOC)
         message.sender = fromSelf ? selfUser : otherUser
         message.systemMessageType = type
 

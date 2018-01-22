@@ -110,8 +110,10 @@ extension Dictionary
     // MARK: - CASCacheProtocol
     
     func cacheStyleNodes(_ styleNodes: [AnyObject]!, fromPath path: String!, variables: [AnyHashable: Any]!) {
-        guard let bcasPath = self.bcasPath(path, variables: variables),
-            let styleNodes = styleNodes else {
+
+        guard !ProcessInfo.processInfo.isRunningTests,
+              let bcasPath = self.bcasPath(path, variables: variables),
+              let styleNodes = styleNodes else {
             return
         }
         
