@@ -27,7 +27,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (instancetype)wr_fingerprintHowToVerifyURL;
 
-+ (instancetype)wr_termsOfServicesURL;
++ (instancetype)wr_termsOfServicesURLForTeamAccount:(BOOL)teamAccount;
 
 + (instancetype)wr_privacyPolicyURL;
 
