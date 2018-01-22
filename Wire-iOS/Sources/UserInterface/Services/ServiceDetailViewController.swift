@@ -158,10 +158,21 @@ final class ServiceDetailViewController: UIViewController {
         view.addSubview(confirmButton)
         
         confirmButton.setTitle("peoplepicker.services.add_service.button".localized, for: .normal)
-        
+
+        var topMargin: CGFloat = 16
+        if #available(iOS 10.0, *) {
+            topMargin = 16
+        }
+        else {
+            if let naviBarHeight = self.navigationController?.navigationBar.frame.height {
+                topMargin = 16 + naviBarHeight
+            }
+        }
+
         constrain(self.view, detailView, confirmButton) { selfView, detailView, confirmButton in
             detailView.leading == selfView.leading + 16
-            detailView.top == selfView.topMargin + 16
+            detailView.top == selfView.topMargin + topMargin
+
             detailView.trailing == selfView.trailing - 16
             
             confirmButton.top == detailView.bottom + 16
