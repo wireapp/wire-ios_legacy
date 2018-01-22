@@ -77,6 +77,10 @@
     self.userImageView.user = user;
     self.guestLabel.hidden = ![user isGuestInConversation:conversation];
 
+    if ([user isServiceUser]) {///TODO: update DM
+        self.guestLabel.hidden = true;
+    }
+
     if (ZMUser.selfUser.isTeamMember) {
         self.nameLabel.attributedText = [AvailabilityStringBuilder stringFor:user with:AvailabilityLabelStyleParticipants color:nil];
     } else {
