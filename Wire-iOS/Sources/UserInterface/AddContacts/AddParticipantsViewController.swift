@@ -88,7 +88,7 @@ public class AddParticipantsViewController : UIViewController {
         bottomContainer.addSubview(confirmButton)
  
         searchHeaderViewController = SearchHeaderViewController(userSelection: userSelection, variant: ColorScheme.default().variant)
-        searchResultsViewController = SearchResultsViewController(userSelection: userSelection, team: ZMUser.selfUser().team, variant: ColorScheme.default().variant, isAddingParticipants: true)
+        searchResultsViewController = SearchResultsViewController(userSelection: userSelection, variant: ColorScheme.default().variant, isAddingParticipants: true)
 
         super.init(nibName: nil, bundle: nil)
         
@@ -101,6 +101,7 @@ public class AddParticipantsViewController : UIViewController {
         searchResultsViewController.filterConversation = conversation.conversationType == .group ? conversation : nil
         searchResultsViewController.mode = .list
         searchResultsViewController.searchContactList()
+        searchResultsViewController.delegate = self
         
         userSelection.add(observer: self)
         
@@ -201,7 +202,7 @@ extension AddParticipantsViewController : SearchHeaderViewControllerDelegate {
         } else {
             emptyResultLabel.text = emptySearchResultText
             searchResultsViewController.mode = .search
-            searchResultsViewController.search(withQuery: query, local: true)
+            searchResultsViewController.searchForLocalUsers(withQuery: query)
         }
     }
     
@@ -217,5 +218,38 @@ extension AddParticipantsViewController : UIPopoverPresentationControllerDelegat
         return UIModalPresentationStyle.overFullScreen
     }
     
+}
+
+extension AddParticipantsViewController: SearchResultsViewControllerDelegate {
+    public func searchResultsViewController(_ searchResultsViewController: SearchResultsViewController, didTapOnUser user: ZMSearchableUser, indexPath: IndexPath, section: SearchResultsViewControllerSection)
+    {
+        // no-op
+    }
+    
+    public func searchResultsViewController(_ searchResultsViewController: SearchResultsViewController, didDoubleTapOnUser user: ZMSearchableUser, indexPath: IndexPath)
+    {
+        // no-op
+    }
+    
+    public func searchResultsViewController(_ searchResultsViewController: SearchResultsViewController, didTapOnConversation conversation: ZMConversation)
+    {
+        // no-op
+    }
+    
+    public func searchResultsViewController(_ searchResultsViewController: SearchResultsViewController, didTapOnSeviceUser user: ServiceUser)
+    {
+        guard let userSession = ZMUserSession.shared() else {
+            return
+        }
+        self.showLoadingView = true
+        self.conversation.add(serviceUser: user, in: userSession) { [weak self] _ in
+            guard let `self` = self else {
+                return
+            }
+            
+            self.delegate?.addParticipantsViewControllerDidCancel(self)
+            self.showLoadingView = false
+        }
+    }
 }
 

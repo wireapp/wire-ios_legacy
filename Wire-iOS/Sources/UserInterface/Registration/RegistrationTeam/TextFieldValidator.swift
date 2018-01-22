@@ -19,11 +19,14 @@
 import Foundation
 
 class TextFieldValidator {
+    
+    var customValidator: ((String) -> ValidationError?)?
 
     enum ValidationError: Error, Equatable {
         case tooShort(kind: AccessoryTextField.Kind)
         case tooLong(kind: AccessoryTextField.Kind)
         case invalidEmail
+        case custom(String)
         case none
 
 
@@ -35,6 +38,8 @@ class TextFieldValidator {
             case (.invalidEmail, .invalidEmail),
                  (.none, .none):
                 return true
+            case (.custom(let lhs), .custom(let rhs)):
+                return lhs == rhs
             default:
                 return false
             }
@@ -44,6 +49,10 @@ class TextFieldValidator {
     func validate(text: String?, kind: AccessoryTextField.Kind) -> TextFieldValidator.ValidationError {
         guard let text = text else {
             return .none
+        }
+        
+        if let customError = customValidator?(text) {
+            return customError
         }
 
         switch kind {
@@ -103,6 +112,8 @@ extension TextFieldValidator.ValidationError: LocalizedError {
             }
         case .invalidEmail:
             return "email.guidance.invalid".localized
+        case .custom(let description):
+            return description
         case .none:
             return ""
         }

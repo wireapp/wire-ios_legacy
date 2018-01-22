@@ -42,6 +42,11 @@ final class TeamMemberInviteViewController: UIViewController, TeamInviteTopbarDe
         createConstraints()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        footerTextFieldView.becomeFirstResponder()
+    }
+    
     private func setupViews() {
         [tableView, topBar, topBarSpacerView].forEach(view.addSubview)
         topBarSpacerView.backgroundColor = UIColor.Team.background
@@ -101,16 +106,21 @@ final class TeamMemberInviteViewController: UIViewController, TeamInviteTopbarDe
     
     private func setupFooterView() {
         footerTextFieldView.onConfirm = sendInvite
-        footerTextFieldView.onAddFromAddressbook = {
-            // TODO: Present address book picker
+        footerTextFieldView.shouldConfirm = { [weak self] email in
+            guard let `self` = self else { return true }
+            return !self.dataSource.data.emails.contains(email)
         }
         tableView.tableFooterView = footerTextFieldView.sized(fittingWidth: tableView.bounds.width)
     }
     
     private func sendInvite(to email: String) {
+        if case .unreachable = NetworkStatus.shared().reachability() {
+            return footerTextFieldView.errorMessage = "team.invite.error.no_internet".localized.uppercased()
+        }
+        
         guard let userSession = ZMUserSession.shared() else { return }
         Analytics.shared().tag(TeamInviteEvent.sentInvite(.teamCreation))
-        showLoadingView = true
+        footerTextFieldView.isLoading = true
         
         ZMUser.selfUser().team?.invite(email: email, in: userSession) { [weak self] result in
             self?.handle(inviteResult: result, from:  .manualInput)
@@ -123,7 +133,7 @@ final class TeamMemberInviteViewController: UIViewController, TeamInviteTopbarDe
         case.addressBook: handleAddressBookResult(result)
         }
         
-        showLoadingView = false
+        footerTextFieldView.isLoading = false
         topBar.mode = dataSource.data.count == 0 ? .skip : .done
     }
     

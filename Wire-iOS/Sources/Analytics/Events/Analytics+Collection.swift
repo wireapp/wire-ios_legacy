@@ -80,7 +80,7 @@ fileprivate func string(for actionType: CollectionActionType) -> String
 extension ZMConversation {
     fileprivate var conversationAttributes : [String : String] {
         var attributes = [String: String]()
-        let isBot = self.isBotConversation ? "true" : "false"
+        let isBot = self.isServiceUserConversation ? "true" : "false"
         attributes["with_bot"] = isBot
         if let convType = self.analyticsTypeString() {
             attributes["conversation_type"] = convType

@@ -34,6 +34,12 @@
 "peoplepicker.header.contacts" = "Contacts";
 "peoplepicker.header.contacts_personal" = "Personal Contacts";
 "peoplepicker.header.directory" = "Connect";
+
+"peoplepicker.header.people" = "People";
+"peoplepicker.header.services" = "Services";
+"peoplepicker.services.create_conversation.item" = "Create a new conversation";
+"peoplepicker.services.add_service.button" = "Add service";
+
 "peoplepicker.title.create_conversation" = "Create group";
 "peoplepicker.title.add_to_conversation" = "Add people";
 
@@ -229,6 +235,12 @@
 "camera_access.denied" = "Wire needs access to the Camera.";
 "camera_access.denied.instruction" = "";
 "camera_access.denied.open_settings" = "Enable it in Wire Settings";
+
+// Camera and photos access, keyboard
+"keyboard_photos_access.denied.keyboard.settings" = "Settings";
+"keyboard_photos_access.denied.keyboard.camera_and_photos" = "Wire needs access to your\ncamera and photos."; // split text on two lines for a better text balance
+"keyboard_photos_access.denied.keyboard.photos" = "Wire needs access to your photos.";
+"keyboard_photos_access.denied.keyboard.camera" = "Wire needs access to your camera.";
 
 // Camera Controls
 "camera_controls.aeaf_lock" = "AE/AF Lock";
@@ -837,9 +849,11 @@
 "team.invite.top_bar.done" = "Done";
 
 // Team Invite Errors
-"team.invite.error.generic" = "Something went wrong, please try again.";
-"team.invite.error.already_registered" = "This email address is already in use.";
-"team.invite.error.too_many_invitations" = "The maximum number of invitations has been sent.";
+"team.invite.error.generic" = "Something went wrong, please try again";
+"team.invite.error.already_registered" = "This email address is already in use";
+"team.invite.error.already_invited" = "This email has already been invited";
+"team.invite.error.too_many_invitations" = "The maximum number of invitations has been sent";
+"team.invite.error.no_internet" = "No internet connection";
 
 // Registration
 

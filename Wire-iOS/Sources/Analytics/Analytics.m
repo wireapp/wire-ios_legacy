@@ -39,6 +39,7 @@
 
 NSString * LocalyticsAPIKey = @STRINGIZE(ANALYTICS_API_KEY);
 NSString * MixpanelAPIKey = @STRINGIZE(MIXPANEL_API_KEY);
+NSString * PersistedAttributesKey = @"AnalyticsPersistedEventAttributes";
 BOOL UseAnalytics = USE_ANALYTICS;
 
 @interface Analytics ()
@@ -202,6 +203,24 @@ static Analytics *sharedAnalytics = nil;
     [self tagEvent:tag attributes:[event attributesDump] source:source];
 }
 
+- (NSDictionary<NSString *,id> * _Nullable)persistedAttributesForEvent:(NSString * _Nonnull)event
+{
+    NSDictionary *persistedAttributes = [[NSUserDefaults standardUserDefaults] objectForKey:PersistedAttributesKey];
+    NSDictionary *eventAttributes = persistedAttributes[event];
+    return eventAttributes;
+}
+
+- (void)setPersistedAttributes:(NSDictionary<NSString *,id> * _Nullable)attributes forEvent:(NSString * _Nonnull)event
+{
+    NSDictionary *persisted = [[NSUserDefaults standardUserDefaults] objectForKey:PersistedAttributesKey];
+    NSMutableDictionary *persistedAttributes = persisted == nil ? [NSMutableDictionary dictionary] : [persisted mutableCopy];
+    if (attributes == nil) {
+        [persistedAttributes removeObjectForKey:event];
+    } else {
+        persistedAttributes[event] = attributes;
+    }
+    [[NSUserDefaults standardUserDefaults] setObject:persistedAttributes forKey:PersistedAttributesKey];
+}
 
 - (void)sendCustomDimensionsWithNumberOfContacts:(NSUInteger)contacts
                               groupConversations:(NSUInteger)groupConv

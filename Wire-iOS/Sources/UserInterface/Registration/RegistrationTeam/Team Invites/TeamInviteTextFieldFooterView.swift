@@ -28,11 +28,23 @@ final class TeamInviteTextFieldFooterView: UIView {
         uppercasePlaceholder: false
     )
     
+    var isLoading = false {
+        didSet {
+            updateLoadingState()
+        }
+    }
+    
     let errorButton = Button()
     private let textField: AccessoryTextField
     private let errorLabel = UILabel()
 
-    var onAddFromAddressbook: (() -> Void)?
+    var shouldConfirm: ((String) -> Bool)? {
+        didSet {
+            textField.textFieldValidator.customValidator = { [weak self] email in
+                (self?.shouldConfirm?(email) ?? true) ? nil : .custom("team.invite.error.already_invited".localized.uppercased())
+            }
+        }
+    }
     
     var onConfirm: ((String) -> Void)? {
         didSet {
@@ -44,6 +56,10 @@ final class TeamInviteTextFieldFooterView: UIView {
         didSet {
             errorLabel.text = errorMessage
         }
+    }
+    
+    @discardableResult override func becomeFirstResponder() -> Bool {
+        return textField.becomeFirstResponder()
     }
     
     init() {
@@ -66,7 +82,7 @@ final class TeamInviteTextFieldFooterView: UIView {
         errorLabel.textColor = UIColor.Team.errorMessageColor
         textField.overrideButtonIcon = .send
         textFieldDescriptor.valueValidated = { [weak self] error in
-            self?.errorMessage = error.errorDescription
+            self?.errorMessage = error.errorDescription?.uppercased()
             if error == .none {
                 self?.errorButton.isHidden = true
             }
@@ -76,9 +92,9 @@ final class TeamInviteTextFieldFooterView: UIView {
         errorButton.titleLabel?.font = FontSpec(.medium, .semibold).font!
         errorButton.setTitleColor(.black, for: .normal)
         errorButton.setTitleColor(.darkGray, for: .highlighted)
-        errorButton.addTarget(self, action: #selector(didTapContactsButton), for: .touchUpInside)
         errorButton.accessibilityIdentifier = "LearnMoreButton"
         errorButton.addTarget(self, action: #selector(showLearnMorePage), for: .touchUpInside)
+        textField.accessibilityLabel = "EmailInputField"
         [textField, errorLabel, errorButton].forEach(addSubview)
         backgroundColor = .clear
     }
@@ -104,12 +120,13 @@ final class TeamInviteTextFieldFooterView: UIView {
         textField.textFieldDidChange(textField: textField)
     }
     
-    @objc private func didTapContactsButton(_ sender: Button) {
-        onAddFromAddressbook?()
-    }
-    
     @objc private func showLearnMorePage() {
         let url = URL(string: "https://support.wire.com/hc/en-us/articles/115004082129-My-email-address-is-already-in-use-and-I-cannot-create-an-account-What-can-I-do-")!
         UIApplication.shared.openURL(url)
+    }
+    
+    private func updateLoadingState() {
+        textField.isLoading = isLoading
+        textFieldDescriptor.acceptsInput = !isLoading
     }
 }

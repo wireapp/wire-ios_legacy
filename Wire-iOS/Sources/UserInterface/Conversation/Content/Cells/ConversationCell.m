@@ -92,10 +92,6 @@ static const CGFloat BurstContainerExpandedHeight = 40;
 
 @end
 
-@interface ConversationCell (PreviewProvider) <PreviewProvider>
-
-@end
-
 @implementation ConversationCell
 
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
@@ -642,18 +638,6 @@ static const CGFloat BurstContainerExpandedHeight = 40;
     if ([self.delegate respondsToSelector:@selector(conversationCell:userTapped:inView:)]) {
         [self.delegate conversationCell:self userTapped:BareUserToUser(userImageView.user) inView:userImageView];
     }
-}
-
-#pragma mark - Preview Provider delegate
-
--(void)preparePreview
-{
-    self.contentLayoutMargins = UIEdgeInsetsZero;
-}
-
--(CGFloat)getPreviewContentHeight
-{
-    return [CellSizesProvider compressedSizeForView: self.messageContentView];
 }
 
 #pragma mark - Message observation

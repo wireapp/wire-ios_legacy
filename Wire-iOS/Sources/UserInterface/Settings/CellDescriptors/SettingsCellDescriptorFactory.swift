@@ -71,7 +71,7 @@ import Foundation
                                                     identifier: nil,
                                                     presentationAction: { () -> (UIViewController?) in
                                                         Analytics.shared().tagOpenManageTeamURL()
-                                                        NSURL.wr_manageTeam().wr_URLByAppendingLocaleParameter().open()
+                                                        URL.manageTeam(source: .settings).open()
                                                         return nil
                                                     },
                                                     previewGenerator: nil,

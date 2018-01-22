@@ -201,6 +201,7 @@ typedef NS_ENUM(NSInteger, ZetaIconType)
     ZetaIconTypeAvailabilityAway                = 0x749,
     ZetaIconTypeAvailabilityAvailable           = 0x750,
     
+    ZetaIconTypeBot                             = 0x752,
     // Team Invites
     ZetaIconTypeExclamationMarkCircle           = 0x751,
 };

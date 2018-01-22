@@ -86,16 +86,16 @@ import MessageUI
         }
         
         // Prepare subject & body
-        let user = ZMUser.selfUser()!
-        let userID = user.remoteIdentifier?.transportString() ?? ""
+        let user = ZMUser.selfUser()
+        let userID = user?.remoteIdentifier?.transportString() ?? ""
         let device = UIDevice.current.name
         let now = Date()
-        let userDescription = "\(user.name ?? "") [user: \(userID)] [device: \(device)]"
+        let userDescription = "\(user?.name ?? "") [user: \(userID)] [device: \(device)]"
         let message = "Logs for: \(message)\n\n"
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd_HH-mm-ss"
         let timeStr = formatter.string(from: now)
-        let fileName = "logs_\(user.name ?? userID)_T\(timeStr).txt"
+        let fileName = "logs_\(user?.name ?? userID)_T\(timeStr).txt"
         
         // compose
         let mailVC = MFMailComposeViewController()

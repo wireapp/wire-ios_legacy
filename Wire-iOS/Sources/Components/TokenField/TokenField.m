@@ -23,6 +23,8 @@
 #import "TokenTextAttachment.h"
 #import "IconButton.h"
 #import "Logging.h"
+#import "ColorScheme.h"
+#import "Wire-Swift.h"
 
 
 CGFloat const accessoryButtonSize = 32.0f;
@@ -88,12 +90,12 @@ CGFloat const accessoryButtonSize = 32.0f;
 
 - (void)setupDefaultAppearance
 {
-    _font = [UIFont systemFontOfSize:[UIFont systemFontSize]];
+    [self setupFonts];
     _textColor = [UIColor blackColor];
     _lineSpacing = 8.0f;
     _hasAccessoryButton = NO;
-    
-    self.tokenTitleFont = [UIFont boldSystemFontOfSize:[UIFont systemFontSize] - 2];
+    _tokenTitleVerticalAdjustment = 1;
+
     self.tokenTitleColor = [UIColor whiteColor];
     self.tokenSelectedTitleColor = [UIColor colorWithRed:0.103 green:0.382 blue:0.691 alpha:1.000];
     self.tokenBackgroundColor = [UIColor colorWithRed:0.118 green:0.467 blue:0.745 alpha:1.000];
@@ -101,6 +103,7 @@ CGFloat const accessoryButtonSize = 32.0f;
     self.tokenBorderColor = [UIColor colorWithRed:0.118 green:0.467 blue:0.745 alpha:1.000];
     self.tokenSelectedBorderColor = [UIColor colorWithRed:0.118 green:0.467 blue:0.745 alpha:1.000];
     self.tokenTextTransform = TextTransformUpper;
+    self.dotColor = [ColorScheme.defaultColorScheme colorWithName:ColorSchemeColorTextDimmed];
 }
 
 - (void)setupSubviews
@@ -397,6 +400,7 @@ CGFloat const accessoryButtonSize = 32.0f;
 - (void)removeAllTokens
 {
     [self removeTokens:[self.currentTokens copy]];
+    [self.textView showOrHidePlaceholder];
 }
 
 - (void)removeTokens:(NSArray *)tokensToRemove
@@ -590,12 +594,10 @@ CGFloat const accessoryButtonSize = 32.0f;
         
         [string appendAttributedString:tokenString];
         
-        if (token != tokens.lastObject) {
-            TokenSeparatorAttachment *separatorAttachment = [[TokenSeparatorAttachment alloc] initWithToken:token tokenField:self];
-            NSMutableAttributedString* separatorString = [[NSAttributedString attributedStringWithAttachment:separatorAttachment] mutableCopy];
-            
-            [string appendAttributedString:separatorString];
-        }
+        TokenSeparatorAttachment *separatorAttachment = [[TokenSeparatorAttachment alloc] initWithToken:token tokenField:self];
+        NSMutableAttributedString* separatorString = [[NSAttributedString attributedStringWithAttachment:separatorAttachment] mutableCopy];
+        
+        [string appendAttributedString:separatorString];
     }
     [string addAttributes:self.textAttributes range:NSMakeRange(0, string.length)];
     return string;
@@ -813,7 +815,6 @@ CGFloat const accessoryButtonSize = 32.0f;
     
     [self filterUnwantedAttachments];
     [self notifyIfFilterTextChanged];
-    [self filterTrailingTokenSeparator];
     [self invalidateIntrinsicContentSize];
 }
 
@@ -835,10 +836,8 @@ CGFloat const accessoryButtonSize = 32.0f;
                                                   [updatedCurrentSeparatorTokens addObject:((TokenSeparatorAttachment *) textAttachment).token];
                                               }
                                           }];
-    if (updatedCurrentTokens.count > 0) {
-        [updatedCurrentSeparatorTokens addObject:updatedCurrentTokens.lastObject];
-        [updatedCurrentTokens intersectSet:updatedCurrentSeparatorTokens];
-    }
+    
+    [updatedCurrentTokens intersectSet:updatedCurrentSeparatorTokens];
     
     NSMutableSet *deletedTokens = [NSMutableSet setWithArray:self.currentTokens];
     [deletedTokens minusSet:updatedCurrentTokens.set];
@@ -851,22 +850,6 @@ CGFloat const accessoryButtonSize = 32.0f;
     if ([self.delegate respondsToSelector:@selector(tokenField:changedTokensTo:)]) {
         [self.delegate tokenField:self changedTokensTo:self.currentTokens];
     }
-}
-
-- (void)filterTrailingTokenSeparator
-{
-    [self.textView.attributedText enumerateAttribute:NSAttachmentAttributeName
-                                             inRange:NSMakeRange(0, self.textView.text.length)
-                                             options:NSAttributedStringEnumerationReverse
-                                          usingBlock:^(NSTextAttachment *textAttachment, NSRange range, BOOL *stop) {
-                                              *stop = YES;
-                                              
-                                              if ([textAttachment isKindOfClass:[TokenSeparatorAttachment class]]) {
-                                                  [self.textView.textStorage beginEditing];
-                                                  [self.textView.textStorage deleteCharactersInRange:range];
-                                                  [self.textView.textStorage endEditing];
-                                              }
-                                          }];
 }
 
 - (void)notifyIfFilterTextChanged

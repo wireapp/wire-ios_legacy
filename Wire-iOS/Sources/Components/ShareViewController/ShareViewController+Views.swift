@@ -40,29 +40,34 @@ extension ShareViewController {
             self.shareablePreviewWrapper = shareablePreviewWrapper
         }
 
-        self.tokenField.cas_styleClass = "search"
         self.tokenField.textColor = .white
         self.tokenField.clipsToBounds = true
         self.tokenField.layer.cornerRadius = 4
         self.tokenField.tokenTitleColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorTextForeground, variant: .dark)
         self.tokenField.tokenSelectedTitleColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorTextForeground, variant: .dark)
+        self.tokenField.tokenTitleVerticalAdjustment = 1
         self.tokenField.textView.placeholderTextAlignment = .natural
         self.tokenField.textView.accessibilityLabel = "textViewSearch"
         self.tokenField.textView.placeholder = "content.message.forward.to".localized.uppercased()
         self.tokenField.textView.keyboardAppearance = .dark
         self.tokenField.textView.returnKeyType = .done
         self.tokenField.textView.autocorrectionType = .no
-        self.tokenField.textView.textContainerInset = UIEdgeInsets(top: 10, left: 32, bottom: 10, right: 12)
+        self.tokenField.textView.textContainerInset = UIEdgeInsets(top: 9, left: 40, bottom: 11, right: 12)
         self.tokenField.textView.backgroundColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorTokenFieldBackground, variant: .dark)
         self.tokenField.delegate = self
 
-        self.searchIcon.image = UIImage(for: .search, iconSize: .tiny, color: .white)
+        if self.allowsMultiselect {
+            self.searchIcon.image = UIImage(for: .search, iconSize: .tiny, color: .white)
+        }
+        else {
+            self.searchIcon.isHidden = true
+        }
 
         self.destinationsTableView.backgroundColor = .clear
         self.destinationsTableView.register(ShareDestinationCell<D>.self, forCellReuseIdentifier: ShareDestinationCell<D>.reuseIdentifier)
         self.destinationsTableView.separatorStyle = .none
         self.destinationsTableView.allowsSelection = true
-        self.destinationsTableView.allowsMultipleSelection = true
+        self.destinationsTableView.allowsMultipleSelection = self.allowsMultiselect
         self.destinationsTableView.keyboardDismissMode = .interactive
         self.destinationsTableView.delegate = self
         self.destinationsTableView.dataSource = self
@@ -101,17 +106,12 @@ extension ShareViewController {
         }
         
         if self.showPreview {
-            
-            let height = self.shareable.height(for: self.shareablePreviewView!)
-            
             constrain(self.containerView, self.shareablePreviewWrapper!, self.shareablePreviewView!, self.tokenField) { view, shareablePreviewWrapper, shareablePreviewView, tokenField in
                 
-                shareablePreviewWrapper.top == view.top + 28
+                shareablePreviewWrapper.top == view.topMargin + 28
                 shareablePreviewWrapper.left == view.left + 16
                 shareablePreviewWrapper.right == -16 + view.right
                 
-                shareablePreviewView.height == height
-                shareablePreviewWrapper.height == height
                 shareablePreviewView.edges == shareablePreviewWrapper.edges
                 
                 tokenField.top == shareablePreviewWrapper.bottom + 16
@@ -127,6 +127,9 @@ extension ShareViewController {
         constrain(self.tokenField, self.searchIcon) { tokenField, searchIcon in
             searchIcon.centerY == tokenField.centerY
             searchIcon.left == tokenField.left + 8 // the search icon glyph has whitespaces
+            if !self.allowsMultiselect {
+                tokenField.height == 0
+            }
         }
         
         constrain(self.view, self.destinationsTableView, self.topSeparatorView) { view, destinationsTableView, topSeparatorView in
