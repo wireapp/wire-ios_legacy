@@ -932,6 +932,9 @@
 "registration.signin.email_button.title" = "Email";
 "registration.signin.phone_button.title" = "Phone";
 
+"registration.signin.alert.password_needed.title" = "Password needed";
+"registration.signin.alert.password_needed.message" = "Please enter your Password in order to log in.";
+
 "registration.devices.title" = "Devices";
 "registration.devices.active_list_header" = "Active";
 "registration.devices.current_list_header" = "Current";
