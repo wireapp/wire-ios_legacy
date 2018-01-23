@@ -905,6 +905,8 @@
 		D5168F562010F25000F8222A /* TokenField.m in Sources */ = {isa = PBXBuildFile; fileRef = 1EE9DCAE1B5F9A6D00E347DF /* TokenField.m */; };
 		D5168F572010F25400F8222A /* Token.m in Sources */ = {isa = PBXBuildFile; fileRef = 1EE9DCAC1B5F9A6D00E347DF /* Token.m */; };
 		D5168F592010F2F700F8222A /* TokenField+DefaultAppearance.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5168F582010F2F700F8222A /* TokenField+DefaultAppearance.swift */; };
+		D51735712017640D00B473CE /* UIAlertController+PasswordVerification.swift in Sources */ = {isa = PBXBuildFile; fileRef = D51735702017640D00B473CE /* UIAlertController+PasswordVerification.swift */; };
+		D5173573201764DD00B473CE /* UIAlertAction+Convenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5173572201764DD00B473CE /* UIAlertAction+Convenience.swift */; };
 		D5490A1D20050AAA0057EAA8 /* TeamMemberInviteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5490A1C20050AAA0057EAA8 /* TeamMemberInviteViewController.swift */; };
 		D5DBAAA720064D5600E9F65B /* ArrayDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5DBAAA620064D5600E9F65B /* ArrayDataSource.swift */; };
 		D5DBAAAA20064D8800E9F65B /* InviteResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5DBAAA920064D8800E9F65B /* InviteResult.swift */; };
@@ -2422,6 +2424,8 @@
 		D5168F42200F6F2300F8222A /* CABasicAnimation+Rotation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "CABasicAnimation+Rotation.m"; sourceTree = "<group>"; };
 		D5168F4C2010B61D00F8222A /* URL+Wire.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URL+Wire.swift"; sourceTree = "<group>"; };
 		D5168F582010F2F700F8222A /* TokenField+DefaultAppearance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TokenField+DefaultAppearance.swift"; sourceTree = "<group>"; };
+		D51735702017640D00B473CE /* UIAlertController+PasswordVerification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIAlertController+PasswordVerification.swift"; sourceTree = "<group>"; };
+		D5173572201764DD00B473CE /* UIAlertAction+Convenience.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIAlertAction+Convenience.swift"; sourceTree = "<group>"; };
 		D5490A1C20050AAA0057EAA8 /* TeamMemberInviteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamMemberInviteViewController.swift; sourceTree = "<group>"; };
 		D5DBAAA620064D5600E9F65B /* ArrayDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrayDataSource.swift; sourceTree = "<group>"; };
 		D5DBAAA920064D8800E9F65B /* InviteResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InviteResult.swift; sourceTree = "<group>"; };
@@ -3539,6 +3543,7 @@
 				D5168F272008ED0700F8222A /* KeyboardBlockObserver.swift */,
 				D5F8BFF32007AC84008F8C3D /* UIView+TableViewHeaderFooterSizing.swift */,
 				87AAE41E1E423C2A00E1D13A /* CASStyler+Fonts.swift */,
+				D5173572201764DD00B473CE /* UIAlertAction+Convenience.swift */,
 				CE8E4FB61DF17BBE0009F437 /* TextTransform */,
 				871BC1ED1D34F8F800DF0793 /* CALayer+EasyAnimation.h */,
 				871BC1EE1D34F8F800DF0793 /* CALayer+EasyAnimation.m */,
@@ -5189,6 +5194,7 @@
 			isa = PBXGroup;
 			children = (
 				EF2126D61FB9DFE300625A9B /* SignInViewController.m */,
+				D51735702017640D00B473CE /* UIAlertController+PasswordVerification.swift */,
 				EF2126D71FB9DFE300625A9B /* LoginCredentials.swift */,
 				EF2126D81FB9DFE300625A9B /* EmailSignInViewController.h */,
 				EF2126D91FB9DFE300625A9B /* PhoneSignInViewController.m */,
@@ -6323,6 +6329,7 @@
 				D5168F572010F25400F8222A /* Token.m in Sources */,
 				8742C2EA1E5309FC00329FB6 /* NSAttributedString+Highlight.swift in Sources */,
 				876113E41DD1DD6B007F5969 /* SketchToolbar.swift in Sources */,
+				D5173573201764DD00B473CE /* UIAlertAction+Convenience.swift in Sources */,
 				871BC00A1D34F56300DF0793 /* TimeIntervalClusterizer.m in Sources */,
 				EF2127201FB9DFE300625A9B /* NavigationController.m in Sources */,
 				871BC0031D34F56300DF0793 /* AnalyticsFileTransferObserver.swift in Sources */,
@@ -6596,6 +6603,7 @@
 				87F6D1BB1C1590B7000AB4D2 /* RequestPasswordViewController.swift in Sources */,
 				87DCF4E01D34EA4500BB420F /* TopPeopleCell.m in Sources */,
 				8F5A3E9D19AE2C9E00D0E9DA /* AVSMediaManager+Additions.m in Sources */,
+				D51735712017640D00B473CE /* UIAlertController+PasswordVerification.swift in Sources */,
 				BF3A3DCE1EA75290005477F8 /* RotatingKeyboardAvoidingViewController.swift in Sources */,
 				BFC914921D1814AF001F068B /* LocationMessageCell.swift in Sources */,
 				871BC2731D34F8F800DF0793 /* UpsideDownTableView.m in Sources */,
