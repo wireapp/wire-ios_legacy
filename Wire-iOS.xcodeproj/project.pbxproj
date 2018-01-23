@@ -1036,6 +1036,7 @@
 		F16427041FCC5BB600D2ABFC /* VerifyEmailStepDescription.swift in Sources */ = {isa = PBXBuildFile; fileRef = F16427031FCC5BB600D2ABFC /* VerifyEmailStepDescription.swift */; };
 		F16427061FCC5BE400D2ABFC /* SetFullNameStepDescription.swift in Sources */ = {isa = PBXBuildFile; fileRef = F16427051FCC5BE400D2ABFC /* SetFullNameStepDescription.swift */; };
 		F16427081FCC5BF800D2ABFC /* SetPasswordStepDescription.swift in Sources */ = {isa = PBXBuildFile; fileRef = F16427071FCC5BF800D2ABFC /* SetPasswordStepDescription.swift */; };
+		F187D6C820162A4300A2DA8F /* ConversationCell+Sender.swift in Sources */ = {isa = PBXBuildFile; fileRef = F187D6C720162A4300A2DA8F /* ConversationCell+Sender.swift */; };
 		F194AD7A1E3F3BBC00B0049B /* UIApplication+RTL.swift in Sources */ = {isa = PBXBuildFile; fileRef = F194AD791E3F3BBC00B0049B /* UIApplication+RTL.swift */; };
 		F194CA1B1E7179C2004C5E56 /* VoiceChannelOverlayTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F194CA181E717142004C5E56 /* VoiceChannelOverlayTests.swift */; };
 		F195EB9D1E2F75BC00712118 /* FeedbackOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F195EB9C1E2F75BC00712118 /* FeedbackOverlayView.swift */; };
@@ -2616,6 +2617,7 @@
 		F16427031FCC5BB600D2ABFC /* VerifyEmailStepDescription.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerifyEmailStepDescription.swift; sourceTree = "<group>"; };
 		F16427051FCC5BE400D2ABFC /* SetFullNameStepDescription.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetFullNameStepDescription.swift; sourceTree = "<group>"; };
 		F16427071FCC5BF800D2ABFC /* SetPasswordStepDescription.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetPasswordStepDescription.swift; sourceTree = "<group>"; };
+		F187D6C720162A4300A2DA8F /* ConversationCell+Sender.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConversationCell+Sender.swift"; sourceTree = "<group>"; };
 		F194AD791E3F3BBC00B0049B /* UIApplication+RTL.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIApplication+RTL.swift"; sourceTree = "<group>"; };
 		F194CA181E717142004C5E56 /* VoiceChannelOverlayTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VoiceChannelOverlayTests.swift; sourceTree = "<group>"; };
 		F195EB9C1E2F75BC00712118 /* FeedbackOverlayView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedbackOverlayView.swift; sourceTree = "<group>"; };
@@ -4574,6 +4576,7 @@
 				EF2C189F1FED435600E9F2FD /* ConversationCell+BurstTimestamp.swift */,
 				BF989D071E896D210052BF8F /* ConversationCellBurstTimestampView.swift */,
 				87CB36BB1D7480F6007AB4E5 /* ConversationCell+Like.swift */,
+				F187D6C720162A4300A2DA8F /* ConversationCell+Sender.swift */,
 				16E311C71A5FEAE200FF2C9E /* TextMessageCell.h */,
 				874AE9B51DDCC98B00D3C830 /* TextMessageCell+Internal.h */,
 				16E311C81A5FEAE200FF2C9E /* TextMessageCell.m */,
@@ -6160,6 +6163,7 @@
 				BF381FDF1D4F922F00075672 /* AnalyticsTracker+AddressBookPermissions.swift in Sources */,
 				F195EB9D1E2F75BC00712118 /* FeedbackOverlayView.swift in Sources */,
 				87B7DAEE1E697CC3005F5140 /* UserImageView+Magic.m in Sources */,
+				F187D6C820162A4300A2DA8F /* ConversationCell+Sender.swift in Sources */,
 				87AAE4251E4347F000E1D13A /* ConversationContentViewController+PeekPop.swift in Sources */,
 				871BC2881D34F8F800DF0793 /* UIImage+Dotted.swift in Sources */,
 				871BC00C1D34F56300DF0793 /* Analytics+ConversationEvents.m in Sources */,
