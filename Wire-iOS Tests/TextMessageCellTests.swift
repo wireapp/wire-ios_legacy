@@ -287,6 +287,18 @@ extension TextMessageCellTests {
     }
 }
 
+// MARK: - Bots test
+extension TextMessageCellTests {
+    func testThatItRendersBotSender() {
+        let message = mockMessage(state: .sent)
+        let bot = MockUser.mockSelf()!
+        bot.isServiceUser = true
+        message.sender = ((bot as AnyObject) as! ZMUser)
+        sut.configure(for: message, layoutProperties: layoutProperties)
+        verify(view: sut.prepareForSnapshot())
+    }
+}
+
 
 // MARK: - Helpers
 
