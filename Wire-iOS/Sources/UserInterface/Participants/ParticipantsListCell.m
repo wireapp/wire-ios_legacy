@@ -75,8 +75,8 @@
 - (void)updateForUser:(ZMUser *)user inConversation:(ZMConversation *)conversation
 {
     self.userImageView.user = user;
+    
     self.guestLabel.hidden = ![user isGuestInConversation:conversation];
-
     if ([user isServiceUser]) {
         self.guestLabel.hidden = YES;
     }
