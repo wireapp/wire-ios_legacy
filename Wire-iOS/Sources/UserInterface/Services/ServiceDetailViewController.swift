@@ -160,7 +160,7 @@ final class ServiceDetailViewController: UIViewController {
         confirmButton.setTitle("peoplepicker.services.add_service.button".localized, for: .normal)
 
         var topMargin: CGFloat = 16
-        if #available(iOS 10.0, *) {
+        if #available(iOS 11.0, *) {
             topMargin = 16
         }
         else {

@@ -526,6 +526,7 @@ final internal class StartConversationMatcher: TypedConversationStatusMatcher {
             else {
             return .none
         }
+
         let senderString = sender.displayName(in: conversation)
         let resultString = String(format: "conversation.status.started_conversation".localized, senderString)
         return (resultString && type(of: self).regularStyle).addAttributes(type(of: self).emphasisStyle, toSubstring: senderString)
