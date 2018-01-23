@@ -19,8 +19,8 @@
 import Foundation
 
 extension UIViewController {
-    @objc(add:viewController:toView:)
-    @objc func add(_ viewController: UIViewController?, to view: UIView) {
+    @objc(addViewController:toView:)
+    func add(_ viewController: UIViewController?, to view: UIView) {
         guard let viewController = viewController else { return }
 
         addChildViewController(viewController)
@@ -32,7 +32,7 @@ extension UIViewController {
     /// Add a child view controller and add its view as self's subview
     ///
     /// - Parameter viewController: viewController to add
-    @objc func addChild(_ viewController: UIViewController?) {
+    func addChild(_ viewController: UIViewController?) {
         self.add(viewController, to: self.view)
     }
 }
