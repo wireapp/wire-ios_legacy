@@ -25,13 +25,18 @@ import Cartography
     
     fileprivate(set) var customNavBar : UINavigationBarContainer?
     fileprivate var contentView = UIView()
-    
+    var navHeight : NSLayoutConstraint?
+
+    fileprivate let networkStatusViewController: NetworkStatusViewController
+
     open fileprivate(set) weak var conversationViewController: ConversationViewController?
     
     public init(conversation: ZMConversation, clientViewController: ZClientViewController) {
         let conversationController = ConversationViewController()
         conversationController.conversation = conversation
         conversationController.zClientViewController = clientViewController
+
+        networkStatusViewController = NetworkStatusViewController()
         
         super.init(nibName: .none, bundle: .none)
         
@@ -72,7 +77,7 @@ import Cartography
             customNavBar.top == view.top
             customNavBar.left == view.left
             customNavBar.right == view.right
-            customNavBar.height == 100 ///TODO
+            navHeight = customNavBar.height == 100
             
             contentView.left == view.left
             contentView.right == view.right
@@ -89,6 +94,13 @@ import Cartography
         super.viewDidAppear(animated)
         delay(0.4) {
             UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(true)
+        }
+
+        ///FIXME: test animation here
+        navHeight?.constant = 150
+
+        UIView.animate(withDuration: 5) {
+            self.view.layoutIfNeeded()
         }
     }
     
