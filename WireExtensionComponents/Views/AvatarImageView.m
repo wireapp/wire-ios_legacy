@@ -57,7 +57,7 @@
 
 - (void)setup
 {
-    _circular = YES;
+    _shape = AvatarImageViewShapeCircle;
     _showInitials = YES;
     [self createContainerView];
     [self createImageView];
@@ -73,8 +73,16 @@
 
 - (void)updateCornerRadius
 {
-    if (self.circular) {
-        self.containerView.layer.cornerRadius = MIN(self.bounds.size.width, self.bounds.size.height) / 2;
+    switch (self.shape) {
+        case AvatarImageViewShapeRectangle:
+            self.containerView.layer.cornerRadius = 0;
+            break;
+        case AvatarImageViewShapeCircle:
+            self.containerView.layer.cornerRadius = MIN(self.bounds.size.width, self.bounds.size.height) / 2;
+            break;
+        case AvatarImageViewShapeRounded:
+            self.containerView.layer.cornerRadius = 4;
+            break;
     }
 }
 
