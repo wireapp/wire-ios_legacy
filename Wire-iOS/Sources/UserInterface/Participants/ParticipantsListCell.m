@@ -77,7 +77,7 @@
     self.userImageView.user = user;
     self.guestLabel.hidden = ![user isGuestInConversation:conversation];
 
-    if ([user isServiceUser]) {///TODO: update DM
+    if ([user isServiceUser]) {
         self.guestLabel.hidden = true;
     }
 
