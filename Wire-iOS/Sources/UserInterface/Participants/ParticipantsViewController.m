@@ -378,7 +378,6 @@ static NSString *const ParticipantHeaderReuseIdentifier = @"ParticipantListHeade
     }
 }
 
-///TODO: rewrite with swift
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
     if ([self.headerView.titleView isFirstResponder]) {
@@ -387,36 +386,16 @@ static NSString *const ParticipantHeaderReuseIdentifier = @"ParticipantListHeade
     }
     
     ZMUser *user = self.participants[indexPath.row];
-    ///TODO: new VC for server user, a ServiceDetailViewController with a remove button
-
-    UIViewController * viewContollerToPush;
-    if (user.isServiceUser) { ///TODO: inject a remove btn
-    ServiceDetailViewController *serviceDetail = [[ServiceDetailViewController alloc] initWithServiceUser:user];
-
-    serviceDetail.completion = ^(ZMConversation *conversation) {
-        ///TODO: remove from conversation
-//        if (nil != conversation) {
-//            if ([self.delegate respondsToSelector:@selector(startUI:didSelectConversation:)]) {
-//                [self.delegate startUI:self didSelectConversation:conversation];
-//            }
-//        }
-    };
-
-        viewContollerToPush = serviceDetail;
-    }
-    else {
+    
     ProfileViewController *profileViewController = [[ProfileViewController alloc] initWithUser:user conversation:self.conversation];
     profileViewController.delegate = self;
     profileViewController.navigationControllerDelegate = self.navigationControllerDelegate;
     
-        viewContollerToPush = profileViewController;
-    }
-
     UICollectionViewLayoutAttributes *layoutAttributes = [self.collectionView layoutAttributesForItemAtIndexPath:indexPath];
-
+    
     self.navigationControllerDelegate.tapLocation = [self.collectionView convertPoint:layoutAttributes.center toView:self.view];
-
-    [self.navigationController pushViewController:viewContollerToPush animated:YES];
+    
+    [self.navigationController pushViewController:profileViewController animated:YES];
 }
 
 @end
