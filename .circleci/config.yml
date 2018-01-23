@@ -55,6 +55,6 @@ jobs:
     - store_artifacts:
         path: SnapshotResults
     - store_test_results:
-        path: junit
+        path: build/junit
     - save_cache: *gems_cache
     - save_cache: *carthage_cache
