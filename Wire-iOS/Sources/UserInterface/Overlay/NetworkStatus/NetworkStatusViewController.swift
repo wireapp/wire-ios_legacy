@@ -49,6 +49,7 @@ class NetworkStatusViewController : UIViewController {
             networkStatusView.left == containerView.left
             networkStatusView.right == containerView.right
             networkStatusView.top == containerView.top
+            networkStatusView.height == containerView.height
         }
         
         if let userSession = ZMUserSession.shared() {
@@ -100,7 +101,7 @@ class NetworkStatusViewController : UIViewController {
     fileprivate func startOfflineBarTimer() {
         offlineBarTimer = .allVersionCompatibleScheduledTimer(withTimeInterval: 2.0, repeats: false) {
             [weak self] _ in
-            self?.collapseOfflineBar()
+            self?.collapseOfflineBar()///TODO: do not collapse
         }
     }
     
@@ -126,7 +127,7 @@ class NetworkStatusViewController : UIViewController {
         networkStatusView.update(state: state, animated: true)
         
         if state == .offlineExpanded {
-            startOfflineBarTimer()
+//            startOfflineBarTimer()
         }
     }
 

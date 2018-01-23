@@ -26,6 +26,7 @@ import Cartography
     fileprivate(set) var customNavBar : UINavigationBarContainer?
     fileprivate var contentView = UIView()
     var navHeight : NSLayoutConstraint?
+    var networkStatusBarHeight : NSLayoutConstraint?
 
     fileprivate let networkStatusViewController: NetworkStatusViewController
 
@@ -46,9 +47,6 @@ import Cartography
         
         conversationViewController = conversationController
 
-        networkStatusViewController.view.translatesAutoresizingMaskIntoConstraints = false
-        self.addChild(networkStatusViewController)
-
         configure()
     }
     
@@ -68,31 +66,35 @@ import Cartography
         navbar.isOpaque = true
         navbar.setBackgroundImage(UIImage(), for: .any, barMetrics: .default)
         navbar.shadowImage = UIImage()
-        navbar.translatesAutoresizingMaskIntoConstraints = false
         navbar.barTintColor = ColorScheme.default().color(withName: ColorSchemeColorBarBackground)
         
         self.customNavBar = UINavigationBarContainer(navbar)
         
         self.view.addSubview(self.customNavBar!)
         self.view.addSubview(self.contentView)
-        
+        self.addChild(networkStatusViewController)
+
+        [networkStatusViewController.view, navbar, self.contentView].forEach{view in
+            view.translatesAutoresizingMaskIntoConstraints = false}
+
         constrain(self.customNavBar!, self.view, self.contentView, conversationViewController.view, networkStatusViewController.view) { (customNavBar: LayoutProxy, view: LayoutProxy, contentView: LayoutProxy, conversationViewControllerView: LayoutProxy, networkStatusViewControllerView: LayoutProxy) -> () in
             
-            customNavBar.top == view.top
+            networkStatusViewControllerView.top == view.top + UIScreen.safeArea.top
+            networkStatusViewControllerView.left == view.left
+            networkStatusViewControllerView.right == view.right
+//                        networkStatusBarHeight = networkStatusViewControllerView.height == OfflineBar.expandedHeight
+
+            customNavBar.top == networkStatusViewControllerView.top
             customNavBar.left == view.left
             customNavBar.right == view.right
-            navHeight = customNavBar.height == 100
-            
+//            navHeight = customNavBar.height == 100 ~(750) ///TODO: remove
+
             contentView.left == view.left
             contentView.right == view.right
             contentView.bottom == view.bottom - UIScreen.safeArea.bottom
             contentView.top == customNavBar.bottom
             
             conversationViewControllerView.edges == contentView.edges
-
-            networkStatusViewControllerView.top == view.top
-            networkStatusViewControllerView.left == view.left
-            networkStatusViewControllerView.right == view.right
         }
         
         self.customNavBar!.navigationBar.pushItem(conversationViewController.navigationItem, animated: false)
@@ -105,11 +107,12 @@ import Cartography
         }
 
         ///FIXME: test animation here
-        navHeight?.constant = 150
+//        navHeight?.constant = 150
+//        networkStatusBarHeight?.constant = 40
 
-        UIView.animate(withDuration: 5) {
-            self.view.layoutIfNeeded()
-        }
+//        UIView.animate(withDuration: 2) {
+//            self.view.layoutIfNeeded()
+//        }
     }
     
     open override var prefersStatusBarHidden : Bool {

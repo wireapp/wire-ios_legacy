@@ -21,15 +21,15 @@ import Cartography
 
 class UINavigationBarContainer: UIView {
 
-    let landscapeTopMargin : CGFloat = 20.0
-    let landscapeNavbarHeight : CGFloat = 30.0
-    let portraitNavbarHeight : CGFloat = 44.0
-    
+    let landscapeTopMargin: CGFloat = 20.0
+    let landscapeNavbarHeight: CGFloat = 30.0
+    let portraitNavbarHeight: CGFloat = 44.0
+
     var navigationBar: UINavigationBar!
-//    var topMargin : NSLayoutConstraint?
-    var navHeight : NSLayoutConstraint?
-    
-    init(_ navigationBar : UINavigationBar) {
+    //    var topMargin : NSLayoutConstraint?
+    var navHeight: NSLayoutConstraint?
+
+    init(_ navigationBar: UINavigationBar) {
         super.init(frame: .zero)
         self.navigationBar = navigationBar
         self.addSubview(navigationBar)
@@ -40,17 +40,18 @@ class UINavigationBarContainer: UIView {
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
-    
+
     func createConstraints() {
-        constrain(navigationBar, self) { (navigationBar: LayoutProxy, view: LayoutProxy) -> () in
-//            self.topMargin = navigationBar.top == view.top + UIScreen.safeArea.top
+        constrain(navigationBar, self) { (navigationBar: LayoutProxy, view: LayoutProxy) -> Void in
+            //            self.topMargin = navigationBar.top == view.top + UIScreen.safeArea.top
             self.navHeight = navigationBar.height == portraitNavbarHeight
             navigationBar.left == view.left
             navigationBar.right == view.right
             navigationBar.bottom == view.bottom
+            navigationBar.height == view.height
         }
     }
-    
+
     override func layoutSubviews() {
         super.layoutSubviews()
         guard /*let topMargin = topMargin,*/ let navHeight = navHeight else { return }
@@ -58,10 +59,10 @@ class UINavigationBarContainer: UIView {
         let deviceType = UIDevice.current.userInterfaceIdiom
 
         if(UIInterfaceOrientationIsLandscape(orientation) && deviceType == .phone) {
-//            topMargin.constant = landscapeTopMargin
+            //            topMargin.constant = landscapeTopMargin
             navHeight.constant = landscapeNavbarHeight
         } else {
-//            topMargin.constant = UIScreen.safeArea.top
+            //            topMargin.constant = UIScreen.safeArea.top
             navHeight.constant = portraitNavbarHeight
         }
     }
