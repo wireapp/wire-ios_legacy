@@ -102,9 +102,8 @@ enum NetworkStatusViewState {
     case offlineCollapsed
 }
 
-
 protocol NetworkStatusViewDelegate: class {
-    func didChangeHeight(_ networkStatusView : NetworkStatusView, animated: Bool, offlineBarState: OfflineBarState)
+    func didChangeHeight(_ networkStatusView: NetworkStatusView, animated: Bool, offlineBarState: OfflineBarState)
 }
 
 class NetworkStatusView: UIView {
@@ -166,13 +165,9 @@ class NetworkStatusView: UIView {
     }
 
     func updateViewState(animated: Bool) {
-        connectingView.isHidden = state != .onlineSynchronizing
+        let connectingViewHidden = state != .onlineSynchronizing
         connectingView.animating = state == .onlineSynchronizing
-        offlineView.isHidden = state != .offlineExpanded && state != .offlineCollapsed
-
-        if state == .online || state == .onlineSynchronizing {
-            offlineView.state = .minimized
-        }
+        let offlineViewHidden = state != .offlineExpanded && state != .offlineCollapsed
 
         var offlineBarState: OfflineBarState?
         switch state {
@@ -180,8 +175,8 @@ class NetworkStatusView: UIView {
             offlineBarState = .expanded
         case .offlineCollapsed:
             offlineBarState = .minimized
-        default:
-            offlineBarState = nil
+        case .online, .onlineSynchronizing:
+            offlineBarState = .minimized
         }
 
         if let offlineBarState = offlineBarState {
@@ -189,9 +184,14 @@ class NetworkStatusView: UIView {
                 UIView.animate(withDuration: NetworkStatusView.resizeAnimationTime, delay: 0, options: [.curveEaseIn, .beginFromCurrentState], animations: {
                     self.offlineView.update(state: offlineBarState, animated: animated)
                     self.layoutIfNeeded()
-                })
+                }) { _ in
+                    self.connectingView.isHidden = connectingViewHidden
+                    self.offlineView.isHidden = offlineViewHidden
+                }
             } else {
                 self.offlineView.update(state: offlineBarState, animated: animated)
+                connectingView.isHidden = connectingViewHidden
+                offlineView.isHidden = offlineViewHidden
             }
 
             delegate?.didChangeHeight(self, animated: animated, offlineBarState: offlineBarState)
