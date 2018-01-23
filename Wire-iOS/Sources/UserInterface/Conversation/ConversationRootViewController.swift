@@ -54,7 +54,7 @@ import Cartography
         
         self.view.backgroundColor = ColorScheme.default().color(withName: ColorSchemeColorBarBackground)
         
-        let navbar = UINavigationBar()
+        let navbar = UINavigationBar()///TODO: animation height
         navbar.isTranslucent = false
         navbar.isOpaque = true
         navbar.setBackgroundImage(UIImage(), for: .any, barMetrics: .default)
@@ -72,6 +72,7 @@ import Cartography
             customNavBar.top == view.top
             customNavBar.left == view.left
             customNavBar.right == view.right
+            customNavBar.height == 100 ///TODO
             
             contentView.left == view.left
             contentView.right == view.right
