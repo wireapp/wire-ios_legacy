@@ -26,8 +26,8 @@ enum OfflineBarState {
 
 class OfflineBar: UIView {
 
-    public let collapsedHeight: CGFloat = 2
-    public let expandedHeight: CGFloat = 20
+    static public let collapsedHeight: CGFloat = 2
+    static public let expandedHeight: CGFloat = 20
 
     private let offlineLabel: UILabel
     private var heightConstraint: NSLayoutConstraint?
@@ -84,12 +84,12 @@ class OfflineBar: UIView {
             offlineLabel.left >= containerView.leftMargin
             offlineLabel.right <= containerView.rightMargin
 
-            heightConstraint = containerView.height == collapsedHeight
+            heightConstraint = containerView.height == OfflineBar.collapsedHeight
         }
     }
 
     private func updateViews(animated: Bool = true) {
-        heightConstraint?.constant = state == .expanded ? expandedHeight : collapsedHeight
+        heightConstraint?.constant = state == .expanded ? OfflineBar.expandedHeight : OfflineBar.collapsedHeight
         offlineLabel.alpha = state == .expanded ? 1 : 0
     }
 
@@ -102,11 +102,19 @@ enum NetworkStatusViewState {
     case offlineCollapsed
 }
 
+
+protocol NetworkStatusViewDelegate: class {
+    func didChangeHeight(_ networkStatusView : NetworkStatusView, animated: Bool, offlineBarState: OfflineBarState)
+}
+
 class NetworkStatusView: UIView {
+
+    static public let resizeAnimationTime: TimeInterval = 0.35
 
     private let connectingView: BreathLoadingBar
     private let offlineView: OfflineBar
     private var _state: NetworkStatusViewState = .online
+    public weak var delegate: NetworkStatusViewDelegate?
 
     var state: NetworkStatusViewState {
         set {
@@ -142,7 +150,7 @@ class NetworkStatusView: UIView {
 
     func createConstraints() {
         constrain(self, offlineView, connectingView) { containerView, offlineView, connectingView in
-            containerView.height == 20
+            containerView.height == OfflineBar.expandedHeight
 
             offlineView.left == containerView.left
             offlineView.right == containerView.right
@@ -153,7 +161,7 @@ class NetworkStatusView: UIView {
             connectingView.right == containerView.right
             connectingView.top == containerView.top
             connectingView.bottom <= containerView.bottom
-            connectingView.height == 2
+            connectingView.height == OfflineBar.collapsedHeight
         }
     }
 
@@ -166,27 +174,29 @@ class NetworkStatusView: UIView {
             offlineView.state = .minimized
         }
 
-        if state == .offlineExpanded {
+        var offlineBarState: OfflineBarState?
+        switch state {
+        case .offlineExpanded:
+            offlineBarState = .expanded
+        case .offlineCollapsed:
+            offlineBarState = .minimized
+        default:
+            offlineBarState = nil
+        }
+
+        if let offlineBarState = offlineBarState {
             if animated {
-                UIView.animate(withDuration: 0.35, delay: 0, options: [.curveEaseIn, .beginFromCurrentState], animations: {
-                    self.offlineView.update(state: .expanded, animated: animated)
+                UIView.animate(withDuration: NetworkStatusView.resizeAnimationTime, delay: 0, options: [.curveEaseIn, .beginFromCurrentState], animations: {
+                    self.offlineView.update(state: offlineBarState, animated: animated)
                     self.layoutIfNeeded()
                 })
             } else {
-                self.offlineView.update(state: .expanded, animated: animated)
+                self.offlineView.update(state: offlineBarState, animated: animated)
             }
+
+            delegate?.didChangeHeight(self, animated: animated, offlineBarState: offlineBarState)
         }
 
-        if state == .offlineCollapsed {
-            if animated {
-                UIView.animate(withDuration: 0.35, delay: 0, options: [.curveEaseOut, .beginFromCurrentState], animations: {
-                    self.offlineView.update(state: .minimized, animated: animated)
-                    self.layoutIfNeeded() ///TODO: tell parents to update
-                })
-            } else {
-                self.offlineView.update(state: .minimized, animated: animated)
-            }
-        }
     }
 
     // Detects when the view can be touchable

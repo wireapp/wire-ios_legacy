@@ -22,7 +22,7 @@ import Cartography
 @objc
 class NetworkStatusViewController : UIViewController {
     
-    fileprivate var networkStatusView : NetworkStatusView!
+    fileprivate let networkStatusView = NetworkStatusView()
     fileprivate var networkStatusObserverToken : Any?
     fileprivate var pendingState : NetworkStatusViewState?
     fileprivate var offlineBarTimer : Timer?
@@ -41,8 +41,6 @@ class NetworkStatusViewController : UIViewController {
     }
     
     override func viewDidLoad() {
-        networkStatusView = NetworkStatusView()
-        
         view.addSubview(networkStatusView)
         
         constrain(self.view, networkStatusView) { containerView, networkStatusView in
@@ -58,6 +56,10 @@ class NetworkStatusViewController : UIViewController {
         }
         
         networkStatusView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tappedOnNetworkStatusBar)))
+    }
+
+    public func setNetworkStatusViewDelegate(delegate: NetworkStatusViewDelegate) {
+        self.networkStatusView.delegate = delegate
     }
     
     public func notifyWhenOffline() -> Bool {
@@ -101,7 +103,7 @@ class NetworkStatusViewController : UIViewController {
     fileprivate func startOfflineBarTimer() {
         offlineBarTimer = .allVersionCompatibleScheduledTimer(withTimeInterval: 2.0, repeats: false) {
             [weak self] _ in
-            self?.collapseOfflineBar()///TODO: do not collapse
+            self?.collapseOfflineBar()
         }
     }
     
@@ -125,10 +127,6 @@ class NetworkStatusViewController : UIViewController {
     
     fileprivate func update(state : NetworkStatusViewState) {
         networkStatusView.update(state: state, animated: true)
-        
-        if state == .offlineExpanded {
-//            startOfflineBarTimer()
-        }
     }
 
 }
