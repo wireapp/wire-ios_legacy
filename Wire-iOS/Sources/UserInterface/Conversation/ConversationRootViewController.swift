@@ -76,7 +76,7 @@ import Cartography
         self.view.addSubview(self.customNavBar!)
         self.view.addSubview(self.contentView)
         
-        constrain(self.customNavBar!, self.view, self.contentView, conversationViewController.view) { (customNavBar: LayoutProxy, view: LayoutProxy, contentView: LayoutProxy, conversationViewControllerView: LayoutProxy) -> () in
+        constrain(self.customNavBar!, self.view, self.contentView, conversationViewController.view, networkStatusViewController.view) { (customNavBar: LayoutProxy, view: LayoutProxy, contentView: LayoutProxy, conversationViewControllerView: LayoutProxy, networkStatusViewControllerView: LayoutProxy) -> () in
             
             customNavBar.top == view.top
             customNavBar.left == view.left
@@ -89,6 +89,10 @@ import Cartography
             contentView.top == customNavBar.bottom
             
             conversationViewControllerView.edges == contentView.edges
+
+            networkStatusViewControllerView.top == view.top
+            networkStatusViewControllerView.left == view.left
+            networkStatusViewControllerView.right == view.right
         }
         
         self.customNavBar!.navigationBar.pushItem(conversationViewController.navigationItem, animated: false)
