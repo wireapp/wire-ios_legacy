@@ -28,8 +28,6 @@ public protocol Shareable {
     associatedtype I: ShareDestination
     func share<I>(to: [I])
     func previewView() -> UIView?
-    func height(for previewView: UIView?) -> CGFloat
-    
 }
 
 final public class ShareViewController<D: ShareDestination, S: Shareable>: UIViewController, UITableViewDelegate, UITableViewDataSource, TokenFieldDelegate, UIViewControllerTransitioningDelegate {
@@ -42,13 +40,15 @@ final public class ShareViewController<D: ShareDestination, S: Shareable>: UIVie
     }
     
     public let showPreview: Bool
+    public let allowsMultiselect: Bool
     public var onDismiss: ((ShareViewController, Bool)->())?
     
-    public init(shareable: S, destinations: [D], showPreview: Bool = true) {
+    public init(shareable: S, destinations: [D], showPreview: Bool = true, allowsMultiselect: Bool = true) {
         self.destinations = destinations
         self.filteredDestinations = destinations
         self.shareable = shareable
         self.showPreview = showPreview
+        self.allowsMultiselect = allowsMultiselect
         super.init(nibName: nil, bundle: nil)
         self.transitioningDelegate = self
     }
@@ -136,7 +136,15 @@ final public class ShareViewController<D: ShareDestination, S: Shareable>: UIVie
     
     public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let destination = self.filteredDestinations[indexPath.row]
-
+        
+        if !self.allowsMultiselect && self.selectedDestinations.count > 0 {
+            if let indexPathForSelectedRow = tableView.indexPathForSelectedRow {
+                tableView.deselectRow(at: indexPathForSelectedRow, animated: true)
+            }
+            self.selectedDestinations.removeAll()
+            self.tokenField.removeAllTokens()
+        }
+        
         self.tokenField.addToken(forTitle: destination.displayName, representedObject: destination)
         
         self.selectedDestinations.insert(destination)

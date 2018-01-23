@@ -441,6 +441,7 @@ extension VoiceChannelOverlay {
         
         let video = AVSVideoView()
         video.shouldFill = true
+        video.userid = callingConversation.firstActiveParticipantOtherThanSelf()?.remoteIdentifier?.transportString()
         video.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         video.isUserInteractionEnabled = false
         video.backgroundColor = UIColor(patternImage: .dot(9))

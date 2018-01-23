@@ -21,20 +21,13 @@
 #import "CollectionViewSectionAggregator.h"
 #import "CollectionViewSectionController.h"
 
-// the aggregator is the collection view's delegate, so this
-// protocol can be used to pass delegate methods externally
-@protocol CollectionViewSectionAggregatorDelegate <NSObject>
-@optional
-- (void)scrollViewDidScroll:(UIScrollView *_Nonnull)scrollView;
-@end
-
 @interface CollectionViewSectionAggregator : NSObject <UICollectionViewDataSource, UICollectionViewDelegateFlowLayout>
 
 @property (nonatomic, nullable)   NSArray<id<CollectionViewSectionController>> *sectionControllers;
 @property (nonatomic, readonly, nonnull) NSArray<id<CollectionViewSectionController>> *visibleSectionControllers;
 @property (nonatomic, weak, nullable) UICollectionView *collectionView;
-@property (nonatomic, weak, nullable) id <CollectionViewSectionAggregatorDelegate> delegate;
 
 - (void)reloadData;
+- (void)updateCollectionViewWithControllers;
 
 @end

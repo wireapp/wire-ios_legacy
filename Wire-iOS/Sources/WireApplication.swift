@@ -16,7 +16,6 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-import Foundation
 import UIKit
 
 @objc public class WireApplication: UIApplication {
@@ -29,5 +28,12 @@ import UIKit
     override public func registerForRemoteNotifications() {
         if AutomationHelper.sharedHelper.skipFirstLoginAlerts { return }
         super.registerForRemoteNotifications()
+    }
+    
+    override public func motionEnded(_ motion: UIEventSubtype, with event: UIEvent?) {
+        guard motion == .motionShake else { return }
+        DebugAlert.showSendLogsMessage(
+            message: "You have performed a shake motion, please confirm sending debug logs."
+        )
     }
 }

@@ -22,7 +22,6 @@
 @protocol CollectionViewSectionController;
 
 @protocol CollectionViewSectionDelegate <NSObject>
-
 - (void)collectionViewSectionController:(id<CollectionViewSectionController>)controller
                           didSelectItem:(id)item
                             atIndexPath:(NSIndexPath *)indexPath;
@@ -42,7 +41,6 @@
 @property (nonatomic, weak) UICollectionView *collectionView;
 @property (nonatomic, weak) id <CollectionViewSectionDelegate> delegate;
 @property (nonatomic, getter=isHidden, readonly) BOOL hidden;
-- (BOOL)hasSearchResults;
 @optional
 - (void)reloadData;
 @end

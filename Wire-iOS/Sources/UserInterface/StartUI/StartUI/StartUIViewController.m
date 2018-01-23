@@ -49,11 +49,12 @@
 static NSUInteger const StartUIInitiallyShowsKeyboardConversationThreshold = 10;
 
 
-@interface StartUIViewController () <ContactsViewControllerDelegate, UserSelectionObserver, SearchResultsViewControllerDelegate, SearchHeaderViewControllerDelegate, CollectionViewSectionAggregatorDelegate>
+@interface StartUIViewController () <ContactsViewControllerDelegate, UserSelectionObserver, SearchResultsViewControllerDelegate, SearchHeaderViewControllerDelegate>
 
 @property (nonatomic) ProfilePresenter *profilePresenter;
 @property (nonatomic) StartUIQuickActionsBar *quickActionsBar;
 @property (nonatomic) UILabel *emptyResultLabel;
+@property (nonatomic) SearchGroupSelector *groupSelector;
 
 @property (nonatomic) SearchHeaderViewController *searchHeaderViewController;
 @property (nonatomic) SearchResultsViewController *searchResultsViewController;
@@ -104,7 +105,17 @@ static NSUInteger const StartUIInitiallyShowsKeyboardConversationThreshold = 10;
     [self.view addSubview:self.searchHeaderViewController.view];
     [self.searchHeaderViewController didMoveToParentViewController:self];
     
-    self.searchResultsViewController = [[SearchResultsViewController alloc] initWithUserSelection:self.userSelection team:team variant:ColorSchemeVariantDark isAddingParticipants:NO];
+    self.groupSelector = [[SearchGroupSelector alloc] init];
+    self.groupSelector.translatesAutoresizingMaskIntoConstraints = NO;
+    @weakify(self);
+    self.groupSelector.onGroupSelected = ^(SearchGroup group) {
+        @strongify(self);
+        self.searchResultsViewController.searchGroup = group;
+        [self performSearch];
+    };
+    [self.view addSubview:self.groupSelector];
+    
+    self.searchResultsViewController = [[SearchResultsViewController alloc] initWithUserSelection:self.userSelection variant:ColorSchemeVariantDark isAddingParticipants:NO];
     self.searchResultsViewController.mode = SearchResultsViewControllerModeList;
     self.searchResultsViewController.delegate = self;
     [self addChildViewController:self.searchResultsViewController];
@@ -125,19 +136,28 @@ static NSUInteger const StartUIInitiallyShowsKeyboardConversationThreshold = 10;
     [self updateActionBar];
     [self handleUploadAddressBookLogicIfNeeded];
     [self.searchResultsViewController searchContactList];
-    self.searchResultsViewController.sectionAggregator.delegate = self;
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [self.navigationController setNavigationBarHidden:YES animated:animated];
 }
 
 - (void)createConstraints
 {
     [self.searchHeaderViewController.view autoPinEdgeToSuperviewEdge:ALEdgeTop withInset:UIScreen.safeArea.top];
-    [self.searchHeaderViewController.view autoPinEdgeToSuperviewEdge:ALEdgeRight];
-    [self.searchHeaderViewController.view autoPinEdgeToSuperviewEdge:ALEdgeLeft];
+    [self.searchHeaderViewController.view autoPinEdgeToSuperviewEdge:ALEdgeLeading];
+    [self.searchHeaderViewController.view autoPinEdgeToSuperviewEdge:ALEdgeTrailing];
     
-    [self.searchResultsViewController.view autoPinEdgeToSuperviewEdge:ALEdgeLeft];
-    [self.searchResultsViewController.view autoPinEdgeToSuperviewEdge:ALEdgeRight];
+    [self.groupSelector autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.searchHeaderViewController.view];
+    [self.groupSelector autoPinEdgeToSuperviewEdge:ALEdgeLeading];
+    [self.groupSelector autoPinEdgeToSuperviewEdge:ALEdgeTrailing];
+
+    [self.searchResultsViewController.view autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.groupSelector];
+    [self.searchResultsViewController.view autoPinEdgeToSuperviewEdge:ALEdgeTrailing];
+    [self.searchResultsViewController.view autoPinEdgeToSuperviewEdge:ALEdgeLeading];
     [self.searchResultsViewController.view autoPinEdgeToSuperviewEdge:ALEdgeBottom];
-    [self.searchResultsViewController.view autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.searchHeaderViewController.view];
 }
 
 - (void)handleUploadAddressBookLogicIfNeeded
@@ -208,15 +228,25 @@ static NSUInteger const StartUIInitiallyShowsKeyboardConversationThreshold = 10;
     NSString *searchString = self.searchHeaderViewController.query;
     DDLogInfo(@"Search for %@", searchString);
     
-    if (searchString.length == 0) {
-        self.searchResultsViewController.mode = SearchResultsViewControllerModeList;
-        [self.searchResultsViewController searchContactList];
-    } else {
-        BOOL leadingAt = [[searchString substringToIndex:1] isEqualToString:@"@"];
-        BOOL hasSelection = self.userSelection.users.count > 0;
-        [Analytics.shared tagEnteredSearchWithLeadingAtSign:leadingAt context:SearchContextStartUI];
-        self.searchResultsViewController.mode = hasSelection ? SearchResultsViewControllerModeSelection : SearchResultsViewControllerModeSearch;
-        [self.searchResultsViewController searchWithQuery:searchString local:hasSelection];
+    if (self.groupSelector.group == SearchGroupPeople) {
+        if (searchString.length == 0) {
+            self.searchResultsViewController.mode = SearchResultsViewControllerModeList;
+            [self.searchResultsViewController searchContactList];
+        } else {
+            BOOL leadingAt = [[searchString substringToIndex:1] isEqualToString:@"@"];
+            BOOL hasSelection = self.userSelection.users.count > 0;
+            [Analytics.shared tagEnteredSearchWithLeadingAtSign:leadingAt context:SearchContextStartUI];
+            self.searchResultsViewController.mode = hasSelection ? SearchResultsViewControllerModeSelection : SearchResultsViewControllerModeSearch;
+            if (hasSelection) {
+                [self.searchResultsViewController searchForLocalUsersWithQuery:searchString];
+            }
+            else {
+                [self.searchResultsViewController searchForUsersWithQuery:searchString];
+            }
+        }
+    }
+    else {
+        [self.searchResultsViewController searchForServicesWithQuery:searchString];
     }
 }
 
@@ -348,6 +378,21 @@ static NSUInteger const StartUIInitiallyShowsKeyboardConversationThreshold = 10;
     }
 }
 
+- (void)searchResultsViewController:(SearchResultsViewController * _Nonnull)searchResultsViewController didTapOnSeviceUser:(id<ServiceUser> _Nonnull)serviceUser
+{
+    ServiceDetailViewController *serviceDetail = [[ServiceDetailViewController alloc] initWithServiceUser:serviceUser];
+    
+    serviceDetail.completion = ^(ZMConversation *conversation) {
+        if (nil != conversation) {
+            if ([self.delegate respondsToSelector:@selector(startUI:didSelectConversation:)]) {
+                [self.delegate startUI:self didSelectConversation:conversation];
+            }
+        }
+    };
+    
+    [self.navigationController pushViewController:serviceDetail animated:YES];
+}
+
 #pragma mark - SearchHeaderViewControllerDelegate
 
 - (void)searchHeaderViewControllerDidCancelAction:(SearchHeaderViewController *)searchHeaderViewController
@@ -385,13 +430,6 @@ static NSUInteger const StartUIInitiallyShowsKeyboardConversationThreshold = 10;
     [self dismissViewControllerAnimated:YES completion:^{
         [self wr_presentInviteActivityViewControllerWithSourceView:self.quickActionsBar logicalContext:GenericInviteContextStartUIBanner];
     }];
-}
-
-#pragma mark - CollectionViewSectionAggregatorDelegate
-
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView
-{
-    [self.searchHeaderViewController.separatorView scrollViewDidScroll:scrollView];
 }
 
 @end

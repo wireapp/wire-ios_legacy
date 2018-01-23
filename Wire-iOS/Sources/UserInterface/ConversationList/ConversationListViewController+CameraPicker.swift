@@ -19,6 +19,7 @@
 import Foundation
 import AVKit
 import MobileCoreServices
+import Cartography
 
 func forward(_ image: UIImage, to conversations: [AnyObject]) {
     guard let imageData = UIImageJPEGRepresentation(image, 0.9),
@@ -46,12 +47,11 @@ extension UIImage: Shareable {
         imageView.clipsToBounds = true
         imageView.backgroundColor = .white
         imageView.layer.cornerRadius = 4
+        constrain(imageView) { imageView in
+            imageView.height == PreviewHeightCalculator.heightForImage(self)
+        }
+        
         return imageView
-    }
-    
-    public func height(for previewView: UIView?) -> CGFloat {
-        guard let previewView = previewView as? UIImageView else { return 0.0 }
-        return CellSizesProvider.heightForImage(previewView.image)
     }
 }
 
@@ -84,11 +84,11 @@ extension URL: Shareable {
         playerViewController.view.backgroundColor = .white
         playerViewController.view.layer.cornerRadius = 4
 
+        constrain(playerViewController.view) { playerViewControllerView in
+            playerViewControllerView.height == PreviewHeightCalculator.heightForVideo()
+        }
+        
         return playerViewController.view
-    }
-    
-    public func height(for previewView: UIView?) -> CGFloat {
-        return CellSizesProvider.heightForVideo()
     }
 }
 
@@ -96,21 +96,24 @@ extension URL: Shareable {
 extension ConversationListViewController {
 
     @objc public func showCameraPicker() {
-        let cameraPicker = CameraPicker(target: self)
-        cameraPicker.didPickResult = { [weak self] result in
-            guard let `self` = self else {
-                return
-            }
-            
-            switch result {
-            case .image(let image):
-                self.showShareControllerFor(image: image)
-            case .video(let videoURL):
-                self.showShareControllerFor(videoAtURL: videoURL)
+        UIApplication.wr_requestOrWarnAboutVideoAccess { (granted) in
+            if granted {
+                let cameraPicker = CameraPicker(target: self)
+                cameraPicker.didPickResult = { [weak self] result in
+                    guard let `self` = self else {
+                        return
+                    }
+                    
+                    switch result {
+                    case .image(let image):
+                        self.showShareControllerFor(image: image)
+                    case .video(let videoURL):
+                        self.showShareControllerFor(videoAtURL: videoURL)
+                    }
+                }
+                cameraPicker.pick()
             }
         }
-        
-        cameraPicker.pick()
     }
     
     public func showShareControllerFor(image: UIImage) {

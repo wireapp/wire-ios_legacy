@@ -984,7 +984,7 @@
         });
     }
     else {
-        [UIApplication wr_requestOrWarnAboutVideoAccess:^(BOOL granted) {
+        [UIApplication wr_requestVideoAccess:^(BOOL granted) {
             [self executeWithCameraRollPermission:^(BOOL success){
                 self.mode = ConversationInputBarViewControllerModeCamera;
                 [self.inputBar.textView becomeFirstResponder];

@@ -16,18 +16,14 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-import Foundation
-import Cartography
+import UIKit
 
-extension NotificationWindowRootViewController {
-
-    func createNotificationWindowRootViewControllerConstraints() {
-        constrain(self.view, networkStatusViewController!.view) { selfView, networkStatusView in
-            networkStatusView.leading == selfView.leading + 16
-            networkStatusView.trailing == selfView.trailing - 16
-            networkStatusView.top == selfView.top + 28 ///TODO: iPhone X
-            networkStatusView.bottom == selfView.bottom
-        }
+extension TokenField {
+    func setupFonts() {
+        // Dynamic Type is disabled for now until the separator dots
+        // vertical alignment has been fixed for larger fonts.
+        let schema = FontScheme(contentSizeCategory: .medium)
+        font = schema.font(for: .init(.normal, .regular))
+        tokenTitleFont = schema.font(for: .init(.small, .regular))
     }
-
 }

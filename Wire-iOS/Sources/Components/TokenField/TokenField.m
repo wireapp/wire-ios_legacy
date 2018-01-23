@@ -23,6 +23,8 @@
 #import "TokenTextAttachment.h"
 #import "IconButton.h"
 #import "Logging.h"
+#import "ColorScheme.h"
+#import "Wire-Swift.h"
 
 
 CGFloat const accessoryButtonSize = 32.0f;
@@ -65,18 +67,12 @@ CGFloat const accessoryButtonSize = 32.0f;
 - (instancetype)initWithCoder:(NSCoder *)coder
 {
     self = [super initWithCoder:coder];
-    if (self) {
-        [self setup];
-    }
     return self;
 }
 
 - (instancetype)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
-    if (self) {
-        [self setup];
-    }
     return self;
 }
 
@@ -94,20 +90,20 @@ CGFloat const accessoryButtonSize = 32.0f;
 
 - (void)setupDefaultAppearance
 {
-    _font = [UIFont systemFontOfSize:[UIFont systemFontSize]];
+    [self setupFonts];
     _textColor = [UIColor blackColor];
     _lineSpacing = 8.0f;
     _hasAccessoryButton = NO;
-    
-    self.tokenTitleFont = [UIFont boldSystemFontOfSize:[UIFont systemFontSize] - 2];
+    _tokenTitleVerticalAdjustment = 1;
+
     self.tokenTitleColor = [UIColor whiteColor];
     self.tokenSelectedTitleColor = [UIColor colorWithRed:0.103 green:0.382 blue:0.691 alpha:1.000];
     self.tokenBackgroundColor = [UIColor colorWithRed:0.118 green:0.467 blue:0.745 alpha:1.000];
     self.tokenSelectedBackgroundColor = [UIColor whiteColor];
     self.tokenBorderColor = [UIColor colorWithRed:0.118 green:0.467 blue:0.745 alpha:1.000];
     self.tokenSelectedBorderColor = [UIColor colorWithRed:0.118 green:0.467 blue:0.745 alpha:1.000];
-    self.tokenHeight = 0.0f;
     self.tokenTextTransform = TextTransformUpper;
+    self.dotColor = [ColorScheme.defaultColorScheme colorWithName:ColorSchemeColorTextDimmed];
 }
 
 - (void)setupSubviews
@@ -119,6 +115,9 @@ CGFloat const accessoryButtonSize = 32.0f;
     self.textView.delegate = self;
     self.textView.translatesAutoresizingMaskIntoConstraints = NO;
     self.textView.backgroundColor = [UIColor clearColor];
+    if (@available(iOS 11, *)) {
+        self.textView.textDragInteraction.enabled = NO;
+    }
     [self addSubview:self.textView];
     
     self.toLabel = [UILabel new];
@@ -296,15 +295,6 @@ CGFloat const accessoryButtonSize = 32.0f;
     [self updateTokenAttachments];
 }
 
-- (void)setTokenHeight:(CGFloat)tokenHeight
-{
-    if (_tokenHeight == tokenHeight) {
-        return;
-    }
-    _tokenHeight = tokenHeight;
-    [self updateTokenAttachments];
-}
-
 - (void)setTokenTitleVerticalAdjustment:(CGFloat)tokenTitleVerticalAdjustment
 {
     if (_tokenTitleVerticalAdjustment == tokenTitleVerticalAdjustment) {
@@ -410,6 +400,7 @@ CGFloat const accessoryButtonSize = 32.0f;
 - (void)removeAllTokens
 {
     [self removeTokens:[self.currentTokens copy]];
+    [self.textView showOrHidePlaceholder];
 }
 
 - (void)removeTokens:(NSArray *)tokensToRemove
@@ -419,9 +410,13 @@ CGFloat const accessoryButtonSize = 32.0f;
     [self.textView.attributedText enumerateAttribute:NSAttachmentAttributeName
                                              inRange:NSMakeRange(0, self.textView.attributedText.length)
                                              options:0
-                                          usingBlock:^(TokenTextAttachment *tokenAttachment, NSRange range, BOOL *stop)
+                                          usingBlock:^(NSTextAttachment *textAttachment, NSRange range, BOOL *stop)
      {
-         if ([tokensToRemove containsObject:tokenAttachment.token]) {
+         if ([textAttachment isKindOfClass:[TokenSeparatorAttachment class]] && [tokensToRemove containsObject:((TokenSeparatorAttachment *)textAttachment).token]) {
+             [rangesToRemove addObject:[NSValue valueWithRange:range]];
+         }
+         
+         if ([textAttachment isKindOfClass:[TokenTextAttachment class]] && [tokensToRemove containsObject:((TokenTextAttachment *)textAttachment).token]) {
              [rangesToRemove addObject:[NSValue valueWithRange:range]];
          }
      }];
@@ -596,7 +591,13 @@ CGFloat const accessoryButtonSize = 32.0f;
     for (Token *token in tokens) {
         TokenTextAttachment *tokenAttachment = [[TokenTextAttachment alloc] initWithToken:token tokenField:self];
         NSMutableAttributedString* tokenString = [[NSAttributedString attributedStringWithAttachment:tokenAttachment] mutableCopy];
+        
         [string appendAttributedString:tokenString];
+        
+        TokenSeparatorAttachment *separatorAttachment = [[TokenSeparatorAttachment alloc] initWithToken:token tokenField:self];
+        NSMutableAttributedString* separatorString = [[NSAttributedString attributedStringWithAttachment:separatorAttachment] mutableCopy];
+        
+        [string appendAttributedString:separatorString];
     }
     [string addAttributes:self.textAttributes range:NSMakeRange(0, string.length)];
     return string;
@@ -746,6 +747,15 @@ CGFloat const accessoryButtonSize = 32.0f;
 
 #pragma mark - UITextViewDelegate
 
+- (BOOL)textView:(UITextView *)textView shouldInteractWithTextAttachment:(NSTextAttachment *)textAttachment inRange:(NSRange)characterRange
+{
+    if ([textAttachment isKindOfClass:[TokenSeparatorAttachment class]]) {
+        return NO;
+    }
+    
+    return YES;
+}
+
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
 {
     if ([text isEqualToString:@"\n"]) {
@@ -804,35 +814,55 @@ CGFloat const accessoryButtonSize = 32.0f;
     self.userDidConfirmInput = NO;
     
     [self filterUnwantedAttachments];
+    [self notifyIfFilterTextChanged];
     [self invalidateIntrinsicContentSize];
 }
 
 - (void)filterUnwantedAttachments
 {
-    NSMutableArray *updatedCurrentTokens = [@[] mutableCopy];
+    NSMutableOrderedSet *updatedCurrentTokens = [NSMutableOrderedSet orderedSet];
+    NSMutableSet *updatedCurrentSeparatorTokens = [NSMutableSet set];
     
+    [self.textView.attributedText enumerateAttribute:NSAttachmentAttributeName
+                                             inRange:NSMakeRange(0, self.textView.text.length)
+                                             options:0
+                                          usingBlock:^(NSTextAttachment *textAttachment, NSRange range, BOOL *stop) {
+                                              
+                                              if ([textAttachment isKindOfClass:[TokenTextAttachment class]] && ![updatedCurrentTokens containsObject:((TokenTextAttachment *)textAttachment).token]) {
+                                                  [updatedCurrentTokens addObject:((TokenTextAttachment *)textAttachment).token];
+                                              }
+                                              
+                                              if ([textAttachment isKindOfClass:[TokenSeparatorAttachment class]] && ![updatedCurrentSeparatorTokens containsObject:((TokenSeparatorAttachment *) textAttachment).token]) {
+                                                  [updatedCurrentSeparatorTokens addObject:((TokenSeparatorAttachment *) textAttachment).token];
+                                              }
+                                          }];
+    
+    [updatedCurrentTokens intersectSet:updatedCurrentSeparatorTokens];
+    
+    NSMutableSet *deletedTokens = [NSMutableSet setWithArray:self.currentTokens];
+    [deletedTokens minusSet:updatedCurrentTokens.set];
+    
+    if (deletedTokens.count > 0) {
+        [self removeTokens:deletedTokens.allObjects];
+    }
+    
+    [self.currentTokens removeObjectsInArray:deletedTokens.allObjects];
+    if ([self.delegate respondsToSelector:@selector(tokenField:changedTokensTo:)]) {
+        [self.delegate tokenField:self changedTokensTo:self.currentTokens];
+    }
+}
+
+- (void)notifyIfFilterTextChanged
+{
     __block NSUInteger indexOfFilterText = 0;
     [self.textView.attributedText enumerateAttribute:NSAttachmentAttributeName
                                              inRange:NSMakeRange(0, self.textView.text.length)
                                              options:0
                                           usingBlock:^(TokenTextAttachment *tokenAttachment, NSRange range, BOOL *stop) {
-                                              
-                                              // ZIOS-2300 - apparently text dictation generates some kind of attachments, so we need to validate the class
-                                              if (![tokenAttachment isKindOfClass:[TokenTextAttachment class]]) {
-                                                  return;
-                                              }
-                                              
-                                              indexOfFilterText = NSMaxRange(range);
-                                              
-                                              if (! [updatedCurrentTokens containsObject:tokenAttachment.token]) {
-                                                  [updatedCurrentTokens addObject:tokenAttachment.token];
+                                              if ([tokenAttachment isKindOfClass:[TokenTextAttachment class]]) {
+                                                  indexOfFilterText = NSMaxRange(range);
                                               }
                                           }];
-    
-    self.currentTokens = updatedCurrentTokens;
-    if ([self.delegate respondsToSelector:@selector(tokenField:changedTokensTo:)]) {
-        [self.delegate tokenField:self changedTokensTo:self.currentTokens];
-    }
     
     NSString *oldFilterText = self.filterText;
     self.filterText = [self.textView.text substringFromIndex:indexOfFilterText];
@@ -858,6 +888,10 @@ NS_INLINE BOOL RangeIncludesRange(NSRange range, NSRange includedRange)
 - (void)textViewDidChangeSelection:(UITextView *)textView
 {
     DDLogDebug(@"Selection changed: %@", NSStringFromRange(textView.selectedRange));
+    
+    __block NSRange modifiedSelectionRange = NSMakeRange(0, 0);
+    __block BOOL hasModifiedSelection = NO;
+    
     [textView.attributedText enumerateAttribute:NSAttachmentAttributeName
                                         inRange:NSMakeRange(0, textView.attributedText.length)
                                         options:0
@@ -865,9 +899,19 @@ NS_INLINE BOOL RangeIncludesRange(NSRange range, NSRange includedRange)
                                          if ([tokenAttachment isKindOfClass:[TokenTextAttachment class]]) {
                                              tokenAttachment.selected = RangeIncludesRange(textView.selectedRange, range);
                                              [textView.layoutManager invalidateDisplayForCharacterRange:range];
+                                             
+                                             if (RangeIncludesRange(textView.selectedRange, range)) {
+                                                 modifiedSelectionRange = NSUnionRange(hasModifiedSelection ? modifiedSelectionRange : range, range);
+                                                 hasModifiedSelection = YES;
+                                             }
                                              DDLogVerbose(@"    person attachement: %@ at range: %@ selected: %d", tokenAttachment.token.title,  NSStringFromRange(range), tokenAttachment.selected);
                                          }
                                      }];
+    
+    
+    if (hasModifiedSelection && !NSEqualRanges(textView.selectedRange, modifiedSelectionRange)) {
+        textView.selectedRange = modifiedSelectionRange;
+    }
 }
 
 #pragma mark - UIScrollViewDelegate

@@ -44,6 +44,17 @@
     UIEdgeInsets insets = [super contentInset];
     return UIEdgeInsetsMake(insets.bottom, insets.left, insets.top, insets.right);
 }
+    
+- (UIEdgeInsets)correctedScrollIndicatorInsets
+{
+    UIEdgeInsets insets = super.scrollIndicatorInsets;
+    return UIEdgeInsetsMake(insets.bottom, insets.left, insets.top, insets.right);
+}
+    
+- (void)setCorrectedScrollIndicatorInsets:(UIEdgeInsets)correctedScrollIndicatorInsets
+{
+    [super setScrollIndicatorInsets:UIEdgeInsetsMake(correctedScrollIndicatorInsets.bottom, correctedScrollIndicatorInsets.left, correctedScrollIndicatorInsets.top, correctedScrollIndicatorInsets.right)];
+}
 
 - (void)setTableHeaderView:(UIView *)tableHeaderView
 {

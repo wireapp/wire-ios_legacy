@@ -5,9 +5,9 @@
 	<key>people_picker</key>
 	<dict>
 		<key>left_padding</key>
-		<real>20</real>
+		<integer>0</integer>
 		<key>right_padding</key>
-		<real>20</real>
+		<integer>16</integer>
 		<key>top_padding</key>
 		<real>24</real>
 		<key>bottom_padding</key>
@@ -172,9 +172,9 @@
 			<key>name_label_text_transform</key>
 			<string>UPPER</string>
 			<key>left_padding</key>
-			<real>24</real>
+			<integer>16</integer>
 			<key>right_padding</key>
-			<real>24</real>
+			<integer>16</integer>
 			<key>top_padding</key>
 			<real>0</real>
 			<key>bottom_padding</key>
@@ -189,9 +189,9 @@
 			<key>tile_height</key>
 			<integer>52</integer>
 			<key>person_tile_left_margin</key>
-			<integer>24</integer>
+			<integer>16</integer>
 			<key>person_tile_right_margin</key>
-			<integer>24</integer>
+			<integer>16</integer>
 			<key>person_tile_right_margin_drawer_open</key>
 			<integer>36</integer>
 			<key>tile_horizontal_spacing</key>
@@ -201,7 +201,7 @@
 			<key>tile_name_vertical_spacing</key>
 			<integer>0</integer>
 			<key>tile_name_horizontal_spacing</key>
-			<integer>20</integer>
+			<integer>16</integer>
 			<key>tile_image_diameter</key>
 			<integer>36</integer>
 			<key>stroke_color</key>

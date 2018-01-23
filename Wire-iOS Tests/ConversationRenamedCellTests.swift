@@ -53,7 +53,7 @@ class ConversationRenamedCellTests: CoreDataSnapshotTestCase {
     }
 
     private func renamedMessage(fromSelf: Bool, name: String) -> ZMSystemMessage {
-        let message = ZMSystemMessage.insertNewObject(in: moc)
+        let message = ZMSystemMessage.insertNewObject(in: uiMOC)
         message.systemMessageType = .conversationNameChanged
         message.sender = fromSelf ? selfUser : otherUser
         message.text = name

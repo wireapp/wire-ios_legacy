@@ -18,12 +18,11 @@
 
 import Foundation
 
-@objc class CellSizesProvider: NSObject {
+@objc class PreviewHeightCalculator: NSObject {
     
     static let standardCellHeight : CGFloat = 200.0
     static let compressedCellHeight : CGFloat = 160.0
     static let videoViewHeight : CGFloat = 160.0
-    static let minimumMediaSize : CGFloat = 48.0
     
     static func heightForImage(_ image: UIImage?) -> CGFloat {
         var height : CGFloat = 0.0
@@ -33,28 +32,19 @@ import Foundation
             height = standardCellHeight
         }
         
-        return getFinalHeight(for: height)
-    }
-    
-    static func originalSize(for image: ZMImageMessageData) -> CGSize {
-        let scaleFactor: CGFloat = image.isAnimatedGIF ? 1 : 0.5;
-        return (image.originalSize).applying(CGAffineTransform(scaleX: scaleFactor, y: scaleFactor));
-    }
-    
-    static func heightForVideo() -> CGFloat {
-        return getFinalHeight(for: videoViewHeight)
+        return calculateFinalHeight(for: height)
     }
     
     static func compressedSizeForView(_ view: UIView) -> CGFloat {
         return view.systemLayoutSizeFitting(UILayoutFittingCompressedSize).height;
     }
     
-    private static func getFinalHeight(for height: CGFloat) -> CGFloat {
+    static func heightForVideo() -> CGFloat {
+        return calculateFinalHeight(for: videoViewHeight)
+    }
+    
+    private static func calculateFinalHeight(for height: CGFloat) -> CGFloat {
         return min((UIScreen.isCompact() ? compressedCellHeight : standardCellHeight), height)
     }
-    
-    static func getMinimumSize(for size: CGSize) -> CGSize {
-        return CGSize(width: max(minimumMediaSize, size.width), height: max(minimumMediaSize, size.height))
-    }
-    
+
 }

@@ -28,6 +28,8 @@ NSString *const PeoplePickerUsersInContactsReuseIdentifier = @"PeoplePickerUsers
 
 @interface UsersInContactsSection () <UserSelectionObserver>
 
+@property(nonatomic) BOOL displaysInviteTeamMemberRow;
+
 @end
 
 @implementation UsersInContactsSection
@@ -39,19 +41,9 @@ NSString *const PeoplePickerUsersInContactsReuseIdentifier = @"PeoplePickerUsers
     [self.userSelection removeObserver:self];
 }
 
-- (BOOL)hasSearchResults
-{
-    return (self.contacts.count > 0);
-}
-
 - (BOOL)isHidden
 {
-    return (self.contacts.count == 0);
-}
-
-+ (NSSet *)keyPathsForValuesAffectingIsHidden
-{
-    return [NSSet setWithObject:NSStringFromSelector(@selector(contacts))];
+    return self.contacts.count == 0;
 }
 
 - (void)setCollectionView:(UICollectionView *)collectionView

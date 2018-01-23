@@ -121,6 +121,8 @@ public final class AudioRecorder: NSObject, AudioRecorderType {
     public var recordEndedCallback: ((Bool) -> Void)? // recordedToMaxDuration: Bool
     public var fileURL: URL?
     
+    fileprivate var recordingStartTime: TimeInterval?
+    
     override init() {
         fatalError("init() is not implemented for AudioRecorder")
     }
@@ -159,23 +161,28 @@ public final class AudioRecorder: NSObject, AudioRecorderType {
         recordTimerCallback?(0)
         fileURL = nil
         setupDisplayLink()
+        
+        var successfullyStarted = false
+        
         if let maxDuration = self.maxRecordingDuration {
-            if !audioRecorder.record(forDuration: maxDuration) {
-                DDLogError("Failed to start audio recording")
-            }
-            else {
-                self.recordStartedCallback?()
-            }
+            successfullyStarted = audioRecorder.record(forDuration: maxDuration)
+            if !successfullyStarted { DDLogError("Failed to start audio recording") }
+            else { self.recordStartedCallback?() }
         }
         else {
-            if !audioRecorder.record() { // 25 minutes max recording
-                DDLogError("Failed to start audio recording")
-            }
+            successfullyStarted = audioRecorder.record()
+            if !successfullyStarted { DDLogError("Failed to start audio recording") }
         }
+        
+        recordingStartTime = successfullyStarted ? audioRecorder.deviceCurrentTime : nil
     }
     
     @discardableResult public func stopRecording() -> Bool {
         audioRecorder?.stop()
+        return postRecordingProcessing()
+    }
+    
+    fileprivate func postRecordingProcessing() -> Bool {
         recordLevelCallBack?(0)
         removeDisplayLink()
         guard let filePath = audioRecorder?.url.path , fm.fileExists(atPath: filePath) else { return false }
@@ -277,10 +284,15 @@ public final class AudioRecorder: NSObject, AudioRecorderType {
     }
     
     public func durationForCurrentState() -> TimeInterval? {
-        if case .recording = state {
-            return audioRecorder?.currentTime
-        } else {
-            return audioPlayer?.currentTime ?? audioRecorder?.currentTime
+        switch state {
+        case .recording:
+            guard let recorder = audioRecorder, let startTime = recordingStartTime else {
+                return nil
+            }
+            return recorder.deviceCurrentTime - startTime
+            
+        case .playback:
+            return audioPlayer?.currentTime
         }
     }
     
@@ -289,13 +301,18 @@ public final class AudioRecorder: NSObject, AudioRecorderType {
 
 extension AudioRecorder: AVAudioRecorderDelegate {
     public func audioRecorderDidFinishRecording(_ recorder: AVAudioRecorder, successfully flag: Bool) {
-        let recordedToMaxDuration: Bool
+        
+        var recordedToMaxDuration = false
+        recordingStartTime = nil
+        
         if let maxRecordingDuration = self.maxRecordingDuration {
-            recordedToMaxDuration = currentDuration >= maxRecordingDuration
+            let duration = AVURLAsset(url: recorder.url).duration.seconds
+            recordedToMaxDuration = duration >= maxRecordingDuration
         }
-        else {
-            recordedToMaxDuration = false
-        }
+        
+        // in the case that the recording finished due to the maxRecordingDuration
+        // reached, we should still clean up afterwards
+        if recordedToMaxDuration { _ = postRecordingProcessing() }
         
         self.recordEndedCallback?(recordedToMaxDuration)
     }

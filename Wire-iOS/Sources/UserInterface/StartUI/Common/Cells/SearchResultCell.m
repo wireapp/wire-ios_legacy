@@ -187,8 +187,7 @@
         [self.conversationImageView autoPinEdgeToSuperviewEdge:ALEdgeTop];
 
         [self.instantConnectButton autoAlignAxis:ALAxisHorizontal toSameAxisOfView:self.avatarContainer];
-        [self.instantConnectButton autoPinEdgeToSuperviewEdge:ALEdgeTrailing withInset:0];
-        [self.instantConnectButton autoSetDimensionsToSize:CGSizeMake(64, 64)];
+        [self.instantConnectButton autoPinEdgeToSuperviewEdge:ALEdgeTrailing withInset:16];
 
         self.initialConstraintsCreated = YES;
         [self updateForContext];
@@ -271,7 +270,7 @@
 
     self.instantConnectButton.hidden = ! canBeConnected;
     [self setNeedsUpdateConstraints];
-    self.badgeUserImageView.user = self.user;
+    self.badgeUserImageView.user = (id)self.user;
 }
 
 #pragma mark - Public API
@@ -384,7 +383,7 @@
 
 - (void)updateSubtitle
 {
-    NSAttributedString *subtitle = [self attributedSubtitleWithUser:self.user];
+    NSAttributedString *subtitle = [self attributedSubtitleWithUser:(id)self.user];
 
     if (nil == subtitle) {
         self.subtitleLabel.text = @"";

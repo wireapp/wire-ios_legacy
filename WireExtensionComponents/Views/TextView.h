@@ -37,6 +37,8 @@ IB_DESIGNABLE
 @property (nonatomic) UIEdgeInsets placeholderTextContainerInset;
 @property (nonatomic) NSTextAlignment placeholderTextAlignment;
 
+- (void)showOrHidePlaceholder;
+    
 @end
 
 @protocol MediaAsset;

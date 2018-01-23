@@ -22,6 +22,76 @@
 #import "TokenField.h"
 #import "NSString+TextTransform.h"
 
+@implementation TokenSeparatorAttachment
+
+- (instancetype)initWithToken:(Token *)token tokenField:(TokenField *)tokenField
+{
+    if (self = [super init]) {
+        self.token = token;
+        self.tokenField = tokenField;
+        [self refreshImage];
+    }
+    return self;
+}
+
+- (void)refreshImage
+{
+    self.image = [self imageForCurrentToken];
+}
+
+- (UIImage *)imageForCurrentToken
+{
+    const CGFloat dotSize = 4.0f;
+    const CGFloat dotSpacing = 8.0f;
+    const CGFloat imageHeight = ceilf(self.tokenField.font.pointSize);
+    
+    CGSize imageSize = CGSizeMake(dotSize + dotSpacing * 2, imageHeight);
+    
+    const CGFloat delta = ceilf((self.tokenField.font.lineHeight - imageHeight) * 0.5f - self.tokenField.tokenTitleVerticalAdjustment);
+    self.bounds = CGRectMake(0, delta, imageSize.width, imageSize.height);
+    
+    UIGraphicsBeginImageContextWithOptions(self.bounds.size, NO, 0.0);
+    
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    CFRetain(context);
+    
+    CGContextSaveGState(context);
+    
+    CGContextSetFillColorWithColor(context, self.backgroundColor.CGColor);
+    CGContextSetLineJoin(context, kCGLineJoinRound);
+    CGContextSetLineWidth(context, 1);
+    
+    // draw dot
+    UIBezierPath *dotPath = [UIBezierPath bezierPathWithOvalInRect:CGRectMake(dotSpacing,
+                                                                              ceilf((imageSize.height + dotSize) / 2.0f),
+                                                                              dotSize,
+                                                                              dotSize)];
+    
+    CGContextSetFillColorWithColor(context, self.dotColor.CGColor);
+    CGContextAddPath(context, dotPath.CGPath);
+    CGContextFillPath(context);
+    
+    UIImage *i = UIGraphicsGetImageFromCurrentImageContext();
+    
+    CGContextRestoreGState(context);
+    UIGraphicsEndImageContext();
+    CFRelease(context);
+    
+    return i;
+}
+
+- (UIColor *)dotColor
+{
+    return self.tokenField.dotColor;
+}
+
+- (UIColor *)backgroundColor
+{
+    return self.tokenField.tokenBackgroundColor;
+}
+
+@end
+
 @implementation TokenTextAttachment
 
 - (instancetype)initWithToken:(Token *)token tokenField:(TokenField *)tokenField
@@ -50,10 +120,10 @@
 
 - (UIImage *)imageForCurrentToken
 {
-    CGFloat imageHeight = self.tokenField.font.lineHeight;
+    const CGFloat imageHeight = ceilf(self.tokenField.font.lineHeight);
     NSString *title = [self.token.title transformStringWithTransform:self.tokenField.tokenTextTransform];
-    CGFloat tokenMaxWidth = self.token.maxTitleWidth - self.tokenField.tokenOffset - imageHeight;
-    // Need to protect from insane values;
+    CGFloat tokenMaxWidth = ceilf(self.token.maxTitleWidth - self.tokenField.tokenOffset - imageHeight);
+    // Width cannot be smaller than height
     if (tokenMaxWidth < imageHeight) {
         tokenMaxWidth = imageHeight;
     }
@@ -65,47 +135,24 @@
     CGSize size = attributedName.size;
     
     CGSize imageSize = size;
-    
-    // adding horizontal item spacing, and tokenHeight for the end cap radiuses
-    imageSize.width += self.tokenField.tokenOffset + imageHeight;
     imageSize.height = imageHeight;
     
-    CGFloat delta = (self.tokenField.font.capHeight - imageHeight) * 0.5f;
+    const CGFloat delta = ceilf((self.tokenField.font.capHeight - imageHeight) * 0.5f);
     self.bounds = CGRectMake(0, delta, imageSize.width, imageHeight);
     
     UIGraphicsBeginImageContextWithOptions(self.bounds.size, NO, 0.0);
-    
+
     CGContextRef context = UIGraphicsGetCurrentContext();
     CFRetain(context);
-    
+
     CGContextSaveGState(context);
-    CGContextTranslateCTM(context, 0, (self.bounds.size.height - imageSize.height) / 2.0f);
-    
+
     CGContextSetFillColorWithColor(context, self.backgroundColor.CGColor);
     CGContextSetStrokeColorWithColor(context, self.borderColor.CGColor);
     CGContextSetLineJoin(context, kCGLineJoinRound);
     CGContextSetLineWidth(context, 1);
     
-    // draw the caps at either end
-    
-    CGMutablePathRef path = CGPathCreateMutable();
-    
-    // when you have a rect with stroke line width = 1, 0.5 of line is inside of rect, 0.5 is inside,
-    // so we draw rect with width/height less by 1, with origin (0.5, 0.5) to compensate this.
-    CGFloat radius = (imageHeight - 1.0f) * 0.5f;
-    CGPathAddRoundedRect(path, NULL, CGRectMake(0.5f, 0.5f, size.width + imageHeight - 1.0f, imageHeight - 1.0f), radius, radius);
-    
-    CGContextAddPath(context, path);
-    CGContextFillPath(context);
-    
-    CGContextAddPath(context, path);
-    CGContextStrokePath(context);
-    
-    CFRelease(path);
-    
-    // draw text on top
-    
-    [attributedName drawAtPoint:CGPointMake(imageHeight / 2, (imageHeight - size.height) / 2.0f - self.tokenField.tokenTitleVerticalAdjustment)];
+    [attributedName drawAtPoint:CGPointMake(0, -delta + self.tokenField.tokenTitleVerticalAdjustment)];
     
     UIImage *i = UIGraphicsGetImageFromCurrentImageContext();
     
@@ -143,6 +190,11 @@
     } else {
         return self.tokenField.tokenBorderColor;
     }
+}
+
+- (UIColor *)dotColor
+{
+    return self.tokenField.dotColor;
 }
 
 - (NSDictionary *)titleAttributes

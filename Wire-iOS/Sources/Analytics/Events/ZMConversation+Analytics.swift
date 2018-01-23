@@ -49,12 +49,14 @@ extension ZMConversation {
         return conversationType.analyticsTypeString
     }
     
-    public var isBotConversation : Bool {
-        guard conversationType == .oneOnOne,
-              let otherUser = firstActiveParticipantOtherThanSelf() , otherUser.isBot
-        else { return false }
+    public var isServiceUserConversation : Bool {
+        guard self.activeParticipants.count == 2,
+             let otherUser = self.firstActiveParticipantOtherThanSelf() else {
+            return false
+        }
         
-        return true
+        return otherUser.serviceIdentifier != nil &&
+                otherUser.providerIdentifier != nil
     }
 }
 

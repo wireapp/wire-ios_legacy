@@ -24,5 +24,6 @@
 @interface UpsideDownTableView : UITableView
 
 @property (nonatomic) UIEdgeInsets correctedContentInset;
+@property (nonatomic) UIEdgeInsets correctedScrollIndicatorInsets;
 
 @end

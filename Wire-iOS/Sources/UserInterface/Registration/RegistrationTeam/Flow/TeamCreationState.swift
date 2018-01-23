@@ -25,6 +25,7 @@ enum TeamCreationState {
     case setFullName(teamName: String, email: String, activationCode: String)
     case setPassword(teamName: String, email: String, activationCode: String, fullName: String)
     case createTeam(teamName: String, email: String, activationCode: String, fullName: String, password: String)
+    case inviteMembers
 }
 
 // MARK: - State transitions
@@ -43,6 +44,8 @@ extension TeamCreationState {
             return .setFullName(teamName: teamName, email: email, activationCode: activationCode)
         case let .createTeam(teamName: teamName, email: email, activationCode: activationCode, fullName: fullname, password: _):
             return .setPassword(teamName: teamName, email: email, activationCode: activationCode, fullName: fullname)
+        case .inviteMembers:
+            return nil
         }
     }
 
@@ -59,6 +62,8 @@ extension TeamCreationState {
         case let .setPassword(teamName: teamName, email: email, activationCode: activationCode, fullName: fullName):
             return .createTeam(teamName: teamName, email: email, activationCode: activationCode, fullName: fullName, password: value)
         case .createTeam:
+            return .inviteMembers
+        case .inviteMembers:
             return nil
         }
     }

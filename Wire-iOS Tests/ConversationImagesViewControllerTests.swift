@@ -24,15 +24,21 @@ class ConversationImagesViewControllerTests: CoreDataSnapshotTestCase {
     
     var sut: ConversationImagesViewController! = nil
     
+    override var needsCaches: Bool {
+        return true
+    }
+    
     override func setUp() {
         super.setUp()
         snapshotBackgroundColor = UIColor.white
     
         let image = self.image(inTestBundleNamed: "unsplash_matterhorn.jpg")
         let initialMessage = otherUserConversation.appendMessage(withImageData: image.data())!
-        
         let imagesCategoryMatch = CategoryMatch(including: .image, excluding: .none)
-        let assetWrapper = AssetCollectionWrapper(conversation: otherUserConversation, matchingCategories: [imagesCategoryMatch])
+        let collection = MockCollection(messages: [ imagesCategoryMatch : [initialMessage] ])
+        let delegate = AssetCollectionMulticastDelegate()
+        
+        let assetWrapper = AssetCollectionWrapper(conversation: otherUserConversation, assetCollection: collection, assetCollectionDelegate: delegate, matchingCategories: [imagesCategoryMatch])
         sut = ConversationImagesViewController(collection: assetWrapper, initialMessage: initialMessage, inverse: true)
     }
     
