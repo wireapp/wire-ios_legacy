@@ -96,15 +96,15 @@
     return YES;
 }
 
-- (void)addViewController:(UIViewController *)viewController toView:(UIView *)view
-{
-    if (viewController == nil) {
-        return;
-    }
-    [self addChildViewController:viewController];
-    [view addSubview:viewController.view];
-    [viewController didMoveToParentViewController:self];
-}
+//- (void)addViewController:(UIViewController *)viewController toView:(UIView *)view
+//{
+//    if (viewController == nil) {
+//        return;
+//    }
+//    [self addChildViewController:viewController];
+//    [view addSubview:viewController.view];
+//    [viewController didMoveToParentViewController:self];
+//}
 
 ///TODO: swift
 - (void)transitionToLoggedInSession

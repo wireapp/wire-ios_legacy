@@ -45,6 +45,10 @@ import Cartography
         conversationController.didMove(toParentViewController: self)
         
         conversationViewController = conversationController
+
+        networkStatusViewController.view.translatesAutoresizingMaskIntoConstraints = false
+        self.addChild(networkStatusViewController)
+
         configure()
     }
     
