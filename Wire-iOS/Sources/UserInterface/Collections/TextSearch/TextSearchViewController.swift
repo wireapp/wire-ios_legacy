@@ -93,7 +93,7 @@ final public class TextSearchViewController: NSObject {
     fileprivate func reloadResults() {
         let query = searchQuery ?? ""
         let noResults = results.isEmpty
-        let validQuery = query.characters.count >= 2
+        let validQuery = query.count >= 2
 
         // We hide the results when we either have none or the query is too short
         resultsView.tableView.isHidden = noResults || !validQuery
@@ -136,7 +136,7 @@ extension TextSearchViewController: TextSearchInputViewDelegate {
         searchStartedDate = nil
         hideLoadingSpinner()
 
-        if query.characters.count < 2 {
+        if query.count < 2 {
             // We reset the results to avoid showing the previous 
             // results for a short period for subsequential searches
             results = []
@@ -146,7 +146,7 @@ extension TextSearchViewController: TextSearchInputViewDelegate {
     }
 
     public func searchViewShouldReturn(_ searchView: TextSearchInputView) -> Bool {
-        return searchView.query.characters.count >= 2
+        return searchView.query.count >= 2
     }
 }
 

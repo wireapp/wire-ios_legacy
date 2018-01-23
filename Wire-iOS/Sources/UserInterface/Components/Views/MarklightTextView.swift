@@ -114,7 +114,7 @@ extension MarklightTextView {
             let bulletListPrefix = "(^[*+-])([\\t ]*$)"
             let listPrefixPattern = "(\(numberListPrefix))|(\(bulletListPrefix))"
             let regex = try! NSRegularExpression(pattern: listPrefixPattern, options: [.anchorsMatchLines])
-            let wholeRange = NSMakeRange(0, text.characters.count)
+            let wholeRange = NSMakeRange(0, text.count)
             text = regex.stringByReplacingMatches(in: text, options: [], range: wholeRange, withTemplate: "")
             
             return text
@@ -162,7 +162,7 @@ extension MarklightTextView {
         let lineStart = lineStartForTextAtPosition(start)
         replace(textRange(from: lineStart, to: lineStart)!, withText: syntax)
         // preserve relative caret position
-        let newPos = position(from: start, offset: syntax.characters.count)!
+        let newPos = position(from: start, offset: syntax.count)!
         selectedTextRange = textRange(from: newPos, to: newPos)
     }
     
@@ -177,14 +177,14 @@ extension MarklightTextView {
             replace(preRange, withText: syntax)
             
             // offset acounts for first insertion
-            let end = position(from: selection.end, offset: syntax.characters.count)!
+            let end = position(from: selection.end, offset: syntax.count)!
             let postRange = textRange(from: end, to: end)!
             replace(postRange, withText: syntax)
         }
         else {
             // insert syntax & move caret inside
             replace(selection, withText: syntax + syntax)
-            let newPos = position(from: start, offset: syntax.characters.count)!
+            let newPos = position(from: start, offset: syntax.count)!
             selectedTextRange = textRange(from: newPos, to: newPos)
         }
     }

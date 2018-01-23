@@ -109,7 +109,7 @@ class UnsentTextSendable: UnsentSendableBase, UnsentSendable {
         if let url = url?.absoluteString, !self.text.contains(url)  {
             var separator = ""
             
-            if !self.text.isEmpty && self.text.characters.last != " " {
+            if !self.text.isEmpty && self.text.last != " " {
                 separator = " "
             }
             
