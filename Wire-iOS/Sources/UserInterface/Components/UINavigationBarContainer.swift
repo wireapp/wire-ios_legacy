@@ -43,7 +43,6 @@ class UINavigationBarContainer: UIView {
 
     func createConstraints() {
         constrain(navigationBar, self) { (navigationBar: LayoutProxy, view: LayoutProxy) -> Void in
-            //            self.topMargin = navigationBar.top == view.top + UIScreen.safeArea.top
             self.navHeight = navigationBar.height == portraitNavbarHeight
             navigationBar.left == view.left
             navigationBar.right == view.right
@@ -59,10 +58,8 @@ class UINavigationBarContainer: UIView {
         let deviceType = UIDevice.current.userInterfaceIdiom
 
         if(UIInterfaceOrientationIsLandscape(orientation) && deviceType == .phone) {
-            //            topMargin.constant = landscapeTopMargin
             navHeight.constant = landscapeNavbarHeight
         } else {
-            //            topMargin.constant = UIScreen.safeArea.top
             navHeight.constant = portraitNavbarHeight
         }
     }
