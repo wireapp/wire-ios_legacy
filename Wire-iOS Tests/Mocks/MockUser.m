@@ -232,4 +232,6 @@ static id<ZMBareUser> mockSelfUser = nil;
 
 @synthesize isPendingApprovalByOtherUser = _isPendingApprovalByOtherUser;
 
+@synthesize isServiceUser;
+
 @end
