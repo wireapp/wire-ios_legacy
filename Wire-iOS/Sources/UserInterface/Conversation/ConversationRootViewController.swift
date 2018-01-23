@@ -87,12 +87,11 @@ import Cartography
             networkStatusViewControllerView.top == view.top + UIScreen.safeArea.top
             networkStatusViewControllerView.left == view.left + networkStatusBarLeftRightMargin
             networkStatusViewControllerView.right == view.right - networkStatusBarLeftRightMargin
-            //                        networkStatusBarHeight = networkStatusViewControllerView.height == OfflineBar.expandedHeight
 
-            customNavBar.top == networkStatusViewControllerView.top
+            customNavBar.top == networkStatusViewControllerView.bottom
             customNavBar.left == view.left
             customNavBar.right == view.right
-            //            navHeight = customNavBar.height == 100 ~(750) ///TODO: remove
+//                        navHeight = customNavBar.height == 100
 
             contentView.left == view.left
             contentView.right == view.right

@@ -150,7 +150,7 @@ class NetworkStatusView: UIView {
 
     func createConstraints() {
         constrain(self, offlineView, connectingView) { containerView, offlineView, connectingView in
-            containerView.height == OfflineBar.expandedHeight
+            containerView.height == offlineView.height
 
             offlineView.left == containerView.left
             offlineView.right == containerView.right
