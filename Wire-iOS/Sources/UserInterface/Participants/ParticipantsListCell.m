@@ -78,7 +78,7 @@
     self.guestLabel.hidden = ![user isGuestInConversation:conversation];
 
     if ([user isServiceUser]) {
-        self.guestLabel.hidden = true;
+        self.guestLabel.hidden = YES;
     }
 
     if (ZMUser.selfUser.isTeamMember) {
