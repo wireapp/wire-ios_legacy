@@ -296,6 +296,7 @@ extension TextMessageCellTests {
         message.sender = ((bot as AnyObject) as! ZMUser)
         sut.configure(for: message, layoutProperties: layoutProperties)
         verify(view: sut.prepareForSnapshot())
+        bot.isServiceUser = false
     }
 }
 
