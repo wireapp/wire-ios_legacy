@@ -30,11 +30,13 @@ extension ParticipantsViewController: UICollectionViewDelegate {
         var viewContollerToPush: UIViewController?
 
         if user.isServiceUser {
+            let confirmButton = Button(style: .full)
+            confirmButton.setTitle("participants.services.remove_integration.button".localized, for: .normal)
+            confirmButton.setBackgroundImageColor(.red, for: .normal)
             let serviceDetail = ServiceDetailViewController(serviceUser: user,
                                                             backgroundColor: self.view.backgroundColor,
                                                             textColor: .black, ///FIXME: ask for design
-                                                            buttonBackgroundColor: .red,
-                                                            buttonTitle:  "participants.services.remove_integration.button".localized)
+                                                            confirmButton: confirmButton)
 
             ///TODO: inject a remove block
             //            public var completion: ((ZMConversation?)->())? = nil // TODO: not wired up yet
@@ -49,8 +51,9 @@ extension ParticipantsViewController: UICollectionViewDelegate {
             viewContollerToPush = profileViewController
         }
 
-        let layoutAttributes: UICollectionViewLayoutAttributes? = collectionView.layoutAttributesForItem(at: indexPath)
-        navigationControllerDelegate.tapLocation = collectionView.convert(layoutAttributes?.center ?? CGPoint.zero, to: view)
+        if let layoutAttributes: UICollectionViewLayoutAttributes = collectionView.layoutAttributesForItem(at: indexPath) {
+        navigationControllerDelegate.tapLocation = collectionView.convert(layoutAttributes.center, to: view)
+        }
 
         if let viewContollerToPush = viewContollerToPush {
             navigationController?.pushViewController(viewContollerToPush, animated: true)

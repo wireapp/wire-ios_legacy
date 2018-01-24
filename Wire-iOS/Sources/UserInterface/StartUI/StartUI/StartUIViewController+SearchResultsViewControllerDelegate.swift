@@ -46,8 +46,11 @@ extension StartUIViewController: SearchResultsViewControllerDelegate {
     }
 
     public func searchResultsViewController(_ searchResultsViewController: SearchResultsViewController, didTapOnSeviceUser serviceUser: ServiceUser) {
-        
-        let serviceDetail = ServiceDetailViewController(serviceUser: serviceUser, backgroundColor: .clear, textColor: .white, buttonTitle: "peoplepicker.services.add_service.button".localized)
+
+        let confirmButton = Button(styleClass: "dialogue-button-full")
+        confirmButton.setTitle("peoplepicker.services.add_service.button".localized, for: .normal)
+
+        let serviceDetail = ServiceDetailViewController(serviceUser: serviceUser, backgroundColor: .clear, textColor: .white, confirmButton: confirmButton)
 
         serviceDetail.completion = {(_ conversation: ZMConversation?) -> Void in
             if let conversation = conversation {

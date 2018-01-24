@@ -146,7 +146,7 @@ extension ServiceConversation: ShareDestination {
 */
 final class ServiceDetailViewController: UIViewController {
     private let detailView: ServiceDetailView
-    private let confirmButton = Button(styleClass: "dialogue-button-full")
+    private let confirmButton: Button
     
     public var service: Service {
         didSet {
@@ -156,22 +156,21 @@ final class ServiceDetailViewController: UIViewController {
     
     public var completion: ((ZMConversation?)->())? = nil // TODO: not wired up yet
     
-    init(serviceUser: ServiceUser, backgroundColor: UIColor?, textColor: UIColor?, buttonBackgroundColor: UIColor? = nil, buttonTitle: String
+    init(serviceUser: ServiceUser, backgroundColor: UIColor?, textColor: UIColor?,
+         buttonBackgroundColor: UIColor? = nil,
+         confirmButton: Button
         ///FIXME: a bool for add or remove?
         //, buttonCallback: @escaping Callback<ServiceDetailViewController>
         ) {
         self.service = Service(serviceUser: serviceUser)
         self.detailView = ServiceDetailView(service: service, textColor: textColor)
-        
+        self.confirmButton = confirmButton
+
         super.init(nibName: nil, bundle: nil)
         
         self.title = self.service.serviceUser.name
 
         view.backgroundColor = backgroundColor
-        if let buttonBackgroundColor = buttonBackgroundColor {
-            confirmButton.setBackgroundImageColor(buttonBackgroundColor, for: .normal)
-        }
-        confirmButton.setTitle(buttonTitle, for: .normal)
     }
     
     required init?(coder aDecoder: NSCoder) {
