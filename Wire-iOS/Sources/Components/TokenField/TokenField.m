@@ -435,6 +435,8 @@ CGFloat const accessoryButtonSize = 32.0f;
     [self.currentTokens removeObjectsInArray:tokensToRemove];
     [self invalidateIntrinsicContentSize];
     [self updateTextAttributes];
+    
+    [self.textView showOrHidePlaceholder];
 }
 
 - (Token *)tokenForRepresentedObject:(id)object
