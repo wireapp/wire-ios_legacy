@@ -27,13 +27,15 @@ final class ProfileHeaderServiceDetailViewController: UIViewController {
     var headerView: ProfileHeaderView!
     var serviceDetailViewController: ServiceDetailViewController!
     let serviceUser: ServiceUser
+    let conversation: ZMConversation
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    init(serviceUser: ServiceUser) {
+    init(serviceUser: ServiceUser, conversation: ZMConversation) {
         self.serviceUser = serviceUser
+        self.conversation = conversation
 
         super.init(nibName: nil, bundle: nil)
 
@@ -87,10 +89,6 @@ final class ProfileHeaderServiceDetailViewController: UIViewController {
         profileViewControllerDelegate?.profileViewControllerWants(toBeDismissed: self, completion: completion)
     }
 
-    func removeService() {
-
-    }
-
     func setupServiceDetailViewController(serviceUser: ServiceUser) {
         let confirmButton = Button(style: .full)
         confirmButton.setBackgroundImageColor(.red, for: .normal)
@@ -98,7 +96,14 @@ final class ProfileHeaderServiceDetailViewController: UIViewController {
         confirmButton.setTitle("participants.services.remove_integration.button".localized, for: .normal)
 
         let buttonCallback: Callback<Button> = { [weak self] _ in
-                        self?.removeService()
+            guard let weakSelf = self else {return}
+
+            ZMUserSession.shared()?.enqueueChanges({() -> Void in
+                weakSelf.conversation.removeParticipant(weakSelf.serviceUser as! ZMUser)///TODO:
+            }, completionHandler: {() -> Void in
+                //            self.profileViewControllerDelegate.profileDetailsViewController(self, wantsToBeDismissedWithCompletion: nil)
+                ///FIXME:
+            })
         }
 
 
