@@ -34,6 +34,12 @@
 "peoplepicker.header.contacts" = "Kişiler";
 "peoplepicker.header.contacts_personal" = "Kişisel Kişiler";
 "peoplepicker.header.directory" = "Bağlan";
+
+"peoplepicker.header.people" = "People";
+"peoplepicker.header.services" = "Services";
+"peoplepicker.services.create_conversation.item" = "Create a new conversation";
+"peoplepicker.services.add_service.button" = "Add service";
+
 "peoplepicker.title.create_conversation" = "Grup oluştur";
 "peoplepicker.title.add_to_conversation" = "Kişi ekle";
 
@@ -59,6 +65,7 @@
 "peoplepicker.send_invitation.dialog.ok" = "TAMAM";
 
 "peoplepicker.invite_more_people" = "Daha fazla kişi davet et";
+"peoplepicker.invite_team_members" = "Invite people to join the team";
 "peoplepicker.quick-action.open-conversation" = "Aç";
 "peoplepicker.quick-action.create-conversation" = "Grup oluştur";
 
@@ -76,10 +83,8 @@
 "contacts_ui.notification.invitation_failed" = "Davet gönderilirken hata oluştu";
 "contacts_ui.title" = "İnsanları davet et";
 
-"contacts_ui.no_contact.title" = "Hiç konuşma yok\n";
-"contacts_ui.no_contact.message" = "Bir konuşma başlat ya da bir grup oluştur.";
-
-"contacts_ui.no_contact.archived.title" = "Her şey arşivlendi";
+"conversation_list.empty.all_archived.message" = "Everything archived";
+"conversation_list.empty.no_contacts.message" = "Start a conversation or\ncreate a group.";
 
 
 // Conversation List Indicator
@@ -201,7 +206,7 @@
 "conversation.input_bar.audio_message.tooltip.pull_send" = "Göndermek için kaydırın";
 "conversation.input_bar.audio_message.tooltip.tap_send" = "Göndermek için tıkla";
 "conversation.input_bar.audio_message.too_long.title" = "Kayıt durdu";
-"conversation.input_bar.audio_message.too_long.message" = "Sesli mesajlar %@ ile sınırlıdır. Bu mesaj gönderilsin mi?";
+"conversation.input_bar.audio_message.too_long.message" = "Audio messages are limited to %@.";
 "conversation.input_bar.audio_message.send" = "Gönder";
 
 "conversation.input_bar.audio_message.keyboard.record_tip" = "Kaydetmek için tıkla\nDaha sonra %@ bilirsin";
@@ -218,7 +223,7 @@
 "conversation.input_bar.shortcut.cancel_editing_message" = "İptal";
 
 "conversation.input_bar.message_too_long.title" = "Mesaj çok uzun";
-"conversation.input_bar.message_too_long.message" = "%d karakter uzunluğuna kadar mesaj gönderebilirsiniz.";
+"conversation.input_bar.message_too_long.message" = "En fazla %d karakterlik mesajlar gönderebilirsiniz.";
 
 // Image confirmation dialogue
 "image_confirmer.confirm" = "TAMAM";
@@ -230,6 +235,12 @@
 "camera_access.denied" = "Wire'ın kameraya erişmesi gerek.";
 "camera_access.denied.instruction" = "";
 "camera_access.denied.open_settings" = "Wire Ayarları'ndan etkinleştirin";
+
+// Camera and photos access, keyboard
+"keyboard_photos_access.denied.keyboard.settings" = "Ayarlar";
+"keyboard_photos_access.denied.keyboard.camera_and_photos" = "Wire needs access to your\ncamera and photos."; // split text on two lines for a better text balance
+"keyboard_photos_access.denied.keyboard.photos" = "Wire needs access to your photos.";
+"keyboard_photos_access.denied.keyboard.camera" = "Wire needs access to your camera.";
 
 // Camera Controls
 "camera_controls.aeaf_lock" = "AE/AF kilidi";
@@ -564,10 +575,10 @@
 "self.new_device_alert.trust_devices" = "TAMAM";
 
 // Settings - top level
-"self.settings.create_team.title" = "Bir takım oluşturun";
+"self.settings.create_team.title" = "Bir takım oluştur";
 "self.settings.manage_team.title" = "Takımı Yönet";
 "self.settings.add_team_or_account.title" = "Yeni Takım veya Hesap";
-"self.settings.add_account.title" = "Bir hesap ekleyin";
+"self.settings.add_account.title" = "Bir hesap ekle";
 
 "self.settings.add_account.error.title" = "Üç hesap aktif";
 "self.settings.add_account.error.message" = "Tek seferde üç hesapla giriş yapabilirsiniz. Başka bir tane eklemek için birinden çıkış yapın.";
@@ -792,7 +803,7 @@
 "landing.title" = "Herkes için güvenli mesajlaşma.";
 "landing.create_account.title" = "Bir hesap oluştur";
 "landing.create_account.subtitle" = "kişisel kullanım için";
-"landing.create_team.title" = "Bir takım oluşturun";
+"landing.create_team.title" = "Bir takım oluştur";
 "landing.create_team.subtitle" = "iş için";
 "landing.login.hints" = "Zaten bir hesabınız var mı?";
 "landing.login.button.title" = "Giriş yap";
@@ -826,6 +837,23 @@
 
 
 "team.email_code.input_field.accessbility_label" = "E-postanıza gönderilen altı haneli kodu girin.";
+
+// Invite Team Members
+
+"team.invite.header.title" = "Build your team";
+"team.invite.header.subtitle" = "Invite your colleagues to join.";
+"team.invite.textfield.placeholder" = "colleague@yourcompany.com";
+"team.invite.textfield.accesibility" = "Enter e-mail address for colleague to invite.";
+"team.invite.learn_more.title" = "Daha fazla bilgi";
+"team.invite.top_bar.skip" = "Skip";
+"team.invite.top_bar.done" = "Done";
+
+// Team Invite Errors
+"team.invite.error.generic" = "Bir şeyler ters gitti, lütfen tekrar deneyin";
+"team.invite.error.already_registered" = "This email address is already in use";
+"team.invite.error.already_invited" = "This email has already been invited";
+"team.invite.error.too_many_invitations" = "The maximum number of invitations has been sent";
+"team.invite.error.no_internet" = "No internet connection";
 
 // Registration
 
@@ -903,6 +931,9 @@
 "registration.signin.too_many_devices.sign_out_button.title" = "Çıkış yap";
 "registration.signin.email_button.title" = "E-posta";
 "registration.signin.phone_button.title" = "Telefon";
+
+"registration.signin.alert.password_needed.title" = "Password needed";
+"registration.signin.alert.password_needed.message" = "Please enter your Password in order to log in.";
 
 "registration.devices.title" = "Cihazlar";
 "registration.devices.active_list_header" = "Etkin";

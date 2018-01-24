@@ -294,9 +294,9 @@
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>one</key>
-			<string>新呼叫</string>
+			<string>新招呼</string>
 			<key>other</key>
-			<string>%d新呼叫</string>
+			<string>%d個新招呼</string>
 		</dict>
 	</dict>
 	<key>conversation.silenced.status.message.missedcall</key>

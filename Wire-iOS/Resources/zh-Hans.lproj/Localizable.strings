@@ -34,6 +34,12 @@
 "peoplepicker.header.contacts" = "联系人";
 "peoplepicker.header.contacts_personal" = "联系人";
 "peoplepicker.header.directory" = "添加好友";
+
+"peoplepicker.header.people" = "People";
+"peoplepicker.header.services" = "Services";
+"peoplepicker.services.create_conversation.item" = "Create a new conversation";
+"peoplepicker.services.add_service.button" = "Add service";
+
 "peoplepicker.title.create_conversation" = "创建群聊\n";
 "peoplepicker.title.add_to_conversation" = "新增好友";
 
@@ -59,6 +65,7 @@
 "peoplepicker.send_invitation.dialog.ok" = "好";
 
 "peoplepicker.invite_more_people" = "邀请更多人";
+"peoplepicker.invite_team_members" = "邀请好友使用Wire";
 "peoplepicker.quick-action.open-conversation" = "开启";
 "peoplepicker.quick-action.create-conversation" = "创建群聊";
 
@@ -76,10 +83,8 @@
 "contacts_ui.notification.invitation_failed" = "无法发送邀请";
 "contacts_ui.title" = "邀请联系人";
 
-"contacts_ui.no_contact.title" = "暂无对话\n";
-"contacts_ui.no_contact.message" = "开始一段对话或创建一个组。";
-
-"contacts_ui.no_contact.archived.title" = "所以内容均已存档";
+"conversation_list.empty.all_archived.message" = "所以内容均已存档";
+"conversation_list.empty.no_contacts.message" = "开始一段对话或创建一个组。";
 
 
 // Conversation List Indicator
@@ -149,8 +154,8 @@
 "conversation.voiceover.verified" = "已验证";
 
 "conversation.status.call" = "正在呼叫";
-"conversation.status.typing" = "输入信息";
-"conversation.status.typing.group" = "%@︰ 输入消息......";
+"conversation.status.typing" = "正在输入...";
+"conversation.status.typing.group" = "%@︰正在输入...";
 "conversation.status.silenced" = "静音";
 "conversation.status.blocked" = "已拉黑";
 
@@ -201,7 +206,7 @@
 "conversation.input_bar.audio_message.tooltip.pull_send" = "向上滑动发送";
 "conversation.input_bar.audio_message.tooltip.tap_send" = "点击发送";
 "conversation.input_bar.audio_message.too_long.title" = "停止记录";
-"conversation.input_bar.audio_message.too_long.message" = "音频信息仅限于 %@。发送此信息吗？";
+"conversation.input_bar.audio_message.too_long.message" = "Audio messages are limited to %@.";
 "conversation.input_bar.audio_message.send" = "发送";
 
 "conversation.input_bar.audio_message.keyboard.record_tip" = "点击记录\n你之后可以 %@ 它，";
@@ -230,6 +235,12 @@
 "camera_access.denied" = "Wire需要使用相机的权限。";
 "camera_access.denied.instruction" = "";
 "camera_access.denied.open_settings" = "在Wire设置中启用它";
+
+// Camera and photos access, keyboard
+"keyboard_photos_access.denied.keyboard.settings" = "设置";
+"keyboard_photos_access.denied.keyboard.camera_and_photos" = "Wire needs access to your\ncamera and photos."; // split text on two lines for a better text balance
+"keyboard_photos_access.denied.keyboard.photos" = "Wire needs access to your photos.";
+"keyboard_photos_access.denied.keyboard.camera" = "Wire needs access to your camera.";
 
 // Camera Controls
 "camera_controls.aeaf_lock" = "AE / AF锁定";
@@ -827,6 +838,23 @@
 
 "team.email_code.input_field.accessbility_label" = "请输入电子邮件中之六位验证码。";
 
+// Invite Team Members
+
+"team.invite.header.title" = "创建您的团队";
+"team.invite.header.subtitle" = "邀请你的同事加入。";
+"team.invite.textfield.placeholder" = "colleague@yourcompany.com";
+"team.invite.textfield.accesibility" = "输入要邀请的同事的电子邮件地址。";
+"team.invite.learn_more.title" = "更多信息";
+"team.invite.top_bar.skip" = "跳过";
+"team.invite.top_bar.done" = "完成";
+
+// Team Invite Errors
+"team.invite.error.generic" = "出了点问题，请再试一次";
+"team.invite.error.already_registered" = "This email address is already in use";
+"team.invite.error.already_invited" = "This email has already been invited";
+"team.invite.error.too_many_invitations" = "The maximum number of invitations has been sent";
+"team.invite.error.no_internet" = "No internet connection";
+
 // Registration
 
 "registration.title" = "注册";
@@ -903,6 +931,9 @@
 "registration.signin.too_many_devices.sign_out_button.title" = "登出";
 "registration.signin.email_button.title" = "电邮箱地址";
 "registration.signin.phone_button.title" = "电话";
+
+"registration.signin.alert.password_needed.title" = "Password needed";
+"registration.signin.alert.password_needed.message" = "Please enter your Password in order to log in.";
 
 "registration.devices.title" = "设备";
 "registration.devices.active_list_header" = "其他已启用的设备";

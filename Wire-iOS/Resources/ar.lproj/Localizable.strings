@@ -34,6 +34,12 @@
 "peoplepicker.header.contacts" = "جهات الاتصال";
 "peoplepicker.header.contacts_personal" = "جهات الاتصال شخصية";
 "peoplepicker.header.directory" = "تواصل";
+
+"peoplepicker.header.people" = "People";
+"peoplepicker.header.services" = "Services";
+"peoplepicker.services.create_conversation.item" = "Create a new conversation";
+"peoplepicker.services.add_service.button" = "Add service";
+
 "peoplepicker.title.create_conversation" = "إنشاء مجموعة";
 "peoplepicker.title.add_to_conversation" = "إضافة أشخاص";
 
@@ -59,6 +65,7 @@
 "peoplepicker.send_invitation.dialog.ok" = "موافق";
 
 "peoplepicker.invite_more_people" = "ادعُ أشخاصًا أكثر";
+"peoplepicker.invite_team_members" = "Invite people to join the team";
 "peoplepicker.quick-action.open-conversation" = "افتح";
 "peoplepicker.quick-action.create-conversation" = "إنشاء مجموعة";
 
@@ -76,10 +83,8 @@
 "contacts_ui.notification.invitation_failed" = "فَشل إرسال الدعوة";
 "contacts_ui.title" = "دعوة أُناس";
 
-"contacts_ui.no_contact.title" = "لا محادثات بعد";
-"contacts_ui.no_contact.message" = "ابدأ محادثة أو قم بإنشاء مجموعة.";
-
-"contacts_ui.no_contact.archived.title" = "أُرشف كل شيء";
+"conversation_list.empty.all_archived.message" = "Everything archived";
+"conversation_list.empty.no_contacts.message" = "Start a conversation or\ncreate a group.";
 
 
 // Conversation List Indicator
@@ -201,7 +206,7 @@
 "conversation.input_bar.audio_message.tooltip.pull_send" = "اسحب لأعلى للإرسال";
 "conversation.input_bar.audio_message.tooltip.tap_send" = "اُنقُر للإرسال";
 "conversation.input_bar.audio_message.too_long.title" = "تم إيقاف التسجيل";
-"conversation.input_bar.audio_message.too_long.message" = "الرسائل الصوتية محدودة بـ%@. هل تريد مُتابعة الإرسال؟";
+"conversation.input_bar.audio_message.too_long.message" = "Audio messages are limited to %@.";
 "conversation.input_bar.audio_message.send" = "إرسال";
 
 "conversation.input_bar.audio_message.keyboard.record_tip" = "انقر لبدء التسجيل\nبإمكانك %@ بعد ذلك";
@@ -230,6 +235,12 @@
 "camera_access.denied" = "Wire يحتاج للوصول للكاميرا.";
 "camera_access.denied.instruction" = "";
 "camera_access.denied.open_settings" = "تَفعيلها من إعدادات Wire";
+
+// Camera and photos access, keyboard
+"keyboard_photos_access.denied.keyboard.settings" = "الإعدادات";
+"keyboard_photos_access.denied.keyboard.camera_and_photos" = "Wire needs access to your\ncamera and photos."; // split text on two lines for a better text balance
+"keyboard_photos_access.denied.keyboard.photos" = "Wire needs access to your photos.";
+"keyboard_photos_access.denied.keyboard.camera" = "Wire needs access to your camera.";
 
 // Camera Controls
 "camera_controls.aeaf_lock" = "AE/AF قفل";
@@ -827,6 +838,23 @@
 
 "team.email_code.input_field.accessbility_label" = "Please enter the six-digit code from the email.";
 
+// Invite Team Members
+
+"team.invite.header.title" = "Build your team";
+"team.invite.header.subtitle" = "Invite your colleagues to join.";
+"team.invite.textfield.placeholder" = "colleague@yourcompany.com";
+"team.invite.textfield.accesibility" = "Enter e-mail address for colleague to invite.";
+"team.invite.learn_more.title" = "معرفة المزيد";
+"team.invite.top_bar.skip" = "Skip";
+"team.invite.top_bar.done" = "Done";
+
+// Team Invite Errors
+"team.invite.error.generic" = "حدث خطأ ما، برجاء إعادة المحاولة";
+"team.invite.error.already_registered" = "This email address is already in use";
+"team.invite.error.already_invited" = "This email has already been invited";
+"team.invite.error.too_many_invitations" = "The maximum number of invitations has been sent";
+"team.invite.error.no_internet" = "No internet connection";
+
 // Registration
 
 "registration.title" = "تسجيل";
@@ -903,6 +931,9 @@
 "registration.signin.too_many_devices.sign_out_button.title" = "تسجيل الخروج";
 "registration.signin.email_button.title" = "البريد الإلكتروني";
 "registration.signin.phone_button.title" = "الهاتف";
+
+"registration.signin.alert.password_needed.title" = "Password needed";
+"registration.signin.alert.password_needed.message" = "Please enter your Password in order to log in.";
 
 "registration.devices.title" = "الأجهزة";
 "registration.devices.active_list_header" = "نشط";
