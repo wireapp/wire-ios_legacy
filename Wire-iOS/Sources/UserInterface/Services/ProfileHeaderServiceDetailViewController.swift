@@ -87,16 +87,27 @@ final class ProfileHeaderServiceDetailViewController: UIViewController {
         profileViewControllerDelegate?.profileViewControllerWants(toBeDismissed: self, completion: completion)
     }
 
+    func removeService() {
+
+    }
+
     func setupServiceDetailViewController(serviceUser: ServiceUser) {
         let confirmButton = Button(style: .full)
         confirmButton.setBackgroundImageColor(.red, for: .normal)
+        confirmButton.backgroundColor = .red
         confirmButton.setTitle("participants.services.remove_integration.button".localized, for: .normal)
+
+        let buttonCallback: Callback<Button> = { [weak self] _ in
+                        self?.removeService()
+        }
+
 
         serviceDetailViewController = ServiceDetailViewController(serviceUser: serviceUser,
                                                                   backgroundColor: self.view.backgroundColor,
                                                                   textColor: .black, ///FIXME: ask for design
                                                                   confirmButton: confirmButton,
-                                                                  forceShowNavigationBarWhenviewWillAppear: false)
+                                                                  forceShowNavigationBarWhenviewWillAppear: false,
+                                                                  buttonCallback: buttonCallback)
 
         self.addToSelf(serviceDetailViewController)
 

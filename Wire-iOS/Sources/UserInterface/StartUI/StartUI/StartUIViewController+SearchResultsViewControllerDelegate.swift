@@ -46,11 +46,28 @@ extension StartUIViewController: SearchResultsViewControllerDelegate {
     }
 
     public func searchResultsViewController(_ searchResultsViewController: SearchResultsViewController, didTapOnSeviceUser serviceUser: ServiceUser) {
-
         let confirmButton = Button(styleClass: "dialogue-button-full")
         confirmButton.setTitle("peoplepicker.services.add_service.button".localized, for: .normal)
 
-        let serviceDetail = ServiceDetailViewController(serviceUser: serviceUser, backgroundColor: .clear, textColor: .white, confirmButton: confirmButton, forceShowNavigationBarWhenviewWillAppear: true)
+        let buttonCallback: Callback<Button> = { [weak self] _ in
+            guard let userSession = ZMUserSession.shared() else {
+                return
+            }
+
+            var allConversations: [ServiceConversation] = [.new]
+
+            let zmConversations = ZMConversationList.conversationsIncludingArchived(inUserSession: userSession).shareableConversations()
+
+            allConversations.append(contentsOf: zmConversations.map(ServiceConversation.existing))
+
+            let conversationPicker = ShareViewController<ServiceConversation, Service>(shareable: Service(serviceUser: serviceUser), destinations: allConversations, showPreview: true, allowsMultiselect: false)
+            conversationPicker.onDismiss = { [weak self] _, completed in
+                self?.navigationController?.dismiss(animated: true, completion: nil)
+            }
+            self?.navigationController?.pushViewController(conversationPicker, animated: true)
+        }
+
+        let serviceDetail = ServiceDetailViewController(serviceUser: serviceUser, backgroundColor: .clear, textColor: .white, confirmButton: confirmButton, forceShowNavigationBarWhenviewWillAppear: true, buttonCallback: buttonCallback)
 
         serviceDetail.completion = {(_ conversation: ZMConversation?) -> Void in
             if let conversation = conversation {
@@ -74,6 +91,5 @@ extension StartUIViewController: SearchResultsViewControllerDelegate {
             //            delegate.startUI(self, didSelectUsers: Set<AnyHashable>([user]), forAction: .createOrOpenConversation)
         }
     }
-
 }
 

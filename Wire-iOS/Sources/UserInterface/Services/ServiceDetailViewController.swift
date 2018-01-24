@@ -128,6 +128,9 @@ final class ServiceDetailViewController: UIViewController {
     private let detailView: ServiceDetailView
     private let confirmButton: Button
     private var forceShowNavigationBarWhenviewWillAppear: Bool
+
+    ///FIXME: work around to override Button class color update after UI transition
+    private let confirmButtonBackgroundColor: UIColor?
     
     public var service: Service {
         didSet {
@@ -140,20 +143,22 @@ final class ServiceDetailViewController: UIViewController {
     init(serviceUser: ServiceUser, backgroundColor: UIColor?, textColor: UIColor?,
          buttonBackgroundColor: UIColor? = nil,
          confirmButton: Button,
-         forceShowNavigationBarWhenviewWillAppear: Bool
-        ///FIXME: a bool for add or remove?
-        //, buttonCallback: @escaping Callback<ServiceDetailViewController>
+         forceShowNavigationBarWhenviewWillAppear: Bool,
+         buttonCallback: @escaping Callback<Button>
         ) {
         self.service = Service(serviceUser: serviceUser)
         self.detailView = ServiceDetailView(service: service, textColor: textColor)
         self.confirmButton = confirmButton
         self.forceShowNavigationBarWhenviewWillAppear = forceShowNavigationBarWhenviewWillAppear
+        self.confirmButtonBackgroundColor = confirmButton.backgroundColor
 
         super.init(nibName: nil, bundle: nil)
         
         self.title = self.service.serviceUser.name
 
         view.backgroundColor = backgroundColor
+
+        self.confirmButton.addCallback(for: .touchUpInside, callback: buttonCallback)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -162,11 +167,7 @@ final class ServiceDetailViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        self.confirmButton.addCallback(for: .touchUpInside) { [weak self] _ in
-            self?.showConversationPicker()
-        }
-        
+
         view.addSubview(detailView)
         view.addSubview(confirmButton)
         
@@ -213,23 +214,19 @@ final class ServiceDetailViewController: UIViewController {
         if forceShowNavigationBarWhenviewWillAppear {
             self.navigationController?.setNavigationBarHidden(false, animated: animated)
         }
+
+        ///FIXME: useless
+        if let confirmButtonBackgroundColor = confirmButtonBackgroundColor {
+            confirmButton.setBackgroundImageColor(confirmButtonBackgroundColor, for: .normal)
+        }
     }
-    
-    private func showConversationPicker() {
-        guard let userSession = ZMUserSession.shared() else {
-            return
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+
+        ///FIXME: too late
+        if let confirmButtonBackgroundColor = confirmButtonBackgroundColor {
+            confirmButton.setBackgroundImageColor(confirmButtonBackgroundColor, for: .normal)
         }
-        
-        var allConversations: [ServiceConversation] = [.new]
-        
-        let zmConversations = ZMConversationList.conversationsIncludingArchived(inUserSession: userSession).shareableConversations()
-        
-        allConversations.append(contentsOf: zmConversations.map(ServiceConversation.existing))
-        
-        let conversationPicker = ShareViewController<ServiceConversation, Service>(shareable: self.service, destinations: allConversations, showPreview: true, allowsMultiselect: false)
-        conversationPicker.onDismiss = { [weak self] _, completed in
-            self?.navigationController?.dismiss(animated: true, completion: nil)
-        }
-        self.navigationController?.pushViewController(conversationPicker, animated: true)
     }
 }
