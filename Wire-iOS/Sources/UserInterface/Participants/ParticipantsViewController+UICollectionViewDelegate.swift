@@ -27,13 +27,13 @@ extension ParticipantsViewController: UICollectionViewDelegate {
         }
         guard let user: ZMUser = participants[indexPath.row] as? ZMUser else { return }
 
-        ///FIXME: new VC for server user, a ServiceDetailViewController with a remove button
         var viewContollerToPush: UIViewController?
 
         if user.isServiceUser {
             let serviceDetail = ServiceDetailViewController(serviceUser: user,
                                                             backgroundColor: self.view.backgroundColor,
                                                             textColor: .black, ///FIXME: ask for design
+                                                            buttonBackgroundColor: .red,
                                                             buttonTitle:  "participants.services.remove_integration.button".localized)
 
             ///TODO: inject a remove block

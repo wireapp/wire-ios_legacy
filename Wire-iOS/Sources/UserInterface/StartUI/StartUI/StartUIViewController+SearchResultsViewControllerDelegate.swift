@@ -37,19 +37,6 @@ extension StartUIViewController: SearchResultsViewControllerDelegate {
         }
     }
 
-    public func searchResultsViewController(_ searchResultsViewController: SearchResultsViewController, didDoubleTapOnUser user: ZMSearchableUser, indexPath: IndexPath) {
-        guard let unboxedUser: ZMUser = BareUserToUser(user) else { return }
-        ///FIXME: compile crash
-//        guard delegate.responds(to: #selector(StartUIDelegate.startUI(_:didSelectUsers:for:))) else { return }
-//
-        if (unboxedUser.isConnected) && !unboxedUser.isBlocked {
-            if self.userSelection.users.count == 1 && !userSelection.users.contains(unboxedUser ) {
-                return
-            }
-            delegate.startUI(self, didSelectUsers: Set<AnyHashable>([user]), forAction: .createOrOpenConversation)
-        }
-    }
-
     public func searchResultsViewController(_ searchResultsViewController: SearchResultsViewController, didTapOnConversation conversation: ZMConversation) {
         guard delegate.responds(to: #selector(StartUIDelegate.startUI(_:didSelect:))) else { return }
 
@@ -71,4 +58,20 @@ extension StartUIViewController: SearchResultsViewControllerDelegate {
             }
         navigationController?.pushViewController(serviceDetail, animated: true)
     }
+
+    
+    public func searchResultsViewController(_ searchResultsViewController: SearchResultsViewController, didDoubleTapOnUser user: ZMSearchableUser, indexPath: IndexPath) {
+        guard let unboxedUser: ZMUser = BareUserToUser(user) else { return }
+                guard delegate.responds(to: #selector(StartUIDelegate.startUI(_:didSelectUsers:for:))) else { return }
+
+        if (unboxedUser.isConnected) && !unboxedUser.isBlocked {
+            if self.userSelection.users.count == 1 && !userSelection.users.contains(unboxedUser ) {
+                return
+            }
+            ///FIXME: compile crash?
+//            delegate.startUI(self, didSelectUsers: Set<AnyHashable>([user]), forAction: .createOrOpenConversation)
+        }
+    }
+
+
 }

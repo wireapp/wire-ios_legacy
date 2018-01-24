@@ -32,7 +32,7 @@ final class ServiceDetailView: UIView {
     
     init(service: Service, textColor: UIColor?) {
         self.service = service
-        self.serviceView = ServiceView(service: service)
+        self.serviceView = ServiceView(service: service, textColor: textColor)
         super.init(frame: .zero)
 
         [serviceView, descriptionTextView].forEach(addSubview)
@@ -76,7 +76,7 @@ final class ServiceView: UIView {
         }
     }
     
-    init(service: Service) {
+    init(service: Service, textColor: UIColor? = .white) {
         self.service = service
         super.init(frame: .zero)
         [logoView, nameLabel, providerLabel].forEach(addSubview)
@@ -100,11 +100,11 @@ final class ServiceView: UIView {
         backgroundColor = .clear
         
         nameLabel.font = FontSpec(.large, .regular).font
-        nameLabel.textColor = .white
+        nameLabel.textColor = textColor
         nameLabel.backgroundColor = .clear
         
         providerLabel.font = FontSpec(.medium, .regular).font
-        providerLabel.textColor = .white
+        providerLabel.textColor = textColor
         providerLabel.backgroundColor = .clear
         updateForService()
     }
