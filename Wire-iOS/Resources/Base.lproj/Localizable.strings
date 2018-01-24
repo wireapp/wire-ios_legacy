@@ -536,6 +536,8 @@
 // General strings
 "general.confirm" = "OK";
 
+// Bot
+"participants.services.remove_integration.button" = "remove integration";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Self profile

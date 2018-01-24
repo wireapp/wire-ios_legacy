@@ -30,7 +30,7 @@ final class ServiceDetailView: UIView {
         }
     }
     
-    init(service: Service) {
+    init(service: Service, textColor: UIColor?) {
         self.service = service
         self.serviceView = ServiceView(service: service)
         super.init(frame: .zero)
@@ -50,7 +50,7 @@ final class ServiceDetailView: UIView {
         
         backgroundColor = .clear
         descriptionTextView.backgroundColor = .clear
-        descriptionTextView.textColor = .white ///TODO: black color for embedded in partiVC
+        descriptionTextView.textColor = textColor
         descriptionTextView.font = FontSpec(.normal, .regular).font
         descriptionTextView.isEditable = false
         updateForService()

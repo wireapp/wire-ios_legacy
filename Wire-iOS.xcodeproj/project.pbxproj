@@ -1011,6 +1011,7 @@
 		EFB23D0A1FC852380055B866 /* TextFieldValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF61B3411FC8508400D8E631 /* TextFieldValidator.swift */; };
 		EFB23D0B1FC853CF0055B866 /* AccessoryTextFieldValidationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF61B33F1FC84B0100D8E631 /* AccessoryTextFieldValidationTests.swift */; };
 		EFC530A61FF3F277004D2B31 /* VoiceChannelViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFC530A31FF3F26D004D2B31 /* VoiceChannelViewControllerTests.swift */; };
+		EFDEF48E20189E8000F9DA06 /* StartUIViewController+SearchResultsViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFDEF48D20189E8000F9DA06 /* StartUIViewController+SearchResultsViewControllerDelegate.swift */; };
 		EFE8062B1FDFF24C006A0EE7 /* NSDate+Format.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFE8062A1FDFF24C006A0EE7 /* NSDate+Format.swift */; };
 		EFE806301FE006A7006A0EE7 /* DateFormatterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFE8062E1FE005A7006A0EE7 /* DateFormatterTests.swift */; };
 		EFFF9E851FBF335700491F9A /* UIColor+TeamCreation.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFFF9E841FBF335700491F9A /* UIColor+TeamCreation.swift */; };
@@ -2587,6 +2588,7 @@
 		EF7F74021FCC01140059C13F /* EmailAdresssValidatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailAdresssValidatorTests.swift; sourceTree = "<group>"; };
 		EF91A0541FF3A04700FE2F53 /* GiphySearchViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GiphySearchViewControllerTests.swift; sourceTree = "<group>"; };
 		EFC530A31FF3F26D004D2B31 /* VoiceChannelViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoiceChannelViewControllerTests.swift; sourceTree = "<group>"; };
+		EFDEF48D20189E8000F9DA06 /* StartUIViewController+SearchResultsViewControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StartUIViewController+SearchResultsViewControllerDelegate.swift"; sourceTree = "<group>"; };
 		EFE8062A1FDFF24C006A0EE7 /* NSDate+Format.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSDate+Format.swift"; sourceTree = "<group>"; };
 		EFE8062E1FE005A7006A0EE7 /* DateFormatterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateFormatterTests.swift; sourceTree = "<group>"; };
 		EFFF9E841FBF335700491F9A /* UIColor+TeamCreation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+TeamCreation.swift"; sourceTree = "<group>"; };
@@ -4136,6 +4138,7 @@
 				87DCF4D81D34EA4500BB420F /* StartUIQuickActionsBar.m */,
 				87DCF4DC1D34EA4500BB420F /* StartUIViewController.h */,
 				87DCF4DD1D34EA4500BB420F /* StartUIViewController.m */,
+				EFDEF48D20189E8000F9DA06 /* StartUIViewController+SearchResultsViewControllerDelegate.swift */,
 				16F6BB0D1EDD7B23009EA803 /* SearchHeaderViewController.swift */,
 				16325E641EE03CC4000E72EB /* SearchResultsView.swift */,
 				164C29AA1ED33A5F0026562A /* SearchResultsViewController.swift */,
@@ -6758,6 +6761,7 @@
 				16D68E9B1CEF99C7003AB9E0 /* WaveformProgressView.swift in Sources */,
 				87BEB0441D3E478500DE9575 /* AssetLibrary.swift in Sources */,
 				EE43324B1F1A785800096D90 /* PopUpIconButtonView.swift in Sources */,
+				EFDEF48E20189E8000F9DA06 /* StartUIViewController+SearchResultsViewControllerDelegate.swift in Sources */,
 				BFE57B4B1D52335A00CB0806 /* ConversationPreviewViewController.swift in Sources */,
 				871BC0171D34F56300DF0793 /* AnalyticsGroupConversationEvent.m in Sources */,
 				871BC3561D34F94200DF0793 /* AudioPlaylistViewController.m in Sources */,

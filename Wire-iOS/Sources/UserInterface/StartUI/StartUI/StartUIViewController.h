@@ -20,6 +20,7 @@
 #import <UIKit/UIKit.h>
 
 @class ZMConversation, PeopleInputController;
+@class UserSelection;
 
 typedef NS_ENUM(NSUInteger, StartUIAction) {
     StartUIActionCreateOrOpenConversation,
@@ -34,8 +35,12 @@ typedef NS_ENUM(NSUInteger, StartUIAction) {
 
 @property (nonatomic, weak) id <StartUIDelegate> delegate;
 @property (nonatomic, readonly) UIScrollView *scrollView;
+///FIXME: private
+@property (nonatomic) UserSelection *userSelection;
 
 - (void)showKeyboardIfNeeded;
+///FIXME: private
+- (void)presentProfileViewControllerForUser:(id<ZMSearchableUser>)bareUser atIndexPath:(NSIndexPath *)indexPath;
 
 @end
 

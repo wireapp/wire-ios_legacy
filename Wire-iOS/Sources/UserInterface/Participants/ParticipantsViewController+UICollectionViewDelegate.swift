@@ -27,16 +27,20 @@ extension ParticipantsViewController: UICollectionViewDelegate {
         }
         guard let user: ZMUser = participants[indexPath.row] as? ZMUser else { return }
 
-        ///TODO: new VC for server user, a ServiceDetailViewController with a remove button
+        ///FIXME: new VC for server user, a ServiceDetailViewController with a remove button
         var viewContollerToPush: UIViewController?
 
         if user.isServiceUser {
-            ///TODO: inject a remove btn
-            let serviceDetail = ServiceDetailViewController(serviceUser: user)
-//            public var completion: ((ZMConversation?)->())? = nil // TODO: not wired up yet
-//            serviceDetail.completion = {(_ conversation: ZMConversation) -> () in
-                ///TODO: remove from conversation
-//            }
+            let serviceDetail = ServiceDetailViewController(serviceUser: user,
+                                                            backgroundColor: self.view.backgroundColor,
+                                                            textColor: .black, ///FIXME: ask for design
+                                                            buttonTitle:  "participants.services.remove_integration.button".localized)
+
+            ///TODO: inject a remove block
+            //            public var completion: ((ZMConversation?)->())? = nil // TODO: not wired up yet
+            //            serviceDetail.completion = {(_ conversation: ZMConversation) -> () in
+            ///TODO: remove from conversation
+            //            }
             viewContollerToPush = serviceDetail
         } else {
             let profileViewController = ProfileViewController(user: user, conversation: conversation)
@@ -49,7 +53,7 @@ extension ParticipantsViewController: UICollectionViewDelegate {
         navigationControllerDelegate.tapLocation = collectionView.convert(layoutAttributes?.center ?? CGPoint.zero, to: view)
 
         if let viewContollerToPush = viewContollerToPush {
-        navigationController?.pushViewController(viewContollerToPush, animated: true)
+            navigationController?.pushViewController(viewContollerToPush, animated: true)
         }
     }
 }

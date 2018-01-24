@@ -121,6 +121,29 @@ extension ServiceConversation: ShareDestination {
     }
 }
 
+
+///TODO: snapshot test
+///TODO: rewrite this classy for Button
+/*
+ Button.dialogue-button-full, Button.dialogue-button-empty, Button.dialogue-button-empty-light, Button.dialogue-button-empty-dark, Button.dialogue-button-empty-monochrome, Button.dialogue-button-full-monochrome {
+ textTransform: upper;
+ titleLabel: @{
+ font: $font-small-light;
+ };
+
+ layer: @{
+ cornerRadius: 4;
+ }
+
+ contentEdgeInsets: 4, 16; /* top=bottom=4, left=right=8 */
+ }
+
+ Button.dialogue-button-full {
+ backgroundImageColor[state:normal]: $color-accent-current;
+ titleColor[state:normal]: white;
+ titleColor[state:highlighted]: $color-text-dimmed;
+ }
+*/
 final class ServiceDetailViewController: UIViewController {
     private let detailView: ServiceDetailView
     private let confirmButton = Button(styleClass: "dialogue-button-full")
@@ -133,13 +156,22 @@ final class ServiceDetailViewController: UIViewController {
     
     public var completion: ((ZMConversation?)->())? = nil // TODO: not wired up yet
     
-    init(serviceUser: ServiceUser) {
+    init(serviceUser: ServiceUser, backgroundColor: UIColor?, textColor: UIColor?, buttonBackgroundColor: UIColor? = nil, buttonTitle: String
+        ///FIXME: a bool for add or remove?
+        //, buttonCallback: @escaping Callback<ServiceDetailViewController>
+        ) {
         self.service = Service(serviceUser: serviceUser)
-        self.detailView = ServiceDetailView(service: service)
+        self.detailView = ServiceDetailView(service: service, textColor: textColor)
         
         super.init(nibName: nil, bundle: nil)
         
         self.title = self.service.serviceUser.name
+
+        view.backgroundColor = backgroundColor
+        if let buttonBackgroundColor = buttonBackgroundColor {
+            confirmButton.setBackgroundImageColor(buttonBackgroundColor, for: .normal)
+        }
+        confirmButton.setTitle(buttonTitle, for: .normal)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -153,11 +185,9 @@ final class ServiceDetailViewController: UIViewController {
             self?.showConversationPicker()
         }
         
-        view.backgroundColor = .clear
         view.addSubview(detailView)
         view.addSubview(confirmButton)
         
-        confirmButton.setTitle("peoplepicker.services.add_service.button".localized, for: .normal)
 
         var topMargin: CGFloat = 16
         if #available(iOS 11.0, *) {

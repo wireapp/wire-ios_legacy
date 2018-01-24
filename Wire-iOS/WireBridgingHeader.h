@@ -76,6 +76,7 @@
 #import "ParticipantsHeaderView.h"
 #import "ProfileViewController.h"
 #import "ProfileNavigationControllerDelegate.h"
+#import "StartUIViewController.h"
 
 // View Controllers
 #import "ZClientViewController.h"
