@@ -26,37 +26,51 @@ final class ProfileHeaderServiceDetailViewController: UIViewController {
 
     var headerView: ProfileHeaderView!
     var serviceDetailViewController: ServiceDetailViewController!
+    let serviceUser: ServiceUser
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
     init(serviceUser: ServiceUser) {
+        self.serviceUser = serviceUser
+
         super.init(nibName: nil, bundle: nil)
 
-        setupHeader()
-        setupServiceDetailViewController(serviceUser: serviceUser)
-
         self.navigationController?.delegate = self.navigationControllerDelegate
+        self.view.backgroundColor = .white
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        setupHeader()
+        setupServiceDetailViewController(serviceUser: serviceUser)
         createConstraints()
     }
 
     private func createConstraints() {
-        constrain(view) { view in
-            ///TODO: create view constraints
+        var topMargin = UIScreen.safeArea.top
+        if UIScreen.hasNotch {
+            topMargin -= 20.0;
+        }
+
+        constrain(view, self.headerView, self.serviceDetailViewController.view) { view, headerView, serviceDetailView in
+            headerView.top == view.top + topMargin
+            headerView.right == view.right
+            headerView.left == view.left
+
+            serviceDetailView.top == headerView.bottom
+            serviceDetailView.right == view.right
+            serviceDetailView.left == view.left
+            serviceDetailView.bottom == view.bottom
         }
     }
 
     func setupHeader() {
         var headerStyle: ProfileHeaderStyle = .cancelButton
-        if UIDevice.current.userInterfaceIdiom == .pad {
-            if navigationController?.viewControllers.count > 1 {
+        if UIDevice.current.userInterfaceIdiom == .pad && navigationController?.viewControllers.count > 1 {
                 headerStyle = .backButton
-            }
         }
         headerView = ProfileHeaderView(with: headerStyle)
 
@@ -81,14 +95,13 @@ final class ProfileHeaderServiceDetailViewController: UIViewController {
         confirmButton.setTitle("participants.services.remove_integration.button".localized, for: .normal)
         confirmButton.setBackgroundImageColor(.red, for: .normal)
 
-        let serviceDetail = ServiceDetailViewController(serviceUser: serviceUser,
+        serviceDetailViewController = ServiceDetailViewController(serviceUser: serviceUser,
                                                         backgroundColor: self.view.backgroundColor,
                                                         textColor: .black, ///FIXME: ask for design
             confirmButton: confirmButton)
 
-        self.add(serviceDetailViewController, to: self.view)
+        self.addToSelf(serviceDetailViewController)
 
-        serviceDetailViewController = serviceDetail
 
         ///TODO: inject a remove block
         //            public var completion: ((ZMConversation?)->())? = nil // TODO: not wired up yet
