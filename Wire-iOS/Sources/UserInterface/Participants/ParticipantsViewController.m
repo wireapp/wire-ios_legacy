@@ -67,9 +67,9 @@ static NSString *const ParticipantHeaderReuseIdentifier = @"ParticipantListHeade
 
 
 
-@interface ParticipantsViewController (ProfileView) <ProfileViewControllerDelegate>
-
-@end
+//@interface ParticipantsViewController (ProfileView) <ProfileViewControllerDelegate>
+//
+//@end
 
 
 
@@ -378,6 +378,26 @@ static NSString *const ParticipantHeaderReuseIdentifier = @"ParticipantListHeade
     }
 }
 
+
+//@end
+//@implementation ParticipantsViewController (ProfileView)
+
+///TODO: rewrite as swift extension
+- (void)profileViewControllerWantsToBeDismissed:(ProfileViewController *)profileViewController completion:(dispatch_block_t)completion
+{
+    [self.navigationController popViewControllerAnimated:YES];
+    [self.navigationController.transitionCoordinator animateAlongsideTransition:nil completion:^(id<UIViewControllerTransitionCoordinatorContext> context) {
+        if (completion != nil) completion();
+    }];
+}
+
+- (void)profileViewController:(ProfileViewController *)controller wantsToNavigateToConversation:(ZMConversation *)conversation
+{
+    [self dismissViewControllerAnimated:YES completion:^{
+        [self.zClientViewController selectConversation:conversation focusOnView:YES animated:YES];
+    }];
+}
+
 @end
 
 
@@ -560,22 +580,3 @@ static NSString *const ParticipantHeaderReuseIdentifier = @"ParticipantListHeade
 @end
 
 
-
-@implementation ParticipantsViewController (ProfileView)
-
-- (void)profileViewControllerWantsToBeDismissed:(ProfileViewController *)profileViewController completion:(dispatch_block_t)completion
-{
-    [self.navigationController popViewControllerAnimated:YES];
-    [self.navigationController.transitionCoordinator animateAlongsideTransition:nil completion:^(id<UIViewControllerTransitionCoordinatorContext> context) {
-        if (completion != nil) completion();
-    }];
-}
-
-- (void)profileViewController:(ProfileViewController *)controller wantsToNavigateToConversation:(ZMConversation *)conversation
-{
-    [self dismissViewControllerAnimated:YES completion:^{
-        [self.zClientViewController selectConversation:conversation focusOnView:YES animated:YES];
-    }];
-}
-
-@end

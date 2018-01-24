@@ -32,7 +32,7 @@ extension ParticipantsViewController: UICollectionViewDelegate {
 
         if user.isServiceUser {
             ///TODO: inject a remove btn
-            var serviceDetail = ServiceDetailViewController(serviceUser: user)
+            let serviceDetail = ServiceDetailViewController(serviceUser: user)
 //            public var completion: ((ZMConversation?)->())? = nil // TODO: not wired up yet
 //            serviceDetail.completion = {(_ conversation: ZMConversation) -> () in
                 ///TODO: remove from conversation
@@ -41,13 +41,16 @@ extension ParticipantsViewController: UICollectionViewDelegate {
         } else {
             let profileViewController = ProfileViewController(user: user, conversation: conversation)
             profileViewController?.delegate = self
-            profileViewController.navigationControllerDelegate = navigationControllerDelegate
+            profileViewController?.navigationControllerDelegate = navigationControllerDelegate
             viewContollerToPush = profileViewController
         }
 
-        var layoutAttributes: UICollectionViewLayoutAttributes? = collectionView?.layoutAttributesForItem(at: indexPath)
-        navigationControllerDelegate.tapLocation = collectionView?.convert(layoutAttributes?.center ?? CGPoint.zero, to: view)
+        let layoutAttributes: UICollectionViewLayoutAttributes? = collectionView.layoutAttributesForItem(at: indexPath)
+        navigationControllerDelegate.tapLocation = collectionView.convert(layoutAttributes?.center ?? CGPoint.zero, to: view)
+
+        if let viewContollerToPush = viewContollerToPush {
         navigationController?.pushViewController(viewContollerToPush, animated: true)
+        }
     }
 }
 

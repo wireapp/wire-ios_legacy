@@ -20,6 +20,7 @@
 #import <UIKit/UIKit.h>
 ///TODO: private
 #import "ProfileNavigationControllerDelegate.h"
+#import "ProfileViewController.h"
 
 @class ZMConversation;
 @class ZClientViewController;
@@ -36,7 +37,7 @@
 
 /// The view controller which shows details about the given @c ZMConversation and their participants
 /// @see ProfileViewController
-@interface ParticipantsViewController : UIViewController
+@interface ParticipantsViewController : UIViewController <ProfileViewControllerDelegate>
 
 @property (nonatomic, weak) id<ParticipantsViewControllerDelegate> delegate;
 @property (nonatomic, strong) ZMConversation *conversation;
