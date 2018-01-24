@@ -89,6 +89,24 @@ final class ProfileHeaderServiceDetailViewController: UIViewController {
         profileViewControllerDelegate?.profileViewControllerWants(toBeDismissed: self, completion: completion)
     }
 
+    func presentRemoveFromConversationDialogue() {
+        if let actionSheetController = ActionSheetController.dialog(forRemoving: serviceUser as! ZMUser, from: conversation, style: ActionSheetController.defaultStyle(), completion: {(_ canceled: Bool) -> Void in
+            self.dismiss(animated: true, completion: {() -> Void in
+                if canceled {
+                    return
+                }
+//                ZMUserSession.shared.enqueueChanges({() -> Void in
+//                    self.conversation.removeParticipant(self.fullUser())
+//                }, completionHandler: {() -> Void in
+//                    self.delegate.profileDetailsViewController(self, wantsToBeDismissedWithCompletion: nil)
+//                })
+            })
+        }) {
+            present(actionSheetController, animated: true)
+        }
+        MediaManagerPlayAlert()
+    }
+
     func setupServiceDetailViewController(serviceUser: ServiceUser) {
         let confirmButton = Button(style: .full)
         confirmButton.setBackgroundImageColor(.red, for: .normal)
@@ -98,12 +116,13 @@ final class ProfileHeaderServiceDetailViewController: UIViewController {
         let buttonCallback: Callback<Button> = { [weak self] _ in
             guard let weakSelf = self else {return}
 
-            ZMUserSession.shared()?.enqueueChanges({() -> Void in
-                weakSelf.conversation.removeParticipant(weakSelf.serviceUser as! ZMUser)///TODO:
-            }, completionHandler: {() -> Void in
-                //            self.profileViewControllerDelegate.profileDetailsViewController(self, wantsToBeDismissedWithCompletion: nil)
-                ///FIXME:
-            })
+            weakSelf.presentRemoveFromConversationDialogue()
+//            ZMUserSession.shared()?.enqueueChanges({() -> Void in
+//                weakSelf.conversation.removeParticipant(weakSelf.serviceUser as! ZMUser)///TODO:
+//            }, completionHandler: {() -> Void in
+//                //            self.profileViewControllerDelegate.profileDetailsViewController(self, wantsToBeDismissedWithCompletion: nil)
+//                ///FIXME:
+//            })
         }
 
 
