@@ -123,27 +123,6 @@ extension ServiceConversation: ShareDestination {
 
 
 ///TODO: snapshot test
-///TODO: rewrite this classy for Button
-/*
- Button.dialogue-button-full, Button.dialogue-button-empty, Button.dialogue-button-empty-light, Button.dialogue-button-empty-dark, Button.dialogue-button-empty-monochrome, Button.dialogue-button-full-monochrome {
- textTransform: upper;
- titleLabel: @{
- font: $font-small-light;
- };
-
- layer: @{
- cornerRadius: 4;
- }
-
- contentEdgeInsets: 4, 16; /* top=bottom=4, left=right=8 */
- }
-
- Button.dialogue-button-full {
- backgroundImageColor[state:normal]: $color-accent-current;
- titleColor[state:normal]: white;
- titleColor[state:highlighted]: $color-text-dimmed;
- }
-*/
 final class ServiceDetailViewController: UIViewController {
 
     private let detailView: ServiceDetailView
@@ -156,8 +135,7 @@ final class ServiceDetailViewController: UIViewController {
     }
     
     public var completion: ((ZMConversation?)->())? = nil // TODO: not wired up yet
-    public weak var navigationControllerDelegate: ProfileNavigationControllerDelegate?
-    
+
     init(serviceUser: ServiceUser, backgroundColor: UIColor?, textColor: UIColor?,
          buttonBackgroundColor: UIColor? = nil,
          confirmButton: Button
@@ -224,8 +202,6 @@ final class ServiceDetailViewController: UIViewController {
         self.service.serviceUser.fetchDetails(in: userSession) { [weak self] details in
             self?.detailView.service.serviceUserDetails = details
         }
-
-        self.navigationController?.delegate = self.navigationControllerDelegate
     }
     
     override func viewWillAppear(_ animated: Bool) {

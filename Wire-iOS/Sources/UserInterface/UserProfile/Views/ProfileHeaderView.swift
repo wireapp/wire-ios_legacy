@@ -40,6 +40,15 @@ final class ProfileHeaderView: UIView {
     private let detailView = UserNameDetailView()
     private let verifiedImageView = UIImageView(image: WireStyleKit.imageOfShieldverified())
 
+    init(with profileHeaderStyle: ProfileHeaderStyle) {
+        headerStyle = profileHeaderStyle
+        super.init(frame: .zero)
+
+        setupViews()
+        configure()
+        createConstraints()
+    }
+
     @objc(initWithViewModel:)
     init(with viewModel: ProfileHeaderViewModel) {
         headerStyle = viewModel.style
@@ -102,7 +111,8 @@ final class ProfileHeaderView: UIView {
     }
 
     @objc(configureWithViewModel:)
-    public func configure(with model: ProfileHeaderViewModel) {
+    public func configure(with model: ProfileHeaderViewModel? = nil) {
+        guard let model = model else { return }
         detailView.configure(with: model.userDetailViewModel)
     }
 
