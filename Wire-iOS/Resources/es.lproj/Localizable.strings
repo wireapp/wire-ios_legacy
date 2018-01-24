@@ -34,6 +34,12 @@
 "peoplepicker.header.contacts" = "Contactos";
 "peoplepicker.header.contacts_personal" = "Contactos personales";
 "peoplepicker.header.directory" = "Conectar";
+
+"peoplepicker.header.people" = "People";
+"peoplepicker.header.services" = "Services";
+"peoplepicker.services.create_conversation.item" = "Create a new conversation";
+"peoplepicker.services.add_service.button" = "Add service";
+
 "peoplepicker.title.create_conversation" = "Crear grupo";
 "peoplepicker.title.add_to_conversation" = "Añadir contactos";
 
@@ -59,6 +65,7 @@
 "peoplepicker.send_invitation.dialog.ok" = "OK";
 
 "peoplepicker.invite_more_people" = "Invitar a más contactos";
+"peoplepicker.invite_team_members" = "Invite people to join the team";
 "peoplepicker.quick-action.open-conversation" = "Abrir";
 "peoplepicker.quick-action.create-conversation" = "Crear grupo";
 
@@ -76,15 +83,13 @@
 "contacts_ui.notification.invitation_failed" = "No se pudo enviar la invitación";
 "contacts_ui.title" = "Invitar contactos";
 
-"contacts_ui.no_contact.title" = "Todavía sin chats\n";
-"contacts_ui.no_contact.message" = "Iniciar una conversación o crear un grupo.";
-
-"contacts_ui.no_contact.archived.title" = "Todo archivado";
+"conversation_list.empty.all_archived.message" = "Everything archived";
+"conversation_list.empty.no_contacts.message" = "Start a conversation or\ncreate a group.";
 
 
 // Conversation List Indicator
 "conversation_list.right_accessory.join_button.title" = "Entrar";
-"conversation_list.header.self_team.accessibility_value" = "%@ account.";
+"conversation_list.header.self_team.accessibility_value" = "cuenta de %@.";
 "conversation_list.header.self_team.accessibility_value.inactive" = "Toca para activar.";
 "conversation_list.header.self_team.accessibility_value.active" = "Activar ahora.";
 "conversation_list.header.self_team.accessibility_value.has_new_messages" = "Tiene mensajes nuevos.";
@@ -201,7 +206,7 @@
 "conversation.input_bar.audio_message.tooltip.pull_send" = "Desliza hacia arriba para enviar";
 "conversation.input_bar.audio_message.tooltip.tap_send" = "Pulsa para enviar";
 "conversation.input_bar.audio_message.too_long.title" = "La grabación se detuvo";
-"conversation.input_bar.audio_message.too_long.message" = "Los mensajes de audio tienen un límite de %@. ¿Enviar este mensaje?";
+"conversation.input_bar.audio_message.too_long.message" = "Audio messages are limited to %@.";
 "conversation.input_bar.audio_message.send" = "Enviar";
 
 "conversation.input_bar.audio_message.keyboard.record_tip" = "Pulsa para grabar\nPodrás %@ después de hacerlo";
@@ -214,11 +219,11 @@
 "conversation.connection_view.in_address_book" = "En contactos";
 
 "conversation.input_bar.shortcut.send" = "Envía Mensaje";
-"conversation.input_bar.shortcut.edit_last_message" = "Edit Last Message";
+"conversation.input_bar.shortcut.edit_last_message" = "Editar el último mensaje";
 "conversation.input_bar.shortcut.cancel_editing_message" = "Cancelar";
 
-"conversation.input_bar.message_too_long.title" = "Message too long";
-"conversation.input_bar.message_too_long.message" = "You can send messages up to %d characters long.";
+"conversation.input_bar.message_too_long.title" = "El mensaje es demasiado largo";
+"conversation.input_bar.message_too_long.message" = "Puede enviar mensajes de hasta %d caracteres.";
 
 // Image confirmation dialogue
 "image_confirmer.confirm" = "OK";
@@ -230,6 +235,12 @@
 "camera_access.denied" = "Wire necesita acceso a la cámara.";
 "camera_access.denied.instruction" = "";
 "camera_access.denied.open_settings" = "Habilítala en Ajustes";
+
+// Camera and photos access, keyboard
+"keyboard_photos_access.denied.keyboard.settings" = "Ajustes";
+"keyboard_photos_access.denied.keyboard.camera_and_photos" = "Wire needs access to your\ncamera and photos."; // split text on two lines for a better text balance
+"keyboard_photos_access.denied.keyboard.photos" = "Wire needs access to your photos.";
+"keyboard_photos_access.denied.keyboard.camera" = "Wire needs access to your camera.";
 
 // Camera Controls
 "camera_controls.aeaf_lock" = "Bloqueo AE/AF";
@@ -292,8 +303,8 @@
 "content.system.failedtosend_message_timestamp_resend" = "Reenviar";
 "content.system.failedtosend_message_timestamp_delete" = "Eliminar";
 "content.system.like_tooltip" = "Pulsa para dar un 'like'";
-"content.system.deleted_message_prefix_timestamp" = "Deleted: %@";
-"content.system.edited_message_prefix_timestamp" = "Edited: %@";
+"content.system.deleted_message_prefix_timestamp" = "Eliminado: %@";
+"content.system.edited_message_prefix_timestamp" = "Editado: %@";
 "content.system.connecting_to" = "Conectando con %@. \nInicia un chat";
 "content.system.connected_to" = "Conectado con %@\nInicia un chat";
 "content.system.other_wanted_to_talk" = "%@ llamó";
@@ -565,12 +576,12 @@
 
 // Settings - top level
 "self.settings.create_team.title" = "Crear equipo";
-"self.settings.manage_team.title" = "Manage Team";
-"self.settings.add_team_or_account.title" = "New Team or Account";
+"self.settings.manage_team.title" = "Administrar equipo";
+"self.settings.add_team_or_account.title" = "Nuevo equipo o cuenta";
 "self.settings.add_account.title" = "Agregar cuenta";
 
-"self.settings.add_account.error.title" = "Three accounts active";
-"self.settings.add_account.error.message" = "You can only be logged in with three accounts at once. Log out from one to add another.";
+"self.settings.add_account.error.title" = "Tres cuentas activas";
+"self.settings.add_account.error.message" = "Solo puedes estar conectado con tres cuentas a la vez. Desconecta una para agregar otra.";
 
 // Settings - Account details
 "self.settings.account_section" = "Cuenta";
@@ -674,7 +685,7 @@
 
 "self.settings.callkit.title" = "Notificaciones de (vídeo)llamadas";
 "self.settings.callkit.caption" = "A pantalla completa";
-"self.settings.callkit.description" = "Show Wire calls on the lock screen and in iOS call history. If iCloud is enabled, call history is shared with Apple.";
+"self.settings.callkit.description" = "Mostrar llamadas de Wire en la pantalla de bloqueo y en el historial de llamadas de iOS. Si iCloud se encuentra habilitado, el historial de llamadas será compartido con Apple.";
 
 "self.settings.vbr.title" = "Tasa de bits variable";
 "self.settings.vbr.description" = "Esta opción permite que las llamadas de audio utilicen menos datos y funcionen mejor en redes lentas. Al desactivar esta opción se usará la codificación de audio de tasa de bits constante que necesita más ancho de banda pero es más segura frente a ataques de terceros.";
@@ -710,7 +721,7 @@
 "self.settings.sound_menu.title" = "Notificaciones sonoras";
 "self.settings.sound_menu.no_sounds.title" = "Ninguna";
 "self.settings.sound_menu.all_sounds.title" = "Todas";
-"self.settings.sound_menu.mute_while_talking.title" = "First message and pings";
+"self.settings.sound_menu.mute_while_talking.title" = "Primer mensaje y pings";
 
 // Developer options
 "self.settings.developer_options.title" = "Opciones para desarrolladores";
@@ -730,7 +741,7 @@
 "self.settings.privacy_security.lock_cancelled.description" = "Desbloquea Wire con Touch ID o el código";
 "self.settings.privacy_security.lock_cancelled.action" = "Desbloquear";
 
-"self.settings.privacy_security.disable_link_previews.title" = "Create Link Previews";
+"self.settings.privacy_security.disable_link_previews.title" = "Crear vista previa de los enlaces";
 "self.settings.privacy_security.disable_link_previews.footer" = "Las vistas previas todavía pueden mostrarse para enlaces de otras personas.";
 
 "self.settings.privacy_analytics_menu.devices.title" = "Dispositivos";
@@ -779,8 +790,8 @@
 "name.guidance.toolong" = "Demasiados caracteres";
 
 "email.placeholder" = "Email";
-"email.guidance.invalid" = "Invalid email address";
-"email.guidance.tooshort" = "Email is too short";
+"email.guidance.invalid" = "Dirección de correo electrónico inválida";
+"email.guidance.tooshort" = "Correo electrónico demasiado corto";
 "email.guidance.toolong" = "Demasiados caracteres";
 
 "password.placeholder" = "Contraseña";
@@ -789,43 +800,60 @@
 
 // Landing screen
 
-"landing.title" = "Secure messaging for everyone.";
-"landing.create_account.title" = "Create an account";
-"landing.create_account.subtitle" = "for personal use";
+"landing.title" = "Mensajería segura para todos.";
+"landing.create_account.title" = "Crear una cuenta";
+"landing.create_account.subtitle" = "para uso personal";
 "landing.create_team.title" = "Crear equipo";
-"landing.create_team.subtitle" = "for work";
-"landing.login.hints" = "Already have an account?";
-"landing.login.button.title" = "Log in";
+"landing.create_team.subtitle" = "para el trabajo";
+"landing.login.hints" = "¿Ya tienes una cuenta?";
+"landing.login.button.title" = "Iniciar sesión";
 
 // Create team
 
-"team.name.headline" = "Name your team";
-"team.name.subheadline" = "You can always change it later.";
-"team.name.textfield.placeholder" = "team name";
-"team.name.textfield.accessibility" = "Set team name";
-"team.name.whatiswireforteams" = "What is Wire for teams?";
+"team.name.headline" = "Nombre de tu equipo";
+"team.name.subheadline" = "Siempre puedes cambiarlo más tarde.";
+"team.name.textfield.placeholder" = "nombre del equipo";
+"team.name.textfield.accessibility" = "Establecer nombre del equipo";
+"team.name.whatiswireforteams" = "¿Qué es Wire para equipos?";
 
-"team.email.headline" = "Your account";
-"team.email.subheadline" = "Enter your work email address.";
-"team.email.textfield.placeholder" = "you@yourcompany.com";
-"team.email.textfield.accessibility" = "Your company email";
+"team.email.headline" = "Tu cuenta";
+"team.email.subheadline" = "Ingrese su dirección de correo electrónico laboral.";
+"team.email.textfield.placeholder" = "tú@tucompañía.com";
+"team.email.textfield.accessibility" = "Correo electrónico de la compañía";
 "team.email.button.learn_more" = "Más información";
 
-"team.activation_code.headline" = "You've got mail";
-"team.activation_code.subheadline" = "Enter the verification code we sent to %@.";
-"team.activation_code.button.resend" = "Resend code";
-"team.activation_code.button.change_email" = "Change email";
+"team.activation_code.headline" = "Tienes correo electrónico";
+"team.activation_code.subheadline" = "Introduce el código de verificación que enviamos a %@.";
+"team.activation_code.button.resend" = "Reenviar código";
+"team.activation_code.button.change_email" = "Modificar correo";
 
-"team.full_name.headline" = "Your name";
-"team.full_name.textfield.placeholder" = "Full name";
-"team.full_name.textfield.accessibility" = "Set full name";
+"team.full_name.headline" = "Tu nombre";
+"team.full_name.textfield.placeholder" = "Nombre completo";
+"team.full_name.textfield.accessibility" = "Establecer nombre completo";
 
-"team.password.headline" = "Set password";
+"team.password.headline" = "Establecer contraseña";
 "team.password.textfield.placeholder" = "Al menos 8 caracteres";
-"team.password.textfield.accessibility" = "Set password, at least 8 characters";
+"team.password.textfield.accessibility" = "Establecer contraseña con un mínimo de 8 caracteres";
 
 
-"team.email_code.input_field.accessbility_label" = "Please enter the six-digit code from the email.";
+"team.email_code.input_field.accessbility_label" = "Por favor, introduce el código de seis dígitos del correo electrónico.";
+
+// Invite Team Members
+
+"team.invite.header.title" = "Build your team";
+"team.invite.header.subtitle" = "Invite your colleagues to join.";
+"team.invite.textfield.placeholder" = "colleague@yourcompany.com";
+"team.invite.textfield.accesibility" = "Enter e-mail address for colleague to invite.";
+"team.invite.learn_more.title" = "Más información";
+"team.invite.top_bar.skip" = "Skip";
+"team.invite.top_bar.done" = "Done";
+
+// Team Invite Errors
+"team.invite.error.generic" = "Algo salió mal. Por favor, inténtalo de nuevo";
+"team.invite.error.already_registered" = "This email address is already in use";
+"team.invite.error.already_invited" = "This email has already been invited";
+"team.invite.error.too_many_invitations" = "The maximum number of invitations has been sent";
+"team.invite.error.no_internet" = "No internet connection";
 
 // Registration
 
@@ -871,8 +899,8 @@
 "registration.terms_of_use.agree" = "De acuerdo";
 
 "registration.terms_of_use.terms.title" = "Términos de uso";
-"registration.terms_of_use.terms.message" = "Please accept the Terms of Use to continue.";
-"registration.terms_of_use.terms.view" = "View";
+"registration.terms_of_use.terms.message" = "Por favor, acepta los Términos de Servicio.";
+"registration.terms_of_use.terms.view" = "Ver";
 "registration.terms_of_use.accept" = "Aceptar";
 
 "registration.email_flow.title" = "Registrarse por email";
@@ -903,6 +931,9 @@
 "registration.signin.too_many_devices.sign_out_button.title" = "Cerrar sesión";
 "registration.signin.email_button.title" = "Email";
 "registration.signin.phone_button.title" = "Teléfono";
+
+"registration.signin.alert.password_needed.title" = "Password needed";
+"registration.signin.alert.password_needed.message" = "Please enter your Password in order to log in.";
 
 "registration.devices.title" = "Dispositivos";
 "registration.devices.active_list_header" = "Activo";
@@ -959,7 +990,7 @@
 "error.user.device_deleted_remotely" = "Se ha cerrado la sesión en otro dispositivo.";
 "error.user.last_identity_cant_be_deleted" = "Wire necesita una dirección de email o un número de teléfono.";
 "error.user.account_suspended" = "Esta cuenta ya no está autorizada a iniciar sesión.";
-"error.user.account_limit_reached" = "You can't add more than 3 accounts.";
+"error.user.account_limit_reached" = "No se puede agregar más de 3 cuentas.";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Those are caught by the UI without involving the SE validation. Basically very similar to ZMUserSessionErrorCode onces
@@ -1034,7 +1065,7 @@
 "compose.drafts.compose.subject.placeholder" = "Toca para seleccionar un tema";
 
 "compose.drafts.compose.delete.confirm.title" = "Confirmar borrado";
-"compose.drafts.compose.delete.confirm.message" = "This action will permanently delete this draft and cannot be undone.";
+"compose.drafts.compose.delete.confirm.message" = "Esta acción elimina permanentemente el borrador y no se puede deshacer.";
 "compose.drafts.compose.delete.confirm.action.title" = "Eliminar";
 
 "compose.drafts.compose.dismiss.confirm.title" = "Guardar como borrador";
@@ -1042,12 +1073,12 @@
 "compose.drafts.compose.dismiss.delete.action.title" = "Eliminar";
 
 "availability.message.cancel" = "Cancelar";
-"availability.message.set_status" = "Set a status";
+"availability.message.set_status" = "Establecer estado";
 
 "availability.none" = "Ninguna";
-"availability.available" = "Available";
-"availability.away" = "Away";
-"availability.busy" = "Busy";
-"availability.available.placeholder" = "%@ is available";
-"availability.away.placeholder" = "%@ is away";
-"availability.busy.placeholder" = "%@ is busy";
+"availability.available" = "Disponible";
+"availability.away" = "Ausente";
+"availability.busy" = "Ocupado";
+"availability.available.placeholder" = "%@ está disponible";
+"availability.away.placeholder" = "%@ está ausente";
+"availability.busy.placeholder" = "%@ está ocupado";

@@ -34,6 +34,12 @@
 "peoplepicker.header.contacts" = "Kontaktid";
 "peoplepicker.header.contacts_personal" = "Isiklikud kontaktid";
 "peoplepicker.header.directory" = "Lisa kontakt";
+
+"peoplepicker.header.people" = "Inimesed";
+"peoplepicker.header.services" = "Teenused";
+"peoplepicker.services.create_conversation.item" = "Alusta vestlust";
+"peoplepicker.services.add_service.button" = "Lisa teenus";
+
 "peoplepicker.title.create_conversation" = "Loo grupp";
 "peoplepicker.title.add_to_conversation" = "Lisa inimesi";
 
@@ -59,6 +65,7 @@
 "peoplepicker.send_invitation.dialog.ok" = "OK";
 
 "peoplepicker.invite_more_people" = "Kutsu rohkem inimesi";
+"peoplepicker.invite_team_members" = "Kutsu inimesi meeskonnaga liituma";
 "peoplepicker.quick-action.open-conversation" = "Ava";
 "peoplepicker.quick-action.create-conversation" = "Loo grupivestlus";
 
@@ -76,10 +83,8 @@
 "contacts_ui.notification.invitation_failed" = "Kutse saatmine ebaõnnestus";
 "contacts_ui.title" = "Kutsu inimesi";
 
-"contacts_ui.no_contact.title" = "Pole veel vestlusi\n";
-"contacts_ui.no_contact.message" = "Alustage vestlust või rühma loomine.";
-
-"contacts_ui.no_contact.archived.title" = "Kõik on arhiveeritud";
+"conversation_list.empty.all_archived.message" = "Kõik on arhiveeritud";
+"conversation_list.empty.no_contacts.message" = "Alusta vestlust või loo grupp.";
 
 
 // Conversation List Indicator
@@ -201,7 +206,7 @@
 "conversation.input_bar.audio_message.tooltip.pull_send" = "Saatmiseks nipsa üles";
 "conversation.input_bar.audio_message.tooltip.tap_send" = "Saatmiseks toksa";
 "conversation.input_bar.audio_message.too_long.title" = "Salvestamine peatatud";
-"conversation.input_bar.audio_message.too_long.message" = "Häälsõnumite pikkus on piiratud: %@. Saada see sõnum?";
+"conversation.input_bar.audio_message.too_long.message" = "Audiosõnumitte pikkuse piirang: %@";
 "conversation.input_bar.audio_message.send" = "Saada";
 
 "conversation.input_bar.audio_message.keyboard.record_tip" = "Salvestamiseks toksa nuppu.\nSeejärel saad sellele %@ filtri lisada.";
@@ -230,6 +235,12 @@
 "camera_access.denied" = "Wire vajab ligipääsu kaamerale.";
 "camera_access.denied.instruction" = "";
 "camera_access.denied.open_settings" = "Lülita see sisse Wire seadetest";
+
+// Camera and photos access, keyboard
+"keyboard_photos_access.denied.keyboard.settings" = "Seaded";
+"keyboard_photos_access.denied.keyboard.camera_and_photos" = "Wire vajab juurdepääsuõigust kaamerale ja fotodele."; // split text on two lines for a better text balance
+"keyboard_photos_access.denied.keyboard.photos" = "Wire vajab juurdepääsuõigust fotodele.";
+"keyboard_photos_access.denied.keyboard.camera" = "Wire vajab juurdepääsuõigust kaamerale.";
 
 // Camera Controls
 "camera_controls.aeaf_lock" = "AE/AF lukustus";
@@ -827,6 +838,23 @@
 
 "team.email_code.input_field.accessbility_label" = "Sisestage e-postiga saabunud 6-kohaline kood.";
 
+// Invite Team Members
+
+"team.invite.header.title" = "Ehita oma meeskond";
+"team.invite.header.subtitle" = "Kutsu kolleegid liituma.";
+"team.invite.textfield.placeholder" = "nimi@firma.ee";
+"team.invite.textfield.accesibility" = "Teiste kutsumiseks sisesta nende eposti aadress.";
+"team.invite.learn_more.title" = "Loe lähemalt";
+"team.invite.top_bar.skip" = "Jäta vahele";
+"team.invite.top_bar.done" = "Valmis";
+
+// Team Invite Errors
+"team.invite.error.generic" = "Midagi läks valesti, palun proovi uuesti";
+"team.invite.error.already_registered" = "See eposti aadress on juba kasutusel";
+"team.invite.error.already_invited" = "See eposti aadress on juba kutsutud";
+"team.invite.error.too_many_invitations" = "Maksimaalne kutsete arv on saadetud";
+"team.invite.error.no_internet" = "Internetiühendus puudub";
+
 // Registration
 
 "registration.title" = "Registreerimine";
@@ -903,6 +931,9 @@
 "registration.signin.too_many_devices.sign_out_button.title" = "Logi välja";
 "registration.signin.email_button.title" = "E-post";
 "registration.signin.phone_button.title" = "Telefon";
+
+"registration.signin.alert.password_needed.title" = "Password needed";
+"registration.signin.alert.password_needed.message" = "Please enter your Password in order to log in.";
 
 "registration.devices.title" = "Seadmed";
 "registration.devices.active_list_header" = "Aktiivsed";

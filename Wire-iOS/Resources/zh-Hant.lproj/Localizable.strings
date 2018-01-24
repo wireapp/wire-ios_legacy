@@ -34,8 +34,14 @@
 "peoplepicker.header.contacts" = "連絡人";
 "peoplepicker.header.contacts_personal" = "聯絡人";
 "peoplepicker.header.directory" = "加為連絡人";
+
+"peoplepicker.header.people" = "聯絡人";
+"peoplepicker.header.services" = "服務";
+"peoplepicker.services.create_conversation.item" = "開始新對話";
+"peoplepicker.services.add_service.button" = "新增服務";
+
 "peoplepicker.title.create_conversation" = "建立群組";
-"peoplepicker.title.add_to_conversation" = "新增連絡人";
+"peoplepicker.title.add_to_conversation" = "邀請連絡人";
 
 "peoplepicker.no_contacts_title" = "沒有連絡人。";
 
@@ -45,7 +51,7 @@
 "peoplepicker.no_matching_results.action.send_invite" = "發送邀請";
 "peoplepicker.no_matching_results.action.share_contacts" = "分享通訊錄";
 
-"peoplepicker.no_matching_results_provide_valid_email" = "請輸入有效的電子郵件信箱";
+"peoplepicker.no_matching_results_provide_valid_email" = "請輸入有效電子郵件信箱";
 "peoplepicker.no_matching_results_after_address_book_upload_title" = "沒有符合結果。";
 /* This sentence ends with button title, contained in peoplepicker.no_matching_results_after_address_book_upload_button */
 "peoplepicker.no_matching_results_after_address_book_upload_message" = "請輸入完整的電子郵件地址或";
@@ -58,7 +64,8 @@
 "peoplepicker.send_invitation.dialog.message" = "連結兩週內有效。如逾期請重新發送。";
 "peoplepicker.send_invitation.dialog.ok" = "確認";
 
-"peoplepicker.invite_more_people" = "邀請更多的人";
+"peoplepicker.invite_more_people" = "邀請更多人";
+"peoplepicker.invite_team_members" = "邀請其他人加入團隊";
 "peoplepicker.quick-action.open-conversation" = "開啟";
 "peoplepicker.quick-action.create-conversation" = "建立群組";
 
@@ -76,10 +83,8 @@
 "contacts_ui.notification.invitation_failed" = "無法發送邀請";
 "contacts_ui.title" = "邀請朋友加入";
 
-"contacts_ui.no_contact.title" = "尚無對話\n";
-"contacts_ui.no_contact.message" = "開啟一場對話或創建一個群組。";
-
-"contacts_ui.no_contact.archived.title" = "全部都存檔了";
+"conversation_list.empty.all_archived.message" = "全部都已存檔";
+"conversation_list.empty.no_contacts.message" = "開始對話或\n創建群組。";
 
 
 // Conversation List Indicator
@@ -101,7 +106,7 @@
 "conversation_list.voiceover.status.play_media" = "播放";
 "conversation_list.voiceover.status.silenced" = "靜音";
 "conversation_list.voiceover.status.typing" = "輸入中";
-"conversation_list.voiceover.status.ping" = "呼叫";
+"conversation_list.voiceover.status.ping" = "招呼";
 "conversation_list.voiceover.bottom_bar.archived_button.label" = "已封存";
 "conversation_list.voiceover.bottom_bar.archived_button.hint" = "已封存對話";
 "conversation_list.voiceover.bottom_bar.contacts_button.label" = "連絡人";
@@ -115,7 +120,7 @@
 "archived_list.title" = "封存";
 
 // Add contact tool tip
-"tool_tip.contacts.title" = "對話從這裡開始";
+"tool_tip.contacts.title" = "從這裡開始對話";
 "tool_tip.contacts.message" = "開啟新的聊天室。盡情在個人或群組聊天室中傳達訊息、通話和分享。";
 
 // "Knows" subtitle in cell: "Knows Indrek", "Knows Indrek and Jane", "Knows Indrek and 5 others"
@@ -201,14 +206,14 @@
 "conversation.input_bar.audio_message.tooltip.pull_send" = "向上滑動來發送";
 "conversation.input_bar.audio_message.tooltip.tap_send" = "點擊來發送";
 "conversation.input_bar.audio_message.too_long.title" = "錄音停止";
-"conversation.input_bar.audio_message.too_long.message" = "語音訊息最大容量上限為%@。發送此訊息？";
+"conversation.input_bar.audio_message.too_long.message" = "語音訊息長度上限是%@。";
 "conversation.input_bar.audio_message.send" = "發送";
 
 "conversation.input_bar.audio_message.keyboard.record_tip" = "點擊來錄製語音訊息\n之後您可%@該訊息";
 "conversation.input_bar.audio_message.keyboard.filter_tip" = "選擇濾鏡";
 
 "conversation.call.many_participants_confirmation.title" = "開始通話";
-"conversation.call.many_participants_confirmation.message" = "這將會呼叫%d位聯絡人";
+"conversation.call.many_participants_confirmation.message" = "這將會打電話給%d位聯絡人";
 "conversation.call.many_participants_confirmation.call" = "通話";
 
 "conversation.connection_view.in_address_book" = "在連絡人中";
@@ -230,6 +235,12 @@
 "camera_access.denied" = "Wire需要使用相機權限。";
 "camera_access.denied.instruction" = "";
 "camera_access.denied.open_settings" = "請前往手機「設定」並允許Wire使用相機權限";
+
+// Camera and photos access, keyboard
+"keyboard_photos_access.denied.keyboard.settings" = "設定";
+"keyboard_photos_access.denied.keyboard.camera_and_photos" = "Wire需要使用你的相機和照片。"; // split text on two lines for a better text balance
+"keyboard_photos_access.denied.keyboard.photos" = "Wire需要使用你的相機。";
+"keyboard_photos_access.denied.keyboard.camera" = "Wire需要你授權相機權限。";
 
 // Camera Controls
 "camera_controls.aeaf_lock" = "AE/AF鎖定";
@@ -253,10 +264,10 @@
 "content.system.you_dative" = "您";
 "content.system.you_accusative" = "您";
 
-"content.system.continued_conversation" = "開始和 %@ 對話";
+"content.system.continued_conversation" = "開始與%@對話";
 
-"content.system.other_started_conversation" = "%@和%@開始對話";
-"content.system.you_started_conversation" = "您 開啟了和 %@ 的聊天室";
+"content.system.other_started_conversation" = "%@開始與%@對話";
+"content.system.you_started_conversation" = "您與%@開始對話";
 
 "content.system.you_added_participant" = "您加了%@到對話";
 "content.system.other_added_participant" = "%@加了%@到對話";
@@ -277,7 +288,7 @@
 "content.system.conversation.other.removed" = "%@ 移除了 %@";
 "content.system.conversation.other.left" = "%@離開了";
 
-"content.system.conversation.you.started" = "%@ 和 %@ 開啓了聊天室";
+"content.system.conversation.you.started" = "%@開始與%@對話";
 "content.system.conversation.you.added" = "%@加了%@到對話";
 "content.system.conversation.you.removed" = "%@ 移除了 %@";
 "content.system.conversation.you.left" = "%@離開了";
@@ -294,10 +305,10 @@
 "content.system.like_tooltip" = "點一下讚好";
 "content.system.deleted_message_prefix_timestamp" = "已刪除: %@";
 "content.system.edited_message_prefix_timestamp" = "已編輯: %@";
-"content.system.connecting_to" = "和 %@ 成為連絡人。開始聊天吧";
-"content.system.connected_to" = "和 %@ 成為連絡人。開始聊天吧";
+"content.system.connecting_to" = "與%@成為連絡人。\n開始聊天吧";
+"content.system.connected_to" = "與%@成為連絡人\n開始聊天吧";
 "content.system.other_wanted_to_talk" = "%@曾來電";
-"content.system.you_wanted_to_talk" = "您 播出通話";
+"content.system.you_wanted_to_talk" = "您曾打電話";
 "content.system.ephemeral_time_remaining" = "還餘%@";
 
 "content.system.you_started" = "您";
@@ -311,7 +322,7 @@
 "content.system.renamed_conv.title-you" = "%@重新命名聊天室";
 "content.system.renamed_conv.title.you" = "您";
 
-"content.system.reactivated_device" = "您重新使用%@，在關閉期間的訊息不會顯示出來。";
+"content.system.reactivated_device" = "您重新使用%@，在停用期間的訊息不會顯示出來。";
 
 "content.system.new_device" = "新的設備";
 "content.system.started_using" = "開始使用";
@@ -385,8 +396,8 @@
 
 // Voice
 "voice.status.one_to_one.incoming" = "%@\n來電";
-"voice.status.group_call.incoming" = "%@\n撥號中";
-"voice.status.one_to_one.outgoing" = "%@\n來電";
+"voice.status.group_call.incoming" = "%@\n群組來電";
+"voice.status.one_to_one.outgoing" = "%@\n撥號中";
 "voice.status.joining" = "%@\n連接中";
 "voice.status.video_not_available" = "視訊關閉";
 "voice.status.low_connection" = "連線品質不佳";
@@ -508,7 +519,7 @@
 // Device list
 "profile.devices.title" = "設備";
 "profile.devices.fingerprint_message_unencrypted" = "%@使用舊版本的Wire，無法顯示設備。";
-"profile.devices.fingerprint_message" = "Wire 給每一台裝置一組獨立的識別碼，請與%@校對識別碼以驗證您的對話。為何要驗證對話？";
+"profile.devices.fingerprint_message" = "Wire 給每一部裝置一組獨立的識別碼，請與%@校對識別碼以驗證您的對話。為何要驗證對話？";
 "profile.devices.fingerprint_message.link" = "為何要驗證對話？";
 
 // Device detail
@@ -543,7 +554,7 @@
 "self.voiceover.hint" = "打開用戶檔案和設定";
 "self.new-device.voiceover.label" = "已添加設定檔及新設備";
 
-"self.add_phone_number" = "新增手機號碼";
+"self.add_phone_number" = "加入手機號碼";
 "self.add_email_password" = "新增電子郵件信箱和密碼";
 
 // About screen
@@ -555,10 +566,10 @@
 
 // Self new devices
 "self.new_device_alert.title" = "您已經連接%@到Wire";
-"self.new_device_alert.title_prefix.tablet" = "一台平板電腦";
-"self.new_device_alert.title_prefix.phone" = "一台手機";
+"self.new_device_alert.title_prefix.tablet" = "一部平板電腦";
+"self.new_device_alert.title_prefix.phone" = "一部手機";
 "self.new_device_alert.title_prefix.devices" = "%d 裝置";
-"self.new_device_alert.message" = "%@\n若您沒有，請移除此裝置，並重新設定您的密碼。";
+"self.new_device_alert.message" = "%@\n若您沒有，請移除該裝置，並重新設定您的密碼。";
 "self.new_device_alert.message_plural" = "%@\n若您沒有，請移除這些裝置，並重新設定您的密碼。";
 "self.new_device_alert.manage_devices" = "管理設備";
 "self.new_device_alert.trust_devices" = "確認";
@@ -589,7 +600,7 @@
 
 "self.settings.account_details.remove_device.title" = "移除設備";
 "self.settings.account_details.key_fingerprint.title" = "指紋識別";
-"self.settings.account_details.remove_device.message" = "需要您的密碼進行設備移除";
+"self.settings.account_details.remove_device.message" = "需要您的密碼移除設備";
 "self.settings.account_details.remove_device.password" = "密碼";
 "self.settings.account_details.remove_device.password.error" = "錯誤的密碼";
 
@@ -677,7 +688,7 @@
 "self.settings.callkit.description" = "在鎖屏界面與通話記錄中顯示Wire來電。如果您已啟動iCloud，您的來電記錄也將同步到Apple服務器。";
 
 "self.settings.vbr.title" = "可變位元率編碼";
-"self.settings.vbr.description" = "這設定會使用較少數據，在較慢網絡上可有更佳音頻通話。請關閉並使用固定位元率編碼。";
+"self.settings.vbr.description" = "這設定會使用較少數據，在較慢網絡上可有更佳通話質素。如關閉此選項的話，會使用固定位元率編碼。";
 
 "self.settings.sound_menu.sounds.wire_call" = "Wire 鈴聲";
 "self.settings.sound_menu.sounds.wire_message" = "Wire 訊息";
@@ -710,7 +721,7 @@
 "self.settings.sound_menu.title" = "音效通知";
 "self.settings.sound_menu.no_sounds.title" = "無";
 "self.settings.sound_menu.all_sounds.title" = "全部";
-"self.settings.sound_menu.mute_while_talking.title" = "首則訊息和呼叫";
+"self.settings.sound_menu.mute_while_talking.title" = "首則訊息及招呼";
 
 // Developer options
 "self.settings.developer_options.title" = "開發人員設定";
@@ -827,6 +838,23 @@
 
 "team.email_code.input_field.accessbility_label" = "請輸入電子郵件中之六位驗證碼。";
 
+// Invite Team Members
+
+"team.invite.header.title" = "建立您的團隊";
+"team.invite.header.subtitle" = "邀請你的同事加入。";
+"team.invite.textfield.placeholder" = "colleague@yourcompany.com";
+"team.invite.textfield.accesibility" = "輸入同事的電子郵件地址以邀請。";
+"team.invite.learn_more.title" = "瞭解詳情";
+"team.invite.top_bar.skip" = "略過";
+"team.invite.top_bar.done" = "完成";
+
+// Team Invite Errors
+"team.invite.error.generic" = "出了點問題，請再試一次";
+"team.invite.error.already_registered" = "此電子郵件已註冊";
+"team.invite.error.already_invited" = "已發出邀請到此電子郵件";
+"team.invite.error.too_many_invitations" = "已達到邀請上限。";
+"team.invite.error.no_internet" = "沒有網路連線";
+
 // Registration
 
 "registration.title" = "註冊";
@@ -904,6 +932,9 @@
 "registration.signin.email_button.title" = "電子郵件";
 "registration.signin.phone_button.title" = "手機";
 
+"registration.signin.alert.password_needed.title" = "Password needed";
+"registration.signin.alert.password_needed.message" = "Please enter your Password in order to log in.";
+
 "registration.devices.title" = "設備";
 "registration.devices.active_list_header" = "其他已啟用的設備";
 "registration.devices.current_list_header" = "此設備";
@@ -956,7 +987,7 @@
 "error.user.phone_code_invalid" = "請輸入一個有效的代碼";
 "error.user.phone_code_too_many" = "我們已透過手機簡訊發送代碼到您的手機。如需新代碼需等候 10 分鐘後再點擊重新發送。";
 "error.user.registration_unknown_error" = "出了點問題，請再試一次。";
-"error.user.device_deleted_remotely" = "您的另一台設備已被登出。";
+"error.user.device_deleted_remotely" = "您的另一部設備已被登出。";
 "error.user.last_identity_cant_be_deleted" = "電子郵件地址或電話號碼是必需的。";
 "error.user.account_suspended" = "此帳戶不再被授權登錄";
 "error.user.account_limit_reached" = "您最多可添加三個賬號";
@@ -1015,7 +1046,7 @@
 "collections.section.files.title" = "檔案";
 "collections.section.videos.title" = "影片";
 "collections.section.links.title" = "連結：";
-"collections.section.all.button" = "顯示所有%d→";
+"collections.section.all.button" = "顯示所有%d項→";
 "collections.section.no_items" = "沒有資料";
 "collections.image_viewer.copied.title" = "照片已複製";
 

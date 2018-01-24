@@ -34,6 +34,12 @@
 "peoplepicker.header.contacts" = "Yhteystiedot";
 "peoplepicker.header.contacts_personal" = "Henkilökohtaiset kontaktit";
 "peoplepicker.header.directory" = "Yhdistä";
+
+"peoplepicker.header.people" = "People";
+"peoplepicker.header.services" = "Services";
+"peoplepicker.services.create_conversation.item" = "Create a new conversation";
+"peoplepicker.services.add_service.button" = "Add service";
+
 "peoplepicker.title.create_conversation" = "Luo ryhmä";
 "peoplepicker.title.add_to_conversation" = "Lisää ihmisiä";
 
@@ -59,6 +65,7 @@
 "peoplepicker.send_invitation.dialog.ok" = "OK";
 
 "peoplepicker.invite_more_people" = "Kutsu lisää ihmisiä";
+"peoplepicker.invite_team_members" = "Invite people to join the team";
 "peoplepicker.quick-action.open-conversation" = "Avaa";
 "peoplepicker.quick-action.create-conversation" = "Luo ryhmä";
 
@@ -76,10 +83,8 @@
 "contacts_ui.notification.invitation_failed" = "Kutsun lähettäminen epäonnistui";
 "contacts_ui.title" = "Kutsu ihmisiä";
 
-"contacts_ui.no_contact.title" = "Ei vielä keskusteluja\n";
-"contacts_ui.no_contact.message" = "Aloita keskustelu tai luo ryhmä.";
-
-"contacts_ui.no_contact.archived.title" = "Kaikki arkistoitu";
+"conversation_list.empty.all_archived.message" = "Everything archived";
+"conversation_list.empty.no_contacts.message" = "Start a conversation or\ncreate a group.";
 
 
 // Conversation List Indicator
@@ -201,7 +206,7 @@
 "conversation.input_bar.audio_message.tooltip.pull_send" = "Pyyhkäise ylös lähettääksesi";
 "conversation.input_bar.audio_message.tooltip.tap_send" = "Napauta lähettääksesi";
 "conversation.input_bar.audio_message.too_long.title" = "Äänitys pysäytetty";
-"conversation.input_bar.audio_message.too_long.message" = "Ääniviestit on rajoitettu maksimissaan %@ kokoiseksi. Haluatko lähettää tämän viestin?";
+"conversation.input_bar.audio_message.too_long.message" = "Audio messages are limited to %@.";
 "conversation.input_bar.audio_message.send" = "Lähetä";
 
 "conversation.input_bar.audio_message.keyboard.record_tip" = "Napauta äänittääksesi\nVoit %@ sen jälkeen";
@@ -230,6 +235,12 @@
 "camera_access.denied" = "Wire tarvitsee luvan käyttää kameraa.";
 "camera_access.denied.instruction" = "";
 "camera_access.denied.open_settings" = "Salli se Wiren asetuksissa";
+
+// Camera and photos access, keyboard
+"keyboard_photos_access.denied.keyboard.settings" = "Asetukset";
+"keyboard_photos_access.denied.keyboard.camera_and_photos" = "Wire needs access to your\ncamera and photos."; // split text on two lines for a better text balance
+"keyboard_photos_access.denied.keyboard.photos" = "Wire needs access to your photos.";
+"keyboard_photos_access.denied.keyboard.camera" = "Wire needs access to your camera.";
 
 // Camera Controls
 "camera_controls.aeaf_lock" = "AE/AF Lukko";
@@ -827,6 +838,23 @@
 
 "team.email_code.input_field.accessbility_label" = "Please enter the six-digit code from the email.";
 
+// Invite Team Members
+
+"team.invite.header.title" = "Build your team";
+"team.invite.header.subtitle" = "Invite your colleagues to join.";
+"team.invite.textfield.placeholder" = "colleague@yourcompany.com";
+"team.invite.textfield.accesibility" = "Enter e-mail address for colleague to invite.";
+"team.invite.learn_more.title" = "Lue lisää";
+"team.invite.top_bar.skip" = "Skip";
+"team.invite.top_bar.done" = "Done";
+
+// Team Invite Errors
+"team.invite.error.generic" = "Jokin meni pieleen, yritä uudelleen";
+"team.invite.error.already_registered" = "This email address is already in use";
+"team.invite.error.already_invited" = "This email has already been invited";
+"team.invite.error.too_many_invitations" = "The maximum number of invitations has been sent";
+"team.invite.error.no_internet" = "No internet connection";
+
 // Registration
 
 "registration.title" = "Rekisteröityminen";
@@ -903,6 +931,9 @@
 "registration.signin.too_many_devices.sign_out_button.title" = "Kirjaudu ulos";
 "registration.signin.email_button.title" = "Sähköposti";
 "registration.signin.phone_button.title" = "Puhelinnumero";
+
+"registration.signin.alert.password_needed.title" = "Password needed";
+"registration.signin.alert.password_needed.message" = "Please enter your Password in order to log in.";
 
 "registration.devices.title" = "Laitteet";
 "registration.devices.active_list_header" = "Aktiivinen";
