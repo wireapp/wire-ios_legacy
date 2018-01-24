@@ -28,8 +28,6 @@ class NetworkStatusViewTests: ZMSnapshotTestCase {
         super.setUp()
         accentColor = .violet ///FIXME: yellow?
         sut = NetworkStatusView()
-
-        recordMode = true
     }
 
     override func tearDown() {
