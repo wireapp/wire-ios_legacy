@@ -89,13 +89,14 @@ final class ProfileHeaderServiceDetailViewController: UIViewController {
 
     func setupServiceDetailViewController(serviceUser: ServiceUser) {
         let confirmButton = Button(style: .full)
-        confirmButton.setTitle("participants.services.remove_integration.button".localized, for: .normal)
         confirmButton.setBackgroundImageColor(.red, for: .normal)
+        confirmButton.setTitle("participants.services.remove_integration.button".localized, for: .normal)
 
         serviceDetailViewController = ServiceDetailViewController(serviceUser: serviceUser,
                                                                   backgroundColor: self.view.backgroundColor,
                                                                   textColor: .black, ///FIXME: ask for design
-            confirmButton: confirmButton)
+                                                                  confirmButton: confirmButton,
+                                                                  forceShowNavigationBarWhenviewWillAppear: false)
 
         self.addToSelf(serviceDetailViewController)
 

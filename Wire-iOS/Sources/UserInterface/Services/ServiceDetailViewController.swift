@@ -127,6 +127,7 @@ final class ServiceDetailViewController: UIViewController {
 
     private let detailView: ServiceDetailView
     private let confirmButton: Button
+    private var forceShowNavigationBarWhenviewWillAppear: Bool
     
     public var service: Service {
         didSet {
@@ -138,13 +139,15 @@ final class ServiceDetailViewController: UIViewController {
 
     init(serviceUser: ServiceUser, backgroundColor: UIColor?, textColor: UIColor?,
          buttonBackgroundColor: UIColor? = nil,
-         confirmButton: Button
+         confirmButton: Button,
+         forceShowNavigationBarWhenviewWillAppear: Bool
         ///FIXME: a bool for add or remove?
         //, buttonCallback: @escaping Callback<ServiceDetailViewController>
         ) {
         self.service = Service(serviceUser: serviceUser)
         self.detailView = ServiceDetailView(service: service, textColor: textColor)
         self.confirmButton = confirmButton
+        self.forceShowNavigationBarWhenviewWillAppear = forceShowNavigationBarWhenviewWillAppear
 
         super.init(nibName: nil, bundle: nil)
         
@@ -206,8 +209,10 @@ final class ServiceDetailViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
-        self.navigationController?.setNavigationBarHidden(false, animated: animated)
+
+        if forceShowNavigationBarWhenviewWillAppear {
+            self.navigationController?.setNavigationBarHidden(false, animated: animated)
+        }
     }
     
     private func showConversationPicker() {

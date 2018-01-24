@@ -50,7 +50,7 @@ extension StartUIViewController: SearchResultsViewControllerDelegate {
         let confirmButton = Button(styleClass: "dialogue-button-full")
         confirmButton.setTitle("peoplepicker.services.add_service.button".localized, for: .normal)
 
-        let serviceDetail = ServiceDetailViewController(serviceUser: serviceUser, backgroundColor: .clear, textColor: .white, confirmButton: confirmButton)
+        let serviceDetail = ServiceDetailViewController(serviceUser: serviceUser, backgroundColor: .clear, textColor: .white, confirmButton: confirmButton, forceShowNavigationBarWhenviewWillAppear: true)
 
         serviceDetail.completion = {(_ conversation: ZMConversation?) -> Void in
             if let conversation = conversation {
@@ -58,23 +58,22 @@ extension StartUIViewController: SearchResultsViewControllerDelegate {
                     self.delegate.startUI!(self, didSelect: conversation)
                 }
             }
-            }
+        }
         navigationController?.pushViewController(serviceDetail, animated: true)
     }
 
-    
     public func searchResultsViewController(_ searchResultsViewController: SearchResultsViewController, didDoubleTapOnUser user: ZMSearchableUser, indexPath: IndexPath) {
         guard let unboxedUser: ZMUser = BareUserToUser(user) else { return }
-                guard delegate.responds(to: #selector(StartUIDelegate.startUI(_:didSelectUsers:for:))) else { return }
+        guard delegate.responds(to: #selector(StartUIDelegate.startUI(_:didSelectUsers:for:))) else { return }
 
         if (unboxedUser.isConnected) && !unboxedUser.isBlocked {
             if self.userSelection.users.count == 1 && !userSelection.users.contains(unboxedUser ) {
                 return
             }
             ///FIXME: compile crash?
-//            delegate.startUI(self, didSelectUsers: Set<AnyHashable>([user]), forAction: .createOrOpenConversation)
+            //            delegate.startUI(self, didSelectUsers: Set<AnyHashable>([user]), forAction: .createOrOpenConversation)
         }
     }
 
-
 }
+
