@@ -22,7 +22,7 @@ import Cartography
 final class ProfileHeaderServiceDetailViewController: UIViewController {
 
     public weak var navigationControllerDelegate: ProfileNavigationControllerDelegate?
-//    public weak var profileViewControllerDelegate: ProfileViewControllerDelegate? ///FIXME: better name
+    public weak var profileViewControllerDelegate: ProfileViewControllerDelegate? ///FIXME: better name
 
     var headerView: ProfileHeaderView!
     var serviceDetailViewController: ServiceDetailViewController!
@@ -70,7 +70,7 @@ final class ProfileHeaderServiceDetailViewController: UIViewController {
     func setupHeader() {
         var headerStyle: ProfileHeaderStyle = .cancelButton
         if UIDevice.current.userInterfaceIdiom == .pad && navigationController?.viewControllers.count > 1 {
-                headerStyle = .backButton
+            headerStyle = .backButton
         }
         headerView = ProfileHeaderView(with: headerStyle)
 
@@ -80,15 +80,12 @@ final class ProfileHeaderServiceDetailViewController: UIViewController {
     }
 
     func dismissButtonClicked() {
-        ///FIXME: need dismissal? back is enough for first release
-//        requestDismissal(withCompletion: nil)
+        requestDismissal(withCompletion: nil)
     }
 
-//    func requestDismissal(withCompletion completion: (() -> ())?) {
-//        if (profileViewControllerDelegate?.responds(to: #selector(ProfileViewControllerDelegate.profileViewControllerWants(toBeDismissed:completion:))))! {
-//            profileViewControllerDelegate?.profileViewControllerWants(toBeDismissed: self, completion: completion)
-//        }
-//    }
+    func requestDismissal(withCompletion completion: (() -> ())?) {
+        profileViewControllerDelegate?.profileViewControllerWants(toBeDismissed: self, completion: completion)
+    }
 
     func setupServiceDetailViewController(serviceUser: ServiceUser) {
         let confirmButton = Button(style: .full)
@@ -96,8 +93,8 @@ final class ProfileHeaderServiceDetailViewController: UIViewController {
         confirmButton.setBackgroundImageColor(.red, for: .normal)
 
         serviceDetailViewController = ServiceDetailViewController(serviceUser: serviceUser,
-                                                        backgroundColor: self.view.backgroundColor,
-                                                        textColor: .black, ///FIXME: ask for design
+                                                                  backgroundColor: self.view.backgroundColor,
+                                                                  textColor: .black, ///FIXME: ask for design
             confirmButton: confirmButton)
 
         self.addToSelf(serviceDetailViewController)
@@ -115,45 +112,45 @@ final class ProfileHeaderServiceDetailViewController: UIViewController {
 
 // MARK: - iPad size class switchin
 /*
-extension ProfileHeaderServiceDetailViewController {
+ extension ProfileHeaderServiceDetailViewController {
 
-    open override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
+ open override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+ super.traitCollectionDidChange(previousTraitCollection)
 
-        ///TODO: change the UI config, constraints, font size and etc here if this VC has different UI design pattern on iPad compact/regular mode
-    }
+ ///TODO: change the UI config, constraints, font size and etc here if this VC has different UI design pattern on iPad compact/regular mode
+ }
 
-    ///Notice: this method is called if this VC is a root VC. it is not called after iPad orientation changes
-    open override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
-        super.viewWillTransition(to: size, with: coordinator)
-        ///TODO: handle UI update related to view size changes
-    }
+ ///Notice: this method is called if this VC is a root VC. it is not called after iPad orientation changes
+ open override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+ super.viewWillTransition(to: size, with: coordinator)
+ ///TODO: handle UI update related to view size changes
+ }
 
-}
-*/
+ }
+ */
 // MARK: - Status Bar / Supported Orientations
 
 extension ProfileHeaderServiceDetailViewController {
 
-//    override var shouldAutorotate: Bool {
-//        switch UIDevice.current.userInterfaceIdiom {
-//        case .pad:
-//
-//        switch (self.traitCollection.horizontalSizeClass) {
-//        case .compact:
-//            ///TODO: if this should auto rotate, return true
-//            return false
-//        default:
-//            return true
-//        }
-//        default:
-//            ///TODO: if this should auto rotate, return true
-//            return false
-//        }
-//    }
+    //    override var shouldAutorotate: Bool {
+    //        switch UIDevice.current.userInterfaceIdiom {
+    //        case .pad:
+    //
+    //        switch (self.traitCollection.horizontalSizeClass) {
+    //        case .compact:
+    //            ///TODO: if this should auto rotate, return true
+    //            return false
+    //        default:
+    //            return true
+    //        }
+    //        default:
+    //            ///TODO: if this should auto rotate, return true
+    //            return false
+    //        }
+    //    }
 
-//    override var prefersStatusBarHidden: Bool {
-//        ///TODO: if this VC does not show status bar, return false
-//        return true
-//    }
+    //    override var prefersStatusBarHidden: Bool {
+    //        ///TODO: if this VC does not show status bar, return false
+    //        return true
+    //    }
 }

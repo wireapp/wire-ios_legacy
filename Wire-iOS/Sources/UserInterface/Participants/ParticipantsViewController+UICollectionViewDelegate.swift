@@ -30,7 +30,9 @@ extension ParticipantsViewController: UICollectionViewDelegate {
         var viewContollerToPush: UIViewController?
 
         if user.isServiceUser {
-            viewContollerToPush = ProfileHeaderServiceDetailViewController(serviceUser: user)
+            let profileHeaderServiceDetailViewController = ProfileHeaderServiceDetailViewController(serviceUser: user)
+            profileHeaderServiceDetailViewController.profileViewControllerDelegate = self
+            viewContollerToPush = profileHeaderServiceDetailViewController
         } else {
             let profileViewController = ProfileViewController(user: user, conversation: conversation)
             profileViewController?.delegate = self

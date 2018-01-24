@@ -41,7 +41,7 @@ typedef NS_ENUM(NSInteger, ProfileViewControllerContext) {
 
 @protocol ProfileViewControllerDelegate <NSObject>
 
-- (void)profileViewControllerWantsToBeDismissed:(ProfileViewController *)controller completion:(dispatch_block_t)completion;
+- (void)profileViewControllerWantsToBeDismissed:(UIViewController *)controller completion:(dispatch_block_t)completion;
 
 @optional
 

@@ -383,7 +383,7 @@ static NSString *const ParticipantHeaderReuseIdentifier = @"ParticipantListHeade
 //@implementation ParticipantsViewController (ProfileView)
 
 ///TODO: rewrite as swift extension
-- (void)profileViewControllerWantsToBeDismissed:(ProfileViewController *)profileViewController completion:(dispatch_block_t)completion
+- (void)profileViewControllerWantsToBeDismissed:(UIViewController *)profileViewController completion:(dispatch_block_t)completion
 {
     [self.navigationController popViewControllerAnimated:YES];
     [self.navigationController.transitionCoordinator animateAlongsideTransition:nil completion:^(id<UIViewControllerTransitionCoordinatorContext> context) {
