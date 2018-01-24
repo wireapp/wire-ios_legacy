@@ -73,7 +73,7 @@ class SearchResultsView : UIView {
             accessoryContainer.left == container.left
             accessoryContainer.right == container.right
             accessoryContainerHeightConstraint = accessoryContainer.height == 0
-            accessoryViewBottomOffsetConstraint = accessoryContainer.bottom == container.bottom - UIScreen.safeArea.bottom
+            accessoryViewBottomOffsetConstraint = accessoryContainer.bottom == container.bottom
             
             emptyResultContainer.top == container.top + 64
             emptyResultContainer.centerX == container.centerX
@@ -137,7 +137,7 @@ class SearchResultsView : UIView {
         
         UIView.animate(withKeyboardNotification: notification, in: self, animations: { (keyboardFrameInView) in
             let keyboardHeight = keyboardFrameInView.size.height - inputAccessoryHeight
-            self.accessoryViewBottomOffsetConstraint?.constant = -keyboardHeight - UIScreen.safeArea.bottom
+            self.accessoryViewBottomOffsetConstraint?.constant = -keyboardHeight
             self.layoutIfNeeded()
         }, completion: nil)
     }
