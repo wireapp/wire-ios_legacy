@@ -145,6 +145,7 @@ extension ServiceConversation: ShareDestination {
  }
 */
 final class ServiceDetailViewController: UIViewController {
+
     private let detailView: ServiceDetailView
     private let confirmButton: Button
     
@@ -155,6 +156,7 @@ final class ServiceDetailViewController: UIViewController {
     }
     
     public var completion: ((ZMConversation?)->())? = nil // TODO: not wired up yet
+    public weak var navigationControllerDelegate: ProfileNavigationControllerDelegate?
     
     init(serviceUser: ServiceUser, backgroundColor: UIColor?, textColor: UIColor?,
          buttonBackgroundColor: UIColor? = nil,
@@ -222,6 +224,8 @@ final class ServiceDetailViewController: UIViewController {
         self.service.serviceUser.fetchDetails(in: userSession) { [weak self] details in
             self?.detailView.service.serviceUserDetails = details
         }
+
+        self.navigationController?.delegate = self.navigationControllerDelegate
     }
     
     override func viewWillAppear(_ animated: Bool) {

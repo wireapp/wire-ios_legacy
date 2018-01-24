@@ -36,13 +36,15 @@ extension ParticipantsViewController: UICollectionViewDelegate {
             let serviceDetail = ServiceDetailViewController(serviceUser: user,
                                                             backgroundColor: self.view.backgroundColor,
                                                             textColor: .black, ///FIXME: ask for design
-                                                            confirmButton: confirmButton)
+                confirmButton: confirmButton)
 
             ///TODO: inject a remove block
             //            public var completion: ((ZMConversation?)->())? = nil // TODO: not wired up yet
             //            serviceDetail.completion = {(_ conversation: ZMConversation) -> () in
             ///TODO: remove from conversation
             //            }
+
+            serviceDetail.navigationControllerDelegate = navigationControllerDelegate
             viewContollerToPush = serviceDetail
         } else {
             let profileViewController = ProfileViewController(user: user, conversation: conversation)
@@ -52,7 +54,7 @@ extension ParticipantsViewController: UICollectionViewDelegate {
         }
 
         if let layoutAttributes: UICollectionViewLayoutAttributes = collectionView.layoutAttributesForItem(at: indexPath) {
-        navigationControllerDelegate.tapLocation = collectionView.convert(layoutAttributes.center, to: view)
+            navigationControllerDelegate.tapLocation = collectionView.convert(layoutAttributes.center, to: view)
         }
 
         if let viewContollerToPush = viewContollerToPush {
