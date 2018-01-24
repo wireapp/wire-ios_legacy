@@ -156,11 +156,16 @@ public class SearchHeaderViewController : UIViewController {
         tokenField.clearFilterText()
         tokenField.removeAllTokens()
         resetQuery()
+        updateClearIndicator(for: tokenField)
     }
     
     public func resetQuery() {
         tokenField.filterUnwantedAttachments()
         delegate?.searchHeaderViewController(self, updatedSearchQuery: tokenField.filterText)
+    }
+    
+    fileprivate func updateClearIndicator(for tokenField: TokenField) {
+        clearButton.isHidden = tokenField.filterText.isEmpty && tokenField.tokens.isEmpty
     }
     
 }
@@ -178,15 +183,12 @@ extension SearchHeaderViewController : UserSelectionObserver {
     public func userSelection(_ userSelection: UserSelection, didRemoveUser user: ZMUser) {
         guard let token = tokenField.token(forRepresentedObject: user) else { return }
         tokenField.removeToken(token)
+        updateClearIndicator(for: tokenField)
     }
     
 }
 
 extension SearchHeaderViewController : TokenFieldDelegate {
-    
-    func updateClearIndicator(for tokenField: TokenField) {
-        clearButton.isHidden = tokenField.filterText.isEmpty && tokenField.tokens.isEmpty
-    }
 
     public func tokenField(_ tokenField: TokenField, changedTokensTo tokens: [Token]) {
         userSelection.replace(tokens.map { $0.representedObject as! ZMUser })
