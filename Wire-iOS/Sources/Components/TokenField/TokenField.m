@@ -435,6 +435,8 @@ CGFloat const accessoryButtonSize = 32.0f;
     [self.currentTokens removeObjectsInArray:tokensToRemove];
     [self invalidateIntrinsicContentSize];
     [self updateTextAttributes];
+    
+    [self.textView showOrHidePlaceholder];
 }
 
 - (Token *)tokenForRepresentedObject:(id)object
@@ -865,7 +867,7 @@ CGFloat const accessoryButtonSize = 32.0f;
                                           }];
     
     NSString *oldFilterText = self.filterText;
-    self.filterText = [self.textView.text substringFromIndex:indexOfFilterText];
+    self.filterText = [[self.textView.text substringFromIndex:indexOfFilterText] stringByReplacingOccurrencesOfString:@"\uFFFC" withString:@""];
     if ([oldFilterText isEqualToString:self.filterText] == NO) {
         if ([self.delegate respondsToSelector:@selector(tokenField:changedFilterTextTo:)]) {
             [self.delegate tokenField:self changedFilterTextTo:self.filterText];

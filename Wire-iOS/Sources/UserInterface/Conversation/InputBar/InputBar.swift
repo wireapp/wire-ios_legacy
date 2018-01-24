@@ -311,7 +311,7 @@ private struct InputBarConstants {
     }
     
     func updateFakeCursorVisibility(_ firstResponder: UIResponder? = nil) {
-        fakeCursor.isHidden = textView.isFirstResponder || textView.text.characters.count != 0 || firstResponder != nil
+        fakeCursor.isHidden = textView.isFirstResponder || textView.text.count != 0 || firstResponder != nil
     }
 
     // MARK: - Disable interactions on the lower part to not to interfere with the keyboard

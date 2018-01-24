@@ -96,7 +96,7 @@ public final class UserConnectionView: UIView, Copyable {
     }
 
     private var handleLabelText: NSAttributedString? {
-        guard let handle = user.handle, handle.characters.count > 0 else { return nil }
+        guard let handle = user.handle, handle.count > 0 else { return nil }
         return ("@" + handle) && [
             NSForegroundColorAttributeName: ColorScheme.default().color(withName: ColorSchemeColorTextDimmed),
             NSFontAttributeName: UIFont(magicIdentifier: "style.text.small.font_spec_bold")

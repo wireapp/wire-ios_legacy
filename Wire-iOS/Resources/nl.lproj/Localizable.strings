@@ -34,6 +34,12 @@
 "peoplepicker.header.contacts" = "Contacten";
 "peoplepicker.header.contacts_personal" = "Persoonlijke Contacten";
 "peoplepicker.header.directory" = "Contacten toevoegen";
+
+"peoplepicker.header.people" = "People";
+"peoplepicker.header.services" = "Services";
+"peoplepicker.services.create_conversation.item" = "Create a new conversation";
+"peoplepicker.services.add_service.button" = "Add service";
+
 "peoplepicker.title.create_conversation" = "Maak groep";
 "peoplepicker.title.add_to_conversation" = "Contacten toevoegen";
 
@@ -59,6 +65,7 @@
 "peoplepicker.send_invitation.dialog.ok" = "OK";
 
 "peoplepicker.invite_more_people" = "Nodig meer mensen uit";
+"peoplepicker.invite_team_members" = "Invite people to join the team";
 "peoplepicker.quick-action.open-conversation" = "Openen";
 "peoplepicker.quick-action.create-conversation" = "Groep creëren";
 
@@ -76,10 +83,8 @@
 "contacts_ui.notification.invitation_failed" = "Het versturen van de uitnodiging is mislukt";
 "contacts_ui.title" = "Nodig anderen uit";
 
-"contacts_ui.no_contact.title" = "Nog geen gesprekken\n";
-"contacts_ui.no_contact.message" = "Start een gesprek of een groep maken.";
-
-"contacts_ui.no_contact.archived.title" = "Alles gearchiveerd";
+"conversation_list.empty.all_archived.message" = "Everything archived";
+"conversation_list.empty.no_contacts.message" = "Start a conversation or\ncreate a group.";
 
 
 // Conversation List Indicator
@@ -201,7 +206,7 @@
 "conversation.input_bar.audio_message.tooltip.pull_send" = "Swipe omhoog om te versturen";
 "conversation.input_bar.audio_message.tooltip.tap_send" = "Tik om te verzenden";
 "conversation.input_bar.audio_message.too_long.title" = "Opname gestopt";
-"conversation.input_bar.audio_message.too_long.message" = "Audio-berichten zijn gelimiteerd tot %@. Dit bericht versturen?";
+"conversation.input_bar.audio_message.too_long.message" = "Audio messages are limited to %@.";
 "conversation.input_bar.audio_message.send" = "Stuur";
 
 "conversation.input_bar.audio_message.keyboard.record_tip" = "Tap om op te nemen\nJe kan hier na %@";
@@ -230,6 +235,12 @@
 "camera_access.denied" = "Wire heeft toegang nodig tot de camera.";
 "camera_access.denied.instruction" = "";
 "camera_access.denied.open_settings" = "Open instellingen voor Wire om toegang tot de camera te geven";
+
+// Camera and photos access, keyboard
+"keyboard_photos_access.denied.keyboard.settings" = "Instellingen";
+"keyboard_photos_access.denied.keyboard.camera_and_photos" = "Wire needs access to your\ncamera and photos."; // split text on two lines for a better text balance
+"keyboard_photos_access.denied.keyboard.photos" = "Wire needs access to your photos.";
+"keyboard_photos_access.denied.keyboard.camera" = "Wire needs access to your camera.";
 
 // Camera Controls
 "camera_controls.aeaf_lock" = "AE/AF-vergrendeling";
@@ -827,6 +838,23 @@
 
 "team.email_code.input_field.accessbility_label" = "Vul hier je 6 caracter code in van je email.";
 
+// Invite Team Members
+
+"team.invite.header.title" = "Build your team";
+"team.invite.header.subtitle" = "Invite your colleagues to join.";
+"team.invite.textfield.placeholder" = "colleague@yourcompany.com";
+"team.invite.textfield.accesibility" = "Enter e-mail address for colleague to invite.";
+"team.invite.learn_more.title" = "Leer meer";
+"team.invite.top_bar.skip" = "Skip";
+"team.invite.top_bar.done" = "Done";
+
+// Team Invite Errors
+"team.invite.error.generic" = "Er is een fout opgetreden, probeer het nogmaals";
+"team.invite.error.already_registered" = "This email address is already in use";
+"team.invite.error.already_invited" = "This email has already been invited";
+"team.invite.error.too_many_invitations" = "The maximum number of invitations has been sent";
+"team.invite.error.no_internet" = "No internet connection";
+
 // Registration
 
 "registration.title" = "Registratie";
@@ -903,6 +931,9 @@
 "registration.signin.too_many_devices.sign_out_button.title" = "Uitloggen";
 "registration.signin.email_button.title" = "E-mail";
 "registration.signin.phone_button.title" = "Telefoonnummer";
+
+"registration.signin.alert.password_needed.title" = "Password needed";
+"registration.signin.alert.password_needed.message" = "Please enter your Password in order to log in.";
 
 "registration.devices.title" = "Apparaten";
 "registration.devices.active_list_header" = "Actief";

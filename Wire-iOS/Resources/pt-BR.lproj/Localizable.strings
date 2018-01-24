@@ -34,6 +34,12 @@
 "peoplepicker.header.contacts" = "Contatos";
 "peoplepicker.header.contacts_personal" = "Contatos pessoais";
 "peoplepicker.header.directory" = "Conectar";
+
+"peoplepicker.header.people" = "Pessoas";
+"peoplepicker.header.services" = "Serviços";
+"peoplepicker.services.create_conversation.item" = "Criar uma nova conversa";
+"peoplepicker.services.add_service.button" = "Adicionar serviço";
+
 "peoplepicker.title.create_conversation" = "Criar grupo";
 "peoplepicker.title.add_to_conversation" = "Adicionar pessoas";
 
@@ -59,6 +65,7 @@
 "peoplepicker.send_invitation.dialog.ok" = "OK";
 
 "peoplepicker.invite_more_people" = "Convidar mais pessoas";
+"peoplepicker.invite_team_members" = "Convide pessoas para entrar na equipe";
 "peoplepicker.quick-action.open-conversation" = "Abrir";
 "peoplepicker.quick-action.create-conversation" = "Criar grupo";
 
@@ -76,10 +83,8 @@
 "contacts_ui.notification.invitation_failed" = "Falha ao enviar o convite";
 "contacts_ui.title" = "Convidar pessoas";
 
-"contacts_ui.no_contact.title" = "Não há conversas ainda\n";
-"contacts_ui.no_contact.message" = "Iniciar uma conversa ou criar um grupo.";
-
-"contacts_ui.no_contact.archived.title" = "Tudo foi arquivado";
+"conversation_list.empty.all_archived.message" = "Tudo foi arquivado";
+"conversation_list.empty.no_contacts.message" = "Iniciar uma conversa ou \ncrie um grupo.";
 
 
 // Conversation List Indicator
@@ -201,7 +206,7 @@
 "conversation.input_bar.audio_message.tooltip.pull_send" = "Puxe para cima para enviar";
 "conversation.input_bar.audio_message.tooltip.tap_send" = "Toque para enviar";
 "conversation.input_bar.audio_message.too_long.title" = "Gravação Parou";
-"conversation.input_bar.audio_message.too_long.message" = "Mensagens de áudio são limitadas a %@. Enviar esta mensagem?";
+"conversation.input_bar.audio_message.too_long.message" = "Mensagens de áudio são limitadas a %@.";
 "conversation.input_bar.audio_message.send" = "Enviar";
 
 "conversation.input_bar.audio_message.keyboard.record_tip" = "Toque para gravar\nVocê pode %@ depois disso";
@@ -230,6 +235,12 @@
 "camera_access.denied" = "Wire precisa acessar a câmera.";
 "camera_access.denied.instruction" = "";
 "camera_access.denied.open_settings" = "Habilite nas configurações do Wire";
+
+// Camera and photos access, keyboard
+"keyboard_photos_access.denied.keyboard.settings" = "Ajustes";
+"keyboard_photos_access.denied.keyboard.camera_and_photos" = "Wire precisa acessar sua \ncâmera e fotos."; // split text on two lines for a better text balance
+"keyboard_photos_access.denied.keyboard.photos" = "Wire precisa acessar suas fotos.";
+"keyboard_photos_access.denied.keyboard.camera" = "Wire precisa acessar sua câmera.";
 
 // Camera Controls
 "camera_controls.aeaf_lock" = "Bloqueio AE/AF";
@@ -799,7 +810,7 @@
 
 // Create team
 
-"team.name.headline" = "Nomeie sua equipe";
+"team.name.headline" = "Dê um nome à sua equipa";
 "team.name.subheadline" = "Você sempre pode mudar isso mais tarde.";
 "team.name.textfield.placeholder" = "nome da equipe";
 "team.name.textfield.accessibility" = "Defina um nome da equipe";
@@ -817,7 +828,7 @@
 "team.activation_code.button.change_email" = "Alterar e-mail";
 
 "team.full_name.headline" = "Seu nome";
-"team.full_name.textfield.placeholder" = "Nome Completo";
+"team.full_name.textfield.placeholder" = "Nome completo";
 "team.full_name.textfield.accessibility" = "Defina seu nome completo";
 
 "team.password.headline" = "Definir senha";
@@ -826,6 +837,23 @@
 
 
 "team.email_code.input_field.accessbility_label" = "Por favor introduza o código de seis dígitos do e-mail.";
+
+// Invite Team Members
+
+"team.invite.header.title" = "Crie sua equipe";
+"team.invite.header.subtitle" = "Convide seus colegas para participar.";
+"team.invite.textfield.placeholder" = "colega@suacompanhia.com";
+"team.invite.textfield.accesibility" = "Digite o endereço de e-mail do colega para convidar.";
+"team.invite.learn_more.title" = "Mais informação";
+"team.invite.top_bar.skip" = "Pular";
+"team.invite.top_bar.done" = "Pronto";
+
+// Team Invite Errors
+"team.invite.error.generic" = "Algo deu errado, por favor tente novamente";
+"team.invite.error.already_registered" = "Esse endereço de e-mail já está sendo usado";
+"team.invite.error.already_invited" = "Este e-mail já foi convidado";
+"team.invite.error.too_many_invitations" = "O número máximo de convites foi enviado";
+"team.invite.error.no_internet" = "Sem conexão à Internet";
 
 // Registration
 
@@ -872,7 +900,7 @@
 
 "registration.terms_of_use.terms.title" = "Termos de uso";
 "registration.terms_of_use.terms.message" = "Por favor, aceite os termos de uso para continuar.";
-"registration.terms_of_use.terms.view" = "Ver";
+"registration.terms_of_use.terms.view" = "Vizualizar";
 "registration.terms_of_use.accept" = "Aceitar";
 
 "registration.email_flow.title" = "Cadastre-se por e-mail";
@@ -903,6 +931,9 @@
 "registration.signin.too_many_devices.sign_out_button.title" = "Sair";
 "registration.signin.email_button.title" = "E-mail";
 "registration.signin.phone_button.title" = "Telefone";
+
+"registration.signin.alert.password_needed.title" = "Password needed";
+"registration.signin.alert.password_needed.message" = "Please enter your Password in order to log in.";
 
 "registration.devices.title" = "Dispositivos";
 "registration.devices.active_list_header" = "Ativo";

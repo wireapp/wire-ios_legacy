@@ -34,6 +34,12 @@
 "peoplepicker.header.contacts" = "Контакты";
 "peoplepicker.header.contacts_personal" = "Личные контакты";
 "peoplepicker.header.directory" = "Добавить в контакты";
+
+"peoplepicker.header.people" = "Люди";
+"peoplepicker.header.services" = "Службы";
+"peoplepicker.services.create_conversation.item" = "Создать новую беседу";
+"peoplepicker.services.add_service.button" = "Добавить службу";
+
 "peoplepicker.title.create_conversation" = "Создать группу";
 "peoplepicker.title.add_to_conversation" = "Добавить людей";
 
@@ -59,6 +65,7 @@
 "peoplepicker.send_invitation.dialog.ok" = "OK";
 
 "peoplepicker.invite_more_people" = "Пригласить еще людей";
+"peoplepicker.invite_team_members" = "Пригласите людей в команду";
 "peoplepicker.quick-action.open-conversation" = "Открыть";
 "peoplepicker.quick-action.create-conversation" = "Создать группу";
 
@@ -76,10 +83,8 @@
 "contacts_ui.notification.invitation_failed" = "Не удалось отправить приглашение";
 "contacts_ui.title" = "Пригласить людей";
 
-"contacts_ui.no_contact.title" = "Разговоров пока нет\n";
-"contacts_ui.no_contact.message" = "Начните разговор или создайте группу.";
-
-"contacts_ui.no_contact.archived.title" = "Все разговоры отправлены в архив";
+"conversation_list.empty.all_archived.message" = "Все разговоры отправлены в архив";
+"conversation_list.empty.no_contacts.message" = "Начните разговор или создайте группу.";
 
 
 // Conversation List Indicator
@@ -201,7 +206,7 @@
 "conversation.input_bar.audio_message.tooltip.pull_send" = "Проведите вверх для отправки";
 "conversation.input_bar.audio_message.tooltip.tap_send" = "Нажмите для отправки";
 "conversation.input_bar.audio_message.too_long.title" = "Запись остановлена";
-"conversation.input_bar.audio_message.too_long.message" = "Размер аудио сообщений ограничен %@. Отправить это сообщение?";
+"conversation.input_bar.audio_message.too_long.message" = "Аудиосообщения ограничены %@.";
 "conversation.input_bar.audio_message.send" = "Отправить";
 
 "conversation.input_bar.audio_message.keyboard.record_tip" = "Коснитесь для записи\nВы можете %@ после этого";
@@ -230,6 +235,12 @@
 "camera_access.denied" = "Wire хочет получить доступ к камере.";
 "camera_access.denied.instruction" = "";
 "camera_access.denied.open_settings" = "Разрешите доступ к камере в настройках Wire";
+
+// Camera and photos access, keyboard
+"keyboard_photos_access.denied.keyboard.settings" = "Настройки";
+"keyboard_photos_access.denied.keyboard.camera_and_photos" = "Wire необходим доступ к вашим\nкамере и фото."; // split text on two lines for a better text balance
+"keyboard_photos_access.denied.keyboard.photos" = "Wire необходим доступ к вашим фото.";
+"keyboard_photos_access.denied.keyboard.camera" = "Wire необходим доступ к вашей камере.";
 
 // Camera Controls
 "camera_controls.aeaf_lock" = "Фиксация экспозиции/фокуса";
@@ -827,6 +838,23 @@
 
 "team.email_code.input_field.accessbility_label" = "Введите шестизначный код из письма.";
 
+// Invite Team Members
+
+"team.invite.header.title" = "Создание команды";
+"team.invite.header.subtitle" = "Пригласите своих коллег присоединиться.";
+"team.invite.textfield.placeholder" = "colleague@yourcompany.com";
+"team.invite.textfield.accesibility" = "Введите адрес электронной почты для приглашения коллеги.";
+"team.invite.learn_more.title" = "Подробнее";
+"team.invite.top_bar.skip" = "Пропустить";
+"team.invite.top_bar.done" = "Готово";
+
+// Team Invite Errors
+"team.invite.error.generic" = "Что-то пошло не так - пожалуйста, попробуйте еще раз";
+"team.invite.error.already_registered" = "Этот адрес электронной почты уже используется";
+"team.invite.error.already_invited" = "Этот email уже был приглашен ранее";
+"team.invite.error.too_many_invitations" = "Было отправлено максимальное количество приглашений";
+"team.invite.error.no_internet" = "Нет соединения с интернетом";
+
 // Registration
 
 "registration.title" = "Регистрация";
@@ -903,6 +931,9 @@
 "registration.signin.too_many_devices.sign_out_button.title" = "Выход";
 "registration.signin.email_button.title" = "Email";
 "registration.signin.phone_button.title" = "Телефон";
+
+"registration.signin.alert.password_needed.title" = "Введите пароль";
+"registration.signin.alert.password_needed.message" = "Для входа необходимо ввести пароль.";
 
 "registration.devices.title" = "Устройства";
 "registration.devices.active_list_header" = "Активное";
