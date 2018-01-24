@@ -50,7 +50,7 @@ final class ServiceDetailView: UIView {
         
         backgroundColor = .clear
         descriptionTextView.backgroundColor = .clear
-        descriptionTextView.textColor = .white
+        descriptionTextView.textColor = .white ///TODO: black color for embedded in partiVC
         descriptionTextView.font = FontSpec(.normal, .regular).font
         descriptionTextView.isEditable = false
         updateForService()

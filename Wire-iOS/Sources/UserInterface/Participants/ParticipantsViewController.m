@@ -79,7 +79,7 @@ static NSString *const ParticipantHeaderReuseIdentifier = @"ParticipantListHeade
 
 
 
-@interface ParticipantsViewController () <UICollectionViewDataSource, UICollectionViewDelegate, ZMConversationObserver, UIGestureRecognizerDelegate>
+@interface ParticipantsViewController () <UICollectionViewDataSource, ZMConversationObserver, UIGestureRecognizerDelegate>
 
 @property (nonatomic) UICollectionView *collectionView;
 @property (nonatomic) UICollectionViewFlowLayout *collectionViewLayout;
@@ -376,26 +376,6 @@ static NSString *const ParticipantHeaderReuseIdentifier = @"ParticipantListHeade
             
         });
     }
-}
-
-- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
-{
-    if ([self.headerView.titleView isFirstResponder]) {
-        [self.headerView.titleView resignFirstResponder];
-        return;
-    }
-    
-    ZMUser *user = self.participants[indexPath.row];
-    
-    ProfileViewController *profileViewController = [[ProfileViewController alloc] initWithUser:user conversation:self.conversation];
-    profileViewController.delegate = self;
-    profileViewController.navigationControllerDelegate = self.navigationControllerDelegate;
-    
-    UICollectionViewLayoutAttributes *layoutAttributes = [self.collectionView layoutAttributesForItemAtIndexPath:indexPath];
-    
-    self.navigationControllerDelegate.tapLocation = [self.collectionView convertPoint:layoutAttributes.center toView:self.view];
-    
-    [self.navigationController pushViewController:profileViewController animated:YES];
 }
 
 @end
