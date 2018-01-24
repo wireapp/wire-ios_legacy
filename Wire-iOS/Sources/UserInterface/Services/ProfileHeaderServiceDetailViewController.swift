@@ -89,17 +89,17 @@ final class ProfileHeaderServiceDetailViewController: UIViewController {
         profileViewControllerDelegate?.profileViewControllerWants(toBeDismissed: self, completion: completion)
     }
 
-    func presentRemoveFromConversationDialogue() {
+    func presentRemoveFromConversationDialogue(user: ZMUser) {
         if let actionSheetController = ActionSheetController.dialog(forRemoving: serviceUser as! ZMUser, from: conversation, style: ActionSheetController.defaultStyle(), completion: {(_ canceled: Bool) -> Void in
             self.dismiss(animated: true, completion: {() -> Void in
                 if canceled {
                     return
                 }
-//                ZMUserSession.shared.enqueueChanges({() -> Void in
-//                    self.conversation.removeParticipant(self.fullUser())
-//                }, completionHandler: {() -> Void in
-//                    self.delegate.profileDetailsViewController(self, wantsToBeDismissedWithCompletion: nil)
-//                })
+                ZMUserSession.shared()?.enqueueChanges({() -> Void in
+                    self.conversation.removeParticipant(user)
+                }, completionHandler: {() -> Void in
+                    self.profileViewControllerDelegate?.profileViewControllerWants(toBeDismissed: self, completion: nil)
+                })
             })
         }) {
             present(actionSheetController, animated: true)
@@ -114,79 +114,22 @@ final class ProfileHeaderServiceDetailViewController: UIViewController {
         confirmButton.setTitle("participants.services.remove_integration.button".localized, for: .normal)
 
         let buttonCallback: Callback<Button> = { [weak self] _ in
-            guard let weakSelf = self else {return}
+            guard let weakSelf = self else { return }
+            guard weakSelf.serviceUser.isKind(of: ZMUser.self)  else { return }
 
-            weakSelf.presentRemoveFromConversationDialogue()
-//            ZMUserSession.shared()?.enqueueChanges({() -> Void in
-//                weakSelf.conversation.removeParticipant(weakSelf.serviceUser as! ZMUser)///TODO:
-//            }, completionHandler: {() -> Void in
-//                //            self.profileViewControllerDelegate.profileDetailsViewController(self, wantsToBeDismissedWithCompletion: nil)
-//                ///FIXME:
-//            })
+            weakSelf.presentRemoveFromConversationDialogue(user: weakSelf.serviceUser as! ZMUser)
         }
 
 
         serviceDetailViewController = ServiceDetailViewController(serviceUser: serviceUser,
                                                                   backgroundColor: self.view.backgroundColor,
                                                                   textColor: .black, ///FIXME: ask for design
-                                                                  confirmButton: confirmButton,
-                                                                  forceShowNavigationBarWhenviewWillAppear: false,
-                                                                  buttonCallback: buttonCallback)
+            confirmButton: confirmButton,
+            forceShowNavigationBarWhenviewWillAppear: false,
+            buttonCallback: buttonCallback)
 
         self.addToSelf(serviceDetailViewController)
 
-
-        ///TODO: inject a remove block
-        //            public var completion: ((ZMConversation?)->())? = nil // TODO: not wired up yet
-        //            serviceDetail.completion = {(_ conversation: ZMConversation) -> () in
-        ///TODO: remove from conversation
-        //            }
-
-        //            serviceDetail.navigationControllerDelegate = navigationControllerDelegate
     }
 }
 
-// MARK: - iPad size class switchin
-/*
- extension ProfileHeaderServiceDetailViewController {
-
- open override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
- super.traitCollectionDidChange(previousTraitCollection)
-
- ///TODO: change the UI config, constraints, font size and etc here if this VC has different UI design pattern on iPad compact/regular mode
- }
-
- ///Notice: this method is called if this VC is a root VC. it is not called after iPad orientation changes
- open override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
- super.viewWillTransition(to: size, with: coordinator)
- ///TODO: handle UI update related to view size changes
- }
-
- }
- */
-// MARK: - Status Bar / Supported Orientations
-
-extension ProfileHeaderServiceDetailViewController {
-
-    //    override var shouldAutorotate: Bool {
-    //        switch UIDevice.current.userInterfaceIdiom {
-    //        case .pad:
-    //
-    //        switch (self.traitCollection.horizontalSizeClass) {
-    //        case .compact:
-    //            ///TODO: if this should auto rotate, return true
-    //            return false
-    //        default:
-    //            return true
-    //        }
-    //        default:
-    //            ///TODO: if this should auto rotate, return true
-    //            return false
-    //        }
-    //    }
-
-    //    override var prefersStatusBarHidden: Bool {
-    //        ///TODO: if this VC does not show status bar, return false
-    //        return true
-    //    }
-}
