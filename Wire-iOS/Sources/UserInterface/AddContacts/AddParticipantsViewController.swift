@@ -31,6 +31,7 @@ public protocol AddParticipantsViewControllerDelegate : class {
 public class AddParticipantsViewController : UIViewController {
     
     fileprivate let searchResultsViewController : SearchResultsViewController
+    fileprivate let searchGroupSelector : SearchGroupSelector
     fileprivate let searchHeaderViewController : SearchHeaderViewController
     fileprivate let userSelection : UserSelection = UserSelection()
     fileprivate let collectionView : UICollectionView
@@ -88,6 +89,9 @@ public class AddParticipantsViewController : UIViewController {
         bottomContainer.addSubview(confirmButton)
  
         searchHeaderViewController = SearchHeaderViewController(userSelection: userSelection, variant: ColorScheme.default().variant)
+        
+        searchGroupSelector = SearchGroupSelector(variant: .light)
+
         searchResultsViewController = SearchResultsViewController(userSelection: userSelection, variant: ColorScheme.default().variant, isAddingParticipants: true)
 
         super.init(nibName: nil, bundle: nil)
@@ -105,12 +109,23 @@ public class AddParticipantsViewController : UIViewController {
         
         userSelection.add(observer: self)
         
+        searchGroupSelector.onGroupSelected = { [weak self] group in
+            guard let `self` = self else {
+                return
+            }
+            
+            self.searchResultsViewController.searchGroup = group
+            self.performSearch()
+        }
+        
         if conversation.conversationType == .oneOnOne, let connectedUser = conversation.connectedUser {
             userSelection.add(connectedUser)
         }
     }
 
     override public func viewDidLoad() {
+        view.addSubview(searchGroupSelector)
+        
         searchHeaderViewController.title = conversation.displayName
         searchHeaderViewController.delegate = self
         addChildViewController(searchHeaderViewController)
@@ -134,11 +149,10 @@ public class AddParticipantsViewController : UIViewController {
         constrain(view, searchHeaderViewController.view, searchResultsViewController.view, confirmButton, bottomContainer) {
             container, searchHeaderView, searchResultsView, confirmButton, bottomContainer in
             
-            searchHeaderView.top == container.top + UIScreen.safeArea.top
+            searchHeaderView.top == container.top
             searchHeaderView.left == container.left
             searchHeaderView.right == container.right
             
-            searchResultsView.top == searchHeaderView.bottom
             searchResultsView.left == container.left
             searchResultsView.right == container.right
             searchResultsView.bottom == container.bottom
@@ -148,6 +162,14 @@ public class AddParticipantsViewController : UIViewController {
             confirmButton.left == bottomContainer.left + margin
             confirmButton.right == bottomContainer.right - margin
             confirmButton.bottom == bottomContainer.bottom - margin - UIScreen.safeArea.bottom
+        }
+        
+        constrain(view, searchHeaderViewController.view, searchGroupSelector, searchResultsViewController.view) {
+            view, searchHeaderView, searchGroupSelector, searchResultsView in
+            searchGroupSelector.top == searchHeaderView.bottom
+            searchGroupSelector.leading == view.leading
+            searchGroupSelector.trailing == view.trailing
+            searchResultsView.top == searchGroupSelector.bottom
         }
     }
         
@@ -165,6 +187,21 @@ public class AddParticipantsViewController : UIViewController {
     
     var everyoneHasBeenAddedText : String {
         return "add_participants.all_contacts_added".localized
+    }
+    
+    fileprivate func performSearch() {
+        if searchHeaderViewController.tokenField.filterText.isEmpty &&
+            searchResultsViewController.searchGroup != .services {
+            
+            emptyResultLabel.text = everyoneHasBeenAddedText
+            searchResultsViewController.mode = .list
+            searchResultsViewController.searchContactList()
+        }
+        else {
+            emptyResultLabel.text = emptySearchResultText
+            searchResultsViewController.mode = .search
+            searchResultsViewController.searchForLocalUsers(withQuery: searchHeaderViewController.tokenField.filterText)
+        }
     }
 }
 
@@ -195,15 +232,7 @@ extension AddParticipantsViewController : SearchHeaderViewControllerDelegate {
     }
     
     public func searchHeaderViewController(_ searchHeaderViewController: SearchHeaderViewController, updatedSearchQuery query: String) {
-        if query.isEmpty {
-            emptyResultLabel.text = everyoneHasBeenAddedText
-            searchResultsViewController.mode = .list
-            searchResultsViewController.searchContactList()
-        } else {
-            emptyResultLabel.text = emptySearchResultText
-            searchResultsViewController.mode = .search
-            searchResultsViewController.searchForLocalUsers(withQuery: query)
-        }
+        self.performSearch()
     }
     
 }
