@@ -32,11 +32,11 @@ extension ZMConversation {
     /// returns a dictionary which key is UserType, value is sorted array of ZMBareUser
     public var sortedOtherActiveParticipantsGroupByUserType: [UserType: [ZMBareUser]] {
         guard let participants = otherActiveParticipants.array as? [ZMBareUser] else { return [:] }
-        let userParticipants = participants.filter{ !$0.isServiceUser }.sorted { lhs, rhs in
+        let userParticipants = participants.filter { !$0.isServiceUser }.sorted { lhs, rhs in
             lhs.displayName < rhs.displayName
         }
 
-        let serviceUserParticipants = participants.filter{ $0.isServiceUser }.sorted { lhs, rhs in
+        let serviceUserParticipants = participants.filter { $0.isServiceUser }.sorted { lhs, rhs in
             lhs.displayName < rhs.displayName
         }
 
@@ -45,4 +45,3 @@ extension ZMConversation {
     }
 
 }
-
