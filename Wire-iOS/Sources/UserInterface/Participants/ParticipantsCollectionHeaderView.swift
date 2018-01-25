@@ -20,7 +20,7 @@ import Foundation
 import Cartography
 
 final public class ParticipantsCollectionHeaderView: UICollectionReusableView, Reusable {
-    public var title: String = "Services"  {
+    public var title: String = ""  {
         didSet {
             titleLabel.text = title.localized.uppercased()
         }

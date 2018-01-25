@@ -346,7 +346,6 @@ static NSString *const ParticipantHeaderReuseIdentifier = @"ParticipantListHeade
     }
 }
 
-///FIXME: section 2
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
     if ([self.headerView.titleView isFirstResponder]) {
@@ -354,7 +353,7 @@ static NSString *const ParticipantHeaderReuseIdentifier = @"ParticipantListHeade
         return;
     }
     
-    ZMUser *user = self.participants[indexPath.row];
+    ZMUser *user =  [self userAt:indexPath];
     
     ProfileViewController *profileViewController = [[ProfileViewController alloc] initWithUser:user conversation:self.conversation];
     profileViewController.delegate = self;

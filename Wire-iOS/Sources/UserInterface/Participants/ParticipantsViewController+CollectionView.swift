@@ -39,6 +39,8 @@ extension ParticipantsViewController: UICollectionViewDataSource {
         return hasServiceUserInParticipants() ? 2 : 1
     }
 
+    // MARK: - section header
+
     public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
         guard let userType = UserType(rawValue: section), userType == .serviceUser else { return .zero }
 
@@ -65,13 +67,19 @@ extension ParticipantsViewController: UICollectionViewDataSource {
 /// Cell configuration
 
 extension ParticipantsViewController {
-    func configureCell(_ cell: ParticipantsListCell, at indexPath: IndexPath) {
+
+    func user(at indexPath: IndexPath) -> ZMUser? {
         guard let userType = UserType(rawValue:indexPath.section),
-              let array = groupedParticipants[userType] as? [ZMUser],
-              indexPath.row < array.count else { return }
+            let array = groupedParticipants[userType] as? [ZMUser],
+            indexPath.row < array.count else { return nil }
 
         let user = array[indexPath.row]
-        cell.update(for: user, in: conversation)
+
+        return user
+    }
+
+    func configureCell(_ cell: ParticipantsListCell, at indexPath: IndexPath) {
+        cell.update(for: user(at: indexPath), in: conversation)
     }
 }
 
