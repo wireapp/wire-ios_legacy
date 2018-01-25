@@ -22,12 +22,6 @@ public enum UserType: Int {
 }
 
 extension ZMConversation {
-    public var sortedOtherActiveParticipants: [ZMBareUser] {
-        guard let participants = otherActiveParticipants.array as? [ZMBareUser] else { return [] }
-        return participants.sorted { lhs, rhs in
-            lhs.displayName < rhs.displayName
-        }
-    }
 
     /// returns a dictionary which key is UserType, value is sorted array of ZMBareUser
     public var sortedOtherActiveParticipantsGroupByUserType: [UserType: [ZMBareUser]] {
