@@ -21,9 +21,14 @@ import Foundation
 extension ParticipantsViewController: UICollectionViewDataSource {
 
     public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return self.participants.count
-    }
+        //        return hasServiceUserInParticipants() ? : self.participants.count
 
+        if let array = groupedParticipants[UserType.user] as? [AnyObject] {
+            return array.count
+        }
+
+        return 0
+    }
 
     public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ParticipantCellReuseIdentifier, for: indexPath) as? ParticipantsListCell else { fatal("unable to dequeue cell with ParticipantCellReuseIdentifier") }
@@ -31,7 +36,6 @@ extension ParticipantsViewController: UICollectionViewDataSource {
         configureCell(cell, at: indexPath)
         return cell
     }
-
 
     public func numberOfSections(in collectionView: UICollectionView) -> Int {
         return hasServiceUserInParticipants() ? 2 : 1
@@ -55,5 +59,17 @@ extension ParticipantsViewController {
         }
 
         return hasServiceUser
+    }
+}
+
+/// refresh collection view data source
+
+extension ParticipantsViewController {
+    func updateParticipants()
+    {
+        self.participants = self.conversation.sortedOtherActiveParticipants
+        self.groupedParticipants = self.conversation.sortedOtherActiveParticipantsGroupByUserType
+
+        self.collectionView?.reloadData()
     }
 }

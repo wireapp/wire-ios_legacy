@@ -81,7 +81,6 @@ static NSString *const ParticipantHeaderReuseIdentifier = @"ParticipantListHeade
 
 @interface ParticipantsViewController () <UICollectionViewDelegate, ZMConversationObserver, UIGestureRecognizerDelegate>
 
-@property (nonatomic) UICollectionView *collectionView;
 @property (nonatomic) UICollectionViewFlowLayout *collectionViewLayout;
 @property (nonatomic) ParticipantsHeaderView *headerView;
 @property (nonatomic) ParticipantsFooterView *footerView;
@@ -276,10 +275,8 @@ static NSString *const ParticipantHeaderReuseIdentifier = @"ParticipantListHeade
     if (conversation != nil) {
         self.conversationObserverToken = [ConversationChangeInfo addObserver:self forConversation:self.conversation];
     }
-    
-    self.participants = self.conversation.sortedOtherActiveParticipants;
-    
-    [self.collectionView reloadData];
+
+    [self updateParticipants];
 }
 
 - (void)viewDidLayoutSubviews
@@ -349,10 +346,8 @@ static NSString *const ParticipantHeaderReuseIdentifier = @"ParticipantListHeade
         
         dispatch_async(dispatch_get_main_queue(), ^{
             @strongify(self);
-            self.participants = self.conversation.sortedOtherActiveParticipants;
             [self reloadUI];
-            [self.collectionView reloadData];
-            
+            [self updateParticipants];
         });
     }
 }
