@@ -22,6 +22,7 @@
 
 
 #import "ParticipantsViewController.h"
+#import "ParticipantsViewController+internal.h"
 #import "ParticipantsListCell.h"
 #import "WAZUIMagicIOS.h"
 #import "ZClientViewController.h"
@@ -56,7 +57,6 @@
 #import "Wire-Swift.h"
 
 
-static NSString *const ParticipantCellReuseIdentifier = @"ParticipantListCell";
 static NSString *const ParticipantHeaderReuseIdentifier = @"ParticipantListHeader";
 
 
@@ -79,7 +79,7 @@ static NSString *const ParticipantHeaderReuseIdentifier = @"ParticipantListHeade
 
 
 
-@interface ParticipantsViewController () <UICollectionViewDataSource, UICollectionViewDelegate, ZMConversationObserver, UIGestureRecognizerDelegate>
+@interface ParticipantsViewController () <UICollectionViewDelegate, ZMConversationObserver, UIGestureRecognizerDelegate>
 
 @property (nonatomic) UICollectionView *collectionView;
 @property (nonatomic) UICollectionViewFlowLayout *collectionViewLayout;
@@ -91,7 +91,6 @@ static NSString *const ParticipantHeaderReuseIdentifier = @"ParticipantListHeade
 
 @property (nonatomic) NSMutableSet *userImageObserverTokens;
 
-@property (nonatomic) NSArray *participants;
 @property (nonatomic) BOOL ignoreNextNameChange;
 
 // Cosmetic
@@ -327,27 +326,7 @@ static NSString *const ParticipantHeaderReuseIdentifier = @"ParticipantListHeade
     return itemSize;
 }
 
-#pragma mark - Delegates
-
-- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
-{
-    return 1;
-}
-
-- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
-{
-    return self.participants.count;
-}
-
-// The cell that is returned must be retrieved from a call to -dequeueReusableCellWithReuseIdentifier:forIndexPath:
-- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
-{
-    ParticipantsListCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:ParticipantCellReuseIdentifier forIndexPath:indexPath];
-    
-    [self configureCell:cell atIndexPath:indexPath];
-    
-    return cell;
-}
+#pragma mark - ParticipantsListCell
 
 - (void)configureCell:(ParticipantsListCell *)cell atIndexPath:(NSIndexPath *)indexPath
 {

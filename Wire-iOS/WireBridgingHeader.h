@@ -72,6 +72,9 @@
 #import "TokenField.h"
 #import "TokenizedTextView.h"
 #import "TokenTextAttachment.h"
+#import "ParticipantsViewController.h"
+#import "ParticipantsViewController+internal.h"
+#import "ParticipantsListCell.h"
 
 // View Controllers
 #import "ZClientViewController.h"
