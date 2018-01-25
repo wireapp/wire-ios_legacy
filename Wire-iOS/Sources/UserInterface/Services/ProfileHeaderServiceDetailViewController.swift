@@ -22,7 +22,7 @@ import Cartography
 final class ProfileHeaderServiceDetailViewController: UIViewController {
 
     public weak var navigationControllerDelegate: ProfileNavigationControllerDelegate?
-    public weak var profileViewControllerDelegate: ProfileViewControllerDelegate? ///FIXME: better name
+    public weak var profileViewControllerDelegate: ProfileViewControllerDelegate?
 
     var headerView: ProfileHeaderView!
     var serviceDetailViewController: ServiceDetailViewController!
@@ -123,7 +123,7 @@ final class ProfileHeaderServiceDetailViewController: UIViewController {
 
         serviceDetailViewController = ServiceDetailViewController(serviceUser: serviceUser,
                                                                   backgroundColor: self.view.backgroundColor,
-                                                                  textColor: .black, ///FIXME: ask for design
+                                                                  textColor: .black,
             confirmButton: confirmButton,
             forceShowNavigationBarWhenviewWillAppear: false,
             buttonCallback: buttonCallback)

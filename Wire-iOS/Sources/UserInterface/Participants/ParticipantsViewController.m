@@ -66,13 +66,6 @@ static NSString *const ParticipantHeaderReuseIdentifier = @"ParticipantListHeade
 @end
 
 
-
-//@interface ParticipantsViewController (ProfileView) <ProfileViewControllerDelegate>
-//
-//@end
-
-
-
 @interface ParticipantsViewController (HeaderFooter) <ParticipantsHeaderDelegate, ParticipantsFooterDelegate>
 
 @end
@@ -379,10 +372,8 @@ static NSString *const ParticipantHeaderReuseIdentifier = @"ParticipantListHeade
 }
 
 
-//@end
-//@implementation ParticipantsViewController (ProfileView)
+#pragma mark - ProfileViewControllerDelegate
 
-///TODO: rewrite as swift extension
 - (void)profileViewControllerWantsToBeDismissed:(UIViewController *)profileViewController completion:(dispatch_block_t)completion
 {
     [self.navigationController popViewControllerAnimated:YES];

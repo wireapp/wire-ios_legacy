@@ -122,14 +122,14 @@ extension ServiceConversation: ShareDestination {
 }
 
 
-///TODO: snapshot test
+///FIXME: snapshot test
 final class ServiceDetailViewController: UIViewController {
 
     private let detailView: ServiceDetailView
     private let confirmButton: Button
     private var forceShowNavigationBarWhenviewWillAppear: Bool
 
-    ///FIXME: work around to override Button class color update after UI transition
+    ///FIXME: work around to override Button class color update after UI transition, create a new Button class with no classy dependency
     private let confirmButtonBackgroundColor: UIColor?
     
     public var service: Service {
@@ -214,17 +214,12 @@ final class ServiceDetailViewController: UIViewController {
         if forceShowNavigationBarWhenviewWillAppear {
             self.navigationController?.setNavigationBarHidden(false, animated: animated)
         }
-
-        ///FIXME: useless
-        if let confirmButtonBackgroundColor = confirmButtonBackgroundColor {
-            confirmButton.setBackgroundImageColor(confirmButtonBackgroundColor, for: .normal)
-        }
     }
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
 
-        ///FIXME: too late
+        ///FIXME: remove
         if let confirmButtonBackgroundColor = confirmButtonBackgroundColor {
             confirmButton.setBackgroundImageColor(confirmButtonBackgroundColor, for: .normal)
         }

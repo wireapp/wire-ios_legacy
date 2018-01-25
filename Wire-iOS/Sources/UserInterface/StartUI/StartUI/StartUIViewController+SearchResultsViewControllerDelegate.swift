@@ -81,14 +81,13 @@ extension StartUIViewController: SearchResultsViewControllerDelegate {
 
     public func searchResultsViewController(_ searchResultsViewController: SearchResultsViewController, didDoubleTapOnUser user: ZMSearchableUser, indexPath: IndexPath) {
         guard let unboxedUser: ZMUser = BareUserToUser(user) else { return }
-        guard delegate.responds(to: #selector(StartUIDelegate.startUI(_:didSelectUsers:for:))) else { return }
 
         if (unboxedUser.isConnected) && !unboxedUser.isBlocked {
             if self.userSelection.users.count == 1 && !userSelection.users.contains(unboxedUser ) {
                 return
             }
-            ///FIXME: compile crash?
-            //            delegate.startUI(self, didSelectUsers: Set<AnyHashable>([user]), forAction: .createOrOpenConversation)
+            let set = NSSet(array:[user]) as! Set<AnyHashable>
+            delegate.startUI(self, didSelectUsers: set, for: .createOrOpenConversation)
         }
     }
 }
