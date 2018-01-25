@@ -22,8 +22,6 @@ static NSString *const ParticipantCellReuseIdentifier = @"ParticipantListCell";
 
 @interface ParticipantsViewController ()
 
-- (void)configureCell:(ParticipantsListCell *)cell atIndexPath:(NSIndexPath *)indexPath;
-
 @property (nonatomic) NSArray *participants;
 @property (nonatomic) NSDictionary *groupedParticipants;
 @property (nonatomic) UICollectionView *collectionView;

@@ -21,10 +21,18 @@ import Foundation
 extension ParticipantsViewController: UICollectionViewDataSource {
 
     public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        //        return hasServiceUserInParticipants() ? : self.participants.count
 
-        if let array = groupedParticipants[UserType.user] as? [AnyObject] {
-            return array.count
+        switch section {
+        case UserType.user.rawValue:
+            if let array = groupedParticipants[UserType.user] as? [AnyObject] {
+                return array.count
+            }
+        case UserType.serviceUser.rawValue:
+            if let array = groupedParticipants[UserType.serviceUser] as? [AnyObject] {
+                return array.count
+            }
+        default:
+            return 0
         }
 
         return 0
@@ -43,7 +51,20 @@ extension ParticipantsViewController: UICollectionViewDataSource {
 
 }
 
-///TODO: section title
+/// Cell configuration
+
+extension ParticipantsViewController {
+    func configureCell(_ cell: ParticipantsListCell, at indexPath: IndexPath) {
+        guard let userType = UserType(rawValue:indexPath.section),
+              let array = groupedParticipants[userType] as? [ZMUser],
+              indexPath.row < array.count else { return }
+
+        let user = array[indexPath.row]
+        cell.update(for: user, in: conversation)
+    }
+}
+
+///TODO: section title - service section with "peoplepicker.header.services"
 
 /// Service user identification
 

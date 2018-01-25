@@ -16,7 +16,7 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-public enum UserType: UInt {
+public enum UserType: Int {
     case user = 0
     case serviceUser = 1
 }
@@ -29,14 +29,19 @@ extension ZMConversation {
         }
     }
 
-    /// returns a dictionary
+    /// returns a dictionary which key is UserType, value is sorted array of ZMBareUser
     public var sortedOtherActiveParticipantsGroupByUserType: [UserType: [ZMBareUser]] {
         guard let participants = otherActiveParticipants.array as? [ZMBareUser] else { return [:] }
-        let sortedParticipants = participants.sorted { lhs, rhs in
+        let userParticipants = participants.filter{ !$0.isServiceUser }.sorted { lhs, rhs in
             lhs.displayName < rhs.displayName
         }
 
-        return [.user:sortedParticipants]
+        let serviceUserParticipants = participants.filter{ $0.isServiceUser }.sorted { lhs, rhs in
+            lhs.displayName < rhs.displayName
+        }
+
+        return [.user: userParticipants,
+                .serviceUser: serviceUserParticipants]
     }
 
 }

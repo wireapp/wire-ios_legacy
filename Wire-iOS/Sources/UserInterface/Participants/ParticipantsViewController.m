@@ -323,14 +323,6 @@ static NSString *const ParticipantHeaderReuseIdentifier = @"ParticipantListHeade
     return itemSize;
 }
 
-#pragma mark - ParticipantsListCell
-
-- (void)configureCell:(ParticipantsListCell *)cell atIndexPath:(NSIndexPath *)indexPath
-{
-    ZMUser *user = self.participants[indexPath.row];
-    [cell updateForUser:user inConversation:self.conversation];
-}
-
 #pragma mark - ZMConversationObserver
 
 - (void)conversationDidChange:(ConversationChangeInfo *)change

@@ -1007,7 +1007,7 @@
 		EF6163A61FE9682700C6F5A9 /* TextMessageCellTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8EE5591D636F4600B0D6D7 /* TextMessageCellTests.swift */; };
 		EF7F74041FCC033D0059C13F /* EmailAdresssValidatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF7F74021FCC01140059C13F /* EmailAdresssValidatorTests.swift */; };
 		EF91A0561FF3A05A00FE2F53 /* GiphySearchViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF91A0541FF3A04700FE2F53 /* GiphySearchViewControllerTests.swift */; };
-		EFA820B02019F0D700FED370 /* ParticipantsViewController+UICollectionViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFA820AF2019F0D700FED370 /* ParticipantsViewController+UICollectionViewDataSource.swift */; };
+		EFA820B02019F0D700FED370 /* ParticipantsViewController+CollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFA820AF2019F0D700FED370 /* ParticipantsViewController+CollectionView.swift */; };
 		EFB23D0A1FC852380055B866 /* TextFieldValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF61B3411FC8508400D8E631 /* TextFieldValidator.swift */; };
 		EFB23D0B1FC853CF0055B866 /* AccessoryTextFieldValidationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF61B33F1FC84B0100D8E631 /* AccessoryTextFieldValidationTests.swift */; };
 		EFC530A61FF3F277004D2B31 /* VoiceChannelViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFC530A31FF3F26D004D2B31 /* VoiceChannelViewControllerTests.swift */; };
@@ -2585,7 +2585,7 @@
 		EF61B3411FC8508400D8E631 /* TextFieldValidator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextFieldValidator.swift; sourceTree = "<group>"; };
 		EF7F74021FCC01140059C13F /* EmailAdresssValidatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailAdresssValidatorTests.swift; sourceTree = "<group>"; };
 		EF91A0541FF3A04700FE2F53 /* GiphySearchViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GiphySearchViewControllerTests.swift; sourceTree = "<group>"; };
-		EFA820AF2019F0D700FED370 /* ParticipantsViewController+UICollectionViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ParticipantsViewController+UICollectionViewDataSource.swift"; sourceTree = "<group>"; };
+		EFA820AF2019F0D700FED370 /* ParticipantsViewController+CollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ParticipantsViewController+CollectionView.swift"; sourceTree = "<group>"; };
 		EFA820B12019F45E00FED370 /* ParticipantsViewController+internal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ParticipantsViewController+internal.h"; sourceTree = "<group>"; };
 		EFC530A31FF3F26D004D2B31 /* VoiceChannelViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoiceChannelViewControllerTests.swift; sourceTree = "<group>"; };
 		EFE8062A1FDFF24C006A0EE7 /* NSDate+Format.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSDate+Format.swift"; sourceTree = "<group>"; };
@@ -4764,7 +4764,7 @@
 				8FC85264199245760008B66B /* ParticipantsViewController.h */,
 				EFA820B12019F45E00FED370 /* ParticipantsViewController+internal.h */,
 				8FC85265199245760008B66B /* ParticipantsViewController.m */,
-				EFA820AF2019F0D700FED370 /* ParticipantsViewController+UICollectionViewDataSource.swift */,
+				EFA820AF2019F0D700FED370 /* ParticipantsViewController+CollectionView.swift */,
 			);
 			path = Participants;
 			sourceTree = "<group>";
@@ -6741,7 +6741,7 @@
 				7CED30721FD97748009F0DAC /* IconStringsBuilder.swift in Sources */,
 				871BC00F1D34F56300DF0793 /* Analytics+OTREvents.m in Sources */,
 				876E0C8B1EC5ED69007EF34E /* CameraPicker.swift in Sources */,
-				EFA820B02019F0D700FED370 /* ParticipantsViewController+UICollectionViewDataSource.swift in Sources */,
+				EFA820B02019F0D700FED370 /* ParticipantsViewController+CollectionView.swift in Sources */,
 				87F18BB81E01550600C69D9B /* AudioMessageView.swift in Sources */,
 				7C72F03D200E0D03001231D3 /* PhotoPermissionsController.swift in Sources */,
 				877A325E1E8912500017DD9A /* RoundedBadge.swift in Sources */,
