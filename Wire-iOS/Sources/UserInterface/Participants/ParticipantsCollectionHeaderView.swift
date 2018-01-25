@@ -23,10 +23,17 @@ final public class ParticipantsCollectionHeaderView: UICollectionReusableView, R
     public var title: String = ""  {
         didSet {
             titleLabel.text = title.localized.uppercased()
+            titleLabel.sizeToFit()
         }
     }
 
-    let titleLabel = UILabel()
+    let titleLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = UIColor.wr_color(from: "rgb(141, 152, 159)")
+        label.font = FontSpec(.small, .semibold).font!
+
+        return label
+    }()
 
     public required init(coder: NSCoder) {
         fatal("init(coder: NSCoder) is not implemented")
@@ -39,7 +46,9 @@ final public class ParticipantsCollectionHeaderView: UICollectionReusableView, R
         self.clipsToBounds = true
 
         constrain(self, self.titleLabel) { selfView, titleLabel in
-            titleLabel.edges == selfView.edges
+            titleLabel.leading == selfView.leading + 16
+            titleLabel.top == selfView.top + 32
+            titleLabel.bottom == selfView.bottom + 24
         }
     }
 

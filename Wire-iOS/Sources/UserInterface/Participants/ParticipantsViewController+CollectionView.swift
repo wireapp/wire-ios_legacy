@@ -44,7 +44,13 @@ extension ParticipantsViewController: UICollectionViewDataSource {
     public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
         guard let userType = UserType(rawValue: section), userType == .serviceUser else { return .zero }
 
-        return CGSize(width: collectionView.bounds.size.width, height: 48) /// FIXME: height
+        if let headerView = collectionView.visibleSupplementaryViews(ofKind: UICollectionElementKindSectionHeader).first as? ParticipantsCollectionHeaderView {
+            headerView.layoutIfNeeded()
+            let height = headerView.systemLayoutSizeFitting(UILayoutFittingExpandedSize).height
+            return CGSize(width: collectionView.frame.width, height: height)
+        }
+
+        return CGSize(width: collectionView.bounds.size.width, height: 72)
     }
 
     public func collectionView(_ collectionView: UICollectionView,
