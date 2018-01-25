@@ -69,7 +69,7 @@ public class ServicesSection: NSObject, CollectionViewSectionController {
         }
         headerView.title = "peoplepicker.header.services".localized
         headerView.clipsToBounds = true
-        headerView.colorSchemeVariant = colorSchemeVariant
+        //        headerView.colorSchemeVariant = colorSchemeVariant ///TODO: black color
         return headerView
     }
     

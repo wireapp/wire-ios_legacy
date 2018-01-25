@@ -39,6 +39,27 @@ extension ParticipantsViewController: UICollectionViewDataSource {
         return hasServiceUserInParticipants() ? 2 : 1
     }
 
+    public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+        guard let userType = UserType(rawValue: section), userType == .serviceUser else { return .zero }
+
+        return CGSize(width: collectionView.bounds.size.width, height: 48) /// FIXME: height
+    }
+
+    public func collectionView(_ collectionView: UICollectionView,
+                               viewForSupplementaryElementOfKind kind: String,
+                               at indexPath: IndexPath) -> UICollectionReusableView {
+        guard let userType = UserType(rawValue:indexPath.section), userType == .serviceUser else { return UICollectionReusableView() }
+
+        guard let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionElementKindSectionHeader,
+                                                                               withReuseIdentifier: ParticipantCollectionViewHeaderReuseIdentifier,
+                                                                               for: indexPath) as? ParticipantsCollectionHeaderView
+            else { fatal("cannot dequeue header") }
+
+        headerView.title = "peoplepicker.header.services".localized
+
+//        headerView.colorSchemeVariant = colorSchemeVariant /// TODO
+        return headerView
+    }
 }
 
 /// Cell configuration
@@ -53,8 +74,6 @@ extension ParticipantsViewController {
         cell.update(for: user, in: conversation)
     }
 }
-
-///TODO: section title - service section with "peoplepicker.header.services"
 
 /// Service user identification
 

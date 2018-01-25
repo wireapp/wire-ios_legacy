@@ -17,6 +17,7 @@
 //
 
 static NSString *const ParticipantCellReuseIdentifier = @"ParticipantListCell";
+static NSString *const ParticipantCollectionViewHeaderReuseIdentifier = @"ParticipantCollectionViewHeaderReuseIdentifier";
 
 @class ParticipantsListCell;
 

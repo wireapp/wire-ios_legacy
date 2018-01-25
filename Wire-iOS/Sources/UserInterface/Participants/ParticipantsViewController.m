@@ -143,6 +143,8 @@ static NSString *const ParticipantHeaderReuseIdentifier = @"ParticipantListHeade
     [self.collectionView setDelegate:self];
     
     [self.collectionView registerClass:[ParticipantsListCell class] forCellWithReuseIdentifier:ParticipantCellReuseIdentifier];
+    [self.collectionView registerClass:[ParticipantsCollectionHeaderView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:ParticipantCollectionViewHeaderReuseIdentifier];
+
     [self.collectionView setBackgroundColor:[UIColor clearColor]];
     
     [self.view addSubview:self.collectionView];
@@ -344,6 +346,7 @@ static NSString *const ParticipantHeaderReuseIdentifier = @"ParticipantListHeade
     }
 }
 
+///FIXME: section 2
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
     if ([self.headerView.titleView isFirstResponder]) {
