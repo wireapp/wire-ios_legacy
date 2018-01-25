@@ -143,7 +143,7 @@ static NSString *const ParticipantHeaderReuseIdentifier = @"ParticipantListHeade
     [self.collectionView setDelegate:self];
     
     [self.collectionView registerClass:[ParticipantsListCell class] forCellWithReuseIdentifier:ParticipantCellReuseIdentifier];
-    [self.collectionView registerClass:[ParticipantsCollectionHeaderView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:ParticipantCollectionViewHeaderReuseIdentifier];
+    [self.collectionView registerClass:[ParticipantsCollectionHeaderView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:ParticipantCollectionViewSectionHeaderReuseIdentifier];
 
     [self.collectionView setBackgroundColor:[UIColor clearColor]];
     

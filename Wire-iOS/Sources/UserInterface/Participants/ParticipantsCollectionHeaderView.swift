@@ -51,6 +51,4 @@ final public class ParticipantsCollectionHeaderView: UICollectionReusableView, R
             titleLabel.bottom == selfView.bottom + 24
         }
     }
-
-    ///TODO color varient
 }

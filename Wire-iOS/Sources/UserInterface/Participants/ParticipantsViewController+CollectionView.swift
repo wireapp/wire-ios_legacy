@@ -59,7 +59,7 @@ extension ParticipantsViewController: UICollectionViewDataSource {
         guard let userType = UserType(rawValue:indexPath.section), userType == .serviceUser else { return UICollectionReusableView() }
 
         guard let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionElementKindSectionHeader,
-                                                                               withReuseIdentifier: ParticipantCollectionViewHeaderReuseIdentifier,
+                                                                               withReuseIdentifier: ParticipantCollectionViewSectionHeaderReuseIdentifier,
                                                                                for: indexPath) as? ParticipantsCollectionHeaderView
             else { fatal("cannot dequeue header") }
 
@@ -99,11 +99,10 @@ extension ParticipantsViewController {
 
     // MARK: - refresh collection view data source
 
-    func updateParticipants()
-    {
-        self.participants = self.conversation.sortedOtherActiveParticipants
+    func updateParticipants() {
         self.groupedParticipants = self.conversation.sortedOtherActiveParticipantsGroupByUserType
 
         self.collectionView?.reloadData()
     }
 }
+

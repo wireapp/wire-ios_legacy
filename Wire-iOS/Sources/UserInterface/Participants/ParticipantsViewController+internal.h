@@ -17,13 +17,12 @@
 //
 
 static NSString *const ParticipantCellReuseIdentifier = @"ParticipantListCell";
-static NSString *const ParticipantCollectionViewHeaderReuseIdentifier = @"ParticipantCollectionViewHeaderReuseIdentifier";
+static NSString *const ParticipantCollectionViewSectionHeaderReuseIdentifier = @"ParticipantCollectionViewSectionHeaderReuseIdentifier";
 
 @class ParticipantsListCell;
 
 @interface ParticipantsViewController ()
 
-@property (nonatomic) NSArray *participants;
 @property (nonatomic) NSDictionary *groupedParticipants;
 @property (nonatomic) UICollectionView *collectionView;
 
