@@ -146,7 +146,7 @@ static NSUInteger const StartUIInitiallyShowsKeyboardConversationThreshold = 10;
 
 - (void)createConstraints
 {
-    [self.searchHeaderViewController.view autoPinEdgeToSuperviewEdge:ALEdgeTop withInset:UIScreen.safeArea.top];
+    [self.searchHeaderViewController.view autoPinEdgeToSuperviewEdge:ALEdgeTop];
     [self.searchHeaderViewController.view autoPinEdgeToSuperviewEdge:ALEdgeLeading];
     [self.searchHeaderViewController.view autoPinEdgeToSuperviewEdge:ALEdgeTrailing];
     
