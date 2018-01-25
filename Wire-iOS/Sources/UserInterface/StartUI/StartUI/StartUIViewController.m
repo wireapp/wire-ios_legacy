@@ -387,6 +387,8 @@ static NSUInteger const StartUIInitiallyShowsKeyboardConversationThreshold = 10;
             if ([self.delegate respondsToSelector:@selector(startUI:didSelectConversation:)]) {
                 [self.delegate startUI:self didSelectConversation:conversation];
             }
+        } else {
+            [self.delegate startUIDidCancel:self];
         }
     };
     

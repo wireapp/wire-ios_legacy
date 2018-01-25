@@ -55,7 +55,7 @@ extension ServiceConversation: Hashable {
     }
 }
 
-private func add(service: Service, to conversation: Any) {
+private func add(service: Service, to conversation: Any, completion: @escaping (AddBotResult)->()) {
     guard let userSession = ZMUserSession.shared(),
            let serviceConversation = conversation as? ServiceConversation else {
         return
@@ -63,12 +63,16 @@ private func add(service: Service, to conversation: Any) {
     
     switch serviceConversation {
     case .new:
-        userSession.startConversation(with: service.serviceUser) { conversation in
-            
-        }
+        userSession.startConversation(with: service.serviceUser, completion: { (result) in
+            completion(result)
+        })
     case .existing(let conversation):
         conversation.add(serviceUser: service.serviceUser, in: userSession) { done in
-            
+            if let done = done {
+                completion(AddBotResult.failure(error: done))
+            } else {
+                completion(AddBotResult.success(conversation: conversation))
+            }
         }
     }
 }
@@ -81,7 +85,9 @@ extension Service: Shareable {
             return
         }
         
-        add(service: self, to: serviceConversation)
+        add(service: self, to: serviceConversation, completion: { result in
+            
+        })
     }
     
     public func previewView() -> UIView? {
@@ -215,6 +221,7 @@ final class ServiceDetailViewController: UIViewController {
         let conversationPicker = ShareViewController<ServiceConversation, Service>(shareable: self.service, destinations: allConversations, showPreview: true, allowsMultiselect: false)
         conversationPicker.onDismiss = { [weak self] _, completed in
             self?.navigationController?.dismiss(animated: true, completion: nil)
+            self?.completion?(nil)
         }
         self.navigationController?.pushViewController(conversationPicker, animated: true)
     }
