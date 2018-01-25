@@ -21,21 +21,11 @@ import Foundation
 extension ParticipantsViewController: UICollectionViewDataSource {
 
     public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        guard let userType = UserType(rawValue:section),
+            let array = groupedParticipants[userType] as? [ZMUser]
+            else { return 0 }
 
-        switch section {
-        case UserType.user.rawValue:
-            if let array = groupedParticipants[UserType.user] as? [AnyObject] {
-                return array.count
-            }
-        case UserType.serviceUser.rawValue:
-            if let array = groupedParticipants[UserType.serviceUser] as? [AnyObject] {
-                return array.count
-            }
-        default:
-            return 0
-        }
-
-        return 0
+        return array.count
     }
 
     public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -70,16 +60,10 @@ extension ParticipantsViewController {
 
 extension ParticipantsViewController {
     func hasServiceUserInParticipants() -> Bool {
-        var hasServiceUser = false
+        guard let array = groupedParticipants[UserType.serviceUser] as? [ZMUser]
+            else { return false }
 
-        for participant in participants {
-            if let user = participant as? ZMUser, user.isServiceUser {
-                hasServiceUser = true
-                break
-            }
-        }
-
-        return hasServiceUser
+        return array.count >= 1
     }
 }
 
