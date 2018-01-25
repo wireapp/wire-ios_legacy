@@ -38,6 +38,7 @@ public class AddParticipantsViewController : UIViewController {
     fileprivate let bottomContainer = UIView()
     fileprivate let confirmButton : IconButton
     fileprivate let emptyResultLabel = UILabel()
+    fileprivate var bottomConstraint: NSLayoutConstraint?
     
     public weak var delegate : AddParticipantsViewControllerDelegate? = nil
     
@@ -108,6 +109,11 @@ public class AddParticipantsViewController : UIViewController {
         if conversation.conversationType == .oneOnOne, let connectedUser = conversation.connectedUser {
             userSelection.add(connectedUser)
         }
+        
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(keyboardFrameDidChange(notification:)),
+                                               name: NSNotification.Name.UIKeyboardWillChangeFrame,
+                                               object: nil)
     }
 
     override public func viewDidLoad() {
@@ -147,7 +153,7 @@ public class AddParticipantsViewController : UIViewController {
             confirmButton.top == bottomContainer.top
             confirmButton.left == bottomContainer.left + margin
             confirmButton.right == bottomContainer.right - margin
-            confirmButton.bottom == bottomContainer.bottom - margin - UIScreen.safeArea.bottom
+            self.bottomConstraint = confirmButton.bottom == bottomContainer.bottom - margin - UIScreen.safeArea.bottom
         }
     }
         
@@ -165,6 +171,18 @@ public class AddParticipantsViewController : UIViewController {
     
     var everyoneHasBeenAddedText : String {
         return "add_participants.all_contacts_added".localized
+    }
+    
+    func keyboardFrameDidChange(notification: Notification) {
+        let firstResponder = UIResponder.wr_currentFirst()
+        let inputAccessoryHeight = firstResponder?.inputAccessoryView?.bounds.size.height ?? 0
+        let margin = (searchResultsViewController.view as! SearchResultsView).accessoryViewMargin
+        
+        UIView.animate(withKeyboardNotification: notification, in: self.view, animations: { (keyboardFrameInView) in
+            let keyboardHeight = keyboardFrameInView.size.height - inputAccessoryHeight
+            self.bottomConstraint?.constant = -margin - (keyboardHeight == 0 ? UIScreen.safeArea.bottom : CGFloat(0))
+            self.view.layoutIfNeeded()
+        }, completion: nil)
     }
 }
 
