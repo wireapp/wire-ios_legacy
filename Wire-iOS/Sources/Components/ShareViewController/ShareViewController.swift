@@ -42,6 +42,7 @@ final public class ShareViewController<D: ShareDestination, S: Shareable>: UIVie
     public let showPreview: Bool
     public let allowsMultiselect: Bool
     public var onDismiss: ((ShareViewController, Bool)->())?
+    internal var bottomConstraint: NSLayoutConstraint?
     
     public init(shareable: S, destinations: [D], showPreview: Bool = true, allowsMultiselect: Bool = true) {
         self.destinations = destinations
@@ -51,6 +52,11 @@ final public class ShareViewController<D: ShareDestination, S: Shareable>: UIVie
         self.allowsMultiselect = allowsMultiselect
         super.init(nibName: nil, bundle: nil)
         self.transitioningDelegate = self
+        
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(keyboardFrameDidChange(notification:)),
+                                               name: NSNotification.Name.UIKeyboardWillChangeFrame,
+                                               object: nil)
     }
     
     required public init?(coder aDecoder: NSCoder) {
@@ -186,4 +192,14 @@ final public class ShareViewController<D: ShareDestination, S: Shareable>: UIVie
         return BlurEffectTransition(visualEffectView: blurView, crossfadingViews: [containerView], reverse: true)
     }
     
+    func keyboardFrameDidChange(notification: Notification) {
+        let firstResponder = UIResponder.wr_currentFirst()
+        let inputAccessoryHeight = firstResponder?.inputAccessoryView?.bounds.size.height ?? 0
+        
+        UIView.animate(withKeyboardNotification: notification, in: self.view, animations: { (keyboardFrameInView) in
+            let keyboardHeight = keyboardFrameInView.size.height - inputAccessoryHeight
+            self.bottomConstraint?.constant = keyboardHeight == 0 ? -self.safeArea.bottom : CGFloat(0)
+            self.view.layoutIfNeeded()
+        }, completion: nil)
+    }
 }
