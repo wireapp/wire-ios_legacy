@@ -59,14 +59,14 @@ extension ParticipantsViewController: UICollectionViewDataSource {
 
         headerView.title = "peoplepicker.header.services".localized
 
-//        headerView.colorSchemeVariant = colorSchemeVariant /// TODO
+        //        headerView.colorSchemeVariant = colorSchemeVariant /// TODO
         return headerView
     }
 }
 
-/// Cell configuration
-
 extension ParticipantsViewController {
+
+    // MARK: - Cell configuration
 
     func user(at indexPath: IndexPath) -> ZMUser? {
         guard let userType = UserType(rawValue:indexPath.section),
@@ -81,22 +81,18 @@ extension ParticipantsViewController {
     func configureCell(_ cell: ParticipantsListCell, at indexPath: IndexPath) {
         cell.update(for: user(at: indexPath), in: conversation)
     }
-}
 
-/// Service user identification
+    // MARK: - Service user identification
 
-extension ParticipantsViewController {
     func hasServiceUserInParticipants() -> Bool {
         guard let array = groupedParticipants[UserType.serviceUser] as? [ZMUser]
             else { return false }
 
         return array.count >= 1
     }
-}
 
-/// refresh collection view data source
+    // MARK: - refresh collection view data source
 
-extension ParticipantsViewController {
     func updateParticipants()
     {
         self.participants = self.conversation.sortedOtherActiveParticipants
