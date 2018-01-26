@@ -210,7 +210,7 @@ public extension Analytics {
         attributes["action"] = action.attributeValue
 
         if let typeAttribute = conversation.analyticsTypeString() {
-            attributes["with_bot"] = conversation.isBotConversation ? "true" : "false";
+            attributes["with_bot"] = conversation.isServiceUserConversation ? "true" : "false";
             attributes["conversation_type"] = typeAttribute
         }
         tagEvent(conversationMediaCompleteActionEventName, attributes: attributes)

@@ -48,9 +48,9 @@ class ConversationAvatarViewTests: CoreDataSnapshotTestCase {
 
     func testThatItRendersNoUserImages() {
         // GIVEN
-        let thirdUser = ZMUser.insertNewObject(in: moc)
+        let thirdUser = ZMUser.insertNewObject(in: uiMOC)
         thirdUser.name = "Anna"
-        let conversation = ZMConversation.insertGroupConversation(into: moc, withParticipants: [otherUser, thirdUser])
+        let conversation = ZMConversation.insertGroupConversation(into: uiMOC, withParticipants: [otherUser, thirdUser])
         conversation?.removeParticipant(selfUser)
         conversation?.removeParticipant(otherUser)
         conversation?.removeParticipant(thirdUser)
@@ -66,7 +66,7 @@ class ConversationAvatarViewTests: CoreDataSnapshotTestCase {
         // GIVEN
         otherUser.accentColorValue = .strongLimeGreen
         otherUserConversation.conversationType = .oneOnOne
-        moc.saveOrRollback()
+        uiMOC.saveOrRollback()
         
         // WHEN
         sut.conversation = otherUserConversation
@@ -75,9 +75,9 @@ class ConversationAvatarViewTests: CoreDataSnapshotTestCase {
         _ = sut.prepareForSnapshots()
         
         // AND WHEN
-        let thirdUser = ZMUser.insertNewObject(in: moc)
+        let thirdUser = ZMUser.insertNewObject(in: uiMOC)
         thirdUser.name = "Anna"
-        let conversation = ZMConversation.insertGroupConversation(into: moc, withParticipants: [otherUser, thirdUser])
+        let conversation = ZMConversation.insertGroupConversation(into: uiMOC, withParticipants: [otherUser, thirdUser])
         conversation?.removeParticipant(selfUser)
         conversation?.removeParticipant(otherUser)
         conversation?.removeParticipant(thirdUser)
@@ -92,7 +92,7 @@ class ConversationAvatarViewTests: CoreDataSnapshotTestCase {
         // GIVEN
         otherUser.accentColorValue = .strongLimeGreen
         otherUserConversation.conversationType = .oneOnOne
-        moc.saveOrRollback()
+        uiMOC.saveOrRollback()
         
         // WHEN
         sut.conversation = otherUserConversation
@@ -103,9 +103,9 @@ class ConversationAvatarViewTests: CoreDataSnapshotTestCase {
 
     func testThatItRendersTwoUserImages() {
         // GIVEN
-        let thirdUser = ZMUser.insertNewObject(in: moc)
+        let thirdUser = ZMUser.insertNewObject(in: uiMOC)
         thirdUser.name = "Anna"
-        let conversation = ZMConversation.insertGroupConversation(into: moc, withParticipants: [otherUser, thirdUser])
+        let conversation = ZMConversation.insertGroupConversation(into: uiMOC, withParticipants: [otherUser, thirdUser])
         
         (conversation?.activeParticipants.array as! [ZMUser]).assignSomeAccentColors()
         
@@ -118,7 +118,7 @@ class ConversationAvatarViewTests: CoreDataSnapshotTestCase {
 
     func testThatItRendersManyUsers() {
         // GIVEN
-        let conversation = ZMConversation.insertGroupConversation(into: moc, withParticipants: usernames.map(createUser))
+        let conversation = ZMConversation.insertGroupConversation(into: uiMOC, withParticipants: usernames.map(createUser))
         
         (conversation?.activeParticipants.array as! [ZMUser]).assignSomeAccentColors()
         

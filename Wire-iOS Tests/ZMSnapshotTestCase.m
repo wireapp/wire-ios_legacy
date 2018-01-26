@@ -65,6 +65,11 @@ static NSSet<NSNumber *> *phoneWidths(void) {
 
 @implementation ZMSnapshotTestCase
 
+- (BOOL)needsCaches
+{
+    return NO;
+}
+
 - (void)setUp
 {
     [super setUp];
@@ -108,10 +113,18 @@ static NSSet<NSNumber *> *phoneWidths(void) {
                                                                }];
 
     [self waitForExpectations:@[contextExpectation] timeout:0.1];
+    
+    if (self.needsCaches) {
+        [self setUpCaches];
+    }
 }
 
 - (void)tearDown
 {
+    if (self.needsCaches) {
+        [self wipeCaches];
+    }
+    
     // Needs to be called before setting self.documentsDirectory to nil.
     [self removeContentsOfDocumentsDirectory];
 
@@ -123,6 +136,22 @@ static NSSet<NSNumber *> *phoneWidths(void) {
     [UIView setAnimationsEnabled:YES];
 
     [super tearDown];
+}
+
+- (void)setUpCaches
+{
+    self.uiMOC.zm_imageAssetCache = [[ImageAssetCache alloc] initWithMBLimit:5 location:nil];
+    self.uiMOC.zm_userImageCache = [[UserImageLocalCache alloc] initWithLocation:nil];
+    self.uiMOC.zm_fileAssetCache = [[FileAssetCache alloc] initWithLocation:nil];
+}
+
+- (void)wipeCaches
+{
+    [self.uiMOC.zm_fileAssetCache wipeCaches];
+    [self.uiMOC.zm_userImageCache wipeCache];
+    [self.uiMOC.zm_imageAssetCache wipeCache];
+    
+    [PersonName.stringsToPersonNames removeAllObjects];
 }
 
 - (void)removeContentsOfDocumentsDirectory

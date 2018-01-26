@@ -25,7 +25,7 @@ import Classy
 
 extension ConversationCell {
     
-    func prepareLayoutForPreview(message: ZMMessage? = nil) {
+    func prepareLayoutForPreview(message: ZMMessage? = nil) -> CGFloat {
         let layoutProperties = ConversationCellLayoutProperties()
         layoutProperties.showSender = false
         layoutProperties.showUnreadMarker = false
@@ -43,5 +43,8 @@ extension ConversationCell {
         self.likeButton.isHidden = true
         self.isUserInteractionEnabled = false
         self.setSelected(false, animated: false)
+        self.contentLayoutMargins = .zero
+        
+        return PreviewHeightCalculator.compressedSizeForView(self)
     }
 }

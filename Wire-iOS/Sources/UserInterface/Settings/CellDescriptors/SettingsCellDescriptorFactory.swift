@@ -71,7 +71,7 @@ import Foundation
                                                     identifier: nil,
                                                     presentationAction: { () -> (UIViewController?) in
                                                         Analytics.shared().tagOpenManageTeamURL()
-                                                        NSURL.wr_manageTeam().wr_URLByAppendingLocaleParameter().open()
+                                                        URL.manageTeam(source: .settings).open()
                                                         return nil
                                                     },
                                                     previewGenerator: nil,
@@ -202,7 +202,14 @@ import Foundation
 
         let versionTitle =  "self.settings.advanced.version_technical_details.title".localized
         let versionCell = SettingsButtonCellDescriptor(title: versionTitle, isDestructive: false) { _ in
-            UIApplication.shared.keyWindow?.rootViewController?.present(VersionInfoViewController(), animated: true, completion: .none)
+            let versionInfoViewController = VersionInfoViewController()
+            var superViewController = UIApplication.shared.keyWindow?.rootViewController
+            if let presentedViewController = superViewController?.presentedViewController {
+                superViewController = presentedViewController
+                versionInfoViewController.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
+                versionInfoViewController.navigationController?.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
+            }
+            superViewController?.present(versionInfoViewController, animated: true, completion: .none)
         }
 
         let versionSection = SettingsSectionDescriptor(cellDescriptors: [versionCell])
@@ -271,7 +278,8 @@ import Foundation
             return BrowserViewController(url: (NSURL.wr_privacyPolicy() as NSURL).wr_URLByAppendingLocaleParameter() as URL!)
         }, previewGenerator: .none)
         let tosButton = SettingsExternalScreenCellDescriptor(title: "about.tos.title".localized, isDestructive: false, presentationStyle: .modal, presentationAction: { _ in
-            return BrowserViewController(url: (NSURL.wr_termsOfServices() as NSURL).wr_URLByAppendingLocaleParameter() as URL!)
+            let url = NSURL.wr_termsOfServicesURL(forTeamAccount: ZMUser.selfUser().hasTeam).wr_URLByAppendingLocaleParameter() as URL
+            return BrowserViewController(url: url)
         }, previewGenerator: .none)
         let licenseButton = SettingsExternalScreenCellDescriptor(title: "about.license.title".localized, isDestructive: false, presentationStyle: .modal, presentationAction: { _ in
             return BrowserViewController(url: (NSURL.wr_licenseInformation() as NSURL).wr_URLByAppendingLocaleParameter() as URL!)

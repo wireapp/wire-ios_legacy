@@ -129,7 +129,7 @@ final public class ConversationAvatarView: UIView {
                 $0.userSession = ZMUserSession.shared()
                 $0.size = .tiny
                 $0.showInitials = (self.mode == .one)
-                $0.isCircular = false
+                $0.shape = .rectangle
                 if index < users.count {
                     $0.user = users[index]
                 }

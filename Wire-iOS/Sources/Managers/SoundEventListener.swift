@@ -77,7 +77,7 @@ class SoundEventListener : NSObject {
             let localMessage = message as? ZMMessage,
             localMessage.deliveryState == .pending
         {
-            UIImpactFeedbackGenerator(style: .medium).impactOccurred()
+            UIImpactFeedbackGenerator(style: .light).impactOccurred()
         }
     }
 }

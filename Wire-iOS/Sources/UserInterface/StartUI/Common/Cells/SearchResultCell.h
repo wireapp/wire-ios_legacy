@@ -21,14 +21,13 @@
 #import "SwipeMenuCollectionCell.h"
 
 @protocol ZMBareUser;
-@protocol ZMSearchableUser;
 @class ZMConversation, Team;
 
 @interface SearchResultCell : SwipeMenuCollectionCell
 
 @property (nonatomic) ColorSchemeVariant colorSchemeVariant;
 @property (nonatomic, nullable) Team *team;
-@property (nonatomic, nullable) id<ZMBareUser, ZMSearchableUser, AccentColorProvider> user;
+@property (nonatomic, nullable) id<ZMBareUser> user;
 @property (nonatomic, nullable) ZMConversation *conversation;
 @property (nonatomic, copy, nullable)   void (^doubleTapAction)(SearchResultCell * _Nonnull);
 @property (nonatomic, copy, nullable)   void (^instantConnectAction)(SearchResultCell * _Nonnull);

@@ -37,7 +37,7 @@ protocol SettingsCellType: class {
     var icon: ZetaIconType {get set}
 }
 
-@objc class SettingsTableCell: UITableViewCell, SettingsCellType, Reusable {
+@objc class SettingsTableCell: UITableViewCell, SettingsCellType {
     let iconImageView = UIImageView()
     public let cellNameLabel = UILabel()
     let valueLabel = UILabel()

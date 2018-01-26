@@ -108,7 +108,7 @@ fileprivate let textColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorTe
     }
 
     static func attributedSubtitle(for user: ZMBareUser?) -> NSAttributedString? {
-        guard let handle = user?.handle, handle.characters.count > 0 else { return nil }
+        guard let handle = user?.handle, handle.count > 0 else { return nil }
         return ("@" + handle) && smallBoldFont && dimmedColor
     }
 

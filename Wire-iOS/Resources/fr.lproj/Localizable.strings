@@ -34,6 +34,12 @@
 "peoplepicker.header.contacts" = "Contacts";
 "peoplepicker.header.contacts_personal" = "Contacts personnels";
 "peoplepicker.header.directory" = "Se connecter";
+
+"peoplepicker.header.people" = "People";
+"peoplepicker.header.services" = "Services";
+"peoplepicker.services.create_conversation.item" = "Create a new conversation";
+"peoplepicker.services.add_service.button" = "Add service";
+
 "peoplepicker.title.create_conversation" = "Créer un groupe";
 "peoplepicker.title.add_to_conversation" = "Ajouter des personnes";
 
@@ -59,6 +65,7 @@
 "peoplepicker.send_invitation.dialog.ok" = "OK";
 
 "peoplepicker.invite_more_people" = "Invitez plus de personnes";
+"peoplepicker.invite_team_members" = "Invite people to join the team";
 "peoplepicker.quick-action.open-conversation" = "Ouvrir";
 "peoplepicker.quick-action.create-conversation" = "Créer un groupe";
 
@@ -76,10 +83,8 @@
 "contacts_ui.notification.invitation_failed" = "Échec de l'envoi de l'invitation";
 "contacts_ui.title" = "Inviter des personnes";
 
-"contacts_ui.no_contact.title" = "Aucune conversation";
-"contacts_ui.no_contact.message" = "Commencez une conversation ou créez un groupe.";
-
-"contacts_ui.no_contact.archived.title" = "Tout a été archivé";
+"conversation_list.empty.all_archived.message" = "Tout a été archivé";
+"conversation_list.empty.no_contacts.message" = "Commencez une conversation ou créez un groupe.";
 
 
 // Conversation List Indicator
@@ -201,7 +206,7 @@
 "conversation.input_bar.audio_message.tooltip.pull_send" = "Balayez vers le haut pour envoyer";
 "conversation.input_bar.audio_message.tooltip.tap_send" = "Appuyez pour envoyer";
 "conversation.input_bar.audio_message.too_long.title" = "Enregistrement arrêté";
-"conversation.input_bar.audio_message.too_long.message" = "Les messages vocaux sont limités à %@. Envoyer ce message ?";
+"conversation.input_bar.audio_message.too_long.message" = "Les messages audio sont limités à %@.";
 "conversation.input_bar.audio_message.send" = "Envoyer";
 
 "conversation.input_bar.audio_message.keyboard.record_tip" = "Appuyez pour enregistrer\nVous pouvez l'%@ après cela";
@@ -230,6 +235,12 @@
 "camera_access.denied" = "Wire a besoin d’accéder à l'appareil photo.";
 "camera_access.denied.instruction" = "";
 "camera_access.denied.open_settings" = "Autoriser l'accès dans les paramètres de Wire";
+
+// Camera and photos access, keyboard
+"keyboard_photos_access.denied.keyboard.settings" = "Paramètres";
+"keyboard_photos_access.denied.keyboard.camera_and_photos" = "Wire needs access to your\ncamera and photos."; // split text on two lines for a better text balance
+"keyboard_photos_access.denied.keyboard.photos" = "Wire needs access to your photos.";
+"keyboard_photos_access.denied.keyboard.camera" = "Wire a besoin d’accéder à la Caméra.";
 
 // Camera Controls
 "camera_controls.aeaf_lock" = "Verrouillage AE/AF";
@@ -827,6 +838,23 @@
 
 "team.email_code.input_field.accessbility_label" = "Veuillez entrer le code à six chiffres qui se trouve dans l’e-mail.";
 
+// Invite Team Members
+
+"team.invite.header.title" = "Créez votre équipe";
+"team.invite.header.subtitle" = "Invitez vos collègues à nous rejoindre.";
+"team.invite.textfield.placeholder" = "colleague@yourcompany.com";
+"team.invite.textfield.accesibility" = "Enter e-mail address for colleague to invite.";
+"team.invite.learn_more.title" = "En savoir plus";
+"team.invite.top_bar.skip" = "Passer";
+"team.invite.top_bar.done" = "Terminé";
+
+// Team Invite Errors
+"team.invite.error.generic" = "Une erreur s'est produite, veuillez réessayer";
+"team.invite.error.already_registered" = "This email address is already in use";
+"team.invite.error.already_invited" = "This email has already been invited";
+"team.invite.error.too_many_invitations" = "The maximum number of invitations has been sent";
+"team.invite.error.no_internet" = "No internet connection";
+
 // Registration
 
 "registration.title" = "Inscription";
@@ -903,6 +931,9 @@
 "registration.signin.too_many_devices.sign_out_button.title" = "Se déconnecter";
 "registration.signin.email_button.title" = "E-mail";
 "registration.signin.phone_button.title" = "Téléphone";
+
+"registration.signin.alert.password_needed.title" = "Password needed";
+"registration.signin.alert.password_needed.message" = "Please enter your Password in order to log in.";
 
 "registration.devices.title" = "Appareils";
 "registration.devices.active_list_header" = "Actif";

@@ -43,7 +43,6 @@
 #import "ConversationViewController+Private.h"
 #import "ConversationListCell.h"
 #import "ConversationListItemView.h"
-#import "GapLoadingBar.h"
 #import "WAZUIMagicIOS.h"
 #import "ResizingTextView.h"
 #import "NextResponderTextView.h"
@@ -67,6 +66,12 @@
 #import "VoiceChannelCollectionViewLayout.h"
 #import "ContrastUserImageView.h"
 #import "PassthroughTouchesView.h"
+#import "SearchSectionHeaderView.h"
+#import "CAMediaTimingFunction+AdditionalEquations.h"
+#import "Token.h"
+#import "TokenField.h"
+#import "TokenizedTextView.h"
+#import "TokenTextAttachment.h"
 
 // View Controllers
 #import "ZClientViewController.h"

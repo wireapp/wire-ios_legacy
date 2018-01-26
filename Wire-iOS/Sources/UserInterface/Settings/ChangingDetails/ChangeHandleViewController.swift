@@ -159,8 +159,8 @@ struct HandleChangeState {
     func validate(_ handle: String) throws {
         let subset = CharacterSet(charactersIn: handle).isSubset(of: HandleChangeState.allowedCharacters)
         guard subset && handle.isEqualToUnicodeName else { throw ValidationError.invalidCharacter }
-        guard handle.characters.count >= HandleChangeState.allowedLength.lowerBound else { throw ValidationError.tooShort }
-        guard handle.characters.count <= HandleChangeState.allowedLength.upperBound else { throw ValidationError.tooLong }
+        guard handle.count >= HandleChangeState.allowedLength.lowerBound else { throw ValidationError.tooShort }
+        guard handle.count <= HandleChangeState.allowedLength.upperBound else { throw ValidationError.tooLong }
         guard handle != currentHandle else { throw ValidationError.sameAsPrevious }
     }
 
@@ -331,7 +331,7 @@ extension ChangeHandleViewController: UserProfileUpdateObserver {
     func didSetHandle() {
         showLoadingView = false
         state.availability = .taken
-        Analytics.shared().tag(UserNameEvent.Settings.setUsername(withLength: state.newHandle?.characters.count ?? 0))
+        Analytics.shared().tag(UserNameEvent.Settings.setUsername(withLength: state.newHandle?.count ?? 0))
         guard popOnSuccess else { return }
         _ = navigationController?.popViewController(animated: true)
     }

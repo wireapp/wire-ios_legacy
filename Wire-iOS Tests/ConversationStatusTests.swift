@@ -21,6 +21,10 @@ import XCTest
 @testable import Wire
 
 class ConversationStatusTests: CoreDataSnapshotTestCase {
+    
+    override var needsCaches: Bool {
+        return true
+    }
 
     func testThatItReturnsStatusForEmptyConversation() {
         // GIVEN

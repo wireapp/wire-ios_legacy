@@ -24,7 +24,6 @@ import Cartography
     var collectionViewLayout: CollectionViewLeftAlignedFlowLayout!
     var collectionView: UICollectionView!
     let noResultsView = NoResultsView()
-    let separatorView = UIView()
     
     static public let useAutolayout = false
     
@@ -55,10 +54,6 @@ import Cartography
         self.collectionView.isScrollEnabled = true
         self.collectionView.backgroundColor = UIColor.clear
         self.addSubview(self.collectionView)
-
-
-        self.separatorView.cas_styleClass = "separator"
-        self.addSubview(self.separatorView)
    
         self.noResultsView.label.accessibilityLabel = "no items"
         self.noResultsView.label.text = "collections.section.no_items".localized.uppercased()
@@ -106,14 +101,12 @@ import Cartography
         self.addSubview(searchViewController.resultsView)
         self.addSubview(searchViewController.searchBar)
         
-        self.bringSubview(toFront: self.separatorView)
-        
         constrain(self, searchViewController.searchBar, self.collectionView, self.noResultsView) { (selfView: LayoutProxy, searchBar: LayoutProxy, collectionView: LayoutProxy, noResultsView: LayoutProxy) -> () in
             
             searchBar.top == selfView.top
             searchBar.leading == selfView.leading
             searchBar.trailing == selfView.trailing
-            searchBar.height == 44
+            searchBar.height == 56
             
             collectionView.top == searchBar.bottom
             
@@ -131,13 +124,6 @@ import Cartography
         
         constrain(self.collectionView, searchViewController.resultsView) { collectionView, resultsView in
             resultsView.edges == collectionView.edges
-        }
-        
-        constrain(searchViewController.searchBar, self.separatorView) { searchBar, separatorView in
-            separatorView.leading == searchBar.leading
-            separatorView.trailing == searchBar.trailing
-            separatorView.bottom == searchBar.bottom
-            separatorView.height == CGFloat.hairline
         }
     }
     

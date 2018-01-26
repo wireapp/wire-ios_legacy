@@ -32,9 +32,8 @@ import UIKit
     
     override public func motionEnded(_ motion: UIEventSubtype, with event: UIEvent?) {
         guard motion == .motionShake else { return }
-        DebugAlert.show(
-            message: "You have performed a shake motion, please confirm sending debug logs.",
-            sendLogs: true
+        DebugAlert.showSendLogsMessage(
+            message: "You have performed a shake motion, please confirm sending debug logs."
         )
     }
 }

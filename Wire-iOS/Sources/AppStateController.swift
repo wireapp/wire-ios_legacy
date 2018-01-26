@@ -42,7 +42,7 @@ class AppStateController : NSObject {
     fileprivate var hasCompletedRegistration = false
     fileprivate var loadingAccount : Account?
     fileprivate var authenticationError : Error?
-    fileprivate let isRunningTests = ProcessInfo.processInfo.environment["XCTestConfigurationFilePath"] != nil
+    fileprivate let isRunningTests = ProcessInfo.processInfo.isRunningTests
     
     override init() {
         super.init()
@@ -133,7 +133,14 @@ extension AppStateController : SessionManagerDelegate {
         updateAppState()
     }
     
-    func sessionManagerWillStartMigratingLocalStore() {
+    func sessionManagerWillMigrateLegacyAccount() {
+        isMigrating = true
+        updateAppState()
+    }
+    
+    func sessionManagerWillMigrateAccount(_ account: Account) {
+        guard account == loadingAccount else { return }
+        
         isMigrating = true
         updateAppState()
     }

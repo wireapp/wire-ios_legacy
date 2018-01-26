@@ -59,7 +59,7 @@ public final class UnknownMessageCell : ConversationCell {
         let text = "content.system.unknown_message.body".localized
         let link = "content.system.unknown_message.body.link".localized
         let message = text + " " + link
-        let range : NSRange = NSMakeRange(text.characters.count + 1, link.characters.count)
+        let range : NSRange = NSMakeRange(text.count + 1, link.count)
         
         messageLabel.text = message
         messageLabel.addLink(to: NSURL.wr_unknownMessageHelp() as URL, with: range)

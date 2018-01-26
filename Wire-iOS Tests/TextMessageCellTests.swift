@@ -35,7 +35,7 @@ class TextMessageCellTests: ZMSnapshotTestCase {
 
     override func setUp() {
         super.setUp()
-        snapshotBackgroundColor = ColorScheme.default().color(withName: ColorSchemeColorConversationBackground)
+        snapshotBackgroundColor = ColorScheme.default().color(withName: ColorSchemeColorContentBackground)
         accentColor = .strongBlue
         sut = TextMessageCell(style: .default, reuseIdentifier: name!)
         sut.layer.speed = 0
@@ -284,6 +284,19 @@ extension TextMessageCellTests {
 
     func testThatItRendersATextMessage_LikedSender_ForiPadPro12Inch() {
         verifySnapshotLikedTextCell(width: 1024)
+    }
+}
+
+// MARK: - Bots test
+extension TextMessageCellTests {
+    func testThatItRendersBotSender() {
+        let message = mockMessage(state: .sent)
+        let bot = MockUser.mockSelf()!
+        bot.isServiceUser = true
+        message.sender = ((bot as AnyObject) as! ZMUser)
+        sut.configure(for: message, layoutProperties: layoutProperties)
+        verify(view: sut.prepareForSnapshot())
+        bot.isServiceUser = false
     }
 }
 

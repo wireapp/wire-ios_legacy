@@ -262,6 +262,8 @@
 {
     self.loginCredentials = loginCredentials;
     [self presentEmailSignInViewControllerToEnterPassword];
+    UIAlertController *controller = [UIAlertController passwordVerificationNeededControllerWithCompletion:nil];
+    [self presentViewController:controller animated:YES completion:nil];
 }
 
 @end
