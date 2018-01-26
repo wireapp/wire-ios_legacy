@@ -61,14 +61,25 @@ private func add(service: Service, to conversation: Any) {
         return
     }
     
+    func tagAdded(user: ServiceUser, to conversation: ZMConversation) {
+        Analytics.shared().tag(ServiceAddedEvent(service: user, conversation: conversation, context: .startUI))
+    }
+    
     switch serviceConversation {
     case .new:
-        userSession.startConversation(with: service.serviceUser) { conversation in
-            
+        userSession.startConversation(with: service.serviceUser) { result in
+            switch result {
+            case .success(conversation: let conversation): tagAdded(user: service.serviceUser, to: conversation)
+            case .failure(error: _ /* TODO: Handle Error */): break
+            }
         }
     case .existing(let conversation):
-        conversation.add(serviceUser: service.serviceUser, in: userSession) { done in
-            
+        conversation.add(serviceUser: service.serviceUser, in: userSession) { error in
+            if let _ = error {
+                // TODO: Handle Error
+            } else {
+                tagAdded(user: service.serviceUser, to: conversation)
+            }
         }
     }
 }
