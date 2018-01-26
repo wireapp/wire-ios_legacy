@@ -81,7 +81,6 @@ static NSString *const ParticipantHeaderReuseIdentifier = @"ParticipantListHeade
 
 @interface ParticipantsViewController () <UICollectionViewDelegate, ZMConversationObserver, UIGestureRecognizerDelegate>
 
-@property (nonatomic) UICollectionViewFlowLayout *collectionViewLayout;
 @property (nonatomic) ParticipantsHeaderView *headerView;
 @property (nonatomic) ParticipantsFooterView *footerView;
 @property (nonatomic) ProfileNavigationControllerDelegate *navigationControllerDelegate;
@@ -92,9 +91,6 @@ static NSString *const ParticipantHeaderReuseIdentifier = @"ParticipantListHeade
 
 @property (nonatomic) BOOL ignoreNextNameChange;
 
-// Cosmetic
-
-@property (nonatomic) CGFloat insetMargin;
 @property (nonatomic) id conversationObserverToken;
 
 @end
@@ -131,10 +127,8 @@ static NSString *const ParticipantHeaderReuseIdentifier = @"ParticipantListHeade
     [self.view addGestureRecognizer:self.tapToDismissEditingGestureRecognizer];
 
     self.collectionViewLayout = [[UICollectionViewFlowLayout alloc] init];
-    self.collectionViewLayout.itemSize = [self itemSizeForMagicPrefix:@"participants"];
-    self.collectionViewLayout.sectionInset = UIEdgeInsetsMake(self.insetMargin, self.insetMargin, self.insetMargin, self.insetMargin);
-    self.collectionViewLayout.minimumLineSpacing = 0.0f;
-    
+    [self configCollectionViewLayout];
+
     self.collectionView = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:self.collectionViewLayout];
     self.collectionView.alwaysBounceVertical = YES;
     self.collectionView.translatesAutoresizingMaskIntoConstraints = NO;
@@ -316,13 +310,6 @@ static NSString *const ParticipantHeaderReuseIdentifier = @"ParticipantListHeade
 - (void)loadMagic
 {
     self.insetMargin = 24;
-}
-
-- (CGSize)itemSizeForMagicPrefix:(NSString *)prefix
-{
-    CGSize itemSize = CGSizeMake([WAZUIMagic floatForIdentifier:[prefix stringByAppendingString:@".tile_width"]],
-                                 [WAZUIMagic floatForIdentifier:[prefix stringByAppendingString:@".tile_height"]]);
-    return itemSize;
 }
 
 #pragma mark - ZMConversationObserver

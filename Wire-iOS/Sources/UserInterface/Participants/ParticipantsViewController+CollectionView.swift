@@ -72,6 +72,58 @@ extension ParticipantsViewController: UICollectionViewDataSource {
 
 extension ParticipantsViewController {
 
+    enum DeviceScreenSize {
+        case iPhone3_5Inch
+        case iPhone4Inch
+        case iPhone4_7Inch
+        case iPhone5_5Inch
+        case iPhone5_8Inch
+        case iPhoneBiggerThan5_8Inch
+        case iPad
+        case unknown
+
+        static var screenSizeOfThisDevice: DeviceScreenSize {
+            switch UIDevice.current.userInterfaceIdiom {
+            case .pad:
+                return .iPad
+            case .phone:
+                let screenHeight = UIScreen.main.nativeBounds.size.height
+
+                switch screenHeight {
+                case 960:
+                    return .iPhone3_5Inch
+                case 1136:
+                    return .iPhone4Inch
+                case 1334:
+                    return .iPhone4_7Inch
+                case 1920:
+                    return .iPhone5_5Inch
+                case 2436:
+                    return .iPhone5_8Inch
+                default:
+                    return .iPhoneBiggerThan5_8Inch
+                }
+            default:
+                return .unknown
+            }
+        }
+    }
+
+    // MARK: - collectionview layout configuration
+    func configCollectionViewLayout() {
+
+        /// 96x132 for iPhone 6 or bigger, others are 80x116
+        switch DeviceScreenSize.screenSizeOfThisDevice {
+        case .iPhone4_7Inch, .iPhone5_5Inch, .iPhone5_8Inch, .iPhoneBiggerThan5_8Inch:
+            self.collectionViewLayout.itemSize = CGSize(width: 96, height: 132)
+        default:
+            self.collectionViewLayout.itemSize = CGSize(width: 80, height: 116)
+        }
+
+        self.collectionViewLayout.sectionInset = UIEdgeInsets(top: self.insetMargin, left: self.insetMargin, bottom: self.insetMargin, right: self.insetMargin)
+        self.collectionViewLayout.minimumLineSpacing = 0.0
+    }
+
     // MARK: - Cell configuration
 
     func user(at indexPath: IndexPath) -> ZMUser? {

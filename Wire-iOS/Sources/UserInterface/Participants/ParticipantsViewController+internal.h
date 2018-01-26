@@ -25,5 +25,7 @@ static NSString *const ParticipantCollectionViewSectionHeaderReuseIdentifier = @
 
 @property (nonatomic) NSDictionary *groupedParticipants;
 @property (nonatomic) UICollectionView *collectionView;
-
+@property (nonatomic) UICollectionViewFlowLayout *collectionViewLayout;
+// Cosmetic
+@property (nonatomic) CGFloat insetMargin;
 @end
