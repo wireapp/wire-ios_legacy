@@ -64,8 +64,6 @@ extension ParticipantsViewController: UICollectionViewDataSource {
             else { fatal("cannot dequeue header") }
 
         headerView.title = "peoplepicker.header.services".localized
-
-        //        headerView.colorSchemeVariant = colorSchemeVariant /// TODO
         return headerView
     }
 }

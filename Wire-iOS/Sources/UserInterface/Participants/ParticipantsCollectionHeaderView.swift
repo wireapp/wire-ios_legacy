@@ -19,6 +19,8 @@
 import Foundation
 import Cartography
 
+
+/// A UICollectionReusableView for ParticipantsViewController's collection view's section header view.
 final public class ParticipantsCollectionHeaderView: UICollectionReusableView, Reusable {
     public var title: String = "" {
         didSet {
