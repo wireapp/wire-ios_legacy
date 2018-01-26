@@ -82,3 +82,9 @@ struct ServiceRemovedEvent: Event {
         return [Keys.serviceID: serviceIdentifier]
     }
 }
+
+extension Analytics {
+    @objc func tagDidRemoveService(_ serviceUser: ServiceUser) {
+        tag(ServiceRemovedEvent(service: serviceUser))
+    }
+}
