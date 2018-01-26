@@ -1012,7 +1012,6 @@
 		EFB23D0A1FC852380055B866 /* TextFieldValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF61B3411FC8508400D8E631 /* TextFieldValidator.swift */; };
 		EFB23D0B1FC853CF0055B866 /* AccessoryTextFieldValidationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF61B33F1FC84B0100D8E631 /* AccessoryTextFieldValidationTests.swift */; };
 		EFB5E0BC201A1D640040D8DC /* ParticipantsCollectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFB5E0BB201A1D640040D8DC /* ParticipantsCollectionHeaderView.swift */; };
-		EFB5E0BE201B45E10040D8DC /* ParticipantsListCell+constrain.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFB5E0BD201B45E10040D8DC /* ParticipantsListCell+constrain.swift */; };
 		EFC530A61FF3F277004D2B31 /* VoiceChannelViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFC530A31FF3F26D004D2B31 /* VoiceChannelViewControllerTests.swift */; };
 		EFE8062B1FDFF24C006A0EE7 /* NSDate+Format.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFE8062A1FDFF24C006A0EE7 /* NSDate+Format.swift */; };
 		EFE806301FE006A7006A0EE7 /* DateFormatterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFE8062E1FE005A7006A0EE7 /* DateFormatterTests.swift */; };
@@ -2592,8 +2591,6 @@
 		EFA820AF2019F0D700FED370 /* ParticipantsViewController+CollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ParticipantsViewController+CollectionView.swift"; sourceTree = "<group>"; };
 		EFA820B12019F45E00FED370 /* ParticipantsViewController+internal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ParticipantsViewController+internal.h"; sourceTree = "<group>"; };
 		EFB5E0BB201A1D640040D8DC /* ParticipantsCollectionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticipantsCollectionHeaderView.swift; sourceTree = "<group>"; };
-		EFB5E0BD201B45E10040D8DC /* ParticipantsListCell+constrain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ParticipantsListCell+constrain.swift"; sourceTree = "<group>"; };
-		EFB5E0BF201B46720040D8DC /* ParticipantsListCell+internal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ParticipantsListCell+internal.h"; sourceTree = "<group>"; };
 		EFC530A31FF3F26D004D2B31 /* VoiceChannelViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoiceChannelViewControllerTests.swift; sourceTree = "<group>"; };
 		EFE8062A1FDFF24C006A0EE7 /* NSDate+Format.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSDate+Format.swift"; sourceTree = "<group>"; };
 		EFE8062E1FE005A7006A0EE7 /* DateFormatterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateFormatterTests.swift; sourceTree = "<group>"; };
@@ -4768,9 +4765,7 @@
 				8FC8525C199245760008B66B /* ParticipantsHeaderView.h */,
 				8FC8525D199245760008B66B /* ParticipantsHeaderView.m */,
 				8FC85260199245760008B66B /* ParticipantsListCell.h */,
-				EFB5E0BF201B46720040D8DC /* ParticipantsListCell+internal.h */,
 				8FC85261199245760008B66B /* ParticipantsListCell.m */,
-				EFB5E0BD201B45E10040D8DC /* ParticipantsListCell+constrain.swift */,
 				8FC85264199245760008B66B /* ParticipantsViewController.h */,
 				EFA820B12019F45E00FED370 /* ParticipantsViewController+internal.h */,
 				8FC85265199245760008B66B /* ParticipantsViewController.m */,
@@ -6661,7 +6656,6 @@
 				87F6D1BB1C1590B7000AB4D2 /* RequestPasswordViewController.swift in Sources */,
 				87DCF4E01D34EA4500BB420F /* TopPeopleCell.m in Sources */,
 				8F5A3E9D19AE2C9E00D0E9DA /* AVSMediaManager+Additions.m in Sources */,
-				EFB5E0BE201B45E10040D8DC /* ParticipantsListCell+constrain.swift in Sources */,
 				D51735712017640D00B473CE /* UIAlertController+PasswordVerification.swift in Sources */,
 				BF3A3DCE1EA75290005477F8 /* RotatingKeyboardAvoidingViewController.swift in Sources */,
 				BFC914921D1814AF001F068B /* LocationMessageCell.swift in Sources */,

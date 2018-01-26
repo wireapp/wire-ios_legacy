@@ -120,12 +120,13 @@ extension ParticipantsViewController {
         switch DeviceScreenSize.screenSizeOfThisDevice {
         case .iPhone4_7Inch, .iPhone5_5Inch, .iPhone5_8Inch, .iPhoneBiggerThan5_8Inch:
             self.collectionViewLayout.itemSize = CGSize(width: 96, height: 106)
+            self.collectionViewLayout.minimumLineSpacing = 26
         default:
-            self.collectionViewLayout.itemSize = CGSize(width: 80, height: 90)
+            self.collectionViewLayout.itemSize = CGSize(width: 80, height: 98)
+            self.collectionViewLayout.minimumLineSpacing = 18
         }
 
         self.collectionViewLayout.sectionInset = UIEdgeInsets(top: self.insetMargin, left: self.insetMargin, bottom: self.insetMargin, right: self.insetMargin)
-        self.collectionViewLayout.minimumLineSpacing = 0.0
     }
 
     // MARK: - Cell configuration
