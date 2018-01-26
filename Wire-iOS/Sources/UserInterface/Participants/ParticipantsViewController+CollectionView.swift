@@ -71,49 +71,6 @@ extension ParticipantsViewController: UICollectionViewDataSource {
 }
 
 extension ParticipantsViewController {
-
-    enum DeviceScreenSize {
-        case iPhone3_5Inch
-        case iPhone4Inch
-        case iPhone4_7Inch
-        case iPhone5_5Inch
-        case iPhone5_8Inch
-        case iPhoneBiggerThan5_8Inch
-        case iPad
-        case unknown
-
-        static var screenSizeOfThisDevice: DeviceScreenSize {
-            switch UIDevice.current.userInterfaceIdiom {
-            case .pad:
-                return .iPad
-            case .phone:
-                let screenHeight = UIScreen.main.nativeBounds.size.height
-
-                switch screenHeight {
-                case 960:
-                    return .iPhone3_5Inch
-                case 1136:
-                    return .iPhone4Inch
-                case 1334:
-                    return .iPhone4_7Inch
-                case 1920:
-                    return .iPhone5_5Inch
-                case 2436:
-                    return .iPhone5_8Inch
-                default:
-                    if screenHeight > 2436 {
-                        return .iPhoneBiggerThan5_8Inch
-                    }
-                    else {
-                        return .unknown
-                    }
-                }
-            default:
-                return .unknown
-            }
-        }
-    }
-
     // MARK: - collectionview layout configuration
     func configCollectionViewLayout() {
 
