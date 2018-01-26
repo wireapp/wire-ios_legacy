@@ -42,15 +42,17 @@ extension ParticipantsViewController: UICollectionViewDataSource {
     // MARK: - section header
 
     public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        guard let userType = UserType(rawValue: section), userType == .serviceUser else { return .zero }
-
-        if let headerView = collectionView.visibleSupplementaryViews(ofKind: UICollectionElementKindSectionHeader).first as? ParticipantsCollectionHeaderView {
-            headerView.layoutIfNeeded()
-            let height = headerView.systemLayoutSizeFitting(UILayoutFittingExpandedSize).height
-            return CGSize(width: collectionView.frame.width, height: height)
+        guard let userType = UserType(rawValue: section), userType == .serviceUser else {
+            return .zero
         }
 
-        return CGSize(width: collectionView.bounds.size.width, height: 72)
+        var height: CGFloat = 24
+        if let headerView = collectionView.visibleSupplementaryViews(ofKind: UICollectionElementKindSectionHeader).first as? ParticipantsCollectionHeaderView {
+            headerView.layoutIfNeeded()
+            height = headerView.systemLayoutSizeFitting(UILayoutFittingExpandedSize).height
+        }
+
+        return CGSize(width: collectionView.bounds.size.width, height: height)
     }
 
     public func collectionView(_ collectionView: UICollectionView,

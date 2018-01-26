@@ -49,8 +49,10 @@ final public class ParticipantsCollectionHeaderView: UICollectionReusableView, R
 
         constrain(self, self.titleLabel) { selfView, titleLabel in
             titleLabel.leading == selfView.leading + 16
-            titleLabel.top == selfView.top + 32
-            titleLabel.bottom == selfView.bottom + 24
+            // 32pt, minus 24pt collectionviewlayout inset
+            titleLabel.top == selfView.top + 8
+            // 24pt, minus 24pt collectionviewlayout inset
+            titleLabel.bottom == selfView.bottom
         }
     }
 }
