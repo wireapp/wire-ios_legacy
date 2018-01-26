@@ -380,7 +380,8 @@ static NSUInteger const StartUIInitiallyShowsKeyboardConversationThreshold = 10;
 
 - (void)searchResultsViewController:(SearchResultsViewController * _Nonnull)searchResultsViewController didTapOnSeviceUser:(id<ServiceUser> _Nonnull)serviceUser
 {
-    ServiceDetailViewController *serviceDetail = [[ServiceDetailViewController alloc] initWithServiceUser:serviceUser];
+    ServiceDetailViewController *serviceDetail = [[ServiceDetailViewController alloc] initWithServiceUser:serviceUser
+                                                                                                  variant:ColorSchemeVariantDark];
     
     serviceDetail.completion = ^(ZMConversation *conversation) {
         if (nil != conversation) {

@@ -96,7 +96,7 @@ extension Service: Shareable {
     }
     
     public func previewView() -> UIView? {
-        return ServiceView(service: self)
+        return ServiceView(service: self, variant: .dark)
     }
 }
 
@@ -142,11 +142,15 @@ final class ServiceDetailViewController: UIViewController {
         }
     }
     
-    public var completion: ((ZMConversation?)->())? = nil // TODO: not wired up yet
+    public var destinationConversation: ZMConversation?
+    public var completion: ((ZMConversation?)->())? = nil
     
-    init(serviceUser: ServiceUser) {
+    public let variant: ColorSchemeVariant
+    
+    init(serviceUser: ServiceUser, variant: ColorSchemeVariant) {
+        self.variant = variant
         self.service = Service(serviceUser: serviceUser)
-        self.detailView = ServiceDetailView(service: service)
+        self.detailView = ServiceDetailView(service: service, variant: variant)
         
         super.init(nibName: nil, bundle: nil)
         
@@ -161,10 +165,16 @@ final class ServiceDetailViewController: UIViewController {
         super.viewDidLoad()
         
         self.confirmButton.addCallback(for: .touchUpInside) { [weak self] _ in
-            self?.showConversationPicker()
+            self?.onAddServicePressed()
         }
         
-        view.backgroundColor = .clear
+        switch self.variant {
+        case .dark:
+            view.backgroundColor = .clear
+        case .light:
+            view.backgroundColor = .white
+        }
+        
         view.addSubview(detailView)
         view.addSubview(confirmButton)
         
@@ -210,6 +220,33 @@ final class ServiceDetailViewController: UIViewController {
         super.viewWillAppear(animated)
         
         self.navigationController?.setNavigationBarHidden(false, animated: animated)
+        
+        if (self.navigationController?.viewControllers.count ?? 0) > 1 {
+            self.navigationItem.leftBarButtonItem = UIBarButtonItem(icon: .backArrow, target: self, action: #selector(ServiceDetailViewController.backButtonTapped(_:)))
+        }
+        else {
+            self.navigationItem.rightBarButtonItem = UIBarButtonItem(icon: .X, target: self, action: #selector(ServiceDetailViewController.dismissButtonTapped(_:)))
+        }
+    }
+    
+    @objc(backButtonTapped:)
+    public func backButtonTapped(_ sender: AnyObject!) {
+        self.navigationController?.popViewController(animated: true)
+    }
+    
+    @objc(dismissButtonTapped:)
+    public func dismissButtonTapped(_ sender: AnyObject!) {
+        self.navigationController?.dismiss(animated: true, completion: nil)
+    }
+    
+    private func onAddServicePressed() {
+        if let conversation = self.destinationConversation {
+            add(service: self.service, to: conversation)
+            completion?(conversation)
+        }
+        else {
+            showConversationPicker()
+        }
     }
     
     private func showConversationPicker() {
@@ -224,8 +261,14 @@ final class ServiceDetailViewController: UIViewController {
         allConversations.append(contentsOf: zmConversations.map(ServiceConversation.existing))
         
         let conversationPicker = ShareViewController<ServiceConversation, Service>(shareable: self.service, destinations: allConversations, showPreview: true, allowsMultiselect: false)
-        conversationPicker.onDismiss = { [weak self] _, completed in
-            self?.navigationController?.dismiss(animated: true, completion: nil)
+        conversationPicker.onDismiss = { [weak self] (_, finished) in
+            self?.navigationController?.dismiss(animated: true) {
+                guard let `self` = self else {
+                    return
+                }
+                
+                self.completion?(nil)
+            }
         }
         self.navigationController?.pushViewController(conversationPicker, animated: true)
     }

@@ -190,14 +190,16 @@ public class AddParticipantsViewController : UIViewController {
     }
     
     fileprivate func performSearch() {
-        if searchHeaderViewController.tokenField.filterText.isEmpty &&
-            searchResultsViewController.searchGroup != .services {
-            
+        switch (searchResultsViewController.searchGroup, searchHeaderViewController.tokenField.filterText.isEmpty) {
+        case (.services, _):
+            emptyResultLabel.text = emptySearchResultText
+            searchResultsViewController.mode = .search
+            searchResultsViewController.searchForServices(withQuery: searchHeaderViewController.tokenField.filterText)
+        case (.people, true):
             emptyResultLabel.text = everyoneHasBeenAddedText
             searchResultsViewController.mode = .list
             searchResultsViewController.searchContactList()
-        }
-        else {
+        case (.people, false):
             emptyResultLabel.text = emptySearchResultText
             searchResultsViewController.mode = .search
             searchResultsViewController.searchForLocalUsers(withQuery: searchHeaderViewController.tokenField.filterText)
@@ -250,36 +252,22 @@ extension AddParticipantsViewController : UIPopoverPresentationControllerDelegat
 }
 
 extension AddParticipantsViewController: SearchResultsViewControllerDelegate {
-    public func searchResultsViewController(_ searchResultsViewController: SearchResultsViewController, didTapOnUser user: ZMSearchableUser, indexPath: IndexPath, section: SearchResultsViewControllerSection)
-    {
+    public func searchResultsViewController(_ searchResultsViewController: SearchResultsViewController, didTapOnUser user: ZMSearchableUser, indexPath: IndexPath, section: SearchResultsViewControllerSection) {
         // no-op
     }
     
-    public func searchResultsViewController(_ searchResultsViewController: SearchResultsViewController, didDoubleTapOnUser user: ZMSearchableUser, indexPath: IndexPath)
-    {
+    public func searchResultsViewController(_ searchResultsViewController: SearchResultsViewController, didDoubleTapOnUser user: ZMSearchableUser, indexPath: IndexPath) {
         // no-op
     }
     
-    public func searchResultsViewController(_ searchResultsViewController: SearchResultsViewController, didTapOnConversation conversation: ZMConversation)
-    {
+    public func searchResultsViewController(_ searchResultsViewController: SearchResultsViewController, didTapOnConversation conversation: ZMConversation) {
         // no-op
     }
     
-    public func searchResultsViewController(_ searchResultsViewController: SearchResultsViewController, didTapOnSeviceUser user: ServiceUser)
-    {
-        guard let userSession = ZMUserSession.shared() else {
-            return
-        }
-        self.showLoadingView = true
-        self.conversation.add(serviceUser: user, in: userSession) { [weak self] _ in
-            guard let `self` = self else {
-                return
-            }
-            
-            self.delegate?.addParticipantsViewControllerDidCancel(self)
-            self.showLoadingView = false
-            Analytics.shared().tag(ServiceAddedEvent(service: user, conversation: self.conversation, context: .conversationDetails))
-        }
+    public func searchResultsViewController(_ searchResultsViewController: SearchResultsViewController, didTapOnSeviceUser user: ServiceUser) {
+        let serviceDetails = ServiceDetailViewController(serviceUser: user, variant: .light)
+        serviceDetails.destinationConversation = self.conversation
+        self.present(serviceDetails.wrapInNavigationController(), animated: true, completion: nil)
     }
 }
 
