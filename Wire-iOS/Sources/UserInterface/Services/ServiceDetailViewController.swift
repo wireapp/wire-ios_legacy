@@ -90,6 +90,16 @@ extension Service: Shareable {
         })
     }
     
+    public func share<ServiceConversation>(to: [ServiceConversation], completion: @escaping (AddBotResult)->()) {
+        guard let serviceConversation = to.first else {
+            return
+        }
+        
+        add(service: self, to: serviceConversation, completion: { result in
+            completion(result)
+        })
+    }
+    
     public func previewView() -> UIView? {
         return ServiceView(service: self)
     }
@@ -137,7 +147,8 @@ final class ServiceDetailViewController: UIViewController {
         }
     }
     
-    public var completion: ((ZMConversation?)->())? = nil // TODO: not wired up yet
+    public var completion: ((AddBotResult)->())? = nil
+    //public var completion: ((ZMConversation?)->())? = nil // TODO: not wired up yet
     
     init(serviceUser: ServiceUser) {
         self.service = Service(serviceUser: serviceUser)
@@ -218,10 +229,10 @@ final class ServiceDetailViewController: UIViewController {
         
         allConversations.append(contentsOf: zmConversations.map(ServiceConversation.existing))
         
-        let conversationPicker = ShareViewController<ServiceConversation, Service>(shareable: self.service, destinations: allConversations, showPreview: true, allowsMultiselect: false)
-        conversationPicker.onDismiss = { [weak self] _, completed in
+        let conversationPicker = ShareServiceViewController(shareable: self.service, destinations: allConversations, showPreview: true, allowsMultiselect: false)
+        conversationPicker.onServiceDismiss = { [weak self] _, completed, result in
+            self?.completion?(result)
             self?.navigationController?.dismiss(animated: true, completion: nil)
-            self?.completion?(nil)
         }
         self.navigationController?.pushViewController(conversationPicker, animated: true)
     }

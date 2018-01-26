@@ -30,7 +30,7 @@ public protocol Shareable {
     func previewView() -> UIView?
 }
 
-final public class ShareViewController<D: ShareDestination, S: Shareable>: UIViewController, UITableViewDelegate, UITableViewDataSource, TokenFieldDelegate, UIViewControllerTransitioningDelegate {
+public class ShareViewController<D: ShareDestination, S: Shareable>: UIViewController, UITableViewDelegate, UITableViewDataSource, TokenFieldDelegate, UIViewControllerTransitioningDelegate {
     public let destinations: [D]
     public let shareable: S
     private(set) var selectedDestinations: Set<D> = Set() {
