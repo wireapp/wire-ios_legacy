@@ -267,6 +267,14 @@ extension AddParticipantsViewController: SearchResultsViewControllerDelegate {
     public func searchResultsViewController(_ searchResultsViewController: SearchResultsViewController, didTapOnSeviceUser user: ServiceUser) {
         let serviceDetails = ServiceDetailViewController(serviceUser: user, variant: .light)
         serviceDetails.destinationConversation = self.conversation
+        serviceDetails.completion = { [weak self] _ in
+            guard let `self` = self else {
+                return
+            }
+            self.dismiss(animated: true) {
+                self.delegate?.addParticipantsViewControllerDidCancel(self)
+            }
+        }
         self.present(serviceDetails.wrapInNavigationController(), animated: true, completion: nil)
     }
 }

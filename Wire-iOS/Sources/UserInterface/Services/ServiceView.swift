@@ -112,11 +112,11 @@ final class ServiceView: UIView {
         backgroundColor = .clear
         
         nameLabel.font = FontSpec(.large, .regular).font
-        nameLabel.textColor = .white
+        nameLabel.textColor = ColorScheme.default().color(withName: ColorSchemeColorTextForeground, variant: variant)
         nameLabel.backgroundColor = .clear
         
         providerLabel.font = FontSpec(.medium, .regular).font
-        providerLabel.textColor = .white
+        providerLabel.textColor = ColorScheme.default().color(withName: ColorSchemeColorTextForeground, variant: variant)
         providerLabel.backgroundColor = .clear
         updateForService()
     }

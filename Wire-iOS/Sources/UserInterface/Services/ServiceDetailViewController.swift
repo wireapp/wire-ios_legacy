@@ -224,9 +224,8 @@ final class ServiceDetailViewController: UIViewController {
         if (self.navigationController?.viewControllers.count ?? 0) > 1 {
             self.navigationItem.leftBarButtonItem = UIBarButtonItem(icon: .backArrow, target: self, action: #selector(ServiceDetailViewController.backButtonTapped(_:)))
         }
-        else {
-            self.navigationItem.rightBarButtonItem = UIBarButtonItem(icon: .X, target: self, action: #selector(ServiceDetailViewController.dismissButtonTapped(_:)))
-        }
+
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(icon: .X, target: self, action: #selector(ServiceDetailViewController.dismissButtonTapped(_:)))
     }
     
     @objc(backButtonTapped:)
@@ -241,7 +240,7 @@ final class ServiceDetailViewController: UIViewController {
     
     private func onAddServicePressed() {
         if let conversation = self.destinationConversation {
-            add(service: self.service, to: conversation)
+            add(service: self.service, to: ServiceConversation.existing(conversation))
             completion?(conversation)
         }
         else {
@@ -256,7 +255,7 @@ final class ServiceDetailViewController: UIViewController {
         
         var allConversations: [ServiceConversation] = [.new]
         
-        let zmConversations = ZMConversationList.conversationsIncludingArchived(inUserSession: userSession).shareableConversations()
+        let zmConversations = ZMConversationList.conversationsIncludingArchived(inUserSession: userSession).shareableConversations().filter { $0.conversationType != .oneOnOne }
         
         allConversations.append(contentsOf: zmConversations.map(ServiceConversation.existing))
         
