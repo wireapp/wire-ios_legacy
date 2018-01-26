@@ -75,6 +75,7 @@
 #import "ParticipantsViewController.h"
 #import "ParticipantsViewController+internal.h"
 #import "ParticipantsListCell.h"
+#import "ParticipantsListCell+internal.h"
 
 // View Controllers
 #import "ZClientViewController.h"

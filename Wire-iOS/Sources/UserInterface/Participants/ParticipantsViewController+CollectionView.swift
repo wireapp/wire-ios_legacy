@@ -101,7 +101,12 @@ extension ParticipantsViewController {
                 case 2436:
                     return .iPhone5_8Inch
                 default:
-                    return .iPhoneBiggerThan5_8Inch
+                    if screenHeight > 2436 {
+                        return .iPhoneBiggerThan5_8Inch
+                    }
+                    else {
+                        return .unknown
+                    }
                 }
             default:
                 return .unknown
@@ -112,12 +117,11 @@ extension ParticipantsViewController {
     // MARK: - collectionview layout configuration
     func configCollectionViewLayout() {
 
-        /// 96x132 for iPhone 6 or bigger, others are 80x116
         switch DeviceScreenSize.screenSizeOfThisDevice {
         case .iPhone4_7Inch, .iPhone5_5Inch, .iPhone5_8Inch, .iPhoneBiggerThan5_8Inch:
-            self.collectionViewLayout.itemSize = CGSize(width: 96, height: 132)
+            self.collectionViewLayout.itemSize = CGSize(width: 96, height: 106)
         default:
-            self.collectionViewLayout.itemSize = CGSize(width: 80, height: 116)
+            self.collectionViewLayout.itemSize = CGSize(width: 80, height: 90)
         }
 
         self.collectionViewLayout.sectionInset = UIEdgeInsets(top: self.insetMargin, left: self.insetMargin, bottom: self.insetMargin, right: self.insetMargin)
