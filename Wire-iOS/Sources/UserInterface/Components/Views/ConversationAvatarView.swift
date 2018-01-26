@@ -140,8 +140,6 @@ final public class ConversationAvatarView: UIView {
             self.userImages().forEach {
                 $0.userSession = ZMUserSession.shared()
                 $0.size = .tiny
-                $0.showInitials = mode.showInitials
-                $0.shape = mode.shape
                 if index < users.count {
                     $0.user = users[index]
                 }
@@ -150,6 +148,9 @@ final public class ConversationAvatarView: UIView {
                     $0.containerView.isOpaque = false
                     $0.containerView.backgroundColor = UIColor(white: 0, alpha: 0.24)
                 }
+                
+                $0.showInitials = mode.showInitials
+                $0.shape = mode.shape
                 index = index + 1
             }
             self.setNeedsLayout()
