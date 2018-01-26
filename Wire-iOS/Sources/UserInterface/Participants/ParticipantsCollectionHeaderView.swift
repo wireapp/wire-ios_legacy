@@ -31,7 +31,8 @@ final public class ParticipantsCollectionHeaderView: UICollectionReusableView, R
 
     let titleLabel: UILabel = {
         let label = UILabel()
-        label.textColor = UIColor.wr_color(from: "rgb(141, 152, 159)")
+
+        label.textColor = ColorScheme.default().color(withName: ColorSchemeColorTextDimmed)
         label.font = FontSpec(.small, .semibold).font!
 
         return label
