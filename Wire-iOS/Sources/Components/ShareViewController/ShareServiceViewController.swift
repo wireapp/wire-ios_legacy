@@ -23,10 +23,10 @@ class ShareServiceViewController: ShareViewController<ServiceConversation,Servic
     
     // MARK: - Actions
     
-    public var onServiceDismiss: ((ShareServiceViewController, Bool, AddBotResult)->())?
+    public var onServiceDismiss: ((ShareServiceViewController, Bool, AddBotResult?)->())?
     
     override public func onCloseButtonPressed(sender: AnyObject?) {
-        self.onServiceDismiss?(self, false, AddBotResult.failure(error: AddBotError.general))
+        self.onServiceDismiss?(self, false, nil)
     }
     
     override public func onSendButtonPressed(sender: AnyObject?) {

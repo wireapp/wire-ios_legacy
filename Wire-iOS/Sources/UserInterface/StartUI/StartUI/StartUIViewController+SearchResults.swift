@@ -60,12 +60,16 @@ extension StartUIViewController: SearchResultsViewControllerDelegate {
         let detail = ServiceDetailViewController(serviceUser: user)
         
         detail.completion = { [weak self] result in
-            switch result {
-                
-            case .success(let conversation):
-                self?.delegate.startUI!(self, didSelect: conversation)
-            case .failure(let error):
-                self?.handleAddBotError(error)
+            if let result = result {
+                switch result {
+                    
+                case .success(let conversation):
+                    self?.delegate.startUI!(self, didSelect: conversation)
+                case .failure(let error):
+                    self?.handleAddBotError(error)
+                }
+            } else {
+                self?.delegate.startUIDidCancel(self)
             }
         }
         
@@ -73,22 +77,30 @@ extension StartUIViewController: SearchResultsViewControllerDelegate {
     }
     
     private func handleAddBotError(_ error: AddBotError) {
-        
-        var message : String?
-        
-        switch error {
-        case .offline: message = "You're offline"
-        case .general: message = "A generic error occurred"
-        case .tooManyParticipants: message = "The conversation is full"
-        case .botNotResponding: message = "The bot is not responding. Please try again later."
-        case .botRejected: message = "The bot rejected to be added to this conversation"
+        let alert = UIAlertController(title: error.localizedTitle,
+                                      message: error.localizedMessage,
+                                      cancelButtonTitle: "general.confirm".localized)
+        self.present(alert, animated: true, completion: nil)
+    }
+}
+
+extension AddBotError {
+    
+    var localizedTitle: String {
+        switch self {
+        case .tooManyParticipants:
+            return "TODO"
+        default:
+            return "peoplepicker.services.add_service.error.title".localized
         }
-        
-        if let message = message {
-            let alert = UIAlertController(title: "Error", message: message, cancelButtonTitle: "Ok")
-            self.present(alert, animated: true, completion: nil)
+    }
+    
+    var localizedMessage: String {
+        switch self {
+        case .tooManyParticipants:
+            return "TODO"
+        default:
+            return "peoplepicker.services.add_service.error".localized
         }
-        
-        self.delegate.startUIDidCancel(self)
     }
 }

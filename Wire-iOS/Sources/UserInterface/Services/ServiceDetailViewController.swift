@@ -159,8 +159,7 @@ final class ServiceDetailViewController: UIViewController {
         }
     }
     
-    public var completion: ((AddBotResult)->())? = nil
-    //public var completion: ((ZMConversation?)->())? = nil // TODO: not wired up yet
+    public var completion: ((AddBotResult?)->())? = nil
     
     init(serviceUser: ServiceUser) {
         self.service = Service(serviceUser: serviceUser)
