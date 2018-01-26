@@ -431,6 +431,9 @@ typedef NS_ENUM(NSUInteger, ProfileUserAction) {
             [[ZMUserSession sharedSession] enqueueChanges:^{
                 [self.conversation removeParticipant:[self fullUser]];
             } completionHandler:^{
+                if (self.fullUser.isServiceUser) {
+                    [Analytics.shared tagDidRemoveService:self.fullUser];
+                }
                 [self.delegate profileDetailsViewController:self wantsToBeDismissedWithCompletion:nil];
             }];
         }];

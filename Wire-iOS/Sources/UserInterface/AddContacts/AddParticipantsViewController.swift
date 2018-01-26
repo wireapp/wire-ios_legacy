@@ -249,6 +249,7 @@ extension AddParticipantsViewController: SearchResultsViewControllerDelegate {
             
             self.delegate?.addParticipantsViewControllerDidCancel(self)
             self.showLoadingView = false
+            Analytics.shared().tag(ServiceAddedEvent(service: user, conversation: self.conversation, context: .conversationDetails))
         }
     }
 }

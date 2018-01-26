@@ -240,8 +240,6 @@ class AppRootViewController: UIViewController {
             }
 
         case .authenticated(completedRegistration: let completedRegistration):
-            // TODO: CallKit only with 1 account
-            sessionManager?.updateCallNotificationStyleFromSettings()
             UIColor.setAccentOverride(.undefined)
             mainWindow.tintColor = UIColor.accent()
             executeAuthenticatedBlocks()

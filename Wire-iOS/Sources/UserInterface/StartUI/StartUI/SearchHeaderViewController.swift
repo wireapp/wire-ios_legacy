@@ -65,6 +65,8 @@ public class SearchHeaderViewController : UIViewController {
     }
     
     public override func viewDidLoad() {
+        view.backgroundColor = UIColor(white: 1.0, alpha: 0.08)
+        
         searchIcon.image = UIImage(for: .search, iconSize: .tiny, color: UIColor.wr_color(fromColorScheme: ColorSchemeColorTextForeground, variant: colorSchemeVariant))
         
         clearButton.accessibilityLabel = "clear"
@@ -135,7 +137,7 @@ public class SearchHeaderViewController : UIViewController {
                 
         constrain(view, titleContainer, tokenFieldContainer) { view, titleContainer, tokenFieldContainer in
             
-            titleContainer.top == view.top
+            titleContainer.top == view.top + UIScreen.safeArea.top
             titleContainer.leading == view.leading
             titleContainer.trailing == view.trailing
             titleContainer.height == 44
