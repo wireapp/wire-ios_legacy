@@ -49,7 +49,8 @@ extension ZMConversation {
         return conversationType.analyticsTypeString
     }
     
-    public var isServiceUserConversation : Bool {
+    /// Whether the conversation is a 1-on-1 conversation with a service user
+    public var isOneOnOneServiceUserConversation: Bool {
         guard self.activeParticipants.count == 2,
              let otherUser = self.firstActiveParticipantOtherThanSelf() else {
             return false
@@ -57,6 +58,12 @@ extension ZMConversation {
         
         return otherUser.serviceIdentifier != nil &&
                 otherUser.providerIdentifier != nil
+    }
+    
+    /// Whether the conversation includes at least 1 service user.
+    public var includesServiceUser: Bool {
+        guard let participants = otherActiveParticipants.array as? [ZMBareUser] else { return false }
+        return participants.any { $0.isServiceUser }
     }
 }
 

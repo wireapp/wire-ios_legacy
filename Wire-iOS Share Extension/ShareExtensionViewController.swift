@@ -39,7 +39,7 @@ class ShareExtensionViewController: SLComposeServiceViewController {
     
     lazy var accountItem : SLComposeSheetConfigurationItem = { [weak self] in
         let item = SLComposeSheetConfigurationItem()!
-        let accountName = self?.currentAccount?.userName
+        let accountName = self?.currentAccount?.shareExtensionDisplayName
         
         item.title = "share_extension.conversation_selection.account".localized
         item.value = accountName ?? "share_extension.conversation_selection.empty.value".localized
@@ -308,7 +308,7 @@ class ShareExtensionViewController: SLComposeServiceViewController {
         guard let account = account, account != currentAccount else { return }
         
         currentAccount = account
-        accountItem.value = account.userName
+        accountItem.value = account.shareExtensionDisplayName
         conversationItem.value = "share_extension.conversation_selection.empty.value".localized
         postContent?.target = nil
         extensionActivity?.conversation = nil

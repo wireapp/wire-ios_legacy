@@ -61,9 +61,20 @@ private func add(service: Service, to conversation: Any, completion: @escaping (
         return
     }
     
+    func tagAdded(user: ServiceUser, to conversation: ZMConversation) {
+        Analytics.shared().tag(ServiceAddedEvent(service: user, conversation: conversation, context: .startUI))
+    }
+    
     switch serviceConversation {
     case .new:
         userSession.startConversation(with: service.serviceUser, completion: { (result) in
+            
+            switch result {
+            case .success(let conversation):
+                tagAdded(user: service.serviceUser, to: conversation)
+            default: break
+            }
+            
             completion(result)
         })
     case .existing(let conversation):
@@ -71,6 +82,7 @@ private func add(service: Service, to conversation: Any, completion: @escaping (
             if let done = done {
                 completion(AddBotResult.failure(error: done))
             } else {
+                tagAdded(user: service.serviceUser, to: conversation)
                 completion(AddBotResult.success(conversation: conversation))
             }
         }
