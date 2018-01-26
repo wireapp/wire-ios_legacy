@@ -168,8 +168,7 @@ extension SoundEventListener : WireCallCenterCallStateObserver {
         case .established:
             playSoundIfAllowed(MediaManagerSoundUserJoinsVoiceChannelSound)
         case .incoming(video: _, shouldRing: true, degraded: _):
-            guard let sessionManager = SessionManager.shared, 
-            guard !conversation.isSilenced else { return }
+            guard let sessionManager = SessionManager.shared, !conversation.isSilenced else { return }
             
             let otherNonIdleCalls = callCenter.nonIdleCalls.filter({ (key: UUID, callState: CallState) -> Bool in
                 return key != conversationId
