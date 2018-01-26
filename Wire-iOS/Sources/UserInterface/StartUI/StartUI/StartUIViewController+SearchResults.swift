@@ -59,18 +59,36 @@ extension StartUIViewController: SearchResultsViewControllerDelegate {
         
         let detail = ServiceDetailViewController(serviceUser: user)
         
-        detail.completion = { result in
+        detail.completion = { [weak self] result in
             switch result {
                 
             case .success(let conversation):
-                self.delegate.startUI!(self, didSelect: conversation)
+                self?.delegate.startUI!(self, didSelect: conversation)
             case .failure(let error):
-                let alert = UIAlertController(title: "Error", message: error.localizedDescription, cancelButtonTitle: "Ok")
-                self.present(alert, animated: true, completion: nil)
-                self.delegate.startUIDidCancel(self)
+                self?.handleAddBotError(error)
             }
         }
         
         self.navigationController?.pushViewController(detail, animated: true)
+    }
+    
+    private func handleAddBotError(_ error: AddBotError) {
+        
+        var message : String?
+        
+        switch error {
+        case .offline: message = "You're offline"
+        case .general: message = "A generic error occurred"
+        case .tooManyParticipants: message = "The conversation is full"
+        case .botNotResponding: message = "The bot is not responding. Please try again later."
+        case .botRejected: message = "The bot rejected to be added to this conversation"
+        }
+        
+        if let message = message {
+            let alert = UIAlertController(title: "Error", message: message, cancelButtonTitle: "Ok")
+            self.present(alert, animated: true, completion: nil)
+        }
+        
+        self.delegate.startUIDidCancel(self)
     }
 }
