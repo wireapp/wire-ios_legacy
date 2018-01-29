@@ -23,6 +23,8 @@ final class ServiceDetailView: UIView {
     private let serviceView: ServiceView
     private let descriptionTextView = UITextView()
     
+    public let variant: ColorSchemeVariant
+    
     public var service: Service {
         didSet {
             updateForService()
@@ -30,9 +32,10 @@ final class ServiceDetailView: UIView {
         }
     }
     
-    init(service: Service) {
+    init(service: Service, variant: ColorSchemeVariant) {
         self.service = service
-        self.serviceView = ServiceView(service: service)
+        self.variant = variant
+        self.serviceView = ServiceView(service: service, variant: variant)
         super.init(frame: .zero)
 
         [serviceView, descriptionTextView].forEach(addSubview)
@@ -48,9 +51,15 @@ final class ServiceDetailView: UIView {
             descriptionTextView.bottom == selfView.bottom
         }
         
-        backgroundColor = .clear
+        switch variant {
+        case .dark:
+            backgroundColor = .clear
+        case .light:
+            backgroundColor = .white
+        }
+        
         descriptionTextView.backgroundColor = .clear
-        descriptionTextView.textColor = .white
+        descriptionTextView.textColor = ColorScheme.default().color(withName: ColorSchemeColorTextForeground, variant: variant)
         descriptionTextView.font = FontSpec(.normal, .regular).font
         descriptionTextView.isEditable = false
         updateForService()
@@ -70,14 +79,17 @@ final class ServiceView: UIView {
     private let nameLabel = UILabel()
     private let providerLabel = UILabel()
     
+    public let variant: ColorSchemeVariant
+    
     public var service: Service {
         didSet {
             updateForService()
         }
     }
     
-    init(service: Service) {
+    init(service: Service, variant: ColorSchemeVariant) {
         self.service = service
+        self.variant = variant
         super.init(frame: .zero)
         [logoView, nameLabel, providerLabel].forEach(addSubview)
         constrain(self, logoView, nameLabel, providerLabel) { selfView, logoView, nameLabel, providerLabel in
@@ -100,11 +112,11 @@ final class ServiceView: UIView {
         backgroundColor = .clear
         
         nameLabel.font = FontSpec(.large, .regular).font
-        nameLabel.textColor = .white
+        nameLabel.textColor = ColorScheme.default().color(withName: ColorSchemeColorTextForeground, variant: variant)
         nameLabel.backgroundColor = .clear
         
         providerLabel.font = FontSpec(.medium, .regular).font
-        providerLabel.textColor = .white
+        providerLabel.textColor = ColorScheme.default().color(withName: ColorSchemeColorTextForeground, variant: variant)
         providerLabel.backgroundColor = .clear
         updateForService()
     }

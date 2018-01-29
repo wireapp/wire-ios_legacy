@@ -104,7 +104,7 @@ static NSUInteger const StartUIInitiallyShowsKeyboardConversationThreshold = 10;
     [self.view addSubview:self.searchHeaderViewController.view];
     [self.searchHeaderViewController didMoveToParentViewController:self];
     
-    self.groupSelector = [[SearchGroupSelector alloc] init];
+    self.groupSelector = [[SearchGroupSelector alloc] initWithVariant:ColorSchemeVariantDark];
     self.groupSelector.translatesAutoresizingMaskIntoConstraints = NO;
     @weakify(self);
     self.groupSelector.onGroupSelected = ^(SearchGroup group) {

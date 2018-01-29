@@ -434,7 +434,7 @@
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Profile and Participants
 
-"participants.add_people_button_title" = "Add people";
+"participants.add_people_button_title" = "Add";
 "participants.avatar.guest.title" = "Guest";
 
 // Meta Menu

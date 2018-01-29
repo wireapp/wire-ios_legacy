@@ -51,20 +51,20 @@ extension StartUIViewController: SearchResultsViewControllerDelegate {
     
     public func searchResultsViewController(_ searchResultsViewController: SearchResultsViewController, didTapOnConversation conversation: ZMConversation) {
         if conversation.conversationType == .group {
-            self.delegate.startUI!(self, didSelect: conversation)
+            self.delegate.startUI?(self, didSelect: conversation)
         }
     }
     
     public func searchResultsViewController(_ searchResultsViewController: SearchResultsViewController, didTapOnSeviceUser user: ServiceUser) {
         
-        let detail = ServiceDetailViewController(serviceUser: user)
+        let detail = ServiceDetailViewController(serviceUser: user, variant: .dark)
         
         detail.completion = { [weak self] result in
             if let result = result {
                 switch result {
                     
                 case .success(let conversation):
-                    self?.delegate.startUI!(self, didSelect: conversation)
+                    self?.delegate.startUI?(self, didSelect: conversation)
                 case .failure(let error):
                     self?.handleAddBotError(error)
                 }
