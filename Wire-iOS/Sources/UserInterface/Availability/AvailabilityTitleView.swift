@@ -25,7 +25,7 @@ import WireDataModel
 
 @objc public class AvailabilityTitleView: TitleView {
     
-    private var user: ZMUser?
+    fileprivate var user: ZMUser?
     fileprivate var style: AvailabilityTitleViewStyle
     private var observerToken: Any?
     
@@ -57,6 +57,8 @@ import WireDataModel
         if let sharedSession = ZMUserSession.shared() {
             self.observerToken = UserChangeInfo.add(observer: self, for: user, userSession: sharedSession)
         }
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(applicationDidEnterForeground), name: Notification.Name.UIApplicationWillEnterForeground, object: nil)
         
         configure(user: user)
     }
@@ -96,6 +98,17 @@ import WireDataModel
         
         UIImpactFeedbackGenerator(style: .medium).impactOccurred()
     }
+}
+
+extension AvailabilityTitleView {
+    
+    @objc
+    fileprivate func applicationDidEnterForeground() {
+        guard let user = self.user else { return }
+        
+        configure(user: user)
+    }
+    
 }
 
 extension AvailabilityTitleView: ZMUserObserver {

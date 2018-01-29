@@ -77,7 +77,7 @@ class SoundEventListener : NSObject {
             let localMessage = message as? ZMMessage,
             localMessage.deliveryState == .pending
         {
-            UIImpactFeedbackGenerator(style: .medium).impactOccurred()
+            UIImpactFeedbackGenerator(style: .light).impactOccurred()
         }
     }
 }
@@ -168,7 +168,7 @@ extension SoundEventListener : WireCallCenterCallStateObserver {
         case .established:
             playSoundIfAllowed(MediaManagerSoundUserJoinsVoiceChannelSound)
         case .incoming(video: _, shouldRing: true, degraded: _):
-            guard !conversation.isSilenced else { return }
+            guard let sessionManager = SessionManager.shared, !conversation.isSilenced else { return }
             
             let otherNonIdleCalls = callCenter.nonIdleCalls.filter({ (key: UUID, callState: CallState) -> Bool in
                 return key != conversationId
@@ -176,7 +176,7 @@ extension SoundEventListener : WireCallCenterCallStateObserver {
             
             if otherNonIdleCalls.count > 0 {
                 playSoundIfAllowed(MediaManagerSoundRingingFromThemInCallSound)
-            } else if userSession.callNotificationStyle != .callKit {
+            } else if sessionManager.callNotificationStyle != .callKit {
                 playSoundIfAllowed(MediaManagerSoundRingingFromThemSound)
             }
         case .incoming(video: _, shouldRing: false, degraded: _):

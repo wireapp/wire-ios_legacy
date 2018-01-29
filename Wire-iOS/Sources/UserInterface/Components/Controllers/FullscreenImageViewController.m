@@ -145,7 +145,6 @@
 - (void)viewDidLayoutSubviews
 {
     [super viewDidLayoutSubviews];
-    [self updateZoomWithSize:self.view.bounds.size];
     [self centerScrollViewContent];
 }
 
@@ -272,6 +271,7 @@
             
             self.scrollView.contentSize = imageView.image.size;
             
+            [self updateZoomWithSize:self.view.bounds.size];
             [self centerScrollViewContent];
         });
     });

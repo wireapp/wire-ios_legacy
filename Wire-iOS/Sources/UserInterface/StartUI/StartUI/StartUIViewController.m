@@ -105,7 +105,7 @@ static NSUInteger const StartUIInitiallyShowsKeyboardConversationThreshold = 10;
     [self.view addSubview:self.searchHeaderViewController.view];
     [self.searchHeaderViewController didMoveToParentViewController:self];
     
-    self.groupSelector = [[SearchGroupSelector alloc] init];
+    self.groupSelector = [[SearchGroupSelector alloc] initWithVariant:ColorSchemeVariantDark];
     self.groupSelector.translatesAutoresizingMaskIntoConstraints = NO;
     @weakify(self);
     self.groupSelector.onGroupSelected = ^(SearchGroup group) {
@@ -146,7 +146,7 @@ static NSUInteger const StartUIInitiallyShowsKeyboardConversationThreshold = 10;
 
 - (void)createConstraints
 {
-    [self.searchHeaderViewController.view autoPinEdgeToSuperviewEdge:ALEdgeTop withInset:UIScreen.safeArea.top];
+    [self.searchHeaderViewController.view autoPinEdgeToSuperviewEdge:ALEdgeTop];
     [self.searchHeaderViewController.view autoPinEdgeToSuperviewEdge:ALEdgeLeading];
     [self.searchHeaderViewController.view autoPinEdgeToSuperviewEdge:ALEdgeTrailing];
     
@@ -380,7 +380,8 @@ static NSUInteger const StartUIInitiallyShowsKeyboardConversationThreshold = 10;
 
 - (void)searchResultsViewController:(SearchResultsViewController * _Nonnull)searchResultsViewController didTapOnSeviceUser:(id<ServiceUser> _Nonnull)serviceUser
 {
-    ServiceDetailViewController *serviceDetail = [[ServiceDetailViewController alloc] initWithServiceUser:serviceUser];
+    ServiceDetailViewController *serviceDetail = [[ServiceDetailViewController alloc] initWithServiceUser:serviceUser
+                                                                                                  variant:ColorSchemeVariantDark];
     
     serviceDetail.completion = ^(ZMConversation *conversation) {
         if (nil != conversation) {

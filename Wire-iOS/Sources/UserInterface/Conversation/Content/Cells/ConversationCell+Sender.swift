@@ -56,11 +56,9 @@ public extension ConversationCell {
             let bot = attributedName(for: .botSuffix, string: "BOT")
             let name = attributedName(for: .botName, string: name)
             attributedString = name + " ".attributedString + bot
-            self.authorImageView.shape = .rounded
         } else {
             let accentColor = ColorScheme.default().nameAccent(for: sender.accentColorValue, variant: ColorScheme.default().variant)
             attributedString = attributedName(for: .userName(accent: accentColor), string: name)
-            self.authorImageView.shape = .circle
         }
 
         self.authorLabel.attributedText = attributedString

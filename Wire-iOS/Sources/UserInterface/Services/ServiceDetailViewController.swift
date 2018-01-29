@@ -61,14 +61,25 @@ private func add(service: Service, to conversation: Any) {
         return
     }
     
+    func tagAdded(user: ServiceUser, to conversation: ZMConversation) {
+        Analytics.shared().tag(ServiceAddedEvent(service: user, conversation: conversation, context: .startUI))
+    }
+    
     switch serviceConversation {
     case .new:
-        userSession.startConversation(with: service.serviceUser) { conversation in
-            
+        userSession.startConversation(with: service.serviceUser) { result in
+            switch result {
+            case .success(conversation: let conversation): tagAdded(user: service.serviceUser, to: conversation)
+            case .failure(error: _ /* TODO: Handle Error */): break
+            }
         }
     case .existing(let conversation):
-        conversation.add(serviceUser: service.serviceUser, in: userSession) { done in
-            
+        conversation.add(serviceUser: service.serviceUser, in: userSession) { error in
+            if let _ = error {
+                // TODO: Handle Error
+            } else {
+                tagAdded(user: service.serviceUser, to: conversation)
+            }
         }
     }
 }
@@ -85,7 +96,7 @@ extension Service: Shareable {
     }
     
     public func previewView() -> UIView? {
-        return ServiceView(service: self)
+        return ServiceView(service: self, variant: .dark)
     }
 }
 
@@ -131,11 +142,15 @@ final class ServiceDetailViewController: UIViewController {
         }
     }
     
-    public var completion: ((ZMConversation?)->())? = nil // TODO: not wired up yet
+    public var destinationConversation: ZMConversation?
+    public var completion: ((ZMConversation?)->())? = nil
     
-    init(serviceUser: ServiceUser) {
+    public let variant: ColorSchemeVariant
+    
+    init(serviceUser: ServiceUser, variant: ColorSchemeVariant) {
+        self.variant = variant
         self.service = Service(serviceUser: serviceUser)
-        self.detailView = ServiceDetailView(service: service)
+        self.detailView = ServiceDetailView(service: service, variant: variant)
         
         super.init(nibName: nil, bundle: nil)
         
@@ -150,10 +165,16 @@ final class ServiceDetailViewController: UIViewController {
         super.viewDidLoad()
         
         self.confirmButton.addCallback(for: .touchUpInside) { [weak self] _ in
-            self?.showConversationPicker()
+            self?.onAddServicePressed()
         }
         
-        view.backgroundColor = .clear
+        switch self.variant {
+        case .dark:
+            view.backgroundColor = .clear
+        case .light:
+            view.backgroundColor = .white
+        }
+        
         view.addSubview(detailView)
         view.addSubview(confirmButton)
         
@@ -199,6 +220,32 @@ final class ServiceDetailViewController: UIViewController {
         super.viewWillAppear(animated)
         
         self.navigationController?.setNavigationBarHidden(false, animated: animated)
+        
+        if (self.navigationController?.viewControllers.count ?? 0) > 1 {
+            self.navigationItem.leftBarButtonItem = UIBarButtonItem(icon: .backArrow, target: self, action: #selector(ServiceDetailViewController.backButtonTapped(_:)))
+        }
+
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(icon: .X, target: self, action: #selector(ServiceDetailViewController.dismissButtonTapped(_:)))
+    }
+    
+    @objc(backButtonTapped:)
+    public func backButtonTapped(_ sender: AnyObject!) {
+        self.navigationController?.popViewController(animated: true)
+    }
+    
+    @objc(dismissButtonTapped:)
+    public func dismissButtonTapped(_ sender: AnyObject!) {
+        self.navigationController?.dismiss(animated: true, completion: nil)
+    }
+    
+    private func onAddServicePressed() {
+        if let conversation = self.destinationConversation {
+            add(service: self.service, to: ServiceConversation.existing(conversation))
+            completion?(conversation)
+        }
+        else {
+            showConversationPicker()
+        }
     }
     
     private func showConversationPicker() {
@@ -208,13 +255,19 @@ final class ServiceDetailViewController: UIViewController {
         
         var allConversations: [ServiceConversation] = [.new]
         
-        let zmConversations = ZMConversationList.conversationsIncludingArchived(inUserSession: userSession).shareableConversations()
+        let zmConversations = ZMConversationList.conversationsIncludingArchived(inUserSession: userSession).shareableConversations().filter { $0.conversationType != .oneOnOne }
         
         allConversations.append(contentsOf: zmConversations.map(ServiceConversation.existing))
         
         let conversationPicker = ShareViewController<ServiceConversation, Service>(shareable: self.service, destinations: allConversations, showPreview: true, allowsMultiselect: false)
-        conversationPicker.onDismiss = { [weak self] _, completed in
-            self?.navigationController?.dismiss(animated: true, completion: nil)
+        conversationPicker.onDismiss = { [weak self] (_, finished) in
+            self?.navigationController?.dismiss(animated: true) {
+                guard let `self` = self else {
+                    return
+                }
+                
+                self.completion?(nil)
+            }
         }
         self.navigationController?.pushViewController(conversationPicker, animated: true)
     }

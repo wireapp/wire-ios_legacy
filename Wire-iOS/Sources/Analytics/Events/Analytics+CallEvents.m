@@ -100,8 +100,10 @@
 
 - (NSDictionary *)attributesForConversation:(ZMConversation *)conversation
 {
-    return @{ @"conversation_type" : [self stringForConversationType:conversation.conversationType],
-              @"with_bot"          : conversation.isServiceUserConversation ? @"true" : @"false" };
+    return @{
+             @"conversation_type" : [self stringForConversationType:conversation.conversationType],
+             @"with_service"      : conversation.includesServiceUser ? @"true" : @"false"
+             };
 }
 
 - (NSDictionary *)attributesForInitiatedCall:(BOOL)initiatedCall

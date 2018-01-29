@@ -71,6 +71,12 @@
     [self updateCornerRadius];
 }
 
+- (void)setShape:(AvatarImageViewShape)shape
+{
+    _shape = shape;
+    [self updateCornerRadius];
+}
+
 - (void)updateCornerRadius
 {
     switch (self.shape) {
@@ -80,8 +86,8 @@
         case AvatarImageViewShapeCircle:
             self.containerView.layer.cornerRadius = MIN(self.bounds.size.width, self.bounds.size.height) / 2;
             break;
-        case AvatarImageViewShapeRounded:
-            self.containerView.layer.cornerRadius = 4;
+        case AvatarImageViewShapeRoundedRelative:
+            self.containerView.layer.cornerRadius = ceil(CGRectGetHeight(self.containerView.bounds) / 6);
             break;
     }
 }
@@ -111,7 +117,6 @@
 - (void)layoutSubviews
 {
     [super layoutSubviews];
-
     [self updateCornerRadius];
 }
 

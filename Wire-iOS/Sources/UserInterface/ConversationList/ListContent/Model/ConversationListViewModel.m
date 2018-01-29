@@ -75,17 +75,23 @@ void debugLogUpdate (ConversationListChangeInfo *note);
 
 - (void)setupObserversForActiveTeam
 {
+    ZMUserSession *userSession = [ZMUserSession sharedSession];
+    
+    if (userSession == nil) {
+        return;
+    }
+    
     self.pendingConversationListObserverToken = [ConversationListChangeInfo addObserver:self
-                                                                                forList:[ZMConversationList pendingConnectionConversationsInUserSession:[ZMUserSession sharedSession]]
-                                                                            userSession:[ZMUserSession sharedSession]];
+                                                                                forList:[ZMConversationList pendingConnectionConversationsInUserSession:userSession]
+                                                                            userSession:userSession];
     
     self.conversationListObserverToken = [ConversationListChangeInfo addObserver:self
-                                                                         forList:[ZMConversationList conversationsInUserSession:[ZMUserSession sharedSession]]
-                                                                     userSession:[ZMUserSession sharedSession]];
+                                                                         forList:[ZMConversationList conversationsInUserSession:userSession]
+                                                                     userSession:userSession];
     
     self.clearedConversationListObserverToken = [ConversationListChangeInfo addObserver:self
-                                                                                forList:[ZMConversationList clearedConversationsInUserSession:[ZMUserSession sharedSession]]
-                                                                            userSession:[ZMUserSession sharedSession]];
+                                                                                forList:[ZMConversationList clearedConversationsInUserSession:userSession]
+                                                                            userSession:userSession];
 }
 
 /**

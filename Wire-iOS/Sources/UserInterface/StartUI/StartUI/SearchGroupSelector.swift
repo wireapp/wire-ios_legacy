@@ -21,8 +21,10 @@ import Foundation
 import Cartography
 
 final class SearchGroupButton: UIButton {
-    
-    init() {
+    let colorSchemeVariant : ColorSchemeVariant
+
+    init(variant: ColorSchemeVariant) {
+        colorSchemeVariant = variant
         super.init(frame: .zero)
         
         addSubview(selectionLineView)
@@ -56,14 +58,24 @@ final class SearchGroupButton: UIButton {
     
     override var isSelected: Bool {
         didSet {
-            selectionLineView.backgroundColor = isSelected ? .white : .clear
-            setTitleColor(isSelected ? .white : UIColor(white: 1, alpha: 0.5), for: .normal)
+            let selectionColor: UIColor
+            switch self.colorSchemeVariant {
+            case .dark:
+                selectionColor = .white
+            case .light:
+                selectionColor = .black
+            }
+            
+            selectionLineView.backgroundColor = isSelected ? selectionColor : .clear
+            setTitleColor(isSelected ? selectionColor : selectionColor.withAlphaComponent(0.5), for: .normal)
         }
     }
 }
 
 final class SearchGroupSelector: UIView {
     private let radioButtonsView: RadioButtonsView<SearchGroupButton>
+    let colorSchemeVariant : ColorSchemeVariant
+
     
     @objc public var group: SearchGroup = .people {
         didSet {
@@ -76,13 +88,14 @@ final class SearchGroupSelector: UIView {
         return DeveloperMenuState.developerMenuEnabled() && ZMUser.selfUser().team != nil
     }
     
-    init() {
+    init(variant: ColorSchemeVariant) {
         let radioButtons: [SearchGroupButton] = SearchGroup.all.map {
-            let button = SearchGroupButton()
+            let button = SearchGroupButton(variant: variant)
             button.group = $0
             return button
         }
         radioButtonsView = RadioButtonsView(buttons: radioButtons)
+        colorSchemeVariant = variant
         super.init(frame: .zero)
         
         radioButtons.forEach {
@@ -93,6 +106,10 @@ final class SearchGroupSelector: UIView {
         
         guard SearchGroupSelector.shouldShowBotResults else {
             return
+        }
+        
+        if colorSchemeVariant == .dark {
+            backgroundColor = UIColor(white: 1.0, alpha: 0.08)
         }
         
         addSubview(radioButtonsView)
