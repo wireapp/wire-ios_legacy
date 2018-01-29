@@ -127,7 +127,6 @@ static NSString *const ParticipantHeaderReuseIdentifier = @"ParticipantListHeade
     [self.view addGestureRecognizer:self.tapToDismissEditingGestureRecognizer];
 
     self.collectionViewLayout = [[UICollectionViewFlowLayout alloc] init];
-    [self configCollectionViewLayout];
 
     self.collectionView = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:self.collectionViewLayout];
     self.collectionView.alwaysBounceVertical = YES;
@@ -278,6 +277,8 @@ static NSString *const ParticipantHeaderReuseIdentifier = @"ParticipantListHeade
 - (void)viewDidLayoutSubviews
 {
     [super viewDidLayoutSubviews];
+
+    [self configCollectionViewLayout];
     self.footerView.separatorLine.hidden = ! self.collectionView.isContentOverflowing;
 }
 

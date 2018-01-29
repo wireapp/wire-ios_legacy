@@ -76,13 +76,12 @@ extension ParticipantsViewController {
 
     func configCollectionViewLayout() {
 
-        if self.view.frame.width * UIScreen.main.scale >= DeviceNativeBoundsSize.iPhone4_7Inch.rawValue.width {
-            self.collectionViewLayout.itemSize = CGSize(width: 96, height: 106)
-            self.collectionViewLayout.minimumLineSpacing = 26
-        }
-        else {
+        if self.view.frame.width * UIScreen.main.scale < DeviceNativeBoundsSize.iPhone4_7Inch.rawValue.width {
             self.collectionViewLayout.itemSize = CGSize(width: 80, height: 98)
             self.collectionViewLayout.minimumLineSpacing = 18
+        } else {
+            self.collectionViewLayout.itemSize = CGSize(width: 96, height: 106)
+            self.collectionViewLayout.minimumLineSpacing = 26
         }
 
         self.collectionViewLayout.sectionInset = UIEdgeInsets(top: self.insetMargin, left: self.insetMargin, bottom: self.insetMargin, right: self.insetMargin)
