@@ -281,10 +281,7 @@ final class ServiceDetailViewController: UIViewController {
         
         let conversationPicker = ShareServiceViewController(shareable: self.service, destinations: allConversations, showPreview: true, allowsMultiselect: false)
         conversationPicker.onServiceDismiss = { [weak self] _, completed, result in
-            self?.navigationController?.dismiss(animated: true) {
-                guard let `self` = self else { return }
-                self.completion?(result)
-            }
+            self?.completion?(result)
         }
         self.navigationController?.pushViewController(conversationPicker, animated: true)
     }
