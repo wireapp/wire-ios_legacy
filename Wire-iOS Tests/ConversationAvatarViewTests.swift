@@ -100,6 +100,23 @@ class ConversationAvatarViewTests: CoreDataSnapshotTestCase {
         // THEN
         verify(view: sut.prepareForSnapshots())
     }
+    
+    func testThatItRendersASingleServiceUser() {
+        // GIVEN
+        otherUser.serviceIdentifier = "serviceIdentifier"
+        otherUser.providerIdentifier = "providerIdentifier"
+        XCTAssert(otherUser.isServiceUser)
+
+        otherUser.accentColorValue = .strongLimeGreen
+        otherUserConversation.conversationType = .oneOnOne
+        uiMOC.saveOrRollback()
+        
+        // WHEN
+        sut.conversation = otherUserConversation
+        
+        // THEN
+        verify(view: sut.prepareForSnapshots())
+    }
 
     func testThatItRendersTwoUserImages() {
         // GIVEN

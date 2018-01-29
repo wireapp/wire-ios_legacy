@@ -31,6 +31,7 @@ public protocol AddParticipantsViewControllerDelegate : class {
 public class AddParticipantsViewController : UIViewController {
     
     fileprivate let searchResultsViewController : SearchResultsViewController
+    fileprivate let searchGroupSelector : SearchGroupSelector
     fileprivate let searchHeaderViewController : SearchHeaderViewController
     fileprivate let userSelection : UserSelection = UserSelection()
     fileprivate let collectionView : UICollectionView
@@ -86,8 +87,11 @@ public class AddParticipantsViewController : UIViewController {
         
         bottomContainer.backgroundColor = UIColor.clear
         bottomContainer.addSubview(confirmButton)
- 
+
         searchHeaderViewController = SearchHeaderViewController(userSelection: userSelection, variant: ColorScheme.default().variant)
+        
+        searchGroupSelector = SearchGroupSelector(variant: .light)
+
         searchResultsViewController = SearchResultsViewController(userSelection: userSelection, variant: ColorScheme.default().variant, isAddingParticipants: true)
 
         super.init(nibName: nil, bundle: nil)
@@ -105,12 +109,23 @@ public class AddParticipantsViewController : UIViewController {
         
         userSelection.add(observer: self)
         
+        searchGroupSelector.onGroupSelected = { [weak self] group in
+            guard let `self` = self else {
+                return
+            }
+            
+            self.searchResultsViewController.searchGroup = group
+            self.performSearch()
+        }
+        
         if conversation.conversationType == .oneOnOne, let connectedUser = conversation.connectedUser {
             userSelection.add(connectedUser)
         }
     }
 
     override public func viewDidLoad() {
+        view.addSubview(searchGroupSelector)
+        
         searchHeaderViewController.title = conversation.displayName
         searchHeaderViewController.delegate = self
         addChildViewController(searchHeaderViewController)
@@ -134,11 +149,10 @@ public class AddParticipantsViewController : UIViewController {
         constrain(view, searchHeaderViewController.view, searchResultsViewController.view, confirmButton, bottomContainer) {
             container, searchHeaderView, searchResultsView, confirmButton, bottomContainer in
             
-            searchHeaderView.top == container.top + UIScreen.safeArea.top
+            searchHeaderView.top == container.top
             searchHeaderView.left == container.left
             searchHeaderView.right == container.right
             
-            searchResultsView.top == searchHeaderView.bottom
             searchResultsView.left == container.left
             searchResultsView.right == container.right
             searchResultsView.bottom == container.bottom
@@ -149,8 +163,16 @@ public class AddParticipantsViewController : UIViewController {
             confirmButton.right == bottomContainer.right - margin
             confirmButton.bottom == bottomContainer.bottom - margin - UIScreen.safeArea.bottom
         }
-    }
         
+        constrain(view, searchHeaderViewController.view, searchGroupSelector, searchResultsViewController.view) {
+            view, searchHeaderView, searchGroupSelector, searchResultsView in
+            searchGroupSelector.top == searchHeaderView.bottom
+            searchGroupSelector.leading == view.leading
+            searchGroupSelector.trailing == view.trailing
+            searchResultsView.top == searchGroupSelector.bottom
+        }
+    }
+
     func updateConfirmButtonVisibility() {
         if userSelection.users.isEmpty {
             searchResultsViewController.searchResultsView?.accessoryView = nil
@@ -165,6 +187,23 @@ public class AddParticipantsViewController : UIViewController {
     
     var everyoneHasBeenAddedText : String {
         return "add_participants.all_contacts_added".localized
+    }
+    
+    fileprivate func performSearch() {
+        switch (searchResultsViewController.searchGroup, searchHeaderViewController.tokenField.filterText.isEmpty) {
+        case (.services, _):
+            emptyResultLabel.text = emptySearchResultText
+            searchResultsViewController.mode = .search
+            searchResultsViewController.searchForServices(withQuery: searchHeaderViewController.tokenField.filterText)
+        case (.people, true):
+            emptyResultLabel.text = everyoneHasBeenAddedText
+            searchResultsViewController.mode = .list
+            searchResultsViewController.searchContactList()
+        case (.people, false):
+            emptyResultLabel.text = emptySearchResultText
+            searchResultsViewController.mode = .search
+            searchResultsViewController.searchForLocalUsers(withQuery: searchHeaderViewController.tokenField.filterText)
+        }
     }
 }
 
@@ -195,21 +234,13 @@ extension AddParticipantsViewController : SearchHeaderViewControllerDelegate {
     }
     
     public func searchHeaderViewController(_ searchHeaderViewController: SearchHeaderViewController, updatedSearchQuery query: String) {
-        if query.isEmpty {
-            emptyResultLabel.text = everyoneHasBeenAddedText
-            searchResultsViewController.mode = .list
-            searchResultsViewController.searchContactList()
-        } else {
-            emptyResultLabel.text = emptySearchResultText
-            searchResultsViewController.mode = .search
-            searchResultsViewController.searchForLocalUsers(withQuery: query)
-        }
+        self.performSearch()
     }
     
 }
 
 extension AddParticipantsViewController : UIPopoverPresentationControllerDelegate {
-        
+
     public func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
         return UIModalPresentationStyle.overFullScreen
     }
@@ -221,36 +252,37 @@ extension AddParticipantsViewController : UIPopoverPresentationControllerDelegat
 }
 
 extension AddParticipantsViewController: SearchResultsViewControllerDelegate {
-    public func searchResultsViewController(_ searchResultsViewController: SearchResultsViewController, didTapOnUser user: ZMSearchableUser, indexPath: IndexPath, section: SearchResultsViewControllerSection)
-    {
+    public func searchResultsViewController(_ searchResultsViewController: SearchResultsViewController, didTapOnUser user: ZMSearchableUser, indexPath: IndexPath, section: SearchResultsViewControllerSection) {
         // no-op
     }
     
-    public func searchResultsViewController(_ searchResultsViewController: SearchResultsViewController, didDoubleTapOnUser user: ZMSearchableUser, indexPath: IndexPath)
-    {
+    public func searchResultsViewController(_ searchResultsViewController: SearchResultsViewController, didDoubleTapOnUser user: ZMSearchableUser, indexPath: IndexPath) {
         // no-op
     }
     
-    public func searchResultsViewController(_ searchResultsViewController: SearchResultsViewController, didTapOnConversation conversation: ZMConversation)
-    {
+    public func searchResultsViewController(_ searchResultsViewController: SearchResultsViewController, didTapOnConversation conversation: ZMConversation) {
         // no-op
     }
     
-    public func searchResultsViewController(_ searchResultsViewController: SearchResultsViewController, didTapOnSeviceUser user: ServiceUser)
-    {
-        guard let userSession = ZMUserSession.shared() else {
-            return
-        }
-        self.showLoadingView = true
-        self.conversation.add(serviceUser: user, in: userSession) { [weak self] _ in
+    public func searchResultsViewController(_ searchResultsViewController: SearchResultsViewController, didTapOnSeviceUser user: ServiceUser) {
+        let navigationController = UIViewController.navigationControllerWithDefaultNavigationBar()
+        let buttonCallback = ButtonCallbackfactory.addServiceButtonCallback(navigationController: navigationController, serviceUser: user)
+
+        let serviceDetails = ServiceDetailViewController(serviceUser: user, confirmButton: Buttonfactory.addServicebutton(), forceShowNavigationBarWhenviewWillAppear: true,  variant: .light, buttonCallback: buttonCallback)
+        
+        serviceDetails.destinationConversation = self.conversation
+        serviceDetails.completion = { [weak self] _ in
             guard let `self` = self else {
                 return
             }
-            
-            self.delegate?.addParticipantsViewControllerDidCancel(self)
-            self.showLoadingView = false
-            Analytics.shared().tag(ServiceAddedEvent(service: user, conversation: self.conversation, context: .conversationDetails))
+            self.dismiss(animated: true) {
+                self.delegate?.addParticipantsViewControllerDidCancel(self)
+            }
         }
+
+        navigationController.setViewControllers([serviceDetails], animated: false)
+
+        self.present(navigationController, animated: true, completion: nil)
     }
 }
 

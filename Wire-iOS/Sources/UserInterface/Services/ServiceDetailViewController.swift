@@ -96,7 +96,7 @@ extension Service: Shareable {
     }
     
     public func previewView() -> UIView? {
-        return ServiceView(service: self)
+        return ServiceView(service: self, variant: .dark)
     }
 }
 
@@ -133,6 +133,48 @@ extension ServiceConversation: ShareDestination {
 }
 
 
+final class Buttonfactory: NSObject {
+    @objc static func addServicebutton() -> Button {
+        let confirmButton = Button(styleClass: "dialogue-button-full")
+        confirmButton.setTitle("peoplepicker.services.add_service.button".localized, for: .normal)
+
+        return confirmButton
+   }
+
+    static func removeServicebutton() -> Button {
+        let confirmButton = Button(style: .full)
+        confirmButton.setBackgroundImageColor(.red, for: .normal)
+        confirmButton.backgroundColor = .red
+        confirmButton.setTitle("participants.services.remove_integration.button".localized, for: .normal)
+
+        return confirmButton
+    }
+}
+
+final class ButtonCallbackfactory: NSObject {
+    @objc static func addServiceButtonCallback(navigationController: UINavigationController?, serviceUser: ServiceUser) -> Callback<Button> {
+        let buttonCallback: Callback<Button> = {  _ in
+            guard let userSession = ZMUserSession.shared() else {
+                return
+            }
+
+            var allConversations: [ServiceConversation] = [.new]
+
+            let zmConversations = ZMConversationList.conversationsIncludingArchived(inUserSession: userSession).shareableConversations()
+
+            allConversations.append(contentsOf: zmConversations.map(ServiceConversation.existing))
+
+            let conversationPicker = ShareViewController<ServiceConversation, Service>(shareable: Service(serviceUser: serviceUser), destinations: allConversations, showPreview: true, allowsMultiselect: false)
+            conversationPicker.onDismiss = { _, completed in
+                navigationController?.dismiss(animated: true, completion: nil)
+            }
+            navigationController?.pushViewController(conversationPicker, animated: true)
+        }
+
+        return buttonCallback
+    }
+}
+
 ///FIXME: snapshot test
 final class ServiceDetailViewController: UIViewController {
 
@@ -149,25 +191,27 @@ final class ServiceDetailViewController: UIViewController {
         }
     }
     
-    public var completion: ((ZMConversation?)->())? = nil // TODO: not wired up yet
+    public var destinationConversation: ZMConversation?
+    public var completion: ((ZMConversation?)->())? = nil
 
-    init(serviceUser: ServiceUser, backgroundColor: UIColor?, textColor: UIColor?,
-         buttonBackgroundColor: UIColor? = nil,
+    public let variant: ColorSchemeVariant
+
+    init(serviceUser: ServiceUser,
          confirmButton: Button,
          forceShowNavigationBarWhenviewWillAppear: Bool,
+         variant: ColorSchemeVariant,
          buttonCallback: @escaping Callback<Button>
         ) {
         self.service = Service(serviceUser: serviceUser)
-        self.detailView = ServiceDetailView(service: service, textColor: textColor)
+        self.detailView = ServiceDetailView(service: service, variant: variant)
         self.confirmButton = confirmButton
         self.forceShowNavigationBarWhenviewWillAppear = forceShowNavigationBarWhenviewWillAppear
         self.confirmButtonBackgroundColor = confirmButton.backgroundColor
+        self.variant = variant
 
         super.init(nibName: nil, bundle: nil)
         
         self.title = self.service.serviceUser.name
-
-        view.backgroundColor = backgroundColor
 
         self.confirmButton.addCallback(for: .touchUpInside, callback: buttonCallback)
     }
@@ -179,6 +223,17 @@ final class ServiceDetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        self.confirmButton.addCallback(for: .touchUpInside) { [weak self] _ in
+            self?.onAddServicePressed()
+        }
+        
+        switch self.variant {
+        case .dark:
+            view.backgroundColor = .clear
+        case .light:
+            view.backgroundColor = .white
+        }
+        
         view.addSubview(detailView)
         view.addSubview(confirmButton)
         
@@ -221,7 +276,6 @@ final class ServiceDetailViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-
         if forceShowNavigationBarWhenviewWillAppear {
             self.navigationController?.setNavigationBarHidden(false, animated: animated)
         }
@@ -233,6 +287,55 @@ final class ServiceDetailViewController: UIViewController {
         ///FIXME: remove
         if let confirmButtonBackgroundColor = confirmButtonBackgroundColor {
             confirmButton.setBackgroundImageColor(confirmButtonBackgroundColor, for: .normal)
+        }
+
+        if (self.navigationController?.viewControllers.count ?? 0) > 1 {
+            self.navigationItem.leftBarButtonItem = UIBarButtonItem(icon: .backArrow, target: self, action: #selector(ServiceDetailViewController.backButtonTapped(_:)))
+        }
+
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(icon: .X, target: self, action: #selector(ServiceDetailViewController.dismissButtonTapped(_:)))
+    }
+    
+    @objc(backButtonTapped:)
+    public func backButtonTapped(_ sender: AnyObject!) {
+        self.navigationController?.popViewController(animated: true)
+    }
+    
+    @objc(dismissButtonTapped:)
+    public func dismissButtonTapped(_ sender: AnyObject!) {
+        self.navigationController?.dismiss(animated: true, completion: nil)
+    }
+    
+    private func onAddServicePressed() {
+        if let conversation = self.destinationConversation {
+            Wire.add(service: self.service, to: ServiceConversation.existing(conversation))
+            completion?(conversation)
+        }
+        else {
+            showConversationPicker()
+        }
+    }
+    
+    private func showConversationPicker() {
+        guard let userSession = ZMUserSession.shared() else {
+            return
+        }
+        
+        var allConversations: [ServiceConversation] = [.new]
+        
+        let zmConversations = ZMConversationList.conversationsIncludingArchived(inUserSession: userSession).shareableConversations().filter { $0.conversationType != .oneOnOne }
+        
+        allConversations.append(contentsOf: zmConversations.map(ServiceConversation.existing))
+        
+        let conversationPicker = ShareViewController<ServiceConversation, Service>(shareable: self.service, destinations: allConversations, showPreview: true, allowsMultiselect: false)
+        conversationPicker.onDismiss = { [weak self] (_, finished) in
+            self?.navigationController?.dismiss(animated: true) {
+                guard let `self` = self else {
+                    return
+                }
+                
+                self.completion?(nil)
+            }
         }
     }
 }

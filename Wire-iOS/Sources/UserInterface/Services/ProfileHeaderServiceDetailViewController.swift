@@ -108,10 +108,6 @@ final class ProfileHeaderServiceDetailViewController: UIViewController {
     }
 
     func setupServiceDetailViewController(serviceUser: ServiceUser) {
-        let confirmButton = Button(style: .full)
-        confirmButton.setBackgroundImageColor(.red, for: .normal)
-        confirmButton.backgroundColor = .red
-        confirmButton.setTitle("participants.services.remove_integration.button".localized, for: .normal)
 
         let buttonCallback: Callback<Button> = { [weak self] _ in
             guard let weakSelf = self else { return }
@@ -120,12 +116,10 @@ final class ProfileHeaderServiceDetailViewController: UIViewController {
             weakSelf.presentRemoveFromConversationDialogue(user: weakSelf.serviceUser as! ZMUser)
         }
 
-
         serviceDetailViewController = ServiceDetailViewController(serviceUser: serviceUser,
-                                                                  backgroundColor: self.view.backgroundColor,
-                                                                  textColor: .black,
-            confirmButton: confirmButton,
+            confirmButton: Buttonfactory.removeServicebutton(),
             forceShowNavigationBarWhenviewWillAppear: false,
+            variant: .light,
             buttonCallback: buttonCallback)
 
         self.addToSelf(serviceDetailViewController)

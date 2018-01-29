@@ -50,13 +50,23 @@ class DefaultNavigationBar : UINavigationBar {
 }
 
 extension UIViewController {
-    
+
+    static func navigationControllerWithDefaultNavigationBar() -> UINavigationController {
+        return UIViewController.navigationControllerWithDefaultNavigationBar(RotationAwareNavigationController.self)
+    }
+
+    static func navigationControllerWithDefaultNavigationBar(_ navigationControllerClass: UINavigationController.Type) -> UINavigationController {
+        let navigationController = navigationControllerClass.init(navigationBarClass: DefaultNavigationBar.self, toolbarClass: nil)
+
+        return navigationController
+    }
+
     func wrapInNavigationController() -> UINavigationController {
         return self.wrapInNavigationController(RotationAwareNavigationController.self)
     }
     
     func wrapInNavigationController(_ navigationControllerClass: UINavigationController.Type) -> UINavigationController {
-        let navigationController = navigationControllerClass.init(navigationBarClass: DefaultNavigationBar.self, toolbarClass: nil)
+        let navigationController = UIViewController.navigationControllerWithDefaultNavigationBar(navigationControllerClass)
         navigationController.setViewControllers([self], animated: false)
         return navigationController
     }
