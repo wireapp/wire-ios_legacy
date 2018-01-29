@@ -71,14 +71,16 @@ extension ParticipantsViewController: UICollectionViewDataSource {
 }
 
 extension ParticipantsViewController {
+
     // MARK: - collectionview layout configuration
+
     func configCollectionViewLayout() {
 
-        switch DeviceScreenSize.screenSizeOfThisDevice {
-        case .iPhone4_7Inch, .iPhone5_5Inch, .iPhone5_8Inch, .iPhoneBiggerThan5_8Inch:
+        if self.view.frame.width * UIScreen.main.scale >= DeviceNativeBoundsSize.iPhone4_7Inch.rawValue.width {
             self.collectionViewLayout.itemSize = CGSize(width: 96, height: 106)
             self.collectionViewLayout.minimumLineSpacing = 26
-        default:
+        }
+        else {
             self.collectionViewLayout.itemSize = CGSize(width: 80, height: 98)
             self.collectionViewLayout.minimumLineSpacing = 18
         }
