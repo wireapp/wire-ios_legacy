@@ -70,6 +70,38 @@ extension ParticipantsViewController: UICollectionViewDataSource {
     }
 }
 
+extension ParticipantsViewController: UICollectionViewDelegate {
+    public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+
+        guard headerView?.titleView.isFirstResponder == false else {
+            headerView?.titleView.resignFirstResponder()
+            return
+        }
+        guard let user: ZMUser = user(at: indexPath) else { return }
+
+        var viewContollerToPush: UIViewController?
+
+        if user.isServiceUser {
+            let profileHeaderServiceDetailViewController = ProfileHeaderServiceDetailViewController(serviceUser: user, conversation: conversation)
+            profileHeaderServiceDetailViewController.profileViewControllerDelegate = self
+            viewContollerToPush = profileHeaderServiceDetailViewController
+        } else {
+            let profileViewController = ProfileViewController(user: user, conversation: conversation)
+            profileViewController?.delegate = self
+            profileViewController?.navigationControllerDelegate = navigationControllerDelegate
+            viewContollerToPush = profileViewController
+        }
+
+        if let layoutAttributes: UICollectionViewLayoutAttributes = collectionView.layoutAttributesForItem(at: indexPath) {
+            navigationControllerDelegate.tapLocation = collectionView.convert(layoutAttributes.center, to: view)
+        }
+
+        if let viewContollerToPush = viewContollerToPush {
+            navigationController?.pushViewController(viewContollerToPush, animated: true)
+        }
+    }
+}
+
 extension ParticipantsViewController {
 
     // MARK: - collectionview layout configuration
@@ -120,4 +152,3 @@ extension ParticipantsViewController {
         self.collectionView?.reloadData()
     }
 }
-
