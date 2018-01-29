@@ -78,9 +78,9 @@ private func add(service: Service, to conversation: Any, completion: @escaping (
             completion(result)
         })
     case .existing(let conversation):
-        conversation.add(serviceUser: service.serviceUser, in: userSession) { done in
-            if let done = done {
-                completion(AddBotResult.failure(error: done))
+        conversation.add(serviceUser: service.serviceUser, in: userSession) { error in
+            if let error = error {
+                completion(AddBotResult.failure(error: error))
             } else {
                 tagAdded(user: service.serviceUser, to: conversation)
                 completion(AddBotResult.success(conversation: conversation))
