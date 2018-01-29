@@ -25,7 +25,7 @@ extension ParticipantsViewController: UICollectionViewDelegate {
             headerView?.titleView.resignFirstResponder()
             return
         }
-        guard let user: ZMUser = participants[indexPath.row] as? ZMUser else { return }
+        guard let user: ZMUser = user(at: indexPath) else { return }
 
         var viewContollerToPush: UIViewController?
 

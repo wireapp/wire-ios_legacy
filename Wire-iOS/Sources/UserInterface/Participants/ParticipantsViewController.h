@@ -18,15 +18,11 @@
 
 
 #import <UIKit/UIKit.h>
-///FIXME: private
-#import "ProfileNavigationControllerDelegate.h"
 #import "ProfileViewController.h"
 
 @class ZMConversation;
 @class ZClientViewController;
 @class ParticipantsViewController;
-///FIXME: private
-@class ParticipantsHeaderView;
 
 @protocol ParticipantsViewControllerDelegate <NSObject>
 @optional
@@ -43,10 +39,6 @@
 @property (nonatomic, strong) ZMConversation *conversation;
 @property (nonatomic, weak) ZClientViewController *zClientViewController;
 @property (nonatomic, assign) BOOL shouldDrawTopSeparatorLineDuringPresentation;
-///FIXME: private
-@property (nonatomic, readonly) ParticipantsHeaderView *headerView;
-@property (nonatomic, readonly) NSArray *participants;
-@property (nonatomic, readonly) ProfileNavigationControllerDelegate *navigationControllerDelegate;
 
 - (instancetype)initWithConversation:(ZMConversation *)conversation;
 

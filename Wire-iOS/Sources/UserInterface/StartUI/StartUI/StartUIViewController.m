@@ -22,6 +22,7 @@
 @import WireExtensionComponents;
 
 #import "StartUIViewController.h"
+#import "StartUIViewController+internal.h"
 #import "ProfilePresenter.h"
 #import "ShareContactsViewController.h"
 #import "ZClientViewController.h"

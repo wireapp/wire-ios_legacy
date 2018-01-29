@@ -74,9 +74,7 @@ static NSString *const ParticipantHeaderReuseIdentifier = @"ParticipantListHeade
 
 @interface ParticipantsViewController () <ZMConversationObserver, UIGestureRecognizerDelegate>
 
-@property (nonatomic) ParticipantsHeaderView *headerView;
 @property (nonatomic) ParticipantsFooterView *footerView;
-@property (nonatomic) ProfileNavigationControllerDelegate *navigationControllerDelegate;
 
 @property (nonatomic) UITapGestureRecognizer *tapToDismissEditingGestureRecognizer;
 
@@ -327,14 +325,6 @@ static NSString *const ParticipantHeaderReuseIdentifier = @"ParticipantListHeade
     }
 }
 
-
-- (void)configureCell:(ParticipantsListCell *)cell atIndexPath:(NSIndexPath *)indexPath
-{
-    ZMUser *user = self.participants[indexPath.row];
-    [cell updateForUser:user inConversation:self.conversation];
-}
-
-
 #pragma mark - ProfileViewControllerDelegate
 
 - (void)profileViewControllerWantsToBeDismissed:(UIViewController *)profileViewController completion:(dispatch_block_t)completion
@@ -350,7 +340,7 @@ static NSString *const ParticipantHeaderReuseIdentifier = @"ParticipantListHeade
     [self dismissViewControllerAnimated:YES completion:^{
         [self.zClientViewController selectConversation:conversation focusOnView:YES animated:YES];
     }];
-}
+} 
 @end
 
 

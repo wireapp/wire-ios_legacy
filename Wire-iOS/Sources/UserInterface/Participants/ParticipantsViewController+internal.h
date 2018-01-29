@@ -16,16 +16,25 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
+#import "ProfileNavigationControllerDelegate.h"
+#import "ProfileViewController.h"
+
 static NSString *const ParticipantCellReuseIdentifier = @"ParticipantListCell";
 static NSString *const ParticipantCollectionViewSectionHeaderReuseIdentifier = @"ParticipantCollectionViewSectionHeaderReuseIdentifier";
 
 @class ParticipantsListCell;
+@class ParticipantsHeaderView;
 
 @interface ParticipantsViewController ()
 
 @property (nonatomic) NSDictionary *groupedParticipants;
 @property (nonatomic) UICollectionView *collectionView;
 @property (nonatomic) UICollectionViewFlowLayout *collectionViewLayout;
+@property (nonatomic) ParticipantsHeaderView *headerView;
+@property (nonatomic) ProfileNavigationControllerDelegate *navigationControllerDelegate;
+
 // Cosmetic
 @property (nonatomic) CGFloat insetMargin;
 @end
+
+
