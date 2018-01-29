@@ -87,20 +87,15 @@ extension StartUIViewController: SearchResultsViewControllerDelegate {
 extension AddBotError {
     
     var localizedTitle: String {
-        switch self {
-        case .tooManyParticipants:
-            return "TODO"
-        default:
-            return "peoplepicker.services.add_service.error.title".localized
-        }
+        return "peoplepicker.services.add_service.error.title".localized
     }
     
     var localizedMessage: String {
         switch self {
         case .tooManyParticipants:
-            return "TODO"
+            return "peoplepicker.services.add_service.error.full".localized
         default:
-            return "peoplepicker.services.add_service.error".localized
+            return "peoplepicker.services.add_service.error.default".localized
         }
     }
 }
