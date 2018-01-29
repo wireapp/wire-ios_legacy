@@ -20,6 +20,12 @@
 import Foundation
 import Cartography
 
+extension ZMConversation {
+    var botCanBeAdded: Bool {
+        return self.conversationType != .oneOnOne
+    }
+}
+
 public enum ServiceConversation {
     case existing(ZMConversation)
     case new
@@ -275,7 +281,7 @@ final class ServiceDetailViewController: UIViewController {
         
         var allConversations: [ServiceConversation] = [.new]
         
-        let zmConversations = ZMConversationList.conversationsIncludingArchived(inUserSession: userSession).shareableConversations().filter { $0.conversationType != .oneOnOne }
+        let zmConversations = ZMConversationList.conversationsIncludingArchived(inUserSession: userSession).convesationsWhereBotCanBeAdded()
         
         allConversations.append(contentsOf: zmConversations.map(ServiceConversation.existing))
         

@@ -130,7 +130,9 @@ public class AddParticipantsViewController : UIViewController {
     }
 
     override public func viewDidLoad() {
-        view.addSubview(searchGroupSelector)
+        if self.conversation.botCanBeAdded {
+            view.addSubview(searchGroupSelector)
+        }
         
         searchHeaderViewController.title = conversation.displayName
         searchHeaderViewController.delegate = self
@@ -170,12 +172,20 @@ public class AddParticipantsViewController : UIViewController {
             self.bottomConstraint = confirmButton.bottom == bottomContainer.bottom - margin - UIScreen.safeArea.bottom
         }
         
-        constrain(view, searchHeaderViewController.view, searchGroupSelector, searchResultsViewController.view) {
-            view, searchHeaderView, searchGroupSelector, searchResultsView in
-            searchGroupSelector.top == searchHeaderView.bottom
-            searchGroupSelector.leading == view.leading
-            searchGroupSelector.trailing == view.trailing
-            searchResultsView.top == searchGroupSelector.bottom
+        if self.conversation.botCanBeAdded {
+            constrain(view, searchHeaderViewController.view, searchGroupSelector, searchResultsViewController.view) {
+                view, searchHeaderView, searchGroupSelector, searchResultsView in
+                searchGroupSelector.top == searchHeaderView.bottom
+                searchGroupSelector.leading == view.leading
+                searchGroupSelector.trailing == view.trailing
+                searchResultsView.top == searchGroupSelector.bottom
+            }
+        }
+        else {
+            constrain(searchHeaderViewController.view, searchResultsViewController.view) {
+                searchHeaderView, searchResultsView in
+                searchResultsView.top == searchHeaderView.bottom
+            }
         }
     }
         
