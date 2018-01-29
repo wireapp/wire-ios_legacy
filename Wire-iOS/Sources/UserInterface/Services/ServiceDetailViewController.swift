@@ -152,19 +152,17 @@ extension ServiceConversation: ShareDestination {
 
 final class Buttonfactory: NSObject {
     @objc static func addServicebutton() -> Button {
-        let confirmButton = Button(styleClass: "dialogue-button-full")
-        confirmButton.setTitle("peoplepicker.services.add_service.button".localized, for: .normal)
+        let button = Button(styleClass: "dialogue-button-full")
+        button.setTitle("peoplepicker.services.add_service.button".localized, for: .normal)
 
-        return confirmButton
+        return button
    }
 
-    static func removeServicebutton() -> Button {
-        let confirmButton = Button(style: .full)
-        confirmButton.setBackgroundImageColor(.red, for: .normal)
-        confirmButton.backgroundColor = .red
-        confirmButton.setTitle("participants.services.remove_integration.button".localized, for: .normal)
+    static func destructiveServiceButton() -> Button {
+        let button = Button(styleClass: "dialogue-button-full-destructive")
+        button.setTitle("participants.services.remove_integration.button".localized, for: .normal)
 
-        return confirmButton
+        return button
     }
 }
 
@@ -199,9 +197,6 @@ final class ServiceDetailViewController: UIViewController {
     private let confirmButton: Button
     private var forceShowNavigationBarWhenviewWillAppear: Bool
 
-    ///FIXME: work around to override Button class color update after UI transition, create a new Button class with no classy dependency
-    private let confirmButtonBackgroundColor: UIColor?
-    
     public var service: Service {
         didSet {
             self.detailView.service = service
@@ -223,7 +218,6 @@ final class ServiceDetailViewController: UIViewController {
         self.detailView = ServiceDetailView(service: service, variant: variant)
         self.confirmButton = confirmButton
         self.forceShowNavigationBarWhenviewWillAppear = forceShowNavigationBarWhenviewWillAppear
-        self.confirmButtonBackgroundColor = confirmButton.backgroundColor
         self.variant = variant
 
         super.init(nibName: nil, bundle: nil)
@@ -300,11 +294,6 @@ final class ServiceDetailViewController: UIViewController {
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-
-        ///FIXME: remove
-        if let confirmButtonBackgroundColor = confirmButtonBackgroundColor {
-            confirmButton.setBackgroundImageColor(confirmButtonBackgroundColor, for: .normal)
-        }
 
         if (self.navigationController?.viewControllers.count ?? 0) > 1 {
             self.navigationItem.leftBarButtonItem = UIBarButtonItem(icon: .backArrow, target: self, action: #selector(ServiceDetailViewController.backButtonTapped(_:)))
