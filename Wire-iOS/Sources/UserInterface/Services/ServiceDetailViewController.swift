@@ -141,7 +141,7 @@ extension ServiceConversation: ShareDestination {
         case .new:
             let imageView = UIImageView()
             imageView.contentMode = .center
-            imageView.image = UIImage.init(for: .plus, iconSize: .medium, color: .white)
+            imageView.image = UIImage.init(for: .plus, iconSize: .tiny, color: .white)
             return imageView
         case .existing(let conversation):
             return conversation.avatarView
@@ -279,7 +279,7 @@ final class ServiceDetailViewController: UIViewController {
         
         allConversations.append(contentsOf: zmConversations.map(ServiceConversation.existing))
         
-        let conversationPicker = ShareServiceViewController(shareable: self.service, destinations: allConversations, showPreview: true, allowsMultiselect: false)
+        let conversationPicker = ShareServiceViewController(shareable: self.service, destinations: allConversations, showPreview: true, allowsMultipleSelection: false)
         conversationPicker.onServiceDismiss = { [weak self] _, completed, result in
             self?.completion?(result)
         }

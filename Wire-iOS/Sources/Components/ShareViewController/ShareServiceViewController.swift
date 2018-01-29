@@ -21,6 +21,19 @@ import WireExtensionComponents
 
 class ShareServiceViewController: ShareViewController<ServiceConversation,Service> {
     
+    @objc(backButtonTapped:)
+    public func backButtonTapped(_ sender: AnyObject!) {
+        self.navigationController?.popViewController(animated: true)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        if (self.navigationController?.viewControllers.count ?? 0) > 1 {
+            self.navigationItem.leftBarButtonItem = UIBarButtonItem(icon: .backArrow, target: self, action: #selector(ServiceDetailViewController.backButtonTapped(_:)))
+        }
+    }
+    
     // MARK: - Actions
     
     public var onServiceDismiss: ((ShareServiceViewController, Bool, AddBotResult?)->())?

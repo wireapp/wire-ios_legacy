@@ -40,16 +40,16 @@ public class ShareViewController<D: ShareDestination, S: Shareable>: UIViewContr
     }
     
     public let showPreview: Bool
-    public let allowsMultiselect: Bool
+    public let allowsMultipleSelection: Bool
     public var onDismiss: ((ShareViewController, Bool)->())?
     internal var bottomConstraint: NSLayoutConstraint?
     
-    public init(shareable: S, destinations: [D], showPreview: Bool = true, allowsMultiselect: Bool = true) {
+    public init(shareable: S, destinations: [D], showPreview: Bool = true, allowsMultipleSelection: Bool = true) {
         self.destinations = destinations
         self.filteredDestinations = destinations
         self.shareable = shareable
         self.showPreview = showPreview
-        self.allowsMultiselect = allowsMultiselect
+        self.allowsMultipleSelection = allowsMultipleSelection
         super.init(nibName: nil, bundle: nil)
         self.transitioningDelegate = self
         
@@ -143,17 +143,13 @@ public class ShareViewController<D: ShareDestination, S: Shareable>: UIViewContr
     public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let destination = self.filteredDestinations[indexPath.row]
         
-        if !self.allowsMultiselect && self.selectedDestinations.count > 0 {
-            if let indexPathForSelectedRow = tableView.indexPathForSelectedRow {
-                tableView.deselectRow(at: indexPathForSelectedRow, animated: true)
-            }
-            self.selectedDestinations.removeAll()
-            self.tokenField.removeAllTokens()
-        }
-        
         self.tokenField.addToken(forTitle: destination.displayName, representedObject: destination)
         
         self.selectedDestinations.insert(destination)
+        
+        if !self.allowsMultipleSelection {
+            self.onSendButtonPressed(sender: nil)
+        }
     }
     
     public func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
