@@ -17,7 +17,7 @@
 //
 
 import Foundation
-
+/// Enum for replacing IS_IPHONE, IS_IPHONE_4, IS_IPHONE_5, IS_IPHONE_6, IS_IPHONE_6_PLUS_OR_BIGGER objc macros. Each value represents a native screen size of the device.
 enum DeviceNativeBoundsSize: CGSize {
 
     case iPhone3_5Inch = "{640, 960}"
@@ -32,7 +32,9 @@ enum DeviceNativeBoundsSize: CGSize {
     case iPadRetina12_9Inch = "{2048, 2732}"
     case unknown = "{0, 0}"
 
-    static var screenSizeOfThisDevice: DeviceNativeBoundsSize {
+
+    /// Return native screen bound of this device. Support up to iPhone X of 2017 and iPad Pro 12.9 Inch.
+    static var nativeScreenBoundOfThisDevice: DeviceNativeBoundsSize {
         switch UIDevice.current.userInterfaceIdiom {
         case .pad:
             let screenHeight = UIScreen.main.nativeBounds.size.height
@@ -41,11 +43,11 @@ enum DeviceNativeBoundsSize: CGSize {
             case 768:
                 return .iPad
             case 1536:
-                return .iPad
+                return .iPadRetina
             case 1668:
-                return .iPad
+                return .iPadRetina10_5Inch
             case 2048:
-                return .iPad
+                return .iPadRetina12_9Inch
             default:
                 return .unknown
             }

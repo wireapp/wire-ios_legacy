@@ -16,6 +16,11 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
+
+/// Enum for section ordering in ParticipantsViewController's collection view
+///
+/// - user: user section (section 0)
+/// - serviceUser: service user section (section 1)
 public enum UserType: Int {
     case user = 0
     case serviceUser = 1
