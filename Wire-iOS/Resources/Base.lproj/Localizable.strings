@@ -39,6 +39,9 @@
 "peoplepicker.header.services" = "Services";
 "peoplepicker.services.create_conversation.item" = "Create a new conversation";
 "peoplepicker.services.add_service.button" = "Add service";
+"peoplepicker.services.add_service.error.title" = "The service can't be added";
+"peoplepicker.services.add_service.error.default" = "The service is unavailable at the moment";
+"peoplepicker.services.add_service.error.full" = "The conversation is full";
 
 "peoplepicker.title.create_conversation" = "Create group";
 "peoplepicker.title.add_to_conversation" = "Add people";

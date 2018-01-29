@@ -77,6 +77,8 @@
 #import "ProfileViewController.h"
 #import "ProfileNavigationControllerDelegate.h"
 #import "StartUIViewController.h"
+#import "ParticipantsViewController+internal.h"
+#import "ParticipantsListCell.h"
 
 // View Controllers
 #import "ZClientViewController.h"
@@ -120,6 +122,7 @@
 #import "VoiceUserImageView.h"
 #import "VoiceChannelParticipantCell.h"
 #import "ProfilePictureStepViewController.h"
+#import "StartUIViewController.h"
 
 // Helper objects
 #import "PushTransition.h"

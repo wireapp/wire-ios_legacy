@@ -60,7 +60,8 @@
     self.guestLabel.hidden = YES;
     [self.contentView addSubview:self.guestLabel];
     
-    [self.userImageView autoCenterInSuperview];
+    [self.userImageView autoPinEdge:ALEdgeTop toEdge:ALEdgeTop ofView:self.contentView];
+    [self.userImageView autoAlignAxisToSuperviewAxis:ALAxisVertical];
     [self.userImageView autoSetDimensionsToSize:CGSizeMake(80, 80)];
     [self.nameLabel autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.userImageView withOffset:8];
     [self.nameLabel autoPinEdge:ALEdgeLeft toEdge:ALEdgeLeft ofView:self.userImageView];

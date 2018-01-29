@@ -100,7 +100,7 @@ extension ShareViewController {
         constrain(self.view, self.blurView, self.containerView) { view, blurView, containerView in
             blurView.edges == view.edges
             containerView.top == view.top + safeArea.top
-            containerView.bottom == view.bottom - safeArea.bottom
+            self.bottomConstraint = containerView.bottom == view.bottom - safeArea.bottom
             containerView.leading == view.leading
             containerView.trailing == view.trailing
         }

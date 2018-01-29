@@ -19,8 +19,7 @@
 
 #import <UIKit/UIKit.h>
 
-@class ZMConversation, PeopleInputController;
-@class UserSelection;
+@class ZMConversation, PeopleInputController, UserSelection;
 
 typedef NS_ENUM(NSUInteger, StartUIAction) {
     StartUIActionCreateOrOpenConversation,
