@@ -86,11 +86,8 @@
         case AvatarImageViewShapeCircle:
             self.containerView.layer.cornerRadius = MIN(self.bounds.size.width, self.bounds.size.height) / 2;
             break;
-        case AvatarImageViewShapeRounded:
-            self.containerView.layer.cornerRadius = 4;
-            break;
         case AvatarImageViewShapeRoundedRelative:
-            self.containerView.layer.cornerRadius = CGRectGetHeight(self.containerView.bounds) / 5;
+            self.containerView.layer.cornerRadius = ceil(CGRectGetHeight(self.containerView.bounds) / 6);
             break;
     }
 }

@@ -21,7 +21,6 @@
 
 typedef NS_ENUM(NSUInteger, AvatarImageViewShape) {
     AvatarImageViewShapeCircle,
-    AvatarImageViewShapeRounded,
     AvatarImageViewShapeRectangle,
     AvatarImageViewShapeRoundedRelative
 };
