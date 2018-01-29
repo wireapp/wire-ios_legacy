@@ -54,7 +54,7 @@ final public class ShareViewController<D: ShareDestination, S: Shareable>: UIVie
         self.transitioningDelegate = self
         
         NotificationCenter.default.addObserver(self,
-                                               selector: #selector(keyboardFrameDidChange(notification:)),
+                                               selector: #selector(keyboardFrameWillChange(notification:)),
                                                name: NSNotification.Name.UIKeyboardWillChangeFrame,
                                                object: nil)
     }
@@ -192,7 +192,7 @@ final public class ShareViewController<D: ShareDestination, S: Shareable>: UIVie
         return BlurEffectTransition(visualEffectView: blurView, crossfadingViews: [containerView], reverse: true)
     }
     
-    func keyboardFrameDidChange(notification: Notification) {
+    func keyboardFrameWillChange(notification: Notification) {
         let firstResponder = UIResponder.wr_currentFirst()
         let inputAccessoryHeight = firstResponder?.inputAccessoryView?.bounds.size.height ?? 0
         
