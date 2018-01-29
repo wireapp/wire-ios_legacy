@@ -252,7 +252,9 @@ final class ServiceDetailViewController: UIViewController {
     
     @objc(dismissButtonTapped:)
     public func dismissButtonTapped(_ sender: AnyObject!) {
-        self.navigationController?.dismiss(animated: true, completion: nil)
+        self.navigationController?.dismiss(animated: true, completion: { [weak self] in
+            self?.completion?(nil)
+        })
     }
     
     private func onAddServicePressed() {
