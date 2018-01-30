@@ -16,12 +16,15 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
+
 import UIKit
 import Cartography
+
 
 @objc enum ProfileHeaderStyle: Int {
     case cancelButton, backButton, noButton
 }
+
 
 final class ProfileHeaderView: UIView {
 
@@ -46,7 +49,7 @@ final class ProfileHeaderView: UIView {
         configure(with: viewModel)
         createConstraints()
     }
-
+    
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -72,15 +75,15 @@ final class ProfileHeaderView: UIView {
         let horizontalMargin = WAZUIMagic.cgFloat(forIdentifier: "profile_temp.content_left_margin")
 
         let detailViewMargin = horizontalMargin + 32
-
-        constrain(self, detailView) { (view: LayoutProxy, detailView: LayoutProxy) -> Void in
+        
+        constrain(self, detailView) { (view: LayoutProxy, detailView: LayoutProxy) -> () in
             detailView.top == view.top + topMargin
             detailView.leading == view.leading + detailViewMargin
             detailView.trailing == view.trailing - detailViewMargin
             detailView.bottom == view.bottom - 12
         }
 
-        constrain(self, dismissButton, verifiedImageView, detailView.titleLabel) { (view: LayoutProxy, dismiss: LayoutProxy, verified: LayoutProxy, title: LayoutProxy) -> Void in
+        constrain(self, dismissButton, verifiedImageView, detailView.titleLabel) { (view: LayoutProxy, dismiss: LayoutProxy, verified: LayoutProxy, title: LayoutProxy) -> () in
             dismiss.top == view.top + 26
             dismiss.width == dismiss.height
             dismiss.width == 32
@@ -90,7 +93,7 @@ final class ProfileHeaderView: UIView {
             verified.width == 16
             verified.leading == view.leading + horizontalMargin
 
-            switch headerStyle {
+            switch headerStyle { 
             case .backButton: dismiss.leading == view.leading + horizontalMargin
             case .cancelButton: dismiss.trailing == view.trailing - horizontalMargin
             default: break
@@ -119,4 +122,3 @@ final class ProfileHeaderView: UIView {
     }
 
 }
-
