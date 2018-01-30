@@ -52,6 +52,8 @@ typedef NS_ENUM(NSUInteger, ProfileViewControllerTabBarIndex) {
 @interface ProfileViewController (ProfileViewControllerDelegate) <ProfileViewControllerDelegate>
 @end
 
+@interface ProfileViewController (ViewControllerDismissable) <ViewControllerDismissable>
+@end
 
 @interface ProfileViewController (ProfileDetailsViewControllerDelegate) <ProfileDetailsViewControllerDelegate>
 @end
@@ -135,7 +137,7 @@ typedef NS_ENUM(NSUInteger, ProfileViewControllerTabBarIndex) {
 - (void)requestDismissalWithCompletion:(dispatch_block_t)completion
 {
     if ([self.delegate respondsToSelector:@selector(profileViewControllerWantsToBeDismissed:completion:)]) {
-        [self.delegate profileViewControllerWantsToBeDismissed:self completion:completion];
+        [self.viewControllerDismissable profileViewControllerWantsToBeDismissed:self completion:completion];
     }
 }
 
@@ -268,6 +270,14 @@ typedef NS_ENUM(NSUInteger, ProfileViewControllerTabBarIndex) {
 
 @end
 
+@implementation ProfileViewController (ViewControllerDismissable)
+
+- (void)profileViewControllerWantsToBeDismissed:(UIViewController *)controller completion:(dispatch_block_t)completion
+{
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+@end
 
 @implementation ProfileViewController (ProfileViewControllerDelegate)
 
@@ -276,11 +286,6 @@ typedef NS_ENUM(NSUInteger, ProfileViewControllerTabBarIndex) {
     if ([self.delegate respondsToSelector:@selector(profileViewController:wantsToNavigateToConversation:)]) {
         [self.delegate profileViewController:controller wantsToNavigateToConversation:conversation];
     }
-}
-
-- (void)profileViewControllerWantsToBeDismissed:(UIViewController *)controller completion:(dispatch_block_t)completion
-{
-    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (NSString *)suggestedBackButtonTitleForProfileViewController:(id)controller
