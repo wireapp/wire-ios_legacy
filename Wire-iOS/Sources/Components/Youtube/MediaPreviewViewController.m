@@ -137,7 +137,7 @@
     NSArray *queryItems = components.queryItems == nil ? @[] : components.queryItems;
     components.queryItems = [queryItems arrayByAddingObject:[NSURLQueryItem queryItemWithName:@"autoplay" value:@"1"]];
 
-    BrowserViewController *browserViewController = [[BrowserViewController alloc] initWithURL:components.URL forUseWithStatusBar:YES];
+    BrowserViewController *browserViewController = [[BrowserViewController alloc] initWithURL:components.URL];
     [self.view.window.rootViewController presentViewController:browserViewController animated:YES completion:nil];
 }
 
