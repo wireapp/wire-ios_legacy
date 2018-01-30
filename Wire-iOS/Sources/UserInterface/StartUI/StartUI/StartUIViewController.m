@@ -49,7 +49,7 @@
 static NSUInteger const StartUIInitiallyShowsKeyboardConversationThreshold = 10;
 
 
-@interface StartUIViewController () <ContactsViewControllerDelegate, UserSelectionObserver, SearchResultsViewControllerDelegate, SearchHeaderViewControllerDelegate>
+@interface StartUIViewController () <ContactsViewControllerDelegate, UserSelectionObserver, SearchHeaderViewControllerDelegate>
 
 @property (nonatomic) ProfilePresenter *profilePresenter;
 @property (nonatomic) StartUIQuickActionsBar *quickActionsBar;
@@ -58,7 +58,6 @@ static NSUInteger const StartUIInitiallyShowsKeyboardConversationThreshold = 10;
 
 @property (nonatomic) SearchHeaderViewController *searchHeaderViewController;
 @property (nonatomic) SearchResultsViewController *searchResultsViewController;
-@property (nonatomic) UserSelection *userSelection;
 @property (nonatomic) AnalyticsTracker *analyticsTracker;
 
 @property (nonatomic) BOOL addressBookUploadLogicHandled;
@@ -105,7 +104,7 @@ static NSUInteger const StartUIInitiallyShowsKeyboardConversationThreshold = 10;
     [self.view addSubview:self.searchHeaderViewController.view];
     [self.searchHeaderViewController didMoveToParentViewController:self];
     
-    self.groupSelector = [[SearchGroupSelector alloc] init];
+    self.groupSelector = [[SearchGroupSelector alloc] initWithVariant:ColorSchemeVariantDark];
     self.groupSelector.translatesAutoresizingMaskIntoConstraints = NO;
     @weakify(self);
     self.groupSelector.onGroupSelected = ^(SearchGroup group) {
@@ -146,7 +145,7 @@ static NSUInteger const StartUIInitiallyShowsKeyboardConversationThreshold = 10;
 
 - (void)createConstraints
 {
-    [self.searchHeaderViewController.view autoPinEdgeToSuperviewEdge:ALEdgeTop withInset:UIScreen.safeArea.top];
+    [self.searchHeaderViewController.view autoPinEdgeToSuperviewEdge:ALEdgeTop];
     [self.searchHeaderViewController.view autoPinEdgeToSuperviewEdge:ALEdgeLeading];
     [self.searchHeaderViewController.view autoPinEdgeToSuperviewEdge:ALEdgeTrailing];
     
@@ -325,72 +324,6 @@ static NSUInteger const StartUIInitiallyShowsKeyboardConversationThreshold = 10;
 - (void)userSelection:(UserSelection *)userSelection wasReplacedBy:(NSArray<ZMUser *> *)users
 {
     [self updateActionBar];
-}
-
-#pragma mark - SearchResultsViewControllerDelegate
-
-- (void)searchResultsViewController:(SearchResultsViewController *)searchResultsViewController didTapOnUser:(id<ZMSearchableUser>)user indexPath:(NSIndexPath *)indexPath section:(enum SearchResultsViewControllerSection)section
-{
-    if ([user conformsToProtocol:@protocol(AnalyticsConnectionStateProvider)]) {
-        [Analytics.shared tagSelectedSearchResultWithConnectionStateProvider:(id<AnalyticsConnectionStateProvider>)user
-                                                                     context:SearchContextStartUI];
-    }
-    
-    switch (section) {
-        case SearchResultsViewControllerSectionTopPeople:
-            [[Analytics shared] tagSelectedTopContact];
-            break;
-        case SearchResultsViewControllerSectionContacts:
-            [[Analytics shared] tagSelectedSearchResultUserWithIndex:indexPath.row];
-            break;
-        case SearchResultsViewControllerSectionDirectory:
-            [[Analytics shared] tagSelectedSuggestedUserWithIndex:indexPath.row];
-            break;
-        default:
-            break;
-    }
-    
-    if (! user.isConnected && ! user.isTeamMember) {
-        [self presentProfileViewControllerForUser:user atIndexPath:indexPath];
-    }
-}
-
-- (void)searchResultsViewController:(SearchResultsViewController *)searchResultsViewController didDoubleTapOnUser:(id<ZMSearchableUser>)user indexPath:(NSIndexPath *)indexPath
-{
-    ZMUser *unboxedUser = BareUserToUser(user);
-    
-    if (unboxedUser != nil && unboxedUser.isConnected && ! unboxedUser.isBlocked) {
-        if (user != nil && [self.delegate respondsToSelector:@selector(startUI:didSelectUsers:forAction:)]) {
-            if (self.userSelection.users.count == 1 && ![self.userSelection.users containsObject:unboxedUser]) {
-                return;
-            }
-            [self.delegate startUI:self didSelectUsers:[NSSet setWithObject:user] forAction:StartUIActionCreateOrOpenConversation];
-        }
-    }
-}
-
-- (void)searchResultsViewController:(SearchResultsViewController *)searchResultsViewController didTapOnConversation:(ZMConversation *)conversation
-{
-    if (conversation.conversationType == ZMConversationTypeGroup) {
-        if ([self.delegate respondsToSelector:@selector(startUI:didSelectConversation:)]) {
-            [self.delegate startUI:self didSelectConversation:conversation];
-        }
-    }
-}
-
-- (void)searchResultsViewController:(SearchResultsViewController * _Nonnull)searchResultsViewController didTapOnSeviceUser:(id<ServiceUser> _Nonnull)serviceUser
-{
-    ServiceDetailViewController *serviceDetail = [[ServiceDetailViewController alloc] initWithServiceUser:serviceUser];
-    
-    serviceDetail.completion = ^(ZMConversation *conversation) {
-        if (nil != conversation) {
-            if ([self.delegate respondsToSelector:@selector(startUI:didSelectConversation:)]) {
-                [self.delegate startUI:self didSelectConversation:conversation];
-            }
-        }
-    };
-    
-    [self.navigationController pushViewController:serviceDetail animated:YES];
 }
 
 #pragma mark - SearchHeaderViewControllerDelegate

@@ -399,13 +399,6 @@ static const CGFloat BurstContainerExpandedHeight = 40;
     }
 }
 
-- (void)updateSenderAndSenderImage:(id<ZMConversationMessage>)message
-{
-    self.authorLabel.text = [message.sender displayNameInConversation:message.conversation];
-    self.authorLabel.textColor = [[ColorScheme defaultColorScheme] nameAccentForColor:message.sender.accentColorValue
-                                                                              variant:[ColorScheme defaultColorScheme].variant];
-    self.authorImageView.user = message.sender;
-}
 
 - (void)setCountdownContainerViewHidden:(BOOL)countdownContainerViewHidden
 {

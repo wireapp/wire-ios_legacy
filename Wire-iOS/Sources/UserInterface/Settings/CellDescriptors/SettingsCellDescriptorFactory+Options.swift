@@ -110,8 +110,7 @@ extension SettingsCellDescriptorFactory {
         let soundAlertSection = SettingsSectionDescriptor(cellDescriptors: [soundAlert])
         cellDescriptors.append(soundAlertSection)
         
-        // TODO: CallKit only with 1 account
-        if #available(iOS 10.0, *), (SessionManager.shared?.accountManager.accounts.count ?? 0 <= 1) {
+        if #available(iOS 10.0, *) {
             let callKitDescriptor = SettingsPropertyToggleCellDescriptor(settingsProperty: settingsPropertyFactory.property(.disableCallKit), inverse: true)
             let callKitHeader = "self.settings.callkit.title".localized
             let callKitDescription = "self.settings.callkit.description".localized

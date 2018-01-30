@@ -112,7 +112,6 @@ import WireLinkPreview
 
 
 @objc class MockMessage: NSObject, ZMConversationMessage {
-
     typealias UsersByReaction = Dictionary<String, [ZMUser]>
     
     // MARK: - ZMConversationMessage
@@ -174,7 +173,11 @@ import WireLinkPreview
     var canBeDeleted: Bool {
         return systemMessageData == nil
     }
-
+    
+    func markAsUnread() {
+        // no-op
+    }
+    
     var hasBeenDeleted = false
     
     var systemMessageType: ZMSystemMessageType = ZMSystemMessageType.invalid

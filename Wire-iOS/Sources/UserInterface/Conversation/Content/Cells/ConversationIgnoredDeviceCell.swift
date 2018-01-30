@@ -56,7 +56,7 @@ class ConversationIgnoredDeviceCell : IconSystemCell {
                 let deviceRange = (endResult as NSString).range(of: deviceString)
 
                 let attributedString = NSMutableAttributedString(string: endResult)
-                attributedString.addAttributes([NSFontAttributeName: labelFont, NSForegroundColorAttributeName: labelTextColor], range:NSRange(location: 0, length: endResult.characters.count))
+                attributedString.addAttributes([NSFontAttributeName: labelFont, NSForegroundColorAttributeName: labelTextColor], range:NSRange(location: 0, length: endResult.count))
                 attributedString.addAttributes([NSFontAttributeName: labelBoldFont, NSForegroundColorAttributeName: labelTextColor], range: youRange)
                 attributedString.addAttributes([NSFontAttributeName: labelFont, NSLinkAttributeName: type(of: self).deviceListLink], range: deviceRange)
                 

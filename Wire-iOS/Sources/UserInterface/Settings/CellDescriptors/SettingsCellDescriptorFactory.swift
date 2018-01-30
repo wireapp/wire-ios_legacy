@@ -278,7 +278,8 @@ import Foundation
             return BrowserViewController(url: (NSURL.wr_privacyPolicy() as NSURL).wr_URLByAppendingLocaleParameter() as URL!)
         }, previewGenerator: .none)
         let tosButton = SettingsExternalScreenCellDescriptor(title: "about.tos.title".localized, isDestructive: false, presentationStyle: .modal, presentationAction: { _ in
-            return BrowserViewController(url: (NSURL.wr_termsOfServices() as NSURL).wr_URLByAppendingLocaleParameter() as URL!)
+            let url = NSURL.wr_termsOfServicesURL(forTeamAccount: ZMUser.selfUser().hasTeam).wr_URLByAppendingLocaleParameter() as URL
+            return BrowserViewController(url: url)
         }, previewGenerator: .none)
         let licenseButton = SettingsExternalScreenCellDescriptor(title: "about.license.title".localized, isDestructive: false, presentationStyle: .modal, presentationAction: { _ in
             return BrowserViewController(url: (NSURL.wr_licenseInformation() as NSURL).wr_URLByAppendingLocaleParameter() as URL!)

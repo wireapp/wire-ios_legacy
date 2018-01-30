@@ -42,20 +42,23 @@ public extension InteractionMethod {
 }
 
 public extension Analytics {
-
+    
     public func tagReactedOnMessage(_ message: ZMConversationMessage, reactionType:ReactionType, method: InteractionMethod) {
         guard let conversation = message.conversation,
-              let sender = message.sender,
-              let lastMessage = (conversation.messages.lastObject as? ZMMessage),
-              let zmMessage = message as? ZMMessage
-        else { return }
+            let sender = message.sender,
+            let lastMessage = (conversation.messages.lastObject as? ZMMessage),
+            let zmMessage = message as? ZMMessage
+            else { return }
+        
+        var attributes = [
+            "type"                    : Message.messageType(message).analyticsTypeString,
+            "action"                  : reactionType.analyticsTypeString,
+            "method"                  : method.analyticsTypeString,
+            "with_service"            : (conversation.includesServiceUser ? "true" : "false"),
+            "user"                    : (sender.isSelfUser                ? "sender" : "receiver"),
+            "reacted_to_last_message" : (lastMessage == zmMessage         ? "true"   : "false")
+        ]
 
-        var attributes = ["type"                       : Message.messageType(message).analyticsTypeString,
-                          "action"                     : reactionType.analyticsTypeString,
-                          "method"                     : method.analyticsTypeString,
-                          "with_bot"                   : (conversation.isServiceUserConversation ? "true"   : "false"),
-                          "user"                       : (sender.isSelfUser                  ? "sender" : "receiver"),
-                          "reacted_to_last_message"    : (lastMessage == zmMessage           ? "true"   : "false")]
         if let convType = ConversationType.type(conversation) {
             attributes["conversation_type"] = convType.analyticsTypeString
         }

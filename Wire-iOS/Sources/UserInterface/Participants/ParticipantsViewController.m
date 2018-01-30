@@ -22,6 +22,7 @@
 
 
 #import "ParticipantsViewController.h"
+#import "ParticipantsViewController+internal.h"
 #import "ParticipantsListCell.h"
 #import "WAZUIMagicIOS.h"
 #import "ZClientViewController.h"
@@ -56,7 +57,6 @@
 #import "Wire-Swift.h"
 
 
-static NSString *const ParticipantCellReuseIdentifier = @"ParticipantListCell";
 static NSString *const ParticipantHeaderReuseIdentifier = @"ParticipantListHeader";
 
 
@@ -79,10 +79,8 @@ static NSString *const ParticipantHeaderReuseIdentifier = @"ParticipantListHeade
 
 
 
-@interface ParticipantsViewController () <UICollectionViewDataSource, UICollectionViewDelegate, ZMConversationObserver, UIGestureRecognizerDelegate>
+@interface ParticipantsViewController () <UICollectionViewDelegate, ZMConversationObserver, UIGestureRecognizerDelegate>
 
-@property (nonatomic) UICollectionView *collectionView;
-@property (nonatomic) UICollectionViewFlowLayout *collectionViewLayout;
 @property (nonatomic) ParticipantsHeaderView *headerView;
 @property (nonatomic) ParticipantsFooterView *footerView;
 @property (nonatomic) ProfileNavigationControllerDelegate *navigationControllerDelegate;
@@ -91,12 +89,8 @@ static NSString *const ParticipantHeaderReuseIdentifier = @"ParticipantListHeade
 
 @property (nonatomic) NSMutableSet *userImageObserverTokens;
 
-@property (nonatomic) NSArray *participants;
 @property (nonatomic) BOOL ignoreNextNameChange;
 
-// Cosmetic
-
-@property (nonatomic) CGFloat insetMargin;
 @property (nonatomic) id conversationObserverToken;
 
 @end
@@ -133,10 +127,7 @@ static NSString *const ParticipantHeaderReuseIdentifier = @"ParticipantListHeade
     [self.view addGestureRecognizer:self.tapToDismissEditingGestureRecognizer];
 
     self.collectionViewLayout = [[UICollectionViewFlowLayout alloc] init];
-    self.collectionViewLayout.itemSize = [self itemSizeForMagicPrefix:@"participants"];
-    self.collectionViewLayout.sectionInset = UIEdgeInsetsMake(self.insetMargin, self.insetMargin, self.insetMargin, self.insetMargin);
-    self.collectionViewLayout.minimumLineSpacing = 0.0f;
-    
+
     self.collectionView = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:self.collectionViewLayout];
     self.collectionView.alwaysBounceVertical = YES;
     self.collectionView.translatesAutoresizingMaskIntoConstraints = NO;
@@ -145,6 +136,8 @@ static NSString *const ParticipantHeaderReuseIdentifier = @"ParticipantListHeade
     [self.collectionView setDelegate:self];
     
     [self.collectionView registerClass:[ParticipantsListCell class] forCellWithReuseIdentifier:ParticipantCellReuseIdentifier];
+    [self.collectionView registerClass:[ParticipantsCollectionHeaderView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:ParticipantCollectionViewSectionHeaderReuseIdentifier];
+
     [self.collectionView setBackgroundColor:[UIColor clearColor]];
     
     [self.view addSubview:self.collectionView];
@@ -277,15 +270,15 @@ static NSString *const ParticipantHeaderReuseIdentifier = @"ParticipantListHeade
     if (conversation != nil) {
         self.conversationObserverToken = [ConversationChangeInfo addObserver:self forConversation:self.conversation];
     }
-    
-    self.participants = self.conversation.sortedOtherActiveParticipants;
-    
-    [self.collectionView reloadData];
+
+    [self updateParticipants];
 }
 
 - (void)viewDidLayoutSubviews
 {
     [super viewDidLayoutSubviews];
+
+    [self configCollectionViewLayout];
     self.footerView.separatorLine.hidden = ! self.collectionView.isContentOverflowing;
 }
 
@@ -320,41 +313,6 @@ static NSString *const ParticipantHeaderReuseIdentifier = @"ParticipantListHeade
     self.insetMargin = 24;
 }
 
-- (CGSize)itemSizeForMagicPrefix:(NSString *)prefix
-{
-    CGSize itemSize = CGSizeMake([WAZUIMagic floatForIdentifier:[prefix stringByAppendingString:@".tile_width"]],
-                                 [WAZUIMagic floatForIdentifier:[prefix stringByAppendingString:@".tile_height"]]);
-    return itemSize;
-}
-
-#pragma mark - Delegates
-
-- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
-{
-    return 1;
-}
-
-- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
-{
-    return self.participants.count;
-}
-
-// The cell that is returned must be retrieved from a call to -dequeueReusableCellWithReuseIdentifier:forIndexPath:
-- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
-{
-    ParticipantsListCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:ParticipantCellReuseIdentifier forIndexPath:indexPath];
-    
-    [self configureCell:cell atIndexPath:indexPath];
-    
-    return cell;
-}
-
-- (void)configureCell:(ParticipantsListCell *)cell atIndexPath:(NSIndexPath *)indexPath
-{
-    ZMUser *user = self.participants[indexPath.row];
-    [cell updateForUser:user inConversation:self.conversation];
-}
-
 #pragma mark - ZMConversationObserver
 
 - (void)conversationDidChange:(ConversationChangeInfo *)change
@@ -370,10 +328,8 @@ static NSString *const ParticipantHeaderReuseIdentifier = @"ParticipantListHeade
         
         dispatch_async(dispatch_get_main_queue(), ^{
             @strongify(self);
-            self.participants = self.conversation.sortedOtherActiveParticipants;
             [self reloadUI];
-            [self.collectionView reloadData];
-            
+            [self updateParticipants];
         });
     }
 }
@@ -385,7 +341,7 @@ static NSString *const ParticipantHeaderReuseIdentifier = @"ParticipantListHeade
         return;
     }
     
-    ZMUser *user = self.participants[indexPath.row];
+    ZMUser *user =  [self userAt:indexPath];
     
     ProfileViewController *profileViewController = [[ProfileViewController alloc] initWithUser:user conversation:self.conversation];
     profileViewController.delegate = self;

@@ -26,6 +26,7 @@
 #import "UIColor+WAZExtensions.h"
 #import "Analytics.h"
 #import "WebLinkTextView.h"
+#import "WireSyncEngine+iOS.h"
 
 #import "NSURL+WireLocale.h"
 #import "NSURL+WireURLs.h"
@@ -89,7 +90,7 @@
     
     [attributedTerms addAttributes:@{ NSFontAttributeName : [UIFont fontWithMagicIdentifier:@"style.text.large.font_spec_medium"],
                                       NSForegroundColorAttributeName : UIColor.accentColor,
-                                      NSLinkAttributeName : NSURL.wr_termsOfServicesURL } range:termsOfUseLinkRange];
+                                      NSLinkAttributeName : self.termsOfServiceURL } range:termsOfUseLinkRange];
     
     self.termsOfUseText = [[WebLinkTextView alloc] initForAutoLayout];
     self.termsOfUseText.delegate = self;
@@ -135,8 +136,15 @@
 
 - (void)openTOS:(id)sender
 {
-    SFSafariViewController *webViewController = [[SFSafariViewController alloc] initWithURL:[NSURL.wr_termsOfServicesURL wr_URLByAppendingLocaleParameter]];
+    SFSafariViewController *webViewController = [[SFSafariViewController alloc] initWithURL:self.termsOfServiceURL];
     [self presentViewController:webViewController animated:YES completion:nil];
+}
+
+- (NSURL *)termsOfServiceURL
+{
+    BOOL isTeamAccount = ZMUser.selfUser.team != nil;
+    NSURL *url = [NSURL wr_termsOfServicesURLForTeamAccount:isTeamAccount];
+    return url.wr_URLByAppendingLocaleParameter;
 }
 
 - (void)agreeToTerms:(id)sender

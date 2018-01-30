@@ -424,7 +424,7 @@ extension ZMUser {
             return "conversation.status.you".localized
         }
         else {
-            return self.displayName(in: conversation) ?? self.displayName
+            return self.displayName(in: conversation)
         }
     }
 }
@@ -522,12 +522,12 @@ final internal class StartConversationMatcher: TypedConversationStatusMatcher {
     func description(with status: ConversationStatus, conversation: ZMConversation) -> NSAttributedString? {
         guard let message = status.messagesRequiringAttention.first(where: { StatusMessageType(message: $0) == .newConversation }),
               let sender = message.sender,
-              let senderString = sender.displayName(in: conversation),
               !sender.isSelfUser
             else {
             return .none
         }
-        
+
+        let senderString = sender.displayName(in: conversation)
         let resultString = String(format: "conversation.status.started_conversation".localized, senderString)
         return (resultString && type(of: self).regularStyle).addAttributes(type(of: self).emphasisStyle, toSubstring: senderString)
     }

@@ -39,7 +39,7 @@ class ShareExtensionViewController: SLComposeServiceViewController {
     
     lazy var accountItem : SLComposeSheetConfigurationItem = { [weak self] in
         let item = SLComposeSheetConfigurationItem()!
-        let accountName = self?.currentAccount?.userName
+        let accountName = self?.currentAccount?.shareExtensionDisplayName
         
         item.title = "share_extension.conversation_selection.account".localized
         item.value = accountName ?? "share_extension.conversation_selection.empty.value".localized
@@ -158,7 +158,7 @@ class ShareExtensionViewController: SLComposeServiceViewController {
 
     override func isContentValid() -> Bool {
         // Do validation of contentText and/or NSExtensionContext attachments here
-        let textLength = self.contentText.trimmingCharacters(in: .whitespaces).characters.count
+        let textLength = self.contentText.trimmingCharacters(in: .whitespaces).count
         let remaining = SharedConstants.maximumMessageLength - textLength
         let remainingCharactersThreshold = 30
         
@@ -308,7 +308,7 @@ class ShareExtensionViewController: SLComposeServiceViewController {
         guard let account = account, account != currentAccount else { return }
         
         currentAccount = account
-        accountItem.value = account.userName
+        accountItem.value = account.shareExtensionDisplayName
         conversationItem.value = "share_extension.conversation_selection.empty.value".localized
         postContent?.target = nil
         extensionActivity?.conversation = nil

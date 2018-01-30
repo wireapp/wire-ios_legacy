@@ -354,7 +354,7 @@ extension SearchResultsViewController : CollectionViewSectionDelegate {
         if let user = item as? ZMUser {
             delegate?.searchResultsViewController(self, didTapOnUser: user, indexPath: indexPath, section: sectionFor(controller: controller))
         }
-        else if let service = item as? ServiceUser {
+        else if let service = item as? ServiceUser, service.isServiceUser {
             delegate?.searchResultsViewController(self, didTapOnSeviceUser: service)
         }
         else if let searchUser = item as? ZMSearchUser {

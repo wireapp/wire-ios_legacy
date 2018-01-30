@@ -30,7 +30,7 @@ extension NSData {
         var even = true
         strings.forEach { (string: String) -> () in
             if even {
-                if fingerprintString.characters.count > 0 {
+                if fingerprintString.count > 0 {
                     fingerprintString = fingerprintString + " "
                 }
                 even = false

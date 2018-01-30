@@ -153,7 +153,7 @@ extension ArgumentsType {
         for argument in self.arguments {
             let searchString = "--" + commandLineArgument + "="
             if argument.hasPrefix(searchString) {
-                return argument.substring(from: searchString.characters.index(searchString.startIndex, offsetBy: searchString.characters.count))
+                return argument.substring(from: searchString.index(searchString.startIndex, offsetBy: searchString.count))
             }
         }
         return nil

@@ -94,7 +94,7 @@ fileprivate enum Mode {
     /// 1-2 participants in conversation:
     /// / AA \
     /// \ AA /
-    case one
+    case one(serviceUser: Bool)
     /// 2+ participants in conversation:
     /// / AB \
     /// \ CD /
@@ -103,17 +103,29 @@ fileprivate enum Mode {
 
 extension Mode {
     fileprivate init(conversation: ZMConversation) {
-        self.init(usersCount: conversation.activeParticipants.count - 1)
+        self.init(users: conversation.otherActiveParticipants.array as! [ZMUser])
     }
     
-    fileprivate init(usersCount: Int) {
-        switch (usersCount) {
-        case 0:
-            self = .none
-        case 1:
-            self = .one
-        default:
-            self = .four
+    fileprivate init(users: [ZMBareUser]) {
+        switch (users.count) {
+        case 0: self = .none
+        case 1: self = .one(serviceUser: users[0].isServiceUser)
+        default: self = .four
+        }
+    }
+    
+    var showInitials: Bool {
+        if case .one = self {
+            return true
+        } else {
+            return false
+        }
+    }
+    
+    var shape: AvatarImageViewShape {
+        switch self {
+        case .one(serviceUser: true): return .roundedRelative
+        default: return .rectangle
         }
     }
 }
@@ -122,14 +134,12 @@ final public class ConversationAvatarView: UIView {
 
     public var users: [ZMUser] = [] {
         didSet {
-            self.mode = Mode(usersCount: users.count)
+            self.mode = Mode(users: users)
 
             var index: Int = 0
             self.userImages().forEach {
                 $0.userSession = ZMUserSession.shared()
                 $0.size = .tiny
-                $0.showInitials = (self.mode == .one)
-                $0.isCircular = false
                 if index < users.count {
                     $0.user = users[index]
                 }
@@ -138,6 +148,9 @@ final public class ConversationAvatarView: UIView {
                     $0.containerView.isOpaque = false
                     $0.containerView.backgroundColor = UIColor(white: 0, alpha: 0.24)
                 }
+                
+                $0.showInitials = mode.showInitials
+                $0.shape = mode.shape
                 index = index + 1
             }
             self.setNeedsLayout()
@@ -158,12 +171,12 @@ final public class ConversationAvatarView: UIView {
         }
     }
     
-    private var mode: Mode = .one {
+    private var mode: Mode = .one(serviceUser: false) {
         didSet {
             self.clippingView.subviews.forEach { $0.isHidden = true }
             self.userImages().forEach { $0.isHidden = false }
             
-            if mode == .one {
+            if case .one = mode {
                 layer.borderWidth = 0
                 backgroundColor = .clear
             }
@@ -266,8 +279,14 @@ final public class ConversationAvatarView: UIView {
     }
     
     private func updateCornerRadius() {
-        layer.cornerRadius = self.mode == .one ? layer.bounds.width / 2.0 : 6
-        clippingView.layer.cornerRadius = self.mode == .one ? clippingView.layer.bounds.width / 2.0 : 4
+        switch mode {
+        case .one(serviceUser: let serviceUser):
+            layer.cornerRadius = serviceUser ? 0 : layer.bounds.width / 2.0
+            clippingView.layer.cornerRadius = serviceUser ? 0 : clippingView.layer.bounds.width / 2.0
+        default:
+            layer.cornerRadius = 6
+            clippingView.layer.cornerRadius = 4
+        }
     }
 }
 

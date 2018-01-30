@@ -816,10 +816,6 @@ ConversationCell, IconSystemCell, ConversationNewDeviceCell, MissedCallCell, Per
         backgroundColor: $color-background;
     }
 
-    authorLabel: @{
-        font: $font-medium-semibold;
-    }
-
     burstTimestampView: @{
         label: @{
             textColor: $color-text-foreground;
