@@ -30,6 +30,7 @@ final class UserDetailViewControllerFactory: NSObject {
     @objc static func createUserDetailViewController(user: ZMUser,
                                                      conversation: ZMConversation,
                                                      profileViewControllerDelegate: ProfileViewControllerDelegate,
+                                                     viewControllerDismissable: ViewControllerDismissable,
                                                      navigationControllerDelegate: ProfileNavigationControllerDelegate? = nil) -> UIViewController {
         if user.isServiceUser {
             let profileHeaderServiceDetailViewController = ProfileHeaderServiceDetailViewController(serviceUser: user, conversation: conversation)
@@ -39,6 +40,7 @@ final class UserDetailViewControllerFactory: NSObject {
         } else {
             let profileViewController = ProfileViewController(user: user, conversation: conversation)
             profileViewController?.delegate = profileViewControllerDelegate
+            profileViewController?.viewControllerDismissable = viewControllerDismissable
             profileViewController?.navigationControllerDelegate = navigationControllerDelegate
             return profileViewController!
         }

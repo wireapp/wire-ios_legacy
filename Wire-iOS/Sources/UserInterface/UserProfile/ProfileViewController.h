@@ -66,6 +66,7 @@ typedef NS_ENUM(NSInteger, ProfileViewControllerContext) {
 
 @property (nonatomic, readonly) id<ZMSearchableUser, AccentColorProvider> bareUser;
 @property (nonatomic, weak) id<ProfileViewControllerDelegate> delegate;
+@property (nonatomic, weak) id<ViewControllerDismissable> viewControllerDismissable;
 @property (nonatomic) ProfileNavigationControllerDelegate *navigationControllerDelegate;
 @property (nonatomic, assign) BOOL shouldDrawTopSeparatorLineDuringPresentation;
 

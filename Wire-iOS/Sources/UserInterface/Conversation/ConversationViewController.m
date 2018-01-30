@@ -871,6 +871,7 @@
                                                               [self dismissViewControllerAnimated:YES completion:^{
                                                                   ProfileViewController *profileViewController = [[ProfileViewController alloc] initWithUser:user context:ProfileViewControllerContextDeviceList];
                                                                   profileViewController.delegate = self;
+                                                                  profileViewController.viewControllerDismissable = self;
                                                                   [self presentViewController:profileViewController animated:YES completion:nil];
                                                               }];
                                                           }
