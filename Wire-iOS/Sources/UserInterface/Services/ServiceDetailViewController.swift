@@ -221,7 +221,7 @@ final class ServiceDetailViewController: UIViewController {
     /// - Parameters:
     ///   - serviceUser: a ServiceUser to show
     ///   - confirmButton: a Button for confirmation
-    ///   - forceShowNavigationBar: if the param is true, navigation bar is hidden (e.g. when the container view ahs a custom header view, navigation bar is not necessary)
+    ///   - forceShowNavigationBar: if the param is true, navigation bar is hidden (e.g. when the container view as a custom header view, navigation bar is not necessary)
     ///   - variant: color variant
     ///   - buttonCallback: callback closure of the confirm button
     init(serviceUser: ServiceUser,

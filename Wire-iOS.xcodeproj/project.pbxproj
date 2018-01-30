@@ -1015,7 +1015,7 @@
 		EFA820AC2018E8AA00FED370 /* ProfileHeaderServiceDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFA820AB2018E8A900FED370 /* ProfileHeaderServiceDetailViewController.swift */; };
 		EFA820AE2019075400FED370 /* UIViewController+addViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFA820AD2019075400FED370 /* UIViewController+addViewController.swift */; };
 		EFA820B02019F0D700FED370 /* ParticipantsViewController+CollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFA820AF2019F0D700FED370 /* ParticipantsViewController+CollectionView.swift */; };
-		EFABC922202085A6001F9866 /* UIViewController+createUserDetailScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFABC921202085A6001F9866 /* UIViewController+createUserDetailScreen.swift */; };
+		EFABC922202085A6001F9866 /* UserDetailViewControllerFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFABC921202085A6001F9866 /* UserDetailViewControllerFactory.swift */; };
 		EFABC92420208D80001F9866 /* UIViewController+removeUserConfirmationUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFABC92320208D80001F9866 /* UIViewController+removeUserConfirmationUI.swift */; };
 		EFB23D0A1FC852380055B866 /* TextFieldValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF61B3411FC8508400D8E631 /* TextFieldValidator.swift */; };
 		EFB23D0B1FC853CF0055B866 /* AccessoryTextFieldValidationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF61B33F1FC84B0100D8E631 /* AccessoryTextFieldValidationTests.swift */; };
@@ -2605,7 +2605,7 @@
 		EFA820AD2019075400FED370 /* UIViewController+addViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+addViewController.swift"; sourceTree = "<group>"; };
 		EFA820AF2019F0D700FED370 /* ParticipantsViewController+CollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ParticipantsViewController+CollectionView.swift"; sourceTree = "<group>"; };
 		EFA820B12019F45E00FED370 /* ParticipantsViewController+internal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ParticipantsViewController+internal.h"; sourceTree = "<group>"; };
-		EFABC921202085A6001F9866 /* UIViewController+createUserDetailScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+createUserDetailScreen.swift"; sourceTree = "<group>"; };
+		EFABC921202085A6001F9866 /* UserDetailViewControllerFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDetailViewControllerFactory.swift; sourceTree = "<group>"; };
 		EFABC92320208D80001F9866 /* UIViewController+removeUserConfirmationUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+removeUserConfirmationUI.swift"; sourceTree = "<group>"; };
 		EFB5E0BB201A1D640040D8DC /* ParticipantsCollectionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticipantsCollectionHeaderView.swift; sourceTree = "<group>"; };
 		EFC530A31FF3F26D004D2B31 /* VoiceChannelViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoiceChannelViewControllerTests.swift; sourceTree = "<group>"; };
@@ -3645,7 +3645,7 @@
 				872E22211F600347007729D4 /* Cartography+Additions.swift */,
 				8759E2C01FC828ED008E17C9 /* CAAnimation+Cursor.swift */,
 				EFA820AD2019075400FED370 /* UIViewController+addViewController.swift */,
-				EFABC921202085A6001F9866 /* UIViewController+createUserDetailScreen.swift */,
+				EFABC921202085A6001F9866 /* UserDetailViewControllerFactory.swift */,
 				EFABC92320208D80001F9866 /* UIViewController+removeUserConfirmationUI.swift */,
 			);
 			path = Helpers;
@@ -6205,7 +6205,7 @@
 				BF1A81281C9848DB00A96CAA /* ConversationViewController+NavigationBar.swift in Sources */,
 				87F18BB61E0154FB00C69D9B /* FileTransferView.swift in Sources */,
 				BF381FDF1D4F922F00075672 /* AnalyticsTracker+AddressBookPermissions.swift in Sources */,
-				EFABC922202085A6001F9866 /* UIViewController+createUserDetailScreen.swift in Sources */,
+				EFABC922202085A6001F9866 /* UserDetailViewControllerFactory.swift in Sources */,
 				F195EB9D1E2F75BC00712118 /* FeedbackOverlayView.swift in Sources */,
 				87B7DAEE1E697CC3005F5140 /* UserImageView+Magic.m in Sources */,
 				F187D6C820162A4300A2DA8F /* ConversationCell+Sender.swift in Sources */,

@@ -17,9 +17,9 @@
 //
 
 import Foundation
-extension UIViewController {
+final class UserDetailViewControllerFactory: NSObject {
 
-    /// Return a ProfileHeaderServiceDetailViewController if the user is a serviceUser, otherwise return a ProfileViewController
+    /// Create a ProfileHeaderServiceDetailViewController if the user is a serviceUser, otherwise return a ProfileViewController
     ///
     /// - Parameters:
     ///   - user: user to show the detailif

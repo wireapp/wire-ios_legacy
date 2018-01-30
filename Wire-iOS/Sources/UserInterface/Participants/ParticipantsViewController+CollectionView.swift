@@ -84,7 +84,7 @@ extension ParticipantsViewController: UICollectionViewDelegate {
             navigationControllerDelegate.tapLocation = collectionView.convert(layoutAttributes.center, to: view)
         }
 
-        let viewContollerToPush = UIViewController.createUserDetailViewController(user: user, conversation: conversation, profileViewControllerDelegate: self, navigationControllerDelegate: navigationControllerDelegate)
+        let viewContollerToPush = UserDetailViewControllerFactory.createUserDetailViewController(user: user, conversation: conversation, profileViewControllerDelegate: self, navigationControllerDelegate: navigationControllerDelegate)
 
         navigationController?.pushViewController(viewContollerToPush, animated: true)
     }

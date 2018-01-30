@@ -450,7 +450,7 @@
         case ZMConversationTypeOneOnOne:
         case ZMConversationTypeConnection:
         {
-            viewController = [UIViewController createUserDetailViewControllerWithUser:self.conversation.firstActiveParticipantOtherThanSelf
+            viewController = [UserDetailViewControllerFactory createUserDetailViewControllerWithUser:self.conversation.firstActiveParticipantOtherThanSelf
                                           conversation:self.conversation
                          profileViewControllerDelegate:self
                           navigationControllerDelegate:nil];
