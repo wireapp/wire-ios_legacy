@@ -18,7 +18,7 @@
 
 
 #import <UIKit/UIKit.h>
-
+#import "Wire-Swift.h"
 
 @class IconButton;
 
@@ -29,7 +29,5 @@
 @property (nonatomic) IconButton *closeButton;
 @property (nonatomic) UILabel *titleLabel;
 @property (nonatomic) CGFloat progress;
-
-- (instancetype)initForUseWithStatusBar:(BOOL)statusBar;
 
 @end

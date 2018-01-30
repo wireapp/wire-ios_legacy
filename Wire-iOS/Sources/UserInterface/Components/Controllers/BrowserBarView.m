@@ -27,7 +27,6 @@
 
 @property (nonatomic) CAShapeLayer *progressLayer;
 @property (nonatomic) BOOL initialConstraintsCreated;
-@property (nonatomic) BOOL useWithStatusBar;
 
 @end
 
@@ -35,15 +34,8 @@
 
 - (instancetype)init
 {
-    return [self initForUseWithStatusBar:NO];
-}
-
-- (instancetype)initForUseWithStatusBar:(BOOL)statusBar
-{
     self = [super init];
     if (self) {
-        self.useWithStatusBar = statusBar;
-
         self.shareButton = [IconButton iconButtonCircular];
         self.shareButton.translatesAutoresizingMaskIntoConstraints = NO;
         [self.shareButton setIcon:ZetaIconTypeExport withSize:ZetaIconSizeTiny forState:UIControlStateNormal];
@@ -74,7 +66,7 @@
     if(! self.initialConstraintsCreated) {
         self.initialConstraintsCreated = YES;
 
-        CGFloat offset = self.useWithStatusBar ? 10 : 0;
+        CGFloat offset = UIScreen.safeArea.top / 2.0;
         [self.shareButton autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:8];
         [self.shareButton autoSetDimensionsToSize:CGSizeMake(32, 32)];
         [self.shareButton autoAlignAxis:ALAxisHorizontal toSameAxisOfView:self withOffset:offset];

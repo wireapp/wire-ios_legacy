@@ -25,7 +25,6 @@
 
 - (instancetype)initWithCoder:(NSCoder *)aDecoder NS_UNAVAILABLE;
 - (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil NS_UNAVAILABLE;
-- (instancetype)initWithURL:(NSURL *)URL forUseWithStatusBar:(BOOL)statusBar NS_DESIGNATED_INITIALIZER;
 - (instancetype)initWithURL:(NSURL *)URL;
 
 @end
