@@ -60,6 +60,8 @@ final class ProfileHeaderServiceDetailViewController: UIViewController {
             topMargin -= 20.0
         }
 
+        self.serviceDetailViewController.view.translatesAutoresizingMaskIntoConstraints = false
+
         constrain(view, self.headerView, self.serviceDetailViewController.view) { view, headerView, serviceDetailView in
             headerView.top == view.top + topMargin
             headerView.right == view.right
@@ -88,7 +90,6 @@ final class ProfileHeaderServiceDetailViewController: UIViewController {
 
         headerView = ProfileHeaderView(with: viewModel)
 
-        headerView.translatesAutoresizingMaskIntoConstraints = false
         headerView.dismissButton.addTarget(self, action: #selector(self.dismissButtonClicked), for: .touchUpInside)
         view.addSubview(headerView)
     }
@@ -102,19 +103,11 @@ final class ProfileHeaderServiceDetailViewController: UIViewController {
     }
 
     func setupServiceDetailViewController(serviceUser: ServiceUser) {
-
-        let buttonCallback: Callback<Button> = { [weak self] _ in
-            guard let weakSelf = self else { return }
-            guard weakSelf.serviceUser.isKind(of: ZMUser.self)  else { return }
-
-            weakSelf.presentRemoveFromConversationDialogue(user: weakSelf.serviceUser as! ZMUser, conversation: weakSelf.conversation, profileViewControllerDelegate: self?.profileViewControllerDelegate)
-        }
-
         serviceDetailViewController = ServiceDetailViewController(serviceUser: serviceUser,
-                                                                  confirmButton: Button.createDestructiveServiceButton(callback: buttonCallback),
+                                                                  actionButton: Button.createDestructiveServiceButton(),
+                                                                  actionType: .removeService,
                                                                   forceShowNavigationBar: false,
-                                                                  variant: .light,
-                                                                  buttonCallback: buttonCallback)
+                                                                  variant: .light)
 
         self.addToSelf(serviceDetailViewController)
 

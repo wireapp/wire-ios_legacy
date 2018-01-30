@@ -155,56 +155,15 @@ extension ServiceConversation: ShareDestination {
     }
 }
 
-
-/// Creates Buttons for ServiceDetailViewController
-extension Button {
-    @objc static func createAddServiceButton(callback: @escaping Callback<Button>) -> Button {
-        return Button.createButton(styleClass: "dialogue-button-full", title: "peoplepicker.services.add_service.button".localized, callback: callback)
-    }
-
-    static func createDestructiveServiceButton(callback: @escaping Callback<Button>) -> Button {
-        return Button.createButton(styleClass: "dialogue-button-full-destructive", title: "participants.services.remove_integration.button".localized, callback: callback)
-    }
-
-    static func createButton(styleClass:String, title:String, callback: @escaping Callback<Button>) -> Button {
-        let button = Button(styleClass: styleClass)
-        button.setTitle(title, for: .normal)
-
-        button.addCallback(for: .touchUpInside, callback: callback)
-
-        return button
-    }
-}
-
-/// Creates Button callbacks for ServiceDetailViewController
-final class ButtonCallbackFactory: NSObject {
-    @objc static func addServiceButtonCallback(navigationController: UINavigationController?, serviceUser: ServiceUser) -> Callback<Button> {
-        let buttonCallback: Callback<Button> = {  _ in
-            guard let userSession = ZMUserSession.shared() else {
-                return
-            }
-
-            var allConversations: [ServiceConversation] = [.new]
-
-            let zmConversations = ZMConversationList.conversationsIncludingArchived(inUserSession: userSession).shareableConversations()
-
-            allConversations.append(contentsOf: zmConversations.map(ServiceConversation.existing))
-
-            let conversationPicker = ShareViewController<ServiceConversation, Service>(shareable: Service(serviceUser: serviceUser), destinations: allConversations, showPreview: true, allowsMultipleSelection: false)
-            conversationPicker.onDismiss = { _, completed in
-                navigationController?.dismiss(animated: true, completion: nil)
-            }
-            navigationController?.pushViewController(conversationPicker, animated: true)
-        }
-
-        return buttonCallback
-    }
-}
-
 final class ServiceDetailViewController: UIViewController {
 
+    enum ActionType {
+        case addService, removeService
+    }
+
     private let detailView: ServiceDetailView
-    private let confirmButton: Button
+    private let actionButton: Button
+    private let actionType: ActionType
     private var forceShowNavigationBar: Bool
 
     public var service: Service {
@@ -227,14 +186,16 @@ final class ServiceDetailViewController: UIViewController {
     ///   - forceShowNavigationBar: if the param is true, navigation bar is hidden (e.g. when the container view as a custom header view, navigation bar is not necessary)
     ///   - variant: color variant
     init(serviceUser: ServiceUser,
-         confirmButton: Button,
+         actionButton: Button,
+         actionType: ActionType,
          forceShowNavigationBar: Bool,
          variant: ColorSchemeVariant) {
         self.service = Service(serviceUser: serviceUser)
         self.detailView = ServiceDetailView(service: service, variant: variant)
-        self.confirmButton = confirmButton
+        self.actionButton = actionButton
         self.forceShowNavigationBar = forceShowNavigationBar
         self.variant = variant
+        self.actionType = actionType
 
         super.init(nibName: nil, bundle: nil)
         
@@ -244,14 +205,50 @@ final class ServiceDetailViewController: UIViewController {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
+    func createRemoveServiceCallBack() -> Callback<Button> {
+        let buttonCallback: Callback<Button> = { [weak self] _ in
+            guard let weakSelf = self else { return }
+            guard weakSelf.service.serviceUser.isKind(of: ZMUser.self)  else { return }
+
+            weakSelf.presentRemoveFromConversationDialogue(user: weakSelf.service.serviceUser as! ZMUser, conversation: weakSelf.destinationConversation, profileViewControllerDelegate: nil/*self?.profileViewControllerDelegate*/)///TODO
+        }
+
+        return buttonCallback
+    }
+
+    func createOnAddServicePressed() -> Callback<Button> {
+        return { [weak self] _ in
+            self?.onAddServicePressed()
+        }
+    }
+
+    private func onAddServicePressed() {
+        if let conversation = self.destinationConversation {
+            Wire.add(service: self.service, to: ServiceConversation.existing(conversation), completion: { [weak self] result in
+                self?.completion?(result)
+            })
+        }
+        else {
+            showConversationPicker()
+        }
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.confirmButton.addCallback(for: .touchUpInside) { [weak self] _ in
-            self?.onAddServicePressed()
+        var callback: Callback<Button>?
+        switch actionType {
+        case .addService:
+            callback = createOnAddServicePressed()
+        case .removeService:
+                callback = createRemoveServiceCallBack()
         }
-        
+
+        if let callback = callback {
+        self.actionButton.addCallback(for: .touchUpInside, callback: callback)
+        }
+
         switch self.variant {
         case .dark:
             view.backgroundColor = .clear
@@ -260,7 +257,7 @@ final class ServiceDetailViewController: UIViewController {
         }
         
         view.addSubview(detailView)
-        view.addSubview(confirmButton)
+        view.addSubview(actionButton)
         
 
         var topMargin: CGFloat = 16
@@ -273,7 +270,7 @@ final class ServiceDetailViewController: UIViewController {
             }
         }
 
-        constrain(self.view, detailView, confirmButton) { selfView, detailView, confirmButton in
+        constrain(self.view, detailView, actionButton) { selfView, detailView, confirmButton in
             detailView.leading == selfView.leading + 16
             detailView.top == selfView.topMargin + topMargin
 
@@ -326,17 +323,6 @@ final class ServiceDetailViewController: UIViewController {
         self.navigationController?.dismiss(animated: true, completion: { [weak self] in
             self?.completion?(nil)
         })
-    }
-    
-    private func onAddServicePressed() {
-        if let conversation = self.destinationConversation {
-            Wire.add(service: self.service, to: ServiceConversation.existing(conversation), completion: { [weak self] result in
-                self?.completion?(result)
-            })
-        }
-        else {
-            showConversationPicker()
-        }
     }
     
     private func showConversationPicker() {

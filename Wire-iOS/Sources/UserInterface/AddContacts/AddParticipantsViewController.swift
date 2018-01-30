@@ -294,11 +294,13 @@ extension AddParticipantsViewController: SearchResultsViewControllerDelegate {
     
     public func searchResultsViewController(_ searchResultsViewController: SearchResultsViewController, didTapOnSeviceUser user: ServiceUser) {
         let navigationController = UIViewController.navigationControllerWithDefaultNavigationBar()
-        let buttonCallback = ButtonCallbackFactory.addServiceButtonCallback(navigationController: navigationController, serviceUser: user)
 
-        let serviceDetails = ServiceDetailViewController(serviceUser: user, confirmButton: Button.createAddServiceButton(callback: buttonCallback), forceShowNavigationBar: true,  variant: .light)
+        let serviceDetails = ServiceDetailViewController(serviceUser: user,
+                                                         actionButton: Button.createAddServiceButton(),
+                                                         actionType: .addService,
+                                                         forceShowNavigationBar: true,
+                                                         variant: .light)
         
-        serviceDetails.destinationConversation = self.conversation
         serviceDetails.completion = { [weak self] _ in
             guard let `self` = self else {
                 return

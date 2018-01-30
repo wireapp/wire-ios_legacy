@@ -27,7 +27,7 @@ extension UIViewController {
     ///   - conversation: the current converation contains that user
     ///   - profileViewControllerDelegate: a ProfileViewControllerDelegate to call when this UIViewController is dismissed
     @objc func presentRemoveFromConversationDialogue(user: ZMUser,
-                                                     conversation: ZMConversation,
+                                                     conversation: ZMConversation?,
                                                      profileViewControllerDelegate: ProfileViewControllerDelegate?) {
         if let actionSheetController = ActionSheetController.dialog(forRemoving: user, from: conversation, style: ActionSheetController.defaultStyle(), completion: {(_ canceled: Bool) -> Void in
             self.dismiss(animated: true, completion: {() -> Void in
@@ -35,7 +35,7 @@ extension UIViewController {
                     return
                 }
                 ZMUserSession.shared()?.enqueueChanges({() -> Void in
-                    conversation.removeParticipant(user)
+                    conversation?.removeParticipant(user)
                 }, completionHandler: {() -> Void in
                     if user.isServiceUser {
                         Analytics.shared().tagDidRemoveService(user)
