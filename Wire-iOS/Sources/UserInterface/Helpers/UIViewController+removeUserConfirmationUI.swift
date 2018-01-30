@@ -20,7 +20,7 @@ import Foundation
 
 extension UIViewController {
 
-    /// Present a action sheet for user removal confirmation
+    /// Present an action sheet for user removal confirmation
     ///
     /// - Parameters:
     ///   - user: user to remove

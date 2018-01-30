@@ -296,7 +296,7 @@ extension AddParticipantsViewController: SearchResultsViewControllerDelegate {
         let navigationController = UIViewController.navigationControllerWithDefaultNavigationBar()
         let buttonCallback = ButtonCallbackfactory.addServiceButtonCallback(navigationController: navigationController, serviceUser: user)
 
-        let serviceDetails = ServiceDetailViewController(serviceUser: user, confirmButton: Buttonfactory.addServicebutton(), forceShowNavigationBarWhenviewWillAppear: true,  variant: .light, buttonCallback: buttonCallback)
+        let serviceDetails = ServiceDetailViewController(serviceUser: user, confirmButton: Buttonfactory.addServicebutton(), forceShowNavigationBar: true,  variant: .light, buttonCallback: buttonCallback)
         
         serviceDetails.destinationConversation = self.conversation
         serviceDetails.completion = { [weak self] _ in
@@ -309,7 +309,6 @@ extension AddParticipantsViewController: SearchResultsViewControllerDelegate {
         }
 
         navigationController.setViewControllers([serviceDetails], animated: false)
-
         self.present(navigationController, animated: true, completion: nil)
     }
 }

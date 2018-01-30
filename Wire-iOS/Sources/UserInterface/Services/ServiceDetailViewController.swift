@@ -156,6 +156,7 @@ extension ServiceConversation: ShareDestination {
 }
 
 
+/// Creates Buttons for ServiceDetailViewController
 final class Buttonfactory: NSObject {
     @objc static func addServicebutton() -> Button {
         let button = Button(styleClass: "dialogue-button-full")
@@ -172,6 +173,7 @@ final class Buttonfactory: NSObject {
     }
 }
 
+/// Creates Button callbacks for ServiceDetailViewController
 final class ButtonCallbackfactory: NSObject {
     @objc static func addServiceButtonCallback(navigationController: UINavigationController?, serviceUser: ServiceUser) -> Callback<Button> {
         let buttonCallback: Callback<Button> = {  _ in
@@ -200,7 +202,7 @@ final class ServiceDetailViewController: UIViewController {
 
     private let detailView: ServiceDetailView
     private let confirmButton: Button
-    private var forceShowNavigationBarWhenviewWillAppear: Bool
+    private var forceShowNavigationBar: Bool
 
     public var service: Service {
         didSet {
@@ -213,16 +215,25 @@ final class ServiceDetailViewController: UIViewController {
 
     public let variant: ColorSchemeVariant
 
+
+    /// init method with ServiceUser and customized UI.
+    ///
+    /// - Parameters:
+    ///   - serviceUser: a ServiceUser to show
+    ///   - confirmButton: a Button for confirmation
+    ///   - forceShowNavigationBar: if the param is true, navigation bar is hidden (e.g. when the container view ahs a custom header view, navigation bar is not necessary)
+    ///   - variant: color variant
+    ///   - buttonCallback: callback closure of the confirm button
     init(serviceUser: ServiceUser,
          confirmButton: Button,
-         forceShowNavigationBarWhenviewWillAppear: Bool,
+         forceShowNavigationBar: Bool,
          variant: ColorSchemeVariant,
          buttonCallback: @escaping Callback<Button>
         ) {
         self.service = Service(serviceUser: serviceUser)
         self.detailView = ServiceDetailView(service: service, variant: variant)
         self.confirmButton = confirmButton
-        self.forceShowNavigationBarWhenviewWillAppear = forceShowNavigationBarWhenviewWillAppear
+        self.forceShowNavigationBar = forceShowNavigationBar
         self.variant = variant
 
         super.init(nibName: nil, bundle: nil)
@@ -292,7 +303,7 @@ final class ServiceDetailViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        if forceShowNavigationBarWhenviewWillAppear {
+        if forceShowNavigationBar {
             self.navigationController?.setNavigationBarHidden(false, animated: animated)
         }
     }
@@ -345,5 +356,6 @@ final class ServiceDetailViewController: UIViewController {
         conversationPicker.onServiceDismiss = { [weak self] _, completed, result in
             self?.completion?(result)
         }
+        self.navigationController?.pushViewController(conversationPicker, animated: true)
     }
 }

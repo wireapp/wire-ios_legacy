@@ -59,7 +59,7 @@ extension StartUIViewController: SearchResultsViewControllerDelegate {
     public func searchResultsViewController(_ searchResultsViewController: SearchResultsViewController, didTapOnSeviceUser user: ServiceUser) {
         
         let buttonCallback = ButtonCallbackfactory.addServiceButtonCallback(navigationController: navigationController, serviceUser: user)
-        let detail = ServiceDetailViewController(serviceUser: user, confirmButton: Buttonfactory.addServicebutton(), forceShowNavigationBarWhenviewWillAppear: true, variant: .light, buttonCallback: buttonCallback)
+        let detail = ServiceDetailViewController(serviceUser: user, confirmButton: Buttonfactory.addServicebutton(), forceShowNavigationBar: true, variant: .light, buttonCallback: buttonCallback)
 
         detail.completion = { [weak self] result in
             if let result = result {

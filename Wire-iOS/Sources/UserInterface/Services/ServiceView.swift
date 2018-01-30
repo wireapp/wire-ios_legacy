@@ -34,8 +34,8 @@ final class ServiceDetailView: UIView {
     
     init(service: Service, variant: ColorSchemeVariant) {
         self.service = service
-        self.serviceView = ServiceView(service: service, variant: variant)
         self.variant = variant
+        self.serviceView = ServiceView(service: service, variant: variant)
         super.init(frame: .zero)
 
         [serviceView, descriptionTextView].forEach(addSubview)

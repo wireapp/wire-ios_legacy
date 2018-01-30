@@ -19,6 +19,8 @@
 import UIKit
 import Cartography
 
+
+/// A container UIViewController with a ProfileHeaderView and a ServiceDetailViewController.
 final class ProfileHeaderServiceDetailViewController: UIViewController {
 
     public weak var navigationControllerDelegate: ProfileNavigationControllerDelegate?
@@ -110,7 +112,7 @@ final class ProfileHeaderServiceDetailViewController: UIViewController {
 
         serviceDetailViewController = ServiceDetailViewController(serviceUser: serviceUser,
                                                                   confirmButton: Buttonfactory.destructiveServiceButton(),
-                                                                  forceShowNavigationBarWhenviewWillAppear: false,
+                                                                  forceShowNavigationBar: false,
                                                                   variant: .light,
                                                                   buttonCallback: buttonCallback)
 

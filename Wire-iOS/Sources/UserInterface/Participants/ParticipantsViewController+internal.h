@@ -36,5 +36,3 @@ static NSString *const ParticipantCollectionViewSectionHeaderReuseIdentifier = @
 // Cosmetic
 @property (nonatomic) CGFloat insetMargin;
 @end
-
-
