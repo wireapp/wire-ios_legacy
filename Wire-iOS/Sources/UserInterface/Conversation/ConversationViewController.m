@@ -450,11 +450,11 @@
         case ZMConversationTypeOneOnOne:
         case ZMConversationTypeConnection:
         {
-            ProfileViewController *profileViewController = [[ProfileViewController alloc] initWithUser:self.conversation.firstActiveParticipantOtherThanSelf
-                                                                                          conversation:self.conversation];
-            profileViewController.delegate = self;
-            profileViewController.shouldDrawTopSeparatorLineDuringPresentation = YES;
-            viewController = profileViewController;
+            viewController = [UIViewController createUserDetailViewControllerWithUser:self.conversation.firstActiveParticipantOtherThanSelf conversation:self.conversation  profileViewControllerDelegate:self navigationControllerDelegate:nil];
+
+            if ([viewController isKindOfClass:[ProfileViewController class]]) {
+                ((ProfileViewController *)viewController).shouldDrawTopSeparatorLineDuringPresentation = YES;
+            }
             break;
         }
         case ZMConversationTypeInvalid:

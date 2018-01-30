@@ -79,26 +79,14 @@ extension ParticipantsViewController: UICollectionViewDelegate {
         }
         guard let user: ZMUser = user(at: indexPath) else { return }
 
-        var viewContollerToPush: UIViewController?
-
-        if user.isServiceUser {
-            let profileHeaderServiceDetailViewController = ProfileHeaderServiceDetailViewController(serviceUser: user, conversation: conversation)
-            profileHeaderServiceDetailViewController.profileViewControllerDelegate = self
-            viewContollerToPush = profileHeaderServiceDetailViewController
-        } else {
-            let profileViewController = ProfileViewController(user: user, conversation: conversation)
-            profileViewController?.delegate = self
-            profileViewController?.navigationControllerDelegate = navigationControllerDelegate
-            viewContollerToPush = profileViewController
-        }
 
         if let layoutAttributes: UICollectionViewLayoutAttributes = collectionView.layoutAttributesForItem(at: indexPath) {
             navigationControllerDelegate.tapLocation = collectionView.convert(layoutAttributes.center, to: view)
         }
 
-        if let viewContollerToPush = viewContollerToPush {
-            navigationController?.pushViewController(viewContollerToPush, animated: true)
-        }
+        let viewContollerToPush = UIViewController.createUserDetailViewController(user: user, conversation: conversation, profileViewControllerDelegate: self, navigationControllerDelegate: navigationControllerDelegate)
+
+        navigationController?.pushViewController(viewContollerToPush, animated: true)
     }
 }
 
