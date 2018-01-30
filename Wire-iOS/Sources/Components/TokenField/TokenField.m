@@ -378,7 +378,11 @@ CGFloat const accessoryButtonSize = 32.0f;
     } else {
         self.textView.attributedText = [self collapsedString];
         [self invalidateIntrinsicContentSize];
-    }    
+    }
+    
+    if([[[self tokens] firstObject] representedObject] == nil) {
+        NSLog(@"STOPP!");
+    }
 }
 
 - (void)removeToken:(Token *)token

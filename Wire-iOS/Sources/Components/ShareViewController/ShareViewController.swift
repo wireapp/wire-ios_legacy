@@ -145,6 +145,10 @@ public class ShareViewController<D: ShareDestination, S: Shareable>: UIViewContr
         
         self.tokenField.addToken(forTitle: destination.displayName, representedObject: destination)
         
+        if self.tokenField.tokens.first?.representedObject == nil {
+            print("STOPP")
+        }
+        
         self.selectedDestinations.insert(destination)
         
         if !self.allowsMultipleSelection {
