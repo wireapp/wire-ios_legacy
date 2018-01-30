@@ -34,6 +34,7 @@ extension UIViewController {
         if user.isServiceUser {
             let profileHeaderServiceDetailViewController = ProfileHeaderServiceDetailViewController(serviceUser: user, conversation: conversation)
             profileHeaderServiceDetailViewController.profileViewControllerDelegate = profileViewControllerDelegate
+            profileHeaderServiceDetailViewController.navigationControllerDelegate = navigationControllerDelegate
             return profileHeaderServiceDetailViewController
         } else {
             let profileViewController = ProfileViewController(user: user, conversation: conversation)

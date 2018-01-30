@@ -1016,6 +1016,7 @@
 		EFA820AE2019075400FED370 /* UIViewController+addViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFA820AD2019075400FED370 /* UIViewController+addViewController.swift */; };
 		EFA820B02019F0D700FED370 /* ParticipantsViewController+CollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFA820AF2019F0D700FED370 /* ParticipantsViewController+CollectionView.swift */; };
 		EFABC922202085A6001F9866 /* UIViewController+createUserDetailScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFABC921202085A6001F9866 /* UIViewController+createUserDetailScreen.swift */; };
+		EFABC92420208D80001F9866 /* UIViewController+removeUserConfirmationUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFABC92320208D80001F9866 /* UIViewController+removeUserConfirmationUI.swift */; };
 		EFB23D0A1FC852380055B866 /* TextFieldValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF61B3411FC8508400D8E631 /* TextFieldValidator.swift */; };
 		EFB23D0B1FC853CF0055B866 /* AccessoryTextFieldValidationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF61B33F1FC84B0100D8E631 /* AccessoryTextFieldValidationTests.swift */; };
 		EFB5E0BC201A1D640040D8DC /* ParticipantsCollectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFB5E0BB201A1D640040D8DC /* ParticipantsCollectionHeaderView.swift */; };
@@ -2605,6 +2606,7 @@
 		EFA820AF2019F0D700FED370 /* ParticipantsViewController+CollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ParticipantsViewController+CollectionView.swift"; sourceTree = "<group>"; };
 		EFA820B12019F45E00FED370 /* ParticipantsViewController+internal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ParticipantsViewController+internal.h"; sourceTree = "<group>"; };
 		EFABC921202085A6001F9866 /* UIViewController+createUserDetailScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+createUserDetailScreen.swift"; sourceTree = "<group>"; };
+		EFABC92320208D80001F9866 /* UIViewController+removeUserConfirmationUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+removeUserConfirmationUI.swift"; sourceTree = "<group>"; };
 		EFB5E0BB201A1D640040D8DC /* ParticipantsCollectionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticipantsCollectionHeaderView.swift; sourceTree = "<group>"; };
 		EFC530A31FF3F26D004D2B31 /* VoiceChannelViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoiceChannelViewControllerTests.swift; sourceTree = "<group>"; };
 		EFE8062A1FDFF24C006A0EE7 /* NSDate+Format.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSDate+Format.swift"; sourceTree = "<group>"; };
@@ -3644,6 +3646,7 @@
 				8759E2C01FC828ED008E17C9 /* CAAnimation+Cursor.swift */,
 				EFA820AD2019075400FED370 /* UIViewController+addViewController.swift */,
 				EFABC921202085A6001F9866 /* UIViewController+createUserDetailScreen.swift */,
+				EFABC92320208D80001F9866 /* UIViewController+removeUserConfirmationUI.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -6777,6 +6780,7 @@
 				7CC085461F7AA30F0010F96B /* DotView.swift in Sources */,
 				87DCF4931D34E9BA00BB420F /* ContactsViewController.m in Sources */,
 				7CED30721FD97748009F0DAC /* IconStringsBuilder.swift in Sources */,
+				EFABC92420208D80001F9866 /* UIViewController+removeUserConfirmationUI.swift in Sources */,
 				871BC00F1D34F56300DF0793 /* Analytics+OTREvents.m in Sources */,
 				876E0C8B1EC5ED69007EF34E /* CameraPicker.swift in Sources */,
 				EFA820B02019F0D700FED370 /* ParticipantsViewController+CollectionView.swift in Sources */,

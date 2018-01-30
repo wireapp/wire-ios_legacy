@@ -99,32 +99,13 @@ final class ProfileHeaderServiceDetailViewController: UIViewController {
         profileViewControllerDelegate?.profileViewControllerWants(toBeDismissed: self, completion: completion)
     }
 
-    ///FIXME: mv to UIViewcontrolle/ProfileViewControllerDelegater extension
-    func presentRemoveFromConversationDialogue(user: ZMUser, profileViewControllerDelegate: ProfileViewControllerDelegate?) {
-        if let actionSheetController = ActionSheetController.dialog(forRemoving: user, from: conversation, style: ActionSheetController.defaultStyle(), completion: {(_ canceled: Bool) -> Void in
-            self.dismiss(animated: true, completion: {() -> Void in
-                if canceled {
-                    return
-                }
-                ZMUserSession.shared()?.enqueueChanges({() -> Void in
-                    self.conversation.removeParticipant(user)
-                }, completionHandler: {() -> Void in
-                    profileViewControllerDelegate?.profileViewControllerWants(toBeDismissed: self, completion: nil)
-                })
-            })
-        }) {
-            present(actionSheetController, animated: true)
-        }
-        MediaManagerPlayAlert()
-    }
-
     func setupServiceDetailViewController(serviceUser: ServiceUser) {
 
         let buttonCallback: Callback<Button> = { [weak self] _ in
             guard let weakSelf = self else { return }
             guard weakSelf.serviceUser.isKind(of: ZMUser.self)  else { return }
 
-            weakSelf.presentRemoveFromConversationDialogue(user: weakSelf.serviceUser as! ZMUser, profileViewControllerDelegate: self?.profileViewControllerDelegate)
+            weakSelf.presentRemoveFromConversationDialogue(user: weakSelf.serviceUser as! ZMUser, conversation: weakSelf.conversation, profileViewControllerDelegate: self?.profileViewControllerDelegate)
         }
 
         serviceDetailViewController = ServiceDetailViewController(serviceUser: serviceUser,

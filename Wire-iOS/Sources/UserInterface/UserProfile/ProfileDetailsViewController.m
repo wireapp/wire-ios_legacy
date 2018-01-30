@@ -380,7 +380,7 @@ typedef NS_ENUM(NSUInteger, ProfileUserAction) {
             break;
             
         case ProfileUserActionRemovePeople:
-            [self presentRemoveFromConversationDialogue];
+            [self presentRemoveFromConversationDialogueWithUser:[self fullUser] conversation:self.conversation profileViewControllerDelegate:(id <ProfileViewControllerDelegate> _Nullable)self.delegate];
             break;
             
         case ProfileUserActionAcceptConnectionRequest:
@@ -417,31 +417,6 @@ typedef NS_ENUM(NSUInteger, ProfileUserAction) {
     }];
     
     [self.delegate profileDetailsViewController:self didPresentAddParticipantsViewController:addParticipantsViewController];
-}
-
-- (void)presentRemoveFromConversationDialogue
-{
-    __block ActionSheetController *actionSheetController =
-    [ActionSheetController dialogForRemovingUser:[self fullUser] fromConversation:self.conversation style:[ActionSheetController defaultStyle] completion:^(BOOL canceled) {
-        [self dismissViewControllerAnimated:YES completion:^{
-            if (canceled) {
-                return;
-            }
-            
-            [[ZMUserSession sharedSession] enqueueChanges:^{
-                [self.conversation removeParticipant:[self fullUser]];
-            } completionHandler:^{
-                if (self.fullUser.isServiceUser) {
-                    [Analytics.shared tagDidRemoveService:self.fullUser];
-                }
-                [self.delegate profileDetailsViewController:self wantsToBeDismissedWithCompletion:nil];
-            }];
-        }];
-    }];
-    
-    [self presentViewController:actionSheetController animated:YES completion:nil];
-    
-    MediaManagerPlayAlert();
 }
 
 - (void)bringUpConnectionRequestSheet
