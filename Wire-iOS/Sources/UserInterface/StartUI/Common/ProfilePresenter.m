@@ -125,7 +125,7 @@
 
 #pragma mark - ViewControllerDismissable
 
-- (void)profileViewControllerWantsToBeDismissed:(ProfileViewController *)profileViewController completion:(dispatch_block_t)completion
+- (void)profileViewControllerWantsToBeDismissed:(UIViewController *)profileViewController completion:(dispatch_block_t)completion
 {
     [profileViewController dismissViewControllerAnimated:YES completion:^{
         if (completion != nil) {

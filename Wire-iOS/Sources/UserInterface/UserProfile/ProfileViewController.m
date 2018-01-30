@@ -278,7 +278,7 @@ typedef NS_ENUM(NSUInteger, ProfileViewControllerTabBarIndex) {
     }
 }
 
-- (void)profileViewControllerWantsToBeDismissed:(ProfileViewController *)controller completion:(dispatch_block_t)completion
+- (void)profileViewControllerWantsToBeDismissed:(UIViewController *)controller completion:(dispatch_block_t)completion
 {
     [self.navigationController popViewControllerAnimated:YES];
 }

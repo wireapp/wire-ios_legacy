@@ -92,6 +92,9 @@
 @interface ConversationViewController (ProfileViewController) <ProfileViewControllerDelegate>
 @end
 
+@interface ConversationViewController (ViewControllerDismissable) <ViewControllerDismissable>
+@end
+
 @interface ConversationViewController (AddParticipants) <AddParticipantsViewControllerDelegate>
 @end
 
@@ -453,6 +456,7 @@
             viewController = [UserDetailViewControllerFactory createUserDetailViewControllerWithUser:self.conversation.firstActiveParticipantOtherThanSelf
                                           conversation:self.conversation
                          profileViewControllerDelegate:self
+                             viewControllerDismissable:self
                           navigationControllerDelegate:nil];
 
             if ([viewController isKindOfClass:[ProfileViewController class]]) {
@@ -784,12 +788,16 @@
 
 @end
 
-@implementation ConversationViewController (ProfileViewController)
+@implementation ConversationViewController (ViewControllerDismissable)
 
-- (void)profileViewControllerWantsToBeDismissed:(ProfileViewController *)profileViewController completion:(dispatch_block_t)completion
+- (void)profileViewControllerWantsToBeDismissed:(UIViewController *)profileViewController completion:(dispatch_block_t)completion
 {
     [self dismissViewControllerAnimated:YES completion:completion];
 }
+
+@end
+
+@implementation ConversationViewController (ProfileViewController)
 
 - (void)profileViewController:(ProfileViewController *)controller wantsToNavigateToConversation:(ZMConversation *)conversation
 {
