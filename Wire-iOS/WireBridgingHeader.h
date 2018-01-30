@@ -124,6 +124,7 @@
 #import "VoiceChannelParticipantCell.h"
 #import "ProfilePictureStepViewController.h"
 #import "StartUIViewController.h"
+#import "Button.h"
 
 // Helper objects
 #import "PushTransition.h"

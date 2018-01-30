@@ -111,7 +111,7 @@ final class ProfileHeaderServiceDetailViewController: UIViewController {
         }
 
         serviceDetailViewController = ServiceDetailViewController(serviceUser: serviceUser,
-                                                                  confirmButton: Buttonfactory.destructiveServiceButton(),
+                                                                  confirmButton: Button.createDestructiveServiceButton(callback: buttonCallback),
                                                                   forceShowNavigationBar: false,
                                                                   variant: .light,
                                                                   buttonCallback: buttonCallback)

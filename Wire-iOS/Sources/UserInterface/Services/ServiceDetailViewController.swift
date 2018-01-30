@@ -63,8 +63,8 @@ extension ServiceConversation: Hashable {
 
 private func add(service: Service, to conversation: Any, completion: @escaping (AddBotResult)->()) {
     guard let userSession = ZMUserSession.shared(),
-           let serviceConversation = conversation as? ServiceConversation else {
-        return
+        let serviceConversation = conversation as? ServiceConversation else {
+            return
     }
     
     func tagAdded(user: ServiceUser, to conversation: ZMConversation) {
@@ -157,24 +157,27 @@ extension ServiceConversation: ShareDestination {
 
 
 /// Creates Buttons for ServiceDetailViewController
-final class Buttonfactory: NSObject {
-    @objc static func addServicebutton() -> Button {
-        let button = Button(styleClass: "dialogue-button-full")
-        button.setTitle("peoplepicker.services.add_service.button".localized, for: .normal)
+extension Button {
+    @objc static func createAddServiceButton(callback: @escaping Callback<Button>) -> Button {
+        return Button.createButton(styleClass: "dialogue-button-full", title: "peoplepicker.services.add_service.button".localized, callback: callback)
+    }
 
-        return button
-   }
+    static func createDestructiveServiceButton(callback: @escaping Callback<Button>) -> Button {
+        return Button.createButton(styleClass: "dialogue-button-full-destructive", title: "participants.services.remove_integration.button".localized, callback: callback)
+    }
 
-    static func destructiveServiceButton() -> Button {
-        let button = Button(styleClass: "dialogue-button-full-destructive")
-        button.setTitle("participants.services.remove_integration.button".localized, for: .normal)
+    static func createButton(styleClass:String, title:String, callback: @escaping Callback<Button>) -> Button {
+        let button = Button(styleClass: styleClass)
+        button.setTitle(title, for: .normal)
+
+        button.addCallback(for: .touchUpInside, callback: callback)
 
         return button
     }
 }
 
 /// Creates Button callbacks for ServiceDetailViewController
-final class ButtonCallbackfactory: NSObject {
+final class ButtonCallbackFactory: NSObject {
     @objc static func addServiceButtonCallback(navigationController: UINavigationController?, serviceUser: ServiceUser) -> Callback<Button> {
         let buttonCallback: Callback<Button> = {  _ in
             guard let userSession = ZMUserSession.shared() else {
@@ -223,13 +226,10 @@ final class ServiceDetailViewController: UIViewController {
     ///   - confirmButton: a Button for confirmation
     ///   - forceShowNavigationBar: if the param is true, navigation bar is hidden (e.g. when the container view as a custom header view, navigation bar is not necessary)
     ///   - variant: color variant
-    ///   - buttonCallback: callback closure of the confirm button
     init(serviceUser: ServiceUser,
          confirmButton: Button,
          forceShowNavigationBar: Bool,
-         variant: ColorSchemeVariant,
-         buttonCallback: @escaping Callback<Button>
-        ) {
+         variant: ColorSchemeVariant) {
         self.service = Service(serviceUser: serviceUser)
         self.detailView = ServiceDetailView(service: service, variant: variant)
         self.confirmButton = confirmButton
@@ -239,8 +239,6 @@ final class ServiceDetailViewController: UIViewController {
         super.init(nibName: nil, bundle: nil)
         
         self.title = self.service.serviceUser.name
-
-        self.confirmButton.addCallback(for: .touchUpInside, callback: buttonCallback)
     }
     
     required init?(coder aDecoder: NSCoder) {

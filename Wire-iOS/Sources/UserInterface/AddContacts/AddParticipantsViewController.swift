@@ -294,9 +294,9 @@ extension AddParticipantsViewController: SearchResultsViewControllerDelegate {
     
     public func searchResultsViewController(_ searchResultsViewController: SearchResultsViewController, didTapOnSeviceUser user: ServiceUser) {
         let navigationController = UIViewController.navigationControllerWithDefaultNavigationBar()
-        let buttonCallback = ButtonCallbackfactory.addServiceButtonCallback(navigationController: navigationController, serviceUser: user)
+        let buttonCallback = ButtonCallbackFactory.addServiceButtonCallback(navigationController: navigationController, serviceUser: user)
 
-        let serviceDetails = ServiceDetailViewController(serviceUser: user, confirmButton: Buttonfactory.addServicebutton(), forceShowNavigationBar: true,  variant: .light, buttonCallback: buttonCallback)
+        let serviceDetails = ServiceDetailViewController(serviceUser: user, confirmButton: Button.createAddServiceButton(callback: buttonCallback), forceShowNavigationBar: true,  variant: .light)
         
         serviceDetails.destinationConversation = self.conversation
         serviceDetails.completion = { [weak self] _ in
