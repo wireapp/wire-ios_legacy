@@ -262,7 +262,7 @@
         canBeConnected = NO;
     }
     else if (fullUser != nil) {
-        canBeConnected = fullUser.canBeConnected && ! fullUser.isBlocked && ! fullUser.isPendingApproval && !fullUser.isTeamMember;
+        canBeConnected = fullUser.canBeConnected && ! fullUser.isBlocked && ! fullUser.isPendingApproval && !fullUser.isTeamMember && !fullUser.isServiceUser;
     }
     else {
         canBeConnected = self.user.canBeConnected;
