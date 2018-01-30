@@ -33,7 +33,7 @@
 
 /// The view controller which shows details about the given @c ZMConversation and their participants
 /// @see ProfileViewController
-@interface ParticipantsViewController : UIViewController <ProfileViewControllerDelegate>
+@interface ParticipantsViewController : UIViewController <ProfileViewControllerDelegate, ViewControllerDismissable>
 
 @property (nonatomic, weak) id<ParticipantsViewControllerDelegate> delegate;
 @property (nonatomic, strong) ZMConversation *conversation;

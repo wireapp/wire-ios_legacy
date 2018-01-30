@@ -325,7 +325,7 @@ static NSString *const ParticipantHeaderReuseIdentifier = @"ParticipantListHeade
     }
 }
 
-#pragma mark - ProfileViewControllerDelegate
+#pragma mark - ViewControllerDismissable
 
 - (void)profileViewControllerWantsToBeDismissed:(UIViewController *)profileViewController completion:(dispatch_block_t)completion
 {
@@ -334,6 +334,8 @@ static NSString *const ParticipantHeaderReuseIdentifier = @"ParticipantListHeade
         if (completion != nil) completion();
     }];
 }
+
+#pragma mark - ProfileViewControllerDelegate
 
 - (void)profileViewController:(ProfileViewController *)controller wantsToNavigateToConversation:(ZMConversation *)conversation
 {
