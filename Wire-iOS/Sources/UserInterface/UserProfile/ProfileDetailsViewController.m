@@ -380,7 +380,7 @@ typedef NS_ENUM(NSUInteger, ProfileUserAction) {
             break;
             
         case ProfileUserActionRemovePeople:
-            [self presentRemoveFromConversationDialogueWithUser:[self fullUser] conversation:self.conversation profileViewControllerDelegate:(id <ProfileViewControllerDelegate> _Nullable)self.delegate];
+            [self presentRemoveFromConversationDialogueWithUser:[self fullUser] conversation:self.conversation viewControllerDismissable:self.viewControllerDismissable];
             break;
             
         case ProfileUserActionAcceptConnectionRequest:

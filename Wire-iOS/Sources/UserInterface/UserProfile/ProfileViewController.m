@@ -146,6 +146,7 @@ typedef NS_ENUM(NSUInteger, ProfileViewControllerTabBarIndex) {
     if (self.context != ProfileViewControllerContextDeviceList) {
         ProfileDetailsViewController *profileDetailsViewController = [[ProfileDetailsViewController alloc] initWithUser:self.bareUser conversation:self.conversation context:self.context];
         profileDetailsViewController.delegate = self;
+        profileDetailsViewController.viewControllerDismissable = self;
         profileDetailsViewController.title = NSLocalizedString(@"profile.details.title", nil);
         [viewControllers addObject:profileDetailsViewController];
     }

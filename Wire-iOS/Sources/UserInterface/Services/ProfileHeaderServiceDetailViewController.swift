@@ -25,6 +25,7 @@ final class ProfileHeaderServiceDetailViewController: UIViewController {
 
     public weak var navigationControllerDelegate: ProfileNavigationControllerDelegate?
     public weak var profileViewControllerDelegate: ProfileViewControllerDelegate?
+    public weak var viewControllerDismissable: ViewControllerDismissable?
 
     var headerView: ProfileHeaderView!
     var serviceDetailViewController: ServiceDetailViewController!
@@ -99,7 +100,7 @@ final class ProfileHeaderServiceDetailViewController: UIViewController {
     }
 
     func requestDismissal(withCompletion completion: (() -> Void)?) {
-        profileViewControllerDelegate?.profileViewControllerWants(toBeDismissed: self, completion: completion)
+        viewControllerDismissable?.profileViewControllerWants(toBeDismissed: self, completion: completion)
     }
 
     func setupServiceDetailViewController(serviceUser: ServiceUser) {
@@ -108,6 +109,7 @@ final class ProfileHeaderServiceDetailViewController: UIViewController {
                                                                   actionType: .removeService,
                                                                   forceShowNavigationBar: false,
                                                                   variant: .light)
+        serviceDetailViewController.viewControllerDismissable = self.viewControllerDismissable
 
         self.addToSelf(serviceDetailViewController)
 

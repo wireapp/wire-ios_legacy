@@ -161,11 +161,6 @@ final class ServiceDetailViewController: UIViewController {
         case addService, removeService
     }
 
-    private let detailView: ServiceDetailView
-    private let actionButton: Button
-    private let actionType: ActionType
-    private var forceShowNavigationBar: Bool
-
     public var service: Service {
         didSet {
             self.detailView.service = service
@@ -176,7 +171,12 @@ final class ServiceDetailViewController: UIViewController {
     public var destinationConversation: ZMConversation?
 
     public let variant: ColorSchemeVariant
+    public var viewControllerDismissable: ViewControllerDismissable?
 
+    private let detailView: ServiceDetailView
+    private let actionButton: Button
+    private let actionType: ActionType
+    private var forceShowNavigationBar: Bool
 
     /// init method with ServiceUser and customized UI.
     ///
@@ -211,7 +211,7 @@ final class ServiceDetailViewController: UIViewController {
             guard let weakSelf = self else { return }
             guard weakSelf.service.serviceUser.isKind(of: ZMUser.self)  else { return }
 
-            weakSelf.presentRemoveFromConversationDialogue(user: weakSelf.service.serviceUser as! ZMUser, conversation: weakSelf.destinationConversation, profileViewControllerDelegate: nil/*self?.profileViewControllerDelegate*/)///TODO
+            weakSelf.presentRemoveFromConversationDialogue(user: weakSelf.service.serviceUser as! ZMUser, conversation: weakSelf.destinationConversation, viewControllerDismissable: weakSelf.viewControllerDismissable)
         }
 
         return buttonCallback

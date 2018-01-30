@@ -25,10 +25,10 @@ extension UIViewController {
     /// - Parameters:
     ///   - user: user to remove
     ///   - conversation: the current converation contains that user
-    ///   - profileViewControllerDelegate: a ProfileViewControllerDelegate to call when this UIViewController is dismissed
+    ///   - viewControllerDismissable: a ViewControllerDismissable to call when this UIViewController is dismissed
     @objc func presentRemoveFromConversationDialogue(user: ZMUser,
                                                      conversation: ZMConversation?,
-                                                     profileViewControllerDelegate: ProfileViewControllerDelegate?) {
+                                                     viewControllerDismissable: ViewControllerDismissable?) {
         if let actionSheetController = ActionSheetController.dialog(forRemoving: user, from: conversation, style: ActionSheetController.defaultStyle(), completion: {(_ canceled: Bool) -> Void in
             self.dismiss(animated: true, completion: {() -> Void in
                 if canceled {
@@ -40,7 +40,7 @@ extension UIViewController {
                     if user.isServiceUser {
                         Analytics.shared().tagDidRemoveService(user)
                     }
-                    profileViewControllerDelegate?.profileViewControllerWants(toBeDismissed: self, completion: nil)
+                    viewControllerDismissable?.profileViewControllerWants(toBeDismissed: self, completion: nil)
                 })
             })
         }) {
