@@ -133,6 +133,10 @@ extension ZMConversationList {
                 conversation != excluding
         }
     }
+    
+    func convesationsWhereBotCanBeAdded() -> [ZMConversation] {
+        return self.shareableConversations().filter { $0.botCanBeAdded }
+    }
 }
 
 extension ConversationContentViewController: UIAdaptivePresentationControllerDelegate {

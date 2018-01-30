@@ -91,9 +91,7 @@ public class ServicesSection: NSObject, CollectionViewSectionController {
             
             self.delegate?.collectionViewSectionController(self, didDoubleTapItem: user, at: indexPath)
         }
-        cell.instantConnectAction = { [weak self] _ in
-            self?.delegate?.collectionViewSectionController(self, didSelectItem: user, at: indexPath)
-        }
+        cell.instantConnectAction = nil
         return cell
     }
     

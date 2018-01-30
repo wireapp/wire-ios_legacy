@@ -20,6 +20,12 @@
 import Foundation
 import Cartography
 
+extension ZMConversation {
+    var botCanBeAdded: Bool {
+        return self.conversationType != .oneOnOne
+    }
+}
+
 public enum ServiceConversation {
     case existing(ZMConversation)
     case new
@@ -141,7 +147,7 @@ extension ServiceConversation: ShareDestination {
         case .new:
             let imageView = UIImageView()
             imageView.contentMode = .center
-            imageView.image = UIImage.init(for: .plus, iconSize: .medium, color: .white)
+            imageView.image = UIImage.init(for: .plus, iconSize: .tiny, color: .white)
             return imageView
         case .existing(let conversation):
             return conversation.avatarView
@@ -332,11 +338,11 @@ final class ServiceDetailViewController: UIViewController {
         
         var allConversations: [ServiceConversation] = [.new]
         
-        let zmConversations = ZMConversationList.conversationsIncludingArchived(inUserSession: userSession).shareableConversations().filter { $0.conversationType != .oneOnOne }
+        let zmConversations = ZMConversationList.conversationsIncludingArchived(inUserSession: userSession).convesationsWhereBotCanBeAdded()
         
         allConversations.append(contentsOf: zmConversations.map(ServiceConversation.existing))
         
-        let conversationPicker = ShareServiceViewController(shareable: self.service, destinations: allConversations, showPreview: true, allowsMultiselect: false)
+        let conversationPicker = ShareServiceViewController(shareable: self.service, destinations: allConversations, showPreview: true, allowsMultipleSelection: false)
         conversationPicker.onServiceDismiss = { [weak self] _, completed, result in
             self?.completion?(result)
         }
