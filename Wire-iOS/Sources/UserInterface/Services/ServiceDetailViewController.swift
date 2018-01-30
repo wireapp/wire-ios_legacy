@@ -185,7 +185,7 @@ final class ButtonCallbackfactory: NSObject {
 
             allConversations.append(contentsOf: zmConversations.map(ServiceConversation.existing))
 
-            let conversationPicker = ShareViewController<ServiceConversation, Service>(shareable: Service(serviceUser: serviceUser), destinations: allConversations, showPreview: true, allowsMultiselect: false)
+            let conversationPicker = ShareViewController<ServiceConversation, Service>(shareable: Service(serviceUser: serviceUser), destinations: allConversations, showPreview: true, allowsMultipleSelection: false)
             conversationPicker.onDismiss = { _, completed in
                 navigationController?.dismiss(animated: true, completion: nil)
             }

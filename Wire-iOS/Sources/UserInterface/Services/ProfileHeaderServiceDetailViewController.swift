@@ -52,9 +52,11 @@ final class ProfileHeaderServiceDetailViewController: UIViewController {
     }
 
     private func createConstraints() {
-        var topMargin = UIScreen.safeArea.top
+
+        /// align to ParticipantsViewController's "X" button y position
+        var topMargin = -UIScreen.safeArea.top + 20
         if UIScreen.hasNotch {
-            topMargin -= 20.0;
+            topMargin -= 20.0
         }
 
         constrain(view, self.headerView, self.serviceDetailViewController.view) { view, headerView, serviceDetailView in
@@ -69,12 +71,20 @@ final class ProfileHeaderServiceDetailViewController: UIViewController {
         }
     }
 
-    func setupHeader() {
+    // MARK: - header view
+
+    func headerViewModel(with user: ZMBareUser) -> ProfileHeaderViewModel {
         var headerStyle: ProfileHeaderStyle = .cancelButton
-        if UIDevice.current.userInterfaceIdiom == .pad && navigationController?.viewControllers.count > 1 {
+        if UIApplication.shared.keyWindow?.traitCollection.horizontalSizeClass == .regular {
             headerStyle = .backButton
         }
-        headerView = ProfileHeaderView(with: headerStyle)
+        return ProfileHeaderViewModel(user: user, fallbackName: user.displayName, addressBookName: nil, style: headerStyle)
+    }
+
+    func setupHeader() {
+        let viewModel = headerViewModel(with: serviceUser)
+
+        headerView = ProfileHeaderView(with: viewModel)
 
         headerView.translatesAutoresizingMaskIntoConstraints = false
         headerView.dismissButton.addTarget(self, action: #selector(self.dismissButtonClicked), for: .touchUpInside)
@@ -85,12 +95,13 @@ final class ProfileHeaderServiceDetailViewController: UIViewController {
         requestDismissal(withCompletion: nil)
     }
 
-    func requestDismissal(withCompletion completion: (() -> ())?) {
+    func requestDismissal(withCompletion completion: (() -> Void)?) {
         profileViewControllerDelegate?.profileViewControllerWants(toBeDismissed: self, completion: completion)
     }
 
-    func presentRemoveFromConversationDialogue(user: ZMUser) {
-        if let actionSheetController = ActionSheetController.dialog(forRemoving: serviceUser as! ZMUser, from: conversation, style: ActionSheetController.defaultStyle(), completion: {(_ canceled: Bool) -> Void in
+    ///FIXME: mv to UIViewcontrolle/ProfileViewControllerDelegater extension
+    func presentRemoveFromConversationDialogue(user: ZMUser, profileViewControllerDelegate: ProfileViewControllerDelegate?) {
+        if let actionSheetController = ActionSheetController.dialog(forRemoving: user, from: conversation, style: ActionSheetController.defaultStyle(), completion: {(_ canceled: Bool) -> Void in
             self.dismiss(animated: true, completion: {() -> Void in
                 if canceled {
                     return
@@ -98,7 +109,7 @@ final class ProfileHeaderServiceDetailViewController: UIViewController {
                 ZMUserSession.shared()?.enqueueChanges({() -> Void in
                     self.conversation.removeParticipant(user)
                 }, completionHandler: {() -> Void in
-                    self.profileViewControllerDelegate?.profileViewControllerWants(toBeDismissed: self, completion: nil)
+                    profileViewControllerDelegate?.profileViewControllerWants(toBeDismissed: self, completion: nil)
                 })
             })
         }) {
@@ -113,17 +124,16 @@ final class ProfileHeaderServiceDetailViewController: UIViewController {
             guard let weakSelf = self else { return }
             guard weakSelf.serviceUser.isKind(of: ZMUser.self)  else { return }
 
-            weakSelf.presentRemoveFromConversationDialogue(user: weakSelf.serviceUser as! ZMUser)
+            weakSelf.presentRemoveFromConversationDialogue(user: weakSelf.serviceUser as! ZMUser, profileViewControllerDelegate: self?.profileViewControllerDelegate)
         }
 
         serviceDetailViewController = ServiceDetailViewController(serviceUser: serviceUser,
-            confirmButton: Buttonfactory.destructiveServiceButton(),
-            forceShowNavigationBarWhenviewWillAppear: false,
-            variant: .light,
-            buttonCallback: buttonCallback)
+                                                                  confirmButton: Buttonfactory.destructiveServiceButton(),
+                                                                  forceShowNavigationBarWhenviewWillAppear: false,
+                                                                  variant: .light,
+                                                                  buttonCallback: buttonCallback)
 
         self.addToSelf(serviceDetailViewController)
 
     }
 }
-
