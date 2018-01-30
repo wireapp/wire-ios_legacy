@@ -38,13 +38,12 @@ final class ProfileHeaderServiceDetailViewController: UIViewController {
         self.conversation = conversation
 
         super.init(nibName: nil, bundle: nil)
-
-        self.navigationController?.delegate = self.navigationControllerDelegate
-        self.view.backgroundColor = .white
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        self.navigationController?.delegate = self.navigationControllerDelegate
 
         setupHeader()
         setupServiceDetailViewController(serviceUser: serviceUser)
@@ -75,6 +74,7 @@ final class ProfileHeaderServiceDetailViewController: UIViewController {
 
     func headerViewModel(with user: ZMBareUser) -> ProfileHeaderViewModel {
         var headerStyle: ProfileHeaderStyle = .cancelButton
+        /// TODO: It is possible that headerStyle changes in run time, e.g. iPad changes its size class. Rewrite ProfileHeaderView to handle size class changing.
         if UIApplication.shared.keyWindow?.traitCollection.horizontalSizeClass == .regular {
             headerStyle = .backButton
         }

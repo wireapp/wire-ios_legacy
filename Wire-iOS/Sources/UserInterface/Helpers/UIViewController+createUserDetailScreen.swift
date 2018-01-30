@@ -27,7 +27,10 @@ extension UIViewController {
     ///   - profileViewControllerDelegate: a ProfileViewControllerDelegate
     ///   - navigationControllerDelegate: a ProfileNavigationControllerDelegate
     /// - Returns: if the user is a serviceUser, return a ProfileHeaderServiceDetailViewController. if the user not a serviceUser, return a ProfileViewController
-    @objc static func createUserDetailViewController(user: ZMUser, conversation: ZMConversation, profileViewControllerDelegate: ProfileViewControllerDelegate, navigationControllerDelegate: ProfileNavigationControllerDelegate? = nil) -> UIViewController {
+    @objc static func createUserDetailViewController(user: ZMUser,
+                                                     conversation: ZMConversation,
+                                                     profileViewControllerDelegate: ProfileViewControllerDelegate,
+                                                     navigationControllerDelegate: ProfileNavigationControllerDelegate? = nil) -> UIViewController {
         if user.isServiceUser {
             let profileHeaderServiceDetailViewController = ProfileHeaderServiceDetailViewController(serviceUser: user, conversation: conversation)
             profileHeaderServiceDetailViewController.profileViewControllerDelegate = profileViewControllerDelegate

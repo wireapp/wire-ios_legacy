@@ -196,7 +196,6 @@ final class ButtonCallbackfactory: NSObject {
     }
 }
 
-///FIXME: snapshot test
 final class ServiceDetailViewController: UIViewController {
 
     private let detailView: ServiceDetailView
