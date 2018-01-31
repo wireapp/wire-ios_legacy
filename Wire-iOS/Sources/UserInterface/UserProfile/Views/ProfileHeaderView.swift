@@ -93,7 +93,7 @@ final class ProfileHeaderView: UIView {
             verified.width == 16
             verified.leading == view.leading + horizontalMargin
 
-            switch headerStyle { 
+            switch headerStyle {
             case .backButton: dismiss.leading == view.leading + horizontalMargin
             case .cancelButton: dismiss.trailing == view.trailing - horizontalMargin
             default: break

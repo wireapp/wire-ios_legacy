@@ -296,6 +296,7 @@ extension AddParticipantsViewController: SearchResultsViewControllerDelegate {
         let navigationController = UIViewController.navigationControllerWithDefaultNavigationBar()
 
         let serviceDetails = ServiceDetailViewController(serviceUser: user,
+                                                         destinationConversation: self.conversation,
                                                          actionButton: Button.createAddServiceButton(),
                                                          actionType: .addService,
                                                          forceShowNavigationBar: true,

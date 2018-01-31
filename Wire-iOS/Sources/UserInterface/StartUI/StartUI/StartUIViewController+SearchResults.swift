@@ -61,9 +61,11 @@ extension StartUIViewController: SearchResultsViewControllerDelegate {
         let button = Button.createAddServiceButton()
 
         let detail = ServiceDetailViewController(serviceUser: user,
+                                                 destinationConversation: nil,
                                                  actionButton: button,
                                                  actionType: .addService,
-                                                 forceShowNavigationBar: true, variant: .dark)
+                                                 forceShowNavigationBar: true,
+                                                 variant: .dark)
 
         detail.completion = { [weak self] result in
             if let result = result {

@@ -104,6 +104,7 @@ final class ProfileHeaderServiceDetailViewController: UIViewController {
 
     func setupServiceDetailViewController(serviceUser: ServiceUser) {
         serviceDetailViewController = ServiceDetailViewController(serviceUser: serviceUser,
+                                                                  destinationConversation: self.conversation,
                                                                   actionButton: Button.createDestructiveServiceButton(),
                                                                   actionType: .removeService,
                                                                   forceShowNavigationBar: false,

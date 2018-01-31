@@ -167,7 +167,7 @@ final class ServiceDetailViewController: UIViewController {
     }
 
     public var completion: ((AddBotResult?)->Void)?
-    public var destinationConversation: ZMConversation?
+    let destinationConversation: ZMConversation?
 
     public let variant: ColorSchemeVariant
     public var viewControllerDismissable: ViewControllerDismissable?
@@ -177,19 +177,23 @@ final class ServiceDetailViewController: UIViewController {
     private let actionType: ActionType
     private var forceShowNavigationBar: Bool
 
-    /// init method with ServiceUser and customized UI.
+    /// init method with ServiceUser, destination conversation and customized UI.
     ///
     /// - Parameters:
     ///   - serviceUser: a ServiceUser to show
-    ///   - confirmButton: a Button for confirmation
+    ///   - destinationConversation: the destination conversation of the serviceUser
+    ///   - actionButton: an action Button with customized UI
+    ///   - actionType: Enum ActionType to choose the actiion add or remove the service user
     ///   - forceShowNavigationBar: if the param is true, navigation bar is hidden (e.g. when the container view as a custom header view, navigation bar is not necessary)
     ///   - variant: color variant
     init(serviceUser: ServiceUser,
+         destinationConversation: ZMConversation?,
          actionButton: Button,
          actionType: ActionType,
          forceShowNavigationBar: Bool,
          variant: ColorSchemeVariant) {
         self.service = Service(serviceUser: serviceUser)
+        self.destinationConversation = destinationConversation
         self.detailView = ServiceDetailView(service: service, variant: variant)
         self.actionButton = actionButton
         self.forceShowNavigationBar = forceShowNavigationBar
@@ -294,7 +298,7 @@ final class ServiceDetailViewController: UIViewController {
         })
     }
 
-    // MARK: - action button callback
+    // MARK: - action button callback - remove service
 
     func createRemoveServiceCallBack() -> Callback<Button> {
         let buttonCallback: Callback<Button> = { [weak self] _ in
@@ -306,6 +310,8 @@ final class ServiceDetailViewController: UIViewController {
 
         return buttonCallback
     }
+
+    // MARK: - action button callback - add service
 
     func createOnAddServicePressed() -> Callback<Button> {
         return { [weak self] _ in
