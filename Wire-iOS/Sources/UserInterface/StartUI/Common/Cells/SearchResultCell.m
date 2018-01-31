@@ -383,7 +383,7 @@
 
 - (void)updateSubtitle
 {
-    NSAttributedString *subtitle = [self attributedSubtitleWithUser:(id)self.user];
+    NSAttributedString *subtitle = [self attributedSubtitleForUser:(id)self.user];
 
     if (nil == subtitle) {
         self.subtitleLabel.text = @"";
@@ -414,20 +414,20 @@
     }
 }
 
-- (NSAttributedString *)attributedSubtitleWithUser:(id <ZMBareUser, ZMSearchableUser>)user
+- (NSAttributedString *)attributedSubtitleForRegularUser:(id <ZMBareUser, ZMSearchableUser>)user
 {
     NSMutableAttributedString *subtitle = [[NSMutableAttributedString alloc] init];
-
+    
     NSAttributedString *attributedHandle;
     NSString *handle = user.handle ?: BareUserToUser(user).handle;
-
+    
     if (nil != handle && handle.length > 0) {
         NSDictionary *attributes = @{ NSFontAttributeName: self.class.boldFont, NSForegroundColorAttributeName: self.subtitleColor };
         NSString *displayHandle = [NSString stringWithFormat:@"@%@", handle];
         attributedHandle = [[NSAttributedString alloc] initWithString:displayHandle attributes:attributes];
         [subtitle appendAttributedString:attributedHandle];
     }
-
+    
     NSString *addresBookName = BareUserToUser(user).addressBookEntry.cachedName;
     NSAttributedString *correlation = [self.class.correlationFormatter correlationTextFor:self.user addressBookName:addresBookName];
     if (nil != correlation) {
@@ -437,8 +437,30 @@
         }
         [subtitle appendAttributedString:correlation];
     }
-
+    
     return subtitle.length != 0 ? [[NSAttributedString alloc] initWithAttributedString:subtitle] : nil;
+}
+
+- (NSAttributedString *)attributedSubtitleForServiceUser:(id <SearchServiceUser>)user
+{
+    if (user.summary.length != 0) {
+        NSDictionary *attributes = @{ NSFontAttributeName: self.class.boldFont, NSForegroundColorAttributeName: self.subtitleColor };
+        return [[NSAttributedString alloc] initWithString:user.summary
+                                               attributes:attributes];
+    }
+    else {
+        return nil;
+    }
+}
+
+- (NSAttributedString *)attributedSubtitleForUser:(id <ZMBareUser, ZMSearchableUser>)user
+{
+    if ([user conformsToProtocol:@protocol(SearchServiceUser)]) {
+        return [self attributedSubtitleForServiceUser:(id<SearchServiceUser>)user];
+    }
+    else {
+        return [self attributedSubtitleForRegularUser:user];
+    }
 }
 
 @end

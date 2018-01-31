@@ -292,26 +292,34 @@ extension AddParticipantsViewController: SearchResultsViewControllerDelegate {
         // no-op
     }
     
-    public func searchResultsViewController(_ searchResultsViewController: SearchResultsViewController, didTapOnSeviceUser user: ServiceUser) {
-        let navigationController = UIViewController.navigationControllerWithDefaultNavigationBar()
 
-        let serviceDetails = ServiceDetailViewController(serviceUser: user,
+    public func searchResultsViewController(_ searchResultsViewController: SearchResultsViewController, didTapOnSeviceUser user: ServiceUser) {
+
+        let navigationController = UIViewController.navigationControllerWithDefaultNavigationBar()
+        let detail = ServiceDetailViewController(serviceUser: user,
                                                          destinationConversation: self.conversation,
                                                          actionType: .addService,
                                                          forceShowNavigationBar: true,
                                                          variant: .light)
-        
-        serviceDetails.completion = { [weak self] _ in
-            guard let `self` = self else {
-                return
-            }
-            self.dismiss(animated: true) {
-                self.delegate?.addParticipantsViewControllerDidCancel(self)
+
+        detail.completion = { [weak self] result in
+            guard let `self` = self else { return }
+            
+            if let result = result {
+                switch result {
+                case .success( _):
+                    self.dismiss(animated: true, completion: {
+                        self.delegate?.addParticipantsViewController(self, didSelectUsers: [user as! ZMUser])
+                    })
+                case .failure(let error):
+                    error.displayAddBotError(in: detail)
+                }
             }
         }
-
+        
         navigationController.setViewControllers([serviceDetails], animated: false)
         self.present(navigationController, animated: true, completion: nil)
     }
+    
 }
 
