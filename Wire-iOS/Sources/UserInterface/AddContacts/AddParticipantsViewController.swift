@@ -317,7 +317,7 @@ extension AddParticipantsViewController: SearchResultsViewControllerDelegate {
             }
         }
         
-        navigationController.setViewControllers([serviceDetails], animated: false)
+        navigationController.setViewControllers([detail], animated: false)
         self.present(navigationController, animated: true, completion: nil)
     }
     
