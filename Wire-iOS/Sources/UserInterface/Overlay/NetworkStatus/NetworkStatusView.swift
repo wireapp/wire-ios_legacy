@@ -61,7 +61,7 @@ class OfflineBar: UIView {
         ///TODO:, margins left/right: 16pt. margin to top of screen: 28pt (iPhone 8 and older), 44pt (iPhone X), margin to navigation bar: 10pt, height: 24pt
         backgroundColor = UIColor(rgb:0xFEBF02, alpha: 1)///TODO share with Syncing bar
 
-        layer.cornerRadius = 6
+        layer.cornerRadius = 6 ///TODO: change to 1 during animation
         layer.masksToBounds = true
 
         offlineLabel.font = FontSpec(FontSize.small, .medium).font
@@ -108,7 +108,7 @@ protocol NetworkStatusViewDelegate: class {
 
 class NetworkStatusView: UIView {
 
-    static public let resizeAnimationTime: TimeInterval = 0.35
+    static public let resizeAnimationTime: TimeInterval = 1
 
     private let connectingView: BreathLoadingBar
     private let offlineView: OfflineBar
@@ -182,7 +182,7 @@ class NetworkStatusView: UIView {
         if let offlineBarState = offlineBarState {
             if animated {
                 UIView.animate(withDuration: NetworkStatusView.resizeAnimationTime, delay: 0, options: [.curveEaseIn, .beginFromCurrentState], animations: {
-                    self.offlineView.update(state: offlineBarState, animated: animated)
+                    self.offlineView.update(state: offlineBarState, animated: animated) ///TODO: update radius
                     self.layoutIfNeeded()
                 }) { _ in
                     self.connectingView.isHidden = connectingViewHidden

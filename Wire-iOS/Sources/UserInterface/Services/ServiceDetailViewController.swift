@@ -265,7 +265,7 @@ final class ServiceDetailViewController: UIViewController {
     
     private func onAddServicePressed() {
         if let conversation = self.destinationConversation {
-            add(service: self.service, to: ServiceConversation.existing(conversation), completion: { [weak self] result in
+            Wire.add(service: self.service, to: ServiceConversation.existing(conversation), completion: { [weak self] result in
                 self?.completion?(result)
             })
         }
