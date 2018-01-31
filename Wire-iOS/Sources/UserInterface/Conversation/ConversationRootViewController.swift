@@ -24,8 +24,6 @@ import Cartography
 // This class wraps the conversation content view controller in order to display the navigation bar on the top
 @objc open class ConversationRootViewController: UIViewController {
 
-    let networkStatusBarLeftRightMargin: CGFloat = 16
-
     fileprivate(set) var customNavBar: UINavigationBarContainer?
     fileprivate var contentView = UIView()
     var navHeight: NSLayoutConstraint?
@@ -82,16 +80,17 @@ import Cartography
         [networkStatusViewController.view, navbar, self.contentView].forEach {view in
             view.translatesAutoresizingMaskIntoConstraints = false}
 
+        let topMargin = UIScreen.safeArea.top
+
         constrain(self.customNavBar!, self.view, self.contentView, conversationViewController.view, networkStatusViewController.view) { (customNavBar: LayoutProxy, view: LayoutProxy, contentView: LayoutProxy, conversationViewControllerView: LayoutProxy, networkStatusViewControllerView: LayoutProxy) -> Void in
 
-            networkStatusViewControllerView.top == view.top + UIScreen.safeArea.top
-            networkStatusViewControllerView.left == view.left + networkStatusBarLeftRightMargin
-            networkStatusViewControllerView.right == view.right - networkStatusBarLeftRightMargin
+            networkStatusViewControllerView.top == view.top + topMargin
+            networkStatusViewControllerView.left == view.left
+            networkStatusViewControllerView.right == view.right
 
             customNavBar.top == networkStatusViewControllerView.bottom
             customNavBar.left == view.left
             customNavBar.right == view.right
-//                        navHeight = customNavBar.height == 100
 
             contentView.left == view.left
             contentView.right == view.right

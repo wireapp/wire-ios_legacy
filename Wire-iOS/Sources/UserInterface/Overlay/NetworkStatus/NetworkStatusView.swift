@@ -109,11 +109,16 @@ protocol NetworkStatusViewDelegate: class {
 class NetworkStatusView: UIView {
 
     static public let resizeAnimationTime: TimeInterval = 1
+    static public let horizontal: CGFloat = 16
+    static public let verticalMargin: CGFloat = 8
 
     private let connectingView: BreathLoadingBar
     private let offlineView: OfflineBar
     private var _state: NetworkStatusViewState = .online
     public weak var delegate: NetworkStatusViewDelegate?
+
+    var offlineViewTopMargin: NSLayoutConstraint?
+    var offlineViewBottomMargin: NSLayoutConstraint?
 
     var state: NetworkStatusViewState {
         set {
@@ -149,17 +154,17 @@ class NetworkStatusView: UIView {
 
     func createConstraints() {
         constrain(self, offlineView, connectingView) { containerView, offlineView, connectingView in
-            containerView.height == offlineView.height
+//            containerView.height == offlineView.height
 
-            offlineView.left == containerView.left
-            offlineView.right == containerView.right
-            offlineView.top == containerView.top
-            offlineView.bottom <= containerView.bottom
+            offlineView.left == containerView.left + NetworkStatusView.horizontal
+            offlineView.right == containerView.right - NetworkStatusView.horizontal
+            offlineViewTopMargin = offlineView.top == containerView.top + NetworkStatusView.verticalMargin
+            offlineViewBottomMargin = offlineView.bottom == containerView.bottom - NetworkStatusView.verticalMargin
 
-            connectingView.left == containerView.left
-            connectingView.right == containerView.right
-            connectingView.top == containerView.top
-            connectingView.bottom <= containerView.bottom
+            connectingView.left == offlineView.left
+            connectingView.right == offlineView.right
+            connectingView.top == offlineView.top
+            connectingView.bottom <= offlineView.bottom
             connectingView.height == OfflineBar.collapsedHeight
         }
     }
@@ -182,21 +187,34 @@ class NetworkStatusView: UIView {
         if let offlineBarState = offlineBarState {
             if animated {
                 UIView.animate(withDuration: NetworkStatusView.resizeAnimationTime, delay: 0, options: [.curveEaseIn, .beginFromCurrentState], animations: {
-                    self.offlineView.update(state: offlineBarState, animated: animated) ///TODO: update radius
-                    self.layoutIfNeeded()
+                    self.updateUI(offlineBarState: offlineBarState, animated: animated)
                 }) { _ in
-                    self.connectingView.isHidden = connectingViewHidden
-                    self.offlineView.isHidden = offlineViewHidden
+                    self.updateUICompletion(connectingViewHidden: connectingViewHidden, offlineViewHidden: offlineViewHidden)
                 }
             } else {
-                self.offlineView.update(state: offlineBarState, animated: animated)
-                connectingView.isHidden = connectingViewHidden
-                offlineView.isHidden = offlineViewHidden
+                updateUI(offlineBarState: offlineBarState, animated: animated)
+
+                updateUICompletion(connectingViewHidden: connectingViewHidden, offlineViewHidden: offlineViewHidden)
             }
 
             delegate?.didChangeHeight(self, animated: animated, offlineBarState: offlineBarState)
         }
+    }
 
+    func updateUICompletion(connectingViewHidden: Bool, offlineViewHidden: Bool) {
+        self.connectingView.isHidden = connectingViewHidden
+        self.offlineView.isHidden = offlineViewHidden
+    }
+
+    func updateUI(offlineBarState: OfflineBarState, animated: Bool) {
+        self.updateMargin(state: offlineBarState)
+        self.offlineView.update(state: offlineBarState, animated: animated) ///TODO: update radius
+        self.layoutIfNeeded()
+    }
+
+    func updateMargin(state: OfflineBarState) {
+        offlineViewTopMargin?.constant = state == .expanded ? NetworkStatusView.verticalMargin : 0
+        offlineViewBottomMargin?.constant = state == .expanded ? -NetworkStatusView.verticalMargin : 0
     }
 
     // Detects when the view can be touchable
