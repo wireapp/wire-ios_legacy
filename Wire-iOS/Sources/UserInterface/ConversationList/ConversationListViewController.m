@@ -208,6 +208,8 @@
         [Settings sharedSettings].lastViewedScreen = SettingsLastScreenList;
     }
     
+    _state = ConversationListStateConversationList;
+    
     [self updateBottomBarSeparatorVisibilityWithContentController:self.listContentController];
     [self closePushPermissionDialogIfNotNeeded];
 }
