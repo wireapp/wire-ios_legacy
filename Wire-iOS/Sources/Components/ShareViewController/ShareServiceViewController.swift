@@ -26,12 +26,25 @@ class ShareServiceViewController: ShareViewController<ServiceConversation,Servic
         self.navigationController?.popViewController(animated: true)
     }
     
+    @objc(dismissButtonTapped:)
+    public func dismissButtonTapped(_ sender: AnyObject!) {
+        self.navigationController?.dismiss(animated: true, completion: nil)
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
+        self.title = self.shareable.serviceUser.name
+        
         if (self.navigationController?.viewControllers.count ?? 0) > 1 {
-            self.navigationItem.leftBarButtonItem = UIBarButtonItem(icon: .backArrow, target: self, action: #selector(ServiceDetailViewController.backButtonTapped(_:)))
+            self.navigationItem.leftBarButtonItem = UIBarButtonItem(icon: .backArrow,
+                                                                    target: self,
+                                                                    action: #selector(ShareServiceViewController.backButtonTapped(_:)))
         }
+        
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(icon: .X,
+                                                                 target: self,
+                                                                 action: #selector(ShareServiceViewController.dismissButtonTapped(_:)))
     }
     
     // MARK: - Actions
