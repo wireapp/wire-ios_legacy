@@ -285,10 +285,14 @@ final class ServiceDetailViewController: UIViewController {
         super.viewDidAppear(animated)
 
         if (self.navigationController?.viewControllers.count ?? 0) > 1 {
-            self.navigationItem.leftBarButtonItem = UIBarButtonItem(icon: .backArrow, target: self, action: #selector(ServiceDetailViewController.backButtonTapped(_:)))
+            self.navigationItem.leftBarButtonItem = UIBarButtonItem(icon: .backArrow,
+                                                                    target: self,
+                                                                    action: #selector(ServiceDetailViewController.backButtonTapped(_:)))
         }
 
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(icon: .X, target: self, action: #selector(ServiceDetailViewController.dismissButtonTapped(_:)))
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(icon: .X,
+                                                                 target: self,
+                                                                 action: #selector(ServiceDetailViewController.dismissButtonTapped(_:)))
     }
 
     @objc(backButtonTapped:)
