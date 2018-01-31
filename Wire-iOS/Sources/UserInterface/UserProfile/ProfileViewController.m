@@ -313,7 +313,7 @@ typedef NS_ENUM(NSUInteger, ProfileViewControllerTabBarIndex) {
 - (void)profileDetailsViewController:(ProfileDetailsViewController *)profileDetailsViewController wantsToBeDismissedWithCompletion:(dispatch_block_t)completion
 {
     if ([self.delegate respondsToSelector:@selector(profileViewControllerWantsToBeDismissed:completion:)]) {
-        [self.delegate profileViewControllerWantsToBeDismissed:self completion:completion];
+        [self.viewControllerDismissable profileViewControllerWantsToBeDismissed:self completion:completion];
     } else if (completion != nil) {
         completion();
     }
