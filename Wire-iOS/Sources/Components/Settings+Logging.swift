@@ -47,7 +47,7 @@ extension Settings {
     @objc public func loadEnabledLogs() {
         guard DeveloperMenuState.developerMenuEnabled() else { return } // never record on non-internal
         
-        let tagsToEnable = UserDefaults.shared().value(forKey: enabledLogsKey) as? Array<String> ?? ["Network", "Dependencies", "State machine", "Pingback", "SessionManager", "Conversations"]
+        let tagsToEnable = UserDefaults.shared().value(forKey: enabledLogsKey) as? Array<String> ?? ["Network", "Dependencies", "State machine", "Pingback", "SessionManager", "Conversations", "DuplicateEntity"]
         enableLogs(tagsToEnable)
     }
     
