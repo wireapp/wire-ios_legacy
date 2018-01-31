@@ -61,42 +61,21 @@ extension StartUIViewController: SearchResultsViewControllerDelegate {
         let detail = ServiceDetailViewController(serviceUser: user, variant: .dark)
         
         detail.completion = { [weak self] result in
+            guard let `self` = self else { return }
             if let result = result {
                 switch result {
                     
                 case .success(let conversation):
-                    self?.delegate.startUI?(self, didSelect: conversation)
+                    self.delegate.startUI?(self, didSelect: conversation)
                 case .failure(let error):
-                    self?.handleAddBotError(error)
+                    error.displayAddBotError(in: self)
                 }
             } else {
-                self?.delegate.startUIDidCancel(self)
+                self.delegate.startUIDidCancel(self)
             }
         }
         
         self.navigationController?.pushViewController(detail, animated: true)
     }
     
-    private func handleAddBotError(_ error: AddBotError) {
-        let alert = UIAlertController(title: error.localizedTitle,
-                                      message: error.localizedMessage,
-                                      cancelButtonTitle: "general.confirm".localized)
-        self.present(alert, animated: true, completion: nil)
-    }
-}
-
-extension AddBotError {
-    
-    var localizedTitle: String {
-        return "peoplepicker.services.add_service.error.title".localized
-    }
-    
-    var localizedMessage: String {
-        switch self {
-        case .tooManyParticipants:
-            return "peoplepicker.services.add_service.error.full".localized
-        default:
-            return "peoplepicker.services.add_service.error.default".localized
-        }
-    }
 }
