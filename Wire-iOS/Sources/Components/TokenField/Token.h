@@ -25,7 +25,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (instancetype)initWithTitle:(nullable NSString *)title representedObject:(id)representedObject;
 
-@property (weak, nonatomic) id representedObject;
+@property (strong, nonatomic) id representedObject;
 
 @property (copy, nonatomic) NSString *title;
 
