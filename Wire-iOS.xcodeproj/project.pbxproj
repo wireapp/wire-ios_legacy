@@ -2613,6 +2613,7 @@
 		EFE8062A1FDFF24C006A0EE7 /* NSDate+Format.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSDate+Format.swift"; sourceTree = "<group>"; };
 		EFE8062E1FE005A7006A0EE7 /* DateFormatterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateFormatterTests.swift; sourceTree = "<group>"; };
 		EFF6EA3D2020CF4100A7023B /* Button+ServiceButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Button+ServiceButton.swift"; sourceTree = "<group>"; };
+		EFF6EA482021BE6700A7023B /* ViewControllerDismissable.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewControllerDismissable.h; sourceTree = "<group>"; };
 		EFFF9E841FBF335700491F9A /* UIColor+TeamCreation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+TeamCreation.swift"; sourceTree = "<group>"; };
 		F1141C961F5EB2DC005340B3 /* WireApplication.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WireApplication.swift; sourceTree = "<group>"; };
 		F1199D2E1FC8490A0070FAC3 /* TeamCreationFlowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TeamCreationFlowController.swift; sourceTree = "<group>"; };
@@ -3585,6 +3586,7 @@
 		871BC1EB1D34F8F800DF0793 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				EFF6EA482021BE6700A7023B /* ViewControllerDismissable.h */,
 				EF18C7E31F9E4DA00085A832 /* NSString+FileNameForZMUser.swift */,
 				CE8E4FB41DF17BBE0009F437 /* CASStyler+Variables.h */,
 				CE8E4FB51DF17BBE0009F437 /* CASStyler+Variables.m */,

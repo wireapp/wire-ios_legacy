@@ -40,7 +40,7 @@ extension UIViewController {
                     if user.isServiceUser {
                         Analytics.shared().tagDidRemoveService(user)
                     }
-                    viewControllerDismissable?.profileViewControllerWants(toBeDismissed: self, completion: nil)
+                    viewControllerDismissable?.viewControllerWants(toBeDismissed: self, completion: nil)
                 })
             })
         }) {

@@ -790,7 +790,7 @@
 
 @implementation ConversationViewController (ViewControllerDismissable)
 
-- (void)profileViewControllerWantsToBeDismissed:(UIViewController *)profileViewController completion:(dispatch_block_t)completion
+- (void)viewControllerWantsToBeDismissed:(UIViewController *)profileViewController completion:(dispatch_block_t)completion
 {
     [self dismissViewControllerAnimated:YES completion:completion];
 }

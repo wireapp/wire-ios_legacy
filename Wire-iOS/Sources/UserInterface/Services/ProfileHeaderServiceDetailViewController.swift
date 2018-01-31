@@ -24,7 +24,6 @@ import Cartography
 final class ProfileHeaderServiceDetailViewController: UIViewController {
 
     public weak var navigationControllerDelegate: ProfileNavigationControllerDelegate?
-    public weak var profileViewControllerDelegate: ProfileViewControllerDelegate?
     public weak var viewControllerDismissable: ViewControllerDismissable?
 
     var headerView: ProfileHeaderView!
@@ -100,7 +99,7 @@ final class ProfileHeaderServiceDetailViewController: UIViewController {
     }
 
     func requestDismissal(withCompletion completion: (() -> Void)?) {
-        viewControllerDismissable?.profileViewControllerWants(toBeDismissed: self, completion: completion)
+        viewControllerDismissable?.viewControllerWants(toBeDismissed: self, completion: completion)
     }
 
     func setupServiceDetailViewController(serviceUser: ServiceUser) {

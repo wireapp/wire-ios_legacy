@@ -327,7 +327,7 @@ static NSString *const ParticipantHeaderReuseIdentifier = @"ParticipantListHeade
 
 #pragma mark - ViewControllerDismissable
 
-- (void)profileViewControllerWantsToBeDismissed:(UIViewController *)profileViewController completion:(dispatch_block_t)completion
+- (void)viewControllerWantsToBeDismissed:(UIViewController *)profileViewController completion:(dispatch_block_t)completion
 {
     [self.navigationController popViewControllerAnimated:YES];
     [self.navigationController.transitionCoordinator animateAlongsideTransition:nil completion:^(id<UIViewControllerTransitionCoordinatorContext> context) {

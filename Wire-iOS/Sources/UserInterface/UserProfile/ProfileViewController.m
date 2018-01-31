@@ -136,8 +136,8 @@ typedef NS_ENUM(NSUInteger, ProfileViewControllerTabBarIndex) {
 
 - (void)requestDismissalWithCompletion:(dispatch_block_t)completion
 {
-    if ([self.delegate respondsToSelector:@selector(profileViewControllerWantsToBeDismissed:completion:)]) {
-        [self.viewControllerDismissable profileViewControllerWantsToBeDismissed:self completion:completion];
+    if ([self.delegate respondsToSelector:@selector(viewControllerWantsToBeDismissed:completion:)]) {
+        [self.viewControllerDismissable viewControllerWantsToBeDismissed:self completion:completion];
     }
 }
 
@@ -272,7 +272,7 @@ typedef NS_ENUM(NSUInteger, ProfileViewControllerTabBarIndex) {
 
 @implementation ProfileViewController (ViewControllerDismissable)
 
-- (void)profileViewControllerWantsToBeDismissed:(UIViewController *)controller completion:(dispatch_block_t)completion
+- (void)viewControllerWantsToBeDismissed:(UIViewController *)controller completion:(dispatch_block_t)completion
 {
     [self.navigationController popViewControllerAnimated:YES];
 }
@@ -312,8 +312,8 @@ typedef NS_ENUM(NSUInteger, ProfileViewControllerTabBarIndex) {
 
 - (void)profileDetailsViewController:(ProfileDetailsViewController *)profileDetailsViewController wantsToBeDismissedWithCompletion:(dispatch_block_t)completion
 {
-    if ([self.delegate respondsToSelector:@selector(profileViewControllerWantsToBeDismissed:completion:)]) {
-        [self.viewControllerDismissable profileViewControllerWantsToBeDismissed:self completion:completion];
+    if ([self.delegate respondsToSelector:@selector(viewControllerWantsToBeDismissed:completion:)]) {
+        [self.viewControllerDismissable viewControllerWantsToBeDismissed:self completion:completion];
     } else if (completion != nil) {
         completion();
     }

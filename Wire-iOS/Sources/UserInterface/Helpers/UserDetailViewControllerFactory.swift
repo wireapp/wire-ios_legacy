@@ -24,7 +24,8 @@ final class UserDetailViewControllerFactory: NSObject {
     /// - Parameters:
     ///   - user: user to show the detailif
     ///   - conversation: conversation currently displaying
-    ///   - profileViewControllerDelegate: a ProfileViewControllerDelegate
+    ///   - profileViewControllerDelegate: a ProfileViewControllerDelegate for ProfileViewController
+    ///   - viewControllerDismissable: a ViewControllerDismissable for returing UIViewController's dismiss action
     ///   - navigationControllerDelegate: a ProfileNavigationControllerDelegate
     /// - Returns: if the user is a serviceUser, return a ProfileHeaderServiceDetailViewController. if the user not a serviceUser, return a ProfileViewController
     @objc static func createUserDetailViewController(user: ZMUser,
@@ -34,7 +35,7 @@ final class UserDetailViewControllerFactory: NSObject {
                                                      navigationControllerDelegate: ProfileNavigationControllerDelegate? = nil) -> UIViewController {
         if user.isServiceUser {
             let profileHeaderServiceDetailViewController = ProfileHeaderServiceDetailViewController(serviceUser: user, conversation: conversation)
-            profileHeaderServiceDetailViewController.profileViewControllerDelegate = profileViewControllerDelegate
+            profileHeaderServiceDetailViewController.viewControllerDismissable = viewControllerDismissable
             profileHeaderServiceDetailViewController.navigationControllerDelegate = navigationControllerDelegate
             return profileHeaderServiceDetailViewController
         } else {

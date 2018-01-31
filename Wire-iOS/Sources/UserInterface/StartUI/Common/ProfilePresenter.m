@@ -125,7 +125,7 @@
 
 #pragma mark - ViewControllerDismissable
 
-- (void)profileViewControllerWantsToBeDismissed:(UIViewController *)profileViewController completion:(dispatch_block_t)completion
+- (void)viewControllerWantsToBeDismissed:(UIViewController *)profileViewController completion:(dispatch_block_t)completion
 {
     [profileViewController dismissViewControllerAnimated:YES completion:^{
         if (completion != nil) {
@@ -145,7 +145,7 @@
 
 - (void)profileViewController:(ProfileViewController *)controller wantsToNavigateToConversation:(ZMConversation *)conversation
 {
-    [self profileViewControllerWantsToBeDismissed:controller completion:^{
+    [self viewControllerWantsToBeDismissed:controller completion:^{
         [[[ZClientViewController sharedZClientViewController] conversationListViewController] dismissPeoplePickerWithCompletionBlock:^{
             [[ZClientViewController sharedZClientViewController] selectConversation:conversation
                                                                         focusOnView:YES

@@ -19,6 +19,7 @@
 
 #import <UIKit/UIKit.h>
 @import WireExtensionComponents;
+#import "ViewControllerDismissable.h"
 
 
 @protocol ZMSearchableUser;
@@ -36,14 +37,6 @@ typedef NS_ENUM(NSInteger, ProfileViewControllerContext) {
     ProfileViewControllerContextCommonConnection,
     ProfileViewControllerContextDeviceList
 };
-
-
-///TODO: move to a new file, rename the mehtod
-@protocol ViewControllerDismissable <NSObject>
-
-- (void)profileViewControllerWantsToBeDismissed:(UIViewController *)controller completion:(dispatch_block_t)completion;
-
-@end
 
 @protocol ProfileViewControllerDelegate <NSObject>
 
