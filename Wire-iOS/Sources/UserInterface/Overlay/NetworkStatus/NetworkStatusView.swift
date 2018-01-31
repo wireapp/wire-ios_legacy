@@ -28,6 +28,8 @@ class OfflineBar: UIView {
 
     static public let collapsedHeight: CGFloat = 2
     static public let expandedHeight: CGFloat = 20
+    static public let collapsedCornerRadius: CGFloat = 1
+    static public let expandedCornerRadius: CGFloat = 6
 
     private let offlineLabel: UILabel
     private var heightConstraint: NSLayoutConstraint?
@@ -61,7 +63,7 @@ class OfflineBar: UIView {
         ///TODO:, margins left/right: 16pt. margin to top of screen: 28pt (iPhone 8 and older), 44pt (iPhone X), margin to navigation bar: 10pt, height: 24pt
         backgroundColor = UIColor(rgb:0xFEBF02, alpha: 1)///TODO share with Syncing bar
 
-        layer.cornerRadius = 6 ///TODO: change to 1 during animation
+        layer.cornerRadius = OfflineBar.expandedCornerRadius
         layer.masksToBounds = true
 
         offlineLabel.font = FontSpec(FontSize.small, .medium).font
@@ -91,6 +93,7 @@ class OfflineBar: UIView {
     private func updateViews(animated: Bool = true) {
         heightConstraint?.constant = state == .expanded ? OfflineBar.expandedHeight : OfflineBar.collapsedHeight
         offlineLabel.alpha = state == .expanded ? 1 : 0
+        layer.cornerRadius = state == .expanded ? OfflineBar.expandedCornerRadius : OfflineBar.collapsedHeight
     }
 
 }
@@ -214,7 +217,7 @@ class NetworkStatusView: UIView {
 
     func updateUI(offlineBarState: OfflineBarState, animated: Bool) {
         self.updateMargin(state: offlineBarState)
-        self.offlineView.update(state: offlineBarState, animated: animated) ///TODO: update radius
+        self.offlineView.update(state: offlineBarState, animated: animated)
         self.layoutIfNeeded()
     }
 
