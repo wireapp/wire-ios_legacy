@@ -45,7 +45,7 @@ final class ServiceDetailView: UIView {
             serviceView.leading == selfView.leading
             serviceView.trailing == selfView.trailing
             
-            descriptionTextView.top == serviceView.bottom
+            descriptionTextView.top == serviceView.bottom + 16
             descriptionTextView.leading == selfView.leading
             descriptionTextView.trailing == selfView.trailing
             descriptionTextView.bottom == selfView.bottom
@@ -59,8 +59,9 @@ final class ServiceDetailView: UIView {
         }
         
         descriptionTextView.backgroundColor = .clear
+        descriptionTextView.textContainerInset = .zero
         descriptionTextView.textColor = ColorScheme.default().color(withName: ColorSchemeColorTextForeground, variant: variant)
-        descriptionTextView.font = FontSpec(.normal, .regular).font
+        descriptionTextView.font = FontSpec(.normal, .light).font
         descriptionTextView.isEditable = false
         updateForService()
     }
