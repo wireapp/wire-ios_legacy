@@ -184,8 +184,14 @@ class NetworkStatusView: UIView {
             offlineBarState = .minimized
         }
 
+
+
         if let offlineBarState = offlineBarState {
             if animated {
+                if offlineBarState == .expanded {
+                    self.offlineView.isHidden = false
+                }
+
                 UIView.animate(withDuration: NetworkStatusView.resizeAnimationTime, delay: 0, options: [.curveEaseIn, .beginFromCurrentState], animations: {
                     self.updateUI(offlineBarState: offlineBarState, animated: animated)
                 }) { _ in
