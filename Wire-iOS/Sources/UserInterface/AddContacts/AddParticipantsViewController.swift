@@ -297,10 +297,10 @@ extension AddParticipantsViewController: SearchResultsViewControllerDelegate {
 
         let navigationController = UIViewController.navigationControllerWithDefaultNavigationBar()
         let detail = ServiceDetailViewController(serviceUser: user,
-                                                         destinationConversation: self.conversation,
-                                                         actionType: .addService,
-                                                         forceShowNavigationBar: true,
-                                                         variant: .light)
+                                                 destinationConversation: self.conversation,
+                                                 actionType: .addService,
+                                                 forceShowNavigationBar: true,
+                                                 variant: .light)
 
         detail.completion = { [weak self] result in
             guard let `self` = self else { return }
