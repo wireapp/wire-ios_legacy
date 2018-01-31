@@ -58,11 +58,8 @@ extension StartUIViewController: SearchResultsViewControllerDelegate {
     
     public func searchResultsViewController(_ searchResultsViewController: SearchResultsViewController, didTapOnSeviceUser user: ServiceUser) {
 
-        let button = Button.createAddServiceButton()
-
         let detail = ServiceDetailViewController(serviceUser: user,
                                                  destinationConversation: nil,
-                                                 actionButton: button,
                                                  actionType: .addService,
                                                  forceShowNavigationBar: true,
                                                  variant: .dark)

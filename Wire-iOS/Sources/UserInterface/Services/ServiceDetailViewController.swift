@@ -170,7 +170,7 @@ final class ServiceDetailViewController: UIViewController {
     let destinationConversation: ZMConversation?
 
     public let variant: ColorSchemeVariant
-    public var viewControllerDismissable: ViewControllerDismissable?
+    public weak var viewControllerDismissable: ViewControllerDismissable?
 
     private let detailView: ServiceDetailView
     private let actionButton: Button
@@ -182,20 +182,25 @@ final class ServiceDetailViewController: UIViewController {
     /// - Parameters:
     ///   - serviceUser: a ServiceUser to show
     ///   - destinationConversation: the destination conversation of the serviceUser
-    ///   - actionButton: an action Button with customized UI
     ///   - actionType: Enum ActionType to choose the actiion add or remove the service user
     ///   - forceShowNavigationBar: if the param is true, navigation bar is hidden (e.g. when the container view as a custom header view, navigation bar is not necessary)
     ///   - variant: color variant
     init(serviceUser: ServiceUser,
          destinationConversation: ZMConversation?,
-         actionButton: Button,
          actionType: ActionType,
          forceShowNavigationBar: Bool,
          variant: ColorSchemeVariant) {
         self.service = Service(serviceUser: serviceUser)
         self.destinationConversation = destinationConversation
         self.detailView = ServiceDetailView(service: service, variant: variant)
-        self.actionButton = actionButton
+
+        switch actionType {
+        case .addService:
+            self.actionButton = Button.createAddServiceButton()
+        case .removeService:
+            self.actionButton = Button.createDestructiveServiceButton()
+        }
+
         self.forceShowNavigationBar = forceShowNavigationBar
         self.variant = variant
         self.actionType = actionType
