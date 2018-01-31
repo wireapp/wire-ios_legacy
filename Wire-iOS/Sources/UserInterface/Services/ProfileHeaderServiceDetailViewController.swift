@@ -45,6 +45,8 @@ final class ProfileHeaderServiceDetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        view.backgroundColor = .white
+
         self.navigationController?.delegate = self.navigationControllerDelegate
 
         setupHeader()

@@ -305,7 +305,9 @@ final class ServiceDetailViewController: UIViewController {
             guard let weakSelf = self else { return }
             guard weakSelf.service.serviceUser.isKind(of: ZMUser.self)  else { return }
 
-            weakSelf.presentRemoveFromConversationDialogue(user: weakSelf.service.serviceUser as! ZMUser, conversation: weakSelf.destinationConversation, viewControllerDismissable: weakSelf.viewControllerDismissable)
+            weakSelf.presentRemoveFromConversationDialogue(user: weakSelf.service.serviceUser as! ZMUser,
+                                                           conversation: weakSelf.destinationConversation,
+                                                           viewControllerDismissable: weakSelf.viewControllerDismissable)
         }
 
         return buttonCallback

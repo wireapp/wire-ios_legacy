@@ -1699,3 +1699,4 @@ TextSearchResultCell RoundedTextBadge {
         font: $font-small-semibold;
     }
 }
+
