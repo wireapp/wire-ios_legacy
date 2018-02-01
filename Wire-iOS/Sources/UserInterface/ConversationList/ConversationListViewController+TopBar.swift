@@ -31,8 +31,8 @@ extension ConversationListViewController {
         currentAccountView.unreadCountStyle = .others
         return currentAccountView
     }
-    
-    public func createTopBar() {
+
+    @objc func createTopBar() {
         let profileAccountView = self.currentAccountView()
         profileAccountView.selected = false
         profileAccountView.autoUpdateSelection = false
@@ -55,5 +55,11 @@ extension ConversationListViewController {
         self.topBar.layoutMargins = UIEdgeInsetsMake(0, 9, 0, 16)
         self.contentContainer.addSubview(self.topBar)
         self.topBar.leftView = profileAccountView
+    }
+
+    @objc func createNetworkStatusBar() {
+        self.networkStatusViewController = NetworkStatusViewController()
+        ///TODO: delegate
+        self.addChild(networkStatusViewController)
     }
 }

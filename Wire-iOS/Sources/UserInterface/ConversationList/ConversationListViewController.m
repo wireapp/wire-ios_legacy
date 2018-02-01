@@ -104,6 +104,7 @@
 @property (nonatomic) ConversationListBottomBarController *bottomBarController;
 
 @property (nonatomic) ConversationListTopBar *topBar;
+@property (nonatomic) NetworkStatusViewController *networkStatusViewController;
 @property (nonatomic) UIView *contentContainer;
 @property (nonatomic) UIView *conversationListContainer;
 @property (nonatomic) UILabel *noConversationLabel;
@@ -166,6 +167,7 @@
     [self createListContentController];
     [self createBottomBarController];
     [self createTopBar];
+    [self createNetworkStatusBar];
 
     [self createViewConstraints];
     [self.listContentController.collectionView scrollRectToVisible:CGRectMake(0, 0, self.view.bounds.size.width, 1) animated:NO];

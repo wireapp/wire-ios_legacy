@@ -19,20 +19,21 @@
 import Foundation
 import Cartography
 
-@objc
-class NetworkStatusViewController : UIViewController {
+@objc final class NetworkStatusViewController : UIViewController {
     
     fileprivate let networkStatusView = NetworkStatusView()
     fileprivate var networkStatusObserverToken : Any?
     fileprivate var pendingState : NetworkStatusViewState?
     fileprivate var offlineBarTimer : Timer?
-    
-    override func loadView() {
-        let passthroughTouchesView = PassthroughTouchesView()
-        passthroughTouchesView.clipsToBounds = true
-        self.view = passthroughTouchesView
+
+    init() {
+        super.init(nibName: nil, bundle: nil)
     }
-    
+
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
     deinit {
         NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(applyPendingState), object: nil)
 
@@ -40,6 +41,12 @@ class NetworkStatusViewController : UIViewController {
         offlineBarTimer = nil
     }
     
+    override func loadView() {
+        let passthroughTouchesView = PassthroughTouchesView()
+        passthroughTouchesView.clipsToBounds = true
+        self.view = passthroughTouchesView
+    }
+
     override func viewDidLoad() {
         view.addSubview(networkStatusView)
         
