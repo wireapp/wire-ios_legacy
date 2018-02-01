@@ -380,7 +380,12 @@
     [self.bottomBarController.view autoPinEdgeToSuperviewEdge:ALEdgeRight];
     self.bottomBarBottomOffset = [self.bottomBarController.view autoPinEdgeToSuperviewEdge:ALEdgeBottom];
     
-    [self.topBar autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero excludingEdge:ALEdgeBottom];
+    [self.networkStatusViewController.view autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero excludingEdge:ALEdgeBottom];
+    
+    [self.topBar autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.networkStatusViewController.view];
+    [self.topBar autoPinEdgeToSuperviewEdge:ALEdgeLeft];
+    [self.topBar autoPinEdgeToSuperviewEdge:ALEdgeRight];
+
     [self.topBar autoPinEdge:ALEdgeBottom toEdge:ALEdgeTop ofView:self.conversationListContainer];
     [self.contentContainer autoPinEdgesToSuperviewEdgesWithInsets:UIScreen.safeArea];
     

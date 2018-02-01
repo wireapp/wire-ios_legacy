@@ -64,7 +64,7 @@ import Cartography
 
         self.view.backgroundColor = ColorScheme.default().color(withName: ColorSchemeColorBarBackground)
 
-        let navbar = UINavigationBar()///TODO: animation height
+        let navbar = UINavigationBar()
         navbar.isTranslucent = false
         navbar.isOpaque = true
         navbar.setBackgroundImage(UIImage(), for: .any, barMetrics: .default)
