@@ -299,7 +299,6 @@ extension AddParticipantsViewController: SearchResultsViewControllerDelegate {
         let detail = ServiceDetailViewController(serviceUser: user,
                                                  destinationConversation: self.conversation,
                                                  actionType: .addService,
-                                                 forceShowNavigationBar: true,
                                                  variant: .light)
 
         detail.completion = { [weak self] result in

@@ -61,7 +61,6 @@ extension StartUIViewController: SearchResultsViewControllerDelegate {
         let detail = ServiceDetailViewController(serviceUser: user,
                                                  destinationConversation: nil,
                                                  actionType: .addService,
-                                                 forceShowNavigationBar: true,
                                                  variant: .dark)
 
         detail.completion = { [weak self] result in

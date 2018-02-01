@@ -175,7 +175,6 @@ final class ServiceDetailViewController: UIViewController {
     private let detailView: ServiceDetailView
     private let actionButton: Button
     private let actionType: ActionType
-    private var forceShowNavigationBar: Bool
 
     /// init method with ServiceUser, destination conversation and customized UI.
     ///
@@ -183,12 +182,10 @@ final class ServiceDetailViewController: UIViewController {
     ///   - serviceUser: a ServiceUser to show
     ///   - destinationConversation: the destination conversation of the serviceUser
     ///   - actionType: Enum ActionType to choose the actiion add or remove the service user
-    ///   - forceShowNavigationBar: if the param is true, navigation bar is hidden (e.g. when the container view as a custom header view, navigation bar is not necessary)
     ///   - variant: color variant
     init(serviceUser: ServiceUser,
          destinationConversation: ZMConversation?,
          actionType: ActionType,
-         forceShowNavigationBar: Bool,
          variant: ColorSchemeVariant) {
         self.service = Service(serviceUser: serviceUser)
         self.destinationConversation = destinationConversation
@@ -201,7 +198,6 @@ final class ServiceDetailViewController: UIViewController {
             self.actionButton = Button.createDestructiveServiceButton()
         }
 
-        self.forceShowNavigationBar = forceShowNavigationBar
         self.variant = variant
         self.actionType = actionType
 
@@ -271,13 +267,6 @@ final class ServiceDetailViewController: UIViewController {
 
         self.service.serviceUser.fetchDetails(in: userSession) { [weak self] details in
             self?.detailView.service.serviceUserDetails = details
-        }
-    }
-
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        if forceShowNavigationBar {
-            self.navigationController?.setNavigationBarHidden(false, animated: animated)
         }
     }
 

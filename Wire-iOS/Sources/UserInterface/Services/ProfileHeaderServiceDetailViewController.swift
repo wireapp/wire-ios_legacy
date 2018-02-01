@@ -108,7 +108,6 @@ final class ProfileHeaderServiceDetailViewController: UIViewController {
         serviceDetailViewController = ServiceDetailViewController(serviceUser: serviceUser,
                                                                   destinationConversation: self.conversation,
                                                                   actionType: .removeService,
-                                                                  forceShowNavigationBar: false,
                                                                   variant: .light)
         serviceDetailViewController.viewControllerDismissable = self.viewControllerDismissable
 
