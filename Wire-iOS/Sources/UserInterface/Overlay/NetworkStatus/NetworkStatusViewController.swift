@@ -20,7 +20,7 @@ import Foundation
 import Cartography
 
 @objc final class NetworkStatusViewController : UIViewController {
-    
+
     fileprivate let networkStatusView = NetworkStatusView()
     fileprivate var networkStatusObserverToken : Any?
     fileprivate var pendingState : NetworkStatusViewState?
@@ -145,9 +145,14 @@ import Cartography
     }
     
     fileprivate func update(state : NetworkStatusViewState) {
-        networkStatusView.update(state: state, animated: true)
+        if DeviceSizeClass.isIPadFullScreen, let parent = self.parent, parent is ConversationRootViewController {
+            return
+        }
+
+        networkStatusView.update(state: state, animated: true) ///TODO: self.parent! is ConversationListViewController or ConversationRootViewController
     }
 
+    ///FIXME: response to iPad size class changing, hide the status bar on conversation view
 }
 
 extension NetworkStatusViewController : ZMNetworkAvailabilityObserver {
