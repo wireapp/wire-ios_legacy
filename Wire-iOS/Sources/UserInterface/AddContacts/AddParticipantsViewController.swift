@@ -326,7 +326,7 @@ extension AddParticipantsViewController: SearchResultsViewControllerDelegate {
             }
         }
 
-        self.navigationController?.pushViewController(serviceDetails, animated: true)
+        self.navigationController?.pushViewController(detail, animated: true)
     }
     
 }

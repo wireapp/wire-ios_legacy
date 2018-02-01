@@ -72,7 +72,7 @@ extension StartUIViewController: SearchResultsViewControllerDelegate {
                     error.displayAddBotError(in: self)
                 }
             } else {
-                self?.navigationController?.dismiss(animated: true, completion: nil)
+                self.navigationController?.dismiss(animated: true, completion: nil)
             }
         }
         
