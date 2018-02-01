@@ -318,7 +318,7 @@ extension AddParticipantsViewController: SearchResultsViewControllerDelegate {
                 switch result {
                 case .success( _):
                     self.dismiss(animated: true, completion: {
-                        self.delegate?.addParticipantsViewController(self, didSelectUsers: [user as! ZMUser])
+                        self.delegate?.addParticipantsViewController(self, didSelectUsers: [])
                     })
                 case .failure(let error):
                     error.displayAddBotError(in: detail)
