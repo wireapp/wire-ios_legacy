@@ -129,7 +129,7 @@ extension NetworkStatusViewDelegate where Self: UIViewController {
 
 class NetworkStatusView: UIView {
 
-    static public let resizeAnimationTime: TimeInterval = 1
+    static public let resizeAnimationTime: TimeInterval = 0.5
     static public let horizontal: CGFloat = 16
     static public let verticalMargin: CGFloat = 8
 
