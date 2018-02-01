@@ -140,8 +140,13 @@ import Cartography
         constrain(view, cameraButton, startUIButton, archivedButton, composeButton) { view, cameraButton, startUIButton, archivedButton, composeButton in
             startUIButton.centerY == view.centerY
             archivedButton.centerY == view.centerY
-            startUIButton.leading == view.leading + xInset
             archivedButton.trailing == view.trailing - xInset
+            
+            if showArchived {
+                startUIButton.leading == view.leading + xInset
+            } else {
+                startUIButton.centerX == view.centerX
+            }
         }
     }
 
@@ -172,9 +177,12 @@ import Cartography
 
         if showComposeButtons {
             [cameraButton, composeButton, archivedButton, startUIButton, separator].forEach { $0.removeFromSuperview() }
-            addSubviews()
-            createConstraints()
+        } else {
+            [archivedButton, startUIButton, separator].forEach { $0.removeFromSuperview() }
         }
+        
+        addSubviews()
+        createConstraints()
     }
 
     // MARK: - Target Action
