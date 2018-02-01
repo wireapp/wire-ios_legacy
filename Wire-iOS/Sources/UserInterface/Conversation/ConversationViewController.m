@@ -445,7 +445,6 @@
             ParticipantsViewController *participantsViewController = [[ParticipantsViewController alloc] initWithConversation:self.conversation];
             participantsViewController.delegate = self;
             participantsViewController.zClientViewController = [ZClientViewController sharedZClientViewController];
-            participantsViewController.shouldDrawTopSeparatorLineDuringPresentation = YES;
             viewController = participantsViewController;
             break;
         }
@@ -459,9 +458,6 @@
                              viewControllerDismissable:self
                           navigationControllerDelegate:nil];
 
-            if ([viewController isKindOfClass:[ProfileViewController class]]) {
-                ((ProfileViewController *)viewController).shouldDrawTopSeparatorLineDuringPresentation = YES;
-            }
             break;
         }
         case ZMConversationTypeInvalid:

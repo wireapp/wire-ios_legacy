@@ -308,7 +308,6 @@ extension AddParticipantsViewController: SearchResultsViewControllerDelegate {
     
 
     public func searchResultsViewController(_ searchResultsViewController: SearchResultsViewController, didTapOnSeviceUser user: ServiceUser) {
-        let navigationController = UIViewController.navigationControllerWithDefaultNavigationBar()
         let detail = ServiceDetailViewController(serviceUser: user,
                                                  destinationConversation: self.conversation,
                                                  actionType: .addService,
@@ -329,8 +328,7 @@ extension AddParticipantsViewController: SearchResultsViewControllerDelegate {
             }
         }
 
-        navigationController.setViewControllers([detail], animated: false)
-        self.present(navigationController, animated: true, completion: nil)
+        self.navigationController?.pushViewController(detail, animated: true)
     }
     
 }

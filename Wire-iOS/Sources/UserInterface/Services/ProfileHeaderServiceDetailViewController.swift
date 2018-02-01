@@ -57,9 +57,9 @@ final class ProfileHeaderServiceDetailViewController: UIViewController {
     private func createConstraints() {
 
         /// align to ParticipantsViewController's "X" button y position
-        var topMargin = -UIScreen.safeArea.top + 20
+        var topMargin = UIScreen.safeArea.top + 20
         if UIScreen.hasNotch {
-            topMargin -= 20.0
+            topMargin -= 40.0
         }
 
         self.serviceDetailViewController.view.translatesAutoresizingMaskIntoConstraints = false

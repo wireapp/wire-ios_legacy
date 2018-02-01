@@ -40,10 +40,10 @@ final class UserDetailViewControllerFactory: NSObject {
             return profileHeaderServiceDetailViewController
         } else {
             let profileViewController = ProfileViewController(user: user, conversation: conversation)
-            profileViewController?.delegate = profileViewControllerDelegate
-            profileViewController?.viewControllerDismissable = viewControllerDismissable
-            profileViewController?.navigationControllerDelegate = navigationControllerDelegate
-            return profileViewController!
+            profileViewController.delegate = profileViewControllerDelegate
+            profileViewController.viewControllerDismissable = viewControllerDismissable
+            profileViewController.navigationControllerDelegate = navigationControllerDelegate
+            return profileViewController
         }
     }
 }

@@ -176,16 +176,6 @@ static NSString *const ParticipantHeaderReuseIdentifier = @"ParticipantListHeade
     return self.wr_supportedInterfaceOrientations;
 }
 
-- (void)viewWillAppearCustomPresentationAnimated:(BOOL)animated isInteractive:(BOOL)interactive
-{
-    self.headerView.topSeparatorLine.hidden = ! self.shouldDrawTopSeparatorLineDuringPresentation;
-}
-
-- (void)viewDidAppearCustomPresentationAnimated:(BOOL)animated isInteractive:(BOOL)interactive
-{
-    self.headerView.topSeparatorLine.hidden = YES;
-}
-
 - (void)onBackgroundTap:(id)sender
 {
     if (self.headerView.titleView.isFirstResponder) {

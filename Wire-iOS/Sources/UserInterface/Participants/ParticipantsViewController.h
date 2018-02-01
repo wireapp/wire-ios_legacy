@@ -38,7 +38,6 @@
 @property (nonatomic, weak) id<ParticipantsViewControllerDelegate> delegate;
 @property (nonatomic, strong) ZMConversation *conversation;
 @property (nonatomic, weak) ZClientViewController *zClientViewController;
-@property (nonatomic, assign) BOOL shouldDrawTopSeparatorLineDuringPresentation;
 
 - (instancetype)initWithConversation:(ZMConversation *)conversation;
 
