@@ -163,8 +163,8 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(colorSchemeControllerDidApplyChanges:) name:ColorSchemeControllerDidApplyColorSchemeChangeNotification object:nil];
     
     if ([DeveloperMenuState developerMenuEnabled]) { //better way of dealing with this?
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(requestLoopNotification:) name:ZMTransportRequestLoopNotificationName object:nil];
-//        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(potentialErrorNotification:) name:ZMPotentialErrorDetectedNotificationName object:nil]; // TODO enable
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(requestLoopNotification:) name:ZMLoggingRequestLoopNotificationName object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(inconsistentStateNotification:) name:ZMLoggingInconsistentStateNotificationName object:nil];
     }
     
     self.userObserverToken = [UserChangeInfo addObserver:self forUser:[ZMUser selfUser] userSession:[ZMUserSession sharedSession]];
@@ -541,7 +541,7 @@
     [self reloadCurrentConversation];
 }
 
-#pragma mark - Network Loop notification
+#pragma mark - Debug logging notifications
 
 - (void)requestLoopNotification:(NSNotification *)notification;
 {
@@ -549,11 +549,9 @@
     [DebugAlert showSendLogsMessageWithMessage:[NSString stringWithFormat:@"A request loop is going on at %@", path]];
 }
 
-#pragma mark - SE inconsistency notification
-
-- (void)potentialErrorNotification:(NSNotification *)notification;
+- (void)inconsistentStateNotification:(NSNotification *)notification;
 {
-    [DebugAlert showSendLogsMessageWithMessage:[NSString stringWithFormat:@"We detected a potential error, please send logs"]];
+    [DebugAlert showSendLogsMessageWithMessage:[NSString stringWithFormat:@"We detected an inconsistent state: %@", notification.userInfo[ZMLoggingDescriptionKey]]];
 }
 
 #pragma mark -  Share extension analytics
