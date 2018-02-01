@@ -106,7 +106,25 @@ enum NetworkStatusViewState {
 }
 
 protocol NetworkStatusViewDelegate: class {
+    var isViewDidAppear: Bool {get set}
     func didChangeHeight(_ networkStatusView: NetworkStatusView, animated: Bool, offlineBarState: OfflineBarState)
+}
+
+// MARK: - default implementation of didChangeHeight, animates the layout process
+extension NetworkStatusViewDelegate where Self: UIViewController {
+    func didChangeHeight(_ networkStatusView: NetworkStatusView, animated: Bool, offlineBarState: OfflineBarState) {
+
+        guard isViewDidAppear else { return }
+
+        if animated {
+            UIView.animate(withDuration: NetworkStatusView.resizeAnimationTime, delay: 0, options: [.curveEaseIn, .beginFromCurrentState], animations: {
+                self.view.layoutIfNeeded()
+            })
+        } else {
+            self.view.layoutIfNeeded()
+        }
+
+    }
 }
 
 class NetworkStatusView: UIView {

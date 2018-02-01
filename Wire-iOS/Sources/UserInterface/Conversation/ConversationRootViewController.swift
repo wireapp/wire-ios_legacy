@@ -22,12 +22,13 @@ import Cartography
 ///FIXME: snapshot tests for this VC, for online/offline/connecting states.
 
 // This class wraps the conversation content view controller in order to display the navigation bar on the top
-@objc open class ConversationRootViewController: UIViewController {
+@objc open class ConversationRootViewController: UIViewController, NetworkStatusViewDelegate {
 
     fileprivate(set) var customNavBar: UINavigationBarContainer?
     fileprivate var contentView = UIView()
     var navHeight: NSLayoutConstraint?
     var networkStatusBarHeight: NSLayoutConstraint?
+    var isViewDidAppear = false
 
     fileprivate let networkStatusViewController: NetworkStatusViewController
 
@@ -80,15 +81,10 @@ import Cartography
         [networkStatusViewController.view, navbar, self.contentView].forEach {view in
             view.translatesAutoresizingMaskIntoConstraints = false}
 
-        let topMargin = UIScreen.safeArea.top
+        networkStatusViewController.createConstraints(bottomView: customNavBar!, containerView: self.view)
 
-        constrain(self.customNavBar!, self.view, self.contentView, conversationViewController.view, networkStatusViewController.view) { (customNavBar: LayoutProxy, view: LayoutProxy, contentView: LayoutProxy, conversationViewControllerView: LayoutProxy, networkStatusViewControllerView: LayoutProxy) -> Void in
+        constrain(self.customNavBar!, self.view, self.contentView, conversationViewController.view) { (customNavBar: LayoutProxy, view: LayoutProxy, contentView: LayoutProxy, conversationViewControllerView: LayoutProxy) -> Void in
 
-            networkStatusViewControllerView.top == view.top + topMargin
-            networkStatusViewControllerView.left == view.left
-            networkStatusViewControllerView.right == view.right
-
-            customNavBar.top == networkStatusViewControllerView.bottom
             customNavBar.left == view.left
             customNavBar.right == view.right
 
@@ -108,6 +104,8 @@ import Cartography
         delay(0.4) {
             UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(true)
         }
+
+        isViewDidAppear = true
     }
 
     open override var prefersStatusBarHidden: Bool {
@@ -122,19 +120,4 @@ import Cartography
             return .lightContent
         }
     }
-}
-
-extension ConversationRootViewController: NetworkStatusViewDelegate {
-
-    func didChangeHeight(_ networkStatusView: NetworkStatusView, animated: Bool, offlineBarState: OfflineBarState) {
-        if animated {
-            UIView.animate(withDuration: NetworkStatusView.resizeAnimationTime, delay: 0, options: [.curveEaseIn, .beginFromCurrentState], animations: {
-                self.view.layoutIfNeeded()
-            })
-        } else {
-            self.view.layoutIfNeeded()
-        }
-
-    }
-
 }

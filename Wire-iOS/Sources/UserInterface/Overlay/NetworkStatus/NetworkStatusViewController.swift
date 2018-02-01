@@ -65,6 +65,20 @@ import Cartography
         networkStatusView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tappedOnNetworkStatusBar)))
     }
 
+    @objc public func createConstraints(bottomView: UIView, containerView: UIView) {
+        let topMargin = UIScreen.safeArea.top
+
+        constrain(bottomView, containerView, self.view) { (bottomView: LayoutProxy, view: LayoutProxy, networkStatusViewControllerView: LayoutProxy) -> Void in
+
+            networkStatusViewControllerView.top == view.top + topMargin
+            networkStatusViewControllerView.left == view.left
+            networkStatusViewControllerView.right == view.right
+
+            bottomView.top == networkStatusViewControllerView.bottom
+        }
+
+    }
+
     public func setNetworkStatusViewDelegate(delegate: NetworkStatusViewDelegate) {
         self.networkStatusView.delegate = delegate
     }

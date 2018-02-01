@@ -105,6 +105,7 @@
 
 @property (nonatomic) ConversationListTopBar *topBar;
 @property (nonatomic) NetworkStatusViewController *networkStatusViewController;
+@property (nonatomic) BOOL isViewDidAppear;
 @property (nonatomic) UIView *contentContainer;
 @property (nonatomic) UIView *conversationListContainer;
 @property (nonatomic) UILabel *noConversationLabel;
@@ -146,6 +147,7 @@
 {
     [super viewDidLoad];
     self.contentControllerBottomInset = 16;
+    self.isViewDidAppear = NO;
     
     self.contentContainer = [[UIView alloc] initForAutoLayout];
     self.contentContainer.backgroundColor = [UIColor clearColor];
@@ -214,6 +216,8 @@
     
     [self updateBottomBarSeparatorVisibilityWithContentController:self.listContentController];
     [self closePushPermissionDialogIfNotNeeded];
+
+    self.isViewDidAppear = YES;
 }
 
 - (void)requestSuggestedHandlesIfNeeded
@@ -379,10 +383,9 @@
     [self.bottomBarController.view autoPinEdgeToSuperviewEdge:ALEdgeLeft];
     [self.bottomBarController.view autoPinEdgeToSuperviewEdge:ALEdgeRight];
     self.bottomBarBottomOffset = [self.bottomBarController.view autoPinEdgeToSuperviewEdge:ALEdgeBottom];
+
+    [self.networkStatusViewController createConstraintsWithBottomView: self.topBar containerView:self.contentContainer];
     
-    [self.networkStatusViewController.view autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero excludingEdge:ALEdgeBottom];
-    
-    [self.topBar autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.networkStatusViewController.view];
     [self.topBar autoPinEdgeToSuperviewEdge:ALEdgeLeft];
     [self.topBar autoPinEdgeToSuperviewEdge:ALEdgeRight];
 
@@ -406,8 +409,8 @@
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator
 {
     [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {
-         // we reload on rotation to make sure that the list cells lay themselves out correctly for the new
-         // orientation
+        // we reload on rotation to make sure that the list cells lay themselves out correctly for the new
+        // orientation
         [self.listContentController reload];
     } completion:^(id<UIViewControllerTransitionCoordinatorContext> context) {
     }];
@@ -630,7 +633,7 @@
 {
     ZMUserSession *session = ZMUserSession.sharedSession;
     NSUInteger conversationsCount = [ZMConversationList conversationsInUserSession:session].count +
-                                    [ZMConversationList pendingConnectionConversationsInUserSession:session].count;
+    [ZMConversationList pendingConnectionConversationsInUserSession:session].count;
     return conversationsCount > 0;
 }
 
@@ -775,7 +778,7 @@
                        options:UIViewAnimationOptionTransitionCrossDissolve
                     animations:^{
                         self.bottomBarController.showArchived = showArchived;
-    } completion:nil];
+                    } completion:nil];
 }
 
 @end
