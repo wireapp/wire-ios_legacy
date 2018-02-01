@@ -24,11 +24,11 @@ import Classy
 class AddParticipantsNavigationController: UINavigationController {
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationBar.tintColor = .black
+        self.navigationBar.tintColor = ColorScheme.default().color(withName: ColorSchemeColorTextForeground)
         self.navigationBar.setBackgroundImage(UIImage(), for:.default)
         self.navigationBar.shadowImage = UIImage()
         self.navigationBar.isTranslucent = true
-        self.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.black,
+        self.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: ColorScheme.default().color(withName: ColorSchemeColorTextForeground),
                                                   NSFontAttributeName: FontSpec(.medium, .medium).font!.allCaps()]
     }
 }
@@ -104,7 +104,7 @@ public class AddParticipantsViewController : UIViewController {
  
         searchHeaderViewController = SearchHeaderViewController(userSelection: userSelection, variant: ColorScheme.default().variant)
         
-        searchGroupSelector = SearchGroupSelector(variant: .light)
+        searchGroupSelector = SearchGroupSelector(variant: ColorScheme.default().variant)
 
         searchResultsViewController = SearchResultsViewController(userSelection: userSelection, variant: ColorScheme.default().variant, isAddingParticipants: true)
 
