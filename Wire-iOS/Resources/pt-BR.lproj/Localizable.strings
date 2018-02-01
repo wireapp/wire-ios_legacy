@@ -39,6 +39,9 @@
 "peoplepicker.header.services" = "Serviços";
 "peoplepicker.services.create_conversation.item" = "Criar uma nova conversa";
 "peoplepicker.services.add_service.button" = "Adicionar serviço";
+"peoplepicker.services.add_service.error.title" = "O serviço não pode ser adicionado";
+"peoplepicker.services.add_service.error.default" = "O serviço está indisponível no momento";
+"peoplepicker.services.add_service.error.full" = "A conversa está cheia";
 
 "peoplepicker.title.create_conversation" = "Criar grupo";
 "peoplepicker.title.add_to_conversation" = "Adicionar pessoas";
@@ -431,7 +434,7 @@
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Profile and Participants
 
-"participants.add_people_button_title" = "Adicionar pessoas";
+"participants.add_people_button_title" = "Adicionar";
 "participants.avatar.guest.title" = "Convidado";
 
 // Meta Menu
@@ -932,8 +935,8 @@
 "registration.signin.email_button.title" = "E-mail";
 "registration.signin.phone_button.title" = "Telefone";
 
-"registration.signin.alert.password_needed.title" = "Password needed";
-"registration.signin.alert.password_needed.message" = "Please enter your Password in order to log in.";
+"registration.signin.alert.password_needed.title" = "Senha necessária";
+"registration.signin.alert.password_needed.message" = "Por favor, digite sua senha para entrar.";
 
 "registration.devices.title" = "Dispositivos";
 "registration.devices.active_list_header" = "Ativo";

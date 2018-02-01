@@ -39,6 +39,9 @@
 "peoplepicker.header.services" = "服務";
 "peoplepicker.services.create_conversation.item" = "開始新對話";
 "peoplepicker.services.add_service.button" = "新增服務";
+"peoplepicker.services.add_service.error.title" = "The service can't be added";
+"peoplepicker.services.add_service.error.default" = "The service is unavailable at the moment";
+"peoplepicker.services.add_service.error.full" = "The conversation is full";
 
 "peoplepicker.title.create_conversation" = "建立群組";
 "peoplepicker.title.add_to_conversation" = "邀請連絡人";
@@ -431,7 +434,7 @@
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Profile and Participants
 
-"participants.add_people_button_title" = "加入連絡人";
+"participants.add_people_button_title" = "Add";
 "participants.avatar.guest.title" = "訪客";
 
 // Meta Menu
