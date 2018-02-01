@@ -81,7 +81,7 @@ import Cartography
         [networkStatusViewController.view, navbar, self.contentView].forEach {view in
             view.translatesAutoresizingMaskIntoConstraints = false}
 
-        networkStatusViewController.createConstraints(bottomView: customNavBar!, containerView: self.view)
+        networkStatusViewController.createConstraints(bottomView: customNavBar!, containerView: self.view, topMargin: UIScreen.safeArea.top)
 
         constrain(self.customNavBar!, self.view, self.contentView, conversationViewController.view) { (customNavBar: LayoutProxy, view: LayoutProxy, contentView: LayoutProxy, conversationViewControllerView: LayoutProxy) -> Void in
 
