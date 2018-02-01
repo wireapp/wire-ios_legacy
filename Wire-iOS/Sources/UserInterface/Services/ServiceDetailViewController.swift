@@ -154,6 +154,11 @@ extension ServiceConversation: ShareDestination {
     }
 }
 
+struct ServiceDetailVariant {
+    let colorScheme: ColorSchemeVariant
+    let opaque: Bool
+}
+
 final class ServiceDetailViewController: UIViewController {
 
     enum ActionType {
@@ -169,7 +174,7 @@ final class ServiceDetailViewController: UIViewController {
     public var completion: ((AddBotResult?)->Void)?
     let destinationConversation: ZMConversation?
 
-    public let variant: ColorSchemeVariant
+    public let variant: ServiceDetailVariant
     public weak var viewControllerDismissable: ViewControllerDismissable?
 
     private let detailView: ServiceDetailView
@@ -186,10 +191,10 @@ final class ServiceDetailViewController: UIViewController {
     init(serviceUser: ServiceUser,
          destinationConversation: ZMConversation?,
          actionType: ActionType,
-         variant: ColorSchemeVariant) {
+         variant: ServiceDetailVariant) {
         self.service = Service(serviceUser: serviceUser)
         self.destinationConversation = destinationConversation
-        self.detailView = ServiceDetailView(service: service, variant: variant)
+        self.detailView = ServiceDetailView(service: service, variant: variant.colorScheme)
 
         switch actionType {
         case .addService:
@@ -225,11 +230,12 @@ final class ServiceDetailViewController: UIViewController {
             self.actionButton.addCallback(for: .touchUpInside, callback: callback)
         }
 
-        switch self.variant {
-        case .dark:
+        if self.variant.opaque {
+            view.backgroundColor = ColorScheme.default().color(withName: ColorSchemeColorBackground,
+                                                               variant: self.variant.colorScheme)
+        }
+        else {
             view.backgroundColor = .clear
-        case .light:
-            view.backgroundColor = .white
         }
 
         view.addSubview(detailView)

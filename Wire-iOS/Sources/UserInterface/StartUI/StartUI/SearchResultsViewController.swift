@@ -200,6 +200,8 @@ public class SearchResultsViewController : UIViewController {
         sectionAggregator.collectionView = searchResultsView?.collectionView
         
         updateVisibleSections()
+        
+        searchResultsView?.emptyResultContainer.isHidden = !isResultEmpty
     }
     
     @objc
@@ -248,11 +250,17 @@ public class SearchResultsViewController : UIViewController {
         pendingSearchTask = task
     }
     
+    var isResultEmpty: Bool = true {
+        didSet {
+            searchResultsView?.emptyResultContainer.isHidden = !isResultEmpty
+        }
+    }
+    
     func handleSearchResult(result: SearchResult, isCompleted: Bool) {
         self.updateSections(withSearchResult: result)
         
         if isCompleted {
-            searchResultsView?.emptyResultContainer.isHidden = !sectionAggregator.visibleSectionControllers.isEmpty
+            isResultEmpty = sectionAggregator.visibleSectionControllers.isEmpty
         }
     }
     

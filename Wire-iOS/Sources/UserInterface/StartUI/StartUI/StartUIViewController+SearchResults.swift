@@ -39,14 +39,15 @@ extension StartUIViewController: SearchResultsViewControllerDelegate {
     
     public func searchResultsViewController(_ searchResultsViewController: SearchResultsViewController, didDoubleTapOnUser user: ZMSearchableUser, indexPath: IndexPath) {
     
-        if let unboxedUser = BareUserToUser(user), unboxedUser.isConnected, !unboxedUser.isBlocked {
-            
-            if self.userSelection.users.count == 1 && !self.userSelection.users.contains(unboxedUser) {
-                return
-            }
-            
-            self.delegate.startUI(self, didSelectUsers: NSSet(object: user) as! Set<AnyHashable>, for: .createOrOpenConversation)
+        guard let unboxedUser = BareUserToUser(user), unboxedUser.isConnected, !unboxedUser.isBlocked else {
+            return
         }
+            
+        guard self.userSelection.users.count != 1 || self.userSelection.users.contains(unboxedUser) else {
+            return
+        }
+            
+        self.delegate.startUI(self, didSelect: Set(arrayLiteral: unboxedUser), for: .createOrOpenConversation)
     }
     
     public func searchResultsViewController(_ searchResultsViewController: SearchResultsViewController, didTapOnConversation conversation: ZMConversation) {
@@ -57,11 +58,10 @@ extension StartUIViewController: SearchResultsViewControllerDelegate {
     }
     
     public func searchResultsViewController(_ searchResultsViewController: SearchResultsViewController, didTapOnSeviceUser user: ServiceUser) {
-
         let detail = ServiceDetailViewController(serviceUser: user,
                                                  destinationConversation: nil,
                                                  actionType: .addService,
-                                                 variant: .dark)
+                                                 variant: ServiceDetailVariant(colorScheme: .dark, opaque: false))
 
         detail.completion = { [weak self] result in
             guard let `self` = self else { return }
@@ -74,7 +74,7 @@ extension StartUIViewController: SearchResultsViewControllerDelegate {
                     error.displayAddBotError(in: self)
                 }
             } else {
-                self.delegate.startUIDidCancel(self)
+                self.navigationController?.dismiss(animated: true, completion: nil)
             }
         }
         

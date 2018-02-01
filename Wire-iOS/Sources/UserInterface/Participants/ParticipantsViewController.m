@@ -467,11 +467,15 @@ static NSString *const ParticipantHeaderReuseIdentifier = @"ParticipantListHeade
 - (void)presentAddParticipantsViewController
 {    
     AddParticipantsViewController *addParticipantsViewController = [[AddParticipantsViewController alloc] initWithConversation:self.conversation];
-    addParticipantsViewController.modalPresentationStyle = UIModalPresentationOverCurrentContext;
-    addParticipantsViewController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
     addParticipantsViewController.delegate = self;
     
-    [self presentViewController:addParticipantsViewController animated:YES completion:nil];
+    UINavigationController *presentedViewController = [addParticipantsViewController wrapInNavigationController:[AddParticipantsNavigationController class]];
+    presentedViewController.modalPresentationStyle = UIModalPresentationOverCurrentContext;
+    presentedViewController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
+    
+    [self presentViewController:presentedViewController
+                       animated:YES
+                     completion:nil];
 }
 
 /// Returns whether the conversation name was valid and could be set as the new name.

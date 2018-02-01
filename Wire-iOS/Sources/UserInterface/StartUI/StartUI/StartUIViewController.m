@@ -99,7 +99,7 @@ static NSUInteger const StartUIInitiallyShowsKeyboardConversationThreshold = 10;
     self.emptyResultLabel.font = [UIFont fontWithMagicIdentifier:@"style.text.normal.font_spec"];
     
     self.searchHeaderViewController = [[SearchHeaderViewController alloc] initWithUserSelection:self.userSelection variant:ColorSchemeVariantDark];
-    self.searchHeaderViewController.title = team != nil ? team.name : ZMUser.selfUser.displayName;
+    self.title = team != nil ? team.name : ZMUser.selfUser.displayName;
     self.searchHeaderViewController.delegate = self;
     [self addChildViewController:self.searchHeaderViewController];
     [self.view addSubview:self.searchHeaderViewController.view];
@@ -141,7 +141,11 @@ static NSUInteger const StartUIInitiallyShowsKeyboardConversationThreshold = 10;
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    [self.navigationController setNavigationBarHidden:YES animated:animated];
+    
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithIcon:ZetaIconTypeX
+                                                                             style:UIBarButtonItemStylePlain
+                                                                            target:self
+                                                                            action:@selector(onDismissPressed)];
 }
 
 - (void)createConstraints
@@ -219,6 +223,12 @@ static NSUInteger const StartUIInitiallyShowsKeyboardConversationThreshold = 10;
     }
     
     [self.view setNeedsLayout];
+}
+
+- (void)onDismissPressed
+{
+    [self.searchHeaderViewController.tokenField resignFirstResponder];
+    [self.navigationController dismissViewControllerAnimated:YES completion:nil];
 }
 
 #pragma mark - Instance methods
@@ -328,12 +338,6 @@ static NSUInteger const StartUIInitiallyShowsKeyboardConversationThreshold = 10;
 }
 
 #pragma mark - SearchHeaderViewControllerDelegate
-
-- (void)searchHeaderViewControllerDidCancelAction:(SearchHeaderViewController *)searchHeaderViewController
-{
-    [self.searchHeaderViewController.tokenField resignFirstResponder];
-    [self.delegate startUIDidCancel:self];
-}
 
 - (void)searchHeaderViewControllerDidConfirmAction:(SearchHeaderViewController *)searchHeaderViewController
 {

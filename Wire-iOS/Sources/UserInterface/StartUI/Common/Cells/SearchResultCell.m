@@ -220,6 +220,8 @@
     self.avatarViewSizeConstraint.constant = squareImageWidth;
     self.conversationImageViewSize.constant = squareImageWidth;
     self.badgeUserImageView.badgeColor = [UIColor whiteColor];
+    
+    [self updateSubtitle];
 }
 
 - (void)prepareForReuse

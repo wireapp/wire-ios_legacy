@@ -20,6 +20,19 @@ import Foundation
 import Cartography
 import Classy
 
+
+class AddParticipantsNavigationController: UINavigationController {
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        self.navigationBar.tintColor = ColorScheme.default().color(withName: ColorSchemeColorTextForeground)
+        self.navigationBar.setBackgroundImage(UIImage(), for:.default)
+        self.navigationBar.shadowImage = UIImage()
+        self.navigationBar.isTranslucent = true
+        self.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: ColorScheme.default().color(withName: ColorSchemeColorTextForeground),
+                                                  NSFontAttributeName: FontSpec(.medium, .medium).font!.allCaps()]
+    }
+}
+
 @objc
 public protocol AddParticipantsViewControllerDelegate : class {
     
@@ -91,12 +104,14 @@ public class AddParticipantsViewController : UIViewController {
 
         searchHeaderViewController = SearchHeaderViewController(userSelection: userSelection, variant: ColorScheme.default().variant)
         
-        searchGroupSelector = SearchGroupSelector(variant: .light)
+        searchGroupSelector = SearchGroupSelector(variant: ColorScheme.default().variant)
 
         searchResultsViewController = SearchResultsViewController(userSelection: userSelection, variant: ColorScheme.default().variant, isAddingParticipants: true)
 
         super.init(nibName: nil, bundle: nil)
-        
+
+        title = conversation.displayName
+        navigationItem.rightBarButtonItem = UIBarButtonItem(icon: .X, target: self, action: #selector(AddParticipantsViewController.onDismissTapped(_:)))
         emptyResultLabel.text = everyoneHasBeenAddedText
         emptyResultLabel.textColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorTextForeground)
         emptyResultLabel.font = FontSpec(.normal, .none).font!
@@ -134,7 +149,6 @@ public class AddParticipantsViewController : UIViewController {
             view.addSubview(searchGroupSelector)
         }
         
-        searchHeaderViewController.title = conversation.displayName
         searchHeaderViewController.delegate = self
         addChildViewController(searchHeaderViewController)
         view.addSubview(searchHeaderViewController.view)
@@ -144,7 +158,7 @@ public class AddParticipantsViewController : UIViewController {
         view.addSubview(searchResultsViewController.view)
         searchResultsViewController.didMove(toParentViewController: self)
         searchResultsViewController.searchResultsView?.emptyResultView = emptyResultLabel
-        searchResultsViewController.searchResultsView?.backgroundColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorContentBackground);
+        searchResultsViewController.searchResultsView?.backgroundColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorContentBackground)
 
         createConstraints()
         updateConfirmButtonVisibility()
@@ -205,6 +219,10 @@ public class AddParticipantsViewController : UIViewController {
         return "add_participants.all_contacts_added".localized
     }
     
+    @objc public func onDismissTapped(_ sender: Any!) {
+        self.navigationController?.dismiss(animated: true, completion: nil)
+    }
+    
     func keyboardFrameWillChange(notification: Notification) {
         let firstResponder = UIResponder.wr_currentFirst()
         let inputAccessoryHeight = firstResponder?.inputAccessoryView?.bounds.size.height ?? 0
@@ -253,10 +271,6 @@ extension AddParticipantsViewController : UserSelectionObserver {
 
 extension AddParticipantsViewController : SearchHeaderViewControllerDelegate {
     
-    public func searchHeaderViewControllerDidCancelAction(_ searchHeaderViewController: SearchHeaderViewController) {
-        delegate?.addParticipantsViewControllerDidCancel(self)
-    }
-    
     public func searchHeaderViewControllerDidConfirmAction(_ searchHeaderViewController: SearchHeaderViewController) {
         delegate?.addParticipantsViewController(self, didSelectUsers: userSelection.users)
     }
@@ -294,12 +308,11 @@ extension AddParticipantsViewController: SearchResultsViewControllerDelegate {
     
 
     public func searchResultsViewController(_ searchResultsViewController: SearchResultsViewController, didTapOnSeviceUser user: ServiceUser) {
-
         let navigationController = UIViewController.navigationControllerWithDefaultNavigationBar()
         let detail = ServiceDetailViewController(serviceUser: user,
                                                  destinationConversation: self.conversation,
                                                  actionType: .addService,
-                                                 variant: .light)
+                                                 variant: ServiceDetailVariant(colorScheme: ColorScheme.default().variant, opaque: true))
 
         detail.completion = { [weak self] result in
             guard let `self` = self else { return }
@@ -308,14 +321,14 @@ extension AddParticipantsViewController: SearchResultsViewControllerDelegate {
                 switch result {
                 case .success( _):
                     self.dismiss(animated: true, completion: {
-                        self.delegate?.addParticipantsViewController(self, didSelectUsers: [user as! ZMUser])
+                        self.delegate?.addParticipantsViewController(self, didSelectUsers: [])
                     })
                 case .failure(let error):
                     error.displayAddBotError(in: detail)
                 }
             }
         }
-        
+
         navigationController.setViewControllers([detail], animated: false)
         self.present(navigationController, animated: true, completion: nil)
     }

@@ -204,13 +204,6 @@ typedef void (^ConversationCreatedBlock)(ZMConversation *);
     [[Analytics shared] tagEventObject:[AnalyticsSearchResultEvent eventForSearchResultUsed:YES participantCount:[users count]]];
 }
 
-- (void)startUIDidCancel:(StartUIViewController *)startUI
-{
-    [[Analytics shared] tagSearchAbortedWithSource:AnalyticsEventSourceUnspecified];
-    
-    [self dismissPeoplePickerWithCompletionBlock:nil];
-}
-
 - (void)startUI:(StartUIViewController *)startUI didSelectConversation:(ZMConversation *)conversation
 {
     [Analytics.shared tagOpenedExistingConversationWithType:conversation.conversationType];

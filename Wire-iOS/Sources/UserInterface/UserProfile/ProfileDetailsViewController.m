@@ -409,10 +409,14 @@ typedef NS_ENUM(NSUInteger, ProfileUserAction) {
 {
     AddParticipantsViewController *addParticipantsViewController = [[AddParticipantsViewController alloc] initWithConversation:self.conversation];
     
-    addParticipantsViewController.modalPresentationStyle = UIModalPresentationOverCurrentContext;
-    addParticipantsViewController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
+    UINavigationController *presentedViewController = [addParticipantsViewController wrapInNavigationController:[AddParticipantsNavigationController class]];
     
-    [self presentViewController:addParticipantsViewController animated:YES completion:^{
+    presentedViewController.modalPresentationStyle = UIModalPresentationOverCurrentContext;
+    presentedViewController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
+    
+    [self presentViewController:presentedViewController
+                       animated:YES
+                     completion:^{
         [Analytics.shared tagOpenedPeoplePickerGroupAction];
     }];
     
