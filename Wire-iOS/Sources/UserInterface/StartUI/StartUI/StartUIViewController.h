@@ -43,9 +43,7 @@ typedef NS_ENUM(NSUInteger, StartUIAction) {
 
 
 @protocol StartUIDelegate <NSObject>
-- (void)startUIDidCancel:(StartUIViewController *)startUI;
-/// NSSet of ZMUsers
-- (void)startUI:(StartUIViewController *)startUI didSelectUsers:(NSSet *)users forAction:(StartUIAction)action;
+- (void)startUI:(StartUIViewController *)startUI didSelectUsers:(NSSet<ZMUser *> *)users forAction:(StartUIAction)action;
 @optional
 - (void)startUI:(StartUIViewController *)startUI didSelectConversation:(ZMConversation *)conversation;
 @end
