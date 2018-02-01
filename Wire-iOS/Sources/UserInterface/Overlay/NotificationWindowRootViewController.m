@@ -47,7 +47,6 @@
 
 @interface NotificationWindowRootViewController ()
 
-//@property (nonatomic) NetworkStatusViewController *networkStatusViewController;
 @property (nonatomic) AppLockViewController *appLockViewController;
 @property (nonatomic) ChatHeadsViewController *chatHeadsViewController;
 
