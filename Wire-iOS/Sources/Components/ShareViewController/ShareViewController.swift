@@ -133,6 +133,7 @@ public class ShareViewController<D: ShareDestination, S: Shareable>: UIViewContr
         
         let destination = self.filteredDestinations[indexPath.row]
         cell.destination = destination
+        cell.allowsMultipleSelection = self.allowsMultipleSelection
         cell.isSelected = self.selectedDestinations.contains(destination)
         if cell.isSelected {
             tableView.selectRow(at: indexPath, animated: false, scrollPosition: .none)

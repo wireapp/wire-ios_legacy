@@ -32,11 +32,17 @@ final class ShareDestinationCell<D: ShareDestination>: UITableViewCell {
     let avatarViewContainer = UIView()
     var avatarView : UIView?
 
+    var allowsMultipleSelection: Bool = true {
+        didSet {
+            self.checkImageView.isHidden = !allowsMultipleSelection
+        }
+    }
+    
     var destination: D? {
         didSet {
             self.titleLabel.text = destination?.displayName
             self.accessoryView = destination?.securityLevel == .secure ? UIImageView(image: verifiedShieldImage) : nil
-            
+
             if let avatarView = destination?.avatarView {
                 avatarView.frame = CGRect(x: 0, y: 0, width: avatarSize, height: avatarSize)
                 self.avatarViewContainer.addSubview(avatarView)
