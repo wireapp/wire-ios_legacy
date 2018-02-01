@@ -309,7 +309,8 @@ extension AddParticipantsViewController: SearchResultsViewControllerDelegate {
 
     public func searchResultsViewController(_ searchResultsViewController: SearchResultsViewController, didTapOnSeviceUser user: ServiceUser) {
         
-        let detail = ServiceDetailViewController(serviceUser: user, variant: .light)
+        let detail = ServiceDetailViewController(serviceUser: user,
+                                                 variant: ServiceDetailVariant(colorScheme: ColorScheme.default().variant, opaque: true))
         detail.destinationConversation = self.conversation
         detail.completion = { [weak self] result in
             guard let `self` = self else { return }

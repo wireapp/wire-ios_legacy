@@ -59,7 +59,7 @@ extension StartUIViewController: SearchResultsViewControllerDelegate {
     
     public func searchResultsViewController(_ searchResultsViewController: SearchResultsViewController, didTapOnSeviceUser user: ServiceUser) {
         
-        let detail = ServiceDetailViewController(serviceUser: user, variant: .dark)
+        let detail = ServiceDetailViewController(serviceUser: user, variant: ServiceDetailVariant(colorScheme: .dark, opaque: false))
         
         detail.completion = { [weak self] result in
             guard let `self` = self else { return }
