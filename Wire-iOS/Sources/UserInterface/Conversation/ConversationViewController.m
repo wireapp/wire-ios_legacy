@@ -92,6 +92,9 @@
 @interface ConversationViewController (ProfileViewController) <ProfileViewControllerDelegate>
 @end
 
+@interface ConversationViewController (ViewControllerDismissable) <ViewControllerDismissable>
+@end
+
 @interface ConversationViewController (AddParticipants) <AddParticipantsViewControllerDelegate>
 @end
 
@@ -442,7 +445,6 @@
             ParticipantsViewController *participantsViewController = [[ParticipantsViewController alloc] initWithConversation:self.conversation];
             participantsViewController.delegate = self;
             participantsViewController.zClientViewController = [ZClientViewController sharedZClientViewController];
-            participantsViewController.shouldDrawTopSeparatorLineDuringPresentation = YES;
             viewController = participantsViewController;
             break;
         }
@@ -450,11 +452,12 @@
         case ZMConversationTypeOneOnOne:
         case ZMConversationTypeConnection:
         {
-            ProfileViewController *profileViewController = [[ProfileViewController alloc] initWithUser:self.conversation.firstActiveParticipantOtherThanSelf
-                                                                                          conversation:self.conversation];
-            profileViewController.delegate = self;
-            profileViewController.shouldDrawTopSeparatorLineDuringPresentation = YES;
-            viewController = profileViewController;
+            viewController = [UserDetailViewControllerFactory createUserDetailViewControllerWithUser:self.conversation.firstActiveParticipantOtherThanSelf
+                                          conversation:self.conversation
+                         profileViewControllerDelegate:self
+                             viewControllerDismissable:self
+                          navigationControllerDelegate:nil];
+
             break;
         }
         case ZMConversationTypeInvalid:
@@ -786,12 +789,16 @@
 
 @end
 
-@implementation ConversationViewController (ProfileViewController)
+@implementation ConversationViewController (ViewControllerDismissable)
 
-- (void)profileViewControllerWantsToBeDismissed:(ProfileViewController *)profileViewController completion:(dispatch_block_t)completion
+- (void)viewControllerWantsToBeDismissed:(UIViewController *)profileViewController completion:(dispatch_block_t)completion
 {
     [self dismissViewControllerAnimated:YES completion:completion];
 }
+
+@end
+
+@implementation ConversationViewController (ProfileViewController)
 
 - (void)profileViewController:(ProfileViewController *)controller wantsToNavigateToConversation:(ZMConversation *)conversation
 {
@@ -873,6 +880,7 @@
                                                               [self dismissViewControllerAnimated:YES completion:^{
                                                                   ProfileViewController *profileViewController = [[ProfileViewController alloc] initWithUser:user context:ProfileViewControllerContextDeviceList];
                                                                   profileViewController.delegate = self;
+                                                                  profileViewController.viewControllerDismissable = self;
                                                                   [self presentViewController:profileViewController animated:YES completion:nil];
                                                               }];
                                                           }

@@ -1,6 +1,6 @@
-////
+//
 // Wire
-// Copyright (C) 2017 Wire Swiss GmbH
+// Copyright (C) 2018 Wire Swiss GmbH
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -16,14 +16,16 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-#import "ConversationCell.h"
+import UIKit
 
-@interface ConversationCell ()
-
-@property (nonatomic) BOOL showsPreview;
-
-- (void)updateCountdownView;
-- (void)startCountdownAnimationIfNeeded:(id<ZMConversationMessage>)message;
-
-@end
-
+extension ConversationCellLayoutProperties {
+    static let preview: ConversationCellLayoutProperties = {
+        let properties = ConversationCellLayoutProperties()
+        properties.showSender = false
+        properties.showUnreadMarker = false
+        properties.showBurstTimestamp = false
+        properties.topPadding = 0
+        properties.alwaysShowDeliveryState = false
+        return properties
+    }()
+}

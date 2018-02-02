@@ -19,7 +19,9 @@
 
 #import <UIKit/UIKit.h>
 @import WireExtensionComponents;
+#import "ViewControllerDismissable.h"
 
+NS_ASSUME_NONNULL_BEGIN
 
 @protocol ZMSearchableUser;
 @class ZMConversation;
@@ -37,18 +39,14 @@ typedef NS_ENUM(NSInteger, ProfileViewControllerContext) {
     ProfileViewControllerContextDeviceList
 };
 
-
-
 @protocol ProfileViewControllerDelegate <NSObject>
-
-- (void)profileViewControllerWantsToBeDismissed:(ProfileViewController *)controller completion:(dispatch_block_t)completion;
 
 @optional
 
-- (NSString *)suggestedBackButtonTitleForProfileViewController:(ProfileViewController *)controller;
+- (NSString *)suggestedBackButtonTitleForProfileViewController:(nullable ProfileViewController *)controller;
 
-- (void)profileViewController:(ProfileViewController *)controller wantsToNavigateToConversation:(ZMConversation *)conversation;
-- (void)profileViewController:(ProfileViewController *)controller wantsToAddUsers:(NSSet *)users toConversation:(ZMConversation *)conversation;
+- (void)profileViewController:(nullable ProfileViewController *)controller wantsToNavigateToConversation:(ZMConversation *)conversation;
+- (void)profileViewController:(nullable ProfileViewController *)controller wantsToAddUsers:(NSSet *)users toConversation:(ZMConversation *)conversation;
 
 @end
 
@@ -56,13 +54,15 @@ typedef NS_ENUM(NSInteger, ProfileViewControllerContext) {
 
 @interface ProfileViewController : UIViewController
 
-- (id)initWithUser:(id<ZMSearchableUser, AccentColorProvider>)user context:(ProfileViewControllerContext)context;
-- (id)initWithUser:(id<ZMSearchableUser, AccentColorProvider>)user conversation:(ZMConversation *)conversation;
-- (id)initWithUser:(id<ZMSearchableUser, AccentColorProvider>)user conversation:(ZMConversation *)conversation context:(ProfileViewControllerContext)context;
+- (instancetype)initWithUser:(id<ZMSearchableUser, AccentColorProvider>)user context:(ProfileViewControllerContext)context;
+- (instancetype)initWithUser:(id<ZMSearchableUser, AccentColorProvider>)user conversation:(nullable ZMConversation *)conversation;
+- (instancetype)initWithUser:(id<ZMSearchableUser, AccentColorProvider>)user conversation:(nullable ZMConversation *)conversation context:(ProfileViewControllerContext)context;
 
 @property (nonatomic, readonly) id<ZMSearchableUser, AccentColorProvider> bareUser;
-@property (nonatomic, weak) id<ProfileViewControllerDelegate> delegate;
-@property (nonatomic) ProfileNavigationControllerDelegate *navigationControllerDelegate;
-@property (nonatomic, assign) BOOL shouldDrawTopSeparatorLineDuringPresentation;
+@property (nonatomic, weak, nullable) id<ProfileViewControllerDelegate> delegate;
+@property (nonatomic, weak, nullable) id<ViewControllerDismissable> viewControllerDismissable;
+@property (nonatomic, nullable) ProfileNavigationControllerDelegate *navigationControllerDelegate;
 
 @end
+
+NS_ASSUME_NONNULL_END

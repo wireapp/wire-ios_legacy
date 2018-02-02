@@ -101,7 +101,7 @@ public class AddParticipantsViewController : UIViewController {
         
         bottomContainer.backgroundColor = UIColor.clear
         bottomContainer.addSubview(confirmButton)
- 
+
         searchHeaderViewController = SearchHeaderViewController(userSelection: userSelection, variant: ColorScheme.default().variant)
         
         searchGroupSelector = SearchGroupSelector(variant: ColorScheme.default().variant)
@@ -202,7 +202,7 @@ public class AddParticipantsViewController : UIViewController {
             }
         }
     }
-        
+
     func updateConfirmButtonVisibility() {
         if userSelection.users.isEmpty {
             searchResultsViewController.searchResultsView?.accessoryView = nil
@@ -282,7 +282,7 @@ extension AddParticipantsViewController : SearchHeaderViewControllerDelegate {
 }
 
 extension AddParticipantsViewController : UIPopoverPresentationControllerDelegate {
-        
+
     public func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
         return UIModalPresentationStyle.overFullScreen
     }
@@ -308,10 +308,11 @@ extension AddParticipantsViewController: SearchResultsViewControllerDelegate {
     
 
     public func searchResultsViewController(_ searchResultsViewController: SearchResultsViewController, didTapOnSeviceUser user: ServiceUser) {
-        
         let detail = ServiceDetailViewController(serviceUser: user,
+                                                 destinationConversation: self.conversation,
+                                                 actionType: .addService,
                                                  variant: ServiceDetailVariant(colorScheme: ColorScheme.default().variant, opaque: true))
-        detail.destinationConversation = self.conversation
+
         detail.completion = { [weak self] result in
             guard let `self` = self else { return }
             
