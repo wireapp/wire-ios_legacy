@@ -19,8 +19,6 @@
 import Foundation
 import Cartography
 
-///FIXME: snapshot tests for this VC, for online/offline/connecting states.
-
 // This class wraps the conversation content view controller in order to display the navigation bar on the top
 @objc open class ConversationRootViewController: UIViewController {
 

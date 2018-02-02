@@ -193,7 +193,7 @@ class NetworkStatusView: UIView {
 
     func updateViewState(animated: Bool) {
         let connectingViewHidden = state != .onlineSynchronizing
-        connectingView.animating = state == .onlineSynchronizing ///TODO: pass animated param, rename animating to spinning
+        connectingView.animating = state == .onlineSynchronizing
         let offlineViewHidden = state != .offlineExpanded && state != .offlineCollapsed
 
         var offlineBarState: OfflineBarState?
@@ -260,7 +260,7 @@ class NetworkStatusView: UIView {
 }
 
 extension NetworkStatusView: BreathLoadingBarDelegate {
-    func animationDidStarted() { ///TODO: animated param
+    func animationDidStarted() {
         delegate?.didChangeHeight(self, animated: true, state: state)
     }
 
