@@ -232,6 +232,9 @@ class NetworkStatusView: UIView {
         offlineViewTopMargin?.constant = offlineBarState == .expanded ? NetworkStatusView.verticalMargin : 0
         offlineViewBottomMargin?.constant = offlineBarState == .expanded ? -NetworkStatusView.verticalMargin : 0
 
+        connectingViewHeight?.constant = connectingViewHidden ? 0 : OfflineBar.collapsedHeight
+        connectingViewBottomMargin?.constant = connectingViewHidden ? 0 : -NetworkStatusView.verticalMargin
+
         /// offlineViewBottomMargin is active iff connectingViewHidden is visible
         if offlineViewHidden && !connectingViewHidden {
             offlineViewBottomMargin?.isActive = false
