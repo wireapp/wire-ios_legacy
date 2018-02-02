@@ -207,8 +207,6 @@ class NetworkStatusView: UIView {
             offlineBarState = .minimized
         }
 
-
-
         if let offlineBarState = offlineBarState {
             if animated {
                 if offlineBarState == .expanded {
@@ -216,12 +214,12 @@ class NetworkStatusView: UIView {
                 }
 
                 UIView.animate(withDuration: NetworkStatusView.resizeAnimationTime, delay: 0, options: [.curveEaseIn, .beginFromCurrentState], animations: {
-                    self.updateUI(offlineBarState: offlineBarState, animated: animated)
+                    self.updateUI(offlineBarState: offlineBarState, animated: animated, connectingViewHidden: connectingViewHidden, offlineViewHidden: offlineViewHidden)
                 }) { _ in
                     self.updateUICompletion(connectingViewHidden: connectingViewHidden, offlineViewHidden: offlineViewHidden)
                 }
             } else {
-                updateUI(offlineBarState: offlineBarState, animated: animated)
+                updateUI(offlineBarState: offlineBarState, animated: animated, connectingViewHidden: connectingViewHidden, offlineViewHidden: offlineViewHidden)
 
                 updateUICompletion(connectingViewHidden: connectingViewHidden, offlineViewHidden: offlineViewHidden)
             }
@@ -230,20 +228,27 @@ class NetworkStatusView: UIView {
         }
     }
 
-    func updateUICompletion(connectingViewHidden: Bool, offlineViewHidden: Bool) {
-        self.connectingView.isHidden = connectingViewHidden
-        self.offlineView.isHidden = offlineViewHidden
-    }
+    func updateUI(offlineBarState: OfflineBarState, animated: Bool, connectingViewHidden: Bool, offlineViewHidden: Bool) {
+        offlineViewTopMargin?.constant = offlineBarState == .expanded ? NetworkStatusView.verticalMargin : 0
+        offlineViewBottomMargin?.constant = offlineBarState == .expanded ? -NetworkStatusView.verticalMargin : 0
 
-    func updateUI(offlineBarState: OfflineBarState, animated: Bool) {
-        self.updateMargin(state: offlineBarState)
+        /// offlineViewBottomMargin is active iff connectingViewHidden is visible
+        if offlineViewHidden && !connectingViewHidden {
+            offlineViewBottomMargin?.isActive = false
+            connectingViewBottomMargin?.isActive = true
+        }
+        else {
+            connectingViewBottomMargin?.isActive = false
+            offlineViewBottomMargin?.isActive = true
+        }
+
         self.offlineView.update(state: offlineBarState, animated: animated)
         self.layoutIfNeeded()
     }
 
-    func updateMargin(state: OfflineBarState) {
-        offlineViewTopMargin?.constant = state == .expanded ? NetworkStatusView.verticalMargin : 0
-        offlineViewBottomMargin?.constant = state == .expanded ? -NetworkStatusView.verticalMargin : 0
+    func updateUICompletion(connectingViewHidden: Bool, offlineViewHidden: Bool) {
+        self.connectingView.isHidden = connectingViewHidden
+        self.offlineView.isHidden = offlineViewHidden
     }
 
     // Detects when the view can be touchable
