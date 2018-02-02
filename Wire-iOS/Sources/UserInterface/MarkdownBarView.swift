@@ -18,12 +18,12 @@
 
 import UIKit
 import Cartography
-import Marklight
+import Down
 
 
 public protocol MarkdownBarViewDelegate: class {
-    func markdownBarView(_ markdownBarView: MarkdownBarView, didSelectElementType type: MarkdownElementType, with sender: IconButton)
-    func markdownBarView(_ markdownBarView: MarkdownBarView, didDeselectElementType type: MarkdownElementType, with sender: IconButton)
+    func markdownBarView(_ view: MarkdownBarView, didSelectMarkdown markdown: Markdown, with sender: IconButton)
+    func markdownBarView(_ view: MarkdownBarView, didDeselectMarkdown markdown: Markdown, with sender: IconButton)
 }
 
 
@@ -44,7 +44,7 @@ public final class MarkdownBarView: UIView {
     public let codeButton           = IconButton()
     
     public let buttons: [IconButton]
-    public var activeModes = [MarkdownElementType]()
+    public var activeModes = [Markdown]()
     
     required public init() {
         buttons = [headerButton, boldButton, italicButton, numberListButton, bulletListButton, codeButton]
@@ -98,54 +98,58 @@ public final class MarkdownBarView: UIView {
     
     @objc private func buttonTapped(sender: IconButton) {
         
-        let elementType: MarkdownElementType
+        let markdown: Markdown
         
         switch sender {
         case headerButton:
             switch headerButton.iconType(for: .normal) {
-            case .markdownH1:       elementType = .header(.h1)
-            case .markdownH2:       elementType = .header(.h2)
-            case .markdownH3:       elementType = .header(.h3)
+            // TODO: differentiate
+            case .markdownH1:       markdown = .header
+            case .markdownH2:       markdown = .header
+            case .markdownH3:       markdown = .header
             default:                return
             }
-        case boldButton:            elementType = .bold
-        case italicButton:          elementType = .italic
-        case numberListButton:      elementType = .numberList
-        case bulletListButton:      elementType = .bulletList
-        case codeButton:            elementType = .code
+        case boldButton:            markdown = .bold
+        case italicButton:          markdown = .italic
+        // TODO: differentiate
+        case numberListButton:      markdown = .list
+        case bulletListButton:      markdown = .list
+        case codeButton:            markdown = .code
         default:                    return
         }
         
         if sender.iconColor(for: .normal) != normalColor {
             sender.setIconColor(normalColor, for: .normal)
-            delegate?.markdownBarView(self, didDeselectElementType: elementType, with: sender)
+            delegate?.markdownBarView(self, didDeselectMarkdown: markdown, with: sender)
         } else {
-            delegate?.markdownBarView(self, didSelectElementType: elementType, with: sender)
+            delegate?.markdownBarView(self, didSelectMarkdown: markdown, with: sender)
         }
     }
     
-    public func updateIconsForModes(_ modes: [MarkdownElementType]) {
+    public func updateIconsForModes(_ modes: [Markdown]) {
         
         resetIcons()
         var buttonsToHighlight = [IconButton]()
         
         for type in modes {
             switch type {
-            case .header(let level):
-                // update header icon
-                let icon: ZetaIconType
-                switch level {
-                case .h1: icon = .markdownH1
-                case .h2: icon = .markdownH2
-                case .h3: icon = .markdownH3
-                }
-                headerButton.setIcon(icon, with: .tiny, for: .normal)
+            // TODO: differentiate
+            case .header:
+//                // update header icon
+//                let icon: ZetaIconType
+//                switch level {
+//                case .h1: icon = .markdownH1
+//                case .h2: icon = .markdownH2
+//                case .h3: icon = .markdownH3
+//                }
+//                headerButton.setIcon(icon, with: .tiny, for: .normal)
                 buttonsToHighlight.append(headerButton)
                 
             case .italic: buttonsToHighlight.append(italicButton)
             case .bold: buttonsToHighlight.append(boldButton)
-            case .numberList: buttonsToHighlight.append(numberListButton)
-            case .bulletList: buttonsToHighlight.append(bulletListButton)
+            // TODO: differentiate
+            case .list: buttonsToHighlight.append(numberListButton)
+            case .list: buttonsToHighlight.append(bulletListButton)
             case .code: buttonsToHighlight.append(codeButton)
             default: break
             }
@@ -164,15 +168,16 @@ extension MarkdownBarView: PopUpIconButtonDelegate {
     func popUpIconButton(_ button: PopUpIconButton, didSelectIcon icon: ZetaIconType) {
         
         if button === headerButton {
-            var headerLevel: MarkdownElementType.HeaderLevel?
-            switch icon {
-            case .markdownH1: headerLevel = .h1
-            case .markdownH2: headerLevel = .h2
-            case .markdownH3: headerLevel = .h3
-            default: return
-            }
+//            var headerLevel: MarkdownElementType.HeaderLevel?
+//            switch icon {
+//            case .markdownH1: headerLevel = .h1
+//            case .markdownH2: headerLevel = .h2
+//            case .markdownH3: headerLevel = .h3
+//            default: return
+//            }
             // selecting header level from popup view always inserts/converts current syntax
-            delegate?.markdownBarView(self, didSelectElementType: .header(headerLevel!), with: button)
+            delegate?.markdownBarView(self, didSelectMarkdown: .header, with: button)
+//            delegate?.markdownBarView(self, didSelectElementType: .header(headerLevel!), with: button)
         }
     }
 }
