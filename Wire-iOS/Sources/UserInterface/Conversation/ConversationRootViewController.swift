@@ -121,3 +121,7 @@ import Cartography
         }
     }
 }
+
+extension ConversationRootViewController: NetworkStatusViewControllerDelegate {
+}
+

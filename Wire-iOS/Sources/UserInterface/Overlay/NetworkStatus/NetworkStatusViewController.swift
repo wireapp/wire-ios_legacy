@@ -19,12 +19,25 @@
 import Foundation
 import Cartography
 
+protocol NetworkStatusViewControllerDelegate: class {
+    var shouldShowNetworkStatusUIInIPadFullScreenMode: Bool {get set}
+}
+
+extension NetworkStatusViewControllerDelegate {
+    var shouldShowNetworkStatusUIInIPadFullScreenMode: Bool {
+        get {
+            return true
+        }
+    }
+}
+
 @objc final class NetworkStatusViewController : UIViewController {
 
     fileprivate let networkStatusView = NetworkStatusView()
     fileprivate var networkStatusObserverToken : Any?
     fileprivate var pendingState : NetworkStatusViewState?
     fileprivate var offlineBarTimer : Timer?
+    public weak var delegate: NetworkStatusViewControllerDelegate?
 
     init() {
         super.init(nibName: nil, bundle: nil)
@@ -145,7 +158,9 @@ import Cartography
     }
     
     fileprivate func update(state : NetworkStatusViewState) {
-        if DeviceSizeClass.isIPadFullScreen, let parent = self.parent, parent is ConversationRootViewController {
+        if DeviceSizeClass.isIPadFullScreen,
+            let shouldShowNetworkStatusUI = delegate?.shouldShowNetworkStatusUIInIPadFullScreenMode,
+            shouldShowNetworkStatusUI == false {
             return
         }
 
