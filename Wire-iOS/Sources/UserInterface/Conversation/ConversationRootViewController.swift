@@ -76,7 +76,7 @@ import Cartography
 
         self.view.addSubview(self.customNavBar!)
         self.view.addSubview(self.contentView)
-        self.addChild(networkStatusViewController)
+        self.addToSelf(networkStatusViewController)
 
         [networkStatusViewController.view, navbar, self.contentView].forEach {view in
             view.translatesAutoresizingMaskIntoConstraints = false}
@@ -123,5 +123,11 @@ import Cartography
 }
 
 extension ConversationRootViewController: NetworkStatusViewControllerDelegate {
+    var shouldShowNetworkStatusUIInIPadFullScreenMode: Bool {
+        get {
+            return false
+        }
+    }
+
 }
 

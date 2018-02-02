@@ -20,7 +20,8 @@ import Foundation
 import Cartography
 
 protocol NetworkStatusViewControllerDelegate: class {
-    var shouldShowNetworkStatusUIInIPadFullScreenMode: Bool {get set}
+    /// if return false, NetworkStatusViewController will not disapper in iPad full screen mode, default is true
+    var shouldShowNetworkStatusUIInIPadFullScreenMode: Bool {get}
 }
 
 extension NetworkStatusViewControllerDelegate {

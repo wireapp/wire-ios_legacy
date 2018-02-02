@@ -34,10 +34,10 @@ extension UIViewController {
     }
 
 
-    /// Add a child view controller and add its view as self's subview
+    /// Add a view controller as self's child viewController and add its view as self's subview
     ///
     /// - Parameter viewController: viewController to add
-    func addChild(_ viewController: UIViewController?) {
-        self.add(viewController, to: self.view)
+    func addToSelf(_ viewController: UIViewController) {
+        add(viewController, to: self.view)
     }
 }
