@@ -105,7 +105,16 @@ enum NetworkStatusViewState {
 }
 
 protocol NetworkStatusViewDelegate: class {
+
+    /// Set this var to true after viewDidAppear. This flag prevents first layout animation when the UIViewController is created but not yet appear, if didChangeHeight called with animated = true.
     var isViewDidAppear: Bool {get set}
+
+    /// When the networkStatusView changes its height, this delegate method is called. The delegate should refresh its layout in the method.
+    ///
+    /// - Parameters:
+    ///   - networkStatusView: the delegate caller
+    ///   - animated: networkStatusView changes height animated?
+    ///   - state: the new NetworkStatusViewState of networkStatusView
     func didChangeHeight(_ networkStatusView: NetworkStatusView, animated: Bool, state: NetworkStatusViewState)
 }
 

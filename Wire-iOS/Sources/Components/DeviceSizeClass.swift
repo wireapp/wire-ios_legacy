@@ -18,6 +18,7 @@
 
 import Foundation
 
+/// Enum for replacing IS_IPAD_FULLSCREEN objc macros.
 enum DeviceSizeClass {
     case iPadRegular
     case other
