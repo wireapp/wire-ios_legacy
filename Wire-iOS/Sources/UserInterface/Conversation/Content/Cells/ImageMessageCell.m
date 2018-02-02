@@ -586,7 +586,7 @@ static const CGFloat ImageToolbarMinimumSize = 192;
 
 #pragma mark - Preview Provider delegate
 
-- (CGFloat)prepareLayoutForPreviewWithMessage:(ZMMessage *)message
+- (CGFloat)prepareLayoutForPreviewWithMessage:(id <ZMConversationMessage>)message
 {
     NOT_USED([super prepareLayoutForPreviewWithMessage:message]);
     self.autoStretchVertically = NO;

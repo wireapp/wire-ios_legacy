@@ -86,6 +86,10 @@ extension ZMMessage: Shareable {
     
     public typealias I = ZMConversation
     
+    
+}
+
+extension ZMConversationMessage {
     public func previewView() -> UIView? {
         var cell: ConversationCell
         

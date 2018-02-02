@@ -188,8 +188,8 @@ public final class VideoMessageCell: ConversationCell {
         }
     }
     
-    override func prepareLayoutForPreview(message: ZMMessage?) -> CGFloat {
-        let _ = super.prepareLayoutForPreview(message: message)
+    override func prepareLayoutForPreview(message: ZMConversationMessage?) -> CGFloat {
+        super.prepareLayoutForPreview(message: message)
         return PreviewHeightCalculator.heightForVideo()
     }
 }
