@@ -22,7 +22,7 @@ import Cartography
 ///FIXME: snapshot tests for this VC, for online/offline/connecting states.
 
 // This class wraps the conversation content view controller in order to display the navigation bar on the top
-@objc open class ConversationRootViewController: UIViewController, NetworkStatusViewDelegate {
+@objc open class ConversationRootViewController: UIViewController {
 
     fileprivate(set) var customNavBar: UINavigationBarContainer?
     fileprivate var contentView = UIView()
@@ -49,7 +49,7 @@ import Cartography
 
         conversationViewController = conversationController
 
-        networkStatusViewController.setNetworkStatusViewDelegate(delegate: self)
+        networkStatusViewController.delegate = self
 
         configure()
     }
@@ -122,7 +122,7 @@ import Cartography
     }
 }
 
-extension ConversationRootViewController: NetworkStatusViewControllerDelegate {
+extension ConversationRootViewController: NetworkStatusBarDelegate {
     var shouldShowNetworkStatusUIInIPadFullScreenMode: Bool {
         get {
             return false

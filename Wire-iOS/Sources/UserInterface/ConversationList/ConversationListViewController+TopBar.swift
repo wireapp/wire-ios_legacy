@@ -20,7 +20,7 @@
 import UIKit
 import Cartography
 
-extension ConversationListViewController: NetworkStatusViewDelegate {
+extension ConversationListViewController: NetworkStatusBarDelegate {
 }
 
 extension ConversationListViewController {
@@ -63,6 +63,6 @@ extension ConversationListViewController {
     @objc func createNetworkStatusBar() {
         self.networkStatusViewController = NetworkStatusViewController()
         self.addToSelf(networkStatusViewController)
-        networkStatusViewController.setNetworkStatusViewDelegate(delegate: self)
+        networkStatusViewController.delegate = self
     }
 }

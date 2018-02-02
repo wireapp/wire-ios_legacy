@@ -19,6 +19,8 @@
 import Foundation
 import Cartography
 
+typealias NetworkStatusBarDelegate = NetworkStatusViewControllerDelegate & NetworkStatusViewDelegate
+
 protocol NetworkStatusViewControllerDelegate: class {
     /// if return false, NetworkStatusViewController will not disapper in iPad full screen mode, default is true
     var shouldShowNetworkStatusUIInIPadFullScreenMode: Bool {get}
@@ -34,11 +36,16 @@ extension NetworkStatusViewControllerDelegate {
 
 @objc final class NetworkStatusViewController : UIViewController {
 
+    public weak var delegate: NetworkStatusBarDelegate? {
+        didSet {
+            networkStatusView.delegate = delegate
+        }
+    }
+
     fileprivate let networkStatusView = NetworkStatusView()
     fileprivate var networkStatusObserverToken : Any?
     fileprivate var pendingState : NetworkStatusViewState?
     fileprivate var offlineBarTimer : Timer?
-    public weak var delegate: NetworkStatusViewControllerDelegate?
 
     init() {
         super.init(nibName: nil, bundle: nil)
@@ -91,10 +98,6 @@ extension NetworkStatusViewControllerDelegate {
 
     }
 
-    public func setNetworkStatusViewDelegate(delegate: NetworkStatusViewDelegate) {
-        self.networkStatusView.delegate = delegate
-    }
-    
     public func notifyWhenOffline() -> Bool {
         if networkStatusView.state == .offlineCollapsed {
             update(state: .offlineExpanded)
@@ -178,3 +181,4 @@ extension NetworkStatusViewController : ZMNetworkAvailabilityObserver {
     }
     
 }
+
