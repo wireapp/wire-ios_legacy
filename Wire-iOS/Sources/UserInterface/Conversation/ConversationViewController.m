@@ -585,15 +585,20 @@
 {
     AddParticipantsViewController *addParticipantsViewController = [[AddParticipantsViewController alloc] initWithConversation:self.conversation];
     addParticipantsViewController.delegate = self;
-    addParticipantsViewController.modalPresentationStyle = UIModalPresentationPopover;
-    addParticipantsViewController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
+    
+    UINavigationController *presentedViewController = [addParticipantsViewController wrapInNavigationController:[AddParticipantsNavigationController class]];
+    
+    presentedViewController.modalPresentationStyle = UIModalPresentationPopover;
+    presentedViewController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
 
-    UIPopoverPresentationController *popoverPresentationController = addParticipantsViewController.popoverPresentationController;
+    UIPopoverPresentationController *popoverPresentationController = presentedViewController.popoverPresentationController;
     popoverPresentationController.sourceView = button;
     popoverPresentationController.sourceRect = button.bounds;
     popoverPresentationController.delegate = addParticipantsViewController;
 
-    [self presentViewController:addParticipantsViewController animated:YES completion:nil];
+    [self presentViewController:presentedViewController
+                       animated:YES
+                     completion:nil];
 }
 
 - (void)conversationContentViewController:(ConversationContentViewController *)contentViewController didTriggerResendingMessage:(id <ZMConversationMessage>)message

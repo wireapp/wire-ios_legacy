@@ -39,6 +39,9 @@
 "peoplepicker.header.services" = "Teenused";
 "peoplepicker.services.create_conversation.item" = "Alusta vestlust";
 "peoplepicker.services.add_service.button" = "Lisa teenus";
+"peoplepicker.services.add_service.error.title" = "The service can't be added";
+"peoplepicker.services.add_service.error.default" = "The service is unavailable at the moment";
+"peoplepicker.services.add_service.error.full" = "The conversation is full";
 
 "peoplepicker.title.create_conversation" = "Loo grupp";
 "peoplepicker.title.add_to_conversation" = "Lisa inimesi";
@@ -431,7 +434,7 @@
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Profile and Participants
 
-"participants.add_people_button_title" = "Lisa inimesi";
+"participants.add_people_button_title" = "Add";
 "participants.avatar.guest.title" = "Külaline";
 
 // Meta Menu

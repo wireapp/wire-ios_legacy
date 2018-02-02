@@ -244,7 +244,7 @@ static NSTimeInterval const ParticipantsHeaderViewEditHintDismissTimeout = 10.0f
     
     // Cancel button
     [self.cancelButton addConstraintForAligningTopToTopOfView:self distance:- 26];
-    [self.cancelButton addConstraintForRightMargin:16 relativeToView:self];
+    [self.cancelButton addConstraintForRightMargin:8 relativeToView:self];
     [self.cancelButton autoMatchDimension:ALDimensionHeight toDimension:ALDimensionWidth ofView:self.cancelButton];
     self.cancelButtonWidthConstraint = [self.cancelButton autoSetDimension:ALDimensionWidth toSize:32];
     

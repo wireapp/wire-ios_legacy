@@ -39,6 +39,9 @@
 "peoplepicker.header.services" = "Paslaugos";
 "peoplepicker.services.create_conversation.item" = "Kurti naują susirašinėjimą";
 "peoplepicker.services.add_service.button" = "Pridėti paslaugą";
+"peoplepicker.services.add_service.error.title" = "The service can't be added";
+"peoplepicker.services.add_service.error.default" = "The service is unavailable at the moment";
+"peoplepicker.services.add_service.error.full" = "The conversation is full";
 
 "peoplepicker.title.create_conversation" = "Sukurti grupę";
 "peoplepicker.title.add_to_conversation" = "Pridėti žmones";
@@ -431,7 +434,7 @@
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Profile and Participants
 
-"participants.add_people_button_title" = "Pridėti žmones";
+"participants.add_people_button_title" = "Add";
 "participants.avatar.guest.title" = "Svečias";
 
 // Meta Menu
@@ -932,8 +935,8 @@
 "registration.signin.email_button.title" = "El. paštas";
 "registration.signin.phone_button.title" = "Telefonas";
 
-"registration.signin.alert.password_needed.title" = "Password needed";
-"registration.signin.alert.password_needed.message" = "Please enter your Password in order to log in.";
+"registration.signin.alert.password_needed.title" = "Slaptažodis būtinas";
+"registration.signin.alert.password_needed.message" = "Įrašę slaptažodį galėsite prisijungti.";
 
 "registration.devices.title" = "Įrenginiai";
 "registration.devices.active_list_header" = "Aktyvūs";

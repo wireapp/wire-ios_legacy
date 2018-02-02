@@ -155,6 +155,11 @@ extension ServiceConversation: ShareDestination {
     }
 }
 
+struct ServiceDetailVariant {
+    let colorScheme: ColorSchemeVariant
+    let opaque: Bool
+}
+
 final class ServiceDetailViewController: UIViewController {
     private let detailView: ServiceDetailView
     private let confirmButton = Button(styleClass: "dialogue-button-full")
@@ -168,12 +173,12 @@ final class ServiceDetailViewController: UIViewController {
     public var completion: ((AddBotResult?)->())? = nil
     public var destinationConversation: ZMConversation?
 
-    public let variant: ColorSchemeVariant
+    public let variant: ServiceDetailVariant
     
-    init(serviceUser: ServiceUser, variant: ColorSchemeVariant) {
+    init(serviceUser: ServiceUser, variant: ServiceDetailVariant) {
         self.variant = variant
         self.service = Service(serviceUser: serviceUser)
-        self.detailView = ServiceDetailView(service: service, variant: variant)
+        self.detailView = ServiceDetailView(service: service, variant: variant.colorScheme)
         
         super.init(nibName: nil, bundle: nil)
         
@@ -191,11 +196,12 @@ final class ServiceDetailViewController: UIViewController {
             self?.onAddServicePressed()
         }
         
-        switch self.variant {
-        case .dark:
+        if self.variant.opaque {
+            view.backgroundColor = ColorScheme.default().color(withName: ColorSchemeColorBackground,
+                                                               variant: self.variant.colorScheme)
+        }
+        else {
             view.backgroundColor = .clear
-        case .light:
-            view.backgroundColor = .white
         }
         
         view.addSubview(detailView)
@@ -241,8 +247,6 @@ final class ServiceDetailViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
-        self.navigationController?.setNavigationBarHidden(false, animated: animated)
         
         if (self.navigationController?.viewControllers.count ?? 0) > 1 {
             self.navigationItem.leftBarButtonItem = UIBarButtonItem(icon: .backArrow,

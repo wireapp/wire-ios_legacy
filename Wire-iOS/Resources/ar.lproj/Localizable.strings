@@ -35,10 +35,13 @@
 "peoplepicker.header.contacts_personal" = "جهات الاتصال شخصية";
 "peoplepicker.header.directory" = "تواصل";
 
-"peoplepicker.header.people" = "People";
+"peoplepicker.header.people" = "أشخاص";
 "peoplepicker.header.services" = "Services";
 "peoplepicker.services.create_conversation.item" = "Create a new conversation";
-"peoplepicker.services.add_service.button" = "Add service";
+"peoplepicker.services.add_service.button" = "إضافة خدمة";
+"peoplepicker.services.add_service.error.title" = "The service can't be added";
+"peoplepicker.services.add_service.error.default" = "The service is unavailable at the moment";
+"peoplepicker.services.add_service.error.full" = "The conversation is full";
 
 "peoplepicker.title.create_conversation" = "إنشاء مجموعة";
 "peoplepicker.title.add_to_conversation" = "إضافة أشخاص";
@@ -219,7 +222,7 @@
 "conversation.connection_view.in_address_book" = "في جهات الاتصال";
 
 "conversation.input_bar.shortcut.send" = "إرسال رسالة";
-"conversation.input_bar.shortcut.edit_last_message" = "Edit Last Message";
+"conversation.input_bar.shortcut.edit_last_message" = "تحرير آخر رسالة";
 "conversation.input_bar.shortcut.cancel_editing_message" = "إلغاء";
 
 "conversation.input_bar.message_too_long.title" = "الرسالة طويلة جداً";
@@ -239,8 +242,8 @@
 // Camera and photos access, keyboard
 "keyboard_photos_access.denied.keyboard.settings" = "الإعدادات";
 "keyboard_photos_access.denied.keyboard.camera_and_photos" = "Wire needs access to your\ncamera and photos."; // split text on two lines for a better text balance
-"keyboard_photos_access.denied.keyboard.photos" = "Wire needs access to your photos.";
-"keyboard_photos_access.denied.keyboard.camera" = "Wire needs access to your camera.";
+"keyboard_photos_access.denied.keyboard.photos" = "Wire يريد الوصول لصورك.";
+"keyboard_photos_access.denied.keyboard.camera" = "Wire يريد الوصول للكاميرا.";
 
 // Camera Controls
 "camera_controls.aeaf_lock" = "AE/AF قفل";
@@ -303,7 +306,7 @@
 "content.system.failedtosend_message_timestamp_resend" = "إعادة الإرسال";
 "content.system.failedtosend_message_timestamp_delete" = "حذف";
 "content.system.like_tooltip" = "انقر للإعجاب";
-"content.system.deleted_message_prefix_timestamp" = "Deleted: %@";
+"content.system.deleted_message_prefix_timestamp" = "حُذِفت: %@";
 "content.system.edited_message_prefix_timestamp" = "Edited: %@";
 "content.system.connecting_to" = "التواصل مع %@\nبدأ مُحادثة";
 "content.system.connected_to" = "تم التواصل مع %@\nبدأ مُحادثة";
@@ -431,7 +434,7 @@
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Profile and Participants
 
-"participants.add_people_button_title" = "إضافة أشخاص";
+"participants.add_people_button_title" = "إضافة";
 "participants.avatar.guest.title" = "ضيف";
 
 // Meta Menu
@@ -802,18 +805,18 @@
 
 "landing.title" = "Secure messaging for everyone.";
 "landing.create_account.title" = "إنشاء حساب";
-"landing.create_account.subtitle" = "for personal use";
+"landing.create_account.subtitle" = "للاستخدام الشخصي";
 "landing.create_team.title" = "إنشاء فريق";
-"landing.create_team.subtitle" = "for work";
+"landing.create_team.subtitle" = "للعمل";
 "landing.login.hints" = "لديك حساب بالفعل ؟";
 "landing.login.button.title" = "تسجيل الدخول";
 
 // Create team
 
-"team.name.headline" = "Name your team";
-"team.name.subheadline" = "You can always change it later.";
+"team.name.headline" = "سمّ فريقك";
+"team.name.subheadline" = "بإمكانك تغييره لاحقًا.";
 "team.name.textfield.placeholder" = "اسم الفريق";
-"team.name.textfield.accessibility" = "Set team name";
+"team.name.textfield.accessibility" = "ضع اسم للفريق";
 "team.name.whatiswireforteams" = "What is Wire for teams?";
 
 "team.email.headline" = "حسابك";
@@ -1076,9 +1079,9 @@
 "availability.message.set_status" = "تعيين الحالة";
 
 "availability.none" = "لا شيء";
-"availability.available" = "Available";
-"availability.away" = "Away";
-"availability.busy" = "Busy";
+"availability.available" = "متاح";
+"availability.away" = "بالخارج";
+"availability.busy" = "مشغول";
 "availability.available.placeholder" = "%@ is available";
 "availability.away.placeholder" = "%@ is away";
 "availability.busy.placeholder" = "%@ is busy";
