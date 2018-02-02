@@ -46,6 +46,7 @@ extension NetworkStatusViewControllerDelegate {
     fileprivate var networkStatusObserverToken : Any?
     fileprivate var pendingState : NetworkStatusViewState?
     fileprivate var offlineBarTimer : Timer?
+    fileprivate var state : NetworkStatusViewState?
 
     init() {
         super.init(nibName: nil, bundle: nil)
@@ -162,13 +163,20 @@ extension NetworkStatusViewControllerDelegate {
     }
     
     fileprivate func update(state : NetworkStatusViewState) {
+        self.state = state
+        guard shouldNetworkStatusViewUpdates else { return }
+
+        networkStatusView.update(state: state, animated: true)
+    }
+
+    var shouldNetworkStatusViewUpdates: Bool {
         if DeviceSizeClass.isIPadFullScreen,
             let shouldShowNetworkStatusUI = delegate?.shouldShowNetworkStatusUIInIPadFullScreenMode,
             shouldShowNetworkStatusUI == false {
-            return
+            return false
         }
-
-        networkStatusView.update(state: state, animated: true)
+        
+        return true
     }
 
     ///FIXME: response to iPad size class changing, hide the status bar on conversation view
@@ -182,3 +190,21 @@ extension NetworkStatusViewController : ZMNetworkAvailabilityObserver {
     
 }
 
+// MARK: - iPad size class switching
+
+extension NetworkStatusViewController {
+
+    open override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+
+        /// when size class changes and self should not be shown, hide it.
+        if shouldNetworkStatusViewUpdates == false {
+            networkStatusView.update(state: .online, animated: false)
+        }
+        else {
+            if let state = state {
+                networkStatusView.update(state: state, animated: false)
+            }
+        }
+    }
+}
