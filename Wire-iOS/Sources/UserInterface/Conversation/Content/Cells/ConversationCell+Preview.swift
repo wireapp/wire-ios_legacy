@@ -40,6 +40,6 @@ extension ConversationCell {
         self.setSelected(false, animated: false)
         self.contentLayoutMargins = .zero
         
-        return PreviewHeightCalculator.compressedSizeForView(self)
+        return PreviewHeightCalculator.compressedSizeForView(messageContentView)
     }
 }
