@@ -31,10 +31,10 @@
 
 @import WireExtensionComponents;
 @import WireLinkPreview;
-@import Marklight;
+@import Down;
 
 static NSMutableParagraphStyle *cellParagraphStyle;
-static MarklightGroupStyler *groupStyler;
+static DownStyle *style;
 
 
 
@@ -114,13 +114,28 @@ static inline NSDataDetector *linkDataDetector(void)
         foregroundColor = [UIColor wr_colorFromColorScheme:ColorSchemeColorTextForeground];
     }
     
-    NSDictionary *attributes = @{
-                                NSFontAttributeName : font,
-                                NSForegroundColorAttributeName : foregroundColor,
-                                NSParagraphStyleAttributeName : cellParagraphStyle
-                                };
+//    NSDictionary *attributes = @{
+//                                NSFontAttributeName : font,
+//                                NSForegroundColorAttributeName : foregroundColor,
+//                                NSParagraphStyleAttributeName : cellParagraphStyle
+//                                };
+//    
+//    NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:text attributes:attributes];
     
-    NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:text attributes:attributes];
+    // set the attributes here
+    
+    if (nil == style) {
+        // set markdown attribute styles here
+        ColorScheme *colorScheme = [ColorScheme defaultColorScheme];
+        style = [[DownStyle alloc] init];
+        style.baseFont = font;
+        style.baseFontColor = foregroundColor;
+        style.baseParagraphStyle = cellParagraphStyle;
+        style.h1Color = [colorScheme colorWithName:ColorSchemeColorAccent];
+    }
+    
+    NSAttributedString *markdownString = [NSAttributedString markdownFrom:text style:style];
+    NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithAttributedString:markdownString];
 
     if (obfuscated) {
         return attributedString;
@@ -143,59 +158,38 @@ static inline NSDataDetector *linkDataDetector(void)
     [mutableLinkAttachments removeObjectsInArray:invalidLinkAttachments];
     linkAttachments = mutableLinkAttachments;
     
-    // Emoticon substitution should not be performed on URLs.
-    // 1. Get ranges with no URLs inside each range.
-    NSMutableArray *nonURLRanges = [@[] mutableCopy];
-    NSUInteger nextRangeBegining = 0;
-    for (LinkAttachment *linkAttachment in linkAttachments) {
-        NSRange URLRange = linkAttachment.range;
-        NSRange emoticonRange = NSMakeRange(nextRangeBegining, URLRange.location - nextRangeBegining);
-        if (emoticonRange.length > 0) {
-            [nonURLRanges addObject:[NSValue valueWithRange:emoticonRange]];
-        }
-        nextRangeBegining = NSMaxRange(URLRange);
-    }
-    NSRange emoticonRange = NSMakeRange(nextRangeBegining, text.length - nextRangeBegining);
-    if (emoticonRange.length > 0) {
-        [nonURLRanges addObject:[NSValue valueWithRange:emoticonRange]];
-    }
+    // FIXME: resolving emoticons causes an exception (change of length of string probably)
     
-    // 2. Substitute emoticons on ranges.
-    // reverse iteration keeps values in nonURLRanges actual while enumeration
-    // (stringByResolvingEmoticonShortcuts changes length of string)
-    for (NSValue *rangeValue in nonURLRanges.reverseObjectEnumerator) {
-        [attributedString.mutableString resolveEmoticonShortcutsInRange:rangeValue.rangeValue];
-    }
+//    // Emoticon substitution should not be performed on URLs.
+//    // 1. Get ranges with no URLs inside each range.
+//    NSMutableArray *nonURLRanges = [@[] mutableCopy];
+//    NSUInteger nextRangeBegining = 0;
+//    for (LinkAttachment *linkAttachment in linkAttachments) {
+//        NSRange URLRange = linkAttachment.range;
+//        NSRange emoticonRange = NSMakeRange(nextRangeBegining, URLRange.location - nextRangeBegining);
+//        if (emoticonRange.length > 0) {
+//            [nonURLRanges addObject:[NSValue valueWithRange:emoticonRange]];
+//        }
+//        nextRangeBegining = NSMaxRange(URLRange);
+//    }
+//    NSRange emoticonRange = NSMakeRange(nextRangeBegining, text.length - nextRangeBegining);
+//    if (emoticonRange.length > 0) {
+//        [nonURLRanges addObject:[NSValue valueWithRange:emoticonRange]];
+//    }
+//
+//    // 2. Substitute emoticons on ranges.
+//    // reverse iteration keeps values in nonURLRanges actual while enumeration
+//    // (stringByResolvingEmoticonShortcuts changes length of string)
+//    for (NSValue *rangeValue in nonURLRanges.reverseObjectEnumerator) {
+//        [attributedString.mutableString resolveEmoticonShortcutsInRange:rangeValue.rangeValue];
+//    }
     
     [attributedString endEditing];
     
-    if (nil == groupStyler) {
-        // set markdown attribute styles here
-        ColorScheme *colorScheme = [ColorScheme defaultColorScheme];
-        MarklightStyle *style = [[MarklightStyle alloc] init];
-        style.hideSyntax = YES;
-        
-        style.syntaxAttributes = @{NSForegroundColorAttributeName: colorScheme.accentColor};
-        
-        NSMutableParagraphStyle * paragraphStyle = [[NSMutableParagraphStyle alloc] init];
-        paragraphStyle.paragraphSpacingBefore = 24.0;
-        paragraphStyle.paragraphSpacing = 12.0;
-        
-        UIFont *italicFont = [[UIFont systemFontOfSize:16.0 weight:UIFontWeightLight] italicFont];
-        style.italicAttributes = @{NSFontAttributeName: italicFont};
-        
-        NSMutableDictionary *h1HeaderAttributes = [[NSMutableDictionary alloc] initWithDictionary:style.h1HeadingAttributes];
-        [h1HeaderAttributes setValue:paragraphStyle forKey:NSParagraphStyleAttributeName];
-        style.h1HeadingAttributes = h1HeaderAttributes;
-        
-        NSMutableDictionary *codeAttributes = [[NSMutableDictionary alloc] initWithDictionary:style.codeAttributes];
-        [codeAttributes setValue:[colorScheme colorWithName: ColorSchemeColorTextForeground] forKey:NSForegroundColorAttributeName];
-        style.codeAttributes = codeAttributes;
-        groupStyler = [[MarklightGroupStyler alloc] initWithStyle: style];
-    }
+
     
     // parse for markdown syntax & apply attributes
-    [groupStyler addMarkdownAttributes:attributedString editedRange: NSMakeRange(0, attributedString.length)];
+//    [groupStyler addMarkdownAttributes:attributedString editedRange: NSMakeRange(0, attributedString.length)];
     
     if ([attributedString.string wr_containsOnlyEmojiWithSpaces]) {
         [attributedString setAttributes:@{NSFontAttributeName: [UIFont systemFontOfSize:40]} range:NSMakeRange(0, attributedString.length)];
@@ -216,7 +210,7 @@ static inline NSDataDetector *linkDataDetector(void)
 
 + (void)invalidateMarkdownStyle
 {
-    groupStyler = nil;
+    style = nil;
 }
 
 + (NSArray *)linkAttachmentsForURLMatches:(NSArray *)matches
