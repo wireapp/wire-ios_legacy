@@ -19,7 +19,13 @@
 import UIKit
 import QuartzCore
 
+protocol BreathLoadingBarDelegate: class {
+    func animationDidStarted()
+    func animationDidStopped()
+}
+
 class BreathLoadingBar: UIView {
+    public weak var delegate: BreathLoadingBarDelegate?
 
     public var animating: Bool = false {
         didSet {
@@ -84,6 +90,8 @@ class BreathLoadingBar: UIView {
     }
 
     func startAnimation() {
+        delegate?.animationDidStarted()
+
         let anim = CAKeyframeAnimation(keyPath: "opacity")
         anim.values = [0.4, 1, 0.4]
         anim.isRemovedOnCompletion = false
@@ -96,6 +104,8 @@ class BreathLoadingBar: UIView {
     }
 
     func stopAnimation() {
+        delegate?.animationDidStopped()
+
         self.layer.removeAnimation(forKey: BreathLoadingAnimationKey)
     }
 

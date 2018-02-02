@@ -107,12 +107,12 @@ enum NetworkStatusViewState {
 
 protocol NetworkStatusViewDelegate: class {
     var isViewDidAppear: Bool {get set}
-    func didChangeHeight(_ networkStatusView: NetworkStatusView, animated: Bool, offlineBarState: OfflineBarState)
+    func didChangeHeight(_ networkStatusView: NetworkStatusView, animated: Bool, state: NetworkStatusViewState)
 }
 
 // MARK: - default implementation of didChangeHeight, animates the layout process
 extension NetworkStatusViewDelegate where Self: UIViewController {
-    func didChangeHeight(_ networkStatusView: NetworkStatusView, animated: Bool, offlineBarState: OfflineBarState) {
+    func didChangeHeight(_ networkStatusView: NetworkStatusView, animated: Bool, state: NetworkStatusViewState) {
 
         guard isViewDidAppear else { return }
 
@@ -140,6 +140,8 @@ class NetworkStatusView: UIView {
 
     var offlineViewTopMargin: NSLayoutConstraint?
     var offlineViewBottomMargin: NSLayoutConstraint?
+    var connectingViewHeight: NSLayoutConstraint?
+    var connectingViewBottomMargin: NSLayoutConstraint?
 
     var state: NetworkStatusViewState {
         set {
@@ -163,6 +165,8 @@ class NetworkStatusView: UIView {
 
         super.init(frame: frame)
 
+        connectingView.delegate = self
+
         [offlineView, connectingView].forEach(addSubview)
 
         createConstraints()
@@ -175,8 +179,6 @@ class NetworkStatusView: UIView {
 
     func createConstraints() {
         constrain(self, offlineView, connectingView) { containerView, offlineView, connectingView in
-//            containerView.height == offlineView.height
-
             offlineView.left == containerView.left + NetworkStatusView.horizontal
             offlineView.right == containerView.right - NetworkStatusView.horizontal
             offlineViewTopMargin = offlineView.top == containerView.top + NetworkStatusView.verticalMargin
@@ -185,14 +187,14 @@ class NetworkStatusView: UIView {
             connectingView.left == offlineView.left
             connectingView.right == offlineView.right
             connectingView.top == offlineView.top
-            connectingView.bottom <= offlineView.bottom
-            connectingView.height == OfflineBar.collapsedHeight
+            connectingViewHeight = connectingView.height == OfflineBar.collapsedHeight
+            connectingViewBottomMargin = connectingView.bottom == containerView.bottom - NetworkStatusView.verticalMargin
         }
     }
 
     func updateViewState(animated: Bool) {
         let connectingViewHidden = state != .onlineSynchronizing
-        connectingView.animating = state == .onlineSynchronizing
+        connectingView.animating = state == .onlineSynchronizing ///TODO: pass animated param, rename animating to spinning
         let offlineViewHidden = state != .offlineExpanded && state != .offlineCollapsed
 
         var offlineBarState: OfflineBarState?
@@ -224,7 +226,7 @@ class NetworkStatusView: UIView {
                 updateUICompletion(connectingViewHidden: connectingViewHidden, offlineViewHidden: offlineViewHidden)
             }
 
-            delegate?.didChangeHeight(self, animated: animated, offlineBarState: offlineBarState)
+            delegate?.didChangeHeight(self, animated: animated, state: state)
         }
     }
 
@@ -250,3 +252,12 @@ class NetworkStatusView: UIView {
     }
 }
 
+extension NetworkStatusView: BreathLoadingBarDelegate {
+    func animationDidStarted() { ///TODO: animated param
+        delegate?.didChangeHeight(self, animated: true, state: state)
+    }
+
+    func animationDidStopped() {
+        delegate?.didChangeHeight(self, animated: true, state: state)
+    }
+}

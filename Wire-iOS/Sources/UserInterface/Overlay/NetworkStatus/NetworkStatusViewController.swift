@@ -168,7 +168,7 @@ extension NetworkStatusViewControllerDelegate {
             return
         }
 
-        networkStatusView.update(state: state, animated: true) ///TODO: self.parent! is ConversationListViewController or ConversationRootViewController
+        networkStatusView.update(state: state, animated: true)
     }
 
     ///FIXME: response to iPad size class changing, hide the status bar on conversation view
