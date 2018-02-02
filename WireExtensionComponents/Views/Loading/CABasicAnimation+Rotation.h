@@ -21,5 +21,4 @@
 @interface CABasicAnimation (Rotation)
     
 + (CABasicAnimation * _Nonnull)rotateAnimationWithRotationSpeed:(CGFloat)rotationSpeed beginTime:(CGFloat)beginTime delegate:(id<CAAnimationDelegate> _Nullable)delegate;
-
 @end
