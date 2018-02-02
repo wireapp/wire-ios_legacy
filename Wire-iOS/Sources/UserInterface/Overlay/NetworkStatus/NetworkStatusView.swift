@@ -60,8 +60,7 @@ class OfflineBar: UIView {
         offlineLabel = UILabel()
 
         super.init(frame: frame)
-        ///TODO:, margins left/right: 16pt. margin to top of screen: 28pt (iPhone 8 and older), 44pt (iPhone X), margin to navigation bar: 10pt, height: 24pt
-        backgroundColor = UIColor(rgb:0xFEBF02, alpha: 1)///TODO share with Syncing bar
+        backgroundColor = UIColor(rgb:0xFEBF02, alpha: 1)
 
         layer.cornerRadius = OfflineBar.expandedCornerRadius
         layer.masksToBounds = true
