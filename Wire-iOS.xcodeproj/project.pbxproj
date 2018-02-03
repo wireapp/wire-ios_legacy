@@ -951,7 +951,9 @@
 		EE4332491F1A67E500096D90 /* PopUpIconButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE4332481F1A67E500096D90 /* PopUpIconButton.swift */; };
 		EE43324B1F1A785800096D90 /* PopUpIconButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE43324A1F1A785800096D90 /* PopUpIconButtonView.swift */; };
 		EE6067041F23BC33001CAC97 /* MarklightTextViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE6067031F23BC33001CAC97 /* MarklightTextViewTests.swift */; };
+		EE8E926320248377000F4752 /* Down.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EE8E92602024836B000F4752 /* Down.framework */; };
 		EE8E9267202496C2000F4752 /* NSAttributedString+Down.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE8E9266202496C2000F4752 /* NSAttributedString+Down.swift */; };
+		EE8E926E2024F085000F4752 /* MarkdownTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE8E926D2024F085000F4752 /* MarkdownTextView.swift */; };
 		EEA747A81FCEBAD1000B529E /* AnalyticsMixpanelProviderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEA747A71FCEBAD1000B529E /* AnalyticsMixpanelProviderTests.swift */; };
 		EEB8A2D01F628D1100958881 /* Settings+Account.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEB8A2CF1F628D1100958881 /* Settings+Account.swift */; };
 		EEBE8C5C1F681694009D78C9 /* NSData+ImageType.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEBE8C5B1F681694009D78C9 /* NSData+ImageType.swift */; };
@@ -1096,6 +1098,20 @@
 			proxyType = 1;
 			remoteGlobalIDString = 8F42C537199244A700288E4D;
 			remoteInfo = "ZClient-iOS";
+		};
+		EE8E925F2024836B000F4752 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = EE8E925A2024836B000F4752 /* Down.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 8A569F401E6B3E50008BE2AC;
+			remoteInfo = Down;
+		};
+		EE8E92612024836B000F4752 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = EE8E925A2024836B000F4752 /* Down.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 8AFAEAFB1E6E32E900E09B68;
+			remoteInfo = DownTests;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -2507,7 +2523,9 @@
 		EE4332481F1A67E500096D90 /* PopUpIconButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PopUpIconButton.swift; sourceTree = "<group>"; };
 		EE43324A1F1A785800096D90 /* PopUpIconButtonView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PopUpIconButtonView.swift; sourceTree = "<group>"; };
 		EE6067031F23BC33001CAC97 /* MarklightTextViewTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MarklightTextViewTests.swift; sourceTree = "<group>"; };
+		EE8E925A2024836B000F4752 /* Down.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Down.xcodeproj; path = ../../Repos/Down/Down.xcodeproj; sourceTree = "<group>"; };
 		EE8E9266202496C2000F4752 /* NSAttributedString+Down.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSAttributedString+Down.swift"; sourceTree = "<group>"; };
+		EE8E926D2024F085000F4752 /* MarkdownTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkdownTextView.swift; sourceTree = "<group>"; };
 		EEA747A71FCEBAD1000B529E /* AnalyticsMixpanelProviderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsMixpanelProviderTests.swift; sourceTree = "<group>"; };
 		EEB8A2CF1F628D1100958881 /* Settings+Account.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Settings+Account.swift"; sourceTree = "<group>"; };
 		EEBE8C5B1F681694009D78C9 /* NSData+ImageType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSData+ImageType.swift"; sourceTree = "<group>"; };
@@ -2717,6 +2735,7 @@
 				87D7AF671DF5A158001A1CD7 /* Contacts.framework in Frameworks */,
 				872C99121DB0EA54006A3BDE /* Intents.framework in Frameworks */,
 				87ADCE4E1DA68FA400CC06DC /* CallKit.framework in Frameworks */,
+				EE8E926320248377000F4752 /* Down.framework in Frameworks */,
 				874D0EB11D3E575E003DF418 /* Photos.framework in Frameworks */,
 				872786CB1D38EE2000CC3C15 /* OnePasswordExtension.framework in Frameworks */,
 				873478071D34EE5100CB200F /* libstdc++.tbd in Frameworks */,
@@ -3530,6 +3549,7 @@
 				870C97C41D670CA700F6FD7D /* NextResponderTextView.h */,
 				870C97C21D670C9A00F6FD7D /* NextResponderTextView.m */,
 				EE291BB61F0BC54D00142F31 /* MarklightTextView.swift */,
+				EE8E926D2024F085000F4752 /* MarkdownTextView.swift */,
 				871BC1D41D34F8F800DF0793 /* StackView.h */,
 				871BC1D51D34F8F800DF0793 /* StackView.m */,
 				871BC1D61D34F8F800DF0793 /* SwipeMenuCollectionCell.h */,
@@ -4214,6 +4234,7 @@
 		8F42C52F199244A700288E4D = {
 			isa = PBXGroup;
 			children = (
+				EE8E925A2024836B000F4752 /* Down.xcodeproj */,
 				87501FB21D40D6490056C042 /* ComponentsVersions.plist */,
 				87C8D7FB1BA8261C00B0530B /* Entitlements-Dev.entitlements */,
 				87C8D7FC1BA8261C00B0530B /* Entitlements-Prod.entitlements */,
@@ -5192,6 +5213,15 @@
 			path = InputBar;
 			sourceTree = "<group>";
 		};
+		EE8E925B2024836B000F4752 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				EE8E92602024836B000F4752 /* Down.framework */,
+				EE8E92622024836B000F4752 /* DownTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		EF2126B41FB9DFE300625A9B /* Registration */ = {
 			isa = PBXGroup;
 			children = (
@@ -5695,6 +5725,12 @@
 			mainGroup = 8F42C52F199244A700288E4D;
 			productRefGroup = 8F42C539199244A700288E4D /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = EE8E925B2024836B000F4752 /* Products */;
+					ProjectRef = EE8E925A2024836B000F4752 /* Down.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				8F42C537199244A700288E4D /* Wire-iOS */,
@@ -5706,6 +5742,23 @@
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		EE8E92602024836B000F4752 /* Down.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = Down.framework;
+			remoteRef = EE8E925F2024836B000F4752 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		EE8E92622024836B000F4752 /* DownTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = DownTests.xctest;
+			remoteRef = EE8E92612024836B000F4752 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		168A16A71D9597C2005CFA6C /* Resources */ = {
@@ -6790,6 +6843,7 @@
 				7C49D0E2201A3E8400A99760 /* ShareServiceViewController.swift in Sources */,
 				8775BF1E2007CFB200A8AD93 /* UIControlBlockAPI.swift in Sources */,
 				EF2C18A01FED435600E9F2FD /* ConversationCell+BurstTimestamp.swift in Sources */,
+				EE8E926E2024F085000F4752 /* MarkdownTextView.swift in Sources */,
 				F12CDAE01E43868200CEFCEB /* ConfirmEmailViewController.swift in Sources */,
 				876113E01DD1DD19007F5969 /* ColorSchemeController.m in Sources */,
 				EF2127041FB9DFE300625A9B /* RegistrationViewController.m in Sources */,
