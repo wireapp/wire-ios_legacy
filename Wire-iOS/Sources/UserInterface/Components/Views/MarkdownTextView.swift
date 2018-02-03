@@ -91,6 +91,9 @@ class MarkdownTextView: NextResponderTextView {
         typingAttributes = currentAttributes
     }
     
+    func handleNewLine() {
+        if activeMarkdown.contains(.header) {
+            updateTypingAttributesSubtracting(.header)
         }
     }
 

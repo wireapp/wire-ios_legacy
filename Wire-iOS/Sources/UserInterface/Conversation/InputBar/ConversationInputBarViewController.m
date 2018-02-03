@@ -877,7 +877,7 @@
     // markdown text view needs to detect newlines
     // in order to automatically insert new list items
     if ([text isEqualToString:@"\n"] || [text isEqualToString:@"\r"]) {
-//        [self.inputBar.textView handleNewLine];
+        [self.inputBar.textView handleNewLine];
     }
     
     // send only if send key pressed
