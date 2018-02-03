@@ -53,6 +53,14 @@ class MarkdownTextView: NextResponderTextView {
         return NSMakeRange(0, attributedText.length)
     }
 
+    func resetMarkdown() {
+        activeMarkdown = .none
+        currentAttributes = [
+            NSFontAttributeName: FontSpec(.normal, .regular).font!,
+            NSForegroundColorAttributeName: UIColor.black
+        ]
+    }
+    
     // MARK: - Querying Markdown Types
     
     /// Returns the markdown bitmask at the current caret position.
