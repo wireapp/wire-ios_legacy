@@ -20,7 +20,6 @@ import UIKit
 import Cartography
 import Down
 
-
 public protocol MarkdownBarViewDelegate: class {
     func markdownBarView(_ view: MarkdownBarView, didSelectMarkdown markdown: Markdown, with sender: IconButton)
     func markdownBarView(_ view: MarkdownBarView, didDeselectMarkdown markdown: Markdown, with sender: IconButton)
@@ -94,6 +93,10 @@ public final class MarkdownBarView: UIView {
         headerButton.setupView()
     }
     
+    func textViewDidChangeActiveMarkdown(note: Notification) {
+        guard let textView = note.object as? MarkdownTextView else { return }
+        updateIcons(forMarkdown: textView.activeMarkdown)
+    }
     // MARK: Actions
     
     @objc private func buttonTapped(sender: IconButton) {
@@ -126,36 +129,47 @@ public final class MarkdownBarView: UIView {
         }
     }
     
-    public func updateIconsForModes(_ modes: [Markdown]) {
+    // MARK: - Conversions
+    
+    private func buttonFor(_ markdown: Markdown) -> IconButton? {
+        switch markdown {
+        case .header:                       return headerButton
+        case .bold:                         return boldButton
+        case .italic:                       return italicButton
+        case .code:                         return codeButton
+        default:                            return nil
+        }
+    }
+    
+    fileprivate func markdown(for button: IconButton) -> Markdown? {
+        switch button {
+        case headerButton:                  return .header
+        case boldButton:                    return .bold
+        case italicButton:                  return .italic
+        case codeButton:                    return .code
+        default:                            return nil
+        }
+    }
+    
+    public func updateIcons(forMarkdown markdown: Markdown) {
         
-        resetIcons()
-        var buttonsToHighlight = [IconButton]()
-        
-        for type in modes {
-            switch type {
-            // TODO: differentiate
-            case .header:
-//                // update header icon
-//                let icon: ZetaIconType
-//                switch level {
-//                case .h1: icon = .markdownH1
-//                case .h2: icon = .markdownH2
-//                case .h3: icon = .markdownH3
-//                }
-//                headerButton.setIcon(icon, with: .tiny, for: .normal)
-                buttonsToHighlight.append(headerButton)
-                
-            case .italic: buttonsToHighlight.append(italicButton)
-            case .bold: buttonsToHighlight.append(boldButton)
-            // TODO: differentiate
-            case .list: buttonsToHighlight.append(numberListButton)
-            case .list: buttonsToHighlight.append(bulletListButton)
-            case .code: buttonsToHighlight.append(codeButton)
-            default: break
+        for button in buttons {
+            guard let buttonMarkdown = self.markdown(for: button) else { continue }
+            
+            // current button not part of active markdown
+            if markdown.isDisjoint(with: buttonMarkdown) {
+                button.setIconColor(normalColor, for: .normal)
+//                button.isEnabled = markdown.union(buttonMarkdown).isValid
+            }
+            else {
+                button.setIconColor(accentColor, for: .normal)
+            }
+            
+            // FIXME: disable unsupported buttons for now
+            if buttonMarkdown == .none {
+                button.isEnabled = false
             }
         }
-        
-        buttonsToHighlight.forEach { $0.setIconColor(accentColor, for: .normal) }
     }
     
     @objc public func resetIcons() {
@@ -168,16 +182,8 @@ extension MarkdownBarView: PopUpIconButtonDelegate {
     func popUpIconButton(_ button: PopUpIconButton, didSelectIcon icon: ZetaIconType) {
         
         if button === headerButton {
-//            var headerLevel: MarkdownElementType.HeaderLevel?
-//            switch icon {
-//            case .markdownH1: headerLevel = .h1
-//            case .markdownH2: headerLevel = .h2
-//            case .markdownH3: headerLevel = .h3
-//            default: return
-//            }
-            // selecting header level from popup view always inserts/converts current syntax
+            // TODO: differentiate header levels
             delegate?.markdownBarView(self, didSelectMarkdown: .header, with: button)
-//            delegate?.markdownBarView(self, didSelectElementType: .header(headerLevel!), with: button)
         }
     }
 }

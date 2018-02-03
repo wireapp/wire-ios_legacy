@@ -19,8 +19,6 @@
 
 import Foundation
 import Cartography
-import Marklight
-
 
 protocol MessageComposeViewControllerDelegate: class {
     func composeViewController(_ controller: MessageComposeViewController, wantsToSendDraft: MessageDraft)
@@ -33,7 +31,7 @@ final class MessageComposeViewController: UIViewController {
     weak var delegate: MessageComposeViewControllerDelegate?
 
     private let subjectTextField = UITextField()
-    fileprivate let messageTextView = MarklightTextView()
+    fileprivate let messageTextView = MarkdownTextView()
     private let color = ColorScheme.default().color(withName:)
     private let sendButtonView = DraftSendInputAccessoryView()
     fileprivate let markdownBarView = MarkdownBarView()
@@ -288,13 +286,13 @@ extension MessageComposeViewController: UITextViewDelegate {
 
     func textViewDidChange(_ textView: UITextView) {
         updateDraftThrottled()
-        markdownBarView.updateIconsForModes(messageTextView.markdownElementsForRange(nil))
+//        markdownBarView.updateIconsForModes(messageTextView.markdownElementsForRange(nil))
     }
 
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         
         if text == "\n" || text == "\r" {
-            (textView as! MarklightTextView).handleNewLine()
+//            (textView as! MarklightTextView).handleNewLine()
         }
         
         if range.location == 0 && text == " " && textView.text?.isEmpty ?? true {
@@ -305,7 +303,7 @@ extension MessageComposeViewController: UITextViewDelegate {
     }
     
     func textViewDidChangeSelection(_ textView: UITextView) {
-        markdownBarView.updateIconsForModes(messageTextView.markdownElementsForRange(nil))
+//        markdownBarView.updateIconsForModes(messageTextView.markdownElementsForRange(nil))
     }
 }
 
