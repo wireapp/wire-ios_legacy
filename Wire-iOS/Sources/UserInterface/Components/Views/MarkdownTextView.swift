@@ -39,6 +39,7 @@ class MarkdownTextView: NextResponderTextView {
     fileprivate(set) var activeMarkdown = Markdown.none {
         didSet {
             if oldValue != activeMarkdown {
+                updateTypingAttributes()
                 NotificationCenter.default.post(name: .MarkdownTextViewDidChangeActiveMarkdown, object: self)
             }
         }
@@ -67,7 +68,7 @@ class MarkdownTextView: NextResponderTextView {
         ]
     }
     
-    // MARK: - Querying Markdown Types
+    // MARK: - Public Interface
     
     /// Returns the markdown bitmask at the current caret position.
     ///
@@ -88,10 +89,54 @@ class MarkdownTextView: NextResponderTextView {
         // typing attributes are automatically cleared after each change,
         // so we have to keep setting it.
         typingAttributes = currentAttributes
-//        printAttributes()
+    }
+    
+        }
     }
 
     // MARK: - Private Interface
+    
+    fileprivate func updateTypingAttribtuesAdding(_ markdown: Markdown) {
+        
+        switch markdown {
+        case .header, .bold:
+            // TODO: refactor this
+            if let currentFont = currentAttributes[NSFontAttributeName] as? UIFont {
+                currentAttributes[NSFontAttributeName] = currentFont.bold
+            }
+        case .italic:
+            if let currentFont = currentAttributes[NSFontAttributeName] as? UIFont {
+                currentAttributes[NSFontAttributeName] = currentFont.italic
+            }
+        default:
+            break
+        }
+        
+        // do this last to trigger adding typing attributes
+        activeMarkdown.insert(markdown)
+        currentAttributes[MarkdownIDAttributeName] = activeMarkdown
+    }
+    
+    fileprivate func updateTypingAttributesSubtracting(_ markdown: Markdown) {
+        
+        switch markdown {
+        case .header, .bold:
+            // TODO: refactor this
+            if let currentFont = currentAttributes[NSFontAttributeName] as? UIFont {
+                currentAttributes[NSFontAttributeName] = currentFont.unBold
+            }
+        case .italic:
+            if let currentFont = currentAttributes[NSFontAttributeName] as? UIFont {
+                currentAttributes[NSFontAttributeName] = currentFont.unItalic
+            }
+        default:
+            break
+        }
+        
+        // do this last to trigger adding typing attributes
+        activeMarkdown.remove(markdown)
+        currentAttributes[MarkdownIDAttributeName] = activeMarkdown
+    }
     
     fileprivate func printAttributes() {
         attributedText.enumerateAttribute(MarkdownIDAttributeName, in: wholeRange, options: []) { (val, range, _) in
@@ -108,41 +153,11 @@ class MarkdownTextView: NextResponderTextView {
 extension MarkdownTextView: MarkdownBarViewDelegate {
     
     func markdownBarView(_ view: MarkdownBarView, didSelectMarkdown markdown: Markdown, with sender: IconButton) {
-        activeMarkdown.insert(markdown)
-        currentAttributes[MarkdownIDAttributeName] = activeMarkdown
-        
-        switch markdown {
-        case .header, .bold:
-            // TODO: refactor this
-            if let currentFont = currentAttributes[NSFontAttributeName] as? UIFont {
-                currentAttributes[NSFontAttributeName] = currentFont.bold
-            }
-        case .italic:
-            if let currentFont = currentAttributes[NSFontAttributeName] as? UIFont {
-                currentAttributes[NSFontAttributeName] = currentFont.italic
-            }
-        default:
-            break
-        }
+        updateTypingAttribtuesAdding(markdown)
     }
     
     func markdownBarView(_ view: MarkdownBarView, didDeselectMarkdown markdown: Markdown, with sender: IconButton) {
-        activeMarkdown.remove(markdown)
-        currentAttributes[MarkdownIDAttributeName] = activeMarkdown
-        
-        switch markdown {
-        case .header, .bold:
-            // TODO: refactor this
-            if let currentFont = currentAttributes[NSFontAttributeName] as? UIFont {
-                currentAttributes[NSFontAttributeName] = currentFont.unBold
-            }
-        case .italic:
-            if let currentFont = currentAttributes[NSFontAttributeName] as? UIFont {
-                currentAttributes[NSFontAttributeName] = currentFont.unItalic
-            }
-        default:
-            break
-        }
+        updateTypingAttributesSubtracting(markdown)
     }
 }
 
