@@ -126,12 +126,10 @@ static inline NSDataDetector *linkDataDetector(void)
     
     if (nil == style) {
         // set markdown attribute styles here
-        ColorScheme *colorScheme = [ColorScheme defaultColorScheme];
         style = [[DownStyle alloc] init];
         style.baseFont = font;
         style.baseFontColor = foregroundColor;
         style.baseParagraphStyle = cellParagraphStyle;
-        style.h1Color = [colorScheme colorWithName:ColorSchemeColorAccent];
     }
     
     NSAttributedString *markdownString = [NSAttributedString markdownFrom:text style:style];
