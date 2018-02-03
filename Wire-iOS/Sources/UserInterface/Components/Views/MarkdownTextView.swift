@@ -28,14 +28,20 @@ class MarkdownTextView: NextResponderTextView {
     
     // MARK: - Properties
     
+    /// The style used to apply attributes.
     var style = DownStyle()
     
+    /// The string containing markdown syntax for the corresponding
+    /// attributed text.
     var preparedText: String {
         return self.parser.parse(attributedString: self.attributedText)
     }
+    
+    /// The parser used to convert attributed text into markdown syntax.
+    private let parser = AttributedStringParser()
 
-    let parser = AttributedStringParser()
-
+    /// The currently active markdown. This determines which attribtues
+    /// are applied when typing.
     fileprivate(set) var activeMarkdown = Markdown.none {
         didSet {
             if oldValue != activeMarkdown {
@@ -51,6 +57,7 @@ class MarkdownTextView: NextResponderTextView {
         }
     }
     
+    /// The current attributes to be applied when typing.
     fileprivate var currentAttributes: [String : Any] = [
         NSFontAttributeName: FontSpec(.normal, .regular).font!,
         NSForegroundColorAttributeName: UIColor.black
@@ -59,16 +66,36 @@ class MarkdownTextView: NextResponderTextView {
     private var wholeRange: NSRange {
         return NSMakeRange(0, attributedText.length)
     }
-
+    
+    // MARK: - Public Interface
+    
+    /// Resets the active markdown to none and the current attributes.
     func resetMarkdown() {
-        activeMarkdown = .none
         currentAttributes = [
             NSFontAttributeName: FontSpec(.normal, .regular).font!,
             NSForegroundColorAttributeName: UIColor.black
         ]
+        activeMarkdown = .none
     }
     
-    // MARK: - Public Interface
+    /// Calling this method ensures that the current attributes are applied
+    /// to newly typed text.
+    func updateTypingAttributes() {
+        // typing attributes are automatically cleared after each change,
+        // so we have to keep setting it to provide continuity.
+        typingAttributes = currentAttributes
+    }
+    
+    /// Responding to newlines involves helpful behaviour such as exiting
+    /// header mode or inserting new list items.
+    func handleNewLine() {
+        if activeMarkdown.contains(.header) {
+            updateTypingAttributesSubtracting(.header)
+        }
+        // TODO: automatic list item generation
+    }
+    
+    // MARK: Query Methods
     
     /// Returns the markdown bitmask at the current caret position.
     ///
@@ -84,21 +111,11 @@ class MarkdownTextView: NextResponderTextView {
         let type = attributedText.attribute(MarkdownIDAttributeName, at: location, effectiveRange: nil) as? Markdown
         return type ?? .none
     }
-    
-    func updateTypingAttributes() {
-        // typing attributes are automatically cleared after each change,
-        // so we have to keep setting it.
-        typingAttributes = currentAttributes
-    }
-    
-    func handleNewLine() {
-        if activeMarkdown.contains(.header) {
-            updateTypingAttributesSubtracting(.header)
-        }
-    }
 
     // MARK: - Private Interface
     
+    /// Updates the current attributes incrementally by inserting the given
+    /// markdown.
     fileprivate func updateTypingAttribtuesAdding(_ markdown: Markdown) {
         
         switch markdown {
@@ -120,6 +137,8 @@ class MarkdownTextView: NextResponderTextView {
         currentAttributes[MarkdownIDAttributeName] = activeMarkdown
     }
     
+    /// Updates the current attributes incrementally by subtracting the given
+    /// markdown.
     fileprivate func updateTypingAttributesSubtracting(_ markdown: Markdown) {
         
         switch markdown {
@@ -141,6 +160,7 @@ class MarkdownTextView: NextResponderTextView {
         currentAttributes[MarkdownIDAttributeName] = activeMarkdown
     }
     
+    /// Temporary helper
     fileprivate func printAttributes() {
         attributedText.enumerateAttribute(MarkdownIDAttributeName, in: wholeRange, options: []) { (val, range, _) in
             let markdown = val as? Markdown
