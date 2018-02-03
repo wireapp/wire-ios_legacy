@@ -618,7 +618,7 @@
 
 - (void)commandReturnPressed
 {
-    NSString *candidateText = self.inputBar.textView.text;
+    NSString *candidateText = self.inputBar.textView.preparedText;
     if (nil != candidateText) {
         [self sendOrEditText:candidateText];
     }
@@ -883,7 +883,7 @@
     // send only if send key pressed
     if (textView.returnKeyType == UIReturnKeySend && [text isEqualToString:@"\n"]) {
         [self.inputBar.textView autocorrectLastWord];
-        NSString *candidateText = self.inputBar.textView.text;
+        NSString *candidateText = self.inputBar.textView.preparedText;
         [self sendOrEditText:candidateText];
         return NO;
     }
@@ -1098,8 +1098,7 @@
 {
     [self.inputBar.textView autocorrectLastWord];
     if([self checkMessageLength]){
-        [self sendOrEditText:self.inputBar.textView.text];
-//        [self.inputBar.textView resetTypingAttributes];
+        [self sendOrEditText:self.inputBar.textView.preparedText];
     }
 }
 

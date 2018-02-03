@@ -29,6 +29,12 @@ class MarkdownTextView: NextResponderTextView {
     // MARK: - Properties
     
     var style = DownStyle()
+    
+    var preparedText: String {
+        return self.parser.parse(attributedString: self.attributedText)
+    }
+
+    let parser = AttributedStringParser()
 
     fileprivate(set) var activeMarkdown = Markdown.none {
         didSet {
@@ -82,7 +88,7 @@ class MarkdownTextView: NextResponderTextView {
         // typing attributes are automatically cleared after each change,
         // so we have to keep setting it.
         typingAttributes = currentAttributes
-        printAttributes()
+//        printAttributes()
     }
 
     // MARK: - Private Interface
