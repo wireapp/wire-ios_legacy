@@ -89,9 +89,8 @@ class MarkdownTextView: NextResponderTextView {
     /// Responding to newlines involves helpful behaviour such as exiting
     /// header mode or inserting new list items.
     func handleNewLine() {
-        if activeMarkdown.isHeader {
-            // TODO: handle for different headers
-            updateTypingAttributesSubtracting(.h1)
+        if let header = activeMarkdown.headerValue {
+            updateTypingAttributesSubtracting(header)
         }
         // TODO: automatic list item generation
     }
@@ -118,6 +117,9 @@ class MarkdownTextView: NextResponderTextView {
     /// Updates the current attributes incrementally by inserting the given
     /// markdown.
     fileprivate func updateTypingAttribtuesAdding(_ markdown: Markdown) {
+        
+        // don't forget to subtract old header first
+        activeMarkdown.subtract([.h1, .h2, .h3])
         
         switch markdown {
         // TODO: handle different header sizes

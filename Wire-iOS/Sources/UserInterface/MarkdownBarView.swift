@@ -115,7 +115,6 @@ public final class MarkdownBarView: UIView {
         }
         
         if sender.iconColor(for: .normal) != normalColor {
-            sender.setIconColor(normalColor, for: .normal)
             delegate?.markdownBarView(self, didDeselectMarkdown: markdown, with: sender)
         } else {
             delegate?.markdownBarView(self, didSelectMarkdown: markdown, with: sender)
@@ -145,6 +144,12 @@ public final class MarkdownBarView: UIView {
     }
     
     public func updateIcons(forMarkdown markdown: Markdown) {
+        
+        // change header icon if necessary
+        if let headerMarkdown = markdown.headerValue,
+            let headerIcon = headerMarkdown.headerIcon {
+            headerButton.setIcon(headerIcon, with: .tiny, for: .normal)
+        }
         
         for button in buttons {
             guard let buttonMarkdown = self.markdown(for: button) else { continue }
@@ -188,6 +193,17 @@ private extension ZetaIconType {
         case .markdownH2: return .h2
         case .markdownH3: return .h3
         default:          return nil
+        }
+    }
+}
+
+private extension Markdown {
+    var headerIcon: ZetaIconType? {
+        switch self {
+        case .h1: return .markdownH1
+        case .h2: return .markdownH2
+        case .h3: return .markdownH3
+        default:  return nil
         }
     }
 }
