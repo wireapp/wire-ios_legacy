@@ -119,7 +119,9 @@ class MarkdownTextView: NextResponderTextView {
     fileprivate func updateTypingAttribtuesAdding(_ markdown: Markdown) {
         
         // don't forget to subtract old header first
-        activeMarkdown.subtract([.h1, .h2, .h3])
+        if markdown.isHeader {
+            activeMarkdown.subtract([.h1, .h2, .h3])
+        }
         
         switch markdown {
         // TODO: handle different header sizes
