@@ -104,21 +104,14 @@ public final class MarkdownBarView: UIView {
         let markdown: Markdown
         
         switch sender {
-        case headerButton:
-            switch headerButton.iconType(for: .normal) {
-            // TODO: differentiate
-            case .markdownH1:       markdown = .header
-            case .markdownH2:       markdown = .header
-            case .markdownH3:       markdown = .header
-            default:                return
-            }
-        case boldButton:            markdown = .bold
-        case italicButton:          markdown = .italic
+        case headerButton:      markdown = headerButton.iconType(for: .normal).headerMarkdown ?? .h1
+        case boldButton:        markdown = .bold
+        case italicButton:      markdown = .italic
         // TODO: differentiate
-        case numberListButton:      markdown = .list
-        case bulletListButton:      markdown = .list
-        case codeButton:            markdown = .code
-        default:                    return
+        case numberListButton:  markdown = .list
+        case bulletListButton:  markdown = .list
+        case codeButton:        markdown = .code
+        default:                return
         }
         
         if sender.iconColor(for: .normal) != normalColor {
@@ -133,21 +126,21 @@ public final class MarkdownBarView: UIView {
     
     private func buttonFor(_ markdown: Markdown) -> IconButton? {
         switch markdown {
-        case .header:                       return headerButton
-        case .bold:                         return boldButton
-        case .italic:                       return italicButton
-        case .code:                         return codeButton
-        default:                            return nil
+        case .h1, .h2, .h3: return headerButton
+        case .bold:         return boldButton
+        case .italic:       return italicButton
+        case .code:         return codeButton
+        default:            return nil
         }
     }
     
     fileprivate func markdown(for button: IconButton) -> Markdown? {
         switch button {
-        case headerButton:                  return .header
-        case boldButton:                    return .bold
-        case italicButton:                  return .italic
-        case codeButton:                    return .code
-        default:                            return nil
+        case headerButton:  return headerButton.iconType(for: .normal).headerMarkdown
+        case boldButton:    return .bold
+        case italicButton:  return .italic
+        case codeButton:    return .code
+        default:            return nil
         }
     }
     
@@ -182,8 +175,19 @@ extension MarkdownBarView: PopUpIconButtonDelegate {
     func popUpIconButton(_ button: PopUpIconButton, didSelectIcon icon: ZetaIconType) {
         
         if button === headerButton {
-            // TODO: differentiate header levels
-            delegate?.markdownBarView(self, didSelectMarkdown: .header, with: button)
+            let markdown = icon.headerMarkdown ?? .h1
+            delegate?.markdownBarView(self, didSelectMarkdown: markdown, with: button)
+        }
+    }
+}
+
+private extension ZetaIconType {
+    var headerMarkdown: Markdown? {
+        switch self {
+        case .markdownH1: return .h1
+        case .markdownH2: return .h2
+        case .markdownH3: return .h3
+        default:          return nil
         }
     }
 }

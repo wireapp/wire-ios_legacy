@@ -89,8 +89,9 @@ class MarkdownTextView: NextResponderTextView {
     /// Responding to newlines involves helpful behaviour such as exiting
     /// header mode or inserting new list items.
     func handleNewLine() {
-        if activeMarkdown.contains(.header) {
-            updateTypingAttributesSubtracting(.header)
+        if activeMarkdown.isHeader {
+            // TODO: handle for different headers
+            updateTypingAttributesSubtracting(.h1)
         }
         // TODO: automatic list item generation
     }
@@ -119,7 +120,8 @@ class MarkdownTextView: NextResponderTextView {
     fileprivate func updateTypingAttribtuesAdding(_ markdown: Markdown) {
         
         switch markdown {
-        case .header, .bold:
+        // TODO: handle different header sizes
+        case .h1, .h2, .h3, .bold:
             // TODO: refactor this
             if let currentFont = currentAttributes[NSFontAttributeName] as? UIFont {
                 currentAttributes[NSFontAttributeName] = currentFont.bold
@@ -142,7 +144,8 @@ class MarkdownTextView: NextResponderTextView {
     fileprivate func updateTypingAttributesSubtracting(_ markdown: Markdown) {
         
         switch markdown {
-        case .header, .bold:
+        // TODO: handle different header sizes
+        case .h1, .h2, .h3, .bold:
             // TODO: refactor this
             if let currentFont = currentAttributes[NSFontAttributeName] as? UIFont {
                 currentAttributes[NSFontAttributeName] = currentFont.unBold
