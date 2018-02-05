@@ -24,7 +24,6 @@ class MockContainerViewController: UIViewController, NetworkStatusBarDelegate {
     var isViewDidAppear: Bool = true
 }
 
-
 /// Snapshot tests for differnt margin and size of NetworkStatusViewController.view for all value of ZMNetworkState with other UIView at the bottom.
 final class NetworkStatusViewControllerTests: ZMSnapshotTestCase {
 
@@ -57,13 +56,12 @@ final class NetworkStatusViewControllerTests: ZMSnapshotTestCase {
 
             mockContentView.bottom == view.bottom - UIScreen.safeArea.bottom
         }
-
-//        recordMode = true
     }
 
     override func tearDown() {
         sut = nil
         mockContainerViewController = nil
+        mockContentView = nil
 
         super.tearDown()
     }
