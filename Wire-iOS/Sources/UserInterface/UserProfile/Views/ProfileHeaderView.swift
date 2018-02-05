@@ -36,13 +36,18 @@ final class ProfileHeaderView: UIView {
 
     private(set) var dismissButton = IconButton.iconButtonCircular()
     private(set) var headerStyle: ProfileHeaderStyle
+    let profileViewControllerContext: ProfileViewControllerContext?
 
     private let detailView = UserNameDetailView()
     private let verifiedImageView = UIImageView(image: WireStyleKit.imageOfShieldverified())
 
+    var backButtonLeading: NSLayoutConstraint?
+    var cancelButtonTrailing: NSLayoutConstraint?
+
     @objc(initWithViewModel:)
     init(with viewModel: ProfileHeaderViewModel) {
-        headerStyle = viewModel.style
+        headerStyle = .noButton
+        profileViewControllerContext = viewModel.profileViewControllerContext
         super.init(frame: .zero)
 
         setupViews()
@@ -64,6 +69,7 @@ final class ProfileHeaderView: UIView {
         dismissButton.accessibilityIdentifier = "OtherUserProfileCloseButton"
 
         switch headerStyle {
+        ///TODO: change icon when trait changes
         case .backButton: dismissButton.setIcon(.chevronLeft, with: .tiny, for: .normal)
         case .cancelButton: dismissButton.setIcon(.X, with: .tiny, for: .normal)
         default: break
@@ -93,11 +99,20 @@ final class ProfileHeaderView: UIView {
             verified.width == 16
             verified.leading == view.leading + horizontalMargin
 
-            switch headerStyle {
-            case .backButton: dismiss.leading == view.leading + horizontalMargin
-            case .cancelButton: dismiss.trailing == view.trailing - horizontalMargin
-            default: break
-            }
+            backButtonLeading = dismiss.leading == view.leading + horizontalMargin
+            cancelButtonTrailing = dismiss.trailing == view.trailing - horizontalMargin
+        }
+
+        switch headerStyle {
+        case .backButton:
+            cancelButtonTrailing?.isActive = false
+            backButtonLeading?.isActive = true
+        case .cancelButton:
+            backButtonLeading?.isActive = false
+            cancelButtonTrailing?.isActive = true
+        default:
+            backButtonLeading?.isActive = false
+            cancelButtonTrailing?.isActive = false
         }
     }
 
@@ -121,4 +136,7 @@ final class ProfileHeaderView: UIView {
         )
     }
 
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+    }
 }

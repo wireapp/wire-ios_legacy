@@ -79,12 +79,12 @@ final class ProfileHeaderServiceDetailViewController: UIViewController {
     // MARK: - header view
 
     func headerViewModel(with user: ZMBareUser) -> ProfileHeaderViewModel {
-        var headerStyle: ProfileHeaderStyle = .cancelButton
+//        var headerStyle: ProfileHeaderStyle = .cancelButton
         /// TODO: It is possible that headerStyle changes in run time, e.g. iPad changes its size class. Rewrite ProfileHeaderView to handle size class changing.
-        if UIApplication.shared.keyWindow?.traitCollection.horizontalSizeClass == .regular {
-            headerStyle = .backButton
-        }
-        return ProfileHeaderViewModel(user: user, fallbackName: user.displayName, addressBookName: nil, style: headerStyle)
+//        if UIApplication.shared.keyWindow?.traitCollection.horizontalSizeClass == .regular {
+//            headerStyle = .backButton
+//        }
+        return ProfileHeaderViewModel(user: user, fallbackName: user.displayName, addressBookName: nil)
     }
 
     func setupHeader() {
