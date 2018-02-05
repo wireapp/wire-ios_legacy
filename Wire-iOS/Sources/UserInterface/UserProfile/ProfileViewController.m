@@ -18,6 +18,7 @@
 
 
 #import "ProfileViewController.h"
+#import "ProfileViewController+internal.h"
 
 #import "WireSyncEngine+iOS.h"
 #import "avs+iOS.h"
@@ -69,7 +70,6 @@ typedef NS_ENUM(NSUInteger, ProfileViewControllerTabBarIndex) {
 
 @interface ProfileViewController () <ZMUserObserver>
 
-@property (nonatomic, readonly) ProfileViewControllerContext context;
 @property (nonatomic, readonly) ZMConversation *conversation;
 
 @property (nonatomic) id observerToken;
@@ -194,23 +194,6 @@ typedef NS_ENUM(NSUInteger, ProfileViewControllerTabBarIndex) {
     
     [self.view addSubview:headerView];
     self.headerView = headerView;
-}
-
-- (ProfileHeaderViewModel *)headerViewModelWithUser:(id<ZMBareUser>)user
-{
-    ProfileHeaderStyle headerStyle = ProfileHeaderStyleCancelButton;
-    if (IS_IPAD_FULLSCREEN) {
-        if (self.navigationController.viewControllers.count > 1) {
-            headerStyle = ProfileHeaderStyleBackButton;
-        } else if (self.context != ProfileViewControllerContextDeviceList) {
-            headerStyle = ProfileHeaderStyleNoButton; // no button in 1:1 profile popover
-        }
-    }
-
-    return [[ProfileHeaderViewModel alloc] initWithUser:user
-                                           fallbackName:user.displayName
-                                        addressBookName:BareUserToUser(user).addressBookEntry.cachedName
-                                                  style:headerStyle];
 }
 
 #pragma mark - User observation

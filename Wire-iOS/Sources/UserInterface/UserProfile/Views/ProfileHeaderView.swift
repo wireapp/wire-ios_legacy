@@ -21,10 +21,9 @@ import UIKit
 import Cartography
 
 
-@objc enum ProfileHeaderStyle: Int {
+enum ProfileHeaderStyle: Int {
     case cancelButton, backButton, noButton
 }
-
 
 final class ProfileHeaderView: UIView {
 
@@ -36,18 +35,26 @@ final class ProfileHeaderView: UIView {
 
     private(set) var dismissButton = IconButton.iconButtonCircular()
     private(set) var headerStyle: ProfileHeaderStyle
+    private let navigationControllerViewControllerCount: Int?
+    private let profileViewControllerContext: ProfileViewControllerContext?
 
     private let detailView = UserNameDetailView()
     private let verifiedImageView = UIImageView(image: WireStyleKit.imageOfShieldverified())
 
+    private var backButtonLeading: NSLayoutConstraint?
+    private var cancelButtonTrailing: NSLayoutConstraint?
+
     @objc(initWithViewModel:)
     init(with viewModel: ProfileHeaderViewModel) {
-        headerStyle = viewModel.style
+        headerStyle = .noButton
+        navigationControllerViewControllerCount = viewModel.navigationControllerViewControllerCount
+        profileViewControllerContext = viewModel.context
         super.init(frame: .zero)
 
         setupViews()
         configure(with: viewModel)
         createConstraints()
+        updateDismissButton()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -62,12 +69,6 @@ final class ProfileHeaderView: UIView {
 
         verifiedImageView.accessibilityIdentifier = "VerifiedShield"
         dismissButton.accessibilityIdentifier = "OtherUserProfileCloseButton"
-
-        switch headerStyle {
-        case .backButton: dismissButton.setIcon(.chevronLeft, with: .tiny, for: .normal)
-        case .cancelButton: dismissButton.setIcon(.X, with: .tiny, for: .normal)
-        default: break
-        }
     }
 
     private func createConstraints() {
@@ -93,11 +94,8 @@ final class ProfileHeaderView: UIView {
             verified.width == 16
             verified.leading == view.leading + horizontalMargin
 
-            switch headerStyle {
-            case .backButton: dismiss.leading == view.leading + horizontalMargin
-            case .cancelButton: dismiss.trailing == view.trailing - horizontalMargin
-            default: break
-            }
+            backButtonLeading = dismiss.leading == view.leading + horizontalMargin
+            cancelButtonTrailing = dismiss.trailing == view.trailing - horizontalMargin
         }
     }
 
@@ -121,4 +119,55 @@ final class ProfileHeaderView: UIView {
         )
     }
 
+
+    // MARK: - DismissButton style and constraints
+    
+    func updateDismissButton() {
+        switch headerStyle {
+        case .backButton:
+            cancelButtonTrailing?.isActive = false
+            backButtonLeading?.isActive = true
+
+            dismissButton.isHidden = false
+
+            dismissButton.setIcon(.chevronLeft, with: .tiny, for: .normal)
+        case .cancelButton:
+            backButtonLeading?.isActive = false
+            cancelButtonTrailing?.isActive = true
+
+            dismissButton.isHidden = false
+
+            dismissButton.setIcon(.X, with: .tiny, for: .normal)
+        case .noButton:
+            ///the button is hidden, the position is not important
+            backButtonLeading?.isActive = false
+            cancelButtonTrailing?.isActive = true
+
+            dismissButton.isHidden = true
+        }
+    }
+
+    func updateHeaderStyle() {
+        var headerStyle: ProfileHeaderStyle = .cancelButton
+
+        if self.traitCollection.userInterfaceIdiom == .pad && UIApplication.shared.keyWindow?.traitCollection.horizontalSizeClass == .regular {
+
+            if navigationControllerViewControllerCount > 1 {
+                headerStyle = .backButton
+            } else if profileViewControllerContext != .deviceList {
+                headerStyle = .noButton
+            }
+        }
+
+        self.headerStyle = headerStyle
+    }
+
+    // MARK: - UITraitCollection
+
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+
+        updateHeaderStyle()
+        updateDismissButton()
+    }
 }
