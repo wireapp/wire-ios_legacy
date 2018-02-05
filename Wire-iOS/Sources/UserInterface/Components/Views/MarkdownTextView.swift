@@ -29,7 +29,7 @@ class MarkdownTextView: NextResponderTextView {
     // MARK: - Properties
     
     /// The style used to apply attributes.
-    var style = DownStyle()
+    var style: DownStyle
     
     /// The string containing markdown syntax for the corresponding
     /// attributed text.
@@ -67,14 +67,26 @@ class MarkdownTextView: NextResponderTextView {
         return NSMakeRange(0, attributedText.length)
     }
     
+    // MARK: - Init
+    
+    convenience init() {
+        self.init(with: DownStyle.normal)
+    }
+    
+    init(with style: DownStyle) {
+        self.style = style
+        super.init(frame: .zero, textContainer: nil)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     // MARK: - Public Interface
     
     /// Resets the active markdown to none and the current attributes.
     func resetMarkdown() {
-        currentAttributes = [
-            NSFontAttributeName: FontSpec(.normal, .regular).font!,
-            NSForegroundColorAttributeName: UIColor.black
-        ]
+        currentAttributes = style.defaultAttributes
         activeMarkdown = .none
     }
     
@@ -189,6 +201,29 @@ extension MarkdownTextView: MarkdownBarViewDelegate {
     func markdownBarView(_ view: MarkdownBarView, didDeselectMarkdown markdown: Markdown, with sender: IconButton) {
         updateTypingAttributesSubtracting(markdown)
     }
+}
+
+// MARK: - DownStyle Presets
+
+extension DownStyle {
+    /// The style used within the conversation message cells.
+    static var normal: DownStyle = {
+        let style = DownStyle()
+        style.baseFont = FontSpec(.normal, .light).font!
+        style.baseFontColor = ColorScheme.default().color(withName: ColorSchemeColorTextForeground)
+        return style
+    }()
+    
+    /// The style used within the input bar.
+    static var compact: DownStyle = {
+        let style = normal
+        
+        // headers all same size
+        style.h1Size = style.baseFont.pointSize
+        style.h2Size = style.h1Size
+        style.h3Size = style.h1Size
+        return style
+    }()
 }
 
 // TODO: this is temporary, maybe refactor out to Down

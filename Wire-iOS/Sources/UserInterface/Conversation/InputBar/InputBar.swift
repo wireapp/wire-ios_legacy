@@ -21,6 +21,7 @@ import UIKit
 import Cartography
 import Classy
 import WireExtensionComponents
+import Down
 
 extension Settings {
     var returnKeyType: UIReturnKeyType {
@@ -82,7 +83,7 @@ private struct InputBarConstants {
     private let inputBarVerticalInset : CGFloat = 34
 
 
-    let textView = MarkdownTextView()
+    let textView = MarkdownTextView(with: DownStyle.compact)
     public let leftAccessoryView  = UIView()
     public let rightAccessoryView = UIView()
     
