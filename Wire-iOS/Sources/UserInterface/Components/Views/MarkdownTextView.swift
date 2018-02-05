@@ -48,6 +48,7 @@ class MarkdownTextView: NextResponderTextView {
     fileprivate(set) var activeMarkdown = Markdown.none {
         didSet {
             if oldValue != activeMarkdown {
+                currentAttributes = attributes(for: activeMarkdown)
                 updateTypingAttributes()
                 NotificationCenter.default.post(name: .MarkdownTextViewDidChangeActiveMarkdown, object: self)
             }
@@ -73,7 +74,7 @@ class MarkdownTextView: NextResponderTextView {
     init(with style: DownStyle) {
         self.style = style
         super.init(frame: .zero, textContainer: nil)
-        resetMarkdown()
+        currentAttributes = attributes(for: activeMarkdown)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -84,7 +85,6 @@ class MarkdownTextView: NextResponderTextView {
     
     /// Resets the active markdown to none and the current attributes.
     func resetMarkdown() {
-        currentAttributes = style.defaultAttributes
         activeMarkdown = .none
     }
     
@@ -93,7 +93,6 @@ class MarkdownTextView: NextResponderTextView {
     func updateTypingAttributes() {
         // typing attributes are automatically cleared after each change,
         // so we have to keep setting it to provide continuity.
-        currentAttributes = attributes(for: activeMarkdown)
         typingAttributes = currentAttributes
     }
     
