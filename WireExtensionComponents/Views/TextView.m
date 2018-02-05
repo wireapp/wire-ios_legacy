@@ -70,6 +70,15 @@
     return self;
 }
 
+- (id)initWithFrame:(CGRect)frame textContainer:(NSTextContainer *)textContainer
+{
+    self = [super initWithFrame:frame textContainer:textContainer];
+    if (self) {
+        [self setup];
+    }
+    return self;
+}
+
 #pragma mark Setup
 
 - (void)setup
