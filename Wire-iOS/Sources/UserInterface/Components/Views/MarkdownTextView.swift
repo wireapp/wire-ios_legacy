@@ -31,14 +31,17 @@ class MarkdownTextView: NextResponderTextView {
     /// The style used to apply attributes.
     var style: DownStyle
     
+    /// The parser used to convert attributed text into markdown syntax.
+    private let parser = AttributedStringParser()
+
     /// The string containing markdown syntax for the corresponding
     /// attributed text.
     var preparedText: String {
         return self.parser.parse(attributedString: self.attributedText)
     }
     
-    /// The parser used to convert attributed text into markdown syntax.
-    private let parser = AttributedStringParser()
+    /// The current attributes to be applied when typing.
+    fileprivate var currentAttributes: [String : Any] = [:]
 
     /// The currently active markdown. This determines which attribtues
     /// are applied when typing.
@@ -57,12 +60,6 @@ class MarkdownTextView: NextResponderTextView {
         }
     }
     
-    /// The current attributes to be applied when typing.
-    fileprivate var currentAttributes: [String : Any] = [
-        NSFontAttributeName: FontSpec(.normal, .regular).font!,
-        NSForegroundColorAttributeName: UIColor.black
-    ]
-
     private var wholeRange: NSRange {
         return NSMakeRange(0, attributedText.length)
     }
@@ -76,6 +73,7 @@ class MarkdownTextView: NextResponderTextView {
     init(with style: DownStyle) {
         self.style = style
         super.init(frame: .zero, textContainer: nil)
+        resetMarkdown()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -209,7 +207,7 @@ extension DownStyle {
     /// The style used within the conversation message cells.
     static var normal: DownStyle = {
         let style = DownStyle()
-        style.baseFont = FontSpec(.normal, .light).font!
+        style.baseFont = FontSpec(.normal, .regular).font!
         style.baseFontColor = ColorScheme.default().color(withName: ColorSchemeColorTextForeground)
         return style
     }()
