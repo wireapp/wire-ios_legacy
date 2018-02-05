@@ -186,12 +186,10 @@ class MarkdownTextView: NextResponderTextView {
 extension MarkdownTextView: MarkdownBarViewDelegate {
     
     func markdownBarView(_ view: MarkdownBarView, didSelectMarkdown markdown: Markdown, with sender: IconButton) {
-//        updateTypingAttribtuesAdding(markdown)
         activeMarkdown.insert(markdown)
     }
     
     func markdownBarView(_ view: MarkdownBarView, didDeselectMarkdown markdown: Markdown, with sender: IconButton) {
-//        updateTypingAttributesSubtracting(markdown)
         activeMarkdown.subtract(markdown)
     }
 }
