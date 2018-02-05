@@ -93,6 +93,7 @@ class MarkdownTextView: NextResponderTextView {
     func updateTypingAttributes() {
         // typing attributes are automatically cleared after each change,
         // so we have to keep setting it to provide continuity.
+        currentAttributes = attributes(for: activeMarkdown)
         typingAttributes = currentAttributes
     }
     
@@ -124,57 +125,50 @@ class MarkdownTextView: NextResponderTextView {
 
     // MARK: - Private Interface
     
-    /// Updates the current attributes incrementally by inserting the given
-    /// markdown.
-    fileprivate func updateTypingAttribtuesAdding(_ markdown: Markdown) {
+    /// Returns the attributes for the given markdown.
+    func attributes(for markdown: Markdown) -> [String : Any] {
         
-        // don't forget to subtract old header first
-        if markdown.isHeader {
-            activeMarkdown.subtract([.h1, .h2, .h3])
+        // the idea is to query for specific markdown & adjust the attributes
+        // incrementally
+        
+        var font = style.baseFont
+        var color = style.baseFontColor
+        let paragraphyStyle = style.baseParagraphStyle
+        
+        // add code attributes first, since it uses different font
+        if markdown.contains(.code) {
+            font = style.codeFont
+            if let codeColor = style.codeColor {
+                color = codeColor
+            }
         }
         
-        switch markdown {
-        // TODO: handle different header sizes
-        case .h1, .h2, .h3, .bold:
-            // TODO: refactor this
-            if let currentFont = currentAttributes[NSFontAttributeName] as? UIFont {
-                currentAttributes[NSFontAttributeName] = currentFont.bold
+        // if header
+        if let header = markdown.headerValue {
+            if let headerSize = style.headerSize(for: header) {
+                font = font.withSize(headerSize).bold
             }
-        case .italic:
-            if let currentFont = currentAttributes[NSFontAttributeName] as? UIFont {
-                currentAttributes[NSFontAttributeName] = currentFont.italic
+            if let headerColor = style.headerColor(for: header) {
+                color = headerColor
             }
-        default:
-            break
         }
         
-        // do this last to trigger adding typing attributes
-        activeMarkdown.insert(markdown)
-        currentAttributes[MarkdownIDAttributeName] = activeMarkdown
-    }
-    
-    /// Updates the current attributes incrementally by subtracting the given
-    /// markdown.
-    fileprivate func updateTypingAttributesSubtracting(_ markdown: Markdown) {
+        // TODO: Quote, List
         
-        switch markdown {
-        // TODO: handle different header sizes
-        case .h1, .h2, .h3, .bold:
-            // TODO: refactor this
-            if let currentFont = currentAttributes[NSFontAttributeName] as? UIFont {
-                currentAttributes[NSFontAttributeName] = currentFont.unBold
-            }
-        case .italic:
-            if let currentFont = currentAttributes[NSFontAttributeName] as? UIFont {
-                currentAttributes[NSFontAttributeName] = currentFont.unItalic
-            }
-        default:
-            break
+        if markdown.contains(.bold) {
+            font = font.bold
         }
         
-        // do this last to trigger adding typing attributes
-        activeMarkdown.remove(markdown)
-        currentAttributes[MarkdownIDAttributeName] = activeMarkdown
+        if markdown.contains(.italic) {
+            font = font.italic
+        }
+        
+        return [
+            MarkdownIDAttributeName: markdown,
+            NSFontAttributeName: font,
+            NSForegroundColorAttributeName: color,
+            NSParagraphStyleAttributeName: paragraphyStyle
+        ]
     }
     
     /// Temporary helper
@@ -184,7 +178,6 @@ class MarkdownTextView: NextResponderTextView {
             print("Markdown: \(markdown ?? .none)")
         }
     }
-    
 }
 
 
@@ -193,11 +186,13 @@ class MarkdownTextView: NextResponderTextView {
 extension MarkdownTextView: MarkdownBarViewDelegate {
     
     func markdownBarView(_ view: MarkdownBarView, didSelectMarkdown markdown: Markdown, with sender: IconButton) {
-        updateTypingAttribtuesAdding(markdown)
+//        updateTypingAttribtuesAdding(markdown)
+        activeMarkdown.insert(markdown)
     }
     
     func markdownBarView(_ view: MarkdownBarView, didDeselectMarkdown markdown: Markdown, with sender: IconButton) {
-        updateTypingAttributesSubtracting(markdown)
+//        updateTypingAttributesSubtracting(markdown)
+        activeMarkdown.subtract(markdown)
     }
 }
 
@@ -209,6 +204,7 @@ extension DownStyle {
         let style = DownStyle()
         style.baseFont = FontSpec(.normal, .regular).font!
         style.baseFontColor = ColorScheme.default().color(withName: ColorSchemeColorTextForeground)
+        style.codeFont = UIFont(name: "Menlo", size: style.baseFont.pointSize) ?? style.baseFont
         return style
     }()
     
@@ -237,10 +233,6 @@ private extension UIFont {
         return contains(.traitItalic)
     }
     
-    var isMonospace: Bool {
-        return contains(.traitMonoSpace)
-    }
-    
     private func contains(_ trait: UIFontDescriptorSymbolicTraits) -> Bool {
         return fontDescriptor.symbolicTraits.contains(trait)
     }
@@ -251,20 +243,8 @@ private extension UIFont {
         return self.with(.traitBold)
     }
     
-    var unBold: UIFont {
-        return self.without(.traitBold)
-    }
-    
     var italic: UIFont {
         return self.with(.traitItalic)
-    }
-    
-    var unItalic: UIFont {
-        return self.without(.traitItalic)
-    }
-    
-    var monospace: UIFont {
-        return self.with(.traitMonoSpace)
     }
     
     /// Returns a copy of the font with the added symbolic trait.
@@ -272,16 +252,6 @@ private extension UIFont {
         guard !contains(trait) else { return self }
         var traits = fontDescriptor.symbolicTraits
         traits.insert(trait)
-        // FIXME: perhaps no good!
-        guard let newDescriptor = fontDescriptor.withSymbolicTraits(traits) else { return self }
-        // size 0 means the size remains the same as before
-        return UIFont(descriptor: newDescriptor, size: 0)
-    }
-    
-    private func without(_ trait: UIFontDescriptorSymbolicTraits) -> UIFont {
-        guard contains(trait) else { return self }
-        var traits = fontDescriptor.symbolicTraits
-        traits.subtract(trait)
         // FIXME: perhaps no good!
         guard let newDescriptor = fontDescriptor.withSymbolicTraits(traits) else { return self }
         // size 0 means the size remains the same as before
