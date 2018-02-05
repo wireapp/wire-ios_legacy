@@ -20,12 +20,15 @@ import Foundation
 
 extension ParticipantsViewController: UICollectionViewDataSource {
 
+    func participants(of type: UserType) -> [ZMUser] {
+        return groupedParticipants[type] as? [ZMUser] ?? []
+    }
+    
     public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        guard let userType = UserType(rawValue:section),
-            let array = groupedParticipants[userType] as? [ZMUser]
+        guard let userType = UserType(rawValue:section)
             else { return 0 }
 
-        return array.count
+        return participants(of: userType).count
     }
 
     public func collectionView(_ collectionView: UICollectionView,
@@ -108,7 +111,7 @@ extension ParticipantsViewController: UICollectionViewDelegateFlowLayout {
                                insetForSectionAt section: Int) -> UIEdgeInsets {
         let section = UserType(rawValue: section)!
         
-        let hasFirstSection = ((groupedParticipants[UserType.user] as? Array<ZMUser>)?.count ?? 0) > 0
+        let hasFirstSection = !self.participants(of: .user).isEmpty
 
         switch (section, hasFirstSection) {
         case (_, true):
@@ -148,13 +151,13 @@ extension ParticipantsViewController {
     // MARK: - Cell configuration
 
     func user(at indexPath: IndexPath) -> ZMUser? {
-        guard let userType = UserType(rawValue:indexPath.section),
-            let array = groupedParticipants[userType] as? [ZMUser],
-            indexPath.row < array.count else { return nil }
+        guard let userType = UserType(rawValue:indexPath.section) else { return nil }
+        
+        let users = participants(of: userType)
+        
+        guard indexPath.row < users.count else { return nil }
 
-        let user = array[indexPath.row]
-
-        return user
+        return users[indexPath.row]
     }
 
     func configureCell(_ cell: ParticipantsListCell, at indexPath: IndexPath) {
@@ -164,10 +167,7 @@ extension ParticipantsViewController {
     // MARK: - Service user identification
 
     func hasServiceUserInParticipants() -> Bool {
-        guard let array = groupedParticipants[UserType.serviceUser] as? [ZMUser]
-            else { return false }
-
-        return array.count >= 1
+        return !participants(of: .serviceUser).isEmpty
     }
 
     // MARK: - refresh collection view data source
