@@ -125,7 +125,7 @@ class MarkdownTextView: NextResponderTextView {
     // MARK: - Private Interface
     
     /// Returns the attributes for the given markdown.
-    func attributes(for markdown: Markdown) -> [String : Any] {
+    private func attributes(for markdown: Markdown) -> [String : Any] {
         
         // the idea is to query for specific markdown & adjust the attributes
         // incrementally
