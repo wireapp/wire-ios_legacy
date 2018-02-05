@@ -208,6 +208,7 @@ extension DownStyle {
     /// The style used within the input bar.
     static var compact: DownStyle = {
         let style = normal
+        style.baseParagraphStyle = NSParagraphStyle.default
         
         // headers all same size
         style.h1Size = style.baseFont.pointSize
