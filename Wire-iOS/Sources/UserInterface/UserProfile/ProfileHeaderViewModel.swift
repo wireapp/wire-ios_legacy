@@ -24,11 +24,14 @@ import UIKit
 
     let userDetailViewModel: UserNameDetailViewModel
     let profileViewControllerContext: ProfileViewControllerContext?
+    let navigationControllerViewControllerCount: Int?
 
     init(user: ZMBareUser?,
          fallbackName fallback: String,
          addressBookName: String?,
+         navigationControllerViewControllerCount: Int?,
          profileViewControllerContext: ProfileViewControllerContext? = nil) {
+        self.navigationControllerViewControllerCount = navigationControllerViewControllerCount
         self.profileViewControllerContext = profileViewControllerContext
         self.userDetailViewModel = UserNameDetailViewModel(
             user: user,

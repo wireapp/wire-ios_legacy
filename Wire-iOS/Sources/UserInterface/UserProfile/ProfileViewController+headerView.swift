@@ -21,6 +21,10 @@ import Foundation
 extension ProfileViewController {
     @objc(headerViewModelWithUser:)
     func headerViewModel(with user: ZMBareUser) -> ProfileHeaderViewModel {
-        return ProfileHeaderViewModel(user: user, fallbackName: user.displayName, addressBookName: BareUserToUser(user).addressBookEntry.cachedName, profileViewControllerContext: context)
+        return ProfileHeaderViewModel(user: user,
+                                      fallbackName: user.displayName,
+                                      addressBookName: BareUserToUser(user)?.addressBookEntry?.cachedName,
+                                      navigationControllerViewControllerCount: navigationController?.viewControllers.count,
+                                      profileViewControllerContext: context)
     }
 }

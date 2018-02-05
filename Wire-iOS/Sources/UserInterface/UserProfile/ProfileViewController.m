@@ -196,25 +196,6 @@ typedef NS_ENUM(NSUInteger, ProfileViewControllerTabBarIndex) {
     self.headerView = headerView;
 }
 
-//- (ProfileHeaderViewModel *)headerViewModelWithUser:(id<ZMBareUser>)user
-//{
-//    ProfileHeaderStyle headerStyle = ProfileHeaderStyleCancelButton;
-//
-//    ///TODO: clean 
-//    if (IS_IPAD_FULLSCREEN) {
-//        if (self.navigationController.viewControllers.count > 1) {
-//            headerStyle = ProfileHeaderStyleBackButton;
-//        } else if (self.context != ProfileViewControllerContextDeviceList) {
-//            headerStyle = ProfileHeaderStyleNoButton; // no button in 1:1 profile popover
-//        }
-//    }
-
-//    return [[ProfileHeaderViewModel alloc] initWithUser:user
-//                                           fallbackName:user.displayName
-//                                        addressBookName:BareUserToUser(user).addressBookEntry.cachedName
-//                           profileViewControllerContext:self.context];
-//}
-
 #pragma mark - User observation
 
 - (void)updateShowVerifiedShield
