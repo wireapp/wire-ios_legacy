@@ -288,6 +288,7 @@ final class ServiceDetailViewController: UIViewController {
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(icon: .X,
                                                                  target: self,
                                                                  action: #selector(ServiceDetailViewController.dismissButtonTapped(_:)))
+        self.navigationItem.rightBarButtonItem?.accessibilityIdentifier = "close"
     }
 
     @objc(backButtonTapped:)

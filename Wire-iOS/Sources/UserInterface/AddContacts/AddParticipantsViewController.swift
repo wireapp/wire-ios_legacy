@@ -112,6 +112,7 @@ public class AddParticipantsViewController : UIViewController {
 
         title = conversation.displayName
         navigationItem.rightBarButtonItem = UIBarButtonItem(icon: .X, target: self, action: #selector(AddParticipantsViewController.onDismissTapped(_:)))
+        navigationItem.rightBarButtonItem?.accessibilityIdentifier = "close"
         emptyResultLabel.text = everyoneHasBeenAddedText
         emptyResultLabel.textColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorTextForeground)
         emptyResultLabel.font = FontSpec(.normal, .none).font!
