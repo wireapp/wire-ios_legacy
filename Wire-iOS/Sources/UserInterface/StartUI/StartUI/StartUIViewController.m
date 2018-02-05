@@ -146,7 +146,7 @@ static NSUInteger const StartUIInitiallyShowsKeyboardConversationThreshold = 10;
                                                                              style:UIBarButtonItemStylePlain
                                                                             target:self
                                                                             action:@selector(onDismissPressed)];
-    self.navigationItem.rightBarButtonItem.accessibilityIdentifier = "close";
+    self.navigationItem.rightBarButtonItem.accessibilityIdentifier = @"close";
 }
 
 - (void)createConstraints
