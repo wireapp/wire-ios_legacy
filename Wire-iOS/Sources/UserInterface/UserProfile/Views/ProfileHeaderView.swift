@@ -99,6 +99,29 @@ final class ProfileHeaderView: UIView {
         }
     }
 
+    @objc(configureWithViewModel:)
+    public func configure(with model: ProfileHeaderViewModel) {
+        detailView.configure(with: model.userDetailViewModel)
+    }
+
+    private func updateVerifiedShield() {
+        var shouldHide = true
+        if headerStyle != .backButton {
+            shouldHide = !showVerifiedShield
+        }
+
+        UIView.transition(
+            with: verifiedImageView,
+            duration: 0.2,
+            options: .transitionCrossDissolve,
+            animations: { self.verifiedImageView.isHidden = shouldHide },
+            completion: nil
+        )
+    }
+
+
+    // MARK: - DismissButton style and constraints
+    
     func updateDismissButton() {
         // switch constraints
         switch headerStyle {
@@ -120,26 +143,6 @@ final class ProfileHeaderView: UIView {
         case .cancelButton: dismissButton.setIcon(.X, with: .tiny, for: .normal)
         case .noButton: dismissButton.isHidden = true
         }
-    }
-
-    @objc(configureWithViewModel:)
-    public func configure(with model: ProfileHeaderViewModel) {
-        detailView.configure(with: model.userDetailViewModel)
-    }
-
-    private func updateVerifiedShield() {
-        var shouldHide = true
-        if headerStyle != .backButton {
-            shouldHide = !showVerifiedShield
-        }
-
-        UIView.transition(
-            with: verifiedImageView,
-            duration: 0.2,
-            options: .transitionCrossDissolve,
-            animations: { self.verifiedImageView.isHidden = shouldHide },
-            completion: nil
-        )
     }
 
     func updateHeaderStyle() {
