@@ -73,12 +73,12 @@
         [self.appLockViewController wr_removeFromParentViewController];
     }
 
-    self.appLockViewController.view.translatesAutoresizingMaskIntoConstraints = NO;
-    [self addViewController:self.appLockViewController toView:self.view];
-
     self.chatHeadsViewController = [[ChatHeadsViewController alloc] init];
     self.chatHeadsViewController.view.translatesAutoresizingMaskIntoConstraints = NO;
     [self addViewController:self.chatHeadsViewController toView:self.view];
+
+    self.appLockViewController.view.translatesAutoresizingMaskIntoConstraints = NO;
+    [self addViewController:self.appLockViewController toView:self.view];
 
     [self setupConstraints];
     [self updateAppearanceForOrientation:[UIApplication sharedApplication].statusBarOrientation];
