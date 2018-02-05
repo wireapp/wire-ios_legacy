@@ -123,25 +123,27 @@ final class ProfileHeaderView: UIView {
     // MARK: - DismissButton style and constraints
     
     func updateDismissButton() {
-        // switch constraints
         switch headerStyle {
         case .backButton:
             cancelButtonTrailing?.isActive = false
             backButtonLeading?.isActive = true
+
+            dismissButton.isHidden = false
+
+            dismissButton.setIcon(.chevronLeft, with: .tiny, for: .normal)
         case .cancelButton:
             backButtonLeading?.isActive = false
             cancelButtonTrailing?.isActive = true
-        case .noButton:
-            backButtonLeading?.isActive = false
-            cancelButtonTrailing?.isActive = false
-        }
 
-        // switch icon
-        dismissButton.isHidden = false
-        switch headerStyle {
-        case .backButton: dismissButton.setIcon(.chevronLeft, with: .tiny, for: .normal)
-        case .cancelButton: dismissButton.setIcon(.X, with: .tiny, for: .normal)
-        case .noButton: dismissButton.isHidden = true
+            dismissButton.isHidden = false
+
+            dismissButton.setIcon(.X, with: .tiny, for: .normal)
+        case .noButton:
+            ///the button is hidden, the position is not important
+            backButtonLeading?.isActive = false
+            cancelButtonTrailing?.isActive = true
+
+            dismissButton.isHidden = true
         }
     }
 
@@ -159,6 +161,8 @@ final class ProfileHeaderView: UIView {
 
         self.headerStyle = headerStyle
     }
+
+    // MARK: - UITraitCollection
 
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
