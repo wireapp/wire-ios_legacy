@@ -28,8 +28,13 @@ extension ParticipantsViewController: UICollectionViewDataSource {
         return array.count
     }
 
-    public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ParticipantCellReuseIdentifier, for: indexPath) as? ParticipantsListCell else { fatal("unable to dequeue cell with ParticipantCellReuseIdentifier") }
+    public func collectionView(_ collectionView: UICollectionView,
+                               cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ParticipantCellReuseIdentifier, for: indexPath) as? ParticipantsListCell
+            else {
+                fatal("unable to dequeue cell with ParticipantCellReuseIdentifier")
+                
+        }
 
         configureCell(cell, at: indexPath)
         return cell
@@ -41,7 +46,10 @@ extension ParticipantsViewController: UICollectionViewDataSource {
 
     // MARK: - section header
 
-    public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+    public func collectionView(_ collectionView: UICollectionView,
+                               layout collectionViewLayout: UICollectionViewLayout,
+                               referenceSizeForHeaderInSection section: Int) -> CGSize {
+        
         guard let userType = UserType(rawValue: section), userType == .serviceUser else {
             return .zero
         }
@@ -94,6 +102,34 @@ extension ParticipantsViewController: UICollectionViewDelegate {
     }
 }
 
+extension ParticipantsViewController: UICollectionViewDelegateFlowLayout {
+    public func collectionView(_ collectionView: UICollectionView,
+                               layout collectionViewLayout: UICollectionViewLayout,
+                               insetForSectionAt section: Int) -> UIEdgeInsets {
+        let section = UserType(rawValue: section)!
+        
+        let hasFirstSection = ((groupedParticipants[UserType.user] as? Array<ZMUser>)?.count ?? 0) > 0
+
+        switch (section, hasFirstSection) {
+        case (_, true):
+            return UIEdgeInsets(top: self.insetMargin,
+                                left: self.insetMargin,
+                                bottom: self.insetMargin,
+                                right: self.insetMargin)
+        case (.user, false):
+            return UIEdgeInsets(top: 0,
+                                left: self.insetMargin,
+                                bottom: 0,
+                                right: self.insetMargin)
+        case (.serviceUser, false):
+            return UIEdgeInsets(top: 0,
+                                left: self.insetMargin,
+                                bottom: self.insetMargin,
+                                right: self.insetMargin)
+        }
+    }
+}
+
 extension ParticipantsViewController {
 
     // MARK: - collectionview layout configuration
@@ -107,8 +143,6 @@ extension ParticipantsViewController {
             self.collectionViewLayout.itemSize = CGSize(width: 96, height: 106)
             self.collectionViewLayout.minimumLineSpacing = 26
         }
-
-        self.collectionViewLayout.sectionInset = UIEdgeInsets(top: self.insetMargin, left: self.insetMargin, bottom: self.insetMargin, right: self.insetMargin)
     }
 
     // MARK: - Cell configuration
