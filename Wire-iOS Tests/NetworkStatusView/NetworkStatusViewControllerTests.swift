@@ -25,8 +25,7 @@ class MockContainerViewController: UIViewController, NetworkStatusBarDelegate {
 }
 
 
-/// Snapshot tests for different UI layout for all value of ZMNetworkState when NetworkStatusViewController is embedded in a UIViewController,
-/// with other UIView at the bottom.
+/// Snapshot tests for differnt margin and size of NetworkStatusViewController.view for all value of ZMNetworkState with other UIView at the bottom.
 final class NetworkStatusViewControllerTests: ZMSnapshotTestCase {
 
     var sut: NetworkStatusViewController!

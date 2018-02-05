@@ -120,7 +120,11 @@ import Cartography
     }
 }
 
+
 extension ConversationRootViewController: NetworkStatusBarDelegate {
+
+
+    /// The network status bar shows on conversation list only in iPad full screen mode
     var shouldShowNetworkStatusUIInIPadFullScreenMode: Bool {
         get {
             return false
