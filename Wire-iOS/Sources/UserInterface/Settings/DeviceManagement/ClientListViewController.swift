@@ -114,7 +114,7 @@ import CocoaLumberjackSwift
         self.view.addSubview(self.topSeparator)
         self.createConstraints()
 
-        if Device.isIPadFullScreen {
+        if Device.isIPadRegular {
             self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.cancel, target: self, action: #selector(ClientListViewController.backPressed(_:)))
         }
         

@@ -20,28 +20,47 @@ import Foundation
 
 /// Enum for replacing IS_IPAD_FULLSCREEN, IS_IPAD_PORTRAIT_LAYOUT and IS_IPAD_LANDSCAPE_LAYOUT objc macros.
 enum Device {
-    enum SizeClass {
+    enum HorizontalSizeClass {
         enum Orientation {
             case landscape
             case portrait
+            case unknown
         }
 
         case regular(Orientation?)
         case compact
+        case unknown
     }
 
-    case iPad(SizeClass?)
+    case iPad(HorizontalSizeClass?)
     case other
+}
 
+extension Device {
     static var currentDeviceSizeClass: Device {
-        if UIDevice.current.userInterfaceIdiom == .pad && UIApplication.shared.keyWindow?.traitCollection.horizontalSizeClass == .regular {
-            return Device.iPad(.regular(nil))
+        switch UIDevice.current.userInterfaceIdiom {
+        case .pad:
+            switch UIApplication.shared.keyWindow?.traitCollection.horizontalSizeClass {
+            case .regular?:
+                let statusBarOrientation = UIApplication.shared.statusBarOrientation
+                if UIInterfaceOrientationIsLandscape(statusBarOrientation) {
+                    return .iPad(.regular(.landscape))
+                }
+                else if UIInterfaceOrientationIsPortrait(statusBarOrientation) {
+                    return .iPad(.regular(.portrait))
+                }
+                else {
+                    return .iPad(.regular(.unknown))
+                }
+            default:
+                return .iPad(.unknown)
+            }
+        default:
+            return .other
         }
-
-        return Device.other
     }
 
-    static var isIPadFullScreen: Bool {
+    static var isIPadRegular: Bool {
         switch Device.currentDeviceSizeClass {
         case .iPad(.regular?):
             return true

@@ -170,7 +170,7 @@ extension NetworkStatusViewControllerDelegate {
     }
 
     var shouldNetworkStatusViewUpdates: Bool {
-        if Device.isIPadFullScreen,
+        if Device.isIPadRegular,
             let shouldShowNetworkStatusUI = delegate?.shouldShowNetworkStatusUIInIPadFullScreenMode,
             shouldShowNetworkStatusUI == false {
             return false
