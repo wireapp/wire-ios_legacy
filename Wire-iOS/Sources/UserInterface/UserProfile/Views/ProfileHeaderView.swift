@@ -35,20 +35,20 @@ final class ProfileHeaderView: UIView {
 
     private(set) var dismissButton = IconButton.iconButtonCircular()
     private(set) var headerStyle: ProfileHeaderStyle
-    let navigationControllerViewControllerCount: Int?
-    let profileViewControllerContext: ProfileViewControllerContext?
+    private let navigationControllerViewControllerCount: Int?
+    private let profileViewControllerContext: ProfileViewControllerContext?
 
     private let detailView = UserNameDetailView()
     private let verifiedImageView = UIImageView(image: WireStyleKit.imageOfShieldverified())
 
-    var backButtonLeading: NSLayoutConstraint?
-    var cancelButtonTrailing: NSLayoutConstraint?
+    private var backButtonLeading: NSLayoutConstraint?
+    private var cancelButtonTrailing: NSLayoutConstraint?
 
     @objc(initWithViewModel:)
     init(with viewModel: ProfileHeaderViewModel) {
         headerStyle = .noButton
         navigationControllerViewControllerCount = viewModel.navigationControllerViewControllerCount
-        profileViewControllerContext = viewModel.profileViewControllerContext
+        profileViewControllerContext = viewModel.context
         super.init(frame: .zero)
 
         setupViews()

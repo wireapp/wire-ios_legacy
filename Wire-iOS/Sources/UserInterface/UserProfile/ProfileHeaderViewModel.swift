@@ -23,16 +23,25 @@ import UIKit
 @objc final class ProfileHeaderViewModel: NSObject {
 
     let userDetailViewModel: UserNameDetailViewModel
-    let profileViewControllerContext: ProfileViewControllerContext?
+    let context: ProfileViewControllerContext?
     let navigationControllerViewControllerCount: Int?
 
+
+    /// Create a ProfileHeaderViewModel for ProfileHeaderView apperance
+    ///
+    /// - Parameters:
+    ///   - user: a ZMBareUser object for showing user's name
+    ///   - fallback: fallback name
+    ///   - addressBookName: address book name for subtitle
+    ///   - navigationControllerViewControllerCount: the number of parent view controller's navigationController's viewController(s), for choosing dismiss button icon type.
+    ///   - profileViewControllerContext: default is nil, for choosing dismiss button icon type.
     init(user: ZMBareUser?,
          fallbackName fallback: String,
          addressBookName: String?,
          navigationControllerViewControllerCount: Int?,
-         profileViewControllerContext: ProfileViewControllerContext? = nil) {
+         context: ProfileViewControllerContext? = nil) {
         self.navigationControllerViewControllerCount = navigationControllerViewControllerCount
-        self.profileViewControllerContext = profileViewControllerContext
+        self.context = context
         self.userDetailViewModel = UserNameDetailViewModel(
             user: user,
             fallbackName: fallback,

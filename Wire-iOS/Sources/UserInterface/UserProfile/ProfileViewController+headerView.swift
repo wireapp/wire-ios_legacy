@@ -25,6 +25,6 @@ extension ProfileViewController {
                                       fallbackName: user.displayName,
                                       addressBookName: BareUserToUser(user)?.addressBookEntry?.cachedName,
                                       navigationControllerViewControllerCount: navigationController?.viewControllers.count,
-                                      profileViewControllerContext: context)
+                                      context: context)
     }
 }
