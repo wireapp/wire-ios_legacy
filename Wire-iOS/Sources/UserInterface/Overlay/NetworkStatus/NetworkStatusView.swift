@@ -200,7 +200,7 @@ class NetworkStatusView: UIView {
         }
     }
 
-    func updateViewState(animated: Bool) {
+    private func updateViewState(animated: Bool) {
         let connectingViewHidden = state != .onlineSynchronizing
         connectingView.animating = state == .onlineSynchronizing
         let offlineViewHidden = state != .offlineExpanded && state != .offlineCollapsed
@@ -236,7 +236,10 @@ class NetworkStatusView: UIView {
         }
     }
 
-    func updateUI(offlineBarState: OfflineBarState, animated: Bool, connectingViewHidden: Bool, offlineViewHidden: Bool) {
+    func updateUI(offlineBarState: OfflineBarState,
+                  animated: Bool,
+                  connectingViewHidden: Bool,
+                  offlineViewHidden: Bool) {
         offlineViewTopMargin?.constant = offlineBarState == .expanded ? NetworkStatusView.verticalMargin : 0
         offlineViewBottomMargin?.constant = offlineBarState == .expanded ? -NetworkStatusView.verticalMargin : 0
 

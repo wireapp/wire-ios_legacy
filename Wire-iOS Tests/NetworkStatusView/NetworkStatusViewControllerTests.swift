@@ -21,6 +21,10 @@ import XCTest
 import Cartography
 
 class MockContainerViewController: UIViewController, NetworkStatusBarDelegate {
+    var shouldShowNetworkStatusUIInIPadRegularLandscape: Bool = true
+
+    var shouldShowNetworkStatusUIInIPadRegularPortrait: Bool = true
+
     var isViewDidAppear: Bool = true
 }
 

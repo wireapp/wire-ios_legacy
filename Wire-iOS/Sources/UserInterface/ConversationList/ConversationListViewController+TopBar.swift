@@ -21,6 +21,17 @@ import UIKit
 import Cartography
 
 extension ConversationListViewController: NetworkStatusBarDelegate {
+    var shouldShowNetworkStatusUIInIPadRegularLandscape: Bool {
+        get {
+            return true
+        }
+    }
+
+    var shouldShowNetworkStatusUIInIPadRegularPortrait: Bool {
+        get {
+            return false
+        }
+    }
 }
 
 extension ConversationListViewController {
@@ -62,7 +73,7 @@ extension ConversationListViewController {
 
     @objc func createNetworkStatusBar() {
         self.networkStatusViewController = NetworkStatusViewController()
-        self.addToSelf(networkStatusViewController)
         networkStatusViewController.delegate = self
+        self.addToSelf(networkStatusViewController)
     }
 }

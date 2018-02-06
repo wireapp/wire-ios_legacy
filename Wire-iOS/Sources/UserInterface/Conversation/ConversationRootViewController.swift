@@ -41,13 +41,14 @@ import Cartography
 
         super.init(nibName: .none, bundle: .none)
 
+        networkStatusViewController.delegate = self
+
         self.addChildViewController(conversationController)
         self.contentView.addSubview(conversationController.view)
         conversationController.didMove(toParentViewController: self)
 
         conversationViewController = conversationController
 
-        networkStatusViewController.delegate = self
 
         configure()
     }
@@ -123,11 +124,16 @@ import Cartography
 
 extension ConversationRootViewController: NetworkStatusBarDelegate {
 
-
     /// The network status bar shows on conversation list only in iPad full screen mode
-    var shouldShowNetworkStatusUIInIPadFullScreenMode: Bool {
+    var shouldShowNetworkStatusUIInIPadRegularLandscape: Bool {
         get {
             return false
+        }
+    }
+
+    var shouldShowNetworkStatusUIInIPadRegularPortrait: Bool {
+        get {
+            return true
         }
     }
 

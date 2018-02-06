@@ -22,16 +22,11 @@ import Cartography
 typealias NetworkStatusBarDelegate = NetworkStatusViewControllerDelegate & NetworkStatusViewDelegate
 
 protocol NetworkStatusViewControllerDelegate: class {
-    /// if return false, NetworkStatusViewController will not disapper in iPad full screen mode, default is true
-    var shouldShowNetworkStatusUIInIPadFullScreenMode: Bool {get}
-}
+    /// if return false, NetworkStatusViewController will not disapper in iPad regular mode landscape orientation.
+    var shouldShowNetworkStatusUIInIPadRegularLandscape: Bool {get}
 
-extension NetworkStatusViewControllerDelegate {
-    var shouldShowNetworkStatusUIInIPadFullScreenMode: Bool {
-        get {
-            return true
-        }
-    }
+    /// if return false, NetworkStatusViewController will not disapper in iPad regular mode portrait orientation.
+    var shouldShowNetworkStatusUIInIPadRegularPortrait: Bool {get}
 }
 
 @objc final class NetworkStatusViewController: UIViewController {
@@ -46,7 +41,7 @@ extension NetworkStatusViewControllerDelegate {
     static private var shared: NetworkStatusViewController? {
         get {
             for networkStatusViewController in selfInstances {
-                if networkStatusViewController.shouldNetworkStatusViewUpdates {
+                if networkStatusViewController.shouldNetworkStatusViewUpdates() {
                     return networkStatusViewController
                 }
 
@@ -185,19 +180,43 @@ extension NetworkStatusViewControllerDelegate {
 
     fileprivate func update(state: NetworkStatusViewState) {
         self.state = state
-        guard shouldNetworkStatusViewUpdates else { return }
+        guard shouldNetworkStatusViewUpdates() else { return }
 
         networkStatusView.update(state: state, animated: true)
     }
 
-    var shouldNetworkStatusViewUpdates: Bool {
-        if UIIdiomSizeClassOrientation.isIPadRegularLandscape(),
-            let shouldShowNetworkStatusUI = delegate?.shouldShowNetworkStatusUIInIPadFullScreenMode, ///TODO: one more delegate method for landscape
-            shouldShowNetworkStatusUI == false {
-            return false
+    func shouldNetworkStatusViewUpdates(to size: CGSize? = nil) -> Bool {
+
+        if UIIdiomSizeClassOrientation.isIPadRegular(), let delegate = self.delegate {
+            var iPadBoundSize = self.view.bounds.size
+            if let size = size {
+                iPadBoundSize = size
+            }
+            if iPadBoundSize == .zero {
+                return false
+            }
+
+            if iPadBoundSize.width > iPadBoundSize.height {
+                return delegate.shouldShowNetworkStatusUIInIPadRegularLandscape
+            }
+            else {
+                return delegate.shouldShowNetworkStatusUIInIPadRegularPortrait
+            }
         }
 
         return true
+    }
+
+    func updateNetworkStatusView(to size: CGSize? = nil) {
+        /// when size class changes and self should not be shown, hide it.
+        if shouldNetworkStatusViewUpdates(to: size) == false {
+            networkStatusView.update(state: .online, animated: false)
+            self.delegate?.didChangeHeight(networkStatusView, animated: false, state: .online)
+        } else {
+            if let state = state {
+                networkStatusView.update(state: state, animated: false)
+            }
+        }
     }
 }
 
@@ -213,17 +232,6 @@ extension NetworkStatusViewController: ZMNetworkAvailabilityObserver {
 
 extension NetworkStatusViewController {
 
-    func updateNetworkStatusView() {
-        /// when size class changes and self should not be shown, hide it.
-        if shouldNetworkStatusViewUpdates == false {
-            networkStatusView.update(state: .online, animated: false)
-        } else {
-            if let state = state {
-                networkStatusView.update(state: state, animated: false)
-            }
-        }
-    }
-
     open override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
 
@@ -233,13 +241,7 @@ extension NetworkStatusViewController {
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
 
-        updateNetworkStatusView()
-    }
-
-    override func viewWillLayoutSubviews() {
-        super.viewWillLayoutSubviews()
-
-        updateNetworkStatusView()
+        updateNetworkStatusView(to: size)
     }
 
 }
