@@ -205,6 +205,7 @@ final class ServiceDetailViewController: UIViewController {
 
         self.variant = variant
         self.actionType = actionType
+        actionButton.isHidden = destinationConversation.map(ZMUser.selfUser().isGuest) ?? false
 
         super.init(nibName: nil, bundle: nil)
 
