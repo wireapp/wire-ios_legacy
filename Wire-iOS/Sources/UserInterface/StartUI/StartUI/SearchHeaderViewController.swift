@@ -107,9 +107,11 @@ public class SearchHeaderViewController : UIViewController {
             tokenField.trailing == container.trailing - 8
             tokenField.centerY == container.centerY
         }
-                
+        
+        // pin to the bottom of the navigation bar
+        tokenFieldContainer.topAnchor.constraint(equalTo: self.topLayoutGuide.bottomAnchor).isActive = true
+
         constrain(view, tokenFieldContainer) { view, tokenFieldContainer in
-            tokenFieldContainer.top == view.topMargin
             tokenFieldContainer.bottom == view.bottom
             tokenFieldContainer.leading == view.leading
             tokenFieldContainer.trailing == view.trailing
