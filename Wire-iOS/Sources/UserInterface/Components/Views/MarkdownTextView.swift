@@ -107,10 +107,14 @@ class MarkdownTextView: NextResponderTextView {
     
     // MARK: Query Methods
     
-    /// Returns the markdown bitmask at the current caret position.
+    /// Returns the markdown at the current caret position.
     ///
     func markdownAtCaret() -> Markdown {
-        return markdown(at: selectedRange.location)
+        let caret = selectedRange.location
+        if caret == 0 { return markdown(at: caret) }
+        // in order to allow continuity of typing, the markdown at the caret
+        // should be the same as the previous position.
+        return markdown(at: caret - 1)
     }
     
     /// Returns the markdown bitmask at the given location if it exists, else
