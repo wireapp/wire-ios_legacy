@@ -16,10 +16,8 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-
 import UIKit
 import Cartography
-
 
 enum ProfileHeaderStyle: Int {
     case cancelButton, backButton, noButton
@@ -34,7 +32,8 @@ final class ProfileHeaderView: UIView {
     }
 
     private(set) var dismissButton = IconButton.iconButtonCircular()
-    private(set) var headerStyle: ProfileHeaderStyle
+    internal(set) var headerStyle: ProfileHeaderStyle
+    /// flag for disable headerStyle update in traitCollectionDidChange. It should be used for test only.
     private let navigationControllerViewControllerCount: Int?
     private let profileViewControllerContext: ProfileViewControllerContext?
 
@@ -56,7 +55,7 @@ final class ProfileHeaderView: UIView {
         createConstraints()
         updateDismissButton()
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -76,7 +75,7 @@ final class ProfileHeaderView: UIView {
         let horizontalMargin = WAZUIMagic.cgFloat(forIdentifier: "profile_temp.content_left_margin")
 
         let detailViewMargin = horizontalMargin + 32
-        
+
         constrain(self, detailView) { (view: LayoutProxy, detailView: LayoutProxy) -> () in
             detailView.top == view.top + topMargin
             detailView.leading == view.leading + detailViewMargin
@@ -119,9 +118,8 @@ final class ProfileHeaderView: UIView {
         )
     }
 
-
     // MARK: - DismissButton style and constraints
-    
+
     func updateDismissButton() {
         switch headerStyle {
         case .backButton:
@@ -147,7 +145,7 @@ final class ProfileHeaderView: UIView {
         }
     }
 
-    func updateHeaderStyle() {
+    private func updateHeaderStyle() {
         var headerStyle: ProfileHeaderStyle = .cancelButton
 
         if self.traitCollection.userInterfaceIdiom == .pad && UIApplication.shared.keyWindow?.traitCollection.horizontalSizeClass == .regular {
@@ -166,8 +164,13 @@ final class ProfileHeaderView: UIView {
 
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
+        guard self.traitCollection.userInterfaceIdiom == .pad,
+            UIApplication.shared.keyWindow?.traitCollection.horizontalSizeClass != .unspecified else {
+            return
+        }
 
         updateHeaderStyle()
         updateDismissButton()
     }
 }
+
