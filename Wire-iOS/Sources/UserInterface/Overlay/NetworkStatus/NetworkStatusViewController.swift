@@ -55,6 +55,7 @@ protocol NetworkStatusViewControllerDelegate: class {
     fileprivate var pendingState: NetworkStatusViewState?
     fileprivate var offlineBarTimer: Timer?
     fileprivate var state: NetworkStatusViewState?
+    fileprivate var finishedViewWillAppear: Bool = false
 
     init() {
         super.init(nibName: nil, bundle: nil)
@@ -93,11 +94,21 @@ protocol NetworkStatusViewControllerDelegate: class {
         }
 
         if let userSession = ZMUserSession.shared() {
-            update(state: viewState(from: userSession.networkState))
             networkStatusObserverToken = ZMNetworkAvailabilityChangeNotification.addNetworkAvailabilityObserver(self, userSession: userSession)
         }
 
         networkStatusView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tappedOnNetworkStatusBar)))
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+
+        guard !finishedViewWillAppear else { return }
+
+        finishedViewWillAppear = true
+        if let userSession = ZMUserSession.shared() {
+            update(state: viewState(from: userSession.networkState))
+        }
     }
 
     @objc public func createConstraints(bottomView: UIView, containerView: UIView, topMargin: CGFloat) {
@@ -187,24 +198,23 @@ protocol NetworkStatusViewControllerDelegate: class {
 
     func shouldNetworkStatusViewUpdates(to size: CGSize? = nil) -> Bool {
 
-        if UIIdiomSizeClassOrientation.isIPadRegular(), let delegate = self.delegate {
-            var iPadBoundSize = self.view.bounds.size
-            if let size = size {
-                iPadBoundSize = size
+        guard UIIdiomSizeClassOrientation.isIPadRegular() else { return true }
+        guard let delegate = self.delegate else { return true }
+
+            var isLandscape = false
+            if let size = size, size.width > 0 {
+                isLandscape = size.width > size.height
             }
-            if iPadBoundSize == .zero {
-                return false
+            else {
+                isLandscape = UIIdiomSizeClassOrientation.isLandscape()
             }
 
-            if iPadBoundSize.width > iPadBoundSize.height {
+            if isLandscape {
                 return delegate.shouldShowNetworkStatusUIInIPadRegularLandscape
             }
             else {
                 return delegate.shouldShowNetworkStatusUIInIPadRegularPortrait
             }
-        }
-
-        return true
     }
 
     func updateNetworkStatusView(to size: CGSize? = nil) {

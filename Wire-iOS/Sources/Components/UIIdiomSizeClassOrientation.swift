@@ -64,13 +64,21 @@ extension UIIdiomSizeClassOrientation {
 
     /// Notice: this two methods used in UIViewController.viewWillTransition. It returns the original orientation, not the new orientation
     ///
-    /// - Returns: <#return value description#>
+    /// - Returns:
     static func isIPadRegularLandscape() -> Bool {
         return UIIdiomSizeClassOrientation.current() == UIIdiomSizeClassOrientation(idiom: .pad, horizontalSizeClass: .regular, orientation: .landscapeLeft)
     }
 
     static func isIPadRegularPortrait() -> Bool {
         return !UIIdiomSizeClassOrientation.isIPadRegularLandscape()
+    }
+
+    static func isPortrait() -> Bool {
+        return UIInterfaceOrientationIsPortrait(UIIdiomSizeClassOrientation.current().orientation!) /// FIXME: unwrap
+    }
+
+    static func isLandscape() -> Bool {
+        return UIInterfaceOrientationIsLandscape(UIIdiomSizeClassOrientation.current().orientation!)
     }
 }
 
