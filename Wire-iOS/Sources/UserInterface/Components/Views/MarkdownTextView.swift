@@ -49,6 +49,7 @@ class MarkdownTextView: NextResponderTextView {
         didSet {
             if oldValue != activeMarkdown {
                 currentAttributes = attributes(for: activeMarkdown)
+                markdownTextStorage.currentMarkdown = activeMarkdown
                 updateTypingAttributes()
                 NotificationCenter.default.post(name: .MarkdownTextViewDidChangeActiveMarkdown, object: self)
             }
@@ -65,6 +66,8 @@ class MarkdownTextView: NextResponderTextView {
         return NSMakeRange(0, attributedText.length)
     }
     
+    let markdownTextStorage: MarkdownTextStorage
+    
     // MARK: - Init
     
     convenience init() {
@@ -73,8 +76,16 @@ class MarkdownTextView: NextResponderTextView {
     
     init(with style: DownStyle) {
         self.style = style
-        super.init(frame: .zero, textContainer: nil)
+
+        self.markdownTextStorage = MarkdownTextStorage()
+        let layoutManager = NSLayoutManager()
+        self.markdownTextStorage.addLayoutManager(layoutManager)
+        let textContainer = NSTextContainer()
+        layoutManager.addTextContainer(textContainer)
+        super.init(frame: .zero, textContainer: textContainer)
+        
         currentAttributes = attributes(for: activeMarkdown)
+        markdownTextStorage.currentMarkdown = .none
     }
     
     required init?(coder aDecoder: NSCoder) {
