@@ -951,13 +951,13 @@
 		EE4332491F1A67E500096D90 /* PopUpIconButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE4332481F1A67E500096D90 /* PopUpIconButton.swift */; };
 		EE43324B1F1A785800096D90 /* PopUpIconButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE43324A1F1A785800096D90 /* PopUpIconButtonView.swift */; };
 		EE6067041F23BC33001CAC97 /* MarklightTextViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE6067031F23BC33001CAC97 /* MarklightTextViewTests.swift */; };
-		EE8E926320248377000F4752 /* Down.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EE8E92602024836B000F4752 /* Down.framework */; };
 		EE8E9267202496C2000F4752 /* NSAttributedString+Down.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE8E9266202496C2000F4752 /* NSAttributedString+Down.swift */; };
 		EE8E926E2024F085000F4752 /* MarkdownTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE8E926D2024F085000F4752 /* MarkdownTextView.swift */; };
 		EEA747A81FCEBAD1000B529E /* AnalyticsMixpanelProviderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEA747A71FCEBAD1000B529E /* AnalyticsMixpanelProviderTests.swift */; };
 		EEB8A2D01F628D1100958881 /* Settings+Account.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEB8A2CF1F628D1100958881 /* Settings+Account.swift */; };
 		EEBE8C5C1F681694009D78C9 /* NSData+ImageType.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEBE8C5B1F681694009D78C9 /* NSData+ImageType.swift */; };
 		EEBE8C5E1F68171F009D78C9 /* NSData_ImageTypeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEBE8C5D1F68171F009D78C9 /* NSData_ImageTypeTests.swift */; };
+		EECDB2542029D7DA00D0D268 /* Down.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EECDB2532029D7D900D0D268 /* Down.framework */; };
 		EEE6310B1F7390D100E56803 /* ChatHeadsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEE6310A1F7390D100E56803 /* ChatHeadsViewController.swift */; };
 		EEF28EEA1F1613DA007642E2 /* MarkdownBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEF28EE91F1613DA007642E2 /* MarkdownBarView.swift */; };
 		EEF28EED1F16692A007642E2 /* InputBarSecondaryButtonsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEF28EEC1F16692A007642E2 /* InputBarSecondaryButtonsView.swift */; };
@@ -2530,6 +2530,7 @@
 		EEB8A2CF1F628D1100958881 /* Settings+Account.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Settings+Account.swift"; sourceTree = "<group>"; };
 		EEBE8C5B1F681694009D78C9 /* NSData+ImageType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSData+ImageType.swift"; sourceTree = "<group>"; };
 		EEBE8C5D1F68171F009D78C9 /* NSData_ImageTypeTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSData_ImageTypeTests.swift; sourceTree = "<group>"; };
+		EECDB2532029D7D900D0D268 /* Down.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Down.framework; path = Carthage/Build/iOS/Down.framework; sourceTree = "<group>"; };
 		EEE6310A1F7390D100E56803 /* ChatHeadsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatHeadsViewController.swift; sourceTree = "<group>"; };
 		EEF28EE91F1613DA007642E2 /* MarkdownBarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MarkdownBarView.swift; path = ../../MarkdownBarView.swift; sourceTree = "<group>"; };
 		EEF28EEC1F16692A007642E2 /* InputBarSecondaryButtonsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputBarSecondaryButtonsView.swift; sourceTree = "<group>"; };
@@ -2733,9 +2734,9 @@
 				87AAE4291E43682E00E1D13A /* LocalAuthentication.framework in Frameworks */,
 				8714A9EC1E69E605006BBAE9 /* FLAnimatedImage.framework in Frameworks */,
 				87D7AF671DF5A158001A1CD7 /* Contacts.framework in Frameworks */,
+				EECDB2542029D7DA00D0D268 /* Down.framework in Frameworks */,
 				872C99121DB0EA54006A3BDE /* Intents.framework in Frameworks */,
 				87ADCE4E1DA68FA400CC06DC /* CallKit.framework in Frameworks */,
-				EE8E926320248377000F4752 /* Down.framework in Frameworks */,
 				874D0EB11D3E575E003DF418 /* Photos.framework in Frameworks */,
 				872786CB1D38EE2000CC3C15 /* OnePasswordExtension.framework in Frameworks */,
 				873478071D34EE5100CB200F /* libstdc++.tbd in Frameworks */,
@@ -3161,6 +3162,7 @@
 		8286E48D7CC440448CBD8F48 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				EECDB2532029D7D900D0D268 /* Down.framework */,
 				8715F22E1F8677A2006F3935 /* Mixpanel.framework */,
 				EE291BB41F0B9BF200142F31 /* Marklight.framework */,
 				F1CE2DEF1EF0337F00631D8A /* PureLayout.framework */,
@@ -6098,6 +6100,7 @@
 				"$(SRCROOT)/Carthage/Build/iOS/PureLayout.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/Marklight.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/Mixpanel.framework",
+				"$(BUILT_PRODUCTS_DIR)/Down.framework",
 			);
 			name = "Copy Frameworks and DSYMs";
 			outputPaths = (

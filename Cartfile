@@ -15,3 +15,4 @@ github "wireapp/FLAnimatedImage" "1.0.12-wire"
 github "wireapp/PureLayout" "v3.0.0"
 github "wireapp/Marklight" ~> 1.0.9
 github "wireapp/mixpanel-swift" ~> 2.2
+github "wireapp/Down" "fix/AST-Rendering-Swift3"
