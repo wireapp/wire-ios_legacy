@@ -55,8 +55,8 @@ class ShareViewControllerTests: CoreDataSnapshotTestCase {
     }
     
     func testThatItRendersCorrectlyShareViewController_Photos() {
-        /// TODO fix image loading
         guard let imageData = image(inTestBundleNamed: "unsplash_burger.jpg").data() else {
+            XCTFail("Cannot load image")
             return
         }
         groupConversation.appendMessage(withImageData: imageData)
@@ -85,7 +85,7 @@ class ShareViewControllerTests: CoreDataSnapshotTestCase {
     
     /// BOTS INTEGRATION
     
-    func testThatItRendersCorrectlyShareServiceViewController_SelectionWithoutPicture() {
+    func testThatItRendersCorrectlyShareServiceViewController_Selection() {
         
         let serviceUser = createService(name: "Wire Mountain Bot")
         
@@ -107,7 +107,7 @@ class ShareViewControllerTests: CoreDataSnapshotTestCase {
         verifyInAllDeviceSizes(view: sut.view)
     }
     
-    func createService(name: String) -> ZMUser {
+    private func createService(name: String) -> ZMUser {
         let bot = createUser(name: name)
         bot.serviceIdentifier = "serviceIdentifier"
         bot.providerIdentifier = "providerIdentifier"
