@@ -18,54 +18,46 @@
 
 import Foundation
 
-/// Enum for replacing IS_IPAD_FULLSCREEN, IS_IPAD_PORTRAIT_LAYOUT and IS_IPAD_LANDSCAPE_LAYOUT objc macros.
-enum Device {
-    enum HorizontalSizeClass {
-        enum Orientation {
-            case landscape
-            case portrait
-            case unknown
-        }
+/// Struct for replacing IS_IPAD_FULLSCREEN, IS_IPAD_PORTRAIT_LAYOUT and IS_IPAD_LANDSCAPE_LAYOUT objc macros.
+struct UIIdiomSizeClassOrientation {
+    var idiom: UIUserInterfaceIdiom
+    var horizontalSizeClass: UIUserInterfaceSizeClass?
+    var orientation: UIInterfaceOrientation?
 
-        case regular(Orientation?)
-        case compact
-        case unknown
+    init() {
+        idiom = UIDevice.current.userInterfaceIdiom
+        horizontalSizeClass = UIApplication.shared.keyWindow?.traitCollection.horizontalSizeClass
+        orientation = UIApplication.shared.statusBarOrientation
     }
 
-    case iPad(HorizontalSizeClass?)
-    case other
+    init(idiom: UIUserInterfaceIdiom, horizontalSizeClass: UIUserInterfaceSizeClass?, orientation: UIInterfaceOrientation? = nil) {
+        self.idiom = idiom
+        self.horizontalSizeClass = horizontalSizeClass
+        self.orientation = orientation
+    }
+
+    static var currentIdiomSizeClassOrientation: UIIdiomSizeClassOrientation {
+        return UIIdiomSizeClassOrientation()
+    }
 }
 
-extension Device {
-    static var currentDeviceSizeClass: Device {
-        switch UIDevice.current.userInterfaceIdiom {
-        case .pad:
-            switch UIApplication.shared.keyWindow?.traitCollection.horizontalSizeClass {
-            case .regular?:
-                let statusBarOrientation = UIApplication.shared.statusBarOrientation
-                if UIInterfaceOrientationIsLandscape(statusBarOrientation) {
-                    return .iPad(.regular(.landscape))
-                }
-                else if UIInterfaceOrientationIsPortrait(statusBarOrientation) {
-                    return .iPad(.regular(.portrait))
-                }
-                else {
-                    return .iPad(.regular(.unknown))
-                }
-            default:
-                return .iPad(.unknown)
-            }
-        default:
-            return .other
-        }
+extension UIIdiomSizeClassOrientation: Equatable {}
+func ==(lhs: UIIdiomSizeClassOrientation, rhs: UIIdiomSizeClassOrientation) -> Bool {
+
+    var isOrientationEqual = false
+    if let lhsOrientation = lhs.orientation, let rhsOrientation = rhs.orientation {
+        isOrientationEqual = lhsOrientation == rhsOrientation
+    }
+    else {
+        isOrientationEqual = true
     }
 
+    return lhs.idiom == rhs.idiom && lhs.horizontalSizeClass == rhs.horizontalSizeClass && isOrientationEqual
+}
+
+extension UIIdiomSizeClassOrientation {
     static var isIPadRegular: Bool {
-        switch Device.currentDeviceSizeClass {
-        case .iPad(.regular?):
-            return true
-        default:
-            return false
-        }
+        return UIIdiomSizeClassOrientation.currentIdiomSizeClassOrientation == UIIdiomSizeClassOrientation(idiom: .pad, horizontalSizeClass: .regular, orientation: nil)
     }
 }
+
