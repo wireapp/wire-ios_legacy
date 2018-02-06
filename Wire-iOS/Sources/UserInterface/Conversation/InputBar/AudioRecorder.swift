@@ -214,27 +214,7 @@ public final class AudioRecorder: NSObject, AudioRecorderType {
         currentDuration = duration
         recordTimerCallback?(currentDuration)
     }
-    
-//    private func setSessionActive(_ active: Bool) {
-//        if active {
-//            AVSMediaManager.sharedInstance().stopAudio()
-//            AppDelegate.shared().mediaPlaybackManager?.audioTrackPlayer.stop()
-//        }
-//        
-//        do {
-//            try AVAudioSession.sharedInstance().setActive(active)
-//        }
-//        catch let error {
-//            DDLogError("Failed to set session activity to \(active): \(error)")
-//        }
-//        
-//        do {
-//            try AVAudioSession.sharedInstance().setCategory(active ? AVAudioSessionCategoryPlayAndRecord : AVAudioSessionCategorySoloAmbient)
-//        } catch let error {
-//            DDLogError("Failed change audio category for recording: \(error)")
-//        }
-//    }
-    
+        
     // MARK: Playing
     
     public func playRecording() {
