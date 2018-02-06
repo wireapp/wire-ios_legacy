@@ -41,10 +41,9 @@ class DefaultNavigationBar : UINavigationBar {
                                NSForegroundColorAttributeName: ColorScheme.default().color(withName: ColorSchemeColorTextForeground)]
         setTitleVerticalPositionAdjustment(-2.0, for: .default)
         
-        let separatorPixel = UIImage.singlePixelImage(with: ColorScheme.default().color(withName: ColorSchemeColorSeparator))
+        let separatorPixel = UIImage.singlePixelImage(with: UIColor.clear)
         let retinaSeparatorPixel = UIImage(cgImage: separatorPixel.cgImage!, scale: UIScreen.main.scale, orientation: separatorPixel.imageOrientation)
         shadowImage = retinaSeparatorPixel
-        
     }
     
 }
