@@ -191,8 +191,8 @@ extension NetworkStatusViewControllerDelegate {
     }
 
     var shouldNetworkStatusViewUpdates: Bool {
-        if UIIdiomSizeClassOrientation.isIPadRegular,
-            let shouldShowNetworkStatusUI = delegate?.shouldShowNetworkStatusUIInIPadFullScreenMode,
+        if UIIdiomSizeClassOrientation.isIPadRegularLandscape(),
+            let shouldShowNetworkStatusUI = delegate?.shouldShowNetworkStatusUIInIPadFullScreenMode, ///TODO: one more delegate method for landscape
             shouldShowNetworkStatusUI == false {
             return false
         }
@@ -209,13 +209,11 @@ extension NetworkStatusViewController: ZMNetworkAvailabilityObserver {
 
 }
 
-// MARK: - iPad size class switching
+// MARK: - iPad size class and orientation switching
 
 extension NetworkStatusViewController {
 
-    open override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-
+    func updateNetworkStatusView() {
         /// when size class changes and self should not be shown, hide it.
         if shouldNetworkStatusViewUpdates == false {
             networkStatusView.update(state: .online, animated: false)
@@ -225,5 +223,24 @@ extension NetworkStatusViewController {
             }
         }
     }
+
+    open override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+
+        updateNetworkStatusView()
+    }
+
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
+
+        updateNetworkStatusView()
+    }
+
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+
+        updateNetworkStatusView()
+    }
+
 }
 

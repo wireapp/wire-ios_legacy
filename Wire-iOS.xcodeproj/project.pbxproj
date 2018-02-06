@@ -1014,7 +1014,7 @@
 		EF538FDF2028AB2B00EA4048 /* ProfileViewController+headerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF538FDD2028A9A600EA4048 /* ProfileViewController+headerView.swift */; };
 		EF6163A51FE9583400C6F5A9 /* Message+dayFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF6163A41FE9583400C6F5A9 /* Message+dayFormatter.swift */; };
 		EF6163A61FE9682700C6F5A9 /* TextMessageCellTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8EE5591D636F4600B0D6D7 /* TextMessageCellTests.swift */; };
-		EF72D87420236DE600BD4155 /* DeviceSizeClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF72D87320236DE600BD4155 /* DeviceSizeClass.swift */; };
+		EF72D87420236DE600BD4155 /* UIIdiomSizeClassOrientation.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF72D87320236DE600BD4155 /* UIIdiomSizeClassOrientation.swift */; };
 		EF7D75A6201B6149003A8AF8 /* DeviceNativeBoundsSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF7D75A5201B6149003A8AF8 /* DeviceNativeBoundsSize.swift */; };
 		EF7F74041FCC033D0059C13F /* EmailAdresssValidatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF7F74021FCC01140059C13F /* EmailAdresssValidatorTests.swift */; };
 		EF91A0561FF3A05A00FE2F53 /* GiphySearchViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF91A0541FF3A04700FE2F53 /* GiphySearchViewControllerTests.swift */; };
@@ -2611,7 +2611,7 @@
 		EF61B33F1FC84B0100D8E631 /* AccessoryTextFieldValidationTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccessoryTextFieldValidationTests.swift; sourceTree = "<group>"; };
 		EF61B3411FC8508400D8E631 /* TextFieldValidator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextFieldValidator.swift; sourceTree = "<group>"; };
 		EF70E202201F7B7600083BCB /* StartUIViewController+internal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "StartUIViewController+internal.h"; sourceTree = "<group>"; };
-		EF72D87320236DE600BD4155 /* DeviceSizeClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceSizeClass.swift; sourceTree = "<group>"; };
+		EF72D87320236DE600BD4155 /* UIIdiomSizeClassOrientation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIIdiomSizeClassOrientation.swift; sourceTree = "<group>"; };
 		EF7D75A5201B6149003A8AF8 /* DeviceNativeBoundsSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceNativeBoundsSize.swift; sourceTree = "<group>"; };
 		EF7F74021FCC01140059C13F /* EmailAdresssValidatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailAdresssValidatorTests.swift; sourceTree = "<group>"; };
 		EF91A0541FF3A04700FE2F53 /* GiphySearchViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GiphySearchViewControllerTests.swift; sourceTree = "<group>"; };
@@ -3680,7 +3680,7 @@
 				871BC3311D34F94200DF0793 /* Constants.h */,
 				871BC3321D34F94200DF0793 /* Constants.m */,
 				EF7D75A5201B6149003A8AF8 /* DeviceNativeBoundsSize.swift */,
-				EF72D87320236DE600BD4155 /* DeviceSizeClass.swift */,
+				EF72D87320236DE600BD4155 /* UIIdiomSizeClassOrientation.swift */,
 				871BC3351D34F94200DF0793 /* NetworkConditionHelper.h */,
 				871BC3361D34F94200DF0793 /* NetworkConditionHelper.m */,
 				871BC3371D34F94200DF0793 /* Settings */,
@@ -6580,7 +6580,7 @@
 				871BC26E1D34F8F800DF0793 /* PassthroughWindow.m in Sources */,
 				EE4332491F1A67E500096D90 /* PopUpIconButton.swift in Sources */,
 				871BC2201D34F8F800DF0793 /* ActionSheetAlertView.m in Sources */,
-				EF72D87420236DE600BD4155 /* DeviceSizeClass.swift in Sources */,
+				EF72D87420236DE600BD4155 /* UIIdiomSizeClassOrientation.swift in Sources */,
 				16B2DE2E1CCFB3B0000D7C30 /* InputBar.swift in Sources */,
 				EF2C18A21FED541F00E9F2FD /* Timer+allVersionCompatibleScheduledTimer.swift in Sources */,
 				871BC22B1D34F8F800DF0793 /* FullscreenImageViewController.m in Sources */,

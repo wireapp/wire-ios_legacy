@@ -36,7 +36,7 @@ struct UIIdiomSizeClassOrientation {
         self.orientation = orientation
     }
 
-    static var currentIdiomSizeClassOrientation: UIIdiomSizeClassOrientation {
+    static func current() -> UIIdiomSizeClassOrientation {
         return UIIdiomSizeClassOrientation()
     }
 }
@@ -44,9 +44,10 @@ struct UIIdiomSizeClassOrientation {
 extension UIIdiomSizeClassOrientation: Equatable {}
 func ==(lhs: UIIdiomSizeClassOrientation, rhs: UIIdiomSizeClassOrientation) -> Bool {
 
+    // If one of the orientations is nil, return true
     var isOrientationEqual = false
     if let lhsOrientation = lhs.orientation, let rhsOrientation = rhs.orientation {
-        isOrientationEqual = lhsOrientation == rhsOrientation
+        isOrientationEqual = UIInterfaceOrientationIsLandscape(lhsOrientation) == UIInterfaceOrientationIsLandscape(rhsOrientation)
     }
     else {
         isOrientationEqual = true
@@ -56,8 +57,20 @@ func ==(lhs: UIIdiomSizeClassOrientation, rhs: UIIdiomSizeClassOrientation) -> B
 }
 
 extension UIIdiomSizeClassOrientation {
-    static var isIPadRegular: Bool {
-        return UIIdiomSizeClassOrientation.currentIdiomSizeClassOrientation == UIIdiomSizeClassOrientation(idiom: .pad, horizontalSizeClass: .regular, orientation: nil)
+    static func isIPadRegular() -> Bool {
+        return UIIdiomSizeClassOrientation.current() == UIIdiomSizeClassOrientation(idiom: .pad, horizontalSizeClass: .regular)
+    }
+
+
+    /// Notice: this two methods used in UIViewController.viewWillTransition. It returns the original orientation, not the new orientation
+    ///
+    /// - Returns: <#return value description#>
+    static func isIPadRegularLandscape() -> Bool {
+        return UIIdiomSizeClassOrientation.current() == UIIdiomSizeClassOrientation(idiom: .pad, horizontalSizeClass: .regular, orientation: .landscapeLeft)
+    }
+
+    static func isIPadRegularPortrait() -> Bool {
+        return !UIIdiomSizeClassOrientation.isIPadRegularLandscape()
     }
 }
 
