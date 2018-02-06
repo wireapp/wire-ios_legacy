@@ -35,13 +35,13 @@
 "peoplepicker.header.contacts_personal" = "Contacts personnels";
 "peoplepicker.header.directory" = "Se connecter";
 
-"peoplepicker.header.people" = "People";
+"peoplepicker.header.people" = "Personnes";
 "peoplepicker.header.services" = "Services";
-"peoplepicker.services.create_conversation.item" = "Create a new conversation";
-"peoplepicker.services.add_service.button" = "Add service";
-"peoplepicker.services.add_service.error.title" = "The service can't be added";
-"peoplepicker.services.add_service.error.default" = "The service is unavailable at the moment";
-"peoplepicker.services.add_service.error.full" = "The conversation is full";
+"peoplepicker.services.create_conversation.item" = "Créer une nouvelle conversation";
+"peoplepicker.services.add_service.button" = "Ajouter un service";
+"peoplepicker.services.add_service.error.title" = "Le service ne peut pas être ajouté";
+"peoplepicker.services.add_service.error.default" = "Le service n'est pas disponible en ce moment";
+"peoplepicker.services.add_service.error.full" = "La conversation est pleine";
 
 "peoplepicker.title.create_conversation" = "Créer un groupe";
 "peoplepicker.title.add_to_conversation" = "Ajouter des personnes";
@@ -241,8 +241,8 @@
 
 // Camera and photos access, keyboard
 "keyboard_photos_access.denied.keyboard.settings" = "Paramètres";
-"keyboard_photos_access.denied.keyboard.camera_and_photos" = "Wire needs access to your\ncamera and photos."; // split text on two lines for a better text balance
-"keyboard_photos_access.denied.keyboard.photos" = "Wire needs access to your photos.";
+"keyboard_photos_access.denied.keyboard.camera_and_photos" = "Wire a besoin d'accéder à votre\ncaméra et vos photos."; // split text on two lines for a better text balance
+"keyboard_photos_access.denied.keyboard.photos" = "Wire a besoin d'accéder à vos photos.";
 "keyboard_photos_access.denied.keyboard.camera" = "Wire a besoin d’accéder à la Caméra.";
 
 // Camera Controls
@@ -853,10 +853,10 @@
 
 // Team Invite Errors
 "team.invite.error.generic" = "Une erreur s'est produite, veuillez réessayer";
-"team.invite.error.already_registered" = "This email address is already in use";
-"team.invite.error.already_invited" = "This email has already been invited";
-"team.invite.error.too_many_invitations" = "The maximum number of invitations has been sent";
-"team.invite.error.no_internet" = "No internet connection";
+"team.invite.error.already_registered" = "Cette addresse courriel est déjà utilisée";
+"team.invite.error.already_invited" = "Cette addresse courriel est déjà invitée";
+"team.invite.error.too_many_invitations" = "Le maximum d'invitations ont été envoyées";
+"team.invite.error.no_internet" = "Pas de connexion Internet";
 
 // Registration
 
@@ -935,8 +935,8 @@
 "registration.signin.email_button.title" = "E-mail";
 "registration.signin.phone_button.title" = "Téléphone";
 
-"registration.signin.alert.password_needed.title" = "Password needed";
-"registration.signin.alert.password_needed.message" = "Please enter your Password in order to log in.";
+"registration.signin.alert.password_needed.title" = "Mot de passe requis";
+"registration.signin.alert.password_needed.message" = "Veuillez saisir votre mot de passe pour vous connecter.";
 
 "registration.devices.title" = "Appareils";
 "registration.devices.active_list_header" = "Actif";
