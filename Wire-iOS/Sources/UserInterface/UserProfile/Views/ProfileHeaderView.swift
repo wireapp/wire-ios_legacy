@@ -77,14 +77,14 @@ final class ProfileHeaderView: UIView {
 
         let detailViewMargin = horizontalMargin + 32
 
-        constrain(self, detailView) { (view: LayoutProxy, detailView: LayoutProxy) -> Void in
+        constrain(self, detailView) { (view: LayoutProxy, detailView: LayoutProxy) -> () in
             detailView.top == view.top + topMargin
             detailView.leading == view.leading + detailViewMargin
             detailView.trailing == view.trailing - detailViewMargin
             detailView.bottom == view.bottom - 12
         }
 
-        constrain(self, dismissButton, verifiedImageView, detailView.titleLabel) { (view: LayoutProxy, dismiss: LayoutProxy, verified: LayoutProxy, title: LayoutProxy) -> Void in
+        constrain(self, dismissButton, verifiedImageView, detailView.titleLabel) { (view: LayoutProxy, dismiss: LayoutProxy, verified: LayoutProxy, title: LayoutProxy) -> () in
             dismiss.top == view.top + 26
             dismiss.width == dismiss.height
             dismiss.width == 32

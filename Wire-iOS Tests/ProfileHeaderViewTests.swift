@@ -27,7 +27,10 @@ class ProfileHeaderViewTests: ZMSnapshotTestCase {
         snapshotBackgroundColor = .white
     }
 
-    func createSutWithHeadStyle(style: ProfileHeaderStyle, user: ZMBareUser? = nil, addressBookName: String? = nil, fallbackName: String = "Jose Luis") -> ProfileHeaderView {
+    func createSutWithHeadStyle(style: ProfileHeaderStyle,
+                                user: ZMBareUser? = nil,
+                                addressBookName: String? = nil,
+                                fallbackName: String = "Jose Luis") -> ProfileHeaderView {
         let model = ProfileHeaderViewModel(user: user, fallbackName: fallbackName, addressBookName: addressBookName, navigationControllerViewControllerCount: 0)
         let sut = ProfileHeaderView(with: model)
         sut.headerStyle = style
@@ -72,27 +75,27 @@ class ProfileHeaderViewTests: ZMSnapshotTestCase {
 
     func testThatItRendersUserName() {
         let user = MockUser.mockUsers().first
-        let sut = createSutWithHeadStyle(style: .noButton, user: user, addressBookName: nil, fallbackName: "")
+        let sut = createSutWithHeadStyle(style: .noButton, user: user, fallbackName: "")
         verifyInAllPhoneWidths(view: sut)
     }
 
     func testThatItRendersUserName_Verified() {
         let user = MockUser.mockUsers().first
-        let sut = createSutWithHeadStyle(style: .noButton, user: user, addressBookName: nil, fallbackName: "")
+        let sut = createSutWithHeadStyle(style: .noButton, user: user, fallbackName: "")
         sut.showVerifiedShield = true
         verifyInAllPhoneWidths(view: sut)
     }
 
     func testThatItRendersUserNoUsernameButEmail() {
         let user = MockUser.mockUsers().last
-        let sut = createSutWithHeadStyle(style: .noButton, user: user, addressBookName: nil, fallbackName: "")
+        let sut = createSutWithHeadStyle(style: .noButton, user: user, fallbackName: "")
         verifyInAllPhoneWidths(view: sut)
     }
 
     func testThatItRendersUserWithEmptyUserName() {
         let user = MockUser.mockUsers().first
         (user as Any as! MockUser).handle = ""
-        let sut = createSutWithHeadStyle(style: .noButton, user: user, addressBookName: nil, fallbackName: "")
+        let sut = createSutWithHeadStyle(style: .noButton, user: user, fallbackName: "")
         verifyInAllPhoneWidths(view: sut)
     }
 
