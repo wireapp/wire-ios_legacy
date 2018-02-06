@@ -35,7 +35,6 @@ class ProfileHeaderViewTests: ZMSnapshotTestCase {
         let sut = ProfileHeaderView(with: model)
         sut.headerStyle = style
         sut.updateDismissButton()
-        sut.disableHeaderStyleUpdate = true
 
         return sut
     }

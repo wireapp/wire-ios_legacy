@@ -34,7 +34,6 @@ final class ProfileHeaderView: UIView {
     private(set) var dismissButton = IconButton.iconButtonCircular()
     internal(set) var headerStyle: ProfileHeaderStyle
     /// flag for disable headerStyle update in traitCollectionDidChange. It should be used for test only.
-    internal(set) var disableHeaderStyleUpdate: Bool = false
     private let navigationControllerViewControllerCount: Int?
     private let profileViewControllerContext: ProfileViewControllerContext?
 
@@ -165,8 +164,10 @@ final class ProfileHeaderView: UIView {
 
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
-
-        if disableHeaderStyleUpdate { return }
+        guard self.traitCollection.userInterfaceIdiom == .pad,
+            UIApplication.shared.keyWindow?.traitCollection.horizontalSizeClass != .unspecified else {
+            return
+        }
 
         updateHeaderStyle()
         updateDismissButton()
