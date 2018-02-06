@@ -42,6 +42,19 @@ extension NetworkStatusViewControllerDelegate {
         }
     }
 
+    static private var selfInstances: [NetworkStatusViewController] = []
+    static private var shared: NetworkStatusViewController? {
+        get {
+            for networkStatusViewController in selfInstances {
+                if networkStatusViewController.shouldNetworkStatusViewUpdates {
+                    return networkStatusViewController
+                }
+
+            }
+            return nil
+        }
+    }
+
     fileprivate let networkStatusView = NetworkStatusView()
     fileprivate var networkStatusObserverToken: Any?
     fileprivate var pendingState: NetworkStatusViewState?
@@ -50,6 +63,7 @@ extension NetworkStatusViewControllerDelegate {
 
     init() {
         super.init(nibName: nil, bundle: nil)
+        NetworkStatusViewController.selfInstances.append(self)
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -61,6 +75,10 @@ extension NetworkStatusViewControllerDelegate {
 
         offlineBarTimer?.invalidate()
         offlineBarTimer = nil
+
+        if let index = NetworkStatusViewController.selfInstances.index(of: self) {
+            NetworkStatusViewController.selfInstances.remove(at: index)
+        }
     }
 
     override func loadView() {
@@ -99,9 +117,12 @@ extension NetworkStatusViewControllerDelegate {
 
     }
 
-    public func notifyWhenOffline() -> Bool {
+    static public func notifyWhenOffline() -> Bool {
+        guard let shared = NetworkStatusViewController.shared else { return true }
+        let networkStatusView = shared.networkStatusView
+
         if networkStatusView.state == .offlineCollapsed {
-            update(state: .offlineExpanded)
+            shared.update(state: .offlineExpanded)
         }
 
         return networkStatusView.state == .offlineExpanded || networkStatusView.state == .offlineCollapsed
@@ -170,7 +191,7 @@ extension NetworkStatusViewControllerDelegate {
     }
 
     var shouldNetworkStatusViewUpdates: Bool {
-        if Device.isIPadRegular,
+        if UIIdiomSizeClassOrientation.isIPadRegular,
             let shouldShowNetworkStatusUI = delegate?.shouldShowNetworkStatusUIInIPadFullScreenMode,
             shouldShowNetworkStatusUI == false {
             return false
