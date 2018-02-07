@@ -33,6 +33,8 @@ class MarkdownTextView: NextResponderTextView {
     
     /// The parser used to convert attributed text into markdown syntax.
     private let parser = AttributedStringParser()
+    
+    let markdownTextStorage: MarkdownTextStorage
 
     /// The string containing markdown syntax for the corresponding
     /// attributed text.
@@ -66,8 +68,6 @@ class MarkdownTextView: NextResponderTextView {
         return NSMakeRange(0, attributedText.length)
     }
     
-    let markdownTextStorage: MarkdownTextStorage
-    
     // MARK: - Init
     
     convenience init() {
@@ -84,8 +84,9 @@ class MarkdownTextView: NextResponderTextView {
         layoutManager.addTextContainer(textContainer)
         super.init(frame: .zero, textContainer: textContainer)
         
-        currentAttributes = attributes(for: activeMarkdown)
         markdownTextStorage.currentMarkdown = .none
+        currentAttributes = attributes(for: activeMarkdown)
+        updateTypingAttributes()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -128,9 +129,7 @@ class MarkdownTextView: NextResponderTextView {
         return markdown(at: caret - 1)
     }
     
-    /// Returns the markdown bitmask at the given location if it exists, else
-    /// returns the `none` bitmask.
-    ///
+    /// Returns the markdown at the given location.
     func markdown(at location: Int) -> Markdown {
         guard location >= 0 && attributedText.length > location else { return .none }
         let type = attributedText.attribute(MarkdownIDAttributeName, at: location, effectiveRange: nil) as? Markdown
@@ -207,7 +206,7 @@ class MarkdownTextView: NextResponderTextView {
     /// Updates all attributes in the given range by transforming markdown tags
     /// using the given transformation function, then refetching the attributes
     /// for the transformed values and setting the new attributes.
-    fileprivate func updateAttributes(in range: NSRange, using markdownTransform: (Markdown) -> Markdown) {
+    private func updateAttributes(in range: NSRange, using markdownTransform: (Markdown) -> Markdown) {
         var exisitngMarkdownRanges = [(Markdown, NSRange)]()
         markdownTextStorage.enumerateAttribute(MarkdownIDAttributeName, in: range, options: []) { md, mdRange, _ in
             if let md = md as? Markdown { exisitngMarkdownRanges.append((md, mdRange)) }
