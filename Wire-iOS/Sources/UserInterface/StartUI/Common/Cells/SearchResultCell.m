@@ -37,18 +37,21 @@
 
 @property (nonatomic, strong) UIView *avatarOverlay;
 @property (nonatomic, strong) UIImageView *successCheckmark;
+@property (nonatomic, strong) UIImageView *trailingCheckmarkView;
+
+@property (nonatomic, strong) UIStackView *nameLabelStackView;
 
 @property (nonatomic, assign) BOOL initialConstraintsCreated;
 @property (nonatomic, strong) NSLayoutConstraint *avatarViewSizeConstraint;
 @property (nonatomic, strong) NSLayoutConstraint *conversationImageViewSize;
-@property (nonatomic, strong) NSLayoutConstraint *nameLabelTopConstraint;
-@property (nonatomic, strong) NSLayoutConstraint *nameLabelVerticalConstraint;
 @property (nonatomic, strong) NSLayoutConstraint *nameRightMarginConstraint;
-@property (nonatomic, strong) NSLayoutConstraint *subtitleRightMarginConstraint;
+@property (nonatomic, strong) NSLayoutConstraint *guestLabelTrailingConstraint;
+@property (nonatomic, strong) NSLayoutConstraint *guestLabelCheckmarkViewHorizontalConstraint;
 
 @property (nonatomic, strong) UILabel *subtitleLabel;
 
 @property (nonatomic, strong) GuestLabel *guestLabel;
+@property (nonatomic, strong) UIView *separatorLineView;
 
 @end
 
@@ -99,15 +102,31 @@
         self.conversationImageView = [[ConversationAvatarView alloc] initForAutoLayout];
         self.conversationImageView.opaque = NO;
         [self.avatarContainer addSubview:self.conversationImageView];
+        
+        self.nameLabelStackView = [[UIStackView alloc] initForAutoLayout];
+        self.nameLabelStackView.axis = UILayoutConstraintAxisVertical;
+        self.nameLabelStackView.spacing = 2;
+        [self.swipeView addSubview:self.nameLabelStackView];
 
         self.nameLabel = [[UILabel alloc] initForAutoLayout];
         self.nameLabel.lineBreakMode = NSLineBreakByTruncatingTail;
         self.nameLabel.textAlignment = NSTextAlignmentNatural;
-        [self.swipeView addSubview:self.nameLabel];
+        [self.nameLabelStackView addArrangedSubview:self.nameLabel];
 
         self.subtitleLabel = [[UILabel alloc] initForAutoLayout];
         self.subtitleLabel.accessibilityIdentifier = @"additionalUserInfo";
-        [self.swipeView addSubview:self.subtitleLabel];
+        [self.nameLabelStackView addArrangedSubview:self.subtitleLabel];
+
+        self.separatorLineView = [[UIView alloc] initForAutoLayout];
+        self.separatorLineView.backgroundColor = [ColorScheme.defaultColorScheme colorWithName:ColorSchemeColorPaleSeparator];
+        [self.swipeView addSubview:self.separatorLineView];
+        
+        self.trailingCheckmarkView = [[UIImageView alloc] initForAutoLayout];
+        [self.swipeView addSubview:self.trailingCheckmarkView];
+        self.trailingCheckmarkView.layer.borderColor = [ColorScheme.defaultColorScheme colorWithName:ColorSchemeColorIconNormal].CGColor;
+        self.trailingCheckmarkView.layer.borderWidth = 2;
+        self.trailingCheckmarkView.contentMode = UIViewContentModeCenter;
+        self.trailingCheckmarkView.layer.cornerRadius = 12;
 
         UITapGestureRecognizer *doubleTapper = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(doubleTap:)];
         doubleTapper.numberOfTapsRequired = 2;
@@ -128,6 +147,9 @@
         [self createUserImageView];
         [self setNeedsUpdateConstraints];
         [self updateForContext];
+        
+        self.showSeparatorLine = NO;
+        self.mode = SearchResultCellSelectionModeAvatarOverlay;
     }
     return self;
 }
@@ -157,24 +179,10 @@
 
         [self.gesturesView autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero];
 
-        [self.subtitleLabel autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.nameLabel];
-        [self.subtitleLabel autoPinEdge:ALEdgeLeading toEdge:ALEdgeTrailing ofView:self.avatarContainer withOffset:[WAZUIMagic cgFloatForIdentifier:@"people_picker.search_results_mode.tile_name_horizontal_spacing"]];
-        self.subtitleRightMarginConstraint = [self.subtitleLabel autoPinEdge:ALEdgeTrailing toEdge:ALEdgeTrailing ofView:self.swipeView withOffset:- rightMargin];
-
-        self.nameLabelTopConstraint = [self.nameLabel autoPinEdge:ALEdgeTop toEdge:ALEdgeTop ofView:self.swipeView withOffset:9.0f];
-        self.nameLabelVerticalConstraint = [self.nameLabel autoAlignAxis:ALAxisHorizontal toSameAxisOfView:self.avatarContainer];
+        [self.nameLabelStackView autoAlignAxis:ALAxisHorizontal toSameAxisOfView:self.avatarContainer];
         
-        if (self.subtitleLabel.text.length == 0) {
-            self.nameLabelTopConstraint.active = NO;
-            self.nameLabelVerticalConstraint.active = YES;
-        }
-        else {
-            self.nameLabelVerticalConstraint.active = NO;
-            self.nameLabelTopConstraint.active = YES;
-        }
-        
-        [self.nameLabel autoPinEdge:ALEdgeLeading toEdge:ALEdgeTrailing ofView:self.avatarContainer withOffset:nameAvatarMargin];
-        self.nameRightMarginConstraint = [self.nameLabel autoPinEdge:ALEdgeTrailing toEdge:ALEdgeTrailing ofView:self.swipeView withOffset:- rightMargin];
+        [self.nameLabelStackView autoPinEdge:ALEdgeLeading toEdge:ALEdgeTrailing ofView:self.avatarContainer withOffset:nameAvatarMargin];
+        self.nameRightMarginConstraint = [self.nameLabelStackView autoPinEdge:ALEdgeTrailing toEdge:ALEdgeTrailing ofView:self.swipeView withOffset:- rightMargin];
 
         self.avatarViewSizeConstraint = [self.avatarContainer autoSetDimension:ALDimensionWidth toSize:80];
         [self.avatarContainer autoMatchDimension:ALDimensionWidth toDimension:ALDimensionHeight ofView:self.avatarContainer];
@@ -188,7 +196,16 @@
 
         [self.instantConnectButton autoAlignAxis:ALAxisHorizontal toSameAxisOfView:self.avatarContainer];
         [self.instantConnectButton autoPinEdgeToSuperviewEdge:ALEdgeTrailing withInset:16];
+        
+        [self.trailingCheckmarkView autoAlignAxis:ALAxisHorizontal toSameAxisOfView:self.avatarContainer];
+        [self.trailingCheckmarkView autoPinEdgeToSuperviewEdge:ALEdgeTrailing withInset:16];
+        [self.trailingCheckmarkView autoSetDimensionsToSize:CGSizeMake(24, 24)];
 
+        [self.separatorLineView autoPinEdgeToSuperviewEdge:ALEdgeTrailing];
+        [self.separatorLineView autoPinEdgeToSuperviewEdge:ALEdgeBottom];
+        [self.separatorLineView autoSetDimension:ALDimensionHeight toSize:1];
+        [self.separatorLineView autoPinEdge:ALEdgeLeading toEdge:ALEdgeLeading ofView:self.nameLabel];
+        
         self.initialConstraintsCreated = YES;
         [self updateForContext];
 
@@ -204,10 +221,8 @@
     else if (!self.guestLabel.hidden) {
         rightMarginForName = self.guestLabel.bounds.size.width + rightMargin;
     }
-    
-    self.subtitleRightMarginConstraint.constant = -rightMarginForName;
-    self.nameRightMarginConstraint.constant = -rightMarginForName;
 
+    self.nameRightMarginConstraint.constant = -rightMarginForName;
     [super updateConstraints];
 }
 
@@ -241,6 +256,8 @@
         [self.successCheckmark removeFromSuperview];
         self.successCheckmark = nil;
         self.contentView.alpha = 1.0f;
+        self.showSeparatorLine = NO;
+        self.mode = SearchResultCellSelectionModeAvatarOverlay;
     }];
 }
 
@@ -273,6 +290,12 @@
     self.instantConnectButton.hidden = ! canBeConnected;
     [self setNeedsUpdateConstraints];
     self.badgeUserImageView.user = (id)self.user;
+}
+
+- (void)setShowSeparatorLine:(BOOL)showSeparatorLine
+{
+    _showSeparatorLine = showSeparatorLine;
+    self.separatorLineView.hidden = !showSeparatorLine;
 }
 
 #pragma mark - Public API
@@ -364,10 +387,24 @@
 {
     [super setSelected:selected];
 
-    if (selected) {
-        [self.badgeUserImageView setBadgeIcon:ZetaIconTypeCheckmark];
-    } else {
-        self.badgeUserImageView.badge = nil;
+    switch (self.mode) {
+        case SearchResultCellSelectionModeAvatarOverlay:
+            if (selected) {
+                [self.badgeUserImageView setBadgeIcon:ZetaIconTypeCheckmark];
+            } else {
+                self.badgeUserImageView.badge = nil;
+            }
+            break;
+
+        case SearchResultCellSelectionModeTrailingCheckmark: {
+            UIColor *foregroundColor = [ColorScheme.defaultColorScheme colorWithName:ColorSchemeColorBackground];
+            UIColor *backgroundColor = [ColorScheme.defaultColorScheme colorWithName:ColorSchemeColorIconNormal];
+            self.trailingCheckmarkView.image = selected ? [UIImage imageForIcon:ZetaIconTypeCheckmark iconSize:ZetaIconSizeLike color:foregroundColor] : nil;
+            self.trailingCheckmarkView.backgroundColor = selected ? backgroundColor : UIColor.clearColor;
+            UIColor *borderColor = selected ? backgroundColor : [backgroundColor colorWithAlphaComponent:0.64];
+            self.trailingCheckmarkView.layer.borderColor = borderColor.CGColor;
+            break;
+        }
     }
 }
 
@@ -386,16 +423,8 @@
 - (void)updateSubtitle
 {
     NSAttributedString *subtitle = [self attributedSubtitleForUser:(id)self.user];
-
-    if (nil == subtitle) {
-        self.subtitleLabel.text = @"";
-        self.nameLabelTopConstraint.active = NO;
-        self.nameLabelVerticalConstraint.active = YES;
-    } else {
-        self.nameLabelVerticalConstraint.active = NO;
-        self.nameLabelTopConstraint.active = YES;
-        self.subtitleLabel.attributedText = subtitle;
-    }
+    self.subtitleLabel.attributedText = subtitle;
+    self.subtitleLabel.hidden = nil == subtitle || [subtitle.string isEqualToString:@""];
 }
 
 - (void)updateGuestLabel
@@ -407,13 +436,29 @@
             self.guestLabel = [[GuestLabel alloc] init];
             [self.swipeView addSubview:self.guestLabel];
             [self.guestLabel autoAlignAxisToSuperviewAxis:ALAxisHorizontal];
-            [self.guestLabel autoPinEdgeToSuperviewEdge:ALEdgeTrailing withInset:rightMargin];
+            self.guestLabelTrailingConstraint = [self.guestLabel autoPinEdgeToSuperviewEdge:ALEdgeTrailing withInset:rightMargin];
+            self.guestLabelCheckmarkViewHorizontalConstraint = [self.guestLabel autoPinEdge:ALEdgeTrailing toEdge:ALEdgeLeading ofView:self.trailingCheckmarkView withOffset:-16];
+            [self updateGuestLabelConstraints];
         }
         self.guestLabel.hidden = NO;
     }
     else {
         self.guestLabel.hidden = YES;
     }
+}
+
+- (void)updateGuestLabelConstraints
+{
+    self.guestLabelCheckmarkViewHorizontalConstraint.active = self.mode == SearchResultCellSelectionModeTrailingCheckmark;
+    self.guestLabelTrailingConstraint.active = self.mode == SearchResultCellSelectionModeAvatarOverlay;
+}
+
+- (void)setMode:(SearchResultCellSelectionMode)mode
+{
+    _mode = mode;
+    self.trailingCheckmarkView.hidden = mode == SearchResultCellSelectionModeAvatarOverlay;
+    [self updateGuestLabelConstraints];
+    [self setSelected:self.selected];
 }
 
 - (NSAttributedString *)attributedSubtitleForRegularUser:(id <ZMBareUser, ZMSearchableUser>)user

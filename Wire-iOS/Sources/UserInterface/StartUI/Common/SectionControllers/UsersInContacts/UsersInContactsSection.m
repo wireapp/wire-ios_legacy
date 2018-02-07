@@ -91,6 +91,11 @@ NSString *const PeoplePickerUsersInContactsReuseIdentifier = @"PeoplePickerUsers
     ZMUser *modelObject = self.contacts[indexPath.item];
     
     SearchResultCell *particularCell = (SearchResultCell *)genericCell;
+    particularCell.showSeparatorLine = self.useNewStyleCellLayout;
+    particularCell.mode = self.useNewStyleCellLayout
+        ? SearchResultCellSelectionModeTrailingCheckmark
+        : SearchResultCellSelectionModeAvatarOverlay;
+    
     @weakify(self, modelObject);
     particularCell.doubleTapAction = ^(SearchResultCell *cell) {
         @strongify(self, modelObject);
@@ -141,8 +146,8 @@ NSString *const PeoplePickerUsersInContactsReuseIdentifier = @"PeoplePickerUsers
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    return CGSizeMake(self.collectionView.bounds.size.width, 
-                      [WAZUIMagic floatForIdentifier:@"people_picker.search_results_mode.tile_height"]);
+    const CGFloat height = self.useNewStyleCellLayout ? 64 : [WAZUIMagic floatForIdentifier:@"people_picker.search_results_mode.tile_height"];
+    return CGSizeMake(self.collectionView.bounds.size.width, height);
 }
 
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section
