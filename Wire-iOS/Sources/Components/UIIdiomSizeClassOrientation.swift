@@ -20,17 +20,30 @@ import Foundation
 
 /// Struct for replacing IS_IPAD_FULLSCREEN, IS_IPAD_PORTRAIT_LAYOUT and IS_IPAD_LANDSCAPE_LAYOUT objc macros.
 struct UIIdiomSizeClassOrientation {
-    var idiom: UIUserInterfaceIdiom
-    var horizontalSizeClass: UIUserInterfaceSizeClass?
-    var orientation: UIInterfaceOrientation?
+    
+    enum Orientation {
+        case landscape, portrait, unknown
+    }
+    
+    let idiom: UIUserInterfaceIdiom
+    let horizontalSizeClass: UIUserInterfaceSizeClass?
+    let orientation: Orientation?
 
     init() {
         idiom = UIDevice.current.userInterfaceIdiom
         horizontalSizeClass = UIApplication.shared.keyWindow?.traitCollection.horizontalSizeClass
-        orientation = UIApplication.shared.statusBarOrientation
+        if UIInterfaceOrientationIsLandscape(UIApplication.shared.statusBarOrientation) {
+            orientation = .landscape
+        }
+        else if UIInterfaceOrientationIsPortrait(UIApplication.shared.statusBarOrientation) {
+            orientation = .portrait
+        }
+        else {
+            orientation = .unknown
+        }
     }
 
-    init(idiom: UIUserInterfaceIdiom, horizontalSizeClass: UIUserInterfaceSizeClass?, orientation: UIInterfaceOrientation? = nil) {
+    init(idiom: UIUserInterfaceIdiom, horizontalSizeClass: UIUserInterfaceSizeClass?, orientation: Orientation? = nil) {
         self.idiom = idiom
         self.horizontalSizeClass = horizontalSizeClass
         self.orientation = orientation
@@ -47,7 +60,7 @@ func ==(lhs: UIIdiomSizeClassOrientation, rhs: UIIdiomSizeClassOrientation) -> B
     // If one of the orientations is nil, return true
     var isOrientationEqual = false
     if let lhsOrientation = lhs.orientation, let rhsOrientation = rhs.orientation {
-        isOrientationEqual = UIInterfaceOrientationIsLandscape(lhsOrientation) == UIInterfaceOrientationIsLandscape(rhsOrientation)
+        isOrientationEqual = lhsOrientation == rhsOrientation
     }
     else {
         isOrientationEqual = true
@@ -62,11 +75,11 @@ extension UIIdiomSizeClassOrientation {
     }
 
 
-    /// Notice: this two methods used in UIViewController.viewWillTransition. It returns the original orientation, not the new orientation
+    /// Notice: these two methods used in UIViewController.viewWillTransition. It returns the original orientation, not the new orientation
     ///
-    /// - Returns:
+    /// - Returns: true if current status is iPad in regular size class and orientation is landscape.
     static func isIPadRegularLandscape() -> Bool {
-        return UIIdiomSizeClassOrientation.current() == UIIdiomSizeClassOrientation(idiom: .pad, horizontalSizeClass: .regular, orientation: .landscapeLeft)
+        return UIIdiomSizeClassOrientation.current() == UIIdiomSizeClassOrientation(idiom: .pad, horizontalSizeClass: .regular, orientation: .landscape)
     }
 
     static func isIPadRegularPortrait() -> Bool {
@@ -74,11 +87,11 @@ extension UIIdiomSizeClassOrientation {
     }
 
     static func isPortrait() -> Bool {
-        return UIInterfaceOrientationIsPortrait(UIIdiomSizeClassOrientation.current().orientation!) /// FIXME: unwrap
+        return UIIdiomSizeClassOrientation.current().orientation == .portrait
     }
 
     static func isLandscape() -> Bool {
-        return UIInterfaceOrientationIsLandscape(UIIdiomSizeClassOrientation.current().orientation!)
+        return UIIdiomSizeClassOrientation.current().orientation == .landscape
     }
 }
 
