@@ -39,9 +39,9 @@
 "peoplepicker.header.services" = "Paslaugos";
 "peoplepicker.services.create_conversation.item" = "Kurti naują susirašinėjimą";
 "peoplepicker.services.add_service.button" = "Pridėti paslaugą";
-"peoplepicker.services.add_service.error.title" = "The service can't be added";
-"peoplepicker.services.add_service.error.default" = "The service is unavailable at the moment";
-"peoplepicker.services.add_service.error.full" = "The conversation is full";
+"peoplepicker.services.add_service.error.title" = "Paslauga negali būti pridėta";
+"peoplepicker.services.add_service.error.default" = "Paslauga šiuo metu negalima";
+"peoplepicker.services.add_service.error.full" = "Susirašinėjimas pilnas";
 
 "peoplepicker.title.create_conversation" = "Sukurti grupę";
 "peoplepicker.title.add_to_conversation" = "Pridėti žmones";
@@ -434,7 +434,7 @@
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Profile and Participants
 
-"participants.add_people_button_title" = "Add";
+"participants.add_people_button_title" = "Pridėti";
 "participants.avatar.guest.title" = "Svečias";
 
 // Meta Menu
@@ -539,6 +539,8 @@
 // General strings
 "general.confirm" = "GERAI";
 
+// Bot
+"participants.services.remove_integration.button" = "pašalinti integraciją";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Self profile
