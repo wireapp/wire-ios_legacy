@@ -27,7 +27,7 @@ import Cartography
     public var availabilityView = AvailabilityTitleView(user: ZMUser.selfUser(), style: .selfProfile)
     var stackView : UICustomSpacingStackView!
     var userObserverToken: NSObjectProtocol?
-    var source: UIViewController?
+    weak var source: UIViewController?
     
     init(user: ZMUser) {
         super.init(frame: .zero)

@@ -39,9 +39,9 @@
 "peoplepicker.header.services" = "服務";
 "peoplepicker.services.create_conversation.item" = "開始新對話";
 "peoplepicker.services.add_service.button" = "新增服務";
-"peoplepicker.services.add_service.error.title" = "The service can't be added";
-"peoplepicker.services.add_service.error.default" = "The service is unavailable at the moment";
-"peoplepicker.services.add_service.error.full" = "The conversation is full";
+"peoplepicker.services.add_service.error.title" = "無法加入服務";
+"peoplepicker.services.add_service.error.default" = "服務暫時無法使用";
+"peoplepicker.services.add_service.error.full" = "對話人數已達上限";
 
 "peoplepicker.title.create_conversation" = "建立群組";
 "peoplepicker.title.add_to_conversation" = "邀請連絡人";
@@ -434,7 +434,7 @@
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Profile and Participants
 
-"participants.add_people_button_title" = "Add";
+"participants.add_people_button_title" = "加入";
 "participants.avatar.guest.title" = "訪客";
 
 // Meta Menu
@@ -539,6 +539,8 @@
 // General strings
 "general.confirm" = "確認";
 
+// Bot
+"participants.services.remove_integration.button" = "移除服務";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Self profile
@@ -687,7 +689,7 @@
 "self.settings.sound_menu.sounds.none" = "無";
 
 "self.settings.callkit.title" = "通話";
-"self.settings.callkit.caption" = "與iOS分享";
+"self.settings.callkit.caption" = "與iOS系統共用";
 "self.settings.callkit.description" = "在鎖屏界面與通話記錄中顯示Wire來電。如果您已啟動iCloud，您的來電記錄也將同步到Apple服務器。";
 
 "self.settings.vbr.title" = "可變位元率編碼";
@@ -935,8 +937,8 @@
 "registration.signin.email_button.title" = "電子郵件";
 "registration.signin.phone_button.title" = "手機";
 
-"registration.signin.alert.password_needed.title" = "Password needed";
-"registration.signin.alert.password_needed.message" = "Please enter your Password in order to log in.";
+"registration.signin.alert.password_needed.title" = "需要輸入密碼";
+"registration.signin.alert.password_needed.message" = "請輸入您的密碼以登入。";
 
 "registration.devices.title" = "設備";
 "registration.devices.active_list_header" = "其他已啟用的設備";

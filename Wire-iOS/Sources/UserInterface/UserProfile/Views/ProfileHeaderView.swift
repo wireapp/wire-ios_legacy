@@ -53,6 +53,7 @@ final class ProfileHeaderView: UIView {
         setupViews()
         configure(with: viewModel)
         createConstraints()
+        updateHeaderStyle()
         updateDismissButton()
     }
 

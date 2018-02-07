@@ -130,7 +130,11 @@ public class AddParticipantsViewController : UIViewController {
             guard let `self` = self else {
                 return
             }
-            
+            // Remove selected users when switching to services tab to avoid the user confusion: users in the field are
+            // not going to be added to the new conversation with the bot.
+            if group == .services {
+                self.searchHeaderViewController.clearInput()
+            }
             self.searchResultsViewController.searchGroup = group
             self.performSearch()
         }

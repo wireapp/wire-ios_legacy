@@ -35,10 +35,10 @@
 "peoplepicker.header.contacts_personal" = "Persoonlijke Contacten";
 "peoplepicker.header.directory" = "Contacten toevoegen";
 
-"peoplepicker.header.people" = "People";
-"peoplepicker.header.services" = "Services";
-"peoplepicker.services.create_conversation.item" = "Create a new conversation";
-"peoplepicker.services.add_service.button" = "Add service";
+"peoplepicker.header.people" = "Personen";
+"peoplepicker.header.services" = "Diensten";
+"peoplepicker.services.create_conversation.item" = "Een nieuw gesprek beginnen";
+"peoplepicker.services.add_service.button" = "Service toevoegen";
 "peoplepicker.services.add_service.error.title" = "The service can't be added";
 "peoplepicker.services.add_service.error.default" = "The service is unavailable at the moment";
 "peoplepicker.services.add_service.error.full" = "The conversation is full";
@@ -539,6 +539,8 @@
 // General strings
 "general.confirm" = "OK";
 
+// Bot
+"participants.services.remove_integration.button" = "remove integration";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Self profile
