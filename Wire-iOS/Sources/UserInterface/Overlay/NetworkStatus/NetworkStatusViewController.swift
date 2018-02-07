@@ -53,7 +53,6 @@ protocol NetworkStatusViewControllerDelegate: class {
     fileprivate let networkStatusView = NetworkStatusView()
     fileprivate var networkStatusObserverToken: Any?
     fileprivate var pendingState: NetworkStatusViewState?
-    fileprivate var offlineBarTimer: Timer?
     fileprivate var state: NetworkStatusViewState?
     fileprivate var finishedViewWillAppear: Bool = false
     
@@ -68,9 +67,6 @@ protocol NetworkStatusViewControllerDelegate: class {
     
     deinit {
         NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(applyPendingState), object: nil)
-        
-        offlineBarTimer?.invalidate()
-        offlineBarTimer = nil
         
         if let index = NetworkStatusViewController.selfInstances.index(of: self) {
             NetworkStatusViewController.selfInstances.remove(at: index)
@@ -161,13 +157,6 @@ protocol NetworkStatusViewControllerDelegate: class {
             showOfflineAlert()
         default:
             break
-        }
-    }
-    
-    fileprivate func startOfflineBarTimer() {
-        offlineBarTimer = .allVersionCompatibleScheduledTimer(withTimeInterval: 2.0, repeats: false) {
-            [weak self] _ in
-            self?.collapseOfflineBar()
         }
     }
     
