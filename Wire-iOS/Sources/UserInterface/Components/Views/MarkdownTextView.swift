@@ -185,6 +185,41 @@ class MarkdownTextView: NextResponderTextView {
         ]
     }
     
+    /// Returns the range of the line enclosing the current selection if it
+    /// exists, else nil.
+    fileprivate func rangeOfCurrentLine() -> NSRange? {
+        guard selectedRange.location != NSNotFound else { return nil }
+        return (text as NSString).lineRange(for: selectedRange)
+    }
+    
+    /// Adds the given markdown (and the associated attributes) to the given
+    /// range.
+    fileprivate func add(_ markdown: Markdown, to range: NSRange) {
+        updateAttributes(in: range) { $0.union(markdown) }
+    }
+    
+    /// Removes the given markdown (and the associated attributes) from the given
+    /// range.
+    fileprivate func remove(_ markdown: Markdown, to range: NSRange) {
+        updateAttributes(in: range) { $0.subtracting(markdown) }
+    }
+    
+    /// Updates all attributes in the given range by transforming markdown tags
+    /// using the given transformation function, then refetching the attributes
+    /// for the transformed values and setting the new attributes.
+    fileprivate func updateAttributes(in range: NSRange, using markdownTransform: (Markdown) -> Markdown) {
+        var exisitngMarkdownRanges = [(Markdown, NSRange)]()
+        markdownTextStorage.enumerateAttribute(MarkdownIDAttributeName, in: range, options: []) { md, mdRange, _ in
+            if let md = md as? Markdown { exisitngMarkdownRanges.append((md, mdRange)) }
+        }
+        
+        for (md, mdRange) in exisitngMarkdownRanges {
+            // updated attributes depends on how md is transformed
+            let updatedAttributes = attributes(for: markdownTransform(md))
+            markdownTextStorage.setAttributes(updatedAttributes, range: mdRange)
+        }
+    }
+    
 //    fileprivate func insertListItem() {
 //
 //        // maybe better way is to find the last newline from caret, or start of document
