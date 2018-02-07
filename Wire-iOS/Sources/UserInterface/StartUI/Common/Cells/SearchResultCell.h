@@ -25,7 +25,8 @@
 
 
 typedef NS_ENUM(NSUInteger, SearchResultCellSelectionMode) {
-    SearchResultCellSelectionModeAvatarOverlay,
+    SearchResultCellSelectionModeNone,
+    SearchResultCellSelectionModeDimmedBackground,
     SearchResultCellSelectionModeTrailingCheckmark
 };
 

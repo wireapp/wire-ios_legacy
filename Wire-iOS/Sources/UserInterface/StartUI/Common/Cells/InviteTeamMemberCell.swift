@@ -19,23 +19,27 @@
 import Foundation
 import Cartography
 
-class InviteTeamMemberCell : UICollectionViewCell, Reusable {
+
+class StartUIIconCell: UICollectionViewCell, Reusable {
     
-    let iconView : UIImageView  = UIImageView()
-    let titleLabel : UILabel = UILabel()
+    private let iconView = UIImageView()
+    private let titleLabel = UILabel()
+    
+    fileprivate var icon: ZetaIconType? {
+        didSet {
+            iconView.image = icon.map { UIImage.init(for: $0, iconSize: .tiny, color: .white) }
+        }
+    }
+    
+    fileprivate var title: String? {
+        didSet {
+            titleLabel.text = title
+        }
+    }
     
     override init(frame: CGRect) {
-        
         super.init(frame: frame)
-        
-        iconView.image = UIImage.init(for: .envelope, iconSize: .tiny, color: .white)
-        iconView.contentMode = .center
-        
-        titleLabel.text = "peoplepicker.invite_team_members".localized
-        titleLabel.font = FontSpec(.normal, .medium).font
-        titleLabel.textColor = .white
-        [iconView, titleLabel].forEach(contentView.addSubview)
-        
+        setupViews()
         createConstraints()
     }
     
@@ -43,8 +47,15 @@ class InviteTeamMemberCell : UICollectionViewCell, Reusable {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func createConstraints() {
-        let iconSize : CGFloat = 32.0
+    fileprivate func setupViews() {
+        iconView.contentMode = .center
+        titleLabel.font = FontSpec(.normal, .medium).font
+        titleLabel.textColor = .white
+        [iconView, titleLabel].forEach(contentView.addSubview)
+    }
+    
+    fileprivate  func createConstraints() {
+        let iconSize: CGFloat = 32.0
         
         constrain(contentView, iconView, titleLabel) { container, iconView, titleLabel in
             iconView.width == iconSize
@@ -57,6 +68,27 @@ class InviteTeamMemberCell : UICollectionViewCell, Reusable {
             titleLabel.top == container.top
             titleLabel.bottom == container.bottom
         }
+    }
+    
+}
+
+
+final class InviteTeamMemberCell: StartUIIconCell  {
+
+    override func setupViews() {
+        super.setupViews()
+        icon = .envelope
+        title = "peoplepicker.invite_team_members".localized
+    }
+    
+}
+
+final class CreateGroupCell: StartUIIconCell  {
+    
+    override func setupViews() {
+        super.setupViews()
+        icon = .envelope
+        title = "peoplepicker.quick-action.create-conversation".localized
     }
     
 }

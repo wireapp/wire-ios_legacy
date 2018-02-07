@@ -81,4 +81,10 @@ extension StartUIViewController: SearchResultsViewControllerDelegate {
         self.navigationController?.pushViewController(detail, animated: true)
     }
     
+    public func searchResultsViewController(_ searchResultsViewController: SearchResultsViewController, wantsToPerformAction action: SearchResultsViewControllerAction) {
+        switch action {
+        case .createGroup: fatalError("Unimplemented")
+        }
+    }
+    
 }

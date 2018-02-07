@@ -307,6 +307,9 @@ extension AddParticipantsViewController: SearchResultsViewControllerDelegate {
         // no-op
     }
     
+    public func searchResultsViewController(_ searchResultsViewController: SearchResultsViewController, wantsToPerformAction action: SearchResultsViewControllerAction) {
+        // no-op
+    }
 
     public func searchResultsViewController(_ searchResultsViewController: SearchResultsViewController, didTapOnSeviceUser user: ServiceUser) {
         let detail = ServiceDetailViewController(serviceUser: user,

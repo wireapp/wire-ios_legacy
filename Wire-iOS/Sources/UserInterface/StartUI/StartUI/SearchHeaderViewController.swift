@@ -34,6 +34,7 @@ public class SearchHeaderViewController : UIViewController {
     let clearButton: IconButton
     let userSelection : UserSelection
     let colorSchemeVariant : ColorSchemeVariant
+    var allowsMultipleSelection: Bool = true
     
     @objc
     public weak var delegate : SearchHeaderViewControllerDelegate? = nil
@@ -144,6 +145,7 @@ extension SearchHeaderViewController : UserSelectionObserver {
     }
     
     public func userSelection(_ userSelection: UserSelection, didAddUser user: ZMUser) {
+        guard allowsMultipleSelection else { return }
         tokenField.addToken(forTitle: user.displayName, representedObject: user)
     }
     

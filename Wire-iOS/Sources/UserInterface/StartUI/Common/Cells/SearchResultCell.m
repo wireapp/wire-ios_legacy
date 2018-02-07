@@ -149,7 +149,7 @@
         [self updateForContext];
         
         self.showSeparatorLine = NO;
-        self.mode = SearchResultCellSelectionModeAvatarOverlay;
+        self.mode = SearchResultCellSelectionModeNone;
     }
     return self;
 }
@@ -257,7 +257,8 @@
         self.successCheckmark = nil;
         self.contentView.alpha = 1.0f;
         self.showSeparatorLine = NO;
-        self.mode = SearchResultCellSelectionModeAvatarOverlay;
+        self.mode = SearchResultCellSelectionModeNone;
+        self.backgroundColor = UIColor.clearColor;
     }];
 }
 
@@ -388,14 +389,11 @@
     [super setSelected:selected];
 
     switch (self.mode) {
-        case SearchResultCellSelectionModeAvatarOverlay:
-            if (selected) {
-                [self.badgeUserImageView setBadgeIcon:ZetaIconTypeCheckmark];
-            } else {
-                self.badgeUserImageView.badge = nil;
-            }
+        case SearchResultCellSelectionModeNone:
             break;
-
+        case SearchResultCellSelectionModeDimmedBackground:
+            self.backgroundColor = self.selected ? [UIColor colorWithWhite:0 alpha:0.08] : [UIColor clearColor];
+            break;
         case SearchResultCellSelectionModeTrailingCheckmark: {
             UIColor *foregroundColor = [ColorScheme.defaultColorScheme colorWithName:ColorSchemeColorBackground];
             UIColor *backgroundColor = [ColorScheme.defaultColorScheme colorWithName:ColorSchemeColorIconNormal];
@@ -405,6 +403,14 @@
             self.trailingCheckmarkView.layer.borderColor = borderColor.CGColor;
             break;
         }
+    }
+}
+
+- (void)setHighlighted:(BOOL)highlighted
+{
+    [super setHighlighted:highlighted];
+    if (self.mode == SearchResultCellSelectionModeDimmedBackground) {
+        self.backgroundColor = highlighted ? [UIColor colorWithWhite:0 alpha:0.08] : UIColor.clearColor;
     }
 }
 
@@ -450,13 +456,13 @@
 - (void)updateGuestLabelConstraints
 {
     self.guestLabelCheckmarkViewHorizontalConstraint.active = self.mode == SearchResultCellSelectionModeTrailingCheckmark;
-    self.guestLabelTrailingConstraint.active = self.mode == SearchResultCellSelectionModeAvatarOverlay;
+    self.guestLabelTrailingConstraint.active = self.mode != SearchResultCellSelectionModeTrailingCheckmark;
 }
 
 - (void)setMode:(SearchResultCellSelectionMode)mode
 {
     _mode = mode;
-    self.trailingCheckmarkView.hidden = mode == SearchResultCellSelectionModeAvatarOverlay;
+    self.trailingCheckmarkView.hidden = mode != SearchResultCellSelectionModeTrailingCheckmark;
     [self updateGuestLabelConstraints];
     [self setSelected:self.selected];
 }

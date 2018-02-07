@@ -84,6 +84,7 @@ NSString *const PeoplePickerGroupConversationsReuseIdentifier = @"PeoplePickerGr
     };
     
     particularCell.conversation = modelObject;
+    particularCell.mode = SearchResultCellSelectionModeDimmedBackground;
     
     return genericCell;
 }

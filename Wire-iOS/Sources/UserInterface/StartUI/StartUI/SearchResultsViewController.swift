@@ -44,6 +44,12 @@ public protocol SearchResultsViewControllerDelegate {
     func searchResultsViewController(_ searchResultsViewController: SearchResultsViewController, didDoubleTapOnUser user: ZMSearchableUser, indexPath: IndexPath)
     func searchResultsViewController(_ searchResultsViewController: SearchResultsViewController, didTapOnConversation conversation: ZMConversation)
     func searchResultsViewController(_ searchResultsViewController: SearchResultsViewController, didTapOnSeviceUser user: ServiceUser)
+    func searchResultsViewController(_ searchResultsViewController: SearchResultsViewController, wantsToPerformAction action: SearchResultsViewControllerAction)
+}
+
+@objc
+public enum SearchResultsViewControllerAction : Int {
+    case createGroup
 }
 
 @objc
@@ -121,6 +127,7 @@ public class SearchResultsViewController : UIViewController {
     let topPeopleSection: TopPeopleLineSection
     let servicesSection: ServicesSection
     let inviteTeamMemberSection: InviteTeamMemberSection
+    let createGroupSection = CreateGroupSection()
     
     var pendingSearchTask: SearchTask? = nil
     var isAddingParticipants: Bool
@@ -145,7 +152,7 @@ public class SearchResultsViewController : UIViewController {
     }
     
     @objc
-    public init(userSelection: UserSelection, variant: ColorSchemeVariant, isAddingParticipants : Bool = false) {
+    public init(userSelection: UserSelection, variant: ColorSchemeVariant, isAddingParticipants: Bool = false) {
         self.searchDirectory = SearchDirectory(userSession: ZMUserSession.shared()!)
         self.userSelection = userSelection
         self.isAddingParticipants = isAddingParticipants
@@ -183,6 +190,7 @@ public class SearchResultsViewController : UIViewController {
         topPeopleSection.delegate = self
         conversationsSection.delegate = self
         servicesSection.delegate = self
+        createGroupSection.delegate = self
     }
     
     required public init?(coder aDecoder: NSCoder) {
@@ -298,9 +306,9 @@ public class SearchResultsViewController : UIViewController {
             case (.selection, true):
                 sections = [teamMemberAndContactsSection]
             case (.list, false):
-                sections = [topPeopleSection, contactsSection]
+                sections = [topPeopleSection, createGroupSection, contactsSection]
             case (.list, true):
-                sections = [inviteTeamMemberSection, teamMemberAndContactsSection]
+                sections = [inviteTeamMemberSection, createGroupSection, teamMemberAndContactsSection]
             }
         }
         
@@ -371,6 +379,9 @@ extension SearchResultsViewController : CollectionViewSectionDelegate {
         }
         else if let conversation = item as? ZMConversation {
             delegate?.searchResultsViewController(self, didTapOnConversation: conversation)
+        }
+        else if (item as? CreateGroupSection.Row) == .createGroup {
+            delegate?.searchResultsViewController(self, wantsToPerformAction: .createGroup)
         }
     }
     

@@ -50,11 +50,11 @@ IconButton.conversation-toolbar {
     adjustsImageWhenHighlighted: false;
 }
 
-StartUIQuickActionsBar {
+StartUIInviteActionBar {
     backgroundColor: rgb(0, 0, 0, 0.24);
 }
 
-StartUIQuickActionsBar > Button {
+StartUIInviteActionBar > Button {
     titleEdgeInsets: 2, 8, 3, 8;
 }
 
