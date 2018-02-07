@@ -92,6 +92,9 @@
 @interface ConversationViewController (ProfileViewController) <ProfileViewControllerDelegate>
 @end
 
+@interface ConversationViewController (ViewControllerDismissable) <ViewControllerDismissable>
+@end
+
 @interface ConversationViewController (AddParticipants) <AddParticipantsViewControllerDelegate>
 @end
 
@@ -442,7 +445,6 @@
             ParticipantsViewController *participantsViewController = [[ParticipantsViewController alloc] initWithConversation:self.conversation];
             participantsViewController.delegate = self;
             participantsViewController.zClientViewController = [ZClientViewController sharedZClientViewController];
-            participantsViewController.shouldDrawTopSeparatorLineDuringPresentation = YES;
             viewController = participantsViewController;
             break;
         }
@@ -450,11 +452,12 @@
         case ZMConversationTypeOneOnOne:
         case ZMConversationTypeConnection:
         {
-            ProfileViewController *profileViewController = [[ProfileViewController alloc] initWithUser:self.conversation.firstActiveParticipantOtherThanSelf
-                                                                                          conversation:self.conversation];
-            profileViewController.delegate = self;
-            profileViewController.shouldDrawTopSeparatorLineDuringPresentation = YES;
-            viewController = profileViewController;
+            viewController = [UserDetailViewControllerFactory createUserDetailViewControllerWithUser:self.conversation.firstActiveParticipantOtherThanSelf
+                                          conversation:self.conversation
+                         profileViewControllerDelegate:self
+                             viewControllerDismissable:self
+                          navigationControllerDelegate:nil];
+
             break;
         }
         case ZMConversationTypeInvalid:
@@ -585,15 +588,20 @@
 {
     AddParticipantsViewController *addParticipantsViewController = [[AddParticipantsViewController alloc] initWithConversation:self.conversation];
     addParticipantsViewController.delegate = self;
-    addParticipantsViewController.modalPresentationStyle = UIModalPresentationPopover;
-    addParticipantsViewController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
+    
+    UINavigationController *presentedViewController = [addParticipantsViewController wrapInNavigationController:[AddParticipantsNavigationController class]];
+    
+    presentedViewController.modalPresentationStyle = UIModalPresentationPopover;
+    presentedViewController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
 
-    UIPopoverPresentationController *popoverPresentationController = addParticipantsViewController.popoverPresentationController;
+    UIPopoverPresentationController *popoverPresentationController = presentedViewController.popoverPresentationController;
     popoverPresentationController.sourceView = button;
     popoverPresentationController.sourceRect = button.bounds;
     popoverPresentationController.delegate = addParticipantsViewController;
 
-    [self presentViewController:addParticipantsViewController animated:YES completion:nil];
+    [self presentViewController:presentedViewController
+                       animated:YES
+                     completion:nil];
 }
 
 - (void)conversationContentViewController:(ConversationContentViewController *)contentViewController didTriggerResendingMessage:(id <ZMConversationMessage>)message
@@ -781,12 +789,16 @@
 
 @end
 
-@implementation ConversationViewController (ProfileViewController)
+@implementation ConversationViewController (ViewControllerDismissable)
 
-- (void)profileViewControllerWantsToBeDismissed:(ProfileViewController *)profileViewController completion:(dispatch_block_t)completion
+- (void)viewControllerWantsToBeDismissed:(UIViewController *)profileViewController completion:(dispatch_block_t)completion
 {
     [self dismissViewControllerAnimated:YES completion:completion];
 }
+
+@end
+
+@implementation ConversationViewController (ProfileViewController)
 
 - (void)profileViewController:(ProfileViewController *)controller wantsToNavigateToConversation:(ZMConversation *)conversation
 {
@@ -868,6 +880,7 @@
                                                               [self dismissViewControllerAnimated:YES completion:^{
                                                                   ProfileViewController *profileViewController = [[ProfileViewController alloc] initWithUser:user context:ProfileViewControllerContextDeviceList];
                                                                   profileViewController.delegate = self;
+                                                                  profileViewController.viewControllerDismissable = self;
                                                                   [self presentViewController:profileViewController animated:YES completion:nil];
                                                               }];
                                                           }

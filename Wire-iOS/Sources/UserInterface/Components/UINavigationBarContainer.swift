@@ -26,7 +26,6 @@ class UINavigationBarContainer: UIView {
     let portraitNavbarHeight: CGFloat = 44.0
 
     var navigationBar: UINavigationBar!
-    //    var topMargin : NSLayoutConstraint?
     var navHeight: NSLayoutConstraint?
 
     init(_ navigationBar: UINavigationBar) {
@@ -53,7 +52,7 @@ class UINavigationBarContainer: UIView {
 
     override func layoutSubviews() {
         super.layoutSubviews()
-        guard /*let topMargin = topMargin,*/ let navHeight = navHeight else { return }
+        guard let navHeight = navHeight else { return }
         let orientation = UIApplication.shared.statusBarOrientation
         let deviceType = UIDevice.current.userInterfaceIdiom
 

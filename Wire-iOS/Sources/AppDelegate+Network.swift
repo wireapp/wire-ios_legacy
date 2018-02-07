@@ -25,7 +25,7 @@ extension AppDelegate {
     @discardableResult
     @objc
     static func checkNetworkAndFlashIndicatorIfNecessary() -> Bool {
-        return AppDelegate.shared().notificationWindowController?.networkStatusViewController?.notifyWhenOffline() ?? true
+        return NetworkStatusViewController.notifyWhenOffline()
     }
     
 }

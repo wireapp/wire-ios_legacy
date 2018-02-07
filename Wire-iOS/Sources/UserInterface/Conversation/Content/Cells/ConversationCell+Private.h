@@ -16,7 +16,11 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-@interface ConversationCell (Private)
+#import "ConversationCell.h"
+
+@interface ConversationCell ()
+
+@property (nonatomic) BOOL showsPreview;
 
 - (void)updateCountdownView;
 - (void)startCountdownAnimationIfNeeded:(id<ZMConversationMessage>)message;

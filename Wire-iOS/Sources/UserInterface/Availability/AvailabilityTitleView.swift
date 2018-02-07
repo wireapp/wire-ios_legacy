@@ -58,7 +58,7 @@ import WireDataModel
             self.observerToken = UserChangeInfo.add(observer: self, for: user, userSession: sharedSession)
         }
         
-        NotificationCenter.default.addObserver(self, selector: #selector(applicationDidEnterForeground), name: Notification.Name.UIApplicationWillEnterForeground, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(applicationDidBecomeActive), name: Notification.Name.UIApplicationDidBecomeActive, object: nil)
         
         configure(user: user)
     }
@@ -103,7 +103,7 @@ import WireDataModel
 extension AvailabilityTitleView {
     
     @objc
-    fileprivate func applicationDidEnterForeground() {
+    fileprivate func applicationDidBecomeActive() {
         guard let user = self.user else { return }
         
         configure(user: user)

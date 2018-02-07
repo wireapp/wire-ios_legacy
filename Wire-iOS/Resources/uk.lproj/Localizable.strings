@@ -39,6 +39,9 @@
 "peoplepicker.header.services" = "Сервіси";
 "peoplepicker.services.create_conversation.item" = "Розпочати нову розмову";
 "peoplepicker.services.add_service.button" = "Додати сервіс";
+"peoplepicker.services.add_service.error.title" = "The service can't be added";
+"peoplepicker.services.add_service.error.default" = "The service is unavailable at the moment";
+"peoplepicker.services.add_service.error.full" = "The conversation is full";
 
 "peoplepicker.title.create_conversation" = "Створити групу";
 "peoplepicker.title.add_to_conversation" = "Додати учасників";
@@ -431,7 +434,7 @@
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Profile and Participants
 
-"participants.add_people_button_title" = "Додати учасників";
+"participants.add_people_button_title" = "Add";
 "participants.avatar.guest.title" = "Гість";
 
 // Meta Menu

@@ -18,11 +18,11 @@
 
 
 #import <UIKit/UIKit.h>
+#import "ProfileViewController.h"
 
 @class ZMConversation;
 @class ZClientViewController;
 @class ParticipantsViewController;
-
 
 @protocol ParticipantsViewControllerDelegate <NSObject>
 @optional
@@ -33,12 +33,11 @@
 
 /// The view controller which shows details about the given @c ZMConversation and their participants
 /// @see ProfileViewController
-@interface ParticipantsViewController : UIViewController
+@interface ParticipantsViewController : UIViewController <ProfileViewControllerDelegate, ViewControllerDismissable>
 
 @property (nonatomic, weak) id<ParticipantsViewControllerDelegate> delegate;
 @property (nonatomic, strong) ZMConversation *conversation;
 @property (nonatomic, weak) ZClientViewController *zClientViewController;
-@property (nonatomic, assign) BOOL shouldDrawTopSeparatorLineDuringPresentation;
 
 - (instancetype)initWithConversation:(ZMConversation *)conversation;
 

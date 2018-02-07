@@ -136,6 +136,20 @@ static NSTimeInterval const ParticipantsHeaderViewEditHintDismissTimeout = 10.0f
     [self updateEditHintViewLeftOffset];
 }
 
+#pragma mark - UITraitEnvironment
+
+/**
+ When iPad switches size class, hide cancel button if switch to iPad Full screen mode, otherwise show the cancel button.
+
+ @param previousTraitCollection previousTraitCollection
+ */
+- (void)traitCollectionDidChange:(nullable UITraitCollection *)previousTraitCollection
+{
+    [super traitCollectionDidChange:previousTraitCollection];
+
+    [self updateCancelButtonHidden];
+}
+
 #pragma mark - UI creation
 
 - (void)addContainerView
@@ -158,11 +172,13 @@ static NSTimeInterval const ParticipantsHeaderViewEditHintDismissTimeout = 10.0f
     [self.cancelButton setIcon:ZetaIconTypeX withSize:ZetaIconSizeTiny forState:UIControlStateNormal];
 
 	[self.cancelButton addTarget:self action:@selector(buttonTapped:) forControlEvents:UIControlEventTouchUpInside];
-	
-	if (IS_IPAD_FULLSCREEN) {
-		// Don’t show the button in iPad popovers (Full screen mode).
-		self.cancelButton.hidden = YES;
-	}
+
+    [self updateCancelButtonHidden];
+}
+
+- (void)updateCancelButtonHidden
+{
+    self.cancelButton.hidden = (IS_IPAD_FULLSCREEN);
 }
 
 - (void)addTitle
@@ -244,7 +260,7 @@ static NSTimeInterval const ParticipantsHeaderViewEditHintDismissTimeout = 10.0f
     
     // Cancel button
     [self.cancelButton addConstraintForAligningTopToTopOfView:self distance:- 26];
-    [self.cancelButton addConstraintForRightMargin:16 relativeToView:self];
+    [self.cancelButton addConstraintForRightMargin:8 relativeToView:self];
     [self.cancelButton autoMatchDimension:ALDimensionHeight toDimension:ALDimensionWidth ofView:self.cancelButton];
     self.cancelButtonWidthConstraint = [self.cancelButton autoSetDimension:ALDimensionWidth toSize:32];
     

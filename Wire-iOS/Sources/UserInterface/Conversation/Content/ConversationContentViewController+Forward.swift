@@ -86,6 +86,10 @@ extension ZMMessage: Shareable {
     
     public typealias I = ZMConversation
     
+    
+}
+
+extension ZMConversationMessage {
     public func previewView() -> UIView? {
         var cell: ConversationCell
         
@@ -111,9 +115,8 @@ extension ZMMessage: Shareable {
             fatal("Cannot create preview for \(self)")
         }
         
-        let height = cell.prepareLayoutForPreview(message: self)
-        
         cell.translatesAutoresizingMaskIntoConstraints = false
+        let height = cell.prepareLayoutForPreview(message: self)
         
         constrain(cell.contentView) { cellContentView in
             cellContentView.height == height

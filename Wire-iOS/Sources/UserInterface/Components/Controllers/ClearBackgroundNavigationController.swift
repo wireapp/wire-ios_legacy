@@ -54,11 +54,11 @@ class ClearBackgroundNavigationController: UINavigationController {
         self.navigationBar.setBackgroundImage(UIImage(), for:.default)
         self.navigationBar.shadowImage = UIImage()
         self.navigationBar.isTranslucent = true
-        self.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.white, NSFontAttributeName: UIFont(magicIdentifier: "style.text.normal.font_spec_bold").allCaps()]
+        self.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.white, NSFontAttributeName: FontSpec(.medium, .medium).font!.allCaps()]
         
         let navButtonAppearance = UIBarButtonItem.appearance(whenContainedInInstancesOf: [UINavigationBar.self])
         
-        let attributes = [NSFontAttributeName : UIFont(magicIdentifier: "style.text.normal.font_spec").allCaps()]
+        let attributes = [NSFontAttributeName : FontSpec(.normal, .light).font!.allCaps()]
         navButtonAppearance.setTitleTextAttributes(attributes, for: UIControlState.normal)
         navButtonAppearance.setTitleTextAttributes(attributes, for: UIControlState.highlighted)
         

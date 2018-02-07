@@ -34,6 +34,7 @@
 #import "Analytics.h"
 #import "Wire-Swift.h"
 #import "UIImage+ZetaIconsNeue.h"
+#import "ConversationCell+Private.h"
 
 #import "UIView+Borders.h"
 
@@ -61,7 +62,6 @@
 
 @property (nonatomic) CGSize originalImageSize;
 @property (nonatomic) CGSize imageSize;
-@property (nonatomic) BOOL showsPreview;
 
 @end
 
@@ -586,14 +586,11 @@ static const CGFloat ImageToolbarMinimumSize = 192;
 
 #pragma mark - Preview Provider delegate
 
-- (CGFloat)prepareLayoutForPreviewWithMessage:(ZMMessage *)message
+- (CGFloat)prepareLayoutForPreviewWithMessage:(id <ZMConversationMessage>)message
 {
-    CGFloat unused __attribute__((unused)) = [super prepareLayoutForPreviewWithMessage:message];
-    
+    NOT_USED([super prepareLayoutForPreviewWithMessage:message]);
     self.autoStretchVertically = NO;
-    self.showsPreview = YES;
     self.defaultLayoutMargins = UIEdgeInsetsZero;
-    
     return [PreviewHeightCalculator heightForImage:self.fullImageView.image];
 }
 

@@ -39,6 +39,9 @@
 "peoplepicker.header.services" = "Dienste";
 "peoplepicker.services.create_conversation.item" = "Neue Unterhaltung beginnen";
 "peoplepicker.services.add_service.button" = "Dienst hinzufügen";
+"peoplepicker.services.add_service.error.title" = "The service can't be added";
+"peoplepicker.services.add_service.error.default" = "The service is unavailable at the moment";
+"peoplepicker.services.add_service.error.full" = "The conversation is full";
 
 "peoplepicker.title.create_conversation" = "Gruppe erstellen";
 "peoplepicker.title.add_to_conversation" = "Kontakte hinzufügen";
@@ -431,7 +434,7 @@
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Profile and Participants
 
-"participants.add_people_button_title" = "Kontakte hinzufügen";
+"participants.add_people_button_title" = "Add";
 "participants.avatar.guest.title" = "Gast";
 
 // Meta Menu

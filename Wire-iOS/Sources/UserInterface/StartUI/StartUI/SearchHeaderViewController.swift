@@ -22,19 +22,12 @@ import Cartography
 
 @objc
 public protocol SearchHeaderViewControllerDelegate : class {
-    
     func searchHeaderViewController(_ searchHeaderViewController : SearchHeaderViewController, updatedSearchQuery query: String)
-    func searchHeaderViewControllerDidCancelAction(_ searchHeaderViewController : SearchHeaderViewController)
     func searchHeaderViewControllerDidConfirmAction(_ searchHeaderViewController : SearchHeaderViewController)
-    
-    
 }
 
 public class SearchHeaderViewController : UIViewController {
     
-    let titleContainer = UIView()
-    let titleLabel = UILabel()
-    let closeButton : IconButton
     let tokenFieldContainer = UIView()
     let tokenField = TokenField()
     let searchIcon = UIImageView()
@@ -56,7 +49,6 @@ public class SearchHeaderViewController : UIViewController {
     public init(userSelection: UserSelection, variant: ColorSchemeVariant) {
         self.userSelection = userSelection
         self.colorSchemeVariant = variant
-        self.closeButton = variant == .dark ? IconButton.iconButtonDefaultLight() : IconButton.iconButtonDefaultDark()
         self.clearButton = variant == .dark ? IconButton.iconButtonDefaultLight() : IconButton.iconButtonDefaultDark()
         
         super.init(nibName: nil, bundle: nil)
@@ -75,10 +67,6 @@ public class SearchHeaderViewController : UIViewController {
         clearButton.alpha = 0.4
         clearButton.isHidden = true
         
-        titleLabel.text = title?.uppercased()
-        titleLabel.textAlignment = .center
-        titleLabel.textColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorTextForeground, variant: colorSchemeVariant)
-        
         tokenField.layer.cornerRadius = 4
         tokenField.textColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorTextForeground, variant: colorSchemeVariant)
         tokenField.tokenTitleColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorTextForeground, variant: colorSchemeVariant)
@@ -94,29 +82,14 @@ public class SearchHeaderViewController : UIViewController {
         tokenField.textView.textContainerInset = UIEdgeInsets(top: 9, left: 40, bottom: 11, right: 32)
         tokenField.delegate = self
         
-        closeButton.accessibilityLabel = "close"
-        closeButton.setIcon(.X, with: .tiny, for: .normal)
-        closeButton.addTarget(self, action: #selector(onCloseButtonPressed), for: .touchUpInside)
-        
-        [titleLabel, closeButton].forEach(titleContainer.addSubview)
         [tokenField, searchIcon, clearButton].forEach(tokenFieldContainer.addSubview)
-        [titleContainer, tokenFieldContainer].forEach(view.addSubview)
+        [tokenFieldContainer].forEach(view.addSubview)
         
         createConstraints()
     }
     
     fileprivate func createConstraints() {
         
-        constrain(titleContainer, titleLabel, closeButton) { container, titleLabel, closeButton in
-            titleLabel.leading == container.leading + 8
-            titleLabel.trailing == container.trailing - 8
-            titleLabel.centerY == container.centerY
-            
-            closeButton.width == 44
-            closeButton.height == closeButton.width
-            closeButton.centerY == container.centerY
-            closeButton.trailing == container.trailing
-        }
         
         constrain(tokenFieldContainer, tokenField, searchIcon, clearButton) { container, tokenField, searchIcon, clearButton in
             searchIcon.centerY == tokenField.centerY
@@ -135,23 +108,13 @@ public class SearchHeaderViewController : UIViewController {
             tokenField.centerY == container.centerY
         }
                 
-        constrain(view, titleContainer, tokenFieldContainer) { view, titleContainer, tokenFieldContainer in
-            
-            titleContainer.top == view.top + UIScreen.safeArea.top
-            titleContainer.leading == view.leading
-            titleContainer.trailing == view.trailing
-            titleContainer.height == 44
-            
-            tokenFieldContainer.top == titleContainer.bottom
+        constrain(view, tokenFieldContainer) { view, tokenFieldContainer in
+            tokenFieldContainer.top == view.topMargin
             tokenFieldContainer.bottom == view.bottom
             tokenFieldContainer.leading == view.leading
             tokenFieldContainer.trailing == view.trailing
             tokenFieldContainer.height == 56
         }
-    }
-    
-    fileprivate dynamic func onCloseButtonPressed() {
-        delegate?.searchHeaderViewControllerDidCancelAction(self)
     }
     
     fileprivate dynamic func onClearButtonPressed() {

@@ -19,8 +19,6 @@
 import Foundation
 import Cartography
 
-///FIXME: snapshot tests for this VC, for online/offline/connecting states.
-
 // This class wraps the conversation content view controller in order to display the navigation bar on the top
 @objc open class ConversationRootViewController: UIViewController {
 
@@ -28,6 +26,7 @@ import Cartography
     fileprivate var contentView = UIView()
     var navHeight: NSLayoutConstraint?
     var networkStatusBarHeight: NSLayoutConstraint?
+    var isViewDidAppear = false
 
     fileprivate let networkStatusViewController: NetworkStatusViewController
 
@@ -42,13 +41,14 @@ import Cartography
 
         super.init(nibName: .none, bundle: .none)
 
+        networkStatusViewController.delegate = self
+
         self.addChildViewController(conversationController)
         self.contentView.addSubview(conversationController.view)
         conversationController.didMove(toParentViewController: self)
 
         conversationViewController = conversationController
 
-        networkStatusViewController.setNetworkStatusViewDelegate(delegate: self)
 
         configure()
     }
@@ -64,7 +64,7 @@ import Cartography
 
         self.view.backgroundColor = ColorScheme.default().color(withName: ColorSchemeColorBarBackground)
 
-        let navbar = UINavigationBar()///TODO: animation height
+        let navbar = UINavigationBar()
         navbar.isTranslucent = false
         navbar.isOpaque = true
         navbar.setBackgroundImage(UIImage(), for: .any, barMetrics: .default)
@@ -75,20 +75,15 @@ import Cartography
 
         self.view.addSubview(self.customNavBar!)
         self.view.addSubview(self.contentView)
-        self.addChild(networkStatusViewController)
+        self.addToSelf(networkStatusViewController)
 
         [networkStatusViewController.view, navbar, self.contentView].forEach {view in
             view.translatesAutoresizingMaskIntoConstraints = false}
 
-        let topMargin = UIScreen.safeArea.top
+        networkStatusViewController.createConstraints(bottomView: customNavBar!, containerView: self.view, topMargin: UIScreen.safeArea.top)
 
-        constrain(self.customNavBar!, self.view, self.contentView, conversationViewController.view, networkStatusViewController.view) { (customNavBar: LayoutProxy, view: LayoutProxy, contentView: LayoutProxy, conversationViewControllerView: LayoutProxy, networkStatusViewControllerView: LayoutProxy) -> Void in
+        constrain(self.customNavBar!, self.view, self.contentView, conversationViewController.view) { (customNavBar: LayoutProxy, view: LayoutProxy, contentView: LayoutProxy, conversationViewControllerView: LayoutProxy) -> Void in
 
-            networkStatusViewControllerView.top == view.top + topMargin
-            networkStatusViewControllerView.left == view.left
-            networkStatusViewControllerView.right == view.right
-
-            customNavBar.top == networkStatusViewControllerView.bottom
             customNavBar.left == view.left
             customNavBar.right == view.right
 
@@ -108,6 +103,8 @@ import Cartography
         delay(0.4) {
             UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(true)
         }
+
+        isViewDidAppear = true
     }
 
     open override var prefersStatusBarHidden: Bool {
@@ -124,17 +121,21 @@ import Cartography
     }
 }
 
-extension ConversationRootViewController: NetworkStatusViewDelegate {
 
-    func didChangeHeight(_ networkStatusView: NetworkStatusView, animated: Bool, offlineBarState: OfflineBarState) {
-        if animated {
-            UIView.animate(withDuration: NetworkStatusView.resizeAnimationTime, delay: 0, options: [.curveEaseIn, .beginFromCurrentState], animations: {
-                self.view.layoutIfNeeded()
-            })
-        } else {
-            self.view.layoutIfNeeded()
+extension ConversationRootViewController: NetworkStatusBarDelegate {
+
+    /// The network status bar shows on conversation list only in iPad full screen mode
+    var shouldShowNetworkStatusUIInIPadRegularLandscape: Bool {
+        get {
+            return false
         }
+    }
 
+    var shouldShowNetworkStatusUIInIPadRegularPortrait: Bool {
+        get {
+            return true
+        }
     }
 
 }
+

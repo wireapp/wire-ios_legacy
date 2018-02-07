@@ -18,6 +18,7 @@
 
 
 #import "ConversationCell.h"
+#import "ConversationCell+Private.h"
 
 @import PureLayout;
 
@@ -429,10 +430,12 @@ static const CGFloat BurstContainerExpandedHeight = 40;
 
  @param previousTraitCollection previousTraitCollection
  */
-- (void)traitCollectionDidChange:(nullable UITraitCollection *)previousTraitCollection {
+- (void)traitCollectionDidChange:(nullable UITraitCollection *)previousTraitCollection
+{
     [super traitCollectionDidChange:previousTraitCollection];
-
-    self.contentLayoutMargins = self.class.layoutDirectionAwareLayoutMargins;
+    if (!self.showsPreview) {
+        self.contentLayoutMargins = self.class.layoutDirectionAwareLayoutMargins;
+    }
 }
 
 #pragma mark - Long press management

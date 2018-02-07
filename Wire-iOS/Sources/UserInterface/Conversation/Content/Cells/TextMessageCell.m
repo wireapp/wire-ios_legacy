@@ -456,9 +456,8 @@
 
 #pragma mark - Preview Provider delegate
 
-- (CGFloat)prepareLayoutForPreviewWithMessage:(ZMMessage *)message
+- (CGFloat)prepareLayoutForPreviewWithMessage:(id <ZMConversationMessage>)message
 {
-    CGFloat height = [super prepareLayoutForPreviewWithMessage:message];
     self.smallLinkAttachments = YES;
     self.linkAttachmentContainer.layoutMargins = UIEdgeInsetsZero;
     self.messageTextView.backgroundColor = [UIColor wr_colorFromColorScheme:ColorSchemeColorBackground];
@@ -467,7 +466,7 @@
     self.messageTextView.textContainerInset = UIEdgeInsetsMake(8, 8, 10, 8);
     self.messageTextView.textContainer.lineBreakMode = NSLineBreakByTruncatingTail;
     self.messageTextView.textContainer.maximumNumberOfLines = 2;
-    return height;
+    return [super prepareLayoutForPreviewWithMessage:message];
 }
 
 @end

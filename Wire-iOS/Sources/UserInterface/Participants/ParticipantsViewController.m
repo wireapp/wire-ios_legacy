@@ -66,24 +66,15 @@ static NSString *const ParticipantHeaderReuseIdentifier = @"ParticipantListHeade
 @end
 
 
-
-@interface ParticipantsViewController (ProfileView) <ProfileViewControllerDelegate>
-
-@end
-
-
-
 @interface ParticipantsViewController (HeaderFooter) <ParticipantsHeaderDelegate, ParticipantsFooterDelegate>
 
 @end
 
 
 
-@interface ParticipantsViewController () <UICollectionViewDelegate, ZMConversationObserver, UIGestureRecognizerDelegate>
+@interface ParticipantsViewController () <ZMConversationObserver, UIGestureRecognizerDelegate>
 
-@property (nonatomic) ParticipantsHeaderView *headerView;
 @property (nonatomic) ParticipantsFooterView *footerView;
-@property (nonatomic) ProfileNavigationControllerDelegate *navigationControllerDelegate;
 
 @property (nonatomic) UITapGestureRecognizer *tapToDismissEditingGestureRecognizer;
 
@@ -109,8 +100,7 @@ static NSString *const ParticipantHeaderReuseIdentifier = @"ParticipantListHeade
         self.conversation = conversation;
         self.userImageObserverTokens = [NSMutableSet setWithCapacity:5];
         self.navigationControllerDelegate = [[ProfileNavigationControllerDelegate alloc] init];
-        
-        [self loadMagic];
+        self.insetMargin = 24;
     }
     
     return self;
@@ -183,16 +173,6 @@ static NSString *const ParticipantHeaderReuseIdentifier = @"ParticipantListHeade
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations
 {
     return self.wr_supportedInterfaceOrientations;
-}
-
-- (void)viewWillAppearCustomPresentationAnimated:(BOOL)animated isInteractive:(BOOL)interactive
-{
-    self.headerView.topSeparatorLine.hidden = ! self.shouldDrawTopSeparatorLineDuringPresentation;
-}
-
-- (void)viewDidAppearCustomPresentationAnimated:(BOOL)animated isInteractive:(BOOL)interactive
-{
-    self.headerView.topSeparatorLine.hidden = YES;
 }
 
 - (void)onBackgroundTap:(id)sender
@@ -306,13 +286,6 @@ static NSString *const ParticipantHeaderReuseIdentifier = @"ParticipantListHeade
     [self.headerView.titleView resignFirstResponder];
 }
 
-#pragma mark - Magic
-
-- (void)loadMagic
-{
-    self.insetMargin = 24;
-}
-
 #pragma mark - ZMConversationObserver
 
 - (void)conversationDidChange:(ConversationChangeInfo *)change
@@ -334,26 +307,24 @@ static NSString *const ParticipantHeaderReuseIdentifier = @"ParticipantListHeade
     }
 }
 
-- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
+#pragma mark - ViewControllerDismissable
+
+- (void)viewControllerWantsToBeDismissed:(UIViewController *)profileViewController completion:(dispatch_block_t)completion
 {
-    if ([self.headerView.titleView isFirstResponder]) {
-        [self.headerView.titleView resignFirstResponder];
-        return;
-    }
-    
-    ZMUser *user =  [self userAt:indexPath];
-    
-    ProfileViewController *profileViewController = [[ProfileViewController alloc] initWithUser:user conversation:self.conversation];
-    profileViewController.delegate = self;
-    profileViewController.navigationControllerDelegate = self.navigationControllerDelegate;
-    
-    UICollectionViewLayoutAttributes *layoutAttributes = [self.collectionView layoutAttributesForItemAtIndexPath:indexPath];
-    
-    self.navigationControllerDelegate.tapLocation = [self.collectionView convertPoint:layoutAttributes.center toView:self.view];
-    
-    [self.navigationController pushViewController:profileViewController animated:YES];
+    [self.navigationController popViewControllerAnimated:YES];
+    [self.navigationController.transitionCoordinator animateAlongsideTransition:nil completion:^(id<UIViewControllerTransitionCoordinatorContext> context) {
+        if (completion != nil) completion();
+    }];
 }
 
+#pragma mark - ProfileViewControllerDelegate
+
+- (void)profileViewController:(ProfileViewController *)controller wantsToNavigateToConversation:(ZMConversation *)conversation
+{
+    [self dismissViewControllerAnimated:YES completion:^{
+        [self.zClientViewController selectConversation:conversation focusOnView:YES animated:YES];
+    }];
+} 
 @end
 
 
@@ -478,11 +449,15 @@ static NSString *const ParticipantHeaderReuseIdentifier = @"ParticipantListHeade
 - (void)presentAddParticipantsViewController
 {    
     AddParticipantsViewController *addParticipantsViewController = [[AddParticipantsViewController alloc] initWithConversation:self.conversation];
-    addParticipantsViewController.modalPresentationStyle = UIModalPresentationOverCurrentContext;
-    addParticipantsViewController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
     addParticipantsViewController.delegate = self;
     
-    [self presentViewController:addParticipantsViewController animated:YES completion:nil];
+    UINavigationController *presentedViewController = [addParticipantsViewController wrapInNavigationController:[AddParticipantsNavigationController class]];
+    presentedViewController.modalPresentationStyle = UIModalPresentationOverCurrentContext;
+    presentedViewController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
+    
+    [self presentViewController:presentedViewController
+                       animated:YES
+                     completion:nil];
 }
 
 /// Returns whether the conversation name was valid and could be set as the new name.
@@ -536,22 +511,3 @@ static NSString *const ParticipantHeaderReuseIdentifier = @"ParticipantListHeade
 @end
 
 
-
-@implementation ParticipantsViewController (ProfileView)
-
-- (void)profileViewControllerWantsToBeDismissed:(ProfileViewController *)profileViewController completion:(dispatch_block_t)completion
-{
-    [self.navigationController popViewControllerAnimated:YES];
-    [self.navigationController.transitionCoordinator animateAlongsideTransition:nil completion:^(id<UIViewControllerTransitionCoordinatorContext> context) {
-        if (completion != nil) completion();
-    }];
-}
-
-- (void)profileViewController:(ProfileViewController *)controller wantsToNavigateToConversation:(ZMConversation *)conversation
-{
-    [self dismissViewControllerAnimated:YES completion:^{
-        [self.zClientViewController selectConversation:conversation focusOnView:YES animated:YES];
-    }];
-}
-
-@end

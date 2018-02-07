@@ -163,8 +163,8 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(colorSchemeControllerDidApplyChanges:) name:ColorSchemeControllerDidApplyColorSchemeChangeNotification object:nil];
     
     if ([DeveloperMenuState developerMenuEnabled]) { //better way of dealing with this?
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(requestLoopNotification:) name:ZMTransportRequestLoopNotificationName object:nil];
-//        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(potentialErrorNotification:) name:ZMPotentialErrorDetectedNotificationName object:nil]; // TODO enable
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(requestLoopNotification:) name:ZMLoggingRequestLoopNotificationName object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(inconsistentStateNotification:) name:ZMLoggingInconsistentStateNotificationName object:nil];
     }
     
     self.userObserverToken = [UserChangeInfo addObserver:self forUser:[ZMUser selfUser] userSession:[ZMUserSession sharedSession]];
@@ -438,6 +438,7 @@
         ProfileViewController *profileViewController = [[ProfileViewController alloc] initWithUser:user context:ProfileViewControllerContextDeviceList];
         if ([self.conversationRootViewController isKindOfClass:ConversationRootViewController.class]) {
             profileViewController.delegate = (id <ProfileViewControllerDelegate>)[(ConversationRootViewController *)self.conversationRootViewController conversationViewController];
+            profileViewController.viewControllerDismissable = (id <ViewControllerDismissable>)[(ConversationRootViewController *)self.conversationRootViewController conversationViewController];
         }
         UINavigationController *navWrapperController = [[UINavigationController alloc] initWithRootViewController:profileViewController];
         navWrapperController.modalPresentationStyle = UIModalPresentationFormSheet;
@@ -460,7 +461,18 @@
         [self.splitViewController.rightViewController dismissViewControllerAnimated:NO completion:callback];
     }
     else if (self.conversationListViewController.presentedViewController != nil) {
-        [self.conversationListViewController dismissViewControllerAnimated:NO completion:callback];
+        // This is a workaround around the fact that the transitioningDelegate of the settings
+        // view controller is not called when the transition is not being performed animated.
+        // This sounds like a bug in UIKit (Radar incoming) as I would expect the custom animator
+        // being called with `transitionContext.isAnimated == false`. As this is not the case
+        // we have to restore the proper pre-presentation state here.
+        UIView *conversationView = self.conversationListViewController.view;
+        if (!CATransform3DIsIdentity(conversationView.layer.transform) || 1 != conversationView.alpha) {
+            conversationView.layer.transform = CATransform3DIdentity;
+            conversationView.alpha = 1;
+        }
+        
+        [self.conversationListViewController.presentedViewController dismissViewControllerAnimated:NO completion:callback];
     }
     else if (self.presentedViewController != nil) {
         [self dismissViewControllerAnimated:NO completion:callback];
@@ -540,7 +552,7 @@
     [self reloadCurrentConversation];
 }
 
-#pragma mark - Network Loop notification
+#pragma mark - Debug logging notifications
 
 - (void)requestLoopNotification:(NSNotification *)notification;
 {
@@ -548,11 +560,9 @@
     [DebugAlert showSendLogsMessageWithMessage:[NSString stringWithFormat:@"A request loop is going on at %@", path]];
 }
 
-#pragma mark - SE inconsistency notification
-
-- (void)potentialErrorNotification:(NSNotification *)notification;
+- (void)inconsistentStateNotification:(NSNotification *)notification;
 {
-    [DebugAlert showSendLogsMessageWithMessage:[NSString stringWithFormat:@"We detected a potential error, please send logs"]];
+    [DebugAlert showSendLogsMessageWithMessage:[NSString stringWithFormat:@"We detected an inconsistent state: %@", notification.userInfo[ZMLoggingDescriptionKey]]];
 }
 
 #pragma mark -  Share extension analytics

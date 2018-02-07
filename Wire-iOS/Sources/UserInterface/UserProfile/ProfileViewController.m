@@ -18,6 +18,7 @@
 
 
 #import "ProfileViewController.h"
+#import "ProfileViewController+internal.h"
 
 #import "WireSyncEngine+iOS.h"
 #import "avs+iOS.h"
@@ -52,6 +53,8 @@ typedef NS_ENUM(NSUInteger, ProfileViewControllerTabBarIndex) {
 @interface ProfileViewController (ProfileViewControllerDelegate) <ProfileViewControllerDelegate>
 @end
 
+@interface ProfileViewController (ViewControllerDismissable) <ViewControllerDismissable>
+@end
 
 @interface ProfileViewController (ProfileDetailsViewControllerDelegate) <ProfileDetailsViewControllerDelegate>
 @end
@@ -67,7 +70,6 @@ typedef NS_ENUM(NSUInteger, ProfileViewControllerTabBarIndex) {
 
 @interface ProfileViewController () <ZMUserObserver>
 
-@property (nonatomic, readonly) ProfileViewControllerContext context;
 @property (nonatomic, readonly) ZMConversation *conversation;
 
 @property (nonatomic) id observerToken;
@@ -134,8 +136,8 @@ typedef NS_ENUM(NSUInteger, ProfileViewControllerTabBarIndex) {
 
 - (void)requestDismissalWithCompletion:(dispatch_block_t)completion
 {
-    if ([self.delegate respondsToSelector:@selector(profileViewControllerWantsToBeDismissed:completion:)]) {
-        [self.delegate profileViewControllerWantsToBeDismissed:self completion:completion];
+    if ([self.delegate respondsToSelector:@selector(viewControllerWantsToBeDismissed:completion:)]) {
+        [self.viewControllerDismissable viewControllerWantsToBeDismissed:self completion:completion];
     }
 }
 
@@ -146,6 +148,7 @@ typedef NS_ENUM(NSUInteger, ProfileViewControllerTabBarIndex) {
     if (self.context != ProfileViewControllerContextDeviceList) {
         ProfileDetailsViewController *profileDetailsViewController = [[ProfileDetailsViewController alloc] initWithUser:self.bareUser conversation:self.conversation context:self.context];
         profileDetailsViewController.delegate = self;
+        profileDetailsViewController.viewControllerDismissable = self;
         profileDetailsViewController.title = NSLocalizedString(@"profile.details.title", nil);
         [viewControllers addObject:profileDetailsViewController];
     }
@@ -191,23 +194,6 @@ typedef NS_ENUM(NSUInteger, ProfileViewControllerTabBarIndex) {
     
     [self.view addSubview:headerView];
     self.headerView = headerView;
-}
-
-- (ProfileHeaderViewModel *)headerViewModelWithUser:(id<ZMBareUser>)user
-{
-    ProfileHeaderStyle headerStyle = ProfileHeaderStyleCancelButton;
-    if (IS_IPAD_FULLSCREEN) {
-        if (self.navigationController.viewControllers.count > 1) {
-            headerStyle = ProfileHeaderStyleBackButton;
-        } else if (self.context != ProfileViewControllerContextDeviceList) {
-            headerStyle = ProfileHeaderStyleNoButton; // no button in 1:1 profile popover
-        }
-    }
-
-    return [[ProfileHeaderViewModel alloc] initWithUser:user
-                                           fallbackName:user.displayName
-                                        addressBookName:BareUserToUser(user).addressBookEntry.cachedName
-                                                  style:headerStyle];
 }
 
 #pragma mark - User observation
@@ -267,6 +253,14 @@ typedef NS_ENUM(NSUInteger, ProfileViewControllerTabBarIndex) {
 
 @end
 
+@implementation ProfileViewController (ViewControllerDismissable)
+
+- (void)viewControllerWantsToBeDismissed:(UIViewController *)controller completion:(dispatch_block_t)completion
+{
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+@end
 
 @implementation ProfileViewController (ProfileViewControllerDelegate)
 
@@ -275,11 +269,6 @@ typedef NS_ENUM(NSUInteger, ProfileViewControllerTabBarIndex) {
     if ([self.delegate respondsToSelector:@selector(profileViewController:wantsToNavigateToConversation:)]) {
         [self.delegate profileViewController:controller wantsToNavigateToConversation:conversation];
     }
-}
-
-- (void)profileViewControllerWantsToBeDismissed:(ProfileViewController *)controller completion:(dispatch_block_t)completion
-{
-    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (NSString *)suggestedBackButtonTitleForProfileViewController:(id)controller
@@ -306,8 +295,8 @@ typedef NS_ENUM(NSUInteger, ProfileViewControllerTabBarIndex) {
 
 - (void)profileDetailsViewController:(ProfileDetailsViewController *)profileDetailsViewController wantsToBeDismissedWithCompletion:(dispatch_block_t)completion
 {
-    if ([self.delegate respondsToSelector:@selector(profileViewControllerWantsToBeDismissed:completion:)]) {
-        [self.delegate profileViewControllerWantsToBeDismissed:self completion:completion];
+    if ([self.delegate respondsToSelector:@selector(viewControllerWantsToBeDismissed:completion:)]) {
+        [self.viewControllerDismissable viewControllerWantsToBeDismissed:self completion:completion];
     } else if (completion != nil) {
         completion();
     }

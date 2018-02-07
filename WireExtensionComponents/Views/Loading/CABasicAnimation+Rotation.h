@@ -18,11 +18,6 @@
 
 #import <QuartzCore/QuartzCore.h>
 
-
-@interface GapLayer : CALayer
-@property (assign, nonatomic) CGFloat alpha;
-@end
-
 @interface CABasicAnimation (Rotation)
     
 + (CABasicAnimation * _Nonnull)rotateAnimationWithRotationSpeed:(CGFloat)rotationSpeed beginTime:(CGFloat)beginTime delegate:(id<CAAnimationDelegate> _Nullable)delegate;

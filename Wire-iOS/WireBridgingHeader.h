@@ -75,6 +75,12 @@
 #import "TokenTextAttachment.h"
 #import "ParticipantsViewController.h"
 #import "ParticipantsViewController+internal.h"
+#import "ParticipantsHeaderView.h"
+#import "ProfileViewController.h"
+#import "ProfileViewController+internal.h"
+#import "ProfileNavigationControllerDelegate.h"
+#import "StartUIViewController.h"
+#import "StartUIViewController+internal.h"
 #import "ParticipantsListCell.h"
 
 // View Controllers
@@ -120,6 +126,8 @@
 #import "VoiceChannelParticipantCell.h"
 #import "ProfilePictureStepViewController.h"
 #import "StartUIViewController.h"
+#import "Button.h"
+#import "ViewControllerDismissable.h"
 
 // Helper objects
 #import "PushTransition.h"

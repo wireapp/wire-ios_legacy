@@ -1,4 +1,4 @@
-//
+////
 // Wire
 // Copyright (C) 2018 Wire Swiss GmbH
 //
@@ -16,23 +16,8 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-import Foundation
+@interface ProfileViewController () <ZMUserObserver>
 
-extension UIViewController {
-    @objc(addViewController:toView:)
-    func add(_ viewController: UIViewController?, to view: UIView) {
-        guard let viewController = viewController else { return }
+@property (nonatomic, readonly) ProfileViewControllerContext context;
 
-        addChildViewController(viewController)
-        view.addSubview(viewController.view)
-        viewController.didMove(toParentViewController: self)
-    }
-
-
-    /// Add a child view controller and add its view as self's subview
-    ///
-    /// - Parameter viewController: viewController to add
-    func addChild(_ viewController: UIViewController?) {
-        self.add(viewController, to: self.view)
-    }
-}
+@end

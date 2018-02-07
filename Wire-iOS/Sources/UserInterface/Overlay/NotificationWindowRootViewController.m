@@ -47,12 +47,8 @@
 
 @interface NotificationWindowRootViewController ()
 
-//@property (nonatomic) NetworkStatusViewController *networkStatusViewController;
 @property (nonatomic) AppLockViewController *appLockViewController;
 @property (nonatomic) ChatHeadsViewController *chatHeadsViewController;
-
-@property (nonatomic, strong) NSLayoutConstraint *overlayContainerLeftMargin;
-@property (nonatomic, strong) NSLayoutConstraint *networkActivityRightMargin;
 
 @end
 
@@ -74,15 +70,14 @@
         [self.appLockViewController wr_removeFromParentViewController];
     }
 
-    self.appLockViewController.view.translatesAutoresizingMaskIntoConstraints = NO;
-    [self addViewController:self.appLockViewController toView:self.view];
-
     self.chatHeadsViewController = [[ChatHeadsViewController alloc] init];
     self.chatHeadsViewController.view.translatesAutoresizingMaskIntoConstraints = NO;
     [self addViewController:self.chatHeadsViewController toView:self.view];
 
+    self.appLockViewController.view.translatesAutoresizingMaskIntoConstraints = NO;
+    [self addViewController:self.appLockViewController toView:self.view];
+
     [self setupConstraints];
-    [self updateAppearanceForOrientation:[UIApplication sharedApplication].statusBarOrientation];
 }
 
 - (void)setupConstraints
@@ -150,31 +145,6 @@
         return topViewController.supportedInterfaceOrientations;
     } else {
         return self.wr_supportedInterfaceOrientations;
-    }
-}
-
-- (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator
-{
-    [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {
-
-        UIInterfaceOrientation orientation = [[UIApplication sharedApplication] statusBarOrientation];
-        [self updateAppearanceForOrientation:orientation];
-
-    } completion:^(id<UIViewControllerTransitionCoordinatorContext> context) {
-    }];
-
-    [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
-}
-
-- (void)updateAppearanceForOrientation:(UIInterfaceOrientation)orientation
-{
-    if (IS_IPAD_LANDSCAPE_LAYOUT) {
-        CGFloat sidebarWidth = [WAZUIMagic cgFloatForIdentifier:@"framework.sidebar_width"];
-        CGFloat rightMargin =  -([UIScreen mainScreen].bounds.size.width - sidebarWidth);
-        self.networkActivityRightMargin.constant = rightMargin;
-    }
-    else {
-        self.networkActivityRightMargin.constant = 0;
     }
 }
 
