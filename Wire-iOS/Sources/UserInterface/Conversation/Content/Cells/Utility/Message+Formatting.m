@@ -121,7 +121,7 @@ static inline NSDataDetector *linkDataDetector(void)
         style = [[DownStyle alloc] init];
         style.baseFont = font;
         style.baseFontColor = foregroundColor;
-        style.baseParagraphStyle = cellParagraphStyle;
+//        style.baseParagraphStyle = cellParagraphStyle;
     }
     
     NSAttributedString *markdownString = [NSAttributedString markdownFrom:text style:style];
@@ -175,11 +175,6 @@ static inline NSDataDetector *linkDataDetector(void)
 //    }
     
     [attributedString endEditing];
-    
-
-    
-    // parse for markdown syntax & apply attributes
-//    [groupStyler addMarkdownAttributes:attributedString editedRange: NSMakeRange(0, attributedString.length)];
     
     if ([attributedString.string wr_containsOnlyEmojiWithSpaces]) {
         [attributedString setAttributes:@{NSFontAttributeName: [UIFont systemFontOfSize:40]} range:NSMakeRange(0, attributedString.length)];
