@@ -187,7 +187,7 @@ protocol NetworkStatusViewControllerDelegate: class {
         networkStatusView.update(state: state, animated: true)
     }
     
-    func shouldShowOnIPad(for newOrientation: UIIdiomSizeClassOrientation.Orientation?) -> Bool {
+    func shouldShowOnIPad(for newOrientation: UIIdiomSizeClassOrientationProtocol.Orientation?) -> Bool {
         
         guard let delegate = self.delegate, let newOrientation = newOrientation else { return true }
         
