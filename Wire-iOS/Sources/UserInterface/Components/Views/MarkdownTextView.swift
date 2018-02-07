@@ -122,11 +122,12 @@ class MarkdownTextView: NextResponderTextView {
     /// Returns the markdown at the current caret position.
     ///
     func markdownAtCaret() -> Markdown {
-        let caret = selectedRange.location
-        if caret == 0 { return markdown(at: caret) }
+        guard let range = selectedTextRange, range.isEmpty else { return .none }
+        let caret = range.start
+        let location = offset(from: beginningOfDocument, to: caret)
         // in order to allow continuity of typing, the markdown at the caret
-        // should be the same as the previous position.
-        return markdown(at: caret - 1)
+        // should actually be markdown at the position behind the caret
+        return markdown(at: max(0, location - 1))
     }
     
     /// Returns the markdown at the given location.
