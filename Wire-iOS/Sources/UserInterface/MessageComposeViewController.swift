@@ -52,6 +52,11 @@ final class MessageComposeViewController: UIViewController {
                                                selector: #selector(MessageComposeViewController.keyboardFrameWillChange(_:)),
                                                name: NSNotification.Name.UIKeyboardWillChangeFrame,
                                                object: nil)
+        
+        NotificationCenter.default.addObserver(markdownBarView,
+                                               selector: #selector(markdownBarView.textViewDidChangeActiveMarkdown),
+                                               name: Notification.Name.MarkdownTextViewDidChangeActiveMarkdown,
+                                               object: messageTextView)
     }
     
     deinit {
@@ -286,25 +291,22 @@ extension MessageComposeViewController: UITextViewDelegate {
 
     func textViewDidChange(_ textView: UITextView) {
         updateDraftThrottled()
-//        markdownBarView.updateIconsForModes(messageTextView.markdownElementsForRange(nil))
     }
 
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         
         if text == "\n" || text == "\r" {
-//            (textView as! MarklightTextView).handleNewLine()
+            (textView as? MarkdownTextView)?.handleNewLine()
         }
         
         if range.location == 0 && text == " " && textView.text?.isEmpty ?? true {
             return false
         }
-
+        
+        (textView as? MarkdownTextView)?.updateTypingAttributes()
         return true
     }
     
-    func textViewDidChangeSelection(_ textView: UITextView) {
-//        markdownBarView.updateIconsForModes(messageTextView.markdownElementsForRange(nil))
-    }
 }
 
 
