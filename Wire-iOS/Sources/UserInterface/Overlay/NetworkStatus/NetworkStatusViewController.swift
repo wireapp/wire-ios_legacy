@@ -41,7 +41,7 @@ protocol NetworkStatusViewControllerDelegate: class {
     static private var shared: NetworkStatusViewController? {
         get {
             for networkStatusViewController in selfInstances {
-                if networkStatusViewController.shouldShowOnIPad(for: UIIdiomSizeClassOrientation.current().orientation) {
+                if networkStatusViewController.shouldShowOnIPad(for: uIIdiomSizeClassOrientationProtocol.current().orientation) {
                     return networkStatusViewController
                 }
                 
@@ -55,8 +55,10 @@ protocol NetworkStatusViewControllerDelegate: class {
     fileprivate var pendingState: NetworkStatusViewState?
     fileprivate var state: NetworkStatusViewState?
     fileprivate var finishedViewWillAppear: Bool = false
+    fileprivate let uIIdiomSizeClassOrientationProtocol: UIIdiomSizeClassOrientationProtocol.Type
     
-    init() {
+    init(_ uIIdiomSizeClassOrientationProtocol: UIIdiomSizeClassOrientationProtocol.Type = UIIdiomSizeClassOrientation.self) {
+        self.uIIdiomSizeClassOrientationProtocol = uIIdiomSizeClassOrientationProtocol
         super.init(nibName: nil, bundle: nil)
         NetworkStatusViewController.selfInstances.append(self)
     }
@@ -180,7 +182,7 @@ protocol NetworkStatusViewControllerDelegate: class {
     
     fileprivate func update(state: NetworkStatusViewState) {
         self.state = state
-        guard shouldShowOnIPad(for: UIIdiomSizeClassOrientation.current().orientation) else { return } ///TODO: rename
+        guard shouldShowOnIPad(for: UIIdiomSizeClassOrientation.current().orientation) else { return }
         
         networkStatusView.update(state: state, animated: true)
     }
@@ -229,7 +231,7 @@ extension NetworkStatusViewController {
         super.traitCollectionDidChange(previousTraitCollection)
         guard UIDevice.current.userInterfaceIdiom == .pad else { return }
         
-        updateStateForIPad(for: UIIdiomSizeClassOrientation.current().orientation)
+        updateStateForIPad(for: uIIdiomSizeClassOrientationProtocol.current().orientation)
     }
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {

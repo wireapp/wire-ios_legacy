@@ -18,19 +18,25 @@
 
 import Foundation
 
-/// Struct for replacing IS_IPAD_FULLSCREEN, IS_IPAD_PORTRAIT_LAYOUT and IS_IPAD_LANDSCAPE_LAYOUT objc macros.
-struct UIIdiomSizeClassOrientation {
-    
+protocol UIIdiomSizeClassOrientationProtocol {
     enum Orientation {
         case landscape, portrait, unknown
     }
     
-    let idiom: UIUserInterfaceIdiom
-    let horizontalSizeClass: UIUserInterfaceSizeClass?
-    let orientation: Orientation?
+    var idiom: UIUserInterfaceIdiom {get}
+    var horizontalSizeClass: UIUserInterfaceSizeClass?  {get}
+    var orientation: Orientation?  {get}
+
+    static func current() -> UIIdiomSizeClassOrientationProtocol
+}
+
+/// Struct for replacing IS_IPAD_FULLSCREEN, IS_IPAD_PORTRAIT_LAYOUT and IS_IPAD_LANDSCAPE_LAYOUT objc macros.
+struct UIIdiomSizeClassOrientation: UIIdiomSizeClassOrientationProtocol {
+    var idiom: UIUserInterfaceIdiom = UIDevice.current.userInterfaceIdiom
+    var horizontalSizeClass: UIUserInterfaceSizeClass?
+    var orientation: Orientation?
 
     init() {
-        idiom = UIDevice.current.userInterfaceIdiom
         horizontalSizeClass = UIApplication.shared.keyWindow?.traitCollection.horizontalSizeClass
         if UIInterfaceOrientationIsLandscape(UIApplication.shared.statusBarOrientation) {
             orientation = .landscape
@@ -54,8 +60,8 @@ struct UIIdiomSizeClassOrientation {
     }
 }
 
-extension UIIdiomSizeClassOrientation: Equatable {}
-func ==(lhs: UIIdiomSizeClassOrientation, rhs: UIIdiomSizeClassOrientation) -> Bool {
+extension UIIdiomSizeClassOrientation: Equatable {
+    static func ==(lhs: UIIdiomSizeClassOrientation, rhs: UIIdiomSizeClassOrientation) -> Bool {
 
     // If one of the orientations is nil, return true
     var isOrientationEqual = false
@@ -67,6 +73,7 @@ func ==(lhs: UIIdiomSizeClassOrientation, rhs: UIIdiomSizeClassOrientation) -> B
     }
 
     return lhs.idiom == rhs.idiom && lhs.horizontalSizeClass == rhs.horizontalSizeClass && isOrientationEqual
+}
 }
 
 extension UIIdiomSizeClassOrientation {
