@@ -268,11 +268,20 @@ class MarkdownTextView: NextResponderTextView {
 extension MarkdownTextView: MarkdownBarViewDelegate {
     
     func markdownBarView(_ view: MarkdownBarView, didSelectMarkdown markdown: Markdown, with sender: IconButton) {
-//        if markdown == .list { insertListItem() }
+        // selecting header will apply header to the whole line
+        if markdown.isHeader, let range = rangeOfCurrentLine() {
+            add(markdown, to: range)
+        }
+        
         activeMarkdown.insert(markdown)
     }
     
     func markdownBarView(_ view: MarkdownBarView, didDeselectMarkdown markdown: Markdown, with sender: IconButton) {
+        // deselecting header will remove header from the whole line
+        if markdown.isHeader, let range = rangeOfCurrentLine() {
+            remove(markdown, to: range)
+        }
+        
         activeMarkdown.subtract(markdown)
     }
 }
