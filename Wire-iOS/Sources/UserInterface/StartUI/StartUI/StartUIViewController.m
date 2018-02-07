@@ -110,6 +110,11 @@ static NSUInteger const StartUIInitiallyShowsKeyboardConversationThreshold = 10;
     @weakify(self);
     self.groupSelector.onGroupSelected = ^(SearchGroup group) {
         @strongify(self);
+        if (SearchGroupServices == group) {
+            // Remove selected users when switching to services tab to avoid the user confusion: users in the field are
+            // not going to be added to the new conversation with the bot.
+            [self.searchHeaderViewController clearInput];
+        }
         self.searchResultsViewController.searchGroup = group;
         [self performSearch];
     };

@@ -126,6 +126,12 @@ public class SearchHeaderViewController : UIViewController {
         updateClearIndicator(for: tokenField)
     }
     
+    public func clearInput() {
+        tokenField.removeAllTokens()
+        tokenField.clearFilterText()
+        userSelection.replace([])
+    }
+    
     public func resetQuery() {
         tokenField.filterUnwantedAttachments()
         delegate?.searchHeaderViewController(self, updatedSearchQuery: tokenField.filterText)
