@@ -1029,6 +1029,7 @@
 		EFE806301FE006A7006A0EE7 /* DateFormatterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFE8062E1FE005A7006A0EE7 /* DateFormatterTests.swift */; };
 		EFF6EA3E2020CF4100A7023B /* Button+ServiceButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFF6EA3D2020CF4100A7023B /* Button+ServiceButton.swift */; };
 		EFFF9E851FBF335700491F9A /* UIColor+TeamCreation.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFFF9E841FBF335700491F9A /* UIColor+TeamCreation.swift */; };
+		F10F46D420288CEB00261449 /* ConversationCreationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F10F46D320288CEB00261449 /* ConversationCreationController.swift */; };
 		F1141C971F5EB2DC005340B3 /* WireApplication.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1141C961F5EB2DC005340B3 /* WireApplication.swift */; };
 		F1199D351FC8490A0070FAC3 /* TeamCreationFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1199D2E1FC8490A0070FAC3 /* TeamCreationFlowController.swift */; };
 		F1199D361FC8490A0070FAC3 /* TeamCreationState.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1199D2F1FC8490A0070FAC3 /* TeamCreationState.swift */; };
@@ -1061,6 +1062,8 @@
 		F1A989D01FD1630300B8A82E /* SecondaryViewDescription.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1A989CF1FD1630300B8A82E /* SecondaryViewDescription.swift */; };
 		F1AA8AD61E5DF36A006A0E68 /* DegradationOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1AA8AD51E5DF36A006A0E68 /* DegradationOverlayView.swift */; };
 		F1B025641E574B3C00900C65 /* VoiceChannelOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1B025631E574B3C00900C65 /* VoiceChannelOverlay.swift */; };
+		F1B5EAC72029AB9A0081D402 /* SimpleTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1B5EAC62029AB9A0081D402 /* SimpleTextField.swift */; };
+		F1B5EAC92029AC7E0081D402 /* SimpleTextFieldValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1B5EAC82029AC7E0081D402 /* SimpleTextFieldValidator.swift */; };
 		F1C9E3601EAE008C006438D7 /* TestSetup.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1C9E35E1EADFFB8006438D7 /* TestSetup.swift */; };
 		F1CE2DF01EF0337F00631D8A /* PureLayout.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F1CE2DEF1EF0337F00631D8A /* PureLayout.framework */; };
 		F93D58431D7D9184003AE972 /* Analytics+ConversationEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = F93D58421D7D9184003AE972 /* Analytics+ConversationEvents.swift */; };
@@ -2624,6 +2627,7 @@
 		EFF6EA3D2020CF4100A7023B /* Button+ServiceButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Button+ServiceButton.swift"; sourceTree = "<group>"; };
 		EFF6EA482021BE6700A7023B /* ViewControllerDismissable.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewControllerDismissable.h; sourceTree = "<group>"; };
 		EFFF9E841FBF335700491F9A /* UIColor+TeamCreation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+TeamCreation.swift"; sourceTree = "<group>"; };
+		F10F46D320288CEB00261449 /* ConversationCreationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationCreationController.swift; sourceTree = "<group>"; };
 		F1141C961F5EB2DC005340B3 /* WireApplication.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WireApplication.swift; sourceTree = "<group>"; };
 		F1199D2E1FC8490A0070FAC3 /* TeamCreationFlowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TeamCreationFlowController.swift; sourceTree = "<group>"; };
 		F1199D2F1FC8490A0070FAC3 /* TeamCreationState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TeamCreationState.swift; sourceTree = "<group>"; };
@@ -2664,6 +2668,8 @@
 		F1A989CF1FD1630300B8A82E /* SecondaryViewDescription.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondaryViewDescription.swift; sourceTree = "<group>"; };
 		F1AA8AD51E5DF36A006A0E68 /* DegradationOverlayView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DegradationOverlayView.swift; sourceTree = "<group>"; };
 		F1B025631E574B3C00900C65 /* VoiceChannelOverlay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VoiceChannelOverlay.swift; sourceTree = "<group>"; };
+		F1B5EAC62029AB9A0081D402 /* SimpleTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleTextField.swift; sourceTree = "<group>"; };
+		F1B5EAC82029AC7E0081D402 /* SimpleTextFieldValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleTextFieldValidator.swift; sourceTree = "<group>"; };
 		F1C9E35E1EADFFB8006438D7 /* TestSetup.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestSetup.swift; sourceTree = "<group>"; };
 		F1CE2DEF1EF0337F00631D8A /* PureLayout.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PureLayout.framework; path = Carthage/Build/iOS/PureLayout.framework; sourceTree = "<group>"; };
 		F1D0445E1ED8675200EAC1DA /* TeamSelectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TeamSelectionViewController.swift; sourceTree = "<group>"; };
@@ -4572,6 +4578,7 @@
 		8FC8517F199245760008B66B /* Conversation */ = {
 			isa = PBXGroup;
 			children = (
+				F10F46D02028857C00261449 /* Create */,
 				8FC85180199245760008B66B /* Content */,
 				8FC851B3199245760008B66B /* InputBar */,
 				875F89151D6F35DC00D8748E /* ReactionsList */,
@@ -5342,6 +5349,16 @@
 				EF7F74021FCC01140059C13F /* EmailAdresssValidatorTests.swift */,
 			);
 			path = AccessoryTextField;
+			sourceTree = "<group>";
+		};
+		F10F46D02028857C00261449 /* Create */ = {
+			isa = PBXGroup;
+			children = (
+				F10F46D320288CEB00261449 /* ConversationCreationController.swift */,
+				F1B5EAC62029AB9A0081D402 /* SimpleTextField.swift */,
+				F1B5EAC82029AC7E0081D402 /* SimpleTextFieldValidator.swift */,
+			);
+			path = Create;
 			sourceTree = "<group>";
 		};
 		F1199D2B1FC8490A0070FAC3 /* Flow */ = {
@@ -6608,6 +6625,7 @@
 				DB5206491B06355300138586 /* MentionsCollectionViewController.m in Sources */,
 				87DCF4EF1D34EA4500BB420F /* TopPeopleLineSection.m in Sources */,
 				8711A5A21E0D395A00043ACF /* CollectionCellHeader.swift in Sources */,
+				F1B5EAC92029AC7E0081D402 /* SimpleTextFieldValidator.swift in Sources */,
 				8FC854B9199245770008B66B /* MagicConfig.m in Sources */,
 				871BC2211D34F8F800DF0793 /* ActionSheetContainerView.m in Sources */,
 				D5DBAAAC20064DD700E9F65B /* TeamMemberInviteHeaderView.swift in Sources */,
@@ -6745,6 +6763,7 @@
 				87C539561E8E516400084F94 /* BoundsAwareFlowLayout.swift in Sources */,
 				D5D89782201A25E000FAF69C /* Analytics+Services.swift in Sources */,
 				8FC85498199245770008B66B /* MediaBar.m in Sources */,
+				F1B5EAC72029AB9A0081D402 /* SimpleTextField.swift in Sources */,
 				16E2A0A61F6BF233005F4DB1 /* ZMConversation+Calling.swift in Sources */,
 				BFCF31DD1DA52ECE0039B3DC /* KeyboardHeight.swift in Sources */,
 				87A752171E002F6C004317DB /* ConversationRootViewController.swift in Sources */,
@@ -6837,6 +6856,7 @@
 				871BC3521D34F94200DF0793 /* AggregateArray.m in Sources */,
 				873C5FE81C10426A00D5132A /* ClientTableViewCell.swift in Sources */,
 				87DCF4E71D34EA4500BB420F /* UIActivityViewController+Invite.m in Sources */,
+				F10F46D420288CEB00261449 /* ConversationCreationController.swift in Sources */,
 				8FC853FF199245770008B66B /* AppDelegate.m in Sources */,
 				EE265E821F6FF4910087676B /* ChatHeadView.swift in Sources */,
 				BF0555BD1E6D785C00D3E9D4 /* CallCells.swift in Sources */,
