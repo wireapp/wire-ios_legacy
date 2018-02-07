@@ -215,7 +215,7 @@ extension NetworkStatusViewController: ZMNetworkAvailabilityObserver {
 // MARK: - iPad size class and orientation switching
 
 extension NetworkStatusViewController {
-    func updateStateForIPad(for newOrientation: UIIdiomSizeClassOrientation.Orientation?) {
+    func updateStateForIPad(for newOrientation: UIIdiomSizeClassOrientationProtocol.Orientation?) {
         if shouldShowOnIPad(for: newOrientation) {
             if let state = state {
                 networkStatusView.update(state: state, animated: false)
