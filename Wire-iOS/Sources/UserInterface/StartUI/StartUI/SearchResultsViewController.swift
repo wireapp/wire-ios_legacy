@@ -166,6 +166,7 @@ public class SearchResultsViewController : UIViewController {
         contactsSection.userSelection = userSelection
         contactsSection.title = team != nil ? "peoplepicker.header.contacts_personal".localized : "peoplepicker.header.contacts".localized
         contactsSection.colorSchemeVariant = variant
+        contactsSection.useNewStyleCellLayout = isAddingParticipants
         teamMemberAndContactsSection = UsersInContactsSection()
         teamMemberAndContactsSection.useNewStyleCellLayout = isAddingParticipants
         teamMemberAndContactsSection.userSelection = userSelection

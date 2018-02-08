@@ -35,6 +35,10 @@
 "peoplepicker.header.contacts_personal" = "Personal Contacts";
 "peoplepicker.header.directory" = "Connect";
 
+"peoplepicker.group.title.singular" = "Add People";
+"peoplepicker.group.title.plural" = "Add People (%d)";
+"peoplepicker.group.create" = "Create";
+
 "peoplepicker.header.people" = "People";
 "peoplepicker.header.services" = "Services";
 "peoplepicker.services.create_conversation.item" = "Create a new conversation";

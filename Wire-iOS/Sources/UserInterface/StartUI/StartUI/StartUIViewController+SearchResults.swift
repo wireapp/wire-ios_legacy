@@ -84,7 +84,7 @@ extension StartUIViewController: SearchResultsViewControllerDelegate {
     public func searchResultsViewController(_ searchResultsViewController: SearchResultsViewController, wantsToPerformAction action: SearchResultsViewControllerAction) {
         switch action {
         case .createGroup:
-            let controller = ConversationCreationController() { [weak self] in
+            let controller = ConversationCreationController { [weak self] in
                 self?.navigationController?.popViewController(animated: true)
             }
             let avoiding = KeyboardAvoidingViewController(viewController: controller)

@@ -21,11 +21,12 @@ import Foundation
 import UIKit
 import Cartography
 
-final class ConversationToCreate {
-    let name: String
-    var participants: [ZMUser] = []
-    init (name: String) {
+final public class ConversationCreationValues {
+    var name: String
+    var participants: Set<ZMUser>
+    init (name: String, participants: Set<ZMUser> = []) {
         self.name = name
+        self.participants = participants
     }
 }
 
@@ -47,6 +48,8 @@ final class ConversationCreationController: UIViewController {
     private var textField: SimpleTextField!
     private var textFieldValidator = SimpleTextFieldValidator()
     fileprivate var secondaryErrorView: UIView?
+    
+    fileprivate var values: ConversationCreationValues?
 
     fileprivate var onClose: (() -> ())?
 
@@ -87,7 +90,7 @@ final class ConversationCreationController: UIViewController {
         mainViewContainer = UIView()
         mainViewContainer.translatesAutoresizingMaskIntoConstraints = false
 
-        backButtonDescription.buttonTapped = self.onClose
+        backButtonDescription.buttonTapped = { [weak self] in self?.onClose?() }
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: backButtonDescription.create())
 
         nextButton = ButtonWithLargerHitArea()
@@ -97,6 +100,7 @@ final class ConversationCreationController: UIViewController {
         nextButton.setTitleColor(UIColor.wr_color(fromColorScheme: ColorSchemeColorIconHighlighted, variant: .light), for: .highlighted)
         nextButton.setTitleColor(UIColor.wr_color(fromColorScheme: ColorSchemeColorIconShadow, variant: .light), for: .disabled)
 
+        nextButton.addTarget(self, action: #selector(nextButtonTapped), for: .touchUpInside)
         nextButton.titleLabel?.font = FontSpec(.medium, .medium).font!
 
         navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: ColorScheme.default().color(withName: ColorSchemeColorTextForeground),
@@ -183,13 +187,35 @@ final class ConversationCreationController: UIViewController {
         case let .error(error):
             displayError(error)
         case let .valid(name):
-            print("Create group with : \(name))")
+            let newValues = ConversationCreationValues(name: name, participants: values?.participants ?? [])
+            values = newValues
+            let participantsController = AddParticipantsViewController(context: .create(newValues))
+            participantsController.conversationCreationDelegate = self
+            UIView.performWithoutAnimation(participantsController.loadViewIfNeeded)
+            navigationController?.pushViewController(participantsController, animated: true)
         }
     }
 
-    dynamic func nextButtonTapped(_ sender: UIButton) {
+    @objc fileprivate func nextButtonTapped(_ sender: UIButton) {
         guard let value = textField.value else { return }
         proceedWith(value: value)
+    }
+}
+
+// MARK: - AddParticipantsConversationCreationDelegate
+
+extension ConversationCreationController: AddParticipantsConversationCreationDelegate {
+    
+    func addParticipantsViewController(_ addParticipantsViewController: AddParticipantsViewController, didPerform action: AddParticipantsViewController.CreateAction) {
+        
+        switch action {
+        case .updatedUsers(let users):
+            values = values.map {
+                ConversationCreationValues(name: $0.name, participants: users)
+            }
+        case .create: break
+            // TODO: Create Conversation
+        }
     }
 }
 
