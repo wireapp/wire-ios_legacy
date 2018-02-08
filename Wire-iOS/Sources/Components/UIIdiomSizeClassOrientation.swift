@@ -31,6 +31,21 @@ protocol UIIdiomSizeClassOrientationProtocol {
     static func current() -> UIIdiomSizeClassOrientationProtocol
 }
 
+func ==(lhs: UIIdiomSizeClassOrientationProtocol, rhs: UIIdiomSizeClassOrientationProtocol) -> Bool {
+
+    // If one of the orientations is nil, return true
+    var isOrientationEqual = false
+    if let lhsOrientation = lhs.orientation, let rhsOrientation = rhs.orientation {
+        isOrientationEqual = lhsOrientation == rhsOrientation
+    }
+    else {
+        isOrientationEqual = true
+    }
+
+    return lhs.idiom == rhs.idiom && lhs.horizontalSizeClass == rhs.horizontalSizeClass && isOrientationEqual
+}
+
+
 /// Struct for replacing IS_IPAD_FULLSCREEN, IS_IPAD_PORTRAIT_LAYOUT and IS_IPAD_LANDSCAPE_LAYOUT objc macros.
 struct UIIdiomSizeClassOrientation: UIIdiomSizeClassOrientationProtocol {
     var idiom: UIUserInterfaceIdiom = UIDevice.current.userInterfaceIdiom
@@ -61,25 +76,11 @@ struct UIIdiomSizeClassOrientation: UIIdiomSizeClassOrientationProtocol {
     }
 }
 
-extension UIIdiomSizeClassOrientation: Equatable {
-    static func ==(lhs: UIIdiomSizeClassOrientation, rhs: UIIdiomSizeClassOrientation) -> Bool {
-
-    // If one of the orientations is nil, return true
-    var isOrientationEqual = false
-    if let lhsOrientation = lhs.orientation, let rhsOrientation = rhs.orientation {
-        isOrientationEqual = lhsOrientation == rhsOrientation
-    }
-    else {
-        isOrientationEqual = true
-    }
-
-    return lhs.idiom == rhs.idiom && lhs.horizontalSizeClass == rhs.horizontalSizeClass && isOrientationEqual
-}
-}
-
 extension UIIdiomSizeClassOrientation {
     static func isIPadRegular() -> Bool {
-        return UIIdiomSizeClassOrientation.current() == UIIdiomSizeClassOrientation(idiom: .pad, horizontalSizeClass: .regular)
+        let current = UIIdiomSizeClassOrientation.current()
+        let iPadRegular: UIIdiomSizeClassOrientationProtocol = UIIdiomSizeClassOrientation(idiom: .pad, horizontalSizeClass: .regular)
+        return current == iPadRegular
     }
 
 
@@ -87,7 +88,10 @@ extension UIIdiomSizeClassOrientation {
     ///
     /// - Returns: true if current status is iPad in regular size class and orientation is landscape.
     static func isIPadRegularLandscape() -> Bool {
-        return UIIdiomSizeClassOrientation.current() == UIIdiomSizeClassOrientation(idiom: .pad, horizontalSizeClass: .regular, orientation: .landscape)
+        let current = UIIdiomSizeClassOrientation.current()
+        let iPadRegularLandscape: UIIdiomSizeClassOrientationProtocol = UIIdiomSizeClassOrientation(idiom: .pad, horizontalSizeClass: .regular, orientation: .landscape)
+
+        return current == iPadRegularLandscape
     }
 
     static func isIPadRegularPortrait() -> Bool {

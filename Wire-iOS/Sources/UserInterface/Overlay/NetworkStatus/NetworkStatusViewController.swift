@@ -41,7 +41,7 @@ protocol NetworkStatusViewControllerDelegate: class {
     static private var shared: NetworkStatusViewController? {
         get {
             for networkStatusViewController in selfInstances {
-                if networkStatusViewController.shouldShowOnIPad(for: uIIdiomSizeClassOrientationProtocol.current().orientation) {
+                if networkStatusViewController.shouldShowOnIPad(for: networkStatusViewController.uIIdiomSizeClassOrientationProtocol.current().orientation) {
                     return networkStatusViewController
                 }
                 
