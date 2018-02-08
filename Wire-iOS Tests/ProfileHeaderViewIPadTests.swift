@@ -19,11 +19,23 @@
 import XCTest
 @testable import Wire
 
-extension ProfileHeaderView {
-    convenience init(_ uIIdiomSizeClassOrientationProtocol: UIIdiomSizeClassOrientationProtocol.Type = UIIdiomSizeClassOrientation.self) {
-//        self.uIIdiomSizeClassOrientationProtocol = uIIdiomSizeClassOrientationProtocol
-        self.init()
+struct MockIdiomSizeClassOrientation: UIIdiomSizeClassOrientationProtocol {
+    var idiom: UIUserInterfaceIdiom
+    var horizontalSizeClass: UIUserInterfaceSizeClass?
+    var orientation: Orientation?
+    
+    static var currentIdiom = UIUserInterfaceIdiom.pad
+    static var currentHorizontalSizeClass = UIUserInterfaceSizeClass.regular
+    static var currentOrientation = Orientation.landscape
+
+    static func current() -> UIIdiomSizeClassOrientationProtocol {
+        return MockIdiomSizeClassOrientation(idiom: currentIdiom, horizontalSizeClass: currentHorizontalSizeClass, orientation: currentOrientation)
     }
+    
+    func isIPadRegular() -> Bool {
+        return true
+    }
+    
 }
 
 final class ProfileHeaderViewIPadTests: XCTestCase {
@@ -35,7 +47,7 @@ final class ProfileHeaderViewIPadTests: XCTestCase {
 
         let model = ProfileHeaderViewModel(user: nil, fallbackName: "Jose Luis", addressBookName: nil, navigationControllerViewControllerCount: 0)
 
-        sut = ProfileHeaderView(with: model)
+        sut = ProfileHeaderView(with: model, MockIdiomSizeClassOrientation.self)
     }
     
     override func tearDown() {
