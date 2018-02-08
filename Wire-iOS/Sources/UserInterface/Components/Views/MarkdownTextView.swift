@@ -59,9 +59,7 @@ class MarkdownTextView: NextResponderTextView {
     }
     
     public override var selectedTextRange: UITextRange? {
-        didSet {
-            activeMarkdown = self.markdownAtCaret()
-        }
+        didSet { activeMarkdown = self.markdownAtSelection() }
     }
     
     private var wholeRange: NSRange {
@@ -119,22 +117,31 @@ class MarkdownTextView: NextResponderTextView {
     
     // MARK: Query Methods
     
+    /// Returns the markdown at the current selected range. If this is a position
+    /// or the selected range contains only a single type of markdown, this
+    /// markdown is returned. Otherwise none is returned.
+    private func markdownAtSelection() -> Markdown {
+        guard selectedRange.length > 0 else { return markdownAtCaret() }
+        let markdownInSelection = markdown(in: selectedRange)
+        if markdownInSelection.count == 1 {
+            return markdownInSelection.first!
+        }
+        return .none
+    }
+    
     /// Returns the markdown at the current caret position.
     ///
-    func markdownAtCaret() -> Markdown {
-        guard let range = selectedTextRange, range.isEmpty else { return .none }
-        let caret = range.start
-        let location = offset(from: beginningOfDocument, to: caret)
+    private func markdownAtCaret() -> Markdown {
         // in order to allow continuity of typing, the markdown at the caret
         // should actually be markdown at the position behind the caret
-        return markdown(at: max(0, location - 1))
+        return markdown(at: max(0, selectedRange.location - 1))
     }
     
     /// Returns the markdown at the given location.
-    func markdown(at location: Int) -> Markdown {
+    private func markdown(at location: Int) -> Markdown {
         guard location >= 0 && attributedText.length > location else { return .none }
-        let type = attributedText.attribute(MarkdownIDAttributeName, at: location, effectiveRange: nil) as? Markdown
-        return type ?? .none
+        let markdown = attributedText.attribute(MarkdownIDAttributeName, at: location, effectiveRange: nil) as? Markdown
+        return markdown ?? .none
     }
 
     // MARK: - Private Interface
@@ -200,8 +207,18 @@ class MarkdownTextView: NextResponderTextView {
     
     /// Removes the given markdown (and the associated attributes) from the given
     /// range.
-    fileprivate func remove(_ markdown: Markdown, to range: NSRange) {
+    fileprivate func remove(_ markdown: Markdown, from range: NSRange) {
         updateAttributes(in: range) { $0.subtracting(markdown) }
+    }
+    
+    /// Returns a set containing all markdown combinations present in the given
+    /// range.
+    fileprivate func markdown(in range: NSRange) -> Set<Markdown> {
+        var result = Set<Markdown>()
+        markdownTextStorage.enumerateAttribute(MarkdownIDAttributeName, in: range, options: []) { md, _, _ in
+            result.insert(md as? Markdown ?? .none)
+        }
+        return result
     }
     
     /// Updates all attributes in the given range by transforming markdown tags
@@ -268,6 +285,21 @@ class MarkdownTextView: NextResponderTextView {
 extension MarkdownTextView: MarkdownBarViewDelegate {
     
     func markdownBarView(_ view: MarkdownBarView, didSelectMarkdown markdown: Markdown, with sender: IconButton) {
+        
+        // note: it makes sense that when we have a selection, header and list buttons
+        // are disabled
+        
+        // there is a selection
+        if selectedRange.length > 0 {
+            // need to clear the atomic markdown first
+            if self.markdown(in: selectedRange).count > 1 {
+                remove([.bold, .italic, .code], from: selectedRange)
+            }
+            
+            // apply the markdown to the whole selection
+            add(markdown, to: selectedRange)
+        }
+        
         // selecting header will apply header to the whole line
         if markdown.isHeader, let range = rangeOfCurrentLine() {
             add(markdown, to: range)
@@ -277,9 +309,15 @@ extension MarkdownTextView: MarkdownBarViewDelegate {
     }
     
     func markdownBarView(_ view: MarkdownBarView, didDeselectMarkdown markdown: Markdown, with sender: IconButton) {
+        
+        // there is a selection
+        if selectedRange.length > 0 {
+            remove(markdown, from: selectedRange)
+        }
+        
         // deselecting header will remove header from the whole line
         if markdown.isHeader, let range = rangeOfCurrentLine() {
-            remove(markdown, to: range)
+            remove(markdown, from: range)
         }
         
         activeMarkdown.subtract(markdown)
@@ -310,3 +348,4 @@ extension DownStyle {
         return style
     }()
 }
+
