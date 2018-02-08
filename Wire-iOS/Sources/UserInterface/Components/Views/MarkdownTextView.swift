@@ -143,6 +143,16 @@ class MarkdownTextView: NextResponderTextView {
         let markdown = attributedText.attribute(MarkdownIDAttributeName, at: location, effectiveRange: nil) as? Markdown
         return markdown ?? .none
     }
+    
+    /// Returns a set containing all markdown combinations present in the given
+    /// range.
+    fileprivate func markdown(in range: NSRange) -> Set<Markdown> {
+        var result = Set<Markdown>()
+        markdownTextStorage.enumerateAttribute(MarkdownIDAttributeName, in: range, options: []) { md, _, _ in
+            result.insert(md as? Markdown ?? .none)
+        }
+        return result
+    }
 
     // MARK: - Private Interface
     
@@ -211,16 +221,6 @@ class MarkdownTextView: NextResponderTextView {
         updateAttributes(in: range) { $0.subtracting(markdown) }
     }
     
-    /// Returns a set containing all markdown combinations present in the given
-    /// range.
-    fileprivate func markdown(in range: NSRange) -> Set<Markdown> {
-        var result = Set<Markdown>()
-        markdownTextStorage.enumerateAttribute(MarkdownIDAttributeName, in: range, options: []) { md, _, _ in
-            result.insert(md as? Markdown ?? .none)
-        }
-        return result
-    }
-    
     /// Updates all attributes in the given range by transforming markdown tags
     /// using the given transformation function, then refetching the attributes
     /// for the transformed values and setting the new attributes.
@@ -285,13 +285,9 @@ class MarkdownTextView: NextResponderTextView {
 extension MarkdownTextView: MarkdownBarViewDelegate {
     
     func markdownBarView(_ view: MarkdownBarView, didSelectMarkdown markdown: Markdown, with sender: IconButton) {
-        
-        // note: it makes sense that when we have a selection, header and list buttons
-        // are disabled
-        
         // there is a selection
         if selectedRange.length > 0 {
-            // need to clear the atomic markdown first
+            // need to clear the inline markdown first
             if self.markdown(in: selectedRange).count > 1 {
                 remove([.bold, .italic, .code], from: selectedRange)
             }
@@ -309,7 +305,6 @@ extension MarkdownTextView: MarkdownBarViewDelegate {
     }
     
     func markdownBarView(_ view: MarkdownBarView, didDeselectMarkdown markdown: Markdown, with sender: IconButton) {
-        
         // there is a selection
         if selectedRange.length > 0 {
             remove(markdown, from: selectedRange)
