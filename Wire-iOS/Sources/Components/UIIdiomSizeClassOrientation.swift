@@ -29,6 +29,7 @@ protocol UIIdiomSizeClassOrientationProtocol {
     var orientation: Orientation?  {get}
 
     static func current() -> UIIdiomSizeClassOrientationProtocol
+    func isIPadRegular() -> Bool
 }
 
 func ==(lhs: UIIdiomSizeClassOrientationProtocol, rhs: UIIdiomSizeClassOrientationProtocol) -> Bool {
@@ -77,7 +78,7 @@ struct UIIdiomSizeClassOrientation: UIIdiomSizeClassOrientationProtocol {
 }
 
 extension UIIdiomSizeClassOrientation {
-    static func isIPadRegular() -> Bool {
+    func isIPadRegular() -> Bool {
         let current = UIIdiomSizeClassOrientation.current()
         let iPadRegular: UIIdiomSizeClassOrientationProtocol = UIIdiomSizeClassOrientation(idiom: .pad, horizontalSizeClass: .regular)
         return current == iPadRegular
