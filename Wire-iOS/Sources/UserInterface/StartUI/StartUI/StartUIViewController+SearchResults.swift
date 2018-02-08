@@ -84,11 +84,13 @@ extension StartUIViewController: SearchResultsViewControllerDelegate {
     public func searchResultsViewController(_ searchResultsViewController: SearchResultsViewController, wantsToPerformAction action: SearchResultsViewControllerAction) {
         switch action {
         case .createGroup:
-            let controller = ConversationCreationController { [weak self] in
-                self?.navigationController?.popViewController(animated: true)
-            }
-            let avoiding = KeyboardAvoidingViewController(viewController: controller)
-            self.navigationController?.pushViewController(avoiding, animated: true)
+            let alert = UIAlertController(title: "🚧 Under construction ⚠️", message: "Intentionally broken until Friday. \n\n To create a new group conversation:\n 1. Go to 1-1 conversation with one of the people \n 2. Open user's profile \n 3. Tap 'Create Group'\n 4. Add remaining participants", cancelButtonTitle: "I will try")
+            ZClientViewController.shared()?.present(alert, animated: true, completion: nil)
+//            let controller = ConversationCreationController { [weak self] in
+//                self?.navigationController?.popViewController(animated: true)
+//            }
+//            let avoiding = KeyboardAvoidingViewController(viewController: controller)
+//            self.navigationController?.pushViewController(avoiding, animated: true)
         }
     }
     
