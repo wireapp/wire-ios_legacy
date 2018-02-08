@@ -81,4 +81,31 @@ final class ProfileHeaderViewIPadTests: XCTestCase {
         // THEN
         XCTAssertEqual(sut.headerStyle, .noButton, "sut.headerStyle is \(sut.headerStyle)")
     }
+
+    func testThatDismissButtonStyleIsCancelWhenIdiomIsPhone() {
+        // GIVEN
+        MockIdiomSizeClassOrientation.currentIdiom = .phone
+        MockIdiomSizeClassOrientation.currentHorizontalSizeClass = .compact
+        MockIdiomSizeClassOrientation.currentOrientation = .portrait
+        
+        // WHEN
+        sut.traitCollectionDidChange(nil)
+
+        // THEN
+        XCTAssertEqual(sut.headerStyle, .cancelButton, "sut.headerStyle is \(sut.headerStyle)")
+    }
+    
+    func testThatDismissButtonStyleIsBackWhenNavControllerCountGreatThanOne() {
+        // GIVEN
+        let model = ProfileHeaderViewModel(user: nil, fallbackName: "Jose Luis", addressBookName: nil, navigationControllerViewControllerCount: 2)
+        sut = ProfileHeaderView(with: model, MockIdiomSizeClassOrientation.self)
+        MockIdiomSizeClassOrientation.currentHorizontalSizeClass = .regular
+        MockIdiomSizeClassOrientation.currentOrientation = .portrait
+
+        // WHEN
+        sut.traitCollectionDidChange(nil)
+        
+        // THEN
+        XCTAssertEqual(sut.headerStyle, .backButton, "sut.headerStyle is \(sut.headerStyle)")
+    }
 }
