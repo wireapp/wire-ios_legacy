@@ -293,7 +293,7 @@ final class TeamCreationStepController: UIViewController {
 
             secondaryViewsStackView.leading >= view.leading
             secondaryViewsStackView.trailing <= view.trailing
-            secondaryViewsStackView.height == 42 ~ LayoutPriority(500)
+            secondaryViewsStackView.height == 42 ~ 500.0
             secondaryViewsStackView.height >= 13
             secondaryViewsStackView.centerX == view.centerX
 
@@ -321,7 +321,7 @@ final class TeamCreationStepController: UIViewController {
             topSpacer.top == view.top
             headlineLabel.top == topSpacer.bottom
 
-            headlineLabel.bottom == subtextLabel.top - 24 ~ LayoutPriority(750)
+            headlineLabel.bottom == subtextLabel.top - 24 ~ 750.0
             headlineLabel.leading == view.leadingMargin
             headlineLabel.trailing == view.trailingMargin
 
@@ -331,7 +331,7 @@ final class TeamCreationStepController: UIViewController {
             subtextLabel.height >= 19
 
             inputViewsContainer.top >= subtextLabel.bottom + 5
-            inputViewsContainer.top == subtextLabel.bottom + 80 ~ LayoutPriority(800)
+            inputViewsContainer.top == subtextLabel.bottom + 80 ~ 800.0
         }
 
         constrain(mainViewContainer, mainView) { mainViewContainer, mainView in

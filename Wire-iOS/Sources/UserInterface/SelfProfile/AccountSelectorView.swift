@@ -45,7 +45,7 @@ internal class LineView: UIView {
         constrain(self, first) { selfView, first in
             first.leading == selfView.leading
             first.top == selfView.top
-            first.bottom == selfView.bottom ~ LayoutPriority(750)
+            first.bottom == selfView.bottom ~ 750.0
         }
         
         var previous: UIView = first

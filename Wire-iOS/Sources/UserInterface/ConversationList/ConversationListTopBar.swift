@@ -169,8 +169,8 @@ open class TopBar: UIView {
             rightSeparatorLineView.bottom == selfView.bottom
             
             middleViewContainer.center == selfView.center
-            leftSeparatorLineView.trailing == selfView.centerX ~ LayoutPriority(750)
-            rightSeparatorLineView.leading == selfView.centerX ~ LayoutPriority(750)
+            leftSeparatorLineView.trailing == selfView.centerX ~ 750.0
+            rightSeparatorLineView.leading == selfView.centerX ~ 750.0
             self.leftSeparatorInsetConstraint = leftSeparatorLineView.trailing == middleViewContainer.leading - 7
             self.rightSeparatorInsetConstraint = rightSeparatorLineView.leading == middleViewContainer.trailing + 7
         }

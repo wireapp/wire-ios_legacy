@@ -108,7 +108,7 @@ open class IconSystemCell: ConversationCell, TTTAttributedLabelDelegate {
     private func createConstraints() {
         let labelViewTopInset: CGFloat = verticalInset + lineMedianYOffset
         
-        constrain(self.leftIconContainer, self.leftIconView, self.labelView, self.messageContentView, self.authorLabel) { (leftIconContainer: LayoutProxy, leftIconView: LayoutProxy, labelView: LayoutProxy, messageContentView: LayoutProxy, authorLabel: LayoutProxy) -> () in
+        constrain(self.leftIconContainer, self.leftIconView, self.labelView, self.messageContentView, self.authorLabel) { leftIconContainer, leftIconView, labelView, messageContentView, authorLabel in
             leftIconContainer.leading == messageContentView.leading
             leftIconContainer.trailing == authorLabel.leading
             leftIconContainer.bottom <= messageContentView.bottom
@@ -131,7 +131,7 @@ open class IconSystemCell: ConversationCell, TTTAttributedLabelDelegate {
     }
     
     private func createLineViewConstraints() {
-        constrain(self.lineView, self.contentView, self.labelView, self.messageContentView) { (lineView: LayoutProxy, contentView: LayoutProxy, labelView: LayoutProxy, messageContentView: LayoutProxy) -> () in
+        constrain(self.lineView, self.contentView, self.labelView, self.messageContentView) { lineView, contentView, labelView, messageContentView in
             lineView.leading == labelView.trailing + 16
             lineView.height == .hairline
             lineView.trailing == contentView.trailing
@@ -139,7 +139,7 @@ open class IconSystemCell: ConversationCell, TTTAttributedLabelDelegate {
     }
     
     private func createBaselineConstraint() {
-        constrain(lineView, labelView, leftIconContainer) { (lineView: LayoutProxy, labelView: LayoutProxy, icon: LayoutProxy) -> () in
+        constrain(lineView, labelView, leftIconContainer) { lineView, labelView, icon in
             lineBaseLineConstraint = lineView.centerY == labelView.top + self.labelView.font.median - lineMedianYOffset
             icon.centerY == lineView.centerY
         }
