@@ -31,11 +31,6 @@ struct MockIdiomSizeClassOrientation: UIIdiomSizeClassOrientationProtocol {
     static func current() -> UIIdiomSizeClassOrientationProtocol {
         return MockIdiomSizeClassOrientation(idiom: currentIdiom, horizontalSizeClass: currentHorizontalSizeClass, orientation: currentOrientation)
     }
-    
-    func isIPadRegular() -> Bool {
-        return true
-    }
-    
 }
 
 final class ProfileHeaderViewIPadTests: XCTestCase {
@@ -55,23 +50,35 @@ final class ProfileHeaderViewIPadTests: XCTestCase {
         super.tearDown()
     }
 
-
-
-    /// Example checker method which can be reused in different tests
-    ///
-    /// - Parameters:
-    ///   - file: optional, for XCTAssert logging error source
-    ///   - line: optional, for XCTAssert logging error source
-    fileprivate func checkerExample(file: StaticString = #file, line: UInt = #line) {
-        XCTAssert(true, file: file, line: line)
-    }
-
-    func testExample(){
+    func testThatDismissButtonSwitchesStyleWhenSizeClassChangeFromRegularToCompact() {
         // GIVEN
+        MockIdiomSizeClassOrientation.currentHorizontalSizeClass = .regular
+        MockIdiomSizeClassOrientation.currentOrientation = .portrait
+        sut.traitCollectionDidChange(nil)
+        XCTAssertEqual(sut.headerStyle, .noButton, "sut.headerStyle is \(sut.headerStyle)")
 
         // WHEN
+        MockIdiomSizeClassOrientation.currentHorizontalSizeClass = .compact
+        MockIdiomSizeClassOrientation.currentOrientation = .portrait
+        sut.traitCollectionDidChange(nil)
 
         // THEN
-        checkerExample()
+        XCTAssertEqual(sut.headerStyle, .cancelButton, "sut.headerStyle is \(sut.headerStyle)")
+    }
+
+    func testThatDismissButtonSwitchesStyleWhenSizeClassChangeFromCompactToRegular() {
+        // GIVEN
+        MockIdiomSizeClassOrientation.currentHorizontalSizeClass = .compact
+        MockIdiomSizeClassOrientation.currentOrientation = .portrait
+        sut.traitCollectionDidChange(nil)
+        XCTAssertEqual(sut.headerStyle, .cancelButton, "sut.headerStyle is \(sut.headerStyle)")
+
+        // WHEN
+        MockIdiomSizeClassOrientation.currentHorizontalSizeClass = .regular
+        MockIdiomSizeClassOrientation.currentOrientation = .portrait
+        sut.traitCollectionDidChange(nil)
+        
+        // THEN
+        XCTAssertEqual(sut.headerStyle, .noButton, "sut.headerStyle is \(sut.headerStyle)")
     }
 }

@@ -32,6 +32,12 @@ protocol UIIdiomSizeClassOrientationProtocol {
     func isIPadRegular() -> Bool 
 }
 
+extension UIIdiomSizeClassOrientationProtocol {
+    func isIPadRegular() -> Bool {
+        return self == UIIdiomSizeClassOrientation(idiom: .pad, horizontalSizeClass: .regular)
+    }
+}
+
 func ==(lhs: UIIdiomSizeClassOrientationProtocol, rhs: UIIdiomSizeClassOrientationProtocol) -> Bool {
 
     // If one of the orientations is nil, return true
@@ -78,12 +84,6 @@ struct UIIdiomSizeClassOrientation: UIIdiomSizeClassOrientationProtocol {
 }
 
 extension UIIdiomSizeClassOrientation {
-    func isIPadRegular() -> Bool {
-        let current = UIIdiomSizeClassOrientation.current()
-        let iPadRegular: UIIdiomSizeClassOrientationProtocol = UIIdiomSizeClassOrientation(idiom: .pad, horizontalSizeClass: .regular)
-        return current == iPadRegular
-    }
-
 
     /// Notice: these two methods used in UIViewController.viewWillTransition. It returns the original orientation, not the new orientation
     ///
