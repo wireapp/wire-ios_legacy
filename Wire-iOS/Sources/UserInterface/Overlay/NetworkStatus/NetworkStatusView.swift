@@ -257,11 +257,11 @@ class NetworkStatusView: UIView {
         }
 
         self.offlineView.update(state: offlineBarState, animated: animated)
+        
         self.layoutIfNeeded()
     }
 
     func updateUICompletion(connectingViewHidden: Bool, offlineViewHidden: Bool) {
-        self.connectingView.isHidden = connectingViewHidden
         self.offlineView.isHidden = offlineViewHidden
     }
 

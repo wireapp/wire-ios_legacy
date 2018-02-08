@@ -46,6 +46,7 @@ protocol NetworkStatusViewControllerDelegate: class {
                 }
                 
             }
+
             return nil
         }
     }
@@ -223,7 +224,6 @@ extension NetworkStatusViewController {
         } else {
             /// when size class changes and delegate view controller disabled to show networkStatusView, hide the networkStatusView
             networkStatusView.update(state: .online, animated: false)
-            //self.delegate?.didChangeHeight(networkStatusView, animated: false, state: .online)
         }
     }
     
