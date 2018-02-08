@@ -18,6 +18,7 @@
 
 
 "general.ok" = "OK";
+"general.next" = "Next";
 "general.cancel" = "Cancel";
 "general.open_settings" = "Open Wire Settings";
 
@@ -231,6 +232,10 @@
 
 "conversation.input_bar.message_too_long.title" = "Message too long";
 "conversation.input_bar.message_too_long.message" = "You can send messages up to %d characters long.";
+
+"conversation.create.group_name.placeholder" = "Group name";
+"conversation.create.guidance.empty" = "At least 1 character";
+"conversation.create.guidance.toolong" = "Too many characters";
 
 // Image confirmation dialogue
 "image_confirmer.confirm" = "OK";

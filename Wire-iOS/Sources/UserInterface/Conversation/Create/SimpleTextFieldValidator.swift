@@ -64,9 +64,9 @@ extension SimpleTextFieldValidator.ValidationError: LocalizedError {
     var errorDescription: String? {
         switch self {
         case .tooLong:
-            return "group_name.guidance.toolong".localized
+            return "conversation.create.guidance.toolong".localized
         case .empty:
-            return "group_name.guidance.empty".localized
+            return "conversation.create.guidance.empty".localized
         }
     }
 }

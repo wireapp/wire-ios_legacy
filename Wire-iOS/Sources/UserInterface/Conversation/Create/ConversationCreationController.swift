@@ -94,7 +94,7 @@ final class ConversationCreationController: UIViewController {
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: backButtonDescription.create())
 
         nextButton = ButtonWithLargerHitArea()
-        nextButton.setTitle("next".uppercased(), for: .normal)
+        nextButton.setTitle("general.next".localized.uppercased(), for: .normal)
         let textColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorIconNormal, variant: .light)
         nextButton.setTitleColor(textColor, for: .normal)
         nextButton.setTitleColor(UIColor.wr_color(fromColorScheme: ColorSchemeColorIconHighlighted, variant: .light), for: .highlighted)
@@ -109,7 +109,7 @@ final class ConversationCreationController: UIViewController {
         navigationItem.rightBarButtonItem = UIBarButtonItem(customView: nextButton)
 
         textField = SimpleTextField()
-        textField.placeholder = "Group name".uppercased()
+        textField.placeholder = "conversation.create.group_name.placeholder".localized.uppercased()
         textField.textFieldDelegate = self
         mainViewContainer.addSubview(textField)
 
@@ -216,7 +216,6 @@ extension ConversationCreationController: SimpleTextFieldDelegate {
     func textField(_ textField: SimpleTextField, valueChanged value: SimpleTextField.Value?) {
         clearError()
         nextButton.isEnabled = (value != nil)
-        print("Next button \(nextButton.isEnabled ? "enabled" : "disabled")")
     }
 
     func textFieldReturnPressed(_ textField: SimpleTextField) {
