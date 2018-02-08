@@ -18,10 +18,11 @@
 
 import Foundation
 
+enum Orientation {
+    case landscape, portrait, unknown
+}
+
 protocol UIIdiomSizeClassOrientationProtocol {
-    enum Orientation {
-        case landscape, portrait, unknown
-    }
     
     var idiom: UIUserInterfaceIdiom {get}
     var horizontalSizeClass: UIUserInterfaceSizeClass?  {get}
@@ -55,7 +56,7 @@ struct UIIdiomSizeClassOrientation: UIIdiomSizeClassOrientationProtocol {
         self.orientation = orientation
     }
 
-    static func current() -> UIIdiomSizeClassOrientation {
+    static func current() -> UIIdiomSizeClassOrientationProtocol {
         return UIIdiomSizeClassOrientation()
     }
 }

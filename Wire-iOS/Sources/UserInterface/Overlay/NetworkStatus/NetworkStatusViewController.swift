@@ -187,7 +187,7 @@ protocol NetworkStatusViewControllerDelegate: class {
         networkStatusView.update(state: state, animated: true)
     }
     
-    func shouldShowOnIPad(for newOrientation: UIIdiomSizeClassOrientationProtocol.Orientation?) -> Bool {
+    func shouldShowOnIPad(for newOrientation: Orientation?) -> Bool {
         
         guard let delegate = self.delegate, let newOrientation = newOrientation else { return true }
         
@@ -215,7 +215,7 @@ extension NetworkStatusViewController: ZMNetworkAvailabilityObserver {
 // MARK: - iPad size class and orientation switching
 
 extension NetworkStatusViewController {
-    func updateStateForIPad(for newOrientation: UIIdiomSizeClassOrientationProtocol.Orientation?) {
+    func updateStateForIPad(for newOrientation: Orientation?) {
         if shouldShowOnIPad(for: newOrientation) {
             if let state = state {
                 networkStatusView.update(state: state, animated: false)
@@ -238,7 +238,7 @@ extension NetworkStatusViewController {
         super.viewWillTransition(to: size, with: coordinator)
         guard UIDevice.current.userInterfaceIdiom == .pad else { return }
         
-        var newOrientation = UIIdiomSizeClassOrientation.Orientation.unknown
+        var newOrientation = Orientation.unknown
         if size.width > 0 {
             if size.width > size.height {
             newOrientation =  .landscape
