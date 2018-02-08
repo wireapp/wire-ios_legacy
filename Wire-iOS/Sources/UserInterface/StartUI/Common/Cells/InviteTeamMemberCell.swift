@@ -72,7 +72,6 @@ class StartUIIconCell: UICollectionViewCell, Reusable {
     
 }
 
-
 final class InviteTeamMemberCell: StartUIIconCell  {
 
     override func setupViews() {
@@ -87,7 +86,7 @@ final class CreateGroupCell: StartUIIconCell  {
     
     override func setupViews() {
         super.setupViews()
-        icon = .envelope
+        icon = .createConversation
         title = "peoplepicker.quick-action.create-conversation".localized
     }
     

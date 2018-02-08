@@ -150,22 +150,17 @@ final class ConversationCreationController: UIViewController {
         }
 
         constrain(view, errorViewContainer, mainViewContainer) { view, errorViewContainer, mainViewContainer in
-
             errorViewContainer.bottom == view.bottom - 25
             errorViewContainer.leading == view.leading
             errorViewContainer.trailing == view.trailing
             errorViewContainer.height == 30
-
             mainViewContainer.bottom == errorViewContainer.top
             mainViewContainer.centerX == view.centerX
             mainViewContainer.width == view.width
-
-
         }
 
         constrain(mainViewContainer, textField) { mainViewContainer, textField in
             textField.height == TeamCreationStepController.mainViewHeight
-
             textField.top == mainViewContainer.top
             textField.leading == mainViewContainer.leading
             textField.trailing == mainViewContainer.trailing
@@ -191,7 +186,6 @@ final class ConversationCreationController: UIViewController {
             values = newValues
             let participantsController = AddParticipantsViewController(context: .create(newValues))
             participantsController.conversationCreationDelegate = self
-            UIView.performWithoutAnimation(participantsController.loadViewIfNeeded)
             navigationController?.pushViewController(participantsController, animated: true)
         }
     }
@@ -207,14 +201,11 @@ final class ConversationCreationController: UIViewController {
 extension ConversationCreationController: AddParticipantsConversationCreationDelegate {
     
     func addParticipantsViewController(_ addParticipantsViewController: AddParticipantsViewController, didPerform action: AddParticipantsViewController.CreateAction) {
-        
         switch action {
         case .updatedUsers(let users):
-            values = values.map {
-                ConversationCreationValues(name: $0.name, participants: users)
-            }
+            values = values.map { .init(name: $0.name, participants: users) }
         case .create: break
-            // TODO: Create Conversation
+            // TODO
         }
     }
 }
