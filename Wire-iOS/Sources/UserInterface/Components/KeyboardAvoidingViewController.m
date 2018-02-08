@@ -112,7 +112,7 @@
 {
     [super viewWillAppear:animated];
     
-    self.bottomEdgeConstraint.constant = -[[KeyboardFrameObserver sharedObserver] keyboardFrame].size.height;
+    self.bottomEdgeConstraint.constant = -[[KeyboardFrameObserver sharedObserver] keyboardFrame].size.height + UIScreen.safeArea.bottom;
 }
 
 - (void)createInitialConstraints
