@@ -177,6 +177,7 @@
             self.placeholderLabel.textColor = self.placeholderTextColor;
             self.placeholderLabel.textTransform = self.placeholderTextTransform;
             self.placeholderLabel.textAlignment = self.placeholderTextAlignment;
+            self.placeholderLabel.isAccessibilityElement = NO;
             [self addSubview:self.placeholderLabel];
             
             if(self.attributedPlaceholder && self.attributedPlaceholder.length > 0) {

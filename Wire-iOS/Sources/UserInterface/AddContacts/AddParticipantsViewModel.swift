@@ -87,7 +87,7 @@ struct AddParticipantsViewModel {
             button.setTitleColor(.wr_color(fromColorScheme: ColorSchemeColorTextBackground), for: [.highlighted, .disabled])
             button.addTarget(target, action: action, for: .touchUpInside)
             button.titleLabel?.font = FontSpec(.medium, .medium).font!
-            button.accessibilityIdentifier = "button.addpeople.skip"
+            button.accessibilityIdentifier = values.participants.isEmpty ? "button.addpeople.skip" : "button.addpeople.create"
             return UIBarButtonItem(customView: button)
         }
     }

@@ -145,7 +145,7 @@ static NSString * const ContactsViewControllerSectionHeaderID = @"ContactsSectio
     self.tokenField = [[TokenField alloc] initForAutoLayout];
     self.tokenField.delegate = self;
     self.tokenField.textColor = [colorScheme colorWithName:ColorSchemeColorTextForeground];
-    self.tokenField.textView.accessibilityLabel = @"textViewSearch";
+    self.tokenField.textView.accessibilityIdentifier = @"textViewSearch";
     self.tokenField.textView.placeholder = NSLocalizedString(@"contacts_ui.search_placeholder", @"");
     self.tokenField.textView.keyboardAppearance = [ColorScheme keyboardAppearanceForVariant:self.colorSchemeVariant];
     [self.topContainerView addSubview:self.tokenField];

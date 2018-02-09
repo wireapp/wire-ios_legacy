@@ -87,6 +87,9 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
+        self.isAccessibilityElement = YES;
+        self.shouldGroupAccessibilityChildren = YES;
+        
         self.colorSchemeVariant = ColorSchemeVariantDark;
         self.contentView.translatesAutoresizingMaskIntoConstraints = NO;
 
@@ -289,6 +292,31 @@
     self.instantConnectButton.hidden = ! canBeConnected;
     [self setNeedsUpdateConstraints];
     self.badgeUserImageView.user = (id)self.user;
+    
+    [self updateAccessibilityLabel];
+}
+
+- (void)updateForConversation
+{
+    if (self.conversation.conversationType == ZMConversationTypeOneOnOne) {
+        ZMUser *otherUser = self.conversation.connectedUser;
+        self.user = otherUser;
+        self.badgeUserImageView.hidden = NO;
+        self.conversationImageView.conversation = nil;
+    }
+    else {
+        self.conversationImageView.conversation = self.conversation;
+        self.badgeUserImageView.hidden = YES;
+        self.user = nil;
+        self.nameLabel.text = self.conversation.displayName;
+    }
+    
+    [self updateAccessibilityLabel];
+}
+
+- (void)updateAccessibilityLabel
+{
+    self.accessibilityLabel = [NSString stringWithFormat:@"%@ - %@", self.nameLabel.text, self.subtitleLabel.text];
 }
 
 #pragma mark - Public API
@@ -362,18 +390,7 @@
 {
     _conversation = conversation;
     
-    if (conversation.conversationType == ZMConversationTypeOneOnOne) {
-        ZMUser *otherUser = conversation.connectedUser;
-        self.user = otherUser;
-        self.badgeUserImageView.hidden = NO;
-        self.conversationImageView.conversation = nil;
-    }
-    else {
-        self.conversationImageView.conversation = self.conversation;
-        self.badgeUserImageView.hidden = YES;
-        self.user = nil;
-        self.nameLabel.text = conversation.displayName;
-    }
+    [self updateForConversation];
 }
 
 - (void)setSelected:(BOOL)selected
