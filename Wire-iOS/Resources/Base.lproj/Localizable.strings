@@ -38,6 +38,8 @@
 
 "peoplepicker.group.title.singular" = "Add People";
 "peoplepicker.group.title.plural" = "Add People (%d)";
+"peoplepicker.group.skip" = "Skip";
+"peoplepicker.group.done" = "Done";
 "peoplepicker.group.create" = "Create";
 
 "peoplepicker.header.people" = "People";

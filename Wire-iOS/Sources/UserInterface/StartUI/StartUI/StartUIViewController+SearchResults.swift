@@ -67,7 +67,6 @@ extension StartUIViewController: SearchResultsViewControllerDelegate {
             guard let `self` = self else { return }
             if let result = result {
                 switch result {
-                    
                 case .success(let conversation):
                     self.delegate.startUI?(self, didSelect: conversation)
                 case .failure(let error):
@@ -84,13 +83,14 @@ extension StartUIViewController: SearchResultsViewControllerDelegate {
     public func searchResultsViewController(_ searchResultsViewController: SearchResultsViewController, wantsToPerformAction action: SearchResultsViewControllerAction) {
         switch action {
         case .createGroup:
-            let alert = UIAlertController(title: "🚧 Under construction ⚠️", message: "Intentionally broken until Friday. \n\n To create a new group conversation:\n 1. Go to 1-1 conversation with one of the people \n 2. Open user's profile \n 3. Tap 'Create Group'\n 4. Add remaining participants", cancelButtonTitle: "I will try")
-            ZClientViewController.shared()?.present(alert, animated: true, completion: nil)
-//            let controller = ConversationCreationController { [weak self] in
-//                self?.navigationController?.popViewController(animated: true)
-//            }
-//            let avoiding = KeyboardAvoidingViewController(viewController: controller)
-//            self.navigationController?.pushViewController(avoiding, animated: true)
+            let controller = ConversationCreationController { controller in
+                controller.dismiss(animated: true)
+            }
+            let avoiding = KeyboardAvoidingViewController(viewController: controller)
+            let navigationController = UINavigationController(rootViewController: avoiding)
+            navigationController.navigationBar.setBackgroundImage(.init(), for: .default)
+            navigationController.navigationBar.shadowImage = .init()
+            ZClientViewController.shared()?.present(navigationController, animated: true)
         }
     }
     

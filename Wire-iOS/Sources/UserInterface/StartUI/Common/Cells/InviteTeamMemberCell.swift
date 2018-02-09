@@ -88,6 +88,7 @@ final class CreateGroupCell: StartUIIconCell  {
         super.setupViews()
         icon = .createConversation
         title = "peoplepicker.quick-action.create-conversation".localized
+        accessibilityIdentifier = "button.searchui.creategroup"
     }
     
 }

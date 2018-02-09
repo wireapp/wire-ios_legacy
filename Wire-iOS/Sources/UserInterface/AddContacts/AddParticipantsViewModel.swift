@@ -41,15 +41,10 @@ struct AddParticipantsViewModel {
         }
     }
     
-    var title: String {
-        switch context {
-        case .create(let values):
-            return values.participants.isEmpty
-                ? "peoplepicker.group.title.singular".localized
-                : "peoplepicker.group.title.plural".localized(args: values.participants.count)
-        case .add(let conversation):
-            return conversation.displayName
-        }
+    func title(with users: Set<ZMUser>) -> String {
+        return users.isEmpty
+            ? "peoplepicker.group.title.singular".localized
+            : "peoplepicker.group.title.plural".localized(args: users.count)
     }
     
     var filterConversation: ZMConversation? {
@@ -84,10 +79,16 @@ struct AddParticipantsViewModel {
             let item = UIBarButtonItem(icon: .X, target: target, action: action)
             item.accessibilityIdentifier = "close"
             return item
-        case .create:
-            let item = UIBarButtonItem(title: "peoplepicker.group.create".localized, style: .plain, target: target, action: action)
-            item.accessibilityIdentifier = "create"
-            return item
+        case .create(let values):
+            let button = ButtonWithLargerHitArea()
+            let key = values.participants.isEmpty ?  "peoplepicker.group.skip" : "peoplepicker.group.done"
+            button.setTitle(key.localized.uppercased(), for: .normal)
+            button.setTitleColor(.wr_color(fromColorScheme: ColorSchemeColorTextForeground), for: .normal)
+            button.setTitleColor(.wr_color(fromColorScheme: ColorSchemeColorTextBackground), for: [.highlighted, .disabled])
+            button.addTarget(target, action: action, for: .touchUpInside)
+            button.titleLabel?.font = FontSpec(.medium, .medium).font!
+            button.accessibilityIdentifier = "button.addpeople.skip"
+            return UIBarButtonItem(customView: button)
         }
     }
     

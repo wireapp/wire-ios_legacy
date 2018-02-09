@@ -51,9 +51,10 @@ final class ConversationCreationController: UIViewController {
     
     fileprivate var values: ConversationCreationValues?
 
-    fileprivate var onClose: (() -> ())?
+    typealias CreationCloseClosure = (UIViewController) -> Void
+    fileprivate var onClose: CreationCloseClosure?
 
-    init(onClose: (() -> ())? = nil) {
+    init(onClose: CreationCloseClosure? = nil) {
         self.onClose = onClose
         super.init(nibName: nil, bundle: nil)
     }
@@ -90,7 +91,9 @@ final class ConversationCreationController: UIViewController {
         mainViewContainer = UIView()
         mainViewContainer.translatesAutoresizingMaskIntoConstraints = false
 
-        backButtonDescription.buttonTapped = { [weak self] in self?.onClose?() }
+        backButtonDescription.buttonTapped = { [unowned self] in
+            self.onClose?(self)
+        }
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: backButtonDescription.create())
 
         nextButton = ButtonWithLargerHitArea()
@@ -103,6 +106,7 @@ final class ConversationCreationController: UIViewController {
         nextButton.addTarget(self, action: #selector(nextButtonTapped), for: .touchUpInside)
         nextButton.titleLabel?.font = FontSpec(.medium, .medium).font!
 
+        navigationController?.navigationBar.tintColor = .wr_color(fromColorScheme: ColorSchemeColorTextForeground)
         navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: ColorScheme.default().color(withName: ColorSchemeColorTextForeground),
                                                   NSFontAttributeName: FontSpec(.normal, .medium).font!.allCaps()]
 
@@ -182,6 +186,7 @@ final class ConversationCreationController: UIViewController {
         case let .error(error):
             displayError(error)
         case let .valid(name):
+            textField.resignFirstResponder()
             let newValues = ConversationCreationValues(name: name, participants: values?.participants ?? [])
             values = newValues
             let participantsController = AddParticipantsViewController(context: .create(newValues))
