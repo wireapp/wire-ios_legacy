@@ -286,6 +286,10 @@ static NSString *const ConversationUnknownMessageCellId     = @"conversationUnkn
             case ZMSystemMessageTypeTeamMemberLeave:
                 cellIdentifier = ParticipantsCell.zm_reuseIdentifier;
                 break;
+
+            case ZMSystemMessageTypeNewConversationWithName:
+                cellIdentifier = ConversationNameCell.zm_reuseIdentifier;
+                break;
                 
             case ZMSystemMessageTypeMessageDeletedForEveryone:
                 cellIdentifier = ConversationMessageDeletedCellId;
@@ -295,8 +299,8 @@ static NSString *const ConversationUnknownMessageCellId     = @"conversationUnkn
                 cellIdentifier = ConversationPerformedCallCellId;
                 break;
 
-            default:
-                break;
+            case ZMSystemMessageTypeInvalid:
+                NSAssert(0, @"Invalid system message type");
         }
     }
     
@@ -355,6 +359,7 @@ static NSString *const ConversationUnknownMessageCellId     = @"conversationUnkn
     [self.tableView registerClass:[VideoMessageCell class] forCellReuseIdentifier:ConversationVideoMessageCellId];
     [self.tableView registerClass:[AudioMessageCell class] forCellReuseIdentifier:ConversationAudioMessageCellId];
     [self.tableView registerClass:[ParticipantsCell class] forCellReuseIdentifier:ParticipantsCell.zm_reuseIdentifier];
+    [self.tableView registerClass:[ConversationNameCell class] forCellReuseIdentifier:ConversationNameCell.zm_reuseIdentifier];
     [self.tableView registerClass:[LocationMessageCell class] forCellReuseIdentifier:ConversationLocationMessageCellId];
     [self.tableView registerClass:[MessageDeletedCell class] forCellReuseIdentifier:ConversationMessageDeletedCellId];
     [self.tableView registerClass:[UnknownMessageCell class] forCellReuseIdentifier:ConversationUnknownMessageCellId];

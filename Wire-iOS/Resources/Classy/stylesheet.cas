@@ -833,7 +833,7 @@ ConversationCellBurstTimestampView {
 }
 
 
-IconSystemCell, ConversationNewDeviceCell, MissedCallCell, PerformedCallCell, CannotDecryptCell, ConversationIgnoredDeviceCell, ConversationNewDeviceCell, ConversationRenamedCell, ConversationVerifiedCell, MissingMessagesCell, ParticipantsCell {
+IconSystemCell, ConversationNewDeviceCell, MissedCallCell, PerformedCallCell, CannotDecryptCell, ConversationIgnoredDeviceCell, ConversationNewDeviceCell, ConversationRenamedCell, ConversationNameCell, ConversationVerifiedCell, MissingMessagesCell, ParticipantsCell {
     lineView: @{
         backgroundColor: $color-separator;
     }
@@ -849,6 +849,10 @@ IconSystemCell, ConversationNewDeviceCell, MissedCallCell, PerformedCallCell, Ca
 
 ConversationRenamedCell {
     nameLabelFont: $font-normal-semibold;
+}
+
+ConversationNameCell {
+    nameLabelFont: $font-large-semibold;
 }
 
 FileTransferView {

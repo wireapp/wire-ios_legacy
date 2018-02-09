@@ -35,7 +35,7 @@ static NSTimeInterval const BurstSeparatorTimeDifference = 60 * 45; // 45 minute
     layoutProperties.showUnreadMarker = lastUnreadMessage != nil && [message isEqual:lastUnreadMessage];
     layoutProperties.showBurstTimestamp = [self shouldShowBurstSeparatorForMessage:message] || layoutProperties.showUnreadMarker;
     layoutProperties.showDayBurstTimestamp = [self shouldShowDaySeparatorForMessage:message];
-    layoutProperties.topPadding       = [self topPaddingForMessage:message showingSender:layoutProperties.showSender showingTimestamp:layoutProperties.showBurstTimestamp];
+    layoutProperties.topPadding       = [self topPaddingForMessage:message showingTimestamp:layoutProperties.showBurstTimestamp];
     layoutProperties.alwaysShowDeliveryState = [self shouldShowAlwaysDeliveryStateForMessage:message];
     
     if ([Message isTextMessage:message]) {
@@ -113,6 +113,7 @@ static NSTimeInterval const BurstSeparatorTimeDifference = 60 * 45; // 45 minute
                 systemMessage.systemMessageType != ZMSystemMessageTypeConversationIsSecure &&
                 systemMessage.systemMessageType != ZMSystemMessageTypeReactivatedDevice &&
                 systemMessage.systemMessageType != ZMSystemMessageTypeNewConversation &&
+                systemMessage.systemMessageType != ZMSystemMessageTypeNewConversationWithName &&
                 systemMessage.systemMessageType != ZMSystemMessageTypeUsingNewDevice &&
                 systemMessage.systemMessageType != ZMSystemMessageTypeMessageDeletedForEveryone &&
                 systemMessage.systemMessageType != ZMSystemMessageTypeMissedCall &&
@@ -143,18 +144,21 @@ static NSTimeInterval const BurstSeparatorTimeDifference = 60 * 45; // 45 minute
     return showTimestamp;
 }
 
-- (CGFloat)topPaddingForMessage:(id<ZMConversationMessage>)message showingSender:(BOOL)showingSender showingTimestamp:(BOOL)showingTimestamp
+- (CGFloat)topPaddingForMessage:(id<ZMConversationMessage>)message showingTimestamp:(BOOL)showingTimestamp
 {
     id<ZMConversationMessage>previousMessage = [self messagePreviousToMessage:message];
     
     if (! previousMessage) {
-        return [self topMarginForMessage:message showingSender:showingSender showingTimestamp:showingTimestamp];
+        return [self topMarginForMessage:message showingTimestamp:showingTimestamp];
+    }
+    if ([self bundledMessage:message withPreviousMessage:previousMessage]) {
+        return 0;
     }
     
-    return MAX([self topMarginForMessage:message showingSender:showingSender showingTimestamp:showingTimestamp], [self bottomMarginForMessage:previousMessage]);
+    return MAX([self topMarginForMessage:message showingTimestamp:showingTimestamp], [self bottomMarginForMessage:previousMessage]);
 }
 
-- (CGFloat)topMarginForMessage:(id<ZMConversationMessage>)message showingSender:(BOOL)showingSender showingTimestamp:(BOOL)showingTimestamp
+- (CGFloat)topMarginForMessage:(id<ZMConversationMessage>)message showingTimestamp:(BOOL)showingTimestamp
 {
     if ([Message isSystemMessage:message] || showingTimestamp) {
         return 16;
@@ -176,6 +180,13 @@ static NSTimeInterval const BurstSeparatorTimeDifference = 60 * 45; // 45 minute
     }
     
     return 0;
+}
+
+- (BOOL)bundledMessage:(id<ZMConversationMessage>)message withPreviousMessage:(id<ZMConversationMessage>)previousMessage
+    {
+        BOOL previousMessageIsConversationName = (previousMessage.systemMessageData.systemMessageType == ZMSystemMessageTypeNewConversationWithName);
+        BOOL messageIsConversationCreated = (message.systemMessageData.systemMessageType == ZMSystemMessageTypeNewConversation);
+        return messageIsConversationCreated && previousMessageIsConversationName;
 }
 
 @end

@@ -1061,9 +1061,11 @@
 		F194AD7A1E3F3BBC00B0049B /* UIApplication+RTL.swift in Sources */ = {isa = PBXBuildFile; fileRef = F194AD791E3F3BBC00B0049B /* UIApplication+RTL.swift */; };
 		F194CA1B1E7179C2004C5E56 /* VoiceChannelOverlayTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F194CA181E717142004C5E56 /* VoiceChannelOverlayTests.swift */; };
 		F195EB9D1E2F75BC00712118 /* FeedbackOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F195EB9C1E2F75BC00712118 /* FeedbackOverlayView.swift */; };
+		F1961640202C66FB0095B6BC /* ConversationNameCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F196163F202C66FB0095B6BC /* ConversationNameCell.swift */; };
 		F1A989D01FD1630300B8A82E /* SecondaryViewDescription.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1A989CF1FD1630300B8A82E /* SecondaryViewDescription.swift */; };
 		F1AA8AD61E5DF36A006A0E68 /* DegradationOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1AA8AD51E5DF36A006A0E68 /* DegradationOverlayView.swift */; };
 		F1B025641E574B3C00900C65 /* VoiceChannelOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1B025631E574B3C00900C65 /* VoiceChannelOverlay.swift */; };
+		F1B58925202DB270002BB59B /* ConversationNameCellTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1B58924202DB270002BB59B /* ConversationNameCellTests.swift */; };
 		F1B5EAC72029AB9A0081D402 /* SimpleTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1B5EAC62029AB9A0081D402 /* SimpleTextField.swift */; };
 		F1B5EAC92029AC7E0081D402 /* SimpleTextFieldValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1B5EAC82029AC7E0081D402 /* SimpleTextFieldValidator.swift */; };
 		F1C9E3601EAE008C006438D7 /* TestSetup.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1C9E35E1EADFFB8006438D7 /* TestSetup.swift */; };
@@ -2669,9 +2671,11 @@
 		F194AD791E3F3BBC00B0049B /* UIApplication+RTL.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIApplication+RTL.swift"; sourceTree = "<group>"; };
 		F194CA181E717142004C5E56 /* VoiceChannelOverlayTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VoiceChannelOverlayTests.swift; sourceTree = "<group>"; };
 		F195EB9C1E2F75BC00712118 /* FeedbackOverlayView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedbackOverlayView.swift; sourceTree = "<group>"; };
+		F196163F202C66FB0095B6BC /* ConversationNameCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationNameCell.swift; sourceTree = "<group>"; };
 		F1A989CF1FD1630300B8A82E /* SecondaryViewDescription.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondaryViewDescription.swift; sourceTree = "<group>"; };
 		F1AA8AD51E5DF36A006A0E68 /* DegradationOverlayView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DegradationOverlayView.swift; sourceTree = "<group>"; };
 		F1B025631E574B3C00900C65 /* VoiceChannelOverlay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VoiceChannelOverlay.swift; sourceTree = "<group>"; };
+		F1B58924202DB270002BB59B /* ConversationNameCellTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationNameCellTests.swift; sourceTree = "<group>"; };
 		F1B5EAC62029AB9A0081D402 /* SimpleTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleTextField.swift; sourceTree = "<group>"; };
 		F1B5EAC82029AC7E0081D402 /* SimpleTextFieldValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleTextFieldValidator.swift; sourceTree = "<group>"; };
 		F1C9E35E1EADFFB8006438D7 /* TestSetup.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestSetup.swift; sourceTree = "<group>"; };
@@ -4660,6 +4664,7 @@
 				874448841C22FC6200E7B947 /* ConversationVerifiedCell.swift */,
 				BF415B261C3C354C00DF57B7 /* MissingMessagesCell.swift */,
 				BFE08C1B1D5B5CFA002367F6 /* MessageDeletedCell.swift */,
+				F196163F202C66FB0095B6BC /* ConversationNameCell.swift */,
 				BFFE94391E782FD70025AD75 /* ConversationRenamedCell.swift */,
 				CEC0FE3A1C4FBF120093BF0D /* ConversationIgnoredDeviceCell.swift */,
 				870EB76F1C60E9B400F274A3 /* CannotDecryptCell.swift */,
@@ -4986,6 +4991,7 @@
 				874B5DB11CEDF7B80010474C /* AudioMessageCellTests.swift */,
 				BF735D001E716816003BC61F /* CallSystemMessageTests.swift */,
 				BF4D99CF1E79AF8100A7B08F /* ParticipantCellTests.swift */,
+				F1B58924202DB270002BB59B /* ConversationNameCellTests.swift */,
 				BFFE943B1E7839D10025AD75 /* ConversationRenamedCellTests.swift */,
 				160C31201E4C7E770012E4BC /* UnknownMessageCellTests.swift */,
 				BFC914991D181B7C001F068B /* LocationMessageCellTests.swift */,
@@ -6257,6 +6263,7 @@
 				87F18BB61E0154FB00C69D9B /* FileTransferView.swift in Sources */,
 				BF381FDF1D4F922F00075672 /* AnalyticsTracker+AddressBookPermissions.swift in Sources */,
 				EFABC922202085A6001F9866 /* UserDetailViewControllerFactory.swift in Sources */,
+				F1961640202C66FB0095B6BC /* ConversationNameCell.swift in Sources */,
 				F195EB9D1E2F75BC00712118 /* FeedbackOverlayView.swift in Sources */,
 				87B7DAEE1E697CC3005F5140 /* UserImageView+Magic.m in Sources */,
 				F187D6C820162A4300A2DA8F /* ConversationCell+Sender.swift in Sources */,
@@ -6933,6 +6940,7 @@
 				BFFE943E1E7839EB0025AD75 /* CoreDataSnapshotTestCase.swift in Sources */,
 				BFA13E1A1D4B66EE00F0A91B /* ImageMessageCellTests.swift in Sources */,
 				BFA13E161D4A5F7100F0A91B /* ConfirmAssetViewControllerTests.swift in Sources */,
+				F1B58925202DB270002BB59B /* ConversationNameCellTests.swift in Sources */,
 				160287AD1E4351FC0036FC5B /* MockVoiceChannel.swift in Sources */,
 				87BEB0E01C734DA60094BFE9 /* MockLoader.m in Sources */,
 				F127BD5A1E2667170093B2F1 /* MockCollection.swift in Sources */,

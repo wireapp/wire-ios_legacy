@@ -33,6 +33,11 @@ class ParticipantsCellTests: CoreDataSnapshotTestCase {
         verify(view: sut.prepareForSnapshots(), tolerance: tolerance)
     }
 
+    func testThatItRendersParticipantsCellStartedNamedConversationSelfUser() {
+        let sut = cell(for: .newConversation, fromSelf: true, text: "Conversation")
+        verify(view: sut.prepareForSnapshots(), tolerance: tolerance)
+    }
+
     func testThatItRendersParticipantsCellStartedConversationOtherUser() {
         let sut = cell(for: .newConversation, fromSelf: false)
         verify(view: sut.prepareForSnapshots(), tolerance: tolerance)
@@ -81,10 +86,11 @@ class ParticipantsCellTests: CoreDataSnapshotTestCase {
 
     // MARK: - Helper
 
-    private func cell(for type: ZMSystemMessageType, fromSelf: Bool, manyUsers: Bool = false, left: Bool = false) -> IconSystemCell {
+    private func cell(for type: ZMSystemMessageType, fromSelf: Bool, manyUsers: Bool = false, left: Bool = false, text: String? = nil) -> IconSystemCell {
         let message = ZMSystemMessage.insertNewObject(in: uiMOC)
         message.sender = fromSelf ? selfUser : otherUser
         message.systemMessageType = type
+        message.text = text
 
         if !left {
             // We add the sender to ensure it is removed
