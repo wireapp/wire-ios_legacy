@@ -112,7 +112,11 @@
 {
     [super viewWillAppear:animated];
     
-    self.bottomEdgeConstraint.constant = -[[KeyboardFrameObserver sharedObserver] keyboardFrame].size.height + UIScreen.safeArea.bottom;
+    CGFloat bottomOffset = -[[KeyboardFrameObserver sharedObserver] keyboardFrame].size.height;
+    if (fabs(bottomOffset) > 0) {
+        bottomOffset = bottomOffset + UIScreen.safeArea.bottom;
+    }
+    self.bottomEdgeConstraint.constant = bottomOffset;
 }
 
 - (void)createInitialConstraints
