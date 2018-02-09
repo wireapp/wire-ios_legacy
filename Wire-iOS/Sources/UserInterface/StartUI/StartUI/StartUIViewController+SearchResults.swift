@@ -34,6 +34,8 @@ extension StartUIViewController: SearchResultsViewControllerDelegate {
         
         if !user.isConnected && !user.isTeamMember {
             self.presentProfileViewController(for: user, at: indexPath)
+        } else if let unboxed = BareUserToUser(user) {
+            delegate.startUI(self, didSelect: [unboxed])
         }
     }
     
@@ -47,7 +49,7 @@ extension StartUIViewController: SearchResultsViewControllerDelegate {
             return
         }
             
-        self.delegate.startUI(self, didSelect: Set(arrayLiteral: unboxedUser), for: .createOrOpenConversation)
+        self.delegate.startUI(self, didSelect: [unboxedUser])
     }
     
     public func searchResultsViewController(_ searchResultsViewController: SearchResultsViewController, didTapOnConversation conversation: ZMConversation) {
@@ -83,8 +85,10 @@ extension StartUIViewController: SearchResultsViewControllerDelegate {
     public func searchResultsViewController(_ searchResultsViewController: SearchResultsViewController, wantsToPerformAction action: SearchResultsViewControllerAction) {
         switch action {
         case .createGroup:
-            let controller = ConversationCreationController { [weak self] _ in
-                self?.navigationController?.popViewController(animated: true)
+            let controller = ConversationCreationController { [unowned self] values in
+                self.navigationController?.popViewController(animated: true)
+                guard let values = values else { return }
+                self.delegate.startUI(self, createConversationWith: values.participants, name: values.name)
             }
             
             let avoiding = KeyboardAvoidingViewController(viewController: controller)

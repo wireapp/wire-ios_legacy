@@ -148,7 +148,6 @@
         [self setNeedsUpdateConstraints];
         [self updateForContext];
         
-        self.showSeparatorLine = NO;
         self.mode = SearchResultCellSelectionModeNone;
     }
     return self;
@@ -256,7 +255,6 @@
         [self.successCheckmark removeFromSuperview];
         self.successCheckmark = nil;
         self.contentView.alpha = 1.0f;
-        self.showSeparatorLine = NO;
         self.mode = SearchResultCellSelectionModeNone;
         self.backgroundColor = UIColor.clearColor;
     }];
@@ -291,12 +289,6 @@
     self.instantConnectButton.hidden = ! canBeConnected;
     [self setNeedsUpdateConstraints];
     self.badgeUserImageView.user = (id)self.user;
-}
-
-- (void)setShowSeparatorLine:(BOOL)showSeparatorLine
-{
-    _showSeparatorLine = showSeparatorLine;
-    self.separatorLineView.hidden = !showSeparatorLine;
 }
 
 #pragma mark - Public API
@@ -391,9 +383,6 @@
     switch (self.mode) {
         case SearchResultCellSelectionModeNone:
             break;
-        case SearchResultCellSelectionModeDimmedBackground:
-            self.backgroundColor = self.selected ? [UIColor colorWithWhite:0 alpha:0.08] : [UIColor clearColor];
-            break;
         case SearchResultCellSelectionModeTrailingCheckmark: {
             UIColor *foregroundColor = [ColorScheme.defaultColorScheme colorWithName:ColorSchemeColorBackground];
             UIColor *backgroundColor = [ColorScheme.defaultColorScheme colorWithName:ColorSchemeColorIconNormal];
@@ -409,9 +398,7 @@
 - (void)setHighlighted:(BOOL)highlighted
 {
     [super setHighlighted:highlighted];
-    if (self.mode == SearchResultCellSelectionModeDimmedBackground) {
-        self.backgroundColor = highlighted ? [UIColor colorWithWhite:0 alpha:0.08] : UIColor.clearColor;
-    }
+    self.backgroundColor = highlighted ? [UIColor colorWithWhite:0 alpha:0.08] : UIColor.clearColor;
 }
 
 #pragma mark - Override

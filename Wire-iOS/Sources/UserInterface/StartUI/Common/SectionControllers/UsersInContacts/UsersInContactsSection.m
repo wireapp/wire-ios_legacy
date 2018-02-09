@@ -91,10 +91,9 @@ NSString *const PeoplePickerUsersInContactsReuseIdentifier = @"PeoplePickerUsers
     ZMUser *modelObject = self.contacts[indexPath.item];
     
     SearchResultCell *particularCell = (SearchResultCell *)genericCell;
-    particularCell.showSeparatorLine = self.useNewStyleCellLayout;
     particularCell.mode = self.useNewStyleCellLayout
         ? SearchResultCellSelectionModeTrailingCheckmark
-        : SearchResultCellSelectionModeDimmedBackground;
+        : SearchResultCellSelectionModeNone;
     
     @weakify(self, modelObject);
     particularCell.doubleTapAction = ^(SearchResultCell *cell) {
@@ -120,7 +119,6 @@ NSString *const PeoplePickerUsersInContactsReuseIdentifier = @"PeoplePickerUsers
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
     ZMUser *modelObject = self.contacts[indexPath.item];
-    
     [self.userSelection add:modelObject];
     
     if ([self.delegate respondsToSelector:@selector(collectionViewSectionController:didSelectItem:atIndexPath:)]) {

@@ -90,8 +90,6 @@ public class SearchHeaderViewController : UIViewController {
     }
     
     fileprivate func createConstraints() {
-        
-        
         constrain(tokenFieldContainer, tokenField, searchIcon, clearButton) { container, tokenField, searchIcon, clearButton in
             searchIcon.centerY == tokenField.centerY
             searchIcon.leading == tokenField.leading + 8
@@ -151,8 +149,9 @@ extension SearchHeaderViewController : UserSelectionObserver {
     }
     
     public func userSelection(_ userSelection: UserSelection, didAddUser user: ZMUser) {
-        guard allowsMultipleSelection else { return }
-        tokenField.addToken(forTitle: user.displayName, representedObject: user)
+        if !allowsMultipleSelection && !tokenField.tokens.isEmpty {
+            tokenField.addToken(forTitle: user.displayName, representedObject: user)
+        }
     }
     
     public func userSelection(_ userSelection: UserSelection, didRemoveUser user: ZMUser) {

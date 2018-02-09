@@ -265,6 +265,7 @@ static NSUInteger const StartUIInitiallyShowsKeyboardConversationThreshold = 10;
         [inviteContactsViewController.analyticsTracker tagEvent:AnalyticsEventInviteContactListOpened];
     }];
 }
+
 - (void)presentProfileViewControllerForUser:(id<ZMSearchableUser>)bareUser atIndexPath:(NSIndexPath *)indexPath
 {
     [self.searchHeaderViewController.tokenField resignFirstResponder];
@@ -292,7 +293,7 @@ static NSUInteger const StartUIInitiallyShowsKeyboardConversationThreshold = 10;
 
 - (void)userSelection:(UserSelection *)userSelection didAddUser:(ZMUser *)user
 {
-    [self.delegate startUI:self didSelectUsers:userSelection.users forAction:StartUIActionCreateOrOpenConversation];
+    // no-op
 }
 
 - (void)userSelection:(UserSelection *)userSelection didRemoveUser:(ZMUser * _Nonnull)user
@@ -310,7 +311,7 @@ static NSUInteger const StartUIInitiallyShowsKeyboardConversationThreshold = 10;
 - (void)searchHeaderViewControllerDidConfirmAction:(SearchHeaderViewController *)searchHeaderViewController
 {
     if (self.userSelection.users.count > 0) {
-        [self.delegate startUI:self didSelectUsers:self.userSelection.users forAction:StartUIActionCreateOrOpenConversation];
+        [self.delegate startUI:self didSelectUsers:self.userSelection.users];
     }
     else {
         [self.searchHeaderViewController resetQuery];
