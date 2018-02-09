@@ -64,6 +64,7 @@ class CreateGroupSection: NSObject, CollectionViewSectionController {
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        collectionView.deselectItem(at: indexPath, animated: true)
         delegate?.collectionViewSectionController(self, didSelectItem: data[indexPath.row], at: indexPath)
     }
     

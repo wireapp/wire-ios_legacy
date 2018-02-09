@@ -280,7 +280,7 @@
 
 - (StartUIViewController *)createPeoplePickerController
 {
-    StartUIViewController *startUIViewController = [StartUIViewController new];
+    StartUIViewController *startUIViewController = [[StartUIViewController alloc] init];
     startUIViewController.delegate = self;
     return startUIViewController;
 }

@@ -45,16 +45,23 @@ class ClearBackgroundNavigationController: UINavigationController {
         self.transitioningDelegate = self
     }
     
+    open var useDefaultPopGesture: Bool = false {
+        didSet {
+            self.interactivePopGestureRecognizer?.isEnabled = useDefaultPopGesture
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = UIColor.clear
-        self.interactivePopGestureRecognizer?.isEnabled = false
+        self.useDefaultPopGesture = false
         
         self.navigationBar.tintColor = .white
         self.navigationBar.setBackgroundImage(UIImage(), for:.default)
         self.navigationBar.shadowImage = UIImage()
         self.navigationBar.isTranslucent = true
-        self.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.white, NSFontAttributeName: FontSpec(.medium, .medium).font!.allCaps()]
+        self.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.white,
+                                                  NSFontAttributeName: FontSpec(.medium, .medium).font!.allCaps()]
         
         let navButtonAppearance = UIBarButtonItem.appearance(whenContainedInInstancesOf: [UINavigationBar.self])
         
@@ -62,7 +69,7 @@ class ClearBackgroundNavigationController: UINavigationController {
         navButtonAppearance.setTitleTextAttributes(attributes, for: UIControlState.normal)
         navButtonAppearance.setTitleTextAttributes(attributes, for: UIControlState.highlighted)
         
-        self.dismissGestureRecognizer = UIScreenEdgePanGestureRecognizer(target: self, action: #selector(SettingsNavigationController.onEdgeSwipe(gestureRecognizer:)))
+        self.dismissGestureRecognizer = UIScreenEdgePanGestureRecognizer(target: self, action: #selector(ClearBackgroundNavigationController.onEdgeSwipe(gestureRecognizer:)))
         self.dismissGestureRecognizer.edges = [.left]
         self.dismissGestureRecognizer.delegate = self
         self.view.addGestureRecognizer(self.dismissGestureRecognizer)
@@ -74,6 +81,9 @@ class ClearBackgroundNavigationController: UINavigationController {
         }
     }
     
+    func navigationController(_ navigationController: UINavigationController, didShow viewController: UIViewController, animated: Bool) {
+        useDefaultPopGesture = fabs(viewController.view.backgroundColor?.alpha ?? 1.0 - 1.0) < CGFloat.ulpOfOne
+    }
 }
 
 
@@ -82,6 +92,10 @@ extension ClearBackgroundNavigationController: UINavigationControllerDelegate {
                               animationControllerFor operation: UINavigationControllerOperation,
                               from fromVC: UIViewController,
                               to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        if self.useDefaultPopGesture {
+            return nil
+        }
+        
         switch operation {
         case .push:
             return self.pushTransition
@@ -110,6 +124,9 @@ extension ClearBackgroundNavigationController: UIViewControllerTransitioningDele
 
 extension ClearBackgroundNavigationController: UIGestureRecognizerDelegate {
     func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
+        if self.useDefaultPopGesture && gestureRecognizer == self.dismissGestureRecognizer {
+            return false
+        }
         return true
     }
     
