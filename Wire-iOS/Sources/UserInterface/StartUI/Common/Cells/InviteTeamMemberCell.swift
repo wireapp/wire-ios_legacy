@@ -19,11 +19,11 @@
 import Foundation
 import Cartography
 
-
 class StartUIIconCell: UICollectionViewCell, Reusable {
     
     private let iconView = UIImageView()
     private let titleLabel = UILabel()
+    private let separator = UIView()
     
     fileprivate var icon: ZetaIconType? {
         didSet {
@@ -34,6 +34,12 @@ class StartUIIconCell: UICollectionViewCell, Reusable {
     fileprivate var title: String? {
         didSet {
             titleLabel.text = title
+        }
+    }
+    
+    override var isHighlighted: Bool {
+        didSet {
+            backgroundColor = isHighlighted ? .init(white: 0, alpha: 0.08) : .clear
         }
     }
     
@@ -51,13 +57,14 @@ class StartUIIconCell: UICollectionViewCell, Reusable {
         iconView.contentMode = .center
         titleLabel.font = FontSpec(.normal, .medium).font
         titleLabel.textColor = .white
-        [iconView, titleLabel].forEach(contentView.addSubview)
+        [iconView, titleLabel, separator].forEach(contentView.addSubview)
+        separator.backgroundColor = UIColor(white: 1, alpha: 0.08)
     }
     
     fileprivate  func createConstraints() {
         let iconSize: CGFloat = 32.0
         
-        constrain(contentView, iconView, titleLabel) { container, iconView, titleLabel in
+        constrain(contentView, iconView, titleLabel, separator) { container, iconView, titleLabel, separator in
             iconView.width == iconSize
             iconView.height == iconSize
             iconView.leading == container.leading + 16
@@ -67,6 +74,11 @@ class StartUIIconCell: UICollectionViewCell, Reusable {
             titleLabel.trailing == container.trailing
             titleLabel.top == container.top
             titleLabel.bottom == container.bottom
+            
+            separator.leading == titleLabel.leading
+            separator.trailing == container.trailing
+            separator.bottom == container.bottom
+            separator.height == 1
         }
     }
     

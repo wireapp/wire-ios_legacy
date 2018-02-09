@@ -67,9 +67,7 @@ typedef void (^ConversationCreatedBlock)(ZMConversation *);
                     onConversationCreated(conversation);
                 });
                 
-                AnalyticsGroupConversationEvent *event = [AnalyticsGroupConversationEvent eventForCreatedGroupWithContext:CreatedGroupContextStartUI
-                                                                                                         participantCount:conversation.activeParticipants.count]; // Include self
-                [[Analytics shared] tagEventObject:event];
+                [ConversationListViewController tagGroupConversationCreated:conversation];
             }];
         }
     }];
@@ -77,129 +75,18 @@ typedef void (^ConversationCreatedBlock)(ZMConversation *);
 
 #pragma mark - People picker delegate
 
-- (void)startUI:(StartUIViewController *)startUI didSelectUsers:(NSSet *)users forAction:(StartUIAction)action
+- (void)startUI:(StartUIViewController *)startUI didSelectUsers:(NSSet *)users
 {    
     if (users.count == 0) {
         [[Analytics shared] tagSearchAbortedWithSource:AnalyticsEventSourceUnspecified];
-        
         return;
     }
     
-    BOOL videoCall = NO;
-    
-    switch (action) {
-        case StartUIActionCreateOrOpenConversation:
-        {
-            [self withConversationForUsers:users callback:^(ZMConversation *conversation) {
-                [[ZClientViewController sharedZClientViewController] selectConversation:conversation
-                                                                            focusOnView:YES
-                                                                               animated:YES];
-            }];
-        }
-            break;
-        case StartUIActionVideoCall:
-        {
-            videoCall = YES;
-            // fallthrough
-        }
-        case StartUIActionCall:
-        {
-            [self dismissPeoplePickerWithCompletionBlock:^{
-                if (users.count == 1) {
-                    __block ZMConversation *conversation = nil;
-                    ZMUser *user = users.anyObject;
-                    
-                    if ([user respondsToSelector:@selector(oneToOneConversation)]) {
-                        [[ZMUserSession sharedSession] enqueueChanges:^{
-                            conversation = user.oneToOneConversation;
-                        } completionHandler:^{
-                            [[ZClientViewController sharedZClientViewController] selectConversation:conversation
-                                                                                        focusOnView:YES
-                                                                                           animated:YES];
-                            @weakify(self);
-                            self.startCallToken =
-                            [conversation onCreatedRemotely:^{
-                                @strongify(self);
-                                if (videoCall) {
-                                    [conversation startVideoCall];
-                                }
-                                else {
-                                    [conversation startAudioCall];
-                                }
-                                self.startCallToken = nil;
-                            }];
-                        }];
-                    }
-                }
-                else if (users.count > 1) {
-                    
-                    ZMConversation __block *conversation = nil;
-                    
-                    [[ZMUserSession sharedSession] enqueueChanges:^{
-                        Team *team = ZMUser.selfUser.team;
-                        
-                        conversation = [ZMConversation insertGroupConversationIntoUserSession:[ZMUserSession sharedSession]
-                                                                             withParticipants:users.allObjects
-                                                                                       inTeam:team];
-                    } completionHandler:^{
-                        
-                        [[ZClientViewController sharedZClientViewController] selectConversation:conversation
-                                                                                    focusOnView:YES
-                                                                                       animated:YES];
-                        
-                        @weakify(self);
-                        self.startCallToken =
-                        [conversation onCreatedRemotely:^{
-                            @strongify(self);
-                            [conversation startAudioCall];
-                            self.startCallToken = nil;
-                        }];
-                        
-                        AnalyticsGroupConversationEvent *event = [AnalyticsGroupConversationEvent eventForCreatedGroupWithContext:CreatedGroupContextStartUI
-                                                                                                                 participantCount:conversation.activeParticipants.count]; // Include self
-                        [[Analytics shared] tagEventObject:event];
-                    }];
-                }
-            }];
-        }
-            break;
-        case StartUIActionPostPicture:
-        {
-            CameraPicker *picker = [[CameraPicker alloc] initWithTarget:self];
-            picker.didPickImage = ^(UIImage *image) {
-                NSData *imageData = UIImageJPEGRepresentation(image, 0.9);
-                [self withConversationForUsers:users callback:^(ZMConversation *conversation) {
-                    [[ZMUserSession sharedSession] enqueueChanges:^{
-                        [conversation appendMessageWithImageData:imageData];
-                    } completionHandler:^{
-                        [[Analytics shared] tagMediaAction:ConversationMediaActionPhoto inConversation:conversation];
-                        [[Analytics shared] tagMediaActionCompleted:ConversationMediaActionPhoto inConversation:conversation];
-                        [[ZClientViewController sharedZClientViewController] selectConversation:conversation
-                                                                                    focusOnView:YES
-                                                                                       animated:YES];
-                    }];
-                }];
-            };
-            picker.didPickVideo = ^(NSURL *videoURL) {
-                [self withConversationForUsers:users callback:^(ZMConversation *conversation) {
-                    [FileMetaDataGenerator metadataForFileAtURL:videoURL
-                                                            UTI:(NSString *)kUTTypeMovie
-                                                           name:@"Recording"
-                                                     completion:^(ZMFileMetadata * metadata) {
-                                                         [conversation appendMessageWithFileMetadata:metadata];
-                                                         [[ZClientViewController sharedZClientViewController] selectConversation:conversation
-                                                                                                                     focusOnView:YES
-                                                                                                                        animated:YES];
-                                                     }];
-                }];
-            };
-            
-            [picker pick];
-        }
-            break;
-        default:
-            break;
-    }
+    [self withConversationForUsers:users callback:^(ZMConversation *conversation) {
+        [[ZClientViewController sharedZClientViewController] selectConversation:conversation
+                                                                    focusOnView:YES
+                                                                       animated:YES];
+    }];
     
     [[Analytics shared] tagEventObject:[AnalyticsSearchResultEvent eventForSearchResultUsed:YES participantCount:[users count]]];
 }
@@ -213,6 +100,29 @@ typedef void (^ConversationCreatedBlock)(ZMConversation *);
                                                                     focusOnView:YES
                                                                        animated:YES];
     }];
+}
+
+- (void)startUI:(StartUIViewController *)startUI createConversationWithUsers:(NSSet<ZMUser *> *)users name:(NSString *)name
+{
+    __block ZMConversation *conversation = nil;
+    [ZMUserSession.sharedSession enqueueChanges:^{
+        conversation = [ZMConversation insertGroupConversationIntoUserSession:ZMUserSession.sharedSession
+                                                             withParticipants:users.allObjects
+                                                                         name:name
+                                                                       inTeam:ZMUser.selfUser.team];
+    } completionHandler:^{
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [ZClientViewController.sharedZClientViewController selectConversation:conversation focusOnView:YES animated:YES];
+        });
+        [ConversationListViewController tagGroupConversationCreated:conversation];
+    }];
+}
+
++ (void)tagGroupConversationCreated:(ZMConversation *)conversation
+{
+    AnalyticsGroupConversationEvent *event = [AnalyticsGroupConversationEvent eventForCreatedGroupWithContext:CreatedGroupContextStartUI
+                                                                                             participantCount:conversation.activeParticipants.count]; // Include self
+    [[Analytics shared] tagEventObject:event];
 }
 
 @end

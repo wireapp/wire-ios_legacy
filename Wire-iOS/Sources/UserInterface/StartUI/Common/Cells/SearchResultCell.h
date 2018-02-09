@@ -26,7 +26,6 @@
 
 typedef NS_ENUM(NSUInteger, SearchResultCellSelectionMode) {
     SearchResultCellSelectionModeNone,
-    SearchResultCellSelectionModeDimmedBackground,
     SearchResultCellSelectionModeTrailingCheckmark
 };
 
@@ -40,7 +39,6 @@ typedef NS_ENUM(NSUInteger, SearchResultCellSelectionMode) {
 @property (nonatomic, copy, nullable)   void (^instantConnectAction)(SearchResultCell * _Nonnull);
 
 @property (nonatomic) SearchResultCellSelectionMode mode;
-@property (nonatomic) BOOL showSeparatorLine;
 
 - (void)playAddUserAnimation;
 

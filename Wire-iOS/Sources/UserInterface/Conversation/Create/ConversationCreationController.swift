@@ -61,7 +61,7 @@ final class ConversationCreationController: UIViewController {
     
     fileprivate var values: ConversationCreationValues?
 
-    typealias CreationCloseClosure = (UIViewController) -> Void
+    typealias CreationCloseClosure = (ConversationCreationValues?) -> Void
     fileprivate var onClose: CreationCloseClosure?
 
     init(onClose: CreationCloseClosure? = nil) {
@@ -137,8 +137,9 @@ final class ConversationCreationController: UIViewController {
     private func setupNavigationBar() {
         
         // left button
-        backButtonDescription.buttonTapped = { [unowned self] in self.onClose?(self) }
+        backButtonDescription.buttonTapped = { [unowned self] in self.onClose?(self.values) }
         backButtonDescription.accessibilityIdentifier = "button.newgroup.back"
+
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: backButtonDescription.create())
 
         // title view
@@ -218,8 +219,8 @@ extension ConversationCreationController: AddParticipantsConversationCreationDel
         switch action {
         case .updatedUsers(let users):
             values = values.map { .init(name: $0.name, participants: users) }
-        case .create: break
-            // TODO
+        case .create:
+            onClose?(values)
         }
     }
 }
