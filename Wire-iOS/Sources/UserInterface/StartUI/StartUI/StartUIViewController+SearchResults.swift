@@ -86,9 +86,10 @@ extension StartUIViewController: SearchResultsViewControllerDelegate {
         switch action {
         case .createGroup:
             let controller = ConversationCreationController { [unowned self] values in
-                self.navigationController?.popViewController(animated: true)
-                guard let values = values else { return }
-                self.delegate.startUI(self, createConversationWith: values.participants, name: values.name)
+                self.navigationController?.popToRootViewController(animated: true)
+                values.apply {
+                    self.delegate.startUI(self, createConversationWith: $0.participants, name: $0.name)
+                }
             }
             
             let avoiding = KeyboardAvoidingViewController(viewController: controller)
