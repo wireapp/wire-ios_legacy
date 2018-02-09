@@ -20,6 +20,7 @@ import Foundation
 
 final class BackButtonDescription {
     var buttonTapped: (() -> ())? = nil
+    var accessibilityIdentifier: String? = "backButton"
 }
 
 extension BackButtonDescription: ViewDescriptor {
@@ -30,7 +31,7 @@ extension BackButtonDescription: ViewDescriptor {
         button.translatesAutoresizingMaskIntoConstraints = false
         let iconType: ZetaIconType = UIApplication.isLeftToRightLayout ? .chevronLeft : .chevronRight
         button.setIcon(iconType, with: .small, for: .normal)
-        button.accessibilityIdentifier = "backButton"
+        button.accessibilityIdentifier = accessibilityIdentifier
         button.addTarget(self, action: #selector(BackButtonDescription.backButtonTapped(_:)), for: .touchUpInside)
         return button
     }

@@ -101,6 +101,8 @@ final class ConversationCreationController: UIViewController {
         mainViewContainer.translatesAutoresizingMaskIntoConstraints = false
 
         textField = SimpleTextField()
+        textField.isAccessibilityElement = true
+        textField.accessibilityIdentifier = "textfield.newgroup.name"
         textField.placeholder = "conversation.create.group_name.placeholder".localized.uppercased()
         textField.textFieldDelegate = self
         mainViewContainer.addSubview(textField)
@@ -125,6 +127,7 @@ final class ConversationCreationController: UIViewController {
         
         // left button
         backButtonDescription.buttonTapped = { [unowned self] in self.onClose?(self) }
+        backButtonDescription.accessibilityIdentifier = "button.newgroup.back"
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: backButtonDescription.create())
 
         // title view
@@ -138,7 +141,7 @@ final class ConversationCreationController: UIViewController {
         
         // right button
         nextButton = ButtonWithLargerHitArea(type: .custom)
-        nextButton.accessibilityIdentifier = "next"
+        nextButton.accessibilityIdentifier = "button.newgroup.next"
         nextButton.setTitle("general.next".localized.uppercased(), for: .normal)
         nextButton.setTitleColor(UIColor.wr_color(fromColorScheme: ColorSchemeColorIconNormal, variant: .light), for: .normal)
         nextButton.setTitleColor(UIColor.wr_color(fromColorScheme: ColorSchemeColorTextDimmed, variant: .light), for: .highlighted)
