@@ -89,6 +89,13 @@ public class AddParticipantsViewController: UIViewController {
         self.init(context: .add(conversation))
     }
     
+    override open var title: String? {
+        didSet {
+            navigationItem.titleView = ConversationCreationTitleFactory.createTitleLabel(for: self.title ?? "")
+            navigationItem.titleView?.accessibilityIdentifier = "label.addpeople.title"
+        }
+    }
+    
     public init(context: Context) {
         viewModel = AddParticipantsViewModel(with: context)
         
@@ -180,8 +187,10 @@ public class AddParticipantsViewController: UIViewController {
         updateSelectionValues()
         
         if case .create = context {
-            navigationItem.hidesBackButton = true
-            navigationItem.leftBarButtonItem = .init(icon: .chevronLeft, target: self, action: #selector(backButtonTapped))
+            let buttonDescriptor = BackButtonDescription()
+            buttonDescriptor.buttonTapped = { [weak self] in self?.backButtonTapped() }
+            buttonDescriptor.accessibilityIdentifier = "button.addpeople.back"
+            navigationItem.leftBarButtonItem = .init(customView: buttonDescriptor.create())
         }
     }
 
@@ -223,7 +232,7 @@ public class AddParticipantsViewController: UIViewController {
         }
     }
     
-    @objc private func backButtonTapped(_ sender: UIBarButtonItem) {
+    @objc private func backButtonTapped() {
         navigationController?.popViewController(animated: true)
     }
     

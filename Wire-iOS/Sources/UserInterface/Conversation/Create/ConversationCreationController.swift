@@ -30,6 +30,17 @@ final public class ConversationCreationValues {
     }
 }
 
+open class ConversationCreationTitleFactory {
+    static func createTitleLabel(for title: String) -> UILabel {
+        let titleLabel = UILabel()
+        titleLabel.font = FontSpec(.normal, .medium).font!.allCaps()
+        titleLabel.textColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorIconNormal, variant: .light)
+        titleLabel.text = title
+        titleLabel.sizeToFit()
+        return titleLabel
+    }
+}
+
 final class ConversationCreationController: UIViewController {
 
     static let errorFont = FontSpec(.small, .semibold).font!
@@ -131,13 +142,7 @@ final class ConversationCreationController: UIViewController {
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: backButtonDescription.create())
 
         // title view
-        let titleLabel = UILabel()
-        titleLabel.font = FontSpec(.normal, .medium).font!.allCaps()
-        titleLabel.textColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorIconNormal, variant: .light)
-        titleLabel.text = title
-        titleLabel.sizeToFit()
-        
-        navigationItem.titleView = titleLabel
+        navigationItem.titleView = ConversationCreationTitleFactory.createTitleLabel(for: self.title ?? "")
         
         // right button
         nextButton = ButtonWithLargerHitArea(type: .custom)

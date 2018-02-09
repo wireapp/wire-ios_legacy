@@ -75,7 +75,7 @@ public class SearchHeaderViewController : UIViewController {
         tokenField.clipsToBounds = true
         tokenField.textView.placeholderTextColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorTokenFieldTextPlaceHolder, variant: colorSchemeVariant)
         tokenField.textView.backgroundColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorTokenFieldBackground, variant: colorSchemeVariant)
-        tokenField.textView.accessibilityLabel = "textViewSearch"
+        tokenField.textView.accessibilityIdentifier = "textViewSearch"
         tokenField.textView.placeholder = "peoplepicker.search_placeholder".localized.uppercased()
         tokenField.textView.keyboardAppearance = ColorScheme.keyboardAppearance(for: colorSchemeVariant)
         tokenField.textView.returnKeyType = .done
