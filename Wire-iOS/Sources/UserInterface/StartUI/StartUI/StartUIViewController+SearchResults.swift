@@ -83,14 +83,12 @@ extension StartUIViewController: SearchResultsViewControllerDelegate {
     public func searchResultsViewController(_ searchResultsViewController: SearchResultsViewController, wantsToPerformAction action: SearchResultsViewControllerAction) {
         switch action {
         case .createGroup:
-            let controller = ConversationCreationController { controller in
-                controller.dismiss(animated: true)
+            let controller = ConversationCreationController { [weak self] _ in
+                self?.navigationController?.popViewController(animated: true)
             }
+            
             let avoiding = KeyboardAvoidingViewController(viewController: controller)
-            let navigationController = UINavigationController(rootViewController: avoiding)
-            navigationController.navigationBar.setBackgroundImage(.init(), for: .default)
-            navigationController.navigationBar.shadowImage = .init()
-            ZClientViewController.shared()?.present(navigationController, animated: true)
+            self.navigationController?.pushViewController(avoiding, animated: true)
         }
     }
     
