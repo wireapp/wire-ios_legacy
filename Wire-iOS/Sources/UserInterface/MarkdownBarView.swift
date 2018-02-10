@@ -135,11 +135,12 @@ public final class MarkdownBarView: UIView {
     
     fileprivate func markdown(for button: IconButton) -> Markdown? {
         switch button {
-        case headerButton:  return headerButton.iconType(for: .normal).headerMarkdown
-        case boldButton:    return .bold
-        case italicButton:  return .italic
-        case codeButton:    return .code
-        default:            return nil
+        case headerButton:      return headerButton.iconType(for: .normal).headerMarkdown
+        case boldButton:        return .bold
+        case italicButton:      return .italic
+        case codeButton:        return .code
+        case numberListButton:  return .list
+        default:                return nil
         }
     }
     
