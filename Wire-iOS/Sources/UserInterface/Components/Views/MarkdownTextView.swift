@@ -26,6 +26,10 @@ extension Notification.Name {
 
 class MarkdownTextView: NextResponderTextView {
     
+    enum KeyEvent {
+        case none, newline, backspace
+    }
+    
     // MARK: - Properties
     
     /// The style used to apply attributes.
@@ -65,6 +69,8 @@ class MarkdownTextView: NextResponderTextView {
     private var wholeRange: NSRange {
         return NSMakeRange(0, attributedText.length)
     }
+    
+    private var lastKeyEvent = KeyEvent.none
     
     // MARK: - Init
     
@@ -112,7 +118,28 @@ class MarkdownTextView: NextResponderTextView {
         if activeMarkdown.containsHeader {
             resetMarkdown()
         }
-        // TODO: automatic list item generation
+    }
+    
+    func handleBackspace() {
+    }
+    
+    /// Call this method before the text view changes to give it a chance
+    /// to perform any work.
+    func respondToChange(_ text: String, inRange range: NSRange) {
+        if text == "\n" || text == "\r" {
+            lastKeyEvent = .newline
+            handleNewLine()
+        }
+        else if text.isEmpty && range.length > 0 {
+            lastKeyEvent = .backspace
+            handleBackspace()
+        }
+        else {
+            lastKeyEvent = .none
+        }
+        
+        updateTypingAttributes()
+    }
     }
     
     // MARK: Query Methods

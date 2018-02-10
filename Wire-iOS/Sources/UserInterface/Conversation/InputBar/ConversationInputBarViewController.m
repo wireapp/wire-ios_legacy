@@ -874,12 +874,6 @@
 
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
 {
-    // markdown text view needs to detect newlines
-    // in order to automatically insert new list items
-    if ([text isEqualToString:@"\n"] || [text isEqualToString:@"\r"]) {
-        [self.inputBar.textView handleNewLine];
-    }
-    
     // send only if send key pressed
     if (textView.returnKeyType == UIReturnKeySend && [text isEqualToString:@"\n"]) {
         [self.inputBar.textView autocorrectLastWord];
@@ -887,7 +881,8 @@
         [self sendOrEditText:candidateText];
         return NO;
     }
-    [self.inputBar.textView updateTypingAttributes];
+    
+    [self.inputBar.textView respondToChange: text inRange: range];
     return YES;
 }
 
