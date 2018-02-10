@@ -281,39 +281,6 @@ class MarkdownTextView: NextResponderTextView {
         }
     }
     
-//    fileprivate func insertListItem() {
-//
-//        // maybe better way is to find the last newline from caret, or start of document
-//        // if none
-//
-//        if let caret = selectedTextRange?.start {
-//            let lineStart = tokenizer.position(from: caret, toBoundary: .paragraph, inDirection: UITextStorageDirection.backward.rawValue)
-//            let lineEnd = tokenizer.position(from: caret, toBoundary: .paragraph, inDirection: UITextStorageDirection.forward.rawValue)
-//
-//            if let lineStart = lineStart, let lineEnd = lineEnd {
-//                let lineRange = textRange(from: lineStart, to: lineEnd)!
-//                let loc = offset(from: beginningOfDocument, to: lineRange.start)
-//                let len = offset(from: lineRange.start, to: lineRange.end)
-//                let nsRange = NSMakeRange(loc, len)
-//
-//                // need to insert list markdown id to all ranges within line range
-//
-//            }
-//
-//            if let lineStart = lineStart {
-//                if let range = textRange(from: lineStart, to: lineStart) {
-//                    replace(range, withText: "1.\t")
-//                }
-//            }
-//            else if caret == beginningOfDocument || caret == endOfDocument {
-//
-//                if let range = textRange(from: caret, to: caret) {
-//                    replace(range, withText: "1.\t")
-//                }
-//            }
-//        }
-//    }
-    
     /// Temporary helper
     fileprivate func printAttributes() {
         attributedText.enumerateAttribute(MarkdownIDAttributeName, in: wholeRange, options: []) { (val, range, _) in
