@@ -63,7 +63,10 @@ class MarkdownTextView: NextResponderTextView {
     }
     
     public override var selectedTextRange: UITextRange? {
-        didSet { activeMarkdown = self.markdownAtSelection() }
+        didSet {
+            activeMarkdown = self.markdownAtSelection()
+            NotificationCenter.default.post(name: .MarkdownTextViewDidChangeSelection, object: self)
+        }
     }
     
     private var wholeRange: NSRange {
