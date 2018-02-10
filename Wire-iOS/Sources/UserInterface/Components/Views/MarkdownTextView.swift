@@ -88,6 +88,8 @@ class MarkdownTextView: NextResponderTextView {
         layoutManager.addTextContainer(textContainer)
         super.init(frame: .zero, textContainer: textContainer)
         
+        NotificationCenter.default.addObserver(self, selector: #selector(textViewDidChange), name: .UITextViewTextDidChange, object: nil)
+        
         markdownTextStorage.currentMarkdown = .none
         currentAttributes = attributes(for: activeMarkdown)
         updateTypingAttributes()
@@ -140,6 +142,10 @@ class MarkdownTextView: NextResponderTextView {
         
         updateTypingAttributes()
     }
+    
+    
+    @objc private func textViewDidChange() {
+        
     }
     
     // MARK: Query Methods
