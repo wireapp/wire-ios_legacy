@@ -245,6 +245,14 @@ class MarkdownTextView: NextResponderTextView {
         return (text as NSString).lineRange(for: selectedRange)
     }
     
+    private func rangeOfPreviousLine() -> NSRange? {
+        guard let currentLineRange = rangeOfCurrentLine() else { return nil }
+        guard currentLineRange.location != 0 else { return nil }
+        let prev = NSMakeRange(currentLineRange.location - 1, 0)
+        return (text as NSString).lineRange(for: prev)
+        
+    }
+    
     /// Adds the given markdown (and the associated attributes) to the given
     /// range.
     fileprivate func add(_ markdown: Markdown, to range: NSRange) {
