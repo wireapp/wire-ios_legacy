@@ -215,7 +215,12 @@ static inline NSDataDetector *linkDataDetector(void)
 {
     NSDataDetector *detector = linkDataDetector();
     NSArray *contentURLs = nil;
-    NSString *trimmedText = [message.messageText trimmedCopy];
+    
+    // if the message contains markdown, the parsed string will be shorter
+    // b/c the markdown syntax is removed. In order to ensure the link
+    // attachment ranges are valid, we must detect links from the parsed string.
+    NSString *text = [NSMutableAttributedString markdownFrom:message.messageText style:DownStyle.normal].string;
+    NSString *trimmedText = [text trimmedCopy];
     
     if (trimmedText.length > 0) {
         NSArray *matches = [detector matchesInString:trimmedText options:0 range:NSMakeRange(0, trimmedText.length)];
