@@ -19,13 +19,13 @@
 import Foundation
 import Down
 
-extension NSAttributedString {
+extension NSMutableAttributedString {
     @objc
-    static func markdown(from text: String, style: DownStyle) -> NSAttributedString {
+    static func markdown(from text: String, style: DownStyle) -> NSMutableAttributedString {
         let down = Down(markdownString: text)
         if let result = try? down.toAttributedString(usingStyle: style) {
-            return result
+            return NSMutableAttributedString(attributedString: result)
         }
-        return NSAttributedString(string: text)
+        return NSMutableAttributedString(string: text)
     }
 }

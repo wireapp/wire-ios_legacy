@@ -124,9 +124,8 @@ static inline NSDataDetector *linkDataDetector(void)
 //        style.baseParagraphStyle = cellParagraphStyle;
     }
     
-    NSAttributedString *markdownString = [NSAttributedString markdownFrom:text style:style];
-    NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithAttributedString:markdownString];
-
+    NSMutableAttributedString *attributedString = [NSMutableAttributedString markdownFrom:text style:style];
+    
     if (obfuscated) {
         return attributedString;
     }
