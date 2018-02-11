@@ -20,9 +20,10 @@ import UIKit
 import Cartography
 import Down
 
-public protocol MarkdownBarViewDelegate: class {
+protocol MarkdownBarViewDelegate: class {
     func markdownBarView(_ view: MarkdownBarView, didSelectMarkdown markdown: Markdown, with sender: IconButton)
     func markdownBarView(_ view: MarkdownBarView, didDeselectMarkdown markdown: Markdown, with sender: IconButton)
+    func markdownBarView(_ view: MarkdownBarView, didSelectListType type: MarkdownTextView.ListType)
 }
 
 
@@ -107,9 +108,12 @@ public final class MarkdownBarView: UIView {
         case headerButton:      markdown = headerButton.iconType(for: .normal).headerMarkdown ?? .h1
         case boldButton:        markdown = .bold
         case italicButton:      markdown = .italic
-        // TODO: differentiate
-        case numberListButton:  markdown = .list
-        case bulletListButton:  markdown = .list
+        case numberListButton:
+            delegate?.markdownBarView(self, didSelectListType: .number)
+            return
+        case bulletListButton:
+            delegate?.markdownBarView(self, didSelectListType: .bullet)
+            return
         case codeButton:        markdown = .code
         default:                return
         }

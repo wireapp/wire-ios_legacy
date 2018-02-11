@@ -26,9 +26,8 @@ extension Notification.Name {
 
 class MarkdownTextView: NextResponderTextView {
     
-    enum KeyEvent {
-        case none, newline, backspace
-    }
+    enum KeyEvent { case none, newline, backspace }
+    enum ListType { case number, bullet }
     
     // MARK: - Properties
     
@@ -69,8 +68,29 @@ class MarkdownTextView: NextResponderTextView {
         }
     }
     
+    // MARK: - Range Helpers
+    
     private var wholeRange: NSRange {
-        return NSMakeRange(0, attributedText.length)
+        return NSMakeRange(0, (text as NSString).length)
+    }
+    
+    fileprivate var currentLineRange: NSRange? {
+        guard selectedRange.location != NSNotFound else { return nil }
+        return (text as NSString).lineRange(for: selectedRange)
+    }
+    
+    private var currentLineTextRange: UITextRange? {
+        return currentLineRange?.textRange(in: self)
+    }
+    
+    private var previousLineRange: NSRange? {
+        guard let currentLineRange = currentLineRange else { return nil }
+        guard currentLineRange.location > 0 else { return nil }
+        return (text as NSString).lineRange(for: NSMakeRange(currentLineRange.location - 1, 0))
+    }
+    
+    private var previousLineTextRange: UITextRange? {
+        return previousLineRange?.textRange(in: self)
     }
     
     private var lastKeyEvent = KeyEvent.none
@@ -124,9 +144,10 @@ class MarkdownTextView: NextResponderTextView {
             resetMarkdown()
         }
     }
-    
+
     func handleBackspace() {
     }
+    
     
     /// Call this method before the text view changes to give it a chance
     /// to perform any work.
@@ -148,7 +169,27 @@ class MarkdownTextView: NextResponderTextView {
     
     
     @objc private func textViewDidChange() {
-        
+        // the user entered a newline
+        if lastKeyEvent == .newline {
+            // it's important to consume this last key so we don't end up in a loop
+            lastKeyEvent = .none
+            
+            guard
+                let prevlineRange = previousLineRange,
+                let prevLineTextRange = previousLineTextRange,
+                let selection = selectedTextRange
+                else { return }
+
+            if isEmptyListItem(range: prevlineRange) {
+                // the delete last line
+                restore(selection, afterReplacingRange: prevLineTextRange, withText: "")
+            }
+            else if isListItem(range: prevlineRange) {
+                // insert list item at current line
+                let type = isNumberItem(forLine: prevlineRange) ? ListType.number : .bullet
+                insertListItem(type: type)
+            }
+        }
     }
     
     // MARK: Query Methods
@@ -190,7 +231,7 @@ class MarkdownTextView: NextResponderTextView {
         return result
     }
 
-    // MARK: - Private Interface
+    // MARK: - Attributes
     
     /// Returns the attributes for the given markdown.
     private func attributes(for markdown: Markdown) -> [String : Any] {
@@ -238,21 +279,6 @@ class MarkdownTextView: NextResponderTextView {
         ]
     }
     
-    /// Returns the range of the line enclosing the current selection if it
-    /// exists, else nil.
-    fileprivate func rangeOfCurrentLine() -> NSRange? {
-        guard selectedRange.location != NSNotFound else { return nil }
-        return (text as NSString).lineRange(for: selectedRange)
-    }
-    
-    private func rangeOfPreviousLine() -> NSRange? {
-        guard let currentLineRange = rangeOfCurrentLine() else { return nil }
-        guard currentLineRange.location != 0 else { return nil }
-        let prev = NSMakeRange(currentLineRange.location - 1, 0)
-        return (text as NSString).lineRange(for: prev)
-        
-    }
-    
     /// Adds the given markdown (and the associated attributes) to the given
     /// range.
     fileprivate func add(_ markdown: Markdown, to range: NSRange) {
@@ -281,13 +307,155 @@ class MarkdownTextView: NextResponderTextView {
         }
     }
     
-    /// Temporary helper
-    fileprivate func printAttributes() {
-        attributedText.enumerateAttribute(MarkdownIDAttributeName, in: wholeRange, options: []) { (val, range, _) in
-            let markdown = val as? Markdown
-            print("Markdown: \(markdown ?? .none)")
+    // MARK: Lists
+    
+    private lazy var emptyListItemRegex: NSRegularExpression = {
+        let pattern = "^((\\d+\\.)|[*+-])[\\t ]*$"
+        return try! NSRegularExpression(pattern: pattern, options: .anchorsMatchLines)
+    }()
+    
+    private lazy var listItemRegex: NSRegularExpression = {
+        let pattern = "^((?:(?:\\d+\\.)|[*+-])\\ ).*$"
+        return try! NSRegularExpression(pattern: pattern, options: .anchorsMatchLines)
+    }()
+
+    private func isEmptyListItem(range: NSRange) -> Bool {
+        return emptyListItemRegex.numberOfMatches(in: text, options: [], range: range) != 0
+    }
+    
+    private func isListItem(range: NSRange) -> Bool {
+        return rangeOfListPrefix(forLine: range) != nil
+    }
+    
+    private func rangeOfListPrefix(forLine range: NSRange) -> NSRange? {
+        if let match = listItemRegex.firstMatch(in: text, options: [], range: range) {
+            return match.rangeAt(1)
+        }
+        return nil
+    }
+    
+    private lazy var numberPrefixRegex: NSRegularExpression = {
+        return try! NSRegularExpression(pattern: "^(\\d+)\\.\\ ", options: .anchorsMatchLines)
+    }()
+    
+    private lazy var bulletPrefixRegex: NSRegularExpression = {
+        return try! NSRegularExpression(pattern: "^([*+-])\\ ", options: .anchorsMatchLines)
+    }()
+    
+    private func numberPrefix(forLine range: NSRange) -> (Int, NSRange)? {
+        if let match = numberPrefixRegex.firstMatch(in: text, options: [], range: range) {
+            let num = markdownTextStorage.attributedSubstring(from: match.rangeAt(1)).string
+            return (Int(num) ?? 0, match.range)
+        }
+        return nil
+    }
+    
+    private func bulletPrefix(forLine range: NSRange) -> (String, NSRange)? {
+        if let match = bulletPrefixRegex.firstMatch(in: text, options: [], range: range) {
+            let bullet = markdownTextStorage.attributedSubstring(from: match.rangeAt(1)).string
+            return (bullet, match.range)
+        }
+        return nil
+    }
+    
+    private func isNumberItem(forLine range: NSRange) -> Bool {
+        return numberPrefix(forLine: range) != nil
+    }
+    
+    private func isBulletItem(forLine range: NSRange) -> Bool {
+        return bulletPrefix(forLine: range) != nil
+    }
+    
+    private func nextListPrefix(type: ListType) -> String {
+        guard let previousLine = previousLineRange else {
+            return type == .number ? "1. " : "- "
+        }
+        switch type {
+        case .number:
+            if let num = numberPrefix(forLine: previousLine)?.0 {
+                return "\(num + 1). "
+            }
+        case .bullet:
+            if let bullet = bulletPrefix(forLine: previousLine)?.0 {
+                return "\(bullet) "
+            }
+        }
+        return type == .number ? "1. " : "- "
+    }
+    
+    /// Inserts/removes/converts the list prefix on the current line.
+    fileprivate func processList(type: ListType) {
+        guard let lineRange = currentLineRange else { return }
+        
+        // check for existing prefix
+        if numberPrefix(forLine: lineRange) != nil {
+            switch type {
+            case .number:
+                removeListItem()
+            case .bullet:
+                removeListItem()
+                insertListItem(type: type)
+            }
+        }
+        else if bulletPrefix(forLine: lineRange) != nil {
+            switch type {
+            case .number:
+                removeListItem()
+                insertListItem(type: type)
+            case .bullet:
+                removeListItem()
+            }
+        }
+        else {
+            insertListItem(type: type)
         }
     }
+    
+    /// Replaces the given range with the given text and attempts to restore the given
+    /// selection.
+    private func restore(_ selection: UITextRange, afterReplacingRange range: UITextRange, withText text: String) {
+        replace(range, withText: text)
+        let oldLength = offset(from: range.start, to: range.end)
+        let newLength = (text as NSString).length
+        let delta = newLength - oldLength
+        
+        guard
+            let start = position(from: selection.start, offset: delta),
+            let end = position(from: selection.end, offset: delta),
+            let restoredSelection = textRange(from: start, to: end)
+            else { return }
+        
+        selectedTextRange = restoredSelection
+    }
+    
+    fileprivate func insertListItem(type: ListType) {
+        
+        guard
+            let lineRange = currentLineRange, !isListItem(range: lineRange),
+            let selection = selectedTextRange,
+            let lineStart = NSMakeRange(lineRange.location, 0).textRange(in: self)
+            else { return }
+
+        let prefix = nextListPrefix(type: type)
+        
+        // insert prefix with no md
+        typingAttributes = attributes(for: .none)
+        restore(selection, afterReplacingRange: lineStart, withText: prefix)
+        updateTypingAttributes()
+    }
+
+    
+    fileprivate func removeListItem() {
+        
+        guard
+            let lineRange = currentLineRange,
+            let prefixRange = rangeOfListPrefix(forLine: lineRange)?.textRange(in: self),
+            let selection = selectedTextRange
+            else { return }
+        
+        restore(selection, afterReplacingRange: prefixRange, withText: "")
+    }
+    
 }
 
 
@@ -308,7 +476,7 @@ extension MarkdownTextView: MarkdownBarViewDelegate {
         }
         
         // selecting header will apply header to the whole line
-        if markdown.isHeader, let range = rangeOfCurrentLine() {
+        if markdown.isHeader, let range = currentLineRange {
             add(markdown, to: range)
         }
         
@@ -322,13 +490,18 @@ extension MarkdownTextView: MarkdownBarViewDelegate {
         }
         
         // deselecting header will remove header from the whole line
-        if markdown.isHeader, let range = rangeOfCurrentLine() {
+        if markdown.isHeader, let range = currentLineRange {
             remove(markdown, from: range)
         }
         
         activeMarkdown.subtract(markdown)
     }
+    
+    func markdownBarView(_ view: MarkdownBarView, didSelectListType type: MarkdownTextView.ListType) {
+        processList(type: type)
+    }
 }
+
 
 // MARK: - DownStyle Presets
 
@@ -339,6 +512,7 @@ extension DownStyle {
         style.baseFont = FontSpec(.normal, .regular).font!
         style.baseFontColor = ColorScheme.default().color(withName: ColorSchemeColorTextForeground)
         style.codeFont = UIFont(name: "Menlo", size: style.baseFont.pointSize) ?? style.baseFont
+        style.listIndentation = 0
         return style
     }()
     
@@ -355,3 +529,18 @@ extension DownStyle {
     }()
 }
 
+
+// MARK: - Helper Extensions
+
+private extension NSRange {
+
+    func textRange(in textInput: UITextInput) -> UITextRange? {
+        guard
+            let start = textInput.position(from: textInput.beginningOfDocument, offset: location),
+            let end = textInput.position(from: start, offset: length),
+            let range = textInput.textRange(from: start, to: end)
+            else { return nil }
+        
+        return range
+    }
+}
