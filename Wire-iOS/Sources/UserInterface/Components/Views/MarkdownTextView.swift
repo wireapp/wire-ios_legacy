@@ -477,6 +477,10 @@ extension MarkdownTextView: MarkdownBarViewDelegate {
         
         // selecting header will apply header to the whole line
         if markdown.isHeader, let range = currentLineRange {
+            // remove any existing header styles before adding new header
+            let otherHeaders = ([.h1, .h2, .h3] as Markdown).subtracting(markdown)
+            activeMarkdown.subtract(otherHeaders)
+            remove(otherHeaders, from: range)
             add(markdown, to: range)
         }
         
