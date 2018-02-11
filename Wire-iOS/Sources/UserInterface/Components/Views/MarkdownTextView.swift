@@ -466,9 +466,19 @@ extension MarkdownTextView: MarkdownBarViewDelegate {
     func markdownBarView(_ view: MarkdownBarView, didSelectMarkdown markdown: Markdown, with sender: IconButton) {
         // there is a selection
         if selectedRange.length > 0 {
+            let multipleMarkdown = self.markdown(in: selectedRange).count > 1
+            
             // need to clear the inline markdown first
-            if self.markdown(in: selectedRange).count > 1 {
+            if multipleMarkdown {
                 remove([.bold, .italic, .code], from: selectedRange)
+            }
+            
+            // we can't combine code with bold or italic
+            if markdown == .code {
+                remove([.bold, .italic], from: selectedRange)
+            }
+            else if markdown == .bold || markdown == .italic {
+                remove(.code, from: selectedRange)
             }
             
             // apply the markdown to the whole selection
@@ -482,6 +492,14 @@ extension MarkdownTextView: MarkdownBarViewDelegate {
             activeMarkdown.subtract(otherHeaders)
             remove(otherHeaders, from: range)
             add(markdown, to: range)
+        }
+        
+        // we can't combine code with bold or italic
+        if markdown == .code {
+            activeMarkdown.subtract([.bold, .italic])
+        }
+        else if markdown == .bold || markdown == .italic {
+            activeMarkdown.subtract(.code)
         }
         
         activeMarkdown.insert(markdown)
