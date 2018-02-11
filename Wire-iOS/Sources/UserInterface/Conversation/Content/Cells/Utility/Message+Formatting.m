@@ -148,31 +148,29 @@ static inline NSDataDetector *linkDataDetector(void)
     [mutableLinkAttachments removeObjectsInArray:invalidLinkAttachments];
     linkAttachments = mutableLinkAttachments;
     
-    // FIXME: resolving emoticons causes an exception (change of length of string probably)
-    
-//    // Emoticon substitution should not be performed on URLs.
-//    // 1. Get ranges with no URLs inside each range.
-//    NSMutableArray *nonURLRanges = [@[] mutableCopy];
-//    NSUInteger nextRangeBegining = 0;
-//    for (LinkAttachment *linkAttachment in linkAttachments) {
-//        NSRange URLRange = linkAttachment.range;
-//        NSRange emoticonRange = NSMakeRange(nextRangeBegining, URLRange.location - nextRangeBegining);
-//        if (emoticonRange.length > 0) {
-//            [nonURLRanges addObject:[NSValue valueWithRange:emoticonRange]];
-//        }
-//        nextRangeBegining = NSMaxRange(URLRange);
-//    }
-//    NSRange emoticonRange = NSMakeRange(nextRangeBegining, text.length - nextRangeBegining);
-//    if (emoticonRange.length > 0) {
-//        [nonURLRanges addObject:[NSValue valueWithRange:emoticonRange]];
-//    }
-//
-//    // 2. Substitute emoticons on ranges.
-//    // reverse iteration keeps values in nonURLRanges actual while enumeration
-//    // (stringByResolvingEmoticonShortcuts changes length of string)
-//    for (NSValue *rangeValue in nonURLRanges.reverseObjectEnumerator) {
-//        [attributedString.mutableString resolveEmoticonShortcutsInRange:rangeValue.rangeValue];
-//    }
+    // Emoticon substitution should not be performed on URLs.
+    // 1. Get ranges with no URLs inside each range.
+    NSMutableArray *nonURLRanges = [@[] mutableCopy];
+    NSUInteger nextRangeBegining = 0;
+    for (LinkAttachment *linkAttachment in linkAttachments) {
+        NSRange URLRange = linkAttachment.range;
+        NSRange emoticonRange = NSMakeRange(nextRangeBegining, URLRange.location - nextRangeBegining);
+        if (emoticonRange.length > 0) {
+            [nonURLRanges addObject:[NSValue valueWithRange:emoticonRange]];
+        }
+        nextRangeBegining = NSMaxRange(URLRange);
+    }
+    NSRange emoticonRange = NSMakeRange(nextRangeBegining, attributedString.length - nextRangeBegining);
+    if (emoticonRange.length > 0) {
+        [nonURLRanges addObject:[NSValue valueWithRange:emoticonRange]];
+    }
+
+    // 2. Substitute emoticons on ranges.
+    // reverse iteration keeps values in nonURLRanges actual while enumeration
+    // (stringByResolvingEmoticonShortcuts changes length of string)
+    for (NSValue *rangeValue in nonURLRanges.reverseObjectEnumerator) {
+        [attributedString.mutableString resolveEmoticonShortcutsInRange:rangeValue.rangeValue];
+    }
     
     [attributedString endEditing];
     
