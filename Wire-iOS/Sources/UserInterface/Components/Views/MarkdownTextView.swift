@@ -20,14 +20,17 @@ import Foundation
 import Down
 
 extension Notification.Name {
-    static let MarkdownTextViewDidChangeSelection = Notification.Name("MarkdownTextViewDidChangeSelection")
     static let MarkdownTextViewDidChangeActiveMarkdown = Notification.Name("MarkdownTextViewDidChangeActiveMarkdown")
 }
 
 class MarkdownTextView: NextResponderTextView {
     
     enum KeyEvent { case none, newline, backspace }
-    enum ListType { case number, bullet }
+    
+    enum ListType {
+        case number, bullet
+        var prefix: String { return self == .number ? "1. " : "- " }
+    }
     
     // MARK: - Properties
     
@@ -37,8 +40,9 @@ class MarkdownTextView: NextResponderTextView {
     /// The parser used to convert attributed text into markdown syntax.
     private let parser = AttributedStringParser()
     
+    /// The main backing store
     let markdownTextStorage: MarkdownTextStorage
-
+    
     /// The string containing markdown syntax for the corresponding
     /// attributed text.
     var preparedText: String {
@@ -62,16 +66,16 @@ class MarkdownTextView: NextResponderTextView {
     }
     
     public override var selectedTextRange: UITextRange? {
-        didSet {
-            activeMarkdown = self.markdownAtSelection()
-            NotificationCenter.default.post(name: .MarkdownTextViewDidChangeSelection, object: self)
-        }
+        didSet { activeMarkdown = self.markdownAtSelection() }
     }
+    
+    /// Describes the last key event entered by the user.
+    private var lastKeyEvent = KeyEvent.none
     
     // MARK: - Range Helpers
     
     private var wholeRange: NSRange {
-        return NSMakeRange(0, (text as NSString).length)
+        return NSMakeRange(0, markdownTextStorage.length)
     }
     
     fileprivate var currentLineRange: NSRange? {
@@ -84,16 +88,13 @@ class MarkdownTextView: NextResponderTextView {
     }
     
     private var previousLineRange: NSRange? {
-        guard let currentLineRange = currentLineRange else { return nil }
-        guard currentLineRange.location > 0 else { return nil }
-        return (text as NSString).lineRange(for: NSMakeRange(currentLineRange.location - 1, 0))
+        guard let range = currentLineRange, range.location > 0 else { return nil }
+        return (text as NSString).lineRange(for: NSMakeRange(range.location - 1, 0))
     }
     
     private var previousLineTextRange: UITextRange? {
         return previousLineRange?.textRange(in: self)
     }
-    
-    private var lastKeyEvent = KeyEvent.none
     
     // MARK: - Init
     
@@ -103,7 +104,7 @@ class MarkdownTextView: NextResponderTextView {
     
     init(with style: DownStyle) {
         self.style = style
-
+        // create the storage stack
         self.markdownTextStorage = MarkdownTextStorage()
         let layoutManager = NSLayoutManager()
         self.markdownTextStorage.addLayoutManager(layoutManager)
@@ -124,31 +125,11 @@ class MarkdownTextView: NextResponderTextView {
     
     // MARK: - Public Interface
     
-    /// Resets the active markdown to none and the current attributes.
+    /// Resets the active markdown to none and the sets the default
+    /// typing attributes.
     func resetMarkdown() {
         activeMarkdown = .none
     }
-    
-    /// Calling this method ensures that the current attributes are applied
-    /// to newly typed text.
-    func updateTypingAttributes() {
-        // typing attributes are automatically cleared after each change,
-        // so we have to keep setting it to provide continuity.
-        typingAttributes = currentAttributes
-    }
-    
-    /// Responding to newlines involves helpful behaviour such as exiting
-    /// header mode or inserting new list items.
-    func handleNewLine() {
-        if activeMarkdown.containsHeader {
-            resetMarkdown()
-        }
-    }
-
-    func handleBackspace() {
-        
-    }
-    
     
     /// Call this method before the text view changes to give it a chance
     /// to perform any work.
@@ -168,6 +149,15 @@ class MarkdownTextView: NextResponderTextView {
         updateTypingAttributes()
     }
     
+    // MARK: - Private Interface
+    
+    /// Calling this method ensures that the current attributes are applied
+    /// to newly typed text.
+    private func updateTypingAttributes() {
+        // typing attributes are automatically cleared after each change,
+        // so we have to keep setting it to provide continuity.
+        typingAttributes = currentAttributes
+    }
     
     @objc private func textViewDidChange() {
         // it's important to reset lastKeyEvent as soon as we use it
@@ -182,13 +172,13 @@ class MarkdownTextView: NextResponderTextView {
                 let selection = selectedTextRange
                 else { return }
             
-            if isEmptyListItem(range: prevlineRange) {
+            if isEmptyListItem(at: prevlineRange) {
                 // the delete last line
                 restore(selection, afterReplacingRange: prevLineTextRange, withText: "")
             }
-            else if isListItem(range: prevlineRange) {
+            else if isListItem(at: prevlineRange) {
                 // insert list item at current line
-                let type = isNumberItem(forLine: prevlineRange) ? ListType.number : .bullet
+                let type = isNumberItem(at: prevlineRange) ? ListType.number : .bullet
                 insertListItem(type: type)
             }
         case .backspace:
@@ -197,10 +187,21 @@ class MarkdownTextView: NextResponderTextView {
         default:
             break
         }
-    
     }
     
-    // MARK: Query Methods
+    /// Responding to newlines involves helpful behaviour such as exiting
+    /// header mode or inserting new list items.
+    private func handleNewLine() {
+        if activeMarkdown.containsHeader {
+            resetMarkdown()
+        }
+    }
+    
+    private func handleBackspace() {
+        
+    }
+    
+    // MARK: Markdown Querying
     
     /// Returns the markdown at the current selected range. If this is a position
     /// or the selected range contains only a single type of markdown, this
@@ -215,7 +216,6 @@ class MarkdownTextView: NextResponderTextView {
     }
     
     /// Returns the markdown at the current caret position.
-    ///
     private func markdownAtCaret() -> Markdown {
         // in order to allow continuity of typing, the markdown at the caret
         // should actually be markdown at the position behind the caret
@@ -224,8 +224,8 @@ class MarkdownTextView: NextResponderTextView {
     
     /// Returns the markdown at the given location.
     private func markdown(at location: Int) -> Markdown {
-        guard location >= 0 && attributedText.length > location else { return .none }
-        let markdown = attributedText.attribute(MarkdownIDAttributeName, at: location, effectiveRange: nil) as? Markdown
+        guard location >= 0 && markdownTextStorage.length > location else { return .none }
+        let markdown = markdownTextStorage.attribute(MarkdownIDAttributeName, at: location, effectiveRange: nil) as? Markdown
         return markdown ?? .none
     }
     
@@ -239,7 +239,7 @@ class MarkdownTextView: NextResponderTextView {
         return result
     }
 
-    // MARK: - Attributes
+    // MARK: - Attribute Manipulation
     
     /// Returns the attributes for the given markdown.
     private func attributes(for markdown: Markdown) -> [String : Any] {
@@ -251,15 +251,19 @@ class MarkdownTextView: NextResponderTextView {
         var color = style.baseFontColor
         let paragraphyStyle = style.baseParagraphStyle
         
-        // add code attributes first, since it uses different font
         if markdown.contains(.code) {
             font = style.codeFont
-            if let codeColor = style.codeColor {
-                color = codeColor
-            }
+            if let codeColor = style.codeColor { color = codeColor }
         }
         
-        // if header
+        if markdown.contains(.bold) {
+            font = font.bold
+        }
+        
+        if markdown.contains(.italic) {
+            font = font.italic
+        }
+        
         if let header = markdown.headerValue {
             if let headerSize = style.headerSize(for: header) {
                 font = font.withSize(headerSize).bold
@@ -270,14 +274,6 @@ class MarkdownTextView: NextResponderTextView {
         }
         
         // TODO: Quote, List
-        
-        if markdown.contains(.bold) {
-            font = font.bold
-        }
-        
-        if markdown.contains(.italic) {
-            font = font.italic
-        }
         
         return [
             MarkdownIDAttributeName: markdown,
@@ -300,22 +296,21 @@ class MarkdownTextView: NextResponderTextView {
     }
     
     /// Updates all attributes in the given range by transforming markdown tags
-    /// using the given transformation function, then refetching the attributes
-    /// for the transformed values and setting the new attributes.
-    private func updateAttributes(in range: NSRange, using markdownTransform: (Markdown) -> Markdown) {
+    /// using the transformation function, then refetching the attributes for
+    /// the transformed values and setting the new attributes.
+    private func updateAttributes(in range: NSRange, using transform: (Markdown) -> Markdown) {
         var exisitngMarkdownRanges = [(Markdown, NSRange)]()
         markdownTextStorage.enumerateAttribute(MarkdownIDAttributeName, in: range, options: []) { md, mdRange, _ in
             if let md = md as? Markdown { exisitngMarkdownRanges.append((md, mdRange)) }
         }
         
         for (md, mdRange) in exisitngMarkdownRanges {
-            // updated attributes depends on how md is transformed
-            let updatedAttributes = attributes(for: markdownTransform(md))
+            let updatedAttributes = attributes(for: transform(md))
             markdownTextStorage.setAttributes(updatedAttributes, range: mdRange)
         }
     }
     
-    // MARK: Lists
+    // MARK: - List Regex
     
     private lazy var emptyListItemRegex: NSRegularExpression = {
         let pattern = "^((\\d+\\.)|[*+-])[\\t ]*$"
@@ -326,21 +321,6 @@ class MarkdownTextView: NextResponderTextView {
         let pattern = "^((?:(?:\\d+\\.)|[*+-])\\ ).*$"
         return try! NSRegularExpression(pattern: pattern, options: .anchorsMatchLines)
     }()
-
-    private func isEmptyListItem(range: NSRange) -> Bool {
-        return emptyListItemRegex.numberOfMatches(in: text, options: [], range: range) != 0
-    }
-    
-    private func isListItem(range: NSRange) -> Bool {
-        return rangeOfListPrefix(forLine: range) != nil
-    }
-    
-    private func rangeOfListPrefix(forLine range: NSRange) -> NSRange? {
-        if let match = listItemRegex.firstMatch(in: text, options: [], range: range) {
-            return match.rangeAt(1)
-        }
-        return nil
-    }
     
     private lazy var numberPrefixRegex: NSRegularExpression = {
         return try! NSRegularExpression(pattern: "^(\\d+)\\.\\ ", options: .anchorsMatchLines)
@@ -350,7 +330,22 @@ class MarkdownTextView: NextResponderTextView {
         return try! NSRegularExpression(pattern: "^([*+-])\\ ", options: .anchorsMatchLines)
     }()
     
-    private func numberPrefix(forLine range: NSRange) -> (Int, NSRange)? {
+    // MARK: - List Methods
+
+    private func isEmptyListItem(at range: NSRange) -> Bool {
+        return emptyListItemRegex.numberOfMatches(in: text, options: [], range: range) != 0
+    }
+    
+    private func isListItem(at range: NSRange) -> Bool {
+        return rangeOfListPrefix(at: range) != nil
+    }
+    
+    private func rangeOfListPrefix(at range: NSRange) -> NSRange? {
+        let match = listItemRegex.firstMatch(in: text, options: [], range: range)
+        return match?.rangeAt(1)
+    }
+    
+    private func numberPrefix(at range: NSRange) -> (Int, NSRange)? {
         if let match = numberPrefixRegex.firstMatch(in: text, options: [], range: range) {
             let num = markdownTextStorage.attributedSubstring(from: match.rangeAt(1)).string
             return (Int(num) ?? 0, match.range)
@@ -358,7 +353,7 @@ class MarkdownTextView: NextResponderTextView {
         return nil
     }
     
-    private func bulletPrefix(forLine range: NSRange) -> (String, NSRange)? {
+    private func bulletPrefix(at range: NSRange) -> (String, NSRange)? {
         if let match = bulletPrefixRegex.firstMatch(in: text, options: [], range: range) {
             let bullet = markdownTextStorage.attributedSubstring(from: match.rangeAt(1)).string
             return (bullet, match.range)
@@ -366,29 +361,29 @@ class MarkdownTextView: NextResponderTextView {
         return nil
     }
     
-    private func isNumberItem(forLine range: NSRange) -> Bool {
-        return numberPrefix(forLine: range) != nil
+    private func isNumberItem(at range: NSRange) -> Bool {
+        return numberPrefix(at: range) != nil
     }
     
-    private func isBulletItem(forLine range: NSRange) -> Bool {
-        return bulletPrefix(forLine: range) != nil
+    private func isBulletItem(at range: NSRange) -> Bool {
+        return bulletPrefix(at: range) != nil
     }
     
+    /// Returns the next list prefix by first trying to match a previous
+    /// list item, otherwise returns the default prefix.
     private func nextListPrefix(type: ListType) -> String {
-        guard let previousLine = previousLineRange else {
-            return type == .number ? "1. " : "- "
-        }
+        guard let previousLine = previousLineRange else { return type.prefix }
         switch type {
         case .number:
-            if let num = numberPrefix(forLine: previousLine)?.0 {
+            if let num = numberPrefix(at: previousLine)?.0 {
                 return "\(num + 1). "
             }
         case .bullet:
-            if let bullet = bulletPrefix(forLine: previousLine)?.0 {
+            if let bullet = bulletPrefix(at: previousLine)?.0 {
                 return "\(bullet) "
             }
         }
-        return type == .number ? "1. " : "- "
+        return type.prefix
     }
     
     /// Inserts/removes/converts the list prefix on the current line.
@@ -396,7 +391,7 @@ class MarkdownTextView: NextResponderTextView {
         guard let lineRange = currentLineRange else { return }
         
         // check for existing prefix
-        if numberPrefix(forLine: lineRange) != nil {
+        if numberPrefix(at: lineRange) != nil {
             switch type {
             case .number:
                 removeListItem()
@@ -405,7 +400,7 @@ class MarkdownTextView: NextResponderTextView {
                 insertListItem(type: type)
             }
         }
-        else if bulletPrefix(forLine: lineRange) != nil {
+        else if bulletPrefix(at: lineRange) != nil {
             switch type {
             case .number:
                 removeListItem()
@@ -419,8 +414,34 @@ class MarkdownTextView: NextResponderTextView {
         }
     }
     
-    /// Replaces the given range with the given text and attempts to restore the given
-    /// selection.
+    /// Inserts a list prefix with the given type on the current line.
+    fileprivate func insertListItem(type: ListType) {
+        guard
+            let lineRange = currentLineRange, !isListItem(at: lineRange),
+            let selection = selectedTextRange,
+            let lineStart = NSMakeRange(lineRange.location, 0).textRange(in: self)
+            else { return }
+
+        let prefix = nextListPrefix(type: type)
+        
+        // insert prefix with no md
+        typingAttributes = attributes(for: .none)
+        restore(selection, afterReplacingRange: lineStart, withText: prefix)
+        updateTypingAttributes()
+    }
+
+    /// Removes the list prefix from the current line.
+    fileprivate func removeListItem() {
+        guard
+            let lineRange = currentLineRange,
+            let prefixRange = rangeOfListPrefix(at: lineRange)?.textRange(in: self),
+            let selection = selectedTextRange
+            else { return }
+        
+        restore(selection, afterReplacingRange: prefixRange, withText: "")
+    }
+    
+    /// Replaces the range with the text and attempts to restore the selection.
     private func restore(_ selection: UITextRange, afterReplacingRange range: UITextRange, withText text: String) {
         replace(range, withText: text)
         let oldLength = offset(from: range.start, to: range.end)
@@ -436,34 +457,6 @@ class MarkdownTextView: NextResponderTextView {
         selectedTextRange = restoredSelection
     }
     
-    fileprivate func insertListItem(type: ListType) {
-        
-        guard
-            let lineRange = currentLineRange, !isListItem(range: lineRange),
-            let selection = selectedTextRange,
-            let lineStart = NSMakeRange(lineRange.location, 0).textRange(in: self)
-            else { return }
-
-        let prefix = nextListPrefix(type: type)
-        
-        // insert prefix with no md
-        typingAttributes = attributes(for: .none)
-        restore(selection, afterReplacingRange: lineStart, withText: prefix)
-        updateTypingAttributes()
-    }
-
-    
-    fileprivate func removeListItem() {
-        
-        guard
-            let lineRange = currentLineRange,
-            let prefixRange = rangeOfListPrefix(forLine: lineRange)?.textRange(in: self),
-            let selection = selectedTextRange
-            else { return }
-        
-        restore(selection, afterReplacingRange: prefixRange, withText: "")
-    }
-    
 }
 
 
@@ -472,28 +465,9 @@ class MarkdownTextView: NextResponderTextView {
 extension MarkdownTextView: MarkdownBarViewDelegate {
     
     func markdownBarView(_ view: MarkdownBarView, didSelectMarkdown markdown: Markdown, with sender: IconButton) {
-        // there is a selection
-        if selectedRange.length > 0 {
-            let multipleMarkdown = self.markdown(in: selectedRange).count > 1
-            
-            // need to clear the inline markdown first
-            if multipleMarkdown {
-                remove([.bold, .italic, .code], from: selectedRange)
-            }
-            
-            // we can't combine code with bold or italic
-            if markdown == .code {
-                remove([.bold, .italic], from: selectedRange)
-            }
-            else if markdown == .bold || markdown == .italic {
-                remove(.code, from: selectedRange)
-            }
-            
-            // apply the markdown to the whole selection
-            add(markdown, to: selectedRange)
-        }
+        guard selectedRange.location != NSNotFound else { return }
         
-        // selecting header will apply header to the whole line
+        // apply header to the whole line
         if markdown.isHeader, let range = currentLineRange {
             // remove any existing header styles before adding new header
             let otherHeaders = ([.h1, .h2, .h3] as Markdown).subtracting(markdown)
@@ -502,26 +476,39 @@ extension MarkdownTextView: MarkdownBarViewDelegate {
             add(markdown, to: range)
         }
         
-        // we can't combine code with bold or italic
+        // prevent combination of code with bold or italic
         if markdown == .code {
+            remove([.bold, .italic], from: selectedRange)
             activeMarkdown.subtract([.bold, .italic])
         }
         else if markdown == .bold || markdown == .italic {
+            remove(.code, from: selectedRange)
             activeMarkdown.subtract(.code)
+        }
+
+        if selectedRange.length > 0 {
+            // if multiple md in selection, remove all inline md before
+            // applying the new md
+            if self.markdown(in: selectedRange).count > 1 {
+                remove([.bold, .italic, .code], from: selectedRange)
+            }
+            
+            add(markdown, to: selectedRange)
         }
         
         activeMarkdown.insert(markdown)
     }
     
     func markdownBarView(_ view: MarkdownBarView, didDeselectMarkdown markdown: Markdown, with sender: IconButton) {
-        // there is a selection
-        if selectedRange.length > 0 {
-            remove(markdown, from: selectedRange)
-        }
+        guard selectedRange.location != NSNotFound else { return }
         
-        // deselecting header will remove header from the whole line
+        // remove header from the whole line
         if markdown.isHeader, let range = currentLineRange {
             remove(markdown, from: range)
+        }
+
+        if selectedRange.length > 0 {
+            remove(markdown, from: selectedRange)
         }
         
         activeMarkdown.subtract(markdown)
