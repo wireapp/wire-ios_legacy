@@ -121,7 +121,7 @@ static inline NSDataDetector *linkDataDetector(void)
         style = [[DownStyle alloc] init];
         style.baseFont = font;
         style.baseFontColor = foregroundColor;
-//        style.baseParagraphStyle = cellParagraphStyle;
+        style.baseParagraphStyle = cellParagraphStyle;
     }
     
     NSMutableAttributedString *attributedString = [NSMutableAttributedString markdownFrom:text style:style];

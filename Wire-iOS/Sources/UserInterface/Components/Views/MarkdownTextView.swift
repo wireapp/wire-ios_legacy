@@ -146,6 +146,7 @@ class MarkdownTextView: NextResponderTextView {
     }
 
     func handleBackspace() {
+        
     }
     
     
@@ -169,9 +170,10 @@ class MarkdownTextView: NextResponderTextView {
     
     
     @objc private func textViewDidChange() {
-        // the user entered a newline
-        if lastKeyEvent == .newline {
-            // it's important to consume this last key so we don't end up in a loop
+        // it's important to reset lastKeyEvent as soon as we use it
+        // so that the event is only processed once
+        switch lastKeyEvent {
+        case .newline:
             lastKeyEvent = .none
             
             guard
@@ -179,7 +181,7 @@ class MarkdownTextView: NextResponderTextView {
                 let prevLineTextRange = previousLineTextRange,
                 let selection = selectedTextRange
                 else { return }
-
+            
             if isEmptyListItem(range: prevlineRange) {
                 // the delete last line
                 restore(selection, afterReplacingRange: prevLineTextRange, withText: "")
@@ -189,7 +191,13 @@ class MarkdownTextView: NextResponderTextView {
                 let type = isNumberItem(forLine: prevlineRange) ? ListType.number : .bullet
                 insertListItem(type: type)
             }
+        case .backspace:
+            lastKeyEvent = .none
+        // TODO: if the space after list prefix was deleted, remove the remaining prefix
+        default:
+            break
         }
+    
     }
     
     // MARK: Query Methods
@@ -534,6 +542,7 @@ extension DownStyle {
         style.baseFont = FontSpec(.normal, .regular).font!
         style.baseFontColor = ColorScheme.default().color(withName: ColorSchemeColorTextForeground)
         style.codeFont = UIFont(name: "Menlo", size: style.baseFont.pointSize) ?? style.baseFont
+        style.baseParagraphStyle = NSParagraphStyle.default
         style.listIndentation = 0
         return style
     }()
