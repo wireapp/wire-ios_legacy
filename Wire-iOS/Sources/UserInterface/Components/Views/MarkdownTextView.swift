@@ -251,6 +251,17 @@ class MarkdownTextView: NextResponderTextView {
         var color = style.baseFontColor
         let paragraphyStyle = style.baseParagraphStyle
         
+        // header should be processed first b/c changing the font
+        // size clears the bold/italic traits
+        if let header = markdown.headerValue {
+            if let headerSize = style.headerSize(for: header) {
+                font = font.withSize(headerSize).bold
+            }
+            if let headerColor = style.headerColor(for: header) {
+                color = headerColor
+            }
+        }
+        
         if markdown.contains(.code) {
             font = style.codeFont
             if let codeColor = style.codeColor { color = codeColor }
@@ -262,15 +273,6 @@ class MarkdownTextView: NextResponderTextView {
         
         if markdown.contains(.italic) {
             font = font.italic
-        }
-        
-        if let header = markdown.headerValue {
-            if let headerSize = style.headerSize(for: header) {
-                font = font.withSize(headerSize).bold
-            }
-            if let headerColor = style.headerColor(for: header) {
-                color = headerColor
-            }
         }
         
         // TODO: Quote, List
