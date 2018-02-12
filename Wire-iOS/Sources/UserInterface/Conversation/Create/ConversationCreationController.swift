@@ -147,12 +147,14 @@ final class ConversationCreationController: UIViewController {
         
         // right button
         nextButton = ButtonWithLargerHitArea(type: .custom)
+        nextButton.frame = CGRect(x: 0, y: 0, width: 40, height: 20)
         nextButton.accessibilityIdentifier = "button.newgroup.next"
         nextButton.setTitle("general.next".localized.uppercased(), for: .normal)
         nextButton.setTitleColor(UIColor.wr_color(fromColorScheme: ColorSchemeColorIconNormal, variant: .light), for: .normal)
         nextButton.setTitleColor(UIColor.wr_color(fromColorScheme: ColorSchemeColorTextDimmed, variant: .light), for: .highlighted)
         nextButton.setTitleColor(UIColor.wr_color(fromColorScheme: ColorSchemeColorIconShadow, variant: .light), for: .disabled)
         nextButton.titleLabel?.font = FontSpec(.medium, .medium).font!
+        nextButton.sizeToFit()
         
         nextButton.addCallback(for: .touchUpInside) { [weak self] _ in
             self?.tryToProceed()
