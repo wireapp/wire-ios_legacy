@@ -77,8 +77,7 @@ public final class MarkdownBarView: UIView {
         codeButton.setIcon(.markdownCode, with: .tiny, for: .normal)
         
         for button in buttons {
-            let color = ColorScheme.default().color(withName: ColorSchemeColorIconNormal)
-            button.setIconColor(color, for: .normal)
+            button.setIconColor(normalColor, for: .normal)
             button.addTarget(self, action: #selector(buttonTapped(sender:)), for: .touchUpInside)
             stackView.addArrangedSubview(button)
         }
@@ -108,13 +107,13 @@ public final class MarkdownBarView: UIView {
         case headerButton:      markdown = headerButton.iconType(for: .normal).headerMarkdown ?? .h1
         case boldButton:        markdown = .bold
         case italicButton:      markdown = .italic
+        case codeButton:        markdown = .code
         case numberListButton:
             delegate?.markdownBarView(self, didSelectListType: .number)
             return
         case bulletListButton:
             delegate?.markdownBarView(self, didSelectListType: .bullet)
             return
-        case codeButton:        markdown = .code
         default:                return
         }
         
@@ -143,35 +142,20 @@ public final class MarkdownBarView: UIView {
         case boldButton:        return .bold
         case italicButton:      return .italic
         case codeButton:        return .code
-        case numberListButton:  return .list
         default:                return nil
         }
     }
     
     public func updateIcons(forMarkdown markdown: Markdown) {
-        
         // change header icon if necessary
-        if let headerMarkdown = markdown.headerValue,
-            let headerIcon = headerMarkdown.headerIcon {
+        if let headerIcon = markdown.headerValue?.headerIcon {
             headerButton.setIcon(headerIcon, with: .tiny, for: .normal)
         }
         
         for button in buttons {
             guard let buttonMarkdown = self.markdown(for: button) else { continue }
-            
-            // current button not part of active markdown
-            if markdown.isDisjoint(with: buttonMarkdown) {
-                button.setIconColor(normalColor, for: .normal)
-//                button.isEnabled = markdown.union(buttonMarkdown).isValid
-            }
-            else {
-                button.setIconColor(accentColor, for: .normal)
-            }
-            
-            // FIXME: disable unsupported buttons for now
-            if buttonMarkdown == .none {
-                button.isEnabled = false
-            }
+            let color = markdown.contains(buttonMarkdown) ? accentColor : normalColor
+            button.setIconColor(color, for: .normal)
         }
     }
     
