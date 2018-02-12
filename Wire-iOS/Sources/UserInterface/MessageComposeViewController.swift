@@ -295,18 +295,13 @@ extension MessageComposeViewController: UITextViewDelegate {
 
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         
-        if text == "\n" || text == "\r" {
-            (textView as? MarkdownTextView)?.handleNewLine()
-        }
-        
         if range.location == 0 && text == " " && textView.text?.isEmpty ?? true {
             return false
         }
         
-        (textView as? MarkdownTextView)?.updateTypingAttributes()
+        (textView as? MarkdownTextView)?.respondToChange(text, inRange: range)
         return true
     }
-    
 }
 
 
