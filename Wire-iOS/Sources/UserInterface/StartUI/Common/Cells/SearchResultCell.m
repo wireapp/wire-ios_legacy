@@ -316,7 +316,15 @@
 
 - (void)updateAccessibilityLabel
 {
-    self.accessibilityLabel = [NSString stringWithFormat:@"%@ - %@", self.nameLabel.text, self.subtitleLabel.text];
+    if (self.nameLabel.text.length != 0 && self.subtitleLabel.text.length != 0) {
+        self.accessibilityLabel = [NSString stringWithFormat:@"%@ - %@", self.nameLabel.text, self.subtitleLabel.text];
+    }
+    else if (self.nameLabel.text.length != 0) {
+        self.accessibilityLabel = self.nameLabel.text;
+    }
+    else {
+        self.accessibilityLabel = @"";
+    }
 }
 
 #pragma mark - Public API
