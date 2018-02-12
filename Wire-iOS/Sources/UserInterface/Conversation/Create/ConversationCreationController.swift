@@ -137,7 +137,7 @@ final class ConversationCreationController: UIViewController {
     private func setupNavigationBar() {
         
         // left button
-        backButtonDescription.buttonTapped = { [unowned self] in self.onClose?(self.values) }
+        backButtonDescription.buttonTapped = { [unowned self] in self.onClose?(nil) }
         backButtonDescription.accessibilityIdentifier = "button.newgroup.back"
 
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: backButtonDescription.create())

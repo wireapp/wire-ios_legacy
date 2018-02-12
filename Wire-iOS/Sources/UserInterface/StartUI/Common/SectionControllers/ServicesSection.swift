@@ -83,6 +83,7 @@ public class ServicesSection: NSObject, CollectionViewSectionController {
         
         let user = self.services[indexPath.item]
         cell.user = user
+        cell.accessoryType = .disclosureIndicator
         cell.colorSchemeVariant = colorSchemeVariant
         cell.doubleTapAction = { [weak self] _ in
             guard let `self` = self else {
