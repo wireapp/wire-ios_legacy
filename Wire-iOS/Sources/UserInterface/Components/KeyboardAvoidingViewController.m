@@ -122,10 +122,9 @@
     [self.viewController.view autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:0];
     [self.viewController.view autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:0];
     self.topEdgeConstraint = [self.viewController.view autoPinEdgeToSuperviewEdge:ALEdgeTop withInset:self.topInset];
-    self.bottomEdgeConstraint = [self.viewController.view autoPinEdgeToSuperviewEdge:ALEdgeBottom withInset:0];
-
-//    self.bottomEdgeConstraint = [self.viewController.bottomLayoutGuide.bottomAnchor constraintEqualToAnchor:self.bottomLayoutGuide.bottomAnchor constant:0];
-//    [self.bottomEdgeConstraint setActive:YES];
+    
+    self.bottomEdgeConstraint = [self.viewController.bottomLayoutGuide.bottomAnchor constraintEqualToAnchor:self.bottomLayoutGuide.bottomAnchor constant:0];
+    [self.bottomEdgeConstraint setActive:YES];
 }
 
 - (void)setTopInset:(CGFloat)topInset
