@@ -63,10 +63,10 @@ public class ParticipantsCell: IconSystemCell {
 
     override public func configure(for message: ZMConversationMessage!, layoutProperties: ConversationCellLayoutProperties!) {
         super.configure(for: message, layoutProperties: layoutProperties)
-        let model = ParticipantsCellViewModel(font: labelFont, boldFont: labelBoldFont, textColor: labelTextColor, message: message)
+        let model = ParticipantsCellViewModel(font: labelFont, boldFont: labelBoldFont, largeFont: labelBoldFont, textColor: labelTextColor, message: message)
         leftIconView.image = model.image()
         attributedText = model.attributedTitle()
-
+        nameLabel.attributedText = model.attributedHeading()
         // We need a layout pass here in order for the collectionView to pick up the correct size
         setNeedsLayout()
         layoutIfNeeded()
