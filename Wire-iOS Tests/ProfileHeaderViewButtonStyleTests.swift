@@ -19,20 +19,6 @@
 import XCTest
 @testable import Wire
 
-struct MockIdiomSizeClassOrientation: UIIdiomSizeClassOrientationProtocol {
-    var idiom: UIUserInterfaceIdiom
-    var horizontalSizeClass: UIUserInterfaceSizeClass?
-    var orientation: Orientation?
-    
-    static var currentIdiom = UIUserInterfaceIdiom.pad
-    static var currentHorizontalSizeClass = UIUserInterfaceSizeClass.regular
-    static var currentOrientation = Orientation.landscape
-
-    static func current() -> UIIdiomSizeClassOrientationProtocol {
-        return MockIdiomSizeClassOrientation(idiom: currentIdiom, horizontalSizeClass: currentHorizontalSizeClass, orientation: currentOrientation)
-    }
-}
-
 final class ProfileHeaderViewButtonStyleTests: XCTestCase {
     
     var sut: ProfileHeaderView!

@@ -32,6 +32,8 @@ final class LandingViewController: UIViewController {
 
     private let tracker = AnalyticsTracker(context: AnalyticsContextRegistrationEmail)
 
+    fileprivate var uIIdiomSizeClassOrientationProtocol: UIIdiomSizeClassOrientationProtocol.Type
+
     // MARK: - UI styles
 
     static let semiboldFont = FontSpec(.large, .semibold).font!
@@ -80,7 +82,7 @@ final class LandingViewController: UIViewController {
         return label
     }()
 
-    fileprivate let buttonStackView: UIStackView = {
+    let buttonStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.distribution = .fillEqually
         stackView.spacing = 24
@@ -143,7 +145,17 @@ final class LandingViewController: UIViewController {
         button.addTarget(self, action: #selector(LandingViewController.cancelButtonTapped(_:)), for: .touchUpInside)
         return button
     }()
-
+    
+    init(_ uIIdiomSizeClassOrientationProtocol: UIIdiomSizeClassOrientationProtocol.Type = UIIdiomSizeClassOrientation.self) {
+        self.uIIdiomSizeClassOrientationProtocol = uIIdiomSizeClassOrientationProtocol
+        
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -256,12 +268,15 @@ final class LandingViewController: UIViewController {
     }
 
     func updateStackViewAxis() {
-        guard UIDevice.current.userInterfaceIdiom == .pad else { return }
+        let currentIdiomSizeClassOrientation = uIIdiomSizeClassOrientationProtocol.current()
+        guard currentIdiomSizeClassOrientation.idiom == .pad else { return }
 
-        switch self.traitCollection.horizontalSizeClass {
-        case .regular:
+        switch currentIdiomSizeClassOrientation.horizontalSizeClass {
+        case .regular?:
             buttonStackView.axis = .horizontal
-        default:
+        case .compact?:
+            buttonStackView.axis = .vertical
+        case .unspecified?, .none:
             buttonStackView.axis = .vertical
         }
     }

@@ -44,7 +44,8 @@ final class ProfileHeaderView: UIView {
     private var cancelButtonTrailing: NSLayoutConstraint?
     fileprivate var uIIdiomSizeClassOrientationProtocol: UIIdiomSizeClassOrientationProtocol.Type
 
-    convenience init(with viewModel: ProfileHeaderViewModel, _ uIIdiomSizeClassOrientationProtocol: UIIdiomSizeClassOrientationProtocol.Type = UIIdiomSizeClassOrientation.self) {
+    convenience init(with viewModel: ProfileHeaderViewModel,
+                     _ uIIdiomSizeClassOrientationProtocol: UIIdiomSizeClassOrientationProtocol.Type = UIIdiomSizeClassOrientation.self) {
         self.init(with: viewModel)
 
         self.uIIdiomSizeClassOrientationProtocol = uIIdiomSizeClassOrientationProtocol
