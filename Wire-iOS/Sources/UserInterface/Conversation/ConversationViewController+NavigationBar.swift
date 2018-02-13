@@ -169,7 +169,7 @@ public extension ConversationViewController {
             return [UIBarButtonItem(customView: joinCallButton)]
         }
 
-        if conversation.conversationType == .oneOnOne {
+        if conversation.conversationType == .oneOnOne || conversation.otherActiveParticipants.count == 1 {
             return [UIBarButtonItem(customView: audioCallButton), UIBarButtonItem(customView: videoCallButton)]
         }
 
