@@ -41,6 +41,18 @@ open class ConversationCreationTitleFactory {
     }
 }
 
+@objc protocol ConversationCreationControllerDelegate: class {
+    func conversationCreationController(
+        _ controller: ConversationCreationController,
+        didSelectName name: String,
+        participants: Set<ZMUser>
+    )
+
+    func conversationCreationControllerDidCancel(
+        _ controller: ConversationCreationController
+    )
+}
+
 final class ConversationCreationController: UIViewController {
 
     static let errorFont = FontSpec(.small, .semibold).font!
@@ -61,16 +73,12 @@ final class ConversationCreationController: UIViewController {
     
     fileprivate var values: ConversationCreationValues?
 
-    typealias CreationCloseClosure = (ConversationCreationValues?) -> Void
-    fileprivate var onClose: CreationCloseClosure?
-
-    init(onClose: CreationCloseClosure? = nil) {
-        self.onClose = onClose
-        super.init(nibName: nil, bundle: nil)
-    }
-
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+    weak var delegate: ConversationCreationControllerDelegate?
+    private var preSelectedParticipants: Set<ZMUser>?
+    
+    @objc public convenience init(preSelectedParticipants: Set<ZMUser>) {
+        self.init(nibName: nil, bundle: nil)
+        self.preSelectedParticipants = preSelectedParticipants
     }
 
     override var prefersStatusBarHidden: Bool {
@@ -135,9 +143,11 @@ final class ConversationCreationController: UIViewController {
     }
 
     private func setupNavigationBar() {
-        
         // left button
-        backButtonDescription.buttonTapped = { [unowned self] in self.onClose?(nil) }
+        backButtonDescription.buttonTapped = { [unowned self] in
+            self.delegate?.conversationCreationControllerDidCancel(self)
+        }
+
         backButtonDescription.accessibilityIdentifier = "button.newgroup.back"
 
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: backButtonDescription.create())
@@ -199,7 +209,7 @@ final class ConversationCreationController: UIViewController {
             displayError(error)
         case let .valid(name):
             textField.resignFirstResponder()
-            let newValues = ConversationCreationValues(name: name, participants: values?.participants ?? [])
+            let newValues = ConversationCreationValues(name: name, participants: preSelectedParticipants ?? values?.participants ?? [])
             values = newValues
             let participantsController = AddParticipantsViewController(context: .create(newValues))
             participantsController.conversationCreationDelegate = self
@@ -222,7 +232,9 @@ extension ConversationCreationController: AddParticipantsConversationCreationDel
         case .updatedUsers(let users):
             values = values.map { .init(name: $0.name, participants: users) }
         case .create:
-            onClose?(values)
+            values.apply {
+                delegate?.conversationCreationController(self, didSelectName: $0.name, participants: $0.participants)
+            }
         }
     }
 }

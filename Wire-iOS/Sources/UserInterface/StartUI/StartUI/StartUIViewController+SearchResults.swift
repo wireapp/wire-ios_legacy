@@ -85,16 +85,9 @@ extension StartUIViewController: SearchResultsViewControllerDelegate {
     public func searchResultsViewController(_ searchResultsViewController: SearchResultsViewController, wantsToPerformAction action: SearchResultsViewControllerAction) {
         switch action {
         case .createGroup:
-            let controller = ConversationCreationController { [unowned self] values in
-                self.navigationController?.popToRootViewController(animated: true) {
-                    UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(true)
-                }
+            let controller = ConversationCreationController()
+            controller.delegate = self
 
-                values.apply {
-                    self.delegate.startUI(self, createConversationWith: $0.participants, name: $0.name)
-                }
-            }
-            
             let avoiding = KeyboardAvoidingViewController(viewController: controller)
             self.navigationController?.pushViewController(avoiding, animated: true) {
                 UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(true)
@@ -102,4 +95,17 @@ extension StartUIViewController: SearchResultsViewControllerDelegate {
         }
     }
     
+}
+
+extension StartUIViewController: ConversationCreationControllerDelegate {
+    func conversationCreationController(_ controller: ConversationCreationController, didSelectName name: String, participants: Set<ZMUser>) {
+        navigationController?.popToRootViewController(animated: true)
+        delegate.startUI(self, createConversationWith: participants, name: name)
+    }
+    
+    func conversationCreationControllerDidCancel(_ controller: ConversationCreationController) {
+        navigationController?.popToRootViewController(animated: true) {
+            UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(true)
+        }
+    }
 }
