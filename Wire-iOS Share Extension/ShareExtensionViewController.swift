@@ -313,7 +313,7 @@ class ShareExtensionViewController: SLComposeServiceViewController {
             guard error == .loggedOut else { return }
             let alert = UIAlertController(title: "share_extension.logged_out.title".localized,
                                           message: "share_extension.logged_out.message".localized, preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "general.ok".localized, style: .default, handler: nil))
+            alert.addAction(UIAlertAction(title: "share_extension.general.ok".localized, style: .default, handler: nil))
             self.present(alert, animated: true)
             return
         } catch { //any other error
