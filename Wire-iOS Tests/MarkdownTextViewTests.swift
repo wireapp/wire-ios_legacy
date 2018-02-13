@@ -47,6 +47,49 @@ final class MarkdownTextViewTests: XCTestCase {
         super.tearDown()
     }
     
+    // MARK: - Helpers
+    
+    // Insert the text, but AFTER giving sut a chance to respond.
+    func insertText(_ str: String) {
+        sut.respondToChange(str, inRange: NSMakeRange(str.length, 0))
+        sut.insertText(str)
+    }
+    
+    func button(for markdown: Markdown) -> IconButton? {
+        switch markdown {
+        case .h1, .h2, .h3: return bar.headerButton
+        case .bold:         return bar.boldButton
+        case .italic:       return bar.italicButton
+        case .code:         return bar.codeButton
+        default:            return nil
+        }
+    }
+    
+    func select(_ markdown: Markdown...) {
+        markdown.forEach(select)
+    }
+    
+    func select(_ markdown: Markdown) {
+        guard let button = button(for: markdown) else {
+            XCTFail()
+            return
+        }
+        sut.markdownBarView(bar, didSelectMarkdown: markdown, with: button)
+    }
+    
+    func deselect(_ markdown: Markdown...) {
+        markdown.forEach(deselect)
+    }
+    
+    func deselect(_ markdown: Markdown) {
+        guard let button = button(for: markdown) else {
+            XCTFail()
+            return
+        }
+        sut.markdownBarView(bar, didDeselectMarkdown: markdown, with: button)
+    }
+    
+    // Attributes that we expect for certain markdown combinations.
     func attrs(for markdown: Markdown) -> [String: Any] {
         switch markdown {
         // atomic
@@ -57,11 +100,32 @@ final class MarkdownTextViewTests: XCTestCase {
                 NSForegroundColorAttributeName: style.baseFontColor,
                 NSParagraphStyleAttributeName: style.baseParagraphStyle
             ]
-        case .h1, .h2, .h3:
+        case .h1, .h2, .h3,
+             [.h1, .bold],
+             [.h2, .bold],
+             [.h3, .bold]:
             return [
                 MarkdownIDAttributeName: markdown,
-                NSFontAttributeName: style.baseFont.withSize(style.headerSize(for: markdown)!).bold,
+                NSFontAttributeName: style.baseFont.withSize(style.headerSize(for: markdown.headerValue!)!).bold,
                 NSForegroundColorAttributeName: style.baseFontColor,
+                NSParagraphStyleAttributeName: style.baseParagraphStyle
+            ]
+        case [.h1, .italic], [.h1, .bold, .italic],
+             [.h2, .italic], [.h2, .bold, .italic],
+             [.h3, .italic], [.h3, .bold, .italic]:
+            return [
+                MarkdownIDAttributeName: markdown,
+                NSFontAttributeName: style.baseFont.withSize(style.headerSize(for: markdown.headerValue!)!).bold.italic,
+                NSForegroundColorAttributeName: style.baseFontColor,
+                NSParagraphStyleAttributeName: style.baseParagraphStyle
+            ]
+        case [.h1, .code],
+             [.h2, .code],
+             [.h3, .code]:
+            return [
+                MarkdownIDAttributeName: markdown,
+                NSFontAttributeName: style.codeFont.withSize(style.headerSize(for: markdown.headerValue!)!).bold,
+                NSForegroundColorAttributeName: style.codeColor!,
                 NSParagraphStyleAttributeName: style.baseParagraphStyle
             ]
         case .bold:
@@ -85,28 +149,6 @@ final class MarkdownTextViewTests: XCTestCase {
                 NSForegroundColorAttributeName: style.codeColor!,
                 NSParagraphStyleAttributeName: style.baseParagraphStyle
             ]
-        // combined
-        case [.h1, .bold]:
-            return [
-                MarkdownIDAttributeName: markdown,
-                NSFontAttributeName: style.baseFont.withSize(style.headerSize(for: .h1)!).bold,
-                NSForegroundColorAttributeName: style.baseFontColor,
-                NSParagraphStyleAttributeName: style.baseParagraphStyle
-            ]
-        case [.h1, .italic], [.h1, .bold, .italic]:
-            return [
-                MarkdownIDAttributeName: markdown,
-                NSFontAttributeName: style.baseFont.withSize(style.headerSize(for: .h1)!).bold.italic,
-                NSForegroundColorAttributeName: style.baseFontColor,
-                NSParagraphStyleAttributeName: style.baseParagraphStyle
-            ]
-        case [.h1, .code]:
-            return [
-                MarkdownIDAttributeName: markdown,
-                NSFontAttributeName: style.codeFont.withSize(style.headerSize(for: .h1)!).bold,
-                NSForegroundColorAttributeName: style.codeColor!,
-                NSParagraphStyleAttributeName: style.baseParagraphStyle
-            ]
         case [.bold, .italic]:
             return [
                 MarkdownIDAttributeName: markdown,
@@ -120,6 +162,7 @@ final class MarkdownTextViewTests: XCTestCase {
         return [:]
     }
     
+    // A way to check that two attribute dictionaries are equal
     func equal(_ lhs: [String: Any], _ rhs: [String: Any]) -> Bool {
         if lhs[MarkdownIDAttributeName] as? Markdown != rhs[MarkdownIDAttributeName] as? Markdown {
             return false
@@ -136,6 +179,8 @@ final class MarkdownTextViewTests: XCTestCase {
         return true
     }
     
+    // Passes the test if the attributes starting at the given range match the expected
+    // attributes and they extend all the way to the end of this range.
     func checkAttributes(for markdown: Markdown, inRange range: NSRange) {
         var attrRange = NSMakeRange(NSNotFound, 0)
         let result = sut.attributedText.attributes(at: range.location, effectiveRange: &attrRange)
@@ -145,118 +190,62 @@ final class MarkdownTextViewTests: XCTestCase {
     
     // MARK: - Attributes (Inserting)
     
-    // MARK: Headers
-    
-    func checkHeader(_ md: Markdown) {
+    func selectAndCheck(_ md: Markdown...) {
         // GIVEN
         let text = "Oh Hai!"
-        // WHEN: I select header
-        sut.markdownBarView(bar, didSelectMarkdown: md, with: bar.headerButton)
-        sut.insertText(text)
-        // THEN: it renders header
-        checkAttributes(for: md, inRange: NSMakeRange(0, text.length))
+        // WHEN: select each MD
+        md.forEach(select)
+        insertText(text)
+        // THEN: it renders correct attributes
+        checkAttributes(for: Markdown(md), inRange: NSMakeRange(0, text.length))
     }
     
+    // MARK: Atomic ☺️
+    
     func testThatItCreatesCorrectAttributes_H1() {
-        checkHeader(.h1)
+        selectAndCheck(.h1)
     }
     
     func testThatItCreatesCorrectAttributes_H2() {
-        checkHeader(.h2)
+        selectAndCheck(.h2)
     }
     
     func testThatItCreatesCorrectAttributes_H3() {
-        checkHeader(.h3)
+        selectAndCheck(.h3)
     }
     
-    // MARK: Bold, Italic, Code
-    
     func testThatItCreatesCorrectAttributes_Bold() {
-        // GIVEN
-        let text = "Oh Hai!"
-        // WHEN: I select bold
-        sut.markdownBarView(bar, didSelectMarkdown: .bold, with: bar.boldButton)
-        sut.insertText(text)
-        // THEN: it renders bold
-        checkAttributes(for: .bold, inRange: NSMakeRange(0, text.length))
+        selectAndCheck(.bold)
     }
     
     func testThatItCreatesCorrectAttributes_Italic() {
-        // GIVEN
-        let text = "Oh Hai!"
-        // WHEN: I select italic
-        sut.markdownBarView(bar, didSelectMarkdown: .italic, with: bar.italicButton)
-        sut.insertText(text)
-        // THEN: it renders italic
-        checkAttributes(for: .italic, inRange: NSMakeRange(0, text.length))
+        selectAndCheck(.italic)
     }
 
     func testThatItCreatesCorrectAttributes_Code() {
-        // GIVEN
-        let text = "Oh Hai!"
-        // WHEN: I select code
-        sut.markdownBarView(bar, didSelectMarkdown: .code, with: bar.codeButton)
-        sut.insertText(text)
-        // THEN: it renders code
-        checkAttributes(for: .code, inRange: NSMakeRange(0, text.length))
+        selectAndCheck(.code)
     }
     
     // MARK: Combinations 😬
     
     func testThatItCreatesCorrectAttributes_HeaderItalic() {
-        // GIVEN
-        let text = "Oh Hai!"
-        // WHEN: I select header & italic
-        sut.markdownBarView(bar, didSelectMarkdown: .h1, with: bar.headerButton)
-        sut.markdownBarView(bar, didSelectMarkdown: .italic, with: bar.italicButton)
-        sut.insertText(text)
-        // THEN: it renders both
-        checkAttributes(for: [.h1, .italic], inRange: NSMakeRange(0, text.length))
+        selectAndCheck(.h1, .italic)
     }
     
     func testThatItCreatesCorrectAttributes_HeaderBold() {
-        // GIVEN
-        let text = "Oh Hai!"
-        // WHEN: I select header & bold
-        sut.markdownBarView(bar, didSelectMarkdown: .h1, with: bar.headerButton)
-        sut.markdownBarView(bar, didSelectMarkdown: .bold, with: bar.boldButton)
-        sut.insertText(text)
-        // THEN: it renders both
-        checkAttributes(for: [.h1, .bold], inRange: NSMakeRange(0, text.length))
+        selectAndCheck(.h1, .bold)
     }
     
     func testThatItCreatesCorrectAttributes_HeaderBoldItalic() {
-        // GIVEN
-        let text = "Oh Hai!"
-        // WHEN: I select header, bold & italic
-        sut.markdownBarView(bar, didSelectMarkdown: .h1, with: bar.headerButton)
-        sut.markdownBarView(bar, didSelectMarkdown: .bold, with: bar.boldButton)
-        sut.markdownBarView(bar, didSelectMarkdown: .italic, with: bar.italicButton)
-        sut.insertText(text)
-        // THEN: it renders all three
-        checkAttributes(for: [.h1, .bold, .italic], inRange: NSMakeRange(0, text.length))
+        selectAndCheck(.h1, .bold, .italic)
     }
     
     func testThatItCreatesCorrectAttributes_HeaderCode() {
-        // GIVEN
-        let text = "Oh Hai!"
-        // WHEN: I select header & code
-        sut.markdownBarView(bar, didSelectMarkdown: .h1, with: bar.headerButton)
-        sut.markdownBarView(bar, didSelectMarkdown: .code, with: bar.codeButton)
-        sut.insertText(text)
-        // THEN: it renders both
-        checkAttributes(for: [.h1, .code], inRange: NSMakeRange(0, text.length))
+        selectAndCheck(.h1, .code)
     }
     
     func testThatItCreatesCorrectAttributes_BoldItalic() {
-        // GIVEN
-        let text = "Oh Hai!"
-        // WHEN: I select bold & italic
-        sut.markdownBarView(bar, didSelectMarkdown: .bold, with: bar.boldButton)
-        sut.markdownBarView(bar, didSelectMarkdown: .italic, with: bar.italicButton)
-        sut.insertText(text)
-        // THEN: it renders both
-        checkAttributes(for: [.bold, .italic], inRange: NSMakeRange(0, text.length))
+        selectAndCheck(.bold, .italic)
     }
 
     // MARK: - Attributes (Removing)
@@ -264,15 +253,14 @@ final class MarkdownTextViewTests: XCTestCase {
     func testThatItCreatesCorrectAttributesWhenRemoving_Header() {
         // GIVEN
         let text = "Oh Hai!"
-        // WHEN: I select header & italic
-        sut.markdownBarView(bar, didSelectMarkdown: .h1, with: bar.headerButton)
-        sut.markdownBarView(bar, didSelectMarkdown: .italic, with: bar.italicButton)
-        sut.insertText(text)
-        // THEN: it renders both
+        // WHEN
+        select(.h1, .italic)
+        insertText(text)
+        // THEN
         checkAttributes(for: [.h1, .italic], inRange: NSMakeRange(0, text.length))
-        // AND WHEN: I deselect header & insert more text
-        sut.markdownBarView(bar, didDeselectMarkdown: .h1, with: bar.headerButton)
-        sut.insertText(text)
+        // AND WHEN
+        deselect(.h1)
+        insertText(text)
         // THEN: it renders italic on the whole line
         checkAttributes(for: .italic, inRange: NSMakeRange(0, text.length * 2))
     }
@@ -280,15 +268,14 @@ final class MarkdownTextViewTests: XCTestCase {
     func testThatItCreatesCorrectAttributesWhenRemoving_Bold() {
         // GIVEN
         let text = "Oh Hai!"
-        // WHEN: I select bold & italic
-        sut.markdownBarView(bar, didSelectMarkdown: .bold, with: bar.boldButton)
-        sut.markdownBarView(bar, didSelectMarkdown: .italic, with: bar.italicButton)
-        sut.insertText(text)
-        // THEN: it renders both
+        // WHEN
+        select(.bold, .italic)
+        insertText(text)
+        // THEN
         checkAttributes(for: [.bold, .italic], inRange: NSMakeRange(0, text.length))
-        // AND WHEN: I deselect bold & insert more text
-        sut.markdownBarView(bar, didDeselectMarkdown: .bold, with: bar.boldButton)
-        sut.insertText(text)
+        // AND WHEN
+        deselect(.bold)
+        insertText(text)
         // THEN: it only renders italic
         checkAttributes(for: .italic, inRange: NSMakeRange(text.length, text.length))
     }
@@ -296,32 +283,30 @@ final class MarkdownTextViewTests: XCTestCase {
     func testThatItCreatesCorrectAttributesWhenRemoving_Italic() {
         // GIVEN
         let text = "Oh Hai!"
-        // WHEN: I select bold & italic
-        sut.markdownBarView(bar, didSelectMarkdown: .bold, with: bar.boldButton)
-        sut.markdownBarView(bar, didSelectMarkdown: .italic, with: bar.italicButton)
-        sut.insertText(text)
-        // THEN: it renders both
+        // WHEN
+        select(.bold, .italic)
+        insertText(text)
+        // THEN
         checkAttributes(for: [.bold, .italic], inRange: NSMakeRange(0, text.length))
-        // AND WHEN: I deselect italic & insert more text
-        sut.markdownBarView(bar, didDeselectMarkdown: .italic, with: bar.italicButton)
-        sut.insertText(text)
-        // THEN: it only renders bold
+        // AND WHEN
+        deselect(.italic)
+        insertText(text)
+        // THEN
         checkAttributes(for: .bold, inRange: NSMakeRange(text.length, text.length))
     }
     
     func testThatItCreatesCorrectAttributesWhenRemoving_Code() {
         // GIVEN
         let text = "Oh Hai!"
-        // WHEN: I select header & code
-        sut.markdownBarView(bar, didSelectMarkdown: .h1, with: bar.headerButton)
-        sut.markdownBarView(bar, didSelectMarkdown: .code, with: bar.codeButton)
-        sut.insertText(text)
-        // THEN: it renders both
+        // WHEN
+        select(.h1, .code)
+        insertText(text)
+        // THEN
         checkAttributes(for: [.h1, .code], inRange: NSMakeRange(0, text.length))
-        // AND WHEN: I deselect code & insert more text
-        sut.markdownBarView(bar, didDeselectMarkdown: .code, with: bar.codeButton)
-        sut.insertText(text)
-        // THEN: it only renders header
+        // AND WHEN
+        deselect(.code)
+        insertText(text)
+        // THEN
         checkAttributes(for: .h1, inRange: NSMakeRange(text.length, text.length))
     }
     
@@ -331,27 +316,49 @@ final class MarkdownTextViewTests: XCTestCase {
         // GIVEN
         let line1 = "Oh Hai!"
         let line2 = "\nOh Bai!"
-        // WHEN: I select header & italic
-        sut.markdownBarView(bar, didSelectMarkdown: .h1, with: bar.headerButton)
-        sut.markdownBarView(bar, didSelectMarkdown: .italic, with: bar.italicButton)
-        sut.insertText(line1)
-        // THEN: it renders both
+        // WHEN
+        select(.h1, .italic)
+        insertText(line1)
+        // THEN
         checkAttributes(for: [.h1, .italic], inRange: NSMakeRange(0, line1.length))
-        // AND WHEN: I deselect header & italic & insert new text on next line
-        sut.markdownBarView(bar, didDeselectMarkdown: .h1, with: bar.headerButton)
-        sut.markdownBarView(bar, didDeselectMarkdown: .italic, with: bar.italicButton)
-        sut.insertText(line2)
-        // THEN: it renders italic on the whole line first line & nothing on next line
+        // AND WHEN
+        deselect(.h1, .italic)
+        insertText(line2)
+        // THEN
         checkAttributes(for: .italic, inRange: NSMakeRange(0, line1.length))
         checkAttributes(for: .none, inRange: NSMakeRange(line1.length, line2.length))
     }
 
     func testThatChangingHeadersUpdatesAttributesForWholeLine() {
-        XCTFail()
+        // GIVEN
+        let text = "Oh Hai!"
+        // WHEN
+        select(.h1, .italic)
+        insertText(text)
+        // THEN
+        checkAttributes(for: [.h1, .italic], inRange: NSMakeRange(0, text.length))
+        // AND WHEN
+        select(.h2)
+        // THEN
+        checkAttributes(for: [.h2, .italic], inRange: NSMakeRange(0, text.length))
+        // AND WHEN
+        select(.h3)
+        // THEN
+        checkAttributes(for: [.h3, .italic], inRange: NSMakeRange(0, text.length))
     }
     
     func testThatInsertingNewLineAfterHeaderResetsActiveMarkdown() {
-        XCTFail()
+        // GIVEN
+        let line1 = "Oh Hai!"
+        let line2 = "Ok Bai!"
+        // WHEN
+        select(.h1, .italic)
+        insertText(line1)
+        insertText("\n")
+        insertText(line2)
+        // THEN
+        checkAttributes(for: [.h1, .italic], inRange: NSMakeRange(0, line1.length))
+        checkAttributes(for: .none, inRange: NSMakeRange(line1.length, line2.length + 1))
     }
     
     func testThatSelectingCodeClearsBoldAndItalic() {
