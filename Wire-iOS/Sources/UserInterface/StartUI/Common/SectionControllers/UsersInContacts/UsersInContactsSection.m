@@ -91,9 +91,9 @@ NSString *const PeoplePickerUsersInContactsReuseIdentifier = @"PeoplePickerUsers
     ZMUser *modelObject = self.contacts[indexPath.item];
     
     SearchResultCell *particularCell = (SearchResultCell *)genericCell;
-    particularCell.mode = self.useNewStyleCellLayout
-        ? SearchResultCellSelectionModeTrailingCheckmark
-        : SearchResultCellSelectionModeNone;
+    particularCell.accessoryType = self.useNewStyleCellLayout
+        ? SearchResultCellAccessoryTypeTrailingCheckmark
+        : SearchResultCellAccessoryTypeNone;
     
     @weakify(self, modelObject);
     particularCell.doubleTapAction = ^(SearchResultCell *cell) {

@@ -1,4 +1,4 @@
-// 
+//
 // Wire
 // Copyright (C) 2016 Wire Swiss GmbH
 // 
@@ -228,6 +228,16 @@
 - (BOOL)prefersStatusBarHidden
 {
     return YES;
+}
+
+- (UIStatusBarStyle)preferredStatusBarStyle
+{
+    if (self.presentedViewController != nil) {
+        return self.presentedViewController.preferredStatusBarStyle;
+    }
+    else {
+        return UIStatusBarStyleLightContent;
+    }
 }
 
 - (void)createNoConversationLabel;

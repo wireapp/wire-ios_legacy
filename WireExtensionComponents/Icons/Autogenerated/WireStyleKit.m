@@ -5329,6 +5329,24 @@ static UIImage* _imageOfShieldnotverified = nil;
     [groupPath fill];
 }
 
++ (void)drawIcon_0x755_32ptWithColor: (UIColor*)color
+{
+    
+    //// Arrow Drawing
+    UIBezierPath* arrowPath = [UIBezierPath bezierPath];
+    [arrowPath moveToPoint: CGPointMake(13, 8.15)];
+    [arrowPath addLineToPoint: CGPointMake(20.12, 1)];
+    [arrowPath addLineToPoint: CGPointMake(51, 32)];
+    [arrowPath addLineToPoint: CGPointMake(20.12, 63)];
+    [arrowPath addLineToPoint: CGPointMake(13, 55.85)];
+    [arrowPath addLineToPoint: CGPointMake(36.75, 32)];
+    [arrowPath addLineToPoint: CGPointMake(13, 8.15)];
+    [arrowPath closePath];
+    arrowPath.usesEvenOddFillRule = YES;
+    [color setFill];
+    [arrowPath fill];
+}
+
 + (void)drawMissedcallWithAccent: (UIColor*)accent
 {
     //// Color Declarations
@@ -9306,6 +9324,17 @@ static UIImage* _imageOfShieldnotverified = nil;
     return imageOfIcon_0x754_32pt;
 }
 
++ (UIImage*)imageOfIcon_0x755_32ptWithColor: (UIColor*)color
+{
+    UIGraphicsBeginImageContextWithOptions(CGSizeMake(64, 64), NO, 0);
+    [WireStyleKit drawIcon_0x755_32ptWithColor: color];
+    
+    UIImage* imageOfIcon_0x755_32pt = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    return imageOfIcon_0x755_32pt;
+}
+
 + (UIImage*)imageOfMissedcallWithAccent: (UIColor*)accent
 {
     UIGraphicsBeginImageContextWithOptions(CGSizeMake(40, 40), NO, 0);
@@ -9518,3 +9547,4 @@ CGRect WireStyleKitResizingBehaviorApply(WireStyleKitResizingBehavior behavior, 
     result.origin.y = target.origin.y + (target.size.height - result.size.height) / 2;
     return result;
 }
+

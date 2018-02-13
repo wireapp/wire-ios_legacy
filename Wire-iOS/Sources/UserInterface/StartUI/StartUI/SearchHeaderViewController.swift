@@ -149,9 +149,8 @@ extension SearchHeaderViewController : UserSelectionObserver {
     }
     
     public func userSelection(_ userSelection: UserSelection, didAddUser user: ZMUser) {
-        if !allowsMultipleSelection && !tokenField.tokens.isEmpty {
-            tokenField.addToken(forTitle: user.displayName, representedObject: user)
-        }
+        guard allowsMultipleSelection else { return }
+        tokenField.addToken(forTitle: user.displayName, representedObject: user)
     }
     
     public func userSelection(_ userSelection: UserSelection, didRemoveUser user: ZMUser) {

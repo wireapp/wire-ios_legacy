@@ -67,6 +67,7 @@ public class AddParticipantsViewController: UIViewController {
     fileprivate let confirmButton : IconButton
     fileprivate let emptyResultLabel = UILabel()
     fileprivate var bottomConstraint: NSLayoutConstraint?
+    fileprivate let backButtonDescriptor = BackButtonDescription()
     
     public weak var delegate : AddParticipantsViewControllerDelegate?
     public weak var conversationCreationDelegate : AddParticipantsConversationCreationDelegate?
@@ -187,10 +188,9 @@ public class AddParticipantsViewController: UIViewController {
         updateSelectionValues()
         
         if case .create = context {
-            let buttonDescriptor = BackButtonDescription()
-            buttonDescriptor.buttonTapped = { [weak self] in self?.backButtonTapped() }
-            buttonDescriptor.accessibilityIdentifier = "button.addpeople.back"
-            navigationItem.leftBarButtonItem = .init(customView: buttonDescriptor.create())
+            backButtonDescriptor.buttonTapped = { [weak self] in self?.backButtonTapped() }
+            backButtonDescriptor.accessibilityIdentifier = "button.addpeople.back"
+            navigationItem.leftBarButtonItem = .init(customView: backButtonDescriptor.create())
         }
     }
 

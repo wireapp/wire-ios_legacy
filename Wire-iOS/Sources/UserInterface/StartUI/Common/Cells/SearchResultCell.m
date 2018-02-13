@@ -121,7 +121,6 @@
         [self.nameLabelStackView addArrangedSubview:self.subtitleLabel];
 
         self.separatorLineView = [[UIView alloc] initForAutoLayout];
-        self.separatorLineView.backgroundColor = [ColorScheme.defaultColorScheme colorWithName:ColorSchemeColorPaleSeparator];
         [self.swipeView addSubview:self.separatorLineView];
         
         self.trailingCheckmarkView = [[UIImageView alloc] initForAutoLayout];
@@ -151,7 +150,7 @@
         [self setNeedsUpdateConstraints];
         [self updateForContext];
         
-        self.mode = SearchResultCellSelectionModeNone;
+        self.accessoryType = SearchResultCellAccessoryTypeNone;
     }
     return self;
 }
@@ -205,7 +204,7 @@
 
         [self.separatorLineView autoPinEdgeToSuperviewEdge:ALEdgeTrailing];
         [self.separatorLineView autoPinEdgeToSuperviewEdge:ALEdgeBottom];
-        [self.separatorLineView autoSetDimension:ALDimensionHeight toSize:1];
+        [self.separatorLineView autoSetDimension:ALDimensionHeight toSize:UIScreen.hairline];
         [self.separatorLineView autoPinEdge:ALEdgeLeading toEdge:ALEdgeLeading ofView:self.nameLabel];
         
         self.initialConstraintsCreated = YES;
@@ -232,6 +231,7 @@
 {
     self.nameLabel.font = [UIFont fontWithMagicIdentifier:@"people_picker.search_results_mode.name_label_font"];
     self.nameLabel.textColor = [UIColor wr_colorFromColorScheme:ColorSchemeColorTextForeground variant:self.colorSchemeVariant];
+    self.separatorLineView.backgroundColor = [ColorScheme.defaultColorScheme colorWithName:ColorSchemeColorCellSeparator variant:self.colorSchemeVariant];
 
     CGFloat squareImageWidth = [WAZUIMagic cgFloatForIdentifier:@"people_picker.search_results_mode.tile_image_diameter"];
     self.avatarViewSizeConstraint.constant = squareImageWidth;
@@ -258,7 +258,7 @@
         [self.successCheckmark removeFromSuperview];
         self.successCheckmark = nil;
         self.contentView.alpha = 1.0f;
-        self.mode = SearchResultCellSelectionModeNone;
+        self.accessoryType = SearchResultCellAccessoryTypeNone;
         self.backgroundColor = UIColor.clearColor;
     }];
 }
@@ -404,20 +404,7 @@
 - (void)setSelected:(BOOL)selected
 {
     [super setSelected:selected];
-
-    switch (self.mode) {
-        case SearchResultCellSelectionModeNone:
-            break;
-        case SearchResultCellSelectionModeTrailingCheckmark: {
-            UIColor *foregroundColor = [ColorScheme.defaultColorScheme colorWithName:ColorSchemeColorBackground];
-            UIColor *backgroundColor = [ColorScheme.defaultColorScheme colorWithName:ColorSchemeColorIconNormal];
-            self.trailingCheckmarkView.image = selected ? [UIImage imageForIcon:ZetaIconTypeCheckmark iconSize:ZetaIconSizeLike color:foregroundColor] : nil;
-            self.trailingCheckmarkView.backgroundColor = selected ? backgroundColor : UIColor.clearColor;
-            UIColor *borderColor = selected ? backgroundColor : [backgroundColor colorWithAlphaComponent:0.64];
-            self.trailingCheckmarkView.layer.borderColor = borderColor.CGColor;
-            break;
-        }
-    }
+    [self updateTrailingImageViewSelected:selected];
 }
 
 - (void)setHighlighted:(BOOL)highlighted
@@ -467,16 +454,41 @@
 
 - (void)updateGuestLabelConstraints
 {
-    self.guestLabelCheckmarkViewHorizontalConstraint.active = self.mode == SearchResultCellSelectionModeTrailingCheckmark;
-    self.guestLabelTrailingConstraint.active = self.mode != SearchResultCellSelectionModeTrailingCheckmark;
+    self.guestLabelCheckmarkViewHorizontalConstraint.active = self.accessoryType == SearchResultCellAccessoryTypeTrailingCheckmark;
+    self.guestLabelTrailingConstraint.active = self.accessoryType != SearchResultCellAccessoryTypeTrailingCheckmark;
 }
 
-- (void)setMode:(SearchResultCellSelectionMode)mode
+- (void)setAccessoryType:(SearchResultCellAccessoryType)accessoryType
 {
-    _mode = mode;
-    self.trailingCheckmarkView.hidden = mode != SearchResultCellSelectionModeTrailingCheckmark;
+    _accessoryType = accessoryType;
     [self updateGuestLabelConstraints];
     [self setSelected:self.selected];
+}
+
+- (void)updateTrailingImageViewSelected:(BOOL)selected
+{
+    self.trailingCheckmarkView.hidden = self.accessoryType == SearchResultCellAccessoryTypeNone;
+    
+    switch (self.accessoryType) {
+        case SearchResultCellAccessoryTypeNone:
+            break;
+        case SearchResultCellAccessoryTypeDisclosureIndicator: {
+            self.trailingCheckmarkView.backgroundColor = nil;
+            self.trailingCheckmarkView.layer.borderColor = UIColor.clearColor.CGColor;
+            UIColor *color = [ColorScheme.defaultColorScheme colorWithName:ColorSchemeColorSeparator];
+            self.trailingCheckmarkView.image = [UIImage imageForIcon:ZetaIconTypeDisclosureIndicator iconSize:ZetaIconSizeLike color:color];
+            break;
+        }
+        case SearchResultCellAccessoryTypeTrailingCheckmark: {
+            UIColor *foregroundColor = [ColorScheme.defaultColorScheme colorWithName:ColorSchemeColorBackground];
+            UIColor *backgroundColor = [ColorScheme.defaultColorScheme colorWithName:ColorSchemeColorIconNormal];
+            self.trailingCheckmarkView.image = selected ? [UIImage imageForIcon:ZetaIconTypeCheckmark iconSize:ZetaIconSizeLike color:foregroundColor] : nil;
+            self.trailingCheckmarkView.backgroundColor = selected ? backgroundColor : UIColor.clearColor;
+            UIColor *borderColor = selected ? backgroundColor : [backgroundColor colorWithAlphaComponent:0.64];
+            self.trailingCheckmarkView.layer.borderColor = borderColor.CGColor;
+            break;
+        }
+    }
 }
 
 - (NSAttributedString *)attributedSubtitleForRegularUser:(id <ZMBareUser, ZMSearchableUser>)user

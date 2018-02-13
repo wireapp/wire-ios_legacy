@@ -182,6 +182,7 @@ extern CGRect WireStyleKitResizingBehaviorApply(WireStyleKitResizingBehavior beh
 + (void)drawIcon_0x752_32ptWithColor: (UIColor*)color;
 + (void)drawIcon_0x753_32ptWithColor: (UIColor*)color;
 + (void)drawIcon_0x754_32ptWithColor: (UIColor*)color;
++ (void)drawIcon_0x755_32ptWithColor: (UIColor*)color;
 + (void)drawMissedcallWithAccent: (UIColor*)accent;
 + (void)drawYoutubeWithColor: (UIColor*)color;
 + (void)drawMissedcalllastWithAccent: (UIColor*)accent;
@@ -318,6 +319,7 @@ extern CGRect WireStyleKitResizingBehaviorApply(WireStyleKitResizingBehavior beh
 + (UIImage*)imageOfIcon_0x752_32ptWithColor: (UIColor*)color;
 + (UIImage*)imageOfIcon_0x753_32ptWithColor: (UIColor*)color;
 + (UIImage*)imageOfIcon_0x754_32ptWithColor: (UIColor*)color;
++ (UIImage*)imageOfIcon_0x755_32ptWithColor: (UIColor*)color;
 + (UIImage*)imageOfMissedcallWithAccent: (UIColor*)accent;
 + (UIImage*)imageOfYoutubeWithColor: (UIColor*)color;
 + (UIImage*)imageOfMissedcalllastWithAccent: (UIColor*)accent;
@@ -332,3 +334,4 @@ extern CGRect WireStyleKitResizingBehaviorApply(WireStyleKitResizingBehavior beh
 + (UIImage*)imageOfTabWithColor: (UIColor*)color;
 
 @end
+
