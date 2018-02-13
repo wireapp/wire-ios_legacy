@@ -98,8 +98,8 @@ public class AddParticipantsViewController: UIViewController {
         }
     }
     
-    public init(context: Context, variant: ColorSchemeVariant? = nil) {
-        self.variant = variant ?? ColorScheme.default().variant
+    public init(context: Context, variant: ColorSchemeVariant = ColorScheme.default().variant) {
+        self.variant = variant
         
         viewModel = AddParticipantsViewModel(with: context)
         
