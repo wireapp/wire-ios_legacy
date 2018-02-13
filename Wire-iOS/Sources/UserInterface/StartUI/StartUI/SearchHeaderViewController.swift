@@ -58,8 +58,10 @@ public class SearchHeaderViewController : UIViewController {
     }
     
     public override func viewDidLoad() {
+        super.viewDidLoad()
+
         view.backgroundColor = UIColor(white: 1.0, alpha: 0.08)
-        
+
         searchIcon.image = UIImage(for: .search, iconSize: .tiny, color: UIColor.wr_color(fromColorScheme: ColorSchemeColorTextForeground, variant: colorSchemeVariant))
         
         clearButton.accessibilityLabel = "clear"

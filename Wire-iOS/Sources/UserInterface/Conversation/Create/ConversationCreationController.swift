@@ -201,7 +201,7 @@ final class ConversationCreationController: UIViewController {
             textField.resignFirstResponder()
             let newValues = ConversationCreationValues(name: name, participants: values?.participants ?? [])
             values = newValues
-            let participantsController = AddParticipantsViewController(context: .create(newValues))
+            let participantsController = AddParticipantsViewController(context: .create(newValues), variant: .light)
             participantsController.conversationCreationDelegate = self
             navigationController?.pushViewController(participantsController, animated: true)
         }

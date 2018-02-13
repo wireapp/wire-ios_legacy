@@ -57,6 +57,7 @@ public class AddParticipantsViewController: UIViewController {
         case create(ConversationCreationValues)
     }
     
+    fileprivate let variant: ColorSchemeVariant
     fileprivate let searchResultsViewController : SearchResultsViewController
     fileprivate let searchGroupSelector : SearchGroupSelector
     fileprivate let searchHeaderViewController : SearchHeaderViewController
@@ -97,7 +98,9 @@ public class AddParticipantsViewController: UIViewController {
         }
     }
     
-    public init(context: Context) {
+    public init(context: Context, variant: ColorSchemeVariant? = nil) {
+        self.variant = variant ?? ColorScheme.default().variant
+        
         viewModel = AddParticipantsViewModel(with: context)
         
         collectionViewLayout = UICollectionViewFlowLayout()
@@ -128,17 +131,17 @@ public class AddParticipantsViewController: UIViewController {
         bottomContainer.backgroundColor = UIColor.clear
         bottomContainer.addSubview(confirmButton)
 
-        searchHeaderViewController = SearchHeaderViewController(userSelection: userSelection, variant: ColorScheme.default().variant)
+        searchHeaderViewController = SearchHeaderViewController(userSelection: userSelection, variant: self.variant)
         
-        searchGroupSelector = SearchGroupSelector(variant: ColorScheme.default().variant)
+        searchGroupSelector = SearchGroupSelector(variant: self.variant)
 
-        searchResultsViewController = SearchResultsViewController(userSelection: userSelection, variant: ColorScheme.default().variant, isAddingParticipants: true)
+        searchResultsViewController = SearchResultsViewController(userSelection: userSelection, variant: self.variant, isAddingParticipants: true)
 
         super.init(nibName: nil, bundle: nil)
         updateValues()
 
         emptyResultLabel.text = everyoneHasBeenAddedText
-        emptyResultLabel.textColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorTextForeground)
+        emptyResultLabel.textColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorTextForeground, variant: self.variant)
         emptyResultLabel.font = FontSpec(.normal, .none).font!
         
         confirmButton.addTarget(self, action: #selector(searchHeaderViewControllerDidConfirmAction(_:)), for: .touchUpInside)
@@ -182,7 +185,9 @@ public class AddParticipantsViewController: UIViewController {
         view.addSubview(searchResultsViewController.view)
         searchResultsViewController.didMove(toParentViewController: self)
         searchResultsViewController.searchResultsView?.emptyResultView = emptyResultLabel
-        searchResultsViewController.searchResultsView?.backgroundColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorContentBackground)
+        searchResultsViewController.searchResultsView?.backgroundColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorContentBackground, variant: self.variant)
+        
+        view.backgroundColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorContentBackground, variant: self.variant)
         
         createConstraints()
         updateSelectionValues()
@@ -379,7 +384,7 @@ extension AddParticipantsViewController: SearchResultsViewControllerDelegate {
             serviceUser: user,
             destinationConversation: conversation,
             actionType: .addService,
-            variant: .init(colorScheme: ColorScheme.default().variant, opaque: true)
+            variant: .init(colorScheme: self.variant, opaque: true)
         )
 
         detail.completion = { [weak self] result in

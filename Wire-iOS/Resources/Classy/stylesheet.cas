@@ -1252,13 +1252,6 @@ AddParticipantsViewController SearchHeaderViewController {
     }
 }
 
-
-AddParticipantsViewController {
-    view: @{
-        backgroundColor: $color-bar-background;
-    }
-}
-
 /* Invite Contacts */
 
 ContactsViewController, InviteContactsViewController {
