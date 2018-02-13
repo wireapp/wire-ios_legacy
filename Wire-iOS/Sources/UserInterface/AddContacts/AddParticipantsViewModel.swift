@@ -20,9 +20,11 @@ import UIKit
 
 struct AddParticipantsViewModel {
     let context: AddParticipantsViewController.Context
+    let variant: ColorSchemeVariant
     
-    init(with context: AddParticipantsViewController.Context) {
+    init(with context: AddParticipantsViewController.Context, variant: ColorSchemeVariant) {
         self.context = context
+        self.variant = variant
     }
     
     var botCanBeAdded: Bool {
@@ -81,11 +83,11 @@ struct AddParticipantsViewModel {
             return item
         case .create(let values):
             let button = ButtonWithLargerHitArea()
-            let key = values.participants.isEmpty ?  "peoplepicker.group.skip" : "peoplepicker.group.done"
+            let key = values.participants.isEmpty ? "peoplepicker.group.skip" : "peoplepicker.group.done"
             button.frame = CGRect(x: 0, y: 0, width: 40, height: 20)
             button.setTitle(key.localized.uppercased(), for: .normal)
-            button.setTitleColor(.wr_color(fromColorScheme: ColorSchemeColorTextForeground), for: .normal)
-            button.setTitleColor(.wr_color(fromColorScheme: ColorSchemeColorTextBackground), for: [.highlighted, .disabled])
+            button.setTitleColor(.accent(), for: .normal)
+            button.setTitleColor(.wr_color(fromColorScheme: ColorSchemeColorTextBackground, variant: variant), for: [.highlighted, .disabled])
             button.addTarget(target, action: action, for: .touchUpInside)
             button.titleLabel?.font = FontSpec(.medium, .medium).font!
             button.accessibilityIdentifier = values.participants.isEmpty ? "button.addpeople.skip" : "button.addpeople.create"

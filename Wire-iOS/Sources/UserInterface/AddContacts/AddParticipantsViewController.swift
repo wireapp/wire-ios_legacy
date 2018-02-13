@@ -101,7 +101,7 @@ public class AddParticipantsViewController: UIViewController {
     public init(context: Context, variant: ColorSchemeVariant = ColorScheme.default().variant) {
         self.variant = variant
         
-        viewModel = AddParticipantsViewModel(with: context)
+        viewModel = AddParticipantsViewModel(with: context, variant: variant)
         
         collectionViewLayout = UICollectionViewFlowLayout()
         collectionViewLayout.scrollDirection = .vertical
@@ -251,7 +251,7 @@ public class AddParticipantsViewController: UIViewController {
         // Update view model after selection changed
         if case .create(let values) = viewModel.context {
             let updated = ConversationCreationValues(name: values.name, participants: userSelection.users)
-            viewModel = AddParticipantsViewModel(with: .create(updated))
+            viewModel = AddParticipantsViewModel(with: .create(updated), variant: variant)
         }
 
         // Update confirm button visibility
