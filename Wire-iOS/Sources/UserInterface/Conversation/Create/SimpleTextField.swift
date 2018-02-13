@@ -19,8 +19,18 @@
 import Foundation
 
 protocol SimpleTextFieldDelegate: class {
-    func textField(_ textField: SimpleTextField, valueChanged value: SimpleTextField.Value?)
+    func textField(_ textField: SimpleTextField, valueChanged value: SimpleTextField.Value)
     func textFieldReturnPressed(_ textField: SimpleTextField)
+}
+
+extension Optional where Wrapped == String {
+    var value: SimpleTextField.Value? {
+        guard let value = self else { return nil }
+        if let error = SimpleTextFieldValidator().validate(text: value) {
+            return .error(error)
+        }
+        return .valid(value)
+    }
 }
 
 class SimpleTextField: UITextField {
@@ -35,13 +45,9 @@ class SimpleTextField: UITextField {
     public weak var textFieldDelegate: SimpleTextFieldDelegate?
 
     public var value: Value? {
-        guard let text = text else { return nil }
-        if let error = textFieldValidator.validate(text: text) {
-            return .error(error)
-        }
-        return .valid(text)
+        return text.value
     }
-
+    
     // MARK:- UI constants
 
     static let enteredTextFont = FontSpec(.normal, .regular, .inputText).font!
@@ -76,7 +82,7 @@ class SimpleTextField: UITextField {
     }
 
     private func setupTextFieldProperties() {
-        self.returnKeyType = .next
+        returnKeyType = .next
         autocapitalizationType = .words
         accessibilityIdentifier = "NameField"
         autocorrectionType = .no
@@ -120,7 +126,7 @@ class SimpleTextField: UITextField {
 
 extension SimpleTextField: SimpleTextFieldValidatorDelegate {
     func textFieldValueChanged(_ value: String?) {
-        textFieldDelegate?.textField(self, valueChanged: self.value)
+        textFieldDelegate?.textField(self, valueChanged: value.value ?? .error(.empty))
     }
 
     func textFieldValueSubmitted(_ value: String) {

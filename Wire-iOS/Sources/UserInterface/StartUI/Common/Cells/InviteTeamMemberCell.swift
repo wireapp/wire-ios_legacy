@@ -55,7 +55,7 @@ class StartUIIconCell: UICollectionViewCell, Reusable {
     
     fileprivate func setupViews() {
         iconView.contentMode = .center
-        titleLabel.font = FontSpec(.normal, .medium).font
+        titleLabel.font = FontSpec(.normal, .light).font
         titleLabel.textColor = .white
         [iconView, titleLabel, separator].forEach(contentView.addSubview)
         separator.backgroundColor = ColorScheme.default().color(withName: ColorSchemeColorCellSeparator, variant: .dark)

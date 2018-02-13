@@ -160,10 +160,10 @@ final class ConversationCreationController: UIViewController {
         nextButton.frame = CGRect(x: 0, y: 0, width: 40, height: 20)
         nextButton.accessibilityIdentifier = "button.newgroup.next"
         nextButton.setTitle("general.next".localized.uppercased(), for: .normal)
-        nextButton.setTitleColor(UIColor.wr_color(fromColorScheme: ColorSchemeColorIconNormal, variant: .light), for: .normal)
+        nextButton.setTitleColor(.accent(), for: .normal)
         nextButton.setTitleColor(UIColor.wr_color(fromColorScheme: ColorSchemeColorTextDimmed, variant: .light), for: .highlighted)
         nextButton.setTitleColor(UIColor.wr_color(fromColorScheme: ColorSchemeColorIconShadow, variant: .light), for: .disabled)
-        nextButton.titleLabel?.font = FontSpec(.medium, .medium).font!
+        nextButton.titleLabel?.font = FontSpec(.medium, .semibold).font!
         nextButton.sizeToFit()
         
         nextButton.addCallback(for: .touchUpInside) { [weak self] _ in
@@ -171,15 +171,19 @@ final class ConversationCreationController: UIViewController {
         }
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(customView: nextButton)
+        nextButton.isEnabled = false
     }
     
     private func createConstraints() {
         
+        self.safeBottomAnchor.constraint(equalTo: errorViewContainer.bottomAnchor).isActive = true
+        
         constrain(view, errorViewContainer, mainViewContainer) { view, errorViewContainer, mainViewContainer in
-            errorViewContainer.bottom == view.bottom - 25
+            
             errorViewContainer.leading == view.leading
             errorViewContainer.trailing == view.trailing
-            errorViewContainer.height == 30
+            errorViewContainer.height == 82
+
             mainViewContainer.bottom == errorViewContainer.top
             mainViewContainer.centerX == view.centerX
             mainViewContainer.width == view.width
@@ -194,12 +198,9 @@ final class ConversationCreationController: UIViewController {
         }
 
         constrain(errorViewContainer, errorLabel) { errorViewContainer, errorLabel in
-            errorLabel.centerY == errorViewContainer.centerY
             errorLabel.leading == errorViewContainer.leadingMargin
             errorLabel.trailing == errorViewContainer.trailingMargin
-            errorLabel.topMargin == errorViewContainer.topMargin
-            errorLabel.bottomMargin == errorViewContainer.bottomMargin
-            errorLabel.height >= 19
+            errorLabel.top == errorViewContainer.top + 16
         }
     }
 
@@ -242,9 +243,13 @@ extension ConversationCreationController: AddParticipantsConversationCreationDel
 // MARK: - SimpleTextFieldDelegate
 
 extension ConversationCreationController: SimpleTextFieldDelegate {
-    func textField(_ textField: SimpleTextField, valueChanged value: SimpleTextField.Value?) {
+    func textField(_ textField: SimpleTextField, valueChanged value: SimpleTextField.Value) {
         clearError()
-        nextButton.isEnabled = (value != nil)
+        switch value {
+        case .error(_): nextButton.isEnabled = false
+        case .valid(_): nextButton.isEnabled = true
+        }
+        
     }
 
     func textFieldReturnPressed(_ textField: SimpleTextField) {

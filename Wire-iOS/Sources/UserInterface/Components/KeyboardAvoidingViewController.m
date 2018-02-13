@@ -113,9 +113,7 @@
     [super viewWillAppear:animated];
     
     CGFloat bottomOffset = -[[KeyboardFrameObserver sharedObserver] keyboardFrame].size.height;
-    if (fabs(bottomOffset) > 0) {
-        bottomOffset = bottomOffset + UIScreen.safeArea.bottom;
-    }
+
     self.bottomEdgeConstraint.constant = bottomOffset;
 }
 
@@ -147,10 +145,7 @@
 {
     [UIView animateWithKeyboardNotification:notification inView:self.view animations:^(CGRect keyboardFrameInView) {
         CGFloat bottomOffset = -keyboardFrameInView.size.height;
-        // Take in account the bottom screen inset on iPhone X and others.
-        if (fabs(bottomOffset) > 0) {
-            bottomOffset = bottomOffset + UIScreen.safeArea.bottom;
-        }
+
         if (self.bottomEdgeConstraint.constant != bottomOffset) {
             self.bottomEdgeConstraint.constant = bottomOffset;
             
