@@ -51,6 +51,10 @@ class ClearBackgroundNavigationController: UINavigationController {
         }
     }
     
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return topViewController?.preferredStatusBarStyle ?? .default
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = UIColor.clear

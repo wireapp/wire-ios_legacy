@@ -82,7 +82,12 @@ final public class BackgroundViewController: UIViewController {
     }
 
     open override var preferredStatusBarStyle : UIStatusBarStyle {
-        return .lightContent
+        if let child = childViewControllers.first {
+            return child.preferredStatusBarStyle
+        }
+        else {
+            return .lightContent
+        }
     }
     
     public override func shouldDisplayNotification(from account: Account) -> Bool {

@@ -151,6 +151,11 @@ static NSUInteger const StartUIInitiallyShowsKeyboardConversationThreshold = 10;
     self.navigationItem.rightBarButtonItem.accessibilityIdentifier = @"close";
 }
 
+- (UIStatusBarStyle)preferredStatusBarStyle
+{
+    return UIStatusBarStyleLightContent;
+}
+
 - (void)createConstraints
 {
     [self.searchHeaderViewController.view autoPinEdgeToSuperviewEdge:ALEdgeTop];
