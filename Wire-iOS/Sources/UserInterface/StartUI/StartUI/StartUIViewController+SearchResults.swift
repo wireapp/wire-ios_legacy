@@ -87,25 +87,40 @@ extension StartUIViewController: SearchResultsViewControllerDelegate {
         case .createGroup:
             let controller = ConversationCreationController()
             controller.delegate = self
-
             let avoiding = KeyboardAvoidingViewController(viewController: controller)
-            self.navigationController?.pushViewController(avoiding, animated: true) {
-                UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(true)
+
+            if self.traitCollection.horizontalSizeClass == .compact {
+                self.navigationController?.pushViewController(avoiding, animated: true) {
+                    UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(true)
+                }
+            }
+            else {
+                let embeddedNavigationController = avoiding.wrapInNavigationController()
+                embeddedNavigationController.modalPresentationStyle = .formSheet
+                self.present(embeddedNavigationController, animated: true)
             }
         }
     }
-    
 }
 
 extension StartUIViewController: ConversationCreationControllerDelegate {
+    func dismiss(controller: ConversationCreationController) {
+        if traitCollection.horizontalSizeClass == .compact {
+            navigationController?.popToRootViewController(animated: true) {
+                UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(true)
+            }
+        }
+        else {
+            controller.navigationController?.dismiss(animated: true)
+        }
+    }
+    
     func conversationCreationController(_ controller: ConversationCreationController, didSelectName name: String, participants: Set<ZMUser>) {
-        navigationController?.popToRootViewController(animated: true)
+        dismiss(controller: controller)
         delegate.startUI(self, createConversationWith: participants, name: name)
     }
     
     func conversationCreationControllerDidCancel(_ controller: ConversationCreationController) {
-        navigationController?.popToRootViewController(animated: true) {
-            UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(true)
-        }
+        dismiss(controller: controller)
     }
 }

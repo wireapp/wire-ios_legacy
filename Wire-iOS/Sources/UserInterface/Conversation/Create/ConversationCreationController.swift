@@ -144,13 +144,18 @@ final class ConversationCreationController: UIViewController {
 
     private func setupNavigationBar() {
         // left button
-        backButtonDescription.buttonTapped = { [unowned self] in
-            self.delegate?.conversationCreationControllerDidCancel(self)
+        backButtonDescription.buttonTapped = { [weak self] in
+            self?.onCancel()
         }
 
         backButtonDescription.accessibilityIdentifier = "button.newgroup.back"
-
-        navigationItem.leftBarButtonItem = UIBarButtonItem(customView: backButtonDescription.create())
+        if navigationController?.viewControllers.count ?? 0 > 1 {
+            navigationItem.leftBarButtonItem = UIBarButtonItem(customView: backButtonDescription.create())
+        }
+        else {
+            navigationItem.leftBarButtonItem = UIBarButtonItem(icon: .X, target: self, action: #selector(onCancel))
+            navigationItem.leftBarButtonItem?.accessibilityIdentifier = "button.newgroup.close"
+        }
 
         // title view
         navigationItem.titleView = ConversationCreationTitleFactory.createTitleLabel(for: self.title ?? "")
@@ -202,6 +207,10 @@ final class ConversationCreationController: UIViewController {
             errorLabel.trailing == errorViewContainer.trailingMargin
             errorLabel.top == errorViewContainer.top + 16
         }
+    }
+
+    dynamic func onCancel() {
+        delegate?.conversationCreationControllerDidCancel(self)
     }
 
     func proceedWith(value: SimpleTextField.Value) {
