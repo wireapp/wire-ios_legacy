@@ -180,8 +180,12 @@ final class ConversationCreationController: UIViewController {
     }
     
     private func createConstraints() {
-        
-        self.safeBottomAnchor.constraint(equalTo: errorViewContainer.bottomAnchor).isActive = true
+        if UIApplication.shared.keyWindow!.traitCollection.horizontalSizeClass == .compact {
+            self.safeBottomAnchor.constraint(equalTo: errorViewContainer.bottomAnchor).isActive = true
+        }
+        else {
+            mainViewContainer.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+        }
         
         constrain(view, errorViewContainer, mainViewContainer) { view, errorViewContainer, mainViewContainer in
             

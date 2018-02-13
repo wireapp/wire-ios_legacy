@@ -87,15 +87,15 @@ extension StartUIViewController: SearchResultsViewControllerDelegate {
         case .createGroup:
             let controller = ConversationCreationController()
             controller.delegate = self
-            let avoiding = KeyboardAvoidingViewController(viewController: controller)
 
             if self.traitCollection.horizontalSizeClass == .compact {
+                let avoiding = KeyboardAvoidingViewController(viewController: controller)
                 self.navigationController?.pushViewController(avoiding, animated: true) {
                     UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(true)
                 }
             }
             else {
-                let embeddedNavigationController = avoiding.wrapInNavigationController()
+                let embeddedNavigationController = controller.wrapInNavigationController()
                 embeddedNavigationController.modalPresentationStyle = .formSheet
                 self.present(embeddedNavigationController, animated: true)
             }
