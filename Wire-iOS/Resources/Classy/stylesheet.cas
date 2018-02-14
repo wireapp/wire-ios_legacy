@@ -847,6 +847,10 @@ IconSystemCell, ConversationNewDeviceCell, MissedCallCell, PerformedCallCell, Ca
     labelTextBlendedColor: $color-text-dimmed;
 }
 
+ParticipantsCell {
+    labelLargeFont: $font-large-semibold;
+}
+
 ConversationRenamedCell {
     nameLabelFont: $font-normal-semibold;
 }

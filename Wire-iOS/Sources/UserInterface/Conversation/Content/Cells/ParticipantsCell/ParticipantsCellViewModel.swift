@@ -85,19 +85,13 @@ struct ParticipantsCellViewModel {
     }
 
     func attributedHeading() -> NSAttributedString? {
-        guard let sender = message.sender,
-            let labelFont = font,
-            let labelTextColor = textColor else { return nil }
-
-        switch message.actionType {
-        case let .started(withName: .some(conversationName)):
-            let senderName = sender.isSelfUser ? "content.system.you_nominative".localized.capitalized : self.name(for: sender)
-            let text = "content.system.conversation.with_name.title".localized(args: senderName) && labelFont && labelTextColor
-            let name = conversationName.attributedString && largeFont
-            return [text, name].joined(separator: "\n".attributedString)
-        default:
-            return nil
-        }
+        guard let sender = message.sender, let font = font, let largeFont = largeFont, let textColor = textColor else { return nil }
+        guard case let .started(withName: conversationName?) = message.actionType else { return nil }
+        
+        let senderName = sender.isSelfUser ? "content.system.you_nominative".localized.capitalized : name(for: sender)
+        let text = "content.system.conversation.with_name.title".localized(args: senderName) && font && textColor
+        let title = conversationName.attributedString && largeFont && textColor
+        return [text, title].joined(separator: "\n".attributedString) && .lineHeight(4)
     }
 
     func attributedTitle() -> NSAttributedString? {
