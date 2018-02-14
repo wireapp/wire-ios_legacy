@@ -60,7 +60,6 @@ final class ConversationCreationController: UIViewController {
     static let mainViewHeight: CGFloat = 56
 
     fileprivate var errorLabel: UILabel!
-
     fileprivate var errorViewContainer: UIView!
     private var mainViewContainer: UIView!
 
@@ -72,21 +71,32 @@ final class ConversationCreationController: UIViewController {
     fileprivate var secondaryErrorView: UIView?
     
     fileprivate var values: ConversationCreationValues?
-
+    fileprivate let source: LinearGroupCreationFlowSource
+    
     weak var delegate: ConversationCreationControllerDelegate?
     private var preSelectedParticipants: Set<ZMUser>?
     
     @objc public convenience init(preSelectedParticipants: Set<ZMUser>) {
-        self.init(nibName: nil, bundle: nil)
+        self.init(source: .conversationDetails)
         self.preSelectedParticipants = preSelectedParticipants
     }
-
+    
+    public init(source: LinearGroupCreationFlowSource = .startUI) {
+        self.source = source
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override var prefersStatusBarHidden: Bool {
         return false
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        Analytics.shared().tagLinearGroupOpened(with: self.source)
 
         view.backgroundColor = UIColor.Team.background
         title = "create group".uppercased()
@@ -225,6 +235,9 @@ final class ConversationCreationController: UIViewController {
             textField.resignFirstResponder()
             let newValues = ConversationCreationValues(name: name, participants: preSelectedParticipants ?? values?.participants ?? [])
             values = newValues
+            
+            Analytics.shared().tagLinearGroupSelectParticipantsOpened(with: self.source)
+            
             let participantsController = AddParticipantsViewController(context: .create(newValues), variant: .light)
             participantsController.conversationCreationDelegate = self
             navigationController?.pushViewController(participantsController, animated: true)
@@ -247,6 +260,7 @@ extension ConversationCreationController: AddParticipantsConversationCreationDel
             values = values.map { .init(name: $0.name, participants: users) }
         case .create:
             values.apply {
+                Analytics.shared().tagLinearGroupCreated(with: self.source, isEmpty: $0.participants.isEmpty)
                 delegate?.conversationCreationController(self, didSelectName: $0.name, participants: $0.participants)
             }
         }
