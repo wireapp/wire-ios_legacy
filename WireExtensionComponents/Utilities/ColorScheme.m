@@ -28,6 +28,7 @@ NSString * const ColorSchemeColorAccentDimmedFlat = @"accent-current-dimmed-flat
 NSString * const ColorSchemeColorAccentDarken = @"accent-current-darken";
 
 NSString * const ColorSchemeColorSeparator = @"separator";
+NSString * const ColorSchemeColorCellSeparator = @"cell-separator";
 NSString * const ColorSchemeColorBackground = @"background";
 NSString * const ColorSchemeColorBarBackground = @"bar-background";
 NSString * const ColorSchemeColorContentBackground = @"content-background";
@@ -219,6 +220,7 @@ static NSString* light(NSString *colorString) {
     UIColor *white98 = [UIColor colorWithWhite:0.98 alpha:1];
     UIColor *white90 = [UIColor colorWithWhite:0.9 alpha:1];
     UIColor *white60 = [UIColor colorWithWhite:0.6 alpha:1];
+    UIColor *whiteAlpha8 = [UIColor wr_colorFromString:@"rgb(255, 255, 255, 0.08)"];
     UIColor *whiteAlpha16 = [UIColor wr_colorFromString:@"rgb(255, 255, 255, 0.16)"];
     UIColor *whiteAlpha24 = [UIColor wr_colorFromString:@"rgb(255, 255, 255, 0.24)"];
     UIColor *whiteAlpha40 = [UIColor wr_colorFromString:@"rgb(255, 255, 255, 0.40)"];
@@ -233,6 +235,7 @@ static NSString* light(NSString *colorString) {
     UIColor *backgroundGraphite = [UIColor wr_colorFromString:@"rgb(22, 24, 25)"];
     UIColor *backgroundLightGraphite = [UIColor wr_colorFromString:@"rgb(30, 32, 33)"];
     UIColor *graphite = [UIColor wr_colorFromString:@"rgb(51, 55, 58)"];
+    UIColor *graphiteAlpha8 = [UIColor wr_colorFromString:@"rgb(51, 55, 58, 0.08)"];
     UIColor *graphiteAlpha16 = [UIColor wr_colorFromString:@"rgb(51, 55, 58, 0.16)"];
     UIColor *graphiteAlpha40 = [UIColor wr_colorFromString:@"rgb(51, 55, 58, 0.40)"];
     UIColor *lightGraphite = [UIColor wr_colorFromString:@"rgb(141, 152, 159)"];
@@ -288,7 +291,8 @@ static NSString* light(NSString *colorString) {
                                    ColorSchemeColorSectionBackground: UIColor.clearColor,
                                    ColorSchemeColorSectionText: blackAlpha40,
                                    ColorSchemeColorTokenFieldBackground: blackAlpha4,
-                                   ColorSchemeColorTokenFieldTextPlaceHolder: lightGraphite
+                                   ColorSchemeColorTokenFieldTextPlaceHolder: lightGraphite,
+                                   ColorSchemeColorCellSeparator: whiteAlpha8
                                    }];
     
     for (ZMAccentColor color = ZMAccentColorMin; color <= ZMAccentColorMax; color++) {
@@ -343,7 +347,8 @@ static NSString* light(NSString *colorString) {
                                   ColorSchemeColorSectionBackground: UIColor.clearColor,
                                   ColorSchemeColorSectionText: whiteAlpha40,
                                   ColorSchemeColorTokenFieldBackground: whiteAlpha16,
-                                  ColorSchemeColorTokenFieldTextPlaceHolder: whiteAlpha40
+                                  ColorSchemeColorTokenFieldTextPlaceHolder: whiteAlpha40,
+                                  ColorSchemeColorCellSeparator: graphiteAlpha8
                                   }];
 
     for (ZMAccentColor color = ZMAccentColorMin; color <= ZMAccentColorMax; color++) {

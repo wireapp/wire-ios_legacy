@@ -18,33 +18,31 @@
 
 
 #import "AVSLogObserver.h"
-#import "WireSyncEngine+iOS.h"
 
-@interface AVSLogObserver () <ZMAVSLogObserver>
-@property (nonatomic, strong) id<ZMAVSLogObserverToken> token;
+@import WireSyncEngine;
+
+@interface AVSLogObserver () <AVSLogger>
+
+@property (nonatomic) id token;
+
 @end
 
 @implementation AVSLogObserver
-
-- (void)dealloc
-{
-    [ZMUserSession removeAVSLogObserver:self.token];
-}
 
 - (instancetype)init
 {
     self = [super init];
     if (self) {
-        self.token = [ZMUserSession addAVSLogObserver:self];
+        self.token = [SessionManager addLogger:self];
     }
     return self;
 }
 
-// MARK: - ZMAVSLogObserver
+// MARK: - AVSLoggger
 
-- (void)logMessage:(NSString *)msg
+- (void)logMessage:(NSString *)message
 {
-    DDLogVoice(@"AVS: %@", msg);
+    DDLogVoice(@"AVS: %@", message);
 }
 
 @end

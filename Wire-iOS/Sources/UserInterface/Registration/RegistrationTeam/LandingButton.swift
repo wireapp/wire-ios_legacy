@@ -53,7 +53,7 @@ class LandingButton: ButtonWithLargerHitArea {
             iconButton.width == iconButton.height
 
             // smaller button for iPhone4s screen size
-            iconButton.width == 72 ~ LayoutPriority(750)
+            iconButton.width == 72 ~ 750.0
             iconButton.top == selfView.top
             iconButton.centerX == selfView.centerX
 

@@ -16,11 +16,9 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-
 import XCTest
 import Cartography
 @testable import Wire
-
 
 class ProfileHeaderViewTests: ZMSnapshotTestCase {
 
@@ -29,74 +27,76 @@ class ProfileHeaderViewTests: ZMSnapshotTestCase {
         snapshotBackgroundColor = .white
     }
 
-    func testThatItRendersFallbackUserName() {
-        let model = ProfileHeaderViewModel(user: nil, fallbackName: "Jose Luis", addressBookName: nil, style: .noButton)
+    func createSutWithHeadStyle(style: ProfileHeaderStyle,
+                                user: ZMBareUser? = nil,
+                                addressBookName: String? = nil,
+                                fallbackName: String = "Jose Luis") -> ProfileHeaderView {
+        let model = ProfileHeaderViewModel(user: user, fallbackName: fallbackName, addressBookName: addressBookName, navigationControllerViewControllerCount: 0)
         let sut = ProfileHeaderView(with: model)
+        sut.headerStyle = style
+        sut.updateDismissButton()
+
+        return sut
+    }
+
+    func testThatItRendersFallbackUserName() {
+        let sut = createSutWithHeadStyle(style: .noButton)
         verifyInAllPhoneWidths(view: sut)
     }
 
     func testThatItRendersFallbackUserName_CancelButton() {
-        let model = ProfileHeaderViewModel(user: nil, fallbackName: "Jose Luis", addressBookName: nil, style: .cancelButton)
-        let sut = ProfileHeaderView(with: model)
+        let sut = createSutWithHeadStyle(style: .cancelButton)
         verifyInAllPhoneWidths(view: sut)
     }
 
     func testThatItRendersFallbackUserName_CancelButton_Verified() {
-        let model = ProfileHeaderViewModel(user: nil, fallbackName: "Jose Luis", addressBookName: nil, style: .cancelButton)
-        let sut = ProfileHeaderView(with: model)
+        let sut = createSutWithHeadStyle(style: .cancelButton)
         sut.showVerifiedShield = true
         verifyInAllPhoneWidths(view: sut)
     }
 
     func testThatItRendersFallbackUserName_BackButton() {
-        let model = ProfileHeaderViewModel(user: nil, fallbackName: "Jose Luis", addressBookName: nil, style: .backButton)
-        let sut = ProfileHeaderView(with: model)
+        let sut = createSutWithHeadStyle(style: .backButton)
         verifyInAllPhoneWidths(view: sut)
     }
 
     func testThatItRendersAddressBookName() {
         let user = MockUser.mockUsers().first
-        let model = ProfileHeaderViewModel(user: user, fallbackName: "Jose Luis", addressBookName: "JameyBoy", style: .backButton)
-        let sut = ProfileHeaderView(with: model)
+        let sut = createSutWithHeadStyle(style: .backButton, user: user, addressBookName: "JameyBoy")
         verifyInAllPhoneWidths(view: sut)
     }
 
     func testThatItRendersAddressBookName_EqualName() {
         let user = MockUser.mockUsers().first
-        let model = ProfileHeaderViewModel(user: user, fallbackName: "", addressBookName: user?.name, style: .backButton)
-        let sut = ProfileHeaderView(with: model)
+        let sut = createSutWithHeadStyle(style: .backButton, user: user, addressBookName: user?.name, fallbackName: "")
         verifyInAllPhoneWidths(view: sut)
     }
 
     func testThatItRendersUserName() {
         let user = MockUser.mockUsers().first
-        let model = ProfileHeaderViewModel(user: user, fallbackName: "", addressBookName: nil, style: .noButton)
-        let sut = ProfileHeaderView(with: model)
+        let sut = createSutWithHeadStyle(style: .noButton, user: user, fallbackName: "")
         verifyInAllPhoneWidths(view: sut)
     }
 
     func testThatItRendersUserName_Verified() {
         let user = MockUser.mockUsers().first
-        let model = ProfileHeaderViewModel(user: user, fallbackName: "", addressBookName: nil, style: .noButton)
-        let sut = ProfileHeaderView(with: model)
+        let sut = createSutWithHeadStyle(style: .noButton, user: user, fallbackName: "")
         sut.showVerifiedShield = true
         verifyInAllPhoneWidths(view: sut)
     }
 
     func testThatItRendersUserNoUsernameButEmail() {
         let user = MockUser.mockUsers().last
-        let model = ProfileHeaderViewModel(user: user, fallbackName: "", addressBookName: nil, style: .noButton)
-        let sut = ProfileHeaderView(with: model)
+        let sut = createSutWithHeadStyle(style: .noButton, user: user, fallbackName: "")
         verifyInAllPhoneWidths(view: sut)
     }
-
 
     func testThatItRendersUserWithEmptyUserName() {
         let user = MockUser.mockUsers().first
         (user as Any as! MockUser).handle = ""
-        let model = ProfileHeaderViewModel(user: user, fallbackName: "", addressBookName: nil, style: .noButton)
-        let sut = ProfileHeaderView(with: model)
+        let sut = createSutWithHeadStyle(style: .noButton, user: user, fallbackName: "")
         verifyInAllPhoneWidths(view: sut)
     }
 
 }
+

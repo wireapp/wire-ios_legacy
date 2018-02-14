@@ -98,7 +98,12 @@ final class AnalyticsMixpanelProvider: NSObject, AnalyticsProvider {
         "calling.received_video_call",
         "calling.avs_metrics_ended_call",
         "notifications.processing",
-        TeamInviteEvent.sentInvite(.teamCreation).name
+        TeamInviteEvent.sentInvite(.teamCreation).name,
+        "integration.added_service",
+        "integration.removed_service",
+        LinearGroupCreationFlowEvent.openedGroupCreation.rawValue,
+        LinearGroupCreationFlowEvent.openedSelectParticipants.rawValue,
+        LinearGroupCreationFlowEvent.groupCreationSucceeded.rawValue
         ])
     
     private static let enabledSuperProperties = Set<String>([

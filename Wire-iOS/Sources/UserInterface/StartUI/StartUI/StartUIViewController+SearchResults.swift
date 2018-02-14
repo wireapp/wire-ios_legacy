@@ -34,6 +34,8 @@ extension StartUIViewController: SearchResultsViewControllerDelegate {
         
         if !user.isConnected && !user.isTeamMember {
             self.presentProfileViewController(for: user, at: indexPath)
+        } else if let unboxed = BareUserToUser(user) {
+            delegate.startUI(self, didSelect: [unboxed])
         }
     }
     
@@ -47,7 +49,7 @@ extension StartUIViewController: SearchResultsViewControllerDelegate {
             return
         }
             
-        self.delegate.startUI(self, didSelect: Set(arrayLiteral: unboxedUser), for: .createOrOpenConversation)
+        self.delegate.startUI(self, didSelect: [unboxedUser])
     }
     
     public func searchResultsViewController(_ searchResultsViewController: SearchResultsViewController, didTapOnConversation conversation: ZMConversation) {
@@ -67,7 +69,6 @@ extension StartUIViewController: SearchResultsViewControllerDelegate {
             guard let `self` = self else { return }
             if let result = result {
                 switch result {
-                    
                 case .success(let conversation):
                     self.delegate.startUI?(self, didSelect: conversation)
                 case .failure(let error):
@@ -81,4 +82,45 @@ extension StartUIViewController: SearchResultsViewControllerDelegate {
         self.navigationController?.pushViewController(detail, animated: true)
     }
     
+    public func searchResultsViewController(_ searchResultsViewController: SearchResultsViewController, wantsToPerformAction action: SearchResultsViewControllerAction) {
+        switch action {
+        case .createGroup:
+            let controller = ConversationCreationController()
+            controller.delegate = self
+
+            if self.traitCollection.horizontalSizeClass == .compact {
+                let avoiding = KeyboardAvoidingViewController(viewController: controller)
+                self.navigationController?.pushViewController(avoiding, animated: true) {
+                    UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(true)
+                }
+            }
+            else {
+                let embeddedNavigationController = controller.wrapInNavigationController()
+                embeddedNavigationController.modalPresentationStyle = .formSheet
+                self.present(embeddedNavigationController, animated: true)
+            }
+        }
+    }
+}
+
+extension StartUIViewController: ConversationCreationControllerDelegate {
+    func dismiss(controller: ConversationCreationController) {
+        if traitCollection.horizontalSizeClass == .compact {
+            navigationController?.popToRootViewController(animated: true) {
+                UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(true)
+            }
+        }
+        else {
+            controller.navigationController?.dismiss(animated: true)
+        }
+    }
+    
+    func conversationCreationController(_ controller: ConversationCreationController, didSelectName name: String, participants: Set<ZMUser>) {
+        dismiss(controller: controller)
+        delegate.startUI(self, createConversationWith: participants, name: name)
+    }
+    
+    func conversationCreationControllerDidCancel(_ controller: ConversationCreationController) {
+        dismiss(controller: controller)
+    }
 }

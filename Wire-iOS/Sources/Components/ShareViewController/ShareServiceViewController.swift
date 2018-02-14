@@ -45,6 +45,7 @@ class ShareServiceViewController: ShareViewController<ServiceConversation,Servic
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(icon: .X,
                                                                  target: self,
                                                                  action: #selector(ShareServiceViewController.dismissButtonTapped(_:)))
+        self.navigationItem.rightBarButtonItem?.accessibilityIdentifier = "close"
     }
     
     // MARK: - Actions

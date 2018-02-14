@@ -100,8 +100,7 @@ static NSString *const ParticipantHeaderReuseIdentifier = @"ParticipantListHeade
         self.conversation = conversation;
         self.userImageObserverTokens = [NSMutableSet setWithCapacity:5];
         self.navigationControllerDelegate = [[ProfileNavigationControllerDelegate alloc] init];
-        
-        [self loadMagic];
+        self.insetMargin = 24;
     }
     
     return self;
@@ -285,13 +284,6 @@ static NSString *const ParticipantHeaderReuseIdentifier = @"ParticipantListHeade
 - (void)onTapToResign:(id)sender
 {
     [self.headerView.titleView resignFirstResponder];
-}
-
-#pragma mark - Magic
-
-- (void)loadMagic
-{
-    self.insetMargin = 24;
 }
 
 #pragma mark - ZMConversationObserver

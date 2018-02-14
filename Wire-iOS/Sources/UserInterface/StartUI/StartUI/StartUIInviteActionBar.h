@@ -19,28 +19,11 @@
 
 @import UIKit;
 
-
-
 @class Button;
 @class IconButton;
 
-
-typedef NS_ENUM(NSUInteger, StartUIQuickActionBarMode)
-{
-    StartUIQuickActionBarModeInvite,
-    StartUIQuickActionBarModeCreateConversation,
-    StartUIQuickActionBarModeOpenConversation,
-    StartUIQuickActionBarModeOpenGroupConversation
-};
-
-
-@interface StartUIQuickActionsBar : UIView
-
-@property (nonatomic) StartUIQuickActionBarMode mode;
+@interface StartUIInviteActionBar: UIView
 
 @property (nonatomic, readonly) Button *inviteButton;
-@property (nonatomic, readonly) Button *conversationButton;
-@property (nonatomic, readonly) IconButton *cameraButton;
-@property (nonatomic, readonly) IconButton *callButton;
-@property (nonatomic, readonly) IconButton *videoCallButton;
+
 @end

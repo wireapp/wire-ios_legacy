@@ -21,13 +21,6 @@
 
 @class ZMConversation, PeopleInputController, UserSelection;
 
-typedef NS_ENUM(NSUInteger, StartUIAction) {
-    StartUIActionCreateOrOpenConversation,
-    StartUIActionCall,
-    StartUIActionVideoCall,
-    StartUIActionPostPicture,
-};
-
 @protocol StartUIDelegate;
 
 @interface StartUIViewController : UIViewController
@@ -41,7 +34,8 @@ typedef NS_ENUM(NSUInteger, StartUIAction) {
 
 
 @protocol StartUIDelegate <NSObject>
-- (void)startUI:(StartUIViewController *)startUI didSelectUsers:(NSSet<ZMUser *> *)users forAction:(StartUIAction)action;
+- (void)startUI:(StartUIViewController *)startUI didSelectUsers:(NSSet<ZMUser *> *)users;
+- (void)startUI:(StartUIViewController *)startUI createConversationWithUsers:(NSSet<ZMUser *> *)users name:(NSString *)name;
 @optional
 - (void)startUI:(StartUIViewController *)startUI didSelectConversation:(ZMConversation *)conversation;
 @end

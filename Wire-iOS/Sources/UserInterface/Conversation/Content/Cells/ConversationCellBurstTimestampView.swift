@@ -106,7 +106,7 @@ import Cartography
 
             label.centerY == view.centerY
             label.leading == view.leadingMargin
-            label.trailing <= view.trailingMargin ~ LayoutPriority(500)
+            label.trailing <= view.trailingMargin ~ 500.0
 
             heightConstraints = [
                 leftSeparator.height == separatorHeight,

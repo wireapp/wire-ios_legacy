@@ -407,9 +407,16 @@ typedef NS_ENUM(NSUInteger, ProfileUserAction) {
 
 - (void)presentAddParticipantsViewController
 {
-    AddParticipantsViewController *addParticipantsViewController = [[AddParticipantsViewController alloc] initWithConversation:self.conversation];
+    NSSet *selectedUsers = nil;
+    if (nil != self.conversation.connectedUser) {
+        selectedUsers = [NSSet setWithObject:self.conversation.connectedUser];
+    } else {
+        selectedUsers = [NSSet set];
+    }
     
-    UINavigationController *presentedViewController = [addParticipantsViewController wrapInNavigationController:[AddParticipantsNavigationController class]];
+    ConversationCreationController *conversationCreationController = [[ConversationCreationController alloc] initWithPreSelectedParticipants:selectedUsers];
+    KeyboardAvoidingViewController *avoiding = [[KeyboardAvoidingViewController alloc] initWithViewController:conversationCreationController];
+    UINavigationController *presentedViewController = [avoiding wrapInNavigationController:AddParticipantsNavigationController.class];
     
     presentedViewController.modalPresentationStyle = UIModalPresentationOverCurrentContext;
     presentedViewController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
@@ -418,9 +425,10 @@ typedef NS_ENUM(NSUInteger, ProfileUserAction) {
                        animated:YES
                      completion:^{
         [Analytics.shared tagOpenedPeoplePickerGroupAction];
+        [UIApplication.sharedApplication wr_updateStatusBarForCurrentControllerAnimated:YES];
     }];
     
-    [self.delegate profileDetailsViewController:self didPresentAddParticipantsViewController:addParticipantsViewController];
+    [self.delegate profileDetailsViewController:self didPresentConversationCreationController:conversationCreationController];
 }
 
 - (void)bringUpConnectionRequestSheet

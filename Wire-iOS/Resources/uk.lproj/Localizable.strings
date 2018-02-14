@@ -39,9 +39,9 @@
 "peoplepicker.header.services" = "Сервіси";
 "peoplepicker.services.create_conversation.item" = "Розпочати нову розмову";
 "peoplepicker.services.add_service.button" = "Додати сервіс";
-"peoplepicker.services.add_service.error.title" = "The service can't be added";
-"peoplepicker.services.add_service.error.default" = "The service is unavailable at the moment";
-"peoplepicker.services.add_service.error.full" = "The conversation is full";
+"peoplepicker.services.add_service.error.title" = "Неможливо додати сервіс";
+"peoplepicker.services.add_service.error.default" = "Даний сервіс наразі недоступний";
+"peoplepicker.services.add_service.error.full" = "Розмова переповнена";
 
 "peoplepicker.title.create_conversation" = "Створити групу";
 "peoplepicker.title.add_to_conversation" = "Додати учасників";
@@ -434,7 +434,7 @@
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Profile and Participants
 
-"participants.add_people_button_title" = "Add";
+"participants.add_people_button_title" = "Додати";
 "participants.avatar.guest.title" = "Гість";
 
 // Meta Menu
@@ -539,6 +539,8 @@
 // General strings
 "general.confirm" = "OK";
 
+// Bot
+"participants.services.remove_integration.button" = "видалити інтеграцію";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Self profile
@@ -935,8 +937,8 @@
 "registration.signin.email_button.title" = "Email";
 "registration.signin.phone_button.title" = "Телефон";
 
-"registration.signin.alert.password_needed.title" = "Password needed";
-"registration.signin.alert.password_needed.message" = "Please enter your Password in order to log in.";
+"registration.signin.alert.password_needed.title" = "Необхідно ввести пароль";
+"registration.signin.alert.password_needed.message" = "Будь ласка, введіть ваш пароль для того, щоб увійти.";
 
 "registration.devices.title" = "Пристрої";
 "registration.devices.active_list_header" = "Активні";

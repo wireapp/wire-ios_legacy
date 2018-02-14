@@ -127,13 +127,13 @@ class EmojiSectionViewController: UIViewController {
         let fullSpacing = (view.bounds.width - 2 * inset) - iconSize
         let padding = fullSpacing / (count - 1)
 
-        constrain(view, sectionButtons.first!) { (view: LayoutProxy, firstButton: LayoutProxy) -> () in
+        constrain(view, sectionButtons.first!) { view, firstButton in
             firstButton.leading == view.leading + inset
             view.height == iconSize + inset
         }
         
         sectionButtons.enumerated().dropFirst().forEach { idx, button in
-            constrain(button, sectionButtons[idx - 1], view) { (button: LayoutProxy, previous: LayoutProxy, view: LayoutProxy) -> () in
+            constrain(button, sectionButtons[idx - 1], view) { button, previous, view in
                 button.centerX == previous.centerX + padding
             }
         }

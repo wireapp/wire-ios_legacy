@@ -24,6 +24,15 @@ import Foundation
     let rootGroup: SettingsControllerGeneratorType & SettingsInternalGroupCellDescriptorType
     static let dismissNotificationName = "SettingsNavigationControllerDismissNotificationName"
     
+    override var useDefaultPopGesture: Bool {
+        get {
+            return false
+        }
+        set {
+            // no op
+        }
+    }
+    
     let settingsPropertyFactory: SettingsPropertyFactory
     @objc var dismissAction: ((SettingsNavigationController) -> ())? = .none
     

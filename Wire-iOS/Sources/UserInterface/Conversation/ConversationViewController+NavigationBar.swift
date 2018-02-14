@@ -163,7 +163,7 @@ public extension ConversationViewController {
     }
 
     public func rightNavigationItems(forConversation conversation: ZMConversation) -> [UIBarButtonItem] {
-        guard !conversation.isReadOnly else { return [] }
+        guard !conversation.isReadOnly, conversation.otherActiveParticipants.count != 0 else { return [] }
 
         if conversation.canJoinCall {
             return [UIBarButtonItem(customView: joinCallButton)]
@@ -268,7 +268,7 @@ public extension ConversationViewController {
         conversation.startVideoCall()
     }
 
-    private dynamic func joinCallButtonTapped(_sender: UIBarButtonItem) {
+    private dynamic func joinCallButtonTapped(_sender: AnyObject!) {
         guard conversation.canJoinCall else { return }
 
         // This will result in joining an ongoing call.
