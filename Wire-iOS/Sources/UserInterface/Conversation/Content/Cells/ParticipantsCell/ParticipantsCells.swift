@@ -91,6 +91,7 @@ public class ParticipantsCell: ConversationCell {
         labelView.isAccessibilityElement = true
 
         stackView.axis = .vertical
+        stackView.spacing = verticalInset
         messageContentView.addSubview(stackView)
         [topContainer, bottomContainer].forEach(stackView.addArrangedSubview)
         topContainer.addSubview(nameLabel)
@@ -106,7 +107,10 @@ public class ParticipantsCell: ConversationCell {
     
     private func createConstraints() {
         constrain(stackView, messageContentView) { stackView, messageContentView in
-            stackView.edges == messageContentView.edges
+            stackView.top == messageContentView.top + verticalInset
+            stackView.leading == messageContentView.leading
+            stackView.trailing == messageContentView.trailing
+            stackView.bottom == messageContentView.bottom - verticalInset
         }
         
         constrain(leftIconContainer, leftIconView, labelView, messageContentView, authorLabel) { leftIconContainer, leftIconView, labelView, messageContentView, authorLabel in
@@ -122,10 +126,10 @@ public class ParticipantsCell: ConversationCell {
         }
         
         constrain(nameLabel, labelView, messageContentView, leftIconContainer, bottomContainer) { nameLabel, labelView, messageContentView, leftIconContainer, bottomContainer in
-            labelView.top == bottomContainer.top + verticalInset
+            labelView.top == bottomContainer.top
             nameLabel.leading == leftIconContainer.trailing
             nameLabel.trailing <= messageContentView.trailing - 72
-            labelView.bottom <= bottomContainer.bottom - verticalInset
+            labelView.bottom <= bottomContainer.bottom
             messageContentView.height >= 32
         }
         
@@ -142,7 +146,7 @@ public class ParticipantsCell: ConversationCell {
             participants.leading == label.leading
             participants.trailing == container.trailing - 72
             participants.top == label.bottom + 8
-            participants.bottom == bottomContainer.bottom - 8
+            participants.bottom == bottomContainer.bottom
         }
     }
     
