@@ -21,7 +21,7 @@ import Foundation
 class VoiceChannelParticipantsController : NSObject {
     
     let conversation : ZMConversation
-    let collectionView : UICollectionView
+    unowned let collectionView : UICollectionView
     
     var voiceGainObserverToken : Any?
     var participantObserverToken : Any?
@@ -42,7 +42,7 @@ class VoiceChannelParticipantsController : NSObject {
         // the next layout pass, which is when the collection view normally queries the data source.
         collectionView.performBatchUpdates(nil)
     }
-    
+
     fileprivate func playHapticFeedback(for changeInfo: VoiceChannelParticipantNotification) {
         guard #available(iOS 10, *) else {
             return
@@ -63,6 +63,7 @@ extension VoiceChannelParticipantsController : UICollectionViewDataSource {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "VoiceChannelParticipantCell", for: indexPath)
         
         if let participants = conversation.voiceChannel?.participants,
+            indexPath.row < participants.count,
             let user = participants.object(at: indexPath.row) as? ZMUser,
             let participantState = conversation.voiceChannel?.state(forParticipant: user) {
             (cell as? VoiceChannelParticipantCell)?.configure(for: user, participantState: participantState)
