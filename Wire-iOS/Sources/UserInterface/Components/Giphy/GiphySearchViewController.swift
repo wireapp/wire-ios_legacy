@@ -208,8 +208,8 @@ class GiphySearchViewController: UICollectionViewController {
         masonrylayout.itemMargins = CGSize(width: 1, height: 1)
     }
 
-    func onDismiss() {
-        self.navigationController?.dismiss(animated: true, completion: nil)
+    func onDismiss(completion: (() -> Swift.Void)? = nil) {
+        self.navigationController?.dismiss(animated: true, completion: completion)
     }
 
     func performSearch() {
@@ -253,9 +253,14 @@ class GiphySearchViewController: UICollectionViewController {
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: GiphyCollectionViewCell.CellIdentifier, for: indexPath) as! GiphyCollectionViewCell
-        let ziph = searchResultsController.results[indexPath.row]
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: GiphyCollectionViewCell.CellIdentifier,
+                                                            for: indexPath) as? GiphyCollectionViewCell
+            else {
+                fatal("cannot dequeue cell")
+            }
 
+        let ziph = searchResultsController.results[indexPath.row]
+        
         if let representation = ziph.ziphyImages[ZiphyClient.fromZiphyImageTypeToString(.fixedWidthDownsampled)] {
             cell.ziph = ziph
             cell.representation = representation
