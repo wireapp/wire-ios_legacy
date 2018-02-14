@@ -49,12 +49,6 @@ final class MarkdownTextViewTests: XCTestCase {
     
     // MARK: - Helpers
     
-    // Insert the text, but AFTER giving sut a chance to respond.
-    func insertText(_ str: String) {
-        sut.respondToChange(str, inRange: NSMakeRange(str.length, 0))
-        sut.insertText(str)
-    }
-    
     func button(for markdown: Markdown) -> IconButton? {
         switch markdown {
         case .h1, .h2, .h3: return bar.headerButton
@@ -63,6 +57,12 @@ final class MarkdownTextViewTests: XCTestCase {
         case .code:         return bar.codeButton
         default:            return nil
         }
+    }
+    
+    // Insert the text, but AFTER giving sut a chance to respond.
+    func insertText(_ str: String) {
+        sut.respondToChange(str, inRange: NSMakeRange(str.length, 0))
+        sut.insertText(str)
     }
     
     func select(_ markdown: Markdown...) {
@@ -92,7 +92,6 @@ final class MarkdownTextViewTests: XCTestCase {
     // Attributes that we expect for certain markdown combinations.
     func attrs(for markdown: Markdown) -> [String: Any] {
         switch markdown {
-        // atomic
         case .none:
             return [
                 MarkdownIDAttributeName: markdown,
@@ -361,12 +360,94 @@ final class MarkdownTextViewTests: XCTestCase {
         checkAttributes(for: .none, inRange: NSMakeRange(line1.length, line2.length + 1))
     }
     
-    func testThatSelectingCodeClearsBoldAndItalic() {
-        XCTFail()
+    func testThatSelectingCodeClearsBold() {
+        // GIVEN
+        let text = "Oh Hai!"
+        // WHEN
+        select(.bold)
+        insertText(text)
+        // THEN
+        checkAttributes(for: .bold, inRange: NSMakeRange(0, text.length))
+        // AND WHEN
+        select(.code)
+        insertText(text)
+        // THEN
+        checkAttributes(for: .code, inRange: NSMakeRange(text.length, text.length))
     }
     
-    func testThatSelectingBoldOrItalicClearsCode() {
-        XCTFail()
+    func testThatSelectingCodeClearsItalic() {
+        // GIVEN
+        let text = "Oh Hai!"
+        // WHEN
+        select(.italic)
+        insertText(text)
+        // THEN
+        checkAttributes(for: .italic, inRange: NSMakeRange(0, text.length))
+        // AND WHEN
+        select(.code)
+        insertText(text)
+        // THEN
+        checkAttributes(for: .code, inRange: NSMakeRange(text.length, text.length))
+    }
+    
+    func testThatSelectingCodeClearsBoldItalic() {
+        // GIVEN
+        let text = "Oh Hai!"
+        // WHEN
+        select(.bold, .italic)
+        insertText(text)
+        // THEN
+        checkAttributes(for: [.bold, .italic], inRange: NSMakeRange(0, text.length))
+        // AND WHEN
+        select(.code)
+        insertText(text)
+        // THEN
+        checkAttributes(for: .code, inRange: NSMakeRange(text.length, text.length))
+    }
+    
+    func testThatSelectingBoldClearsCode() {
+        // GIVEN
+        let text = "Oh Hai!"
+        // WHEN
+        select(.code)
+        insertText(text)
+        // THEN
+        checkAttributes(for: .code, inRange: NSMakeRange(0, text.length))
+        // AND WHEN
+        select(.bold)
+        insertText(text)
+        // THEN
+        checkAttributes(for: .bold, inRange: NSMakeRange(text.length, text.length))
+    }
+    
+    func testThatSelectingItalicClearsCode() {
+        // GIVEN
+        let text = "Oh Hai!"
+        // WHEN
+        select(.code)
+        insertText(text)
+        // THEN
+        checkAttributes(for: .code, inRange: NSMakeRange(0, text.length))
+        // AND WHEN
+        select(.italic)
+        insertText(text)
+        // THEN
+        checkAttributes(for: .italic, inRange: NSMakeRange(text.length, text.length))
+    }
+    
+    func testThatSelectingBoldItalicClearsCode() {
+        // GIVEN
+        let text = "Oh Hai!"
+        // WHEN
+        select(.code)
+        insertText(text)
+        // THEN
+        checkAttributes(for: .code, inRange: NSMakeRange(0, text.length))
+        // AND WHEN
+        select(.bold, .italic)
+        insertText(text)
+        // THEN
+        checkAttributes(for: [.bold, .italic], inRange: NSMakeRange(text.length, text.length))
     }
     
     func testThatSelectingListOnHeaderRemovesHeaderAttributes() {
@@ -379,49 +460,220 @@ final class MarkdownTextViewTests: XCTestCase {
 
     // MARK: - Selections
     
-    func testThatSelectingMarkdownOnRangeUpdatesAttributes() {
-        XCTFail()
-    }
-    
-    func testThatDeselectingMarkdownOnRangeUpdatesAttributes() {
-        XCTFail()
+    var wholeTextRange: UITextRange {
+        return sut.textRange(from: sut.beginningOfDocument, to: sut.endOfDocument)!
     }
     
     func testThatSelectingMarkdownOnRangeContainingSingleMarkdownUpdatesAttributes() {
-        XCTFail()
+        // GIVEN
+        let text = "Oh Hai!"
+        let wholeRange = NSMakeRange(0, text.length)
+        
+        insertText(text)
+        checkAttributes(for: .none, inRange: wholeRange)
+        sut.selectedTextRange = wholeTextRange
+        
+        // WHEN
+        select(.bold)
+        // THEN
+        checkAttributes(for: .bold, inRange: wholeRange)
+        // AND WHEN
+        select(.italic)
+        // THEN
+        checkAttributes(for: [.bold, .italic], inRange: wholeRange)
+        // AND WHEN
+        select(.code)
+        // THEN
+        checkAttributes(for: .code, inRange: wholeRange)
+        // AND WHEN
+        select(.h1)
+        // THEN
+        checkAttributes(for: [.h1, .code], inRange: wholeRange)
+        // AND WHEN
+        select(.italic)
+        // THEN
+        checkAttributes(for: [.h1, .italic], inRange: wholeRange)
     }
     
-    func testThatSelectingMarkdownOnRangeContainingMultipleMarkdownUpdatesAttributes() {
-        XCTFail()
+    func testThatWhenTheSelectedRangeContainsMultipleMarkdownTheActiveMarkdownIsNone() {
+        // GIVEN
+        let text = "Oh Hai!"
+        
+        select(.italic)
+        insertText(text)
+        checkAttributes(for: .italic, inRange: NSMakeRange(0, text.length))
+        
+        select(.code)
+        insertText(text)
+        checkAttributes(for: .code, inRange: NSMakeRange(text.length, text.length))
+        
+        // WHEN
+        sut.selectedTextRange = wholeTextRange
+        // THEN
+        XCTAssertEqual(sut.activeMarkdown, .none)
+    }
+    
+    func testThatSelectingMarkdownOnRangeContainingMultipleMarkdownReplacesAttributes() {
+        // GIVEN
+        let text = "Oh Hai!"
+        let wholeRange = NSMakeRange(0, text.length * 2)
+        
+        select(.italic)
+        insertText(text)
+        checkAttributes(for: .italic, inRange: NSMakeRange(0, text.length))
+        
+        select(.code)
+        insertText(text)
+        checkAttributes(for: .code, inRange: NSMakeRange(text.length, text.length))
+        
+        // WHEN
+        sut.selectedTextRange = wholeTextRange
+        select(.bold)
+        // THEN
+        checkAttributes(for: .bold, inRange: wholeRange)
+    }
+    
+    func testThatDeselectingMarkdownOnRangeUpdatesAttributes() {
+        // GIVEN
+        let text = "Oh Hai!"
+        let wholeRange = NSMakeRange(0, text.length)
+        
+        select(.h1, .bold, .italic)
+        insertText(text)
+        checkAttributes(for: [.h1, .bold, .italic], inRange: wholeRange)
+        sut.selectedTextRange = wholeTextRange
+        
+        // WHEN
+        deselect(.bold)
+        // THEN
+        checkAttributes(for: [.h1, .italic], inRange: wholeRange)
+        // AND WHEN
+        deselect(.h1)
+        // THEN
+        checkAttributes(for: .italic, inRange: wholeRange)
+        // AND WHEN
+        deselect(.italic)
+        // THEN
+        checkAttributes(for: .none, inRange: wholeRange)
     }
     
     // MARK: - Lists
     
-    func testThatSelectingListInsertsNewItemPrefix() {
-        XCTFail()
+    func testThatSelectingListInsertsNewItemPrefix_Number() {
+        // GIVEN
+        let text = "Oh Hai!"
+        insertText(text)
+        // WHEN
+        sut.markdownBarView(bar, didSelectListType: .number)
+        // THEN
+        XCTAssertEqual(sut.text, "1. \(text)")
     }
     
-    func testThatDeselectingListRemovesItemPrefix() {
-        XCTFail()
+    func testThatSelectingListInsertsNewItemPrefix_Bullet() {
+        // GIVEN
+        let text = "Oh Hai!"
+        insertText(text)
+        // WHEN
+        sut.markdownBarView(bar, didSelectListType: .bullet)
+        // THEN
+        XCTAssertEqual(sut.text, "- \(text)")
     }
     
-    func testThatSelectingListBelowExistingItemInsertsNewItemWithCorrectPrefix() {
-        XCTFail()
+    func testThatDeselectingListRemovesItemPrefix_Number() {
+        // GIVEN
+        let text = "Oh Hai!"
+        insertText("1. \(text)")
+        // WHEN
+        sut.markdownBarView(bar, didSelectListType: .number)
+        // THEN
+        XCTAssertEqual(sut.text, text)
+    }
+    
+    func testThatDeselectingListRemovesItemPrefix_Bullet() {
+        // GIVEN
+        let text = "Oh Hai!"
+        ["- ", "+ ", "* "].forEach {
+            insertText($0 + text)
+            // WHEN
+            sut.markdownBarView(bar, didSelectListType: .bullet)
+            // THEN
+            XCTAssertEqual(sut.text, text)
+            // AFTER
+            sut.text = ""
+        }
+    }
+    
+    func testThatSelectingListBelowExistingItemInsertsNewItemWithCorrectPrefix_Number() {
+        // GIVEN
+        insertText("1. Oh Hai!\n")
+        insertText("OK Bai!")
+        // WHEN
+        sut.markdownBarView(bar, didSelectListType: .number)
+        // THEN
+        XCTAssertEqual(sut.text, "1. Oh Hai!\n2. OK Bai!")
+        // AND WHEN
+        insertText("\nI'm still here.")
+        // THEN
+        XCTAssertEqual(sut.text, "1. Oh Hai!\n2. OK Bai!\n3. I'm still here.")
+    }
+    
+    func testThatSelectingListBelowExistingItemInsertsNewItemWithCorrectPrefix_Bullet() {
+        ["- ", "+ ", "* "].forEach {
+            // GIVEN
+            insertText($0 + " Oh Hai!\n")
+            insertText("OK Bai!")
+            // WHEN
+            sut.markdownBarView(bar, didSelectListType: .bullet)
+            // THEN
+            XCTAssertEqual(sut.text, $0 + "Oh Hai!\n" + $0 + "OK Bai!")
+            // AFTER
+            sut.text = ""
+        }
     }
     
     func testThatChangingListTypeConvertsPrefix() {
-        XCTFail()
+        // GIVEN
+        insertText("1. Oh Hai!")
+        // WHEN
+        sut.markdownBarView(bar, didSelectListType: .bullet)
+        // THEN
+        XCTAssertEqual(sut.text, "- Oh Hai!")
+        // AND WHEN
+        sut.markdownBarView(bar, didSelectListType: .number)
+        // THEN
+        XCTAssertEqual(sut.text, "1. Oh Hai!")
     }
     
     func testThatInsertingNewLineAfterItemCreatesNewEmptyItem() {
-        XCTFail()
+        // GIVEN
+        insertText("1. Oh Hai!")
+        // WHEN
+        insertText("\n")
+        // THEN
+        XCTAssertEqual(sut.text, "1. Oh Hai!\n2. ")
     }
     
     func testThatInsertingNewLineAfterEmptyItemDeletesTheItem() {
-        XCTFail()
+        // GIVEN
+        insertText("1. Oh Hai!\n2. ")
+        // WHEN
+        insertText("\n")
+        // THEN
+        XCTAssertEqual(sut.text, "1. Oh Hai!\n")
     }
     
     func testThatInsertingNewLineInMiddleOfItemSplitsItemIntoTwoItems() {
+        // GIVEN
+        insertText("- Oh Hai!")
+        // place caret just before "H"
+        sut.selectedRange = NSMakeRange(5, 0)
+        // WHEN
+        insertText("\n")
+        // THEN
+        XCTAssertEqual(sut.text, "- Oh \n- Hai!")
+    }
+    
+    func testThatInsertingAndRemovingListItemPreservesCurrentTextSelection() {
         XCTFail()
     }
     
