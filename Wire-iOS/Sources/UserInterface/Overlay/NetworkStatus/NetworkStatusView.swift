@@ -240,7 +240,6 @@ class NetworkStatusView: UIView {
                   animated: Bool,
                   connectingViewHidden: Bool,
                   offlineViewHidden: Bool) {
-        offlineViewTopMargin?.constant = offlineBarState == .expanded ? NetworkStatusView.verticalMargin : 0
         offlineViewBottomMargin?.constant = offlineBarState == .expanded ? -NetworkStatusView.verticalMargin : 0
 
         connectingViewHeight?.constant = connectingViewHidden ? 0 : OfflineBar.collapsedHeight
