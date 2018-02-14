@@ -18,23 +18,22 @@
 
 import Foundation
 
-class InviteTeamMemberSection: NSObject, CollectionViewSectionController {
+class CreateGroupSection: NSObject, CollectionViewSectionController {
     
+    enum Row {
+        case createGroup
+    }
+    
+    private let data = [Row.createGroup]
     weak var delegate: CollectionViewSectionDelegate?
-    var team: Team?
     var collectionView: UICollectionView? = nil {
         didSet {
-            collectionView?.register(InviteTeamMemberCell.self, forCellWithReuseIdentifier: InviteTeamMemberCell.zm_reuseIdentifier)
+            collectionView?.register(CreateGroupCell.self, forCellWithReuseIdentifier: CreateGroupCell.zm_reuseIdentifier)
         }
     }
     
-    init(team: Team?) {
-        super.init()
-        self.team = team
-    }
-    
     var isHidden: Bool {
-        return team?.members.count > 1
+        return false
     }
     
     func hasSearchResults() -> Bool {
@@ -42,36 +41,35 @@ class InviteTeamMemberSection: NSObject, CollectionViewSectionController {
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 1
+        return data.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        return collectionView.dequeueReusableCell(withReuseIdentifier: InviteTeamMemberCell.zm_reuseIdentifier, for: indexPath)
+        return collectionView.dequeueReusableCell(withReuseIdentifier: CreateGroupCell.zm_reuseIdentifier, for: indexPath)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: collectionView.bounds.size.width, height: WAZUIMagic.cgFloat(forIdentifier: "people_picker.search_results_mode.tile_height"))
+        return CGSize(width: collectionView.bounds.width, height: WAZUIMagic.cgFloat(forIdentifier: "people_picker.search_results_mode.tile_height"))
     }
-
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        return CGSize.zero
+        return .zero
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         let top = WAZUIMagic.cgFloat(forIdentifier: "people_picker.search_results_mode.top_padding")
         let left = WAZUIMagic.cgFloat(forIdentifier: "people_picker.search_results_mode.left_padding")
         let right = WAZUIMagic.cgFloat(forIdentifier: "people_picker.search_results_mode.right_padding")
-        
         return UIEdgeInsets(top: top, left: left, bottom: 0, right: right)
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        URL.manageTeam(source: .onboarding).open()
+        collectionView.deselectItem(at: indexPath, animated: true)
+        delegate?.collectionViewSectionController(self, didSelectItem: data[indexPath.row], at: indexPath)
     }
     
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
-        
+        // no-op
     }
     
 }
-

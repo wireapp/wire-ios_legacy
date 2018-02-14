@@ -539,6 +539,8 @@
 // General strings
 "general.confirm" = "V redu";
 
+// Bot
+"participants.services.remove_integration.button" = "remove integration";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Self profile

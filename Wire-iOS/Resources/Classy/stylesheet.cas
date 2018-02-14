@@ -50,11 +50,11 @@ IconButton.conversation-toolbar {
     adjustsImageWhenHighlighted: false;
 }
 
-StartUIQuickActionsBar {
+StartUIInviteActionBar {
     backgroundColor: rgb(0, 0, 0, 0.24);
 }
 
-StartUIQuickActionsBar > Button {
+StartUIInviteActionBar > Button {
     titleEdgeInsets: 2, 8, 3, 8;
 }
 
@@ -1249,13 +1249,6 @@ AddParticipantsViewController SearchHeaderViewController {
     closeButton: @{
         iconColor[state:normal]: $color-icon-normal;
         iconColor[state:highlighted]: $color-icon-highlighted;
-    }
-}
-
-
-AddParticipantsViewController {
-    view: @{
-        backgroundColor: $color-bar-background;
     }
 }
 

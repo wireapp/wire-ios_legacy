@@ -816,6 +816,21 @@
     }];
 }
 
+- (void)profileViewController:(ProfileViewController *)controller wantsToCreateConversationWithName:(NSString *)name users:(NSSet *)users
+{
+    [self dismissViewControllerAnimated:YES completion:^{
+        __block  ZMConversation *newConversation = nil;
+        
+        @weakify(self);
+        [ZMUserSession.sharedSession enqueueChanges:^{
+            newConversation = [ZMConversation insertGroupConversationIntoUserSession:ZMUserSession.sharedSession withParticipants:users.allObjects name:name inTeam:ZMUser.selfUser.team];
+        } completionHandler:^{
+            @strongify(self);
+            [self.zClientViewController selectConversation:newConversation focusOnView:YES animated:YES];
+        }];
+    }];
+}
+
 @end
 
 

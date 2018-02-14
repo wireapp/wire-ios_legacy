@@ -86,8 +86,8 @@
 "contacts_ui.notification.invitation_failed" = "无法发送邀请";
 "contacts_ui.title" = "邀请联系人";
 
-"conversation_list.empty.all_archived.message" = "所以内容均已存档";
-"conversation_list.empty.no_contacts.message" = "开始一段对话或创建一个组。";
+"conversation_list.empty.all_archived.message" = "全部都已存档";
+"conversation_list.empty.no_contacts.message" = "开始对话或\n创建群组。";
 
 
 // Conversation List Indicator
@@ -539,6 +539,8 @@
 // General strings
 "general.confirm" = "好";
 
+// Bot
+"participants.services.remove_integration.button" = "remove integration";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Self profile
@@ -687,7 +689,7 @@
 "self.settings.sound_menu.sounds.none" = "无";
 
 "self.settings.callkit.title" = "通话";
-"self.settings.callkit.caption" = "与iOS分享";
+"self.settings.callkit.caption" = "与iOS系统共用";
 "self.settings.callkit.description" = "在锁屏界面与通话记录中显示Wire的来电信息。如果您已启动iCloud，您的来电记录也将同步到Apple服务器。";
 
 "self.settings.vbr.title" = "可变码率编码";

@@ -42,7 +42,7 @@ class UINavigationBarContainer: UIView {
     }
     
     func createConstraints() {
-        constrain(navigationBar, self) { (navigationBar: LayoutProxy, view: LayoutProxy) -> () in
+        constrain(navigationBar, self) { navigationBar, view in
             self.topMargin = navigationBar.top == view.top + UIScreen.safeArea.top
             self.navHeight = navigationBar.height == portraitNavbarHeight
             navigationBar.left == view.left

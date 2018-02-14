@@ -195,9 +195,9 @@ import CocoaLumberjackSwift
             topContainer.top >= view.top + 16
             topContainer.right <= view.right - 16
             
-            topContainer.left == view.left + 16 ~ LayoutPriority(750)
-            topContainer.top == view.top + 16 ~ LayoutPriority(750)
-            topContainer.right == view.right - 16 ~ LayoutPriority(750)
+            topContainer.left == view.left + 16 ~ 750.0
+            topContainer.top == view.top + 16 ~ 750.0
+            topContainer.right == view.right - 16 ~ 750.0
             
             topContainer.width <= 400
             topContainer.centerX == view.centerX

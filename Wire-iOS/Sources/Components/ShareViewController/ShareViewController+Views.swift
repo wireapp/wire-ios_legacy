@@ -47,7 +47,7 @@ extension ShareViewController {
         self.tokenField.tokenSelectedTitleColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorTextForeground, variant: .dark)
         self.tokenField.tokenTitleVerticalAdjustment = 1
         self.tokenField.textView.placeholderTextAlignment = .natural
-        self.tokenField.textView.accessibilityLabel = "textViewSearch"
+        self.tokenField.textView.accessibilityIdentifier = "textViewSearch"
         self.tokenField.textView.placeholder = "content.message.forward.to".localized.uppercased()
         self.tokenField.textView.keyboardAppearance = .dark
         self.tokenField.textView.returnKeyType = .done

@@ -23,7 +23,7 @@
 
 @interface CollectionViewSectionAggregator : NSObject <UICollectionViewDataSource, UICollectionViewDelegateFlowLayout>
 
-@property (nonatomic, nullable)   NSArray<id<CollectionViewSectionController>> *sectionControllers;
+@property (nonatomic, nullable) NSArray<id<CollectionViewSectionController>> *sectionControllers;
 @property (nonatomic, readonly, nonnull) NSArray<id<CollectionViewSectionController>> *visibleSectionControllers;
 @property (nonatomic, weak, nullable) UICollectionView *collectionView;
 

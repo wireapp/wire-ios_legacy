@@ -536,7 +536,7 @@ extension VoiceChannelOverlay {
         
         constrain(self, contentContainer, callingTopUserImage) { view, contentContainer, callingTopUserImage in
             
-            contentContainer.width == 320 ~ LayoutPriority(750)
+            contentContainer.width == 320 ~ 750.0
             contentContainer.width <= 320
             contentContainer.top == view.top
             contentContainer.bottom == view.bottom
@@ -585,8 +585,8 @@ extension VoiceChannelOverlay {
             avatarContainer.leading == contentContainer.leadingMargin
             avatarContainer.trailing == contentContainer.trailingMargin
             
-            callingUserImage.width == 320 ~ LayoutPriority(750)
-            callingUserImage.height == 320 ~ LayoutPriority(750)
+            callingUserImage.width == 320 ~ 750.0
+            callingUserImage.height == 320 ~ 750.0
             callingUserImage.width == callingUserImage.height
             callingUserImage.center == avatarContainer.center
             callingUserImage.leading >= avatarContainer.leading

@@ -100,7 +100,7 @@ public final class InputBarButtonsView: UIView {
             outerContainer.top == view.top
             
             view.height == outerContainer.height + UIScreen.safeArea.bottom
-            view.width == 600 ~ LayoutPriority(750)
+            view.width == 600 ~ 750.0
         }
     }
     
@@ -186,7 +186,7 @@ public final class InputBarButtonsView: UIView {
             let isLastButton = rowIsFull && current == buttons.last
             let offset = constants.iconSize / 2 + constants.buttonMargin
             
-            constrain(previous, current) { (previous: LayoutProxy, current: LayoutProxy) -> () in
+            constrain(previous, current) { previous, current in
                 previous.trailing == current.leading
                 
                 if (isFirstButton) {

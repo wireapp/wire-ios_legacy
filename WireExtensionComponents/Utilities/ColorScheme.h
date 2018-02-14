@@ -56,6 +56,7 @@ extern NSString * const ColorSchemeColorBackground;
 extern NSString * const ColorSchemeColorContentBackground;
 extern NSString * const ColorSchemeColorBarBackground;
 extern NSString * const ColorSchemeColorSeparator;
+extern NSString * const ColorSchemeColorCellSeparator;
 extern NSString * const ColorSchemeColorBackgroundOverlay;
 extern NSString * const ColorSchemeColorBackgroundOverlayWithoutPicture;
 extern NSString * const ColorSchemeColorPlaceholderBackground;
