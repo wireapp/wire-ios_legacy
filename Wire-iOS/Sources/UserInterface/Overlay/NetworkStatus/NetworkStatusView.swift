@@ -162,7 +162,9 @@ class NetworkStatusView: UIView {
 
     func update(state: NetworkStatusViewState, animated: Bool) {
         _state = state
-        updateViewState(animated: animated)
+        // if this is called before the frame is set then the offline
+        // bar zooms into view (which we don't want).
+        updateViewState(animated: (frame == .zero) ? false : animated)
     }
 
     override init(frame: CGRect) {
