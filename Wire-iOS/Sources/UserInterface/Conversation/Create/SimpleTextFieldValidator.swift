@@ -37,7 +37,8 @@ final class SimpleTextFieldValidator: NSObject {
         if stringToValidate.isEmpty {
             return .empty
         }
-        if stringToValidate.count > 64 {
+        // Check byte size (emoji + zalgo)
+        if stringToValidate.utf8.count > 64 {
             return .tooLong
         }
         return nil
