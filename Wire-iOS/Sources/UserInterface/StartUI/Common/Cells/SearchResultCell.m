@@ -316,15 +316,23 @@
 
 - (void)updateAccessibilityLabel
 {
+    NSString *newAccessibilityLabel = @"";
+    
     if (self.nameLabel.text.length != 0 && self.subtitleLabel.text.length != 0) {
-        self.accessibilityLabel = [NSString stringWithFormat:@"%@ - %@", self.nameLabel.text, self.subtitleLabel.text];
+        newAccessibilityLabel = [NSString stringWithFormat:@"%@ - %@", self.nameLabel.text, self.subtitleLabel.text];
     }
     else if (self.nameLabel.text.length != 0) {
-        self.accessibilityLabel = self.nameLabel.text;
+        newAccessibilityLabel = self.nameLabel.text;
     }
     else {
-        self.accessibilityLabel = @"";
+        newAccessibilityLabel = @"";
     }
+    
+    if (!self.guestLabel.hidden && self.guestLabel.textLabel.text.length != 0) {
+        newAccessibilityLabel = [NSString stringWithFormat:@"%@ (%@)", newAccessibilityLabel, self.guestLabel.textLabel.text];
+    }
+    
+    self.accessibilityLabel = newAccessibilityLabel;
 }
 
 #pragma mark - Public API
@@ -480,8 +488,8 @@
             break;
         }
         case SearchResultCellAccessoryTypeTrailingCheckmark: {
-            UIColor *foregroundColor = [ColorScheme.defaultColorScheme colorWithName:ColorSchemeColorBackground];
-            UIColor *backgroundColor = [ColorScheme.defaultColorScheme colorWithName:ColorSchemeColorIconNormal];
+            UIColor *foregroundColor = [ColorScheme.defaultColorScheme colorWithName:ColorSchemeColorBackground variant:self.colorSchemeVariant];
+            UIColor *backgroundColor = [ColorScheme.defaultColorScheme colorWithName:ColorSchemeColorIconNormal variant:self.colorSchemeVariant];
             self.trailingCheckmarkView.image = selected ? [UIImage imageForIcon:ZetaIconTypeCheckmark iconSize:ZetaIconSizeLike color:foregroundColor] : nil;
             self.trailingCheckmarkView.backgroundColor = selected ? backgroundColor : UIColor.clearColor;
             UIColor *borderColor = selected ? backgroundColor : [backgroundColor colorWithAlphaComponent:0.64];
@@ -532,7 +540,7 @@
 
 - (NSAttributedString *)attributedSubtitleForUser:(id <ZMBareUser, ZMSearchableUser>)user
 {
-    if ([user conformsToProtocol:@protocol(SearchServiceUser)]) {
+    if ([user conformsToProtocol:@protocol(SearchServiceUser)] && user.isServiceUser) {
         return [self attributedSubtitleForServiceUser:(id<SearchServiceUser>)user];
     }
     else {
