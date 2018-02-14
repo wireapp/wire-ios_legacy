@@ -29,13 +29,10 @@ class ShareViewControllerTests: CoreDataSnapshotTestCase {
     override func setUp() {
         super.setUp()
         self.groupConversation = self.createGroupConversation()
-        uiMOC.zm_imageAssetCache = ImageAssetCache(MBLimit: 50)
-        uiMOC.saveOrRollback()
     }
     
-    override func tearDown() {
-        uiMOC.zm_imageAssetCache.wipeCache()
-        super.tearDown()
+    override var needsCaches: Bool {
+        return true
     }
     
     func testThatItRendersCorrectlyShareViewController_OneLineTextMessage() {
@@ -55,12 +52,28 @@ class ShareViewControllerTests: CoreDataSnapshotTestCase {
     }
     
     func testThatItRendersCorrectlyShareViewController_Photos() {
-        guard let imageData = image(inTestBundleNamed: "unsplash_burger.jpg").data() else {
-            XCTFail("Cannot load image")
+        let img = image(inTestBundleNamed: "unsplash_matterhorn.jpg")
+        self.groupConversation.appendMessage(withImageData: img.data()!)
+        
+        groupConversation.addParticipant(self.createUser(name: "John Appleseed"))
+        let oneToOneConversation = self.createGroupConversation()
+        
+        guard let message = groupConversation.messages.firstObject as? ZMMessage else {
+            XCTFail("Cannot add test message to the group conversation")
             return
         }
-        groupConversation.appendMessage(withImageData: imageData)
-        makeTestForShareViewController()
+        
+        if let preview = message.previewView() as? ImageMessageCell {
+            _ = preview.prepareForSnapshot(img.size, image: img)
+        }
+        
+        let sut = ShareViewController<ZMConversation, ZMMessage>(
+            shareable: message,
+            destinations: [groupConversation, oneToOneConversation],
+            showPreview: true
+        )
+        
+        self.verifyInAllDeviceSizes(view: sut.view)
     }
     
     func makeTestForShareViewController() {
@@ -73,14 +86,14 @@ class ShareViewControllerTests: CoreDataSnapshotTestCase {
             XCTFail("Cannot add test message to the group conversation")
             return
         }
-        
+    
         let sut = ShareViewController<ZMConversation, ZMMessage>(
             shareable: message,
             destinations: [groupConversation, oneToOneConversation],
             showPreview: true
         )
         
-        verifyInAllDeviceSizes(view: sut.view)
+        self.verifyInAllDeviceSizes(view: sut.view)
     }
     
     /// BOTS INTEGRATION
@@ -97,6 +110,7 @@ class ShareViewControllerTests: CoreDataSnapshotTestCase {
         let otherServiceUser = createService(name: "WireBurger Bot")
         
         let serviceConversation = ZMConversation.insertNewObject(in: uiMOC)
+        serviceConversation.remoteIdentifier = UUID()
         serviceConversation.conversationType = .group
         serviceConversation.internalAddParticipants([selfUser, otherServiceUser], isAuthoritative: true)
         
