@@ -107,7 +107,7 @@ enum NetworkStatusViewState {
 protocol NetworkStatusViewDelegate: class {
 
     /// Set this var to true after viewDidAppear. This flag prevents first layout animation when the UIViewController is created but not yet appear, if didChangeHeight called with animated = true.
-    var isViewDidAppear: Bool {get set}
+    var isViewDidAppear: Bool { get set }
 
     /// When the networkStatusView changes its height, this delegate method is called. The delegate should refresh its layout in the method.
     ///
@@ -125,7 +125,7 @@ extension NetworkStatusViewDelegate where Self: UIViewController {
         guard isViewDidAppear else { return }
 
         if animated {
-            UIView.animate(withDuration: NetworkStatusView.resizeAnimationTime, delay: 0, options: [.curveEaseIn, .beginFromCurrentState], animations: {
+            UIView.animate(withDuration: NetworkStatusView.resizeAnimationTime, delay: 0, options: [.curveEaseInOut, .beginFromCurrentState], animations: {
                 self.view.layoutIfNeeded()
             })
         } else {
@@ -137,7 +137,7 @@ extension NetworkStatusViewDelegate where Self: UIViewController {
 
 class NetworkStatusView: UIView {
 
-    static public let resizeAnimationTime: TimeInterval = 0.5
+    static public let resizeAnimationTime: TimeInterval = 0.25
     static public let horizontal: CGFloat = 16
     static public let verticalMargin: CGFloat = 8
 
@@ -216,20 +216,38 @@ class NetworkStatusView: UIView {
         }
 
         if let offlineBarState = offlineBarState {
+            
+            let updateUIBlock: () -> Void = {
+                self.updateUI(
+                    offlineBarState: offlineBarState,
+                    animated: animated,
+                    connectingViewHidden: connectingViewHidden,
+                    offlineViewHidden: offlineViewHidden
+                )
+            }
+
+            let completionBlock: () -> Void = {
+                self.updateUICompletion(
+                    connectingViewHidden: connectingViewHidden,
+                    offlineViewHidden: offlineViewHidden
+                )
+            }
+            
             if animated {
                 if offlineBarState == .expanded {
                     self.offlineView.isHidden = false
                 }
-
-                UIView.animate(withDuration: NetworkStatusView.resizeAnimationTime, delay: 0, options: [.curveEaseIn, .beginFromCurrentState], animations: {
-                    self.updateUI(offlineBarState: offlineBarState, animated: animated, connectingViewHidden: connectingViewHidden, offlineViewHidden: offlineViewHidden)
-                }) { _ in
-                    self.updateUICompletion(connectingViewHidden: connectingViewHidden, offlineViewHidden: offlineViewHidden)
-                }
+                
+                UIView.animate(
+                    withDuration: NetworkStatusView.resizeAnimationTime,
+                    delay: 0,
+                    options: [.curveEaseInOut, .beginFromCurrentState],
+                    animations: updateUIBlock,
+                    completion: { _ in completionBlock() }
+                )
             } else {
-                updateUI(offlineBarState: offlineBarState, animated: animated, connectingViewHidden: connectingViewHidden, offlineViewHidden: offlineViewHidden)
-
-                updateUICompletion(connectingViewHidden: connectingViewHidden, offlineViewHidden: offlineViewHidden)
+                updateUIBlock()
+                completionBlock()
             }
 
             delegate?.didChangeHeight(self, animated: animated, state: state)
