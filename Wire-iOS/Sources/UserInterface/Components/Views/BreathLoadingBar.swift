@@ -99,7 +99,7 @@ class BreathLoadingBar: UIView {
         anim.fillMode = kCAFillModeForwards
         anim.repeatCount = .infinity
         anim.duration = animationDuration
-        anim.timingFunction = CAMediaTimingFunction.easeInOutQuart()
+        anim.timingFunction = CAMediaTimingFunction.easeInOutCirc()
         self.layer.add(anim, forKey: BreathLoadingAnimationKey)
     }
 
