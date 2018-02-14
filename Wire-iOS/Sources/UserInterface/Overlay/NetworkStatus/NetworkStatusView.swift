@@ -168,7 +168,7 @@ class NetworkStatusView: UIView {
     override init(frame: CGRect) {
         connectingView = BreathLoadingBar.withDefaultAnimationDuration()
         connectingView.accessibilityIdentifier = "LoadBar"
-        connectingView.backgroundColor = UIColor.accent()
+        connectingView.backgroundColor = UIColor(rgb:0xFEBF02, alpha: 1)
         offlineView = OfflineBar()
 
         super.init(frame: frame)
