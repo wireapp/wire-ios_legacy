@@ -232,8 +232,9 @@ final class ConversationCreationController: UIViewController {
         case let .error(error):
             displayError(error)
         case let .valid(name):
+            let trimmed = name.trimmingCharacters(in: .whitespacesAndNewlines)
             textField.resignFirstResponder()
-            let newValues = ConversationCreationValues(name: name, participants: preSelectedParticipants ?? values?.participants ?? [])
+            let newValues = ConversationCreationValues(name: trimmed, participants: preSelectedParticipants ?? values?.participants ?? [])
             values = newValues
             
             Analytics.shared().tagLinearGroupSelectParticipantsOpened(with: self.source)
