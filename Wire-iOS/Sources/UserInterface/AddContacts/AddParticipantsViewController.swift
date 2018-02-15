@@ -93,7 +93,7 @@ public class AddParticipantsViewController: UIViewController {
     
     override open var title: String? {
         didSet {
-            navigationItem.titleView = ConversationCreationTitleFactory.createTitleLabel(for: self.title ?? "")
+            navigationItem.titleView = ConversationCreationTitleFactory.createTitleLabel(for: self.title ?? "", variant: variant)
             navigationItem.titleView?.accessibilityIdentifier = "label.addpeople.title"
         }
     }

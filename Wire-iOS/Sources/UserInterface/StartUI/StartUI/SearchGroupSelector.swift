@@ -108,10 +108,8 @@ final class SearchGroupSelector: UIView {
             return
         }
         
-        if colorSchemeVariant == .dark {
-            backgroundColor = UIColor(white: 1.0, alpha: 0.08)
-        }
-        
+        backgroundColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorSearchBarBackground, variant: colorSchemeVariant)
+
         addSubview(radioButtonsView)
 
         constrain(self, radioButtonsView) { selfView, radioButtonsView in

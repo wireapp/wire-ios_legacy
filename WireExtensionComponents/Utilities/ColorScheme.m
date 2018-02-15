@@ -31,6 +31,7 @@ NSString * const ColorSchemeColorSeparator = @"separator";
 NSString * const ColorSchemeColorCellSeparator = @"cell-separator";
 NSString * const ColorSchemeColorBackground = @"background";
 NSString * const ColorSchemeColorBarBackground = @"bar-background";
+NSString * const ColorSchemeColorSearchBarBackground = @"search-bar-background";
 NSString * const ColorSchemeColorContentBackground = @"content-background";
 NSString * const ColorSchemeColorBackgroundOverlay = @"background-overlay";
 NSString * const ColorSchemeColorBackgroundOverlayWithoutPicture = @"background-overlay-without-picture";
@@ -292,7 +293,8 @@ static NSString* light(NSString *colorString) {
                                    ColorSchemeColorSectionText: blackAlpha40,
                                    ColorSchemeColorTokenFieldBackground: blackAlpha4,
                                    ColorSchemeColorTokenFieldTextPlaceHolder: lightGraphite,
-                                   ColorSchemeColorCellSeparator: whiteAlpha8
+                                   ColorSchemeColorCellSeparator: graphiteAlpha8,
+                                   ColorSchemeColorSearchBarBackground: white
                                    }];
     
     for (ZMAccentColor color = ZMAccentColorMin; color <= ZMAccentColorMax; color++) {
@@ -348,7 +350,8 @@ static NSString* light(NSString *colorString) {
                                   ColorSchemeColorSectionText: whiteAlpha40,
                                   ColorSchemeColorTokenFieldBackground: whiteAlpha16,
                                   ColorSchemeColorTokenFieldTextPlaceHolder: whiteAlpha40,
-                                  ColorSchemeColorCellSeparator: graphiteAlpha8
+                                  ColorSchemeColorCellSeparator: whiteAlpha8,
+                                  ColorSchemeColorSearchBarBackground: whiteAlpha8
                                   }];
 
     for (ZMAccentColor color = ZMAccentColorMin; color <= ZMAccentColorMax; color++) {

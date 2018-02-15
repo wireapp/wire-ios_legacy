@@ -31,10 +31,10 @@ final public class ConversationCreationValues {
 }
 
 open class ConversationCreationTitleFactory {
-    static func createTitleLabel(for title: String) -> UILabel {
+    static func createTitleLabel(for title: String, variant: ColorSchemeVariant) -> UILabel {
         let titleLabel = UILabel()
         titleLabel.font = FontSpec(.normal, .medium).font!.allCaps()
-        titleLabel.textColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorIconNormal, variant: .light)
+        titleLabel.textColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorIconNormal, variant: variant)
         titleLabel.text = title
         titleLabel.sizeToFit()
         return titleLabel
@@ -63,6 +63,8 @@ final class ConversationCreationController: UIViewController {
     fileprivate var errorViewContainer: UIView!
     private var mainViewContainer: UIView!
 
+    fileprivate var navigationBarBackgroundView: UIView!
+    
     private let backButtonDescription = BackButtonDescription()
     fileprivate var nextButton: UIButton!
 
@@ -129,6 +131,10 @@ final class ConversationCreationController: UIViewController {
         mainViewContainer = UIView()
         mainViewContainer.translatesAutoresizingMaskIntoConstraints = false
 
+        navigationBarBackgroundView = UIView()
+        navigationBarBackgroundView.backgroundColor = .white
+        mainViewContainer.addSubview(navigationBarBackgroundView)
+        
         textField = SimpleTextField()
         textField.isAccessibilityElement = true
         textField.accessibilityIdentifier = "textfield.newgroup.name"
@@ -164,11 +170,12 @@ final class ConversationCreationController: UIViewController {
         }
         else {
             navigationItem.leftBarButtonItem = UIBarButtonItem(icon: .X, target: self, action: #selector(onCancel))
+            navigationItem.leftBarButtonItem?.tintColor = .black
             navigationItem.leftBarButtonItem?.accessibilityIdentifier = "button.newgroup.close"
         }
 
         // title view
-        navigationItem.titleView = ConversationCreationTitleFactory.createTitleLabel(for: self.title ?? "")
+        navigationItem.titleView = ConversationCreationTitleFactory.createTitleLabel(for: self.title ?? "", variant: .light)
         
         // right button
         nextButton = ButtonWithLargerHitArea(type: .custom)
@@ -195,6 +202,13 @@ final class ConversationCreationController: UIViewController {
         }
         else {
             mainViewContainer.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+        }
+        
+        constrain(view, navigationBarBackgroundView, self.car_topLayoutGuide) { view, navigationBarBackgroundView, topLayoutGuide in
+            navigationBarBackgroundView.leading == view.leading
+            navigationBarBackgroundView.trailing == view.trailing
+            navigationBarBackgroundView.top == view.top
+            navigationBarBackgroundView.bottom == topLayoutGuide.bottom
         }
         
         constrain(view, errorViewContainer, mainViewContainer) { view, errorViewContainer, mainViewContainer in
