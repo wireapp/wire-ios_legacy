@@ -104,6 +104,18 @@ typedef void (^ConversationCreatedBlock)(ZMConversation *);
 
 - (void)startUI:(StartUIViewController *)startUI createConversationWithUsers:(NSSet<ZMUser *> *)users name:(NSString *)name
 {
+    if (self.presentedViewController != nil) {
+        [self dismissViewControllerAnimated:YES completion:^{
+            [self createConversationWithUsers:users name:name];
+        }];
+    }
+    else {
+        [self createConversationWithUsers:users name:name];
+    }
+}
+
+- (void)createConversationWithUsers:(NSSet<ZMUser *> *)users name:(NSString *)name
+{
     __block ZMConversation *conversation = nil;
     [ZMUserSession.sharedSession enqueueChanges:^{
         conversation = [ZMConversation insertGroupConversationIntoUserSession:ZMUserSession.sharedSession

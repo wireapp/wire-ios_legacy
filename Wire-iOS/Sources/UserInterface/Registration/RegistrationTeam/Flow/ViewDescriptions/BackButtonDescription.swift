@@ -30,7 +30,7 @@ extension BackButtonDescription: ViewDescriptor {
         button.setIconColor(UIColor.wr_color(fromColorScheme: ColorSchemeColorIconNormal, variant: .light), for: .normal)
         button.setIconColor(UIColor.wr_color(fromColorScheme: ColorSchemeColorTextDimmed, variant: .light), for: .highlighted)
         let iconType: ZetaIconType = UIApplication.isLeftToRightLayout ? .chevronLeft : .chevronRight
-        button.setIcon(iconType, with: .small, for: .normal)
+        button.setIcon(iconType, with: .tiny, for: .normal)
         button.accessibilityIdentifier = accessibilityIdentifier
         button.addTarget(self, action: #selector(BackButtonDescription.backButtonTapped(_:)), for: .touchUpInside)
         button.sizeToFit()
