@@ -65,7 +65,7 @@ class ClearBackgroundNavigationController: UINavigationController {
         self.navigationBar.shadowImage = UIImage()
         self.navigationBar.isTranslucent = true
         self.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.white,
-                                                  NSFontAttributeName: FontSpec(.medium, .medium).font!.allCaps()]
+                                                  NSFontAttributeName: FontSpec(.normal, .medium).font!.allCaps()]
         
         let navButtonAppearance = UIBarButtonItem.appearance(whenContainedInInstancesOf: [UINavigationBar.self])
         
