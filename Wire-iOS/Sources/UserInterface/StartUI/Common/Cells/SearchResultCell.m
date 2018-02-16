@@ -31,6 +31,7 @@
 @property (nonatomic, strong) UIView *gesturesView;
 @property (nonatomic, strong) BadgeUserImageView *badgeUserImageView;
 @property (nonatomic, strong) ConversationAvatarView *conversationImageView;
+@property (nonatomic, strong) NSMutableDictionary *correlationFormatters;
 @property (nonatomic, strong) UILabel *nameLabel;
 @property (nonatomic, strong) UIView *avatarContainer;
 @property (nonatomic, strong) IconButton *instantConnectButton;
@@ -72,17 +73,21 @@
     return [UIFont fontWithMagicIdentifier:@"style.text.small.font_spec_bold"];
 }
 
-+ (AddressBookCorrelationFormatter *)correlationFormatter
-{
-    static dispatch_once_t onceToken;
-    static AddressBookCorrelationFormatter *formatter = nil;
-    dispatch_once(&onceToken, ^{
-        formatter = [[AddressBookCorrelationFormatter alloc] initWithLightFont:self.lightFont
-                                                                      boldFont:self.boldFont
-                                                                         color:[[ColorScheme defaultColorScheme] colorWithName:ColorSchemeColorTextDimmed]];
-    });
+-(void)setColorSchemeVariant:(ColorSchemeVariant)colorSchemeVariant{
+    if(colorSchemeVariant != _colorSchemeVariant) {
+        _colorSchemeVariant = colorSchemeVariant;
+        if([self.correlationFormatters objectForKey:@(_colorSchemeVariant)] == nil) {
+            UIColor *color = [[ColorScheme defaultColorScheme] colorWithName:ColorSchemeColorTextDimmed variant:_colorSchemeVariant];
+            AddressBookCorrelationFormatter *formatter = [[AddressBookCorrelationFormatter alloc] initWithLightFont:self.class.lightFont
+                                                                                                           boldFont:self.class.boldFont
+                                                                                                              color:color];
+            [self.correlationFormatters setObject:formatter forKey:@(colorSchemeVariant)];
+        }
+    }
+}
 
-    return formatter;
+-(AddressBookCorrelationFormatter*)ABCorrelationFormatterForCurrentColorSchemeVariant{
+    return [self.correlationFormatters objectForKey:@(self.colorSchemeVariant)];
 }
 
 - (id)initWithFrame:(CGRect)frame
@@ -92,6 +97,7 @@
         self.isAccessibilityElement = YES;
         self.shouldGroupAccessibilityChildren = YES;
         
+        self.correlationFormatters = [NSMutableDictionary dictionary];
         self.colorSchemeVariant = ColorSchemeVariantDark;
         self.contentView.translatesAutoresizingMaskIntoConstraints = NO;
 
@@ -218,9 +224,9 @@
         }];
     }
 
-    CGFloat rightMarginForName = rightMargin;
+    CGFloat rightMarginForName = 0;
     if (!self.instantConnectButton.hidden) {
-        rightMarginForName = self.instantConnectButton.bounds.size.width + rightMargin;
+        rightMarginForName = self.instantConnectButton.bounds.size.width;
     }
     if (!self.trailingCheckmarkView.hidden) {
         rightMarginForName += self.trailingCheckmarkView.bounds.size.width + rightMargin;
@@ -520,7 +526,7 @@
     }
     
     NSString *addresBookName = BareUserToUser(user).addressBookEntry.cachedName;
-    NSAttributedString *correlation = [self.class.correlationFormatter correlationTextFor:self.user addressBookName:addresBookName];
+    NSAttributedString *correlation = [[self ABCorrelationFormatterForCurrentColorSchemeVariant] correlationTextFor:self.user addressBookName:addresBookName];
     if (nil != correlation) {
         if (nil != attributedHandle) {
             NSDictionary *delimiterAttributes = @{ NSFontAttributeName: self.class.lightFont, NSForegroundColorAttributeName: self.subtitleColor };
