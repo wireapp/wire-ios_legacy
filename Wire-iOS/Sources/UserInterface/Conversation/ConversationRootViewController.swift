@@ -79,8 +79,8 @@ import Cartography
 
 
         networkStatusViewController.createConstraints(bottomView: customNavBar!, containerView: self.view, topMargin: UIScreen.safeArea.top)
-
-        constrain(self.customNavBar!, self.view, self.contentView, conversationViewController.view) {
+ 
+        constrain(customNavBar!, view, contentView, conversationViewController.view) {
             (customNavBar: LayoutProxy, view: LayoutProxy, contentView: LayoutProxy, conversationViewControllerView: LayoutProxy) -> () in
 
             customNavBar.left == view.left
