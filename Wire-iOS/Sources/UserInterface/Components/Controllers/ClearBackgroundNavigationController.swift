@@ -85,11 +85,19 @@ class ClearBackgroundNavigationController: UINavigationController {
         }
     }
     
-    func navigationController(_ navigationController: UINavigationController, didShow viewController: UIViewController, animated: Bool) {
-        let clearBackround = viewController.view.backgroundColor == .clear
-        let opaqueBackground = fabs(viewController.view.backgroundColor?.alpha ?? 1.0 - 1.0) < CGFloat.ulpOfOne
-        useDefaultPopGesture = !clearBackround && opaqueBackground
+    func navigationController(_ navigationController: UINavigationController, willShow viewController: UIViewController, animated: Bool) {
+        if let avoiding = viewController as? KeyboardAvoidingViewController {
+            updateGesture(for: avoiding.viewController)
+        } else {
+            updateGesture(for: viewController)
+        }
     }
+    
+    private func updateGesture(for viewController: UIViewController) {
+        let translucentBackground = viewController.view.backgroundColor?.alpha < 1.0
+        useDefaultPopGesture = !translucentBackground
+    }
+    
 }
 
 
