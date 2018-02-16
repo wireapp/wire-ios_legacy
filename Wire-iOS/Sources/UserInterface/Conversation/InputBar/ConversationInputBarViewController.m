@@ -148,7 +148,7 @@
 
 @property (nonatomic) id typingObserverToken;
 
-@property (nonatomic) UINotificationFeedbackGenerator* feedbackGenerator;
+@property (nonatomic) UINotificationFeedbackGenerator *notificationFeedbackGenerator;
 @end
 
 
@@ -169,7 +169,8 @@
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didEnterBackground:) name:UIApplicationDidEnterBackgroundNotification object:nil];
         
         if (nil != [UINotificationFeedbackGenerator class]) {
-            self.feedbackGenerator = [[UINotificationFeedbackGenerator alloc] init];
+            self.notificationFeedbackGenerator = [[UINotificationFeedbackGenerator alloc] init];
+            self.impactFeedbackGenerator = [[UIImpactFeedbackGenerator alloc] initWithStyle:UIImpactFeedbackStyleLight];
         }
     }
     return self;
@@ -1102,8 +1103,8 @@
     }
 }
 
--(BOOL)checkMessageLength{
-    
+-(BOOL)checkMessageLength
+{
     BOOL allowed = self.inputBar.textView.text.length <= (NSUInteger)SharedConstants.maximumMessageLength;
     
     if(!allowed) {
@@ -1133,15 +1134,15 @@
 
 - (void)appendKnock
 {
+    [self.notificationFeedbackGenerator prepare];
     [[ZMUserSession sharedSession] enqueueChanges:^{
         id<ZMConversationMessage> knockMessage = [self.conversation appendKnock];
         if (knockMessage) {
             [Analytics.shared tagMediaAction:ConversationMediaActionPing inConversation:self.conversation];
             [Analytics.shared tagMediaActionCompleted:ConversationMediaActionPing inConversation:self.conversation];
-            
+
             [AVSMediaManager.sharedInstance playSound:MediaManagerSoundOutgoingKnockSound];
-            
-            [self.feedbackGenerator notificationOccurred:UINotificationFeedbackTypeSuccess];
+            [self.notificationFeedbackGenerator notificationOccurred:UINotificationFeedbackTypeSuccess];
         }
     }];
     
