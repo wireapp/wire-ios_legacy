@@ -20,6 +20,7 @@
 
 
 
+"share_extension.general.ok" = "موافق";
 "share_extension.conversation_selection.account" = "Account:";
 "share_extension.conversation_selection.title" = "المُحادثة:";
 "share_extension.send_button.title" = "إرسال";
@@ -33,6 +34,8 @@
 "share_extension.timeout.title" = "The connection has timed out.";
 "share_extension.timeout.message" = "Check your Internet connection and try again. The attachments were saved in the conversation.";
 "share_extension.privacy_security.lock_app.description" = "إلغاء تأمين Wire";
+"share_extension.logged_out.title" = "You've been logged out from this account.";
+"share_extension.logged_out.message" = "Please choose another account.";
 
 "conversation.displayname.emptygroup" = "محادثة جماعية";
 "meta.degraded.degradation_reason_message.singular" = "%@ بدأ باستخدام جهاز جديد.";

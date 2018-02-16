@@ -18,6 +18,7 @@
 
 
 "general.ok" = "OK";
+"general.next" = "Next";
 "general.cancel" = "Annulla";
 "general.open_settings" = "Apri le impostazioni di Wire";
 
@@ -34,6 +35,12 @@
 "peoplepicker.header.contacts" = "Contatti";
 "peoplepicker.header.contacts_personal" = "Contatti personali";
 "peoplepicker.header.directory" = "Connetti";
+
+"peoplepicker.group.title.singular" = "Aggiungi persone";
+"peoplepicker.group.title.plural" = "Add People (%d)";
+"peoplepicker.group.skip" = "Salta";
+"peoplepicker.group.done" = "Fatto";
+"peoplepicker.group.create" = "Create";
 
 "peoplepicker.header.people" = "Persone";
 "peoplepicker.header.services" = "Servizi";
@@ -228,6 +235,10 @@
 "conversation.input_bar.message_too_long.title" = "Il messaggio è troppo lungo";
 "conversation.input_bar.message_too_long.message" = "Puoi inviare messaggi lunghi al massimo %d caratteri.";
 
+"conversation.create.group_name.placeholder" = "Group name";
+"conversation.create.guidance.empty" = "At least 1 character";
+"conversation.create.guidance.toolong" = "Troppi caratteri";
+
 // Image confirmation dialogue
 "image_confirmer.confirm" = "OK";
 "image_confirmer.cancel" = "Annulla";
@@ -324,6 +335,10 @@
 "content.system.renamed_conv.title" = "%@ ha rinominato la conversazione";
 "content.system.renamed_conv.title-you" = "%@ ha rinominato la conversazione";
 "content.system.renamed_conv.title.you" = "Tu";
+
+"content.system.conversation.with_name.title" = "%@ started the conversation";
+
+"content.system.conversation.with_name.participants" = "with %@";
 
 "content.system.reactivated_device" = "Hai iniziato a utilizzare %@ nuovamente. I messaggi inviati nel frattempo non verranno visualizzato qui.";
 

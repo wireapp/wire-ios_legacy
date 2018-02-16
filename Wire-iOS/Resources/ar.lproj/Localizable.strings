@@ -18,6 +18,7 @@
 
 
 "general.ok" = "موافق";
+"general.next" = "Next";
 "general.cancel" = "إلغاء";
 "general.open_settings" = "فتح إعدادات Wire";
 
@@ -34,6 +35,12 @@
 "peoplepicker.header.contacts" = "جهات الاتصال";
 "peoplepicker.header.contacts_personal" = "جهات الاتصال شخصية";
 "peoplepicker.header.directory" = "تواصل";
+
+"peoplepicker.group.title.singular" = "إضافة أشخاص";
+"peoplepicker.group.title.plural" = "Add People (%d)";
+"peoplepicker.group.skip" = "Skip";
+"peoplepicker.group.done" = "Done";
+"peoplepicker.group.create" = "Create";
 
 "peoplepicker.header.people" = "أشخاص";
 "peoplepicker.header.services" = "Services";
@@ -228,6 +235,10 @@
 "conversation.input_bar.message_too_long.title" = "الرسالة طويلة جداً";
 "conversation.input_bar.message_too_long.message" = "يمكنك إرسال رسائل حتى %d حرفاً.";
 
+"conversation.create.group_name.placeholder" = "Group name";
+"conversation.create.guidance.empty" = "At least 1 character";
+"conversation.create.guidance.toolong" = "حروف كثيرة عن الحد";
+
 // Image confirmation dialogue
 "image_confirmer.confirm" = "موافق";
 "image_confirmer.cancel" = "إلغاء";
@@ -324,6 +335,10 @@
 "content.system.renamed_conv.title" = "قام %@ بإعادة تسمية المُحادثة";
 "content.system.renamed_conv.title-you" = "قام %@ بإعادة تسمية المُحادثة";
 "content.system.renamed_conv.title.you" = "أنت";
+
+"content.system.conversation.with_name.title" = "%@ started the conversation";
+
+"content.system.conversation.with_name.participants" = "with %@";
 
 "content.system.reactivated_device" = "بدأت استخدام %@ مرة أخرى. الرسائل المُرسلة في ذاك الحين لن تُعرض هنا.";
 

@@ -20,6 +20,7 @@
 
 
 
+"share_extension.general.ok" = "GERAI";
 "share_extension.conversation_selection.account" = "Paskyra:";
 "share_extension.conversation_selection.title" = "Pokalbis:";
 "share_extension.send_button.title" = "Siųsti";
@@ -33,6 +34,8 @@
 "share_extension.timeout.title" = "Susijungimui skirtas laikas pasibaigė.";
 "share_extension.timeout.message" = "Patikrinkite interneto ryšį ir bandykite dar kartą. Priedai buvo išsaugoti susirašinėjime.";
 "share_extension.privacy_security.lock_app.description" = "Atrakinti „Wire“";
+"share_extension.logged_out.title" = "You've been logged out from this account.";
+"share_extension.logged_out.message" = "Please choose another account.";
 
 "conversation.displayname.emptygroup" = "Tuščias grupės pokalbis";
 "meta.degraded.degradation_reason_message.singular" = "%@ pradėjo naudotis nauju įrenginiu.";

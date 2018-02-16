@@ -18,6 +18,7 @@
 
 
 "general.ok" = "OK";
+"general.next" = "Вперед";
 "general.cancel" = "Отменить";
 "general.open_settings" = "Открыть настройки Wire";
 
@@ -34,6 +35,12 @@
 "peoplepicker.header.contacts" = "Контакты";
 "peoplepicker.header.contacts_personal" = "Личные контакты";
 "peoplepicker.header.directory" = "Добавить в контакты";
+
+"peoplepicker.group.title.singular" = "Добавить людей";
+"peoplepicker.group.title.plural" = "Добавить людей (%d)";
+"peoplepicker.group.skip" = "Пропустить";
+"peoplepicker.group.done" = "Готово";
+"peoplepicker.group.create" = "Создать";
 
 "peoplepicker.header.people" = "Люди";
 "peoplepicker.header.services" = "Службы";
@@ -228,6 +235,10 @@
 "conversation.input_bar.message_too_long.title" = "Сообщение слишком длинное";
 "conversation.input_bar.message_too_long.message" = "Вы можете отправлять сообщения длиной до %d символов.";
 
+"conversation.create.group_name.placeholder" = "Имя группы";
+"conversation.create.guidance.empty" = "Не менее 1 символа";
+"conversation.create.guidance.toolong" = "Слишком много символов";
+
 // Image confirmation dialogue
 "image_confirmer.confirm" = "OK";
 "image_confirmer.cancel" = "Отменить";
@@ -324,6 +335,10 @@
 "content.system.renamed_conv.title" = "%@ переименовал беседу";
 "content.system.renamed_conv.title-you" = "%@ переименовал беседу";
 "content.system.renamed_conv.title.you" = "Вы";
+
+"content.system.conversation.with_name.title" = "%@ начал разговор";
+
+"content.system.conversation.with_name.participants" = "с %@";
 
 "content.system.reactivated_device" = "Вы начали использовать %@ снова. Сообщения, отправленные ранее, не будут отображаться здесь.";
 

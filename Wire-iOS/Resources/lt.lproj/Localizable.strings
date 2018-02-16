@@ -18,6 +18,7 @@
 
 
 "general.ok" = "GERAI";
+"general.next" = "Kitas";
 "general.cancel" = "Atsisakyti";
 "general.open_settings" = "Atidaryti Wire nustatymus";
 
@@ -34,6 +35,12 @@
 "peoplepicker.header.contacts" = "Kontaktai";
 "peoplepicker.header.contacts_personal" = "Asmeniniai kontaktai";
 "peoplepicker.header.directory" = "Užmegzti kontaktą";
+
+"peoplepicker.group.title.singular" = "Pridėti žmones";
+"peoplepicker.group.title.plural" = "Pridėti žmonių (%d)";
+"peoplepicker.group.skip" = "Praleisti";
+"peoplepicker.group.done" = "Baigta";
+"peoplepicker.group.create" = "Kurti";
 
 "peoplepicker.header.people" = "Žmonės";
 "peoplepicker.header.services" = "Paslaugos";
@@ -228,6 +235,10 @@
 "conversation.input_bar.message_too_long.title" = "Žinutė per ilga";
 "conversation.input_bar.message_too_long.message" = "Galite siųsti žinutes, kurių ilgis iki %d simbolių.";
 
+"conversation.create.group_name.placeholder" = "Grupės pavadinimas";
+"conversation.create.guidance.empty" = "Bent 1 simbolis";
+"conversation.create.guidance.toolong" = "Per daug simbolių";
+
 // Image confirmation dialogue
 "image_confirmer.confirm" = "GERAI";
 "image_confirmer.cancel" = "Atsisakyti";
@@ -324,6 +335,10 @@
 "content.system.renamed_conv.title" = "%@ pakeitė susirašinėjimo pavadinimą";
 "content.system.renamed_conv.title-you" = "%@ pakeitėte susirašinėjimo pavadinimą";
 "content.system.renamed_conv.title.you" = "Jūs";
+
+"content.system.conversation.with_name.title" = "%@ pradėjo susirašinėjimą";
+
+"content.system.conversation.with_name.participants" = "su %@";
 
 "content.system.reactivated_device" = "Vėl pradėjote naudotis „%@“. Žinutės parašytos įrenginio nenaudojimo laikotarpiu čia neatsiras.";
 
