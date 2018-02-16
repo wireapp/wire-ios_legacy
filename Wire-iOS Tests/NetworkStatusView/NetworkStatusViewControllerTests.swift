@@ -54,7 +54,7 @@ final class NetworkStatusViewControllerTests: ZMSnapshotTestCase {
 
         sut.createConstraints(bottomView: mockContentView, containerView: mockContainerViewController.view, topMargin: UIScreen.safeArea.top)
 
-        constrain(mockContentView, mockContainerViewController.view) { (mockContentView: LayoutProxy, view: LayoutProxy) -> Void in
+        constrain(mockContentView, mockContainerViewController.view) { mockContentView, view in
             mockContentView.left == view.left
             mockContentView.right == view.right
 
