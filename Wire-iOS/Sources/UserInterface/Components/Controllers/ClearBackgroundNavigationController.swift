@@ -86,7 +86,9 @@ class ClearBackgroundNavigationController: UINavigationController {
     }
     
     func navigationController(_ navigationController: UINavigationController, didShow viewController: UIViewController, animated: Bool) {
-        useDefaultPopGesture = fabs(viewController.view.backgroundColor?.alpha ?? 1.0 - 1.0) < CGFloat.ulpOfOne
+        let clearBackround = viewController.view.backgroundColor == .clear
+        let opaqueBackground = fabs(viewController.view.backgroundColor?.alpha ?? 1.0 - 1.0) < CGFloat.ulpOfOne
+        useDefaultPopGesture = !clearBackround && opaqueBackground
     }
 }
 
