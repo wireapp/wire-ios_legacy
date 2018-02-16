@@ -59,7 +59,7 @@ import Classy
         constrain(view, containerView, separatorView, addressLabel, sendButton) { view, container, separator, label, button in
             container.edges == inset(view.edges, 24, 0)
             label.leading == container.leading
-            label.trailing <= button.leading - 12 ~ LayoutPriority(1000)
+            label.trailing <= button.leading - 12 ~ 1000.0
             label.top == container.top
             label.bottom == container.bottom - UIScreen.safeArea.bottom
             button.trailing == container.trailing

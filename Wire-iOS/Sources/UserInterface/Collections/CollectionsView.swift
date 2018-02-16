@@ -101,7 +101,7 @@ import Cartography
         self.addSubview(searchViewController.resultsView)
         self.addSubview(searchViewController.searchBar)
         
-        constrain(self, searchViewController.searchBar, self.collectionView, self.noResultsView) { (selfView: LayoutProxy, searchBar: LayoutProxy, collectionView: LayoutProxy, noResultsView: LayoutProxy) -> () in
+        constrain(self, searchViewController.searchBar, self.collectionView, self.noResultsView) { selfView, searchBar, collectionView, noResultsView in
             
             searchBar.top == selfView.top
             searchBar.leading == selfView.leading

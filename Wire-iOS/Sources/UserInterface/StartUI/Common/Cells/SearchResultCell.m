@@ -37,18 +37,21 @@
 
 @property (nonatomic, strong) UIView *avatarOverlay;
 @property (nonatomic, strong) UIImageView *successCheckmark;
+@property (nonatomic, strong) UIImageView *trailingCheckmarkView;
+
+@property (nonatomic, strong) UIStackView *nameLabelStackView;
 
 @property (nonatomic, assign) BOOL initialConstraintsCreated;
 @property (nonatomic, strong) NSLayoutConstraint *avatarViewSizeConstraint;
 @property (nonatomic, strong) NSLayoutConstraint *conversationImageViewSize;
-@property (nonatomic, strong) NSLayoutConstraint *nameLabelTopConstraint;
-@property (nonatomic, strong) NSLayoutConstraint *nameLabelVerticalConstraint;
 @property (nonatomic, strong) NSLayoutConstraint *nameRightMarginConstraint;
-@property (nonatomic, strong) NSLayoutConstraint *subtitleRightMarginConstraint;
+@property (nonatomic, strong) NSLayoutConstraint *guestLabelTrailingConstraint;
+@property (nonatomic, strong) NSLayoutConstraint *guestLabelCheckmarkViewHorizontalConstraint;
 
 @property (nonatomic, strong) UILabel *subtitleLabel;
 
 @property (nonatomic, strong) GuestLabel *guestLabel;
+@property (nonatomic, strong) UIView *separatorLineView;
 
 @end
 
@@ -84,6 +87,9 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
+        self.isAccessibilityElement = YES;
+        self.shouldGroupAccessibilityChildren = YES;
+        
         self.colorSchemeVariant = ColorSchemeVariantDark;
         self.contentView.translatesAutoresizingMaskIntoConstraints = NO;
 
@@ -99,15 +105,30 @@
         self.conversationImageView = [[ConversationAvatarView alloc] initForAutoLayout];
         self.conversationImageView.opaque = NO;
         [self.avatarContainer addSubview:self.conversationImageView];
+        
+        self.nameLabelStackView = [[UIStackView alloc] initForAutoLayout];
+        self.nameLabelStackView.axis = UILayoutConstraintAxisVertical;
+        self.nameLabelStackView.spacing = 2;
+        [self.swipeView addSubview:self.nameLabelStackView];
 
         self.nameLabel = [[UILabel alloc] initForAutoLayout];
         self.nameLabel.lineBreakMode = NSLineBreakByTruncatingTail;
         self.nameLabel.textAlignment = NSTextAlignmentNatural;
-        [self.swipeView addSubview:self.nameLabel];
+        [self.nameLabelStackView addArrangedSubview:self.nameLabel];
 
         self.subtitleLabel = [[UILabel alloc] initForAutoLayout];
         self.subtitleLabel.accessibilityIdentifier = @"additionalUserInfo";
-        [self.swipeView addSubview:self.subtitleLabel];
+        [self.nameLabelStackView addArrangedSubview:self.subtitleLabel];
+
+        self.separatorLineView = [[UIView alloc] initForAutoLayout];
+        [self.swipeView addSubview:self.separatorLineView];
+        
+        self.trailingCheckmarkView = [[UIImageView alloc] initForAutoLayout];
+        [self.swipeView addSubview:self.trailingCheckmarkView];
+        self.trailingCheckmarkView.layer.borderColor = [ColorScheme.defaultColorScheme colorWithName:ColorSchemeColorIconNormal].CGColor;
+        self.trailingCheckmarkView.layer.borderWidth = 2;
+        self.trailingCheckmarkView.contentMode = UIViewContentModeCenter;
+        self.trailingCheckmarkView.layer.cornerRadius = 12;
 
         UITapGestureRecognizer *doubleTapper = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(doubleTap:)];
         doubleTapper.numberOfTapsRequired = 2;
@@ -128,6 +149,8 @@
         [self createUserImageView];
         [self setNeedsUpdateConstraints];
         [self updateForContext];
+        
+        self.accessoryType = SearchResultCellAccessoryTypeNone;
     }
     return self;
 }
@@ -157,24 +180,10 @@
 
         [self.gesturesView autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero];
 
-        [self.subtitleLabel autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.nameLabel];
-        [self.subtitleLabel autoPinEdge:ALEdgeLeading toEdge:ALEdgeTrailing ofView:self.avatarContainer withOffset:[WAZUIMagic cgFloatForIdentifier:@"people_picker.search_results_mode.tile_name_horizontal_spacing"]];
-        self.subtitleRightMarginConstraint = [self.subtitleLabel autoPinEdge:ALEdgeTrailing toEdge:ALEdgeTrailing ofView:self.swipeView withOffset:- rightMargin];
-
-        self.nameLabelTopConstraint = [self.nameLabel autoPinEdge:ALEdgeTop toEdge:ALEdgeTop ofView:self.swipeView withOffset:9.0f];
-        self.nameLabelVerticalConstraint = [self.nameLabel autoAlignAxis:ALAxisHorizontal toSameAxisOfView:self.avatarContainer];
+        [self.nameLabelStackView autoAlignAxis:ALAxisHorizontal toSameAxisOfView:self.avatarContainer];
         
-        if (self.subtitleLabel.text.length == 0) {
-            self.nameLabelTopConstraint.active = NO;
-            self.nameLabelVerticalConstraint.active = YES;
-        }
-        else {
-            self.nameLabelVerticalConstraint.active = NO;
-            self.nameLabelTopConstraint.active = YES;
-        }
-        
-        [self.nameLabel autoPinEdge:ALEdgeLeading toEdge:ALEdgeTrailing ofView:self.avatarContainer withOffset:nameAvatarMargin];
-        self.nameRightMarginConstraint = [self.nameLabel autoPinEdge:ALEdgeTrailing toEdge:ALEdgeTrailing ofView:self.swipeView withOffset:- rightMargin];
+        [self.nameLabelStackView autoPinEdge:ALEdgeLeading toEdge:ALEdgeTrailing ofView:self.avatarContainer withOffset:nameAvatarMargin];
+        self.nameRightMarginConstraint = [self.nameLabelStackView autoPinEdge:ALEdgeTrailing toEdge:ALEdgeTrailing ofView:self.swipeView withOffset:- rightMargin];
 
         self.avatarViewSizeConstraint = [self.avatarContainer autoSetDimension:ALDimensionWidth toSize:80];
         [self.avatarContainer autoMatchDimension:ALDimensionWidth toDimension:ALDimensionHeight ofView:self.avatarContainer];
@@ -188,7 +197,16 @@
 
         [self.instantConnectButton autoAlignAxis:ALAxisHorizontal toSameAxisOfView:self.avatarContainer];
         [self.instantConnectButton autoPinEdgeToSuperviewEdge:ALEdgeTrailing withInset:16];
+        
+        [self.trailingCheckmarkView autoAlignAxis:ALAxisHorizontal toSameAxisOfView:self.avatarContainer];
+        [self.trailingCheckmarkView autoPinEdgeToSuperviewEdge:ALEdgeTrailing withInset:16];
+        [self.trailingCheckmarkView autoSetDimensionsToSize:CGSizeMake(24, 24)];
 
+        [self.separatorLineView autoPinEdgeToSuperviewEdge:ALEdgeTrailing];
+        [self.separatorLineView autoPinEdgeToSuperviewEdge:ALEdgeBottom];
+        [self.separatorLineView autoSetDimension:ALDimensionHeight toSize:UIScreen.hairline];
+        [self.separatorLineView autoPinEdge:ALEdgeLeading toEdge:ALEdgeLeading ofView:self.nameLabel];
+        
         self.initialConstraintsCreated = YES;
         [self updateForContext];
 
@@ -204,10 +222,8 @@
     else if (!self.guestLabel.hidden) {
         rightMarginForName = self.guestLabel.bounds.size.width + rightMargin;
     }
-    
-    self.subtitleRightMarginConstraint.constant = -rightMarginForName;
-    self.nameRightMarginConstraint.constant = -rightMarginForName;
 
+    self.nameRightMarginConstraint.constant = -rightMarginForName;
     [super updateConstraints];
 }
 
@@ -215,6 +231,7 @@
 {
     self.nameLabel.font = [UIFont fontWithMagicIdentifier:@"people_picker.search_results_mode.name_label_font"];
     self.nameLabel.textColor = [UIColor wr_colorFromColorScheme:ColorSchemeColorTextForeground variant:self.colorSchemeVariant];
+    self.separatorLineView.backgroundColor = [ColorScheme.defaultColorScheme colorWithName:ColorSchemeColorCellSeparator variant:self.colorSchemeVariant];
 
     CGFloat squareImageWidth = [WAZUIMagic cgFloatForIdentifier:@"people_picker.search_results_mode.tile_image_diameter"];
     self.avatarViewSizeConstraint.constant = squareImageWidth;
@@ -241,6 +258,8 @@
         [self.successCheckmark removeFromSuperview];
         self.successCheckmark = nil;
         self.contentView.alpha = 1.0f;
+        self.accessoryType = SearchResultCellAccessoryTypeNone;
+        self.backgroundColor = UIColor.clearColor;
     }];
 }
 
@@ -273,6 +292,47 @@
     self.instantConnectButton.hidden = ! canBeConnected;
     [self setNeedsUpdateConstraints];
     self.badgeUserImageView.user = (id)self.user;
+    
+    [self updateAccessibilityLabel];
+}
+
+- (void)updateForConversation
+{
+    if (self.conversation.conversationType == ZMConversationTypeOneOnOne) {
+        ZMUser *otherUser = self.conversation.connectedUser;
+        self.user = otherUser;
+        self.badgeUserImageView.hidden = NO;
+        self.conversationImageView.conversation = nil;
+    }
+    else {
+        self.conversationImageView.conversation = self.conversation;
+        self.badgeUserImageView.hidden = YES;
+        self.user = nil;
+        self.nameLabel.text = self.conversation.displayName;
+    }
+    
+    [self updateAccessibilityLabel];
+}
+
+- (void)updateAccessibilityLabel
+{
+    NSString *newAccessibilityLabel = @"";
+    
+    if (self.nameLabel.text.length != 0 && self.subtitleLabel.text.length != 0) {
+        newAccessibilityLabel = [NSString stringWithFormat:@"%@ - %@", self.nameLabel.text, self.subtitleLabel.text];
+    }
+    else if (self.nameLabel.text.length != 0) {
+        newAccessibilityLabel = self.nameLabel.text;
+    }
+    else {
+        newAccessibilityLabel = @"";
+    }
+    
+    if (!self.guestLabel.hidden && self.guestLabel.textLabel.text.length != 0) {
+        newAccessibilityLabel = [NSString stringWithFormat:@"%@ (%@)", newAccessibilityLabel, self.guestLabel.textLabel.text];
+    }
+    
+    self.accessibilityLabel = newAccessibilityLabel;
 }
 
 #pragma mark - Public API
@@ -346,29 +406,19 @@
 {
     _conversation = conversation;
     
-    if (conversation.conversationType == ZMConversationTypeOneOnOne) {
-        ZMUser *otherUser = conversation.connectedUser;
-        self.user = otherUser;
-        self.badgeUserImageView.hidden = NO;
-        self.conversationImageView.conversation = nil;
-    }
-    else {
-        self.conversationImageView.conversation = self.conversation;
-        self.badgeUserImageView.hidden = YES;
-        self.user = nil;
-        self.nameLabel.text = conversation.displayName;
-    }
+    [self updateForConversation];
 }
 
 - (void)setSelected:(BOOL)selected
 {
     [super setSelected:selected];
+    [self updateTrailingImageViewSelected:selected];
+}
 
-    if (selected) {
-        [self.badgeUserImageView setBadgeIcon:ZetaIconTypeCheckmark];
-    } else {
-        self.badgeUserImageView.badge = nil;
-    }
+- (void)setHighlighted:(BOOL)highlighted
+{
+    [super setHighlighted:highlighted];
+    self.backgroundColor = highlighted ? [UIColor colorWithWhite:0 alpha:0.08] : UIColor.clearColor;
 }
 
 #pragma mark - Override
@@ -386,16 +436,8 @@
 - (void)updateSubtitle
 {
     NSAttributedString *subtitle = [self attributedSubtitleForUser:(id)self.user];
-
-    if (nil == subtitle) {
-        self.subtitleLabel.text = @"";
-        self.nameLabelTopConstraint.active = NO;
-        self.nameLabelVerticalConstraint.active = YES;
-    } else {
-        self.nameLabelVerticalConstraint.active = NO;
-        self.nameLabelTopConstraint.active = YES;
-        self.subtitleLabel.attributedText = subtitle;
-    }
+    self.subtitleLabel.attributedText = subtitle;
+    self.subtitleLabel.hidden = nil == subtitle || [subtitle.string isEqualToString:@""];
 }
 
 - (void)updateGuestLabel
@@ -407,12 +449,53 @@
             self.guestLabel = [[GuestLabel alloc] init];
             [self.swipeView addSubview:self.guestLabel];
             [self.guestLabel autoAlignAxisToSuperviewAxis:ALAxisHorizontal];
-            [self.guestLabel autoPinEdgeToSuperviewEdge:ALEdgeTrailing withInset:rightMargin];
+            self.guestLabelTrailingConstraint = [self.guestLabel autoPinEdgeToSuperviewEdge:ALEdgeTrailing withInset:rightMargin];
+            self.guestLabelCheckmarkViewHorizontalConstraint = [self.guestLabel autoPinEdge:ALEdgeTrailing toEdge:ALEdgeLeading ofView:self.trailingCheckmarkView withOffset:-16];
+            [self updateGuestLabelConstraints];
         }
         self.guestLabel.hidden = NO;
     }
     else {
         self.guestLabel.hidden = YES;
+    }
+}
+
+- (void)updateGuestLabelConstraints
+{
+    self.guestLabelCheckmarkViewHorizontalConstraint.active = self.accessoryType == SearchResultCellAccessoryTypeTrailingCheckmark;
+    self.guestLabelTrailingConstraint.active = self.accessoryType != SearchResultCellAccessoryTypeTrailingCheckmark;
+}
+
+- (void)setAccessoryType:(SearchResultCellAccessoryType)accessoryType
+{
+    _accessoryType = accessoryType;
+    [self updateGuestLabelConstraints];
+    [self setSelected:self.selected];
+}
+
+- (void)updateTrailingImageViewSelected:(BOOL)selected
+{
+    self.trailingCheckmarkView.hidden = self.accessoryType == SearchResultCellAccessoryTypeNone;
+    
+    switch (self.accessoryType) {
+        case SearchResultCellAccessoryTypeNone:
+            break;
+        case SearchResultCellAccessoryTypeDisclosureIndicator: {
+            self.trailingCheckmarkView.backgroundColor = nil;
+            self.trailingCheckmarkView.layer.borderColor = UIColor.clearColor.CGColor;
+            UIColor *color = [ColorScheme.defaultColorScheme colorWithName:ColorSchemeColorSeparator];
+            self.trailingCheckmarkView.image = [UIImage imageForIcon:ZetaIconTypeDisclosureIndicator iconSize:ZetaIconSizeLike color:color];
+            break;
+        }
+        case SearchResultCellAccessoryTypeTrailingCheckmark: {
+            UIColor *foregroundColor = [ColorScheme.defaultColorScheme colorWithName:ColorSchemeColorBackground variant:self.colorSchemeVariant];
+            UIColor *backgroundColor = [ColorScheme.defaultColorScheme colorWithName:ColorSchemeColorIconNormal variant:self.colorSchemeVariant];
+            self.trailingCheckmarkView.image = selected ? [UIImage imageForIcon:ZetaIconTypeCheckmark iconSize:ZetaIconSizeLike color:foregroundColor] : nil;
+            self.trailingCheckmarkView.backgroundColor = selected ? backgroundColor : UIColor.clearColor;
+            UIColor *borderColor = selected ? backgroundColor : [backgroundColor colorWithAlphaComponent:0.64];
+            self.trailingCheckmarkView.layer.borderColor = borderColor.CGColor;
+            break;
+        }
     }
 }
 
@@ -457,7 +540,7 @@
 
 - (NSAttributedString *)attributedSubtitleForUser:(id <ZMBareUser, ZMSearchableUser>)user
 {
-    if ([user conformsToProtocol:@protocol(SearchServiceUser)]) {
+    if ([user conformsToProtocol:@protocol(SearchServiceUser)] && user.isServiceUser) {
         return [self attributedSubtitleForServiceUser:(id<SearchServiceUser>)user];
     }
     else {

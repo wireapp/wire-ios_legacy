@@ -33,16 +33,16 @@ extern CGRect WireStyleKitResizingBehaviorApply(WireStyleKitResizingBehavior beh
 
 
 @interface WireStyleKit : NSObject
-    
-    // iOS Controls Customization Outlets
-    @property (strong, nonatomic) IBOutletCollection(NSObject) NSArray* ongoingcallTargets;
-    @property (strong, nonatomic) IBOutletCollection(NSObject) NSArray* shieldverifiedTargets;
-    @property (strong, nonatomic) IBOutletCollection(NSObject) NSArray* shieldnotverifiedTargets;
-    
-    // Colors
+
+// iOS Controls Customization Outlets
+@property (strong, nonatomic) IBOutletCollection(NSObject) NSArray* ongoingcallTargets;
+@property (strong, nonatomic) IBOutletCollection(NSObject) NSArray* shieldverifiedTargets;
+@property (strong, nonatomic) IBOutletCollection(NSObject) NSArray* shieldnotverifiedTargets;
+
+// Colors
 + (UIColor*)fillColor10;
-    
-    // Drawing Methods
+
+// Drawing Methods
 + (void)drawIcon_0x100_32ptWithColor: (UIColor*)color;
 + (void)drawIcon_0x102_32ptWithColor: (UIColor*)color;
 + (void)drawIcon_0x104_32ptWithColor: (UIColor*)color;
@@ -181,6 +181,8 @@ extern CGRect WireStyleKitResizingBehaviorApply(WireStyleKitResizingBehavior beh
 + (void)drawIcon_0x751_32ptWithColor: (UIColor*)color;
 + (void)drawIcon_0x752_32ptWithColor: (UIColor*)color;
 + (void)drawIcon_0x753_32ptWithColor: (UIColor*)color;
++ (void)drawIcon_0x754_32ptWithColor: (UIColor*)color;
++ (void)drawIcon_0x755_32ptWithColor: (UIColor*)color;
 + (void)drawMissedcallWithAccent: (UIColor*)accent;
 + (void)drawYoutubeWithColor: (UIColor*)color;
 + (void)drawMissedcalllastWithAccent: (UIColor*)accent;
@@ -200,8 +202,8 @@ extern CGRect WireStyleKitResizingBehaviorApply(WireStyleKitResizingBehavior beh
 + (void)drawSpaceFocusWithFrame: (CGRect)targetFrame resizing: (WireStyleKitResizingBehavior)resizing color: (UIColor*)color;
 + (void)drawMentionsWithFrame: (CGRect)frame backgroundColor: (UIColor*)backgroundColor;
 + (void)drawTabWithColor: (UIColor*)color;
-    
-    // Generated Images
+
+// Generated Images
 + (UIImage*)imageOfIcon_0x100_32ptWithColor: (UIColor*)color;
 + (UIImage*)imageOfIcon_0x102_32ptWithColor: (UIColor*)color;
 + (UIImage*)imageOfIcon_0x104_32ptWithColor: (UIColor*)color;
@@ -316,6 +318,8 @@ extern CGRect WireStyleKitResizingBehaviorApply(WireStyleKitResizingBehavior beh
 + (UIImage*)imageOfIcon_0x751_32ptWithColor: (UIColor*)color;
 + (UIImage*)imageOfIcon_0x752_32ptWithColor: (UIColor*)color;
 + (UIImage*)imageOfIcon_0x753_32ptWithColor: (UIColor*)color;
++ (UIImage*)imageOfIcon_0x754_32ptWithColor: (UIColor*)color;
++ (UIImage*)imageOfIcon_0x755_32ptWithColor: (UIColor*)color;
 + (UIImage*)imageOfMissedcallWithAccent: (UIColor*)accent;
 + (UIImage*)imageOfYoutubeWithColor: (UIColor*)color;
 + (UIImage*)imageOfMissedcalllastWithAccent: (UIColor*)accent;
@@ -328,6 +332,6 @@ extern CGRect WireStyleKitResizingBehaviorApply(WireStyleKitResizingBehavior beh
 + (UIImage*)imageOfShieldnotverified;
 + (UIImage*)imageOfSpaceFocusWithColor: (UIColor*)color;
 + (UIImage*)imageOfTabWithColor: (UIColor*)color;
-    
-    @end
+
+@end
 

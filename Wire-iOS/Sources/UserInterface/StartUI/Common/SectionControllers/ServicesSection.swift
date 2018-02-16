@@ -83,6 +83,7 @@ public class ServicesSection: NSObject, CollectionViewSectionController {
         
         let user = self.services[indexPath.item]
         cell.user = user
+        cell.accessoryType = .disclosureIndicator
         cell.colorSchemeVariant = colorSchemeVariant
         cell.doubleTapAction = { [weak self] _ in
             guard let `self` = self else {
@@ -116,7 +117,7 @@ public class ServicesSection: NSObject, CollectionViewSectionController {
     public func collectionView(_ collectionView: UICollectionView,
                                layout collectionViewLayout: UICollectionViewLayout,
                                sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: self.collectionView.bounds.size.width, height: 52)
+        return CGSize(width: self.collectionView.bounds.size.width, height: 64)
     }
     
     public func collectionView(_ collectionView: UICollectionView,

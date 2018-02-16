@@ -18,20 +18,18 @@
 
 import Foundation
 
-class InviteTeamMemberSection : NSObject, CollectionViewSectionController {
+class InviteTeamMemberSection: NSObject, CollectionViewSectionController {
     
     weak var delegate: CollectionViewSectionDelegate?
-    var team : Team?
+    var team: Team?
     var collectionView: UICollectionView? = nil {
         didSet {
             collectionView?.register(InviteTeamMemberCell.self, forCellWithReuseIdentifier: InviteTeamMemberCell.zm_reuseIdentifier)
         }
     }
     
-    init(team : Team?) {
-        
+    init(team: Team?) {
         super.init()
-        
         self.team = team
     }
     

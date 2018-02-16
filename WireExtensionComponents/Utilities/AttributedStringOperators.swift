@@ -121,6 +121,26 @@ public extension String {
     }
 }
 
+// MARK: - Line Height
+
+public enum ParagraphStyleDescriptor {
+    case lineHeight(CGFloat)
+    
+    var style: NSParagraphStyle {
+        let style = NSMutableParagraphStyle()
+        switch self {
+        case .lineHeight(let height): style.lineSpacing = height
+        }
+        return style
+    }
+}
+
+public func &&(left: NSAttributedString, right: ParagraphStyleDescriptor) -> NSAttributedString {
+    let result = NSMutableAttributedString(attributedString: left)
+    result.addAttributes([NSParagraphStyleAttributeName: right.style], range: NSMakeRange(0, result.length))
+    return NSAttributedString(attributedString: result)
+}
+
 // The point of view is important for the localization grammar. In some languages, for example German, the verb has
 // to adjust depending on the point of view. @c PointOfView containts the meta-information for the localization system
 // in order to understand which localized string should be picked.

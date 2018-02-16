@@ -17,7 +17,6 @@
 // 
 
 
-import UIKit
 import Cartography
 
 
@@ -129,7 +128,7 @@ open class TabBar: UIView {
             buttonRow.right <= buttonRow.superview!.right
             buttonRow.centerX == buttonRow.superview!.centerX
             buttonRow.height == 40
-            buttonRow.width == 375 ~ LayoutPriority(750)
+            buttonRow.width == 375 ~ 750.0
         }
         
         constrain(self.leftLineView, self.buttonRow, self.arrowView) { leftLineView, buttonRow, arrowView in

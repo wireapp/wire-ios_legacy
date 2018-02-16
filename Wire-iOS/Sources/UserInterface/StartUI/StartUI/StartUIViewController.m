@@ -28,7 +28,7 @@
 #import "ZClientViewController.h"
 #import "SearchResultCell.h"
 #import "TopPeopleCell.h"
-#import "StartUIQuickActionsBar.h"
+#import "StartUIInviteActionBar.h"
 #import "Button.h"
 #import "IconButton.h"
 
@@ -53,7 +53,7 @@ static NSUInteger const StartUIInitiallyShowsKeyboardConversationThreshold = 10;
 @interface StartUIViewController () <ContactsViewControllerDelegate, UserSelectionObserver, SearchHeaderViewControllerDelegate>
 
 @property (nonatomic) ProfilePresenter *profilePresenter;
-@property (nonatomic) StartUIQuickActionsBar *quickActionsBar;
+@property (nonatomic) StartUIInviteActionBar *quickActionsBar;
 @property (nonatomic) UILabel *emptyResultLabel;
 @property (nonatomic) SearchGroupSelector *groupSelector;
 
@@ -101,6 +101,7 @@ static NSUInteger const StartUIInitiallyShowsKeyboardConversationThreshold = 10;
     self.searchHeaderViewController = [[SearchHeaderViewController alloc] initWithUserSelection:self.userSelection variant:ColorSchemeVariantDark];
     self.title = team != nil ? team.name : ZMUser.selfUser.displayName;
     self.searchHeaderViewController.delegate = self;
+    self.searchHeaderViewController.allowsMultipleSelection = NO;
     [self addChildViewController:self.searchHeaderViewController];
     [self.view addSubview:self.searchHeaderViewController.view];
     [self.searchHeaderViewController didMoveToParentViewController:self];
@@ -128,12 +129,8 @@ static NSUInteger const StartUIInitiallyShowsKeyboardConversationThreshold = 10;
     [self.searchResultsViewController didMoveToParentViewController:self];
     self.searchResultsViewController.searchResultsView.emptyResultView = self.emptyResultLabel;
     
-    self.quickActionsBar = [[StartUIQuickActionsBar alloc] init];
+    self.quickActionsBar = [[StartUIInviteActionBar alloc] init];
     [self.quickActionsBar.inviteButton addTarget:self action:@selector(inviteMoreButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
-    [self.quickActionsBar.conversationButton addTarget:self action:@selector(createConversationButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
-    [self.quickActionsBar.callButton addTarget:self action:@selector(callButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
-    [self.quickActionsBar.videoCallButton addTarget:self action:@selector(videoCallButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
-    [self.quickActionsBar.cameraButton addTarget:self action:@selector(cameraButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
 
     self.view.backgroundColor = [UIColor clearColor];
     
@@ -152,6 +149,11 @@ static NSUInteger const StartUIInitiallyShowsKeyboardConversationThreshold = 10;
                                                                             target:self
                                                                             action:@selector(onDismissPressed)];
     self.navigationItem.rightBarButtonItem.accessibilityIdentifier = @"close";
+}
+
+- (UIStatusBarStyle)preferredStatusBarStyle
+{
+    return UIStatusBarStyleLightContent;
 }
 
 - (void)createConstraints
@@ -211,21 +213,11 @@ static NSUInteger const StartUIInitiallyShowsKeyboardConversationThreshold = 10;
 - (void)updateActionBar
 {
     if (self.userSelection.users.count == 0) {
-        if (self.searchHeaderViewController.query.length != 0 ||
-            ZMUser.selfUser.hasTeam) {
+        if (self.searchHeaderViewController.query.length != 0 || ZMUser.selfUser.hasTeam) {
             self.searchResultsViewController.searchResultsView.accessoryView = nil;
         } else {
             self.searchResultsViewController.searchResultsView.accessoryView = self.quickActionsBar;
-            self.quickActionsBar.mode = StartUIQuickActionBarModeInvite;
         }
-    }
-    else if (self.userSelection.users.count == 1) {
-        self.searchResultsViewController.searchResultsView.accessoryView = self.quickActionsBar;
-        self.quickActionsBar.mode = StartUIQuickActionBarModeOpenConversation;
-    }
-    else {
-        self.searchResultsViewController.searchResultsView.accessoryView = self.quickActionsBar;
-        self.quickActionsBar.mode = StartUIQuickActionBarModeCreateConversation;
     }
     
     [self.view setNeedsLayout];
@@ -279,30 +271,6 @@ static NSUInteger const StartUIInitiallyShowsKeyboardConversationThreshold = 10;
     }];
 }
 
-- (void)createConversationButtonTapped:(id)sender
-{
-    [self.searchHeaderViewController.tokenField resignFirstResponder];
-    [self.delegate startUI:self didSelectUsers:self.userSelection.users forAction:StartUIActionCreateOrOpenConversation];
-}
-
-- (void)callButtonTapped:(id)sender
-{
-    [self.searchHeaderViewController.tokenField resignFirstResponder];
-    [self.delegate startUI:self didSelectUsers:self.userSelection.users forAction:StartUIActionCall];
-}
-
-- (void)videoCallButtonTapped:(id)sender
-{
-    [self.searchHeaderViewController.tokenField resignFirstResponder];
-    [self.delegate startUI:self didSelectUsers:self.userSelection.users forAction:StartUIActionVideoCall];
-}
-
-- (void)cameraButtonTapped:(id)sender
-{
-    [self.searchHeaderViewController.tokenField resignFirstResponder];
-    [self.delegate startUI:self didSelectUsers:self.userSelection.users forAction:StartUIActionPostPicture];
-}
-
 - (void)presentProfileViewControllerForUser:(id<ZMSearchableUser>)bareUser atIndexPath:(NSIndexPath *)indexPath
 {
     [self.searchHeaderViewController.tokenField resignFirstResponder];
@@ -330,17 +298,17 @@ static NSUInteger const StartUIInitiallyShowsKeyboardConversationThreshold = 10;
 
 - (void)userSelection:(UserSelection *)userSelection didAddUser:(ZMUser *)user
 {
-    [self updateActionBar];
+    // no-op
 }
 
 - (void)userSelection:(UserSelection *)userSelection didRemoveUser:(ZMUser * _Nonnull)user
 {
-    [self updateActionBar];
+  // no-op
 }
 
 - (void)userSelection:(UserSelection *)userSelection wasReplacedBy:(NSArray<ZMUser *> *)users
 {
-    [self updateActionBar];
+  // no-op
 }
 
 #pragma mark - SearchHeaderViewControllerDelegate
@@ -348,7 +316,7 @@ static NSUInteger const StartUIInitiallyShowsKeyboardConversationThreshold = 10;
 - (void)searchHeaderViewControllerDidConfirmAction:(SearchHeaderViewController *)searchHeaderViewController
 {
     if (self.userSelection.users.count > 0) {
-        [self.delegate startUI:self didSelectUsers:self.userSelection.users forAction:StartUIActionCreateOrOpenConversation];
+        [self.delegate startUI:self didSelectUsers:self.userSelection.users];
     }
     else {
         [self.searchHeaderViewController resetQuery];

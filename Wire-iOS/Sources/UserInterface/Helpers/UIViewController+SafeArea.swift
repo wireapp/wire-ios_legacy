@@ -1,6 +1,6 @@
 //
 // Wire
-// Copyright (C) 2017 Wire Swiss GmbH
+// Copyright (C) 2018 Wire Swiss GmbH
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -16,17 +16,16 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-import UIKit
 
-extension UINavigationController {
-    func popToPrevious(of controller: UIViewController) -> [UIViewController]? {
-        if let currentIdx = viewControllers.index(of: controller) {
-            let previousIdx = currentIdx - 1
-            if viewControllers.count > previousIdx {
-                let previousController = viewControllers[previousIdx]
-                return popToViewController(previousController, animated: true)
-            }
+import Foundation
+
+extension UIViewController {
+    var safeBottomAnchor: NSLayoutYAxisAnchor {
+        if #available(iOS 11, *) {
+            return self.view.safeAreaLayoutGuide.bottomAnchor
         }
-        return nil
+        else {
+            return self.bottomLayoutGuide.topAnchor
+        }
     }
 }

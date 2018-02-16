@@ -19,23 +19,33 @@
 import Foundation
 import Cartography
 
-class InviteTeamMemberCell : UICollectionViewCell, Reusable {
+class StartUIIconCell: UICollectionViewCell, Reusable {
     
-    let iconView : UIImageView  = UIImageView()
-    let titleLabel : UILabel = UILabel()
+    private let iconView = UIImageView()
+    private let titleLabel = UILabel()
+    private let separator = UIView()
+    
+    fileprivate var icon: ZetaIconType? {
+        didSet {
+            iconView.image = icon.map { UIImage.init(for: $0, iconSize: .tiny, color: .white) }
+        }
+    }
+    
+    fileprivate var title: String? {
+        didSet {
+            titleLabel.text = title
+        }
+    }
+    
+    override var isHighlighted: Bool {
+        didSet {
+            backgroundColor = isHighlighted ? .init(white: 0, alpha: 0.08) : .clear
+        }
+    }
     
     override init(frame: CGRect) {
-        
         super.init(frame: frame)
-        
-        iconView.image = UIImage.init(for: .envelope, iconSize: .tiny, color: .white)
-        iconView.contentMode = .center
-        
-        titleLabel.text = "peoplepicker.invite_team_members".localized
-        titleLabel.font = FontSpec(.normal, .medium).font
-        titleLabel.textColor = .white
-        [iconView, titleLabel].forEach(contentView.addSubview)
-        
+        setupViews()
         createConstraints()
     }
     
@@ -43,10 +53,18 @@ class InviteTeamMemberCell : UICollectionViewCell, Reusable {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func createConstraints() {
-        let iconSize : CGFloat = 32.0
+    fileprivate func setupViews() {
+        iconView.contentMode = .center
+        titleLabel.font = FontSpec(.normal, .light).font
+        titleLabel.textColor = .white
+        [iconView, titleLabel, separator].forEach(contentView.addSubview)
+        separator.backgroundColor = ColorScheme.default().color(withName: ColorSchemeColorCellSeparator, variant: .dark)
+    }
+    
+    fileprivate  func createConstraints() {
+        let iconSize: CGFloat = 32.0
         
-        constrain(contentView, iconView, titleLabel) { container, iconView, titleLabel in
+        constrain(contentView, iconView, titleLabel, separator) { container, iconView, titleLabel, separator in
             iconView.width == iconSize
             iconView.height == iconSize
             iconView.leading == container.leading + 16
@@ -56,7 +74,35 @@ class InviteTeamMemberCell : UICollectionViewCell, Reusable {
             titleLabel.trailing == container.trailing
             titleLabel.top == container.top
             titleLabel.bottom == container.bottom
+            
+            separator.leading == titleLabel.leading
+            separator.trailing == container.trailing
+            separator.bottom == container.bottom
+            separator.height == .hairline
         }
+    }
+    
+}
+
+final class InviteTeamMemberCell: StartUIIconCell  {
+
+    override func setupViews() {
+        super.setupViews()
+        icon = .envelope
+        title = "peoplepicker.invite_team_members".localized
+    }
+    
+}
+
+final class CreateGroupCell: StartUIIconCell  {
+    
+    override func setupViews() {
+        super.setupViews()
+        icon = .createConversation
+        title = "peoplepicker.quick-action.create-conversation".localized
+        isAccessibilityElement = true
+        accessibilityLabel = title
+        accessibilityIdentifier = "button.searchui.creategroup"
     }
     
 }

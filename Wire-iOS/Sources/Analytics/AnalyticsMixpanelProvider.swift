@@ -100,7 +100,10 @@ final class AnalyticsMixpanelProvider: NSObject, AnalyticsProvider {
         "notifications.processing",
         TeamInviteEvent.sentInvite(.teamCreation).name,
         "integration.added_service",
-        "integration.removed_service"
+        "integration.removed_service",
+        LinearGroupCreationFlowEvent.openedGroupCreation.rawValue,
+        LinearGroupCreationFlowEvent.openedSelectParticipants.rawValue,
+        LinearGroupCreationFlowEvent.groupCreationSucceeded.rawValue
         ])
     
     private static let enabledSuperProperties = Set<String>([
