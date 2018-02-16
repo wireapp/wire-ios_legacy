@@ -415,6 +415,7 @@
 		8732670E1D2D0C5C005A62C1 /* AudioRecordKeyboardViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8732670C1D2D0C49005A62C1 /* AudioRecordKeyboardViewControllerTests.swift */; };
 		8733378A1DF5B43A006AE609 /* SwiftDependencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = 873337891DF5B43A006AE609 /* SwiftDependencies.swift */; };
 		873478071D34EE5100CB200F /* libstdc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 873478061D34EE5100CB200F /* libstdc++.tbd */; };
+		8735AE722036CBF900DCE66E /* huge.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 8735AE702036C88800DCE66E /* huge.pdf */; };
 		8736F1841E4B67F0001CBA62 /* AppLockView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8736F1831E4B67F0001CBA62 /* AppLockView.swift */; };
 		8736F1C21E4DCEB8001CBA62 /* AppLockViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8736F1C11E4DCEB8001CBA62 /* AppLockViewController.swift */; };
 		87371C1A1B7355C400807499 /* ConversationListViewController+StartUI.m in Sources */ = {isa = PBXBuildFile; fileRef = 87371C191B7355C400807499 /* ConversationListViewController+StartUI.m */; };
@@ -1742,6 +1743,7 @@
 		8732670C1D2D0C49005A62C1 /* AudioRecordKeyboardViewControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioRecordKeyboardViewControllerTests.swift; sourceTree = "<group>"; };
 		873337891DF5B43A006AE609 /* SwiftDependencies.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftDependencies.swift; sourceTree = "<group>"; };
 		873478061D34EE5100CB200F /* libstdc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libstdc++.tbd"; path = "usr/lib/libstdc++.tbd"; sourceTree = SDKROOT; };
+		8735AE702036C88800DCE66E /* huge.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = huge.pdf; sourceTree = "<group>"; };
 		8736F1831E4B67F0001CBA62 /* AppLockView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppLockView.swift; sourceTree = "<group>"; };
 		8736F1C11E4DCEB8001CBA62 /* AppLockViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppLockViewController.swift; sourceTree = "<group>"; };
 		87371C181B7355C400807499 /* ConversationListViewController+StartUI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ConversationListViewController+StartUI.h"; sourceTree = "<group>"; };
@@ -5144,6 +5146,7 @@
 				7C374E471FDE7B8B00A43B9C /* unsplash_matterhorn_small_height.jpg */,
 				7C374E491FDE7B8C00A43B9C /* unsplash_matterhorn_small_size.jpg */,
 				7C374E4A1FDE7B8C00A43B9C /* unsplash_matterhorn_small_width.jpg */,
+				8735AE702036C88800DCE66E /* huge.pdf */,
 				87656FCE1FB5FEDC00D5286C /* 0x0.pdf */,
 			);
 			name = Resources;
@@ -5850,6 +5853,7 @@
 				1E18C2BF1AFBBB820043F3CF /* emoticons.min.json in Resources */,
 				1E8772281B0C8CAB005BDDC6 /* emo-test-03.json in Resources */,
 				DBF7235F1B5566B80036F4C5 /* a_lot_of_people.json in Resources */,
+				8735AE722036CBF900DCE66E /* huge.pdf in Resources */,
 				16A202781B6774760095BBD1 /* soundcloud-playlist2.json in Resources */,
 				1E2268041B395722003980E3 /* people-01.json in Resources */,
 				16A202691B66A0040095BBD1 /* soundcloud-track2.json in Resources */,
