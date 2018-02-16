@@ -52,7 +52,7 @@ class ClearBackgroundNavigationController: UINavigationController {
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
-        return topViewController?.preferredStatusBarStyle ?? .default
+        return topViewController?.preferredStatusBarStyle ?? .lightContent
     }
     
     override func viewDidLoad() {
