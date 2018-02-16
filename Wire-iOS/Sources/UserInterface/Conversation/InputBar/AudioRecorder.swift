@@ -155,26 +155,26 @@ public final class AudioRecorder: NSObject, AudioRecorderType {
     public func startRecording() {
         guard let audioRecorder = self.audioRecorder else { return }
         
-        AVSMediaManager.sharedInstance().startRecording()
-
-        state = .recording
-        recordTimerCallback?(0)
-        fileURL = nil
-        setupDisplayLink()
-        
-        var successfullyStarted = false
-        
-        if let maxDuration = self.maxRecordingDuration {
-            successfullyStarted = audioRecorder.record(forDuration: maxDuration)
-            if !successfullyStarted { DDLogError("Failed to start audio recording") }
-            else { self.recordStartedCallback?() }
+        AVSMediaManager.sharedInstance().startRecording {
+            self.state = .recording
+            self.recordTimerCallback?(0)
+            self.fileURL = nil
+            self.setupDisplayLink()
+            
+            var successfullyStarted = false
+            
+            if let maxDuration = self.maxRecordingDuration {
+                successfullyStarted = audioRecorder.record(forDuration: maxDuration)
+                if !successfullyStarted { DDLogError("Failed to start audio recording") }
+                else { self.recordStartedCallback?() }
+            }
+            else {
+                successfullyStarted = audioRecorder.record()
+                if !successfullyStarted { DDLogError("Failed to start audio recording") }
+            }
+            
+            self.recordingStartTime = successfullyStarted ? audioRecorder.deviceCurrentTime : nil
         }
-        else {
-            successfullyStarted = audioRecorder.record()
-            if !successfullyStarted { DDLogError("Failed to start audio recording") }
-        }
-        
-        recordingStartTime = successfullyStarted ? audioRecorder.deviceCurrentTime : nil
     }
     
     @discardableResult public func stopRecording() -> Bool {
