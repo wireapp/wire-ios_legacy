@@ -53,8 +53,7 @@ extension StartUIViewController: SearchResultsViewControllerDelegate {
     }
     
     public func searchResultsViewController(_ searchResultsViewController: SearchResultsViewController, didTapOnConversation conversation: ZMConversation) {
-        if conversation.conversationType == .group
-            || (conversation.conversationType == .oneOnOne && conversation.includesServiceUser) {
+        if conversation.conversationType == .group || conversation.conversationType == .oneOnOne {
             self.delegate.startUI?(self, didSelect: conversation)
         }
     }
