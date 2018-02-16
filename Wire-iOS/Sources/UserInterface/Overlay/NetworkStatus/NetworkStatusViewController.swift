@@ -109,13 +109,13 @@ protocol NetworkStatusViewControllerDelegate: class {
             update(state: viewState(from: userSession.networkState))
         }
     }
-
+ 
     @objc public func createConstraints(bottomView: UIView, containerView: UIView, topMargin: CGFloat) {
-        constrain(bottomView, containerView, self.view) { (bottomView: LayoutProxy, view: LayoutProxy, networkStatusViewControllerView: LayoutProxy) -> Void in
+        constrain(bottomView, containerView, view) { bottomView, containerView, networkStatusViewControllerView in
 
-            networkStatusViewControllerView.top == view.top + topMargin
-            networkStatusViewControllerView.left == view.left
-            networkStatusViewControllerView.right == view.right
+            networkStatusViewControllerView.top == containerView.top + topMargin
+            networkStatusViewControllerView.left == containerView.left
+            networkStatusViewControllerView.right == containerView.right
 
             bottomView.top == networkStatusViewControllerView.bottom
         }
