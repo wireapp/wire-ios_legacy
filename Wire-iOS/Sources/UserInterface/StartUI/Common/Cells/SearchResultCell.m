@@ -77,7 +77,9 @@
     static dispatch_once_t onceToken;
     static AddressBookCorrelationFormatter *formatter = nil;
     dispatch_once(&onceToken, ^{
-        formatter = [[AddressBookCorrelationFormatter alloc] initWithLightFont:self.lightFont boldFont:self.boldFont color:UIColor.whiteColor];
+        formatter = [[AddressBookCorrelationFormatter alloc] initWithLightFont:self.lightFont
+                                                                      boldFont:self.boldFont
+                                                                         color:[[ColorScheme defaultColorScheme] colorWithName:ColorSchemeColorTextDimmed]];
     });
 
     return formatter;
@@ -183,6 +185,7 @@
         [self.nameLabelStackView autoAlignAxis:ALAxisHorizontal toSameAxisOfView:self.avatarContainer];
         
         [self.nameLabelStackView autoPinEdge:ALEdgeLeading toEdge:ALEdgeTrailing ofView:self.avatarContainer withOffset:nameAvatarMargin];
+        
         self.nameRightMarginConstraint = [self.nameLabelStackView autoPinEdge:ALEdgeTrailing toEdge:ALEdgeTrailing ofView:self.swipeView withOffset:- rightMargin];
 
         self.avatarViewSizeConstraint = [self.avatarContainer autoSetDimension:ALDimensionWidth toSize:80];
@@ -196,10 +199,10 @@
         [self.conversationImageView autoPinEdgeToSuperviewEdge:ALEdgeTop];
 
         [self.instantConnectButton autoAlignAxis:ALAxisHorizontal toSameAxisOfView:self.avatarContainer];
-        [self.instantConnectButton autoPinEdgeToSuperviewEdge:ALEdgeTrailing withInset:16];
+        [self.instantConnectButton autoPinEdgeToSuperviewEdge:ALEdgeTrailing withInset:rightMargin];
         
         [self.trailingCheckmarkView autoAlignAxis:ALAxisHorizontal toSameAxisOfView:self.avatarContainer];
-        [self.trailingCheckmarkView autoPinEdgeToSuperviewEdge:ALEdgeTrailing withInset:16];
+        [self.trailingCheckmarkView autoPinEdgeToSuperviewEdge:ALEdgeTrailing withInset:rightMargin];
         [self.trailingCheckmarkView autoSetDimensionsToSize:CGSizeMake(24, 24)];
 
         [self.separatorLineView autoPinEdgeToSuperviewEdge:ALEdgeTrailing];
@@ -217,10 +220,13 @@
 
     CGFloat rightMarginForName = rightMargin;
     if (!self.instantConnectButton.hidden) {
-        rightMarginForName = self.instantConnectButton.bounds.size.width;
+        rightMarginForName = self.instantConnectButton.bounds.size.width + rightMargin;
     }
-    else if (!self.guestLabel.hidden) {
-        rightMarginForName = self.guestLabel.bounds.size.width + rightMargin;
+    if (!self.trailingCheckmarkView.hidden) {
+        rightMarginForName += self.trailingCheckmarkView.bounds.size.width + rightMargin;
+    }
+    if (!self.guestLabel.hidden) {
+        rightMarginForName += self.guestLabel.bounds.size.width + rightMargin;
     }
 
     self.nameRightMarginConstraint.constant = -rightMarginForName;
@@ -450,7 +456,7 @@
             [self.swipeView addSubview:self.guestLabel];
             [self.guestLabel autoAlignAxisToSuperviewAxis:ALAxisHorizontal];
             self.guestLabelTrailingConstraint = [self.guestLabel autoPinEdgeToSuperviewEdge:ALEdgeTrailing withInset:rightMargin];
-            self.guestLabelCheckmarkViewHorizontalConstraint = [self.guestLabel autoPinEdge:ALEdgeTrailing toEdge:ALEdgeLeading ofView:self.trailingCheckmarkView withOffset:-16];
+            self.guestLabelCheckmarkViewHorizontalConstraint = [self.guestLabel autoPinEdge:ALEdgeTrailing toEdge:ALEdgeLeading ofView:self.trailingCheckmarkView withOffset:-rightMargin];
             [self updateGuestLabelConstraints];
         }
         self.guestLabel.hidden = NO;
