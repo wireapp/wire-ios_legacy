@@ -20,6 +20,7 @@
 
 
 
+"share_extension.general.ok" = "OK";
 "share_extension.conversation_selection.account" = "Аккаунт:";
 "share_extension.conversation_selection.title" = "Разговор:";
 "share_extension.send_button.title" = "Отправить";
@@ -33,6 +34,8 @@
 "share_extension.timeout.title" = "Время соединения истекло.";
 "share_extension.timeout.message" = "Проверьте подключение к Интернету и повторите попытку. Вложения были сохранены в беседе.";
 "share_extension.privacy_security.lock_app.description" = "Разблокировать Wire";
+"share_extension.logged_out.title" = "Вы вышли из этой учетной записи.";
+"share_extension.logged_out.message" = "Выберите другую учетную запись.";
 
 "conversation.displayname.emptygroup" = "Пустая групповая беседа";
 "meta.degraded.degradation_reason_message.singular" = "%@ начал(-а) использовать новое устройство.";

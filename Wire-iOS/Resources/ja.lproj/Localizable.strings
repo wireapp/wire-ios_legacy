@@ -18,6 +18,7 @@
 
 
 "general.ok" = "OK";
+"general.next" = "Next";
 "general.cancel" = "キャンセル";
 "general.open_settings" = "Wireの設定を開く";
 
@@ -34,6 +35,12 @@
 "peoplepicker.header.contacts" = "連絡先";
 "peoplepicker.header.contacts_personal" = "個人の連絡先";
 "peoplepicker.header.directory" = "接続";
+
+"peoplepicker.group.title.singular" = "友達を追加";
+"peoplepicker.group.title.plural" = "Add People (%d)";
+"peoplepicker.group.skip" = "Skip";
+"peoplepicker.group.done" = "Done";
+"peoplepicker.group.create" = "Create";
 
 "peoplepicker.header.people" = "People";
 "peoplepicker.header.services" = "Services";
@@ -228,6 +235,10 @@
 "conversation.input_bar.message_too_long.title" = "Message too long";
 "conversation.input_bar.message_too_long.message" = "You can send messages up to %d characters long.";
 
+"conversation.create.group_name.placeholder" = "Group name";
+"conversation.create.guidance.empty" = "At least 1 character";
+"conversation.create.guidance.toolong" = "文字が多すぎます";
+
 // Image confirmation dialogue
 "image_confirmer.confirm" = "OK";
 "image_confirmer.cancel" = "キャンセル";
@@ -324,6 +335,10 @@
 "content.system.renamed_conv.title" = "%@が会話に名前を付けました";
 "content.system.renamed_conv.title-you" = "%@が会話に名前を付けました";
 "content.system.renamed_conv.title.you" = "あなた";
+
+"content.system.conversation.with_name.title" = "%@ started the conversation";
+
+"content.system.conversation.with_name.participants" = "with %@";
 
 "content.system.reactivated_device" = "あなたは %@ を再び利用しています。いままでのメッセージはここには表示されません。";
 

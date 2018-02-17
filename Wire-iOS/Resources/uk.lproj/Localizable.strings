@@ -18,6 +18,7 @@
 
 
 "general.ok" = "OK";
+"general.next" = "Далі";
 "general.cancel" = "Скасувати";
 "general.open_settings" = "Відкрити налаштування Wire";
 
@@ -34,6 +35,12 @@
 "peoplepicker.header.contacts" = "Контакти";
 "peoplepicker.header.contacts_personal" = "Персональні контакти";
 "peoplepicker.header.directory" = "Додати до контактів";
+
+"peoplepicker.group.title.singular" = "Додати учасників";
+"peoplepicker.group.title.plural" = "Додати учасників (%d)";
+"peoplepicker.group.skip" = "Пропустити";
+"peoplepicker.group.done" = "Готово";
+"peoplepicker.group.create" = "Створити";
 
 "peoplepicker.header.people" = "Люди";
 "peoplepicker.header.services" = "Сервіси";
@@ -228,6 +235,10 @@
 "conversation.input_bar.message_too_long.title" = "Повідомлення занадто довге";
 "conversation.input_bar.message_too_long.message" = "Можна надсилати повідомлення довжиною до %d символів.";
 
+"conversation.create.group_name.placeholder" = "Ім'я групи";
+"conversation.create.guidance.empty" = "Не менше 1 символу";
+"conversation.create.guidance.toolong" = "Занадто багато символів";
+
 // Image confirmation dialogue
 "image_confirmer.confirm" = "OK";
 "image_confirmer.cancel" = "Скасувати";
@@ -324,6 +335,10 @@
 "content.system.renamed_conv.title" = "%@ перейменував(-ла) розмову";
 "content.system.renamed_conv.title-you" = "%@ перейменував(-ла) розмову";
 "content.system.renamed_conv.title.you" = "Ви";
+
+"content.system.conversation.with_name.title" = "%@ started the conversation";
+
+"content.system.conversation.with_name.participants" = "with %@";
 
 "content.system.reactivated_device" = "Ви почали використовувати %@ знову. Повідомлення, надіслані поки ви не користувалися ним, не з'являться тут.";
 
