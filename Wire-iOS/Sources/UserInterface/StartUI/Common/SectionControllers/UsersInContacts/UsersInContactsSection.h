@@ -33,4 +33,6 @@ FOUNDATION_EXPORT NSString * _Nonnull const PeoplePickerUsersInContactsReuseIden
 @property (nonatomic, nullable) Team *team;
 @property (nonatomic) ColorSchemeVariant colorSchemeVariant;
 
+@property (nonatomic) BOOL useNewStyleCellLayout;
+
 @end

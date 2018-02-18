@@ -23,14 +23,22 @@
 @protocol ZMBareUser;
 @class ZMConversation, Team;
 
-@interface SearchResultCell : SwipeMenuCollectionCell
+
+typedef NS_ENUM(NSUInteger, SearchResultCellAccessoryType) {
+    SearchResultCellAccessoryTypeNone,
+    SearchResultCellAccessoryTypeTrailingCheckmark,
+    SearchResultCellAccessoryTypeDisclosureIndicator
+};
+
+@interface SearchResultCell: SwipeMenuCollectionCell
 
 @property (nonatomic) ColorSchemeVariant colorSchemeVariant;
+@property (nonatomic) SearchResultCellAccessoryType accessoryType;
 @property (nonatomic, nullable) Team *team;
 @property (nonatomic, nullable) id<ZMBareUser> user;
 @property (nonatomic, nullable) ZMConversation *conversation;
-@property (nonatomic, copy, nullable)   void (^doubleTapAction)(SearchResultCell * _Nonnull);
-@property (nonatomic, copy, nullable)   void (^instantConnectAction)(SearchResultCell * _Nonnull);
+@property (nonatomic, copy, nullable)  void (^doubleTapAction)(SearchResultCell * _Nonnull);
+@property (nonatomic, copy, nullable)  void (^instantConnectAction)(SearchResultCell * _Nonnull);
 
 - (void)playAddUserAnimation;
 

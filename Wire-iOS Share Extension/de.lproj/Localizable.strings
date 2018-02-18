@@ -20,6 +20,7 @@
 
 
 
+"share_extension.general.ok" = "Verstanden";
 "share_extension.conversation_selection.account" = "Konto:";
 "share_extension.conversation_selection.title" = "Unterhaltung:";
 "share_extension.send_button.title" = "Senden";
@@ -33,6 +34,8 @@
 "share_extension.timeout.title" = "Zeitüberschreitung beim Verbindungsversuch.";
 "share_extension.timeout.message" = "Überprüfen Sie ihre Internetverbindung und versuchen Sie es erneut. Der Anhang wurde in der Unterhaltung gespeichert.";
 "share_extension.privacy_security.lock_app.description" = "Wire entsperren";
+"share_extension.logged_out.title" = "You've been logged out from this account.";
+"share_extension.logged_out.message" = "Please choose another account.";
 
 "conversation.displayname.emptygroup" = "Leere Gruppe - Gespräch";
 "meta.degraded.degradation_reason_message.singular" = "%@ hat ein neues Gerät hinzugefügt.";

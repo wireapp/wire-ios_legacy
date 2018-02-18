@@ -184,7 +184,7 @@ final class LandingViewController: UIViewController {
         constrain(logoView, headline, cancelButton, headerContainerView) { logoView, headline, cancelButton, headerContainerView in
             ///reserver space for status bar(20pt)
             logoView.top >= headerContainerView.top + 36
-            logoAlignTop = logoView.top == headerContainerView.top + 72 ~ LayoutPriority(500)
+            logoAlignTop = logoView.top == headerContainerView.top + 72 ~ 500.0
             logoView.centerX == headerContainerView.centerX
             logoView.width == 96
             logoView.height == 31
@@ -229,7 +229,7 @@ final class LandingViewController: UIViewController {
 
             loginButton.top == loginHintsLabel.bottom + 4
             loginButton.centerX == selfView.centerX
-            loginButtonAlignBottom = loginButton.bottom == selfView.bottomMargin - 32 ~ LayoutPriority(500)
+            loginButtonAlignBottom = loginButton.bottom == selfView.bottomMargin - 32 ~ 500.0
         }
 
         [createAccountButton, createTeamButton].forEach() { button in

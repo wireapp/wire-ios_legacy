@@ -20,6 +20,7 @@
 
 
 
+"share_extension.general.ok" = "OK";
 "share_extension.conversation_selection.account" = "Account:";
 "share_extension.conversation_selection.title" = "Gesprek:";
 "share_extension.send_button.title" = "Stuur";
@@ -33,6 +34,8 @@
 "share_extension.timeout.title" = "Er is een time-out in de verbinding met de server.";
 "share_extension.timeout.message" = "Controleer je internet connectie en probeer opniew. De bijlagen zijn opgeslagen in de conversatie.";
 "share_extension.privacy_security.lock_app.description" = "Ontgrendel Wire";
+"share_extension.logged_out.title" = "You've been logged out from this account.";
+"share_extension.logged_out.message" = "Please choose another account.";
 
 "conversation.displayname.emptygroup" = "Leeg groep gesprek";
 "meta.degraded.degradation_reason_message.singular" = "%@ is een ander apparaat gaan gebruiken.";

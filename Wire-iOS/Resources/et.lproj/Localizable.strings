@@ -18,6 +18,7 @@
 
 
 "general.ok" = "OK";
+"general.next" = "Next";
 "general.cancel" = "Tühista";
 "general.open_settings" = "Ava Wire sätted";
 
@@ -34,6 +35,12 @@
 "peoplepicker.header.contacts" = "Kontaktid";
 "peoplepicker.header.contacts_personal" = "Isiklikud kontaktid";
 "peoplepicker.header.directory" = "Lisa kontakt";
+
+"peoplepicker.group.title.singular" = "Lisa inimesi";
+"peoplepicker.group.title.plural" = "Add People (%d)";
+"peoplepicker.group.skip" = "Jäta vahele";
+"peoplepicker.group.done" = "Valmis";
+"peoplepicker.group.create" = "Create";
 
 "peoplepicker.header.people" = "Inimesed";
 "peoplepicker.header.services" = "Teenused";
@@ -228,6 +235,10 @@
 "conversation.input_bar.message_too_long.title" = "Liiga pikk sõnum";
 "conversation.input_bar.message_too_long.message" = "Sõnum võib olla kuni %d tähemärki.";
 
+"conversation.create.group_name.placeholder" = "Group name";
+"conversation.create.guidance.empty" = "At least 1 character";
+"conversation.create.guidance.toolong" = "Liiga pikk nimi";
+
 // Image confirmation dialogue
 "image_confirmer.confirm" = "OK";
 "image_confirmer.cancel" = "Tühista";
@@ -324,6 +335,10 @@
 "content.system.renamed_conv.title" = "%@ nimetas vestluse ümber";
 "content.system.renamed_conv.title-you" = "%@ nimetasid vestluse ümber";
 "content.system.renamed_conv.title.you" = "Sina";
+
+"content.system.conversation.with_name.title" = "%@ started the conversation";
+
+"content.system.conversation.with_name.participants" = "with %@";
 
 "content.system.reactivated_device" = "Hakkasid uuesti kasutama seadet %@. Vahepeal saadetud sõnumid siia ei ilmu.";
 

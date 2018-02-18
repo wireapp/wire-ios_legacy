@@ -133,7 +133,7 @@ class GiphyConfirmationViewController: UIViewController {
             buttonContainer.left >= container.left + 32
             buttonContainer.right <= container.right - 32
             buttonContainer.bottom  == container.bottom - 32
-            buttonContainer.width == 476 ~ LayoutPriority(700)
+            buttonContainer.width == 476 ~ 700.0
             buttonContainer.centerX == container.centerX
         }
     }

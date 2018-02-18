@@ -1,4 +1,4 @@
-// 
+//
 // Wire
 // Copyright (C) 2016 Wire Swiss GmbH
 // 
@@ -236,6 +236,16 @@
     return YES;
 }
 
+- (UIStatusBarStyle)preferredStatusBarStyle
+{
+    if (self.presentedViewController != nil) {
+        return self.presentedViewController.preferredStatusBarStyle;
+    }
+    else {
+        return UIStatusBarStyleLightContent;
+    }
+}
+
 - (void)createNoConversationLabel;
 {
     self.noConversationLabel = [[UILabel alloc] initForAutoLayout];
@@ -286,7 +296,7 @@
 
 - (StartUIViewController *)createPeoplePickerController
 {
-    StartUIViewController *startUIViewController = [StartUIViewController new];
+    StartUIViewController *startUIViewController = [[StartUIViewController alloc] init];
     startUIViewController.delegate = self;
     return startUIViewController;
 }

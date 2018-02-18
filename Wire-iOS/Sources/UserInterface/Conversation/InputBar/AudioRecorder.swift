@@ -154,8 +154,8 @@ public final class AudioRecorder: NSObject, AudioRecorderType {
     
     public func startRecording() {
         guard let audioRecorder = self.audioRecorder else { return }
-        
-        AVSMediaManager.sharedInstance().startRecording()
+
+        setSessionActive(true)
 
         state = .recording
         recordTimerCallback?(0)
@@ -187,7 +187,7 @@ public final class AudioRecorder: NSObject, AudioRecorderType {
         removeDisplayLink()
         guard let filePath = audioRecorder?.url.path , fm.fileExists(atPath: filePath) else { return false }
         fileURL = audioRecorder?.url
-        AVSMediaManager.sharedInstance().stopRecording()
+        setSessionActive(false)
         return true
     }
     
@@ -214,7 +214,27 @@ public final class AudioRecorder: NSObject, AudioRecorderType {
         currentDuration = duration
         recordTimerCallback?(currentDuration)
     }
+    
+    private func setSessionActive(_ active: Bool) {
+        if active {
+            AVSMediaManager.sharedInstance().stopAudio()
+            AppDelegate.shared().mediaPlaybackManager?.audioTrackPlayer.stop()
+        }
         
+        do {
+            try AVAudioSession.sharedInstance().setActive(active)
+        }
+        catch let error {
+            DDLogError("Failed to set session activity to \(active): \(error)")
+        }
+        
+        do {
+            try AVAudioSession.sharedInstance().setCategory(active ? AVAudioSessionCategoryPlayAndRecord : AVAudioSessionCategorySoloAmbient)
+        } catch let error {
+            DDLogError("Failed change audio category for recording: \(error)")
+        }
+    }
+    
     // MARK: Playing
     
     public func playRecording() {

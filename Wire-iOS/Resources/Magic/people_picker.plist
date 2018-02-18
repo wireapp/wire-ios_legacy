@@ -187,7 +187,7 @@
 			<key>tile_width</key>
 			<integer>0</integer>
 			<key>tile_height</key>
-			<integer>52</integer>
+			<integer>64</integer>
 			<key>person_tile_left_margin</key>
 			<integer>16</integer>
 			<key>person_tile_right_margin</key>

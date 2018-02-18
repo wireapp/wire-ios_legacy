@@ -412,6 +412,7 @@ static const CGFloat BurstContainerExpandedHeight = 40;
     if (nil == self.countdownView) {
         if (!countdownContainerViewHidden) {
             self.countdownView = [[DestructionCountdownView alloc] init];
+            self.countdownView.accessibilityLabel = @"EphemeralMessageCountdownView";
             [self.countdownContainerView addSubview:self.countdownView];
             [self.countdownView autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsMake(2, 2, 2, 2)];
             self.countdownContainerView.layer.cornerRadius = CGRectGetWidth(self.countdownContainerView.bounds) / 2;

@@ -32,4 +32,16 @@ extension UIColor {
 
         self.init(red: r, green: g, blue: b, alpha: alpha)
     }
+    
+    public var alpha: CGFloat {
+        get {
+            var alpha: CGFloat = 0
+            guard self.getRed(nil, green: nil, blue: nil, alpha: &alpha) else {
+                return 0
+            }
+            
+            return alpha
+        }
+    }
+    
 }

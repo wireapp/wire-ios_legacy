@@ -88,7 +88,7 @@ import WireDataModel
     
     override func updateAccessibilityLabel() {
         guard let user = user else { return }
-        self.accessibilityLabel = "\(user.name)_is_\(user.availability.localizedName)".localized
+        self.accessibilityLabel = "\(user.name!)_is_\(user.availability.localizedName)".localized
     }
     
     func provideHapticFeedback() {

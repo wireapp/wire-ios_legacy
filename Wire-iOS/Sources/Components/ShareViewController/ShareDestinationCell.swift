@@ -64,6 +64,7 @@ final class ShareDestinationCell<D: ShareDestination>: UITableViewCell {
         self.titleLabel.backgroundColor = .clear
         self.titleLabel.textColor = .white
         
+        self.selectionStyle = .none
         self.contentView.backgroundColor = .clear
         self.backgroundView = UIView()
         self.selectedBackgroundView = UIView()

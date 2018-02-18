@@ -18,6 +18,7 @@
 
 
 "general.ok" = "好";
+"general.next" = "Next";
 "general.cancel" = "取消";
 "general.open_settings" = "开启Wire设定";
 
@@ -34,6 +35,12 @@
 "peoplepicker.header.contacts" = "联系人";
 "peoplepicker.header.contacts_personal" = "联系人";
 "peoplepicker.header.directory" = "添加好友";
+
+"peoplepicker.group.title.singular" = "新增好友";
+"peoplepicker.group.title.plural" = "Add People (%d)";
+"peoplepicker.group.skip" = "跳过";
+"peoplepicker.group.done" = "完成";
+"peoplepicker.group.create" = "Create";
 
 "peoplepicker.header.people" = "People";
 "peoplepicker.header.services" = "Services";
@@ -228,6 +235,10 @@
 "conversation.input_bar.message_too_long.title" = "消息过长。";
 "conversation.input_bar.message_too_long.message" = "您可以发送最长 %d 字符的信息。";
 
+"conversation.create.group_name.placeholder" = "Group name";
+"conversation.create.guidance.empty" = "At least 1 character";
+"conversation.create.guidance.toolong" = "超出字符限制";
+
 // Image confirmation dialogue
 "image_confirmer.confirm" = "好";
 "image_confirmer.cancel" = "取消";
@@ -324,6 +335,10 @@
 "content.system.renamed_conv.title" = "%@ 重新命名了聊天室";
 "content.system.renamed_conv.title-you" = "%@ 重新命名了聊天室";
 "content.system.renamed_conv.title.you" = "你";
+
+"content.system.conversation.with_name.title" = "%@ started the conversation";
+
+"content.system.conversation.with_name.participants" = "with %@";
 
 "content.system.reactivated_device" = "您再次开始使用%@。在此期间发送的信息将不会在这里显示。";
 

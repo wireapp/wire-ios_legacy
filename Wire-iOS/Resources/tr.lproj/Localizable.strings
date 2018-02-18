@@ -18,6 +18,7 @@
 
 
 "general.ok" = "Tamam";
+"general.next" = "Next";
 "general.cancel" = "İptal";
 "general.open_settings" = "Wire Ayarlarını Aç";
 
@@ -34,6 +35,12 @@
 "peoplepicker.header.contacts" = "Kişiler";
 "peoplepicker.header.contacts_personal" = "Kişisel Kişiler";
 "peoplepicker.header.directory" = "Bağlan";
+
+"peoplepicker.group.title.singular" = "Kişi Ekle";
+"peoplepicker.group.title.plural" = "Add People (%d)";
+"peoplepicker.group.skip" = "Skip";
+"peoplepicker.group.done" = "Done";
+"peoplepicker.group.create" = "Create";
 
 "peoplepicker.header.people" = "People";
 "peoplepicker.header.services" = "Services";
@@ -228,6 +235,10 @@
 "conversation.input_bar.message_too_long.title" = "Mesaj çok uzun";
 "conversation.input_bar.message_too_long.message" = "En fazla %d karakterlik mesajlar gönderebilirsiniz.";
 
+"conversation.create.group_name.placeholder" = "Group name";
+"conversation.create.guidance.empty" = "At least 1 character";
+"conversation.create.guidance.toolong" = "Çok fazla karakter";
+
 // Image confirmation dialogue
 "image_confirmer.confirm" = "TAMAM";
 "image_confirmer.cancel" = "İptal";
@@ -324,6 +335,10 @@
 "content.system.renamed_conv.title" = "%@ bu konuşmanın adını değiştirdi";
 "content.system.renamed_conv.title-you" = "%@ bu konuşmanın adını değiştirdi";
 "content.system.renamed_conv.title.you" = "Sen";
+
+"content.system.conversation.with_name.title" = "%@ started the conversation";
+
+"content.system.conversation.with_name.participants" = "with %@";
 
 "content.system.reactivated_device" = "Tekrar %@ kullanmaya başladın. Bu sırada gönderilmiş mesajlar burada gözükmeyecek.";
 
