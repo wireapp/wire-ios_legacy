@@ -20,6 +20,7 @@
 
 
 
+"share_extension.general.ok" = "OK";
 "share_extension.conversation_selection.account" = "Konto:";
 "share_extension.conversation_selection.title" = "Vestlus:";
 "share_extension.send_button.title" = "Saada";
@@ -33,6 +34,8 @@
 "share_extension.timeout.title" = "Ühendus aegus.";
 "share_extension.timeout.message" = "Kontrollige internetiühendust ja proovige uuesti. Saadetu on vestlusesse salvestatud.";
 "share_extension.privacy_security.lock_app.description" = "Tee lukust lahti";
+"share_extension.logged_out.title" = "You've been logged out from this account.";
+"share_extension.logged_out.message" = "Please choose another account.";
 
 "conversation.displayname.emptygroup" = "Tühi grupivestlus";
 "meta.degraded.degradation_reason_message.singular" = "%@ hakkas uut seadet kasutama.";

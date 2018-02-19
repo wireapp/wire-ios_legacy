@@ -18,6 +18,7 @@
 
 
 "general.ok" = "OK";
+"general.next" = "Next";
 "general.cancel" = "Annuleer";
 "general.open_settings" = "Open instellingen voor Wire";
 
@@ -35,13 +36,19 @@
 "peoplepicker.header.contacts_personal" = "Persoonlijke Contacten";
 "peoplepicker.header.directory" = "Contacten toevoegen";
 
+"peoplepicker.group.title.singular" = "Contacten toevoegen";
+"peoplepicker.group.title.plural" = "Add People (%d)";
+"peoplepicker.group.skip" = "Sla over";
+"peoplepicker.group.done" = "Klaar";
+"peoplepicker.group.create" = "Create";
+
 "peoplepicker.header.people" = "Personen";
 "peoplepicker.header.services" = "Diensten";
 "peoplepicker.services.create_conversation.item" = "Een nieuw gesprek beginnen";
 "peoplepicker.services.add_service.button" = "Service toevoegen";
-"peoplepicker.services.add_service.error.title" = "The service can't be added";
-"peoplepicker.services.add_service.error.default" = "The service is unavailable at the moment";
-"peoplepicker.services.add_service.error.full" = "The conversation is full";
+"peoplepicker.services.add_service.error.title" = "De service kan niet toegevoegd worden";
+"peoplepicker.services.add_service.error.default" = "De service is onbeschikbaar op het moment";
+"peoplepicker.services.add_service.error.full" = "Het gesprek is vol";
 
 "peoplepicker.title.create_conversation" = "Maak groep";
 "peoplepicker.title.add_to_conversation" = "Contacten toevoegen";
@@ -68,7 +75,7 @@
 "peoplepicker.send_invitation.dialog.ok" = "OK";
 
 "peoplepicker.invite_more_people" = "Nodig meer mensen uit";
-"peoplepicker.invite_team_members" = "Invite people to join the team";
+"peoplepicker.invite_team_members" = "Nodig andere mensen uit voor het team";
 "peoplepicker.quick-action.open-conversation" = "Openen";
 "peoplepicker.quick-action.create-conversation" = "Groep creëren";
 
@@ -86,8 +93,8 @@
 "contacts_ui.notification.invitation_failed" = "Het versturen van de uitnodiging is mislukt";
 "contacts_ui.title" = "Nodig anderen uit";
 
-"conversation_list.empty.all_archived.message" = "Everything archived";
-"conversation_list.empty.no_contacts.message" = "Start a conversation or\ncreate a group.";
+"conversation_list.empty.all_archived.message" = "Alles is gearchiveerd";
+"conversation_list.empty.no_contacts.message" = "Start een gesprek of maak een groep aan.";
 
 
 // Conversation List Indicator
@@ -228,6 +235,10 @@
 "conversation.input_bar.message_too_long.title" = "Bericht te lang";
 "conversation.input_bar.message_too_long.message" = "Je kan berichten verzenden van maximaal %d tekens lang.";
 
+"conversation.create.group_name.placeholder" = "Group name";
+"conversation.create.guidance.empty" = "At least 1 character";
+"conversation.create.guidance.toolong" = "Te veel tekens";
+
 // Image confirmation dialogue
 "image_confirmer.confirm" = "OK";
 "image_confirmer.cancel" = "Annuleer";
@@ -243,7 +254,7 @@
 "keyboard_photos_access.denied.keyboard.settings" = "Instellingen";
 "keyboard_photos_access.denied.keyboard.camera_and_photos" = "Wire needs access to your\ncamera and photos."; // split text on two lines for a better text balance
 "keyboard_photos_access.denied.keyboard.photos" = "Wire needs access to your photos.";
-"keyboard_photos_access.denied.keyboard.camera" = "Wire needs access to your camera.";
+"keyboard_photos_access.denied.keyboard.camera" = "Wire heeft toegang nodig tot jou camera.";
 
 // Camera Controls
 "camera_controls.aeaf_lock" = "AE/AF-vergrendeling";
@@ -324,6 +335,10 @@
 "content.system.renamed_conv.title" = "%@ hernoemde het gesprek";
 "content.system.renamed_conv.title-you" = "%@ hernoemde het gesprek";
 "content.system.renamed_conv.title.you" = "Jij";
+
+"content.system.conversation.with_name.title" = "%@ started the conversation";
+
+"content.system.conversation.with_name.participants" = "with %@";
 
 "content.system.reactivated_device" = "Je bent %@ weer gaan gebruiken. Berichten die in de tussentijd verzonden zijn worden hier niet getoond.";
 
@@ -434,7 +449,7 @@
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Profile and Participants
 
-"participants.add_people_button_title" = "Add";
+"participants.add_people_button_title" = "Toevoegen";
 "participants.avatar.guest.title" = "Gast";
 
 // Meta Menu
@@ -540,7 +555,7 @@
 "general.confirm" = "OK";
 
 // Bot
-"participants.services.remove_integration.button" = "remove integration";
+"participants.services.remove_integration.button" = "verwijder integratie";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Self profile
@@ -845,13 +860,13 @@
 
 // Invite Team Members
 
-"team.invite.header.title" = "Build your team";
-"team.invite.header.subtitle" = "Invite your colleagues to join.";
-"team.invite.textfield.placeholder" = "colleague@yourcompany.com";
+"team.invite.header.title" = "Maak je team aan";
+"team.invite.header.subtitle" = "Nodig je collega’s uit.";
+"team.invite.textfield.placeholder" = "collega@joubedrijf.nl";
 "team.invite.textfield.accesibility" = "Enter e-mail address for colleague to invite.";
 "team.invite.learn_more.title" = "Leer meer";
-"team.invite.top_bar.skip" = "Skip";
-"team.invite.top_bar.done" = "Done";
+"team.invite.top_bar.skip" = "Sla over";
+"team.invite.top_bar.done" = "Klaar";
 
 // Team Invite Errors
 "team.invite.error.generic" = "Er is een fout opgetreden, probeer het nogmaals";
@@ -937,7 +952,7 @@
 "registration.signin.email_button.title" = "E-mail";
 "registration.signin.phone_button.title" = "Telefoonnummer";
 
-"registration.signin.alert.password_needed.title" = "Password needed";
+"registration.signin.alert.password_needed.title" = "Wachtwoord is nodig";
 "registration.signin.alert.password_needed.message" = "Please enter your Password in order to log in.";
 
 "registration.devices.title" = "Apparaten";

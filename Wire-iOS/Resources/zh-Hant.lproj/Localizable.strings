@@ -18,6 +18,7 @@
 
 
 "general.ok" = "確認";
+"general.next" = "Next";
 "general.cancel" = "取消";
 "general.open_settings" = "開啟Wire設定";
 
@@ -34,6 +35,12 @@
 "peoplepicker.header.contacts" = "連絡人";
 "peoplepicker.header.contacts_personal" = "聯絡人";
 "peoplepicker.header.directory" = "加為連絡人";
+
+"peoplepicker.group.title.singular" = "加入連絡人";
+"peoplepicker.group.title.plural" = "Add People (%d)";
+"peoplepicker.group.skip" = "略過";
+"peoplepicker.group.done" = "完成";
+"peoplepicker.group.create" = "Create";
 
 "peoplepicker.header.people" = "聯絡人";
 "peoplepicker.header.services" = "服務";
@@ -228,6 +235,10 @@
 "conversation.input_bar.message_too_long.title" = "訊息過長";
 "conversation.input_bar.message_too_long.message" = "每則訊息最多只能包含%d個字元。";
 
+"conversation.create.group_name.placeholder" = "Group name";
+"conversation.create.guidance.empty" = "At least 1 character";
+"conversation.create.guidance.toolong" = "字數太多";
+
 // Image confirmation dialogue
 "image_confirmer.confirm" = "確認";
 "image_confirmer.cancel" = "取消";
@@ -325,6 +336,10 @@
 "content.system.renamed_conv.title-you" = "%@重新命名聊天室";
 "content.system.renamed_conv.title.you" = "您";
 
+"content.system.conversation.with_name.title" = "%@ started the conversation";
+
+"content.system.conversation.with_name.participants" = "with %@";
+
 "content.system.reactivated_device" = "您重新使用%@，在停用期間的訊息不會顯示出來。";
 
 "content.system.new_device" = "新的設備";
@@ -390,7 +405,7 @@
 "content.player.unable_to_play" = "無法播放曲目";
 
 // Connecting (NEW IMPLEMENTATION, REVIEW LATER)
-"connection_request.title" = "連接到 %@"; // check UPPERCASE implementation in code
+"connection_request.title" = "連接到%@"; // check UPPERCASE implementation in code
 "missive.connection_request.default_message" = "%@您好，\n在Wire和我一起聊天吧。\n%@";
 
 "connection_request.send_button_title" = "加為連絡人";
@@ -760,7 +775,7 @@
 
 "self.settings.advanced.title" = "進階";
 "self.settings.advanced.troubleshooting.title" = "疑難排解";
-"self.settings.advanced.troubleshooting.submit_debug.title" = "提交錯誤報告";
+"self.settings.advanced.troubleshooting.submit_debug.title" = "提交通話除錯報告";
 "self.settings.advanced.troubleshooting.submit_debug.subtitle" = "這些資料將幫助Wire診斷通話問題。";
 "self.settings.advanced.reset_push_token.title" = "重置推送通知的 Token";
 "self.settings.advanced.reset_push_token.subtitle" = "如果您有推送通知的問題，Wire客服可能會請您重設此token。";
@@ -773,8 +788,8 @@
 "self.settings.technical_report.send_report" = "傳送報告到Wire";
 "self.settings.technical_report.mail.recipient" = "callingsupport@wire.com";
 "self.settings.technical_report.mail.subject" = "Wire通話報告";
-"self.settings.technical_report.include_log" = "包含詳細的日誌";
-"self.settings.technical_report.privacy_warning" = "詳細的日誌可能包含個人資料";
+"self.settings.technical_report.include_log" = "包含詳細日誌";
+"self.settings.technical_report.privacy_warning" = "詳細日誌可能包含個人資料";
 
 // Password reset
 "self.settings.password_reset_menu.title" = "重設密碼";

@@ -18,6 +18,7 @@
 
 
 "general.ok" = "OK";
+"general.next" = "Next";
 "general.cancel" = "Peruuta";
 "general.open_settings" = "Avaa Wiren Asetukset";
 
@@ -34,6 +35,12 @@
 "peoplepicker.header.contacts" = "Yhteystiedot";
 "peoplepicker.header.contacts_personal" = "Henkilökohtaiset kontaktit";
 "peoplepicker.header.directory" = "Yhdistä";
+
+"peoplepicker.group.title.singular" = "Lisää ihmisiä";
+"peoplepicker.group.title.plural" = "Add People (%d)";
+"peoplepicker.group.skip" = "Skip";
+"peoplepicker.group.done" = "Done";
+"peoplepicker.group.create" = "Create";
 
 "peoplepicker.header.people" = "People";
 "peoplepicker.header.services" = "Services";
@@ -228,6 +235,10 @@
 "conversation.input_bar.message_too_long.title" = "Message too long";
 "conversation.input_bar.message_too_long.message" = "You can send messages up to %d characters long.";
 
+"conversation.create.group_name.placeholder" = "Group name";
+"conversation.create.guidance.empty" = "At least 1 character";
+"conversation.create.guidance.toolong" = "Liian monta merkkiä";
+
 // Image confirmation dialogue
 "image_confirmer.confirm" = "OK";
 "image_confirmer.cancel" = "Peruuta";
@@ -324,6 +335,10 @@
 "content.system.renamed_conv.title" = "%@ nimesi keskustelun uudelleen";
 "content.system.renamed_conv.title-you" = "%@ nimesit keskustelun uudelleen";
 "content.system.renamed_conv.title.you" = "Sinä";
+
+"content.system.conversation.with_name.title" = "%@ started the conversation";
+
+"content.system.conversation.with_name.participants" = "with %@";
 
 "content.system.reactivated_device" = "Aloitit käyttämään %@ uudestaan. Viestit jotka lähetettiin sillä välin eivät näy täällä.";
 
