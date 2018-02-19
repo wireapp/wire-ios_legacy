@@ -55,6 +55,8 @@ final class MarkdownTextViewTests: XCTestCase {
         case .bold:         return bar.boldButton
         case .italic:       return bar.italicButton
         case .code:         return bar.codeButton
+        case .oList:        return bar.numberListButton
+        case .uList:        return bar.bulletListButton
         default:            return nil
         }
     }
@@ -564,7 +566,7 @@ final class MarkdownTextViewTests: XCTestCase {
         let text = "Oh Hai!"
         insertText(text)
         // WHEN
-        sut.markdownBarView(bar, didSelectListType: .number)
+        select(.oList)
         // THEN
         XCTAssertEqual(sut.text, "1. \(text)")
     }
@@ -574,7 +576,7 @@ final class MarkdownTextViewTests: XCTestCase {
         let text = "Oh Hai!"
         insertText(text)
         // WHEN
-        sut.markdownBarView(bar, didSelectListType: .bullet)
+        select(.uList)
         // THEN
         XCTAssertEqual(sut.text, "- \(text)")
     }
@@ -584,7 +586,7 @@ final class MarkdownTextViewTests: XCTestCase {
         let text = "Oh Hai!"
         insertText("1. \(text)")
         // WHEN
-        sut.markdownBarView(bar, didSelectListType: .number)
+        select(.oList)
         // THEN
         XCTAssertEqual(sut.text, text)
     }
@@ -595,7 +597,7 @@ final class MarkdownTextViewTests: XCTestCase {
         ["- ", "+ ", "* "].forEach {
             insertText($0 + text)
             // WHEN
-            sut.markdownBarView(bar, didSelectListType: .bullet)
+            select(.uList)
             // THEN
             XCTAssertEqual(sut.text, text)
             // AFTER
@@ -608,22 +610,18 @@ final class MarkdownTextViewTests: XCTestCase {
         insertText("1. Oh Hai!\n")
         insertText("OK Bai!")
         // WHEN
-        sut.markdownBarView(bar, didSelectListType: .number)
+        select(.oList)
         // THEN
         XCTAssertEqual(sut.text, "1. Oh Hai!\n2. OK Bai!")
-        // AND WHEN
-        insertText("\nI'm still here.")
-        // THEN
-        XCTAssertEqual(sut.text, "1. Oh Hai!\n2. OK Bai!\n3. I'm still here.")
     }
     
     func testThatSelectingListBelowExistingItemInsertsNewItemWithCorrectPrefix_Bullet() {
         ["- ", "+ ", "* "].forEach {
             // GIVEN
-            insertText($0 + " Oh Hai!\n")
+            insertText($0 + "Oh Hai!\n")
             insertText("OK Bai!")
             // WHEN
-            sut.markdownBarView(bar, didSelectListType: .bullet)
+            select(.uList)
             // THEN
             XCTAssertEqual(sut.text, $0 + "Oh Hai!\n" + $0 + "OK Bai!")
             // AFTER
@@ -635,11 +633,11 @@ final class MarkdownTextViewTests: XCTestCase {
         // GIVEN
         insertText("1. Oh Hai!")
         // WHEN
-        sut.markdownBarView(bar, didSelectListType: .bullet)
+        select(.uList)
         // THEN
         XCTAssertEqual(sut.text, "- Oh Hai!")
         // AND WHEN
-        sut.markdownBarView(bar, didSelectListType: .number)
+        select(.oList)
         // THEN
         XCTAssertEqual(sut.text, "1. Oh Hai!")
     }
@@ -674,6 +672,14 @@ final class MarkdownTextViewTests: XCTestCase {
     }
     
     func testThatInsertingAndRemovingListItemPreservesCurrentTextSelection() {
+        XCTFail()
+    }
+    
+    func testThatDeletingPartOfListPrefixRemovesListMarkdownForLine() {
+        XCTFail()
+    }
+    
+    func testThatTypingListPrefixAddsListMarkdownForLine() {
         XCTFail()
     }
     
