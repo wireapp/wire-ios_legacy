@@ -675,11 +675,25 @@ final class MarkdownTextViewTests: XCTestCase {
         XCTFail()
     }
     
+    func testThatIfSelectionIsInListPrefixThenRemovingListItemSetsSelectionToStartOfLine() {
+        XCTFail()
+    }
+    
     func testThatDeletingPartOfListPrefixRemovesListMarkdownForLine() {
         XCTFail()
     }
     
     func testThatTypingListPrefixAddsListMarkdownForLine() {
+        XCTFail()
+    }
+    
+    // MARK: - Deleting newlines
+    
+    func testThatIfIfNewlineAfterHeaderIsDeletedThenHeaderIsAppliedToWholeLine() {
+        XCTFail()
+    }
+    
+    func testThatIfNewLineAfterListItemIsDeletedThenListIsAppliedToWholeLine() {
         XCTFail()
     }
     
