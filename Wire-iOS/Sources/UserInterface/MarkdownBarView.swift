@@ -23,7 +23,6 @@ import Down
 protocol MarkdownBarViewDelegate: class {
     func markdownBarView(_ view: MarkdownBarView, didSelectMarkdown markdown: Markdown, with sender: IconButton)
     func markdownBarView(_ view: MarkdownBarView, didDeselectMarkdown markdown: Markdown, with sender: IconButton)
-    func markdownBarView(_ view: MarkdownBarView, didSelectListType type: MarkdownTextView.ListType)
 }
 
 
@@ -101,21 +100,7 @@ public final class MarkdownBarView: UIView {
     
     @objc private func buttonTapped(sender: IconButton) {
         
-        let markdown: Markdown
-        
-        switch sender {
-        case headerButton:      markdown = headerButton.iconType(for: .normal).headerMarkdown ?? .h1
-        case boldButton:        markdown = .bold
-        case italicButton:      markdown = .italic
-        case codeButton:        markdown = .code
-        case numberListButton:
-            delegate?.markdownBarView(self, didSelectListType: .number)
-            return
-        case bulletListButton:
-            delegate?.markdownBarView(self, didSelectListType: .bullet)
-            return
-        default:                return
-        }
+        guard let markdown = markdown(for: sender) else { return }
         
         if sender.iconColor(for: .normal) != normalColor {
             delegate?.markdownBarView(self, didDeselectMarkdown: markdown, with: sender)
@@ -132,16 +117,20 @@ public final class MarkdownBarView: UIView {
         case .bold:         return boldButton
         case .italic:       return italicButton
         case .code:         return codeButton
+        case .oList:        return numberListButton
+        case .uList:        return bulletListButton
         default:            return nil
         }
     }
     
     fileprivate func markdown(for button: IconButton) -> Markdown? {
         switch button {
-        case headerButton:      return headerButton.iconType(for: .normal).headerMarkdown
+        case headerButton:      return headerButton.iconType(for: .normal).headerMarkdown ?? .h1
         case boldButton:        return .bold
         case italicButton:      return .italic
         case codeButton:        return .code
+        case numberListButton:  return .oList
+        case bulletListButton:  return .uList
         default:                return nil
         }
     }

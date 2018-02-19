@@ -218,8 +218,10 @@ class MarkdownTextView: NextResponderTextView {
     /// Returns the markdown at the current caret position.
     private func markdownAtCaret() -> Markdown {
         // in order to allow continuity of typing, the markdown at the caret
-        // should actually be markdown at the position behind the caret
-        return markdown(at: max(0, selectedRange.location - 1))
+        // should actually be markdown at the position behind the caret (up to
+        // the start of the line)
+        guard let range = currentLineRange else { return .none }
+        return markdown(at: max(range.location, selectedRange.location - 1))
     }
     
     /// Returns the markdown at the given location.
@@ -431,6 +433,12 @@ class MarkdownTextView: NextResponderTextView {
         typingAttributes = attributes(for: .none)
         restore(selection, afterReplacingRange: lineStart, withText: prefix)
         updateTypingAttributes()
+        
+        // add list md to whole line
+        guard let newLineRange = currentLineRange else { return }
+        let md = (type == .number) ? Markdown.oList : .uList
+        add(md, to: newLineRange)
+        activeMarkdown.insert(md)
     }
 
     /// Removes the list prefix from the current line.
@@ -438,10 +446,20 @@ class MarkdownTextView: NextResponderTextView {
         guard
             let lineRange = currentLineRange,
             let prefixRange = rangeOfListPrefix(at: lineRange)?.textRange(in: self),
-            let selection = selectedTextRange
+            var selection = selectedTextRange
             else { return }
         
+        // if the selection is within the prefix range, change selection
+        // to be at start of list content
+        if offset(from: selection.start, to: prefixRange.end) > 0 {
+            selection = textRange(from: prefixRange.end, to: prefixRange.end)!
+        }
+        
         restore(selection, afterReplacingRange: prefixRange, withText: "")
+        
+        // remove list md to whole line
+        guard let newLineRange = currentLineRange else { return }
+        remove([.oList, .uList], from: newLineRange)
     }
     
     /// Replaces the range with the text and attempts to restore the selection.
@@ -469,6 +487,12 @@ extension MarkdownTextView: MarkdownBarViewDelegate {
     
     func markdownBarView(_ view: MarkdownBarView, didSelectMarkdown markdown: Markdown, with sender: IconButton) {
         guard selectedRange.location != NSNotFound else { return }
+        
+        if markdown == .oList {
+            processList(type: .number)
+        } else if markdown == .uList {
+            processList(type: .bullet)
+        }
         
         // apply header to the whole line
         if markdown.isHeader, let range = currentLineRange {
@@ -505,6 +529,12 @@ extension MarkdownTextView: MarkdownBarViewDelegate {
     func markdownBarView(_ view: MarkdownBarView, didDeselectMarkdown markdown: Markdown, with sender: IconButton) {
         guard selectedRange.location != NSNotFound else { return }
         
+        if markdown == .oList {
+            processList(type: .number)
+        } else if markdown == .uList {
+            processList(type: .bullet)
+        }
+        
         // remove header from the whole line
         if markdown.isHeader, let range = currentLineRange {
             remove(markdown, from: range)
@@ -515,10 +545,6 @@ extension MarkdownTextView: MarkdownBarViewDelegate {
         }
         
         activeMarkdown.subtract(markdown)
-    }
-    
-    func markdownBarView(_ view: MarkdownBarView, didSelectListType type: MarkdownTextView.ListType) {
-        processList(type: type)
     }
 }
 
