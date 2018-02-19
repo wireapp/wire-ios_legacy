@@ -27,11 +27,12 @@
 @import WireDataModel;
 #import "Wire-Swift.h"
 
+static NSMutableDictionary *correlationFormatters;
+
 @interface SearchResultCell ()
 @property (nonatomic, strong) UIView *gesturesView;
 @property (nonatomic, strong) BadgeUserImageView *badgeUserImageView;
 @property (nonatomic, strong) ConversationAvatarView *conversationImageView;
-@property (nonatomic, strong) NSMutableDictionary *correlationFormatters;
 @property (nonatomic, strong) UILabel *nameLabel;
 @property (nonatomic, strong) UIView *avatarContainer;
 @property (nonatomic, strong) IconButton *instantConnectButton;
@@ -73,21 +74,23 @@
     return [UIFont fontWithMagicIdentifier:@"style.text.small.font_spec_bold"];
 }
 
--(void)setColorSchemeVariant:(ColorSchemeVariant)colorSchemeVariant{
-    if(colorSchemeVariant != _colorSchemeVariant) {
-        _colorSchemeVariant = colorSchemeVariant;
-        if([self.correlationFormatters objectForKey:@(_colorSchemeVariant)] == nil) {
-            UIColor *color = [[ColorScheme defaultColorScheme] colorWithName:ColorSchemeColorTextDimmed variant:_colorSchemeVariant];
-            AddressBookCorrelationFormatter *formatter = [[AddressBookCorrelationFormatter alloc] initWithLightFont:self.class.lightFont
-                                                                                                           boldFont:self.class.boldFont
-                                                                                                              color:color];
-            [self.correlationFormatters setObject:formatter forKey:@(colorSchemeVariant)];
-        }
++ (AddressBookCorrelationFormatter*)correlationFormatterForColorSchemeVariant:(ColorSchemeVariant)variant {
+    
+    if(correlationFormatters == nil) {
+        correlationFormatters = [NSMutableDictionary dictionary];
     }
-}
-
--(AddressBookCorrelationFormatter*)ABCorrelationFormatterForCurrentColorSchemeVariant{
-    return [self.correlationFormatters objectForKey:@(self.colorSchemeVariant)];
+    
+    AddressBookCorrelationFormatter *formatter = [correlationFormatters objectForKey:@(variant)];
+    
+    if(formatter == nil) {
+        UIColor *color = [[ColorScheme defaultColorScheme] colorWithName:ColorSchemeColorTextDimmed variant:variant];
+        formatter = [[AddressBookCorrelationFormatter alloc] initWithLightFont:self.class.lightFont
+                                                                      boldFont:self.class.boldFont
+                                                                         color:color];
+        [correlationFormatters setObject:formatter forKey:@(variant)];
+    }
+    
+    return formatter;
 }
 
 - (id)initWithFrame:(CGRect)frame
@@ -97,7 +100,6 @@
         self.isAccessibilityElement = YES;
         self.shouldGroupAccessibilityChildren = YES;
         
-        self.correlationFormatters = [NSMutableDictionary dictionary];
         self.colorSchemeVariant = ColorSchemeVariantDark;
         self.contentView.translatesAutoresizingMaskIntoConstraints = NO;
 
@@ -524,9 +526,9 @@
         attributedHandle = [[NSAttributedString alloc] initWithString:displayHandle attributes:attributes];
         [subtitle appendAttributedString:attributedHandle];
     }
-    
-    NSString *addresBookName = BareUserToUser(user).addressBookEntry.cachedName;
-    NSAttributedString *correlation = [[self ABCorrelationFormatterForCurrentColorSchemeVariant] correlationTextFor:self.user addressBookName:addresBookName];
+    NSString *addressBookName = BareUserToUser(user).addressBookEntry.cachedName;
+    AddressBookCorrelationFormatter *formatter = [self.class correlationFormatterForColorSchemeVariant:self.colorSchemeVariant];
+    NSAttributedString *correlation = [formatter correlationTextFor:self.user addressBookName:addressBookName];
     if (nil != correlation) {
         if (nil != attributedHandle) {
             NSDictionary *delimiterAttributes = @{ NSFontAttributeName: self.class.lightFont, NSForegroundColorAttributeName: self.subtitleColor };
