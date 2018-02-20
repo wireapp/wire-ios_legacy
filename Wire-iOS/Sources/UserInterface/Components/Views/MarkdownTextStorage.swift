@@ -43,8 +43,7 @@ class MarkdownTextStorage: NSTextStorage {
         // attrs is missing the markdown id, then we need to included it.
         if  needsCheck, let attrs = attrs, attrs[MarkdownIDAttributeName] == nil {
             needsCheck = false
-            storage.addAttribute(MarkdownIDAttributeName, value: currentMarkdown, range: editedRange)
-            edited(.editedAttributes, range: editedRange, changeInLength: 0)
+            storage.addAttribute(MarkdownIDAttributeName, value: currentMarkdown, range: range)
         }
         
         edited(.editedAttributes, range: range, changeInLength: 0)
