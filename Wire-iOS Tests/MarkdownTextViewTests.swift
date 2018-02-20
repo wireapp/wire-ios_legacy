@@ -67,6 +67,13 @@ final class MarkdownTextViewTests: XCTestCase {
         sut.insertText(str)
     }
     
+    // Delete the text in the range, but AFTER giving sut a chance to respond.
+    func deleteText(in range: NSRange) {
+        sut.respondToChange("", inRange: range)
+        sut.selectedRange = range
+        sut.deleteBackward()
+    }
+    
     func select(_ markdown: Markdown...) {
         markdown.forEach(select)
     }
@@ -94,7 +101,7 @@ final class MarkdownTextViewTests: XCTestCase {
     // Attributes that we expect for certain markdown combinations.
     func attrs(for markdown: Markdown) -> [String: Any] {
         switch markdown {
-        case .none:
+        case .none, .oList, .uList:
             return [
                 MarkdownIDAttributeName: markdown,
                 NSFontAttributeName: style.baseFont,
@@ -451,14 +458,6 @@ final class MarkdownTextViewTests: XCTestCase {
         // THEN
         checkAttributes(for: [.bold, .italic], inRange: NSMakeRange(text.length, text.length))
     }
-    
-    func testThatSelectingListOnHeaderRemovesHeaderAttributes() {
-        XCTFail()
-    }
-    
-    func testThatSelectingHeaderOnListRemovesListPrefixAndUpdatesAttributes() {
-        XCTFail()
-    }
 
     // MARK: - Selections
     
@@ -672,32 +671,97 @@ final class MarkdownTextViewTests: XCTestCase {
     }
     
     func testThatInsertingAndRemovingListItemPreservesCurrentTextSelection() {
-        XCTFail()
+        // GIVEN
+        insertText("Oh Hai!")
+        // select "Hai"
+        sut.selectedRange = NSMakeRange(3, 3)
+        // WHEN
+        select(.oList)
+        // THEN
+        XCTAssertEqual(sut.text, "1. Oh Hai!")
+        XCTAssertEqual(sut.selectedRange, NSMakeRange(6, 3))
+        // AND WHEN
+        deselect(.oList)
+        // THEN
+        XCTAssertEqual(sut.text, "Oh Hai!")
+        XCTAssertEqual(sut.selectedRange, NSMakeRange(3, 3))
     }
     
     func testThatIfSelectionIsInListPrefixThenRemovingListItemSetsSelectionToStartOfLine() {
-        XCTFail()
+        // GIVEN
+        insertText("1. Oh Hai!\n2. Ok Bai!")
+        // select "2. "
+        sut.selectedRange = NSMakeRange(12, 3)
+        // WHEN
+        deselect(.oList)
+        // THEN
+        XCTAssertEqual(sut.text, "1. Oh Hai!\nOk Bai!")
+        XCTAssertEqual(sut.selectedRange, NSMakeRange(11, 0))
     }
     
-    func testThatDeletingPartOfListPrefixRemovesListMarkdownForLine() {
-        XCTFail()
+    func testThatDeletingPartOfListPrefixRemovesListMarkdownForLine_Number() {
+        // GIVEN
+        let text = "Oh Hai!"
+        insertText(text)
+        select(.oList)
+        XCTAssertEqual(sut.text, "1. Oh Hai!")
+        checkAttributes(for: .oList, inRange: NSMakeRange(0, text.length + 3))
+        // WHEN
+        deleteText(in: NSMakeRange(2, 1))
+        // THEN
+        XCTAssertEqual(sut.text, "1.Oh Hai!")
+        checkAttributes(for: .none, inRange: NSMakeRange(0, text.length + 2))
     }
     
-    func testThatTypingListPrefixAddsListMarkdownForLine() {
-        XCTFail()
+    func testThatDeletingPartOfListPrefixRemovesListMarkdownForLine_Bullet() {
+        // GIVEN
+        let text = "Oh Hai!"
+        insertText(text)
+        select(.uList)
+        XCTAssertEqual(sut.text, "- Oh Hai!")
+        checkAttributes(for: .uList, inRange: NSMakeRange(0, text.length + 2))
+        // WHEN
+        deleteText(in: NSMakeRange(0, 1))
+        // THEN
+        XCTAssertEqual(sut.text, " Oh Hai!")
+        checkAttributes(for: .none, inRange: NSMakeRange(0, text.length + 1))
     }
     
-    // MARK: - Deleting newlines
+    func testThatTypingListPrefixAddsListMarkdownForLine_Number() {
+        // GIVEN
+        let text = "1. Oh Hai!"
+        // WHEN
+        text.characters.forEach { insertText(String($0)) }
+        // THEN
+        XCTAssertEqual(sut.text, text)
+        checkAttributes(for: .oList, inRange: NSMakeRange(0, text.length))
+    }
     
-    func testThatIfIfNewlineAfterHeaderIsDeletedThenHeaderIsAppliedToWholeLine() {
-        XCTFail()
+    func testThatTypingListPrefixAddsListMarkdownForLine_Bullet() {
+        // GIVEN
+        let text = "+ Oh Hai!"
+        // WHEN
+        text.characters.forEach { insertText(String($0)) }
+        // THEN
+        XCTAssertEqual(sut.text, text)
+        checkAttributes(for: .uList, inRange: NSMakeRange(0, text.length))
     }
     
     func testThatIfNewLineAfterListItemIsDeletedThenListIsAppliedToWholeLine() {
-        XCTFail()
+        // GIVEN
+        let line1 = "1. Oh Hai!"
+        let line2 = "Ok Bai!"
+        insertText(line1)
+        insertText("\n" + line2)
+        checkAttributes(for: .oList, inRange: NSMakeRange(0, line1.length))
+        checkAttributes(for: .none, inRange: NSMakeRange(line1.length, line2.length + 1))
+        // WHEN
+        let rangeOfNewline = NSMakeRange(line1.length, 1)
+        deleteText(in: rangeOfNewline)
+        // THEN
+        XCTAssertEqual(sut.text, line1 + line2)
+        checkAttributes(for: .oList, inRange: NSMakeRange(0, line1.length + line2.length))
     }
-    
-    // MARK: - Simulate User Formatting Message
     
 }
 
