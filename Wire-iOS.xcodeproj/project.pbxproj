@@ -945,13 +945,10 @@
 		DBF7235F1B5566B80036F4C5 /* a_lot_of_people.json in Resources */ = {isa = PBXBuildFile; fileRef = DBF7235E1B5566B80036F4C5 /* a_lot_of_people.json */; };
 		EE118C012031D1C300BC68D6 /* MarkdownTextViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE118BFF2031D17000BC68D6 /* MarkdownTextViewTests.swift */; };
 		EE265E821F6FF4910087676B /* ChatHeadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE265E811F6FF4910087676B /* ChatHeadView.swift */; };
-		EE291BB51F0B9BF200142F31 /* Marklight.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EE291BB41F0B9BF200142F31 /* Marklight.framework */; };
-		EE291BB71F0BC54D00142F31 /* MarklightTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE291BB61F0BC54D00142F31 /* MarklightTextView.swift */; };
 		EE2FC1D81F56F89800A9A418 /* ConversationImagesViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE2FC1D71F56F89800A9A418 /* ConversationImagesViewControllerTests.swift */; };
 		EE3A5B0D1F7A7BD400733045 /* ChatHeadTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE3A5B0C1F7A7BD400733045 /* ChatHeadTests.swift */; };
 		EE4332491F1A67E500096D90 /* PopUpIconButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE4332481F1A67E500096D90 /* PopUpIconButton.swift */; };
 		EE43324B1F1A785800096D90 /* PopUpIconButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE43324A1F1A785800096D90 /* PopUpIconButtonView.swift */; };
-		EE6067041F23BC33001CAC97 /* MarklightTextViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE6067031F23BC33001CAC97 /* MarklightTextViewTests.swift */; };
 		EE75B774203C6F5300855099 /* MarkdownTextStorageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE75B773203C6F5300855099 /* MarkdownTextStorageTests.swift */; };
 		EE8E9267202496C2000F4752 /* NSAttributedString+Down.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE8E9266202496C2000F4752 /* NSAttributedString+Down.swift */; };
 		EE8E926E2024F085000F4752 /* MarkdownTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE8E926D2024F085000F4752 /* MarkdownTextView.swift */; };
@@ -2507,12 +2504,10 @@
 		EE118BFF2031D17000BC68D6 /* MarkdownTextViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkdownTextViewTests.swift; sourceTree = "<group>"; };
 		EE265E811F6FF4910087676B /* ChatHeadView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatHeadView.swift; sourceTree = "<group>"; };
 		EE291BB41F0B9BF200142F31 /* Marklight.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Marklight.framework; path = Carthage/Build/iOS/Marklight.framework; sourceTree = "<group>"; };
-		EE291BB61F0BC54D00142F31 /* MarklightTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MarklightTextView.swift; sourceTree = "<group>"; };
 		EE2FC1D71F56F89800A9A418 /* ConversationImagesViewControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConversationImagesViewControllerTests.swift; sourceTree = "<group>"; };
 		EE3A5B0C1F7A7BD400733045 /* ChatHeadTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatHeadTests.swift; sourceTree = "<group>"; };
 		EE4332481F1A67E500096D90 /* PopUpIconButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PopUpIconButton.swift; sourceTree = "<group>"; };
 		EE43324A1F1A785800096D90 /* PopUpIconButtonView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PopUpIconButtonView.swift; sourceTree = "<group>"; };
-		EE6067031F23BC33001CAC97 /* MarklightTextViewTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MarklightTextViewTests.swift; sourceTree = "<group>"; };
 		EE75B773203C6F5300855099 /* MarkdownTextStorageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkdownTextStorageTests.swift; sourceTree = "<group>"; };
 		EE8E9266202496C2000F4752 /* NSAttributedString+Down.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSAttributedString+Down.swift"; sourceTree = "<group>"; };
 		EE8E926D2024F085000F4752 /* MarkdownTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkdownTextView.swift; sourceTree = "<group>"; };
@@ -2732,7 +2727,6 @@
 				872786CB1D38EE2000CC3C15 /* OnePasswordExtension.framework in Frameworks */,
 				873478071D34EE5100CB200F /* libstdc++.tbd in Frameworks */,
 				87E0D6D51CD3978900C54196 /* AVKit.framework in Frameworks */,
-				EE291BB51F0B9BF200142F31 /* Marklight.framework in Frameworks */,
 				87775AB41D9513F9000CAD4F /* WireRequestStrategy.framework in Frameworks */,
 				169FF9331C57CB2100C5BF90 /* VideoToolbox.framework in Frameworks */,
 				1EE85C671B5F96FC008E084B /* WireExtensionComponents.framework in Frameworks */,
@@ -3541,7 +3535,6 @@
 				871BC1D31D34F8F800DF0793 /* ResizingTextView.m */,
 				870C97C41D670CA700F6FD7D /* NextResponderTextView.h */,
 				870C97C21D670C9A00F6FD7D /* NextResponderTextView.m */,
-				EE291BB61F0BC54D00142F31 /* MarklightTextView.swift */,
 				EE8E926D2024F085000F4752 /* MarkdownTextView.swift */,
 				EECDB2552029F5AB00D0D268 /* MarkdownTextStorage.swift */,
 				871BC1D41D34F8F800DF0793 /* StackView.h */,
@@ -4929,7 +4922,6 @@
 				EF61B33E1FC8461200D8E631 /* AccessoryTextField */,
 				EE3A5B0C1F7A7BD400733045 /* ChatHeadTests.swift */,
 				EEBE8C5D1F68171F009D78C9 /* NSData_ImageTypeTests.swift */,
-				EE6067031F23BC33001CAC97 /* MarklightTextViewTests.swift */,
 				EE118BFF2031D17000BC68D6 /* MarkdownTextViewTests.swift */,
 				EE75B773203C6F5300855099 /* MarkdownTextStorageTests.swift */,
 				F1C9E35E1EADFFB8006438D7 /* TestSetup.swift */,
@@ -6059,7 +6051,6 @@
 				"$(SRCROOT)/Carthage/Build/iOS/FLAnimatedImage.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/WireCanvas.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/PureLayout.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/Marklight.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/Mixpanel.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/Down.framework",
 			);
@@ -6658,7 +6649,6 @@
 				871BC2221D34F8F800DF0793 /* ActionSheetController.m in Sources */,
 				87DCF4F01D34EA4500BB420F /* UsersInContactsSection.m in Sources */,
 				871BC3631D34F94200DF0793 /* SoundcloudAudioTrack.m in Sources */,
-				EE291BB71F0BC54D00142F31 /* MarklightTextView.swift in Sources */,
 				161285DF1DD1E81E004728E9 /* NSString+URL.swift in Sources */,
 				16E2A0A21F6BEF6E005F4DB1 /* SoundEventListener.swift in Sources */,
 				AF58EC821E9FBCD800EB94CD /* ColorScheme+Helper.swift in Sources */,
@@ -6955,7 +6945,6 @@
 				16BEBC3F1D006FB6006FFD3E /* ThreeDotsLoadingViewTests.swift in Sources */,
 				876AE7601C159A9C00E3E743 /* NSStringFingerprintTests.m in Sources */,
 				16271BC81DA5213400689486 /* TypingIndicatorViewTests.swift in Sources */,
-				EE6067041F23BC33001CAC97 /* MarklightTextViewTests.swift in Sources */,
 				16EB9B3A1CE1DBB400883FCF /* VideoMessageCellTests.swift in Sources */,
 				BF16FC4F1DAFCE9300FF4325 /* MockConversationFactory.m in Sources */,
 				BFAD3A171CD0F14800F0FBED /* ConversationTitleViewTests.m in Sources */,
