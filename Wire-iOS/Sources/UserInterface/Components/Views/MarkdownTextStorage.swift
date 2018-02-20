@@ -27,7 +27,7 @@ class MarkdownTextStorage: NSTextStorage {
     override var string: String { return storage.string }
     
     var currentMarkdown: Markdown = .none
-    private var needsUpdate: Bool = false
+    private var needsCheck: Bool = false
     
     override func attributes(at location: Int, effectiveRange range: NSRangePointer?) -> [String : Any] {
         return storage.attributes(at: location, effectiveRange: range)
@@ -37,17 +37,14 @@ class MarkdownTextStorage: NSTextStorage {
         beginEditing()
         storage.setAttributes(attrs, range: range)
         
-        // this is a workaround for the case where the markdown id is not included
-        // in attrs after autocorrect or automatic fullstop insertions. We only
-        // update immediately text has changed and the attributes are missing
-        // the markdown id.
-        if  needsUpdate,
-            let attrs = attrs,
-            attrs[MarkdownIDAttributeName] == nil
-        {
+        // This is a workaround for the case where the markdown id is missing
+        // after automatically inserts corrections or fullstops after a space.
+        // If the needsCheck flag is set (after characters are replaced) & the
+        // attrs is missing the markdown id, then we need to included it.
+        if  needsCheck, let attrs = attrs, attrs[MarkdownIDAttributeName] == nil {
+            needsCheck = false
             storage.addAttribute(MarkdownIDAttributeName, value: currentMarkdown, range: editedRange)
             edited(.editedAttributes, range: editedRange, changeInLength: 0)
-            needsUpdate = false
         }
         
         edited(.editedAttributes, range: range, changeInLength: 0)
@@ -59,9 +56,8 @@ class MarkdownTextStorage: NSTextStorage {
         storage.replaceCharacters(in: range, with: str)
         edited(.editedCharacters, range: range, changeInLength: (str as NSString).length - range.length)
         endEditing()
-        // this method is called when the os enters text automatically
-        // (for autocorrect or fullstops), in this case we need to make
-        // sure the markdown id attribute is added.
-        needsUpdate = true
+        
+        // see setAttributes(_ :range:)
+        needsCheck = true
     }
 }
