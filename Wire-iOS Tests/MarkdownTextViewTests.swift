@@ -586,7 +586,7 @@ final class MarkdownTextViewTests: XCTestCase {
         let text = "Oh Hai!"
         insertText("1. \(text)")
         // WHEN
-        select(.oList)
+        deselect(.oList)
         // THEN
         XCTAssertEqual(sut.text, text)
     }
@@ -597,7 +597,7 @@ final class MarkdownTextViewTests: XCTestCase {
         ["- ", "+ ", "* "].forEach {
             insertText($0 + text)
             // WHEN
-            select(.uList)
+            deselect(.uList)
             // THEN
             XCTAssertEqual(sut.text, text)
             // AFTER

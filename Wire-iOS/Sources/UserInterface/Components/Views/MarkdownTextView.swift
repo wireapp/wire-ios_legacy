@@ -29,6 +29,15 @@ class MarkdownTextView: NextResponderTextView {
     
     enum ListType {
         case number, bullet
+        
+        init?(markdown: Markdown) {
+            switch markdown {
+            case .oList: self = .number
+            case .uList: self = .bullet
+            default: return nil
+            }
+        }
+        
         var prefix: String { return self == .number ? "1. " : "- " }
     }
     
@@ -176,9 +185,8 @@ class MarkdownTextView: NextResponderTextView {
                 // the delete last line
                 restore(selection, afterReplacingRange: prevLineTextRange, withText: "")
             }
-            else if isListItem(at: prevlineRange) {
+            else if let type = listType(in: prevlineRange) {
                 // insert list item at current line
-                let type = isNumberItem(at: prevlineRange) ? ListType.number : .bullet
                 insertListItem(type: type)
             }
         case .backspace:
@@ -187,6 +195,8 @@ class MarkdownTextView: NextResponderTextView {
         default:
             break
         }
+        
+        validateListItemAtCaret()
     }
     
     /// Responding to newlines involves helpful behaviour such as exiting
@@ -322,56 +332,82 @@ class MarkdownTextView: NextResponderTextView {
         return try! NSRegularExpression(pattern: pattern, options: .anchorsMatchLines)
     }()
     
-    private lazy var listItemRegex: NSRegularExpression = {
-        let pattern = "^((?:(?:\\d+\\.)|[*+-])\\ ).*$"
-        return try! NSRegularExpression(pattern: pattern, options: .anchorsMatchLines)
+    private lazy var orderedListItemRegex: NSRegularExpression = {
+        // group 1: prefix, group 2: number, group 3: content
+        return try! NSRegularExpression(pattern: "^((\\d+)\\.\\ )(.*$)", options: .anchorsMatchLines)
     }()
     
-    private lazy var numberPrefixRegex: NSRegularExpression = {
-        return try! NSRegularExpression(pattern: "^(\\d+)\\.\\ ", options: .anchorsMatchLines)
-    }()
-    
-    private lazy var bulletPrefixRegex: NSRegularExpression = {
-        return try! NSRegularExpression(pattern: "^([*+-])\\ ", options: .anchorsMatchLines)
+    private lazy var unorderedListItemRegex: NSRegularExpression = {
+        // group 1: prefix, group 2: bullet, group 3: content
+        return try! NSRegularExpression(pattern: "^(([*+-])\\ )(.*$)", options: .anchorsMatchLines)
     }()
     
     // MARK: - List Methods
 
+    /// Scans the string in the line containing the caret for a list item. If
+    /// one is found, the appropriate markdown ID is applied.
+    private func validateListItemAtCaret() {
+        guard let lineRange = currentLineRange else { return }
+        validateListItem(in: lineRange)
+    }
+    
+    /// Scans the string in the given range for a list item. If one is found,
+    /// the appropriate markdown ID is applied.
+    private func validateListItem(in range: NSRange) {
+        remove([.oList, .uList], from: range)
+        orderedListItemRegex.enumerateMatches(in: text, options: [], range: range) { match, _, _ in
+            if let matchRange = match?.range { add(.oList, to: matchRange) }
+        }
+        unorderedListItemRegex.enumerateMatches(in: text, options: [], range: range) { match, _, _ in
+            if let matchRange = match?.range { add(.uList, to: matchRange) }
+        }
+    }
+    
+    /// Returns true if an empty list item is present in the given range.
     private func isEmptyListItem(at range: NSRange) -> Bool {
         return emptyListItemRegex.numberOfMatches(in: text, options: [], range: range) != 0
     }
     
-    private func isListItem(at range: NSRange) -> Bool {
-        return rangeOfListPrefix(at: range) != nil
+    /// Returns the list type in the given range, if it exists.
+    private func listType(in range: NSRange) -> ListType? {
+        if numberPrefix(at: range) != nil { return .number }
+        else if bulletPrefix(at: range) != nil { return .bullet }
+        else { return nil }
     }
     
+    /// Returns the range of the list prefix in the given range, if it exists.
     private func rangeOfListPrefix(at range: NSRange) -> NSRange? {
-        let match = listItemRegex.firstMatch(in: text, options: [], range: range)
-        return match?.rangeAt(1)
+        if let match = orderedListItemRegex.firstMatch(in: text, options: [], range: range) {
+            if match.rangeAt(1).location != NSNotFound {
+                return match.rangeAt(1)
+            }
+        }
+        
+        if let match = unorderedListItemRegex.firstMatch(in: text, options: [], range: range) {
+            if match.rangeAt(1).location != NSNotFound {
+                return match.rangeAt(1)
+            }
+        }
+        
+        return nil
     }
     
-    private func numberPrefix(at range: NSRange) -> (Int, NSRange)? {
-        if let match = numberPrefixRegex.firstMatch(in: text, options: [], range: range) {
-            let num = markdownTextStorage.attributedSubstring(from: match.rangeAt(1)).string
-            return (Int(num) ?? 0, match.range)
+    /// Returns the number prefix in the given range, if it exists.
+    private func numberPrefix(at range: NSRange) -> Int? {
+        if let match = orderedListItemRegex.firstMatch(in: text, options: [], range: range) {
+            let num = markdownTextStorage.attributedSubstring(from: match.rangeAt(2)).string
+            return Int(num)
         }
         return nil
     }
     
-    private func bulletPrefix(at range: NSRange) -> (String, NSRange)? {
-        if let match = bulletPrefixRegex.firstMatch(in: text, options: [], range: range) {
-            let bullet = markdownTextStorage.attributedSubstring(from: match.rangeAt(1)).string
-            return (bullet, match.range)
+    /// Returns the bullet prefix in the given range, if it exists.
+    private func bulletPrefix(at range: NSRange) -> String? {
+        if let match = unorderedListItemRegex.firstMatch(in: text, options: [], range: range) {
+            let bullet = markdownTextStorage.attributedSubstring(from: match.rangeAt(2)).string
+            return bullet
         }
         return nil
-    }
-    
-    private func isNumberItem(at range: NSRange) -> Bool {
-        return numberPrefix(at: range) != nil
-    }
-    
-    private func isBulletItem(at range: NSRange) -> Bool {
-        return bulletPrefix(at: range) != nil
     }
     
     /// Returns the next list prefix by first trying to match a previous
@@ -379,50 +415,19 @@ class MarkdownTextView: NextResponderTextView {
     private func nextListPrefix(type: ListType) -> String {
         guard let previousLine = previousLineRange else { return type.prefix }
         switch type {
-        case .number:
-            if let num = numberPrefix(at: previousLine)?.0 {
-                return "\(num + 1). "
-            }
-        case .bullet:
-            if let bullet = bulletPrefix(at: previousLine)?.0 {
-                return "\(bullet) "
-            }
-        }
-        return type.prefix
-    }
-    
-    /// Inserts/removes/converts the list prefix on the current line.
-    fileprivate func processList(type: ListType) {
-        guard let lineRange = currentLineRange else { return }
-        
-        // check for existing prefix
-        if numberPrefix(at: lineRange) != nil {
-            switch type {
-            case .number:
-                removeListItem()
-            case .bullet:
-                removeListItem()
-                insertListItem(type: type)
-            }
-        }
-        else if bulletPrefix(at: lineRange) != nil {
-            switch type {
-            case .number:
-                removeListItem()
-                insertListItem(type: type)
-            case .bullet:
-                removeListItem()
-            }
-        }
-        else {
-            insertListItem(type: type)
+        case .number: return "\((numberPrefix(at: previousLine) ?? 0) + 1). "
+        case .bullet: return "\(bulletPrefix(at: previousLine) ?? "-") "
         }
     }
     
     /// Inserts a list prefix with the given type on the current line.
     fileprivate func insertListItem(type: ListType) {
+        
+        // remove existing list item if it exists
+        removeListItem()
+        
         guard
-            let lineRange = currentLineRange, !isListItem(at: lineRange),
+            let lineRange = currentLineRange,
             let selection = selectedTextRange,
             let lineStart = NSMakeRange(lineRange.location, 0).textRange(in: self)
             else { return }
@@ -436,9 +441,7 @@ class MarkdownTextView: NextResponderTextView {
         
         // add list md to whole line
         guard let newLineRange = currentLineRange else { return }
-        let md = (type == .number) ? Markdown.oList : .uList
-        add(md, to: newLineRange)
-        activeMarkdown.insert(md)
+        validateListItem(in: newLineRange)
     }
 
     /// Removes the list prefix from the current line.
@@ -457,9 +460,8 @@ class MarkdownTextView: NextResponderTextView {
         
         restore(selection, afterReplacingRange: prefixRange, withText: "")
         
-        // remove list md to whole line
         guard let newLineRange = currentLineRange else { return }
-        remove([.oList, .uList], from: newLineRange)
+        validateListItem(in: newLineRange)
     }
     
     /// Replaces the range with the text and attempts to restore the selection.
@@ -488,10 +490,8 @@ extension MarkdownTextView: MarkdownBarViewDelegate {
     func markdownBarView(_ view: MarkdownBarView, didSelectMarkdown markdown: Markdown, with sender: IconButton) {
         guard selectedRange.location != NSNotFound else { return }
         
-        if markdown == .oList {
-            processList(type: .number)
-        } else if markdown == .uList {
-            processList(type: .bullet)
+        if let listType = ListType(markdown: markdown) {
+            insertListItem(type: listType)
         }
         
         // apply header to the whole line
@@ -529,10 +529,8 @@ extension MarkdownTextView: MarkdownBarViewDelegate {
     func markdownBarView(_ view: MarkdownBarView, didDeselectMarkdown markdown: Markdown, with sender: IconButton) {
         guard selectedRange.location != NSNotFound else { return }
         
-        if markdown == .oList {
-            processList(type: .number)
-        } else if markdown == .uList {
-            processList(type: .bullet)
+        if markdown == .oList || markdown == .uList {
+            removeListItem()
         }
         
         // remove header from the whole line
