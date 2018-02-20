@@ -27,15 +27,6 @@ class MarkdownTextView: NextResponderTextView {
     
     enum ListType {
         case number, bullet
-        
-        init?(markdown: Markdown) {
-            switch markdown {
-            case .oList: self = .number
-            case .uList: self = .bullet
-            default: return nil
-            }
-        }
-        
         var prefix: String { return self == .number ? "1. " : "- " }
     }
     
@@ -55,6 +46,9 @@ class MarkdownTextView: NextResponderTextView {
     var preparedText: String {
         return self.parser.parse(attributedString: self.attributedText)
     }
+    
+    /// Set when newline is entered, used for auto list item creation.
+    private var newlineFlag = false
     
     /// The current attributes to be applied when typing.
     fileprivate var currentAttributes: [String : Any] = [:]
@@ -77,10 +71,6 @@ class MarkdownTextView: NextResponderTextView {
     }
     
     // MARK: - Range Helpers
-    
-    private var wholeRange: NSRange {
-        return NSMakeRange(0, markdownTextStorage.length)
-    }
     
     fileprivate var currentLineRange: NSRange? {
         guard selectedRange.location != NSNotFound else { return nil }
@@ -116,11 +106,10 @@ class MarkdownTextView: NextResponderTextView {
         layoutManager.addTextContainer(textContainer)
         super.init(frame: .zero, textContainer: textContainer)
         
-        NotificationCenter.default.addObserver(self, selector: #selector(textViewDidChange), name: .UITextViewTextDidChange, object: nil)
-        
-        markdownTextStorage.currentMarkdown = .none
         currentAttributes = attributes(for: activeMarkdown)
         updateTypingAttributes()
+
+        NotificationCenter.default.addObserver(self, selector: #selector(textViewDidChange), name: .UITextViewTextDidChange, object: nil)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -129,13 +118,8 @@ class MarkdownTextView: NextResponderTextView {
     
     // MARK: - Public Interface
     
-    /// Resets the active markdown to none and the sets the default
-    /// typing attributes.
-    func resetMarkdown() {
-        activeMarkdown = .none
-    }
-    
-    private var newlineFlag = false
+    /// Clears active markdown & updates typing attributes.
+    func resetMarkdown() { activeMarkdown = .none }
     
     /// Call this method before the text view changes to give it a chance
     /// to perform any work.
@@ -153,13 +137,14 @@ class MarkdownTextView: NextResponderTextView {
     // MARK: - Private Interface
     
     /// Calling this method ensures that the current attributes are applied
-    /// to newly typed text.
-    private func updateTypingAttributes() {
-        // typing attributes are automatically cleared after each change,
-        // so we have to keep setting it to provide continuity.
-        typingAttributes = currentAttributes
-    }
+    /// to newly typed text. Since iOS11, typing attributes are automatically
+    /// cleared when selection & text changes, so we have to keep setting it
+    /// to provide continuity.
+    private func updateTypingAttributes() { typingAttributes = currentAttributes }
     
+    /// Called after each text change has been committed. We use this opportunity
+    /// to insert new list items in the case a newline was entered, as well as
+    /// to validate any potential list items on the currently selected line.
     @objc private func textViewDidChange() {
         
         if newlineFlag {
@@ -174,7 +159,7 @@ class MarkdownTextView: NextResponderTextView {
             
             if isEmptyListItem(at: prevlineRange) {
                 // the delete last line
-                restore(selection, afterReplacingRange: prevLineTextRange, withText: "")
+                replaceText(in: prevLineTextRange, with: "", restoringSelection: selection)
             }
             else if let type = listType(in: prevlineRange) {
                 // insert list item at current line
@@ -199,11 +184,11 @@ class MarkdownTextView: NextResponderTextView {
         return .none
     }
     
-    /// Returns the markdown at the current caret position.
+    /// Returns the markdown for the current caret position. We actually get the
+    /// markdown for the position behind the caret unless the caret is at the
+    /// start of a line. We do this so the user can, for instance, move the
+    /// caret at the end of a bold word and continue typing in bold.
     private func markdownAtCaret() -> Markdown {
-        // in order to allow continuity of typing, the markdown at the caret
-        // should actually be markdown at the position behind the caret (up to
-        // the start of the line)
         guard let range = currentLineRange else { return .none }
         return markdown(at: max(range.location, selectedRange.location - 1))
     }
@@ -261,8 +246,6 @@ class MarkdownTextView: NextResponderTextView {
         if markdown.contains(.italic) {
             font = font.italic
         }
-        
-        // TODO: Quote, List
         
         return [
             MarkdownIDAttributeName: markdown,
@@ -410,12 +393,12 @@ class MarkdownTextView: NextResponderTextView {
         
         // insert prefix with no md
         typingAttributes = attributes(for: .none)
-        restore(selection, afterReplacingRange: lineStart, withText: prefix)
+        replaceText(in: lineStart, with: prefix, restoringSelection: selection)
         updateTypingAttributes()
         
         // add list md to whole line
         guard let newLineRange = currentLineRange else { return }
-        validateListItem(in: newLineRange)
+        add(type == .number ? .oList : .uList, to: newLineRange)
     }
 
     /// Removes the list prefix from the current line.
@@ -432,19 +415,23 @@ class MarkdownTextView: NextResponderTextView {
             selection = textRange(from: prefixRange.end, to: prefixRange.end)!
         }
         
-        restore(selection, afterReplacingRange: prefixRange, withText: "")
+        replaceText(in: prefixRange, with: "", restoringSelection: selection)
         
+        // remove list md from whole line
         guard let newLineRange = currentLineRange else { return }
-        validateListItem(in: newLineRange)
+        remove([.oList, .uList], from: newLineRange)
     }
     
     /// Replaces the range with the text and attempts to restore the selection.
-    private func restore(_ selection: UITextRange, afterReplacingRange range: UITextRange, withText text: String) {
+    private func replaceText(in range: UITextRange, with text: String, restoringSelection selection: UITextRange) {
         replace(range, withText: text)
+        
+        // calculate the new selection
         let oldLength = offset(from: range.start, to: range.end)
         let newLength = (text as NSString).length
         let delta = newLength - oldLength
         
+        // attempt to restore the selection
         guard
             let start = position(from: selection.start, offset: delta),
             let end = position(from: selection.end, offset: delta),
@@ -453,7 +440,6 @@ class MarkdownTextView: NextResponderTextView {
         
         selectedTextRange = restoredSelection
     }
-    
 }
 
 
