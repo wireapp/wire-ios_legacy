@@ -25,8 +25,6 @@ extension Notification.Name {
 
 class MarkdownTextView: NextResponderTextView {
     
-    enum KeyEvent { case none, newline, backspace }
-    
     enum ListType {
         case number, bullet
         
@@ -77,9 +75,6 @@ class MarkdownTextView: NextResponderTextView {
     public override var selectedTextRange: UITextRange? {
         didSet { activeMarkdown = self.markdownAtSelection() }
     }
-    
-    /// Describes the last key event entered by the user.
-    private var lastKeyEvent = KeyEvent.none
     
     // MARK: - Range Helpers
     
@@ -140,19 +135,16 @@ class MarkdownTextView: NextResponderTextView {
         activeMarkdown = .none
     }
     
+    private var newlineFlag = false
+    
     /// Call this method before the text view changes to give it a chance
     /// to perform any work.
     func respondToChange(_ text: String, inRange range: NSRange) {
         if text == "\n" || text == "\r" {
-            lastKeyEvent = .newline
-            handleNewLine()
-        }
-        else if text.isEmpty && range.length > 0 {
-            lastKeyEvent = .backspace
-            handleBackspace()
-        }
-        else {
-            lastKeyEvent = .none
+            newlineFlag = true
+            if activeMarkdown.containsHeader {
+                resetMarkdown()
+            }
         }
         
         updateTypingAttributes()
@@ -169,11 +161,10 @@ class MarkdownTextView: NextResponderTextView {
     }
     
     @objc private func textViewDidChange() {
-        // it's important to reset lastKeyEvent as soon as we use it
-        // so that the event is only processed once
-        switch lastKeyEvent {
-        case .newline:
-            lastKeyEvent = .none
+        
+        if newlineFlag {
+            // flip immediately to avoid infinity
+            newlineFlag = false
             
             guard
                 let prevlineRange = previousLineRange,
@@ -189,26 +180,9 @@ class MarkdownTextView: NextResponderTextView {
                 // insert list item at current line
                 insertListItem(type: type)
             }
-        case .backspace:
-            lastKeyEvent = .none
-        // TODO: if the space after list prefix was deleted, remove the remaining prefix
-        default:
-            break
         }
         
         validateListItemAtCaret()
-    }
-    
-    /// Responding to newlines involves helpful behaviour such as exiting
-    /// header mode or inserting new list items.
-    private func handleNewLine() {
-        if activeMarkdown.containsHeader {
-            resetMarkdown()
-        }
-    }
-    
-    private func handleBackspace() {
-        
     }
     
     // MARK: Markdown Querying
