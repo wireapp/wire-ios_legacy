@@ -488,29 +488,38 @@ class MarkdownTextView: NextResponderTextView {
 extension MarkdownTextView: MarkdownBarViewDelegate {
     
     func markdownBarView(_ view: MarkdownBarView, didSelectMarkdown markdown: Markdown, with sender: IconButton) {
+        // there must be a selection
         guard selectedRange.location != NSNotFound else { return }
         
-        if let listType = ListType(markdown: markdown) {
-            insertListItem(type: listType)
-        }
-        
-        // apply header to the whole line
-        if markdown.isHeader, let range = currentLineRange {
-            // remove any existing header styles before adding new header
-            let otherHeaders = ([.h1, .h2, .h3] as Markdown).subtracting(markdown)
-            activeMarkdown.subtract(otherHeaders)
-            remove(otherHeaders, from: range)
-            add(markdown, to: range)
-        }
-        
-        // prevent combination of code with bold or italic
-        if markdown == .code {
+        switch markdown {
+        case .h1, .h2, .h3:
+            // apply header to the whole line
+            if let range = currentLineRange {
+                // remove any existing header styles before adding new header
+                let otherHeaders = ([.h1, .h2, .h3] as Markdown).subtracting(markdown)
+                activeMarkdown.subtract(otherHeaders)
+                remove(otherHeaders, from: range)
+                add(markdown, to: range)
+            }
+            
+        case .oList:
+            insertListItem(type: .number)
+            
+        case .uList:
+            insertListItem(type: .bullet)
+            
+        case .code:
+            // selecting code deselects bold & italic
             remove([.bold, .italic], from: selectedRange)
             activeMarkdown.subtract([.bold, .italic])
-        }
-        else if markdown == .bold || markdown == .italic {
+            
+        case .bold, .italic:
+            // selecting bold or italic deselects code
             remove(.code, from: selectedRange)
             activeMarkdown.subtract(.code)
+            
+        default:
+            break
         }
 
         if selectedRange.length > 0 {
@@ -527,17 +536,23 @@ extension MarkdownTextView: MarkdownBarViewDelegate {
     }
     
     func markdownBarView(_ view: MarkdownBarView, didDeselectMarkdown markdown: Markdown, with sender: IconButton) {
+        // there must be a selection
         guard selectedRange.location != NSNotFound else { return }
         
-        if markdown == .oList || markdown == .uList {
+        switch markdown {
+        case .h1, .h2, .h3:
+            // remove header from the whole line
+            if let range = currentLineRange {
+                remove(markdown, from: range)
+            }
+            
+        case .oList, .uList:
             removeListItem()
+            
+        default:
+            break
         }
         
-        // remove header from the whole line
-        if markdown.isHeader, let range = currentLineRange {
-            remove(markdown, from: range)
-        }
-
         if selectedRange.length > 0 {
             remove(markdown, from: selectedRange)
         }
