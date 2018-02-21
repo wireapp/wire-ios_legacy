@@ -98,6 +98,9 @@
 		16D3632F1AB05BBE00471F5F /* CameraTopToolsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 16D3632E1AB05BBE00471F5F /* CameraTopToolsViewController.m */; };
 		16D3633A1AB073AC00471F5F /* CameraBottomToolsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 16D363391AB073AC00471F5F /* CameraBottomToolsViewController.m */; };
 		16D453C71B6F9CB000675246 /* LinkAttachmentTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 16D453C61B6F9CB000675246 /* LinkAttachmentTests.m */; };
+		16D49328203DCC88008DDFFA /* GroupDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16D49327203DCC88008DDFFA /* GroupDetailsViewController.swift */; };
+		16D4932A203DCCCA008DDFFA /* GroupDetailsParticipantCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16D49329203DCCCA008DDFFA /* GroupDetailsParticipantCell.swift */; };
+		16D4932C203DD480008DDFFA /* GroupDetailsParticipantCellTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16D4932B203DD480008DDFFA /* GroupDetailsParticipantCellTests.swift */; };
 		16D68E9B1CEF99C7003AB9E0 /* WaveformProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16D68E9A1CEF99C7003AB9E0 /* WaveformProgressView.swift */; };
 		16E2A09A1F6ADE75005F4DB1 /* ActiveVoiceChannelViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16E2A0991F6ADE75005F4DB1 /* ActiveVoiceChannelViewController.swift */; };
 		16E2A09C1F6BCDAF005F4DB1 /* VoiceChannelParticipantsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16E2A09B1F6BCDAF005F4DB1 /* VoiceChannelParticipantsController.swift */; };
@@ -1262,6 +1265,9 @@
 		16D363391AB073AC00471F5F /* CameraBottomToolsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CameraBottomToolsViewController.m; sourceTree = "<group>"; };
 		16D3FD031E3BCCF80052A535 /* BlurEffectTransition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlurEffectTransition.swift; sourceTree = "<group>"; };
 		16D453C61B6F9CB000675246 /* LinkAttachmentTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LinkAttachmentTests.m; sourceTree = "<group>"; };
+		16D49327203DCC88008DDFFA /* GroupDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupDetailsViewController.swift; sourceTree = "<group>"; };
+		16D49329203DCCCA008DDFFA /* GroupDetailsParticipantCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupDetailsParticipantCell.swift; sourceTree = "<group>"; };
+		16D4932B203DD480008DDFFA /* GroupDetailsParticipantCellTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupDetailsParticipantCellTests.swift; sourceTree = "<group>"; };
 		16D68E9A1CEF99C7003AB9E0 /* WaveformProgressView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WaveformProgressView.swift; sourceTree = "<group>"; };
 		16E2A0991F6ADE75005F4DB1 /* ActiveVoiceChannelViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActiveVoiceChannelViewController.swift; sourceTree = "<group>"; };
 		16E2A09B1F6BCDAF005F4DB1 /* VoiceChannelParticipantsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VoiceChannelParticipantsController.swift; sourceTree = "<group>"; };
@@ -2908,6 +2914,15 @@
 			path = TabBar;
 			sourceTree = "<group>";
 		};
+		16D49326203DCC59008DDFFA /* GroupDetails */ = {
+			isa = PBXGroup;
+			children = (
+				16D49327203DCC88008DDFFA /* GroupDetailsViewController.swift */,
+				16D49329203DCCCA008DDFFA /* GroupDetailsParticipantCell.swift */,
+			);
+			path = GroupDetails;
+			sourceTree = "<group>";
+		};
 		16DF2F6C1BE7B9EB005CF8DE /* AddContacts */ = {
 			isa = PBXGroup;
 			children = (
@@ -4544,6 +4559,7 @@
 		8FC8516F199245760008B66B /* UserInterface */ = {
 			isa = PBXGroup;
 			children = (
+				16D49326203DCC59008DDFFA /* GroupDetails */,
 				7C5836621FD5AB98001CC843 /* Availability */,
 				EF2126B41FB9DFE300625A9B /* Registration */,
 				16A293D81F5FF9F500B4EB16 /* Skeleton */,
@@ -5036,6 +5052,7 @@
 				EF91A0541FF3A04700FE2F53 /* GiphySearchViewControllerTests.swift */,
 				7C72F03E200E1000001231D3 /* MockPhotoPermissionsController.swift */,
 				7C23A26B20247474005FEB54 /* ShareViewControllerTests.swift */,
+				16D4932B203DD480008DDFFA /* GroupDetailsParticipantCellTests.swift */,
 			);
 			path = "Wire-iOS Tests";
 			sourceTree = "<group>";
@@ -6345,6 +6362,7 @@
 				8FC854A2199245770008B66B /* ParticipantsListCell.m in Sources */,
 				870C926F1E8D1C7300A10995 /* ConversationListViewModel+Teams.swift in Sources */,
 				BFA25DCB1D9AB88A0086DEBD /* Emojis.swift in Sources */,
+				16D49328203DCC88008DDFFA /* GroupDetailsViewController.swift in Sources */,
 				BFCF31D51D9E91880039B3DC /* RecentlyUsedEmojis.swift in Sources */,
 				871BC25B1D34F8F800DF0793 /* ColorBandsView.m in Sources */,
 				EF2127221FB9DFE300625A9B /* FormFlowViewController.m in Sources */,
@@ -6556,6 +6574,7 @@
 				8F41CFC8199297C600E3B032 /* ZMConversation+Additions.m in Sources */,
 				BAEF10FA1B8C8849005BFA48 /* AnimatedListMenuView.m in Sources */,
 				871BC2551D34F8F800DF0793 /* CrossfadeTransition.m in Sources */,
+				16D4932A203DCCCA008DDFFA /* GroupDetailsParticipantCell.swift in Sources */,
 				872CB8B819E58816006752B4 /* ProfileSendConnectionRequestFooterView.m in Sources */,
 				877B07821E3B4C4A0070A6F2 /* ZMConversationMessage+Properties.swift in Sources */,
 				EF2127231FB9DFE300625A9B /* RegistrationFormController.m in Sources */,
@@ -6931,6 +6950,7 @@
 				BF29C9871C6E357100601EE7 /* ZMSnapshotTestCase.m in Sources */,
 				BFE08C1E1D5B6F34002367F6 /* MessageDeletedCellTests.swift in Sources */,
 				BFF655741E81235900D48337 /* ConversationAvatarViewTests.swift in Sources */,
+				16D4932C203DD480008DDFFA /* GroupDetailsParticipantCellTests.swift in Sources */,
 				87BEB0E51C7363D30094BFE9 /* MockMessage+Creation.m in Sources */,
 				BFAD3A191CD1011100F0FBED /* ProfilePictureStepViewControllerTests.m in Sources */,
 				1E98C81B1BD1719500C7A7A2 /* ContactsDataSourceTests.m in Sources */,
