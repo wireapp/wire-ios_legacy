@@ -55,6 +55,7 @@ open class CoreDataSnapshotTestCase: ZMSnapshotTestCase {
 
         otherUserConversation = ZMConversation.insertNewObject(in: uiMOC)
         otherUserConversation.conversationType = .oneOnOne
+        otherUserConversation.remoteIdentifier = UUID()
         let connection = ZMConnection.insertNewObject(in: uiMOC)
         connection.to = otherUser
         connection.status = .accepted
