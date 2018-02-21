@@ -1,6 +1,6 @@
 //
 // Wire
-// Copyright (C) 2016 Wire Swiss GmbH
+// Copyright (C) 2018 Wire Swiss GmbH
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -18,20 +18,23 @@
 
 import Foundation
 
-public protocol Reusable {
-    static var reuseIdentifier: String { get }
-    var reuseIdentifier: String? { get }
+protocol CellConfigurationConfigurable: Reusable {
+    func configure(with configuration: CellConfiguration, variant: ColorSchemeVariant)
 }
 
-public extension Reusable {
-    static var reuseIdentifier: String {
-        guard let `class` = self as? AnyClass else { return "\(self)" }
-        return NSStringFromClass(`class`)
+enum CellConfiguration {
+    typealias Action = () -> Void
+    case toggle(title: String, get: () -> Bool, set: (Bool) -> Void)
+    
+    var cellType: CellConfigurationConfigurable.Type {
+        switch self {
+        case .toggle: return ToggleCell.self
+        }
     }
     
-    var reuseIdentifier: String? {
-        return type(of: self).reuseIdentifier
+    var action: Action? {
+        switch self {
+        case .toggle: return nil
+        }
     }
 }
-
-extension UITableViewCell: Reusable {}

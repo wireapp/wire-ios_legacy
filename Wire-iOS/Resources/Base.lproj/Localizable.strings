@@ -875,6 +875,12 @@
 "team.invite.error.too_many_invitations" = "The maximum number of invitations has been sent";
 "team.invite.error.no_internet" = "No internet connection";
 
+// Guest Room
+
+"guest_room.allow_guests.title" = "Allow guests";
+"guest_room.allow_guests.subtitle" = "Open this conversation to people outside your team.";
+
+
 // Registration
 
 "registration.title" = "Registration";
