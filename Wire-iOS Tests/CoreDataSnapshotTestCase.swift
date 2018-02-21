@@ -66,6 +66,7 @@ open class CoreDataSnapshotTestCase: ZMSnapshotTestCase {
 
     func createGroupConversation() -> ZMConversation {
         let conversation = ZMConversation.insertNewObject(in: uiMOC)
+        conversation.remoteIdentifier = UUID()
         conversation.conversationType = .group
         conversation.internalAddParticipants([selfUser, otherUser], isAuthoritative: true)
         return conversation
