@@ -27,6 +27,8 @@
 @import WireDataModel;
 #import "Wire-Swift.h"
 
+static NSMutableDictionary *correlationFormatters;
+
 @interface SearchResultCell ()
 @property (nonatomic, strong) UIView *gesturesView;
 @property (nonatomic, strong) BadgeUserImageView *badgeUserImageView;
@@ -72,14 +74,22 @@
     return [UIFont fontWithMagicIdentifier:@"style.text.small.font_spec_bold"];
 }
 
-+ (AddressBookCorrelationFormatter *)correlationFormatter
-{
-    static dispatch_once_t onceToken;
-    static AddressBookCorrelationFormatter *formatter = nil;
-    dispatch_once(&onceToken, ^{
-        formatter = [[AddressBookCorrelationFormatter alloc] initWithLightFont:self.lightFont boldFont:self.boldFont color:UIColor.whiteColor];
-    });
-
++ (AddressBookCorrelationFormatter*)correlationFormatterForColorSchemeVariant:(ColorSchemeVariant)variant {
+    
+    if(correlationFormatters == nil) {
+        correlationFormatters = [NSMutableDictionary dictionary];
+    }
+    
+    AddressBookCorrelationFormatter *formatter = [correlationFormatters objectForKey:@(variant)];
+    
+    if(formatter == nil) {
+        UIColor *color = [[ColorScheme defaultColorScheme] colorWithName:ColorSchemeColorTextDimmed variant:variant];
+        formatter = [[AddressBookCorrelationFormatter alloc] initWithLightFont:self.class.lightFont
+                                                                      boldFont:self.class.boldFont
+                                                                         color:color];
+        [correlationFormatters setObject:formatter forKey:@(variant)];
+    }
+    
     return formatter;
 }
 
@@ -183,6 +193,7 @@
         [self.nameLabelStackView autoAlignAxis:ALAxisHorizontal toSameAxisOfView:self.avatarContainer];
         
         [self.nameLabelStackView autoPinEdge:ALEdgeLeading toEdge:ALEdgeTrailing ofView:self.avatarContainer withOffset:nameAvatarMargin];
+        
         self.nameRightMarginConstraint = [self.nameLabelStackView autoPinEdge:ALEdgeTrailing toEdge:ALEdgeTrailing ofView:self.swipeView withOffset:- rightMargin];
 
         self.avatarViewSizeConstraint = [self.avatarContainer autoSetDimension:ALDimensionWidth toSize:80];
@@ -196,10 +207,10 @@
         [self.conversationImageView autoPinEdgeToSuperviewEdge:ALEdgeTop];
 
         [self.instantConnectButton autoAlignAxis:ALAxisHorizontal toSameAxisOfView:self.avatarContainer];
-        [self.instantConnectButton autoPinEdgeToSuperviewEdge:ALEdgeTrailing withInset:16];
+        [self.instantConnectButton autoPinEdgeToSuperviewEdge:ALEdgeTrailing withInset:rightMargin];
         
         [self.trailingCheckmarkView autoAlignAxis:ALAxisHorizontal toSameAxisOfView:self.avatarContainer];
-        [self.trailingCheckmarkView autoPinEdgeToSuperviewEdge:ALEdgeTrailing withInset:16];
+        [self.trailingCheckmarkView autoPinEdgeToSuperviewEdge:ALEdgeTrailing withInset:rightMargin];
         [self.trailingCheckmarkView autoSetDimensionsToSize:CGSizeMake(24, 24)];
 
         [self.separatorLineView autoPinEdgeToSuperviewEdge:ALEdgeTrailing];
@@ -215,12 +226,15 @@
         }];
     }
 
-    CGFloat rightMarginForName = rightMargin;
+    CGFloat rightMarginForName = 0;
     if (!self.instantConnectButton.hidden) {
         rightMarginForName = self.instantConnectButton.bounds.size.width;
     }
-    else if (!self.guestLabel.hidden) {
-        rightMarginForName = self.guestLabel.bounds.size.width + rightMargin;
+    if (!self.trailingCheckmarkView.hidden) {
+        rightMarginForName += self.trailingCheckmarkView.bounds.size.width + rightMargin;
+    }
+    if (!self.guestLabel.hidden) {
+        rightMarginForName += self.guestLabel.bounds.size.width + rightMargin;
     }
 
     self.nameRightMarginConstraint.constant = -rightMarginForName;
@@ -450,7 +464,7 @@
             [self.swipeView addSubview:self.guestLabel];
             [self.guestLabel autoAlignAxisToSuperviewAxis:ALAxisHorizontal];
             self.guestLabelTrailingConstraint = [self.guestLabel autoPinEdgeToSuperviewEdge:ALEdgeTrailing withInset:rightMargin];
-            self.guestLabelCheckmarkViewHorizontalConstraint = [self.guestLabel autoPinEdge:ALEdgeTrailing toEdge:ALEdgeLeading ofView:self.trailingCheckmarkView withOffset:-16];
+            self.guestLabelCheckmarkViewHorizontalConstraint = [self.guestLabel autoPinEdge:ALEdgeTrailing toEdge:ALEdgeLeading ofView:self.trailingCheckmarkView withOffset:-rightMargin];
             [self updateGuestLabelConstraints];
         }
         self.guestLabel.hidden = NO;
@@ -512,9 +526,9 @@
         attributedHandle = [[NSAttributedString alloc] initWithString:displayHandle attributes:attributes];
         [subtitle appendAttributedString:attributedHandle];
     }
-    
-    NSString *addresBookName = BareUserToUser(user).addressBookEntry.cachedName;
-    NSAttributedString *correlation = [self.class.correlationFormatter correlationTextFor:self.user addressBookName:addresBookName];
+    NSString *addressBookName = BareUserToUser(user).addressBookEntry.cachedName;
+    AddressBookCorrelationFormatter *formatter = [self.class correlationFormatterForColorSchemeVariant:self.colorSchemeVariant];
+    NSAttributedString *correlation = [formatter correlationTextFor:self.user addressBookName:addressBookName];
     if (nil != correlation) {
         if (nil != attributedHandle) {
             NSDictionary *delimiterAttributes = @{ NSFontAttributeName: self.class.lightFont, NSForegroundColorAttributeName: self.subtitleColor };

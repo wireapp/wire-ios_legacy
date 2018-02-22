@@ -99,7 +99,7 @@ class ParticipantsCellTests: CoreDataSnapshotTestCase {
     // MARK: - Helper
 
     private func cell(for type: ZMSystemMessageType, text: String? = nil, fromSelf: Bool = false, userCount: UserCount = .one, left: Bool = false) -> ConversationCell {
-        let message = ZMSystemMessage.insertNewObject(in: uiMOC)
+        let message = ZMSystemMessage(nonce: UUID(), managedObjectContext: uiMOC)
         message.sender = fromSelf ? selfUser : otherUser
         message.systemMessageType = type
         message.text = text
