@@ -21,7 +21,7 @@
 
 @import WireSyncEngine;
 
-@interface AVSLogObserver ()// <AVSLogger>
+@interface AVSLogObserver () <AVSLogger>
 
 @property (nonatomic) id token;
 
@@ -33,7 +33,7 @@
 {
     self = [super init];
     if (self) {
-//        self.token = [SessionManager addLogger:self];
+        self.token = [SessionManager addLogger:self];
     }
     return self;
 }
