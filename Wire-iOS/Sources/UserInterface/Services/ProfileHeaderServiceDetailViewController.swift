@@ -45,7 +45,7 @@ final class ProfileHeaderServiceDetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        view.backgroundColor = .white
+        view.backgroundColor = ColorScheme.default().color(withName: ColorSchemeColorBackground)
 
         self.navigationController?.delegate = self.navigationControllerDelegate
 
@@ -100,10 +100,11 @@ final class ProfileHeaderServiceDetailViewController: UIViewController {
     }
 
     func setupServiceDetailViewController(serviceUser: ServiceUser) {
+        let variant = ColorScheme.default().variant
         serviceDetailViewController = ServiceDetailViewController(serviceUser: serviceUser,
                                                                   destinationConversation: self.conversation,
                                                                   actionType: .removeService,
-                                                                  variant: ServiceDetailVariant(colorScheme: .light, opaque: false))
+                                                                  variant: ServiceDetailVariant(colorScheme: variant, opaque: false))
         serviceDetailViewController.viewControllerDismissable = self.viewControllerDismissable
 
         self.addToSelf(serviceDetailViewController)
