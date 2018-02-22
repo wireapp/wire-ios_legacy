@@ -62,12 +62,12 @@ final class ToggleSubtitleCell: UITableViewCell, CellConfigurationConfigurable {
             topContainer.top == contentView.top
             topContainer.leading == contentView.leading
             topContainer.trailing == contentView.trailing
-            topContainer.height == 44
+            topContainer.height == 56
             
             subtitleLabel.leading == contentView.leading + 16
             subtitleLabel.trailing == contentView.trailing - 16
-            subtitleLabel.top == topContainer.bottom + 8
-            subtitleLabel.bottom == contentView.bottom - 8
+            subtitleLabel.top == topContainer.bottom + 16
+            subtitleLabel.bottom == contentView.bottom - 24
         }
     }
     
