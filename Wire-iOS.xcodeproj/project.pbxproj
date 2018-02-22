@@ -932,7 +932,7 @@
 		D59EA0C520234EE300B17CE7 /* ConversationCellLayoutProperties+Preview.swift in Sources */ = {isa = PBXBuildFile; fileRef = D59EA0C420234EE300B17CE7 /* ConversationCellLayoutProperties+Preview.swift */; };
 		D59EA0C72024756B00B17CE7 /* MessagePreviewViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D59EA0C62024756B00B17CE7 /* MessagePreviewViewTests.swift */; };
 		D5C34E8E203D75C5004A0986 /* ConversationOptionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5C34E8D203D75C5004A0986 /* ConversationOptionsViewController.swift */; };
-		D5C34E91203D7AEA004A0986 /* ToggleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5C34E90203D7AEA004A0986 /* ToggleCell.swift */; };
+		D5C34E91203D7AEA004A0986 /* ToggleSubtitleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5C34E90203D7AEA004A0986 /* ToggleSubtitleCell.swift */; };
 		D5C34E93203D7B2E004A0986 /* CellConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5C34E92203D7B2E004A0986 /* CellConfiguration.swift */; };
 		D5CEBFC3202CA3BA00AFBD3A /* AddParticipantsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5CEBFC2202CA3BA00AFBD3A /* AddParticipantsViewModel.swift */; };
 		D5D89780201A12D300FAF69C /* Account+ShareExtensionDisplayName.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D8977E201A121900FAF69C /* Account+ShareExtensionDisplayName.swift */; };
@@ -2492,7 +2492,7 @@
 		D59EA0C420234EE300B17CE7 /* ConversationCellLayoutProperties+Preview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConversationCellLayoutProperties+Preview.swift"; sourceTree = "<group>"; };
 		D59EA0C62024756B00B17CE7 /* MessagePreviewViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagePreviewViewTests.swift; sourceTree = "<group>"; };
 		D5C34E8D203D75C5004A0986 /* ConversationOptionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationOptionsViewController.swift; sourceTree = "<group>"; };
-		D5C34E90203D7AEA004A0986 /* ToggleCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToggleCell.swift; sourceTree = "<group>"; };
+		D5C34E90203D7AEA004A0986 /* ToggleSubtitleCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToggleSubtitleCell.swift; sourceTree = "<group>"; };
 		D5C34E92203D7B2E004A0986 /* CellConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellConfiguration.swift; sourceTree = "<group>"; };
 		D5CEBFC2202CA3BA00AFBD3A /* AddParticipantsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddParticipantsViewModel.swift; sourceTree = "<group>"; };
 		D5D8977E201A121900FAF69C /* Account+ShareExtensionDisplayName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Account+ShareExtensionDisplayName.swift"; sourceTree = "<group>"; };
@@ -5211,7 +5211,7 @@
 				D5C34E92203D7B2E004A0986 /* CellConfiguration.swift */,
 				D5943439203DCB8F006AA0C0 /* ConversationOptionsViewModel.swift */,
 				D53DB9A4203EE03400655CB4 /* Conversation+OptionsConfiguration.swift */,
-				D5C34E90203D7AEA004A0986 /* ToggleCell.swift */,
+				D5C34E90203D7AEA004A0986 /* ToggleSubtitleCell.swift */,
 			);
 			path = "Conversation Options";
 			sourceTree = "<group>";
@@ -6279,7 +6279,7 @@
 				87CB36BA1D74782B007AB4E5 /* LikeButton.swift in Sources */,
 				D5168F592010F2F700F8222A /* TokenField+DefaultAppearance.swift in Sources */,
 				16325E651EE03CC4000E72EB /* SearchResultsView.swift in Sources */,
-				D5C34E91203D7AEA004A0986 /* ToggleCell.swift in Sources */,
+				D5C34E91203D7AEA004A0986 /* ToggleSubtitleCell.swift in Sources */,
 				8FC85471199245770008B66B /* ZClientViewController.m in Sources */,
 				8795322E1A8A141000EB495B /* ContrastUserImageView.m in Sources */,
 				EF2127081FB9DFE300625A9B /* PhoneNumberViewController.m in Sources */,

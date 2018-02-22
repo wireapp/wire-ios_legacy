@@ -48,7 +48,7 @@ final class ConversationOptionsViewController: UIViewController, UITableViewDele
     
     private func setupViews() {
         view.addSubview(tableView)
-        tableView.register(ToggleCell.self, forCellReuseIdentifier: ToggleCell.reuseIdentifier)
+        tableView.register(ToggleSubtitleCell.self, forCellReuseIdentifier: ToggleSubtitleCell.reuseIdentifier)
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 80
         tableView.separatorStyle = .none

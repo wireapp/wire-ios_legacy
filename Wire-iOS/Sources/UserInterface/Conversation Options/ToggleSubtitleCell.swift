@@ -19,7 +19,7 @@
 import UIKit
 import Cartography
 
-final class ToggleCell: UITableViewCell, CellConfigurationConfigurable {
+final class ToggleSubtitleCell: UITableViewCell, CellConfigurationConfigurable {
     private let topContainer = UIView()
     private let titleLabel = UILabel()
     private let toggle = UISwitch()

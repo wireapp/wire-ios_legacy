@@ -28,7 +28,7 @@ enum CellConfiguration {
     
     var cellType: CellConfigurationConfigurable.Type {
         switch self {
-        case .toggle: return ToggleCell.self
+        case .toggle: return ToggleSubtitleCell.self
         }
     }
     

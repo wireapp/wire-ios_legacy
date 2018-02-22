@@ -36,11 +36,6 @@ class MockOptionsViewModelConfiguration: ConversationOptionsViewModelConfigurati
 }
 
 final class ConversationOptionsViewControllerTests: ZMSnapshotTestCase {
-    
-    override func setUp() {
-        super.setUp()
-        recordMode = true
-    }
 
     func testThatItRendersTeamOnly() {
         // Given
