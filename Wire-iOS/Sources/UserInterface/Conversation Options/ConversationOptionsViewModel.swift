@@ -28,17 +28,6 @@ protocol ConversationOptionsViewModelDelegate: class {
     func viewModel(_ viewModel: ConversationOptionsViewModel, didReceiveError error: Error)
 }
 
-extension ZMConversation: ConversationOptionsViewModelConfiguration {
-    var isTeamOnly: Bool {
-        return accessMode.isEmpty
-    }
-    
-    func setTeamOnly(_ teamOnly: Bool, completion: @escaping (VoidResult) -> Void) {
-        // TODO: User proper API to enable / disable team only mode.
-        upgradeAccessLevel(in: ZMUserSession.shared()!, completion: completion)
-    }
-}
-
 class ConversationOptionsViewModel {
     struct State {
         var rows = [CellConfiguration]()
@@ -61,6 +50,7 @@ class ConversationOptionsViewModel {
     
     init(configuration: ConversationOptionsViewModelConfiguration) {
         self.configuration = configuration
+        updateRows()
     }
     
     private func updateRows() {
@@ -72,13 +62,14 @@ class ConversationOptionsViewModel {
         return [
             .toggle(
                 title: "guest_room.allow_guests.title".localized,
+                subtitle: "guest_room.allow_guests.subtitle".localized,
                 get: { [unowned self] in return self.configuration.isTeamOnly },
                 set: { [unowned self] in self.setTeamOnly($0) }
             )
         ]
     }
     
-    private func setTeamOnly(_ teamOnly: Bool) {
+    func setTeamOnly(_ teamOnly: Bool) {
         state.isLoading = true
         configuration.setTeamOnly(teamOnly) { [unowned self] result in
             self.state.isLoading = false

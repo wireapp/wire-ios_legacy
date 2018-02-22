@@ -24,7 +24,7 @@ protocol CellConfigurationConfigurable: Reusable {
 
 enum CellConfiguration {
     typealias Action = () -> Void
-    case toggle(title: String, get: () -> Bool, set: (Bool) -> Void)
+    case toggle(title: String, subtitle: String, get: () -> Bool, set: (Bool) -> Void)
     
     var cellType: CellConfigurationConfigurable.Type {
         switch self {

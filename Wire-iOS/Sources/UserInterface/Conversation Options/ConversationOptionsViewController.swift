@@ -37,25 +37,24 @@ final class ConversationOptionsViewController: UIViewController, UITableViewDele
         self.viewModel = viewModel
         self.variant = variant
         super.init(nibName: nil, bundle: nil)
+        setupViews()
+        createConstraints()
+        viewModel.delegate = self
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        setupViews()
-        createConstraints()
-        viewModel.delegate = self
-    }
-    
     private func setupViews() {
         view.addSubview(tableView)
+        tableView.register(ToggleCell.self, forCellReuseIdentifier: ToggleCell.reuseIdentifier)
+        tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.estimatedRowHeight = 80
         tableView.tableFooterView = .init()
         tableView.delegate = self
         tableView.dataSource = self
-//        tableView.backgroundColor = ColorScheme
+        tableView.backgroundColor = ColorScheme.default().color(withName: ColorSchemeColorContentBackground, variant: variant)
     }
     
     private func createConstraints() {
