@@ -442,10 +442,13 @@
 
     switch (self.conversation.conversationType) {
         case ZMConversationTypeGroup: {
-            ParticipantsViewController *participantsViewController = [[ParticipantsViewController alloc] initWithConversation:self.conversation];
-            participantsViewController.delegate = self;
-            participantsViewController.zClientViewController = [ZClientViewController sharedZClientViewController];
-            viewController = participantsViewController;
+            // TODO jacob: do it properly
+            GroupDetailsViewController *groupDetailsViewController = [[GroupDetailsViewController alloc] initWithConversation:self.conversation];
+            viewController = groupDetailsViewController;
+//            ParticipantsViewController *participantsViewController = [[ParticipantsViewController alloc] initWithConversation:self.conversation];
+//            participantsViewController.delegate = self;
+//            participantsViewController.zClientViewController = [ZClientViewController sharedZClientViewController];
+//            viewController = participantsViewController;
             break;
         }
         case ZMConversationTypeSelf:

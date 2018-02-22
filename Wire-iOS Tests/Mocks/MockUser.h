@@ -45,6 +45,7 @@
 @property (nonatomic, readwrite) NSUInteger totalCommonConnections;
 @property (nonatomic, assign) BOOL isSelfUser;
 @property (nonatomic, assign) BOOL isServiceUser;
+@property (nonatomic, assign) BOOL isTeamMember;
 
 @property (nonatomic) NSSet <id<UserClientType>> * clients;
 - (UIColor *)accentColor;
