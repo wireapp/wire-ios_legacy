@@ -1,10 +1,2 @@
-[attr]utf16 diff merge -crlf
-
 WireStyleKit.m linguist-generated
 WireStyleKit.h linguist-generated
-*           utf16
-*.txt		utf16
-*.vcproj	text eol=crlf
-*.sh		text eol=lf
-*.jpg		binary
-*.png		binary
