@@ -51,7 +51,7 @@ final class ConversationOptionsViewController: UIViewController, UITableViewDele
         tableView.register(ToggleCell.self, forCellReuseIdentifier: ToggleCell.reuseIdentifier)
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 80
-        tableView.tableFooterView = .init()
+        tableView.separatorStyle = .none
         tableView.delegate = self
         tableView.dataSource = self
         tableView.backgroundColor = ColorScheme.default().color(withName: ColorSchemeColorContentBackground, variant: variant)

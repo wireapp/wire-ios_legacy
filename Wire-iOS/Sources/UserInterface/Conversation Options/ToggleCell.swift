@@ -47,6 +47,8 @@ final class ToggleCell: UITableViewCell, CellConfigurationConfigurable {
         [topContainer, subtitleLabel].forEach(contentView.addSubview)
         toggle.addTarget(self, action: #selector(toggleChanged), for: .valueChanged)
         subtitleLabel.numberOfLines = 0
+        subtitleLabel.font = FontSpec(.small, .regular).font
+        titleLabel.font = FontSpec(.normal, .regular).font
     }
     
     private func createConstraints() {
@@ -76,6 +78,7 @@ final class ToggleCell: UITableViewCell, CellConfigurationConfigurable {
         topContainer.backgroundColor = color(ColorSchemeColorBackground)
         titleLabel.textColor = color(ColorSchemeColorTextForeground)
         subtitleLabel.textColor = color(ColorSchemeColorTextDimmed)
+        backgroundColor = .clear
     }
     
     @objc private func toggleChanged(_ sender: UISwitch) {
