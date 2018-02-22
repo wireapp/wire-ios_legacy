@@ -19,7 +19,6 @@
 import UIKit
 import Cartography
 
-
 final class ConversationOptionsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, ConversationOptionsViewModelDelegate {
 
     private let tableView = UITableView()
@@ -73,6 +72,11 @@ final class ConversationOptionsViewController: UIViewController, UITableViewDele
     
     func viewModel(_ viewModel: ConversationOptionsViewModel, didReceiveError error: Error) {
         // TODO: Present error alert.
+    }
+    
+    func viewModel(_ viewModel: ConversationOptionsViewModel, confirmRemovingGuests completion: @escaping (Bool) -> Void) {
+        let alert = UIAlertController.confirmRemovingGuests(completion)
+        present(alert, animated: false)
     }
 
     // MARK: – UITableViewDelegate & UITableViewDataSource

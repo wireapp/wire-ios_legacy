@@ -44,7 +44,7 @@ final class ConversationOptionsViewControllerTests: ZMSnapshotTestCase {
         let sut = ConversationOptionsViewController(viewModel: viewModel, variant: .light)
         
         // Then
-        verifyInIPhoneSize(view: sut.view)
+        verify(view: sut.view)
     }
     
     func testThatItRendersTeamOnly_DarkTheme() {
@@ -54,7 +54,7 @@ final class ConversationOptionsViewControllerTests: ZMSnapshotTestCase {
         let sut = ConversationOptionsViewController(viewModel: viewModel, variant: .dark)
         
         // Then
-        verifyInIPhoneSize(view: sut.view)
+        verify(view: sut.view)
     }
     
     func testThatItRendersNotTeamOnly() {
@@ -64,7 +64,7 @@ final class ConversationOptionsViewControllerTests: ZMSnapshotTestCase {
         let sut = ConversationOptionsViewController(viewModel: viewModel, variant: .light)
         
         // Then
-        verifyInIPhoneSize(view: sut.view)
+        verify(view: sut.view)
     }
     
     func testThatItRendersNotTeamOnly_DarkTheme() {
@@ -74,12 +74,12 @@ final class ConversationOptionsViewControllerTests: ZMSnapshotTestCase {
         let sut = ConversationOptionsViewController(viewModel: viewModel, variant: .dark)
         
         // Then
-        verifyInIPhoneSize(view: sut.view)
+        verify(view: sut.view)
     }
     
     func testThatItRendersLoading() {
         // Given
-        let config = MockOptionsViewModelConfiguration(isTeamOnly: false)
+        let config = MockOptionsViewModelConfiguration(isTeamOnly: true)
         let viewModel = ConversationOptionsViewModel(configuration: config)
         let sut = ConversationOptionsViewController(viewModel: viewModel, variant: .light)
         
@@ -87,15 +87,15 @@ final class ConversationOptionsViewControllerTests: ZMSnapshotTestCase {
         sut.view.layer.speed = 0
         
         // When
-        viewModel.setTeamOnly(true)
+        viewModel.setTeamOnly(false)
         
         // Then
-        verifyInIPhoneSize(view: sut.view)
+        verify(view: sut.view)
     }
     
     func testThatItRendersLoading_DarkTheme() {
         // Given
-        let config = MockOptionsViewModelConfiguration(isTeamOnly: false)
+        let config = MockOptionsViewModelConfiguration(isTeamOnly: true)
         let viewModel = ConversationOptionsViewModel(configuration: config)
         let sut = ConversationOptionsViewController(viewModel: viewModel, variant: .dark)
         
@@ -103,10 +103,45 @@ final class ConversationOptionsViewControllerTests: ZMSnapshotTestCase {
         sut.view.layer.speed = 0
         
         // When
-        viewModel.setTeamOnly(true)
+        viewModel.setTeamOnly(false)
         
         // Then
-        verifyInIPhoneSize(view: sut.view)
+        verify(view: sut.view)
+    }
+    
+    func testThatItRendersRemoveGuestsConfirmationAlert() {
+        // When & Then
+        let sut = UIAlertController.confirmRemovingGuests { _ in }
+        verifyAlertController(sut)
+    }
+    
+    func testThatItRendersRevokeLinkConfirmationAlert() {
+        // When & Then
+        recordMode = true
+        let sut = UIAlertController.confirmRevokingLink { _ in }
+        verifyAlertController(sut)
+    }
+    
+    private func verifyAlertController(_ controller: UIAlertController, file: StaticString = #file, line: UInt = #line) {
+        // Given
+        let window = UIWindow(frame: .init(x: 0, y: 0, width: 375, height: 667))
+        let container = UIViewController()
+        container.loadViewIfNeeded()
+        window.rootViewController = container
+        window.makeKeyAndVisible()
+        controller.loadViewIfNeeded()
+        controller.view.setNeedsLayout()
+        controller.view.layoutIfNeeded()
+        
+        // When
+        let presentationExpectation = expectation(description: "It should be presented")
+        container.present(controller, animated: false) {
+            presentationExpectation.fulfill()
+        }
+        
+        // Then
+        waitForExpectations(timeout: 2, handler: nil)
+        verify(view: controller.view, file: file, line: line)
     }
     
 }

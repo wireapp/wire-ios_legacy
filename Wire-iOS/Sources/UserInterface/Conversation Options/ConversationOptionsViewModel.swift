@@ -26,6 +26,7 @@ protocol ConversationOptionsViewModelConfiguration: class {
 protocol ConversationOptionsViewModelDelegate: class {
     func viewModel(_ viewModel: ConversationOptionsViewModel, didUpdateState state: ConversationOptionsViewModel.State)
     func viewModel(_ viewModel: ConversationOptionsViewModel, didReceiveError error: Error)
+    func viewModel(_ viewModel: ConversationOptionsViewModel, confirmRemovingGuests completion: @escaping (Bool) -> Void)
 }
 
 class ConversationOptionsViewModel {
@@ -70,13 +71,28 @@ class ConversationOptionsViewModel {
     }
     
     func setTeamOnly(_ teamOnly: Bool) {
-        state.isLoading = true
-        configuration.setTeamOnly(teamOnly) { [unowned self] result in
-            self.state.isLoading = false
-            switch result {
-            case .success: self.updateRows()
-            case .failure(let error): self.delegate?.viewModel(self, didReceiveError: error)
+        func _setTeamOnly() {
+            state.isLoading = true
+            configuration.setTeamOnly(teamOnly) { [unowned self] result in
+                self.state.isLoading = false
+                switch result {
+                case .success: self.updateRows()
+                case .failure(let error): self.delegate?.viewModel(self, didReceiveError: error)
+                }
             }
+        }
+        
+        guard teamOnly != configuration.isTeamOnly else { return }
+        
+        // In case team only mode should be activated, ask the delegate
+        // to confirm this action as all guests will be removed.
+        if teamOnly {
+            delegate?.viewModel(self, confirmRemovingGuests: { remove in
+                guard remove else { return }
+                _setTeamOnly()
+            })
+        } else {
+            _setTeamOnly()
         }
     }
     
