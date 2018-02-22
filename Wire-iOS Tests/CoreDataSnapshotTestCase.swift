@@ -16,6 +16,8 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
+import WireTesting
+
 
 /// This class provides a `NSManagedObjectContext` in order to test views with real data instead
 /// of mock objects.
@@ -55,6 +57,7 @@ open class CoreDataSnapshotTestCase: ZMSnapshotTestCase {
 
         otherUserConversation = ZMConversation.insertNewObject(in: uiMOC)
         otherUserConversation.conversationType = .oneOnOne
+        otherUserConversation.remoteIdentifier = UUID.create()
         let connection = ZMConnection.insertNewObject(in: uiMOC)
         connection.to = otherUser
         connection.status = .accepted
@@ -65,6 +68,7 @@ open class CoreDataSnapshotTestCase: ZMSnapshotTestCase {
 
     func createGroupConversation() -> ZMConversation {
         let conversation = ZMConversation.insertNewObject(in: uiMOC)
+        conversation.remoteIdentifier = UUID.create()
         conversation.conversationType = .group
         conversation.internalAddParticipants([selfUser, otherUser], isAuthoritative: true)
         return conversation
