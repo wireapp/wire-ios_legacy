@@ -31,5 +31,6 @@ github "wireapp/wire-ios-sync-engine" "146.0.0"
 github "wireapp/wire-ios-system" "19.1.0"
 github "wireapp/wire-ios-testing" "13.0.1"
 github "wireapp/wire-ios-transport" "33.0.0"
-github "wireapp/wire-ios-utilities" "20.1.0"
+github "wireapp/wire-ios-utilities" "20.2.0"
 github "wireapp/wire-ios-ziphy" "7.0.1"
+
