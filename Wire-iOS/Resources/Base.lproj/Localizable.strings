@@ -454,6 +454,7 @@
 
 "participants.section.participants" = "Participants (%d)";
 "participants.section.services" = "Services (%d)";
+"participants.footer.add_title" = "Add Participants";
 
 // Meta Menu
 "meta.menu.rename" = "Rename";

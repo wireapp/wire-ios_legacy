@@ -930,6 +930,8 @@
 		D5173573201764DD00B473CE /* UIAlertAction+Convenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5173572201764DD00B473CE /* UIAlertAction+Convenience.swift */; };
 		D5490A1D20050AAA0057EAA8 /* TeamMemberInviteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5490A1C20050AAA0057EAA8 /* TeamMemberInviteViewController.swift */; };
 		D5677158202B496700308448 /* CreateGroupSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5677157202B496700308448 /* CreateGroupSection.swift */; };
+		D586C51F20405CC200BBA492 /* GroupDetailsFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D586C51E20405CC200BBA492 /* GroupDetailsFooterView.swift */; };
+		D586C5212040675700BBA492 /* UIAlertController+ConversationActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D586C5202040675700BBA492 /* UIAlertController+ConversationActions.swift */; };
 		D59EA0C520234EE300B17CE7 /* ConversationCellLayoutProperties+Preview.swift in Sources */ = {isa = PBXBuildFile; fileRef = D59EA0C420234EE300B17CE7 /* ConversationCellLayoutProperties+Preview.swift */; };
 		D59EA0C72024756B00B17CE7 /* MessagePreviewViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D59EA0C62024756B00B17CE7 /* MessagePreviewViewTests.swift */; };
 		D5CEBFC3202CA3BA00AFBD3A /* AddParticipantsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5CEBFC2202CA3BA00AFBD3A /* AddParticipantsViewModel.swift */; };
@@ -2489,6 +2491,8 @@
 		D5173572201764DD00B473CE /* UIAlertAction+Convenience.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIAlertAction+Convenience.swift"; sourceTree = "<group>"; };
 		D5490A1C20050AAA0057EAA8 /* TeamMemberInviteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamMemberInviteViewController.swift; sourceTree = "<group>"; };
 		D5677157202B496700308448 /* CreateGroupSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateGroupSection.swift; sourceTree = "<group>"; };
+		D586C51E20405CC200BBA492 /* GroupDetailsFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupDetailsFooterView.swift; sourceTree = "<group>"; };
+		D586C5202040675700BBA492 /* UIAlertController+ConversationActions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIAlertController+ConversationActions.swift"; sourceTree = "<group>"; };
 		D59EA0C420234EE300B17CE7 /* ConversationCellLayoutProperties+Preview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConversationCellLayoutProperties+Preview.swift"; sourceTree = "<group>"; };
 		D59EA0C62024756B00B17CE7 /* MessagePreviewViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagePreviewViewTests.swift; sourceTree = "<group>"; };
 		D5CEBFC2202CA3BA00AFBD3A /* AddParticipantsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddParticipantsViewModel.swift; sourceTree = "<group>"; };
@@ -2925,6 +2929,8 @@
 			isa = PBXGroup;
 			children = (
 				16D49327203DCC88008DDFFA /* GroupDetailsViewController.swift */,
+				D586C5202040675700BBA492 /* UIAlertController+ConversationActions.swift */,
+				D586C51E20405CC200BBA492 /* GroupDetailsFooterView.swift */,
 				16D49329203DCCCA008DDFFA /* GroupDetailsParticipantCell.swift */,
 				167961AA203F2BB400B72ACC /* GroupDetailsGuestOptionsCell.swift */,
 				167961A8203F26E600B72ACC /* GroupDetailsSectionHeader.swift */,
@@ -6430,6 +6436,7 @@
 				EF2127111FB9DFE300625A9B /* LoginCredentials.swift in Sources */,
 				EF2127091FB9DFE300625A9B /* EmailFormViewController.m in Sources */,
 				87DCF4E91D34EA4500BB420F /* ProfilePresenter.m in Sources */,
+				D586C5212040675700BBA492 /* UIAlertController+ConversationActions.swift in Sources */,
 				87F18BD21E03F13900C69D9B /* ZMLocationMessageData+Coordinates.swift in Sources */,
 				EF7D75A6201B6149003A8AF8 /* DeviceNativeBoundsSize.swift in Sources */,
 				F1199D351FC8490A0070FAC3 /* TeamCreationFlowController.swift in Sources */,
@@ -6570,6 +6577,7 @@
 				BF52C1601CB25FE70037331F /* ArchivedListViewModel.swift in Sources */,
 				871BC28C1D34F8F800DF0793 /* UIScrollView+Zeta.m in Sources */,
 				D5CEBFC3202CA3BA00AFBD3A /* AddParticipantsViewModel.swift in Sources */,
+				D586C51F20405CC200BBA492 /* GroupDetailsFooterView.swift in Sources */,
 				871BC2531D34F8F800DF0793 /* MediaThumbnail.m in Sources */,
 				871BC25E1D34F8F800DF0793 /* ColorPickerKnobView.m in Sources */,
 				871BC0281D34F5D200DF0793 /* EmoticonSubstitutionConfiguration.m in Sources */,

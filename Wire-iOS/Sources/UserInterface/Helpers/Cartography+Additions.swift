@@ -39,4 +39,5 @@ extension Cartography.Point {
                 self.centerY == around.centerY + y]
         
     }
+    
 }

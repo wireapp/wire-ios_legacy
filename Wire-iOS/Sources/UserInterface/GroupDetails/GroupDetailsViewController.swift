@@ -1,6 +1,6 @@
 //
 // Wire
-// Copyright (C) 2017 Wire Swiss GmbH
+// Copyright (C) 2018 Wire Swiss GmbH
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -19,11 +19,14 @@
 import UIKit
 import Cartography
 
-class GroupDetailsViewController: UIViewController, ZMConversationObserver {
+class GroupDetailsViewController: UIViewController, ZMConversationObserver, GroupDetailsFooterViewDelegate {
     
     private let collectionViewController: CollectionViewController
     private let conversation: ZMConversation
+    private let footerView = GroupDetailsFooterView()
+    private let bottomSpacer = UIView()
     private var token: NSObjectProtocol?
+    private var actionController: ConversationActionController?
     
     public init(conversation: ZMConversation) {
         self.conversation = conversation
@@ -53,13 +56,31 @@ class GroupDetailsViewController: UIViewController, ZMConversationObserver {
         collectionView.alwaysBounceVertical = true
         collectionView.contentInset = UIEdgeInsets(top: 32, left: 0, bottom: 0, right: 0)
         
-        view.addSubview(collectionView)
+        [collectionView, footerView, bottomSpacer].forEach(view.addSubview)
+        bottomSpacer.backgroundColor = .wr_color(fromColorScheme: ColorSchemeColorBackground)
         
-        constrain(view, collectionView) { container, collectionView in
-            collectionView.edges == container.edges
+        constrain(view, collectionView, footerView, bottomSpacer) { container, collectionView, footerView, bottomSpacer in
+            collectionView.top == container.top
+            collectionView.leading == container.leading
+            collectionView.trailing == container.trailing
+            collectionView.bottom == footerView.top
+            footerView.leading == container.leading
+            footerView.trailing == container.trailing
+            footerView.bottom == bottomSpacer.top
+            
+            if #available(iOS 11, *) {
+                bottomSpacer.top == container.safeAreaLayoutGuide.bottom
+            } else {
+                bottomSpacer.top == container.bottom
+            }
+            
+            bottomSpacer.bottom == container.bottom
+            bottomSpacer.leading == container.leading
+            bottomSpacer.trailing == container.trailing
         }
         
         collectionViewController.collectionView = collectionView
+        footerView.delegate = self
     }
 
     func computeVisibleSections() -> [_CollectionViewSectionController] {
@@ -83,6 +104,15 @@ class GroupDetailsViewController: UIViewController, ZMConversationObserver {
         // TODO: Check if `teamOnly` changed.
         guard changeInfo.participantsChanged || changeInfo.nameChanged else { return }
         collectionViewController.sections = computeVisibleSections()
+    }
+    
+    func detailsView(_ view: GroupDetailsFooterView, performAction action: GroupDetailsFooterView.Action) {
+        switch action {
+        case .invite: break
+        case .more:
+            actionController = ConversationActionController(conversation: conversation, target: self)
+            actionController?.presentMenu()
+        }
     }
 
 }
@@ -212,7 +242,7 @@ class ParticipantsSectionController: DefaultSectionController {
     }
     
     override var sectionTitle: String {
-        return "participants.section.participants".localized(args: participants.count)
+        return "participants.section.participants".localized(args: participants.count).uppercased()
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -245,7 +275,7 @@ class ServicesSectionController: DefaultSectionController {
     }
     
     override var sectionTitle: String {
-        return "participants.section.services".localized(args: serviceUsers.count)
+        return "participants.section.services".localized(args: serviceUsers.count).uppercased()
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
