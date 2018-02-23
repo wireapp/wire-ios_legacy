@@ -22,11 +22,13 @@ import UIKit
 import Cartography
 
 final public class ConversationCreationValues {
+    var allowGuests: Bool
     var name: String
     var participants: Set<ZMUser>
-    init (name: String, participants: Set<ZMUser> = []) {
+    init (name: String, participants: Set<ZMUser> = [], allowGuests: Bool) {
         self.name = name
         self.participants = participants
+        self.allowGuests = allowGuests
     }
 }
 
@@ -248,7 +250,7 @@ final class ConversationCreationController: UIViewController {
         case let .valid(name):
             let trimmed = name.trimmingCharacters(in: .whitespacesAndNewlines)
             textField.resignFirstResponder()
-            let newValues = ConversationCreationValues(name: trimmed, participants: preSelectedParticipants ?? values?.participants ?? [])
+            let newValues = ConversationCreationValues(name: trimmed, participants: preSelectedParticipants ?? values?.participants ?? [], allowGuests: true)
             values = newValues
             
             Analytics.shared().tagLinearGroupSelectParticipantsOpened(with: self.source)
@@ -272,7 +274,7 @@ extension ConversationCreationController: AddParticipantsConversationCreationDel
     func addParticipantsViewController(_ addParticipantsViewController: AddParticipantsViewController, didPerform action: AddParticipantsViewController.CreateAction) {
         switch action {
         case .updatedUsers(let users):
-            values = values.map { .init(name: $0.name, participants: users) }
+            values = values.map { .init(name: $0.name, participants: users, allowGuests: true) }
         case .create:
             values.apply {
                 Analytics.shared().tagLinearGroupCreated(with: self.source, isEmpty: $0.participants.isEmpty)

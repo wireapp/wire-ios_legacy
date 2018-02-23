@@ -121,7 +121,10 @@ static NSUInteger const StartUIInitiallyShowsKeyboardConversationThreshold = 10;
     };
     [self.view addSubview:self.groupSelector];
     
-    self.searchResultsViewController = [[SearchResultsViewController alloc] initWithUserSelection:self.userSelection variant:ColorSchemeVariantDark isAddingParticipants:NO];
+    self.searchResultsViewController = [[SearchResultsViewController alloc] initWithUserSelection:self.userSelection
+                                                                                          variant:ColorSchemeVariantDark
+                                                                             isAddingParticipants:NO
+                                                                              shouldIncludeGuests:YES];
     self.searchResultsViewController.mode = SearchResultsViewControllerModeList;
     self.searchResultsViewController.delegate = self;
     [self addChildViewController:self.searchResultsViewController];
