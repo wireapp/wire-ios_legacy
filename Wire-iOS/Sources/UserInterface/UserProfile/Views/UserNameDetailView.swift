@@ -24,37 +24,6 @@ import Cartography
 fileprivate let smallLightFont = UIFont(magicIdentifier: "style.text.small.font_spec_light")!
 fileprivate let smallBoldFont = UIFont(magicIdentifier: "style.text.small.font_spec_bold")!
 fileprivate let normalBoldFont = UIFont(magicIdentifier: "style.text.normal.font_spec_bold")!
-fileprivate var dimmedColors: [ColorSchemeVariant: UIColor] = [:]
-fileprivate var dimmedColor: UIColor {
-    get {
-        guard let color = dimmedColors[ColorScheme.default().variant] else {
-            let dimmed = UIColor.wr_color(fromColorScheme: ColorSchemeColorTextDimmed)
-            dimmedColors[ColorScheme.default().variant] = dimmed
-            return dimmed
-        }
-        return color
-    }
-    set {
-        if let color = dimmedColors[ColorScheme.default().variant], color == newValue { return }
-        dimmedColors[ColorScheme.default().variant] = newValue
-    }
-}
-
-fileprivate var textColors: [ColorSchemeVariant: UIColor] = [:]
-fileprivate var textColor: UIColor {
-    get {
-        guard let color = textColors[ColorScheme.default().variant] else {
-            let text = UIColor.wr_color(fromColorScheme: ColorSchemeColorTextForeground)
-            textColors[ColorScheme.default().variant] = text
-            return text
-        }
-        return color
-    }
-    set {
-        if let color = textColors[ColorScheme.default().variant], color == newValue { return }
-        textColors[ColorScheme.default().variant] = newValue
-    }
-}
 
 @objc public class AddressBookCorrelationFormatter: NSObject {
 
@@ -121,7 +90,7 @@ fileprivate var textColor: UIColor {
     }
 
     static var formatter: AddressBookCorrelationFormatter = {
-        AddressBookCorrelationFormatter(lightFont: smallLightFont, boldFont: smallBoldFont, color: dimmedColor)
+        AddressBookCorrelationFormatter(lightFont: smallLightFont, boldFont: smallBoldFont, color: UIColor.wr_color(fromColorScheme: ColorSchemeColorTextDimmed))
     }()
 
     init(user: ZMBareUser?, fallbackName fallback: String, addressBookName: String?) {
@@ -131,12 +100,12 @@ fileprivate var textColor: UIColor {
     }
 
     static func attributedTitle(for user: ZMBareUser?, fallback: String) -> NSAttributedString {
-        return (user?.name ?? fallback) && normalBoldFont && textColor
+        return (user?.name ?? fallback) && normalBoldFont && UIColor.wr_color(fromColorScheme: ColorSchemeColorTextForeground)
     }
 
     static func attributedSubtitle(for user: ZMBareUser?) -> NSAttributedString? {
         guard let handle = user?.handle, handle.count > 0 else { return nil }
-        return ("@" + handle) && smallBoldFont && dimmedColor
+        return ("@" + handle) && smallBoldFont && UIColor.wr_color(fromColorScheme: ColorSchemeColorTextDimmed)
     }
 
     static func attributedCorrelationText(for user: ZMBareUser?, addressBookName: String?) -> NSAttributedString? {
