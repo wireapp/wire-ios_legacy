@@ -19,17 +19,18 @@
 import UIKit
 import Cartography
 
-class GroupDetailsViewController: UIViewController {
+class GroupDetailsViewController: UIViewController, ZMConversationObserver {
     
-    let participantsSectionController : ParticipantsSectionController
-    let collectionViewController : CollectionViewController
+    private let collectionViewController: CollectionViewController
+    private let conversation: ZMConversation
+    private var token: NSObjectProtocol?
     
     public init(conversation: ZMConversation) {
-        let asd = GuestOptionsSection()
-        participantsSectionController = ParticipantsSectionController(conversation: conversation)
-        collectionViewController = CollectionViewController(sections: [asd, participantsSectionController])
-        
+        self.conversation = conversation
+        collectionViewController = CollectionViewController()
         super.init(nibName: nil, bundle: nil)
+        collectionViewController.sections = computeVisibleSections()
+        token = ConversationChangeInfo.add(observer: self, for: conversation)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -44,12 +45,13 @@ class GroupDetailsViewController: UIViewController {
         collectionViewLayout.minimumInteritemSpacing = 12
         collectionViewLayout.minimumLineSpacing = 0
         
-        let collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: collectionViewLayout)
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: collectionViewLayout)
         collectionView.backgroundColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorContentBackground)
         collectionView.allowsMultipleSelection = true
         collectionView.keyboardDismissMode = .onDrag
         collectionView.bounces = true
         collectionView.alwaysBounceVertical = true
+        collectionView.contentInset = UIEdgeInsets(top: 32, left: 0, bottom: 0, right: 0)
         
         view.addSubview(collectionView)
         
@@ -58,6 +60,29 @@ class GroupDetailsViewController: UIViewController {
         }
         
         collectionViewController.collectionView = collectionView
+    }
+
+    func computeVisibleSections() -> [_CollectionViewSectionController] {
+        var sections = [_CollectionViewSectionController]()
+        if nil != ZMUser.selfUser().team {
+            let optionsController = GuestOptionsSection()
+            sections.append(optionsController)
+        }
+        if conversation.mutableOtherActiveParticipants.count > 0 {
+            let participantsSectionController = ParticipantsSectionController(conversation: conversation)
+            sections.append(participantsSectionController)
+        }
+        if conversation.includesServiceUser {
+            let servicesSection = ServicesSectionController(conversation: conversation)
+            sections.append(servicesSection)
+        }
+        return sections
+    }
+    
+    func conversationDidChange(_ changeInfo: ConversationChangeInfo) {
+        // TODO: Check if `teamOnly` changed.
+        guard changeInfo.participantsChanged || changeInfo.nameChanged else { return }
+        collectionViewController.sections = computeVisibleSections()
     }
 
 }
@@ -77,9 +102,17 @@ class CollectionViewController: NSObject, UICollectionViewDelegate {
         }
     }
     
-    let sections : [_CollectionViewSectionController]
+    var sections: [_CollectionViewSectionController] {
+        didSet {
+            sections.forEach {
+                $0.prepareForUse(in: collectionView)
+            }
+            
+            collectionView?.reloadData()
+        }
+    }
     
-    init(sections : [_CollectionViewSectionController]) {
+    init(sections : [_CollectionViewSectionController] = []) {
         self.sections = sections
     }
     
@@ -147,7 +180,7 @@ class DefaultSectionController: NSObject, _CollectionViewSectionController {
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        return CGSize(width: collectionView.bounds.size.width, height: 20)
+        return CGSize(width: collectionView.bounds.size.width, height: 48)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -166,10 +199,10 @@ class DefaultSectionController: NSObject, _CollectionViewSectionController {
 
 class ParticipantsSectionController: DefaultSectionController {
     
-    let conversation : ZMConversation
+    private let participants: [ZMBareUser]
     
     init(conversation: ZMConversation) {
-        self.conversation = conversation
+        participants = conversation.sortedOtherParticipants
     }
     
     override func prepareForUse(in collectionView : UICollectionView?) {
@@ -179,21 +212,52 @@ class ParticipantsSectionController: DefaultSectionController {
     }
     
     override var sectionTitle: String {
-        return "Participaints(\(conversation.activeParticipants.count))".localizedUppercase
+        return "participants.section.participants".localized(args: participants.count)
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return conversation.activeParticipants.count
+        return participants.count
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let user = conversation.activeParticipants.object(at: indexPath.row) as? ZMUser
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: GroupDetailsParticipantCell.zm_reuseIdentifier, for: indexPath)
+        let user = participants[indexPath.row]
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: GroupDetailsParticipantCell.zm_reuseIdentifier, for: indexPath) as! GroupDetailsParticipantCell
         
-        if let user = user, let cell = cell as? GroupDetailsParticipantCell {
-            cell.configure(with: user)
-        }
+        cell.configure(with: user)
+        cell.separator.isHidden = participants.count - 1 == indexPath.row
+        return cell
+    }
+    
+}
+
+class ServicesSectionController: DefaultSectionController {
+    
+    private let serviceUsers: [ZMBareUser]
+    
+    init(conversation: ZMConversation) {
+        serviceUsers = conversation.sortedServiceUsers
+    }
+    
+    override func prepareForUse(in collectionView : UICollectionView?) {
+        super.prepareForUse(in: collectionView)
         
+        collectionView?.register(GroupDetailsParticipantCell.self, forCellWithReuseIdentifier: GroupDetailsParticipantCell.zm_reuseIdentifier)
+    }
+    
+    override var sectionTitle: String {
+        return "participants.section.services".localized(args: serviceUsers.count)
+    }
+    
+    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return serviceUsers.count
+    }
+    
+    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let user = serviceUsers[indexPath.row]
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: GroupDetailsParticipantCell.zm_reuseIdentifier, for: indexPath) as! GroupDetailsParticipantCell
+        
+        cell.configure(with: user)
+        cell.separator.isHidden = serviceUsers.count - 1 == indexPath.row
         return cell
     }
     
@@ -210,8 +274,7 @@ class GuestOptionsSection: NSObject, _CollectionViewSectionController {
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: GroupDetailsGuestOptionsCell.zm_reuseIdentifier, for: indexPath)
-        
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: GroupDetailsGuestOptionsCell.zm_reuseIdentifier, for: indexPath) as! GroupDetailsGuestOptionsCell
         return cell
     }
     

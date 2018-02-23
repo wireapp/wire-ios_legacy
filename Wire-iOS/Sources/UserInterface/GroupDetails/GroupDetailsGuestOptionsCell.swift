@@ -21,7 +21,6 @@ import WireExtensionComponents
 
 class GroupDetailsGuestOptionsCell: UICollectionViewCell {
     
-    let separator = UIView()
     let guestIconView = UIImageView()
     let accessoryIconView = UIImageView()
     let titleLabel = UILabel()
@@ -53,16 +52,16 @@ class GroupDetailsGuestOptionsCell: UICollectionViewCell {
         guestIconView.contentMode = .scaleAspectFit
         guestIconView.setContentHuggingPriority(UILayoutPriorityRequired, for: .horizontal)
         
-        accessoryIconView.image = UIImage(for: .disclosureIndicator, iconSize: .tiny, color: UIColor.wr_color(fromColorScheme: ColorSchemeColorSeparator, variant: variant))
+        accessoryIconView.image = UIImage(for: .disclosureIndicator, iconSize: .like, color: .wr_color(fromColorScheme: ColorSchemeColorSeparator, variant: variant))
         accessoryIconView.translatesAutoresizingMaskIntoConstraints = false
         accessoryIconView.contentMode = .scaleAspectFit
         
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
-        titleLabel.font = FontSpec.init(.normal, .medium).font!
+        titleLabel.font = FontSpec.init(.normal, .light).font!
         titleLabel.text = "Guest Options"
         
         statusLabel.translatesAutoresizingMaskIntoConstraints = false
-        statusLabel.font = FontSpec.init(.normal, .medium).font!
+        statusLabel.font = FontSpec.init(.normal, .light).font!
         statusLabel.text = "Off"
         statusLabel.setContentHuggingPriority(UILayoutPriorityRequired, for: .horizontal)
         
@@ -86,21 +85,12 @@ class GroupDetailsGuestOptionsCell: UICollectionViewCell {
         contentStackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor).isActive = true
         contentStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16).isActive = true
         
-        contentView.addSubview(separator)
-        separator.translatesAutoresizingMaskIntoConstraints = false
-        separator.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 64).isActive = true
-        separator.trailingAnchor.constraint(equalTo: contentView.trailingAnchor).isActive = true
-        separator.bottomAnchor.constraint(equalTo: contentView.bottomAnchor).isActive = true
-        separator.heightAnchor.constraint(equalToConstant: .hairline).isActive = true
-        
         configureColors()
     }
     
     private func configureColors() {
         let separatorColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorSeparator, variant: variant)
-        
         backgroundColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorTextBackground, variant: variant)
-        separator.backgroundColor = separatorColor
         guestIconView.image = UIImage(for: .person, iconSize: .tiny, color: UIColor.wr_color(fromColorScheme: ColorSchemeColorTextForeground, variant: variant))
         accessoryIconView.image = UIImage(for: .disclosureIndicator, iconSize: .tiny, color: separatorColor)
         titleLabel.textColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorTextForeground, variant: variant)

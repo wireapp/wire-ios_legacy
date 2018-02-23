@@ -452,6 +452,9 @@
 "participants.add_people_button_title" = "Add";
 "participants.avatar.guest.title" = "Guest";
 
+"participants.section.participants" = "Participants (%d)";
+"participants.section.services" = "Services (%d)";
+
 // Meta Menu
 "meta.menu.rename" = "Rename";
 "meta.menu.leave" = "Leave";

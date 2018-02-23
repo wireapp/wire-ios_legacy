@@ -49,23 +49,21 @@ class GroupDetailsParticipantCell: UICollectionViewCell {
                 accessoryActionButton.isHidden = true
             case .disclosure:
                 accessoryActionButton.isHidden = false
-                accessoryActionButton.setIcon(.disclosureIndicator, with: .tiny, for: .normal)
+                accessoryActionButton.setIcon(.disclosureIndicator, with: .like, for: .normal)
             case .connect:
                 accessoryActionButton.isHidden = false
-                accessoryActionButton.setIcon(.plusCircled, with: .tiny, for: .normal)
+                accessoryActionButton.setIcon(.plusCircled, with: .like, for: .normal)
             }
         }
     }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
         setup()
     }
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        
         setup()
     }
     
@@ -77,10 +75,10 @@ class GroupDetailsParticipantCell: UICollectionViewCell {
         accessoryActionButton.setIcon(.disclosureIndicator, with: .tiny, for: .normal)
         
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
-        titleLabel.font = FontSpec.init(.normal, .medium).font!
+        titleLabel.font = FontSpec.init(.normal, .light).font!
         
         subtitleLabel.translatesAutoresizingMaskIntoConstraints = false
-        subtitleLabel.font = FontSpec.init(.small, .medium).font!
+        subtitleLabel.font = FontSpec.init(.small, .regular).font!
         
         avatar.size = .small
         avatar.translatesAutoresizingMaskIntoConstraints = false
@@ -142,7 +140,7 @@ class GroupDetailsParticipantCell: UICollectionViewCell {
         subtitleLabel.textColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorSectionText, variant: variant)
     }
     
-    public func configure(with user: ZMUser) {
+    public func configure(with user: ZMBareUser) {
         avatar.user = user
         titleLabel.attributedText = user.nameIncludingAvailability(color: UIColor.wr_color(fromColorScheme: ColorSchemeColorTextForeground, variant: variant))
         guestIconView.isHidden = !ZMUser.selfUser().isTeamMember || user.isTeamMember

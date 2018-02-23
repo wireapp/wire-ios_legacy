@@ -23,26 +23,17 @@ class GroupDetailsSectionHeader: UICollectionReusableView {
     
     let titleLabel = UILabel()
  
-    var variant : ColorSchemeVariant = .light {
+    var variant: ColorSchemeVariant = .light {
         didSet {
             guard oldValue != variant else { return }
-            
             configureColors()
         }
     }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
-        titleLabel.font = FontSpec(.small, .medium).font!
-        titleLabel.translatesAutoresizingMaskIntoConstraints = false
-        titleLabel.numberOfLines = 0
-        titleLabel.baselineAdjustment = .alignCenters
-        
-        addSubview(titleLabel)
-        titleLabel.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
-        titleLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16).isActive = true
-    
+        setupViews()
+        createConstraints()
         configureColors()
     }
     
@@ -50,7 +41,23 @@ class GroupDetailsSectionHeader: UICollectionReusableView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    fileprivate func configureColors() {
+    private func setupViews() {
+        titleLabel.font = FontSpec(.small, .semibold).font!
+        titleLabel.translatesAutoresizingMaskIntoConstraints = false
+        titleLabel.numberOfLines = 0
+        addSubview(titleLabel)
+    }
+    
+    private func createConstraints() {
+        NSLayoutConstraint.activate([
+            titleLabel.heightAnchor.constraint(equalToConstant: 16),
+            titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
+            titleLabel.topAnchor.constraint(equalTo: topAnchor, constant: 24),
+            titleLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -8),
+        ])
+    }
+    
+    private func configureColors() {
         titleLabel.textColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorSectionText, variant: variant)
     }
     
