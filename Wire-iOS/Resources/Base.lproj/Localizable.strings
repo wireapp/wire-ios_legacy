@@ -465,7 +465,7 @@
 
 // Delete conversation
 "meta.menu.delete_content.dialog_title" = "Delete content?";
-"meta.menu.delete_content.dialog_message" = "This will clear the conversation history and remove it from the list.";
+"meta.menu.delete_content.dialog_message" = "This will clear the conversation history on all your devices.";
 "meta.menu.delete_content.leave_as_well_message" = "Also leave the conversation";
 "meta.menu.delete_content.button_cancel" = "Cancel";
 "meta.menu.delete_content.button_delete" = "Delete";
