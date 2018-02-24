@@ -53,7 +53,7 @@ class MarkdownTextView: NextResponderTextView {
     /// The current attributes to be applied when typing.
     fileprivate var currentAttributes: [String : Any] = [:]
 
-    /// The currently active markdown. This determines which attribtues
+    /// The currently active markdown. This determines which attributes
     /// are applied when typing.
     fileprivate(set) var activeMarkdown = Markdown.none {
         didSet {
