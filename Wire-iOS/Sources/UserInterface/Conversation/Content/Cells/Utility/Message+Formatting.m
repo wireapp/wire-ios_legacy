@@ -102,34 +102,27 @@ static inline NSDataDetector *linkDataDetector(void)
         cellParagraphStyle = [[NSMutableParagraphStyle alloc] init];
         cellParagraphStyle.minimumLineHeight = [WAZUIMagic floatForIdentifier:@"content.line_height"] * [UIFont wr_preferredContentSizeMultiplierFor:[[UIApplication sharedApplication] preferredContentSizeCategory]];
     }
-
-    UIFont *font;
-    UIColor *foregroundColor;
-
-    if (obfuscated) {
-        font = [UIFont fontWithName:@"RedactedScript-Regular" size:18];
-        foregroundColor = [UIColor wr_colorFromColorScheme:ColorSchemeColorAccent];
-    } else {
-        font = [UIFont fontWithMagicIdentifier:@"style.text.normal.font_spec"];
-        foregroundColor = [UIColor wr_colorFromColorScheme:ColorSchemeColorTextForeground];
-    }
-    
-    // set the attributes here
     
     if (nil == style) {
         // set markdown attribute styles here
         style = [[DownStyle alloc] init];
-        style.baseFont = font;
-        style.baseFontColor = foregroundColor;
+        style.baseFont = [UIFont fontWithMagicIdentifier:@"style.text.normal.font_spec"];
+        style.baseFontColor = [UIColor wr_colorFromColorScheme:ColorSchemeColorTextForeground];
         style.baseParagraphStyle = cellParagraphStyle;
+    }
+
+    if (obfuscated) {
+        NSDictionary *attrs = @{
+                                NSFontAttributeName: [UIFont fontWithName:@"RedactedScript-Regular" size:18],
+                                NSForegroundColorAttributeName: [UIColor wr_colorFromColorScheme:ColorSchemeColorAccent],
+                                NSParagraphStyleAttributeName: cellParagraphStyle
+                                };
+        
+        return [[NSAttributedString alloc] initWithString:text attributes:attrs];
     }
     
     NSMutableAttributedString *attributedString = [NSMutableAttributedString markdownFrom:text style:style];
     
-    if (obfuscated) {
-        return attributedString;
-    }
-
     [attributedString beginEditing];
     
     NSMutableArray *invalidLinkAttachments = [NSMutableArray array];
