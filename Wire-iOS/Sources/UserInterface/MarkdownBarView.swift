@@ -94,8 +94,9 @@ public final class MarkdownBarView: UIView {
     
     func textViewDidChangeActiveMarkdown(note: Notification) {
         guard let textView = note.object as? MarkdownTextView else { return }
-        updateIcons(forMarkdown: textView.activeMarkdown)
+        updateIcons(for: textView.activeMarkdown)
     }
+    
     // MARK: Actions
     
     @objc private func buttonTapped(sender: IconButton) {
@@ -110,19 +111,7 @@ public final class MarkdownBarView: UIView {
     }
     
     // MARK: - Conversions
-    
-    private func buttonFor(_ markdown: Markdown) -> IconButton? {
-        switch markdown {
-        case .h1, .h2, .h3: return headerButton
-        case .bold:         return boldButton
-        case .italic:       return italicButton
-        case .code:         return codeButton
-        case .oList:        return numberListButton
-        case .uList:        return bulletListButton
-        default:            return nil
-        }
-    }
-    
+        
     fileprivate func markdown(for button: IconButton) -> Markdown? {
         switch button {
         case headerButton:      return headerButton.iconType(for: .normal).headerMarkdown ?? .h1
@@ -135,7 +124,7 @@ public final class MarkdownBarView: UIView {
         }
     }
     
-    public func updateIcons(forMarkdown markdown: Markdown) {
+    public func updateIcons(for markdown: Markdown) {
         // change header icon if necessary
         if let headerIcon = markdown.headerValue?.headerIcon {
             headerButton.setIcon(headerIcon, with: .tiny, for: .normal)
