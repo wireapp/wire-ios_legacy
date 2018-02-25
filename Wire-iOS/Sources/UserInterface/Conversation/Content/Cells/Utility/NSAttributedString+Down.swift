@@ -23,9 +23,7 @@ extension NSMutableAttributedString {
     @objc
     static func markdown(from text: String, style: DownStyle) -> NSMutableAttributedString {
         let down = Down(markdownString: text)
-        if let result = try? down.toAttributedString(usingStyle: style) {
-            return NSMutableAttributedString(attributedString: result)
-        }
-        return NSMutableAttributedString(string: text)
+        let result = try? down.toAttributedString(using: style)
+        return result as? NSMutableAttributedString ??  NSMutableAttributedString(string: text)
     }
 }
