@@ -101,6 +101,7 @@ static inline NSDataDetector *linkDataDetector(void)
     if (nil == cellParagraphStyle) {
         cellParagraphStyle = [[NSMutableParagraphStyle alloc] init];
         cellParagraphStyle.minimumLineHeight = [WAZUIMagic floatForIdentifier:@"content.line_height"] * [UIFont wr_preferredContentSizeMultiplierFor:[[UIApplication sharedApplication] preferredContentSizeCategory]];
+        cellParagraphStyle.paragraphSpacing = 8;
     }
     
     if (nil == style) {
