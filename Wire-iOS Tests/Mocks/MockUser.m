@@ -60,6 +60,11 @@ static id<ZMBareUser> mockSelfUser = nil;
     mockSelfUser = newMockUser;
 }
 
++ (MockUser *)mockUserFor:(ZMUser *)user
+{
+    return (MockUser *)user;
+}
+
 - (BOOL)isGuestInConversation:(ZMConversation *)conversation
 {
     return NO;

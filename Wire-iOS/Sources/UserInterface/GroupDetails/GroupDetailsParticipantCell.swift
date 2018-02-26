@@ -31,6 +31,7 @@ class GroupDetailsParticipantCell: UICollectionViewCell {
     let subtitleLabel = UILabel()
     let accessoryActionButton = IconButton()
     let guestIconView = UIImageView()
+    let verifiedIconView = UIImageView()
     var contentStackView : UIStackView!
     var titleStackView : UIStackView!
     var iconStackView : UIStackView!
@@ -72,6 +73,10 @@ class GroupDetailsParticipantCell: UICollectionViewCell {
         guestIconView.translatesAutoresizingMaskIntoConstraints = false
         guestIconView.contentMode = .scaleAspectFit
         
+        verifiedIconView.image = WireStyleKit.imageOfShieldverified()
+        verifiedIconView.translatesAutoresizingMaskIntoConstraints = false
+        verifiedIconView.contentMode = .scaleAspectFit
+        
         accessoryActionButton.setIcon(.disclosureIndicator, with: .tiny, for: .normal)
         
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -93,7 +98,7 @@ class GroupDetailsParticipantCell: UICollectionViewCell {
         avatarSpacer.centerXAnchor.constraint(equalTo: avatar.centerXAnchor).isActive = true
         avatarSpacer.centerYAnchor.constraint(equalTo: avatar.centerYAnchor).isActive = true
         
-        iconStackView = UIStackView(arrangedSubviews: [guestIconView, accessoryActionButton])
+        iconStackView = UIStackView(arrangedSubviews: [verifiedIconView, guestIconView, accessoryActionButton])
         iconStackView.spacing = 8
         iconStackView.axis = .horizontal
         iconStackView.distribution = .fill
@@ -144,6 +149,7 @@ class GroupDetailsParticipantCell: UICollectionViewCell {
         avatar.user = user
         titleLabel.attributedText = user.nameIncludingAvailability(color: UIColor.wr_color(fromColorScheme: ColorSchemeColorTextForeground, variant: variant))
         guestIconView.isHidden = !ZMUser.selfUser().isTeamMember || user.isTeamMember
+        verifiedIconView.isHidden = (user as? ZMUser)?.untrusted() ?? true
         
         if let handle = user.handle, !handle.isEmpty {
             subtitleLabel.isHidden = false

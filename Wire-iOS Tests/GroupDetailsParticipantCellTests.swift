@@ -45,6 +45,27 @@ class GroupDetailsParticipantCellTests: ZMSnapshotTestCase {
         }))
     }
     
+    func testTrustedNonTeamUser() {
+        let user = MockUser.mockUsers()[0]
+        let mockUser = MockUser(for: user)
+        mockUser?.untrusted = false
+        
+        verify(view: cell({ (cell) in
+            cell.configure(with: user)
+        }))
+    }
+    
+    func testTrustedNonTeamUser_DarkMode() {
+        let user = MockUser.mockUsers()[0]
+        let mockUser = MockUser(for: user)
+        mockUser?.untrusted = false
+        
+        verify(view: cell({ (cell) in
+            cell.variant = .dark
+            cell.configure(with: user)
+        }))
+    }
+    
     func testNonTeamUser_DarkMode() {
         let user = MockUser.mockUsers()[0]
         
@@ -66,6 +87,29 @@ class GroupDetailsParticipantCellTests: ZMSnapshotTestCase {
     func testGuestUser_DarkMode() {
         MockUser.mockSelf().isTeamMember = true
         let user = MockUser.mockUsers()[0]
+        
+        verify(view: cell({ (cell) in
+            cell.variant = .dark
+            cell.configure(with: user)
+        }))
+    }
+    
+    func testTrustedGuestUser() {
+        MockUser.mockSelf().isTeamMember = true
+        let user = MockUser.mockUsers()[0]
+        let mockUser = MockUser(for: user)
+        mockUser?.untrusted = false
+        
+        verify(view: cell({ (cell) in
+            cell.configure(with: user)
+        }))
+    }
+    
+    func testTrustedGuestUser_DarkMode() {
+        MockUser.mockSelf().isTeamMember = true
+        let user = MockUser.mockUsers()[0]
+        let mockUser = MockUser(for: user)
+        mockUser?.untrusted = false
         
         verify(view: cell({ (cell) in
             cell.variant = .dark
