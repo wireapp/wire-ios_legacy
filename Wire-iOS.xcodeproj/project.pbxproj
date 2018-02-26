@@ -933,6 +933,7 @@
 		D550F57020444924009E09DD /* ConversationActionController+Delete.swift in Sources */ = {isa = PBXBuildFile; fileRef = D550F56F20444924009E09DD /* ConversationActionController+Delete.swift */; };
 		D550F57220444A1B009E09DD /* ConersationActionController+Tracking.swift in Sources */ = {isa = PBXBuildFile; fileRef = D550F57120444A1B009E09DD /* ConersationActionController+Tracking.swift */; };
 		D550F57520444CF8009E09DD /* AlertResultConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = D550F57420444CF8009E09DD /* AlertResultConfiguration.swift */; };
+		D550F5772044532D009E09DD /* ConversationAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = D550F5762044532D009E09DD /* ConversationAction.swift */; };
 		D5677158202B496700308448 /* CreateGroupSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5677157202B496700308448 /* CreateGroupSection.swift */; };
 		D586C51F20405CC200BBA492 /* GroupDetailsFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D586C51E20405CC200BBA492 /* GroupDetailsFooterView.swift */; };
 		D586C5212040675700BBA492 /* ConversationActionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D586C5202040675700BBA492 /* ConversationActionController.swift */; };
@@ -2498,6 +2499,7 @@
 		D550F56F20444924009E09DD /* ConversationActionController+Delete.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConversationActionController+Delete.swift"; sourceTree = "<group>"; };
 		D550F57120444A1B009E09DD /* ConersationActionController+Tracking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConersationActionController+Tracking.swift"; sourceTree = "<group>"; };
 		D550F57420444CF8009E09DD /* AlertResultConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertResultConfiguration.swift; sourceTree = "<group>"; };
+		D550F5762044532D009E09DD /* ConversationAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationAction.swift; sourceTree = "<group>"; };
 		D5677157202B496700308448 /* CreateGroupSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateGroupSection.swift; sourceTree = "<group>"; };
 		D586C51E20405CC200BBA492 /* GroupDetailsFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupDetailsFooterView.swift; sourceTree = "<group>"; };
 		D586C5202040675700BBA492 /* ConversationActionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationActionController.swift; sourceTree = "<group>"; };
@@ -5221,6 +5223,7 @@
 			isa = PBXGroup;
 			children = (
 				D586C5202040675700BBA492 /* ConversationActionController.swift */,
+				D550F5762044532D009E09DD /* ConversationAction.swift */,
 				D550F56D204444EE009E09DD /* ConversationActionController+Leave.swift */,
 				D550F57420444CF8009E09DD /* AlertResultConfiguration.swift */,
 				D550F56F20444924009E09DD /* ConversationActionController+Delete.swift */,
@@ -6592,6 +6595,7 @@
 				D550F56E204444EE009E09DD /* ConversationActionController+Leave.swift in Sources */,
 				BFAAB23D1DED8BB900CBC096 /* ProfileHeaderViewModel.swift in Sources */,
 				87F61D1A1CD36F0900670794 /* GradientView.swift in Sources */,
+				D550F5772044532D009E09DD /* ConversationAction.swift in Sources */,
 				87582BA21C886BB90061FEB1 /* ClassyCache.swift in Sources */,
 				871BC0151D34F56300DF0793 /* AnalyticsConnectionRequestEvent.m in Sources */,
 				8F0DEDD51A693F58003F0ACC /* PingCell.m in Sources */,
