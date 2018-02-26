@@ -19,6 +19,7 @@
 
 import Foundation
 import Cartography
+import Down
 
 protocol MessageComposeViewControllerDelegate: class {
     func composeViewController(_ controller: MessageComposeViewController, wantsToSendDraft: MessageDraft)
@@ -44,8 +45,8 @@ final class MessageComposeViewController: UIViewController {
         self.draft = draft
         self.persistence = persistence
         super.init(nibName: nil, bundle: nil)
-        loadDraft()
         setupViews()
+        loadDraft()
         createConstraints()
         
         NotificationCenter.default.addObserver(self,
@@ -222,9 +223,11 @@ final class MessageComposeViewController: UIViewController {
             persistence.enqueue(block: {
                 if self.hasDraftContent {
                     let (subject, message) = (self.subjectTextField.text?.trimmed, self.messageTextView.text?.trimmed)
+                    let attributedText = self.messageTextView.attributedText.withEncodedMarkdownIDs
                     guard draft.subject != subject || draft.message != message else { return }
                     draft.subject = subject
                     draft.message = message
+                    draft.attributedMessage = attributedText
                     draft.lastModifiedDate = NSDate()
                 } else {
                     $0.delete(draft)
@@ -270,7 +273,7 @@ final class MessageComposeViewController: UIViewController {
 
     private func loadDraft() {
         subjectTextField.text = draft?.subject
-        messageTextView.text = draft?.message
+        messageTextView.attributedText = draft?.attributedMessage?.withDecodedMarkdownIDs
         updateButtonStates()
     }
 
