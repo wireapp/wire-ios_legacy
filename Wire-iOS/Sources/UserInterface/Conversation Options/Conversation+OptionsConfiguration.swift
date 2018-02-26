@@ -23,7 +23,6 @@ extension ZMConversation {
     }
     
     class OptionsConfigurationContainer: NSObject, ConversationOptionsViewModelConfiguration, ZMConversationObserver {
-        
         private var conversation: ZMConversation
         private var token: NSObjectProtocol?
         var teamOnlyChangedHandler: ((Bool) -> Void)?
@@ -39,8 +38,7 @@ extension ZMConversation {
         }
         
         func setTeamOnly(_ teamOnly: Bool, completion: @escaping (VoidResult) -> Void) {
-            fatalError("unimplemented")
-            //        setMode(teamOnly ? [] : .allowGuests, in: ZMUserSession.shared()!, completion)
+            conversation.setAllowGuests(!teamOnly, in: ZMUserSession.shared()!, completion)
         }
         
         func conversationDidChange(_ changeInfo: ConversationChangeInfo) {
@@ -49,5 +47,3 @@ extension ZMConversation {
     }
     
 }
-
-
