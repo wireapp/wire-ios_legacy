@@ -23,7 +23,7 @@ import Cartography
 /// A container UIViewController with a ProfileHeaderView and a ServiceDetailViewController.
 final class ProfileHeaderServiceDetailViewController: UIViewController {
 
-    public weak var navigationControllerDelegate: ProfileNavigationControllerDelegate?
+    public weak var navigationControllerDelegate: UINavigationControllerDelegate?
     public weak var viewControllerDismissable: ViewControllerDismissable?
 
     var headerView: ProfileHeaderView!

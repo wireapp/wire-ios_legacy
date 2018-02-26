@@ -35,7 +35,6 @@ typedef NS_ENUM(NSInteger, ProfileViewControllerContext) {
     ProfileViewControllerContextSearch,
     ProfileViewControllerContextGroupConversation,
     ProfileViewControllerContextOneToOneConversation,
-    ProfileViewControllerContextCommonConnection,
     ProfileViewControllerContextDeviceList
 };
 
@@ -62,7 +61,7 @@ typedef NS_ENUM(NSInteger, ProfileViewControllerContext) {
 @property (nonatomic, readonly) id<ZMSearchableUser, AccentColorProvider> bareUser;
 @property (nonatomic, weak, nullable) id<ProfileViewControllerDelegate> delegate;
 @property (nonatomic, weak, nullable) id<ViewControllerDismissable> viewControllerDismissable;
-@property (nonatomic, nullable) ProfileNavigationControllerDelegate *navigationControllerDelegate;
+@property (nonatomic, nullable) id<UINavigationControllerDelegate> navigationControllerDelegate;
 
 @end
 

@@ -173,8 +173,7 @@ typedef NS_ENUM(NSUInteger, ProfileUserAction) {
     
     ProfileViewContentMode mode = self.profileViewContentMode;
     
-    BOOL validContext = (self.context == ProfileViewControllerContextSearch ||
-                         self.context == ProfileViewControllerContextCommonConnection);
+    BOOL validContext = (self.context == ProfileViewControllerContextSearch);
     
     if (!user.isTeamMember && validContext && user.isPendingApprovalBySelfUser) {
         ProfileIncomingConnectionRequestFooterView *incomingConnectionRequestFooterView = [[ProfileIncomingConnectionRequestFooterView alloc] init];
@@ -333,12 +332,7 @@ typedef NS_ENUM(NSUInteger, ProfileUserAction) {
         }
     }
     else if (user.isConnected) {
-        if (self.context == ProfileViewControllerContextCommonConnection) {
-            return ProfileUserActionBlock;
-        }
-        else {
-            return ProfileUserActionPresentMenu;
-        }
+        return ProfileUserActionPresentMenu;
     }
     else if (nil != user.team) {
         return ProfileUserActionPresentMenu;

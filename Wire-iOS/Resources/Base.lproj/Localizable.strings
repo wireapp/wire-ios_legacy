@@ -454,6 +454,10 @@
 "participants.add_people_button_title" = "Add";
 "participants.avatar.guest.title" = "Guest";
 
+"participants.section.participants" = "Participants (%d)";
+"participants.section.services" = "Services (%d)";
+"participants.footer.add_title" = "Add Participants";
+
 // Meta Menu
 "meta.menu.rename" = "Rename";
 "meta.menu.leave" = "Leave";
@@ -471,6 +475,7 @@
 "meta.menu.delete_content.leave_as_well_message" = "Also leave the conversation";
 "meta.menu.delete_content.button_cancel" = "Cancel";
 "meta.menu.delete_content.button_delete" = "Delete";
+"meta.menu.delete_content.button_delete_and_leave" = "Delete and leave";
 
 // Leave conversation
 "meta.leave_conversation_dialog_title" = "Leave conversation?";
@@ -478,6 +483,7 @@
 "meta.leave_conversation.delete_content_as_well_message" = "Also delete the content";
 "meta.leave_conversation_button_cancel" = "Cancel";
 "meta.leave_conversation_button_leave" = "Leave";
+"meta.leave_conversation_button_leave_and_delete" = "Leave and delete content";
 
 // Conversation Degraded (security level lowered)
 "meta.degraded.degradation_reason_message.singular" = "%@ started using a new device.";

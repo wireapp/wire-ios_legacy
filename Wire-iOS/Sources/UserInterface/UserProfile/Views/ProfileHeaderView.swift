@@ -84,15 +84,10 @@ final class ProfileHeaderView: UIView {
             detailView.bottom == view.bottom - 12
         }
 
-        constrain(self, dismissButton, verifiedImageView, detailView.titleLabel) { view, dismiss, verified, title in
+        constrain(self, dismissButton) { view, dismiss in
             dismiss.top == view.top + 26
             dismiss.width == dismiss.height
             dismiss.width == 32
-
-            verified.centerY == title.centerY
-            verified.width == verified.height
-            verified.width == 16
-            verified.leading == view.leading + horizontalMargin
 
             backButtonLeading = dismiss.leading == view.leading + horizontalMargin
             cancelButtonTrailing = dismiss.trailing == view.trailing - horizontalMargin
