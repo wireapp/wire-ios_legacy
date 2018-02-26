@@ -21,12 +21,12 @@ import Cartography
 
 class GroupDetailsViewController: UIViewController, ZMConversationObserver, GroupDetailsFooterViewDelegate {
     
-    private let collectionViewController: CollectionViewController
-    private let conversation: ZMConversation
-    private let footerView = GroupDetailsFooterView()
-    private let bottomSpacer = UIView()
-    private var token: NSObjectProtocol?
-    private var actionController: ConversationActionController?
+    fileprivate let collectionViewController: CollectionViewController
+    fileprivate let conversation: ZMConversation
+    fileprivate let footerView = GroupDetailsFooterView()
+    fileprivate let bottomSpacer = UIView()
+    fileprivate var token: NSObjectProtocol?
+    fileprivate var actionController: ConversationActionController?
     
     public init(conversation: ZMConversation) {
         self.conversation = conversation
@@ -90,11 +90,11 @@ class GroupDetailsViewController: UIViewController, ZMConversationObserver, Grou
             sections.append(optionsController)
         }
         if conversation.mutableOtherActiveParticipants.count > 0 {
-            let participantsSectionController = ParticipantsSectionController(conversation: conversation)
+            let participantsSectionController = ParticipantsSectionController(conversation: conversation, delegate: self)
             sections.append(participantsSectionController)
         }
         if conversation.includesServiceUser {
-            let servicesSection = ServicesSectionController(conversation: conversation)
+            let servicesSection = ServicesSectionController(conversation: conversation, delegate: self)
             sections.append(servicesSection)
         }
         return sections
@@ -114,8 +114,30 @@ class GroupDetailsViewController: UIViewController, ZMConversationObserver, Grou
             actionController?.presentMenu()
         }
     }
+    
+}
+
+extension GroupDetailsViewController: ParticipantsSectionControllerDelegate, ViewControllerDismissable, UINavigationControllerDelegate {
+    
+    func presentDetailsView(for user: ZMUser) {
+        let viewController = UserDetailViewControllerFactory.createUserDetailViewController(user: user,
+                                                                                            conversation: conversation,
+                                                                                            profileViewControllerDelegate: self,
+                                                                                            viewControllerDismissable: self)
+        
+        navigationController?.pushViewController(viewController, animated: true)
+    }
+    
+    func viewControllerWants(toBeDismissed controller: UIViewController!, completion: (() -> Void)!) {
+        navigationController?.popViewController(animated: true)
+    }
+    
+}
+
+extension GroupDetailsViewController: ProfileViewControllerDelegate {
 
 }
+
 
 class CollectionViewController: NSObject, UICollectionViewDelegate {
     
@@ -144,6 +166,10 @@ class CollectionViewController: NSObject, UICollectionViewDelegate {
     
     init(sections : [_CollectionViewSectionController] = []) {
         self.sections = sections
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        sections[indexPath.section].collectionView?(collectionView, didSelectItemAt: indexPath)
     }
     
 }
@@ -183,6 +209,12 @@ extension CollectionViewController: UICollectionViewDelegateFlowLayout {
 protocol _CollectionViewSectionController: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     func prepareForUse(in collectionView : UICollectionView?)
+    
+}
+
+protocol ParticipantsSectionControllerDelegate: class {
+    
+    func presentDetailsView(for user: ZMUser)
     
 }
 
@@ -229,10 +261,12 @@ class DefaultSectionController: NSObject, _CollectionViewSectionController {
 
 class ParticipantsSectionController: DefaultSectionController {
     
+    private weak var delegate: ParticipantsSectionControllerDelegate?
     private let participants: [ZMBareUser]
     
-    init(conversation: ZMConversation) {
-        participants = conversation.sortedOtherParticipants
+    init(conversation: ZMConversation, delegate: ParticipantsSectionControllerDelegate) {
+        self.participants = conversation.sortedOtherParticipants
+        self.delegate = delegate
     }
     
     override func prepareForUse(in collectionView : UICollectionView?) {
@@ -258,14 +292,21 @@ class ParticipantsSectionController: DefaultSectionController {
         return cell
     }
     
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        guard let user = participants[indexPath.row] as? ZMUser else { return }
+        delegate?.presentDetailsView(for: user)
+    }
+    
 }
 
 class ServicesSectionController: DefaultSectionController {
     
+    private weak var delegate: ParticipantsSectionControllerDelegate?
     private let serviceUsers: [ZMBareUser]
     
-    init(conversation: ZMConversation) {
-        serviceUsers = conversation.sortedServiceUsers
+    init(conversation: ZMConversation, delegate: ParticipantsSectionControllerDelegate) {
+        self.serviceUsers = conversation.sortedServiceUsers
+        self.delegate = delegate
     }
     
     override func prepareForUse(in collectionView : UICollectionView?) {
@@ -289,6 +330,11 @@ class ServicesSectionController: DefaultSectionController {
         cell.configure(with: user)
         cell.separator.isHidden = serviceUsers.count - 1 == indexPath.row
         return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        guard let user = serviceUsers[indexPath.row] as? ZMUser else { return }
+        delegate?.presentDetailsView(for: user)
     }
     
 }
