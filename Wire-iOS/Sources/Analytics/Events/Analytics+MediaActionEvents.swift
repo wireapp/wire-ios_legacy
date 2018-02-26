@@ -17,25 +17,6 @@
 // 
 
 
-@objc public enum ConversationMediaAction: UInt {
-    case text, photo, audioCall, videoCall, gif, ping, fileTransfer, videoMessage, audioMessage, location
-    
-    var attributeValue: String {
-        switch self {
-        case .text:         return "text"
-        case .photo:        return "photo"
-        case .audioCall:    return "audio_call"
-        case .videoCall:    return "video_call"
-        case .gif:          return "giphy"
-        case .ping:         return "ping"
-        case .fileTransfer: return "file"
-        case .videoMessage: return "video"
-        case .audioMessage: return "audio"
-        case .location:     return "location"
-        }
-    }
-}
-
 @objc public enum ConversationMediaPictureSource: UInt {
     case gallery, camera, sketch, giphy, sharing, clip, paste
     

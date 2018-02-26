@@ -24,6 +24,7 @@
 #import "MediaPlaybackManager.h"
 #import "Wire-Swift.h"
 @import WireExtensionComponents;
+@import WireSyncEngine;
 
 #import "Constants.h"
 

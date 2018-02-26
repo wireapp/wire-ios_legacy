@@ -21,6 +21,7 @@ import UIKit
 protocol ConversationOptionsViewModelConfiguration: class {
     var isTeamOnly: Bool { get }
     func setTeamOnly(_ teamOnly: Bool, completion: @escaping (VoidResult) -> Void)
+    var teamOnlyChangedHandler: ((Bool) -> Void)? { get set }
 }
 
 protocol ConversationOptionsViewModelDelegate: class {
@@ -52,6 +53,9 @@ class ConversationOptionsViewModel {
     init(configuration: ConversationOptionsViewModelConfiguration) {
         self.configuration = configuration
         updateRows()
+        configuration.teamOnlyChangedHandler = { [weak self] _ in
+            self?.updateRows()
+        }
     }
     
     private func updateRows() {

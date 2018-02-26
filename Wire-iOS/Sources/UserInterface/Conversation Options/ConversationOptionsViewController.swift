@@ -27,7 +27,7 @@ final class ConversationOptionsViewController: UIViewController, UITableViewDele
     
     convenience init(conversation: ZMConversation) {
         self.init(
-            viewModel: .init(configuration: conversation),
+            viewModel: .init(configuration: conversation.optionsConfiguration()),
             variant: ColorScheme.default().variant
         )
     }
@@ -71,7 +71,7 @@ final class ConversationOptionsViewController: UIViewController, UITableViewDele
     }
     
     func viewModel(_ viewModel: ConversationOptionsViewModel, didReceiveError error: Error) {
-        // TODO: Present error alert.
+        present(UIAlertController.genericError(), animated: false)
     }
     
     func viewModel(_ viewModel: ConversationOptionsViewModel, confirmRemovingGuests completion: @escaping (Bool) -> Void) {

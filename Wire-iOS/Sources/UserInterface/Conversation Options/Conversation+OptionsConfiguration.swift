@@ -16,12 +16,38 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-extension ZMConversation: ConversationOptionsViewModelConfiguration {
-    var isTeamOnly: Bool {
-        return accessMode?.isEmpty ?? false
+extension ZMConversation {
+    
+    func optionsConfiguration() -> ConversationOptionsViewModelConfiguration {
+        return OptionsConfigurationContainer(conversation: self)
     }
     
-    func setTeamOnly(_ teamOnly: Bool, completion: @escaping (VoidResult) -> Void) {
-        setMode(teamOnly ? [] : .allowGuests, in: ZMUserSession.shared()!, completion)
+    class OptionsConfigurationContainer: NSObject, ConversationOptionsViewModelConfiguration, ZMConversationObserver {
+        
+        private var conversation: ZMConversation
+        private var token: NSObjectProtocol?
+        var teamOnlyChangedHandler: ((Bool) -> Void)?
+        
+        init(conversation: ZMConversation) {
+            self.conversation = conversation
+            super.init()
+            token = ConversationChangeInfo.add(observer: self, for: conversation)
+        }
+        
+        var isTeamOnly: Bool {
+            return conversation.accessMode == ConversationAccessMode.teamOnly
+        }
+        
+        func setTeamOnly(_ teamOnly: Bool, completion: @escaping (VoidResult) -> Void) {
+            fatalError("unimplemented")
+            //        setMode(teamOnly ? [] : .allowGuests, in: ZMUserSession.shared()!, completion)
+        }
+        
+        func conversationDidChange(_ changeInfo: ConversationChangeInfo) {
+            teamOnlyChangedHandler?(isTeamOnly)
+        }
     }
+    
 }
+
+

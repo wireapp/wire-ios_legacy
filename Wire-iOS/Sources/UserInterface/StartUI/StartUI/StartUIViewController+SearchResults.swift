@@ -114,9 +114,9 @@ extension StartUIViewController: ConversationCreationControllerDelegate {
         }
     }
     
-    func conversationCreationController(_ controller: ConversationCreationController, didSelectName name: String, participants: Set<ZMUser>) {
+    func conversationCreationController(_ controller: ConversationCreationController, didSelectName name: String, participants: Set<ZMUser>, allowGuests: Bool) {
         dismiss(controller: controller)
-        delegate.startUI(self, createConversationWith: participants, name: name)
+        delegate.startUI(self, createConversationWith: participants, name: name, allowGuests: allowGuests)
     }
     
     func conversationCreationControllerDidCancel(_ controller: ConversationCreationController) {

@@ -23,6 +23,7 @@ class MockOptionsViewModelConfiguration: ConversationOptionsViewModelConfigurati
     typealias SetHandler = (Bool, (VoidResult) -> Void) -> Void
     var isTeamOnly: Bool
     var setTeamOnlyHandler: SetHandler?
+    var teamOnlyChangedHandler: ((Bool) -> Void)?
     
     init(isTeamOnly: Bool, setTeamOnly: SetHandler? = nil) {
         self.isTeamOnly = isTeamOnly
@@ -62,6 +63,20 @@ final class ConversationOptionsViewControllerTests: ZMSnapshotTestCase {
         let config = MockOptionsViewModelConfiguration(isTeamOnly: false)
         let viewModel = ConversationOptionsViewModel(configuration: config)
         let sut = ConversationOptionsViewController(viewModel: viewModel, variant: .light)
+        
+        // Then
+        verify(view: sut.view)
+    }
+    
+    func testThatItUpdatesWhenItReceivesAChange() {
+        // Given
+        let config = MockOptionsViewModelConfiguration(isTeamOnly: false)
+        let viewModel = ConversationOptionsViewModel(configuration: config)
+        let sut = ConversationOptionsViewController(viewModel: viewModel, variant: .light)
+        
+        XCTAssertNotNil(config.teamOnlyChangedHandler)
+        config.isTeamOnly = true
+        config.teamOnlyChangedHandler?(true)
         
         // Then
         verify(view: sut.view)
@@ -117,7 +132,6 @@ final class ConversationOptionsViewControllerTests: ZMSnapshotTestCase {
     
     func testThatItRendersRevokeLinkConfirmationAlert() {
         // When & Then
-        recordMode = true
         let sut = UIAlertController.confirmRevokingLink { _ in }
         verifyAlertController(sut)
     }

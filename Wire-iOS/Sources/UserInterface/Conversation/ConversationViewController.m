@@ -818,7 +818,7 @@
 
 - (void)profileViewController:(ProfileViewController *)controller wantsToCreateConversationWithName:(NSString *)name users:(NSSet *)users
 {
-    [self dismissViewControllerAnimated:YES completion:^{
+    dispatch_block_t conversationCreation = ^{
         __block  ZMConversation *newConversation = nil;
         
         @weakify(self);
@@ -828,7 +828,14 @@
             @strongify(self);
             [self.zClientViewController selectConversation:newConversation focusOnView:YES animated:YES];
         }];
-    }];
+    };
+    
+    if (nil != self.presentedViewController) {
+        [self dismissViewControllerAnimated:YES completion:conversationCreation];
+    }
+    else {
+        conversationCreation();
+    }
 }
 
 @end
