@@ -34,6 +34,9 @@ class GroupDetailsViewController: UIViewController, ZMConversationObserver, Grou
         super.init(nibName: nil, bundle: nil)
         collectionViewController.sections = computeVisibleSections()
         token = ConversationChangeInfo.add(observer: self, for: conversation)
+
+        navigationItem.rightBarButtonItem = UIBarButtonItem(icon: .X, target: self, action: #selector(GroupDetailsViewController.dismissButtonTapped))
+        navigationItem.rightBarButtonItem?.accessibilityIdentifier = "close"
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -113,6 +116,10 @@ class GroupDetailsViewController: UIViewController, ZMConversationObserver, Grou
             actionController = ConversationActionController(conversation: conversation, target: self)
             actionController?.presentMenu()
         }
+    }
+    
+    func dismissButtonTapped() {
+        dismiss(animated: true)
     }
     
 }

@@ -468,12 +468,9 @@
             break;
     }
 
-    RotationAwareNavigationController *navigationController = [[RotationAwareNavigationController alloc] initWithRootViewController:viewController];
-    navigationController.navigationBarHidden = YES;
+    _participantsController = viewController.wrapInNavigationController;
 
-    _participantsController = navigationController;
-
-    return navigationController;
+    return _participantsController;
 }
 
 - (void)setAnalyticsTracker:(AnalyticsTracker *)analyticsTracker
