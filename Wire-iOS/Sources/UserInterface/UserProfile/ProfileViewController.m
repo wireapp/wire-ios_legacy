@@ -286,7 +286,7 @@ typedef NS_ENUM(NSUInteger, ProfileViewControllerTabBarIndex) {
 
 @implementation ProfileViewController (ConversationCreationDelegate)
 
-- (void)conversationCreationController:(ConversationCreationController *)controller didSelectName:(NSString *)name participants:(NSSet<ZMUser *> *)participants
+- (void)conversationCreationController:(ConversationCreationController *)controller didSelectName:(NSString *)name participants:(NSSet<ZMUser *> *)participants allowGuests:(BOOL)allowGuests
 {
     [controller dismissViewControllerAnimated:YES completion:^{
         [UIApplication.sharedApplication wr_updateStatusBarForCurrentControllerAnimated:YES];
