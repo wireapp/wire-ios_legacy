@@ -58,11 +58,11 @@ class GroupDetailsGuestOptionsCell: UICollectionViewCell {
         
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         titleLabel.font = FontSpec.init(.normal, .light).font!
-        titleLabel.text = "Guest Options"
+        titleLabel.text = "group_details.guest_options_cell.title".localized
         
         statusLabel.translatesAutoresizingMaskIntoConstraints = false
         statusLabel.font = FontSpec.init(.normal, .light).font!
-        statusLabel.text = "Off"
+        statusLabel.text = "group_details.guest_options_cell.disabled".localized
         statusLabel.setContentHuggingPriority(UILayoutPriorityRequired, for: .horizontal)
         
         let avatarSpacer = UIView()
