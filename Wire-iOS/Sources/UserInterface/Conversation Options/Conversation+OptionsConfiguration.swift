@@ -34,7 +34,7 @@ extension ZMConversation {
         }
         
         var isTeamOnly: Bool {
-            return conversation.accessMode == ConversationAccessMode.teamOnly
+            return conversation.accessMode == .teamOnly
         }
         
         func setTeamOnly(_ teamOnly: Bool, completion: @escaping (VoidResult) -> Void) {
