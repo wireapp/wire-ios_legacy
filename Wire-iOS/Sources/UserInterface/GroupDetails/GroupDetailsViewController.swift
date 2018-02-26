@@ -93,7 +93,7 @@ class GroupDetailsViewController: UIViewController, ZMConversationObserver, Grou
     func computeVisibleSections() -> [_CollectionViewSectionController] {
         var sections = [_CollectionViewSectionController]()
         if nil != ZMUser.selfUser().team {
-            let optionsController = GuestOptionsSection()
+            let optionsController = GuestOptionsSection(delegate: self)
             sections.append(optionsController)
         }
         if conversation.mutableOtherActiveParticipants.count > 0 {
@@ -141,6 +141,11 @@ extension GroupDetailsViewController: ParticipantsSectionControllerDelegate, Vie
     
     func viewControllerWants(toBeDismissed controller: UIViewController!, completion: (() -> Void)!) {
         navigationController?.popViewController(animated: true)
+    }
+    
+    func presentOptionsMenu() {
+        let menu = ConversationOptionsViewController(conversation: conversation)
+        navigationController?.pushViewController(menu, animated: true)
     }
     
 }
@@ -226,6 +231,7 @@ protocol _CollectionViewSectionController: UICollectionViewDataSource, UICollect
 protocol ParticipantsSectionControllerDelegate: class {
     
     func presentDetailsView(for user: ZMUser)
+    func presentOptionsMenu()
     
 }
 
@@ -351,6 +357,12 @@ class ServicesSectionController: DefaultSectionController {
 }
 
 class GuestOptionsSection: NSObject, _CollectionViewSectionController {
+
+    private weak var delegate: ParticipantsSectionControllerDelegate?
+    
+    init(delegate: ParticipantsSectionControllerDelegate) {
+        self.delegate = delegate
+    }
     
     func prepareForUse(in collectionView: UICollectionView?) {
         collectionView?.register(GroupDetailsGuestOptionsCell.self, forCellWithReuseIdentifier: GroupDetailsGuestOptionsCell.zm_reuseIdentifier)
@@ -367,6 +379,10 @@ class GuestOptionsSection: NSObject, _CollectionViewSectionController {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: collectionView.bounds.size.width, height: 56)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        delegate?.presentOptionsMenu()
     }
     
 }
