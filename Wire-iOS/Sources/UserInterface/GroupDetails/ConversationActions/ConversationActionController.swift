@@ -16,22 +16,14 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-extension UIAlertAction {
-    
-    fileprivate static func action(for action: ZMConversation.Action, handler: @escaping () -> Void) -> UIAlertAction {
-        return UIAlertAction(title: action.title, style: action.style) { _ in
-            handler()
-        }
-    }
-
-}
-
 @objc final class ConversationActionController: NSObject {
     
     private let conversation: ZMConversation
-    private unowned let target: UIViewController
+    unowned let target: UIViewController
     
     @objc init(conversation: ZMConversation, target: UIViewController) {
+        // Does not support blocking yet (1-on-1)
+        requireInternal(conversation.conversationType == .group, "currently only allowed for group conversations")
         self.conversation = conversation
         self.target = target
         super.init()
@@ -39,10 +31,14 @@ extension UIAlertAction {
     
     func presentMenu() {
         let controller = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-        conversation.actions.map(action).forEach(controller.addAction)
+        conversation.actions.map(alertAction).forEach(controller.addAction)
         controller.addAction(.cancel())
         controller.view.tintColor = .wr_color(fromColorScheme: ColorSchemeColorTextForeground, variant: .light)
         target.present(controller, animated: true)
+    }
+    
+    private func dismiss(_ block: @escaping () -> Void) {
+        target.dismiss(animated: true, completion: block)
     }
     
     private func dismissAndEnqueue(_ block: @escaping () -> Void) {
@@ -51,7 +47,7 @@ extension UIAlertAction {
         }
     }
     
-    private func transitionToListAndEnqueue(_ block: @escaping () -> Void) {
+    func transitionToListAndEnqueue(_ block: @escaping () -> Void) {
         target.dismiss(animated: true) {
             ZClientViewController.shared()?.transitionToList(animated: true) {
                 ZMUserSession.shared()?.enqueueChanges(block)
@@ -59,22 +55,34 @@ extension UIAlertAction {
         }
     }
     
-    private func action(for conversationAction: ZMConversation.Action) -> UIAlertAction {
-        switch conversationAction {
-        case .archive(isArchived: let isArchived): return .action(for: conversationAction) { [weak self] in
+    private func alertAction(for action: ZMConversation.Action) -> UIAlertAction {
+        switch action {
+        case .archive(isArchived: let isArchived): return action.alertAction { [weak self] in
             guard let `self` = self else { return }
             self.transitionToListAndEnqueue {
                 self.conversation.isArchived = !isArchived
                 Analytics.shared().tagArchivedConversation(!isArchived)
             }
         }
-        case .silence(isSilenced: let isSilenced): return .action(for: conversationAction) { [weak self] in
+        case .silence(isSilenced: let isSilenced): return action.alertAction { [weak self] in
             guard let `self` = self else { return }
             self.dismissAndEnqueue {
                 self.conversation.isSilenced = !isSilenced
             }
         }
-        default: return .action(for: conversationAction) { fatalError() }
+        case .leave: return action.alertAction { [weak self] in
+            guard let `self` = self else { return }
+            self.request(LeaveResult.self) { result in
+                self.handleLeaveResult(result, for: self.conversation)
+            }
+        }
+        case .delete: return action.alertAction { [weak self] in
+            guard let `self` = self else { return }
+            self.request(DeleteResult.self) { result in
+                self.handleDeleteResult(result, for: self.conversation)
+            }
+        }
+        default: fatalError() // Does not support blocking yet (1-on-1)
         }
     }
     
@@ -155,6 +163,8 @@ extension ZMConversation.Action {
         case .block(isBlocked: let blocked): return blocked ? "profile.unblock_button_title" : "profile.block_dialog.button_block"
         }
     }
+    
+    func alertAction(handler: @escaping () -> Void) -> UIAlertAction {
+        return .init(title: title, style: style) { _ in handler() }
+    }
 }
-
-
