@@ -55,8 +55,6 @@
 #import "ActionSheetController.h"
 #import "ActionSheetController+Conversation.h"
 
-#import "InviteBannerViewController.h"
-
 #import "Wire-Swift.h"
 
 @interface ConversationListViewController (Content) <ConversationListContentDelegate>
@@ -100,7 +98,6 @@
 @property (nonatomic) id initialSyncObserverToken;
 
 @property (nonatomic) ConversationListContentController *listContentController;
-@property (nonatomic) InviteBannerViewController *invitationBannerViewController;
 @property (nonatomic) ConversationListBottomBarController *bottomBarController;
 
 @property (nonatomic) ConversationListTopBar *topBar;

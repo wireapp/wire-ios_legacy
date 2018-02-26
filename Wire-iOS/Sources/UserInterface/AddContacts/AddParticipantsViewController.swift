@@ -20,6 +20,25 @@ import Foundation
 import Cartography
 import Classy
 
+extension ZMConversation {
+    var canAddGuest: Bool {
+        // If not a team conversation: possible to add any contact.
+        guard let _ = self.team else {
+            return true
+        }
+        
+        // Access mode and/or role is unknown: let's try to add and observe the result.
+        guard let accessMode = self.accessMode,
+              let accessRole = self.accessRole else {
+                return true
+        }
+        
+        let canAddGuest = accessMode.contains(.invite)
+        let guestCanBeAdded = accessRole != .team
+        
+        return canAddGuest && guestCanBeAdded
+    }
+}
 
 class AddParticipantsNavigationController: UINavigationController {
     override func viewDidLoad() {
@@ -43,6 +62,17 @@ public protocol AddParticipantsViewControllerDelegate : class {
 public protocol AddParticipantsConversationCreationDelegate: class {
 
     func addParticipantsViewController(_ addParticipantsViewController : AddParticipantsViewController, didPerform action: AddParticipantsViewController.CreateAction)
+}
+
+extension AddParticipantsViewController.Context {
+    var includeGuests: Bool {
+        switch self {
+        case .add(let conversation):
+            return conversation.canAddGuest
+        case .create(let creationValues):
+            return creationValues.allowGuests
+        }
+    }
 }
 
 public class AddParticipantsViewController: UIViewController {
@@ -135,7 +165,10 @@ public class AddParticipantsViewController: UIViewController {
         
         searchGroupSelector = SearchGroupSelector(variant: self.variant)
 
-        searchResultsViewController = SearchResultsViewController(userSelection: userSelection, variant: self.variant, isAddingParticipants: true)
+        searchResultsViewController = SearchResultsViewController(userSelection: userSelection,
+                                                                  variant: self.variant,
+                                                                  isAddingParticipants: true,
+                                                                  shouldIncludeGuests: viewModel.context.includeGuests)
 
         super.init(nibName: nil, bundle: nil)
         updateValues()
@@ -250,7 +283,7 @@ public class AddParticipantsViewController: UIViewController {
     fileprivate func updateSelectionValues() {
         // Update view model after selection changed
         if case .create(let values) = viewModel.context {
-            let updated = ConversationCreationValues(name: values.name, participants: userSelection.users)
+            let updated = ConversationCreationValues(name: values.name, participants: userSelection.users, allowGuests: true)
             viewModel = AddParticipantsViewModel(with: .create(updated), variant: variant)
         }
 

@@ -75,5 +75,6 @@ extension ZMConversation {
         guard let participants = otherActiveParticipants.array as? [ZMBareUser] else { return [] }
         return participants.filter { !$0.isServiceUser }.sorted { $0.0.displayName < $0.1.displayName }
     }
+
 }
 

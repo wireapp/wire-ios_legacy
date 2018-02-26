@@ -1,4 +1,4 @@
-//
+////
 // Wire
 // Copyright (C) 2018 Wire Swiss GmbH
 //
@@ -16,26 +16,19 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
+import UIKit
 
-import Foundation
-
-extension UIViewController {
-    var safeBottomAnchor: NSLayoutYAxisAnchor {
-        if #available(iOS 11, *) {
-            return self.view.safeAreaLayoutGuide.bottomAnchor
-        }
-        else {
-            return self.bottomLayoutGuide.topAnchor
-        }
-    }
-}
-
-extension UIView {
-    var safeAreaLayoutGuideOrFallback: UILayoutGuide {
-        if #available(iOS 11, *) {
-            return safeAreaLayoutGuide
-        } else {
-            return layoutMarginsGuide
-        }
+extension UILabel {
+    convenience init(
+        key: String? = nil,
+        size: FontSize = .normal,
+        weight: FontWeight = .regular,
+        color: String,
+        variant: ColorSchemeVariant = ColorScheme.default().variant
+        ) {
+        self.init(frame: .zero)
+        text = key.map { $0.localized }
+        font = FontSpec(size, weight).font
+        textColor = ColorScheme.default().color(withName: color, variant: variant)
     }
 }
