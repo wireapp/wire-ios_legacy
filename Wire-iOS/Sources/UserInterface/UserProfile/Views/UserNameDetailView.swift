@@ -121,7 +121,6 @@ fileprivate let textColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorTe
 
 final class UserNameDetailView: UIView {
 
-    let titleLabel = UILabel()
     let subtitleLabel = UILabel()
     let correlationLabel = UILabel()
 
@@ -136,7 +135,6 @@ final class UserNameDetailView: UIView {
     }
 
     func configure(with model: UserNameDetailViewModel) {
-        titleLabel.attributedText = model.title
         subtitleLabel.attributedText = model.firstSubtitle
         correlationLabel.attributedText = model.secondSubtitle
 
@@ -147,23 +145,16 @@ final class UserNameDetailView: UIView {
     private func setupViews() {
         translatesAutoresizingMaskIntoConstraints = false
 
-        [titleLabel, subtitleLabel, correlationLabel].forEach {
+        [subtitleLabel, correlationLabel].forEach {
             $0.textAlignment = .center
             $0.backgroundColor = .clear
             addSubview($0)
         }
-
-        titleLabel.accessibilityIdentifier = "name"
     }
 
     private func createConstraints() {
-        constrain(self, titleLabel, subtitleLabel, correlationLabel) { view, title, subtitle, correlation in
-            title.top == view.top
-            title.height == 32
-            title.leading == view.leading
-            title.trailing == view.trailing
-
-            subtitle.top == title.bottom + 4
+        constrain(self, subtitleLabel, correlationLabel) { view, subtitle, correlation in
+            subtitle.top == view.top
             subtitle.centerX == view.centerX
             subtitle.height == 16
 

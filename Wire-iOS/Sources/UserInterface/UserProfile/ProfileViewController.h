@@ -35,7 +35,6 @@ typedef NS_ENUM(NSInteger, ProfileViewControllerContext) {
     ProfileViewControllerContextSearch,
     ProfileViewControllerContextGroupConversation,
     ProfileViewControllerContextOneToOneConversation,
-    ProfileViewControllerContextCommonConnection,
     ProfileViewControllerContextDeviceList
 };
 

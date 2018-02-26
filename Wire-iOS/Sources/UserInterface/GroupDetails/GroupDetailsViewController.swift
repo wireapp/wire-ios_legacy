@@ -53,11 +53,15 @@ class GroupDetailsViewController: UIViewController, ZMConversationObserver, Grou
         
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: collectionViewLayout)
         collectionView.backgroundColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorContentBackground)
-        collectionView.allowsMultipleSelection = true
+        collectionView.allowsMultipleSelection = false
         collectionView.keyboardDismissMode = .onDrag
         collectionView.bounces = true
         collectionView.alwaysBounceVertical = true
         collectionView.contentInset = UIEdgeInsets(top: 32, left: 0, bottom: 0, right: 0)
+        
+        if #available(iOS 11.0, *) {
+            collectionView.contentInsetAdjustmentBehavior = .never
+        }
         
         [collectionView, footerView, bottomSpacer].forEach(view.addSubview)
         bottomSpacer.backgroundColor = .wr_color(fromColorScheme: ColorSchemeColorBackground)
