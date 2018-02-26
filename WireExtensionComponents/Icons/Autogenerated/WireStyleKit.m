@@ -1,6 +1,6 @@
 //
 // Wire
-// Copyright (C) 2017 Wire Swiss GmbH
+// Copyright (C) 2018 Wire Swiss GmbH
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -35,7 +35,7 @@ static UIImage* _imageOfShieldnotverified = nil;
 {
     // Colors Initialization
     _fillColor10 = [UIColor colorWithRed: 0.067 green: 0.084 blue: 0.078 alpha: 1];
-    
+
 }
 
 #pragma mark Colors
@@ -46,7 +46,7 @@ static UIImage* _imageOfShieldnotverified = nil;
 
 + (void)drawIcon_0x100_32ptWithColor: (UIColor*)color
 {
-    
+
     //// Add Drawing
     UIBezierPath* addPath = [UIBezierPath bezierPath];
     [addPath moveToPoint: CGPointMake(0, 28)];
@@ -70,7 +70,7 @@ static UIImage* _imageOfShieldnotverified = nil;
 
 + (void)drawIcon_0x102_32ptWithColor: (UIColor*)color
 {
-    
+
     //// Remove Drawing
     UIBezierPath* removePath = [UIBezierPath bezierPath];
     [removePath moveToPoint: CGPointMake(22.64, 55.86)];
@@ -88,7 +88,7 @@ static UIImage* _imageOfShieldnotverified = nil;
 
 + (void)drawIcon_0x104_32ptWithColor: (UIColor*)color
 {
-    
+
     //// Block Drawing
     UIBezierPath* blockPath = [UIBezierPath bezierPath];
     [blockPath moveToPoint: CGPointMake(32, 64)];
@@ -120,7 +120,7 @@ static UIImage* _imageOfShieldnotverified = nil;
 
 + (void)drawIcon_0x105_32ptWithColor: (UIColor*)color
 {
-    
+
     //// Path Drawing
     UIBezierPath* pathPath = [UIBezierPath bezierPath];
     [pathPath moveToPoint: CGPointMake(64, 32)];
@@ -150,7 +150,7 @@ static UIImage* _imageOfShieldnotverified = nil;
 
 + (void)drawIcon_0x120_32ptWithColor: (UIColor*)color
 {
-    
+
     //// Flip Drawing
     UIBezierPath* flipPath = [UIBezierPath bezierPath];
     [flipPath moveToPoint: CGPointMake(36, 16.19)];
@@ -177,7 +177,7 @@ static UIImage* _imageOfShieldnotverified = nil;
 
 + (void)drawIcon_0x125_32ptWithColor: (UIColor*)color
 {
-    
+
     //// More Drawing
     UIBezierPath* morePath = [UIBezierPath bezierPath];
     [morePath moveToPoint: CGPointMake(8, 40)];
@@ -208,7 +208,7 @@ static UIImage* _imageOfShieldnotverified = nil;
 
 + (void)drawIcon_0x137_32ptWithColor: (UIColor*)color
 {
-    
+
     //// Ping Drawing
     UIBezierPath* pingPath = [UIBezierPath bezierPath];
     [pingPath moveToPoint: CGPointMake(23.8, 17.09)];
@@ -278,7 +278,7 @@ static UIImage* _imageOfShieldnotverified = nil;
 
 + (void)drawIcon_0x143_32ptWithColor: (UIColor*)color
 {
-    
+
     //// Camera Drawing
     UIBezierPath* cameraPath = [UIBezierPath bezierPath];
     [cameraPath moveToPoint: CGPointMake(18.29, 8)];
@@ -317,7 +317,7 @@ static UIImage* _imageOfShieldnotverified = nil;
 
 + (void)drawIcon_0x144_32ptWithColor: (UIColor*)color
 {
-    
+
     //// Shutter Drawing
     UIBezierPath* shutterPath = [UIBezierPath bezierPath];
     [shutterPath moveToPoint: CGPointMake(32, 56)];
@@ -348,7 +348,7 @@ static UIImage* _imageOfShieldnotverified = nil;
 
 + (void)drawIcon_0x145_32ptWithColor: (UIColor*)color
 {
-    
+
     //// Picture Drawing
     UIBezierPath* picturePath = [UIBezierPath bezierPath];
     [picturePath moveToPoint: CGPointMake(0, 4)];
@@ -381,7 +381,7 @@ static UIImage* _imageOfShieldnotverified = nil;
 
 + (void)drawIcon_0x150_32ptWithColor: (UIColor*)color
 {
-    
+
     //// Chat Drawing
     UIBezierPath* chatPath = [UIBezierPath bezierPath];
     [chatPath moveToPoint: CGPointMake(39.2, 52)];
@@ -405,7 +405,7 @@ static UIImage* _imageOfShieldnotverified = nil;
 
 + (void)drawIcon_0x158_32ptWithColor: (UIColor*)color
 {
-    
+
     //// Speaker Drawing
     UIBezierPath* speakerPath = [UIBezierPath bezierPath];
     [speakerPath moveToPoint: CGPointMake(2.06, 48.08)];
@@ -434,7 +434,7 @@ static UIImage* _imageOfShieldnotverified = nil;
 
 + (void)drawIcon_0x162_32ptWithColor: (UIColor*)color
 {
-    
+
     //// Silence Drawing
     UIBezierPath* silencePath = [UIBezierPath bezierPath];
     [silencePath moveToPoint: CGPointMake(8.81, 42.95)];
@@ -474,7 +474,7 @@ static UIImage* _imageOfShieldnotverified = nil;
 
 + (void)drawIcon_0x177_32ptWithColor: (UIColor*)color
 {
-    
+
     //// Edit Drawing
     UIBezierPath* editPath = [UIBezierPath bezierPath];
     [editPath moveToPoint: CGPointMake(58.22, 19.38)];
@@ -507,7 +507,7 @@ static UIImage* _imageOfShieldnotverified = nil;
 
 + (void)drawIcon_0x193_32ptWithColor: (UIColor*)color
 {
-    
+
     //// Flash Drawing
     UIBezierPath* flashPath = [UIBezierPath bezierPath];
     [flashPath moveToPoint: CGPointMake(28, 36)];
@@ -525,7 +525,7 @@ static UIImage* _imageOfShieldnotverified = nil;
 
 + (void)drawIcon_0x194_32ptWithColor: (UIColor*)color
 {
-    
+
     //// Flash-off Drawing
     UIBezierPath* flashoffPath = [UIBezierPath bezierPath];
     [flashoffPath moveToPoint: CGPointMake(35.93, 24.37)];
@@ -556,7 +556,7 @@ static UIImage* _imageOfShieldnotverified = nil;
 
 + (void)drawIcon_0x195_32ptWithColor: (UIColor*)color
 {
-    
+
     //// Flash-auto Drawing
     UIBezierPath* flashautoPath = [UIBezierPath bezierPath];
     [flashautoPath moveToPoint: CGPointMake(28, 36)];
@@ -579,7 +579,7 @@ static UIImage* _imageOfShieldnotverified = nil;
 
 + (void)drawIcon_0x197_32ptWithColor: (UIColor*)color
 {
-    
+
     //// Download Drawing
     UIBezierPath* downloadPath = [UIBezierPath bezierPath];
     [downloadPath moveToPoint: CGPointMake(0, 56)];
@@ -606,7 +606,7 @@ static UIImage* _imageOfShieldnotverified = nil;
 
 + (void)drawIcon_0x205_32ptWithColor: (UIColor*)color
 {
-    
+
     //// Path Drawing
     UIBezierPath* pathPath = [UIBezierPath bezierPath];
     [pathPath moveToPoint: CGPointMake(29, 62)];
@@ -662,7 +662,7 @@ static UIImage* _imageOfShieldnotverified = nil;
 
 + (void)drawIcon_0x212_32ptWithColor: (UIColor*)color
 {
-    
+
     //// Archive Drawing
     UIBezierPath* archivePath = [UIBezierPath bezierPath];
     [archivePath moveToPoint: CGPointMake(0, 20)];
@@ -698,7 +698,7 @@ static UIImage* _imageOfShieldnotverified = nil;
 
 + (void)drawIcon_0x198_32ptWithColor: (UIColor*)color
 {
-    
+
     //// Share Drawing
     UIBezierPath* sharePath = [UIBezierPath bezierPath];
     [sharePath moveToPoint: CGPointMake(0, 56)];
@@ -726,7 +726,7 @@ static UIImage* _imageOfShieldnotverified = nil;
 
 + (void)drawIcon_0x160_32ptWithColor: (UIColor*)color
 {
-    
+
     //// Mute Drawing
     UIBezierPath* mutePath = [UIBezierPath bezierPath];
     [mutePath moveToPoint: CGPointMake(12.82, 57.93)];
@@ -772,7 +772,7 @@ static UIImage* _imageOfShieldnotverified = nil;
 
 + (void)drawIcon_0x101_32ptWithColor: (UIColor*)color
 {
-    
+
     //// Remove Drawing
     UIBezierPath* removePath = [UIBezierPath bezierPathWithRect: CGRectMake(0, 28, 64, 8)];
     [color setFill];
@@ -781,7 +781,7 @@ static UIImage* _imageOfShieldnotverified = nil;
 
 + (void)drawIcon_0x215_32ptWithColor: (UIColor*)color
 {
-    
+
     //// Bezier Drawing
     UIBezierPath* bezierPath = [UIBezierPath bezierPath];
     [bezierPath moveToPoint: CGPointMake(48, 8.15)];
@@ -823,7 +823,7 @@ static UIImage* _imageOfShieldnotverified = nil;
 
 + (void)drawIcon_0x216_32ptWithColor: (UIColor*)color
 {
-    
+
     //// Add Drawing
     UIBezierPath* addPath = [UIBezierPath bezierPath];
     [addPath moveToPoint: CGPointMake(32, 64)];
@@ -853,7 +853,7 @@ static UIImage* _imageOfShieldnotverified = nil;
 
 + (void)drawIcon_0x172_32ptWithColor: (UIColor*)color
 {
-    
+
     //// Email Drawing
     UIBezierPath* emailPath = [UIBezierPath bezierPath];
     [emailPath moveToPoint: CGPointMake(63.98, 56)];
@@ -876,7 +876,7 @@ static UIImage* _imageOfShieldnotverified = nil;
 
 + (void)drawIcon_0x217_32ptWithColor: (UIColor*)color
 {
-    
+
     //// Added Drawing
     UIBezierPath* addedPath = [UIBezierPath bezierPath];
     [addedPath moveToPoint: CGPointMake(0, 32)];
@@ -900,7 +900,7 @@ static UIImage* _imageOfShieldnotverified = nil;
 
 + (void)drawIcon_0x117_32ptWithColor: (UIColor*)color
 {
-    
+
     //// Resend Drawing
     UIBezierPath* resendPath = [UIBezierPath bezierPath];
     [resendPath moveToPoint: CGPointMake(54.63, 9.37)];
@@ -927,7 +927,7 @@ static UIImage* _imageOfShieldnotverified = nil;
 
 + (void)drawIcon_0x179_32ptWithColor: (UIColor*)color
 {
-    
+
     //// Sketch Drawing
     UIBezierPath* sketchPath = [UIBezierPath bezierPath];
     [sketchPath moveToPoint: CGPointMake(54.83, 39.53)];
@@ -986,7 +986,7 @@ static UIImage* _imageOfShieldnotverified = nil;
 
 + (void)drawIcon_0x219_32ptWithColor: (UIColor*)color
 {
-    
+
     //// GIF Drawing
     UIBezierPath* gIFPath = [UIBezierPath bezierPath];
     [gIFPath moveToPoint: CGPointMake(48, 36)];
@@ -1036,7 +1036,7 @@ static UIImage* _imageOfShieldnotverified = nil;
 
 + (void)drawIcon_0x116_32ptWithColor: (UIColor*)color
 {
-    
+
     //// Undo Drawing
     UIBezierPath* undoPath = [UIBezierPath bezierPath];
     [undoPath moveToPoint: CGPointMake(9.37, 9.37)];
@@ -1063,7 +1063,7 @@ static UIImage* _imageOfShieldnotverified = nil;
 
 + (void)drawIcon_0x126_24ptWithColor: (UIColor*)color
 {
-    
+
     //// Path-3 Drawing
     UIBezierPath* path3Path = [UIBezierPath bezierPath];
     [path3Path moveToPoint: CGPointMake(38.85, 38.85)];
@@ -1087,7 +1087,7 @@ static UIImage* _imageOfShieldnotverified = nil;
 
 + (void)drawIcon_0x128_8ptWithColor: (UIColor*)color
 {
-    
+
     //// Path Drawing
     UIBezierPath* pathPath = [UIBezierPath bezierPath];
     [pathPath moveToPoint: CGPointMake(7, 12)];
@@ -1109,7 +1109,7 @@ static UIImage* _imageOfShieldnotverified = nil;
 
 + (void)drawIcon_0x126_32ptWithColor: (UIColor*)color
 {
-    
+
     //// Spinner Drawing
     UIBezierPath* spinnerPath = [UIBezierPath bezierPath];
     [spinnerPath moveToPoint: CGPointMake(54.24, 22.96)];
@@ -1135,7 +1135,7 @@ static UIImage* _imageOfShieldnotverified = nil;
 
 + (void)drawIcon_0x165_32ptWithColor: (UIColor*)color
 {
-    
+
     //// Pending Drawing
     UIBezierPath* pendingPath = [UIBezierPath bezierPath];
     [pendingPath moveToPoint: CGPointMake(32, 56)];
@@ -1172,7 +1172,7 @@ static UIImage* _imageOfShieldnotverified = nil;
 
 + (void)drawIcon_0x187_32ptWithColor: (UIColor*)color
 {
-    
+
     //// Card Drawing
     UIBezierPath* cardPath = [UIBezierPath bezierPath];
     [cardPath moveToPoint: CGPointMake(0, 16.02)];
@@ -1234,7 +1234,7 @@ static UIImage* _imageOfShieldnotverified = nil;
 
 + (void)drawIcon_0x163_32ptWithColor: (UIColor*)color
 {
-    
+
     //// Search Drawing
     UIBezierPath* searchPath = [UIBezierPath bezierPath];
     [searchPath moveToPoint: CGPointMake(55.9, 27.97)];
@@ -1260,7 +1260,7 @@ static UIImage* _imageOfShieldnotverified = nil;
 
 + (void)drawIcon_0x221_32ptWithColor: (UIColor*)color
 {
-    
+
     //// Theme Drawing
     UIBezierPath* themePath = [UIBezierPath bezierPath];
     [themePath moveToPoint: CGPointMake(32, 48)];
@@ -1349,7 +1349,7 @@ static UIImage* _imageOfShieldnotverified = nil;
 
 + (void)drawInviteWithColor: (UIColor*)color
 {
-    
+
     //// Bezier 2 Drawing
     UIBezierPath* bezier2Path = [UIBezierPath bezierPath];
     [bezier2Path moveToPoint: CGPointMake(27.9, 30.82)];
@@ -1383,7 +1383,7 @@ static UIImage* _imageOfShieldnotverified = nil;
 
 + (void)drawIcon_0x222_32ptWithColor: (UIColor*)color
 {
-    
+
     //// Hung up Drawing
     UIBezierPath* hungUpPath = [UIBezierPath bezierPath];
     [hungUpPath moveToPoint: CGPointMake(0, 50.85)];
@@ -1421,7 +1421,7 @@ static UIImage* _imageOfShieldnotverified = nil;
 
 + (void)drawIcon_0x123_32ptWithColor: (UIColor*)color
 {
-    
+
     //// Undo Drawing
     UIBezierPath* undoPath = [UIBezierPath bezierPath];
     [undoPath moveToPoint: CGPointMake(14, 38)];
@@ -1493,7 +1493,7 @@ static UIImage* _imageOfShieldnotverified = nil;
 
 + (void)drawIcon_0x128_32ptWithColor: (UIColor*)color
 {
-    
+
     //// Error Drawing
     UIBezierPath* errorPath = [UIBezierPath bezierPath];
     [errorPath moveToPoint: CGPointMake(36, 4)];
@@ -1515,7 +1515,7 @@ static UIImage* _imageOfShieldnotverified = nil;
 
 + (void)drawIcon_0x113_32ptWithColor: (UIColor*)color
 {
-    
+
     //// Down Drawing
     UIBezierPath* downPath = [UIBezierPath bezierPath];
     [downPath moveToPoint: CGPointMake(32.16, 52.07)];
@@ -1533,7 +1533,7 @@ static UIImage* _imageOfShieldnotverified = nil;
 
 + (void)drawIcon_0x121_32ptWithColor: (UIColor*)color
 {
-    
+
     //// List Drawing
     UIBezierPath* listPath = [UIBezierPath bezierPath];
     [listPath moveToPoint: CGPointMake(0, 28)];
@@ -1564,7 +1564,7 @@ static UIImage* _imageOfShieldnotverified = nil;
 
 + (void)drawIcon_0x111_32ptWithColor: (UIColor*)color
 {
-    
+
     //// Back Drawing
     UIBezierPath* backPath = [UIBezierPath bezierPath];
     [backPath moveToPoint: CGPointMake(45.22, 36.27)];
@@ -1586,7 +1586,7 @@ static UIImage* _imageOfShieldnotverified = nil;
 
 + (void)drawIcon_0x226_32ptWithColor: (UIColor*)color
 {
-    
+
     //// Video Drawing
     UIBezierPath* videoPath = [UIBezierPath bezierPath];
     [videoPath moveToPoint: CGPointMake(48, 15.36)];
@@ -1612,7 +1612,7 @@ static UIImage* _imageOfShieldnotverified = nil;
 
 + (void)drawIcon_0x131_32ptWithColor: (UIColor*)color
 {
-    
+
     //// Play Drawing
     UIBezierPath* playPath = [UIBezierPath bezierPath];
     [playPath moveToPoint: CGPointMake(16, 62.31)];
@@ -1627,7 +1627,7 @@ static UIImage* _imageOfShieldnotverified = nil;
 
 + (void)drawIcon_0x164_32ptWithColor: (UIColor*)color
 {
-    
+
     //// Settings Drawing
     UIBezierPath* settingsPath = [UIBezierPath bezierPath];
     [settingsPath moveToPoint: CGPointMake(11.32, 44.19)];
@@ -1679,7 +1679,7 @@ static UIImage* _imageOfShieldnotverified = nil;
 
 + (void)drawIcon_0x132_32ptWithColor: (UIColor*)color
 {
-    
+
     //// Pause Drawing
     UIBezierPath* pausePath = [UIBezierPath bezierPath];
     [pausePath moveToPoint: CGPointMake(16, 0)];
@@ -1703,13 +1703,13 @@ static UIImage* _imageOfShieldnotverified = nil;
 
 + (void)drawIcon_0x1420_28ptWithColor: (UIColor*)color
 {
-    
+
     //// Oval Drawing
     UIBezierPath* ovalPath = [UIBezierPath bezierPathWithOvalInRect: CGRectMake(0, 0, 56, 56)];
     [color setFill];
     [ovalPath fill];
-    
-    
+
+
     //// Contact Drawing
     UIBezierPath* contactPath = [UIBezierPath bezierPath];
     [contactPath moveToPoint: CGPointMake(35.22, 32)];
@@ -1739,7 +1739,7 @@ static UIImage* _imageOfShieldnotverified = nil;
 
 + (void)drawIcon_0x110_32ptWithColor: (UIColor*)color
 {
-    
+
     //// Back Drawing
     UIBezierPath* backPath = [UIBezierPath bezierPath];
     [backPath moveToPoint: CGPointMake(19.78, 36.27)];
@@ -1761,7 +1761,7 @@ static UIImage* _imageOfShieldnotverified = nil;
 
 + (void)drawIcon_0x103_32ptWithColor: (UIColor*)color
 {
-    
+
     //// Close Drawing
     UIBezierPath* closePath = [UIBezierPath bezierPath];
     [closePath moveToPoint: CGPointMake(11.52, 58)];
@@ -1785,7 +1785,7 @@ static UIImage* _imageOfShieldnotverified = nil;
 
 + (void)drawIcon_0x211_32ptWithColor: (UIColor*)color
 {
-    
+
     //// Call Drawing
     UIBezierPath* callPath = [UIBezierPath bezierPath];
     [callPath moveToPoint: CGPointMake(50.85, 64)];
@@ -1822,7 +1822,7 @@ static UIImage* _imageOfShieldnotverified = nil;
 
 + (void)drawIcon_0x142_32ptWithColor: (UIColor*)color
 {
-    
+
     //// Contacts Drawing
     UIBezierPath* contactsPath = [UIBezierPath bezierPath];
     [contactsPath moveToPoint: CGPointMake(46.43, 40)];
@@ -1852,7 +1852,7 @@ static UIImage* _imageOfShieldnotverified = nil;
 
 + (void)drawIcon_0x152_32ptWithColor: (UIColor*)color
 {
-    
+
     //// File Drawing
     UIBezierPath* filePath = [UIBezierPath bezierPath];
     [filePath moveToPoint: CGPointMake(11.96, 0)];
@@ -1880,7 +1880,7 @@ static UIImage* _imageOfShieldnotverified = nil;
 
 + (void)drawIcon_0x185_32ptWithColor: (UIColor*)color
 {
-    
+
     //// View Drawing
     UIBezierPath* viewPath = [UIBezierPath bezierPath];
     [viewPath moveToPoint: CGPointMake(64, 32)];
@@ -1904,7 +1904,7 @@ static UIImage* _imageOfShieldnotverified = nil;
 
 + (void)drawIcon_0x146_32ptWithColor: (UIColor*)color
 {
-    
+
     //// Movie Drawing
     UIBezierPath* moviePath = [UIBezierPath bezierPath];
     [moviePath moveToPoint: CGPointMake(44, 64)];
@@ -1968,7 +1968,7 @@ static UIImage* _imageOfShieldnotverified = nil;
 
 + (void)drawIcon_0x227_32ptWithColor: (UIColor*)color
 {
-    
+
     //// Record Drawing
     UIBezierPath* recordPath = [UIBezierPath bezierPath];
     [recordPath moveToPoint: CGPointMake(32, 64)];
@@ -1996,7 +1996,7 @@ static UIImage* _imageOfShieldnotverified = nil;
 
 + (void)drawIcon_0x159_32ptWithColor: (UIColor*)color
 {
-    
+
     //// Microphone Drawing
     UIBezierPath* microphonePath = [UIBezierPath bezierPath];
     [microphonePath moveToPoint: CGPointMake(50.3, 47.84)];
@@ -2024,7 +2024,7 @@ static UIImage* _imageOfShieldnotverified = nil;
 
 + (void)drawIcon_0x228_32ptWithColor: (UIColor*)color
 {
-    
+
     //// Stop Drawing
     UIBezierPath* stopPath = [UIBezierPath bezierPathWithRect: CGRectMake(8, 8, 48, 48)];
     [color setFill];
@@ -2033,7 +2033,7 @@ static UIImage* _imageOfShieldnotverified = nil;
 
 + (void)drawIcon_0x154_32ptWithColor: (UIColor*)color
 {
-    
+
     //// Attachment Drawing
     UIBezierPath* attachmentPath = [UIBezierPath bezierPath];
     [attachmentPath moveToPoint: CGPointMake(10.53, 30.8)];
@@ -2074,7 +2074,7 @@ static UIImage* _imageOfShieldnotverified = nil;
 
 + (void)drawIcon_0x148_32ptWithColor: (UIColor*)color
 {
-    
+
     //// Location Drawing
     UIBezierPath* locationPath = [UIBezierPath bezierPath];
     [locationPath moveToPoint: CGPointMake(56, 24)];
@@ -2098,7 +2098,7 @@ static UIImage* _imageOfShieldnotverified = nil;
 
 + (void)drawIcon_0x229_32ptWithColor: (UIColor*)color
 {
-    
+
     //// Record Drawing
     UIBezierPath* recordPath = [UIBezierPath bezierPathWithOvalInRect: CGRectMake(0, 0, 64, 64)];
     [color setFill];
@@ -2107,7 +2107,7 @@ static UIImage* _imageOfShieldnotverified = nil;
 
 + (void)drawIcon_0x230_32ptWithColor: (UIColor*)color
 {
-    
+
     //// Stop Drawing
     UIBezierPath* stopPath = [UIBezierPath bezierPath];
     [stopPath moveToPoint: CGPointMake(0, 7.98)];
@@ -2127,7 +2127,7 @@ static UIImage* _imageOfShieldnotverified = nil;
 
 + (void)drawIcon_0x149_32ptWithColor: (UIColor*)color
 {
-    
+
     //// Locate Drawing
     UIBezierPath* locatePath = [UIBezierPath bezierPath];
     [locatePath moveToPoint: CGPointMake(0, 34)];
@@ -2143,7 +2143,7 @@ static UIImage* _imageOfShieldnotverified = nil;
 
 + (void)drawIcon_0x240_32ptWithColor: (UIColor*)color
 {
-    
+
     //// Helium Drawing
     UIBezierPath* heliumPath = [UIBezierPath bezierPath];
     [heliumPath moveToPoint: CGPointMake(32, 0)];
@@ -2166,7 +2166,7 @@ static UIImage* _imageOfShieldnotverified = nil;
 
 + (void)drawIcon_0x244_32ptWithColor: (UIColor*)color
 {
-    
+
     //// Cathedral Drawing
     UIBezierPath* cathedralPath = [UIBezierPath bezierPath];
     [cathedralPath moveToPoint: CGPointMake(8, 28)];
@@ -2211,7 +2211,7 @@ static UIImage* _imageOfShieldnotverified = nil;
 
 + (void)drawIcon_0x246_32ptWithColor: (UIColor*)color
 {
-    
+
     //// Robot Drawing
     UIBezierPath* robotPath = [UIBezierPath bezierPath];
     [robotPath moveToPoint: CGPointMake(32, 12)];
@@ -2275,7 +2275,7 @@ static UIImage* _imageOfShieldnotverified = nil;
 
 + (void)drawIcon_0x245_32ptWithColor: (UIColor*)color
 {
-    
+
     //// Alien Drawing
     UIBezierPath* alienPath = [UIBezierPath bezierPath];
     [alienPath moveToPoint: CGPointMake(32, 64)];
@@ -2303,7 +2303,7 @@ static UIImage* _imageOfShieldnotverified = nil;
 
 + (void)drawIcon_0x242_32ptWithColor: (UIColor*)color
 {
-    
+
     //// Jellyfish Drawing
     UIBezierPath* jellyfishPath = [UIBezierPath bezierPath];
     [jellyfishPath moveToPoint: CGPointMake(4.28, 32.01)];
@@ -2352,7 +2352,7 @@ static UIImage* _imageOfShieldnotverified = nil;
 
 + (void)drawIcon_0x247_32ptWithColor: (UIColor*)color
 {
-    
+
     //// Bezier Drawing
     UIBezierPath* bezierPath = [UIBezierPath bezierPath];
     [bezierPath moveToPoint: CGPointMake(64, 44.94)];
@@ -2410,7 +2410,7 @@ static UIImage* _imageOfShieldnotverified = nil;
 
 + (void)drawIcon_0x243_32ptWithColor: (UIColor*)color
 {
-    
+
     //// Hare Drawing
     UIBezierPath* harePath = [UIBezierPath bezierPath];
     [harePath moveToPoint: CGPointMake(4, 6.75)];
@@ -2457,7 +2457,7 @@ static UIImage* _imageOfShieldnotverified = nil;
 
 + (void)drawIcon_0x139_32ptWithColor: (UIColor*)color
 {
-    
+
     //// Bezier Drawing
     UIBezierPath* bezierPath = [UIBezierPath bezierPath];
     [bezierPath moveToPoint: CGPointMake(64, 28)];
@@ -2489,7 +2489,7 @@ static UIImage* _imageOfShieldnotverified = nil;
 
 + (void)drawIcon_0x186_32ptWithColor: (UIColor*)color
 {
-    
+
     //// Delete Drawing
     UIBezierPath* deletePath = [UIBezierPath bezierPath];
     [deletePath moveToPoint: CGPointMake(24, 8)];
@@ -2520,7 +2520,7 @@ static UIImage* _imageOfShieldnotverified = nil;
 
 + (void)drawIcon_0x183_32ptWithColor: (UIColor*)color
 {
-    
+
     //// Like Drawing
     UIBezierPath* likePath = [UIBezierPath bezierPath];
     [likePath moveToPoint: CGPointMake(32.84, 50.34)];
@@ -2553,7 +2553,7 @@ static UIImage* _imageOfShieldnotverified = nil;
 
 + (void)drawIcon_0x184_32ptWithColor: (UIColor*)color
 {
-    
+
     //// Liked Drawing
     UIBezierPath* likedPath = [UIBezierPath bezierPath];
     [likedPath moveToPoint: CGPointMake(29.54, 9.02)];
@@ -2573,7 +2573,7 @@ static UIImage* _imageOfShieldnotverified = nil;
 
 + (void)drawIcon_0x188_32ptWithColor: (UIColor*)color
 {
-    
+
     //// Devices Drawing
     UIBezierPath* devicesPath = [UIBezierPath bezierPath];
     [devicesPath moveToPoint: CGPointMake(43.99, 0)];
@@ -2621,7 +2621,7 @@ static UIImage* _imageOfShieldnotverified = nil;
 
 + (void)drawIcon_0x135_32ptWithColor: (UIColor*)color
 {
-    
+
     //// Options Drawing
     UIBezierPath* optionsPath = [UIBezierPath bezierPath];
     [optionsPath moveToPoint: CGPointMake(38.93, 60)];
@@ -2679,7 +2679,7 @@ static UIImage* _imageOfShieldnotverified = nil;
 
 + (void)drawIcon_0x134_32ptWithColor: (UIColor*)color
 {
-    
+
     //// Advanced Drawing
     UIBezierPath* advancedPath = [UIBezierPath bezierPath];
     [advancedPath moveToPoint: CGPointMake(26.1, 29.58)];
@@ -2726,7 +2726,7 @@ static UIImage* _imageOfShieldnotverified = nil;
 
 + (void)drawIcon_0x127_32ptWithColor: (UIColor*)color
 {
-    
+
     //// Support Drawing
     UIBezierPath* supportPath = [UIBezierPath bezierPath];
     [supportPath moveToPoint: CGPointMake(45.32, 56.63)];
@@ -2790,7 +2790,7 @@ static UIImage* _imageOfShieldnotverified = nil;
 
 + (void)drawIcon_0x202_32ptWithColor: (UIColor*)color
 {
-    
+
     //// w-symbol Drawing
     UIBezierPath* wsymbolPath = [UIBezierPath bezierPath];
     [wsymbolPath moveToPoint: CGPointMake(43.56, 59.4)];
@@ -2843,7 +2843,7 @@ static UIImage* _imageOfShieldnotverified = nil;
 
 + (void)drawIcon_0x235_32ptWithColor: (UIColor*)color
 {
-    
+
     //// Send Drawing
     UIBezierPath* sendPath = [UIBezierPath bezierPath];
     [sendPath moveToPoint: CGPointMake(8, 54.06)];
@@ -2864,7 +2864,7 @@ static UIImage* _imageOfShieldnotverified = nil;
 
 + (void)drawIcon_0x237_32ptWithColor: (UIColor*)color
 {
-    
+
     //// Emoji Drawing
     UIBezierPath* emojiPath = [UIBezierPath bezierPath];
     [emojiPath moveToPoint: CGPointMake(32, 64)];
@@ -2909,7 +2909,7 @@ static UIImage* _imageOfShieldnotverified = nil;
 
 + (void)drawIcon_0x236_32ptWithColor: (UIColor*)color
 {
-    
+
     //// Keyboard Drawing
     UIBezierPath* keyboardPath = [UIBezierPath bezierPath];
     [keyboardPath moveToPoint: CGPointMake(32, 16)];
@@ -2935,7 +2935,7 @@ static UIImage* _imageOfShieldnotverified = nil;
 
 + (void)drawIcon_0x238_32ptWithColor: (UIColor*)color
 {
-    
+
     //// Backspace Drawing
     UIBezierPath* backspacePath = [UIBezierPath bezierPath];
     [backspacePath moveToPoint: CGPointMake(1.16, 35.85)];
@@ -2987,7 +2987,7 @@ static UIImage* _imageOfShieldnotverified = nil;
 
 + (void)drawIcon_0x250_32ptWithColor: (UIColor*)color
 {
-    
+
     //// Flower Drawing
     UIBezierPath* flowerPath = [UIBezierPath bezierPath];
     [flowerPath moveToPoint: CGPointMake(39.73, 13.34)];
@@ -3025,7 +3025,7 @@ static UIImage* _imageOfShieldnotverified = nil;
 
 + (void)drawIcon_0x251_32ptWithColor: (UIColor*)color
 {
-    
+
     //// Cake Drawing
     UIBezierPath* cakePath = [UIBezierPath bezierPath];
     [cakePath moveToPoint: CGPointMake(52, 28)];
@@ -3089,7 +3089,7 @@ static UIImage* _imageOfShieldnotverified = nil;
 
 + (void)drawIcon_0x252_32ptWithColor: (UIColor*)color
 {
-    
+
     //// Bezier Drawing
     UIBezierPath* bezierPath = [UIBezierPath bezierPath];
     [bezierPath moveToPoint: CGPointMake(64, 45.01)];
@@ -3137,7 +3137,7 @@ static UIImage* _imageOfShieldnotverified = nil;
 
 + (void)drawIcon_0x253_32ptWithColor: (UIColor*)color
 {
-    
+
     //// Ball Drawing
     UIBezierPath* ballPath = [UIBezierPath bezierPath];
     [ballPath moveToPoint: CGPointMake(34.14, 29.86)];
@@ -3191,7 +3191,7 @@ static UIImage* _imageOfShieldnotverified = nil;
 
 + (void)drawIcon_0x254_32ptWithColor: (UIColor*)color
 {
-    
+
     //// Crown Drawing
     UIBezierPath* crownPath = [UIBezierPath bezierPath];
     [crownPath moveToPoint: CGPointMake(30.21, 7.58)];
@@ -3249,7 +3249,7 @@ static UIImage* _imageOfShieldnotverified = nil;
 
 + (void)drawIcon_0x255_32ptWithColor: (UIColor*)color
 {
-    
+
     //// Symbol Drawing
     UIBezierPath* symbolPath = [UIBezierPath bezierPath];
     [symbolPath moveToPoint: CGPointMake(27.55, 24.23)];
@@ -3280,7 +3280,7 @@ static UIImage* _imageOfShieldnotverified = nil;
 
 + (void)drawIcon_0x256_32ptWithColor: (UIColor*)color
 {
-    
+
     //// Flag Drawing
     UIBezierPath* flagPath = [UIBezierPath bezierPath];
     [flagPath moveToPoint: CGPointMake(8.23, 6.46)];
@@ -3304,7 +3304,7 @@ static UIImage* _imageOfShieldnotverified = nil;
 
 + (void)drawIcon_0x124_32ptWithColor: (UIColor*)color
 {
-    
+
     //// More Drawing
     UIBezierPath* morePath = [UIBezierPath bezierPath];
     [morePath moveToPoint: CGPointMake(8, 64)];
@@ -3335,7 +3335,7 @@ static UIImage* _imageOfShieldnotverified = nil;
 
 + (void)drawIcon_0x239_32ptWithColor: (UIColor*)color
 {
-    
+
     //// Hourglass Drawing
     UIBezierPath* hourglassPath = [UIBezierPath bezierPath];
     [hourglassPath moveToPoint: CGPointMake(28, 32)];
@@ -3391,7 +3391,7 @@ static UIImage* _imageOfShieldnotverified = nil;
 {
     //// Color Declarations
     UIColor* color40 = [color colorWithAlphaComponent: 0.4];
-    
+
     //// Oval Drawing
     UIBezierPath* ovalPath = [UIBezierPath bezierPath];
     [ovalPath moveToPoint: CGPointMake(55.72, 35.66)];
@@ -3409,8 +3409,8 @@ static UIImage* _imageOfShieldnotverified = nil;
     [ovalPath closePath];
     [color40 setFill];
     [ovalPath fill];
-    
-    
+
+
     //// Bezier 2 Drawing
     UIBezierPath* bezier2Path = [UIBezierPath bezierPath];
     [bezier2Path moveToPoint: CGPointMake(49.16, 23.14)];
@@ -3441,7 +3441,7 @@ static UIImage* _imageOfShieldnotverified = nil;
 {
     //// Color Declarations
     UIColor* color40 = [color colorWithAlphaComponent: 0.4];
-    
+
     //// Bezier Drawing
     UIBezierPath* bezierPath = [UIBezierPath bezierPath];
     [bezierPath moveToPoint: CGPointMake(32, 56)];
@@ -3458,8 +3458,8 @@ static UIImage* _imageOfShieldnotverified = nil;
     [bezierPath closePath];
     [color40 setFill];
     [bezierPath fill];
-    
-    
+
+
     //// Bezier 2 Drawing
     UIBezierPath* bezier2Path = [UIBezierPath bezierPath];
     [bezier2Path moveToPoint: CGPointMake(46.18, 30)];
@@ -3494,7 +3494,7 @@ static UIImage* _imageOfShieldnotverified = nil;
 {
     //// Color Declarations
     UIColor* color40 = [color colorWithAlphaComponent: 0.4];
-    
+
     //// Bezier Drawing
     UIBezierPath* bezierPath = [UIBezierPath bezierPath];
     [bezierPath moveToPoint: CGPointMake(50.83, 30)];
@@ -3515,8 +3515,8 @@ static UIImage* _imageOfShieldnotverified = nil;
     bezierPath.usesEvenOddFillRule = YES;
     [color setFill];
     [bezierPath fill];
-    
-    
+
+
     //// Bezier 2 Drawing
     UIBezierPath* bezier2Path = [UIBezierPath bezierPath];
     [bezier2Path moveToPoint: CGPointMake(46.86, 13.15)];
@@ -3540,7 +3540,7 @@ static UIImage* _imageOfShieldnotverified = nil;
 {
     //// Color Declarations
     UIColor* color40 = [color colorWithAlphaComponent: 0.4];
-    
+
     //// Bezier 2 Drawing
     UIBezierPath* bezier2Path = [UIBezierPath bezierPath];
     [bezier2Path moveToPoint: CGPointMake(46.86, 13.15)];
@@ -3558,8 +3558,8 @@ static UIImage* _imageOfShieldnotverified = nil;
     [bezier2Path closePath];
     [color40 setFill];
     [bezier2Path fill];
-    
-    
+
+
     //// Bezier 3 Drawing
     UIBezierPath* bezier3Path = [UIBezierPath bezierPath];
     [bezier3Path moveToPoint: CGPointMake(53.13, 30)];
@@ -3590,7 +3590,7 @@ static UIImage* _imageOfShieldnotverified = nil;
 
 + (void)drawIcon_0x737_32ptWithColor: (UIColor*)color
 {
-    
+
     //// Bezier Drawing
     UIBezierPath* bezierPath = [UIBezierPath bezierPath];
     [bezierPath moveToPoint: CGPointMake(32, 60)];
@@ -3649,7 +3649,7 @@ static UIImage* _imageOfShieldnotverified = nil;
 
 + (void)drawIcon_0x654_32ptWithColor: (UIColor*)color
 {
-    
+
     //// Bezier Drawing
     UIBezierPath* bezierPath = [UIBezierPath bezierPath];
     [bezierPath moveToPoint: CGPointMake(4.68, 29.63)];
@@ -3689,7 +3689,7 @@ static UIImage* _imageOfShieldnotverified = nil;
 
 + (void)drawIcon_0x643_32ptWithColor: (UIColor*)color
 {
-    
+
     //// Bezier Drawing
     UIBezierPath* bezierPath = [UIBezierPath bezierPath];
     [bezierPath moveToPoint: CGPointMake(48, 36)];
@@ -3754,7 +3754,7 @@ static UIImage* _imageOfShieldnotverified = nil;
 
 + (void)drawIcon_0x645_32ptWithColor: (UIColor*)color
 {
-    
+
     //// Bezier 4 Drawing
     UIBezierPath* bezier4Path = [UIBezierPath bezierPath];
     [bezier4Path moveToPoint: CGPointMake(42, 16)];
@@ -3802,7 +3802,7 @@ static UIImage* _imageOfShieldnotverified = nil;
 
 + (void)drawIcon_0x644_32ptWithColor: (UIColor*)color
 {
-    
+
     //// Bezier Drawing
     UIBezierPath* bezierPath = [UIBezierPath bezierPath];
     [bezierPath moveToPoint: CGPointMake(32, 60)];
@@ -3835,7 +3835,7 @@ static UIImage* _imageOfShieldnotverified = nil;
 
 + (void)drawIcon_0x719_32ptWithColor: (UIColor*)color
 {
-    
+
     //// Bezier Drawing
     UIBezierPath* bezierPath = [UIBezierPath bezierPath];
     [bezierPath moveToPoint: CGPointMake(32, 8)];
@@ -3884,7 +3884,7 @@ static UIImage* _imageOfShieldnotverified = nil;
 
 + (void)drawIcon_0x648_32ptWithColor: (UIColor*)color
 {
-    
+
     //// Bezier Drawing
     UIBezierPath* bezierPath = [UIBezierPath bezierPath];
     [bezierPath moveToPoint: CGPointMake(32, 4)];
@@ -3922,7 +3922,7 @@ static UIImage* _imageOfShieldnotverified = nil;
 
 + (void)drawIcon_0x637_32ptWithColor: (UIColor*)color
 {
-    
+
     //// Bezier Drawing
     UIBezierPath* bezierPath = [UIBezierPath bezierPath];
     [bezierPath moveToPoint: CGPointMake(51.55, 8.64)];
@@ -3980,7 +3980,7 @@ static UIImage* _imageOfShieldnotverified = nil;
 
 + (void)drawIcon_0x735_32ptWithColor: (UIColor*)color
 {
-    
+
     //// Bezier Drawing
     UIBezierPath* bezierPath = [UIBezierPath bezierPath];
     [bezierPath moveToPoint: CGPointMake(12, 28)];
@@ -4013,7 +4013,7 @@ static UIImage* _imageOfShieldnotverified = nil;
 
 + (void)drawIcon_0x659_32ptWithColor: (UIColor*)color
 {
-    
+
     //// Bezier Drawing
     UIBezierPath* bezierPath = [UIBezierPath bezierPath];
     [bezierPath moveToPoint: CGPointMake(51.26, 52.18)];
@@ -4058,7 +4058,7 @@ static UIImage* _imageOfShieldnotverified = nil;
 
 + (void)drawIcon_0x679_32ptWithColor: (UIColor*)color
 {
-    
+
     //// Bezier Drawing
     UIBezierPath* bezierPath = [UIBezierPath bezierPath];
     [bezierPath moveToPoint: CGPointMake(29.59, 63.97)];
@@ -4117,7 +4117,7 @@ static UIImage* _imageOfShieldnotverified = nil;
 
 + (void)drawIcon_0x167_32ptWithColor: (UIColor*)color
 {
-    
+
     //// Bezier Drawing
     UIBezierPath* bezierPath = [UIBezierPath bezierPath];
     [bezierPath moveToPoint: CGPointMake(20, 13)];
@@ -4153,7 +4153,7 @@ static UIImage* _imageOfShieldnotverified = nil;
 
 + (void)drawIcon_0x736_32ptWithColor: (UIColor*)color
 {
-    
+
     //// Bezier Drawing
     UIBezierPath* bezierPath = [UIBezierPath bezierPath];
     [bezierPath moveToPoint: CGPointMake(32, 12)];
@@ -4179,7 +4179,7 @@ static UIImage* _imageOfShieldnotverified = nil;
 
 + (void)drawIcon_0x260_32ptWithColor: (UIColor*)color
 {
-    
+
     //// Collection Drawing
     UIBezierPath* collectionPath = [UIBezierPath bezierPath];
     [collectionPath moveToPoint: CGPointMake(0.02, 27.98)];
@@ -4213,7 +4213,7 @@ static UIImage* _imageOfShieldnotverified = nil;
 
 + (void)drawIcon_0x234_32ptWithColor: (UIColor*)color
 {
-    
+
     //// Copy Drawing
     UIBezierPath* copyPath = [UIBezierPath bezierPath];
     [copyPath moveToPoint: CGPointMake(24, 40)];
@@ -4250,7 +4250,7 @@ static UIImage* _imageOfShieldnotverified = nil;
 
 + (void)drawIcon_0x261_32ptWithColor: (UIColor*)color
 {
-    
+
     //// Return-search Drawing
     UIBezierPath* returnsearchPath = [UIBezierPath bezierPath];
     [returnsearchPath moveToPoint: CGPointMake(55.9, 27.97)];
@@ -4281,7 +4281,7 @@ static UIImage* _imageOfShieldnotverified = nil;
 
 + (void)drawIcon_0x262_32ptWithColor: (UIColor*)color
 {
-    
+
     //// Dismiss Drawing
     UIBezierPath* dismissPath = [UIBezierPath bezierPath];
     [dismissPath moveToPoint: CGPointMake(44.97, 13.37)];
@@ -4312,7 +4312,7 @@ static UIImage* _imageOfShieldnotverified = nil;
 
 + (void)drawIcon_0x263_32ptWithColor: (UIColor*)color
 {
-    
+
     //// Unread Drawing
     UIBezierPath* unreadPath = [UIBezierPath bezierPath];
     [unreadPath moveToPoint: CGPointMake(16, 8)];
@@ -4339,7 +4339,7 @@ static UIImage* _imageOfShieldnotverified = nil;
 
 + (void)drawIcon_0x264_32ptWithColor: (UIColor*)color
 {
-    
+
     //// Spaces Drawing
     UIBezierPath* spacesPath = [UIBezierPath bezierPath];
     [spacesPath moveToPoint: CGPointMake(11.63, 20.01)];
@@ -4370,7 +4370,7 @@ static UIImage* _imageOfShieldnotverified = nil;
 
 + (void)drawIcon_0x265_32ptWithColor: (UIColor*)color
 {
-    
+
     //// Profile Drawing
     UIBezierPath* profilePath = [UIBezierPath bezierPath];
     [profilePath moveToPoint: CGPointMake(32, 64)];
@@ -4403,7 +4403,7 @@ static UIImage* _imageOfShieldnotverified = nil;
 
 + (void)drawIcon_0x266_32ptWithColor: (UIColor*)color
 {
-    
+
     //// Compose Drawing
     UIBezierPath* composePath = [UIBezierPath bezierPath];
     [composePath moveToPoint: CGPointMake(44, 56)];
@@ -4439,7 +4439,7 @@ static UIImage* _imageOfShieldnotverified = nil;
 
 + (void)drawIcon_0x267_32ptWithColor: (UIColor*)color
 {
-    
+
     //// Megaphone Drawing
     UIBezierPath* megaphonePath = [UIBezierPath bezierPath];
     [megaphonePath moveToPoint: CGPointMake(47.81, 53.75)];
@@ -4473,7 +4473,7 @@ static UIImage* _imageOfShieldnotverified = nil;
 
 + (void)drawIcon_0x268_32ptWithColor: (UIColor*)color
 {
-    
+
     //// Bezier Drawing
     UIBezierPath* bezierPath = [UIBezierPath bezierPath];
     [bezierPath moveToPoint: CGPointMake(16, 64)];
@@ -4497,7 +4497,7 @@ static UIImage* _imageOfShieldnotverified = nil;
 
 + (void)drawIcon_0x738_32ptWithColor: (UIColor*)color
 {
-    
+
     //// Bezier Drawing
     UIBezierPath* bezierPath = [UIBezierPath bezierPath];
     [bezierPath moveToPoint: CGPointMake(17.42, 18.27)];
@@ -4564,7 +4564,7 @@ static UIImage* _imageOfShieldnotverified = nil;
 
 + (void)drawIcon_0x739_32ptWithColor: (UIColor*)color
 {
-    
+
     //// Bezier Drawing
     UIBezierPath* bezierPath = [UIBezierPath bezierPath];
     [bezierPath moveToPoint: CGPointMake(4, 0)];
@@ -4597,7 +4597,7 @@ static UIImage* _imageOfShieldnotverified = nil;
 
 + (void)drawIcon_0x740_32ptWithColor: (UIColor*)color
 {
-    
+
     //// Group 2
     {
         //// Bezier 2 Drawing
@@ -4636,8 +4636,8 @@ static UIImage* _imageOfShieldnotverified = nil;
         bezier2Path.usesEvenOddFillRule = YES;
         [color setFill];
         [bezier2Path fill];
-        
-        
+
+
         //// Bezier 3 Drawing
         UIBezierPath* bezier3Path = [UIBezierPath bezierPath];
         [bezier3Path moveToPoint: CGPointMake(4, 0)];
@@ -4662,7 +4662,7 @@ static UIImage* _imageOfShieldnotverified = nil;
 
 + (void)drawIcon_0x741_32ptWithColor: (UIColor*)color
 {
-    
+
     //// Group 2
     {
         //// Bezier Drawing
@@ -4684,8 +4684,8 @@ static UIImage* _imageOfShieldnotverified = nil;
         bezierPath.usesEvenOddFillRule = YES;
         [color setFill];
         [bezierPath fill];
-        
-        
+
+
         //// Bezier 2 Drawing
         UIBezierPath* bezier2Path = [UIBezierPath bezierPath];
         [bezier2Path moveToPoint: CGPointMake(46.44, 27.05)];
@@ -4749,7 +4749,7 @@ static UIImage* _imageOfShieldnotverified = nil;
 
 + (void)drawIcon_0x742_32ptWithColor: (UIColor*)color
 {
-    
+
     //// Bezier Drawing
     UIBezierPath* bezierPath = [UIBezierPath bezierPath];
     [bezierPath moveToPoint: CGPointMake(11, 64)];
@@ -4792,7 +4792,7 @@ static UIImage* _imageOfShieldnotverified = nil;
 
 + (void)drawIcon_0x743_32ptWithColor: (UIColor*)color
 {
-    
+
     //// Bezier Drawing
     UIBezierPath* bezierPath = [UIBezierPath bezierPath];
     [bezierPath moveToPoint: CGPointMake(32.98, 54.15)];
@@ -4816,7 +4816,7 @@ static UIImage* _imageOfShieldnotverified = nil;
 
 + (void)drawIcon_0x744_32ptWithColor: (UIColor*)color
 {
-    
+
     //// Group 2
     {
         //// Bezier Drawing
@@ -4842,8 +4842,8 @@ static UIImage* _imageOfShieldnotverified = nil;
         bezierPath.usesEvenOddFillRule = YES;
         [color setFill];
         [bezierPath fill];
-        
-        
+
+
         //// Rectangle Drawing
         UIBezierPath* rectanglePath = [UIBezierPath bezierPathWithRect: CGRectMake(12, 55, 37, 9)];
         [color setFill];
@@ -4853,7 +4853,7 @@ static UIImage* _imageOfShieldnotverified = nil;
 
 + (void)drawIcon_0x745_32ptWithColor: (UIColor*)color
 {
-    
+
     //// Bezier Drawing
     UIBezierPath* bezierPath = [UIBezierPath bezierPath];
     [bezierPath moveToPoint: CGPointMake(20, 28.18)];
@@ -4880,8 +4880,8 @@ static UIImage* _imageOfShieldnotverified = nil;
     bezierPath.usesEvenOddFillRule = YES;
     [color setFill];
     [bezierPath fill];
-    
-    
+
+
     //// Bezier 2 Drawing
     UIBezierPath* bezier2Path = [UIBezierPath bezierPath];
     [bezier2Path moveToPoint: CGPointMake(5, 28.18)];
@@ -4912,7 +4912,7 @@ static UIImage* _imageOfShieldnotverified = nil;
 
 + (void)drawIcon_0x746_32ptWithColor: (UIColor*)color
 {
-    
+
     //// Group 2
     {
         //// Bezier Drawing
@@ -4941,8 +4941,8 @@ static UIImage* _imageOfShieldnotverified = nil;
         bezierPath.usesEvenOddFillRule = YES;
         [color setFill];
         [bezierPath fill];
-        
-        
+
+
         //// Bezier 2 Drawing
         UIBezierPath* bezier2Path = [UIBezierPath bezierPath];
         [bezier2Path moveToPoint: CGPointMake(0, 29.42)];
@@ -4966,8 +4966,8 @@ static UIImage* _imageOfShieldnotverified = nil;
         bezier2Path.usesEvenOddFillRule = YES;
         [color setFill];
         [bezier2Path fill];
-        
-        
+
+
         //// Bezier 3 Drawing
         UIBezierPath* bezier3Path = [UIBezierPath bezierPath];
         [bezier3Path moveToPoint: CGPointMake(4.11, 57.22)];
@@ -4993,8 +4993,8 @@ static UIImage* _imageOfShieldnotverified = nil;
         bezier3Path.usesEvenOddFillRule = YES;
         [color setFill];
         [bezier3Path fill];
-        
-        
+
+
         //// Bezier 4 Drawing
         UIBezierPath* bezier4Path = [UIBezierPath bezierPath];
         [bezier4Path moveToPoint: CGPointMake(4.08, 16.1)];
@@ -5017,7 +5017,7 @@ static UIImage* _imageOfShieldnotverified = nil;
 {
     //// General Declarations
     CGContextRef context = UIGraphicsGetCurrentContext();
-    
+
     //// Group 2
     {
         //// Bezier Drawing
@@ -5032,8 +5032,8 @@ static UIImage* _imageOfShieldnotverified = nil;
         [bezierPath closePath];
         [color setFill];
         [bezierPath fill];
-        
-        
+
+
         //// Bezier 2 Drawing
         UIBezierPath* bezier2Path = [UIBezierPath bezierPath];
         [bezier2Path moveToPoint: CGPointMake(19.6, 17.16)];
@@ -5046,24 +5046,24 @@ static UIImage* _imageOfShieldnotverified = nil;
         [bezier2Path closePath];
         [color setFill];
         [bezier2Path fill];
-        
-        
+
+
         //// Rectangle Drawing
         CGContextSaveGState(context);
         CGContextTranslateCTM(context, 33.04, 32);
         CGContextRotateCTM(context, 12.1 * M_PI/180);
-        
+
         UIBezierPath* rectanglePath = [UIBezierPath bezierPathWithRect: CGRectMake(-4.25, -30.61, 8.5, 61.21)];
         [color setFill];
         [rectanglePath fill];
-        
+
         CGContextRestoreGState(context);
     }
 }
 
 + (void)drawIcon_0x269_32ptWithColor: (UIColor*)color
 {
-    
+
     //// Group 2
     {
         //// Bezier Drawing
@@ -5092,8 +5092,8 @@ static UIImage* _imageOfShieldnotverified = nil;
         [bezierPath closePath];
         [color setFill];
         [bezierPath fill];
-        
-        
+
+
         //// Bezier 2 Drawing
         UIBezierPath* bezier2Path = [UIBezierPath bezierPath];
         [bezier2Path moveToPoint: CGPointMake(36, 28)];
@@ -5118,7 +5118,7 @@ static UIImage* _imageOfShieldnotverified = nil;
 
 + (void)drawIcon_0x748_32ptWithColor: (UIColor*)color
 {
-    
+
     //// Bezier Drawing
     UIBezierPath* bezierPath = [UIBezierPath bezierPath];
     [bezierPath moveToPoint: CGPointMake(32, 64)];
@@ -5140,7 +5140,7 @@ static UIImage* _imageOfShieldnotverified = nil;
 
 + (void)drawIcon_0x749_32ptWithColor: (UIColor*)color
 {
-    
+
     //// Bezier Drawing
     UIBezierPath* bezierPath = [UIBezierPath bezierPath];
     [bezierPath moveToPoint: CGPointMake(32, 64)];
@@ -5162,7 +5162,7 @@ static UIImage* _imageOfShieldnotverified = nil;
 
 + (void)drawIcon_0x750_32ptWithColor: (UIColor*)color
 {
-    
+
     //// Bezier Drawing
     UIBezierPath* bezierPath = [UIBezierPath bezierPath];
     [bezierPath moveToPoint: CGPointMake(32, 64)];
@@ -5178,7 +5178,7 @@ static UIImage* _imageOfShieldnotverified = nil;
 
 + (void)drawIcon_0x751_32ptWithColor: (UIColor*)color
 {
-    
+
     //// Alert Drawing
     UIBezierPath* alertPath = [UIBezierPath bezierPath];
     [alertPath moveToPoint: CGPointMake(32, 64)];
@@ -5208,7 +5208,7 @@ static UIImage* _imageOfShieldnotverified = nil;
 
 + (void)drawIcon_0x752_32ptWithColor: (UIColor*)color
 {
-    
+
     //// Service Drawing
     UIBezierPath* servicePath = [UIBezierPath bezierPath];
     [servicePath moveToPoint: CGPointMake(20.44, 23.59)];
@@ -5265,7 +5265,7 @@ static UIImage* _imageOfShieldnotverified = nil;
 
 + (void)drawIcon_0x753_32ptWithColor: (UIColor*)color
 {
-    
+
     //// DownArrow Drawing
     UIBezierPath* downArrowPath = [UIBezierPath bezierPath];
     [downArrowPath moveToPoint: CGPointMake(40.25, 52.03)];
@@ -5286,7 +5286,7 @@ static UIImage* _imageOfShieldnotverified = nil;
 
 + (void)drawIcon_0x754_32ptWithColor: (UIColor*)color
 {
-    
+
     //// Group Drawing
     UIBezierPath* groupPath = [UIBezierPath bezierPath];
     [groupPath moveToPoint: CGPointMake(40, 8)];
@@ -5331,7 +5331,7 @@ static UIImage* _imageOfShieldnotverified = nil;
 
 + (void)drawIcon_0x755_32ptWithColor: (UIColor*)color
 {
-    
+
     //// Arrow Drawing
     UIBezierPath* arrowPath = [UIBezierPath bezierPath];
     [arrowPath moveToPoint: CGPointMake(13, 8.15)];
@@ -5347,26 +5347,71 @@ static UIImage* _imageOfShieldnotverified = nil;
     [arrowPath fill];
 }
 
++ (void)drawIcon_0x756_32ptWithColor: (UIColor*)color
+{
+
+    //// Guest Drawing
+    UIBezierPath* guestPath = [UIBezierPath bezierPath];
+    [guestPath moveToPoint: CGPointMake(24, 4)];
+    [guestPath addCurveToPoint: CGPointMake(28, 0) controlPoint1: CGPointMake(24, 1.79) controlPoint2: CGPointMake(25.79, 0)];
+    [guestPath addLineToPoint: CGPointMake(36, 0)];
+    [guestPath addCurveToPoint: CGPointMake(40, 4) controlPoint1: CGPointMake(38.21, 0) controlPoint2: CGPointMake(40, 1.79)];
+    [guestPath addLineToPoint: CGPointMake(52, 4)];
+    [guestPath addCurveToPoint: CGPointMake(60, 12) controlPoint1: CGPointMake(56.42, 4) controlPoint2: CGPointMake(60, 7.58)];
+    [guestPath addLineToPoint: CGPointMake(60, 56)];
+    [guestPath addCurveToPoint: CGPointMake(52, 64) controlPoint1: CGPointMake(60, 60.42) controlPoint2: CGPointMake(56.42, 64)];
+    [guestPath addLineToPoint: CGPointMake(12, 64)];
+    [guestPath addCurveToPoint: CGPointMake(4, 56) controlPoint1: CGPointMake(7.58, 64) controlPoint2: CGPointMake(4, 60.42)];
+    [guestPath addLineToPoint: CGPointMake(4, 12)];
+    [guestPath addCurveToPoint: CGPointMake(12, 4) controlPoint1: CGPointMake(4, 7.58) controlPoint2: CGPointMake(7.58, 4)];
+    [guestPath addLineToPoint: CGPointMake(24, 4)];
+    [guestPath closePath];
+    [guestPath moveToPoint: CGPointMake(26, 8)];
+    [guestPath addCurveToPoint: CGPointMake(24, 10) controlPoint1: CGPointMake(24.9, 8) controlPoint2: CGPointMake(24, 8.9)];
+    [guestPath addCurveToPoint: CGPointMake(26, 12) controlPoint1: CGPointMake(24, 11.1) controlPoint2: CGPointMake(24.9, 12)];
+    [guestPath addLineToPoint: CGPointMake(38, 12)];
+    [guestPath addCurveToPoint: CGPointMake(40, 10) controlPoint1: CGPointMake(39.1, 12) controlPoint2: CGPointMake(40, 11.1)];
+    [guestPath addCurveToPoint: CGPointMake(38, 8) controlPoint1: CGPointMake(40, 8.9) controlPoint2: CGPointMake(39.1, 8)];
+    [guestPath addLineToPoint: CGPointMake(26, 8)];
+    [guestPath closePath];
+    [guestPath moveToPoint: CGPointMake(32, 36)];
+    [guestPath addCurveToPoint: CGPointMake(40, 28) controlPoint1: CGPointMake(36.42, 36) controlPoint2: CGPointMake(40, 32.42)];
+    [guestPath addCurveToPoint: CGPointMake(32, 20) controlPoint1: CGPointMake(40, 23.58) controlPoint2: CGPointMake(36.42, 20)];
+    [guestPath addCurveToPoint: CGPointMake(24, 28) controlPoint1: CGPointMake(27.58, 20) controlPoint2: CGPointMake(24, 23.58)];
+    [guestPath addCurveToPoint: CGPointMake(32, 36) controlPoint1: CGPointMake(24, 32.42) controlPoint2: CGPointMake(27.58, 36)];
+    [guestPath closePath];
+    [guestPath moveToPoint: CGPointMake(24, 40)];
+    [guestPath addCurveToPoint: CGPointMake(16, 48) controlPoint1: CGPointMake(19.58, 40) controlPoint2: CGPointMake(16, 43.58)];
+    [guestPath addLineToPoint: CGPointMake(16, 52)];
+    [guestPath addLineToPoint: CGPointMake(48, 52)];
+    [guestPath addLineToPoint: CGPointMake(48, 48)];
+    [guestPath addCurveToPoint: CGPointMake(40, 40) controlPoint1: CGPointMake(48, 43.58) controlPoint2: CGPointMake(44.42, 40)];
+    [guestPath addLineToPoint: CGPointMake(24, 40)];
+    [guestPath closePath];
+    [color setFill];
+    [guestPath fill];
+}
+
 + (void)drawMissedcallWithAccent: (UIColor*)accent
 {
     //// Color Declarations
     UIColor* accentopacity64 = [accent colorWithAlphaComponent: 0.64];
     UIColor* accentopacity32 = [accent colorWithAlphaComponent: 0.32];
-    
+
     //// Oval Drawing
     UIBezierPath* ovalPath = [UIBezierPath bezierPathWithOvalInRect: CGRectMake(1, 1, 38, 38)];
     [accentopacity32 setStroke];
     ovalPath.lineWidth = 1;
     [ovalPath stroke];
-    
-    
+
+
     //// Oval 2 Drawing
     UIBezierPath* oval2Path = [UIBezierPath bezierPathWithOvalInRect: CGRectMake(5, 5, 30, 30)];
     [accentopacity64 setStroke];
     oval2Path.lineWidth = 1;
     [oval2Path stroke];
-    
-    
+
+
     //// Oval 3 Drawing
     UIBezierPath* oval3Path = [UIBezierPath bezierPathWithOvalInRect: CGRectMake(9, 9, 22, 22)];
     [accent setStroke];
@@ -5376,7 +5421,7 @@ static UIImage* _imageOfShieldnotverified = nil;
 
 + (void)drawYoutubeWithColor: (UIColor*)color
 {
-    
+
     //// Bezier Drawing
     UIBezierPath* bezierPath = [UIBezierPath bezierPath];
     [bezierPath moveToPoint: CGPointMake(35.71, 12.99)];
@@ -5562,21 +5607,21 @@ static UIImage* _imageOfShieldnotverified = nil;
     //// Color Declarations
     UIColor* accentopacity64 = [accent colorWithAlphaComponent: 0.64];
     UIColor* accentopacity32 = [accent colorWithAlphaComponent: 0.32];
-    
+
     //// Oval Drawing
     UIBezierPath* ovalPath = [UIBezierPath bezierPathWithOvalInRect: CGRectMake(1, 1, 38, 38)];
     [accentopacity32 setStroke];
     ovalPath.lineWidth = 1;
     [ovalPath stroke];
-    
-    
+
+
     //// Oval 2 Drawing
     UIBezierPath* oval2Path = [UIBezierPath bezierPathWithOvalInRect: CGRectMake(5, 5, 30, 30)];
     [accentopacity64 setStroke];
     oval2Path.lineWidth = 1;
     [oval2Path stroke];
-    
-    
+
+
     //// Text Drawing
     UIBezierPath* textPath = [UIBezierPath bezierPath];
     [textPath moveToPoint: CGPointMake(17.02, 10)];
@@ -5630,7 +5675,7 @@ static UIImage* _imageOfShieldnotverified = nil;
 
 + (void)drawVimeoWithColor: (UIColor*)color
 {
-    
+
     //// logo-vimeo Drawing
     UIBezierPath* logovimeoPath = [UIBezierPath bezierPath];
     [logovimeoPath moveToPoint: CGPointMake(26.16, 0.76)];
@@ -5784,7 +5829,7 @@ static UIImage* _imageOfShieldnotverified = nil;
     UIColor* fillColor9 = [UIColor colorWithRed: 0 green: 0 blue: 0 alpha: 1];
     UIColor* black16 = [UIColor colorWithRed: 0 green: 0 blue: 0 alpha: 0.16];
     UIColor* fillColor12 = [UIColor colorWithRed: 0 green: 0 blue: 0 alpha: 0.4];
-    
+
     //// Group 2
     {
         //// Bezier Drawing
@@ -5798,14 +5843,14 @@ static UIImage* _imageOfShieldnotverified = nil;
         bezierPath.usesEvenOddFillRule = YES;
         [black16 setFill];
         [bezierPath fill];
-        
-        
+
+
         //// Oval Drawing
         UIBezierPath* ovalPath = [UIBezierPath bezierPathWithOvalInRect: CGRectMake(6, 6, 6, 6)];
         [fillColor9 setFill];
         [ovalPath fill];
-        
-        
+
+
         //// Oval 2 Drawing
         UIBezierPath* oval2Path = [UIBezierPath bezierPathWithOvalInRect: CGRectMake(3, 3, 12, 12)];
         [fillColor12 setFill];
@@ -5817,7 +5862,7 @@ static UIImage* _imageOfShieldnotverified = nil;
 {
     //// General Declarations
     CGContextRef context = UIGraphicsGetCurrentContext();
-    
+
     //// Group 2
     {
         //// Group 3
@@ -5825,7 +5870,7 @@ static UIImage* _imageOfShieldnotverified = nil;
             CGContextSaveGState(context);
             CGContextSetAlpha(context, 0.32);
             CGContextBeginTransparencyLayer(context, NULL);
-            
+
             //// Clip Clip
             UIBezierPath* clipPath = [UIBezierPath bezierPath];
             [clipPath moveToPoint: CGPointMake(9, 18)];
@@ -5836,8 +5881,8 @@ static UIImage* _imageOfShieldnotverified = nil;
             [clipPath closePath];
             clipPath.usesEvenOddFillRule = YES;
             [clipPath addClip];
-            
-            
+
+
             //// Bezier Drawing
             UIBezierPath* bezierPath = [UIBezierPath bezierPath];
             [bezierPath moveToPoint: CGPointMake(9, 18)];
@@ -5849,53 +5894,53 @@ static UIImage* _imageOfShieldnotverified = nil;
             [color setStroke];
             bezierPath.lineWidth = 2;
             [bezierPath stroke];
-            
-            
+
+
             CGContextEndTransparencyLayer(context);
             CGContextRestoreGState(context);
         }
-        
-        
+
+
         //// Group 4
         {
             CGContextSaveGState(context);
             CGContextSetAlpha(context, 0.72);
             CGContextBeginTransparencyLayer(context, NULL);
-            
+
             //// Clip Clip 2
             UIBezierPath* clip2Path = [UIBezierPath bezierPathWithOvalInRect: CGRectMake(3, 3, 12, 12)];
             [clip2Path addClip];
-            
-            
+
+
             //// Oval Drawing
             UIBezierPath* ovalPath = [UIBezierPath bezierPathWithOvalInRect: CGRectMake(3, 3, 12, 12)];
             [color setStroke];
             ovalPath.lineWidth = 2;
             [ovalPath stroke];
-            
-            
+
+
             CGContextEndTransparencyLayer(context);
             CGContextRestoreGState(context);
         }
-        
-        
+
+
         //// Group 5
         {
             CGContextSaveGState(context);
             CGContextBeginTransparencyLayer(context, NULL);
-            
+
             //// Clip Clip 3
             UIBezierPath* clip3Path = [UIBezierPath bezierPathWithOvalInRect: CGRectMake(6, 6, 6, 6)];
             [clip3Path addClip];
-            
-            
+
+
             //// Oval 3 Drawing
             UIBezierPath* oval3Path = [UIBezierPath bezierPathWithOvalInRect: CGRectMake(6, 6, 6, 6)];
             [color setStroke];
             oval3Path.lineWidth = 2;
             [oval3Path stroke];
-            
-            
+
+
             CGContextEndTransparencyLayer(context);
             CGContextRestoreGState(context);
         }
@@ -5904,7 +5949,7 @@ static UIImage* _imageOfShieldnotverified = nil;
 
 + (void)drawLogoWithColor: (UIColor*)color
 {
-    
+
     //// Bezier 2 Drawing
     UIBezierPath* bezier2Path = [UIBezierPath bezierPath];
     [bezier2Path moveToPoint: CGPointMake(256.09, 140.1)];
@@ -5944,7 +5989,7 @@ static UIImage* _imageOfShieldnotverified = nil;
 
 + (void)drawWireWithColor: (UIColor*)color
 {
-    
+
     //// Logo 2 Drawing
     UIBezierPath* logo2Path = [UIBezierPath bezierPath];
     [logo2Path moveToPoint: CGPointMake(42.72, 41.02)];
@@ -6045,7 +6090,7 @@ static UIImage* _imageOfShieldnotverified = nil;
     //// Color Declarations
     UIColor* e2EE = [UIColor colorWithRed: 0 green: 0.588 blue: 0.941 alpha: 1];
     UIColor* black24 = [UIColor colorWithRed: 0 green: 0 blue: 0 alpha: 0.24];
-    
+
     //// path-1 Drawing
     UIBezierPath* path1Path = [UIBezierPath bezierPath];
     [path1Path moveToPoint: CGPointMake(15, 1.87)];
@@ -6059,8 +6104,8 @@ static UIImage* _imageOfShieldnotverified = nil;
     path1Path.usesEvenOddFillRule = YES;
     [e2EE setFill];
     [path1Path fill];
-    
-    
+
+
     //// Shadow Drawing
     UIBezierPath* shadowPath = [UIBezierPath bezierPath];
     [shadowPath moveToPoint: CGPointMake(15, 1.87)];
@@ -6078,7 +6123,7 @@ static UIImage* _imageOfShieldnotverified = nil;
 {
     //// Color Declarations
     UIColor* e2EE = [UIColor colorWithRed: 0 green: 0.588 blue: 0.941 alpha: 1];
-    
+
     //// Bezier Drawing
     UIBezierPath* bezierPath = [UIBezierPath bezierPath];
     [bezierPath moveToPoint: CGPointMake(15, 1.87)];
@@ -6105,7 +6150,7 @@ static UIImage* _imageOfShieldnotverified = nil;
 
 + (void)drawShieldWithColor: (UIColor*)color
 {
-    
+
     //// Bezier 56 Drawing
     UIBezierPath* bezier56Path = [UIBezierPath bezierPath];
     [bezier56Path moveToPoint: CGPointMake(148.01, 70.64)];
@@ -7859,11 +7904,11 @@ static UIImage* _imageOfShieldnotverified = nil;
     CGRect resizedFrame = WireStyleKitResizingBehaviorApply(resizing, CGRectMake(0, 0, 260, 260), targetFrame);
     CGContextTranslateCTM(context, resizedFrame.origin.x, resizedFrame.origin.y);
     CGContextScaleCTM(context, resizedFrame.size.width / 260, resizedFrame.size.height / 260);
-    
-    
+
+
     //// Color Declarations
     UIColor* white80 = [UIColor colorWithRed: 1 green: 1 blue: 1 alpha: 0.8];
-    
+
     //// Bezier Drawing
     UIBezierPath* bezierPath = [UIBezierPath bezierPath];
     [bezierPath moveToPoint: CGPointMake(130, 260)];
@@ -7891,7 +7936,7 @@ static UIImage* _imageOfShieldnotverified = nil;
     [bezierPath fill];
     
     CGContextRestoreGState(context);
-    
+
 }
 
 + (void)drawSpaceWithColor: (UIColor*)color
@@ -7909,8 +7954,8 @@ static UIImage* _imageOfShieldnotverified = nil;
     CGRect resizedFrame = WireStyleKitResizingBehaviorApply(resizing, CGRectMake(0, 0, 28, 28), targetFrame);
     CGContextTranslateCTM(context, resizedFrame.origin.x, resizedFrame.origin.y);
     CGContextScaleCTM(context, resizedFrame.size.width / 28, resizedFrame.size.height / 28);
-    
-    
+
+
     //// Bezier Drawing
     UIBezierPath* bezierPath = [UIBezierPath bezierPath];
     [bezierPath moveToPoint: CGPointMake(16.03, 0.55)];
@@ -7938,7 +7983,7 @@ static UIImage* _imageOfShieldnotverified = nil;
     [bezierPath fill];
     
     CGContextRestoreGState(context);
-    
+
 }
 
 + (void)drawSpaceFocusWithColor: (UIColor*)color
@@ -7956,8 +8001,8 @@ static UIImage* _imageOfShieldnotverified = nil;
     CGRect resizedFrame = WireStyleKitResizingBehaviorApply(resizing, CGRectMake(0, 0, 36, 36), targetFrame);
     CGContextTranslateCTM(context, resizedFrame.origin.x, resizedFrame.origin.y);
     CGContextScaleCTM(context, resizedFrame.size.width / 36, resizedFrame.size.height / 36);
-    
-    
+
+
     //// Bezier Drawing
     UIBezierPath* bezierPath = [UIBezierPath bezierPath];
     [bezierPath moveToPoint: CGPointMake(21.5, 0.94)];
@@ -7994,19 +8039,19 @@ static UIImage* _imageOfShieldnotverified = nil;
     [bezierPath fill];
     
     CGContextRestoreGState(context);
-    
+
 }
 
 + (void)drawMentionsWithFrame: (CGRect)frame backgroundColor: (UIColor*)backgroundColor
 {
     //// Color Declarations
     UIColor* black40 = [backgroundColor colorWithAlphaComponent: 0.4];
-    
-    
+
+
     //// Subframes
     CGRect frame2 = CGRectMake(CGRectGetMinX(frame) + floor((frame.size.width - 16) * 0.50000 + 0.5), CGRectGetMinY(frame) + floor((frame.size.height - 12) * 1.00000 + 0.5), 16, 12);
-    
-    
+
+
     //// Bezier Drawing
     UIBezierPath* bezierPath = [UIBezierPath bezierPath];
     [bezierPath moveToPoint: CGPointMake(CGRectGetMaxX(frame) - 25, CGRectGetMinY(frame) + 1)];
@@ -8022,8 +8067,8 @@ static UIImage* _imageOfShieldnotverified = nil;
     [bezierPath closePath];
     [black40 setFill];
     [bezierPath fill];
-    
-    
+
+
     //// Bezier 2 Drawing
     UIBezierPath* bezier2Path = [UIBezierPath bezierPath];
     [bezier2Path moveToPoint: CGPointMake(CGRectGetMaxX(frame) - 24.28, CGRectGetMinY(frame))];
@@ -8043,7 +8088,7 @@ static UIImage* _imageOfShieldnotverified = nil;
 
 + (void)drawTabWithColor: (UIColor*)color
 {
-    
+
     //// Bezier Drawing
     UIBezierPath* bezierPath = [UIBezierPath bezierPath];
     [bezierPath moveToPoint: CGPointMake(0, 8.5)];
@@ -8063,10 +8108,10 @@ static UIImage* _imageOfShieldnotverified = nil;
 {
     UIGraphicsBeginImageContextWithOptions(CGSizeMake(64, 64), NO, 0);
     [WireStyleKit drawIcon_0x100_32ptWithColor: color];
-    
+
     UIImage* imageOfIcon_0x100_32pt = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
-    
+
     return imageOfIcon_0x100_32pt;
 }
 
@@ -8074,10 +8119,10 @@ static UIImage* _imageOfShieldnotverified = nil;
 {
     UIGraphicsBeginImageContextWithOptions(CGSizeMake(64, 64), NO, 0);
     [WireStyleKit drawIcon_0x102_32ptWithColor: color];
-    
+
     UIImage* imageOfIcon_0x102_32pt = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
-    
+
     return imageOfIcon_0x102_32pt;
 }
 
@@ -8085,10 +8130,10 @@ static UIImage* _imageOfShieldnotverified = nil;
 {
     UIGraphicsBeginImageContextWithOptions(CGSizeMake(64, 64), NO, 0);
     [WireStyleKit drawIcon_0x104_32ptWithColor: color];
-    
+
     UIImage* imageOfIcon_0x104_32pt = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
-    
+
     return imageOfIcon_0x104_32pt;
 }
 
@@ -8096,10 +8141,10 @@ static UIImage* _imageOfShieldnotverified = nil;
 {
     UIGraphicsBeginImageContextWithOptions(CGSizeMake(64, 64), NO, 0);
     [WireStyleKit drawIcon_0x120_32ptWithColor: color];
-    
+
     UIImage* imageOfIcon_0x120_32pt = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
-    
+
     return imageOfIcon_0x120_32pt;
 }
 
@@ -8107,10 +8152,10 @@ static UIImage* _imageOfShieldnotverified = nil;
 {
     UIGraphicsBeginImageContextWithOptions(CGSizeMake(64, 64), NO, 0);
     [WireStyleKit drawIcon_0x125_32ptWithColor: color];
-    
+
     UIImage* imageOfIcon_0x125_32pt = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
-    
+
     return imageOfIcon_0x125_32pt;
 }
 
@@ -8118,10 +8163,10 @@ static UIImage* _imageOfShieldnotverified = nil;
 {
     UIGraphicsBeginImageContextWithOptions(CGSizeMake(64, 64), NO, 0);
     [WireStyleKit drawIcon_0x137_32ptWithColor: color];
-    
+
     UIImage* imageOfIcon_0x137_32pt = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
-    
+
     return imageOfIcon_0x137_32pt;
 }
 
@@ -8129,10 +8174,10 @@ static UIImage* _imageOfShieldnotverified = nil;
 {
     UIGraphicsBeginImageContextWithOptions(CGSizeMake(64, 64), NO, 0);
     [WireStyleKit drawIcon_0x143_32ptWithColor: color];
-    
+
     UIImage* imageOfIcon_0x143_32pt = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
-    
+
     return imageOfIcon_0x143_32pt;
 }
 
@@ -8140,10 +8185,10 @@ static UIImage* _imageOfShieldnotverified = nil;
 {
     UIGraphicsBeginImageContextWithOptions(CGSizeMake(64, 64), NO, 0);
     [WireStyleKit drawIcon_0x144_32ptWithColor: color];
-    
+
     UIImage* imageOfIcon_0x144_32pt = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
-    
+
     return imageOfIcon_0x144_32pt;
 }
 
@@ -8151,10 +8196,10 @@ static UIImage* _imageOfShieldnotverified = nil;
 {
     UIGraphicsBeginImageContextWithOptions(CGSizeMake(64, 64), NO, 0);
     [WireStyleKit drawIcon_0x145_32ptWithColor: color];
-    
+
     UIImage* imageOfIcon_0x145_32pt = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
-    
+
     return imageOfIcon_0x145_32pt;
 }
 
@@ -8162,10 +8207,10 @@ static UIImage* _imageOfShieldnotverified = nil;
 {
     UIGraphicsBeginImageContextWithOptions(CGSizeMake(64, 64), NO, 0);
     [WireStyleKit drawIcon_0x150_32ptWithColor: color];
-    
+
     UIImage* imageOfIcon_0x150_32pt = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
-    
+
     return imageOfIcon_0x150_32pt;
 }
 
@@ -8173,10 +8218,10 @@ static UIImage* _imageOfShieldnotverified = nil;
 {
     UIGraphicsBeginImageContextWithOptions(CGSizeMake(64, 64), NO, 0);
     [WireStyleKit drawIcon_0x158_32ptWithColor: color];
-    
+
     UIImage* imageOfIcon_0x158_32pt = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
-    
+
     return imageOfIcon_0x158_32pt;
 }
 
@@ -8184,10 +8229,10 @@ static UIImage* _imageOfShieldnotverified = nil;
 {
     UIGraphicsBeginImageContextWithOptions(CGSizeMake(64, 64), NO, 0);
     [WireStyleKit drawIcon_0x162_32ptWithColor: color];
-    
+
     UIImage* imageOfIcon_0x162_32pt = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
-    
+
     return imageOfIcon_0x162_32pt;
 }
 
@@ -8195,10 +8240,10 @@ static UIImage* _imageOfShieldnotverified = nil;
 {
     UIGraphicsBeginImageContextWithOptions(CGSizeMake(64, 64), NO, 0);
     [WireStyleKit drawIcon_0x177_32ptWithColor: color];
-    
+
     UIImage* imageOfIcon_0x177_32pt = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
-    
+
     return imageOfIcon_0x177_32pt;
 }
 
@@ -8206,10 +8251,10 @@ static UIImage* _imageOfShieldnotverified = nil;
 {
     UIGraphicsBeginImageContextWithOptions(CGSizeMake(64, 64), NO, 0);
     [WireStyleKit drawIcon_0x193_32ptWithColor: color];
-    
+
     UIImage* imageOfIcon_0x193_32pt = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
-    
+
     return imageOfIcon_0x193_32pt;
 }
 
@@ -8217,10 +8262,10 @@ static UIImage* _imageOfShieldnotverified = nil;
 {
     UIGraphicsBeginImageContextWithOptions(CGSizeMake(64, 64), NO, 0);
     [WireStyleKit drawIcon_0x194_32ptWithColor: color];
-    
+
     UIImage* imageOfIcon_0x194_32pt = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
-    
+
     return imageOfIcon_0x194_32pt;
 }
 
@@ -8228,10 +8273,10 @@ static UIImage* _imageOfShieldnotverified = nil;
 {
     UIGraphicsBeginImageContextWithOptions(CGSizeMake(64, 64), NO, 0);
     [WireStyleKit drawIcon_0x195_32ptWithColor: color];
-    
+
     UIImage* imageOfIcon_0x195_32pt = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
-    
+
     return imageOfIcon_0x195_32pt;
 }
 
@@ -8239,10 +8284,10 @@ static UIImage* _imageOfShieldnotverified = nil;
 {
     UIGraphicsBeginImageContextWithOptions(CGSizeMake(64, 64), NO, 0);
     [WireStyleKit drawIcon_0x197_32ptWithColor: color];
-    
+
     UIImage* imageOfIcon_0x197_32pt = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
-    
+
     return imageOfIcon_0x197_32pt;
 }
 
@@ -8250,10 +8295,10 @@ static UIImage* _imageOfShieldnotverified = nil;
 {
     UIGraphicsBeginImageContextWithOptions(CGSizeMake(64, 64), NO, 0);
     [WireStyleKit drawIcon_0x205_32ptWithColor: color];
-    
+
     UIImage* imageOfIcon_0x205_32pt = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
-    
+
     return imageOfIcon_0x205_32pt;
 }
 
@@ -8261,10 +8306,10 @@ static UIImage* _imageOfShieldnotverified = nil;
 {
     UIGraphicsBeginImageContextWithOptions(CGSizeMake(64, 64), NO, 0);
     [WireStyleKit drawIcon_0x212_32ptWithColor: color];
-    
+
     UIImage* imageOfIcon_0x212_32pt = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
-    
+
     return imageOfIcon_0x212_32pt;
 }
 
@@ -8272,10 +8317,10 @@ static UIImage* _imageOfShieldnotverified = nil;
 {
     UIGraphicsBeginImageContextWithOptions(CGSizeMake(64, 64), NO, 0);
     [WireStyleKit drawIcon_0x198_32ptWithColor: color];
-    
+
     UIImage* imageOfIcon_0x198_32pt = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
-    
+
     return imageOfIcon_0x198_32pt;
 }
 
@@ -8283,10 +8328,10 @@ static UIImage* _imageOfShieldnotverified = nil;
 {
     UIGraphicsBeginImageContextWithOptions(CGSizeMake(64, 64), NO, 0);
     [WireStyleKit drawIcon_0x217_32ptWithColor: color];
-    
+
     UIImage* imageOfIcon_0x217_32pt = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
-    
+
     return imageOfIcon_0x217_32pt;
 }
 
@@ -8294,10 +8339,10 @@ static UIImage* _imageOfShieldnotverified = nil;
 {
     UIGraphicsBeginImageContextWithOptions(CGSizeMake(64, 64), NO, 0);
     [WireStyleKit drawIcon_0x117_32ptWithColor: color];
-    
+
     UIImage* imageOfIcon_0x117_32pt = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
-    
+
     return imageOfIcon_0x117_32pt;
 }
 
@@ -8305,10 +8350,10 @@ static UIImage* _imageOfShieldnotverified = nil;
 {
     UIGraphicsBeginImageContextWithOptions(CGSizeMake(48, 48), NO, 0);
     [WireStyleKit drawIcon_0x126_24ptWithColor: color];
-    
+
     UIImage* imageOfIcon_0x126_24pt = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
-    
+
     return imageOfIcon_0x126_24pt;
 }
 
@@ -8316,10 +8361,10 @@ static UIImage* _imageOfShieldnotverified = nil;
 {
     UIGraphicsBeginImageContextWithOptions(CGSizeMake(16, 16), NO, 0);
     [WireStyleKit drawIcon_0x128_8ptWithColor: color];
-    
+
     UIImage* imageOfIcon_0x128_8pt = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
-    
+
     return imageOfIcon_0x128_8pt;
 }
 
@@ -8327,10 +8372,10 @@ static UIImage* _imageOfShieldnotverified = nil;
 {
     UIGraphicsBeginImageContextWithOptions(CGSizeMake(64, 64), NO, 0);
     [WireStyleKit drawIcon_0x163_32ptWithColor: color];
-    
+
     UIImage* imageOfIcon_0x163_32pt = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
-    
+
     return imageOfIcon_0x163_32pt;
 }
 
@@ -8338,10 +8383,10 @@ static UIImage* _imageOfShieldnotverified = nil;
 {
     UIGraphicsBeginImageContextWithOptions(CGSizeMake(64, 64), NO, 0);
     [WireStyleKit drawIcon_0x221_32ptWithColor: color];
-    
+
     UIImage* imageOfIcon_0x221_32pt = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
-    
+
     return imageOfIcon_0x221_32pt;
 }
 
@@ -8349,10 +8394,10 @@ static UIImage* _imageOfShieldnotverified = nil;
 {
     UIGraphicsBeginImageContextWithOptions(CGSizeMake(40, 40), NO, 0);
     [WireStyleKit drawInviteWithColor: color];
-    
+
     UIImage* imageOfInvite = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
-    
+
     return imageOfInvite;
 }
 
@@ -8360,10 +8405,10 @@ static UIImage* _imageOfShieldnotverified = nil;
 {
     UIGraphicsBeginImageContextWithOptions(CGSizeMake(64, 64), NO, 0);
     [WireStyleKit drawIcon_0x123_32ptWithColor: color];
-    
+
     UIImage* imageOfIcon_0x123_32pt = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
-    
+
     return imageOfIcon_0x123_32pt;
 }
 
@@ -8371,10 +8416,10 @@ static UIImage* _imageOfShieldnotverified = nil;
 {
     UIGraphicsBeginImageContextWithOptions(CGSizeMake(64, 64), NO, 0);
     [WireStyleKit drawIcon_0x128_32ptWithColor: color];
-    
+
     UIImage* imageOfIcon_0x128_32pt = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
-    
+
     return imageOfIcon_0x128_32pt;
 }
 
@@ -8382,10 +8427,10 @@ static UIImage* _imageOfShieldnotverified = nil;
 {
     UIGraphicsBeginImageContextWithOptions(CGSizeMake(64, 64), NO, 0);
     [WireStyleKit drawIcon_0x113_32ptWithColor: color];
-    
+
     UIImage* imageOfIcon_0x113_32pt = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
-    
+
     return imageOfIcon_0x113_32pt;
 }
 
@@ -8393,10 +8438,10 @@ static UIImage* _imageOfShieldnotverified = nil;
 {
     UIGraphicsBeginImageContextWithOptions(CGSizeMake(64, 64), NO, 0);
     [WireStyleKit drawIcon_0x121_32ptWithColor: color];
-    
+
     UIImage* imageOfIcon_0x121_32pt = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
-    
+
     return imageOfIcon_0x121_32pt;
 }
 
@@ -8404,10 +8449,10 @@ static UIImage* _imageOfShieldnotverified = nil;
 {
     UIGraphicsBeginImageContextWithOptions(CGSizeMake(64, 64), NO, 0);
     [WireStyleKit drawIcon_0x111_32ptWithColor: color];
-    
+
     UIImage* imageOfIcon_0x111_32pt = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
-    
+
     return imageOfIcon_0x111_32pt;
 }
 
@@ -8415,10 +8460,10 @@ static UIImage* _imageOfShieldnotverified = nil;
 {
     UIGraphicsBeginImageContextWithOptions(CGSizeMake(64, 64), NO, 0);
     [WireStyleKit drawIcon_0x226_32ptWithColor: color];
-    
+
     UIImage* imageOfIcon_0x226_32pt = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
-    
+
     return imageOfIcon_0x226_32pt;
 }
 
@@ -8426,10 +8471,10 @@ static UIImage* _imageOfShieldnotverified = nil;
 {
     UIGraphicsBeginImageContextWithOptions(CGSizeMake(64, 64), NO, 0);
     [WireStyleKit drawIcon_0x164_32ptWithColor: color];
-    
+
     UIImage* imageOfIcon_0x164_32pt = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
-    
+
     return imageOfIcon_0x164_32pt;
 }
 
@@ -8437,10 +8482,10 @@ static UIImage* _imageOfShieldnotverified = nil;
 {
     UIGraphicsBeginImageContextWithOptions(CGSizeMake(56, 56), NO, 0);
     [WireStyleKit drawIcon_0x1420_28ptWithColor: color];
-    
+
     UIImage* imageOfIcon_0x1420_28pt = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
-    
+
     return imageOfIcon_0x1420_28pt;
 }
 
@@ -8448,10 +8493,10 @@ static UIImage* _imageOfShieldnotverified = nil;
 {
     UIGraphicsBeginImageContextWithOptions(CGSizeMake(64, 64), NO, 0);
     [WireStyleKit drawIcon_0x110_32ptWithColor: color];
-    
+
     UIImage* imageOfIcon_0x110_32pt = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
-    
+
     return imageOfIcon_0x110_32pt;
 }
 
@@ -8459,10 +8504,10 @@ static UIImage* _imageOfShieldnotverified = nil;
 {
     UIGraphicsBeginImageContextWithOptions(CGSizeMake(64, 64), NO, 0);
     [WireStyleKit drawIcon_0x103_32ptWithColor: color];
-    
+
     UIImage* imageOfIcon_0x103_32pt = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
-    
+
     return imageOfIcon_0x103_32pt;
 }
 
@@ -8470,10 +8515,10 @@ static UIImage* _imageOfShieldnotverified = nil;
 {
     UIGraphicsBeginImageContextWithOptions(CGSizeMake(64, 64), NO, 0);
     [WireStyleKit drawIcon_0x211_32ptWithColor: color];
-    
+
     UIImage* imageOfIcon_0x211_32pt = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
-    
+
     return imageOfIcon_0x211_32pt;
 }
 
@@ -8481,10 +8526,10 @@ static UIImage* _imageOfShieldnotverified = nil;
 {
     UIGraphicsBeginImageContextWithOptions(CGSizeMake(64, 64), NO, 0);
     [WireStyleKit drawIcon_0x142_32ptWithColor: color];
-    
+
     UIImage* imageOfIcon_0x142_32pt = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
-    
+
     return imageOfIcon_0x142_32pt;
 }
 
@@ -8492,10 +8537,10 @@ static UIImage* _imageOfShieldnotverified = nil;
 {
     UIGraphicsBeginImageContextWithOptions(CGSizeMake(64, 64), NO, 0);
     [WireStyleKit drawIcon_0x152_32ptWithColor: color];
-    
+
     UIImage* imageOfIcon_0x152_32pt = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
-    
+
     return imageOfIcon_0x152_32pt;
 }
 
@@ -8503,10 +8548,10 @@ static UIImage* _imageOfShieldnotverified = nil;
 {
     UIGraphicsBeginImageContextWithOptions(CGSizeMake(64, 64), NO, 0);
     [WireStyleKit drawIcon_0x146_32ptWithColor: color];
-    
+
     UIImage* imageOfIcon_0x146_32pt = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
-    
+
     return imageOfIcon_0x146_32pt;
 }
 
@@ -8514,10 +8559,10 @@ static UIImage* _imageOfShieldnotverified = nil;
 {
     UIGraphicsBeginImageContextWithOptions(CGSizeMake(64, 64), NO, 0);
     [WireStyleKit drawIcon_0x227_32ptWithColor: color];
-    
+
     UIImage* imageOfIcon_0x227_32pt = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
-    
+
     return imageOfIcon_0x227_32pt;
 }
 
@@ -8525,10 +8570,10 @@ static UIImage* _imageOfShieldnotverified = nil;
 {
     UIGraphicsBeginImageContextWithOptions(CGSizeMake(64, 64), NO, 0);
     [WireStyleKit drawIcon_0x159_32ptWithColor: color];
-    
+
     UIImage* imageOfIcon_0x159_32pt = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
-    
+
     return imageOfIcon_0x159_32pt;
 }
 
@@ -8536,10 +8581,10 @@ static UIImage* _imageOfShieldnotverified = nil;
 {
     UIGraphicsBeginImageContextWithOptions(CGSizeMake(64, 64), NO, 0);
     [WireStyleKit drawIcon_0x228_32ptWithColor: color];
-    
+
     UIImage* imageOfIcon_0x228_32pt = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
-    
+
     return imageOfIcon_0x228_32pt;
 }
 
@@ -8547,10 +8592,10 @@ static UIImage* _imageOfShieldnotverified = nil;
 {
     UIGraphicsBeginImageContextWithOptions(CGSizeMake(64, 64), NO, 0);
     [WireStyleKit drawIcon_0x154_32ptWithColor: color];
-    
+
     UIImage* imageOfIcon_0x154_32pt = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
-    
+
     return imageOfIcon_0x154_32pt;
 }
 
@@ -8558,10 +8603,10 @@ static UIImage* _imageOfShieldnotverified = nil;
 {
     UIGraphicsBeginImageContextWithOptions(CGSizeMake(64, 64), NO, 0);
     [WireStyleKit drawIcon_0x148_32ptWithColor: color];
-    
+
     UIImage* imageOfIcon_0x148_32pt = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
-    
+
     return imageOfIcon_0x148_32pt;
 }
 
@@ -8569,10 +8614,10 @@ static UIImage* _imageOfShieldnotverified = nil;
 {
     UIGraphicsBeginImageContextWithOptions(CGSizeMake(64, 64), NO, 0);
     [WireStyleKit drawIcon_0x229_32ptWithColor: color];
-    
+
     UIImage* imageOfIcon_0x229_32pt = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
-    
+
     return imageOfIcon_0x229_32pt;
 }
 
@@ -8580,10 +8625,10 @@ static UIImage* _imageOfShieldnotverified = nil;
 {
     UIGraphicsBeginImageContextWithOptions(CGSizeMake(64, 64), NO, 0);
     [WireStyleKit drawIcon_0x230_32ptWithColor: color];
-    
+
     UIImage* imageOfIcon_0x230_32pt = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
-    
+
     return imageOfIcon_0x230_32pt;
 }
 
@@ -8591,10 +8636,10 @@ static UIImage* _imageOfShieldnotverified = nil;
 {
     UIGraphicsBeginImageContextWithOptions(CGSizeMake(64, 64), NO, 0);
     [WireStyleKit drawIcon_0x149_32ptWithColor: color];
-    
+
     UIImage* imageOfIcon_0x149_32pt = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
-    
+
     return imageOfIcon_0x149_32pt;
 }
 
@@ -8602,10 +8647,10 @@ static UIImage* _imageOfShieldnotverified = nil;
 {
     UIGraphicsBeginImageContextWithOptions(CGSizeMake(64, 64), NO, 0);
     [WireStyleKit drawIcon_0x240_32ptWithColor: color];
-    
+
     UIImage* imageOfIcon_0x240_32pt = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
-    
+
     return imageOfIcon_0x240_32pt;
 }
 
@@ -8613,10 +8658,10 @@ static UIImage* _imageOfShieldnotverified = nil;
 {
     UIGraphicsBeginImageContextWithOptions(CGSizeMake(64, 64), NO, 0);
     [WireStyleKit drawIcon_0x244_32ptWithColor: color];
-    
+
     UIImage* imageOfIcon_0x244_32pt = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
-    
+
     return imageOfIcon_0x244_32pt;
 }
 
@@ -8624,10 +8669,10 @@ static UIImage* _imageOfShieldnotverified = nil;
 {
     UIGraphicsBeginImageContextWithOptions(CGSizeMake(64, 64), NO, 0);
     [WireStyleKit drawIcon_0x246_32ptWithColor: color];
-    
+
     UIImage* imageOfIcon_0x246_32pt = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
-    
+
     return imageOfIcon_0x246_32pt;
 }
 
@@ -8635,10 +8680,10 @@ static UIImage* _imageOfShieldnotverified = nil;
 {
     UIGraphicsBeginImageContextWithOptions(CGSizeMake(64, 64), NO, 0);
     [WireStyleKit drawIcon_0x245_32ptWithColor: color];
-    
+
     UIImage* imageOfIcon_0x245_32pt = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
-    
+
     return imageOfIcon_0x245_32pt;
 }
 
@@ -8646,10 +8691,10 @@ static UIImage* _imageOfShieldnotverified = nil;
 {
     UIGraphicsBeginImageContextWithOptions(CGSizeMake(64, 64), NO, 0);
     [WireStyleKit drawIcon_0x242_32ptWithColor: color];
-    
+
     UIImage* imageOfIcon_0x242_32pt = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
-    
+
     return imageOfIcon_0x242_32pt;
 }
 
@@ -8657,10 +8702,10 @@ static UIImage* _imageOfShieldnotverified = nil;
 {
     UIGraphicsBeginImageContextWithOptions(CGSizeMake(64, 64), NO, 0);
     [WireStyleKit drawIcon_0x247_32ptWithColor: color];
-    
+
     UIImage* imageOfIcon_0x247_32pt = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
-    
+
     return imageOfIcon_0x247_32pt;
 }
 
@@ -8668,10 +8713,10 @@ static UIImage* _imageOfShieldnotverified = nil;
 {
     UIGraphicsBeginImageContextWithOptions(CGSizeMake(64, 64), NO, 0);
     [WireStyleKit drawIcon_0x243_32ptWithColor: color];
-    
+
     UIImage* imageOfIcon_0x243_32pt = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
-    
+
     return imageOfIcon_0x243_32pt;
 }
 
@@ -8679,10 +8724,10 @@ static UIImage* _imageOfShieldnotverified = nil;
 {
     UIGraphicsBeginImageContextWithOptions(CGSizeMake(64, 64), NO, 0);
     [WireStyleKit drawIcon_0x139_32ptWithColor: color];
-    
+
     UIImage* imageOfIcon_0x139_32pt = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
-    
+
     return imageOfIcon_0x139_32pt;
 }
 
@@ -8690,10 +8735,10 @@ static UIImage* _imageOfShieldnotverified = nil;
 {
     UIGraphicsBeginImageContextWithOptions(CGSizeMake(64, 64), NO, 0);
     [WireStyleKit drawIcon_0x183_32ptWithColor: color];
-    
+
     UIImage* imageOfIcon_0x183_32pt = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
-    
+
     return imageOfIcon_0x183_32pt;
 }
 
@@ -8701,10 +8746,10 @@ static UIImage* _imageOfShieldnotverified = nil;
 {
     UIGraphicsBeginImageContextWithOptions(CGSizeMake(64, 64), NO, 0);
     [WireStyleKit drawIcon_0x184_32ptWithColor: color];
-    
+
     UIImage* imageOfIcon_0x184_32pt = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
-    
+
     return imageOfIcon_0x184_32pt;
 }
 
@@ -8712,10 +8757,10 @@ static UIImage* _imageOfShieldnotverified = nil;
 {
     UIGraphicsBeginImageContextWithOptions(CGSizeMake(64, 64), NO, 0);
     [WireStyleKit drawIcon_0x202_32ptWithColor: color];
-    
+
     UIImage* imageOfIcon_0x202_32pt = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
-    
+
     return imageOfIcon_0x202_32pt;
 }
 
@@ -8723,10 +8768,10 @@ static UIImage* _imageOfShieldnotverified = nil;
 {
     UIGraphicsBeginImageContextWithOptions(CGSizeMake(64, 64), NO, 0);
     [WireStyleKit drawIcon_0x235_32ptWithColor: color];
-    
+
     UIImage* imageOfIcon_0x235_32pt = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
-    
+
     return imageOfIcon_0x235_32pt;
 }
 
@@ -8734,10 +8779,10 @@ static UIImage* _imageOfShieldnotverified = nil;
 {
     UIGraphicsBeginImageContextWithOptions(CGSizeMake(64, 64), NO, 0);
     [WireStyleKit drawIcon_0x237_32ptWithColor: color];
-    
+
     UIImage* imageOfIcon_0x237_32pt = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
-    
+
     return imageOfIcon_0x237_32pt;
 }
 
@@ -8745,10 +8790,10 @@ static UIImage* _imageOfShieldnotverified = nil;
 {
     UIGraphicsBeginImageContextWithOptions(CGSizeMake(64, 64), NO, 0);
     [WireStyleKit drawIcon_0x236_32ptWithColor: color];
-    
+
     UIImage* imageOfIcon_0x236_32pt = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
-    
+
     return imageOfIcon_0x236_32pt;
 }
 
@@ -8756,10 +8801,10 @@ static UIImage* _imageOfShieldnotverified = nil;
 {
     UIGraphicsBeginImageContextWithOptions(CGSizeMake(64, 64), NO, 0);
     [WireStyleKit drawIcon_0x238_32ptWithColor: color];
-    
+
     UIImage* imageOfIcon_0x238_32pt = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
-    
+
     return imageOfIcon_0x238_32pt;
 }
 
@@ -8767,10 +8812,10 @@ static UIImage* _imageOfShieldnotverified = nil;
 {
     UIGraphicsBeginImageContextWithOptions(CGSizeMake(64, 64), NO, 0);
     [WireStyleKit drawIcon_0x250_32ptWithColor: color];
-    
+
     UIImage* imageOfIcon_0x250_32pt = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
-    
+
     return imageOfIcon_0x250_32pt;
 }
 
@@ -8778,10 +8823,10 @@ static UIImage* _imageOfShieldnotverified = nil;
 {
     UIGraphicsBeginImageContextWithOptions(CGSizeMake(64, 64), NO, 0);
     [WireStyleKit drawIcon_0x251_32ptWithColor: color];
-    
+
     UIImage* imageOfIcon_0x251_32pt = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
-    
+
     return imageOfIcon_0x251_32pt;
 }
 
@@ -8789,10 +8834,10 @@ static UIImage* _imageOfShieldnotverified = nil;
 {
     UIGraphicsBeginImageContextWithOptions(CGSizeMake(64, 64), NO, 0);
     [WireStyleKit drawIcon_0x252_32ptWithColor: color];
-    
+
     UIImage* imageOfIcon_0x252_32pt = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
-    
+
     return imageOfIcon_0x252_32pt;
 }
 
@@ -8800,10 +8845,10 @@ static UIImage* _imageOfShieldnotverified = nil;
 {
     UIGraphicsBeginImageContextWithOptions(CGSizeMake(64, 64), NO, 0);
     [WireStyleKit drawIcon_0x253_32ptWithColor: color];
-    
+
     UIImage* imageOfIcon_0x253_32pt = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
-    
+
     return imageOfIcon_0x253_32pt;
 }
 
@@ -8811,10 +8856,10 @@ static UIImage* _imageOfShieldnotverified = nil;
 {
     UIGraphicsBeginImageContextWithOptions(CGSizeMake(64, 64), NO, 0);
     [WireStyleKit drawIcon_0x254_32ptWithColor: color];
-    
+
     UIImage* imageOfIcon_0x254_32pt = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
-    
+
     return imageOfIcon_0x254_32pt;
 }
 
@@ -8822,10 +8867,10 @@ static UIImage* _imageOfShieldnotverified = nil;
 {
     UIGraphicsBeginImageContextWithOptions(CGSizeMake(64, 64), NO, 0);
     [WireStyleKit drawIcon_0x255_32ptWithColor: color];
-    
+
     UIImage* imageOfIcon_0x255_32pt = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
-    
+
     return imageOfIcon_0x255_32pt;
 }
 
@@ -8833,10 +8878,10 @@ static UIImage* _imageOfShieldnotverified = nil;
 {
     UIGraphicsBeginImageContextWithOptions(CGSizeMake(64, 64), NO, 0);
     [WireStyleKit drawIcon_0x256_32ptWithColor: color];
-    
+
     UIImage* imageOfIcon_0x256_32pt = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
-    
+
     return imageOfIcon_0x256_32pt;
 }
 
@@ -8844,10 +8889,10 @@ static UIImage* _imageOfShieldnotverified = nil;
 {
     UIGraphicsBeginImageContextWithOptions(CGSizeMake(64, 64), NO, 0);
     [WireStyleKit drawIcon_0x124_32ptWithColor: color];
-    
+
     UIImage* imageOfIcon_0x124_32pt = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
-    
+
     return imageOfIcon_0x124_32pt;
 }
 
@@ -8855,10 +8900,10 @@ static UIImage* _imageOfShieldnotverified = nil;
 {
     UIGraphicsBeginImageContextWithOptions(CGSizeMake(64, 64), NO, 0);
     [WireStyleKit drawIcon_0x239_32ptWithColor: color];
-    
+
     UIImage* imageOfIcon_0x239_32pt = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
-    
+
     return imageOfIcon_0x239_32pt;
 }
 
@@ -8866,10 +8911,10 @@ static UIImage* _imageOfShieldnotverified = nil;
 {
     UIGraphicsBeginImageContextWithOptions(CGSizeMake(64, 64), NO, 0);
     [WireStyleKit drawSecondWithColor: color];
-    
+
     UIImage* imageOfSecond = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
-    
+
     return imageOfSecond;
 }
 
@@ -8877,10 +8922,10 @@ static UIImage* _imageOfShieldnotverified = nil;
 {
     UIGraphicsBeginImageContextWithOptions(CGSizeMake(64, 64), NO, 0);
     [WireStyleKit drawMinuteWithColor: color];
-    
+
     UIImage* imageOfMinute = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
-    
+
     return imageOfMinute;
 }
 
@@ -8888,10 +8933,10 @@ static UIImage* _imageOfShieldnotverified = nil;
 {
     UIGraphicsBeginImageContextWithOptions(CGSizeMake(64, 64), NO, 0);
     [WireStyleKit drawHourWithColor: color];
-    
+
     UIImage* imageOfHour = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
-    
+
     return imageOfHour;
 }
 
@@ -8899,10 +8944,10 @@ static UIImage* _imageOfShieldnotverified = nil;
 {
     UIGraphicsBeginImageContextWithOptions(CGSizeMake(64, 64), NO, 0);
     [WireStyleKit drawDayWithColor: color];
-    
+
     UIImage* imageOfDay = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
-    
+
     return imageOfDay;
 }
 
@@ -8910,10 +8955,10 @@ static UIImage* _imageOfShieldnotverified = nil;
 {
     UIGraphicsBeginImageContextWithOptions(CGSizeMake(64, 64), NO, 0);
     [WireStyleKit drawIcon_0x737_32ptWithColor: color];
-    
+
     UIImage* imageOfIcon_0x737_32pt = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
-    
+
     return imageOfIcon_0x737_32pt;
 }
 
@@ -8921,10 +8966,10 @@ static UIImage* _imageOfShieldnotverified = nil;
 {
     UIGraphicsBeginImageContextWithOptions(CGSizeMake(64, 64), NO, 0);
     [WireStyleKit drawIcon_0x654_32ptWithColor: color];
-    
+
     UIImage* imageOfIcon_0x654_32pt = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
-    
+
     return imageOfIcon_0x654_32pt;
 }
 
@@ -8932,10 +8977,10 @@ static UIImage* _imageOfShieldnotverified = nil;
 {
     UIGraphicsBeginImageContextWithOptions(CGSizeMake(64, 64), NO, 0);
     [WireStyleKit drawIcon_0x643_32ptWithColor: color];
-    
+
     UIImage* imageOfIcon_0x643_32pt = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
-    
+
     return imageOfIcon_0x643_32pt;
 }
 
@@ -8943,10 +8988,10 @@ static UIImage* _imageOfShieldnotverified = nil;
 {
     UIGraphicsBeginImageContextWithOptions(CGSizeMake(64, 64), NO, 0);
     [WireStyleKit drawIcon_0x645_32ptWithColor: color];
-    
+
     UIImage* imageOfIcon_0x645_32pt = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
-    
+
     return imageOfIcon_0x645_32pt;
 }
 
@@ -8954,10 +8999,10 @@ static UIImage* _imageOfShieldnotverified = nil;
 {
     UIGraphicsBeginImageContextWithOptions(CGSizeMake(64, 64), NO, 0);
     [WireStyleKit drawIcon_0x644_32ptWithColor: color];
-    
+
     UIImage* imageOfIcon_0x644_32pt = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
-    
+
     return imageOfIcon_0x644_32pt;
 }
 
@@ -8965,10 +9010,10 @@ static UIImage* _imageOfShieldnotverified = nil;
 {
     UIGraphicsBeginImageContextWithOptions(CGSizeMake(64, 64), NO, 0);
     [WireStyleKit drawIcon_0x648_32ptWithColor: color];
-    
+
     UIImage* imageOfIcon_0x648_32pt = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
-    
+
     return imageOfIcon_0x648_32pt;
 }
 
@@ -8976,10 +9021,10 @@ static UIImage* _imageOfShieldnotverified = nil;
 {
     UIGraphicsBeginImageContextWithOptions(CGSizeMake(64, 64), NO, 0);
     [WireStyleKit drawIcon_0x637_32ptWithColor: color];
-    
+
     UIImage* imageOfIcon_0x637_32pt = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
-    
+
     return imageOfIcon_0x637_32pt;
 }
 
@@ -8987,10 +9032,10 @@ static UIImage* _imageOfShieldnotverified = nil;
 {
     UIGraphicsBeginImageContextWithOptions(CGSizeMake(64, 64), NO, 0);
     [WireStyleKit drawIcon_0x735_32ptWithColor: color];
-    
+
     UIImage* imageOfIcon_0x735_32pt = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
-    
+
     return imageOfIcon_0x735_32pt;
 }
 
@@ -8998,10 +9043,10 @@ static UIImage* _imageOfShieldnotverified = nil;
 {
     UIGraphicsBeginImageContextWithOptions(CGSizeMake(64, 64), NO, 0);
     [WireStyleKit drawIcon_0x659_32ptWithColor: color];
-    
+
     UIImage* imageOfIcon_0x659_32pt = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
-    
+
     return imageOfIcon_0x659_32pt;
 }
 
@@ -9009,10 +9054,10 @@ static UIImage* _imageOfShieldnotverified = nil;
 {
     UIGraphicsBeginImageContextWithOptions(CGSizeMake(64, 64), NO, 0);
     [WireStyleKit drawIcon_0x736_32ptWithColor: color];
-    
+
     UIImage* imageOfIcon_0x736_32pt = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
-    
+
     return imageOfIcon_0x736_32pt;
 }
 
@@ -9020,10 +9065,10 @@ static UIImage* _imageOfShieldnotverified = nil;
 {
     UIGraphicsBeginImageContextWithOptions(CGSizeMake(64, 64), NO, 0);
     [WireStyleKit drawIcon_0x260_32ptWithColor: color];
-    
+
     UIImage* imageOfIcon_0x260_32pt = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
-    
+
     return imageOfIcon_0x260_32pt;
 }
 
@@ -9031,10 +9076,10 @@ static UIImage* _imageOfShieldnotverified = nil;
 {
     UIGraphicsBeginImageContextWithOptions(CGSizeMake(64, 64), NO, 0);
     [WireStyleKit drawIcon_0x234_32ptWithColor: color];
-    
+
     UIImage* imageOfIcon_0x234_32pt = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
-    
+
     return imageOfIcon_0x234_32pt;
 }
 
@@ -9042,10 +9087,10 @@ static UIImage* _imageOfShieldnotverified = nil;
 {
     UIGraphicsBeginImageContextWithOptions(CGSizeMake(64, 64), NO, 0);
     [WireStyleKit drawIcon_0x261_32ptWithColor: color];
-    
+
     UIImage* imageOfIcon_0x261_32pt = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
-    
+
     return imageOfIcon_0x261_32pt;
 }
 
@@ -9053,10 +9098,10 @@ static UIImage* _imageOfShieldnotverified = nil;
 {
     UIGraphicsBeginImageContextWithOptions(CGSizeMake(64, 64), NO, 0);
     [WireStyleKit drawIcon_0x262_32ptWithColor: color];
-    
+
     UIImage* imageOfIcon_0x262_32pt = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
-    
+
     return imageOfIcon_0x262_32pt;
 }
 
@@ -9064,10 +9109,10 @@ static UIImage* _imageOfShieldnotverified = nil;
 {
     UIGraphicsBeginImageContextWithOptions(CGSizeMake(64, 64), NO, 0);
     [WireStyleKit drawIcon_0x263_32ptWithColor: color];
-    
+
     UIImage* imageOfIcon_0x263_32pt = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
-    
+
     return imageOfIcon_0x263_32pt;
 }
 
@@ -9075,10 +9120,10 @@ static UIImage* _imageOfShieldnotverified = nil;
 {
     UIGraphicsBeginImageContextWithOptions(CGSizeMake(64, 64), NO, 0);
     [WireStyleKit drawIcon_0x264_32ptWithColor: color];
-    
+
     UIImage* imageOfIcon_0x264_32pt = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
-    
+
     return imageOfIcon_0x264_32pt;
 }
 
@@ -9086,10 +9131,10 @@ static UIImage* _imageOfShieldnotverified = nil;
 {
     UIGraphicsBeginImageContextWithOptions(CGSizeMake(64, 64), NO, 0);
     [WireStyleKit drawIcon_0x265_32ptWithColor: color];
-    
+
     UIImage* imageOfIcon_0x265_32pt = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
-    
+
     return imageOfIcon_0x265_32pt;
 }
 
@@ -9097,10 +9142,10 @@ static UIImage* _imageOfShieldnotverified = nil;
 {
     UIGraphicsBeginImageContextWithOptions(CGSizeMake(64, 64), NO, 0);
     [WireStyleKit drawIcon_0x266_32ptWithColor: color];
-    
+
     UIImage* imageOfIcon_0x266_32pt = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
-    
+
     return imageOfIcon_0x266_32pt;
 }
 
@@ -9108,10 +9153,10 @@ static UIImage* _imageOfShieldnotverified = nil;
 {
     UIGraphicsBeginImageContextWithOptions(CGSizeMake(64, 64), NO, 0);
     [WireStyleKit drawIcon_0x267_32ptWithColor: color];
-    
+
     UIImage* imageOfIcon_0x267_32pt = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
-    
+
     return imageOfIcon_0x267_32pt;
 }
 
@@ -9119,10 +9164,10 @@ static UIImage* _imageOfShieldnotverified = nil;
 {
     UIGraphicsBeginImageContextWithOptions(CGSizeMake(64, 64), NO, 0);
     [WireStyleKit drawIcon_0x268_32ptWithColor: color];
-    
+
     UIImage* imageOfIcon_0x268_32pt = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
-    
+
     return imageOfIcon_0x268_32pt;
 }
 
@@ -9130,10 +9175,10 @@ static UIImage* _imageOfShieldnotverified = nil;
 {
     UIGraphicsBeginImageContextWithOptions(CGSizeMake(64, 64), NO, 0);
     [WireStyleKit drawIcon_0x738_32ptWithColor: color];
-    
+
     UIImage* imageOfIcon_0x738_32pt = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
-    
+
     return imageOfIcon_0x738_32pt;
 }
 
@@ -9141,10 +9186,10 @@ static UIImage* _imageOfShieldnotverified = nil;
 {
     UIGraphicsBeginImageContextWithOptions(CGSizeMake(64, 64), NO, 0);
     [WireStyleKit drawIcon_0x739_32ptWithColor: color];
-    
+
     UIImage* imageOfIcon_0x739_32pt = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
-    
+
     return imageOfIcon_0x739_32pt;
 }
 
@@ -9152,10 +9197,10 @@ static UIImage* _imageOfShieldnotverified = nil;
 {
     UIGraphicsBeginImageContextWithOptions(CGSizeMake(64, 64), NO, 0);
     [WireStyleKit drawIcon_0x740_32ptWithColor: color];
-    
+
     UIImage* imageOfIcon_0x740_32pt = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
-    
+
     return imageOfIcon_0x740_32pt;
 }
 
@@ -9163,10 +9208,10 @@ static UIImage* _imageOfShieldnotverified = nil;
 {
     UIGraphicsBeginImageContextWithOptions(CGSizeMake(64, 64), NO, 0);
     [WireStyleKit drawIcon_0x741_32ptWithColor: color];
-    
+
     UIImage* imageOfIcon_0x741_32pt = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
-    
+
     return imageOfIcon_0x741_32pt;
 }
 
@@ -9174,10 +9219,10 @@ static UIImage* _imageOfShieldnotverified = nil;
 {
     UIGraphicsBeginImageContextWithOptions(CGSizeMake(64, 64), NO, 0);
     [WireStyleKit drawIcon_0x742_32ptWithColor: color];
-    
+
     UIImage* imageOfIcon_0x742_32pt = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
-    
+
     return imageOfIcon_0x742_32pt;
 }
 
@@ -9185,10 +9230,10 @@ static UIImage* _imageOfShieldnotverified = nil;
 {
     UIGraphicsBeginImageContextWithOptions(CGSizeMake(64, 64), NO, 0);
     [WireStyleKit drawIcon_0x743_32ptWithColor: color];
-    
+
     UIImage* imageOfIcon_0x743_32pt = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
-    
+
     return imageOfIcon_0x743_32pt;
 }
 
@@ -9196,10 +9241,10 @@ static UIImage* _imageOfShieldnotverified = nil;
 {
     UIGraphicsBeginImageContextWithOptions(CGSizeMake(64, 64), NO, 0);
     [WireStyleKit drawIcon_0x744_32ptWithColor: color];
-    
+
     UIImage* imageOfIcon_0x744_32pt = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
-    
+
     return imageOfIcon_0x744_32pt;
 }
 
@@ -9207,10 +9252,10 @@ static UIImage* _imageOfShieldnotverified = nil;
 {
     UIGraphicsBeginImageContextWithOptions(CGSizeMake(64, 64), NO, 0);
     [WireStyleKit drawIcon_0x745_32ptWithColor: color];
-    
+
     UIImage* imageOfIcon_0x745_32pt = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
-    
+
     return imageOfIcon_0x745_32pt;
 }
 
@@ -9218,10 +9263,10 @@ static UIImage* _imageOfShieldnotverified = nil;
 {
     UIGraphicsBeginImageContextWithOptions(CGSizeMake(64, 64), NO, 0);
     [WireStyleKit drawIcon_0x746_32ptWithColor: color];
-    
+
     UIImage* imageOfIcon_0x746_32pt = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
-    
+
     return imageOfIcon_0x746_32pt;
 }
 
@@ -9229,10 +9274,10 @@ static UIImage* _imageOfShieldnotverified = nil;
 {
     UIGraphicsBeginImageContextWithOptions(CGSizeMake(64, 64), NO, 0);
     [WireStyleKit drawIcon_0x747_32ptWithColor: color];
-    
+
     UIImage* imageOfIcon_0x747_32pt = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
-    
+
     return imageOfIcon_0x747_32pt;
 }
 
@@ -9240,10 +9285,10 @@ static UIImage* _imageOfShieldnotverified = nil;
 {
     UIGraphicsBeginImageContextWithOptions(CGSizeMake(64, 64), NO, 0);
     [WireStyleKit drawIcon_0x269_32ptWithColor: color];
-    
+
     UIImage* imageOfIcon_0x269_32pt = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
-    
+
     return imageOfIcon_0x269_32pt;
 }
 
@@ -9251,10 +9296,10 @@ static UIImage* _imageOfShieldnotverified = nil;
 {
     UIGraphicsBeginImageContextWithOptions(CGSizeMake(64, 64), NO, 0);
     [WireStyleKit drawIcon_0x748_32ptWithColor: color];
-    
+
     UIImage* imageOfIcon_0x748_32pt = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
-    
+
     return imageOfIcon_0x748_32pt;
 }
 
@@ -9262,10 +9307,10 @@ static UIImage* _imageOfShieldnotverified = nil;
 {
     UIGraphicsBeginImageContextWithOptions(CGSizeMake(64, 64), NO, 0);
     [WireStyleKit drawIcon_0x749_32ptWithColor: color];
-    
+
     UIImage* imageOfIcon_0x749_32pt = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
-    
+
     return imageOfIcon_0x749_32pt;
 }
 
@@ -9273,10 +9318,10 @@ static UIImage* _imageOfShieldnotverified = nil;
 {
     UIGraphicsBeginImageContextWithOptions(CGSizeMake(64, 64), NO, 0);
     [WireStyleKit drawIcon_0x750_32ptWithColor: color];
-    
+
     UIImage* imageOfIcon_0x750_32pt = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
-    
+
     return imageOfIcon_0x750_32pt;
 }
 
@@ -9284,10 +9329,10 @@ static UIImage* _imageOfShieldnotverified = nil;
 {
     UIGraphicsBeginImageContextWithOptions(CGSizeMake(64, 64), NO, 0);
     [WireStyleKit drawIcon_0x751_32ptWithColor: color];
-    
+
     UIImage* imageOfIcon_0x751_32pt = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
-    
+
     return imageOfIcon_0x751_32pt;
 }
 
@@ -9295,10 +9340,10 @@ static UIImage* _imageOfShieldnotverified = nil;
 {
     UIGraphicsBeginImageContextWithOptions(CGSizeMake(64, 64), NO, 0);
     [WireStyleKit drawIcon_0x752_32ptWithColor: color];
-    
+
     UIImage* imageOfIcon_0x752_32pt = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
-    
+
     return imageOfIcon_0x752_32pt;
 }
 
@@ -9306,10 +9351,10 @@ static UIImage* _imageOfShieldnotverified = nil;
 {
     UIGraphicsBeginImageContextWithOptions(CGSizeMake(64, 64), NO, 0);
     [WireStyleKit drawIcon_0x753_32ptWithColor: color];
-    
+
     UIImage* imageOfIcon_0x753_32pt = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
-    
+
     return imageOfIcon_0x753_32pt;
 }
 
@@ -9317,10 +9362,10 @@ static UIImage* _imageOfShieldnotverified = nil;
 {
     UIGraphicsBeginImageContextWithOptions(CGSizeMake(64, 64), NO, 0);
     [WireStyleKit drawIcon_0x754_32ptWithColor: color];
-    
+
     UIImage* imageOfIcon_0x754_32pt = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
-    
+
     return imageOfIcon_0x754_32pt;
 }
 
@@ -9328,21 +9373,32 @@ static UIImage* _imageOfShieldnotverified = nil;
 {
     UIGraphicsBeginImageContextWithOptions(CGSizeMake(64, 64), NO, 0);
     [WireStyleKit drawIcon_0x755_32ptWithColor: color];
-    
+
     UIImage* imageOfIcon_0x755_32pt = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
-    
+
     return imageOfIcon_0x755_32pt;
+}
+
++ (UIImage*)imageOfIcon_0x756_32ptWithColor: (UIColor*)color
+{
+    UIGraphicsBeginImageContextWithOptions(CGSizeMake(64, 64), NO, 0);
+    [WireStyleKit drawIcon_0x756_32ptWithColor: color];
+
+    UIImage* imageOfIcon_0x756_32pt = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+
+    return imageOfIcon_0x756_32pt;
 }
 
 + (UIImage*)imageOfMissedcallWithAccent: (UIColor*)accent
 {
     UIGraphicsBeginImageContextWithOptions(CGSizeMake(40, 40), NO, 0);
     [WireStyleKit drawMissedcallWithAccent: accent];
-    
+
     UIImage* imageOfMissedcall = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
-    
+
     return imageOfMissedcall;
 }
 
@@ -9350,10 +9406,10 @@ static UIImage* _imageOfShieldnotverified = nil;
 {
     UIGraphicsBeginImageContextWithOptions(CGSizeMake(72, 16), NO, 0);
     [WireStyleKit drawYoutubeWithColor: color];
-    
+
     UIImage* imageOfYoutube = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
-    
+
     return imageOfYoutube;
 }
 
@@ -9361,10 +9417,10 @@ static UIImage* _imageOfShieldnotverified = nil;
 {
     UIGraphicsBeginImageContextWithOptions(CGSizeMake(40, 40), NO, 0);
     [WireStyleKit drawMissedcalllastWithAccent: accent];
-    
+
     UIImage* imageOfMissedcalllast = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
-    
+
     return imageOfMissedcalllast;
 }
 
@@ -9372,10 +9428,10 @@ static UIImage* _imageOfShieldnotverified = nil;
 {
     UIGraphicsBeginImageContextWithOptions(CGSizeMake(84, 24), NO, 0);
     [WireStyleKit drawVimeoWithColor: color];
-    
+
     UIImage* imageOfVimeo = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
-    
+
     return imageOfVimeo;
 }
 
@@ -9383,13 +9439,13 @@ static UIImage* _imageOfShieldnotverified = nil;
 {
     if (_imageOfOngoingcall)
         return _imageOfOngoingcall;
-    
+
     UIGraphicsBeginImageContextWithOptions(CGSizeMake(18, 18), NO, 0);
     [WireStyleKit drawOngoingcall];
-    
+
     _imageOfOngoingcall = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
-    
+
     return _imageOfOngoingcall;
 }
 
@@ -9397,10 +9453,10 @@ static UIImage* _imageOfShieldnotverified = nil;
 {
     UIGraphicsBeginImageContextWithOptions(CGSizeMake(18, 18), NO, 0);
     [WireStyleKit drawJoinongoingcallWithColor: color];
-    
+
     UIImage* imageOfJoinongoingcall = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
-    
+
     return imageOfJoinongoingcall;
 }
 
@@ -9408,10 +9464,10 @@ static UIImage* _imageOfShieldnotverified = nil;
 {
     UIGraphicsBeginImageContextWithOptions(CGSizeMake(272, 224), NO, 0);
     [WireStyleKit drawLogoWithColor: color];
-    
+
     UIImage* imageOfLogo = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
-    
+
     return imageOfLogo;
 }
 
@@ -9419,10 +9475,10 @@ static UIImage* _imageOfShieldnotverified = nil;
 {
     UIGraphicsBeginImageContextWithOptions(CGSizeMake(174, 50), NO, 0);
     [WireStyleKit drawWireWithColor: color];
-    
+
     UIImage* imageOfWire = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
-    
+
     return imageOfWire;
 }
 
@@ -9430,13 +9486,13 @@ static UIImage* _imageOfShieldnotverified = nil;
 {
     if (_imageOfShieldverified)
         return _imageOfShieldverified;
-    
+
     UIGraphicsBeginImageContextWithOptions(CGSizeMake(16, 16), NO, 0);
     [WireStyleKit drawShieldverified];
-    
+
     _imageOfShieldverified = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
-    
+
     return _imageOfShieldverified;
 }
 
@@ -9444,13 +9500,13 @@ static UIImage* _imageOfShieldnotverified = nil;
 {
     if (_imageOfShieldnotverified)
         return _imageOfShieldnotverified;
-    
+
     UIGraphicsBeginImageContextWithOptions(CGSizeMake(16, 16), NO, 0);
     [WireStyleKit drawShieldnotverified];
-    
+
     _imageOfShieldnotverified = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
-    
+
     return _imageOfShieldnotverified;
 }
 
@@ -9458,10 +9514,10 @@ static UIImage* _imageOfShieldnotverified = nil;
 {
     UIGraphicsBeginImageContextWithOptions(CGSizeMake(36, 36), NO, 0);
     [WireStyleKit drawSpaceFocusWithColor: color];
-    
+
     UIImage* imageOfSpaceFocus = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
-    
+
     return imageOfSpaceFocus;
 }
 
@@ -9469,10 +9525,10 @@ static UIImage* _imageOfShieldnotverified = nil;
 {
     UIGraphicsBeginImageContextWithOptions(CGSizeMake(18, 9), NO, 0);
     [WireStyleKit drawTabWithColor: color];
-    
+
     UIImage* imageOfTab = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
-    
+
     return imageOfTab;
 }
 
@@ -9481,7 +9537,7 @@ static UIImage* _imageOfShieldnotverified = nil;
 - (void)setOngoingcallTargets: (NSArray*)ongoingcallTargets
 {
     _ongoingcallTargets = ongoingcallTargets;
-    
+
     for (id target in ongoingcallTargets)
         [target performSelector: @selector(setImage:) withObject: WireStyleKit.imageOfOngoingcall];
 }
@@ -9489,7 +9545,7 @@ static UIImage* _imageOfShieldnotverified = nil;
 - (void)setShieldverifiedTargets: (NSArray*)shieldverifiedTargets
 {
     _shieldverifiedTargets = shieldverifiedTargets;
-    
+
     for (id target in shieldverifiedTargets)
         [target performSelector: @selector(setImage:) withObject: WireStyleKit.imageOfShieldverified];
 }
@@ -9497,7 +9553,7 @@ static UIImage* _imageOfShieldnotverified = nil;
 - (void)setShieldnotverifiedTargets: (NSArray*)shieldnotverifiedTargets
 {
     _shieldnotverifiedTargets = shieldnotverifiedTargets;
-    
+
     for (id target in shieldnotverifiedTargets)
         [target performSelector: @selector(setImage:) withObject: WireStyleKit.imageOfShieldnotverified];
 }
@@ -9511,11 +9567,11 @@ CGRect WireStyleKitResizingBehaviorApply(WireStyleKitResizingBehavior behavior, 
 {
     if (CGRectEqualToRect(rect, target) || CGRectEqualToRect(target, CGRectZero))
         return rect;
-    
+
     CGSize scales = CGSizeZero;
     scales.width = ABS(target.size.width / rect.size.width);
     scales.height = ABS(target.size.height / rect.size.height);
-    
+
     switch (behavior)
     {
         case WireStyleKitResizingBehaviorAspectFit:
@@ -9539,7 +9595,7 @@ CGRect WireStyleKitResizingBehaviorApply(WireStyleKitResizingBehavior behavior, 
             break;
         }
     }
-    
+
     CGRect result = CGRectStandardize(rect);
     result.size.width *= scales.width;
     result.size.height *= scales.height;
@@ -9547,4 +9603,3 @@ CGRect WireStyleKitResizingBehaviorApply(WireStyleKitResizingBehavior behavior, 
     result.origin.y = target.origin.y + (target.size.height - result.size.height) / 2;
     return result;
 }
-

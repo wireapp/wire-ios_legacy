@@ -1,6 +1,6 @@
 //
 // Wire
-// Copyright (C) 2017 Wire Swiss GmbH
+// Copyright (C) 2018 Wire Swiss GmbH
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -26,7 +26,7 @@ typedef enum : NSInteger
     WireStyleKitResizingBehaviorAspectFill, //!< The content is proportionally resized to completely fill the target rectangle.
     WireStyleKitResizingBehaviorStretch, //!< The content is stretched to match the entire target rectangle.
     WireStyleKitResizingBehaviorCenter, //!< The content is centered in the target rectangle, but it is NOT resized.
-    
+
 } WireStyleKitResizingBehavior;
 
 extern CGRect WireStyleKitResizingBehaviorApply(WireStyleKitResizingBehavior behavior, CGRect rect, CGRect target);
@@ -183,6 +183,7 @@ extern CGRect WireStyleKitResizingBehaviorApply(WireStyleKitResizingBehavior beh
 + (void)drawIcon_0x753_32ptWithColor: (UIColor*)color;
 + (void)drawIcon_0x754_32ptWithColor: (UIColor*)color;
 + (void)drawIcon_0x755_32ptWithColor: (UIColor*)color;
++ (void)drawIcon_0x756_32ptWithColor: (UIColor*)color;
 + (void)drawMissedcallWithAccent: (UIColor*)accent;
 + (void)drawYoutubeWithColor: (UIColor*)color;
 + (void)drawMissedcalllastWithAccent: (UIColor*)accent;
@@ -320,6 +321,7 @@ extern CGRect WireStyleKitResizingBehaviorApply(WireStyleKitResizingBehavior beh
 + (UIImage*)imageOfIcon_0x753_32ptWithColor: (UIColor*)color;
 + (UIImage*)imageOfIcon_0x754_32ptWithColor: (UIColor*)color;
 + (UIImage*)imageOfIcon_0x755_32ptWithColor: (UIColor*)color;
++ (UIImage*)imageOfIcon_0x756_32ptWithColor: (UIColor*)color;
 + (UIImage*)imageOfMissedcallWithAccent: (UIColor*)accent;
 + (UIImage*)imageOfYoutubeWithColor: (UIColor*)color;
 + (UIImage*)imageOfMissedcalllastWithAccent: (UIColor*)accent;
@@ -334,4 +336,3 @@ extern CGRect WireStyleKitResizingBehaviorApply(WireStyleKitResizingBehavior beh
 + (UIImage*)imageOfTabWithColor: (UIColor*)color;
 
 @end
-

@@ -28,7 +28,7 @@
 @interface ParticipantsListCell ()
 @property (nonatomic) UILabel *nameLabel;
 @property (nonatomic) BadgeUserImageView *userImageView;
-@property (nonatomic) GuestLabel *guestLabel;
+@property (nonatomic) GuestIndicator *guestIndicator;
 @end
 
 @implementation ParticipantsListCell
@@ -56,9 +56,9 @@
     [self.contentView addSubview:userImageView];
     self.userImageView = userImageView;
     
-    self.guestLabel = [[GuestLabel alloc] initForAutoLayout];
-    self.guestLabel.hidden = YES;
-    [self.contentView addSubview:self.guestLabel];
+    self.guestIndicator = [[GuestIndicator alloc] initWithVariant:[[ColorScheme defaultColorScheme] variant]];
+    self.guestIndicator.hidden = YES;
+    [self.contentView addSubview:self.guestIndicator];
     
     [self.userImageView autoPinEdge:ALEdgeTop toEdge:ALEdgeTop ofView:self.contentView];
     [self.userImageView autoAlignAxisToSuperviewAxis:ALAxisVertical];
@@ -67,8 +67,8 @@
     [self.nameLabel autoPinEdge:ALEdgeLeft toEdge:ALEdgeLeft ofView:self.userImageView];
     [self.nameLabel autoPinEdge:ALEdgeRight toEdge:ALEdgeRight ofView:self.userImageView];
     
-    [self.guestLabel autoPinEdge:ALEdgeBottom toEdge:ALEdgeBottom ofView:self.userImageView withOffset:1];
-    [self.guestLabel autoAlignAxisToSuperviewAxis:ALAxisVertical];
+    [self.guestIndicator autoPinEdge:ALEdgeBottom toEdge:ALEdgeBottom ofView:self.userImageView withOffset:1];
+    [self.guestIndicator autoAlignAxisToSuperviewAxis:ALAxisVertical];
 }
 
 #pragma mark - Getters / setters
@@ -77,9 +77,9 @@
 {
     self.userImageView.user = user;
     
-    self.guestLabel.hidden = ![user isGuestInConversation:conversation];
+    self.guestIndicator.hidden = ![user isGuestInConversation:conversation];
     if ([user isServiceUser]) {
-        self.guestLabel.hidden = YES;
+        self.guestIndicator.hidden = YES;
     }
 
     if (ZMUser.selfUser.isTeamMember) {

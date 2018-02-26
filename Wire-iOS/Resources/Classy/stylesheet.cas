@@ -704,14 +704,6 @@ ParticipantsListCell {
     }
 }
 
-GuestLabel {
-    backgroundColor: $color-background-light;
-    textLabel @{
-        font: $font-small-light;
-        textColor: $color-text-foreground-light;
-    }
-}
-
 /* Fullscreen image view */
 
 FullscreenImageViewController {
