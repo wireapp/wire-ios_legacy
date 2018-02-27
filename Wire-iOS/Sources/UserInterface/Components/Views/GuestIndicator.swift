@@ -24,10 +24,47 @@ public class GuestIndicator: UIImageView {
         super.init(image: UIImage(for: .guest,
                                   iconSize: .tiny,
                                   color: UIColor.wr_color(fromColorScheme: ColorSchemeColorIconNormal, variant: variant)))
+        contentMode = .scaleToFill
+        setContentCompressionResistancePriority(UILayoutPriorityRequired, for: .vertical)
+        setContentCompressionResistancePriority(UILayoutPriorityRequired, for: .horizontal)
+        setContentHuggingPriority(UILayoutPriorityRequired, for: .vertical)
+        setContentHuggingPriority(UILayoutPriorityRequired, for: .horizontal)
         accessibilityIdentifier = "guest indicator"
     }
     
     required public init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+}
+
+public class GuestLabelIndicator: UIStackView {
+    private let guestIcon: GuestIndicator
+    private let label = UILabel()
+    
+    init(variant: ColorSchemeVariant = ColorScheme.default().variant) {
+        guestIcon = GuestIndicator(variant: variant)
+        
+        label.numberOfLines = 0
+        label.textAlignment = .left
+        label.font = FontSpec(.medium, .light).font
+        label.textColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorTextForeground, variant: variant)
+        label.setContentCompressionResistancePriority(UILayoutPriorityRequired, for: .vertical)
+        label.setContentCompressionResistancePriority(UILayoutPriorityRequired, for: .horizontal)
+        label.text = "profile.details.guest".localized
+        
+        super.init(frame: .zero)
+
+        axis = .horizontal
+        spacing = 12
+        distribution = .fill
+        alignment = .fill
+        addArrangedSubview(guestIcon)
+        addArrangedSubview(label)
+        
+        accessibilityIdentifier = "guest indicator"
+    }
+    
+    public required init(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 }
