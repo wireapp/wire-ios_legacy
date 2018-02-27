@@ -27,6 +27,13 @@ class GroupDetailsGuestOptionsCell: UICollectionViewCell {
     let statusLabel = UILabel()
     var contentStackView : UIStackView!
     
+    var isOn = false {
+        didSet {
+            let key = "group_details.guest_options_cell.\(isOn ? "enabled" : "disabled")"
+            statusLabel.text = key.localized
+        }
+    }
+    
     var variant : ColorSchemeVariant = ColorScheme.default().variant {
         didSet {
             guard oldValue != variant else { return }
@@ -62,7 +69,6 @@ class GroupDetailsGuestOptionsCell: UICollectionViewCell {
         
         statusLabel.translatesAutoresizingMaskIntoConstraints = false
         statusLabel.font = FontSpec.init(.normal, .light).font!
-        statusLabel.text = "group_details.guest_options_cell.disabled".localized
         statusLabel.setContentHuggingPriority(UILayoutPriorityRequired, for: .horizontal)
         
         let avatarSpacer = UIView()
