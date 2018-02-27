@@ -28,7 +28,9 @@ class GroupDetailsViewController: UIViewController, ZMConversationObserver, Grou
     fileprivate var token: NSObjectProtocol?
     fileprivate var actionController: ConversationActionController?
     fileprivate var renameSectionController : RenameSectionController?
-    
+    fileprivate let emptyView = UIImageView()
+    private var emptyViewVerticalConstraint: NSLayoutConstraint?
+
     public init(conversation: ZMConversation) {
         self.conversation = conversation
         collectionViewController = CollectionViewController()
@@ -43,15 +45,16 @@ class GroupDetailsViewController: UIViewController, ZMConversationObserver, Grou
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         title = "participants.title".localized.uppercased()
+        view.backgroundColor = .wr_color(fromColorScheme: ColorSchemeColorContentBackground)
+        
         let collectionViewLayout = UICollectionViewFlowLayout()
         collectionViewLayout.scrollDirection = .vertical
         collectionViewLayout.minimumInteritemSpacing = 12
         collectionViewLayout.minimumLineSpacing = 0
         
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: collectionViewLayout)
-        collectionView.backgroundColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorContentBackground)
+        collectionView.backgroundColor = .clear
         collectionView.allowsMultipleSelection = false
         collectionView.keyboardDismissMode = .onDrag
         collectionView.bounces = true
@@ -62,7 +65,7 @@ class GroupDetailsViewController: UIViewController, ZMConversationObserver, Grou
             collectionView.contentInsetAdjustmentBehavior = .never
         }
         
-        [collectionView, footerView, bottomSpacer].forEach(view.addSubview)
+        [emptyView, collectionView, footerView, bottomSpacer].forEach(view.addSubview)
         bottomSpacer.backgroundColor = .wr_color(fromColorScheme: ColorSchemeColorBackground)
         
         constrain(view, collectionView, footerView, bottomSpacer) { container, collectionView, footerView, bottomSpacer in
@@ -87,16 +90,40 @@ class GroupDetailsViewController: UIViewController, ZMConversationObserver, Grou
         
         collectionViewController.collectionView = collectionView
         footerView.delegate = self
+    
+        emptyView.translatesAutoresizingMaskIntoConstraints = false
+        emptyView.isHidden = true
+        
+        let backgroundColor = ColorScheme.default().color(withName: ColorSchemeColorBackground)
+        let emptyViewColor = backgroundColor.mix(ColorScheme.default().color(withName: ColorSchemeColorTextForeground), amount: 0.16)
+        emptyView.image = UIImage(for: .person, fontSize: 160, color: emptyViewColor)
+        emptyView.contentMode = .center
+        emptyView.accessibilityIdentifier = "img.groupdetails.empty"
+        emptyView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        emptyViewVerticalConstraint = emptyView.centerYAnchor.constraint(equalTo: collectionView.centerYAnchor, constant: 0)
+        emptyViewVerticalConstraint?.isActive = true
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationItem.rightBarButtonItem = navigationController?.closeItem()
+        updateEmptyViewVisibility()
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        updateEmptyViewVisibility()
+    }
+    
+    private func updateEmptyViewVisibility() {
+        collectionViewController.collectionView?.setNeedsLayout()
+        collectionViewController.collectionView?.layoutIfNeeded()
+        emptyViewVerticalConstraint?.constant = collectionViewController.collectionView.map { $0.contentInset.top / 2 + $0.contentSize.height / 2 } ?? 0
+        emptyView.isHidden = collectionViewController.sections.any { $0 is ParticipantsSectionController || $0 is ServicesSectionController }
     }
 
     func computeVisibleSections() -> [_CollectionViewSectionController] {
         var sections = [_CollectionViewSectionController]()
-        
         let renameSectionController = RenameSectionController(conversation: conversation)
         sections.append(renameSectionController)
         self.renameSectionController = renameSectionController
@@ -114,12 +141,14 @@ class GroupDetailsViewController: UIViewController, ZMConversationObserver, Grou
             let servicesSection = ServicesSectionController(serviceUsers: serviceUsers, delegate: self)
             sections.append(servicesSection)
         }
+        
         return sections
     }
     
     func conversationDidChange(_ changeInfo: ConversationChangeInfo) {
         guard changeInfo.participantsChanged || changeInfo.nameChanged || changeInfo.allowGuestsChanged else { return }
         collectionViewController.sections = computeVisibleSections()
+        updateEmptyViewVisibility()
     }
     
     func detailsView(_ view: GroupDetailsFooterView, performAction action: GroupDetailsFooterView.Action) {
