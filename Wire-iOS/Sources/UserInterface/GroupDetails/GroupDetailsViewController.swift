@@ -358,7 +358,7 @@ class ParticipantsSectionController: DefaultSectionController {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: GroupDetailsParticipantCell.zm_reuseIdentifier, for: indexPath) as! GroupDetailsParticipantCell
         
         cell.configure(with: user)
-        cell.separator.isHidden = participants.count - 1 == indexPath.row
+        cell.separator.isHidden = (participants.count - 1) == indexPath.row
         return cell
     }
     
@@ -398,7 +398,7 @@ class ServicesSectionController: DefaultSectionController {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: GroupDetailsParticipantCell.zm_reuseIdentifier, for: indexPath) as! GroupDetailsParticipantCell
         
         cell.configure(with: user)
-        cell.separator.isHidden = serviceUsers.count - 1 == indexPath.row
+        cell.separator.isHidden = (serviceUsers.count - 1) == indexPath.row
         return cell
     }
     
