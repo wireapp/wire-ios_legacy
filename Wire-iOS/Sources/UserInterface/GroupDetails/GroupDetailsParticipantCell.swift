@@ -36,6 +36,14 @@ class GroupDetailsParticipantCell: UICollectionViewCell {
     var titleStackView : UIStackView!
     var iconStackView : UIStackView!
     
+    override var isHighlighted: Bool {
+        didSet {
+            backgroundColor = isHighlighted
+                ? .init(white: 0, alpha: 0.08)
+                : .wr_color(fromColorScheme: ColorSchemeColorTextBackground, variant: variant)
+        }
+    }
+    
     var variant : ColorSchemeVariant = ColorScheme.default().variant {
         didSet {
             guard oldValue != variant else { return }

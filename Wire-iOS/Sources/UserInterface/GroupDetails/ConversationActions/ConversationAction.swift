@@ -20,6 +20,7 @@ import Foundation
 
 extension ZMConversation {
     enum Action {
+        case rename
         case delete
         case leave
         case silence(isSilenced: Bool)
@@ -53,7 +54,7 @@ extension ZMConversation {
     }
     
     private func availableGroupActions() -> [Action] {
-        var actions = availableStandardActions() + [.delete]
+        var actions: [Action] = [.rename] + availableStandardActions() + [.delete]
         if activeParticipants.contains(ZMUser.selfUser()) {
             actions.append(.leave)
         }
@@ -85,6 +86,7 @@ extension ZMConversation.Action {
     
     private var localizationKey: String {
         switch self {
+        case .rename: return "meta.menu.rename"
         case .delete: return "meta.menu.delete"
         case .leave: return "meta.menu.leave"
         case .silence(isSilenced: let muted): return "meta.menu.silence.\(muted ? "unmute" : "mute")"

@@ -454,6 +454,7 @@
 "participants.add_people_button_title" = "Add";
 "participants.avatar.guest.title" = "Guest";
 
+"participants.title" = "Details";
 "participants.section.participants" = "Participants (%d)";
 "participants.section.services" = "Services (%d)";
 "participants.footer.add_title" = "Add Participants";
