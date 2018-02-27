@@ -60,14 +60,14 @@ class GroupDetailsGuestOptionsCell: UICollectionViewCell {
     }
     
     fileprivate func setup() {
-        guestIconView.image = UIImage(for: .person, iconSize: .tiny, color: UIColor.wr_color(fromColorScheme: ColorSchemeColorSeparator, variant: variant))
+        guestIconView.image = UIImage(for: .person, iconSize: .like, color: UIColor.wr_color(fromColorScheme: ColorSchemeColorSeparator, variant: variant))
         guestIconView.translatesAutoresizingMaskIntoConstraints = false
         guestIconView.contentMode = .scaleAspectFit
         guestIconView.setContentHuggingPriority(UILayoutPriorityRequired, for: .horizontal)
         
         accessoryIconView.image = UIImage(for: .disclosureIndicator, iconSize: .like, color: .wr_color(fromColorScheme: ColorSchemeColorSeparator, variant: variant))
         accessoryIconView.translatesAutoresizingMaskIntoConstraints = false
-        accessoryIconView.contentMode = .scaleAspectFit
+        accessoryIconView.contentMode = .center
         
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         titleLabel.font = FontSpec.init(.normal, .light).font!
@@ -84,8 +84,12 @@ class GroupDetailsGuestOptionsCell: UICollectionViewCell {
         avatarSpacer.heightAnchor.constraint(equalTo: guestIconView.heightAnchor).isActive = true
         avatarSpacer.centerXAnchor.constraint(equalTo: guestIconView.centerXAnchor).isActive = true
         avatarSpacer.centerYAnchor.constraint(equalTo: guestIconView.centerYAnchor).isActive = true
+
+        let iconViewSpacer = UIView()
+        iconViewSpacer.translatesAutoresizingMaskIntoConstraints = false
+        iconViewSpacer.widthAnchor.constraint(equalToConstant: 8).isActive = true
         
-        contentStackView = UIStackView(arrangedSubviews: [avatarSpacer, titleLabel, statusLabel, accessoryIconView])
+        contentStackView = UIStackView(arrangedSubviews: [avatarSpacer, titleLabel, statusLabel, iconViewSpacer, accessoryIconView])
         contentStackView.axis = .horizontal
         contentStackView.distribution = .fill
         contentStackView.alignment = .center
@@ -104,7 +108,7 @@ class GroupDetailsGuestOptionsCell: UICollectionViewCell {
         let separatorColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorSeparator, variant: variant)
         backgroundColor = .wr_color(fromColorScheme: ColorSchemeColorTextBackground, variant: variant)
         guestIconView.image = UIImage(for: .person, iconSize: .tiny, color: UIColor.wr_color(fromColorScheme: ColorSchemeColorTextForeground, variant: variant))
-        accessoryIconView.image = UIImage(for: .disclosureIndicator, iconSize: .tiny, color: separatorColor)
+        accessoryIconView.image = UIImage(for: .disclosureIndicator, iconSize: .like, color: separatorColor)
         titleLabel.textColor = .wr_color(fromColorScheme: ColorSchemeColorTextForeground, variant: variant)
         statusLabel.textColor = separatorColor
     }

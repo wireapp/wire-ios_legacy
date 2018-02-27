@@ -79,13 +79,14 @@ class GroupDetailsParticipantCell: UICollectionViewCell {
     fileprivate func setup() {
         guestIconView.image = UIImage(for: .guest, iconSize: .tiny, color: UIColor.wr_color(fromColorScheme: ColorSchemeColorSeparator, variant: variant))
         guestIconView.translatesAutoresizingMaskIntoConstraints = false
-        guestIconView.contentMode = .scaleAspectFit
+        guestIconView.contentMode = .center
         
         verifiedIconView.image = WireStyleKit.imageOfShieldverified()
         verifiedIconView.translatesAutoresizingMaskIntoConstraints = false
-        verifiedIconView.contentMode = .scaleAspectFit
+        verifiedIconView.contentMode = .center
         
-        accessoryActionButton.setIcon(.disclosureIndicator, with: .tiny, for: .normal)
+        accessoryActionButton.setIcon(.disclosureIndicator, with: .like, for: .normal)
+        accessoryActionButton.imageView?.contentMode = .center
         
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         titleLabel.font = FontSpec.init(.normal, .light).font!

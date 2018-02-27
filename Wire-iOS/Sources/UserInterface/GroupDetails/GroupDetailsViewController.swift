@@ -290,8 +290,8 @@ protocol ParticipantsSectionControllerDelegate: class {
 
 class DefaultSectionController: NSObject, _CollectionViewSectionController {
     
-    var sectionTitle : String {
-        return "Header"
+    var sectionTitle: String {
+        return ""
     }
     
     var variant : ColorSchemeVariant = ColorScheme.default().variant
@@ -409,7 +409,7 @@ class ServicesSectionController: DefaultSectionController {
     
 }
 
-class GuestOptionsSection: NSObject, _CollectionViewSectionController {
+class GuestOptionsSection: DefaultSectionController {
 
     private weak var delegate: ParticipantsSectionControllerDelegate?
     private let conversation: ZMConversation
@@ -419,21 +419,26 @@ class GuestOptionsSection: NSObject, _CollectionViewSectionController {
         self.conversation = conversation
     }
     
-    func prepareForUse(in collectionView: UICollectionView?) {
+    override func prepareForUse(in collectionView: UICollectionView?) {
+        super.prepareForUse(in: collectionView)
         collectionView?.register(GroupDetailsGuestOptionsCell.self, forCellWithReuseIdentifier: GroupDetailsGuestOptionsCell.zm_reuseIdentifier)
     }
     
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return 1
     }
+    
+    override func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+        return CGSize(width: collectionView.bounds.size.width, height: 32)
+    }
 
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: GroupDetailsGuestOptionsCell.zm_reuseIdentifier, for: indexPath) as! GroupDetailsGuestOptionsCell
         cell.isOn = conversation.allowGuests
         return cell
     }
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+    override func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: collectionView.bounds.size.width, height: 56)
     }
     
