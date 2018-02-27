@@ -1,6 +1,6 @@
 //
 // Wire
-// Copyright (C) 2017 Wire Swiss GmbH
+// Copyright (C) 2018 Wire Swiss GmbH
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -16,20 +16,25 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
+import Foundation
 
-extension UIBarButtonItem {
+protocol CellConfigurationConfigurable: Reusable {
+    func configure(with configuration: CellConfiguration, variant: ColorSchemeVariant)
+}
 
-    convenience init(icon: ZetaIconType, style: UIBarButtonItemStyle = .plain, target: Any?, action: Selector?) {
-        self.init(
-            image: UIImage(for: icon, iconSize: .tiny, color: ColorScheme.default().color(withName: ColorSchemeColorTextForeground)),
-            style: style,
-            target: target,
-            action: action
-        )
+enum CellConfiguration {
+    typealias Action = () -> Void
+    case toggle(title: String, subtitle: String, get: () -> Bool, set: (Bool) -> Void)
+    
+    var cellType: CellConfigurationConfigurable.Type {
+        switch self {
+        case .toggle: return ToggleSubtitleCell.self
+        }
     }
     
-    static func backButton(target: Any?, action: Selector?) -> UIBarButtonItem {
-        return .init(icon: .backArrow, target: target, action: action)
+    var action: Action? {
+        switch self {
+        case .toggle: return nil
+        }
     }
-
 }

@@ -71,7 +71,8 @@ typedef NS_ENUM(NSUInteger, ProfileViewControllerTabBarIndex) {
 
 @property (nonatomic, readonly) ZMConversation *conversation;
 @property (nonatomic) id observerToken;
-@property (nonatomic) ProfileHeaderView *headerView;
+@property (nonatomic) UserNameDetailView *usernameDetailsView;
+@property (nonatomic) ProfileTitleView *profileTitleView;
 @property (nonatomic) TabBarController *tabsController;
 
 @end
@@ -116,6 +117,7 @@ typedef NS_ENUM(NSUInteger, ProfileViewControllerTabBarIndex) {
         self.observerToken = [UserChangeInfo addObserver:self forUser:self.fullUser userSession:[ZMUserSession sharedSession]];
     }
     
+    [self setupNavigationItems];
     [self setupHeader];
     [self setupTabsController];
     [self setupConstraints];
@@ -136,6 +138,15 @@ typedef NS_ENUM(NSUInteger, ProfileViewControllerTabBarIndex) {
 {
     if ([self.delegate respondsToSelector:@selector(viewControllerWantsToBeDismissed:completion:)]) {
         [self.viewControllerDismissable viewControllerWantsToBeDismissed:self completion:completion];
+    }
+}
+
+- (void)setupNavigationItems
+{
+    if (self.navigationController.viewControllers.count == 1) {
+        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithIcon:ZetaIconTypeX style:UIBarButtonItemStylePlain target:self action:@selector(dismissButtonClicked)];
+    } else {
+        self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithIcon:ZetaIconTypeBackArrow style:UIBarButtonItemStylePlain target:self action:@selector(dismissButtonClicked)];
     }
 }
 
@@ -168,15 +179,9 @@ typedef NS_ENUM(NSUInteger, ProfileViewControllerTabBarIndex) {
 
 - (void)setupConstraints
 {
-    UIEdgeInsets edges = UIScreen.safeArea;
-    
-    if(UIScreen.hasNotch) {
-        edges.top -= 20.0;
-    }
-    
-    [self.headerView autoPinEdgesToSuperviewEdgesWithInsets:edges excludingEdge:ALEdgeBottom];
+    [self.usernameDetailsView autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero excludingEdge:ALEdgeBottom];
     [self.tabsController.view autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero excludingEdge:ALEdgeTop];
-    [self.tabsController.view autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.headerView];
+    [self.tabsController.view autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.usernameDetailsView];
 }
 
 #pragma mark - Header
@@ -184,14 +189,20 @@ typedef NS_ENUM(NSUInteger, ProfileViewControllerTabBarIndex) {
 - (void)setupHeader
 {
     id<ZMBareUser> user = self.bareUser;
-
-    ProfileHeaderViewModel *viewModel = [self headerViewModelWithUser:user];
-    ProfileHeaderView *headerView = [[ProfileHeaderView alloc] initWithViewModel:viewModel];
-    headerView.translatesAutoresizingMaskIntoConstraints = NO;
-    [headerView.dismissButton addTarget:self action:@selector(dismissButtonClicked) forControlEvents:UIControlEventTouchUpInside];
     
-    [self.view addSubview:headerView];
-    self.headerView = headerView;
+    ProfileHeaderViewModel *viewModel = [self headerViewModelWithUser:user];
+    
+    UserNameDetailView *usernameDetailsView = [[UserNameDetailView alloc] init];
+    usernameDetailsView.translatesAutoresizingMaskIntoConstraints = NO;
+    [usernameDetailsView configureWith:viewModel.userDetailViewModel];
+    [self.view addSubview:usernameDetailsView];
+    self.usernameDetailsView = usernameDetailsView;
+    
+    ProfileTitleView *titleView = [[ProfileTitleView alloc] init];
+    titleView.translatesAutoresizingMaskIntoConstraints = NO;
+    [titleView configureWithViewModel:viewModel.userDetailViewModel];
+    self.navigationItem.titleView = titleView;
+    self.profileTitleView = titleView;
 }
 
 #pragma mark - User observation
@@ -204,7 +215,7 @@ typedef NS_ENUM(NSUInteger, ProfileViewControllerTabBarIndex) {
                         self.context != ProfileViewControllerContextDeviceList &&
                         self.tabsController.selectedIndex != ProfileViewControllerTabBarIndexDevices;
 
-        self.headerView.showVerifiedShield = showShield;
+        self.profileTitleView.showVerifiedShield = showShield;
     }
 }
 

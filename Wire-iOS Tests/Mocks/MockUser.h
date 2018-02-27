@@ -27,6 +27,7 @@
 @interface MockUser : NSObject<ZMBareUser, ZMBareUserConnection, Mockable>
 + (NSArray <ZMUser *> *)mockUsers;
 + (MockUser *)mockSelfUser;
++ (MockUser *)mockUserFor:(ZMUser *)user;
 + (ZMUser<ZMEditableUser> *)selfUserInUserSession:(ZMUserSession *)session;
 
 + (void)setMockSelfUser:(id<ZMBareUser>)newMockUser;
@@ -45,6 +46,7 @@
 @property (nonatomic, readwrite) NSUInteger totalCommonConnections;
 @property (nonatomic, assign) BOOL isSelfUser;
 @property (nonatomic, assign) BOOL isServiceUser;
+@property (nonatomic, assign) BOOL isTeamMember;
 
 @property (nonatomic) NSSet <id<UserClientType>> * clients;
 - (UIColor *)accentColor;

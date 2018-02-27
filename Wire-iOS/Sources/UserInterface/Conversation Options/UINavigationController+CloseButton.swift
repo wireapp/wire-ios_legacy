@@ -1,6 +1,6 @@
 //
 // Wire
-// Copyright (C) 2017 Wire Swiss GmbH
+// Copyright (C) 2018 Wire Swiss GmbH
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -16,20 +16,17 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
+import Foundation
 
-extension UIBarButtonItem {
-
-    convenience init(icon: ZetaIconType, style: UIBarButtonItemStyle = .plain, target: Any?, action: Selector?) {
-        self.init(
-            image: UIImage(for: icon, iconSize: .tiny, color: ColorScheme.default().color(withName: ColorSchemeColorTextForeground)),
-            style: style,
-            target: target,
-            action: action
-        )
+extension UINavigationController {
+    
+    func closeItem() -> UIBarButtonItem {
+        let item = UIBarButtonItem(icon: .X, target: self, action: #selector(closeTapped))
+        item.accessibilityIdentifier = "close"
+        return item
     }
     
-    static func backButton(target: Any?, action: Selector?) -> UIBarButtonItem {
-        return .init(icon: .backArrow, target: target, action: action)
+    @objc private func closeTapped() {
+        dismiss(animated: true)
     }
-
 }

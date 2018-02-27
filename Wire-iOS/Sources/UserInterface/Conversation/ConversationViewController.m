@@ -442,10 +442,13 @@
 
     switch (self.conversation.conversationType) {
         case ZMConversationTypeGroup: {
-            ParticipantsViewController *participantsViewController = [[ParticipantsViewController alloc] initWithConversation:self.conversation];
-            participantsViewController.delegate = self;
-            participantsViewController.zClientViewController = [ZClientViewController sharedZClientViewController];
-            viewController = participantsViewController;
+            // TODO jacob: do it properly
+            GroupDetailsViewController *groupDetailsViewController = [[GroupDetailsViewController alloc] initWithConversation:self.conversation];
+            viewController = groupDetailsViewController;
+//            ParticipantsViewController *participantsViewController = [[ParticipantsViewController alloc] initWithConversation:self.conversation];
+//            participantsViewController.delegate = self;
+//            participantsViewController.zClientViewController = [ZClientViewController sharedZClientViewController];
+//            viewController = participantsViewController;
             break;
         }
         case ZMConversationTypeSelf:
@@ -465,12 +468,9 @@
             break;
     }
 
-    RotationAwareNavigationController *navigationController = [[RotationAwareNavigationController alloc] initWithRootViewController:viewController];
-    navigationController.navigationBarHidden = YES;
+    _participantsController = viewController.wrapInNavigationController;
 
-    _participantsController = navigationController;
-
-    return navigationController;
+    return _participantsController;
 }
 
 - (void)setAnalyticsTracker:(AnalyticsTracker *)analyticsTracker

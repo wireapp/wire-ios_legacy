@@ -25,7 +25,8 @@ public protocol Reusable {
 
 public extension Reusable {
     static var reuseIdentifier: String {
-        return "\(self)"
+        guard let `class` = self as? AnyClass else { return "\(self)" }
+        return NSStringFromClass(`class`)
     }
     
     var reuseIdentifier: String? {
