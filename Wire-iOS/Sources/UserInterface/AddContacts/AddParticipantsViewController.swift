@@ -48,7 +48,7 @@ class AddParticipantsNavigationController: UINavigationController {
         self.navigationBar.shadowImage = UIImage()
         self.navigationBar.isTranslucent = true
         self.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: ColorScheme.default().color(withName: ColorSchemeColorTextForeground),
-                                                  NSFontAttributeName: FontSpec(.medium, .medium).font!.allCaps()]
+                                                  NSFontAttributeName: FontSpec(.medium, .medium).font!]
     }
 }
 

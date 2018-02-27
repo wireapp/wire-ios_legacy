@@ -210,7 +210,7 @@ final class ChangeHandleViewController: SettingsBaseTableViewController {
     }
 
     private func setupViews() {
-        title = "self.settings.account_section.handle.change.title".localized
+        title = "self.settings.account_section.handle.change.title".localized.uppercased()
         view.backgroundColor = .clear
         ChangeHandleTableViewCell.register(in: tableView)
         tableView.allowsSelection = false

@@ -45,7 +45,7 @@ final class ConversationOptionsViewController: UIViewController, UITableViewDele
         navigationItem.rightBarButtonItem = navigationController?.closeItem()
         navigationItem.leftBarButtonItem = .backButton(target: self, action: #selector(dismissTapped))
         navigationController?.navigationBar.titleTextAttributes = [
-            NSFontAttributeName: FontSpec(.small, .semibold).font!.allCaps(),
+            NSFontAttributeName: FontSpec(.small, .semibold).font!,
             NSForegroundColorAttributeName: UIColor.wr_color(fromColorScheme: ColorSchemeColorTextForeground, variant: variant)
         ]
     }
