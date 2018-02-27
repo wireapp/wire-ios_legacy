@@ -79,6 +79,7 @@ class ConversationOptionsViewModel {
     func setAllowGuests(_ allowGuests: Bool) {
         func _setAllowGuests() {
             state.isLoading = true
+            
             configuration.setAllowGuests(allowGuests) { [unowned self] result in
                 self.state.isLoading = false
                 switch result {

@@ -83,7 +83,7 @@ typedef NS_ENUM(NSUInteger, ProfileUserAction) {
 
 @property (nonatomic) UserImageView *userImageView;
 @property (nonatomic) UIView *footerView;
-@property (nonatomic) UILabel *teamsGuestLabel;
+@property (nonatomic) GuestLabelIndicator *teamsGuestIndicator;
 @property (nonatomic) BOOL showGuestLabel;
 @property (nonatomic) AvailabilityTitleView *availabilityView;
 @property (nonatomic) UICustomSpacingStackView *stackView;
@@ -116,19 +116,19 @@ typedef NS_ENUM(NSUInteger, ProfileUserAction) {
 {
     [self createUserImageView];
     [self createFooter];
-    [self createTeamsGuestLabel];
+    [self createGuestIndicator];
     
-    self.teamsGuestLabel.hidden = !self.showGuestLabel;
+    self.teamsGuestIndicator.hidden = !self.showGuestLabel;
     self.availabilityView.hidden = !ZMUser.selfUser.isTeamMember || self.fullUser.availability == AvailabilityNone;
 
-    self.stackView = [[UICustomSpacingStackView alloc] initWithCustomSpacedArrangedSubviews:@[self.userImageView, self.teamsGuestLabel, self.availabilityView]];
+    self.stackView = [[UICustomSpacingStackView alloc] initWithCustomSpacedArrangedSubviews:@[self.userImageView, self.teamsGuestIndicator, self.availabilityView]];
     self.stackView.axis = UILayoutConstraintAxisVertical;
     self.stackView.spacing = 0;
     self.stackView.alignment = UIStackViewAlignmentCenter;
     [self.view addSubview:self.stackView];
     
-    [self.stackView wr_addCustomSpacing:(self.teamsGuestLabel.isHidden ? 32 : 4) after:self.userImageView];
-    [self.stackView wr_addCustomSpacing:(self.availabilityView.isHidden ? 40 : 32) after:self.teamsGuestLabel];
+    [self.stackView wr_addCustomSpacing:(self.teamsGuestIndicator.isHidden ? 32 : 32) after:self.userImageView];
+    [self.stackView wr_addCustomSpacing:(self.availabilityView.isHidden ? 40 : 32) after:self.teamsGuestIndicator];
     [self.stackView wr_addCustomSpacing:32 after:self.availabilityView];
 }
 
@@ -154,13 +154,9 @@ typedef NS_ENUM(NSUInteger, ProfileUserAction) {
     self.userImageView.user = self.bareUser;
 }
 
-- (void)createTeamsGuestLabel
+- (void)createGuestIndicator
 {
-    self.teamsGuestLabel = [[UILabel alloc] initForAutoLayout];
-    self.teamsGuestLabel.numberOfLines = 0;
-    self.teamsGuestLabel.textAlignment = NSTextAlignmentCenter;
-    [self.teamsGuestLabel setContentCompressionResistancePriority:1000 forAxis:UILayoutConstraintAxisVertical];
-    self.teamsGuestLabel.text = NSLocalizedString(@"profile.details.guest", nil);
+    self.teamsGuestIndicator = [[GuestLabelIndicator alloc] initWithVariant:[[ColorScheme defaultColorScheme] variant]];
 }
 
 #pragma mark - Footer
