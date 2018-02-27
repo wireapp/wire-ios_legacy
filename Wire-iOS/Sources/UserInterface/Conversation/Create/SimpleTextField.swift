@@ -21,6 +21,7 @@ import Foundation
 protocol SimpleTextFieldDelegate: class {
     func textField(_ textField: SimpleTextField, valueChanged value: SimpleTextField.Value)
     func textFieldReturnPressed(_ textField: SimpleTextField)
+    func textFieldDidEndEditing(_ textField: SimpleTextField)
 }
 
 extension Optional where Wrapped == String {
@@ -131,6 +132,10 @@ extension SimpleTextField: SimpleTextFieldValidatorDelegate {
 
     func textFieldValueSubmitted(_ value: String) {
         textFieldDelegate?.textFieldReturnPressed(self)
+    }
+    
+    func textFieldDidEndEditing() {
+        textFieldDelegate?.textFieldDidEndEditing(self)
     }
 
 }

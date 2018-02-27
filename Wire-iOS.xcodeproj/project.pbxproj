@@ -76,6 +76,7 @@
 		168A16AF1D9597C2005CFA6C /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 168A16AD1D9597C2005CFA6C /* MainInterface.storyboard */; };
 		168A16B31D9597C2005CFA6C /* Wire Share Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 168A16A91D9597C2005CFA6C /* Wire Share Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		1693D9681CEDB26200D1F13C /* UIApplication+Permissions.m in Sources */ = {isa = PBXBuildFile; fileRef = 1693D9671CEDB26200D1F13C /* UIApplication+Permissions.m */; };
+		169A00612045972200EA0E66 /* GroupDetailsRenameCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 169A00602045972200EA0E66 /* GroupDetailsRenameCell.swift */; };
 		169FF9331C57CB2100C5BF90 /* VideoToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 169FF9321C57CB2100C5BF90 /* VideoToolbox.framework */; };
 		16A2024C1B66505B0095BBD1 /* soundcloud.png in Resources */ = {isa = PBXBuildFile; fileRef = 16A2024A1B66505B0095BBD1 /* soundcloud.png */; };
 		16A2024D1B66505C0095BBD1 /* soundcloud@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 16A2024B1B66505B0095BBD1 /* soundcloud@2x.png */; };
@@ -1250,6 +1251,7 @@
 		168A16B01D9597C2005CFA6C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1693D9661CEDB26200D1F13C /* UIApplication+Permissions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIApplication+Permissions.h"; sourceTree = "<group>"; };
 		1693D9671CEDB26200D1F13C /* UIApplication+Permissions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIApplication+Permissions.m"; sourceTree = "<group>"; };
+		169A00602045972200EA0E66 /* GroupDetailsRenameCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupDetailsRenameCell.swift; sourceTree = "<group>"; };
 		169FF9321C57CB2100C5BF90 /* VideoToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VideoToolbox.framework; path = System/Library/Frameworks/VideoToolbox.framework; sourceTree = SDKROOT; };
 		16A2024A1B66505B0095BBD1 /* soundcloud.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = soundcloud.png; sourceTree = "<group>"; };
 		16A2024B1B66505B0095BBD1 /* soundcloud@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "soundcloud@2x.png"; sourceTree = "<group>"; };
@@ -2947,6 +2949,7 @@
 				D550F57320444BE8009E09DD /* ConversationActions */,
 				16D49327203DCC88008DDFFA /* GroupDetailsViewController.swift */,
 				D586C51E20405CC200BBA492 /* GroupDetailsFooterView.swift */,
+				169A00602045972200EA0E66 /* GroupDetailsRenameCell.swift */,
 				16D49329203DCCCA008DDFFA /* GroupDetailsParticipantCell.swift */,
 				167961AA203F2BB400B72ACC /* GroupDetailsGuestOptionsCell.swift */,
 				167961A8203F26E600B72ACC /* GroupDetailsSectionHeader.swift */,
@@ -6935,6 +6938,7 @@
 				D5168F552010F24C00F8222A /* TokenTextAttachment.m in Sources */,
 				EF21270F1FB9DFE300625A9B /* CountryCodeBaseTableViewController.m in Sources */,
 				54AB765C1DB7AB77008D19C8 /* DeveloperOptionsController.swift in Sources */,
+				169A00612045972200EA0E66 /* GroupDetailsRenameCell.swift in Sources */,
 				87F18BC41E02E4C200C69D9B /* CollectionAudioCell.swift in Sources */,
 				871BC2741D34F8F800DF0793 /* BadgeUserImageView.m in Sources */,
 				871BC35A1D34F94200DF0793 /* AudioTrackViewController.m in Sources */,

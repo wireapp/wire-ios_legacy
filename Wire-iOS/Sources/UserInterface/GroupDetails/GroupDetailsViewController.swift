@@ -27,6 +27,7 @@ class GroupDetailsViewController: UIViewController, ZMConversationObserver, Grou
     fileprivate let bottomSpacer = UIView()
     fileprivate var token: NSObjectProtocol?
     fileprivate var actionController: ConversationActionController?
+    fileprivate var renameSectionController : RenameSectionController?
     
     public init(conversation: ZMConversation) {
         self.conversation = conversation
@@ -95,6 +96,11 @@ class GroupDetailsViewController: UIViewController, ZMConversationObserver, Grou
 
     func computeVisibleSections() -> [_CollectionViewSectionController] {
         var sections = [_CollectionViewSectionController]()
+        
+        let renameSectionController = RenameSectionController(conversation: conversation)
+        sections.append(renameSectionController)
+        self.renameSectionController = renameSectionController
+        
         if nil != ZMUser.selfUser().team {
             let optionsController = GuestOptionsSection(conversation: conversation, delegate: self)
             sections.append(optionsController)
@@ -136,7 +142,8 @@ class GroupDetailsViewController: UIViewController, ZMConversationObserver, Grou
 
 extension GroupDetailsViewController: ConversationActionControllerRenameDelegate {
     func controllerWantsToRenameConversation(_ controller: ConversationActionController) {
-        fatalError("Unimplemented")
+        collectionViewController.collectionView?.scrollToItem(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
+        renameSectionController?.focus()
     }
 }
 
@@ -403,6 +410,77 @@ class GuestOptionsSection: NSObject, _CollectionViewSectionController {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         delegate?.presentOptionsMenu()
+    }
+    
+}
+
+class RenameSectionController: NSObject, _CollectionViewSectionController {
+    
+    fileprivate var validName : String? = nil
+    fileprivate var conversation: ZMConversation
+    fileprivate var renameCell : GroupDetailsRenameCell?
+    
+    init(conversation: ZMConversation) {
+        self.conversation = conversation
+    }
+    
+    func focus() {
+        renameCell?.titleTextField.becomeFirstResponder()
+    }
+    
+    func prepareForUse(in collectionView: UICollectionView?) {
+        collectionView?.register(GroupDetailsRenameCell.self, forCellWithReuseIdentifier: GroupDetailsRenameCell.zm_reuseIdentifier)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 1
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: GroupDetailsRenameCell.zm_reuseIdentifier, for: indexPath) as! GroupDetailsRenameCell
+        cell.titleTextField.text = conversation.displayName
+        cell.titleTextField.textFieldDelegate = self
+        renameCell = cell
+        return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: collectionView.bounds.size.width, height: 56)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        focus()
+    }
+    
+}
+
+extension RenameSectionController: SimpleTextFieldDelegate {
+    
+    func textFieldReturnPressed(_ textField: SimpleTextField) {
+        guard let value = textField.value else { return }
+        
+        switch  value {
+        case .valid(let name):
+            validName = name
+            textField.endEditing(true)
+        case .error:
+            // TODO show error
+            textField.endEditing(true)
+        }
+    }
+    
+    func textField(_ textField: SimpleTextField, valueChanged value: SimpleTextField.Value) {
+        
+    }
+    
+    func textFieldDidEndEditing(_ textField: SimpleTextField) {
+        if let newName = validName {
+            ZMUserSession.shared()?.enqueueChanges {
+                self.conversation.userDefinedName = newName
+            }
+        } else {
+            textField.text = conversation.displayName
+        }
     }
     
 }
