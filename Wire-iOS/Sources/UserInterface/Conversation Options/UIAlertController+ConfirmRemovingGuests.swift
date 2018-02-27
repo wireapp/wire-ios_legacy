@@ -23,6 +23,7 @@ extension UIAlertController {
     static func genericError() -> UIAlertController {
         let controller = UIAlertController(title: nil, message: "error.user.unkown_error".localized, preferredStyle: .alert)
         controller.addAction(.ok())
+        controller.view.tintColor = ColorScheme.default().color(withName: ColorSchemeColorTextForeground, variant: .light)
         return controller
     }
     
@@ -49,7 +50,7 @@ extension UIAlertController {
         }
         controller.addAction(removeAction)
         controller.addAction(.cancel { completion(false) })
-        controller.view.tintColor = ColorScheme.default().color(withName: ColorSchemeColorTextForeground)
+        controller.view.tintColor = ColorScheme.default().color(withName: ColorSchemeColorTextForeground, variant: .light)
         return controller
     }
 }

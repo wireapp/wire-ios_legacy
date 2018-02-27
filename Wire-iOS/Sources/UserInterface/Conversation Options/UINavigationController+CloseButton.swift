@@ -30,3 +30,15 @@ extension UINavigationController {
         dismiss(animated: true)
     }
 }
+
+extension UIViewController {
+    func backItem() -> UIBarButtonItem {
+        return .backButton(target: self, action: #selector(dismissTapped))
+    }
+    
+    
+    @objc private func dismissTapped(_ sender: UIBarButtonItem) {
+        navigationController?.popViewController(animated: true)
+    }
+    
+}

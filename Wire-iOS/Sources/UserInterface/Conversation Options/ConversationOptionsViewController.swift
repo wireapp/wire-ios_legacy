@@ -18,6 +18,8 @@
 
 import UIKit
 
+
+
 final class ConversationOptionsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, ConversationOptionsViewModelDelegate {
 
     private let tableView = UITableView()
@@ -47,7 +49,7 @@ final class ConversationOptionsViewController: UIViewController, UITableViewDele
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationItem.rightBarButtonItem = navigationController?.closeItem()
-        navigationItem.leftBarButtonItem = .backButton(target: self, action: #selector(dismissTapped))
+        navigationItem.leftBarButtonItem = backItem()
         navigationController?.navigationBar.titleTextAttributes = [
             NSFontAttributeName: FontSpec(.small, .semibold).font!,
             NSForegroundColorAttributeName: UIColor.wr_color(fromColorScheme: ColorSchemeColorTextForeground, variant: variant)
@@ -82,11 +84,7 @@ final class ConversationOptionsViewController: UIViewController, UITableViewDele
             tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
     }
-    
-    @objc private func dismissTapped(_ sender: UIBarButtonItem) {
-        navigationController?.popViewController(animated: true)
-    }
-    
+
     // MARK: – ConversationOptionsViewModelDelegate
     
     func viewModel(_ viewModel: ConversationOptionsViewModel, didUpdateState state: ConversationOptionsViewModel.State) {
