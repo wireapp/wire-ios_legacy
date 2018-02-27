@@ -45,8 +45,8 @@ final class MessageComposeViewController: UIViewController {
         self.draft = draft
         self.persistence = persistence
         super.init(nibName: nil, bundle: nil)
-        setupViews()
         loadDraft()
+        setupViews()
         createConstraints()
         
         NotificationCenter.default.addObserver(self,
@@ -92,9 +92,6 @@ final class MessageComposeViewController: UIViewController {
     }
 
     private func setupTextView() {
-        messageTextView.textColor = color(ColorSchemeColorTextForeground)
-        messageTextView.backgroundColor = .clear
-        messageTextView.font = FontSpec(.normal, .none).font!
         
         // NB: setting the textContainerInset causes the content size to change
         // drastically when tapping on a white space ¯\_(ツ)_/¯. We simulate
@@ -105,6 +102,7 @@ final class MessageComposeViewController: UIViewController {
         
         messageTextView.contentInset = UIEdgeInsetsMake(16, 0, 48, -16)
         messageTextView.textContainer.lineFragmentPadding = 0
+        messageTextView.backgroundColor = .clear
         messageTextView.delegate = self
         messageTextView.indicatorStyle = ColorScheme.default().indicatorStyle
         messageTextView.accessibilityLabel = "messageTextField"
