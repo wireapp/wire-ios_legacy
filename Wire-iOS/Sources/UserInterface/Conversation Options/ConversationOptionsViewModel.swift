@@ -79,7 +79,10 @@ class ConversationOptionsViewModel {
     func setAllowGuests(_ allowGuests: Bool) {
         func _setAllowGuests() {
             state.isLoading = true
-            configuration.setAllowGuests(allowGuests, in: ZMUserSession.shared()!) { [unowned self] result in
+            guard let userSession = ZMUserSession.shared() else {
+                return
+            }
+            configuration.setAllowGuests(allowGuests, in: userSession) { [unowned self] result in
                 self.state.isLoading = false
                 switch result {
                 case .success: self.updateRows()

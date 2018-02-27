@@ -55,7 +55,7 @@ public class GuestLabelIndicator: UIStackView {
         super.init(frame: .zero)
 
         axis = .horizontal
-        spacing = 12
+        spacing = 8
         distribution = .fill
         alignment = .fill
         addArrangedSubview(guestIcon)
