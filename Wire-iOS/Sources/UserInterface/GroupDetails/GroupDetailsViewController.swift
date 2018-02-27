@@ -117,7 +117,9 @@ class GroupDetailsViewController: UIViewController, ZMConversationObserver, Grou
     
     func detailsView(_ view: GroupDetailsFooterView, performAction action: GroupDetailsFooterView.Action) {
         switch action {
-        case .invite: break
+        case .invite:
+            let addParticipantsViewController = AddParticipantsViewController(conversation: conversation)
+            present(addParticipantsViewController.wrapInNavigationController(), animated: true)
         case .more:
             actionController = ConversationActionController(conversation: conversation, target: self)
             actionController?.presentMenu()
@@ -130,7 +132,21 @@ class GroupDetailsViewController: UIViewController, ZMConversationObserver, Grou
     
 }
 
-extension GroupDetailsViewController: ParticipantsSectionControllerDelegate, ViewControllerDismissable, UINavigationControllerDelegate {
+extension GroupDetailsViewController: ViewControllerDismissable, UINavigationControllerDelegate, ProfileViewControllerDelegate {
+    
+    func viewControllerWants(toBeDismissed controller: UIViewController!, completion: (() -> Void)!) {
+        navigationController?.popViewController(animated: true)
+    }
+    
+    func profileViewController(_ controller: ProfileViewController?, wantsToNavigateTo conversation: ZMConversation) {
+        dismiss(animated: true) {
+            ZClientViewController.shared()?.load(conversation, focusOnView: true, animated: true)
+        }
+    }
+    
+}
+
+extension GroupDetailsViewController: ParticipantsSectionControllerDelegate {
     
     func presentDetailsView(for user: ZMUser) {
         let viewController = UserDetailViewControllerFactory.createUserDetailViewController(user: user,
@@ -141,21 +157,12 @@ extension GroupDetailsViewController: ParticipantsSectionControllerDelegate, Vie
         navigationController?.pushViewController(viewController, animated: true)
     }
     
-    func viewControllerWants(toBeDismissed controller: UIViewController!, completion: (() -> Void)!) {
-        navigationController?.popViewController(animated: true)
-    }
-    
     func presentOptionsMenu() {
         let menu = ConversationOptionsViewController(conversation: conversation)
         navigationController?.pushViewController(menu, animated: true)
     }
     
 }
-
-extension GroupDetailsViewController: ProfileViewControllerDelegate {
-
-}
-
 
 class CollectionViewController: NSObject, UICollectionViewDelegate {
     

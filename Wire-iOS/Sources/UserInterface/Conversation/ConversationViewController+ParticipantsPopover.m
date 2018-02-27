@@ -18,7 +18,6 @@
 
 
 #import "ConversationViewController+ParticipantsPopover.h"
-#import "ParticipantsViewController.h"
 #import "ProfileViewController.h"
 #import "Wire-Swift.h"
 
@@ -39,7 +38,7 @@
 
 - (void)hideAndDestroyParticipantsPopoverController
 {
-    if ([self.presentedViewController isKindOfClass:[ParticipantsViewController class]] ||
+    if ([self.presentedViewController isKindOfClass:[GroupDetailsViewController class]] ||
         [self.presentedViewController isKindOfClass:[ProfileViewController class]]) {
         [self dismissViewControllerAnimated:YES completion:nil];
     }

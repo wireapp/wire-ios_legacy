@@ -39,8 +39,6 @@ didEndDisplayingActiveMediaPlayerForMessage:(id<ZMConversationMessage>)message;
             didScrollWithOffsetFromBottom:(CGFloat)offset
                         withLatestMessage:(id<ZMConversationMessage>)message;
 
-- (void)conversationContentViewController:(ConversationContentViewController *)contentViewController didTriggerAddContactsButton:(UIButton *)button;
-
 - (void)conversationContentViewController:(ConversationContentViewController *)contentViewController didTriggerResendingMessage:(id<ZMConversationMessage>)message;
 
 - (void)conversationContentViewController:(ConversationContentViewController *)contentViewController didTriggerEditingMessage:(id<ZMConversationMessage>)message;

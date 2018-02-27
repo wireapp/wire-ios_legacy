@@ -30,7 +30,6 @@
 
 #import "WAZUIMagicIOS.h"
 
-#import "ParticipantsViewController.h"
 #import "ConversationListViewController.h"
 #import "ConversationViewController.h"
 #import "ConnectRequestsViewController.h"
@@ -417,9 +416,8 @@
 
 - (void)openDetailScreenForConversation:(ZMConversation *)conversation
 {
-    ParticipantsViewController *controller = [[ParticipantsViewController alloc] initWithConversation:conversation];
-    RotationAwareNavigationController *navController = [[RotationAwareNavigationController alloc] initWithRootViewController:controller];
-    [navController setNavigationBarHidden:YES animated:NO];
+    GroupDetailsViewController *controller = [[GroupDetailsViewController alloc] initWithConversation:conversation];
+    UINavigationController *navController =  controller.wrapInNavigationController;
     navController.modalPresentationStyle = UIModalPresentationFormSheet;
     [self presentViewController:navController animated:YES completion:nil];
 }

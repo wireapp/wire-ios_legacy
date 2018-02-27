@@ -464,11 +464,6 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
     }
 }
 
-- (void)addContacts:(id)sender
-{
-    [self.delegate conversationContentViewController:self didTriggerAddContactsButton:sender];
-}
-
 - (void)updateVisibleMessagesWindow
 {
     BOOL isViewVisible = YES;
