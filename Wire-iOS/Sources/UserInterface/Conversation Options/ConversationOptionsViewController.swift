@@ -24,9 +24,13 @@ final class ConversationOptionsViewController: UIViewController, UITableViewDele
     private var viewModel: ConversationOptionsViewModel
     private let variant: ColorSchemeVariant
     
-    convenience init(conversation: ZMConversation) {
+    convenience init(conversation: ZMConversation, userSession: ZMUserSession) {
+        let configuration = ZMConversation.OptionsConfigurationContainer(
+            conversation: conversation,
+            userSession: userSession
+        )
         self.init(
-            viewModel: .init(configuration: conversation.optionsConfiguration()),
+            viewModel: .init(configuration: configuration),
             variant: ColorScheme.default().variant
         )
     }

@@ -166,7 +166,7 @@ extension GroupDetailsViewController: ParticipantsSectionControllerDelegate {
     }
     
     func presentOptionsMenu() {
-        let menu = ConversationOptionsViewController(conversation: conversation)
+        let menu = ConversationOptionsViewController(conversation: conversation, userSession: ZMUserSession.shared()!)
         navigationController?.pushViewController(menu, animated: true)
     }
     

@@ -20,18 +20,16 @@ import WireSyncEngine
 
 extension ZMConversation {
     
-    func optionsConfiguration() -> ConversationOptionsViewModelConfiguration {
-        return OptionsConfigurationContainer(conversation: self)
-    }
-    
     class OptionsConfigurationContainer: NSObject, ConversationOptionsViewModelConfiguration, ZMConversationObserver {
         
         private var conversation: ZMConversation
         private var token: NSObjectProtocol?
+        private let userSession: ZMUserSession
         var allowGuestsChangedHandler: ((Bool) -> Void)?
         
-        init(conversation: ZMConversation) {
+        init(conversation: ZMConversation, userSession: ZMUserSession) {
             self.conversation = conversation
+            self.userSession = userSession
             super.init()
             token = ConversationChangeInfo.add(observer: self, for: conversation)
         }
@@ -44,7 +42,7 @@ extension ZMConversation {
             return conversation.accessMode == .allowGuests
         }
         
-        func setAllowGuests(_ allowGuests: Bool, in userSession: ZMUserSession, completion: @escaping (VoidResult) -> Void) {
+        func setAllowGuests(_ allowGuests: Bool, completion: @escaping (VoidResult) -> Void) {
             conversation.setAllowGuests(allowGuests, in: userSession, completion)
         }
         
