@@ -77,7 +77,7 @@ class GroupDetailsParticipantCell: UICollectionViewCell {
     }
     
     fileprivate func setup() {
-        guestIconView.image = UIImage(for: .person, iconSize: .tiny, color: UIColor.wr_color(fromColorScheme: ColorSchemeColorSeparator, variant: variant))
+        guestIconView.image = UIImage(for: .guest, iconSize: .tiny, color: UIColor.wr_color(fromColorScheme: ColorSchemeColorSeparator, variant: variant))
         guestIconView.translatesAutoresizingMaskIntoConstraints = false
         guestIconView.contentMode = .scaleAspectFit
         
@@ -147,7 +147,7 @@ class GroupDetailsParticipantCell: UICollectionViewCell {
         
         backgroundColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorTextBackground, variant: variant)
         separator.backgroundColor = separatorColor
-        guestIconView.image = UIImage(for: .person, iconSize: .tiny, color: separatorColor)
+        guestIconView.image = UIImage(for: .guest, iconSize: .tiny, color: separatorColor)
         accessoryActionButton.setIconColor(separatorColor, for: .normal)
         titleLabel.textColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorTextForeground, variant: variant)
         subtitleLabel.textColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorSectionText, variant: variant)
