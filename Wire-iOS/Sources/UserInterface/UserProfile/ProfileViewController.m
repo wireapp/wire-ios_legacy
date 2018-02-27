@@ -190,17 +190,16 @@ typedef NS_ENUM(NSUInteger, ProfileViewControllerTabBarIndex) {
 {
     id<ZMBareUser> user = self.bareUser;
     
-    ProfileHeaderViewModel *viewModel = [self headerViewModelWithUser:user];
-    
+    UserNameDetailViewModel *viewModel = [[UserNameDetailViewModel alloc] initWithUser:user fallbackName:user.displayName addressBookName:BareUserToUser(user).addressBookEntry.cachedName];
     UserNameDetailView *usernameDetailsView = [[UserNameDetailView alloc] init];
     usernameDetailsView.translatesAutoresizingMaskIntoConstraints = NO;
-    [usernameDetailsView configureWith:viewModel.userDetailViewModel];
+    [usernameDetailsView configureWith:viewModel];
     [self.view addSubview:usernameDetailsView];
     self.usernameDetailsView = usernameDetailsView;
     
     ProfileTitleView *titleView = [[ProfileTitleView alloc] init];
     titleView.translatesAutoresizingMaskIntoConstraints = NO;
-    [titleView configureWithViewModel:viewModel.userDetailViewModel];
+    [titleView configureWithViewModel:viewModel];
     self.navigationItem.titleView = titleView;
     self.profileTitleView = titleView;
 }
