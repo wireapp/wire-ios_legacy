@@ -69,16 +69,6 @@ final class ConversationOptionsViewControllerTests: ZMSnapshotTestCase {
         verify(view: sut.wrapInNavigationController().view)
     }
     
-    func testThatItRendersItsTitle_DarkTheme() {
-        // Given
-        let config = MockOptionsViewModelConfiguration(allowGuests: true, title: "Italy Trip")
-        let viewModel = ConversationOptionsViewModel(configuration: config)
-        let sut = ConversationOptionsViewController(viewModel: viewModel, variant: .dark)
-        
-        // Then
-        verify(view: sut.wrapInNavigationController().view)
-    }
-    
     func testThatItRendersNotTeamOnly() {
         // Given
         let config = MockOptionsViewModelConfiguration(allowGuests: false)
@@ -115,34 +105,36 @@ final class ConversationOptionsViewControllerTests: ZMSnapshotTestCase {
     
     func testThatItRendersLoading() {
         // Given
-        let config = MockOptionsViewModelConfiguration(allowGuests: true)
+        let config = MockOptionsViewModelConfiguration(allowGuests: false)
         let viewModel = ConversationOptionsViewModel(configuration: config)
         let sut = ConversationOptionsViewController(viewModel: viewModel, variant: .light)
+        let navigationController = sut.wrapInNavigationController()
         
         sut.loadViewIfNeeded()
-        sut.view.layer.speed = 0
+        navigationController.view.layer.speed = 0
         
         // When
-        viewModel.setAllowGuests(false)
+        viewModel.setAllowGuests(true)
         
         // Then
-        verify(view: sut.view)
+        verify(view: navigationController.view)
     }
     
     func testThatItRendersLoading_DarkTheme() {
         // Given
-        let config = MockOptionsViewModelConfiguration(allowGuests: true)
+        let config = MockOptionsViewModelConfiguration(allowGuests: false)
         let viewModel = ConversationOptionsViewModel(configuration: config)
         let sut = ConversationOptionsViewController(viewModel: viewModel, variant: .dark)
+        let navigationController = sut.wrapInNavigationController()
         
         sut.loadViewIfNeeded()
-        sut.view.layer.speed = 0
+        navigationController.view.layer.speed = 0
         
         // When
-        viewModel.setAllowGuests(false)
+        viewModel.setAllowGuests(true)
         
         // Then
-        verify(view: sut.view)
+        verify(view: navigationController.view)
     }
     
     func testThatItRendersRemoveGuestsConfirmationAlert() {

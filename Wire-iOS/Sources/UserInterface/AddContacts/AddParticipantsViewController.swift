@@ -48,15 +48,8 @@ class AddParticipantsNavigationController: UINavigationController {
         self.navigationBar.shadowImage = UIImage()
         self.navigationBar.isTranslucent = true
         self.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: ColorScheme.default().color(withName: ColorSchemeColorTextForeground),
-                                                  NSFontAttributeName: FontSpec(.medium, .medium).font!.allCaps()]
+                                                  NSFontAttributeName: FontSpec(.medium, .medium).font!]
     }
-}
-
-@objc
-public protocol AddParticipantsViewControllerDelegate : class {
-    
-    func addParticipantsViewControllerDidCancel(_ addParticipantsViewController : AddParticipantsViewController)
-    func addParticipantsViewController(_ addParticipantsViewController : AddParticipantsViewController, didSelectUsers users: Set<ZMUser>)
 }
 
 public protocol AddParticipantsConversationCreationDelegate: class {
@@ -100,7 +93,6 @@ public class AddParticipantsViewController: UIViewController {
     fileprivate var bottomConstraint: NSLayoutConstraint?
     fileprivate let backButtonDescriptor = BackButtonDescription()
     
-    public weak var delegate : AddParticipantsViewControllerDelegate?
     public weak var conversationCreationDelegate : AddParticipantsConversationCreationDelegate?
     
     fileprivate var viewModel: AddParticipantsViewModel {
@@ -352,6 +344,14 @@ public class AddParticipantsViewController: UIViewController {
             searchResultsViewController.searchForLocalUsers(withQuery: searchHeaderViewController.tokenField.filterText)
         }
     }
+    
+    fileprivate func addSelectedParticipants(to conversation: ZMConversation) {
+        let selectedUsers = self.userSelection.users
+        
+        ZMUserSession.shared()?.enqueueChanges({
+            conversation.addParticipants(selectedUsers)
+        })
+    }
 }
 
 extension AddParticipantsViewController : UserSelectionObserver {
@@ -373,7 +373,12 @@ extension AddParticipantsViewController : UserSelectionObserver {
 extension AddParticipantsViewController : SearchHeaderViewControllerDelegate {
     
     public func searchHeaderViewControllerDidConfirmAction(_ searchHeaderViewController: SearchHeaderViewController) {
-        delegate?.addParticipantsViewController(self, didSelectUsers: userSelection.users)
+        if case .add(let conversation) = viewModel.context {
+            self.dismiss(animated: true) {
+                self.addSelectedParticipants(to: conversation)
+            }
+            
+        }
     }
     
     public func searchHeaderViewController(_ searchHeaderViewController: SearchHeaderViewController, updatedSearchQuery query: String) {
@@ -424,9 +429,7 @@ extension AddParticipantsViewController: SearchResultsViewControllerDelegate {
             guard let `self` = self, let result = result else { return }
             switch result {
             case .success:
-                self.dismiss(animated: true) {
-                    self.delegate?.addParticipantsViewController(self, didSelectUsers: [])
-                }
+                self.dismiss(animated: true)
             case .failure(let error):
                 error.displayAddBotError(in: detail)
             }

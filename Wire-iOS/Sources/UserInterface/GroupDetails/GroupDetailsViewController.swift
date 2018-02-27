@@ -95,7 +95,7 @@ class GroupDetailsViewController: UIViewController, ZMConversationObserver, Grou
     func computeVisibleSections() -> [_CollectionViewSectionController] {
         var sections = [_CollectionViewSectionController]()
         if nil != ZMUser.selfUser().team {
-            let optionsController = GuestOptionsSection(delegate: self)
+            let optionsController = GuestOptionsSection(conversation: conversation, delegate: self)
             sections.append(optionsController)
         }
         if conversation.mutableOtherActiveParticipants.count > 0 {
@@ -110,14 +110,15 @@ class GroupDetailsViewController: UIViewController, ZMConversationObserver, Grou
     }
     
     func conversationDidChange(_ changeInfo: ConversationChangeInfo) {
-        // TODO: Check if `teamOnly` changed.
-        guard changeInfo.participantsChanged || changeInfo.nameChanged else { return }
+        guard changeInfo.participantsChanged || changeInfo.nameChanged || changeInfo.allowGuestsChanged else { return }
         collectionViewController.sections = computeVisibleSections()
     }
     
     func detailsView(_ view: GroupDetailsFooterView, performAction action: GroupDetailsFooterView.Action) {
         switch action {
-        case .invite: break
+        case .invite:
+            let addParticipantsViewController = AddParticipantsViewController(conversation: conversation)
+            present(addParticipantsViewController.wrapInNavigationController(), animated: true)
         case .more:
             actionController = ConversationActionController(conversation: conversation, target: self)
             actionController?.presentMenu()
@@ -130,7 +131,21 @@ class GroupDetailsViewController: UIViewController, ZMConversationObserver, Grou
     
 }
 
-extension GroupDetailsViewController: ParticipantsSectionControllerDelegate, ViewControllerDismissable, UINavigationControllerDelegate {
+extension GroupDetailsViewController: ViewControllerDismissable, UINavigationControllerDelegate, ProfileViewControllerDelegate {
+    
+    func viewControllerWants(toBeDismissed controller: UIViewController!, completion: (() -> Void)!) {
+        navigationController?.popViewController(animated: true)
+    }
+    
+    func profileViewController(_ controller: ProfileViewController?, wantsToNavigateTo conversation: ZMConversation) {
+        dismiss(animated: true) {
+            ZClientViewController.shared()?.load(conversation, focusOnView: true, animated: true)
+        }
+    }
+    
+}
+
+extension GroupDetailsViewController: ParticipantsSectionControllerDelegate {
     
     func presentDetailsView(for user: ZMUser) {
         let viewController = UserDetailViewControllerFactory.createUserDetailViewController(user: user,
@@ -141,21 +156,12 @@ extension GroupDetailsViewController: ParticipantsSectionControllerDelegate, Vie
         navigationController?.pushViewController(viewController, animated: true)
     }
     
-    func viewControllerWants(toBeDismissed controller: UIViewController!, completion: (() -> Void)!) {
-        navigationController?.popViewController(animated: true)
-    }
-    
     func presentOptionsMenu() {
         let menu = ConversationOptionsViewController(conversation: conversation)
         navigationController?.pushViewController(menu, animated: true)
     }
     
 }
-
-extension GroupDetailsViewController: ProfileViewControllerDelegate {
-
-}
-
 
 class CollectionViewController: NSObject, UICollectionViewDelegate {
     
@@ -361,9 +367,11 @@ class ServicesSectionController: DefaultSectionController {
 class GuestOptionsSection: NSObject, _CollectionViewSectionController {
 
     private weak var delegate: ParticipantsSectionControllerDelegate?
+    private let conversation: ZMConversation
     
-    init(delegate: ParticipantsSectionControllerDelegate) {
+    init(conversation: ZMConversation, delegate: ParticipantsSectionControllerDelegate) {
         self.delegate = delegate
+        self.conversation = conversation
     }
     
     func prepareForUse(in collectionView: UICollectionView?) {
@@ -376,6 +384,7 @@ class GuestOptionsSection: NSObject, _CollectionViewSectionController {
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: GroupDetailsGuestOptionsCell.zm_reuseIdentifier, for: indexPath) as! GroupDetailsGuestOptionsCell
+        cell.isOn = conversation.allowGuests
         return cell
     }
     

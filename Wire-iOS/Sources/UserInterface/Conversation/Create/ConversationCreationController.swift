@@ -35,9 +35,9 @@ final public class ConversationCreationValues {
 open class ConversationCreationTitleFactory {
     static func createTitleLabel(for title: String, variant: ColorSchemeVariant) -> UILabel {
         let titleLabel = UILabel()
-        titleLabel.font = FontSpec(.normal, .medium).font!.allCaps()
+        titleLabel.font = FontSpec(.normal, .medium).font
         titleLabel.textColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorIconNormal, variant: variant)
-        titleLabel.text = title
+        titleLabel.text = title.uppercased()
         titleLabel.sizeToFit()
         return titleLabel
     }
