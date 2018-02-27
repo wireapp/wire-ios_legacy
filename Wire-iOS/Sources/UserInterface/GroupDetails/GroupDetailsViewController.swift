@@ -34,9 +34,6 @@ class GroupDetailsViewController: UIViewController, ZMConversationObserver, Grou
         super.init(nibName: nil, bundle: nil)
         collectionViewController.sections = computeVisibleSections()
         token = ConversationChangeInfo.add(observer: self, for: conversation)
-
-        navigationItem.rightBarButtonItem = UIBarButtonItem(icon: .X, target: self, action: #selector(GroupDetailsViewController.dismissButtonTapped))
-        navigationItem.rightBarButtonItem?.accessibilityIdentifier = "close"
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -88,6 +85,11 @@ class GroupDetailsViewController: UIViewController, ZMConversationObserver, Grou
         
         collectionViewController.collectionView = collectionView
         footerView.delegate = self
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationItem.rightBarButtonItem = navigationController?.closeItem()
     }
 
     func computeVisibleSections() -> [_CollectionViewSectionController] {

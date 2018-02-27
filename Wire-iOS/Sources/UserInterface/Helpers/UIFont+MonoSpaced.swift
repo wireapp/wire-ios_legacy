@@ -30,12 +30,12 @@ private let monospaceAttribute = [
 
 private let allCapsFeatureSettingsAttributeLowerCase = [
     UIFontFeatureTypeIdentifierKey: kLowerCaseType,
-    UIFontFeatureSelectorIdentifierKey: kLowerCaseSmallCapsSelector,
+    UIFontFeatureSelectorIdentifierKey: kDefaultLowerCaseSelector,
 ]
 
 private let allCapsFeatureSettingsAttributeUpperCase = [
     UIFontFeatureTypeIdentifierKey: kUpperCaseType,
-    UIFontFeatureSelectorIdentifierKey: kUpperCaseSmallCapsSelector,
+    UIFontFeatureSelectorIdentifierKey: kDefaultUpperCaseSelector,
 ]
 
 private let allCapsAttribute = [

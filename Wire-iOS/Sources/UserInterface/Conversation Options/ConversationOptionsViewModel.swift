@@ -19,6 +19,7 @@
 import UIKit
 
 protocol ConversationOptionsViewModelConfiguration: class {
+    var title: String { get }
     var allowGuests: Bool { get }
     var allowGuestsChangedHandler: ((Bool) -> Void)? { get set }
     func setAllowGuests(_ allowGuests: Bool, completion: @escaping (VoidResult) -> Void)
@@ -34,6 +35,7 @@ class ConversationOptionsViewModel {
     struct State {
         var rows = [CellConfiguration]()
         var isLoading = false
+        var title = ""
     }
     
     var state = State() {
@@ -52,6 +54,7 @@ class ConversationOptionsViewModel {
     
     init(configuration: ConversationOptionsViewModelConfiguration) {
         self.configuration = configuration
+        state.title = configuration.title
         updateRows()
         configuration.allowGuestsChangedHandler = { [weak self] _ in
             self?.updateRows()

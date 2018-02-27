@@ -40,6 +40,16 @@ final class ConversationOptionsViewController: UIViewController, UITableViewDele
         viewModel.delegate = self
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationItem.rightBarButtonItem = navigationController?.closeItem()
+        navigationItem.leftBarButtonItem = .backButton(target: self, action: #selector(dismissTapped))
+        navigationController?.navigationBar.titleTextAttributes = [
+            NSFontAttributeName: FontSpec(.small, .semibold).font!.allCaps(),
+            NSForegroundColorAttributeName: UIColor.wr_color(fromColorScheme: ColorSchemeColorTextForeground, variant: variant)
+        ]
+    }
+    
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -54,6 +64,9 @@ final class ConversationOptionsViewController: UIViewController, UITableViewDele
         tableView.delegate = self
         tableView.dataSource = self
         tableView.backgroundColor = ColorScheme.default().color(withName: ColorSchemeColorContentBackground, variant: variant)
+        if #available(iOS 11.0, *) {
+            tableView.contentInsetAdjustmentBehavior = .never
+        }
     }
     
     private func createConstraints() {
@@ -66,11 +79,16 @@ final class ConversationOptionsViewController: UIViewController, UITableViewDele
         ])
     }
     
+    @objc private func dismissTapped(_ sender: UIBarButtonItem) {
+        navigationController?.popViewController(animated: true)
+    }
+    
     // MARK: – ConversationOptionsViewModelDelegate
     
     func viewModel(_ viewModel: ConversationOptionsViewModel, didUpdateState state: ConversationOptionsViewModel.State) {
         tableView.reloadData()
         navigationController?.showLoadingView = state.isLoading
+        title = state.title
     }
     
     func viewModel(_ viewModel: ConversationOptionsViewModel, didReceiveError error: Error) {

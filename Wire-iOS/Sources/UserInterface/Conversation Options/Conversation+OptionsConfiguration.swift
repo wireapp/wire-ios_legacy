@@ -33,6 +33,10 @@ extension ZMConversation {
             token = ConversationChangeInfo.add(observer: self, for: conversation)
         }
         
+        var title: String {
+            return conversation.displayName
+        }
+        
         var allowGuests: Bool {
             return conversation.accessMode == .allowGuests
         }
