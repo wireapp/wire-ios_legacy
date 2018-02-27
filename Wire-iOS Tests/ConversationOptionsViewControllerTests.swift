@@ -21,26 +21,27 @@ import XCTest
 
 class MockOptionsViewModelConfiguration: ConversationOptionsViewModelConfiguration {
     typealias SetHandler = (Bool, (VoidResult) -> Void) -> Void
-    var isTeamOnly: Bool
-    var setTeamOnlyHandler: SetHandler?
-    var teamOnlyChangedHandler: ((Bool) -> Void)?
+    var allowGuests: Bool
+    var setAllowGuests: SetHandler?
+    var allowGuestsChangedHandler: ((Bool) -> Void)?
+    var title: String
     
-    init(isTeamOnly: Bool, setTeamOnly: SetHandler? = nil) {
-        self.isTeamOnly = isTeamOnly
-        self.setTeamOnlyHandler = setTeamOnly
+    init(allowGuests: Bool, title: String = "", setAllowGuests: SetHandler? = nil) {
+        self.allowGuests = allowGuests
+        self.setAllowGuests = setAllowGuests
+        self.title = title
     }
-    
-    func setTeamOnly(_ teamOnly: Bool, completion: @escaping (VoidResult) -> Void) {
-        setTeamOnlyHandler?(teamOnly, completion)
+
+    func setAllowGuests(_ allowGuests: Bool, completion: @escaping (VoidResult) -> Void) {
+        setAllowGuests?(allowGuests, completion)
     }
-    
 }
 
 final class ConversationOptionsViewControllerTests: ZMSnapshotTestCase {
 
     func testThatItRendersTeamOnly() {
         // Given
-        let config = MockOptionsViewModelConfiguration(isTeamOnly: true)
+        let config = MockOptionsViewModelConfiguration(allowGuests: true)
         let viewModel = ConversationOptionsViewModel(configuration: config)
         let sut = ConversationOptionsViewController(viewModel: viewModel, variant: .light)
         
@@ -50,7 +51,7 @@ final class ConversationOptionsViewControllerTests: ZMSnapshotTestCase {
     
     func testThatItRendersTeamOnly_DarkTheme() {
         // Given
-        let config = MockOptionsViewModelConfiguration(isTeamOnly: true)
+        let config = MockOptionsViewModelConfiguration(allowGuests: true)
         let viewModel = ConversationOptionsViewModel(configuration: config)
         let sut = ConversationOptionsViewController(viewModel: viewModel, variant: .dark)
         
@@ -58,9 +59,29 @@ final class ConversationOptionsViewControllerTests: ZMSnapshotTestCase {
         verify(view: sut.view)
     }
     
+    func testThatItRendersItsTitle() {
+        // Given
+        let config = MockOptionsViewModelConfiguration(allowGuests: true, title: "Italy Trip")
+        let viewModel = ConversationOptionsViewModel(configuration: config)
+        let sut = ConversationOptionsViewController(viewModel: viewModel, variant: .light)
+        
+        // Then
+        verify(view: sut.wrapInNavigationController().view)
+    }
+    
+    func testThatItRendersItsTitle_DarkTheme() {
+        // Given
+        let config = MockOptionsViewModelConfiguration(allowGuests: true, title: "Italy Trip")
+        let viewModel = ConversationOptionsViewModel(configuration: config)
+        let sut = ConversationOptionsViewController(viewModel: viewModel, variant: .dark)
+        
+        // Then
+        verify(view: sut.wrapInNavigationController().view)
+    }
+    
     func testThatItRendersNotTeamOnly() {
         // Given
-        let config = MockOptionsViewModelConfiguration(isTeamOnly: false)
+        let config = MockOptionsViewModelConfiguration(allowGuests: false)
         let viewModel = ConversationOptionsViewModel(configuration: config)
         let sut = ConversationOptionsViewController(viewModel: viewModel, variant: .light)
         
@@ -70,13 +91,13 @@ final class ConversationOptionsViewControllerTests: ZMSnapshotTestCase {
     
     func testThatItUpdatesWhenItReceivesAChange() {
         // Given
-        let config = MockOptionsViewModelConfiguration(isTeamOnly: false)
+        let config = MockOptionsViewModelConfiguration(allowGuests: false)
         let viewModel = ConversationOptionsViewModel(configuration: config)
         let sut = ConversationOptionsViewController(viewModel: viewModel, variant: .light)
         
-        XCTAssertNotNil(config.teamOnlyChangedHandler)
-        config.isTeamOnly = true
-        config.teamOnlyChangedHandler?(true)
+        XCTAssertNotNil(config.allowGuestsChangedHandler)
+        config.allowGuests = true
+        config.allowGuestsChangedHandler?(true)
         
         // Then
         verify(view: sut.view)
@@ -84,7 +105,7 @@ final class ConversationOptionsViewControllerTests: ZMSnapshotTestCase {
     
     func testThatItRendersNotTeamOnly_DarkTheme() {
         // Given
-        let config = MockOptionsViewModelConfiguration(isTeamOnly: false)
+        let config = MockOptionsViewModelConfiguration(allowGuests: false)
         let viewModel = ConversationOptionsViewModel(configuration: config)
         let sut = ConversationOptionsViewController(viewModel: viewModel, variant: .dark)
         
@@ -94,7 +115,7 @@ final class ConversationOptionsViewControllerTests: ZMSnapshotTestCase {
     
     func testThatItRendersLoading() {
         // Given
-        let config = MockOptionsViewModelConfiguration(isTeamOnly: true)
+        let config = MockOptionsViewModelConfiguration(allowGuests: true)
         let viewModel = ConversationOptionsViewModel(configuration: config)
         let sut = ConversationOptionsViewController(viewModel: viewModel, variant: .light)
         
@@ -102,7 +123,7 @@ final class ConversationOptionsViewControllerTests: ZMSnapshotTestCase {
         sut.view.layer.speed = 0
         
         // When
-        viewModel.setTeamOnly(false)
+        viewModel.setAllowGuests(false)
         
         // Then
         verify(view: sut.view)
@@ -110,7 +131,7 @@ final class ConversationOptionsViewControllerTests: ZMSnapshotTestCase {
     
     func testThatItRendersLoading_DarkTheme() {
         // Given
-        let config = MockOptionsViewModelConfiguration(isTeamOnly: true)
+        let config = MockOptionsViewModelConfiguration(allowGuests: true)
         let viewModel = ConversationOptionsViewModel(configuration: config)
         let sut = ConversationOptionsViewController(viewModel: viewModel, variant: .dark)
         
@@ -118,7 +139,7 @@ final class ConversationOptionsViewControllerTests: ZMSnapshotTestCase {
         sut.view.layer.speed = 0
         
         // When
-        viewModel.setTeamOnly(false)
+        viewModel.setAllowGuests(false)
         
         // Then
         verify(view: sut.view)
