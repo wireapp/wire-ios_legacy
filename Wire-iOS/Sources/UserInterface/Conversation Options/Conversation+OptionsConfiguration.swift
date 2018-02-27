@@ -16,6 +16,8 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
+import WireSyncEngine
+
 extension ZMConversation {
     
     func optionsConfiguration() -> ConversationOptionsViewModelConfiguration {
@@ -23,6 +25,10 @@ extension ZMConversation {
     }
     
     class OptionsConfigurationContainer: NSObject, ConversationOptionsViewModelConfiguration, ZMConversationObserver {
+        func setAllowGuests(_ allowGuests: Bool, in userSession: ZMUserSession, completion: @escaping (VoidResult) -> Void) {
+            self.setAllowGuests(allowGuests, in: userSession, completion: completion)
+        }
+        
         private var conversation: ZMConversation
         private var token: NSObjectProtocol?
         var allowGuestsChangedHandler: ((Bool) -> Void)?
@@ -39,10 +45,6 @@ extension ZMConversation {
         
         var allowGuests: Bool {
             return conversation.accessMode == .allowGuests
-        }
-        
-        func setAllowGuests(_ allowGuests: Bool, completion: @escaping (VoidResult) -> Void) {
-            conversation.setAllowGuests(allowGuests, in: ZMUserSession.shared()!, completion)
         }
         
         func conversationDidChange(_ changeInfo: ConversationChangeInfo) {
