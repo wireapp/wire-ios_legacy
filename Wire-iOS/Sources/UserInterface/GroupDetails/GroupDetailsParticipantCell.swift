@@ -158,7 +158,12 @@ class GroupDetailsParticipantCell: UICollectionViewCell {
         avatar.user = user
         titleLabel.attributedText = user.nameIncludingAvailability(color: UIColor.wr_color(fromColorScheme: ColorSchemeColorTextForeground, variant: variant))
         guestIconView.isHidden = !ZMUser.selfUser().isTeamMember || user.isTeamMember
-        verifiedIconView.isHidden = (user as? ZMUser)?.untrusted() ?? true
+        
+        if let user = user as? ZMUser {
+            verifiedIconView.isHidden = !user.trusted() || user.clients.isEmpty
+        } else {
+            verifiedIconView.isHidden  = true
+        }
         
         if let handle = user.handle, !handle.isEmpty {
             subtitleLabel.isHidden = false

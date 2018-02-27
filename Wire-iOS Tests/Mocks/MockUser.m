@@ -30,6 +30,7 @@ static id<ZMBareUser> mockSelfUser = nil;
 {
     self = [super init];
     if (self) {
+        _clients = [NSSet set];
         for (NSString *key in jsonObject.allKeys) {
             id value = jsonObject[key];
             [self setValue:value forKey:key];
@@ -180,11 +181,6 @@ static id<ZMBareUser> mockSelfUser = nil;
 }
 
 - (id)observableKeys
-{
-    return @[];
-}
-
-- (id)clients
 {
     return @[];
 }
