@@ -25,9 +25,6 @@ extension ZMConversation {
     }
     
     class OptionsConfigurationContainer: NSObject, ConversationOptionsViewModelConfiguration, ZMConversationObserver {
-        func setAllowGuests(_ allowGuests: Bool, in userSession: ZMUserSession, completion: @escaping (VoidResult) -> Void) {
-            self.setAllowGuests(allowGuests, in: userSession, completion: completion)
-        }
         
         private var conversation: ZMConversation
         private var token: NSObjectProtocol?
@@ -40,11 +37,15 @@ extension ZMConversation {
         }
         
         var title: String {
-            return conversation.displayName
+            return conversation.displayName.uppercased()
         }
         
         var allowGuests: Bool {
             return conversation.accessMode == .allowGuests
+        }
+        
+        func setAllowGuests(_ allowGuests: Bool, in userSession: ZMUserSession, completion: @escaping (VoidResult) -> Void) {
+            conversation.setAllowGuests(allowGuests, in: userSession, completion)
         }
         
         func conversationDidChange(_ changeInfo: ConversationChangeInfo) {
