@@ -32,7 +32,7 @@ class MockOptionsViewModelConfiguration: ConversationOptionsViewModelConfigurati
         self.title = title
     }
 
-    func setAllowGuests(_ allowGuests: Bool, completion: @escaping (VoidResult) -> Void) {
+    func setAllowGuests(_ allowGuests: Bool, in: ZMUserSession, completion: @escaping (VoidResult) -> Void) {
         setAllowGuests?(allowGuests, completion)
     }
 }
