@@ -25,7 +25,7 @@ extension ZMConversation {
     class OptionsConfigurationContainer: NSObject, ConversationOptionsViewModelConfiguration, ZMConversationObserver {
         private var conversation: ZMConversation
         private var token: NSObjectProtocol?
-        var teamOnlyChangedHandler: ((Bool) -> Void)?
+        var allowGuestsChangedHandler: ((Bool) -> Void)?
         
         init(conversation: ZMConversation) {
             self.conversation = conversation
@@ -33,16 +33,17 @@ extension ZMConversation {
             token = ConversationChangeInfo.add(observer: self, for: conversation)
         }
         
-        var isTeamOnly: Bool {
-            return conversation.accessMode == .teamOnly
+        var allowGuests: Bool {
+            return conversation.accessMode == .allowGuests
         }
         
-        func setTeamOnly(_ teamOnly: Bool, completion: @escaping (VoidResult) -> Void) {
-            conversation.setAllowGuests(!teamOnly, in: ZMUserSession.shared()!, completion)
+        func setAllowGuests(_ allowGuests: Bool, completion: @escaping (VoidResult) -> Void) {
+            conversation.setAllowGuests(allowGuests, in: ZMUserSession.shared()!, completion)
         }
         
         func conversationDidChange(_ changeInfo: ConversationChangeInfo) {
-            teamOnlyChangedHandler?(isTeamOnly)
+            guard changeInfo.allowGuestsChanged else { return }
+            allowGuestsChangedHandler?(allowGuests)
         }
     }
     

@@ -19,9 +19,9 @@
 import UIKit
 
 protocol ConversationOptionsViewModelConfiguration: class {
-    var isTeamOnly: Bool { get }
-    func setTeamOnly(_ teamOnly: Bool, completion: @escaping (VoidResult) -> Void)
-    var teamOnlyChangedHandler: ((Bool) -> Void)? { get set }
+    var allowGuests: Bool { get }
+    var allowGuestsChangedHandler: ((Bool) -> Void)? { get set }
+    func setAllowGuests(_ allowGuests: Bool, completion: @escaping (VoidResult) -> Void)
 }
 
 protocol ConversationOptionsViewModelDelegate: class {
@@ -53,7 +53,7 @@ class ConversationOptionsViewModel {
     init(configuration: ConversationOptionsViewModelConfiguration) {
         self.configuration = configuration
         updateRows()
-        configuration.teamOnlyChangedHandler = { [weak self] _ in
+        configuration.allowGuestsChangedHandler = { [weak self] _ in
             self?.updateRows()
         }
     }
@@ -63,21 +63,20 @@ class ConversationOptionsViewModel {
     }
     
     private func computeVisibleRows() -> [CellConfiguration] {
-        // TODO: Append additional rows depending on whether or not we have a link or not.
         return [
             .toggle(
                 title: "guest_room.allow_guests.title".localized,
                 subtitle: "guest_room.allow_guests.subtitle".localized,
-                get: { [unowned self] in return self.configuration.isTeamOnly },
-                set: { [unowned self] in self.setTeamOnly($0) }
+                get: { [unowned self] in return self.configuration.allowGuests },
+                set: { [unowned self] in self.setAllowGuests($0) }
             )
         ]
     }
     
-    func setTeamOnly(_ teamOnly: Bool) {
-        func _setTeamOnly() {
+    func setAllowGuests(_ allowGuests: Bool) {
+        func _setAllowGuests() {
             state.isLoading = true
-            configuration.setTeamOnly(teamOnly) { [unowned self] result in
+            configuration.setAllowGuests(allowGuests) { [unowned self] result in
                 self.state.isLoading = false
                 switch result {
                 case .success: self.updateRows()
@@ -86,17 +85,17 @@ class ConversationOptionsViewModel {
             }
         }
         
-        guard teamOnly != configuration.isTeamOnly else { return }
+        guard allowGuests != configuration.allowGuests else { return }
         
-        // In case team only mode should be activated, ask the delegate
+        // In case allow guests mode should be deactivated, ask the delegate
         // to confirm this action as all guests will be removed.
-        if teamOnly {
-            delegate?.viewModel(self, confirmRemovingGuests: { remove in
-                guard remove else { return }
-                _setTeamOnly()
+        if !allowGuests {
+            delegate?.viewModel(self, confirmRemovingGuests: { [unowned self] remove in
+                guard remove else { return self.updateRows() }
+                _setAllowGuests()
             })
         } else {
-            _setTeamOnly()
+            _setAllowGuests()
         }
     }
     

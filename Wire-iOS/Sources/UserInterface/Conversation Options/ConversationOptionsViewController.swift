@@ -17,7 +17,6 @@
 //
 
 import UIKit
-import Cartography
 
 final class ConversationOptionsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, ConversationOptionsViewModelDelegate {
 
@@ -58,16 +57,20 @@ final class ConversationOptionsViewController: UIViewController, UITableViewDele
     }
     
     private func createConstraints() {
-        constrain(view, tableView) { view, tableView in
-            tableView.edges == view.edges
-        }
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            tableView.topAnchor.constraint(equalTo: view.topAnchor),
+            tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+        ])
     }
     
     // MARK: – ConversationOptionsViewModelDelegate
     
     func viewModel(_ viewModel: ConversationOptionsViewModel, didUpdateState state: ConversationOptionsViewModel.State) {
         tableView.reloadData()
-        showLoadingView = state.isLoading
+        navigationController?.showLoadingView = state.isLoading
     }
     
     func viewModel(_ viewModel: ConversationOptionsViewModel, didReceiveError error: Error) {
@@ -75,8 +78,7 @@ final class ConversationOptionsViewController: UIViewController, UITableViewDele
     }
     
     func viewModel(_ viewModel: ConversationOptionsViewModel, confirmRemovingGuests completion: @escaping (Bool) -> Void) {
-        let alert = UIAlertController.confirmRemovingGuests(completion)
-        present(alert, animated: false)
+        present(UIAlertController.confirmRemovingGuests(completion), animated: true)
     }
 
     // MARK: – UITableViewDelegate & UITableViewDataSource
