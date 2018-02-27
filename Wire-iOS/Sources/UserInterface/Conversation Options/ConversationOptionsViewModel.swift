@@ -22,7 +22,7 @@ protocol ConversationOptionsViewModelConfiguration: class {
     var title: String { get }
     var allowGuests: Bool { get }
     var allowGuestsChangedHandler: ((Bool) -> Void)? { get set }
-    func setAllowGuests(_ allowGuests: Bool, in: ZMUserSession, completion: @escaping (VoidResult) -> Void)
+    func setAllowGuests(_ allowGuests: Bool, completion: @escaping (VoidResult) -> Void)
 }
 
 protocol ConversationOptionsViewModelDelegate: class {
@@ -79,10 +79,8 @@ class ConversationOptionsViewModel {
     func setAllowGuests(_ allowGuests: Bool) {
         func _setAllowGuests() {
             state.isLoading = true
-            guard let userSession = ZMUserSession.shared() else {
-                return
-            }
-            configuration.setAllowGuests(allowGuests, in: userSession) { [unowned self] result in
+            
+            configuration.setAllowGuests(allowGuests) { [unowned self] result in
                 self.state.isLoading = false
                 switch result {
                 case .success: self.updateRows()

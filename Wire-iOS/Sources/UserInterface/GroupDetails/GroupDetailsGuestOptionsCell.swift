@@ -34,6 +34,14 @@ class GroupDetailsGuestOptionsCell: UICollectionViewCell {
         }
     }
     
+    override var isHighlighted: Bool {
+        didSet {
+            backgroundColor = isHighlighted
+                ? .init(white: 0, alpha: 0.08)
+                : .wr_color(fromColorScheme: ColorSchemeColorTextBackground, variant: variant)
+        }
+    }
+    
     var variant : ColorSchemeVariant = ColorScheme.default().variant {
         didSet {
             guard oldValue != variant else { return }
@@ -43,13 +51,11 @@ class GroupDetailsGuestOptionsCell: UICollectionViewCell {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
         setup()
     }
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        
         setup()
     }
     
@@ -96,10 +102,10 @@ class GroupDetailsGuestOptionsCell: UICollectionViewCell {
     
     private func configureColors() {
         let separatorColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorSeparator, variant: variant)
-        backgroundColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorTextBackground, variant: variant)
+        backgroundColor = .wr_color(fromColorScheme: ColorSchemeColorTextBackground, variant: variant)
         guestIconView.image = UIImage(for: .person, iconSize: .tiny, color: UIColor.wr_color(fromColorScheme: ColorSchemeColorTextForeground, variant: variant))
         accessoryIconView.image = UIImage(for: .disclosureIndicator, iconSize: .tiny, color: separatorColor)
-        titleLabel.textColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorTextForeground, variant: variant)
+        titleLabel.textColor = .wr_color(fromColorScheme: ColorSchemeColorTextForeground, variant: variant)
         statusLabel.textColor = separatorColor
     }
     

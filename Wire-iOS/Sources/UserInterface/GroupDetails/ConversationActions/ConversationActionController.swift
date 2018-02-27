@@ -16,10 +16,15 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
+@objc protocol ConversationActionControllerRenameDelegate: class {
+    func controllerWantsToRenameConversation(_ controller: ConversationActionController)
+}
+
 @objc final class ConversationActionController: NSObject {
     
     private let conversation: ZMConversation
     unowned let target: UIViewController
+    weak var renameDelegate: ConversationActionControllerRenameDelegate? // Only relevant for group conversations and the rename action
     
     @objc init(conversation: ZMConversation, target: UIViewController) {
         // Does not support blocking yet (1-on-1)
@@ -57,6 +62,10 @@
     
     private func alertAction(for action: ZMConversation.Action) -> UIAlertAction {
         switch action {
+        case .rename: return action.alertAction { [weak self] in
+            guard let `self` = self else { return }
+            self.renameDelegate?.controllerWantsToRenameConversation(self)
+        }
         case .archive(isArchived: let isArchived): return action.alertAction { [weak self] in
             guard let `self` = self else { return }
             self.transitionToListAndEnqueue {

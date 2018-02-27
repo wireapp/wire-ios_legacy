@@ -43,6 +43,7 @@ class GroupDetailsViewController: UIViewController, ZMConversationObserver, Grou
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        title = "participants.title".localized.uppercased()
         let collectionViewLayout = UICollectionViewFlowLayout()
         collectionViewLayout.scrollDirection = .vertical
         collectionViewLayout.minimumInteritemSpacing = 12
@@ -98,12 +99,13 @@ class GroupDetailsViewController: UIViewController, ZMConversationObserver, Grou
             let optionsController = GuestOptionsSection(conversation: conversation, delegate: self)
             sections.append(optionsController)
         }
-        if conversation.mutableOtherActiveParticipants.count > 0 {
-            let participantsSectionController = ParticipantsSectionController(conversation: conversation, delegate: self)
+        let (participants, serviceUsers) = (conversation.sortedOtherParticipants, conversation.sortedServiceUsers)
+        if !participants.isEmpty {
+            let participantsSectionController = ParticipantsSectionController(participants: participants, delegate: self)
             sections.append(participantsSectionController)
         }
-        if conversation.includesServiceUser {
-            let servicesSection = ServicesSectionController(conversation: conversation, delegate: self)
+        if !serviceUsers.isEmpty {
+            let servicesSection = ServicesSectionController(serviceUsers: serviceUsers, delegate: self)
             sections.append(servicesSection)
         }
         return sections
@@ -121,6 +123,7 @@ class GroupDetailsViewController: UIViewController, ZMConversationObserver, Grou
             present(addParticipantsViewController.wrapInNavigationController(), animated: true)
         case .more:
             actionController = ConversationActionController(conversation: conversation, target: self)
+            actionController?.renameDelegate = self
             actionController?.presentMenu()
         }
     }
@@ -129,6 +132,12 @@ class GroupDetailsViewController: UIViewController, ZMConversationObserver, Grou
         dismiss(animated: true)
     }
     
+}
+
+extension GroupDetailsViewController: ConversationActionControllerRenameDelegate {
+    func controllerWantsToRenameConversation(_ controller: ConversationActionController) {
+        fatalError("Unimplemented")
+    }
 }
 
 extension GroupDetailsViewController: ViewControllerDismissable, UINavigationControllerDelegate, ProfileViewControllerDelegate {
@@ -157,7 +166,7 @@ extension GroupDetailsViewController: ParticipantsSectionControllerDelegate {
     }
     
     func presentOptionsMenu() {
-        let menu = ConversationOptionsViewController(conversation: conversation)
+        let menu = ConversationOptionsViewController(conversation: conversation, userSession: ZMUserSession.shared()!)
         navigationController?.pushViewController(menu, animated: true)
     }
     
@@ -289,8 +298,8 @@ class ParticipantsSectionController: DefaultSectionController {
     private weak var delegate: ParticipantsSectionControllerDelegate?
     private let participants: [ZMBareUser]
     
-    init(conversation: ZMConversation, delegate: ParticipantsSectionControllerDelegate) {
-        self.participants = conversation.sortedOtherParticipants
+    init(participants: [ZMBareUser], delegate: ParticipantsSectionControllerDelegate) {
+        self.participants = participants
         self.delegate = delegate
     }
     
@@ -329,8 +338,8 @@ class ServicesSectionController: DefaultSectionController {
     private weak var delegate: ParticipantsSectionControllerDelegate?
     private let serviceUsers: [ZMBareUser]
     
-    init(conversation: ZMConversation, delegate: ParticipantsSectionControllerDelegate) {
-        self.serviceUsers = conversation.sortedServiceUsers
+    init(serviceUsers: [ZMBareUser], delegate: ParticipantsSectionControllerDelegate) {
+        self.serviceUsers = serviceUsers
         self.delegate = delegate
     }
     
