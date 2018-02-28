@@ -530,22 +530,24 @@ extension DownStyle {
     /// The style used within the conversation message cells.
     static var normal: DownStyle = {
         let style = DownStyle()
-        style.baseFont = FontSpec(.normal, .regular).font!
+        style.baseFont = FontSpec(.normal, .none).font!
         style.baseFontColor = ColorScheme.default().color(withName: ColorSchemeColorTextForeground)
         style.codeFont = UIFont(name: "Menlo", size: style.baseFont.pointSize) ?? style.baseFont
         style.baseParagraphStyle = NSParagraphStyle.default
         style.listIndentation = 0
+        style.listItemPrefixSpacing = 4
         return style
     }()
     
     /// The style used within the input bar.
     static var compact: DownStyle = {
         let style = DownStyle()
-        style.baseFont = FontSpec(.normal, .regular).font!
+        style.baseFont = FontSpec(.normal, .none).font!
         style.baseFontColor = ColorScheme.default().color(withName: ColorSchemeColorTextForeground)
         style.codeFont = UIFont(name: "Menlo", size: style.baseFont.pointSize) ?? style.baseFont
         style.baseParagraphStyle = NSParagraphStyle.default
         style.listIndentation = 0
+        style.listItemPrefixSpacing = 4
         
         // headers all same size
         style.h1Size = style.baseFont.pointSize

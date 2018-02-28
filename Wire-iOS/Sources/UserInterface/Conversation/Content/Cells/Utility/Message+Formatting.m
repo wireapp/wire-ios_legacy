@@ -106,7 +106,7 @@ static inline NSDataDetector *linkDataDetector(void)
     
     if (nil == style) {
         // set markdown attribute styles here
-        style = [[DownStyle alloc] init];
+        style = DownStyle.normal;
         style.baseFont = [UIFont fontWithMagicIdentifier:@"style.text.normal.font_spec"];
         style.baseFontColor = [UIColor wr_colorFromColorScheme:ColorSchemeColorTextForeground];
         style.baseParagraphStyle = cellParagraphStyle;
