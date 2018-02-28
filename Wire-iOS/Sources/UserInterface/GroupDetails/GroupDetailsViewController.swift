@@ -319,7 +319,7 @@ class DefaultSectionController: NSObject, _CollectionViewSectionController {
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: collectionView.bounds.size.width, height: 64)
+        return CGSize(width: collectionView.bounds.size.width, height: 56)
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
