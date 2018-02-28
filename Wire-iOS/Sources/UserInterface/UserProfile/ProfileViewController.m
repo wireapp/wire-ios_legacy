@@ -142,9 +142,9 @@ typedef NS_ENUM(NSUInteger, ProfileViewControllerTabBarIndex) {
 - (void)setupNavigationItems
 {
     if (self.navigationController.viewControllers.count == 1) {
-        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithIcon:ZetaIconTypeX style:UIBarButtonItemStylePlain target:self action:@selector(dismissButtonClicked)];
+        self.navigationItem.rightBarButtonItem = [self.navigationController closeItem];
     } else {
-        self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithIcon:ZetaIconTypeBackArrow style:UIBarButtonItemStylePlain target:self action:@selector(dismissButtonClicked)];
+        self.navigationItem.leftBarButtonItem = [self backItem];
     }
 }
 

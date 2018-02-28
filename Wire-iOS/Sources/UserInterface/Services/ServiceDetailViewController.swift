@@ -158,6 +158,10 @@ final class ServiceDetailViewController: UIViewController {
             self.detailView.service = service
         }
     }
+    
+    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+        return wr_supportedInterfaceOrientations
+    }
 
     public var completion: ((AddBotResult?)->Void)?
     let destinationConversation: ZMConversation?

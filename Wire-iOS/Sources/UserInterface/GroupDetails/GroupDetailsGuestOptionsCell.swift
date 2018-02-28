@@ -60,6 +60,7 @@ class GroupDetailsGuestOptionsCell: UICollectionViewCell {
     }
     
     fileprivate func setup() {
+        accessibilityIdentifier = "cell.groupdetails.guestoptions"
         guestIconView.translatesAutoresizingMaskIntoConstraints = false
         guestIconView.contentMode = .scaleAspectFit
         guestIconView.setContentHuggingPriority(UILayoutPriorityRequired, for: .horizontal)

@@ -30,6 +30,10 @@ class GroupDetailsViewController: UIViewController, ZMConversationObserver, Grou
     fileprivate var renameSectionController : RenameSectionController?
     fileprivate let emptyView = UIImageView()
     private var emptyViewVerticalConstraint: NSLayoutConstraint?
+    
+    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+        return wr_supportedInterfaceOrientations
+    }
 
     public init(conversation: ZMConversation) {
         self.conversation = conversation
@@ -300,6 +304,10 @@ class DefaultSectionController: NSObject, _CollectionViewSectionController {
         return ""
     }
     
+    var sectionAccessibilityIdentifier: String {
+        return "section_header"
+    }
+    
     var variant : ColorSchemeVariant = ColorScheme.default().variant
     
     func prepareForUse(in collectionView : UICollectionView?) {
@@ -312,6 +320,7 @@ class DefaultSectionController: NSObject, _CollectionViewSectionController {
         if let sectionHeaderView = supplementaryView as? GroupDetailsSectionHeader {
             sectionHeaderView.variant = variant
             sectionHeaderView.titleLabel.text = sectionTitle
+            sectionHeaderView.accessibilityIdentifier = sectionAccessibilityIdentifier
         }
         
         return supplementaryView
@@ -355,6 +364,10 @@ class ParticipantsSectionController: DefaultSectionController {
         return "participants.section.participants".localized(args: participants.count).uppercased()
     }
     
+    override var sectionAccessibilityIdentifier: String {
+        return "label.groupdetails.participants"
+    }
+    
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return participants.count
     }
@@ -393,6 +406,10 @@ class ServicesSectionController: DefaultSectionController {
     
     override var sectionTitle: String {
         return "participants.section.services".localized(args: serviceUsers.count).uppercased()
+    }
+    
+    override var sectionAccessibilityIdentifier: String {
+        return "label.groupdetails.services"
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

@@ -26,6 +26,10 @@ final class ConversationOptionsViewController: UIViewController, UITableViewDele
     private var viewModel: ConversationOptionsViewModel
     private let variant: ColorSchemeVariant
     
+    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+        return wr_supportedInterfaceOrientations
+    }
+    
     convenience init(conversation: ZMConversation, userSession: ZMUserSession) {
         let configuration = ZMConversation.OptionsConfigurationContainer(
             conversation: conversation,
