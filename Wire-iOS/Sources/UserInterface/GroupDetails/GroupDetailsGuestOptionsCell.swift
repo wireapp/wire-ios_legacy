@@ -60,6 +60,8 @@ class GroupDetailsGuestOptionsCell: UICollectionViewCell {
     }
     
     fileprivate func setup() {
+        accessibilityIdentifier = "cell.groupdetails.guestoptions"
+        
         guestIconView.image = UIImage(for: .person, iconSize: .like, color: UIColor.wr_color(fromColorScheme: ColorSchemeColorSeparator, variant: variant))
         guestIconView.translatesAutoresizingMaskIntoConstraints = false
         guestIconView.contentMode = .scaleAspectFit

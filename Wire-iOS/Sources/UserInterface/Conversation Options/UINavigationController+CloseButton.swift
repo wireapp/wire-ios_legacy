@@ -33,7 +33,9 @@ extension UINavigationController {
 
 extension UIViewController {
     func backItem() -> UIBarButtonItem {
-        return .backButton(target: self, action: #selector(dismissTapped))
+        let item = UIBarButtonItem.backButton(target: self, action: #selector(dismissTapped))
+        item.accessibilityIdentifier = "back"
+        return item
     }
     
     

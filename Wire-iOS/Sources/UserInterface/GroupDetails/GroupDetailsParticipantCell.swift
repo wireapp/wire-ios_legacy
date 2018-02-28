@@ -80,16 +80,19 @@ class GroupDetailsParticipantCell: UICollectionViewCell {
         guestIconView.image = UIImage(for: .guest, iconSize: .tiny, color: UIColor.wr_color(fromColorScheme: ColorSchemeColorSeparator, variant: variant))
         guestIconView.translatesAutoresizingMaskIntoConstraints = false
         guestIconView.contentMode = .center
+        guestIconView.accessibilityIdentifier = "img.guest"
         
         verifiedIconView.image = WireStyleKit.imageOfShieldverified()
         verifiedIconView.translatesAutoresizingMaskIntoConstraints = false
         verifiedIconView.contentMode = .center
+        verifiedIconView.accessibilityIdentifier = "img.shield"
         
         accessoryActionButton.setIcon(.disclosureIndicator, with: .like, for: .normal)
         accessoryActionButton.imageView?.contentMode = .center
         
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         titleLabel.font = FontSpec.init(.normal, .light).font!
+        titleLabel.accessibilityIdentifier = "label.groupdetails.username"
         
         subtitleLabel.translatesAutoresizingMaskIntoConstraints = false
         subtitleLabel.font = FontSpec.init(.small, .regular).font!
