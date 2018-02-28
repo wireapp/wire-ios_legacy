@@ -711,6 +711,7 @@ final class MarkdownTextViewTests: XCTestCase {
         // THEN
         XCTAssertEqual(sut.text, "1.Oh Hai!")
         checkAttributes(for: .none, inRange: NSMakeRange(0, text.length + 2))
+        XCTAssertEqual(sut.activeMarkdown, .none)
     }
     
     func testThatDeletingPartOfListPrefixRemovesListMarkdownForLine_Bullet() {
@@ -725,6 +726,7 @@ final class MarkdownTextViewTests: XCTestCase {
         // THEN
         XCTAssertEqual(sut.text, " Oh Hai!")
         checkAttributes(for: .none, inRange: NSMakeRange(0, text.length + 1))
+        XCTAssertEqual(sut.activeMarkdown, .none)
     }
     
     func testThatTypingListPrefixAddsListMarkdownForLine_Number() {
@@ -735,6 +737,7 @@ final class MarkdownTextViewTests: XCTestCase {
         // THEN
         XCTAssertEqual(sut.text, text)
         checkAttributes(for: .oList, inRange: NSMakeRange(0, text.length))
+        XCTAssertEqual(sut.activeMarkdown, .oList)
     }
     
     func testThatTypingListPrefixAddsListMarkdownForLine_Bullet() {
@@ -745,6 +748,7 @@ final class MarkdownTextViewTests: XCTestCase {
         // THEN
         XCTAssertEqual(sut.text, text)
         checkAttributes(for: .uList, inRange: NSMakeRange(0, text.length))
+        XCTAssertEqual(sut.activeMarkdown, .uList)
     }
     
     func testThatIfNewLineAfterListItemIsDeletedThenListIsAppliedToWholeLine() {
@@ -753,8 +757,8 @@ final class MarkdownTextViewTests: XCTestCase {
         let line2 = "Ok Bai!"
         insertText(line1)
         insertText("\n" + line2)
-        checkAttributes(for: .oList, inRange: NSMakeRange(0, line1.length))
-        checkAttributes(for: .none, inRange: NSMakeRange(line1.length, line2.length + 1))
+        checkAttributes(for: .oList, inRange: NSMakeRange(0, line1.length + 1))
+        checkAttributes(for: .none, inRange: NSMakeRange(line1.length + 1, line2.length))
         // WHEN
         let rangeOfNewline = NSMakeRange(line1.length, 1)
         deleteText(in: rangeOfNewline)

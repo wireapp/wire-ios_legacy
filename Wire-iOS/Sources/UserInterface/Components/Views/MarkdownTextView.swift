@@ -318,6 +318,8 @@ class MarkdownTextView: NextResponderTextView {
         unorderedListItemRegex.enumerateMatches(in: text, options: [], range: range) { match, _, _ in
             if let matchRange = match?.range { add(.uList, to: matchRange) }
         }
+        
+        activeMarkdown = markdownAtCaret()
     }
     
     /// Returns true if an empty list item is present in the given range.
