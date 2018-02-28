@@ -88,6 +88,7 @@ class GuestsBarController: UIViewController {
         label.textColor = .white
         label.text = "conversation.guests_present".localized.uppercased()
         label.textAlignment = .center
+        label.accessibilityIdentifier = "label.conversationview.hasguests"
         
         container.addSubview(label)
         
