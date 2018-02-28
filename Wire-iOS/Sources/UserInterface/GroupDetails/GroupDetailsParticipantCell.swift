@@ -146,7 +146,7 @@ class GroupDetailsParticipantCell: UICollectionViewCell {
     private func configureColors() {
         let separatorColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorSeparator, variant: variant)
         
-        backgroundColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorTextBackground, variant: variant)
+        backgroundColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorBarBackground, variant: variant)
         separator.backgroundColor = separatorColor
         guestIconView.image = UIImage(for: .guest, iconSize: .tiny, color: separatorColor)
         accessoryActionButton.setIconColor(separatorColor, for: .normal)

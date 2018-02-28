@@ -55,6 +55,7 @@ class GroupDetailsRenameCell : UICollectionViewCell {
         titleTextField.translatesAutoresizingMaskIntoConstraints = false
         titleTextField.font = FontSpec.init(.normal, .light).font!
         titleTextField.returnKeyType = .done
+        titleTextField.backgroundColor = .clear
 
         contentStackView = UIStackView(arrangedSubviews: [titleTextField, accessoryIconView])
         contentStackView.axis = .horizontal
@@ -72,7 +73,7 @@ class GroupDetailsRenameCell : UICollectionViewCell {
     }
     
     private func configureColors() {
-        backgroundColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorTextBackground, variant: variant)
+        backgroundColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorBarBackground, variant: variant)
         accessoryIconView.image = UIImage(for: .pencil, iconSize: .tiny, color: UIColor.wr_color(fromColorScheme: ColorSchemeColorTextForeground, variant: variant))
         titleTextField.textColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorTextForeground, variant: variant)
     }
