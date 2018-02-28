@@ -83,6 +83,7 @@ typedef NS_ENUM(NSUInteger, ProfileUserAction) {
 
 @property (nonatomic) UserImageView *userImageView;
 @property (nonatomic) UIView *footerView;
+@property (nonatomic) UIView *stackViewContainer;
 @property (nonatomic) GuestLabelIndicator *teamsGuestIndicator;
 @property (nonatomic) BOOL showGuestLabel;
 @property (nonatomic) AvailabilityTitleView *availabilityView;
@@ -118,6 +119,8 @@ typedef NS_ENUM(NSUInteger, ProfileUserAction) {
     [self createFooter];
     [self createGuestIndicator];
     
+    self.stackViewContainer = [[UIView alloc] initForAutoLayout];
+    [self.view addSubview:self.stackViewContainer];
     self.teamsGuestIndicator.hidden = !self.showGuestLabel;
     self.availabilityView.hidden = !ZMUser.selfUser.isTeamMember || self.fullUser.availability == AvailabilityNone;
 
@@ -125,7 +128,7 @@ typedef NS_ENUM(NSUInteger, ProfileUserAction) {
     self.stackView.axis = UILayoutConstraintAxisVertical;
     self.stackView.spacing = 0;
     self.stackView.alignment = UIStackViewAlignmentCenter;
-    [self.view addSubview:self.stackView];
+    [self.stackViewContainer addSubview:self.stackView];
     
     [self.stackView wr_addCustomSpacing:(self.teamsGuestIndicator.isHidden ? 32 : 32) after:self.userImageView];
     [self.stackView wr_addCustomSpacing:(self.availabilityView.isHidden ? 40 : 32) after:self.teamsGuestIndicator];
@@ -134,10 +137,14 @@ typedef NS_ENUM(NSUInteger, ProfileUserAction) {
 
 - (void)setupConstraints
 {
-    [self.stackView autoPinEdgeToSuperviewEdge:ALEdgeTop withInset:32];
     [self.stackView autoPinEdgeToSuperviewEdge:ALEdgeLeading];
     [self.stackView autoPinEdgeToSuperviewEdge:ALEdgeTrailing];
-    [self.stackView autoPinEdge:ALEdgeBottom toEdge:ALEdgeTop ofView:self.footerView withOffset:0 relation:NSLayoutRelationLessThanOrEqual];
+    [self.stackView autoCenterInSuperview];
+    
+    [self.stackViewContainer autoPinEdgeToSuperviewEdge:ALEdgeTop];
+    [self.stackViewContainer autoPinEdgeToSuperviewEdge:ALEdgeLeading];
+    [self.stackViewContainer autoPinEdgeToSuperviewEdge:ALEdgeTrailing];
+    [self.stackViewContainer autoPinEdge:ALEdgeBottom toEdge:ALEdgeTop ofView:self.footerView];
     
     UIEdgeInsets bottomInset = UIEdgeInsetsMake(0, 0, UIScreen.safeArea.bottom, 0);
     [self.footerView autoPinEdgesToSuperviewEdgesWithInsets:bottomInset excludingEdge:ALEdgeTop];
