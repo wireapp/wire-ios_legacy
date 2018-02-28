@@ -27,7 +27,8 @@ final public class ConversationCreationValues {
     var participants: Set<ZMUser>
     init (name: String, participants: Set<ZMUser> = [], allowGuests: Bool) {
         self.name = name
-        self.participants = participants
+        let selfUser = ZMUser.selfUser()!
+        self.participants = allowGuests ? participants : Set(Array(participants).filter { $0.team == selfUser.team })
         self.allowGuests = allowGuests
     }
 }
