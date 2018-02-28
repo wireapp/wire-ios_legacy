@@ -30,6 +30,10 @@ class GroupDetailsViewController: UIViewController, ZMConversationObserver, Grou
     fileprivate var renameSectionController : RenameSectionController?
     fileprivate let emptyView = UIImageView()
     private var emptyViewVerticalConstraint: NSLayoutConstraint?
+    
+    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+        return wr_supportedInterfaceOrientations
+    }
 
     public init(conversation: ZMConversation) {
         self.conversation = conversation
