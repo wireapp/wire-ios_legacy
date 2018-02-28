@@ -201,7 +201,7 @@ final class ServiceDetailViewController: UIViewController {
 
         super.init(nibName: nil, bundle: nil)
 
-        self.title = self.service.serviceUser.name
+        self.title = self.service.serviceUser.name.localizedUppercase
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -271,12 +271,6 @@ final class ServiceDetailViewController: UIViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-
-        if (self.navigationController?.viewControllers.count ?? 0) > 1 {
-            self.navigationItem.leftBarButtonItem = UIBarButtonItem(icon: .backArrow,
-                                                                    target: self,
-                                                                    action: #selector(ServiceDetailViewController.backButtonTapped(_:)))
-        }
 
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(icon: .X,
                                                                  target: self,

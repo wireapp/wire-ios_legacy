@@ -143,8 +143,6 @@ typedef NS_ENUM(NSUInteger, ProfileViewControllerTabBarIndex) {
 {
     if (self.navigationController.viewControllers.count == 1) {
         self.navigationItem.rightBarButtonItem = [self.navigationController closeItem];
-    } else {
-        self.navigationItem.leftBarButtonItem = [self backItem];
     }
 }
 

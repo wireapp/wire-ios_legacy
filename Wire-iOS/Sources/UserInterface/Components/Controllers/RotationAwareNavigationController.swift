@@ -20,6 +20,7 @@
 import Foundation
 
 class RotationAwareNavigationController: UINavigationController {
+    
     override var shouldAutorotate : Bool {
         if let topController = self.viewControllers.last {
             return topController.shouldAutorotate
@@ -64,4 +65,19 @@ class RotationAwareNavigationController: UINavigationController {
             return super.preferredStatusBarStyle
         }
     }
+    
+    override func setViewControllers(_ viewControllers: [UIViewController], animated: Bool) {
+        viewControllers.forEach { viewController in
+            viewController.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
+        }
+        
+        super.setViewControllers(viewControllers, animated: animated)
+    }
+    
+    override func pushViewController(_ viewController: UIViewController, animated: Bool) {
+        viewController.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
+        
+        super.pushViewController(viewController, animated: animated)
+    }
+    
 }

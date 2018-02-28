@@ -65,11 +65,11 @@ class ClearBackgroundNavigationController: UINavigationController {
         self.navigationBar.shadowImage = UIImage()
         self.navigationBar.isTranslucent = true
         self.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.white,
-                                                  NSFontAttributeName: FontSpec(.normal, .medium).font!.smallCaps()]
+                                                  NSFontAttributeName: FontSpec(.small, .semibold).font!]
         
         let navButtonAppearance = UIBarButtonItem.appearance(whenContainedInInstancesOf: [UINavigationBar.self])
         
-        let attributes = [NSFontAttributeName : FontSpec(.normal, .light).font!.smallCaps()]
+        let attributes = [NSFontAttributeName: FontSpec(.small, .semibold).font!]
         navButtonAppearance.setTitleTextAttributes(attributes, for: UIControlState.normal)
         navButtonAppearance.setTitleTextAttributes(attributes, for: UIControlState.highlighted)
         
@@ -77,6 +77,20 @@ class ClearBackgroundNavigationController: UINavigationController {
         self.dismissGestureRecognizer.edges = [.left]
         self.dismissGestureRecognizer.delegate = self
         self.view.addGestureRecognizer(self.dismissGestureRecognizer)
+    }
+    
+    override func setViewControllers(_ viewControllers: [UIViewController], animated: Bool) {
+        viewControllers.forEach { viewController in
+            viewController.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
+        }
+        
+        super.setViewControllers(viewControllers, animated: animated)
+    }
+    
+    override func pushViewController(_ viewController: UIViewController, animated: Bool) {
+        viewController.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
+        
+        super.pushViewController(viewController, animated: animated)
     }
     
     func onEdgeSwipe(gestureRecognizer: UIScreenEdgePanGestureRecognizer) {
