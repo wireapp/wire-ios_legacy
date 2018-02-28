@@ -722,9 +722,9 @@ final class MarkdownTextViewTests: XCTestCase {
         XCTAssertEqual(sut.text, "- Oh Hai!")
         checkAttributes(for: .uList, inRange: NSMakeRange(0, text.length + 2))
         // WHEN
-        deleteText(in: NSMakeRange(0, 1))
+        deleteText(in: NSMakeRange(1, 1))
         // THEN
-        XCTAssertEqual(sut.text, " Oh Hai!")
+        XCTAssertEqual(sut.text, "-Oh Hai!")
         checkAttributes(for: .none, inRange: NSMakeRange(0, text.length + 1))
         XCTAssertEqual(sut.activeMarkdown, .none)
     }
