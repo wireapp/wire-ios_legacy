@@ -166,15 +166,26 @@ final class ConversationCreationController: UIViewController {
         [toggleView, toggleSubtitleLabel].forEach(bottomViewContainer.addSubview)
         [mainViewContainer, errorViewContainer, bottomViewContainer].forEach(view.addSubview)
         
-        toggleView.handler = { [unowned self] allowGuests in
-            self.values = ConversationCreationValues(
-                name: self.values?.name ?? "",
-                participants: self.values?.participants ?? [],
-                allowGuests: allowGuests
-            )
+        toggleView.handler = { [weak self] allow in
+            self?.updateAllowGuests(allow)
         }
         
         bottomViewContainer.isHidden = nil == ZMUser.selfUser().team
+    }
+    
+    private func updateAllowGuests(_ allow: Bool) {
+        // Remove guests if the toggle was switched off.
+        let participants: Set<ZMUser> = {
+            guard let current = values?.participants else { return [] }
+            guard !allow else { return current }
+            return Set(Array(current).filter { $0.team != ZMUser.selfUser().team || (!$0.isServiceUser) })
+        }()
+
+        values = ConversationCreationValues(
+            name: values?.name ?? "",
+            participants: participants,
+            allowGuests: allow
+        )
     }
 
     private func setupNavigationBar() {
