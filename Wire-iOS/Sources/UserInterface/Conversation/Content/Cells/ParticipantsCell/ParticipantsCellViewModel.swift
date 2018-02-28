@@ -43,10 +43,10 @@ private enum ConversationActionType {
 
 private extension ZMConversationMessage {
     var actionType: ConversationActionType {
-        guard let systemMessage = systemMessageData, let sender = sender else { return .none }
+        guard let systemMessage = systemMessageData else { return .none }
         switch systemMessage.systemMessageType {
-        case .participantsRemoved where systemMessage.users == [sender]: return .left
-        case .participantsRemoved where systemMessage.users != [sender]: return .removed
+        case .participantsRemoved where systemMessage.userIsTheSender: return .left
+        case .participantsRemoved where !systemMessage.userIsTheSender: return .removed
         case .participantsAdded: return .added(herself: systemMessage.userIsTheSender)
         case .newConversation: return .started(withName: systemMessage.text)
         case .teamMemberLeave: return .teamMemberLeave
