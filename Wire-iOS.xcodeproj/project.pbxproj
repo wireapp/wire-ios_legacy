@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		160287AD1E4351FC0036FC5B /* MockVoiceChannel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 160287AB1E434C460036FC5B /* MockVoiceChannel.swift */; };
-		16063D0B1BE0D5CE0097F62C /* ProfileNavigationControllerDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 16063D0A1BE0D5CE0097F62C /* ProfileNavigationControllerDelegate.m */; };
 		1607359B1EB2393000528965 /* SettingsShareDatabaseCellDescriptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1607359A1EB2393000528965 /* SettingsShareDatabaseCellDescriptor.swift */; };
 		160A9CA81C3D62CD00B644AA /* ProfileDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1613C76D1C3D2E7400B1FB8A /* ProfileDetailsViewController.m */; };
 		160A9CA91C3D62EC00B644AA /* TabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16AACE731C0CAEBD00E62C43 /* TabBar.swift */; };
@@ -1166,8 +1165,6 @@
 		095275931B7E834400123BAF /* WireSyncEngine.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WireSyncEngine.framework; path = Carthage/Build/iOS/WireSyncEngine.framework; sourceTree = "<group>"; };
 		09840860C07422F288E71923 /* libPods-Wire Share Extension.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Wire Share Extension.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		160287AB1E434C460036FC5B /* MockVoiceChannel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockVoiceChannel.swift; sourceTree = "<group>"; };
-		16063D091BE0D5CE0097F62C /* ProfileNavigationControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfileNavigationControllerDelegate.h; sourceTree = "<group>"; };
-		16063D0A1BE0D5CE0097F62C /* ProfileNavigationControllerDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileNavigationControllerDelegate.m; sourceTree = "<group>"; };
 		1607359A1EB2393000528965 /* SettingsShareDatabaseCellDescriptor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsShareDatabaseCellDescriptor.swift; sourceTree = "<group>"; };
 		160C311E1E4C78480012E4BC /* UnknownMessageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnknownMessageCell.swift; sourceTree = "<group>"; };
 		160C31201E4C7E770012E4BC /* UnknownMessageCellTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnknownMessageCellTests.swift; sourceTree = "<group>"; };
@@ -4900,8 +4897,6 @@
 				BF999B5F1C0C984C008D5414 /* ProfileDevicesViewController.m */,
 				87D5E43D1C3E78A000EB8289 /* ProfileClientViewController.swift */,
 				BF0515241E390E10000D5C22 /* CopyableLabel.swift */,
-				16063D091BE0D5CE0097F62C /* ProfileNavigationControllerDelegate.h */,
-				16063D0A1BE0D5CE0097F62C /* ProfileNavigationControllerDelegate.m */,
 				872CB8A019E58816006752B4 /* Views */,
 			);
 			path = UserProfile;
@@ -6578,7 +6573,6 @@
 				EF21271A1FB9DFE300625A9B /* ProfilePictureStepViewController.m in Sources */,
 				16F9EB2B1BC52EE40021EF39 /* ActionSheetController+Conversation.m in Sources */,
 				7C4789852021F40E00A38442 /* AddBotError+UIHandler.swift in Sources */,
-				16063D0B1BE0D5CE0097F62C /* ProfileNavigationControllerDelegate.m in Sources */,
 				EF2127131FB9DFE300625A9B /* EmailSignInViewController.m in Sources */,
 				871BC2711D34F8F800DF0793 /* SwipeMenuCollectionCell.m in Sources */,
 				BF52C1591CAEBD8D0037331F /* ArchivedNavigationBar.swift in Sources */,

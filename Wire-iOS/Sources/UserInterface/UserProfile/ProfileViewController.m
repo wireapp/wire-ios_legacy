@@ -35,7 +35,6 @@
 #import "Wire-Swift.h"
 
 #import "ContactsDataSource.h"
-#import "ProfileNavigationControllerDelegate.h"
 #import "ProfileDevicesViewController.h"
 #import "ProfileDetailsViewController.h"
 
@@ -102,7 +101,6 @@ typedef NS_ENUM(NSUInteger, ProfileViewControllerTabBarIndex) {
         _bareUser = user;
         _conversation = conversation;
         _context = context;
-        _navigationControllerDelegate = [[ProfileNavigationControllerDelegate alloc] init];
     }
     return self;
 }

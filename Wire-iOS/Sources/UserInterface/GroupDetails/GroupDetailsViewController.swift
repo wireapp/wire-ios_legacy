@@ -108,6 +108,7 @@ class GroupDetailsViewController: UIViewController, ZMConversationObserver, Grou
         super.viewWillAppear(animated)
         navigationItem.rightBarButtonItem = navigationController?.closeItem()
         updateEmptyViewVisibility()
+        collectionViewController.collectionView?.reloadData()
     }
     
     override func viewDidLayoutSubviews() {
@@ -155,7 +156,9 @@ class GroupDetailsViewController: UIViewController, ZMConversationObserver, Grou
         switch action {
         case .invite:
             let addParticipantsViewController = AddParticipantsViewController(conversation: conversation)
-            present(addParticipantsViewController.wrapInNavigationController(), animated: true)
+            let navigationController = addParticipantsViewController.wrapInNavigationController()
+            navigationController.modalPresentationStyle = .currentContext
+            present(navigationController, animated: true)
         case .more:
             actionController = ConversationActionController(conversation: conversation, target: self)
             actionController?.renameDelegate = self
@@ -176,7 +179,7 @@ extension GroupDetailsViewController: ConversationActionControllerRenameDelegate
     }
 }
 
-extension GroupDetailsViewController: ViewControllerDismissable, UINavigationControllerDelegate, ProfileViewControllerDelegate {
+extension GroupDetailsViewController: ViewControllerDismissable, ProfileViewControllerDelegate {
     
     func viewControllerWants(toBeDismissed controller: UIViewController!, completion: (() -> Void)!) {
         navigationController?.popViewController(animated: true)

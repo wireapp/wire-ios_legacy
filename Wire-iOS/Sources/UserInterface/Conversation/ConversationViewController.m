@@ -443,8 +443,7 @@
             viewController = [UserDetailViewControllerFactory createUserDetailViewControllerWithUser:self.conversation.firstActiveParticipantOtherThanSelf
                                           conversation:self.conversation
                          profileViewControllerDelegate:self
-                             viewControllerDismissable:self
-                          navigationControllerDelegate:nil];
+                             viewControllerDismissable:self];
 
             break;
         }
