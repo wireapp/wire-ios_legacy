@@ -36,6 +36,7 @@ import WireLinkPreview
     var removedUsers: Set<ZMUser>! = Set()
     var text: String! = ""
     var needsUpdatingUsers: Bool = false
+    var userIsTheSender: Bool = false
 
     var duration: TimeInterval = 0
     var childMessages = Set<AnyHashable>()
