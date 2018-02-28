@@ -105,12 +105,12 @@ class GroupDetailsGuestOptionsCell: UICollectionViewCell {
     }
     
     private func configureColors() {
-        let separatorColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorSeparator, variant: variant)
+        let sectionTextColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorSectionText, variant: variant)
         backgroundColor = .wr_color(fromColorScheme: ColorSchemeColorBarBackground, variant: variant)
         guestIconView.image = UIImage(for: .person, iconSize: .tiny, color: UIColor.wr_color(fromColorScheme: ColorSchemeColorTextForeground, variant: variant))
-        accessoryIconView.image = UIImage(for: .disclosureIndicator, iconSize: .like, color: separatorColor)
+        accessoryIconView.image = UIImage(for: .disclosureIndicator, iconSize: .like, color: sectionTextColor)
         titleLabel.textColor = .wr_color(fromColorScheme: ColorSchemeColorTextForeground, variant: variant)
-        statusLabel.textColor = separatorColor
+        statusLabel.textColor = sectionTextColor
     }
     
 }
