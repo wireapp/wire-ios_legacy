@@ -70,8 +70,10 @@ struct ParticipantsCellViewModel {
         guard let sender = message.sender else { return [] }
 
         switch message.actionType {
-        case .left: return [sender]
-        case .added(herself: true): return [sender]
+        case .left,
+             .added(herself: true),
+             .teamMemberLeave:
+            return [sender]
         default:
             guard let systemMessage = message.systemMessageData else { return [] }
             return systemMessage.users.subtracting([sender]).sorted { name(for: $0.0) < name(for: $0.1) }

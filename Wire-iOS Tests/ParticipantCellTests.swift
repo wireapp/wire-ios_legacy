@@ -77,6 +77,11 @@ class ParticipantsCellTests: CoreDataSnapshotTestCase {
         verify(view: sut.prepareForSnapshots(), tolerance: tolerance)
     }
 
+    func testThatItRendersParticipantsCellRemovedFromTeam() {
+        let sut = cell(for: .teamMemberLeave, fromSelf: false)
+        verify(view: sut.prepareForSnapshots(), tolerance: tolerance)
+    }
+
     // MARK: - Left Users
 
     func testThatItRendersParticipantsCellLeftParticipant() {
