@@ -455,7 +455,7 @@
 "participants.avatar.guest.title" = "Guest";
 
 "participants.title" = "Details";
-"participants.section.participants" = "Participants (%d)";
+"participants.section.participants" = "People (%d)";
 "participants.section.services" = "Services (%d)";
 "participants.footer.add_title" = "Add Participants";
 
