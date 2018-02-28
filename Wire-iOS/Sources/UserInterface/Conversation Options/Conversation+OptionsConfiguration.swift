@@ -43,7 +43,7 @@ extension ZMConversation {
         }
         
         func setAllowGuests(_ allowGuests: Bool, completion: @escaping (VoidResult) -> Void) {
-            
+            conversation.setAllowGuests(allowGuests, in: userSession, completion)
         }
         
         func conversationDidChange(_ changeInfo: ConversationChangeInfo) {
