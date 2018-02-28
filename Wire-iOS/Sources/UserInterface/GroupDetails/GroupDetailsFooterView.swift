@@ -61,7 +61,7 @@ final class GroupDetailsFooterView: UIView {
         addButton.setTitle("participants.footer.add_title".localized.uppercased(), for: .normal)
         addButton.titleImageSpacing = 16
         addButton.titleLabel?.font = FontSpec(.small, .regular).font
-        backgroundColor = color(ColorSchemeColorBackground)
+        backgroundColor = color(ColorSchemeColorBarBackground)
     }
     
     private func createConstraints() {

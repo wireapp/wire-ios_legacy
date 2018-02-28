@@ -38,7 +38,7 @@ class GroupDetailsGuestOptionsCell: UICollectionViewCell {
         didSet {
             backgroundColor = isHighlighted
                 ? .init(white: 0, alpha: 0.08)
-                : .wr_color(fromColorScheme: ColorSchemeColorTextBackground, variant: variant)
+                : .wr_color(fromColorScheme: ColorSchemeColorBarBackground, variant: variant)
         }
     }
     
