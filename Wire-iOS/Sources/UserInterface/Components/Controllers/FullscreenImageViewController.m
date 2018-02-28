@@ -145,6 +145,7 @@
 - (void)viewDidLayoutSubviews
 {
     [super viewDidLayoutSubviews];
+    [self updateZoom];
     [self centerScrollViewContent];
 }
 
