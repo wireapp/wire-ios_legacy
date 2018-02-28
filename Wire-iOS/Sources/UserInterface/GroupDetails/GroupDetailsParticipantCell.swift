@@ -96,8 +96,8 @@ class GroupDetailsParticipantCell: UICollectionViewCell {
         
         avatar.size = .small
         avatar.translatesAutoresizingMaskIntoConstraints = false
-        avatar.widthAnchor.constraint(equalToConstant: 32).isActive = true
-        avatar.heightAnchor.constraint(equalToConstant: 32).isActive = true
+        avatar.widthAnchor.constraint(equalToConstant: 28).isActive = true
+        avatar.heightAnchor.constraint(equalToConstant: 28).isActive = true
         
         let avatarSpacer = UIView()
         avatarSpacer.addSubview(avatar)
