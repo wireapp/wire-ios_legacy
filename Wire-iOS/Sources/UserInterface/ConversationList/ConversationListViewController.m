@@ -1,4 +1,4 @@
-// 
+//
 // Wire
 // Copyright (C) 2016 Wire Swiss GmbH
 // 
@@ -55,8 +55,6 @@
 #import "ActionSheetController.h"
 #import "ActionSheetController+Conversation.h"
 
-#import "InviteBannerViewController.h"
-
 #import "Wire-Swift.h"
 
 @interface ConversationListViewController (Content) <ConversationListContentDelegate>
@@ -100,7 +98,6 @@
 @property (nonatomic) id initialSyncObserverToken;
 
 @property (nonatomic) ConversationListContentController *listContentController;
-@property (nonatomic) InviteBannerViewController *invitationBannerViewController;
 @property (nonatomic) ConversationListBottomBarController *bottomBarController;
 
 @property (nonatomic) ConversationListTopBar *topBar;
@@ -230,6 +227,16 @@
     return YES;
 }
 
+- (UIStatusBarStyle)preferredStatusBarStyle
+{
+    if (self.presentedViewController != nil) {
+        return self.presentedViewController.preferredStatusBarStyle;
+    }
+    else {
+        return UIStatusBarStyleLightContent;
+    }
+}
+
 - (void)createNoConversationLabel;
 {
     self.noConversationLabel = [[UILabel alloc] initForAutoLayout];
@@ -280,7 +287,7 @@
 
 - (StartUIViewController *)createPeoplePickerController
 {
-    StartUIViewController *startUIViewController = [StartUIViewController new];
+    StartUIViewController *startUIViewController = [[StartUIViewController alloc] init];
     startUIViewController.delegate = self;
     return startUIViewController;
 }

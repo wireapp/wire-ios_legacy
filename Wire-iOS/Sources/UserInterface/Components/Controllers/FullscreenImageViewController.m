@@ -171,6 +171,9 @@
 {
     [super viewWillAppear:animated];
     self.closeButton.hidden = !self.showCloseButton;
+    if(self.parentViewController != nil) {
+        [self updateZoomWithSize:self.parentViewController.view.frame.size];
+    }
 }
 
 - (BOOL)prefersStatusBarHidden

@@ -20,6 +20,7 @@
 
 
 
+"share_extension.general.ok" = "OK";
 "share_extension.conversation_selection.account" = "Conta:";
 "share_extension.conversation_selection.title" = "Conversa:";
 "share_extension.send_button.title" = "Enviar";
@@ -33,6 +34,8 @@
 "share_extension.timeout.title" = "A conexão expirou.";
 "share_extension.timeout.message" = "Verifique sua conexão de Internet e tente novamente. Os anexos foram salvos na conversa.";
 "share_extension.privacy_security.lock_app.description" = "Desbloquear Wire";
+"share_extension.logged_out.title" = "Você foi deslogado dessa conta.";
+"share_extension.logged_out.message" = "Por favor, escolha outra conta.";
 
 "conversation.displayname.emptygroup" = "Conversa em grupo vazia";
 "meta.degraded.degradation_reason_message.singular" = "%@ começou a usar um novo dispositivo.";

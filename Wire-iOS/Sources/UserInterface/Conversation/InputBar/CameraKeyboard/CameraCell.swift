@@ -76,7 +76,7 @@ open class CameraCell: UICollectionViewCell, Reusable {
         self.expandButton.accessibilityIdentifier = "fullscreenCameraButton"
         self.contentView.addSubview(self.expandButton)
         
-        self.takePictureButton.setIcon(.cameraShutter, with: .actionButton, for: UIControlState())
+        self.takePictureButton.setIcon(.cameraShutter, with: .cameraKeyboardButton, for: UIControlState())
         self.takePictureButton.setIconColor(UIColor.white, for: UIControlState())
         self.takePictureButton.translatesAutoresizingMaskIntoConstraints = false
         self.takePictureButton.addTarget(self, action: #selector(shutterButtonPressed(_:)), for: .touchUpInside)

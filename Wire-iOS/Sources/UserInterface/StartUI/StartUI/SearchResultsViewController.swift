@@ -44,6 +44,12 @@ public protocol SearchResultsViewControllerDelegate {
     func searchResultsViewController(_ searchResultsViewController: SearchResultsViewController, didDoubleTapOnUser user: ZMSearchableUser, indexPath: IndexPath)
     func searchResultsViewController(_ searchResultsViewController: SearchResultsViewController, didTapOnConversation conversation: ZMConversation)
     func searchResultsViewController(_ searchResultsViewController: SearchResultsViewController, didTapOnSeviceUser user: ServiceUser)
+    func searchResultsViewController(_ searchResultsViewController: SearchResultsViewController, wantsToPerformAction action: SearchResultsViewControllerAction)
+}
+
+@objc
+public enum SearchResultsViewControllerAction : Int {
+    case createGroup
 }
 
 @objc
@@ -121,6 +127,7 @@ public class SearchResultsViewController : UIViewController {
     let topPeopleSection: TopPeopleLineSection
     let servicesSection: ServicesSection
     let inviteTeamMemberSection: InviteTeamMemberSection
+    let createGroupSection = CreateGroupSection()
     
     var pendingSearchTask: SearchTask? = nil
     var isAddingParticipants: Bool
@@ -131,6 +138,7 @@ public class SearchResultsViewController : UIViewController {
     }
     
     public var filterConversation: ZMConversation? = nil
+    public let shouldIncludeGuests: Bool
     
     public weak var delegate: SearchResultsViewControllerDelegate? = nil
     
@@ -145,11 +153,12 @@ public class SearchResultsViewController : UIViewController {
     }
     
     @objc
-    public init(userSelection: UserSelection, variant: ColorSchemeVariant, isAddingParticipants : Bool = false) {
+    public init(userSelection: UserSelection, variant: ColorSchemeVariant, isAddingParticipants: Bool = false, shouldIncludeGuests: Bool) {
         self.searchDirectory = SearchDirectory(userSession: ZMUserSession.shared()!)
         self.userSelection = userSelection
         self.isAddingParticipants = isAddingParticipants
         self.mode = .list
+        self.shouldIncludeGuests = shouldIncludeGuests
         
         let team = ZMUser.selfUser().team
         let teamName = team?.name
@@ -159,7 +168,9 @@ public class SearchResultsViewController : UIViewController {
         contactsSection.userSelection = userSelection
         contactsSection.title = team != nil ? "peoplepicker.header.contacts_personal".localized : "peoplepicker.header.contacts".localized
         contactsSection.colorSchemeVariant = variant
+        contactsSection.useNewStyleCellLayout = isAddingParticipants
         teamMemberAndContactsSection = UsersInContactsSection()
+        teamMemberAndContactsSection.useNewStyleCellLayout = isAddingParticipants
         teamMemberAndContactsSection.userSelection = userSelection
         teamMemberAndContactsSection.title = "peoplepicker.header.contacts".localized
         teamMemberAndContactsSection.team = team
@@ -182,6 +193,7 @@ public class SearchResultsViewController : UIViewController {
         topPeopleSection.delegate = self
         conversationsSection.delegate = self
         servicesSection.delegate = self
+        createGroupSection.delegate = self
     }
     
     required public init?(coder aDecoder: NSCoder) {
@@ -297,9 +309,9 @@ public class SearchResultsViewController : UIViewController {
             case (.selection, true):
                 sections = [teamMemberAndContactsSection]
             case (.list, false):
-                sections = [topPeopleSection, contactsSection]
+                sections = [createGroupSection, topPeopleSection, contactsSection]
             case (.list, true):
-                sections = [inviteTeamMemberSection, teamMemberAndContactsSection]
+                sections = [createGroupSection, inviteTeamMemberSection, teamMemberAndContactsSection]
             }
         }
         
@@ -318,12 +330,19 @@ public class SearchResultsViewController : UIViewController {
         
         contactsSection.contacts = contacts
 
-        teamMemberAndContactsSection.contacts = Set(teamContacts + contacts).sorted {
-            let name0 = $0.name ?? ""
-            let name1 = $1.name ?? ""
+        // Access mode is not set, or the guests are allowed.
+        if shouldIncludeGuests {
+            teamMemberAndContactsSection.contacts = Set(teamContacts + contacts).sorted {
+                let name0 = $0.name ?? ""
+                let name1 = $1.name ?? ""
 
-            return name0.compare(name1) == .orderedAscending
-         }
+                return name0.compare(name1) == .orderedAscending
+             }
+        }
+        else {
+            teamMemberAndContactsSection.contacts = teamContacts
+        }
+        
         directorySection.suggestions = searchResult.directory
         conversationsSection.groupConversations = searchResult.conversations
         servicesSection.services = searchResult.services
@@ -370,6 +389,9 @@ extension SearchResultsViewController : CollectionViewSectionDelegate {
         }
         else if let conversation = item as? ZMConversation {
             delegate?.searchResultsViewController(self, didTapOnConversation: conversation)
+        }
+        else if (item as? CreateGroupSection.Row) == .createGroup {
+            delegate?.searchResultsViewController(self, wantsToPerformAction: .createGroup)
         }
     }
     

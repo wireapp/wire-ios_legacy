@@ -298,13 +298,6 @@ final public class CollectionsViewController: UIViewController {
             backButton.addTarget(self, action: #selector(CollectionsViewController.backButtonPressed(_:)), for: .touchUpInside)
             self.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: backButton)
         }
-        
-        if let navBar = self.navigationController?.navigationBar {
-            let imageToStretch = UIImage.shadowImage(withInset: 16.0 * UIScreen.main.scale, color: ColorScheme.default().color(withName: ColorSchemeColorSeparator))
-            let scaleImageToStretch = UIImage(cgImage: imageToStretch.cgImage!, scale: UIScreen.main.scale, orientation: .up)
-            let stretchedImage = scaleImageToStretch.resizableImage(withCapInsets: UIEdgeInsetsMake(0, 18, 0, 18))
-            navBar.shadowImage = stretchedImage
-        }
     }
     
     public func perform(_ action: MessageAction, for message: ZMConversationMessage, from view: UIView) {

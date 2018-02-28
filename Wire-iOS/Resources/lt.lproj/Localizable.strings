@@ -18,6 +18,7 @@
 
 
 "general.ok" = "GERAI";
+"general.next" = "Kitas";
 "general.cancel" = "Atsisakyti";
 "general.open_settings" = "Atidaryti Wire nustatymus";
 
@@ -35,13 +36,19 @@
 "peoplepicker.header.contacts_personal" = "Asmeniniai kontaktai";
 "peoplepicker.header.directory" = "Užmegzti kontaktą";
 
+"peoplepicker.group.title.singular" = "Pridėti žmones";
+"peoplepicker.group.title.plural" = "Pridėti žmonių (%d)";
+"peoplepicker.group.skip" = "Praleisti";
+"peoplepicker.group.done" = "Baigta";
+"peoplepicker.group.create" = "Kurti";
+
 "peoplepicker.header.people" = "Žmonės";
 "peoplepicker.header.services" = "Paslaugos";
 "peoplepicker.services.create_conversation.item" = "Kurti naują susirašinėjimą";
 "peoplepicker.services.add_service.button" = "Pridėti paslaugą";
-"peoplepicker.services.add_service.error.title" = "The service can't be added";
-"peoplepicker.services.add_service.error.default" = "The service is unavailable at the moment";
-"peoplepicker.services.add_service.error.full" = "The conversation is full";
+"peoplepicker.services.add_service.error.title" = "Paslauga negali būti pridėta";
+"peoplepicker.services.add_service.error.default" = "Paslauga šiuo metu negalima";
+"peoplepicker.services.add_service.error.full" = "Susirašinėjimas pilnas";
 
 "peoplepicker.title.create_conversation" = "Sukurti grupę";
 "peoplepicker.title.add_to_conversation" = "Pridėti žmones";
@@ -228,6 +235,10 @@
 "conversation.input_bar.message_too_long.title" = "Žinutė per ilga";
 "conversation.input_bar.message_too_long.message" = "Galite siųsti žinutes, kurių ilgis iki %d simbolių.";
 
+"conversation.create.group_name.placeholder" = "Grupės pavadinimas";
+"conversation.create.guidance.empty" = "Bent 1 simbolis";
+"conversation.create.guidance.toolong" = "Per daug simbolių";
+
 // Image confirmation dialogue
 "image_confirmer.confirm" = "GERAI";
 "image_confirmer.cancel" = "Atsisakyti";
@@ -324,6 +335,10 @@
 "content.system.renamed_conv.title" = "%@ pakeitė susirašinėjimo pavadinimą";
 "content.system.renamed_conv.title-you" = "%@ pakeitėte susirašinėjimo pavadinimą";
 "content.system.renamed_conv.title.you" = "Jūs";
+
+"content.system.conversation.with_name.title" = "%@ pradėjo susirašinėjimą";
+
+"content.system.conversation.with_name.participants" = "su %@";
 
 "content.system.reactivated_device" = "Vėl pradėjote naudotis „%@“. Žinutės parašytos įrenginio nenaudojimo laikotarpiu čia neatsiras.";
 
@@ -434,7 +449,7 @@
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Profile and Participants
 
-"participants.add_people_button_title" = "Add";
+"participants.add_people_button_title" = "Pridėti";
 "participants.avatar.guest.title" = "Svečias";
 
 // Meta Menu
@@ -539,6 +554,8 @@
 // General strings
 "general.confirm" = "GERAI";
 
+// Bot
+"participants.services.remove_integration.button" = "pašalinti integraciją";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Self profile

@@ -116,7 +116,7 @@ extension ZMSystemMessageData {
     private func createConstraints() {
         constrain(self, reactionsView, statusLabel, labelClipView) { selfView, reactionsView, statusLabel, labelClipView in
 
-            selfView.height >= 28 ~ LayoutPriority(750)
+            selfView.height >= 28 ~ 750.0
             
             labelClipView.leading == selfView.leadingMargin
             labelClipView.trailing == selfView.trailingMargin

@@ -62,7 +62,7 @@
     <key>list.connect_request.people_waiting</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
-      <string>%#@d_number_of_people@在等待</string>
+      <string>%#@d_number_of_people@等候您連絡</string>
       <key>d_number_of_people</key>
       <dict>
         <key>NSStringFormatSpecTypeKey</key>

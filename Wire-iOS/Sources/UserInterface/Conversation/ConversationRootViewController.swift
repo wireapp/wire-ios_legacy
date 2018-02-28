@@ -67,7 +67,7 @@ import Cartography
         self.view.addSubview(self.customNavBar!)
         self.view.addSubview(self.contentView)
         
-        constrain(self.customNavBar!, self.view, self.contentView, conversationViewController.view) { (customNavBar: LayoutProxy, view: LayoutProxy, contentView: LayoutProxy, conversationViewControllerView: LayoutProxy) -> () in
+        constrain(self.customNavBar!, self.view, self.contentView, conversationViewController.view) { customNavBar, view, contentView, conversationViewControllerView in
             
             customNavBar.top == view.top
             customNavBar.left == view.left

@@ -34,6 +34,7 @@ public class SearchHeaderViewController : UIViewController {
     let clearButton: IconButton
     let userSelection : UserSelection
     let colorSchemeVariant : ColorSchemeVariant
+    var allowsMultipleSelection: Bool = true
     
     @objc
     public weak var delegate : SearchHeaderViewControllerDelegate? = nil
@@ -57,8 +58,10 @@ public class SearchHeaderViewController : UIViewController {
     }
     
     public override func viewDidLoad() {
-        view.backgroundColor = UIColor(white: 1.0, alpha: 0.08)
-        
+        super.viewDidLoad()
+
+        view.backgroundColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorSearchBarBackground, variant: colorSchemeVariant)
+
         searchIcon.image = UIImage(for: .search, iconSize: .tiny, color: UIColor.wr_color(fromColorScheme: ColorSchemeColorTextForeground, variant: colorSchemeVariant))
         
         clearButton.accessibilityLabel = "clear"
@@ -74,7 +77,7 @@ public class SearchHeaderViewController : UIViewController {
         tokenField.clipsToBounds = true
         tokenField.textView.placeholderTextColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorTokenFieldTextPlaceHolder, variant: colorSchemeVariant)
         tokenField.textView.backgroundColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorTokenFieldBackground, variant: colorSchemeVariant)
-        tokenField.textView.accessibilityLabel = "textViewSearch"
+        tokenField.textView.accessibilityIdentifier = "textViewSearch"
         tokenField.textView.placeholder = "peoplepicker.search_placeholder".localized.uppercased()
         tokenField.textView.keyboardAppearance = ColorScheme.keyboardAppearance(for: colorSchemeVariant)
         tokenField.textView.returnKeyType = .done
@@ -89,8 +92,6 @@ public class SearchHeaderViewController : UIViewController {
     }
     
     fileprivate func createConstraints() {
-        
-        
         constrain(tokenFieldContainer, tokenField, searchIcon, clearButton) { container, tokenField, searchIcon, clearButton in
             searchIcon.centerY == tokenField.centerY
             searchIcon.leading == tokenField.leading + 8
@@ -107,9 +108,11 @@ public class SearchHeaderViewController : UIViewController {
             tokenField.trailing == container.trailing - 8
             tokenField.centerY == container.centerY
         }
-                
+        
+        // pin to the bottom of the navigation bar
+        tokenFieldContainer.topAnchor.constraint(equalTo: self.topLayoutGuide.bottomAnchor).isActive = true
+
         constrain(view, tokenFieldContainer) { view, tokenFieldContainer in
-            tokenFieldContainer.top == view.topMargin
             tokenFieldContainer.bottom == view.bottom
             tokenFieldContainer.leading == view.leading
             tokenFieldContainer.trailing == view.trailing
@@ -122,6 +125,12 @@ public class SearchHeaderViewController : UIViewController {
         tokenField.removeAllTokens()
         resetQuery()
         updateClearIndicator(for: tokenField)
+    }
+    
+    public func clearInput() {
+        tokenField.removeAllTokens()
+        tokenField.clearFilterText()
+        userSelection.replace([])
     }
     
     public func resetQuery() {
@@ -142,6 +151,7 @@ extension SearchHeaderViewController : UserSelectionObserver {
     }
     
     public func userSelection(_ userSelection: UserSelection, didAddUser user: ZMUser) {
+        guard allowsMultipleSelection else { return }
         tokenField.addToken(forTitle: user.displayName, representedObject: user)
     }
     

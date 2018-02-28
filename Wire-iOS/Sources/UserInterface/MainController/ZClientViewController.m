@@ -30,7 +30,6 @@
 
 #import "WAZUIMagicIOS.h"
 
-#import "ParticipantsViewController.h"
 #import "ConversationListViewController.h"
 #import "ConversationViewController.h"
 #import "ConnectRequestsViewController.h"
@@ -417,9 +416,8 @@
 
 - (void)openDetailScreenForConversation:(ZMConversation *)conversation
 {
-    ParticipantsViewController *controller = [[ParticipantsViewController alloc] initWithConversation:conversation];
-    RotationAwareNavigationController *navController = [[RotationAwareNavigationController alloc] initWithRootViewController:controller];
-    [navController setNavigationBarHidden:YES animated:NO];
+    GroupDetailsViewController *controller = [[GroupDetailsViewController alloc] initWithConversation:conversation];
+    UINavigationController *navController =  controller.wrapInNavigationController;
     navController.modalPresentationStyle = UIModalPresentationFormSheet;
     [self presentViewController:navController animated:YES completion:nil];
 }
@@ -461,7 +459,18 @@
         [self.splitViewController.rightViewController dismissViewControllerAnimated:NO completion:callback];
     }
     else if (self.conversationListViewController.presentedViewController != nil) {
-        [self.conversationListViewController dismissViewControllerAnimated:NO completion:callback];
+        // This is a workaround around the fact that the transitioningDelegate of the settings
+        // view controller is not called when the transition is not being performed animated.
+        // This sounds like a bug in UIKit (Radar incoming) as I would expect the custom animator
+        // being called with `transitionContext.isAnimated == false`. As this is not the case
+        // we have to restore the proper pre-presentation state here.
+        UIView *conversationView = self.conversationListViewController.view;
+        if (!CATransform3DIsIdentity(conversationView.layer.transform) || 1 != conversationView.alpha) {
+            conversationView.layer.transform = CATransform3DIdentity;
+            conversationView.alpha = 1;
+        }
+        
+        [self.conversationListViewController.presentedViewController dismissViewControllerAnimated:NO completion:callback];
     }
     else if (self.presentedViewController != nil) {
         [self dismissViewControllerAnimated:NO completion:callback];

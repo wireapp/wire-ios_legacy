@@ -81,6 +81,8 @@ typedef NS_ENUM(NSInteger, ZetaIconType)
     ZetaIconTypeCopy                            = 0x234,
     ZetaIconTypeCompose                         = 0x268,
     ZetaIconTypeLongDownArrow                   = 0x753,
+    ZetaIconTypeCreateConversation              = 0x754,
+    ZetaIconTypeDisclosureIndicator             = 0x755,
     
     ZetaIconTypeLeave                           = 0x205,
     ZetaIconTypeConvMetaAddPerson               = 0x215,
@@ -142,7 +144,7 @@ typedef NS_ENUM(NSInteger, ZetaIconType)
     
     ZetaIconTypeSelfProfile                     = 0x265,
     ZetaIconTypeMegaphone                       = 0x267,
-    ZetaIconTypeSettingsAccount                 = 0x187,
+    ZetaIconTypeSettingsAccount                 = 0x265,
     ZetaIconTypeSettingsDevices                 = 0x188,
     ZetaIconTypeSettingsOptions                 = 0x135,
     ZetaIconTypeSettingsAdvanced                = 0x134,
@@ -204,6 +206,8 @@ typedef NS_ENUM(NSInteger, ZetaIconType)
     ZetaIconTypeBot                             = 0x752,
     // Team Invites
     ZetaIconTypeExclamationMarkCircle           = 0x751,
+    
+    ZetaIconTypeGuest                           = 0x756
 };
 
 typedef NS_ENUM(NSInteger, ZetaIconSize) {
@@ -215,6 +219,7 @@ typedef NS_ENUM(NSInteger, ZetaIconSize) {
     ZetaIconSizeMedium, // 24
     ZetaIconSizeActionButton, // 28
     ZetaIconSizeRegistrationButton, // 32
+    ZetaIconSizeCameraKeyboardButton, // 36
     ZetaIconSizeCamera, // 40
     ZetaIconSizeLarge,   // 48
 };

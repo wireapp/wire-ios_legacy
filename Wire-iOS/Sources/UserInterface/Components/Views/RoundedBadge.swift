@@ -69,15 +69,3 @@ public class RoundedTextBadge: RoundedBadge {
     }
 }
 
-public class GuestLabel: RoundedTextBadge {
-    init() {
-        super.init(contentInset: UIEdgeInsets(top: 2, left: 8, bottom: 2, right: 8))
-        textLabel.text = "participants.avatar.guest.title".localized
-        accessibilityIdentifier = "guest label"
-    }
-    
-    required public init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-}
-

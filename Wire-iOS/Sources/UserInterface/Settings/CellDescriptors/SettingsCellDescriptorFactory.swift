@@ -374,7 +374,7 @@ import Foundation
         let genericMessage = ZMGenericMessage.genericMessage(pbMessage: builder!.build(), messageID: UUID().transportString(), expiresAfter: nil)
         
         userSession.enqueueChanges {
-            conversation.append(genericMessage, expires: false, hidden: false)
+            conversation.appendClientMessage(with: genericMessage, expires: false, hidden: false)
         }
     }
     

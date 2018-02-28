@@ -464,11 +464,6 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
     }
 }
 
-- (void)addContacts:(id)sender
-{
-    [self.delegate conversationContentViewController:self didTriggerAddContactsButton:sender];
-}
-
 - (void)updateVisibleMessagesWindow
 {
     BOOL isViewVisible = YES;
@@ -799,7 +794,6 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
     if ([self.delegate respondsToSelector:@selector(conversationContentViewController:shouldBecomeFirstResponderWhenShowMenuFromCell:)]) {
         shouldBecomeFirstResponder = [self.delegate conversationContentViewController:self shouldBecomeFirstResponderWhenShowMenuFromCell:cell];
     }
-    [ConversationInputBarViewController endEditingMessage];
     return shouldBecomeFirstResponder;
 }
 

@@ -108,6 +108,7 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark - Helper
 
 - (UIImage *)imageInTestBundleNamed:(NSString *)name;
+- (NSURL *)URLForResourceInTestBundleNamed:(NSString *)name;
 
 @end
 

@@ -1,4 +1,4 @@
-//
+ //
 // Wire
 // Copyright (C) 2016 Wire Swiss GmbH
 //
@@ -24,10 +24,6 @@ import Cartography
 fileprivate let smallLightFont = UIFont(magicIdentifier: "style.text.small.font_spec_light")!
 fileprivate let smallBoldFont = UIFont(magicIdentifier: "style.text.small.font_spec_bold")!
 fileprivate let normalBoldFont = UIFont(magicIdentifier: "style.text.normal.font_spec_bold")!
-
-fileprivate let dimmedColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorTextDimmed)
-fileprivate let textColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorTextForeground)
-
 
 @objc public class AddressBookCorrelationFormatter: NSObject {
 
@@ -94,7 +90,7 @@ fileprivate let textColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorTe
     }
 
     static var formatter: AddressBookCorrelationFormatter = {
-        AddressBookCorrelationFormatter(lightFont: smallLightFont, boldFont: smallBoldFont, color: dimmedColor)
+        AddressBookCorrelationFormatter(lightFont: smallLightFont, boldFont: smallBoldFont, color: UIColor.wr_color(fromColorScheme: ColorSchemeColorTextDimmed))
     }()
 
     init(user: ZMBareUser?, fallbackName fallback: String, addressBookName: String?) {
@@ -104,12 +100,12 @@ fileprivate let textColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorTe
     }
 
     static func attributedTitle(for user: ZMBareUser?, fallback: String) -> NSAttributedString {
-        return (user?.name ?? fallback) && normalBoldFont && textColor
+        return (user?.name ?? fallback) && normalBoldFont && UIColor.wr_color(fromColorScheme: ColorSchemeColorTextForeground)
     }
 
     static func attributedSubtitle(for user: ZMBareUser?) -> NSAttributedString? {
         guard let handle = user?.handle, handle.count > 0 else { return nil }
-        return ("@" + handle) && smallBoldFont && dimmedColor
+        return ("@" + handle) && smallBoldFont && UIColor.wr_color(fromColorScheme: ColorSchemeColorTextDimmed)
     }
 
     static func attributedCorrelationText(for user: ZMBareUser?, addressBookName: String?) -> NSAttributedString? {
@@ -121,7 +117,6 @@ fileprivate let textColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorTe
 
 final class UserNameDetailView: UIView {
 
-    let titleLabel = UILabel()
     let subtitleLabel = UILabel()
     let correlationLabel = UILabel()
 
@@ -136,7 +131,6 @@ final class UserNameDetailView: UIView {
     }
 
     func configure(with model: UserNameDetailViewModel) {
-        titleLabel.attributedText = model.title
         subtitleLabel.attributedText = model.firstSubtitle
         correlationLabel.attributedText = model.secondSubtitle
 
@@ -147,23 +141,16 @@ final class UserNameDetailView: UIView {
     private func setupViews() {
         translatesAutoresizingMaskIntoConstraints = false
 
-        [titleLabel, subtitleLabel, correlationLabel].forEach {
+        [subtitleLabel, correlationLabel].forEach {
             $0.textAlignment = .center
             $0.backgroundColor = .clear
             addSubview($0)
         }
-
-        titleLabel.accessibilityIdentifier = "name"
     }
 
     private func createConstraints() {
-        constrain(self, titleLabel, subtitleLabel, correlationLabel) { view, title, subtitle, correlation in
-            title.top == view.top
-            title.height == 32
-            title.leading == view.leading
-            title.trailing == view.trailing
-
-            subtitle.top == title.bottom + 4
+        constrain(self, subtitleLabel, correlationLabel) { view, subtitle, correlation in
+            subtitle.top == view.top
             subtitle.centerX == view.centerX
             subtitle.height == 16
 

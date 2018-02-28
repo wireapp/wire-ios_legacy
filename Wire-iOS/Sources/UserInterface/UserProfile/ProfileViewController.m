@@ -18,6 +18,7 @@
 
 
 #import "ProfileViewController.h"
+#import "ProfileViewController+internal.h"
 
 #import "WireSyncEngine+iOS.h"
 #import "avs+iOS.h"
@@ -34,7 +35,6 @@
 #import "Wire-Swift.h"
 
 #import "ContactsDataSource.h"
-#import "ProfileNavigationControllerDelegate.h"
 #import "ProfileDevicesViewController.h"
 #import "ProfileDetailsViewController.h"
 
@@ -44,9 +44,6 @@ typedef NS_ENUM(NSUInteger, ProfileViewControllerTabBarIndex) {
     ProfileViewControllerTabBarIndexDevices
 };
 
-
-@interface ProfileViewController (AddParticipants) <AddParticipantsViewControllerDelegate>
-@end
 
 
 @interface ProfileViewController (ProfileViewControllerDelegate) <ProfileViewControllerDelegate>
@@ -58,22 +55,23 @@ typedef NS_ENUM(NSUInteger, ProfileViewControllerTabBarIndex) {
 @interface ProfileViewController (ProfileDetailsViewControllerDelegate) <ProfileDetailsViewControllerDelegate>
 @end
 
-
 @interface ProfileViewController (DevicesListDelegate) <ProfileDevicesViewControllerDelegate>
 @end
 
 @interface ProfileViewController (TabBarControllerDelegate) <TabBarControllerDelegate>
 @end
 
+@interface ProfileViewController (ConversationCreationDelegate) <ConversationCreationControllerDelegate>
+@end
+
 
 
 @interface ProfileViewController () <ZMUserObserver>
 
-@property (nonatomic, readonly) ProfileViewControllerContext context;
 @property (nonatomic, readonly) ZMConversation *conversation;
-
 @property (nonatomic) id observerToken;
-@property (nonatomic) ProfileHeaderView *headerView;
+@property (nonatomic) UserNameDetailView *usernameDetailsView;
+@property (nonatomic) ProfileTitleView *profileTitleView;
 @property (nonatomic) TabBarController *tabsController;
 
 @end
@@ -103,7 +101,6 @@ typedef NS_ENUM(NSUInteger, ProfileViewControllerTabBarIndex) {
         _bareUser = user;
         _conversation = conversation;
         _context = context;
-        _navigationControllerDelegate = [[ProfileNavigationControllerDelegate alloc] init];
     }
     return self;
 }
@@ -118,6 +115,7 @@ typedef NS_ENUM(NSUInteger, ProfileViewControllerTabBarIndex) {
         self.observerToken = [UserChangeInfo addObserver:self forUser:self.fullUser userSession:[ZMUserSession sharedSession]];
     }
     
+    [self setupNavigationItems];
     [self setupHeader];
     [self setupTabsController];
     [self setupConstraints];
@@ -138,6 +136,15 @@ typedef NS_ENUM(NSUInteger, ProfileViewControllerTabBarIndex) {
 {
     if ([self.delegate respondsToSelector:@selector(viewControllerWantsToBeDismissed:completion:)]) {
         [self.viewControllerDismissable viewControllerWantsToBeDismissed:self completion:completion];
+    }
+}
+
+- (void)setupNavigationItems
+{
+    if (self.navigationController.viewControllers.count == 1) {
+        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithIcon:ZetaIconTypeX style:UIBarButtonItemStylePlain target:self action:@selector(dismissButtonClicked)];
+    } else {
+        self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithIcon:ZetaIconTypeBackArrow style:UIBarButtonItemStylePlain target:self action:@selector(dismissButtonClicked)];
     }
 }
 
@@ -170,15 +177,9 @@ typedef NS_ENUM(NSUInteger, ProfileViewControllerTabBarIndex) {
 
 - (void)setupConstraints
 {
-    UIEdgeInsets edges = UIScreen.safeArea;
-    
-    if(UIScreen.hasNotch) {
-        edges.top -= 20.0;
-    }
-    
-    [self.headerView autoPinEdgesToSuperviewEdgesWithInsets:edges excludingEdge:ALEdgeBottom];
+    [self.usernameDetailsView autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero excludingEdge:ALEdgeBottom];
     [self.tabsController.view autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero excludingEdge:ALEdgeTop];
-    [self.tabsController.view autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.headerView];
+    [self.tabsController.view autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.usernameDetailsView];
 }
 
 #pragma mark - Header
@@ -186,31 +187,19 @@ typedef NS_ENUM(NSUInteger, ProfileViewControllerTabBarIndex) {
 - (void)setupHeader
 {
     id<ZMBareUser> user = self.bareUser;
-
-    ProfileHeaderViewModel *viewModel = [self headerViewModelWithUser:user];
-    ProfileHeaderView *headerView = [[ProfileHeaderView alloc] initWithViewModel:viewModel];
-    headerView.translatesAutoresizingMaskIntoConstraints = NO;
-    [headerView.dismissButton addTarget:self action:@selector(dismissButtonClicked) forControlEvents:UIControlEventTouchUpInside];
     
-    [self.view addSubview:headerView];
-    self.headerView = headerView;
-}
-
-- (ProfileHeaderViewModel *)headerViewModelWithUser:(id<ZMBareUser>)user
-{
-    ProfileHeaderStyle headerStyle = ProfileHeaderStyleCancelButton;
-    if (IS_IPAD_FULLSCREEN) {
-        if (self.navigationController.viewControllers.count > 1) {
-            headerStyle = ProfileHeaderStyleBackButton;
-        } else if (self.context != ProfileViewControllerContextDeviceList) {
-            headerStyle = ProfileHeaderStyleNoButton; // no button in 1:1 profile popover
-        }
-    }
-
-    return [[ProfileHeaderViewModel alloc] initWithUser:user
-                                           fallbackName:user.displayName
-                                        addressBookName:BareUserToUser(user).addressBookEntry.cachedName
-                                                  style:headerStyle];
+    UserNameDetailViewModel *viewModel = [[UserNameDetailViewModel alloc] initWithUser:user fallbackName:user.displayName addressBookName:BareUserToUser(user).addressBookEntry.cachedName];
+    UserNameDetailView *usernameDetailsView = [[UserNameDetailView alloc] init];
+    usernameDetailsView.translatesAutoresizingMaskIntoConstraints = NO;
+    [usernameDetailsView configureWith:viewModel];
+    [self.view addSubview:usernameDetailsView];
+    self.usernameDetailsView = usernameDetailsView;
+    
+    ProfileTitleView *titleView = [[ProfileTitleView alloc] init];
+    titleView.translatesAutoresizingMaskIntoConstraints = NO;
+    [titleView configureWithViewModel:viewModel];
+    self.navigationItem.titleView = titleView;
+    self.profileTitleView = titleView;
 }
 
 #pragma mark - User observation
@@ -223,7 +212,7 @@ typedef NS_ENUM(NSUInteger, ProfileViewControllerTabBarIndex) {
                         self.context != ProfileViewControllerContextDeviceList &&
                         self.tabsController.selectedIndex != ProfileViewControllerTabBarIndexDevices;
 
-        self.headerView.showVerifiedShield = showShield;
+        self.profileTitleView.showVerifiedShield = showShield;
     }
 }
 
@@ -250,25 +239,6 @@ typedef NS_ENUM(NSUInteger, ProfileViewControllerTabBarIndex) {
 
 @end
 
-
-
-@implementation ProfileViewController (AddParticipants)
-
-- (void)addParticipantsViewControllerDidCancel:(AddParticipantsViewController *)addParticipantsViewController
-{
-    [addParticipantsViewController dismissViewControllerAnimated:YES completion:nil];
-}
-
-- (void)addParticipantsViewController:(AddParticipantsViewController *)addParticipantsViewController didSelectUsers:(NSSet<ZMUser *> *)users
-{
-    [addParticipantsViewController dismissViewControllerAnimated:YES completion:^{
-        if ([self.delegate respondsToSelector:@selector(profileViewController:wantsToAddUsers:toConversation:)]) {
-            [self.delegate profileViewController:self wantsToAddUsers:users toConversation:self.conversation];
-        }
-    }];
-}
-
-@end
 
 @implementation ProfileViewController (ViewControllerDismissable)
 
@@ -305,9 +275,9 @@ typedef NS_ENUM(NSUInteger, ProfileViewControllerTabBarIndex) {
     }
 }
 
-- (void)profileDetailsViewController:(ProfileDetailsViewController *)profileDetailsViewController didPresentAddParticipantsViewController:(AddParticipantsViewController *)addParticipantsViewController
+- (void)profileDetailsViewController:(ProfileDetailsViewController *)profileDetailsViewController didPresentConversationCreationController:(ConversationCreationController *)conversationCreationController
 {
-    addParticipantsViewController.delegate = self;
+    conversationCreationController.delegate = self;
 }
 
 - (void)profileDetailsViewController:(ProfileDetailsViewController *)profileDetailsViewController wantsToBeDismissedWithCompletion:(dispatch_block_t)completion
@@ -322,12 +292,35 @@ typedef NS_ENUM(NSUInteger, ProfileViewControllerTabBarIndex) {
 @end
 
 
+@implementation ProfileViewController (ConversationCreationDelegate)
+
+- (void)conversationCreationController:(ConversationCreationController *)controller didSelectName:(NSString *)name participants:(NSSet<ZMUser *> *)participants allowGuests:(BOOL)allowGuests
+{
+    [controller dismissViewControllerAnimated:YES completion:^{
+        [UIApplication.sharedApplication wr_updateStatusBarForCurrentControllerAnimated:YES];
+        if ([self.delegate respondsToSelector:@selector(profileViewController:wantsToCreateConversationWithName:users:)]) {
+            [self.delegate profileViewController:self wantsToCreateConversationWithName:name users:participants];
+        }
+    }];
+}
+
+- (void)conversationCreationControllerDidCancel:(ConversationCreationController *)controller
+{
+    [controller dismissViewControllerAnimated:YES completion:^{
+        [UIApplication.sharedApplication wr_updateStatusBarForCurrentControllerAnimated:YES];
+    }];
+}
+
+@end
+
+
 @implementation ProfileViewController (DevicesListDelegate)
 
 - (void)profileDevicesViewController:(ProfileDevicesViewController *)profileDevicesViewController didTapDetailForClient:(UserClient *)client
 {
     ProfileClientViewController *userClientDetailController = [[ProfileClientViewController alloc] initWithClient:client fromConversation:YES];
-    [self presentViewController:userClientDetailController animated:YES completion:nil];
+    userClientDetailController.showBackButton = NO;
+    [self.navigationController pushViewController:userClientDetailController animated:YES];
 }
 
 @end

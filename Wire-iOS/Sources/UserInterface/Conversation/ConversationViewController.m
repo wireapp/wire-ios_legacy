@@ -44,7 +44,6 @@
 #import "TextMessageCell.h"
 
 #import "ZClientViewController.h"
-#import "ParticipantsViewController.h"
 #import "ConversationViewController+ParticipantsPopover.h"
 #import "MediaBar.h"
 #import "MediaPlayer.h"
@@ -86,22 +85,13 @@
 @interface ConversationViewController (Content) <ConversationContentViewControllerDelegate>
 @end
 
-@interface ConversationViewController (ParticipantsViewController) <ParticipantsViewControllerDelegate>
-@end
-
 @interface ConversationViewController (ProfileViewController) <ProfileViewControllerDelegate>
 @end
 
 @interface ConversationViewController (ViewControllerDismissable) <ViewControllerDismissable>
 @end
 
-@interface ConversationViewController (AddParticipants) <AddParticipantsViewControllerDelegate>
-@end
-
 @interface ConversationViewController (ZMConversationObserver) <ZMConversationObserver>
-@end
-
-@interface ConversationViewController (UINavigationControllerDelegate) <UINavigationControllerDelegate>
 @end
 
 @interface ConversationViewController (VerticalTransitionDataSource) <VerticalTransitionDataSource>
@@ -442,10 +432,8 @@
 
     switch (self.conversation.conversationType) {
         case ZMConversationTypeGroup: {
-            ParticipantsViewController *participantsViewController = [[ParticipantsViewController alloc] initWithConversation:self.conversation];
-            participantsViewController.delegate = self;
-            participantsViewController.zClientViewController = [ZClientViewController sharedZClientViewController];
-            viewController = participantsViewController;
+            GroupDetailsViewController *groupDetailsViewController = [[GroupDetailsViewController alloc] initWithConversation:self.conversation];
+            viewController = groupDetailsViewController;
             break;
         }
         case ZMConversationTypeSelf:
@@ -455,8 +443,7 @@
             viewController = [UserDetailViewControllerFactory createUserDetailViewControllerWithUser:self.conversation.firstActiveParticipantOtherThanSelf
                                           conversation:self.conversation
                          profileViewControllerDelegate:self
-                             viewControllerDismissable:self
-                          navigationControllerDelegate:nil];
+                             viewControllerDismissable:self];
 
             break;
         }
@@ -465,12 +452,9 @@
             break;
     }
 
-    RotationAwareNavigationController *navigationController = [[RotationAwareNavigationController alloc] initWithRootViewController:viewController];
-    navigationController.navigationBarHidden = YES;
+    _participantsController = viewController.wrapInNavigationController;
 
-    _participantsController = navigationController;
-
-    return navigationController;
+    return _participantsController;
 }
 
 - (void)setAnalyticsTracker:(AnalyticsTracker *)analyticsTracker
@@ -582,26 +566,6 @@
 - (void)conversationContentViewController:(ConversationContentViewController *)contentViewController didEndDisplayingActiveMediaPlayerForMessage:(id<ZMConversationMessage>)message
 {
     [self.conversationBarController presentBar:self.mediaBarViewController];
-}
-
-- (void)conversationContentViewController:(ConversationContentViewController *)contentViewController didTriggerAddContactsButton:(UIButton *)button
-{
-    AddParticipantsViewController *addParticipantsViewController = [[AddParticipantsViewController alloc] initWithConversation:self.conversation];
-    addParticipantsViewController.delegate = self;
-    
-    UINavigationController *presentedViewController = [addParticipantsViewController wrapInNavigationController:[AddParticipantsNavigationController class]];
-    
-    presentedViewController.modalPresentationStyle = UIModalPresentationPopover;
-    presentedViewController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
-
-    UIPopoverPresentationController *popoverPresentationController = presentedViewController.popoverPresentationController;
-    popoverPresentationController.sourceView = button;
-    popoverPresentationController.sourceRect = button.bounds;
-    popoverPresentationController.delegate = addParticipantsViewController;
-
-    [self presentViewController:presentedViewController
-                       animated:YES
-                     completion:nil];
 }
 
 - (void)conversationContentViewController:(ConversationContentViewController *)contentViewController didTriggerResendingMessage:(id <ZMConversationMessage>)message
@@ -775,20 +739,6 @@
 
 @end
 
-@implementation ConversationViewController (ParticipantsViewController)
-
-- (void)participantsViewControllerWantsToBeDismissed:(ParticipantsViewController *)viewController
-{
-    [self dismissViewControllerAnimated:YES completion:nil];
-}
-
-- (void)participantsViewController:(ParticipantsViewController *)controller wantsToAddUsers:(NSSet *)users toConversation:(ZMConversation *)conversation
-{
-    [self profileViewController:nil wantsToAddUsers:users toConversation:conversation];
-}
-
-@end
-
 @implementation ConversationViewController (ViewControllerDismissable)
 
 - (void)viewControllerWantsToBeDismissed:(UIViewController *)profileViewController completion:(dispatch_block_t)completion
@@ -809,28 +759,26 @@
     }];
 }
 
-- (void)profileViewController:(ProfileViewController *)controller wantsToAddUsers:(NSSet *)users toConversation:(ZMConversation *)conversation
+- (void)profileViewController:(ProfileViewController *)controller wantsToCreateConversationWithName:(NSString *)name users:(NSSet *)users
 {
-    [self dismissViewControllerAnimated:YES completion:^{
-        [self addParticipants:users];
-    }];
-}
-
-@end
-
-
-@implementation ConversationViewController (AddParticipants)
-
-- (void)addParticipantsViewControllerDidCancel:(AddParticipantsViewController *)addParticipantsViewController
-{
-    [self dismissViewControllerAnimated:YES completion:nil];
-}
-
-- (void)addParticipantsViewController:(AddParticipantsViewController *)addParticipantsViewController didSelectUsers:(NSSet<ZMUser *> *)users
-{
-    [addParticipantsViewController dismissViewControllerAnimated:YES completion:^{
-        [self addParticipants:users];
-    }];
+    dispatch_block_t conversationCreation = ^{
+        __block  ZMConversation *newConversation = nil;
+        
+        @weakify(self);
+        [ZMUserSession.sharedSession enqueueChanges:^{
+            newConversation = [ZMConversation insertGroupConversationIntoUserSession:ZMUserSession.sharedSession withParticipants:users.allObjects name:name inTeam:ZMUser.selfUser.team];
+        } completionHandler:^{
+            @strongify(self);
+            [self.zClientViewController selectConversation:newConversation focusOnView:YES animated:YES];
+        }];
+    };
+    
+    if (nil != self.presentedViewController) {
+        [self dismissViewControllerAnimated:YES completion:conversationCreation];
+    }
+    else {
+        conversationCreation();
+    }
 }
 
 @end
@@ -898,7 +846,6 @@
     navigationController.modalPresentationStyle = UIModalPresentationFormSheet;
     navigationController.backButton.cas_styleClass = @"circular";
     navigationController.rightButtonEnabled = YES;
-    navigationController.delegate = self;
     [navigationController updateRightButtonWithIconType:ZetaIconTypeX
                                                iconSize:ZetaIconSizeTiny
                                                  target:self
@@ -912,26 +859,6 @@
 {
     [self.conversation doNotResendMessagesThatCausedDegradation];
     [self dismissViewControllerAnimated:YES completion:nil];
-}
-
-@end
-
-
-
-#pragma mark - UINavigationControllerDelegate
-
-@implementation ConversationViewController (UINavigationControllerDelegate)
-
-- (void)navigationController:(UINavigationController *)navigationController willShowViewController:(UIViewController *)viewController animated:(BOOL)animated
-{
-    NavigationController *navController = (NavigationController *)navigationController;
-    if ([viewController isKindOfClass:[ProfileClientViewController class]] ||
-        [viewController isKindOfClass:[ParticipantsViewController class]] ||
-        [viewController isKindOfClass:[ProfileViewController class]]) {
-        navController.rightButtonEnabled = NO;
-    } else {
-        navController.rightButtonEnabled = YES;
-    }
 }
 
 @end

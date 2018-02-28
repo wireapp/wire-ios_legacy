@@ -21,7 +21,7 @@ import Cartography
 
 extension ZMConversation {
     var botCanBeAdded: Bool {
-        return self.conversationType != .oneOnOne
+        return self.conversationType != .oneOnOne && canAddGuest
     }
 }
 
@@ -60,7 +60,7 @@ extension ServiceConversation: Hashable {
     }
 }
 
-private func add(service: Service, to conversation: Any, completion: @escaping (AddBotResult)->Void) {
+private func add(service: Service, to conversation: Any, completion: ((AddBotResult) -> Void)? = nil) {
     guard let userSession = ZMUserSession.shared(),
         let serviceConversation = conversation as? ServiceConversation else {
             return
@@ -72,23 +72,21 @@ private func add(service: Service, to conversation: Any, completion: @escaping (
 
     switch serviceConversation {
     case .new:
-        userSession.startConversation(with: service.serviceUser, completion: { (result) in
-
+        userSession.startConversation(with: service.serviceUser) { result in
             switch result {
-            case .success(let conversation):
-                tagAdded(user: service.serviceUser, to: conversation)
+            case .success(let conversation): tagAdded(user: service.serviceUser, to: conversation)
             default: break
             }
 
-            completion(result)
-        })
+            completion?(result)
+        }
     case .existing(let conversation):
         conversation.add(serviceUser: service.serviceUser, in: userSession) { error in
             if let error = error {
-                completion(AddBotResult.failure(error: error))
+                completion?(AddBotResult.failure(error: error))
             } else {
                 tagAdded(user: service.serviceUser, to: conversation)
-                completion(AddBotResult.success(conversation: conversation))
+                completion?(AddBotResult.success(conversation: conversation))
             }
         }
     }
@@ -98,23 +96,13 @@ extension Service: Shareable {
     public typealias I = ServiceConversation
 
     public func share<ServiceConversation>(to: [ServiceConversation]) {
-        guard let serviceConversation = to.first else {
-            return
-        }
-
-        add(service: self, to: serviceConversation, completion: { result in
-
-        })
+        guard let serviceConversation = to.first else { return }
+        add(service: self, to: serviceConversation)
     }
 
-    public func share<ServiceConversation>(to: [ServiceConversation], completion: @escaping (AddBotResult)->Void) {
-        guard let serviceConversation = to.first else {
-            return
-        }
-
-        add(service: self, to: serviceConversation, completion: { result in
-            completion(result)
-        })
+    public func share<ServiceConversation>(to: [ServiceConversation], completion: @escaping (AddBotResult) -> Void) {
+        guard let serviceConversation = to.first else { return }
+        add(service: self, to: serviceConversation, completion: completion)
     }
 
     public func previewView() -> UIView? {
@@ -146,7 +134,7 @@ extension ServiceConversation: ShareDestination {
         case .new:
             let imageView = UIImageView()
             imageView.contentMode = .center
-            imageView.image = UIImage.init(for: .plus, iconSize: .tiny, color: .white)
+            imageView.image = UIImage(for: .plus, iconSize: .tiny, color: .white)
             return imageView
         case .existing(let conversation):
             return conversation.avatarView
@@ -205,6 +193,7 @@ final class ServiceDetailViewController: UIViewController {
 
         self.variant = variant
         self.actionType = actionType
+        actionButton.isHidden = destinationConversation.map(ZMUser.selfUser().isGuest) ?? false
 
         super.init(nibName: nil, bundle: nil)
 
@@ -288,6 +277,7 @@ final class ServiceDetailViewController: UIViewController {
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(icon: .X,
                                                                  target: self,
                                                                  action: #selector(ServiceDetailViewController.dismissButtonTapped(_:)))
+        self.navigationItem.rightBarButtonItem?.accessibilityIdentifier = "close"
     }
 
     @objc(backButtonTapped:)

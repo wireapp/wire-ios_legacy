@@ -50,11 +50,11 @@ IconButton.conversation-toolbar {
     adjustsImageWhenHighlighted: false;
 }
 
-StartUIQuickActionsBar {
+StartUIInviteActionBar {
     backgroundColor: rgb(0, 0, 0, 0.24);
 }
 
-StartUIQuickActionsBar > Button {
+StartUIInviteActionBar > Button {
     titleEdgeInsets: 2, 8, 3, 8;
 }
 
@@ -645,73 +645,6 @@ MediaPreviewViewController {
     }
 }
 
-/* Conversation detail / participants */
-
-ParticipantsHeaderView.editing {
-    titleViewBackground: @{
-        backgroundColor: $color-separator;
-    }
-}
-
-ParticipantsHeaderView {
-    subtitleLabel: @{
-        textColor: $color-text-dimmed;
-        font: $font-small;
-    }
-    titleView: @{
-        textColor: $color-text-foreground;
-        font: $font-normal-semibold;
-    }
-    titleViewBackground: @{
-        layer: @{
-            cornerRadius: 2;
-        }
-        backgroundColor: clear;
-    }
-    separatorLine: @{
-        backgroundColor: $color-separator;
-    }
-    topSeparatorLine: @{
-        backgroundColor: $color-separator;
-    }
-}
-
-ParticipantsFooterView {
-    separatorLine: @{
-        backgroundColor: $color-separator;
-    }
-    leftButton: @{
-        contentEdgeInsets: 0 0 0 16
-        titleEdgeInsets: 0 16 0 -16
-        titleColor[state:normal]: $color-text-foreground;
-        titleColor[state:highlighted]: $color-text-dimmed;
-        titleLabel: @{
-            font: $font-small-light;
-        }
-    }
-}
-
-ParticipantsViewController {
-    view: @{
-        backgroundColor: $color-background;
-    }
-}
-
-ParticipantsListCell {
-    nameLabel @{
-        textColor: $color-text-foreground;
-        font: $font-small-light;
-    }
-}
-
-GuestLabel {
-    backgroundColor: $color-background-light;
-    textLabel @{
-        font: $font-small-light;
-        textColor: $color-text-foreground-light;
-    }
-}
-
 /* Fullscreen image view */
 
 FullscreenImageViewController {
@@ -845,6 +778,10 @@ IconSystemCell, ConversationNewDeviceCell, MissedCallCell, PerformedCallCell, Ca
     labelFont: $font-medium;
     labelBoldFont: $font-medium-semibold;
     labelTextBlendedColor: $color-text-dimmed;
+}
+
+ParticipantsCell {
+    labelLargeFont: $font-large-semibold;
 }
 
 ConversationRenamedCell {
@@ -1249,13 +1186,6 @@ AddParticipantsViewController SearchHeaderViewController {
     closeButton: @{
         iconColor[state:normal]: $color-icon-normal;
         iconColor[state:highlighted]: $color-icon-highlighted;
-    }
-}
-
-
-AddParticipantsViewController {
-    view: @{
-        backgroundColor: $color-bar-background;
     }
 }
 

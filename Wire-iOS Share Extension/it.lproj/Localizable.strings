@@ -20,6 +20,7 @@
 
 
 
+"share_extension.general.ok" = "OK";
 "share_extension.conversation_selection.account" = "Account:";
 "share_extension.conversation_selection.title" = "Conversazione:";
 "share_extension.send_button.title" = "Invia";
@@ -33,6 +34,8 @@
 "share_extension.timeout.title" = "Timeout della connessione.";
 "share_extension.timeout.message" = "Controlla la tua connessione Internet e riprova. Gli allegati sono stati salvati nella conversazione.";
 "share_extension.privacy_security.lock_app.description" = "Sblocca Wire";
+"share_extension.logged_out.title" = "You've been logged out from this account.";
+"share_extension.logged_out.message" = "Please choose another account.";
 
 "conversation.displayname.emptygroup" = "Conversazione di gruppo vuota";
 "meta.degraded.degradation_reason_message.singular" = "%@ ha iniziato a usare un nuovo dispositivo.";

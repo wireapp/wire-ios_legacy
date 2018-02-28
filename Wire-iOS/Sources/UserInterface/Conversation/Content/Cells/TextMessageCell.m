@@ -456,7 +456,7 @@
 
 #pragma mark - Preview Provider delegate
 
-- (CGFloat)prepareLayoutForPreviewWithMessage:(ZMMessage *)message
+- (CGFloat)prepareLayoutForPreviewWithMessage:(id <ZMConversationMessage>)message
 {
     self.smallLinkAttachments = YES;
     self.linkAttachmentContainer.layoutMargins = UIEdgeInsetsZero;

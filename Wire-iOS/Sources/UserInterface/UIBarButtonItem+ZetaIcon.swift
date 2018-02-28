@@ -19,13 +19,17 @@
 
 extension UIBarButtonItem {
 
-    convenience init(icon: ZetaIconType, style: UIBarButtonItemStyle = .plain, target: Any, action: Selector) {
+    convenience init(icon: ZetaIconType, style: UIBarButtonItemStyle = .plain, target: Any?, action: Selector?) {
         self.init(
             image: UIImage(for: icon, iconSize: .tiny, color: ColorScheme.default().color(withName: ColorSchemeColorTextForeground)),
             style: style,
             target: target,
             action: action
         )
+    }
+    
+    static func backButton(target: Any?, action: Selector?) -> UIBarButtonItem {
+        return .init(icon: .backArrow, target: target, action: action)
     }
 
 }

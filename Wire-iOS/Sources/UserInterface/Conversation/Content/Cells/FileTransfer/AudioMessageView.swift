@@ -105,7 +105,7 @@ final class AudioMessageView: UIView, TransferView {
     }
     
     private func createConstraints() {
-        constrain(self, self.playButton, self.timeLabel) { (selfView: LayoutProxy, playButton: LayoutProxy, timeLabel: LayoutProxy) -> () in
+        constrain(self, self.playButton, self.timeLabel) { selfView, playButton, timeLabel in
             selfView.height == 56
             
             playButton.left == selfView.left + 12
