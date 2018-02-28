@@ -106,16 +106,21 @@
     NSString *fingerprintExplanation = [NSString stringWithFormat:message, userName];
     NSString *fingerprintLearnMoreLink = NSLocalizedString(@"profile.devices.fingerprint_message.link", nil);
     NSRange learnMoreLinkRange = [fingerprintExplanation rangeOfString:fingerprintLearnMoreLink];
+    
+    NSMutableParagraphStyle *paragraphStyle = NSParagraphStyle.defaultParagraphStyle.mutableCopy;
+    paragraphStyle.lineSpacing = 2;
 
     NSDictionary *textAttributes = @{
                                      NSForegroundColorAttributeName: self.textColor,
-                                     NSFontAttributeName: self.font
+                                     NSFontAttributeName: self.font,
+                                     NSParagraphStyleAttributeName: paragraphStyle
                                      };
 
     NSDictionary *linkAttributes = @{
                                      NSFontAttributeName: self.font,
                                      NSForegroundColorAttributeName: self.linkAttributeColor,
-                                     NSLinkAttributeName: NSURL.wr_fingerprintLearnMoreURL
+                                     NSLinkAttributeName: NSURL.wr_fingerprintLearnMoreURL,
+                                     NSParagraphStyleAttributeName: paragraphStyle
                                      };
 
     NSMutableAttributedString *attributedText = [[NSMutableAttributedString alloc] initWithString:fingerprintExplanation
