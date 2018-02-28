@@ -59,7 +59,7 @@ class GroupDetailsViewController: UIViewController, ZMConversationObserver, Grou
         collectionView.keyboardDismissMode = .onDrag
         collectionView.bounces = true
         collectionView.alwaysBounceVertical = true
-        collectionView.contentInset = UIEdgeInsets(top: 32, left: 0, bottom: 0, right: 0)
+        collectionView.contentInset = UIEdgeInsets(top: 32, left: 0, bottom: 32, right: 0)
         
         if #available(iOS 11.0, *) {
             collectionView.contentInsetAdjustmentBehavior = .never

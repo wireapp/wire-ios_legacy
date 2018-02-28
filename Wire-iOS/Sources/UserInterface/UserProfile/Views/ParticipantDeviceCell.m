@@ -47,7 +47,6 @@
     
     if (self) {
         self.backgroundColor = UIColor.clearColor;
-        self.separatorInset = UIEdgeInsetsMake(0, 24, 0, 0);
         self.selectionStyle = UITableViewCellSelectionStyleNone;
         self.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         [self createViews];
