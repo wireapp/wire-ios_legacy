@@ -134,7 +134,8 @@
     [super viewDidLoad];
     
     self.colorSchemeController = [[ColorSchemeController alloc] init];
-
+    
+    [[UIView appearanceWhenContainedInInstancesOfClasses:@[UIAlertController.class]] setTintColor:[ColorScheme.defaultColorScheme colorWithName:ColorSchemeColorTextForeground variant:ColorSchemeVariantLight]];
     self.pendingInitialStateRestore = YES;
     
     self.view.backgroundColor = [UIColor blackColor];

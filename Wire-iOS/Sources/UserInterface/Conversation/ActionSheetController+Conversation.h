@@ -28,7 +28,6 @@
 
 + (ActionSheetController *)dialogForConversationDetails:(ZMConversation *)conversation style:(ActionSheetControllerStyle)style;
 + (ActionSheetController *)dialogForBlockingUser:(ZMUser *)user style:(ActionSheetControllerStyle)style completion:(void (^)(BOOL canceled))completion;
-+ (ActionSheetController *)dialogForRemovingUser:(ZMUser *)user fromConversation:(ZMConversation *)conversation style:(ActionSheetControllerStyle)style completion:(void (^)(BOOL canceled))completion;
 + (ActionSheetController *)dialogForAcceptingConnectionRequestWithUser:(ZMUser *)user style:(ActionSheetControllerStyle)style completion:(void (^)(BOOL ignored))completion;
 + (ActionSheetController *)dialogForCancelingConnectionRequestWithUser:(ZMUser *)user style:(ActionSheetControllerStyle)style completion:(void (^)(BOOL canceled))completion;
 + (ActionSheetController *)dialogForUnknownClientsForUsers:(NSSet<ZMUser *> *)users style:(ActionSheetControllerStyle)style completion:(void (^)(BOOL sendAnywayPressed, BOOL showDetailsPressed))completion;
