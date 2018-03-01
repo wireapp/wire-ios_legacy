@@ -158,7 +158,7 @@ class GroupDetailsParticipantCell: UICollectionViewCell {
     public func configure(with user: ZMBareUser) {
         avatar.user = user
         titleLabel.attributedText = user.nameIncludingAvailability(color: UIColor.wr_color(fromColorScheme: ColorSchemeColorTextForeground, variant: variant))
-        guestIconView.isHidden = !ZMUser.selfUser().isTeamMember || user.isTeamMember
+        guestIconView.isHidden = !ZMUser.selfUser().isTeamMember || user.isTeamMember || user.isServiceUser
         
         if let user = user as? ZMUser {
             verifiedIconView.isHidden = !user.trusted() || user.clients.isEmpty

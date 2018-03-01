@@ -23,6 +23,7 @@ class GroupDetailsParticipantCellTests: ZMSnapshotTestCase {
         
     override func setUp() {
         super.setUp()
+        recordMode = true
     }
     
     override func tearDown() {
@@ -35,6 +36,17 @@ class GroupDetailsParticipantCellTests: ZMSnapshotTestCase {
         configuration(cell)
         cell.layoutIfNeeded()
         return cell
+    }
+    
+    func testServiceUser() {
+        MockUser.mockSelf().isTeamMember = true
+        let user = MockUser.mockUsers()[0]
+        let mockUser = MockUser(for: user)
+        mockUser?.isServiceUser = true
+        
+        verify(view: cell({ (cell) in
+            cell.configure(with: user)
+        }))
     }
     
     func testNonTeamUser() {
