@@ -70,6 +70,7 @@
 		167AEA101B16031900890435 /* VoiceChannelParticipantCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 167AEA0F1B16031900890435 /* VoiceChannelParticipantCell.m */; };
 		167B3B491BB36F6C003F5104 /* ConversationMessageWindowTableViewAdapter.m in Sources */ = {isa = PBXBuildFile; fileRef = 167B3B481BB36F6C003F5104 /* ConversationMessageWindowTableViewAdapter.m */; };
 		16829EDF2010D60800F579A0 /* InviteTeamMemberSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16829EDE2010D60800F579A0 /* InviteTeamMemberSection.swift */; };
+		1682AEB620480C80003A052A /* UIVIewController+Navigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1682AEB520480C80003A052A /* UIVIewController+Navigation.swift */; };
 		168A16AC1D9597C2005CFA6C /* ShareExtensionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 168A16AB1D9597C2005CFA6C /* ShareExtensionViewController.swift */; };
 		168A16AF1D9597C2005CFA6C /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 168A16AD1D9597C2005CFA6C /* MainInterface.storyboard */; };
 		168A16B31D9597C2005CFA6C /* Wire Share Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 168A16A91D9597C2005CFA6C /* Wire Share Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -1236,6 +1237,7 @@
 		167B3B471BB36F6C003F5104 /* ConversationMessageWindowTableViewAdapter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConversationMessageWindowTableViewAdapter.h; sourceTree = "<group>"; };
 		167B3B481BB36F6C003F5104 /* ConversationMessageWindowTableViewAdapter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConversationMessageWindowTableViewAdapter.m; sourceTree = "<group>"; };
 		16829EDE2010D60800F579A0 /* InviteTeamMemberSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InviteTeamMemberSection.swift; sourceTree = "<group>"; };
+		1682AEB520480C80003A052A /* UIVIewController+Navigation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIVIewController+Navigation.swift"; sourceTree = "<group>"; };
 		168A16A31D95964B005CFA6C /* NSString+URL.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSString+URL.swift"; sourceTree = "<group>"; };
 		168A16A91D9597C2005CFA6C /* Wire Share Extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Wire Share Extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
 		168A16AB1D9597C2005CFA6C /* ShareExtensionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareExtensionViewController.swift; sourceTree = "<group>"; };
@@ -3714,6 +3716,7 @@
 				EFABC921202085A6001F9866 /* UserDetailViewControllerFactory.swift */,
 				EFABC92320208D80001F9866 /* UIViewController+removeUserConfirmationUI.swift */,
 				8716850F203332F800AC9F81 /* UIViewController+SafeArea.swift */,
+				1682AEB520480C80003A052A /* UIVIewController+Navigation.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -6603,6 +6606,7 @@
 				877A32601E892A100017DD9A /* ConversationListAccessoryView.swift in Sources */,
 				8F41CFC8199297C600E3B032 /* ZMConversation+Additions.m in Sources */,
 				BAEF10FA1B8C8849005BFA48 /* AnimatedListMenuView.m in Sources */,
+				1682AEB620480C80003A052A /* UIVIewController+Navigation.swift in Sources */,
 				871BC2551D34F8F800DF0793 /* CrossfadeTransition.m in Sources */,
 				16D4932A203DCCCA008DDFFA /* GroupDetailsParticipantCell.swift in Sources */,
 				872CB8B819E58816006752B4 /* ProfileSendConnectionRequestFooterView.m in Sources */,

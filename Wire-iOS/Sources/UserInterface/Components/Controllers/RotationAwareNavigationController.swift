@@ -67,15 +67,13 @@ class RotationAwareNavigationController: UINavigationController {
     }
     
     override func setViewControllers(_ viewControllers: [UIViewController], animated: Bool) {
-        viewControllers.forEach { viewController in
-            viewController.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
-        }
+        viewControllers.forEach { $0.hideDefaultButtonTitle() }
         
         super.setViewControllers(viewControllers, animated: animated)
     }
     
     override func pushViewController(_ viewController: UIViewController, animated: Bool) {
-        viewController.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
+        viewController.hideDefaultButtonTitle()
         
         super.pushViewController(viewController, animated: animated)
     }
