@@ -57,6 +57,7 @@ class GroupDetailsRenameCell : UICollectionViewCell {
         titleTextField.returnKeyType = .done
         titleTextField.backgroundColor = .clear
         titleTextField.textInsets = UIEdgeInsets.zero
+        titleTextField.keyboardAppearance = ColorScheme.default().keyboardAppearance
 
         contentStackView = UIStackView(arrangedSubviews: [titleTextField, accessoryIconView])
         contentStackView.axis = .horizontal
