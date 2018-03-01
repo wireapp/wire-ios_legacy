@@ -61,13 +61,10 @@ class GroupDetailsGuestOptionsCell: UICollectionViewCell {
     
     fileprivate func setup() {
         accessibilityIdentifier = "cell.groupdetails.guestoptions"
-        
-        guestIconView.image = UIImage(for: .person, iconSize: .like, color: UIColor.wr_color(fromColorScheme: ColorSchemeColorSeparator, variant: variant))
         guestIconView.translatesAutoresizingMaskIntoConstraints = false
         guestIconView.contentMode = .scaleAspectFit
         guestIconView.setContentHuggingPriority(UILayoutPriorityRequired, for: .horizontal)
         
-        accessoryIconView.image = UIImage(for: .disclosureIndicator, iconSize: .like, color: .wr_color(fromColorScheme: ColorSchemeColorSeparator, variant: variant))
         accessoryIconView.translatesAutoresizingMaskIntoConstraints = false
         accessoryIconView.contentMode = .center
         
@@ -109,7 +106,7 @@ class GroupDetailsGuestOptionsCell: UICollectionViewCell {
     private func configureColors() {
         let sectionTextColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorSectionText, variant: variant)
         backgroundColor = .wr_color(fromColorScheme: ColorSchemeColorBarBackground, variant: variant)
-        guestIconView.image = UIImage(for: .person, iconSize: .tiny, color: UIColor.wr_color(fromColorScheme: ColorSchemeColorTextForeground, variant: variant))
+        guestIconView.image = UIImage(for: .guest, iconSize: .tiny, color: UIColor.wr_color(fromColorScheme: ColorSchemeColorTextForeground, variant: variant))
         accessoryIconView.image = UIImage(for: .disclosureIndicator, iconSize: .like, color: sectionTextColor)
         titleLabel.textColor = .wr_color(fromColorScheme: ColorSchemeColorTextForeground, variant: variant)
         statusLabel.textColor = sectionTextColor

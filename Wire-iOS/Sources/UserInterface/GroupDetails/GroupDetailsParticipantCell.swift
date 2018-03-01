@@ -99,8 +99,8 @@ class GroupDetailsParticipantCell: UICollectionViewCell {
         
         avatar.size = .small
         avatar.translatesAutoresizingMaskIntoConstraints = false
-        avatar.widthAnchor.constraint(equalToConstant: 32).isActive = true
-        avatar.heightAnchor.constraint(equalToConstant: 32).isActive = true
+        avatar.widthAnchor.constraint(equalToConstant: 28).isActive = true
+        avatar.heightAnchor.constraint(equalToConstant: 28).isActive = true
         
         let avatarSpacer = UIView()
         avatarSpacer.addSubview(avatar)
@@ -148,7 +148,7 @@ class GroupDetailsParticipantCell: UICollectionViewCell {
     
     private func configureColors() {
         backgroundColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorBarBackground, variant: variant)
-        separator.backgroundColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorSeparator, variant: variant)
+        separator.backgroundColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorCellSeparator, variant: variant)
         guestIconView.image = UIImage(for: .guest, iconSize: .tiny, color: UIColor.wr_color(fromColorScheme: ColorSchemeColorSectionText, variant: variant))
         accessoryActionButton.setIconColor(UIColor.wr_color(fromColorScheme: ColorSchemeColorSectionText, variant: variant), for: .normal)
         titleLabel.textColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorTextForeground, variant: variant)

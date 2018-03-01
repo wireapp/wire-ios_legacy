@@ -178,8 +178,11 @@ class GroupDetailsViewController: UIViewController, ZMConversationObserver, Grou
 
 extension GroupDetailsViewController: ConversationActionControllerRenameDelegate {
     func controllerWantsToRenameConversation(_ controller: ConversationActionController) {
-        collectionViewController.collectionView?.scrollToItem(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
-        renameSectionController?.focus()
+        UIView.animate(withDuration: 0.35, animations: {
+            self.collectionViewController.collectionView?.scrollToItem(at: IndexPath(row: 0, section: 0), at: .top, animated: false)
+        }) { [weak self] _ in
+            self?.renameSectionController?.focus()
+        }
     }
 }
 
@@ -328,7 +331,7 @@ class DefaultSectionController: NSObject, _CollectionViewSectionController {
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: collectionView.bounds.size.width, height: 64)
+        return CGSize(width: collectionView.bounds.size.width, height: 56)
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -524,7 +527,11 @@ extension RenameSectionController: SimpleTextFieldDelegate {
     }
     
     func textField(_ textField: SimpleTextField, valueChanged value: SimpleTextField.Value) {
-        
+
+    }
+    
+    func textFieldDidBeginEditing(_ textField: SimpleTextField) {
+        renameCell?.accessoryIconView.isHidden = true
     }
     
     func textFieldDidEndEditing(_ textField: SimpleTextField) {
@@ -535,6 +542,8 @@ extension RenameSectionController: SimpleTextFieldDelegate {
         } else {
             textField.text = conversation.displayName
         }
+        
+        renameCell?.accessoryIconView.isHidden = false
     }
     
 }

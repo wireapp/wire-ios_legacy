@@ -204,10 +204,16 @@ public extension ConversationViewController {
 
     /// Update left navigation bar items
     func updateLeftNavigationBarItems() {
+        let newItems: [UIBarButtonItem]
+        
         if UIApplication.isLeftToRightLayout {
-            self.navigationItem.leftBarButtonItems = leftNavigationItems(forConversation: conversation)
+            newItems = leftNavigationItems(forConversation: conversation)
         } else {
-            self.navigationItem.leftBarButtonItems = rightNavigationItems(forConversation: conversation)
+            newItems = rightNavigationItems(forConversation: self.conversation)
+        }
+        
+        if self.navigationItem.leftBarButtonItems?.count ?? 0 != newItems.count {
+           self.navigationItem.leftBarButtonItems = newItems
         }
     }
 
