@@ -40,16 +40,17 @@ class GuestsBarController: UIViewController {
     }
     
     public func setCollapsed(_ collapsed: Bool, animated: Bool) {
+        
+        guard self.isViewLoaded else {
+            return
+        }
+        
         if collapsed == _isCollapsed {
             return
         }
         
         _isCollapsed = collapsed
 
-        guard self.isViewLoaded else {
-            return
-        }
-        
         let change = {
             if (!collapsed) {
                 self.heightConstraint.constant = collapsed ? GuestsBarController.collapsedHeight : GuestsBarController.expandedHeight
