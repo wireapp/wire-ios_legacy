@@ -176,6 +176,10 @@ public class ParticipantsCell: ConversationCell {
 
     override public func configure(for message: ZMConversationMessage!, layoutProperties: ConversationCellLayoutProperties!) {
         super.configure(for: message, layoutProperties: layoutProperties)
+        reloadInformation(for: message)
+    }
+
+    private func reloadInformation(for message: ZMConversationMessage) {
         let model = ParticipantsCellViewModel(font: labelFont, boldFont: labelBoldFont, largeFont: labelLargeFont, textColor: labelTextColor, message: message)
         leftIconView.image = model.image()
         attributedText = model.attributedTitle()
@@ -188,4 +192,14 @@ public class ParticipantsCell: ConversationCell {
         collectionViewController.users = model.sortedUsers()
     }
 
+    open override func update(forMessage changeInfo: MessageChangeInfo!) -> Bool {
+        let needsLayout = super.update(forMessage: changeInfo)
+
+        if changeInfo.usersChanged {
+            reloadInformation(for: changeInfo.message)
+            return true
+        }
+
+        return needsLayout
+    }
 }
