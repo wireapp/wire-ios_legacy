@@ -39,7 +39,7 @@ extension ZMConversation {
         }
         
         var allowGuests: Bool {
-            return conversation.accessMode == .allowGuests
+            return conversation.allowGuests
         }
         
         func setAllowGuests(_ allowGuests: Bool, completion: @escaping (VoidResult) -> Void) {
