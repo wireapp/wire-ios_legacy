@@ -282,7 +282,9 @@
     
 - (BOOL)guestsBarShouldBePresented
 {
-    BOOL isVisible = YES;
+    if (self.conversation.conversationType == ZMConversationTypeOneOnOne) {
+        return NO;
+    }
     
     if (self.conversation.team == ZMUser.selfUser.team) {
         BOOL containsGuests = NO;
@@ -294,13 +296,11 @@
             }
         }
         
-        isVisible = containsGuests;
+        return containsGuests;
     }
     else {
-        isVisible = NO;
+        return NO;
     }
-    
-    return isVisible;
 }
     
 - (void)updateGuestsBarVisibility
