@@ -22,9 +22,11 @@ class ServicesSectionController: GroupDetailsSectionController {
     
     private weak var delegate: GroupDetailsSectionControllerDelegate?
     private let serviceUsers: [ZMBareUser]
+    private let conversation: ZMConversation
     
-    init(serviceUsers: [ZMBareUser], delegate: GroupDetailsSectionControllerDelegate) {
+    init(serviceUsers: [ZMBareUser], conversation: ZMConversation, delegate: GroupDetailsSectionControllerDelegate) {
         self.serviceUsers = serviceUsers
+        self.conversation = conversation
         self.delegate = delegate
     }
     
@@ -50,7 +52,7 @@ class ServicesSectionController: GroupDetailsSectionController {
         let user = serviceUsers[indexPath.row]
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: GroupDetailsParticipantCell.zm_reuseIdentifier, for: indexPath) as! GroupDetailsParticipantCell
         
-        cell.configure(with: user)
+        cell.configure(with: user, conversation: conversation)
         cell.separator.isHidden = (serviceUsers.count - 1) == indexPath.row
         return cell
     }

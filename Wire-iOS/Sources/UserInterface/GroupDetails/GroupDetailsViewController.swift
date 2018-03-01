@@ -140,11 +140,11 @@ class GroupDetailsViewController: UIViewController, ZMConversationObserver, Grou
         }
         let (participants, serviceUsers) = (conversation.sortedOtherParticipants, conversation.sortedServiceUsers)
         if !participants.isEmpty {
-            let participantsSectionController = ParticipantsSectionController(participants: participants, delegate: self)
+            let participantsSectionController = ParticipantsSectionController(participants: participants, conversation: conversation, delegate: self)
             sections.append(participantsSectionController)
         }
         if !serviceUsers.isEmpty {
-            let servicesSection = ServicesSectionController(serviceUsers: serviceUsers, delegate: self)
+            let servicesSection = ServicesSectionController(serviceUsers: serviceUsers, conversation: conversation, delegate: self)
             sections.append(servicesSection)
         }
         
