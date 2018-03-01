@@ -30,6 +30,10 @@ class GroupDetailsViewController: UIViewController, ZMConversationObserver, Grou
     fileprivate var renameSectionController : RenameSectionController?
     fileprivate let emptyView = UIImageView()
     private var emptyViewVerticalConstraint: NSLayoutConstraint?
+    
+    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+        return wr_supportedInterfaceOrientations
+    }
 
     public init(conversation: ZMConversation) {
         self.conversation = conversation
@@ -174,8 +178,11 @@ class GroupDetailsViewController: UIViewController, ZMConversationObserver, Grou
 
 extension GroupDetailsViewController: ConversationActionControllerRenameDelegate {
     func controllerWantsToRenameConversation(_ controller: ConversationActionController) {
-        collectionViewController.collectionView?.scrollToItem(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
-        renameSectionController?.focus()
+        UIView.animate(withDuration: 0.35, animations: {
+            self.collectionViewController.collectionView?.scrollToItem(at: IndexPath(row: 0, section: 0), at: .top, animated: false)
+        }) { [weak self] _ in
+            self?.renameSectionController?.focus()
+        }
     }
 }
 
@@ -297,6 +304,10 @@ class DefaultSectionController: NSObject, _CollectionViewSectionController {
         return ""
     }
     
+    var sectionAccessibilityIdentifier: String {
+        return "section_header"
+    }
+    
     var variant : ColorSchemeVariant = ColorScheme.default().variant
     
     func prepareForUse(in collectionView : UICollectionView?) {
@@ -309,6 +320,7 @@ class DefaultSectionController: NSObject, _CollectionViewSectionController {
         if let sectionHeaderView = supplementaryView as? GroupDetailsSectionHeader {
             sectionHeaderView.variant = variant
             sectionHeaderView.titleLabel.text = sectionTitle
+            sectionHeaderView.accessibilityIdentifier = sectionAccessibilityIdentifier
         }
         
         return supplementaryView
@@ -319,7 +331,7 @@ class DefaultSectionController: NSObject, _CollectionViewSectionController {
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: collectionView.bounds.size.width, height: 64)
+        return CGSize(width: collectionView.bounds.size.width, height: 56)
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -350,6 +362,10 @@ class ParticipantsSectionController: DefaultSectionController {
     
     override var sectionTitle: String {
         return "participants.section.participants".localized(args: participants.count).uppercased()
+    }
+    
+    override var sectionAccessibilityIdentifier: String {
+        return "label.groupdetails.participants"
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -390,6 +406,10 @@ class ServicesSectionController: DefaultSectionController {
     
     override var sectionTitle: String {
         return "participants.section.services".localized(args: serviceUsers.count).uppercased()
+    }
+    
+    override var sectionAccessibilityIdentifier: String {
+        return "label.groupdetails.services"
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -507,7 +527,11 @@ extension RenameSectionController: SimpleTextFieldDelegate {
     }
     
     func textField(_ textField: SimpleTextField, valueChanged value: SimpleTextField.Value) {
-        
+
+    }
+    
+    func textFieldDidBeginEditing(_ textField: SimpleTextField) {
+        renameCell?.accessoryIconView.isHidden = true
     }
     
     func textFieldDidEndEditing(_ textField: SimpleTextField) {
@@ -518,6 +542,8 @@ extension RenameSectionController: SimpleTextFieldDelegate {
         } else {
             textField.text = conversation.displayName
         }
+        
+        renameCell?.accessoryIconView.isHidden = false
     }
     
 }

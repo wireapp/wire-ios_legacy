@@ -31,10 +31,21 @@ class GroupDetailsParticipantCellTests: ZMSnapshotTestCase {
     }
     
     func cell(_ configuration : (GroupDetailsParticipantCell) -> Void) -> GroupDetailsParticipantCell {
-        let cell = GroupDetailsParticipantCell(frame: CGRect(x: 0, y: 0, width: 320, height: 64))
+        let cell = GroupDetailsParticipantCell(frame: CGRect(x: 0, y: 0, width: 320, height: 56))
         configuration(cell)
         cell.layoutIfNeeded()
         return cell
+    }
+    
+    func testServiceUser() {
+        MockUser.mockSelf().isTeamMember = true
+        let user = MockUser.mockUsers()[0]
+        let mockUser = MockUser(for: user)
+        mockUser?.isServiceUser = true
+        
+        verify(view: cell({ (cell) in
+            cell.configure(with: user)
+        }))
     }
     
     func testNonTeamUser() {

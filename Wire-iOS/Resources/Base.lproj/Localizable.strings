@@ -241,6 +241,8 @@
 "conversation.create.toggle.title" = "Allow guests";
 "conversation.create.toggle.subtitle" = "Open this conversation to people outside your team. You can always change it later.";
 
+"conversation.guests_present" = "Guests are present";
+
 // Image confirmation dialogue
 "image_confirmer.confirm" = "OK";
 "image_confirmer.cancel" = "Cancel";
@@ -309,6 +311,7 @@
 "content.system.conversation.you.removed" = "%@ removed %@";
 "content.system.conversation.you.left" = "%@ left";
 "content.system.conversation.team.member-leave" = "%@ was removed from the team.";
+"content.system.conversation.guest.joined" = "%@ joined";
 
 "content.system.other_renamed_conv_to_nothing" = "%@ removed the conversation name";
 "content.system.you_renamed_conv_to_nothing" = "You removed the conversation name";
@@ -455,7 +458,7 @@
 "participants.avatar.guest.title" = "Guest";
 
 "participants.title" = "Details";
-"participants.section.participants" = "Participants (%d)";
+"participants.section.participants" = "People (%d)";
 "participants.section.services" = "Services (%d)";
 "participants.footer.add_title" = "Add Participants";
 

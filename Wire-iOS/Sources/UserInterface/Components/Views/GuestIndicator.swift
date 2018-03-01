@@ -29,7 +29,7 @@ public class GuestIndicator: UIImageView {
         setContentCompressionResistancePriority(UILayoutPriorityRequired, for: .horizontal)
         setContentHuggingPriority(UILayoutPriorityRequired, for: .vertical)
         setContentHuggingPriority(UILayoutPriorityRequired, for: .horizontal)
-        accessibilityIdentifier = "guest indicator"
+        accessibilityIdentifier = "img.guest"
     }
     
     required public init?(coder aDecoder: NSCoder) {

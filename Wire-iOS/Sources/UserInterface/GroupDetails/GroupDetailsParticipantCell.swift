@@ -80,24 +80,27 @@ class GroupDetailsParticipantCell: UICollectionViewCell {
         guestIconView.image = UIImage(for: .guest, iconSize: .tiny, color: UIColor.wr_color(fromColorScheme: ColorSchemeColorSeparator, variant: variant))
         guestIconView.translatesAutoresizingMaskIntoConstraints = false
         guestIconView.contentMode = .center
+        guestIconView.accessibilityIdentifier = "img.guest"
         
         verifiedIconView.image = WireStyleKit.imageOfShieldverified()
         verifiedIconView.translatesAutoresizingMaskIntoConstraints = false
         verifiedIconView.contentMode = .center
+        verifiedIconView.accessibilityIdentifier = "img.shield"
         
         accessoryActionButton.setIcon(.disclosureIndicator, with: .like, for: .normal)
         accessoryActionButton.imageView?.contentMode = .center
         
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         titleLabel.font = FontSpec.init(.normal, .light).font!
+        titleLabel.accessibilityIdentifier = "label.groupdetails.username"
         
         subtitleLabel.translatesAutoresizingMaskIntoConstraints = false
         subtitleLabel.font = FontSpec.init(.small, .regular).font!
         
         avatar.size = .small
         avatar.translatesAutoresizingMaskIntoConstraints = false
-        avatar.widthAnchor.constraint(equalToConstant: 32).isActive = true
-        avatar.heightAnchor.constraint(equalToConstant: 32).isActive = true
+        avatar.widthAnchor.constraint(equalToConstant: 28).isActive = true
+        avatar.heightAnchor.constraint(equalToConstant: 28).isActive = true
         
         let avatarSpacer = UIView()
         avatarSpacer.addSubview(avatar)
@@ -145,7 +148,7 @@ class GroupDetailsParticipantCell: UICollectionViewCell {
     
     private func configureColors() {
         backgroundColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorBarBackground, variant: variant)
-        separator.backgroundColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorSeparator, variant: variant)
+        separator.backgroundColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorCellSeparator, variant: variant)
         guestIconView.image = UIImage(for: .guest, iconSize: .tiny, color: UIColor.wr_color(fromColorScheme: ColorSchemeColorSectionText, variant: variant))
         accessoryActionButton.setIconColor(UIColor.wr_color(fromColorScheme: ColorSchemeColorSectionText, variant: variant), for: .normal)
         titleLabel.textColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorTextForeground, variant: variant)
@@ -155,7 +158,7 @@ class GroupDetailsParticipantCell: UICollectionViewCell {
     public func configure(with user: ZMBareUser) {
         avatar.user = user
         titleLabel.attributedText = user.nameIncludingAvailability(color: UIColor.wr_color(fromColorScheme: ColorSchemeColorTextForeground, variant: variant))
-        guestIconView.isHidden = !ZMUser.selfUser().isTeamMember || user.isTeamMember
+        guestIconView.isHidden = !ZMUser.selfUser().isTeamMember || user.isTeamMember || user.isServiceUser
         
         if let user = user as? ZMUser {
             verifiedIconView.isHidden = !user.trusted() || user.clients.isEmpty
