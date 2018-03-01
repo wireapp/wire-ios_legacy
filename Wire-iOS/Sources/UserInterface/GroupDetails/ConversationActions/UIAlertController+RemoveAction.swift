@@ -22,7 +22,7 @@ import Foundation
 extension UIAlertController {
     static func remove(_ user: ZMUser, completion: @escaping (Bool) -> Void) -> UIAlertController {
         let controller = UIAlertController(
-            title: "profile.remove_dialog_title".localized,
+            title: nil,
             message: "profile.remove_dialog_message".localized(args: user.displayName),
             preferredStyle: .actionSheet
         )

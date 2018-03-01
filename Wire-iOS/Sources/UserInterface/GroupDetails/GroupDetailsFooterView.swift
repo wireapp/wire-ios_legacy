@@ -62,6 +62,8 @@ final class GroupDetailsFooterView: UIView {
         addButton.titleImageSpacing = 16
         addButton.titleLabel?.font = FontSpec(.small, .regular).font
         backgroundColor = color(ColorSchemeColorBarBackground)
+        addButton.accessibilityIdentifier = "OtherUserMetaControllerLeftButton"
+        moreButton.accessibilityIdentifier = "OtherUserMetaControllerRightButton"
     }
     
     private func createConstraints() {

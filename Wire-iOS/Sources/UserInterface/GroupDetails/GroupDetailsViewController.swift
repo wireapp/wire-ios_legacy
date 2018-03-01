@@ -30,8 +30,6 @@ class GroupDetailsViewController: UIViewController, ZMConversationObserver, Grou
     fileprivate var renameSectionController : RenameSectionController?
     fileprivate let emptyView = UIImageView()
     private var emptyViewVerticalConstraint: NSLayoutConstraint?
-    private let topSeparator = OverflowSeparatorView()
-    private let bottomSeparator = OverflowSeparatorView()
     
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         return wr_supportedInterfaceOrientations
@@ -71,21 +69,11 @@ class GroupDetailsViewController: UIViewController, ZMConversationObserver, Grou
             collectionView.contentInsetAdjustmentBehavior = .never
         }
         
-        [emptyView, topSeparator, collectionView, bottomSeparator, footerView, bottomSpacer].forEach(view.addSubview)
+        [emptyView, collectionView, footerView, bottomSpacer].forEach(view.addSubview)
         bottomSpacer.backgroundColor = .wr_color(fromColorScheme: ColorSchemeColorBackground)
-        bottomSeparator.inverse = true
         
-        constrain(topSeparator, collectionView, bottomSeparator, footerView, view) { topSeparator, collectionView, bottomSeparator, footerView, container in
-            topSeparator.top == container.top
-            topSeparator.leading == collectionView.leading
-            topSeparator.trailing == collectionView.trailing
-            bottomSeparator.leading == collectionView.leading
-            bottomSeparator.trailing == collectionView.trailing
-            bottomSeparator.bottom == footerView.top
-        }
-        
-        constrain(view, topSeparator, collectionView, footerView, bottomSpacer) { container, topSeparator, collectionView, footerView, bottomSpacer in
-            collectionView.top == topSeparator.bottom
+        constrain(view, collectionView, footerView, bottomSpacer) { container, collectionView, footerView, bottomSpacer in
+            collectionView.top == container.top
             collectionView.leading == container.leading
             collectionView.trailing == container.trailing
             collectionView.bottom == footerView.top
@@ -105,7 +93,6 @@ class GroupDetailsViewController: UIViewController, ZMConversationObserver, Grou
         }
         
         collectionViewController.collectionView = collectionView
-        collectionViewController.separators = [topSeparator, bottomSeparator]
         footerView.delegate = self
     
         emptyView.translatesAutoresizingMaskIntoConstraints = false
@@ -233,8 +220,6 @@ extension GroupDetailsViewController: ParticipantsSectionControllerDelegate {
 
 class CollectionViewController: NSObject, UICollectionViewDelegate {
     
-    var separators = [OverflowSeparatorView]()
-    
     var collectionView : UICollectionView? = nil {
         didSet {
             collectionView?.dataSource = self
@@ -264,12 +249,6 @@ class CollectionViewController: NSObject, UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         sections[indexPath.section].collectionView?(collectionView, didSelectItemAt: indexPath)
-    }
-    
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        separators.forEach {
-            $0.scrollViewDidScroll(scrollView: scrollView)
-        }
     }
     
 }

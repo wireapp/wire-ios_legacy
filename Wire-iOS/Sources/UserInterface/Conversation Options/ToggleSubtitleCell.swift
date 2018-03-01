@@ -87,10 +87,11 @@ final class ToggleSubtitleCell: UITableViewCell, CellConfigurationConfigurable {
     }
     
     func configure(with configuration: CellConfiguration, variant: ColorSchemeVariant) {
-        guard case let .toggle(title, subtitle, get, set) = configuration else { preconditionFailure() }
+        guard case let .toggle(title, subtitle, identifier, get, set) = configuration else { preconditionFailure() }
         titleLabel.text = title
         subtitleLabel.text = subtitle
         action = set
+        toggle.accessibilityIdentifier = identifier
         toggle.isOn = get()
         self.variant = variant
     }
