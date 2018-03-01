@@ -251,7 +251,7 @@ typedef NS_ENUM(NSUInteger, ProfileUserAction) {
 {
     switch (userAction) {
         case ProfileUserActionAddPeople:
-            return ZetaIconTypeConvMetaAddPerson;
+            return ZetaIconTypeCreateConversation;
             break;
             
         case ProfileUserActionPresentMenu:
