@@ -133,7 +133,6 @@ class ProfileClientViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        navigationItem.leftBarButtonItem = backItem()
         title = ""
     }
     

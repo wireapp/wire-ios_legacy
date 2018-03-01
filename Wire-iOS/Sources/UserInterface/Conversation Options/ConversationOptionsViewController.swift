@@ -50,9 +50,8 @@ final class ConversationOptionsViewController: UIViewController, UITableViewDele
         viewModel.delegate = self
     }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         navigationItem.rightBarButtonItem = navigationController?.closeItem()
     }
     
