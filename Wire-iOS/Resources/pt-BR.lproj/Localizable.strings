@@ -238,6 +238,10 @@
 "conversation.create.group_name.placeholder" = "Nome do grupo";
 "conversation.create.guidance.empty" = "Pelo menos 1 caractere";
 "conversation.create.guidance.toolong" = "Muitos caracteres";
+"conversation.create.toggle.title" = "Allow guests";
+"conversation.create.toggle.subtitle" = "Open this conversation to people outside your team. You can always change it later.";
+
+"conversation.guests_present" = "Guests are present";
 
 // Image confirmation dialogue
 "image_confirmer.confirm" = "OK";
@@ -307,6 +311,7 @@
 "content.system.conversation.you.removed" = "%@ removeu %@";
 "content.system.conversation.you.left" = "%@ saiu";
 "content.system.conversation.team.member-leave" = "%@ foi removido da equipe.";
+"content.system.conversation.guest.joined" = "%@ joined";
 
 "content.system.other_renamed_conv_to_nothing" = "%@ removeu o nome da conversa";
 "content.system.you_renamed_conv_to_nothing" = "Você removeu o nome da conversa";
@@ -452,6 +457,11 @@
 "participants.add_people_button_title" = "Adicionar";
 "participants.avatar.guest.title" = "Convidado";
 
+"participants.title" = "Detalhes";
+"participants.section.participants" = "People (%d)";
+"participants.section.services" = "Services (%d)";
+"participants.footer.add_title" = "Add Participants";
+
 // Meta Menu
 "meta.menu.rename" = "Renomear";
 "meta.menu.leave" = "Deixar";
@@ -465,10 +475,11 @@
 
 // Delete conversation
 "meta.menu.delete_content.dialog_title" = "Excluir conteúdo?";
-"meta.menu.delete_content.dialog_message" = "Isto irá limpar o histórico de conversa e removê-lo da lista.";
+"meta.menu.delete_content.dialog_message" = "This will clear the conversation history on all your devices.";
 "meta.menu.delete_content.leave_as_well_message" = "Também sair da conversa";
 "meta.menu.delete_content.button_cancel" = "Cancelar";
 "meta.menu.delete_content.button_delete" = "Apagar";
+"meta.menu.delete_content.button_delete_and_leave" = "Delete and leave";
 
 // Leave conversation
 "meta.leave_conversation_dialog_title" = "Sair da conversa?";
@@ -476,6 +487,7 @@
 "meta.leave_conversation.delete_content_as_well_message" = "Também excluir o conteúdo";
 "meta.leave_conversation_button_cancel" = "Cancelar";
 "meta.leave_conversation_button_leave" = "Sair";
+"meta.leave_conversation_button_leave_and_delete" = "Leave and delete content";
 
 // Conversation Degraded (security level lowered)
 "meta.degraded.degradation_reason_message.singular" = "%@ começou a usar um novo dispositivo.";
@@ -556,6 +568,11 @@
 
 // Bot
 "participants.services.remove_integration.button" = "remover integração";
+
+// Group details
+"group_details.guest_options_cell.title" = "Guest Options";
+"group_details.guest_options_cell.enabled" = "On";
+"group_details.guest_options_cell.disabled" = "Desligar";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Self profile
@@ -874,6 +891,15 @@
 "team.invite.error.already_invited" = "Este e-mail já foi convidado";
 "team.invite.error.too_many_invitations" = "O número máximo de convites foi enviado";
 "team.invite.error.no_internet" = "Sem conexão à Internet";
+
+// Guest Room
+
+"guest_room.allow_guests.title" = "Allow guests";
+"guest_room.allow_guests.subtitle" = "Open this conversation to people outside your team.";
+"guest_room.remove_guests.message" = "Current guests will be removed from the conversation. New guests will not be allowed.";
+"guest_room.remove_guests.action" = "Remove Guests";
+"guest_room.revoke_link.message" = "New guests will not be able to join with this link. Current guests will still have access.";
+"guest_room.revoke_link.action" = "Revoke Link";
 
 // Registration
 
