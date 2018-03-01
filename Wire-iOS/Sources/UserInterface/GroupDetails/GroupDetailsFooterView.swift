@@ -30,8 +30,8 @@ final class GroupDetailsFooterView: UIView {
     weak var delegate: GroupDetailsFooterViewDelegate?
     
     private let variant: ColorSchemeVariant
-    private let moreButton = IconButton()
-    private let addButton = IconButton()
+    public let moreButton = IconButton()
+    public let addButton = IconButton()
     
     init(variant: ColorSchemeVariant = ColorScheme.default().variant) {
         self.variant = variant

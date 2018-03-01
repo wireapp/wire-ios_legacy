@@ -94,6 +94,7 @@ class GroupDetailsViewController: UIViewController, ZMConversationObserver, Grou
         
         collectionViewController.collectionView = collectionView
         footerView.delegate = self
+        footerView.addButton.isHidden = ZMUser.selfUser().isGuest(in: conversation)
     
         emptyView.translatesAutoresizingMaskIntoConstraints = false
         emptyView.isHidden = true
