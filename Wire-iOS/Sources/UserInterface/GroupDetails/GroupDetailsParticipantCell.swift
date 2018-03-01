@@ -19,7 +19,14 @@
 import UIKit
 import WireExtensionComponents
 
-class GroupDetailsParticipantCell: UICollectionViewCell {
+class GroupDetailsParticipantCell: UICollectionViewCell, Themeable {
+    
+    dynamic var colorSchemeVariant: ColorSchemeVariant = ColorScheme.default().variant {
+        didSet {
+            guard oldValue != colorSchemeVariant else { return }
+            applyColorScheme(colorSchemeVariant)
+        }
+    }
     
     enum AccessoryIcon {
         case none, disclosure, connect
@@ -40,14 +47,7 @@ class GroupDetailsParticipantCell: UICollectionViewCell {
         didSet {
             backgroundColor = isHighlighted
                 ? .init(white: 0, alpha: 0.08)
-                : .wr_color(fromColorScheme: ColorSchemeColorBarBackground, variant: variant)
-        }
-    }
-    
-    var variant : ColorSchemeVariant = ColorScheme.default().variant {
-        didSet {
-            guard oldValue != variant else { return }
-            configureColors()
+                : .wr_color(fromColorScheme: ColorSchemeColorBarBackground, variant: colorSchemeVariant)
         }
     }
     
@@ -77,7 +77,6 @@ class GroupDetailsParticipantCell: UICollectionViewCell {
     }
     
     fileprivate func setup() {
-        guestIconView.image = UIImage(for: .guest, iconSize: .tiny, color: UIColor.wr_color(fromColorScheme: ColorSchemeColorSeparator, variant: variant))
         guestIconView.translatesAutoresizingMaskIntoConstraints = false
         guestIconView.contentMode = .center
         guestIconView.accessibilityIdentifier = "img.guest"
@@ -143,21 +142,21 @@ class GroupDetailsParticipantCell: UICollectionViewCell {
         separator.bottomAnchor.constraint(equalTo: contentView.bottomAnchor).isActive = true
         separator.heightAnchor.constraint(equalToConstant: .hairline).isActive = true
         
-        configureColors()
+        applyColorScheme(colorSchemeVariant)
     }
     
-    private func configureColors() {
-        backgroundColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorBarBackground, variant: variant)
-        separator.backgroundColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorCellSeparator, variant: variant)
-        guestIconView.image = UIImage(for: .guest, iconSize: .tiny, color: UIColor.wr_color(fromColorScheme: ColorSchemeColorSectionText, variant: variant))
-        accessoryActionButton.setIconColor(UIColor.wr_color(fromColorScheme: ColorSchemeColorSectionText, variant: variant), for: .normal)
-        titleLabel.textColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorTextForeground, variant: variant)
-        subtitleLabel.textColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorSectionText, variant: variant)
+    func applyColorScheme(_ colorSchemeVariant: ColorSchemeVariant) {
+        backgroundColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorBarBackground, variant: colorSchemeVariant)
+        separator.backgroundColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorCellSeparator, variant: colorSchemeVariant)
+        guestIconView.image = UIImage(for: .guest, iconSize: .tiny, color: UIColor.wr_color(fromColorScheme: ColorSchemeColorSectionText, variant: colorSchemeVariant))
+        accessoryActionButton.setIconColor(UIColor.wr_color(fromColorScheme: ColorSchemeColorSectionText, variant: colorSchemeVariant), for: .normal)
+        titleLabel.textColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorTextForeground, variant: colorSchemeVariant)
+        subtitleLabel.textColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorSectionText, variant: colorSchemeVariant)
     }
     
     public func configure(with user: ZMBareUser) {
         avatar.user = user
-        titleLabel.attributedText = user.nameIncludingAvailability(color: UIColor.wr_color(fromColorScheme: ColorSchemeColorTextForeground, variant: variant))
+        titleLabel.attributedText = user.nameIncludingAvailability(color: UIColor.wr_color(fromColorScheme: ColorSchemeColorTextForeground, variant: colorSchemeVariant))
         guestIconView.isHidden = !ZMUser.selfUser().isTeamMember || user.isTeamMember || user.isServiceUser
         
         if let user = user as? ZMUser {

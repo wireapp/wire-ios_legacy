@@ -50,6 +50,7 @@
 #import "Wire-Swift.h"
 
 #import "NSLayoutConstraint+Helpers.h"
+#import "StartUIViewController.h"
 
 @interface ZClientViewController (InitialState) <SplitViewControllerDelegate>
 
@@ -125,6 +126,8 @@
         
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(contentSizeCategoryDidChange:) name:UIContentSizeCategoryDidChangeNotification object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationWillEnterForeground:) name:UIApplicationWillEnterForegroundNotification object:nil];
+                
+        [[GuestIndicator appearanceWhenContainedInInstancesOfClasses:@[StartUIView.class]] setColorSchemeVariant:ColorSchemeVariantDark];
     }
     return self;
 }

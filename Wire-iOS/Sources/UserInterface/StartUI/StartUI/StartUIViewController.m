@@ -82,6 +82,11 @@ static NSUInteger const StartUIInitiallyShowsKeyboardConversationThreshold = 10;
     return self;
 }
 
+-(void)loadView
+{
+    self.view = [[StartUIView alloc] initWithFrame:CGRectZero];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
