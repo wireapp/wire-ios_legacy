@@ -286,7 +286,13 @@
         return NO;
     }
     
-    if (self.conversation.team == ZMUser.selfUser.team) {
+    Team *selfUserTeam = ZMUser.selfUser.team;
+    
+    if (selfUserTeam == nil) {
+        return NO;
+    }
+    
+    if (self.conversation.team == selfUserTeam) {
         BOOL containsGuests = NO;
         
         for (ZMUser *user in self.conversation.activeParticipants) {
