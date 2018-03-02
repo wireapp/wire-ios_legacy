@@ -62,12 +62,12 @@ extension LinearGroupCreationFlowEvent: Event {
             return source.attributes
         case let .groupCreationSucceeded(source: source, isEmpty: isEmpty, allowGuests: allowGuests):
             var attributes = source.attributes
-            attributes?["with_participants"] = isEmpty ? "false" : "true"
-            attributes?["is_allow_guests"] = allowGuests ? "true" : "false"
+            attributes?["with_participants"] = !isEmpty
+            attributes?["is_allow_guests"] = allowGuests
             return attributes
         case let .addParticipants(source: source, users: users, guests: guests, allowGuests: allowGuests):
             var attributes = source.attributes
-            attributes?["is_allow_guests"] = allowGuests ? "true" : "false"
+            attributes?["is_allow_guests"] = allowGuests
             attributes?["user_num"] = users
             attributes?["guest_num"] = guests
             attributes?["temporary_guest_num"] = 0

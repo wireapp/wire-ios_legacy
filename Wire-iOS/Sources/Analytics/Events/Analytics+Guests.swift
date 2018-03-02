@@ -19,9 +19,9 @@
 import Foundation
 
 extension Analytics {
-    @objc public func guestAttributes(in conversation: ZMConversation) -> [String : String] {
+    @objc public func guestAttributes(in conversation: ZMConversation) -> [String : Any] {
         return [
-            "is_allow_guests" : conversation.allowGuests ? "true" : "false",
+            "is_allow_guests" : conversation.allowGuests,
             "user_type" : ZMUser.selfUser().isGuest(in: conversation) ? "guest" : "user"
         ]
     }

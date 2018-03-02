@@ -76,7 +76,7 @@ public enum ConversationEvent: Event {
     var attributes: [AnyHashable : Any]? {
         switch self {
         case let .toggleAllowGuests(value: value):
-            return ["is_allow_guests" : value ? "true" : "false"]
+            return ["is_allow_guests" : value]
         }
     }
 
