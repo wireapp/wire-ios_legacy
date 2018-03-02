@@ -40,7 +40,7 @@ class DeveloperOptionsController : UIViewController {
 extension DeveloperOptionsController {
     
     override func loadView() {
-        self.title = "options"
+        self.title = "OPTIONS"
         self.view = UIView()
         self.edgesForExtendedLayout = UIRectEdge()
         self.view.backgroundColor = .clear
