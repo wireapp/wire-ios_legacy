@@ -91,7 +91,6 @@ class GroupDetailsParticipantCell: UICollectionViewCell, Themeable {
         
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         titleLabel.font = FontSpec.init(.normal, .light).font!
-        titleLabel.accessibilityIdentifier = "label.groupdetails.username"
         
         subtitleLabel.translatesAutoresizingMaskIntoConstraints = false
         subtitleLabel.font = FontSpec.init(.small, .regular).font!
