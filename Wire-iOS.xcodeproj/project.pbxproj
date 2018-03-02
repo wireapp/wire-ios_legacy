@@ -2270,7 +2270,6 @@
 		BA9EAFAA1AD8121800279A40 /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
 		BAA1F7E21B610D89002402B6 /* SketchColorCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SketchColorCollectionViewCell.h; path = Sketchpad/SketchColorCollectionViewCell.h; sourceTree = "<group>"; };
 		BAA1F7E31B610D89002402B6 /* SketchColorCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SketchColorCollectionViewCell.m; path = Sketchpad/SketchColorCollectionViewCell.m; sourceTree = "<group>"; };
-		BAA4322F1B39BB8E00F1CD2A /* MarkdownParser.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MarkdownParser.framework; path = Carthage/Build/iOS/MarkdownParser.framework; sourceTree = "<group>"; };
 		BACB88511AF7C48900DDCDB0 /* Wire-iOS-Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Wire-iOS-Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BACB88541AF7C48900DDCDB0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BACB88551AF7C48900DDCDB0 /* AggregateArrayTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AggregateArrayTests.m; sourceTree = "<group>"; };
@@ -2544,7 +2543,6 @@
 		EE118BFF2031D17000BC68D6 /* MarkdownTextViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkdownTextViewTests.swift; sourceTree = "<group>"; };
 		EE2640C62044070900F41F10 /* MessageDraft_V2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = MessageDraft_V2.xcdatamodel; sourceTree = "<group>"; };
 		EE265E811F6FF4910087676B /* ChatHeadView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatHeadView.swift; sourceTree = "<group>"; };
-		EE291BB41F0B9BF200142F31 /* Marklight.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Marklight.framework; path = Carthage/Build/iOS/Marklight.framework; sourceTree = "<group>"; };
 		EE2FC1D71F56F89800A9A418 /* ConversationImagesViewControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConversationImagesViewControllerTests.swift; sourceTree = "<group>"; };
 		EE3A5B0C1F7A7BD400733045 /* ChatHeadTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatHeadTests.swift; sourceTree = "<group>"; };
 		EE4332481F1A67E500096D90 /* PopUpIconButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PopUpIconButton.swift; sourceTree = "<group>"; };
@@ -3204,7 +3202,6 @@
 				EECDB2532029D7D900D0D268 /* Down.framework */,
 				167961A6203DED9100B72ACC /* WireTesting.framework */,
 				8715F22E1F8677A2006F3935 /* Mixpanel.framework */,
-				EE291BB41F0B9BF200142F31 /* Marklight.framework */,
 				F1CE2DEF1EF0337F00631D8A /* PureLayout.framework */,
 				BFBC11E41ED84DE400502AF0 /* WireMessageStrategy.framework */,
 				BFBC11E21ED84DB200502AF0 /* WireDataModel.framework */,
@@ -3240,7 +3237,6 @@
 				095275931B7E834400123BAF /* WireSyncEngine.framework */,
 				1EC719F71B67B59A00700A14 /* Classy.framework */,
 				1EC71A271B6A1B9200700A14 /* WireImages.framework */,
-				BAA4322F1B39BB8E00F1CD2A /* MarkdownParser.framework */,
 				DBE6F98D1B1DE51C00B7DD32 /* ziphy.framework */,
 				BA9EAFAA1AD8121800279A40 /* AdSupport.framework */,
 				5407B8C21A643CCE009090C6 /* UIKit.framework */,
@@ -5936,7 +5932,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "$SRCROOT/Scripts/copyExtraAudioNotifications";
+			shellScript = $SRCROOT/Scripts/copyExtraAudioNotifications;
 		};
 		193B0B9A94C0482E9B6C33B0 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
