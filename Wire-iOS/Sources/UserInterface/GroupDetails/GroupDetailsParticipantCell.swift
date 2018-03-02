@@ -33,7 +33,7 @@ class GroupDetailsParticipantCell: UICollectionViewCell, Themeable {
     }
     
     let separator = UIView()
-    let avatar = UserImageView()
+    let avatar = BadgeUserImageView(magicPrefix: "people_picker.search_results_mode")
     let titleLabel = UILabel()
     let subtitleLabel = UILabel()
     let accessoryActionButton = IconButton()
