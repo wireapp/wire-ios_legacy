@@ -55,7 +55,13 @@ extension ZMConversation {
     }
     
     private func availableGroupActions() -> [Action] {
-        var actions: [Action] = [.rename] + availableStandardActions() + [.delete]
+        var actions = [Action]()
+        if isSelfAnActiveMember {
+            actions.append(.rename)
+        }
+        actions += availableStandardActions()
+        actions.append(.delete)
+
         if activeParticipants.contains(ZMUser.selfUser()) {
             actions.append(.leave)
         }
