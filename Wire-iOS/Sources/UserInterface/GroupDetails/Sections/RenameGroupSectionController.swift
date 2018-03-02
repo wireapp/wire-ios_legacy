@@ -34,6 +34,7 @@ class RenameGroupSectionController: NSObject, _CollectionViewSectionController {
     }
     
     func focus() {
+        guard conversation.isSelfAnActiveMember else { return }
         renameCell?.titleTextField.becomeFirstResponder()
     }
     
@@ -49,6 +50,8 @@ class RenameGroupSectionController: NSObject, _CollectionViewSectionController {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: GroupDetailsRenameCell.zm_reuseIdentifier, for: indexPath) as! GroupDetailsRenameCell
         cell.configure(for: conversation)
         cell.titleTextField.textFieldDelegate = self
+        renameCell?.titleTextField.isUserInteractionEnabled = conversation.isSelfAnActiveMember
+        renameCell?.accessoryIconView.isHidden = !conversation.isSelfAnActiveMember
         renameCell = cell
         return cell
     }
