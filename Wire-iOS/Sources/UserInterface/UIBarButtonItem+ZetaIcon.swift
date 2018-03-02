@@ -28,8 +28,4 @@ extension UIBarButtonItem {
         )
     }
     
-    static func backButton(target: Any?, action: Selector?) -> UIBarButtonItem {
-        return .init(icon: .backArrow, target: target, action: action)
-    }
-
 }

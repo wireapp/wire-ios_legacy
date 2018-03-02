@@ -71,6 +71,23 @@ import MessageUI
 
         controller.present(alert, animated: true, completion: nil)
     }
+    
+    static func displayFallbackActivityController(logData: Data, logFileName: String, email: String, from controller: UIViewController) {
+        let alert = UIAlertController(title: "self.settings.technical_report_section.title".localized,
+                                      message: "self.settings.technical_report.no_mail_alert".localized + email,
+                                      cancelButtonTitle: "general.cancel".localized)
+        alert.addAction(UIAlertAction(title: "general.ok".localized, style: .default, handler: { (action) in
+            let url = URL(fileURLWithPath: NSTemporaryDirectory().appendingPathComponent(logFileName))
+            try! logData.write(to: url)
+            let activity = UIActivityViewController(activityItems: [url], applicationActivities: nil)
+            activity.completionWithItemsHandler = { activityType, completed, returnedItems, error in
+                try! FileManager.default.removeItem(at: url)
+            }
+            controller.present(activity, animated: true, completion: nil)
+        }))
+        controller.present(alert, animated: true, completion: nil)
+    }
+    
 }
 
 /// Sends debug logs by email
@@ -84,15 +101,9 @@ import MessageUI
         guard let controller = UIApplication.shared.wr_topmostController(onlyFullScreen: false) else { return }
         guard self.senderInstance == nil else { return }
         
-        let alert = DebugLogSender()
         let logs = ZMSLog.recordedContent
         guard !logs.isEmpty else {
             DebugAlert.showGeneric(message: "There are no logs to send, have you enabled them from the debug menu > log settings BEFORE the issue happened?\nWARNING: restarting the app will discard all collected logs")
-            return
-        }
-        
-        guard MFMailComposeViewController.canSendMail() else {
-            DebugAlert.showGeneric(message: "You do not have an email account set up")
             return
         }
         
@@ -107,14 +118,28 @@ import MessageUI
         formatter.dateFormat = "yyyy-MM-dd_HH-mm-ss"
         let timeStr = formatter.string(from: now)
         let fileName = "logs_\(user?.name ?? userID)_T\(timeStr).txt"
+        let completeLog = logs.joined(separator: "\n")
+        let mail = "ios@wire.com"
+        
+        guard MFMailComposeViewController.canSendMail() else {
+            // Adds user description and message (usually attached to the mail)
+            // on top of the complete log
+            let completeLogWithMessage = [userDescription, message, completeLog].joined(separator: "\n")
+            let logData = completeLogWithMessage.data(using: .utf8)!
+            DebugAlert.displayFallbackActivityController(logData: logData, logFileName: fileName, email: mail, from: controller)
+            return
+        }
         
         // compose
+        
+        let alert = DebugLogSender()
+        let logData = completeLog.data(using: .utf8)!
+        
         let mailVC = MFMailComposeViewController()
-        mailVC.setToRecipients(["ios@wire.com"])
+        mailVC.setToRecipients([mail])
         mailVC.setSubject("iOS logs from \(userDescription)")
         mailVC.setMessageBody(message, isHTML: false)
-        let completeLog = logs.joined(separator: "\n")
-        mailVC.addAttachmentData(completeLog.data(using: .utf8)!, mimeType: "text/plain", fileName: fileName)
+        mailVC.addAttachmentData(logData, mimeType: "text/plain", fileName: fileName)
         mailVC.mailComposeDelegate = alert
         alert.mailViewController = mailVC
         

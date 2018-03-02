@@ -136,8 +136,6 @@ typedef NS_ENUM(NSUInteger, ProfileUserAction) {
 
 - (void)setupConstraints
 {
-    [self.stackView autoPinEdgeToSuperviewEdge:ALEdgeLeading];
-    [self.stackView autoPinEdgeToSuperviewEdge:ALEdgeTrailing];
     [self.stackView autoCenterInSuperview];
     
     [self.stackViewContainer autoPinEdgeToSuperviewEdge:ALEdgeTop];
@@ -162,7 +160,7 @@ typedef NS_ENUM(NSUInteger, ProfileUserAction) {
 
 - (void)createGuestIndicator
 {
-    self.teamsGuestIndicator = [[GuestLabelIndicator alloc] initWithVariant:[[ColorScheme defaultColorScheme] variant]];
+    self.teamsGuestIndicator = [[GuestLabelIndicator alloc] init];
 }
 
 #pragma mark - Footer
@@ -251,7 +249,7 @@ typedef NS_ENUM(NSUInteger, ProfileUserAction) {
 {
     switch (userAction) {
         case ProfileUserActionAddPeople:
-            return ZetaIconTypeConvMetaAddPerson;
+            return ZetaIconTypeCreateConversation;
             break;
             
         case ProfileUserActionPresentMenu:

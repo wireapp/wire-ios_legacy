@@ -70,6 +70,7 @@ class ConversationOptionsViewModel {
             .toggle(
                 title: "guest_room.allow_guests.title".localized,
                 subtitle: "guest_room.allow_guests.subtitle".localized,
+                accessibilityIdentifier: "toggle.guestoptions.allowguests",
                 get: { [unowned self] in return self.configuration.allowGuests },
                 set: { [unowned self] in self.setAllowGuests($0) }
             )

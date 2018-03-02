@@ -68,7 +68,7 @@ static id<ZMBareUser> mockSelfUser = nil;
 
 - (BOOL)isGuestInConversation:(ZMConversation *)conversation
 {
-    return NO;
+    return self.isGuestInConversation;
 }
 
 + (ZMUser<ZMEditableUser> *)selfUserInUserSession:(ZMUserSession *)session

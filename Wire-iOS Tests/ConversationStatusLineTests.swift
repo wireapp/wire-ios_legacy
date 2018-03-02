@@ -234,6 +234,25 @@ class ConversationStatusLineTests: CoreDataSnapshotTestCase {
         let sut = createGroupConversation()
         let otherMessage = ZMSystemMessage(nonce: UUID(), managedObjectContext: uiMOC)
         otherMessage.systemMessageType = .participantsAdded
+        let anotherUser = ZMUser.insertNewObject(in: uiMOC)
+        anotherUser.name = "Marie"
+        otherMessage.sender = self.otherUser
+        otherMessage.users = [anotherUser]
+        otherMessage.addedUsers = [anotherUser]
+        sut.sortedAppendMessage(otherMessage)
+        sut.lastReadServerTimeStamp = Date.distantPast
+        
+        // WHEN
+        let status = sut.status.description(for: sut)
+        // THEN
+        XCTAssertEqual(status.string, "\(self.otherUser.displayName!) added \(anotherUser.displayName!)")
+    }
+    
+    func testStatusForSystemMessageSomeoneJoined() {
+        // GIVEN
+        let sut = createGroupConversation()
+        let otherMessage = ZMSystemMessage(nonce: UUID(), managedObjectContext: uiMOC)
+        otherMessage.systemMessageType = .participantsAdded
         otherMessage.sender = self.otherUser
         otherMessage.users = Set([self.otherUser])
         otherMessage.addedUsers = Set([self.otherUser])
@@ -243,7 +262,7 @@ class ConversationStatusLineTests: CoreDataSnapshotTestCase {
         // WHEN
         let status = sut.status.description(for: sut)
         // THEN
-        XCTAssertEqual(status.string, "\(self.otherUser.displayName!) added \(self.otherUser.displayName!)")
+        XCTAssertEqual(status.string, "\(self.otherUser.displayName!) joined")
     }
     
     func testStatusForSystemMessageIWasRemoved() {

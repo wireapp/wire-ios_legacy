@@ -21,6 +21,7 @@ import Foundation
 
 class GroupDetailsRenameCell : UICollectionViewCell {
  
+    let verifiedIconView = UIImageView()
     let accessoryIconView = UIImageView()
     let titleTextField = SimpleTextField()
     var contentStackView: UIStackView!
@@ -46,6 +47,12 @@ class GroupDetailsRenameCell : UICollectionViewCell {
     
     fileprivate func setup() {
         
+        verifiedIconView.image = WireStyleKit.imageOfShieldverified()
+        verifiedIconView.translatesAutoresizingMaskIntoConstraints = false
+        verifiedIconView.contentMode = .scaleAspectFit
+        verifiedIconView.setContentHuggingPriority(UILayoutPriorityRequired, for: .horizontal)
+        verifiedIconView.setContentCompressionResistancePriority(UILayoutPriorityRequired, for: .horizontal)
+        
         accessoryIconView.image = UIImage(for: .pencil, iconSize: .like, color: .wr_color(fromColorScheme: ColorSchemeColorTextForeground, variant: variant))
         accessoryIconView.translatesAutoresizingMaskIntoConstraints = false
         accessoryIconView.contentMode = .scaleAspectFit
@@ -56,20 +63,28 @@ class GroupDetailsRenameCell : UICollectionViewCell {
         titleTextField.font = FontSpec.init(.normal, .light).font!
         titleTextField.returnKeyType = .done
         titleTextField.backgroundColor = .clear
+        titleTextField.textInsets = UIEdgeInsets.zero
+        titleTextField.keyboardAppearance = ColorScheme.default().keyboardAppearance
 
-        contentStackView = UIStackView(arrangedSubviews: [titleTextField, accessoryIconView])
+        contentStackView = UIStackView(arrangedSubviews: [verifiedIconView, titleTextField, accessoryIconView])
         contentStackView.axis = .horizontal
         contentStackView.distribution = .fill
         contentStackView.alignment = .center
         contentStackView.translatesAutoresizingMaskIntoConstraints = false
         
         contentView.addSubview(contentStackView)
-        contentStackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16).isActive = true
+        contentStackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 24).isActive = true
         contentStackView.topAnchor.constraint(equalTo: contentView.topAnchor).isActive = true
         contentStackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor).isActive = true
         contentStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16).isActive = true
+        contentStackView.spacing = 8
         
         configureColors()
+    }
+    
+    func configure(for conversation: ZMConversation) {
+        titleTextField.text = conversation.displayName
+        verifiedIconView.isHidden = conversation.securityLevel != .secure
     }
     
     private func configureColors() {

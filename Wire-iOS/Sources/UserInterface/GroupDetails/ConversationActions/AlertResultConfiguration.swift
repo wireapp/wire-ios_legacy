@@ -25,7 +25,6 @@ protocol AlertResultConfiguration {
 extension AlertResultConfiguration {
     static fileprivate func controller(_ handler: @escaping (Self) -> Void) -> UIAlertController {
         let controller = UIAlertController(title: nil, message: message, preferredStyle: .actionSheet)
-        controller.view.tintColor = .wr_color(fromColorScheme: ColorSchemeColorTextForeground, variant: .light)
         all.map { $0.action(handler) }.forEach(controller.addAction)
         return controller
     }

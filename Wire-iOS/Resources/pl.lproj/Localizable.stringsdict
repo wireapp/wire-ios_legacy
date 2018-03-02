@@ -17,6 +17,8 @@
         <string>urządzenie</string>
         <key>few</key>
         <string>urządzenia %lu</string>
+        <key>many</key>
+        <string>urządzenia %lu</string>
         <key>other</key>
         <string>urządzenia %lu</string>
       </dict>
@@ -34,6 +36,8 @@
         <key>one</key>
         <string>Jedna osoba</string>
         <key>few</key>
+        <string>%lu osób</string>
+        <key>many</key>
         <string>%lu osób</string>
         <key>other</key>
         <string>%lu osób</string>
@@ -53,6 +57,8 @@
         <string>has been added</string>
         <key>few</key>
         <string>have been added</string>
+        <key>many</key>
+        <string>have been added</string>
         <key>other</key>
         <string>have been added</string>
       </dict>
@@ -70,6 +76,8 @@
         <key>one</key>
         <string>has been removed</string>
         <key>few</key>
+        <string>have been removed</string>
+        <key>many</key>
         <string>have been removed</string>
         <key>other</key>
         <string>have been removed</string>
@@ -89,6 +97,8 @@
         <string>Jedna osoba</string>
         <key>few</key>
         <string>%d osób</string>
+        <key>many</key>
+        <string>%d osób</string>
         <key>other</key>
         <string>%d osób</string>
       </dict>
@@ -106,6 +116,8 @@
         <key>one</key>
         <string>i jeszcze jedna</string>
         <key>few</key>
+        <string>i %d innych</string>
+        <key>many</key>
         <string>i %d innych</string>
         <key>other</key>
         <string>i %d innych</string>
@@ -125,6 +137,8 @@
         <string>d</string>
         <key>few</key>
         <string>%d others</string>
+        <key>many</key>
+        <string>%d others</string>
         <key>other</key>
         <string>%d others</string>
       </dict>
@@ -143,6 +157,8 @@
         <string> and %d others</string>
         <key>few</key>
         <string> and %d others</string>
+        <key>many</key>
+        <string> and %d others</string>
         <key>other</key>
         <string> and %d others</string>
       </dict>
@@ -155,6 +171,8 @@
         <key>one</key>
         <string>nowe urządzenie</string>
         <key>few</key>
+        <string>nowe urządzenia</string>
+        <key>many</key>
         <string>nowe urządzenia</string>
         <key>other</key>
         <string>nowe urządzenia</string>
@@ -174,6 +192,8 @@
         <string>nowe urządzenie</string>
         <key>few</key>
         <string>nowe urządzenia</string>
+        <key>many</key>
+        <string>nowe urządzenia</string>
         <key>other</key>
         <string>nowe urządzenia</string>
       </dict>
@@ -191,6 +211,8 @@
         <key>one</key>
         <string>nowa wiadomość tekstowa</string>
         <key>few</key>
+        <string>%d nowe wiadomości tekstowe</string>
+        <key>many</key>
         <string>%d nowe wiadomości tekstowe</string>
         <key>other</key>
         <string>%d nowe wiadomości tekstowe</string>
@@ -210,6 +232,8 @@
         <string>nowy link</string>
         <key>few</key>
         <string>%d nowe linki</string>
+        <key>many</key>
+        <string>%d nowe linki</string>
         <key>other</key>
         <string>%d nowe linki</string>
       </dict>
@@ -227,6 +251,8 @@
         <key>one</key>
         <string>nowy obraz</string>
         <key>few</key>
+        <string>%d nowe obrazy</string>
+        <key>many</key>
         <string>%d nowe obrazy</string>
         <key>other</key>
         <string>%d nowe obrazy</string>
@@ -246,6 +272,8 @@
         <string>nowa lokalizacja</string>
         <key>few</key>
         <string>%d nowych lokalizacji</string>
+        <key>many</key>
+        <string>%d nowych lokalizacji</string>
         <key>other</key>
         <string>%d nowych lokalizacji</string>
       </dict>
@@ -263,6 +291,8 @@
         <key>one</key>
         <string>nowa wiadomość dźwiękowa</string>
         <key>few</key>
+        <string>%d nowych wiadomości dźwiękowych</string>
+        <key>many</key>
         <string>%d nowych wiadomości dźwiękowych</string>
         <key>other</key>
         <string>%d nowych wiadomości dźwiękowych</string>
@@ -282,6 +312,8 @@
         <string>nowe wideo</string>
         <key>few</key>
         <string>%d nowe wideo</string>
+        <key>many</key>
+        <string>%d nowe wideo</string>
         <key>other</key>
         <string>%d nowe wideo</string>
       </dict>
@@ -299,6 +331,8 @@
         <key>one</key>
         <string>nowe zaczepienie</string>
         <key>few</key>
+        <string>%d nowych zaczepień</string>
+        <key>many</key>
         <string>%d nowych zaczepień</string>
         <key>other</key>
         <string>%d nowych zaczepień</string>
@@ -318,6 +352,8 @@
         <string>nieodebrane połączenie</string>
         <key>few</key>
         <string>%d nieodebranych połączeń</string>
+        <key>many</key>
+        <string>%d nieodebranych połączeń</string>
         <key>other</key>
         <string>%d nieodebranych połączeń</string>
       </dict>
@@ -335,6 +371,8 @@
         <key>one</key>
         <string>nowy plik</string>
         <key>few</key>
+        <string>%d nowe pliki</string>
+        <key>many</key>
         <string>%d nowe pliki</string>
         <key>other</key>
         <string>%d nowe pliki</string>

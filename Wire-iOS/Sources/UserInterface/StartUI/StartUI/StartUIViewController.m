@@ -82,6 +82,11 @@ static NSUInteger const StartUIInitiallyShowsKeyboardConversationThreshold = 10;
     return self;
 }
 
+-(void)loadView
+{
+    self.view = [[StartUIView alloc] initWithFrame:CGRectZero];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -99,7 +104,7 @@ static NSUInteger const StartUIInitiallyShowsKeyboardConversationThreshold = 10;
     self.emptyResultLabel.font = [UIFont fontWithMagicIdentifier:@"style.text.normal.font_spec"];
     
     self.searchHeaderViewController = [[SearchHeaderViewController alloc] initWithUserSelection:self.userSelection variant:ColorSchemeVariantDark];
-    self.title = team != nil ? team.name : ZMUser.selfUser.displayName;
+    self.title = (team != nil ? team.name : ZMUser.selfUser.displayName).localizedUppercaseString;
     self.searchHeaderViewController.delegate = self;
     self.searchHeaderViewController.allowsMultipleSelection = NO;
     [self addChildViewController:self.searchHeaderViewController];

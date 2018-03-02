@@ -185,6 +185,7 @@
 "conversation.status.added_multiple" = "People added";
 "conversation.status.you_was_added" = "%@ added you";
 "conversation.status.added_users" = "%@ added %@";
+"conversation.status.joined" = "%@ joined";
 "conversation.status.removed_multiple" = "People removed";
 "conversation.status.you_were_removed" = "You were removed";
 "conversation.status.you_left" = "You left";
@@ -240,6 +241,8 @@
 "conversation.create.guidance.toolong" = "Too many characters";
 "conversation.create.toggle.title" = "Allow guests";
 "conversation.create.toggle.subtitle" = "Open this conversation to people outside your team. You can always change it later.";
+
+"conversation.guests_present" = "Guests are present";
 
 // Image confirmation dialogue
 "image_confirmer.confirm" = "OK";
@@ -456,7 +459,7 @@
 "participants.avatar.guest.title" = "Guest";
 
 "participants.title" = "Details";
-"participants.section.participants" = "Participants (%d)";
+"participants.section.participants" = "People (%d)";
 "participants.section.services" = "Services (%d)";
 "participants.footer.add_title" = "Add Participants";
 
@@ -805,6 +808,7 @@
 "self.settings.technical_report.mail.subject" = "Wire Calling Report";
 "self.settings.technical_report.include_log" = "Include detailed log";
 "self.settings.technical_report.privacy_warning" = "Detailed logs could contain personal data";
+"self.settings.technical_report.no_mail_alert" = "No mail client detected. Tap \"OK\" and send logs manually to: ";
 
 // Password reset
 "self.settings.password_reset_menu.title" = "Reset Password";

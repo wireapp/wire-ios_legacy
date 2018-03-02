@@ -27,6 +27,7 @@ extension ZMConversation {
         case archive(isArchived: Bool)
         case cancelRequest
         case block(isBlocked: Bool)
+        case remove
     }
     
     var actions: [Action] {
@@ -54,7 +55,13 @@ extension ZMConversation {
     }
     
     private func availableGroupActions() -> [Action] {
-        var actions: [Action] = [.rename] + availableStandardActions() + [.delete]
+        var actions = [Action]()
+        if isSelfAnActiveMember {
+            actions.append(.rename)
+        }
+        actions += availableStandardActions()
+        actions.append(.delete)
+
         if activeParticipants.contains(ZMUser.selfUser()) {
             actions.append(.leave)
         }
@@ -75,7 +82,7 @@ extension ZMConversation.Action {
     
     fileprivate var style: UIAlertActionStyle {
         switch self {
-        case .delete, .leave: return .destructive
+        case .delete, .leave, .remove: return .destructive
         default: return .default
         }
     }
@@ -86,6 +93,7 @@ extension ZMConversation.Action {
     
     private var localizationKey: String {
         switch self {
+        case .remove: return "profile.remove_dialog_button_remove"
         case .rename: return "meta.menu.rename"
         case .delete: return "meta.menu.delete"
         case .leave: return "meta.menu.leave"

@@ -38,7 +38,6 @@
         let controller = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         conversation.actions.map(alertAction).forEach(controller.addAction)
         controller.addAction(.cancel())
-        controller.view.tintColor = .wr_color(fromColorScheme: ColorSchemeColorTextForeground, variant: .light)
         target.present(controller, animated: true)
     }
     

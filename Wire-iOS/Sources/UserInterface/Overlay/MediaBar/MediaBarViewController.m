@@ -88,11 +88,6 @@
                                                       options:NSKeyValueObservingOptionInitial | NSKeyValueObservingOptionNew];
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
 - (MediaBar *)mediaBarView
 {
     return (MediaBar *)self.view;

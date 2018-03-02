@@ -21,19 +21,23 @@ import Cartography
 
 class GroupDetailsViewController: UIViewController, ZMConversationObserver, GroupDetailsFooterViewDelegate {
     
-    fileprivate let collectionViewController: CollectionViewController
+    fileprivate let collectionViewController: SectionCollectionViewController
     fileprivate let conversation: ZMConversation
     fileprivate let footerView = GroupDetailsFooterView()
     fileprivate let bottomSpacer = UIView()
     fileprivate var token: NSObjectProtocol?
     fileprivate var actionController: ConversationActionController?
-    fileprivate var renameSectionController : RenameSectionController?
+    fileprivate var renameGroupSectionController : RenameGroupSectionController?
     fileprivate let emptyView = UIImageView()
     private var emptyViewVerticalConstraint: NSLayoutConstraint?
+    
+    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+        return wr_supportedInterfaceOrientations
+    }
 
     public init(conversation: ZMConversation) {
         self.conversation = conversation
-        collectionViewController = CollectionViewController()
+        collectionViewController = SectionCollectionViewController()
         super.init(nibName: nil, bundle: nil)
         collectionViewController.sections = computeVisibleSections()
         token = ConversationChangeInfo.add(observer: self, for: conversation)
@@ -90,6 +94,7 @@ class GroupDetailsViewController: UIViewController, ZMConversationObserver, Grou
         
         collectionViewController.collectionView = collectionView
         footerView.delegate = self
+        footerView.addButton.isHidden = ZMUser.selfUser().isGuest(in: conversation)
     
         emptyView.translatesAutoresizingMaskIntoConstraints = false
         emptyView.isHidden = true
@@ -125,21 +130,21 @@ class GroupDetailsViewController: UIViewController, ZMConversationObserver, Grou
 
     func computeVisibleSections() -> [_CollectionViewSectionController] {
         var sections = [_CollectionViewSectionController]()
-        let renameSectionController = RenameSectionController(conversation: conversation)
-        sections.append(renameSectionController)
-        self.renameSectionController = renameSectionController
+        let renameGroupSectionController = RenameGroupSectionController(conversation: conversation)
+        sections.append(renameGroupSectionController)
+        self.renameGroupSectionController = renameGroupSectionController
         
         if nil != ZMUser.selfUser().team {
-            let optionsController = GuestOptionsSection(conversation: conversation, delegate: self)
-            sections.append(optionsController)
+            let guestOptionsSectionController = GuestOptionsSectionController(conversation: conversation, delegate: self)
+            sections.append(guestOptionsSectionController)
         }
         let (participants, serviceUsers) = (conversation.sortedOtherParticipants, conversation.sortedServiceUsers)
         if !participants.isEmpty {
-            let participantsSectionController = ParticipantsSectionController(participants: participants, delegate: self)
+            let participantsSectionController = ParticipantsSectionController(participants: participants, conversation: conversation, delegate: self)
             sections.append(participantsSectionController)
         }
         if !serviceUsers.isEmpty {
-            let servicesSection = ServicesSectionController(serviceUsers: serviceUsers, delegate: self)
+            let servicesSection = ServicesSectionController(serviceUsers: serviceUsers, conversation: conversation, delegate: self)
             sections.append(servicesSection)
         }
         
@@ -174,15 +179,18 @@ class GroupDetailsViewController: UIViewController, ZMConversationObserver, Grou
 
 extension GroupDetailsViewController: ConversationActionControllerRenameDelegate {
     func controllerWantsToRenameConversation(_ controller: ConversationActionController) {
-        collectionViewController.collectionView?.scrollToItem(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
-        renameSectionController?.focus()
+        UIView.animate(withDuration: 0.35, animations: {
+            self.collectionViewController.collectionView?.scrollToItem(at: IndexPath(row: 0, section: 0), at: .top, animated: false)
+        }) { [weak self] _ in
+            self?.renameGroupSectionController?.focus()
+        }
     }
 }
 
 extension GroupDetailsViewController: ViewControllerDismissable, ProfileViewControllerDelegate {
     
     func viewControllerWants(toBeDismissed controller: UIViewController!, completion: (() -> Void)!) {
-        navigationController?.popViewController(animated: true)
+        navigationController?.popViewController(animated: true, completion: completion)
     }
     
     func profileViewController(_ controller: ProfileViewController?, wantsToNavigateTo conversation: ZMConversation) {
@@ -193,9 +201,9 @@ extension GroupDetailsViewController: ViewControllerDismissable, ProfileViewCont
     
 }
 
-extension GroupDetailsViewController: ParticipantsSectionControllerDelegate {
+extension GroupDetailsViewController: GroupDetailsSectionControllerDelegate, GuestOptionsSectionControllerDelegate {
     
-    func presentDetailsView(for user: ZMUser) {
+    func presentDetails(for user: ZMUser) {
         let viewController = UserDetailViewControllerFactory.createUserDetailViewController(user: user,
                                                                                             conversation: conversation,
                                                                                             profileViewControllerDelegate: self,
@@ -204,320 +212,9 @@ extension GroupDetailsViewController: ParticipantsSectionControllerDelegate {
         navigationController?.pushViewController(viewController, animated: true)
     }
     
-    func presentOptionsMenu() {
+    func presentGuestOptions() {
         let menu = ConversationOptionsViewController(conversation: conversation, userSession: ZMUserSession.shared()!)
         navigationController?.pushViewController(menu, animated: true)
-    }
-    
-}
-
-class CollectionViewController: NSObject, UICollectionViewDelegate {
-    
-    var collectionView : UICollectionView? = nil {
-        didSet {
-            collectionView?.dataSource = self
-            collectionView?.delegate = self
-            
-            sections.forEach {
-                $0.prepareForUse(in: collectionView)
-            }
-            
-            collectionView?.reloadData()
-        }
-    }
-    
-    var sections: [_CollectionViewSectionController] {
-        didSet {
-            sections.forEach {
-                $0.prepareForUse(in: collectionView)
-            }
-            
-            collectionView?.reloadData()
-        }
-    }
-    
-    init(sections : [_CollectionViewSectionController] = []) {
-        self.sections = sections
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        sections[indexPath.section].collectionView?(collectionView, didSelectItemAt: indexPath)
-    }
-    
-}
-
-extension CollectionViewController: UICollectionViewDataSource {
-    
-    func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return sections.count
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return sections[section].collectionView(collectionView, numberOfItemsInSection: 0)
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        return sections[indexPath.section].collectionView(collectionView, cellForItemAt:indexPath)
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        return sections[indexPath.section].collectionView!(collectionView, viewForSupplementaryElementOfKind:kind, at:indexPath)
-    }
-    
-}
-
-extension CollectionViewController: UICollectionViewDelegateFlowLayout {
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        return sections[section].collectionView?(collectionView, layout: collectionViewLayout, referenceSizeForHeaderInSection: section) ?? CGSize.zero
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return sections[indexPath.section].collectionView?(collectionView, layout: collectionViewLayout, sizeForItemAt: indexPath) ?? CGSize.zero
-    }
-    
-}
-
-protocol _CollectionViewSectionController: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
-    
-    func prepareForUse(in collectionView : UICollectionView?)
-    
-}
-
-protocol ParticipantsSectionControllerDelegate: class {
-    
-    func presentDetailsView(for user: ZMUser)
-    func presentOptionsMenu()
-    
-}
-
-class DefaultSectionController: NSObject, _CollectionViewSectionController {
-    
-    var sectionTitle: String {
-        return ""
-    }
-    
-    var variant : ColorSchemeVariant = ColorScheme.default().variant
-    
-    func prepareForUse(in collectionView : UICollectionView?) {
-        collectionView?.register(GroupDetailsSectionHeader.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: "SectionHeader")
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        let supplementaryView = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionElementKindSectionHeader, withReuseIdentifier: "SectionHeader", for: indexPath)
-        
-        if let sectionHeaderView = supplementaryView as? GroupDetailsSectionHeader {
-            sectionHeaderView.variant = variant
-            sectionHeaderView.titleLabel.text = sectionTitle
-        }
-        
-        return supplementaryView
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        return CGSize(width: collectionView.bounds.size.width, height: 48)
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: collectionView.bounds.size.width, height: 64)
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        fatal("Must be overridden")
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        fatal("Must be overridden")
-    }
-    
-}
-
-class ParticipantsSectionController: DefaultSectionController {
-    
-    private weak var delegate: ParticipantsSectionControllerDelegate?
-    private let participants: [ZMBareUser]
-    
-    init(participants: [ZMBareUser], delegate: ParticipantsSectionControllerDelegate) {
-        self.participants = participants
-        self.delegate = delegate
-    }
-    
-    override func prepareForUse(in collectionView : UICollectionView?) {
-        super.prepareForUse(in: collectionView)
-        
-        collectionView?.register(GroupDetailsParticipantCell.self, forCellWithReuseIdentifier: GroupDetailsParticipantCell.zm_reuseIdentifier)
-    }
-    
-    override var sectionTitle: String {
-        return "participants.section.participants".localized(args: participants.count).uppercased()
-    }
-    
-    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return participants.count
-    }
-    
-    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let user = participants[indexPath.row]
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: GroupDetailsParticipantCell.zm_reuseIdentifier, for: indexPath) as! GroupDetailsParticipantCell
-        
-        cell.configure(with: user)
-        cell.separator.isHidden = (participants.count - 1) == indexPath.row
-        return cell
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        guard let user = participants[indexPath.row] as? ZMUser else { return }
-        delegate?.presentDetailsView(for: user)
-    }
-    
-}
-
-class ServicesSectionController: DefaultSectionController {
-    
-    private weak var delegate: ParticipantsSectionControllerDelegate?
-    private let serviceUsers: [ZMBareUser]
-    
-    init(serviceUsers: [ZMBareUser], delegate: ParticipantsSectionControllerDelegate) {
-        self.serviceUsers = serviceUsers
-        self.delegate = delegate
-    }
-    
-    override func prepareForUse(in collectionView : UICollectionView?) {
-        super.prepareForUse(in: collectionView)
-        
-        collectionView?.register(GroupDetailsParticipantCell.self, forCellWithReuseIdentifier: GroupDetailsParticipantCell.zm_reuseIdentifier)
-    }
-    
-    override var sectionTitle: String {
-        return "participants.section.services".localized(args: serviceUsers.count).uppercased()
-    }
-    
-    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return serviceUsers.count
-    }
-    
-    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let user = serviceUsers[indexPath.row]
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: GroupDetailsParticipantCell.zm_reuseIdentifier, for: indexPath) as! GroupDetailsParticipantCell
-        
-        cell.configure(with: user)
-        cell.separator.isHidden = (serviceUsers.count - 1) == indexPath.row
-        return cell
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        guard let user = serviceUsers[indexPath.row] as? ZMUser else { return }
-        delegate?.presentDetailsView(for: user)
-    }
-    
-}
-
-class GuestOptionsSection: DefaultSectionController {
-
-    private weak var delegate: ParticipantsSectionControllerDelegate?
-    private let conversation: ZMConversation
-    
-    init(conversation: ZMConversation, delegate: ParticipantsSectionControllerDelegate) {
-        self.delegate = delegate
-        self.conversation = conversation
-    }
-    
-    override func prepareForUse(in collectionView: UICollectionView?) {
-        super.prepareForUse(in: collectionView)
-        collectionView?.register(GroupDetailsGuestOptionsCell.self, forCellWithReuseIdentifier: GroupDetailsGuestOptionsCell.zm_reuseIdentifier)
-    }
-    
-    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 1
-    }
-    
-    override func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        return CGSize(width: collectionView.bounds.size.width, height: 32)
-    }
-
-    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: GroupDetailsGuestOptionsCell.zm_reuseIdentifier, for: indexPath) as! GroupDetailsGuestOptionsCell
-        cell.isOn = conversation.allowGuests
-        return cell
-    }
-    
-    override func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: collectionView.bounds.size.width, height: 56)
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        delegate?.presentOptionsMenu()
-    }
-    
-}
-
-class RenameSectionController: NSObject, _CollectionViewSectionController {
-    
-    fileprivate var validName : String? = nil
-    fileprivate var conversation: ZMConversation
-    fileprivate var renameCell : GroupDetailsRenameCell?
-    
-    init(conversation: ZMConversation) {
-        self.conversation = conversation
-    }
-    
-    func focus() {
-        renameCell?.titleTextField.becomeFirstResponder()
-    }
-    
-    func prepareForUse(in collectionView: UICollectionView?) {
-        collectionView?.register(GroupDetailsRenameCell.self, forCellWithReuseIdentifier: GroupDetailsRenameCell.zm_reuseIdentifier)
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 1
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: GroupDetailsRenameCell.zm_reuseIdentifier, for: indexPath) as! GroupDetailsRenameCell
-        cell.titleTextField.text = conversation.displayName
-        cell.titleTextField.textFieldDelegate = self
-        renameCell = cell
-        return cell
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: collectionView.bounds.size.width, height: 56)
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        focus()
-    }
-    
-}
-
-extension RenameSectionController: SimpleTextFieldDelegate {
-    
-    func textFieldReturnPressed(_ textField: SimpleTextField) {
-        guard let value = textField.value else { return }
-        
-        switch  value {
-        case .valid(let name):
-            validName = name
-            textField.endEditing(true)
-        case .error:
-            // TODO show error
-            textField.endEditing(true)
-        }
-    }
-    
-    func textField(_ textField: SimpleTextField, valueChanged value: SimpleTextField.Value) {
-        
-    }
-    
-    func textFieldDidEndEditing(_ textField: SimpleTextField) {
-        if let newName = validName {
-            ZMUserSession.shared()?.enqueueChanges {
-                self.conversation.userDefinedName = newName
-            }
-        } else {
-            textField.text = conversation.displayName
-        }
     }
     
 }

@@ -17,6 +17,8 @@
         <string>устройство</string>
         <key>few</key>
         <string>%lu устройств</string>
+        <key>many</key>
+        <string>%lu устройств</string>
         <key>other</key>
         <string>%lu устройств</string>
       </dict>
@@ -35,6 +37,8 @@
         <string>Один человек</string>
         <key>few</key>
         <string>%lu человек</string>
+        <key>many</key>
+        <string>%lu человек</string>
         <key>other</key>
         <string>%lu человек</string>
       </dict>
@@ -50,11 +54,13 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>lu</string>
         <key>one</key>
-        <string>добавлен</string>
+        <string>был добавлен</string>
         <key>few</key>
-        <string>добавлены</string>
+        <string>был добавлены</string>
+        <key>many</key>
+        <string>были добавлены</string>
         <key>other</key>
-        <string>добавлен</string>
+        <string>были добавлены</string>
       </dict>
     </dict>
     <key>content.system.missing_messages.subtitle_removed</key>
@@ -68,9 +74,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>lu</string>
         <key>one</key>
-        <string>удален</string>
+        <string>был удален</string>
         <key>few</key>
-        <string>было удалено</string>
+        <string>были удалены</string>
+        <key>many</key>
+        <string>были удалены</string>
         <key>other</key>
         <string>были удалены</string>
       </dict>
@@ -86,8 +94,10 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Один человек ожидает</string>
+        <string>Один человек</string>
         <key>few</key>
+        <string>%d человек</string>
+        <key>many</key>
         <string>%d человек ожидают</string>
         <key>other</key>
         <string>%d человек</string>
@@ -107,6 +117,8 @@
         <string>и еще один(-а)</string>
         <key>few</key>
         <string>и %d других</string>
+        <key>many</key>
+        <string>и %d других</string>
         <key>other</key>
         <string>и %d других</string>
       </dict>
@@ -118,13 +130,15 @@
       <key>d_number_of_others</key>
       <dict>
         <key>one</key>
-        <string>%d остальных</string>
+        <string>%d еще</string>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>few</key>
-        <string>%d остальных</string>
+        <string>%d еще</string>
+        <key>many</key>
+        <string>%d еще</string>
         <key>other</key>
         <string>%d еще</string>
       </dict>
@@ -142,7 +156,9 @@
         <key>one</key>
         <string> и %d остальных</string>
         <key>few</key>
-        <string> и %d остальных</string>
+        <string> и %d еще</string>
+        <key>many</key>
+        <string> и %d еще</string>
         <key>other</key>
         <string> и %d остальных</string>
       </dict>
@@ -155,9 +171,11 @@
         <key>one</key>
         <string>новое устройство</string>
         <key>few</key>
+        <string>новых устройств</string>
+        <key>many</key>
         <string>новые устройства</string>
         <key>other</key>
-        <string>новые устройства</string>
+        <string>новых устройств</string>
       </dict>
     </dict>
     <key>content.system.new_devices</key>
@@ -173,6 +191,8 @@
         <key>one</key>
         <string>новое устройство</string>
         <key>few</key>
+        <string>новые устройства</string>
+        <key>many</key>
         <string>новые устройства</string>
         <key>other</key>
         <string>новые устройства</string>
@@ -192,6 +212,8 @@
         <string>новое текстовое сообщение</string>
         <key>few</key>
         <string>%d новых текстовых сообщений</string>
+        <key>many</key>
+        <string>%d новых текстовых сообщений</string>
         <key>other</key>
         <string>%d новых текстовых сообщений</string>
       </dict>
@@ -209,6 +231,8 @@
         <key>one</key>
         <string>новая ссылка</string>
         <key>few</key>
+        <string>%d новых ссылок</string>
+        <key>many</key>
         <string>%d новых ссылок</string>
         <key>other</key>
         <string>%d новых ссылок</string>
@@ -228,6 +252,8 @@
         <string>новое изображение</string>
         <key>few</key>
         <string>%d новых изображений</string>
+        <key>many</key>
+        <string>%d новых изображений</string>
         <key>other</key>
         <string>%d новых изображений</string>
       </dict>
@@ -245,6 +271,8 @@
         <key>one</key>
         <string>новое местоположение</string>
         <key>few</key>
+        <string>%d новых местоположений</string>
+        <key>many</key>
         <string>%d новых местоположений</string>
         <key>other</key>
         <string>%d новых местоположений</string>
@@ -264,6 +292,8 @@
         <string>новое аудиосообщение</string>
         <key>few</key>
         <string>%d новых аудио сообщений</string>
+        <key>many</key>
+        <string>%d новых аудио сообщений</string>
         <key>other</key>
         <string>%d новых аудио сообщений</string>
       </dict>
@@ -281,6 +311,8 @@
         <key>one</key>
         <string>новое видео</string>
         <key>few</key>
+        <string>%d новых видео</string>
+        <key>many</key>
         <string>%d новых видео</string>
         <key>other</key>
         <string>%d новых видео</string>
@@ -300,6 +332,8 @@
         <string>новый пинг</string>
         <key>few</key>
         <string>%d новых пингов</string>
+        <key>many</key>
+        <string>%d новых пингов</string>
         <key>other</key>
         <string>%d новых пингов</string>
       </dict>
@@ -318,6 +352,8 @@
         <string>пропущенный вызов</string>
         <key>few</key>
         <string>%d пропущенных вызовов</string>
+        <key>many</key>
+        <string>%d пропущенных звонков</string>
         <key>other</key>
         <string>%d пропущенных вызовов</string>
       </dict>
@@ -335,6 +371,8 @@
         <key>one</key>
         <string>новый файл</string>
         <key>few</key>
+        <string>%d новых файлов</string>
+        <key>many</key>
         <string>%d новых файлов</string>
         <key>other</key>
         <string>%d новых файлов</string>

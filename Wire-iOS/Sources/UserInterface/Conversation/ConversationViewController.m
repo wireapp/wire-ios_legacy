@@ -56,7 +56,6 @@
 #import "ConversationInputBarViewController.h"
 #import "ProfileViewController.h"
 #import "MediaPlaybackManager.h"
-#import "BarController.h"
 #import "ContactsDataSource.h"
 #import "VerticalTransition.h"
 
@@ -109,8 +108,6 @@
 @property (nonatomic) ConversationContentViewController *contentViewController;
 @property (nonatomic) UIViewController *participantsController;
 
-@property (nonatomic) BOOL mediaBarAnimationInFlight;
-
 @property (nonatomic) ConversationInputBarViewController *inputBarController;
 @property (nonatomic) OutgoingConnectionViewController *outgoingConnectionViewController;
 
@@ -118,6 +115,8 @@
 @property (nonatomic) NSLayoutConstraint *inputBarZeroHeight;
 @property (nonatomic) InvisibleInputAccessoryView *invisibleInputAccessoryView;
 
+@property (nonatomic) GuestsBarController *guestsBarController;
+    
 @property (nonatomic) id voiceChannelStateObserverToken;
 @property (nonatomic) id conversationObserverToken;
 
@@ -168,6 +167,7 @@
     [self createContentViewController];
     [self createConversationBarController];
     [self createMediaBarViewController];
+    [self createGuestsBarController];
 
     [self addChildViewController:self.contentViewController];
     [self.view addSubview:self.contentViewController.view];
@@ -186,6 +186,7 @@
 
     [self createConstraints];
     [self updateInputBarVisibility];
+    [self updateGuestsBarVisibility];
 }
 
 - (void)createInputBarController
@@ -270,8 +271,56 @@
 
 - (void)createMediaBarViewController
 {
-    self.mediaBarViewController = [[MediaBarViewController alloc] initWithMediaPlaybackManager:[AppDelegate sharedAppDelegate].mediaPlaybackManager];
+    self.mediaBarViewController = [[MediaBarViewController alloc] initWithMediaPlaybackManager:[ZClientViewController sharedZClientViewController].mediaPlaybackManager];
     [self.mediaBarViewController.view addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didTapMediaBar:)]];
+}
+    
+- (void)createGuestsBarController
+{
+    self.guestsBarController = [[GuestsBarController alloc] init];
+}
+    
+- (BOOL)guestsBarShouldBePresented
+{
+    if (self.conversation.conversationType == ZMConversationTypeOneOnOne) {
+        return NO;
+    }
+    
+    Team *selfUserTeam = ZMUser.selfUser.team;
+    
+    if (selfUserTeam == nil) {
+        return NO;
+    }
+    
+    if (self.conversation.team == selfUserTeam) {
+        BOOL containsGuests = NO;
+        
+        for (ZMUser *user in self.conversation.activeParticipants) {
+            if ([user isGuestInConversation:self.conversation]) {
+                containsGuests = YES;
+                break;
+            }
+        }
+        
+        return containsGuests;
+    }
+    else {
+        return NO;
+    }
+}
+    
+- (void)updateGuestsBarVisibility
+{
+    if ([self guestsBarShouldBePresented]) {
+        BOOL isPresented = nil != self.guestsBarController.parentViewController;
+        if (!isPresented) {
+            [self.conversationBarController presentBar:self.guestsBarController];
+            [self.guestsBarController setCollapsed:NO animated:YES];
+        }
+    }
+    else {
+        [self.conversationBarController dismissBar:self.guestsBarController];
+    }
 }
 
 - (void)createConstraints
@@ -700,6 +749,8 @@
     if (! self.contentViewController.isScrolledToBottom && !isEditing) {
         [self.contentViewController scrollToBottomAnimated:YES];
     }
+    
+    [self.guestsBarController setCollapsed:YES animated:YES];
 
     return YES;
 }
@@ -798,6 +849,7 @@
         [self updateOutgoingConnectionVisibility];
         [self.contentViewController updateTableViewHeaderView];
         [self updateInputBarVisibility];
+        [self updateGuestsBarVisibility];
     }
     
     if (note.nameChanged || note.securityLevelChanged || note.connectionStateChanged) {

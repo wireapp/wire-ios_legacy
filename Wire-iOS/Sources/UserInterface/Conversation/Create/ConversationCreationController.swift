@@ -116,7 +116,7 @@ final class ConversationCreationController: UIViewController {
         Analytics.shared().tagLinearGroupOpened(with: self.source)
 
         view.backgroundColor = UIColor.Team.background
-        title = "create group".uppercased()
+        title = "profile.create_conversation_button_title".localized.uppercased()
         
         setupNavigationBar()
         createViews()
@@ -319,7 +319,7 @@ extension ConversationCreationController: AddParticipantsConversationCreationDel
 // MARK: - SimpleTextFieldDelegate
 
 extension ConversationCreationController: SimpleTextFieldDelegate {
-    
+
     func textField(_ textField: SimpleTextField, valueChanged value: SimpleTextField.Value) {
         clearError()
         switch value {
@@ -331,6 +331,10 @@ extension ConversationCreationController: SimpleTextFieldDelegate {
 
     func textFieldReturnPressed(_ textField: SimpleTextField) {
         tryToProceed()
+    }
+    
+    func textFieldDidBeginEditing(_ textField: SimpleTextField) {
+        
     }
     
     func textFieldDidEndEditing(_ textField: SimpleTextField) {
