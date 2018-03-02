@@ -52,7 +52,7 @@ static NSMutableDictionary *correlationFormatters;
 
 @property (nonatomic, strong) UILabel *subtitleLabel;
 
-@property (nonatomic, strong) GuestIndicator *guestIndicator;
+@property (nonatomic, strong) UIImageView *guestIndicator;
 @property (nonatomic, strong) UIView *separatorLineView;
 
 @end
@@ -460,7 +460,11 @@ static NSMutableDictionary *correlationFormatters;
 
     if (nil != self.team && !self.user.isTeamMember) {
         if (nil == self.guestIndicator) {
-            self.guestIndicator = [[GuestIndicator alloc] initWithVariant:ColorSchemeVariantDark];
+            UIColor *guestIconColor = [UIColor wr_colorFromColorScheme:ColorSchemeColorSectionText variant:self.colorSchemeVariant];
+            self.guestIndicator = [[UIImageView alloc] initWithImage:[UIImage imageForIcon:ZetaIconTypeGuest iconSize:ZetaIconSizeTiny color:guestIconColor]];
+            self.guestIndicator.contentMode = UIViewContentModeCenter;
+            [self.guestIndicator setContentHuggingPriority:UILayoutPriorityRequired forAxis:UILayoutConstraintAxisHorizontal];
+            [self.guestIndicator setContentCompressionResistancePriority:UILayoutPriorityRequired forAxis:UILayoutConstraintAxisHorizontal];
             [self.swipeView addSubview:self.guestIndicator];
             [self.guestIndicator autoAlignAxisToSuperviewAxis:ALAxisHorizontal];
             self.guestIndicatorTrailingConstraint = [self.guestIndicator autoPinEdgeToSuperviewEdge:ALEdgeTrailing withInset:rightMargin];

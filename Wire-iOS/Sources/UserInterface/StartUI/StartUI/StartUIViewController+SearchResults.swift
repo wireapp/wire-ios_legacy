@@ -18,6 +18,8 @@
 
 import Foundation
 
+class StartUIView : UIView { }
+
 extension StartUIViewController: SearchResultsViewControllerDelegate {
     public func searchResultsViewController(_ searchResultsViewController: SearchResultsViewController, didTapOnUser user: ZMSearchableUser, indexPath: IndexPath, section: SearchResultsViewControllerSection) {
         

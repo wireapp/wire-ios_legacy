@@ -17,6 +17,8 @@
         <string>пристрій</string>
         <key>few</key>
         <string>%lu пристрої</string>
+        <key>many</key>
+        <string>%lu пристроїв</string>
         <key>other</key>
         <string>%lu пристроїв</string>
       </dict>
@@ -35,6 +37,8 @@
         <string>Один учасник</string>
         <key>few</key>
         <string>%lu учасники</string>
+        <key>many</key>
+        <string>%lu учасників</string>
         <key>other</key>
         <string>%lu учасників</string>
       </dict>
@@ -52,6 +56,8 @@
         <key>one</key>
         <string>був(-ла) доданий(-а)</string>
         <key>few</key>
+        <string>було додано</string>
+        <key>many</key>
         <string>було додано</string>
         <key>other</key>
         <string>було додано</string>
@@ -71,6 +77,8 @@
         <string>був(-ла) видалений(-а)</string>
         <key>few</key>
         <string>було видалено</string>
+        <key>many</key>
+        <string>було видалено</string>
         <key>other</key>
         <string>було видалено</string>
       </dict>
@@ -89,6 +97,8 @@
         <string>Одна людина</string>
         <key>few</key>
         <string>%d людини</string>
+        <key>many</key>
+        <string>%d людей</string>
         <key>other</key>
         <string>%d людей</string>
       </dict>
@@ -107,6 +117,8 @@
         <string>та ще 1</string>
         <key>few</key>
         <string>та ще %d</string>
+        <key>many</key>
+        <string>та ще %d інших</string>
         <key>other</key>
         <string>та ще %d</string>
       </dict>
@@ -124,6 +136,8 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>few</key>
+        <string>%d</string>
+        <key>many</key>
         <string>%d</string>
         <key>other</key>
         <string>%d</string>
@@ -143,6 +157,8 @@
         <string> та ще %d</string>
         <key>few</key>
         <string> та ще %d</string>
+        <key>many</key>
+        <string> та ще %d</string>
         <key>other</key>
         <string> та ще %d</string>
       </dict>
@@ -155,6 +171,8 @@
         <key>one</key>
         <string>новий пристрій</string>
         <key>few</key>
+        <string>нові пристрої</string>
+        <key>many</key>
         <string>нові пристрої</string>
         <key>other</key>
         <string>нових пристроїв</string>
@@ -174,6 +192,8 @@
         <string>новий пристрій</string>
         <key>few</key>
         <string>нові пристрої</string>
+        <key>many</key>
+        <string>нові пристрої</string>
         <key>other</key>
         <string>нових пристроїв</string>
       </dict>
@@ -192,6 +212,8 @@
         <string>нове текстове повідомлення</string>
         <key>few</key>
         <string>%d нові текстові повідомлення</string>
+        <key>many</key>
+        <string>%d нових текстових повідомлень</string>
         <key>other</key>
         <string>%d нових текстових повідомлень</string>
       </dict>
@@ -210,6 +232,8 @@
         <string>новий лінк</string>
         <key>few</key>
         <string>%d нові лінки</string>
+        <key>many</key>
+        <string>%d нових лінків</string>
         <key>other</key>
         <string>%d нових лінків</string>
       </dict>
@@ -228,6 +252,8 @@
         <string>нова картинка</string>
         <key>few</key>
         <string>%d нові картинки</string>
+        <key>many</key>
+        <string>%d нових картинок</string>
         <key>other</key>
         <string>%d нових картинок</string>
       </dict>
@@ -246,6 +272,8 @@
         <string>нове розташування</string>
         <key>few</key>
         <string>%d нові розташування</string>
+        <key>many</key>
+        <string>%d нових розташувань</string>
         <key>other</key>
         <string>%d нових розташувань</string>
       </dict>
@@ -264,6 +292,8 @@
         <string>нове аудіоповідомлення</string>
         <key>few</key>
         <string>%d нові аудіоповідомлення</string>
+        <key>many</key>
+        <string>%d нових аудіоповідомлень</string>
         <key>other</key>
         <string>%d нових аудіоповідомлень</string>
       </dict>
@@ -282,6 +312,8 @@
         <string>нове відео</string>
         <key>few</key>
         <string>%d нові відео</string>
+        <key>many</key>
+        <string>%d нових відео</string>
         <key>other</key>
         <string>%d нових відео</string>
       </dict>
@@ -300,6 +332,8 @@
         <string>новий пінг</string>
         <key>few</key>
         <string>%d нові пінги</string>
+        <key>many</key>
+        <string>%d нових пінгів</string>
         <key>other</key>
         <string>%d нових пінгів</string>
       </dict>
@@ -318,6 +352,8 @@
         <string>пропущений дзвінок</string>
         <key>few</key>
         <string>%d пропущені дзвінки</string>
+        <key>many</key>
+        <string>%d пропущених дзвінків</string>
         <key>other</key>
         <string>%d пропущених дзвінків</string>
       </dict>
@@ -336,6 +372,8 @@
         <string>новий файл</string>
         <key>few</key>
         <string>%d нові файли</string>
+        <key>many</key>
+        <string>%d нових файлів</string>
         <key>other</key>
         <string>%d нових файлів</string>
       </dict>

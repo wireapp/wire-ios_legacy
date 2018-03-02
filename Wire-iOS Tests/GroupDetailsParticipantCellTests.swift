@@ -83,7 +83,7 @@ class GroupDetailsParticipantCellTests: ZMSnapshotTestCase {
         _ = mockUser?.feature(withUserClients: 1)
         
         verify(view: cell({ (cell) in
-            cell.variant = .dark
+            cell.colorSchemeVariant = .dark
             cell.configure(with: user, conversation: conversation)
         }))
     }
@@ -92,7 +92,7 @@ class GroupDetailsParticipantCellTests: ZMSnapshotTestCase {
         let user = MockUser.mockUsers()[0]
         
         verify(view: cell({ (cell) in
-            cell.variant = .dark
+            cell.colorSchemeVariant = .dark
             cell.configure(with: user, conversation: conversation)
         }))
     }
@@ -115,7 +115,7 @@ class GroupDetailsParticipantCellTests: ZMSnapshotTestCase {
         mockUser?.isGuestInConversation = true
         
         verify(view: cell({ (cell) in
-            cell.variant = .dark
+            cell.colorSchemeVariant = .dark
             cell.configure(with: user, conversation: conversation)
         }))
     }
@@ -142,7 +142,7 @@ class GroupDetailsParticipantCellTests: ZMSnapshotTestCase {
         _ = mockUser?.feature(withUserClients: 1)
         
         verify(view: cell({ (cell) in
-            cell.variant = .dark
+            cell.colorSchemeVariant = .dark
             cell.configure(with: user, conversation: conversation)
         }))
     }
@@ -159,7 +159,7 @@ class GroupDetailsParticipantCellTests: ZMSnapshotTestCase {
         let user = MockUser.mockUsers()[10]
         
         verify(view: cell({ (cell) in
-            cell.variant = .dark
+            cell.colorSchemeVariant = .dark
             cell.configure(with: user, conversation: conversation)
         }))
     }

@@ -34,8 +34,8 @@
 "share_extension.timeout.title" = "La connexion a expiré.";
 "share_extension.timeout.message" = "Vérifiez votre connexion internet et réessayez. Les pièces jointes ont été enregistrées dans la conversation.";
 "share_extension.privacy_security.lock_app.description" = "Déverrouiller Wire";
-"share_extension.logged_out.title" = "You've been logged out from this account.";
-"share_extension.logged_out.message" = "Please choose another account.";
+"share_extension.logged_out.title" = "Vous avez été déconnecté de ce compte.";
+"share_extension.logged_out.message" = "Veuillez choisir un autre compte.";
 
 "conversation.displayname.emptygroup" = "Conversation de groupe vide";
 "meta.degraded.degradation_reason_message.singular" = "%@ utilise un nouvel appareil.";

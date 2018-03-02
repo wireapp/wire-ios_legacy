@@ -34,8 +34,8 @@
 "share_extension.timeout.title" = "Susijungimui skirtas laikas pasibaigė.";
 "share_extension.timeout.message" = "Patikrinkite interneto ryšį ir bandykite dar kartą. Priedai buvo išsaugoti susirašinėjime.";
 "share_extension.privacy_security.lock_app.description" = "Atrakinti „Wire“";
-"share_extension.logged_out.title" = "You've been logged out from this account.";
-"share_extension.logged_out.message" = "Please choose another account.";
+"share_extension.logged_out.title" = "Buvote atjungti nuo šios paskyros.";
+"share_extension.logged_out.message" = "Pasirinkite kitą paskyrą.";
 
 "conversation.displayname.emptygroup" = "Tuščias grupės pokalbis";
 "meta.degraded.degradation_reason_message.singular" = "%@ pradėjo naudotis nauju įrenginiu.";

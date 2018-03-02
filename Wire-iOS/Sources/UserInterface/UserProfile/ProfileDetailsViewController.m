@@ -162,7 +162,7 @@ typedef NS_ENUM(NSUInteger, ProfileUserAction) {
 
 - (void)createGuestIndicator
 {
-    self.teamsGuestIndicator = [[GuestLabelIndicator alloc] initWithVariant:[[ColorScheme defaultColorScheme] variant]];
+    self.teamsGuestIndicator = [[GuestLabelIndicator alloc] init];
 }
 
 #pragma mark - Footer
