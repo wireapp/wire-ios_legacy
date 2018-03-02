@@ -57,7 +57,7 @@ class SettingsTechnicalReportViewController: UITableViewController, MFMailCompos
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        title = NSLocalizedString("self.settings.technical_report_section.title", comment: "").uppercased()
+        title = NSLocalizedString("self.settings.technical_report_section.title", comment: "").localizedUppercase
         tableView.backgroundColor = UIColor.clear
         tableView.isScrollEnabled = false
         tableView.separatorColor = UIColor(white: 1, alpha: 0.1)
