@@ -91,9 +91,11 @@ class GroupDetailsParticipantCell: UICollectionViewCell, Themeable {
         
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         titleLabel.font = FontSpec.init(.normal, .light).font!
+        titleLabel.accessibilityIdentifier = "name"
         
         subtitleLabel.translatesAutoresizingMaskIntoConstraints = false
         subtitleLabel.font = FontSpec.init(.small, .regular).font!
+        subtitleLabel.accessibilityIdentifier = "username"
         
         avatar.size = .small
         avatar.translatesAutoresizingMaskIntoConstraints = false
