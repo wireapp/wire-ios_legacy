@@ -186,7 +186,6 @@
 
     [self createConstraints];
     [self updateInputBarVisibility];
-    [self updateGuestsBarVisibility];
 }
 
 - (void)createInputBarController
@@ -309,13 +308,13 @@
     }
 }
     
-- (void)updateGuestsBarVisibility
+- (void)updateGuestsBarVisibilityAndShowIfNeeded:(BOOL)showIfNeeded
 {
     if ([self guestsBarShouldBePresented]) {
         BOOL isPresented = nil != self.guestsBarController.parentViewController;
-        if (!isPresented) {
+        if (!isPresented || showIfNeeded) {
             [self.conversationBarController presentBar:self.guestsBarController];
-            [self.guestsBarController setCollapsed:NO animated:YES];
+            [self.guestsBarController setCollapsed:NO animated:NO];
         }
     }
     else {
@@ -342,6 +341,7 @@
 {
     [super viewWillAppear:animated];
     self.isAppearing = YES;
+    [self updateGuestsBarVisibilityAndShowIfNeeded:YES];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -849,7 +849,7 @@
         [self updateOutgoingConnectionVisibility];
         [self.contentViewController updateTableViewHeaderView];
         [self updateInputBarVisibility];
-        [self updateGuestsBarVisibility];
+        [self updateGuestsBarVisibilityAndShowIfNeeded:NO];
     }
     
     if (note.nameChanged || note.securityLevelChanged || note.connectionStateChanged) {
