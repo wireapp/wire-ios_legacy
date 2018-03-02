@@ -164,7 +164,7 @@ let videoDurationClusterizer: TimeIntervalClusterizer = {
 
 public extension ZMConversation {
 
-    var ephemeralTrackingAttributes: [String: String] {
+    var ephemeralTrackingAttributes: [String: Any] {
         let ephemeral = destructionTimeout != .none
         var attributes = ["is_ephemeral": ephemeral ? "true" : "false"]
         guard ephemeral else { return attributes }
@@ -302,7 +302,7 @@ public extension Analytics {
     /// User uploads an audio message
     public func tagSentAudioMessage(in conversation: ZMConversation, duration: TimeInterval, context: AudioMessageContext, filter: AVSAudioEffectType, type: ConversationMediaRecordingType) {
         let filterName = filter.description.lowercased()
-        var  attributes: [String: String] = [
+        var  attributes: [String: Any] = [
             "duration": videoDurationClusterizer.clusterizeTimeInterval(duration),
             "duration_actual": type(of: self).stringFromTimeInterval(duration),
             AudioMessageContext.keyName: context.attributeString,
@@ -310,7 +310,7 @@ public extension Analytics {
             "state": type.description
         ]
 
-        conversation.ephemeralTrackingAttributes.forEach { key, value in
+        for (key, value) in conversation.ephemeralTrackingAttributes {
             attributes[key] = value
         }
 
