@@ -27,7 +27,9 @@ extension UIViewController {
     }
     
     func hideBackButtonTitle() {
-        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
+        let item = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
+        item.accessibilityLabel = "back"
+        navigationItem.backBarButtonItem = item
     }
     
 }
