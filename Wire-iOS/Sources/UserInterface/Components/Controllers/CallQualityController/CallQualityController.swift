@@ -25,6 +25,8 @@ import Cartography
 }
 
 class CallQualityViewController : UIViewController {
+    
+    var contentView: UIView
 
     var callQualityStackView : UICustomSpacingStackView!
     var closeButton : IconButton
@@ -35,11 +37,15 @@ class CallQualityViewController : UIViewController {
     @objc weak var delegate: CallQualityViewControllerDelegate?
     
     static func defaultSurveyController() -> CallQualityViewController {
-        return CallQualityViewController(questionLabelText: NSLocalizedString("calling.quality_survey.question", comment: ""))
+        let controller = CallQualityViewController(questionLabelText: NSLocalizedString("calling.quality_survey.question", comment: ""))
+        controller.modalPresentationCapturesStatusBarAppearance = true
+        controller.modalPresentationStyle = .overFullScreen
+        return controller
     }
     
     init(questionLabelText: String){
         
+        self.contentView = UIView()
         self.closeButton = IconButton()
         self.titleLabel = UILabel()
         self.questionText = UILabel()
@@ -49,6 +55,8 @@ class CallQualityViewController : UIViewController {
         self.scoreSelectorView = QualityScoreSelectorView(onScoreSet: { [weak self] score in
             self?.delegate?.callQualityController(self!, didSelect: score)
         })
+        
+        contentView.layer.cornerRadius = 12
 
         closeButton.setIcon(.X, with: .tiny, for: [], renderingMode: .alwaysTemplate)
         closeButton.accessibilityIdentifier = "score_close"
@@ -68,8 +76,9 @@ class CallQualityViewController : UIViewController {
         closeButton.addTarget(self, action: #selector(onCloseButtonTapped), for: .touchUpInside)
       
         titleLabel.textColor = UIColor.cas_color(withHex: "#323639")
-        titleLabel.font = UIFont.systemFont(ofSize: 40, weight: UIFontWeightLight)
+        titleLabel.font = UIFont.systemFont(ofSize: 30, weight: UIFontWeightMedium)
         titleLabel.text = NSLocalizedString("calling.quality_survey.title", comment: "")
+        titleLabel.adjustsFontSizeToFitWidth = true
         
         questionText.text = questionLabelText
         questionText.font = FontSpec(.normal, .regular).font
@@ -82,7 +91,7 @@ class CallQualityViewController : UIViewController {
         callQualityStackView.axis = .vertical
         callQualityStackView.spacing = 10
         callQualityStackView.wr_addCustomSpacing(24, after: titleLabel)
-        callQualityStackView.wr_addCustomSpacing(48, after: questionText)
+        callQualityStackView.wr_addCustomSpacing(32, after: questionText)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -90,28 +99,58 @@ class CallQualityViewController : UIViewController {
     }
   
     override func viewDidLoad() {
-        view.backgroundColor = UIColor.cas_color(withHex: "#F8F8F8")
-        view.addSubview(closeButton)
-        view.addSubview(callQualityStackView)
 
-        closeButton.layer.cornerRadius = 14
+        view.backgroundColor = UIColor.black.withAlphaComponent(0.6)
+        contentView.backgroundColor = .white
         
+        view.addSubview(contentView)
+        contentView.addSubview(closeButton)
+        contentView.addSubview(callQualityStackView)
+
+        constrain(contentView) { contentView in
+            contentView.centerX == contentView.superview!.centerX
+            contentView.width == (contentView.superview!.width - 32)
+            contentView.bottom == (contentView.superview!.bottomMargin - 12)
+        }
+        
+        closeButton.layer.cornerRadius = 14
+                
         constrain(closeButton) { closeButton in
-            closeButton.top == (closeButton.superview!.topMargin + 8)
             closeButton.right == (closeButton.superview!.right - 16)
             closeButton.width == 28
             closeButton.height == 28
         }
         
         constrain(callQualityStackView) { callQualityView in
-            callQualityView.center == callQualityView.superview!.center
-            callQualityView.width <= callQualityView.superview!.width
+            callQualityView.centerX == callQualityView.superview!.centerX
+            callQualityView.width == (callQualityView.superview!.width - 32)
+            callQualityView.bottom == (callQualityView.superview!.bottom - 24)
         }
+        
+        closeButton.bottomAnchor.constraint(equalTo: callQualityStackView.topAnchor, constant: -10).isActive = true
+        contentView.topAnchor.constraint(equalTo: closeButton.topAnchor, constant: -24).isActive = true
+    }
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
     }
     
     func onCloseButtonTapped() {
         delegate?.callQualityControllerDidFinishWithoutScore(self)
     }
+    
+    /*override func willTransition(to newCollection: UITraitCollection, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.willTransition(to: newCollection, with: coordinator)
+        coordinator.animate { _ in self.updateLayout(for: newCollection) }
+    }
+    
+    // Adaptive Layout
+    
+    private func updateLayout(for traitCollection: UITraitCollection) {
+        
+        
+
+    }*/
 }
 
 class CallQualityView : UIStackView {
@@ -138,14 +177,16 @@ class CallQualityView : UIStackView {
         scoreButton.tag = buttonScore
         scoreButton.circular = true
         scoreButton.setTitle(String(buttonScore), for: .normal)
+        scoreButton.titleLabel?.font = UIFont.monospacedDigitSystemFont(ofSize: 18, weight: UIFontWeightRegular)
         scoreButton.setTitleColor(UIColor.cas_color(withHex: "#272A2C"), for: .normal)
         scoreButton.setTitleColor(.white, for: .highlighted)
         scoreButton.setTitleColor(.white, for: .selected)
         scoreButton.addTarget(self, action: #selector(onClick), for: .primaryActionTriggered)
-        scoreButton.setBackgroundImageColor(.white, for: UIControlState.normal)
+        scoreButton.setBackgroundImageColor(UIColor.cas_color(withHex: "#F8F8F8"), for: UIControlState.normal)
         scoreButton.setBackgroundImageColor(UIColor(for: .strongBlue) , for: UIControlState.highlighted)
         scoreButton.setBackgroundImageColor(UIColor(for: .strongBlue) , for: UIControlState.selected)
         scoreButton.accessibilityIdentifier = "score_\(buttonScore)"
+        
         scoreButton.accessibilityLabel = labelText
         constrain(scoreButton){scoreButton in
             scoreButton.width == 56
