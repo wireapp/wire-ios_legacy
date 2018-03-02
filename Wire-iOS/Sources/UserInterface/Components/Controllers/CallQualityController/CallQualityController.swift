@@ -19,80 +19,57 @@
 import Foundation
 import Cartography
 
-struct RatingState {
-    var rating1: Int? = nil
-    var rating2: Int? = nil
-}
-
-class BaseCallQualityViewController :  UIViewController {
-
-    let root = CallQualityViewController(questionLabelText: "1/2 How do you rate the call set up time?")
-    let baseNavigationController : UINavigationController
-
-    var ratingState: RatingState = RatingState(rating1: nil, rating2: nil)
-    
-    init(){
-        self.baseNavigationController = UINavigationController()
-        super.init(nibName: nil, bundle: nil)
-        root.delegate = self
-        baseNavigationController.setNavigationBarHidden(true, animated: false)
-    }
-
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-
-    override func viewDidLoad() {
-        view.addSubview(baseNavigationController.view)
-        baseNavigationController.pushViewController(root, animated: true)
-    }
-
-}
-
-extension BaseCallQualityViewController: CallQualityViewControllerDelegate {
-    func controller(_ controller: CallQualityViewController, didSelect score: Int) {
-        if controller == root {
-            ratingState.rating1 = score
-            let next = CallQualityViewController(questionLabelText: "2/2 How do you rate the overall\nquality of the call?")
-            next.delegate = self
-            baseNavigationController.pushViewController(next, animated: true)
-        }
-        else {
-            ratingState.rating2 = score
-            self.dismiss(animated: true, completion: nil)
-            
-            CallQualityScoreProvider.shared.userScore = ratingState
-        }
-    }
-}
-
-protocol CallQualityViewControllerDelegate: class {
-    func controller(_ controller: CallQualityViewController, didSelect score: Int)
+@objc protocol CallQualityViewControllerDelegate: class {
+    func callQualityControllerDidFinishWithoutScore(_ controller: CallQualityViewController)
+    func callQualityController(_ controller: CallQualityViewController, didSelect score: Int)
 }
 
 class CallQualityViewController : UIViewController {
 
     var callQualityStackView : UICustomSpacingStackView!
+    var closeButton : IconButton
     let titleLabel : UILabel
     let questionText : UILabel
     var scoreSelectorView : QualityScoreSelectorView!
     var questionLabelText = String()
-    weak var delegate: CallQualityViewControllerDelegate?
+    @objc weak var delegate: CallQualityViewControllerDelegate?
+    
+    static func defaultSurveyController() -> CallQualityViewController {
+        return CallQualityViewController(questionLabelText: NSLocalizedString("calling.quality_survey.question", comment: ""))
+    }
     
     init(questionLabelText: String){
         
+        self.closeButton = IconButton()
         self.titleLabel = UILabel()
         self.questionText = UILabel()
 
         super.init(nibName: nil, bundle: nil)
         
         self.scoreSelectorView = QualityScoreSelectorView(onScoreSet: { [weak self] score in
-            self?.delegate?.controller(self!, didSelect: score)
+            self?.delegate?.callQualityController(self!, didSelect: score)
         })
+
+        closeButton.setIcon(.X, with: .tiny, for: [], renderingMode: .alwaysTemplate)
+        closeButton.accessibilityIdentifier = "score_close"
+        closeButton.accessibilityLabel = NSLocalizedString("general.close", comment: "")
+        closeButton.imageEdgeInsets = UIEdgeInsetsMake(8, 8, 8, 8)
+        closeButton.clipsToBounds = true
+        closeButton.adjustsImageWhenHighlighted = false
         
+        let cancelVisualSelectionColor = UIColor(for: .strongBlue).withAlphaComponent(0.5)
+        closeButton.setBackgroundImageColor(UIColor.cas_color(withHex: "#DAD9DF") , for: .normal)
+        closeButton.setBackgroundImageColor(cancelVisualSelectionColor, for: .selected)
+        closeButton.setBackgroundImageColor(cancelVisualSelectionColor, for: .highlighted)
+        closeButton.setIconColor(.black, for: .normal)
+        closeButton.setIconColor(.white, for: .selected)
+        closeButton.setIconColor(.white, for: .highlighted)
+
+        closeButton.addTarget(self, action: #selector(onCloseButtonTapped), for: .touchUpInside)
+      
         titleLabel.textColor = UIColor.cas_color(withHex: "#323639")
         titleLabel.font = UIFont.systemFont(ofSize: 40, weight: UIFontWeightLight)
-        titleLabel.text = "Call Quality Survey"
+        titleLabel.text = NSLocalizedString("calling.quality_survey.title", comment: "")
         
         questionText.text = questionLabelText
         questionText.font = FontSpec(.normal, .regular).font
@@ -114,12 +91,26 @@ class CallQualityViewController : UIViewController {
   
     override func viewDidLoad() {
         view.backgroundColor = UIColor.cas_color(withHex: "#F8F8F8")
+        view.addSubview(closeButton)
         view.addSubview(callQualityStackView)
+
+        closeButton.layer.cornerRadius = 14
+        
+        constrain(closeButton) { closeButton in
+            closeButton.top == (closeButton.superview!.topMargin + 8)
+            closeButton.right == (closeButton.superview!.right - 16)
+            closeButton.width == 28
+            closeButton.height == 28
+        }
         
         constrain(callQualityStackView) { callQualityView in
             callQualityView.center == callQualityView.superview!.center
             callQualityView.width <= callQualityView.superview!.width
         }
+    }
+    
+    func onCloseButtonTapped() {
+        delegate?.callQualityControllerDidFinishWithoutScore(self)
     }
 }
 
@@ -189,7 +180,8 @@ class QualityScoreSelectorView : UIView {
         scoreStackView.distribution = .equalCentering
         scoreStackView.spacing = 8
         
-        [("Bad", 1), ("Poor", 2), ("Fair", 3), ("Good", 4), ("Excellent", 5)]
+        (1 ... 5)
+            .map { (localizedNameForScore($0), $0) }
             .map { CallQualityView( labelText: $0.0, buttonScore: $0.1, callback: onScoreSet) }
             .forEach(scoreStackView.addArrangedSubview)
         
@@ -197,6 +189,10 @@ class QualityScoreSelectorView : UIView {
         constrain(self, scoreStackView) { selfView, scoreStackView in
             scoreStackView.edges == selfView.edges
         }
+    }
+
+    func localizedNameForScore(_ score: Int) -> String {
+        return NSLocalizedString("calling.quality_survey.answer.\(score)", comment: "")
     }
     
     required init?(coder aDecoder: NSCoder) {

@@ -23,15 +23,14 @@ final class CallQualityScoreProvider: NSObject, AnalyticsType {
     public static let shared = CallQualityScoreProvider()
     
     private var lastCallingEvent: [String: NSObject] = [:]
-    public var userScore: RatingState? = nil {
+    public var userScore: Int? = nil {
         didSet {
-            guard let userScore = self.userScore, let rating1 = userScore.rating1, let rating2 = userScore.rating2 else {
+            guard let userScore = self.userScore else {
                 return
             }
             
             var attributes = lastCallingEvent
-            attributes["score1"] = NSNumber(integerLiteral: rating1)
-            attributes["score2"] = NSNumber(integerLiteral: rating2)
+            attributes["score"] = NSNumber(integerLiteral: userScore)
             nextProvider?.tagEvent(type(of: self).callingEventName, attributes: attributes)
             self.userScore = nil
         }

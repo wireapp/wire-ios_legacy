@@ -187,7 +187,7 @@ extension ActiveVoiceChannelViewController : WireCallCenterCallStateObserver {
         
         if case .answered = callState,
             let presentedController = self.presentedViewController,
-            presentedController is BaseCallQualityViewController {
+            presentedController is CallQualityViewController {
             
             presentedController.dismiss(animated: true, completion: nil)
         }
@@ -197,10 +197,24 @@ extension ActiveVoiceChannelViewController : WireCallCenterCallStateObserver {
         }
         
         if case .terminating = callState, answeredCalls.contains(conversation.remoteIdentifier!) {
-            let baseQualityController = BaseCallQualityViewController()
+            let qualityController = CallQualityViewController.defaultSurveyController()
+            qualityController.delegate = self
             answeredCalls.remove(conversation.remoteIdentifier!)
-            present(baseQualityController, animated: true)
+            present(qualityController, animated: true)
         }
     }
     
+}
+
+extension ActiveVoiceChannelViewController : CallQualityViewControllerDelegate {
+    
+    func callQualityController(_ controller: CallQualityViewController, didSelect score: Int) {
+        controller.dismiss(animated: true, completion: nil)
+        CallQualityScoreProvider.shared.userScore = score
+    }
+    
+    func callQualityControllerDidFinishWithoutScore(_ controller: CallQualityViewController) {
+        controller.dismiss(animated: true, completion: nil)
+    }
+
 }

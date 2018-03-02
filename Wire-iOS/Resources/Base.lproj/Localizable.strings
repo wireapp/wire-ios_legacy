@@ -20,8 +20,8 @@
 "general.ok" = "OK";
 "general.next" = "Next";
 "general.cancel" = "Cancel";
+"general.close" = "Close";
 "general.open_settings" = "Open Wire Settings";
-
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // People picker/start UI
@@ -1128,3 +1128,14 @@
 "availability.available.placeholder" = "%@ is available";
 "availability.away.placeholder" = "%@ is away";
 "availability.busy.placeholder" = "%@ is busy";
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Call Quality Survey
+
+"calling.quality_survey.title" = "Call Quality Survey";
+"calling.quality_survey.question" = "How do you rate the overall quality of the call?";
+"calling.quality_survey.answer.1" = "Bad";
+"calling.quality_survey.answer.2" = "Poor";
+"calling.quality_survey.answer.3" = "Fair";
+"calling.quality_survey.answer.4" = "Good";
+"calling.quality_survey.answer.5" = "Excellent";

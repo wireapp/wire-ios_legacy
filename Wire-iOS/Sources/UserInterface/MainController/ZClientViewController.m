@@ -68,6 +68,10 @@
 
 @end
 
+@interface ZClientViewController (QualitySurvey) <CallQualityViewControllerDelegate>
+    #pragma mark TODO: Figure out when to display the call view controller
+@end
+
 
 @interface ZClientViewController () <ZMUserObserver>
 
@@ -171,6 +175,13 @@
     }
     
     self.userObserverToken = [UserChangeInfo addObserver:self forUser:[ZMUser selfUser] userSession:[ZMUserSession sharedSession]];
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    CallQualityViewController *callController = [CallQualityViewController defaultSurveyController];
+    callController.delegate = self;
+    [self presentViewController:callController animated:YES completion:NULL];
 }
 
 - (void)createBackgroundViewController
@@ -709,6 +720,22 @@
     if (newState == ZMNetworkStateOnline && [[UIApplication sharedApplication] applicationState] == UIApplicationStateActive) {
         [self uploadAddressBookIfNeeded];
     }
+}
+
+@end
+
+#pragma mark Call Survey (Temp)
+
+@implementation ZClientViewController (CallSurvey)
+
+- (void)callQualityController:(CallQualityViewController *)controller didSelect:(NSInteger)score
+{
+    [controller dismissViewControllerAnimated:YES completion:NULL];
+}
+
+- (void)callQualityControllerDidFinishWithoutScore:(CallQualityViewController *)controller
+{
+    [controller dismissViewControllerAnimated:YES completion:NULL];
 }
 
 @end
