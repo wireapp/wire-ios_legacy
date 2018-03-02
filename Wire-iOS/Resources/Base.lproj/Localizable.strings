@@ -185,6 +185,7 @@
 "conversation.status.added_multiple" = "People added";
 "conversation.status.you_was_added" = "%@ added you";
 "conversation.status.added_users" = "%@ added %@";
+"conversation.status.joined" = "%@ joined";
 "conversation.status.removed_multiple" = "People removed";
 "conversation.status.you_were_removed" = "You were removed";
 "conversation.status.you_left" = "You left";
