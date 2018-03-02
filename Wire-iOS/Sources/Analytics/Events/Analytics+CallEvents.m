@@ -100,10 +100,12 @@
 
 - (NSDictionary *)attributesForConversation:(ZMConversation *)conversation
 {
-    return @{
+    NSMutableDictionary *attributes = @{
              @"conversation_type" : [self stringForConversationType:conversation.conversationType],
-             @"with_service"      : conversation.includesServiceUser ? @"true" : @"false"
-             };
+             @"with_service"      : conversation.includesServiceUser ? @"true" : @"false",
+             }.mutableCopy;
+    [attributes addEntriesFromDictionary:[self guestAttributesIn: conversation]];
+    return attributes;
 }
 
 - (NSDictionary *)attributesForInitiatedCall:(BOOL)initiatedCall

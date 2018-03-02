@@ -194,6 +194,11 @@ public extension Analytics {
             attributes["with_service"] = conversation.includesServiceUser ? "true" : "false";
             attributes["conversation_type"] = typeAttribute
         }
+
+        for (key, value) in guestAttributes(in: conversation) {
+            attributes[key] = value
+        }
+
         tagEvent(conversationMediaCompleteActionEventName, attributes: attributes)
     }
 
