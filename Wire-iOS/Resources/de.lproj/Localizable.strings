@@ -401,7 +401,7 @@
 
 "content.file.too_big" = "Du kannst Dateien bis zu %@ senden";
 // Someone pinged
-"content.ping.text" = "%1$@ hast gepingt";
+"content.ping.text" = "%1$@ hat gepingt";
 
 // Current user pinged
 "content.ping.text.you" = "Du";
