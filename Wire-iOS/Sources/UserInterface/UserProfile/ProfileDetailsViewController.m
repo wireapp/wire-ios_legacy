@@ -118,6 +118,7 @@ typedef NS_ENUM(NSUInteger, ProfileUserAction) {
     [self createFooter];
     [self createGuestIndicator];
     
+    self.view.backgroundColor = [UIColor wr_colorFromColorScheme:ColorSchemeColorBackground];
     self.stackViewContainer = [[UIView alloc] initForAutoLayout];
     [self.view addSubview:self.stackViewContainer];
     self.teamsGuestIndicator.hidden = !self.showGuestLabel;

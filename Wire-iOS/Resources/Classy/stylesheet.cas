@@ -386,7 +386,7 @@ ProfileView {
 
 ProfileViewController {
     view: @{
-        backgroundColor: $color-background;
+        backgroundColor: $color-bar-background;
     }
     topSeparatorLineView: @{
         backgroundColor: $color-separator;
