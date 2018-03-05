@@ -19,9 +19,9 @@
 import Foundation
 
 protocol UserInterfaceIdiomProtocol {
-    static var idiom: UIUserInterfaceIdiom {get}
+    var userInterfaceIdiom: UIUserInterfaceIdiom { get }
 }
 
-struct UserInterfaceIdiom: UserInterfaceIdiomProtocol {
-    static var idiom: UIUserInterfaceIdiom = UIDevice.current.userInterfaceIdiom
+extension UIDevice: UserInterfaceIdiomProtocol {
+
 }

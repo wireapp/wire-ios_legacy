@@ -19,6 +19,6 @@
 import Foundation
 @testable import Wire
 
-struct MockUserInterfaceIdiom: UserInterfaceIdiomProtocol {
-    static var idiom: UIUserInterfaceIdiom = .unspecified
+final class MockUserInterfaceIdiom: UserInterfaceIdiomProtocol {
+    var userInterfaceIdiom: UIUserInterfaceIdiom = .unspecified
 }

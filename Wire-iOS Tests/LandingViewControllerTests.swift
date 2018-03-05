@@ -20,14 +20,24 @@
 import XCTest
 @testable import Wire
 
+extension UILayoutConstraintAxis : CustomStringConvertible {
+    public var description: String {
+        switch self {
+        case .horizontal : return "horizontal"
+        case .vertical : return "vertical"
+        }
+    }
+}
+
 final class LandingViewControllerTests: XCTestCase {
     
     var sut: LandingViewController!
     var mockParentViewControler: UIViewController! = UIViewController()
-    
+    var mockUserInterfaceIdiom: MockUserInterfaceIdiom! = MockUserInterfaceIdiom()
+
     override func setUp() {
         super.setUp()
-        sut = LandingViewController(userInterfaceIdiom: MockUserInterfaceIdiom.self)
+        sut = LandingViewController(idiom: mockUserInterfaceIdiom)
         mockParentViewControler.addChildViewController(sut)
     }
     
@@ -35,11 +45,12 @@ final class LandingViewControllerTests: XCTestCase {
         super.tearDown()        
         sut = nil
         mockParentViewControler = nil
+        mockUserInterfaceIdiom = nil
     }
     
     func testThatStackViewAxisChanagesWhenSizeClassChanges() {
         // GIVEN
-        MockUserInterfaceIdiom.idiom = .pad
+        mockUserInterfaceIdiom.userInterfaceIdiom = .pad
         var traitCollection = UITraitCollection(horizontalSizeClass: .regular)
         mockParentViewControler.setOverrideTraitCollection(traitCollection, forChildViewController: sut)
         sut.traitCollectionDidChange(nil)
@@ -56,7 +67,7 @@ final class LandingViewControllerTests: XCTestCase {
 
     func testThatStackViewAxisDoesNotChanagesWhenSizeClassChangesOnIPhone() {
         // GIVEN
-        MockUserInterfaceIdiom.idiom = .phone
+        mockUserInterfaceIdiom.userInterfaceIdiom = .phone
         var traitCollection = UITraitCollection(horizontalSizeClass: .regular)
         mockParentViewControler.setOverrideTraitCollection(traitCollection, forChildViewController: sut)
         sut.traitCollectionDidChange(nil)
