@@ -21,20 +21,28 @@ import Foundation
 
 class ParticipantsSectionController: GroupDetailsSectionController {
     
+    fileprivate weak var collectionView: UICollectionView?
     private weak var delegate: GroupDetailsSectionControllerDelegate?
     private let participants: [ZMBareUser]
     private let conversation: ZMConversation
+    private var token: AnyObject?
     
     init(participants: [ZMBareUser], conversation: ZMConversation, delegate: GroupDetailsSectionControllerDelegate) {
         self.participants = participants
         self.conversation = conversation
         self.delegate = delegate
+        
+        super.init()
+        
+        token = UserChangeInfo.add(observer: self, for: nil, userSession: ZMUserSession.shared()!)
     }
     
     override func prepareForUse(in collectionView : UICollectionView?) {
         super.prepareForUse(in: collectionView)
         
         collectionView?.register(GroupDetailsParticipantCell.self, forCellWithReuseIdentifier: GroupDetailsParticipantCell.zm_reuseIdentifier)
+        
+        self.collectionView = collectionView
     }
     
     override var sectionTitle: String {
@@ -62,6 +70,16 @@ class ParticipantsSectionController: GroupDetailsSectionController {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let user = participants[indexPath.row] as? ZMUser else { return }
         delegate?.presentDetails(for: user)
+    }
+    
+}
+
+extension ParticipantsSectionController: ZMUserObserver {
+    
+    func userDidChange(_ changeInfo: UserChangeInfo) {
+        guard changeInfo.connectionStateChanged || changeInfo.nameChanged else { return }
+        
+        collectionView?.reloadData()
     }
     
 }
