@@ -35,9 +35,9 @@ public class GuestIndicator: UIImageView, Themeable {
     var iconColor: UIColor {
         switch self.colorSchemeVariant {
         case .dark:
-            return UIColor.wr_color(fromColorScheme: ColorSchemeColorTextPlaceholder, variant: colorSchemeVariant)
+            return UIColor(white: 1.0, alpha: 0.64)
         case .light:
-            return UIColor.wr_color(fromColorScheme: ColorSchemeColorIconNormal, variant: colorSchemeVariant)
+            return UIColor(rgb: 0x33373A, alpha: 0.4)
         }
     }
     
