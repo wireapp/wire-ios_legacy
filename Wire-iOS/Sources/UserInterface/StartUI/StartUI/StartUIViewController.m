@@ -107,12 +107,14 @@ static NSUInteger const StartUIInitiallyShowsKeyboardConversationThreshold = 10;
     self.title = (team != nil ? team.name : ZMUser.selfUser.displayName).localizedUppercaseString;
     self.searchHeaderViewController.delegate = self;
     self.searchHeaderViewController.allowsMultipleSelection = NO;
+    self.searchHeaderViewController.view.backgroundColor = [UIColor wr_colorFromColorScheme:ColorSchemeColorSearchBarBackground variant:ColorSchemeVariantDark];
     [self addChildViewController:self.searchHeaderViewController];
     [self.view addSubview:self.searchHeaderViewController.view];
     [self.searchHeaderViewController didMoveToParentViewController:self];
     
     self.groupSelector = [[SearchGroupSelector alloc] initWithVariant:ColorSchemeVariantDark];
     self.groupSelector.translatesAutoresizingMaskIntoConstraints = NO;
+    self.groupSelector.backgroundColor = [UIColor wr_colorFromColorScheme:ColorSchemeColorSearchBarBackground variant:ColorSchemeVariantDark];
     @weakify(self);
     self.groupSelector.onGroupSelected = ^(SearchGroup group) {
         @strongify(self);
