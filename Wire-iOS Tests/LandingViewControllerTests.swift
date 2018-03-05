@@ -42,10 +42,10 @@ final class LandingViewControllerTests: XCTestCase {
     }
     
     override func tearDown() {
-        super.tearDown()        
         sut = nil
         mockParentViewControler = nil
         mockUserInterfaceIdiom = nil
+        super.tearDown()
     }
     
     func testThatStackViewAxisChanagesWhenSizeClassChanges() {
