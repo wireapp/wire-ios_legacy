@@ -342,7 +342,7 @@ static NSMutableDictionary *correlationFormatters;
         newAccessibilityLabel = @"";
     }
     
-    if (!self.guestIndicator.hidden) {
+    if ([self isUserGuest]) {
         newAccessibilityLabel = [NSString stringWithFormat:@"%@ (%@)", newAccessibilityLabel, NSLocalizedString(@"participants.avatar.guest.title", @"")];
     }
     
@@ -454,15 +454,18 @@ static NSMutableDictionary *correlationFormatters;
     self.subtitleLabel.hidden = nil == subtitle || [subtitle.string isEqualToString:@""];
 }
 
+- (BOOL)isUserGuest
+{
+    return (nil != self.team && !self.user.isTeamMember);
+}
+
 - (void)updateGuestIndicator
 {
     CGFloat rightMargin = [WAZUIMagic cgFloatForIdentifier:@"people_picker.search_results_mode.person_tile_right_margin"];
 
-    if (nil != self.team && !self.user.isTeamMember) {
+    if (self.isUserGuest) {
         if (nil == self.guestIndicator) {
-            UIColor *guestIconColor = [UIColor wr_colorFromColorScheme:ColorSchemeColorSectionText variant:self.colorSchemeVariant];
-            self.guestIndicator = [[UIImageView alloc] initWithImage:[UIImage imageForIcon:ZetaIconTypeGuest iconSize:ZetaIconSizeTiny color:guestIconColor]];
-            self.guestIndicator.contentMode = UIViewContentModeCenter;
+            self.guestIndicator = [[GuestIndicator alloc] init];
             [self.guestIndicator setContentHuggingPriority:UILayoutPriorityRequired forAxis:UILayoutConstraintAxisHorizontal];
             [self.guestIndicator setContentCompressionResistancePriority:UILayoutPriorityRequired forAxis:UILayoutConstraintAxisHorizontal];
             [self.swipeView addSubview:self.guestIndicator];

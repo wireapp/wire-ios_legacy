@@ -29,11 +29,20 @@ public class GuestIndicator: UIImageView, Themeable {
     }
     
     func applyColorScheme(_ colorSchemeVariant: ColorSchemeVariant) {
-        image = UIImage(for: .guest, iconSize: .tiny, color: UIColor.wr_color(fromColorScheme: ColorSchemeColorIconNormal, variant: colorSchemeVariant))
+        image = UIImage(for: .guest, iconSize: .tiny, color: iconColor)
+    }
+    
+    var iconColor: UIColor {
+        switch self.colorSchemeVariant {
+        case .dark:
+            return UIColor.wr_color(fromColorScheme: ColorSchemeColorTextPlaceholder, variant: colorSchemeVariant)
+        case .light:
+            return UIColor.wr_color(fromColorScheme: ColorSchemeColorIconNormal, variant: colorSchemeVariant)
+        }
     }
     
     init() {
-        super.init(image: UIImage(for: .guest, iconSize: .tiny, color: UIColor.wr_color(fromColorScheme: ColorSchemeColorIconNormal, variant: colorSchemeVariant)))
+        super.init(image: UIImage(for: .guest, iconSize: .tiny, color: iconColor))
         contentMode = .scaleToFill
         setContentCompressionResistancePriority(UILayoutPriorityRequired, for: .vertical)
         setContentCompressionResistancePriority(UILayoutPriorityRequired, for: .horizontal)

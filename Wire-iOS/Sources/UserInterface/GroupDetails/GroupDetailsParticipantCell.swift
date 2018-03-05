@@ -37,7 +37,7 @@ class GroupDetailsParticipantCell: UICollectionViewCell, Themeable {
     let titleLabel = UILabel()
     let subtitleLabel = UILabel()
     let accessoryActionButton = IconButton()
-    let guestIconView = UIImageView()
+    let guestIconView = GuestIndicator()
     let verifiedIconView = UIImageView()
     var contentStackView : UIStackView!
     var titleStackView : UIStackView!
@@ -78,8 +78,6 @@ class GroupDetailsParticipantCell: UICollectionViewCell, Themeable {
     
     fileprivate func setup() {
         guestIconView.translatesAutoresizingMaskIntoConstraints = false
-        guestIconView.contentMode = .center
-        guestIconView.accessibilityIdentifier = "img.guest"
         
         verifiedIconView.image = WireStyleKit.imageOfShieldverified()
         verifiedIconView.translatesAutoresizingMaskIntoConstraints = false
@@ -149,7 +147,6 @@ class GroupDetailsParticipantCell: UICollectionViewCell, Themeable {
     func applyColorScheme(_ colorSchemeVariant: ColorSchemeVariant) {
         backgroundColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorBarBackground, variant: colorSchemeVariant)
         separator.backgroundColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorCellSeparator, variant: colorSchemeVariant)
-        guestIconView.image = UIImage(for: .guest, iconSize: .tiny, color: UIColor.wr_color(fromColorScheme: ColorSchemeColorSectionText, variant: colorSchemeVariant))
         accessoryActionButton.setIconColor(UIColor.wr_color(fromColorScheme: ColorSchemeColorSectionText, variant: colorSchemeVariant), for: .normal)
         titleLabel.textColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorTextForeground, variant: colorSchemeVariant)
         subtitleLabel.textColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorSectionText, variant: colorSchemeVariant)
