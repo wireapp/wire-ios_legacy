@@ -148,7 +148,7 @@ final class LandingViewController: UIViewController {
 
     /// init method for injecting mock UserInterfaceIdiomProtocol
     ///
-    /// - Parameter userInterfaceIdiom: a struct Type compliant with UserInterfaceIdiomProtocol. Default Type is UserInterfaceIdiom.self. Provide this param for testing only.
+    /// - Parameter userInterfaceIdiom: Provide this param for testing only
     init(idiom: UserInterfaceIdiomProtocol = UIDevice.current) {
         self.idiom = idiom
         
