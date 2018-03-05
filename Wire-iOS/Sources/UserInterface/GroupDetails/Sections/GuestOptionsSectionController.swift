@@ -28,10 +28,12 @@ class GuestOptionsSectionController: GroupDetailsSectionController {
     
     private weak var delegate: GuestOptionsSectionControllerDelegate?
     private let conversation: ZMConversation
+    private let syncCompleted: Bool
     
-    init(conversation: ZMConversation, delegate: GuestOptionsSectionControllerDelegate) {
+    init(conversation: ZMConversation, delegate: GuestOptionsSectionControllerDelegate, syncCompleted: Bool) {
         self.delegate = delegate
         self.conversation = conversation
+        self.syncCompleted = syncCompleted
     }
     
     override func prepareForUse(in collectionView: UICollectionView?) {
@@ -50,6 +52,8 @@ class GuestOptionsSectionController: GroupDetailsSectionController {
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: GroupDetailsGuestOptionsCell.zm_reuseIdentifier, for: indexPath) as! GroupDetailsGuestOptionsCell
         cell.isOn = conversation.allowGuests
+        cell.isUserInteractionEnabled = syncCompleted
+        cell.alpha = syncCompleted ? 1 : 0.48
         return cell
     }
     
