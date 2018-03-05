@@ -163,7 +163,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d新連結</string>
+        <string>%d條新連結</string>
       </dict>
     </dict>
     <key>conversation.silenced.status.message.image</key>
