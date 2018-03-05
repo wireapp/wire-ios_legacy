@@ -36,10 +36,11 @@ final class LandingViewControllerTests: XCTestCase {
     
     func testThatStackViewAxisChanagesWhenSizeClassChanges() {
         // GIVEN
+        MockIdiomSizeClassOrientation.currentIdiom = .pad
         MockIdiomSizeClassOrientation.currentHorizontalSizeClass = .regular
         MockIdiomSizeClassOrientation.currentOrientation = .portrait
         sut.traitCollectionDidChange(nil)
-        XCTAssertEqual(sut.buttonStackView.axis, .horizontal, "buttonStackView.axis \(sut.buttonStackView.axis)")
+        XCTAssertEqual(sut.buttonStackView.axis, .horizontal, "buttonStackView.axis \(String(describing: sut.buttonStackView.axis))")
         
         // WHEN
         MockIdiomSizeClassOrientation.currentHorizontalSizeClass = .compact
