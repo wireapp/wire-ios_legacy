@@ -16,20 +16,22 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-
 import Foundation
 @testable import Wire
 
+
+/// Mock IdiomSizeClassOrientation for tests. To simulate device property updating, modify currentIdiom and/or currentHorizontalSizeClass and/or currentOrientation in the test.
 struct MockIdiomSizeClassOrientation: UIIdiomSizeClassOrientationProtocol {
     var idiom: UIUserInterfaceIdiom
     var horizontalSizeClass: UIUserInterfaceSizeClass?
     var orientation: Orientation?
-    
+
     static var currentIdiom = UIUserInterfaceIdiom.unspecified
     static var currentHorizontalSizeClass = UIUserInterfaceSizeClass.unspecified
     static var currentOrientation = Orientation.unknown
-    
+
     static func current() -> UIIdiomSizeClassOrientationProtocol {
         return MockIdiomSizeClassOrientation(idiom: currentIdiom, horizontalSizeClass: currentHorizontalSizeClass, orientation: currentOrientation)
     }
 }
+

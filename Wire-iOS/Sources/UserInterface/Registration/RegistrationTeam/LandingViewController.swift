@@ -145,7 +145,11 @@ final class LandingViewController: UIViewController {
         button.addTarget(self, action: #selector(LandingViewController.cancelButtonTapped(_:)), for: .touchUpInside)
         return button
     }()
-    
+
+
+    /// init method for injecting mock UIIdiomSizeClassOrientation
+    ///
+    /// - Parameter uIIdiomSizeClassOrientationProtocol: default is UIIdiomSizeClassOrientation.self, for tests you may inject your mock UIIdiomSizeClassOrientation
     init(_ uIIdiomSizeClassOrientationProtocol: UIIdiomSizeClassOrientationProtocol.Type = UIIdiomSizeClassOrientation.self) {
         self.uIIdiomSizeClassOrientationProtocol = uIIdiomSizeClassOrientationProtocol
         
