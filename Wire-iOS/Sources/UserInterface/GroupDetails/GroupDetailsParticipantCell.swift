@@ -37,7 +37,7 @@ class GroupDetailsParticipantCell: UICollectionViewCell, Themeable {
     let titleLabel = UILabel()
     let subtitleLabel = UILabel()
     let accessoryActionButton = IconButton()
-    let guestIconView = GuestIndicator()
+    let guestIconView = UIImageView()
     let verifiedIconView = UIImageView()
     var contentStackView : UIStackView!
     var titleStackView : UIStackView!
@@ -78,6 +78,8 @@ class GroupDetailsParticipantCell: UICollectionViewCell, Themeable {
     
     fileprivate func setup() {
         guestIconView.translatesAutoresizingMaskIntoConstraints = false
+        guestIconView.contentMode = .center
+        guestIconView.accessibilityIdentifier = "img.guest"
         
         verifiedIconView.image = WireStyleKit.imageOfShieldverified()
         verifiedIconView.translatesAutoresizingMaskIntoConstraints = false
@@ -150,6 +152,7 @@ class GroupDetailsParticipantCell: UICollectionViewCell, Themeable {
         accessoryActionButton.setIconColor(UIColor.wr_color(fromColorScheme: ColorSchemeColorSectionText, variant: colorSchemeVariant), for: .normal)
         titleLabel.textColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorTextForeground, variant: colorSchemeVariant)
         subtitleLabel.textColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorSectionText, variant: colorSchemeVariant)
+        guestIconView.image = UIImage(for: .guest, iconSize: .tiny, color: UIColor.wr_color(fromColorScheme: ColorSchemeColorIconGuest, variant: colorSchemeVariant))
     }
     
     public func configure(with user: ZMBareUser, conversation: ZMConversation) {
