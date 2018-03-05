@@ -32,7 +32,7 @@ final class LandingViewController: UIViewController {
 
     private let tracker = AnalyticsTracker(context: AnalyticsContextRegistrationEmail)
 
-    fileprivate var uIIdiomSizeClassOrientationProtocol: UIIdiomSizeClassOrientationProtocol.Type
+    fileprivate var userInterfaceIdiom: UserInterfaceIdiomProtocol.Type
 
     // MARK: - UI styles
 
@@ -146,12 +146,11 @@ final class LandingViewController: UIViewController {
         return button
     }()
 
-
-    /// init method for injecting mock UIIdiomSizeClassOrientation
+    /// init method for injecting mock UserInterfaceIdiomProtocol
     ///
-    /// - Parameter uIIdiomSizeClassOrientationProtocol: default is UIIdiomSizeClassOrientation.self, for tests you may inject your mock UIIdiomSizeClassOrientation
-    init(_ uIIdiomSizeClassOrientationProtocol: UIIdiomSizeClassOrientationProtocol.Type = UIIdiomSizeClassOrientation.self) {
-        self.uIIdiomSizeClassOrientationProtocol = uIIdiomSizeClassOrientationProtocol
+    /// - Parameter userInterfaceIdiom: a struct Type compliant with UserInterfaceIdiomProtocol. Default Type is UserInterfaceIdiom.self. Provide this param for testing only.
+    init(userInterfaceIdiom: UserInterfaceIdiomProtocol.Type = UserInterfaceIdiom.self) {
+        self.userInterfaceIdiom = userInterfaceIdiom
         
         super.init(nibName: nil, bundle: nil)
     }
@@ -272,15 +271,13 @@ final class LandingViewController: UIViewController {
     }
 
     func updateStackViewAxis() {
-        let currentIdiomSizeClassOrientation = uIIdiomSizeClassOrientationProtocol.current()
-        guard currentIdiomSizeClassOrientation.idiom == .pad else { return }
+        let idiom = userInterfaceIdiom.idiom
+        guard idiom == .pad else { return }
 
-        switch currentIdiomSizeClassOrientation.horizontalSizeClass {
-        case .regular?:
+        switch self.traitCollection.horizontalSizeClass {
+        case .regular:
             buttonStackView.axis = .horizontal
-        case .compact?:
-            buttonStackView.axis = .vertical
-        case .unspecified?, .none:
+        default:
             buttonStackView.axis = .vertical
         }
     }
