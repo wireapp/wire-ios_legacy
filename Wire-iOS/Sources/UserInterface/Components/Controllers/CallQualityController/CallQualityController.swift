@@ -238,6 +238,7 @@ class CallQualityView : UIStackView {
 
         axis = .vertical
         spacing = 16
+        
         scoreLabel.text = [1, 3, 5].contains(buttonScore) ? labelText : ""
         scoreLabel.font = FontSpec(.medium, .regular).font
         scoreLabel.textAlignment = .center
@@ -258,8 +259,7 @@ class CallQualityView : UIStackView {
         
         scoreButton.accessibilityLabel = labelText
         constrain(scoreButton){scoreButton in
-            scoreButton.width == 56
-            scoreButton.height == 56
+            scoreButton.height == scoreButton.width
         }
         
         addArrangedSubview(scoreLabel)
