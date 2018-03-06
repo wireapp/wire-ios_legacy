@@ -54,6 +54,9 @@ class GroupDetailsParticipantCell: UICollectionViewCell, Themeable {
     var titleStackView : UIStackView!
     var iconStackView : UIStackView!
     
+    fileprivate static let boldFont: UIFont! = FontSpec.init(.small, .regular).font!
+    fileprivate static let lightFont: UIFont! = FontSpec.init(.small, .light).font!
+    
     private func contentBackgroundColor(for colorSchemeVariant: ColorSchemeVariant) -> UIColor {
         return contentBackgroundColor ?? UIColor.wr_color(fromColorScheme: ColorSchemeColorBarBackground, variant: colorSchemeVariant)
     }
@@ -212,9 +215,9 @@ class GroupDetailsParticipantCell: UICollectionViewCell, Themeable {
             verifiedIconView.isHidden  = true
         }
         
-        if let handle = user.handle, !handle.isEmpty {
+        if let subtitle = subtitle(for: user), subtitle.length > 0 {
             subtitleLabel.isHidden = false
-            subtitleLabel.text = "@\(handle)"
+            subtitleLabel.attributedText = subtitle
         } else {
             subtitleLabel.isHidden = true
         }
@@ -222,6 +225,56 @@ class GroupDetailsParticipantCell: UICollectionViewCell, Themeable {
     
 }
 
+// MARK: - Subtitle
+
+extension GroupDetailsParticipantCell {
+    
+    func subtitle(for user: ZMBareUser) -> NSAttributedString? {
+        if user.isServiceUser, let service = user as? SearchServiceUser {
+            return subtitle(forServiceUser: service)
+        } else {
+            return subtitle(forRegularUser: user)
+        }
+    }
+    
+    private func subtitle(forRegularUser user: ZMBareUser) -> NSAttributedString {
+        var components: [NSAttributedString?] = []
+        
+        if let handle = user.handle, !handle.isEmpty {
+            components.append("@\(handle)" && GroupDetailsParticipantCell.boldFont)
+        }
+        
+        if let user = user as? ZMUser, let addressBookName = user.addressBookEntry?.cachedName {
+            let formatter = GroupDetailsParticipantCell.correlationFormatter(for: colorSchemeVariant)
+            components.append(formatter.correlationText(for: user, addressBookName: addressBookName))
+        }
+        
+        return components.flatMap({ $0 }).joined(separator: " · " && GroupDetailsParticipantCell.lightFont)
+    }
+    
+    private func subtitle(forServiceUser service: SearchServiceUser) -> NSAttributedString? {
+        guard let summary = service.summary else { return nil }
+        
+        return summary && GroupDetailsParticipantCell.boldFont
+    }
+    
+    private static var correlationFormatters:  [ColorSchemeVariant : AddressBookCorrelationFormatter] = [:]
+    private class func correlationFormatter(for colorSchemeVariant: ColorSchemeVariant) -> AddressBookCorrelationFormatter {
+        if let formatter = correlationFormatters[colorSchemeVariant] {
+            return formatter
+        }
+        
+        let color = UIColor.wr_color(fromColorScheme: ColorSchemeColorSectionText, variant: colorSchemeVariant)
+        let formatter = AddressBookCorrelationFormatter(lightFont: lightFont, boldFont: boldFont, color: color)
+        
+        correlationFormatters[colorSchemeVariant] = formatter
+        
+        return formatter
+    }
+    
+}
+
+// MARK: - Availability
 
 extension ZMBareUser {
     
