@@ -19,7 +19,7 @@
 import Foundation
 
 extension PingCell {
-    @objc func pointOfViewString(senderText: String) -> String? {
+    @objc func pingMessage(senderText: String) -> String? {
         guard let sender = self.message?.sender else { return nil }
         let pov = sender.pov
         let title = "content.ping.text".localized(pov: pov, args: senderText)

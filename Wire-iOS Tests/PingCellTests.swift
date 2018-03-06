@@ -22,24 +22,26 @@ import XCTest
 final class PingCellTests: XCTestCase {
 
     var sut: PingCell!
-    var originalAppleLanguages: String!
+    var originalAppleLanguages: [String]?
 
     override func setUp() {
         // change AppleLanguages to German, then restore to original language in tearDown()
-        originalAppleLanguages = UserDefaults.standard.string(forKey: "AppleLanguages")
+        if originalAppleLanguages == nil {
+            originalAppleLanguages = UserDefaults.standard.stringArray(forKey: "AppleLanguages")
+        }
         UserDefaults.standard.set(["de"], forKey: "AppleLanguages")
+        UserDefaults.standard.synchronize()
 
         super.setUp()
+
         sut = PingCell()
     }
 
     override func tearDown() {
         sut = nil
-        if let originalAppleLanguages = originalAppleLanguages {
-            UserDefaults.standard.set([originalAppleLanguages], forKey: "AppleLanguages")
-        } else {
-            UserDefaults.standard.removeObject(forKey: "AppleLanguages")
-        }
+        UserDefaults.standard.set(originalAppleLanguages, forKey: "AppleLanguages")
+        UserDefaults.standard.synchronize()
+
         super.tearDown()
     }
 
@@ -50,10 +52,10 @@ final class PingCellTests: XCTestCase {
         sut.configure(for: MockMessageFactory.pingMessage(), layoutProperties: nil)
 
         // WHEN
-        let pointOfViewString = sut.pointOfViewString(senderText: senderText)
+        let pingMessage = sut.pingMessage(senderText: senderText)
 
         // THEN
-        XCTAssertEqual(pointOfViewString, "Du hast gepingt", "pointOfViewString is \(String(describing: pointOfViewString))")
+        XCTAssertEqual(pingMessage, "Du hast gepingt", "pointOfViewString is \(String(describing: pingMessage))")
     }
 
     func testSomeonePingedInGerman() {
@@ -63,10 +65,10 @@ final class PingCellTests: XCTestCase {
         sut.configure(for: MockMessageFactory.pingMessage(), layoutProperties: nil)
 
         // WHEN
-        let pointOfViewString = sut.pointOfViewString(senderText: senderText)
+        let pingMessage = sut.pingMessage(senderText: senderText)
 
         // THEN
-        XCTAssertEqual(pointOfViewString, "Bill hat gepingt", "pointOfViewString is \(String(describing: pointOfViewString))")
+        XCTAssertEqual(pingMessage, "Bill hat gepingt", "pointOfViewString is \(String(describing: pingMessage))")
     }
 }
 
