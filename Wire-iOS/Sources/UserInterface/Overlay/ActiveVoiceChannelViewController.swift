@@ -17,6 +17,7 @@
 //
 
 import Foundation
+import StoreKit
 
 fileprivate let zmLog = ZMSLog(tag: "calling")
 
@@ -209,6 +210,13 @@ extension ActiveVoiceChannelViewController : WireCallCenterCallStateObserver {
 extension ActiveVoiceChannelViewController : CallQualityViewControllerDelegate {
     
     func callQualityController(_ controller: CallQualityViewController, didSelect score: Int) {
+        
+        if score >= 4 {
+            if #available(iOS 10.3, *) {
+                SKStoreReviewController.requestReview()
+            }
+        }
+        
         controller.dismiss(animated: true, completion: nil)
         CallQualityScoreProvider.shared.userScore = score
     }

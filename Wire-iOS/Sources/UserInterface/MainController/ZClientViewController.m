@@ -731,7 +731,9 @@
 - (void)callQualityController:(CallQualityViewController *)controller didSelect:(NSInteger)score
 {
     if (score >= 4) {
-        [SKStoreReviewController requestReview];
+        if (@available(iOS 10.3, *)) {
+            [SKStoreReviewController requestReview];
+        }
     }
     [controller dismissViewControllerAnimated:YES completion:NULL];
 }
