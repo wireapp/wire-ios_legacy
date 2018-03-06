@@ -160,14 +160,10 @@ open class CameraCell: UICollectionViewCell, Reusable {
         cameraController.previewLayer.frame = self.contentView.bounds
         self.updateVideoOrientation()
     }
-    
-    fileprivate func updateVideoOrientation() {
-        guard var cameraController = self.cameraController else {
-            return
-        }
-        
+
+    var newCaptureVideoOrientation: AVCaptureVideoOrientation {
         let newOrientation: AVCaptureVideoOrientation
-        
+
         switch deviceOrientation.orientation {
         case .portrait:
             newOrientation = .portrait;
@@ -184,7 +180,17 @@ open class CameraCell: UICollectionViewCell, Reusable {
         default:
             newOrientation = .portrait;
         }
-        
+
+        return newOrientation
+    }
+
+    fileprivate func updateVideoOrientation() {
+        guard var cameraController = self.cameraController else {
+            return
+        }
+
+        let newOrientation = newCaptureVideoOrientation
+
         if UIDevice.current.userInterfaceIdiom == .pad {
             if let connection = cameraController.previewLayer.connection,
                 connection.isVideoOrientationSupported {

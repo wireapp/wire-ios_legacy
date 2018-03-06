@@ -50,26 +50,33 @@ final class CameraCellTests: XCTestCase {
         super.tearDown()
     }
 
+    func testThatDefaultSnapshotVideoOrientationIsPortrait(){
+        // GIVEN
+        let newCaptureVideoOrientation = sut.newCaptureVideoOrientation
 
-
-    /// Example checker method which can be reused in different tests
-    ///
-    /// - Parameters:
-    ///   - file: optional, for XCTAssert logging error source
-    ///   - line: optional, for XCTAssert logging error source
-    fileprivate func checkerExample(file: StaticString = #file, line: UInt = #line) {
-        XCTAssert(true, file: file, line: line)
+        // WHEN & THEN
+        XCTAssertEqual(newCaptureVideoOrientation, .portrait, "newCaptureVideoOrientation is \(String(describing: newCaptureVideoOrientation))")
     }
 
-    func testExample(){
-        // GIVEN
+    func testThatNewCaptureVideoOrientationUpdatesAfterOrientationChanges(){
+        // case landscapeLeft
+        mockDeviceOrientation.orientation = .landscapeLeft
+        XCTAssertEqual(sut.newCaptureVideoOrientation, .landscapeRight)
+
+        // case landscapeRight
+        mockDeviceOrientation.orientation = .landscapeRight
+        XCTAssertEqual(sut.newCaptureVideoOrientation, .landscapeLeft)
+
+        // case portraitUpsideDown
+        mockDeviceOrientation.orientation = .portraitUpsideDown
+        XCTAssertEqual(sut.newCaptureVideoOrientation, .portraitUpsideDown)
+
+        // case portrait
         mockDeviceOrientation.orientation = .portrait
-        sut.deviceOrientationDidChange(nil)
-        let snapshotVideoOrientation = sut.cameraController?.snapshotVideoOrientation
-        XCTAssertEqual(snapshotVideoOrientation, .portrait, "snapshotVideoOrientation is \(String(describing: snapshotVideoOrientation))")
+        XCTAssertEqual(sut.newCaptureVideoOrientation, .portrait)
 
-        // WHEN
-
-        // THEN
+        // default
+        mockDeviceOrientation.orientation = .unknown
+        XCTAssertEqual(sut.newCaptureVideoOrientation, .portrait)
     }
 }
