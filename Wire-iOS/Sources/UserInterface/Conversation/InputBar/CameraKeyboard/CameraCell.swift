@@ -37,7 +37,7 @@ open class CameraCell: UICollectionViewCell, Reusable {
     
     fileprivate static let ciContext = CIContext(options: [:])
 
-    var deviceOrientation: DeviceOrientationProtocol
+    fileprivate var deviceOrientation: DeviceOrientationProtocol
 
     deinit {
         NotificationCenter.default.removeObserver(self)
@@ -275,5 +275,17 @@ open class CameraCell: UICollectionViewCell, Reusable {
         
         cameraController.currentCamera = cameraController.currentCamera == .front ? .back : .front
         Settings.shared().preferredCamera = cameraController.currentCamera
+    }
+}
+
+extension CameraCell {
+    /// init method for injecting mock DeviceOrientationProtocol
+    ///
+    /// - Parameters:
+    ///   - frame: frame of the cell
+    ///   - deviceOrientation: Provide this param for testing only
+    convenience init(frame: CGRect, deviceOrientation: DeviceOrientationProtocol = UIDevice.current) {
+        self.init(frame: frame)
+        self.deviceOrientation = deviceOrientation
     }
 }

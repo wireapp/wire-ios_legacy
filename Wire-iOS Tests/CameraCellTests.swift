@@ -33,18 +33,6 @@ extension AVCaptureVideoOrientation : CustomStringConvertible {
     }
 }
 
-extension CameraCell {
-    /// init method for injecting mock DeviceOrientationProtocol
-    ///
-    /// - Parameters:
-    ///   - frame: frame of the cell
-    ///   - deviceOrientation: Provide this param for testing only
-    convenience init(frame: CGRect, deviceOrientation: DeviceOrientationProtocol = UIDevice.current) {
-        self.init(frame: frame)
-        self.deviceOrientation = deviceOrientation
-    }
-}
-
 final class CameraCellTests: XCTestCase {
     
     var sut: CameraCell!
