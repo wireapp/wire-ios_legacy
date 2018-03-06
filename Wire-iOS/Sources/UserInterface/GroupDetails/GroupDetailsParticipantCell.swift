@@ -33,7 +33,7 @@ class GroupDetailsParticipantCell: UICollectionViewCell, Themeable {
     }
     
     let separator = UIView()
-    let avatar = UserImageView()
+    let avatar = BadgeUserImageView(magicPrefix: "people_picker.search_results_mode")
     let titleLabel = UILabel()
     let subtitleLabel = UILabel()
     let accessoryActionButton = IconButton()
@@ -91,10 +91,11 @@ class GroupDetailsParticipantCell: UICollectionViewCell, Themeable {
         
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         titleLabel.font = FontSpec.init(.normal, .light).font!
-        titleLabel.accessibilityIdentifier = "label.groupdetails.username"
+        titleLabel.accessibilityIdentifier = "name"
         
         subtitleLabel.translatesAutoresizingMaskIntoConstraints = false
         subtitleLabel.font = FontSpec.init(.small, .regular).font!
+        subtitleLabel.accessibilityIdentifier = "username"
         
         avatar.size = .small
         avatar.translatesAutoresizingMaskIntoConstraints = false
@@ -148,10 +149,10 @@ class GroupDetailsParticipantCell: UICollectionViewCell, Themeable {
     func applyColorScheme(_ colorSchemeVariant: ColorSchemeVariant) {
         backgroundColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorBarBackground, variant: colorSchemeVariant)
         separator.backgroundColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorCellSeparator, variant: colorSchemeVariant)
-        guestIconView.image = UIImage(for: .guest, iconSize: .tiny, color: UIColor.wr_color(fromColorScheme: ColorSchemeColorSectionText, variant: colorSchemeVariant))
         accessoryActionButton.setIconColor(UIColor.wr_color(fromColorScheme: ColorSchemeColorSectionText, variant: colorSchemeVariant), for: .normal)
         titleLabel.textColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorTextForeground, variant: colorSchemeVariant)
         subtitleLabel.textColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorSectionText, variant: colorSchemeVariant)
+        guestIconView.image = UIImage(for: .guest, iconSize: .tiny, color: UIColor.wr_color(fromColorScheme: ColorSchemeColorIconGuest, variant: colorSchemeVariant))
     }
     
     public func configure(with user: ZMBareUser, conversation: ZMConversation) {

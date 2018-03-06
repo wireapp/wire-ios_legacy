@@ -351,6 +351,8 @@ public class AddParticipantsViewController: UIViewController {
         ZMUserSession.shared()?.enqueueChanges({
             conversation.addParticipants(selectedUsers)
         })
+
+        Analytics.shared().tagAddParticipants(source:.conversationDetails, selectedUsers, allowGuests: conversation.allowGuests, in: conversation)
     }
 }
 

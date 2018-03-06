@@ -57,34 +57,33 @@ class SettingsTechnicalReportViewController: UITableViewController, MFMailCompos
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        title = NSLocalizedString("self.settings.technical_report_section.title", comment: "")
+        title = NSLocalizedString("self.settings.technical_report_section.title", comment: "").localizedUppercase
         tableView.backgroundColor = UIColor.clear
         tableView.isScrollEnabled = false
         tableView.separatorColor = UIColor(white: 1, alpha: 0.1)
     }
     
     func sendReport() {
-        let report = "Calling report"
-        
+        let fileName = "voice.log"
+        let attachmentData = AppDelegate.shared().currentVoiceLogData
+        let mailRecipient = NSLocalizedString("self.settings.technical_report.mail.recipient", comment: "")
+
         guard MFMailComposeViewController.canSendMail() else {
-            let activityViewController = UIActivityViewController(activityItems: [report as Any], applicationActivities: nil)
-            activityViewController.popoverPresentationController?.sourceView = sendReportCell.textLabel
-            guard let bounds = sendReportCell.textLabel?.bounds else { return }
-            activityViewController.popoverPresentationController?.sourceRect = bounds
-            self.present(activityViewController, animated: true, completion: nil)
+            DebugAlert.displayFallbackActivityController(logData: attachmentData(), logFileName: fileName, email: mailRecipient, from: self)
             return
         }
-        
+    
+        let report = "Calling report"
+
         let mailComposeViewController = MFMailComposeViewController()
         mailComposeViewController.mailComposeDelegate = self
-        mailComposeViewController.setToRecipients([NSLocalizedString("self.settings.technical_report.mail.recipient", comment: "")])
+        mailComposeViewController.setToRecipients([mailRecipient])
         mailComposeViewController.setSubject(NSLocalizedString("self.settings.technical_report.mail.subject", comment: ""))
-        let attachmentData = AppDelegate.shared().currentVoiceLogData
         
         if attachmentData().count > 0 && includedVoiceLogCell.accessoryType == .checkmark {
-            mailComposeViewController.addAttachmentData(attachmentData(), mimeType: "text/plain", fileName: "voice.log")
+            mailComposeViewController.addAttachmentData(attachmentData(), mimeType: "text/plain", fileName: fileName)
         }
-        
+    
         mailComposeViewController.setMessageBody(report, isHTML: false)
         self.present(mailComposeViewController, animated: true, completion: nil)
     }

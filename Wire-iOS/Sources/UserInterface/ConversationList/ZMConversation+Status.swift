@@ -446,6 +446,11 @@ final internal class GroupActivityMatcher: TypedConversationStatusMatcher {
                 
                 return self.addEmphasis(to: result, for: sender.displayName(in: conversation))
             }
+            else if systemMessage.userIsTheSender {
+                let senderName = sender.nameAsSender(in: conversation)
+                let result = "conversation.status.joined".localized(args: senderName) && type(of: self).regularStyle
+                return addEmphasis(to: result, for: senderName)
+            }
             else {
                 let usersList = systemMessage.users.map { $0.displayName(in: conversation) }.joined(separator: ", ")
                 

@@ -108,7 +108,7 @@ final class SearchGroupSelector: UIView {
             return
         }
         
-        backgroundColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorSearchBarBackground, variant: colorSchemeVariant)
+        backgroundColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorBarBackground, variant: colorSchemeVariant)
 
         addSubview(radioButtonsView)
 

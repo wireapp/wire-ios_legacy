@@ -1,4 +1,4 @@
-//
+////
 // Wire
 // Copyright (C) 2018 Wire Swiss GmbH
 //
@@ -18,18 +18,11 @@
 
 import Foundation
 
-extension UIViewController {
-    
-    func hideDefaultButtonTitle() {
-        guard navigationItem.backBarButtonItem == nil else { return }
-        
-        hideBackButtonTitle()
+extension Analytics {
+    @objc public func guestAttributes(in conversation: ZMConversation) -> [String : Any] {
+        return [
+            "is_allow_guests" : conversation.allowGuests,
+            "user_type" : ZMUser.selfUser().isGuest(in: conversation) ? "guest" : "user"
+        ]
     }
-    
-    func hideBackButtonTitle() {
-        let item = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
-        item.accessibilityLabel = "back"
-        navigationItem.backBarButtonItem = item
-    }
-    
 }

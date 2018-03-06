@@ -17,19 +17,8 @@
 //
 
 import Foundation
+@testable import Wire
 
-extension UIViewController {
-    
-    func hideDefaultButtonTitle() {
-        guard navigationItem.backBarButtonItem == nil else { return }
-        
-        hideBackButtonTitle()
-    }
-    
-    func hideBackButtonTitle() {
-        let item = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
-        item.accessibilityLabel = "back"
-        navigationItem.backBarButtonItem = item
-    }
-    
+final class MockUserInterfaceIdiom: UserInterfaceIdiomProtocol {
+    var userInterfaceIdiom: UIUserInterfaceIdiom = .unspecified
 }

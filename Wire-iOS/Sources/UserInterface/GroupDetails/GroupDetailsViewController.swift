@@ -30,17 +30,30 @@ class GroupDetailsViewController: UIViewController, ZMConversationObserver, Grou
     fileprivate var renameGroupSectionController : RenameGroupSectionController?
     fileprivate let emptyView = UIImageView()
     private var emptyViewVerticalConstraint: NSLayoutConstraint?
+    private var syncObserver: InitialSyncObserver!
+
+    var didCompleteInitialSync = false {
+        didSet {
+            collectionViewController.sections = computeVisibleSections()
+        }
+    }
     
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         return wr_supportedInterfaceOrientations
     }
 
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return ColorScheme.default().statusBarStyle
+    }
+    
     public init(conversation: ZMConversation) {
         self.conversation = conversation
         collectionViewController = SectionCollectionViewController()
         super.init(nibName: nil, bundle: nil)
-        collectionViewController.sections = computeVisibleSections()
         token = ConversationChangeInfo.add(observer: self, for: conversation)
+        syncObserver = InitialSyncObserver(in: ZMUserSession.shared()!) { [weak self] completed in
+            self?.didCompleteInitialSync = completed
+        }
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -70,7 +83,7 @@ class GroupDetailsViewController: UIViewController, ZMConversationObserver, Grou
         }
         
         [emptyView, collectionView, footerView, bottomSpacer].forEach(view.addSubview)
-        bottomSpacer.backgroundColor = .wr_color(fromColorScheme: ColorSchemeColorBackground)
+        bottomSpacer.backgroundColor = .wr_color(fromColorScheme: ColorSchemeColorBarBackground)
         
         constrain(view, collectionView, footerView, bottomSpacer) { container, collectionView, footerView, bottomSpacer in
             collectionView.top == container.top
@@ -107,6 +120,7 @@ class GroupDetailsViewController: UIViewController, ZMConversationObserver, Grou
         emptyView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         emptyViewVerticalConstraint = emptyView.centerYAnchor.constraint(equalTo: collectionView.centerYAnchor, constant: 0)
         emptyViewVerticalConstraint?.isActive = true
+        collectionViewController.sections = computeVisibleSections()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -135,7 +149,7 @@ class GroupDetailsViewController: UIViewController, ZMConversationObserver, Grou
         self.renameGroupSectionController = renameGroupSectionController
         
         if nil != ZMUser.selfUser().team {
-            let guestOptionsSectionController = GuestOptionsSectionController(conversation: conversation, delegate: self)
+            let guestOptionsSectionController = GuestOptionsSectionController(conversation: conversation, delegate: self, syncCompleted: didCompleteInitialSync)
             sections.append(guestOptionsSectionController)
         }
         let (participants, serviceUsers) = (conversation.sortedOtherParticipants, conversation.sortedServiceUsers)
