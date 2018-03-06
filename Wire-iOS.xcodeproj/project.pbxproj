@@ -665,8 +665,6 @@
 		87DCF49D1D34E9E600BB420F /* MapKit+Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87DCF4981D34E9E600BB420F /* MapKit+Helper.swift */; };
 		87DCF49E1D34E9E600BB420F /* ModalTopBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87DCF4991D34E9E600BB420F /* ModalTopBar.swift */; };
 		87DCF49F1D34E9E600BB420F /* NSUserDefaults+Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87DCF49A1D34E9E600BB420F /* NSUserDefaults+Location.swift */; };
-		87DCF4DE1D34EA4500BB420F /* SearchResultCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 87DCF4A41D34EA4500BB420F /* SearchResultCell.m */; };
-		87DCF4DF1D34EA4500BB420F /* SearchSectionHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 87DCF4A61D34EA4500BB420F /* SearchSectionHeaderView.m */; };
 		87DCF4E01D34EA4500BB420F /* TopPeopleCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 87DCF4A81D34EA4500BB420F /* TopPeopleCell.m */; };
 		87DCF4E51D34EA4500BB420F /* ActionSheetController+Invite.m in Sources */ = {isa = PBXBuildFile; fileRef = 87DCF4B41D34EA4500BB420F /* ActionSheetController+Invite.m */; };
 		87DCF4E61D34EA4500BB420F /* ShareItemProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 87DCF4B61D34EA4500BB420F /* ShareItemProvider.m */; };
@@ -2083,10 +2081,6 @@
 		87DCF4981D34E9E600BB420F /* MapKit+Helper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MapKit+Helper.swift"; sourceTree = "<group>"; };
 		87DCF4991D34E9E600BB420F /* ModalTopBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModalTopBar.swift; sourceTree = "<group>"; };
 		87DCF49A1D34E9E600BB420F /* NSUserDefaults+Location.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSUserDefaults+Location.swift"; sourceTree = "<group>"; };
-		87DCF4A31D34EA4500BB420F /* SearchResultCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchResultCell.h; sourceTree = "<group>"; };
-		87DCF4A41D34EA4500BB420F /* SearchResultCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchResultCell.m; sourceTree = "<group>"; };
-		87DCF4A51D34EA4500BB420F /* SearchSectionHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchSectionHeaderView.h; sourceTree = "<group>"; };
-		87DCF4A61D34EA4500BB420F /* SearchSectionHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchSectionHeaderView.m; sourceTree = "<group>"; };
 		87DCF4A71D34EA4500BB420F /* TopPeopleCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TopPeopleCell.h; sourceTree = "<group>"; };
 		87DCF4A81D34EA4500BB420F /* TopPeopleCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TopPeopleCell.m; sourceTree = "<group>"; };
 		87DCF4B31D34EA4500BB420F /* ActionSheetController+Invite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ActionSheetController+Invite.h"; sourceTree = "<group>"; };
@@ -4200,10 +4194,6 @@
 		87DCF4A21D34EA4500BB420F /* Cells */ = {
 			isa = PBXGroup;
 			children = (
-				87DCF4A31D34EA4500BB420F /* SearchResultCell.h */,
-				87DCF4A41D34EA4500BB420F /* SearchResultCell.m */,
-				87DCF4A51D34EA4500BB420F /* SearchSectionHeaderView.h */,
-				87DCF4A61D34EA4500BB420F /* SearchSectionHeaderView.m */,
 				87DCF4A71D34EA4500BB420F /* TopPeopleCell.h */,
 				87DCF4A81D34EA4500BB420F /* TopPeopleCell.m */,
 				1671D6D0200CDC380022D289 /* InviteTeamMemberCell.swift */,
@@ -6423,7 +6413,6 @@
 				BF5C379B1C0E0E8700EA11E3 /* ParticipantDeviceCell.m in Sources */,
 				BA8DC27C1B5FF5CF00103262 /* SketchColorPickerController.m in Sources */,
 				871BC2871D34F8F800DF0793 /* UIFont+MonoSpaced.swift in Sources */,
-				87DCF4DF1D34EA4500BB420F /* SearchSectionHeaderView.m in Sources */,
 				D5490A1D20050AAA0057EAA8 /* TeamMemberInviteViewController.swift in Sources */,
 				F194AD7A1E3F3BBC00B0049B /* UIApplication+RTL.swift in Sources */,
 				871BC2351D34F8F800DF0793 /* GiphyNavigationBar.m in Sources */,
@@ -6568,7 +6557,6 @@
 				871BC24B1D34F8F800DF0793 /* UIView+WAZUIMagicExtensions.m in Sources */,
 				D5168F282008ED0700F8222A /* KeyboardBlockObserver.swift in Sources */,
 				BF0BDF6D1DA6794E003C61DE /* ConversationInputBarViewController+Ephemeral.swift in Sources */,
-				87DCF4DE1D34EA4500BB420F /* SearchResultCell.m in Sources */,
 				F12CDADF1E43868200CEFCEB /* ChangePhoneViewController.swift in Sources */,
 				EF2127251FB9DFE300625A9B /* RegistrationPhoneFlowViewController.m in Sources */,
 				871BC2931D34F8F800DF0793 /* UIView+WR_Snapshot.m in Sources */,
