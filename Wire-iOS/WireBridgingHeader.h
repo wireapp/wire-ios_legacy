@@ -76,6 +76,7 @@
 #import "ProfileViewController+internal.h"
 #import "StartUIViewController.h"
 #import "StartUIViewController+internal.h"
+#import "PingCell.h"
 
 // View Controllers
 #import "ZClientViewController.h"
