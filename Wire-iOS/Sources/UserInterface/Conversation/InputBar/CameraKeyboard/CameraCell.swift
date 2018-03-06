@@ -27,7 +27,7 @@ public protocol CameraCellDelegate: class {
 }
 
 open class CameraCell: UICollectionViewCell, Reusable {
-    var cameraController: CameraControllerProtocol?
+    var cameraController: CameraController?
     
     let expandButton = IconButton()
     let takePictureButton = IconButton()
@@ -48,11 +48,8 @@ open class CameraCell: UICollectionViewCell, Reusable {
     /// - Parameters:
     ///   - frame: frame of the cell
     ///   - deviceOrientation: Provide this param for testing only
-    ///   - cameraController: Provide this param for testing only
-    convenience init(frame: CGRect, deviceOrientation: DeviceOrientationProtocol = UIDevice.current,
-                     cameraController: CameraControllerProtocol = CameraController()) {
+    convenience init(frame: CGRect, deviceOrientation: DeviceOrientationProtocol = UIDevice.current) {
         self.init(frame: frame)
-        self.cameraController = cameraController
         self.deviceOrientation = deviceOrientation
     }
 
@@ -62,7 +59,7 @@ open class CameraCell: UICollectionViewCell, Reusable {
 
         super.init(frame: frame)
         
-        if var cameraController = self.cameraController {
+        if let cameraController = self.cameraController {
             cameraController.previewLayer.frame = self.contentView.bounds
             cameraController.currentCamera = Settings.shared().preferredCamera
             cameraController.previewLayer.videoGravity = AVLayerVideoGravityResizeAspectFill
@@ -185,7 +182,7 @@ open class CameraCell: UICollectionViewCell, Reusable {
     }
 
     fileprivate func updateVideoOrientation() {
-        guard var cameraController = self.cameraController else {
+        guard let cameraController = self.cameraController else {
             return
         }
 
@@ -282,7 +279,7 @@ open class CameraCell: UICollectionViewCell, Reusable {
     }
     
     func changeCameraPressed(_ sender: AnyObject) {
-        guard var cameraController = self.cameraController else {
+        guard let cameraController = self.cameraController else {
             return
         }
         
