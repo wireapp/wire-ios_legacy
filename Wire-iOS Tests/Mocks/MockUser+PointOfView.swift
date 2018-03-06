@@ -19,7 +19,8 @@
 import Foundation
 
 extension MockUser {
+    static var currentPointOfView: PointOfView = .none
     var pov: PointOfView {
-        return self.isSelfUser ? .secondPerson : .thirdPerson
+        return MockUser.currentPointOfView
     }
 }
