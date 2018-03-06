@@ -208,35 +208,19 @@ class CallQualityViewController : UIViewController, UIGestureRecognizerDelegate 
         super.willTransition(to: newCollection, with: coordinator)
         coordinator.animate(alongsideTransition: { _ in self.updateLayout(for: newCollection) })
     }
-     
+
+    func updateLayout(isRegular: Bool) {
+        ipad_centerYConstraint.isActive = isRegular
+        ipad_centerXConstraint.isActive = isRegular
+        iphone_leadingConstraint.isActive = !isRegular
+        iphone_trailingConstraint.isActive = !isRegular
+        iphone_bottomConstraint.isActive = !isRegular
+    }
+
     func updateLayout(for traitCollection: UITraitCollection) {
-        
-        switch traitCollection.horizontalSizeClass {
-        case .regular:
-            updateLayoutForRegularSize()
-
-        default:
-            updateLayoutForCompactSize()
-        }
-
+        updateLayout(isRegular: traitCollection.horizontalSizeClass == .regular)
     }
 
-    func updateLayoutForRegularSize() {
-        ipad_centerYConstraint.isActive = true
-        ipad_centerXConstraint.isActive = true
-        iphone_leadingConstraint.isActive = false
-        iphone_trailingConstraint.isActive = false
-        iphone_bottomConstraint.isActive = false
-    }
-
-    func updateLayoutForCompactSize() {
-        ipad_centerYConstraint.isActive = false
-        ipad_centerXConstraint.isActive = false
-        iphone_leadingConstraint.isActive = true
-        iphone_trailingConstraint.isActive = true
-        iphone_bottomConstraint.isActive = true
-    }
-    
 }
 
 class CallQualityView : UIStackView {

@@ -42,13 +42,8 @@ class CallQualityControllerTests: ZMSnapshotTestCase {
 
     }
 
-    func configure(view: UIView, isIpad: Bool) {
-        if isIpad {
-            print("Is iPad")
-            qualityController?.updateLayoutForRegularSize()
-        } else {
-            qualityController?.updateLayoutForCompactSize()
-        }
+    func configure(view: UIView, isTablet: Bool) {
+        qualityController?.updateLayout(isRegular: isTablet)
     }
 
     func testSurveyInterface() {
