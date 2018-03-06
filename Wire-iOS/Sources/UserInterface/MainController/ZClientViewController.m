@@ -16,10 +16,9 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 // 
 
-
-
 @import QuartzCore;
 @import PureLayout;
+@import StoreKit;
 
 #import "ZClientViewController+Internal.h"
 
@@ -68,7 +67,7 @@
 
 @end
 
-@interface ZClientViewController (QualitySurvey) <CallQualityViewControllerDelegate>
+@interface ZClientViewController (QualitySurvey) <CallQualityViewControllerDelegate, UIViewControllerTransitioningDelegate>
     #pragma mark TODO: Figure out when to display the call view controller
 @end
 
@@ -181,6 +180,7 @@
 {
     CallQualityViewController *callController = [CallQualityViewController defaultSurveyController];
     callController.delegate = self;
+    callController.transitioningDelegate = self;
     [self presentViewController:callController animated:YES completion:NULL];
 }
 
@@ -730,12 +730,33 @@
 
 - (void)callQualityController:(CallQualityViewController *)controller didSelect:(NSInteger)score
 {
+    if (score >= 4) {
+        [SKStoreReviewController requestReview];
+    }
     [controller dismissViewControllerAnimated:YES completion:NULL];
 }
 
 - (void)callQualityControllerDidFinishWithoutScore:(CallQualityViewController *)controller
 {
     [controller dismissViewControllerAnimated:YES completion:NULL];
+}
+
+- (id<UIViewControllerAnimatedTransitioning>)animationControllerForPresentedController:(UIViewController *)presented presentingController:(UIViewController *)presenting sourceController:(UIViewController *)source
+{
+    if ([presented isKindOfClass:[CallQualityViewController class]]) {
+        return [[CallQualityPresentationTransition alloc] init];
+    }
+    
+    return nil;
+}
+
+- (id<UIViewControllerAnimatedTransitioning>)animationControllerForDismissedController:(UIViewController *)dismissed
+{
+    if ([dismissed isKindOfClass:[CallQualityViewController class]]) {
+        return [[CallQualityDismissalTransition alloc] init];
+    }
+    
+    return nil;
 }
 
 @end

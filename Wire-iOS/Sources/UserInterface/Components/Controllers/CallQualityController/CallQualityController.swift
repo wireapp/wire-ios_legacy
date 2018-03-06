@@ -24,9 +24,12 @@ import Cartography
     func callQualityController(_ controller: CallQualityViewController, didSelect score: Int)
 }
 
-class CallQualityViewController : UIViewController {
+class CallQualityViewController : UIViewController, UIGestureRecognizerDelegate {
     
+    @objc weak var delegate: CallQualityViewControllerDelegate?
     var contentView: UIView
+    var dimmingView: UIView
+    var dismissTapGestureRecognizer: UITapGestureRecognizer!
 
     var callQualityStackView : UICustomSpacingStackView!
     var closeButton : IconButton
@@ -34,7 +37,16 @@ class CallQualityViewController : UIViewController {
     let questionText : UILabel
     var scoreSelectorView : QualityScoreSelectorView!
     var questionLabelText = String()
-    @objc weak var delegate: CallQualityViewControllerDelegate?
+    
+    // MARK: Contraints
+    
+    private var ipad_centerXConstraint: NSLayoutConstraint!
+    private var ipad_centerYConstraint: NSLayoutConstraint!
+    private var iphone_leadingConstraint: NSLayoutConstraint!
+    private var iphone_trailingConstraint: NSLayoutConstraint!
+    private var iphone_bottomConstraint: NSLayoutConstraint!
+    
+    // MARK: Initialization
     
     static func defaultSurveyController() -> CallQualityViewController {
         let controller = CallQualityViewController(questionLabelText: NSLocalizedString("calling.quality_survey.question", comment: ""))
@@ -45,7 +57,8 @@ class CallQualityViewController : UIViewController {
     
     init(questionLabelText: String){
         
-        self.contentView = UIView()
+        self.contentView = ContinuousCornersView(cornerRadius: 32)
+        self.dimmingView = UIView()
         self.closeButton = IconButton()
         self.titleLabel = UILabel()
         self.questionText = UILabel()
@@ -56,8 +69,9 @@ class CallQualityViewController : UIViewController {
             self?.delegate?.callQualityController(self!, didSelect: score)
         })
         
-        contentView.layer.cornerRadius = 12
-
+        dimmingView.backgroundColor = UIColor.black.withAlphaComponent(0.6)
+        dimmingView.alpha = 0
+    
         closeButton.setIcon(.X, with: .tiny, for: [], renderingMode: .alwaysTemplate)
         closeButton.accessibilityIdentifier = "score_close"
         closeButton.accessibilityLabel = NSLocalizedString("general.close", comment: "")
@@ -92,6 +106,28 @@ class CallQualityViewController : UIViewController {
         callQualityStackView.spacing = 10
         callQualityStackView.wr_addCustomSpacing(24, after: titleLabel)
         callQualityStackView.wr_addCustomSpacing(32, after: questionText)
+        
+        dismissTapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(onTapToDismiss))
+        dismissTapGestureRecognizer.delegate = self
+        view.addGestureRecognizer(dismissTapGestureRecognizer)
+        
+        // Constraint
+        
+        iphone_leadingConstraint = contentView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 8)
+        iphone_trailingConstraint = contentView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -8)
+
+        let bottomAnchor: NSLayoutAnchor<NSLayoutYAxisAnchor>
+        
+        if #available(iOS 11, *) {
+            bottomAnchor = view.safeAreaLayoutGuide.bottomAnchor
+        } else {
+            bottomAnchor = view.bottomAnchor
+        }
+
+        iphone_bottomConstraint = contentView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -8)
+        ipad_centerYConstraint = contentView.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+        ipad_centerXConstraint = contentView.centerXAnchor.constraint(equalTo: view.centerXAnchor)
+
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -100,17 +136,16 @@ class CallQualityViewController : UIViewController {
   
     override func viewDidLoad() {
 
-        view.backgroundColor = UIColor.black.withAlphaComponent(0.6)
         contentView.backgroundColor = .white
+        contentView.translatesAutoresizingMaskIntoConstraints = false
         
+        view.addSubview(dimmingView)
         view.addSubview(contentView)
         contentView.addSubview(closeButton)
         contentView.addSubview(callQualityStackView)
-
-        constrain(contentView) { contentView in
-            contentView.centerX == contentView.superview!.centerX
-            contentView.width == (contentView.superview!.width - 32)
-            contentView.bottom == (contentView.superview!.bottomMargin - 12)
+        
+        constrain(view, dimmingView) { selfView, dimmingView in
+            dimmingView.edges == selfView.edges
         }
         
         closeButton.layer.cornerRadius = 14
@@ -135,22 +170,56 @@ class CallQualityViewController : UIViewController {
         return .lightContent
     }
     
+    // MARK: Dismiss Events
+    
     func onCloseButtonTapped() {
         delegate?.callQualityControllerDidFinishWithoutScore(self)
     }
     
-    /*override func willTransition(to newCollection: UITraitCollection, with coordinator: UIViewControllerTransitionCoordinator) {
-        super.willTransition(to: newCollection, with: coordinator)
-        coordinator.animate { _ in self.updateLayout(for: newCollection) }
+    func onTapToDismiss() {
+        delegate?.callQualityControllerDidFinishWithoutScore(self)
     }
     
-    // Adaptive Layout
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
+        return touch.view?.isDescendant(of: contentView) == false
+    }
     
+    override func accessibilityPerformMagicTap() -> Bool {
+        onTapToDismiss()
+        return true
+    }
+    
+    // MARK: Adaptive Layout
+    
+    override func viewWillAppear(_ animated: Bool) {
+        updateLayout(for: traitCollection)
+    }
+    
+    override func willTransition(to newCollection: UITraitCollection, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.willTransition(to: newCollection, with: coordinator)
+        coordinator.animate(alongsideTransition: { _ in self.updateLayout(for: newCollection) })
+    }
+     
     private func updateLayout(for traitCollection: UITraitCollection) {
         
-        
+        switch traitCollection.horizontalSizeClass {
+        case .regular:
+            ipad_centerYConstraint.isActive = true
+            ipad_centerXConstraint.isActive = true
+            iphone_leadingConstraint.isActive = false
+            iphone_trailingConstraint.isActive = false
+            iphone_bottomConstraint.isActive = false
 
-    }*/
+        default:
+            ipad_centerYConstraint.isActive = false
+            ipad_centerXConstraint.isActive = false
+            iphone_leadingConstraint.isActive = true
+            iphone_trailingConstraint.isActive = true
+            iphone_bottomConstraint.isActive = true
+        }
+
+    }
+    
 }
 
 class CallQualityView : UIStackView {
@@ -169,7 +238,7 @@ class CallQualityView : UIStackView {
 
         axis = .vertical
         spacing = 16
-        scoreLabel.text = labelText
+        scoreLabel.text = [1, 3, 5].contains(buttonScore) ? labelText : ""
         scoreLabel.font = FontSpec(.medium, .regular).font
         scoreLabel.textAlignment = .center
         scoreLabel.textColor = UIColor.cas_color(withHex: "#272A2C")
@@ -218,12 +287,12 @@ class QualityScoreSelectorView : UIView {
         super.init(frame: .zero)
         
         scoreStackView.axis = .horizontal
-        scoreStackView.distribution = .equalCentering
+        scoreStackView.distribution = .fillEqually
         scoreStackView.spacing = 8
         
         (1 ... 5)
             .map { (localizedNameForScore($0), $0) }
-            .map { CallQualityView( labelText: $0.0, buttonScore: $0.1, callback: onScoreSet) }
+            .map { CallQualityView(labelText: $0.0, buttonScore: $0.1, callback: onScoreSet) }
             .forEach(scoreStackView.addArrangedSubview)
         
         addSubview(scoreStackView)
@@ -231,7 +300,7 @@ class QualityScoreSelectorView : UIView {
             scoreStackView.edges == selfView.edges
         }
     }
-
+    
     func localizedNameForScore(_ score: Int) -> String {
         return NSLocalizedString("calling.quality_survey.answer.\(score)", comment: "")
     }
