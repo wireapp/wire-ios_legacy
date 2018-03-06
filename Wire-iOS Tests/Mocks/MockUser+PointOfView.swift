@@ -18,12 +18,8 @@
 
 import Foundation
 
-extension PingCell {
-    @objc func pointOfViewString(senderText: String) -> String? {
-        guard let sender = self.message?.sender else { return nil }
-        let pov = sender.pov
-        let title = "content.ping.text".localized(pov: pov, args: senderText)
-
-        return title
+extension MockUser {
+    var pov: PointOfView {
+        return self.isSelfUser ? .secondPerson : .thirdPerson
     }
 }
