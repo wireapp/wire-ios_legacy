@@ -79,6 +79,7 @@
 #import "TopPeopleLineCollectionViewController.h"
 #import "TopPeopleCell.h"
 #import "CollectionViewContainerCell.h"
+#import "PingCell.h"
 
 // View Controllers
 #import "ZClientViewController.h"
