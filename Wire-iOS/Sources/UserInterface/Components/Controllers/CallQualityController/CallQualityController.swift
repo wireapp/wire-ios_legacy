@@ -48,11 +48,21 @@ class CallQualityViewController : UIViewController, UIGestureRecognizerDelegate 
     
     // MARK: Initialization
     
-    static func defaultSurveyController() -> CallQualityViewController {
+    static func requestSurveyController() -> CallQualityViewController? {
+        
+        let requestDate = Date()
+
+        guard CallQualityScoreProvider.canRequestSurvey(at: requestDate) else {
+            return nil
+        }
+        
+        CallQualityScoreProvider.updateLastSurveyDate(requestDate)
+        
         let controller = CallQualityViewController(questionLabelText: NSLocalizedString("calling.quality_survey.question", comment: ""))
         controller.modalPresentationCapturesStatusBarAppearance = true
         controller.modalPresentationStyle = .overFullScreen
         return controller
+        
     }
     
     init(questionLabelText: String){

@@ -195,13 +195,23 @@ extension ActiveVoiceChannelViewController : WireCallCenterCallStateObserver {
             presentedController.dismiss(animated: true, completion: nil)
         }
 
-        if case .terminating = callState, answeredCalls.contains(conversation.remoteIdentifier!) {
-            let qualityController = CallQualityViewController.defaultSurveyController()
+        if case let .terminating(reason) = callState, answeredCalls.contains(conversation.remoteIdentifier!) {
+            
+            // Only show the survey if the called finished without errors
+            guard reason == .normal || reason == .stillOngoing else {
+                return
+            }
+            
+            guard let qualityController = CallQualityViewController.requestSurveyController() else {
+                return
+            }
+            
             qualityController.delegate = self
             qualityController.transitioningDelegate = self
             
             answeredCalls.remove(conversation.remoteIdentifier!)
             present(qualityController, animated: true)
+            
         }
         
     }

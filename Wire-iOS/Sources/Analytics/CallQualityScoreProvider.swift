@@ -63,3 +63,33 @@ final class CallQualityScoreProvider: NSObject, AnalyticsType {
         return nextProvider?.persistedAttributes(for: event)
     }
 }
+
+// MARK: - Survey Mute Filter
+
+let UserDefaultLastCallSurveyDate = "LastCallSurveyDate"
+
+// Show the survey only once every 10 days (10 * 24 * 3600)
+let CallSurveyMuteInterval: TimeInterval = 864_000
+
+extension CallQualityScoreProvider {
+    
+    static func updateLastSurveyDate(_ date: Date) {
+        UserDefaults.standard.set(date.timeIntervalSinceReferenceDate, forKey: UserDefaultLastCallSurveyDate)
+    }
+    
+    static func resetSurveyMuteFilter() {
+        UserDefaults.standard.removeObject(forKey: UserDefaultLastCallSurveyDate)
+    }
+    
+    static func canRequestSurvey(at date: Date) -> Bool {
+        
+        let lastSurveyTimestamp = UserDefaults.standard.double(forKey: UserDefaultLastCallSurveyDate)
+        let lastSurveyDate = Date(timeIntervalSinceReferenceDate: lastSurveyTimestamp)
+        let nextPossibleDate = lastSurveyDate.addingTimeInterval(CallSurveyMuteInterval)
+                
+        // Allow the survey if the mute period is finished, or if it finished today
+        return (date > nextPossibleDate) || (Calendar.autoupdatingCurrent.isDateInToday(nextPossibleDate))
+        
+    }
+    
+}

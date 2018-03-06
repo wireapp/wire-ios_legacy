@@ -178,7 +178,12 @@
 
 - (void)viewDidAppear:(BOOL)animated
 {
-    CallQualityViewController *callController = [CallQualityViewController defaultSurveyController];
+    CallQualityViewController *callController = [CallQualityViewController requestSurveyController];
+    
+    if (!callController) {
+        return;
+    }
+    
     callController.delegate = self;
     callController.transitioningDelegate = self;
     [self presentViewController:callController animated:YES completion:NULL];
