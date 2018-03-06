@@ -19,8 +19,7 @@
 import Foundation
 
 extension MockUser {
-    static var currentPointOfView: PointOfView = .none
     var pov: PointOfView {
-        return MockUser.currentPointOfView
+        return .none
     }
 }
