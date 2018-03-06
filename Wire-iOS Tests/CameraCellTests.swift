@@ -36,17 +36,20 @@ extension AVCaptureVideoOrientation : CustomStringConvertible {
 final class CameraCellTests: XCTestCase {
     
     var sut: CameraCell!
-    var mockDeviceOrientation: MockDeviceOrientation! = MockDeviceOrientation()
-    var mockCameraController: MockCameraController! = MockCameraController()
+    var mockDeviceOrientation: MockDeviceOrientation!
+    var mockCameraController: MockCameraController!
 
     override func setUp() {
         super.setUp()
+        mockDeviceOrientation = MockDeviceOrientation()
+        mockCameraController = MockCameraController()
         sut = CameraCell(frame: .zero, deviceOrientation: mockDeviceOrientation, cameraController: mockCameraController)
     }
     
     override func tearDown() {
         sut = nil
         mockDeviceOrientation = nil
+        mockCameraController = nil
         super.tearDown()
     }
 

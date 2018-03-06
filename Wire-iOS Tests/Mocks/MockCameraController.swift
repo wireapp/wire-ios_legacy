@@ -29,14 +29,11 @@ final class MockCameraController: CameraControllerProtocol {
     var snapshotVideoOrientation: AVCaptureVideoOrientation = .portrait
 
     func startRunning() {
-
     }
 
     func stopRunning() {
-
     }
 
     func captureStillImage(completionHandler: @escaping (Data?, [AnyHashable : Any]?, Error?) -> Void) {
-
     }
 }
