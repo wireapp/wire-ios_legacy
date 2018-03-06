@@ -38,6 +38,7 @@ class CallQualityPresentationTransition: NSObject, UIViewControllerAnimatedTrans
         let dimmingView = callQualityVC.dimmingView
         
         containerView.addSubview(toView)
+        callQualityVC.updateLayout(for: containerView.traitCollection)
 
         switch containerView.traitCollection.horizontalSizeClass {
         case .regular:

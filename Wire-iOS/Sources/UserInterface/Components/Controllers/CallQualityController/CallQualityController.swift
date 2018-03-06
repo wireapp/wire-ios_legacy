@@ -209,7 +209,7 @@ class CallQualityViewController : UIViewController, UIGestureRecognizerDelegate 
         coordinator.animate(alongsideTransition: { _ in self.updateLayout(for: newCollection) })
     }
      
-    private func updateLayout(for traitCollection: UITraitCollection) {
+    func updateLayout(for traitCollection: UITraitCollection) {
         
         switch traitCollection.horizontalSizeClass {
         case .regular:
