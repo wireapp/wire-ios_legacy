@@ -212,6 +212,7 @@ class AppRootViewController: UIViewController {
                 needsToReauthenticate = [ZMUserSessionErrorCode.clientDeletedRemotely,
                     .accessTokenExpired,
                     .needsPasswordToRegisterClient,
+                    .needsToRegisterEmailToRegisterClient,
                     .canNotRegisterMoreClients
                 ].contains(errorCode)
             }
