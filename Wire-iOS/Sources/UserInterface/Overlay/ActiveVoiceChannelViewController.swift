@@ -177,14 +177,16 @@ extension ActiveVoiceChannelViewController : WireCallCenterCallStateObserver {
     
     func callCenterDidChange(callState: CallState, conversation: ZMConversation, caller: ZMUser, timestamp: Date?) {
         updateVisibleVoiceChannelViewController()
-    
-        guard DeveloperMenuState.developerMenuEnabled(),
-            (UseAnalytics.boolValue || AutomationHelper.sharedHelper.useAnalytics),
+
+        guard (UseAnalytics.boolValue || AutomationHelper.sharedHelper.useAnalytics),
             !TrackingManager.shared.disableCrashAndAnalyticsSharing
-        else {
-            return
+            else {
+                return
         }
         
+        if case .answered = callState {
+            answeredCalls.insert(conversation.remoteIdentifier!)
+        }
         
         if case .answered = callState,
             let presentedController = self.presentedViewController,
@@ -192,17 +194,28 @@ extension ActiveVoiceChannelViewController : WireCallCenterCallStateObserver {
             
             presentedController.dismiss(animated: true, completion: nil)
         }
-        
-        if case .answered = callState {
-            answeredCalls.insert(conversation.remoteIdentifier!)
-        }
-        
+
         if case .terminating = callState, answeredCalls.contains(conversation.remoteIdentifier!) {
             let qualityController = CallQualityViewController.defaultSurveyController()
             qualityController.delegate = self
+            qualityController.transitioningDelegate = self
+            
             answeredCalls.remove(conversation.remoteIdentifier!)
             present(qualityController, animated: true)
         }
+        
+    }
+    
+}
+
+extension ActiveVoiceChannelViewController : UIViewControllerTransitioningDelegate {
+    
+    func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        return (presented is CallQualityViewController) ? CallQualityPresentationTransition() : nil
+    }
+    
+    func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        return (dismissed is CallQualityViewController) ? CallQualityDismissalTransition() : nil
     }
     
 }
