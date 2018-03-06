@@ -19,14 +19,14 @@
 import Foundation
 
 
-class GroupDetailsSectionHeader: UICollectionReusableView {
+class GroupDetailsSectionHeader: UICollectionReusableView, Themeable {
     
     let titleLabel = UILabel()
  
-    var variant: ColorSchemeVariant = .light {
+    dynamic var colorSchemeVariant: ColorSchemeVariant = ColorScheme.default().variant {
         didSet {
-            guard oldValue != variant else { return }
-            configureColors()
+            guard oldValue != colorSchemeVariant else { return }
+            applyColorScheme(colorSchemeVariant)
         }
     }
     
@@ -34,7 +34,7 @@ class GroupDetailsSectionHeader: UICollectionReusableView {
         super.init(frame: frame)
         setupViews()
         createConstraints()
-        configureColors()
+        applyColorScheme(colorSchemeVariant)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -57,8 +57,8 @@ class GroupDetailsSectionHeader: UICollectionReusableView {
         ])
     }
     
-    private func configureColors() {
-        titleLabel.textColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorSectionText, variant: variant)
+    func applyColorScheme(_ colorSchemeVariant: ColorSchemeVariant) {
+        titleLabel.textColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorSectionText, variant: colorSchemeVariant)
     }
     
 }

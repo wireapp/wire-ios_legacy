@@ -138,8 +138,8 @@ class GroupDetailsViewController: UIViewController, ZMConversationObserver, Grou
         emptyView.isHidden = collectionViewController.sections.any { $0 is ParticipantsSectionController || $0 is ServicesSectionController }
     }
 
-    func computeVisibleSections() -> [_CollectionViewSectionController] {
-        var sections = [_CollectionViewSectionController]()
+    func computeVisibleSections() -> [CollectionViewSectionController] {
+        var sections = [CollectionViewSectionController]()
         let renameGroupSectionController = RenameGroupSectionController(conversation: conversation)
         sections.append(renameGroupSectionController)
         self.renameGroupSectionController = renameGroupSectionController

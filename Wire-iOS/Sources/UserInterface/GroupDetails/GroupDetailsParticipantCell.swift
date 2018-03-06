@@ -28,6 +28,14 @@ class GroupDetailsParticipantCell: UICollectionViewCell, Themeable {
         }
     }
     
+    // if nil the background color is the default content background color for the theme
+    dynamic var contentBackgroundColor: UIColor? = nil {
+        didSet {
+            guard oldValue != contentBackgroundColor else { return }
+            applyColorScheme(colorSchemeVariant)
+        }
+    }
+    
     enum AccessoryIcon {
         case none, disclosure, connect
     }
@@ -36,33 +44,35 @@ class GroupDetailsParticipantCell: UICollectionViewCell, Themeable {
     let avatar = BadgeUserImageView(magicPrefix: "people_picker.search_results_mode")
     let titleLabel = UILabel()
     let subtitleLabel = UILabel()
-    let accessoryActionButton = IconButton()
+    let connectButton = IconButton()
+    let accessoryIconView = UIImageView()
     let guestIconView = UIImageView()
     let verifiedIconView = UIImageView()
+    let checkmarkIconView = UIImageView()
     var contentStackView : UIStackView!
     var titleStackView : UIStackView!
     var iconStackView : UIStackView!
+    
+    private func contentBackgroundColor(for colorSchemeVariant: ColorSchemeVariant) -> UIColor {
+        return contentBackgroundColor ?? UIColor.wr_color(fromColorScheme: ColorSchemeColorBarBackground, variant: colorSchemeVariant)
+    }
     
     override var isHighlighted: Bool {
         didSet {
             backgroundColor = isHighlighted
                 ? .init(white: 0, alpha: 0.08)
-                : .wr_color(fromColorScheme: ColorSchemeColorBarBackground, variant: colorSchemeVariant)
+                : contentBackgroundColor(for: colorSchemeVariant)
         }
     }
     
-    var accessoryIcon : AccessoryIcon = .none {
+    override var isSelected: Bool {
         didSet {
-            switch accessoryIcon {
-            case .none:
-                accessoryActionButton.isHidden = true
-            case .disclosure:
-                accessoryActionButton.isHidden = false
-                accessoryActionButton.setIcon(.disclosureIndicator, with: .like, for: .normal)
-            case .connect:
-                accessoryActionButton.isHidden = false
-                accessoryActionButton.setIcon(.plusCircled, with: .like, for: .normal)
-            }
+            let foregroundColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorBackground, variant: colorSchemeVariant)
+            let backgroundColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorIconNormal, variant: colorSchemeVariant)
+            let borderColor = isSelected ? backgroundColor : backgroundColor.withAlphaComponent(0.64)
+            checkmarkIconView.image = isSelected ? UIImage(for: .checkmark, iconSize: .like, color: foregroundColor) : nil
+            checkmarkIconView.backgroundColor = isSelected ? backgroundColor : .clear
+            checkmarkIconView.layer.borderColor = borderColor.cgColor
         }
     }
     
@@ -76,6 +86,17 @@ class GroupDetailsParticipantCell: UICollectionViewCell, Themeable {
         setup()
     }
     
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        
+        verifiedIconView.isHidden = true
+        connectButton.isHidden = true
+        accessoryIconView.isHidden = false
+        checkmarkIconView.image = nil
+        checkmarkIconView.layer.borderColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorIconNormal, variant: colorSchemeVariant).cgColor
+        checkmarkIconView.isHidden = true
+    }
+    
     fileprivate func setup() {
         guestIconView.translatesAutoresizingMaskIntoConstraints = false
         guestIconView.contentMode = .center
@@ -86,8 +107,19 @@ class GroupDetailsParticipantCell: UICollectionViewCell, Themeable {
         verifiedIconView.contentMode = .center
         verifiedIconView.accessibilityIdentifier = "img.shield"
         
-        accessoryActionButton.setIcon(.disclosureIndicator, with: .like, for: .normal)
-        accessoryActionButton.imageView?.contentMode = .center
+        connectButton.setIcon(.plusCircled, with: .tiny, for: .normal)
+        connectButton.imageView?.contentMode = .center
+        connectButton.isHidden = true
+        
+        checkmarkIconView.layer.borderWidth = 2
+        checkmarkIconView.contentMode = .center
+        checkmarkIconView.layer.cornerRadius = 12
+        checkmarkIconView.isHidden = true
+        checkmarkIconView.widthAnchor.constraint(equalToConstant: 24).isActive = true
+        checkmarkIconView.heightAnchor.constraint(equalToConstant: 24).isActive = true
+        
+        accessoryIconView.translatesAutoresizingMaskIntoConstraints = false
+        accessoryIconView.contentMode = .center
         
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         titleLabel.font = FontSpec.init(.normal, .light).font!
@@ -101,7 +133,7 @@ class GroupDetailsParticipantCell: UICollectionViewCell, Themeable {
         avatar.translatesAutoresizingMaskIntoConstraints = false
         avatar.widthAnchor.constraint(equalToConstant: 28).isActive = true
         avatar.heightAnchor.constraint(equalToConstant: 28).isActive = true
-        
+                
         let avatarSpacer = UIView()
         avatarSpacer.addSubview(avatar)
         avatarSpacer.translatesAutoresizingMaskIntoConstraints = false
@@ -110,7 +142,7 @@ class GroupDetailsParticipantCell: UICollectionViewCell, Themeable {
         avatarSpacer.centerXAnchor.constraint(equalTo: avatar.centerXAnchor).isActive = true
         avatarSpacer.centerYAnchor.constraint(equalTo: avatar.centerYAnchor).isActive = true
         
-        iconStackView = UIStackView(arrangedSubviews: [verifiedIconView, guestIconView, accessoryActionButton])
+        iconStackView = UIStackView(arrangedSubviews: [verifiedIconView, guestIconView, connectButton, checkmarkIconView, accessoryIconView])
         iconStackView.spacing = 8
         iconStackView.axis = .horizontal
         iconStackView.distribution = .fill
@@ -147,18 +179,26 @@ class GroupDetailsParticipantCell: UICollectionViewCell, Themeable {
     }
     
     func applyColorScheme(_ colorSchemeVariant: ColorSchemeVariant) {
-        backgroundColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorBarBackground, variant: colorSchemeVariant)
+        let sectionTextColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorSectionText, variant: colorSchemeVariant)
+        backgroundColor = contentBackgroundColor(for: colorSchemeVariant)
         separator.backgroundColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorCellSeparator, variant: colorSchemeVariant)
-        accessoryActionButton.setIconColor(UIColor.wr_color(fromColorScheme: ColorSchemeColorSectionText, variant: colorSchemeVariant), for: .normal)
-        titleLabel.textColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorTextForeground, variant: colorSchemeVariant)
-        subtitleLabel.textColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorSectionText, variant: colorSchemeVariant)
         guestIconView.image = UIImage(for: .guest, iconSize: .tiny, color: UIColor.wr_color(fromColorScheme: ColorSchemeColorIconGuest, variant: colorSchemeVariant))
+        accessoryIconView.image = UIImage(for: .disclosureIndicator, iconSize: .like, color: sectionTextColor)
+        connectButton.setIconColor(sectionTextColor, for: .normal)
+        checkmarkIconView.layer.borderColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorIconNormal, variant: colorSchemeVariant).cgColor
+        titleLabel.textColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorTextForeground, variant: colorSchemeVariant)
+        subtitleLabel.textColor = sectionTextColor
     }
     
-    public func configure(with user: ZMBareUser, conversation: ZMConversation) {
+    public func configure(with user: ZMBareUser, conversation: ZMConversation? = nil) {
         avatar.user = user
         titleLabel.attributedText = user.nameIncludingAvailability(color: UIColor.wr_color(fromColorScheme: ColorSchemeColorTextForeground, variant: colorSchemeVariant))
-        guestIconView.isHidden = !user.isGuest(in: conversation)
+        
+        if let conversation = conversation {
+            guestIconView.isHidden = !user.isGuest(in: conversation)
+        } else {
+            guestIconView.isHidden = !ZMUser.selfUser().isTeamMember || user.isTeamMember || user.isServiceUser
+        }
         
         if let user = user as? ZMUser {
             verifiedIconView.isHidden = !user.trusted() || user.clients.isEmpty

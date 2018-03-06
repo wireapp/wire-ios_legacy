@@ -76,6 +76,9 @@
 #import "ProfileViewController+internal.h"
 #import "StartUIViewController.h"
 #import "StartUIViewController+internal.h"
+#import "TopPeopleLineCollectionViewController.h"
+#import "TopPeopleCell.h"
+#import "CollectionViewContainerCell.h"
 
 // View Controllers
 #import "ZClientViewController.h"
@@ -108,11 +111,6 @@
 #import "CountryCodeTableViewController.h"
 #import "UIViewController+WR_Invite.h"
 #import "UIActivityViewController+Invite.h"
-#import "UsersInContactsSection.h"
-#import "UsersInDirectorySection.h"
-#import "GroupConversationsSection.h"
-#import "TopPeopleLineSection.h"
-#import "CollectionViewSectionAggregator.h"
 #import "ProfileDetailsViewController.h"
 #import "ContactsDataSource.h"
 #import "LaunchImageViewController.h"

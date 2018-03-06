@@ -18,13 +18,15 @@
 
 import Foundation
 
-protocol _CollectionViewSectionController: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+protocol CollectionViewSectionController: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+    
+    var isHidden: Bool { get }
     
     func prepareForUse(in collectionView : UICollectionView?)
     
 }
 
-class SectionCollectionViewController: NSObject, UICollectionViewDelegate {
+class SectionCollectionViewController: NSObject {
     
     var collectionView : UICollectionView? = nil {
         didSet {
@@ -39,7 +41,7 @@ class SectionCollectionViewController: NSObject, UICollectionViewDelegate {
         }
     }
     
-    var sections: [_CollectionViewSectionController] {
+    var sections: [CollectionViewSectionController] {
         didSet {
             sections.forEach {
                 $0.prepareForUse(in: collectionView)
@@ -49,12 +51,24 @@ class SectionCollectionViewController: NSObject, UICollectionViewDelegate {
         }
     }
     
-    init(sections : [_CollectionViewSectionController] = []) {
+    var visibleSections: [CollectionViewSectionController] {
+        return sections.filter({ !$0.isHidden })
+    }
+    
+    init(sections : [CollectionViewSectionController] = []) {
         self.sections = sections
     }
     
+}
+
+extension SectionCollectionViewController: UICollectionViewDelegate {
+    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        sections[indexPath.section].collectionView?(collectionView, didSelectItemAt: indexPath)
+        visibleSections[indexPath.section].collectionView?(collectionView, didSelectItemAt: indexPath)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
+        visibleSections[indexPath.section].collectionView?(collectionView, didDeselectItemAt: indexPath)
     }
     
 }
@@ -62,19 +76,19 @@ class SectionCollectionViewController: NSObject, UICollectionViewDelegate {
 extension SectionCollectionViewController: UICollectionViewDataSource {
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return sections.count
+        return visibleSections.count
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return sections[section].collectionView(collectionView, numberOfItemsInSection: 0)
+        return visibleSections[section].collectionView(collectionView, numberOfItemsInSection: 0)
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        return sections[indexPath.section].collectionView(collectionView, cellForItemAt:indexPath)
+        return visibleSections[indexPath.section].collectionView(collectionView, cellForItemAt:indexPath)
     }
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        return sections[indexPath.section].collectionView!(collectionView, viewForSupplementaryElementOfKind:kind, at:indexPath)
+        return visibleSections[indexPath.section].collectionView!(collectionView, viewForSupplementaryElementOfKind:kind, at:indexPath)
     }
     
 }
@@ -82,11 +96,11 @@ extension SectionCollectionViewController: UICollectionViewDataSource {
 extension SectionCollectionViewController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        return sections[section].collectionView?(collectionView, layout: collectionViewLayout, referenceSizeForHeaderInSection: section) ?? CGSize.zero
+        return visibleSections[section].collectionView?(collectionView, layout: collectionViewLayout, referenceSizeForHeaderInSection: section) ?? CGSize.zero
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return sections[indexPath.section].collectionView?(collectionView, layout: collectionViewLayout, sizeForItemAt: indexPath) ?? CGSize.zero
+        return visibleSections[indexPath.section].collectionView?(collectionView, layout: collectionViewLayout, sizeForItemAt: indexPath) ?? CGSize.zero
     }
     
 }
