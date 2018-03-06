@@ -72,7 +72,7 @@ let UserDefaultLastCallSurveyDate = "LastCallSurveyDate"
 let CallSurveyMuteInterval: TimeInterval = 864_000
 
 extension CallQualityScoreProvider {
-    
+
     static func updateLastSurveyDate(_ date: Date) {
         UserDefaults.standard.set(date.timeIntervalSinceReferenceDate, forKey: UserDefaultLastCallSurveyDate)
     }
@@ -81,14 +81,14 @@ extension CallQualityScoreProvider {
         UserDefaults.standard.removeObject(forKey: UserDefaultLastCallSurveyDate)
     }
     
-    static func canRequestSurvey(at date: Date) -> Bool {
+    static func canRequestSurvey(at date: Date, muteInterval: TimeInterval = CallSurveyMuteInterval) -> Bool {
         
         let lastSurveyTimestamp = UserDefaults.standard.double(forKey: UserDefaultLastCallSurveyDate)
         let lastSurveyDate = Date(timeIntervalSinceReferenceDate: lastSurveyTimestamp)
-        let nextPossibleDate = lastSurveyDate.addingTimeInterval(CallSurveyMuteInterval)
+        let nextPossibleDate = lastSurveyDate.addingTimeInterval(muteInterval)
                 
-        // Allow the survey if the mute period is finished, or if it finished today
-        return (date > nextPossibleDate) || (Calendar.autoupdatingCurrent.isDateInToday(nextPossibleDate))
+        // Allow the survey if the mute period is finished
+        return (date >= nextPossibleDate)
         
     }
     

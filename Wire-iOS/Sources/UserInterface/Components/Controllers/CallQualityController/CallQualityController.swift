@@ -117,24 +117,6 @@ class CallQualityViewController : UIViewController, UIGestureRecognizerDelegate 
         
         dismissTapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(onTapToDismiss))
         dismissTapGestureRecognizer.delegate = self
-        view.addGestureRecognizer(dismissTapGestureRecognizer)
-        
-        // Constraint
-        
-        iphone_leadingConstraint = contentView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 8)
-        iphone_trailingConstraint = contentView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -8)
-
-        let bottomAnchor: NSLayoutAnchor<NSLayoutYAxisAnchor>
-        
-        if #available(iOS 11, *) {
-            bottomAnchor = view.safeAreaLayoutGuide.bottomAnchor
-        } else {
-            bottomAnchor = view.bottomAnchor
-        }
-
-        iphone_bottomConstraint = contentView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -8)
-        ipad_centerYConstraint = contentView.centerYAnchor.constraint(equalTo: view.centerYAnchor)
-        ipad_centerXConstraint = contentView.centerXAnchor.constraint(equalTo: view.centerXAnchor)
 
     }
     
@@ -143,6 +125,8 @@ class CallQualityViewController : UIViewController, UIGestureRecognizerDelegate 
     }
   
     override func viewDidLoad() {
+
+        view.addGestureRecognizer(dismissTapGestureRecognizer)
 
         contentView.backgroundColor = .white
         contentView.translatesAutoresizingMaskIntoConstraints = false
@@ -169,9 +153,30 @@ class CallQualityViewController : UIViewController, UIGestureRecognizerDelegate 
             callQualityView.width == (callQualityView.superview!.width - 32)
             callQualityView.bottom == (callQualityView.superview!.bottom - 24)
         }
-        
+
         closeButton.bottomAnchor.constraint(equalTo: callQualityStackView.topAnchor, constant: -10).isActive = true
         contentView.topAnchor.constraint(equalTo: closeButton.topAnchor, constant: -24).isActive = true
+
+        // Adaptive Constraints
+
+        iphone_leadingConstraint = contentView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 8)
+        iphone_trailingConstraint = contentView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -8)
+
+        let bottomAnchor: NSLayoutAnchor<NSLayoutYAxisAnchor>
+
+        if #available(iOS 11, *) {
+            bottomAnchor = view.safeAreaLayoutGuide.bottomAnchor
+        } else {
+            bottomAnchor = view.bottomAnchor
+        }
+
+        iphone_bottomConstraint = contentView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -8)
+        ipad_centerYConstraint = contentView.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+        ipad_centerXConstraint = contentView.centerXAnchor.constraint(equalTo: view.centerXAnchor)
+
+
+        updateLayout(for: traitCollection)
+
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -198,11 +203,7 @@ class CallQualityViewController : UIViewController, UIGestureRecognizerDelegate 
     }
     
     // MARK: Adaptive Layout
-    
-    override func viewWillAppear(_ animated: Bool) {
-        updateLayout(for: traitCollection)
-    }
-    
+
     override func willTransition(to newCollection: UITraitCollection, with coordinator: UIViewControllerTransitionCoordinator) {
         super.willTransition(to: newCollection, with: coordinator)
         coordinator.animate(alongsideTransition: { _ in self.updateLayout(for: newCollection) })
@@ -212,20 +213,28 @@ class CallQualityViewController : UIViewController, UIGestureRecognizerDelegate 
         
         switch traitCollection.horizontalSizeClass {
         case .regular:
-            ipad_centerYConstraint.isActive = true
-            ipad_centerXConstraint.isActive = true
-            iphone_leadingConstraint.isActive = false
-            iphone_trailingConstraint.isActive = false
-            iphone_bottomConstraint.isActive = false
+            updateLayoutForRegularSize()
 
         default:
-            ipad_centerYConstraint.isActive = false
-            ipad_centerXConstraint.isActive = false
-            iphone_leadingConstraint.isActive = true
-            iphone_trailingConstraint.isActive = true
-            iphone_bottomConstraint.isActive = true
+            updateLayoutForCompactSize()
         }
 
+    }
+
+    func updateLayoutForRegularSize() {
+        ipad_centerYConstraint.isActive = true
+        ipad_centerXConstraint.isActive = true
+        iphone_leadingConstraint.isActive = false
+        iphone_trailingConstraint.isActive = false
+        iphone_bottomConstraint.isActive = false
+    }
+
+    func updateLayoutForCompactSize() {
+        ipad_centerYConstraint.isActive = false
+        ipad_centerXConstraint.isActive = false
+        iphone_leadingConstraint.isActive = true
+        iphone_trailingConstraint.isActive = true
+        iphone_bottomConstraint.isActive = true
     }
     
 }
