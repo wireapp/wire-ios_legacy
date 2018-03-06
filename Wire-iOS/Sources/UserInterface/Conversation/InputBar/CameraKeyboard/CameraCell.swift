@@ -27,7 +27,7 @@ public protocol CameraCellDelegate: class {
 }
 
 open class CameraCell: UICollectionViewCell, Reusable {
-    let cameraController: CameraController?
+    var cameraController: CameraControllerProtocol?
     
     let expandButton = IconButton()
     let takePictureButton = IconButton()
@@ -36,17 +36,33 @@ open class CameraCell: UICollectionViewCell, Reusable {
     weak var delegate: CameraCellDelegate?
     
     fileprivate static let ciContext = CIContext(options: [:])
-    
+
+    fileprivate var deviceOrientation: DeviceOrientationProtocol
+
     deinit {
         NotificationCenter.default.removeObserver(self)
     }
-    
+
+    /// init method for injecting mock DeviceOrientationProtocol
+    ///
+    /// - Parameters:
+    ///   - frame: frame of the cell
+    ///   - deviceOrientation: Provide this param for testing only
+    ///   - cameraController: Provide this param for testing only
+    convenience init(frame: CGRect, deviceOrientation: DeviceOrientationProtocol = UIDevice.current,
+                     cameraController: CameraControllerProtocol = CameraController()) {
+        self.init(frame: frame)
+        self.cameraController = cameraController
+        self.deviceOrientation = deviceOrientation
+    }
+
     override init(frame: CGRect) {
         self.cameraController = CameraController()
-        
+        self.deviceOrientation = UIDevice.current
+
         super.init(frame: frame)
         
-        if let cameraController = self.cameraController {
+        if var cameraController = self.cameraController {
             cameraController.previewLayer.frame = self.contentView.bounds
             cameraController.currentCamera = Settings.shared().preferredCamera
             cameraController.previewLayer.videoGravity = AVLayerVideoGravityResizeAspectFill
@@ -146,13 +162,13 @@ open class CameraCell: UICollectionViewCell, Reusable {
     }
     
     fileprivate func updateVideoOrientation() {
-        guard let cameraController = self.cameraController else {
+        guard var cameraController = self.cameraController else {
             return
         }
         
         let newOrientation: AVCaptureVideoOrientation
         
-        switch UIDevice.current.orientation {
+        switch deviceOrientation.orientation {
         case .portrait:
             newOrientation = .portrait;
             break;
@@ -260,7 +276,7 @@ open class CameraCell: UICollectionViewCell, Reusable {
     }
     
     func changeCameraPressed(_ sender: AnyObject) {
-        guard let cameraController = self.cameraController else {
+        guard var cameraController = self.cameraController else {
             return
         }
         
