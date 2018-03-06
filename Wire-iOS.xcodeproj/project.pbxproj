@@ -1120,48 +1120,6 @@
 			remoteGlobalIDString = 1EE85C4F1B5F96FB008E084B;
 			remoteInfo = ZetaFramework;
 		};
-		7C93CE8D204D891400933622 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 7C93CE87204D891300933622 /* WireSyncEngine.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 549815931A43232400A7CE2E;
-			remoteInfo = "WireSyncEngine-ios";
-		};
-		7C93CE8F204D891400933622 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 7C93CE87204D891300933622 /* WireSyncEngine.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 3E1860C3191A649D000FE027;
-			remoteInfo = "WireSyncEngine-iOS-Tests";
-		};
-		7C93CE91204D891400933622 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 7C93CE87204D891300933622 /* WireSyncEngine.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 3E186088191A56F6000FE027;
-			remoteInfo = "WireSyncEngine Test Host";
-		};
-		7CB1053D204E886600D12CC2 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 7CB10534204E886500D12CC2 /* WireTransport.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 3E88BCA71B1F35DF00232589;
-			remoteInfo = "WireTransport-ios";
-		};
-		7CB1053F204E886600D12CC2 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 7CB10534204E886500D12CC2 /* WireTransport.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 3E88BCB21B1F35DF00232589;
-			remoteInfo = "WireTransport-ios-tests";
-		};
-		7CB10541204E886600D12CC2 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 7CB10534204E886500D12CC2 /* WireTransport.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 09A218661B790D330076547A;
-			remoteInfo = "WireTransport-tests-host";
-		};
 		87B7DAB31E696F5D005F5140 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 8F42C530199244A700288E4D /* Project object */;
@@ -1478,12 +1436,10 @@
 		7C6A69041FDFD80E007EBE41 /* AvailabilityLabelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvailabilityLabelTests.swift; sourceTree = "<group>"; };
 		7C72F03C200E0D03001231D3 /* PhotoPermissionsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoPermissionsController.swift; sourceTree = "<group>"; };
 		7C72F03E200E1000001231D3 /* MockPhotoPermissionsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockPhotoPermissionsController.swift; sourceTree = "<group>"; };
-		7C93CE87204D891300933622 /* WireSyncEngine.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = WireSyncEngine.xcodeproj; path = "../wire-ios-sync-engine/WireSyncEngine.xcodeproj"; sourceTree = "<group>"; };
 		7C98DCFF1FC32F41005C0042 /* SettingsPropertyName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsPropertyName.swift; sourceTree = "<group>"; };
 		7CA540811F740B7C00457F4B /* UIScreen+Compact.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIScreen+Compact.h"; sourceTree = "<group>"; };
 		7CA540821F740B7C00457F4B /* UIScreen+Compact.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIScreen+Compact.m"; sourceTree = "<group>"; };
 		7CB082D51FB20E0E00972488 /* ShareExtensionNetworkObserver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareExtensionNetworkObserver.swift; sourceTree = "<group>"; };
-		7CB10534204E886500D12CC2 /* WireTransport.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = WireTransport.xcodeproj; path = "../wire-ios-transport/WireTransport.xcodeproj"; sourceTree = "<group>"; };
 		7CC085451F7AA30F0010F96B /* DotView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DotView.swift; sourceTree = "<group>"; };
 		7CCBE24C1FC72FE500CBD55D /* SharedConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedConstants.swift; sourceTree = "<group>"; };
 		7CEB45271F8FAAC400D772D5 /* UINavigationBarContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UINavigationBarContainer.swift; sourceTree = "<group>"; };
@@ -3270,26 +3226,6 @@
 			path = Availability;
 			sourceTree = "<group>";
 		};
-		7C93CE88204D891300933622 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				7C93CE8E204D891400933622 /* WireSyncEngine.framework */,
-				7C93CE90204D891400933622 /* WireSyncEngine-iOS-Tests.xctest */,
-				7C93CE92204D891400933622 /* WireSyncEngine Test Host.app */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		7CB10535204E886500D12CC2 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				7CB1053E204E886600D12CC2 /* WireTransport.framework */,
-				7CB10540204E886600D12CC2 /* WireTransport-ios-tests.xctest */,
-				7CB10542204E886600D12CC2 /* WireTransport-tests-host.app */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		8286E48D7CC440448CBD8F48 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -4371,9 +4307,7 @@
 		8F42C52F199244A700288E4D = {
 			isa = PBXGroup;
 			children = (
-				7C93CE87204D891300933622 /* WireSyncEngine.xcodeproj */,
 				87501FB21D40D6490056C042 /* ComponentsVersions.plist */,
-				7CB10534204E886500D12CC2 /* WireTransport.xcodeproj */,
 				87C8D7FB1BA8261C00B0530B /* Entitlements-Dev.entitlements */,
 				87C8D7FC1BA8261C00B0530B /* Entitlements-Prod.entitlements */,
 				8FC85543199246EF0008B66B /* ConfigurationSets */,
@@ -5890,16 +5824,6 @@
 			mainGroup = 8F42C52F199244A700288E4D;
 			productRefGroup = 8F42C539199244A700288E4D /* Products */;
 			projectDirPath = "";
-			projectReferences = (
-				{
-					ProductGroup = 7C93CE88204D891300933622 /* Products */;
-					ProjectRef = 7C93CE87204D891300933622 /* WireSyncEngine.xcodeproj */;
-				},
-				{
-					ProductGroup = 7CB10535204E886500D12CC2 /* Products */;
-					ProjectRef = 7CB10534204E886500D12CC2 /* WireTransport.xcodeproj */;
-				},
-			);
 			projectRoot = "";
 			targets = (
 				8F42C537199244A700288E4D /* Wire-iOS */,
@@ -5911,51 +5835,6 @@
 			);
 		};
 /* End PBXProject section */
-
-/* Begin PBXReferenceProxy section */
-		7C93CE8E204D891400933622 /* WireSyncEngine.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = WireSyncEngine.framework;
-			remoteRef = 7C93CE8D204D891400933622 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		7C93CE90204D891400933622 /* WireSyncEngine-iOS-Tests.xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = "WireSyncEngine-iOS-Tests.xctest";
-			remoteRef = 7C93CE8F204D891400933622 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		7C93CE92204D891400933622 /* WireSyncEngine Test Host.app */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.application;
-			path = "WireSyncEngine Test Host.app";
-			remoteRef = 7C93CE91204D891400933622 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		7CB1053E204E886600D12CC2 /* WireTransport.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = WireTransport.framework;
-			remoteRef = 7CB1053D204E886600D12CC2 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		7CB10540204E886600D12CC2 /* WireTransport-ios-tests.xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = "WireTransport-ios-tests.xctest";
-			remoteRef = 7CB1053F204E886600D12CC2 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		7CB10542204E886600D12CC2 /* WireTransport-tests-host.app */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.application;
-			path = "WireTransport-tests-host.app";
-			remoteRef = 7CB10541204E886600D12CC2 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		168A16A71D9597C2005CFA6C /* Resources */ = {
