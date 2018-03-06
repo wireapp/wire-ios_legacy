@@ -41,6 +41,7 @@ class GroupDetailsParticipantCell: UICollectionViewCell, Themeable {
     }
     
     let separator = UIView()
+    let avatarSpacer = UIView()
     let avatar = BadgeUserImageView(magicPrefix: "people_picker.search_results_mode")
     let titleLabel = UILabel()
     let subtitleLabel = UILabel()
@@ -115,9 +116,7 @@ class GroupDetailsParticipantCell: UICollectionViewCell, Themeable {
         checkmarkIconView.contentMode = .center
         checkmarkIconView.layer.cornerRadius = 12
         checkmarkIconView.isHidden = true
-        checkmarkIconView.widthAnchor.constraint(equalToConstant: 24).isActive = true
-        checkmarkIconView.heightAnchor.constraint(equalToConstant: 24).isActive = true
-        
+
         accessoryIconView.translatesAutoresizingMaskIntoConstraints = false
         accessoryIconView.contentMode = .center
         
@@ -131,16 +130,9 @@ class GroupDetailsParticipantCell: UICollectionViewCell, Themeable {
         
         avatar.size = .small
         avatar.translatesAutoresizingMaskIntoConstraints = false
-        avatar.widthAnchor.constraint(equalToConstant: 28).isActive = true
-        avatar.heightAnchor.constraint(equalToConstant: 28).isActive = true
-                
-        let avatarSpacer = UIView()
+
         avatarSpacer.addSubview(avatar)
         avatarSpacer.translatesAutoresizingMaskIntoConstraints = false
-        avatarSpacer.widthAnchor.constraint(equalToConstant: 64).isActive = true
-        avatarSpacer.heightAnchor.constraint(equalTo: avatar.heightAnchor).isActive = true
-        avatarSpacer.centerXAnchor.constraint(equalTo: avatar.centerXAnchor).isActive = true
-        avatarSpacer.centerYAnchor.constraint(equalTo: avatar.centerYAnchor).isActive = true
         
         iconStackView = UIStackView(arrangedSubviews: [verifiedIconView, guestIconView, connectButton, checkmarkIconView, accessoryIconView])
         iconStackView.spacing = 8
@@ -162,20 +154,34 @@ class GroupDetailsParticipantCell: UICollectionViewCell, Themeable {
         contentStackView.alignment = .center
         contentStackView.translatesAutoresizingMaskIntoConstraints = false
         
-        contentView.addSubview(contentStackView)
-        contentStackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor).isActive = true
-        contentStackView.topAnchor.constraint(equalTo: contentView.topAnchor).isActive = true
-        contentStackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor).isActive = true
-        contentStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16).isActive = true
-        
-        contentView.addSubview(separator)
         separator.translatesAutoresizingMaskIntoConstraints = false
-        separator.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 64).isActive = true
-        separator.trailingAnchor.constraint(equalTo: contentView.trailingAnchor).isActive = true
-        separator.bottomAnchor.constraint(equalTo: contentView.bottomAnchor).isActive = true
-        separator.heightAnchor.constraint(equalToConstant: .hairline).isActive = true
         
+        contentView.addSubview(contentStackView)
+        contentView.addSubview(separator)
+        
+        createConstraints()
         applyColorScheme(colorSchemeVariant)
+    }
+    
+    func createConstraints() {
+        NSLayoutConstraint.activate([
+            checkmarkIconView.widthAnchor.constraint(equalToConstant: 24),
+            checkmarkIconView.heightAnchor.constraint(equalToConstant: 24),
+            avatar.widthAnchor.constraint(equalToConstant: 28),
+            avatar.heightAnchor.constraint(equalToConstant: 28),
+            avatarSpacer.widthAnchor.constraint(equalToConstant: 64),
+            avatarSpacer.heightAnchor.constraint(equalTo: avatar.heightAnchor),
+            avatarSpacer.centerXAnchor.constraint(equalTo: avatar.centerXAnchor),
+            avatarSpacer.centerYAnchor.constraint(equalTo: avatar.centerYAnchor),
+            contentStackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            contentStackView.topAnchor.constraint(equalTo: contentView.topAnchor),
+            contentStackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+            contentStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
+            separator.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 64),
+            separator.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            separator.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+            separator.heightAnchor.constraint(equalToConstant: .hairline),
+        ])
     }
     
     func applyColorScheme(_ colorSchemeVariant: ColorSchemeVariant) {
