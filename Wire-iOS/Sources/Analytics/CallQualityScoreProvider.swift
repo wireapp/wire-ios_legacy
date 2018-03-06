@@ -76,7 +76,7 @@ extension CallQualityScoreProvider {
     static func updateLastSurveyDate(_ date: Date) {
         UserDefaults.standard.set(date.timeIntervalSinceReferenceDate, forKey: UserDefaultLastCallSurveyDate)
     }
-    
+
     static func resetSurveyMuteFilter() {
         UserDefaults.standard.removeObject(forKey: UserDefaultLastCallSurveyDate)
     }

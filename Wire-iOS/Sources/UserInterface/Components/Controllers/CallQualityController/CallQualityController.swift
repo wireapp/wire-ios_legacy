@@ -55,9 +55,7 @@ class CallQualityViewController : UIViewController, UIGestureRecognizerDelegate 
         guard CallQualityScoreProvider.canRequestSurvey(at: requestDate) else {
             return nil
         }
-        
-        CallQualityScoreProvider.updateLastSurveyDate(requestDate)
-        
+                
         let controller = CallQualityViewController(questionLabelText: NSLocalizedString("calling.quality_survey.question", comment: ""))
         controller.modalPresentationCapturesStatusBarAppearance = true
         controller.modalPresentationStyle = .overFullScreen
@@ -248,7 +246,7 @@ class CallQualityView : UIStackView {
 
         axis = .vertical
         spacing = 16
-        
+
         scoreLabel.text = [1, 3, 5].contains(buttonScore) ? labelText : ""
         scoreLabel.font = FontSpec(.medium, .regular).font
         scoreLabel.textAlignment = .center

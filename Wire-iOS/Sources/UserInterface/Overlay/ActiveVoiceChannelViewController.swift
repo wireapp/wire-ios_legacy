@@ -187,15 +187,16 @@ extension ActiveVoiceChannelViewController : WireCallCenterCallStateObserver {
         if case .answered = callState {
             answeredCalls.insert(conversation.remoteIdentifier!)
         }
-        
-        if case .answered = callState,
-            let presentedController = self.presentedViewController,
-            presentedController is CallQualityViewController {
-            
+
+        if let presentedController = self.presentedViewController as? CallQualityViewController {
             presentedController.dismiss(animated: true, completion: nil)
         }
 
-        if case let .terminating(reason) = callState, answeredCalls.contains(conversation.remoteIdentifier!) {
+        if case let .terminating(reason) = callState {
+            
+            guard answeredCalls.contains(conversation.remoteIdentifier!) else {
+                return
+            }
             
             // Only show the survey if the called finished without errors
             guard reason == .normal || reason == .stillOngoing else {
@@ -241,10 +242,13 @@ extension ActiveVoiceChannelViewController : CallQualityViewControllerDelegate {
         }
         
         controller.dismiss(animated: true, completion: nil)
+        
+        CallQualityScoreProvider.updateLastSurveyDate(Date())
         CallQualityScoreProvider.shared.userScore = score
     }
     
     func callQualityControllerDidFinishWithoutScore(_ controller: CallQualityViewController) {
+        CallQualityScoreProvider.updateLastSurveyDate(Date())
         controller.dismiss(animated: true, completion: nil)
     }
 
