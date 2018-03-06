@@ -22,13 +22,9 @@ import XCTest
 final class PingCellTests: XCTestCase {
 
     var sut: PingCell!
-    var originalAppleLanguages: [String]?
 
     override func setUp() {
-        // change AppleLanguages to German, then restore to original language in tearDown()
-        if originalAppleLanguages == nil {
-            originalAppleLanguages = UserDefaults.standard.stringArray(forKey: "AppleLanguages")
-        }
+        // change AppleLanguages to German, then restore to en language in tearDown()
         UserDefaults.standard.set(["de"], forKey: "AppleLanguages")
         UserDefaults.standard.synchronize()
 
@@ -39,7 +35,7 @@ final class PingCellTests: XCTestCase {
 
     override func tearDown() {
         sut = nil
-        UserDefaults.standard.set(originalAppleLanguages, forKey: "AppleLanguages")
+        UserDefaults.standard.set(["en"], forKey: "AppleLanguages")
         UserDefaults.standard.synchronize()
 
         super.tearDown()
