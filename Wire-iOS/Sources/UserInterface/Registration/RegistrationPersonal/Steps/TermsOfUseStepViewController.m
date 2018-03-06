@@ -27,7 +27,7 @@
 #import "Analytics.h"
 #import "WebLinkTextView.h"
 #import "WireSyncEngine+iOS.h"
-
+#import "Wire-Swift.h"
 #import "NSURL+WireLocale.h"
 #import "NSURL+WireURLs.h"
 #import "Button.h"
@@ -127,7 +127,7 @@
         [self.termsOfUseText autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:28];
         
         [self.agreeButton autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.termsOfUseText withOffset:24];
-        [self.agreeButton autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsMake(0, 28, 28, 28) excludingEdge:ALEdgeTop];
+        [self.agreeButton autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsMake(0, 28, 28 + UIScreen.safeArea.bottom, 28) excludingEdge:ALEdgeTop];
         [self.agreeButton autoSetDimension:ALDimensionHeight toSize:40];
     }
 }

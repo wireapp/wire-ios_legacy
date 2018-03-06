@@ -24,7 +24,7 @@
 #import "RegistrationTextField.h"
 #import "WAZUIMagicIOS.h"
 #import "Constants.h"
-
+#import "Wire-Swift.h"
 #import "WireSyncEngine+iOS.h"
 
 @import WireExtensionComponents;
@@ -109,7 +109,7 @@
         [self.heroLabel autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:28];
         
         [self.nameField autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.heroLabel withOffset:24];
-        [self.nameField autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsMake(0, 28, 28, 28) excludingEdge:ALEdgeTop];
+        [self.nameField autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsMake(0, 28, 28 + UIScreen.safeArea.bottom, 28) excludingEdge:ALEdgeTop];
         [self.nameField autoSetDimension:ALDimensionHeight toSize:40];
     }
 }

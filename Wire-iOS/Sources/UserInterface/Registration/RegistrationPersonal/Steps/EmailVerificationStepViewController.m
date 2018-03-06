@@ -160,7 +160,7 @@
         [self.resendInstructionsLabel autoAlignAxisToSuperviewAxis:ALAxisVertical];
     
         [self.resendButton autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.resendInstructionsLabel withOffset:0];
-        [self.resendButton autoPinEdgeToSuperviewEdge:ALEdgeBottom];
+        [self.resendButton autoPinEdgeToSuperviewEdge:ALEdgeBottom withInset:-UIScreen.safeArea.bottom];
         [self.resendButton autoAlignAxisToSuperviewAxis:ALAxisVertical];
     }
 }

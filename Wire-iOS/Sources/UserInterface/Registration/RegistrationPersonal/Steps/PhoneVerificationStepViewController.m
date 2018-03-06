@@ -171,10 +171,10 @@ const NSTimeInterval PhoneVerificationResendInterval = 30.0f;
         [self.phoneVerificationField autoSetDimension:ALDimensionHeight toSize:40];
         
         [self.resendButton autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.phoneVerificationField withOffset:24];
-        [self.resendButton autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsMake(0, 28, 24, 28) excludingEdge:ALEdgeTop];
+        [self.resendButton autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsMake(0, 28, 24 + UIScreen.safeArea.bottom, 28) excludingEdge:ALEdgeTop];
         
         [self.resendLabel autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.phoneVerificationField withOffset:24];
-        [self.resendLabel autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsMake(0, 28, 24, 28) excludingEdge:ALEdgeTop];
+        [self.resendLabel autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsMake(0, 28, 24 + UIScreen.safeArea.bottom, 28) excludingEdge:ALEdgeTop];
     }
 }
 

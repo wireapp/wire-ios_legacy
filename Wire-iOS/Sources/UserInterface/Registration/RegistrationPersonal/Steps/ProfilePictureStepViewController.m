@@ -160,7 +160,7 @@ NSString * const UnsplashRandomImageLowQualityURL = @"https://source.unsplash.co
     [self.selectOwnPictureButton autoSetDimension:ALDimensionHeight toSize:40];
     
     [self.keepDefaultPictureButton autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.selectOwnPictureButton withOffset:8];
-    [self.keepDefaultPictureButton autoPinEdgeToSuperviewEdge:ALEdgeBottom withInset:28];
+    [self.keepDefaultPictureButton autoPinEdgeToSuperviewEdge:ALEdgeBottom withInset:28 + UIScreen.safeArea.bottom];
     [self.keepDefaultPictureButton autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:28];
     [self.keepDefaultPictureButton autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:28];
     [self.keepDefaultPictureButton autoSetDimension:ALDimensionHeight toSize:40];
