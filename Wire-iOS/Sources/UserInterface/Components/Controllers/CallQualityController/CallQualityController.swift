@@ -243,6 +243,7 @@ class CallQualityView : UIStackView {
         scoreLabel.font = FontSpec(.medium, .regular).font
         scoreLabel.textAlignment = .center
         scoreLabel.textColor = UIColor.cas_color(withHex: "#272A2C")
+        scoreLabel.adjustsFontSizeToFitWidth = true
         
         scoreButton.tag = buttonScore
         scoreButton.circular = true
