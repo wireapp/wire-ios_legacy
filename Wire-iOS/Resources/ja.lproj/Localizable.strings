@@ -185,6 +185,7 @@
 "conversation.status.added_multiple" = "追加された人";
 "conversation.status.you_was_added" = "%@はあなたを追加しました";
 "conversation.status.added_users" = "%@は%@を追加しました";
+"conversation.status.joined" = "%@ joined";
 "conversation.status.removed_multiple" = "削除された人";
 "conversation.status.you_were_removed" = "あなたは削除されました";
 "conversation.status.you_left" = "あなたは退出しました";
@@ -238,6 +239,10 @@
 "conversation.create.group_name.placeholder" = "Group name";
 "conversation.create.guidance.empty" = "At least 1 character";
 "conversation.create.guidance.toolong" = "文字が多すぎます";
+"conversation.create.toggle.title" = "Allow guests";
+"conversation.create.toggle.subtitle" = "Open this conversation to people outside your team. You can always change it later.";
+
+"conversation.guests_present" = "Guests are present";
 
 // Image confirmation dialogue
 "image_confirmer.confirm" = "OK";
@@ -307,6 +312,7 @@
 "content.system.conversation.you.removed" = "%@は%@を削除しました";
 "content.system.conversation.you.left" = "%@が退出しました";
 "content.system.conversation.team.member-leave" = "%@ がチームから削除されました";
+"content.system.conversation.guest.joined" = "%@ joined";
 
 "content.system.other_renamed_conv_to_nothing" = "%@が会話の名前を削除しました";
 "content.system.you_renamed_conv_to_nothing" = "あなたは会話の名前を削除しました";
@@ -452,6 +458,11 @@
 "participants.add_people_button_title" = "Add";
 "participants.avatar.guest.title" = "ゲスト";
 
+"participants.title" = "詳細";
+"participants.section.participants" = "People (%d)";
+"participants.section.services" = "Services (%d)";
+"participants.footer.add_title" = "Add Participants";
+
 // Meta Menu
 "meta.menu.rename" = "名前の変更";
 "meta.menu.leave" = "退室";
@@ -465,10 +476,11 @@
 
 // Delete conversation
 "meta.menu.delete_content.dialog_title" = "コンテンツを削除しますか?";
-"meta.menu.delete_content.dialog_message" = "これにより会話の履歴がクリアされ、リストから削除します。";
+"meta.menu.delete_content.dialog_message" = "This will clear the conversation history on all your devices.";
 "meta.menu.delete_content.leave_as_well_message" = "会話からも退室する";
 "meta.menu.delete_content.button_cancel" = "キャンセル";
 "meta.menu.delete_content.button_delete" = "削除";
+"meta.menu.delete_content.button_delete_and_leave" = "Delete and leave";
 
 // Leave conversation
 "meta.leave_conversation_dialog_title" = "会話から退室しますか？";
@@ -476,6 +488,7 @@
 "meta.leave_conversation.delete_content_as_well_message" = "コンテンツも削除されます";
 "meta.leave_conversation_button_cancel" = "キャンセル";
 "meta.leave_conversation_button_leave" = "離れる";
+"meta.leave_conversation_button_leave_and_delete" = "Leave and delete content";
 
 // Conversation Degraded (security level lowered)
 "meta.degraded.degradation_reason_message.singular" = "%@が新しいデバイスを使い始めました。";
@@ -556,6 +569,11 @@
 
 // Bot
 "participants.services.remove_integration.button" = "remove integration";
+
+// Group details
+"group_details.guest_options_cell.title" = "Guest Options";
+"group_details.guest_options_cell.enabled" = "On";
+"group_details.guest_options_cell.disabled" = "オフ";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Self profile
@@ -790,6 +808,7 @@
 "self.settings.technical_report.mail.subject" = "Wire通話のレポート";
 "self.settings.technical_report.include_log" = "詳細なログを含める";
 "self.settings.technical_report.privacy_warning" = "詳細なログは個人情報を含む可能性があります";
+"self.settings.technical_report.no_mail_alert" = "No mail client detected. Tap \"OK\" and send logs manually to: ";
 
 // Password reset
 "self.settings.password_reset_menu.title" = "パスワードをリセット";
@@ -874,6 +893,18 @@
 "team.invite.error.already_invited" = "This email has already been invited";
 "team.invite.error.too_many_invitations" = "The maximum number of invitations has been sent";
 "team.invite.error.no_internet" = "No internet connection";
+
+// Guest Room
+
+"guest_room.allow_guests.title" = "Allow guests";
+"guest_room.allow_guests.subtitle" = "Open this conversation to people outside your team.";
+"guest_room.remove_guests.message" = "Current guests will be removed from the conversation. New guests will not be allowed.";
+"guest_room.remove_guests.action" = "Remove Guests";
+"guest_room.revoke_link.message" = "New guests will not be able to join with this link. Current guests will still have access.";
+"guest_room.revoke_link.action" = "Revoke Link";
+
+"guest_room.error.generic.title" = "Something went wrong";
+"guest_room.error.generic.message" = "Check your connection and try again";
 
 // Registration
 

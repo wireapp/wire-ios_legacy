@@ -138,6 +138,7 @@ public class SearchResultsViewController : UIViewController {
     }
     
     public var filterConversation: ZMConversation? = nil
+    public let shouldIncludeGuests: Bool
     
     public weak var delegate: SearchResultsViewControllerDelegate? = nil
     
@@ -152,11 +153,12 @@ public class SearchResultsViewController : UIViewController {
     }
     
     @objc
-    public init(userSelection: UserSelection, variant: ColorSchemeVariant, isAddingParticipants: Bool = false) {
+    public init(userSelection: UserSelection, variant: ColorSchemeVariant, isAddingParticipants: Bool = false, shouldIncludeGuests: Bool) {
         self.searchDirectory = SearchDirectory(userSession: ZMUserSession.shared()!)
         self.userSelection = userSelection
         self.isAddingParticipants = isAddingParticipants
         self.mode = .list
+        self.shouldIncludeGuests = shouldIncludeGuests
         
         let team = ZMUser.selfUser().team
         let teamName = team?.name
@@ -328,12 +330,19 @@ public class SearchResultsViewController : UIViewController {
         
         contactsSection.contacts = contacts
 
-        teamMemberAndContactsSection.contacts = Set(teamContacts + contacts).sorted {
-            let name0 = $0.name ?? ""
-            let name1 = $1.name ?? ""
+        // Access mode is not set, or the guests are allowed.
+        if shouldIncludeGuests {
+            teamMemberAndContactsSection.contacts = Set(teamContacts + contacts).sorted {
+                let name0 = $0.name ?? ""
+                let name1 = $1.name ?? ""
 
-            return name0.compare(name1) == .orderedAscending
-         }
+                return name0.compare(name1) == .orderedAscending
+             }
+        }
+        else {
+            teamMemberAndContactsSection.contacts = teamContacts
+        }
+        
         directorySection.suggestions = searchResult.directory
         conversationsSection.groupConversations = searchResult.conversations
         servicesSection.services = searchResult.services

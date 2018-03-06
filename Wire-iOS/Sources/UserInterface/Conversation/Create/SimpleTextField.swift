@@ -21,6 +21,8 @@ import Foundation
 protocol SimpleTextFieldDelegate: class {
     func textField(_ textField: SimpleTextField, valueChanged value: SimpleTextField.Value)
     func textFieldReturnPressed(_ textField: SimpleTextField)
+    func textFieldDidEndEditing(_ textField: SimpleTextField)
+    func textFieldDidBeginEditing(_ textField: SimpleTextField)
 }
 
 extension Optional where Wrapped == String {
@@ -54,8 +56,8 @@ class SimpleTextField: UITextField {
     static let placeholderFont = FontSpec(.small, .regular).font!
 
 
-    let textInsets: UIEdgeInsets = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 8)
-    let placeholderInsets: UIEdgeInsets
+    var textInsets: UIEdgeInsets = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 8)
+    var placeholderInsets: UIEdgeInsets
 
     /// Init with kind for keyboard style and validator type. Default is .unknown
     ///
@@ -131,6 +133,14 @@ extension SimpleTextField: SimpleTextFieldValidatorDelegate {
 
     func textFieldValueSubmitted(_ value: String) {
         textFieldDelegate?.textFieldReturnPressed(self)
+    }
+    
+    func textFieldDidEndEditing() {
+        textFieldDelegate?.textFieldDidEndEditing(self)
+    }
+    
+    func textFieldDidBeginEditing() {
+        textFieldDelegate?.textFieldDidBeginEditing(self)
     }
 
 }

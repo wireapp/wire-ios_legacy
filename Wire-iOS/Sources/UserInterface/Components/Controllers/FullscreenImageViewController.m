@@ -171,6 +171,9 @@
 {
     [super viewWillAppear:animated];
     self.closeButton.hidden = !self.showCloseButton;
+    if(self.parentViewController != nil) {
+        [self updateZoomWithSize:self.parentViewController.view.frame.size];
+    }
 }
 
 - (BOOL)prefersStatusBarHidden
@@ -639,7 +642,7 @@
 
 - (void)messageDidChange:(MessageChangeInfo *)changeInfo
 {
-    if (changeInfo.imageChanged && [[self.message imageMessageData] imageData] != nil) {
+    if ((changeInfo.transferStateChanged || changeInfo.imageChanged) && [[self.message imageMessageData] imageData] != nil) {
         [self.loadingSpinner removeFromSuperview];
         self.loadingSpinner = nil;
         

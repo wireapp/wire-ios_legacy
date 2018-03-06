@@ -185,6 +185,7 @@
 "conversation.status.added_multiple" = "Ihmiset lisätty";
 "conversation.status.you_was_added" = "%@ lisäsi sinut";
 "conversation.status.added_users" = "%@ lisäsi %@ n";
+"conversation.status.joined" = "%@ joined";
 "conversation.status.removed_multiple" = "Ihmiset poistettu";
 "conversation.status.you_were_removed" = "Sinut poistettiin";
 "conversation.status.you_left" = "Sinä poistuit";
@@ -238,6 +239,10 @@
 "conversation.create.group_name.placeholder" = "Group name";
 "conversation.create.guidance.empty" = "At least 1 character";
 "conversation.create.guidance.toolong" = "Liian monta merkkiä";
+"conversation.create.toggle.title" = "Allow guests";
+"conversation.create.toggle.subtitle" = "Open this conversation to people outside your team. You can always change it later.";
+
+"conversation.guests_present" = "Guests are present";
 
 // Image confirmation dialogue
 "image_confirmer.confirm" = "OK";
@@ -307,6 +312,7 @@
 "content.system.conversation.you.removed" = "%@ poisti %@ n";
 "content.system.conversation.you.left" = "%@ poistui";
 "content.system.conversation.team.member-leave" = "%@ poistettiin tiimistä.";
+"content.system.conversation.guest.joined" = "%@ joined";
 
 "content.system.other_renamed_conv_to_nothing" = "%@ poisti keskustelun nimen";
 "content.system.you_renamed_conv_to_nothing" = "Sinä poistit keskustelun nimen";
@@ -452,6 +458,11 @@
 "participants.add_people_button_title" = "Add";
 "participants.avatar.guest.title" = "Vieras";
 
+"participants.title" = "Lisätietoja";
+"participants.section.participants" = "People (%d)";
+"participants.section.services" = "Services (%d)";
+"participants.footer.add_title" = "Add Participants";
+
 // Meta Menu
 "meta.menu.rename" = "Nimeä uudelleen";
 "meta.menu.leave" = "Poistu";
@@ -465,10 +476,11 @@
 
 // Delete conversation
 "meta.menu.delete_content.dialog_title" = "Poista sisältö?";
-"meta.menu.delete_content.dialog_message" = "Tämä tyhjentää keskusteluhistorian ja poistaa sen listalta.";
+"meta.menu.delete_content.dialog_message" = "This will clear the conversation history on all your devices.";
 "meta.menu.delete_content.leave_as_well_message" = "Poistu myös keskustelusta";
 "meta.menu.delete_content.button_cancel" = "Peruuta";
 "meta.menu.delete_content.button_delete" = "Poista";
+"meta.menu.delete_content.button_delete_and_leave" = "Delete and leave";
 
 // Leave conversation
 "meta.leave_conversation_dialog_title" = "Poistu keskustelusta?";
@@ -476,6 +488,7 @@
 "meta.leave_conversation.delete_content_as_well_message" = "Poista myös sisältö";
 "meta.leave_conversation_button_cancel" = "Peruuta";
 "meta.leave_conversation_button_leave" = "Poistu";
+"meta.leave_conversation_button_leave_and_delete" = "Leave and delete content";
 
 // Conversation Degraded (security level lowered)
 "meta.degraded.degradation_reason_message.singular" = "%@ aloitti käyttämään uutta laitetta.";
@@ -556,6 +569,11 @@
 
 // Bot
 "participants.services.remove_integration.button" = "remove integration";
+
+// Group details
+"group_details.guest_options_cell.title" = "Guest Options";
+"group_details.guest_options_cell.enabled" = "On";
+"group_details.guest_options_cell.disabled" = "Pois päältä";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Self profile
@@ -790,6 +808,7 @@
 "self.settings.technical_report.mail.subject" = "Wiren Puhelu Raportti";
 "self.settings.technical_report.include_log" = "Sisällytä yksityiskohtainen loki";
 "self.settings.technical_report.privacy_warning" = "Yksityiskohtaiset logit voivat sisältää henkilökohtaista tietoa";
+"self.settings.technical_report.no_mail_alert" = "No mail client detected. Tap \"OK\" and send logs manually to: ";
 
 // Password reset
 "self.settings.password_reset_menu.title" = "Vaihda Salasana";
@@ -874,6 +893,18 @@
 "team.invite.error.already_invited" = "This email has already been invited";
 "team.invite.error.too_many_invitations" = "The maximum number of invitations has been sent";
 "team.invite.error.no_internet" = "No internet connection";
+
+// Guest Room
+
+"guest_room.allow_guests.title" = "Allow guests";
+"guest_room.allow_guests.subtitle" = "Open this conversation to people outside your team.";
+"guest_room.remove_guests.message" = "Current guests will be removed from the conversation. New guests will not be allowed.";
+"guest_room.remove_guests.action" = "Remove Guests";
+"guest_room.revoke_link.message" = "New guests will not be able to join with this link. Current guests will still have access.";
+"guest_room.revoke_link.action" = "Revoke Link";
+
+"guest_room.error.generic.title" = "Something went wrong";
+"guest_room.error.generic.message" = "Check your connection and try again";
 
 // Registration
 

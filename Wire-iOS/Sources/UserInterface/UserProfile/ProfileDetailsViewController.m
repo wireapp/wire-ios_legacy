@@ -50,7 +50,6 @@
 #import "ProfileIncomingConnectionRequestFooterView.h"
 #import "ProfileUnblockFooterView.h"
 #import "ActionSheetController+Conversation.h"
-#import "ProfileNavigationControllerDelegate.h"
 
 
 typedef NS_ENUM(NSUInteger, ProfileViewContentMode) {
@@ -83,7 +82,8 @@ typedef NS_ENUM(NSUInteger, ProfileUserAction) {
 
 @property (nonatomic) UserImageView *userImageView;
 @property (nonatomic) UIView *footerView;
-@property (nonatomic) UILabel *teamsGuestLabel;
+@property (nonatomic) UIView *stackViewContainer;
+@property (nonatomic) GuestLabelIndicator *teamsGuestIndicator;
 @property (nonatomic) BOOL showGuestLabel;
 @property (nonatomic) AvailabilityTitleView *availabilityView;
 @property (nonatomic) UICustomSpacingStackView *stackView;
@@ -116,28 +116,33 @@ typedef NS_ENUM(NSUInteger, ProfileUserAction) {
 {
     [self createUserImageView];
     [self createFooter];
-    [self createTeamsGuestLabel];
+    [self createGuestIndicator];
     
-    self.teamsGuestLabel.hidden = !self.showGuestLabel;
+    self.view.backgroundColor = [UIColor wr_colorFromColorScheme:ColorSchemeColorBackground];
+    self.stackViewContainer = [[UIView alloc] initForAutoLayout];
+    [self.view addSubview:self.stackViewContainer];
+    self.teamsGuestIndicator.hidden = !self.showGuestLabel;
     self.availabilityView.hidden = !ZMUser.selfUser.isTeamMember || self.fullUser.availability == AvailabilityNone;
 
-    self.stackView = [[UICustomSpacingStackView alloc] initWithCustomSpacedArrangedSubviews:@[self.userImageView, self.teamsGuestLabel, self.availabilityView]];
+    self.stackView = [[UICustomSpacingStackView alloc] initWithCustomSpacedArrangedSubviews:@[self.userImageView, self.teamsGuestIndicator, self.availabilityView]];
     self.stackView.axis = UILayoutConstraintAxisVertical;
     self.stackView.spacing = 0;
     self.stackView.alignment = UIStackViewAlignmentCenter;
-    [self.view addSubview:self.stackView];
+    [self.stackViewContainer addSubview:self.stackView];
     
-    [self.stackView wr_addCustomSpacing:(self.teamsGuestLabel.isHidden ? 32 : 4) after:self.userImageView];
-    [self.stackView wr_addCustomSpacing:(self.availabilityView.isHidden ? 40 : 32) after:self.teamsGuestLabel];
+    [self.stackView wr_addCustomSpacing:(self.teamsGuestIndicator.isHidden ? 32 : 32) after:self.userImageView];
+    [self.stackView wr_addCustomSpacing:(self.availabilityView.isHidden ? 40 : 32) after:self.teamsGuestIndicator];
     [self.stackView wr_addCustomSpacing:32 after:self.availabilityView];
 }
 
 - (void)setupConstraints
 {
-    [self.stackView autoPinEdgeToSuperviewEdge:ALEdgeTop withInset:32];
-    [self.stackView autoPinEdgeToSuperviewEdge:ALEdgeLeading];
-    [self.stackView autoPinEdgeToSuperviewEdge:ALEdgeTrailing];
-    [self.stackView autoPinEdge:ALEdgeBottom toEdge:ALEdgeTop ofView:self.footerView withOffset:0 relation:NSLayoutRelationLessThanOrEqual];
+    [self.stackView autoCenterInSuperview];
+    
+    [self.stackViewContainer autoPinEdgeToSuperviewEdge:ALEdgeTop];
+    [self.stackViewContainer autoPinEdgeToSuperviewEdge:ALEdgeLeading];
+    [self.stackViewContainer autoPinEdgeToSuperviewEdge:ALEdgeTrailing];
+    [self.stackViewContainer autoPinEdge:ALEdgeBottom toEdge:ALEdgeTop ofView:self.footerView];
     
     UIEdgeInsets bottomInset = UIEdgeInsetsMake(0, 0, UIScreen.safeArea.bottom, 0);
     [self.footerView autoPinEdgesToSuperviewEdgesWithInsets:bottomInset excludingEdge:ALEdgeTop];
@@ -154,13 +159,9 @@ typedef NS_ENUM(NSUInteger, ProfileUserAction) {
     self.userImageView.user = self.bareUser;
 }
 
-- (void)createTeamsGuestLabel
+- (void)createGuestIndicator
 {
-    self.teamsGuestLabel = [[UILabel alloc] initForAutoLayout];
-    self.teamsGuestLabel.numberOfLines = 0;
-    self.teamsGuestLabel.textAlignment = NSTextAlignmentCenter;
-    [self.teamsGuestLabel setContentCompressionResistancePriority:1000 forAxis:UILayoutConstraintAxisVertical];
-    self.teamsGuestLabel.text = NSLocalizedString(@"profile.details.guest", nil);
+    self.teamsGuestIndicator = [[GuestLabelIndicator alloc] init];
 }
 
 #pragma mark - Footer
@@ -173,8 +174,7 @@ typedef NS_ENUM(NSUInteger, ProfileUserAction) {
     
     ProfileViewContentMode mode = self.profileViewContentMode;
     
-    BOOL validContext = (self.context == ProfileViewControllerContextSearch ||
-                         self.context == ProfileViewControllerContextCommonConnection);
+    BOOL validContext = (self.context == ProfileViewControllerContextSearch);
     
     if (!user.isTeamMember && validContext && user.isPendingApprovalBySelfUser) {
         ProfileIncomingConnectionRequestFooterView *incomingConnectionRequestFooterView = [[ProfileIncomingConnectionRequestFooterView alloc] init];
@@ -250,7 +250,7 @@ typedef NS_ENUM(NSUInteger, ProfileUserAction) {
 {
     switch (userAction) {
         case ProfileUserActionAddPeople:
-            return ZetaIconTypeConvMetaAddPerson;
+            return ZetaIconTypeCreateConversation;
             break;
             
         case ProfileUserActionPresentMenu:
@@ -333,12 +333,7 @@ typedef NS_ENUM(NSUInteger, ProfileUserAction) {
         }
     }
     else if (user.isConnected) {
-        if (self.context == ProfileViewControllerContextCommonConnection) {
-            return ProfileUserActionBlock;
-        }
-        else {
-            return ProfileUserActionPresentMenu;
-        }
+        return ProfileUserActionPresentMenu;
     }
     else if (nil != user.team) {
         return ProfileUserActionPresentMenu;

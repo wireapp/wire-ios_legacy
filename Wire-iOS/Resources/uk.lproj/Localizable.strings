@@ -185,6 +185,7 @@
 "conversation.status.added_multiple" = "Додані нові учасники";
 "conversation.status.you_was_added" = "%@ додав(-ла) вас";
 "conversation.status.added_users" = "%@ додав(-ла) %@";
+"conversation.status.joined" = "%@ приєднався(-лася)";
 "conversation.status.removed_multiple" = "Учасники видалені";
 "conversation.status.you_were_removed" = "Вас видалили";
 "conversation.status.you_left" = "Ви вийшли";
@@ -238,6 +239,10 @@
 "conversation.create.group_name.placeholder" = "Ім'я групи";
 "conversation.create.guidance.empty" = "Не менше 1 символу";
 "conversation.create.guidance.toolong" = "Занадто багато символів";
+"conversation.create.toggle.title" = "Дозволити присутність гостей";
+"conversation.create.toggle.subtitle" = "Зробити розмову доступною для людей поза межами вашої команди. Це налаштування завжди можна змінити пізніше.";
+
+"conversation.guests_present" = "Присутні гості";
 
 // Image confirmation dialogue
 "image_confirmer.confirm" = "OK";
@@ -307,6 +312,7 @@
 "content.system.conversation.you.removed" = "%@ видалив(-ла) %@";
 "content.system.conversation.you.left" = "%@ вийшов(-ла)";
 "content.system.conversation.team.member-leave" = "%@ був(-ла) видалений(-а) з команди.";
+"content.system.conversation.guest.joined" = "%@ приєднався(-лася)";
 
 "content.system.other_renamed_conv_to_nothing" = "%@ видалив(-ла) ім'я розмови";
 "content.system.you_renamed_conv_to_nothing" = "Ви видалили ім'я розмови";
@@ -336,9 +342,9 @@
 "content.system.renamed_conv.title-you" = "%@ перейменував(-ла) розмову";
 "content.system.renamed_conv.title.you" = "Ви";
 
-"content.system.conversation.with_name.title" = "%@ started the conversation";
+"content.system.conversation.with_name.title" = "%@ розпочав(-ла) розмову";
 
-"content.system.conversation.with_name.participants" = "with %@";
+"content.system.conversation.with_name.participants" = "з %@";
 
 "content.system.reactivated_device" = "Ви почали використовувати %@ знову. Повідомлення, надіслані поки ви не користувалися ним, не з'являться тут.";
 
@@ -452,6 +458,11 @@
 "participants.add_people_button_title" = "Додати";
 "participants.avatar.guest.title" = "Гість";
 
+"participants.title" = "Подробиці";
+"participants.section.participants" = "Учасники (%d)";
+"participants.section.services" = "Сервіси (%d)";
+"participants.footer.add_title" = "Додати учасників";
+
 // Meta Menu
 "meta.menu.rename" = "Перейменувати";
 "meta.menu.leave" = "Вийти з розмови";
@@ -465,10 +476,11 @@
 
 // Delete conversation
 "meta.menu.delete_content.dialog_title" = "Видалити вміст?";
-"meta.menu.delete_content.dialog_message" = "Це зітре історію розмови і видалить її зі списку.";
+"meta.menu.delete_content.dialog_message" = "Це очистить історію розмови на всіх ваших пристроях.";
 "meta.menu.delete_content.leave_as_well_message" = "Також вийти з розмови";
 "meta.menu.delete_content.button_cancel" = "Скасувати";
 "meta.menu.delete_content.button_delete" = "Видалити";
+"meta.menu.delete_content.button_delete_and_leave" = "Видалити та вийти";
 
 // Leave conversation
 "meta.leave_conversation_dialog_title" = "Вийти з розмови?";
@@ -476,6 +488,7 @@
 "meta.leave_conversation.delete_content_as_well_message" = "Також видалити вміст";
 "meta.leave_conversation_button_cancel" = "Скасувати";
 "meta.leave_conversation_button_leave" = "Вийти";
+"meta.leave_conversation_button_leave_and_delete" = "Вийти та видалити вміст";
 
 // Conversation Degraded (security level lowered)
 "meta.degraded.degradation_reason_message.singular" = "%@ почав(-ла) використовувати новий пристрій.";
@@ -556,6 +569,11 @@
 
 // Bot
 "participants.services.remove_integration.button" = "видалити інтеграцію";
+
+// Group details
+"group_details.guest_options_cell.title" = "Гостьові налаштування";
+"group_details.guest_options_cell.enabled" = "Увімк.";
+"group_details.guest_options_cell.disabled" = "Вимкнений";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Self profile
@@ -790,6 +808,7 @@
 "self.settings.technical_report.mail.subject" = "Wire звіт про дзвінок";
 "self.settings.technical_report.include_log" = "Включити детальний журнал логів";
 "self.settings.technical_report.privacy_warning" = "Детальні логи можуть містити персональні дані";
+"self.settings.technical_report.no_mail_alert" = "No mail client detected. Tap \"OK\" and send logs manually to: ";
 
 // Password reset
 "self.settings.password_reset_menu.title" = "Скинути пароль";
@@ -874,6 +893,18 @@
 "team.invite.error.already_invited" = "Ця адреса вже зареєстрована";
 "team.invite.error.too_many_invitations" = "Вже було надіслано максимальну кількість запрошень";
 "team.invite.error.no_internet" = "Відсутнє підключення до Інтернету";
+
+// Guest Room
+
+"guest_room.allow_guests.title" = "Дозволити присутність гостей";
+"guest_room.allow_guests.subtitle" = "Зробити цю розмову доступною для людей поза межами вашої команди.";
+"guest_room.remove_guests.message" = "Поточні гості будуть вилучені з розмови. Нові гості не матимуть доступу до неї.";
+"guest_room.remove_guests.action" = "Видалити гостей";
+"guest_room.revoke_link.message" = "Нові гості не зможуть приєднатися з цим лінком. Поточні гості все ще матимуть доступ.";
+"guest_room.revoke_link.action" = "Відкликати лінк";
+
+"guest_room.error.generic.title" = "Something went wrong";
+"guest_room.error.generic.message" = "Check your connection and try again";
 
 // Registration
 

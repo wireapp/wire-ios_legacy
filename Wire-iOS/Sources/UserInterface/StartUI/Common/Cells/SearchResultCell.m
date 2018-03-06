@@ -47,12 +47,12 @@ static NSMutableDictionary *correlationFormatters;
 @property (nonatomic, strong) NSLayoutConstraint *avatarViewSizeConstraint;
 @property (nonatomic, strong) NSLayoutConstraint *conversationImageViewSize;
 @property (nonatomic, strong) NSLayoutConstraint *nameRightMarginConstraint;
-@property (nonatomic, strong) NSLayoutConstraint *guestLabelTrailingConstraint;
-@property (nonatomic, strong) NSLayoutConstraint *guestLabelCheckmarkViewHorizontalConstraint;
+@property (nonatomic, strong) NSLayoutConstraint *guestIndicatorTrailingConstraint;
+@property (nonatomic, strong) NSLayoutConstraint *guestIndicatorCheckmarkViewHorizontalConstraint;
 
 @property (nonatomic, strong) UILabel *subtitleLabel;
 
-@property (nonatomic, strong) GuestLabel *guestLabel;
+@property (nonatomic, strong) UIImageView *guestIndicator;
 @property (nonatomic, strong) UIView *separatorLineView;
 
 @end
@@ -233,8 +233,8 @@ static NSMutableDictionary *correlationFormatters;
     if (!self.trailingCheckmarkView.hidden) {
         rightMarginForName += self.trailingCheckmarkView.bounds.size.width + rightMargin;
     }
-    if (!self.guestLabel.hidden) {
-        rightMarginForName += self.guestLabel.bounds.size.width + rightMargin;
+    if (!self.guestIndicator.hidden) {
+        rightMarginForName += self.guestIndicator.bounds.size.width + rightMargin;
     }
 
     self.nameRightMarginConstraint.constant = -rightMarginForName;
@@ -289,7 +289,7 @@ static NSMutableDictionary *correlationFormatters;
     }
     
     [self updateSubtitle];
-    [self updateGuestLabel];
+    [self updateGuestIndicator];
     
     BOOL canBeConnected = YES;
 
@@ -342,8 +342,8 @@ static NSMutableDictionary *correlationFormatters;
         newAccessibilityLabel = @"";
     }
     
-    if (!self.guestLabel.hidden && self.guestLabel.textLabel.text.length != 0) {
-        newAccessibilityLabel = [NSString stringWithFormat:@"%@ (%@)", newAccessibilityLabel, self.guestLabel.textLabel.text];
+    if ([self isUserGuest]) {
+        newAccessibilityLabel = [NSString stringWithFormat:@"%@ (%@)", newAccessibilityLabel, NSLocalizedString(@"participants.avatar.guest.title", @"")];
     }
     
     self.accessibilityLabel = newAccessibilityLabel;
@@ -454,36 +454,43 @@ static NSMutableDictionary *correlationFormatters;
     self.subtitleLabel.hidden = nil == subtitle || [subtitle.string isEqualToString:@""];
 }
 
-- (void)updateGuestLabel
+- (BOOL)isUserGuest
+{
+    return (nil != self.team && !self.user.isTeamMember);
+}
+
+- (void)updateGuestIndicator
 {
     CGFloat rightMargin = [WAZUIMagic cgFloatForIdentifier:@"people_picker.search_results_mode.person_tile_right_margin"];
 
-    if (nil != self.team && !self.user.isTeamMember) {
-        if (nil == self.guestLabel) {
-            self.guestLabel = [[GuestLabel alloc] init];
-            [self.swipeView addSubview:self.guestLabel];
-            [self.guestLabel autoAlignAxisToSuperviewAxis:ALAxisHorizontal];
-            self.guestLabelTrailingConstraint = [self.guestLabel autoPinEdgeToSuperviewEdge:ALEdgeTrailing withInset:rightMargin];
-            self.guestLabelCheckmarkViewHorizontalConstraint = [self.guestLabel autoPinEdge:ALEdgeTrailing toEdge:ALEdgeLeading ofView:self.trailingCheckmarkView withOffset:-rightMargin];
-            [self updateGuestLabelConstraints];
+    if (self.isUserGuest) {
+        if (nil == self.guestIndicator) {
+            self.guestIndicator = [[GuestIndicator alloc] init];
+            [self.guestIndicator setContentHuggingPriority:UILayoutPriorityRequired forAxis:UILayoutConstraintAxisHorizontal];
+            [self.guestIndicator setContentCompressionResistancePriority:UILayoutPriorityRequired forAxis:UILayoutConstraintAxisHorizontal];
+            [self.swipeView addSubview:self.guestIndicator];
+            [self.guestIndicator autoAlignAxisToSuperviewAxis:ALAxisHorizontal];
+            self.guestIndicatorTrailingConstraint = [self.guestIndicator autoPinEdgeToSuperviewEdge:ALEdgeTrailing withInset:rightMargin];
+            self.guestIndicatorCheckmarkViewHorizontalConstraint = [self.guestIndicator autoPinEdge:ALEdgeTrailing toEdge:ALEdgeLeading ofView:self.trailingCheckmarkView withOffset:-rightMargin];
+            [self updateGuestIndicatorConstraints];
         }
-        self.guestLabel.hidden = NO;
+        self.guestIndicator.hidden = NO;
     }
     else {
-        self.guestLabel.hidden = YES;
+        self.guestIndicator.hidden = YES;
     }
 }
 
-- (void)updateGuestLabelConstraints
+- (void)updateGuestIndicatorConstraints
 {
-    self.guestLabelCheckmarkViewHorizontalConstraint.active = self.accessoryType == SearchResultCellAccessoryTypeTrailingCheckmark;
-    self.guestLabelTrailingConstraint.active = self.accessoryType != SearchResultCellAccessoryTypeTrailingCheckmark;
+    self.guestIndicatorCheckmarkViewHorizontalConstraint.active = self.accessoryType == SearchResultCellAccessoryTypeTrailingCheckmark;
+    self.guestIndicatorTrailingConstraint.active = self.accessoryType != SearchResultCellAccessoryTypeTrailingCheckmark;
 }
 
 - (void)setAccessoryType:(SearchResultCellAccessoryType)accessoryType
 {
     _accessoryType = accessoryType;
-    [self updateGuestLabelConstraints];
+    [self updateGuestIndicatorConstraints];
     [self setSelected:self.selected];
 }
 

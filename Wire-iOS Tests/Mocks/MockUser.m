@@ -30,6 +30,7 @@ static id<ZMBareUser> mockSelfUser = nil;
 {
     self = [super init];
     if (self) {
+        _clients = [NSSet set];
         for (NSString *key in jsonObject.allKeys) {
             id value = jsonObject[key];
             [self setValue:value forKey:key];
@@ -60,14 +61,14 @@ static id<ZMBareUser> mockSelfUser = nil;
     mockSelfUser = newMockUser;
 }
 
-- (BOOL)isTeamMember
++ (MockUser *)mockUserFor:(ZMUser *)user
 {
-    return NO;
+    return (MockUser *)user;
 }
 
 - (BOOL)isGuestInConversation:(ZMConversation *)conversation
 {
-    return NO;
+    return self.isGuestInConversation;
 }
 
 + (ZMUser<ZMEditableUser> *)selfUserInUserSession:(ZMUserSession *)session
@@ -180,11 +181,6 @@ static id<ZMBareUser> mockSelfUser = nil;
 }
 
 - (id)observableKeys
-{
-    return @[];
-}
-
-- (id)clients
 {
     return @[];
 }

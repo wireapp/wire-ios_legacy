@@ -144,7 +144,7 @@ typedef NS_ENUM(NSInteger, ZetaIconType)
     
     ZetaIconTypeSelfProfile                     = 0x265,
     ZetaIconTypeMegaphone                       = 0x267,
-    ZetaIconTypeSettingsAccount                 = 0x187,
+    ZetaIconTypeSettingsAccount                 = 0x265,
     ZetaIconTypeSettingsDevices                 = 0x188,
     ZetaIconTypeSettingsOptions                 = 0x135,
     ZetaIconTypeSettingsAdvanced                = 0x134,
@@ -206,6 +206,8 @@ typedef NS_ENUM(NSInteger, ZetaIconType)
     ZetaIconTypeBot                             = 0x752,
     // Team Invites
     ZetaIconTypeExclamationMarkCircle           = 0x751,
+    
+    ZetaIconTypeGuest                           = 0x756
 };
 
 typedef NS_ENUM(NSInteger, ZetaIconSize) {

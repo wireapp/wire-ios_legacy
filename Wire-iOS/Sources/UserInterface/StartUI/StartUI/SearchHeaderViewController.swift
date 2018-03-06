@@ -60,7 +60,7 @@ public class SearchHeaderViewController : UIViewController {
     public override func viewDidLoad() {
         super.viewDidLoad()
 
-        view.backgroundColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorSearchBarBackground, variant: colorSchemeVariant)
+        view.backgroundColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorBarBackground, variant: colorSchemeVariant)
 
         searchIcon.image = UIImage(for: .search, iconSize: .tiny, color: UIColor.wr_color(fromColorScheme: ColorSchemeColorTextForeground, variant: colorSchemeVariant))
         

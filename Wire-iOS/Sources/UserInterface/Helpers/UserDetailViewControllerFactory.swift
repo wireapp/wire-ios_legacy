@@ -19,30 +19,27 @@
 import Foundation
 final class UserDetailViewControllerFactory: NSObject {
 
-    /// Create a ProfileHeaderServiceDetailViewController if the user is a serviceUser, otherwise return a ProfileViewController
+    /// Create a ServiceDetailViewController if the user is a serviceUser, otherwise return a ProfileViewController
     ///
     /// - Parameters:
-    ///   - user: user to show the detailif
+    ///   - user: user to show the details
     ///   - conversation: conversation currently displaying
     ///   - profileViewControllerDelegate: a ProfileViewControllerDelegate for ProfileViewController
     ///   - viewControllerDismissable: a ViewControllerDismissable for returing UIViewController's dismiss action
-    ///   - navigationControllerDelegate: a ProfileNavigationControllerDelegate
     /// - Returns: if the user is a serviceUser, return a ProfileHeaderServiceDetailViewController. if the user not a serviceUser, return a ProfileViewController
     @objc static func createUserDetailViewController(user: ZMUser,
                                                      conversation: ZMConversation,
                                                      profileViewControllerDelegate: ProfileViewControllerDelegate,
-                                                     viewControllerDismissable: ViewControllerDismissable,
-                                                     navigationControllerDelegate: ProfileNavigationControllerDelegate? = nil) -> UIViewController {
+                                                     viewControllerDismissable: ViewControllerDismissable) -> UIViewController {
         if user.isServiceUser {
-            let profileHeaderServiceDetailViewController = ProfileHeaderServiceDetailViewController(serviceUser: user, conversation: conversation)
-            profileHeaderServiceDetailViewController.viewControllerDismissable = viewControllerDismissable
-            profileHeaderServiceDetailViewController.navigationControllerDelegate = navigationControllerDelegate
-            return profileHeaderServiceDetailViewController
+            let variant = ServiceDetailVariant(colorScheme: ColorScheme.default().variant, opaque: true)
+            let serviceDetailViewController = ServiceDetailViewController(serviceUser: user, destinationConversation: conversation, actionType: .removeService, variant: variant)
+            serviceDetailViewController.viewControllerDismissable = viewControllerDismissable
+            return serviceDetailViewController
         } else {
             let profileViewController = ProfileViewController(user: user, conversation: conversation)
             profileViewController.delegate = profileViewControllerDelegate
             profileViewController.viewControllerDismissable = viewControllerDismissable
-            profileViewController.navigationControllerDelegate = navigationControllerDelegate
             return profileViewController
         }
     }

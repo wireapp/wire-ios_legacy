@@ -185,6 +185,7 @@
 "conversation.status.added_multiple" = "Žmonės pridėti";
 "conversation.status.you_was_added" = "%@ pridėjo jus";
 "conversation.status.added_users" = "%@ pridėjo pašnekovą %@";
+"conversation.status.joined" = "%@ prisijungė";
 "conversation.status.removed_multiple" = "Žmonės pašalinti";
 "conversation.status.you_were_removed" = "Jūs buvote pašalinti";
 "conversation.status.you_left" = "Jūs išėjote";
@@ -238,6 +239,10 @@
 "conversation.create.group_name.placeholder" = "Grupės pavadinimas";
 "conversation.create.guidance.empty" = "Bent 1 simbolis";
 "conversation.create.guidance.toolong" = "Per daug simbolių";
+"conversation.create.toggle.title" = "Leisti svečius";
+"conversation.create.toggle.subtitle" = "Atverti šį pokalbį žmonėms ne iš jūsų komandos. Vėliau, visada galite tai pakeisti.";
+
+"conversation.guests_present" = "Yra svečių";
 
 // Image confirmation dialogue
 "image_confirmer.confirm" = "GERAI";
@@ -307,6 +312,7 @@
 "content.system.conversation.you.removed" = "%@ pašalino pašnekovą %@";
 "content.system.conversation.you.left" = "%@ išėjo";
 "content.system.conversation.team.member-leave" = "%@ buvo pašalintas iš komandos.";
+"content.system.conversation.guest.joined" = "%@ prisijungė";
 
 "content.system.other_renamed_conv_to_nothing" = "%@ ištrynė susirašinėjimo pavadinimą";
 "content.system.you_renamed_conv_to_nothing" = "Jūs ištrynėte susirašinėjimo pavadinimą";
@@ -452,6 +458,11 @@
 "participants.add_people_button_title" = "Pridėti";
 "participants.avatar.guest.title" = "Svečias";
 
+"participants.title" = "Išsamiau";
+"participants.section.participants" = "Žmonės (%d)";
+"participants.section.services" = "Paslaugos (%d)";
+"participants.footer.add_title" = "Pridėti dalyvių";
+
 // Meta Menu
 "meta.menu.rename" = "Pervadinti";
 "meta.menu.leave" = "Išeiti";
@@ -465,10 +476,11 @@
 
 // Delete conversation
 "meta.menu.delete_content.dialog_title" = "Ištrinti turinį?";
-"meta.menu.delete_content.dialog_message" = "Tai išvalys pokalbio istoriją ir pašalins jį iš sąrašo.";
+"meta.menu.delete_content.dialog_message" = "Tai išvalys bendravimo praeitį visuose jūsų įrenginiuose.";
 "meta.menu.delete_content.leave_as_well_message" = "Taip pat išeiti iš pokalbio";
 "meta.menu.delete_content.button_cancel" = "Atsisakyti";
 "meta.menu.delete_content.button_delete" = "Ištrinti";
+"meta.menu.delete_content.button_delete_and_leave" = "Ištrinti ir išeiti";
 
 // Leave conversation
 "meta.leave_conversation_dialog_title" = "Išeiti iš susirašinėjimo?";
@@ -476,6 +488,7 @@
 "meta.leave_conversation.delete_content_as_well_message" = "Taip pat ištrinti turinį";
 "meta.leave_conversation_button_cancel" = "Atsisakyti";
 "meta.leave_conversation_button_leave" = "Išeiti";
+"meta.leave_conversation_button_leave_and_delete" = "Išeiti ir ištrinti turinį";
 
 // Conversation Degraded (security level lowered)
 "meta.degraded.degradation_reason_message.singular" = "%@ pradėjo naudotis nauju įrenginiu.";
@@ -556,6 +569,11 @@
 
 // Bot
 "participants.services.remove_integration.button" = "pašalinti integraciją";
+
+// Group details
+"group_details.guest_options_cell.title" = "Svečio nustatymai";
+"group_details.guest_options_cell.enabled" = "Įjungta";
+"group_details.guest_options_cell.disabled" = "Išjungta";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Self profile
@@ -790,6 +808,7 @@
 "self.settings.technical_report.mail.subject" = "„Wire“ skambinimo ataskaita";
 "self.settings.technical_report.include_log" = "Pridėti išsamų žurnalą";
 "self.settings.technical_report.privacy_warning" = "Išsamiuose žurnaluose gali būti asmeninių duomenų";
+"self.settings.technical_report.no_mail_alert" = "El. pašto klientų nėra. Spustelėlę \"Gerai\" galėsite išsiųsti žurnalą rankiniu būdu: ";
 
 // Password reset
 "self.settings.password_reset_menu.title" = "Atstatyti slaptažodį";
@@ -874,6 +893,18 @@
 "team.invite.error.already_invited" = "Šis el. pašto adresas jau buvo kviestas";
 "team.invite.error.too_many_invitations" = "Didžiausias galimas kvietimų skaičius išsiųstas";
 "team.invite.error.no_internet" = "Nėra interneto ryšio";
+
+// Guest Room
+
+"guest_room.allow_guests.title" = "Leisti svečius";
+"guest_room.allow_guests.subtitle" = "Leiskite matyti šį susirašinėjimą žmonėms nesantiems komandoje.";
+"guest_room.remove_guests.message" = "Dabartiniai svečiai bus pašalinti iš susirašinėjimo. Nauji svečiai prisijungi negalės.";
+"guest_room.remove_guests.action" = "Pašalinti svečius";
+"guest_room.revoke_link.message" = "Nauji svečiai negalės prisijungti spustelėję nuorodą. Dabartiniai svečiai prisijungti galės.";
+"guest_room.revoke_link.action" = "Atšaukti nuorodą";
+
+"guest_room.error.generic.title" = "Kažkas atsitiko";
+"guest_room.error.generic.message" = "Patikrinkite interneto ryšį ir bandykite dar kartą";
 
 // Registration
 

@@ -20,6 +20,25 @@ import Foundation
 import Cartography
 import Classy
 
+extension ZMConversation {
+    var canAddGuest: Bool {
+        // If not a team conversation: possible to add any contact.
+        guard let _ = self.team else {
+            return true
+        }
+        
+        // Access mode and/or role is unknown: let's try to add and observe the result.
+        guard let accessMode = self.accessMode,
+              let accessRole = self.accessRole else {
+                return true
+        }
+        
+        let canAddGuest = accessMode.contains(.invite)
+        let guestCanBeAdded = accessRole != .team
+        
+        return canAddGuest && guestCanBeAdded
+    }
+}
 
 class AddParticipantsNavigationController: UINavigationController {
     override func viewDidLoad() {
@@ -29,20 +48,24 @@ class AddParticipantsNavigationController: UINavigationController {
         self.navigationBar.shadowImage = UIImage()
         self.navigationBar.isTranslucent = true
         self.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: ColorScheme.default().color(withName: ColorSchemeColorTextForeground),
-                                                  NSFontAttributeName: FontSpec(.medium, .medium).font!.allCaps()]
+                                                  NSFontAttributeName: FontSpec(.medium, .medium).font!]
     }
-}
-
-@objc
-public protocol AddParticipantsViewControllerDelegate : class {
-    
-    func addParticipantsViewControllerDidCancel(_ addParticipantsViewController : AddParticipantsViewController)
-    func addParticipantsViewController(_ addParticipantsViewController : AddParticipantsViewController, didSelectUsers users: Set<ZMUser>)
 }
 
 public protocol AddParticipantsConversationCreationDelegate: class {
 
     func addParticipantsViewController(_ addParticipantsViewController : AddParticipantsViewController, didPerform action: AddParticipantsViewController.CreateAction)
+}
+
+extension AddParticipantsViewController.Context {
+    var includeGuests: Bool {
+        switch self {
+        case .add(let conversation):
+            return conversation.canAddGuest
+        case .create(let creationValues):
+            return creationValues.allowGuests
+        }
+    }
 }
 
 public class AddParticipantsViewController: UIViewController {
@@ -70,7 +93,6 @@ public class AddParticipantsViewController: UIViewController {
     fileprivate var bottomConstraint: NSLayoutConstraint?
     fileprivate let backButtonDescriptor = BackButtonDescription()
     
-    public weak var delegate : AddParticipantsViewControllerDelegate?
     public weak var conversationCreationDelegate : AddParticipantsConversationCreationDelegate?
     
     fileprivate var viewModel: AddParticipantsViewModel {
@@ -135,7 +157,10 @@ public class AddParticipantsViewController: UIViewController {
         
         searchGroupSelector = SearchGroupSelector(variant: self.variant)
 
-        searchResultsViewController = SearchResultsViewController(userSelection: userSelection, variant: self.variant, isAddingParticipants: true)
+        searchResultsViewController = SearchResultsViewController(userSelection: userSelection,
+                                                                  variant: self.variant,
+                                                                  isAddingParticipants: true,
+                                                                  shouldIncludeGuests: viewModel.context.includeGuests)
 
         super.init(nibName: nil, bundle: nil)
         updateValues()
@@ -250,7 +275,7 @@ public class AddParticipantsViewController: UIViewController {
     fileprivate func updateSelectionValues() {
         // Update view model after selection changed
         if case .create(let values) = viewModel.context {
-            let updated = ConversationCreationValues(name: values.name, participants: userSelection.users)
+            let updated = ConversationCreationValues(name: values.name, participants: userSelection.users, allowGuests: true)
             viewModel = AddParticipantsViewModel(with: .create(updated), variant: variant)
         }
 
@@ -319,6 +344,16 @@ public class AddParticipantsViewController: UIViewController {
             searchResultsViewController.searchForLocalUsers(withQuery: searchHeaderViewController.tokenField.filterText)
         }
     }
+    
+    fileprivate func addSelectedParticipants(to conversation: ZMConversation) {
+        let selectedUsers = self.userSelection.users
+        
+        ZMUserSession.shared()?.enqueueChanges({
+            conversation.addParticipants(selectedUsers)
+        })
+
+        Analytics.shared().tagAddParticipants(source:.conversationDetails, selectedUsers, allowGuests: conversation.allowGuests, in: conversation)
+    }
 }
 
 extension AddParticipantsViewController : UserSelectionObserver {
@@ -340,7 +375,12 @@ extension AddParticipantsViewController : UserSelectionObserver {
 extension AddParticipantsViewController : SearchHeaderViewControllerDelegate {
     
     public func searchHeaderViewControllerDidConfirmAction(_ searchHeaderViewController: SearchHeaderViewController) {
-        delegate?.addParticipantsViewController(self, didSelectUsers: userSelection.users)
+        if case .add(let conversation) = viewModel.context {
+            self.dismiss(animated: true) {
+                self.addSelectedParticipants(to: conversation)
+            }
+            
+        }
     }
     
     public func searchHeaderViewController(_ searchHeaderViewController: SearchHeaderViewController, updatedSearchQuery query: String) {
@@ -391,9 +431,7 @@ extension AddParticipantsViewController: SearchResultsViewControllerDelegate {
             guard let `self` = self, let result = result else { return }
             switch result {
             case .success:
-                self.dismiss(animated: true) {
-                    self.delegate?.addParticipantsViewController(self, didSelectUsers: [])
-                }
+                self.dismiss(animated: true)
             case .failure(let error):
                 error.displayAddBotError(in: detail)
             }

@@ -28,7 +28,8 @@
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       disableMainThreadChecker = "YES"
       language = ""
-      shouldUseLaunchSchemeArgsEnv = "YES">
+      shouldUseLaunchSchemeArgsEnv = "YES"
+      codeCoverageEnabled = "YES">
       <Testables>
          <TestableReference
             skipped = "NO">
@@ -37,16 +38,6 @@
                BlueprintIdentifier = "BACB88501AF7C48900DDCDB0"
                BuildableName = "Wire-iOS-Tests.xctest"
                BlueprintName = "Wire-iOS-Tests"
-               ReferencedContainer = "container:Wire-iOS.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "BFAD54021E6972CD0015C677"
-               BuildableName = "NotificationFetchComponentsTests.xctest"
-               BlueprintName = "NotificationFetchComponentsTests"
                ReferencedContainer = "container:Wire-iOS.xcodeproj">
             </BuildableReference>
          </TestableReference>
@@ -158,7 +149,7 @@
          <EnvironmentVariable
             key = "ZMLOG_TAGS"
             value = "Network"
-            isEnabled = "NO">
+            isEnabled = "YES">
          </EnvironmentVariable>
          <EnvironmentVariable
             key = "DYLD_PRINT_LIBRARIES"

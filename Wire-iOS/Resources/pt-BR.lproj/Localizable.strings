@@ -185,6 +185,7 @@
 "conversation.status.added_multiple" = "Pessoas adicionadas";
 "conversation.status.you_was_added" = "%@ adicionou você";
 "conversation.status.added_users" = "%@ adicionou %@";
+"conversation.status.joined" = "%@ juntou-se";
 "conversation.status.removed_multiple" = "Pessoas removidas";
 "conversation.status.you_were_removed" = "Você foram removido";
 "conversation.status.you_left" = "Você saiu";
@@ -238,6 +239,10 @@
 "conversation.create.group_name.placeholder" = "Nome do grupo";
 "conversation.create.guidance.empty" = "Pelo menos 1 caractere";
 "conversation.create.guidance.toolong" = "Muitos caracteres";
+"conversation.create.toggle.title" = "Permitir convidados";
+"conversation.create.toggle.subtitle" = "Abra esta conversa à pessoas fora da sua equipe. Você sempre pode mudar isso mais tarde.";
+
+"conversation.guests_present" = "Os convidados estão presentes";
 
 // Image confirmation dialogue
 "image_confirmer.confirm" = "OK";
@@ -307,6 +312,7 @@
 "content.system.conversation.you.removed" = "%@ removeu %@";
 "content.system.conversation.you.left" = "%@ saiu";
 "content.system.conversation.team.member-leave" = "%@ foi removido da equipe.";
+"content.system.conversation.guest.joined" = "%@ juntou-se";
 
 "content.system.other_renamed_conv_to_nothing" = "%@ removeu o nome da conversa";
 "content.system.you_renamed_conv_to_nothing" = "Você removeu o nome da conversa";
@@ -452,6 +458,11 @@
 "participants.add_people_button_title" = "Adicionar";
 "participants.avatar.guest.title" = "Convidado";
 
+"participants.title" = "Detalhes";
+"participants.section.participants" = "Pessoas (%d)";
+"participants.section.services" = "Serviços (%d)";
+"participants.footer.add_title" = "Adicionar Participantes";
+
 // Meta Menu
 "meta.menu.rename" = "Renomear";
 "meta.menu.leave" = "Deixar";
@@ -465,10 +476,11 @@
 
 // Delete conversation
 "meta.menu.delete_content.dialog_title" = "Excluir conteúdo?";
-"meta.menu.delete_content.dialog_message" = "Isto irá limpar o histórico de conversa e removê-lo da lista.";
+"meta.menu.delete_content.dialog_message" = "Isto irá limpar o histórico de conversas em todos os seus dispositivos.";
 "meta.menu.delete_content.leave_as_well_message" = "Também sair da conversa";
 "meta.menu.delete_content.button_cancel" = "Cancelar";
 "meta.menu.delete_content.button_delete" = "Apagar";
+"meta.menu.delete_content.button_delete_and_leave" = "Apagar e sair";
 
 // Leave conversation
 "meta.leave_conversation_dialog_title" = "Sair da conversa?";
@@ -476,6 +488,7 @@
 "meta.leave_conversation.delete_content_as_well_message" = "Também excluir o conteúdo";
 "meta.leave_conversation_button_cancel" = "Cancelar";
 "meta.leave_conversation_button_leave" = "Sair";
+"meta.leave_conversation_button_leave_and_delete" = "Sair e excluir conteúdo";
 
 // Conversation Degraded (security level lowered)
 "meta.degraded.degradation_reason_message.singular" = "%@ começou a usar um novo dispositivo.";
@@ -556,6 +569,11 @@
 
 // Bot
 "participants.services.remove_integration.button" = "remover integração";
+
+// Group details
+"group_details.guest_options_cell.title" = "Opções de Convidados";
+"group_details.guest_options_cell.enabled" = "Ligado";
+"group_details.guest_options_cell.disabled" = "Desligar";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Self profile
@@ -790,6 +808,7 @@
 "self.settings.technical_report.mail.subject" = "Relatório de Chamadas do Wire";
 "self.settings.technical_report.include_log" = "Incluir o log detalhado";
 "self.settings.technical_report.privacy_warning" = "Registros detalhados podem conter dados pessoais";
+"self.settings.technical_report.no_mail_alert" = "No mail client detected. Tap \"OK\" and send logs manually to: ";
 
 // Password reset
 "self.settings.password_reset_menu.title" = "Redefinir senha";
@@ -874,6 +893,18 @@
 "team.invite.error.already_invited" = "Este e-mail já foi convidado";
 "team.invite.error.too_many_invitations" = "O número máximo de convites foi enviado";
 "team.invite.error.no_internet" = "Sem conexão à Internet";
+
+// Guest Room
+
+"guest_room.allow_guests.title" = "Permitir convidados";
+"guest_room.allow_guests.subtitle" = "Abrir esta conversa à pessoas fora da sua equipe.";
+"guest_room.remove_guests.message" = "Os convidados atuais serão removidos da conversa. Não serão permitidos novos convidados.";
+"guest_room.remove_guests.action" = "Remover Convidados";
+"guest_room.revoke_link.message" = "Novos convidados não será capazes de juntar-se com este link. Os convidados atuais ainda terão acesso.";
+"guest_room.revoke_link.action" = "Desativar Link";
+
+"guest_room.error.generic.title" = "Something went wrong";
+"guest_room.error.generic.message" = "Check your connection and try again";
 
 // Registration
 

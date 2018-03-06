@@ -26,26 +26,25 @@ extension UIViewController {
     ///   - user: user to remove
     ///   - conversation: the current converation contains that user
     ///   - viewControllerDismissable: a ViewControllerDismissable to call when this UIViewController is dismissed
-    @objc func presentRemoveFromConversationDialogue(user: ZMUser,
-                                                     conversation: ZMConversation?,
-                                                     viewControllerDismissable: ViewControllerDismissable?) {
-        if let actionSheetController = ActionSheetController.dialog(forRemoving: user, from: conversation, style: ActionSheetController.defaultStyle(), completion: {(_ canceled: Bool) -> Void in
-            self.dismiss(animated: true, completion: {() -> Void in
-                if canceled {
-                    return
+    @objc func presentRemoveFromConversationDialogue(
+        user: ZMUser,
+        conversation: ZMConversation?,
+        viewControllerDismissable: ViewControllerDismissable?
+        ) {
+
+        let controller = UIAlertController.remove(user) { [weak self] remove in
+            guard remove, let `self` = self else { return }
+            ZMUserSession.shared()?.enqueueChanges({
+                conversation?.removeParticipant(user)
+            }, completionHandler: {
+                if user.isServiceUser {
+                    Analytics.shared().tagDidRemoveService(user)
                 }
-                ZMUserSession.shared()?.enqueueChanges({() -> Void in
-                    conversation?.removeParticipant(user)
-                }, completionHandler: {() -> Void in
-                    if user.isServiceUser {
-                        Analytics.shared().tagDidRemoveService(user)
-                    }
-                    viewControllerDismissable?.viewControllerWants(toBeDismissed: self, completion: nil)
-                })
+                viewControllerDismissable?.viewControllerWants(toBeDismissed: self, completion: nil)
             })
-        }) {
-            present(actionSheetController, animated: true)
         }
+        
+        present(controller, animated: true)
         MediaManagerPlayAlert()
     }
 }

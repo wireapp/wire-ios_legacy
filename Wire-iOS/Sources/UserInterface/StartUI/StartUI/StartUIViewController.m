@@ -82,6 +82,11 @@ static NSUInteger const StartUIInitiallyShowsKeyboardConversationThreshold = 10;
     return self;
 }
 
+-(void)loadView
+{
+    self.view = [[StartUIView alloc] initWithFrame:CGRectZero];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -99,15 +104,17 @@ static NSUInteger const StartUIInitiallyShowsKeyboardConversationThreshold = 10;
     self.emptyResultLabel.font = [UIFont fontWithMagicIdentifier:@"style.text.normal.font_spec"];
     
     self.searchHeaderViewController = [[SearchHeaderViewController alloc] initWithUserSelection:self.userSelection variant:ColorSchemeVariantDark];
-    self.title = team != nil ? team.name : ZMUser.selfUser.displayName;
+    self.title = (team != nil ? team.name : ZMUser.selfUser.displayName).localizedUppercaseString;
     self.searchHeaderViewController.delegate = self;
     self.searchHeaderViewController.allowsMultipleSelection = NO;
+    self.searchHeaderViewController.view.backgroundColor = [UIColor wr_colorFromColorScheme:ColorSchemeColorSearchBarBackground variant:ColorSchemeVariantDark];
     [self addChildViewController:self.searchHeaderViewController];
     [self.view addSubview:self.searchHeaderViewController.view];
     [self.searchHeaderViewController didMoveToParentViewController:self];
     
     self.groupSelector = [[SearchGroupSelector alloc] initWithVariant:ColorSchemeVariantDark];
     self.groupSelector.translatesAutoresizingMaskIntoConstraints = NO;
+    self.groupSelector.backgroundColor = [UIColor wr_colorFromColorScheme:ColorSchemeColorSearchBarBackground variant:ColorSchemeVariantDark];
     @weakify(self);
     self.groupSelector.onGroupSelected = ^(SearchGroup group) {
         @strongify(self);
@@ -121,7 +128,10 @@ static NSUInteger const StartUIInitiallyShowsKeyboardConversationThreshold = 10;
     };
     [self.view addSubview:self.groupSelector];
     
-    self.searchResultsViewController = [[SearchResultsViewController alloc] initWithUserSelection:self.userSelection variant:ColorSchemeVariantDark isAddingParticipants:NO];
+    self.searchResultsViewController = [[SearchResultsViewController alloc] initWithUserSelection:self.userSelection
+                                                                                          variant:ColorSchemeVariantDark
+                                                                             isAddingParticipants:NO
+                                                                              shouldIncludeGuests:YES];
     self.searchResultsViewController.mode = SearchResultsViewControllerModeList;
     self.searchResultsViewController.delegate = self;
     [self addChildViewController:self.searchResultsViewController];

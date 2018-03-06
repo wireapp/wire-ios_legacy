@@ -17,25 +17,6 @@
 // 
 
 
-@objc public enum ConversationMediaAction: UInt {
-    case text, photo, audioCall, videoCall, gif, ping, fileTransfer, videoMessage, audioMessage, location
-    
-    var attributeValue: String {
-        switch self {
-        case .text:         return "text"
-        case .photo:        return "photo"
-        case .audioCall:    return "audio_call"
-        case .videoCall:    return "video_call"
-        case .gif:          return "giphy"
-        case .ping:         return "ping"
-        case .fileTransfer: return "file"
-        case .videoMessage: return "video"
-        case .audioMessage: return "audio"
-        case .location:     return "location"
-        }
-    }
-}
-
 @objc public enum ConversationMediaPictureSource: UInt {
     case gallery, camera, sketch, giphy, sharing, clip, paste
     
@@ -183,7 +164,7 @@ let videoDurationClusterizer: TimeIntervalClusterizer = {
 
 public extension ZMConversation {
 
-    var ephemeralTrackingAttributes: [String: String] {
+    var ephemeralTrackingAttributes: [String: Any] {
         let ephemeral = destructionTimeout != .none
         var attributes = ["is_ephemeral": ephemeral ? "true" : "false"]
         guard ephemeral else { return attributes }
@@ -213,6 +194,11 @@ public extension Analytics {
             attributes["with_service"] = conversation.includesServiceUser ? "true" : "false";
             attributes["conversation_type"] = typeAttribute
         }
+
+        for (key, value) in guestAttributes(in: conversation) {
+            attributes[key] = value
+        }
+
         tagEvent(conversationMediaCompleteActionEventName, attributes: attributes)
     }
 
@@ -316,7 +302,7 @@ public extension Analytics {
     /// User uploads an audio message
     public func tagSentAudioMessage(in conversation: ZMConversation, duration: TimeInterval, context: AudioMessageContext, filter: AVSAudioEffectType, type: ConversationMediaRecordingType) {
         let filterName = filter.description.lowercased()
-        var  attributes: [String: String] = [
+        var  attributes: [String: Any] = [
             "duration": videoDurationClusterizer.clusterizeTimeInterval(duration),
             "duration_actual": type(of: self).stringFromTimeInterval(duration),
             AudioMessageContext.keyName: context.attributeString,
@@ -324,7 +310,7 @@ public extension Analytics {
             "state": type.description
         ]
 
-        conversation.ephemeralTrackingAttributes.forEach { key, value in
+        for (key, value) in conversation.ephemeralTrackingAttributes {
             attributes[key] = value
         }
 

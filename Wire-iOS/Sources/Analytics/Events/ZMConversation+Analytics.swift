@@ -65,5 +65,16 @@ extension ZMConversation {
         guard let participants = otherActiveParticipants.array as? [ZMBareUser] else { return false }
         return participants.any { $0.isServiceUser }
     }
+    
+    public var sortedServiceUsers: [ZMBareUser] {
+        guard let participants = otherActiveParticipants.array as? [ZMBareUser] else { return [] }
+        return participants.filter { $0.isServiceUser }.sorted { $0.0.displayName < $0.1.displayName }
+    }
+    
+    public var sortedOtherParticipants: [ZMBareUser] {
+        guard let participants = otherActiveParticipants.array as? [ZMBareUser] else { return [] }
+        return participants.filter { !$0.isServiceUser }.sorted { $0.0.displayName < $0.1.displayName }
+    }
+
 }
 

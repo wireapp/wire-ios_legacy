@@ -30,7 +30,6 @@
 
 #import "WAZUIMagicIOS.h"
 
-#import "ParticipantsViewController.h"
 #import "ConversationListViewController.h"
 #import "ConversationViewController.h"
 #import "ConnectRequestsViewController.h"
@@ -51,6 +50,7 @@
 #import "Wire-Swift.h"
 
 #import "NSLayoutConstraint+Helpers.h"
+#import "StartUIViewController.h"
 
 @interface ZClientViewController (InitialState) <SplitViewControllerDelegate>
 
@@ -126,6 +126,8 @@
         
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(contentSizeCategoryDidChange:) name:UIContentSizeCategoryDidChangeNotification object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationWillEnterForeground:) name:UIApplicationWillEnterForegroundNotification object:nil];
+                
+        [[GuestIndicator appearanceWhenContainedInInstancesOfClasses:@[StartUIView.class]] setColorSchemeVariant:ColorSchemeVariantDark];
     }
     return self;
 }
@@ -135,7 +137,8 @@
     [super viewDidLoad];
     
     self.colorSchemeController = [[ColorSchemeController alloc] init];
-
+    
+    [[UIView appearanceWhenContainedInInstancesOfClasses:@[UIAlertController.class]] setTintColor:[ColorScheme.defaultColorScheme colorWithName:ColorSchemeColorTextForeground variant:ColorSchemeVariantLight]];
     self.pendingInitialStateRestore = YES;
     
     self.view.backgroundColor = [UIColor blackColor];
@@ -417,9 +420,8 @@
 
 - (void)openDetailScreenForConversation:(ZMConversation *)conversation
 {
-    ParticipantsViewController *controller = [[ParticipantsViewController alloc] initWithConversation:conversation];
-    RotationAwareNavigationController *navController = [[RotationAwareNavigationController alloc] initWithRootViewController:controller];
-    [navController setNavigationBarHidden:YES animated:NO];
+    GroupDetailsViewController *controller = [[GroupDetailsViewController alloc] initWithConversation:conversation];
+    UINavigationController *navController =  controller.wrapInNavigationController;
     navController.modalPresentationStyle = UIModalPresentationFormSheet;
     [self presentViewController:navController animated:YES completion:nil];
 }

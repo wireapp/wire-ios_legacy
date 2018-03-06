@@ -109,8 +109,7 @@
     profileViewController.delegate = self;
     profileViewController.viewControllerDismissable = self;
 
-    RotationAwareNavigationController *navigationController = [[RotationAwareNavigationController alloc] initWithRootViewController:profileViewController];
-    navigationController.navigationBarHidden = YES;
+    UINavigationController *navigationController = profileViewController.wrapInNavigationController;
     navigationController.transitioningDelegate = self.transitionDelegate;
     navigationController.modalPresentationStyle = UIModalPresentationPopover;
     

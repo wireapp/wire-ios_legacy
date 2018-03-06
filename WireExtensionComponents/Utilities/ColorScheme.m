@@ -46,6 +46,7 @@ NSString * const ColorSchemeColorIconSelected = @"icon-selected";
 NSString * const ColorSchemeColorIconHighlighted = @"icon-highlighted";
 NSString * const ColorSchemeColorIconBackgroundSelected = @"icon-background-selected";
 NSString * const ColorSchemeColorIconBackgroundSelectedNoAccent = @"icon-background-selected-no-accent";
+NSString * const ColorSchemeColorIconGuest = @"icon-guest";
 
 NSString * const ColorSchemeColorPopUpButtonOverlayShadow = @"popup-button-overlay-shadow";
 
@@ -294,7 +295,8 @@ static NSString* light(NSString *colorString) {
                                    ColorSchemeColorTokenFieldBackground: blackAlpha4,
                                    ColorSchemeColorTokenFieldTextPlaceHolder: lightGraphite,
                                    ColorSchemeColorCellSeparator: graphiteAlpha8,
-                                   ColorSchemeColorSearchBarBackground: white
+                                   ColorSchemeColorSearchBarBackground: white,
+                                   ColorSchemeColorIconGuest: [backgroundGraphite colorWithAlphaComponent:0.4],
                                    }];
     
     for (ZMAccentColor color = ZMAccentColorMin; color <= ZMAccentColorMax; color++) {
@@ -351,7 +353,8 @@ static NSString* light(NSString *colorString) {
                                   ColorSchemeColorTokenFieldBackground: whiteAlpha16,
                                   ColorSchemeColorTokenFieldTextPlaceHolder: whiteAlpha40,
                                   ColorSchemeColorCellSeparator: whiteAlpha8,
-                                  ColorSchemeColorSearchBarBackground: whiteAlpha8
+                                  ColorSchemeColorSearchBarBackground: whiteAlpha8,
+                                  ColorSchemeColorIconGuest: [UIColor colorWithWhite:1.0 alpha:0.64],
                                   }];
 
     for (ZMAccentColor color = ZMAccentColorMin; color <= ZMAccentColorMax; color++) {

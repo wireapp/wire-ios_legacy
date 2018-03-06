@@ -27,7 +27,6 @@ NS_ASSUME_NONNULL_BEGIN
 @class ZMConversation;
 @class ZMUser;
 @class ProfileViewController;
-@class ProfileNavigationControllerDelegate;
 
 
 
@@ -35,7 +34,6 @@ typedef NS_ENUM(NSInteger, ProfileViewControllerContext) {
     ProfileViewControllerContextSearch,
     ProfileViewControllerContextGroupConversation,
     ProfileViewControllerContextOneToOneConversation,
-    ProfileViewControllerContextCommonConnection,
     ProfileViewControllerContextDeviceList
 };
 
@@ -46,7 +44,6 @@ typedef NS_ENUM(NSInteger, ProfileViewControllerContext) {
 - (NSString *)suggestedBackButtonTitleForProfileViewController:(nullable ProfileViewController *)controller;
 
 - (void)profileViewController:(nullable ProfileViewController *)controller wantsToNavigateToConversation:(ZMConversation *)conversation;
-- (void)profileViewController:(nullable ProfileViewController *)controller wantsToAddUsers:(NSSet *)users toConversation:(ZMConversation *)conversation;
 - (void)profileViewController:(nullable ProfileViewController *)controller wantsToCreateConversationWithName:(nullable NSString *)name users:(nonnull NSSet <ZMUser *>*)users;
 
 @end
@@ -62,7 +59,7 @@ typedef NS_ENUM(NSInteger, ProfileViewControllerContext) {
 @property (nonatomic, readonly) id<ZMSearchableUser, AccentColorProvider> bareUser;
 @property (nonatomic, weak, nullable) id<ProfileViewControllerDelegate> delegate;
 @property (nonatomic, weak, nullable) id<ViewControllerDismissable> viewControllerDismissable;
-@property (nonatomic, nullable) ProfileNavigationControllerDelegate *navigationControllerDelegate;
+@property (nonatomic, nullable) id<UINavigationControllerDelegate> navigationControllerDelegate;
 
 @end
 

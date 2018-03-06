@@ -342,26 +342,6 @@
     return actionSheetController;
 }
 
-+ (ActionSheetController *)dialogForRemovingUser:(ZMUser *)user fromConversation:(ZMConversation *)conversation style:(ActionSheetControllerStyle)style completion:(void (^)(BOOL canceled))completion
-{
-    ActionSheetController *actionSheetController = [[ActionSheetController alloc] initWithTitle:conversation.displayName layout:ActionSheetControllerLayoutAlert style:style];
-    
-    actionSheetController.messageTitle = NSLocalizedString(@"profile.remove_dialog_title", @"");
-    actionSheetController.message = [NSString stringWithFormat:NSLocalizedString(@"profile.remove_dialog_message", @""), user.displayName];
-    
-    [actionSheetController addAction:[SheetAction actionWithTitle:NSLocalizedString(@"profile.remove_dialog_button_cancel", nil) iconType:ZetaIconTypeBell style:SheetActionStyleCancel handler:^(SheetAction *action) {
-        if (completion != nil) completion(YES);
-    }]];
-    [actionSheetController addAction:[SheetAction actionWithTitle:NSLocalizedString(@"profile.remove_dialog_button_remove", nil)
-                                                         iconType:ZetaIconTypeNone
-                                                            style:SheetActionStyleDefault
-                                                          handler:^(SheetAction *action) {
-                                                              if (completion != nil) completion(NO);
-                                                          }]];
-    
-    return actionSheetController;
-}
-
 + (ActionSheetController *)dialogForAcceptingConnectionRequestWithUser:(ZMUser *)user style:(ActionSheetControllerStyle)style completion:(void (^)(BOOL ignored))completion
 {
     ActionSheetController *actionSheetController = [[ActionSheetController alloc] initWithTitle:@"" layout:ActionSheetControllerLayoutAlert style:style];

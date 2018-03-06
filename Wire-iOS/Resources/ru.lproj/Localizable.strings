@@ -37,12 +37,12 @@
 "peoplepicker.header.directory" = "Добавить в контакты";
 
 "peoplepicker.group.title.singular" = "Добавить людей";
-"peoplepicker.group.title.plural" = "Добавить людей (%d)";
+"peoplepicker.group.title.plural" = "Добавить участников (%d)";
 "peoplepicker.group.skip" = "Пропустить";
 "peoplepicker.group.done" = "Готово";
 "peoplepicker.group.create" = "Создать";
 
-"peoplepicker.header.people" = "Люди";
+"peoplepicker.header.people" = "Участники";
 "peoplepicker.header.services" = "Службы";
 "peoplepicker.services.create_conversation.item" = "Создать новую беседу";
 "peoplepicker.services.add_service.button" = "Добавить службу";
@@ -185,6 +185,7 @@
 "conversation.status.added_multiple" = "Добавлены участники";
 "conversation.status.you_was_added" = "%@ добавил(-а) вас";
 "conversation.status.added_users" = "%@ добавил(-а) %@";
+"conversation.status.joined" = "%@ присоединился";
 "conversation.status.removed_multiple" = "Удалены участники";
 "conversation.status.you_were_removed" = "Вы были удалены";
 "conversation.status.you_left" = "Вы покинули беседу";
@@ -238,6 +239,10 @@
 "conversation.create.group_name.placeholder" = "Имя группы";
 "conversation.create.guidance.empty" = "Не менее 1 символа";
 "conversation.create.guidance.toolong" = "Слишком много символов";
+"conversation.create.toggle.title" = "Разрешить гостям";
+"conversation.create.toggle.subtitle" = "Открыть этот разговор для людей не из вашей команды. Вы всегда сможете изменить это позже.";
+
+"conversation.guests_present" = "Присутствуют гости";
 
 // Image confirmation dialogue
 "image_confirmer.confirm" = "OK";
@@ -307,6 +312,7 @@
 "content.system.conversation.you.removed" = "%@ удалил %@";
 "content.system.conversation.you.left" = "%@ покинул(а) разговор";
 "content.system.conversation.team.member-leave" = "%@ был удален из команды.";
+"content.system.conversation.guest.joined" = "%@ присоединился";
 
 "content.system.other_renamed_conv_to_nothing" = "%@ удалил(-а) название разговора";
 "content.system.you_renamed_conv_to_nothing" = "Вы удалили название разговора";
@@ -452,6 +458,11 @@
 "participants.add_people_button_title" = "Добавить";
 "participants.avatar.guest.title" = "Гость";
 
+"participants.title" = "Подробнее";
+"participants.section.participants" = "Участники (%d)";
+"participants.section.services" = "Сервисов (%d)";
+"participants.footer.add_title" = "Добавить участников";
+
 // Meta Menu
 "meta.menu.rename" = "Переименовать";
 "meta.menu.leave" = "Покинуть";
@@ -465,10 +476,11 @@
 
 // Delete conversation
 "meta.menu.delete_content.dialog_title" = "Удалить содержимое?";
-"meta.menu.delete_content.dialog_message" = "Очистить историю разговора и удалить его из списка.";
+"meta.menu.delete_content.dialog_message" = "Это очистит историю разговоров на всех ваших устройствах.";
 "meta.menu.delete_content.leave_as_well_message" = "Также покинуть разговор";
 "meta.menu.delete_content.button_cancel" = "Отменить";
 "meta.menu.delete_content.button_delete" = "Удалить";
+"meta.menu.delete_content.button_delete_and_leave" = "Удалить и покинуть";
 
 // Leave conversation
 "meta.leave_conversation_dialog_title" = "Покинуть разговор?";
@@ -476,6 +488,7 @@
 "meta.leave_conversation.delete_content_as_well_message" = "Также удалить содержимое";
 "meta.leave_conversation_button_cancel" = "Отменить";
 "meta.leave_conversation_button_leave" = "Покинуть";
+"meta.leave_conversation_button_leave_and_delete" = "Покинуть и удалить контент";
 
 // Conversation Degraded (security level lowered)
 "meta.degraded.degradation_reason_message.singular" = "%@ начал(-а) использовать новое устройство.";
@@ -556,6 +569,11 @@
 
 // Bot
 "participants.services.remove_integration.button" = "удалить интеграцию";
+
+// Group details
+"group_details.guest_options_cell.title" = "Опции гостей";
+"group_details.guest_options_cell.enabled" = "Вкл.";
+"group_details.guest_options_cell.disabled" = "Выключен";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Self profile
@@ -790,6 +808,7 @@
 "self.settings.technical_report.mail.subject" = "Wire отчет о звонке";
 "self.settings.technical_report.include_log" = "Включить подробную запись логов";
 "self.settings.technical_report.privacy_warning" = "Подробные журналы могут содержать личные данные";
+"self.settings.technical_report.no_mail_alert" = "Почтовый клиент не обнаружен. Нажмите \"OK\" и отправьте журналы вручную: ";
 
 // Password reset
 "self.settings.password_reset_menu.title" = "Сбросить пароль";
@@ -874,6 +893,18 @@
 "team.invite.error.already_invited" = "Этот email уже был приглашен ранее";
 "team.invite.error.too_many_invitations" = "Было отправлено максимальное количество приглашений";
 "team.invite.error.no_internet" = "Нет соединения с интернетом";
+
+// Guest Room
+
+"guest_room.allow_guests.title" = "Разрешить гостям";
+"guest_room.allow_guests.subtitle" = "Открыть этот разговор для людей не из вашей команды.";
+"guest_room.remove_guests.message" = "Текущие гости будут удалены из разговора. Новые гости допущены не будут.";
+"guest_room.remove_guests.action" = "Удалить гостей";
+"guest_room.revoke_link.message" = "Новые гости не смогут присоединиться по этой ссылке. На доступ текущих гостей это не повлияет.";
+"guest_room.revoke_link.action" = "Отменить ссылку";
+
+"guest_room.error.generic.title" = "Что-то пошло не так";
+"guest_room.error.generic.message" = "Проверьте подключение и попробуйте еще раз";
 
 // Registration
 

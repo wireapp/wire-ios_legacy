@@ -72,7 +72,7 @@ import CocoaLumberjackSwift
         }
 
         super.init(nibName: nil, bundle: nil)
-        self.title = NSLocalizedString("registration.devices.title", comment:"")
+        self.title = "registration.devices.title".localized.uppercased()
         self.edgesForExtendedLayout = []
 
         self.initalizeProperties(clientsList ?? Array(ZMUser.selfUser().clients.filter { !$0.isSelfClient() } ))

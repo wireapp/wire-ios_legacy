@@ -25,12 +25,13 @@ private func localizationKey(with pathComponent: String, senderIsSelfUser: Bool)
 
 private enum ConversationActionType {
 
-    case none, started(withName: String?), added, removed, left, teamMemberLeave
+    case none, started(withName: String?), added(herself: Bool), removed, left, teamMemberLeave
 
     func formatKey(senderIsSelfUser: Bool) -> String {
         switch self {
         case .left: return localizationKey(with: "left", senderIsSelfUser: senderIsSelfUser)
-        case .added: return localizationKey(with: "added", senderIsSelfUser: senderIsSelfUser)
+        case .added(herself: true): return "content.system.conversation.guest.joined"
+        case .added(herself: false): return localizationKey(with: "added", senderIsSelfUser: senderIsSelfUser)
         case .removed: return localizationKey(with: "removed", senderIsSelfUser: senderIsSelfUser)
         case .started(withName: .none), .none: return localizationKey(with: "started", senderIsSelfUser: senderIsSelfUser)
         case .started(withName: .some): return "content.system.conversation.with_name.participants"
@@ -42,11 +43,11 @@ private enum ConversationActionType {
 
 private extension ZMConversationMessage {
     var actionType: ConversationActionType {
-        guard let systemMessage = systemMessageData, let sender = sender else { return .none }
+        guard let systemMessage = systemMessageData else { return .none }
         switch systemMessage.systemMessageType {
-        case .participantsRemoved where systemMessage.users == [sender]: return .left
-        case .participantsRemoved where systemMessage.users != [sender]: return .removed
-        case .participantsAdded: return .added
+        case .participantsRemoved where systemMessage.userIsTheSender: return .left
+        case .participantsRemoved where !systemMessage.userIsTheSender: return .removed
+        case .participantsAdded: return .added(herself: systemMessage.userIsTheSender)
         case .newConversation: return .started(withName: systemMessage.text)
         case .teamMemberLeave: return .teamMemberLeave
         default: return .none
@@ -69,7 +70,10 @@ struct ParticipantsCellViewModel {
         guard let sender = message.sender else { return [] }
 
         switch message.actionType {
-        case .left: return [sender]
+        case .left,
+             .added(herself: true),
+             .teamMemberLeave:
+            return [sender]
         default:
             guard let systemMessage = message.systemMessageData else { return [] }
             return systemMessage.users.subtracting([sender]).sorted { name(for: $0.0) < name(for: $0.1) }

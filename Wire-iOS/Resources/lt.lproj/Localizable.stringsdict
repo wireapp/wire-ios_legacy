@@ -17,6 +17,8 @@
         <string>įrenginys</string>
         <key>few</key>
         <string>%lu įrenginiai</string>
+        <key>many</key>
+        <string>%lu įrenginio</string>
         <key>other</key>
         <string>%lu įrenginių</string>
       </dict>
@@ -35,6 +37,8 @@
         <string>Vienas žmogus</string>
         <key>few</key>
         <string>%lu žmonės</string>
+        <key>many</key>
+        <string>%lu žmogaus</string>
         <key>other</key>
         <string>%lu žmonių</string>
       </dict>
@@ -53,6 +57,8 @@
         <string>buvo pridėtas</string>
         <key>few</key>
         <string>buvo pridėti</string>
+        <key>many</key>
+        <string>buvo pridėta</string>
         <key>other</key>
         <string>buvo pridėtų</string>
       </dict>
@@ -71,6 +77,8 @@
         <string>buvo pašalintas</string>
         <key>few</key>
         <string>buvo pašalinti</string>
+        <key>many</key>
+        <string>bus pašalinta</string>
         <key>other</key>
         <string>buvo pašalintų</string>
       </dict>
@@ -89,6 +97,8 @@
         <string>Vienas žmogus</string>
         <key>few</key>
         <string>%d žmonės</string>
+        <key>many</key>
+        <string>%d žmogaus</string>
         <key>other</key>
         <string>%d žmonių</string>
       </dict>
@@ -106,6 +116,8 @@
         <key>one</key>
         <string>ir dar vienas</string>
         <key>few</key>
+        <string>ir dar %d</string>
+        <key>many</key>
         <string>ir dar %d</string>
         <key>other</key>
         <string>ir dar %d</string>
@@ -125,6 +137,8 @@
         <string>d</string>
         <key>few</key>
         <string>%d kitus</string>
+        <key>many</key>
+        <string>%d kito</string>
         <key>other</key>
         <string>%d kitų</string>
       </dict>
@@ -143,6 +157,8 @@
         <string> ir %d kitas</string>
         <key>few</key>
         <string> ir %d kiti</string>
+        <key>many</key>
+        <string> ir %d kito</string>
         <key>other</key>
         <string> ir %d kitų</string>
       </dict>
@@ -156,6 +172,8 @@
         <string>nauju įrenginiu</string>
         <key>few</key>
         <string>naujais įrenginiais</string>
+        <key>many</key>
+        <string>naujo įrenginio</string>
         <key>other</key>
         <string>naujų įrenginių</string>
       </dict>
@@ -173,6 +191,8 @@
         <key>one</key>
         <string>naujas įrenginys</string>
         <key>few</key>
+        <string>nauji įrenginiai</string>
+        <key>many</key>
         <string>nauji įrenginiai</string>
         <key>other</key>
         <string>naujų įrenginių</string>
@@ -192,6 +212,8 @@
         <string>nauja žinutė</string>
         <key>few</key>
         <string>%d naujos žinutės</string>
+        <key>many</key>
+        <string>%d naujos žinutės</string>
         <key>other</key>
         <string>%d naujų žinučių</string>
       </dict>
@@ -209,6 +231,8 @@
         <key>one</key>
         <string>nauja nuoroda</string>
         <key>few</key>
+        <string>%d naujos nuorodos</string>
+        <key>many</key>
         <string>%d naujos nuorodos</string>
         <key>other</key>
         <string>%d naujų nuorodų</string>
@@ -228,6 +252,8 @@
         <string>naujas paveikslėlis</string>
         <key>few</key>
         <string>%d nauji paveikslėliai</string>
+        <key>many</key>
+        <string>%d nauji paveikslėliai</string>
         <key>other</key>
         <string>%d naujų paveikslėlių</string>
       </dict>
@@ -245,6 +271,8 @@
         <key>one</key>
         <string>nauja vieta</string>
         <key>few</key>
+        <string>%d naujos vietos</string>
+        <key>many</key>
         <string>%d naujos vietos</string>
         <key>other</key>
         <string>%d naujų vietų</string>
@@ -264,6 +292,8 @@
         <string>naujas garso įrašas</string>
         <key>few</key>
         <string>%d nauji garso įrašai</string>
+        <key>many</key>
+        <string>%d nauji garso įrašai</string>
         <key>other</key>
         <string>%d naujų garso įrašų</string>
       </dict>
@@ -281,6 +311,8 @@
         <key>one</key>
         <string>naujas vaizdo įrašas</string>
         <key>few</key>
+        <string>%d nauji vaizdo įrašai</string>
+        <key>many</key>
         <string>%d nauji vaizdo įrašai</string>
         <key>other</key>
         <string>%d naujų vaizdo įrašų</string>
@@ -300,6 +332,8 @@
         <string>naujas skambtelėjimas</string>
         <key>few</key>
         <string>%d nauji skambtelėjimai</string>
+        <key>many</key>
+        <string>%d nauji skambtelėjimai</string>
         <key>other</key>
         <string>%d naujų skambtelėjimų</string>
       </dict>
@@ -318,6 +352,8 @@
         <string>praleistas skambutis</string>
         <key>few</key>
         <string>%d praleisti skambučiai</string>
+        <key>many</key>
+        <string>%d praleisti skambučiai</string>
         <key>other</key>
         <string>%d praleistų skambučių</string>
       </dict>
@@ -335,6 +371,8 @@
         <key>one</key>
         <string>naujas failas</string>
         <key>few</key>
+        <string>%d nauji failai</string>
+        <key>many</key>
         <string>%d nauji failai</string>
         <key>other</key>
         <string>%d naujų failų</string>

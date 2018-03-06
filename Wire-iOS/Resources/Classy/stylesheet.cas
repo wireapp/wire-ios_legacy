@@ -386,7 +386,7 @@ ProfileView {
 
 ProfileViewController {
     view: @{
-        backgroundColor: $color-background;
+        backgroundColor: $color-bar-background;
     }
     topSeparatorLineView: @{
         backgroundColor: $color-separator;
@@ -642,73 +642,6 @@ MediaPreviewViewController {
 
     @device iphone {
         viewHeight: 160
-    }
-}
-
-/* Conversation detail / participants */
-
-ParticipantsHeaderView.editing {
-    titleViewBackground: @{
-        backgroundColor: $color-separator;
-    }
-}
-
-ParticipantsHeaderView {
-    subtitleLabel: @{
-        textColor: $color-text-dimmed;
-        font: $font-small;
-    }
-    titleView: @{
-        textColor: $color-text-foreground;
-        font: $font-normal-semibold;
-    }
-    titleViewBackground: @{
-        layer: @{
-            cornerRadius: 2;
-        }
-        backgroundColor: clear;
-    }
-    separatorLine: @{
-        backgroundColor: $color-separator;
-    }
-    topSeparatorLine: @{
-        backgroundColor: $color-separator;
-    }
-}
-
-ParticipantsFooterView {
-    separatorLine: @{
-        backgroundColor: $color-separator;
-    }
-    leftButton: @{
-        contentEdgeInsets: 0 0 0 16
-        titleEdgeInsets: 0 16 0 -16
-        titleColor[state:normal]: $color-text-foreground;
-        titleColor[state:highlighted]: $color-text-dimmed;
-        titleLabel: @{
-            font: $font-small-light;
-        }
-    }
-}
-
-ParticipantsViewController {
-    view: @{
-        backgroundColor: $color-background;
-    }
-}
-
-ParticipantsListCell {
-    nameLabel @{
-        textColor: $color-text-foreground;
-        font: $font-small-light;
-    }
-}
-
-GuestLabel {
-    backgroundColor: $color-background-light;
-    textLabel @{
-        font: $font-small-light;
-        textColor: $color-text-foreground-light;
     }
 }
 
