@@ -97,6 +97,12 @@ struct ParticipantsCellViewModel {
         let title = conversationName.attributedString && largeFont && textColor
         return [text, title].joined(separator: "\n".attributedString) && .lineHeight(4)
     }
+    
+    var showInviteButton: Bool {
+        guard let conversation = message.conversation else { return false }
+        guard case .started = message.actionType else { return false }
+        return conversation.allowGuests
+    }
 
     func attributedTitle() -> NSAttributedString? {
         guard let sender = message.sender,

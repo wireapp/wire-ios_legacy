@@ -20,8 +20,7 @@
 import Classy
 import Cartography
 
-
-public class ParticipantsCell: ConversationCell {
+public class ParticipantsCell: ConversationCell, ParticipantsInvitePeopleViewDelegate {
 
     private let collectionViewController = ParticipantsCollectionViewController<ParticipantsUserCell>()
     private let stackView = UIStackView()
@@ -33,6 +32,7 @@ public class ParticipantsCell: ConversationCell {
     private let nameLabel = UILabel()
     private let verticalInset: CGFloat = 16
     private var lineBaseLineConstraint: NSLayoutConstraint?
+    private let inviteView = ParticipantsInvitePeopleView()
     
     // Classy
     let lineView = UIView()
@@ -81,6 +81,7 @@ public class ParticipantsCell: ConversationCell {
     }
     
     private func setupViews() {
+        inviteView.delegate = self
         leftIconView.contentMode = .center
         leftIconView.isAccessibilityElement = true
         leftIconView.accessibilityLabel = "Icon"
@@ -93,7 +94,7 @@ public class ParticipantsCell: ConversationCell {
         stackView.axis = .vertical
         stackView.spacing = verticalInset
         messageContentView.addSubview(stackView)
-        [topContainer, bottomContainer].forEach(stackView.addArrangedSubview)
+        [topContainer, bottomContainer, inviteView].forEach(stackView.addArrangedSubview)
         topContainer.addSubview(nameLabel)
         bottomContainer.addSubview(leftIconContainer)
         leftIconContainer.addSubview(leftIconView)
@@ -123,6 +124,10 @@ public class ParticipantsCell: ConversationCell {
             leftIconView.height == leftIconView.width
             labelView.leading == leftIconContainer.trailing
             labelView.trailing <= messageContentView.trailing - 72
+        }
+        
+        constrain(authorLabel, inviteView) { nameLabel, inviteView in
+            inviteView.leading == nameLabel.leading
         }
         
         constrain(nameLabel, labelView, messageContentView, leftIconContainer, bottomContainer) { nameLabel, labelView, messageContentView, leftIconContainer, bottomContainer in
@@ -186,6 +191,8 @@ public class ParticipantsCell: ConversationCell {
         nameLabel.attributedText = model.attributedHeading()
         topContainer.isHidden = nameLabel.attributedText == nil
         bottomContainer.isHidden = model.sortedUsers().count == 0
+        inviteView.isHidden = !model.showInviteButton
+
         // We need a layout pass here in order for the collectionView to pick up the correct size
         setNeedsLayout()
         layoutIfNeeded()
@@ -201,5 +208,11 @@ public class ParticipantsCell: ConversationCell {
         }
 
         return needsLayout
+    }
+    
+    // MARK: - ParticipantsInvitePeopleViewDelegate
+    
+    func invitePeopleViewInviteButtonTapped(_ invitePeopleView: ParticipantsInvitePeopleView) {
+        delegate?.conversationCell?(self, openGuestOptionsFrom: invitePeopleView.inviteButton)
     }
 }

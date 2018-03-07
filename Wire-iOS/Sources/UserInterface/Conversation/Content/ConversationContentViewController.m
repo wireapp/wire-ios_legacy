@@ -818,6 +818,11 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
 {
     return self.onScreen;
 }
+    
+- (void)conversationCell:(ConversationCell *)cell openGuestOptionsFromView:(UIView *)sourceView
+{
+    [self.delegate conversationContentViewController:self presentGuestOptionsFromView:sourceView];
+}
 
 @end
 

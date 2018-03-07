@@ -452,14 +452,7 @@
     ZM_WEAK(self);
     self.titleView.tapHandler = ^(UIButton * _Nonnull button) {
         ZM_STRONG(self);
-        [ConversationInputBarViewController endEditingMessage];
-        [self.inputBarController.inputBar.textView resignFirstResponder];
-        
-        UIViewController *participantsController = [self participantsController];
-        participantsController.transitioningDelegate = self.conversationDetailsTransitioningDelegate;
-        [self createAndPresentParticipantsPopoverControllerWithRect:self.titleView.superview.bounds
-                                                           fromView:self.titleView.superview
-                                              contentViewController:participantsController];
+        [self presentParticipantsViewControllerFromView:self.titleView.superview];
     };
     [self.titleView configure];
     
@@ -467,6 +460,18 @@
     self.navigationItem.leftItemsSupplementBackButton = NO;
 
     [self updateRightNavigationItemsButtons];
+}
+    
+- (void)presentParticipantsViewControllerFromView:(UIView *)sourceView
+{
+    [ConversationInputBarViewController endEditingMessage];
+    [self.inputBarController.inputBar.textView resignFirstResponder];
+    
+    UIViewController *participantsController = [self participantsController];
+    participantsController.transitioningDelegate = self.conversationDetailsTransitioningDelegate;
+    [self createAndPresentParticipantsPopoverControllerWithRect:sourceView.bounds
+                                                       fromView:sourceView
+                                          contentViewController:participantsController];
 }
 
 - (void)updateInputBarVisibility
@@ -673,6 +678,11 @@
 - (void)conversationContentViewControllerWantsToDismiss:(ConversationContentViewController *)controller
 {
     [self openConversationList];
+}
+    
+- (void)conversationContentViewController:(ConversationContentViewController *)controller presentGuestOptionsFromView:(UIView *)sourceView
+{
+    [self presentParticipantsViewControllerFromView:sourceView];
 }
 
 @end
