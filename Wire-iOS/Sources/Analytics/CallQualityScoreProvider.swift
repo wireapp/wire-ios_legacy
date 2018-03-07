@@ -23,19 +23,16 @@ final class CallQualityScoreProvider: NSObject, AnalyticsType {
     public static let shared = CallQualityScoreProvider()
     
     private var lastCallingEvent: [String: NSObject] = [:]
-    public var userScore: Int? = nil {
-        didSet {
-            guard let userScore = self.userScore else {
-                return
-            }
-            
-            var attributes = lastCallingEvent
-            attributes["score"] = NSNumber(integerLiteral: userScore)
-            nextProvider?.tagEvent(type(of: self).callingEventName, attributes: attributes)
-            self.userScore = nil
-        }
+
+    func recordCallQualityReview(score: Int, callDuration: Int) {
+
+        var attributes = lastCallingEvent
+        attributes["score"] = score as NSNumber
+        attributes["duration"] = callDuration as NSNumber
+
+        nextProvider?.tagEvent(type(of: self).callingEventName, attributes: attributes)
     }
-    
+
     private static let callingEventName = "calling.avs_metrics_ended_call"
     
     public var nextProvider: AnalyticsType? = nil

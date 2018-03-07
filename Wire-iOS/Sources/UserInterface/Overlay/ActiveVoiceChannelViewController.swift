@@ -24,7 +24,7 @@ fileprivate let zmLog = ZMSLog(tag: "calling")
 class ActiveVoiceChannelViewController : UIViewController {
     
     var callStateObserverToken : Any?
-    var answeredCalls : Set<UUID> = Set()
+    var answeredCalls: [UUID: Date] = [:]
     
     deinit {
         visibleVoiceChannelViewController?.stopCallDurationTimer()
@@ -178,14 +178,16 @@ extension ActiveVoiceChannelViewController : WireCallCenterCallStateObserver {
     func callCenterDidChange(callState: CallState, conversation: ZMConversation, caller: ZMUser, timestamp: Date?) {
         updateVisibleVoiceChannelViewController()
 
-        guard (UseAnalytics.boolValue || AutomationHelper.sharedHelper.useAnalytics),
+        let changeDate = Date()
+
+        guard !Analytics.shared().isOptedOut,
             !TrackingManager.shared.disableCrashAndAnalyticsSharing
             else {
                 return
         }
         
-        if case .answered = callState {
-            answeredCalls.insert(conversation.remoteIdentifier!)
+        if case .established = callState {
+            answeredCalls[conversation.remoteIdentifier!] = Date()
         }
 
         if let presentedController = self.presentedViewController as? CallQualityViewController {
@@ -194,23 +196,31 @@ extension ActiveVoiceChannelViewController : WireCallCenterCallStateObserver {
 
         if case let .terminating(reason) = callState {
             
-            guard answeredCalls.contains(conversation.remoteIdentifier!) else {
+            guard let callStartDate = answeredCalls[conversation.remoteIdentifier!] else {
                 return
             }
-            
-            // Only show the survey if the called finished without errors
+
+            // Only show the survey if the call was longer that 10 seconds
+
+            let callDuration = changeDate.timeIntervalSince(callStartDate)
+
+            guard callDuration > 10 else {
+                return
+            }
+
+            // Only show the survey if the call finished without errors
             guard reason == .normal || reason == .stillOngoing else {
                 return
             }
             
-            guard let qualityController = CallQualityViewController.requestSurveyController() else {
+            guard let qualityController = CallQualityViewController.requestSurveyController(callDuration: callDuration) else {
                 return
             }
             
             qualityController.delegate = self
             qualityController.transitioningDelegate = self
             
-            answeredCalls.remove(conversation.remoteIdentifier!)
+            answeredCalls[conversation.remoteIdentifier!] = nil
             present(qualityController, animated: true)
             
         }
@@ -244,7 +254,7 @@ extension ActiveVoiceChannelViewController : CallQualityViewControllerDelegate {
         controller.dismiss(animated: true, completion: nil)
         
         CallQualityScoreProvider.updateLastSurveyDate(Date())
-        CallQualityScoreProvider.shared.userScore = score
+        CallQualityScoreProvider.shared.recordCallQualityReview(score: score, callDuration: controller.callDuration)
     }
     
     func callQualityControllerDidFinishWithoutScore(_ controller: CallQualityViewController) {

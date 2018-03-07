@@ -246,7 +246,7 @@ import Foundation
         let reloadUIButton = SettingsButtonCellDescriptor(title: "Reload user interface", isDestructive: false, selectAction: SettingsCellDescriptorFactory.reloadUserInterface)
         developerCellDescriptors.append(reloadUIButton)
 
-        if (UseAnalytics.boolValue || AutomationHelper.sharedHelper.useAnalytics) &&
+        if !Analytics.shared().isOptedOut &&
             !TrackingManager.shared.disableCrashAndAnalyticsSharing {
 
             let resetSurveyMuteButton = SettingsButtonCellDescriptor(title: "Show call quality survey", isDestructive: false, selectAction: SettingsCellDescriptorFactory.resetCallQualitySurveyMuteFilter)

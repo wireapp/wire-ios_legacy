@@ -27,6 +27,8 @@ import Cartography
 class CallQualityViewController : UIViewController, UIGestureRecognizerDelegate {
 
     let questionLabelText: String
+    let callDuration: Int
+
     @objc weak var delegate: CallQualityViewControllerDelegate?
 
     let contentView = ContinuousCornersView(cornerRadius: 32)
@@ -49,7 +51,7 @@ class CallQualityViewController : UIViewController, UIGestureRecognizerDelegate 
     
     // MARK: Initialization
     
-    static func requestSurveyController() -> CallQualityViewController? {
+    static func requestSurveyController(callDuration: TimeInterval) -> CallQualityViewController? {
         
         let requestDate = Date()
 
@@ -57,15 +59,18 @@ class CallQualityViewController : UIViewController, UIGestureRecognizerDelegate 
             return nil
         }
                 
-        let controller = CallQualityViewController(questionLabelText: NSLocalizedString("calling.quality_survey.question", comment: ""))
+        let controller = CallQualityViewController(questionLabelText: NSLocalizedString("calling.quality_survey.question", comment: ""),
+                                                   callDuration: Int(callDuration))
+
         controller.modalPresentationCapturesStatusBarAppearance = true
         controller.modalPresentationStyle = .overFullScreen
         return controller
         
     }
     
-    init(questionLabelText: String){
+    init(questionLabelText: String, callDuration: Int) {
         self.questionLabelText = questionLabelText
+        self.callDuration = callDuration
         super.init(nibName: nil, bundle: nil)
     }
     
