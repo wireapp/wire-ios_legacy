@@ -51,14 +51,13 @@ class CallQualityPresentationTransition: NSObject, UIViewControllerAnimatedTrans
         // Animate Presentation
         
         let duration = transitionDuration(using: transitionContext)
-        let curve = UIViewAnimationOptions(rawValue: 7 << 16)
-        
+
         let animations = {
             dimmingView.alpha = 1
             contentView.transform = .identity
         }
         
-        UIView.animate(withDuration: duration, delay: 0, options: curve, animations: animations) { finished in
+        UIView.animate(withDuration: duration, delay: 0, options: .systemPresentationCurve, animations: animations) { finished in
             transitionContext.completeTransition((transitionContext.transitionWasCancelled == false) && finished)
         }
         

@@ -47,14 +47,13 @@ class CallQualityDismissalTransition: NSObject, UIViewControllerAnimatedTransiti
         }
         
         let duration = transitionDuration(using: transitionContext)
-        let curve = UIViewAnimationOptions(rawValue: 6 << 16)
-        
+
         let animations = {
             dimmingView.alpha = 0
             contentView.transform = hideTransform
         }
         
-        UIView.animate(withDuration: duration, delay: 0, options: curve, animations: animations) { finished in
+        UIView.animate(withDuration: duration, delay: 0, options: .systemDismissalCurve, animations: animations) { finished in
             transitionContext.completeTransition((transitionContext.transitionWasCancelled == false) && finished)
         }
         
