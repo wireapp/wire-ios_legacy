@@ -208,8 +208,7 @@
 - (void)registrationPhoneFlowViewController:(RegistrationPhoneFlowViewController *)viewController needsToSignInWith:(LoginCredentials *)loginCredentials
 {
     [self presentLoginTab];
-    self.signInViewController.loginCredentials = loginCredentials;
-    [self.signInViewController presentEmailSignInViewControllerToEnterPassword];
+    [self.signInViewController presentSignInViewControllerWithCredentials:loginCredentials];
 }
 
 @end

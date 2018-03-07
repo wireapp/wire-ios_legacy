@@ -31,6 +31,6 @@
 @property (nonatomic) AnalyticsTracker *analyticsTracker;
 @property (nonatomic) LoginCredentials *loginCredentials;
 
-- (void)presentEmailSignInViewControllerToEnterPassword;
+- (void)presentSignInViewControllerWithCredentials:(LoginCredentials*)credentials;
 
 @end

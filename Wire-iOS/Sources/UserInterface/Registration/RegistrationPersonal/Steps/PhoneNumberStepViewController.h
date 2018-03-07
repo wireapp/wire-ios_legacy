@@ -28,7 +28,7 @@
 
 @interface PhoneNumberStepViewController : RegistrationStepViewController
 
-- (instancetype)initWithUneditablePhoneNumber:(NSString *)phoneNumber;
+- (instancetype)initWithPhoneNumber:(NSString *)phoneNumber isEditable:(BOOL)isEditable;
 - (instancetype)initWithUnregisteredUser:(ZMIncompleteRegistrationUser *)unregisteredUser;
 
 @property (nonatomic, readonly) UILabel *heroLabel;
@@ -36,5 +36,6 @@
 @property (nonatomic) BOOL invitationButtonDisplayed;
 
 - (void)takeFirstResponder;
+- (void)reset;
 
 @end

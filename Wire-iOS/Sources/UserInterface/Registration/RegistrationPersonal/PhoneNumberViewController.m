@@ -186,6 +186,54 @@ static CGFloat PhoneNumberFieldTopMargin = 16;
     self.phoneNumberField.textColor = editable ? [UIColor colorWithMagicIdentifier:@"style.color.static_foreground.normal"] : [UIColor colorWithMagicIdentifier:@"style.color.static_foreground.faded"];
 }
 
+-(void)setPhoneNumber:(NSString *)phoneNumber
+{
+    _phoneNumber = phoneNumber;
+    
+    if(phoneNumber == nil) {
+        [self selectInitialCountry];
+        self.phoneNumberField.text = nil;
+    } else {
+        [self pastePhoneNumber:phoneNumber];
+    }
+}
+
+-(BOOL)pastePhoneNumber:(NSString*)phoneNumber {
+    
+    // Auto detect country for phone numbers beginning with "+"
+    
+    // When pastedString is copied from phone app (self phone number section), it contains right/left handling symbols: \u202A\u202B\u202C\u202D
+    // @"\U0000202d+380 (00) 123 45 67\U0000202c"
+    NSMutableCharacterSet *illegalCharacters = [NSMutableCharacterSet whitespaceAndNewlineCharacterSet];
+    [illegalCharacters formUnionWithCharacterSet:[NSCharacterSet decimalDigitCharacterSet]];
+    [illegalCharacters formUnionWithCharacterSet:[NSCharacterSet characterSetWithCharactersInString:@"+-()"]];
+    [illegalCharacters invert];
+    
+    phoneNumber = [phoneNumber stringByTrimmingCharactersInSet:illegalCharacters];
+    
+    if ([[phoneNumber stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] hasPrefix:@"+"]) {
+        Country *country = [Country detectCountryForPhoneNumber:phoneNumber];
+        if (country) {
+            self.country = country;
+            
+            NSString *phoneNumberWithoutCountryCode = [phoneNumber stringByReplacingOccurrencesOfString:self.country.e164PrefixString
+                                                                                             withString:@""];
+            
+            self.phoneNumberField.text = phoneNumberWithoutCountryCode;
+            [self updateRightAccessoryForPhoneNumber:phoneNumber];
+            return NO;
+        }
+    }
+    
+    // Just paste (if valid) for phone numbers not beginning with "+", or phones where country is not detected.
+    phoneNumber = [NSString phoneNumberStringWithE164:self.country.e164 number:phoneNumber];
+    if ([ZMUser validatePhoneNumber:&phoneNumber error:NULL]) {
+        return YES;
+    } else {
+        return NO;
+    }
+}
+
 #pragma mark - Field Validation
 
 
@@ -214,39 +262,7 @@ static CGFloat PhoneNumberFieldTopMargin = 16;
 - (BOOL)textField:(UITextField *)textField shouldPasteCharactersInRange:(NSRange)range replacementString:(NSString *)string
 {
     NSString *phoneNumber = [textField.text stringByReplacingCharactersInRange:range withString:string];
-    
-    // Auto detect country for phone numbers beginning with "+"
-    
-    // When pastedString is copied from phone app (self phone number section), it contains right/left handling symbols: \u202A\u202B\u202C\u202D
-    // @"\U0000202d+380 (00) 123 45 67\U0000202c"
-    NSMutableCharacterSet *illegalCharacters = [NSMutableCharacterSet whitespaceAndNewlineCharacterSet];
-    [illegalCharacters formUnionWithCharacterSet:[NSCharacterSet decimalDigitCharacterSet]];
-    [illegalCharacters formUnionWithCharacterSet:[NSCharacterSet characterSetWithCharactersInString:@"+-()"]];
-    [illegalCharacters invert];
-    
-    phoneNumber = [phoneNumber stringByTrimmingCharactersInSet:illegalCharacters];
-    
-    if ([[phoneNumber stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] hasPrefix:@"+"]) {
-        Country *country = [Country detectCountryForPhoneNumber:phoneNumber];
-        if (country) {
-            self.country = country;
-        
-            NSString *phoneNumberWithoutCountryCode = [phoneNumber stringByReplacingOccurrencesOfString:self.country.e164PrefixString
-                                                                                             withString:@""];
-            
-            self.phoneNumberField.text = phoneNumberWithoutCountryCode;
-            [self updateRightAccessoryForPhoneNumber:phoneNumber];
-            return NO;
-        }
-    }
-    
-    // Just paste (if valid) for phone numbers not beginning with "+", or phones where country is not detected.
-    phoneNumber = [NSString phoneNumberStringWithE164:self.country.e164 number:phoneNumber];
-    if ([ZMUser validatePhoneNumber:&phoneNumber error:NULL]) {
-        return YES;
-    } else {
-        return NO;
-    }
+    return [self pastePhoneNumber:phoneNumber];
 }
 
 #pragma mark - Actions
