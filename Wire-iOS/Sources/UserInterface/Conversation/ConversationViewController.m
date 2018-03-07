@@ -452,7 +452,7 @@
     ZM_WEAK(self);
     self.titleView.tapHandler = ^(UIButton * _Nonnull button) {
         ZM_STRONG(self);
-        [self presentParticipantsViewControllerFromView:self.titleView.superview];
+        [self presentParticipantsViewController:self.participantsController fromView:self.titleView.superview];
     };
     [self.titleView configure];
     
@@ -462,16 +462,15 @@
     [self updateRightNavigationItemsButtons];
 }
     
-- (void)presentParticipantsViewControllerFromView:(UIView *)sourceView
+- (void)presentParticipantsViewController:(UIViewController *)viewController fromView:(UIView *)sourceView
 {
     [ConversationInputBarViewController endEditingMessage];
     [self.inputBarController.inputBar.textView resignFirstResponder];
     
-    UIViewController *participantsController = [self participantsController];
-    participantsController.transitioningDelegate = self.conversationDetailsTransitioningDelegate;
+    viewController.transitioningDelegate = self.conversationDetailsTransitioningDelegate;
     [self createAndPresentParticipantsPopoverControllerWithRect:sourceView.bounds
                                                        fromView:sourceView
-                                          contentViewController:participantsController];
+                                          contentViewController:viewController];
 }
 
 - (void)updateInputBarVisibility
@@ -682,7 +681,14 @@
     
 - (void)conversationContentViewController:(ConversationContentViewController *)controller presentGuestOptionsFromView:(UIView *)sourceView
 {
-    [self presentParticipantsViewControllerFromView:sourceView];
+    if (self.conversation.conversationType != ZMConversationTypeGroup) {
+        DDLogError(@"Illegal Operation: Trying to show guest options for non-group conversation");
+        return;
+    }
+    GroupDetailsViewController *groupDetailsViewController = [[GroupDetailsViewController alloc] initWithConversation:self.conversation];
+    UINavigationController *navigationController = groupDetailsViewController.wrapInNavigationController;
+    [groupDetailsViewController presentGuestOptionsAnimated:NO];
+    [self presentParticipantsViewController:navigationController fromView:sourceView];
 }
 
 @end

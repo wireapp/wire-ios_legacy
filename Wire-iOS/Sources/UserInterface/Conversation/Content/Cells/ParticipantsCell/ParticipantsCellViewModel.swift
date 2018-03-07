@@ -99,9 +99,10 @@ struct ParticipantsCellViewModel {
     }
     
     var showInviteButton: Bool {
-        guard let conversation = message.conversation else { return false }
         guard case .started = message.actionType else { return false }
-        return conversation.allowGuests
+        return true == message.conversation?.allowGuests
+            && nil != message.conversation?.team
+            && ZMUser.selfUser().isTeamMember
     }
 
     func attributedTitle() -> NSAttributedString? {

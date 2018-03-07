@@ -19,9 +19,9 @@
 import Foundation
 
 protocol GuestOptionsSectionControllerDelegate: class {
-    
-    func presentGuestOptions()
-    
+
+    func presentGuestOptions(animated: Bool)
+
 }
 
 class GuestOptionsSectionController: GroupDetailsSectionController {
@@ -62,7 +62,7 @@ class GuestOptionsSectionController: GroupDetailsSectionController {
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        delegate?.presentGuestOptions()
+        delegate?.presentGuestOptions(animated: true)
     }
     
 }

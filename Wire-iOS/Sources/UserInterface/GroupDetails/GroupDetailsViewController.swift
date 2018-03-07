@@ -226,9 +226,10 @@ extension GroupDetailsViewController: GroupDetailsSectionControllerDelegate, Gue
         navigationController?.pushViewController(viewController, animated: true)
     }
     
-    func presentGuestOptions() {
+    @objc(presentGuestOptionsAnimated:)
+    func presentGuestOptions(animated: Bool) {
         let menu = ConversationOptionsViewController(conversation: conversation, userSession: ZMUserSession.shared()!)
-        navigationController?.pushViewController(menu, animated: true)
+        navigationController?.pushViewController(menu, animated: animated)
     }
     
 }
