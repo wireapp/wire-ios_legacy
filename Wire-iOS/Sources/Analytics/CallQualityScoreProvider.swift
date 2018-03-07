@@ -67,9 +67,7 @@ final class CallQualityScoreProvider: NSObject, AnalyticsType {
 // MARK: - Survey Mute Filter
 
 let UserDefaultLastCallSurveyDate = "LastCallSurveyDate"
-
-// Show the survey only once every 10 days (10 * 24 * 3600)
-let CallSurveyMuteInterval: TimeInterval = 864_000
+let CallSurveyMuteInterval: TimeInterval = Calendar.secondsInDays(10)
 
 extension CallQualityScoreProvider {
 
