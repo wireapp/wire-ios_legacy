@@ -38,7 +38,7 @@ class ContactsSectionController : SearchSectionController {
     override func prepareForUse(in collectionView : UICollectionView?) {
         super.prepareForUse(in: collectionView)
         
-        collectionView?.register(GroupDetailsParticipantCell.self, forCellWithReuseIdentifier: GroupDetailsParticipantCell.zm_reuseIdentifier)
+        collectionView?.register(UserCell.self, forCellWithReuseIdentifier: UserCell.zm_reuseIdentifier)
         
         self.collectionView = collectionView
     }
@@ -63,7 +63,7 @@ class ContactsSectionController : SearchSectionController {
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let user = contacts[indexPath.row]
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: GroupDetailsParticipantCell.zm_reuseIdentifier, for: indexPath) as! GroupDetailsParticipantCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: UserCell.zm_reuseIdentifier, for: indexPath) as! UserCell
         
         cell.configure(with: user)
         cell.separator.isHidden = (contacts.count - 1) == indexPath.row

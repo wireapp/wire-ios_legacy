@@ -19,7 +19,7 @@
 import Foundation
 
 
-class GroupDetailsSectionHeader: UICollectionReusableView, Themeable {
+class SectionHeader: UICollectionReusableView, Themeable {
     
     let titleLabel = UILabel()
  

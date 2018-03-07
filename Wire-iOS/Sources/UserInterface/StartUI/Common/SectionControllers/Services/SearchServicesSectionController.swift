@@ -39,7 +39,7 @@ class SearchServicesSectionController: SearchSectionController {
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let service = services[indexPath.row]
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: GroupDetailsParticipantCell.zm_reuseIdentifier, for: indexPath) as! GroupDetailsParticipantCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: UserCell.zm_reuseIdentifier, for: indexPath) as! UserCell
         
         cell.configure(with: service)
         cell.separator.isHidden = (services.count - 1) == indexPath.row
