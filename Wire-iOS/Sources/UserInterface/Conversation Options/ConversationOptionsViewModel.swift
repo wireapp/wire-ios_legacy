@@ -102,6 +102,8 @@ class ConversationOptionsViewModel {
     
     func fetchLink() {
         showLoadingCell = true
+        
+        // TODO: Use configuration method to fetch and check invite links
         DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
             self.showLoadingCell = false
         }
