@@ -92,7 +92,7 @@ class CallQualityViewController : UIViewController, UIGestureRecognizerDelegate 
             self?.delegate?.callQualityController(self!, didSelect: score)
         })
 
-        dimmingView.backgroundColor = UIColor.black.withAlphaComponent(0.6)
+        dimmingView.backgroundColor = UIColor.CallQuality.backgroundDim
         dimmingView.alpha = 0
 
         closeButton.setIcon(.X, with: .tiny, for: [], renderingMode: .alwaysTemplate)
@@ -104,24 +104,23 @@ class CallQualityViewController : UIViewController, UIGestureRecognizerDelegate 
         closeButton.clipsToBounds = true
         closeButton.adjustsImageWhenHighlighted = false
 
-        let cancelVisualSelectionColor = UIColor(for: .strongBlue).withAlphaComponent(0.5)
-        closeButton.setBackgroundImageColor(UIColor.cas_color(withHex: "#DAD9DF") , for: .normal)
-        closeButton.setBackgroundImageColor(cancelVisualSelectionColor, for: .selected)
-        closeButton.setBackgroundImageColor(cancelVisualSelectionColor, for: .highlighted)
+        closeButton.setBackgroundImageColor(UIColor.CallQuality.closeButton, for: .normal)
+        closeButton.setBackgroundImageColor(UIColor.CallQuality.buttonHighlight, for: .selected)
+        closeButton.setBackgroundImageColor(UIColor.CallQuality.buttonHighlight, for: .highlighted)
         closeButton.setIconColor(.black, for: .normal)
         closeButton.setIconColor(.white, for: .selected)
         closeButton.setIconColor(.white, for: .highlighted)
 
         closeButton.addTarget(self, action: #selector(onCloseButtonTapped), for: .touchUpInside)
 
-        titleLabel.textColor = UIColor.cas_color(withHex: "#323639")
+        titleLabel.textColor = UIColor.CallQuality.title
         titleLabel.font = UIFont.systemFont(ofSize: 30, weight: UIFontWeightMedium)
         titleLabel.text = NSLocalizedString("calling.quality_survey.title", comment: "")
         titleLabel.adjustsFontSizeToFitWidth = true
 
         questionLabel.text = questionLabelText
         questionLabel.font = FontSpec(.normal, .regular).font
-        questionLabel.textColor = UIColor.cas_color(withHex: "#323639").withAlphaComponent(0.56)
+        questionLabel.textColor = UIColor.CallQuality.question
         questionLabel.textAlignment = .center
         questionLabel.numberOfLines = 0
 
@@ -136,7 +135,7 @@ class CallQualityViewController : UIViewController, UIGestureRecognizerDelegate 
         dismissTapGestureRecognizer.delegate = self
         view.addGestureRecognizer(dismissTapGestureRecognizer)
 
-        contentView.backgroundColor = .white
+        contentView.backgroundColor = UIColor.CallQuality.contentBackground
         contentView.translatesAutoresizingMaskIntoConstraints = false
 
         view.addSubview(dimmingView)
@@ -246,20 +245,20 @@ class CallQualityView : UIStackView {
         scoreLabel.text = [1, 3, 5].contains(buttonScore) ? labelText : ""
         scoreLabel.font = FontSpec(.medium, .regular).font
         scoreLabel.textAlignment = .center
-        scoreLabel.textColor = UIColor.cas_color(withHex: "#272A2C")
+        scoreLabel.textColor = UIColor.CallQuality.score
         scoreLabel.adjustsFontSizeToFitWidth = true
         
         scoreButton.tag = buttonScore
         scoreButton.circular = true
         scoreButton.setTitle(String(buttonScore), for: .normal)
         scoreButton.titleLabel?.font = UIFont.monospacedDigitSystemFont(ofSize: 18, weight: UIFontWeightRegular)
-        scoreButton.setTitleColor(UIColor.cas_color(withHex: "#272A2C"), for: .normal)
+        scoreButton.setTitleColor(UIColor.CallQuality.score, for: .normal)
         scoreButton.setTitleColor(.white, for: .highlighted)
         scoreButton.setTitleColor(.white, for: .selected)
         scoreButton.addTarget(self, action: #selector(onClick), for: .primaryActionTriggered)
-        scoreButton.setBackgroundImageColor(UIColor.cas_color(withHex: "#F8F8F8"), for: UIControlState.normal)
-        scoreButton.setBackgroundImageColor(UIColor(for: .strongBlue) , for: UIControlState.highlighted)
-        scoreButton.setBackgroundImageColor(UIColor(for: .strongBlue) , for: UIControlState.selected)
+        scoreButton.setBackgroundImageColor(UIColor.CallQuality.scoreBackground, for: UIControlState.normal)
+        scoreButton.setBackgroundImageColor(UIColor.CallQuality.scoreHighlight, for: UIControlState.highlighted)
+        scoreButton.setBackgroundImageColor(UIColor.CallQuality.scoreHighlight, for: UIControlState.selected)
         scoreButton.accessibilityIdentifier = "score_\(buttonScore)"
         
         scoreButton.accessibilityLabel = labelText
