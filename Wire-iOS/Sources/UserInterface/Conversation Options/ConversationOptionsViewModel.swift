@@ -38,6 +38,12 @@ class ConversationOptionsViewModel {
         var title = ""
     }
     
+    var showLoadingCell = false {
+        didSet {
+            updateRows()
+        }
+    }
+    
     var state = State() {
         didSet {
             delegate?.viewModel(self, didUpdateState: state)
@@ -66,15 +72,39 @@ class ConversationOptionsViewModel {
     }
     
     private func computeVisibleRows() -> [CellConfiguration] {
-        return [
+        var rows: [CellConfiguration] = [
             .toggle(
                 title: "guest_room.allow_guests.title".localized,
                 subtitle: "guest_room.allow_guests.subtitle".localized,
-                accessibilityIdentifier: "toggle.guestoptions.allowguests",
+                identifier: "toggle.guestoptions.allowguests",
                 get: { [unowned self] in return self.configuration.allowGuests },
                 set: { [unowned self] in self.setAllowGuests($0) }
             )
         ]
+        
+        if configuration.allowGuests {
+            rows.append(.linkHeader)
+            
+            if showLoadingCell {
+                rows.append(.loading)
+            } else {
+                rows.append(.centerButton(
+                    title: "guest_room.link.button.title".localized,
+                    identifier: "",
+                    action: { [unowned self] in self.fetchLink() }
+                    )
+                )
+            }
+        }
+
+        return rows
+    }
+    
+    func fetchLink() {
+        showLoadingCell = true
+        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+            self.showLoadingCell = false
+        }
     }
     
     func setAllowGuests(_ allowGuests: Bool) {

@@ -24,17 +24,42 @@ protocol CellConfigurationConfigurable: Reusable {
 
 enum CellConfiguration {
     typealias Action = () -> Void
-    case toggle(title: String, subtitle: String, accessibilityIdentifier: String, get: () -> Bool, set: (Bool) -> Void)
+    case toggle(title: String, subtitle: String, identifier: String, get: () -> Bool, set: (Bool) -> Void)
+    case linkHeader
+    case centerButton(title: String, identifier: String, action: () -> Void)
+    case loading
     
     var cellType: CellConfigurationConfigurable.Type {
         switch self {
         case .toggle: return ToggleSubtitleCell.self
+        case .linkHeader: return LinkHeaderCell.self
+        case .centerButton: return ActionCell.self
+        case .loading: return LoadingIndicatorCell.self
         }
     }
     
     var action: Action? {
         switch self {
-        case .toggle: return nil
+        case .toggle, .linkHeader, .loading: return nil
+        case let .centerButton(_, _, action: action): return action
         }
     }
+    
+    // MARK: - Convenience
+    
+    static var allCellTypes: [UITableViewCell.Type] {
+        return [
+            ToggleSubtitleCell.self,
+            LinkHeaderCell.self,
+            ActionCell.self,
+            LoadingIndicatorCell.self
+        ]
+    }
+    
+    static func prepare(_ tableView: UITableView) {
+        allCellTypes.forEach {
+            tableView.register($0, forCellReuseIdentifier: $0.reuseIdentifier)
+        }
+    }
+
 }
