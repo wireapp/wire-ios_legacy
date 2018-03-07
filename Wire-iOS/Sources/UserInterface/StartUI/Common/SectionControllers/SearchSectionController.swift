@@ -18,13 +18,17 @@
 
 import Foundation
 
-protocol GroupDetailsSectionControllerDelegate: class {
+protocol SearchSectionControllerDelegate: class {
     
-    func presentDetails(for user: ZMUser)
+    func searchSectionController(_ searchSectionController: CollectionViewSectionController, didSelectUser user: ZMBareUser, at indexPath: IndexPath)
+    
+    func searchSectionController(_ searchSectionController: CollectionViewSectionController, didSelectConversation conversation: ZMConversation, at indexPath: IndexPath)
+    
+    func searchSectionController(_ searchSectionController: CollectionViewSectionController, didSelectRow row: CreateGroupSection.Row, at indexPath: IndexPath)
     
 }
 
-class GroupDetailsSectionController: NSObject, CollectionViewSectionController {
+class SearchSectionController: NSObject, CollectionViewSectionController {
     
     var isHidden: Bool {
         return false
@@ -37,7 +41,7 @@ class GroupDetailsSectionController: NSObject, CollectionViewSectionController {
     var sectionAccessibilityIdentifier: String {
         return "section_header"
     }
-    
+        
     func prepareForUse(in collectionView : UICollectionView?) {
         collectionView?.register(GroupDetailsSectionHeader.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: "SectionHeader")
     }
@@ -46,7 +50,7 @@ class GroupDetailsSectionController: NSObject, CollectionViewSectionController {
         let supplementaryView = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionElementKindSectionHeader, withReuseIdentifier: "SectionHeader", for: indexPath)
         
         if let sectionHeaderView = supplementaryView as? GroupDetailsSectionHeader {
-            sectionHeaderView.titleLabel.text = sectionTitle
+            sectionHeaderView.titleLabel.text = sectionTitle.localizedUppercase
             sectionHeaderView.accessibilityIdentifier = sectionAccessibilityIdentifier
         }
         
@@ -70,3 +74,4 @@ class GroupDetailsSectionController: NSObject, CollectionViewSectionController {
     }
     
 }
+

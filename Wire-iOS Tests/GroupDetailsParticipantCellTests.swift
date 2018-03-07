@@ -52,7 +52,7 @@ class GroupDetailsParticipantCellTests: ZMSnapshotTestCase {
         let mockUser = MockUser(for: user)
         mockUser?.isServiceUser = true
         
-        verify(view: cell({ (cell) in
+        verifyInAllColorSchemes(view: cell({ (cell) in
             cell.configure(with: user, conversation: conversation)
         }))
     }
@@ -60,7 +60,7 @@ class GroupDetailsParticipantCellTests: ZMSnapshotTestCase {
     func testNonTeamUser() {
         let user = MockUser.mockUsers()[0]
         
-        verify(view: cell({ (cell) in
+        verifyInAllColorSchemes(view: cell({ (cell) in
             cell.configure(with: user, conversation: conversation)
         }))
     }
@@ -71,28 +71,7 @@ class GroupDetailsParticipantCellTests: ZMSnapshotTestCase {
         mockUser?.trusted = true
         _ = mockUser?.feature(withUserClients: 1)
         
-        verify(view: cell({ (cell) in
-            cell.configure(with: user, conversation: conversation)
-        }))
-    }
-    
-    func testTrustedNonTeamUser_DarkMode() {
-        let user = MockUser.mockUsers()[0]
-        let mockUser = MockUser(for: user)
-        mockUser?.trusted = true
-        _ = mockUser?.feature(withUserClients: 1)
-        
-        verify(view: cell({ (cell) in
-            cell.colorSchemeVariant = .dark
-            cell.configure(with: user, conversation: conversation)
-        }))
-    }
-    
-    func testNonTeamUser_DarkMode() {
-        let user = MockUser.mockUsers()[0]
-        
-        verify(view: cell({ (cell) in
-            cell.colorSchemeVariant = .dark
+        verifyInAllColorSchemes(view: cell({ (cell) in
             cell.configure(with: user, conversation: conversation)
         }))
     }
@@ -103,19 +82,7 @@ class GroupDetailsParticipantCellTests: ZMSnapshotTestCase {
         let mockUser = MockUser(for: user)
         mockUser?.isGuestInConversation = true
         
-        verify(view: cell({ (cell) in
-            cell.configure(with: user, conversation: conversation)
-        }))
-    }
-    
-    func testGuestUser_DarkMode() {
-        MockUser.mockSelf().isTeamMember = true
-        let user = MockUser.mockUsers()[0]
-        let mockUser = MockUser(for: user)
-        mockUser?.isGuestInConversation = true
-        
-        verify(view: cell({ (cell) in
-            cell.colorSchemeVariant = .dark
+        verifyInAllColorSchemes(view: cell({ (cell) in
             cell.configure(with: user, conversation: conversation)
         }))
     }
@@ -128,21 +95,7 @@ class GroupDetailsParticipantCellTests: ZMSnapshotTestCase {
         mockUser?.isGuestInConversation = true
         _ = mockUser?.feature(withUserClients: 1)
         
-        verify(view: cell({ (cell) in
-            cell.configure(with: user, conversation: conversation)
-        }))
-    }
-    
-    func testTrustedGuestUser_DarkMode() {
-        MockUser.mockSelf().isTeamMember = true
-        let user = MockUser.mockUsers()[0]
-        let mockUser = MockUser(for: user)
-        mockUser?.trusted = true
-        mockUser?.isGuestInConversation = true
-        _ = mockUser?.feature(withUserClients: 1)
-        
-        verify(view: cell({ (cell) in
-            cell.colorSchemeVariant = .dark
+        verifyInAllColorSchemes(view: cell({ (cell) in
             cell.configure(with: user, conversation: conversation)
         }))
     }
@@ -150,16 +103,7 @@ class GroupDetailsParticipantCellTests: ZMSnapshotTestCase {
     func testNonTeamUserWithoutHandle() {
         let user = MockUser.mockUsers()[10]
         
-        verify(view: cell({ (cell) in
-            cell.configure(with: user, conversation: conversation)
-        }))
-    }
-    
-    func testNonTeamUserWithoutHandle_DarkMode() {
-        let user = MockUser.mockUsers()[10]
-        
-        verify(view: cell({ (cell) in
-            cell.colorSchemeVariant = .dark
+        verifyInAllColorSchemes(view: cell({ (cell) in
             cell.configure(with: user, conversation: conversation)
         }))
     }

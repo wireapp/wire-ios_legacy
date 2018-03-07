@@ -26,7 +26,6 @@
 #import "ProfilePresenter.h"
 #import "ShareContactsViewController.h"
 #import "ZClientViewController.h"
-#import "SearchResultCell.h"
 #import "TopPeopleCell.h"
 #import "StartUIInviteActionBar.h"
 #import "Button.h"
