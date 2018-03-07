@@ -49,7 +49,7 @@ class CallQualityControllerTests: ZMSnapshotTestCase {
 
     func testSurveyInterface() {
         CallQualityScoreProvider.resetSurveyMuteFilter()
-        let qualityController = CallQualityViewController.requestSurveyController()!
+        let qualityController = CallQualityViewController.requestSurveyController(callDuration: 10)!
         self.qualityController = qualityController
         verifyInAllDeviceSizes(view: qualityController.view, configuration: configure)
     }
