@@ -41,6 +41,7 @@ class GroupDetailsParticipantCellTests: ZMSnapshotTestCase {
     
     func cell(_ configuration : (GroupDetailsParticipantCell) -> Void) -> GroupDetailsParticipantCell {
         let cell = GroupDetailsParticipantCell(frame: CGRect(x: 0, y: 0, width: 320, height: 56))
+        cell.accessoryIconView.isHidden = false
         configuration(cell)
         cell.layoutIfNeeded()
         return cell
