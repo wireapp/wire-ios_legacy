@@ -65,6 +65,16 @@ class SearchSectionController: NSObject, CollectionViewSectionController {
         return CGSize(width: collectionView.bounds.size.width, height: 56)
     }
     
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        
+        // Workaround for when a cell is created inside an animation block. In this case it happens
+        // when the keyboard is animating away which will change the height of the collection view
+        // and therefore reveal more cells.
+        UIView.performWithoutAnimation {
+            cell.layoutIfNeeded()
+        }
+    }
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         fatal("Must be overridden")
     }
