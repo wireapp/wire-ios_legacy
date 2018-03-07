@@ -54,6 +54,7 @@ class ServicesSectionController: GroupDetailsSectionController {
         
         cell.configure(with: user, conversation: conversation)
         cell.separator.isHidden = (serviceUsers.count - 1) == indexPath.row
+        cell.accessoryIconView.isHidden = false
         cell.accessibilityIdentifier = "participants.section.services.cell"
         return cell
     }

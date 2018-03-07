@@ -93,23 +93,27 @@ class GroupDetailsParticipantCell: UICollectionViewCell, Themeable {
     override func prepareForReuse() {
         super.prepareForReuse()
         
-        verifiedIconView.isHidden = true
-        connectButton.isHidden = true
-        accessoryIconView.isHidden = false
-        checkmarkIconView.image = nil
-        checkmarkIconView.layer.borderColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorIconNormal, variant: colorSchemeVariant).cgColor
-        checkmarkIconView.isHidden = true
+        UIView.performWithoutAnimation {
+            verifiedIconView.isHidden = true
+            connectButton.isHidden = true
+            accessoryIconView.isHidden = false
+            checkmarkIconView.image = nil
+            checkmarkIconView.layer.borderColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorIconNormal, variant: colorSchemeVariant).cgColor
+            checkmarkIconView.isHidden = true
+        }
     }
     
     fileprivate func setup() {
         guestIconView.translatesAutoresizingMaskIntoConstraints = false
         guestIconView.contentMode = .center
         guestIconView.accessibilityIdentifier = "img.guest"
+        guestIconView.isHidden = true
         
         verifiedIconView.image = WireStyleKit.imageOfShieldverified()
         verifiedIconView.translatesAutoresizingMaskIntoConstraints = false
         verifiedIconView.contentMode = .center
         verifiedIconView.accessibilityIdentifier = "img.shield"
+        verifiedIconView.isHidden = true
         
         connectButton.setIcon(.plusCircled, with: .tiny, for: .normal)
         connectButton.imageView?.contentMode = .center
@@ -122,6 +126,7 @@ class GroupDetailsParticipantCell: UICollectionViewCell, Themeable {
 
         accessoryIconView.translatesAutoresizingMaskIntoConstraints = false
         accessoryIconView.contentMode = .center
+        accessoryIconView.isHidden = true
         
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         titleLabel.font = FontSpec.init(.normal, .light).font!

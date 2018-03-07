@@ -63,6 +63,7 @@ class ParticipantsSectionController: GroupDetailsSectionController {
         
         cell.configure(with: user, conversation: conversation)
         cell.separator.isHidden = (participants.count - 1) == indexPath.row
+        cell.accessoryIconView.isHidden = false
         cell.accessibilityIdentifier = "participants.section.participants.cell"
         return cell
     }

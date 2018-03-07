@@ -79,6 +79,10 @@ extension SectionCollectionViewController: UICollectionViewDataSource {
         return visibleSections.count
     }
     
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        visibleSections[indexPath.section].collectionView?(collectionView, willDisplay: cell, forItemAt: indexPath)
+    }
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return visibleSections[section].collectionView(collectionView, numberOfItemsInSection: 0)
     }

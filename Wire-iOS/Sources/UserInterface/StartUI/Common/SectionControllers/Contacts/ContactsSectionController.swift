@@ -68,7 +68,7 @@ class ContactsSectionController : SearchSectionController {
         cell.configure(with: user)
         cell.separator.isHidden = (contacts.count - 1) == indexPath.row
         cell.checkmarkIconView.isHidden = !allowsSelection
-        cell.accessoryIconView.isHidden = allowsSelection
+        cell.accessoryIconView.isHidden = true
         
         let selected = selection?.users.contains(user) ?? false
         cell.isSelected = selected

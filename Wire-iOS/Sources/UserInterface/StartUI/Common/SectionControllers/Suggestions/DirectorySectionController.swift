@@ -53,7 +53,6 @@ class DirectorySectionController: SearchSectionController {
         
         cell.configure(with: user)
         cell.separator.isHidden = (suggestions.count - 1) == indexPath.row
-        cell.backgroundColor = .clear
         cell.guestIconView.isHidden = true
         cell.accessoryIconView.isHidden = true
         cell.connectButton.isHidden = false
