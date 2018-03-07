@@ -43,18 +43,15 @@ class CallQualityControllerTests: ZMSnapshotTestCase {
     }
 
     func configure(view: UIView, isTablet: Bool) {
+        qualityController?.dimmingView.alpha = 1
         qualityController?.updateLayout(isRegular: isTablet)
     }
 
     func testSurveyInterface() {
-
         CallQualityScoreProvider.resetSurveyMuteFilter()
         let qualityController = CallQualityViewController.requestSurveyController()!
-        qualityController.dimmingView.alpha = 1
-
         self.qualityController = qualityController
         verifyInAllDeviceSizes(view: qualityController.view, configuration: configure)
-
     }
 
 }

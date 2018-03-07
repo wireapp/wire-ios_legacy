@@ -25,19 +25,20 @@ import Cartography
 }
 
 class CallQualityViewController : UIViewController, UIGestureRecognizerDelegate {
-    
+
+    let questionLabelText: String
     @objc weak var delegate: CallQualityViewControllerDelegate?
-    var contentView: UIView
-    var dimmingView: UIView
-    var dismissTapGestureRecognizer: UITapGestureRecognizer!
+
+    let contentView = ContinuousCornersView(cornerRadius: 32)
+    let dimmingView = UIView()
+    let closeButton = IconButton()
+    let titleLabel = UILabel()
+    let questionLabel = UILabel()
 
     var callQualityStackView : UICustomSpacingStackView!
-    var closeButton : IconButton
-    let titleLabel : UILabel
-    let questionText : UILabel
     var scoreSelectorView : QualityScoreSelectorView!
-    var questionLabelText = String()
-    
+    var dismissTapGestureRecognizer: UITapGestureRecognizer!
+
     // MARK: Contraints
     
     private var ipad_centerXConstraint: NSLayoutConstraint!
@@ -64,29 +65,45 @@ class CallQualityViewController : UIViewController, UIGestureRecognizerDelegate 
     }
     
     init(questionLabelText: String){
-        
-        self.contentView = ContinuousCornersView(cornerRadius: 32)
-        self.dimmingView = UIView()
-        self.closeButton = IconButton()
-        self.titleLabel = UILabel()
-        self.questionText = UILabel()
-
+        self.questionLabelText = questionLabelText
         super.init(nibName: nil, bundle: nil)
-        
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+  
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        createViews()
+        createConstraints()
+        updateLayout(for: traitCollection)
+    }
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
+
+    // MARK: Interface
+
+    func createViews() {
+
         self.scoreSelectorView = QualityScoreSelectorView(onScoreSet: { [weak self] score in
             self?.delegate?.callQualityController(self!, didSelect: score)
         })
-        
+
         dimmingView.backgroundColor = UIColor.black.withAlphaComponent(0.6)
         dimmingView.alpha = 0
-    
+
         closeButton.setIcon(.X, with: .tiny, for: [], renderingMode: .alwaysTemplate)
+        closeButton.circular = true
+        closeButton.borderWidth = 0
         closeButton.accessibilityIdentifier = "score_close"
         closeButton.accessibilityLabel = NSLocalizedString("general.close", comment: "")
         closeButton.imageEdgeInsets = UIEdgeInsetsMake(8, 8, 8, 8)
         closeButton.clipsToBounds = true
         closeButton.adjustsImageWhenHighlighted = false
-        
+
         let cancelVisualSelectionColor = UIColor(for: .strongBlue).withAlphaComponent(0.5)
         closeButton.setBackgroundImageColor(UIColor.cas_color(withHex: "#DAD9DF") , for: .normal)
         closeButton.setBackgroundImageColor(cancelVisualSelectionColor, for: .selected)
@@ -96,58 +113,51 @@ class CallQualityViewController : UIViewController, UIGestureRecognizerDelegate 
         closeButton.setIconColor(.white, for: .highlighted)
 
         closeButton.addTarget(self, action: #selector(onCloseButtonTapped), for: .touchUpInside)
-      
+
         titleLabel.textColor = UIColor.cas_color(withHex: "#323639")
         titleLabel.font = UIFont.systemFont(ofSize: 30, weight: UIFontWeightMedium)
         titleLabel.text = NSLocalizedString("calling.quality_survey.title", comment: "")
         titleLabel.adjustsFontSizeToFitWidth = true
-        
-        questionText.text = questionLabelText
-        questionText.font = FontSpec(.normal, .regular).font
-        questionText.textColor = UIColor.cas_color(withHex: "#323639").withAlphaComponent(0.56)
-        questionText.textAlignment = .center
-        questionText.numberOfLines = 0
-        
-        callQualityStackView = UICustomSpacingStackView(customSpacedArrangedSubviews: [titleLabel, questionText, scoreSelectorView])
+
+        questionLabel.text = questionLabelText
+        questionLabel.font = FontSpec(.normal, .regular).font
+        questionLabel.textColor = UIColor.cas_color(withHex: "#323639").withAlphaComponent(0.56)
+        questionLabel.textAlignment = .center
+        questionLabel.numberOfLines = 0
+
+        callQualityStackView = UICustomSpacingStackView(customSpacedArrangedSubviews: [titleLabel, questionLabel, scoreSelectorView])
         callQualityStackView.alignment = .center
         callQualityStackView.axis = .vertical
         callQualityStackView.spacing = 10
         callQualityStackView.wr_addCustomSpacing(24, after: titleLabel)
-        callQualityStackView.wr_addCustomSpacing(32, after: questionText)
-        
+        callQualityStackView.wr_addCustomSpacing(32, after: questionLabel)
+
         dismissTapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(onTapToDismiss))
         dismissTapGestureRecognizer.delegate = self
-
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-  
-    override func viewDidLoad() {
-
         view.addGestureRecognizer(dismissTapGestureRecognizer)
 
         contentView.backgroundColor = .white
         contentView.translatesAutoresizingMaskIntoConstraints = false
-        
+
         view.addSubview(dimmingView)
         view.addSubview(contentView)
         contentView.addSubview(closeButton)
         contentView.addSubview(callQualityStackView)
-        
+
+    }
+
+    func createConstraints() {
+
         constrain(view, dimmingView) { selfView, dimmingView in
             dimmingView.edges == selfView.edges
         }
-        
-        closeButton.layer.cornerRadius = 14
-                
+
         constrain(closeButton) { closeButton in
             closeButton.right == (closeButton.superview!.right - 16)
             closeButton.width == 28
             closeButton.height == 28
         }
-        
+
         constrain(callQualityStackView) { callQualityView in
             callQualityView.centerX == callQualityView.superview!.centerX
             callQualityView.width == (callQualityView.superview!.width - 32)
@@ -174,13 +184,6 @@ class CallQualityViewController : UIViewController, UIGestureRecognizerDelegate 
         ipad_centerYConstraint = contentView.centerYAnchor.constraint(equalTo: view.centerYAnchor)
         ipad_centerXConstraint = contentView.centerXAnchor.constraint(equalTo: view.centerXAnchor)
 
-
-        updateLayout(for: traitCollection)
-
-    }
-    
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent
     }
     
     // MARK: Dismiss Events
