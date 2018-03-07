@@ -29,9 +29,7 @@ class UserCellTests: ZMSnapshotTestCase {
         
     override func setUp() {
         super.setUp()
-        
-        recordMode = true
-        
+                
         mockConversation = MockConversationFactory.mockConversation()
     }
     
