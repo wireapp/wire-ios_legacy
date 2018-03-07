@@ -105,6 +105,9 @@ final class SearchGroupSelector: UIView {
         }
         
         guard SearchGroupSelector.shouldShowBotResults else {
+            constrain(self) { selfView in
+                selfView.height == 0
+            }
             return
         }
         
