@@ -165,6 +165,11 @@
     [self addChildViewController:self.keyboardAvoidingViewController];
     [self.view addSubview:self.keyboardAvoidingViewController.view];
     [self.keyboardAvoidingViewController didMoveToParentViewController:self];
+    
+    if (userSessionErrorCode == ZMUserSessionNeedsPasswordToRegisterClient) {
+        UIViewController *alertController = [UIAlertController passwordVerificationNeededControllerWithCompletion:nil];
+        [self presentViewController:alertController animated:YES completion:nil];
+    }
 }
 
 - (void)updateViewConstraints
