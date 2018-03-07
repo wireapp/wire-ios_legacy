@@ -162,19 +162,26 @@ const NSTimeInterval PhoneVerificationResendInterval = 30.0f;
     if (! self.initialConstraintsCreated) {
         self.initialConstraintsCreated = YES;
         
-        [self.instructionLabel autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:28];
-        [self.instructionLabel autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:28];
+        CGFloat inset = 28.0;
+        [self.instructionLabel autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:inset];
+        [self.instructionLabel autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:inset];
         
         [self.phoneVerificationField autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.instructionLabel withOffset:24];
-        [self.phoneVerificationField autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:28];
-        [self.phoneVerificationField autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:28];
+        [self.phoneVerificationField autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:inset];
+        [self.phoneVerificationField autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:inset];
         [self.phoneVerificationField autoSetDimension:ALDimensionHeight toSize:40];
         
         [self.resendButton autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.phoneVerificationField withOffset:24];
-        [self.resendButton autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsMake(0, 28, 24 + UIScreen.safeArea.bottom, 28) excludingEdge:ALEdgeTop];
+        [self.resendButton autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:inset];
+        [self.resendButton autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:inset];
+        [[self.resendButton.bottomAnchor constraintEqualToAnchor:self.safeBottomAnchor constant:-24] setActive:YES];
+        
         
         [self.resendLabel autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.phoneVerificationField withOffset:24];
-        [self.resendLabel autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsMake(0, 28, 24 + UIScreen.safeArea.bottom, 28) excludingEdge:ALEdgeTop];
+        [self.resendLabel autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:inset];
+        [self.resendLabel autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:inset];
+        [[self.resendLabel.bottomAnchor constraintEqualToAnchor:self.safeBottomAnchor constant:-24] setActive:YES];
+        
     }
 }
 

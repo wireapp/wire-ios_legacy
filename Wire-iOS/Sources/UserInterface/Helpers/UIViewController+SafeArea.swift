@@ -28,6 +28,15 @@ extension UIViewController {
             return self.bottomLayoutGuide.topAnchor
         }
     }
+    
+    var safeTopAnchor: NSLayoutYAxisAnchor {
+        if #available(iOS 11, *) {
+            return self.view.safeAreaLayoutGuide.topAnchor
+        }
+        else {
+            return self.topLayoutGuide.bottomAnchor
+        }
+    }
 }
 
 extension UIView {
