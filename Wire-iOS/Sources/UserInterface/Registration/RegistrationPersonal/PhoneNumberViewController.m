@@ -188,7 +188,7 @@ static CGFloat PhoneNumberFieldTopMargin = 16;
 
 -(void)setPhoneNumber:(NSString *)phoneNumber
 {
-    _phoneNumber = phoneNumber;
+    _phoneNumber = [phoneNumber copy];
     
     if(phoneNumber == nil) {
         [self selectInitialCountry];
