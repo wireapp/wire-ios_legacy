@@ -18,12 +18,16 @@
 
 import Foundation
 
-class RenameGroupSectionController: NSObject, _CollectionViewSectionController {
+class RenameGroupSectionController: NSObject, CollectionViewSectionController {
     
     fileprivate var validName : String? = nil
     fileprivate var conversation: ZMConversation
     fileprivate var renameCell : GroupDetailsRenameCell?
     fileprivate var token : AnyObject?
+    
+    var isHidden: Bool {
+        return false
+    }
     
     init(conversation: ZMConversation) {
         self.conversation = conversation
