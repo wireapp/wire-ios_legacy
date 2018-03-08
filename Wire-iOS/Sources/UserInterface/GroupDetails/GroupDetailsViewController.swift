@@ -148,7 +148,7 @@ class GroupDetailsViewController: UIViewController, ZMConversationObserver, Grou
         sections.append(renameGroupSectionController)
         self.renameGroupSectionController = renameGroupSectionController
         
-        if conversation.team != nil && !ZMUser.selfUser().isGuest(in: conversation) && ZMUser.selfUser().isTeamMember {
+        if conversation.canManageAccess {
             let guestOptionsSectionController = GuestOptionsSectionController(conversation: conversation, delegate: self, syncCompleted: didCompleteInitialSync)
             sections.append(guestOptionsSectionController)
         }
