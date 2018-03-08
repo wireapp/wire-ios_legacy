@@ -42,7 +42,7 @@ class UserCell: UICollectionViewCell, Themeable {
     
     let separator = UIView()
     let avatarSpacer = UIView()
-    let avatar = BadgeUserImageView(magicPrefix: "people_picker.search_results_mode")
+    let avatar = BadgeUserImageView()
     let titleLabel = UILabel()
     let subtitleLabel = UILabel()
     let connectButton = IconButton()
@@ -137,6 +137,7 @@ class UserCell: UICollectionViewCell, Themeable {
         subtitleLabel.accessibilityIdentifier = "username"
         
         avatar.size = .small
+        avatar.initials.font = UIFont.systemFont(ofSize: 11, weight: UIFontWeightLight)
         avatar.translatesAutoresizingMaskIntoConstraints = false
 
         avatarSpacer.addSubview(avatar)

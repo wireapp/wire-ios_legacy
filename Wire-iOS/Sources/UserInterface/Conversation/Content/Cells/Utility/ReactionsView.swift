@@ -41,8 +41,9 @@ import Cartography
             }
             
             for user in likersToDisplay {
-                let userImage = UserImageView(magicPrefix: "content.reaction")
+                let userImage = UserImageView(size: .tiny)
                 userImage.userSession = ZMUserSession.shared()
+                userImage.initials.font = UIFont.systemFont(ofSize: 8, weight: UIFontWeightLight)
                 userImage.user = user
                 constrain(userImage) { userImage in
                     userImage.width == userImage.height

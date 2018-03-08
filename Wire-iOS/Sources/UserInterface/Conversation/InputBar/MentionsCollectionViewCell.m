@@ -22,7 +22,6 @@
 #import "UIView+Borders.h"
 #import "UIFont+MagicAccess.h"
 @import PureLayout;
-#import "UserImageView+Magic.h"
 #import "WireSyncEngine+iOS.h"
 #import "Wire-Swift.h"
 
@@ -67,7 +66,8 @@
 
 -(void)createUserImageView
 {
-    self.userImageView = [[UserImageView alloc] initWithMagicPrefix:@"content.author_image"];
+    self.userImageView = [[UserImageView alloc] init];
+    self.userImageView.initials.font = [UIFont systemFontOfSize:11 weight:UIFontWeightLight];
     self.userImageView.userSession = [ZMUserSession sharedSession];
     self.userImageView.translatesAutoresizingMaskIntoConstraints = NO;
     

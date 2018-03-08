@@ -25,7 +25,6 @@
 #import "WireSyncEngine+iOS.h"
 #import "UIView+Borders.h"
 #import <WireDataModel/ZMBareUser.h>
-#import "UserImageView+Magic.h"
 #import "Wire-Swift.h"
 
 @interface TopPeopleCell ()
@@ -82,7 +81,8 @@
 {
     [self.badgeUserImageView removeFromSuperview];
 
-    self.badgeUserImageView = [[BadgeUserImageView alloc] initWithMagicPrefix:@"people_picker.top_conversations_mode"];
+    self.badgeUserImageView = [[BadgeUserImageView alloc] init];
+    self.badgeUserImageView.initials.font = [UIFont systemFontOfSize:11 weight:UIFontWeightLight];
     self.badgeUserImageView.userSession = [ZMUserSession sharedSession];
     self.badgeUserImageView.size = UserImageViewSizeSmall;
     self.badgeUserImageView.translatesAutoresizingMaskIntoConstraints = NO;

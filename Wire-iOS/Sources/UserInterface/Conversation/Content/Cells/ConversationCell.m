@@ -33,7 +33,6 @@
 #import "Analytics.h"
 #import "Analytics+ConversationEvents.h"
 #import "UIResponder+FirstResponder.h"
-#import "UserImageView+Magic.h"
 #import "UIScreen+Compact.h"
 
 const CGFloat ConversationCellSelectedOpacity = 0.4;
@@ -166,7 +165,8 @@ static const CGFloat BurstContainerExpandedHeight = 40;
     self.authorImageContainer.translatesAutoresizingMaskIntoConstraints = NO;
     [self.marginContainer addSubview:self.authorImageContainer];
     
-    self.authorImageView = [[UserImageView alloc] initWithMagicPrefix:@"content.author_image"];
+    self.authorImageView = [[UserImageView alloc] init];
+    self.authorImageView.initials.font = [UIFont systemFontOfSize:11 weight:UIFontWeightLight];
     self.authorImageView.userSession = [ZMUserSession sharedSession];
     self.authorImageView.translatesAutoresizingMaskIntoConstraints = NO;
     self.authorImageView.delegate = self;

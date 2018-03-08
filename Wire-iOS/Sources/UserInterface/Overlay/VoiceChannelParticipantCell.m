@@ -78,7 +78,8 @@
     self = [super initWithFrame:frame];
     
     if (self) {
-        self.userImage = [[VoiceUserImageView alloc] initWithMagicPrefix:@"voice_overlay.user_image_view"];
+        self.userImage = [[VoiceUserImageView alloc] init];
+        self.userImage.initials.font =  [UIFont systemFontOfSize:20 weight:UIFontWeightLight];
         self.userImage.userSession = [ZMUserSession sharedSession];
         self.userImage.translatesAutoresizingMaskIntoConstraints = NO;
         self.userImage.state = VoiceUserImageViewStateTalking;

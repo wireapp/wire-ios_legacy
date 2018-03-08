@@ -26,7 +26,6 @@
 #import "ZMUser+Additions.h"
 #import "WireSyncEngine+iOS.h"
 #import "UIView+WR_ExtendedBlockAnimations.h"
-#import "UserImageView+Magic.h"
 
 
 @interface BadgeUserImageView () <ZMUserObserver>
@@ -38,9 +37,9 @@
 
 @implementation BadgeUserImageView
 
-- (instancetype)initWithMagicPrefix:(NSString *)magicPrefix
+- (instancetype)init
 {
-    self = [super initWithMagicPrefix:magicPrefix];
+    self = [super init];
     
     if (self) {
         _badgeIconSize = ZetaIconSizeTiny;
