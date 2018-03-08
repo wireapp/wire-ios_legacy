@@ -43,15 +43,6 @@ open class CameraCell: UICollectionViewCell, Reusable {
         NotificationCenter.default.removeObserver(self)
     }
 
-    /// init method with a param for injecting mock device
-    ///
-    /// - Parameters:
-    ///   - device: Provide this param for testing only
-    convenience init(device: DeviceProtocol) {
-        self.init(frame: .zero)
-        self.device = device
-    }
-
     override init(frame: CGRect) {
         self.cameraController = CameraController()
 
@@ -286,3 +277,13 @@ open class CameraCell: UICollectionViewCell, Reusable {
     }
 }
 
+extension CameraCell {
+    /// init method with a param for injecting mock device
+    ///
+    /// - Parameters:
+    ///   - device: Provide this param for testing only
+    convenience init(device: DeviceProtocol) {
+        self.init(frame: .zero)
+        self.device = device
+    }
+}
