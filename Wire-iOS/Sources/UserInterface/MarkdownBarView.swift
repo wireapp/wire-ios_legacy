@@ -32,7 +32,6 @@ public final class MarkdownBarView: UIView {
     weak var delegate: MarkdownBarViewDelegate?
     
     private let stackView =  UIStackView()
-    private let buttonMargin = WAZUIMagic.cgFloat(forIdentifier: "content.left_margin") / 2 - UIImage.size(for: .tiny) / 2
     private let accentColor = ColorScheme.default().accentColor
     private let normalColor = ColorScheme.default().color(withName: ColorSchemeColorIconNormal)
     
@@ -45,6 +44,10 @@ public final class MarkdownBarView: UIView {
     
     public let buttons: [IconButton]
     public var activeModes = [MarkdownElementType]()
+
+    private var buttonMargin: CGFloat {
+        return UIView.conversationLayoutMargins.left / 2 - UIImage.size(for: .tiny) / 2
+    }
     
     required public init() {
         buttons = [headerButton, boldButton, italicButton, numberListButton, bulletListButton, codeButton]

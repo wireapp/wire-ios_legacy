@@ -41,10 +41,7 @@ class FileTransferCellTests: ZMSnapshotTestCase {
         cell.bounds = CGRect(x: 0.0, y: 0.0, width: 320.0, height: 9999)
         cell.contentView.bounds = CGRect(x: 0.0, y: 0.0, width: 320, height: 9999)
         cell.layer.speed = 0;
-        
-        cell.layoutMargins = UIEdgeInsetsMake(0, CGFloat(WAZUIMagic.float(forIdentifier: "content.left_margin")),
-        0, CGFloat(WAZUIMagic.float(forIdentifier: "content.right_margin")))
-        
+        cell.layoutMargins = UIView.directionAwareConversationLayoutMargins
         cell.configure(for: fileMessage, layoutProperties: layoutProperties)
       
         return cell.wrapInTableView()

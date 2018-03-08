@@ -375,7 +375,7 @@
     [self.sendButton autoSetDimensionsToSize:CGSizeMake(edgeLength, edgeLength)];
     [self.sendButton autoPinEdgeToSuperviewEdge:ALEdgeLeading];
     [self.sendButton autoPinEdgeToSuperviewEdge:ALEdgeBottom withInset:14];
-    CGFloat rightInset = ([WAZUIMagic cgFloatForIdentifier:@"content.left_margin"] - edgeLength) / 2;
+    CGFloat rightInset = (UIView.conversationLayoutMargins.left - edgeLength) / 2;
     [self.sendButton autoPinEdgeToSuperviewEdge:ALEdgeTrailing withInset:rightInset relation:NSLayoutRelationGreaterThanOrEqual];
 }
 

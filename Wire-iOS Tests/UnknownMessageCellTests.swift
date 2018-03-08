@@ -37,9 +37,7 @@ class UnknownMessageCellTests: ZMSnapshotTestCase {
         cell.layer.speed = 0 // freeze animations for deterministic tests
         cell.bounds = CGRect(x: 0.0, y: 0.0, width: 320.0, height: 9999)
         cell.contentView.bounds = CGRect(x: 0.0, y: 0.0, width: 320, height: 9999)
-        
-        cell.layoutMargins = UIEdgeInsetsMake(0, CGFloat(WAZUIMagic.float(forIdentifier: "content.left_margin")),
-                                              0, CGFloat(WAZUIMagic.float(forIdentifier: "content.right_margin")))
+        cell.layoutMargins = UIView.directionAwareConversationLayoutMargins
         
         cell.configure(for: systemMessage, layoutProperties: layoutProperties)
         

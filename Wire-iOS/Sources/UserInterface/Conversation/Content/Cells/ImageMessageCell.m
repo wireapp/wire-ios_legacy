@@ -90,7 +90,7 @@ static const CGFloat ImageToolbarMinimumSize = 192;
         [self createImageMessageViews];
         [self createConstraints];
 
-        self.defaultLayoutMargins = [ImageMessageCell layoutDirectionAwareLayoutMargins];
+        self.defaultLayoutMargins = UIView.directionAwareConversationLayoutMargins;
 
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(applicationDidEnterBackground:)
@@ -597,7 +597,7 @@ static const CGFloat ImageToolbarMinimumSize = 192;
 - (void)traitCollectionDidChange:(nullable UITraitCollection *)previousTraitCollection {
     [super traitCollectionDidChange:previousTraitCollection];
 
-    self.defaultLayoutMargins = [ImageMessageCell layoutDirectionAwareLayoutMargins];
+    self.defaultLayoutMargins = UIView.directionAwareConversationLayoutMargins;
     [self updateImageMessageConstraintConstants];
 }
 

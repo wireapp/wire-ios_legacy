@@ -108,7 +108,7 @@ static const CGFloat BurstContainerExpandedHeight = 40;
         
         [self createViews];
 
-        self.contentLayoutMargins = self.class.layoutDirectionAwareLayoutMargins;
+        self.contentLayoutMargins = UIView.directionAwareConversationLayoutMargins;
 
         [NSLayoutConstraint autoCreateAndInstallConstraints:^{
             [self createBaseConstraints];
@@ -435,7 +435,7 @@ static const CGFloat BurstContainerExpandedHeight = 40;
 {
     [super traitCollectionDidChange:previousTraitCollection];
     if (!self.showsPreview) {
-        self.contentLayoutMargins = self.class.layoutDirectionAwareLayoutMargins;
+        self.contentLayoutMargins = UIView.directionAwareConversationLayoutMargins;
     }
 }
 
