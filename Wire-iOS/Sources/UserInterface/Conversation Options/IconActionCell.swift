@@ -68,8 +68,9 @@ final class IconActionCell: UITableViewCell, CellConfigurationConfigurable {
     
     func configure(with configuration: CellConfiguration, variant: ColorSchemeVariant) {
         guard case let .iconAction(title, icon, color, _) = configuration else { preconditionFailure() }
-        iconImageView.image = UIImage(for: icon, iconSize: .tiny, color: color)
-        label.textColor = color
+        let mainColor = color ?? .wr_color(fromColorScheme: ColorSchemeColorTextForeground, variant: variant)
+        iconImageView.image = UIImage(for: icon, iconSize: .tiny, color: mainColor)
+        label.textColor = mainColor
         label.text = title
         separator.backgroundColor = .wr_color(fromColorScheme: ColorSchemeColorCellSeparator, variant: variant)
     }

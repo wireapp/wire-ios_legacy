@@ -20,11 +20,14 @@ import XCTest
 @testable import Wire
 
 class MockOptionsViewModelConfiguration: ConversationOptionsViewModelConfiguration {
+    
     typealias SetHandler = (Bool, (VoidResult) -> Void) -> Void
     var allowGuests: Bool
     var setAllowGuests: SetHandler?
     var allowGuestsChangedHandler: ((Bool) -> Void)?
     var title: String
+    var linkResult: Result<String?>? = nil
+    var deleteResult: VoidResult = .success
     
     init(allowGuests: Bool, title: String = "", setAllowGuests: SetHandler? = nil) {
         self.allowGuests = allowGuests
@@ -34,6 +37,14 @@ class MockOptionsViewModelConfiguration: ConversationOptionsViewModelConfigurati
 
     func setAllowGuests(_ allowGuests: Bool, completion: @escaping (VoidResult) -> Void) {
         setAllowGuests?(allowGuests, completion)
+    }
+    
+    func fetchConversationLink(completion: @escaping (Result<String?>) -> Void) {
+        linkResult.apply(completion)
+    }
+    
+    func deleteLink(completion: @escaping (VoidResult) -> Void) {
+        completion(deleteResult)
     }
 }
 
@@ -52,6 +63,50 @@ final class ConversationOptionsViewControllerTests: ZMSnapshotTestCase {
     func testThatItRendersTeamOnly_DarkTheme() {
         // Given
         let config = MockOptionsViewModelConfiguration(allowGuests: true)
+        let viewModel = ConversationOptionsViewModel(configuration: config)
+        let sut = ConversationOptionsViewController(viewModel: viewModel, variant: .dark)
+        
+        // Then
+        verify(view: sut.view)
+    }
+    
+    func testThatItRendersAllowGuests_WithLink() {
+        // Given
+        let config = MockOptionsViewModelConfiguration(allowGuests: true)
+        config.linkResult = .success("https://app.wire.com/772bfh1bbcssjs982637 3nbbdsn9917nbbdaehkej827648-72bns9")
+        let viewModel = ConversationOptionsViewModel(configuration: config)
+        let sut = ConversationOptionsViewController(viewModel: viewModel, variant: .light)
+        
+        // Then
+        verify(view: sut.view)
+    }
+    
+    func testThatItRendersAllowGuests_WithLink_DarkTheme() {
+        // Given
+        let config = MockOptionsViewModelConfiguration(allowGuests: true)
+        config.linkResult = .success("https://app.wire.com/772bfh1bbcssjs982637 3nbbdsn9917nbbdaehkej827648-72bns9")
+        let viewModel = ConversationOptionsViewModel(configuration: config)
+        let sut = ConversationOptionsViewController(viewModel: viewModel, variant: .dark)
+        
+        // Then
+        verify(view: sut.view)
+    }
+    
+    func testThatItRendersAllowGuests_WithoutLink() {
+        // Given
+        let config = MockOptionsViewModelConfiguration(allowGuests: true)
+        config.linkResult = .success(nil)
+        let viewModel = ConversationOptionsViewModel(configuration: config)
+        let sut = ConversationOptionsViewController(viewModel: viewModel, variant: .light)
+        
+        // Then
+        verify(view: sut.view)
+    }
+    
+    func testThatItRendersAllowGuests_WithoutLink_DarkTheme() {
+        // Given
+        let config = MockOptionsViewModelConfiguration(allowGuests: true)
+        config.linkResult = .success(nil)
         let viewModel = ConversationOptionsViewModel(configuration: config)
         let sut = ConversationOptionsViewController(viewModel: viewModel, variant: .dark)
         

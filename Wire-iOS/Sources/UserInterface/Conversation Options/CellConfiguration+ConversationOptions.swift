@@ -43,7 +43,7 @@ extension CellConfiguration {
         return .iconAction(
             title: "guest_room.actions.copy_link".localized,
             icon: .copy,
-            color: .wr_color(fromColorScheme: ColorSchemeColorTextForeground),
+            color: nil,
             action: action
         )
     }
@@ -51,7 +51,7 @@ extension CellConfiguration {
     static let copiedLink: CellConfiguration = .iconAction(
             title: "guest_room.actions.copied_link".localized,
             icon: .checkmark,
-            color: .wr_color(fromColorScheme: ColorSchemeColorTextForeground),
+            color: nil,
             action: {}
         )
     
@@ -59,7 +59,7 @@ extension CellConfiguration {
         return .iconAction(
             title: "guest_room.actions.share_link".localized,
             icon: .export,
-            color: .wr_color(fromColorScheme: ColorSchemeColorTextForeground),
+            color: nil,
             action: action
         )
     }
