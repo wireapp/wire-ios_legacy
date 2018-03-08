@@ -21,7 +21,6 @@
 
 @import PureLayout;
 
-#import "VoiceGainLayer+MagicInit.h"
 #import "WAZUIMagic.h"
 #import "CALayer+EasyAnimation.h"
 #import "UIColor+WAZExtensions.h"

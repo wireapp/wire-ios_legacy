@@ -32,4 +32,7 @@
 @property (nonatomic, strong) NSColor *circleColor;
 #endif
 
++ (instancetype)voiceGainLayerWithRingColor:(UIColor *)color;
+- (void)updateCircleColor:(UIColor *)color;
+
 @end
