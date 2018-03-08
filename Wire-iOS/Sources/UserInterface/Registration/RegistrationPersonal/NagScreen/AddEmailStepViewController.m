@@ -121,7 +121,7 @@
         [self.emailFormViewController.view autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.heroLabel withOffset:24];
         [self.emailFormViewController.view autoPinEdgeToSuperviewEdge:ALEdgeLeading withInset:inset];
         [self.emailFormViewController.view autoPinEdgeToSuperviewEdge:ALEdgeTrailing withInset:inset];
-        [[self.emailFormViewController.view.bottomAnchor constraintEqualToAnchor:self.safeBottomAnchor constant:10] setActive:YES];
+        [[self.emailFormViewController.view.bottomAnchor constraintEqualToAnchor:self.safeBottomAnchor constant:-10] setActive:YES];
     }
 }
 
