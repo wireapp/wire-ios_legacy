@@ -99,7 +99,7 @@
     [super updateViewConstraints];
     
     if (! self.initialConstraintsCreated) {
-        const CGFloat Margin = [WAZUIMagic floatForIdentifier:@"camera_overlay.margin"];
+        const CGFloat Margin = 24;
         
         [self.toggleFlashButton autoAlignAxisToSuperviewAxis:ALAxisHorizontal];
         [self.toggleFlashButton autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:Margin];

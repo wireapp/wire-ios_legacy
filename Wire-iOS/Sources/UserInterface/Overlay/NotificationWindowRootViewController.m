@@ -178,7 +178,7 @@
 - (void)updateAppearanceForOrientation:(UIInterfaceOrientation)orientation
 {
     if (IS_IPAD_LANDSCAPE_LAYOUT) {
-        CGFloat sidebarWidth = [WAZUIMagic cgFloatForIdentifier:@"framework.sidebar_width"];
+        CGFloat sidebarWidth = 336;
         CGFloat rightMargin =  -([UIScreen mainScreen].bounds.size.width - sidebarWidth);
         self.networkActivityRightMargin.constant = rightMargin;
     }

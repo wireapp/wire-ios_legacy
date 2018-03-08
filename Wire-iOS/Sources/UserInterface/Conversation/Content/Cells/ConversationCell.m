@@ -176,7 +176,7 @@ static const CGFloat BurstContainerExpandedHeight = 40;
     [self.authorImageContainer addSubview:self.authorImageView];
     
     NSMutableParagraphStyle *paragraphStyle = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
-    paragraphStyle.minimumLineHeight = [WAZUIMagic cgFloatForIdentifier:@"content.burst_timestamp.line_height"];
+    paragraphStyle.minimumLineHeight = 12;
     paragraphStyle.maximumLineHeight = paragraphStyle.minimumLineHeight;
 
     self.burstTimestampView = [[ConversationCellBurstTimestampView alloc] initForAutoLayout];
@@ -234,7 +234,7 @@ static const CGFloat BurstContainerExpandedHeight = 40;
 
 - (void)createBaseConstraints
 {
-    CGFloat authorImageDiameter = [WAZUIMagic floatForIdentifier:@"content.sender_image_tile_diameter"];
+    CGFloat authorImageDiameter = 24;
 
     self.topMarginConstraint = [self.burstTimestampView autoPinEdgeToSuperviewEdge:ALEdgeTop];
     [self.burstTimestampView autoPinEdgeToSuperviewEdge:ALEdgeLeading];

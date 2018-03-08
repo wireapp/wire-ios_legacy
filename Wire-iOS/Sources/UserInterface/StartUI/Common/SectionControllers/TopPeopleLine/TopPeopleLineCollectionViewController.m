@@ -76,7 +76,7 @@
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    return CGSizeMake([WAZUIMagic floatForIdentifier:@"people_picker.top_conversations_mode.tile_width"], [WAZUIMagic floatForIdentifier:@"people_picker.top_conversations_mode.tile_height"]);
+    return CGSizeMake(56, 78);
 }
 
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section {    

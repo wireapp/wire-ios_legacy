@@ -86,7 +86,7 @@
     UIColor *optionalColor = [UIColor colorWithMagicIdentifier:@"guidance.guidance_type_optional_color"];
     UIColor *dotColor = guidanceType == GuidanceTypeInfo ? optionalColor : requiredColor;
 
-    CGFloat dotDiameter = [WAZUIMagic cgFloatForIdentifier:@"guidance.dot_size"];
+    CGFloat dotDiameter = 10;
 
     UIView *dotView = [[UIView alloc] initWithFrame:(CGRect) {CGPointZero, {dotDiameter, dotDiameter}}];
     dotView.backgroundColor = dotColor;

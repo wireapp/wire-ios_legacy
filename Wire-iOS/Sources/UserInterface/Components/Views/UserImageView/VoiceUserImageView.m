@@ -91,7 +91,7 @@
                 
                 if (! self.userConnectingLayer) {
                     self.userConnectingLayer = [UserConnectingLayer userConnectingLayerWithCircleColor:[(id)self.user accentColor]];
-                    self.userConnectingLayer.circleRotationDuration = [WAZUIMagic floatForIdentifier:@"voice_overlay.connecting_animation_rotation_duration"];
+                    self.userConnectingLayer.circleRotationDuration = 2;
                 }
                 
                 [self.layer insertSublayer:self.userConnectingLayer atIndex:0];

@@ -57,7 +57,7 @@
     if (! self.initialConstraintsCreated) {
         self.initialConstraintsCreated = YES;
         
-        CGFloat dotDiameter = [WAZUIMagic cgFloatForIdentifier:@"guidance.dot_size"];
+        CGFloat dotDiameter = 10;
         
         self.dot.layer.cornerRadius = dotDiameter / 2.0;
         [self.dot autoSetDimensionsToSize:CGSizeMake(dotDiameter, dotDiameter)];

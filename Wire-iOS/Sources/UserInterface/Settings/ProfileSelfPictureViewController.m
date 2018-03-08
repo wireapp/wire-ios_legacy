@@ -139,8 +139,8 @@
                      self.libraryButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
                      [self.libraryButton setImage:result forState:UIControlStateNormal];
                      
-                     self.libraryButton.layer.borderColor = [UIColor colorWithMagicIdentifier:@"camera.gallery_button_tile_stroke_color"].CGColor;
-                     self.libraryButton.layer.borderWidth = [WAZUIMagic floatForIdentifier:@"camera.gallery_button_tile_stroke_width"];
+                     self.libraryButton.layer.borderColor = [UIColor.whiteColor colorWithAlphaComponent:0.32].CGColor;
+                     self.libraryButton.layer.borderWidth = 1;
                      self.libraryButton.layer.cornerRadius = 5;
                      self.libraryButton.clipsToBounds = YES;
                  });

@@ -38,7 +38,7 @@
         self.unblockButton.translatesAutoresizingMaskIntoConstraints = NO;
         [self addSubview:self.unblockButton];
 
-        [self.unblockButton addConstraintForHeight:[WAZUIMagic cgFloatForIdentifier:@"profile.unblock_button.height"]];
+        [self.unblockButton addConstraintForHeight:40];
         [self.unblockButton addConstraintsFittingToView:self edgeInsets:UIEdgeInsetsMake(0, 24, 24, 24)];
         
         [self.unblockButton setTitle:[NSLocalizedString(@"profile.unblock_button_title", @"") transformStringWithMagicKey:@"profile.unblock_button.text_transform"]

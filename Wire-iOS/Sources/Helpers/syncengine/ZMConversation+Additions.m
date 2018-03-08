@@ -186,11 +186,7 @@
     BOOL showTimestamp = NO;
 
     NSTimeInterval seconds = [message.serverTimestamp timeIntervalSinceDate:previousMessage.serverTimestamp];
-
     NSTimeInterval referenceSeconds = 300;
-#if (TARGET_OS_IPHONE)
-    referenceSeconds = [WAZUIMagic floatForIdentifier:@"content.burst_time_interval"];
-#endif
 
     if (seconds > referenceSeconds) {
         showTimestamp = YES;

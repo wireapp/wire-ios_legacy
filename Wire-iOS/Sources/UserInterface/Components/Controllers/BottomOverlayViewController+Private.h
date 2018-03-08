@@ -25,13 +25,7 @@
 
 @interface BottomOverlayViewController ()
 
-#pragma mark - Magic Values
-
-@property (nonatomic) UIColor *overlayBackgroundColor;
-@property (nonatomic) CGFloat overlayHeight;
-
 //To be called in subclasses in this order
-- (void)loadMagicValues __attribute__((objc_requires_super));
 - (void)setupBottomOverlay __attribute__((objc_requires_super));
 - (void)setupTopView __attribute__((objc_requires_super));
 - (void)setupGestureRecognizers __attribute__((objc_requires_super));

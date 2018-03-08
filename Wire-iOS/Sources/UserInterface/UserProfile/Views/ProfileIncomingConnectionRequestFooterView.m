@@ -56,16 +56,15 @@
 {
     self.acceptButton.translatesAutoresizingMaskIntoConstraints = NO;
     [self.acceptButton addConstraintForTopMargin:0 relativeToView:self];
-    [self.acceptButton addConstraintForBottomMargin:[WAZUIMagic cgFloatForIdentifier:@"profile_temp.content_bottom_margin"] relativeToView:self];
-    [self.acceptButton addConstraintForRightMargin:[WAZUIMagic cgFloatForIdentifier:@"profile_temp.content_right_margin"] relativeToView:self];
-    [self.acceptButton addConstraintForHeight:[WAZUIMagic cgFloatForIdentifier:@"connect.connect_button.height"]];
-    
+    [self.acceptButton addConstraintForBottomMargin:12 relativeToView:self];
+    [self.acceptButton addConstraintForRightMargin:8 relativeToView:self];
+    [self.acceptButton addConstraintForHeight:40];
     
     self.ignoreButton.translatesAutoresizingMaskIntoConstraints = NO;
     [self.ignoreButton addConstraintForTopMargin:0 relativeToView:self];
-    [self.ignoreButton addConstraintForBottomMargin:[WAZUIMagic cgFloatForIdentifier:@"profile_temp.content_bottom_margin"] relativeToView:self];
-    [self.ignoreButton addConstraintForLeftMargin:[WAZUIMagic cgFloatForIdentifier:@"profile_temp.content_left_margin"] relativeToView:self];
-    [self.ignoreButton addConstraintForHeight:[WAZUIMagic cgFloatForIdentifier:@"connect.ignore_button.height"]];
+    [self.ignoreButton addConstraintForBottomMargin:12 relativeToView:self];
+    [self.ignoreButton addConstraintForLeftMargin:16 relativeToView:self];
+    [self.ignoreButton addConstraintForHeight:40];
     
     [self.acceptButton addConstraintForAligningLeftToRightOfView:self.ignoreButton distance:16];
     [self.acceptButton addConstraintForEqualWidthToView:self.ignoreButton];

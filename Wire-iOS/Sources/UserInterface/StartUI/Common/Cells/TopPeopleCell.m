@@ -110,8 +110,7 @@
         [self.conversationImageView autoPinEdgeToSuperviewEdge:ALEdgeTop withInset:0];
         [self.conversationImageView autoPinEdgeToSuperviewEdge:ALEdgeLeft];
 
-        [self.nameLabel autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.avatarContainer withOffset:[WAZUIMagic cgFloatForIdentifier:@"people_picker.top_conversations_mode.tile_name_vertical_spacing"]];
-
+        [self.nameLabel autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.avatarContainer withOffset:8];
         [self.nameLabel autoPinEdge:ALEdgeLeft toEdge:ALEdgeLeft ofView:self.avatarContainer];
         [self.nameLabel autoPinEdge:ALEdgeRight toEdge:ALEdgeRight ofView:self.avatarContainer];
 
@@ -126,7 +125,7 @@
     self.nameLabel.font = [UIFont fontWithMagicIdentifier:@"people_picker.top_conversations_mode.name_label_font"];
     self.nameLabel.textColor = [UIColor colorWithMagicIdentifier:@"people_picker.top_conversations_mode.context_add_people.name_label_font_color"];
 
-    CGFloat squareImageWidth = [WAZUIMagic cgFloatForIdentifier:@"people_picker.top_conversations_mode.tile_image_diameter"];
+    CGFloat squareImageWidth = 56;
     self.avatarViewSizeConstraint.constant = squareImageWidth;
     self.conversationImageViewSize.constant = squareImageWidth;
     
