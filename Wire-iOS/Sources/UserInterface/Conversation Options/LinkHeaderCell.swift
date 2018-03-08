@@ -24,7 +24,7 @@ final class LinkHeaderCell: UITableViewCell, CellConfigurationConfigurable {
     private let topSeparator = UIView()
     private let titleLabel = UILabel()
     private let subtitleLabel = UILabel()
-
+    
     private var variant: ColorSchemeVariant = .light {
         didSet {
             styleViews()
@@ -57,7 +57,7 @@ final class LinkHeaderCell: UITableViewCell, CellConfigurationConfigurable {
             topSeparator.leading == contentView.leading + 16
             topSeparator.trailing == contentView.trailing - 16
             topSeparator.height == .hairline
-
+            
             titleLabel.top == topSeparator.bottom + 24
             titleLabel.leading == topSeparator.leading
             titleLabel.trailing == topSeparator.trailing
@@ -70,8 +70,8 @@ final class LinkHeaderCell: UITableViewCell, CellConfigurationConfigurable {
     }
     
     private func styleViews() {
-        let color = ColorScheme.default().color(withName: ColorSchemeColorTextDimmed, variant: variant)
-        topSeparator.backgroundColor = color
+        let color = UIColor.wr_color(fromColorScheme: ColorSchemeColorTextDimmed, variant: variant)
+        topSeparator.backgroundColor = .wr_color(fromColorScheme: ColorSchemeColorCellSeparator, variant: variant)
         titleLabel.textColor = color
         subtitleLabel.textColor = color
         backgroundColor = .clear
@@ -80,5 +80,5 @@ final class LinkHeaderCell: UITableViewCell, CellConfigurationConfigurable {
     func configure(with configuration: CellConfiguration, variant: ColorSchemeVariant) {
         self.variant = variant
     }
-}
 
+}

@@ -45,10 +45,8 @@ extension ZMConversation {
         func setAllowGuests(_ allowGuests: Bool, completion: @escaping (VoidResult) -> Void) {
             conversation.setAllowGuests(allowGuests, in: userSession) {
                 switch $0 {
-                case .success:
-                    Analytics.shared().tagAllowGuests(value: allowGuests)
-                case .failure:
-                    break
+                case .success: Analytics.shared().tagAllowGuests(value: allowGuests)
+                case .failure: break
                 }
                 completion($0)
             }
@@ -58,6 +56,18 @@ extension ZMConversation {
             guard changeInfo.allowGuestsChanged else { return }
             allowGuestsChangedHandler?(allowGuests)
         }
+
+        func fetchConversationLink(completion: @escaping (Result<String?>) -> Void) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                completion(.success("https://app.wire.com/772bfh1bbcssjs9826373nbbdsn9917nbbdaehkej827648-72bns9"))
+            }
+        }
+        
+        func deleteLink(completion: @escaping (VoidResult) -> Void) {
+            // TODO
+            completion(.success)
+        }
+
     }
     
 }

@@ -46,6 +46,7 @@ class ParticipantsInvitePeopleView: UIView {
         stackView.alignment = .leading
         addSubview(stackView)
         [titleLabel, inviteButton].forEach(stackView.addArrangedSubview)
+        titleLabel.numberOfLines = 0
         titleLabel.text = "content.system.conversation.invite.title".localized
         inviteButton.setTitle("content.system.conversation.invite.button".localized, for: .normal)
         inviteButton.setTitleColor(.wr_color(fromColorScheme: ColorSchemeColorTextForeground), for: .normal)

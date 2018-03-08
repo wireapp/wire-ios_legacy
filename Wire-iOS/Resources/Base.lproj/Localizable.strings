@@ -915,6 +915,13 @@
 
 "guest_room.link.button.title" = "Create Link";
 
+"guest_room.actions.copy_link" = "Copy Link";
+"guest_room.actions.copied_link" = "Link Copied!";
+"guest_room.actions.share_link" = "Share Link";
+"guest_room.actions.revoke_link" = "Revoke Link";
+
+"guest_room.share.message" = "Join me in a conversation on Wire:\n%@";
+
 // Registration
 
 "registration.title" = "Registration";
