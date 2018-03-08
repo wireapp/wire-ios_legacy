@@ -37,13 +37,13 @@ open class CameraCell: UICollectionViewCell, Reusable {
     
     fileprivate static let ciContext = CIContext(options: [:])
 
-    fileprivate var deviceOrientation: DeviceOrientationProtocol
+    fileprivate var deviceOrientation: UserInterfaceIdiomProtocol
 
     deinit {
         NotificationCenter.default.removeObserver(self)
     }
 
-    init(frame: CGRect, deviceOrientation: DeviceOrientationProtocol = UIDevice.current) {
+    init(frame: CGRect, deviceOrientation: UserInterfaceIdiomProtocol = UIDevice.current) {
         self.cameraController = CameraController()
         self.deviceOrientation = deviceOrientation
 

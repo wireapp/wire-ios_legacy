@@ -20,6 +20,7 @@ import Foundation
 
 protocol UserInterfaceIdiomProtocol {
     var userInterfaceIdiom: UIUserInterfaceIdiom { get }
+    var orientation: UIDeviceOrientation { get }
 }
 
 extension UIDevice: UserInterfaceIdiomProtocol {
