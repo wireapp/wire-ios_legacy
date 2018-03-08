@@ -66,11 +66,11 @@ fileprivate extension UIViewController {
         navigationController.navigationBar.isTranslucent = true
         navigationController.navigationBar.titleTextAttributes = [
             NSForegroundColorAttributeName: UIColor.white,
-            NSFontAttributeName: UIFont(magicIdentifier: "style.text.normal.font_spec").smallCaps()
+            NSFontAttributeName: FontSpec(.small, .semibold).font!
         ]
 
         UIBarButtonItem.appearance(whenContainedInInstancesOf: [UINavigationBar.self]).setTitleTextAttributes([
-            NSFontAttributeName : UIFont(magicIdentifier: "style.text.normal.font_spec").smallCaps()
+            NSFontAttributeName : FontSpec(.normal, .semibold).font!
             ], for: UIControlState.normal)
 
         beginAppearanceTransition(true, animated: false)

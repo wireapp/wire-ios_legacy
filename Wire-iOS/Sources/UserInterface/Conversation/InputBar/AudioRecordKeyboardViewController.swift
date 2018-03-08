@@ -107,7 +107,7 @@ import CocoaLumberjackSwift
         
         self.createTipLabel()
         
-        self.timeLabel.font = UIFont(magicIdentifier: "style.text.small.font_spec_light")
+        self.timeLabel.font = FontSpec(.small, .light).font!
         self.timeLabel.textColor = colorScheme.color(withName: ColorSchemeColorTextForeground, variant: .dark)
         
         [self.audioPreviewView, self.timeLabel, self.tipLabel].forEach(self.topContainer.addSubview)
@@ -182,7 +182,7 @@ import CocoaLumberjackSwift
         attributedTipText.addAttribute(NSParagraphStyleAttributeName, value: style, range: NSMakeRange(0, (attributedTipText.string as NSString).length))
         self.tipLabel.attributedText = NSAttributedString(attributedString: attributedTipText)
         self.tipLabel.numberOfLines = 2
-        self.tipLabel.font = UIFont(magicIdentifier: "style.text.small.font_spec_light")
+        self.tipLabel.font = FontSpec(.small, .light).font!
         self.tipLabel.textColor = colorScheme.color(withName: ColorSchemeColorTextDimmed)
         self.tipLabel.textAlignment = .center
         
