@@ -187,7 +187,6 @@ public final class AudioRecorder: NSObject, AudioRecorderType {
         removeDisplayLink()
         guard let filePath = audioRecorder?.url.path , fm.fileExists(atPath: filePath) else { return false }
         fileURL = audioRecorder?.url
-        AVSMediaManager.sharedInstance().stopRecording()
         return true
     }
     
@@ -295,8 +294,9 @@ extension AudioRecorder: AVAudioRecorderDelegate {
         if recordedToMaxDuration { _ = postRecordingProcessing() }
         
         self.recordEndedCallback?(recordedToMaxDuration)
+        AVSMediaManager.sharedInstance().stopRecording()
     }
-    
+        
     public func audioRecorderEncodeErrorDidOccur(_ recorder: AVAudioRecorder, error: Error?) {
         DDLogError("Cannot finish recording: \(String(describing: error))")
     }
