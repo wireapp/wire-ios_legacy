@@ -36,17 +36,17 @@ extension AVCaptureVideoOrientation : CustomStringConvertible {
 final class CameraCellTests: XCTestCase {
     
     var sut: CameraCell!
-    var mockDeviceOrientation: MockUserInterfaceIdiom!
+    var mockDevice: MockDevice!
 
     override func setUp() {
         super.setUp()
-        mockDeviceOrientation = MockUserInterfaceIdiom()
-        sut = CameraCell(frame: .zero, deviceOrientation: mockDeviceOrientation)
+        mockDevice = MockDevice()
+        sut = CameraCell(frame: .zero, device: mockDevice)
     }
     
     override func tearDown() {
         sut = nil
-        mockDeviceOrientation = nil
+        mockDevice = nil
         super.tearDown()
     }
 
@@ -60,23 +60,23 @@ final class CameraCellTests: XCTestCase {
 
     func testThatNewCaptureVideoOrientationUpdatesAfterOrientationChanges(){
         // case landscapeLeft
-        mockDeviceOrientation.orientation = .landscapeLeft
+        mockDevice.orientation = .landscapeLeft
         XCTAssertEqual(sut.newCaptureVideoOrientation, .landscapeRight)
 
         // case landscapeRight
-        mockDeviceOrientation.orientation = .landscapeRight
+        mockDevice.orientation = .landscapeRight
         XCTAssertEqual(sut.newCaptureVideoOrientation, .landscapeLeft)
 
         // case portraitUpsideDown
-        mockDeviceOrientation.orientation = .portraitUpsideDown
+        mockDevice.orientation = .portraitUpsideDown
         XCTAssertEqual(sut.newCaptureVideoOrientation, .portraitUpsideDown)
 
         // case portrait
-        mockDeviceOrientation.orientation = .portrait
+        mockDevice.orientation = .portrait
         XCTAssertEqual(sut.newCaptureVideoOrientation, .portrait)
 
         // default
-        mockDeviceOrientation.orientation = .unknown
+        mockDevice.orientation = .unknown
         XCTAssertEqual(sut.newCaptureVideoOrientation, .portrait)
     }
 }

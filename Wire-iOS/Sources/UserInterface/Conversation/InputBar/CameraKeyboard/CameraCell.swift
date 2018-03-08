@@ -37,15 +37,20 @@ open class CameraCell: UICollectionViewCell, Reusable {
     
     fileprivate static let ciContext = CIContext(options: [:])
 
-    fileprivate var deviceOrientation: UserInterfaceIdiomProtocol
+    fileprivate var device: DeviceProtocol
 
     deinit {
         NotificationCenter.default.removeObserver(self)
     }
 
-    init(frame: CGRect, deviceOrientation: UserInterfaceIdiomProtocol = UIDevice.current) {
+    /// init method with a param for injecting mock device
+    ///
+    /// - Parameters:
+    ///   - frame: same as UIView.init(frame: frame)
+    ///   - device: Provide this param for testing only
+    init(frame: CGRect, device: DeviceProtocol = UIDevice.current) {
         self.cameraController = CameraController()
-        self.deviceOrientation = deviceOrientation
+        self.device = device
 
         super.init(frame: frame)
         
@@ -151,7 +156,7 @@ open class CameraCell: UICollectionViewCell, Reusable {
     var newCaptureVideoOrientation: AVCaptureVideoOrientation {
         let newOrientation: AVCaptureVideoOrientation
 
-        switch deviceOrientation.orientation {
+        switch device.orientation {
         case .portrait:
             newOrientation = .portrait;
             break;

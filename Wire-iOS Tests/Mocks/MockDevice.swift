@@ -19,7 +19,7 @@
 import Foundation
 @testable import Wire
 
-final class MockUserInterfaceIdiom: UserInterfaceIdiomProtocol {
+final class MockDevice: DeviceProtocol {
     var orientation: UIDeviceOrientation = .unknown
     var userInterfaceIdiom: UIUserInterfaceIdiom = .unspecified
 }
