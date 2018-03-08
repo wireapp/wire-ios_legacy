@@ -250,8 +250,7 @@ static CGFloat PhoneNumberFieldTopMargin = 16;
     NSError *error = nil;
     [ZMUser validatePhoneNumber:&phoneNumber error:&error];
     
-    if (error.code == ZMObjectValidationErrorCodeStringTooLong ||
-        error.code == ZMObjectValidationErrorCodePhoneNumberContainsInvalidCharacters) {
+    if (error != nil && error.code != ZMObjectValidationErrorCodeStringTooShort) {
         return NO;
     }
     
