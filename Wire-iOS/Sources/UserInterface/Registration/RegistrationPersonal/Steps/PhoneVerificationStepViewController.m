@@ -112,7 +112,7 @@ const NSTimeInterval PhoneVerificationResendInterval = 30.0f;
 {
     self.instructionLabel = [[UILabel alloc] init];
     self.instructionLabel.font = UIFont.largeThinFont;
-    self.instructionLabel.textColor = [UIColor colorWithMagicIdentifier:@"style.color.static_foreground.normal"];
+    self.instructionLabel.textColor = [UIColor wr_colorFromColorScheme:ColorSchemeColorTextForeground variant:ColorSchemeVariantDark];
     self.instructionLabel.text = [NSString stringWithFormat:NSLocalizedString(@"registration.verify_phone_number.instructions", nil), self.phoneNumber];
     self.instructionLabel.numberOfLines = 0;
     

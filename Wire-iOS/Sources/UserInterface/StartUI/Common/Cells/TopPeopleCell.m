@@ -124,7 +124,7 @@
 - (void)updateForContext
 {
     self.nameLabel.font = UIFont.smallLightFont;
-    self.nameLabel.textColor = [UIColor colorWithMagicIdentifier:@"people_picker.top_conversations_mode.context_add_people.name_label_font_color"];
+    self.nameLabel.textColor = [UIColor wr_colorFromColorScheme:ColorSchemeColorTextForeground variant:ColorSchemeVariantDark];
 
     CGFloat squareImageWidth = 56;
     self.avatarViewSizeConstraint.constant = squareImageWidth;

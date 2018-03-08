@@ -71,7 +71,7 @@
 {
     self.titleLabel = [[UILabel alloc] initForAutoLayout];
     self.titleLabel.font = UIFont.largeSemiboldFont;
-    self.titleLabel.textColor = [UIColor colorWithMagicIdentifier:@"style.color.static_foreground.normal"];
+    self.titleLabel.textColor = [UIColor wr_colorFromColorScheme:ColorSchemeColorTextForeground variant:ColorSchemeVariantDark];
     self.titleLabel.text = NSLocalizedString(@"registration.terms_of_use.title", nil);
     
     [self.view addSubview:self.titleLabel];
@@ -86,7 +86,7 @@
     NSMutableAttributedString *attributedTerms =
     [[NSMutableAttributedString alloc] initWithString:termsOfUse
                                            attributes:@{ NSFontAttributeName : UIFont.largeLightFont,
-                                                         NSForegroundColorAttributeName: [UIColor colorWithMagicIdentifier:@"style.color.static_foreground.normal"] }];
+                                                         NSForegroundColorAttributeName: [UIColor wr_colorFromColorScheme:ColorSchemeColorTextForeground variant:ColorSchemeVariantDark] }];
     
     [attributedTerms addAttributes:@{ NSFontAttributeName : UIFont.largeSemiboldFont,
                                       NSForegroundColorAttributeName : UIColor.accentColor,

@@ -68,7 +68,7 @@
 - (void)createHeroLabel
 {
     self.heroLabel = [[UILabel alloc] initForAutoLayout];
-    self.heroLabel.textColor = [UIColor colorWithMagicIdentifier:@"style.color.static_foreground.normal"];
+    self.heroLabel.textColor = [UIColor wr_colorFromColorScheme:ColorSchemeColorTextForeground variant:ColorSchemeVariantDark];
     self.heroLabel.font = UIFont.largeSemiboldFont;
     self.heroLabel.numberOfLines = 0;
     self.heroLabel.attributedText = [self attributedHeroText];
@@ -91,7 +91,7 @@
     paragraphStyle.paragraphSpacing = 10;
     
     NSMutableAttributedString *attributedText = [[NSMutableAttributedString alloc] initWithString:text attributes:@{ NSParagraphStyleAttributeName : paragraphStyle }];
-    [attributedText addAttributes:@{ NSForegroundColorAttributeName : [UIColor colorWithMagicIdentifier:@"style.color.static_foreground.normal"],
+    [attributedText addAttributes:@{ NSForegroundColorAttributeName : [UIColor wr_colorFromColorScheme:ColorSchemeColorTextForeground variant:ColorSchemeVariantDark],
                                      NSFontAttributeName : UIFont.largeLightFont }
                             range:[text rangeOfString:paragraph]];
     

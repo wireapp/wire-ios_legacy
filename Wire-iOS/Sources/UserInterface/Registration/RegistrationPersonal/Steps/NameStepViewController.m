@@ -79,7 +79,7 @@
 {
     self.heroLabel = [[UILabel alloc] initForAutoLayout];
     self.heroLabel.font = UIFont.largeLightFont;
-    self.heroLabel.textColor = [UIColor colorWithMagicIdentifier:@"style.color.static_foreground.normal"];
+    self.heroLabel.textColor = [UIColor wr_colorFromColorScheme:ColorSchemeColorTextForeground variant:ColorSchemeVariantDark];
     self.heroLabel.numberOfLines = 0;
     self.heroLabel.text = NSLocalizedString(@"registration.enter_name.hero", nil);
     

@@ -124,7 +124,7 @@
     self.phoneNumberStepViewController = [[PhoneNumberStepViewController alloc] init];
     self.phoneNumberStepViewController.formStepDelegate = self;
     self.phoneNumberStepViewController.view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-    self.phoneNumberStepViewController.heroLabel.textColor = [UIColor colorWithMagicIdentifier:@"style.color.static_foreground.normal"];
+    self.phoneNumberStepViewController.heroLabel.textColor = [UIColor wr_colorFromColorScheme:ColorSchemeColorTextForeground variant:ColorSchemeVariantDark];
     self.phoneNumberStepViewController.heroLabel.font = UIFont.largeSemiboldFont;
     self.phoneNumberStepViewController.heroLabel.attributedText = [self attributedHeroText];
     
@@ -159,8 +159,8 @@
     self.skipButton = [UIButton buttonWithType:UIButtonTypeCustom];
     self.skipButton.hidden = YES;
     self.skipButton.titleLabel.font = UIFont.smallLightFont;
-    [self.skipButton setTitleColor:[UIColor colorWithMagicIdentifier:@"style.color.static_foreground.normal"] forState:UIControlStateNormal];
-    [self.skipButton setTitleColor:[[UIColor colorWithMagicIdentifier:@"style.color.static_foreground.normal"] colorWithAlphaComponent:0.2] forState:UIControlStateHighlighted];
+    [self.skipButton setTitleColor:[UIColor wr_colorFromColorScheme:ColorSchemeColorTextForeground variant:ColorSchemeVariantDark] forState:UIControlStateNormal];
+    [self.skipButton setTitleColor:[[UIColor wr_colorFromColorScheme:ColorSchemeColorTextForeground variant:ColorSchemeVariantDark] colorWithAlphaComponent:0.2] forState:UIControlStateHighlighted];
     [self.skipButton setTitle:[NSLocalizedString(@"registration.add_phone_number.skip_button.title", nil) uppercasedWithCurrentLocale] forState:UIControlStateNormal];
     [self.skipButton addTarget:self action:@selector(skip:) forControlEvents:UIControlEventTouchUpInside];
     
@@ -178,7 +178,7 @@
     paragraphStyle.paragraphSpacing = 10;
     
     NSMutableAttributedString *attributedText = [[NSMutableAttributedString alloc] initWithString:text attributes:@{ NSParagraphStyleAttributeName : paragraphStyle }];
-    [attributedText addAttributes:@{ NSForegroundColorAttributeName : [UIColor colorWithMagicIdentifier:@"style.color.static_foreground.normal"],
+    [attributedText addAttributes:@{ NSForegroundColorAttributeName : [UIColor wr_colorFromColorScheme:ColorSchemeColorTextForeground variant:ColorSchemeVariantDark],
                                      NSFontAttributeName: UIFont.largeLightFont }
                             range:[text rangeOfString:paragraph]];
     

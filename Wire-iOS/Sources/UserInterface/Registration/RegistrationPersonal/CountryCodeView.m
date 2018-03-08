@@ -48,12 +48,12 @@
         self.button.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
         self.button.titleLabel.font = UIFont.normalLightFont;
         self.button.accessibilityIdentifier = @"CountryCodeButton";
-        [self.button setTitleColor:[UIColor colorWithMagicIdentifier:@"style.color.static_foreground.normal"] forState:UIControlStateNormal];
-        [self.button setTitleColor:[UIColor colorWithMagicIdentifier:@"style.color.static_foreground.faded"] forState:UIControlStateHighlighted];
+        [self.button setTitleColor:[UIColor wr_colorFromColorScheme:ColorSchemeColorTextForeground variant:ColorSchemeVariantDark] forState:UIControlStateNormal];
+        [self.button setTitleColor:[UIColor wr_colorFromColorScheme:ColorSchemeColorButtonFaded variant:ColorSchemeVariantDark] forState:UIControlStateHighlighted];
         [self addSubview:self.button];
         
         self.separatorLine = [[UIView alloc] initForAutoLayout];
-        self.separatorLine.backgroundColor = [UIColor colorWithMagicIdentifier:@"style.color.static_foreground.faded"];
+        self.separatorLine.backgroundColor = [UIColor wr_colorFromColorScheme:ColorSchemeColorButtonFaded variant:ColorSchemeVariantDark];
         [self addSubview:self.separatorLine];
     }
     

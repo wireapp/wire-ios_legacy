@@ -97,7 +97,7 @@
     self.instructionsLabel.numberOfLines = 0;
     self.instructionsLabel.textAlignment = NSTextAlignmentCenter;
     self.instructionsLabel.font = UIFont.normalLightFont;
-    self.instructionsLabel.textColor = [UIColor colorWithMagicIdentifier:@"style.color.static_foreground.normal"];
+    self.instructionsLabel.textColor = [UIColor wr_colorFromColorScheme:ColorSchemeColorTextForeground variant:ColorSchemeVariantDark];
     self.instructionsLabel.attributedText = [self attributedInstructionsText];
     [self.containerView addSubview:self.instructionsLabel];
 }
@@ -119,7 +119,7 @@
     self.resendInstructionsLabel.numberOfLines = 0;
     self.resendInstructionsLabel.textAlignment = NSTextAlignmentCenter;
     self.resendInstructionsLabel.font = UIFont.normalLightFont;
-    self.resendInstructionsLabel.textColor = [UIColor colorWithMagicIdentifier:@"style.color.static_foreground.faded"];
+    self.resendInstructionsLabel.textColor = [UIColor wr_colorFromColorScheme:ColorSchemeColorButtonFaded variant:ColorSchemeVariantDark];
     self.resendInstructionsLabel.text = NSLocalizedString(@"registration.verify_email.resend.instructions", nil);
     [self.containerView addSubview:self.resendInstructionsLabel];
 }

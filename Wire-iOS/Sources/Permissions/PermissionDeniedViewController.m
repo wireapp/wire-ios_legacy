@@ -111,7 +111,7 @@
 - (void)createHeroLabel
 {    
     self.heroLabel = [[UILabel alloc] initForAutoLayout];
-    self.heroLabel.textColor = [UIColor colorWithMagicIdentifier:@"style.color.static_foreground.normal"];
+    self.heroLabel.textColor = [UIColor wr_colorFromColorScheme:ColorSchemeColorTextForeground variant:ColorSchemeVariantDark];
     self.heroLabel.numberOfLines = 0;
    
     [self.view addSubview:self.heroLabel];
@@ -130,8 +130,8 @@
     self.laterButton = [UIButton buttonWithType:UIButtonTypeCustom];
     self.laterButton.translatesAutoresizingMaskIntoConstraints = NO;
     self.laterButton.titleLabel.font = UIFont.smallLightFont;
-    [self.laterButton setTitleColor:[UIColor colorWithMagicIdentifier:@"style.color.static_foreground.normal"] forState:UIControlStateNormal];
-    [self.laterButton setTitleColor:[UIColor colorWithMagicIdentifier:@"style.color.static_foreground.faded"] forState:UIControlStateHighlighted];
+    [self.laterButton setTitleColor:[UIColor wr_colorFromColorScheme:ColorSchemeColorTextForeground variant:ColorSchemeVariantDark] forState:UIControlStateNormal];
+    [self.laterButton setTitleColor:[UIColor wr_colorFromColorScheme:ColorSchemeColorButtonFaded variant:ColorSchemeVariantDark] forState:UIControlStateHighlighted];
     [self.laterButton addTarget:self action:@selector(continueWithoutAccess:) forControlEvents:UIControlEventTouchUpInside];
     
     [self.view addSubview:self.laterButton];

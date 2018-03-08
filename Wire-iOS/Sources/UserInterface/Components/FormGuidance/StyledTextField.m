@@ -83,8 +83,8 @@
 - (void)setGuidanceType:(GuidanceType)guidanceType
 {
     _guidanceType = guidanceType;
-    UIColor *requiredColor = [UIColor colorWithMagicIdentifier:@"guidance.guidance_type_required_color"];
-    UIColor *optionalColor = [UIColor colorWithMagicIdentifier:@"guidance.guidance_type_optional_color"];
+    UIColor *requiredColor = [UIColor colorWithRed:0.811 green:0.243 blue:0.235 alpha:1];
+    UIColor *optionalColor = [UIColor colorWithRed:0.996 green:0.823 blue:0.019 alpha:1];
     UIColor *dotColor = guidanceType == GuidanceTypeInfo ? optionalColor : requiredColor;
 
     CGFloat dotDiameter = 10;

@@ -82,8 +82,8 @@ static CGFloat PhoneNumberFieldTopMargin = 16;
     self.selectCountryButton.contentHorizontalAlignment = [UIApplication isLeftToRightLayout] ? UIControlContentHorizontalAlignmentLeft : UIControlContentHorizontalAlignmentRight;
     
     self.selectCountryButton.titleLabel.font = UIFont.normalLightFont;
-    [self.selectCountryButton setTitleColor:[UIColor colorWithMagicIdentifier:@"style.color.static_foreground.normal"] forState:UIControlStateNormal];
-    [self.selectCountryButton setTitleColor:[UIColor colorWithMagicIdentifier:@"style.color.static_foreground.faded"] forState:UIControlStateHighlighted];
+    [self.selectCountryButton setTitleColor:[UIColor wr_colorFromColorScheme:ColorSchemeColorTextForeground variant:ColorSchemeVariantDark] forState:UIControlStateNormal];
+    [self.selectCountryButton setTitleColor:[UIColor wr_colorFromColorScheme:ColorSchemeColorButtonFaded variant:ColorSchemeVariantDark] forState:UIControlStateHighlighted];
     
     ZetaIconType iconType = [UIApplication isLeftToRightLayout] ? ZetaIconTypeChevronRight : ZetaIconTypeChevronLeft;
     UIImage *icon = [UIImage imageForIcon:iconType iconSize:ZetaIconSizeSmall color:UIColor.whiteColor];
@@ -183,7 +183,7 @@ static CGFloat PhoneNumberFieldTopMargin = 16;
     self.selectCountryButtonIcon.hidden = ! editable;
     self.selectCountryButtonHeightConstraint.constant = editable ? SelectCountryButtonHeight : 0;
     self.phoneNumberFieldTopMarginConstraint.constant = editable ? PhoneNumberFieldTopMargin : 0;
-    self.phoneNumberField.textColor = editable ? [UIColor colorWithMagicIdentifier:@"style.color.static_foreground.normal"] : [UIColor colorWithMagicIdentifier:@"style.color.static_foreground.faded"];
+    self.phoneNumberField.textColor = editable ? [UIColor wr_colorFromColorScheme:ColorSchemeColorTextForeground variant:ColorSchemeVariantDark] : [UIColor wr_colorFromColorScheme:ColorSchemeColorButtonFaded variant:ColorSchemeVariantDark];
 }
 
 #pragma mark - Field Validation
