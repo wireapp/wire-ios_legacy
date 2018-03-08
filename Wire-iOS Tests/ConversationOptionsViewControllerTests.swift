@@ -55,6 +55,7 @@ final class ConversationOptionsViewControllerTests: ZMSnapshotTestCase {
         let config = MockOptionsViewModelConfiguration(allowGuests: true)
         let viewModel = ConversationOptionsViewModel(configuration: config)
         let sut = ConversationOptionsViewController(viewModel: viewModel, variant: .light)
+        sut.view.layer.speed = 0
         
         // Then
         verify(view: sut.view)
@@ -65,6 +66,7 @@ final class ConversationOptionsViewControllerTests: ZMSnapshotTestCase {
         let config = MockOptionsViewModelConfiguration(allowGuests: true)
         let viewModel = ConversationOptionsViewModel(configuration: config)
         let sut = ConversationOptionsViewController(viewModel: viewModel, variant: .dark)
+        sut.view.layer.speed = 0
         
         // Then
         verify(view: sut.view)
@@ -119,6 +121,7 @@ final class ConversationOptionsViewControllerTests: ZMSnapshotTestCase {
         let config = MockOptionsViewModelConfiguration(allowGuests: true, title: "Italy Trip")
         let viewModel = ConversationOptionsViewModel(configuration: config)
         let sut = ConversationOptionsViewController(viewModel: viewModel, variant: .light)
+        sut.view.layer.speed = 0
         
         // Then
         verify(view: sut.wrapInNavigationController().view)
@@ -139,6 +142,7 @@ final class ConversationOptionsViewControllerTests: ZMSnapshotTestCase {
         let config = MockOptionsViewModelConfiguration(allowGuests: false)
         let viewModel = ConversationOptionsViewModel(configuration: config)
         let sut = ConversationOptionsViewController(viewModel: viewModel, variant: .light)
+        sut.view.layer.speed = 0
         
         XCTAssertNotNil(config.allowGuestsChangedHandler)
         config.allowGuests = true
