@@ -26,6 +26,7 @@
 #import "UIView+Borders.h"
 #import <WireDataModel/ZMBareUser.h>
 #import "UserImageView+Magic.h"
+#import "Wire-Swift.h"
 
 @interface TopPeopleCell ()
 
@@ -122,7 +123,7 @@
 
 - (void)updateForContext
 {
-    self.nameLabel.font = [UIFont fontWithMagicIdentifier:@"people_picker.top_conversations_mode.name_label_font"];
+    self.nameLabel.font = UIFont.smallLightFont;
     self.nameLabel.textColor = [UIColor colorWithMagicIdentifier:@"people_picker.top_conversations_mode.context_add_people.name_label_font_color"];
 
     CGFloat squareImageWidth = 56;

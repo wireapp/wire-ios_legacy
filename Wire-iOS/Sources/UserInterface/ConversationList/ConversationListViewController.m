@@ -253,7 +253,7 @@
 
     NSDictionary *titleAttributes = @{
                                       NSForegroundColorAttributeName : [UIColor whiteColor],
-                                      NSFontAttributeName : [UIFont fontWithMagicIdentifier:@"style.text.small.font_spec_bold"],
+                                      NSFontAttributeName : UIFont.smallMediumFont,
                                       NSParagraphStyleAttributeName : paragraphStyle
                                       };
 

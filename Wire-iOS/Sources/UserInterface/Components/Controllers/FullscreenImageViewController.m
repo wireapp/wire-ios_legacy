@@ -355,7 +355,7 @@
 {
     NSString *text = [displayName uppercasedWithCurrentLocale];
     NSDictionary *attributes = @{
-                                 NSFontAttributeName : [UIFont fontWithMagicIdentifier:@"style.text.small.font_spec_bold"],
+                                 NSFontAttributeName : UIFont.smallMediumFont,
                                  NSForegroundColorAttributeName : [UIColor wr_colorFromColorScheme:ColorSchemeColorTextForeground],
                                  NSBackgroundColorAttributeName : [UIColor wr_colorFromColorScheme:ColorSchemeColorTextBackground] };
     

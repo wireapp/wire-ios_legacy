@@ -22,6 +22,7 @@
 #import "WAZUIMagicIOS.h"
 #import "UIView+Borders.h"
 #import "NSAttributedString+Wire.h"
+#import "Wire-Swift.h"
 
 
 
@@ -65,7 +66,7 @@
 - (void)setup
 {
     self.textColor = [UIColor whiteColor];
-    self.font = [UIFont fontWithMagicIdentifier:@"style.text.normal.font_spec"];
+    self.font = UIFont.normalLightFont;
     self.translatesAutoresizingMaskIntoConstraints = NO;
     self.originalFontSize = -1;
 
@@ -168,7 +169,7 @@
 
     NSAttributedString *attributedPlaceholder = [placeholder attributedStringWithAttributes:@{
             NSForegroundColorAttributeName : [UIColor colorWithWhite:1 alpha:0.4],
-            NSFontAttributeName : [UIFont fontWithMagicIdentifier:@"style.text.normal.font_spec"]
+            NSFontAttributeName : UIFont.normalLightFont
     }];
     return attributedPlaceholder;
 }

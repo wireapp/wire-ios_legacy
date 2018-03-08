@@ -22,6 +22,7 @@
 @import PureLayout;
 
 #import "WAZUIMagicIOS.h"
+#import "Wire-Swift.h"
 
 
 
@@ -45,7 +46,7 @@
         self.button = [UIButton buttonWithType:UIButtonTypeCustom];
         self.button.translatesAutoresizingMaskIntoConstraints = NO;
         self.button.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
-        self.button.titleLabel.font = [UIFont fontWithMagicIdentifier:@"style.text.normal.font_spec"];
+        self.button.titleLabel.font = UIFont.normalLightFont;
         self.button.accessibilityIdentifier = @"CountryCodeButton";
         [self.button setTitleColor:[UIColor colorWithMagicIdentifier:@"style.color.static_foreground.normal"] forState:UIControlStateNormal];
         [self.button setTitleColor:[UIColor colorWithMagicIdentifier:@"style.color.static_foreground.faded"] forState:UIControlStateHighlighted];

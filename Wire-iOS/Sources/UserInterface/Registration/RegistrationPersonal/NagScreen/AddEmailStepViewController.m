@@ -69,7 +69,7 @@
 {
     self.heroLabel = [[UILabel alloc] initForAutoLayout];
     self.heroLabel.textColor = [UIColor colorWithMagicIdentifier:@"style.color.static_foreground.normal"];
-    self.heroLabel.font = [UIFont fontWithMagicIdentifier:@"style.text.large.font_spec_medium"];
+    self.heroLabel.font = UIFont.largeSemiboldFont;
     self.heroLabel.numberOfLines = 0;
     self.heroLabel.attributedText = [self attributedHeroText];
     
@@ -92,7 +92,7 @@
     
     NSMutableAttributedString *attributedText = [[NSMutableAttributedString alloc] initWithString:text attributes:@{ NSParagraphStyleAttributeName : paragraphStyle }];
     [attributedText addAttributes:@{ NSForegroundColorAttributeName : [UIColor colorWithMagicIdentifier:@"style.color.static_foreground.normal"],
-                                     NSFontAttributeName : [UIFont fontWithMagicIdentifier:@"style.text.large.font_spec_light"] }
+                                     NSFontAttributeName : UIFont.largeLightFont }
                             range:[text rangeOfString:paragraph]];
     
     return attributedText;

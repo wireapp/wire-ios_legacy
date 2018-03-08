@@ -81,7 +81,7 @@ static CGFloat PhoneNumberFieldTopMargin = 16;
     self.selectCountryButton = [UIButton buttonWithType:UIButtonTypeCustom];
     self.selectCountryButton.contentHorizontalAlignment = [UIApplication isLeftToRightLayout] ? UIControlContentHorizontalAlignmentLeft : UIControlContentHorizontalAlignmentRight;
     
-    self.selectCountryButton.titleLabel.font = [UIFont fontWithMagicIdentifier:@"style.text.normal.font_spec"];
+    self.selectCountryButton.titleLabel.font = UIFont.normalLightFont;
     [self.selectCountryButton setTitleColor:[UIColor colorWithMagicIdentifier:@"style.color.static_foreground.normal"] forState:UIControlStateNormal];
     [self.selectCountryButton setTitleColor:[UIColor colorWithMagicIdentifier:@"style.color.static_foreground.faded"] forState:UIControlStateHighlighted];
     

@@ -55,8 +55,8 @@
     paragraphStyle.paragraphSpacing = 10;
     
     NSMutableAttributedString *attributedText = [[NSMutableAttributedString alloc] initWithString:text attributes:@{ NSParagraphStyleAttributeName : paragraphStyle }];
-    [attributedText addAttributes:@{ NSFontAttributeName : [UIFont fontWithMagicIdentifier:@"style.text.large.font_spec_thin"] } range:[text rangeOfString:[@[paragraph1, paragraph2] componentsJoinedByString:@"\u2029"]]];
-    [attributedText addAttributes:@{ NSFontAttributeName : [UIFont fontWithMagicIdentifier:@"style.text.large.font_spec_medium"] } range:[text rangeOfString:title]];
+    [attributedText addAttributes:@{ NSFontAttributeName : UIFont.largeThinFont } range:[text rangeOfString:[@[paragraph1, paragraph2] componentsJoinedByString:@"\u2029"]]];
+    [attributedText addAttributes:@{ NSFontAttributeName : UIFont.largeSemiboldFont } range:[text rangeOfString:title]];
     vc.heroLabel.attributedText = attributedText;
     
     [vc.settingsButton setTitle:[NSLocalizedString(@"registration.address_book_access_denied.settings_button.title", nil) uppercasedWithCurrentLocale] forState:UIControlStateNormal];
@@ -79,8 +79,8 @@
     paragraphStyle.paragraphSpacing = 10;
     
     NSMutableAttributedString *attributedText = [[NSMutableAttributedString alloc] initWithString:text attributes:@{ NSParagraphStyleAttributeName : paragraphStyle }];
-    [attributedText addAttributes:@{ NSFontAttributeName : [UIFont fontWithMagicIdentifier:@"style.text.large.font_spec_thin"] } range:[text rangeOfString:paragraph1]];
-    [attributedText addAttributes:@{ NSFontAttributeName : [UIFont fontWithMagicIdentifier:@"style.text.large.font_spec_medium"] } range:[text rangeOfString:title]];
+    [attributedText addAttributes:@{ NSFontAttributeName : UIFont.largeThinFont } range:[text rangeOfString:paragraph1]];
+    [attributedText addAttributes:@{ NSFontAttributeName : UIFont.largeSemiboldFont } range:[text rangeOfString:title]];
     vc.heroLabel.attributedText = attributedText;
     
     [vc.settingsButton setTitle:[NSLocalizedString(@"registration.push_access_denied.settings_button.title", nil) uppercasedWithCurrentLocale] forState:UIControlStateNormal];
@@ -129,7 +129,7 @@
 {
     self.laterButton = [UIButton buttonWithType:UIButtonTypeCustom];
     self.laterButton.translatesAutoresizingMaskIntoConstraints = NO;
-    self.laterButton.titleLabel.font = [UIFont fontWithMagicIdentifier:@"style.text.small.font_spec_light"];
+    self.laterButton.titleLabel.font = UIFont.smallLightFont;
     [self.laterButton setTitleColor:[UIColor colorWithMagicIdentifier:@"style.color.static_foreground.normal"] forState:UIControlStateNormal];
     [self.laterButton setTitleColor:[UIColor colorWithMagicIdentifier:@"style.color.static_foreground.faded"] forState:UIControlStateHighlighted];
     [self.laterButton addTarget:self action:@selector(continueWithoutAccess:) forControlEvents:UIControlEventTouchUpInside];

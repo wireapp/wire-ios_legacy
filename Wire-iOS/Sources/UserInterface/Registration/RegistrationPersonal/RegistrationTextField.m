@@ -60,7 +60,7 @@ static const CGFloat GuidanceDotViewWidth = 40;
         
         [self setupConfirmButton];
         
-        self.font = [UIFont fontWithMagicIdentifier:@"style.text.normal.font_spec"];
+        self.font = UIFont.normalLightFont;
         self.textColor = [UIColor colorWithMagicIdentifier:@"style.color.static_foreground.normal"];
         self.textInsets = UIEdgeInsetsMake(0, 8, 0, 8);
         if ([[[UIDevice currentDevice] systemVersion] floatValue] < 11.0) {
@@ -99,7 +99,7 @@ static const CGFloat GuidanceDotViewWidth = 40;
 - (NSAttributedString *)attributedPlaceholderString:(NSString *)placeholder
 {
     return [placeholder attributedStringWithAttributes:@{ NSForegroundColorAttributeName : [UIColor colorWithMagicIdentifier:@"style.color.static_foreground.faded"],
-                                                          NSFontAttributeName : [UIFont fontWithMagicIdentifier:@"style.text.small.font_spec_light"] }];
+                                                          NSFontAttributeName : UIFont.smallLightFont }];
 }
 
 - (UIButton *)countryCodeButton

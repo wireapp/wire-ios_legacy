@@ -125,7 +125,7 @@
     self.phoneNumberStepViewController.formStepDelegate = self;
     self.phoneNumberStepViewController.view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     self.phoneNumberStepViewController.heroLabel.textColor = [UIColor colorWithMagicIdentifier:@"style.color.static_foreground.normal"];
-    self.phoneNumberStepViewController.heroLabel.font = [UIFont fontWithMagicIdentifier:@"style.text.large.font_spec_medium"];
+    self.phoneNumberStepViewController.heroLabel.font = UIFont.largeSemiboldFont;
     self.phoneNumberStepViewController.heroLabel.attributedText = [self attributedHeroText];
     
     self.rootNavigationController = [[NavigationController alloc] initWithRootViewController:self.phoneNumberStepViewController.registrationFormViewController];
@@ -158,7 +158,7 @@
 {
     self.skipButton = [UIButton buttonWithType:UIButtonTypeCustom];
     self.skipButton.hidden = YES;
-    self.skipButton.titleLabel.font = [UIFont fontWithMagicIdentifier:@"style.text.small.font_spec_light"];
+    self.skipButton.titleLabel.font = UIFont.smallLightFont;
     [self.skipButton setTitleColor:[UIColor colorWithMagicIdentifier:@"style.color.static_foreground.normal"] forState:UIControlStateNormal];
     [self.skipButton setTitleColor:[[UIColor colorWithMagicIdentifier:@"style.color.static_foreground.normal"] colorWithAlphaComponent:0.2] forState:UIControlStateHighlighted];
     [self.skipButton setTitle:[NSLocalizedString(@"registration.add_phone_number.skip_button.title", nil) uppercasedWithCurrentLocale] forState:UIControlStateNormal];
@@ -179,7 +179,7 @@
     
     NSMutableAttributedString *attributedText = [[NSMutableAttributedString alloc] initWithString:text attributes:@{ NSParagraphStyleAttributeName : paragraphStyle }];
     [attributedText addAttributes:@{ NSForegroundColorAttributeName : [UIColor colorWithMagicIdentifier:@"style.color.static_foreground.normal"],
-                                     NSFontAttributeName: [UIFont fontWithMagicIdentifier:@"style.text.large.font_spec_light"] }
+                                     NSFontAttributeName: UIFont.largeLightFont }
                             range:[text rangeOfString:paragraph]];
     
     return attributedText;

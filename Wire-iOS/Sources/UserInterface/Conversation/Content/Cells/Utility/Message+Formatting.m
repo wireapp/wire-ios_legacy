@@ -110,7 +110,7 @@ static inline NSDataDetector *linkDataDetector(void)
         font = [UIFont fontWithName:@"RedactedScript-Regular" size:18];
         foregroundColor = [UIColor wr_colorFromColorScheme:ColorSchemeColorAccent];
     } else {
-        font = [UIFont fontWithMagicIdentifier:@"style.text.normal.font_spec"];
+        font = UIFont.normalLightFont;
         foregroundColor = [UIColor wr_colorFromColorScheme:ColorSchemeColorTextForeground];
     }
     

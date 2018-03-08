@@ -85,7 +85,7 @@
         [self.contentView addSubview:self.userImage];
         
         self.nameLabel = [[UILabel alloc] initForAutoLayout];
-        self.nameLabel.font = [UIFont fontWithMagicIdentifier:@"style.text.small.font_spec_light"];
+        self.nameLabel.font = UIFont.smallLightFont;
         [self.contentView addSubview:self.nameLabel];
         
         [self createInitialConstraints];

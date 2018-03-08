@@ -23,6 +23,7 @@
 #import "WAZUIMagic.h"
 #import "UIColor+MagicAccess.h"
 #import "UIFont+MagicAccess.h"
+#import "Wire-Swift.h"
 
 
 @implementation GuidanceLabel
@@ -30,7 +31,7 @@
 - (instancetype)initWithFrame:(CGRect)frame
 {
     if (self = [super initWithFrame:frame]) {
-        self.font = [UIFont fontWithMagicIdentifier:@"style.text.small.font_spec_bold"];
+        self.font = UIFont.smallMediumFont;
         self.textColor = [UIColor whiteColor];
         self.numberOfLines = 0;
         self.textAlignment = NSTextAlignmentNatural;

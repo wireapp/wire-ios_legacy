@@ -70,7 +70,7 @@
 - (void)createTitleLabel
 {
     self.titleLabel = [[UILabel alloc] initForAutoLayout];
-    self.titleLabel.font = [UIFont fontWithMagicIdentifier:@"style.text.large.font_spec_medium"];
+    self.titleLabel.font = UIFont.largeSemiboldFont;
     self.titleLabel.textColor = [UIColor colorWithMagicIdentifier:@"style.color.static_foreground.normal"];
     self.titleLabel.text = NSLocalizedString(@"registration.terms_of_use.title", nil);
     
@@ -85,10 +85,10 @@
     
     NSMutableAttributedString *attributedTerms =
     [[NSMutableAttributedString alloc] initWithString:termsOfUse
-                                           attributes:@{ NSFontAttributeName : [UIFont fontWithMagicIdentifier:@"style.text.large.font_spec_light"],
+                                           attributes:@{ NSFontAttributeName : UIFont.largeLightFont,
                                                          NSForegroundColorAttributeName: [UIColor colorWithMagicIdentifier:@"style.color.static_foreground.normal"] }];
     
-    [attributedTerms addAttributes:@{ NSFontAttributeName : [UIFont fontWithMagicIdentifier:@"style.text.large.font_spec_medium"],
+    [attributedTerms addAttributes:@{ NSFontAttributeName : UIFont.largeSemiboldFont,
                                       NSForegroundColorAttributeName : UIColor.accentColor,
                                       NSLinkAttributeName : self.termsOfServiceURL } range:termsOfUseLinkRange];
     

@@ -96,7 +96,7 @@
     self.instructionsLabel = [[UILabel alloc] initForAutoLayout];
     self.instructionsLabel.numberOfLines = 0;
     self.instructionsLabel.textAlignment = NSTextAlignmentCenter;
-    self.instructionsLabel.font = [UIFont fontWithMagicIdentifier:@"style.text.normal.font_spec"];
+    self.instructionsLabel.font = UIFont.normalLightFont;
     self.instructionsLabel.textColor = [UIColor colorWithMagicIdentifier:@"style.color.static_foreground.normal"];
     self.instructionsLabel.attributedText = [self attributedInstructionsText];
     [self.containerView addSubview:self.instructionsLabel];
@@ -107,7 +107,7 @@
     NSString *instructions = [NSString stringWithFormat:NSLocalizedString(@"registration.verify_email.instructions", nil), self.emailAddress];
     NSMutableAttributedString *attributedText = [[NSMutableAttributedString alloc] initWithString:instructions];
     
-    [attributedText addAttributes:@{NSFontAttributeName : [UIFont fontWithMagicIdentifier:@"style.text.normal.font_spec_bold"]}
+    [attributedText addAttributes:@{NSFontAttributeName : UIFont.normalMediumFont}
                             range:[instructions rangeOfString:self.emailAddress]];
     
     return [[NSAttributedString alloc] initWithAttributedString:attributedText];
@@ -118,7 +118,7 @@
     self.resendInstructionsLabel = [[UILabel alloc] initForAutoLayout];
     self.resendInstructionsLabel.numberOfLines = 0;
     self.resendInstructionsLabel.textAlignment = NSTextAlignmentCenter;
-    self.resendInstructionsLabel.font = [UIFont fontWithMagicIdentifier:@"style.text.normal.font_spec"];
+    self.resendInstructionsLabel.font = UIFont.normalLightFont;
     self.resendInstructionsLabel.textColor = [UIColor colorWithMagicIdentifier:@"style.color.static_foreground.faded"];
     self.resendInstructionsLabel.text = NSLocalizedString(@"registration.verify_email.resend.instructions", nil);
     [self.containerView addSubview:self.resendInstructionsLabel];
@@ -128,7 +128,7 @@
 {
     self.resendButton = [UIButton buttonWithType:UIButtonTypeCustom];
     self.resendButton.translatesAutoresizingMaskIntoConstraints = NO;
-    self.resendButton.titleLabel.font = [UIFont fontWithMagicIdentifier:@"style.text.normal.font_spec"];
+    self.resendButton.titleLabel.font = UIFont.normalLightFont;
     [self.resendButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [self.resendButton setTitleColor:[[UIColor whiteColor] colorWithAlphaComponent:0.4] forState:UIControlStateHighlighted];
     [self.resendButton setTitle:NSLocalizedString(@"registration.verify_email.resend.button_title", nil) forState:UIControlStateNormal];

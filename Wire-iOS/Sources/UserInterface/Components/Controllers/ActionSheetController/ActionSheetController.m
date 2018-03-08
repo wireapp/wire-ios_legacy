@@ -130,7 +130,7 @@
     titleLabel.textAlignment = NSTextAlignmentCenter;
     titleLabel.text = title;
     titleLabel.accessibilityIdentifier = @"dialog title";
-    titleLabel.font = [UIFont fontWithMagicIdentifier:@"style.text.normal.font_spec_bold"];
+    titleLabel.font = UIFont.normalMediumFont;
     return [self initWithTitleView:titleLabel layout:layout style:style dismissStyle:dismissStyle];
 }
 

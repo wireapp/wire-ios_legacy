@@ -41,6 +41,7 @@
 		163BB6141BEAA52A00606381 /* InviteContactsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 163BB6131BEAA52A00606381 /* InviteContactsViewController.m */; };
 		163BB8101EE1648100DF9384 /* ContactsDataSource+Searching.swift in Sources */ = {isa = PBXBuildFile; fileRef = 163BB80F1EE1648100DF9384 /* ContactsDataSource+Searching.swift */; };
 		163FB98F20514DB700E74F83 /* UIView+LayoutMargins.swift in Sources */ = {isa = PBXBuildFile; fileRef = 163FB98E20514DB700E74F83 /* UIView+LayoutMargins.swift */; };
+		163FB99120518BF400E74F83 /* UIFont+FontSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 163FB99020518BF400E74F83 /* UIFont+FontSpec.swift */; };
 		1648EEED20498E1300CC6B37 /* SearchSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1648EEEC20498E1300CC6B37 /* SearchSectionController.swift */; };
 		1648EEEF20498F8900CC6B37 /* ContactsSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1648EEEE20498F8900CC6B37 /* ContactsSectionController.swift */; };
 		1648EEF12049A69800CC6B37 /* GroupConversationSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1648EEF02049A69800CC6B37 /* GroupConversationSectionController.swift */; };
@@ -1227,6 +1228,7 @@
 		163BB6131BEAA52A00606381 /* InviteContactsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InviteContactsViewController.m; sourceTree = "<group>"; };
 		163BB80F1EE1648100DF9384 /* ContactsDataSource+Searching.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ContactsDataSource+Searching.swift"; sourceTree = "<group>"; };
 		163FB98E20514DB700E74F83 /* UIView+LayoutMargins.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+LayoutMargins.swift"; sourceTree = "<group>"; };
+		163FB99020518BF400E74F83 /* UIFont+FontSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+FontSpec.swift"; sourceTree = "<group>"; };
 		1648EEEC20498E1300CC6B37 /* SearchSectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchSectionController.swift; sourceTree = "<group>"; };
 		1648EEEE20498F8900CC6B37 /* ContactsSectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsSectionController.swift; sourceTree = "<group>"; };
 		1648EEF02049A69800CC6B37 /* GroupConversationSectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupConversationSectionController.swift; sourceTree = "<group>"; };
@@ -3718,6 +3720,7 @@
 				871BC1FD1D34F8F800DF0793 /* UIColor+WAZExtensions.h */,
 				871BC1FE1D34F8F800DF0793 /* UIColor+WAZExtensions.m */,
 				871BC2011D34F8F800DF0793 /* UIFont+MonoSpaced.swift */,
+				163FB99020518BF400E74F83 /* UIFont+FontSpec.swift */,
 				871BC2021D34F8F800DF0793 /* UIImage+Dotted.swift */,
 				BFFD439D1DE47FFA00505C8C /* UIView+RightToLeft.swift */,
 				871BC2031D34F8F800DF0793 /* UIImage+Transform.h */,
@@ -6755,6 +6758,7 @@
 				D5F22D4C2048052900879444 /* UIAlertController+RemoveAction.swift in Sources */,
 				F1B5EAC92029AC7E0081D402 /* SimpleTextFieldValidator.swift in Sources */,
 				8FC854B9199245770008B66B /* MagicConfig.m in Sources */,
+				163FB99120518BF400E74F83 /* UIFont+FontSpec.swift in Sources */,
 				871BC2211D34F8F800DF0793 /* ActionSheetContainerView.m in Sources */,
 				D5DBAAAC20064DD700E9F65B /* TeamMemberInviteHeaderView.swift in Sources */,
 				871BC0111D34F56300DF0793 /* Analytics+ProfileEvents.m in Sources */,

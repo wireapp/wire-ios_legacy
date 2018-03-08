@@ -100,7 +100,7 @@ static NSUInteger const StartUIInitiallyShowsKeyboardConversationThreshold = 10;
     self.emptyResultLabel = [[UILabel alloc] init];
     self.emptyResultLabel.text = NSLocalizedString(@"peoplepicker.no_matching_results_after_address_book_upload_title", nil);
     self.emptyResultLabel.textColor = [UIColor wr_colorFromColorScheme:ColorSchemeColorTextForeground variant:ColorSchemeVariantDark];
-    self.emptyResultLabel.font = [UIFont fontWithMagicIdentifier:@"style.text.normal.font_spec"];
+    self.emptyResultLabel.font = UIFont.normalLightFont;
     
     self.searchHeaderViewController = [[SearchHeaderViewController alloc] initWithUserSelection:self.userSelection variant:ColorSchemeVariantDark];
     self.title = (team != nil ? team.name : ZMUser.selfUser.displayName).localizedUppercaseString;

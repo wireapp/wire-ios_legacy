@@ -136,7 +136,7 @@ static float normalizeValue(float value, float min, float max) {
     
     self.focusExposureLockLabel = [[UILabel alloc] initForAutoLayout];
     self.focusExposureLockLabel.text = [NSLocalizedString(@"camera_controls.aeaf_lock", nil) uppercasedWithCurrentLocale];
-    self.focusExposureLockLabel.font = [UIFont fontWithMagicIdentifier:@"style.text.small.font_spec_bold"];
+    self.focusExposureLockLabel.font = UIFont.smallMediumFont;
     self.focusExposureLockLabel.textColor = [UIColor blackColor];
     [self.focusExposureLockLabelContainer addSubview:self.focusExposureLockLabel];
     
