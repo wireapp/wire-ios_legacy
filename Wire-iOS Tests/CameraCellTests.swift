@@ -41,7 +41,7 @@ final class CameraCellTests: XCTestCase {
     override func setUp() {
         super.setUp()
         mockDevice = MockDevice()
-        sut = CameraCell(frame: .zero, device: mockDevice)
+        sut = CameraCell(device: mockDevice)
     }
     
     override func tearDown() {

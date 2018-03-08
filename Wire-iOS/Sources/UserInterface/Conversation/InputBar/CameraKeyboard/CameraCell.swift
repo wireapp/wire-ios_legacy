@@ -37,7 +37,7 @@ open class CameraCell: UICollectionViewCell, Reusable {
     
     fileprivate static let ciContext = CIContext(options: [:])
 
-    fileprivate var device: DeviceProtocol
+    fileprivate var device: DeviceProtocol = UIDevice.current
 
     deinit {
         NotificationCenter.default.removeObserver(self)
@@ -46,11 +46,14 @@ open class CameraCell: UICollectionViewCell, Reusable {
     /// init method with a param for injecting mock device
     ///
     /// - Parameters:
-    ///   - frame: same as UIView.init(frame: frame)
     ///   - device: Provide this param for testing only
-    init(frame: CGRect, device: DeviceProtocol = UIDevice.current) {
-        self.cameraController = CameraController()
+    convenience init(device: DeviceProtocol) {
+        self.init(frame: .zero)
         self.device = device
+    }
+
+    override init(frame: CGRect) {
+        self.cameraController = CameraController()
 
         super.init(frame: frame)
         
