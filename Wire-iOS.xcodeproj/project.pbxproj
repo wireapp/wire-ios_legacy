@@ -342,8 +342,6 @@
 		871BC2301D34F8F800DF0793 /* FormGuidance.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC14B1D34F8F800DF0793 /* FormGuidance.m */; };
 		871BC2311D34F8F800DF0793 /* Guidance.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC14D1D34F8F800DF0793 /* Guidance.m */; };
 		871BC2321D34F8F800DF0793 /* StyledTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC1501D34F8F800DF0793 /* StyledTextField.m */; };
-		871BC2351D34F8F800DF0793 /* GiphyNavigationBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC1571D34F8F800DF0793 /* GiphyNavigationBar.m */; };
-		871BC2361D34F8F800DF0793 /* GiphyNavigationBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC1591D34F8F800DF0793 /* GiphyNavigationBarController.m */; };
 		871BC2391D34F8F800DF0793 /* KeyboardAvoidingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC15F1D34F8F800DF0793 /* KeyboardAvoidingViewController.m */; };
 		871BC23A1D34F8F800DF0793 /* KeyboardFrameObserver+iOS.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC1611D34F8F800DF0793 /* KeyboardFrameObserver+iOS.m */; };
 		871BC23B1D34F8F800DF0793 /* KeyboardFrameObserver.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC1631D34F8F800DF0793 /* KeyboardFrameObserver.m */; };
@@ -1110,6 +1108,7 @@
 		F194AD7A1E3F3BBC00B0049B /* UIApplication+RTL.swift in Sources */ = {isa = PBXBuildFile; fileRef = F194AD791E3F3BBC00B0049B /* UIApplication+RTL.swift */; };
 		F194CA1B1E7179C2004C5E56 /* VoiceChannelOverlayTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F194CA181E717142004C5E56 /* VoiceChannelOverlayTests.swift */; };
 		F195EB9D1E2F75BC00712118 /* FeedbackOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F195EB9C1E2F75BC00712118 /* FeedbackOverlayView.swift */; };
+		F19C3A8F20513532004387E4 /* DatabaseStatisticsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F19C3A8E20513532004387E4 /* DatabaseStatisticsController.swift */; };
 		F1A989D01FD1630300B8A82E /* SecondaryViewDescription.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1A989CF1FD1630300B8A82E /* SecondaryViewDescription.swift */; };
 		F1AA8AD61E5DF36A006A0E68 /* DegradationOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1AA8AD51E5DF36A006A0E68 /* DegradationOverlayView.swift */; };
 		F1B025641E574B3C00900C65 /* VoiceChannelOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1B025631E574B3C00900C65 /* VoiceChannelOverlay.swift */; };
@@ -1626,12 +1625,6 @@
 		871BC14E1D34F8F800DF0793 /* GuidanceProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GuidanceProtocol.h; sourceTree = "<group>"; };
 		871BC14F1D34F8F800DF0793 /* StyledTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StyledTextField.h; sourceTree = "<group>"; };
 		871BC1501D34F8F800DF0793 /* StyledTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StyledTextField.m; sourceTree = "<group>"; };
-		871BC1521D34F8F800DF0793 /* GiphyCollectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GiphyCollectionViewController.h; sourceTree = "<group>"; };
-		871BC1561D34F8F800DF0793 /* GiphyNavigationBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GiphyNavigationBar.h; sourceTree = "<group>"; };
-		871BC1571D34F8F800DF0793 /* GiphyNavigationBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GiphyNavigationBar.m; sourceTree = "<group>"; };
-		871BC1581D34F8F800DF0793 /* GiphyNavigationBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GiphyNavigationBarController.h; sourceTree = "<group>"; };
-		871BC1591D34F8F800DF0793 /* GiphyNavigationBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GiphyNavigationBarController.m; sourceTree = "<group>"; };
-		871BC15C1D34F8F800DF0793 /* GiphyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GiphyViewController.h; sourceTree = "<group>"; };
 		871BC15E1D34F8F800DF0793 /* KeyboardAvoidingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeyboardAvoidingViewController.h; sourceTree = "<group>"; };
 		871BC15F1D34F8F800DF0793 /* KeyboardAvoidingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KeyboardAvoidingViewController.m; sourceTree = "<group>"; };
 		871BC1601D34F8F800DF0793 /* KeyboardFrameObserver+iOS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "KeyboardFrameObserver+iOS.h"; sourceTree = "<group>"; };
@@ -2752,6 +2745,7 @@
 		F194AD791E3F3BBC00B0049B /* UIApplication+RTL.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIApplication+RTL.swift"; sourceTree = "<group>"; };
 		F194CA181E717142004C5E56 /* VoiceChannelOverlayTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VoiceChannelOverlayTests.swift; sourceTree = "<group>"; };
 		F195EB9C1E2F75BC00712118 /* FeedbackOverlayView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedbackOverlayView.swift; sourceTree = "<group>"; };
+		F19C3A8E20513532004387E4 /* DatabaseStatisticsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseStatisticsController.swift; sourceTree = "<group>"; };
 		F1A989CF1FD1630300B8A82E /* SecondaryViewDescription.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondaryViewDescription.swift; sourceTree = "<group>"; };
 		F1AA8AD51E5DF36A006A0E68 /* DegradationOverlayView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DegradationOverlayView.swift; sourceTree = "<group>"; };
 		F1B025631E574B3C00900C65 /* VoiceChannelOverlay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VoiceChannelOverlay.swift; sourceTree = "<group>"; };
@@ -3572,12 +3566,6 @@
 		871BC1511D34F8F800DF0793 /* Giphy */ = {
 			isa = PBXGroup;
 			children = (
-				871BC1521D34F8F800DF0793 /* GiphyCollectionViewController.h */,
-				871BC1561D34F8F800DF0793 /* GiphyNavigationBar.h */,
-				871BC1571D34F8F800DF0793 /* GiphyNavigationBar.m */,
-				871BC1581D34F8F800DF0793 /* GiphyNavigationBarController.h */,
-				871BC1591D34F8F800DF0793 /* GiphyNavigationBarController.m */,
-				871BC15C1D34F8F800DF0793 /* GiphyViewController.h */,
 				16719A0F1D99647D00AA6B63 /* GiphySearchViewController.swift */,
 				16719A1C1D9ABB7C00AA6B63 /* GiphyConfirmationViewController.swift */,
 			);
@@ -4952,6 +4940,7 @@
 				87D21AD61D8A98620075AB7A /* AccentColorPickerController.swift */,
 				87C1A7BA1D8FDFD8002630BB /* VersionInfoViewController.h */,
 				87C1A7BB1D8FDFD8002630BB /* VersionInfoViewController.m */,
+				F19C3A8E20513532004387E4 /* DatabaseStatisticsController.swift */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -6458,7 +6447,6 @@
 				871BC2871D34F8F800DF0793 /* UIFont+MonoSpaced.swift in Sources */,
 				D5490A1D20050AAA0057EAA8 /* TeamMemberInviteViewController.swift in Sources */,
 				F194AD7A1E3F3BBC00B0049B /* UIApplication+RTL.swift in Sources */,
-				871BC2351D34F8F800DF0793 /* GiphyNavigationBar.m in Sources */,
 				87F280AA1D080E8400F813CA /* AVSMediaManager+CustomSounds.swift in Sources */,
 				873C5FE71C10426A00D5132A /* ClientListViewController.swift in Sources */,
 				BF38FAF11C9B1D0500E2ACBB /* ConversationTitleView.swift in Sources */,
@@ -6862,6 +6850,7 @@
 				1682AEBD20483DA5003A052A /* ServicesSectionController.swift in Sources */,
 				7C6878DB201B3785003A0C7A /* StartUIViewController+SearchResults.swift in Sources */,
 				87A15FDF1E08318B00AED79B /* CollectionLoadingCell.swift in Sources */,
+				F19C3A8F20513532004387E4 /* DatabaseStatisticsController.swift in Sources */,
 				870815881BF4EAD100D321BC /* SettingsTableViewController.swift in Sources */,
 				EF2127261FB9DFE300625A9B /* RegistrationRootViewController.m in Sources */,
 				BF7ED2DE1DF59974003A4397 /* Analytics+Usernames.swift in Sources */,
@@ -6996,7 +6985,6 @@
 				163B5F011B4D4109009B4629 /* TitleBarViewController.m in Sources */,
 				BFAF4CB51CECEF3C00780537 /* WaveFormView.swift in Sources */,
 				16D316581BC28ED90050B835 /* ZMConversation+Actions.m in Sources */,
-				871BC2361D34F8F800DF0793 /* GiphyNavigationBarController.m in Sources */,
 				87AC9F561C0749FB00E1ED6F /* TailEditingTextField.swift in Sources */,
 				AF58EC851E9FC35A00EB94CD /* MessageDraft.xcdatamodeld in Sources */,
 				871BC2791D34F8F800DF0793 /* VoiceUserImageView.m in Sources */,
