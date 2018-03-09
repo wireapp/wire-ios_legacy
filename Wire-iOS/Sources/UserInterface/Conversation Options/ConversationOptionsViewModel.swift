@@ -79,7 +79,9 @@ class ConversationOptionsViewModel {
             self?.updateRows()
         }
         
-        fetchLink()
+        if configuration.allowGuests {
+            fetchLink()
+        }
     }
     
     private func updateRows() {
@@ -179,7 +181,7 @@ class ConversationOptionsViewModel {
                 switch result {
                 case .success:
                     self.updateRows()
-                    if nil == self.link {
+                    if nil == self.link && allowGuests {
                         self.fetchLink()
                     }
                 case .failure(let error): self.delegate?.viewModel(self, didReceiveError: error)

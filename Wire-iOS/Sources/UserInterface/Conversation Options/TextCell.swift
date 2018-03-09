@@ -30,7 +30,7 @@ final class TextCell: UITableViewCell, CellConfigurationConfigurable {
         contentView.addSubview(container)
         container.addSubview(label)
         label.font = FontSpec(.normal, .light).font
-        label.lineBreakMode = .byCharWrapping
+        label.lineBreakMode = .byClipping
         label.numberOfLines = 0
         constrain(contentView, container, label) { contentView, container, label in
             container.leading == contentView.leading
