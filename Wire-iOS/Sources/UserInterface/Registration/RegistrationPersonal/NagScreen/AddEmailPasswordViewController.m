@@ -171,9 +171,9 @@
 
         NSError *error;
         [self.userProfile requestSettingEmailAndPasswordWithCredentials:self.credentials error:&error];
-        [[[SessionManager shared] activeUserSession] setEmailCredentials:self.credentials];
+        BOOL result = [[SessionManager shared] updateWithCredentials:self.credentials];
 
-        if (nil != error) {
+        if (nil != error || result == NO) {
             DDLogError(@"Error requesting to set email and password: %@", error);
         } else {
             self.showLoadingView = YES;
