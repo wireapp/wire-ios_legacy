@@ -40,15 +40,15 @@ extension UIFont {
     // MARK: - Normal
     
     class var normalLightFont: UIFont {
-        return FontSpec.init(.small, .light).font!
+        return FontSpec.init(.normal, .light).font!
     }
     
     class var normalRegularFont: UIFont {
-        return FontSpec.init(.small, .regular).font!
+        return FontSpec.init(.normal, .regular).font!
     }
     
     class var normalMediumFont: UIFont {
-        return FontSpec.init(.small, .medium).font!
+        return FontSpec.init(.normal, .medium).font!
     }
     
     // MARK: - Large
