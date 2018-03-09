@@ -56,16 +56,17 @@ extension ZMConversation {
             guard changeInfo.allowGuestsChanged else { return }
             allowGuestsChangedHandler?(allowGuests)
         }
+        
+        func createConversationLink(completion: @escaping (Result<String>) -> Void) {
+            conversation.updateAccessAndCreateWirelessLink(in: userSession, completion)
+        }
 
         func fetchConversationLink(completion: @escaping (Result<String?>) -> Void) {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-                completion(.success("https://app.wire.com/772bfh1bbcssjs9826373nbbdsn9917nbbdaehkej827648-72bns9"))
-            }
+            conversation.fetchWirelessLink(in: userSession, completion)
         }
         
         func deleteLink(completion: @escaping (VoidResult) -> Void) {
-            // TODO
-            completion(.success)
+            conversation.deleteWirelessLink(in: userSession, completion)
         }
 
     }

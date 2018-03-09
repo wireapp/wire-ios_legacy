@@ -23,6 +23,7 @@ protocol ConversationOptionsViewModelConfiguration: class {
     var allowGuests: Bool { get }
     var allowGuestsChangedHandler: ((Bool) -> Void)? { get set }
     func setAllowGuests(_ allowGuests: Bool, completion: @escaping (VoidResult) -> Void)
+    func createConversationLink(completion: @escaping (Result<String>) -> Void)
     func fetchConversationLink(completion: @escaping (Result<String?>) -> Void)
     func deleteLink(completion: @escaping (VoidResult) -> Void)
 }
@@ -49,6 +50,7 @@ class ConversationOptionsViewModel {
     }
     
     private var link: String?
+
     private var copyInProgress = false {
         didSet {
             updateRows()
@@ -103,7 +105,7 @@ class ConversationOptionsViewModel {
                     rows.append(.shareLink { [weak self] in self?.shareLink() })
                     rows.append(.revokeLink { [weak self] in self?.revokeLink() })
                 } else {
-                    rows.append(.createLinkButton { [weak self] in self?.fetchLink() })
+                    rows.append(.createLinkButton { [weak self] in self?.createLink() })
                 }
             }
         }
@@ -118,8 +120,11 @@ class ConversationOptionsViewModel {
             self.state.isLoading = true
             self.configuration.deleteLink { result in
                 switch result {
-                case .success: self.updateRows()
-                case .failure(let error): self.delegate?.viewModel(self, didReceiveError: error)
+                case .success:
+                    self.link = nil
+                    self.updateRows()
+                case .failure(let error):
+                    self.delegate?.viewModel(self, didReceiveError: error)
                 }
                 self.state.isLoading = false
             }
@@ -135,7 +140,6 @@ class ConversationOptionsViewModel {
     private func copyLink() {
         UIPasteboard.general.string = link
         copyInProgress = true
-        
         DispatchQueue.main.asyncAfter(deadline: .now() + 3) { [weak self] in
             self?.copyInProgress = false
         }
@@ -148,6 +152,18 @@ class ConversationOptionsViewModel {
             switch result {
                 case .success(let link): self.link = link
                 case .failure(let error): self.delegate?.viewModel(self, didReceiveError: error)
+            }
+            self.showLoadingCell = false
+        }
+    }
+    
+    private func createLink() {
+        showLoadingCell = true
+        configuration.createConversationLink { [weak self] result in
+            guard let `self` = self else { return }
+            switch result {
+            case .success(let link): self.link = link
+            case .failure(let error): self.delegate?.viewModel(self, didReceiveError: error)
             }
             self.showLoadingCell = false
         }
