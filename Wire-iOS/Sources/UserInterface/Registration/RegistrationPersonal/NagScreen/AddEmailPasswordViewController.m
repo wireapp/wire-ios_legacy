@@ -34,6 +34,7 @@
 #import "UIViewController+Errors.h"
 #import "UIImage+ZetaIconsNeue.h"
 #import "AnalyticsTracker+Registration.h"
+#import "Wire-Swift.h"
 
 
 
@@ -170,6 +171,7 @@
 
         NSError *error;
         [self.userProfile requestSettingEmailAndPasswordWithCredentials:self.credentials error:&error];
+        [[[SessionManager shared] activeUserSession] setEmailCredentials:self.credentials];
 
         if (nil != error) {
             DDLogError(@"Error requesting to set email and password: %@", error);
