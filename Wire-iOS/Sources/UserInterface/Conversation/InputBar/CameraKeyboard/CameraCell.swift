@@ -27,7 +27,7 @@ public protocol CameraCellDelegate: class {
 }
 
 open class CameraCell: UICollectionViewCell, Reusable {
-    var cameraController: CameraController?
+    let cameraController: CameraController?
     
     let expandButton = IconButton()
     let takePictureButton = IconButton()
