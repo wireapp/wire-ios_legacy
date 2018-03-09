@@ -207,14 +207,18 @@ class AppRootViewController: UIViewController {
             
             // check if needs to reauthenticate
             var needsToReauthenticate = false
+            var addingNewAccount = true
             if let error = error {
                 let errorCode = (error as NSError).userSessionErrorCode
                 needsToReauthenticate = [ZMUserSessionErrorCode.clientDeletedRemotely,
                     .accessTokenExpired,
                     .needsPasswordToRegisterClient,
                     .needsToRegisterEmailToRegisterClient,
-                    .canNotRegisterMoreClients
                 ].contains(errorCode)
+
+                addingNewAccount = [
+                    ZMUserSessionErrorCode.addAccountRequested
+                    ].contains(errorCode)
             }
             
             if needsToReauthenticate {
@@ -223,7 +227,7 @@ class AppRootViewController: UIViewController {
                 registrationViewController.signInError = error
                 viewController = registrationViewController
             }
-            else {
+            else if (addingNewAccount) {
                 // When we show the landing controller we want it to be nested in navigation controller
                 let landingViewController = LandingViewController()
                 landingViewController.delegate = self

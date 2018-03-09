@@ -132,9 +132,8 @@
     
     BOOL needsToReauthenticate = userSessionErrorCode == ZMUserSessionClientDeletedRemotely ||
                                  userSessionErrorCode == ZMUserSessionAccessTokenExpired ||
-                                 userSessionErrorCode == ZMUserSessionNeedsPasswordToRegisterClient ||
-                                 userSessionErrorCode == ZMUserSessionCanNotRegisterMoreClients;
-    
+                                userSessionErrorCode == ZMUserSessionNeedsPasswordToRegisterClient;
+
     RegistrationRootViewController *registrationRootViewController = [[RegistrationRootViewController alloc] initWithUnregisteredUser:self.unregisteredUser authenticationFlow:self.flowType];
     registrationRootViewController.formStepDelegate = self;
     registrationRootViewController.hasSignInError = self.signInError != nil && !addingAdditionalAccount;
