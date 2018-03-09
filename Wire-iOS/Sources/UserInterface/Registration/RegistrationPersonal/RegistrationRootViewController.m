@@ -30,7 +30,7 @@
 
 #import "Wire-Swift.h"
 
-@interface RegistrationRootViewController () <FormStepDelegate, RegistrationPhoneFlowViewControllerDelegate>
+@interface RegistrationRootViewController () <FormStepDelegate, RegistrationPhoneFlowViewControllerDelegate, RegistrationEmailFlowViewControllerDelegate>
 
 @property (nonatomic) TabBarController *registrationTabBarController;
 @property (nonatomic) ZMIncompleteRegistrationUser *unregisteredUser;
@@ -71,6 +71,7 @@
     if ([RegistrationViewController registrationFlow] == RegistrationFlowEmail) {
         RegistrationEmailFlowViewController *emailFlowViewController = [[RegistrationEmailFlowViewController alloc] initWithUnregisteredUser:self.unregisteredUser];
         emailFlowViewController.formStepDelegate = self;
+        emailFlowViewController.registrationDelegate = self;
         flowViewController = emailFlowViewController;
     }
     else {
@@ -207,6 +208,11 @@
 
 - (void)registrationPhoneFlowViewController:(RegistrationPhoneFlowViewController *)viewController needsToSignInWith:(LoginCredentials *)loginCredentials
 {
+    [self presentLoginTab];
+    [self.signInViewController presentSignInViewControllerWithCredentials:loginCredentials];
+}
+
+- (void)registrationEmailFlowViewController:(RegistrationEmailFlowViewController *)viewController needsToSignInWith:(LoginCredentials *)loginCredentials {
     [self presentLoginTab];
     [self.signInViewController presentSignInViewControllerWithCredentials:loginCredentials];
 }

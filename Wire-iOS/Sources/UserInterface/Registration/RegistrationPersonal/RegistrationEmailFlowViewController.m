@@ -152,12 +152,8 @@
         ZMCompleteRegistrationUser *completeUser = [self.unregisteredUser completeRegistrationUser];
         [[UnauthenticatedSession sharedSession] registerUser:completeUser];
         
-        EmailVerificationStepViewController *emailVerificationStepViewController = [[EmailVerificationStepViewController alloc] initWithEmailAddress:self.unregisteredUser.emailAddress];
-        emailVerificationStepViewController.formStepDelegate = self;
-        emailVerificationStepViewController.delegate = self;
-        emailVerificationStepViewController.view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+        self.navigationController.showLoadingView = YES;
         
-        [self.navigationController pushViewController:emailVerificationStepViewController.registrationFormViewController animated:YES];
     }
     else if ([viewController isKindOfClass:[ProfilePictureStepViewController class]]) {
         ProfilePictureStepViewController *step = (ProfilePictureStepViewController *)viewController;
@@ -183,19 +179,40 @@
 
 - (void)registrationDidFail:(NSError *)error
 {
+    self.navigationController.showLoadingView = NO;
+    
     [self.navigationController popToRootViewControllerAnimated:YES];
     [self showAlertForError:error];
+    
+    if(error.code == ZMUserSessionEmailIsAlreadyRegistered){
+        LoginCredentials *credentials = [[LoginCredentials alloc]
+                                         initWithEmailAddress:self.unregisteredUser.emailAddress
+                                         phoneNumber:nil
+                                         password:self.unregisteredUser.password];
+        
+        [self.emailStepViewController reset];
+        [self.registrationDelegate registrationEmailFlowViewController:self needsToSignInWith:credentials];
+    }
+    
 }
 
 - (void)emailVerificationDidFail:(NSError *)error
 {
+    self.navigationController.showLoadingView = NO;
     [self.analyticsTracker tagResentEmailVerificationFailedWithError:error];
+    
     [self showAlertForError:error];
 }
 
 - (void)emailVerificationDidSucceed
 {
-    // nop
+    self.navigationController.showLoadingView = NO;
+    EmailVerificationStepViewController *emailVerificationStepViewController = [[EmailVerificationStepViewController alloc] initWithEmailAddress:self.unregisteredUser.emailAddress];
+    emailVerificationStepViewController.formStepDelegate = self;
+    emailVerificationStepViewController.delegate = self;
+    emailVerificationStepViewController.view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+    
+    [self.navigationController pushViewController:emailVerificationStepViewController.registrationFormViewController animated:YES];
 }
 
 #pragma mark - ZMAuthenticationObserver

@@ -96,6 +96,11 @@
     [self.emailFormViewController.view autoPinEdgeToSuperviewEdge:ALEdgeBottom withInset:10];
 }
 
+-(void)reset
+{
+    [self.emailFormViewController resetTextFields];
+}
+
 #pragma mark - Actions
 
 - (IBAction)verifyFieldsAndContinue:(id)sender

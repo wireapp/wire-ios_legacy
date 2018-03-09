@@ -328,7 +328,7 @@
     self.navigationController.showLoadingView = NO;
     
     if(error.code == ZMUserSessionPhoneNumberIsAlreadyRegistered) {
-        LoginCredentials *credentials = [[LoginCredentials alloc] initWithEmailAddress:nil phoneNumber:self.unregisteredUser.phoneNumber];
+        LoginCredentials *credentials = [[LoginCredentials alloc] initWithEmailAddress:nil phoneNumber:self.unregisteredUser.phoneNumber password:nil];
         [self.phoneNumberStepViewController reset];
         [self.registrationDelegate registrationPhoneFlowViewController:self needsToSignInWith:credentials];
     }
