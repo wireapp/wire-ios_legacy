@@ -43,7 +43,7 @@ class ConversationOptionsViewModel {
         var title = ""
     }
     
-    var showLoadingCell = false {
+    private var showLoadingCell = false {
         didSet {
             updateRows()
         }
@@ -51,7 +51,7 @@ class ConversationOptionsViewModel {
     
     private var link: String?
 
-    private var copyInProgress = false {
+    var copyInProgress = false {
         didSet {
             updateRows()
         }
@@ -75,8 +75,12 @@ class ConversationOptionsViewModel {
         self.configuration = configuration
         state.title = configuration.title
         updateRows()
-        configuration.allowGuestsChangedHandler = { [weak self] _ in
-            self?.updateRows()
+        configuration.allowGuestsChangedHandler = { [weak self] allowGuests in
+            if allowGuests {
+                self?.fetchLink()
+            } else {
+                self?.updateRows()
+            }
         }
         
         if configuration.allowGuests {
