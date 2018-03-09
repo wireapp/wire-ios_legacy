@@ -21,6 +21,7 @@ import UIKit
 protocol ConversationOptionsViewModelConfiguration: class {
     var title: String { get }
     var allowGuests: Bool { get }
+    var isCodeEnabled: Bool { get }
     var allowGuestsChangedHandler: ((Bool) -> Void)? { get set }
     func setAllowGuests(_ allowGuests: Bool, completion: @escaping (VoidResult) -> Void)
     func createConversationLink(completion: @escaping (Result<String>) -> Void)
@@ -76,14 +77,15 @@ class ConversationOptionsViewModel {
         state.title = configuration.title
         updateRows()
         configuration.allowGuestsChangedHandler = { [weak self] allowGuests in
-            if allowGuests {
-                self?.fetchLink()
+            guard let `self` = self else { return }
+            if allowGuests && self.configuration.isCodeEnabled {
+                self.fetchLink()
             } else {
-                self?.updateRows()
+                self.updateRows()
             }
         }
         
-        if configuration.allowGuests {
+        if configuration.allowGuests && configuration.isCodeEnabled {
             fetchLink()
         }
     }

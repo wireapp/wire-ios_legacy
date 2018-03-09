@@ -42,6 +42,10 @@ extension ZMConversation {
             return conversation.allowGuests
         }
         
+        var isCodeEnabled: Bool {
+            return conversation.accessMode?.contains(.code) ?? false
+        }
+        
         func setAllowGuests(_ allowGuests: Bool, completion: @escaping (VoidResult) -> Void) {
             conversation.setAllowGuests(allowGuests, in: userSession) {
                 switch $0 {

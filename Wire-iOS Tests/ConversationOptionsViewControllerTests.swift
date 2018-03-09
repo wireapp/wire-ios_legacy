@@ -29,6 +29,7 @@ class MockOptionsViewModelConfiguration: ConversationOptionsViewModelConfigurati
     var linkResult: Result<String?>? = nil
     var deleteResult: VoidResult = .success
     var createResult: Result<String>? = nil
+    var isCodeEnabled = true
     
     init(allowGuests: Bool, title: String = "", setAllowGuests: SetHandler? = nil) {
         self.allowGuests = allowGuests
