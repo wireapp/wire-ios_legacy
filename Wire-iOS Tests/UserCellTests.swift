@@ -19,7 +19,7 @@
 import XCTest
 @testable import Wire
 
-class GroupDetailsParticipantCellTests: ZMSnapshotTestCase {
+class UserCellTests: ZMSnapshotTestCase {
     
     var mockConversation: MockConversation!
     
@@ -29,7 +29,7 @@ class GroupDetailsParticipantCellTests: ZMSnapshotTestCase {
         
     override func setUp() {
         super.setUp()
-        
+                
         mockConversation = MockConversationFactory.mockConversation()
     }
     
@@ -39,8 +39,8 @@ class GroupDetailsParticipantCellTests: ZMSnapshotTestCase {
         super.tearDown()
     }
     
-    func cell(_ configuration : (GroupDetailsParticipantCell) -> Void) -> GroupDetailsParticipantCell {
-        let cell = GroupDetailsParticipantCell(frame: CGRect(x: 0, y: 0, width: 320, height: 56))
+    func cell(_ configuration : (UserCell) -> Void) -> UserCell {
+        let cell = UserCell(frame: CGRect(x: 0, y: 0, width: 320, height: 56))
         cell.accessoryIconView.isHidden = false
         configuration(cell)
         cell.layoutIfNeeded()

@@ -139,11 +139,12 @@ typedef NS_ENUM(NSUInteger, ProfileUserAction) {
 {
     [self.stackView autoCenterInSuperview];
     
+    const CGFloat offset = 40;
     [NSLayoutConstraint autoSetPriority:UILayoutPriorityRequired forConstraints:^{
-        [self.stackView autoPinEdge:ALEdgeLeading toEdge:ALEdgeLeading ofView:self.stackViewContainer withOffset:16 relation:NSLayoutRelationGreaterThanOrEqual];
-        [self.stackView autoPinEdge:ALEdgeTop toEdge:ALEdgeTop ofView:self.stackViewContainer withOffset:16 relation:NSLayoutRelationGreaterThanOrEqual];
-        [self.stackView autoPinEdge:ALEdgeTrailing toEdge:ALEdgeTrailing ofView:self.stackViewContainer withOffset:-16 relation:NSLayoutRelationLessThanOrEqual];
-        [self.stackView autoPinEdge:ALEdgeBottom toEdge:ALEdgeBottom ofView:self.stackViewContainer withOffset:-16 relation:NSLayoutRelationLessThanOrEqual];
+        [self.stackView autoPinEdge:ALEdgeLeading toEdge:ALEdgeLeading ofView:self.stackViewContainer withOffset:offset relation:NSLayoutRelationGreaterThanOrEqual];
+        [self.stackView autoPinEdge:ALEdgeTop toEdge:ALEdgeTop ofView:self.stackViewContainer withOffset:offset relation:NSLayoutRelationGreaterThanOrEqual];
+        [self.stackView autoPinEdge:ALEdgeTrailing toEdge:ALEdgeTrailing ofView:self.stackViewContainer withOffset:-offset relation:NSLayoutRelationLessThanOrEqual];
+        [self.stackView autoPinEdge:ALEdgeBottom toEdge:ALEdgeBottom ofView:self.stackViewContainer withOffset:-offset relation:NSLayoutRelationLessThanOrEqual];
     }];
     
     [self.stackViewContainer autoPinEdgeToSuperviewEdge:ALEdgeTop];

@@ -19,7 +19,7 @@
 import UIKit
 import WireExtensionComponents
 
-class GroupDetailsParticipantCell: UICollectionViewCell, Themeable {
+class UserCell: UICollectionViewCell, Themeable {
     
     dynamic var colorSchemeVariant: ColorSchemeVariant = ColorScheme.default().variant {
         didSet {
@@ -130,11 +130,11 @@ class GroupDetailsParticipantCell: UICollectionViewCell, Themeable {
         
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         titleLabel.font = FontSpec.init(.normal, .light).font!
-        titleLabel.accessibilityIdentifier = "name"
+        titleLabel.accessibilityIdentifier = "user_cell.name"
         
         subtitleLabel.translatesAutoresizingMaskIntoConstraints = false
         subtitleLabel.font = FontSpec.init(.small, .regular).font!
-        subtitleLabel.accessibilityIdentifier = "username"
+        subtitleLabel.accessibilityIdentifier = "user_cell.username"
         
         avatar.size = .small
         avatar.translatesAutoresizingMaskIntoConstraints = false
@@ -232,7 +232,7 @@ class GroupDetailsParticipantCell: UICollectionViewCell, Themeable {
 
 // MARK: - Subtitle
 
-extension GroupDetailsParticipantCell {
+extension UserCell {
     
     func subtitle(for user: ZMBareUser) -> NSAttributedString? {
         if user.isServiceUser, let service = user as? SearchServiceUser {
@@ -246,21 +246,21 @@ extension GroupDetailsParticipantCell {
         var components: [NSAttributedString?] = []
         
         if let handle = user.handle, !handle.isEmpty {
-            components.append("@\(handle)" && GroupDetailsParticipantCell.boldFont)
+            components.append("@\(handle)" && UserCell.boldFont)
         }
         
         if let user = user as? ZMUser, let addressBookName = user.addressBookEntry?.cachedName {
-            let formatter = GroupDetailsParticipantCell.correlationFormatter(for: colorSchemeVariant)
+            let formatter = UserCell.correlationFormatter(for: colorSchemeVariant)
             components.append(formatter.correlationText(for: user, addressBookName: addressBookName))
         }
         
-        return components.flatMap({ $0 }).joined(separator: " · " && GroupDetailsParticipantCell.lightFont)
+        return components.flatMap({ $0 }).joined(separator: " · " && UserCell.lightFont)
     }
     
     private func subtitle(forServiceUser service: SearchServiceUser) -> NSAttributedString? {
         guard let summary = service.summary else { return nil }
         
-        return summary && GroupDetailsParticipantCell.boldFont
+        return summary && UserCell.boldFont
     }
     
     private static var correlationFormatters:  [ColorSchemeVariant : AddressBookCorrelationFormatter] = [:]

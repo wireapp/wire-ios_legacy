@@ -77,6 +77,7 @@ class GroupDetailsViewController: UIViewController, ZMConversationObserver, Grou
         collectionView.bounces = true
         collectionView.alwaysBounceVertical = true
         collectionView.contentInset = UIEdgeInsets(top: 32, left: 0, bottom: 32, right: 0)
+        collectionView.accessibilityIdentifier = "group_details.list"
         
         if #available(iOS 11.0, *) {
             collectionView.contentInsetAdjustmentBehavior = .never
@@ -148,7 +149,7 @@ class GroupDetailsViewController: UIViewController, ZMConversationObserver, Grou
         sections.append(renameGroupSectionController)
         self.renameGroupSectionController = renameGroupSectionController
         
-        if conversation.team != nil && !ZMUser.selfUser().isGuest(in: conversation) && ZMUser.selfUser().isTeamMember {
+        if conversation.canManageAccess {
             let guestOptionsSectionController = GuestOptionsSectionController(conversation: conversation, delegate: self, syncCompleted: didCompleteInitialSync)
             sections.append(guestOptionsSectionController)
         }

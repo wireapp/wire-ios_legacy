@@ -45,10 +45,8 @@ extension ZMConversation {
         func setAllowGuests(_ allowGuests: Bool, completion: @escaping (VoidResult) -> Void) {
             conversation.setAllowGuests(allowGuests, in: userSession) {
                 switch $0 {
-                case .success:
-                    Analytics.shared().tagAllowGuests(value: allowGuests)
-                case .failure:
-                    break
+                case .success: Analytics.shared().tagAllowGuests(value: allowGuests)
+                case .failure: break
                 }
                 completion($0)
             }
@@ -58,6 +56,19 @@ extension ZMConversation {
             guard changeInfo.allowGuestsChanged else { return }
             allowGuestsChangedHandler?(allowGuests)
         }
+        
+        func createConversationLink(completion: @escaping (Result<String>) -> Void) {
+            conversation.updateAccessAndCreateWirelessLink(in: userSession, completion)
+        }
+
+        func fetchConversationLink(completion: @escaping (Result<String?>) -> Void) {
+            conversation.fetchWirelessLink(in: userSession, completion)
+        }
+        
+        func deleteLink(completion: @escaping (VoidResult) -> Void) {
+            conversation.deleteWirelessLink(in: userSession, completion)
+        }
+
     }
     
 }
