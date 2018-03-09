@@ -119,7 +119,7 @@ static CGFloat PhoneNumberFieldTopMargin = 16;
 
 #if WIRESTAN
     NSString *backendEnvironment = [[NSUserDefaults standardUserDefaults] stringForKey:@"ZMBackendEnvironmentType"];
-    if ([backendEnvironment isEqualToString:@"edge"]) {
+    if ([backendEnvironment isEqualToString:@"staging"]) {
             initialCountry = [Country countryWirestan];
     }
     
