@@ -101,7 +101,6 @@ final class ConversationOptionsViewControllerTests: ZMSnapshotTestCase {
     
     func testThatItRendersAllowGuests_WithLink_Copying() {
         // Given
-        recordMode = true
         let config = MockOptionsViewModelConfiguration(allowGuests: true)
         config.linkResult = .success("https://app.wire.com/772bfh1bbcssjs982637 3nbbdsn9917nbbdaehkej827648-72bns9")
         let viewModel = ConversationOptionsViewModel(configuration: config)
@@ -114,7 +113,6 @@ final class ConversationOptionsViewControllerTests: ZMSnapshotTestCase {
     
     func testThatItRendersAllowGuests_WithLink_DarkTheme_Copying() {
         // Given
-        recordMode = true
         let config = MockOptionsViewModelConfiguration(allowGuests: true)
         config.linkResult = .success("https://app.wire.com/772bfh1bbcssjs982637 3nbbdsn9917nbbdaehkej827648-72bns9")
         let viewModel = ConversationOptionsViewModel(configuration: config)
