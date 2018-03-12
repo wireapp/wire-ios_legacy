@@ -29,7 +29,7 @@ class MockContainerViewController: UIViewController, NetworkStatusBarDelegate {
 }
 
 /// Snapshot tests for differnt margin and size of NetworkStatusViewController.view for all value of ZMNetworkState with other UIView at the bottom.
-final class NetworkStatusViewControllerTests: ZMSnapshotTestCase {
+final class NetworkStatusViewControllerSnapshotTests: ZMSnapshotTestCase {
 
     var sut: NetworkStatusViewController!
     var mockContainerViewController: MockContainerViewController!
@@ -96,3 +96,94 @@ final class NetworkStatusViewControllerTests: ZMSnapshotTestCase {
 
 }
 
+
+
+final class MockConversationRootViewController: UIViewController, NetworkStatusBarDelegate {
+    var isViewDidAppear: Bool = true
+
+    var networkStatusViewController: NetworkStatusViewController!
+
+    var shouldShowNetworkStatusUIInIPadRegularLandscape: Bool {
+        get {
+            return false
+        }
+    }
+
+    var shouldShowNetworkStatusUIInIPadRegularPortrait: Bool {
+        get {
+            return true
+        }
+    }
+}
+
+final class MockConversationListViewController: UIViewController, NetworkStatusBarDelegate {
+    var isViewDidAppear: Bool = true
+
+    var networkStatusViewController: NetworkStatusViewController!
+
+    var shouldShowNetworkStatusUIInIPadRegularLandscape: Bool {
+        get {
+            return true
+        }
+    }
+
+    var shouldShowNetworkStatusUIInIPadRegularPortrait: Bool {
+        get {
+            return false
+        }
+    }
+}
+
+final class NetworkStatusViewControllerTests: XCTestCase {
+    var sutRoot: NetworkStatusViewController!
+    var sutList: NetworkStatusViewController!
+
+    var mockDevice: MockDevice!
+    var mockConversationRoot: MockConversationRootViewController!
+    var mockConversationList: MockConversationListViewController!
+
+    override func setUp() {
+        super.setUp()
+        mockDevice = MockDevice()
+
+        mockConversationList = MockConversationListViewController()
+        sutList = NetworkStatusViewController(device: mockDevice)
+        mockConversationList.networkStatusViewController = sutList
+        mockConversationList.addChildViewController(sutList)
+        sutList.delegate = mockConversationList
+
+        mockConversationRoot = MockConversationRootViewController()
+        sutRoot = NetworkStatusViewController(device: mockDevice)
+        mockConversationRoot.networkStatusViewController = sutRoot
+        mockConversationRoot.addChildViewController(sutRoot)
+        sutRoot.delegate = mockConversationRoot
+    }
+
+    override func tearDown() {
+        sutList = nil
+        sutRoot = nil
+        mockDevice = nil
+
+        ///TODO
+        super.tearDown()
+    }
+
+    func testThatNetworkStatusViewShowOnListButNotRootWhenDevicePropertiesIsIPadLandscapeRegularMode() {
+        // GIVEN
+        sutList.update(state: .offlineExpanded)
+        sutRoot.update(state: .offlineExpanded)
+
+        mockDevice.userInterfaceIdiom = .pad
+        mockDevice.orientation = .landscapeLeft
+
+        // WHEN
+        let traitCollection = UITraitCollection(horizontalSizeClass: .regular)
+        mockConversationList.setOverrideTraitCollection(traitCollection, forChildViewController: sutList)
+        mockConversationRoot.setOverrideTraitCollection(traitCollection, forChildViewController: sutRoot)
+
+        // THEN
+        XCTAssertEqual(sutList.networkStatusView.state, .offlineExpanded, "List's networkStatusView.state should be equal to .offlineExpanded")
+        XCTAssertEqual(sutRoot.networkStatusView.state, .online, "Root's networkStatusView.state should be equal to .online")
+    }
+
+}

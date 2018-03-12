@@ -18,10 +18,8 @@
 
 import Foundation
 
-protocol DeviceProtocol {
-    var userInterfaceIdiom: UIUserInterfaceIdiom { get }
-    var orientation: UIDeviceOrientation { get }
-}
-
-extension UIDevice: DeviceProtocol {
+extension UIViewController {
+    func isIPadRegular(device: DeviceProtocol) -> Bool {
+        return device.userInterfaceIdiom == .pad && self.traitCollection.horizontalSizeClass == .regular
+    }
 }

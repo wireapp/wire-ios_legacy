@@ -25,7 +25,7 @@ enum OfflineBarState {
 }
 
 class OfflineBar: UIView {
-
+    ///FIXME: new file
     static public let collapsedHeight: CGFloat = 2
     static public let expandedHeight: CGFloat = 20
     static public let collapsedCornerRadius: CGFloat = 1
