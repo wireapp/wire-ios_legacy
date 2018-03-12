@@ -194,8 +194,19 @@ typedef NS_ENUM(NSUInteger, ProfileViewControllerTabBarIndex) {
     self.usernameDetailsView = usernameDetailsView;
     
     ProfileTitleView *titleView = [[ProfileTitleView alloc] init];
-    titleView.translatesAutoresizingMaskIntoConstraints = NO;
     [titleView configureWithViewModel:viewModel];
+    
+    if (@available(iOS 11, *)) {
+        titleView.translatesAutoresizingMaskIntoConstraints = NO;
+        self.navigationItem.titleView = titleView;
+    } else {
+        titleView.translatesAutoresizingMaskIntoConstraints = NO;
+        [titleView setNeedsLayout];
+        [titleView layoutIfNeeded];
+        titleView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+        titleView.translatesAutoresizingMaskIntoConstraints = YES;
+    }
+    
     self.navigationItem.titleView = titleView;
     self.profileTitleView = titleView;
 }

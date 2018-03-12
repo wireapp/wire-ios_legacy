@@ -77,6 +77,7 @@ class GroupDetailsViewController: UIViewController, ZMConversationObserver, Grou
         collectionView.bounces = true
         collectionView.alwaysBounceVertical = true
         collectionView.contentInset = UIEdgeInsets(top: 32, left: 0, bottom: 32, right: 0)
+        collectionView.accessibilityIdentifier = "group_details.list"
         
         if #available(iOS 11.0, *) {
             collectionView.contentInsetAdjustmentBehavior = .never
@@ -142,13 +143,13 @@ class GroupDetailsViewController: UIViewController, ZMConversationObserver, Grou
         emptyView.isHidden = collectionViewController.sections.any { $0 is ParticipantsSectionController || $0 is ServicesSectionController }
     }
 
-    func computeVisibleSections() -> [_CollectionViewSectionController] {
-        var sections = [_CollectionViewSectionController]()
+    func computeVisibleSections() -> [CollectionViewSectionController] {
+        var sections = [CollectionViewSectionController]()
         let renameGroupSectionController = RenameGroupSectionController(conversation: conversation)
         sections.append(renameGroupSectionController)
         self.renameGroupSectionController = renameGroupSectionController
         
-        if nil != ZMUser.selfUser().team {
+        if conversation.canManageAccess {
             let guestOptionsSectionController = GuestOptionsSectionController(conversation: conversation, delegate: self, syncCompleted: didCompleteInitialSync)
             sections.append(guestOptionsSectionController)
         }
@@ -226,9 +227,10 @@ extension GroupDetailsViewController: GroupDetailsSectionControllerDelegate, Gue
         navigationController?.pushViewController(viewController, animated: true)
     }
     
-    func presentGuestOptions() {
+    @objc(presentGuestOptionsAnimated:)
+    func presentGuestOptions(animated: Bool) {
         let menu = ConversationOptionsViewController(conversation: conversation, userSession: ZMUserSession.shared()!)
-        navigationController?.pushViewController(menu, animated: true)
+        navigationController?.pushViewController(menu, animated: animated)
     }
     
 }

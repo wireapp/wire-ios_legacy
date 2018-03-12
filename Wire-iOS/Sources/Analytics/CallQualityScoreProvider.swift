@@ -23,20 +23,16 @@ final class CallQualityScoreProvider: NSObject, AnalyticsType {
     public static let shared = CallQualityScoreProvider()
     
     private var lastCallingEvent: [String: NSObject] = [:]
-    public var userScore: RatingState? = nil {
-        didSet {
-            guard let userScore = self.userScore, let rating1 = userScore.rating1, let rating2 = userScore.rating2 else {
-                return
-            }
-            
-            var attributes = lastCallingEvent
-            attributes["score1"] = NSNumber(integerLiteral: rating1)
-            attributes["score2"] = NSNumber(integerLiteral: rating2)
-            nextProvider?.tagEvent(type(of: self).callingEventName, attributes: attributes)
-            self.userScore = nil
-        }
+
+    func recordCallQualityReview(score: Int, callDuration: Int) {
+
+        var attributes = lastCallingEvent
+        attributes["score"] = score as NSNumber
+        attributes["duration"] = callDuration as NSNumber
+
+        nextProvider?.tagEvent(type(of: self).callingEventName, attributes: attributes)
     }
-    
+
     private static let callingEventName = "calling.avs_metrics_ended_call"
     
     public var nextProvider: AnalyticsType? = nil
@@ -63,4 +59,32 @@ final class CallQualityScoreProvider: NSObject, AnalyticsType {
     func persistedAttributes(for event: String) -> [String : NSObject]? {
         return nextProvider?.persistedAttributes(for: event)
     }
+}
+
+// MARK: - Survey Mute Filter
+
+let UserDefaultLastCallSurveyDate = "LastCallSurveyDate"
+let CallSurveyMuteInterval: TimeInterval = Calendar.secondsInDays(10)
+
+extension CallQualityScoreProvider {
+
+    static func updateLastSurveyDate(_ date: Date) {
+        UserDefaults.standard.set(date.timeIntervalSinceReferenceDate, forKey: UserDefaultLastCallSurveyDate)
+    }
+
+    static func resetSurveyMuteFilter() {
+        UserDefaults.standard.removeObject(forKey: UserDefaultLastCallSurveyDate)
+    }
+    
+    static func canRequestSurvey(at date: Date, muteInterval: TimeInterval = CallSurveyMuteInterval) -> Bool {
+        
+        let lastSurveyTimestamp = UserDefaults.standard.double(forKey: UserDefaultLastCallSurveyDate)
+        let lastSurveyDate = Date(timeIntervalSinceReferenceDate: lastSurveyTimestamp)
+        let nextPossibleDate = lastSurveyDate.addingTimeInterval(muteInterval)
+                
+        // Allow the survey if the mute period is finished
+        return (date >= nextPossibleDate)
+        
+    }
+    
 }

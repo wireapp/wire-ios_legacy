@@ -31,8 +31,9 @@ class ProfileTitleView : UIView {
         }
     }
     
-    init() {
-        super.init(frame: .zero)
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+
         setupViews()
         createConstraints()
     }
@@ -44,7 +45,7 @@ class ProfileTitleView : UIView {
     private func setupViews() {
         verifiedImageView.accessibilityIdentifier = "VerifiedShield"
         
-        titleLabel.accessibilityIdentifier = "name"
+        titleLabel.accessibilityIdentifier = "user_profile.name"
         titleLabel.textAlignment = .center
         titleLabel.backgroundColor = .clear
         

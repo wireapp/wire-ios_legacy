@@ -22,7 +22,7 @@ enum AppState : Equatable {
     
     case headless
     case authenticated(completedRegistration: Bool)
-    case unauthenticated(error : Error?)
+    case unauthenticated(error : NSError?)
     case blacklisted
     case migrating
     case loading(account: Account, from: Account?)
@@ -30,12 +30,18 @@ enum AppState : Equatable {
     public static func ==(lhs: AppState, rhs: AppState) -> Bool {
         
         switch (lhs, rhs) {
+        case let (.unauthenticated(lhs_error), .unauthenticated(rhs_error)):
+            return lhs_error == rhs_error
+        
+        case let (.authenticated(lhs), .authenticated(rhs)):
+            return lhs == rhs
+            
+        case let (.loading(account: lhs1, from: lhs2), .loading(account: rhs1, from: rhs2)):
+            return lhs1 == rhs1 && lhs2 == rhs2
+            
         case (.headless, .headless),
-             (.authenticated, .authenticated),
-             (.unauthenticated, .unauthenticated),
              (.blacklisted, .blacklisted),
-             (.migrating, .migrating),
-             (.loading, .loading):
+             (.migrating, .migrating):
             return true
         default:
             return false

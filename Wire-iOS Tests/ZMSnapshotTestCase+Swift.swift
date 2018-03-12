@@ -20,6 +20,7 @@
 import Foundation
 import Cartography
 import Classy
+@testable import Wire
 
 
 extension UITableViewCell: UITableViewDelegate, UITableViewDataSource {
@@ -109,5 +110,15 @@ extension ZMSnapshotTestCase {
     
     func verifyInAllIPhoneSizes(view: UIView, extraLayoutPass: Bool = false, file: StaticString = #file, line: UInt = #line) {
         verifyView(inAllPhoneSizes: view, extraLayoutPass: extraLayoutPass, file: file.utf8SignedStart(), line: line, configurationBlock: nil)
+    }
+    
+    func verifyInAllColorSchemes(view: UIView, tolerance: Float = 0, file: StaticString = #file, line: UInt = #line) {
+        if var themeable = view as? Themeable {
+            themeable.colorSchemeVariant = .light
+            verifyView(view, extraLayoutPass: false, tolerance: tolerance, file: file.utf8SignedStart(), line: line, identifier: "LightTheme")
+            themeable.colorSchemeVariant = .dark
+            verifyView(view, extraLayoutPass: false, tolerance: tolerance, file: file.utf8SignedStart(), line: line, identifier: "DarkTheme")
+        }
+        
     }
 }

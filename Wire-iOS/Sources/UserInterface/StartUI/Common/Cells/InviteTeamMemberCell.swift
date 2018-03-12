@@ -106,3 +106,16 @@ final class CreateGroupCell: StartUIIconCell  {
     }
     
 }
+
+final class CreateGuestRoomCell: StartUIIconCell  {
+    
+    override func setupViews() {
+        super.setupViews()
+        icon = .guest
+        title = "peoplepicker.quick-action.create-guest-room".localized
+        isAccessibilityElement = true
+        accessibilityLabel = title
+        accessibilityIdentifier = "button.searchui.createguestroom"
+    }
+    
+}

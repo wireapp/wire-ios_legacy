@@ -16,8 +16,6 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 // 
 
-
-
 @import QuartzCore;
 @import PureLayout;
 
@@ -128,6 +126,11 @@
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationWillEnterForeground:) name:UIApplicationWillEnterForegroundNotification object:nil];
                 
         [[GuestIndicator appearanceWhenContainedInInstancesOfClasses:@[StartUIView.class]] setColorSchemeVariant:ColorSchemeVariantDark];
+        [[UserCell appearanceWhenContainedInInstancesOfClasses:@[StartUIView.class]] setColorSchemeVariant:ColorSchemeVariantDark];
+        [[UserCell appearanceWhenContainedInInstancesOfClasses:@[StartUIView.class]] setContentBackgroundColor:UIColor.clearColor];
+        [[SectionHeader appearanceWhenContainedInInstancesOfClasses:@[StartUIView.class]] setColorSchemeVariant:ColorSchemeVariantDark];
+        [[GroupConversationCell appearanceWhenContainedInInstancesOfClasses:@[StartUIView.class]] setColorSchemeVariant:ColorSchemeVariantDark];
+        [[GroupConversationCell appearanceWhenContainedInInstancesOfClasses:@[StartUIView.class]] setContentBackgroundColor:UIColor.clearColor];
     }
     return self;
 }

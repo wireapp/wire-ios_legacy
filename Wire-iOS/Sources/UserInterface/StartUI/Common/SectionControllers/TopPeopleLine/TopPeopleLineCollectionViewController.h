@@ -18,15 +18,17 @@
 
 
 #import <Foundation/Foundation.h>
-#import "CollectionViewSectionController.h"
-
-FOUNDATION_EXPORT NSString *const CellReuseIdentifier;
 
 @class TopPeopleLineSection, UserSelection, ZMConversation;
+
+@protocol TopPeopleLineCollectionViewControllerDelegate <NSObject>
+    
+- (void)topPeopleLineCollectionViewControllerDidSelectConversation:(ZMConversation *)conversation;
+    
+@end
 
 @interface TopPeopleLineCollectionViewController : NSObject <UICollectionViewDelegate, UICollectionViewDataSource>
 @property (nonatomic) NSArray<ZMConversation *> *topPeople;
 @property (nonatomic) UserSelection *userSelection;
-@property (nonatomic, weak) TopPeopleLineSection *sectionController;
-@property (nonatomic, weak) id<CollectionViewSectionDelegate> delegate;
+@property (nonatomic, weak) id<TopPeopleLineCollectionViewControllerDelegate> delegate;
 @end

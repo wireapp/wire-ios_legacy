@@ -452,14 +452,7 @@
     ZM_WEAK(self);
     self.titleView.tapHandler = ^(UIButton * _Nonnull button) {
         ZM_STRONG(self);
-        [ConversationInputBarViewController endEditingMessage];
-        [self.inputBarController.inputBar.textView resignFirstResponder];
-        
-        UIViewController *participantsController = [self participantsController];
-        participantsController.transitioningDelegate = self.conversationDetailsTransitioningDelegate;
-        [self createAndPresentParticipantsPopoverControllerWithRect:self.titleView.superview.bounds
-                                                           fromView:self.titleView.superview
-                                              contentViewController:participantsController];
+        [self presentParticipantsViewController:self.participantsController fromView:self.titleView.superview];
     };
     [self.titleView configure];
     
@@ -467,6 +460,17 @@
     self.navigationItem.leftItemsSupplementBackButton = NO;
 
     [self updateRightNavigationItemsButtons];
+}
+    
+- (void)presentParticipantsViewController:(UIViewController *)viewController fromView:(UIView *)sourceView
+{
+    [ConversationInputBarViewController endEditingMessage];
+    [self.inputBarController.inputBar.textView resignFirstResponder];
+    
+    viewController.transitioningDelegate = self.conversationDetailsTransitioningDelegate;
+    [self createAndPresentParticipantsPopoverControllerWithRect:sourceView.bounds
+                                                       fromView:sourceView
+                                          contentViewController:viewController];
 }
 
 - (void)updateInputBarVisibility
@@ -673,6 +677,18 @@
 - (void)conversationContentViewControllerWantsToDismiss:(ConversationContentViewController *)controller
 {
     [self openConversationList];
+}
+    
+- (void)conversationContentViewController:(ConversationContentViewController *)controller presentGuestOptionsFromView:(UIView *)sourceView
+{
+    if (self.conversation.conversationType != ZMConversationTypeGroup) {
+        DDLogError(@"Illegal Operation: Trying to show guest options for non-group conversation");
+        return;
+    }
+    GroupDetailsViewController *groupDetailsViewController = [[GroupDetailsViewController alloc] initWithConversation:self.conversation];
+    UINavigationController *navigationController = groupDetailsViewController.wrapInNavigationController;
+    [groupDetailsViewController presentGuestOptionsAnimated:NO];
+    [self presentParticipantsViewController:navigationController fromView:sourceView];
 }
 
 @end

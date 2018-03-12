@@ -20,7 +20,10 @@
 "general.ok" = "OK";
 "general.next" = "Next";
 "general.cancel" = "Cancel";
+"general.close" = "Close";
 "general.open_settings" = "Open Wire Settings";
+
+"general.guest-room-name" = "Guest room";
 
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -78,6 +81,7 @@
 "peoplepicker.invite_team_members" = "Invite people to join the team";
 "peoplepicker.quick-action.open-conversation" = "Open";
 "peoplepicker.quick-action.create-conversation" = "Create group";
+"peoplepicker.quick-action.create-guest-room" = "Create guest room";
 
 "add_participants.all_contacts_added" = "Everyone's here.";
 
@@ -313,6 +317,9 @@
 "content.system.conversation.you.left" = "%@ left";
 "content.system.conversation.team.member-leave" = "%@ was removed from the team.";
 "content.system.conversation.guest.joined" = "%@ joined";
+
+"content.system.conversation.invite.title" = "People outside your team can join this conversation.";
+"content.system.conversation.invite.button" = "Invite people";
 
 "content.system.other_renamed_conv_to_nothing" = "%@ removed the conversation name";
 "content.system.you_renamed_conv_to_nothing" = "You removed the conversation name";
@@ -907,6 +914,18 @@
 "guest_room.error.generic.title" = "Something went wrong";
 "guest_room.error.generic.message" = "Check your connection and try again";
 
+"guest_room.link.header.title" = "Invite others with a link";
+"guest_room.link.header.subtitle" = "Anyone with the link can join the conversation for 24 hours, even if they don’t have Wire.";
+
+"guest_room.link.button.title" = "Create Link";
+
+"guest_room.actions.copy_link" = "Copy Link";
+"guest_room.actions.copied_link" = "Link Copied!";
+"guest_room.actions.share_link" = "Share Link";
+"guest_room.actions.revoke_link" = "Revoke Link";
+
+"guest_room.share.message" = "Join me in a conversation on Wire:\n%@";
+
 // Registration
 
 "registration.title" = "Registration";
@@ -1134,3 +1153,14 @@
 "availability.available.placeholder" = "%@ is available";
 "availability.away.placeholder" = "%@ is away";
 "availability.busy.placeholder" = "%@ is busy";
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Call Quality Survey
+
+"calling.quality_survey.title" = "Call Quality Survey";
+"calling.quality_survey.question" = "How do you rate the overall quality of the call?";
+"calling.quality_survey.answer.1" = "Bad";
+"calling.quality_survey.answer.2" = "Poor";
+"calling.quality_survey.answer.3" = "Fair";
+"calling.quality_survey.answer.4" = "Good";
+"calling.quality_survey.answer.5" = "Excellent";

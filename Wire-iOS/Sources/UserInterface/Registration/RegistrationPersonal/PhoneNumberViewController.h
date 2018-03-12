@@ -31,6 +31,7 @@
 
 @property (nonatomic, readonly) RegistrationTextField *phoneNumberField;
 @property (nonatomic, readonly) Country *country;
+@property (nonatomic) NSString *phoneNumber;
 @property (nonatomic) BOOL editable;
 
 @end

@@ -33,7 +33,7 @@ class ServicesSectionController: GroupDetailsSectionController {
     override func prepareForUse(in collectionView : UICollectionView?) {
         super.prepareForUse(in: collectionView)
         
-        collectionView?.register(GroupDetailsParticipantCell.self, forCellWithReuseIdentifier: GroupDetailsParticipantCell.zm_reuseIdentifier)
+        collectionView?.register(UserCell.self, forCellWithReuseIdentifier: UserCell.zm_reuseIdentifier)
     }
     
     override var sectionTitle: String {
@@ -50,10 +50,11 @@ class ServicesSectionController: GroupDetailsSectionController {
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let user = serviceUsers[indexPath.row]
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: GroupDetailsParticipantCell.zm_reuseIdentifier, for: indexPath) as! GroupDetailsParticipantCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: UserCell.zm_reuseIdentifier, for: indexPath) as! UserCell
         
         cell.configure(with: user, conversation: conversation)
         cell.separator.isHidden = (serviceUsers.count - 1) == indexPath.row
+        cell.accessoryIconView.isHidden = false
         cell.accessibilityIdentifier = "participants.section.services.cell"
         return cell
     }

@@ -26,7 +26,6 @@
 #import "ProfilePresenter.h"
 #import "ShareContactsViewController.h"
 #import "ZClientViewController.h"
-#import "SearchResultCell.h"
 #import "TopPeopleCell.h"
 #import "StartUIInviteActionBar.h"
 #import "Button.h"
@@ -138,6 +137,7 @@ static NSUInteger const StartUIInitiallyShowsKeyboardConversationThreshold = 10;
     [self.view addSubview:self.searchResultsViewController.view];
     [self.searchResultsViewController didMoveToParentViewController:self];
     self.searchResultsViewController.searchResultsView.emptyResultView = self.emptyResultLabel;
+    self.searchResultsViewController.searchResultsView.collectionView.accessibilityIdentifier = @"search.list";
     
     self.quickActionsBar = [[StartUIInviteActionBar alloc] init];
     [self.quickActionsBar.inviteButton addTarget:self action:@selector(inviteMoreButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
