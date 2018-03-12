@@ -19,14 +19,32 @@
 import Foundation
 import Cartography
 
+typealias NetworkStatusBarDelegate = NetworkStatusViewControllerDelegate & NetworkStatusViewDelegate
+
+protocol NetworkStatusViewControllerDelegate: class {
+    /// if return false, NetworkStatusViewController will not disapper in iPad regular mode landscape orientation.
+    var shouldShowNetworkStatusUIInIPadRegularLandscape: Bool {get}
+
+    /// if return false, NetworkStatusViewController will not disapper in iPad regular mode portrait orientation.
+    var shouldShowNetworkStatusUIInIPadRegularPortrait: Bool {get}
+}
+
 @objc
 class NetworkStatusViewController : UIViewController {
-    
-    fileprivate var networkStatusView : NetworkStatusView!
+
+    public weak var delegate: NetworkStatusBarDelegate? {
+        didSet {
+            networkStatusView.delegate = delegate
+        }
+    }
+
+    let networkStatusView = NetworkStatusView()
     fileprivate var networkStatusObserverToken : Any?
     fileprivate var pendingState : NetworkStatusViewState?
+    var state: NetworkStatusViewState?
     fileprivate weak var offlineBarTimer : Timer?
-    
+    fileprivate var device: DeviceProtocol = UIDevice.current
+
     override func loadView() {
         let passthroughTouchesView = PassthroughTouchesView()
         passthroughTouchesView.clipsToBounds = true
@@ -38,8 +56,6 @@ class NetworkStatusViewController : UIViewController {
     }
     
     override func viewDidLoad() {
-        networkStatusView = NetworkStatusView()
-        
         view.addSubview(networkStatusView)
         
         constrain(self.view, networkStatusView) { containerView, networkStatusView in
@@ -47,7 +63,7 @@ class NetworkStatusViewController : UIViewController {
             networkStatusView.right == containerView.right
             networkStatusView.top == containerView.top
         }
-        
+
         if let userSession = ZMUserSession.shared() {
             update(state: viewState(from: userSession.networkState))
             networkStatusObserverToken = ZMNetworkAvailabilityChangeNotification.addNetworkAvailabilityObserver(self, userSession: userSession)
@@ -116,7 +132,9 @@ class NetworkStatusViewController : UIViewController {
         pendingState = nil
     }
     
-    fileprivate func update(state : NetworkStatusViewState) {
+    func update(state : NetworkStatusViewState) {
+        self.state = state
+
         networkStatusView.update(state: state, animated: true)
         
         if state == .offlineExpanded {
@@ -132,4 +150,69 @@ extension NetworkStatusViewController : ZMNetworkAvailabilityObserver {
         enqueue(state: viewState(from: newState))
     }
     
+}
+
+// MARK: - iPad size class and orientation switching
+
+extension NetworkStatusViewController {
+    
+    func shouldShowOnIPad(for newOrientation: UIDeviceOrientation?) -> Bool {
+        guard isIPadRegular(device: device) else { return true }
+
+        guard let delegate = self.delegate, let newOrientation = newOrientation else { return true }
+
+        if newOrientation.isPortrait {
+            return delegate.shouldShowNetworkStatusUIInIPadRegularPortrait
+        } else if newOrientation.isLandscape {
+            return delegate.shouldShowNetworkStatusUIInIPadRegularLandscape
+        } else {
+            return true
+        }
+    }
+
+    func updateStateForIPad(for newOrientation: UIDeviceOrientation?) {
+        if shouldShowOnIPad(for: newOrientation) {
+            if let state = state {
+                networkStatusView.update(state: state, animated: false)
+            }
+        } else {
+            /// when size class changes and delegate view controller disabled to show networkStatusView, hide the networkStatusView
+            networkStatusView.update(state: .online, animated: false)
+        }
+    }
+
+    open override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        guard device.userInterfaceIdiom == .pad else { return }
+
+        updateStateForIPad(for: device.orientation)
+    }
+
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
+        guard isIPadRegular(device: device) else { return }
+
+        // find out the new orientation with the new size
+        var newOrientation: UIDeviceOrientation = .unknown
+        if size.width > 0 {
+            if size.width > size.height {
+                newOrientation =  .landscapeLeft
+            } else if size.width < size.height {
+                newOrientation =  .portrait
+            }
+        }
+
+        updateStateForIPad(for: newOrientation)
+    }
+
+}
+
+extension NetworkStatusViewController {
+    /// init method for injecting mock device
+    ///
+    /// - Parameter device: Provide this param for testing only
+    convenience init(device: DeviceProtocol = UIDevice.current) {
+        self.init(nibName: nil, bundle: nil)
+        self.device = device
+    }
 }
