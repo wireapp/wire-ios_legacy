@@ -926,6 +926,9 @@
 
 "guest_room.share.message" = "Join me in a conversation on Wire:\n%@";
 
+"guest_room.expiration.hours_left" = "%@h left";
+"guest_room.expiration.less_than_minutes_left" = "Less than %@m left";
+
 // Registration
 
 "registration.title" = "Registration";
