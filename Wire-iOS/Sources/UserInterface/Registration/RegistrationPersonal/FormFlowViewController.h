@@ -20,6 +20,15 @@
 #import <UIKit/UIKit.h>
 #import "FormStepDelegate.h"
 
+@class FormFlowViewController;
+@class LoginCredentials;
+
+@protocol RegistrationFlowViewControllerDelegate <NSObject>
+
+- (void)registrationFlowViewController:(FormFlowViewController *)viewController needsToSignInWith:(LoginCredentials *)loginCredentials;
+
+@end
+
 @interface FormFlowViewController : UIViewController <UINavigationControllerDelegate>
 
 @property (nonatomic, weak) id<FormStepDelegate> formStepDelegate;

@@ -239,7 +239,7 @@
     }
     else if (error.code == ZMUserSessionNeedsPasswordToRegisterClient) {
         [self.navigationController popToRootViewControllerAnimated:NO];
-        [self.registrationDelegate registrationPhoneFlowViewController:self needsToSignInWith:[[LoginCredentials alloc] initWithError:error]];
+        [self.registrationDelegate registrationFlowViewController:self needsToSignInWith:[[LoginCredentials alloc] initWithError:error]];
     }
     else {
         [self showAlertForError:error];
@@ -330,7 +330,7 @@
     if(error.code == ZMUserSessionPhoneNumberIsAlreadyRegistered) {
         LoginCredentials *credentials = [[LoginCredentials alloc] initWithEmailAddress:nil phoneNumber:self.unregisteredUser.phoneNumber password:nil];
         [self.phoneNumberStepViewController reset];
-        [self.registrationDelegate registrationPhoneFlowViewController:self needsToSignInWith:credentials];
+        [self.registrationDelegate registrationFlowViewController:self needsToSignInWith:credentials];
     }
     
     [self showAlertForError:error];

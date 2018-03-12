@@ -29,13 +29,6 @@
 @class RegistrationPhoneFlowViewController;
 @class LoginCredentials;
 
-@protocol RegistrationPhoneFlowViewControllerDelegate <NSObject>
-
-- (void)registrationPhoneFlowViewController:(RegistrationPhoneFlowViewController *)viewController needsToSignInWith:(LoginCredentials *)loginCredentials;
-
-@end
-
-
 @interface RegistrationPhoneFlowViewController : FormFlowViewController
 
 - (instancetype)initWithCoder:(NSCoder *)aDecoder NS_UNAVAILABLE;
@@ -43,6 +36,6 @@
 - (instancetype)initWithUnregisteredUser:(ZMIncompleteRegistrationUser *)unregisteredUser NS_DESIGNATED_INITIALIZER;
 
 @property (nonatomic, strong) AnalyticsTracker *analyticsTracker;
-@property (nonatomic, weak) id <RegistrationPhoneFlowViewControllerDelegate> registrationDelegate;
+@property (nonatomic, weak) id <RegistrationFlowViewControllerDelegate> registrationDelegate;
 
 @end

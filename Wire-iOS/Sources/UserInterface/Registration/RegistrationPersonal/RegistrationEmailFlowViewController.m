@@ -191,7 +191,7 @@
                                          password:self.unregisteredUser.password];
         
         [self.emailStepViewController reset];
-        [self.registrationDelegate registrationEmailFlowViewController:self needsToSignInWith:credentials];
+        [self.registrationDelegate registrationFlowViewController:self needsToSignInWith:credentials];
     }
     
 }

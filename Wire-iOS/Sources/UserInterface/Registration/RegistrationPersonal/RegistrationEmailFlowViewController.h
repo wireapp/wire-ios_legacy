@@ -26,16 +26,6 @@
 @class AnalyticsTracker;
 @class LoginCredentials;
 
-// a refactory could be done here by unifying the two flow view controller
-// protocols inside FormFlowViewController...
-
-@protocol RegistrationEmailFlowViewControllerDelegate <NSObject>
-
-- (void)registrationEmailFlowViewController:(RegistrationEmailFlowViewController *)viewController needsToSignInWith:(LoginCredentials *)loginCredentials;
-
-@end
-
-
 @interface RegistrationEmailFlowViewController : FormFlowViewController
 
 - (instancetype)initWithCoder:(NSCoder *)aDecoder NS_UNAVAILABLE;
@@ -43,6 +33,6 @@
 - (instancetype)initWithUnregisteredUser:(ZMIncompleteRegistrationUser *)unregisteredUser NS_DESIGNATED_INITIALIZER;
 
 @property (nonatomic, strong) AnalyticsTracker *analyticsTracker;
-@property (nonatomic, weak) id <RegistrationEmailFlowViewControllerDelegate> registrationDelegate;
+@property (nonatomic, weak) id <RegistrationFlowViewControllerDelegate> registrationDelegate;
 
 @end
