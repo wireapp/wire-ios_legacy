@@ -318,7 +318,7 @@ typedef NS_ENUM(NSUInteger, ProfileUserAction) {
     else if (user.isPendingApprovalByOtherUser) {
         return ProfileUserActionCancelConnectionRequest;
     }
-    else if (! user.isConnected && ! user.isPendingApprovalByOtherUser) {
+    else if (user.canBeConnected) {
         return ProfileUserActionSendConnectionRequest;
     } else {
         return ProfileUserActionOpenConversation;

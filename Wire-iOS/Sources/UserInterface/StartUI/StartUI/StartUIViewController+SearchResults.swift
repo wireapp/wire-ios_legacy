@@ -114,6 +114,7 @@ extension StartUIViewController: SearchResultsViewControllerDelegate {
             fatal("No user session present")
         }
         
+        GuestRoomEvent.created.track()
         self.showLoadingView = true
         userSession.performChanges {
             let conversation = ZMConversation.insertGroupConversation(intoUserSession: userSession,

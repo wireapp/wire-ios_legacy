@@ -106,6 +106,11 @@ final class AnalyticsMixpanelProvider: NSObject, AnalyticsProvider {
         LinearGroupCreationFlowEvent.groupCreationSucceededName,
         LinearGroupCreationFlowEvent.addParticipantsName,
         ConversationEvent.toggleAllowGuestsName,
+        GuestLinkEvent.created.name,
+        GuestLinkEvent.copied.name,
+        GuestLinkEvent.revoked.name,
+        GuestLinkEvent.shared.name,
+        GuestRoomEvent.created.name
         ])
     
     private static let enabledSuperProperties = Set<String>([
