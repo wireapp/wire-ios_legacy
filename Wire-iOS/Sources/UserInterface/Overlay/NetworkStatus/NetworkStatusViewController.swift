@@ -29,6 +29,23 @@ protocol NetworkStatusViewControllerDelegate: class {
     var shouldShowNetworkStatusUIInIPadRegularPortrait: Bool {get}
 }
 
+extension NetworkStatusViewController {
+
+    /// store a list of NetworkStatusViewController, for handling global notifyWhenOffline methdo
+    static fileprivate var selfInstances: [NetworkStatusViewController] = []
+    static fileprivate var shared: NetworkStatusViewController? {
+        get {
+            for networkStatusViewController in selfInstances {
+                if networkStatusViewController.shouldShowOnIPad(for: networkStatusViewController.device.orientation) {
+                    return networkStatusViewController
+                }
+            }
+
+            return nil
+        }
+    }
+}
+
 @objc
 class NetworkStatusViewController : UIViewController {
 
@@ -50,7 +67,21 @@ class NetworkStatusViewController : UIViewController {
         passthroughTouchesView.clipsToBounds = true
         self.view = passthroughTouchesView
     }
-    
+
+    /// default init method with a parameter for injecting mock device
+    ///
+    /// - Parameter device: Provide this param for testing only
+    init(device: DeviceProtocol = UIDevice.current) {
+        super.init(nibName: nil, bundle: nil)
+
+        self.device = device
+        NetworkStatusViewController.selfInstances.append(self)
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
     deinit {
         NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(applyPendingState), object: nil)
     }
@@ -72,14 +103,17 @@ class NetworkStatusViewController : UIViewController {
         networkStatusView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tappedOnNetworkStatusBar)))
     }
     
-    public func notifyWhenOffline() -> Bool {
+    static public func notifyWhenOffline() -> Bool {
+        guard let shared = NetworkStatusViewController.shared else { return true }
+        let networkStatusView = shared.networkStatusView
+
         if networkStatusView.state == .offlineCollapsed {
-            update(state: .offlineExpanded)
+            shared.update(state: .offlineExpanded)
         }
-        
+
         return networkStatusView.state == .offlineExpanded || networkStatusView.state == .offlineCollapsed
     }
-    
+
     func showOfflineAlert() {
         let offlineAlert = UIAlertController.init(title: "system_status_bar.no_internet.title".localized,
                                                   message: "system_status_bar.no_internet.explanation".localized,
@@ -207,12 +241,3 @@ extension NetworkStatusViewController {
 
 }
 
-extension NetworkStatusViewController {
-    /// init method for injecting mock device
-    ///
-    /// - Parameter device: Provide this param for testing only
-    convenience init(device: DeviceProtocol = UIDevice.current) {
-        self.init(nibName: nil, bundle: nil)
-        self.device = device
-    }
-}

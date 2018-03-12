@@ -20,12 +20,14 @@ import Foundation
 
 
 extension AppDelegate {
-        
+
     /// @return YES if network is offline
     @discardableResult
     @objc
     static func checkNetworkAndFlashIndicatorIfNecessary() -> Bool {
-        return AppDelegate.shared().notificationWindowController?.networkStatusViewController?.notifyWhenOffline() ?? true
+        return NetworkStatusViewController.notifyWhenOffline()
+        ///TODO: rm networkStatusViewController from notificationWindowController and rewrite related logic
     }
-    
+
 }
+

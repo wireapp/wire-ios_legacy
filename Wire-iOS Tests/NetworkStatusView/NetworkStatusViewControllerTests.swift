@@ -161,5 +161,29 @@ final class NetworkStatusViewControllerTests: XCTestCase {
                                        listState: .offlineExpanded,
                                        rootState: .offlineExpanded)
     }
+
+    func testThatNotifyWhenOfflineShowsNetworkStatusView() {
+        // GIVEN
+        let userInterfaceIdiom: UIUserInterfaceIdiom = .pad
+        let horizontalSizeClass: UIUserInterfaceSizeClass = .regular
+        let orientation: UIDeviceOrientation = .landscapeLeft
+
+        sutList.update(state: .offlineCollapsed)
+        sutRoot.update(state: .offlineCollapsed)
+
+        mockDevice.userInterfaceIdiom = userInterfaceIdiom
+        mockDevice.orientation = orientation
+
+        // WHEN
+        let traitCollection = UITraitCollection(horizontalSizeClass: horizontalSizeClass)
+        mockConversationList.setOverrideTraitCollection(traitCollection, forChildViewController: sutList)
+        mockConversationRoot.setOverrideTraitCollection(traitCollection, forChildViewController: sutRoot)
+
+        _ = NetworkStatusViewController.notifyWhenOffline()
+
+        // THEN
+        XCTAssertEqual(sutList.networkStatusView.state, .offlineExpanded, "List's networkStatusView.state should be equal to .offlineExpanded")
+        XCTAssertEqual(sutRoot.networkStatusView.state, .online, "Root's networkStatusView.state should be equal to .online")
+    }
 }
 
