@@ -27,7 +27,7 @@
 #import "Analytics.h"
 #import "WebLinkTextView.h"
 #import "WireSyncEngine+iOS.h"
-
+#import "Wire-Swift.h"
 #import "NSURL+WireLocale.h"
 #import "NSURL+WireURLs.h"
 #import "Button.h"
@@ -119,15 +119,18 @@
     if (! self.initialConstraintsCreated) {
         self.initialConstraintsCreated = YES;
         
-        [self.titleLabel autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:28];
-        [self.titleLabel autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:28];
+        CGFloat inset = 28.0;
+        [self.titleLabel autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:inset];
+        [self.titleLabel autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:inset];
         
         [self.termsOfUseText autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.titleLabel withOffset:5];
-        [self.termsOfUseText autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:28];
-        [self.termsOfUseText autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:28];
+        [self.termsOfUseText autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:inset];
+        [self.termsOfUseText autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:inset];
         
         [self.agreeButton autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.termsOfUseText withOffset:24];
-        [self.agreeButton autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsMake(0, 28, 28, 28) excludingEdge:ALEdgeTop];
+        [self.agreeButton autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:inset];
+        [self.agreeButton autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:inset];
+        [[self.agreeButton.bottomAnchor constraintEqualToAnchor:self.safeBottomAnchor constant:-inset] setActive:YES];
         [self.agreeButton autoSetDimension:ALDimensionHeight toSize:40];
     }
 }

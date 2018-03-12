@@ -24,7 +24,11 @@ protocol GroupDetailsSectionControllerDelegate: class {
     
 }
 
-class GroupDetailsSectionController: NSObject, _CollectionViewSectionController {
+class GroupDetailsSectionController: NSObject, CollectionViewSectionController {
+    
+    var isHidden: Bool {
+        return false
+    }
     
     var sectionTitle: String {
         return ""
@@ -34,17 +38,14 @@ class GroupDetailsSectionController: NSObject, _CollectionViewSectionController 
         return "section_header"
     }
     
-    var variant : ColorSchemeVariant = ColorScheme.default().variant
-    
     func prepareForUse(in collectionView : UICollectionView?) {
-        collectionView?.register(GroupDetailsSectionHeader.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: "SectionHeader")
+        collectionView?.register(SectionHeader.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: "SectionHeader")
     }
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         let supplementaryView = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionElementKindSectionHeader, withReuseIdentifier: "SectionHeader", for: indexPath)
         
-        if let sectionHeaderView = supplementaryView as? GroupDetailsSectionHeader {
-            sectionHeaderView.variant = variant
+        if let sectionHeaderView = supplementaryView as? SectionHeader {
             sectionHeaderView.titleLabel.text = sectionTitle
             sectionHeaderView.accessibilityIdentifier = sectionAccessibilityIdentifier
         }

@@ -32,6 +32,8 @@ final class LandingViewController: UIViewController {
 
     private let tracker = AnalyticsTracker(context: AnalyticsContextRegistrationEmail)
 
+    fileprivate var device: DeviceProtocol
+
     // MARK: - UI styles
 
     static let semiboldFont = FontSpec(.large, .semibold).font!
@@ -80,7 +82,7 @@ final class LandingViewController: UIViewController {
         return label
     }()
 
-    fileprivate let buttonStackView: UIStackView = {
+    let buttonStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.distribution = .fillEqually
         stackView.spacing = 24
@@ -144,6 +146,19 @@ final class LandingViewController: UIViewController {
         return button
     }()
 
+    /// init method for injecting mock device
+    ///
+    /// - Parameter device: Provide this param for testing only
+    init(device: DeviceProtocol = UIDevice.current) {
+        self.device = device
+
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -256,7 +271,8 @@ final class LandingViewController: UIViewController {
     }
 
     func updateStackViewAxis() {
-        guard UIDevice.current.userInterfaceIdiom == .pad else { return }
+        let userInterfaceIdiom = device.userInterfaceIdiom
+        guard userInterfaceIdiom == .pad else { return }
 
         switch self.traitCollection.horizontalSizeClass {
         case .regular:

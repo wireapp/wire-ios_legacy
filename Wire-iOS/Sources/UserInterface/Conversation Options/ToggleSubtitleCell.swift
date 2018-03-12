@@ -48,7 +48,7 @@ final class ToggleSubtitleCell: UITableViewCell, CellConfigurationConfigurable {
         toggle.addTarget(self, action: #selector(toggleChanged), for: .valueChanged)
         subtitleLabel.numberOfLines = 0
         subtitleLabel.font = FontSpec(.small, .regular).font
-        titleLabel.font = FontSpec(.normal, .regular).font
+        titleLabel.font = FontSpec(.normal, .light).font
         titleLabel.accessibilityIdentifier = "label.guestoptions.description"
         accessibilityElements = [titleLabel, toggle]
     }
@@ -77,7 +77,7 @@ final class ToggleSubtitleCell: UITableViewCell, CellConfigurationConfigurable {
         func color(_ name: String) -> UIColor {
             return ColorScheme.default().color(withName: name, variant: variant)
         }
-        topContainer.backgroundColor = color(ColorSchemeColorBackground)
+        topContainer.backgroundColor = color(ColorSchemeColorBarBackground)
         titleLabel.textColor = color(ColorSchemeColorTextForeground)
         subtitleLabel.textColor = color(ColorSchemeColorTextDimmed)
         backgroundColor = .clear

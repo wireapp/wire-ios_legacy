@@ -20,11 +20,16 @@ import XCTest
 @testable import Wire
 
 class MockOptionsViewModelConfiguration: ConversationOptionsViewModelConfiguration {
+
     typealias SetHandler = (Bool, (VoidResult) -> Void) -> Void
     var allowGuests: Bool
     var setAllowGuests: SetHandler?
     var allowGuestsChangedHandler: ((Bool) -> Void)?
     var title: String
+    var linkResult: Result<String?>? = nil
+    var deleteResult: VoidResult = .success
+    var createResult: Result<String>? = nil
+    var isCodeEnabled = true
     
     init(allowGuests: Bool, title: String = "", setAllowGuests: SetHandler? = nil) {
         self.allowGuests = allowGuests
@@ -35,6 +40,18 @@ class MockOptionsViewModelConfiguration: ConversationOptionsViewModelConfigurati
     func setAllowGuests(_ allowGuests: Bool, completion: @escaping (VoidResult) -> Void) {
         setAllowGuests?(allowGuests, completion)
     }
+    
+    func createConversationLink(completion: @escaping (Result<String>) -> Void) {
+        createResult.apply(completion)
+    }
+    
+    func fetchConversationLink(completion: @escaping (Result<String?>) -> Void) {
+        linkResult.apply(completion)
+    }
+    
+    func deleteLink(completion: @escaping (VoidResult) -> Void) {
+        completion(deleteResult)
+    }
 }
 
 final class ConversationOptionsViewControllerTests: ZMSnapshotTestCase {
@@ -44,6 +61,7 @@ final class ConversationOptionsViewControllerTests: ZMSnapshotTestCase {
         let config = MockOptionsViewModelConfiguration(allowGuests: true)
         let viewModel = ConversationOptionsViewModel(configuration: config)
         let sut = ConversationOptionsViewController(viewModel: viewModel, variant: .light)
+        sut.view.layer.speed = 0
         
         // Then
         verify(view: sut.view)
@@ -52,6 +70,75 @@ final class ConversationOptionsViewControllerTests: ZMSnapshotTestCase {
     func testThatItRendersTeamOnly_DarkTheme() {
         // Given
         let config = MockOptionsViewModelConfiguration(allowGuests: true)
+        let viewModel = ConversationOptionsViewModel(configuration: config)
+        let sut = ConversationOptionsViewController(viewModel: viewModel, variant: .dark)
+        sut.view.layer.speed = 0
+        
+        // Then
+        verify(view: sut.view)
+    }
+    
+    func testThatItRendersAllowGuests_WithLink() {
+        // Given
+        let config = MockOptionsViewModelConfiguration(allowGuests: true)
+        config.linkResult = .success("https://app.wire.com/772bfh1bbcssjs982637 3nbbdsn9917nbbdaehkej827648-72bns9")
+        let viewModel = ConversationOptionsViewModel(configuration: config)
+        let sut = ConversationOptionsViewController(viewModel: viewModel, variant: .light)
+        
+        // Then
+        verify(view: sut.view)
+    }
+    
+    func testThatItRendersAllowGuests_WithLink_DarkTheme() {
+        // Given
+        let config = MockOptionsViewModelConfiguration(allowGuests: true)
+        config.linkResult = .success("https://app.wire.com/772bfh1bbcssjs982637 3nbbdsn9917nbbdaehkej827648-72bns9")
+        let viewModel = ConversationOptionsViewModel(configuration: config)
+        let sut = ConversationOptionsViewController(viewModel: viewModel, variant: .dark)
+        
+        // Then
+        verify(view: sut.view)
+    }
+    
+    func testThatItRendersAllowGuests_WithLink_Copying() {
+        // Given
+        let config = MockOptionsViewModelConfiguration(allowGuests: true)
+        config.linkResult = .success("https://app.wire.com/772bfh1bbcssjs982637 3nbbdsn9917nbbdaehkej827648-72bns9")
+        let viewModel = ConversationOptionsViewModel(configuration: config)
+        let sut = ConversationOptionsViewController(viewModel: viewModel, variant: .light)
+        viewModel.copyInProgress = true
+        
+        // Then
+        verify(view: sut.view)
+    }
+    
+    func testThatItRendersAllowGuests_WithLink_DarkTheme_Copying() {
+        // Given
+        let config = MockOptionsViewModelConfiguration(allowGuests: true)
+        config.linkResult = .success("https://app.wire.com/772bfh1bbcssjs982637 3nbbdsn9917nbbdaehkej827648-72bns9")
+        let viewModel = ConversationOptionsViewModel(configuration: config)
+        let sut = ConversationOptionsViewController(viewModel: viewModel, variant: .dark)
+        viewModel.copyInProgress = true
+        
+        // Then
+        verify(view: sut.view)
+    }
+    
+    func testThatItRendersAllowGuests_WithoutLink() {
+        // Given
+        let config = MockOptionsViewModelConfiguration(allowGuests: true)
+        config.linkResult = .success(nil)
+        let viewModel = ConversationOptionsViewModel(configuration: config)
+        let sut = ConversationOptionsViewController(viewModel: viewModel, variant: .light)
+        
+        // Then
+        verify(view: sut.view)
+    }
+    
+    func testThatItRendersAllowGuests_WithoutLink_DarkTheme() {
+        // Given
+        let config = MockOptionsViewModelConfiguration(allowGuests: true)
+        config.linkResult = .success(nil)
         let viewModel = ConversationOptionsViewModel(configuration: config)
         let sut = ConversationOptionsViewController(viewModel: viewModel, variant: .dark)
         
@@ -64,6 +151,7 @@ final class ConversationOptionsViewControllerTests: ZMSnapshotTestCase {
         let config = MockOptionsViewModelConfiguration(allowGuests: true, title: "Italy Trip")
         let viewModel = ConversationOptionsViewModel(configuration: config)
         let sut = ConversationOptionsViewController(viewModel: viewModel, variant: .light)
+        sut.view.layer.speed = 0
         
         // Then
         verify(view: sut.wrapInNavigationController().view)
@@ -82,8 +170,25 @@ final class ConversationOptionsViewControllerTests: ZMSnapshotTestCase {
     func testThatItUpdatesWhenItReceivesAChange() {
         // Given
         let config = MockOptionsViewModelConfiguration(allowGuests: false)
+        config.linkResult = .success(nil)
         let viewModel = ConversationOptionsViewModel(configuration: config)
         let sut = ConversationOptionsViewController(viewModel: viewModel, variant: .light)
+        sut.view.layer.speed = 0
+        
+        XCTAssertNotNil(config.allowGuestsChangedHandler)
+        config.allowGuests = true
+        config.allowGuestsChangedHandler?(true)
+        
+        // Then
+        verify(view: sut.view)
+    }
+    
+    func testThatItUpdatesWhenItReceivesAChange_Loading() {
+        // Given
+        let config = MockOptionsViewModelConfiguration(allowGuests: false)
+        let viewModel = ConversationOptionsViewModel(configuration: config)
+        let sut = ConversationOptionsViewController(viewModel: viewModel, variant: .light)
+        sut.view.layer.speed = 0
         
         XCTAssertNotNil(config.allowGuestsChangedHandler)
         config.allowGuests = true

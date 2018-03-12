@@ -17,13 +17,14 @@
 //
 
 import Foundation
+import StoreKit
 
 fileprivate let zmLog = ZMSLog(tag: "calling")
 
 class ActiveVoiceChannelViewController : UIViewController {
     
     var callStateObserverToken : Any?
-    var answeredCalls : Set<UUID> = Set()
+    var answeredCalls: [UUID: Date] = [:]
     
     deinit {
         visibleVoiceChannelViewController?.stopCallDurationTimer()
@@ -176,31 +177,89 @@ extension ActiveVoiceChannelViewController : WireCallCenterCallStateObserver {
     
     func callCenterDidChange(callState: CallState, conversation: ZMConversation, caller: ZMUser, timestamp: Date?) {
         updateVisibleVoiceChannelViewController()
-    
-        guard DeveloperMenuState.developerMenuEnabled(),
-            (UseAnalytics.boolValue || AutomationHelper.sharedHelper.useAnalytics),
+
+        let changeDate = Date()
+
+        guard !Analytics.shared().isOptedOut,
             !TrackingManager.shared.disableCrashAndAnalyticsSharing
-        else {
-            return
+            else {
+                return
         }
         
-        
-        if case .answered = callState,
-            let presentedController = self.presentedViewController,
-            presentedController is BaseCallQualityViewController {
-            
+        if case .established = callState {
+            answeredCalls[conversation.remoteIdentifier!] = Date()
+        }
+
+        if let presentedController = self.presentedViewController as? CallQualityViewController {
             presentedController.dismiss(animated: true, completion: nil)
         }
-        
-        if case .answered = callState {
-            answeredCalls.insert(conversation.remoteIdentifier!)
+
+        if case let .terminating(reason) = callState {
+            
+            guard let callStartDate = answeredCalls[conversation.remoteIdentifier!] else {
+                return
+            }
+
+            // Only show the survey if the call was longer that 10 seconds
+
+            let callDuration = changeDate.timeIntervalSince(callStartDate)
+
+            guard callDuration > 10 else {
+                return
+            }
+
+            // Only show the survey if the call finished without errors
+            guard reason == .normal || reason == .stillOngoing else {
+                return
+            }
+            
+            guard let qualityController = CallQualityViewController.requestSurveyController(callDuration: callDuration) else {
+                return
+            }
+            
+            qualityController.delegate = self
+            qualityController.transitioningDelegate = self
+            
+            answeredCalls[conversation.remoteIdentifier!] = nil
+            present(qualityController, animated: true)
+            
         }
         
-        if case .terminating = callState, answeredCalls.contains(conversation.remoteIdentifier!) {
-            let baseQualityController = BaseCallQualityViewController()
-            answeredCalls.remove(conversation.remoteIdentifier!)
-            present(baseQualityController, animated: true)
-        }
     }
     
+}
+
+extension ActiveVoiceChannelViewController : UIViewControllerTransitioningDelegate {
+    
+    func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        return (presented is CallQualityViewController) ? CallQualityPresentationTransition() : nil
+    }
+    
+    func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        return (dismissed is CallQualityViewController) ? CallQualityDismissalTransition() : nil
+    }
+    
+}
+
+extension ActiveVoiceChannelViewController : CallQualityViewControllerDelegate {
+    
+    func callQualityController(_ controller: CallQualityViewController, didSelect score: Int) {
+        
+        if score >= 4 {
+            if #available(iOS 10.3, *) {
+                SKStoreReviewController.requestReview()
+            }
+        }
+        
+        controller.dismiss(animated: true, completion: nil)
+        
+        CallQualityScoreProvider.updateLastSurveyDate(Date())
+        CallQualityScoreProvider.shared.recordCallQualityReview(score: score, callDuration: controller.callDuration)
+    }
+    
+    func callQualityControllerDidFinishWithoutScore(_ controller: CallQualityViewController) {
+        CallQualityScoreProvider.updateLastSurveyDate(Date())
+        controller.dismiss(animated: true, completion: nil)
+    }
+
 }

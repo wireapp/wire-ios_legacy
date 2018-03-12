@@ -118,6 +118,7 @@ typedef NS_ENUM(NSUInteger, ProfileUserAction) {
     [self createFooter];
     [self createGuestIndicator];
     
+    self.view.backgroundColor = [UIColor wr_colorFromColorScheme:ColorSchemeColorBackground];
     self.stackViewContainer = [[UIView alloc] initForAutoLayout];
     [self.view addSubview:self.stackViewContainer];
     self.teamsGuestIndicator.hidden = !self.showGuestLabel;
@@ -137,6 +138,14 @@ typedef NS_ENUM(NSUInteger, ProfileUserAction) {
 - (void)setupConstraints
 {
     [self.stackView autoCenterInSuperview];
+    
+    const CGFloat offset = 40;
+    [NSLayoutConstraint autoSetPriority:UILayoutPriorityRequired forConstraints:^{
+        [self.stackView autoPinEdge:ALEdgeLeading toEdge:ALEdgeLeading ofView:self.stackViewContainer withOffset:offset relation:NSLayoutRelationGreaterThanOrEqual];
+        [self.stackView autoPinEdge:ALEdgeTop toEdge:ALEdgeTop ofView:self.stackViewContainer withOffset:offset relation:NSLayoutRelationGreaterThanOrEqual];
+        [self.stackView autoPinEdge:ALEdgeTrailing toEdge:ALEdgeTrailing ofView:self.stackViewContainer withOffset:-offset relation:NSLayoutRelationLessThanOrEqual];
+        [self.stackView autoPinEdge:ALEdgeBottom toEdge:ALEdgeBottom ofView:self.stackViewContainer withOffset:-offset relation:NSLayoutRelationLessThanOrEqual];
+    }];
     
     [self.stackViewContainer autoPinEdgeToSuperviewEdge:ALEdgeTop];
     [self.stackViewContainer autoPinEdgeToSuperviewEdge:ALEdgeLeading];
@@ -309,7 +318,7 @@ typedef NS_ENUM(NSUInteger, ProfileUserAction) {
     else if (user.isPendingApprovalByOtherUser) {
         return ProfileUserActionCancelConnectionRequest;
     }
-    else if (! user.isConnected && ! user.isPendingApprovalByOtherUser) {
+    else if (user.canBeConnected) {
         return ProfileUserActionSendConnectionRequest;
     } else {
         return ProfileUserActionOpenConversation;

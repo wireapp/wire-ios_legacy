@@ -185,6 +185,7 @@
 "conversation.status.added_multiple" = "Persone aggiunte";
 "conversation.status.you_was_added" = "%@ ti ha aggiunto";
 "conversation.status.added_users" = "%@ ha aggiunto %@";
+"conversation.status.joined" = "%@ è entrato";
 "conversation.status.removed_multiple" = "Persone rimosse";
 "conversation.status.you_were_removed" = "Sei stato rimosso";
 "conversation.status.you_left" = "Hai lasciato la conversazione";
@@ -807,6 +808,7 @@
 "self.settings.technical_report.mail.subject" = "Report di chiamata di Wire";
 "self.settings.technical_report.include_log" = "Includere file di registro dettagliato";
 "self.settings.technical_report.privacy_warning" = "Log dettagliati potrebbero contenere dati personali";
+"self.settings.technical_report.no_mail_alert" = "Nessun client di posta rilevato. Fai tap su \"OK\" ed invia i log manualmente a: ";
 
 // Password reset
 "self.settings.password_reset_menu.title" = "Reimposta password";
@@ -900,6 +902,9 @@
 "guest_room.remove_guests.action" = "Rimuovi ospiti";
 "guest_room.revoke_link.message" = "I nuovi ospiti non saranno in grado di partecipare con questo link. Gli ospiti attuali avranno ancora accesso.";
 "guest_room.revoke_link.action" = "Revoca il link";
+
+"guest_room.error.generic.title" = "Si è verificato un errore";
+"guest_room.error.generic.message" = "Controlla la tua connessione e riprova";
 
 // Registration
 

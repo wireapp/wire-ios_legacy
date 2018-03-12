@@ -105,15 +105,32 @@ class ParticipantsCellTests: CoreDataSnapshotTestCase {
         let sut = cell(for: .newConversation, text: "Italy Trip")
         verify(view: sut.prepareForSnapshots(), tolerance: tolerance)
     }
+    
+    // MARK: - Invite Guests
+    
+    func testThatItRendersNewConversationCellWithParticipantsAndName_AllowGuests() {
+        let sut = cell(for: .newConversation, text: "Italy Trip", fillUsers: .many, allowGuests: true)
+        verify(view: sut.prepareForSnapshots(), tolerance: tolerance)
+    }
+    
+    func testThatItRendersNewConversationCellWithParticipantsAndWithoutName_AllowGuests() {
+        let sut = cell(for: .newConversation, fillUsers: .many, allowGuests: true)
+        verify(view: sut.prepareForSnapshots(), tolerance: tolerance)
+    }
+    
+    func testThatItRendersNewConversationCellWithoutParticipants_AllowGuests() {
+        let sut = cell(for: .newConversation, text: "Italy Trip", allowGuests: true)
+        verify(view: sut.prepareForSnapshots(), tolerance: tolerance)
+    }
 
     // MARK: - Helper
 
-    private func cell(for type: ZMSystemMessageType, text: String? = nil, fromSelf: Bool = false, fillUsers: Users = .one) -> ConversationCell {
+    private func cell(for type: ZMSystemMessageType, text: String? = nil, fromSelf: Bool = false, fillUsers: Users = .one, allowGuests: Bool = false) -> ConversationCell {
         let message = ZMSystemMessage(nonce: UUID(), managedObjectContext: uiMOC)
         message.sender = fromSelf ? selfUser : otherUser
         message.systemMessageType = type
         message.text = text
-
+        
         message.users = {
             // We add the sender to ensure it is removed
             let users = usernames.map(createUser) + [selfUser as ZMUser, otherUser as ZMUser]
@@ -124,6 +141,19 @@ class ParticipantsCellTests: CoreDataSnapshotTestCase {
             case .many: return Set(users)
             }
         }()
+        
+        if allowGuests {
+            uiMOC.markAsSyncContext()
+            let team = Team.fetchOrCreate(with: .create(), create: true, in: uiMOC, created: nil)
+            uiMOC.markAsUIContext()
+            let member = Member.getOrCreateMember(for: selfUser, in: team!, context: uiMOC)
+            member.permissions = .member
+            MockUser.mockSelf().isTeamMember = true
+            let users = Array(message.users).filter { $0 != selfUser }
+            let conversation = ZMConversation.insertGroupConversation(into: uiMOC, withParticipants: users, in: team)
+            conversation?.allowGuests = true
+            message.visibleInConversation = conversation
+        }
 
         let cell = ParticipantsCell(style: .default, reuseIdentifier: nil)
         let props = ConversationCellLayoutProperties()

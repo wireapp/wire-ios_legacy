@@ -105,10 +105,13 @@ final class SearchGroupSelector: UIView {
         }
         
         guard SearchGroupSelector.shouldShowBotResults else {
+            constrain(self) { selfView in
+                selfView.height == 0
+            }
             return
         }
         
-        backgroundColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorSearchBarBackground, variant: colorSchemeVariant)
+        backgroundColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorBarBackground, variant: colorSchemeVariant)
 
         addSubview(radioButtonsView)
 

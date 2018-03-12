@@ -98,7 +98,9 @@ typedef void (^AnimationBlock)(id, NSInteger);
     [super configureForMessage:message layoutProperties:layoutProperties];
 
     NSString *senderText = self.message.sender.isSelfUser ? NSLocalizedString(@"content.ping.text.you", @"") : self.message.sender.displayName;
-    NSString *pingText = [NSString stringWithFormat:NSLocalizedString(@"content.ping.text", @""), senderText, nil];
+
+    NSString *pingText = [self pingMessageWithSenderText: senderText];
+
     NSAttributedString *text = [[NSAttributedString alloc] initWithString:pingText attributes:@{ NSFontAttributeName: self.pingFont }];
     self.pingLabel.attributedText = [text addingFont:self.authorFont toSubstring:senderText];
 

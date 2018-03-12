@@ -30,6 +30,7 @@
 #import "GuidanceLabel.h"
 #import "WireSyncEngine+iOS.h"
 #import "Constants.h"
+#import "Wire-Swift.h"
 
 
 @interface AddEmailStepViewController ()
@@ -110,15 +111,17 @@
 - (void)updateViewConstraints
 {
     [super updateViewConstraints];
-    
     if (! self.initialConstraintsCreated) {
         self.initialConstraintsCreated = YES;
 
-        [self.heroLabel autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:28];
-        [self.heroLabel autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:28];
+        CGFloat inset = 28.0;
+        [self.heroLabel autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:inset];
+        [self.heroLabel autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:inset];
         
         [self.emailFormViewController.view autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.heroLabel withOffset:24];
-        [self.emailFormViewController.view autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsMake(0, 28, 10, 28) excludingEdge:ALEdgeTop];
+        [self.emailFormViewController.view autoPinEdgeToSuperviewEdge:ALEdgeLeading withInset:inset];
+        [self.emailFormViewController.view autoPinEdgeToSuperviewEdge:ALEdgeTrailing withInset:inset];
+        [[self.emailFormViewController.view.bottomAnchor constraintEqualToAnchor:self.safeBottomAnchor constant:-10] setActive:YES];
     }
 }
 

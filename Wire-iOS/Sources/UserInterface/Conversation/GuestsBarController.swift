@@ -24,6 +24,7 @@ class GuestsBarController: UIViewController {
     private let container = UIView()
     private var containerHeightConstraint: NSLayoutConstraint!
     private var heightConstraint: NSLayoutConstraint!
+    private var bottomLabelConstraint: NSLayoutConstraint!
     
     private static let collapsedHeight: CGFloat = 2
     private static let expandedHeight: CGFloat = 20
@@ -59,7 +60,7 @@ class GuestsBarController: UIViewController {
             }
             
             self.containerHeightConstraint.constant = collapsed ? GuestsBarController.collapsedHeight : GuestsBarController.expandedHeight
-
+            self.bottomLabelConstraint.constant = collapsed ? -GuestsBarController.expandedHeight : -3
             self.label.alpha = collapsed ? 0 : 1
             self.view.setNeedsLayout()
             self.view.layoutIfNeeded()
@@ -72,7 +73,7 @@ class GuestsBarController: UIViewController {
         }
     
         if animated {
-            UIView.wr_animate(easing: collapsed ? RBBEasingFunctionEaseOutQuad : RBBEasingFunctionEaseInQuad, duration: 1.0, animations: change, completion: completion)
+            UIView.wr_animate(easing: collapsed ? RBBEasingFunctionEaseOutQuad : RBBEasingFunctionEaseInQuad, duration: 0.4, animations: change, completion: completion)
         }
         else {
             change()
@@ -88,6 +89,7 @@ class GuestsBarController: UIViewController {
         view.backgroundColor = .clear
         
         container.backgroundColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorLightGraphite, variant: .dark)
+        container.clipsToBounds = true
         
         label.font = FontSpec(.small, .semibold).font!
         label.textColor = .white
@@ -100,7 +102,9 @@ class GuestsBarController: UIViewController {
         view.addSubview(container)
         
         constrain(self.view, container, label) { view, container, label in
-            label.edges == view.edges
+            label.leading == view.leading
+            bottomLabelConstraint = label.bottom == view.bottom - 3
+            label.trailing == view.trailing
             view.leading == container.leading
             view.trailing == container.trailing
             container.top == view.top

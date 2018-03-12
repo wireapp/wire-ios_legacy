@@ -88,7 +88,7 @@ final class ConversationCreationController: UIViewController {
     fileprivate var secondaryErrorView: UIView?
     
     fileprivate var values: ConversationCreationValues?
-    fileprivate let source: LinearGroupCreationFlowSource
+    fileprivate let source: LinearGroupCreationFlowEvent.Source
     
     weak var delegate: ConversationCreationControllerDelegate?
     private var preSelectedParticipants: Set<ZMUser>?
@@ -98,7 +98,7 @@ final class ConversationCreationController: UIViewController {
         self.preSelectedParticipants = preSelectedParticipants
     }
     
-    public init(source: LinearGroupCreationFlowSource = .startUI) {
+    public init(source: LinearGroupCreationFlowEvent.Source = .startUI) {
         self.source = source
         super.init(nibName: nil, bundle: nil)
     }
@@ -304,7 +304,11 @@ extension ConversationCreationController: AddParticipantsConversationCreationDel
             values = values.map { .init(name: $0.name, participants: users, allowGuests: $0.allowGuests) }
         case .create:
             values.apply {
-                Analytics.shared().tagLinearGroupCreated(with: self.source, isEmpty: $0.participants.isEmpty)
+                var allParticipants = $0.participants
+                allParticipants.insert(ZMUser.selfUser())
+                Analytics.shared().tagLinearGroupCreated(with: self.source, isEmpty: $0.participants.isEmpty, allowGuests: $0.allowGuests)
+                Analytics.shared().tagAddParticipants(source: self.source, allParticipants, allowGuests: $0.allowGuests, in: nil)
+
                 delegate?.conversationCreationController(
                     self,
                     didSelectName: $0.name,

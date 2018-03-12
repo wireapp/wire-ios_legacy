@@ -42,7 +42,6 @@
 #import "avs+iOS.h"
 #import "Constants.h"
 #import "Settings.h"
-#import "GiphyViewController.h"
 #import "ConversationInputBarSendController.h"
 @import FLAnimatedImage;
 #import "MediaAsset.h"

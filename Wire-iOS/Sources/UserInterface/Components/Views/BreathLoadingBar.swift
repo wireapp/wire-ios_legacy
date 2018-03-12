@@ -19,7 +19,13 @@
 import UIKit
 import QuartzCore
 
+protocol BreathLoadingBarDelegate: class {
+    func animationDidStarted()
+    func animationDidStopped()
+}
+
 class BreathLoadingBar: UIView {
+    public weak var delegate: BreathLoadingBarDelegate?
 
     public var animating: Bool = false {
         didSet {
@@ -46,6 +52,7 @@ class BreathLoadingBar: UIView {
         animating = false
 
         super.init(frame: .zero)
+        layer.cornerRadius = CGFloat.NetworkStatusBar.collapsedCornerRadius
 
         animationDuration = duration
         NotificationCenter.default.addObserver(self, selector: #selector(self.applicationDidBecomeActive), name: .UIApplicationDidBecomeActive, object: nil)
@@ -83,6 +90,8 @@ class BreathLoadingBar: UIView {
     }
 
     func startAnimation() {
+        delegate?.animationDidStarted()
+
         let anim = CAKeyframeAnimation(keyPath: "opacity")
         anim.values = [0.4, 1, 0.4]
         anim.isRemovedOnCompletion = false
@@ -90,11 +99,13 @@ class BreathLoadingBar: UIView {
         anim.fillMode = kCAFillModeForwards
         anim.repeatCount = .infinity
         anim.duration = animationDuration
-        anim.timingFunction = CAMediaTimingFunction.easeInOutQuart()
+        anim.timingFunction = CAMediaTimingFunction.easeInOutCirc()
         self.layer.add(anim, forKey: BreathLoadingAnimationKey)
     }
 
     func stopAnimation() {
+        delegate?.animationDidStopped()
+
         self.layer.removeAnimation(forKey: BreathLoadingAnimationKey)
     }
 

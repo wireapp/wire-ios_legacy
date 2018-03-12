@@ -90,6 +90,7 @@ public final class IncomingConnectionView: UIView {
         )
         
         usernameLabel.attributedText = viewModel.title
+        usernameLabel.accessibilityIdentifier = "name"
         userDetailView.configure(with: viewModel)
     }
 

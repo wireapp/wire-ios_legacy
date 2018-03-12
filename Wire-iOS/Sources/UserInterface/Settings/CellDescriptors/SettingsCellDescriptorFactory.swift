@@ -245,7 +245,18 @@ import Foundation
         developerCellDescriptors.append(shareCryptobox)
         let reloadUIButton = SettingsButtonCellDescriptor(title: "Reload user interface", isDestructive: false, selectAction: SettingsCellDescriptorFactory.reloadUserInterface)
         developerCellDescriptors.append(reloadUIButton)
-        
+
+        let showStatistics = SettingsExternalScreenCellDescriptor(title: "Show database statistics", isDestructive: false, presentationStyle: .navigation, presentationAction: {  DatabaseStatisticsController() })
+        developerCellDescriptors.append(showStatistics)
+
+        if !Analytics.shared().isOptedOut &&
+            !TrackingManager.shared.disableCrashAndAnalyticsSharing {
+
+            let resetSurveyMuteButton = SettingsButtonCellDescriptor(title: "Show call quality survey", isDestructive: false, selectAction: SettingsCellDescriptorFactory.resetCallQualitySurveyMuteFilter)
+            developerCellDescriptors.append(resetSurveyMuteButton)
+
+        }
+
         return SettingsGroupCellDescriptor(items: [SettingsSectionDescriptor(cellDescriptors:developerCellDescriptors)], title: title, icon: .effectRobot)
     }
     
@@ -384,6 +395,18 @@ import Foundation
         }
         
         rootViewController.reload()
+    }
+
+    private static func resetCallQualitySurveyMuteFilter(_ type: SettingsCellDescriptorType) {
+        guard let controller = UIApplication.shared.wr_topmostController(onlyFullScreen: false) else { return }
+
+        CallQualityScoreProvider.resetSurveyMuteFilter()
+
+        let alert = UIAlertController(title: "Mute Filter Removed",
+                                      message: "The call quality survey will be displayed after the next call.",
+                                      cancelButtonTitle: "OK")
+
+        controller.present(alert, animated: true)
     }
 }
 
