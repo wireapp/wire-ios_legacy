@@ -19,14 +19,6 @@
 import XCTest
 @testable import Wire
 
-class MockContainerViewController: UIViewController, NetworkStatusBarDelegate {
-    var shouldShowNetworkStatusUIInIPadRegularLandscape: Bool = true
-
-    var shouldShowNetworkStatusUIInIPadRegularPortrait: Bool = true
-
-    var isViewDidAppear: Bool = true
-}
-
 final class MockConversationRootViewController: UIViewController, NetworkStatusBarDelegate {
     var isViewDidAppear: Bool = true
 
