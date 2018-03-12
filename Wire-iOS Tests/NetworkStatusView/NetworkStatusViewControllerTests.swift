@@ -55,6 +55,55 @@ final class MockConversationListViewController: UIViewController, NetworkStatusB
     }
 }
 
+class MockTransitionCoordinator: NSObject, UIViewControllerTransitionCoordinator {
+    
+    var containerView: UIView = UIView()
+    
+    var targetTransform: CGAffineTransform = CGAffineTransform()
+    
+    var isAnimated: Bool = true
+    
+    var presentationStyle: UIModalPresentationStyle = .none
+    
+    var initiallyInteractive: Bool = true
+    
+    var isInterruptible: Bool = true
+    
+    var isInteractive: Bool = true
+    
+    var isCancelled: Bool = true
+    
+    var transitionDuration: TimeInterval = 0.0
+    
+    var percentComplete: CGFloat = 0.0
+    
+    var completionVelocity: CGFloat = 0.0
+    
+    var completionCurve: UIViewAnimationCurve = .linear
+    
+    func viewController(forKey key: UITransitionContextViewControllerKey) -> UIViewController? {
+        return nil
+    }
+    
+    func view(forKey key: UITransitionContextViewKey) -> UIView? {
+        return nil
+    }
+    
+    func animate(alongsideTransition animation: ((UIViewControllerTransitionCoordinatorContext) -> Void)?, completion: ((UIViewControllerTransitionCoordinatorContext) -> Void)? = nil) -> Bool {
+        return true
+    }
+    
+    func animateAlongsideTransition(in view: UIView?, animation: ((UIViewControllerTransitionCoordinatorContext) -> Void)?, completion: ((UIViewControllerTransitionCoordinatorContext) -> Void)? = nil) -> Bool {
+        return true
+    }
+    
+    func notifyWhenInteractionEnds(_ handler: @escaping (UIViewControllerTransitionCoordinatorContext) -> Void) {
+    }
+    
+    func notifyWhenInteractionChanges(_ handler: @escaping (UIViewControllerTransitionCoordinatorContext) -> Void) {
+    }
+}
+
 final class NetworkStatusViewControllerTests: XCTestCase {
     var sutRoot: NetworkStatusViewController!
     var sutList: NetworkStatusViewController!
@@ -177,11 +226,46 @@ final class NetworkStatusViewControllerTests: XCTestCase {
         let rootState = NetworkStatusViewState.online
         
         setUpSut(userInterfaceIdiom: userInterfaceIdiom, horizontalSizeClass: horizontalSizeClass, orientation: orientation)
+        
         // WHEN
         _ = NetworkStatusViewController.notifyWhenOffline()
         
         // THEN
         checkResult(listState: listState, rootState: rootState)
+    }
+    
+    func testThatIPadRespondsToScreenSizeChanging() {
+        // GIVEN
+        let userInterfaceIdiom: UIUserInterfaceIdiom = .pad
+        let horizontalSizeClass: UIUserInterfaceSizeClass = .regular
+        let orientation: UIDeviceOrientation = .landscapeLeft
+        
+        let listState = NetworkStatusViewState.offlineExpanded
+        let rootState = NetworkStatusViewState.online
+        
+        setUpSut(userInterfaceIdiom: userInterfaceIdiom, horizontalSizeClass: horizontalSizeClass, orientation: orientation)
+        checkResult(listState: listState, rootState: rootState)
+
+        // Portrait
+        
+        // WHEN
+        let mockTransitionCoordinator = MockTransitionCoordinator()
+        let portraitSize = CGSize(width: 768, height: 1024)
+        sutList.viewWillTransition(to: portraitSize, with: mockTransitionCoordinator)
+        sutRoot.viewWillTransition(to: portraitSize, with: mockTransitionCoordinator)
+
+        // THEN
+        checkResult(listState: NetworkStatusViewState.online, rootState: .offlineExpanded)
+
+        // Landscape
+
+        // WHEN
+        let landscapeSize = CGSize(width: 1024, height: 768)
+        sutList.viewWillTransition(to: landscapeSize, with: mockTransitionCoordinator)
+        sutRoot.viewWillTransition(to: landscapeSize, with: mockTransitionCoordinator)
+        
+        // THEN
+        checkResult(listState: NetworkStatusViewState.offlineExpanded, rootState: .online)
     }
 }
 
