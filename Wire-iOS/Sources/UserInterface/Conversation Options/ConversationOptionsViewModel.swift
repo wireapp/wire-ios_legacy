@@ -125,6 +125,7 @@ class ConversationOptionsViewModel {
         delegate?.viewModel(self, confirmRevokingLink: { [weak self] revoke in
             guard let `self` = self else { return }
             guard revoke else { return self.updateRows() }
+            GuestLinkEvent.revoked.track()
             self.state.isLoading = true
             self.configuration.deleteLink { result in
                 switch result {
@@ -141,11 +142,13 @@ class ConversationOptionsViewModel {
     
     private func shareLink() {
         guard let link = link else { return }
+        GuestLinkEvent.shared.track()
         let message = "guest_room.share.message".localized(args: link)
         delegate?.viewModel(self, wantsToShareMessage: message)
     }
     
     private func copyLink() {
+        GuestLinkEvent.copied.track()
         UIPasteboard.general.string = link
         copyInProgress = true
         DispatchQueue.main.asyncAfter(deadline: .now() + 3) { [weak self] in
@@ -166,6 +169,7 @@ class ConversationOptionsViewModel {
     }
     
     private func createLink() {
+        GuestLinkEvent.created.track()
         showLoadingCell = true
         configuration.createConversationLink { [weak self] result in
             guard let `self` = self else { return }
