@@ -1070,6 +1070,7 @@
 		EFA6E2432056D7D6008AB47E /* NetworkStatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFA6E2412056D7D6008AB47E /* NetworkStatusView.swift */; };
 		EFA6E2472056D80F008AB47E /* NetworkStatusViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFA6E2452056D80F008AB47E /* NetworkStatusViewTests.swift */; };
 		EFA6E2482056D80F008AB47E /* NetworkStatusViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFA6E2462056D80F008AB47E /* NetworkStatusViewControllerTests.swift */; };
+		EFA6E24A2056E059008AB47E /* UIViewController+SizeClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFA6E2492056E059008AB47E /* UIViewController+SizeClass.swift */; };
 		EFA820AE2019075400FED370 /* UIViewController+addViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFA820AD2019075400FED370 /* UIViewController+addViewController.swift */; };
 		EFABC922202085A6001F9866 /* UserDetailViewControllerFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFABC921202085A6001F9866 /* UserDetailViewControllerFactory.swift */; };
 		EFABC92420208D80001F9866 /* UIViewController+removeUserConfirmationUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFABC92320208D80001F9866 /* UIViewController+removeUserConfirmationUI.swift */; };
@@ -2703,6 +2704,7 @@
 		EFA6E2412056D7D6008AB47E /* NetworkStatusView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkStatusView.swift; sourceTree = "<group>"; };
 		EFA6E2452056D80F008AB47E /* NetworkStatusViewTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkStatusViewTests.swift; sourceTree = "<group>"; };
 		EFA6E2462056D80F008AB47E /* NetworkStatusViewControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkStatusViewControllerTests.swift; sourceTree = "<group>"; };
+		EFA6E2492056E059008AB47E /* UIViewController+SizeClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "UIViewController+SizeClass.swift"; path = "Wire-iOS/Sources/UserInterface/Helpers/UIViewController+SizeClass.swift"; sourceTree = SOURCE_ROOT; };
 		EFA820AD2019075400FED370 /* UIViewController+addViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+addViewController.swift"; sourceTree = "<group>"; };
 		EFABC921202085A6001F9866 /* UserDetailViewControllerFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDetailViewControllerFactory.swift; sourceTree = "<group>"; };
 		EFABC92320208D80001F9866 /* UIViewController+removeUserConfirmationUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+removeUserConfirmationUI.swift"; sourceTree = "<group>"; };
@@ -4559,6 +4561,7 @@
 				871BC0331D34F60700DF0793 /* NSAttributedString+Wire.h */,
 				871BC0341D34F60700DF0793 /* NSAttributedString+Wire.m */,
 				871BC0351D34F60700DF0793 /* NSDate+Format.h */,
+				EFA6E2492056E059008AB47E /* UIViewController+SizeClass.swift */,
 				871BC0361D34F60700DF0793 /* NSDate+Format.m */,
 				F16426F51FCC0FE200D2ABFC /* UIColor+Hex.swift */,
 				871BC0371D34F60700DF0793 /* NSDictionary+SimpleTypeAccess.h */,
@@ -7160,6 +7163,7 @@
 				87D553681C86F0450026573C /* MockUserClient.m in Sources */,
 				879489E71E5464CF0071B2C1 /* SearchResultLabelTests.swift in Sources */,
 				16A2026A1B66A0040095BBD1 /* SoundcloudAudioTrackTests.m in Sources */,
+				EFA6E24A2056E059008AB47E /* UIViewController+SizeClass.swift in Sources */,
 				870C92671E8CE55800A10995 /* RandomGeneratorFromDataTests.swift in Sources */,
 				BF4D99D01E79AF8100A7B08F /* ParticipantCellTests.swift in Sources */,
 				160C31211E4C7E770012E4BC /* UnknownMessageCellTests.swift in Sources */,
