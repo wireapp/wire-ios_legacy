@@ -89,16 +89,6 @@ final class NetworkStatusViewControllerTests: XCTestCase {
         super.tearDown()
     }
     
-    /// check for networkStatusView state is updated after device properties are changed
-    ///
-    /// - Parameters:
-    ///   - userInterfaceIdiom: updated idiom
-    ///   - horizontalSizeClass: updated size class
-    ///   - orientation: updated orientation
-    ///   - listState: expected networkStatusView state in conversation list
-    ///   - rootState: expected networkStatusView state in conversation root
-    ///   - file: optional, for XCTAssert logging error source
-    ///   - line: optional, for XCTAssert logging error source
     fileprivate func setUpSut(userInterfaceIdiom: UIUserInterfaceIdiom,
                               horizontalSizeClass: UIUserInterfaceSizeClass,
                               orientation: UIDeviceOrientation) {
