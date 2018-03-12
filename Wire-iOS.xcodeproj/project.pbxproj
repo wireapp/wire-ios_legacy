@@ -23,9 +23,6 @@
 		16271BC61D9EB12E00689486 /* TypingIndicatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16271BC51D9EB12E00689486 /* TypingIndicatorView.swift */; };
 		16271BC81DA5213400689486 /* TypingIndicatorViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16271BC71DA5213400689486 /* TypingIndicatorViewTests.swift */; };
 		162836142016574D0027082D /* ProcessInfo+Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 162836132016574D0027082D /* ProcessInfo+Tests.swift */; };
-		162917C91F8BB991000F3E92 /* NetworkStatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 162917C81F8BB991000F3E92 /* NetworkStatusView.swift */; };
-		162917CC1F8CC176000F3E92 /* NetworkStatusViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 162917CA1F8CC0B0000F3E92 /* NetworkStatusViewTests.swift */; };
-		162917CE1F8CD327000F3E92 /* NetworkStatusViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 162917CD1F8CD327000F3E92 /* NetworkStatusViewController.swift */; };
 		162936BB1F470A9300D4F386 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 162936BA1F470A9300D4F386 /* AppState.swift */; };
 		162936BD1F470B4800D4F386 /* AppStateController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 162936BC1F470B4800D4F386 /* AppStateController.swift */; };
 		162936BF1F4714D200D4F386 /* AppRootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 162936BE1F4714D200D4F386 /* AppRootViewController.swift */; };
@@ -1069,6 +1066,10 @@
 		EF7D75A6201B6149003A8AF8 /* DeviceNativeBoundsSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF7D75A5201B6149003A8AF8 /* DeviceNativeBoundsSize.swift */; };
 		EF7F74041FCC033D0059C13F /* EmailAdresssValidatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF7F74021FCC01140059C13F /* EmailAdresssValidatorTests.swift */; };
 		EF91A0561FF3A05A00FE2F53 /* GiphySearchViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF91A0541FF3A04700FE2F53 /* GiphySearchViewControllerTests.swift */; };
+		EFA6E2422056D7D6008AB47E /* NetworkStatusViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFA6E2402056D7D6008AB47E /* NetworkStatusViewController.swift */; };
+		EFA6E2432056D7D6008AB47E /* NetworkStatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFA6E2412056D7D6008AB47E /* NetworkStatusView.swift */; };
+		EFA6E2472056D80F008AB47E /* NetworkStatusViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFA6E2452056D80F008AB47E /* NetworkStatusViewTests.swift */; };
+		EFA6E2482056D80F008AB47E /* NetworkStatusViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFA6E2462056D80F008AB47E /* NetworkStatusViewControllerTests.swift */; };
 		EFA820AE2019075400FED370 /* UIViewController+addViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFA820AD2019075400FED370 /* UIViewController+addViewController.swift */; };
 		EFABC922202085A6001F9866 /* UserDetailViewControllerFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFABC921202085A6001F9866 /* UserDetailViewControllerFactory.swift */; };
 		EFABC92420208D80001F9866 /* UIViewController+removeUserConfirmationUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFABC92320208D80001F9866 /* UIViewController+removeUserConfirmationUI.swift */; };
@@ -1217,9 +1218,6 @@
 		16271BC51D9EB12E00689486 /* TypingIndicatorView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TypingIndicatorView.swift; sourceTree = "<group>"; };
 		16271BC71DA5213400689486 /* TypingIndicatorViewTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TypingIndicatorViewTests.swift; sourceTree = "<group>"; };
 		162836132016574D0027082D /* ProcessInfo+Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ProcessInfo+Tests.swift"; sourceTree = "<group>"; };
-		162917C81F8BB991000F3E92 /* NetworkStatusView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkStatusView.swift; sourceTree = "<group>"; };
-		162917CA1F8CC0B0000F3E92 /* NetworkStatusViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkStatusViewTests.swift; sourceTree = "<group>"; };
-		162917CD1F8CD327000F3E92 /* NetworkStatusViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkStatusViewController.swift; sourceTree = "<group>"; };
 		162936BA1F470A9300D4F386 /* AppState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
 		162936BC1F470B4800D4F386 /* AppStateController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppStateController.swift; sourceTree = "<group>"; };
 		162936BE1F4714D200D4F386 /* AppRootViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppRootViewController.swift; sourceTree = "<group>"; };
@@ -2701,6 +2699,10 @@
 		EF7D75A5201B6149003A8AF8 /* DeviceNativeBoundsSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceNativeBoundsSize.swift; sourceTree = "<group>"; };
 		EF7F74021FCC01140059C13F /* EmailAdresssValidatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailAdresssValidatorTests.swift; sourceTree = "<group>"; };
 		EF91A0541FF3A04700FE2F53 /* GiphySearchViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GiphySearchViewControllerTests.swift; sourceTree = "<group>"; };
+		EFA6E2402056D7D6008AB47E /* NetworkStatusViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkStatusViewController.swift; sourceTree = "<group>"; };
+		EFA6E2412056D7D6008AB47E /* NetworkStatusView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkStatusView.swift; sourceTree = "<group>"; };
+		EFA6E2452056D80F008AB47E /* NetworkStatusViewTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkStatusViewTests.swift; sourceTree = "<group>"; };
+		EFA6E2462056D80F008AB47E /* NetworkStatusViewControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkStatusViewControllerTests.swift; sourceTree = "<group>"; };
 		EFA820AD2019075400FED370 /* UIViewController+addViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+addViewController.swift"; sourceTree = "<group>"; };
 		EFABC921202085A6001F9866 /* UserDetailViewControllerFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDetailViewControllerFactory.swift; sourceTree = "<group>"; };
 		EFABC92320208D80001F9866 /* UIViewController+removeUserConfirmationUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+removeUserConfirmationUI.swift"; sourceTree = "<group>"; };
@@ -3481,6 +3483,7 @@
 		871BC1271D34F8F800DF0793 /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				EFA6E23F2056D7D6008AB47E /* NetworkStatusBar */,
 				876E0C8A1EC5ED69007EF34E /* CameraPicker.swift */,
 				871BC1281D34F8F800DF0793 /* Controllers */,
 				871BC36B1D34F96000DF0793 /* DeviceOrientationObserver.h */,
@@ -4884,7 +4887,6 @@
 				87555C7E1A85021C00A43E2E /* InAppNotifications */,
 				DBBFBCB419D2CB9400557444 /* TitleBar */,
 				8FC85247199245760008B66B /* MediaBar */,
-				8FC8524E199245760008B66B /* NetworkStatus */,
 				8FC85255199245760008B66B /* NotificationWindowRootViewController.h */,
 				8FC85256199245760008B66B /* NotificationWindowRootViewController.m */,
 				1670AFE61B2095B1002BF0AE /* VoiceChannelCollectionViewLayout.h */,
@@ -4914,15 +4916,6 @@
 				163B5EF11B4C209C009B4629 /* MediaBarViewController.m */,
 			);
 			path = MediaBar;
-			sourceTree = "<group>";
-		};
-		8FC8524E199245760008B66B /* NetworkStatus */ = {
-			isa = PBXGroup;
-			children = (
-				162917C81F8BB991000F3E92 /* NetworkStatusView.swift */,
-				162917CD1F8CD327000F3E92 /* NetworkStatusViewController.swift */,
-			);
-			path = NetworkStatus;
 			sourceTree = "<group>";
 		};
 		8FC852B3199245760008B66B /* Settings */ = {
@@ -5020,6 +5013,7 @@
 		BACB88521AF7C48900DDCDB0 /* Wire-iOS Tests */ = {
 			isa = PBXGroup;
 			children = (
+				EFA6E2442056D80F008AB47E /* NetworkStatusView */,
 				EEA747A71FCEBAD1000B529E /* AnalyticsMixpanelProviderTests.swift */,
 				EF61B33E1FC8461200D8E631 /* AccessoryTextField */,
 				EE3A5B0C1F7A7BD400733045 /* ChatHeadTests.swift */,
@@ -5111,7 +5105,6 @@
 				870C92661E8CE55800A10995 /* RandomGeneratorFromDataTests.swift */,
 				876041531F5451B3003CB161 /* AccountViewTests.swift */,
 				EE2FC1D71F56F89800A9A418 /* ConversationImagesViewControllerTests.swift */,
-				162917CA1F8CC0B0000F3E92 /* NetworkStatusViewTests.swift */,
 				87B0ACA91FA20D7C001B2B9D /* AnalyticsTests.swift */,
 				87656FD01FB5FF0300D5286C /* FilePreviewGeneratorTests.swift */,
 				87FC0AE91FC719E80036E029 /* CharacterInputFieldTests.swift */,
@@ -5497,6 +5490,24 @@
 				EF7F74021FCC01140059C13F /* EmailAdresssValidatorTests.swift */,
 			);
 			path = AccessoryTextField;
+			sourceTree = "<group>";
+		};
+		EFA6E23F2056D7D6008AB47E /* NetworkStatusBar */ = {
+			isa = PBXGroup;
+			children = (
+				EFA6E2402056D7D6008AB47E /* NetworkStatusViewController.swift */,
+				EFA6E2412056D7D6008AB47E /* NetworkStatusView.swift */,
+			);
+			path = NetworkStatusBar;
+			sourceTree = "<group>";
+		};
+		EFA6E2442056D80F008AB47E /* NetworkStatusView */ = {
+			isa = PBXGroup;
+			children = (
+				EFA6E2452056D80F008AB47E /* NetworkStatusViewTests.swift */,
+				EFA6E2462056D80F008AB47E /* NetworkStatusViewControllerTests.swift */,
+			);
+			path = NetworkStatusView;
 			sourceTree = "<group>";
 		};
 		F10F46D02028857C00261449 /* Create */ = {
@@ -6352,6 +6363,7 @@
 				1682AEC3204840E7003A052A /* SectionCollectionViewController.swift in Sources */,
 				BF86E11B1C245BF9001D9430 /* UserClient+Fingerprint.swift in Sources */,
 				871067411C0DC5570035603B /* SettingsPropertyToggleCellDescriptor.swift in Sources */,
+				EFA6E2422056D7D6008AB47E /* NetworkStatusViewController.swift in Sources */,
 				16E2A0A01F6BEDE7005F4DB1 /* ProximityMonitorManager.swift in Sources */,
 				1651F9B81D352B7B00A9FAE8 /* ArticleView.swift in Sources */,
 				87DCF4ED1D34EA4500BB420F /* CollectionViewContainerCell.m in Sources */,
@@ -6592,6 +6604,7 @@
 				16F6BB0E1EDD7B23009EA803 /* SearchHeaderViewController.swift in Sources */,
 				D550F57520444CF8009E09DD /* AlertResultConfiguration.swift in Sources */,
 				DB7FEC921B8729AD00BA72DE /* ConversationInputBarSendController.m in Sources */,
+				EFA6E2432056D7D6008AB47E /* NetworkStatusView.swift in Sources */,
 				8744D5BE1C41D6C2000F8F93 /* SettingsClientViewController.swift in Sources */,
 				871BC0181D34F56300DF0793 /* AnalyticsOptEvent.m in Sources */,
 				D54224C620513BFD00526A57 /* CellConfiguration+ConversationOptions.swift in Sources */,
@@ -6787,7 +6800,6 @@
 				8F41CFC9199297C600E3B032 /* Message+UI.m in Sources */,
 				EF2127031FB9DFE300625A9B /* CheckmarkView.m in Sources */,
 				EEE6310B1F7390D100E56803 /* ChatHeadsViewController.swift in Sources */,
-				162917C91F8BB991000F3E92 /* NetworkStatusView.swift in Sources */,
 				EEB8A2D01F628D1100958881 /* Settings+Account.swift in Sources */,
 				BF5C37981C0E0D9C00EA11E3 /* ParticipantsDeviceHeaderView.m in Sources */,
 				870A8C6B1CF719C400874B16 /* RecordingDotView.swift in Sources */,
@@ -7059,7 +7071,6 @@
 				871BC2901D34F8F800DF0793 /* UIView+PopoverBorder.m in Sources */,
 				8775BF232008E0A400A8AD93 /* ServiceDetailViewController.swift in Sources */,
 				16E311D81A6024F400FF2C9E /* ImageMessageCell.m in Sources */,
-				162917CE1F8CD327000F3E92 /* NetworkStatusViewController.swift in Sources */,
 				163495871F010F91004E80DB /* UnauthenticatedSession+Shared.swift in Sources */,
 				F1199D401FC849450070FAC3 /* ButtonDescription.swift in Sources */,
 				87DCF48F1D34E9BA00BB420F /* ContactsEmptyResultView.m in Sources */,
@@ -7119,8 +7130,8 @@
 				F127BD571E262E9F0093B2F1 /* CollectionsViewControllerTests.swift in Sources */,
 				1651F9C01D36789C00A9FAE8 /* Message+FormattingTests.swift in Sources */,
 				87BEB0E21C734DB60094BFE9 /* MockMessage.swift in Sources */,
-				162917CC1F8CC176000F3E92 /* NetworkStatusViewTests.swift in Sources */,
 				87D5E4431C3E79DA00EB8289 /* UserClient+Fingerprint.swift in Sources */,
+				EFA6E2482056D80F008AB47E /* NetworkStatusViewControllerTests.swift in Sources */,
 				BF7ED2DC1DF1D1CF003A4397 /* IncomingConnectionViewTests.swift in Sources */,
 				BA79B0A91B62851F00F23AFB /* SoundEventRulesWatchDogTests.m in Sources */,
 				BF8EE5581D6351B100B0D6D7 /* InputBarEditViewTests.swift in Sources */,
@@ -7137,6 +7148,7 @@
 				AF65A25C1D7E202D00EBA38E /* ReactionsListViewControllerTests.swift in Sources */,
 				874B5DB21CEDF7B80010474C /* AudioMessageCellTests.swift in Sources */,
 				87F6B6361D2E9CF500F057A5 /* EmojiOnlyStringTests.swift in Sources */,
+				EFA6E2472056D80F008AB47E /* NetworkStatusViewTests.swift in Sources */,
 				BADA351F1B431E5000396F2C /* NSURLWireLocaleTests.m in Sources */,
 				874941CB1DE34DEC006CF32B /* UserConnectionViewTests.swift in Sources */,
 				EF6163A61FE9682700C6F5A9 /* TextMessageCellTests.swift in Sources */,
