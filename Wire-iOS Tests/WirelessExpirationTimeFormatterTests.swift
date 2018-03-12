@@ -98,7 +98,7 @@ class WirelessExpirationTimeFormatterTests: XCTestCase {
     }
     
     func testExpirationTimeFormatting_0Minutes() {
-        assert(remainingTime: 0, expected: "Less than 15m left")
+        assert(remainingTime: 0, expected: nil)
     }
     
     func testExpirationTimeFormatting_NegativeValue() {

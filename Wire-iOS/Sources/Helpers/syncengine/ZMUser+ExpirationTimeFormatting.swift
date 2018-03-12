@@ -41,7 +41,7 @@ final class WirelessExpirationTimeFormatter {
     }
     
     func string(for interval: TimeInterval) -> String? {
-        guard interval >= 0 else { return nil }
+        guard interval > 0 else { return nil }
         let (hoursLeft, minutesLeft) = (interval.hours, interval.minutes)
         guard hoursLeft < 2 else { return localizedHours(floor(hoursLeft) + 1) }
 
@@ -69,7 +69,7 @@ final class WirelessExpirationTimeFormatter {
 }
 
 extension ZMUser {
-    var expirationDisplayString: String? {
+    @objc var expirationDisplayString: String? {
         return WirelessExpirationTimeFormatter.shared.string(for: self)
     }
 }
