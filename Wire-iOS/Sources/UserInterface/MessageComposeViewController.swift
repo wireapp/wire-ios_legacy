@@ -19,8 +19,7 @@
 
 import Foundation
 import Cartography
-import Marklight
-
+import Down
 
 protocol MessageComposeViewControllerDelegate: class {
     func composeViewController(_ controller: MessageComposeViewController, wantsToSendDraft: MessageDraft)
@@ -33,7 +32,7 @@ final class MessageComposeViewController: UIViewController {
     weak var delegate: MessageComposeViewControllerDelegate?
 
     private let subjectTextField = UITextField()
-    fileprivate let messageTextView = MarklightTextView()
+    fileprivate let messageTextView = MarkdownTextView()
     private let color = ColorScheme.default().color(withName:)
     private let sendButtonView = DraftSendInputAccessoryView()
     fileprivate let markdownBarView = MarkdownBarView()
@@ -54,6 +53,11 @@ final class MessageComposeViewController: UIViewController {
                                                selector: #selector(MessageComposeViewController.keyboardFrameWillChange(_:)),
                                                name: NSNotification.Name.UIKeyboardWillChangeFrame,
                                                object: nil)
+        
+        NotificationCenter.default.addObserver(markdownBarView,
+                                               selector: #selector(markdownBarView.textViewDidChangeActiveMarkdown),
+                                               name: Notification.Name.MarkdownTextViewDidChangeActiveMarkdown,
+                                               object: messageTextView)
     }
     
     deinit {
@@ -88,9 +92,6 @@ final class MessageComposeViewController: UIViewController {
     }
 
     private func setupTextView() {
-        messageTextView.textColor = color(ColorSchemeColorTextForeground)
-        messageTextView.backgroundColor = .clear
-        messageTextView.font = FontSpec(.normal, .none).font!
         
         // NB: setting the textContainerInset causes the content size to change
         // drastically when tapping on a white space ¯\_(ツ)_/¯. We simulate
@@ -101,6 +102,7 @@ final class MessageComposeViewController: UIViewController {
         
         messageTextView.contentInset = UIEdgeInsetsMake(16, 0, 48, -16)
         messageTextView.textContainer.lineFragmentPadding = 0
+        messageTextView.backgroundColor = .clear
         messageTextView.delegate = self
         messageTextView.indicatorStyle = ColorScheme.default().indicatorStyle
         messageTextView.accessibilityLabel = "messageTextField"
@@ -219,9 +221,11 @@ final class MessageComposeViewController: UIViewController {
             persistence.enqueue(block: {
                 if self.hasDraftContent {
                     let (subject, message) = (self.subjectTextField.text?.trimmed, self.messageTextView.text?.trimmed)
+                    let attributedText = self.messageTextView.attributedText.withEncodedMarkdownIDs
                     guard draft.subject != subject || draft.message != message else { return }
                     draft.subject = subject
                     draft.message = message
+                    draft.attributedMessage = attributedText
                     draft.lastModifiedDate = NSDate()
                 } else {
                     $0.delete(draft)
@@ -267,7 +271,7 @@ final class MessageComposeViewController: UIViewController {
 
     private func loadDraft() {
         subjectTextField.text = draft?.subject
-        messageTextView.text = draft?.message
+        messageTextView.attributedText = draft?.attributedMessage?.withDecodedMarkdownIDs
         updateButtonStates()
     }
 
@@ -288,24 +292,16 @@ extension MessageComposeViewController: UITextViewDelegate {
 
     func textViewDidChange(_ textView: UITextView) {
         updateDraftThrottled()
-        markdownBarView.updateIconsForModes(messageTextView.markdownElementsForRange(nil))
     }
 
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         
-        if text == "\n" || text == "\r" {
-            (textView as! MarklightTextView).handleNewLine()
-        }
-        
         if range.location == 0 && text == " " && textView.text?.isEmpty ?? true {
             return false
         }
-
+        
+        (textView as? MarkdownTextView)?.respondToChange(text, inRange: range)
         return true
-    }
-    
-    func textViewDidChangeSelection(_ textView: UITextView) {
-        markdownBarView.updateIconsForModes(messageTextView.markdownElementsForRange(nil))
     }
 }
 

@@ -32,7 +32,7 @@ final class LandingViewController: UIViewController {
 
     private let tracker = AnalyticsTracker(context: AnalyticsContextRegistrationEmail)
 
-    fileprivate var idiom: UserInterfaceIdiomProtocol
+    fileprivate var device: DeviceProtocol
 
     // MARK: - UI styles
 
@@ -146,12 +146,12 @@ final class LandingViewController: UIViewController {
         return button
     }()
 
-    /// init method for injecting mock UserInterfaceIdiomProtocol
+    /// init method for injecting mock device
     ///
-    /// - Parameter userInterfaceIdiom: Provide this param for testing only
-    init(idiom: UserInterfaceIdiomProtocol = UIDevice.current) {
-        self.idiom = idiom
-        
+    /// - Parameter device: Provide this param for testing only
+    init(device: DeviceProtocol = UIDevice.current) {
+        self.device = device
+
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -271,7 +271,7 @@ final class LandingViewController: UIViewController {
     }
 
     func updateStackViewAxis() {
-        let userInterfaceIdiom = idiom.userInterfaceIdiom
+        let userInterfaceIdiom = device.userInterfaceIdiom
         guard userInterfaceIdiom == .pad else { return }
 
         switch self.traitCollection.horizontalSizeClass {

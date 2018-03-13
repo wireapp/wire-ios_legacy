@@ -18,6 +18,7 @@
 
 
 import CoreData
+import Down
 
 
 /// Class describing unsent message drafts for later sending or further editing.
@@ -29,6 +30,8 @@ import CoreData
     @NSManaged public var subject: String?
     /// The message content
     @NSManaged public var message: String?
+    /// The attributed message content
+    @NSManaged public var attributedMessage: NSAttributedString?
     /// A date indicating when the draft was last modified
     @NSManaged public var lastModifiedDate: NSDate?
 
@@ -52,8 +55,12 @@ import CoreData
                 text += "\n"
             }
         }
-
-        if let message = message, !message.isEmpty {
+        
+        if let attributedMessage = attributedMessage, !attributedMessage.string.isEmpty {
+            let parser = AttributedStringParser()
+            text += parser.parse(attributedString: attributedMessage.withDecodedMarkdownIDs)
+        }
+        else if let message = message, !message.isEmpty {
             text += message
         }
 

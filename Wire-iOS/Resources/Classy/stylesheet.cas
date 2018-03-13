@@ -1304,6 +1304,11 @@ ProfileDetailsViewController {
         textColor: $color-text-foreground;
         font: $font-normal-light;
     }
+    
+    remainingTimeLabel: @{
+        textColor: $color-text-dimmed;
+        font: $font-normal-semibold;
+    }
 }
 
 /* Profile Devices */

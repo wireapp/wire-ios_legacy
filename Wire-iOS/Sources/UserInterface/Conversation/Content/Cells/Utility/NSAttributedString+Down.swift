@@ -1,4 +1,4 @@
-//
+////
 // Wire
 // Copyright (C) 2018 Wire Swiss GmbH
 //
@@ -17,11 +17,24 @@
 //
 
 import Foundation
+import Down
 
-protocol UserInterfaceIdiomProtocol {
-    var userInterfaceIdiom: UIUserInterfaceIdiom { get }
-}
-
-extension UIDevice: UserInterfaceIdiomProtocol {
-
+extension NSMutableAttributedString {
+    @objc
+    static func markdown(from text: String, style: DownStyle) -> NSMutableAttributedString {
+        let down = Down(markdownString: text)
+        let result: NSMutableAttributedString
+        
+        if let attrStr = try? down.toAttributedString(using: style) {
+            result = NSMutableAttributedString(attributedString: attrStr)
+        } else {
+            result = NSMutableAttributedString(string: text)
+        }
+        
+        if result.string.last == "\n" {
+            result.deleteCharacters(in: NSMakeRange(result.length - 1, 1))
+        }
+        
+        return result
+    }
 }

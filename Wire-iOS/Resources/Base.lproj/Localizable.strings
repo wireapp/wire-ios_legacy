@@ -23,6 +23,9 @@
 "general.close" = "Close";
 "general.open_settings" = "Open Wire Settings";
 
+"general.guest-room-name" = "Guest room";
+
+
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // People picker/start UI
 "peoplepicker.search_placeholder" = "Search by name or username";
@@ -78,6 +81,7 @@
 "peoplepicker.invite_team_members" = "Invite people to join the team";
 "peoplepicker.quick-action.open-conversation" = "Open";
 "peoplepicker.quick-action.create-conversation" = "Create group";
+"peoplepicker.quick-action.create-guest-room" = "Create guest room";
 
 "add_participants.all_contacts_added" = "Everyone's here.";
 
@@ -921,6 +925,9 @@
 "guest_room.actions.revoke_link" = "Revoke Link";
 
 "guest_room.share.message" = "Join me in a conversation on Wire:\n%@";
+
+"guest_room.expiration.hours_left" = "%@h left";
+"guest_room.expiration.less_than_minutes_left" = "Less than %@m left";
 
 // Registration
 

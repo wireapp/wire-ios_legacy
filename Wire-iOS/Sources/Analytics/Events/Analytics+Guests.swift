@@ -26,3 +26,40 @@ extension Analytics {
         ]
     }
 }
+
+enum GuestLinkEvent: Event {
+    case created, copied, revoked, shared
+    
+    var name: String {
+        switch self {
+        case .created: return "guests_rooms.link_created"
+        case .copied: return "guests_rooms.link_copied"
+        case .revoked: return "guests_rooms.link_revoked"
+        case .shared: return "guests_rooms.link_shared"
+        }
+    }
+    
+    var attributes: [AnyHashable : Any]? {
+        return nil
+    }
+}
+
+enum GuestRoomEvent: Event {
+    case created
+    
+    var name: String {
+        switch self {
+        case .created: return "guest_rooms.guest_room_creation"
+        }
+    }
+    
+    var attributes: [AnyHashable : Any]? {
+        return nil
+    }
+}
+
+extension Event {
+    func track() {
+        Analytics.shared().tag(self)
+    }
+}
