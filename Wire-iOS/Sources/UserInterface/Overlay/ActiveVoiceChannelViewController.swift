@@ -180,8 +180,9 @@ extension ActiveVoiceChannelViewController : WireCallCenterCallStateObserver {
 
         let changeDate = Date()
 
-        guard !Analytics.shared().isOptedOut,
-            !TrackingManager.shared.disableCrashAndAnalyticsSharing
+        guard !TrackingManager.shared.disableCrashAndAnalyticsSharing,
+                AutomationHelper.sharedHelper.useAnalytics,
+                UseAnalytics.boolValue
             else {
                 return
         }
@@ -205,15 +206,18 @@ extension ActiveVoiceChannelViewController : WireCallCenterCallStateObserver {
             let callDuration = changeDate.timeIntervalSince(callStartDate)
 
             guard callDuration > 10 else {
+                CallQualityScoreProvider.shared.recordCallQualityReview(.notDisplayed(reason: .callTooShort, duration: Int(callDuration)))
                 return
             }
 
             // Only show the survey if the call finished without errors
             guard reason == .normal || reason == .stillOngoing else {
+                CallQualityScoreProvider.shared.recordCallQualityReview(.notDisplayed(reason: .callFailed, duration: Int(callDuration)))
                 return
             }
             
             guard let qualityController = CallQualityViewController.requestSurveyController(callDuration: callDuration) else {
+                CallQualityScoreProvider.shared.recordCallQualityReview(.notDisplayed(reason: .muted, duration: Int(callDuration)))
                 return
             }
             
@@ -254,11 +258,12 @@ extension ActiveVoiceChannelViewController : CallQualityViewControllerDelegate {
         controller.dismiss(animated: true, completion: nil)
         
         CallQualityScoreProvider.updateLastSurveyDate(Date())
-        CallQualityScoreProvider.shared.recordCallQualityReview(score: score, callDuration: controller.callDuration)
+        CallQualityScoreProvider.shared.recordCallQualityReview(.answered(score: score, duration: controller.callDuration))
     }
     
     func callQualityControllerDidFinishWithoutScore(_ controller: CallQualityViewController) {
         CallQualityScoreProvider.updateLastSurveyDate(Date())
+        CallQualityScoreProvider.shared.recordCallQualityReview(.dismissed(duration: controller.callDuration))
         controller.dismiss(animated: true, completion: nil)
     }
 

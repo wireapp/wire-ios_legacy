@@ -246,6 +246,9 @@ import Foundation
         let reloadUIButton = SettingsButtonCellDescriptor(title: "Reload user interface", isDestructive: false, selectAction: SettingsCellDescriptorFactory.reloadUserInterface)
         developerCellDescriptors.append(reloadUIButton)
 
+        let showStatistics = SettingsExternalScreenCellDescriptor(title: "Show database statistics", isDestructive: false, presentationStyle: .navigation, presentationAction: {  DatabaseStatisticsController() })
+        developerCellDescriptors.append(showStatistics)
+
         if !Analytics.shared().isOptedOut &&
             !TrackingManager.shared.disableCrashAndAnalyticsSharing {
 

@@ -50,6 +50,7 @@ public protocol SearchResultsViewControllerDelegate {
 @objc
 public enum SearchResultsViewControllerAction : Int {
     case createGroup
+    case createGuestRoom
 }
 
 @objc
@@ -380,9 +381,13 @@ extension SearchResultsViewController : SearchSectionControllerDelegate {
     }
     
     func searchSectionController(_ searchSectionController: CollectionViewSectionController, didSelectRow row: CreateGroupSection.Row, at indexPath: IndexPath) {
-        guard row == .createGroup else { return }
+        switch row {
+        case .createGroup:
+            delegate?.searchResultsViewController(self, wantsToPerformAction: .createGroup)
+        case .createGuestRoom:
+            delegate?.searchResultsViewController(self, wantsToPerformAction: .createGuestRoom)
+        }
         
-        delegate?.searchResultsViewController(self, wantsToPerformAction: .createGroup)
     }
     
 }

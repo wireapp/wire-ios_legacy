@@ -24,11 +24,13 @@ final class CallQualityScoreProvider: NSObject, AnalyticsType {
     
     private var lastCallingEvent: [String: NSObject] = [:]
 
-    func recordCallQualityReview(score: Int, callDuration: Int) {
+    func recordCallQualityReview(_ review: CallQualitySurveyReview) {
 
         var attributes = lastCallingEvent
-        attributes["score"] = score as NSNumber
-        attributes["duration"] = callDuration as NSNumber
+        attributes["action"] = review.label
+        attributes["score"] = review.score
+        attributes["duration"] = review.callDuration
+        attributes["reason"] = review.reason
 
         nextProvider?.tagEvent(type(of: self).callingEventName, attributes: attributes)
     }

@@ -59,12 +59,12 @@
     return self;
 }
 
-- (instancetype)initWithUneditablePhoneNumber:(NSString *)phoneNumber
+- (instancetype)initWithPhoneNumber:(NSString *)phoneNumber isEditable:(BOOL)isEditable
 {
     self = [super init];
     
     if (self) {
-        _phoneNumberIsEditable = NO;
+        _phoneNumberIsEditable = isEditable;
         self.phoneNumber = phoneNumber;
     }
     
@@ -122,11 +122,7 @@
     self.phoneNumberViewController.view.translatesAutoresizingMaskIntoConstraints = NO;
     [self.phoneNumberViewController.phoneNumberField.confirmButton addTarget:self action:@selector(validatePhoneNumber:) forControlEvents:UIControlEventTouchUpInside];
     
-    if (self.phoneNumber.length > 0) {
-        self.phoneNumberViewController.phoneNumberField.text = self.phoneNumber;
-        self.phoneNumberViewController.phoneNumberField.rightAccessoryView = RegistrationTextFieldRightAccessoryViewConfirmButton;
-        self.phoneNumberViewController.phoneNumberField.leftAccessoryView = RegistrationTextFieldLeftAccessoryViewNone;
-    }
+    self.phoneNumberViewController.phoneNumber = self.phoneNumber;
     
     self.phoneNumberViewController.editable = self.phoneNumberIsEditable;
 }
@@ -153,6 +149,11 @@
 - (void)takeFirstResponder
 {
     [self.phoneNumberViewController.phoneNumberField becomeFirstResponder];
+}
+
+-(void)reset
+{
+    self.phoneNumberViewController.phoneNumber = nil;
 }
 
 #pragma mark - Actions

@@ -33,24 +33,24 @@ final class LandingViewControllerTests: XCTestCase {
     
     var sut: LandingViewController!
     var mockParentViewControler: UIViewController! = UIViewController()
-    var mockUserInterfaceIdiom: MockUserInterfaceIdiom! = MockUserInterfaceIdiom()
+    var mockDevice: MockDevice! = MockDevice()
 
     override func setUp() {
         super.setUp()
-        sut = LandingViewController(idiom: mockUserInterfaceIdiom)
+        sut = LandingViewController(device: mockDevice)
         mockParentViewControler.addChildViewController(sut)
     }
     
     override func tearDown() {
         sut = nil
         mockParentViewControler = nil
-        mockUserInterfaceIdiom = nil
+        mockDevice = nil
         super.tearDown()
     }
     
     func testThatStackViewAxisChanagesWhenSizeClassChanges() {
         // GIVEN
-        mockUserInterfaceIdiom.userInterfaceIdiom = .pad
+        mockDevice.userInterfaceIdiom = .pad
         var traitCollection = UITraitCollection(horizontalSizeClass: .regular)
         mockParentViewControler.setOverrideTraitCollection(traitCollection, forChildViewController: sut)
         sut.traitCollectionDidChange(nil)
@@ -67,7 +67,7 @@ final class LandingViewControllerTests: XCTestCase {
 
     func testThatStackViewAxisDoesNotChanagesWhenSizeClassChangesOnIPhone() {
         // GIVEN
-        mockUserInterfaceIdiom.userInterfaceIdiom = .phone
+        mockDevice.userInterfaceIdiom = .phone
         var traitCollection = UITraitCollection(horizontalSizeClass: .regular)
         mockParentViewControler.setOverrideTraitCollection(traitCollection, forChildViewController: sut)
         sut.traitCollectionDidChange(nil)

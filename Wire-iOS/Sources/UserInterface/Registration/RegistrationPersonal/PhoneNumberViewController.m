@@ -119,7 +119,7 @@ static CGFloat PhoneNumberFieldTopMargin = 16;
 
 #if WIRESTAN
     NSString *backendEnvironment = [[NSUserDefaults standardUserDefaults] stringForKey:@"ZMBackendEnvironmentType"];
-    if ([backendEnvironment isEqualToString:@"edge"]) {
+    if ([backendEnvironment isEqualToString:@"staging"]) {
             initialCountry = [Country countryWirestan];
     }
     
@@ -186,34 +186,19 @@ static CGFloat PhoneNumberFieldTopMargin = 16;
     self.phoneNumberField.textColor = editable ? [UIColor wr_colorFromColorScheme:ColorSchemeColorTextForeground variant:ColorSchemeVariantDark] : [UIColor wr_colorFromColorScheme:ColorSchemeColorButtonFaded variant:ColorSchemeVariantDark];
 }
 
-#pragma mark - Field Validation
-
-
-- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
+-(void)setPhoneNumber:(NSString *)phoneNumber
 {
-    return self.editable;
-}
-
-- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
-{
-    NSString *newString = [textField.text stringByReplacingCharactersInRange:range withString:string];
-    NSString *phoneNumber = [NSString phoneNumberStringWithE164:self.country.e164 number:newString];
+    _phoneNumber = [phoneNumber copy];
     
-    NSError *error = nil;
-    [ZMUser validatePhoneNumber:&phoneNumber error:&error];
-    
-    if (error.code == ZMObjectValidationErrorCodeStringTooLong ||
-        error.code == ZMObjectValidationErrorCodePhoneNumberContainsInvalidCharacters) {
-        return NO;
+    if(phoneNumber == nil) {
+        [self selectInitialCountry];
+        self.phoneNumberField.text = nil;
+    } else {
+        [self pastePhoneNumber:phoneNumber];
     }
-    
-    [self updateRightAccessoryForPhoneNumber:phoneNumber];
-    return YES;
 }
 
-- (BOOL)textField:(UITextField *)textField shouldPasteCharactersInRange:(NSRange)range replacementString:(NSString *)string
-{
-    NSString *phoneNumber = [textField.text stringByReplacingCharactersInRange:range withString:string];
+-(BOOL)pastePhoneNumber:(NSString*)phoneNumber {
     
     // Auto detect country for phone numbers beginning with "+"
     
@@ -230,7 +215,7 @@ static CGFloat PhoneNumberFieldTopMargin = 16;
         Country *country = [Country detectCountryForPhoneNumber:phoneNumber];
         if (country) {
             self.country = country;
-        
+            
             NSString *phoneNumberWithoutCountryCode = [phoneNumber stringByReplacingOccurrencesOfString:self.country.e164PrefixString
                                                                                              withString:@""];
             
@@ -247,6 +232,36 @@ static CGFloat PhoneNumberFieldTopMargin = 16;
     } else {
         return NO;
     }
+}
+
+#pragma mark - Field Validation
+
+
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
+{
+    return self.editable;
+}
+
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+{
+    NSString *newString = [textField.text stringByReplacingCharactersInRange:range withString:string];
+    NSString *phoneNumber = [NSString phoneNumberStringWithE164:self.country.e164 number:newString];
+    
+    NSError *error = nil;
+    [ZMUser validatePhoneNumber:&phoneNumber error:&error];
+    
+    if (error != nil && error.code != ZMObjectValidationErrorCodeStringTooShort) {
+        return NO;
+    }
+    
+    [self updateRightAccessoryForPhoneNumber:phoneNumber];
+    return YES;
+}
+
+- (BOOL)textField:(UITextField *)textField shouldPasteCharactersInRange:(NSRange)range replacementString:(NSString *)string
+{
+    NSString *phoneNumber = [textField.text stringByReplacingCharactersInRange:range withString:string];
+    return [self pastePhoneNumber:phoneNumber];
 }
 
 #pragma mark - Actions

@@ -86,20 +86,43 @@ extension StartUIViewController: SearchResultsViewControllerDelegate {
     public func searchResultsViewController(_ searchResultsViewController: SearchResultsViewController, wantsToPerformAction action: SearchResultsViewControllerAction) {
         switch action {
         case .createGroup:
-            let controller = ConversationCreationController()
-            controller.delegate = self
-
-            if self.traitCollection.horizontalSizeClass == .compact {
-                let avoiding = KeyboardAvoidingViewController(viewController: controller)
-                self.navigationController?.pushViewController(avoiding, animated: true) {
-                    UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(true)
-                }
+            openCreateGroupController()
+        case .createGuestRoom:
+            createGuestRoom()
+        }
+    }
+    
+    func openCreateGroupController() {
+        let controller = ConversationCreationController()
+        controller.delegate = self
+        
+        if self.traitCollection.horizontalSizeClass == .compact {
+            let avoiding = KeyboardAvoidingViewController(viewController: controller)
+            self.navigationController?.pushViewController(avoiding, animated: true) {
+                UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(true)
             }
-            else {
-                let embeddedNavigationController = controller.wrapInNavigationController()
-                embeddedNavigationController.modalPresentationStyle = .formSheet
-                self.present(embeddedNavigationController, animated: true)
-            }
+        }
+        else {
+            let embeddedNavigationController = controller.wrapInNavigationController()
+            embeddedNavigationController.modalPresentationStyle = .formSheet
+            self.present(embeddedNavigationController, animated: true)
+        }
+    }
+    
+    func createGuestRoom() {
+        guard let userSession = ZMUserSession.shared() else {
+            fatal("No user session present")
+        }
+        
+        GuestRoomEvent.created.track()
+        self.showLoadingView = true
+        userSession.performChanges {
+            let conversation = ZMConversation.insertGroupConversation(intoUserSession: userSession,
+                                                                      withParticipants: [],
+                                                                      name: "general.guest-room-name".localized,
+                                                                      in: ZMUser.selfUser().team,
+                                                                      allowGuests: true)
+            self.delegate.startUI?(self, didSelect: conversation)
         }
     }
 }

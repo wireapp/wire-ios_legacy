@@ -130,11 +130,11 @@ class UserCell: UICollectionViewCell, Themeable {
         
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         titleLabel.font = FontSpec.init(.normal, .light).font!
-        titleLabel.accessibilityIdentifier = "name"
+        titleLabel.accessibilityIdentifier = "user_cell.name"
         
         subtitleLabel.translatesAutoresizingMaskIntoConstraints = false
         subtitleLabel.font = FontSpec.init(.small, .regular).font!
-        subtitleLabel.accessibilityIdentifier = "username"
+        subtitleLabel.accessibilityIdentifier = "user_cell.username"
         
         avatar.size = .small
         avatar.initials.font = UIFont.systemFont(ofSize: 11, weight: UIFontWeightLight)

@@ -155,6 +155,11 @@
     [self.passwordField addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
     [self.passwordField.confirmButton addTarget:self action:@selector(signIn:) forControlEvents:UIControlEventTouchUpInside];
     
+    if (self.loginCredentials.password != nil) {
+        // User was previously signed in so we prefill the credentials
+        self.passwordField.text = self.loginCredentials.password;
+    }
+    
     if ([[OnePasswordExtension sharedExtension] isAppExtensionAvailable]) {
         UIButton *onePasswordButton = [UIButton buttonWithType:UIButtonTypeCustom];
         NSBundle *frameworkBundle = [NSBundle bundleForClass:[OnePasswordExtension class]];

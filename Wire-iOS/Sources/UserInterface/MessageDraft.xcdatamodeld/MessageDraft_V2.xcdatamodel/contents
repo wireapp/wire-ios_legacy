@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="13241" systemVersion="16G1114" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="MessageDraft" representedClassName=".MessageDraft" syncable="YES">
+        <attribute name="attributedMessage" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <attribute name="lastModifiedDate" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="message" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="subject" optional="YES" attributeType="String" syncable="YES"/>
+        <fetchIndex name="byLastModifiedDateIndex">
+            <fetchIndexElement property="lastModifiedDate" type="Binary" order="ascending"/>
+        </fetchIndex>
+    </entity>
+    <elements>
+        <element name="MessageDraft" positionX="-63" positionY="-18" width="128" height="105"/>
+    </elements>
+</model>

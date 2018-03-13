@@ -66,11 +66,11 @@ class GroupConversationCell: UICollectionViewCell, Reusable, Themeable {
     fileprivate func setup() {
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         titleLabel.font = FontSpec.init(.normal, .light).font!
-        titleLabel.accessibilityIdentifier = "name"
+        titleLabel.accessibilityIdentifier = "user_cell.name"
         
         subtitleLabel.translatesAutoresizingMaskIntoConstraints = false
         subtitleLabel.font = FontSpec.init(.small, .regular).font!
-        subtitleLabel.accessibilityIdentifier = "username"
+        subtitleLabel.accessibilityIdentifier = "user_cell.username"
         
         avatarView.translatesAutoresizingMaskIntoConstraints = false
         

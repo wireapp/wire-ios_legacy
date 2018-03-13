@@ -32,6 +32,7 @@
 - (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil NS_UNAVAILABLE;
 - (instancetype)initWithUnregisteredUser:(ZMIncompleteRegistrationUser *)unregisteredUser NS_DESIGNATED_INITIALIZER;
 - (void)takeFirstResponder;
+- (void)reset;
 
 @property (nonatomic) AnalyticsTracker *analyticsTracker;
 

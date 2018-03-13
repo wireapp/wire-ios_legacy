@@ -47,8 +47,8 @@ final class ToggleSubtitleCell: UITableViewCell, CellConfigurationConfigurable {
         [topContainer, subtitleLabel].forEach(contentView.addSubview)
         toggle.addTarget(self, action: #selector(toggleChanged), for: .valueChanged)
         subtitleLabel.numberOfLines = 0
-        subtitleLabel.font = FontSpec(.small, .regular).font
-        titleLabel.font = FontSpec(.normal, .regular).font
+        subtitleLabel.font = FontSpec(.medium, .regular).font
+        titleLabel.font = FontSpec(.normal, .light).font
         titleLabel.accessibilityIdentifier = "label.guestoptions.description"
         accessibilityElements = [titleLabel, toggle]
     }

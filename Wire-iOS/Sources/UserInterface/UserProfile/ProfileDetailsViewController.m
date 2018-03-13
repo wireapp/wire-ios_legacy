@@ -84,6 +84,7 @@ typedef NS_ENUM(NSUInteger, ProfileUserAction) {
 @property (nonatomic) UIView *footerView;
 @property (nonatomic) UIView *stackViewContainer;
 @property (nonatomic) GuestLabelIndicator *teamsGuestIndicator;
+@property (nonatomic) UILabel *remainingTimeLabel;
 @property (nonatomic) BOOL showGuestLabel;
 @property (nonatomic) AvailabilityTitleView *availabilityView;
 @property (nonatomic) UICustomSpacingStackView *stackView;
@@ -123,15 +124,26 @@ typedef NS_ENUM(NSUInteger, ProfileUserAction) {
     [self.view addSubview:self.stackViewContainer];
     self.teamsGuestIndicator.hidden = !self.showGuestLabel;
     self.availabilityView.hidden = !ZMUser.selfUser.isTeamMember || self.fullUser.availability == AvailabilityNone;
+    self.remainingTimeLabel = [[UILabel alloc] initForAutoLayout];
+    NSString *remainingTimeString = self.fullUser.expirationDisplayString;
+    self.remainingTimeLabel.text = remainingTimeString;
+    self.remainingTimeLabel.hidden = nil == remainingTimeString;
 
-    self.stackView = [[UICustomSpacingStackView alloc] initWithCustomSpacedArrangedSubviews:@[self.userImageView, self.teamsGuestIndicator, self.availabilityView]];
+    self.stackView = [[UICustomSpacingStackView alloc] initWithCustomSpacedArrangedSubviews:@[self.userImageView, self.teamsGuestIndicator, self.remainingTimeLabel, self.availabilityView]];
     self.stackView.axis = UILayoutConstraintAxisVertical;
     self.stackView.spacing = 0;
     self.stackView.alignment = UIStackViewAlignmentCenter;
     [self.stackViewContainer addSubview:self.stackView];
     
-    [self.stackView wr_addCustomSpacing:(self.teamsGuestIndicator.isHidden ? 32 : 32) after:self.userImageView];
-    [self.stackView wr_addCustomSpacing:(self.availabilityView.isHidden ? 40 : 32) after:self.teamsGuestIndicator];
+    [self.stackView wr_addCustomSpacing:32 after:self.userImageView];
+
+    if (self.remainingTimeLabel.isHidden) {
+        [self.stackView wr_addCustomSpacing:(self.availabilityView.isHidden ? 40 : 32) after:self.teamsGuestIndicator];
+    } else {
+        [self.stackView wr_addCustomSpacing:8 after:self.teamsGuestIndicator];
+        [self.stackView wr_addCustomSpacing:(self.availabilityView.isHidden ? 40 : 32) after:self.remainingTimeLabel];
+    }
+    
     [self.stackView wr_addCustomSpacing:32 after:self.availabilityView];
 }
 
@@ -139,11 +151,12 @@ typedef NS_ENUM(NSUInteger, ProfileUserAction) {
 {
     [self.stackView autoCenterInSuperview];
     
+    const CGFloat offset = 40;
     [NSLayoutConstraint autoSetPriority:UILayoutPriorityRequired forConstraints:^{
-        [self.stackView autoPinEdge:ALEdgeLeading toEdge:ALEdgeLeading ofView:self.stackViewContainer withOffset:16 relation:NSLayoutRelationGreaterThanOrEqual];
-        [self.stackView autoPinEdge:ALEdgeTop toEdge:ALEdgeTop ofView:self.stackViewContainer withOffset:16 relation:NSLayoutRelationGreaterThanOrEqual];
-        [self.stackView autoPinEdge:ALEdgeTrailing toEdge:ALEdgeTrailing ofView:self.stackViewContainer withOffset:-16 relation:NSLayoutRelationLessThanOrEqual];
-        [self.stackView autoPinEdge:ALEdgeBottom toEdge:ALEdgeBottom ofView:self.stackViewContainer withOffset:-16 relation:NSLayoutRelationLessThanOrEqual];
+        [self.stackView autoPinEdge:ALEdgeLeading toEdge:ALEdgeLeading ofView:self.stackViewContainer withOffset:offset relation:NSLayoutRelationGreaterThanOrEqual];
+        [self.stackView autoPinEdge:ALEdgeTop toEdge:ALEdgeTop ofView:self.stackViewContainer withOffset:offset relation:NSLayoutRelationGreaterThanOrEqual];
+        [self.stackView autoPinEdge:ALEdgeTrailing toEdge:ALEdgeTrailing ofView:self.stackViewContainer withOffset:-offset relation:NSLayoutRelationLessThanOrEqual];
+        [self.stackView autoPinEdge:ALEdgeBottom toEdge:ALEdgeBottom ofView:self.stackViewContainer withOffset:-offset relation:NSLayoutRelationLessThanOrEqual];
     }];
     
     [self.stackViewContainer autoPinEdgeToSuperviewEdge:ALEdgeTop];
@@ -318,7 +331,7 @@ typedef NS_ENUM(NSUInteger, ProfileUserAction) {
     else if (user.isPendingApprovalByOtherUser) {
         return ProfileUserActionCancelConnectionRequest;
     }
-    else if (! user.isConnected && ! user.isPendingApprovalByOtherUser) {
+    else if (user.canBeConnected) {
         return ProfileUserActionSendConnectionRequest;
     } else {
         return ProfileUserActionOpenConversation;

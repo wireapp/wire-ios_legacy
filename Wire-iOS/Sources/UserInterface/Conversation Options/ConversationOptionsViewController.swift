@@ -18,8 +18,6 @@
 
 import UIKit
 
-
-
 final class ConversationOptionsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, ConversationOptionsViewModelDelegate {
 
     private let tableView = UITableView()
@@ -61,7 +59,7 @@ final class ConversationOptionsViewController: UIViewController, UITableViewDele
     
     private func setupViews() {
         view.addSubview(tableView)
-        tableView.register(ToggleSubtitleCell.self, forCellReuseIdentifier: ToggleSubtitleCell.reuseIdentifier)
+        CellConfiguration.prepare(tableView)
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.contentInset = UIEdgeInsets(top: 32, left: 0, bottom: 0, right: 0)
         tableView.estimatedRowHeight = 80
@@ -98,6 +96,15 @@ final class ConversationOptionsViewController: UIViewController, UITableViewDele
     
     func viewModel(_ viewModel: ConversationOptionsViewModel, confirmRemovingGuests completion: @escaping (Bool) -> Void) {
         present(UIAlertController.confirmRemovingGuests(completion), animated: true)
+    }
+    
+    func viewModel(_ viewModel: ConversationOptionsViewModel, confirmRevokingLink completion: @escaping (Bool) -> Void) {
+        present(UIAlertController.confirmRevokingLink(completion), animated: true)
+    }
+    
+    func viewModel(_ viewModel: ConversationOptionsViewModel, wantsToShareMessage message: String) {
+        let activityController = TintCorrectedActivityViewController(activityItems: [message], applicationActivities: nil)
+        present(activityController, animated: true)
     }
 
     // MARK: – UITableViewDelegate & UITableViewDataSource

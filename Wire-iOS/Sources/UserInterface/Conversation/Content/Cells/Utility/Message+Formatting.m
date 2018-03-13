@@ -31,10 +31,10 @@
 
 @import WireExtensionComponents;
 @import WireLinkPreview;
-@import Marklight;
+@import Down;
 
 static NSMutableParagraphStyle *cellParagraphStyle;
-static MarklightGroupStyler *groupStyler;
+static DownStyle *style;
 
 
 
@@ -101,31 +101,29 @@ static inline NSDataDetector *linkDataDetector(void)
     if (nil == cellParagraphStyle) {
         cellParagraphStyle = [[NSMutableParagraphStyle alloc] init];
         cellParagraphStyle.minimumLineHeight = 22 * [UIFont wr_preferredContentSizeMultiplierFor:[[UIApplication sharedApplication] preferredContentSizeCategory]];
-    }
-
-    UIFont *font;
-    UIColor *foregroundColor;
-
-    if (obfuscated) {
-        font = [UIFont fontWithName:@"RedactedScript-Regular" size:18];
-        foregroundColor = [UIColor wr_colorFromColorScheme:ColorSchemeColorAccent];
-    } else {
-        font = UIFont.normalLightFont;
-        foregroundColor = [UIColor wr_colorFromColorScheme:ColorSchemeColorTextForeground];
+        cellParagraphStyle.paragraphSpacing = 8;
     }
     
-    NSDictionary *attributes = @{
-                                NSFontAttributeName : font,
-                                NSForegroundColorAttributeName : foregroundColor,
-                                NSParagraphStyleAttributeName : cellParagraphStyle
+    if (nil == style) {
+        // set markdown attribute styles here
+        style = DownStyle.normal;
+        style.baseFont = UIFont.normalLightFont;
+        style.baseFontColor = [UIColor wr_colorFromColorScheme:ColorSchemeColorTextForeground];
+        style.baseParagraphStyle = cellParagraphStyle;
+    }
+
+    if (obfuscated) {
+        NSDictionary *attrs = @{
+                                NSFontAttributeName: [UIFont fontWithName:@"RedactedScript-Regular" size:18],
+                                NSForegroundColorAttributeName: [UIColor wr_colorFromColorScheme:ColorSchemeColorAccent],
+                                NSParagraphStyleAttributeName: cellParagraphStyle
                                 };
-    
-    NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:text attributes:attributes];
-
-    if (obfuscated) {
-        return attributedString;
+        
+        return [[NSAttributedString alloc] initWithString:text attributes:attrs];
     }
-
+    
+    NSMutableAttributedString *attributedString = [NSMutableAttributedString markdownFrom:text style:style];
+    
     [attributedString beginEditing];
     
     NSMutableArray *invalidLinkAttachments = [NSMutableArray array];
@@ -155,11 +153,11 @@ static inline NSDataDetector *linkDataDetector(void)
         }
         nextRangeBegining = NSMaxRange(URLRange);
     }
-    NSRange emoticonRange = NSMakeRange(nextRangeBegining, text.length - nextRangeBegining);
+    NSRange emoticonRange = NSMakeRange(nextRangeBegining, attributedString.length - nextRangeBegining);
     if (emoticonRange.length > 0) {
         [nonURLRanges addObject:[NSValue valueWithRange:emoticonRange]];
     }
-    
+
     // 2. Substitute emoticons on ranges.
     // reverse iteration keeps values in nonURLRanges actual while enumeration
     // (stringByResolvingEmoticonShortcuts changes length of string)
@@ -168,34 +166,6 @@ static inline NSDataDetector *linkDataDetector(void)
     }
     
     [attributedString endEditing];
-    
-    if (nil == groupStyler) {
-        // set markdown attribute styles here
-        ColorScheme *colorScheme = [ColorScheme defaultColorScheme];
-        MarklightStyle *style = [[MarklightStyle alloc] init];
-        style.hideSyntax = YES;
-        
-        style.syntaxAttributes = @{NSForegroundColorAttributeName: colorScheme.accentColor};
-        
-        NSMutableParagraphStyle * paragraphStyle = [[NSMutableParagraphStyle alloc] init];
-        paragraphStyle.paragraphSpacingBefore = 24.0;
-        paragraphStyle.paragraphSpacing = 12.0;
-        
-        UIFont *italicFont = [[UIFont systemFontOfSize:16.0 weight:UIFontWeightLight] italicFont];
-        style.italicAttributes = @{NSFontAttributeName: italicFont};
-        
-        NSMutableDictionary *h1HeaderAttributes = [[NSMutableDictionary alloc] initWithDictionary:style.h1HeadingAttributes];
-        [h1HeaderAttributes setValue:paragraphStyle forKey:NSParagraphStyleAttributeName];
-        style.h1HeadingAttributes = h1HeaderAttributes;
-        
-        NSMutableDictionary *codeAttributes = [[NSMutableDictionary alloc] initWithDictionary:style.codeAttributes];
-        [codeAttributes setValue:[colorScheme colorWithName: ColorSchemeColorTextForeground] forKey:NSForegroundColorAttributeName];
-        style.codeAttributes = codeAttributes;
-        groupStyler = [[MarklightGroupStyler alloc] initWithStyle: style];
-    }
-    
-    // parse for markdown syntax & apply attributes
-    [groupStyler addMarkdownAttributes:attributedString editedRange: NSMakeRange(0, attributedString.length)];
     
     if ([attributedString.string wr_containsOnlyEmojiWithSpaces]) {
         [attributedString setAttributes:@{NSFontAttributeName: [UIFont systemFontOfSize:40]} range:NSMakeRange(0, attributedString.length)];
@@ -216,7 +186,7 @@ static inline NSDataDetector *linkDataDetector(void)
 
 + (void)invalidateMarkdownStyle
 {
-    groupStyler = nil;
+    style = nil;
 }
 
 + (NSArray *)linkAttachmentsForURLMatches:(NSArray *)matches
@@ -239,7 +209,12 @@ static inline NSDataDetector *linkDataDetector(void)
 {
     NSDataDetector *detector = linkDataDetector();
     NSArray *contentURLs = nil;
-    NSString *trimmedText = [message.messageText trimmedCopy];
+    
+    // if the message contains markdown, the parsed string will be shorter
+    // b/c the markdown syntax is removed. In order to ensure the link
+    // attachment ranges are valid, we must detect links from the parsed string.
+    NSString *text = [NSMutableAttributedString markdownFrom:message.messageText style:DownStyle.normal].string;
+    NSString *trimmedText = [text trimmedCopy];
     
     if (trimmedText.length > 0) {
         NSArray *matches = [detector matchesInString:trimmedText options:0 range:NSMakeRange(0, trimmedText.length)];

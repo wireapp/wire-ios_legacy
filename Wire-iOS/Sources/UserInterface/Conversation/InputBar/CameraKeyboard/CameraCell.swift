@@ -36,14 +36,16 @@ open class CameraCell: UICollectionViewCell, Reusable {
     weak var delegate: CameraCellDelegate?
     
     fileprivate static let ciContext = CIContext(options: [:])
-    
+
+    fileprivate var device: DeviceProtocol = UIDevice.current
+
     deinit {
         NotificationCenter.default.removeObserver(self)
     }
-    
+
     override init(frame: CGRect) {
         self.cameraController = CameraController()
-        
+
         super.init(frame: frame)
         
         if let cameraController = self.cameraController {
@@ -144,15 +146,11 @@ open class CameraCell: UICollectionViewCell, Reusable {
         cameraController.previewLayer.frame = self.contentView.bounds
         self.updateVideoOrientation()
     }
-    
-    fileprivate func updateVideoOrientation() {
-        guard let cameraController = self.cameraController else {
-            return
-        }
-        
+
+    var newCaptureVideoOrientation: AVCaptureVideoOrientation {
         let newOrientation: AVCaptureVideoOrientation
-        
-        switch UIDevice.current.orientation {
+
+        switch device.orientation {
         case .portrait:
             newOrientation = .portrait;
             break;
@@ -168,7 +166,17 @@ open class CameraCell: UICollectionViewCell, Reusable {
         default:
             newOrientation = .portrait;
         }
-        
+
+        return newOrientation
+    }
+
+    fileprivate func updateVideoOrientation() {
+        guard let cameraController = self.cameraController else {
+            return
+        }
+
+        let newOrientation = newCaptureVideoOrientation
+
         if UIDevice.current.userInterfaceIdiom == .pad {
             if let connection = cameraController.previewLayer.connection,
                 connection.isVideoOrientationSupported {
@@ -266,5 +274,16 @@ open class CameraCell: UICollectionViewCell, Reusable {
         
         cameraController.currentCamera = cameraController.currentCamera == .front ? .back : .front
         Settings.shared().preferredCamera = cameraController.currentCamera
+    }
+}
+
+extension CameraCell {
+    /// init method with a param for injecting mock device
+    ///
+    /// - Parameters:
+    ///   - device: Provide this param for testing only
+    convenience init(device: DeviceProtocol) {
+        self.init(frame: .zero)
+        self.device = device
     }
 }

@@ -211,6 +211,7 @@ public class AddParticipantsViewController: UIViewController {
         searchResultsViewController.didMove(toParentViewController: self)
         searchResultsViewController.searchResultsView?.emptyResultView = emptyResultLabel
         searchResultsViewController.searchResultsView?.backgroundColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorContentBackground, variant: self.variant)
+        searchResultsViewController.searchResultsView?.collectionView.accessibilityIdentifier = "add_participants.list"
         
         view.backgroundColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorContentBackground, variant: self.variant)
         

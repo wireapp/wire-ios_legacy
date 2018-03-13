@@ -37,5 +37,6 @@
 
 - (BOOL)validateAllFields;
 - (void)resetAllFields;
+- (void)resetTextFields;
 
 @end

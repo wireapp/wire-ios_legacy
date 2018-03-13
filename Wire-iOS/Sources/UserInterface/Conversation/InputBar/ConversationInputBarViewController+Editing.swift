@@ -86,7 +86,7 @@ extension ConversationInputBarViewController: InputBarEditViewDelegate {
         switch buttonType {
         case .undo: inputBar.undo()
         case .cancel: endEditingMessageIfNeeded()
-        case .confirm: sendOrEditText(inputBar.textView.text)
+        case .confirm: sendOrEditText(inputBar.textView.preparedText)
         }
     }
     
