@@ -55,55 +55,6 @@ final class MockConversationListViewController: UIViewController, NetworkStatusB
     }
 }
 
-class MockTransitionCoordinator: NSObject, UIViewControllerTransitionCoordinator {
-    
-    var containerView: UIView = UIView()
-    
-    var targetTransform: CGAffineTransform = CGAffineTransform()
-    
-    var isAnimated: Bool = true
-    
-    var presentationStyle: UIModalPresentationStyle = .none
-    
-    var initiallyInteractive: Bool = true
-    
-    var isInterruptible: Bool = true
-    
-    var isInteractive: Bool = true
-    
-    var isCancelled: Bool = true
-    
-    var transitionDuration: TimeInterval = 0.0
-    
-    var percentComplete: CGFloat = 0.0
-    
-    var completionVelocity: CGFloat = 0.0
-    
-    var completionCurve: UIViewAnimationCurve = .linear
-    
-    func viewController(forKey key: UITransitionContextViewControllerKey) -> UIViewController? {
-        return nil
-    }
-    
-    func view(forKey key: UITransitionContextViewKey) -> UIView? {
-        return nil
-    }
-    
-    func animate(alongsideTransition animation: ((UIViewControllerTransitionCoordinatorContext) -> Void)?, completion: ((UIViewControllerTransitionCoordinatorContext) -> Void)? = nil) -> Bool {
-        return true
-    }
-    
-    func animateAlongsideTransition(in view: UIView?, animation: ((UIViewControllerTransitionCoordinatorContext) -> Void)?, completion: ((UIViewControllerTransitionCoordinatorContext) -> Void)? = nil) -> Bool {
-        return true
-    }
-    
-    func notifyWhenInteractionEnds(_ handler: @escaping (UIViewControllerTransitionCoordinatorContext) -> Void) {
-    }
-    
-    func notifyWhenInteractionChanges(_ handler: @escaping (UIViewControllerTransitionCoordinatorContext) -> Void) {
-    }
-}
-
 final class NetworkStatusViewControllerTests: XCTestCase {
     var sutRoot: NetworkStatusViewController!
     var sutList: NetworkStatusViewController!
@@ -249,10 +200,9 @@ final class NetworkStatusViewControllerTests: XCTestCase {
         // Portrait
         
         // WHEN
-        let mockTransitionCoordinator = MockTransitionCoordinator()
         let portraitSize = CGSize(width: 768, height: 1024)
-        sutList.viewWillTransition(to: portraitSize, with: mockTransitionCoordinator)
-        sutRoot.viewWillTransition(to: portraitSize, with: mockTransitionCoordinator)
+        sutList.viewWillTransition(to: portraitSize, with: nil)
+        sutRoot.viewWillTransition(to: portraitSize, with: nil)
 
         // THEN
         checkResult(listState: NetworkStatusViewState.online, rootState: .offlineExpanded)
@@ -261,8 +211,8 @@ final class NetworkStatusViewControllerTests: XCTestCase {
 
         // WHEN
         let landscapeSize = CGSize(width: 1024, height: 768)
-        sutList.viewWillTransition(to: landscapeSize, with: mockTransitionCoordinator)
-        sutRoot.viewWillTransition(to: landscapeSize, with: mockTransitionCoordinator)
+        sutList.viewWillTransition(to: landscapeSize, with: nil)
+        sutRoot.viewWillTransition(to: landscapeSize, with: nil)
         
         // THEN
         checkResult(listState: NetworkStatusViewState.offlineExpanded, rootState: .online)

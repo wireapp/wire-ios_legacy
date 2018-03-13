@@ -222,8 +222,11 @@ extension NetworkStatusViewController {
         updateStateForIPad(for: device.orientation)
     }
 
-    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
-        super.viewWillTransition(to: size, with: coordinator)
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator?) {
+        if let coordinator = coordinator {
+            super.viewWillTransition(to: size, with: coordinator)
+        }
+
         guard isIPadRegular(device: device) else { return }
 
         // find out the new orientation with the new size
