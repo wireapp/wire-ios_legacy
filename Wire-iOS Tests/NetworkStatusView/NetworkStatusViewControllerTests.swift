@@ -25,15 +25,11 @@ final class MockConversationRootViewController: UIViewController, NetworkStatusB
     var networkStatusViewController: NetworkStatusViewController!
     
     var shouldShowNetworkStatusUIInIPadRegularLandscape: Bool {
-        get {
-            return false
-        }
+        return false
     }
     
     var shouldShowNetworkStatusUIInIPadRegularPortrait: Bool {
-        get {
-            return true
-        }
+        return true
     }
 }
 
@@ -43,15 +39,11 @@ final class MockConversationListViewController: UIViewController, NetworkStatusB
     var networkStatusViewController: NetworkStatusViewController!
     
     var shouldShowNetworkStatusUIInIPadRegularLandscape: Bool {
-        get {
-            return true
-        }
+        return true
     }
     
     var shouldShowNetworkStatusUIInIPadRegularPortrait: Bool {
-        get {
-            return false
-        }
+        return false
     }
 }
 
@@ -70,13 +62,13 @@ final class NetworkStatusViewControllerTests: XCTestCase {
         mockConversationList = MockConversationListViewController()
         sutList = NetworkStatusViewController(device: mockDevice)
         mockConversationList.networkStatusViewController = sutList
-        mockConversationList.addChildViewController(sutList)
+        mockConversationList.addToSelf(sutList)
         sutList.delegate = mockConversationList
         
         mockConversationRoot = MockConversationRootViewController()
         sutRoot = NetworkStatusViewController(device: mockDevice)
         mockConversationRoot.networkStatusViewController = sutRoot
-        mockConversationRoot.addChildViewController(sutRoot)
+        mockConversationRoot.addToSelf(sutRoot)
         sutRoot.delegate = mockConversationRoot
     }
     
@@ -132,9 +124,9 @@ final class NetworkStatusViewControllerTests: XCTestCase {
         setUpSut(userInterfaceIdiom: userInterfaceIdiom, horizontalSizeClass: horizontalSizeClass, orientation: orientation)
 
         // THEN
-        checkResult(listState: listState, rootState: rootState)
+        checkResult(listState: listState, rootState: rootState, file: file, line: line)
     }
-    
+
     func testThatNetworkStatusViewShowsOnListButNotRootWhenDevicePropertiesIsIPadLandscapeRegularMode() {
         checkForNetworkStatusViewState(userInterfaceIdiom: .pad,
                                        horizontalSizeClass: .regular,
