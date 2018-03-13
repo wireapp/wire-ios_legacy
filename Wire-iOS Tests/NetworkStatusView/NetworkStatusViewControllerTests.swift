@@ -45,7 +45,7 @@ final class NetworkStatusViewControllerSnapshotTests: ZMSnapshotTestCase {
         mockContainerViewController.view.bounds.size = CGSize(width: 375.0, height: 667.0)
         mockContainerViewController.view.backgroundColor = .lightGray
 
-        sut = NetworkStatusViewController()
+        sut = NetworkStatusViewController(container: .conversationList)
         mockContainerViewController.view.addSubview(sut.view)
         sut.delegate = mockContainerViewController
 
