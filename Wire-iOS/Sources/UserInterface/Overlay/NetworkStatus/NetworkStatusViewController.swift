@@ -72,6 +72,9 @@ class NetworkStatusViewController : UIViewController {
 
     deinit {
         NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(applyPendingState), object: nil)
+
+        offlineBarTimer?.invalidate()
+        offlineBarTimer = nil
     }
     
     override func viewDidLoad() {
@@ -106,23 +109,29 @@ class NetworkStatusViewController : UIViewController {
     ///
     /// - Returns: false if it is not in offline states
     static public func notifyWhenOffline() -> Bool {
-        guard let shared = NetworkStatusViewController.selfInConversationListView || NetworkStatusViewController.selfInConversationRootView else { return true }
+        let selfInList = NetworkStatusViewController.selfInConversationListView
+        let selfInRoot = NetworkStatusViewController.selfInConversationRootView
 
+        guard selfInList != nil || selfInRoot != nil else { return true }
+
+        return true
         // for compact mode all networkStatusViewController are notified, for regular mode returns the only enabled networkStatusViewController
 
-        if shared.isIPadRegular(device: shared.device) {
-            return shared.chnageStateFormOfflineCollapsedToOfflineExpanded(networkStatusViewController: shared)
-        }
-        else {
-            var ret = true
-            for networkStatusViewController in selfInstances {
-                if shared.chnageStateFormOfflineCollapsedToOfflineExpanded(networkStatusViewController: networkStatusViewController) == false {
-                    ret = false
-                }
-            }
+        ///FIXME:
 
-            return ret
-        }
+//        if shared.isIPadRegular(device: shared.device) {
+//            return shared.chnageStateFormOfflineCollapsedToOfflineExpanded(networkStatusViewController: shared)
+//        }
+//        else {
+//            var ret = true
+//            for networkStatusViewController in selfInstances {
+//                if shared.chnageStateFormOfflineCollapsedToOfflineExpanded(networkStatusViewController: networkStatusViewController) == false {
+//                    ret = false
+//                }
+//            }
+//
+//            return ret
+//        }
     }
 
     func showOfflineAlert() {

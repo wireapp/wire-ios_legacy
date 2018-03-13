@@ -80,9 +80,6 @@ final class NetworkStatusViewControllerTests: XCTestCase {
         mockConversationList = nil
         
         super.tearDown()
-
-        XCTAssertLessThan(NetworkStatusViewController.selfInstances.count, 3, "NetworkStatusViewController instance should always < 3")
-
     }
     
     fileprivate func setUpSut(userInterfaceIdiom: UIUserInterfaceIdiom,
@@ -235,3 +232,35 @@ final class NetworkStatusViewControllerTests: XCTestCase {
     }
 }
 
+
+final class NetworkStatusViewControllerRetainTests: XCTestCase {
+
+    weak var sut: NetworkStatusViewController!
+
+    override func setUp() {
+        super.setUp()
+        sut = NetworkStatusViewController()
+    }
+
+    override func tearDown() {
+        sut = nil
+        super.tearDown()
+    }
+
+    func testNetworkStatusViewControllerIsNotRetainedAfterTimerIsScheduled(){
+        autoreleasepool{
+            // GIVEN
+            var networkStatusViewController: NetworkStatusViewController! = NetworkStatusViewController()
+            sut = networkStatusViewController
+
+
+            // WHEN
+            networkStatusViewController.viewDidLoad()
+            let _ = NetworkStatusViewController.notifyWhenOffline()
+            networkStatusViewController = nil
+        }
+
+        // THEN
+        XCTAssertNil(sut)
+    }
+}
