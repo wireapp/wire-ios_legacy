@@ -63,6 +63,7 @@ extension ConversationInputBarViewController {
         case .began:
             self.createAudioRecord()
             if let audioRecordViewController = self.audioRecordViewController , showAudioRecordViewControllerIfGrantedAccess() {
+                audioRecordViewController.setOverlayState(.expanded(0), animated: true)
                 audioRecordViewController.setRecordingState(.recording, animated: false)
                 audioRecordViewController.beginRecording()
                 self.inputBar.buttonContainer.isHidden = true
