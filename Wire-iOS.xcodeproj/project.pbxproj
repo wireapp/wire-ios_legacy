@@ -3484,6 +3484,7 @@
 		871BC1271D34F8F800DF0793 /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				EF64008C205827F400917141 /* NetworkStatusBar */,
 				876E0C8A1EC5ED69007EF34E /* CameraPicker.swift */,
 				871BC1281D34F8F800DF0793 /* Controllers */,
 				871BC36B1D34F96000DF0793 /* DeviceOrientationObserver.h */,
@@ -4891,7 +4892,6 @@
 				87555C7E1A85021C00A43E2E /* InAppNotifications */,
 				DBBFBCB419D2CB9400557444 /* TitleBar */,
 				8FC85247199245760008B66B /* MediaBar */,
-				8FC8524E199245760008B66B /* NetworkStatus */,
 				8FC85255199245760008B66B /* NotificationWindowRootViewController.h */,
 				8FC85256199245760008B66B /* NotificationWindowRootViewController.m */,
 				1670AFE61B2095B1002BF0AE /* VoiceChannelCollectionViewLayout.h */,
@@ -4921,15 +4921,6 @@
 				163B5EF11B4C209C009B4629 /* MediaBarViewController.m */,
 			);
 			path = MediaBar;
-			sourceTree = "<group>";
-		};
-		8FC8524E199245760008B66B /* NetworkStatus */ = {
-			isa = PBXGroup;
-			children = (
-				162917C81F8BB991000F3E92 /* NetworkStatusView.swift */,
-				162917CD1F8CD327000F3E92 /* NetworkStatusViewController.swift */,
-			);
-			path = NetworkStatus;
 			sourceTree = "<group>";
 		};
 		8FC852B3199245760008B66B /* Settings */ = {
@@ -5515,6 +5506,16 @@
 				EF7F74021FCC01140059C13F /* EmailAdresssValidatorTests.swift */,
 			);
 			path = AccessoryTextField;
+			sourceTree = "<group>";
+		};
+		EF64008C205827F400917141 /* NetworkStatusBar */ = {
+			isa = PBXGroup;
+			children = (
+				162917C81F8BB991000F3E92 /* NetworkStatusView.swift */,
+				162917CD1F8CD327000F3E92 /* NetworkStatusViewController.swift */,
+			);
+			name = NetworkStatusBar;
+			path = "New Group";
 			sourceTree = "<group>";
 		};
 		F10F46D02028857C00261449 /* Create */ = {
