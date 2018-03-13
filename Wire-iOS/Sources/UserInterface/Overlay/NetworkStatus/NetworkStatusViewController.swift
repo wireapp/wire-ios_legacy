@@ -33,6 +33,7 @@ extension NetworkStatusViewController {
 
     /// store a list of NetworkStatusViewController, for handling global notifyWhenOffline methdo
     static fileprivate var selfInstances: [NetworkStatusViewController] = []
+
     static fileprivate var shared: NetworkStatusViewController? {
         get {
             for networkStatusViewController in selfInstances {
@@ -84,6 +85,10 @@ class NetworkStatusViewController : UIViewController {
 
     deinit {
         NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(applyPendingState), object: nil)
+
+        if let index = NetworkStatusViewController.selfInstances.index(of: self) {
+            NetworkStatusViewController.selfInstances.remove(at: index)
+        }
     }
     
     override func viewDidLoad() {
@@ -102,16 +107,39 @@ class NetworkStatusViewController : UIViewController {
         
         networkStatusView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tappedOnNetworkStatusBar)))
     }
-    
-    static public func notifyWhenOffline() -> Bool {
-        guard let shared = NetworkStatusViewController.shared else { return true }
-        let networkStatusView = shared.networkStatusView
+
+    func chnageStateFormOfflineCollapsedToOfflineExpanded(networkStatusViewController: NetworkStatusViewController) -> Bool {
+        let networkStatusView = networkStatusViewController.networkStatusView
 
         if networkStatusView.state == .offlineCollapsed {
-            shared.update(state: .offlineExpanded)
+            networkStatusViewController.update(state: .offlineExpanded)
         }
 
         return networkStatusView.state == .offlineExpanded || networkStatusView.state == .offlineCollapsed
+    }
+
+
+    /// show NetworkStatusViewController instance(s) if its state is .offlineCollapsed
+    ///
+    /// - Returns: false if it is not in offline states
+    static public func notifyWhenOffline() -> Bool {
+        guard let shared = NetworkStatusViewController.shared else { return true }
+
+        // for compact mode all networkStatusViewController are notified, for regular mode returns the only enabled networkStatusViewController
+
+        if shared.isIPadRegular(device: shared.device) {
+            return shared.chnageStateFormOfflineCollapsedToOfflineExpanded(networkStatusViewController: shared)
+        }
+        else {
+            var ret = true
+            for networkStatusViewController in selfInstances {
+                if shared.chnageStateFormOfflineCollapsedToOfflineExpanded(networkStatusViewController: networkStatusViewController) == false {
+                    ret = false
+                }
+            }
+
+            return ret
+        }
     }
 
     func showOfflineAlert() {

@@ -76,16 +76,19 @@ final class NetworkStatusViewControllerTests: XCTestCase {
         sutList = nil
         sutRoot = nil
         mockDevice = nil
+        mockConversationRoot = nil
+        mockConversationList = nil
         
-        ///TODO
         super.tearDown()
     }
     
     fileprivate func setUpSut(userInterfaceIdiom: UIUserInterfaceIdiom,
                               horizontalSizeClass: UIUserInterfaceSizeClass,
-                              orientation: UIDeviceOrientation) {
-        sutList.update(state: .offlineExpanded)
-        sutRoot.update(state: .offlineExpanded)
+                              orientation: UIDeviceOrientation,
+                              listState: NetworkStatusViewState = .offlineExpanded,
+                              rootState: NetworkStatusViewState = .offlineExpanded) {
+        sutList.update(state: listState)
+        sutRoot.update(state: rootState)
         
         mockDevice.userInterfaceIdiom = userInterfaceIdiom
         mockDevice.orientation = orientation
@@ -112,8 +115,6 @@ final class NetworkStatusViewControllerTests: XCTestCase {
     ///   - orientation: updated orientation
     ///   - listState: expected networkStatusView state in conversation list
     ///   - rootState: expected networkStatusView state in conversation root
-    ///   - file: optional, for XCTAssert logging error source
-    ///   - line: optional, for XCTAssert logging error source
     fileprivate func checkForNetworkStatusViewState(userInterfaceIdiom: UIUserInterfaceIdiom,
                                                     horizontalSizeClass: UIUserInterfaceSizeClass,
                                                     orientation: UIDeviceOrientation,
@@ -159,24 +160,44 @@ final class NetworkStatusViewControllerTests: XCTestCase {
                                        rootState: .offlineExpanded)
     }
     
-    func testThatNotifyWhenOfflineShowsNetworkStatusView() {
+    func testThatNotifyWhenOfflineShowsOneNetworkStatusViewOnIPad() {
         // GIVEN
         let userInterfaceIdiom: UIUserInterfaceIdiom = .pad
         let horizontalSizeClass: UIUserInterfaceSizeClass = .regular
         let orientation: UIDeviceOrientation = .landscapeLeft
         
-        let listState = NetworkStatusViewState.offlineExpanded
-        let rootState = NetworkStatusViewState.online
-        
-        setUpSut(userInterfaceIdiom: userInterfaceIdiom, horizontalSizeClass: horizontalSizeClass, orientation: orientation)
-        
+        setUpSut(userInterfaceIdiom: userInterfaceIdiom,
+                 horizontalSizeClass: horizontalSizeClass,
+                 orientation: orientation,
+                 listState: .offlineCollapsed,
+                 rootState: .offlineCollapsed)
+
         // WHEN
         _ = NetworkStatusViewController.notifyWhenOffline()
         
         // THEN
-        checkResult(listState: listState, rootState: rootState)
+        checkResult(listState: .offlineExpanded, rootState: .online)
     }
-    
+
+    func testThatNotifyWhenOfflineShowsBothNetworkStatusViewOnIPhone() {
+        // GIVEN
+        let userInterfaceIdiom: UIUserInterfaceIdiom = .phone
+        let horizontalSizeClass: UIUserInterfaceSizeClass = .compact
+        let orientation: UIDeviceOrientation = .portrait
+
+        setUpSut(userInterfaceIdiom: userInterfaceIdiom,
+                 horizontalSizeClass: horizontalSizeClass,
+                 orientation: orientation,
+                 listState: .offlineCollapsed,
+                 rootState: .offlineCollapsed)
+
+        // WHEN
+        _ = NetworkStatusViewController.notifyWhenOffline()
+
+        // THEN
+        checkResult(listState: .offlineExpanded, rootState: .offlineExpanded)
+    }
+
     func testThatIPadRespondsToScreenSizeChanging() {
         // GIVEN
         let userInterfaceIdiom: UIUserInterfaceIdiom = .pad
