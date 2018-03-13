@@ -140,16 +140,4 @@
     [[UIPasteboard generalPasteboard] setData:image.data forPasteboardType:type];
 }
 
-- (BOOL)wr_hasImages {
-    return [self containsPasteboardTypes:UIPasteboardTypeListImage] || ([self respondsToSelector:@selector(hasImages)] && self.hasImages);
-}
-
-- (BOOL)wr_hasStrings {
-    return [self containsPasteboardTypes:UIPasteboardTypeListString] || ([super respondsToSelector:@selector(hasStrings)] && self.hasStrings);
-}
-
-- (BOOL)wr_hasURLs {
-    return [self containsPasteboardTypes:UIPasteboardTypeListURL] || ([super respondsToSelector:@selector(hasURLs)] && self.hasURLs);
-}
-
 @end

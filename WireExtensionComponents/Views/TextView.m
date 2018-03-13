@@ -25,6 +25,7 @@
 @import PureLayout;
 #import "MediaAsset.h"
 #import "UILabel+TextTransform.h"
+#import "UIPasteboard+Compatibility.h"
 #import <WireExtensionComponents/WireExtensionComponents-Swift.h>
 @import Classy;
 

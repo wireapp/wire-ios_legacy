@@ -18,6 +18,8 @@
 
 
 #import <UIKit/UIKit.h>
+#import "UIPasteboard+Compatibility.h"
+
 @import FLAnimatedImage;
 
 
@@ -71,9 +73,6 @@
 
 - (id<MediaAsset>)mediaAsset;
 - (void)setMediaAsset:(id<MediaAsset>)image;
-- (BOOL)wr_hasImages;
-- (BOOL)wr_hasStrings;
-- (BOOL)wr_hasURLs;
 
 @end
 
