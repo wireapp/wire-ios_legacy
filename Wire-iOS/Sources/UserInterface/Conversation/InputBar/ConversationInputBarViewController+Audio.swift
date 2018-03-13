@@ -26,13 +26,11 @@ extension ConversationInputBarViewController {
     
     func configureAudioButton(_ button: IconButton) {
         let longPressRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(audioButtonLongPressed(_:)))
-        longPressRecognizer.delegate = self
         longPressRecognizer.minimumPressDuration = 0.3
         button.addGestureRecognizer(longPressRecognizer)
 
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(audioButtonPressed(_:)))
         tapGestureRecognizer.require(toFail: longPressRecognizer)
-        tapGestureRecognizer.delegate = self
         button.addGestureRecognizer(tapGestureRecognizer)
     }
     
@@ -106,10 +104,10 @@ extension ConversationInputBarViewController {
         guard let audioRecordViewController = self.audioRecordViewController else {
             return
         }
-        
+
         audioRecordViewController.setOverlayState(.hidden, animated: false)
         
-        UIView.transition(with: inputBar, duration: 0.1, options: .transitionCrossDissolve, animations: {
+        UIView.transition(with: inputBar, duration: 0.1, options: [.transitionCrossDissolve, .allowUserInteraction], animations: {
             audioRecordViewController.view.isHidden = false
             }, completion: { _ in
                 audioRecordViewController.setOverlayState(.expanded(0), animated: true)
@@ -151,15 +149,6 @@ extension ConversationInputBarViewController {
         }
     }
 }
-
-extension ConversationInputBarViewController: UIGestureRecognizerDelegate {
-
-    /*public func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
-        return true
-    }*/
-
-}
-
 
 extension ConversationInputBarViewController: AudioRecordViewControllerDelegate {
     
