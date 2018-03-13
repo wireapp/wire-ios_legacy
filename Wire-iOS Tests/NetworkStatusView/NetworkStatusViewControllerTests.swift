@@ -80,6 +80,9 @@ final class NetworkStatusViewControllerTests: XCTestCase {
         mockConversationList = nil
         
         super.tearDown()
+
+        XCTAssertLessThan(NetworkStatusViewController.selfInstances.count, 3, "NetworkStatusViewController instance should always < 3")
+
     }
     
     fileprivate func setUpSut(userInterfaceIdiom: UIUserInterfaceIdiom,

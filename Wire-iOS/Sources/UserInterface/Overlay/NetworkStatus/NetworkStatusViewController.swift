@@ -32,7 +32,7 @@ protocol NetworkStatusViewControllerDelegate: class {
 extension NetworkStatusViewController {
 
     /// store a list of NetworkStatusViewController, for handling global notifyWhenOffline methdo
-    static fileprivate var selfInstances: [NetworkStatusViewController] = []
+    static var selfInstances: [NetworkStatusViewController] = []
 
     static fileprivate var shared: NetworkStatusViewController? {
         get {
@@ -60,7 +60,7 @@ class NetworkStatusViewController : UIViewController {
     fileprivate var networkStatusObserverToken : Any?
     fileprivate var pendingState : NetworkStatusViewState?
     var state: NetworkStatusViewState?
-    fileprivate weak var offlineBarTimer : Timer?
+    fileprivate var offlineBarTimer : Timer?
     fileprivate var device: DeviceProtocol = UIDevice.current
 
     override func loadView() {
@@ -173,7 +173,9 @@ class NetworkStatusViewController : UIViewController {
     }
     
     fileprivate func startOfflineBarTimer() {
-        offlineBarTimer = Timer.scheduledTimer(timeInterval: 2.0, target: self, selector: #selector(collapseOfflineBar), userInfo: nil, repeats: false)
+        offlineBarTimer = .allVersionCompatibleScheduledTimer(withTimeInterval: 2.0, repeats: false) { [weak self] _ in
+            self?.collapseOfflineBar()
+        }
     }
     
     internal func collapseOfflineBar() {
