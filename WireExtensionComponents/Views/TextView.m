@@ -205,7 +205,7 @@
     UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];
     DDLogDebug(@"types available: %@", [pasteboard pasteboardTypes]);
     
-    if (([pasteboard containsPasteboardTypes:UIPasteboardTypeListImage]  || ([pasteboard respondsToSelector:@selector(hasImages)] && pasteboard.hasImages))
+    if ((pasteboard.wr_hasImages)
         && [self.delegate respondsToSelector:@selector(textView:hasImageToPaste:)]) {
         id<MediaAsset> image = [[UIPasteboard generalPasteboard] mediaAsset];
 #pragma clang diagnostic push
@@ -213,10 +213,10 @@
         [self.delegate performSelector:@selector(textView:hasImageToPaste:) withObject:self withObject:image];
 #pragma clang diagnostic pop
     }
-    else if ([pasteboard containsPasteboardTypes:UIPasteboardTypeListString] || ([pasteboard respondsToSelector:@selector(hasStrings)] && pasteboard.hasStrings)) {
+    else if (pasteboard.wr_hasStrings) {
         [super paste:sender];
     }
-    else if ([pasteboard containsPasteboardTypes:UIPasteboardTypeListURL] || ([pasteboard respondsToSelector:@selector(hasURLs)] && pasteboard.hasURLs)) {
+    else if (pasteboard.wr_hasURLs) {
         if (pasteboard.string.length != 0) {
             [super paste:sender];
         }
@@ -230,7 +230,7 @@
 {
     if (action == @selector(paste:)) {
         UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];
-        return pasteboard.hasImages || pasteboard.hasStrings;
+        return pasteboard.wr_hasImages || pasteboard.wr_hasStrings;
     }
 
     return [super canPerformAction:action withSender:sender];

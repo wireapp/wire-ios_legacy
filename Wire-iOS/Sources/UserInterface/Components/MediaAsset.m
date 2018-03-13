@@ -128,7 +128,7 @@
         NSData *data = [self dataForPasteboardType:(__bridge NSString *)kUTTypeGIF];
         return [[FLAnimatedImage alloc] initWithAnimatedGIFData:data];
     }
-    else if ([self hasImages]) {
+    else if ([self wr_hasImages]) {
         return [self image];
     }
     return nil;
@@ -140,15 +140,15 @@
     [[UIPasteboard generalPasteboard] setData:image.data forPasteboardType:type];
 }
 
-- (BOOL)hasImages {
+- (BOOL)wr_hasImages {
     return [self containsPasteboardTypes:UIPasteboardTypeListImage] || ([self respondsToSelector:@selector(hasImages)] && self.hasImages);
 }
 
-- (BOOL)hasStrings {
+- (BOOL)wr_hasStrings {
     return [self containsPasteboardTypes:UIPasteboardTypeListString] || ([super respondsToSelector:@selector(hasStrings)] && self.hasStrings);
 }
 
-- (BOOL)hasURLs {
+- (BOOL)wr_hasURLs {
     return [self containsPasteboardTypes:UIPasteboardTypeListURL] || ([super respondsToSelector:@selector(hasURLs)] && self.hasURLs);
 }
 

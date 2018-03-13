@@ -71,9 +71,9 @@
 
 - (id<MediaAsset>)mediaAsset;
 - (void)setMediaAsset:(id<MediaAsset>)image;
-- (BOOL)hasImages;
-- (BOOL)hasStrings;
-- (BOOL)hasURLs;
+- (BOOL)wr_hasImages;
+- (BOOL)wr_hasStrings;
+- (BOOL)wr_hasURLs;
 
 @end
 
