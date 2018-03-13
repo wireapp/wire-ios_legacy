@@ -382,6 +382,15 @@ NSString *SplitLayoutObservableDidChangeToLayoutSizeNotification = @"SplitLayout
     return [constraints allObjects];
 }
 
+- (void)lockInterfaceInCurrentViewController {
+    self.horizontalPanner.enabled = NO;
+}
+
+
+- (void)unlockInterface {
+    self.horizontalPanner.enabled = YES;
+}
+
 - (void)setLeftViewController:(nullable UIViewController *)leftViewController
 {
     [self setLeftViewController:leftViewController animated:NO completion:nil];

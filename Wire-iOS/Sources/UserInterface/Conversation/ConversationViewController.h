@@ -30,6 +30,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic) ZMConversation *conversation;
 @property (nonatomic, getter=isFocused) BOOL focused;
 
+- (void)lockInterfaceInCurrentConversation;
+- (void)unlockInterface;
+
 @end
 
 NS_ASSUME_NONNULL_END

@@ -22,17 +22,25 @@ import Cartography
 
 // MARK: Audio Button
 
-let audioRecordTooltipDisplayDuration: TimeInterval = 2
-
 extension ConversationInputBarViewController {
     
     func configureAudioButton(_ button: IconButton) {
-        button.addTarget(self, action: #selector(audioButtonPressed(_:)), for: .touchUpInside)
         let longPressRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(audioButtonLongPressed(_:)))
+        longPressRecognizer.delegate = self
+        longPressRecognizer.minimumPressDuration = 0.3
         button.addGestureRecognizer(longPressRecognizer)
+
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(audioButtonPressed(_:)))
+        tapGestureRecognizer.require(toFail: longPressRecognizer)
+        tapGestureRecognizer.delegate = self
+        button.addGestureRecognizer(tapGestureRecognizer)
     }
     
-    func audioButtonPressed(_ sender: IconButton) {
+    func audioButtonPressed(_ sender: UITapGestureRecognizer) {
+        guard sender.state == .ended else {
+            return
+        }
+
         if self.mode != .audioRecord {
             UIApplication.wr_requestOrWarnAboutMicrophoneAccess({ accepted in
                 if accepted {
@@ -60,6 +68,7 @@ extension ConversationInputBarViewController {
                 audioRecordViewController.setRecordingState(.recording, animated: false)
                 audioRecordViewController.beginRecording()
                 self.inputBar.buttonContainer.isHidden = true
+                (self.parent as? ConversationViewController)?.lockInterfaceInCurrentConversation()
             }
         case .changed:
             if let audioRecordViewController = self.audioRecordViewController {
@@ -70,6 +79,7 @@ extension ConversationInputBarViewController {
                 audioRecordViewController.finishRecordingIfNeeded(sender)
                 audioRecordViewController.setOverlayState(.default, animated: true)
                 audioRecordViewController.setRecordingState(.finishedRecording, animated: true)
+                (self.parent as? ConversationViewController)?.unlockInterface()
             }
         default: break
         }
@@ -140,6 +150,14 @@ extension ConversationInputBarViewController {
             completion()
         }
     }
+}
+
+extension ConversationInputBarViewController: UIGestureRecognizerDelegate {
+
+    /*public func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        return true
+    }*/
+
 }
 
 

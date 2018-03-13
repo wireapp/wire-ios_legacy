@@ -548,6 +548,16 @@
 
 #pragma mark - SwipeNavigationController's panning
 
+- (void)lockInterfaceInCurrentConversation
+{
+    [self.zClientViewController.splitViewController lockInterfaceInCurrentViewController];
+}
+
+- (void)unlockInterface
+{
+    [self.zClientViewController.splitViewController unlockInterface];
+}
+
 - (BOOL)frameworkShouldRecognizePan:(UIPanGestureRecognizer *)gestureRecognizer
 {
     CGPoint location = [gestureRecognizer locationInView:self.view];
