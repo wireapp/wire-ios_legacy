@@ -95,10 +95,16 @@ private let margin = (CGFloat(WAZUIMagic.float(forIdentifier: "content.left_marg
     
     func beginRecording() {
         self.delegate?.audioRecordViewControllerDidStartRecording(self)
-        AudioServicesPlaySystemSound(kSystemSoundID_Vibrate)
-        delay(0.25) {
-            self.recorder.startRecording()
+
+        if #available(iOS 10, *) {
+            let feedbackGenerator = UINotificationFeedbackGenerator()
+            feedbackGenerator.prepare()
+            feedbackGenerator.notificationOccurred(.success)
+        } else {
+            AudioServicesPlaySystemSound(kSystemSoundID_Vibrate)
         }
+
+        self.recorder.startRecording()
     }
     
     func finishRecordingIfNeeded(_ sender: UIGestureRecognizer) {
