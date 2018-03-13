@@ -204,18 +204,19 @@
 {
     UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];
     DDLogDebug(@"types available: %@", [pasteboard pasteboardTypes]);
-
-    if ([pasteboard containsPasteboardTypes:UIPasteboardTypeListImage] && [self.delegate respondsToSelector:@selector(textView:hasImageToPaste:)]) {
+    
+    if (([pasteboard containsPasteboardTypes:UIPasteboardTypeListImage]  || ([pasteboard respondsToSelector:@selector(hasImages)] && pasteboard.hasImages))
+        && [self.delegate respondsToSelector:@selector(textView:hasImageToPaste:)]) {
         id<MediaAsset> image = [[UIPasteboard generalPasteboard] mediaAsset];
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Warc-performSelector-leaks"
         [self.delegate performSelector:@selector(textView:hasImageToPaste:) withObject:self withObject:image];
 #pragma clang diagnostic pop
     }
-    else if ([pasteboard containsPasteboardTypes:UIPasteboardTypeListString]) {
+    else if ([pasteboard containsPasteboardTypes:UIPasteboardTypeListString] || ([pasteboard respondsToSelector:@selector(hasStrings)] && pasteboard.hasStrings)) {
         [super paste:sender];
     }
-    else if ([pasteboard containsPasteboardTypes:UIPasteboardTypeListURL]) {
+    else if ([pasteboard containsPasteboardTypes:UIPasteboardTypeListURL] || ([pasteboard respondsToSelector:@selector(hasURLs)] && pasteboard.hasURLs)) {
         if (pasteboard.string.length != 0) {
             [super paste:sender];
         }
@@ -229,7 +230,7 @@
 {
     if (action == @selector(paste:)) {
         UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];
-        return pasteboard.image || pasteboard.string;
+        return pasteboard.hasImages || pasteboard.hasStrings;
     }
 
     return [super canPerformAction:action withSender:sender];
