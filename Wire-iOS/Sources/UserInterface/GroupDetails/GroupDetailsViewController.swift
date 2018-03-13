@@ -28,8 +28,6 @@ class GroupDetailsViewController: UIViewController, ZMConversationObserver, Grou
     fileprivate var token: NSObjectProtocol?
     fileprivate var actionController: ConversationActionController?
     fileprivate var renameGroupSectionController : RenameGroupSectionController?
-    fileprivate let emptyView = UIImageView()
-    private var emptyViewVerticalConstraint: NSLayoutConstraint?
     private var syncObserver: InitialSyncObserver!
 
     var didCompleteInitialSync = false {
@@ -83,7 +81,7 @@ class GroupDetailsViewController: UIViewController, ZMConversationObserver, Grou
             collectionView.contentInsetAdjustmentBehavior = .never
         }
         
-        [emptyView, collectionView, footerView, bottomSpacer].forEach(view.addSubview)
+        [collectionView, footerView, bottomSpacer].forEach(view.addSubview)
         bottomSpacer.backgroundColor = .wr_color(fromColorScheme: ColorSchemeColorBarBackground)
         
         constrain(view, collectionView, footerView, bottomSpacer) { container, collectionView, footerView, bottomSpacer in
@@ -109,38 +107,13 @@ class GroupDetailsViewController: UIViewController, ZMConversationObserver, Grou
         collectionViewController.collectionView = collectionView
         footerView.delegate = self
         footerView.addButton.isHidden = ZMUser.selfUser().isGuest(in: conversation)
-    
-        emptyView.translatesAutoresizingMaskIntoConstraints = false
-        emptyView.isHidden = true
-        
-        let backgroundColor = ColorScheme.default().color(withName: ColorSchemeColorBackground)
-        let emptyViewColor = backgroundColor.mix(ColorScheme.default().color(withName: ColorSchemeColorTextForeground), amount: 0.16)
-        emptyView.image = UIImage(for: .person, fontSize: 160, color: emptyViewColor)
-        emptyView.contentMode = .center
-        emptyView.accessibilityIdentifier = "img.groupdetails.empty"
-        emptyView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        emptyViewVerticalConstraint = emptyView.centerYAnchor.constraint(equalTo: collectionView.centerYAnchor, constant: 0)
-        emptyViewVerticalConstraint?.isActive = true
         collectionViewController.sections = computeVisibleSections()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationItem.rightBarButtonItem = navigationController?.closeItem()
-        updateEmptyViewVisibility()
         collectionViewController.collectionView?.reloadData()
-    }
-    
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        updateEmptyViewVisibility()
-    }
-    
-    private func updateEmptyViewVisibility() {
-        collectionViewController.collectionView?.setNeedsLayout()
-        collectionViewController.collectionView?.layoutIfNeeded()
-        emptyViewVerticalConstraint?.constant = collectionViewController.collectionView.map { $0.contentInset.top / 2 + $0.contentSize.height / 2 } ?? 0
-        emptyView.isHidden = collectionViewController.sections.any { $0 is ParticipantsSectionController || $0 is ServicesSectionController }
     }
 
     func computeVisibleSections() -> [CollectionViewSectionController] {
@@ -169,7 +142,6 @@ class GroupDetailsViewController: UIViewController, ZMConversationObserver, Grou
     func conversationDidChange(_ changeInfo: ConversationChangeInfo) {
         guard changeInfo.participantsChanged || changeInfo.nameChanged || changeInfo.allowGuestsChanged else { return }
         collectionViewController.sections = computeVisibleSections()
-        updateEmptyViewVisibility()
     }
     
     func detailsView(_ view: GroupDetailsFooterView, performAction action: GroupDetailsFooterView.Action) {
