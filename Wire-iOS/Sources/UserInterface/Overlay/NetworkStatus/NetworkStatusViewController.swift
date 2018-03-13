@@ -17,7 +17,7 @@
 //
 
 import Foundation
-import Cartography
+//import Cartography
 
 typealias NetworkStatusBarDelegate = NetworkStatusViewControllerDelegate & NetworkStatusViewDelegate
 
@@ -31,8 +31,8 @@ protocol NetworkStatusViewControllerDelegate: class {
 
 extension NetworkStatusViewController {
     // static pointer for global access
-    static var selfInConversationRootView: NetworkStatusViewController?
-    static var selfInConversationListView: NetworkStatusViewController?
+    static weak var selfInConversationRootView: NetworkStatusViewController?
+    static weak var selfInConversationListView: NetworkStatusViewController?
 }
 
 @objc
@@ -50,6 +50,7 @@ class NetworkStatusViewController : UIViewController {
     var state: NetworkStatusViewState?
     fileprivate var offlineBarTimer : Timer?
     fileprivate var device: DeviceProtocol = UIDevice.current
+    fileprivate var container: ContainerType
 
     override func loadView() {
         let passthroughTouchesView = PassthroughTouchesView()
@@ -57,11 +58,26 @@ class NetworkStatusViewController : UIViewController {
         self.view = passthroughTouchesView
     }
 
+    enum ContainerType {
+        case conversationList
+        case conversationRoot
+    }
+
     /// default init method with a parameter for injecting mock device
     ///
     /// - Parameter device: Provide this param for testing only
-    init(device: DeviceProtocol = UIDevice.current) {
+    init(container: ContainerType, device: DeviceProtocol = UIDevice.current) {
+        self.container = container
+
         super.init(nibName: nil, bundle: nil)
+
+        switch container {
+        case .conversationList:
+            NetworkStatusViewController.selfInConversationListView = self
+
+        case .conversationRoot:
+            NetworkStatusViewController.selfInConversationRootView = self
+        }
 
         self.device = device
     }
@@ -75,16 +91,24 @@ class NetworkStatusViewController : UIViewController {
 
         offlineBarTimer?.invalidate()
         offlineBarTimer = nil
+
+        switch self.container {
+        case .conversationList:
+            NetworkStatusViewController.selfInConversationListView = nil
+
+        case .conversationRoot:
+            NetworkStatusViewController.selfInConversationRootView = nil
+        }
     }
     
     override func viewDidLoad() {
         view.addSubview(networkStatusView)
         
-        constrain(self.view, networkStatusView) { containerView, networkStatusView in
-            networkStatusView.left == containerView.left
-            networkStatusView.right == containerView.right
-            networkStatusView.top == containerView.top
-        }
+//        constrain(self.view, networkStatusView) { containerView, networkStatusView in
+//            networkStatusView.left == containerView.left
+//            networkStatusView.right == containerView.right
+//            networkStatusView.top == containerView.top
+//        }
 
         if let userSession = ZMUserSession.shared() {
             update(state: viewState(from: userSession.networkState))

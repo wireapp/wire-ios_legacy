@@ -60,16 +60,14 @@ final class NetworkStatusViewControllerTests: XCTestCase {
         mockDevice = MockDevice()
         
         mockConversationList = MockConversationListViewController()
-        sutList = NetworkStatusViewController(device: mockDevice)
+        sutList = NetworkStatusViewController(container: .conversationList, device: mockDevice)
         mockConversationList.networkStatusViewController = sutList
-        NetworkStatusViewController.selfInConversationListView = sutList
         mockConversationList.addToSelf(sutList)
         sutList.delegate = mockConversationList
         
         mockConversationRoot = MockConversationRootViewController()
-        sutRoot = NetworkStatusViewController(device: mockDevice)
+        sutRoot = NetworkStatusViewController(container: .conversationRoot, device: mockDevice)
         mockConversationRoot.networkStatusViewController = sutRoot
-        NetworkStatusViewController.selfInConversationRootView = sutRoot
         mockConversationRoot.addToSelf(sutRoot)
         sutRoot.delegate = mockConversationRoot
     }
@@ -80,9 +78,6 @@ final class NetworkStatusViewControllerTests: XCTestCase {
         mockDevice = nil
         mockConversationRoot = nil
         mockConversationList = nil
-
-        NetworkStatusViewController.selfInConversationListView = nil
-        NetworkStatusViewController.selfInConversationRootView = nil
 
         super.tearDown()
     }
@@ -240,11 +235,10 @@ final class NetworkStatusViewControllerTests: XCTestCase {
 
 final class NetworkStatusViewControllerRetainTests: XCTestCase {
 
-    weak var sut: NetworkStatusViewController!
+    weak var sut: NetworkStatusViewController! = nil
 
     override func setUp() {
         super.setUp()
-        sut = NetworkStatusViewController()
     }
 
     override func tearDown() {
@@ -255,7 +249,7 @@ final class NetworkStatusViewControllerRetainTests: XCTestCase {
     func testNetworkStatusViewControllerIsNotRetainedAfterTimerIsScheduled(){
         autoreleasepool{
             // GIVEN
-            var networkStatusViewController: NetworkStatusViewController! = NetworkStatusViewController()
+            var networkStatusViewController: NetworkStatusViewController! = NetworkStatusViewController(container: .conversationList)
             sut = networkStatusViewController
 
 
