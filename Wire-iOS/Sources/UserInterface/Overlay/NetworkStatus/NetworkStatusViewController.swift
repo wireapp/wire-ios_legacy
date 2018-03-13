@@ -17,7 +17,7 @@
 //
 
 import Foundation
-//import Cartography
+import Cartography
 
 typealias NetworkStatusBarDelegate = NetworkStatusViewControllerDelegate & NetworkStatusViewDelegate
 
@@ -104,11 +104,11 @@ class NetworkStatusViewController : UIViewController {
     override func viewDidLoad() {
         view.addSubview(networkStatusView)
         
-//        constrain(self.view, networkStatusView) { containerView, networkStatusView in
-//            networkStatusView.left == containerView.left
-//            networkStatusView.right == containerView.right
-//            networkStatusView.top == containerView.top
-//        }
+        constrain(self.view, networkStatusView) { containerView, networkStatusView in
+            networkStatusView.left == containerView.left
+            networkStatusView.right == containerView.right
+            networkStatusView.top == containerView.top
+        }
 
         if let userSession = ZMUserSession.shared() {
             update(state: viewState(from: userSession.networkState))
