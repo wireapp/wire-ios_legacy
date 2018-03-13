@@ -17,7 +17,7 @@
 //
 
 import Foundation
-//import Cartography
+import Cartography
 
 typealias NetworkStatusBarDelegate = NetworkStatusViewControllerDelegate & NetworkStatusViewDelegate
 
@@ -80,11 +80,11 @@ class NetworkStatusViewController : UIViewController {
     override func viewDidLoad() {
         view.addSubview(networkStatusView)
         
-//        constrain(self.view, networkStatusView) { containerView, networkStatusView in
-//            networkStatusView.left == containerView.left
-//            networkStatusView.right == containerView.right
-//            networkStatusView.top == containerView.top
-//        }
+        constrain(self.view, networkStatusView) { containerView, networkStatusView in
+            networkStatusView.left == containerView.left
+            networkStatusView.right == containerView.right
+            networkStatusView.top == containerView.top
+        }
 
         if let userSession = ZMUserSession.shared() {
             update(state: viewState(from: userSession.networkState))
@@ -94,11 +94,11 @@ class NetworkStatusViewController : UIViewController {
         networkStatusView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tappedOnNetworkStatusBar)))
     }
 
-    func chnageStateFormOfflineCollapsedToOfflineExpanded(networkStatusViewController: NetworkStatusViewController) -> Bool {
-        let networkStatusView = networkStatusViewController.networkStatusView
+    func chnageStateFormOfflineCollapsedToOfflineExpanded() -> Bool {
+        let networkStatusView = self.networkStatusView
 
         if networkStatusView.state == .offlineCollapsed {
-            networkStatusViewController.update(state: .offlineExpanded)
+            self.update(state: .offlineExpanded)
         }
 
         return networkStatusView.state == .offlineExpanded || networkStatusView.state == .offlineCollapsed
@@ -109,29 +109,26 @@ class NetworkStatusViewController : UIViewController {
     ///
     /// - Returns: false if it is not in offline states
     static public func notifyWhenOffline() -> Bool {
-        let selfInList = NetworkStatusViewController.selfInConversationListView
-        let selfInRoot = NetworkStatusViewController.selfInConversationRootView
+        guard let selfInList = NetworkStatusViewController.selfInConversationListView,
+              let selfInRoot = NetworkStatusViewController.selfInConversationRootView
+            else { return true }
 
-        guard selfInList != nil || selfInRoot != nil else { return true }
-
-        return true
         // for compact mode all networkStatusViewController are notified, for regular mode returns the only enabled networkStatusViewController
 
-        ///FIXME:
+        if selfInList.isIPadRegular(device: selfInList.device) {
+            if selfInList.shouldShowOnIPad(for: selfInList.device.orientation) {
+                return selfInList.chnageStateFormOfflineCollapsedToOfflineExpanded()
+            } else {
+                return selfInRoot.chnageStateFormOfflineCollapsedToOfflineExpanded()
+            }
+        }
+        else {
+            let retList = selfInList.chnageStateFormOfflineCollapsedToOfflineExpanded()
+            let retRoot = selfInRoot.chnageStateFormOfflineCollapsedToOfflineExpanded()
 
-//        if shared.isIPadRegular(device: shared.device) {
-//            return shared.chnageStateFormOfflineCollapsedToOfflineExpanded(networkStatusViewController: shared)
-//        }
-//        else {
-//            var ret = true
-//            for networkStatusViewController in selfInstances {
-//                if shared.chnageStateFormOfflineCollapsedToOfflineExpanded(networkStatusViewController: networkStatusViewController) == false {
-//                    ret = false
-//                }
-//            }
-//
-//            return ret
-//        }
+            ///return false if one of them is false
+            return retList && retRoot
+        }
     }
 
     func showOfflineAlert() {

@@ -62,12 +62,14 @@ final class NetworkStatusViewControllerTests: XCTestCase {
         mockConversationList = MockConversationListViewController()
         sutList = NetworkStatusViewController(device: mockDevice)
         mockConversationList.networkStatusViewController = sutList
+        NetworkStatusViewController.selfInConversationListView = sutList
         mockConversationList.addToSelf(sutList)
         sutList.delegate = mockConversationList
         
         mockConversationRoot = MockConversationRootViewController()
         sutRoot = NetworkStatusViewController(device: mockDevice)
         mockConversationRoot.networkStatusViewController = sutRoot
+        NetworkStatusViewController.selfInConversationRootView = sutRoot
         mockConversationRoot.addToSelf(sutRoot)
         sutRoot.delegate = mockConversationRoot
     }
@@ -78,7 +80,10 @@ final class NetworkStatusViewControllerTests: XCTestCase {
         mockDevice = nil
         mockConversationRoot = nil
         mockConversationList = nil
-        
+
+        NetworkStatusViewController.selfInConversationListView = nil
+        NetworkStatusViewController.selfInConversationRootView = nil
+
         super.tearDown()
     }
     
