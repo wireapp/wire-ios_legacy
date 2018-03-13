@@ -17,7 +17,7 @@
 //
 
 import Foundation
-import Cartography
+//import Cartography
 
 typealias NetworkStatusBarDelegate = NetworkStatusViewControllerDelegate & NetworkStatusViewDelegate
 
@@ -30,21 +30,9 @@ protocol NetworkStatusViewControllerDelegate: class {
 }
 
 extension NetworkStatusViewController {
-
-    /// store a list of NetworkStatusViewController, for handling global notifyWhenOffline methdo
-    static var selfInstances: [NetworkStatusViewController] = []
-
-    static fileprivate var shared: NetworkStatusViewController? {
-        get {
-            for networkStatusViewController in selfInstances {
-                if networkStatusViewController.shouldShowOnIPad(for: networkStatusViewController.device.orientation) {
-                    return networkStatusViewController
-                }
-            }
-
-            return nil
-        }
-    }
+    // static pointer for global access
+    static var selfInConversationRootView: NetworkStatusViewController?
+    static var selfInConversationListView: NetworkStatusViewController?
 }
 
 @objc
@@ -76,7 +64,6 @@ class NetworkStatusViewController : UIViewController {
         super.init(nibName: nil, bundle: nil)
 
         self.device = device
-        NetworkStatusViewController.selfInstances.append(self)
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -85,20 +72,16 @@ class NetworkStatusViewController : UIViewController {
 
     deinit {
         NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(applyPendingState), object: nil)
-
-        if let index = NetworkStatusViewController.selfInstances.index(of: self) {
-            NetworkStatusViewController.selfInstances.remove(at: index)
-        }
     }
     
     override func viewDidLoad() {
         view.addSubview(networkStatusView)
         
-        constrain(self.view, networkStatusView) { containerView, networkStatusView in
-            networkStatusView.left == containerView.left
-            networkStatusView.right == containerView.right
-            networkStatusView.top == containerView.top
-        }
+//        constrain(self.view, networkStatusView) { containerView, networkStatusView in
+//            networkStatusView.left == containerView.left
+//            networkStatusView.right == containerView.right
+//            networkStatusView.top == containerView.top
+//        }
 
         if let userSession = ZMUserSession.shared() {
             update(state: viewState(from: userSession.networkState))
@@ -123,7 +106,7 @@ class NetworkStatusViewController : UIViewController {
     ///
     /// - Returns: false if it is not in offline states
     static public func notifyWhenOffline() -> Bool {
-        guard let shared = NetworkStatusViewController.shared else { return true }
+        guard let shared = NetworkStatusViewController.selfInConversationListView || NetworkStatusViewController.selfInConversationRootView else { return true }
 
         // for compact mode all networkStatusViewController are notified, for regular mode returns the only enabled networkStatusViewController
 
