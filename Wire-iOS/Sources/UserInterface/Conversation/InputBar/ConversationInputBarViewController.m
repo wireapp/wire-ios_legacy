@@ -487,7 +487,7 @@
 {
     [self updateEphemeralIndicatorButtonTitle:self.ephemeralIndicatorButton];
     
-    NSString *trimmed = [self.inputBar.textView.preparedText stringByTrimmingCharactersInSet:NSCharacterSet.whitespaceAndNewlineCharacterSet];
+    NSString *trimmed = [self.inputBar.textView.text stringByTrimmingCharactersInSet:NSCharacterSet.whitespaceAndNewlineCharacterSet];
 
     [self.sendButtonState updateWithTextLength:trimmed.length
                                        editing:nil != self.editingMessage
@@ -554,6 +554,7 @@
 {
     self.inputBar.textView.text = @"";
     [self.inputBar.markdownView resetIcons];
+    [self.inputBar.textView resetMarkdown];
     [self updateRightAccessoryView];
     [self.conversation setIsTyping:NO];
 }
@@ -873,12 +874,6 @@
 
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
 {
-    // markdown text view needs to detect newlines
-    // in order to automatically insert new list items
-    if ([text isEqualToString:@"\n"] || [text isEqualToString:@"\r"]) {
-        [self.inputBar.textView handleNewLine];
-    }
-    
     // send only if send key pressed
     if (textView.returnKeyType == UIReturnKeySend && [text isEqualToString:@"\n"]) {
         [self.inputBar.textView autocorrectLastWord];
@@ -887,6 +882,7 @@
         return NO;
     }
     
+    [self.inputBar.textView respondToChange: text inRange: range];
     return YES;
 }
 
@@ -1098,7 +1094,6 @@
     [self.inputBar.textView autocorrectLastWord];
     if([self checkMessageLength]){
         [self sendOrEditText:self.inputBar.textView.preparedText];
-        [self.inputBar.textView resetTypingAttributes];
     }
 }
 

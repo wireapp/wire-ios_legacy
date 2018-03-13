@@ -37,7 +37,7 @@ import Cartography
         conversationController.conversation = conversation
         conversationController.zClientViewController = clientViewController
 
-        networkStatusViewController = NetworkStatusViewController()
+        networkStatusViewController = NetworkStatusViewController(container: .conversationRoot)
 
         super.init(nibName: .none, bundle: .none)
 

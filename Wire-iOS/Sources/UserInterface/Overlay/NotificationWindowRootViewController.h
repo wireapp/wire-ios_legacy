@@ -24,7 +24,6 @@
 @class BarController;
 @class AppLockViewController;
 @class ChatHeadsViewController;
-@class NetworkStatusViewController;
 
 @interface NotificationWindowRootViewController : UIViewController
 

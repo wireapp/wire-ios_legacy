@@ -72,7 +72,7 @@ extension ConversationListViewController {
     }
 
     @objc func createNetworkStatusBar() {
-        self.networkStatusViewController = NetworkStatusViewController()
+        self.networkStatusViewController = NetworkStatusViewController(container: .conversationList)
         networkStatusViewController.delegate = self
         self.addToSelf(networkStatusViewController)
     }

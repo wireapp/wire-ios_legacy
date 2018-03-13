@@ -1,6 +1,6 @@
-//
+////
 // Wire
-// Copyright (C) 2017 Wire Swiss GmbH
+// Copyright (C) 2018 Wire Swiss GmbH
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -17,16 +17,24 @@
 //
 
 import Foundation
+import Down
 
-
-extension AppDelegate {
-
-    /// @return YES if network is offline
-    @discardableResult
+extension NSMutableAttributedString {
     @objc
-    static func checkNetworkAndFlashIndicatorIfNecessary() -> Bool {
-        return NetworkStatusViewController.notifyWhenOffline()
+    static func markdown(from text: String, style: DownStyle) -> NSMutableAttributedString {
+        let down = Down(markdownString: text)
+        let result: NSMutableAttributedString
+        
+        if let attrStr = try? down.toAttributedString(using: style) {
+            result = NSMutableAttributedString(attributedString: attrStr)
+        } else {
+            result = NSMutableAttributedString(string: text)
+        }
+        
+        if result.string.last == "\n" {
+            result.deleteCharacters(in: NSMakeRange(result.length - 1, 1))
+        }
+        
+        return result
     }
-
 }
-

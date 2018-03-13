@@ -29,7 +29,14 @@ protocol NetworkStatusViewControllerDelegate: class {
     var shouldShowNetworkStatusUIInIPadRegularPortrait: Bool {get}
 }
 
-@objc final class NetworkStatusViewController: UIViewController {
+extension NetworkStatusViewController {
+    // static pointer for global access
+    static weak var selfInConversationRootView: NetworkStatusViewController?
+    static weak var selfInConversationListView: NetworkStatusViewController?
+}
+
+@objc
+class NetworkStatusViewController : UIViewController {
 
     public weak var delegate: NetworkStatusBarDelegate? {
         didSet {
@@ -56,16 +63,31 @@ protocol NetworkStatusViewControllerDelegate: class {
     var state: NetworkStatusViewState?
     fileprivate var finishedViewWillAppear: Bool = false
     fileprivate var device: DeviceProtocol = UIDevice.current
+    fileprivate var container: ContainerType
 
-    /// init method for injecting mock device
+    enum ContainerType {
+        case conversationList
+        case conversationRoot
+    }
+
+    /// default init method with a parameter for injecting mock device
     ///
     /// - Parameter device: Provide this param for testing only
-    init(device: DeviceProtocol = UIDevice.current) {
+    init(container: ContainerType, device: DeviceProtocol = UIDevice.current) {
+        self.container = container
         self.device = device
 
         super.init(nibName: nil, bundle: nil)
 
-        NetworkStatusViewController.selfInstances.append(self)
+        switch container {
+        case .conversationList:
+            NetworkStatusViewController.selfInConversationListView = self
+
+        case .conversationRoot:
+            NetworkStatusViewController.selfInConversationRootView = self
+        }
+
+        self.device = device
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -75,8 +97,12 @@ protocol NetworkStatusViewControllerDelegate: class {
     deinit {
         NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(applyPendingState), object: nil)
 
-        if let index = NetworkStatusViewController.selfInstances.index(of: self) {
-            NetworkStatusViewController.selfInstances.remove(at: index)
+        switch self.container {
+        case .conversationList:
+            NetworkStatusViewController.selfInConversationListView = nil
+
+        case .conversationRoot:
+            NetworkStatusViewController.selfInConversationRootView = nil
         }
     }
 
@@ -88,7 +114,7 @@ protocol NetworkStatusViewControllerDelegate: class {
 
     override func viewDidLoad() {
         view.addSubview(networkStatusView)
-
+        
         constrain(self.view, networkStatusView) { containerView, networkStatusView in
             networkStatusView.left == containerView.left
             networkStatusView.right == containerView.right
@@ -97,9 +123,10 @@ protocol NetworkStatusViewControllerDelegate: class {
         }
 
         if let userSession = ZMUserSession.shared() {
+            update(state: viewState(from: userSession.networkState))
             networkStatusObserverToken = ZMNetworkAvailabilityChangeNotification.addNetworkAvailabilityObserver(self, userSession: userSession)
         }
-
+        
         networkStatusView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tappedOnNetworkStatusBar)))
     }
 
@@ -113,35 +140,58 @@ protocol NetworkStatusViewControllerDelegate: class {
             update(state: viewState(from: userSession.networkState))
         }
     }
- 
+
     @objc public func createConstraints(bottomView: UIView, containerView: UIView, topMargin: CGFloat) {
         constrain(bottomView, containerView, view) { bottomView, containerView, networkStatusViewControllerView in
 
             networkStatusViewControllerView.top == containerView.top + topMargin
             networkStatusViewControllerView.left == containerView.left
             networkStatusViewControllerView.right == containerView.right
-
             bottomView.top == networkStatusViewControllerView.bottom
         }
-
     }
 
-    static public func notifyWhenOffline() -> Bool {
-        guard let shared = NetworkStatusViewController.shared else { return true }
-        let networkStatusView = shared.networkStatusView
+    func chnageStateFormOfflineCollapsedToOfflineExpanded() -> Bool {
+        let networkStatusView = self.networkStatusView
 
         if networkStatusView.state == .offlineCollapsed {
-            shared.update(state: .offlineExpanded)
+            self.update(state: .offlineExpanded)
         }
 
         return networkStatusView.state == .offlineExpanded || networkStatusView.state == .offlineCollapsed
+    }
+
+
+    /// show NetworkStatusViewController instance(s) if its state is .offlineCollapsed
+    ///
+    /// - Returns: false if it is not in offline states
+    static public func notifyWhenOffline() -> Bool {
+        guard let selfInList = NetworkStatusViewController.selfInConversationListView,
+              let selfInRoot = NetworkStatusViewController.selfInConversationRootView
+            else { return true }
+
+        // for compact mode all networkStatusViewController are notified, for regular mode returns the only enabled networkStatusViewController
+
+        if selfInList.isIPadRegular(device: selfInList.device) {
+            if selfInList.shouldShowOnIPad(for: selfInList.device.orientation) {
+                return selfInList.chnageStateFormOfflineCollapsedToOfflineExpanded()
+            } else {
+                return selfInRoot.chnageStateFormOfflineCollapsedToOfflineExpanded()
+            }
+        }
+        else {
+            let retList = selfInList.chnageStateFormOfflineCollapsedToOfflineExpanded()
+            let retRoot = selfInRoot.chnageStateFormOfflineCollapsedToOfflineExpanded()
+
+            ///return false if one of them is false
+            return retList && retRoot
+        }
     }
 
     func showOfflineAlert() {
         let offlineAlert = UIAlertController.init(title: "system_status_bar.no_internet.title".localized,
                                                   message: "system_status_bar.no_internet.explanation".localized,
                                                   cancelButtonTitle: "general.confirm".localized)
-
         offlineAlert.presentTopmost()
     }
 
@@ -237,10 +287,14 @@ extension NetworkStatusViewController {
         updateStateForIPad(for: device.orientation)
     }
 
-    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
-        super.viewWillTransition(to: size, with: coordinator)
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator?) {
+        if let coordinator = coordinator {
+            super.viewWillTransition(to: size, with: coordinator)
+        }
+
         guard isIPadRegular(device: device) else { return }
 
+        // find out the new orientation with the new size
         var newOrientation: UIDeviceOrientation = .unknown
         if size.width > 0 {
             if size.width > size.height {
