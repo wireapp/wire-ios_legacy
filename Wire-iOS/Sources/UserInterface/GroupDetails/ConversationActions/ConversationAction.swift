@@ -20,7 +20,6 @@ import Foundation
 
 extension ZMConversation {
     enum Action {
-        case rename
         case delete
         case leave
         case silence(isSilenced: Bool)
@@ -55,11 +54,7 @@ extension ZMConversation {
     }
     
     private func availableGroupActions() -> [Action] {
-        var actions = [Action]()
-        if isSelfAnActiveMember {
-            actions.append(.rename)
-        }
-        actions += availableStandardActions()
+        var actions = availableStandardActions()
         actions.append(.delete)
 
         if activeParticipants.contains(ZMUser.selfUser()) {
@@ -94,7 +89,6 @@ extension ZMConversation.Action {
     private var localizationKey: String {
         switch self {
         case .remove: return "profile.remove_dialog_button_remove"
-        case .rename: return "meta.menu.rename"
         case .delete: return "meta.menu.delete"
         case .leave: return "meta.menu.leave"
         case .silence(isSilenced: let muted): return "meta.menu.silence.\(muted ? "unmute" : "mute")"

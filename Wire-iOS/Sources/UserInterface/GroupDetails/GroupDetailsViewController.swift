@@ -181,7 +181,6 @@ class GroupDetailsViewController: UIViewController, ZMConversationObserver, Grou
             present(navigationController, animated: true)
         case .more:
             actionController = ConversationActionController(conversation: conversation, target: self)
-            actionController?.renameDelegate = self
             actionController?.presentMenu()
         }
     }
@@ -190,16 +189,6 @@ class GroupDetailsViewController: UIViewController, ZMConversationObserver, Grou
         dismiss(animated: true)
     }
     
-}
-
-extension GroupDetailsViewController: ConversationActionControllerRenameDelegate {
-    func controllerWantsToRenameConversation(_ controller: ConversationActionController) {
-        UIView.animate(withDuration: 0.35, animations: {
-            self.collectionViewController.collectionView?.scrollToItem(at: IndexPath(row: 0, section: 0), at: .top, animated: false)
-        }) { [weak self] _ in
-            self?.renameGroupSectionController?.focus()
-        }
-    }
 }
 
 extension GroupDetailsViewController: ViewControllerDismissable, ProfileViewControllerDelegate {
