@@ -128,7 +128,7 @@
         NSData *data = [self dataForPasteboardType:(__bridge NSString *)kUTTypeGIF];
         return [[FLAnimatedImage alloc] initWithAnimatedGIFData:data];
     }
-    else if ([self containsPasteboardTypes:UIPasteboardTypeListImage]) {
+    else if ([self wr_hasImages]) {
         return [self image];
     }
     return nil;
