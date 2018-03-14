@@ -66,8 +66,8 @@ class NetworkStatusViewController : UIViewController {
     /// default init method with a parameter for injecting mock device
     ///
     /// - Parameter device: Provide this param for testing only
-    init(container: ContainerType, device: DeviceProtocol = UIDevice.current) {
-        self.container = container
+    init(device: DeviceProtocol = UIDevice.current) {
+        self.container = .conversationList ///FIXME: rm
 
         super.init(nibName: nil, bundle: nil)
 
@@ -80,6 +80,11 @@ class NetworkStatusViewController : UIViewController {
         }
 
         self.device = device
+    }
+
+    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+        self.container = .conversationList ///FIXME: rm
+        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -128,7 +133,7 @@ class NetworkStatusViewController : UIViewController {
 
 
     /// show NetworkStatusViewController instance(s) if its state is .offlineCollapsed
-    static public func notifyWhenOffline() {
+    static public func notifyWhenOffline() { ///FIXME: post noti
         guard let selfInList = NetworkStatusViewController.selfInConversationListView,
               let selfInRoot = NetworkStatusViewController.selfInConversationRootView
             else { return }
