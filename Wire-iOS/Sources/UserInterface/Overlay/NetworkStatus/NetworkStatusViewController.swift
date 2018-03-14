@@ -63,7 +63,7 @@ class NetworkStatusViewController : UIViewController {
 
         self.device = device
 
-        NotificationCenter.default.addObserver(self, selector: #selector(chnageStateFormOfflineCollapsedToOfflineExpanded), name: Notification.Name.ShowNetworkStatusBar, object: .none)
+        NotificationCenter.default.addObserver(self, selector: #selector(changeStateFormOfflineCollapsedToOfflineExpanded), name: Notification.Name.ShowNetworkStatusBar, object: .none)
 
     }
 
@@ -100,7 +100,7 @@ class NetworkStatusViewController : UIViewController {
         networkStatusView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tappedOnNetworkStatusBar)))
     }
 
-    func chnageStateFormOfflineCollapsedToOfflineExpanded() {
+    func changeStateFormOfflineCollapsedToOfflineExpanded() {
         let networkStatusView = self.networkStatusView
 
         if networkStatusView.state == .offlineCollapsed {
