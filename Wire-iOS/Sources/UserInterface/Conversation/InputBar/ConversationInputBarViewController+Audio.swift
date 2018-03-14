@@ -67,7 +67,6 @@ extension ConversationInputBarViewController {
                 audioRecordViewController.setRecordingState(.recording, animated: false)
                 audioRecordViewController.beginRecording()
                 self.inputBar.buttonContainer.isHidden = true
-                (self.parent as? ConversationViewController)?.lockInterfaceInCurrentConversation()
             }
         case .changed:
             if let audioRecordViewController = self.audioRecordViewController {
@@ -78,7 +77,6 @@ extension ConversationInputBarViewController {
                 audioRecordViewController.finishRecordingIfNeeded(sender)
                 audioRecordViewController.setOverlayState(.default, animated: true)
                 audioRecordViewController.setRecordingState(.finishedRecording, animated: true)
-                (self.parent as? ConversationViewController)?.unlockInterface()
             }
         default: break
         }
