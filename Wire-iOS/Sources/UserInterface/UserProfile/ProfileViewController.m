@@ -105,6 +105,11 @@ typedef NS_ENUM(NSUInteger, ProfileViewControllerTabBarIndex) {
     return self;
 }
 
+- (UIStatusBarStyle)preferredStatusBarStyle
+{
+    return [[ColorScheme defaultColorScheme] statusBarStyle];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
