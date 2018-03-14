@@ -32,7 +32,7 @@ extension CellConfiguration {
     }
     
     static func createLinkButton(action: @escaping () -> Void) -> CellConfiguration {
-        return .centerButton(
+        return .leadingButton(
             title: "guest_room.link.button.title".localized,
             identifier: "",
             action: action

@@ -26,7 +26,7 @@ enum CellConfiguration {
     typealias Action = () -> Void
     case toggle(title: String, subtitle: String, identifier: String, get: () -> Bool, set: (Bool) -> Void)
     case linkHeader
-    case centerButton(title: String, identifier: String, action: () -> Void)
+    case leadingButton(title: String, identifier: String, action: () -> Void)
     case loading
     case text(String)
     case iconAction(title: String, icon: ZetaIconType, color: UIColor?, action: () -> Void)
@@ -35,7 +35,7 @@ enum CellConfiguration {
         switch self {
         case .toggle: return ToggleSubtitleCell.self
         case .linkHeader: return LinkHeaderCell.self
-        case .centerButton: return ActionCell.self
+        case .leadingButton: return ActionCell.self
         case .loading: return LoadingIndicatorCell.self
         case .text: return TextCell.self
         case .iconAction: return IconActionCell.self
@@ -45,7 +45,7 @@ enum CellConfiguration {
     var action: Action? {
         switch self {
         case .toggle, .linkHeader, .loading, .text: return nil
-        case let .centerButton(_, _, action: action): return action
+        case let .leadingButton(_, _, action: action): return action
         case let .iconAction(_, _, _, action: action): return action
         }
     }

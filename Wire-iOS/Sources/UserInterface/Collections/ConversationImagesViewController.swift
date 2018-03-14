@@ -67,6 +67,12 @@ final class ConversationImagesViewController: UIViewController {
             self.createNavigationTitle()
         }
     }
+
+    public var isPreviewing: Bool = false {
+        didSet {
+            updateBarsForPreview()
+        }
+    }
     
     public var swipeToDismiss: Bool = false {
         didSet {
@@ -160,6 +166,8 @@ final class ConversationImagesViewController: UIViewController {
                 navigationBar.centerX == view.centerX
             }
         }
+
+        updateBarsForPreview()
     }
     
     private func createPageController() {
@@ -274,6 +282,12 @@ final class ConversationImagesViewController: UIViewController {
         likeButton.setIcon(currentMessage.liked ? .liked : .like, with: .tiny, for: .normal)
         likeButton.accessibilityLabel = currentMessage.liked ? "unlike" : "like"
     }
+
+    fileprivate func updateBarsForPreview() {
+        navBarContainer?.isHidden = isPreviewing
+        buttonsBar?.isHidden = isPreviewing
+        separator.isHidden = isPreviewing
+    }
     
     fileprivate func imageController(for message: ZMConversationMessage) -> FullscreenImageViewController {
         let imageViewController = FullscreenImageViewController(message: message)
@@ -325,7 +339,9 @@ final class ConversationImagesViewController: UIViewController {
     }
     
     @objc public func saveCurrent(_ sender: UIButton!) {
-        self.currentController?.performSaveImageAnimation(from: sender)
+        if sender != nil {
+            self.currentController?.performSaveImageAnimation(from: sender)
+        }
         self.messageActionDelegate?.wants(toPerform: .save, for: self.currentMessage)
     }
 
@@ -477,4 +493,32 @@ extension MenuVisibilityController {
     }
 }
 
+extension ConversationImagesViewController {
+
+    override var previewActionItems: [UIPreviewActionItem] {
+        let copyAction = UIPreviewAction(title: NSLocalizedString("content.message.copy", comment: ""), style: .default) { _ in
+            self.copyCurrent(nil)
+        }
+
+        let likeActionKey = currentMessage.liked ? "unlike" : "like"
+        let likeAction = UIPreviewAction(title: NSLocalizedString("content.message.\(likeActionKey)", comment: ""), style: .default) { _ in
+            self.likeCurrent()
+        }
+
+        let saveAction = UIPreviewAction(title: NSLocalizedString("content.message.save", comment: ""), style: .default) { _ in
+            self.saveCurrent(nil)
+        }
+
+        let shareAction = UIPreviewAction(title: NSLocalizedString("content.message.forward", comment: ""), style: .default) { _ in
+            self.shareCurrent(nil)
+        }
+
+        let deleteAction = UIPreviewAction(title: NSLocalizedString("content.message.delete", comment: ""), style: .destructive) { _ in
+            self.deleteCurrent(nil)
+        }
+
+        return [copyAction, likeAction, saveAction, shareAction, deleteAction]
+    }
+
+}
 

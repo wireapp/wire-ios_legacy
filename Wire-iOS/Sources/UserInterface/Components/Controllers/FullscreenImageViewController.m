@@ -176,6 +176,12 @@
     }
 }
 
+- (void)viewWillLayoutSubviews
+{
+    [super viewWillLayoutSubviews];
+    [self updateZoom];
+}
+
 - (BOOL)prefersStatusBarHidden
 {
     return NO;
@@ -221,6 +227,10 @@
     [self.view addSubview:self.scrollView];
 
     [self.scrollView addConstraintsFittingToView:self.view];
+
+    if (@available(iOS 11, *)) {
+        self.scrollView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
+    }
 
     self.automaticallyAdjustsScrollViewInsets = NO;
     self.scrollView.delegate = self;
