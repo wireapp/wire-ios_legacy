@@ -23,10 +23,10 @@ typealias NetworkStatusBarDelegate = NetworkStatusViewControllerDelegate & Netwo
 
 protocol NetworkStatusViewControllerDelegate: class {
     /// if return false, NetworkStatusViewController will not disapper in iPad regular mode landscape orientation.
-    var shouldShowNetworkStatusUIInIPadRegularLandscape: Bool {get}
+    var showInIPadLandscapeMode: Bool {get}
 
     /// if return false, NetworkStatusViewController will not disapper in iPad regular mode portrait orientation.
-    var shouldShowNetworkStatusUIInIPadRegularPortrait: Bool {get}
+    var showInIPadPortraitMode: Bool {get}
 }
 
 extension Notification.Name {
@@ -198,9 +198,9 @@ extension NetworkStatusViewController {
         guard let delegate = self.delegate, let newOrientation = newOrientation else { return true }
 
         if newOrientation.isPortrait {
-            return delegate.shouldShowNetworkStatusUIInIPadRegularPortrait
+            return delegate.showInIPadPortraitMode
         } else if newOrientation.isLandscape {
-            return delegate.shouldShowNetworkStatusUIInIPadRegularLandscape
+            return delegate.showInIPadLandscapeMode
         } else {
             return true
         }

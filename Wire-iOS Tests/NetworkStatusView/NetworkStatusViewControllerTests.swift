@@ -24,11 +24,11 @@ final class MockConversationRootViewController: UIViewController, NetworkStatusB
     
     var networkStatusViewController: NetworkStatusViewController!
     
-    var shouldShowNetworkStatusUIInIPadRegularLandscape: Bool {
+    var showInIPadLandscapeMode: Bool {
         return false
     }
     
-    var shouldShowNetworkStatusUIInIPadRegularPortrait: Bool {
+    var showInIPadPortraitMode: Bool {
         return true
     }
 }
@@ -38,11 +38,11 @@ final class MockConversationListViewController: UIViewController, NetworkStatusB
     
     var networkStatusViewController: NetworkStatusViewController!
     
-    var shouldShowNetworkStatusUIInIPadRegularLandscape: Bool {
+    var showInIPadLandscapeMode: Bool {
         return true
     }
     
-    var shouldShowNetworkStatusUIInIPadRegularPortrait: Bool {
+    var showInIPadPortraitMode: Bool {
         return false
     }
 }
