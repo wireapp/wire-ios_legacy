@@ -21,19 +21,14 @@ import Cartography
 
 final class ActionCell: UITableViewCell, CellConfigurationConfigurable {
     
-    private let button = IconButton()
-    
-    private var variant: ColorSchemeVariant = .light {
-        didSet {
-            styleViews()
-        }
-    }
+    private let imageContainer = UIView()
+    private let iconImageView = UIImageView()
+    private let label = UILabel()
 
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupViews()
         createConstraints()
-        styleViews()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -44,30 +39,32 @@ final class ActionCell: UITableViewCell, CellConfigurationConfigurable {
         let backgroundView = UIView()
         backgroundView.backgroundColor = .init(white: 0, alpha: 0.08)
         selectedBackgroundView = backgroundView
-        button.isUserInteractionEnabled = false
-        button.setIcon(.link, with: .tiny, for: .normal)
-        button.setIconColor(.init(for: .strongBlue), for: .normal)
-        button.setTitleColor(.init(for: .strongBlue), for: .normal)
-        button.titleLabel?.font = FontSpec(.normal, .light).font
-        button.titleImageSpacing = 8
-        contentView.addSubview(button)
+        imageContainer.addSubview(iconImageView)
+        iconImageView.image = UIImage(for: .link, iconSize: .tiny, color: UIColor(for: .strongBlue))
+        label.textColor = UIColor(for: .strongBlue)
+        label.font = FontSpec(.normal, .light).font
+        [imageContainer, label].forEach(contentView.addSubview)
     }
     
     private func createConstraints() {
-        constrain(contentView, button) { contentView, button in
-            button.edges == contentView.edges
-            button.height == 56
+        constrain(contentView, label, imageContainer, iconImageView) { contentView, label, imageContainer, imageView in
+            imageContainer.top == contentView.top
+            imageContainer.bottom == contentView.bottom
+            imageContainer.leading == contentView.leading
+            imageContainer.width == 64
+            imageView.center == imageContainer.center
+            label.leading == imageContainer.trailing
+            label.top == contentView.top
+            label.trailing == contentView.trailing
+            label.bottom == contentView.bottom
+            label.height == 56
         }
     }
     
-    private func styleViews() {
-        backgroundColor = ColorScheme.default().color(withName: ColorSchemeColorBarBackground, variant: variant)
-    }
-    
     func configure(with configuration: CellConfiguration, variant: ColorSchemeVariant) {
-        guard case let .centerButton(title, identifier, _) = configuration else { preconditionFailure() }
-        button.setTitle(title, for: .normal)
+        guard case let .leadingButton(title, identifier, _) = configuration else { preconditionFailure() }
         accessibilityIdentifier = identifier
-        self.variant = variant
+        label.text = title
+        backgroundColor = ColorScheme.default().color(withName: ColorSchemeColorBarBackground, variant: variant)
     }
 }
