@@ -1224,6 +1224,11 @@
     }
 }
 
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRequireFailureOfGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer
+{
+    return [otherGestureRecognizer isKindOfClass:[UIPanGestureRecognizer class]];
+}
+
 @end
 
 @implementation ConversationInputBarViewController (GiphySearchViewControllerDelegate)

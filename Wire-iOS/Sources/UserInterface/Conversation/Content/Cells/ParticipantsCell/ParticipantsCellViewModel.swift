@@ -101,7 +101,7 @@ struct ParticipantsCellViewModel {
     var showInviteButton: Bool {
         guard case .started = message.actionType,
                 let conversation = message.conversation else { return false }
-        return conversation.canManageAccess
+        return conversation.canManageAccess && conversation.allowGuests
     }
 
     func attributedTitle() -> NSAttributedString? {

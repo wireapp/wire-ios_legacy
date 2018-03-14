@@ -133,13 +133,9 @@ class AppRootViewController: UIViewController {
         let analytics = Analytics.shared()
         let sessionManagerAnalytics: AnalyticsType
         
-        if DeveloperMenuState.developerMenuEnabled(){
-            CallQualityScoreProvider.shared.nextProvider = analytics
-            sessionManagerAnalytics = CallQualityScoreProvider.shared
-        }
-        else {
-            sessionManagerAnalytics = analytics
-        }
+        CallQualityScoreProvider.shared.nextProvider = analytics
+        sessionManagerAnalytics = CallQualityScoreProvider.shared
+
         SessionManager.create(
             appVersion: appVersion!,
             mediaManager: mediaManager!,
