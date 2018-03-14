@@ -32,9 +32,9 @@ import Cartography
     fileprivate let duration: TimeInterval
     public weak var delegate: AudioEffectsPickerDelegate?
     
-    fileprivate var audioPlayer: AVAudioPlayer? {
+    fileprivate var audioPlayerController: AudioPlayerController? {
         didSet {
-            if self.audioPlayer == .none {
+            if self.audioPlayerController == .none {
                 let selector = #selector(AudioEffectsPickerViewController.updatePlayProgressTime)
                 NSObject.cancelPreviousPerformRequests(withTarget: self, selector: selector, object: .none)
             }
@@ -65,21 +65,19 @@ import Cartography
             
             self.setState(.playing, animated: true)
 
-            if self.audioPlayer != .none && oldValue == self.selectedAudioEffect {
-                let player = self.audioPlayer!
-                if player.isPlaying {
-                    player.stop()
-                }
-                else {
-                    player.currentTime = 0
-                    player.play()
+            if let audioPlayerController = self.audioPlayerController, oldValue == self.selectedAudioEffect {
+                
+                if audioPlayerController.state == .playing {
+                    audioPlayerController.stop()
+                } else {
+                    audioPlayerController.play()
                 }
             
                 return
             }
             
             if self.selectedAudioEffect != .none {
-                self.audioPlayer?.stop()
+                self.audioPlayerController?.stop()
                 
                 
                 let effectPath = (NSTemporaryDirectory() as NSString).appendingPathComponent("effect.wav")
@@ -91,6 +89,7 @@ import Cartography
                 }
             }
             else {
+                self.delegate?.audioEffectsPickerDidPickEffect(self, effect: .none, resultFilePath: self.recordingPath)
                 self.playMedia(self.recordingPath)
             }
         }
@@ -100,8 +99,8 @@ import Cartography
     fileprivate static let effectColumns = 4
     
     deinit {
-        self.audioPlayer?.stop()
-        self.audioPlayer = .none
+        self.audioPlayerController?.stop()
+        self.audioPlayerController = .none
     }
     
     public required init?(coder aDecoder: NSCoder) {
@@ -184,6 +183,12 @@ import Cartography
         }
     }
     
+    public override func removeFromParentViewController() {
+        self.audioPlayerController?.stop()
+        self.audioPlayerController = nil
+        super.removeFromParentViewController()
+    }
+    
     public override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.selectCurrentFilter()
@@ -196,8 +201,8 @@ import Cartography
     
     public override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
-        self.audioPlayer?.stop()
-        self.audioPlayer = .none
+        self.audioPlayerController?.stop()
+        self.audioPlayerController = nil
     }
     
     public override func viewDidLayoutSubviews() {
@@ -227,7 +232,7 @@ import Cartography
             self.subtitleLabel.textColor = colorScheme.color(withName: ColorSchemeColorTextForeground)
         case .time:
             let duration: Int
-            if let player = self.audioPlayer {
+            if let player = self.audioPlayerController?.player {
                 duration = Int(ceil(player.duration))
             }
             else {
@@ -268,15 +273,15 @@ import Cartography
     
     fileprivate func playMedia(_ atPath: String) {
         Analytics.shared().tagPreviewedAudioMessageRecording(.keyboard)
-        self.audioPlayer = try? AVAudioPlayer(contentsOf: URL(fileURLWithPath: atPath))
-        self.audioPlayer?.delegate = self
-        self.audioPlayer?.play()
+        self.audioPlayerController = try? AudioPlayerController(contentOf: URL(fileURLWithPath: atPath))
+        self.audioPlayerController?.delegate = self
+        self.audioPlayerController?.play()
         self.updatePlayProgressTime()
     }
     
     @objc fileprivate func updatePlayProgressTime() {
         let selector = #selector(AudioEffectsPickerViewController.updatePlayProgressTime)
-        if let player = self.audioPlayer {
+        if let player = self.audioPlayerController?.player {
             self.progressView.progress = Float(player.currentTime / player.duration)
             
             NSObject.cancelPreviousPerformRequests(withTarget: self, selector: selector, object: .none)
@@ -313,20 +318,77 @@ extension AudioEffectsPickerViewController: UICollectionViewDelegate, UICollecti
     }
     
     public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
-        guard ((try? AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayAndRecord, with: .defaultToSpeaker)) != nil) else {
-            DDLogError("Cannot set audio session to CategoryPlayAndRecord, speaker")
-            return
-        }
-        
         self.selectedAudioEffect = self.effects[indexPath.item]
     }
 }
 
-extension AudioEffectsPickerViewController: AVAudioPlayerDelegate {
-    public func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
-        if player == self.audioPlayer {
-            self.setState(.time, animated: true)
+extension AudioEffectsPickerViewController : AudioPlayerControllerDelegate {
+    
+    func audioPlayerControllerDidFinishPlaying() {
+        setState(.time, animated: true)
+    }
+    
+}
+
+private protocol AudioPlayerControllerDelegate : class {
+    
+    func audioPlayerControllerDidFinishPlaying()
+    
+}
+
+private class AudioPlayerController : NSObject, MediaPlayer, AVAudioPlayerDelegate {
+    
+    let player : AVAudioPlayer
+    weak var delegate : AudioPlayerControllerDelegate?
+    weak var mediaManager: MediaPlayerDelegate? = AppDelegate.shared().mediaPlaybackManager
+    
+    init(contentOf URL: URL) throws {
+        player = try AVAudioPlayer(contentsOf: URL)
+        
+        super.init()
+        
+        player.delegate = self
+    }
+    
+    deinit {
+        mediaManager?.mediaPlayer(self, didChangeTo: .completed)
+    }
+
+    var state: MediaPlayerState {
+        if player.isPlaying {
+            return MediaPlayerState.playing
+        } else {
+            return MediaPlayerState.completed
         }
     }
+    
+    var title: String? {
+        return nil
+    }
+    
+    var sourceMessage: ZMConversationMessage? {
+        return nil
+    }
+    
+    func play() {
+        mediaManager?.mediaPlayer(self, didChangeTo: .playing)
+        player.currentTime = 0
+        player.play()
+    }
+    
+    func pause() {
+        player.pause()
+    }
+    
+    func stop() {
+        player.pause()
+    }
+    
+    func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
+        if player == self.player {
+            mediaManager?.mediaPlayer(self, didChangeTo: .completed)
+            delegate?.audioPlayerControllerDidFinishPlaying()
+        }
+    }
+    
 }

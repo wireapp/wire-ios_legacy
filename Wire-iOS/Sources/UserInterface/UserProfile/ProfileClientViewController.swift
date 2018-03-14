@@ -112,7 +112,6 @@ class ProfileClientViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         CASStyler.default().styleItem(self)
 
         self.setupContentView()
@@ -132,6 +131,11 @@ class ProfileClientViewController: UIViewController {
         self.updateFingerprintLabel()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        title = ""
+    }
+    
     private func setupContentView() {
         self.view.addSubview(contentView)
     }
@@ -148,7 +152,7 @@ class ProfileClientViewController: UIViewController {
         showMyDeviceButton.accessibilityIdentifier = "show my device"
         showMyDeviceButton.setTitle(NSLocalizedString("profile.devices.detail.show_my_device.title", comment: "").uppercased(), for: UIControlState())
         showMyDeviceButton.addTarget(self, action: #selector(ProfileClientViewController.onShowMyDeviceTapped(_:)), for: .touchUpInside)
-        self.view.addSubview(showMyDeviceButton)
+        navigationItem.rightBarButtonItem = UIBarButtonItem(customView: showMyDeviceButton)
     }
     
     private func setupDescriptionTextView() {
@@ -286,13 +290,11 @@ class ProfileClientViewController: UIViewController {
 
         let topMargin = UIScreen.safeArea.top > 0 ? UIScreen.safeArea.top : 26.0
         
-        constrain(contentView, backButton, showMyDeviceButton, view) { contentView, backButton, showMyDeviceButton, selfView in
+        constrain(contentView, backButton, view) { contentView, backButton, selfView in
             backButton.left == contentView.left - 8
             backButton.top == selfView.top + topMargin
             backButton.width == 32
             backButton.height == 32
-            showMyDeviceButton.centerY == backButton.centerY
-            showMyDeviceButton.right == contentView.right
         }
 
         constrain(contentView, spinner, verifiedToggle, IDLabel) { contentView, spinner, verifiedToggle, IDLabel in

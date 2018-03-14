@@ -128,47 +128,30 @@ static NSParagraphStyle *cachedParagraphStyle;
 
 + (CGFloat)sizeForZetaIconSize:(ZetaIconSize)iconSize
 {
-    CGFloat size = iconSize;
     switch (iconSize) {
         case ZetaIconSizeMessageStatus:
-            size = 8.0;
-            break;
+            return 8.0;
         case ZetaIconSizeLike:
-            size = 12;
-            break;
+            return 12;
         case ZetaIconSizeSearchBar:
-            size = 14;
-            break;
+            return 14;
         case ZetaIconSizeTiny:
-            size = 16;
-            break;
-            
+            return 16;
         case ZetaIconSizeSmall:
-            size = 20;
-            break;
-            
+            return 20;
         case ZetaIconSizeMedium:
-            size = 24;
-            break;
-            
+            return 24;
         case ZetaIconSizeActionButton:
-            size = 28;
-            break;
-
+            return 28;
         case ZetaIconSizeRegistrationButton:
-            size = 32;
-            break;
-
+            return 32;
         case ZetaIconSizeLarge:
-            size = 48;
-            break;
-            
+            return 48;
         case ZetaIconSizeCamera:
-            size = 40;
-            break;
-
+            return 40;
+        case ZetaIconSizeCameraKeyboardButton:
+            return 36;
     }
-    return size;
 }
 
 @end

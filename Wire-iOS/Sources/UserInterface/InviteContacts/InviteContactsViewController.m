@@ -23,7 +23,6 @@
 #import "ContactsViewController+Private.h"
 #import "ContactsDataSource.h"
 #import "ZClientViewController.h"
-#import "TokenField.h"
 #import "ContactsCell.h"
 #import "WireSyncEngine+iOS.h"
 

@@ -36,6 +36,7 @@ import WireLinkPreview
     var removedUsers: Set<ZMUser>! = Set()
     var text: String! = ""
     var needsUpdatingUsers: Bool = false
+    var userIsTheSender: Bool = false
 
     var duration: TimeInterval = 0
     var childMessages = Set<AnyHashable>()
@@ -112,10 +113,10 @@ import WireLinkPreview
 
 
 @objc class MockMessage: NSObject, ZMConversationMessage {
-
     typealias UsersByReaction = Dictionary<String, [ZMUser]>
     
     // MARK: - ZMConversationMessage
+    var nonce: UUID? = UUID()
     var isEncrypted: Bool = false
     var isPlainText: Bool = true
     var sender: ZMUser? = .none
@@ -174,7 +175,11 @@ import WireLinkPreview
     var canBeDeleted: Bool {
         return systemMessageData == nil
     }
-
+    
+    func markAsUnread() {
+        // no-op
+    }
+    
     var hasBeenDeleted = false
     
     var systemMessageType: ZMSystemMessageType = ZMSystemMessageType.invalid

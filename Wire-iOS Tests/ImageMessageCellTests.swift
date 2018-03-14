@@ -91,7 +91,7 @@ class ImageMessageCellTests: ZMSnapshotTestCase {
     }
 }
 
-private extension ImageMessageCell {
+internal extension ImageMessageCell {
 
     func prepareForSnapshot(_ imageSize: CGSize, image: UIImage? = nil, failedToSend: Bool = false, obfuscated: Bool = false, selected: Bool = false, ephemeral: Bool = false) -> UITableView {
         let layoutProperties = ConversationCellLayoutProperties()

@@ -71,7 +71,7 @@ import Foundation
                                                     identifier: nil,
                                                     presentationAction: { () -> (UIViewController?) in
                                                         Analytics.shared().tagOpenManageTeamURL()
-                                                        NSURL.wr_manageTeam().wr_URLByAppendingLocaleParameter().open()
+                                                        URL.manageTeam(source: .settings).open()
                                                         return nil
                                                     },
                                                     previewGenerator: nil,
@@ -202,7 +202,14 @@ import Foundation
 
         let versionTitle =  "self.settings.advanced.version_technical_details.title".localized
         let versionCell = SettingsButtonCellDescriptor(title: versionTitle, isDestructive: false) { _ in
-            UIApplication.shared.keyWindow?.rootViewController?.present(VersionInfoViewController(), animated: true, completion: .none)
+            let versionInfoViewController = VersionInfoViewController()
+            var superViewController = UIApplication.shared.keyWindow?.rootViewController
+            if let presentedViewController = superViewController?.presentedViewController {
+                superViewController = presentedViewController
+                versionInfoViewController.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
+                versionInfoViewController.navigationController?.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
+            }
+            superViewController?.present(versionInfoViewController, animated: true, completion: .none)
         }
 
         let versionSection = SettingsSectionDescriptor(cellDescriptors: [versionCell])
@@ -238,7 +245,18 @@ import Foundation
         developerCellDescriptors.append(shareCryptobox)
         let reloadUIButton = SettingsButtonCellDescriptor(title: "Reload user interface", isDestructive: false, selectAction: SettingsCellDescriptorFactory.reloadUserInterface)
         developerCellDescriptors.append(reloadUIButton)
-        
+
+        let showStatistics = SettingsExternalScreenCellDescriptor(title: "Show database statistics", isDestructive: false, presentationStyle: .navigation, presentationAction: {  DatabaseStatisticsController() })
+        developerCellDescriptors.append(showStatistics)
+
+        if !Analytics.shared().isOptedOut &&
+            !TrackingManager.shared.disableCrashAndAnalyticsSharing {
+
+            let resetSurveyMuteButton = SettingsButtonCellDescriptor(title: "Show call quality survey", isDestructive: false, selectAction: SettingsCellDescriptorFactory.resetCallQualitySurveyMuteFilter)
+            developerCellDescriptors.append(resetSurveyMuteButton)
+
+        }
+
         return SettingsGroupCellDescriptor(items: [SettingsSectionDescriptor(cellDescriptors:developerCellDescriptors)], title: title, icon: .effectRobot)
     }
     
@@ -271,7 +289,8 @@ import Foundation
             return BrowserViewController(url: (NSURL.wr_privacyPolicy() as NSURL).wr_URLByAppendingLocaleParameter() as URL!)
         }, previewGenerator: .none)
         let tosButton = SettingsExternalScreenCellDescriptor(title: "about.tos.title".localized, isDestructive: false, presentationStyle: .modal, presentationAction: { _ in
-            return BrowserViewController(url: (NSURL.wr_termsOfServices() as NSURL).wr_URLByAppendingLocaleParameter() as URL!)
+            let url = NSURL.wr_termsOfServicesURL(forTeamAccount: ZMUser.selfUser().hasTeam).wr_URLByAppendingLocaleParameter() as URL
+            return BrowserViewController(url: url)
         }, previewGenerator: .none)
         let licenseButton = SettingsExternalScreenCellDescriptor(title: "about.license.title".localized, isDestructive: false, presentationStyle: .modal, presentationAction: { _ in
             return BrowserViewController(url: (NSURL.wr_licenseInformation() as NSURL).wr_URLByAppendingLocaleParameter() as URL!)
@@ -366,7 +385,7 @@ import Foundation
         let genericMessage = ZMGenericMessage.genericMessage(pbMessage: builder!.build(), messageID: UUID().transportString(), expiresAfter: nil)
         
         userSession.enqueueChanges {
-            conversation.append(genericMessage, expires: false, hidden: false)
+            conversation.appendClientMessage(with: genericMessage, expires: false, hidden: false)
         }
     }
     
@@ -376,6 +395,18 @@ import Foundation
         }
         
         rootViewController.reload()
+    }
+
+    private static func resetCallQualitySurveyMuteFilter(_ type: SettingsCellDescriptorType) {
+        guard let controller = UIApplication.shared.wr_topmostController(onlyFullScreen: false) else { return }
+
+        CallQualityScoreProvider.resetSurveyMuteFilter()
+
+        let alert = UIAlertController(title: "Mute Filter Removed",
+                                      message: "The call quality survey will be displayed after the next call.",
+                                      cancelButtonTitle: "OK")
+
+        controller.present(alert, animated: true)
     }
 }
 

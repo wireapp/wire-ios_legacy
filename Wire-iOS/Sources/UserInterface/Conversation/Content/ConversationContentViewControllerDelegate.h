@@ -39,8 +39,6 @@ didEndDisplayingActiveMediaPlayerForMessage:(id<ZMConversationMessage>)message;
             didScrollWithOffsetFromBottom:(CGFloat)offset
                         withLatestMessage:(id<ZMConversationMessage>)message;
 
-- (void)conversationContentViewController:(ConversationContentViewController *)contentViewController didTriggerAddContactsButton:(UIButton *)button;
-
 - (void)conversationContentViewController:(ConversationContentViewController *)contentViewController didTriggerResendingMessage:(id<ZMConversationMessage>)message;
 
 - (void)conversationContentViewController:(ConversationContentViewController *)contentViewController didTriggerEditingMessage:(id<ZMConversationMessage>)message;
@@ -50,6 +48,8 @@ didEndDisplayingActiveMediaPlayerForMessage:(id<ZMConversationMessage>)message;
 - (BOOL)conversationContentViewController:(ConversationContentViewController *)controller shouldBecomeFirstResponderWhenShowMenuFromCell:(UITableViewCell *)cell;
 
 - (void)conversationContentViewControllerWantsToDismiss:(ConversationContentViewController *)controller;
+    
+- (void)conversationContentViewController:(ConversationContentViewController *)controller presentGuestOptionsFromView:(UIView *)sourceView;
 
 @optional
 

@@ -145,7 +145,6 @@
 - (void)viewDidLayoutSubviews
 {
     [super viewDidLayoutSubviews];
-    [self updateZoomWithSize:self.view.bounds.size];
     [self centerScrollViewContent];
 }
 
@@ -172,6 +171,15 @@
 {
     [super viewWillAppear:animated];
     self.closeButton.hidden = !self.showCloseButton;
+    if(self.parentViewController != nil) {
+        [self updateZoomWithSize:self.parentViewController.view.frame.size];
+    }
+}
+
+- (void)viewWillLayoutSubviews
+{
+    [super viewWillLayoutSubviews];
+    [self updateZoom];
 }
 
 - (BOOL)prefersStatusBarHidden
@@ -219,6 +227,10 @@
     [self.view addSubview:self.scrollView];
 
     [self.scrollView addConstraintsFittingToView:self.view];
+
+    if (@available(iOS 11, *)) {
+        self.scrollView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
+    }
 
     self.automaticallyAdjustsScrollViewInsets = NO;
     self.scrollView.delegate = self;
@@ -272,6 +284,7 @@
             
             self.scrollView.contentSize = imageView.image.size;
             
+            [self updateZoomWithSize:self.view.bounds.size];
             [self centerScrollViewContent];
         });
     });
@@ -639,7 +652,7 @@
 
 - (void)messageDidChange:(MessageChangeInfo *)changeInfo
 {
-    if (changeInfo.imageChanged && [[self.message imageMessageData] imageData] != nil) {
+    if ((changeInfo.transferStateChanged || changeInfo.imageChanged) && [[self.message imageMessageData] imageData] != nil) {
         [self.loadingSpinner removeFromSuperview];
         self.loadingSpinner = nil;
         

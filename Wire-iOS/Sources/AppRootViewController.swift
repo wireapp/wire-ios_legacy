@@ -62,6 +62,8 @@ class AppRootViewController: UIViewController {
     }
 
     override public func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
+        
         mainWindow.frame.size = size
 
         coordinator.animate(alongsideTransition: nil, completion: { _ in
@@ -132,13 +134,9 @@ class AppRootViewController: UIViewController {
         let analytics = Analytics.shared()
         let sessionManagerAnalytics: AnalyticsType
         
-        if DeveloperMenuState.developerMenuEnabled(){
-            CallQualityScoreProvider.shared.nextProvider = analytics
-            sessionManagerAnalytics = CallQualityScoreProvider.shared
-        }
-        else {
-            sessionManagerAnalytics = analytics
-        }
+        CallQualityScoreProvider.shared.nextProvider = analytics
+        sessionManagerAnalytics = CallQualityScoreProvider.shared
+
         SessionManager.create(
             appVersion: appVersion!,
             mediaManager: mediaManager!,
@@ -209,13 +207,18 @@ class AppRootViewController: UIViewController {
             
             // check if needs to reauthenticate
             var needsToReauthenticate = false
+            var addingNewAccount = true
             if let error = error {
                 let errorCode = (error as NSError).userSessionErrorCode
                 needsToReauthenticate = [ZMUserSessionErrorCode.clientDeletedRemotely,
                     .accessTokenExpired,
                     .needsPasswordToRegisterClient,
-                    .canNotRegisterMoreClients
+                    .needsToRegisterEmailToRegisterClient,
                 ].contains(errorCode)
+
+                addingNewAccount = [
+                    ZMUserSessionErrorCode.addAccountRequested
+                    ].contains(errorCode)
             }
             
             if needsToReauthenticate {
@@ -224,7 +227,7 @@ class AppRootViewController: UIViewController {
                 registrationViewController.signInError = error
                 viewController = registrationViewController
             }
-            else {
+            else if (addingNewAccount) {
                 // When we show the landing controller we want it to be nested in navigation controller
                 let landingViewController = LandingViewController()
                 landingViewController.delegate = self
@@ -242,8 +245,6 @@ class AppRootViewController: UIViewController {
             }
 
         case .authenticated(completedRegistration: let completedRegistration):
-            // TODO: CallKit only with 1 account
-            sessionManager?.updateCallNotificationStyleFromSettings()
             UIColor.setAccentOverride(.undefined)
             mainWindow.tintColor = UIColor.accent()
             executeAuthenticatedBlocks()

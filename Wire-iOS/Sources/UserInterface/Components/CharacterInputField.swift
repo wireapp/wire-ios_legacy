@@ -30,7 +30,7 @@ public protocol CharacterInputFieldDelegate: NSObjectProtocol {
 public class CharacterInputField: UIControl, UITextInputTraits {
     fileprivate var storage = String() {
         didSet {
-            if storage.characters.count > maxLength {
+            if storage.count > maxLength {
                 storage = String(storage.prefix(maxLength))
             }
             
@@ -64,7 +64,7 @@ public class CharacterInputField: UIControl, UITextInputTraits {
         for index in 0...(maxLength - 1) {
             let characterView = characterViews[index]
             
-            if let character = storage.characters.count > index ? storage[storage.index(storage.startIndex, offsetBy: index)] : nil {
+            if let character = storage.count > index ? storage[storage.index(storage.startIndex, offsetBy: index)] : nil {
                 characterView.character = character
             }
             else {

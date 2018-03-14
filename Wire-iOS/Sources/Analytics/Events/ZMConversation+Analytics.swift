@@ -49,12 +49,32 @@ extension ZMConversation {
         return conversationType.analyticsTypeString
     }
     
-    public var isBotConversation : Bool {
-        guard conversationType == .oneOnOne,
-              let otherUser = firstActiveParticipantOtherThanSelf() , otherUser.isBot
-        else { return false }
+    /// Whether the conversation is a 1-on-1 conversation with a service user
+    public var isOneOnOneServiceUserConversation: Bool {
+        guard self.activeParticipants.count == 2,
+             let otherUser = self.firstActiveParticipantOtherThanSelf() else {
+            return false
+        }
         
-        return true
+        return otherUser.serviceIdentifier != nil &&
+                otherUser.providerIdentifier != nil
     }
+    
+    /// Whether the conversation includes at least 1 service user.
+    public var includesServiceUser: Bool {
+        guard let participants = otherActiveParticipants.array as? [ZMBareUser] else { return false }
+        return participants.any { $0.isServiceUser }
+    }
+    
+    public var sortedServiceUsers: [ZMBareUser] {
+        guard let participants = otherActiveParticipants.array as? [ZMBareUser] else { return [] }
+        return participants.filter { $0.isServiceUser }.sorted { $0.0.displayName < $0.1.displayName }
+    }
+    
+    public var sortedOtherParticipants: [ZMBareUser] {
+        guard let participants = otherActiveParticipants.array as? [ZMBareUser] else { return [] }
+        return participants.filter { !$0.isServiceUser }.sorted { $0.0.displayName < $0.1.displayName }
+    }
+
 }
 

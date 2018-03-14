@@ -20,6 +20,7 @@
 
 
 
+"share_extension.general.ok" = "OK";
 "share_extension.conversation_selection.account" = "Account:";
 "share_extension.conversation_selection.title" = "Samtale:";
 "share_extension.send_button.title" = "Send";
@@ -33,6 +34,8 @@
 "share_extension.timeout.title" = "The connection has timed out.";
 "share_extension.timeout.message" = "Check your Internet connection and try again. The attachments were saved in the conversation.";
 "share_extension.privacy_security.lock_app.description" = "Åben Wire";
+"share_extension.logged_out.title" = "You've been logged out from this account.";
+"share_extension.logged_out.message" = "Please choose another account.";
 
 "conversation.displayname.emptygroup" = "Tom gruppechat";
 "meta.degraded.degradation_reason_message.singular" = "%@ begyndte at bruge en ny enhed.";

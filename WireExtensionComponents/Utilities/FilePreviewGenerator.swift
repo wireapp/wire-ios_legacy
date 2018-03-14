@@ -262,7 +262,11 @@ func AspectFitRectInRect(_ fit: CGRect, into: CGRect) -> CGRect
         contextRef.setAllowsAntialiasing(true)
         let cropBox = pageRef.getBoxRect(CGPDFBox.cropBox)
         
-        guard cropBox.size.width != 0, cropBox.size.height != 0 else {
+        guard cropBox.size.width != 0,
+              cropBox.size.width < 16384,
+              cropBox.size.height != 0,
+              cropBox.size.height < 16384
+        else {
             return
         }
         

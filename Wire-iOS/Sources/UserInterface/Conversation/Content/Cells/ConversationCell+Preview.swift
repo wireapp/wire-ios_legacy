@@ -25,15 +25,10 @@ import Classy
 
 extension ConversationCell {
     
-    func prepareLayoutForPreview(message: ZMMessage? = nil) {
-        let layoutProperties = ConversationCellLayoutProperties()
-        layoutProperties.showSender = false
-        layoutProperties.showUnreadMarker = false
-        layoutProperties.showBurstTimestamp = false
-        layoutProperties.topPadding = 0
-        layoutProperties.alwaysShowDeliveryState = false
-        
-        self.configure(for: message, layoutProperties: layoutProperties)
+    @discardableResult func prepareLayoutForPreview(message: ZMConversationMessage? = nil) -> CGFloat {
+        // Prevent trait collection changes adjusting content insets
+        showsPreview = true
+        self.configure(for: message, layoutProperties: .preview)
         
         constrain(self, self.contentView) { cell, contentView in
             contentView.edges == cell.edges
@@ -43,5 +38,8 @@ extension ConversationCell {
         self.likeButton.isHidden = true
         self.isUserInteractionEnabled = false
         self.setSelected(false, animated: false)
+        self.contentLayoutMargins = .zero
+        
+        return PreviewHeightCalculator.compressedSizeForView(messageContentView)
     }
 }

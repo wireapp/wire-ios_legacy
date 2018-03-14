@@ -248,20 +248,42 @@
     selectedButton.alpha = 1;
 }
 
+- (void)presentSignInViewControllerWithCredentials:(LoginCredentials*)credentials
+{
+    self.loginCredentials = credentials;
+    
+    if(credentials.emailAddress != nil) {
+        [self presentEmailSignInViewControllerToEnterPassword];
+        if(credentials.password == nil) {
+            UIAlertController *controller = [UIAlertController passwordVerificationNeededControllerWithCompletion:nil];
+            [self.navigationController presentViewController:controller animated:YES completion:nil];
+        }
+    } else if (credentials.phoneNumber != nil) {
+        [self presentPhoneSignInViewControllerToEnterPassword];
+    }
+}
+
 - (void)presentEmailSignInViewControllerToEnterPassword
 {
-    self.buttonContainer.hidden = YES;
-    self.wr_tabBarController.enabled = NO;
+    self.buttonContainer.hidden = NO;
+    self.wr_tabBarController.enabled = YES;
     [self setupEmailSignInViewController];
     [self presentSignInViewController:self.emailSignInViewControllerContainer];
+}
+
+- (void)presentPhoneSignInViewControllerToEnterPassword
+{
+    self.buttonContainer.hidden = NO;
+    self.wr_tabBarController.enabled = YES;
+    [self setupPhoneFlowViewController];
+    [self presentSignInViewController:self.phoneSignInViewControllerContainer];
 }
 
 #pragma mark - PhoneSignInViewControllerDelegate
 
 - (void)phoneSignInViewControllerNeedsPasswordFor:(LoginCredentials *)loginCredentials
 {
-    self.loginCredentials = loginCredentials;
-    [self presentEmailSignInViewControllerToEnterPassword];
+    [self presentSignInViewControllerWithCredentials:loginCredentials];
 }
 
 @end

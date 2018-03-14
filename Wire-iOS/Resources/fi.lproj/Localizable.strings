@@ -18,6 +18,7 @@
 
 
 "general.ok" = "OK";
+"general.next" = "Next";
 "general.cancel" = "Peruuta";
 "general.open_settings" = "Avaa Wiren Asetukset";
 
@@ -34,6 +35,21 @@
 "peoplepicker.header.contacts" = "Yhteystiedot";
 "peoplepicker.header.contacts_personal" = "Henkilökohtaiset kontaktit";
 "peoplepicker.header.directory" = "Yhdistä";
+
+"peoplepicker.group.title.singular" = "Lisää ihmisiä";
+"peoplepicker.group.title.plural" = "Add People (%d)";
+"peoplepicker.group.skip" = "Skip";
+"peoplepicker.group.done" = "Done";
+"peoplepicker.group.create" = "Create";
+
+"peoplepicker.header.people" = "People";
+"peoplepicker.header.services" = "Services";
+"peoplepicker.services.create_conversation.item" = "Create a new conversation";
+"peoplepicker.services.add_service.button" = "Add service";
+"peoplepicker.services.add_service.error.title" = "The service can't be added";
+"peoplepicker.services.add_service.error.default" = "The service is unavailable at the moment";
+"peoplepicker.services.add_service.error.full" = "The conversation is full";
+
 "peoplepicker.title.create_conversation" = "Luo ryhmä";
 "peoplepicker.title.add_to_conversation" = "Lisää ihmisiä";
 
@@ -59,6 +75,7 @@
 "peoplepicker.send_invitation.dialog.ok" = "OK";
 
 "peoplepicker.invite_more_people" = "Kutsu lisää ihmisiä";
+"peoplepicker.invite_team_members" = "Invite people to join the team";
 "peoplepicker.quick-action.open-conversation" = "Avaa";
 "peoplepicker.quick-action.create-conversation" = "Luo ryhmä";
 
@@ -76,10 +93,8 @@
 "contacts_ui.notification.invitation_failed" = "Kutsun lähettäminen epäonnistui";
 "contacts_ui.title" = "Kutsu ihmisiä";
 
-"contacts_ui.no_contact.title" = "Ei vielä keskusteluja\n";
-"contacts_ui.no_contact.message" = "Aloita keskustelu tai luo ryhmä.";
-
-"contacts_ui.no_contact.archived.title" = "Kaikki arkistoitu";
+"conversation_list.empty.all_archived.message" = "Everything archived";
+"conversation_list.empty.no_contacts.message" = "Start a conversation or\ncreate a group.";
 
 
 // Conversation List Indicator
@@ -170,6 +185,7 @@
 "conversation.status.added_multiple" = "Ihmiset lisätty";
 "conversation.status.you_was_added" = "%@ lisäsi sinut";
 "conversation.status.added_users" = "%@ lisäsi %@ n";
+"conversation.status.joined" = "%@ joined";
 "conversation.status.removed_multiple" = "Ihmiset poistettu";
 "conversation.status.you_were_removed" = "Sinut poistettiin";
 "conversation.status.you_left" = "Sinä poistuit";
@@ -201,7 +217,7 @@
 "conversation.input_bar.audio_message.tooltip.pull_send" = "Pyyhkäise ylös lähettääksesi";
 "conversation.input_bar.audio_message.tooltip.tap_send" = "Napauta lähettääksesi";
 "conversation.input_bar.audio_message.too_long.title" = "Äänitys pysäytetty";
-"conversation.input_bar.audio_message.too_long.message" = "Ääniviestit on rajoitettu maksimissaan %@ kokoiseksi. Haluatko lähettää tämän viestin?";
+"conversation.input_bar.audio_message.too_long.message" = "Audio messages are limited to %@.";
 "conversation.input_bar.audio_message.send" = "Lähetä";
 
 "conversation.input_bar.audio_message.keyboard.record_tip" = "Napauta äänittääksesi\nVoit %@ sen jälkeen";
@@ -220,6 +236,14 @@
 "conversation.input_bar.message_too_long.title" = "Message too long";
 "conversation.input_bar.message_too_long.message" = "You can send messages up to %d characters long.";
 
+"conversation.create.group_name.placeholder" = "Group name";
+"conversation.create.guidance.empty" = "At least 1 character";
+"conversation.create.guidance.toolong" = "Liian monta merkkiä";
+"conversation.create.toggle.title" = "Allow guests";
+"conversation.create.toggle.subtitle" = "Open this conversation to people outside your team. You can always change it later.";
+
+"conversation.guests_present" = "Guests are present";
+
 // Image confirmation dialogue
 "image_confirmer.confirm" = "OK";
 "image_confirmer.cancel" = "Peruuta";
@@ -230,6 +254,12 @@
 "camera_access.denied" = "Wire tarvitsee luvan käyttää kameraa.";
 "camera_access.denied.instruction" = "";
 "camera_access.denied.open_settings" = "Salli se Wiren asetuksissa";
+
+// Camera and photos access, keyboard
+"keyboard_photos_access.denied.keyboard.settings" = "Asetukset";
+"keyboard_photos_access.denied.keyboard.camera_and_photos" = "Wire needs access to your\ncamera and photos."; // split text on two lines for a better text balance
+"keyboard_photos_access.denied.keyboard.photos" = "Wire needs access to your photos.";
+"keyboard_photos_access.denied.keyboard.camera" = "Wire needs access to your camera.";
 
 // Camera Controls
 "camera_controls.aeaf_lock" = "AE/AF Lukko";
@@ -282,6 +312,7 @@
 "content.system.conversation.you.removed" = "%@ poisti %@ n";
 "content.system.conversation.you.left" = "%@ poistui";
 "content.system.conversation.team.member-leave" = "%@ poistettiin tiimistä.";
+"content.system.conversation.guest.joined" = "%@ joined";
 
 "content.system.other_renamed_conv_to_nothing" = "%@ poisti keskustelun nimen";
 "content.system.you_renamed_conv_to_nothing" = "Sinä poistit keskustelun nimen";
@@ -310,6 +341,10 @@
 "content.system.renamed_conv.title" = "%@ nimesi keskustelun uudelleen";
 "content.system.renamed_conv.title-you" = "%@ nimesit keskustelun uudelleen";
 "content.system.renamed_conv.title.you" = "Sinä";
+
+"content.system.conversation.with_name.title" = "%@ started the conversation";
+
+"content.system.conversation.with_name.participants" = "with %@";
 
 "content.system.reactivated_device" = "Aloitit käyttämään %@ uudestaan. Viestit jotka lähetettiin sillä välin eivät näy täällä.";
 
@@ -420,8 +455,13 @@
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Profile and Participants
 
-"participants.add_people_button_title" = "Lisää ihmisiä";
+"participants.add_people_button_title" = "Add";
 "participants.avatar.guest.title" = "Vieras";
+
+"participants.title" = "Lisätietoja";
+"participants.section.participants" = "People (%d)";
+"participants.section.services" = "Services (%d)";
+"participants.footer.add_title" = "Add Participants";
 
 // Meta Menu
 "meta.menu.rename" = "Nimeä uudelleen";
@@ -436,10 +476,11 @@
 
 // Delete conversation
 "meta.menu.delete_content.dialog_title" = "Poista sisältö?";
-"meta.menu.delete_content.dialog_message" = "Tämä tyhjentää keskusteluhistorian ja poistaa sen listalta.";
+"meta.menu.delete_content.dialog_message" = "This will clear the conversation history on all your devices.";
 "meta.menu.delete_content.leave_as_well_message" = "Poistu myös keskustelusta";
 "meta.menu.delete_content.button_cancel" = "Peruuta";
 "meta.menu.delete_content.button_delete" = "Poista";
+"meta.menu.delete_content.button_delete_and_leave" = "Delete and leave";
 
 // Leave conversation
 "meta.leave_conversation_dialog_title" = "Poistu keskustelusta?";
@@ -447,6 +488,7 @@
 "meta.leave_conversation.delete_content_as_well_message" = "Poista myös sisältö";
 "meta.leave_conversation_button_cancel" = "Peruuta";
 "meta.leave_conversation_button_leave" = "Poistu";
+"meta.leave_conversation_button_leave_and_delete" = "Leave and delete content";
 
 // Conversation Degraded (security level lowered)
 "meta.degraded.degradation_reason_message.singular" = "%@ aloitti käyttämään uutta laitetta.";
@@ -525,6 +567,13 @@
 // General strings
 "general.confirm" = "OK";
 
+// Bot
+"participants.services.remove_integration.button" = "remove integration";
+
+// Group details
+"group_details.guest_options_cell.title" = "Guest Options";
+"group_details.guest_options_cell.enabled" = "On";
+"group_details.guest_options_cell.disabled" = "Pois päältä";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Self profile
@@ -759,6 +808,7 @@
 "self.settings.technical_report.mail.subject" = "Wiren Puhelu Raportti";
 "self.settings.technical_report.include_log" = "Sisällytä yksityiskohtainen loki";
 "self.settings.technical_report.privacy_warning" = "Yksityiskohtaiset logit voivat sisältää henkilökohtaista tietoa";
+"self.settings.technical_report.no_mail_alert" = "No mail client detected. Tap \"OK\" and send logs manually to: ";
 
 // Password reset
 "self.settings.password_reset_menu.title" = "Vaihda Salasana";
@@ -826,6 +876,35 @@
 
 
 "team.email_code.input_field.accessbility_label" = "Please enter the six-digit code from the email.";
+
+// Invite Team Members
+
+"team.invite.header.title" = "Build your team";
+"team.invite.header.subtitle" = "Invite your colleagues to join.";
+"team.invite.textfield.placeholder" = "colleague@yourcompany.com";
+"team.invite.textfield.accesibility" = "Enter e-mail address for colleague to invite.";
+"team.invite.learn_more.title" = "Lue lisää";
+"team.invite.top_bar.skip" = "Skip";
+"team.invite.top_bar.done" = "Done";
+
+// Team Invite Errors
+"team.invite.error.generic" = "Jokin meni pieleen, yritä uudelleen";
+"team.invite.error.already_registered" = "This email address is already in use";
+"team.invite.error.already_invited" = "This email has already been invited";
+"team.invite.error.too_many_invitations" = "The maximum number of invitations has been sent";
+"team.invite.error.no_internet" = "No internet connection";
+
+// Guest Room
+
+"guest_room.allow_guests.title" = "Allow guests";
+"guest_room.allow_guests.subtitle" = "Open this conversation to people outside your team.";
+"guest_room.remove_guests.message" = "Current guests will be removed from the conversation. New guests will not be allowed.";
+"guest_room.remove_guests.action" = "Remove Guests";
+"guest_room.revoke_link.message" = "New guests will not be able to join with this link. Current guests will still have access.";
+"guest_room.revoke_link.action" = "Revoke Link";
+
+"guest_room.error.generic.title" = "Something went wrong";
+"guest_room.error.generic.message" = "Check your connection and try again";
 
 // Registration
 
@@ -903,6 +982,9 @@
 "registration.signin.too_many_devices.sign_out_button.title" = "Kirjaudu ulos";
 "registration.signin.email_button.title" = "Sähköposti";
 "registration.signin.phone_button.title" = "Puhelinnumero";
+
+"registration.signin.alert.password_needed.title" = "Password needed";
+"registration.signin.alert.password_needed.message" = "Please enter your Password in order to log in.";
 
 "registration.devices.title" = "Laitteet";
 "registration.devices.active_list_header" = "Aktiivinen";

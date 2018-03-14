@@ -38,7 +38,8 @@ public extension ConversationCell {
             delegate.responds(to: #selector(ConversationCellDelegate.conversationCellShouldStartDestructionTimer)) &&
             delegate.conversationCellShouldStartDestructionTimer!(self) {
             updateCountdownView()
-            if message.startSelfDestructionIfNeeded() {
+
+            if let message = message, message.startSelfDestructionIfNeeded() {
                 startCountdownAnimationIfNeeded(message)
             }
         }

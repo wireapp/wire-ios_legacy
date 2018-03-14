@@ -29,11 +29,17 @@ import Classy
 /// The delay after which a progess view controller will be displayed if all messages are not yet sent.
 private let progressDisplayDelay: TimeInterval = 0.5
 
+private enum LocalAuthenticationStatus {
+    case disabled
+    case denied
+    case granted
+}
+
 class ShareExtensionViewController: SLComposeServiceViewController {
     
     lazy var accountItem : SLComposeSheetConfigurationItem = { [weak self] in
         let item = SLComposeSheetConfigurationItem()!
-        let accountName = self?.currentAccount?.userName
+        let accountName = self?.currentAccount?.shareExtensionDisplayName
         
         item.title = "share_extension.conversation_selection.account".localized
         item.value = accountName ?? "share_extension.conversation_selection.empty.value".localized
@@ -58,7 +64,7 @@ class ShareExtensionViewController: SLComposeServiceViewController {
     fileprivate var sharingSession: SharingSession? = nil
     fileprivate var extensionActivity: ExtensionActivity? = nil
     fileprivate var currentAccount: Account? = nil
-
+    fileprivate var localAuthenticationStatus: LocalAuthenticationStatus = .disabled
     private var observer: SendableBatchObserver? = nil
     private weak var progressViewController: SendingProgressViewController? = nil
     
@@ -84,7 +90,7 @@ class ShareExtensionViewController: SLComposeServiceViewController {
         ExtensionBackupExcluder.exclude()
         CrashReporter.setupHockeyIfNeeded()
         navigationController?.view.backgroundColor = .white
-        recreateSharingSession()
+        try? recreateSharingSession(account: currentAccount)
         let activity = ExtensionActivity(attachments: allAttachments)
         sharingSession?.analyticsEventPersistence.add(activity.openedEvent())
         extensionActivity = activity
@@ -131,17 +137,17 @@ class ShareExtensionViewController: SLComposeServiceViewController {
         return Bundle.main.infoDictionary?["HostBundleIdentifier"] as? String
     }
     
-    private func recreateSharingSession() {
+    private func recreateSharingSession(account: Account?) throws {
         guard let applicationGroupIdentifier = applicationGroupIdentifier,
             let hostBundleIdentifier = hostBundleIdentifier,
-            let accountIdentifier = currentAccount?.userIdentifier
+            let accountIdentifier = account?.userIdentifier
         else { return }
         
-        sharingSession = try? SharingSession(
-            applicationGroupIdentifier: applicationGroupIdentifier,
-            accountIdentifier: accountIdentifier,
-            hostBundleIdentifier: hostBundleIdentifier
-        )
+        sharingSession = try SharingSession(
+                applicationGroupIdentifier: applicationGroupIdentifier,
+                accountIdentifier: accountIdentifier,
+                hostBundleIdentifier: hostBundleIdentifier
+            )
     }
     
     private var accountManager: AccountManager? {
@@ -152,7 +158,7 @@ class ShareExtensionViewController: SLComposeServiceViewController {
 
     override func isContentValid() -> Bool {
         // Do validation of contentText and/or NSExtensionContext attachments here
-        let textLength = self.contentText.trimmingCharacters(in: .whitespaces).characters.count
+        let textLength = self.contentText.trimmingCharacters(in: .whitespaces).count
         let remaining = SharedConstants.maximumMessageLength - textLength
         let remainingCharactersThreshold = 30
         
@@ -300,26 +306,38 @@ class ShareExtensionViewController: SLComposeServiceViewController {
     
     func updateAccount(_ account: Account?) {
         guard let account = account, account != currentAccount else { return }
+
+        do {
+            try recreateSharingSession(account: account)
+        } catch let error as SharingSession.InitializationError {
+            guard error == .loggedOut else { return }
+            let alert = UIAlertController(title: "share_extension.logged_out.title".localized,
+                                          message: "share_extension.logged_out.message".localized, preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "share_extension.general.ok".localized, style: .default, handler: nil))
+            self.present(alert, animated: true)
+            return
+        } catch { //any other error
+            return
+        }
         
         currentAccount = account
-        accountItem.value = account.userName
+        accountItem.value = account.shareExtensionDisplayName
         conversationItem.value = "share_extension.conversation_selection.empty.value".localized
         postContent?.target = nil
         extensionActivity?.conversation = nil
-        recreateSharingSession()
     }
     
     private func presentChooseAccount() {
-        requireLocalAuthenticationIfNeeded(with: { [weak self] (granted) in
-            if granted == nil || (granted != nil && granted!) {
+        requireLocalAuthenticationIfNeeded(with: { [weak self] (status) in
+            if let status = status, status != .denied {
                 self?.showChooseAccount()
             }
         })
     }
     
     private func presentChooseConversation() {
-        requireLocalAuthenticationIfNeeded(with: { [weak self] (granted) in
-            if granted == nil || (granted != nil && granted!) {
+        requireLocalAuthenticationIfNeeded(with: { [weak self] (status) in
+            if let status = status, status != .denied {
                 self?.showChooseConversation()
             }
         })
@@ -356,27 +374,31 @@ class ShareExtensionViewController: SLComposeServiceViewController {
         pushConfigurationViewController(accountSelectionViewController)
     }
 
-    /// @param callback confirmation; if the auth is not needed or is not possible on the current device called with '.none'
-    func requireLocalAuthenticationIfNeeded(with callback: @escaping (Bool?)->()) {
+    /// @param callback confirmation; called when authentication evaluation is completed.
+    fileprivate func requireLocalAuthenticationIfNeeded(with callback: @escaping (LocalAuthenticationStatus?)->()) {
+        
+        // I need to store the current authentication in order to avoid future authentication requests in the same Share Extension session
         
         guard AppLock.isActive else {
-            callback(.none)
+            localAuthenticationStatus = .disabled
+            callback(localAuthenticationStatus)
             return
         }
         
-        guard let session = sharingSession, !session.isLocalAuthenticationGranted else {
-            callback(true)
+        guard localAuthenticationStatus != .granted else {
+            callback(localAuthenticationStatus)
             return
         }
         
-        AppLock.evaluateAuthentication(description: "share_extension.privacy_security.lock_app.description".localized) { (success, error) in
+        AppLock.evaluateAuthentication(description: "share_extension.privacy_security.lock_app.description".localized) { [weak self] (success, error) in
             DispatchQueue.main.async {
-                callback(success)
                 if let success = success, success {
-                    session.isLocalAuthenticationGranted = success
+                    self?.localAuthenticationStatus = .granted
                 } else {
+                    self?.localAuthenticationStatus = .denied
                     DDLogError("Local authentication error: \(String(describing: error?.localizedDescription))")
                 }
+                callback(self?.localAuthenticationStatus)
             }
         }
     }

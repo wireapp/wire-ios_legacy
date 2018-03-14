@@ -26,13 +26,13 @@
 
 @class ZMConversation;
 @class ProfileDetailsViewController;
-@class AddParticipantsViewController;
+@class ConversationCreationController;
 
 
 @protocol ProfileDetailsViewControllerDelegate <NSObject>
 
 - (void)profileDetailsViewController:(ProfileDetailsViewController *)profileDetailsViewController didSelectConversation:(ZMConversation *)conversation;
-- (void)profileDetailsViewController:(ProfileDetailsViewController *)profileDetailsViewController didPresentAddParticipantsViewController:(AddParticipantsViewController *)addParticipantsViewController;
+- (void)profileDetailsViewController:(ProfileDetailsViewController *)profileDetailsViewController didPresentConversationCreationController:(ConversationCreationController *)conversationCreationController;
 - (void)profileDetailsViewController:(ProfileDetailsViewController *)profileDetailsViewController wantsToBeDismissedWithCompletion:(dispatch_block_t)completion;
 
 @end
@@ -44,5 +44,6 @@
 - (instancetype)initWithUser:(id<ZMBareUser, ZMSearchableUser, AccentColorProvider>)user conversation:(ZMConversation *)conversation context:(ProfileViewControllerContext)context NS_DESIGNATED_INITIALIZER;
 
 @property (nonatomic, weak) id<ProfileDetailsViewControllerDelegate> delegate;
+@property (nonatomic, weak) id<ViewControllerDismissable> viewControllerDismissable;
 
 @end

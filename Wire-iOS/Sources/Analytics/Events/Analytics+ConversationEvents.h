@@ -70,6 +70,7 @@ typedef NS_ENUM(NSUInteger, InteractionMethod) {
 
 @interface Analytics (ConversationEvents)
 
+- (void)tagArchivedConversation:(BOOL)archived;
 - (void)tagArchivedConversation;
 - (void)tagUnarchivedConversation;
 - (void)tagOpenedPeoplePickerGroupAction;

@@ -44,7 +44,6 @@
 #import "TextMessageCell.h"
 
 #import "ZClientViewController.h"
-#import "ParticipantsViewController.h"
 #import "ConversationViewController+ParticipantsPopover.h"
 #import "MediaBar.h"
 #import "MediaPlayer.h"
@@ -57,7 +56,6 @@
 #import "ConversationInputBarViewController.h"
 #import "ProfileViewController.h"
 #import "MediaPlaybackManager.h"
-#import "BarController.h"
 #import "ContactsDataSource.h"
 #import "VerticalTransition.h"
 
@@ -86,19 +84,13 @@
 @interface ConversationViewController (Content) <ConversationContentViewControllerDelegate>
 @end
 
-@interface ConversationViewController (ParticipantsViewController) <ParticipantsViewControllerDelegate>
-@end
-
 @interface ConversationViewController (ProfileViewController) <ProfileViewControllerDelegate>
 @end
 
-@interface ConversationViewController (AddParticipants) <AddParticipantsViewControllerDelegate>
+@interface ConversationViewController (ViewControllerDismissable) <ViewControllerDismissable>
 @end
 
 @interface ConversationViewController (ZMConversationObserver) <ZMConversationObserver>
-@end
-
-@interface ConversationViewController (UINavigationControllerDelegate) <UINavigationControllerDelegate>
 @end
 
 @interface ConversationViewController (VerticalTransitionDataSource) <VerticalTransitionDataSource>
@@ -116,8 +108,6 @@
 @property (nonatomic) ConversationContentViewController *contentViewController;
 @property (nonatomic) UIViewController *participantsController;
 
-@property (nonatomic) BOOL mediaBarAnimationInFlight;
-
 @property (nonatomic) ConversationInputBarViewController *inputBarController;
 @property (nonatomic) OutgoingConnectionViewController *outgoingConnectionViewController;
 
@@ -125,6 +115,8 @@
 @property (nonatomic) NSLayoutConstraint *inputBarZeroHeight;
 @property (nonatomic) InvisibleInputAccessoryView *invisibleInputAccessoryView;
 
+@property (nonatomic) GuestsBarController *guestsBarController;
+    
 @property (nonatomic) id voiceChannelStateObserverToken;
 @property (nonatomic) id conversationObserverToken;
 
@@ -175,6 +167,7 @@
     [self createContentViewController];
     [self createConversationBarController];
     [self createMediaBarViewController];
+    [self createGuestsBarController];
 
     [self addChildViewController:self.contentViewController];
     [self.view addSubview:self.contentViewController.view];
@@ -277,8 +270,56 @@
 
 - (void)createMediaBarViewController
 {
-    self.mediaBarViewController = [[MediaBarViewController alloc] initWithMediaPlaybackManager:[AppDelegate sharedAppDelegate].mediaPlaybackManager];
+    self.mediaBarViewController = [[MediaBarViewController alloc] initWithMediaPlaybackManager:[ZClientViewController sharedZClientViewController].mediaPlaybackManager];
     [self.mediaBarViewController.view addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didTapMediaBar:)]];
+}
+    
+- (void)createGuestsBarController
+{
+    self.guestsBarController = [[GuestsBarController alloc] init];
+}
+    
+- (BOOL)guestsBarShouldBePresented
+{
+    if (self.conversation.conversationType == ZMConversationTypeOneOnOne) {
+        return NO;
+    }
+    
+    Team *selfUserTeam = ZMUser.selfUser.team;
+    
+    if (selfUserTeam == nil) {
+        return NO;
+    }
+    
+    if (self.conversation.team == selfUserTeam) {
+        BOOL containsGuests = NO;
+        
+        for (ZMUser *user in self.conversation.activeParticipants) {
+            if ([user isGuestInConversation:self.conversation]) {
+                containsGuests = YES;
+                break;
+            }
+        }
+        
+        return containsGuests;
+    }
+    else {
+        return NO;
+    }
+}
+    
+- (void)updateGuestsBarVisibilityAndShowIfNeeded:(BOOL)showIfNeeded
+{
+    if ([self guestsBarShouldBePresented]) {
+        BOOL isPresented = nil != self.guestsBarController.parentViewController;
+        if (!isPresented || showIfNeeded) {
+            [self.conversationBarController presentBar:self.guestsBarController];
+            [self.guestsBarController setCollapsed:NO animated:NO];
+        }
+    }
+    else {
+        [self.conversationBarController dismissBar:self.guestsBarController];
+    }
 }
 
 - (void)createConstraints
@@ -300,6 +341,7 @@
 {
     [super viewWillAppear:animated];
     self.isAppearing = YES;
+    [self updateGuestsBarVisibilityAndShowIfNeeded:YES];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -319,6 +361,8 @@
     }
 
     self.contentViewController.searchQueries = self.collectionController.currentTextSearchQuery;
+
+    [[ZMUserSession sharedSession] didOpenWithConversation:self.conversation];
     
     self.isAppearing = NO;
 }
@@ -327,6 +371,7 @@
 {
     [super viewWillDisappear:animated];
     [self updateLeftNavigationBarItems];
+    [[ZMUserSession sharedSession] didCloseWithConversation:self.conversation];
 }
 
 - (void)viewDidDisappear:(BOOL)animated
@@ -410,14 +455,7 @@
     ZM_WEAK(self);
     self.titleView.tapHandler = ^(UIButton * _Nonnull button) {
         ZM_STRONG(self);
-        [ConversationInputBarViewController endEditingMessage];
-        [self.inputBarController.inputBar.textView resignFirstResponder];
-        
-        UIViewController *participantsController = [self participantsController];
-        participantsController.transitioningDelegate = self.conversationDetailsTransitioningDelegate;
-        [self createAndPresentParticipantsPopoverControllerWithRect:self.titleView.superview.bounds
-                                                           fromView:self.titleView.superview
-                                              contentViewController:participantsController];
+        [self presentParticipantsViewController:self.participantsController fromView:self.titleView.superview];
     };
     [self.titleView configure];
     
@@ -425,6 +463,17 @@
     self.navigationItem.leftItemsSupplementBackButton = NO;
 
     [self updateRightNavigationItemsButtons];
+}
+    
+- (void)presentParticipantsViewController:(UIViewController *)viewController fromView:(UIView *)sourceView
+{
+    [ConversationInputBarViewController endEditingMessage];
+    [self.inputBarController.inputBar.textView resignFirstResponder];
+    
+    viewController.transitioningDelegate = self.conversationDetailsTransitioningDelegate;
+    [self createAndPresentParticipantsPopoverControllerWithRect:sourceView.bounds
+                                                       fromView:sourceView
+                                          contentViewController:viewController];
 }
 
 - (void)updateInputBarVisibility
@@ -439,22 +488,19 @@
 
     switch (self.conversation.conversationType) {
         case ZMConversationTypeGroup: {
-            ParticipantsViewController *participantsViewController = [[ParticipantsViewController alloc] initWithConversation:self.conversation];
-            participantsViewController.delegate = self;
-            participantsViewController.zClientViewController = [ZClientViewController sharedZClientViewController];
-            participantsViewController.shouldDrawTopSeparatorLineDuringPresentation = YES;
-            viewController = participantsViewController;
+            GroupDetailsViewController *groupDetailsViewController = [[GroupDetailsViewController alloc] initWithConversation:self.conversation];
+            viewController = groupDetailsViewController;
             break;
         }
         case ZMConversationTypeSelf:
         case ZMConversationTypeOneOnOne:
         case ZMConversationTypeConnection:
         {
-            ProfileViewController *profileViewController = [[ProfileViewController alloc] initWithUser:self.conversation.firstActiveParticipantOtherThanSelf
-                                                                                          conversation:self.conversation];
-            profileViewController.delegate = self;
-            profileViewController.shouldDrawTopSeparatorLineDuringPresentation = YES;
-            viewController = profileViewController;
+            viewController = [UserDetailViewControllerFactory createUserDetailViewControllerWithUser:self.conversation.firstActiveParticipantOtherThanSelf
+                                          conversation:self.conversation
+                         profileViewControllerDelegate:self
+                             viewControllerDismissable:self];
+
             break;
         }
         case ZMConversationTypeInvalid:
@@ -462,12 +508,9 @@
             break;
     }
 
-    RotationAwareNavigationController *navigationController = [[RotationAwareNavigationController alloc] initWithRootViewController:viewController];
-    navigationController.navigationBarHidden = YES;
+    _participantsController = viewController.wrapInNavigationController;
 
-    _participantsController = navigationController;
-
-    return navigationController;
+    return _participantsController;
 }
 
 - (void)setAnalyticsTracker:(AnalyticsTracker *)analyticsTracker
@@ -581,21 +624,6 @@
     [self.conversationBarController presentBar:self.mediaBarViewController];
 }
 
-- (void)conversationContentViewController:(ConversationContentViewController *)contentViewController didTriggerAddContactsButton:(UIButton *)button
-{
-    AddParticipantsViewController *addParticipantsViewController = [[AddParticipantsViewController alloc] initWithConversation:self.conversation];
-    addParticipantsViewController.delegate = self;
-    addParticipantsViewController.modalPresentationStyle = UIModalPresentationPopover;
-    addParticipantsViewController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
-
-    UIPopoverPresentationController *popoverPresentationController = addParticipantsViewController.popoverPresentationController;
-    popoverPresentationController.sourceView = button;
-    popoverPresentationController.sourceRect = button.bounds;
-    popoverPresentationController.delegate = addParticipantsViewController;
-
-    [self presentViewController:addParticipantsViewController animated:YES completion:nil];
-}
-
 - (void)conversationContentViewController:(ConversationContentViewController *)contentViewController didTriggerResendingMessage:(id <ZMConversationMessage>)message
 {
     [[ZMUserSession sharedSession] enqueueChanges:^{
@@ -652,6 +680,18 @@
 - (void)conversationContentViewControllerWantsToDismiss:(ConversationContentViewController *)controller
 {
     [self openConversationList];
+}
+    
+- (void)conversationContentViewController:(ConversationContentViewController *)controller presentGuestOptionsFromView:(UIView *)sourceView
+{
+    if (self.conversation.conversationType != ZMConversationTypeGroup) {
+        DDLogError(@"Illegal Operation: Trying to show guest options for non-group conversation");
+        return;
+    }
+    GroupDetailsViewController *groupDetailsViewController = [[GroupDetailsViewController alloc] initWithConversation:self.conversation];
+    UINavigationController *navigationController = groupDetailsViewController.wrapInNavigationController;
+    [groupDetailsViewController presentGuestOptionsAnimated:NO];
+    [self presentParticipantsViewController:navigationController fromView:sourceView];
 }
 
 @end
@@ -728,6 +768,8 @@
     if (! self.contentViewController.isScrolledToBottom && !isEditing) {
         [self.contentViewController scrollToBottomAnimated:YES];
     }
+    
+    [self.guestsBarController setCollapsed:YES animated:YES];
 
     return YES;
 }
@@ -767,26 +809,16 @@
 
 @end
 
-@implementation ConversationViewController (ParticipantsViewController)
+@implementation ConversationViewController (ViewControllerDismissable)
 
-- (void)participantsViewControllerWantsToBeDismissed:(ParticipantsViewController *)viewController
+- (void)viewControllerWantsToBeDismissed:(UIViewController *)profileViewController completion:(dispatch_block_t)completion
 {
-    [self dismissViewControllerAnimated:YES completion:nil];
-}
-
-- (void)participantsViewController:(ParticipantsViewController *)controller wantsToAddUsers:(NSSet *)users toConversation:(ZMConversation *)conversation
-{
-    [self profileViewController:nil wantsToAddUsers:users toConversation:conversation];
+    [self dismissViewControllerAnimated:YES completion:completion];
 }
 
 @end
 
 @implementation ConversationViewController (ProfileViewController)
-
-- (void)profileViewControllerWantsToBeDismissed:(ProfileViewController *)profileViewController completion:(dispatch_block_t)completion
-{
-    [self dismissViewControllerAnimated:YES completion:completion];
-}
 
 - (void)profileViewController:(ProfileViewController *)controller wantsToNavigateToConversation:(ZMConversation *)conversation
 {
@@ -797,28 +829,26 @@
     }];
 }
 
-- (void)profileViewController:(ProfileViewController *)controller wantsToAddUsers:(NSSet *)users toConversation:(ZMConversation *)conversation
+- (void)profileViewController:(ProfileViewController *)controller wantsToCreateConversationWithName:(NSString *)name users:(NSSet *)users
 {
-    [self dismissViewControllerAnimated:YES completion:^{
-        [self addParticipants:users];
-    }];
-}
-
-@end
-
-
-@implementation ConversationViewController (AddParticipants)
-
-- (void)addParticipantsViewControllerDidCancel:(AddParticipantsViewController *)addParticipantsViewController
-{
-    [self dismissViewControllerAnimated:YES completion:nil];
-}
-
-- (void)addParticipantsViewController:(AddParticipantsViewController *)addParticipantsViewController didSelectUsers:(NSSet<ZMUser *> *)users
-{
-    [addParticipantsViewController dismissViewControllerAnimated:YES completion:^{
-        [self addParticipants:users];
-    }];
+    dispatch_block_t conversationCreation = ^{
+        __block  ZMConversation *newConversation = nil;
+        
+        @weakify(self);
+        [ZMUserSession.sharedSession enqueueChanges:^{
+            newConversation = [ZMConversation insertGroupConversationIntoUserSession:ZMUserSession.sharedSession withParticipants:users.allObjects name:name inTeam:ZMUser.selfUser.team];
+        } completionHandler:^{
+            @strongify(self);
+            [self.zClientViewController selectConversation:newConversation focusOnView:YES animated:YES];
+        }];
+    };
+    
+    if (nil != self.presentedViewController) {
+        [self dismissViewControllerAnimated:YES completion:conversationCreation];
+    }
+    else {
+        conversationCreation();
+    }
 }
 
 @end
@@ -838,6 +868,7 @@
         [self updateOutgoingConnectionVisibility];
         [self.contentViewController updateTableViewHeaderView];
         [self updateInputBarVisibility];
+        [self updateGuestsBarVisibilityAndShowIfNeeded:NO];
     }
     
     if (note.nameChanged || note.securityLevelChanged || note.connectionStateChanged) {
@@ -868,6 +899,7 @@
                                                               [self dismissViewControllerAnimated:YES completion:^{
                                                                   ProfileViewController *profileViewController = [[ProfileViewController alloc] initWithUser:user context:ProfileViewControllerContextDeviceList];
                                                                   profileViewController.delegate = self;
+                                                                  profileViewController.viewControllerDismissable = self;
                                                                   [self presentViewController:profileViewController animated:YES completion:nil];
                                                               }];
                                                           }
@@ -885,7 +917,6 @@
     navigationController.modalPresentationStyle = UIModalPresentationFormSheet;
     navigationController.backButton.cas_styleClass = @"circular";
     navigationController.rightButtonEnabled = YES;
-    navigationController.delegate = self;
     [navigationController updateRightButtonWithIconType:ZetaIconTypeX
                                                iconSize:ZetaIconSizeTiny
                                                  target:self
@@ -899,26 +930,6 @@
 {
     [self.conversation doNotResendMessagesThatCausedDegradation];
     [self dismissViewControllerAnimated:YES completion:nil];
-}
-
-@end
-
-
-
-#pragma mark - UINavigationControllerDelegate
-
-@implementation ConversationViewController (UINavigationControllerDelegate)
-
-- (void)navigationController:(UINavigationController *)navigationController willShowViewController:(UIViewController *)viewController animated:(BOOL)animated
-{
-    NavigationController *navController = (NavigationController *)navigationController;
-    if ([viewController isKindOfClass:[ProfileClientViewController class]] ||
-        [viewController isKindOfClass:[ParticipantsViewController class]] ||
-        [viewController isKindOfClass:[ProfileViewController class]]) {
-        navController.rightButtonEnabled = NO;
-    } else {
-        navController.rightButtonEnabled = YES;
-    }
 }
 
 @end

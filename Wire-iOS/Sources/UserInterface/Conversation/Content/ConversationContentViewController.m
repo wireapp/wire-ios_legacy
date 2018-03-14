@@ -172,7 +172,7 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
     self.tableView.keyboardDismissMode = UIScrollViewKeyboardDismissModeInteractive;
     
     [UIView performWithoutAnimation:^{
-    self.tableView.backgroundColor = self.view.backgroundColor = [UIColor wr_colorFromColorScheme:ColorSchemeColorConversationBackground];
+    self.tableView.backgroundColor = self.view.backgroundColor = [UIColor wr_colorFromColorScheme:ColorSchemeColorContentBackground];
     }];
     
     UIPinchGestureRecognizer *pinchImageGestureRecognizer = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(onPinchZoom:)];
@@ -462,11 +462,6 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
     else {
         action();
     }
-}
-
-- (void)addContacts:(id)sender
-{
-    [self.delegate conversationContentViewController:self didTriggerAddContactsButton:sender];
 }
 
 - (void)updateVisibleMessagesWindow
@@ -799,7 +794,6 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
     if ([self.delegate respondsToSelector:@selector(conversationContentViewController:shouldBecomeFirstResponderWhenShowMenuFromCell:)]) {
         shouldBecomeFirstResponder = [self.delegate conversationContentViewController:self shouldBecomeFirstResponderWhenShowMenuFromCell:cell];
     }
-    [ConversationInputBarViewController endEditingMessage];
     return shouldBecomeFirstResponder;
 }
 
@@ -823,6 +817,11 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
 - (BOOL)conversationCellShouldStartDestructionTimer:(ConversationCell *)cell
 {
     return self.onScreen;
+}
+    
+- (void)conversationCell:(ConversationCell *)cell openGuestOptionsFromView:(UIView *)sourceView
+{
+    [self.delegate conversationContentViewController:self presentGuestOptionsFromView:sourceView];
 }
 
 @end

@@ -32,10 +32,6 @@ class SearchResultsView : UIView {
     var accessoryViewBottomOffsetConstraint : NSLayoutConstraint?
     var isContainedInPopover : Bool = false
     
-    deinit {
-        NotificationCenter.default.removeObserver(self)
-    }
-    
     init() {
         collectionViewLayout = UICollectionViewFlowLayout()
         collectionViewLayout.scrollDirection = .vertical
@@ -55,7 +51,10 @@ class SearchResultsView : UIView {
         
         createConstraints()
         
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardFrameDidChange(notification:)), name: NSNotification.Name.UIKeyboardWillChangeFrame, object: nil)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(keyboardFrameDidChange(notification:)),
+                                               name: NSNotification.Name.UIKeyboardWillChangeFrame,
+                                               object: nil)
     }
     
     required init?(coder aDecoder: NSCoder) {

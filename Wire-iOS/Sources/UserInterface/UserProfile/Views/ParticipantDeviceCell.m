@@ -47,8 +47,8 @@
     
     if (self) {
         self.backgroundColor = UIColor.clearColor;
-        self.separatorInset = UIEdgeInsetsMake(0, 24, 0, 24);
         self.selectionStyle = UITableViewCellSelectionStyleNone;
+        self.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         [self createViews];
         [self setupConstraints];
         [[CASStyler defaultStyler] styleItem:self];
@@ -83,6 +83,12 @@
     [self.identifierLabel autoPinEdge:ALEdgeLeading toEdge:ALEdgeLeading ofView:self.nameLabel];
     [self.identifierLabel autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.nameLabel withOffset:0 relation:NSLayoutRelationGreaterThanOrEqual];
     [self.identifierLabel autoPinEdgeToSuperviewEdge:ALEdgeBottom withInset:16];
+}
+
+- (void)setHighlighted:(BOOL)highlighted animated:(BOOL)animated
+{
+    [super setHighlighted:highlighted animated:animated];
+    self.backgroundColor = highlighted ? [UIColor colorWithWhite:0 alpha:0.08] : UIColor.clearColor;
 }
 
 #pragma mark - Configuration

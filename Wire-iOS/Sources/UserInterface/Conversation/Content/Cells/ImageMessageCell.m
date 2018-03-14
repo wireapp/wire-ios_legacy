@@ -34,6 +34,7 @@
 #import "Analytics.h"
 #import "Wire-Swift.h"
 #import "UIImage+ZetaIconsNeue.h"
+#import "ConversationCell+Private.h"
 
 #import "UIView+Borders.h"
 
@@ -61,11 +62,6 @@
 
 @property (nonatomic) CGSize originalImageSize;
 @property (nonatomic) CGSize imageSize;
-@property (nonatomic) BOOL showsPreview;
-
-@end
-
-@interface ImageMessageCell (PreviewProvider) <PreviewProvider>
 
 @end
 
@@ -285,6 +281,12 @@ static const CGFloat ImageToolbarMinimumSize = 192;
     return self.originalImageSize.width < self.imageSize.width || self.originalImageSize.height < self.imageSize.height;
 }
 
+- (CGSize)sizeForMessage:(id<ZMImageMessageData>)messageData
+{
+    CGFloat scaleFactor = [messageData isAnimatedGIF] ? 1 : 0.5;
+    return CGSizeApplyAffineTransform(messageData.originalSize, CGAffineTransformMakeScale(scaleFactor, scaleFactor));
+}
+
 - (void)configureForMessage:(id<ZMConversationMessage>)convMessage layoutProperties:(ConversationCellLayoutProperties *)layoutProperties
 {
     if (! [Message isImageMessage:convMessage]) {
@@ -298,13 +300,16 @@ static const CGFloat ImageToolbarMinimumSize = 192;
     // request
     [convMessage requestImageDownload]; // there is no harm in calling this if the full content is already available
 
-    self.originalImageSize = [CellSizesProvider originalSizeFor: imageMessageData];
-    self.imageSize = [CellSizesProvider getMinimumSizeFor:self.originalImageSize];
+    CGFloat minimumMediaSize = 48.0;
+    
+    self.originalImageSize = [self sizeForMessage:imageMessageData];
+    self.imageSize = CGSizeMake(MAX(minimumMediaSize, self.originalImageSize.width),
+                                MAX(minimumMediaSize, self.originalImageSize.height));
     
     if (self.autoStretchVertically) {
         self.fullImageView.contentMode = [self imageSmallerThanMinimumSize] ? UIViewContentModeLeft : UIViewContentModeScaleAspectFill;
     } else if (self.showsPreview) {
-        BOOL isSmall = self.imageSize.height < [CellSizesProvider standardCellHeight];
+        BOOL isSmall = self.imageSize.height < [PreviewHeightCalculator standardCellHeight];
         self.fullImageView.contentMode = isSmall ? UIViewContentModeScaleAspectFit : UIViewContentModeScaleAspectFill;
     } else {
         self.fullImageView.contentMode = UIViewContentModeScaleAspectFill;
@@ -581,17 +586,12 @@ static const CGFloat ImageToolbarMinimumSize = 192;
 
 #pragma mark - Preview Provider delegate
 
--(void)preparePreview
+- (CGFloat)prepareLayoutForPreviewWithMessage:(id <ZMConversationMessage>)message
 {
-    [super preparePreview];
+    NOT_USED([super prepareLayoutForPreviewWithMessage:message]);
     self.autoStretchVertically = NO;
-    self.showsPreview = YES;
     self.defaultLayoutMargins = UIEdgeInsetsZero;
-}
-
--(CGFloat)getPreviewContentHeight
-{
-    return [CellSizesProvider heightForImage: [self.fullImageView image]];
+    return [PreviewHeightCalculator heightForImage:self.fullImageView.image];
 }
 
 - (void)traitCollectionDidChange:(nullable UITraitCollection *)previousTraitCollection {

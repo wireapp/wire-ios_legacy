@@ -52,11 +52,7 @@ class SettingsPropertyTextValueCellDescriptor: SettingsPropertyCellDescriptorTyp
                 try self.settingsProperty << SettingsPropertyValue.string(value: stringValue)
             }
             catch let error as NSError {
-                let alertView = UIAlertController(title: "error.full_name".localized, message: error.localizedDescription, preferredStyle: .alert)
-                let actionCancel = UIAlertAction(title: "general.cancel".localized, style: .cancel, handler: nil)
-                alertView.addAction(actionCancel)
-                UIApplication.shared.wr_topmostController(onlyFullScreen: false)?.present(alertView, animated: true, completion: .none)
-                
+                UIApplication.shared.wr_topmostController(onlyFullScreen: false)?.showAlert(forError: error)
             }
             catch let generalError {
                 DDLogError("Error setting property: \(generalError)")

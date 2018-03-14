@@ -424,7 +424,7 @@ extension ZMUser {
             return "conversation.status.you".localized
         }
         else {
-            return self.displayName(in: conversation) ?? self.displayName
+            return self.displayName(in: conversation)
         }
     }
 }
@@ -445,6 +445,11 @@ final internal class GroupActivityMatcher: TypedConversationStatusMatcher {
                 let result = String(format: "conversation.status.you_was_added".localized, sender.displayName(in: conversation)) && type(of: self).regularStyle
                 
                 return self.addEmphasis(to: result, for: sender.displayName(in: conversation))
+            }
+            else if systemMessage.userIsTheSender {
+                let senderName = sender.nameAsSender(in: conversation)
+                let result = "conversation.status.joined".localized(args: senderName) && type(of: self).regularStyle
+                return addEmphasis(to: result, for: senderName)
             }
             else {
                 let usersList = systemMessage.users.map { $0.displayName(in: conversation) }.joined(separator: ", ")
@@ -522,12 +527,12 @@ final internal class StartConversationMatcher: TypedConversationStatusMatcher {
     func description(with status: ConversationStatus, conversation: ZMConversation) -> NSAttributedString? {
         guard let message = status.messagesRequiringAttention.first(where: { StatusMessageType(message: $0) == .newConversation }),
               let sender = message.sender,
-              let senderString = sender.displayName(in: conversation),
               !sender.isSelfUser
             else {
             return .none
         }
-        
+
+        let senderString = sender.displayName(in: conversation)
         let resultString = String(format: "conversation.status.started_conversation".localized, senderString)
         return (resultString && type(of: self).regularStyle).addAttributes(type(of: self).emphasisStyle, toSubstring: senderString)
     }

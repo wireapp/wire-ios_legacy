@@ -20,7 +20,7 @@
 
 @import "colors.cas";
 
-Button.dialogue-button-full, Button.dialogue-button-empty, Button.dialogue-button-empty-light, Button.dialogue-button-empty-dark, Button.dialogue-button-empty-monochrome, Button.dialogue-button-full-monochrome {
+Button.dialogue-button-full, Button.dialogue-button-empty, Button.dialogue-button-empty-light, Button.dialogue-button-empty-dark, Button.dialogue-button-empty-monochrome, Button.dialogue-button-full-monochrome, Button.dialogue-button-full-destructive {
     textTransform: upper;
     titleLabel: @{
         font: $font-small-light;
@@ -35,6 +35,12 @@ Button.dialogue-button-full, Button.dialogue-button-empty, Button.dialogue-butto
 
 Button.dialogue-button-full {
     backgroundImageColor[state:normal]: $color-accent-current;
+    titleColor[state:normal]: white;
+    titleColor[state:highlighted]: $color-text-dimmed;
+}
+
+Button.dialogue-button-full-destructive {
+    backgroundImageColor[state:normal]: $color-accent-red;
     titleColor[state:normal]: white;
     titleColor[state:highlighted]: $color-text-dimmed;
 }

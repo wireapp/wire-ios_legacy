@@ -20,6 +20,7 @@
 
 
 
+"share_extension.general.ok" = "OK";
 "share_extension.conversation_selection.account" = "Account:";
 "share_extension.conversation_selection.title" = "会話";
 "share_extension.send_button.title" = "送信";
@@ -33,6 +34,8 @@
 "share_extension.timeout.title" = "The connection has timed out.";
 "share_extension.timeout.message" = "Check your Internet connection and try again. The attachments were saved in the conversation.";
 "share_extension.privacy_security.lock_app.description" = "Wireのロックを解除する";
+"share_extension.logged_out.title" = "You've been logged out from this account.";
+"share_extension.logged_out.message" = "Please choose another account.";
 
 "conversation.displayname.emptygroup" = "誰もいないグループ";
 "meta.degraded.degradation_reason_message.singular" = "%@が新しいデバイスを使い始めました。";

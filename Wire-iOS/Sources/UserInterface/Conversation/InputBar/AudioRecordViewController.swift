@@ -62,7 +62,7 @@ private let margin = (CGFloat(WAZUIMagic.float(forIdentifier: "content.left_marg
     let recordingDotView = RecordingDotView()
     var recordingDotViewVisible: ConstraintGroup?
     var recordingDotViewHidden: ConstraintGroup?
-    
+
     public let recorder = AudioRecorder(format: .wav, maxRecordingDuration: 25.0 * 60.0)! // 25 Minutes
     
     weak public var delegate: AudioRecordViewControllerDelegate?
@@ -95,10 +95,16 @@ private let margin = (CGFloat(WAZUIMagic.float(forIdentifier: "content.left_marg
     
     func beginRecording() {
         self.delegate?.audioRecordViewControllerDidStartRecording(self)
-        AudioServicesPlaySystemSound(kSystemSoundID_Vibrate)
-        delay(0.25) {
-            self.recorder.startRecording()
+
+        if #available(iOS 10, *) {
+            let feedbackGenerator = UINotificationFeedbackGenerator()
+            feedbackGenerator.prepare()
+            feedbackGenerator.notificationOccurred(.success)
+        } else {
+            AudioServicesPlaySystemSound(kSystemSoundID_Vibrate)
         }
+
+        self.recorder.startRecording()
     }
     
     func finishRecordingIfNeeded(_ sender: UIGestureRecognizer) {
@@ -162,7 +168,7 @@ private let margin = (CGFloat(WAZUIMagic.float(forIdentifier: "content.left_marg
     func createConstraints() {
         let button = buttonOverlay.audioButton
 
-        constrain(view, bottomContainerView, topContainerView, button) { (view: LayoutProxy, bottomContainer: LayoutProxy, topContainer: LayoutProxy, overlayButton: LayoutProxy) -> () in
+        constrain(view, bottomContainerView, topContainerView, button) { view, bottomContainer, topContainer, overlayButton in
             bottomContainer.height == 56
             bottomContainer.left == view.left
             bottomContainer.right == view.right
@@ -176,26 +182,26 @@ private let margin = (CGFloat(WAZUIMagic.float(forIdentifier: "content.left_marg
             topContainer.bottom == bottomContainer.top
         }
         
-        constrain(topContainerView, topTooltipLabel, buttonOverlay) { (topContainer: LayoutProxy, topTooltip: LayoutProxy, overlay: LayoutProxy) -> () in
+        constrain(topContainerView, topTooltipLabel, buttonOverlay) { topContainer, topTooltip, overlay in
             topContainer.centerY == topTooltip.centerY
             topTooltip.right == overlay.left - 12
         }
         
-        constrain(bottomContainerView, buttonOverlay, topSeparator) { (container: LayoutProxy, overlay: LayoutProxy, separator: LayoutProxy) -> () in
+        constrain(bottomContainerView, buttonOverlay, topSeparator) { container, overlay, separator in
             separator.height == .hairline
             separator.right == overlay.left - 8
             separator.left == container.left + 16
             separator.top == container.top
         }
         
-        self.recordingDotViewHidden = constrain(bottomContainerView, timeLabel) { (container: LayoutProxy, timeLabel: LayoutProxy) -> () in
+        self.recordingDotViewHidden = constrain(bottomContainerView, timeLabel) { container, timeLabel in
             timeLabel.centerY == container.centerY
             timeLabel.left == container.left + margin
         }
         
         self.recordingDotViewHidden?.active = false
         
-        self.recordingDotViewVisible = constrain(bottomContainerView, timeLabel, recordingDotView) { (container: LayoutProxy, timeLabel: LayoutProxy, recordingDotView: LayoutProxy) -> () in
+        self.recordingDotViewVisible = constrain(bottomContainerView, timeLabel, recordingDotView) { container, timeLabel, recordingDotView in
             
             timeLabel.centerY == container.centerY
             timeLabel.left == recordingDotView.right + 24
@@ -209,14 +215,14 @@ private let margin = (CGFloat(WAZUIMagic.float(forIdentifier: "content.left_marg
         self.recordingDotViewVisible?.active = true
         
         
-        constrain(bottomContainerView, buttonOverlay, rightSeparator) { (container: LayoutProxy, overlay: LayoutProxy, rightSeparator: LayoutProxy) -> () in
+        constrain(bottomContainerView, buttonOverlay, rightSeparator) { container, overlay, rightSeparator in
             rightSeparator.right == container.right
             rightSeparator.left == overlay.right + 8
             rightSeparator.top == container.top
             rightSeparator.height == .hairline
         }
         
-        constrain(bottomContainerView, timeLabel, audioPreviewView, cancelButton, buttonOverlay) { (container: LayoutProxy, timeLabel: LayoutProxy, previewView: LayoutProxy, cancelButton: LayoutProxy, overlay: LayoutProxy) -> () in
+        constrain(bottomContainerView, timeLabel, audioPreviewView, cancelButton, buttonOverlay) { container, timeLabel, previewView, cancelButton, overlay in
             previewView.left == timeLabel.right + 8
             previewView.top == container.top + 12
             previewView.bottom == container.bottom - 12
@@ -232,9 +238,7 @@ private let margin = (CGFloat(WAZUIMagic.float(forIdentifier: "content.left_marg
     
     func configureAudioRecorder() {
         recorder.recordTimerCallback = { [weak self] time in
-            guard let `self` = self else {
-                return
-            }
+            guard let `self` = self else { return }
             self.updateTimeLabel(time)
         }
         
@@ -243,41 +247,34 @@ private let margin = (CGFloat(WAZUIMagic.float(forIdentifier: "content.left_marg
         }
         
         recorder.recordEndedCallback = { [weak self] reachedMaxRecordingDuration in
-            guard let `self` = self else {
-                return
-            }
+            guard let `self` = self else { return }
             self.recordingState = .finishedRecording
             if reachedMaxRecordingDuration {
                 
                 let duration = Int(ceil(self.recorder.maxRecordingDuration ?? 0))
                 let (seconds, minutes) = (duration % 60, duration / 60)
-                
                 let durationLimit = String(format: "%d:%02d", minutes, seconds)
                 
-                let alertController = UIAlertController(title: "conversation.input_bar.audio_message.too_long.title".localized, message: "conversation.input_bar.audio_message.too_long.message".localized(args: durationLimit), preferredStyle: .alert)
-                let actionCancel = UIAlertAction(title: "general.cancel".localized, style: .cancel, handler: nil)
-                alertController.addAction(actionCancel)
+                let alertController = UIAlertController(
+                    title: "conversation.input_bar.audio_message.too_long.title".localized,
+                    message: "conversation.input_bar.audio_message.too_long.message".localized(args: durationLimit),
+                    preferredStyle: .alert
+                )
                 
-                let actionSend = UIAlertAction(title: "conversation.input_bar.audio_message.send".localized, style: .default, handler: { action in
-                    self.sendAudio(.afterPreview)
-                })
-                alertController.addAction(actionSend)
+                let actionCancel = UIAlertAction(title: "general.ok".localized, style: .default, handler: nil)
+                alertController.addAction(actionCancel)
                 
                 self.present(alertController, animated: true, completion: .none)
             }
         }
         
         recorder.playingStateCallback = { [weak self] state in
-            guard let `self` = self else {
-                return
-            }
+            guard let `self` = self else { return }
             self.buttonOverlay.playingState = state
         }
         
         recorder.recordLevelCallBack = { [weak self] level in
-            guard let `self` = self else {
-                return
-            }
+            guard let `self` = self else { return }
             self.audioPreviewView.updateWithLevel(CGFloat(level))
         }
     }
@@ -324,7 +321,7 @@ private let margin = (CGFloat(WAZUIMagic.float(forIdentifier: "content.left_marg
     }
     
     func updateTimeLabel(_ durationInSeconds: TimeInterval) {
-        let duration = Int(ceil(durationInSeconds))
+        let duration = Int(floor(durationInSeconds))
         let (seconds, minutes) = (duration % 60, duration / 60)
         timeLabel.text = String(format: "%d:%02d", minutes, seconds)
         timeLabel.accessibilityValue = timeLabel.text
@@ -347,7 +344,7 @@ private let margin = (CGFloat(WAZUIMagic.float(forIdentifier: "content.left_marg
     
     func setOverlayState(_ state: AudioButtonOverlayState, animated: Bool) {
         let animations = { self.buttonOverlay.setOverlayState(state) }
-        
+
         if state.animatable && animated {
             UIView.animate(
                 withDuration: state.duration,

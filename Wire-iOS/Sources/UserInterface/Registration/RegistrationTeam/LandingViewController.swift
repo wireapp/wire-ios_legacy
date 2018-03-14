@@ -32,6 +32,8 @@ final class LandingViewController: UIViewController {
 
     private let tracker = AnalyticsTracker(context: AnalyticsContextRegistrationEmail)
 
+    fileprivate var device: DeviceProtocol
+
     // MARK: - UI styles
 
     static let semiboldFont = FontSpec(.large, .semibold).font!
@@ -41,9 +43,7 @@ final class LandingViewController: UIViewController {
         let alignCenterStyle = NSMutableParagraphStyle()
         alignCenterStyle.alignment = NSTextAlignment.center
 
-        let semiboldFont = FontSpec(.large, .semibold).font!
-
-        return [NSForegroundColorAttributeName: UIColor.Team.textColor, NSParagraphStyleAttributeName: alignCenterStyle, NSFontAttributeName:semiboldFont]
+        return [NSForegroundColorAttributeName: UIColor.Team.textColor, NSParagraphStyleAttributeName: alignCenterStyle, NSFontAttributeName: semiboldFont]
     }()
 
     static let buttonSubtitleAttribute: [String: Any] = {
@@ -53,7 +53,7 @@ final class LandingViewController: UIViewController {
 
         let lightFont = FontSpec(.normal, .light).font!
 
-        return [NSForegroundColorAttributeName: UIColor.Team.textColor, NSParagraphStyleAttributeName: alignCenterStyle, NSFontAttributeName:lightFont]
+        return [NSForegroundColorAttributeName: UIColor.Team.textColor, NSParagraphStyleAttributeName: alignCenterStyle, NSFontAttributeName: lightFont]
     }()
 
     // MARK: - constraints for iPad
@@ -82,7 +82,7 @@ final class LandingViewController: UIViewController {
         return label
     }()
 
-    fileprivate let buttonStackView: UIStackView = {
+    let buttonStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.distribution = .fillEqually
         stackView.spacing = 24
@@ -146,6 +146,19 @@ final class LandingViewController: UIViewController {
         return button
     }()
 
+    /// init method for injecting mock device
+    ///
+    /// - Parameter device: Provide this param for testing only
+    init(device: DeviceProtocol = UIDevice.current) {
+        self.device = device
+
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -186,7 +199,7 @@ final class LandingViewController: UIViewController {
         constrain(logoView, headline, cancelButton, headerContainerView) { logoView, headline, cancelButton, headerContainerView in
             ///reserver space for status bar(20pt)
             logoView.top >= headerContainerView.top + 36
-            logoAlignTop = logoView.top == headerContainerView.top + 72 ~ LayoutPriority(500)
+            logoAlignTop = logoView.top == headerContainerView.top + 72 ~ 500.0
             logoView.centerX == headerContainerView.centerX
             logoView.width == 96
             logoView.height == 31
@@ -231,7 +244,7 @@ final class LandingViewController: UIViewController {
 
             loginButton.top == loginHintsLabel.bottom + 4
             loginButton.centerX == selfView.centerX
-            loginButtonAlignBottom = loginButton.bottom == selfView.bottomMargin - 32 ~ LayoutPriority(500)
+            loginButtonAlignBottom = loginButton.bottom == selfView.bottomMargin - 32 ~ 500.0
         }
 
         [createAccountButton, createTeamButton].forEach() { button in
@@ -258,7 +271,8 @@ final class LandingViewController: UIViewController {
     }
 
     func updateStackViewAxis() {
-        guard UIDevice.current.userInterfaceIdiom == .pad else { return }
+        let userInterfaceIdiom = device.userInterfaceIdiom
+        guard userInterfaceIdiom == .pad else { return }
 
         switch self.traitCollection.horizontalSizeClass {
         case .regular:

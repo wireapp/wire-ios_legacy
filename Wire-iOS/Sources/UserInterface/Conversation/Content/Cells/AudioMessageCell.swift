@@ -64,7 +64,7 @@ public final class AudioMessageCell: ConversationCell {
     }
     
     open func createConstraints() {
-        constrain(self.messageContentView, self.containerView, self.audioMessageView, self.authorLabel) { (messageContentView: LayoutProxy, containerView: LayoutProxy, audioMessageView: LayoutProxy, authorLabel: LayoutProxy) -> () in
+        constrain(self.messageContentView, self.containerView, self.audioMessageView, self.authorLabel) { messageContentView, containerView, audioMessageView, authorLabel in
             
             containerView.left == messageContentView.leftMargin
             containerView.right == messageContentView.rightMargin

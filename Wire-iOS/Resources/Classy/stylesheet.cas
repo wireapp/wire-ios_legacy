@@ -50,11 +50,11 @@ IconButton.conversation-toolbar {
     adjustsImageWhenHighlighted: false;
 }
 
-StartUIQuickActionsBar {
+StartUIInviteActionBar {
     backgroundColor: rgb(0, 0, 0, 0.24);
 }
 
-StartUIQuickActionsBar > Button {
+StartUIInviteActionBar > Button {
     titleEdgeInsets: 2, 8, 3, 8;
 }
 
@@ -386,7 +386,7 @@ ProfileView {
 
 ProfileViewController {
     view: @{
-        backgroundColor: $color-background;
+        backgroundColor: $color-bar-background;
     }
     topSeparatorLineView: @{
         backgroundColor: $color-separator;
@@ -645,73 +645,6 @@ MediaPreviewViewController {
     }
 }
 
-/* Conversation detail / participants */
-
-ParticipantsHeaderView.editing {
-    titleViewBackground: @{
-        backgroundColor: $color-separator;
-    }
-}
-
-ParticipantsHeaderView {
-    subtitleLabel: @{
-        textColor: $color-text-dimmed;
-        font: $font-small;
-    }
-    titleView: @{
-        textColor: $color-text-foreground;
-        font: $font-normal-semibold;
-    }
-    titleViewBackground: @{
-        layer: @{
-            cornerRadius: 2;
-        }
-        backgroundColor: clear;
-    }
-    separatorLine: @{
-        backgroundColor: $color-separator;
-    }
-    topSeparatorLine: @{
-        backgroundColor: $color-separator;
-    }
-}
-
-ParticipantsFooterView {
-    separatorLine: @{
-        backgroundColor: $color-separator;
-    }
-    leftButton: @{
-        contentEdgeInsets: 0 0 0 16
-        titleEdgeInsets: 0 16 0 -16
-        titleColor[state:normal]: $color-text-foreground;
-        titleColor[state:highlighted]: $color-text-dimmed;
-        titleLabel: @{
-            font: $font-small-light;
-        }
-    }
-}
-
-ParticipantsViewController {
-    view: @{
-        backgroundColor: $color-background;
-    }
-}
-
-ParticipantsListCell {
-    nameLabel @{
-        textColor: $color-text-foreground;
-        font: $font-small-light;
-    }
-}
-
-GuestLabel {
-    backgroundColor: $color-background-light;
-    textLabel @{
-        font: $font-small-light;
-        textColor: $color-text-foreground-light;
-    }
-}
-
 /* Fullscreen image view */
 
 FullscreenImageViewController {
@@ -816,10 +749,6 @@ ConversationCell, IconSystemCell, ConversationNewDeviceCell, MissedCallCell, Per
         backgroundColor: $color-background;
     }
 
-    authorLabel: @{
-        font: $font-medium-semibold;
-    }
-
     burstTimestampView: @{
         label: @{
             textColor: $color-text-foreground;
@@ -849,6 +778,10 @@ IconSystemCell, ConversationNewDeviceCell, MissedCallCell, PerformedCallCell, Ca
     labelFont: $font-medium;
     labelBoldFont: $font-medium-semibold;
     labelTextBlendedColor: $color-text-dimmed;
+}
+
+ParticipantsCell {
+    labelLargeFont: $font-large-semibold;
 }
 
 ConversationRenamedCell {
@@ -1256,13 +1189,6 @@ AddParticipantsViewController SearchHeaderViewController {
     }
 }
 
-
-AddParticipantsViewController {
-    view: @{
-        backgroundColor: $color-background;
-    }
-}
-
 /* Invite Contacts */
 
 ContactsViewController, InviteContactsViewController {
@@ -1327,20 +1253,18 @@ InviteContactsViewController ContactsSectionHeaderView {
 }
 
 TokenField {
-    font: $font-normal-light;
-    tokenTitleFont: $font-small-semibold;
     numberOfLines: 3;
     lineSpacing: 8;
     tokenOffset: 4;
-    tokenHeight: 20;
-    tokenTitleVerticalAdjustment: 0;
+    tokenBackgroundColor: clear;
+    tokenBorderColor: clear;
 
     textView: @{
         tintColor: $color-accent-current;
         autocorrectionType: no;
         returnKeyType: go;
-        placeholderFont: $font-small-light;
-        placeholderTextContainerInset: 13 10;
+        placeholderFont: $font-small-regular;
+        placeholderTextContainerInset: 0 48;
         placeholderTextTransform: upper;
         lineFragmentPadding: 0;
     }
@@ -1350,20 +1274,6 @@ StartUIViewController SearchHeaderViewController {
     titleLabel: @{
         font: $font-small-semibold;
     }
-}
-
-TokenField.search {
-    textView: @{
-        placeholderFont: $font-small-semibold;
-        placeholderTextContainerInset: 0 0;
-    }
-    tokenTitleFont: $font-medium-semibold;
-    tokenTitleColor: black;
-    tokenBackgroundColor: white;
-    tokenBorderColor: white;
-    tokenSelectedTitleColor: white;
-    tokenSelectedBackgroundColor: clear;
-    tokenSelectedBorderColor: white;
 }
 
 /* Ephemeral Keyboard */
@@ -1394,7 +1304,13 @@ ProfileDetailsViewController {
         textColor: $color-text-foreground;
         font: $font-normal-light;
     }
+    
+    remainingTimeLabel: @{
+        textColor: $color-text-dimmed;
+        font: $font-normal-semibold;
+    }
 }
+
 /* Profile Devices */
 
 ProfileDevicesViewController {
@@ -1600,30 +1516,10 @@ ReactionCell {
     }
 }
 
-/* Share View Controller */
-
-TokenField.share {
-    textView: @{
-        placeholderFont: $font-medium-semibold;
-        placeholderTextContainerInset: 0 0;
-        placeholderTextColor: rgb(255, 255, 255, 0.6);
-        keyboardAppearance: dark;
-    }
-    backgroundColor: clear;
-    tokenTitleFont: $font-medium-semibold;
-    textColor: white;
-    tokenTitleColor: black;
-    tokenBackgroundColor: white;
-    tokenBorderColor: white;
-    tokenSelectedTitleColor: white;
-    tokenSelectedBackgroundColor: clear;
-    tokenSelectedBorderColor: white;
-}
-
 /* Collections */
 
 CollectionsView {
-    backgroundColor: $color-conversation-background;
+    backgroundColor: $color-content-background;
 }
 
 NoResultsView {
@@ -1702,25 +1598,25 @@ AppLockView {
 }
 
 TextSearchInputView {
-    backgroundColor: $color-background;
+    backgroundColor: $color-bar-background;
     
     searchInput: @{
         font: $font-normal;
         textColor: $color-text-foreground;
     }
     placeholderLabel: @{
-        font: $font-small-light;
+        font: $font-small-regular;
         textColor: $color-text-dimmed;
     }
 }
 
 TextSearchResultsView {
-    backgroundColor: $color-background;
+    backgroundColor: $color-content-background;
 }
 
 TextSearchResultCell {
     contentView: @{
-        backgroundColor: $color-background;
+        backgroundColor: $color-content-background;
     }
     resultCountView: @{
         backgroundColor: $color-graphite-light;
@@ -1738,3 +1634,4 @@ TextSearchResultCell RoundedTextBadge {
         font: $font-small-semibold;
     }
 }
+

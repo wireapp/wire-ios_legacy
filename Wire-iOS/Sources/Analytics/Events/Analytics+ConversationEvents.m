@@ -59,6 +59,15 @@ NSString *NSStringFromMessageDeletionType(MessageDeletionType messageDeletionTyp
 
 @implementation Analytics (ConversationEvents)
 
+- (void)tagArchivedConversation:(BOOL)archived
+{
+    if (archived) {
+        [self tagArchivedConversation];
+    } else {
+        [self tagUnarchivedConversation];
+    }
+}
+
 - (void)tagArchivedConversation
 {
     [self tagEvent:@"conversation.archived_conversation"];

@@ -77,7 +77,7 @@ import Classy
         titleButton.isEnabled = interactive
         titleButton.setContentCompressionResistancePriority(1000, for: .vertical)
         updateAccessibilityLabel()
-        frame = titleButton.bounds
+        frame = CGRect(origin: frame.origin, size: titleButton.bounds.size)
         createConstraints()
         setNeedsLayout()
         layoutIfNeeded()

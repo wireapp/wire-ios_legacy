@@ -41,7 +41,7 @@ extension ConversationContentViewController: UIViewControllerPreviewingDelegate 
             lastPreviewURL = url
             controller = SFSafariViewController(url: url)
         } else if message.isImage {
-            controller = self.messagePresenter.viewController(forImageMessage: message, actionResponder: self)
+            controller = self.messagePresenter.viewController(forImageMessagePreview: message, actionResponder: self)
         }
 
         if nil != controller, let cell = tableView.cellForRow(at: cellIndexPath) as? ConversationCell, cell.previewView.bounds != .zero {
@@ -53,6 +53,11 @@ extension ConversationContentViewController: UIViewControllerPreviewingDelegate 
 
     @available(iOS 9.0, *)
     public func previewingContext(_ previewingContext: UIViewControllerPreviewing, commit viewControllerToCommit: UIViewController) {
+        // Restore the navigation and button bars
+        if let imagesViewController = viewControllerToCommit as? ConversationImagesViewController {
+            imagesViewController.isPreviewing = false
+        }
+
         // In case the user has set a 3rd party application to open the URL we do not 
         // want to commit the view controller but instead open the url.
         if let url = lastPreviewURL {

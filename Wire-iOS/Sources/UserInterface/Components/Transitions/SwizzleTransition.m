@@ -40,8 +40,9 @@
         [transitionContext completeTransition:YES];
         return;
     }
+    [containerView setNeedsLayout];
+    [containerView layoutIfNeeded];
     
-    [toView layoutIfNeeded];
     NSTimeInterval durationPhase1 = 0.0f;
     NSTimeInterval durationPhase2 = 0.0f;
     if (self.direction == SwizzleTransitionDirectionHorizontal) {

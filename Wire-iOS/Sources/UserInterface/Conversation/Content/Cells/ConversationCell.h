@@ -21,7 +21,6 @@
 
 #import "UserImageView.h"
 #import "WireSyncEngine+iOS.h"
-#import "PreviewProvider.h"
 #import "Analytics.h"
 #import "Analytics+ConversationEvents.h"
 #import "MessageAction.h"
@@ -72,9 +71,10 @@ typedef void (^SelectedMenuBlock)(BOOL selected, BOOL animated);
 - (void)conversationCell:(ConversationCell *)cell didOpenMenuForCellType:(MessageType)messageType;
 - (void)conversationCellDidTapOpenLikers:(ConversationCell *)cell;
 - (BOOL)conversationCellShouldStartDestructionTimer:(ConversationCell *)cell;
+- (void)conversationCell:(ConversationCell *)cell openGuestOptionsFromView:(UIView *)sourceView;
 @end
 
-@interface ConversationCell : UITableViewCell <UserImageViewDelegate,PreviewProvider>
+@interface ConversationCell : UITableViewCell <UserImageViewDelegate>
 
 @property (nonatomic, readonly) ConversationCellLayoutProperties *layoutProperties;
 

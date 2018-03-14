@@ -20,6 +20,7 @@
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Share Extension
 
+"share_extension.general.ok" = "OK";
 "share_extension.conversation_selection.account" = "Account:";
 "share_extension.conversation_selection.title" = "Conversation:";
 "share_extension.send_button.title" = "Send";
@@ -33,6 +34,8 @@
 "share_extension.timeout.title" = "The connection has timed out.";
 "share_extension.timeout.message" = "Check your Internet connection and try again. The attachments were saved in the conversation.";
 "share_extension.privacy_security.lock_app.description" = "Unlock Wire";
+"share_extension.logged_out.title" = "You've been logged out from this account.";
+"share_extension.logged_out.message" = "Please choose another account.";
 
 "conversation.displayname.emptygroup" = "Empty group conversation";
 "meta.degraded.degradation_reason_message.singular" = "%@ started using a new device.";
@@ -40,3 +43,4 @@
 "meta.degraded.dialog_message" = "Do you still want to send your message?";
 "meta.degraded.cancel_sending_button" = "Do not send";
 "meta.degraded.send_anyway_button" = "Send anyway";
+

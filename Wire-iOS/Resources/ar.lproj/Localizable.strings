@@ -18,6 +18,7 @@
 
 
 "general.ok" = "موافق";
+"general.next" = "Next";
 "general.cancel" = "إلغاء";
 "general.open_settings" = "فتح إعدادات Wire";
 
@@ -34,6 +35,21 @@
 "peoplepicker.header.contacts" = "جهات الاتصال";
 "peoplepicker.header.contacts_personal" = "جهات الاتصال شخصية";
 "peoplepicker.header.directory" = "تواصل";
+
+"peoplepicker.group.title.singular" = "إضافة أشخاص";
+"peoplepicker.group.title.plural" = "Add People (%d)";
+"peoplepicker.group.skip" = "Skip";
+"peoplepicker.group.done" = "Done";
+"peoplepicker.group.create" = "Create";
+
+"peoplepicker.header.people" = "أشخاص";
+"peoplepicker.header.services" = "Services";
+"peoplepicker.services.create_conversation.item" = "Create a new conversation";
+"peoplepicker.services.add_service.button" = "إضافة خدمة";
+"peoplepicker.services.add_service.error.title" = "The service can't be added";
+"peoplepicker.services.add_service.error.default" = "The service is unavailable at the moment";
+"peoplepicker.services.add_service.error.full" = "The conversation is full";
+
 "peoplepicker.title.create_conversation" = "إنشاء مجموعة";
 "peoplepicker.title.add_to_conversation" = "إضافة أشخاص";
 
@@ -59,6 +75,7 @@
 "peoplepicker.send_invitation.dialog.ok" = "موافق";
 
 "peoplepicker.invite_more_people" = "ادعُ أشخاصًا أكثر";
+"peoplepicker.invite_team_members" = "Invite people to join the team";
 "peoplepicker.quick-action.open-conversation" = "افتح";
 "peoplepicker.quick-action.create-conversation" = "إنشاء مجموعة";
 
@@ -76,10 +93,8 @@
 "contacts_ui.notification.invitation_failed" = "فَشل إرسال الدعوة";
 "contacts_ui.title" = "دعوة أُناس";
 
-"contacts_ui.no_contact.title" = "لا محادثات بعد";
-"contacts_ui.no_contact.message" = "ابدأ محادثة أو قم بإنشاء مجموعة.";
-
-"contacts_ui.no_contact.archived.title" = "أُرشف كل شيء";
+"conversation_list.empty.all_archived.message" = "Everything archived";
+"conversation_list.empty.no_contacts.message" = "Start a conversation or\ncreate a group.";
 
 
 // Conversation List Indicator
@@ -170,6 +185,7 @@
 "conversation.status.added_multiple" = "تم إضافة أشخاص";
 "conversation.status.you_was_added" = "%@ أضافك";
 "conversation.status.added_users" = "%@ أضاف %@";
+"conversation.status.joined" = "%@ joined";
 "conversation.status.removed_multiple" = "أزيل أشخاص";
 "conversation.status.you_were_removed" = "تمت إزالتك";
 "conversation.status.you_left" = "أنت غادرت";
@@ -201,7 +217,7 @@
 "conversation.input_bar.audio_message.tooltip.pull_send" = "اسحب لأعلى للإرسال";
 "conversation.input_bar.audio_message.tooltip.tap_send" = "اُنقُر للإرسال";
 "conversation.input_bar.audio_message.too_long.title" = "تم إيقاف التسجيل";
-"conversation.input_bar.audio_message.too_long.message" = "الرسائل الصوتية محدودة بـ%@. هل تريد مُتابعة الإرسال؟";
+"conversation.input_bar.audio_message.too_long.message" = "Audio messages are limited to %@.";
 "conversation.input_bar.audio_message.send" = "إرسال";
 
 "conversation.input_bar.audio_message.keyboard.record_tip" = "انقر لبدء التسجيل\nبإمكانك %@ بعد ذلك";
@@ -214,11 +230,19 @@
 "conversation.connection_view.in_address_book" = "في جهات الاتصال";
 
 "conversation.input_bar.shortcut.send" = "إرسال رسالة";
-"conversation.input_bar.shortcut.edit_last_message" = "Edit Last Message";
+"conversation.input_bar.shortcut.edit_last_message" = "تحرير آخر رسالة";
 "conversation.input_bar.shortcut.cancel_editing_message" = "إلغاء";
 
 "conversation.input_bar.message_too_long.title" = "الرسالة طويلة جداً";
-"conversation.input_bar.message_too_long.message" = "You can send messages up to %d characters long.";
+"conversation.input_bar.message_too_long.message" = "يمكنك إرسال رسائل حتى %d حرفاً.";
+
+"conversation.create.group_name.placeholder" = "Group name";
+"conversation.create.guidance.empty" = "At least 1 character";
+"conversation.create.guidance.toolong" = "حروف كثيرة عن الحد";
+"conversation.create.toggle.title" = "Allow guests";
+"conversation.create.toggle.subtitle" = "Open this conversation to people outside your team. You can always change it later.";
+
+"conversation.guests_present" = "Guests are present";
 
 // Image confirmation dialogue
 "image_confirmer.confirm" = "موافق";
@@ -230,6 +254,12 @@
 "camera_access.denied" = "Wire يحتاج للوصول للكاميرا.";
 "camera_access.denied.instruction" = "";
 "camera_access.denied.open_settings" = "تَفعيلها من إعدادات Wire";
+
+// Camera and photos access, keyboard
+"keyboard_photos_access.denied.keyboard.settings" = "الإعدادات";
+"keyboard_photos_access.denied.keyboard.camera_and_photos" = "Wire needs access to your\ncamera and photos."; // split text on two lines for a better text balance
+"keyboard_photos_access.denied.keyboard.photos" = "Wire يريد الوصول لصورك.";
+"keyboard_photos_access.denied.keyboard.camera" = "Wire يريد الوصول للكاميرا.";
 
 // Camera Controls
 "camera_controls.aeaf_lock" = "AE/AF قفل";
@@ -282,6 +312,7 @@
 "content.system.conversation.you.removed" = "قام %@ بإزالة %@";
 "content.system.conversation.you.left" = "غادر %@";
 "content.system.conversation.team.member-leave" = "حُذِف %@ من الفريق.";
+"content.system.conversation.guest.joined" = "%@ joined";
 
 "content.system.other_renamed_conv_to_nothing" = "حذف %@ اسم المُحادثة";
 "content.system.you_renamed_conv_to_nothing" = "قمت بحذف اسم المُحادثة";
@@ -292,7 +323,7 @@
 "content.system.failedtosend_message_timestamp_resend" = "إعادة الإرسال";
 "content.system.failedtosend_message_timestamp_delete" = "حذف";
 "content.system.like_tooltip" = "انقر للإعجاب";
-"content.system.deleted_message_prefix_timestamp" = "Deleted: %@";
+"content.system.deleted_message_prefix_timestamp" = "حُذِفت: %@";
 "content.system.edited_message_prefix_timestamp" = "Edited: %@";
 "content.system.connecting_to" = "التواصل مع %@\nبدأ مُحادثة";
 "content.system.connected_to" = "تم التواصل مع %@\nبدأ مُحادثة";
@@ -310,6 +341,10 @@
 "content.system.renamed_conv.title" = "قام %@ بإعادة تسمية المُحادثة";
 "content.system.renamed_conv.title-you" = "قام %@ بإعادة تسمية المُحادثة";
 "content.system.renamed_conv.title.you" = "أنت";
+
+"content.system.conversation.with_name.title" = "%@ started the conversation";
+
+"content.system.conversation.with_name.participants" = "with %@";
 
 "content.system.reactivated_device" = "بدأت استخدام %@ مرة أخرى. الرسائل المُرسلة في ذاك الحين لن تُعرض هنا.";
 
@@ -420,8 +455,13 @@
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Profile and Participants
 
-"participants.add_people_button_title" = "إضافة أشخاص";
+"participants.add_people_button_title" = "إضافة";
 "participants.avatar.guest.title" = "ضيف";
+
+"participants.title" = "التفاصيل";
+"participants.section.participants" = "People (%d)";
+"participants.section.services" = "Services (%d)";
+"participants.footer.add_title" = "Add Participants";
 
 // Meta Menu
 "meta.menu.rename" = "إعادة التّسمية";
@@ -436,10 +476,11 @@
 
 // Delete conversation
 "meta.menu.delete_content.dialog_title" = "حذف المحتوى؟";
-"meta.menu.delete_content.dialog_message" = "هذا سوف يمحي تاريخ المحادثة و يزيلها من القائمة.";
+"meta.menu.delete_content.dialog_message" = "This will clear the conversation history on all your devices.";
 "meta.menu.delete_content.leave_as_well_message" = "غادر المحادثة أيضا";
 "meta.menu.delete_content.button_cancel" = "إلغاء";
 "meta.menu.delete_content.button_delete" = "حذف";
+"meta.menu.delete_content.button_delete_and_leave" = "Delete and leave";
 
 // Leave conversation
 "meta.leave_conversation_dialog_title" = "مُغادرة المُحادثة؟";
@@ -447,6 +488,7 @@
 "meta.leave_conversation.delete_content_as_well_message" = "وحذف مُحتواها";
 "meta.leave_conversation_button_cancel" = "إلغاء";
 "meta.leave_conversation_button_leave" = "غادر";
+"meta.leave_conversation_button_leave_and_delete" = "Leave and delete content";
 
 // Conversation Degraded (security level lowered)
 "meta.degraded.degradation_reason_message.singular" = "%@ بدأ باستخدام جهاز جديد.";
@@ -525,6 +567,13 @@
 // General strings
 "general.confirm" = "موافق";
 
+// Bot
+"participants.services.remove_integration.button" = "remove integration";
+
+// Group details
+"group_details.guest_options_cell.title" = "Guest Options";
+"group_details.guest_options_cell.enabled" = "On";
+"group_details.guest_options_cell.disabled" = "غير مفعل";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Self profile
@@ -759,6 +808,7 @@
 "self.settings.technical_report.mail.subject" = "تقرير اتصال Wire";
 "self.settings.technical_report.include_log" = "تضمين سجل مُفصّل";
 "self.settings.technical_report.privacy_warning" = "السّجلات المفصّلة قد تضمّن بيانات شخصيّة";
+"self.settings.technical_report.no_mail_alert" = "No mail client detected. Tap \"OK\" and send logs manually to: ";
 
 // Password reset
 "self.settings.password_reset_menu.title" = "إعادة تعيين كلمة المرور";
@@ -791,28 +841,28 @@
 
 "landing.title" = "Secure messaging for everyone.";
 "landing.create_account.title" = "إنشاء حساب";
-"landing.create_account.subtitle" = "for personal use";
+"landing.create_account.subtitle" = "للاستخدام الشخصي";
 "landing.create_team.title" = "إنشاء فريق";
-"landing.create_team.subtitle" = "for work";
+"landing.create_team.subtitle" = "للعمل";
 "landing.login.hints" = "لديك حساب بالفعل ؟";
 "landing.login.button.title" = "تسجيل الدخول";
 
 // Create team
 
-"team.name.headline" = "Name your team";
-"team.name.subheadline" = "You can always change it later.";
+"team.name.headline" = "سمّ فريقك";
+"team.name.subheadline" = "بإمكانك تغييره لاحقًا.";
 "team.name.textfield.placeholder" = "اسم الفريق";
-"team.name.textfield.accessibility" = "Set team name";
+"team.name.textfield.accessibility" = "ضع اسم للفريق";
 "team.name.whatiswireforteams" = "What is Wire for teams?";
 
 "team.email.headline" = "حسابك";
 "team.email.subheadline" = "Enter your work email address.";
 "team.email.textfield.placeholder" = "you@yourcompany.com";
-"team.email.textfield.accessibility" = "Your company email";
+"team.email.textfield.accessibility" = "ايميل الشركه";
 "team.email.button.learn_more" = "معرفة المزيد";
 
-"team.activation_code.headline" = "You've got mail";
-"team.activation_code.subheadline" = "Enter the verification code we sent to %@.";
+"team.activation_code.headline" = "لديك رسالة";
+"team.activation_code.subheadline" = "أدخل رمز التحقق الذي أرسلناه إلى: %@.";
 "team.activation_code.button.resend" = "إعادة إرسال الرمز";
 "team.activation_code.button.change_email" = "تغيير البريد الإلكتروني";
 
@@ -820,12 +870,41 @@
 "team.full_name.textfield.placeholder" = "الاسم الكامل";
 "team.full_name.textfield.accessibility" = "Set full name";
 
-"team.password.headline" = "Set password";
+"team.password.headline" = "تعيين كلمة السر";
 "team.password.textfield.placeholder" = "8 أحرف على الأقل";
 "team.password.textfield.accessibility" = "Set password, at least 8 characters";
 
 
 "team.email_code.input_field.accessbility_label" = "Please enter the six-digit code from the email.";
+
+// Invite Team Members
+
+"team.invite.header.title" = "Build your team";
+"team.invite.header.subtitle" = "Invite your colleagues to join.";
+"team.invite.textfield.placeholder" = "colleague@yourcompany.com";
+"team.invite.textfield.accesibility" = "Enter e-mail address for colleague to invite.";
+"team.invite.learn_more.title" = "معرفة المزيد";
+"team.invite.top_bar.skip" = "Skip";
+"team.invite.top_bar.done" = "Done";
+
+// Team Invite Errors
+"team.invite.error.generic" = "حدث خطأ ما، برجاء إعادة المحاولة";
+"team.invite.error.already_registered" = "This email address is already in use";
+"team.invite.error.already_invited" = "This email has already been invited";
+"team.invite.error.too_many_invitations" = "The maximum number of invitations has been sent";
+"team.invite.error.no_internet" = "No internet connection";
+
+// Guest Room
+
+"guest_room.allow_guests.title" = "Allow guests";
+"guest_room.allow_guests.subtitle" = "Open this conversation to people outside your team.";
+"guest_room.remove_guests.message" = "Current guests will be removed from the conversation. New guests will not be allowed.";
+"guest_room.remove_guests.action" = "Remove Guests";
+"guest_room.revoke_link.message" = "New guests will not be able to join with this link. Current guests will still have access.";
+"guest_room.revoke_link.action" = "Revoke Link";
+
+"guest_room.error.generic.title" = "Something went wrong";
+"guest_room.error.generic.message" = "Check your connection and try again";
 
 // Registration
 
@@ -872,7 +951,7 @@
 
 "registration.terms_of_use.terms.title" = "شروط الاستخدام";
 "registration.terms_of_use.terms.message" = "Please accept the Terms of Use to continue.";
-"registration.terms_of_use.terms.view" = "View";
+"registration.terms_of_use.terms.view" = "عرض";
 "registration.terms_of_use.accept" = "قبول";
 
 "registration.email_flow.title" = "تسجيل بواسطة بريد إلكتروني";
@@ -903,6 +982,9 @@
 "registration.signin.too_many_devices.sign_out_button.title" = "تسجيل الخروج";
 "registration.signin.email_button.title" = "البريد الإلكتروني";
 "registration.signin.phone_button.title" = "الهاتف";
+
+"registration.signin.alert.password_needed.title" = "Password needed";
+"registration.signin.alert.password_needed.message" = "Please enter your Password in order to log in.";
 
 "registration.devices.title" = "الأجهزة";
 "registration.devices.active_list_header" = "نشط";
@@ -1034,7 +1116,7 @@
 "compose.drafts.compose.subject.placeholder" = "انقر لتعيين موضوع";
 
 "compose.drafts.compose.delete.confirm.title" = "تأكيد الحذف";
-"compose.drafts.compose.delete.confirm.message" = "This action will permanently delete this draft and cannot be undone.";
+"compose.drafts.compose.delete.confirm.message" = "سيتم حذف هذه المسودّة بشكل دائم، ولن يمكن إرجاعها.";
 "compose.drafts.compose.delete.confirm.action.title" = "حذف";
 
 "compose.drafts.compose.dismiss.confirm.title" = "حفظ كمسودة";
@@ -1042,12 +1124,12 @@
 "compose.drafts.compose.dismiss.delete.action.title" = "حذف";
 
 "availability.message.cancel" = "إلغاء";
-"availability.message.set_status" = "Set a status";
+"availability.message.set_status" = "تعيين الحالة";
 
 "availability.none" = "لا شيء";
-"availability.available" = "Available";
-"availability.away" = "Away";
-"availability.busy" = "Busy";
+"availability.available" = "متاح";
+"availability.away" = "بالخارج";
+"availability.busy" = "مشغول";
 "availability.available.placeholder" = "%@ is available";
 "availability.away.placeholder" = "%@ is away";
 "availability.busy.placeholder" = "%@ is busy";

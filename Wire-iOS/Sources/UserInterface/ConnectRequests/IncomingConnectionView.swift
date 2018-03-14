@@ -30,6 +30,7 @@ public final class IncomingConnectionView: UIView {
         )
     }()
 
+    private let usernameLabel = UILabel()
     private let userDetailView = UserNameDetailView()
     private let userImageView = UserImageView()
     private let incomingConnectionFooter = UIView()
@@ -61,8 +62,6 @@ public final class IncomingConnectionView: UIView {
     }
 
     private func setup() {
-        addSubview(userDetailView)
-
         self.acceptButton.accessibilityLabel = "accept"
         self.acceptButton.setTitle("inbox.connection_request.connect_button_title".localized.uppercased(), for: .normal)
         self.acceptButton.addTarget(self, action: #selector(onAcceptButton), for: .touchUpInside)
@@ -79,18 +78,20 @@ public final class IncomingConnectionView: UIView {
         self.incomingConnectionFooter.addSubview(self.acceptButton)
         self.incomingConnectionFooter.addSubview(self.ignoreButton)
 
-        [self.userDetailView, self.userImageView, self.incomingConnectionFooter].forEach(self.addSubview)
+        [self.usernameLabel, self.userDetailView, self.userImageView, self.incomingConnectionFooter].forEach(self.addSubview)
         self.setupLabelText()
     }
 
     private func setupLabelText() {
-        userDetailView.configure(
-            with: .init(
-                user: user,
-                fallbackName: "",
-                addressBookName: BareUserToUser(user)?.addressBookEntry?.cachedName
-            )
+        let viewModel = UserNameDetailViewModel(
+            user: user,
+            fallbackName: "",
+            addressBookName: BareUserToUser(user)?.addressBookEntry?.cachedName
         )
+        
+        usernameLabel.attributedText = viewModel.title
+        usernameLabel.accessibilityIdentifier = "name"
+        userDetailView.configure(with: viewModel)
     }
 
     private func createConstraints() {
@@ -107,9 +108,13 @@ public final class IncomingConnectionView: UIView {
             acceptButton.height == ignoreButton.height
         }
 
-        constrain(self, self.userDetailView, self.incomingConnectionFooter, self.userImageView) { selfView, userDetailView, incomingConnectionFooter, userImageView in
+        constrain(self, self.usernameLabel, self.userDetailView, self.incomingConnectionFooter, self.userImageView) { selfView, usernameLabel, userDetailView, incomingConnectionFooter, userImageView in
+            usernameLabel.top == selfView.top + 18
+            usernameLabel.centerX == selfView.centerX
+            usernameLabel.left >= selfView.left
+            
             userDetailView.centerX == selfView.centerX
-            userDetailView.top == selfView.top + 12
+            userDetailView.top == usernameLabel.bottom + 4
             userDetailView.left >= selfView.left
             userDetailView.bottom <= userImageView.top
 

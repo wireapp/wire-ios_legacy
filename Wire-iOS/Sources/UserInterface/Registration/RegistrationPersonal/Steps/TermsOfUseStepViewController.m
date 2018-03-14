@@ -26,7 +26,8 @@
 #import "UIColor+WAZExtensions.h"
 #import "Analytics.h"
 #import "WebLinkTextView.h"
-
+#import "WireSyncEngine+iOS.h"
+#import "Wire-Swift.h"
 #import "NSURL+WireLocale.h"
 #import "NSURL+WireURLs.h"
 #import "Button.h"
@@ -89,7 +90,7 @@
     
     [attributedTerms addAttributes:@{ NSFontAttributeName : [UIFont fontWithMagicIdentifier:@"style.text.large.font_spec_medium"],
                                       NSForegroundColorAttributeName : UIColor.accentColor,
-                                      NSLinkAttributeName : NSURL.wr_termsOfServicesURL } range:termsOfUseLinkRange];
+                                      NSLinkAttributeName : self.termsOfServiceURL } range:termsOfUseLinkRange];
     
     self.termsOfUseText = [[WebLinkTextView alloc] initForAutoLayout];
     self.termsOfUseText.delegate = self;
@@ -118,15 +119,18 @@
     if (! self.initialConstraintsCreated) {
         self.initialConstraintsCreated = YES;
         
-        [self.titleLabel autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:28];
-        [self.titleLabel autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:28];
+        CGFloat inset = 28.0;
+        [self.titleLabel autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:inset];
+        [self.titleLabel autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:inset];
         
         [self.termsOfUseText autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.titleLabel withOffset:5];
-        [self.termsOfUseText autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:28];
-        [self.termsOfUseText autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:28];
+        [self.termsOfUseText autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:inset];
+        [self.termsOfUseText autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:inset];
         
         [self.agreeButton autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.termsOfUseText withOffset:24];
-        [self.agreeButton autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsMake(0, 28, 28, 28) excludingEdge:ALEdgeTop];
+        [self.agreeButton autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:inset];
+        [self.agreeButton autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:inset];
+        [[self.agreeButton.bottomAnchor constraintEqualToAnchor:self.safeBottomAnchor constant:-inset] setActive:YES];
         [self.agreeButton autoSetDimension:ALDimensionHeight toSize:40];
     }
 }
@@ -135,8 +139,15 @@
 
 - (void)openTOS:(id)sender
 {
-    SFSafariViewController *webViewController = [[SFSafariViewController alloc] initWithURL:[NSURL.wr_termsOfServicesURL wr_URLByAppendingLocaleParameter]];
+    SFSafariViewController *webViewController = [[SFSafariViewController alloc] initWithURL:self.termsOfServiceURL];
     [self presentViewController:webViewController animated:YES completion:nil];
+}
+
+- (NSURL *)termsOfServiceURL
+{
+    BOOL isTeamAccount = ZMUser.selfUser.team != nil;
+    NSURL *url = [NSURL wr_termsOfServicesURLForTeamAccount:isTeamAccount];
+    return url.wr_URLByAppendingLocaleParameter;
 }
 
 - (void)agreeToTerms:(id)sender

@@ -39,7 +39,7 @@ class ParticipantsCellTests: CoreDataSnapshotTestCase {
     }
 
     func testThatItRendersParticipantsCellStartedConversation_ManyUsers() {
-        let sut = cell(for: .newConversation, fromSelf: false, manyUsers: true)
+        let sut = cell(for: .newConversation, fromSelf: false, fillUsers: .many)
         verify(view: sut.prepareForSnapshots(), tolerance: tolerance)
     }
 
@@ -50,13 +50,18 @@ class ParticipantsCellTests: CoreDataSnapshotTestCase {
         verify(view: sut.prepareForSnapshots(), tolerance: tolerance)
     }
 
+    func testThatItRendersParticipantsCellAddedParticipantsHerself() {
+        let sut = cell(for: .participantsAdded, fromSelf: false, fillUsers: .sender)
+        verify(view: sut.prepareForSnapshots(), tolerance: tolerance)
+    }
+
     func testThatItRendersParticipantsCellAddedParticipantsOtherUser() {
         let sut = cell(for: .participantsAdded, fromSelf: false)
         verify(view: sut.prepareForSnapshots(), tolerance: tolerance)
     }
 
     func testThatItRendersParticipantsCellAddedParticipants_ManyUsers() {
-        let sut = cell(for: .participantsAdded, fromSelf: false, manyUsers: true)
+        let sut = cell(for: .participantsAdded, fromSelf: false, fillUsers: .many)
         verify(view: sut.prepareForSnapshots(), tolerance: tolerance)
     }
 
@@ -72,26 +77,82 @@ class ParticipantsCellTests: CoreDataSnapshotTestCase {
         verify(view: sut.prepareForSnapshots(), tolerance: tolerance)
     }
 
+    func testThatItRendersParticipantsCellRemovedFromTeam() {
+        let sut = cell(for: .teamMemberLeave, fromSelf: false)
+        verify(view: sut.prepareForSnapshots(), tolerance: tolerance)
+    }
+
     // MARK: - Left Users
 
     func testThatItRendersParticipantsCellLeftParticipant() {
-        let sut = cell(for: .participantsRemoved, fromSelf: false, left: true)
+        let sut = cell(for: .participantsRemoved, fromSelf: false, fillUsers: .sender)
+        verify(view: sut.prepareForSnapshots(), tolerance: tolerance)
+    }
+    
+    // MARK: - New Conversation
+    
+    func testThatItRendersNewConversationCellWithParticipantsAndName() {
+        let sut = cell(for: .newConversation, text: "Italy Trip", fillUsers: .many)
+        verify(view: sut.prepareForSnapshots(), tolerance: tolerance)
+    }
+    
+    func testThatItRendersNewConversationCellWithParticipantsAndWithoutName() {
+        let sut = cell(for: .newConversation, fillUsers: .many)
+        verify(view: sut.prepareForSnapshots(), tolerance: tolerance)
+    }
+    
+    func testThatItRendersNewConversationCellWithoutParticipants() {
+        let sut = cell(for: .newConversation, text: "Italy Trip")
+        verify(view: sut.prepareForSnapshots(), tolerance: tolerance)
+    }
+    
+    // MARK: - Invite Guests
+    
+    func testThatItRendersNewConversationCellWithParticipantsAndName_AllowGuests() {
+        let sut = cell(for: .newConversation, text: "Italy Trip", fillUsers: .many, allowGuests: true)
+        verify(view: sut.prepareForSnapshots(), tolerance: tolerance)
+    }
+    
+    func testThatItRendersNewConversationCellWithParticipantsAndWithoutName_AllowGuests() {
+        let sut = cell(for: .newConversation, fillUsers: .many, allowGuests: true)
+        verify(view: sut.prepareForSnapshots(), tolerance: tolerance)
+    }
+    
+    func testThatItRendersNewConversationCellWithoutParticipants_AllowGuests() {
+        let sut = cell(for: .newConversation, text: "Italy Trip", allowGuests: true)
         verify(view: sut.prepareForSnapshots(), tolerance: tolerance)
     }
 
     // MARK: - Helper
 
-    private func cell(for type: ZMSystemMessageType, fromSelf: Bool, manyUsers: Bool = false, left: Bool = false) -> IconSystemCell {
-        let message = ZMSystemMessage.insertNewObject(in: moc)
+    private func cell(for type: ZMSystemMessageType, text: String? = nil, fromSelf: Bool = false, fillUsers: Users = .one, allowGuests: Bool = false) -> ConversationCell {
+        let message = ZMSystemMessage(nonce: UUID(), managedObjectContext: uiMOC)
         message.sender = fromSelf ? selfUser : otherUser
         message.systemMessageType = type
-
-        if !left {
+        message.text = text
+        
+        message.users = {
             // We add the sender to ensure it is removed
             let users = usernames.map(createUser) + [selfUser as ZMUser, otherUser as ZMUser]
-            message.users = manyUsers ? Set(users) : Set(users[0...1])
-        } else {
-            message.users = [message.sender!]
+            switch fillUsers {
+            case .none: return []
+            case .sender: return [message.sender!]
+            case .one: return Set(users[0...1])
+            case .many: return Set(users)
+            }
+        }()
+        
+        if allowGuests {
+            uiMOC.markAsSyncContext()
+            let team = Team.fetchOrCreate(with: .create(), create: true, in: uiMOC, created: nil)
+            uiMOC.markAsUIContext()
+            let member = Member.getOrCreateMember(for: selfUser, in: team!, context: uiMOC)
+            member.permissions = .member
+            MockUser.mockSelf().isTeamMember = true
+            let users = Array(message.users).filter { $0 != selfUser }
+            let conversation = ZMConversation.insertGroupConversation(into: uiMOC, withParticipants: users, in: team)
+            conversation?.allowGuests = true
+            message.visibleInConversation = conversation
         }
 
         let cell = ParticipantsCell(style: .default, reuseIdentifier: nil)
@@ -101,6 +162,10 @@ class ParticipantsCellTests: CoreDataSnapshotTestCase {
         return cell
     }
 
+}
+
+private enum Users {
+    case none, sender, one, many
 }
 
 

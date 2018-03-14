@@ -42,20 +42,23 @@ public extension InteractionMethod {
 }
 
 public extension Analytics {
-
+    
     public func tagReactedOnMessage(_ message: ZMConversationMessage, reactionType:ReactionType, method: InteractionMethod) {
         guard let conversation = message.conversation,
-              let sender = message.sender,
-              let lastMessage = (conversation.messages.lastObject as? ZMMessage),
-              let zmMessage = message as? ZMMessage
-        else { return }
+            let sender = message.sender,
+            let lastMessage = (conversation.messages.lastObject as? ZMMessage),
+            let zmMessage = message as? ZMMessage
+            else { return }
+        
+        var attributes = [
+            "type"                    : Message.messageType(message).analyticsTypeString,
+            "action"                  : reactionType.analyticsTypeString,
+            "method"                  : method.analyticsTypeString,
+            "with_service"            : (conversation.includesServiceUser ? "true" : "false"),
+            "user"                    : (sender.isSelfUser                ? "sender" : "receiver"),
+            "reacted_to_last_message" : (lastMessage == zmMessage         ? "true"   : "false")
+        ]
 
-        var attributes = ["type"                       : Message.messageType(message).analyticsTypeString,
-                          "action"                     : reactionType.analyticsTypeString,
-                          "method"                     : method.analyticsTypeString,
-                          "with_bot"                   : (conversation.isBotConversation    ? "true"   : "false"),
-                          "user"                       : (sender.isSelfUser                 ? "sender" : "receiver"),
-                          "reacted_to_last_message"    : (lastMessage == zmMessage          ? "true"   : "false")]
         if let convType = ConversationType.type(conversation) {
             attributes["conversation_type"] = convType.analyticsTypeString
         }
@@ -64,4 +67,29 @@ public extension Analytics {
     }
 }
 
+public enum ConversationEvent: Event {
 
+    static let toggleAllowGuestsName = "guest_rooms.allow_guests"
+
+    case toggleAllowGuests(value: Bool)
+
+    var attributes: [AnyHashable : Any]? {
+        switch self {
+        case let .toggleAllowGuests(value: value):
+            return ["is_allow_guests" : value]
+        }
+    }
+
+    var name: String {
+        switch self {
+        case .toggleAllowGuests:
+            return ConversationEvent.toggleAllowGuestsName
+        }
+    }
+}
+
+extension Analytics {
+    public func tagAllowGuests(value: Bool) {
+        tag(ConversationEvent.toggleAllowGuests(value: value))
+    }
+}

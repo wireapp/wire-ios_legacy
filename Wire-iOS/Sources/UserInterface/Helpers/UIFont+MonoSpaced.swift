@@ -28,18 +28,18 @@ private let monospaceAttribute = [
     UIFontDescriptorFeatureSettingsAttribute: [monospacedFeatureSettingsAttribute]
 ]
 
-private let allCapsFeatureSettingsAttributeLowerCase = [
+private let smallCapsFeatureSettingsAttributeLowerCase = [
     UIFontFeatureTypeIdentifierKey: kLowerCaseType,
     UIFontFeatureSelectorIdentifierKey: kLowerCaseSmallCapsSelector,
 ]
 
-private let allCapsFeatureSettingsAttributeUpperCase = [
+private let smallCapsFeatureSettingsAttributeUpperCase = [
     UIFontFeatureTypeIdentifierKey: kUpperCaseType,
     UIFontFeatureSelectorIdentifierKey: kUpperCaseSmallCapsSelector,
 ]
 
-private let allCapsAttribute = [
-    UIFontDescriptorFeatureSettingsAttribute: [allCapsFeatureSettingsAttributeLowerCase, allCapsFeatureSettingsAttributeUpperCase]
+private let smallCapsAttribute = [
+    UIFontDescriptorFeatureSettingsAttribute: [smallCapsFeatureSettingsAttributeLowerCase, smallCapsFeatureSettingsAttributeUpperCase]
 ]
 
 extension UIFont {
@@ -50,9 +50,9 @@ extension UIFont {
         return UIFont(descriptor: monospaceFontDescriptor, size: 0.0)
     }
     
-    func allCaps() -> UIFont {
+    func smallCaps() -> UIFont {
         let descriptor = fontDescriptor
-        let allCapsDescriptor = descriptor.addingAttributes(allCapsAttribute)
+        let allCapsDescriptor = descriptor.addingAttributes(smallCapsAttribute)
         return UIFont(descriptor: allCapsDescriptor, size: 0.0)
     }
     

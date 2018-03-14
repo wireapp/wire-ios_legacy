@@ -1,4 +1,4 @@
-// 
+//
 // Wire
 // Copyright (C) 2016 Wire Swiss GmbH
 // 
@@ -25,6 +25,7 @@
 @import PureLayout;
 #import "MediaAsset.h"
 #import "UILabel+TextTransform.h"
+#import "UIPasteboard+Compatibility.h"
 #import <WireExtensionComponents/WireExtensionComponents-Swift.h>
 @import Classy;
 
@@ -64,6 +65,15 @@
 - (id)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
+    if (self) {
+        [self setup];
+    }
+    return self;
+}
+
+- (id)initWithFrame:(CGRect)frame textContainer:(NSTextContainer *)textContainer
+{
+    self = [super initWithFrame:frame textContainer:textContainer];
     if (self) {
         [self setup];
     }
@@ -174,10 +184,10 @@
                                                 rect.size.height - self.placeholderTextContainerInset.top - self.placeholderTextContainerInset.bottom);
             self.placeholderLabel = [[UILabel alloc] initWithFrame:placeholderRect];
             self.placeholderLabel.font = self.placeholderFont;
-            self.placeholderLabel.textAlignment = self.textAlignment;
             self.placeholderLabel.textColor = self.placeholderTextColor;
             self.placeholderLabel.textTransform = self.placeholderTextTransform;
             self.placeholderLabel.textAlignment = self.placeholderTextAlignment;
+            self.placeholderLabel.isAccessibilityElement = NO;
             [self addSubview:self.placeholderLabel];
             
             if(self.attributedPlaceholder && self.attributedPlaceholder.length > 0) {
@@ -204,18 +214,19 @@
 {
     UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];
     DDLogDebug(@"types available: %@", [pasteboard pasteboardTypes]);
-
-    if ([pasteboard containsPasteboardTypes:UIPasteboardTypeListImage] && [self.delegate respondsToSelector:@selector(textView:hasImageToPaste:)]) {
+    
+    if ((pasteboard.wr_hasImages)
+        && [self.delegate respondsToSelector:@selector(textView:hasImageToPaste:)]) {
         id<MediaAsset> image = [[UIPasteboard generalPasteboard] mediaAsset];
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Warc-performSelector-leaks"
         [self.delegate performSelector:@selector(textView:hasImageToPaste:) withObject:self withObject:image];
 #pragma clang diagnostic pop
     }
-    else if ([pasteboard containsPasteboardTypes:UIPasteboardTypeListString]) {
+    else if (pasteboard.wr_hasStrings) {
         [super paste:sender];
     }
-    else if ([pasteboard containsPasteboardTypes:UIPasteboardTypeListURL]) {
+    else if (pasteboard.wr_hasURLs) {
         if (pasteboard.string.length != 0) {
             [super paste:sender];
         }
@@ -229,7 +240,7 @@
 {
     if (action == @selector(paste:)) {
         UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];
-        return pasteboard.image || pasteboard.string;
+        return pasteboard.wr_hasImages || pasteboard.wr_hasStrings;
     }
 
     return [super canPerformAction:action withSender:sender];

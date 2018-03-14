@@ -18,6 +18,7 @@
 
 
 "general.ok" = "OK";
+"general.next" = "Вперед";
 "general.cancel" = "Отменить";
 "general.open_settings" = "Открыть настройки Wire";
 
@@ -34,6 +35,21 @@
 "peoplepicker.header.contacts" = "Контакты";
 "peoplepicker.header.contacts_personal" = "Личные контакты";
 "peoplepicker.header.directory" = "Добавить в контакты";
+
+"peoplepicker.group.title.singular" = "Добавить людей";
+"peoplepicker.group.title.plural" = "Добавить участников (%d)";
+"peoplepicker.group.skip" = "Пропустить";
+"peoplepicker.group.done" = "Готово";
+"peoplepicker.group.create" = "Создать";
+
+"peoplepicker.header.people" = "Участники";
+"peoplepicker.header.services" = "Службы";
+"peoplepicker.services.create_conversation.item" = "Создать новую беседу";
+"peoplepicker.services.add_service.button" = "Добавить службу";
+"peoplepicker.services.add_service.error.title" = "Не удается добавить службу";
+"peoplepicker.services.add_service.error.default" = "В данный момент служба недоступна";
+"peoplepicker.services.add_service.error.full" = "The conversation is full";
+
 "peoplepicker.title.create_conversation" = "Создать группу";
 "peoplepicker.title.add_to_conversation" = "Добавить людей";
 
@@ -59,6 +75,7 @@
 "peoplepicker.send_invitation.dialog.ok" = "OK";
 
 "peoplepicker.invite_more_people" = "Пригласить еще людей";
+"peoplepicker.invite_team_members" = "Пригласите людей в команду";
 "peoplepicker.quick-action.open-conversation" = "Открыть";
 "peoplepicker.quick-action.create-conversation" = "Создать группу";
 
@@ -76,10 +93,8 @@
 "contacts_ui.notification.invitation_failed" = "Не удалось отправить приглашение";
 "contacts_ui.title" = "Пригласить людей";
 
-"contacts_ui.no_contact.title" = "Разговоров пока нет\n";
-"contacts_ui.no_contact.message" = "Начните разговор или создайте группу.";
-
-"contacts_ui.no_contact.archived.title" = "Все разговоры отправлены в архив";
+"conversation_list.empty.all_archived.message" = "Все разговоры отправлены в архив";
+"conversation_list.empty.no_contacts.message" = "Начните разговор или создайте группу.";
 
 
 // Conversation List Indicator
@@ -170,6 +185,7 @@
 "conversation.status.added_multiple" = "Добавлены участники";
 "conversation.status.you_was_added" = "%@ добавил(-а) вас";
 "conversation.status.added_users" = "%@ добавил(-а) %@";
+"conversation.status.joined" = "%@ присоединился";
 "conversation.status.removed_multiple" = "Удалены участники";
 "conversation.status.you_were_removed" = "Вы были удалены";
 "conversation.status.you_left" = "Вы покинули беседу";
@@ -201,7 +217,7 @@
 "conversation.input_bar.audio_message.tooltip.pull_send" = "Проведите вверх для отправки";
 "conversation.input_bar.audio_message.tooltip.tap_send" = "Нажмите для отправки";
 "conversation.input_bar.audio_message.too_long.title" = "Запись остановлена";
-"conversation.input_bar.audio_message.too_long.message" = "Размер аудио сообщений ограничен %@. Отправить это сообщение?";
+"conversation.input_bar.audio_message.too_long.message" = "Аудиосообщения ограничены %@.";
 "conversation.input_bar.audio_message.send" = "Отправить";
 
 "conversation.input_bar.audio_message.keyboard.record_tip" = "Коснитесь для записи\nВы можете %@ после этого";
@@ -220,6 +236,14 @@
 "conversation.input_bar.message_too_long.title" = "Сообщение слишком длинное";
 "conversation.input_bar.message_too_long.message" = "Вы можете отправлять сообщения длиной до %d символов.";
 
+"conversation.create.group_name.placeholder" = "Имя группы";
+"conversation.create.guidance.empty" = "Не менее 1 символа";
+"conversation.create.guidance.toolong" = "Слишком много символов";
+"conversation.create.toggle.title" = "Разрешить гостям";
+"conversation.create.toggle.subtitle" = "Открыть этот разговор для людей не из вашей команды. Вы всегда сможете изменить это позже.";
+
+"conversation.guests_present" = "Присутствуют гости";
+
 // Image confirmation dialogue
 "image_confirmer.confirm" = "OK";
 "image_confirmer.cancel" = "Отменить";
@@ -230,6 +254,12 @@
 "camera_access.denied" = "Wire хочет получить доступ к камере.";
 "camera_access.denied.instruction" = "";
 "camera_access.denied.open_settings" = "Разрешите доступ к камере в настройках Wire";
+
+// Camera and photos access, keyboard
+"keyboard_photos_access.denied.keyboard.settings" = "Настройки";
+"keyboard_photos_access.denied.keyboard.camera_and_photos" = "Wire необходим доступ к вашим\nкамере и фото."; // split text on two lines for a better text balance
+"keyboard_photos_access.denied.keyboard.photos" = "Wire необходим доступ к вашим фото.";
+"keyboard_photos_access.denied.keyboard.camera" = "Wire необходим доступ к вашей камере.";
 
 // Camera Controls
 "camera_controls.aeaf_lock" = "Фиксация экспозиции/фокуса";
@@ -282,6 +312,7 @@
 "content.system.conversation.you.removed" = "%@ удалил %@";
 "content.system.conversation.you.left" = "%@ покинул(а) разговор";
 "content.system.conversation.team.member-leave" = "%@ был удален из команды.";
+"content.system.conversation.guest.joined" = "%@ присоединился";
 
 "content.system.other_renamed_conv_to_nothing" = "%@ удалил(-а) название разговора";
 "content.system.you_renamed_conv_to_nothing" = "Вы удалили название разговора";
@@ -310,6 +341,10 @@
 "content.system.renamed_conv.title" = "%@ переименовал беседу";
 "content.system.renamed_conv.title-you" = "%@ переименовал беседу";
 "content.system.renamed_conv.title.you" = "Вы";
+
+"content.system.conversation.with_name.title" = "%@ начал разговор";
+
+"content.system.conversation.with_name.participants" = "с %@";
 
 "content.system.reactivated_device" = "Вы начали использовать %@ снова. Сообщения, отправленные ранее, не будут отображаться здесь.";
 
@@ -420,8 +455,13 @@
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Profile and Participants
 
-"participants.add_people_button_title" = "Добавить людей";
+"participants.add_people_button_title" = "Добавить";
 "participants.avatar.guest.title" = "Гость";
+
+"participants.title" = "Подробнее";
+"participants.section.participants" = "Участники (%d)";
+"participants.section.services" = "Сервисов (%d)";
+"participants.footer.add_title" = "Добавить участников";
 
 // Meta Menu
 "meta.menu.rename" = "Переименовать";
@@ -436,10 +476,11 @@
 
 // Delete conversation
 "meta.menu.delete_content.dialog_title" = "Удалить содержимое?";
-"meta.menu.delete_content.dialog_message" = "Очистить историю разговора и удалить его из списка.";
+"meta.menu.delete_content.dialog_message" = "Это очистит историю разговоров на всех ваших устройствах.";
 "meta.menu.delete_content.leave_as_well_message" = "Также покинуть разговор";
 "meta.menu.delete_content.button_cancel" = "Отменить";
 "meta.menu.delete_content.button_delete" = "Удалить";
+"meta.menu.delete_content.button_delete_and_leave" = "Удалить и покинуть";
 
 // Leave conversation
 "meta.leave_conversation_dialog_title" = "Покинуть разговор?";
@@ -447,6 +488,7 @@
 "meta.leave_conversation.delete_content_as_well_message" = "Также удалить содержимое";
 "meta.leave_conversation_button_cancel" = "Отменить";
 "meta.leave_conversation_button_leave" = "Покинуть";
+"meta.leave_conversation_button_leave_and_delete" = "Покинуть и удалить контент";
 
 // Conversation Degraded (security level lowered)
 "meta.degraded.degradation_reason_message.singular" = "%@ начал(-а) использовать новое устройство.";
@@ -525,6 +567,13 @@
 // General strings
 "general.confirm" = "OK";
 
+// Bot
+"participants.services.remove_integration.button" = "удалить интеграцию";
+
+// Group details
+"group_details.guest_options_cell.title" = "Опции гостей";
+"group_details.guest_options_cell.enabled" = "Вкл.";
+"group_details.guest_options_cell.disabled" = "Выключен";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Self profile
@@ -759,6 +808,7 @@
 "self.settings.technical_report.mail.subject" = "Wire отчет о звонке";
 "self.settings.technical_report.include_log" = "Включить подробную запись логов";
 "self.settings.technical_report.privacy_warning" = "Подробные журналы могут содержать личные данные";
+"self.settings.technical_report.no_mail_alert" = "Почтовый клиент не обнаружен. Нажмите \"OK\" и отправьте журналы вручную: ";
 
 // Password reset
 "self.settings.password_reset_menu.title" = "Сбросить пароль";
@@ -826,6 +876,35 @@
 
 
 "team.email_code.input_field.accessbility_label" = "Введите шестизначный код из письма.";
+
+// Invite Team Members
+
+"team.invite.header.title" = "Создание команды";
+"team.invite.header.subtitle" = "Пригласите своих коллег присоединиться.";
+"team.invite.textfield.placeholder" = "colleague@yourcompany.com";
+"team.invite.textfield.accesibility" = "Введите адрес электронной почты для приглашения коллеги.";
+"team.invite.learn_more.title" = "Подробнее";
+"team.invite.top_bar.skip" = "Пропустить";
+"team.invite.top_bar.done" = "Готово";
+
+// Team Invite Errors
+"team.invite.error.generic" = "Что-то пошло не так - пожалуйста, попробуйте еще раз";
+"team.invite.error.already_registered" = "Этот адрес электронной почты уже используется";
+"team.invite.error.already_invited" = "Этот email уже был приглашен ранее";
+"team.invite.error.too_many_invitations" = "Было отправлено максимальное количество приглашений";
+"team.invite.error.no_internet" = "Нет соединения с интернетом";
+
+// Guest Room
+
+"guest_room.allow_guests.title" = "Разрешить гостям";
+"guest_room.allow_guests.subtitle" = "Открыть этот разговор для людей не из вашей команды.";
+"guest_room.remove_guests.message" = "Текущие гости будут удалены из разговора. Новые гости допущены не будут.";
+"guest_room.remove_guests.action" = "Удалить гостей";
+"guest_room.revoke_link.message" = "Новые гости не смогут присоединиться по этой ссылке. На доступ текущих гостей это не повлияет.";
+"guest_room.revoke_link.action" = "Отменить ссылку";
+
+"guest_room.error.generic.title" = "Что-то пошло не так";
+"guest_room.error.generic.message" = "Проверьте подключение и попробуйте еще раз";
 
 // Registration
 
@@ -903,6 +982,9 @@
 "registration.signin.too_many_devices.sign_out_button.title" = "Выход";
 "registration.signin.email_button.title" = "Email";
 "registration.signin.phone_button.title" = "Телефон";
+
+"registration.signin.alert.password_needed.title" = "Введите пароль";
+"registration.signin.alert.password_needed.message" = "Для входа необходимо ввести пароль.";
 
 "registration.devices.title" = "Устройства";
 "registration.devices.active_list_header" = "Активное";

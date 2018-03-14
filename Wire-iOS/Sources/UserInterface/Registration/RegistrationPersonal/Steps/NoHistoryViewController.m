@@ -114,7 +114,7 @@
     [self.subtitleLabel autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.heroLabel withOffset:12];
     
     [self.OKButton autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.subtitleLabel withOffset:24];
-    [self.OKButton autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsMake(0, 28, 28, 28) excludingEdge:ALEdgeTop];
+    [self.OKButton autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsMake(0, 28, 28 + UIScreen.safeArea.bottom, 28) excludingEdge:ALEdgeTop];
     [self.OKButton autoSetDimension:ALDimensionHeight toSize:40];
     
     if (IS_IPAD_FULLSCREEN) {

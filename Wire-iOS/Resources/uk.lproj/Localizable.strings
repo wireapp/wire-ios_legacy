@@ -18,6 +18,7 @@
 
 
 "general.ok" = "OK";
+"general.next" = "Далі";
 "general.cancel" = "Скасувати";
 "general.open_settings" = "Відкрити налаштування Wire";
 
@@ -34,6 +35,21 @@
 "peoplepicker.header.contacts" = "Контакти";
 "peoplepicker.header.contacts_personal" = "Персональні контакти";
 "peoplepicker.header.directory" = "Додати до контактів";
+
+"peoplepicker.group.title.singular" = "Додати учасників";
+"peoplepicker.group.title.plural" = "Додати учасників (%d)";
+"peoplepicker.group.skip" = "Пропустити";
+"peoplepicker.group.done" = "Готово";
+"peoplepicker.group.create" = "Створити";
+
+"peoplepicker.header.people" = "Люди";
+"peoplepicker.header.services" = "Сервіси";
+"peoplepicker.services.create_conversation.item" = "Розпочати нову розмову";
+"peoplepicker.services.add_service.button" = "Додати сервіс";
+"peoplepicker.services.add_service.error.title" = "Неможливо додати сервіс";
+"peoplepicker.services.add_service.error.default" = "Даний сервіс наразі недоступний";
+"peoplepicker.services.add_service.error.full" = "Розмова переповнена";
+
 "peoplepicker.title.create_conversation" = "Створити групу";
 "peoplepicker.title.add_to_conversation" = "Додати учасників";
 
@@ -59,6 +75,7 @@
 "peoplepicker.send_invitation.dialog.ok" = "OK";
 
 "peoplepicker.invite_more_people" = "Запросити більше людей";
+"peoplepicker.invite_team_members" = "Запросіть колег приєднатися до команди";
 "peoplepicker.quick-action.open-conversation" = "Вiдкрити";
 "peoplepicker.quick-action.create-conversation" = "Створити групу";
 
@@ -76,10 +93,8 @@
 "contacts_ui.notification.invitation_failed" = "Не вдалося надіслати запрошення";
 "contacts_ui.title" = "Запросити людей";
 
-"contacts_ui.no_contact.title" = "Поки що розмови відсутні";
-"contacts_ui.no_contact.message" = "Розпочніть розмову або створіть групу.";
-
-"contacts_ui.no_contact.archived.title" = "Усі розмови заархівовано";
+"conversation_list.empty.all_archived.message" = "Усі розмови заархівовано";
+"conversation_list.empty.no_contacts.message" = "Розпочніть розмову\nабо створіть групу.";
 
 
 // Conversation List Indicator
@@ -170,6 +185,7 @@
 "conversation.status.added_multiple" = "Додані нові учасники";
 "conversation.status.you_was_added" = "%@ додав(-ла) вас";
 "conversation.status.added_users" = "%@ додав(-ла) %@";
+"conversation.status.joined" = "%@ приєднався(-лася)";
 "conversation.status.removed_multiple" = "Учасники видалені";
 "conversation.status.you_were_removed" = "Вас видалили";
 "conversation.status.you_left" = "Ви вийшли";
@@ -201,7 +217,7 @@
 "conversation.input_bar.audio_message.tooltip.pull_send" = "Проведіть вгору для надсилання";
 "conversation.input_bar.audio_message.tooltip.tap_send" = "Торкніться для надсилання";
 "conversation.input_bar.audio_message.too_long.title" = "Запис зупинено";
-"conversation.input_bar.audio_message.too_long.message" = "Аудіоповідомлення обмежені розміром %@. Надіслати це повідомлення?";
+"conversation.input_bar.audio_message.too_long.message" = "Довжина аудіоповідомлень обмежена до %@.";
 "conversation.input_bar.audio_message.send" = "Надіслати";
 
 "conversation.input_bar.audio_message.keyboard.record_tip" = "Торкніться, щоб почати запис\nВи можете %@ після цього";
@@ -220,6 +236,14 @@
 "conversation.input_bar.message_too_long.title" = "Повідомлення занадто довге";
 "conversation.input_bar.message_too_long.message" = "Можна надсилати повідомлення довжиною до %d символів.";
 
+"conversation.create.group_name.placeholder" = "Ім'я групи";
+"conversation.create.guidance.empty" = "Не менше 1 символу";
+"conversation.create.guidance.toolong" = "Занадто багато символів";
+"conversation.create.toggle.title" = "Дозволити присутність гостей";
+"conversation.create.toggle.subtitle" = "Зробити розмову доступною для людей поза межами вашої команди. Це налаштування завжди можна змінити пізніше.";
+
+"conversation.guests_present" = "Присутні гості";
+
 // Image confirmation dialogue
 "image_confirmer.confirm" = "OK";
 "image_confirmer.cancel" = "Скасувати";
@@ -230,6 +254,12 @@
 "camera_access.denied" = "Wire потребує доступу до камери.";
 "camera_access.denied.instruction" = "";
 "camera_access.denied.open_settings" = "Дозвольте доступ до камери в налаштуваннях Wire";
+
+// Camera and photos access, keyboard
+"keyboard_photos_access.denied.keyboard.settings" = "Налаштування";
+"keyboard_photos_access.denied.keyboard.camera_and_photos" = "Wire потребує доступу до \nвашої камери та фотографій."; // split text on two lines for a better text balance
+"keyboard_photos_access.denied.keyboard.photos" = "Wire потребує доступу до ваших фотографій.";
+"keyboard_photos_access.denied.keyboard.camera" = "Wire потребує доступу до вашої камери.";
 
 // Camera Controls
 "camera_controls.aeaf_lock" = "Фіксація експозиції/фокусу";
@@ -282,6 +312,7 @@
 "content.system.conversation.you.removed" = "%@ видалив(-ла) %@";
 "content.system.conversation.you.left" = "%@ вийшов(-ла)";
 "content.system.conversation.team.member-leave" = "%@ був(-ла) видалений(-а) з команди.";
+"content.system.conversation.guest.joined" = "%@ приєднався(-лася)";
 
 "content.system.other_renamed_conv_to_nothing" = "%@ видалив(-ла) ім'я розмови";
 "content.system.you_renamed_conv_to_nothing" = "Ви видалили ім'я розмови";
@@ -310,6 +341,10 @@
 "content.system.renamed_conv.title" = "%@ перейменував(-ла) розмову";
 "content.system.renamed_conv.title-you" = "%@ перейменував(-ла) розмову";
 "content.system.renamed_conv.title.you" = "Ви";
+
+"content.system.conversation.with_name.title" = "%@ розпочав(-ла) розмову";
+
+"content.system.conversation.with_name.participants" = "з %@";
 
 "content.system.reactivated_device" = "Ви почали використовувати %@ знову. Повідомлення, надіслані поки ви не користувалися ним, не з'являться тут.";
 
@@ -420,8 +455,13 @@
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Profile and Participants
 
-"participants.add_people_button_title" = "Додати учасників";
+"participants.add_people_button_title" = "Додати";
 "participants.avatar.guest.title" = "Гість";
+
+"participants.title" = "Подробиці";
+"participants.section.participants" = "Учасники (%d)";
+"participants.section.services" = "Сервіси (%d)";
+"participants.footer.add_title" = "Додати учасників";
 
 // Meta Menu
 "meta.menu.rename" = "Перейменувати";
@@ -436,10 +476,11 @@
 
 // Delete conversation
 "meta.menu.delete_content.dialog_title" = "Видалити вміст?";
-"meta.menu.delete_content.dialog_message" = "Це зітре історію розмови і видалить її зі списку.";
+"meta.menu.delete_content.dialog_message" = "Це очистить історію розмови на всіх ваших пристроях.";
 "meta.menu.delete_content.leave_as_well_message" = "Також вийти з розмови";
 "meta.menu.delete_content.button_cancel" = "Скасувати";
 "meta.menu.delete_content.button_delete" = "Видалити";
+"meta.menu.delete_content.button_delete_and_leave" = "Видалити та вийти";
 
 // Leave conversation
 "meta.leave_conversation_dialog_title" = "Вийти з розмови?";
@@ -447,6 +488,7 @@
 "meta.leave_conversation.delete_content_as_well_message" = "Також видалити вміст";
 "meta.leave_conversation_button_cancel" = "Скасувати";
 "meta.leave_conversation_button_leave" = "Вийти";
+"meta.leave_conversation_button_leave_and_delete" = "Вийти та видалити вміст";
 
 // Conversation Degraded (security level lowered)
 "meta.degraded.degradation_reason_message.singular" = "%@ почав(-ла) використовувати новий пристрій.";
@@ -525,6 +567,13 @@
 // General strings
 "general.confirm" = "OK";
 
+// Bot
+"participants.services.remove_integration.button" = "видалити інтеграцію";
+
+// Group details
+"group_details.guest_options_cell.title" = "Гостьові налаштування";
+"group_details.guest_options_cell.enabled" = "Увімк.";
+"group_details.guest_options_cell.disabled" = "Вимкнений";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Self profile
@@ -759,6 +808,7 @@
 "self.settings.technical_report.mail.subject" = "Wire звіт про дзвінок";
 "self.settings.technical_report.include_log" = "Включити детальний журнал логів";
 "self.settings.technical_report.privacy_warning" = "Детальні логи можуть містити персональні дані";
+"self.settings.technical_report.no_mail_alert" = "No mail client detected. Tap \"OK\" and send logs manually to: ";
 
 // Password reset
 "self.settings.password_reset_menu.title" = "Скинути пароль";
@@ -826,6 +876,35 @@
 
 
 "team.email_code.input_field.accessbility_label" = "Будь ласка, введіть шестизначний код з емейлу.";
+
+// Invite Team Members
+
+"team.invite.header.title" = "Створіть свою власну команду";
+"team.invite.header.subtitle" = "Запросіть ваших колег приєднатися до команди.";
+"team.invite.textfield.placeholder" = "колега@вашакомпанія.com";
+"team.invite.textfield.accesibility" = "Введіть адресу електронної пошти колеги, щоб надіслати запрошення.";
+"team.invite.learn_more.title" = "Дізнатися більше";
+"team.invite.top_bar.skip" = "Пропустити";
+"team.invite.top_bar.done" = "Готово";
+
+// Team Invite Errors
+"team.invite.error.generic" = "Щось пішло не так. Будь ласка, спробуй ще раз";
+"team.invite.error.already_registered" = "Ця адреса електронної пошти вже використовується";
+"team.invite.error.already_invited" = "Ця адреса вже зареєстрована";
+"team.invite.error.too_many_invitations" = "Вже було надіслано максимальну кількість запрошень";
+"team.invite.error.no_internet" = "Відсутнє підключення до Інтернету";
+
+// Guest Room
+
+"guest_room.allow_guests.title" = "Дозволити присутність гостей";
+"guest_room.allow_guests.subtitle" = "Зробити цю розмову доступною для людей поза межами вашої команди.";
+"guest_room.remove_guests.message" = "Поточні гості будуть вилучені з розмови. Нові гості не матимуть доступу до неї.";
+"guest_room.remove_guests.action" = "Видалити гостей";
+"guest_room.revoke_link.message" = "Нові гості не зможуть приєднатися з цим лінком. Поточні гості все ще матимуть доступ.";
+"guest_room.revoke_link.action" = "Відкликати лінк";
+
+"guest_room.error.generic.title" = "Something went wrong";
+"guest_room.error.generic.message" = "Check your connection and try again";
 
 // Registration
 
@@ -903,6 +982,9 @@
 "registration.signin.too_many_devices.sign_out_button.title" = "Вийти";
 "registration.signin.email_button.title" = "Email";
 "registration.signin.phone_button.title" = "Телефон";
+
+"registration.signin.alert.password_needed.title" = "Необхідно ввести пароль";
+"registration.signin.alert.password_needed.message" = "Будь ласка, введіть ваш пароль для того, щоб увійти.";
 
 "registration.devices.title" = "Пристрої";
 "registration.devices.active_list_header" = "Активні";
@@ -1042,12 +1124,12 @@
 "compose.drafts.compose.dismiss.delete.action.title" = "Видалити";
 
 "availability.message.cancel" = "Скасувати";
-"availability.message.set_status" = "Set a status";
+"availability.message.set_status" = "Встановити статус";
 
 "availability.none" = "Все вимкнено";
-"availability.available" = "Available";
-"availability.away" = "Away";
-"availability.busy" = "Busy";
-"availability.available.placeholder" = "%@ is available";
-"availability.away.placeholder" = "%@ is away";
-"availability.busy.placeholder" = "%@ is busy";
+"availability.available" = "Онлайн";
+"availability.away" = "Не на місці";
+"availability.busy" = "Не турбувати";
+"availability.available.placeholder" = "%@: онлайн";
+"availability.away.placeholder" = "%@: не на місці";
+"availability.busy.placeholder" = "%@: не турбувати";

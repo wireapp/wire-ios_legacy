@@ -72,7 +72,7 @@ import CocoaLumberjackSwift
         }
 
         super.init(nibName: nil, bundle: nil)
-        self.title = NSLocalizedString("registration.devices.title", comment:"")
+        self.title = "registration.devices.title".localized.uppercased()
         self.edgesForExtendedLayout = []
 
         self.initalizeProperties(clientsList ?? Array(ZMUser.selfUser().clients.filter { !$0.isSelfClient() } ))
@@ -340,7 +340,7 @@ import CocoaLumberjackSwift
                             self.deleteUserClient(userClient, credentials: newCredentials)
                         } else {
                             if DeveloperMenuState.developerMenuEnabled() {
-                                DebugAlert.show(message: "No email set!")
+                                DebugAlert.showGeneric(message: "No email set!")
                             }
                         }
                     case .right(let error):

@@ -24,6 +24,7 @@
 #import "UIView+Zeta.h"
 #import "Constants.h"
 #import "KeyboardFrameObserver+iOS.h"
+#import "Wire-Swift.h"
 
 
 
@@ -38,6 +39,16 @@
 
 
 @implementation KeyboardAvoidingViewController
+
++ (void)load
+{
+    @autoreleasepool {
+        static dispatch_once_t onceToken;
+        dispatch_once(&onceToken, ^{
+            [KeyboardFrameObserver sharedObserver];
+        });
+    }
+}
 
 - (instancetype)initWithViewController:(UIViewController *)viewController
 {
@@ -101,7 +112,9 @@
 {
     [super viewWillAppear:animated];
     
-    self.bottomEdgeConstraint.constant = -[[KeyboardFrameObserver sharedObserver] keyboardFrame].size.height;
+    CGFloat bottomOffset = -[[KeyboardFrameObserver sharedObserver] keyboardFrame].size.height;
+
+    self.bottomEdgeConstraint.constant = bottomOffset;
 }
 
 - (void)createInitialConstraints
@@ -109,7 +122,9 @@
     [self.viewController.view autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:0];
     [self.viewController.view autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:0];
     self.topEdgeConstraint = [self.viewController.view autoPinEdgeToSuperviewEdge:ALEdgeTop withInset:self.topInset];
-    self.bottomEdgeConstraint = [self.viewController.view autoPinEdgeToSuperviewEdge:ALEdgeBottom withInset:0];
+    
+    self.bottomEdgeConstraint = [self.viewController.bottomLayoutGuide.bottomAnchor constraintEqualToAnchor:self.bottomLayoutGuide.bottomAnchor constant:0];
+    [self.bottomEdgeConstraint setActive:YES];
 }
 
 - (void)setTopInset:(CGFloat)topInset
@@ -130,8 +145,10 @@
 {
     [UIView animateWithKeyboardNotification:notification inView:self.view animations:^(CGRect keyboardFrameInView) {
         CGFloat bottomOffset = -keyboardFrameInView.size.height;
+
         if (self.bottomEdgeConstraint.constant != bottomOffset) {
             self.bottomEdgeConstraint.constant = bottomOffset;
+            
             [self.view layoutIfNeeded];
         }
     } completion:nil];

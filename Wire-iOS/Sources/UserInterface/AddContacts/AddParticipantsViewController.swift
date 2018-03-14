@@ -20,17 +20,69 @@ import Foundation
 import Cartography
 import Classy
 
-@objc
-public protocol AddParticipantsViewControllerDelegate : class {
-    
-    func addParticipantsViewControllerDidCancel(_ addParticipantsViewController : AddParticipantsViewController)
-    func addParticipantsViewController(_ addParticipantsViewController : AddParticipantsViewController, didSelectUsers users: Set<ZMUser>)
-    
+extension ZMConversation {
+    var canAddGuest: Bool {
+        // If not a team conversation: possible to add any contact.
+        guard let _ = self.team else {
+            return true
+        }
+        
+        // Access mode and/or role is unknown: let's try to add and observe the result.
+        guard let accessMode = self.accessMode,
+              let accessRole = self.accessRole else {
+                return true
+        }
+        
+        let canAddGuest = accessMode.contains(.invite)
+        let guestCanBeAdded = accessRole != .team
+        
+        return canAddGuest && guestCanBeAdded
+    }
 }
 
-public class AddParticipantsViewController : UIViewController {
+class AddParticipantsNavigationController: UINavigationController {
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        self.navigationBar.tintColor = ColorScheme.default().color(withName: ColorSchemeColorTextForeground)
+        self.navigationBar.setBackgroundImage(UIImage(), for:.default)
+        self.navigationBar.shadowImage = UIImage()
+        self.navigationBar.isTranslucent = true
+        self.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: ColorScheme.default().color(withName: ColorSchemeColorTextForeground),
+                                                  NSFontAttributeName: FontSpec(.medium, .medium).font!]
+    }
+}
+
+public protocol AddParticipantsConversationCreationDelegate: class {
+
+    func addParticipantsViewController(_ addParticipantsViewController : AddParticipantsViewController, didPerform action: AddParticipantsViewController.CreateAction)
+}
+
+extension AddParticipantsViewController.Context {
+    var includeGuests: Bool {
+        switch self {
+        case .add(let conversation):
+            return conversation.canAddGuest
+        case .create(let creationValues):
+            return creationValues.allowGuests
+        }
+    }
+}
+
+public class AddParticipantsViewController: UIViewController {
     
+    public enum CreateAction {
+        case updatedUsers(Set<ZMUser>)
+        case create
+    }
+    
+    public enum Context {
+        case add(ZMConversation)
+        case create(ConversationCreationValues)
+    }
+    
+    fileprivate let variant: ColorSchemeVariant
     fileprivate let searchResultsViewController : SearchResultsViewController
+    fileprivate let searchGroupSelector : SearchGroupSelector
     fileprivate let searchHeaderViewController : SearchHeaderViewController
     fileprivate let userSelection : UserSelection = UserSelection()
     fileprivate let collectionView : UICollectionView
@@ -38,11 +90,17 @@ public class AddParticipantsViewController : UIViewController {
     fileprivate let bottomContainer = UIView()
     fileprivate let confirmButton : IconButton
     fileprivate let emptyResultLabel = UILabel()
+    fileprivate var bottomConstraint: NSLayoutConstraint?
+    fileprivate let backButtonDescriptor = BackButtonDescription()
     
-    public weak var delegate : AddParticipantsViewControllerDelegate? = nil
+    public weak var conversationCreationDelegate : AddParticipantsConversationCreationDelegate?
     
-    fileprivate let conversation : ZMConversation
-    
+    fileprivate var viewModel: AddParticipantsViewModel {
+        didSet {
+            updateValues()
+        }
+    }
+
     deinit {
         userSelection.remove(observer: self)
     }
@@ -51,8 +109,21 @@ public class AddParticipantsViewController : UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    public init(conversation: ZMConversation) {
-        self.conversation = conversation
+    convenience public init(conversation: ZMConversation) {
+        self.init(context: .add(conversation))
+    }
+    
+    override open var title: String? {
+        didSet {
+            navigationItem.titleView = ConversationCreationTitleFactory.createTitleLabel(for: self.title ?? "", variant: variant)
+            navigationItem.titleView?.accessibilityIdentifier = "label.addpeople.title"
+        }
+    }
+    
+    public init(context: Context, variant: ColorSchemeVariant = ColorScheme.default().variant) {
+        self.variant = variant
+        
+        viewModel = AddParticipantsViewModel(with: context, variant: variant)
         
         collectionViewLayout = UICollectionViewFlowLayout()
         collectionViewLayout.scrollDirection = .vertical
@@ -78,39 +149,58 @@ public class AddParticipantsViewController : UIViewController {
         confirmButton.setTitleImageSpacing(16, horizontalMargin: 24)
         confirmButton.roundCorners = true
         
-        if conversation.conversationType == .oneOnOne {
-            confirmButton.setTitle("peoplepicker.button.create_conversation".localized.uppercased(), for: .normal)
-        } else {
-            confirmButton.setTitle("peoplepicker.button.add_to_conversation".localized.uppercased(), for: .normal)
-        }
         
         bottomContainer.backgroundColor = UIColor.clear
         bottomContainer.addSubview(confirmButton)
- 
-        searchHeaderViewController = SearchHeaderViewController(userSelection: userSelection, variant: ColorScheme.default().variant)
-        searchResultsViewController = SearchResultsViewController(userSelection: userSelection, team: ZMUser.selfUser().team, variant: ColorScheme.default().variant, isAddingParticipants: true)
+
+        searchHeaderViewController = SearchHeaderViewController(userSelection: userSelection, variant: self.variant)
+        
+        searchGroupSelector = SearchGroupSelector(variant: self.variant)
+
+        searchResultsViewController = SearchResultsViewController(userSelection: userSelection,
+                                                                  variant: self.variant,
+                                                                  isAddingParticipants: true,
+                                                                  shouldIncludeGuests: viewModel.context.includeGuests)
 
         super.init(nibName: nil, bundle: nil)
-        
+        updateValues()
+
         emptyResultLabel.text = everyoneHasBeenAddedText
-        emptyResultLabel.textColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorTextForeground)
+        emptyResultLabel.textColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorTextForeground, variant: self.variant)
         emptyResultLabel.font = FontSpec(.normal, .none).font!
         
         confirmButton.addTarget(self, action: #selector(searchHeaderViewControllerDidConfirmAction(_:)), for: .touchUpInside)
         
-        searchResultsViewController.filterConversation = conversation.conversationType == .group ? conversation : nil
+        searchResultsViewController.filterConversation = viewModel.filterConversation
         searchResultsViewController.mode = .list
         searchResultsViewController.searchContactList()
+        searchResultsViewController.delegate = self
         
         userSelection.add(observer: self)
         
-        if conversation.conversationType == .oneOnOne, let connectedUser = conversation.connectedUser {
-            userSelection.add(connectedUser)
+        searchGroupSelector.onGroupSelected = { [weak self] group in
+            guard let `self` = self else {
+                return
+            }
+            // Remove selected users when switching to services tab to avoid the user confusion: users in the field are
+            // not going to be added to the new conversation with the bot.
+            if group == .services {
+                self.searchHeaderViewController.clearInput()
+            }
+            self.searchResultsViewController.searchGroup = group
+            self.performSearch()
         }
-    }
-
-    override public func viewDidLoad() {
-        searchHeaderViewController.title = conversation.displayName
+        
+        viewModel.selectedUsers.forEach(userSelection.add)
+        
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(keyboardFrameWillChange(notification:)),
+                                               name: NSNotification.Name.UIKeyboardWillChangeFrame,
+                                               object: nil)
+        if viewModel.botCanBeAdded {
+            view.addSubview(searchGroupSelector)
+        }
+        
         searchHeaderViewController.delegate = self
         addChildViewController(searchHeaderViewController)
         view.addSubview(searchHeaderViewController.view)
@@ -120,24 +210,25 @@ public class AddParticipantsViewController : UIViewController {
         view.addSubview(searchResultsViewController.view)
         searchResultsViewController.didMove(toParentViewController: self)
         searchResultsViewController.searchResultsView?.emptyResultView = emptyResultLabel
-        searchResultsViewController.sectionAggregator.delegate = self
+        searchResultsViewController.searchResultsView?.backgroundColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorContentBackground, variant: self.variant)
+        searchResultsViewController.searchResultsView?.collectionView.accessibilityIdentifier = "add_participants.list"
+        
+        view.backgroundColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorContentBackground, variant: self.variant)
         
         createConstraints()
-        updateConfirmButtonVisibility()
+        updateSelectionValues()
     }
-    
+
     func createConstraints() {
-        
         let margin = (searchResultsViewController.view as! SearchResultsView).accessoryViewMargin
         
         constrain(view, searchHeaderViewController.view, searchResultsViewController.view, confirmButton, bottomContainer) {
             container, searchHeaderView, searchResultsView, confirmButton, bottomContainer in
             
-            searchHeaderView.top == container.top + UIScreen.safeArea.top
+            searchHeaderView.top == container.top
             searchHeaderView.left == container.left
             searchHeaderView.right == container.right
             
-            searchResultsView.top == searchHeaderView.bottom
             searchResultsView.left == container.left
             searchResultsView.right == container.right
             searchResultsView.bottom == container.bottom
@@ -146,16 +237,59 @@ public class AddParticipantsViewController : UIViewController {
             confirmButton.top == bottomContainer.top
             confirmButton.left == bottomContainer.left + margin
             confirmButton.right == bottomContainer.right - margin
-            confirmButton.bottom == bottomContainer.bottom - margin - UIScreen.safeArea.bottom
+            self.bottomConstraint = confirmButton.bottom == bottomContainer.bottom - margin - UIScreen.safeArea.bottom
+        }
+        
+        if viewModel.botCanBeAdded {
+            constrain(view, searchHeaderViewController.view, searchGroupSelector, searchResultsViewController.view) {
+                view, searchHeaderView, searchGroupSelector, searchResultsView in
+                searchGroupSelector.top == searchHeaderView.bottom
+                searchGroupSelector.leading == view.leading
+                searchGroupSelector.trailing == view.trailing
+                searchResultsView.top == searchGroupSelector.bottom
+            }
+        }
+        else {
+            constrain(searchHeaderViewController.view, searchResultsViewController.view) {
+                searchHeaderView, searchResultsView in
+                searchResultsView.top == searchHeaderView.bottom
+            }
         }
     }
-        
-    func updateConfirmButtonVisibility() {
-        if userSelection.users.isEmpty {
+    
+    private func updateValues() {
+        confirmButton.setTitle(viewModel.confirmButtonTitle, for: .normal)
+        updateTitle()
+        navigationItem.rightBarButtonItem = viewModel.rightNavigationItem(target: self, action: #selector(rightNavigationItemTapped))
+    }
+
+    fileprivate func updateSelectionValues() {
+        // Update view model after selection changed
+        if case .create(let values) = viewModel.context {
+            let updated = ConversationCreationValues(name: values.name, participants: userSelection.users, allowGuests: true)
+            viewModel = AddParticipantsViewModel(with: .create(updated), variant: variant)
+        }
+
+        // Update confirm button visibility
+        if userSelection.users.isEmpty || !viewModel.showsConfirmButton {
             searchResultsViewController.searchResultsView?.accessoryView = nil
         } else {
             searchResultsViewController.searchResultsView?.accessoryView = bottomContainer
         }
+        
+        updateTitle()
+        
+        // Notify delegate
+        conversationCreationDelegate?.addParticipantsViewController(self, didPerform: .updatedUsers(userSelection.users))
+    }
+    
+    private func updateTitle() {
+        title = {
+            switch viewModel.context {
+            case .create(let values): return viewModel.title(with: values.participants)
+            case .add: return viewModel.title(with: userSelection.users)
+            }
+        }()
     }
     
     var emptySearchResultText : String {
@@ -165,50 +299,89 @@ public class AddParticipantsViewController : UIViewController {
     var everyoneHasBeenAddedText : String {
         return "add_participants.all_contacts_added".localized
     }
+    
+    @objc private func rightNavigationItemTapped(_ sender: Any!) {
+        switch viewModel.context {
+        case .add: navigationController?.dismiss(animated: true, completion: nil)
+        case .create: conversationCreationDelegate?.addParticipantsViewController(self, didPerform: .create)
+        }
+    }
+    
+    func keyboardFrameWillChange(notification: Notification) {
+        let firstResponder = UIResponder.wr_currentFirst()
+        let inputAccessoryHeight = firstResponder?.inputAccessoryView?.bounds.size.height ?? 0
+        let margin = (searchResultsViewController.view as! SearchResultsView).accessoryViewMargin
+        
+        UIView.animate(withKeyboardNotification: notification, in: self.view, animations: { (keyboardFrameInView) in
+            let keyboardHeight = keyboardFrameInView.size.height - inputAccessoryHeight
+            self.bottomConstraint?.constant = -margin - (keyboardHeight == 0 ? UIScreen.safeArea.bottom : CGFloat(0))
+            self.view.layoutIfNeeded()
+        }, completion: nil)
+    }
+    
+    fileprivate func performSearch() {
+        switch (searchResultsViewController.searchGroup, searchHeaderViewController.tokenField.filterText.isEmpty) {
+        case (.services, _):
+            emptyResultLabel.text = emptySearchResultText
+            searchResultsViewController.mode = .search
+            searchResultsViewController.searchForServices(withQuery: searchHeaderViewController.tokenField.filterText)
+        case (.people, true):
+            emptyResultLabel.text = everyoneHasBeenAddedText
+            searchResultsViewController.mode = .list
+            searchResultsViewController.searchContactList()
+        case (.people, false):
+            emptyResultLabel.text = emptySearchResultText
+            searchResultsViewController.mode = .search
+            searchResultsViewController.searchForLocalUsers(withQuery: searchHeaderViewController.tokenField.filterText)
+        }
+    }
+    
+    fileprivate func addSelectedParticipants(to conversation: ZMConversation) {
+        let selectedUsers = self.userSelection.users
+        
+        ZMUserSession.shared()?.enqueueChanges({
+            conversation.addParticipants(selectedUsers)
+        })
+
+        Analytics.shared().tagAddParticipants(source:.conversationDetails, selectedUsers, allowGuests: conversation.allowGuests, in: conversation)
+    }
 }
 
 extension AddParticipantsViewController : UserSelectionObserver {
     
     public func userSelection(_ userSelection: UserSelection, didAddUser user: ZMUser) {
-        updateConfirmButtonVisibility()
+        updateSelectionValues()
     }
     
     public func userSelection(_ userSelection: UserSelection, didRemoveUser user: ZMUser) {
-        updateConfirmButtonVisibility()
+        updateSelectionValues()
     }
     
     public func userSelection(_ userSelection: UserSelection, wasReplacedBy users: [ZMUser]) {
-        updateConfirmButtonVisibility()
+        updateSelectionValues()
     }
     
 }
 
 extension AddParticipantsViewController : SearchHeaderViewControllerDelegate {
     
-    public func searchHeaderViewControllerDidCancelAction(_ searchHeaderViewController: SearchHeaderViewController) {
-        delegate?.addParticipantsViewControllerDidCancel(self)
-    }
-    
     public func searchHeaderViewControllerDidConfirmAction(_ searchHeaderViewController: SearchHeaderViewController) {
-        delegate?.addParticipantsViewController(self, didSelectUsers: userSelection.users)
+        if case .add(let conversation) = viewModel.context {
+            self.dismiss(animated: true) {
+                self.addSelectedParticipants(to: conversation)
+            }
+            
+        }
     }
     
     public func searchHeaderViewController(_ searchHeaderViewController: SearchHeaderViewController, updatedSearchQuery query: String) {
-        if query.isEmpty {
-            emptyResultLabel.text = everyoneHasBeenAddedText
-            searchResultsViewController.mode = .list
-            searchResultsViewController.searchContactList()
-        } else {
-            emptyResultLabel.text = emptySearchResultText
-            searchResultsViewController.mode = .search
-            searchResultsViewController.search(withQuery: query, local: true)
-        }
+        self.performSearch()
     }
     
 }
 
 extension AddParticipantsViewController : UIPopoverPresentationControllerDelegate {
-        
+
     public func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
         return UIModalPresentationStyle.overFullScreen
     }
@@ -219,9 +392,44 @@ extension AddParticipantsViewController : UIPopoverPresentationControllerDelegat
     
 }
 
-extension AddParticipantsViewController: CollectionViewSectionAggregatorDelegate {
-    
-    public func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        searchHeaderViewController.separatorView.scrollViewDidScroll(scrollView: scrollView)
+extension AddParticipantsViewController: SearchResultsViewControllerDelegate {
+    public func searchResultsViewController(_ searchResultsViewController: SearchResultsViewController, didTapOnUser user: ZMSearchableUser, indexPath: IndexPath, section: SearchResultsViewControllerSection) {
+        // no-op
     }
+    
+    public func searchResultsViewController(_ searchResultsViewController: SearchResultsViewController, didDoubleTapOnUser user: ZMSearchableUser, indexPath: IndexPath) {
+        // no-op
+    }
+    
+    public func searchResultsViewController(_ searchResultsViewController: SearchResultsViewController, didTapOnConversation conversation: ZMConversation) {
+        // no-op
+    }
+    
+    public func searchResultsViewController(_ searchResultsViewController: SearchResultsViewController, wantsToPerformAction action: SearchResultsViewControllerAction) {
+        // no-op
+    }
+
+    public func searchResultsViewController(_ searchResultsViewController: SearchResultsViewController, didTapOnSeviceUser user: ServiceUser) {
+        guard case let .add(conversation) = viewModel.context else { return }
+        let detail = ServiceDetailViewController(
+            serviceUser: user,
+            destinationConversation: conversation,
+            actionType: .addService,
+            variant: .init(colorScheme: self.variant, opaque: true)
+        )
+
+        detail.completion = { [weak self] result in
+            guard let `self` = self, let result = result else { return }
+            switch result {
+            case .success:
+                self.dismiss(animated: true)
+            case .failure(let error):
+                error.displayAddBotError(in: detail)
+            }
+        }
+        
+        self.navigationController?.pushViewController(detail, animated: true)
+    }
+    
 }
+

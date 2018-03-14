@@ -48,6 +48,9 @@
 
 @end
 
+@interface ProfilePresenter () <ViewControllerDismissable>
+@end
+
 @interface ProfilePresenter () <ProfileViewControllerDelegate>
 
 @property (nonatomic, assign) CGRect presentedFrame;
@@ -104,9 +107,9 @@
     ProfileViewController *profileViewController = [[ProfileViewController alloc] initWithUser:user context:ProfileViewControllerContextSearch];
     profileViewController = profileViewController;
     profileViewController.delegate = self;
-    
-    RotationAwareNavigationController *navigationController = [[RotationAwareNavigationController alloc] initWithRootViewController:profileViewController];
-    navigationController.navigationBarHidden = YES;
+    profileViewController.viewControllerDismissable = self;
+
+    UINavigationController *navigationController = profileViewController.wrapInNavigationController;
     navigationController.transitioningDelegate = self.transitionDelegate;
     navigationController.modalPresentationStyle = UIModalPresentationPopover;
     
@@ -119,9 +122,9 @@
     presentationController.sourceRect = rect;
 }
 
-#pragma mark - ProfileViewControllerDelegate
+#pragma mark - ViewControllerDismissable
 
-- (void)profileViewControllerWantsToBeDismissed:(ProfileViewController *)profileViewController completion:(dispatch_block_t)completion
+- (void)viewControllerWantsToBeDismissed:(UIViewController *)profileViewController completion:(dispatch_block_t)completion
 {
     [profileViewController dismissViewControllerAnimated:YES completion:^{
         if (completion != nil) {
@@ -137,9 +140,11 @@
     }];
 }
 
+#pragma mark - ProfileViewControllerDelegate
+
 - (void)profileViewController:(ProfileViewController *)controller wantsToNavigateToConversation:(ZMConversation *)conversation
 {
-    [self profileViewControllerWantsToBeDismissed:controller completion:^{
+    [self viewControllerWantsToBeDismissed:controller completion:^{
         [[[ZClientViewController sharedZClientViewController] conversationListViewController] dismissPeoplePickerWithCompletionBlock:^{
             [[ZClientViewController sharedZClientViewController] selectConversation:conversation
                                                                         focusOnView:YES

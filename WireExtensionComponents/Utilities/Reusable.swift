@@ -24,16 +24,14 @@ public protocol Reusable {
 }
 
 public extension Reusable {
-    
     static var reuseIdentifier: String {
-        get {
-            return "\(self)"
-        }
+        guard let `class` = self as? AnyClass else { return "\(self)" }
+        return NSStringFromClass(`class`)
     }
     
     var reuseIdentifier: String? {
-        get {
-            return type(of: self).reuseIdentifier
-        }
+        return type(of: self).reuseIdentifier
     }
 }
+
+extension UITableViewCell: Reusable {}

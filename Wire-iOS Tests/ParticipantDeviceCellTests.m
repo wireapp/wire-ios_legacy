@@ -36,7 +36,9 @@
 {
     [super setUp];
     self.sut = [[ParticipantDeviceCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"reuseIdentifier"];
-    [self.sut autoSetDimension:ALDimensionHeight toSize:64]; // This is a fixed height cell
+    self.sut.bounds = CGRectMake(0, 0, 320, 64);
+    [self.sut setNeedsLayout];
+    [self.sut layoutIfNeeded];
     self.user = [ZMUser insertNewObjectInManagedObjectContext:self.uiMOC];
 }
 

@@ -18,6 +18,7 @@
 
 
 "general.ok" = "OK";
+"general.next" = "Weiter";
 "general.cancel" = "Abbrechen";
 "general.open_settings" = "Wire-Einstellungen öffnen";
 
@@ -34,6 +35,21 @@
 "peoplepicker.header.contacts" = "Kontakte";
 "peoplepicker.header.contacts_personal" = "Persönliche Kontakte";
 "peoplepicker.header.directory" = "Vorschläge";
+
+"peoplepicker.group.title.singular" = "Personen hinzufügen";
+"peoplepicker.group.title.plural" = "Personen Hinzufügen (%d)";
+"peoplepicker.group.skip" = "Überspringen";
+"peoplepicker.group.done" = "Fertig";
+"peoplepicker.group.create" = "Erstellen";
+
+"peoplepicker.header.people" = "Kontakte";
+"peoplepicker.header.services" = "Dienste";
+"peoplepicker.services.create_conversation.item" = "Neue Unterhaltung beginnen";
+"peoplepicker.services.add_service.button" = "Dienst hinzufügen";
+"peoplepicker.services.add_service.error.title" = "Der Dienst kann nicht hinzugefügt werden";
+"peoplepicker.services.add_service.error.default" = "Der Dienst ist derzeit nicht verfügbar";
+"peoplepicker.services.add_service.error.full" = "Die Unterhaltung ist voll";
+
 "peoplepicker.title.create_conversation" = "Gruppe erstellen";
 "peoplepicker.title.add_to_conversation" = "Kontakte hinzufügen";
 
@@ -59,6 +75,7 @@
 "peoplepicker.send_invitation.dialog.ok" = "OK";
 
 "peoplepicker.invite_more_people" = "Weitere Personen einladen";
+"peoplepicker.invite_team_members" = "Lade weitere Mitglieder ein";
 "peoplepicker.quick-action.open-conversation" = "Öffnen";
 "peoplepicker.quick-action.create-conversation" = "Gruppe erstellen";
 
@@ -76,10 +93,8 @@
 "contacts_ui.notification.invitation_failed" = "Einladung senden fehlgeschlagen";
 "contacts_ui.title" = "Freunde einladen";
 
-"contacts_ui.no_contact.title" = "Noch keine Unterhaltungen\n";
-"contacts_ui.no_contact.message" = "Beginne eine Unterhaltung oder erstelle eine Gruppe.";
-
-"contacts_ui.no_contact.archived.title" = "Alle Unterhaltungen archiviert";
+"conversation_list.empty.all_archived.message" = "Alle Unterhaltungen archiviert";
+"conversation_list.empty.no_contacts.message" = "Beginne eine Unterhaltung oder \nerstelle eine Gruppe.";
 
 
 // Conversation List Indicator
@@ -170,6 +185,7 @@
 "conversation.status.added_multiple" = "Teilnehmer hinzugefügt";
 "conversation.status.you_was_added" = "%@ hat dich hinzugefügt";
 "conversation.status.added_users" = "%@ hat %@ hinzugefügt";
+"conversation.status.joined" = "%@ ist beigetreten";
 "conversation.status.removed_multiple" = "Teilnehmer entfernt";
 "conversation.status.you_were_removed" = "Du wurdest entfernt";
 "conversation.status.you_left" = "Du hast die Unterhaltung verlassen";
@@ -201,7 +217,7 @@
 "conversation.input_bar.audio_message.tooltip.pull_send" = "Zum Senden nach oben Wischen";
 "conversation.input_bar.audio_message.tooltip.tap_send" = "Tippe, um zu senden";
 "conversation.input_bar.audio_message.too_long.title" = "Die Aufnahme wurde beendet";
-"conversation.input_bar.audio_message.too_long.message" = "Audio-Nachrichten sind auf %@ beschränkt. Diese Nachricht senden?";
+"conversation.input_bar.audio_message.too_long.message" = "Audio-Nachrichten sind auf %@ beschränkt.";
 "conversation.input_bar.audio_message.send" = "Senden";
 
 "conversation.input_bar.audio_message.keyboard.record_tip" = "Zum Aufnehmen tippen\nDu kannst es danach %@";
@@ -220,6 +236,14 @@
 "conversation.input_bar.message_too_long.title" = "Nachricht zu lang";
 "conversation.input_bar.message_too_long.message" = "Du kannst Nachrichten mit bist zu %d Zeichen senden.";
 
+"conversation.create.group_name.placeholder" = "Gruppenname";
+"conversation.create.guidance.empty" = "Mindestens 1 Zeichen";
+"conversation.create.guidance.toolong" = "Zu viele Zeichen";
+"conversation.create.toggle.title" = "Gäste erlauben";
+"conversation.create.toggle.subtitle" = "Öffne diese Unterhaltung für Personen außerhalb deines Teams. Diese Einstellung kann später jederzeit geändert werden.";
+
+"conversation.guests_present" = "Gäste sind anwesend";
+
 // Image confirmation dialogue
 "image_confirmer.confirm" = "OK";
 "image_confirmer.cancel" = "Abbrechen";
@@ -230,6 +254,12 @@
 "camera_access.denied" = "Wire benötigt Zugriff auf die Kamera.";
 "camera_access.denied.instruction" = "";
 "camera_access.denied.open_settings" = "Aktiviere es in den Wire-Einstellungen";
+
+// Camera and photos access, keyboard
+"keyboard_photos_access.denied.keyboard.settings" = "Einstellungen";
+"keyboard_photos_access.denied.keyboard.camera_and_photos" = "Wire benötigt Zugriff auf deine \nKamera und Fotos."; // split text on two lines for a better text balance
+"keyboard_photos_access.denied.keyboard.photos" = "Wire benötigt Zugriff auf deine Fotos.";
+"keyboard_photos_access.denied.keyboard.camera" = "Wire benötigt Zugriff auf die Kamera.";
 
 // Camera Controls
 "camera_controls.aeaf_lock" = "AE/AF Sperre";
@@ -282,6 +312,7 @@
 "content.system.conversation.you.removed" = "%@ hast %@ entfernt";
 "content.system.conversation.you.left" = "%@ hast das Gespräch verlassen";
 "content.system.conversation.team.member-leave" = "%@ wurde aus dem Team entfernt.";
+"content.system.conversation.guest.joined" = "%@ ist beigetreten";
 
 "content.system.other_renamed_conv_to_nothing" = "%@ hat den Namen der Unterhaltung entfernt";
 "content.system.you_renamed_conv_to_nothing" = "Du hast den Namen der Unterhaltung entfernt";
@@ -310,6 +341,10 @@
 "content.system.renamed_conv.title" = "%@ hat das Gespräch umbenannt";
 "content.system.renamed_conv.title-you" = "%@ hast das Gespräch umbenannt";
 "content.system.renamed_conv.title.you" = "Du";
+
+"content.system.conversation.with_name.title" = "%@ hat die Unterhaltung begonnen";
+
+"content.system.conversation.with_name.participants" = "mit %@";
 
 "content.system.reactivated_device" = "Du hast %@ eine Weile nicht benutzt. Nachrichten, die in der Zwischenzeit gesendet wurden, werden nicht angezeigt.";
 
@@ -347,7 +382,7 @@
 "content.file.upload_failed" = "Hochladen fehlgeschlagen";
 "content.file.upload_cancelled" = "Hochladen abgebrochen";
 "content.file.upload_video" = "Videos";
-"content.file.take_video" = "Video aufnehmen und hochladen";
+"content.file.take_video" = "Video aufnehmen & hochladen";
 
 "content.file.save_video" = "Speichern";
 "content.file.save_audio" = "Speichern";
@@ -367,7 +402,8 @@
 
 "content.file.too_big" = "Du kannst Dateien bis zu %@ senden";
 // Someone pinged
-"content.ping.text" = "%1$@ hast gepingt";
+"content.ping.text" = "%@ hat gepingt";
+"content.ping.text-you" = "%@ hast gepingt";
 
 // Current user pinged
 "content.ping.text.you" = "Du";
@@ -420,8 +456,13 @@
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Profile and Participants
 
-"participants.add_people_button_title" = "Kontakte hinzufügen";
+"participants.add_people_button_title" = "Hinzufügen";
 "participants.avatar.guest.title" = "Gast";
+
+"participants.title" = "Details";
+"participants.section.participants" = "Personen (%d)";
+"participants.section.services" = "Dienste (%d)";
+"participants.footer.add_title" = "Teilnehmer hinzufügen";
 
 // Meta Menu
 "meta.menu.rename" = "Umbenennen";
@@ -436,10 +477,11 @@
 
 // Delete conversation
 "meta.menu.delete_content.dialog_title" = "Gesprächsverlauf löschen?";
-"meta.menu.delete_content.dialog_message" = "Der Verlauf wird geleert und die Unterhaltung aus der Liste entfernt.";
+"meta.menu.delete_content.dialog_message" = "Dies löscht den Unterhaltungsverlauf auf all deinen Geräten.";
 "meta.menu.delete_content.leave_as_well_message" = "Unterhaltung verlassen";
 "meta.menu.delete_content.button_cancel" = "Abbrechen";
 "meta.menu.delete_content.button_delete" = "Löschen";
+"meta.menu.delete_content.button_delete_and_leave" = "Löschen und verlassen";
 
 // Leave conversation
 "meta.leave_conversation_dialog_title" = "Unterhaltung verlassen?";
@@ -447,6 +489,7 @@
 "meta.leave_conversation.delete_content_as_well_message" = "Unterhaltungsverlauf löschen";
 "meta.leave_conversation_button_cancel" = "Abbrechen";
 "meta.leave_conversation_button_leave" = "Verlassen";
+"meta.leave_conversation_button_leave_and_delete" = "Verlassen und Inhalt löschen";
 
 // Conversation Degraded (security level lowered)
 "meta.degraded.degradation_reason_message.singular" = "%@ hat ein neues Gerät hinzugefügt.";
@@ -525,6 +568,13 @@
 // General strings
 "general.confirm" = "OK";
 
+// Bot
+"participants.services.remove_integration.button" = "Integration entfernen";
+
+// Group details
+"group_details.guest_options_cell.title" = "Gast-Optionen";
+"group_details.guest_options_cell.enabled" = "An";
+"group_details.guest_options_cell.disabled" = "Aus";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Self profile
@@ -759,6 +809,7 @@
 "self.settings.technical_report.mail.subject" = "Anruf-Fehlerbericht";
 "self.settings.technical_report.include_log" = "Detaillierten Verlauf hinzufügen";
 "self.settings.technical_report.privacy_warning" = "Detaillierte Logs können personenbezogene Daten enthalten.";
+"self.settings.technical_report.no_mail_alert" = "Kein Mail-Client erkannt. Tippen Sie auf \"OK\" und senden Sie manuell an: ";
 
 // Password reset
 "self.settings.password_reset_menu.title" = "Passwort zurücksetzen";
@@ -801,20 +852,20 @@
 
 "team.name.headline" = "Benenne dein Team";
 "team.name.subheadline" = "Der Name kann später jederzeit geändert werden.";
-"team.name.textfield.placeholder" = "Team-Name";
+"team.name.textfield.placeholder" = "Team Name";
 "team.name.textfield.accessibility" = "Team benennen";
 "team.name.whatiswireforteams" = "Was ist Wire für Teams?";
 
-"team.email.headline" = "Dein Benutzerkonto";
+"team.email.headline" = "Dein Konto";
 "team.email.subheadline" = "Deine Unternehmens-E-Mail-Adresse eingeben.";
 "team.email.textfield.placeholder" = "name@unternehmen.de";
 "team.email.textfield.accessibility" = "Deine Unternehmens-E-Mail-Adresse";
 "team.email.button.learn_more" = "Erfahre mehr";
 
 "team.activation_code.headline" = "Du hast Post";
-"team.activation_code.subheadline" = "Bitte gib den Verifizierungscode ein, den wir an %@ gesendet haben.";
+"team.activation_code.subheadline" = "Bitte gib den Verifizierungs-Code ein, den wir an %@ gesendet haben.";
 "team.activation_code.button.resend" = "Code erneut senden";
-"team.activation_code.button.change_email" = "E-Mail-Adresse ändern";
+"team.activation_code.button.change_email" = "E-Mail ändern";
 
 "team.full_name.headline" = "Dein Name";
 "team.full_name.textfield.placeholder" = "Vollständiger Name";
@@ -826,6 +877,35 @@
 
 
 "team.email_code.input_field.accessbility_label" = "Bitte den 6-stelligen Code aus der E-Mail eingeben.";
+
+// Invite Team Members
+
+"team.invite.header.title" = "Erstelle dein Team";
+"team.invite.header.subtitle" = "Lade Kollegen ins Team ein.";
+"team.invite.textfield.placeholder" = "name@unternehmen.com";
+"team.invite.textfield.accesibility" = "Gib die E-Mail-Adresse des Kollegen ein, den du einladen möchtest.";
+"team.invite.learn_more.title" = "Erfahre mehr";
+"team.invite.top_bar.skip" = "Überspringen";
+"team.invite.top_bar.done" = "Fertig";
+
+// Team Invite Errors
+"team.invite.error.generic" = "Ein Fehler ist aufgetreten, bitte versuche es erneut";
+"team.invite.error.already_registered" = "Diese E-Mail-Adresse wird bereits verwendet";
+"team.invite.error.already_invited" = "Diese E-Mail-Adresse wurde bereits eingeladen";
+"team.invite.error.too_many_invitations" = "Die maximale Anzahl von Einladungen wurde versendet";
+"team.invite.error.no_internet" = "Keine Internetverbindung";
+
+// Guest Room
+
+"guest_room.allow_guests.title" = "Gäste erlauben";
+"guest_room.allow_guests.subtitle" = "Öffne diese Unterhaltung für Personen außerhalb deines Teams.";
+"guest_room.remove_guests.message" = "Aktuelle Gäste werden aus der Unterhaltung entfernt. Neue Gäste können nicht hinzugefügt werden.";
+"guest_room.remove_guests.action" = "Gäste entfernen";
+"guest_room.revoke_link.message" = "Neue Gäste werden sich nicht mehr mit diesem Link anmelden können. Aktuelle Gäste haben weiterhin Zugang zur Unterhaltung.";
+"guest_room.revoke_link.action" = "Link widerrufen";
+
+"guest_room.error.generic.title" = "Ein Fehler ist aufgetreten";
+"guest_room.error.generic.message" = "Prüfen Sie Ihre Datenverbindung und versuchen Sie es erneut";
 
 // Registration
 
@@ -903,6 +983,9 @@
 "registration.signin.too_many_devices.sign_out_button.title" = "Ausloggen";
 "registration.signin.email_button.title" = "Email";
 "registration.signin.phone_button.title" = "Telefon";
+
+"registration.signin.alert.password_needed.title" = "Passwort erforderlich";
+"registration.signin.alert.password_needed.message" = "Bitte zum Anmelden Passwort eingeben.";
 
 "registration.devices.title" = "Geräte";
 "registration.devices.active_list_header" = "Aktiv";

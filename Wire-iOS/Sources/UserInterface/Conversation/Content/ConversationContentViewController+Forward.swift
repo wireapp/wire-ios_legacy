@@ -86,6 +86,10 @@ extension ZMMessage: Shareable {
     
     public typealias I = ZMConversation
     
+    
+}
+
+extension ZMConversationMessage {
     public func previewView() -> UIView? {
         var cell: ConversationCell
         
@@ -111,17 +115,17 @@ extension ZMMessage: Shareable {
             fatal("Cannot create preview for \(self)")
         }
         
-        cell.preparePreview()
-        cell.prepareLayoutForPreview(message: self)
+        cell.translatesAutoresizingMaskIntoConstraints = false
+        let height = cell.prepareLayoutForPreview(message: self)
+        
+        constrain(cell.contentView) { cellContentView in
+            cellContentView.height == height
+        }
+        
+        cell.frame = CGRect(x: 0, y: 0, width: cell.frame.size.width, height: height)
         
         return cell
     }
-    
-    public func height(for previewView: UIView?) -> CGFloat {
-        guard let previewView = previewView as? PreviewProvider else { return 0.0 }
-        return previewView.getPreviewContentHeight()
-    }
-
 }
 
 extension ZMConversationList {
@@ -131,6 +135,10 @@ extension ZMConversationList {
                 conversation.isSelfAnActiveMember &&
                 conversation != excluding
         }
+    }
+    
+    func convesationsWhereBotCanBeAdded() -> [ZMConversation] {
+        return self.shareableConversations().filter { $0.botCanBeAdded }
     }
 }
 

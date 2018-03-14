@@ -42,6 +42,7 @@
 #import "Wire-Swift.h"
 
 @import WireExtensionComponents;
+@import WireSyncEngine;
 
 @interface RegistrationPhoneFlowViewController () <UINavigationControllerDelegate, FormStepDelegate, PhoneVerificationStepViewControllerDelegate, ZMRegistrationObserver, PreLoginAuthenticationObserver>
 
@@ -238,7 +239,7 @@
     }
     else if (error.code == ZMUserSessionNeedsPasswordToRegisterClient) {
         [self.navigationController popToRootViewControllerAnimated:NO];
-        [self.registrationDelegate registrationPhoneFlowViewController:self needsToSignInWith:[[LoginCredentials alloc] initWithError:error]];
+        [self.registrationDelegate registrationFlowViewController:self needsToSignInWith:[[LoginCredentials alloc] initWithError:error]];
     }
     else {
         [self showAlertForError:error];
@@ -325,6 +326,13 @@
     }
     
     self.navigationController.showLoadingView = NO;
+    
+    if(error.code == ZMUserSessionPhoneNumberIsAlreadyRegistered) {
+        LoginCredentials *credentials = [[LoginCredentials alloc] initWithEmailAddress:nil phoneNumber:self.unregisteredUser.phoneNumber password:nil];
+        [self.phoneNumberStepViewController reset];
+        [self.registrationDelegate registrationFlowViewController:self needsToSignInWith:credentials];
+    }
+    
     [self showAlertForError:error];
 }
 

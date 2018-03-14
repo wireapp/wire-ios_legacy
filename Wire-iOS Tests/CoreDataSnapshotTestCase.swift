@@ -16,13 +16,13 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
+import WireTesting
+
 
 /// This class provides a `NSManagedObjectContext` in order to test views with real data instead
 /// of mock objects.
 open class CoreDataSnapshotTestCase: ZMSnapshotTestCase {
 
-    var testSession: ZMTestSession!
-    var moc: NSManagedObjectContext!
     var selfUser: ZMUser!
     var otherUser: ZMUser!
     var otherUserConversation: ZMConversation!
@@ -31,56 +31,51 @@ open class CoreDataSnapshotTestCase: ZMSnapshotTestCase {
     override open func setUp() {
         super.setUp()
         snapshotBackgroundColor = .white
-        let group = ZMSDispatchGroup(dispatchGroup: DispatchGroup(), label: name)
-        testSession = ZMTestSession(dispatchGroup: group, accountIdentifier: UUID())
-        testSession.prepare(forTestNamed: name)
-        moc = testSession.uiMOC
         setupTestObjects()
     }
 
     override open func tearDown() {
-        moc = nil
         selfUser = nil
         otherUser = nil
         otherUserConversation = nil
-        testSession?.tearDown()
-        testSession = nil
         super.tearDown()
     }
 
     // MARK: – Setup
 
     private func setupTestObjects() {
-        selfUser = ZMUser.insertNewObject(in: moc)
+        selfUser = ZMUser.insertNewObject(in: uiMOC)
         selfUser.remoteIdentifier = UUID()
         selfUser.name = "selfUser"
-        ZMUser.boxSelfUser(selfUser, inContextUserInfo: moc)
+        ZMUser.boxSelfUser(selfUser, inContextUserInfo: uiMOC)
 
-        otherUser = ZMUser.insertNewObject(in: moc)
+        otherUser = ZMUser.insertNewObject(in: uiMOC)
         otherUser.remoteIdentifier = UUID()
         otherUser.name = "Bruno"
         otherUser.setHandle("bruno")
         otherUser.accentColorValue = .brightOrange
 
-        otherUserConversation = ZMConversation.insertNewObject(in: moc)
+        otherUserConversation = ZMConversation.insertNewObject(in: uiMOC)
         otherUserConversation.conversationType = .oneOnOne
-        let connection = ZMConnection.insertNewObject(in: moc)
+        otherUserConversation.remoteIdentifier = UUID.create()
+        let connection = ZMConnection.insertNewObject(in: uiMOC)
         connection.to = otherUser
         connection.status = .accepted
         connection.conversation = otherUserConversation
 
-        moc.saveOrRollback()
+        uiMOC.saveOrRollback()
     }
 
     func createGroupConversation() -> ZMConversation {
-        let conversation = ZMConversation.insertNewObject(in: moc)
+        let conversation = ZMConversation.insertNewObject(in: uiMOC)
+        conversation.remoteIdentifier = UUID.create()
         conversation.conversationType = .group
         conversation.internalAddParticipants([selfUser, otherUser], isAuthoritative: true)
         return conversation
     }
     
     func createUser(name: String) -> ZMUser {
-        let user = ZMUser.insertNewObject(in: moc)
+        let user = ZMUser.insertNewObject(in: uiMOC)
         user.name = name
         user.remoteIdentifier = UUID()
         return user

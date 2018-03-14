@@ -33,9 +33,13 @@
     return [self URLWithString:@"https://wire.com/privacy/how"];
 }
 
-+ (instancetype)wr_termsOfServicesURL
++ (instancetype)wr_termsOfServicesURLForTeamAccount:(BOOL)teamAccount
 {
-    return [self URLWithString:@"https://wire.com/legal/terms/embed/"];
+    if (teamAccount) {
+        return [self URLWithString:@"https://wire.com/legal/terms/teams"];
+    } else {
+        return [self URLWithString:@"https://wire.com/legal/terms/personal"];
+    }
 }
 
 + (instancetype)wr_privacyPolicyURL

@@ -22,12 +22,16 @@ import WireExtensionComponents
 
 final class ConversationListTopBar: TopBar {
    
+    internal var observerToken: Any?
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         
         if ZMUser.selfUser().isTeamMember {
             let availabilityView = AvailabilityTitleView(user: ZMUser.selfUser(), style: .header)
-            availabilityView.tapHandler = { button in
+            availabilityView.tapHandler = { [weak availabilityView] button in
+                guard let availabilityView = availabilityView else { return }
+                
                 let alert = availabilityView.actionSheet
                 alert.popoverPresentationController?.sourceView = button
                 alert.popoverPresentationController?.sourceRect = button.frame
@@ -39,23 +43,40 @@ final class ConversationListTopBar: TopBar {
             
             titleLabel.font = FontSpec(.normal, .semibold).font
             titleLabel.textColor = ColorScheme.default().color(withName: ColorSchemeColorTextForeground, variant: .dark)
-            titleLabel.text = ZMUser.selfUser().name
             titleLabel.accessibilityTraits = UIAccessibilityTraitHeader
             titleLabel.setContentCompressionResistancePriority(UILayoutPriorityRequired, for: .horizontal)
             titleLabel.setContentCompressionResistancePriority(UILayoutPriorityRequired, for: .vertical)
             titleLabel.setContentHuggingPriority(UILayoutPriorityRequired, for: .horizontal)
             titleLabel.setContentHuggingPriority(UILayoutPriorityRequired, for: .vertical)
             self.middleView = titleLabel
+            
+            if let sharedSession = ZMUserSession.shared() {
+                self.observerToken = UserChangeInfo.add(observer: self, for: ZMUser.selfUser(), userSession: sharedSession)
+            }
+            
+            updateMiddleViewTitle()
         }
         
         self.splitSeparator = false
     }
     
+    func updateMiddleViewTitle() {
+        guard let middleView = middleView as? UILabel else { return }
+        middleView.text = ZMUser.selfUser().name
+    }
     
     required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
+}
+
+extension ConversationListTopBar: ZMUserObserver {
+    
+    public func userDidChange(_ changeInfo: UserChangeInfo) {
+        guard changeInfo.nameChanged else { return }
+        updateMiddleViewTitle()
+    }
 }
 
 extension ConversationListTopBar {
@@ -150,8 +171,8 @@ open class TopBar: UIView {
             rightSeparatorLineView.bottom == selfView.bottom
             
             middleViewContainer.center == selfView.center
-            leftSeparatorLineView.trailing == selfView.centerX ~ LayoutPriority(750)
-            rightSeparatorLineView.leading == selfView.centerX ~ LayoutPriority(750)
+            leftSeparatorLineView.trailing == selfView.centerX ~ 750.0
+            rightSeparatorLineView.leading == selfView.centerX ~ 750.0
             self.leftSeparatorInsetConstraint = leftSeparatorLineView.trailing == middleViewContainer.leading - 7
             self.rightSeparatorInsetConstraint = rightSeparatorLineView.leading == middleViewContainer.trailing + 7
         }

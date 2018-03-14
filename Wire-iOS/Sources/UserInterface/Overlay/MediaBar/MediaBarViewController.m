@@ -24,6 +24,7 @@
 #import "MediaPlaybackManager.h"
 #import "Wire-Swift.h"
 @import WireExtensionComponents;
+@import WireSyncEngine;
 
 #import "Constants.h"
 
@@ -85,11 +86,6 @@
                                                        target:self
                                                      selector:@selector(mediaTitleChanged:)
                                                       options:NSKeyValueObservingOptionInitial | NSKeyValueObservingOptionNew];
-}
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 - (MediaBar *)mediaBarView

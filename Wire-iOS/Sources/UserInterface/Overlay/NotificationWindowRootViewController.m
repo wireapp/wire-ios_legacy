@@ -74,12 +74,12 @@
         [self.appLockViewController wr_removeFromParentViewController];
     }
 
-    self.appLockViewController.view.translatesAutoresizingMaskIntoConstraints = NO;
-    [self addViewController:self.appLockViewController toView:self.view];
-
     self.chatHeadsViewController = [[ChatHeadsViewController alloc] init];
     self.chatHeadsViewController.view.translatesAutoresizingMaskIntoConstraints = NO;
     [self addViewController:self.chatHeadsViewController toView:self.view];
+
+    self.appLockViewController.view.translatesAutoresizingMaskIntoConstraints = NO;
+    [self addViewController:self.appLockViewController toView:self.view];
 
     [self setupConstraints];
     [self updateAppearanceForOrientation:[UIApplication sharedApplication].statusBarOrientation];
@@ -94,16 +94,6 @@
 - (BOOL)prefersStatusBarHidden
 {
     return YES;
-}
-
-- (void)addViewController:(UIViewController *)viewController toView:(UIView *)view
-{
-    if (viewController == nil) {
-        return;
-    }
-    [self addChildViewController:viewController];
-    [view addSubview:viewController.view];
-    [viewController didMoveToParentViewController:self];
 }
 
 - (void)transitionToLoggedInSession

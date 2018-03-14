@@ -42,7 +42,6 @@
 #import "avs+iOS.h"
 #import "Constants.h"
 #import "Settings.h"
-#import "GiphyViewController.h"
 #import "ConversationInputBarSendController.h"
 @import FLAnimatedImage;
 #import "MediaAsset.h"
@@ -148,7 +147,7 @@
 
 @property (nonatomic) id typingObserverToken;
 
-@property (nonatomic) UINotificationFeedbackGenerator* feedbackGenerator;
+@property (nonatomic) UINotificationFeedbackGenerator *notificationFeedbackGenerator;
 @end
 
 
@@ -169,7 +168,8 @@
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didEnterBackground:) name:UIApplicationDidEnterBackgroundNotification object:nil];
         
         if (nil != [UINotificationFeedbackGenerator class]) {
-            self.feedbackGenerator = [[UINotificationFeedbackGenerator alloc] init];
+            self.notificationFeedbackGenerator = [[UINotificationFeedbackGenerator alloc] init];
+            self.impactFeedbackGenerator = [[UIImpactFeedbackGenerator alloc] initWithStyle:UIImpactFeedbackStyleLight];
         }
     }
     return self;
@@ -487,7 +487,7 @@
 {
     [self updateEphemeralIndicatorButtonTitle:self.ephemeralIndicatorButton];
     
-    NSString *trimmed = [self.inputBar.textView.preparedText stringByTrimmingCharactersInSet:NSCharacterSet.whitespaceAndNewlineCharacterSet];
+    NSString *trimmed = [self.inputBar.textView.text stringByTrimmingCharactersInSet:NSCharacterSet.whitespaceAndNewlineCharacterSet];
 
     [self.sendButtonState updateWithTextLength:trimmed.length
                                        editing:nil != self.editingMessage
@@ -554,6 +554,7 @@
 {
     self.inputBar.textView.text = @"";
     [self.inputBar.markdownView resetIcons];
+    [self.inputBar.textView resetMarkdown];
     [self updateRightAccessoryView];
     [self.conversation setIsTyping:NO];
 }
@@ -873,12 +874,6 @@
 
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
 {
-    // markdown text view needs to detect newlines
-    // in order to automatically insert new list items
-    if ([text isEqualToString:@"\n"] || [text isEqualToString:@"\r"]) {
-        [self.inputBar.textView handleNewLine];
-    }
-    
     // send only if send key pressed
     if (textView.returnKeyType == UIReturnKeySend && [text isEqualToString:@"\n"]) {
         [self.inputBar.textView autocorrectLastWord];
@@ -887,6 +882,7 @@
         return NO;
     }
     
+    [self.inputBar.textView respondToChange: text inRange: range];
     return YES;
 }
 
@@ -984,7 +980,7 @@
         });
     }
     else {
-        [UIApplication wr_requestOrWarnAboutVideoAccess:^(BOOL granted) {
+        [UIApplication wr_requestVideoAccess:^(BOOL granted) {
             [self executeWithCameraRollPermission:^(BOOL success){
                 self.mode = ConversationInputBarViewControllerModeCamera;
                 [self.inputBar.textView becomeFirstResponder];
@@ -1098,12 +1094,11 @@
     [self.inputBar.textView autocorrectLastWord];
     if([self checkMessageLength]){
         [self sendOrEditText:self.inputBar.textView.preparedText];
-        [self.inputBar.textView resetTypingAttributes];
     }
 }
 
--(BOOL)checkMessageLength{
-    
+-(BOOL)checkMessageLength
+{
     BOOL allowed = self.inputBar.textView.text.length <= (NSUInteger)SharedConstants.maximumMessageLength;
     
     if(!allowed) {
@@ -1133,15 +1128,15 @@
 
 - (void)appendKnock
 {
+    [self.notificationFeedbackGenerator prepare];
     [[ZMUserSession sharedSession] enqueueChanges:^{
         id<ZMConversationMessage> knockMessage = [self.conversation appendKnock];
         if (knockMessage) {
             [Analytics.shared tagMediaAction:ConversationMediaActionPing inConversation:self.conversation];
             [Analytics.shared tagMediaActionCompleted:ConversationMediaActionPing inConversation:self.conversation];
-            
+
             [AVSMediaManager.sharedInstance playSound:MediaManagerSoundOutgoingKnockSound];
-            
-            [self.feedbackGenerator notificationOccurred:UINotificationFeedbackTypeSuccess];
+            [self.notificationFeedbackGenerator notificationOccurred:UINotificationFeedbackTypeSuccess];
         }
     }];
     
@@ -1227,6 +1222,11 @@
     else {
         return CGRectContainsPoint(gestureRecognizer.view.bounds, [touch locationInView:gestureRecognizer.view]);
     }
+}
+
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRequireFailureOfGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer
+{
+    return [otherGestureRecognizer isKindOfClass:[UIPanGestureRecognizer class]];
 }
 
 @end

@@ -1,4 +1,4 @@
-// 
+//
 // Wire
 // Copyright (C) 2016 Wire Swiss GmbH
 // 
@@ -55,8 +55,6 @@
 #import "ActionSheetController.h"
 #import "ActionSheetController+Conversation.h"
 
-#import "InviteBannerViewController.h"
-
 #import "Wire-Swift.h"
 
 @interface ConversationListViewController (Content) <ConversationListContentDelegate>
@@ -100,13 +98,13 @@
 @property (nonatomic) id initialSyncObserverToken;
 
 @property (nonatomic) ConversationListContentController *listContentController;
-@property (nonatomic) InviteBannerViewController *invitationBannerViewController;
 @property (nonatomic) ConversationListBottomBarController *bottomBarController;
 
 @property (nonatomic) ConversationListTopBar *topBar;
 @property (nonatomic) UIView *contentContainer;
 @property (nonatomic) UIView *conversationListContainer;
 @property (nonatomic) UILabel *noConversationLabel;
+@property (nonatomic) ConversationListOnboardingHint *onboardingHint;
 
 @property (nonatomic) PermissionDeniedViewController *pushPermissionDeniedViewController;
 
@@ -151,6 +149,9 @@
 
     self.userProfile = ZMUserSession.sharedSession.userProfile;
     self.userObserverToken = [UserChangeInfo addObserver:self forUser:[ZMUser selfUser] userSession:[ZMUserSession sharedSession]];
+    
+    self.onboardingHint = [[ConversationListOnboardingHint alloc] init];
+    [self.contentContainer addSubview:self.onboardingHint];
 
     self.conversationListContainer = [[UIView alloc] initForAutoLayout];
     self.conversationListContainer.backgroundColor = [UIColor clearColor];
@@ -204,6 +205,8 @@
         [Settings sharedSettings].lastViewedScreen = SettingsLastScreenList;
     }
     
+    _state = ConversationListStateConversationList;
+    
     [self updateBottomBarSeparatorVisibilityWithContentController:self.listContentController];
     [self closePushPermissionDialogIfNotNeeded];
 }
@@ -224,15 +227,25 @@
     return YES;
 }
 
+- (UIStatusBarStyle)preferredStatusBarStyle
+{
+    if (self.presentedViewController != nil) {
+        return self.presentedViewController.preferredStatusBarStyle;
+    }
+    else {
+        return UIStatusBarStyleLightContent;
+    }
+}
+
 - (void)createNoConversationLabel;
 {
     self.noConversationLabel = [[UILabel alloc] initForAutoLayout];
-    self.noConversationLabel.attributedText = [self attributedTextForNoConversationLabel:self.hasArchivedConversations];
+    self.noConversationLabel.attributedText = self.attributedTextForNoConversationLabel;
     self.noConversationLabel.numberOfLines = 0;
     [self.contentContainer addSubview:self.noConversationLabel];
 }
 
-- (NSAttributedString *)attributedTextForNoConversationLabel:(BOOL)hasArchivedConversations
+- (NSAttributedString *)attributedTextForNoConversationLabel
 {
     NSMutableParagraphStyle *paragraphStyle = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
     paragraphStyle.paragraphSpacing = 10;
@@ -245,23 +258,13 @@
                                       };
 
     paragraphStyle.paragraphSpacing = 4;
-    NSDictionary *textAttributes = @{
-                                     NSForegroundColorAttributeName : [UIColor whiteColor],
-                                     NSFontAttributeName : [UIFont fontWithMagicIdentifier:@"style.text.small.font_spec_light"],
-                                     NSParagraphStyleAttributeName : paragraphStyle
-                                     };
 
-    NSString *titleLocalizationKey = hasArchivedConversations ? @"contacts_ui.no_contact.archived.title": @"contacts_ui.no_contact.title";
+    NSString *titleLocalizationKey = @"conversation_list.empty.all_archived.message";
     NSString *titleString = NSLocalizedString(titleLocalizationKey, nil);
 
     NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:[titleString uppercaseString]
                                                                                          attributes:titleAttributes];
-    if (!hasArchivedConversations) {
-        NSString *messageString = NSLocalizedString(@"contacts_ui.no_contact.message", nil);
-        [attributedString appendString:[messageString uppercaseString]
-                            attributes:textAttributes];
-    }
-
+    
     return attributedString;
 }
 
@@ -284,7 +287,7 @@
 
 - (StartUIViewController *)createPeoplePickerController
 {
-    StartUIViewController *startUIViewController = [StartUIViewController new];
+    StartUIViewController *startUIViewController = [[StartUIViewController alloc] init];
     startUIViewController.delegate = self;
     return startUIViewController;
 }
@@ -339,7 +342,9 @@
             break;
         case ConversationListStatePeoplePicker: {
             StartUIViewController *startUIViewController = self.createPeoplePickerController;
-            [self showViewController:startUIViewController animated:YES completion:^{
+            UINavigationController *navigationWrapper = [startUIViewController wrapInNavigationController:[ClearBackgroundNavigationController class]];
+            
+            [self showViewController:navigationWrapper animated:YES completion:^{
                 [startUIViewController showKeyboardIfNeeded];
                 if (completion) {
                     completion();
@@ -387,6 +392,10 @@
     [self.noConversationLabel autoCenterInSuperview];
     [self.noConversationLabel autoSetDimension:ALDimensionHeight toSize:120.0f];
     [self.noConversationLabel autoSetDimension:ALDimensionWidth toSize:240.0f];
+    
+    [self.onboardingHint autoPinEdge:ALEdgeBottom toEdge:ALEdgeTop ofView:self.bottomBarController.view];
+    [self.onboardingHint autoPinEdgeToSuperviewMargin:ALEdgeLeft];
+    [self.onboardingHint autoPinEdgeToSuperviewMargin:ALEdgeRight];
 
     [self.listContentController.view autoPinEdgeToSuperviewEdge:ALEdgeTop];
     [self.listContentController.view autoPinEdge:ALEdgeBottom toEdge:ALEdgeTop ofView:self.bottomBarController.view];
@@ -591,10 +600,10 @@
 - (void)showNoContactLabel;
 {
     if (self.state == ConversationListStateConversationList) {
-        self.noConversationLabel.attributedText = [self attributedTextForNoConversationLabel:self.hasArchivedConversations];
         [UIView animateWithDuration:0.20
                          animations:^{
-                             self.noConversationLabel.alpha = 1.0f;
+                             self.noConversationLabel.alpha = self.hasArchivedConversations ? 1.0f : 0.0f;
+                             self.onboardingHint.alpha = self.hasArchivedConversations ? 0.0f : 1.0f;
                          }];
     }
 }
@@ -604,6 +613,7 @@
     [UIView animateWithDuration:animated ? 0.20 : 0.0
                      animations:^{
                          self.noConversationLabel.alpha = 0.0f;
+                         self.onboardingHint.alpha = 0.0f;
                      }];
 }
 

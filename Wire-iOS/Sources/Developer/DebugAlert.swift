@@ -22,24 +22,72 @@ import MessageUI
 /// Presents debug alerts
 @objc public class DebugAlert: NSObject {
     
+    private static var isShown = false
+    
     /// Presents an alert, if in developer mode, otherwise do nothing
-    static func show(message: String, sendLogs: Bool = true) {
+    static func showGeneric(message: String) {
+        self.show(message: message)
+    }
+    
+    /// Presents an alert to send logs, if in developer mode, otherwise do nothing
+    static func showSendLogsMessage(message: String) {
+        self.show(
+            message: message,
+            okText: "Send",
+            okAction: { DebugLogSender.sendLogsByEmail(message: message) },
+            okType: .destructive,
+            title: "Send debug logs"
+        )
+    }
+    
+    /// Presents a debug alert with configurable messages and events.
+    /// If not in developer mode, does nothing.
+    private static func show(
+        message: String,
+        okText: String = "OK",
+        okAction: (() -> Void)? = nil,
+        okType: UIAlertActionStyle = .default,
+        title: String = "DEBUG MESSAGE",
+        cancelText: String? = "Cancel"
+        ) {
+
         guard DeveloperMenuState.developerMenuEnabled() else { return }
-        guard let controller = UIApplication.shared.wr_topmostController(onlyFullScreen: false) else { return }
-        let alert = UIAlertController(title: "DEBUG MESSAGE",
-                                      message: message,
-                                      preferredStyle: .alert)
-        if sendLogs {
-            let sendLogAction = UIAlertAction(title: "Send logs", style: .cancel, handler: {
-                _ in
-                DebugLogSender.sendLogsByEmail(message: message)
-            })
-            alert.addAction(sendLogAction)
+        guard let controller = UIApplication.shared.wr_topmostController(onlyFullScreen: false), !isShown else { return }
+        isShown = true
+        
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let okAlertAction = UIAlertAction(title: okText, style: okType) { _ in
+            isShown = false
+            okAction?()
         }
-        let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
-        alert.addAction(okAction)
+        alert.addAction(okAlertAction)
+
+        if let cancelText = cancelText {
+            let cancelAction = UIAlertAction(title: cancelText, style: .cancel) { _ in
+                isShown = false
+            }
+            alert.addAction(cancelAction)
+        }
+
         controller.present(alert, animated: true, completion: nil)
     }
+    
+    static func displayFallbackActivityController(logData: Data, logFileName: String, email: String, from controller: UIViewController) {
+        let alert = UIAlertController(title: "self.settings.technical_report_section.title".localized,
+                                      message: "self.settings.technical_report.no_mail_alert".localized + email,
+                                      cancelButtonTitle: "general.cancel".localized)
+        alert.addAction(UIAlertAction(title: "general.ok".localized, style: .default, handler: { (action) in
+            let url = URL(fileURLWithPath: NSTemporaryDirectory().appendingPathComponent(logFileName))
+            try! logData.write(to: url)
+            let activity = UIActivityViewController(activityItems: [url], applicationActivities: nil)
+            activity.completionWithItemsHandler = { activityType, completed, returnedItems, error in
+                try! FileManager.default.removeItem(at: url)
+            }
+            controller.present(activity, animated: true, completion: nil)
+        }))
+        controller.present(alert, animated: true, completion: nil)
+    }
+    
 }
 
 /// Sends debug logs by email
@@ -53,37 +101,45 @@ import MessageUI
         guard let controller = UIApplication.shared.wr_topmostController(onlyFullScreen: false) else { return }
         guard self.senderInstance == nil else { return }
         
-        let alert = DebugLogSender()
         let logs = ZMSLog.recordedContent
         guard !logs.isEmpty else {
-            DebugAlert.show(message: "There are no logs to send, have you enabled them from the debug menu > log settings BEFORE the issue happened?\nWARNING: restarting the app will discard all collected logs", sendLogs: false)
-            return
-        }
-        
-        guard MFMailComposeViewController.canSendMail() else {
-            DebugAlert.show(message: "You do not have an email account set up", sendLogs: false)
+            DebugAlert.showGeneric(message: "There are no logs to send, have you enabled them from the debug menu > log settings BEFORE the issue happened?\nWARNING: restarting the app will discard all collected logs")
             return
         }
         
         // Prepare subject & body
-        let user = ZMUser.selfUser()!
-        let userID = user.remoteIdentifier?.transportString() ?? ""
+        let user = ZMUser.selfUser()
+        let userID = user?.remoteIdentifier?.transportString() ?? ""
         let device = UIDevice.current.name
         let now = Date()
-        let userDescription = "\(user.name ?? "") [user: \(userID)] [device: \(device)]"
+        let userDescription = "\(user?.name ?? "") [user: \(userID)] [device: \(device)]"
         let message = "Logs for: \(message)\n\n"
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd_HH-mm-ss"
         let timeStr = formatter.string(from: now)
-        let fileName = "logs_\(user.name ?? userID)_T\(timeStr).txt"
+        let fileName = "logs_\(user?.name ?? userID)_T\(timeStr).txt"
+        let completeLog = logs.joined(separator: "\n")
+        let mail = "ios@wire.com"
+        
+        guard MFMailComposeViewController.canSendMail() else {
+            // Adds user description and message (usually attached to the mail)
+            // on top of the complete log
+            let completeLogWithMessage = [userDescription, message, completeLog].joined(separator: "\n")
+            let logData = completeLogWithMessage.data(using: .utf8)!
+            DebugAlert.displayFallbackActivityController(logData: logData, logFileName: fileName, email: mail, from: controller)
+            return
+        }
         
         // compose
+        
+        let alert = DebugLogSender()
+        let logData = completeLog.data(using: .utf8)!
+        
         let mailVC = MFMailComposeViewController()
-        mailVC.setToRecipients(["ios@wire.com"])
+        mailVC.setToRecipients([mail])
         mailVC.setSubject("iOS logs from \(userDescription)")
         mailVC.setMessageBody(message, isHTML: false)
-        let completeLog = logs.joined(separator: "\n")
-        mailVC.addAttachmentData(completeLog.data(using: .utf8)!, mimeType: "text/plain", fileName: fileName)
+        mailVC.addAttachmentData(logData, mimeType: "text/plain", fileName: fileName)
         mailVC.mailComposeDelegate = alert
         alert.mailViewController = mailVC
         

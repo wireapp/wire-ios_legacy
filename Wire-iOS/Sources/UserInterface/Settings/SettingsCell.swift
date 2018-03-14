@@ -37,7 +37,7 @@ protocol SettingsCellType: class {
     var icon: ZetaIconType {get set}
 }
 
-@objc class SettingsTableCell: UITableViewCell, SettingsCellType, Reusable {
+@objc class SettingsTableCell: UITableViewCell, SettingsCellType {
     let iconImageView = UIImageView()
     public let cellNameLabel = UILabel()
     let valueLabel = UILabel()
@@ -180,7 +180,7 @@ protocol SettingsCellType: class {
         
         constrain(self.contentView, self.cellNameLabel, self.iconImageView) { contentView, cellNameLabel, iconImageView in
             self.cellNameLabelToIconInset = cellNameLabel.leading == iconImageView.trailing + 24
-            cellNameLabel.leading == contentView.leading + 16 ~ LayoutPriority(750)
+            cellNameLabel.leading == contentView.leading + 16 ~ 750.0
             cellNameLabel.top == contentView.top + 12
             cellNameLabel.bottom == contentView.bottom - 12
         }

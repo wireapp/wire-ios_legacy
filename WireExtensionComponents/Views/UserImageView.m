@@ -151,10 +151,39 @@ static CIContext *ciContext(void)
     self.initials.text = user.initials.uppercaseString;
     
     self.imageView.contentMode = UIViewContentModeScaleAspectFill;
-    
+    [self updateForServiceUserIfNeeded:user];
     [self setUserImage:nil];
     [self updateIndicatorColor];
     [self updateUserImage];
+}
+
+- (void)updateForServiceUserIfNeeded:(id <ZMBareUser>)user
+{
+    self.shape = [self shapeForUser:user];
+    self.containerView.layer.borderColor = [self borderColorForUser:user];
+    self.containerView.layer.borderWidth = [self borderWidthForUser:user];
+    self.imageView.backgroundColor = [self containerBackgroundColorForUser:user];
+    self.shouldDesaturate |= user.isServiceUser;
+}
+
+- (AvatarImageViewShape)shapeForUser:(id <ZMBareUser>)user
+{
+    return user.isServiceUser ? AvatarImageViewShapeRoundedRelative : AvatarImageViewShapeCircle;
+}
+
+- (UIColor *)containerBackgroundColorForUser:(id <ZMBareUser>)user
+{
+    return user.isServiceUser ? UIColor.whiteColor : UIColor.clearColor;
+}
+
+- (CGColorRef)borderColorForUser:(id <ZMBareUser>)user
+{
+    return user.isServiceUser ? [UIColor.blackColor colorWithAlphaComponent:0.08].CGColor : nil;
+}
+
+- (CGFloat)borderWidthForUser:(id <ZMBareUser>)user
+{
+    return user.isServiceUser ? 0.5 : 0;
 }
 
 - (void)createIndicator
@@ -289,10 +318,11 @@ static CIContext *ciContext(void)
     self.imageView.image = userImage;
     
     if (userImage) {
-        self.containerView.backgroundColor = UIColor.clearColor;
+        self.containerView.backgroundColor = [self containerBackgroundColorForUser:self.user];
     }
-    else if (self.user.isConnected || self.user.isSelfUser || self.user.isTeamMember) {
-        self.containerView.backgroundColor = [self.user accentColor];
+    else if ([self.user respondsToSelector:@selector(accentColor)] &&
+             (self.user.isConnected || self.user.isSelfUser || self.user.isTeamMember)) {
+        self.containerView.backgroundColor = [(id)self.user accentColor];
     }
     else {
         self.containerView.backgroundColor = [UIColor colorWithWhite:0.8 alpha:1];

@@ -61,7 +61,7 @@ extension UserClient {
         
         var paddedIdentifier = remoteIdentifier
         
-        while paddedIdentifier.characters.count < UserClientIdentifierMinimumLength {
+        while paddedIdentifier.count < UserClientIdentifierMinimumLength {
             paddedIdentifier = "0" + paddedIdentifier
         }
         

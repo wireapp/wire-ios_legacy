@@ -173,7 +173,7 @@ class GiphySearchViewController: UICollectionViewController {
         let closeImage = UIImage(for: .X, iconSize: .tiny, color: .black)
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: closeImage, style: .plain, target: self, action: #selector(GiphySearchViewController.onDismiss))
 
-        self.navigationItem.titleView = searchBar//titleViewWrapper
+        self.navigationItem.titleView = searchBar
     }
 
     private func flushLayout() {

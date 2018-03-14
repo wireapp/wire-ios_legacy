@@ -28,9 +28,11 @@ NSString * const ColorSchemeColorAccentDimmedFlat = @"accent-current-dimmed-flat
 NSString * const ColorSchemeColorAccentDarken = @"accent-current-darken";
 
 NSString * const ColorSchemeColorSeparator = @"separator";
+NSString * const ColorSchemeColorCellSeparator = @"cell-separator";
 NSString * const ColorSchemeColorBackground = @"background";
 NSString * const ColorSchemeColorBarBackground = @"bar-background";
-NSString * const ColorSchemeColorConversationBackground = @"conversation-background";
+NSString * const ColorSchemeColorSearchBarBackground = @"search-bar-background";
+NSString * const ColorSchemeColorContentBackground = @"content-background";
 NSString * const ColorSchemeColorBackgroundOverlay = @"background-overlay";
 NSString * const ColorSchemeColorBackgroundOverlayWithoutPicture = @"background-overlay-without-picture";
 
@@ -44,6 +46,7 @@ NSString * const ColorSchemeColorIconSelected = @"icon-selected";
 NSString * const ColorSchemeColorIconHighlighted = @"icon-highlighted";
 NSString * const ColorSchemeColorIconBackgroundSelected = @"icon-background-selected";
 NSString * const ColorSchemeColorIconBackgroundSelectedNoAccent = @"icon-background-selected-no-accent";
+NSString * const ColorSchemeColorIconGuest = @"icon-guest";
 
 NSString * const ColorSchemeColorPopUpButtonOverlayShadow = @"popup-button-overlay-shadow";
 
@@ -219,6 +222,7 @@ static NSString* light(NSString *colorString) {
     UIColor *white98 = [UIColor colorWithWhite:0.98 alpha:1];
     UIColor *white90 = [UIColor colorWithWhite:0.9 alpha:1];
     UIColor *white60 = [UIColor colorWithWhite:0.6 alpha:1];
+    UIColor *whiteAlpha8 = [UIColor wr_colorFromString:@"rgb(255, 255, 255, 0.08)"];
     UIColor *whiteAlpha16 = [UIColor wr_colorFromString:@"rgb(255, 255, 255, 0.16)"];
     UIColor *whiteAlpha24 = [UIColor wr_colorFromString:@"rgb(255, 255, 255, 0.24)"];
     UIColor *whiteAlpha40 = [UIColor wr_colorFromString:@"rgb(255, 255, 255, 0.40)"];
@@ -233,6 +237,7 @@ static NSString* light(NSString *colorString) {
     UIColor *backgroundGraphite = [UIColor wr_colorFromString:@"rgb(22, 24, 25)"];
     UIColor *backgroundLightGraphite = [UIColor wr_colorFromString:@"rgb(30, 32, 33)"];
     UIColor *graphite = [UIColor wr_colorFromString:@"rgb(51, 55, 58)"];
+    UIColor *graphiteAlpha8 = [UIColor wr_colorFromString:@"rgb(51, 55, 58, 0.08)"];
     UIColor *graphiteAlpha16 = [UIColor wr_colorFromString:@"rgb(51, 55, 58, 0.16)"];
     UIColor *graphiteAlpha40 = [UIColor wr_colorFromString:@"rgb(51, 55, 58, 0.40)"];
     UIColor *lightGraphite = [UIColor wr_colorFromString:@"rgb(141, 152, 159)"];
@@ -253,7 +258,7 @@ static NSString* light(NSString *colorString) {
                                    ColorSchemeColorSeparator: lightGraphiteAlpha48,
                                    ColorSchemeColorBarBackground: white,
                                    ColorSchemeColorBackground: white,
-                                   ColorSchemeColorConversationBackground: white97,
+                                   ColorSchemeColorContentBackground: white97,
                                    ColorSchemeColorIconNormal: graphite,
                                    ColorSchemeColorIconSelected: white,
                                    ColorSchemeColorIconHighlighted: white,
@@ -288,7 +293,10 @@ static NSString* light(NSString *colorString) {
                                    ColorSchemeColorSectionBackground: UIColor.clearColor,
                                    ColorSchemeColorSectionText: blackAlpha40,
                                    ColorSchemeColorTokenFieldBackground: blackAlpha4,
-                                   ColorSchemeColorTokenFieldTextPlaceHolder: graphiteAlpha40
+                                   ColorSchemeColorTokenFieldTextPlaceHolder: lightGraphite,
+                                   ColorSchemeColorCellSeparator: graphiteAlpha8,
+                                   ColorSchemeColorSearchBarBackground: white,
+                                   ColorSchemeColorIconGuest: [backgroundGraphite colorWithAlphaComponent:0.4],
                                    }];
     
     for (ZMAccentColor color = ZMAccentColorMin; color <= ZMAccentColorMax; color++) {
@@ -308,7 +316,7 @@ static NSString* light(NSString *colorString) {
                                   ColorSchemeColorSeparator: lightGraphiteAlpha24,
                                   ColorSchemeColorBarBackground: backgroundLightGraphite,
                                   ColorSchemeColorBackground: backgroundGraphite,
-                                  ColorSchemeColorConversationBackground: backgroundGraphite,
+                                  ColorSchemeColorContentBackground: backgroundGraphite,
                                   ColorSchemeColorIconNormal: white,
                                   ColorSchemeColorIconSelected: black,
                                   ColorSchemeColorIconHighlighted: white,
@@ -343,7 +351,10 @@ static NSString* light(NSString *colorString) {
                                   ColorSchemeColorSectionBackground: UIColor.clearColor,
                                   ColorSchemeColorSectionText: whiteAlpha40,
                                   ColorSchemeColorTokenFieldBackground: whiteAlpha16,
-                                  ColorSchemeColorTokenFieldTextPlaceHolder: whiteAlpha40
+                                  ColorSchemeColorTokenFieldTextPlaceHolder: whiteAlpha40,
+                                  ColorSchemeColorCellSeparator: whiteAlpha8,
+                                  ColorSchemeColorSearchBarBackground: whiteAlpha8,
+                                  ColorSchemeColorIconGuest: [UIColor colorWithWhite:1.0 alpha:0.64],
                                   }];
 
     for (ZMAccentColor color = ZMAccentColorMin; color <= ZMAccentColorMax; color++) {

@@ -24,6 +24,10 @@ import XCTest
 class CallSystemMessageTests: CoreDataSnapshotTestCase {
 
     // MARK: - Missed Call
+    
+    override func setUp() {
+        super.setUp()
+    }
 
     func testThatItRendersMissedCallFromSelfUser() {
         let missedCell = cell(for: .missedCall, fromSelf: true)
@@ -60,7 +64,7 @@ class CallSystemMessageTests: CoreDataSnapshotTestCase {
     // MARK: - Helper
 
     private func cell(for type: ZMSystemMessageType, fromSelf: Bool, expanded: Bool = false) -> IconSystemCell {
-        let message = systemMessage(missed: type == .missedCall, in: .insertNewObject(in: moc), from: fromSelf ? selfUser : otherUser)
+        let message = systemMessage(missed: type == .missedCall, in: .insertNewObject(in: uiMOC), from: fromSelf ? selfUser : otherUser)
         let cell = createCell(missed: type == .missedCall)
         cell.layer.speed = 0
         if expanded {

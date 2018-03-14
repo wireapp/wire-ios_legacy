@@ -47,12 +47,12 @@
 {
     self.leftButton = [IconButton iconButtonCircular];
     self.leftButton.translatesAutoresizingMaskIntoConstraints = NO;
-    self.leftButton.accessibilityIdentifier = @"OtherUserMetaControllerLeftButton";
+    self.leftButton.accessibilityIdentifier = @"left_button";
     [self addSubview:self.leftButton];
     
     self.rightButton = [IconButton iconButtonCircular];
     self.rightButton.translatesAutoresizingMaskIntoConstraints = NO;
-    self.rightButton.accessibilityIdentifier = @"OtherUserMetaControllerRightButton";
+    self.rightButton.accessibilityIdentifier = @"right_button";
     [self addSubview:self.rightButton];
 }
 

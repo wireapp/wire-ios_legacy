@@ -44,6 +44,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (nullable UIViewController *)viewControllerForImageMessage:(id<ZMConversationMessage>)message
                                              actionResponder:(nullable id<MessageActionResponder>)delegate;
+
+- (nullable UIViewController *)viewControllerForImageMessagePreview:(id<ZMConversationMessage>)message
+                                                    actionResponder:(nullable id<MessageActionResponder>)delegate;
 @end
 
 NS_ASSUME_NONNULL_END

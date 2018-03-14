@@ -1,6 +1,6 @@
 //
 // Wire
-// Copyright (C) 2017 Wire Swiss GmbH
+// Copyright (C) 2018 Wire Swiss GmbH
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -178,6 +178,12 @@ extern CGRect WireStyleKitResizingBehaviorApply(WireStyleKitResizingBehavior beh
 + (void)drawIcon_0x748_32ptWithColor: (UIColor*)color;
 + (void)drawIcon_0x749_32ptWithColor: (UIColor*)color;
 + (void)drawIcon_0x750_32ptWithColor: (UIColor*)color;
++ (void)drawIcon_0x751_32ptWithColor: (UIColor*)color;
++ (void)drawIcon_0x752_32ptWithColor: (UIColor*)color;
++ (void)drawIcon_0x753_32ptWithColor: (UIColor*)color;
++ (void)drawIcon_0x754_32ptWithColor: (UIColor*)color;
++ (void)drawIcon_0x755_32ptWithColor: (UIColor*)color;
++ (void)drawIcon_0x756_32ptWithColor: (UIColor*)color;
 + (void)drawMissedcallWithAccent: (UIColor*)accent;
 + (void)drawYoutubeWithColor: (UIColor*)color;
 + (void)drawMissedcalllastWithAccent: (UIColor*)accent;
@@ -306,10 +312,16 @@ extern CGRect WireStyleKitResizingBehaviorApply(WireStyleKitResizingBehavior beh
 + (UIImage*)imageOfIcon_0x745_32ptWithColor: (UIColor*)color;
 + (UIImage*)imageOfIcon_0x746_32ptWithColor: (UIColor*)color;
 + (UIImage*)imageOfIcon_0x747_32ptWithColor: (UIColor*)color;
++ (UIImage*)imageOfIcon_0x269_32ptWithColor: (UIColor*)color;
 + (UIImage*)imageOfIcon_0x748_32ptWithColor: (UIColor*)color;
 + (UIImage*)imageOfIcon_0x749_32ptWithColor: (UIColor*)color;
 + (UIImage*)imageOfIcon_0x750_32ptWithColor: (UIColor*)color;
-+ (UIImage*)imageOfIcon_0x269_32ptWithColor: (UIColor*)color;
++ (UIImage*)imageOfIcon_0x751_32ptWithColor: (UIColor*)color;
++ (UIImage*)imageOfIcon_0x752_32ptWithColor: (UIColor*)color;
++ (UIImage*)imageOfIcon_0x753_32ptWithColor: (UIColor*)color;
++ (UIImage*)imageOfIcon_0x754_32ptWithColor: (UIColor*)color;
++ (UIImage*)imageOfIcon_0x755_32ptWithColor: (UIColor*)color;
++ (UIImage*)imageOfIcon_0x756_32ptWithColor: (UIColor*)color;
 + (UIImage*)imageOfMissedcallWithAccent: (UIColor*)accent;
 + (UIImage*)imageOfYoutubeWithColor: (UIColor*)color;
 + (UIImage*)imageOfMissedcalllastWithAccent: (UIColor*)accent;

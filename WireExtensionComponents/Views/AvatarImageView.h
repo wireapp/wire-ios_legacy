@@ -19,14 +19,18 @@
 
 @import UIKit;
 
-
+typedef NS_ENUM(NSUInteger, AvatarImageViewShape) {
+    AvatarImageViewShapeCircle,
+    AvatarImageViewShapeRectangle,
+    AvatarImageViewShapeRoundedRelative
+};
 
 @interface AvatarImageView : UIView
 
 @property (nonatomic, readonly) UIView *containerView;
 @property (nonatomic, readonly) UIImageView *imageView;
 @property (nonatomic, readonly) UILabel *initials;
-@property (nonatomic, getter=isCircular) BOOL circular;
+@property (nonatomic, assign) AvatarImageViewShape shape;
 @property (nonatomic) BOOL showInitials;
 
 @end
