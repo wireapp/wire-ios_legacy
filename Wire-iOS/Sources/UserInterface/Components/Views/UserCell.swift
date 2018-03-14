@@ -136,7 +136,7 @@ class UserCell: UICollectionViewCell, Themeable {
         subtitleLabel.font = FontSpec.init(.small, .regular).font!
         subtitleLabel.accessibilityIdentifier = "user_cell.username"
         
-        avatar.size = .small
+        avatar.size = .tiny
         avatar.translatesAutoresizingMaskIntoConstraints = false
 
         avatarSpacer.addSubview(avatar)
