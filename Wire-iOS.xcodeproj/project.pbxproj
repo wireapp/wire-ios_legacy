@@ -946,6 +946,8 @@
 		D51894792050490E00C095C1 /* ActionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D51894782050490E00C095C1 /* ActionCell.swift */; };
 		D518947B20504C6A00C095C1 /* LoadingIndicatorCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D518947A20504C6A00C095C1 /* LoadingIndicatorCell.swift */; };
 		D53D390C2057F8ED00B87DAD /* TintCorrectedActivityController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D53D390B2057F8ED00B87DAD /* TintCorrectedActivityController.swift */; };
+		D53D390E20596ED300B87DAD /* ConversationActionController+Block.swift in Sources */ = {isa = PBXBuildFile; fileRef = D53D390D20596ED300B87DAD /* ConversationActionController+Block.swift */; };
+		D53D39102059784900B87DAD /* ConversationActionController+CancelRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D53D390F2059784900B87DAD /* ConversationActionController+CancelRequest.swift */; };
 		D53DB9A5203EE03400655CB4 /* Conversation+OptionsConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = D53DB9A4203EE03400655CB4 /* Conversation+OptionsConfiguration.swift */; };
 		D53DB9A6203EE27000655CB4 /* WireTesting.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 167961A6203DED9100B72ACC /* WireTesting.framework */; };
 		D54224C420513A9800526A57 /* TextCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D54224C320513A9800526A57 /* TextCell.swift */; };
@@ -2532,6 +2534,8 @@
 		D51894782050490E00C095C1 /* ActionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionCell.swift; sourceTree = "<group>"; };
 		D518947A20504C6A00C095C1 /* LoadingIndicatorCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingIndicatorCell.swift; sourceTree = "<group>"; };
 		D53D390B2057F8ED00B87DAD /* TintCorrectedActivityController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TintCorrectedActivityController.swift; sourceTree = "<group>"; };
+		D53D390D20596ED300B87DAD /* ConversationActionController+Block.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConversationActionController+Block.swift"; sourceTree = "<group>"; };
+		D53D390F2059784900B87DAD /* ConversationActionController+CancelRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConversationActionController+CancelRequest.swift"; sourceTree = "<group>"; };
 		D53DB9A4203EE03400655CB4 /* Conversation+OptionsConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Conversation+OptionsConfiguration.swift"; sourceTree = "<group>"; };
 		D54224C320513A9800526A57 /* TextCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextCell.swift; sourceTree = "<group>"; };
 		D54224C520513BFD00526A57 /* CellConfiguration+ConversationOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CellConfiguration+ConversationOptions.swift"; sourceTree = "<group>"; };
@@ -5287,8 +5291,10 @@
 				D550F5762044532D009E09DD /* ConversationAction.swift */,
 				D5F22D4B2048052900879444 /* UIAlertController+RemoveAction.swift */,
 				D550F56D204444EE009E09DD /* ConversationActionController+Leave.swift */,
-				D550F57420444CF8009E09DD /* AlertResultConfiguration.swift */,
 				D550F56F20444924009E09DD /* ConversationActionController+Delete.swift */,
+				D53D390F2059784900B87DAD /* ConversationActionController+CancelRequest.swift */,
+				D53D390D20596ED300B87DAD /* ConversationActionController+Block.swift */,
+				D550F57420444CF8009E09DD /* AlertResultConfiguration.swift */,
 				D550F57120444A1B009E09DD /* ConersationActionController+Tracking.swift */,
 			);
 			path = ConversationActions;
@@ -6905,6 +6911,7 @@
 				EF21270C1FB9DFE300625A9B /* Country.m in Sources */,
 				871BC01D1D34F56300DF0793 /* AnalyticsTracker+Media.m in Sources */,
 				BFE08C1C1D5B5CFA002367F6 /* MessageDeletedCell.swift in Sources */,
+				D53D390E20596ED300B87DAD /* ConversationActionController+Block.swift in Sources */,
 				BF52C1571CAEB9E10037331F /* ArchivedListViewController.swift in Sources */,
 				87CB36BC1D7480F6007AB4E5 /* ConversationCell+Like.swift in Sources */,
 				87071CC01CB68BDA0039388A /* ProgressView.swift in Sources */,
@@ -6913,6 +6920,7 @@
 				EF6163A51FE9583400C6F5A9 /* Message+dayFormatter.swift in Sources */,
 				BFA25DC91D9A8D0B0086DEBD /* EmojiKeyboardViewController.swift in Sources */,
 				BAED82B91B307AEE004D027F /* ZMUserSession+RequestProxy.m in Sources */,
+				D53D39102059784900B87DAD /* ConversationActionController+CancelRequest.swift in Sources */,
 				AF36C59F1E9F67B600FADECC /* DraftListViewController.swift in Sources */,
 				EF1F9A021FBB1FD800969DD1 /* LandingButton.swift in Sources */,
 				8733378A1DF5B43A006AE609 /* SwiftDependencies.swift in Sources */,

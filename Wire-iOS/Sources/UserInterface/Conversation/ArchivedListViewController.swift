@@ -31,12 +31,13 @@ import Cartography
 
 @objc final class ArchivedListViewController: UIViewController {
     
-    var collectionView: UICollectionView!
-    let archivedNavigationBar = ArchivedNavigationBar(title: "archived_list.title".localized.uppercased())
-    let cellReuseIdentifier = "ConversationListCellArchivedIdentifier"
-    let swipeIdentifier = "ArchivedList"
-    let viewModel = ArchivedListViewModel()
-    let layoutCell = ConversationListCell()
+    fileprivate var collectionView: UICollectionView!
+    fileprivate let archivedNavigationBar = ArchivedNavigationBar(title: "archived_list.title".localized.uppercased())
+    fileprivate let cellReuseIdentifier = "ConversationListCellArchivedIdentifier"
+    fileprivate let swipeIdentifier = "ArchivedList"
+    fileprivate let viewModel = ArchivedListViewModel()
+    fileprivate let layoutCell = ConversationListCell()
+    fileprivate var actionController: ConversationActionController?
     
     weak var delegate: ArchivedListViewControllerDelegate?
     
@@ -133,7 +134,6 @@ extension ArchivedListViewController: UICollectionViewDataSource, UICollectionVi
 
 extension ArchivedListViewController: ArchivedListViewModelDelegate {
     internal func archivedListViewModel(_ model: ArchivedListViewModel, didUpdateArchivedConversationsWithChange change: ConversationListChangeInfo, applyChangesClosure: @escaping () -> ()) {
-  
         applyChangesClosure()
         collectionView.reloadData()
     }
@@ -152,7 +152,7 @@ extension ArchivedListViewController: ArchivedListViewModelDelegate {
 
 extension ArchivedListViewController: ConversationListCellDelegate {
     func conversationListCellOverscrolled(_ cell: ConversationListCell!) {
-        guard let sheet = ActionSheetController.dialog(forConversationDetails: cell.conversation, style: .dark) else { return }
-        present(sheet, animated: true, completion: nil)
+        actionController = ConversationActionController(conversation: cell.conversation, target: self)
+        actionController?.presentMenu()
     }
 }

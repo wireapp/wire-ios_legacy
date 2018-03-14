@@ -22,8 +22,6 @@
     unowned let target: UIViewController
     
     @objc init(conversation: ZMConversation, target: UIViewController) {
-        // Does not support blocking yet (1-on-1)
-        requireInternal(conversation.conversationType == .group, "currently only allowed for group conversations")
         self.conversation = conversation
         self.target = target
         super.init()
@@ -40,7 +38,7 @@
         target.dismiss(animated: true, completion: block)
     }
     
-    private func dismissAndEnqueue(_ block: @escaping () -> Void) {
+    func dismissAndEnqueue(_ block: @escaping () -> Void) {
         target.dismiss(animated: true) {
             ZMUserSession.shared()?.enqueueChanges(block)
         }
@@ -55,33 +53,32 @@
     }
     
     private func alertAction(for action: ZMConversation.Action) -> UIAlertAction {
-        switch action {
-        case .archive(isArchived: let isArchived): return action.alertAction { [weak self] in
+        return action.alertAction { [weak self] in
             guard let `self` = self else { return }
-            self.transitionToListAndEnqueue {
+            switch action {
+            case .archive(isArchived: let isArchived): self.transitionToListAndEnqueue {
                 self.conversation.isArchived = !isArchived
                 Analytics.shared().tagArchivedConversation(!isArchived)
-            }
-        }
-        case .silence(isSilenced: let isSilenced): return action.alertAction { [weak self] in
-            guard let `self` = self else { return }
-            self.dismissAndEnqueue {
+                }
+            case .silence(isSilenced: let isSilenced): self.dismissAndEnqueue {
                 self.conversation.isSilenced = !isSilenced
-            }
-        }
-        case .leave: return action.alertAction { [weak self] in
-            guard let `self` = self else { return }
-            self.request(LeaveResult.self) { result in
+                }
+            case .leave: self.request(LeaveResult.self) { result in
                 self.handleLeaveResult(result, for: self.conversation)
-            }
-        }
-        case .delete: return action.alertAction { [weak self] in
-            guard let `self` = self else { return }
-            self.request(DeleteResult.self) { result in
+                }
+            case .delete: self.request(DeleteResult.self) { result in
                 self.handleDeleteResult(result, for: self.conversation)
+                }
+            case .cancelRequest:
+                guard let user = self.conversation.connectedUser else { return }
+                self.requestCancelConnectionRequestResult(for: user) { result in
+                    self.handleConnectionRequestResult(result, for: self.conversation)
+                }
+            case .block: self.requestBlockResult(for: self.conversation) { result in
+                self.handleBlockResult(result, for: self.conversation)
+                }
+            case .remove: fatalError()
             }
-        }
-        default: fatalError() // Does not support blocking yet (1-on-1)
         }
     }
     

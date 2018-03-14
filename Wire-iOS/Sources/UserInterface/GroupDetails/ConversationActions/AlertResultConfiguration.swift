@@ -23,7 +23,7 @@ protocol AlertResultConfiguration {
 }
 
 extension AlertResultConfiguration {
-    static fileprivate func controller(_ handler: @escaping (Self) -> Void) -> UIAlertController {
+    static func controller(_ handler: @escaping (Self) -> Void) -> UIAlertController {
         let controller = UIAlertController(title: nil, message: message, preferredStyle: .actionSheet)
         all.map { $0.action(handler) }.forEach(controller.addAction)
         return controller
