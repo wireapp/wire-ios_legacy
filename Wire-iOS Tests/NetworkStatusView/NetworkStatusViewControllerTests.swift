@@ -52,21 +52,23 @@ final class NetworkStatusViewControllerTests: XCTestCase {
     var sutList: NetworkStatusViewController!
     
     var mockDevice: MockDevice!
+    var mockApplication: MockApplication!
     var mockConversationRoot: MockConversationRootViewController!
     var mockConversationList: MockConversationListViewController!
     
     override func setUp() {
         super.setUp()
         mockDevice = MockDevice()
+        mockApplication = MockApplication()
         
         mockConversationList = MockConversationListViewController()
-        sutList = NetworkStatusViewController(device: mockDevice)
+        sutList = NetworkStatusViewController(device: mockDevice, application: mockApplication)
         mockConversationList.networkStatusViewController = sutList
         mockConversationList.addToSelf(sutList)
         sutList.delegate = mockConversationList
         
         mockConversationRoot = MockConversationRootViewController()
-        sutRoot = NetworkStatusViewController(device: mockDevice)
+        sutRoot = NetworkStatusViewController(device: mockDevice, application: mockApplication)
         mockConversationRoot.networkStatusViewController = sutRoot
         mockConversationRoot.addToSelf(sutRoot)
         sutRoot.delegate = mockConversationRoot
@@ -76,6 +78,7 @@ final class NetworkStatusViewControllerTests: XCTestCase {
         sutList = nil
         sutRoot = nil
         mockDevice = nil
+        mockApplication = nil
         mockConversationRoot = nil
         mockConversationList = nil
 
@@ -84,14 +87,14 @@ final class NetworkStatusViewControllerTests: XCTestCase {
     
     fileprivate func setUpSut(userInterfaceIdiom: UIUserInterfaceIdiom,
                               horizontalSizeClass: UIUserInterfaceSizeClass,
-                              orientation: UIDeviceOrientation,
+                              orientation: UIInterfaceOrientation,
                               listState: NetworkStatusViewState = .offlineExpanded,
                               rootState: NetworkStatusViewState = .offlineExpanded) {
         sutList.update(state: listState)
         sutRoot.update(state: rootState)
         
         mockDevice.userInterfaceIdiom = userInterfaceIdiom
-        mockDevice.orientation = orientation
+        mockApplication.statusBarOrientation = orientation
         
         let traitCollection = UITraitCollection(horizontalSizeClass: horizontalSizeClass)
         mockConversationList.setOverrideTraitCollection(traitCollection, forChildViewController: sutList)
@@ -117,7 +120,7 @@ final class NetworkStatusViewControllerTests: XCTestCase {
     ///   - rootState: expected networkStatusView state in conversation root
     fileprivate func checkForNetworkStatusViewState(userInterfaceIdiom: UIUserInterfaceIdiom,
                                                     horizontalSizeClass: UIUserInterfaceSizeClass,
-                                                    orientation: UIDeviceOrientation,
+                                                    orientation: UIInterfaceOrientation,
                                                     listState: NetworkStatusViewState,
                                                     rootState: NetworkStatusViewState,
                                                     file: StaticString = #file, line: UInt = #line) {
@@ -164,11 +167,10 @@ final class NetworkStatusViewControllerTests: XCTestCase {
         // GIVEN
         let userInterfaceIdiom: UIUserInterfaceIdiom = .pad
         let horizontalSizeClass: UIUserInterfaceSizeClass = .regular
-        let orientation: UIDeviceOrientation = .landscapeLeft
-        
+
         setUpSut(userInterfaceIdiom: userInterfaceIdiom,
                  horizontalSizeClass: horizontalSizeClass,
-                 orientation: orientation,
+                 orientation: .landscapeLeft,
                  listState: .offlineCollapsed,
                  rootState: .offlineCollapsed)
 
@@ -183,11 +185,10 @@ final class NetworkStatusViewControllerTests: XCTestCase {
         // GIVEN
         let userInterfaceIdiom: UIUserInterfaceIdiom = .phone
         let horizontalSizeClass: UIUserInterfaceSizeClass = .compact
-        let orientation: UIDeviceOrientation = .portrait
 
         setUpSut(userInterfaceIdiom: userInterfaceIdiom,
                  horizontalSizeClass: horizontalSizeClass,
-                 orientation: orientation,
+                 orientation: .portrait,
                  listState: .offlineCollapsed,
                  rootState: .offlineCollapsed)
 
@@ -202,33 +203,28 @@ final class NetworkStatusViewControllerTests: XCTestCase {
         // GIVEN
         let userInterfaceIdiom: UIUserInterfaceIdiom = .pad
         let horizontalSizeClass: UIUserInterfaceSizeClass = .regular
-        let orientation: UIDeviceOrientation = .landscapeLeft
-        
-        let listState = NetworkStatusViewState.offlineExpanded
-        let rootState = NetworkStatusViewState.online
-        
-        setUpSut(userInterfaceIdiom: userInterfaceIdiom, horizontalSizeClass: horizontalSizeClass, orientation: orientation)
-        checkResult(listState: listState, rootState: rootState)
+
+        setUpSut(userInterfaceIdiom: userInterfaceIdiom, horizontalSizeClass: horizontalSizeClass, orientation: .portrait)
+        checkResult(listState: .online, rootState: .offlineExpanded)
 
         // Portrait
         
         // WHEN
-        let portraitSize = CGSize(width: 768, height: 1024)
-        sutList.viewWillTransition(to: portraitSize, with: nil)
-        sutRoot.viewWillTransition(to: portraitSize, with: nil)
+        sutList.viewWillTransition(to: .zero, with: nil)
+        sutRoot.viewWillTransition(to: .zero, with: nil)
 
         // THEN
-        checkResult(listState: NetworkStatusViewState.online, rootState: .offlineExpanded)
+        checkResult(listState: .online, rootState: .offlineExpanded)
 
         // Landscape
+        mockApplication.statusBarOrientation = .landscapeLeft
 
         // WHEN
-        let landscapeSize = CGSize(width: 1024, height: 768)
-        sutList.viewWillTransition(to: landscapeSize, with: nil)
-        sutRoot.viewWillTransition(to: landscapeSize, with: nil)
+        sutList.viewWillTransition(to: .zero, with: nil)
+        sutRoot.viewWillTransition(to: .zero, with: nil)
         
         // THEN
-        checkResult(listState: NetworkStatusViewState.offlineExpanded, rootState: .online)
+        checkResult(listState: .offlineExpanded, rootState: .online)
     }
 }
 
