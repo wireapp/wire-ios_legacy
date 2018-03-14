@@ -60,13 +60,13 @@ final class NetworkStatusViewControllerTests: XCTestCase {
         mockDevice = MockDevice()
         
         mockConversationList = MockConversationListViewController()
-        sutList = NetworkStatusViewController(container: .conversationList, device: mockDevice)
+        sutList = NetworkStatusViewController(device: mockDevice)
         mockConversationList.networkStatusViewController = sutList
         mockConversationList.addToSelf(sutList)
         sutList.delegate = mockConversationList
         
         mockConversationRoot = MockConversationRootViewController()
-        sutRoot = NetworkStatusViewController(container: .conversationRoot, device: mockDevice)
+        sutRoot = NetworkStatusViewController(device: mockDevice)
         mockConversationRoot.networkStatusViewController = sutRoot
         mockConversationRoot.addToSelf(sutRoot)
         sutRoot.delegate = mockConversationRoot
@@ -249,7 +249,7 @@ final class NetworkStatusViewControllerRetainTests: XCTestCase {
     func testNetworkStatusViewControllerIsNotRetainedAfterTimerIsScheduled(){
         autoreleasepool{
             // GIVEN
-            var networkStatusViewController: NetworkStatusViewController! = NetworkStatusViewController(container: .conversationList)
+            var networkStatusViewController: NetworkStatusViewController! = NetworkStatusViewController()
             sut = networkStatusViewController
 
 
