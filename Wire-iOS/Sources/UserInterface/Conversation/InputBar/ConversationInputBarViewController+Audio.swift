@@ -22,17 +22,23 @@ import Cartography
 
 // MARK: Audio Button
 
-let audioRecordTooltipDisplayDuration: TimeInterval = 2
-
 extension ConversationInputBarViewController {
     
     func configureAudioButton(_ button: IconButton) {
-        button.addTarget(self, action: #selector(audioButtonPressed(_:)), for: .touchUpInside)
         let longPressRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(audioButtonLongPressed(_:)))
+        longPressRecognizer.minimumPressDuration = 0.3
         button.addGestureRecognizer(longPressRecognizer)
+
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(audioButtonPressed(_:)))
+        tapGestureRecognizer.require(toFail: longPressRecognizer)
+        button.addGestureRecognizer(tapGestureRecognizer)
     }
     
-    func audioButtonPressed(_ sender: IconButton) {
+    func audioButtonPressed(_ sender: UITapGestureRecognizer) {
+        guard sender.state == .ended else {
+            return
+        }
+
         if self.mode != .audioRecord {
             UIApplication.wr_requestOrWarnAboutMicrophoneAccess({ accepted in
                 if accepted {
@@ -57,6 +63,7 @@ extension ConversationInputBarViewController {
         case .began:
             self.createAudioRecord()
             if let audioRecordViewController = self.audioRecordViewController , showAudioRecordViewControllerIfGrantedAccess() {
+                audioRecordViewController.setOverlayState(.expanded(0), animated: true)
                 audioRecordViewController.setRecordingState(.recording, animated: false)
                 audioRecordViewController.beginRecording()
                 self.inputBar.buttonContainer.isHidden = true
@@ -96,10 +103,10 @@ extension ConversationInputBarViewController {
         guard let audioRecordViewController = self.audioRecordViewController else {
             return
         }
-        
+
         audioRecordViewController.setOverlayState(.hidden, animated: false)
         
-        UIView.transition(with: inputBar, duration: 0.1, options: .transitionCrossDissolve, animations: {
+        UIView.transition(with: inputBar, duration: 0.1, options: [.transitionCrossDissolve, .allowUserInteraction], animations: {
             audioRecordViewController.view.isHidden = false
             }, completion: { _ in
                 audioRecordViewController.setOverlayState(.expanded(0), animated: true)
@@ -141,7 +148,6 @@ extension ConversationInputBarViewController {
         }
     }
 }
-
 
 extension ConversationInputBarViewController: AudioRecordViewControllerDelegate {
     

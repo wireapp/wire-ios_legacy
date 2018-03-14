@@ -103,7 +103,7 @@ final class ConversationOptionsViewController: UIViewController, UITableViewDele
     }
     
     func viewModel(_ viewModel: ConversationOptionsViewModel, wantsToShareMessage message: String) {
-        let activityController = UIActivityViewController(activityItems: [message], applicationActivities: nil)
+        let activityController = TintCorrectedActivityViewController(activityItems: [message], applicationActivities: nil)
         present(activityController, animated: true)
     }
 

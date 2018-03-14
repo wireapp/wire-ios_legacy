@@ -208,8 +208,7 @@
 
 - (void)resetAllFields
 {
-    self.emailField.text = @"";
-    self.passwordField.text = @"";
+    [self resetTextFields];
     
     if (self.nameFieldEnabled) {
         self.nameField.rightAccessoryView = RegistrationTextFieldRightAccessoryViewNone;
@@ -217,6 +216,12 @@
     
     self.emailField.rightAccessoryView = RegistrationTextFieldRightAccessoryViewNone;
     self.passwordField.rightAccessoryView = RegistrationTextFieldRightAccessoryViewNone;
+}
+
+- (void)resetTextFields
+{
+    self.emailField.text = @"";
+    self.passwordField.text = @"";
 }
 
 - (BOOL)validateAllFields

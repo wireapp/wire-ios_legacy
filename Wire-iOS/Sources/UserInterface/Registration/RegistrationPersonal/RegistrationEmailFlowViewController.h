@@ -21,12 +21,10 @@
 
 #import "FormFlowViewController.h"
 
-
-
+@class RegistrationEmailFlowViewController;
 @class ZMIncompleteRegistrationUser;
 @class AnalyticsTracker;
-
-
+@class LoginCredentials;
 
 @interface RegistrationEmailFlowViewController : FormFlowViewController
 
@@ -35,5 +33,6 @@
 - (instancetype)initWithUnregisteredUser:(ZMIncompleteRegistrationUser *)unregisteredUser NS_DESIGNATED_INITIALIZER;
 
 @property (nonatomic, strong) AnalyticsTracker *analyticsTracker;
+@property (nonatomic, weak) id <RegistrationFlowViewControllerDelegate> registrationDelegate;
 
 @end

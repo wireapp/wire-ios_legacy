@@ -37,6 +37,7 @@ class TopPeopleSectionController : SearchSectionController {
         self.innerCollectionViewController.delegate = self
         self.innerCollectionViewController.topPeople = topConversationsDirectory.topConversations
         self.innerCollectionView.reloadData()
+        self.topConversationsDirectory.refreshTopConversations()
     }
     
     func createInnerCollectionView() {

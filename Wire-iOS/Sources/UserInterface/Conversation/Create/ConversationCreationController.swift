@@ -65,6 +65,7 @@ final class ConversationCreationController: UIViewController {
 
     fileprivate let errorLabel = UILabel()
     fileprivate let errorViewContainer = UIView()
+    fileprivate let colorSchemeVariant = ColorScheme.default().variant
     private let mainViewContainer = UIView()
     private let bottomViewContainer = UIView()
     private let toggleView = ToggleView(
@@ -75,17 +76,13 @@ final class ConversationCreationController: UIViewController {
     private let toggleSubtitleLabel = UILabel(
         key: "conversation.create.toggle.subtitle",
         size: .small,
-        color: ColorSchemeColorTextDimmed,
-        variant: .light
+        color: ColorSchemeColorTextDimmed
     )
 
     fileprivate var navigationBarBackgroundView = UIView()
-    
-    private let backButtonDescription = BackButtonDescription()
     fileprivate let nextButton = ButtonWithLargerHitArea(type: .custom)
 
     private var textField = SimpleTextField()
-    fileprivate var secondaryErrorView: UIView?
     
     fileprivate var values: ConversationCreationValues?
     fileprivate let source: LinearGroupCreationFlowEvent.Source
@@ -115,7 +112,7 @@ final class ConversationCreationController: UIViewController {
         super.viewDidLoad()
         Analytics.shared().tagLinearGroupOpened(with: self.source)
 
-        view.backgroundColor = UIColor.Team.background
+        view.backgroundColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorContentBackground, variant: colorSchemeVariant)
         title = "profile.create_conversation_button_title".localized.uppercased()
         
         setupNavigationBar()
@@ -129,7 +126,7 @@ final class ConversationCreationController: UIViewController {
     }
 
     override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .default
+        return colorSchemeVariant == .light ? .default : .lightContent
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -144,7 +141,7 @@ final class ConversationCreationController: UIViewController {
 
     private func createViews() {
         mainViewContainer.translatesAutoresizingMaskIntoConstraints = false
-        navigationBarBackgroundView.backgroundColor = .white
+        navigationBarBackgroundView.backgroundColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorBarBackground, variant: colorSchemeVariant)
         mainViewContainer.addSubview(navigationBarBackgroundView)
         
         textField = SimpleTextField()
@@ -178,31 +175,23 @@ final class ConversationCreationController: UIViewController {
     }
 
     private func setupNavigationBar() {
-        // left button
-        backButtonDescription.buttonTapped = { [weak self] in
-            self?.onCancel()
-        }
-
-        backButtonDescription.accessibilityIdentifier = "button.newgroup.back"
-        if navigationController?.viewControllers.count ?? 0 > 1 {
-            navigationItem.leftBarButtonItem = UIBarButtonItem(customView: backButtonDescription.create())
-        }
-        else {
+        self.navigationController?.navigationBar.tintColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorTextForeground, variant: colorSchemeVariant)
+        
+        if navigationController?.viewControllers.count ?? 0 <= 1 {
             navigationItem.leftBarButtonItem = UIBarButtonItem(icon: .X, target: self, action: #selector(onCancel))
-            navigationItem.leftBarButtonItem?.tintColor = .black
             navigationItem.leftBarButtonItem?.accessibilityIdentifier = "button.newgroup.close"
         }
 
         // title view
-        navigationItem.titleView = ConversationCreationTitleFactory.createTitleLabel(for: self.title ?? "", variant: .light)
+        navigationItem.titleView = ConversationCreationTitleFactory.createTitleLabel(for: self.title ?? "", variant: colorSchemeVariant)
         
         // right button
         nextButton.frame = CGRect(x: 0, y: 0, width: 40, height: 20)
         nextButton.accessibilityIdentifier = "button.newgroup.next"
         nextButton.setTitle("general.next".localized.uppercased(), for: .normal)
         nextButton.setTitleColor(.accent(), for: .normal)
-        nextButton.setTitleColor(UIColor.wr_color(fromColorScheme: ColorSchemeColorTextDimmed, variant: .light), for: .highlighted)
-        nextButton.setTitleColor(UIColor.wr_color(fromColorScheme: ColorSchemeColorIconShadow, variant: .light), for: .disabled)
+        nextButton.setTitleColor(UIColor.wr_color(fromColorScheme: ColorSchemeColorTextDimmed, variant: colorSchemeVariant), for: .highlighted)
+        nextButton.setTitleColor(UIColor.wr_color(fromColorScheme: ColorSchemeColorTextDimmed, variant: colorSchemeVariant), for: .disabled)
         nextButton.titleLabel?.font = FontSpec(.medium, .semibold).font!
         nextButton.sizeToFit()
         
@@ -282,7 +271,7 @@ final class ConversationCreationController: UIViewController {
             
             Analytics.shared().tagLinearGroupSelectParticipantsOpened(with: self.source)
             
-            let participantsController = AddParticipantsViewController(context: .create(newValues), variant: .light)
+            let participantsController = AddParticipantsViewController(context: .create(newValues), variant: colorSchemeVariant)
             participantsController.conversationCreationDelegate = self
             navigationController?.pushViewController(participantsController, animated: true)
         }

@@ -1,6 +1,6 @@
 //
 // Wire
-// Copyright (C) 2017 Wire Swiss GmbH
+// Copyright (C) 2018 Wire Swiss GmbH
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -16,19 +16,33 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-import Foundation
 
+#import "UIPasteboard+Compatibility.h"
 
-extension AppDelegate {
+@implementation UIPasteboard (Compatibility)
 
-    /// @return YES if network is offline
-    @discardableResult
-    @objc
-    static func checkNetworkAndFlashIndicatorIfNecessary() -> Bool {
-        NetworkStatusViewController.notifyWhenOffline()
-
-        return .unreachable == NetworkStatus.shared().reachability()
+- (BOOL)wr_hasImages {
+    if(@available(iOS 10, *)) {
+        return self.hasImages;
+    } else {
+        return [self containsPasteboardTypes:UIPasteboardTypeListImage];
     }
-
 }
 
+- (BOOL)wr_hasStrings {
+    if(@available(iOS 10, *)) {
+        return self.hasStrings;
+    } else {
+        return [self containsPasteboardTypes:UIPasteboardTypeListString];
+    }
+}
+
+- (BOOL)wr_hasURLs {
+    if(@available(iOS 10, *)) {
+        return self.hasURLs;
+    } else {
+        return [self containsPasteboardTypes:UIPasteboardTypeListURL];
+    }
+}
+
+@end

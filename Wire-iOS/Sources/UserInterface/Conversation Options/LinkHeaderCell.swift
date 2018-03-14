@@ -47,7 +47,7 @@ final class LinkHeaderCell: UITableViewCell, CellConfigurationConfigurable {
         titleLabel.font = FontSpec(.small, .semibold).font
         titleLabel.text = "guest_room.link.header.title".localized.uppercased()
         subtitleLabel.numberOfLines = 0
-        subtitleLabel.font = FontSpec(.small, .regular).font
+        subtitleLabel.font = FontSpec(.medium, .regular).font
         subtitleLabel.text = "guest_room.link.header.subtitle".localized
     }
     

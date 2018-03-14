@@ -62,7 +62,7 @@ private let margin = (CGFloat(WAZUIMagic.float(forIdentifier: "content.left_marg
     let recordingDotView = RecordingDotView()
     var recordingDotViewVisible: ConstraintGroup?
     var recordingDotViewHidden: ConstraintGroup?
-    
+
     public let recorder = AudioRecorder(format: .wav, maxRecordingDuration: 25.0 * 60.0)! // 25 Minutes
     
     weak public var delegate: AudioRecordViewControllerDelegate?
@@ -95,10 +95,16 @@ private let margin = (CGFloat(WAZUIMagic.float(forIdentifier: "content.left_marg
     
     func beginRecording() {
         self.delegate?.audioRecordViewControllerDidStartRecording(self)
-        AudioServicesPlaySystemSound(kSystemSoundID_Vibrate)
-        delay(0.25) {
-            self.recorder.startRecording()
+
+        if #available(iOS 10, *) {
+            let feedbackGenerator = UINotificationFeedbackGenerator()
+            feedbackGenerator.prepare()
+            feedbackGenerator.notificationOccurred(.success)
+        } else {
+            AudioServicesPlaySystemSound(kSystemSoundID_Vibrate)
         }
+
+        self.recorder.startRecording()
     }
     
     func finishRecordingIfNeeded(_ sender: UIGestureRecognizer) {
@@ -338,7 +344,7 @@ private let margin = (CGFloat(WAZUIMagic.float(forIdentifier: "content.left_marg
     
     func setOverlayState(_ state: AudioButtonOverlayState, animated: Bool) {
         let animations = { self.buttonOverlay.setOverlayState(state) }
-        
+
         if state.animatable && animated {
             UIView.animate(
                 withDuration: state.duration,

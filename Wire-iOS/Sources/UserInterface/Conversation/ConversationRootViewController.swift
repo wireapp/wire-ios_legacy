@@ -37,7 +37,7 @@ import Cartography
         conversationController.conversation = conversation
         conversationController.zClientViewController = clientViewController
 
-        networkStatusViewController = NetworkStatusViewController(container: .conversationRoot)
+        networkStatusViewController = NetworkStatusViewController()
 
         super.init(nibName: .none, bundle: .none)
 
@@ -122,18 +122,13 @@ import Cartography
 
 
 extension ConversationRootViewController: NetworkStatusBarDelegate {
-
     /// The network status bar shows on conversation list only in iPad full screen mode
-    var shouldShowNetworkStatusUIInIPadRegularLandscape: Bool {
-        get {
-            return false
-        }
+    var showInIPadLandscapeMode: Bool {
+        return false
     }
 
-    var shouldShowNetworkStatusUIInIPadRegularPortrait: Bool {
-        get {
-            return true
-        }
+    var showInIPadPortraitMode: Bool {
+        return true
     }
 
 }

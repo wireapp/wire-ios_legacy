@@ -361,6 +361,8 @@
     }
 
     self.contentViewController.searchQueries = self.collectionController.currentTextSearchQuery;
+
+    [[ZMUserSession sharedSession] didOpenWithConversation:self.conversation];
     
     self.isAppearing = NO;
 }
@@ -369,6 +371,7 @@
 {
     [super viewWillDisappear:animated];
     [self updateLeftNavigationBarItems];
+    [[ZMUserSession sharedSession] didCloseWithConversation:self.conversation];
 }
 
 - (void)viewDidDisappear:(BOOL)animated

@@ -23,16 +23,14 @@ typealias NetworkStatusBarDelegate = NetworkStatusViewControllerDelegate & Netwo
 
 protocol NetworkStatusViewControllerDelegate: class {
     /// if return false, NetworkStatusViewController will not disapper in iPad regular mode landscape orientation.
-    var shouldShowNetworkStatusUIInIPadRegularLandscape: Bool {get}
+    var showInIPadLandscapeMode: Bool {get}
 
     /// if return false, NetworkStatusViewController will not disapper in iPad regular mode portrait orientation.
-    var shouldShowNetworkStatusUIInIPadRegularPortrait: Bool {get}
+    var showInIPadPortraitMode: Bool {get}
 }
 
-extension NetworkStatusViewController {
-    // static pointer for global access
-    static weak var selfInConversationRootView: NetworkStatusViewController?
-    static weak var selfInConversationListView: NetworkStatusViewController?
+extension Notification.Name {
+    static let ShowNetworkStatusBar = Notification.Name("ShowNetworkStatusBar")
 }
 
 @objc
@@ -63,31 +61,21 @@ class NetworkStatusViewController : UIViewController {
     var state: NetworkStatusViewState?
     fileprivate var finishedViewWillAppear: Bool = false
     fileprivate var device: DeviceProtocol = UIDevice.current
-    fileprivate var container: ContainerType
-
-    enum ContainerType {
-        case conversationList
-        case conversationRoot
-    }
 
     /// default init method with a parameter for injecting mock device
     ///
     /// - Parameter device: Provide this param for testing only
-    init(container: ContainerType, device: DeviceProtocol = UIDevice.current) {
-        self.container = container
-        self.device = device
-
+    init(device: DeviceProtocol = UIDevice.current) {
         super.init(nibName: nil, bundle: nil)
 
-        switch container {
-        case .conversationList:
-            NetworkStatusViewController.selfInConversationListView = self
-
-        case .conversationRoot:
-            NetworkStatusViewController.selfInConversationRootView = self
-        }
-
         self.device = device
+
+        NotificationCenter.default.addObserver(self, selector: #selector(chnageStateFormOfflineCollapsedToOfflineExpanded), name: Notification.Name.ShowNetworkStatusBar, object: .none)
+
+    }
+
+    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -96,14 +84,7 @@ class NetworkStatusViewController : UIViewController {
 
     deinit {
         NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(applyPendingState), object: nil)
-
-        switch self.container {
-        case .conversationList:
-            NetworkStatusViewController.selfInConversationListView = nil
-
-        case .conversationRoot:
-            NetworkStatusViewController.selfInConversationRootView = nil
-        }
+        NotificationCenter.default.removeObserver(self)
     }
 
     override func loadView() {
@@ -151,41 +132,18 @@ class NetworkStatusViewController : UIViewController {
         }
     }
 
-    func chnageStateFormOfflineCollapsedToOfflineExpanded() -> Bool {
+    func chnageStateFormOfflineCollapsedToOfflineExpanded() {
         let networkStatusView = self.networkStatusView
 
         if networkStatusView.state == .offlineCollapsed {
             self.update(state: .offlineExpanded)
         }
-
-        return networkStatusView.state == .offlineExpanded || networkStatusView.state == .offlineCollapsed
     }
 
 
     /// show NetworkStatusViewController instance(s) if its state is .offlineCollapsed
-    ///
-    /// - Returns: false if it is not in offline states
-    static public func notifyWhenOffline() -> Bool {
-        guard let selfInList = NetworkStatusViewController.selfInConversationListView,
-              let selfInRoot = NetworkStatusViewController.selfInConversationRootView
-            else { return true }
-
-        // for compact mode all networkStatusViewController are notified, for regular mode returns the only enabled networkStatusViewController
-
-        if selfInList.isIPadRegular(device: selfInList.device) {
-            if selfInList.shouldShowOnIPad(for: selfInList.device.orientation) {
-                return selfInList.chnageStateFormOfflineCollapsedToOfflineExpanded()
-            } else {
-                return selfInRoot.chnageStateFormOfflineCollapsedToOfflineExpanded()
-            }
-        }
-        else {
-            let retList = selfInList.chnageStateFormOfflineCollapsedToOfflineExpanded()
-            let retRoot = selfInRoot.chnageStateFormOfflineCollapsedToOfflineExpanded()
-
-            ///return false if one of them is false
-            return retList && retRoot
-        }
+    static public func notifyWhenOffline() {
+        NotificationCenter.default.post(name: .ShowNetworkStatusBar, object: self)
     }
 
     func showOfflineAlert() {
@@ -248,9 +206,9 @@ class NetworkStatusViewController : UIViewController {
         guard let delegate = self.delegate, let newOrientation = newOrientation else { return true }
 
         if newOrientation.isPortrait {
-            return delegate.shouldShowNetworkStatusUIInIPadRegularPortrait
+            return delegate.showInIPadPortraitMode
         } else if newOrientation.isLandscape {
-            return delegate.shouldShowNetworkStatusUIInIPadRegularLandscape
+            return delegate.showInIPadLandscapeMode
         } else {
             return true
         }
