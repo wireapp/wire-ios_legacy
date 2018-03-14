@@ -37,6 +37,9 @@ public extension UIViewController {
     }
 
     @objc public func takeFirstResponder() {
+        if UIAccessibilityIsVoiceOverRunning() {
+            return
+        }
         // no-op
     }
 }

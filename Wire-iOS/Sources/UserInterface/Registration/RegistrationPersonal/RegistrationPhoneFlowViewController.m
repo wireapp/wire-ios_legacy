@@ -104,6 +104,9 @@
 
 - (void)takeFirstResponder
 {
+    if (UIAccessibilityIsVoiceOverRunning()) {
+        return;
+    }
     [self.phoneNumberStepViewController takeFirstResponder];
 }
 

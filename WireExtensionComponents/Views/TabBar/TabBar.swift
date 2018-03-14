@@ -70,7 +70,11 @@ open class TabBar: UIView {
         self.style = style
         
         super.init(frame: CGRect.zero)
-        
+
+        if #available(iOS 10, *) {
+            self.accessibilityTraits = UIAccessibilityTraitTabBar
+        }
+
         setupViews()
         createConstraints()
         updateButtonSelection()

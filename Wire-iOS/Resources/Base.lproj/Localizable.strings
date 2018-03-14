@@ -933,6 +933,8 @@
 
 // Registration
 
+"registration.launch_back_button.label" = "Start over";
+
 "registration.title" = "Registration";
 "registration.close_email_invitation_button.email_title" = "Use another email";
 "registration.close_email_invitation_button.phone_title" = "Register by phone";
@@ -1018,7 +1020,15 @@
 "registration.devices.activated_in" = "Activated in";
 "registration.devices.id" = "ID:";
 
+"signin.use_email.label" = "Login with Email";
+"signin.use_phone.label" = "Login with Phone";
 "signin.forgot_password" = "Forgot password?";
+"signin.use_one_password.label" = "Login with One Password";
+
+"registration.phone_country" = "Country";
+"registration.phone_code" = "Country Code";
+"registration.phone_country.hint" = "Double tap to select another country.";
+"registration.phone_code.hint" = "Double tap to select another country code.";
 
 "registration.add_phone_number.hero.title" = "Add phone number";
 "registration.add_phone_number.hero.paragraph" = "This helps us find people you may know. We never share it.";

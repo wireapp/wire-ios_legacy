@@ -57,7 +57,9 @@ static const CGFloat GuidanceDotViewWidth = 40;
     if (self) {
         self.guidanceDotView = [[GuidanceDotView alloc] init];
         self.countryCodeView = [[CountryCodeView alloc] init];
-        
+        self.countryCodeView.accessibilityLabel = NSLocalizedString(@"registration.phone_code", @"");
+        self.countryCodeView.accessibilityHint = NSLocalizedString(@"registration.phone_code.hint", @"");
+
         [self setupConfirmButton];
         
         self.font = [UIFont fontWithMagicIdentifier:@"style.text.normal.font_spec"];
@@ -110,8 +112,9 @@ static const CGFloat GuidanceDotViewWidth = 40;
 - (void)setCountryCode:(NSUInteger)countryCode
 {
     _countryCode = countryCode;
-    
-    [self.countryCodeView.button setTitle:[NSString stringWithFormat:@"+%lu", (unsigned long)countryCode] forState:UIControlStateNormal];
+    NSString *countryCodeText = [NSString stringWithFormat:@"+%lu", (unsigned long)countryCode];
+    self.countryCodeView.accessibilityValue = countryCodeText;
+    [self.countryCodeView.button setTitle:countryCodeText forState:UIControlStateNormal];
 }
 
 - (void)setEnabled:(BOOL)enabled

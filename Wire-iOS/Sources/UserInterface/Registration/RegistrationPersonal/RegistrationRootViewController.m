@@ -128,6 +128,7 @@
 
     [self.backButton setIcon:iconType withSize:ZetaIconSizeSmall forState:UIControlStateNormal];
     self.backButton.accessibilityIdentifier = @"BackToLaunchScreenButton";
+    self.backButton.accessibilityLabel = NSLocalizedString(@"registration.launch_back_button.label", @"");
     [self.view addSubview:self.backButton];
 
     [self.backButton addTarget:self action:@selector(backButtonTapped) forControlEvents:UIControlEventTouchUpInside];

@@ -77,6 +77,9 @@
 
 - (void)takeFirstResponder
 {
+    if (UIAccessibilityIsVoiceOverRunning()) {
+        return;
+    }
     [self.emailFormViewController.nameField becomeFirstResponder];
 }
 

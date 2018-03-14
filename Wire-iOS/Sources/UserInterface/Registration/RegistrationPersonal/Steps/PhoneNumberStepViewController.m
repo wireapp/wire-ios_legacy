@@ -148,6 +148,9 @@
 
 - (void)takeFirstResponder
 {
+    if (UIAccessibilityIsVoiceOverRunning()) {
+        return;
+    }
     [self.phoneNumberViewController.phoneNumberField becomeFirstResponder];
 }
 

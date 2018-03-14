@@ -168,6 +168,7 @@
         onePasswordButton.contentEdgeInsets = UIEdgeInsetsMake(0, 7, 0, 7);
         [onePasswordButton setImage:onePasswordImage forState:UIControlStateNormal];
         [onePasswordButton addTarget:self action:@selector(open1PasswordExtension:) forControlEvents:UIControlEventTouchUpInside];
+        onePasswordButton.accessibilityLabel = NSLocalizedString(@"signin.use_one_password.label", @"");
         self.passwordField.customRightView = onePasswordButton;
         self.passwordField.rightAccessoryView = RegistrationTextFieldRightAccessoryViewCustom;
     }
@@ -213,6 +214,9 @@
 
 - (void)takeFirstResponder
 {
+    if (UIAccessibilityIsVoiceOverRunning()) {
+        return;
+    }
     if (@available(iOS 11, *)) {
         // A workaround for iOS11 not autofilling the password textfield (https://wearezeta.atlassian.net/browse/ZIOS-9080).
         // We need to put focus on the textfield as it seems to force iOS to "see" this texfield
