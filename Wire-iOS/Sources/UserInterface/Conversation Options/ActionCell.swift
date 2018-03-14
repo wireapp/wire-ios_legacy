@@ -48,7 +48,7 @@ final class ActionCell: UITableViewCell, CellConfigurationConfigurable {
         button.setIcon(.link, with: .tiny, for: .normal)
         button.setIconColor(.init(for: .strongBlue), for: .normal)
         button.setTitleColor(.init(for: .strongBlue), for: .normal)
-        button.titleLabel?.font = FontSpec(.normal, .regular).font
+        button.titleLabel?.font = FontSpec(.normal, .light).font
         button.titleImageSpacing = 8
         contentView.addSubview(button)
     }

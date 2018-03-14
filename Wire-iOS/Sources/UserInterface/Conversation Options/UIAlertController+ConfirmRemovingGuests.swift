@@ -33,7 +33,7 @@ extension UIAlertController {
     
     static func confirmRemovingGuests(_ completion: @escaping (Bool) -> Void) -> UIAlertController {
         return confirmController(
-            message: "guest_room.remove_guests.message".localized,
+            title: "guest_room.remove_guests.message".localized,
             confirmTitle: "guest_room.remove_guests.action".localized,
             completion: completion
         )
@@ -41,14 +41,14 @@ extension UIAlertController {
     
     static func confirmRevokingLink(_ completion: @escaping (Bool) -> Void) -> UIAlertController {
         return confirmController(
-            message: "guest_room.revoke_link.message".localized,
+            title: "guest_room.revoke_link.message".localized,
             confirmTitle: "guest_room.revoke_link.action".localized,
             completion: completion
         )
     }
     
-    static private func confirmController(message: String, confirmTitle: String, completion: @escaping (Bool) -> Void) -> UIAlertController {
-        let controller = UIAlertController(title: nil, message: message, preferredStyle: .actionSheet)
+    static private func confirmController(title: String, confirmTitle: String, completion: @escaping (Bool) -> Void) -> UIAlertController {
+        let controller = UIAlertController(title: title, message: nil, preferredStyle: .actionSheet)
         let removeAction = UIAlertAction(title: confirmTitle, style: .destructive) { _ in
             completion(true)
         }
