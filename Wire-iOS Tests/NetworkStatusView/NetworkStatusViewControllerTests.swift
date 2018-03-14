@@ -22,9 +22,9 @@ import XCTest
 import Cartography
 
 class MockContainerViewController: UIViewController, NetworkStatusBarDelegate {
-    var shouldShowNetworkStatusUIInIPadRegularLandscape: Bool = true
+    var showInIPadLandscapeMode: Bool = true
 
-    var shouldShowNetworkStatusUIInIPadRegularPortrait: Bool = true
+    var showInIPadPortraitMode: Bool = true
 
     var isViewDidAppear: Bool = true
 }
@@ -45,7 +45,7 @@ final class NetworkStatusViewControllerSnapshotTests: ZMSnapshotTestCase {
         mockContainerViewController.view.bounds.size = CGSize(width: 375.0, height: 667.0)
         mockContainerViewController.view.backgroundColor = .lightGray
 
-        sut = NetworkStatusViewController(container: .conversationList)
+        sut = NetworkStatusViewController()
         mockContainerViewController.view.addSubview(sut.view)
         sut.delegate = mockContainerViewController
 
