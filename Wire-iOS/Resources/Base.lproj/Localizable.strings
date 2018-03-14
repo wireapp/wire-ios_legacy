@@ -848,6 +848,7 @@
 
 // Landing screen
 
+"landing.app_name" = "Wire";
 "landing.title" = "Secure messaging for everyone.";
 "landing.create_account.title" = "Create an account";
 "landing.create_account.subtitle" = "for personal use";
