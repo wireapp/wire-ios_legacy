@@ -42,6 +42,7 @@ final class IconActionCell: UITableViewCell, CellConfigurationConfigurable {
         selectedBackgroundView = backgroundView
         backgroundColor = .clear
         imageContainer.addSubview(iconImageView)
+        label.font = FontSpec(.normal, .light).font
         [imageContainer, label, separator].forEach(contentView.addSubview)
     }
     
