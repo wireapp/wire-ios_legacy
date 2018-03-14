@@ -118,40 +118,33 @@ class NetworkStatusViewController : UIViewController {
         networkStatusView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tappedOnNetworkStatusBar)))
     }
 
-    func chnageStateFormOfflineCollapsedToOfflineExpanded() -> Bool {
+    func chnageStateFormOfflineCollapsedToOfflineExpanded() {
         let networkStatusView = self.networkStatusView
 
         if networkStatusView.state == .offlineCollapsed {
             self.update(state: .offlineExpanded)
         }
-
-        return networkStatusView.state == .offlineExpanded || networkStatusView.state == .offlineCollapsed
     }
 
 
     /// show NetworkStatusViewController instance(s) if its state is .offlineCollapsed
-    ///
-    /// - Returns: false if it is not in offline states
-    static public func notifyWhenOffline() -> Bool {
+    static public func notifyWhenOffline() {
         guard let selfInList = NetworkStatusViewController.selfInConversationListView,
               let selfInRoot = NetworkStatusViewController.selfInConversationRootView
-            else { return true }
+            else { return }
 
         // for compact mode all networkStatusViewController are notified, for regular mode returns the only enabled networkStatusViewController
 
         if selfInList.isIPadRegular(device: selfInList.device) {
             if selfInList.shouldShowOnIPad(for: selfInList.device.orientation) {
-                return selfInList.chnageStateFormOfflineCollapsedToOfflineExpanded()
+                selfInList.chnageStateFormOfflineCollapsedToOfflineExpanded()
             } else {
-                return selfInRoot.chnageStateFormOfflineCollapsedToOfflineExpanded()
+                selfInRoot.chnageStateFormOfflineCollapsedToOfflineExpanded()
             }
         }
         else {
-            let retList = selfInList.chnageStateFormOfflineCollapsedToOfflineExpanded()
-            let retRoot = selfInRoot.chnageStateFormOfflineCollapsedToOfflineExpanded()
-
-            ///return false if one of them is false
-            return retList && retRoot
+            selfInList.chnageStateFormOfflineCollapsedToOfflineExpanded()
+            selfInRoot.chnageStateFormOfflineCollapsedToOfflineExpanded()
         }
     }
 
