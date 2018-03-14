@@ -241,14 +241,11 @@ extension NetworkStatusViewController {
 
         guard isIPadRegular(device: device) else { return }
 
-        // find out the new orientation with the new size
         var newOrientation: UIInterfaceOrientation = .unknown
-        if size.width > 0 {
-            if size.width > size.height {
-                newOrientation =  .landscapeLeft
-            } else if size.width < size.height {
-                newOrientation =  .portrait
-            }
+        if application.statusBarOrientation.isPortrait {
+            newOrientation = .portrait
+        } else if application.statusBarOrientation.isLandscape {
+            newOrientation = .landscapeLeft
         }
 
         updateStateForIPad(for: newOrientation)
