@@ -25,3 +25,10 @@ protocol DeviceProtocol {
 
 extension UIDevice: DeviceProtocol {
 }
+
+protocol ApplicationProtocol {
+    var statusBarOrientation: UIInterfaceOrientation { get }
+}
+
+extension UIApplication: ApplicationProtocol {
+}
