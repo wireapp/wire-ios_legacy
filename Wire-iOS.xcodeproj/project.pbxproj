@@ -7147,7 +7147,7 @@
 				162917CC1F8CC176000F3E92 /* NetworkStatusViewTests.swift in Sources */,
 				EF2128EE2056D55400C1673B /* NetworkStatusViewControllerTests.swift in Sources */,
 				EE75B774203C6F5300855099 /* MarkdownTextStorageTests.swift in Sources */,
-                87D5E4431C3E79DA00EB8289 /* UserClient+Fingerprint.swift in Sources */,
+				87D5E4431C3E79DA00EB8289 /* UserClient+Fingerprint.swift in Sources */,
 				BF7ED2DC1DF1D1CF003A4397 /* IncomingConnectionViewTests.swift in Sources */,
 				BA79B0A91B62851F00F23AFB /* SoundEventRulesWatchDogTests.m in Sources */,
 				BF8EE5581D6351B100B0D6D7 /* InputBarEditViewTests.swift in Sources */,
