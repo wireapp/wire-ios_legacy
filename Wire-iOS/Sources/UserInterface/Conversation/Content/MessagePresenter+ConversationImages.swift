@@ -20,18 +20,24 @@ import Foundation
 import Classy
 
 extension MessagePresenter {
-    func imagesViewController(for message: ZMConversationMessage, actionResponder: MessageActionResponder) -> UIViewController {
+    func imagesViewController(for message: ZMConversationMessage, actionResponder: MessageActionResponder, isPreviewing: Bool) -> UIViewController {
         
         guard let conversation = message.conversation else {
             fatal("Message \(message) has no conversation.")
         }
-        
+
+        guard let imageSize = message.imageMessageData?.originalSize else {
+            fatal("Image in message \(message) has no size.")
+        }
+
         let imagesCategoryMatch = CategoryMatch(including: .image, excluding: .none)
         
         let collection = AssetCollectionWrapper(conversation: conversation, matchingCategories: [imagesCategoryMatch])
         
         let imagesController = ConversationImagesViewController(collection: collection, initialMessage: message, inverse: true)
-        
+        imagesController.isPreviewing = isPreviewing
+        imagesController.preferredContentSize = imageSize
+
         if (UIDevice.current.userInterfaceIdiom == .phone) {
             imagesController.modalPresentationStyle = .fullScreen;
             imagesController.snapshotBackgroundView = UIScreen.main.snapshotView(afterScreenUpdates: true)
