@@ -25,7 +25,7 @@ enum OfflineBarState {
 }
 
 class OfflineBar: UIView {
-    ///FIXME: new file
+    ///FIXME: mv to constant file
     static public let collapsedHeight: CGFloat = 2
     static public let expandedHeight: CGFloat = 20
     static public let collapsedCornerRadius: CGFloat = 1
@@ -123,9 +123,8 @@ extension NetworkStatusViewDelegate where Self: UIViewController {
     func didChangeHeight(_ networkStatusView: NetworkStatusView, animated: Bool, state: NetworkStatusViewState) {
 
         guard isViewDidAppear else { return }
-
         if animated {
-            UIView.animate(withDuration: NetworkStatusView.resizeAnimationTime, delay: 0, options: [.curveEaseInOut, .beginFromCurrentState], animations: {
+            UIView.animate(withDuration: TimeInterval.NetworkStatusBar.resizeAnimationTime, delay: 0, options: [.curveEaseInOut, .beginFromCurrentState], animations: {
                 self.view.layoutIfNeeded()
             })
         } else {
@@ -137,7 +136,6 @@ extension NetworkStatusViewDelegate where Self: UIViewController {
 
 class NetworkStatusView: UIView {
 
-    static public let resizeAnimationTime: TimeInterval = 0.25
     static public let horizontal: CGFloat = 16
     static public let verticalMargin: CGFloat = 8
 
@@ -241,7 +239,7 @@ class NetworkStatusView: UIView {
                 }
                 
                 UIView.animate(
-                    withDuration: NetworkStatusView.resizeAnimationTime,
+                    withDuration: TimeInterval.NetworkStatusBar.resizeAnimationTime,
                     delay: 0,
                     options: [.curveEaseInOut, .beginFromCurrentState],
                     animations: updateUIBlock,
