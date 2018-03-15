@@ -47,7 +47,9 @@ class NetworkStatusViewController : UIViewController {
     fileprivate var pendingState : NetworkStatusViewState?
     var state: NetworkStatusViewState?
     fileprivate var offlineBarTimer : Timer?
+
     fileprivate var device: DeviceProtocol = UIDevice.current
+    fileprivate var application: ApplicationProtocol = UIApplication.shared
 
     override func loadView() {
         let passthroughTouchesView = PassthroughTouchesView()
@@ -58,17 +60,20 @@ class NetworkStatusViewController : UIViewController {
     /// default init method with a parameter for injecting mock device
     ///
     /// - Parameter device: Provide this param for testing only
-    init(device: DeviceProtocol = UIDevice.current) {
-        super.init(nibName: nil, bundle: nil)
+    /// - Parameter application: Provide this param for testing only
+    convenience init(device: DeviceProtocol = UIDevice.current, application: ApplicationProtocol = UIApplication.shared) {
+        self.init(nibName: nil, bundle: nil)
 
         self.device = device
-
-        NotificationCenter.default.addObserver(self, selector: #selector(changeStateFormOfflineCollapsedToOfflineExpanded), name: Notification.Name.ShowNetworkStatusBar, object: .none)
-
+        self.application = application
     }
 
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+
+        NotificationCenter.default.addObserver(self, selector: #selector(changeStateFormOfflineCollapsedToOfflineExpanded), name: Notification.Name.ShowNetworkStatusBar, object: .none)
+
+        NotificationCenter.default.addObserver(self, selector: #selector(updateStateForIPad), name: NSNotification.Name.UIApplicationDidChangeStatusBarOrientation, object: .none)
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -191,11 +196,11 @@ extension NetworkStatusViewController : ZMNetworkAvailabilityObserver {
 // MARK: - iPad size class and orientation switching
 
 extension NetworkStatusViewController {
-    
-    func shouldShowOnIPad(for newOrientation: UIDeviceOrientation?) -> Bool {
+    func shouldShowOnIPad() -> Bool {
         guard isIPadRegular(device: device) else { return true }
+        guard let delegate = self.delegate else { return true }
 
-        guard let delegate = self.delegate, let newOrientation = newOrientation else { return true }
+        let newOrientation = application.statusBarOrientation
 
         if newOrientation.isPortrait {
             return delegate.showInIPadPortraitMode
@@ -206,43 +211,27 @@ extension NetworkStatusViewController {
         }
     }
 
-    func updateStateForIPad(for newOrientation: UIDeviceOrientation?) {
-        if shouldShowOnIPad(for: newOrientation) {
-            if let state = state {
+    func updateStateForIPad() {
+        guard device.userInterfaceIdiom == .pad else { return }
+        guard let state = self.state else { return }
+
+        switch self.traitCollection.horizontalSizeClass {
+        case .regular:
+            if shouldShowOnIPad() {
                 networkStatusView.update(state: state, animated: false)
+            } else {
+                /// when size class changes and delegate view controller disabled to show networkStatusView, hide the networkStatusView
+                networkStatusView.update(state: .online, animated: false)
             }
-        } else {
-            /// when size class changes and delegate view controller disabled to show networkStatusView, hide the networkStatusView
-            networkStatusView.update(state: .online, animated: false)
+        case .compact, .unspecified:
+            networkStatusView.update(state: state, animated: false)
         }
     }
 
     open override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
-        guard device.userInterfaceIdiom == .pad else { return }
 
-        updateStateForIPad(for: device.orientation)
+        updateStateForIPad()
     }
-
-    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator?) {
-        if let coordinator = coordinator {
-            super.viewWillTransition(to: size, with: coordinator)
-        }
-
-        guard isIPadRegular(device: device) else { return }
-
-        // find out the new orientation with the new size
-        var newOrientation: UIDeviceOrientation = .unknown
-        if size.width > 0 {
-            if size.width > size.height {
-                newOrientation =  .landscapeLeft
-            } else if size.width < size.height {
-                newOrientation =  .portrait
-            }
-        }
-
-        updateStateForIPad(for: newOrientation)
-    }
-
 }
 
