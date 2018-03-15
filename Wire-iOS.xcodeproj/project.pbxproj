@@ -527,6 +527,7 @@
 		8775BF212008CF3500A8AD93 /* ServiceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8775BF202008CF3500A8AD93 /* ServiceView.swift */; };
 		8775BF232008E0A400A8AD93 /* ServiceDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8775BF222008E0A400A8AD93 /* ServiceDetailViewController.swift */; };
 		87775AB41D9513F9000CAD4F /* WireRequestStrategy.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87775AB31D9513F9000CAD4F /* WireRequestStrategy.framework */; };
+		877798AC205A8EF500898A5E /* ZClientViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 877798AB205A8EF500898A5E /* ZClientViewController.swift */; };
 		87797C0B1FF3C849009FC9A9 /* SearchServicesSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87797C0A1FF3C849009FC9A9 /* SearchServicesSectionController.swift */; };
 		877A325E1E8912500017DD9A /* RoundedBadge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 877A325D1E8912500017DD9A /* RoundedBadge.swift */; };
 		877A32601E892A100017DD9A /* ConversationListAccessoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 877A325F1E892A100017DD9A /* ConversationListAccessoryView.swift */; };
@@ -1927,6 +1928,7 @@
 		8775BF222008E0A400A8AD93 /* ServiceDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceDetailViewController.swift; sourceTree = "<group>"; };
 		87775AB21D95138D000CAD4F /* avs-versions */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = "avs-versions"; sourceTree = "<group>"; };
 		87775AB31D9513F9000CAD4F /* WireRequestStrategy.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WireRequestStrategy.framework; path = Carthage/Build/iOS/WireRequestStrategy.framework; sourceTree = "<group>"; };
+		877798AB205A8EF500898A5E /* ZClientViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZClientViewController.swift; sourceTree = "<group>"; };
 		8778AAEC1F6BC6AD0022F53F /* AppLock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppLock.swift; sourceTree = "<group>"; };
 		87797C0A1FF3C849009FC9A9 /* SearchServicesSectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchServicesSectionController.swift; sourceTree = "<group>"; };
 		877A325D1E8912500017DD9A /* RoundedBadge.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoundedBadge.swift; sourceTree = "<group>"; };
@@ -4894,6 +4896,7 @@
 				8FC851EF199245760008B66B /* ZClientViewController.h */,
 				8FA197181AA5EEE500C64826 /* ZClientViewController+Internal.h */,
 				8FC851F0199245760008B66B /* ZClientViewController.m */,
+				877798AB205A8EF500898A5E /* ZClientViewController.swift */,
 			);
 			path = MainController;
 			sourceTree = "<group>";
@@ -6815,6 +6818,7 @@
 				1648EEED20498E1300CC6B37 /* SearchSectionController.swift in Sources */,
 				871BC05A1D34F60700DF0793 /* NSDictionary+SimpleTypeAccess.m in Sources */,
 				879E5E991F0104A6007A88A3 /* UITextView+Autocorrect.swift in Sources */,
+				877798AC205A8EF500898A5E /* ZClientViewController.swift in Sources */,
 				872CB8B919E58816006752B4 /* ProfileUnblockFooterView.m in Sources */,
 				BFFE943A1E782FD70025AD75 /* ConversationRenamedCell.swift in Sources */,
 				DB3A47E01B4AD96C00391B5C /* MentionsCollectionViewCell.m in Sources */,
