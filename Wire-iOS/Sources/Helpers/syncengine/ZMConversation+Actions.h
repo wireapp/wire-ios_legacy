@@ -33,7 +33,8 @@ extern NSString * const ConversationActionUnarchive;
 extern NSString * const ConversationActionCancelConnectionRequest;
 extern NSString * const ConversationActionBlockUser;
 extern NSString * const ConversationActionUnblockUser;
-
+extern NSString * const ConversationActionMarkAsRead;
+extern NSString * const ConversationActionMarkAsUnread;
 
 
 @interface ZMConversation (Actions)

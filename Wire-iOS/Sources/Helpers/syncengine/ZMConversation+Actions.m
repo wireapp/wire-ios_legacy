@@ -19,6 +19,7 @@
 
 #import "ZMConversation+Actions.h"
 #import "ZMUser+Additions.h"
+#import "Wire-Swift.h"
 
 NSString * const ConversationActionDelete = @"ConversationActionDelete";
 NSString * const ConversationActionLeave = @"ConversationActionLeave";
@@ -29,7 +30,8 @@ NSString * const ConversationActionUnarchive = @"ConversationActionUnarchive";
 NSString * const ConversationActionCancelConnectionRequest = @"ConversationActionCancelConnectionRequest";
 NSString * const ConversationActionBlockUser = @"ConversationActionBlockUser";
 NSString * const ConversationActionUnblockUser = @"ConversationActionUnblockUser";
-
+NSString * const ConversationActionMarkAsRead = @"ConversationActionMarkAsRead";
+NSString * const ConversationActionMarkAsUnread = @"ConversationActionMarkAsUnread";
 
 
 @implementation ZMConversation (Actions)
@@ -100,6 +102,14 @@ NSString * const ConversationActionUnblockUser = @"ConversationActionUnblockUser
         }
     }
 
+    NSArray *unreadMessages = self.unreadMessages;
+    if (unreadMessages.count > 0) {
+        [actions addObject:ConversationActionMarkAsRead];
+    }
+    else if (unreadMessages.count == 0 && [self canMarkAsUnread]) {
+        [actions addObject:ConversationActionMarkAsUnread];
+    }
+    
     [actions addObject:self.archiveActionForConversation];
     return actions;
 }

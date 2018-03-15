@@ -185,6 +185,14 @@ static AppDelegate *sharedAppDelegate = nil;
     [[UIApplication sharedApplication] resetRunDuration];
 }
 
+- (void)application:(UIApplication *)application
+performActionForShortcutItem:(UIApplicationShortcutItem *)shortcutItem
+  completionHandler:(void (^)(BOOL))completionHandler
+{
+    [self.rootViewController.quickActionsManager performActionFor:shortcutItem
+                                                completionHandler:completionHandler];
+}
+
 - (void)setupTracking
 {
     // Migrate analytics settings

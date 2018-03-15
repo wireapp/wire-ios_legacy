@@ -23,3 +23,9 @@ extension CGFloat {
         static let collapsedCornerRadius: CGFloat = 1
     }
 }
+
+extension TimeInterval {
+    enum NetworkStatusBar {
+        static let resizeAnimationTime: TimeInterval = 0.25
+    }
+}

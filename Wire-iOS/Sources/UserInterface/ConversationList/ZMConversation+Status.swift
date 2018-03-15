@@ -625,7 +625,7 @@ extension ConversationStatus {
 }
 
 extension ZMConversation {
-    private var unreadMessages: [ZMConversationMessage] {
+    internal var unreadMessages: [ZMConversationMessage] {
         let lastReadIndex: Int
         
         if let lastMessage = self.lastReadMessage {
