@@ -154,6 +154,7 @@
     
     [self.passwordField addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
     [self.passwordField.confirmButton addTarget:self action:@selector(signIn:) forControlEvents:UIControlEventTouchUpInside];
+    self.passwordField.confirmButton.accessibilityLabel = NSLocalizedString(@"signin.confirm", @"");
     
     if (self.loginCredentials.password != nil) {
         // User was previously signed in so we prefill the credentials
@@ -169,6 +170,8 @@
         [onePasswordButton setImage:onePasswordImage forState:UIControlStateNormal];
         [onePasswordButton addTarget:self action:@selector(open1PasswordExtension:) forControlEvents:UIControlEventTouchUpInside];
         onePasswordButton.accessibilityLabel = NSLocalizedString(@"signin.use_one_password.label", @"");
+        onePasswordButton.accessibilityHint = NSLocalizedString(@"signin.use_one_password.hint", @"");
+
         self.passwordField.customRightView = onePasswordButton;
         self.passwordField.rightAccessoryView = RegistrationTextFieldRightAccessoryViewCustom;
     }
@@ -185,7 +188,8 @@
     [self.forgotPasswordButton setTitle:[NSLocalizedString(@"signin.forgot_password", nil) uppercasedWithCurrentLocale] forState:UIControlStateNormal];
     self.forgotPasswordButton.titleLabel.font = [UIFont fontWithMagicIdentifier:@"style.text.small.font_spec_light"];
     [self.forgotPasswordButton addTarget:self action:@selector(resetPassword:) forControlEvents:UIControlEventTouchUpInside];
-    
+
+    self.forgotPasswordButton.accessibilityTraits |= UIAccessibilityTraitLink;
     [self.view addSubview:self.forgotPasswordButton];
 }
 

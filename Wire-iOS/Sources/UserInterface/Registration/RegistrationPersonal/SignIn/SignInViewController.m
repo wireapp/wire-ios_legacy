@@ -130,8 +130,10 @@
 
 - (void)setupAccessibilityElements
 {
+    self.buttonContainer.accessibilityTraits = UIAccessibilityTraitHeader;
+
     if (@available(iOS 10, *)) {
-        self.buttonContainer.accessibilityTraits = UIAccessibilityTraitTabBar;
+        self.buttonContainer.accessibilityTraits |= UIAccessibilityTraitTabBar;
     }
 
     self.emailSignInButton.accessibilityLabel = NSLocalizedString(@"signin.use_email.label", @"");

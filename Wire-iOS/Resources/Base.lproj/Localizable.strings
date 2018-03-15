@@ -933,7 +933,7 @@
 
 // Registration
 
-"registration.launch_back_button.label" = "Start over";
+"registration.launch_back_button.label" = "Back";
 
 "registration.title" = "Registration";
 "registration.close_email_invitation_button.email_title" = "Use another email";
@@ -1023,7 +1023,9 @@
 "signin.use_email.label" = "Login with Email";
 "signin.use_phone.label" = "Login with Phone";
 "signin.forgot_password" = "Forgot password?";
-"signin.use_one_password.label" = "Login with One Password";
+"signin.use_one_password.label" = "Log in with 1Password";
+"signin.use_one_password.hint" = "Double tap to fill your password with 1Password";
+"signin.confirm" = "Log In";
 
 "registration.phone_country" = "Country";
 "registration.phone_code" = "Country Code";

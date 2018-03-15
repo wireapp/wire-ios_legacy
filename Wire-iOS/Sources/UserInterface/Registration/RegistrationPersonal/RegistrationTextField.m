@@ -57,6 +57,8 @@ static const CGFloat GuidanceDotViewWidth = 40;
     if (self) {
         self.guidanceDotView = [[GuidanceDotView alloc] init];
         self.countryCodeView = [[CountryCodeView alloc] init];
+        self.countryCodeView.isAccessibilityElement = YES;
+        self.countryCodeView.accessibilityTraits = UIAccessibilityTraitButton;
         self.countryCodeView.accessibilityLabel = NSLocalizedString(@"registration.phone_code", @"");
         self.countryCodeView.accessibilityHint = NSLocalizedString(@"registration.phone_code.hint", @"");
 
