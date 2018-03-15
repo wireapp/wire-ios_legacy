@@ -5381,10 +5381,10 @@
 		EF2126B51FB9DFE300625A9B /* RegistrationTeam */ = {
 			isa = PBXGroup;
 			children = (
-				EF61B3411FC8508400D8E631 /* TextFieldValidator.swift */,
 				F1199D2B1FC8490A0070FAC3 /* Flow */,
-				EF2127271FB9E06300625A9B /* LandingViewController.swift */,
 				D5DBAAA820064D7D00E9F65B /* Team Invites */,
+				EF61B3411FC8508400D8E631 /* TextFieldValidator.swift */,
+				EF2127271FB9E06300625A9B /* LandingViewController.swift */,
 				EF1F9A011FBB1FD800969DD1 /* LandingButton.swift */,
 				EFFF9E841FBF335700491F9A /* UIColor+TeamCreation.swift */,
 				EF25F7DD1FC45F8E0040C3CC /* AccessoryTextField.swift */,

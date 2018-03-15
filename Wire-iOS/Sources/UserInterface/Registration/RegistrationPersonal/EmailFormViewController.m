@@ -119,7 +119,8 @@
     self.passwordField.accessibilityIdentifier = @"PasswordField";
     self.passwordField.returnKeyType = UIReturnKeyDone;
     self.passwordField.delegate = self;
-    
+    self.passwordField.confirmButton.accessibilityLabel = NSLocalizedString(@"registration.confirm", @"");
+
     [self.passwordField addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
     [self.passwordField addTarget:self action:@selector(textFieldDidEndEditing:) forControlEvents:UIControlEventEditingDidEnd];
     

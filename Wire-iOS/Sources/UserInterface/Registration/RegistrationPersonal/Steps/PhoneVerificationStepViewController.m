@@ -104,8 +104,10 @@ const NSTimeInterval PhoneVerificationResendInterval = 30.0f;
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    
-    [self.phoneVerificationField becomeFirstResponder];
+
+    if (!UIAccessibilityIsVoiceOverRunning()) {
+        [self.phoneVerificationField becomeFirstResponder];
+    }
 }
 
 - (void)createInstructionLabel
@@ -115,7 +117,8 @@ const NSTimeInterval PhoneVerificationResendInterval = 30.0f;
     self.instructionLabel.textColor = [UIColor colorWithMagicIdentifier:@"style.color.static_foreground.normal"];
     self.instructionLabel.text = [NSString stringWithFormat:NSLocalizedString(@"registration.verify_phone_number.instructions", nil), self.phoneNumber];
     self.instructionLabel.numberOfLines = 0;
-    
+    self.instructionLabel.accessibilityTraits |= UIAccessibilityTraitHeader;
+
     [self.view addSubview:self.instructionLabel];
 }
 
@@ -147,11 +150,13 @@ const NSTimeInterval PhoneVerificationResendInterval = 30.0f;
     self.phoneVerificationField = [[RegistrationTextField alloc] initForAutoLayout];
     self.phoneVerificationField.leftAccessoryView = RegistrationTextFieldLeftAccessoryViewNone;
     self.phoneVerificationField.textAlignment = NSTextAlignmentCenter;
-    self.phoneVerificationField.accessibilityLabel = @"verificationField";
+    self.phoneVerificationField.accessibilityIdentifier = @"verificationField";
     self.phoneVerificationField.keyboardType = UIKeyboardTypeNumberPad;
     self.phoneVerificationField.delegate = self;
     [self.phoneVerificationField.confirmButton addTarget:self action:@selector(verifyCode:) forControlEvents:UIControlEventTouchUpInside];
-    
+    self.phoneVerificationField.confirmButton.accessibilityLabel = NSLocalizedString(@"registration.phone.verify.label", @"");
+    self.phoneVerificationField.accessibilityLabel = NSLocalizedString(@"registration.phone.verify_field.label", @"");
+
     [self.view addSubview:self.phoneVerificationField];
 }
 

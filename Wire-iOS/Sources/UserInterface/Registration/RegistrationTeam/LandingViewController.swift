@@ -296,7 +296,6 @@ final class LandingViewController: UIViewController {
     // MARK: - Accessibility
 
     private func configureAccessibilityElements() {
-
         logoView.isAccessibilityElement = false
         headline.isAccessibilityElement = false
         cancelButton.accessibilityLabel = "general.cancel".localized
@@ -307,13 +306,6 @@ final class LandingViewController: UIViewController {
         headlineStackView.shouldGroupAccessibilityChildren = true
 
         headerContainerView.accessibilityElements = [headlineStackView, cancelButton]
-
-        createAccountButton.isAccessibilityElement = true
-        createAccountButton.accessibilityLabel = (LandingViewController.createAccountButtonTitle.string)
-
-        createTeamButton.isAccessibilityElement = true
-        createTeamButton.accessibilityLabel = (LandingViewController.createTeamButtonTitle.string)
-
     }
 
     private static let createAccountButtonTitle: NSAttributedString = {

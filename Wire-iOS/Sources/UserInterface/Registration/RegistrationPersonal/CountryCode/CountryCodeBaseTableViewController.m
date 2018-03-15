@@ -60,6 +60,7 @@ NSString * const CountryCodeCellIdentifier = @"CountryCodeCellIdentifier";
 {
     cell.textLabel.text = country.displayName;
     cell.detailTextLabel.text = [NSString stringWithFormat:@"+%@", country.e164];
+    cell.accessibilityHint = NSLocalizedString(@"registration.phone.country_code.hint", @"");
 }
 
 @end

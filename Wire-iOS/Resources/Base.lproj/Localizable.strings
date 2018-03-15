@@ -21,6 +21,7 @@
 "general.next" = "Next";
 "general.cancel" = "Cancel";
 "general.close" = "Close";
+"general.back" = "Back";
 "general.open_settings" = "Open Wire Settings";
 
 "general.guest-room-name" = "Guest room";
@@ -1031,6 +1032,8 @@
 "registration.phone_code" = "Country Code";
 "registration.phone_country.hint" = "Double tap to select another country.";
 "registration.phone_code.hint" = "Double tap to select another country code.";
+"registration.phone.verify.label" = "Verify phone number";
+"registration.phone.verify_field.label" = "Verification Code";
 
 "registration.add_phone_number.hero.title" = "Add phone number";
 "registration.add_phone_number.hero.paragraph" = "This helps us find people you may know. We never share it.";
@@ -1046,6 +1049,9 @@
 "registration.phone_invitation.title" = "Invitation";
 "registration.phone_invitation.hero.title" = "Hello, %@";
 "registration.phone_invitation.hero.paragraph" = "You are one step away from creating your account.";
+
+"registration.confirm" = "Sign Up";
+"registration.phone.country_code.hint" = "Double tap to use a phone number from this country.";
 
 "error.name_and_email" = "Please enter your full name and a valid email address";
 "error.full_name" = "Please enter your full name";
