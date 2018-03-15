@@ -299,8 +299,6 @@ final class LandingViewController: UIViewController {
 
         logoView.isAccessibilityElement = false
         headline.isAccessibilityElement = false
-
-        cancelButton.isAccessibilityElement = true
         cancelButton.accessibilityLabel = "general.cancel".localized
 
         headlineStackView.isAccessibilityElement = true
