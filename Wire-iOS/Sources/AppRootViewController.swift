@@ -26,7 +26,8 @@ class AppRootViewController: UIViewController {
     public let mainWindow: UIWindow
     public let overlayWindow: UIWindow
     public fileprivate(set) var sessionManager: SessionManager?
-
+    public fileprivate(set) var quickActionsManager: QuickActionsManager?
+    
     fileprivate var sessionManagerCreatedSessionObserverToken: Any?
     fileprivate var sessionManagerDestroyedSessionObserverToken: Any?
     fileprivate var soundEventListeners = [UUID : SoundEventListener]()
@@ -151,6 +152,9 @@ class AppRootViewController: UIViewController {
             self.sessionManager?.requestToOpenViewDelegate = self
             sessionManager.updateCallNotificationStyleFromSettings()
             sessionManager.useConstantBitRateAudio = Settings.shared().callingConstantBitRate
+                
+            self.quickActionsManager = QuickActionsManager(sessionManager: sessionManager,
+                                                           application: UIApplication.shared)
         }
     }
 

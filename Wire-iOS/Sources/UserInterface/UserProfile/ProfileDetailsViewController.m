@@ -332,7 +332,11 @@ typedef NS_ENUM(NSUInteger, ProfileUserAction) {
     }
     else if (user.canBeConnected) {
         return ProfileUserActionSendConnectionRequest;
-    } else {
+    }
+    else if (user.isWirelessUser) {
+        return ProfileUserActionNone;
+    }
+    else {
         return ProfileUserActionOpenConversation;
     }
 }

@@ -105,6 +105,11 @@ typedef NS_ENUM(NSUInteger, ProfileViewControllerTabBarIndex) {
     return self;
 }
 
+- (UIStatusBarStyle)preferredStatusBarStyle
+{
+    return [[ColorScheme defaultColorScheme] statusBarStyle];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -158,7 +163,7 @@ typedef NS_ENUM(NSUInteger, ProfileViewControllerTabBarIndex) {
         [viewControllers addObject:profileDetailsViewController];
     }
     
-    if (self.fullUser.isConnected || self.fullUser.isTeamMember) {
+    if (self.fullUser.isConnected || self.fullUser.isTeamMember || self.fullUser.isWirelessUser) {
         ProfileDevicesViewController *profileDevicesViewController = [[ProfileDevicesViewController alloc] initWithUser:self.fullUser];
         profileDevicesViewController.title = NSLocalizedString(@"profile.devices.title", nil);
         profileDevicesViewController.delegate = self;

@@ -133,13 +133,11 @@
         
         [self.analyticsTracker tagEnteredEmailAndPassword];
 
-        // Dismiss keyboard and delay presentation for a smoother transition
-        [[UIApplication sharedApplication] sendAction:@selector(resignFirstResponder) to:nil from:nil forEvent:nil];
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            TermsOfUseStepViewController *tosController = [[TermsOfUseStepViewController alloc] initWithUnregisteredUser:self.unregisteredUser];
-            tosController.formStepDelegate = self;
-            [self.navigationController pushViewController:tosController.registrationFormViewController animated:YES];
-        });
+        self.navigationController.showLoadingView = YES;
+        
+        ZMCompleteRegistrationUser *completeUser = [self.unregisteredUser completeRegistrationUser];
+        [[UnauthenticatedSession sharedSession] registerUser:completeUser];
+        
     }
     else if ([viewController isKindOfClass:[TermsOfUseStepViewController class]] ||
              ([viewController isKindOfClass:[EmailStepViewController class]] && [self hasUserAcceptedTOS]))
@@ -149,11 +147,12 @@
         
         self.hasUserAcceptedTOS = YES;
         
-        ZMCompleteRegistrationUser *completeUser = [self.unregisteredUser completeRegistrationUser];
-        [[UnauthenticatedSession sharedSession] registerUser:completeUser];
+        EmailVerificationStepViewController *emailVerificationStepViewController = [[EmailVerificationStepViewController alloc] initWithEmailAddress:self.unregisteredUser.emailAddress];
+        emailVerificationStepViewController.formStepDelegate = self;
+        emailVerificationStepViewController.delegate = self;
+        emailVerificationStepViewController.view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
         
-        self.navigationController.showLoadingView = YES;
-        
+        [self.navigationController pushViewController:emailVerificationStepViewController.registrationFormViewController animated:YES];
     }
     else if ([viewController isKindOfClass:[ProfilePictureStepViewController class]]) {
         ProfilePictureStepViewController *step = (ProfilePictureStepViewController *)viewController;
@@ -207,12 +206,15 @@
 - (void)emailVerificationDidSucceed
 {
     self.navigationController.showLoadingView = NO;
-    EmailVerificationStepViewController *emailVerificationStepViewController = [[EmailVerificationStepViewController alloc] initWithEmailAddress:self.unregisteredUser.emailAddress];
-    emailVerificationStepViewController.formStepDelegate = self;
-    emailVerificationStepViewController.delegate = self;
-    emailVerificationStepViewController.view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     
-    [self.navigationController pushViewController:emailVerificationStepViewController.registrationFormViewController animated:YES];
+    // Dismiss keyboard and delay presentation for a smoother transition
+    [[UIApplication sharedApplication] sendAction:@selector(resignFirstResponder) to:nil from:nil forEvent:nil];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        TermsOfUseStepViewController *tosController = [[TermsOfUseStepViewController alloc] initWithUnregisteredUser:self.unregisteredUser];
+        tosController.formStepDelegate = self;
+        [self.navigationController pushViewController:tosController.registrationFormViewController animated:YES];
+    });
+    
 }
 
 #pragma mark - ZMAuthenticationObserver
