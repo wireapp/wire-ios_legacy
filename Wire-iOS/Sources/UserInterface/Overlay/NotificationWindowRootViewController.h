@@ -24,11 +24,9 @@
 @class BarController;
 @class AppLockViewController;
 @class ChatHeadsViewController;
-@class NetworkStatusViewController;
 
 @interface NotificationWindowRootViewController : UIViewController
 
-@property (nonatomic, readonly, nullable) NetworkStatusViewController *networkStatusViewController;
 @property (nonatomic, readonly, nullable) ActiveVoiceChannelViewController *voiceChannelController;
 @property (nonatomic, readonly, nullable) AppLockViewController *appLockViewController;
 @property (nonatomic, readonly, nullable) ChatHeadsViewController *chatHeadsViewController;
