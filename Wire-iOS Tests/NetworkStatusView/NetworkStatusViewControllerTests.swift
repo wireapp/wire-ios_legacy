@@ -25,7 +25,7 @@ final class MockConversationRootViewController: UIViewController, NetworkStatusB
     var networkStatusViewController: NetworkStatusViewController!
     
     var showInIPadLandscapeMode: Bool {
-        return false
+        return true
     }
     
     var showInIPadPortraitMode: Bool {
@@ -39,7 +39,7 @@ final class MockConversationListViewController: UIViewController, NetworkStatusB
     var networkStatusViewController: NetworkStatusViewController!
     
     var showInIPadLandscapeMode: Bool {
-        return true
+        return false
     }
     
     var showInIPadPortraitMode: Bool {
@@ -135,8 +135,8 @@ final class NetworkStatusViewControllerTests: XCTestCase {
         checkForNetworkStatusViewState(userInterfaceIdiom: .pad,
                                        horizontalSizeClass: .regular,
                                        orientation: .landscapeLeft,
-                                       listState: .offlineExpanded,
-                                       rootState: .online)
+                                       listState: .online,
+                                       rootState: .offlineExpanded)
     }
     
     func testThatNetworkStatusViewShowsOnRootButNotListWhenDevicePropertiesIsIPadPortraitRegularMode() {
@@ -175,10 +175,10 @@ final class NetworkStatusViewControllerTests: XCTestCase {
                  rootState: .offlineCollapsed)
 
         // WHEN
-        _ = NetworkStatusViewController.notifyWhenOffline()
+        NetworkStatusViewController.notifyWhenOffline()
         
         // THEN
-        checkResult(listState: .offlineExpanded, rootState: .online)
+        checkResult(listState: .online, rootState: .offlineExpanded)
     }
 
     func testThatNotifyWhenOfflineShowsBothNetworkStatusViewOnIPhone() {
@@ -193,7 +193,7 @@ final class NetworkStatusViewControllerTests: XCTestCase {
                  rootState: .offlineCollapsed)
 
         // WHEN
-        _ = NetworkStatusViewController.notifyWhenOffline()
+        NetworkStatusViewController.notifyWhenOffline()
 
         // THEN
         checkResult(listState: .offlineExpanded, rootState: .offlineExpanded)
@@ -210,8 +210,8 @@ final class NetworkStatusViewControllerTests: XCTestCase {
         // Portrait
         
         // WHEN
-        sutList.viewWillTransition(to: .zero, with: nil)
-        sutRoot.viewWillTransition(to: .zero, with: nil)
+        sutList.updateStateForIPad()
+        sutRoot.updateStateForIPad()
 
         // THEN
         checkResult(listState: .online, rootState: .offlineExpanded)
@@ -220,11 +220,11 @@ final class NetworkStatusViewControllerTests: XCTestCase {
         mockApplication.statusBarOrientation = .landscapeLeft
 
         // WHEN
-        sutList.viewWillTransition(to: .zero, with: nil)
-        sutRoot.viewWillTransition(to: .zero, with: nil)
+        sutList.updateStateForIPad()
+        sutRoot.updateStateForIPad()
         
         // THEN
-        checkResult(listState: .offlineExpanded, rootState: .online)
+        checkResult(listState: .online, rootState: .offlineExpanded)
     }
 }
 
@@ -251,7 +251,7 @@ final class NetworkStatusViewControllerRetainTests: XCTestCase {
 
             // WHEN
             networkStatusViewController.viewDidLoad()
-            let _ = NetworkStatusViewController.notifyWhenOffline()
+            NetworkStatusViewController.notifyWhenOffline()
             networkStatusViewController = nil
         }
 

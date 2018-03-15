@@ -53,8 +53,8 @@ class NetworkStatusViewController : UIViewController {
     /// default init method with a parameter for injecting mock device
     ///
     /// - Parameter device: Provide this param for testing only
-    init(device: DeviceProtocol = UIDevice.current, application: ApplicationProtocol = UIApplication.shared) {
-        super.init(nibName: nil, bundle: nil)
+    convenience init(device: DeviceProtocol = UIDevice.current, application: ApplicationProtocol = UIApplication.shared) {
+        self.init(nibName: nil, bundle: nil)
 
         self.device = device
         self.application = application
