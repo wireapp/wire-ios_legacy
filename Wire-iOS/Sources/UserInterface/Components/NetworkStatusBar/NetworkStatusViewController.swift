@@ -122,7 +122,7 @@ class NetworkStatusViewController : UIViewController {
         }
     }
 
-    func chnageStateFormOfflineCollapsedToOfflineExpanded() {
+    fileprivate func chnageStateFormOfflineCollapsedToOfflineExpanded() {
         let networkStatusView = self.networkStatusView
 
         if networkStatusView.state == .offlineCollapsed {
@@ -189,7 +189,19 @@ class NetworkStatusViewController : UIViewController {
 
         networkStatusView.update(state: state, animated: true)
     }
+}
 
+extension NetworkStatusViewController: ZMNetworkAvailabilityObserver {
+
+    func didChangeAvailability(newState: ZMNetworkState) {
+        enqueue(state: viewState(from: newState))
+    }
+
+}
+
+// MARK: - iPad size class and orientation switching
+
+extension NetworkStatusViewController {
     func shouldShowOnIPad(for newOrientation: UIInterfaceOrientation?) -> Bool {
         guard isIPadRegular(device: device) else { return true }
 
@@ -204,19 +216,6 @@ class NetworkStatusViewController : UIViewController {
         }
     }
 
-}
-
-extension NetworkStatusViewController: ZMNetworkAvailabilityObserver {
-
-    func didChangeAvailability(newState: ZMNetworkState) {
-        enqueue(state: viewState(from: newState))
-    }
-
-}
-
-// MARK: - iPad size class and orientation switching
-
-extension NetworkStatusViewController {
     func updateStateForIPad() {
         guard device.userInterfaceIdiom == .pad else { return }
         guard let state = self.state else { return }
