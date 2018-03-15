@@ -119,6 +119,7 @@
         self.emailField.textContentType = UITextContentTypeUsername;
     }
     self.emailField.placeholder = NSLocalizedString(@"email.placeholder", nil);
+    self.emailField.accessibilityLabel = NSLocalizedString(@"email.placeholder", nil);
     self.emailField.keyboardType = UIKeyboardTypeEmailAddress;
     self.emailField.returnKeyType = UIReturnKeyNext;
     self.emailField.keyboardAppearance = UIKeyboardAppearanceDark;
@@ -146,6 +147,7 @@
         self.passwordField.textContentType = UITextContentTypePassword;
     }
     self.passwordField.placeholder = NSLocalizedString(@"password.placeholder", nil);
+    self.passwordField.accessibilityLabel = NSLocalizedString(@"password.placeholder", nil);
     self.passwordField.secureTextEntry = YES;
     self.passwordField.keyboardAppearance = UIKeyboardAppearanceDark;
     self.passwordField.accessibilityIdentifier = @"PasswordField";

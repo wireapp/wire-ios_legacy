@@ -91,7 +91,7 @@
     phoneNumberStepViewController.formStepDelegate = self;
     phoneNumberStepViewController.view.translatesAutoresizingMaskIntoConstraints = NO;
     self.phoneNumberStepViewController = phoneNumberStepViewController;
-    
+    self.phoneNumberStepViewController.phoneNumberViewController.phoneNumberField.confirmButton.accessibilityLabel = NSLocalizedString(@"signin.confirm", @"");
     
     [self addChildViewController:phoneNumberStepViewController];
     [self.view addSubview:phoneNumberStepViewController.view];

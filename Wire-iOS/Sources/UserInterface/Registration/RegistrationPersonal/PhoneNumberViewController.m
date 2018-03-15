@@ -106,6 +106,7 @@ static CGFloat PhoneNumberFieldTopMargin = 16;
     self.phoneNumberField.leftAccessoryView = RegistrationTextFieldLeftAccessoryViewCountryCode;
     self.phoneNumberField.keyboardType = UIKeyboardTypeNumberPad;
     self.phoneNumberField.placeholder = NSLocalizedString(@"registration.enter_phone_number.placeholder", nil);
+    self.phoneNumberField.accessibilityLabel = NSLocalizedString(@"registration.enter_phone_number.placeholder", nil);
     self.phoneNumberField.delegate = self;
     
     [self.phoneNumberField.countryCodeButton addTarget:self action:@selector(selectCountry:) forControlEvents:UIControlEventTouchUpInside];

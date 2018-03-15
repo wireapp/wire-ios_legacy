@@ -71,6 +71,7 @@
 {
     self.nameField = [[RegistrationTextField alloc] initForAutoLayout];
     self.nameField.placeholder = NSLocalizedString(@"name.placeholder", nil);
+    self.nameField.accessibilityLabel = NSLocalizedString(@"name.placeholder", @"");
     self.nameField.returnKeyType = UIReturnKeyNext;
     self.nameField.keyboardAppearance = UIKeyboardAppearanceDark;
     self.nameField.autocorrectionType = UITextAutocorrectionTypeNo;
@@ -78,7 +79,7 @@
     self.nameField.minimumFontSize = 15.0f;
     self.nameField.accessibilityIdentifier = @"NameField";
     self.nameField.delegate = self;
-    
+
     [self.nameField addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
     [self.nameField addTarget:self action:@selector(textFieldDidEndEditing:) forControlEvents:UIControlEventEditingDidEnd];
     
@@ -91,6 +92,7 @@
     self.emailField = [[RegistrationTextField alloc] initForAutoLayout];
     
     self.emailField.placeholder = NSLocalizedString(@"email.placeholder", nil);
+    self.emailField.accessibilityLabel = NSLocalizedString(@"email.placeholder", nil);
     self.emailField.keyboardType = UIKeyboardTypeEmailAddress;
     self.emailField.returnKeyType = UIReturnKeyNext;
     self.emailField.keyboardAppearance = UIKeyboardAppearanceDark;
@@ -111,6 +113,7 @@
     self.passwordField = [[RegistrationTextField alloc] initForAutoLayout];
     
     self.passwordField.placeholder = NSLocalizedString(@"password.placeholder", nil);
+    self.passwordField.accessibilityLabel = NSLocalizedString(@"password.placeholder", nil);
     self.passwordField.secureTextEntry = YES;
     self.passwordField.keyboardAppearance = UIKeyboardAppearanceDark;
     self.passwordField.accessibilityIdentifier = @"PasswordField";
