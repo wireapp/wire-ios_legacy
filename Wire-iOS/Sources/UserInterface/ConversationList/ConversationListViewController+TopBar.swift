@@ -22,7 +22,7 @@ import Cartography
 
 extension ConversationListViewController: NetworkStatusBarDelegate {
     var showInIPadLandscapeMode: Bool {
-        return true
+        return false
     }
 
     var showInIPadPortraitMode: Bool {
