@@ -60,6 +60,12 @@
                 self.conversation.isArchived = !isArchived
                 Analytics.shared().tagArchivedConversation(!isArchived)
                 }
+            case .markRead: self.dismissAndEnqueue {
+                self.conversation.markAsRead()
+                }
+            case .markUnread: self.dismissAndEnqueue {
+                self.conversation.markAsUnread()
+                }
             case .silence(isSilenced: let isSilenced): self.dismissAndEnqueue {
                 self.conversation.isSilenced = !isSilenced
                 }

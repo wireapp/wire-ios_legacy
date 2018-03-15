@@ -26,6 +26,8 @@ extension ZMConversation {
         case archive(isArchived: Bool)
         case cancelRequest
         case block(isBlocked: Bool)
+        case markRead
+        case markUnread
         case remove
     }
     
@@ -68,6 +70,13 @@ extension ZMConversation {
         if !isReadOnly {
             actions.append(.silence(isSilenced: isSilenced))
         }
+        
+        if unreadMessages.count > 0 {
+            actions.append(.markRead)
+        } else if unreadMessages.count == 0 && canMarkAsUnread() {
+            actions.append(.markUnread)
+        }
+
         actions.append(.archive(isArchived: isArchived))
         return actions
     }
@@ -91,6 +100,8 @@ extension ZMConversation.Action {
         case .remove: return "profile.remove_dialog_button_remove"
         case .delete: return "meta.menu.delete"
         case .leave: return "meta.menu.leave"
+        case .markRead: return "meta.menu.mark_read"
+        case .markUnread: return "meta.menu.mark_unread"
         case .silence(isSilenced: let muted): return "meta.menu.silence.\(muted ? "unmute" : "mute")"
         case .archive(isArchived: let archived): return "meta.menu.\(archived ? "unarchive" : "archive")"
         case .cancelRequest: return "meta.menu.cancel_connection_request"
