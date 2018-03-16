@@ -32,7 +32,6 @@
 #import "IconButton.h"
 
 #import "ShareItemProvider.h"
-#import "ActionSheetController.h"
 #import "InviteContactsViewController.h"
 #import "Analytics.h"
 #import "AnalyticsTracker+Invitations.h"

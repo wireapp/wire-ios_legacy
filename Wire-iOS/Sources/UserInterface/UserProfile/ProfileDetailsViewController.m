@@ -49,7 +49,6 @@
 #import "ProfileSendConnectionRequestFooterView.h"
 #import "ProfileIncomingConnectionRequestFooterView.h"
 #import "ProfileUnblockFooterView.h"
-#import "ActionSheetController+Conversation.h"
 
 
 typedef NS_ENUM(NSUInteger, ProfileViewContentMode) {

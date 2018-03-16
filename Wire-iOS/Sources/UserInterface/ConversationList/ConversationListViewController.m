@@ -51,10 +51,6 @@
 #import "NotificationWindowRootViewController.h"
 #import "PassthroughTouchesView.h"
 
-
-#import "ActionSheetController.h"
-#import "ActionSheetController+Conversation.h"
-
 #import "Wire-Swift.h"
 
 @interface ConversationListViewController (Content) <ConversationListContentDelegate>
