@@ -24,11 +24,7 @@ final class MockConversationRootViewController: UIViewController, NetworkStatusB
 
     var networkStatusViewController: NetworkStatusViewController!
 
-    var showInIPadLandscapeMode: Bool {
-        return true
-    }
-
-    var showInIPadPortraitMode: Bool {
+    func showInIPad(networkStatusViewController: NetworkStatusViewController, with orientation: UIInterfaceOrientation) -> Bool {
         return true
     }
 }
@@ -38,11 +34,7 @@ final class MockConversationListViewController: UIViewController, NetworkStatusB
 
     var networkStatusViewController: NetworkStatusViewController!
 
-    var showInIPadLandscapeMode: Bool {
-        return false
-    }
-
-    var showInIPadPortraitMode: Bool {
+    func showInIPad(networkStatusViewController: NetworkStatusViewController, with orientation: UIInterfaceOrientation) -> Bool {
         return false
     }
 }

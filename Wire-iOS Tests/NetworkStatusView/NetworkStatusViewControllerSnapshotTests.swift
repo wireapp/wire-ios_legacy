@@ -21,9 +21,9 @@ import Cartography
 @testable import Wire
 
 class MockContainerViewController: UIViewController, NetworkStatusBarDelegate {
-    var showInIPadLandscapeMode: Bool = true
-
-    var showInIPadPortraitMode: Bool = true
+    func showInIPad(networkStatusViewController: NetworkStatusViewController, with orientation: UIInterfaceOrientation) -> Bool {
+        return true
+    }
 
     var isViewDidAppear: Bool = true
 }
