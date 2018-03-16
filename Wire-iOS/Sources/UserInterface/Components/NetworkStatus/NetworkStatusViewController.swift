@@ -87,7 +87,7 @@ class NetworkStatusViewController : UIViewController {
 
     override func viewDidLoad() {
         view.addSubview(networkStatusView)
-        
+
         constrain(self.view, networkStatusView) { containerView, networkStatusView in
             networkStatusView.left == containerView.left
             networkStatusView.right == containerView.right
@@ -99,7 +99,7 @@ class NetworkStatusViewController : UIViewController {
             update(state: viewState(from: userSession.networkState))
             networkStatusObserverToken = ZMNetworkAvailabilityChangeNotification.addNetworkAvailabilityObserver(self, userSession: userSession)
         }
-        
+
         networkStatusView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tappedOnNetworkStatusBar)))
     }
 

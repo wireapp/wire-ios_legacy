@@ -1018,7 +1018,7 @@
 		EEF28EED1F16692A007642E2 /* InputBarSecondaryButtonsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEF28EEC1F16692A007642E2 /* InputBarSecondaryButtonsView.swift */; };
 		EEF28EEF1F168039007642E2 /* ConversationInputBarViewController+Markdown.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEF28EEE1F168039007642E2 /* ConversationInputBarViewController+Markdown.swift */; };
 		EF00FD741FDA97BA0059FEDC /* UIViewController+Orientation.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF00FD731FDA97BA0059FEDC /* UIViewController+Orientation.swift */; };
-		EF0D9970205BBD22002D488E /* NetworkStatusViewControllerSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF0D996F205BBD22002D488E /* NetworkStatusViewControllerSnapshotTests.swift */; };
+		EF0D9972205BC74F002D488E /* NetworkStatusViewControllerSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF0D9971205BC74F002D488E /* NetworkStatusViewControllerSnapshotTests.swift */; };
 		EF106E83204D869B00B9F0F6 /* DeviceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF106E82204D869B00B9F0F6 /* DeviceProtocol.swift */; };
 		EF106E86204D8BDF00B9F0F6 /* MockDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF106E84204D8B4200B9F0F6 /* MockDevice.swift */; };
 		EF106E88204DAE8600B9F0F6 /* PingCell+PointOfViewString.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF106E87204DAE8600B9F0F6 /* PingCell+PointOfViewString.swift */; };
@@ -2622,7 +2622,7 @@
 		EEF28EEC1F16692A007642E2 /* InputBarSecondaryButtonsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputBarSecondaryButtonsView.swift; sourceTree = "<group>"; };
 		EEF28EEE1F168039007642E2 /* ConversationInputBarViewController+Markdown.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ConversationInputBarViewController+Markdown.swift"; sourceTree = "<group>"; };
 		EF00FD731FDA97BA0059FEDC /* UIViewController+Orientation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Orientation.swift"; sourceTree = "<group>"; };
-		EF0D996F205BBD22002D488E /* NetworkStatusViewControllerSnapshotTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkStatusViewControllerSnapshotTests.swift; sourceTree = "<group>"; };
+		EF0D9971205BC74F002D488E /* NetworkStatusViewControllerSnapshotTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkStatusViewControllerSnapshotTests.swift; sourceTree = "<group>"; };
 		EF106E82204D869B00B9F0F6 /* DeviceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceProtocol.swift; sourceTree = "<group>"; };
 		EF106E84204D8B4200B9F0F6 /* MockDevice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockDevice.swift; sourceTree = "<group>"; };
 		EF106E87204DAE8600B9F0F6 /* PingCell+PointOfViewString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PingCell+PointOfViewString.swift"; sourceTree = "<group>"; };
@@ -5524,7 +5524,7 @@
 			children = (
 				162917CA1F8CC0B0000F3E92 /* NetworkStatusViewTests.swift */,
 				EF2128EC2056D51600C1673B /* NetworkStatusViewControllerTests.swift */,
-				EF0D996F205BBD22002D488E /* NetworkStatusViewControllerSnapshotTests.swift */,
+				EF0D9971205BC74F002D488E /* NetworkStatusViewControllerSnapshotTests.swift */,
 			);
 			path = NetworkStatusView;
 			sourceTree = "<group>";
@@ -7131,7 +7131,7 @@
 				BACB88561AF7C48900DDCDB0 /* AggregateArrayTests.m in Sources */,
 				EE3A5B0D1F7A7BD400733045 /* ChatHeadTests.swift in Sources */,
 				8751A93C1C737D7200C72324 /* IconSystemCellTests.m in Sources */,
-				EF0D9970205BBD22002D488E /* NetworkStatusViewControllerSnapshotTests.swift in Sources */,
+				EF0D9972205BC74F002D488E /* NetworkStatusViewControllerSnapshotTests.swift in Sources */,
 				7CB1B0C5200E13A600BD7CE9 /* MockPhotoPermissionsController.swift in Sources */,
 				EEBE8C5E1F68171F009D78C9 /* NSData_ImageTypeTests.swift in Sources */,
 				BFFE943C1E7839D10025AD75 /* ConversationRenamedCellTests.swift in Sources */,

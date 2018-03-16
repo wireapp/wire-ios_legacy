@@ -25,9 +25,6 @@ enum OfflineBarState {
 }
 
 class OfflineBar: UIView {
-    static public let collapsedHeight: CGFloat = 2
-    static public let expandedHeight: CGFloat = 20
-    static public let expandedCornerRadius: CGFloat = 6
 
     private let offlineLabel: UILabel
     private var heightConstraint: NSLayoutConstraint?
@@ -60,7 +57,7 @@ class OfflineBar: UIView {
         super.init(frame: frame)
         backgroundColor = UIColor(rgb:0xFEBF02, alpha: 1)
 
-        layer.cornerRadius = OfflineBar.expandedCornerRadius
+        layer.cornerRadius = CGFloat.OfflineBar.expandedCornerRadius
         layer.masksToBounds = true
 
         offlineLabel.font = FontSpec(FontSize.small, .medium).font
@@ -83,14 +80,14 @@ class OfflineBar: UIView {
             offlineLabel.left >= containerView.leftMargin
             offlineLabel.right <= containerView.rightMargin
 
-            heightConstraint = containerView.height == OfflineBar.collapsedHeight
+            heightConstraint = containerView.height == CGFloat.OfflineBar.collapsedHeight
         }
     }
 
     private func updateViews(animated: Bool = true) {
-        heightConstraint?.constant = state == .expanded ? OfflineBar.expandedHeight : OfflineBar.collapsedHeight
+        heightConstraint?.constant = state == .expanded ? CGFloat.OfflineBar.expandedHeight : CGFloat.OfflineBar.collapsedHeight
         offlineLabel.alpha = state == .expanded ? 1 : 0
-        layer.cornerRadius = state == .expanded ? OfflineBar.expandedCornerRadius : OfflineBar.collapsedHeight
+        layer.cornerRadius = state == .expanded ? CGFloat.OfflineBar.expandedCornerRadius : CGFloat.OfflineBar.collapsedHeight
     }
 
 }
@@ -193,7 +190,7 @@ class NetworkStatusView: UIView {
             connectingView.left == offlineView.left
             connectingView.right == offlineView.right
             connectingView.top == offlineView.top
-            connectingViewHeight = connectingView.height == OfflineBar.collapsedHeight
+            connectingViewHeight = connectingView.height == CGFloat.OfflineBar.collapsedHeight
             connectingViewBottomMargin = connectingView.bottom == containerView.bottom - NetworkStatusView.verticalMargin
         }
     }
@@ -258,7 +255,7 @@ class NetworkStatusView: UIView {
                   offlineViewHidden: Bool) {
         offlineViewBottomMargin?.constant = offlineBarState == .expanded ? -NetworkStatusView.verticalMargin : 0
 
-        connectingViewHeight?.constant = connectingViewHidden ? 0 : OfflineBar.collapsedHeight
+        connectingViewHeight?.constant = connectingViewHidden ? 0 : CGFloat.OfflineBar.collapsedHeight
         connectingViewBottomMargin?.constant = connectingViewHidden ? 0 : -NetworkStatusView.verticalMargin
 
         /// offlineViewBottomMargin is active iff connectingViewHidden is visible
@@ -295,3 +292,4 @@ extension NetworkStatusView: BreathLoadingBarDelegate {
         delegate?.didChangeHeight(self, animated: true, state: state)
     }
 }
+
