@@ -21,13 +21,13 @@ import XCTest
 
 final class MockConversationRootViewController: UIViewController, NetworkStatusBarDelegate {
     var isViewDidAppear: Bool = true
-    
+
     var networkStatusViewController: NetworkStatusViewController!
-    
+
     var showInIPadLandscapeMode: Bool {
         return true
     }
-    
+
     var showInIPadPortraitMode: Bool {
         return true
     }
@@ -35,13 +35,13 @@ final class MockConversationRootViewController: UIViewController, NetworkStatusB
 
 final class MockConversationListViewController: UIViewController, NetworkStatusBarDelegate {
     var isViewDidAppear: Bool = true
-    
+
     var networkStatusViewController: NetworkStatusViewController!
-    
+
     var showInIPadLandscapeMode: Bool {
         return false
     }
-    
+
     var showInIPadPortraitMode: Bool {
         return false
     }
@@ -50,30 +50,30 @@ final class MockConversationListViewController: UIViewController, NetworkStatusB
 final class NetworkStatusViewControllerTests: XCTestCase {
     var sutRoot: NetworkStatusViewController!
     var sutList: NetworkStatusViewController!
-    
+
     var mockDevice: MockDevice!
     var mockApplication: MockApplication!
     var mockConversationRoot: MockConversationRootViewController!
     var mockConversationList: MockConversationListViewController!
-    
+
     override func setUp() {
         super.setUp()
         mockDevice = MockDevice()
         mockApplication = MockApplication()
-        
+
         mockConversationList = MockConversationListViewController()
         sutList = NetworkStatusViewController(device: mockDevice, application: mockApplication)
         mockConversationList.networkStatusViewController = sutList
         mockConversationList.addToSelf(sutList)
         sutList.delegate = mockConversationList
-        
+
         mockConversationRoot = MockConversationRootViewController()
         sutRoot = NetworkStatusViewController(device: mockDevice, application: mockApplication)
         mockConversationRoot.networkStatusViewController = sutRoot
         mockConversationRoot.addToSelf(sutRoot)
         sutRoot.delegate = mockConversationRoot
     }
-    
+
     override func tearDown() {
         sutList = nil
         sutRoot = nil
@@ -84,7 +84,7 @@ final class NetworkStatusViewControllerTests: XCTestCase {
 
         super.tearDown()
     }
-    
+
     fileprivate func setUpSut(userInterfaceIdiom: UIUserInterfaceIdiom,
                               horizontalSizeClass: UIUserInterfaceSizeClass,
                               orientation: UIInterfaceOrientation,
@@ -92,24 +92,24 @@ final class NetworkStatusViewControllerTests: XCTestCase {
                               rootState: NetworkStatusViewState = .offlineExpanded) {
         sutList.update(state: listState)
         sutRoot.update(state: rootState)
-        
+
         mockDevice.userInterfaceIdiom = userInterfaceIdiom
         mockApplication.statusBarOrientation = orientation
-        
+
         let traitCollection = UITraitCollection(horizontalSizeClass: horizontalSizeClass)
         mockConversationList.setOverrideTraitCollection(traitCollection, forChildViewController: sutList)
         mockConversationRoot.setOverrideTraitCollection(traitCollection, forChildViewController: sutRoot)
-        
+
     }
-    
+
     fileprivate func checkResult(listState: NetworkStatusViewState,
                                  rootState: NetworkStatusViewState,
                                  file: StaticString = #file, line: UInt = #line) {
-        
+
         XCTAssertEqual(sutList.networkStatusView.state, listState, "List's networkStatusView.state should be equal to \(listState)", file: file, line: line)
         XCTAssertEqual(sutRoot.networkStatusView.state, rootState, "Root's networkStatusView.state should be equal to \(rootState)", file: file, line: line)
     }
-    
+
     /// check for networkStatusView state is updated after device properties are changed
     ///
     /// - Parameters:
@@ -138,7 +138,7 @@ final class NetworkStatusViewControllerTests: XCTestCase {
                                        listState: .online,
                                        rootState: .offlineExpanded)
     }
-    
+
     func testThatNetworkStatusViewShowsOnRootButNotListWhenDevicePropertiesIsIPadPortraitRegularMode() {
         checkForNetworkStatusViewState(userInterfaceIdiom: .pad,
                                        horizontalSizeClass: .regular,
@@ -146,7 +146,7 @@ final class NetworkStatusViewControllerTests: XCTestCase {
                                        listState: .online,
                                        rootState: .offlineExpanded)
     }
-    
+
     func testThatNetworkStatusViewShowsOnListButNotRootWhenDevicePropertiesIsIPadLandscapeCompactMode() {
         checkForNetworkStatusViewState(userInterfaceIdiom: .pad,
                                        horizontalSizeClass: .compact,
@@ -154,7 +154,7 @@ final class NetworkStatusViewControllerTests: XCTestCase {
                                        listState: .offlineExpanded,
                                        rootState: .offlineExpanded)
     }
-    
+
     func testThatNetworkStatusViewShowsOnBothWhenDevicePropertiesIsIPhonePortraitCompactMode() {
         checkForNetworkStatusViewState(userInterfaceIdiom: .phone,
                                        horizontalSizeClass: .compact,
@@ -162,7 +162,7 @@ final class NetworkStatusViewControllerTests: XCTestCase {
                                        listState: .offlineExpanded,
                                        rootState: .offlineExpanded)
     }
-    
+
     func testThatNotifyWhenOfflineShowsOneNetworkStatusViewOnIPad() {
         // GIVEN
         let userInterfaceIdiom: UIUserInterfaceIdiom = .pad
@@ -176,7 +176,7 @@ final class NetworkStatusViewControllerTests: XCTestCase {
 
         // WHEN
         NetworkStatusViewController.notifyWhenOffline()
-        
+
         // THEN
         checkResult(listState: .online, rootState: .offlineExpanded)
     }
@@ -208,10 +208,9 @@ final class NetworkStatusViewControllerTests: XCTestCase {
         checkResult(listState: .online, rootState: .offlineExpanded)
 
         // Portrait
-        
+
         // WHEN
-        sutList.updateStateForIPad()
-        sutRoot.updateStateForIPad()
+        NotificationCenter.default.post(name: NSNotification.Name.UIApplicationDidChangeStatusBarOrientation, object: nil)
 
         // THEN
         checkResult(listState: .online, rootState: .offlineExpanded)
@@ -220,14 +219,12 @@ final class NetworkStatusViewControllerTests: XCTestCase {
         mockApplication.statusBarOrientation = .landscapeLeft
 
         // WHEN
-        sutList.updateStateForIPad()
-        sutRoot.updateStateForIPad()
-        
+        NotificationCenter.default.post(name: NSNotification.Name.UIApplicationDidChangeStatusBarOrientation, object: nil)
+
         // THEN
         checkResult(listState: .online, rootState: .offlineExpanded)
     }
 }
-
 
 final class NetworkStatusViewControllerRetainTests: XCTestCase {
 
@@ -242,12 +239,11 @@ final class NetworkStatusViewControllerRetainTests: XCTestCase {
         super.tearDown()
     }
 
-    func testNetworkStatusViewControllerIsNotRetainedAfterTimerIsScheduled(){
-        autoreleasepool{
+    func testNetworkStatusViewControllerIsNotRetainedAfterTimerIsScheduled() {
+        autoreleasepool {
             // GIVEN
             var networkStatusViewController: NetworkStatusViewController! = NetworkStatusViewController()
             sut = networkStatusViewController
-
 
             // WHEN
             networkStatusViewController.viewDidLoad()
@@ -259,3 +255,4 @@ final class NetworkStatusViewControllerRetainTests: XCTestCase {
         XCTAssertNil(sut)
     }
 }
+

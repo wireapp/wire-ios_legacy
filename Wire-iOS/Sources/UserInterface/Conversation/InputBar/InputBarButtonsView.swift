@@ -76,6 +76,7 @@ public final class InputBarButtonsView: UIView {
         
         buttonInnerContainer.clipsToBounds = true
         expandRowButton.accessibilityIdentifier = "showOtherRowButton"
+        expandRowButton.hitAreaPadding = .zero
         expandRowButton.setIcon(.ellipsis, with: .tiny, for: UIControlState())
         expandRowButton.addTarget(self, action: #selector(ellipsisButtonPressed), for: .touchUpInside)
         buttonOuterContainer.addSubview(buttonInnerContainer)

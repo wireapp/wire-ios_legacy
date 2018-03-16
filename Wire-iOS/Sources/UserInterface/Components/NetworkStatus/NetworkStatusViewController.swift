@@ -47,12 +47,14 @@ class NetworkStatusViewController : UIViewController {
     fileprivate var pendingState: NetworkStatusViewState?
     var state: NetworkStatusViewState?
     fileprivate var finishedViewWillAppear: Bool = false
+
     fileprivate var device: DeviceProtocol = UIDevice.current
     fileprivate var application: ApplicationProtocol = UIApplication.shared
 
     /// default init method with a parameter for injecting mock device
     ///
     /// - Parameter device: Provide this param for testing only
+    /// - Parameter application: Provide this param for testing only
     convenience init(device: DeviceProtocol = UIDevice.current, application: ApplicationProtocol = UIApplication.shared) {
         self.init(nibName: nil, bundle: nil)
 
@@ -63,7 +65,7 @@ class NetworkStatusViewController : UIViewController {
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
 
-        NotificationCenter.default.addObserver(self, selector: #selector(chnageStateFormOfflineCollapsedToOfflineExpanded), name: Notification.Name.ShowNetworkStatusBar, object: .none)
+        NotificationCenter.default.addObserver(self, selector: #selector(changeStateFormOfflineCollapsedToOfflineExpanded), name: Notification.Name.ShowNetworkStatusBar, object: .none)
 
         NotificationCenter.default.addObserver(self, selector: #selector(updateStateForIPad), name: NSNotification.Name.UIApplicationDidChangeStatusBarOrientation, object: .none)
     }
@@ -202,10 +204,11 @@ extension NetworkStatusViewController: ZMNetworkAvailabilityObserver {
 // MARK: - iPad size class and orientation switching
 
 extension NetworkStatusViewController {
-    func shouldShowOnIPad(for newOrientation: UIInterfaceOrientation?) -> Bool {
+    func shouldShowOnIPad() -> Bool {
         guard isIPadRegular(device: device) else { return true }
+        guard let delegate = self.delegate else { return true }
 
-        guard let delegate = self.delegate, let newOrientation = newOrientation else { return true }
+        let newOrientation = application.statusBarOrientation
 
         if newOrientation.isPortrait {
             return delegate.showInIPadPortraitMode
@@ -222,7 +225,7 @@ extension NetworkStatusViewController {
 
         switch self.traitCollection.horizontalSizeClass {
         case .regular:
-            if shouldShowOnIPad(for: application.statusBarOrientation) {
+            if shouldShowOnIPad() {
                 networkStatusView.update(state: state, animated: false)
             } else {
                 /// when size class changes and delegate view controller disabled to show networkStatusView, hide the networkStatusView

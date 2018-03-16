@@ -18,11 +18,9 @@
 
 import Foundation
 
-protocol DeviceProtocol {
-    var userInterfaceIdiom: UIUserInterfaceIdiom { get }
-    var orientation: UIDeviceOrientation { get }
+protocol ApplicationProtocol {
+    var statusBarOrientation: UIInterfaceOrientation { get }
 }
 
-extension UIDevice: DeviceProtocol {
+extension UIApplication: ApplicationProtocol {
 }
-
