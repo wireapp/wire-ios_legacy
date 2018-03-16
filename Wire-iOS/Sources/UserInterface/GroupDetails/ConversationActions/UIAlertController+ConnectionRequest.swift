@@ -20,14 +20,25 @@ import Foundation
 
 
 extension UIAlertController {
-    static func remove(_ user: ZMUser, completion: @escaping (Bool) -> Void) -> UIAlertController {
+    @objc(controllerForAcceptingConnectionRequestForUser:completion:)
+    static func acceptingConnectionRequest(for user: ZMUser, completion: @escaping (Bool) -> Void) -> UIAlertController {
         let controller = UIAlertController(
-            title: "profile.remove_dialog_message".localized(args: user.displayName),
+            title: "profile.connection_request_dialog.message".localized(args: user.displayName),
             message: nil,
             preferredStyle: .actionSheet
         )
-        controller.addAction(ZMConversation.Action.remove.alertAction { completion(true) })
-        controller.addAction(.cancel { completion(false) })
+        let acceptAction = UIAlertAction(
+            title: "profile.connection_request_dialog.button_connect".localized,
+            style: .default,
+            handler: { _ in completion(true) }
+        )
+        let ignoreAction = UIAlertAction(
+            title: "profile.connection_request_dialog.button_cancel".localized,
+            style: .cancel,
+            handler: { _ in completion(false) }
+        )
+        controller.addAction(acceptAction)
+        controller.addAction(ignoreAction)
         return controller
     }
 }

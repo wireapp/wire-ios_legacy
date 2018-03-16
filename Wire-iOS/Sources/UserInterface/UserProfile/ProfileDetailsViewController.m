@@ -462,15 +462,14 @@ typedef NS_ENUM(NSUInteger, ProfileUserAction) {
 
 - (void)bringUpConnectionRequestSheet
 {
-    [self presentViewController:[ActionSheetController dialogForAcceptingConnectionRequestWithUser:[self fullUser] style:[ActionSheetController defaultStyle] completion:^(BOOL ignored) {
-        [self dismissViewControllerAnimated:YES completion:^{
-            if (ignored) {
-                [self cancelConnectionRequest];
-            } else {
-                [self acceptConnectionRequest];
-            }
-        }];
-    }] animated:YES completion:nil];
+    UIAlertController *controller = [UIAlertController controllerForAcceptingConnectionRequestForUser:self.fullUser completion:^(BOOL accept){
+        if (accept) {
+            [self acceptConnectionRequest];
+        } else {
+            [self cancelConnectionRequest];
+        }
+    }];
+    [self presentViewController:controller animated:YES completion:nil];
 }
 
 - (void)bringUpCancelConnectionRequestSheet

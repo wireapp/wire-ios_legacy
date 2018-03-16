@@ -882,7 +882,6 @@
 
     ActionSheetController *actionSheetController =
     [ActionSheetController dialogForUnknownClientsForUsers:users
-                                                   style:[ActionSheetController defaultStyle]
                                               completion:^(BOOL sendAnywayPressed, BOOL showDetailsPressed) {
                                                   if (sendAnywayPressed) {
                                                       [self.conversation resendMessagesThatCausedConversationSecurityDegradation];

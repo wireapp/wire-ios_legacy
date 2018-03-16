@@ -42,7 +42,7 @@ enum BlockResult {
         return .init(title: title, style: style) { _ in handler(self) }
     }
     
-    static func message(for user: ZMUser) -> String {
+    static func title(for user: ZMUser) -> String {
         return "profile.block_dialog.message".localized(args: user.displayName)
     }
     
@@ -55,7 +55,7 @@ extension ConversationActionController {
     
     func requestBlockResult(for conversation: ZMConversation, handler: @escaping (BlockResult) -> Void) {
         guard let user = conversation.connectedUser else { return }
-        let controller = UIAlertController(title: nil, message: BlockResult.message(for: user), preferredStyle: .actionSheet)
+        let controller = UIAlertController(title: BlockResult.title(for: user), message: nil, preferredStyle: .actionSheet)
         BlockResult.all(isBlocked: user.isBlocked).map { $0.action(handler) }.forEach(controller.addAction)
         target.present(controller, animated: true)
     }

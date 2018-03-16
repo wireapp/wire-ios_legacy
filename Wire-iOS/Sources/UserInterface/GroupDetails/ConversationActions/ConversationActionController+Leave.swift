@@ -42,7 +42,7 @@ enum LeaveResult: AlertResultConfiguration {
         return .init(title: title, style: style) { _ in handler(self) }
     }
     
-    static var message: String {
+    static var title: String {
         return "meta.leave_conversation_dialog_message".localized
     }
     
