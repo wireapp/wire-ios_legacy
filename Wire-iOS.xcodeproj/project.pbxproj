@@ -3498,7 +3498,7 @@
 		871BC1271D34F8F800DF0793 /* Components */ = {
 			isa = PBXGroup;
 			children = (
-				EF64008D2058292D00917141 /* NetworkStatusBar */,
+				EF64008D2058292D00917141 /* NetworkStatus */,
 				876E0C8A1EC5ED69007EF34E /* CameraPicker.swift */,
 				871BC1281D34F8F800DF0793 /* Controllers */,
 				871BC36B1D34F96000DF0793 /* DeviceOrientationObserver.h */,
@@ -5528,13 +5528,13 @@
 			path = AccessoryTextField;
 			sourceTree = "<group>";
 		};
-		EF64008D2058292D00917141 /* NetworkStatusBar */ = {
+		EF64008D2058292D00917141 /* NetworkStatus */ = {
 			isa = PBXGroup;
 			children = (
 				EF64008E2058292D00917141 /* NetworkStatusViewController.swift */,
 				EF64008F2058292D00917141 /* NetworkStatusView.swift */,
 			);
-			path = NetworkStatusBar;
+			path = NetworkStatus;
 			sourceTree = "<group>";
 		};
 		F10F46D02028857C00261449 /* Create */ = {
