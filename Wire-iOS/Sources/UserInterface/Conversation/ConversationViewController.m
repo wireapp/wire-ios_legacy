@@ -65,7 +65,6 @@
 #import "UIViewController+Errors.h"
 #import "SplitViewController.h"
 #import "UIColor+WR_ColorScheme.h"
-#import "ActionSheetController+Conversation.h"
 #import "UIResponder+FirstResponder.h"
 
 #import "Wire-Swift.h"
@@ -878,56 +877,49 @@
 
 - (void)presentConversationDegradedActionSheetControllerForUsers:(NSSet<ZMUser *> *)users
 {
-    NavigationController *navigationController = [[NavigationController alloc] init];
+    UIAlertController *controller = [UIAlertController controllerForUnknownClientsForUsers:users completion:^(ConversationDegradedResult result) {
+        switch (result) {
+            case ConversationDegradedResultCancel:
+                [self.conversation doNotResendMessagesThatCausedDegradation];
+                break;
+            case ConversationDegradedResultSendAnyway:
+                [self.conversation resendMessagesThatCausedConversationSecurityDegradation];
+                break;
+            case ConversationDegradedResultShowDetails:
+                [self.conversation doNotResendMessagesThatCausedDegradation];
+                if (self.conversation.conversationType == ZMConversationTypeOneOnOne) {
+                    ZMUser *user = self.conversation.connectedUser;
+                    if (user.clients.count == 1) {
+                        ProfileClientViewController *userClientController = [[ProfileClientViewController alloc] initWithClient:user.clients.anyObject fromConversation:YES];
+                        userClientController.showBackButton = NO;
+                        NavigationController *navigationController = [[NavigationController alloc] init];
+                        navigationController.modalPresentationStyle = UIModalPresentationFormSheet;
+                        navigationController.backButton.cas_styleClass = @"circular";
+                        navigationController.rightButtonEnabled = YES;
+                        [navigationController updateRightButtonWithIconType:ZetaIconTypeX iconSize:ZetaIconSizeTiny target:self action:@selector(degradedConversationDismissed:) animated:NO];
+                        navigationController.view.backgroundColor = [UIColor whiteColor];
+                        [navigationController setViewControllers:@[userClientController]];
+                        [self presentViewController:navigationController animated:YES completion:nil];
+                    } else {
+                        ProfileViewController *profileViewController = [[ProfileViewController alloc] initWithUser:user context:ProfileViewControllerContextDeviceList];
+                        profileViewController.delegate = self;
+                        profileViewController.viewControllerDismissable = self;
+                        [self presentViewController:profileViewController animated:YES completion:nil];
+                    }
+                } else if (self.conversation.conversationType == ZMConversationTypeGroup) {
+                    UIViewController *participantsController = [self participantsController];
+                    participantsController.transitioningDelegate = self.conversationDetailsTransitioningDelegate;
+                    [self presentViewController:participantsController animated:YES completion:nil];
+                }
+                break;
+        }
+    }];
 
-    ActionSheetController *actionSheetController =
-    [ActionSheetController dialogForUnknownClientsForUsers:users
-                                              completion:^(BOOL sendAnywayPressed, BOOL showDetailsPressed) {
-                                                  if (sendAnywayPressed) {
-                                                      [self.conversation resendMessagesThatCausedConversationSecurityDegradation];
-                                                      [self dismissViewControllerAnimated:YES completion:nil];
-                                                  } else if (showDetailsPressed) {
-                                                      [self.conversation doNotResendMessagesThatCausedDegradation];
-                                                      if (self.conversation.conversationType == ZMConversationTypeOneOnOne) {
-                                                          ZMUser *user = self.conversation.connectedUser;
-                                                          if (user.clients.count == 1) {
-                                                              ProfileClientViewController *userClientController = [[ProfileClientViewController alloc] initWithClient:user.clients.anyObject fromConversation:YES];
-                                                              userClientController.showBackButton = NO;
-                                                              [navigationController pushViewController:userClientController animated:YES];
-                                                          } else {
-                                                              [self dismissViewControllerAnimated:YES completion:^{
-                                                                  ProfileViewController *profileViewController = [[ProfileViewController alloc] initWithUser:user context:ProfileViewControllerContextDeviceList];
-                                                                  profileViewController.delegate = self;
-                                                                  profileViewController.viewControllerDismissable = self;
-                                                                  [self presentViewController:profileViewController animated:YES completion:nil];
-                                                              }];
-                                                          }
-                                                      } else if (self.conversation.conversationType == ZMConversationTypeGroup) {
-                                                          [self dismissViewControllerAnimated:YES completion:^{
-                                                              UIViewController *participantsController = [self participantsController];
-                                                              participantsController.transitioningDelegate = self.conversationDetailsTransitioningDelegate;
-                                                              [self presentViewController:participantsController animated:YES completion:nil];
-                                                          }];
-                                                      }
-                                                  }
-                                              }];
-
-    [navigationController setViewControllers:@[actionSheetController] animated:NO];
-    navigationController.modalPresentationStyle = UIModalPresentationFormSheet;
-    navigationController.backButton.cas_styleClass = @"circular";
-    navigationController.rightButtonEnabled = YES;
-    [navigationController updateRightButtonWithIconType:ZetaIconTypeX
-                                               iconSize:ZetaIconSizeTiny
-                                                 target:self
-                                                 action:@selector(degradedConversationDismissed:)
-                                               animated:NO];
-    navigationController.view.backgroundColor = [UIColor whiteColor];
-    [self presentViewController:navigationController animated:YES completion:nil];
+    [self presentViewController:controller animated:YES completion:nil];
 }
 
 - (void)degradedConversationDismissed:(id)sender
 {
-    [self.conversation doNotResendMessagesThatCausedDegradation];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 

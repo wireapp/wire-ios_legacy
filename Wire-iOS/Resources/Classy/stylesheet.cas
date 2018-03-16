@@ -1090,63 +1090,6 @@ UILabel.normal-light {
     textColor: white;
 }
 
-/* ActionSheetController */
-
-ActionSheetListView UIButton {
-    titleLabel: @{
-        font: $font-small-semibold;
-    }
-}
-
-ActionSheetAlertView {
-    titleLabel: @{
-        font: $font-normal-semibold;
-    }
-    
-    messageLabel: @{
-        font: $font-normal-light;
-    }
-}
-
-ActionSheetContainerView.light {
-    UILabel {
-        textColor: $color-text-foreground-light;
-    }
-    
-    ActionSheetListView UIView.separator-strong {
-        backgroundColor: black;
-    }
-    
-    ActionSheetListView UIView.separator {
-        backgroundColor: $color-separator-light;
-    }
-    
-    ActionSheetListView UIButton {
-        titleColor[state:normal]: $color-text-foreground-light;
-        titleColor[state:highlighted]: $color-text-dimmed-light;
-    }
-}
-
-ActionSheetContainerView.dark {
-    UILabel {
-        textColor: $color-text-foreground-dark;
-    }
-    
-    ActionSheetListView UIView.separator-strong {
-        backgroundColor: white;
-    }
-    
-    ActionSheetListView UIView.separator {
-        backgroundColor: $color-separator-dark;
-    }
-    
-    ActionSheetListView UIButton {
-        titleColor[state:normal]: $color-text-foreground-dark;
-        titleColor[state:highlighted]: $color-text-dimmed-dark;
-    }
-}
-
-
 /* Contacts */
 
 ContactsCell {

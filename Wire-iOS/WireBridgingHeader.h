@@ -57,8 +57,6 @@
 #import "ARCollectionViewMasonryLayout.h"
 #import "ZiphyClient+Convenience.h"
 #import "ConversationDetailsTransitioningDelegate.h"
-#import "ActionSheetController.h"
-#import "ActionSheetController+Conversation.h"
 #import "Country.h"
 #import "UserImageView+Magic.h"
 #import "CameraPreviewView.h"
