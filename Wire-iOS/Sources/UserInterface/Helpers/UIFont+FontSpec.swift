@@ -25,52 +25,52 @@ extension UIFont {
     // MARK: - Small
     
     class var smallLightFont: UIFont {
-        return FontSpec.init(.small, .light).font!
+        return FontSpec(.small, .light).font!
     }
     
     class var smallRegularFont: UIFont {
-        return FontSpec.init(.small, .regular).font!
+        return FontSpec(.small, .regular).font!
     }
     
     class var smallMediumFont: UIFont {
-        return FontSpec.init(.small, .medium).font!
+        return FontSpec(.small, .medium).font!
     }
     
 
     // MARK: - Normal
     
     class var normalLightFont: UIFont {
-        return FontSpec.init(.normal, .light).font!
+        return FontSpec(.normal, .light).font!
     }
     
     class var normalRegularFont: UIFont {
-        return FontSpec.init(.normal, .regular).font!
+        return FontSpec(.normal, .regular).font!
     }
     
     class var normalMediumFont: UIFont {
-        return FontSpec.init(.normal, .medium).font!
+        return FontSpec(.normal, .medium).font!
     }
     
     // MARK: - Large
     
     class var largeThinFont: UIFont {
-        return FontSpec.init(.large, .thin).font!
+        return FontSpec(.large, .thin).font!
     }
     
     class var largeLightFont: UIFont {
-        return FontSpec.init(.large, .light).font!
+        return FontSpec(.large, .light).font!
     }
     
     class var largeRegularFont: UIFont {
-        return FontSpec.init(.large, .regular).font!
+        return FontSpec(.large, .regular).font!
     }
     
     class var largeMediumFont: UIFont {
-        return FontSpec.init(.large, .medium).font!
+        return FontSpec(.large, .medium).font!
     }
     
     class var largeSemiboldFont: UIFont {
-        return FontSpec.init(.large, .semibold).font!
+        return FontSpec(.large, .semibold).font!
     }
     
 }
