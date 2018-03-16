@@ -26,7 +26,9 @@ import Cartography
     fileprivate var contentView = UIView()
     var navHeight: NSLayoutConstraint?
     var networkStatusBarHeight: NSLayoutConstraint?
-    var isViewDidAppear = false
+
+    /// for NetworkStatusViewDelegate
+    var shouldAnimateNetworkStatusView = false
 
     fileprivate let networkStatusViewController: NetworkStatusViewController
 
@@ -103,7 +105,7 @@ import Cartography
             UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(true)
         }
 
-        isViewDidAppear = true
+        shouldAnimateNetworkStatusView = true
     }
 
     open override var prefersStatusBarHidden: Bool {
