@@ -21,11 +21,8 @@ import UIKit
 import Cartography
 
 extension ConversationListViewController: NetworkStatusBarDelegate {
-    var showInIPadLandscapeMode: Bool {
-        return false
-    }
-
-    var showInIPadPortraitMode: Bool {
+    func showInIPad(networkStatusViewController: NetworkStatusViewController, with orientation: UIInterfaceOrientation) -> Bool {
+        // do not show on iPad for any orientation in regular mode
         return false
     }
 }

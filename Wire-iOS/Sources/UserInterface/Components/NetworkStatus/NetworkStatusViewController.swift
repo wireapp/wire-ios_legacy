@@ -22,11 +22,13 @@ import Cartography
 typealias NetworkStatusBarDelegate = NetworkStatusViewControllerDelegate & NetworkStatusViewDelegate
 
 protocol NetworkStatusViewControllerDelegate: class {
-    /// if return false, NetworkStatusViewController will not disapper in iPad regular mode landscape orientation.
-    var showInIPadLandscapeMode: Bool {get}
 
-    /// if return false, NetworkStatusViewController will not disapper in iPad regular mode portrait orientation.
-    var showInIPadPortraitMode: Bool {get}
+    ///  return false if NetworkStatusViewController will not disapper in iPad regular mode with specific orientation.
+    ///
+    /// - networkStatusViewController: caller of this delegate method
+    /// - Parameter orientation: orientation to check
+    /// - Returns: return false if the class conform this protocol does not show NetworkStatusViewController in certain orientation.
+    func showInIPad(networkStatusViewController: NetworkStatusViewController, with orientation: UIInterfaceOrientation) -> Bool
 }
 
 extension Notification.Name {
@@ -210,13 +212,7 @@ extension NetworkStatusViewController {
 
         let newOrientation = application.statusBarOrientation
 
-        if newOrientation.isPortrait {
-            return delegate.showInIPadPortraitMode
-        } else if newOrientation.isLandscape {
-            return delegate.showInIPadLandscapeMode
-        } else {
-            return true
-        }
+        return delegate.showInIPad(networkStatusViewController: self, with: newOrientation)
     }
 
     func updateStateForIPad() {

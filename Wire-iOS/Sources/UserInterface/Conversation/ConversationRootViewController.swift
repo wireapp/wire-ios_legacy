@@ -122,14 +122,9 @@ import Cartography
 
 
 extension ConversationRootViewController: NetworkStatusBarDelegate {
-    /// The network status bar shows on conversation list only in iPad full screen mode
-    var showInIPadLandscapeMode: Bool {
+    func showInIPad(networkStatusViewController: NetworkStatusViewController, with orientation: UIInterfaceOrientation) -> Bool {
+        // always show on iPad for any orientation in regular mode
         return true
     }
-
-    var showInIPadPortraitMode: Bool {
-        return true
-    }
-
 }
 
