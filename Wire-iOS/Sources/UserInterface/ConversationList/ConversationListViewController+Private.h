@@ -34,7 +34,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic) ConversationListTopBar *topBar;
 @property (nonatomic) NetworkStatusViewController *networkStatusViewController;
 @property (nonatomic, readonly) ConversationListBottomBarController *bottomBarController;
-@property (nonatomic) BOOL isViewDidAppear;
+/// for NetworkStatusViewDelegate
+@property (nonatomic) BOOL shouldAnimateNetworkStatusView;
 
 - (void)removeUserProfileObserver;
 - (void)presentSettings;

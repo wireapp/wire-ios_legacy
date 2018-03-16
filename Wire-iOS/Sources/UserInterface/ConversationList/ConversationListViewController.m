@@ -102,7 +102,10 @@
 
 @property (nonatomic) ConversationListTopBar *topBar;
 @property (nonatomic) NetworkStatusViewController *networkStatusViewController;
-@property (nonatomic) BOOL isViewDidAppear;
+
+/// for NetworkStatusViewDelegate
+@property (nonatomic) BOOL shouldAnimateNetworkStatusView;
+
 @property (nonatomic) UIView *contentContainer;
 @property (nonatomic) UIView *conversationListContainer;
 @property (nonatomic) UILabel *noConversationLabel;
@@ -144,7 +147,7 @@
 {
     [super viewDidLoad];
     self.contentControllerBottomInset = 16;
-    self.isViewDidAppear = NO;
+    self.shouldAnimateNetworkStatusView = NO;
     
     self.contentContainer = [[UIView alloc] initForAutoLayout];
     self.contentContainer.backgroundColor = [UIColor clearColor];
@@ -214,7 +217,7 @@
     [self updateBottomBarSeparatorVisibilityWithContentController:self.listContentController];
     [self closePushPermissionDialogIfNotNeeded];
 
-    self.isViewDidAppear = YES;
+    self.shouldAnimateNetworkStatusView = YES;
 }
 
 - (void)requestSuggestedHandlesIfNeeded
