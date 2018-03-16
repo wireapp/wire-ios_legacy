@@ -124,7 +124,7 @@ class NetworkStatusViewController : UIViewController {
         }
     }
 
-    fileprivate func chnageStateFormOfflineCollapsedToOfflineExpanded() {
+    fileprivate func changeStateFormOfflineCollapsedToOfflineExpanded() {
         let networkStatusView = self.networkStatusView
 
         if networkStatusView.state == .offlineCollapsed {
@@ -187,7 +187,7 @@ class NetworkStatusViewController : UIViewController {
 
     func update(state: NetworkStatusViewState) {
         self.state = state
-        guard shouldShowOnIPad(for: application.statusBarOrientation) else { return }
+        guard shouldShowOnIPad() else { return }
 
         networkStatusView.update(state: state, animated: true)
     }
