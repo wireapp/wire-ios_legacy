@@ -25,7 +25,6 @@
 
 #import "WAZUIMagiciOS.h"
 #import "UIColor+WAZExtensions.h"
-#import "NSString+WAZUIMagic.h"
 
 #import "WireSyncEngine+iOS.h"
 #import "Constants.h"

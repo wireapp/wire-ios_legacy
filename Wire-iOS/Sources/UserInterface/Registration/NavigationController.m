@@ -23,7 +23,6 @@
 @import WireExtensionComponents;
 
 
-#import "WAZUIMagicIOS.h"
 #import "UIImage+ZetaIconsNeue.h"
 #import "UIColor+WAZExtensions.h"
 #import "UIResponder+FirstResponder.h"

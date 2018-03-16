@@ -18,7 +18,6 @@
 
 
 #import "ProfileUnblockFooterView.h"
-#import "WAZUIMagic.h"
 
 #import "NSString+WAZUIMagic.h"
 #import "Button.h"

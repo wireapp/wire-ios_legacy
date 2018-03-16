@@ -22,7 +22,6 @@
 @import WireExtensionComponents;
 
 
-#import "WAZUIMagicIOS.h"
 #import "UIImage+ZetaIconsNeue.h"
 #import "GuidanceDotView.h"
 #import "CountryCodeView.h"

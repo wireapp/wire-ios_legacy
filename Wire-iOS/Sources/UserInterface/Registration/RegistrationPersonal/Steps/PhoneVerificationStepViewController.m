@@ -22,7 +22,6 @@
 @import PureLayout;
 
 #import "RegistrationTextField.h"
-#import "WAZUIMagicIOS.h"
 #import "UIView+Borders.h"
 #import "UIImage+ZetaIconsNeue.h"
 #import "UIColor+WR_ColorScheme.h"

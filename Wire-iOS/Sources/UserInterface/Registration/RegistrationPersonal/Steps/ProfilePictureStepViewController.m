@@ -21,7 +21,6 @@
 
 @import PureLayout;
 
-#import "WAZUIMagicIOS.h"
 #import "UIColor+WAZExtensions.h"
 #import "WireSyncEngine+iOS.h"
 #import "CameraViewController.h"

@@ -18,7 +18,6 @@
 
 
 #import "CameraAccessMessageViewController.h"
-#import "WAZUIMagicIOS.h"
 #import "Wire-Swift.h"
 
 

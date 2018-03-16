@@ -28,8 +28,6 @@
 #import "PushTransition.h"
 #import "RegistrationFormController.h"
 #import "WireSyncEngine+iOS.h"
-#import "UIColor+MagicAccess.h"
-#import "UIFont+MagicAccess.h"
 #import "UIViewController+Errors.h"
 #import "UIImage+ZetaIconsNeue.h"
 @import WireExtensionComponents;

@@ -22,7 +22,6 @@
 @import PureLayout;
 @import SafariServices;
 
-#import "WAZUIMagicIOS.h"
 #import "UIColor+WAZExtensions.h"
 #import "Analytics.h"
 #import "WebLinkTextView.h"

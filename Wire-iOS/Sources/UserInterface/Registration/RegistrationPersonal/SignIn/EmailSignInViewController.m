@@ -32,8 +32,6 @@
 #import <WireExtensionComponents/ProgressSpinner.h>
 #import "UIImage+ImageUtilities.h"
 #import "UIColor+WAZExtensions.h"
-#import "UIColor+MagicAccess.h"
-#import "UIFont+MagicAccess.h"
 #import "UIViewController+Errors.h"
 #import "Constants.h"
 #import "NSURL+WireLocale.h"

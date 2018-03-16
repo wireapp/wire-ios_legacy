@@ -18,7 +18,6 @@
 
 
 #import "ConnectRequestCell.h"
-#import "WAZUIMagic.h"
 #import "Wire-Swift.h"
 
 @import PureLayout;

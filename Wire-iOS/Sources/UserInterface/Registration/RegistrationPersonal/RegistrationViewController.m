@@ -35,7 +35,6 @@
 #import "NavigationController.h"
 #import "SignInViewController.h"
 #import "Constants.h"
-#import "WAZUIMagicIOS.h"
 
 #import "UIColor+WAZExtensions.h"
 #import "UIViewController+Errors.h"

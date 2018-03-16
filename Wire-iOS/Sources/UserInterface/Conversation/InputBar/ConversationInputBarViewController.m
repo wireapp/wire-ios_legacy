@@ -48,7 +48,6 @@
 #import "UIView+WR_ExtendedBlockAnimations.h"
 #import "UIView+Borders.h"
 #import "ImageMessageCell.h"
-#import "WAZUIMagic.h"
 
 
 @interface ConversationInputBarViewController (Commands)

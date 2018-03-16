@@ -20,7 +20,6 @@
 
 #import "BottomOverlayViewController.h"
 #import "BottomOverlayViewController+Private.h"
-#import "WAZUIMagicIOS.h"
 #import "Wire-Swift.h"
 @import WireExtensionComponents;
 

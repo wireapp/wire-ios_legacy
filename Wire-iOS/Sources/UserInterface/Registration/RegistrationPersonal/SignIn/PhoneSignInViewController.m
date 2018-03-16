@@ -30,7 +30,6 @@
 #import "FormStepDelegate.h"
 #import "WireSyncEngine+iOS.h"
 #import "UIViewController+Errors.h"
-#import "UIFont+MagicAccess.h"
 #import <WireExtensionComponents/UIViewController+LoadingView.h>
 #import "CheckmarkViewController.h"
 #import "StopWatch.h"

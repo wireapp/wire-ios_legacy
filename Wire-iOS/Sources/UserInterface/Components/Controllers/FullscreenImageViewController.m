@@ -34,9 +34,6 @@
 #import "NotificationWindowRootViewController.h"
 
 // helpers
-
-#import "WAZUIMagiciOS.h"
-#import "UIFont+MagicAccess.h"
 #import "UIColor+WR_ColorScheme.h"
 #import "NSDate+Format.h"
 

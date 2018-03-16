@@ -22,7 +22,6 @@
 @import PureLayout;
 
 #import "RegistrationTextField.h"
-#import "WAZUIMagicIOS.h"
 #import "Constants.h"
 #import "Wire-Swift.h"
 #import "WireSyncEngine+iOS.h"

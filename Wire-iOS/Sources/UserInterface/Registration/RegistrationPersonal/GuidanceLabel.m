@@ -20,9 +20,6 @@
 #import "GuidanceLabel.h"
 
 #import "Guidance.h"
-#import "WAZUIMagic.h"
-#import "UIColor+MagicAccess.h"
-#import "UIFont+MagicAccess.h"
 #import "Wire-Swift.h"
 
 

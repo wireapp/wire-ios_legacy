@@ -19,7 +19,6 @@
 
 #import <UIKit/UIKit.h>
 #import "StyledTextField.h"
-#import "WAZUIMagicIOS.h"
 #import "UIView+Borders.h"
 #import "NSAttributedString+Wire.h"
 #import "Wire-Swift.h"

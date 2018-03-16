@@ -23,7 +23,6 @@
 
 #import "NavigationController.h"
 #import "CheckmarkViewController.h"
-#import "WAZUIMagicIOS.h"
 #import "UIImage+ZetaIconsNeue.h"
 #import "UIColor+WAZExtensions.h"
 #import "WireSyncEngine+iOS.h"

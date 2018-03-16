@@ -24,8 +24,6 @@
 #import <WireSyncEngine/WireSyncEngine.h>
 
 #import "Constants.h"
-#import "WAZUIMagic.h"
-#import "UIColor+MagicAccess.h"
 #import "UIColor+WAZExtensions.h"
 @import FLAnimatedImage;
 #import "ImageCache.h"

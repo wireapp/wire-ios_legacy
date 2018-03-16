@@ -29,7 +29,6 @@
 #import "RegistrationFormController.h"
 #import "NavigationController.h"
 #import "WireSyncEngine+iOS.h"
-#import "UIFont+MagicAccess.h"
 #import "UIViewController+Errors.h"
 #import <WireExtensionComponents/UIViewController+LoadingView.h>
 #import "CheckmarkViewController.h"

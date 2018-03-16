@@ -29,13 +29,7 @@
 #import "NotificationWindowRootViewController.h"
 #import "ZClientViewController.h"
 #import "UIApplication+Permissions.h"
-
 #import "Wire-Swift.h"
-
-#if (TARGET_OS_IPHONE)
-#import "WAZUIMagic.h"
-#endif
-
 #import "Settings.h"
 #import "Constants.h"
 

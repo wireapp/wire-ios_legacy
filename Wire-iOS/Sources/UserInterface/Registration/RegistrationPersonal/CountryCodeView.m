@@ -21,7 +21,6 @@
 
 @import PureLayout;
 
-#import "WAZUIMagicIOS.h"
 #import "Wire-Swift.h"
 
 

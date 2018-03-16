@@ -19,8 +19,6 @@
 
 #import "NoHistoryViewController.h"
 @import PureLayout;
-#import "WAZUIMagicIOS.h"
-#import "UIFont+MagicAccess.h"
 #import "RegistrationFormController.h"
 #import "Button.h"
 #import "Wire-Swift.h"

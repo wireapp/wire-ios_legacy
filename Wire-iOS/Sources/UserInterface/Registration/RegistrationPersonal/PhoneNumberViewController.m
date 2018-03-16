@@ -26,7 +26,6 @@
 #import "CountryCodeTableViewController.h"
 #import "Country.h"
 #import "Constants.h"
-#import "WAZUIMagicIOS.h"
 #import "UIImage+ZetaIconsNeue.h"
 #import "WireSyncEngine+iOS.h"
 #import "Wire-Swift.h"

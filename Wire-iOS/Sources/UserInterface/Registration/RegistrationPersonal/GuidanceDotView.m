@@ -21,10 +21,6 @@
 
 @import PureLayout;
 
-#import "WAZUIMagicIOS.h"
-
-
-
 @interface GuidanceDotView ()
 
 @property (nonatomic) UIView *dot;
