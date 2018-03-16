@@ -21,34 +21,40 @@ import XCTest
 @testable import Wire
 
 class NetworkStatusViewTests: ZMSnapshotTestCase {
+
+    var sut: NetworkStatusView!
+
     override func setUp() {
         super.setUp()
         accentColor = .violet
+        sut = NetworkStatusView()
     }
-    
+
+    override func tearDown() {
+        sut = nil
+        super.tearDown()
+    }
+
     func testOfflineExpandedState() {
         // GIVEN
-        let sut = NetworkStatusView()
         sut.state = .offlineExpanded
         // WHEN && THEN
         verifyInAllPhoneWidths(view: sut)
     }
-    
+
     func testOfflineCollapsedState() {
         // GIVEN
-        let sut = NetworkStatusView()
         sut.state = .offlineCollapsed
         // WHEN && THEN
         verifyInAllPhoneWidths(view: sut)
     }
-    
+
     func testOnlineSynchronizing() {
         // GIVEN
-        let sut = NetworkStatusView()
         sut.state = .onlineSynchronizing
         sut.layer.speed = 0 // freeze animations for deterministic tests
         // WHEN && THEN
         verifyInAllPhoneWidths(view: sut)
     }
-    
+
 }
