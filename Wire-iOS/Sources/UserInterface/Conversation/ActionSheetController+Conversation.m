@@ -26,7 +26,6 @@
 #import "Analytics.h"
 #import "UIImage+ZetaIconsNeue.h"
 #import "UIColor+WR_ColorScheme.h"
-#import "UIFont+MagicAccess.h"
 #import "Wire-Swift.h"
 #import "ZClientViewController.h"
 

@@ -20,7 +20,6 @@
 #import "ShareContactsViewController.h"
 #import "PermissionDeniedViewController.h"
 #import "Button.h"
-#import "WAZUIMagicIOS.h"
 #import "UIColor+WAZExtensions.h"
 #import "AnalyticsTracker+Permissions.h"
 #import "Wire-Swift.h"

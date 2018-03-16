@@ -24,7 +24,6 @@
 
 @import WireExtensionComponents;
 #import "UIImage+ZetaIconsNeue.h"
-#import "WAZUIMagicIOS.h"
 #import "Constants.h"
 
 @interface MediaBar ()

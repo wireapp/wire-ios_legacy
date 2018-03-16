@@ -27,7 +27,6 @@
 
 #import "ConversationListViewModel.h"
 
-#import "WAZUIMagicIOS.h"
 #import "UIColor+WAZExtensions.h"
 #import "UIView+Borders.h"
 

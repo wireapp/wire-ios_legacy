@@ -20,7 +20,6 @@
 #import "ParticipantsDeviceHeaderView.h"
 @import PureLayout;
 #import "WebLinkTextView.h"
-#import "WAZUIMagicIOS.h"
 #import "NSURL+WireURLs.h"
 #import "WireExtensionComponents.h"
 

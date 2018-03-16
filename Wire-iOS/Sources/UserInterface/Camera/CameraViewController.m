@@ -34,7 +34,6 @@
 @import FLAnimatedImage;
 #import "UIImage+ZetaIconsNeue.h"
 #import "UIImage+ImageUtilities.h"
-#import "WAZUIMagicIOS.h"
 #import "IconButton.h"
 #import "Constants.h"
 #import "Settings.h"

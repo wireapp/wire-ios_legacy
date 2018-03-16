@@ -21,7 +21,6 @@
 
 @import PureLayout;
 
-#import "WAZUIMagicIOS.h"
 #import "UIColor+WAZExtensions.h"
 #import "Analytics.h"
 #import "WebLinkTextView.h"

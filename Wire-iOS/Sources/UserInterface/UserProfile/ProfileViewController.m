@@ -28,7 +28,6 @@
 #import <WireExtensionComponents/WireExtensionComponents-Swift.h>
 @import PureLayout;
 
-#import "WAZUIMagicIOS.h"
 #import "Constants.h"
 #import "UIColor+WAZExtensions.h"
 #import "UIColor+WR_ColorScheme.h"

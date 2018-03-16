@@ -20,7 +20,6 @@
 #import "MentionsCollectionViewCell.h"
 #import "UserImageView.h"
 #import "UIView+Borders.h"
-#import "UIFont+MagicAccess.h"
 @import PureLayout;
 #import "WireSyncEngine+iOS.h"
 #import "Wire-Swift.h"

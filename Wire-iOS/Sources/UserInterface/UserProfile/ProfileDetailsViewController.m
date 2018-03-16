@@ -29,7 +29,6 @@
 @import WireDataModel;
 
 #import "IconButton.h"
-#import "WAZUIMagicIOS.h"
 #import "Constants.h"
 #import "UIColor+WAZExtensions.h"
 #import "UserImageView.h"

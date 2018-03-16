@@ -29,7 +29,6 @@
 #import "NotificationWindowRootViewController.h"
 
 // helpers
-#import "WAZUIMagicIOS.h"
 #import "Analytics.h"
 
 

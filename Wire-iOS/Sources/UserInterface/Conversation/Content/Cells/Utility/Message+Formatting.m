@@ -19,7 +19,6 @@
 
 #import "Message+Formatting.h"
 
-#import "WAZUIMagicIOS.h"
 #import "WireSyncEngine+iOS.h"
 #import "LinkAttachment.h"
 #import "NSString+EmoticonSubstitution.h"

@@ -22,7 +22,6 @@
 
 @import PureLayout;
 
-#import "WAZUIMagicIOS.h"
 #import "UIColor+WAZExtensions.h"
 #import "Message+UI.h"
 #import "UIColor+WR_ColorScheme.h"

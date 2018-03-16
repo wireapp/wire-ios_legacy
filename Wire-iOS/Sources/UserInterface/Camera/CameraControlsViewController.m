@@ -25,10 +25,7 @@
 #import "CameraController.h"
 #import "CameraFocusRing.h"
 #import "CameraExposureSlider.h"
-#import "UIFont+MagicAccess.h"
 #import "Wire-Swift.h"
-
-#import "WAZUIMagicIOS.h"
 
 
 

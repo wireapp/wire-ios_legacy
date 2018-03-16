@@ -19,8 +19,6 @@
 
 #import "ProfileFooterView.h"
 
-#import "WAZUIMagicIOS.h"
-
 @import PureLayout;
 #import "IconButton.h"
 #import "NSLayoutConstraint+Helpers.h"

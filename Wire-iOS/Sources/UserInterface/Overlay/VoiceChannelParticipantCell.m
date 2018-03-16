@@ -22,7 +22,6 @@
 @import PureLayout;
 
 #import "VoiceUserImageView.h"
-#import "WAZUIMagicIOS.h"
 #import "Wire-Swift.h"
 
 #import "CAMediaTimingFunction+AdditionalEquations.h"

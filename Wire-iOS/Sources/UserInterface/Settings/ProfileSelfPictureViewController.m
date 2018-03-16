@@ -30,7 +30,6 @@
 #import "UIImage+ZetaIconsNeue.h"
 #import "BottomOverlayViewController+Private.h"
 @import WireExtensionComponents;
-#import "WAZUIMagicIOS.h"
 
 #import "ImagePickerConfirmationController.h"
 #import "CameraViewController.h"

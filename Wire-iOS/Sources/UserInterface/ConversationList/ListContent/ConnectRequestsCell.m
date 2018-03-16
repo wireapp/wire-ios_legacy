@@ -22,8 +22,6 @@
 @import PureLayout;
 
 #import "ConversationListItemView.h"
-
-#import "WAZUIMagiciOS.h"
 #import "UIColor+WAZExtensions.h"
 
 #import "WireSyncEngine+iOS.h"

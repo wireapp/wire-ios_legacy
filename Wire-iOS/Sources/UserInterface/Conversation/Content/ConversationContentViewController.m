@@ -41,7 +41,6 @@
 #import "NotificationWindowRootViewController.h"
 
 // helpers
-#import "WAZUIMagicIOS.h"
 #import "Constants.h"
 
 @import PureLayout;

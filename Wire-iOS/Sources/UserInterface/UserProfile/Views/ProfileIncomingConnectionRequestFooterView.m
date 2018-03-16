@@ -18,9 +18,6 @@
 
 
 #import "ProfileIncomingConnectionRequestFooterView.h"
-
-#import "WAZUIMagicIOS.h"
-
 #import "Button.h"
 @import WireExtensionComponents;
 
@@ -44,11 +41,11 @@
 - (void)createViews
 {
     self.acceptButton = [Button buttonWithStyleClass:@"dialogue-button-full"];
-    [self.acceptButton setTitle:[NSLocalizedString(@"inbox.connection_request.connect_button_title", @"") transformStringWithMagicKey:@"connect.connect_button.text_transform"] forState:UIControlStateNormal];
+    [self.acceptButton setTitle:NSLocalizedString(@"inbox.connection_request.connect_button_title", @"").localizedUppercaseString forState:UIControlStateNormal];
     [self addSubview:self.acceptButton];
     
     self.ignoreButton = [Button buttonWithStyleClass:@"dialogue-button-empty"];;
-    [self.ignoreButton setTitle:[NSLocalizedString(@"inbox.connection_request.ignore_button_title", @"") transformStringWithMagicKey:@"connect.ignore_button.text_transform"] forState:UIControlStateNormal];
+    [self.ignoreButton setTitle:NSLocalizedString(@"inbox.connection_request.ignore_button_title", @"").localizedUppercaseString forState:UIControlStateNormal];
     [self addSubview:self.ignoreButton];
 }
 

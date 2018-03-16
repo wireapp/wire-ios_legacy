@@ -23,7 +23,6 @@
 
 #import "Button.h"
 #import "UIColor+WAZExtensions.h"
-#import "WAZUIMagicIOS.h"
 
 #import "Wire-Swift.h"
 

@@ -18,7 +18,6 @@
 
 
 #import "TopPeopleCell.h"
-#import "WAZUIMagiciOS.h"
 @import PureLayout;
 #import "BadgeUserImageView.h"
 #import "Constants.h"
@@ -182,7 +181,7 @@
 
     _displayName = [displayName copy];
 
-    self.nameLabel.text = [_displayName transformStringWithMagicKey:@"people_picker.top_conversations_mode.name_label_text_transform"];
+    self.nameLabel.text = displayName.localizedUppercaseString;
 }
 
 - (void)setSelected:(BOOL)selected

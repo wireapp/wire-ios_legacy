@@ -22,7 +22,6 @@
 #import <WireSyncEngine/WireSyncEngine.h>
 #import "UIColor+WAZExtensions.h"
 #import "ColorScheme.h"
-#import "MagicConfig.h"
 
 static CGSize const ZMDeviceSizeIPhone4 = (CGSize){ .width = 320, .height = 480 };
 static CGSize const ZMDeviceSizeIPhone5 = (CGSize){ .width = 320, .height = 568 };
@@ -73,7 +72,6 @@ static NSSet<NSNumber *> *phoneWidths(void) {
 - (void)setUp
 {
     [super setUp];
-    [MagicConfig sharedConfig];
     XCTAssertEqual(UIScreen.mainScreen.scale, 2, @"Snapshot tests need to be run on a device with a 2x scale");
 
     if ([UIDevice.currentDevice.systemVersion compare:@"10" options:NSNumericSearch] == NSOrderedAscending) {

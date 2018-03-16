@@ -24,7 +24,6 @@
 #import "PassthroughTouchesView.h"
 #import "AppDelegate.h"
 #import "UIView+Borders.h"
-#import "WAZUIMagicIOS.h"
 #import "UIView+Borders.h"
 #import "Constants.h"
 #import "WireSyncEngine+iOS.h"

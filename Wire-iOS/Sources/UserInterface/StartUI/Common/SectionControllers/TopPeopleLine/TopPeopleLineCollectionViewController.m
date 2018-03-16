@@ -21,7 +21,6 @@
 #import "TopPeopleCell.h"
 #import "WireSyncEngine+iOS.h"
 #import "UIView+Borders.h"
-#import "WAZUIMagicIOS.h"
 #import "Wire-Swift.h"
 
 @implementation TopPeopleLineCollectionViewController

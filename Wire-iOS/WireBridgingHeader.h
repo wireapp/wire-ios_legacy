@@ -43,7 +43,6 @@
 #import "ConversationViewController+Private.h"
 #import "ConversationListCell.h"
 #import "ConversationListItemView.h"
-#import "WAZUIMagicIOS.h"
 #import "ResizingTextView.h"
 #import "NextResponderTextView.h"
 #import "RegistrationTextField.h"
@@ -126,14 +125,11 @@
 #import "CrossfadeTransition.h"
 #import "VerticalTransition.h"
 #import "MediaAsset.h"
-#import "MagicConfig.h"
 #import "PassthroughWindow.h"
 #import "PassthroughTouchesView.h"
 #import "StopWatch.h"
 
 // Utils
-#import "UIFont+MagicAccess.h"
-#import "UIColor+MagicAccess.h"
 #import "Analytics.h"
 #import "AnalyticsEvent.h"
 #import "Analytics+Events.h"
