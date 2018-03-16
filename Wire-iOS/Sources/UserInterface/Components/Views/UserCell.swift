@@ -250,6 +250,10 @@ extension UserCell {
             components.append("@\(handle)" && UserCell.boldFont)
         }
         
+        WirelessExpirationTimeFormatter.shared.string(for: user).apply {
+            components.append($0 && UserCell.boldFont)
+        }
+        
         if let user = user as? ZMUser, let addressBookName = user.addressBookEntry?.cachedName {
             let formatter = UserCell.correlationFormatter(for: colorSchemeVariant)
             components.append(formatter.correlationText(for: user, addressBookName: addressBookName))

@@ -100,6 +100,11 @@
 @property (nonatomic) ConversationListBottomBarController *bottomBarController;
 
 @property (nonatomic) ConversationListTopBar *topBar;
+@property (nonatomic) NetworkStatusViewController *networkStatusViewController;
+
+/// for NetworkStatusViewDelegate
+@property (nonatomic) BOOL shouldAnimateNetworkStatusView;
+
 @property (nonatomic) UIView *contentContainer;
 @property (nonatomic) UIView *conversationListContainer;
 @property (nonatomic) UILabel *noConversationLabel;
@@ -141,6 +146,7 @@
 {
     [super viewDidLoad];
     self.contentControllerBottomInset = 16;
+    self.shouldAnimateNetworkStatusView = NO;
     
     self.contentContainer = [[UIView alloc] initForAutoLayout];
     self.contentContainer.backgroundColor = [UIColor clearColor];
@@ -162,6 +168,7 @@
     [self createListContentController];
     [self createBottomBarController];
     [self createTopBar];
+    [self createNetworkStatusBar];
 
     [self createViewConstraints];
     [self.listContentController.collectionView scrollRectToVisible:CGRectMake(0, 0, self.view.bounds.size.width, 1) animated:NO];
@@ -208,6 +215,8 @@
     
     [self updateBottomBarSeparatorVisibilityWithContentController:self.listContentController];
     [self closePushPermissionDialogIfNotNeeded];
+
+    self.shouldAnimateNetworkStatusView = YES;
 }
 
 - (void)requestSuggestedHandlesIfNeeded
@@ -383,8 +392,12 @@
     [self.bottomBarController.view autoPinEdgeToSuperviewEdge:ALEdgeLeft];
     [self.bottomBarController.view autoPinEdgeToSuperviewEdge:ALEdgeRight];
     self.bottomBarBottomOffset = [self.bottomBarController.view autoPinEdgeToSuperviewEdge:ALEdgeBottom];
+
+    [self.networkStatusViewController createConstraintsInContainerWithBottomView: self.topBar containerView:self.contentContainer topMargin:0];
     
-    [self.topBar autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero excludingEdge:ALEdgeBottom];
+    [self.topBar autoPinEdgeToSuperviewEdge:ALEdgeLeft];
+    [self.topBar autoPinEdgeToSuperviewEdge:ALEdgeRight];
+
     [self.topBar autoPinEdge:ALEdgeBottom toEdge:ALEdgeTop ofView:self.conversationListContainer];
     [self.contentContainer autoPinEdgesToSuperviewEdgesWithInsets:UIScreen.safeArea];
     
@@ -405,8 +418,8 @@
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator
 {
     [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {
-         // we reload on rotation to make sure that the list cells lay themselves out correctly for the new
-         // orientation
+        // we reload on rotation to make sure that the list cells lay themselves out correctly for the new
+        // orientation
         [self.listContentController reload];
     } completion:^(id<UIViewControllerTransitionCoordinatorContext> context) {
     }];
@@ -629,7 +642,7 @@
 {
     ZMUserSession *session = ZMUserSession.sharedSession;
     NSUInteger conversationsCount = [ZMConversationList conversationsInUserSession:session].count +
-                                    [ZMConversationList pendingConnectionConversationsInUserSession:session].count;
+    [ZMConversationList pendingConnectionConversationsInUserSession:session].count;
     return conversationsCount > 0;
 }
 
@@ -774,7 +787,7 @@
                        options:UIViewAnimationOptionTransitionCrossDissolve
                     animations:^{
                         self.bottomBarController.showArchived = showArchived;
-    } completion:nil];
+                    } completion:nil];
 }
 
 @end

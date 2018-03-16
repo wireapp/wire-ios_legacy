@@ -22,11 +22,13 @@ import Cartography
 typealias NetworkStatusBarDelegate = NetworkStatusViewControllerDelegate & NetworkStatusViewDelegate
 
 protocol NetworkStatusViewControllerDelegate: class {
-    /// if return false, NetworkStatusViewController will not disapper in iPad regular mode landscape orientation.
-    var showInIPadLandscapeMode: Bool {get}
 
-    /// if return false, NetworkStatusViewController will not disapper in iPad regular mode portrait orientation.
-    var showInIPadPortraitMode: Bool {get}
+    ///  return false if NetworkStatusViewController will not disapper in iPad regular mode with specific orientation.
+    ///
+    /// - networkStatusViewController: caller of this delegate method
+    /// - Parameter orientation: orientation to check
+    /// - Returns: return false if the class conform this protocol does not show NetworkStatusViewController in certain orientation.
+    func showInIPad(networkStatusViewController: NetworkStatusViewController, with orientation: UIInterfaceOrientation) -> Bool
 }
 
 extension Notification.Name {
@@ -43,19 +45,13 @@ class NetworkStatusViewController : UIViewController {
     }
 
     let networkStatusView = NetworkStatusView()
-    fileprivate var networkStatusObserverToken : Any?
-    fileprivate var pendingState : NetworkStatusViewState?
+    fileprivate var networkStatusObserverToken: Any?
+    fileprivate var pendingState: NetworkStatusViewState?
     var state: NetworkStatusViewState?
-    fileprivate var offlineBarTimer : Timer?
+    fileprivate var finishedViewWillAppear: Bool = false
 
     fileprivate var device: DeviceProtocol = UIDevice.current
     fileprivate var application: ApplicationProtocol = UIApplication.shared
-
-    override func loadView() {
-        let passthroughTouchesView = PassthroughTouchesView()
-        passthroughTouchesView.clipsToBounds = true
-        self.view = passthroughTouchesView
-    }
 
     /// default init method with a parameter for injecting mock device
     ///
@@ -83,26 +79,51 @@ class NetworkStatusViewController : UIViewController {
     deinit {
         NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(applyPendingState), object: nil)
         NotificationCenter.default.removeObserver(self)
-
-        offlineBarTimer?.invalidate()
-        offlineBarTimer = nil
     }
-    
+
+    override func loadView() {
+        let passthroughTouchesView = PassthroughTouchesView()
+        passthroughTouchesView.clipsToBounds = true
+        self.view = passthroughTouchesView
+    }
+
     override func viewDidLoad() {
         view.addSubview(networkStatusView)
-        
+
         constrain(self.view, networkStatusView) { containerView, networkStatusView in
             networkStatusView.left == containerView.left
             networkStatusView.right == containerView.right
             networkStatusView.top == containerView.top
+            networkStatusView.height == containerView.height
         }
 
         if let userSession = ZMUserSession.shared() {
             update(state: viewState(from: userSession.networkState))
             networkStatusObserverToken = ZMNetworkAvailabilityChangeNotification.addNetworkAvailabilityObserver(self, userSession: userSession)
         }
-        
+
         networkStatusView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tappedOnNetworkStatusBar)))
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+
+        guard !finishedViewWillAppear else { return }
+
+        finishedViewWillAppear = true
+        if let userSession = ZMUserSession.shared() {
+            update(state: viewState(from: userSession.networkState))
+        }
+    }
+
+    @objc public func createConstraintsInContainer(bottomView: UIView, containerView: UIView, topMargin: CGFloat) {
+        constrain(bottomView, containerView, view) { bottomView, containerView, networkStatusViewControllerView in
+
+            networkStatusViewControllerView.top == containerView.top + topMargin
+            networkStatusViewControllerView.left == containerView.left
+            networkStatusViewControllerView.right == containerView.right
+            bottomView.top == networkStatusViewControllerView.bottom
+        }
     }
 
     func changeStateFormOfflineCollapsedToOfflineExpanded() {
@@ -123,11 +144,10 @@ class NetworkStatusViewController : UIViewController {
         let offlineAlert = UIAlertController.init(title: "system_status_bar.no_internet.title".localized,
                                                   message: "system_status_bar.no_internet.explanation".localized,
                                                   cancelButtonTitle: "general.confirm".localized)
-        
         offlineAlert.presentTopmost()
     }
-    
-    fileprivate func viewState(from networkState : ZMNetworkState) -> NetworkStatusViewState {
+
+    fileprivate func viewState(from networkState: ZMNetworkState) -> NetworkStatusViewState {
         switch networkState {
         case .offline:
             return .offlineExpanded
@@ -137,7 +157,7 @@ class NetworkStatusViewController : UIViewController {
             return .onlineSynchronizing
         }
     }
-    
+
     internal func tappedOnNetworkStatusBar() {
         switch networkStatusView.state {
         case .offlineCollapsed:
@@ -148,49 +168,39 @@ class NetworkStatusViewController : UIViewController {
             break
         }
     }
-    
-    fileprivate func startOfflineBarTimer() {
-        offlineBarTimer = .allVersionCompatibleScheduledTimer(withTimeInterval: 2.0, repeats: false) { [weak self] _ in
-            self?.collapseOfflineBar()
-        }
-    }
-    
+
     internal func collapseOfflineBar() {
         if networkStatusView.state == .offlineExpanded {
             update(state: .offlineCollapsed)
         }
     }
-    
+
     fileprivate func enqueue(state: NetworkStatusViewState) {
         pendingState = state
         NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(applyPendingState), object: nil)
         perform(#selector(applyPendingState), with: nil, afterDelay: 1)
     }
-    
+
     internal func applyPendingState() {
         guard let state = pendingState else { return }
         update(state: state)
         pendingState = nil
     }
-    
-    func update(state : NetworkStatusViewState) {
+
+    func update(state: NetworkStatusViewState) {
         self.state = state
+        guard shouldShowOnIPad() else { return }
 
         networkStatusView.update(state: state, animated: true)
-        
-        if state == .offlineExpanded {
-            startOfflineBarTimer()
-        }
     }
-
 }
 
-extension NetworkStatusViewController : ZMNetworkAvailabilityObserver {
-    
+extension NetworkStatusViewController: ZMNetworkAvailabilityObserver {
+
     func didChangeAvailability(newState: ZMNetworkState) {
         enqueue(state: viewState(from: newState))
     }
-    
+
 }
 
 // MARK: - iPad size class and orientation switching
@@ -202,13 +212,7 @@ extension NetworkStatusViewController {
 
         let newOrientation = application.statusBarOrientation
 
-        if newOrientation.isPortrait {
-            return delegate.showInIPadPortraitMode
-        } else if newOrientation.isLandscape {
-            return delegate.showInIPadLandscapeMode
-        } else {
-            return true
-        }
+        return delegate.showInIPad(networkStatusViewController: self, with: newOrientation)
     }
 
     func updateStateForIPad() {
@@ -234,4 +238,3 @@ extension NetworkStatusViewController {
         updateStateForIPad()
     }
 }
-

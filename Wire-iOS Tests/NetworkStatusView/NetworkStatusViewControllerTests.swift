@@ -20,29 +20,21 @@ import XCTest
 @testable import Wire
 
 final class MockConversationRootViewController: UIViewController, NetworkStatusBarDelegate {
-    var isViewDidAppear: Bool = true
+    var shouldAnimateNetworkStatusView: Bool = true
 
     var networkStatusViewController: NetworkStatusViewController!
 
-    var showInIPadLandscapeMode: Bool {
-        return true
-    }
-
-    var showInIPadPortraitMode: Bool {
+    func showInIPad(networkStatusViewController: NetworkStatusViewController, with orientation: UIInterfaceOrientation) -> Bool {
         return true
     }
 }
 
 final class MockConversationListViewController: UIViewController, NetworkStatusBarDelegate {
-    var isViewDidAppear: Bool = true
+    var shouldAnimateNetworkStatusView: Bool = true
 
     var networkStatusViewController: NetworkStatusViewController!
 
-    var showInIPadLandscapeMode: Bool {
-        return false
-    }
-
-    var showInIPadPortraitMode: Bool {
+    func showInIPad(networkStatusViewController: NetworkStatusViewController, with orientation: UIInterfaceOrientation) -> Bool {
         return false
     }
 }

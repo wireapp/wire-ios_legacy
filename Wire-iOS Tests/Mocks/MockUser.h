@@ -45,6 +45,7 @@
 @property (nonatomic, readwrite) BOOL untrusted;
 @property (nonatomic, readwrite) BOOL trusted;
 @property (nonatomic, readwrite) NSUInteger totalCommonConnections;
+@property (nonatomic, readwrite) NSTimeInterval expiresAfter;
 @property (nonatomic, assign) BOOL isSelfUser;
 @property (nonatomic, assign) BOOL isServiceUser;
 @property (nonatomic, assign) BOOL isTeamMember;

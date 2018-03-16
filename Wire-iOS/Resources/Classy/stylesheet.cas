@@ -1296,7 +1296,7 @@ ProfileDetailsViewController {
     
     remainingTimeLabel: @{
         textColor: $color-text-dimmed;
-        font: $font-normal-semibold;
+        font: $font-medium-semibold;
     }
 }
 

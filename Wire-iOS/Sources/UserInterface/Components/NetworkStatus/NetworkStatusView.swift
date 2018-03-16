@@ -16,7 +16,6 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-
 import Foundation
 import Cartography
 
@@ -25,16 +24,13 @@ enum OfflineBarState {
     case expanded
 }
 
-class OfflineBar : UIView {
-    
-    private let collapsedHeight : CGFloat = 2
-    private let expandedHeight: CGFloat = 20
-    
-    private let offlineLabel : UILabel
-    private var heightConstraint : NSLayoutConstraint?
-    private var _state : OfflineBarState = .minimized
-    
-    var state : OfflineBarState {
+class OfflineBar: UIView {
+
+    private let offlineLabel: UILabel
+    private var heightConstraint: NSLayoutConstraint?
+    private var _state: OfflineBarState = .minimized
+
+    var state: OfflineBarState {
         set {
             update(state: newValue, animated: false)
         }
@@ -42,54 +38,58 @@ class OfflineBar : UIView {
             return _state
         }
     }
-    
+
     func update(state: OfflineBarState, animated: Bool) {
         guard self.state != state else { return }
-        
+
         _state = state
-        
+
         updateViews(animated: animated)
     }
-    
+
     convenience init() {
         self.init(frame: CGRect.zero)
     }
-    
+
     override init(frame: CGRect) {
         offlineLabel = UILabel()
-        
+
         super.init(frame: frame)
-        
-        backgroundColor = UIColor(red: 1.0, green: 0.6863, blue: 0, alpha: 1)
+        backgroundColor = UIColor(rgb:0xFEBF02, alpha: 1)
+
+        layer.cornerRadius = CGFloat.OfflineBar.expandedCornerRadius
+        layer.masksToBounds = true
+
         offlineLabel.font = FontSpec(FontSize.small, .medium).font
         offlineLabel.textColor = UIColor.white
         offlineLabel.text = "system_status_bar.no_internet.title".localized.uppercased()
-        
+
         addSubview(offlineLabel)
-        
+
         createConstraints()
         updateViews(animated: false)
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     private func createConstraints() {
         constrain(self, offlineLabel) { containerView, offlineLabel in
             offlineLabel.center == containerView.center
             offlineLabel.left >= containerView.leftMargin
             offlineLabel.right <= containerView.rightMargin
-            
-            heightConstraint = containerView.height == collapsedHeight
+
+            heightConstraint = containerView.height == CGFloat.OfflineBar.collapsedHeight
         }
     }
-    
+
     private func updateViews(animated: Bool = true) {
-        heightConstraint?.constant = state == .expanded ? expandedHeight : collapsedHeight
+        heightConstraint?.constant = state == .expanded ? CGFloat.OfflineBar.expandedHeight : CGFloat.OfflineBar.collapsedHeight
         offlineLabel.alpha = state == .expanded ? 1 : 0
+        layer.cornerRadius = state == .expanded ? CGFloat.OfflineBar.expandedCornerRadius : CGFloat.OfflineBar.collapsedHeight
     }
-    
+
 }
 
 enum NetworkStatusViewState {
@@ -102,7 +102,7 @@ enum NetworkStatusViewState {
 protocol NetworkStatusViewDelegate: class {
 
     /// Set this var to true after viewDidAppear. This flag prevents first layout animation when the UIViewController is created but not yet appear, if didChangeHeight called with animated = true.
-    var isViewDidAppear: Bool { get set }
+    var shouldAnimateNetworkStatusView: Bool { get set }
 
     /// When the networkStatusView changes its height, this delegate method is called. The delegate should refresh its layout in the method.
     ///
@@ -117,8 +117,8 @@ protocol NetworkStatusViewDelegate: class {
 extension NetworkStatusViewDelegate where Self: UIViewController {
     func didChangeHeight(_ networkStatusView: NetworkStatusView, animated: Bool, state: NetworkStatusViewState) {
 
-        guard isViewDidAppear else { return }
-
+        guard shouldAnimateNetworkStatusView else { return }
+        
         if animated {
             UIView.animate(withDuration: TimeInterval.NetworkStatusBar.resizeAnimationTime, delay: 0, options: [.curveEaseInOut, .beginFromCurrentState], animations: {
                 self.view.layoutIfNeeded()
@@ -130,14 +130,22 @@ extension NetworkStatusViewDelegate where Self: UIViewController {
     }
 }
 
-class NetworkStatusView : UIView {
-    
+class NetworkStatusView: UIView {
+
+    static public let horizontal: CGFloat = 16
+    static public let verticalMargin: CGFloat = 8
+
+    private let connectingView: BreathLoadingBar
+    private let offlineView: OfflineBar
+    private var _state: NetworkStatusViewState = .online
     public weak var delegate: NetworkStatusViewDelegate?
-    private let connectingView : BreathLoadingBar
-    private let offlineView : OfflineBar
-    private var _state : NetworkStatusViewState = .online
-    
-    var state : NetworkStatusViewState {
+
+    var offlineViewTopMargin: NSLayoutConstraint?
+    var offlineViewBottomMargin: NSLayoutConstraint?
+    var connectingViewHeight: NSLayoutConstraint?
+    var connectingViewBottomMargin: NSLayoutConstraint?
+
+    var state: NetworkStatusViewState {
         set {
             update(state: newValue, animated: false)
         }
@@ -145,22 +153,26 @@ class NetworkStatusView : UIView {
             return _state
         }
     }
-    
+
     func update(state: NetworkStatusViewState, animated: Bool) {
         _state = state
-        updateViewState(animated: animated)
+        // if this is called before the frame is set then the offline
+        // bar zooms into view (which we don't want).
+        updateViewState(animated: (frame == .zero) ? false : animated)
     }
-    
+
     override init(frame: CGRect) {
         connectingView = BreathLoadingBar.withDefaultAnimationDuration()
         connectingView.accessibilityIdentifier = "LoadBar"
         connectingView.backgroundColor = UIColor.accent()
         offlineView = OfflineBar()
-        
+
         super.init(frame: frame)
-        
+
+        connectingView.delegate = self
+
         [offlineView, connectingView].forEach(addSubview)
-        
+
         createConstraints()
         state = .online
     }
@@ -168,58 +180,117 @@ class NetworkStatusView : UIView {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     func createConstraints() {
         constrain(self, offlineView, connectingView) { containerView, offlineView, connectingView in
-            containerView.height == 20
-            
-            offlineView.left == containerView.left
-            offlineView.right == containerView.right
-            offlineView.top == containerView.top
-            offlineView.bottom <= containerView.bottom
-            
-            connectingView.left == containerView.left
-            connectingView.right == containerView.right
-            connectingView.top == containerView.top
-            connectingView.bottom <= containerView.bottom
-            connectingView.height == 2
+            offlineView.left == containerView.left + NetworkStatusView.horizontal
+            offlineView.right == containerView.right - NetworkStatusView.horizontal
+            offlineViewTopMargin = offlineView.top == containerView.top + NetworkStatusView.verticalMargin
+            offlineViewBottomMargin = offlineView.bottom == containerView.bottom - NetworkStatusView.verticalMargin
+
+            connectingView.left == offlineView.left
+            connectingView.right == offlineView.right
+            connectingView.top == offlineView.top
+            connectingViewHeight = connectingView.height == CGFloat.OfflineBar.collapsedHeight
+            connectingViewBottomMargin = connectingView.bottom == containerView.bottom - NetworkStatusView.verticalMargin
         }
     }
-    
-    func updateViewState(animated: Bool) {
-        connectingView.isHidden = state != .onlineSynchronizing
+
+    private func updateViewState(animated: Bool) {
+        let connectingViewHidden = state != .onlineSynchronizing
         connectingView.animating = state == .onlineSynchronizing
-        offlineView.isHidden = state != .offlineExpanded && state != .offlineCollapsed
-        
-        if state == .online || state == .onlineSynchronizing {
-            offlineView.state = .minimized
+        let offlineViewHidden = state != .offlineExpanded && state != .offlineCollapsed
+
+        var offlineBarState: OfflineBarState?
+        switch state {
+        case .offlineExpanded:
+            offlineBarState = .expanded
+        case .offlineCollapsed:
+            offlineBarState = .minimized
+        case .online, .onlineSynchronizing:
+            offlineBarState = .minimized
         }
-        
-        if state == .offlineExpanded {
-            if animated {
-                UIView.animate(withDuration: 0.35, delay: 0, options: [.curveEaseIn, .beginFromCurrentState], animations: {
-                    self.offlineView.update(state: .expanded, animated: animated)
-                    self.layoutIfNeeded()
-                })
-            } else {
-                self.offlineView.update(state: .expanded, animated: animated)
+
+        if let offlineBarState = offlineBarState {
+
+            let updateUIBlock: () -> Void = {
+                self.updateUI(
+                    offlineBarState: offlineBarState,
+                    animated: animated,
+                    connectingViewHidden: connectingViewHidden,
+                    offlineViewHidden: offlineViewHidden
+                )
             }
-        }
-            
-        if state == .offlineCollapsed {
-            if animated {
-                UIView.animate(withDuration: 0.35, delay: 0, options: [.curveEaseOut, .beginFromCurrentState], animations: {
-                    self.offlineView.update(state: .minimized, animated: animated)
-                    self.layoutIfNeeded()
-                })
-            } else {
-                self.offlineView.update(state: .minimized, animated: animated)
+
+            let completionBlock: () -> Void = {
+                self.updateUICompletion(
+                    connectingViewHidden: connectingViewHidden,
+                    offlineViewHidden: offlineViewHidden
+                )
             }
+
+            if animated {
+                if offlineBarState == .expanded {
+                    self.offlineView.isHidden = false
+                }
+
+                UIView.animate(
+                    withDuration: TimeInterval.NetworkStatusBar.resizeAnimationTime,
+                    delay: 0,
+                    options: [.curveEaseInOut, .beginFromCurrentState],
+                    animations: updateUIBlock,
+                    completion: { _ in completionBlock() }
+                )
+            } else {
+                updateUIBlock()
+                completionBlock()
+            }
+
+            delegate?.didChangeHeight(self, animated: animated, state: state)
         }
     }
-    
+
+    func updateUI(offlineBarState: OfflineBarState,
+                  animated: Bool,
+                  connectingViewHidden: Bool,
+                  offlineViewHidden: Bool) {
+        offlineViewBottomMargin?.constant = offlineBarState == .expanded ? -NetworkStatusView.verticalMargin : 0
+
+        connectingViewHeight?.constant = connectingViewHidden ? 0 : CGFloat.OfflineBar.collapsedHeight
+        connectingViewBottomMargin?.constant = connectingViewHidden ? 0 : -NetworkStatusView.verticalMargin
+
+        /// offlineViewBottomMargin is active iff connectingViewHidden is visible
+        if offlineViewHidden && !connectingViewHidden {
+            offlineViewBottomMargin?.isActive = false
+            connectingViewBottomMargin?.isActive = true
+        }
+        else {
+            connectingViewBottomMargin?.isActive = false
+            offlineViewBottomMargin?.isActive = true
+        }
+
+        self.offlineView.update(state: offlineBarState, animated: animated)
+
+        self.layoutIfNeeded()
+    }
+
+    func updateUICompletion(connectingViewHidden: Bool, offlineViewHidden: Bool) {
+        self.offlineView.isHidden = offlineViewHidden
+    }
+
     // Detects when the view can be touchable
     override func point(inside point: CGPoint, with event: UIEvent?) -> Bool {
         return state == .offlineExpanded
     }
 }
+
+extension NetworkStatusView: BreathLoadingBarDelegate {
+    func animationDidStarted() {
+        delegate?.didChangeHeight(self, animated: true, state: state)
+    }
+
+    func animationDidStopped() {
+        delegate?.didChangeHeight(self, animated: true, state: state)
+    }
+}
+
