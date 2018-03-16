@@ -124,7 +124,7 @@ class NetworkStatusViewController : UIViewController {
         }
     }
 
-    fileprivate func changeStateFormOfflineCollapsedToOfflineExpanded() {
+    func changeStateFormOfflineCollapsedToOfflineExpanded() {
         let networkStatusView = self.networkStatusView
 
         if networkStatusView.state == .offlineCollapsed {
