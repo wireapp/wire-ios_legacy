@@ -391,7 +391,7 @@
     [self.bottomBarController.view autoPinEdgeToSuperviewEdge:ALEdgeRight];
     self.bottomBarBottomOffset = [self.bottomBarController.view autoPinEdgeToSuperviewEdge:ALEdgeBottom];
 
-    [self.networkStatusViewController createConstraintsWithBottomView: self.topBar containerView:self.contentContainer topMargin:0];
+    [self.networkStatusViewController createConstraintsInContainerWithBottomView: self.topBar containerView:self.contentContainer topMargin:0];
     
     [self.topBar autoPinEdgeToSuperviewEdge:ALEdgeLeft];
     [self.topBar autoPinEdgeToSuperviewEdge:ALEdgeRight];

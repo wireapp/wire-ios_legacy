@@ -114,7 +114,7 @@ class NetworkStatusViewController : UIViewController {
         }
     }
 
-    @objc public func createConstraints(bottomView: UIView, containerView: UIView, topMargin: CGFloat) {
+    @objc public func createConstraintsInContainer(bottomView: UIView, containerView: UIView, topMargin: CGFloat) {
         constrain(bottomView, containerView, view) { bottomView, containerView, networkStatusViewControllerView in
 
             networkStatusViewControllerView.top == containerView.top + topMargin

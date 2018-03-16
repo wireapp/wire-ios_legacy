@@ -78,7 +78,7 @@ import Cartography
         self.addToSelf(networkStatusViewController)
 
 
-        networkStatusViewController.createConstraints(bottomView: customNavBar!, containerView: self.view, topMargin: UIScreen.safeArea.top)
+        networkStatusViewController.createConstraintsInContainer(bottomView: customNavBar!, containerView: self.view, topMargin: UIScreen.safeArea.top)
  
         constrain(customNavBar!, view, contentView, conversationViewController.view) {
             customNavBar, view, contentView, conversationViewControllerView in
