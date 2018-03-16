@@ -154,7 +154,7 @@ public final class AudioRecorder: NSObject, AudioRecorderType {
     
     public func startRecording() {
         guard let audioRecorder = self.audioRecorder else { return }
-        
+
         AVSMediaManager.sharedInstance().startRecording {
             self.state = .recording
             self.recordTimerCallback?(0)

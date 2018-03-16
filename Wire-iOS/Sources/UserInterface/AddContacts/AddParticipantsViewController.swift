@@ -217,12 +217,6 @@ public class AddParticipantsViewController: UIViewController {
         
         createConstraints()
         updateSelectionValues()
-        
-        if case .create = context {
-            backButtonDescriptor.buttonTapped = { [weak self] in self?.backButtonTapped() }
-            backButtonDescriptor.accessibilityIdentifier = "button.addpeople.back"
-            navigationItem.leftBarButtonItem = .init(customView: backButtonDescriptor.create())
-        }
     }
 
     func createConstraints() {
@@ -261,10 +255,6 @@ public class AddParticipantsViewController: UIViewController {
                 searchResultsView.top == searchHeaderView.bottom
             }
         }
-    }
-    
-    @objc private func backButtonTapped() {
-        navigationController?.popViewController(animated: true)
     }
     
     private func updateValues() {
