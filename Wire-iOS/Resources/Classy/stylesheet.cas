@@ -25,25 +25,6 @@ UIView.separator {
     backgroundColor: $color-separator;
 }
 
-MediaPreviewView {
-    titleLabel: @{
-        font: System-Light 16.0;
-        textColor: white;
-        numberOfLines: 2;
-    };
-    subtitleLabel: @{
-        font: $font-small;
-        textColor: white;
-    };
-    overlayView: @{
-        backgroundColor: rgb(0, 0, 0, 0.48);
-    };
-    playButton: @{
-        iconColor: white;
-        iconColor[state:selected]: white;
-    }
-}
-
 IconButton.conversation-toolbar {
     circular: true;
     borderWidth: 0;
