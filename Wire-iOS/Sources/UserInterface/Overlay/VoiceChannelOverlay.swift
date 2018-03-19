@@ -518,6 +518,7 @@ extension VoiceChannelOverlay {
         
         degradationTopLabel.accessibilityIdentifier = "CallDegradationTopLabel"
         degradationTopLabel.textColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorTextForeground, variant: .dark)
+        degradationTopLabel.font = FontSpec(.normal, .light).font!
         
         degradationBottomLabel.accessibilityIdentifier = "CallDegradationBottomLabel"
         degradationBottomLabel.textColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorTextForeground, variant: .dark)
