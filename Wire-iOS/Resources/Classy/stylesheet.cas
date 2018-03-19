@@ -25,22 +25,6 @@ UIView.separator {
     backgroundColor: $color-separator;
 }
 
-IconButton.conversation-toolbar {
-    circular: true;
-    borderWidth: 0;
-    adjustsImageWhenHighlighted: false;
-}
-
-CameraPreviewView {
-    switchCameraButton: @{
-        iconColor[state:normal]: $color-icon-normal-dark;
-    }
-    
-    mutedPreviewOverlay: @{
-        backgroundColor: rgb(0, 0, 0, 0.40);
-    }
-}
-
 IconButton.back-button {
     borderWidth: 0.5;
     borderColor[state: normal]: $color-separator;
