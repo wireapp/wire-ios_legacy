@@ -222,10 +222,13 @@ extension ConversationContentViewController {
     
     func scroll(toIndex indexToShow: Int, completion: ((ConversationCell)->())? = .none) {
         let cellIndexPath = IndexPath(row: indexToShow, section: 0)
-        self.tableView.scrollToRow(at: cellIndexPath, at: .middle, animated: false)
-        
-        delay(0.1) {
-            completion?(self.tableView.cellForRow(at: cellIndexPath) as! ConversationCell)
-        }
+
+        UIView.animate(withDuration: 0.0, animations: {
+            self.tableView.scrollToRow(at: cellIndexPath, at: .middle, animated: false)
+        }, completion: { (didComplete) in
+            if let cell = self.tableView.cellForRow(at: cellIndexPath) {
+                completion?(cell as! ConversationCell)
+            }
+        })
     }
 }
