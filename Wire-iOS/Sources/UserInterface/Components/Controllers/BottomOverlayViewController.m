@@ -20,7 +20,6 @@
 
 #import "BottomOverlayViewController.h"
 #import "BottomOverlayViewController+Private.h"
-#import "WAZUIMagicIOS.h"
 #import "Wire-Swift.h"
 @import WireExtensionComponents;
 
@@ -34,7 +33,6 @@
     
     self.view.backgroundColor = [UIColor clearColor];
 
-    [self loadMagicValues];
     [self setupBottomOverlay];
     [self setupTopView];
     [self setupGestureRecognizers];
@@ -43,25 +41,26 @@
 
 #pragma mark - BottomOverlayViewController+Private
 
-- (void)loadMagicValues
-{
-    self.overlayBackgroundColor = [UIColor colorWithMagicIdentifier:@"bottom_overlay.background_color"];
-    self.overlayHeight = [WAZUIMagic floatForIdentifier:@"bottom_overlay.overlay_height"];
-}
-
 
 - (void)setupBottomOverlay
 {
     self.bottomOverlayView = [[UIView alloc] init];
     self.bottomOverlayView.translatesAutoresizingMaskIntoConstraints = NO;
     [self.view addSubview:self.bottomOverlayView];
+    
+    CGFloat height;
+    if (self.traitCollection.horizontalSizeClass == UIUserInterfaceSizeClassRegular) {
+        height = 104;
+    } else {
+        height = 88;
+    }
 
-    [self.bottomOverlayView addConstraintForHeight:self.overlayHeight + UIScreen.safeArea.bottom];
+    [self.bottomOverlayView addConstraintForHeight:height + UIScreen.safeArea.bottom];
     [self.bottomOverlayView addConstraintForLeftMargin:0 relativeToView:self.view];
     [self.bottomOverlayView addConstraintForRightMargin:0 relativeToView:self.view];
     [self.bottomOverlayView addConstraintForBottomMargin:0 relativeToView:self.view];
 
-    self.bottomOverlayView.backgroundColor = self.overlayBackgroundColor;
+    self.bottomOverlayView.backgroundColor = [UIColor.blackColor colorWithAlphaComponent:0.8];
 }
 
 - (void)setupTopView
@@ -77,7 +76,6 @@
 
     self.topView.backgroundColor = [UIColor clearColor];
 }
-
 
 - (void)setupGestureRecognizers
 {

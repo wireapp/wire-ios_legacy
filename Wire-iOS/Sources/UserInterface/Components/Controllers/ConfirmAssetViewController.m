@@ -24,7 +24,6 @@
 @import AVKit;
 @import AVFoundation;
 @import FLAnimatedImage;
-#import "WAZUIMagicIOS.h"
 #import "Wire-Swift.h"
 
 #import "UIColor+WAZExtensions.h"

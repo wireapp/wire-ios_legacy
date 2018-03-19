@@ -41,7 +41,6 @@
 #import "NotificationWindowRootViewController.h"
 
 // helpers
-#import "WAZUIMagicIOS.h"
 #import "Constants.h"
 
 @import PureLayout;
@@ -267,8 +266,7 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
     }
     
     if (headerView) {
-        headerView.layoutMargins = UIEdgeInsetsMake(0, [WAZUIMagic floatForIdentifier:@"content.system_message.left_margin"],
-                                                    0, [WAZUIMagic floatForIdentifier:@"content.system_message.right_margin"]);
+        headerView.layoutMargins = UIEdgeInsetsMake(0, 20, 0, 20);
         [self setConversationHeaderView:headerView];
     } else {
         self.tableView.tableHeaderView = nil;

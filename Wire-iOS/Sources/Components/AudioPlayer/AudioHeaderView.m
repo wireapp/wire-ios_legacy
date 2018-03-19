@@ -21,7 +21,6 @@
 
 #import "AudioHeaderView.h"
 @import WireExtensionComponents;
-#import "WAZUIMagicIOS.h"
 
 
 @interface AudioHeaderView ()

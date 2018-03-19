@@ -21,7 +21,6 @@
 
 @import PureLayout;
 
-#import "WAZUIMagicIOS.h"
 #import "UIColor+WAZExtensions.h"
 #import "WireSyncEngine+iOS.h"
 #import "CameraViewController.h"
@@ -119,8 +118,8 @@ NSString * const UnsplashRandomImageLowQualityURL = @"https://source.unsplash.co
 - (void)createSubtitleLabel
 {
     self.subtitleLabel = [[UILabel alloc] initForAutoLayout];
-    self.subtitleLabel.font = [UIFont fontWithMagicIdentifier:@"style.text.large.font_spec_light"];
-    self.subtitleLabel.textColor = [UIColor colorWithMagicIdentifier:@"style.color.static_foreground.normal"];
+    self.subtitleLabel.font = UIFont.largeLightFont;
+    self.subtitleLabel.textColor = [UIColor wr_colorFromColorScheme:ColorSchemeColorTextForeground variant:ColorSchemeVariantDark];
     self.subtitleLabel.numberOfLines = 0;
     self.subtitleLabel.text = [NSString stringWithFormat:NSLocalizedString(@"registration.select_picture.subtitle", nil), self.unregisteredUser.name];
 

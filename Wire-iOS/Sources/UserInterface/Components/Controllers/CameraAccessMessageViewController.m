@@ -18,7 +18,7 @@
 
 
 #import "CameraAccessMessageViewController.h"
-#import "WAZUIMagicIOS.h"
+#import "Wire-Swift.h"
 
 
 @interface CameraAccessMessageViewController ()
@@ -40,11 +40,11 @@
     [super viewDidLoad];
     
     self.cameraAccessDeniedLabel.text = NSLocalizedString(@"camera_access.denied", "");
-    self.cameraAccessDeniedLabel.font = [UIFont fontWithMagicIdentifier:@"style.text.normal.font_spec_bold"];
+    self.cameraAccessDeniedLabel.font = UIFont.normalMediumFont;
     self.cameraAccessDeniedLabel.textColor = [UIColor whiteColor];
     
     self.cameraAccessInstructionLabel.text = NSLocalizedString(@"camera_access.denied.instruction", "");
-    self.cameraAccessInstructionLabel.font = [UIFont fontWithMagicIdentifier:@"style.text.normal.font_spec"];
+    self.cameraAccessInstructionLabel.font = UIFont.normalLightFont;
     self.cameraAccessInstructionLabel.textColor = [UIColor whiteColor];
 }
 

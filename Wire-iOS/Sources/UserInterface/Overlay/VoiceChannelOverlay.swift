@@ -273,14 +273,14 @@ extension VoiceChannelOverlay {
     }
     
     private var nameAttributes: [String : Any] {
-        let font = UIFont(magicIdentifier: "style.text.normal.font_spec_bold")!
+        let font = FontSpec(.normal, .medium).font!
         var attributes = baseAttributes
         attributes[NSFontAttributeName] = font
         return attributes
     }
     
     private var messageAttributes: [String : Any] {
-        let font = UIFont(magicIdentifier: "style.text.normal.font_spec")!
+        let font = FontSpec(.normal, .light).font!
         var attributes = baseAttributes
         attributes[NSFontAttributeName] = font
         return attributes
@@ -326,7 +326,7 @@ extension VoiceChannelOverlay {
         attributedString.addAttributes(nameAttributes, range: nameRange)
         let cbrRange = (string as NSString).range(of: "voice.status.cbr".localized.uppercasedWithCurrentLocale)
         if cbrRange.location != NSNotFound {
-            let font = UIFont(magicIdentifier: "style.text.small.font_spec")!
+            let font = FontSpec(.small, .light).font!
             attributedString.addAttributes([NSFontAttributeName: font], range: cbrRange)
         }
         

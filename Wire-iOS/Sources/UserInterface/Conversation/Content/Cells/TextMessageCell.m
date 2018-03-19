@@ -25,7 +25,6 @@
 
 #import "WireSyncEngine+iOS.h"
 #import "ZMConversation+Additions.h"
-#import "WAZUIMagicIOS.h"
 #import "Message+Formatting.h"
 #import "UIView+Borders.h"
 #import "Constants.h"

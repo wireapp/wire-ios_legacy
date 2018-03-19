@@ -29,7 +29,6 @@
 @import WireDataModel;
 
 #import "IconButton.h"
-#import "WAZUIMagicIOS.h"
 #import "Constants.h"
 #import "UIColor+WAZExtensions.h"
 #import "UserImageView.h"
@@ -172,7 +171,8 @@ typedef NS_ENUM(NSUInteger, ProfileUserAction) {
 
 - (void)createUserImageView
 {
-    self.userImageView = [[UserImageView alloc] initWithMagicPrefix:@"profile.user_image"];
+    self.userImageView = [[UserImageView alloc] init];
+    self.userImageView.initials.font = [UIFont systemFontOfSize:80 weight:UIFontWeightThin];
     self.userImageView.userSession = [ZMUserSession sharedSession];
     self.userImageView.translatesAutoresizingMaskIntoConstraints = NO;
     self.userImageView.size = UserImageViewSizeBig;
@@ -332,7 +332,11 @@ typedef NS_ENUM(NSUInteger, ProfileUserAction) {
     }
     else if (user.canBeConnected) {
         return ProfileUserActionSendConnectionRequest;
-    } else {
+    }
+    else if (user.isWirelessUser) {
+        return ProfileUserActionNone;
+    }
+    else {
         return ProfileUserActionOpenConversation;
     }
 }

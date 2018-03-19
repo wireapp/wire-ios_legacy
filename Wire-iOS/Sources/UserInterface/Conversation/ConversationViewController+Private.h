@@ -16,8 +16,6 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 // 
 
-
-#import "WAZUIMagicIOS.h"
 #import "WireSyncEngine+iOS.h"
 
 NS_ASSUME_NONNULL_BEGIN

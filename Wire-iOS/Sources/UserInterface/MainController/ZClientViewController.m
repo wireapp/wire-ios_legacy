@@ -26,8 +26,6 @@
 #import "AppDelegate.h"
 #import "NotificationWindowRootViewController.h"
 
-#import "WAZUIMagicIOS.h"
-
 #import "ConversationListViewController.h"
 #import "ConversationViewController.h"
 #import "ConnectRequestsViewController.h"

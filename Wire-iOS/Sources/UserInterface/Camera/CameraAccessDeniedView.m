@@ -23,7 +23,6 @@
 
 
 #import "UIColor+WAZExtensions.h"
-#import "WAZUIMagicIOS.h"
 #import "Button.h"
 #import "Wire-Swift.h"
 
@@ -51,7 +50,7 @@
         self.backgroundColor = [UIColor blackColor];
         
         self.titleLabel = [[UILabel alloc] initForAutoLayout];
-        self.titleLabel.font = [UIFont fontWithMagicIdentifier:@"style.text.normal.font_spec_bold"];
+        self.titleLabel.font = UIFont.normalMediumFont;
         self.titleLabel.textColor = UIColor.whiteColor;
         self.titleLabel.textAlignment = NSTextAlignmentLeft;
         self.titleLabel.text = NSLocalizedString(@"camera_access.denied", "");
@@ -59,7 +58,7 @@
         [self addSubview:self.titleLabel];
         
         self.instructionsLabel = [[UILabel alloc] initForAutoLayout];
-        self.instructionsLabel.font = [UIFont fontWithMagicIdentifier:@"style.text.normal.font_spec"];
+        self.instructionsLabel.font = UIFont.normalLightFont;
         self.instructionsLabel.textColor = UIColor.whiteColor;
         self.instructionsLabel.text = NSLocalizedString(@"camera_access.denied.instruction", "");
         self.instructionsLabel.numberOfLines = 0;

@@ -29,7 +29,6 @@
 #import "PopTransition.h"
 #import "PushTransition.h"
 #import "NavigationController.h"
-#import "WAZUIMagicIOS.h"
 #import "WireSyncEngine+iOS.h"
 #import "UIViewController+Errors.h"
 #import "UIImage+ZetaIconsNeue.h"

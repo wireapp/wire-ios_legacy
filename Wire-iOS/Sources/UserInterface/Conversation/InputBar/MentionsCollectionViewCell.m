@@ -20,10 +20,9 @@
 #import "MentionsCollectionViewCell.h"
 #import "UserImageView.h"
 #import "UIView+Borders.h"
-#import "UIFont+MagicAccess.h"
 @import PureLayout;
-#import "UserImageView+Magic.h"
 #import "WireSyncEngine+iOS.h"
+#import "Wire-Swift.h"
 
 @interface MentionsLabel : UILabel
 
@@ -66,7 +65,8 @@
 
 -(void)createUserImageView
 {
-    self.userImageView = [[UserImageView alloc] initWithMagicPrefix:@"content.author_image"];
+    self.userImageView = [[UserImageView alloc] init];
+    self.userImageView.initials.font = [UIFont systemFontOfSize:11 weight:UIFontWeightLight];
     self.userImageView.userSession = [ZMUserSession sharedSession];
     self.userImageView.translatesAutoresizingMaskIntoConstraints = NO;
     
@@ -78,7 +78,7 @@
     self.nameLabel = [[MentionsLabel alloc] initForAutoLayout];
     self.nameLabel.lineBreakMode = NSLineBreakByTruncatingTail;
     self.nameLabel.textColor = [UIColor whiteColor];
-    self.nameLabel.font = [UIFont fontWithMagicIdentifier:@"style.text.small.font_spec_bold"];
+    self.nameLabel.font = UIFont.smallMediumFont;
     self.nameLabel.textAlignment = NSTextAlignmentCenter;
     
     [self.contentView addSubview:self.nameLabel];

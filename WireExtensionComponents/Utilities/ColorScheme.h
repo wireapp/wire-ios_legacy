@@ -49,6 +49,8 @@ extern NSString * const ColorSchemeColorChatHeadBorder;
 extern NSString * const ColorSchemeColorChatHeadTitleText;
 extern NSString * const ColorSchemeColorChatHeadSubtitleText;
 
+extern NSString * const ColorSchemeColorButtonFaded;
+
 extern NSString * const ColorSchemeColorTabNormal;
 extern NSString * const ColorSchemeColorTabSelected;
 extern NSString * const ColorSchemeColorTabHighlighted;

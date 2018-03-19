@@ -75,7 +75,6 @@ class AppRootViewController: UIViewController {
         appStateController = AppStateController()
         fileBackupExcluder = FileBackupExcluder()
         avsLogObserver = AVSLogObserver()
-        MagicConfig.shared()
 
         mainWindow = UIWindow(frame: UIScreen.main.bounds)
         mainWindow.accessibilityIdentifier = "ZClientMainWindow"
@@ -366,7 +365,6 @@ class AppRootViewController: UIViewController {
 
     func onContentSizeCategoryChange() {
         Message.invalidateMarkdownStyle()
-        UIFont.wr_flushFontCache()
         NSAttributedString.wr_flushCellParagraphStyleCache()
         ConversationListCell.invalidateCachedCellSize()
         let fontScheme = FontScheme(contentSizeCategory: UIApplication.shared.preferredContentSizeCategory)

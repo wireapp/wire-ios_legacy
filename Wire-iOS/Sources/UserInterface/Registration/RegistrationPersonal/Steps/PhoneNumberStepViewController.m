@@ -22,7 +22,6 @@
 @import PureLayout;
 
 #import "RegistrationTextField.h"
-#import "WAZUIMagicIOS.h"
 #import "UIView+Borders.h"
 #import "UIImage+ZetaIconsNeue.h"
 #import "Constants.h"
@@ -106,7 +105,7 @@
 - (void)createHeroLabel
 {
     self.heroLabel = [[UILabel alloc] initForAutoLayout];
-    self.heroLabel.textColor = [UIColor colorWithMagicIdentifier:@"style.color.static_foreground.normal"];
+    self.heroLabel.textColor = [UIColor wr_colorFromColorScheme:ColorSchemeColorTextForeground variant:ColorSchemeVariantDark];
     self.heroLabel.numberOfLines = 0;
     
     [self.view addSubview:self.heroLabel];

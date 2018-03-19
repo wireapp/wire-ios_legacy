@@ -19,8 +19,6 @@
 
 #import "NoHistoryViewController.h"
 @import PureLayout;
-#import "WAZUIMagicIOS.h"
-#import "UIFont+MagicAccess.h"
 #import "RegistrationFormController.h"
 #import "Button.h"
 #import "Wire-Swift.h"
@@ -68,7 +66,7 @@
     NSString *heroText = [self localizableStringForPart:@"hero"];
     NSMutableAttributedString *attributedText = [[NSMutableAttributedString alloc] initWithString:NSLocalizedString(heroText, nil)
                                                                                        attributes:@{ NSParagraphStyleAttributeName : paragraphStyle,
-                                                                                                     NSFontAttributeName: [UIFont fontWithMagicIdentifier:@"style.text.large.font_spec_medium"]}];
+                                                                                                     NSFontAttributeName: UIFont.largeSemiboldFont }];
     self.heroLabel.attributedText = attributedText;
     
     [self.contentView addSubview:self.heroLabel];
@@ -83,7 +81,7 @@
     NSString *subtitleText = [self localizableStringForPart:@"subtitle"];
     NSMutableAttributedString *attributedText = [[NSMutableAttributedString alloc] initWithString:NSLocalizedString(subtitleText, nil)
                                                                                        attributes:@{ NSParagraphStyleAttributeName : paragraphStyle,
-                                                                                                     NSFontAttributeName: [UIFont fontWithMagicIdentifier:@"style.text.large.font_spec_thin"]}];
+                                                                                                     NSFontAttributeName: UIFont.largeThinFont}];
     self.subtitleLabel.attributedText = attributedText;
     [self.contentView addSubview:self.subtitleLabel];
 }

@@ -35,7 +35,6 @@
 #import "LinkAttachmentCache.h"
 #import "SoundcloudService.h"
 #import "LinkAttachment.h"
-#import "WAZUIMagicIOS.h"
 #import "Wire-Swift.h"
 
 

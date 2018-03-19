@@ -34,7 +34,6 @@
 @import FLAnimatedImage;
 #import "UIImage+ZetaIconsNeue.h"
 #import "UIImage+ImageUtilities.h"
-#import "WAZUIMagicIOS.h"
 #import "IconButton.h"
 #import "Constants.h"
 #import "Settings.h"
@@ -141,8 +140,8 @@ static CameraControllerCamera CameraViewControllerToCameraControllerCamera(Camer
     self.cameraController.previewLayer.videoGravity = AVLayerVideoGravityResizeAspectFill;
     [self.view.layer addSublayer:self.cameraController.previewLayer];
     
-    self.topBarHeight = [WAZUIMagic floatForIdentifier:@"camera_overlay.top_bar.height"];
-    self.bottomBarHeight = [WAZUIMagic floatForIdentifier:@"camera_overlay.bottom_bar.height"];
+    self.topBarHeight = 56;
+    self.bottomBarHeight = 88;
     
     [self createCameraControls];
     [self createPreviewPanel];

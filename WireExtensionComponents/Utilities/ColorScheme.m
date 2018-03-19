@@ -57,6 +57,7 @@ NSString * const ColorSchemeColorChatHeadSubtitleText = @"chat-head-subtitle-tex
 
 NSString * const ColorSchemeColorButtonHighlighted = @"button-highlighted";
 NSString * const ColorSchemeColorButtonEmptyText = @"button-empty-text";
+NSString * const ColorSchemeColorButtonFaded = @"button-faded";
 
 NSString * const ColorSchemeColorIconShadow = @"icon-shadow";
 NSString * const ColorSchemeColorIconHighlight = @"icon-hightlight";
@@ -273,6 +274,7 @@ static NSString* light(NSString *colorString) {
                                    ColorSchemeColorChatHeadSubtitleText: white60,
                                    ColorSchemeColorButtonHighlighted: whiteAlpha24,
                                    ColorSchemeColorButtonEmptyText: accentColor,
+                                   ColorSchemeColorButtonFaded: graphiteAlpha40,
                                    ColorSchemeColorTabNormal: blackAlpha48,
                                    ColorSchemeColorTabSelected: graphite,
                                    ColorSchemeColorTabHighlighted: lightGraphite,
@@ -331,6 +333,7 @@ static NSString* light(NSString *colorString) {
                                   ColorSchemeColorChatHeadSubtitleText: whiteAlpha40,
                                   ColorSchemeColorButtonHighlighted: blackAlpha24,
                                   ColorSchemeColorButtonEmptyText: white,
+                                  ColorSchemeColorButtonFaded: whiteAlpha40,
                                   ColorSchemeColorTabNormal: lightGraphite,
                                   ColorSchemeColorTabSelected: white,
                                   ColorSchemeColorTabHighlighted: lightGraphiteAlpha48,

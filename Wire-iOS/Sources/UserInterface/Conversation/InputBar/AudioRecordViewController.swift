@@ -44,9 +44,6 @@ import Classy
     case afterSlideUp, afterPreview, afterEffect
 }
 
-private let margin = (CGFloat(WAZUIMagic.float(forIdentifier: "content.left_margin")) / 2) - (UIImage.size(for: .tiny) / 2)
-
-
 @objc public final class AudioRecordViewController: UIViewController, AudioRecordBaseViewController {
     
     let buttonOverlay = AudioButtonOverlay()
@@ -167,6 +164,7 @@ private let margin = (CGFloat(WAZUIMagic.float(forIdentifier: "content.left_marg
     
     func createConstraints() {
         let button = buttonOverlay.audioButton
+        let margin = (UIView.conversationLayoutMargins.left / 2) - (UIImage.size(for: .tiny) / 2)
 
         constrain(view, bottomContainerView, topContainerView, button) { view, bottomContainer, topContainer, overlayButton in
             bottomContainer.height == 56

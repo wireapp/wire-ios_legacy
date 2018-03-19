@@ -22,7 +22,7 @@ import Cartography
 
 final class ParticipantsUserCell: UICollectionViewCell {
 
-    private let imageView = UserImageView(magicPrefix: "content.author_image")
+    private let imageView = UserImageView(size: .small)
     private let dimmedAlpha: CGFloat = 0.5
     private let highlightAlphaDifference: CGFloat = 0.3
 
@@ -34,7 +34,8 @@ final class ParticipantsUserCell: UICollectionViewCell {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.imageView.userSession = ZMUserSession.shared()
+        imageView.userSession = ZMUserSession.shared()
+        imageView.initials.font = UIFont.systemFont(ofSize: 11, weight: UIFontWeightLight)
         backgroundColor = .clear
         addSubview(imageView)
         constrain(self, imageView) { view, image in

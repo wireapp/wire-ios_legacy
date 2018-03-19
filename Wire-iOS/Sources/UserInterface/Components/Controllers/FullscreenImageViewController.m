@@ -34,9 +34,6 @@
 #import "NotificationWindowRootViewController.h"
 
 // helpers
-
-#import "WAZUIMagiciOS.h"
-#import "UIFont+MagicAccess.h"
 #import "UIColor+WR_ColorScheme.h"
 #import "NSDate+Format.h"
 
@@ -306,10 +303,11 @@
     self.closeButton.accessibilityIdentifier = @"fullScreenCloseButton";
     
     // Constraints
+    CGFloat topOverlayHeight = self.traitCollection.horizontalSizeClass == UIUserInterfaceSizeClassRegular ? 104 : 60;
     [self.topOverlay addConstraintForRightMargin:0 relativeToView:self.view];
     [self.topOverlay addConstraintForLeftMargin:0 relativeToView:self.view];
     [self.topOverlay addConstraintForTopMargin:0 relativeToView:self.view];
-    [self.topOverlay addConstraintForHeight:[WAZUIMagic floatForIdentifier:@"one_message.top_gradient_height"]];
+    [self.topOverlay addConstraintForHeight:topOverlayHeight];
 
     [self.closeButton addConstraintForAligningVerticallyWithView:self.topOverlay offset:10];
     [self.closeButton addConstraintForRightMargin:8 relativeToView:self.topOverlay];
@@ -364,7 +362,7 @@
 {
     NSString *text = [displayName uppercasedWithCurrentLocale];
     NSDictionary *attributes = @{
-                                 NSFontAttributeName : [UIFont fontWithMagicIdentifier:@"style.text.small.font_spec_bold"],
+                                 NSFontAttributeName : UIFont.smallMediumFont,
                                  NSForegroundColorAttributeName : [UIColor wr_colorFromColorScheme:ColorSchemeColorTextForeground],
                                  NSBackgroundColorAttributeName : [UIColor wr_colorFromColorScheme:ColorSchemeColorTextBackground] };
     

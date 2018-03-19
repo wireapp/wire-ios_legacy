@@ -920,7 +920,7 @@
 "guest_room.error.generic.message" = "Check your connection and try again";
 
 "guest_room.link.header.title" = "Invite others with a link";
-"guest_room.link.header.subtitle" = "Anyone with the link can join the conversation for 24 hours, even if they don’t have Wire.";
+"guest_room.link.header.subtitle" = "Anyone with the link can join the conversation, even if they don't have Wire.";
 
 "guest_room.link.button.title" = "Create Link";
 

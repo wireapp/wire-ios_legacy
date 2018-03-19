@@ -49,7 +49,7 @@ class ParticipantsInvitePeopleView: UIView {
         titleLabel.numberOfLines = 0
         titleLabel.text = "content.system.conversation.invite.title".localized
         titleLabel.textColor = .wr_color(fromColorScheme: ColorSchemeColorTextForeground)
-        titleLabel.font = FontSpec(.medium, .light).font
+        titleLabel.font = FontSpec(.medium, .none).font
         inviteButton.setTitle("content.system.conversation.invite.button".localized, for: .normal)
         inviteButton.setTitleColor(.wr_color(fromColorScheme: ColorSchemeColorTextForeground), for: .normal)
         inviteButton.adjustsTitleWhenHighlighted = true

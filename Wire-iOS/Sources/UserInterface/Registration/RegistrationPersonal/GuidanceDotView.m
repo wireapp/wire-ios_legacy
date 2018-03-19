@@ -21,10 +21,6 @@
 
 @import PureLayout;
 
-#import "WAZUIMagicIOS.h"
-
-
-
 @interface GuidanceDotView ()
 
 @property (nonatomic) UIView *dot;
@@ -40,10 +36,10 @@
 {
     self = [super initWithFrame:frame];
     
-    if (self) {
+    if (self) {        
         self.dot = [[UIView alloc] initForAutoLayout];
         self.dot.translatesAutoresizingMaskIntoConstraints = NO;
-        self.dot.backgroundColor = [UIColor colorWithMagicIdentifier:@"guidance.guidance_type_required_color"];;
+        self.dot.backgroundColor = [UIColor colorWithRed:0.811 green:0.243 blue:0.235 alpha:1];
         [self addSubview:self.dot];
     }
     
@@ -57,7 +53,7 @@
     if (! self.initialConstraintsCreated) {
         self.initialConstraintsCreated = YES;
         
-        CGFloat dotDiameter = [WAZUIMagic cgFloatForIdentifier:@"guidance.dot_size"];
+        CGFloat dotDiameter = 10;
         
         self.dot.layer.cornerRadius = dotDiameter / 2.0;
         [self.dot autoSetDimensionsToSize:CGSizeMake(dotDiameter, dotDiameter)];

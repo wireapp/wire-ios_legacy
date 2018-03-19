@@ -29,7 +29,6 @@
 #import "NotificationWindowRootViewController.h"
 
 // helpers
-#import "WAZUIMagicIOS.h"
 #import "Analytics.h"
 
 
@@ -48,8 +47,6 @@
 #import "MediaBar.h"
 #import "MediaPlayer.h"
 #import "MediaBarViewController.h"
-#import "TitleBar.h"
-#import "TitleBarViewController.h"
 #import "UIView+Borders.h"
 #import "InvisibleInputAccessoryView.h"
 #import "UIView+Zeta.h"

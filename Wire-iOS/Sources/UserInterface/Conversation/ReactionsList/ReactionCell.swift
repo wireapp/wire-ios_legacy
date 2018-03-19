@@ -22,7 +22,7 @@ import Cartography
 import Classy
 
 @objc public class ReactionCell: UICollectionViewCell, Reusable {
-    public let userImageView = UserImageView(magicPrefix: "people_picker.search_results_mode")
+    public let userImageView = UserImageView()
     public let userDisplayNameLabel = UILabel()
     public let usernameLabel = UILabel()
 
@@ -56,6 +56,7 @@ import Classy
         super.init(frame: frame)
         
         self.userImageView.userSession = ZMUserSession.shared()
+        self.userImageView.initials.font = UIFont.systemFont(ofSize: 11, weight: UIFontWeightLight)
         
         self.contentView.addSubview(self.userDisplayNameLabel)
         self.contentView.addSubview(self.usernameLabel)

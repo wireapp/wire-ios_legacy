@@ -24,8 +24,6 @@
 #import <WireSyncEngine/WireSyncEngine.h>
 
 #import "Constants.h"
-#import "WAZUIMagic.h"
-#import "UIColor+MagicAccess.h"
 #import "UIColor+WAZExtensions.h"
 @import FLAnimatedImage;
 #import "ImageCache.h"
@@ -90,7 +88,7 @@ static const CGFloat ImageToolbarMinimumSize = 192;
         [self createImageMessageViews];
         [self createConstraints];
 
-        self.defaultLayoutMargins = [ImageMessageCell layoutDirectionAwareLayoutMargins];
+        self.defaultLayoutMargins = UIView.directionAwareConversationLayoutMargins;
 
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(applicationDidEnterBackground:)
@@ -597,7 +595,7 @@ static const CGFloat ImageToolbarMinimumSize = 192;
 - (void)traitCollectionDidChange:(nullable UITraitCollection *)previousTraitCollection {
     [super traitCollectionDidChange:previousTraitCollection];
 
-    self.defaultLayoutMargins = [ImageMessageCell layoutDirectionAwareLayoutMargins];
+    self.defaultLayoutMargins = UIView.directionAwareConversationLayoutMargins;
     [self updateImageMessageConstraintConstants];
 }
 

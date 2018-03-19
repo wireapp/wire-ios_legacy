@@ -71,7 +71,7 @@ public protocol ColorPickerControllerDelegate {
         self.closeButton.addTarget(self, action: #selector(ColorPickerController.didPressDismiss(_:)), for: .touchUpInside)
         self.closeButton.setIconColor(UIColor.darkGray, for: .normal)
         
-        self.titleLabel.font = UIFont(magicIdentifier: "style.text.small.font_spec_light")
+        self.titleLabel.font = FontSpec(.small, .light).font!
         
         self.headerView.addSubview(self.titleLabel)
         self.headerView.addSubview(self.closeButton)

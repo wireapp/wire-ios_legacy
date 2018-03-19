@@ -25,6 +25,31 @@
 
 @implementation VoiceGainLayer
 
++ (instancetype)voiceGainLayerWithRingColor:(UIColor *)color
+{
+    VoiceGainLayer *layer = [VoiceGainLayer layer];
+    
+    PulseLayer *pulser1 = [PulseLayer layer];
+    pulser1.toOpacity = 0.2f;
+    pulser1.toContentScale = 1.213f;
+    pulser1.backgroundColor = color.CGColor;
+    [layer addSublayer:pulser1];
+    
+    PulseLayer *pulser2 = [PulseLayer layer];
+    pulser2.toOpacity = 0.3f;
+    pulser2.toContentScale = 1.143f;
+    pulser2.backgroundColor = color.CGColor;
+    [layer addSublayer:pulser2];
+    
+    PulseLayer *pulser3 = [PulseLayer layer];
+    pulser3.toOpacity = 0.4f;
+    pulser3.toContentScale = 1.071;
+    pulser3.backgroundColor = color.CGColor;
+    [layer addSublayer:pulser3];
+    
+    return layer;
+}
+
 - (void)layoutSublayers
 {
     [super layoutSublayers];
@@ -75,7 +100,12 @@
     layer.opacity = relativeAlpha * layer.toOpacity;
 }
 
-
+- (void)updateCircleColor:(UIColor *)color
+{
+    for (PulseLayer *pulser in self.sublayers) {
+        pulser.backgroundColor = color.CGColor;
+    }
+}
 
 #pragma mark - AnimatedLayer
 

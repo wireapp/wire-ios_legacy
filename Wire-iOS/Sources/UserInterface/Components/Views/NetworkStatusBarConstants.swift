@@ -22,6 +22,12 @@ extension CGFloat {
     enum NetworkStatusBar {
         static let collapsedCornerRadius: CGFloat = 1
     }
+
+    enum OfflineBar {
+        static let collapsedHeight: CGFloat = 2
+        static let expandedHeight: CGFloat = 20
+        static let expandedCornerRadius: CGFloat = 6
+   }
 }
 
 extension TimeInterval {

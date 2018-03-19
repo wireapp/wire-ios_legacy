@@ -24,7 +24,6 @@
 
 #import "EmailFormViewController.h"
 #import "UIImage+ZetaIconsNeue.h"
-#import "WAZUIMagicIOS.h"
 #import <WireExtensionComponents/ProgressSpinner.h>
 #import "RegistrationTextField.h"
 #import "GuidanceLabel.h"
@@ -68,8 +67,8 @@
 - (void)createHeroLabel
 {
     self.heroLabel = [[UILabel alloc] initForAutoLayout];
-    self.heroLabel.textColor = [UIColor colorWithMagicIdentifier:@"style.color.static_foreground.normal"];
-    self.heroLabel.font = [UIFont fontWithMagicIdentifier:@"style.text.large.font_spec_medium"];
+    self.heroLabel.textColor = [UIColor wr_colorFromColorScheme:ColorSchemeColorTextForeground variant:ColorSchemeVariantDark];
+    self.heroLabel.font = UIFont.largeSemiboldFont;
     self.heroLabel.numberOfLines = 0;
     self.heroLabel.attributedText = [self attributedHeroText];
     
@@ -91,8 +90,8 @@
     paragraphStyle.paragraphSpacing = 10;
     
     NSMutableAttributedString *attributedText = [[NSMutableAttributedString alloc] initWithString:text attributes:@{ NSParagraphStyleAttributeName : paragraphStyle }];
-    [attributedText addAttributes:@{ NSForegroundColorAttributeName : [UIColor colorWithMagicIdentifier:@"style.color.static_foreground.normal"],
-                                     NSFontAttributeName : [UIFont fontWithMagicIdentifier:@"style.text.large.font_spec_light"] }
+    [attributedText addAttributes:@{ NSForegroundColorAttributeName : [UIColor wr_colorFromColorScheme:ColorSchemeColorTextForeground variant:ColorSchemeVariantDark],
+                                     NSFontAttributeName : UIFont.largeLightFont }
                             range:[text rangeOfString:paragraph]];
     
     return attributedText;

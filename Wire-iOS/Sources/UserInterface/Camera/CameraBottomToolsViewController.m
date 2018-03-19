@@ -26,7 +26,6 @@
 #import "Constants.h"
 #import "CameraController.h"
 #import "ImagePickerConfirmationController.h"
-#import "WAZUIMagicIOS.h"
 #import "UIImage+ZetaIconsNeue.h"
 #import "Analytics.h"
 #import "DeviceOrientationObserver.h"
@@ -112,7 +111,7 @@
     [super updateViewConstraints];
     
     if (! self.initialConstraintsCreated) {
-        const CGFloat Margin = [WAZUIMagic floatForIdentifier:@"camera_overlay.margin"];
+        const CGFloat Margin = 24;
         
         [self.libraryButton autoAlignAxisToSuperviewAxis:ALAxisHorizontal];
         [self.libraryButton autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:Margin];
@@ -152,8 +151,8 @@
                      self.libraryButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
                      [self.libraryButton setImage:result forState:UIControlStateNormal];
                      
-                     self.libraryButton.layer.borderColor = [UIColor colorWithMagicIdentifier:@"camera.gallery_button_tile_stroke_color"].CGColor;
-                     self.libraryButton.layer.borderWidth = [WAZUIMagic floatForIdentifier:@"camera.gallery_button_tile_stroke_width"];
+                     self.libraryButton.layer.borderColor = [UIColor.whiteColor colorWithAlphaComponent:0.32].CGColor;
+                     self.libraryButton.layer.borderWidth = 1;
                      self.libraryButton.layer.cornerRadius = 5;
                      self.libraryButton.clipsToBounds = YES;
                  });

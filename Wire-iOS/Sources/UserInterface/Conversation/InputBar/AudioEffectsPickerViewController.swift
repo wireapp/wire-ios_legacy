@@ -127,7 +127,7 @@ import Cartography
         self.progressView.translatesAutoresizingMaskIntoConstraints = false
         
         self.subtitleLabel.textAlignment = .center
-        self.subtitleLabel.font = UIFont(magicIdentifier: "style.text.small.font_spec_light")
+        self.subtitleLabel.font = FontSpec(.small, .light).font!
         self.subtitleLabel.translatesAutoresizingMaskIntoConstraints = false
         self.statusBoxView.translatesAutoresizingMaskIntoConstraints = false
 

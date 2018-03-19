@@ -22,7 +22,6 @@
 @import PureLayout;
 @import SafariServices;
 
-#import "WAZUIMagicIOS.h"
 #import "UIColor+WAZExtensions.h"
 #import "Analytics.h"
 #import "WebLinkTextView.h"
@@ -70,8 +69,8 @@
 - (void)createTitleLabel
 {
     self.titleLabel = [[UILabel alloc] initForAutoLayout];
-    self.titleLabel.font = [UIFont fontWithMagicIdentifier:@"style.text.large.font_spec_medium"];
-    self.titleLabel.textColor = [UIColor colorWithMagicIdentifier:@"style.color.static_foreground.normal"];
+    self.titleLabel.font = UIFont.largeSemiboldFont;
+    self.titleLabel.textColor = [UIColor wr_colorFromColorScheme:ColorSchemeColorTextForeground variant:ColorSchemeVariantDark];
     self.titleLabel.text = NSLocalizedString(@"registration.terms_of_use.title", nil);
     
     [self.view addSubview:self.titleLabel];
@@ -85,10 +84,10 @@
     
     NSMutableAttributedString *attributedTerms =
     [[NSMutableAttributedString alloc] initWithString:termsOfUse
-                                           attributes:@{ NSFontAttributeName : [UIFont fontWithMagicIdentifier:@"style.text.large.font_spec_light"],
-                                                         NSForegroundColorAttributeName: [UIColor colorWithMagicIdentifier:@"style.color.static_foreground.normal"] }];
+                                           attributes:@{ NSFontAttributeName : UIFont.largeLightFont,
+                                                         NSForegroundColorAttributeName: [UIColor wr_colorFromColorScheme:ColorSchemeColorTextForeground variant:ColorSchemeVariantDark] }];
     
-    [attributedTerms addAttributes:@{ NSFontAttributeName : [UIFont fontWithMagicIdentifier:@"style.text.large.font_spec_medium"],
+    [attributedTerms addAttributes:@{ NSFontAttributeName : UIFont.largeSemiboldFont,
                                       NSForegroundColorAttributeName : UIColor.accentColor,
                                       NSLinkAttributeName : self.termsOfServiceURL } range:termsOfUseLinkRange];
     

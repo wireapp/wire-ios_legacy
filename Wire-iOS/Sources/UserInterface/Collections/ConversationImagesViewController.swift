@@ -161,7 +161,7 @@ final class ConversationImagesViewController: UIViewController {
         if let navBarContainer = navBarContainer {
             view.addSubview(navBarContainer)
             constrain(view, navBarContainer) { view, navigationBar in
-                navigationBar.top == view.top
+                navigationBar.top == view.top + UIScreen.safeArea.top
                 navigationBar.width == view.width
                 navigationBar.centerX == view.centerX
             }

@@ -24,7 +24,6 @@
 #import "CameraController.h"
 #import "Constants.h"
 @import WireExtensionComponents;
-#import "WAZUIMagicIOS.h"
 #import "UIImage+ZetaIconsNeue.h"
 #import "Settings.h"
 #import "DeviceOrientationObserver.h"
@@ -99,7 +98,7 @@
     [super updateViewConstraints];
     
     if (! self.initialConstraintsCreated) {
-        const CGFloat Margin = [WAZUIMagic floatForIdentifier:@"camera_overlay.margin"];
+        const CGFloat Margin = 24;
         
         [self.toggleFlashButton autoAlignAxisToSuperviewAxis:ALAxisHorizontal];
         [self.toggleFlashButton autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:Margin];

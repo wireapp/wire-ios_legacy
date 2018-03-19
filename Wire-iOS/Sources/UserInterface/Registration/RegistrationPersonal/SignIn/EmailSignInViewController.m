@@ -32,8 +32,6 @@
 #import <WireExtensionComponents/ProgressSpinner.h>
 #import "UIImage+ImageUtilities.h"
 #import "UIColor+WAZExtensions.h"
-#import "UIColor+MagicAccess.h"
-#import "UIFont+MagicAccess.h"
 #import "UIViewController+Errors.h"
 #import "Constants.h"
 #import "NSURL+WireLocale.h"
@@ -183,7 +181,7 @@
     [self.forgotPasswordButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [self.forgotPasswordButton setTitleColor:[[UIColor whiteColor] colorWithAlphaComponent:0.4] forState:UIControlStateHighlighted];
     [self.forgotPasswordButton setTitle:[NSLocalizedString(@"signin.forgot_password", nil) uppercasedWithCurrentLocale] forState:UIControlStateNormal];
-    self.forgotPasswordButton.titleLabel.font = [UIFont fontWithMagicIdentifier:@"style.text.small.font_spec_light"];
+    self.forgotPasswordButton.titleLabel.font = UIFont.smallLightFont;
     [self.forgotPasswordButton addTarget:self action:@selector(resetPassword:) forControlEvents:UIControlEventTouchUpInside];
     
     [self.view addSubview:self.forgotPasswordButton];

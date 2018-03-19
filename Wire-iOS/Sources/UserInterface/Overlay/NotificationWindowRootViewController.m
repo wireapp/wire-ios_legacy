@@ -24,7 +24,6 @@
 #import "PassthroughTouchesView.h"
 #import "AppDelegate.h"
 #import "UIView+Borders.h"
-#import "WAZUIMagicIOS.h"
 #import "UIView+Borders.h"
 #import "Constants.h"
 #import "WireSyncEngine+iOS.h"
@@ -47,12 +46,8 @@
 
 @interface NotificationWindowRootViewController ()
 
-@property (nonatomic) NetworkStatusViewController *networkStatusViewController;
 @property (nonatomic) AppLockViewController *appLockViewController;
 @property (nonatomic) ChatHeadsViewController *chatHeadsViewController;
-
-@property (nonatomic, strong) NSLayoutConstraint *overlayContainerLeftMargin;
-@property (nonatomic, strong) NSLayoutConstraint *networkActivityRightMargin;
 
 @end
 
@@ -82,7 +77,6 @@
     [self addViewController:self.appLockViewController toView:self.view];
 
     [self setupConstraints];
-    [self updateAppearanceForOrientation:[UIApplication sharedApplication].statusBarOrientation];
 }
 
 - (void)setupConstraints
@@ -98,15 +92,6 @@
 
 - (void)transitionToLoggedInSession
 {
-    self.networkStatusViewController = [[NetworkStatusViewController alloc] init];
-    self.networkStatusViewController.view.translatesAutoresizingMaskIntoConstraints = NO;
-    [self addViewController:self.networkStatusViewController toView:self.view];
-
-    [self.networkStatusViewController.view autoPinEdgeToSuperviewEdge:ALEdgeTop];
-    [self.networkStatusViewController.view autoPinEdgeToSuperviewEdge:ALEdgeLeft];
-    self.networkActivityRightMargin = [self.networkStatusViewController.view autoPinEdgeToSuperviewEdge:ALEdgeRight];
-    [self.networkStatusViewController.view autoPinEdgeToSuperviewEdge:ALEdgeBottom];
-
     _voiceChannelController = [[ActiveVoiceChannelViewController alloc] init];
     self.voiceChannelController.view.translatesAutoresizingMaskIntoConstraints = NO;
     [self addViewController:self.voiceChannelController toView:self.view];
@@ -159,31 +144,6 @@
         return topViewController.supportedInterfaceOrientations;
     } else {
         return self.wr_supportedInterfaceOrientations;
-    }
-}
-
-- (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator
-{
-    [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {
-
-        UIInterfaceOrientation orientation = [[UIApplication sharedApplication] statusBarOrientation];
-        [self updateAppearanceForOrientation:orientation];
-
-    } completion:^(id<UIViewControllerTransitionCoordinatorContext> context) {
-    }];
-
-    [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
-}
-
-- (void)updateAppearanceForOrientation:(UIInterfaceOrientation)orientation
-{
-    if (IS_IPAD_LANDSCAPE_LAYOUT) {
-        CGFloat sidebarWidth = [WAZUIMagic cgFloatForIdentifier:@"framework.sidebar_width"];
-        CGFloat rightMargin =  -([UIScreen mainScreen].bounds.size.width - sidebarWidth);
-        self.networkActivityRightMargin.constant = rightMargin;
-    }
-    else {
-        self.networkActivityRightMargin.constant = 0;
     }
 }
 

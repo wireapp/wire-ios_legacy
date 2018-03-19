@@ -21,8 +21,6 @@
 
 @import PureLayout;
 
-#import "WAZUIMagicIOS.h"
-
 #import "Constants.h"
 #import "PhoneSignInViewController.h"
 #import "EmailSignInViewController.h"
@@ -75,7 +73,7 @@
     
     self.emailSignInButton = [[Button alloc] initForAutoLayout];
     self.emailSignInButton.contentEdgeInsets = UIEdgeInsetsMake(4, 16, 4, 16);
-    self.emailSignInButton.titleLabel.font = [UIFont fontWithMagicIdentifier:@"style.text.small.font_spec_light"];
+    self.emailSignInButton.titleLabel.font = UIFont.smallLightFont;
     [self.emailSignInButton setBorderColor:UIColor.whiteColor forState:UIControlStateNormal];
     [self.emailSignInButton setTitleColor:UIColor.whiteColor forState:UIControlStateNormal];
     self.emailSignInButton.circular = YES;
@@ -85,7 +83,7 @@
     
     self.phoneSignInButton = [[Button alloc] initForAutoLayout];
     self.phoneSignInButton.contentEdgeInsets = UIEdgeInsetsMake(4, 16, 4, 16);
-    self.phoneSignInButton.titleLabel.font = [UIFont fontWithMagicIdentifier:@"style.text.small.font_spec_light"];
+    self.phoneSignInButton.titleLabel.font = UIFont.smallLightFont;
     [self.phoneSignInButton setBorderColor:UIColor.whiteColor forState:UIControlStateNormal];
     [self.phoneSignInButton setTitleColor:UIColor.whiteColor forState:UIControlStateNormal];
     self.phoneSignInButton.circular = YES;

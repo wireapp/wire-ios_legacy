@@ -2,6 +2,8 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>ITSEncryptionExportComplianceCode</key>
+	<string>${APPLE_EXPORT_COMPLIANCE_CODE}</string>
 	<key>NSFaceIDUsageDescription</key>
 	<string>In order to authenticate in the app allow Wire to access the Face ID feature.</string>
 	<key>UIAppFonts</key>
@@ -130,6 +132,6 @@
 	<key>WireGroupId</key>
 	<string>${WIRE_BUNDLE_ID}</string>
 	<key>ITSAppUsesNonExemptEncryption</key>
-	<false/>
+	<true/>
 </dict>
 </plist>

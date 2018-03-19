@@ -20,7 +20,6 @@
 #import "MentionsCollectionViewController.h"
 #import "WireSyncEngine+iOS.h"
 #import "UserImageView.h"
-#import "WAZUIMagicIOS.h"
 #import "MentionsBubbleView.h"
 #import "MentionsCollectionViewCell.h"
 #import "UIView+Borders.h"

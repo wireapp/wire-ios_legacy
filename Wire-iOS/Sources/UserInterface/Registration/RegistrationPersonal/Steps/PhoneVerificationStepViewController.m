@@ -22,7 +22,6 @@
 @import PureLayout;
 
 #import "RegistrationTextField.h"
-#import "WAZUIMagicIOS.h"
 #import "UIView+Borders.h"
 #import "UIImage+ZetaIconsNeue.h"
 #import "UIColor+WR_ColorScheme.h"
@@ -111,8 +110,8 @@ const NSTimeInterval PhoneVerificationResendInterval = 30.0f;
 - (void)createInstructionLabel
 {
     self.instructionLabel = [[UILabel alloc] init];
-    self.instructionLabel.font = [UIFont fontWithMagicIdentifier:@"style.text.large.font_spec_thin"];
-    self.instructionLabel.textColor = [UIColor colorWithMagicIdentifier:@"style.color.static_foreground.normal"];
+    self.instructionLabel.font = UIFont.largeThinFont;
+    self.instructionLabel.textColor = [UIColor wr_colorFromColorScheme:ColorSchemeColorTextForeground variant:ColorSchemeVariantDark];
     self.instructionLabel.text = [NSString stringWithFormat:NSLocalizedString(@"registration.verify_phone_number.instructions", nil), self.phoneNumber];
     self.instructionLabel.numberOfLines = 0;
     
@@ -123,7 +122,7 @@ const NSTimeInterval PhoneVerificationResendInterval = 30.0f;
 {
     self.resendLabel = [[UILabel alloc] initForAutoLayout];
     self.resendLabel.backgroundColor = [UIColor clearColor];
-    self.resendLabel.font = [UIFont fontWithMagicIdentifier:@"style.text.small.font_spec_light"];
+    self.resendLabel.font = UIFont.smallLightFont;
     self.resendLabel.textColor = [UIColor wr_colorFromColorScheme:ColorSchemeColorTextForeground variant:ColorSchemeVariantDark];
     self.resendLabel.numberOfLines = 0;
     [self.view addSubview:self.resendLabel];
@@ -132,7 +131,7 @@ const NSTimeInterval PhoneVerificationResendInterval = 30.0f;
 - (void)createResendButton
 {
     self.resendButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    self.resendButton.titleLabel.font = [UIFont fontWithMagicIdentifier:@"style.text.small.font_spec_light"];
+    self.resendButton.titleLabel.font = UIFont.smallLightFont;
     [self.resendButton setTitleColor:[UIColor wr_colorFromColorScheme:ColorSchemeColorTextForeground variant:ColorSchemeVariantDark] forState:UIControlStateNormal];
     [self.resendButton setTitleColor:[UIColor wr_colorFromColorScheme:ColorSchemeColorTextDimmed variant:ColorSchemeVariantDark] forState:UIControlStateHighlighted];
     [self.resendButton setTitle:[NSLocalizedString(@"registration.verify_phone_number.resend", nil) uppercasedWithCurrentLocale] forState:UIControlStateNormal];

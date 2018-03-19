@@ -19,8 +19,6 @@
 
 #import "ProfileFooterView.h"
 
-#import "WAZUIMagicIOS.h"
-
 @import PureLayout;
 #import "IconButton.h"
 #import "NSLayoutConstraint+Helpers.h"
@@ -58,14 +56,14 @@
 
 - (void)setupConstraints
 {
-    [self.leftButton addConstraintForLeftMargin:[WAZUIMagic cgFloatForIdentifier:@"profile_temp.content_left_margin"] relativeToView:self];
-    [self.leftButton addConstraintForBottomMargin:[WAZUIMagic cgFloatForIdentifier:@"profile_temp.content_bottom_margin"] relativeToView:self];
+    [self.leftButton addConstraintForLeftMargin:16 relativeToView:self];
+    [self.leftButton addConstraintForBottomMargin:12 relativeToView:self];
     [self.leftButton addConstraintForTopMargin:0 relativeToView:self];
     [self.leftButton autoSetDimension:ALDimensionHeight
                                toSize:32];
     
-    [self.rightButton addConstraintForRightMargin:[WAZUIMagic cgFloatForIdentifier:@"profile_temp.content_right_margin"] relativeToView:self];
-    [self.rightButton addConstraintForBottomMargin:[WAZUIMagic cgFloatForIdentifier:@"profile_temp.content_bottom_margin"] relativeToView:self];
+    [self.rightButton addConstraintForRightMargin:8 relativeToView:self];
+    [self.rightButton addConstraintForBottomMargin:12 relativeToView:self];
     [self.rightButton addConstraintForTopMargin:0 relativeToView:self];
     [self.rightButton autoMatchDimension:ALDimensionWidth
                              toDimension:ALDimensionHeight

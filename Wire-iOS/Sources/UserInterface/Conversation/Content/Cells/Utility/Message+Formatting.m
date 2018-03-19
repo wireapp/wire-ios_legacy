@@ -19,7 +19,6 @@
 
 #import "Message+Formatting.h"
 
-#import "WAZUIMagicIOS.h"
 #import "WireSyncEngine+iOS.h"
 #import "LinkAttachment.h"
 #import "NSString+EmoticonSubstitution.h"
@@ -100,14 +99,14 @@ static inline NSDataDetector *linkDataDetector(void)
     
     if (nil == cellParagraphStyle) {
         cellParagraphStyle = [[NSMutableParagraphStyle alloc] init];
-        cellParagraphStyle.minimumLineHeight = [WAZUIMagic floatForIdentifier:@"content.line_height"] * [UIFont wr_preferredContentSizeMultiplierFor:[[UIApplication sharedApplication] preferredContentSizeCategory]];
+        cellParagraphStyle.minimumLineHeight = 22 * [UIFont wr_preferredContentSizeMultiplierFor:[[UIApplication sharedApplication] preferredContentSizeCategory]];
         cellParagraphStyle.paragraphSpacing = 8;
     }
     
     if (nil == style) {
         // set markdown attribute styles here
         style = DownStyle.normal;
-        style.baseFont = [UIFont fontWithMagicIdentifier:@"style.text.normal.font_spec"];
+        style.baseFont = UIFont.normalLightFont;
         style.baseFontColor = [UIColor wr_colorFromColorScheme:ColorSchemeColorTextForeground];
         style.baseParagraphStyle = cellParagraphStyle;
     }

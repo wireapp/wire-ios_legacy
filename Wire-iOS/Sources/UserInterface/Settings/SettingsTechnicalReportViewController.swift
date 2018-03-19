@@ -115,7 +115,7 @@ class SettingsTechnicalReportViewController: UITableViewController, MFMailCompos
         label.text = "self.settings.technical_report.privacy_warning".localized
         label.textColor = ColorScheme.default().color(withName: ColorSchemeColorTextDimmed)
         label.backgroundColor = .clear
-        label.font = UIFont(magicIdentifier: "style.text.small.font_spec_light")
+        label.font = FontSpec(.small, .light).font!
         
         let container = UIView()
         container.addSubview(label)

@@ -24,7 +24,6 @@
 
 @import WireExtensionComponents;
 #import "UIImage+ZetaIconsNeue.h"
-#import "WAZUIMagicIOS.h"
 #import "Constants.h"
 
 @interface MediaBar ()
@@ -102,7 +101,7 @@
         self.initialConstraintsCreated = YES;
         
         CGFloat iconSize = 16;
-        CGFloat buttonInsets = [WAZUIMagic cgFloatForIdentifier:@"media_bar.button_horizontal_inset"];
+        CGFloat buttonInsets = self.traitCollection.horizontalSizeClass == UIUserInterfaceSizeClassRegular ? 32 : 16;
         [self.contentView autoPinEdgesToSuperviewEdges];
         
         [self.titleLabel autoAlignAxis:ALAxisHorizontal toSameAxisOfView:self.contentView];
@@ -126,8 +125,7 @@
 
 - (CGSize)intrinsicContentSize
 {
-    CGFloat mediaBarHeight = [WAZUIMagic floatForIdentifier:@"media_bar.height"];
-    return CGSizeMake(UIViewNoIntrinsicMetric, mediaBarHeight);
+    return CGSizeMake(UIViewNoIntrinsicMetric, 44);
 }
 
 @end

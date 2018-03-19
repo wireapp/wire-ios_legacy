@@ -21,7 +21,6 @@
 
 #import "MediaPreviewView.h"
 @import WireExtensionComponents;
-#import "UIFont+MagicAccess.h"
 #import "Wire-Swift.h"
 
 
@@ -75,7 +74,7 @@
 {
     self.contentView = [[UIView alloc] initForAutoLayout];
     [self addSubview:self.contentView];
-    self.contentView.layoutMargins = UITableViewCell.layoutDirectionAwareLayoutMargins;
+    self.contentView.layoutMargins = UIView.directionAwareConversationLayoutMargins;
 
     self.containerView = [[UIView alloc] initForAutoLayout];
     self.containerView.clipsToBounds = YES;
