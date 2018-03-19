@@ -6677,12 +6677,7 @@
 				8711A5A21E0D395A00043ACF /* CollectionCellHeader.swift in Sources */,
 				D5F22D4C2048052900879444 /* UIAlertController+RemoveAction.swift in Sources */,
 				F1B5EAC92029AC7E0081D402 /* SimpleTextFieldValidator.swift in Sources */,
-<<<<<<< HEAD
-				8FC854B9199245770008B66B /* MagicConfig.m in Sources */,
-=======
 				163FB99120518BF400E74F83 /* UIFont+FontSpec.swift in Sources */,
-				871BC2211D34F8F800DF0793 /* ActionSheetContainerView.m in Sources */,
->>>>>>> develop
 				D5DBAAAC20064DD700E9F65B /* TeamMemberInviteHeaderView.swift in Sources */,
 				871BC0111D34F56300DF0793 /* Analytics+ProfileEvents.m in Sources */,
 				87797C0B1FF3C849009FC9A9 /* SearchServicesSectionController.swift in Sources */,
@@ -6777,11 +6772,7 @@
 				1660F23A1FBF32D400A0EE54 /* MediaPlayerController.swift in Sources */,
 				167961AF20445FB400B72ACC /* ProfileTitleView.swift in Sources */,
 				87A15FE11E08339500AED79B /* CollectionLinkCell.swift in Sources */,
-<<<<<<< HEAD
 				D52F2C20205BE0A600E067C0 /* UIAlertController+ConversationDegraded.swift in Sources */,
-				DBBFBCB919D2CBCB00557444 /* TitleBar.m in Sources */,
-=======
->>>>>>> develop
 				16E311C91A5FEAE200FF2C9E /* TextMessageCell.m in Sources */,
 				87B8C3411DF9788B0015EC89 /* MapOpening.swift in Sources */,
 				F112C58620497860007C1E8F /* Analytics+Guests.swift in Sources */,
