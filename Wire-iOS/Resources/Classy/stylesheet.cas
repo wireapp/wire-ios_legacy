@@ -31,14 +31,6 @@ IconButton.conversation-toolbar {
     adjustsImageWhenHighlighted: false;
 }
 
-StartUIInviteActionBar {
-    backgroundColor: rgb(0, 0, 0, 0.24);
-}
-
-StartUIInviteActionBar > Button {
-    titleEdgeInsets: 2, 8, 3, 8;
-}
-
 VoiceChannelOverlay > IconButton.circular {
     borderWidth: 0.5;
 }

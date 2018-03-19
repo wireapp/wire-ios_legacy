@@ -43,7 +43,7 @@ static const CGFloat padding = 12;
     self = [super init];
     if (self) {
         [self setOpaque:NO];
-        self.backgroundColor = [UIColor clearColor];
+        self.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.24];
 
         [self createLineView];
         [self createInviteButton];
@@ -66,6 +66,7 @@ static const CGFloat padding = 12;
 {
     self.inviteButton = [Button buttonWithStyle:ButtonStyleEmpty variant:ColorSchemeVariantDark];
     self.inviteButton.translatesAutoresizingMaskIntoConstraints = NO;
+    self.inviteButton.titleEdgeInsets = UIEdgeInsetsMake(2, 8, 3, 8);
     [self addSubview:self.inviteButton];
     [self.inviteButton setTitle:NSLocalizedString(@"peoplepicker.invite_more_people", @"") forState:UIControlStateNormal];
 }
