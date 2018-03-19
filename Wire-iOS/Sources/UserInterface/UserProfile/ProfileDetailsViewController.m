@@ -421,7 +421,7 @@ typedef NS_ENUM(NSUInteger, ProfileUserAction) {
 - (void)presentMenuSheetController
 {
     self.actionsController = [[ConversationActionController alloc] initWithConversation:self.conversation target:self];
-    [self.actionsController presentMenu];
+    [self.actionsController presentMenuFromSourceView:self.footerView];
 }
 
 - (void)presentAddParticipantsViewController
@@ -472,6 +472,9 @@ typedef NS_ENUM(NSUInteger, ProfileUserAction) {
             [self cancelConnectionRequest];
         }
     }];
+    
+    controller.popoverPresentationController.sourceView = self.view;
+    controller.popoverPresentationController.sourceRect = [self.view convertRect:self.footerView.frame fromView:self.footerView.superview];
     [self presentViewController:controller animated:YES completion:nil];
 }
 
@@ -482,6 +485,7 @@ typedef NS_ENUM(NSUInteger, ProfileUserAction) {
             [self cancelConnectionRequest];
         }
     }];
+
     [self presentViewController:controller animated:YES completion:nil];
 }
 

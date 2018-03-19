@@ -18,8 +18,14 @@
 
 @objc final class ConversationActionController: NSObject {
     
+    struct PresentationContext {
+        let view: UIView
+        let rect: CGRect
+    }
+    
     private let conversation: ZMConversation
     unowned let target: UIViewController
+    private var currentContext: PresentationContext?
     
     @objc init(conversation: ZMConversation, target: UIViewController) {
         self.conversation = conversation
@@ -27,29 +33,43 @@
         super.init()
     }
     
-    func presentMenu() {
+    @objc(presentMenuFromSourceView:)
+    func presentMenu(from sourceView: UIView?) {
+        currentContext = sourceView.map {
+            .init(
+                view: target.view,
+                rect: target.view.convert($0.frame, from: $0.superview).insetBy(dx: 8, dy: 8)
+            )
+        }
+        
         let controller = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         conversation.actions.map(alertAction).forEach(controller.addAction)
         controller.addAction(.cancel())
-        target.present(controller, animated: true)
+        present(controller)
     }
     
-    private func dismiss(_ block: @escaping () -> Void) {
-        target.dismiss(animated: true, completion: block)
+    func enqueue(_ block: @escaping () -> Void) {
+        ZMUserSession.shared()?.enqueueChanges(block)
     }
     
-    func dismissAndEnqueue(_ block: @escaping () -> Void) {
-        target.dismiss(animated: true) {
+    func transitionToListAndEnqueue(_ block: @escaping () -> Void) {
+        ZClientViewController.shared()?.transitionToList(animated: true) {
             ZMUserSession.shared()?.enqueueChanges(block)
         }
     }
     
-    func transitionToListAndEnqueue(_ block: @escaping () -> Void) {
-        target.dismiss(animated: true) {
-            ZClientViewController.shared()?.transitionToList(animated: true) {
-                ZMUserSession.shared()?.enqueueChanges(block)
-            }
+    private func prepare(viewController: UIViewController, with context: PresentationContext) {
+        viewController.popoverPresentationController.apply {
+            $0.sourceView = context.view
+            $0.sourceRect = context.rect
         }
+    }
+    
+    func present(_ controller: UIViewController) {
+        currentContext.apply {
+            prepare(viewController: controller, with: $0)
+        }
+        target.present(controller, animated: true, completion: nil)
     }
     
     private func alertAction(for action: ZMConversation.Action) -> UIAlertAction {
@@ -60,13 +80,13 @@
                 self.conversation.isArchived = !isArchived
                 Analytics.shared().tagArchivedConversation(!isArchived)
                 }
-            case .markRead: self.dismissAndEnqueue {
+            case .markRead: self.enqueue {
                 self.conversation.markAsRead()
                 }
-            case .markUnread: self.dismissAndEnqueue {
+            case .markUnread: self.enqueue {
                 self.conversation.markAsUnread()
                 }
-            case .silence(isSilenced: let isSilenced): self.dismissAndEnqueue {
+            case .silence(isSilenced: let isSilenced): self.enqueue {
                 self.conversation.isSilenced = !isSilenced
                 }
             case .leave: self.request(LeaveResult.self) { result in

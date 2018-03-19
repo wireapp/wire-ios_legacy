@@ -57,7 +57,7 @@ extension ConversationActionController {
         guard let user = conversation.connectedUser else { return }
         let controller = UIAlertController(title: BlockResult.title(for: user), message: nil, preferredStyle: .actionSheet)
         BlockResult.all(isBlocked: user.isBlocked).map { $0.action(handler) }.forEach(controller.addAction)
-        target.present(controller, animated: true)
+        present(controller)
     }
     
     func handleBlockResult(_ result: BlockResult, for conversation: ZMConversation) {
@@ -68,4 +68,3 @@ extension ConversationActionController {
     }
     
 }
-

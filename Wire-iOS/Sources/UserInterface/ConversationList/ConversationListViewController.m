@@ -486,10 +486,10 @@
     [self.listContentController scrollToCurrentSelectionAnimated:animated];
 }
 
-- (void)showActionMenuForConversation:(ZMConversation *)conversation
+- (void)showActionMenuForConversation:(ZMConversation *)conversation fromView:(UIView *)view
 {
     self.actionsController = [[ConversationActionController alloc] initWithConversation:conversation target:self];
-    [self.actionsController presentMenu];
+    [self.actionsController presentMenuFromSourceView:view];
 }
 
 #pragma mark - Push permissions
@@ -685,9 +685,9 @@
     }
 }
 
-- (void)conversationListContentController:(ConversationListContentController *)controller wantsActionMenuForConversation:(ZMConversation *)conversation
+- (void)conversationListContentController:(ConversationListContentController *)controller wantsActionMenuForConversation:(ZMConversation *)conversation fromSourceView:(UIView *)sourceView
 {
-    [self showActionMenuForConversation:conversation];
+    [self showActionMenuForConversation:conversation fromView:sourceView];
 }
 
 @end

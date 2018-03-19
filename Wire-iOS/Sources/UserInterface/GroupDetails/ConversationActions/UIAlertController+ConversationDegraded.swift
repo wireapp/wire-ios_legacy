@@ -30,10 +30,11 @@ extension UIAlertController {
         let title = "meta.degraded.degradation_reason_message.\(keySuffix)".localized(args: names)
         let message = "meta.degraded.dialog_message".localized
         
+        let iPad = ZClientViewController.shared()?.traitCollection.userInterfaceIdiom == .pad
         let controller = UIAlertController(
             title: title + "\n" + message,
             message: nil,
-            preferredStyle: .actionSheet
+            preferredStyle: iPad ? .alert : .actionSheet
         )
         let acceptAction = UIAlertAction(
             title: "meta.degraded.show_device_button".localized.localizedCapitalized,

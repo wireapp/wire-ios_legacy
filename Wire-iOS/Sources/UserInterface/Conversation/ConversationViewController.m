@@ -889,19 +889,17 @@
                     if (user.clients.count == 1) {
                         ProfileClientViewController *userClientController = [[ProfileClientViewController alloc] initWithClient:user.clients.anyObject fromConversation:YES];
                         userClientController.showBackButton = NO;
-                        NavigationController *navigationController = [[NavigationController alloc] init];
+                        UINavigationController *navigationController = userClientController.wrapInNavigationController;
                         navigationController.modalPresentationStyle = UIModalPresentationFormSheet;
-                        navigationController.backButton.cas_styleClass = @"circular";
-                        navigationController.rightButtonEnabled = YES;
-                        [navigationController updateRightButtonWithIconType:ZetaIconTypeX iconSize:ZetaIconSizeTiny target:self action:@selector(degradedConversationDismissed:) animated:NO];
-                        navigationController.view.backgroundColor = [UIColor whiteColor];
-                        [navigationController setViewControllers:@[userClientController]];
+                        userClientController.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithIcon:ZetaIconTypeX style:UIBarButtonItemStylePlain target:self action:@selector(dismissProfileClientViewController:)];
                         [self presentViewController:navigationController animated:YES completion:nil];
                     } else {
                         ProfileViewController *profileViewController = [[ProfileViewController alloc] initWithUser:user context:ProfileViewControllerContextDeviceList];
                         profileViewController.delegate = self;
                         profileViewController.viewControllerDismissable = self;
-                        [self presentViewController:profileViewController animated:YES completion:nil];
+                        UINavigationController *navigationController = profileViewController.wrapInNavigationController;
+                        navigationController.modalPresentationStyle = UIModalPresentationFormSheet;
+                        [self presentViewController:navigationController animated:YES completion:nil];
                     }
                 } else if (self.conversation.conversationType == ZMConversationTypeGroup) {
                     UIViewController *participantsController = [self participantsController];
@@ -915,7 +913,7 @@
     [self presentViewController:controller animated:YES completion:nil];
 }
 
-- (void)degradedConversationDismissed:(id)sender
+- (void)dismissProfileClientViewController:(UIBarButtonItem *)sender
 {
     [self dismissViewControllerAnimated:YES completion:nil];
 }
