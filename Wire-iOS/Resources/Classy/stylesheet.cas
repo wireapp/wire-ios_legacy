@@ -31,96 +31,6 @@ IconButton.conversation-toolbar {
     adjustsImageWhenHighlighted: false;
 }
 
-VoiceChannelOverlay > IconButton.circular {
-    borderWidth: 0.5;
-}
-
-VoiceChannelOverlay {
-    joinButton: @{
-        titleLabel @{
-            font: $font-small;
-        }
-        
-        imageEdgeInsets: 0 0 0 8;
-    }
-    
-    degradationTopLabel: @{
-        textColor: $color-text-foreground-dark;
-        font: $font-normal-light;
-    }
-    
-    degradationBottomLabel: @{
-        textColor: $color-text-foreground-dark;
-        font: $font-normal-light;
-    }
-
-    topStatusLabel: @{
-        textColor: $color-text-foreground-dark;
-    }
-    
-    centerStatusLabel: @{
-        textColor: $color-text-foreground-dark;
-        font: $font-small-light;
-    }
-    
-    callingProtocolLabel: @{
-        textColor: $color-text-foreground-dark;
-        font: $font-small-light;
-    }
-
-    acceptButton: @{
-        iconButton: @{
-            backgroundImageColor[state:normal]: $color-accent-green;
-            iconColor[state:normal]: white;
-            borderWidth: 0;
-        }
-    }
-    
-    acceptDegradedButton: @{
-        iconButton: @{
-            backgroundImageColor[state:normal]: $color-accent-green;
-            iconColor[state:normal]: white;
-            borderWidth: 0;
-        }
-    }
-    
-    makeDegradedCallButton: @{
-        iconButton: @{
-            backgroundImageColor[state:normal]: $color-accent-green;
-            iconColor[state:normal]: white;
-            borderWidth: 0;
-        }
-    }
-
-    acceptVideoButton: @{
-        iconButton: @{
-            backgroundImageColor[state:normal]: $color-accent-green;
-            iconColor[state:normal]: white;
-            borderWidth: 0;
-        }
-    }
-    
-    ignoreButton: @{
-        iconButton: @{
-            backgroundImageColor[state:normal]: $color-accent-red;
-            iconColor[state:normal]: white;
-            borderWidth: 0;
-        }
-    }
-    
-    leaveButton: @{
-        iconButton: @{
-            backgroundImageColor[state:normal]: $color-accent-red;
-            iconColor[state:normal]: white;
-            borderWidth: 0;
-        }
-    }
-    
-    VoiceChannelParticipantCell UILabel {
-        textColor: $color-text-foreground-dark;
-    }
-}
-
 CameraPreviewView {
     switchCameraButton: @{
         iconColor[state:normal]: $color-icon-normal-dark;
@@ -175,12 +85,6 @@ IconButton.emoji-backspace {
     borderColor[state:normal]: clear;
     circular: false;
     borderWidth: 0.0;
-}
-
-VoiceChannelParticipantCell {
-    nameLabel: @{
-        textAlignment: center;
-    }
 }
 
 AudioTrackViewController > UIView, AudioPlaylistViewController > UIView {
