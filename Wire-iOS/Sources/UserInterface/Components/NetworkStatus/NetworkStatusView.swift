@@ -131,10 +131,6 @@ extension NetworkStatusViewDelegate where Self: UIViewController {
 }
 
 class NetworkStatusView: UIView {
-
-    static public let horizontal: CGFloat = 16
-    static public let verticalMargin: CGFloat = 8
-
     private let connectingView: BreathLoadingBar
     private let offlineView: OfflineBar
     private var _state: NetworkStatusViewState = .online
@@ -183,16 +179,16 @@ class NetworkStatusView: UIView {
 
     func createConstraints() {
         constrain(self, offlineView, connectingView) { containerView, offlineView, connectingView in
-            offlineView.left == containerView.left + NetworkStatusView.horizontal
-            offlineView.right == containerView.right - NetworkStatusView.horizontal
-            offlineViewTopMargin = offlineView.top == containerView.top + NetworkStatusView.verticalMargin
-            offlineViewBottomMargin = offlineView.bottom == containerView.bottom - NetworkStatusView.verticalMargin
+            offlineView.left == containerView.left + CGFloat.NetworkStatusBar.horizontalMargin
+            offlineView.right == containerView.right - CGFloat.NetworkStatusBar.horizontalMargin
+            offlineViewTopMargin = offlineView.top == containerView.top + CGFloat.NetworkStatusBar.verticalMargin
+            offlineViewBottomMargin = offlineView.bottom == containerView.bottom - CGFloat.NetworkStatusBar.verticalMargin
 
             connectingView.left == offlineView.left
             connectingView.right == offlineView.right
             connectingView.top == offlineView.top
             connectingViewHeight = connectingView.height == CGFloat.OfflineBar.collapsedHeight
-            connectingViewBottomMargin = connectingView.bottom == containerView.bottom - NetworkStatusView.verticalMargin
+            connectingViewBottomMargin = connectingView.bottom == containerView.bottom - CGFloat.NetworkStatusView.verticalMargin
         }
     }
 
@@ -257,7 +253,7 @@ class NetworkStatusView: UIView {
         offlineViewBottomMargin?.constant = offlineBarState == .expanded ? -NetworkStatusView.verticalMargin : 0
 
         connectingViewHeight?.constant = connectingViewHidden ? 0 : CGFloat.OfflineBar.collapsedHeight
-        connectingViewBottomMargin?.constant = connectingViewHidden ? 0 : -NetworkStatusView.verticalMargin
+        connectingViewBottomMargin?.constant = connectingViewHidden ? 0 : -CGFloat.NetworkStatusBar.verticalMargin
 
         /// offlineViewBottomMargin is active iff connectingViewHidden is visible
         if offlineViewHidden && !connectingViewHidden {

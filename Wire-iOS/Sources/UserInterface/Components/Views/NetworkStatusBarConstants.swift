@@ -21,6 +21,9 @@ import Foundation
 extension CGFloat {
     enum NetworkStatusBar {
         static let collapsedCornerRadius: CGFloat = 1
+
+        static public let horizontalMargin: CGFloat = 16
+        static public let verticalMargin: CGFloat = 8
     }
 
     enum OfflineBar {
@@ -32,6 +35,6 @@ extension CGFloat {
 
 extension TimeInterval {
     enum NetworkStatusBar {
-        static let resizeAnimationTime: TimeInterval = 0.25
+        static let resizeAnimationTime: TimeInterval = 0.5
     }
 }
