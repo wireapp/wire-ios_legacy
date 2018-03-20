@@ -95,7 +95,7 @@ class AppStateController : NSObject {
             authenticationError = nil
         }
         
-        if newAppState != appState {
+        if !newAppState.isSameKindOf(appState) {
             zmLog.debug("transitioning to app state: \(newAppState)")
             appState = newAppState
             delegate?.appStateController(transitionedTo: appState) {

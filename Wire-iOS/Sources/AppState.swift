@@ -48,4 +48,18 @@ enum AppState : Equatable {
         }   
     }
     
+    public func isSameKindOf(_ error: AppState) -> Bool {
+        
+        switch (self, error) {
+        case (.headless, .headless),
+             (.authenticated, .authenticated),
+             (.unauthenticated, .unauthenticated),
+             (.blacklisted, .blacklisted),
+             (.migrating, .migrating),
+             (.loading, .loading):
+            return true
+        default:
+            return false
+        }
+    }
 }
