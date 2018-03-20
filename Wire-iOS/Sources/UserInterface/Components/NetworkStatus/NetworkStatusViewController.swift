@@ -53,7 +53,7 @@ class NetworkStatusViewController : UIViewController {
     fileprivate var device: DeviceProtocol = UIDevice.current
     fileprivate var application: ApplicationProtocol = UIApplication.shared
 
-    /// default init method with a parameter for injecting mock device
+    /// default init method with a parameter for injecting mock device and mock application
     ///
     /// - Parameter device: Provide this param for testing only
     /// - Parameter application: Provide this param for testing only
@@ -105,7 +105,6 @@ class NetworkStatusViewController : UIViewController {
         networkStatusView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tappedOnNetworkStatusBar)))
     }
 
-    ///TODO: do not check it is online sync?
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 

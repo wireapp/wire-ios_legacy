@@ -80,12 +80,12 @@ class OfflineBar: UIView {
             offlineLabel.left >= containerView.leftMargin
             offlineLabel.right <= containerView.rightMargin
 
-            heightConstraint = containerView.height == CGFloat.OfflineBar.collapsedHeight
+            heightConstraint = containerView.height == 0
         }
     }
 
     private func updateViews(animated: Bool = true) {
-        heightConstraint?.constant = state == .expanded ? CGFloat.OfflineBar.expandedHeight : CGFloat.OfflineBar.collapsedHeight
+        heightConstraint?.constant = state == .expanded ? CGFloat.OfflineBar.expandedHeight : 0
         offlineLabel.alpha = state == .expanded ? 1 : 0
         layer.cornerRadius = state == .expanded ? CGFloat.OfflineBar.expandedCornerRadius : CGFloat.OfflineBar.collapsedHeight
     }
@@ -140,6 +140,7 @@ class NetworkStatusView: UIView {
     var offlineViewBottomMargin: NSLayoutConstraint?
     var connectingViewHeight: NSLayoutConstraint?
     var connectingViewBottomMargin: NSLayoutConstraint?
+    fileprivate var application: ApplicationProtocol = UIApplication.shared
 
     var state: NetworkStatusViewState {
         set {
@@ -155,6 +156,15 @@ class NetworkStatusView: UIView {
         // if this is called before the frame is set then the offline
         // bar zooms into view (which we don't want).
         updateViewState(animated: (frame == .zero) ? false : animated)
+    }
+
+    /// init method with a parameter for injecting mock application
+    ///
+    /// - Parameter application: Provide this param for testing only
+    convenience init(application: ApplicationProtocol = UIApplication.shared) {
+        self.init(frame: .zero)
+
+        self.application = application
     }
 
     override init(frame: CGRect) {
@@ -207,8 +217,8 @@ class NetworkStatusView: UIView {
             offlineBarState = .minimized
         }
 
-        // Hide the sync bar immediately with the app go to background. When the app goes to background, the state change to .online after 1 or 2 seconds and causes visual artifact that the sync bar disappear in a short time.
-        if UIApplication.shared.applicationState == .background { ///TODO: test
+        // When the app is in background, hide the sync bar. It prevents the sync bar is "disappear in a blink" visual artifact.
+        if application.applicationState == .background {
             connectingViewHidden = true
         }
 

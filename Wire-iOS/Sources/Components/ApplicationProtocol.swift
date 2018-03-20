@@ -20,7 +20,7 @@ import Foundation
 
 protocol ApplicationProtocol {
     var statusBarOrientation: UIInterfaceOrientation { get }
+    var applicationState: UIApplicationState { get }
 }
 
-extension UIApplication: ApplicationProtocol {
-}
+extension UIApplication: ApplicationProtocol {}

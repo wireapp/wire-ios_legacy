@@ -21,5 +21,7 @@ import Foundation
 @testable import Wire
 
 final class MockApplication: ApplicationProtocol {
+    var applicationState: UIApplicationState = .active
+
     var statusBarOrientation: UIInterfaceOrientation = .unknown
 }
