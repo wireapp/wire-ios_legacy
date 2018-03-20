@@ -193,7 +193,7 @@ class NetworkStatusView: UIView {
     }
 
     private func updateViewState(animated: Bool) {
-        let connectingViewHidden = state != .onlineSynchronizing
+        var connectingViewHidden = state != .onlineSynchronizing
         connectingView.animating = state == .onlineSynchronizing
         let offlineViewHidden = state != .offlineExpanded && state != .offlineCollapsed
 
@@ -205,6 +205,10 @@ class NetworkStatusView: UIView {
             offlineBarState = .minimized
         case .online, .onlineSynchronizing:
             offlineBarState = .minimized
+        }
+
+        if UIApplication.shared.applicationState == .background {
+            connectingViewHidden = true
         }
 
         if let offlineBarState = offlineBarState {

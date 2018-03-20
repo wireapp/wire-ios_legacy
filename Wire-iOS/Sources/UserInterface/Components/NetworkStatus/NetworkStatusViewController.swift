@@ -180,15 +180,10 @@ class NetworkStatusViewController : UIViewController {
         pendingState = state
         NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(applyPendingState), object: nil)
 
-        // dismiss sync bar immediately without animation when the app becomes active
-        if pendingState == .online && UIApplication.shared.applicationState == .active {///TODO: test
-            applyPendingState(animated: false)
-        } else {
-            perform(#selector(applyPendingState), with: nil, afterDelay: 1)
-        }
+        perform(#selector(applyPendingState), with: true, afterDelay: 1)
     }
 
-    internal func applyPendingState(animated: Bool = true) {
+    internal func applyPendingState(animated: Bool) {
         guard let state = pendingState else { return }
         update(state: state, animated: animated)
         pendingState = nil
