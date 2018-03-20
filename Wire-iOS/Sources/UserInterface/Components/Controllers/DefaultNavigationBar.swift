@@ -40,8 +40,7 @@ class DefaultNavigationBar : UINavigationBar {
         shadowImage = UIImage.singlePixelImage(with: UIColor.clear)
         titleTextAttributes = [NSFontAttributeName: FontSpec(.small, .semibold).font!,
                                NSForegroundColorAttributeName: ColorScheme.default().color(withName: ColorSchemeColorTextForeground)]
-        setTitleVerticalPositionAdjustment(-2.0, for: .default)
-        backIndicatorImage = UIImage(for: .backArrow, iconSize: .tiny, color: ColorScheme.default().color(withName: ColorSchemeColorTextForeground)).withInsets(UIEdgeInsets(top: 0, left: 4, bottom: 0, right: 0), backgroundColor: .clear)
+        backIndicatorImage = UIImage(for: .backArrow, iconSize: .tiny, color: ColorScheme.default().color(withName: ColorSchemeColorTextForeground)).withInsets(UIEdgeInsets(top: 0, left: 4, bottom: 3, right: 0), backgroundColor: .clear)
         backIndicatorTransitionMaskImage = UIImage(for: .backArrow, iconSize: .tiny, color: .black)
     }
     

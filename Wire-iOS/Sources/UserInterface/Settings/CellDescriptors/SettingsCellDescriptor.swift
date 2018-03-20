@@ -185,13 +185,6 @@ class SettingsGroupCellDescriptor: SettingsInternalGroupCellDescriptorType, Sett
         if let navigationController = self.viewController?.navigationController,
            let controllerToPush = self.generateViewController() {
             navigationController.pushViewController(controllerToPush, animated: true)
-            
-            if let settingsTableController = controllerToPush as? SettingsTableViewController,
-                let settingsNavigationController = navigationController as? SettingsNavigationController {
-                settingsTableController.dismissAction = { [unowned settingsNavigationController]  _ in
-                    settingsNavigationController.dismissAction?(settingsNavigationController)
-                }
-            }
         }
     }
     

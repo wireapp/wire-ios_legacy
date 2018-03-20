@@ -31,12 +31,12 @@ import CocoaLumberjackSwift
     var editingList: Bool = false {
         didSet {
             if (self.editingList) {
-                self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.done, target: self, action: #selector(ClientListViewController.endEditing(_:)))
-            }
-            else {
-                self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.edit, target: self, action: #selector(ClientListViewController.startEditing(_:)))
+                self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "general.done".localized.localizedUppercase, style: .plain, target: self, action: #selector(ClientListViewController.endEditing(_:)))
+            } else {
+                self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "general.edit".localized.localizedUppercase, style: .plain, target: self, action: #selector(ClientListViewController.startEditing(_:)))
             }
             
+            self.navigationItem.rightBarButtonItem?.tintColor = UIColor.accent()
             self.navigationItem.setHidesBackButton(self.editingList, animated: true)
             self.clientsTableView?.setEditing(self.editingList, animated: true)
         }

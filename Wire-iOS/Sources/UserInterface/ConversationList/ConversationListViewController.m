@@ -297,11 +297,10 @@
     return startUIViewController;
 }
 
-- (SettingsNavigationController *)createSettingsViewController
+- (UIViewController *)createSettingsViewController
 {
-    SettingsNavigationController *settingsViewController = [SettingsNavigationController settingsNavigationController];
-
-    return settingsViewController;
+    SelfProfileViewController *selfProfileViewController = [[SelfProfileViewController alloc] init];
+    return [selfProfileViewController wrapInNavigationController:ClearBackgroundNavigationController.class];
 }
 
 - (void)createListContentController
@@ -574,27 +573,15 @@
 
 - (void)presentSettings
 {
-    SettingsNavigationController *settingsViewController = [self createSettingsViewController];
+    UIViewController *settingsViewController = [self createSettingsViewController];
     KeyboardAvoidingViewController *keyboardAvoidingWrapperController = [[KeyboardAvoidingViewController alloc] initWithViewController:settingsViewController];
     
     if (self.wr_splitViewController.layoutSize == SplitViewControllerLayoutSizeCompact) {
         keyboardAvoidingWrapperController.topInset = UIScreen.safeArea.top;
-        @weakify(keyboardAvoidingWrapperController);
-        settingsViewController.dismissAction = ^(SettingsNavigationController *controller) {
-            @strongify(keyboardAvoidingWrapperController);
-            [keyboardAvoidingWrapperController dismissViewControllerAnimated:YES completion:nil];
-        };
-        
         keyboardAvoidingWrapperController.modalPresentationStyle = UIModalPresentationCurrentContext;
         keyboardAvoidingWrapperController.transitioningDelegate = self;
         [self presentViewController:keyboardAvoidingWrapperController animated:YES completion:nil];
-    }
-    else {
-        @weakify(self);
-        settingsViewController.dismissAction = ^(SettingsNavigationController *controller) {
-            @strongify(self);
-            [self.parentViewController dismissViewControllerAnimated:YES completion:nil];
-        };
+    } else {
         keyboardAvoidingWrapperController.modalPresentationStyle = UIModalPresentationFormSheet;
         keyboardAvoidingWrapperController.view.backgroundColor = [UIColor blackColor];
         [self.parentViewController presentViewController:keyboardAvoidingWrapperController animated:YES completion:nil];

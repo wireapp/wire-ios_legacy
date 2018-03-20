@@ -221,11 +221,12 @@ final class ChangeHandleViewController: SettingsBaseTableViewController {
         updateUI()
 
         navigationItem.rightBarButtonItem = UIBarButtonItem(
-            title: "self.settings.account_section.handle.change.save".localized,
-            style: .done,
+            title: "self.settings.account_section.handle.change.save".localized.localizedUppercase,
+            style: .plain,
             target: self,
             action: #selector(saveButtonTapped)
         )
+        navigationItem.rightBarButtonItem?.tintColor = UIColor.accent()
     }
 
     func saveButtonTapped(sender: UIBarButtonItem) {

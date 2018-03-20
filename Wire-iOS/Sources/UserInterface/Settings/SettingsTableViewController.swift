@@ -145,9 +145,7 @@ class SettingsTableViewController: SettingsBaseTableViewController {
 
     let group: SettingsInternalGroupCellDescriptorType
     fileprivate var selfUserObserver: NSObjectProtocol!
-    @objc var dismissAction: ((SettingsTableViewController) -> ())? = .none
-
-
+    
     required init(group: SettingsInternalGroupCellDescriptorType) {
         self.group = group
         super.init(style: group.style == .plain ? .plain : .grouped)
@@ -174,9 +172,7 @@ class SettingsTableViewController: SettingsBaseTableViewController {
         super.viewDidLoad()
         self.setupTableView()
         
-        let closeButton = IconButton.closeButton()
-        closeButton.addTarget(self, action: #selector(SettingsTableViewController.dismissRootNavigation(_:)), for: .touchUpInside)
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: closeButton)
+        self.navigationItem.rightBarButtonItem = navigationController?.closeItem()
     }
 
     func setupTableView() {
@@ -185,10 +181,6 @@ class SettingsTableViewController: SettingsBaseTableViewController {
         for aClass in allCellTypes {
             tableView.register(aClass, forCellReuseIdentifier: aClass.reuseIdentifier)
         }
-    }
-
-    func dismissRootNavigation(_ sender: AnyObject) {
-        self.dismissAction?(self)
     }
 
     // MARK: - UITableViewDelegate & UITableViewDelegate

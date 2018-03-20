@@ -26,7 +26,7 @@ import Foundation
     class DismissStepDelegate: NSObject, FormStepDelegate {
         var strongCapture: DismissStepDelegate?
         @objc func didCompleteFormStep(_ viewController: UIViewController!) {
-            NotificationCenter.default.post(name: NSNotification.Name(rawValue: SettingsNavigationController.dismissNotificationName), object: nil)
+            NotificationCenter.default.post(name: NSNotification.Name.DismissSettings, object: nil)
             self.strongCapture = nil
         }
     }
