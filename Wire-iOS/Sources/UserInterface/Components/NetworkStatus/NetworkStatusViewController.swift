@@ -179,20 +179,26 @@ class NetworkStatusViewController : UIViewController {
     fileprivate func enqueue(state: NetworkStatusViewState) {
         pendingState = state
         NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(applyPendingState), object: nil)
-        perform(#selector(applyPendingState), with: nil, afterDelay: 1)///TODO: do not delay if current state is online sync and new state is online and the app is in FG
+
+        // dismiss sync bar immediately without animation when the app becomes active
+        if pendingState == .online && UIApplication.shared.applicationState == .active {///TODO: test
+            applyPendingState(animated: false)
+        } else {
+            perform(#selector(applyPendingState), with: nil, afterDelay: 1)
+        }
     }
 
-    internal func applyPendingState() {
+    internal func applyPendingState(animated: Bool = true) {
         guard let state = pendingState else { return }
-        update(state: state)
+        update(state: state, animated: animated)
         pendingState = nil
     }
 
-    func update(state: NetworkStatusViewState) {
+    func update(state: NetworkStatusViewState, animated: Bool = true) {
         self.state = state
         guard shouldShowOnIPad() else { return }
 
-        networkStatusView.update(state: state, animated: true)
+        networkStatusView.update(state: state, animated: animated)
     }
 }
 
