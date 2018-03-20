@@ -105,6 +105,7 @@ class NetworkStatusViewController : UIViewController {
         networkStatusView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tappedOnNetworkStatusBar)))
     }
 
+    ///TODO: do not check it is online sync?
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
@@ -178,7 +179,7 @@ class NetworkStatusViewController : UIViewController {
     fileprivate func enqueue(state: NetworkStatusViewState) {
         pendingState = state
         NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(applyPendingState), object: nil)
-        perform(#selector(applyPendingState), with: nil, afterDelay: 1)
+        perform(#selector(applyPendingState), with: nil, afterDelay: 1)///TODO: do not delay if current state is online sync and new state is online and the app is in FG
     }
 
     internal func applyPendingState() {
@@ -198,7 +199,7 @@ class NetworkStatusViewController : UIViewController {
 extension NetworkStatusViewController: ZMNetworkAvailabilityObserver {
 
     func didChangeAvailability(newState: ZMNetworkState) {
-        enqueue(state: viewState(from: newState))
+        enqueue(state: viewState(from: newState)) ///TODO: do not enqueue sync state when the app is in BG
     }
 
 }
