@@ -180,20 +180,20 @@ class NetworkStatusViewController : UIViewController {
         pendingState = state
         NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(applyPendingState), object: nil)
 
-        perform(#selector(applyPendingState), with: true, afterDelay: 1)
+        perform(#selector(applyPendingState), with: nil, afterDelay: 1)
     }
 
-    internal func applyPendingState(animated: Bool) {
+    internal func applyPendingState() {
         guard let state = pendingState else { return }
-        update(state: state, animated: animated)
+        update(state: state)
         pendingState = nil
     }
 
-    func update(state: NetworkStatusViewState, animated: Bool = true) {
+    func update(state: NetworkStatusViewState) {
         self.state = state
         guard shouldShowOnIPad() else { return }
 
-        networkStatusView.update(state: state, animated: animated)
+        networkStatusView.update(state: state, animated: true)
     }
 }
 

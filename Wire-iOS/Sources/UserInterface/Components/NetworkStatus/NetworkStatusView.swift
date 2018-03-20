@@ -207,7 +207,8 @@ class NetworkStatusView: UIView {
             offlineBarState = .minimized
         }
 
-        if UIApplication.shared.applicationState == .background {
+        // Hide the sync bar immediately with the app go to background. When the app goes to background, the state change to .online after 1 or 2 seconds and causes visual artifact that the sync bar disappear in a short time.
+        if UIApplication.shared.applicationState == .background { ///TODO: test
             connectingViewHidden = true
         }
 
