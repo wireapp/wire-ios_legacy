@@ -188,7 +188,7 @@ class NetworkStatusView: UIView {
             connectingView.right == offlineView.right
             connectingView.top == offlineView.top
             connectingViewHeight = connectingView.height == CGFloat.OfflineBar.collapsedHeight
-            connectingViewBottomMargin = connectingView.bottom == containerView.bottom - CGFloat.NetworkStatusView.verticalMargin
+            connectingViewBottomMargin = connectingView.bottom == containerView.bottom - CGFloat.NetworkStatusBar.verticalMargin
         }
     }
 
@@ -250,7 +250,7 @@ class NetworkStatusView: UIView {
                   animated: Bool,
                   connectingViewHidden: Bool,
                   offlineViewHidden: Bool) {
-        offlineViewBottomMargin?.constant = offlineBarState == .expanded ? -NetworkStatusView.verticalMargin : 0
+        offlineViewBottomMargin?.constant = offlineBarState == .expanded ? -CGFloat.NetworkStatusBar.verticalMargin : 0
 
         connectingViewHeight?.constant = connectingViewHidden ? 0 : CGFloat.OfflineBar.collapsedHeight
         connectingViewBottomMargin?.constant = connectingViewHidden ? 0 : -CGFloat.NetworkStatusBar.verticalMargin
