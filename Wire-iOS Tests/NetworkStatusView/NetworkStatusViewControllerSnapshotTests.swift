@@ -45,6 +45,7 @@ final class NetworkStatusViewControllerSnapshotTests: ZMSnapshotTestCase {
         mockContainerViewController.view.backgroundColor = .lightGray
 
         sut = NetworkStatusViewController()
+        sut.view.backgroundColor = .gray
         mockContainerViewController.view.addSubview(sut.view)
         sut.delegate = mockContainerViewController
 

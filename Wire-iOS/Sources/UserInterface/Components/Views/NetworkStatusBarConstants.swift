@@ -23,7 +23,7 @@ extension CGFloat {
         static let collapsedCornerRadius: CGFloat = 1
 
         static public let horizontalMargin: CGFloat = 16
-        static public let verticalMargin: CGFloat = 8
+        static public let verticalMargin: CGFloat = 0
     }
 
     enum OfflineBar {
