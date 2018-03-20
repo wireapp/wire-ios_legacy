@@ -69,15 +69,14 @@ extension ConversationActionController {
     
     func requestCancelConnectionRequestResult(for user: ZMUser, handler: @escaping (CancelConnectionRequestResult) -> Void) {
         let controller = CancelConnectionRequestResult.controller(for: user, handler: handler)
-        target.present(controller, animated: true)
+        present(controller)
     }
     
     func handleConnectionRequestResult(_ result: CancelConnectionRequestResult, for conversation: ZMConversation) {
         guard case .cancelRequest = result else { return }
-        dismissAndEnqueue {
+        enqueue {
             conversation.connectedUser?.cancelConnectionRequest()
         }
     }
     
 }
-

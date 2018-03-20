@@ -51,7 +51,7 @@ import Cartography
 
     func createConstraints() {
         constrain(view, contentViewController.view) { view, conversationView in
-            conversationView.edges == inset(view.edges, 0, 16)
+            conversationView.edges == view.edges
         }
     }
 

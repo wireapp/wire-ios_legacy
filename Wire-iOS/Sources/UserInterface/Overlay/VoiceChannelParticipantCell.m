@@ -86,6 +86,8 @@
         
         self.nameLabel = [[UILabel alloc] initForAutoLayout];
         self.nameLabel.font = UIFont.smallLightFont;
+        self.nameLabel.textAlignment = NSTextAlignmentCenter;
+        self.nameLabel.textColor = [UIColor wr_colorFromColorScheme:ColorSchemeColorTextForeground variant:ColorSchemeVariantDark];
         [self.contentView addSubview:self.nameLabel];
         
         [self createInitialConstraints];

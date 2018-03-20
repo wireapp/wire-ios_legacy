@@ -32,10 +32,10 @@ enum GuestLinkEvent: Event {
     
     var name: String {
         switch self {
-        case .created: return "guests_rooms.link_created"
-        case .copied: return "guests_rooms.link_copied"
-        case .revoked: return "guests_rooms.link_revoked"
-        case .shared: return "guests_rooms.link_shared"
+        case .created: return "guest_rooms.link_created"
+        case .copied: return "guest_rooms.link_copied"
+        case .revoked: return "guest_rooms.link_revoked"
+        case .shared: return "guest_rooms.link_shared"
         }
     }
     

@@ -91,10 +91,14 @@
     [self.containerView addSubview:self.overlayView];
     
     self.titleLabel = [[UILabel alloc] initForAutoLayout];
+    self.titleLabel.font = UIFont.normalLightFont;
+    self.titleLabel.textColor = UIColor.whiteColor;
+    self.titleLabel.numberOfLines = 2;
     [self.containerView addSubview:self.titleLabel];
     
     self.playButton = [[IconButton alloc] initForAutoLayout];
     [self.playButton setIcon:ZetaIconTypePlay withSize:ZetaIconSizeLarge forState:UIControlStateNormal];
+    [self.playButton setIconColor:UIColor.whiteColor forState:UIControlStateNormal];
     [self.containerView addSubview:self.playButton];
     
     self.providerImageView = [[UIImageView alloc] initForAutoLayout];

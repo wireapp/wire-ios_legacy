@@ -33,7 +33,7 @@ extension ZMConversation {
     
     var actions: [Action] {
         switch conversationType {
-        case .connection: return availableOneToOneActions()
+        case .connection: return availablePendingActions()
         case .oneOnOne: return availableOneToOneActions()
         default: return availableGroupActions()
         }
