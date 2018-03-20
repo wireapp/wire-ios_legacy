@@ -73,13 +73,6 @@ class NetworkStatusViewSnapShotTests: ZMSnapshotTestCase {
         verifyInAllPhoneWidths(view: sut)
     }
 
-    func testOfflineCollapsedState() {
-        // GIVEN
-        sut.state = .offlineCollapsed
-        // WHEN && THEN
-        verifyInAllPhoneWidths(view: sut)
-    }
-
     func testOnlineSynchronizing() {
         // GIVEN
         sut.state = .onlineSynchronizing
