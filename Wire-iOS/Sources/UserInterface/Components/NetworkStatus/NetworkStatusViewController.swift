@@ -199,7 +199,7 @@ class NetworkStatusViewController : UIViewController {
 extension NetworkStatusViewController: ZMNetworkAvailabilityObserver {
 
     func didChangeAvailability(newState: ZMNetworkState) {
-        enqueue(state: viewState(from: newState)) ///TODO: do not enqueue sync state when the app is in BG
+        enqueue(state: viewState(from: newState))
     }
 
 }
