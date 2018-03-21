@@ -17,7 +17,6 @@
 //
 
 #import "SignInViewController.h"
-//@class PhoneSignInViewController;
 #import "PhoneSignInViewController.h"
 
 @interface SignInViewController ()
