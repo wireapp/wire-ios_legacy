@@ -180,6 +180,9 @@ extension ActiveVoiceChannelViewController : WireCallCenterCallStateObserver {
 
         let changeDate = Date()
 
+        // Only show the survey in internal builds (review required)
+        guard DeveloperMenuState.developerMenuEnabled() else { return }
+
         guard !Analytics.shared().isOptedOut,
             !TrackingManager.shared.disableCrashAndAnalyticsSharing else {
                 return
