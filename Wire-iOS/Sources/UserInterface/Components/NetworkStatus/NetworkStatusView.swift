@@ -137,7 +137,12 @@ class NetworkStatusView: UIView {
     private let connectingView: BreathLoadingBar
     private let offlineView: OfflineBar
     private var _state: NetworkStatusViewState = .online
-    public weak var delegate: NetworkStatusViewDelegate?
+
+    public weak var delegate: NetworkStatusViewDelegate! {
+        didSet {
+            createConstraints()
+        }
+    }
 
     var offlineViewTopMargin: NSLayoutConstraint?
     var offlineViewBottomMargin: NSLayoutConstraint?
@@ -182,7 +187,6 @@ class NetworkStatusView: UIView {
 
         [offlineView, connectingView].forEach(addSubview)
 
-        createConstraints()
         state = .online
     }
 
@@ -192,18 +196,19 @@ class NetworkStatusView: UIView {
 
     func createConstraints() {
         let topMargin = UIScreen.hasNotch ? CGFloat.NetworkStatusBar.topMargin : CGFloat(0)
+        let bottomMargin = delegate.bottomMargin
 
         constrain(self, offlineView, connectingView) { containerView, offlineView, connectingView in
             offlineView.left == containerView.left + CGFloat.NetworkStatusBar.horizontalMargin
             offlineView.right == containerView.right - CGFloat.NetworkStatusBar.horizontalMargin
             offlineViewTopMargin = offlineView.top == containerView.top + topMargin
-            offlineViewBottomMargin = offlineView.bottom == containerView.bottom - CGFloat.NetworkStatusBar.bottomMargin
+            offlineViewBottomMargin = offlineView.bottom == containerView.bottom - bottomMargin
 
             connectingView.left == offlineView.left
             connectingView.right == offlineView.right
             connectingView.top == offlineView.top
             connectingViewHeight = connectingView.height == CGFloat.SyncBar.height
-            connectingViewBottomMargin = connectingView.bottom == containerView.bottom - CGFloat.NetworkStatusBar.bottomMargin
+            connectingViewBottomMargin = connectingView.bottom == containerView.bottom - bottomMargin
         }
     }
 
@@ -270,10 +275,10 @@ class NetworkStatusView: UIView {
                   animated: Bool,
                   connectingViewHidden: Bool,
                   offlineViewHidden: Bool) {
-        offlineViewBottomMargin?.constant = offlineBarState == .expanded ? -CGFloat.NetworkStatusBar.bottomMargin : 0
+        offlineViewBottomMargin?.constant = offlineBarState == .expanded ? -delegate.bottomMargin : 0
 
         connectingViewHeight?.constant = connectingViewHidden ? 0 : CGFloat.SyncBar.height
-        connectingViewBottomMargin?.constant = connectingViewHidden ? 0 : -CGFloat.NetworkStatusBar.bottomMargin
+        connectingViewBottomMargin?.constant = connectingViewHidden ? 0 : -delegate.bottomMargin
 
         /// offlineViewBottomMargin is active iff connectingViewHidden is visible
         if offlineViewHidden && !connectingViewHidden {

@@ -20,19 +20,33 @@ import Foundation
 import XCTest
 @testable import Wire
 
+class MockContainer: NetworkStatusViewDelegate {
+    var shouldAnimateNetworkStatusView: Bool = true
+
+    var bottomMargin: CGFloat = 0
+
+    func didChangeHeight(_ networkStatusView: NetworkStatusView, animated: Bool, state: NetworkStatusViewState) {
+
+    }
+}
+
 class NetworkStatusViewTests: XCTestCase {
     var sut: NetworkStatusView!
     var mockApplication: MockApplication!
+    var mockContainer: MockContainer!
 
     override func setUp() {
         super.setUp()
         mockApplication = MockApplication()
+        mockContainer = MockContainer()
         sut = NetworkStatusView(application: mockApplication)
+        sut.delegate = mockContainer
     }
 
     override func tearDown() {
         sut = nil
         mockApplication = nil
+        mockContainer = nil
         super.tearDown()
     }
 
@@ -54,15 +68,19 @@ class NetworkStatusViewTests: XCTestCase {
 class NetworkStatusViewSnapShotTests: ZMSnapshotTestCase {
 
     var sut: NetworkStatusView!
+    var mockContainer: MockContainer!
 
     override func setUp() {
         super.setUp()
         accentColor = .violet
+        mockContainer = MockContainer()
         sut = NetworkStatusView()
+        sut.delegate = mockContainer
     }
 
     override func tearDown() {
         sut = nil
+        mockContainer = nil
         super.tearDown()
     }
 

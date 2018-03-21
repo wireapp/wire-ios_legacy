@@ -21,6 +21,8 @@ import Cartography
 @testable import Wire
 
 class MockContainerViewController: UIViewController, NetworkStatusBarDelegate {
+    var bottomMargin: CGFloat = 0
+
     func showInIPad(networkStatusViewController: NetworkStatusViewController, with orientation: UIInterfaceOrientation) -> Bool {
         return true
     }
