@@ -31,10 +31,6 @@ protocol NetworkStatusViewControllerDelegate: class {
     func showInIPad(networkStatusViewController: NetworkStatusViewController, with orientation: UIInterfaceOrientation) -> Bool
 }
 
-extension Notification.Name {
-    static let ShowNetworkStatusBar = Notification.Name("ShowNetworkStatusBar")
-}
-
 @objc
 class NetworkStatusViewController : UIViewController {
 
@@ -66,8 +62,6 @@ class NetworkStatusViewController : UIViewController {
 
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
-
-        NotificationCenter.default.addObserver(self, selector: #selector(changeStateFormOfflineCollapsedToOfflineExpanded), name: Notification.Name.ShowNetworkStatusBar, object: .none)
 
         NotificationCenter.default.addObserver(self, selector: #selector(updateStateForIPad), name: NSNotification.Name.UIApplicationDidChangeStatusBarOrientation, object: .none)
     }
@@ -126,20 +120,6 @@ class NetworkStatusViewController : UIViewController {
         }
     }
 
-    func changeStateFormOfflineCollapsedToOfflineExpanded() {
-        let networkStatusView = self.networkStatusView
-
-        if networkStatusView.state == .offlineCollapsed {
-            self.update(state: .offlineExpanded)
-        }
-    }
-
-
-    /// show NetworkStatusViewController instance(s) if its state is .offlineCollapsed
-    static public func notifyWhenOffline() {
-        NotificationCenter.default.post(name: .ShowNetworkStatusBar, object: self)
-    }
-
     func showOfflineAlert() {
         let offlineAlert = UIAlertController.init(title: "system_status_bar.no_internet.title".localized,
                                                   message: "system_status_bar.no_internet.explanation".localized,
@@ -160,18 +140,10 @@ class NetworkStatusViewController : UIViewController {
 
     internal func tappedOnNetworkStatusBar() {
         switch networkStatusView.state {
-        case .offlineCollapsed:
-            update(state: .offlineExpanded)
         case .offlineExpanded:
             showOfflineAlert()
         default:
             break
-        }
-    }
-
-    internal func collapseOfflineBar() {
-        if networkStatusView.state == .offlineExpanded {
-            update(state: .offlineCollapsed)
         }
     }
 

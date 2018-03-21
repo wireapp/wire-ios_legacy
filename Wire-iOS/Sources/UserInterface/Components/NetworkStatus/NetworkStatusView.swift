@@ -96,7 +96,6 @@ enum NetworkStatusViewState {
     case online
     case onlineSynchronizing
     case offlineExpanded
-    case offlineCollapsed
 }
 
 protocol NetworkStatusViewDelegate: class {
@@ -215,14 +214,12 @@ class NetworkStatusView: UIView {
     private func updateViewState(animated: Bool) {
         var connectingViewHidden = state != .onlineSynchronizing
         connectingView.animating = state == .onlineSynchronizing
-        let offlineViewHidden = state != .offlineExpanded && state != .offlineCollapsed
+        let offlineViewHidden = state != .offlineExpanded
 
         var offlineBarState: OfflineBarState?
         switch state {
         case .offlineExpanded:
             offlineBarState = .expanded
-        case .offlineCollapsed:
-            offlineBarState = .minimized
         case .online, .onlineSynchronizing:
             offlineBarState = .minimized
         }

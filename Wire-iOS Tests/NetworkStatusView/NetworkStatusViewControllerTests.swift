@@ -167,8 +167,8 @@ final class NetworkStatusViewControllerTests: XCTestCase {
         setUpSut(userInterfaceIdiom: userInterfaceIdiom,
                  horizontalSizeClass: horizontalSizeClass,
                  orientation: .landscapeLeft,
-                 listState: .offlineCollapsed,
-                 rootState: .offlineCollapsed)
+                 listState: .online,
+                 rootState: .online)
 
         // WHEN
         NetworkStatusViewController.notifyWhenOffline()
@@ -185,8 +185,8 @@ final class NetworkStatusViewControllerTests: XCTestCase {
         setUpSut(userInterfaceIdiom: userInterfaceIdiom,
                  horizontalSizeClass: horizontalSizeClass,
                  orientation: .portrait,
-                 listState: .offlineCollapsed,
-                 rootState: .offlineCollapsed)
+                 listState: .online,
+                 rootState: .online)
 
         // WHEN
         NetworkStatusViewController.notifyWhenOffline()
