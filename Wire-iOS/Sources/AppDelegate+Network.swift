@@ -24,9 +24,7 @@ extension AppDelegate {
     /// @return YES if network is offline
     @discardableResult
     @objc
-    static func checkNetworkAndFlashIndicatorIfNecessary() -> Bool {
-        NetworkStatusViewController.notifyWhenOffline()
-
+    static func checkNetwork() -> Bool {
         return .unreachable == NetworkStatus.shared().reachability()
     }
 

@@ -902,7 +902,7 @@
 {
     [self updateAccessoryViews];
     [self updateNewButtonTitleLabel];
-    [AppDelegate checkNetworkAndFlashIndicatorIfNecessary];
+    [AppDelegate checkNetwork];
 }
 
 - (BOOL)textViewShouldEndEditing:(UITextView *)textView
@@ -1067,7 +1067,7 @@
 
 - (void)giphyButtonPressed:(id)sender
 {
-    if (![AppDelegate checkNetworkAndFlashIndicatorIfNecessary]) {
+    if (![AppDelegate checkNetwork]) {
         
         [Analytics.shared tagMediaAction:ConversationMediaActionGif inConversation:self.conversation];
     

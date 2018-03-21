@@ -159,42 +159,6 @@ final class NetworkStatusViewControllerTests: XCTestCase {
                                        rootState: .offlineExpanded)
     }
 
-    func testThatNotifyWhenOfflineShowsOneNetworkStatusViewOnIPad() {
-        // GIVEN
-        let userInterfaceIdiom: UIUserInterfaceIdiom = .pad
-        let horizontalSizeClass: UIUserInterfaceSizeClass = .regular
-
-        setUpSut(userInterfaceIdiom: userInterfaceIdiom,
-                 horizontalSizeClass: horizontalSizeClass,
-                 orientation: .landscapeLeft,
-                 listState: .online,
-                 rootState: .online)
-
-        // WHEN
-        NetworkStatusViewController.notifyWhenOffline()
-
-        // THEN
-        checkResult(listState: .online, rootState: .offlineExpanded)
-    }
-
-    func testThatNotifyWhenOfflineShowsBothNetworkStatusViewOnIPhone() {
-        // GIVEN
-        let userInterfaceIdiom: UIUserInterfaceIdiom = .phone
-        let horizontalSizeClass: UIUserInterfaceSizeClass = .compact
-
-        setUpSut(userInterfaceIdiom: userInterfaceIdiom,
-                 horizontalSizeClass: horizontalSizeClass,
-                 orientation: .portrait,
-                 listState: .online,
-                 rootState: .online)
-
-        // WHEN
-        NetworkStatusViewController.notifyWhenOffline()
-
-        // THEN
-        checkResult(listState: .offlineExpanded, rootState: .offlineExpanded)
-    }
-
     func testThatIPadRespondsToScreenSizeChanging() {
         // GIVEN
         let userInterfaceIdiom: UIUserInterfaceIdiom = .pad
@@ -235,7 +199,7 @@ final class NetworkStatusViewControllerRetainTests: XCTestCase {
         super.tearDown()
     }
 
-    func testNetworkStatusViewControllerIsNotRetainedAfterTimerIsScheduled() {
+    func testNetworkStatusViewControllerIsNotRetainedAfterPerformIsCalled() {
         autoreleasepool {
             // GIVEN
             var networkStatusViewController: NetworkStatusViewController! = NetworkStatusViewController()
@@ -243,7 +207,8 @@ final class NetworkStatusViewControllerRetainTests: XCTestCase {
 
             // WHEN
             networkStatusViewController.viewDidLoad()
-            NetworkStatusViewController.notifyWhenOffline()
+
+            networkStatusViewController.didChangeAvailability(newState: .online)
             networkStatusViewController = nil
         }
 

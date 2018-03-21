@@ -72,7 +72,7 @@
 
 - (void)sendTextMessage:(NSString *)text
 {
-    [AppDelegate checkNetworkAndFlashIndicatorIfNecessary];
+    [AppDelegate checkNetwork];
     
     BOOL shouldFetchLinkPreview = ![Settings sharedSettings].disableLinkPreviews;
     
@@ -103,7 +103,7 @@
 
 - (void)sendTextMessage:(NSString *)text withImageData:(NSData *)data
 {
-    [AppDelegate checkNetworkAndFlashIndicatorIfNecessary];
+    [AppDelegate checkNetwork];
     __block id <ZMConversationMessage> textMessage = nil;
     
     BOOL shouldFetchLinkPreview = ![Settings sharedSettings].disableLinkPreviews;
