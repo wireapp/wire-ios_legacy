@@ -52,7 +52,7 @@ class BreathLoadingBar: UIView {
         animating = false
 
         super.init(frame: .zero)
-        layer.cornerRadius = CGFloat.NetworkStatusBar.collapsedCornerRadius
+        layer.cornerRadius = CGFloat.SyncBar.cornerRadius
 
         animationDuration = duration
         NotificationCenter.default.addObserver(self, selector: #selector(self.applicationDidBecomeActive), name: .UIApplicationDidBecomeActive, object: nil)

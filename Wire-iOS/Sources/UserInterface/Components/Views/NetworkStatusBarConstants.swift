@@ -20,8 +20,6 @@ import Foundation
 
 extension CGFloat {
     enum NetworkStatusBar {
-        static let collapsedCornerRadius: CGFloat = 1
-
         static public let horizontalMargin: CGFloat = 16
         static public let topMargin: CGFloat = 8
         static public let bottomMargin: CGFloat = 8
@@ -34,6 +32,7 @@ extension CGFloat {
 
     enum SyncBar {
         static let height: CGFloat = 4
+        static let cornerRadius: CGFloat = 2
     }
 }
 

@@ -87,7 +87,7 @@ class OfflineBar: UIView {
     private func updateViews(animated: Bool = true) {
         heightConstraint?.constant = state == .expanded ? CGFloat.OfflineBar.expandedHeight : 0
         offlineLabel.alpha = state == .expanded ? 1 : 0
-        layer.cornerRadius = state == .expanded ? CGFloat.OfflineBar.expandedCornerRadius : CGFloat.SyncBar.height / 2
+        layer.cornerRadius = state == .expanded ? CGFloat.OfflineBar.expandedCornerRadius : CGFloat.SyncBar.cornerRadius
     }
 
 }
