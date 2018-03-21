@@ -124,6 +124,10 @@ import Cartography
 
 
 extension ConversationRootViewController: NetworkStatusBarDelegate {
+    var bottomMargin: CGFloat {
+        return 0
+    }
+
     func showInIPad(networkStatusViewController: NetworkStatusViewController, with orientation: UIInterfaceOrientation) -> Bool {
         // always show on iPad for any orientation in regular mode
         return true
