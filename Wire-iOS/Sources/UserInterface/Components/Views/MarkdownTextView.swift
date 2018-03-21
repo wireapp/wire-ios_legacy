@@ -229,6 +229,12 @@ class MarkdownTextView: NextResponderTextView {
         var color = style.baseFontColor
         let paragraphyStyle = style.baseParagraphStyle
         
+        // if we will bolden the font, it should initially have no weight
+        // (inserting bold trait to light system font has no effect)
+        if markdown.containsHeader || markdown.contains(.bold) {
+            font = font.withoutLightWeight
+        }
+        
         // code should be processed first since it has it's own font.
         if markdown.contains(.code) {
             font = style.codeFont
