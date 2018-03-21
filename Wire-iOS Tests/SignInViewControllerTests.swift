@@ -34,13 +34,16 @@ final class SignInViewControllerTests: XCTestCase {
         super.tearDown()
     }
 
-    func testExample(){
+    func testThatTheAppWouldNotCrashAfterSignInByPhone(){
         // GIVEN
+        /// remove emailSignInViewControllerContainer
+//        sut.presentedSignInViewController = sut.phoneSignInViewControllerContainer
+//        sut.present(sut.emailSignInViewControllerContainer)
 
-        // WHEN
-        sut.emailSignInViewControllerContainer.removeFromParentViewController()
+        ///crash if emailSignInViewControllerContainer is removed
         sut.phoneSignInViewControllerContainer.removeFromParentViewController()
 
+        // WHEN
         sut.signInByPhone(nil)
 
         // THEN

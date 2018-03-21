@@ -22,8 +22,10 @@
 
 @property (nonatomic) UIViewController *emailSignInViewControllerContainer;
 @property (nonatomic) UIViewController *phoneSignInViewControllerContainer;
+@property (nonatomic) UIViewController *presentedSignInViewController;
 
 - (void)signInByPhone:(id)sender;
 - (void)signInByEmail:(id)sender;
 - (void)presentEmailSignInViewControllerToEnterPassword;
+- (void)presentSignInViewController:(UIViewController *)viewController;
 @end
