@@ -209,6 +209,8 @@ final class NetworkStatusViewControllerRetainTests: XCTestCase {
             networkStatusViewController.viewDidLoad()
 
             networkStatusViewController.didChangeAvailability(newState: .online)
+            NSObject.cancelPreviousPerformRequests(withTarget: networkStatusViewController, selector: #selector(networkStatusViewController.applyPendingState), object: nil)
+
             networkStatusViewController = nil
         }
 
