@@ -18,7 +18,7 @@
 		160DECDA1AB32F7D000FB575 /* CameraConfirmationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 160DECD91AB32F7D000FB575 /* CameraConfirmationView.m */; };
 		160DECDD1AB333A3000FB575 /* CameraFocusRing.m in Sources */ = {isa = PBXBuildFile; fileRef = 160DECDC1AB333A3000FB575 /* CameraFocusRing.m */; };
 		160DECE01AB3347B000FB575 /* CameraExposureSlider.m in Sources */ = {isa = PBXBuildFile; fileRef = 160DECDF1AB3347B000FB575 /* CameraExposureSlider.m */; };
-		1610366F20616EBC008AFDD0 /* SelfProfileVIewController+NewDeviceAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1610366E20616EBC008AFDD0 /* SelfProfileVIewController+NewDeviceAlert.swift */; };
+		1610366F20616EBC008AFDD0 /* SelfProfileViewController+NewDeviceAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1610366E20616EBC008AFDD0 /* SelfProfileViewController+NewDeviceAlert.swift */; };
 		1610367120617BEC008AFDD0 /* AppRootViewController+Appearance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1610367020617BEC008AFDD0 /* AppRootViewController+Appearance.swift */; };
 		161285DF1DD1E81E004728E9 /* NSString+URL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 168A16A31D95964B005CFA6C /* NSString+URL.swift */; };
 		161541BC1E28FFAE00AC2FFB /* CircularProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 161541BB1E28FFAE00AC2FFB /* CircularProgressView.swift */; };
@@ -1198,7 +1198,7 @@
 		160DECDC1AB333A3000FB575 /* CameraFocusRing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CameraFocusRing.m; sourceTree = "<group>"; };
 		160DECDE1AB3347B000FB575 /* CameraExposureSlider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CameraExposureSlider.h; sourceTree = "<group>"; };
 		160DECDF1AB3347B000FB575 /* CameraExposureSlider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CameraExposureSlider.m; sourceTree = "<group>"; };
-		1610366E20616EBC008AFDD0 /* SelfProfileVIewController+NewDeviceAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SelfProfileVIewController+NewDeviceAlert.swift"; sourceTree = "<group>"; };
+		1610366E20616EBC008AFDD0 /* SelfProfileViewController+NewDeviceAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SelfProfileViewController+NewDeviceAlert.swift"; sourceTree = "<group>"; };
 		1610367020617BEC008AFDD0 /* AppRootViewController+Appearance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppRootViewController+Appearance.swift"; sourceTree = "<group>"; };
 		161285DD1DD1DA85004728E9 /* WireShareEngine.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WireShareEngine.framework; path = Carthage/Build/iOS/WireShareEngine.framework; sourceTree = "<group>"; };
 		161285E01DD201A1004728E9 /* Wire-iOS Share Extension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Wire-iOS Share Extension.entitlements"; sourceTree = "<group>"; };
@@ -3862,7 +3862,7 @@
 			children = (
 				8708C6811F50860100845C7D /* AccountView.swift */,
 				8745476A1E9E54E600C206E5 /* SelfProfileViewController.swift */,
-				1610366E20616EBC008AFDD0 /* SelfProfileVIewController+NewDeviceAlert.swift */,
+				1610366E20616EBC008AFDD0 /* SelfProfileViewController+NewDeviceAlert.swift */,
 				876EECB21F5078D200E269F3 /* AccountSelectorController.swift */,
 				8708C6801F50860100845C7D /* AccountSelectorView.swift */,
 				872E221F1F5EA4B6007729D4 /* ProfileView.swift */,
@@ -6861,7 +6861,7 @@
 				8F89141D1A9F287E0056AB0C /* ConversationListViewModel.m in Sources */,
 				BF10B58D1E6452B800E7036E /* ZMMessage+Likes.swift in Sources */,
 				D5F8BFF62007C2DE008F8C3D /* TeamInviteTopBar.swift in Sources */,
-				1610366F20616EBC008AFDD0 /* SelfProfileVIewController+NewDeviceAlert.swift in Sources */,
+				1610366F20616EBC008AFDD0 /* SelfProfileViewController+NewDeviceAlert.swift in Sources */,
 				87D5E43E1C3E78A000EB8289 /* ProfileClientViewController.swift in Sources */,
 				BFE277631D5B4FC50074DC6D /* ConversationContentViewController+MessageDeletion.swift in Sources */,
 				7C5836661FD5ABFE001CC843 /* TitleView.swift in Sources */,
