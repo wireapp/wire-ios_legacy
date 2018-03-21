@@ -343,6 +343,7 @@
 "content.system.renamed_conv.title.you" = "Du";
 
 "content.system.conversation.with_name.title" = "%@ hat die Unterhaltung begonnen";
+"content.system.conversation.with_name.title-you" = "Du hast die Unterhaltung begonnen";
 
 "content.system.conversation.with_name.participants" = "mit %@";
 

@@ -352,6 +352,7 @@
 "content.system.renamed_conv.title.you" = "You";
 
 "content.system.conversation.with_name.title" = "%@ started the conversation";
+"content.system.conversation.with_name.title-you" = "%@ started the conversation";
 
 "content.system.conversation.with_name.participants" = "with %@";
 
