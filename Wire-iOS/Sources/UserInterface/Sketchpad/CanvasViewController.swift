@@ -192,7 +192,7 @@ class CanvasViewController: UIViewController, UINavigationControllerDelegate {
             canvas.right == container.right
             
             toolbar.top == canvas.bottom
-            toolbar.bottom == container.bottom - UIScreen.safeArea.bottom
+            toolbar.bottom == container.bottom
             toolbar.left == container.left
             toolbar.right == container.right
         }
