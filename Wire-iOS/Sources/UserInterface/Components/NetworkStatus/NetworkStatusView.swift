@@ -137,6 +137,8 @@ class NetworkStatusView: UIView {
     private let offlineView: OfflineBar
     private var _state: NetworkStatusViewState = .online
 
+    private lazy var topMargin = UIScreen.hasNotch ? CGFloat(0) : CGFloat.NetworkStatusBar.topMargin
+
     public weak var delegate: NetworkStatusViewDelegate! {
         didSet {
             createConstraints()
@@ -194,7 +196,6 @@ class NetworkStatusView: UIView {
     }
 
     func createConstraints() {
-        let topMargin = UIScreen.hasNotch ? CGFloat.NetworkStatusBar.topMargin : CGFloat(0)
         let bottomMargin = delegate.bottomMargin
 
         constrain(self, offlineView, connectingView) { containerView, offlineView, connectingView in
@@ -273,6 +274,7 @@ class NetworkStatusView: UIView {
                   connectingViewHidden: Bool,
                   offlineViewHidden: Bool) {
         offlineViewBottomMargin?.constant = offlineBarState == .expanded ? -delegate.bottomMargin : 0
+        offlineViewTopMargin?.constant = offlineBarState == .expanded ? topMargin : 0
 
         connectingViewHeight?.constant = connectingViewHidden ? 0 : CGFloat.SyncBar.height
         connectingViewBottomMargin?.constant = connectingViewHidden ? 0 : -delegate.bottomMargin
