@@ -98,7 +98,7 @@ class AppRootViewController: UIViewController {
         overlayWindow.makeKeyAndVisible()
         mainWindow.makeKey()
 
-        configureAppearance()
+        type(of: self).configureAppearance()
         configureMediaManager()
 
         if let appGroupIdentifier = Bundle.main.appGroupIdentifier {
