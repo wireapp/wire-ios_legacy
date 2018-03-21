@@ -26,7 +26,6 @@ final class SignInViewControllerTests: XCTestCase {
     override func setUp() {
         super.setUp()
         sut = SignInViewController()
-        sut.viewDidLoad()
     }
     
     override func tearDown() {
@@ -37,9 +36,9 @@ final class SignInViewControllerTests: XCTestCase {
     func testThatTheAppWouldNotCrashAfterSignInByPhone(){
         // GIVEN
         ///TODO: test for case !hasAddedEmailAddress, hasAddedPhoneNumber
-
-        sut.presentedSignInViewController = sut.emailSignInViewControllerContainer
-        sut.present(sut.phoneSignInViewController)
+        let credentials = LoginCredentials(emailAddress: nil, phoneNumber: "fake number", password: nil)
+        sut.loginCredentials = credentials
+        sut.viewDidLoad()
 
         // WHEN
         sut.signInByPhone(nil)
