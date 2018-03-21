@@ -18,6 +18,7 @@
 
 
 #import "SignInViewController.h"
+#import "SignInViewController+internal.h"
 
 @import PureLayout;
 
@@ -34,7 +35,6 @@
 
 @interface SignInViewController () <PhoneSignInViewControllerDelegate>
 
-@property (nonatomic) PhoneSignInViewController *phoneSignInViewController;
 @property (nonatomic) EmailSignInViewController *emailSignInViewController;
 @property (nonatomic) UIView *viewControllerContainer;
 @property (nonatomic) UIView *buttonContainer;

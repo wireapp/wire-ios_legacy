@@ -17,12 +17,17 @@
 //
 
 #import "SignInViewController.h"
+//@class PhoneSignInViewController;
+#import "PhoneSignInViewController.h"
 
 @interface SignInViewController ()
 
 @property (nonatomic) UIViewController *emailSignInViewControllerContainer;
 @property (nonatomic) UIViewController *phoneSignInViewControllerContainer;
+
 @property (nonatomic) UIViewController *presentedSignInViewController;
+
+@property (nonatomic) PhoneSignInViewController *phoneSignInViewController;
 
 - (void)signInByPhone:(id)sender;
 - (void)signInByEmail:(id)sender;

@@ -116,6 +116,7 @@
 #import "StartUIViewController.h"
 #import "Button.h"
 #import "ViewControllerDismissable.h"
+#import "PhoneSignInViewController.h"
 
 // Helper objects
 #import "PushTransition.h"
