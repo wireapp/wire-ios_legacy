@@ -39,6 +39,10 @@ class MediaPlayerController: NSObject {
         self.playerRateObserver = KeyValueObserver.observe(player, keyPath: "rate", target: self, selector: #selector(playerRateChanged))
     }
 
+    func tearDown() {
+        delegate?.mediaPlayerWillBecomeInactive(self)
+    }
+
     deinit {
         delegate?.mediaPlayer(self, didChangeTo: MediaPlayerState.completed)
     }

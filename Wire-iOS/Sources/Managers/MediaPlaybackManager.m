@@ -126,6 +126,7 @@ NSString *const MediaPlaybackManagerPlayerStateChangedNotification = @"MediaPlay
             }
             
             self.activeMediaPlayer = mediaPlayer;
+            [self.changeObserver mediaPlaybackManager:self didStartMediaPlayer:mediaPlayer];
             break;
             
         case MediaPlayerStatePaused:
@@ -154,6 +155,12 @@ NSString *const MediaPlaybackManagerPlayerStateChangedNotification = @"MediaPlay
     
     [[NSNotificationCenter defaultCenter] postNotificationName:MediaPlaybackManagerPlayerStateChangedNotification
                                                         object:mediaPlayer];
+}
+
+- (void)mediaPlayerWillBecomeInactive:(id<MediaPlayer> _Nonnull)mediaPlayer {
+    if (self.activeMediaPlayer == mediaPlayer) {
+        [self.changeObserver mediaPlaybackManager:self didRemoveMediaPlayer:mediaPlayer];
+    }
 }
 
 @end

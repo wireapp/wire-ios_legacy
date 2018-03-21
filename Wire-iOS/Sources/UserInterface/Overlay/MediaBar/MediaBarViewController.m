@@ -30,7 +30,7 @@
 
 
 
-@interface MediaBarViewController ()
+@interface MediaBarViewController () <MediaPlaybackManagerChangeObserver>
 
 @property (nonatomic) MediaPlaybackManager *mediaPlaybackManager;
 @property (nonatomic, readonly) MediaBar *mediaBarView;
@@ -56,6 +56,7 @@
     
     if (self) {
         _mediaPlaybackManager = mediaPlaybackManager;
+        _mediaPlaybackManager.changeObserver = self;
     }
     
     return self;
@@ -74,18 +75,6 @@
     [self.mediaBarView.closeButton addTarget:self action:@selector(stop:) forControlEvents:UIControlEventTouchUpInside];
     
     [self updatePlayPauseButton];
-    
-    self.mediaPlaybackStateObserver = [KeyValueObserver observeObject:self.mediaPlaybackManager
-                                                              keyPath:@"activeMediaPlayer.state"
-                                                               target:self
-                                                             selector:@selector(mediaPlaybackStateChanged:)
-                                                              options:NSKeyValueObservingOptionInitial | NSKeyValueObservingOptionNew];
-    
-    self.mediaTitleObserver = [KeyValueObserver observeObject:self.mediaPlaybackManager
-                                                      keyPath:@"activeMediaPlayer.title"
-                                                       target:self
-                                                     selector:@selector(mediaTitleChanged:)
-                                                      options:NSKeyValueObservingOptionInitial | NSKeyValueObservingOptionNew];
 }
 
 - (MediaBar *)mediaBarView
@@ -130,6 +119,21 @@
 
 #pragma mark - MediaPlaybackStateObserver
 
+- (void)registerObservers
+{
+    self.mediaPlaybackStateObserver = [KeyValueObserver observeObject:self.mediaPlaybackManager
+                                                              keyPath:@"activeMediaPlayer.state"
+                                                               target:self
+                                                             selector:@selector(mediaPlaybackStateChanged:)
+                                                              options:NSKeyValueObservingOptionInitial | NSKeyValueObservingOptionNew];
+
+    self.mediaTitleObserver = [KeyValueObserver observeObject:self.mediaPlaybackManager
+                                                      keyPath:@"activeMediaPlayer.title"
+                                                       target:self
+                                                     selector:@selector(mediaTitleChanged:)
+                                                      options:NSKeyValueObservingOptionOld | NSKeyValueObservingOptionNew];
+}
+
 - (void)mediaPlaybackStateChanged:(NSDictionary *)change
 {
     [self updatePlayPauseButton];
@@ -140,6 +144,21 @@
     if (self.mediaPlaybackManager.activeMediaPlayer) {
         self.mediaBarView.titleLabel.text = [self.mediaPlaybackManager.activeMediaPlayer.title uppercasedWithCurrentLocale];
     }
+}
+
+#pragma mark - MediaPlaybackManagerChangeObserver
+
+/// A media player did become active.
+- (void)mediaPlaybackManager:(MediaPlaybackManager *)mediaPlaybackManager didStartMediaPlayer:(id<MediaPlayer>)mediaPlayer
+{
+    [self registerObservers];
+}
+
+/// The media player did become inactive.
+- (void)mediaPlaybackManager:(MediaPlaybackManager *)mediaPlaybackManager didRemoveMediaPlayer:(id<MediaPlayer>)mediaPlayer
+{
+    self.mediaTitleObserver = nil;
+    self.mediaPlaybackStateObserver = nil;
 }
 
 @end
