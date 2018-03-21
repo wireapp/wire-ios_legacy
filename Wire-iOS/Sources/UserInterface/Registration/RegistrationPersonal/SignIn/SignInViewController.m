@@ -97,7 +97,7 @@
     if (hasAddedEmailAddress || ! hasAddedPhoneNumber) {
         [self presentSignInViewController:self.emailSignInViewControllerContainer];
     } else {
-        [self presentSignInViewController:self.phoneSignInViewController];
+        [self presentSignInViewController:self.phoneSignInViewControllerContainer];
     }
     
     self.view.opaque = NO;
@@ -188,11 +188,6 @@
     toViewController.view.translatesAutoresizingMaskIntoConstraints = YES;
     toViewController.view.frame = fromViewController.view.frame;
     [toViewController.view layoutIfNeeded];
-
-    ///TODO: check parent VC at this point
-//    if (fromViewController.parentViewController != toViewController.parentViewController) {
-//        return;
-//    }
 
     [self transitionFromViewController:fromViewController
                       toViewController:toViewController

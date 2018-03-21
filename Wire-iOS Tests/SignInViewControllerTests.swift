@@ -33,7 +33,7 @@ final class SignInViewControllerTests: XCTestCase {
         super.tearDown()
     }
 
-    func testThatTheAppWouldNotCrashAfterSignInByPhone(){
+    func testThatSignInViewControllerCanHandleTheCaseWithLoginCredentialsHasNilEmailButPhoneNumber(){
         // GIVEN
         ///TODO: test for case !hasAddedEmailAddress, hasAddedPhoneNumber
         let credentials = LoginCredentials(emailAddress: nil, phoneNumber: "fake number", password: nil)
@@ -44,6 +44,6 @@ final class SignInViewControllerTests: XCTestCase {
         sut.signInByPhone(nil)
 
         // THEN
-        XCTAssertTrue(true)
+        XCTAssertEqual(sut.presentedSignInViewController, sut.phoneSignInViewControllerContainer)
     }
 }
