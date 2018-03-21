@@ -82,6 +82,7 @@
 #import "FormFlowViewController.h"
 #import "RegistrationStepViewController.h"
 #import "SignInViewController.h"
+#import "SignInViewController+internal.h"
 #import "NavigationController.h"
 #import "ConversationInputBarViewController.h"
 #import "ConversationInputBarViewController+Files.h"

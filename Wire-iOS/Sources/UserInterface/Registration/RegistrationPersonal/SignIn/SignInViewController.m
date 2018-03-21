@@ -37,8 +37,6 @@
 @property (nonatomic) PhoneSignInViewController *phoneSignInViewController;
 @property (nonatomic) EmailSignInViewController *emailSignInViewController;
 @property (nonatomic) UIViewController *presentedSignInViewController;
-@property (nonatomic) UIViewController *emailSignInViewControllerContainer;
-@property (nonatomic) UIViewController *phoneSignInViewControllerContainer;
 @property (nonatomic) UIView *viewControllerContainer;
 @property (nonatomic) UIView *buttonContainer;
 @property (nonatomic) Button *emailSignInButton;
@@ -187,11 +185,16 @@
     
     [fromViewController willMoveToParentViewController:nil];
     [self addChildViewController:toViewController];
-    
+
     toViewController.view.translatesAutoresizingMaskIntoConstraints = YES;
     toViewController.view.frame = fromViewController.view.frame;
     [toViewController.view layoutIfNeeded];
-    
+
+    ///TODO: check parent VC at this point
+//    if (fromViewController.parentViewController != toViewController.parentViewController) {
+//        return;
+//    }
+
     [self transitionFromViewController:fromViewController
                       toViewController:toViewController
                               duration:0.35 options:UIViewAnimationOptionTransitionCrossDissolve
