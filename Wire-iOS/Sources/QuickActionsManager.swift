@@ -43,6 +43,10 @@ public final class QuickActionsManager: NSObject {
     
     
     func updateQuickActions() {
+        guard DeveloperMenuState.developerMenuEnabled() else {
+            return
+        }
+        
         var allItems: [UIApplicationShortcutItem] = []
         
         if #available(iOS 9.1, *) {

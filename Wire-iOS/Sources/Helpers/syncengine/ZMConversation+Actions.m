@@ -20,6 +20,7 @@
 #import "ZMConversation+Actions.h"
 #import "ZMUser+Additions.h"
 #import "Wire-Swift.h"
+#import "DeveloperMenuState.h"
 
 NSString * const ConversationActionDelete = @"ConversationActionDelete";
 NSString * const ConversationActionLeave = @"ConversationActionLeave";
@@ -103,10 +104,10 @@ NSString * const ConversationActionMarkAsUnread = @"ConversationActionMarkAsUnre
     }
 
     NSArray *unreadMessages = self.unreadMessages;
-    if (unreadMessages.count > 0) {
+    if (DeveloperMenuState.developerMenuEnabled && unreadMessages.count > 0) {
         [actions addObject:ConversationActionMarkAsRead];
     }
-    else if (unreadMessages.count == 0 && [self canMarkAsUnread]) {
+    else if (DeveloperMenuState.developerMenuEnabled && unreadMessages.count == 0 && [self canMarkAsUnread]) {
         [actions addObject:ConversationActionMarkAsUnread];
     }
     

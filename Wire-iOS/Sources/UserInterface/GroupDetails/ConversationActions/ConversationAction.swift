@@ -67,9 +67,9 @@ extension ZMConversation {
     
     private func availableStandardActions() -> [Action] {
         var actions = [Action]()
-        if unreadMessages.count > 0 {
+        if DeveloperMenuState.developerMenuEnabled() && unreadMessages.count > 0 {
             actions.append(.markRead)
-        } else if unreadMessages.count == 0 && canMarkAsUnread() {
+        } else if DeveloperMenuState.developerMenuEnabled() && unreadMessages.count == 0 && canMarkAsUnread() {
             actions.append(.markUnread)
         }
         
