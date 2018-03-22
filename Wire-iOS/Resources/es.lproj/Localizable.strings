@@ -18,9 +18,14 @@
 
 
 "general.ok" = "De acuerdo";
-"general.next" = "Next";
+"general.next" = "Siguiente";
 "general.cancel" = "Cancelar";
+"general.close" = "Cerrar";
 "general.open_settings" = "Abrir ajustes de Wire";
+"general.edit" = "Editar";
+"general.done" = "Listo";
+
+"general.guest-room-name" = "Guest room";
 
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -39,11 +44,11 @@
 "peoplepicker.group.title.singular" = "Añadir contactos";
 "peoplepicker.group.title.plural" = "Add People (%d)";
 "peoplepicker.group.skip" = "Skip";
-"peoplepicker.group.done" = "Done";
-"peoplepicker.group.create" = "Create";
+"peoplepicker.group.done" = "Listo";
+"peoplepicker.group.create" = "Crear";
 
-"peoplepicker.header.people" = "People";
-"peoplepicker.header.services" = "Services";
+"peoplepicker.header.people" = "Personas";
+"peoplepicker.header.services" = "Servicios";
 "peoplepicker.services.create_conversation.item" = "Create a new conversation";
 "peoplepicker.services.add_service.button" = "Add service";
 "peoplepicker.services.add_service.error.title" = "The service can't be added";
@@ -75,9 +80,10 @@
 "peoplepicker.send_invitation.dialog.ok" = "OK";
 
 "peoplepicker.invite_more_people" = "Invitar a más contactos";
-"peoplepicker.invite_team_members" = "Invite people to join the team";
+"peoplepicker.invite_team_members" = "Invitar personas para unirse al equipo";
 "peoplepicker.quick-action.open-conversation" = "Abrir";
 "peoplepicker.quick-action.create-conversation" = "Crear grupo";
+"peoplepicker.quick-action.create-guest-room" = "Create guest room";
 
 "add_participants.all_contacts_added" = "Todos están aquí.";
 
@@ -93,7 +99,7 @@
 "contacts_ui.notification.invitation_failed" = "No se pudo enviar la invitación";
 "contacts_ui.title" = "Invitar contactos";
 
-"conversation_list.empty.all_archived.message" = "Everything archived";
+"conversation_list.empty.all_archived.message" = "Todo archivado";
 "conversation_list.empty.no_contacts.message" = "Start a conversation or\ncreate a group.";
 
 
@@ -236,7 +242,7 @@
 "conversation.input_bar.message_too_long.title" = "El mensaje es demasiado largo";
 "conversation.input_bar.message_too_long.message" = "Puede enviar mensajes de hasta %d caracteres.";
 
-"conversation.create.group_name.placeholder" = "Group name";
+"conversation.create.group_name.placeholder" = "Nombre del grupo";
 "conversation.create.guidance.empty" = "At least 1 character";
 "conversation.create.guidance.toolong" = "Demasiados caracteres";
 "conversation.create.toggle.title" = "Allow guests";
@@ -314,6 +320,9 @@
 "content.system.conversation.team.member-leave" = "%@ fue eliminado del equipo.";
 "content.system.conversation.guest.joined" = "%@ joined";
 
+"content.system.conversation.invite.title" = "People outside your team can join this conversation.";
+"content.system.conversation.invite.button" = "Invitar contactos";
+
 "content.system.other_renamed_conv_to_nothing" = "%@ eliminó el nombre del chat";
 "content.system.you_renamed_conv_to_nothing" = "Eliminaste el nombre del chat";
 "content.system.pending_message_timestamp" = "Enviando …";
@@ -343,6 +352,7 @@
 "content.system.renamed_conv.title.you" = "Tú";
 
 "content.system.conversation.with_name.title" = "%@ started the conversation";
+"content.system.conversation.with_name.title-you" = "%@ started the conversation";
 
 "content.system.conversation.with_name.participants" = "with %@";
 
@@ -397,12 +407,14 @@
 "content.message.go_to_conversation" = "Mostrar en chat";
 "content.message.forward.to" = "Buscar ...";
 "content.message.open" = "Abrir";
+"content.message.copy" = "Copy";
 
 "content.reactions_list.likers" = "Le ha gustado a";
 
 "content.file.too_big" = "Puedes enviar archivos de hasta %@";
 // Someone pinged
-"content.ping.text" = "%1$@ hizo ping";
+"content.ping.text" = "%@ pinged";
+"content.ping.text-you" = "%@ pinged";
 
 // Current user pinged
 "content.ping.text.you" = "Tú";
@@ -455,7 +467,7 @@
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Profile and Participants
 
-"participants.add_people_button_title" = "Add";
+"participants.add_people_button_title" = "Añadir";
 "participants.avatar.guest.title" = "Invitado";
 
 "participants.title" = "Detalles";
@@ -473,6 +485,10 @@
 "meta.menu.silence.unmute" = "No silenciar";
 "meta.menu.cancel" = "Cancelar";
 "meta.menu.cancel_connection_request" = "Cancelar solicitud";
+"meta.menu.mark_unread" = "Mark as Unread";
+"meta.menu.mark_read" = "Mark as Read";
+"shortcut.mark_all_as_read.title" = "Mark All as Read";
+
 
 // Delete conversation
 "meta.menu.delete_content.dialog_title" = "¿Eliminar chat?";
@@ -719,7 +735,7 @@
 "self.settings.sound_menu.ping.title" = "Ping";
 "self.settings.sound_menu.ringtones.title" = "Tonos de llamada";
 "self.settings.sound_menu.sounds.wire_sound" = "Wire";
-"self.settings.sound_menu.sounds.none" = "Ninguna";
+"self.settings.sound_menu.sounds.none" = "Ninguno";
 
 "self.settings.callkit.title" = "Notificaciones de (vídeo)llamadas";
 "self.settings.callkit.caption" = "A pantalla completa";
@@ -879,19 +895,19 @@
 
 // Invite Team Members
 
-"team.invite.header.title" = "Build your team";
-"team.invite.header.subtitle" = "Invite your colleagues to join.";
+"team.invite.header.title" = "Crear tu equipo";
+"team.invite.header.subtitle" = "Invite a sus colegas a unirse.";
 "team.invite.textfield.placeholder" = "colleague@yourcompany.com";
 "team.invite.textfield.accesibility" = "Enter e-mail address for colleague to invite.";
 "team.invite.learn_more.title" = "Más información";
 "team.invite.top_bar.skip" = "Skip";
-"team.invite.top_bar.done" = "Done";
+"team.invite.top_bar.done" = "Listo";
 
 // Team Invite Errors
 "team.invite.error.generic" = "Algo salió mal. Por favor, inténtalo de nuevo";
 "team.invite.error.already_registered" = "This email address is already in use";
-"team.invite.error.already_invited" = "This email has already been invited";
-"team.invite.error.too_many_invitations" = "The maximum number of invitations has been sent";
+"team.invite.error.already_invited" = "Este correo electrónico ya ha sido invitado";
+"team.invite.error.too_many_invitations" = "Número máximo de invitaciones enviadas";
 "team.invite.error.no_internet" = "No internet connection";
 
 // Guest Room
@@ -903,8 +919,23 @@
 "guest_room.revoke_link.message" = "New guests will not be able to join with this link. Current guests will still have access.";
 "guest_room.revoke_link.action" = "Revoke Link";
 
-"guest_room.error.generic.title" = "Something went wrong";
+"guest_room.error.generic.title" = "Algo salió mal";
 "guest_room.error.generic.message" = "Check your connection and try again";
+
+"guest_room.link.header.title" = "Invite others with a link";
+"guest_room.link.header.subtitle" = "Anyone with the link can join the conversation, even if they don't have Wire.";
+
+"guest_room.link.button.title" = "Create Link";
+
+"guest_room.actions.copy_link" = "Copy Link";
+"guest_room.actions.copied_link" = "Link Copied!";
+"guest_room.actions.share_link" = "Share Link";
+"guest_room.actions.revoke_link" = "Revoke Link";
+
+"guest_room.share.message" = "Join me in a conversation on Wire:\n%@";
+
+"guest_room.expiration.hours_left" = "%@h left";
+"guest_room.expiration.less_than_minutes_left" = "Less than %@m left";
 
 // Registration
 
@@ -949,7 +980,7 @@
 "registration.terms_of_use.terms.link" = "Términos de uso";
 "registration.terms_of_use.agree" = "De acuerdo";
 
-"registration.terms_of_use.terms.title" = "Términos de uso";
+"registration.terms_of_use.terms.title" = "Términos de Uso";
 "registration.terms_of_use.terms.message" = "Por favor, acepta los Términos de Servicio.";
 "registration.terms_of_use.terms.view" = "Ver";
 "registration.terms_of_use.accept" = "Aceptar";
@@ -1126,10 +1157,21 @@
 "availability.message.cancel" = "Cancelar";
 "availability.message.set_status" = "Establecer estado";
 
-"availability.none" = "Ninguna";
+"availability.none" = "Ninguno";
 "availability.available" = "Disponible";
 "availability.away" = "Ausente";
 "availability.busy" = "Ocupado";
 "availability.available.placeholder" = "%@ está disponible";
 "availability.away.placeholder" = "%@ está ausente";
 "availability.busy.placeholder" = "%@ está ocupado";
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Call Quality Survey
+
+"calling.quality_survey.title" = "Call Quality Feedback";
+"calling.quality_survey.question" = "How do you rate the overall quality of the call?";
+"calling.quality_survey.answer.1" = "Bad";
+"calling.quality_survey.answer.2" = "Poor";
+"calling.quality_survey.answer.3" = "Fair";
+"calling.quality_survey.answer.4" = "Good";
+"calling.quality_survey.answer.5" = "Excellent";

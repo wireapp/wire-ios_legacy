@@ -20,7 +20,12 @@
 "general.ok" = "OK";
 "general.next" = "Próximo";
 "general.cancel" = "Cancelar";
+"general.close" = "Fechar";
 "general.open_settings" = "Abrir Ajustes do Wire";
+"general.edit" = "Editar";
+"general.done" = "Pronto";
+
+"general.guest-room-name" = "Group de convidados";
 
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -78,6 +83,7 @@
 "peoplepicker.invite_team_members" = "Convide pessoas para entrar na equipe";
 "peoplepicker.quick-action.open-conversation" = "Abrir";
 "peoplepicker.quick-action.create-conversation" = "Criar grupo";
+"peoplepicker.quick-action.create-guest-room" = "Criar grupo de convidados";
 
 "add_participants.all_contacts_added" = "Todo mundo está aqui.";
 
@@ -256,7 +262,7 @@
 "camera_access.denied.open_settings" = "Habilite nas configurações do Wire";
 
 // Camera and photos access, keyboard
-"keyboard_photos_access.denied.keyboard.settings" = "Ajustes";
+"keyboard_photos_access.denied.keyboard.settings" = "Configurações";
 "keyboard_photos_access.denied.keyboard.camera_and_photos" = "Wire precisa acessar sua \ncâmera e fotos."; // split text on two lines for a better text balance
 "keyboard_photos_access.denied.keyboard.photos" = "Wire precisa acessar suas fotos.";
 "keyboard_photos_access.denied.keyboard.camera" = "Wire precisa acessar sua câmera.";
@@ -314,6 +320,9 @@
 "content.system.conversation.team.member-leave" = "%@ foi removido da equipe.";
 "content.system.conversation.guest.joined" = "%@ juntou-se";
 
+"content.system.conversation.invite.title" = "Pessoas de fora da sua equipe podem se juntar a esta conversa.";
+"content.system.conversation.invite.button" = "Convidar pessoas";
+
 "content.system.other_renamed_conv_to_nothing" = "%@ removeu o nome da conversa";
 "content.system.you_renamed_conv_to_nothing" = "Você removeu o nome da conversa";
 "content.system.pending_message_timestamp" = "Enviando…";
@@ -343,6 +352,7 @@
 "content.system.renamed_conv.title.you" = "Você";
 
 "content.system.conversation.with_name.title" = "%@ iniciou a conversa";
+"content.system.conversation.with_name.title-you" = "%@ iniciou a conversa";
 
 "content.system.conversation.with_name.participants" = "com %@";
 
@@ -397,12 +407,14 @@
 "content.message.go_to_conversation" = "Exibir";
 "content.message.forward.to" = "Procurar…";
 "content.message.open" = "Abrir";
+"content.message.copy" = "Copiar";
 
 "content.reactions_list.likers" = "Curtido por";
 
 "content.file.too_big" = "Você pode enviar arquivos de até %@";
 // Someone pinged
-"content.ping.text" = "%1$@ pingou";
+"content.ping.text" = "%@ pingou";
+"content.ping.text-you" = "%@ pingou";
 
 // Current user pinged
 "content.ping.text.you" = "Você";
@@ -473,6 +485,10 @@
 "meta.menu.silence.unmute" = "Notificar";
 "meta.menu.cancel" = "Cancelar";
 "meta.menu.cancel_connection_request" = "Cancelar pedido";
+"meta.menu.mark_unread" = "Mark as Unread";
+"meta.menu.mark_read" = "Mark as Read";
+"shortcut.mark_all_as_read.title" = "Mark All as Read";
+
 
 // Delete conversation
 "meta.menu.delete_content.dialog_title" = "Excluir conteúdo?";
@@ -808,7 +824,7 @@
 "self.settings.technical_report.mail.subject" = "Relatório de Chamadas do Wire";
 "self.settings.technical_report.include_log" = "Incluir o log detalhado";
 "self.settings.technical_report.privacy_warning" = "Registros detalhados podem conter dados pessoais";
-"self.settings.technical_report.no_mail_alert" = "No mail client detected. Tap \"OK\" and send logs manually to: ";
+"self.settings.technical_report.no_mail_alert" = "Nenhum cliente de e-mail detectado. Toque em \"OK\" e envie os logs manualmente para: ";
 
 // Password reset
 "self.settings.password_reset_menu.title" = "Redefinir senha";
@@ -888,7 +904,7 @@
 "team.invite.top_bar.done" = "Pronto";
 
 // Team Invite Errors
-"team.invite.error.generic" = "Algo deu errado, por favor tente novamente";
+"team.invite.error.generic" = "Algo deu errado, por favor, tente de novo";
 "team.invite.error.already_registered" = "Esse endereço de e-mail já está sendo usado";
 "team.invite.error.already_invited" = "Este e-mail já foi convidado";
 "team.invite.error.too_many_invitations" = "O número máximo de convites foi enviado";
@@ -903,8 +919,23 @@
 "guest_room.revoke_link.message" = "Novos convidados não será capazes de juntar-se com este link. Os convidados atuais ainda terão acesso.";
 "guest_room.revoke_link.action" = "Desativar Link";
 
-"guest_room.error.generic.title" = "Something went wrong";
-"guest_room.error.generic.message" = "Check your connection and try again";
+"guest_room.error.generic.title" = "Algo deu errado";
+"guest_room.error.generic.message" = "Verifique sua conexão e tente novamente";
+
+"guest_room.link.header.title" = "Convide outros com um link";
+"guest_room.link.header.subtitle" = "Anyone with the link can join the conversation, even if they don't have Wire.";
+
+"guest_room.link.button.title" = "Criar Link";
+
+"guest_room.actions.copy_link" = "Copiar link";
+"guest_room.actions.copied_link" = "Link Copiado!";
+"guest_room.actions.share_link" = "Compartilhar Link";
+"guest_room.actions.revoke_link" = "Desativar Link";
+
+"guest_room.share.message" = "Junte-se a mim em uma conversa no Wire:\n%@";
+
+"guest_room.expiration.hours_left" = "%@h saiu";
+"guest_room.expiration.less_than_minutes_left" = "Menos de %@m restantes";
 
 // Registration
 
@@ -1133,3 +1164,14 @@
 "availability.available.placeholder" = "%@ está disponível";
 "availability.away.placeholder" = "%@ está ausente";
 "availability.busy.placeholder" = "%@ está ocupado";
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Call Quality Survey
+
+"calling.quality_survey.title" = "Call Quality Feedback";
+"calling.quality_survey.question" = "Como você avalia a qualidade da chamada em geral?";
+"calling.quality_survey.answer.1" = "Muito Ruim";
+"calling.quality_survey.answer.2" = "Ruim";
+"calling.quality_survey.answer.3" = "Razoável";
+"calling.quality_survey.answer.4" = "Boa";
+"calling.quality_survey.answer.5" = "Excelente";

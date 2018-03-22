@@ -18,9 +18,14 @@
 
 
 "general.ok" = "Tamam";
-"general.next" = "Next";
+"general.next" = "İleri";
 "general.cancel" = "İptal";
+"general.close" = "Kapat";
 "general.open_settings" = "Wire Ayarlarını Aç";
+"general.edit" = "Düzenle";
+"general.done" = "Yapıldı";
+
+"general.guest-room-name" = "Guest room";
 
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -39,11 +44,11 @@
 "peoplepicker.group.title.singular" = "Kişi Ekle";
 "peoplepicker.group.title.plural" = "Add People (%d)";
 "peoplepicker.group.skip" = "Skip";
-"peoplepicker.group.done" = "Done";
-"peoplepicker.group.create" = "Create";
+"peoplepicker.group.done" = "Yapıldı";
+"peoplepicker.group.create" = "Oluştur";
 
-"peoplepicker.header.people" = "People";
-"peoplepicker.header.services" = "Services";
+"peoplepicker.header.people" = "İnsanlar";
+"peoplepicker.header.services" = "Servisler";
 "peoplepicker.services.create_conversation.item" = "Create a new conversation";
 "peoplepicker.services.add_service.button" = "Add service";
 "peoplepicker.services.add_service.error.title" = "The service can't be added";
@@ -78,6 +83,7 @@
 "peoplepicker.invite_team_members" = "Invite people to join the team";
 "peoplepicker.quick-action.open-conversation" = "Aç";
 "peoplepicker.quick-action.create-conversation" = "Grup oluştur";
+"peoplepicker.quick-action.create-guest-room" = "Create guest room";
 
 "add_participants.all_contacts_added" = "Herkes burada.";
 
@@ -93,7 +99,7 @@
 "contacts_ui.notification.invitation_failed" = "Davet gönderilirken hata oluştu";
 "contacts_ui.title" = "İnsanları davet et";
 
-"conversation_list.empty.all_archived.message" = "Everything archived";
+"conversation_list.empty.all_archived.message" = "Her şey arşivlendi";
 "conversation_list.empty.no_contacts.message" = "Start a conversation or\ncreate a group.";
 
 
@@ -236,7 +242,7 @@
 "conversation.input_bar.message_too_long.title" = "Mesaj çok uzun";
 "conversation.input_bar.message_too_long.message" = "En fazla %d karakterlik mesajlar gönderebilirsiniz.";
 
-"conversation.create.group_name.placeholder" = "Group name";
+"conversation.create.group_name.placeholder" = "Grup adı";
 "conversation.create.guidance.empty" = "At least 1 character";
 "conversation.create.guidance.toolong" = "Çok fazla karakter";
 "conversation.create.toggle.title" = "Allow guests";
@@ -314,6 +320,9 @@
 "content.system.conversation.team.member-leave" = "%@ takımdan çıkarıldı.";
 "content.system.conversation.guest.joined" = "%@ joined";
 
+"content.system.conversation.invite.title" = "People outside your team can join this conversation.";
+"content.system.conversation.invite.button" = "İnsanları davet et";
+
 "content.system.other_renamed_conv_to_nothing" = "%@ konuşmanın adını kaldırdı";
 "content.system.you_renamed_conv_to_nothing" = "Bu konuşmadının adını kaldırdınız";
 "content.system.pending_message_timestamp" = "Gönderiliyor…";
@@ -343,6 +352,7 @@
 "content.system.renamed_conv.title.you" = "Sen";
 
 "content.system.conversation.with_name.title" = "%@ started the conversation";
+"content.system.conversation.with_name.title-you" = "%@ started the conversation";
 
 "content.system.conversation.with_name.participants" = "with %@";
 
@@ -397,12 +407,14 @@
 "content.message.go_to_conversation" = "Göster";
 "content.message.forward.to" = "Ara…";
 "content.message.open" = "Aç";
+"content.message.copy" = "Copy";
 
 "content.reactions_list.likers" = "Beğenen";
 
 "content.file.too_big" = "En fazla %@ dosya yükleyebilirsin";
 // Someone pinged
-"content.ping.text" = "%1$@ pingledi";
+"content.ping.text" = "%@ pinged";
+"content.ping.text-you" = "%@ pinged";
 
 // Current user pinged
 "content.ping.text.you" = "Sen";
@@ -455,7 +467,7 @@
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Profile and Participants
 
-"participants.add_people_button_title" = "Add";
+"participants.add_people_button_title" = "Ekle";
 "participants.avatar.guest.title" = "Misafir";
 
 "participants.title" = "Ayrıntılar";
@@ -473,6 +485,10 @@
 "meta.menu.silence.unmute" = "Sesi aç";
 "meta.menu.cancel" = "İptal";
 "meta.menu.cancel_connection_request" = "İsteği İptal Et";
+"meta.menu.mark_unread" = "Mark as Unread";
+"meta.menu.mark_read" = "Mark as Read";
+"shortcut.mark_all_as_read.title" = "Mark All as Read";
+
 
 // Delete conversation
 "meta.menu.delete_content.dialog_title" = "İçerik silinsin?";
@@ -879,13 +895,13 @@
 
 // Invite Team Members
 
-"team.invite.header.title" = "Build your team";
-"team.invite.header.subtitle" = "Invite your colleagues to join.";
+"team.invite.header.title" = "Takımını kur";
+"team.invite.header.subtitle" = "Katılmaları için iş arkadaşlarınızı davet edin.";
 "team.invite.textfield.placeholder" = "colleague@yourcompany.com";
 "team.invite.textfield.accesibility" = "Enter e-mail address for colleague to invite.";
 "team.invite.learn_more.title" = "Daha fazla bilgi";
 "team.invite.top_bar.skip" = "Skip";
-"team.invite.top_bar.done" = "Done";
+"team.invite.top_bar.done" = "Yapıldı";
 
 // Team Invite Errors
 "team.invite.error.generic" = "Bir şeyler ters gitti, lütfen tekrar deneyin";
@@ -903,8 +919,23 @@
 "guest_room.revoke_link.message" = "New guests will not be able to join with this link. Current guests will still have access.";
 "guest_room.revoke_link.action" = "Revoke Link";
 
-"guest_room.error.generic.title" = "Something went wrong";
+"guest_room.error.generic.title" = "Bir şeyler yanlış gitti";
 "guest_room.error.generic.message" = "Check your connection and try again";
+
+"guest_room.link.header.title" = "Invite others with a link";
+"guest_room.link.header.subtitle" = "Anyone with the link can join the conversation, even if they don't have Wire.";
+
+"guest_room.link.button.title" = "Create Link";
+
+"guest_room.actions.copy_link" = "Copy Link";
+"guest_room.actions.copied_link" = "Link Copied!";
+"guest_room.actions.share_link" = "Share Link";
+"guest_room.actions.revoke_link" = "Revoke Link";
+
+"guest_room.share.message" = "Join me in a conversation on Wire:\n%@";
+
+"guest_room.expiration.hours_left" = "%@h left";
+"guest_room.expiration.less_than_minutes_left" = "Less than %@m left";
 
 // Registration
 
@@ -1127,9 +1158,20 @@
 "availability.message.set_status" = "Bir durum ayarlayın";
 
 "availability.none" = "Hiçbiri";
-"availability.available" = "Müsait";
+"availability.available" = "Alınabilir";
 "availability.away" = "Uzakta";
 "availability.busy" = "Meşgul";
 "availability.available.placeholder" = "%@ müsait";
 "availability.away.placeholder" = "%@ uzakta";
 "availability.busy.placeholder" = "%@ meşgul";
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Call Quality Survey
+
+"calling.quality_survey.title" = "Call Quality Feedback";
+"calling.quality_survey.question" = "How do you rate the overall quality of the call?";
+"calling.quality_survey.answer.1" = "Bad";
+"calling.quality_survey.answer.2" = "Poor";
+"calling.quality_survey.answer.3" = "Fair";
+"calling.quality_survey.answer.4" = "Good";
+"calling.quality_survey.answer.5" = "Excellent";

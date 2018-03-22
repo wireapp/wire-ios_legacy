@@ -18,9 +18,14 @@
 
 
 "general.ok" = "OK";
-"general.next" = "Next";
+"general.next" = "次へ";
 "general.cancel" = "キャンセル";
+"general.close" = "閉じる";
 "general.open_settings" = "Wireの設定を開く";
+"general.edit" = "編集";
+"general.done" = "完了";
+
+"general.guest-room-name" = "Guest room";
 
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -38,14 +43,14 @@
 
 "peoplepicker.group.title.singular" = "友達を追加";
 "peoplepicker.group.title.plural" = "Add People (%d)";
-"peoplepicker.group.skip" = "Skip";
-"peoplepicker.group.done" = "Done";
-"peoplepicker.group.create" = "Create";
+"peoplepicker.group.skip" = "省略";
+"peoplepicker.group.done" = "完了";
+"peoplepicker.group.create" = "新規作成";
 
-"peoplepicker.header.people" = "People";
-"peoplepicker.header.services" = "Services";
-"peoplepicker.services.create_conversation.item" = "Create a new conversation";
-"peoplepicker.services.add_service.button" = "Add service";
+"peoplepicker.header.people" = "メンバー";
+"peoplepicker.header.services" = "サービス";
+"peoplepicker.services.create_conversation.item" = "会話を作成";
+"peoplepicker.services.add_service.button" = "サービスを追加";
 "peoplepicker.services.add_service.error.title" = "The service can't be added";
 "peoplepicker.services.add_service.error.default" = "The service is unavailable at the moment";
 "peoplepicker.services.add_service.error.full" = "The conversation is full";
@@ -75,9 +80,10 @@
 "peoplepicker.send_invitation.dialog.ok" = "OK";
 
 "peoplepicker.invite_more_people" = "さらに招待する";
-"peoplepicker.invite_team_members" = "Invite people to join the team";
+"peoplepicker.invite_team_members" = "チームに招待する";
 "peoplepicker.quick-action.open-conversation" = "開く";
 "peoplepicker.quick-action.create-conversation" = "グループを作成します";
+"peoplepicker.quick-action.create-guest-room" = "Create guest room";
 
 "add_participants.all_contacts_added" = "Everyone's here.";
 
@@ -93,7 +99,7 @@
 "contacts_ui.notification.invitation_failed" = "招待状を送信できませんでした";
 "contacts_ui.title" = "友達を招待する";
 
-"conversation_list.empty.all_archived.message" = "Everything archived";
+"conversation_list.empty.all_archived.message" = "全てアーカイブ済み";
 "conversation_list.empty.no_contacts.message" = "Start a conversation or\ncreate a group.";
 
 
@@ -191,7 +197,7 @@
 "conversation.status.you_left" = "あなたは退出しました";
 "conversation.status.started_conversation" = "%@ 会話を始めました";
 "conversation.status.removed_users" = "%@は%@を削除しました";
-"conversation.status.everyone_left" = "Everyone left";
+"conversation.status.everyone_left" = "全員退出しました";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Compose Entry Point
@@ -233,11 +239,11 @@
 "conversation.input_bar.shortcut.edit_last_message" = "Edit Last Message";
 "conversation.input_bar.shortcut.cancel_editing_message" = "キャンセル";
 
-"conversation.input_bar.message_too_long.title" = "Message too long";
+"conversation.input_bar.message_too_long.title" = "メッセージが長すぎます";
 "conversation.input_bar.message_too_long.message" = "You can send messages up to %d characters long.";
 
-"conversation.create.group_name.placeholder" = "Group name";
-"conversation.create.guidance.empty" = "At least 1 character";
+"conversation.create.group_name.placeholder" = "グループ名";
+"conversation.create.guidance.empty" = "１文字以上";
 "conversation.create.guidance.toolong" = "文字が多すぎます";
 "conversation.create.toggle.title" = "Allow guests";
 "conversation.create.toggle.subtitle" = "Open this conversation to people outside your team. You can always change it later.";
@@ -314,6 +320,9 @@
 "content.system.conversation.team.member-leave" = "%@ がチームから削除されました";
 "content.system.conversation.guest.joined" = "%@ joined";
 
+"content.system.conversation.invite.title" = "People outside your team can join this conversation.";
+"content.system.conversation.invite.button" = "友達を招待する";
+
 "content.system.other_renamed_conv_to_nothing" = "%@が会話の名前を削除しました";
 "content.system.you_renamed_conv_to_nothing" = "あなたは会話の名前を削除しました";
 "content.system.pending_message_timestamp" = "送信中…";
@@ -343,6 +352,7 @@
 "content.system.renamed_conv.title.you" = "あなた";
 
 "content.system.conversation.with_name.title" = "%@ started the conversation";
+"content.system.conversation.with_name.title-you" = "%@ started the conversation";
 
 "content.system.conversation.with_name.participants" = "with %@";
 
@@ -397,12 +407,14 @@
 "content.message.go_to_conversation" = "開く";
 "content.message.forward.to" = "検索...";
 "content.message.open" = "開く";
+"content.message.copy" = "Copy";
 
 "content.reactions_list.likers" = "いいね！しました";
 
 "content.file.too_big" = "%@までのファイルを送信できます。";
 // Someone pinged
-"content.ping.text" = "%1$@ pingしました";
+"content.ping.text" = "%@ pinged";
+"content.ping.text-you" = "%@ pinged";
 
 // Current user pinged
 "content.ping.text.you" = "あなた";
@@ -455,7 +467,7 @@
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Profile and Participants
 
-"participants.add_people_button_title" = "Add";
+"participants.add_people_button_title" = "追加します";
 "participants.avatar.guest.title" = "ゲスト";
 
 "participants.title" = "詳細";
@@ -473,10 +485,14 @@
 "meta.menu.silence.unmute" = "ミュート解除します。";
 "meta.menu.cancel" = "キャンセル";
 "meta.menu.cancel_connection_request" = "リクエストを取り消す";
+"meta.menu.mark_unread" = "Mark as Unread";
+"meta.menu.mark_read" = "Mark as Read";
+"shortcut.mark_all_as_read.title" = "Mark All as Read";
+
 
 // Delete conversation
 "meta.menu.delete_content.dialog_title" = "コンテンツを削除しますか?";
-"meta.menu.delete_content.dialog_message" = "This will clear the conversation history on all your devices.";
+"meta.menu.delete_content.dialog_message" = "あなたのすべてのデバイスから会話履歴をクリアします。";
 "meta.menu.delete_content.leave_as_well_message" = "会話からも退室する";
 "meta.menu.delete_content.button_cancel" = "キャンセル";
 "meta.menu.delete_content.button_delete" = "削除";
@@ -545,7 +561,7 @@
 
 "profile_view.accessibility.handle" = "ユーザーネーム";
 "profile_view.accessibility.name" = "Display name";
-"profile_view.accessibility.team_name" = "Team name";
+"profile_view.accessibility.team_name" = "チーム名";
 
 // Device list
 "profile.devices.title" = "デバイス";
@@ -614,7 +630,7 @@
 
 // Settings - top level
 "self.settings.create_team.title" = "新しいチームを作成";
-"self.settings.manage_team.title" = "Manage Team";
+"self.settings.manage_team.title" = "チームを管理する";
 "self.settings.add_team_or_account.title" = "New Team or Account";
 "self.settings.add_account.title" = "アカウントを追加";
 
@@ -780,7 +796,7 @@
 "self.settings.privacy_security.lock_cancelled.action" = "ロックを解除";
 
 "self.settings.privacy_security.disable_link_previews.title" = "Create Link Previews";
-"self.settings.privacy_security.disable_link_previews.footer" = "Previews may still be shown for links from other people.";
+"self.settings.privacy_security.disable_link_previews.footer" = "他ユーザーからのリンクがプレビュー表示されれます";
 
 "self.settings.privacy_analytics_menu.devices.title" = "デバイス";
 
@@ -829,7 +845,7 @@
 "name.guidance.toolong" = "文字が多すぎます";
 
 "email.placeholder" = "メール";
-"email.guidance.invalid" = "Invalid email address";
+"email.guidance.invalid" = "無効なメールアドレス";
 "email.guidance.tooshort" = "Email is too short";
 "email.guidance.toolong" = "文字が多すぎます";
 
@@ -839,21 +855,21 @@
 
 // Landing screen
 
-"landing.title" = "Secure messaging for everyone.";
-"landing.create_account.title" = "Create an account";
-"landing.create_account.subtitle" = "for personal use";
+"landing.title" = "全員にセキュアなメッセージングを提供します";
+"landing.create_account.title" = "アカウントを作成";
+"landing.create_account.subtitle" = "個人用途";
 "landing.create_team.title" = "新しいチームを作成";
-"landing.create_team.subtitle" = "for work";
-"landing.login.hints" = "Already have an account?";
-"landing.login.button.title" = "Log in";
+"landing.create_team.subtitle" = "業務用途";
+"landing.login.hints" = "既にアカウントをお持ちですか？";
+"landing.login.button.title" = "ログイン";
 
 // Create team
 
-"team.name.headline" = "Name your team";
-"team.name.subheadline" = "You can always change it later.";
+"team.name.headline" = "チーム名";
+"team.name.subheadline" = "後でいつでも変更することができます。";
 "team.name.textfield.placeholder" = "team name";
 "team.name.textfield.accessibility" = "Set team name";
-"team.name.whatiswireforteams" = "What is Wire for teams?";
+"team.name.whatiswireforteams" = "ワイヤでのチームとは何ですか？";
 
 "team.email.headline" = "Your account";
 "team.email.subheadline" = "Enter your work email address.";
@@ -862,9 +878,9 @@
 "team.email.button.learn_more" = "もっと知る";
 
 "team.activation_code.headline" = "You've got mail";
-"team.activation_code.subheadline" = "Enter the verification code we sent to %@.";
-"team.activation_code.button.resend" = "Resend code";
-"team.activation_code.button.change_email" = "Change email";
+"team.activation_code.subheadline" = "%@ に送信した認証コードを入力してください";
+"team.activation_code.button.resend" = "コードを再送する";
+"team.activation_code.button.change_email" = "メールアドレス変更";
 
 "team.full_name.headline" = "Your name";
 "team.full_name.textfield.placeholder" = "Full name";
@@ -879,18 +895,18 @@
 
 // Invite Team Members
 
-"team.invite.header.title" = "Build your team";
-"team.invite.header.subtitle" = "Invite your colleagues to join.";
+"team.invite.header.title" = "チームを作成します";
+"team.invite.header.subtitle" = "同僚を招待します";
 "team.invite.textfield.placeholder" = "colleague@yourcompany.com";
 "team.invite.textfield.accesibility" = "Enter e-mail address for colleague to invite.";
 "team.invite.learn_more.title" = "もっと知る";
-"team.invite.top_bar.skip" = "Skip";
-"team.invite.top_bar.done" = "Done";
+"team.invite.top_bar.skip" = "省略";
+"team.invite.top_bar.done" = "完了";
 
 // Team Invite Errors
 "team.invite.error.generic" = "問題が生じたようです。もう一度やり直してください。";
 "team.invite.error.already_registered" = "This email address is already in use";
-"team.invite.error.already_invited" = "This email has already been invited";
+"team.invite.error.already_invited" = "このメールアドレスは招待済みです";
 "team.invite.error.too_many_invitations" = "The maximum number of invitations has been sent";
 "team.invite.error.no_internet" = "No internet connection";
 
@@ -903,8 +919,23 @@
 "guest_room.revoke_link.message" = "New guests will not be able to join with this link. Current guests will still have access.";
 "guest_room.revoke_link.action" = "Revoke Link";
 
-"guest_room.error.generic.title" = "Something went wrong";
+"guest_room.error.generic.title" = "何か問題があります";
 "guest_room.error.generic.message" = "Check your connection and try again";
+
+"guest_room.link.header.title" = "Invite others with a link";
+"guest_room.link.header.subtitle" = "Anyone with the link can join the conversation, even if they don't have Wire.";
+
+"guest_room.link.button.title" = "Create Link";
+
+"guest_room.actions.copy_link" = "Copy Link";
+"guest_room.actions.copied_link" = "Link Copied!";
+"guest_room.actions.share_link" = "Share Link";
+"guest_room.actions.revoke_link" = "Revoke Link";
+
+"guest_room.share.message" = "Join me in a conversation on Wire:\n%@";
+
+"guest_room.expiration.hours_left" = "%@h left";
+"guest_room.expiration.less_than_minutes_left" = "Less than %@m left";
 
 // Registration
 
@@ -951,7 +982,7 @@
 
 "registration.terms_of_use.terms.title" = "利用規約";
 "registration.terms_of_use.terms.message" = "Please accept the Terms of Use to continue.";
-"registration.terms_of_use.terms.view" = "View";
+"registration.terms_of_use.terms.view" = "ビュー";
 "registration.terms_of_use.accept" = "承諾";
 
 "registration.email_flow.title" = "メールで登録する。";
@@ -1040,7 +1071,7 @@
 "error.user.registration_unknown_error" = "何か問題が起きたようです。もう一度やり直してください。";
 "error.user.device_deleted_remotely" = "別のデバイスからログアウトしました。";
 "error.user.last_identity_cant_be_deleted" = "メールまたは電話番号のいずれかを削除するためには、それらが登録されている必要があります。";
-"error.user.account_suspended" = "This account is no longer authorized to log in.";
+"error.user.account_suspended" = "このアカウントは、もはやログイン権限はありません";
 "error.user.account_limit_reached" = "You can't add more than 3 accounts.";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -1124,12 +1155,23 @@
 "compose.drafts.compose.dismiss.delete.action.title" = "削除";
 
 "availability.message.cancel" = "キャンセル";
-"availability.message.set_status" = "Set a status";
+"availability.message.set_status" = "ステータスを設定";
 
 "availability.none" = "なし";
-"availability.available" = "Available";
-"availability.away" = "Away";
-"availability.busy" = "Busy";
+"availability.available" = "利用できます";
+"availability.away" = "不在";
+"availability.busy" = "取り込み中";
 "availability.available.placeholder" = "%@ is available";
 "availability.away.placeholder" = "%@ is away";
 "availability.busy.placeholder" = "%@ is busy";
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Call Quality Survey
+
+"calling.quality_survey.title" = "Call Quality Feedback";
+"calling.quality_survey.question" = "How do you rate the overall quality of the call?";
+"calling.quality_survey.answer.1" = "Bad";
+"calling.quality_survey.answer.2" = "Poor";
+"calling.quality_survey.answer.3" = "Fair";
+"calling.quality_survey.answer.4" = "Good";
+"calling.quality_survey.answer.5" = "Excellent";

@@ -20,7 +20,12 @@
 "general.ok" = "OK";
 "general.next" = "Volgende";
 "general.cancel" = "Annuleer";
+"general.close" = "Sluiten";
 "general.open_settings" = "Open instellingen voor Wire";
+"general.edit" = "Bewerken";
+"general.done" = "Klaar";
+
+"general.guest-room-name" = "Gast gesprek";
 
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -40,10 +45,10 @@
 "peoplepicker.group.title.plural" = "Voeg personen (%d)";
 "peoplepicker.group.skip" = "Sla over";
 "peoplepicker.group.done" = "Klaar";
-"peoplepicker.group.create" = "Maak aan";
+"peoplepicker.group.create" = "Aanmaken";
 
-"peoplepicker.header.people" = "Personen";
-"peoplepicker.header.services" = "Diensten";
+"peoplepicker.header.people" = "Deelnemers";
+"peoplepicker.header.services" = "Services";
 "peoplepicker.services.create_conversation.item" = "Een nieuw gesprek beginnen";
 "peoplepicker.services.add_service.button" = "Service toevoegen";
 "peoplepicker.services.add_service.error.title" = "De service kan niet toegevoegd worden";
@@ -78,6 +83,7 @@
 "peoplepicker.invite_team_members" = "Nodig andere mensen uit voor het team";
 "peoplepicker.quick-action.open-conversation" = "Openen";
 "peoplepicker.quick-action.create-conversation" = "Groep creëren";
+"peoplepicker.quick-action.create-guest-room" = "Maak een nieuwe gast chat aan";
 
 "add_participants.all_contacts_added" = "Iedereen is hier.";
 
@@ -93,7 +99,7 @@
 "contacts_ui.notification.invitation_failed" = "Het versturen van de uitnodiging is mislukt";
 "contacts_ui.title" = "Nodig anderen uit";
 
-"conversation_list.empty.all_archived.message" = "Alles is gearchiveerd";
+"conversation_list.empty.all_archived.message" = "Alles gearchiveerd";
 "conversation_list.empty.no_contacts.message" = "Start een gesprek of maak een groep aan.";
 
 
@@ -239,10 +245,10 @@
 "conversation.create.group_name.placeholder" = "Groepsnaam";
 "conversation.create.guidance.empty" = "Minimaal 1 teken";
 "conversation.create.guidance.toolong" = "Te veel tekens";
-"conversation.create.toggle.title" = "Allow guests";
-"conversation.create.toggle.subtitle" = "Open this conversation to people outside your team. You can always change it later.";
+"conversation.create.toggle.title" = "Sta gasten toe";
+"conversation.create.toggle.subtitle" = "Laat mensen van buiten je team toe aan dit gesprek. Je kan dit later nog aanpassen.";
 
-"conversation.guests_present" = "Guests are present";
+"conversation.guests_present" = "Er zijn gasten in dit geprek";
 
 // Image confirmation dialogue
 "image_confirmer.confirm" = "OK";
@@ -314,6 +320,9 @@
 "content.system.conversation.team.member-leave" = "%@ was verwijderd van het team.";
 "content.system.conversation.guest.joined" = "%@ joined";
 
+"content.system.conversation.invite.title" = "People outside your team can join this conversation.";
+"content.system.conversation.invite.button" = "Nodig anderen uit";
+
 "content.system.other_renamed_conv_to_nothing" = "%@ verwijderde de naam van de conversatie";
 "content.system.you_renamed_conv_to_nothing" = "Je verwijderde de naam van de conversatie";
 "content.system.pending_message_timestamp" = "Verzenden…";
@@ -343,6 +352,7 @@
 "content.system.renamed_conv.title.you" = "Jij";
 
 "content.system.conversation.with_name.title" = "%@ begon een gesprek";
+"content.system.conversation.with_name.title-you" = "%@ begon een gesprek";
 
 "content.system.conversation.with_name.participants" = "met %@";
 
@@ -397,12 +407,14 @@
 "content.message.go_to_conversation" = "Tonen";
 "content.message.forward.to" = "Zoeken…";
 "content.message.open" = "Openen";
+"content.message.copy" = "Copy";
 
 "content.reactions_list.likers" = "Leuk gevonden door";
 
 "content.file.too_big" = "U kunt bestanden versturen tot %@";
 // Someone pinged
-"content.ping.text" = "%1$@ pinged";
+"content.ping.text" = "%@ pinged";
+"content.ping.text-you" = "%@ pinged";
 
 // Current user pinged
 "content.ping.text.you" = "Jij";
@@ -459,9 +471,9 @@
 "participants.avatar.guest.title" = "Gast";
 
 "participants.title" = "Beschrijving";
-"participants.section.participants" = "People (%d)";
+"participants.section.participants" = "Personen (%d)";
 "participants.section.services" = "Services (%d)";
-"participants.footer.add_title" = "Add Participants";
+"participants.footer.add_title" = "Deelnemers toevoegen";
 
 // Meta Menu
 "meta.menu.rename" = "Wijzig naam";
@@ -473,14 +485,18 @@
 "meta.menu.silence.unmute" = "Dempen opheffen";
 "meta.menu.cancel" = "Annuleer";
 "meta.menu.cancel_connection_request" = "Annuleer verzoek";
+"meta.menu.mark_unread" = "Mark as Unread";
+"meta.menu.mark_read" = "Mark as Read";
+"shortcut.mark_all_as_read.title" = "Mark All as Read";
+
 
 // Delete conversation
 "meta.menu.delete_content.dialog_title" = "Inhoud verwijderen?";
-"meta.menu.delete_content.dialog_message" = "This will clear the conversation history on all your devices.";
+"meta.menu.delete_content.dialog_message" = "Dit verwijdert de gesprek history van al je apparaten.";
 "meta.menu.delete_content.leave_as_well_message" = "Ook het gesprek verlaten";
 "meta.menu.delete_content.button_cancel" = "Annuleer";
 "meta.menu.delete_content.button_delete" = "Verwijderen";
-"meta.menu.delete_content.button_delete_and_leave" = "Delete and leave";
+"meta.menu.delete_content.button_delete_and_leave" = "Verwijder en verlaat";
 
 // Leave conversation
 "meta.leave_conversation_dialog_title" = "Gesprek verlaten?";
@@ -488,7 +504,7 @@
 "meta.leave_conversation.delete_content_as_well_message" = "Verwijder de inhoud ook";
 "meta.leave_conversation_button_cancel" = "Annuleer";
 "meta.leave_conversation_button_leave" = "Verlaten";
-"meta.leave_conversation_button_leave_and_delete" = "Leave and delete content";
+"meta.leave_conversation_button_leave_and_delete" = "Verlaat en verwijder inhoud";
 
 // Conversation Degraded (security level lowered)
 "meta.degraded.degradation_reason_message.singular" = "%@ is een ander apparaat gaan gebruiken.";
@@ -571,8 +587,8 @@
 "participants.services.remove_integration.button" = "verwijder integratie";
 
 // Group details
-"group_details.guest_options_cell.title" = "Guest Options";
-"group_details.guest_options_cell.enabled" = "On";
+"group_details.guest_options_cell.title" = "Gast opties";
+"group_details.guest_options_cell.enabled" = "Aan";
 "group_details.guest_options_cell.disabled" = "Uit";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -614,7 +630,7 @@
 
 // Settings - top level
 "self.settings.create_team.title" = "Creëer Team";
-"self.settings.manage_team.title" = "Beheer Team";
+"self.settings.manage_team.title" = "Beheer team";
 "self.settings.add_team_or_account.title" = "Nieuw Team of Account";
 "self.settings.add_account.title" = "Voeg een account toe";
 
@@ -808,7 +824,7 @@
 "self.settings.technical_report.mail.subject" = "Rapport over bellen met Wire";
 "self.settings.technical_report.include_log" = "Voeg gedetailleerd log toe";
 "self.settings.technical_report.privacy_warning" = "Gedetailleerde logs kunnen persoonlijke gegevens bevatten";
-"self.settings.technical_report.no_mail_alert" = "No mail client detected. Tap \"OK\" and send logs manually to: ";
+"self.settings.technical_report.no_mail_alert" = "Er is geen mail app gedetecteerd. Klik op 'OK' om de logs handmatig te versturen naar: ";
 
 // Password reset
 "self.settings.password_reset_menu.title" = "Herstel wachtwoord";
@@ -829,7 +845,7 @@
 "name.guidance.toolong" = "Te veel tekens";
 
 "email.placeholder" = "E-mail";
-"email.guidance.invalid" = "Ongeldig emailadres";
+"email.guidance.invalid" = "Ongeldig e-mailadres";
 "email.guidance.tooshort" = "Email adres is te kort";
 "email.guidance.toolong" = "Te veel tekens";
 
@@ -840,16 +856,16 @@
 // Landing screen
 
 "landing.title" = "Veilig communiceren voor iedereen.";
-"landing.create_account.title" = "Account aanmaken";
+"landing.create_account.title" = "Een account aanmaken";
 "landing.create_account.subtitle" = "voor persoonlijk gebruik";
 "landing.create_team.title" = "Creëer Team";
 "landing.create_team.subtitle" = "voor werk";
-"landing.login.hints" = "Heeft u al een account?";
-"landing.login.button.title" = "Log in";
+"landing.login.hints" = "Heb je al een account?";
+"landing.login.button.title" = "Inloggen";
 
 // Create team
 
-"team.name.headline" = "Geef uw team een naam";
+"team.name.headline" = "Geef je team ddn naam";
 "team.name.subheadline" = "Dit kun je later altijd nog aanpassen.";
 "team.name.textfield.placeholder" = "team naam";
 "team.name.textfield.accessibility" = "Stel je team naam in";
@@ -857,14 +873,14 @@
 
 "team.email.headline" = "Je account";
 "team.email.subheadline" = "Voer je werk-e-mailadres in.";
-"team.email.textfield.placeholder" = "jij@joubedrijf.nl";
+"team.email.textfield.placeholder" = "jij@jouwbedrijf.eu";
 "team.email.textfield.accessibility" = "Je bedrijfs email";
 "team.email.button.learn_more" = "Leer meer";
 
 "team.activation_code.headline" = "Je hebt een email ontvangen";
 "team.activation_code.subheadline" = "Voer de verificatiecode in die we naar %@ gestuurde hebben.";
-"team.activation_code.button.resend" = "Code opnieuw versturen";
-"team.activation_code.button.change_email" = "Email wijzigen";
+"team.activation_code.button.resend" = "Code opnieuw verzenden";
+"team.activation_code.button.change_email" = "E-mailadres wijzigen";
 
 "team.full_name.headline" = "Jouw naam";
 "team.full_name.textfield.placeholder" = "Volledige naam";
@@ -880,7 +896,7 @@
 // Invite Team Members
 
 "team.invite.header.title" = "Maak je team aan";
-"team.invite.header.subtitle" = "Nodig je collega’s uit.";
+"team.invite.header.subtitle" = "Nodig je vrienden uit.";
 "team.invite.textfield.placeholder" = "collega@joubedrijf.nl";
 "team.invite.textfield.accesibility" = "Vul het e-mail adres in van een collega, om deze uit te nodigen.";
 "team.invite.learn_more.title" = "Leer meer";
@@ -890,21 +906,36 @@
 // Team Invite Errors
 "team.invite.error.generic" = "Er is een fout opgetreden, probeer het nogmaals";
 "team.invite.error.already_registered" = "Dit e-mailadres is al gebruikt";
-"team.invite.error.already_invited" = "Deze e-mail is al uitgenodigd";
+"team.invite.error.already_invited" = "Deze e-mail is reeds uitgenodigd";
 "team.invite.error.too_many_invitations" = "Het maximale aantal uitnodigingen is bereikt";
 "team.invite.error.no_internet" = "Geen internetverbinding";
 
 // Guest Room
 
-"guest_room.allow_guests.title" = "Allow guests";
-"guest_room.allow_guests.subtitle" = "Open this conversation to people outside your team.";
-"guest_room.remove_guests.message" = "Current guests will be removed from the conversation. New guests will not be allowed.";
-"guest_room.remove_guests.action" = "Remove Guests";
+"guest_room.allow_guests.title" = "Sta gasten toe";
+"guest_room.allow_guests.subtitle" = "Open dit gesprek voor mensen buiten jouw team.";
+"guest_room.remove_guests.message" = "Bestaande gasten zullen worden verwijdert uit het gesprek. Nieuwe gasten worden niet toegestaan.";
+"guest_room.remove_guests.action" = "Verwijder gasten";
 "guest_room.revoke_link.message" = "New guests will not be able to join with this link. Current guests will still have access.";
-"guest_room.revoke_link.action" = "Revoke Link";
+"guest_room.revoke_link.action" = "Link intrekken";
 
-"guest_room.error.generic.title" = "Something went wrong";
-"guest_room.error.generic.message" = "Check your connection and try again";
+"guest_room.error.generic.title" = "Er is iets mis gegaan";
+"guest_room.error.generic.message" = "Controleer je verbinding en probeer het opnieuw";
+
+"guest_room.link.header.title" = "Nodig andere uit met een link";
+"guest_room.link.header.subtitle" = "Anyone with the link can join the conversation, even if they don't have Wire.";
+
+"guest_room.link.button.title" = "Maak link aan";
+
+"guest_room.actions.copy_link" = "Kopieer link";
+"guest_room.actions.copied_link" = "Link gekopieerd!";
+"guest_room.actions.share_link" = "Deel link";
+"guest_room.actions.revoke_link" = "Link intrekken";
+
+"guest_room.share.message" = "Join me in a conversation on Wire:\n%@";
+
+"guest_room.expiration.hours_left" = "%@h over";
+"guest_room.expiration.less_than_minutes_left" = "Minder dan %@m over";
 
 // Registration
 
@@ -951,7 +982,7 @@
 
 "registration.terms_of_use.terms.title" = "Gebruikersvoorwaarden";
 "registration.terms_of_use.terms.message" = "Om verder te gaan moet u de algemene voorwaarden accepteren.";
-"registration.terms_of_use.terms.view" = "Bekijk";
+"registration.terms_of_use.terms.view" = "Toon";
 "registration.terms_of_use.accept" = "Neem op";
 
 "registration.email_flow.title" = "Registreer via e-mail";
@@ -1133,3 +1164,14 @@
 "availability.available.placeholder" = "%@ is beschikbaar";
 "availability.away.placeholder" = "%@ is afwezig";
 "availability.busy.placeholder" = "%@ is bezet";
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Call Quality Survey
+
+"calling.quality_survey.title" = "Call Quality Feedback";
+"calling.quality_survey.question" = "Hoe goed beoordeel je de gesprekskwaliteit van dit gesprek?";
+"calling.quality_survey.answer.1" = "Slecht";
+"calling.quality_survey.answer.2" = "Beroerd";
+"calling.quality_survey.answer.3" = "Redelijk";
+"calling.quality_survey.answer.4" = "Goed";
+"calling.quality_survey.answer.5" = "Uitstekend";

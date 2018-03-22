@@ -20,7 +20,12 @@
 "general.ok" = "OK";
 "general.next" = "Далі";
 "general.cancel" = "Скасувати";
+"general.close" = "Закрити";
 "general.open_settings" = "Відкрити налаштування Wire";
+"general.edit" = "Редагувати";
+"general.done" = "Готово";
+
+"general.guest-room-name" = "Гостьова кімната";
 
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -78,6 +83,7 @@
 "peoplepicker.invite_team_members" = "Запросіть колег приєднатися до команди";
 "peoplepicker.quick-action.open-conversation" = "Вiдкрити";
 "peoplepicker.quick-action.create-conversation" = "Створити групу";
+"peoplepicker.quick-action.create-guest-room" = "Створити гостьову кімнату";
 
 "add_participants.all_contacts_added" = "Усі вже тут.";
 
@@ -314,6 +320,9 @@
 "content.system.conversation.team.member-leave" = "%@ був(-ла) видалений(-а) з команди.";
 "content.system.conversation.guest.joined" = "%@ приєднався(-лася)";
 
+"content.system.conversation.invite.title" = "Люди за межами вашої команди можуть приєднатися до цієї розмови.";
+"content.system.conversation.invite.button" = "Запросити людей";
+
 "content.system.other_renamed_conv_to_nothing" = "%@ видалив(-ла) ім'я розмови";
 "content.system.you_renamed_conv_to_nothing" = "Ви видалили ім'я розмови";
 "content.system.pending_message_timestamp" = "Надсилання…";
@@ -343,6 +352,7 @@
 "content.system.renamed_conv.title.you" = "Ви";
 
 "content.system.conversation.with_name.title" = "%@ розпочав(-ла) розмову";
+"content.system.conversation.with_name.title-you" = "%@ розпочав(-ла) розмову";
 
 "content.system.conversation.with_name.participants" = "з %@";
 
@@ -397,12 +407,14 @@
 "content.message.go_to_conversation" = "Показати в розмові";
 "content.message.forward.to" = "Пошук…";
 "content.message.open" = "Вiдкрити";
+"content.message.copy" = "Скопіювати";
 
 "content.reactions_list.likers" = "Сподобалося";
 
 "content.file.too_big" = "Ви можете надсилати файли до %@";
 // Someone pinged
-"content.ping.text" = "%1$@ надіслав(-ла) пінг";
+"content.ping.text" = "%@ надіслав(-ла) пінг";
+"content.ping.text-you" = "%@ надіслав(-ла) пінг";
 
 // Current user pinged
 "content.ping.text.you" = "Ви";
@@ -473,6 +485,10 @@
 "meta.menu.silence.unmute" = "Увімкнути звук";
 "meta.menu.cancel" = "Скасувати";
 "meta.menu.cancel_connection_request" = "Скасувати запит";
+"meta.menu.mark_unread" = "Позначити як непрочитане";
+"meta.menu.mark_read" = "Позначити як прочитане";
+"shortcut.mark_all_as_read.title" = "Позначити все як прочитане";
+
 
 // Delete conversation
 "meta.menu.delete_content.dialog_title" = "Видалити вміст?";
@@ -719,7 +735,7 @@
 "self.settings.sound_menu.ping.title" = "Пінг";
 "self.settings.sound_menu.ringtones.title" = "Рингтони";
 "self.settings.sound_menu.sounds.wire_sound" = "Wire";
-"self.settings.sound_menu.sounds.none" = "Все вимкнено";
+"self.settings.sound_menu.sounds.none" = "Вимкнено";
 
 "self.settings.callkit.title" = "Дзвінки";
 "self.settings.callkit.caption" = "Ділитися інформацією з iOS";
@@ -808,7 +824,7 @@
 "self.settings.technical_report.mail.subject" = "Wire звіт про дзвінок";
 "self.settings.technical_report.include_log" = "Включити детальний журнал логів";
 "self.settings.technical_report.privacy_warning" = "Детальні логи можуть містити персональні дані";
-"self.settings.technical_report.no_mail_alert" = "No mail client detected. Tap \"OK\" and send logs manually to: ";
+"self.settings.technical_report.no_mail_alert" = "Не виявлено жодного поштового клієнту. Натисніть \"ОК\" та надішліть логи вручну на: ";
 
 // Password reset
 "self.settings.password_reset_menu.title" = "Скинути пароль";
@@ -888,7 +904,7 @@
 "team.invite.top_bar.done" = "Готово";
 
 // Team Invite Errors
-"team.invite.error.generic" = "Щось пішло не так. Будь ласка, спробуй ще раз";
+"team.invite.error.generic" = "Щось пішло не так. Будь ласка, спробуйте ще раз";
 "team.invite.error.already_registered" = "Ця адреса електронної пошти вже використовується";
 "team.invite.error.already_invited" = "Ця адреса вже зареєстрована";
 "team.invite.error.too_many_invitations" = "Вже було надіслано максимальну кількість запрошень";
@@ -903,8 +919,23 @@
 "guest_room.revoke_link.message" = "Нові гості не зможуть приєднатися з цим лінком. Поточні гості все ще матимуть доступ.";
 "guest_room.revoke_link.action" = "Відкликати лінк";
 
-"guest_room.error.generic.title" = "Something went wrong";
-"guest_room.error.generic.message" = "Check your connection and try again";
+"guest_room.error.generic.title" = "Щось пішло не так";
+"guest_room.error.generic.message" = "Перевірте з'єднання і спробуйте ще раз";
+
+"guest_room.link.header.title" = "Запросити інших користувачів за допомогою лінка";
+"guest_room.link.header.subtitle" = "Anyone with the link can join the conversation, even if they don't have Wire.";
+
+"guest_room.link.button.title" = "Створити лінк";
+
+"guest_room.actions.copy_link" = "Скопіювати лінк";
+"guest_room.actions.copied_link" = "Лінк скопійовано!";
+"guest_room.actions.share_link" = "Поділитись лінком";
+"guest_room.actions.revoke_link" = "Відкликати лінк";
+
+"guest_room.share.message" = "Приєднуйтесь до мене в розмові через Wire:\n%@";
+
+"guest_room.expiration.hours_left" = "Залишилось %@ год.";
+"guest_room.expiration.less_than_minutes_left" = "Залишилось менше %@ хв.";
 
 // Registration
 
@@ -1126,10 +1157,21 @@
 "availability.message.cancel" = "Скасувати";
 "availability.message.set_status" = "Встановити статус";
 
-"availability.none" = "Все вимкнено";
+"availability.none" = "Недоступний(-а)";
 "availability.available" = "Онлайн";
 "availability.away" = "Не на місці";
 "availability.busy" = "Не турбувати";
 "availability.available.placeholder" = "%@: онлайн";
 "availability.away.placeholder" = "%@: не на місці";
 "availability.busy.placeholder" = "%@: не турбувати";
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Call Quality Survey
+
+"calling.quality_survey.title" = "Call Quality Feedback";
+"calling.quality_survey.question" = "Як ви оцінюєте загальну якість дзвінка?";
+"calling.quality_survey.answer.1" = "Погано";
+"calling.quality_survey.answer.2" = "Так собі";
+"calling.quality_survey.answer.3" = "Непогано";
+"calling.quality_survey.answer.4" = "Добре";
+"calling.quality_survey.answer.5" = "Чудово";

@@ -20,7 +20,12 @@
 "general.ok" = "OK";
 "general.next" = "Weiter";
 "general.cancel" = "Abbrechen";
+"general.close" = "Schließen";
 "general.open_settings" = "Wire-Einstellungen öffnen";
+"general.edit" = "Bearbeiten";
+"general.done" = "Fertig";
+
+"general.guest-room-name" = "Gästezimmer";
 
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -78,6 +83,7 @@
 "peoplepicker.invite_team_members" = "Lade weitere Mitglieder ein";
 "peoplepicker.quick-action.open-conversation" = "Öffnen";
 "peoplepicker.quick-action.create-conversation" = "Gruppe erstellen";
+"peoplepicker.quick-action.create-guest-room" = "Gästezimmer erstellen";
 
 "add_participants.all_contacts_added" = "Alle sind hier.";
 
@@ -314,6 +320,9 @@
 "content.system.conversation.team.member-leave" = "%@ wurde aus dem Team entfernt.";
 "content.system.conversation.guest.joined" = "%@ ist beigetreten";
 
+"content.system.conversation.invite.title" = "Personen außerhalb deines Teams können an dieser Unterhaltung teilnehmen.";
+"content.system.conversation.invite.button" = "Freunde einladen";
+
 "content.system.other_renamed_conv_to_nothing" = "%@ hat den Namen der Unterhaltung entfernt";
 "content.system.you_renamed_conv_to_nothing" = "Du hast den Namen der Unterhaltung entfernt";
 "content.system.pending_message_timestamp" = "Senden…";
@@ -343,7 +352,7 @@
 "content.system.renamed_conv.title.you" = "Du";
 
 "content.system.conversation.with_name.title" = "%@ hat die Unterhaltung begonnen";
-"content.system.conversation.with_name.title-you" = "Du hast die Unterhaltung begonnen";
+"content.system.conversation.with_name.title-you" = "%@ hast die Unterhaltung begonnen";
 
 "content.system.conversation.with_name.participants" = "mit %@";
 
@@ -398,6 +407,7 @@
 "content.message.go_to_conversation" = "Öffnen";
 "content.message.forward.to" = "Suche…";
 "content.message.open" = "Öffnen";
+"content.message.copy" = "Kopieren";
 
 "content.reactions_list.likers" = "Gefällt";
 
@@ -475,6 +485,10 @@
 "meta.menu.silence.unmute" = "Benachrichtigen";
 "meta.menu.cancel" = "Abbrechen";
 "meta.menu.cancel_connection_request" = "Kontaktanfrage abbrechen";
+"meta.menu.mark_unread" = "Als ungelesen markieren";
+"meta.menu.mark_read" = "Als gelesen markieren";
+"shortcut.mark_all_as_read.title" = "Alle als gelesen markieren";
+
 
 // Delete conversation
 "meta.menu.delete_content.dialog_title" = "Gesprächsverlauf löschen?";
@@ -908,6 +922,21 @@
 "guest_room.error.generic.title" = "Ein Fehler ist aufgetreten";
 "guest_room.error.generic.message" = "Prüfen Sie Ihre Datenverbindung und versuchen Sie es erneut";
 
+"guest_room.link.header.title" = "Andere per Link einladen";
+"guest_room.link.header.subtitle" = "Jeder kann der Gruppe mit diesem Link beitreten - auch ohne eine Wire-Benutzerkonto.";
+
+"guest_room.link.button.title" = "Link erstellen";
+
+"guest_room.actions.copy_link" = "Link kopieren";
+"guest_room.actions.copied_link" = "Link kopiert!";
+"guest_room.actions.share_link" = "Link teilen";
+"guest_room.actions.revoke_link" = "Link widerrufen";
+
+"guest_room.share.message" = "Nimm an meiner Unterhaltung auf Wire teil:\n%@";
+
+"guest_room.expiration.hours_left" = "%@h verbleibend";
+"guest_room.expiration.less_than_minutes_left" = "Weniger als %@m verbleibend";
+
 // Registration
 
 "registration.title" = "Registrierung";
@@ -1135,3 +1164,14 @@
 "availability.available.placeholder" = "%@ ist verfügbar";
 "availability.away.placeholder" = "%@ ist abwesend";
 "availability.busy.placeholder" = "%@ ist beschäftigt";
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Call Quality Survey
+
+"calling.quality_survey.title" = "Rückmeldung zur Anrufqualität";
+"calling.quality_survey.question" = "Wie würdest du die Gesamtqualität des Anrufs bewerten?";
+"calling.quality_survey.answer.1" = "Sehr Schlecht";
+"calling.quality_survey.answer.2" = "Schlecht";
+"calling.quality_survey.answer.3" = "Befriedigend";
+"calling.quality_survey.answer.4" = "Gut";
+"calling.quality_survey.answer.5" = "Sehr Gut";

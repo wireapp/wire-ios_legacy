@@ -20,7 +20,12 @@
 "general.ok" = "OK";
 "general.next" = "Avanti";
 "general.cancel" = "Annulla";
+"general.close" = "Chiudi";
 "general.open_settings" = "Apri le impostazioni di Wire";
+"general.edit" = "Modifica";
+"general.done" = "Fatto";
+
+"general.guest-room-name" = "Stanza degli ospiti";
 
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -40,7 +45,7 @@
 "peoplepicker.group.title.plural" = "Aggiungi persone (%d)";
 "peoplepicker.group.skip" = "Salta";
 "peoplepicker.group.done" = "Fatto";
-"peoplepicker.group.create" = "Crea";
+"peoplepicker.group.create" = "Creare";
 
 "peoplepicker.header.people" = "Persone";
 "peoplepicker.header.services" = "Servizi";
@@ -78,6 +83,7 @@
 "peoplepicker.invite_team_members" = "Invita altre persone ad unirsi al team";
 "peoplepicker.quick-action.open-conversation" = "Apri";
 "peoplepicker.quick-action.create-conversation" = "Crea gruppo";
+"peoplepicker.quick-action.create-guest-room" = "Crea stanza degli ospiti";
 
 "add_participants.all_contacts_added" = "Ognuno è qui.";
 
@@ -314,6 +320,9 @@
 "content.system.conversation.team.member-leave" = "%@ è stato rimosso dal team.";
 "content.system.conversation.guest.joined" = "%@ è entrato";
 
+"content.system.conversation.invite.title" = "Le persone esterne al tuo team possono unirsi a questa conversazione.";
+"content.system.conversation.invite.button" = "Invita persone";
+
 "content.system.other_renamed_conv_to_nothing" = "%@ ha rimosso il nome della conversazione";
 "content.system.you_renamed_conv_to_nothing" = "Hai rimosso il nome della conversazione";
 "content.system.pending_message_timestamp" = "Invio in corso…";
@@ -343,6 +352,7 @@
 "content.system.renamed_conv.title.you" = "Tu";
 
 "content.system.conversation.with_name.title" = "%@ ha iniziato la conversatione";
+"content.system.conversation.with_name.title-you" = "%@ ha iniziato la conversatione";
 
 "content.system.conversation.with_name.participants" = "con %@";
 
@@ -397,12 +407,14 @@
 "content.message.go_to_conversation" = "Mostra";
 "content.message.forward.to" = "Ricerca…";
 "content.message.open" = "Apri";
+"content.message.copy" = "Copia";
 
 "content.reactions_list.likers" = "Piace a";
 
 "content.file.too_big" = "Puoi inviare file fino a %@";
 // Someone pinged
-"content.ping.text" = "%1$@ ti ha mandato un trillo";
+"content.ping.text" = "%1$@ ha mandato un trillo";
+"content.ping.text-you" = "%1$@ ha mandato un trillo";
 
 // Current user pinged
 "content.ping.text.you" = "Tu";
@@ -473,6 +485,10 @@
 "meta.menu.silence.unmute" = "Riattiva audio";
 "meta.menu.cancel" = "Annulla";
 "meta.menu.cancel_connection_request" = "Annulla richiesta";
+"meta.menu.mark_unread" = "Segna come non letto";
+"meta.menu.mark_read" = "Segna come letto";
+"shortcut.mark_all_as_read.title" = "Segna tutti come letti";
+
 
 // Delete conversation
 "meta.menu.delete_content.dialog_title" = "Eliminare il contenuto?";
@@ -903,8 +919,23 @@
 "guest_room.revoke_link.message" = "I nuovi ospiti non saranno in grado di partecipare con questo link. Gli ospiti attuali avranno ancora accesso.";
 "guest_room.revoke_link.action" = "Revoca il link";
 
-"guest_room.error.generic.title" = "Si è verificato un errore";
+"guest_room.error.generic.title" = "Qualcosa è andato storto";
 "guest_room.error.generic.message" = "Controlla la tua connessione e riprova";
+
+"guest_room.link.header.title" = "Invita altre persone con un link";
+"guest_room.link.header.subtitle" = "Chiunque ha il link può unirsi alla conversazione, anche se non ha Wire.";
+
+"guest_room.link.button.title" = "Crea un link";
+
+"guest_room.actions.copy_link" = "Copia link";
+"guest_room.actions.copied_link" = "Link copiato!";
+"guest_room.actions.share_link" = "Condividi link";
+"guest_room.actions.revoke_link" = "Revoca il link";
+
+"guest_room.share.message" = "Unisciti a questa conversazione su Wire:\n%@";
+
+"guest_room.expiration.hours_left" = "%@h rimanenti";
+"guest_room.expiration.less_than_minutes_left" = "Meno di %@m rimanenti";
 
 // Registration
 
@@ -1133,3 +1164,14 @@
 "availability.available.placeholder" = "%@ è disponibile";
 "availability.away.placeholder" = "%@ è assente";
 "availability.busy.placeholder" = "%@ è occupato";
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Call Quality Survey
+
+"calling.quality_survey.title" = "Call Quality Feedback";
+"calling.quality_survey.question" = "Come giudichi la qualità complessiva della chiamata?";
+"calling.quality_survey.answer.1" = "Scarsa";
+"calling.quality_survey.answer.2" = "Insufficiente";
+"calling.quality_survey.answer.3" = "Discreta";
+"calling.quality_survey.answer.4" = "Buona";
+"calling.quality_survey.answer.5" = "Ottima";

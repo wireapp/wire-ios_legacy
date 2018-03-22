@@ -20,7 +20,12 @@
 "general.ok" = "OK";
 "general.next" = "Вперед";
 "general.cancel" = "Отменить";
+"general.close" = "Закрыть";
 "general.open_settings" = "Открыть настройки Wire";
+"general.edit" = "Редактировать";
+"general.done" = "Готово";
+
+"general.guest-room-name" = "Гостевая комната";
 
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -42,13 +47,13 @@
 "peoplepicker.group.done" = "Готово";
 "peoplepicker.group.create" = "Создать";
 
-"peoplepicker.header.people" = "Участники";
+"peoplepicker.header.people" = "Люди";
 "peoplepicker.header.services" = "Службы";
-"peoplepicker.services.create_conversation.item" = "Создать новую беседу";
+"peoplepicker.services.create_conversation.item" = "Создать новый разговор";
 "peoplepicker.services.add_service.button" = "Добавить службу";
 "peoplepicker.services.add_service.error.title" = "Не удается добавить службу";
 "peoplepicker.services.add_service.error.default" = "В данный момент служба недоступна";
-"peoplepicker.services.add_service.error.full" = "The conversation is full";
+"peoplepicker.services.add_service.error.full" = "Разговор переполнен";
 
 "peoplepicker.title.create_conversation" = "Создать группу";
 "peoplepicker.title.add_to_conversation" = "Добавить людей";
@@ -78,6 +83,7 @@
 "peoplepicker.invite_team_members" = "Пригласите людей в команду";
 "peoplepicker.quick-action.open-conversation" = "Открыть";
 "peoplepicker.quick-action.create-conversation" = "Создать группу";
+"peoplepicker.quick-action.create-guest-room" = "Создать гостевую комнату";
 
 "add_participants.all_contacts_added" = "Все пользователи добавлены.";
 
@@ -231,7 +237,7 @@
 
 "conversation.input_bar.shortcut.send" = "Отправить сообщение";
 "conversation.input_bar.shortcut.edit_last_message" = "Изм. последнее сообщение";
-"conversation.input_bar.shortcut.cancel_editing_message" = "Отменить";
+"conversation.input_bar.shortcut.cancel_editing_message" = "Отмена";
 
 "conversation.input_bar.message_too_long.title" = "Сообщение слишком длинное";
 "conversation.input_bar.message_too_long.message" = "Вы можете отправлять сообщения длиной до %d символов.";
@@ -314,6 +320,9 @@
 "content.system.conversation.team.member-leave" = "%@ был удален из команды.";
 "content.system.conversation.guest.joined" = "%@ присоединился";
 
+"content.system.conversation.invite.title" = "Участники не из вашей команды смогут присоединиться к этому разговору.";
+"content.system.conversation.invite.button" = "Пригласить людей";
+
 "content.system.other_renamed_conv_to_nothing" = "%@ удалил(-а) название разговора";
 "content.system.you_renamed_conv_to_nothing" = "Вы удалили название разговора";
 "content.system.pending_message_timestamp" = "Отправка...";
@@ -343,6 +352,7 @@
 "content.system.renamed_conv.title.you" = "Вы";
 
 "content.system.conversation.with_name.title" = "%@ начал разговор";
+"content.system.conversation.with_name.title-you" = "%@ начал разговор";
 
 "content.system.conversation.with_name.participants" = "с %@";
 
@@ -397,12 +407,14 @@
 "content.message.go_to_conversation" = "Показать в разговоре";
 "content.message.forward.to" = "Поиск…";
 "content.message.open" = "Открыть";
+"content.message.copy" = "Копировать";
 
 "content.reactions_list.likers" = "Понравилось";
 
 "content.file.too_big" = "Вы можете отправлять файлы до %@";
 // Someone pinged
-"content.ping.text" = "%1$@ отправил(а) пинг";
+"content.ping.text" = "%@ пинганул";
+"content.ping.text-you" = "%@ пинганул";
 
 // Current user pinged
 "content.ping.text.you" = "Вы";
@@ -458,7 +470,7 @@
 "participants.add_people_button_title" = "Добавить";
 "participants.avatar.guest.title" = "Гость";
 
-"participants.title" = "Подробнее";
+"participants.title" = "Профиль";
 "participants.section.participants" = "Участники (%d)";
 "participants.section.services" = "Сервисов (%d)";
 "participants.footer.add_title" = "Добавить участников";
@@ -473,6 +485,10 @@
 "meta.menu.silence.unmute" = "Вкл.звук";
 "meta.menu.cancel" = "Отменить";
 "meta.menu.cancel_connection_request" = "Отменить запрос";
+"meta.menu.mark_unread" = "Отметить как непрочитанное";
+"meta.menu.mark_read" = "Отметить как прочитанное";
+"shortcut.mark_all_as_read.title" = "Отметить все как прочитанные";
+
 
 // Delete conversation
 "meta.menu.delete_content.dialog_title" = "Удалить содержимое?";
@@ -829,7 +845,7 @@
 "name.guidance.toolong" = "Слишком много символов";
 
 "email.placeholder" = "Email";
-"email.guidance.invalid" = "Недопустимый адрес email";
+"email.guidance.invalid" = "Неправильный email";
 "email.guidance.tooshort" = "Email слишком короткий";
 "email.guidance.toolong" = "Слишком много символов";
 
@@ -845,7 +861,7 @@
 "landing.create_team.title" = "Создать команду";
 "landing.create_team.subtitle" = "для работы";
 "landing.login.hints" = "Уже зарегистрированы?";
-"landing.login.button.title" = "Вход";
+"landing.login.button.title" = "Войти";
 
 // Create team
 
@@ -862,7 +878,7 @@
 "team.email.button.learn_more" = "Подробнее";
 
 "team.activation_code.headline" = "Вам письмо";
-"team.activation_code.subheadline" = "Введите код подтверждения, отправленный на номер %@.";
+"team.activation_code.subheadline" = "Введите код подтверждения, который был отправлен на номер %@.";
 "team.activation_code.button.resend" = "Запросить код повторно";
 "team.activation_code.button.change_email" = "Изменить email";
 
@@ -905,6 +921,21 @@
 
 "guest_room.error.generic.title" = "Что-то пошло не так";
 "guest_room.error.generic.message" = "Проверьте подключение и попробуйте еще раз";
+
+"guest_room.link.header.title" = "Пригласить других пользователей ссылкой";
+"guest_room.link.header.subtitle" = "Любой, у кого есть ссылка, может присоединиться к разговору, даже если у них нет Wire.";
+
+"guest_room.link.button.title" = "Создать ссылку";
+
+"guest_room.actions.copy_link" = "Скопировать ссылку";
+"guest_room.actions.copied_link" = "Ссылка скопирована!";
+"guest_room.actions.share_link" = "Поделиться ссылкой";
+"guest_room.actions.revoke_link" = "Отменить ссылку";
+
+"guest_room.share.message" = "Присоединяйтесь ко мне в Wire:\n%@";
+
+"guest_room.expiration.hours_left" = "Осталось %@ час.";
+"guest_room.expiration.less_than_minutes_left" = "Осталось менее %@ мин.";
 
 // Registration
 
@@ -1123,13 +1154,24 @@
 "compose.drafts.compose.dismiss.confirm.action.title" = "Сохранить";
 "compose.drafts.compose.dismiss.delete.action.title" = "Удалить";
 
-"availability.message.cancel" = "Отменить";
+"availability.message.cancel" = "Отмена";
 "availability.message.set_status" = "Установить статус";
 
 "availability.none" = "Отключены";
-"availability.available" = "Доступен";
+"availability.available" = "Доступно";
 "availability.away" = "Отошел";
 "availability.busy" = "Занят";
 "availability.available.placeholder" = "%@ доступен";
 "availability.away.placeholder" = "%@ отошел";
 "availability.busy.placeholder" = "%@ занят";
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Call Quality Survey
+
+"calling.quality_survey.title" = "Обратная связь";
+"calling.quality_survey.question" = "Как вы оцените общее качество обслуживания?";
+"calling.quality_survey.answer.1" = "Ужасно";
+"calling.quality_survey.answer.2" = "Плохо";
+"calling.quality_survey.answer.3" = "Приемлемо";
+"calling.quality_survey.answer.4" = "Хорошо";
+"calling.quality_survey.answer.5" = "Прекрасно";

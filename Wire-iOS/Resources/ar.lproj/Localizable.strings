@@ -20,7 +20,12 @@
 "general.ok" = "موافق";
 "general.next" = "Next";
 "general.cancel" = "إلغاء";
+"general.close" = "إغلاق";
 "general.open_settings" = "فتح إعدادات Wire";
+"general.edit" = "تعديل";
+"general.done" = "تـم";
+
+"general.guest-room-name" = "Guest room";
 
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -39,11 +44,11 @@
 "peoplepicker.group.title.singular" = "إضافة أشخاص";
 "peoplepicker.group.title.plural" = "Add People (%d)";
 "peoplepicker.group.skip" = "Skip";
-"peoplepicker.group.done" = "Done";
-"peoplepicker.group.create" = "Create";
+"peoplepicker.group.done" = "تـم";
+"peoplepicker.group.create" = "إنشاء";
 
 "peoplepicker.header.people" = "أشخاص";
-"peoplepicker.header.services" = "Services";
+"peoplepicker.header.services" = "الخدمات";
 "peoplepicker.services.create_conversation.item" = "Create a new conversation";
 "peoplepicker.services.add_service.button" = "إضافة خدمة";
 "peoplepicker.services.add_service.error.title" = "The service can't be added";
@@ -78,6 +83,7 @@
 "peoplepicker.invite_team_members" = "Invite people to join the team";
 "peoplepicker.quick-action.open-conversation" = "افتح";
 "peoplepicker.quick-action.create-conversation" = "إنشاء مجموعة";
+"peoplepicker.quick-action.create-guest-room" = "Create guest room";
 
 "add_participants.all_contacts_added" = "الكل حاضر.";
 
@@ -93,7 +99,7 @@
 "contacts_ui.notification.invitation_failed" = "فَشل إرسال الدعوة";
 "contacts_ui.title" = "دعوة أُناس";
 
-"conversation_list.empty.all_archived.message" = "Everything archived";
+"conversation_list.empty.all_archived.message" = "أُرشف كل شيء";
 "conversation_list.empty.no_contacts.message" = "Start a conversation or\ncreate a group.";
 
 
@@ -236,7 +242,7 @@
 "conversation.input_bar.message_too_long.title" = "الرسالة طويلة جداً";
 "conversation.input_bar.message_too_long.message" = "يمكنك إرسال رسائل حتى %d حرفاً.";
 
-"conversation.create.group_name.placeholder" = "Group name";
+"conversation.create.group_name.placeholder" = "اسم المجموعة";
 "conversation.create.guidance.empty" = "At least 1 character";
 "conversation.create.guidance.toolong" = "حروف كثيرة عن الحد";
 "conversation.create.toggle.title" = "Allow guests";
@@ -314,6 +320,9 @@
 "content.system.conversation.team.member-leave" = "حُذِف %@ من الفريق.";
 "content.system.conversation.guest.joined" = "%@ joined";
 
+"content.system.conversation.invite.title" = "People outside your team can join this conversation.";
+"content.system.conversation.invite.button" = "دعوة أُناس";
+
 "content.system.other_renamed_conv_to_nothing" = "حذف %@ اسم المُحادثة";
 "content.system.you_renamed_conv_to_nothing" = "قمت بحذف اسم المُحادثة";
 "content.system.pending_message_timestamp" = "جاري الإرسال...";
@@ -343,6 +352,7 @@
 "content.system.renamed_conv.title.you" = "أنت";
 
 "content.system.conversation.with_name.title" = "%@ started the conversation";
+"content.system.conversation.with_name.title-you" = "%@ started the conversation";
 
 "content.system.conversation.with_name.participants" = "with %@";
 
@@ -397,12 +407,14 @@
 "content.message.go_to_conversation" = "إظهار";
 "content.message.forward.to" = "بحث…";
 "content.message.open" = "افتح";
+"content.message.copy" = "Copy";
 
 "content.reactions_list.likers" = "إعجاب من  ";
 
 "content.file.too_big" = "يمكنك إرسال ملفات حتى %@";
 // Someone pinged
-"content.ping.text" = "%1$@ pings";
+"content.ping.text" = "%@ pinged";
+"content.ping.text-you" = "%@ pinged";
 
 // Current user pinged
 "content.ping.text.you" = "أنت";
@@ -473,6 +485,10 @@
 "meta.menu.silence.unmute" = "إلغاء كتم الصوت";
 "meta.menu.cancel" = "إلغاء";
 "meta.menu.cancel_connection_request" = "تم إلغاء الطلب";
+"meta.menu.mark_unread" = "Mark as Unread";
+"meta.menu.mark_read" = "Mark as Read";
+"shortcut.mark_all_as_read.title" = "Mark All as Read";
+
 
 // Delete conversation
 "meta.menu.delete_content.dialog_title" = "حذف المحتوى؟";
@@ -879,13 +895,13 @@
 
 // Invite Team Members
 
-"team.invite.header.title" = "Build your team";
+"team.invite.header.title" = "أنشئ فريقك";
 "team.invite.header.subtitle" = "Invite your colleagues to join.";
 "team.invite.textfield.placeholder" = "colleague@yourcompany.com";
 "team.invite.textfield.accesibility" = "Enter e-mail address for colleague to invite.";
 "team.invite.learn_more.title" = "معرفة المزيد";
 "team.invite.top_bar.skip" = "Skip";
-"team.invite.top_bar.done" = "Done";
+"team.invite.top_bar.done" = "تـم";
 
 // Team Invite Errors
 "team.invite.error.generic" = "حدث خطأ ما، برجاء إعادة المحاولة";
@@ -903,8 +919,23 @@
 "guest_room.revoke_link.message" = "New guests will not be able to join with this link. Current guests will still have access.";
 "guest_room.revoke_link.action" = "Revoke Link";
 
-"guest_room.error.generic.title" = "Something went wrong";
+"guest_room.error.generic.title" = "حدث خطأ";
 "guest_room.error.generic.message" = "Check your connection and try again";
+
+"guest_room.link.header.title" = "Invite others with a link";
+"guest_room.link.header.subtitle" = "Anyone with the link can join the conversation, even if they don't have Wire.";
+
+"guest_room.link.button.title" = "Create Link";
+
+"guest_room.actions.copy_link" = "Copy Link";
+"guest_room.actions.copied_link" = "Link Copied!";
+"guest_room.actions.share_link" = "Share Link";
+"guest_room.actions.revoke_link" = "Revoke Link";
+
+"guest_room.share.message" = "Join me in a conversation on Wire:\n%@";
+
+"guest_room.expiration.hours_left" = "%@h left";
+"guest_room.expiration.less_than_minutes_left" = "Less than %@m left";
 
 // Registration
 
@@ -1133,3 +1164,14 @@
 "availability.available.placeholder" = "%@ is available";
 "availability.away.placeholder" = "%@ is away";
 "availability.busy.placeholder" = "%@ is busy";
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Call Quality Survey
+
+"calling.quality_survey.title" = "Call Quality Feedback";
+"calling.quality_survey.question" = "How do you rate the overall quality of the call?";
+"calling.quality_survey.answer.1" = "Bad";
+"calling.quality_survey.answer.2" = "Poor";
+"calling.quality_survey.answer.3" = "Fair";
+"calling.quality_survey.answer.4" = "Good";
+"calling.quality_survey.answer.5" = "Excellent";

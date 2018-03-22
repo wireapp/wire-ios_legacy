@@ -18,9 +18,14 @@
 
 
 "general.ok" = "OK";
-"general.next" = "Next";
+"general.next" = "Järgmine";
 "general.cancel" = "Tühista";
+"general.close" = "Sulge";
 "general.open_settings" = "Ava Wire sätted";
+"general.edit" = "Muuda";
+"general.done" = "Valmis";
+
+"general.guest-room-name" = "Külalistetuba";
 
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -37,18 +42,18 @@
 "peoplepicker.header.directory" = "Lisa kontakt";
 
 "peoplepicker.group.title.singular" = "Lisa inimesi";
-"peoplepicker.group.title.plural" = "Add People (%d)";
+"peoplepicker.group.title.plural" = "Lisa inimesi (%d)";
 "peoplepicker.group.skip" = "Jäta vahele";
 "peoplepicker.group.done" = "Valmis";
-"peoplepicker.group.create" = "Create";
+"peoplepicker.group.create" = "Loo";
 
 "peoplepicker.header.people" = "Inimesed";
 "peoplepicker.header.services" = "Teenused";
 "peoplepicker.services.create_conversation.item" = "Alusta vestlust";
 "peoplepicker.services.add_service.button" = "Lisa teenus";
-"peoplepicker.services.add_service.error.title" = "The service can't be added";
-"peoplepicker.services.add_service.error.default" = "The service is unavailable at the moment";
-"peoplepicker.services.add_service.error.full" = "The conversation is full";
+"peoplepicker.services.add_service.error.title" = "Teenust ei saa lisada";
+"peoplepicker.services.add_service.error.default" = "Teenus pole hetkel saadaval";
+"peoplepicker.services.add_service.error.full" = "Vestlus on täis";
 
 "peoplepicker.title.create_conversation" = "Loo grupp";
 "peoplepicker.title.add_to_conversation" = "Lisa inimesi";
@@ -78,6 +83,7 @@
 "peoplepicker.invite_team_members" = "Kutsu inimesi meeskonnaga liituma";
 "peoplepicker.quick-action.open-conversation" = "Ava";
 "peoplepicker.quick-action.create-conversation" = "Loo grupivestlus";
+"peoplepicker.quick-action.create-guest-room" = "Loo külalistetuba";
 
 "add_participants.all_contacts_added" = "Kõik kontaktid juba vestlusesse lisatud.";
 
@@ -185,7 +191,7 @@
 "conversation.status.added_multiple" = "Lisatud mitu inimest";
 "conversation.status.you_was_added" = "%@ lisas sinu";
 "conversation.status.added_users" = "%@ lisas kasutaja %@";
-"conversation.status.joined" = "%@ joined";
+"conversation.status.joined" = "%@ liitus";
 "conversation.status.removed_multiple" = "Mitu inimest eemaldatud";
 "conversation.status.you_were_removed" = "Sind eemaldati vestlusest";
 "conversation.status.you_left" = "Lahkusid vestlusest";
@@ -236,13 +242,13 @@
 "conversation.input_bar.message_too_long.title" = "Liiga pikk sõnum";
 "conversation.input_bar.message_too_long.message" = "Sõnum võib olla kuni %d tähemärki.";
 
-"conversation.create.group_name.placeholder" = "Group name";
-"conversation.create.guidance.empty" = "At least 1 character";
+"conversation.create.group_name.placeholder" = "Grupi nimi";
+"conversation.create.guidance.empty" = "Vähemalt 1 tähemärk";
 "conversation.create.guidance.toolong" = "Liiga pikk nimi";
-"conversation.create.toggle.title" = "Allow guests";
-"conversation.create.toggle.subtitle" = "Open this conversation to people outside your team. You can always change it later.";
+"conversation.create.toggle.title" = "Luba külalisi";
+"conversation.create.toggle.subtitle" = "Ava see vestlus meeskonnast väljas olevatele inimestele. Sa saad seda alati hiljem muuta.";
 
-"conversation.guests_present" = "Guests are present";
+"conversation.guests_present" = "Kohal on külalisi";
 
 // Image confirmation dialogue
 "image_confirmer.confirm" = "OK";
@@ -312,7 +318,10 @@
 "content.system.conversation.you.removed" = "%@ eemaldas kasutaja %@";
 "content.system.conversation.you.left" = "%@ lahkus";
 "content.system.conversation.team.member-leave" = "%@ eemaldati tiimist.";
-"content.system.conversation.guest.joined" = "%@ joined";
+"content.system.conversation.guest.joined" = "%@ liitus";
+
+"content.system.conversation.invite.title" = "Inimesed väljaspool sinu meeskonda saavad liituda selle vestlusega.";
+"content.system.conversation.invite.button" = "Kutsu inimesi";
 
 "content.system.other_renamed_conv_to_nothing" = "%@ eemaldas vestluselt nime";
 "content.system.you_renamed_conv_to_nothing" = "Eemaldasid vestluse nime";
@@ -342,7 +351,8 @@
 "content.system.renamed_conv.title-you" = "%@ nimetasid vestluse ümber";
 "content.system.renamed_conv.title.you" = "Sina";
 
-"content.system.conversation.with_name.title" = "%@ started the conversation";
+"content.system.conversation.with_name.title" = "%@ alustas vestlust";
+"content.system.conversation.with_name.title-you" = "%@ alustas vestlust";
 
 "content.system.conversation.with_name.participants" = "with %@";
 
@@ -397,12 +407,14 @@
 "content.message.go_to_conversation" = "Näita";
 "content.message.forward.to" = "Otsi…";
 "content.message.open" = "Ava";
+"content.message.copy" = "Kopeeri";
 
 "content.reactions_list.likers" = "Neile meeldib";
 
 "content.file.too_big" = "Saad saata faile suurusega %@";
 // Someone pinged
-"content.ping.text" = "%1$@ pingis";
+"content.ping.text" = "%@ pingis";
+"content.ping.text-you" = "%@ pingis";
 
 // Current user pinged
 "content.ping.text.you" = "Sina";
@@ -455,13 +467,13 @@
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Profile and Participants
 
-"participants.add_people_button_title" = "Add";
+"participants.add_people_button_title" = "Lisa";
 "participants.avatar.guest.title" = "Külaline";
 
 "participants.title" = "Üksikasjad";
-"participants.section.participants" = "People (%d)";
-"participants.section.services" = "Services (%d)";
-"participants.footer.add_title" = "Add Participants";
+"participants.section.participants" = "Inimesed (%d)";
+"participants.section.services" = "Teenused (%d)";
+"participants.footer.add_title" = "Lisa osalejaid";
 
 // Meta Menu
 "meta.menu.rename" = "Nimeta ümber";
@@ -473,14 +485,18 @@
 "meta.menu.silence.unmute" = "Heli sisse";
 "meta.menu.cancel" = "Tühista";
 "meta.menu.cancel_connection_request" = "Tühista ühendussoov";
+"meta.menu.mark_unread" = "Märgi mitteloetuks";
+"meta.menu.mark_read" = "Märgi loetuks";
+"shortcut.mark_all_as_read.title" = "Märgi kõik loetuks";
+
 
 // Delete conversation
 "meta.menu.delete_content.dialog_title" = "Kustuta sisu?";
-"meta.menu.delete_content.dialog_message" = "This will clear the conversation history on all your devices.";
+"meta.menu.delete_content.dialog_message" = "See tühjendab vestlusajaloo sinu kõigis seadmetes.";
 "meta.menu.delete_content.leave_as_well_message" = "Lahku samuti vestlusest";
 "meta.menu.delete_content.button_cancel" = "Tühista";
 "meta.menu.delete_content.button_delete" = "Kustuta";
-"meta.menu.delete_content.button_delete_and_leave" = "Delete and leave";
+"meta.menu.delete_content.button_delete_and_leave" = "Kustuta ja lahku";
 
 // Leave conversation
 "meta.leave_conversation_dialog_title" = "Lahku vestlusest?";
@@ -488,7 +504,7 @@
 "meta.leave_conversation.delete_content_as_well_message" = "Kustuta ka sisu";
 "meta.leave_conversation_button_cancel" = "Tühista";
 "meta.leave_conversation_button_leave" = "Lahku";
-"meta.leave_conversation_button_leave_and_delete" = "Leave and delete content";
+"meta.leave_conversation_button_leave_and_delete" = "Lahku ja kustuta sisu";
 
 // Conversation Degraded (security level lowered)
 "meta.degraded.degradation_reason_message.singular" = "%@ hakkas kasutama uut seadet.";
@@ -568,11 +584,11 @@
 "general.confirm" = "OK";
 
 // Bot
-"participants.services.remove_integration.button" = "remove integration";
+"participants.services.remove_integration.button" = "eemalda integratsioon";
 
 // Group details
-"group_details.guest_options_cell.title" = "Guest Options";
-"group_details.guest_options_cell.enabled" = "On";
+"group_details.guest_options_cell.title" = "Külaliste valikud";
+"group_details.guest_options_cell.enabled" = "Sees";
 "group_details.guest_options_cell.disabled" = "Väljas";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -808,7 +824,7 @@
 "self.settings.technical_report.mail.subject" = "Wire kõneraport";
 "self.settings.technical_report.include_log" = "Lisa detailide logi";
 "self.settings.technical_report.privacy_warning" = "Detailsed logid võivad sisaldada personaalseid andmeid";
-"self.settings.technical_report.no_mail_alert" = "No mail client detected. Tap \"OK\" and send logs manually to: ";
+"self.settings.technical_report.no_mail_alert" = "Meiliprogammi ei leitud. Vajuta “OK” ja saada logid käsitsi: ";
 
 // Password reset
 "self.settings.password_reset_menu.title" = "Lähtesta parool";
@@ -842,7 +858,7 @@
 "landing.title" = "Turvaline sõnumside kõigile.";
 "landing.create_account.title" = "Konto loomine";
 "landing.create_account.subtitle" = "isiklikuks kasutuseks";
-"landing.create_team.title" = "Loo uus tiim";
+"landing.create_team.title" = "Loo meeskond";
 "landing.create_team.subtitle" = "töö jaoks";
 "landing.login.hints" = "Konto juba olemas?";
 "landing.login.button.title" = "Logi sisse";
@@ -896,15 +912,30 @@
 
 // Guest Room
 
-"guest_room.allow_guests.title" = "Allow guests";
-"guest_room.allow_guests.subtitle" = "Open this conversation to people outside your team.";
-"guest_room.remove_guests.message" = "Current guests will be removed from the conversation. New guests will not be allowed.";
-"guest_room.remove_guests.action" = "Remove Guests";
-"guest_room.revoke_link.message" = "New guests will not be able to join with this link. Current guests will still have access.";
-"guest_room.revoke_link.action" = "Revoke Link";
+"guest_room.allow_guests.title" = "Luba külalisi";
+"guest_room.allow_guests.subtitle" = "Ava see vestlus meeskonnast väljas olevatele inimestele.";
+"guest_room.remove_guests.message" = "Praegused külalised eemaldatakse vestlusest. Uusi külalisi ei lubata.";
+"guest_room.remove_guests.action" = "Eemalda Külalised";
+"guest_room.revoke_link.message" = "Uued külalised ei saa selle lingi abil liituda. Praegustel külalistel on jätkuvalt ligipääs.";
+"guest_room.revoke_link.action" = "Tühista link";
 
-"guest_room.error.generic.title" = "Something went wrong";
-"guest_room.error.generic.message" = "Check your connection and try again";
+"guest_room.error.generic.title" = "Midagi läks valesti";
+"guest_room.error.generic.message" = "Kontrolli võrguühendust ja proovi uuesti";
+
+"guest_room.link.header.title" = "Kutsu teisi lingi abil";
+"guest_room.link.header.subtitle" = "Selle lingiga saab igaüks vestlusega liituda 24 tunniks, isegi kui neil pole Wire'it.";
+
+"guest_room.link.button.title" = "Loo link";
+
+"guest_room.actions.copy_link" = "Kopeeri link";
+"guest_room.actions.copied_link" = "Link kopeeritud!";
+"guest_room.actions.share_link" = "Jaga linki";
+"guest_room.actions.revoke_link" = "Tühista link";
+
+"guest_room.share.message" = "Liitu minuga Wire vestluses:\n%@";
+
+"guest_room.expiration.hours_left" = "%@h järel";
+"guest_room.expiration.less_than_minutes_left" = "Vähem kui %@min järel";
 
 // Registration
 
@@ -983,8 +1014,8 @@
 "registration.signin.email_button.title" = "E-post";
 "registration.signin.phone_button.title" = "Telefon";
 
-"registration.signin.alert.password_needed.title" = "Password needed";
-"registration.signin.alert.password_needed.message" = "Please enter your Password in order to log in.";
+"registration.signin.alert.password_needed.title" = "Parool on nõutud";
+"registration.signin.alert.password_needed.message" = "Sisselogimiseks sisesta palun oma parool.";
 
 "registration.devices.title" = "Seadmed";
 "registration.devices.active_list_header" = "Aktiivsed";
@@ -1133,3 +1164,14 @@
 "availability.available.placeholder" = "%@ on saadaval";
 "availability.away.placeholder" = "%@ on eemal";
 "availability.busy.placeholder" = "%@ on hõivatud";
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Call Quality Survey
+
+"calling.quality_survey.title" = "Kõne kvaliteedi tagasiside";
+"calling.quality_survey.question" = "Kuidas sa hindad kõne üldist kvaliteeti?";
+"calling.quality_survey.answer.1" = "Halb";
+"calling.quality_survey.answer.2" = "Kehv";
+"calling.quality_survey.answer.3" = "Rahuldav";
+"calling.quality_survey.answer.4" = "Hea";
+"calling.quality_survey.answer.5" = "Suurepärane";

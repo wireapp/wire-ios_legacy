@@ -34,8 +34,8 @@
 "share_extension.timeout.title" = "连接已超时。";
 "share_extension.timeout.message" = "请检查您的互联网连接并重试。附件会保存在对话中。";
 "share_extension.privacy_security.lock_app.description" = "解锁Wire";
-"share_extension.logged_out.title" = "You've been logged out from this account.";
-"share_extension.logged_out.message" = "Please choose another account.";
+"share_extension.logged_out.title" = "您已登出此帐户。";
+"share_extension.logged_out.message" = "请选择另一帐户";
 
 "conversation.displayname.emptygroup" = "空聊天室";
 "meta.degraded.degradation_reason_message.singular" = "%@ 开始使用新的设备。";

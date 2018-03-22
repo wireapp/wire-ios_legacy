@@ -20,7 +20,12 @@
 "general.ok" = "GERAI";
 "general.next" = "Kitas";
 "general.cancel" = "Atsisakyti";
+"general.close" = "Užverti";
 "general.open_settings" = "Atidaryti Wire nustatymus";
+"general.edit" = "Taisyti";
+"general.done" = "Baigta";
+
+"general.guest-room-name" = "Svečių kambarys";
 
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -78,6 +83,7 @@
 "peoplepicker.invite_team_members" = "Kvieskite žmonių prisijungti prie komandos";
 "peoplepicker.quick-action.open-conversation" = "Atverti";
 "peoplepicker.quick-action.create-conversation" = "Sukurti grupę";
+"peoplepicker.quick-action.create-guest-room" = "Kurti kambarį svečiams";
 
 "add_participants.all_contacts_added" = "Visi jau čia.";
 
@@ -314,6 +320,9 @@
 "content.system.conversation.team.member-leave" = "%@ buvo pašalintas iš komandos.";
 "content.system.conversation.guest.joined" = "%@ prisijungė";
 
+"content.system.conversation.invite.title" = "Žmonės nesantys jūsų komandoje gali prisijungti prie susirašinėjimo.";
+"content.system.conversation.invite.button" = "Pakviesti žmones";
+
 "content.system.other_renamed_conv_to_nothing" = "%@ ištrynė susirašinėjimo pavadinimą";
 "content.system.you_renamed_conv_to_nothing" = "Jūs ištrynėte susirašinėjimo pavadinimą";
 "content.system.pending_message_timestamp" = "Siunčiama…";
@@ -343,6 +352,7 @@
 "content.system.renamed_conv.title.you" = "Jūs";
 
 "content.system.conversation.with_name.title" = "%@ pradėjo susirašinėjimą";
+"content.system.conversation.with_name.title-you" = "%@ pradėjo susirašinėjimą";
 
 "content.system.conversation.with_name.participants" = "su %@";
 
@@ -397,12 +407,14 @@
 "content.message.go_to_conversation" = "Parodyti";
 "content.message.forward.to" = "Ieškoti…";
 "content.message.open" = "Atverti";
+"content.message.copy" = "Kopijuoti";
 
 "content.reactions_list.likers" = "Patinka";
 
 "content.file.too_big" = "Siunčiamų failų dydis negali viršyti %@";
 // Someone pinged
-"content.ping.text" = "%1$@ skambtelėjo";
+"content.ping.text" = "%@ skambtelėjo";
+"content.ping.text-you" = "%@ skambtelėjo";
 
 // Current user pinged
 "content.ping.text.you" = "Jūs";
@@ -473,6 +485,10 @@
 "meta.menu.silence.unmute" = "Įjungti pranešimus";
 "meta.menu.cancel" = "Atsisakyti";
 "meta.menu.cancel_connection_request" = "Atšaukti prašymą";
+"meta.menu.mark_unread" = "Žymėti kaip neskaitytą";
+"meta.menu.mark_read" = "Žymėti kaip skaitytą";
+"shortcut.mark_all_as_read.title" = "Žymėti visus kaip skaitytus";
+
 
 // Delete conversation
 "meta.menu.delete_content.dialog_title" = "Ištrinti turinį?";
@@ -571,7 +587,7 @@
 "participants.services.remove_integration.button" = "pašalinti integraciją";
 
 // Group details
-"group_details.guest_options_cell.title" = "Svečio nustatymai";
+"group_details.guest_options_cell.title" = "Svečių nustatymai";
 "group_details.guest_options_cell.enabled" = "Įjungta";
 "group_details.guest_options_cell.disabled" = "Išjungta";
 
@@ -900,11 +916,26 @@
 "guest_room.allow_guests.subtitle" = "Leiskite matyti šį susirašinėjimą žmonėms nesantiems komandoje.";
 "guest_room.remove_guests.message" = "Dabartiniai svečiai bus pašalinti iš susirašinėjimo. Nauji svečiai prisijungi negalės.";
 "guest_room.remove_guests.action" = "Pašalinti svečius";
-"guest_room.revoke_link.message" = "Nauji svečiai negalės prisijungti spustelėję nuorodą. Dabartiniai svečiai prisijungti galės.";
+"guest_room.revoke_link.message" = "Nauji svečiai negalės prisijungti spustelėję nuorodą. Dabartiniai svečiai liks prisijungę.";
 "guest_room.revoke_link.action" = "Atšaukti nuorodą";
 
 "guest_room.error.generic.title" = "Kažkas atsitiko";
 "guest_room.error.generic.message" = "Patikrinkite interneto ryšį ir bandykite dar kartą";
+
+"guest_room.link.header.title" = "Kviesti kitus su nuoroda";
+"guest_room.link.header.subtitle" = "Bet kas turintis nuorodą gali prisijungti prie susirašinėjimo, net jei neturi „Wire“.";
+
+"guest_room.link.button.title" = "Kurti nuorodą";
+
+"guest_room.actions.copy_link" = "Kopijuoti nuorodą";
+"guest_room.actions.copied_link" = "Nuoroda nukopijuota!";
+"guest_room.actions.share_link" = "Bendrinti nuorodą";
+"guest_room.actions.revoke_link" = "Atšaukti nuorodą";
+
+"guest_room.share.message" = "Bendraukime per „Wire“:\n%@";
+
+"guest_room.expiration.hours_left" = "Liko %@ val.";
+"guest_room.expiration.less_than_minutes_left" = "Liko mažiau nei %@ min.";
 
 // Registration
 
@@ -1133,3 +1164,14 @@
 "availability.available.placeholder" = "%@ yra prisijungęs";
 "availability.away.placeholder" = "%@ yra pasišalinęs";
 "availability.busy.placeholder" = "%@ yra užsiėmęs";
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Call Quality Survey
+
+"calling.quality_survey.title" = "Call Quality Feedback";
+"calling.quality_survey.question" = "Kaip bendrai vertinate šio pokalbio kokybę?";
+"calling.quality_survey.answer.1" = "Bloga";
+"calling.quality_survey.answer.2" = "Vidutinė";
+"calling.quality_survey.answer.3" = "Nebloga";
+"calling.quality_survey.answer.4" = "Gera";
+"calling.quality_survey.answer.5" = "Puiki";
