@@ -88,6 +88,7 @@ public class AddParticipantsViewController: UIViewController {
     fileprivate let collectionView : UICollectionView
     fileprivate let collectionViewLayout : UICollectionViewFlowLayout
     fileprivate let bottomContainer = UIView()
+    fileprivate let confirmButtonHeight: CGFloat = 46.0
     fileprivate let confirmButton : IconButton
     fileprivate let emptyResultLabel = UILabel()
     fileprivate var bottomConstraint: NSLayoutConstraint?
@@ -136,7 +137,7 @@ public class AddParticipantsViewController: UIViewController {
         collectionView.keyboardDismissMode = .onDrag
         collectionView.bounces = true
         collectionView.alwaysBounceVertical = true
-        
+
         confirmButton = IconButton()
         confirmButton.setIcon(ZetaIconType.convMetaAddPerson, with: .tiny, for: .normal)
         confirmButton.setIconColor(UIColor.wr_color(fromColorScheme: ColorSchemeColorIconNormal, variant: .dark), for: .normal)
@@ -147,7 +148,7 @@ public class AddParticipantsViewController: UIViewController {
         confirmButton.backgroundColor = UIColor.accent()
         confirmButton.contentHorizontalAlignment = .left
         confirmButton.setTitleImageSpacing(16, horizontalMargin: 24)
-        confirmButton.roundCorners = true
+        confirmButton.roundCorners = UIScreen.hasNotch
         
         
         bottomContainer.backgroundColor = UIColor.clear
@@ -220,8 +221,8 @@ public class AddParticipantsViewController: UIViewController {
     }
 
     func createConstraints() {
-        let margin = (searchResultsViewController.view as! SearchResultsView).accessoryViewMargin
-        
+        let margin = UIScreen.hasNotch ? (searchResultsViewController.view as! SearchResultsView).accessoryViewMargin : 0
+
         constrain(view, searchHeaderViewController.view, searchResultsViewController.view, confirmButton, bottomContainer) {
             container, searchHeaderView, searchResultsView, confirmButton, bottomContainer in
             
@@ -233,11 +234,11 @@ public class AddParticipantsViewController: UIViewController {
             searchResultsView.right == container.right
             searchResultsView.bottom == container.bottom
             
-            confirmButton.height == 46.0
+            confirmButton.height == self.confirmButtonHeight
             confirmButton.top == bottomContainer.top
             confirmButton.left == bottomContainer.left + margin
             confirmButton.right == bottomContainer.right - margin
-            self.bottomConstraint = confirmButton.bottom == bottomContainer.bottom - margin - UIScreen.safeArea.bottom
+            self.bottomConstraint = confirmButton.bottom == bottomContainer.bottom - UIScreen.safeArea.bottom
         }
         
         if viewModel.botCanBeAdded {
@@ -256,7 +257,7 @@ public class AddParticipantsViewController: UIViewController {
             }
         }
     }
-    
+
     private func updateValues() {
         confirmButton.setTitle(viewModel.confirmButtonTitle, for: .normal)
         updateTitle()
@@ -311,10 +312,11 @@ public class AddParticipantsViewController: UIViewController {
         let firstResponder = UIResponder.wr_currentFirst()
         let inputAccessoryHeight = firstResponder?.inputAccessoryView?.bounds.size.height ?? 0
         let margin = (searchResultsViewController.view as! SearchResultsView).accessoryViewMargin
-        
+        let bottomMargin = UIScreen.hasNotch ? margin : CGFloat(0)
+
         UIView.animate(withKeyboardNotification: notification, in: self.view, animations: { (keyboardFrameInView) in
             let keyboardHeight = keyboardFrameInView.size.height - inputAccessoryHeight
-            self.bottomConstraint?.constant = -margin - (keyboardHeight == 0 ? UIScreen.safeArea.bottom : CGFloat(0))
+            self.bottomConstraint?.constant = -(keyboardHeight == 0 ? UIScreen.safeArea.bottom : bottomMargin)
             self.view.layoutIfNeeded()
         }, completion: nil)
     }

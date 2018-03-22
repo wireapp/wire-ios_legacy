@@ -68,8 +68,8 @@ class SearchResultsView : UIView {
             collectionView.top == container.top
             collectionView.left == container.left
             collectionView.right == container.right
-            
-            accessoryContainer.top == collectionView.bottom
+            collectionView.bottom == container.bottom
+
             accessoryContainer.left == container.left
             accessoryContainer.right == container.right
             accessoryContainerHeightConstraint = accessoryContainer.height == 0
@@ -108,6 +108,8 @@ class SearchResultsView : UIView {
             else {
                 accessoryContainerHeightConstraint?.isActive = true
             }
+
+            updateContentInset()
         }
     }
     
@@ -140,6 +142,22 @@ class SearchResultsView : UIView {
             self.accessoryViewBottomOffsetConstraint?.constant = -keyboardHeight
             self.layoutIfNeeded()
         }, completion: nil)
+    }
+
+    private func updateContentInset() {
+
+        if let accessoryView = self.accessoryView {
+            accessoryView.layoutIfNeeded()
+            let bottomInset = (UIScreen.hasNotch ? accessoryViewMargin : 0) + accessoryView.frame.height - UIScreen.safeArea.bottom
+
+            // Add padding at the bottom of the screen
+            collectionView.contentInset.bottom = bottomInset
+            collectionView.scrollIndicatorInsets.bottom  = bottomInset
+        } else {
+            collectionView.contentInset.bottom = 0
+            collectionView.scrollIndicatorInsets.bottom = 0
+        }
+
     }
     
 }
