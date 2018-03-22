@@ -91,7 +91,11 @@ class AppStateController : NSObject {
     func updateAppState(completion: (() -> Void)? = nil) {
         let newAppState = calculateAppState()
         
-        if newAppState != .unauthenticated(error: nil) {
+        switch newAppState {
+        case .unauthenticated:
+            break;
+        default:
+            // only clear the error when transitioning out of the unauthenticated state
             authenticationError = nil
         }
         
