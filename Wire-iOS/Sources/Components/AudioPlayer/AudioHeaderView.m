@@ -20,6 +20,7 @@
 @import PureLayout;
 
 #import "AudioHeaderView.h"
+#import "Wire-Swift.h"
 @import WireExtensionComponents;
 
 
@@ -45,10 +46,14 @@
     if (self) {
         self.artistLabel = [[UILabel alloc] initForAutoLayout];
         self.artistLabel.lineBreakMode = NSLineBreakByTruncatingTail;
+        self.artistLabel.textColor = [UIColor wr_colorFromColorScheme:ColorSchemeColorTextForeground variant:ColorSchemeVariantDark];
+        self.artistLabel.font = UIFont.smallLightFont;
         [self addSubview:self.artistLabel];
         
         self.trackTitleLabel = [[UILabel alloc] initForAutoLayout];
         self.trackTitleLabel.lineBreakMode = NSLineBreakByTruncatingMiddle;
+        self.trackTitleLabel.textColor = [UIColor wr_colorFromColorScheme:ColorSchemeColorTextForeground variant:ColorSchemeVariantDark];
+        self.trackTitleLabel.font = UIFont.smallSemiboldFont;
         [self addSubview:self.trackTitleLabel];
         
         self.providerImageContainer = [[UIView alloc] initForAutoLayout];

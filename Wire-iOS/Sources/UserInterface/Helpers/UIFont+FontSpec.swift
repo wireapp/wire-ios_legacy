@@ -36,6 +36,10 @@ extension UIFont {
         return FontSpec(.small, .medium).font!
     }
     
+    class var smallSemiboldFont: UIFont {
+        return FontSpec(.small, .medium).font!
+    }
+    
 
     // MARK: - Normal
     

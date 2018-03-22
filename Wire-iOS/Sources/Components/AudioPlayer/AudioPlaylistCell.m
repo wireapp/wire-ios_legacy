@@ -17,7 +17,7 @@
 // 
 
 
-#import <Classy/Classy.h>
+#import "Wire-Swift.h"
 @import PureLayout;
 
 #import "AudioPlaylistCell.h"
@@ -32,6 +32,7 @@
     
     if (self) {
         self.selectionStyle = UITableViewCellSelectionStyleNone;
+        self.backgroundColor = UIColor.clearColor;
         
         [self createViews];
         [self createConstraints];
@@ -44,35 +45,41 @@
 {
     [super setSelected:selected animated:animated];
     
-    [self updateStyleClass];
+    [self updateStyle];
 }
 
 - (void)setHighlighted:(BOOL)highlighted animated:(BOOL)animated
 {
     [super setHighlighted:highlighted animated:animated];
     
-    [self updateStyleClass];
+    [self updateStyle];
 }
 
-- (void)updateStyleClass
+- (void)updateStyle
 {
+    self.titleLabel.font = UIFont.smallRegularFont;
+    self.titleLabel.textColor =  [UIColor wr_colorFromColorScheme:ColorSchemeColorTextForeground variant:ColorSchemeVariantDark];
+    self.durationLabel.textColor =  [UIColor wr_colorFromColorScheme:ColorSchemeColorTextDimmed variant:ColorSchemeVariantLight];
+    
     if (self.highlighted) {
-        self.cas_styleClass = @"highlighted";
+        self.titleLabel.textColor =  [UIColor accentColor];
     }
     else if (self.selected) {
-        self.cas_styleClass = @"selected";
-    }
-    else {
-        self.cas_styleClass = nil;
+        self.durationLabel.textColor = [UIColor wr_colorFromColorScheme:ColorSchemeColorTextForeground variant:ColorSchemeVariantDark];
+        self.titleLabel.font = UIFont.smallSemiboldFont;
     }
 }
 
 - (void)createViews
 {
     self.titleLabel = [[UILabel alloc] initForAutoLayout];
+    self.titleLabel.font = UIFont.smallRegularFont;
+    self.titleLabel.textColor =  [UIColor wr_colorFromColorScheme:ColorSchemeColorTextForeground variant:ColorSchemeVariantDark];
     [self.contentView addSubview:self.titleLabel];
     
     self.durationLabel = [[UILabel alloc] initForAutoLayout];
+    self.durationLabel.font = UIFont.smallRegularFont;
+    self.durationLabel.textColor =  [UIColor wr_colorFromColorScheme:ColorSchemeColorTextDimmed variant:ColorSchemeVariantLight];
     [self.contentView addSubview:self.durationLabel];
 }
 

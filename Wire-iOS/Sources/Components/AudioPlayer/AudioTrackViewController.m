@@ -18,7 +18,6 @@
 
 
 @import PureLayout;
-#import <Classy/Classy.h>
 
 #import "AudioTrackViewController.h"
 #import "AudioHeaderView.h"
@@ -103,6 +102,8 @@
     
     _subtitleLabel = [[UILabel alloc] initForAutoLayout];
     self.subtitleLabel.textAlignment = NSTextAlignmentCenter;
+    self.subtitleLabel.textColor = [UIColor wr_colorFromColorScheme:ColorSchemeColorTextForeground variant:ColorSchemeVariantDark];
+    self.subtitleLabel.font = UIFont.smallRegularFont;
     [self.blurEffectView.contentView addSubview:self.subtitleLabel];
     
     [self.audioTrackView.playPauseButton addTarget:self action:@selector(playPause:) forControlEvents:UIControlEventTouchUpInside];
@@ -188,11 +189,11 @@
     [self updateViews];
     
     if (self.audioTrack.failedToLoad || self.audioTrack == nil) {
-        self.view.cas_styleClass = @"failed";
+        self.view.backgroundColor = UIColor.blackColor;
         self.audioTrackView.failedToLoad = YES;
     }
     else {
-        self.view.cas_styleClass = nil;
+        self.view.backgroundColor = UIColor.soundcloudOrange;
         self.audioTrackView.failedToLoad = NO;
     }
     [self updateSubtitle];
