@@ -22,6 +22,8 @@
 @import PureLayout;
 #import "IconButton.h"
 #import "NSLayoutConstraint+Helpers.h"
+#import "UIColor+WR_ColorScheme.h"
+#import "Wire-Swift.h"
 
 
 
@@ -46,6 +48,11 @@
     self.leftButton = [IconButton iconButtonCircular];
     self.leftButton.translatesAutoresizingMaskIntoConstraints = NO;
     self.leftButton.accessibilityIdentifier = @"left_button";
+    self.leftButton.titleEdgeInsets = UIEdgeInsetsMake(0, 15, 0, -16);
+    self.leftButton.contentEdgeInsets = UIEdgeInsetsMake(0, 0, 0, 16);
+    [self.leftButton setTitleColor:[UIColor wr_colorFromColorScheme:ColorSchemeColorTextForeground] forState:UIControlStateNormal];
+    [self.leftButton setTitleColor:[UIColor wr_colorFromColorScheme:ColorSchemeColorTextDimmed] forState:UIControlStateHighlighted];
+    self.leftButton.titleLabel.font = UIFont.smallLightFont;
     [self addSubview:self.leftButton];
     
     self.rightButton = [IconButton iconButtonCircular];

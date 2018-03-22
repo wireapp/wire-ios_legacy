@@ -71,34 +71,6 @@ IconButton.emoji-backspace {
     borderWidth: 0.0;
 }
 
-/* Profile */
-
-ProfileViewController {
-    view: @{
-        backgroundColor: $color-bar-background;
-    }
-    topSeparatorLineView: @{
-        backgroundColor: $color-separator;
-    }
-}
-
-ProfileViewController UserImageView {
-    borderWidth: 1;
-    borderColor: rgb(0, 0, 0, 0.08);
-}
-
-ProfileFooterView {
-    leftButton: @{
-        contentEdgeInsets: 0 0 0 16
-        titleEdgeInsets: 0 16 0 -16
-        titleColor[state:normal]: $color-text-foreground;
-        titleColor[state:highlighted]: $color-text-dimmed;
-        titleLabel: @{
-            font: $font-small-light;
-        }
-    }
-}
-
 UserNameTakeOverViewController {
     view: @{
         backgroundColor: clear;

@@ -177,6 +177,8 @@ typedef NS_ENUM(NSUInteger, ProfileUserAction) {
     self.userImageView.translatesAutoresizingMaskIntoConstraints = NO;
     self.userImageView.size = UserImageViewSizeBig;
     self.userImageView.user = self.bareUser;
+    self.userImageView.imageView.layer.borderWidth = 1;
+    self.userImageView.imageView.layer.borderColor = [UIColor colorWithWhite:0 alpha:0.08].CGColor;
 }
 
 - (void)createGuestIndicator
