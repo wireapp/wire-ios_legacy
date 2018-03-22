@@ -34,8 +34,8 @@
 "share_extension.timeout.title" = "連線逾時。";
 "share_extension.timeout.message" = "請檢查您的互聯網連接並重試。附件會保存在對話中。";
 "share_extension.privacy_security.lock_app.description" = "解鎖Wire";
-"share_extension.logged_out.title" = "You've been logged out from this account.";
-"share_extension.logged_out.message" = "Please choose another account.";
+"share_extension.logged_out.title" = "您已登出此帳戶。";
+"share_extension.logged_out.message" = "請選擇另一帳戶";
 
 "conversation.displayname.emptygroup" = "空聊天室";
 "meta.degraded.degradation_reason_message.singular" = "%@開始使用新設備。";
