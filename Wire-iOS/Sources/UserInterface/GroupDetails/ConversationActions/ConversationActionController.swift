@@ -92,7 +92,7 @@
             case .leave: self.request(LeaveResult.self) { result in
                 self.handleLeaveResult(result, for: self.conversation)
                 }
-            case .delete: self.request(DeleteResult.self) { result in
+            case .delete: self.requestDeleteResult(for: self.conversation) { result in
                 self.handleDeleteResult(result, for: self.conversation)
                 }
             case .cancelRequest:

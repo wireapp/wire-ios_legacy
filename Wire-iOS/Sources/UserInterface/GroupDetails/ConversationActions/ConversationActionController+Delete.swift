@@ -18,7 +18,7 @@
 
 import Foundation
 
-enum DeleteResult: AlertResultConfiguration {
+enum DeleteResult {
     case delete(leave: Bool), cancel
     
     var title: String {
@@ -46,14 +46,24 @@ enum DeleteResult: AlertResultConfiguration {
         return "meta.menu.delete_content.dialog_message".localized
     }
     
-    static var all: [DeleteResult] {
-        return [.delete(leave: true), .delete(leave: false), .cancel]
+    static func options(for conversation: ZMConversation) -> [DeleteResult] {
+        if conversation.conversationType == .oneOnOne {
+            return [.delete(leave: true), .delete(leave: false), .cancel]
+        } else {
+            return [.delete(leave: false), .cancel]
+        }
     }
 }
 
 extension ConversationActionController {
     
- func handleDeleteResult(_ result: DeleteResult, for conversation: ZMConversation) {
+    func requestDeleteResult(for conversation: ZMConversation, handler: @escaping (DeleteResult) -> Void) {
+        let controller = UIAlertController(title: DeleteResult.title, message: nil, preferredStyle: .actionSheet)
+        DeleteResult.options(for: conversation) .map { $0.action(handler) }.forEach(controller.addAction)
+        present(controller)
+    }
+    
+    func handleDeleteResult(_ result: DeleteResult, for conversation: ZMConversation) {
         guard case .delete(leave: let leave) = result else { return }
         transitionToListAndEnqueue { [weak self] in
             conversation.clearMessageHistory()
