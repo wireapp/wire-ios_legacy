@@ -27,8 +27,7 @@ extension Analytics {
     
     internal func tagSettingsChanged(for propertyName: SettingsPropertyName, to value: SettingsPropertyValue) {
         guard let value = value.value(),
-              propertyName != SettingsPropertyName.lockAppLastDate &&
-                propertyName != SettingsPropertyName.disableCrashAndAnalyticsSharing else {
+              propertyName != SettingsPropertyName.lockAppLastDate else {
             return
         }
         let attributes = [settingsChangeEventPropertyName: propertyName,
