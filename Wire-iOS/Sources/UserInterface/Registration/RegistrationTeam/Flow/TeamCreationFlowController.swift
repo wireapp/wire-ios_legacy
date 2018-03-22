@@ -97,6 +97,7 @@ extension TeamCreationFlowController {
         case .setTeamName:
             nextState = nil // Nothing to do
         case .setEmail:
+            tracker.tagTeamCreationAddedTeamName()
             pushNext() // Pushing email step
         case let .verifyEmail(teamName: _, email: email):
             currentController?.showLoadingView = true
