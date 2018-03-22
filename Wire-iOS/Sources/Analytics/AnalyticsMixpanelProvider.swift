@@ -83,6 +83,7 @@ final class AnalyticsMixpanelProvider: NSObject, AnalyticsProvider {
         "team.verified",
         "team.accepted_terms",
         "team.created",
+        "team.added_team_name",
         "team.finished_invite_step",
         "settings.opened_manage_team",
         "registration.succeeded",
