@@ -22,6 +22,8 @@
 "general.cancel" = "Atsisakyti";
 "general.close" = "Užverti";
 "general.open_settings" = "Atidaryti Wire nustatymus";
+"general.edit" = "Taisyti";
+"general.done" = "Baigta";
 
 "general.guest-room-name" = "Svečių kambarys";
 
@@ -350,6 +352,7 @@
 "content.system.renamed_conv.title.you" = "Jūs";
 
 "content.system.conversation.with_name.title" = "%@ pradėjo susirašinėjimą";
+"content.system.conversation.with_name.title-you" = "%@ pradėjo susirašinėjimą";
 
 "content.system.conversation.with_name.participants" = "su %@";
 
@@ -1165,7 +1168,7 @@
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Call Quality Survey
 
-"calling.quality_survey.title" = "Pokalbio kokybės apklausa";
+"calling.quality_survey.title" = "Call Quality Feedback";
 "calling.quality_survey.question" = "Kaip bendrai vertinate šio pokalbio kokybę?";
 "calling.quality_survey.answer.1" = "Bloga";
 "calling.quality_survey.answer.2" = "Vidutinė";

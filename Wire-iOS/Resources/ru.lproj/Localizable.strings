@@ -22,6 +22,8 @@
 "general.cancel" = "Отменить";
 "general.close" = "Закрыть";
 "general.open_settings" = "Открыть настройки Wire";
+"general.edit" = "Редактировать";
+"general.done" = "Готово";
 
 "general.guest-room-name" = "Гостевая комната";
 
@@ -51,7 +53,7 @@
 "peoplepicker.services.add_service.button" = "Добавить службу";
 "peoplepicker.services.add_service.error.title" = "Не удается добавить службу";
 "peoplepicker.services.add_service.error.default" = "В данный момент служба недоступна";
-"peoplepicker.services.add_service.error.full" = "The conversation is full";
+"peoplepicker.services.add_service.error.full" = "Разговор переполнен";
 
 "peoplepicker.title.create_conversation" = "Создать группу";
 "peoplepicker.title.add_to_conversation" = "Добавить людей";
@@ -350,6 +352,7 @@
 "content.system.renamed_conv.title.you" = "Вы";
 
 "content.system.conversation.with_name.title" = "%@ начал разговор";
+"content.system.conversation.with_name.title-you" = "%@ начал разговор";
 
 "content.system.conversation.with_name.participants" = "с %@";
 
@@ -931,8 +934,8 @@
 
 "guest_room.share.message" = "Присоединяйтесь ко мне в Wire:\n%@";
 
-"guest_room.expiration.hours_left" = "%@h left";
-"guest_room.expiration.less_than_minutes_left" = "Less than %@m left";
+"guest_room.expiration.hours_left" = "Осталось %@ час.";
+"guest_room.expiration.less_than_minutes_left" = "Осталось менее %@ мин.";
 
 // Registration
 
@@ -1165,7 +1168,7 @@
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Call Quality Survey
 
-"calling.quality_survey.title" = "Опрос качества обслуживания";
+"calling.quality_survey.title" = "Обратная связь";
 "calling.quality_survey.question" = "Как вы оцените общее качество обслуживания?";
 "calling.quality_survey.answer.1" = "Ужасно";
 "calling.quality_survey.answer.2" = "Плохо";

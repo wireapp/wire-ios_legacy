@@ -22,6 +22,8 @@
 "general.cancel" = "Cancelar";
 "general.close" = "Fechar";
 "general.open_settings" = "Abrir Ajustes do Wire";
+"general.edit" = "Editar";
+"general.done" = "Pronto";
 
 "general.guest-room-name" = "Group de convidados";
 
@@ -350,6 +352,7 @@
 "content.system.renamed_conv.title.you" = "Você";
 
 "content.system.conversation.with_name.title" = "%@ iniciou a conversa";
+"content.system.conversation.with_name.title-you" = "%@ iniciou a conversa";
 
 "content.system.conversation.with_name.participants" = "com %@";
 
@@ -1165,7 +1168,7 @@
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Call Quality Survey
 
-"calling.quality_survey.title" = "Pesquisa de Qualidade da Chamada";
+"calling.quality_survey.title" = "Call Quality Feedback";
 "calling.quality_survey.question" = "Como você avalia a qualidade da chamada em geral?";
 "calling.quality_survey.answer.1" = "Muito Ruim";
 "calling.quality_survey.answer.2" = "Ruim";

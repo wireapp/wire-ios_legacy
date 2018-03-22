@@ -22,6 +22,8 @@
 "general.cancel" = "Annulla";
 "general.close" = "Chiudi";
 "general.open_settings" = "Apri le impostazioni di Wire";
+"general.edit" = "Modifica";
+"general.done" = "Fatto";
 
 "general.guest-room-name" = "Stanza degli ospiti";
 
@@ -350,6 +352,7 @@
 "content.system.renamed_conv.title.you" = "Tu";
 
 "content.system.conversation.with_name.title" = "%@ ha iniziato la conversatione";
+"content.system.conversation.with_name.title-you" = "%@ ha iniziato la conversatione";
 
 "content.system.conversation.with_name.participants" = "con %@";
 
@@ -404,7 +407,7 @@
 "content.message.go_to_conversation" = "Mostra";
 "content.message.forward.to" = "Ricerca…";
 "content.message.open" = "Apri";
-"content.message.copy" = "Copy";
+"content.message.copy" = "Copia";
 
 "content.reactions_list.likers" = "Piace a";
 
@@ -482,9 +485,9 @@
 "meta.menu.silence.unmute" = "Riattiva audio";
 "meta.menu.cancel" = "Annulla";
 "meta.menu.cancel_connection_request" = "Annulla richiesta";
-"meta.menu.mark_unread" = "Mark as Unread";
-"meta.menu.mark_read" = "Mark as Read";
-"shortcut.mark_all_as_read.title" = "Mark All as Read";
+"meta.menu.mark_unread" = "Segna come non letto";
+"meta.menu.mark_read" = "Segna come letto";
+"shortcut.mark_all_as_read.title" = "Segna tutti come letti";
 
 
 // Delete conversation
@@ -920,7 +923,7 @@
 "guest_room.error.generic.message" = "Controlla la tua connessione e riprova";
 
 "guest_room.link.header.title" = "Invita altre persone con un link";
-"guest_room.link.header.subtitle" = "Anyone with the link can join the conversation, even if they don't have Wire.";
+"guest_room.link.header.subtitle" = "Chiunque ha il link può unirsi alla conversazione, anche se non ha Wire.";
 
 "guest_room.link.button.title" = "Crea un link";
 
@@ -1165,7 +1168,7 @@
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Call Quality Survey
 
-"calling.quality_survey.title" = "Sondaggio sulla qualità della chiamata";
+"calling.quality_survey.title" = "Call Quality Feedback";
 "calling.quality_survey.question" = "Come giudichi la qualità complessiva della chiamata?";
 "calling.quality_survey.answer.1" = "Scarsa";
 "calling.quality_survey.answer.2" = "Insufficiente";

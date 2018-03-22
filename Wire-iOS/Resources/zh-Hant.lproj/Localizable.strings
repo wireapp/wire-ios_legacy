@@ -22,6 +22,8 @@
 "general.cancel" = "取消";
 "general.close" = "關閉";
 "general.open_settings" = "開啟Wire設定";
+"general.edit" = "編輯";
+"general.done" = "完成";
 
 "general.guest-room-name" = "訪客聊天室";
 
@@ -261,7 +263,7 @@
 
 // Camera and photos access, keyboard
 "keyboard_photos_access.denied.keyboard.settings" = "設定";
-"keyboard_photos_access.denied.keyboard.camera_and_photos" = "Wire需要使用你的相機和照片。"; // split text on two lines for a better text balance
+"keyboard_photos_access.denied.keyboard.camera_and_photos" = "Wire需要使用你的\n相機和照片。"; // split text on two lines for a better text balance
 "keyboard_photos_access.denied.keyboard.photos" = "Wire需要使用你的相機。";
 "keyboard_photos_access.denied.keyboard.camera" = "Wire需要你授權相機權限。";
 
@@ -350,6 +352,7 @@
 "content.system.renamed_conv.title.you" = "您";
 
 "content.system.conversation.with_name.title" = "%@開啓了聊天室";
+"content.system.conversation.with_name.title-you" = "%@開啓了聊天室";
 
 "content.system.conversation.with_name.participants" = "與%@";
 
@@ -489,7 +492,7 @@
 
 // Delete conversation
 "meta.menu.delete_content.dialog_title" = "確定刪除內容？";
-"meta.menu.delete_content.dialog_message" = "這將清除所有設備上的會話歷史。";
+"meta.menu.delete_content.dialog_message" = "這將清除你所有設備上的會話歷史。";
 "meta.menu.delete_content.leave_as_well_message" = "離開聊天室";
 "meta.menu.delete_content.button_cancel" = "取消";
 "meta.menu.delete_content.button_delete" = "刪除";
@@ -1005,7 +1008,7 @@
 
 "registration.signin.title" = "登入";
 "registration.signin.too_many_devices.title" = "";
-"registration.signin.too_many_devices.subtitle" = "使用此設備前，請先移除您任一其他設備。";
+"registration.signin.too_many_devices.subtitle" = "在此設備使用Wire前，請先移除您任一其他設備。";
 "registration.signin.too_many_devices.manage_button.title" = "管理設備";
 "registration.signin.too_many_devices.sign_out_button.title" = "登出";
 "registration.signin.email_button.title" = "電子郵件";
@@ -1165,7 +1168,7 @@
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Call Quality Survey
 
-"calling.quality_survey.title" = "通話品質調查";
+"calling.quality_survey.title" = "通話品質回報";
 "calling.quality_survey.question" = "你如何評價整個通話過程的品質？";
 "calling.quality_survey.answer.1" = "糟透了";
 "calling.quality_survey.answer.2" = "差";

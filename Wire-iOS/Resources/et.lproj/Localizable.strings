@@ -22,6 +22,8 @@
 "general.cancel" = "Tühista";
 "general.close" = "Sulge";
 "general.open_settings" = "Ava Wire sätted";
+"general.edit" = "Muuda";
+"general.done" = "Valmis";
 
 "general.guest-room-name" = "Külalistetuba";
 
@@ -350,6 +352,7 @@
 "content.system.renamed_conv.title.you" = "Sina";
 
 "content.system.conversation.with_name.title" = "%@ alustas vestlust";
+"content.system.conversation.with_name.title-you" = "%@ alustas vestlust";
 
 "content.system.conversation.with_name.participants" = "with %@";
 
@@ -1165,7 +1168,7 @@
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Call Quality Survey
 
-"calling.quality_survey.title" = "Kõne kvaliteedi uuring";
+"calling.quality_survey.title" = "Kõne kvaliteedi tagasiside";
 "calling.quality_survey.question" = "Kuidas sa hindad kõne üldist kvaliteeti?";
 "calling.quality_survey.answer.1" = "Halb";
 "calling.quality_survey.answer.2" = "Kehv";
