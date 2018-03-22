@@ -298,7 +298,7 @@ class MarkdownTextView: NextResponderTextView {
     // MARK: - List Regex
     
     private lazy var emptyListItemRegex: NSRegularExpression = {
-        let pattern = "^((\\d+\\.)|[*+-])[\\t ]*$"
+        let pattern = "^((\\d+\\.)|[•*+-])[\\t ]*$"
         return try! NSRegularExpression(pattern: pattern, options: .anchorsMatchLines)
     }()
     
@@ -309,7 +309,7 @@ class MarkdownTextView: NextResponderTextView {
     
     private lazy var unorderedListItemRegex: NSRegularExpression = {
         // group 1: prefix, group 2: bullet, group 3: content
-        return try! NSRegularExpression(pattern: "^(([*+-])\\ )(.*$)", options: .anchorsMatchLines)
+        return try! NSRegularExpression(pattern: "^(([•*+-])\\ )(.*$)", options: .anchorsMatchLines)
     }()
     
     // MARK: - List Methods

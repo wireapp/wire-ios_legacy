@@ -633,7 +633,7 @@ final class MarkdownTextViewTests: XCTestCase {
     }
     
     func testThatSelectingListBelowExistingItemInsertsNewItemWithCorrectPrefix_Bullet() {
-        ["- ", "+ ", "* "].forEach {
+        ["• ", "- ", "+ ", "* "].forEach {
             // GIVEN
             insertText($0 + "Oh Hai!\n")
             insertText("OK Bai!")
