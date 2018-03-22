@@ -187,9 +187,4 @@ NSString *const MediaPlaybackManagerPlayerStateChangedNotification = @"MediaPlay
     [self.changeObserver activeMediaPlayerTitleDidChange];
 }
 
-- (void)activeMediaPlayerStateChanged:(NSDictionary *)change
-{
-    [self.changeObserver activeMediaPlayerStateDidChange];
-}
-
 @end
