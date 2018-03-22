@@ -44,6 +44,7 @@ public final class QuickActionsManager: NSObject {
     
     func updateQuickActions() {
         guard DeveloperMenuState.developerMenuEnabled() else {
+            application.shortcutItems = []
             return
         }
         
