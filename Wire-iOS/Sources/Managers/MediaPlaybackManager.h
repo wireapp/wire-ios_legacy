@@ -31,11 +31,11 @@ FOUNDATION_EXPORT NSString *const MediaPlaybackManagerPlayerStateChangedNotifica
 /// An object that observes changes in the media playback manager.
 @protocol MediaPlaybackManagerChangeObserver
 
-/// A media player did become active.
-- (void)mediaPlaybackManager:(MediaPlaybackManager *)mediaPlaybackManager didStartMediaPlayer:(id<MediaPlayer>)mediaPlayer;
+/// The title of the active media player changed.
+- (void)activeMediaPlayerTitleDidChange;
 
-/// The media player did become inactive.
-- (void)mediaPlaybackManager:(MediaPlaybackManager *)mediaPlaybackManager didRemoveMediaPlayer:(id<MediaPlayer>)mediaPlayer;
+/// The state of the active media player changes.
+- (void)activeMediaPlayerStateDidChange;
 
 @end
 

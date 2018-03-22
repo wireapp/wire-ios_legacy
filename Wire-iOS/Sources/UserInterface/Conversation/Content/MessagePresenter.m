@@ -43,7 +43,6 @@
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
-    [self.wr_playerController tearDown];
     self.wr_playerController = nil;
 }
 

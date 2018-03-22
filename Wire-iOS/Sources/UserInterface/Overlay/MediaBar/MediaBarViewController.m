@@ -35,20 +35,9 @@
 @property (nonatomic) MediaPlaybackManager *mediaPlaybackManager;
 @property (nonatomic, readonly) MediaBar *mediaBarView;
 
-@property (nonatomic) NSObject *mediaPlaybackStateObserver;
-@property (nonatomic) NSObject *mediaTitleObserver;
-
 @end
 
 @implementation MediaBarViewController
-
-- (void)dealloc
-{
-    // Observer must be deallocated before `mediaPlaybackManager`
-    self.mediaTitleObserver = nil;
-    self.mediaPlaybackStateObserver = nil;
-    self.mediaPlaybackManager = nil;
-}
 
 - (instancetype)initWithMediaPlaybackManager:(MediaPlaybackManager *)mediaPlaybackManager
 {
@@ -117,48 +106,18 @@
     [self.mediaPlaybackManager stop];
 }
 
-#pragma mark - MediaPlaybackStateObserver
+#pragma mark - MediaPlaybackManagerChangeObserver
 
-- (void)registerObservers
-{
-    self.mediaPlaybackStateObserver = [KeyValueObserver observeObject:self.mediaPlaybackManager
-                                                              keyPath:@"activeMediaPlayer.state"
-                                                               target:self
-                                                             selector:@selector(mediaPlaybackStateChanged:)
-                                                              options:NSKeyValueObservingOptionInitial | NSKeyValueObservingOptionNew];
-
-    self.mediaTitleObserver = [KeyValueObserver observeObject:self.mediaPlaybackManager
-                                                      keyPath:@"activeMediaPlayer.title"
-                                                       target:self
-                                                     selector:@selector(mediaTitleChanged:)
-                                                      options:NSKeyValueObservingOptionOld | NSKeyValueObservingOptionNew];
-}
-
-- (void)mediaPlaybackStateChanged:(NSDictionary *)change
-{
-    [self updatePlayPauseButton];
-}
-
-- (void)mediaTitleChanged:(NSDictionary *)change
+- (void)activeMediaPlayerTitleDidChange
 {
     if (self.mediaPlaybackManager.activeMediaPlayer) {
         self.mediaBarView.titleLabel.text = [self.mediaPlaybackManager.activeMediaPlayer.title uppercasedWithCurrentLocale];
     }
 }
 
-#pragma mark - MediaPlaybackManagerChangeObserver
-
-/// A media player did become active.
-- (void)mediaPlaybackManager:(MediaPlaybackManager *)mediaPlaybackManager didStartMediaPlayer:(id<MediaPlayer>)mediaPlayer
+- (void)activeMediaPlayerStateDidChange
 {
-    [self registerObservers];
-}
-
-/// The media player did become inactive.
-- (void)mediaPlaybackManager:(MediaPlaybackManager *)mediaPlaybackManager didRemoveMediaPlayer:(id<MediaPlayer>)mediaPlayer
-{
-    self.mediaTitleObserver = nil;
-    self.mediaPlaybackStateObserver = nil;
+    [self updatePlayPauseButton];
 }
 
 @end
