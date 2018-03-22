@@ -332,6 +332,7 @@ extern CGRect WireStyleKitResizingBehaviorApply(WireStyleKitResizingBehavior beh
 + (UIImage*)imageOfWireWithColor: (UIColor*)color;
 + (UIImage*)imageOfShieldverified;
 + (UIImage*)imageOfShieldnotverified;
++ (UIImage*)imageOfShieldWithColor: (UIColor*)color;
 + (UIImage*)imageOfSpaceFocusWithColor: (UIColor*)color;
 + (UIImage*)imageOfTabWithColor: (UIColor*)color;
 
