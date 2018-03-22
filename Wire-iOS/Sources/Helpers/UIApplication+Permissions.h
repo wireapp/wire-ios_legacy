@@ -26,5 +26,6 @@ extern NSString * const UserGrantedAudioPermissionsNotification;
 + (void)wr_requestOrWarnAboutMicrophoneAccess:(void(^)(BOOL granted))grantedHandler;
 + (void)wr_requestOrWarnAboutVideoAccess:(void(^)(BOOL granted))grantedHandler;
 + (void)wr_requestVideoAccess:(void(^)(BOOL granted))grantedHandler;
++ (void)wr_requestOrWarnAboutPhotoLibraryAccess:(void(^)(BOOL granted))grantedHandler;
 
 @end

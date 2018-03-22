@@ -21,7 +21,7 @@ import Photos
 
 @objc final public class SavableImage: NSObject {
 
-    public typealias ImageSaveCompletion = () -> Void
+    public typealias ImageSaveCompletion = (Bool) -> Void
     
     fileprivate let imageData: Data
     fileprivate let imageOrientation: UIImageOrientation
@@ -36,19 +36,38 @@ import Photos
     public func saveToLibrary(withCompletion completion: ImageSaveCompletion? = .none) {
         guard !writeInProgess else { return }
         writeInProgess = true
-        
-        PHPhotoLibrary.shared().performChanges({ [weak self] in
-            guard let `self` = self, let image = UIImage(data: self.imageData) else {
+
+        UIApplication.wr_requestOrWarnAboutPhotoLibraryAccess { granted in
+            guard granted else {
+                completion?(false)
                 return
             }
-            
-            PHAssetChangeRequest.creationRequestForAsset(from: image)
-        }) { [weak self] success, error in
-            DispatchQueue.main.async {
-                self?.writeInProgess = false
-                completion?()
+
+            PHPhotoLibrary.shared().performChanges({ [weak self] in
+                guard let `self` = self, let image = UIImage(data: self.imageData) else {
+                    return
+                }
+
+                PHAssetChangeRequest.creationRequestForAsset(from: image)
+            }) { [weak self] success, error in
+                DispatchQueue.main.async {
+                    self?.writeInProgess = false
+                    if let error = error {
+                        self?.warnAboutError(error)
+                    }
+                    completion?(success)
+                }
             }
         }
+
+    }
+
+    private func warnAboutError(_ error: Error) {
+        let alert = UIAlertController(title: "library.alert.permission_warning.title".localized,
+                                      message: (error as NSError).localizedDescription,
+                                      cancelButtonTitle: "general.ok".localized)
+
+        AppDelegate.shared().notificationsWindow?.rootViewController?.present(alert, animated: true, completion: nil)
     }
 
 }

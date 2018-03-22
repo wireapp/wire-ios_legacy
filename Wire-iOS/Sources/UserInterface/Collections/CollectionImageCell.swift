@@ -161,7 +161,7 @@ final public class CollectionImageCell: CollectionCell {
         }
         
         saveableImage = SavableImage(data: imageData, orientation: orientation)
-        saveableImage?.saveToLibrary(withCompletion: { [weak self] in
+        saveableImage?.saveToLibrary(withCompletion: { [weak self] _ in
             self?.saveableImage = nil
         })
     }

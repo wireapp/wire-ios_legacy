@@ -534,8 +534,8 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
         [savableImage saveToLibraryWithCompletion:nil];
     }
     else {
-        [cell.savableImage saveToLibraryWithCompletion:^{
-            if (nil != self.view.window) {
+        [cell.savableImage saveToLibraryWithCompletion:^(BOOL success) {
+            if (nil != self.view.window && success == YES) {
                 UIView *snapshot = [cell.fullImageView snapshotViewAfterScreenUpdates:YES];
                 snapshot.translatesAutoresizingMaskIntoConstraints = YES;
                 CGRect sourceRect = [self.view convertRect:cell.fullImageView.frame fromView:cell.fullImageView.superview];
