@@ -71,32 +71,6 @@ IconButton.emoji-backspace {
     borderWidth: 0.0;
 }
 
-MediaBar {
-    backgroundColor: $color-background;
-    UILabel {
-        font: $font-small;
-        textColor: $color-text-foreground;
-    }
-    
-    bottomSeparatorLine @{
-        backgroundColor: $color-separator;
-    }
-}
-
-BrowserBarView {
-    backgroundColor: $color-background;
-    
-    titleLabel: @{
-        font: $font-small;
-        textColor: $color-text-foreground;
-        textAlignment: center;
-    }
-    
-    progressLayer: @{
-        strokeColor: $color-accent-current;
-    }
-}
-
 /* Sketch related */
 
 CanvasViewController {

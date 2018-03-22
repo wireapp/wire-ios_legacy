@@ -20,11 +20,10 @@
 #import "MediaBar.h"
 
 @import PureLayout;
-#import <Classy/Classy.h>
-
 @import WireExtensionComponents;
 #import "UIImage+ZetaIconsNeue.h"
 #import "Constants.h"
+#import "Wire-Swift.h"
 
 @interface MediaBar ()
 
@@ -66,6 +65,8 @@
     self.titleLabel.textAlignment = NSTextAlignmentCenter;
     self.titleLabel.lineBreakMode = NSLineBreakByTruncatingMiddle;
     self.titleLabel.accessibilityIdentifier = @"playingMediaTitle";
+    self.titleLabel.font = UIFont.smallRegularFont;
+    self.titleLabel.textColor = [UIColor wr_colorFromColorScheme:ColorSchemeColorTextForeground];
     
     [self.contentView addSubview:self.titleLabel];
 }
@@ -91,6 +92,7 @@
 {
     self.bottomSeparatorLine = [[UIView alloc] init];
     self.bottomSeparatorLine.translatesAutoresizingMaskIntoConstraints = NO;
+    self.bottomSeparatorLine.backgroundColor = [UIColor wr_colorFromColorScheme:ColorSchemeColorSeparator];
 
     [self addSubview:self.bottomSeparatorLine];
 }
