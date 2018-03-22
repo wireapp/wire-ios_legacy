@@ -431,9 +431,9 @@
 "inbox.connection_request.ignore_button_title" = "Ignore";
 
 // Save image errors
-"library.alert.permission_warning.title" = "Could not save image";
-"library.alert.permission_warning.restrictions.explaination" = "Wire cannot write in your library because restrictions are enabled.";
-"library.alert.permission_warning.not_allowed.explaination" = "Wire needs access to your Photo Library to save images. Go to Settings to allow Wire to access it.";
+"library.alert.permission_warning.title" = "Wire needs access to your Photos";
+"library.alert.permission_warning.restrictions.explaination" = "Wire cannot access your library because restrictions are enabled.";
+"library.alert.permission_warning.not_allowed.explaination" = "Go to Settings and allow Wire to access your photos.";
 
 // Voice
 "voice.status.one_to_one.incoming" = "%@\nCalling";
