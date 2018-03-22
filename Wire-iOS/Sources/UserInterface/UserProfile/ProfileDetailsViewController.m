@@ -437,7 +437,7 @@ typedef NS_ENUM(NSUInteger, ProfileUserAction) {
     
     if ([[[UIScreen mainScreen] traitCollection] horizontalSizeClass] == UIUserInterfaceSizeClassRegular) {
         [self dismissViewControllerAnimated:YES completion:^{
-            UINavigationController *presentedViewController = [conversationCreationController wrapInNavigationController:AddParticipantsNavigationController.class];
+            UINavigationController *presentedViewController = [conversationCreationController wrapInNavigationController];
             
             presentedViewController.modalPresentationStyle = UIModalPresentationFormSheet;
             
@@ -448,7 +448,7 @@ typedef NS_ENUM(NSUInteger, ProfileUserAction) {
     }
     else {
         KeyboardAvoidingViewController *avoiding = [[KeyboardAvoidingViewController alloc] initWithViewController:conversationCreationController];
-        UINavigationController *presentedViewController = [avoiding wrapInNavigationController:AddParticipantsNavigationController.class];
+        UINavigationController *presentedViewController = [avoiding wrapInNavigationController];
         
         presentedViewController.modalPresentationStyle = UIModalPresentationOverCurrentContext;
         presentedViewController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;

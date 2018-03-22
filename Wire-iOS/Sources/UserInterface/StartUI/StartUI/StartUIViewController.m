@@ -160,6 +160,7 @@ static NSUInteger const StartUIInitiallyShowsKeyboardConversationThreshold = 10;
     self.navigationItem.rightBarButtonItem.accessibilityIdentifier = @"close";
     
     self.navigationController.navigationBar.tintColor = [UIColor wr_colorFromColorScheme:ColorSchemeColorTextForeground variant:ColorSchemeVariantDark];
+    self.navigationController.navigationBar.titleTextAttributes = [DefaultNavigationBar titleTextAttributesFor:ColorSchemeVariantDark];
     
     [UIApplication.sharedApplication wr_updateStatusBarForCurrentControllerAnimated:animated];
 }

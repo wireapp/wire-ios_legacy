@@ -310,17 +310,9 @@ typedef NS_ENUM(NSUInteger, ProfileViewControllerTabBarIndex) {
 - (void)conversationCreationController:(ConversationCreationController *)controller didSelectName:(NSString *)name participants:(NSSet<ZMUser *> *)participants allowGuests:(BOOL)allowGuests
 {
     [controller dismissViewControllerAnimated:YES completion:^{
-        [UIApplication.sharedApplication wr_updateStatusBarForCurrentControllerAnimated:YES];
         if ([self.delegate respondsToSelector:@selector(profileViewController:wantsToCreateConversationWithName:users:)]) {
             [self.delegate profileViewController:self wantsToCreateConversationWithName:name users:participants];
         }
-    }];
-}
-
-- (void)conversationCreationControllerDidCancel:(ConversationCreationController *)controller
-{
-    [controller dismissViewControllerAnimated:YES completion:^{
-        [UIApplication.sharedApplication wr_updateStatusBarForCurrentControllerAnimated:YES];
     }];
 }
 

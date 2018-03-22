@@ -22,7 +22,7 @@ extension AppRootViewController {
     
     @objc
     public static func configureAppearance() {
-        let attributes: [String : Any] = [NSFontAttributeName: FontSpec(.small, .semibold).font!, NSBaselineOffsetAttributeName: 1.0]
+        let attributes: [String : Any] = [NSFontAttributeName: FontSpec(.small, .semibold).font!, NSBaselineOffsetAttributeName: 2.0]
         let barButtonItemAppearance = UIBarButtonItem.appearance(whenContainedInInstancesOf: [DefaultNavigationBar.self])
         barButtonItemAppearance.setTitleTextAttributes(attributes, for: .normal)
         barButtonItemAppearance.setTitleTextAttributes(attributes, for: .highlighted)

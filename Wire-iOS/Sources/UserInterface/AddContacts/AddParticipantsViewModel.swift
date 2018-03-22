@@ -82,17 +82,11 @@ struct AddParticipantsViewModel {
             item.accessibilityIdentifier = "close"
             return item
         case .create(let values):
-            let button = ButtonWithLargerHitArea()
             let key = values.participants.isEmpty ? "peoplepicker.group.skip" : "peoplepicker.group.done"
-            button.frame = CGRect(x: 0, y: 0, width: 40, height: 20)
-            button.setTitle(key.localized.uppercased(), for: .normal)
-            button.setTitleColor(.accent(), for: .normal)
-            button.setTitleColor(.wr_color(fromColorScheme: ColorSchemeColorTextBackground, variant: variant), for: [.highlighted, .disabled])
-            button.addTarget(target, action: action, for: .touchUpInside)
-            button.titleLabel?.font = FontSpec(.medium, .semibold).font!
-            button.accessibilityIdentifier = values.participants.isEmpty ? "button.addpeople.skip" : "button.addpeople.create"
-            button.sizeToFit()
-            return UIBarButtonItem(customView: button)
+            let item = UIBarButtonItem(title: key.localized.uppercased(), style: .plain, target: target, action: action)
+            item.tintColor = UIColor.accent()
+            item.accessibilityIdentifier = values.participants.isEmpty ? "button.addpeople.skip" : "button.addpeople.create"
+            return item
         }
     }
     

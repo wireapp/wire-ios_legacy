@@ -38,10 +38,14 @@ class DefaultNavigationBar : UINavigationBar {
         barTintColor = ColorScheme.default().color(withName: ColorSchemeColorBarBackground)
         setBackgroundImage(UIImage.singlePixelImage(with: ColorScheme.default().color(withName: ColorSchemeColorBarBackground)), for: .default)
         shadowImage = UIImage.singlePixelImage(with: UIColor.clear)
-        titleTextAttributes = [NSFontAttributeName: FontSpec(.small, .semibold).font!,
-                               NSForegroundColorAttributeName: ColorScheme.default().color(withName: ColorSchemeColorTextForeground)]
+        titleTextAttributes = DefaultNavigationBar.titleTextAttributes(for: ColorScheme.default().variant)
         backIndicatorImage = UIImage(for: .backArrow, iconSize: .tiny, color: ColorScheme.default().color(withName: ColorSchemeColorTextForeground)).withInsets(UIEdgeInsets(top: 0, left: 4, bottom: 3, right: 0), backgroundColor: .clear)
         backIndicatorTransitionMaskImage = UIImage(for: .backArrow, iconSize: .tiny, color: .black)
+    }
+    
+    static func titleTextAttributes(for variant: ColorSchemeVariant) -> [String : Any] {
+        return [NSFontAttributeName: FontSpec(.small, .semibold).font!,
+                NSForegroundColorAttributeName: ColorScheme.default().color(withName: ColorSchemeColorTextForeground, variant: variant)]
     }
     
 }
