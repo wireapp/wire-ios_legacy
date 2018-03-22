@@ -71,32 +71,6 @@ IconButton.emoji-backspace {
     borderWidth: 0.0;
 }
 
-/* Sketch related */
-
-CanvasViewController {
-    
-    canvas: @{
-        backgroundColor: white
-    }
-    
-    hintLabel: @{
-        font: $font-small;
-        textColor: $color-text-placeholder;
-        textAlignment: center;
-    }
-    
-}
-
-SketchToolbar {
-    backgroundColor: $color-background;
-    
-    IconButton {
-        iconColor[state:normal]: $color-icon-normal;
-        iconColor[state:highlighted]: $color-icon-highlighted;
-        iconColor[state:selected]: $color-accent-current;
-    }
-}
-
 /* Self profile */
 
 ProfileView {

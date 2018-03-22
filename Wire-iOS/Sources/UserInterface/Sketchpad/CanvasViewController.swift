@@ -83,6 +83,7 @@ class CanvasViewController: UIViewController, UINavigationControllerDelegate {
         super.viewDidLoad()
         
         canvas.delegate = self
+        canvas.backgroundColor = UIColor.white
         
         emojiKeyboardViewController.delegate = self
         emojiKeyboardViewController.backspaceHidden = true
@@ -92,6 +93,9 @@ class CanvasViewController: UIViewController, UINavigationControllerDelegate {
         hintImageView.image = UIImage(for: .brush, fontSize: 172, color: ColorScheme.default().color(withName: ColorSchemeColorPlaceholderBackground))
         hintLabel.text = "sketchpad.initial_hint".localized.uppercased(with: Locale.current)
         hintLabel.numberOfLines = 0
+        hintLabel.font = FontSpec(.small, .regular).font!
+        hintLabel.textAlignment = .center
+        hintLabel.textColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorTextPlaceholder)
         self.view.backgroundColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorBackground)
         
         [canvas, hintLabel, hintImageView, toolbar].forEach(view.addSubview)
