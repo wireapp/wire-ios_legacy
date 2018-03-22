@@ -159,7 +159,9 @@ extension AppLockViewController {
         if !self.localAuthenticationNeeded {
             AppLock.lastUnlockedDate = Date()
         }
-        
+
+        self.localAuthenticationCancelled = false
+
         self.localAuthenticationNeeded = true
         if AppLock.isActive {
             self.dimContents = true
