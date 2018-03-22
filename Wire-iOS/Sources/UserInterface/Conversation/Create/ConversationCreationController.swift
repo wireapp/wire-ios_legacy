@@ -113,7 +113,7 @@ final class ConversationCreationController: UIViewController {
         Analytics.shared().tagLinearGroupOpened(with: self.source)
 
         view.backgroundColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorContentBackground, variant: colorSchemeVariant)
-        title = "profile.create_conversation_button_title".localized.uppercased()
+        title = "conversation.create.group_name.title".localized.uppercased()
         
         setupNavigationBar()
         createViews()
