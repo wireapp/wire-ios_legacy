@@ -71,25 +71,6 @@ IconButton.emoji-backspace {
     borderWidth: 0.0;
 }
 
-/* Self profile */
-
-ProfileView {
-    nameLabel: @{
-        textColor: $color-text-foreground-dark;
-        font: $font-large-light;
-    }
-    
-    handleLabel: @{
-        textColor: $color-text-foreground-dark;
-        font: $font-small;
-    }
-    
-    teamNameLabel: @{
-        textColor: $color-text-foreground-dark;
-        font: $font-small;
-    }
-}
-
 /* Profile */
 
 ProfileViewController {

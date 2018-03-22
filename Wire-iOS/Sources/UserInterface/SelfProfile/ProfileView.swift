@@ -52,14 +52,20 @@ import Cartography
         nameLabel.accessibilityIdentifier = "name"
         nameLabel.setContentHuggingPriority(UILayoutPriorityRequired, for: .vertical)
         nameLabel.setContentCompressionResistancePriority(UILayoutPriorityRequired, for: .vertical)
+        nameLabel.textColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorTextForeground, variant: .dark)
+        nameLabel.font = FontSpec(.large, .light).font!
         handleLabel.accessibilityLabel = "profile_view.accessibility.handle".localized
         handleLabel.accessibilityIdentifier = "username"
         handleLabel.setContentHuggingPriority(UILayoutPriorityRequired, for: .vertical)
         handleLabel.setContentCompressionResistancePriority(UILayoutPriorityRequired, for: .vertical)
+        handleLabel.textColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorTextForeground, variant: .dark)
+        handleLabel.font = FontSpec(.small, .regular).font!
         teamNameLabel.accessibilityLabel = "profile_view.accessibility.team_name".localized
         teamNameLabel.accessibilityIdentifier = "team name"
         teamNameLabel.setContentHuggingPriority(UILayoutPriorityRequired, for: .vertical)
         teamNameLabel.setContentCompressionResistancePriority(UILayoutPriorityRequired, for: .vertical)
+        teamNameLabel.textColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorTextForeground, variant: .dark)
+        teamNameLabel.font = FontSpec(.small, .regular).font!
         
         nameLabel.text = user.name
         nameLabel.accessibilityValue = nameLabel.text
