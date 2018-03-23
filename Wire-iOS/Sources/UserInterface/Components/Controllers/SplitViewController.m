@@ -21,6 +21,7 @@
 
 
 #import "SplitViewController.h"
+#import "SplitViewController+internal.h"
 #import "CrossfadeTransition.h"
 #import "SwizzleTransition.h"
 #import "VerticalTransition.h"
@@ -152,9 +153,6 @@ NSString *SplitLayoutObservableDidChangeToLayoutSizeNotification = @"SplitLayout
 
 
 @interface SplitViewController () <UIGestureRecognizerDelegate>
-
-@property (nonatomic) UIView *leftView;
-@property (nonatomic) UIView *rightView;
 
 @property (nonatomic) NSLayoutConstraint *leftViewOffsetConstraint;
 @property (nonatomic) NSLayoutConstraint *rightViewOffsetConstraint;

@@ -92,6 +92,7 @@
 #import "ConversationListViewModel+Private.h"
 #import "NotificationWindowRootViewController.h"
 #import "SplitViewController.h"
+#import "SplitViewController+internal.h"
 #import "ConfirmAssetViewController.h"
 #import "ProfileSelfPictureViewController.h"
 #import "AddEmailPasswordViewController.h"
