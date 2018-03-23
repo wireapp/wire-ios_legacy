@@ -617,6 +617,7 @@
             // If there's no previously selected screen
             if (self.isConversationViewVisible) {
                 [self selectListItemWhenNoPreviousItemSelected];
+                [self loadPlaceholderConversationControllerAnimated:YES];
             }
             
             break;
