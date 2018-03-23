@@ -82,6 +82,8 @@ final class SplitViewControllerTests: XCTestCase {
         mockParentViewController = nil
         mockSplitViewControllerDelegate = nil
 
+        UIView.setAnimationsEnabled(true)
+
         super.tearDown()
     }
 
