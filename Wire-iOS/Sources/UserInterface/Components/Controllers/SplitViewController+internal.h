@@ -21,4 +21,6 @@
 @property (nonatomic) UIView *leftView;
 @property (nonatomic) UIView *rightView;
 
+- (void)onHorizontalPan:(UIPanGestureRecognizer *)gestureRecognizer;
+
 @end

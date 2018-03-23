@@ -261,7 +261,7 @@ NSString *SplitLayoutObservableDidChangeToLayoutSizeNotification = @"SplitLayout
     self.futureTraitCollection = nil;
 
     // update right view constraits after size changes
-    [self updateRightAndLeftEdgoConstants: self.openPercentage];
+    [self updateRightAndLeftEdgeConstraints: self.openPercentage];
 }
 
 - (void)updateLayoutSizeForTraitCollection:(UITraitCollection *)traitCollection size:(CGSize)size
@@ -563,10 +563,10 @@ NSString *SplitLayoutObservableDidChangeToLayoutSizeNotification = @"SplitLayout
 - (void)setOpenPercentage:(CGFloat)percentage
 {
     _openPercentage = percentage;
-    [self updateRightAndLeftEdgoConstants: percentage];
+    [self updateRightAndLeftEdgeConstraints: percentage];
 }
 
-- (void)updateRightAndLeftEdgoConstants:(CGFloat)percentage
+- (void)updateRightAndLeftEdgeConstraints:(CGFloat)percentage
 {
     self.rightViewOffsetConstraint.constant = self.leftViewWidthConstraint.constant * percentage;
     self.leftViewOffsetConstraint.constant = 64.0f * (1.0f - percentage);
