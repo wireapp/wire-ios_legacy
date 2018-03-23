@@ -663,6 +663,8 @@
     if (list.count > 0) {
         // select the first conversation and don't focus on it
         [self selectConversation:list[0]];
+    } else {
+        [self loadPlaceholderConversationControllerAnimated:YES];
     }
 }
 
