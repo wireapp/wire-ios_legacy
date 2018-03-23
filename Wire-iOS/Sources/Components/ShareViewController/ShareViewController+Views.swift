@@ -111,7 +111,7 @@ extension ShareViewController {
         if self.showPreview {
             constrain(self.containerView, self.shareablePreviewWrapper!, self.shareablePreviewView!, self.tokenField) { view, shareablePreviewWrapper, shareablePreviewView, tokenField in
                 
-                shareablePreviewWrapper.top == view.topMargin + 28
+                shareablePreviewWrapper.top == view.topMargin + 8
                 shareablePreviewWrapper.left == view.left + 16
                 shareablePreviewWrapper.right == -16 + view.right
                 
