@@ -19,35 +19,35 @@
 import XCTest
 @testable import Wire
 
-class MockPanGestureRecognizer: UIPanGestureRecognizer {
-    var testState: UIGestureRecognizerState?
-    var testLocation: CGPoint?
-    var testTranslation: CGPoint?
+final class MockPanGestureRecognizer: UIPanGestureRecognizer {
+    var mockState: UIGestureRecognizerState?
+    var mockLocation: CGPoint?
+    var mockTranslation: CGPoint?
 
     init(location: CGPoint?, translation: CGPoint?, state: UIGestureRecognizerState) {
-        testLocation = location
-        testTranslation = translation
-        testState = state
+        mockLocation = location
+        mockTranslation = translation
+        mockState = state
 
         super.init(target: nil, action: nil)
     }
 
     override func location(in view: UIView?) -> CGPoint {
-        if let testLocation = testLocation {
+        if let testLocation = mockLocation {
             return testLocation
         }
         return super.location(in: view)
     }
 
     override func translation(in view: UIView?) -> CGPoint {
-        if let testTranslation = testTranslation {
+        if let testTranslation = mockTranslation {
             return testTranslation
         }
         return super.translation(in: view)
     }
 
     override var state: UIGestureRecognizerState {
-        if let testState = testState {
+        if let testState = mockState {
             return testState
         }
         return super.state
@@ -75,12 +75,14 @@ final class SplitViewControllerTests: XCTestCase {
     override func setUp() {
         super.setUp()
 
+        UIView.setAnimationsEnabled(false)
+
         mockSplitViewControllerDelegate = MockSplitViewControllerDelegate()
         sut = SplitViewController()
+
         sut.delegate = mockSplitViewControllerDelegate
         mockParentViewController = UIViewController()
         mockParentViewController.addToSelf(sut) ///TODO: set size class before this line
-
     }
     
     override func tearDown() {
@@ -117,7 +119,7 @@ final class SplitViewControllerTests: XCTestCase {
         XCTAssertEqual(sut.rightView.frame.width, compactWidth)
     }
 
-    func testForPan(){
+    func testThatPanRightViewToLessThanHalfWouldBounceBack(){
         // GIVEN
         sut.leftViewController = UIViewController()
         sut.rightViewController = UIViewController()
@@ -134,11 +136,52 @@ final class SplitViewControllerTests: XCTestCase {
         let beganGestureRecognizer = MockPanGestureRecognizer(location: nil, translation: nil, state: .began)
         sut.onHorizontalPan(beganGestureRecognizer)
 
-        let panOffset: CGFloat = 100
+        // if pans less than half of the width, the right view will bounce back
+        let panOffset: CGFloat = sut.view.frame.size.width / 2 - 10
         let gestureRecognizer = MockPanGestureRecognizer(location: nil, translation: CGPoint(x: panOffset, y: 0), state: .changed)
         sut.onHorizontalPan(gestureRecognizer)
 
         // THEN
         XCTAssertEqual(sut.rightView.frame.origin.x, panOffset)
+
+        // WHEN
+        let endedGestureRecognizer = MockPanGestureRecognizer(location: nil, translation: nil, state: .ended)
+        sut.onHorizontalPan(endedGestureRecognizer)
+
+        // THEN
+        XCTAssertEqual(sut.rightView.frame.origin.x, 0)
+    }
+
+    func testThatPanRightViewToMoreThanHalfWouldRevealLeftView(){
+        // GIVEN
+        sut.leftViewController = UIViewController()
+        sut.rightViewController = UIViewController()
+
+        let compactTraitCollection = UITraitCollection(horizontalSizeClass: .compact)
+        mockParentViewController.setOverrideTraitCollection(compactTraitCollection, forChildViewController: sut)
+
+        sut.isLeftViewControllerRevealed = false
+        sut.view.layoutIfNeeded()
+
+        XCTAssertEqual(sut.rightView.frame.origin.x, 0)
+
+        // WHEN
+        let beganGestureRecognizer = MockPanGestureRecognizer(location: nil, translation: nil, state: .began)
+        sut.onHorizontalPan(beganGestureRecognizer)
+
+        // if pans more than half of the width, the left view will be revealed
+        let panOffset: CGFloat = sut.view.frame.size.width / 2 + 10
+        let gestureRecognizer = MockPanGestureRecognizer(location: nil, translation: CGPoint(x: panOffset, y: 0), state: .changed)
+        sut.onHorizontalPan(gestureRecognizer)
+
+        // THEN
+        XCTAssertEqual(sut.rightView.frame.origin.x, panOffset)
+
+        // WHEN
+        let endedGestureRecognizer = MockPanGestureRecognizer(location: nil, translation: nil, state: .ended)
+        sut.onHorizontalPan(endedGestureRecognizer)
+
+        // THEN
+        XCTAssertEqual(sut.rightView.frame.origin.x, sut.view.frame.size.width)
     }
 }
