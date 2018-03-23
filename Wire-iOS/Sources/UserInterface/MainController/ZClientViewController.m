@@ -617,7 +617,6 @@
             // If there's no previously selected screen
             if (self.isConversationViewVisible) {
                 [self selectListItemWhenNoPreviousItemSelected];
-                [self loadPlaceholderConversationControllerAnimated:YES];
             }
             
             break;
@@ -664,6 +663,8 @@
     if (list.count > 0) {
         // select the first conversation and don't focus on it
         [self selectConversation:list[0]];
+    } else {
+        [self loadPlaceholderConversationControllerAnimated:YES];
     }
 }
 

@@ -27,6 +27,8 @@ import Cartography
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.view.backgroundColor = ColorScheme.default().color(withName: ColorSchemeColorBackground)
+        
         let image = WireStyleKit.imageOfShield(with: UIColor(rgb: 0xbac8d1, alpha: 0.24))
         shieldImageView = UIImageView(image: image)
         self.view.addSubview(shieldImageView)
@@ -34,7 +36,7 @@ import Cartography
         constrain(self.view, shieldImageView) {
             selfView, shieldImageView in
                 shieldImageView.centerX == selfView.centerX
-            shieldImageView.centerY == selfView.centerY
+                shieldImageView.centerY == selfView.centerY
         }
         
     }
