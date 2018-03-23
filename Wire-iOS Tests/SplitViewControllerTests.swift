@@ -33,22 +33,22 @@ final class MockPanGestureRecognizer: UIPanGestureRecognizer {
     }
 
     override func location(in view: UIView?) -> CGPoint {
-        if let testLocation = mockLocation {
-            return testLocation
+        if let mockLocation = mockLocation {
+            return mockLocation
         }
         return super.location(in: view)
     }
 
     override func translation(in view: UIView?) -> CGPoint {
-        if let testTranslation = mockTranslation {
-            return testTranslation
+        if let mockTranslation = mockTranslation {
+            return mockTranslation
         }
         return super.translation(in: view)
     }
 
     override var state: UIGestureRecognizerState {
-        if let testState = mockState {
-            return testState
+        if let mockState = mockState {
+            return mockState
         }
         return super.state
     }
