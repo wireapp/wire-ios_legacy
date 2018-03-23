@@ -20,7 +20,7 @@ import XCTest
 @testable import Wire
 
 final class MockPanGestureRecognizer: UIPanGestureRecognizer {
-    var mockState: UIGestureRecognizerState?
+    let mockState: UIGestureRecognizerState
     var mockLocation: CGPoint?
     var mockTranslation: CGPoint?
 
@@ -47,10 +47,7 @@ final class MockPanGestureRecognizer: UIPanGestureRecognizer {
     }
 
     override var state: UIGestureRecognizerState {
-        if let mockState = mockState {
-            return mockState
-        }
-        return super.state
+        return mockState
     }
 }
 
@@ -66,11 +63,6 @@ final class SplitViewControllerTests: XCTestCase {
     var sut: SplitViewController!
     var mockParentViewController: UIViewController!
     var mockSplitViewControllerDelegate: MockSplitViewControllerDelegate!
-
-    // simulate iPad Pro 12.9 inch landscape mode
-    let iPadHeight: CGFloat = 1024
-    let iPadWidth: CGFloat = 1366
-    let listViewWidth: CGFloat = 336
 
     override func setUp() {
         super.setUp()
@@ -95,6 +87,11 @@ final class SplitViewControllerTests: XCTestCase {
 
     func testThatWhenSwitchFromRegularModeToCompactModeChildViewsUpdatesTheirSize(){
         // GIVEN
+
+        // simulate iPad Pro 12.9 inch landscape mode
+        let iPadHeight: CGFloat = 1024
+        let iPadWidth: CGFloat = 1366
+        let listViewWidth: CGFloat = 336
         sut.view.frame = CGRect(origin: .zero, size: CGSize(width: iPadWidth, height: iPadHeight))
 
         let regularTraitCollection = UITraitCollection(horizontalSizeClass: .regular)
