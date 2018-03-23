@@ -24,9 +24,10 @@ final class SplitViewControllerTests: XCTestCase {
     var sut: SplitViewController!
     var mockParentViewController: UIViewController!
 
-    // simulate iPad Pro 12.9 inch portrait mode
+    // simulate iPad Pro 12.9 inch landscape mode
     let iPadHeight: CGFloat = 1024
     let iPadWidth: CGFloat = 1366
+    let listViewWidth: CGFloat = 336
 
     override func setUp() {
         super.setUp()
@@ -54,9 +55,9 @@ final class SplitViewControllerTests: XCTestCase {
 
         let leftViewWidth = sut.leftView.frame.width
 
-        // check the value match the hard code value in SplitViewController
-        XCTAssertEqual(leftViewWidth, 336)
-        XCTAssertEqual(sut.rightView.frame.width, iPadWidth - leftViewWidth)
+        // check the width match the hard code value in SplitViewController
+        XCTAssertEqual(leftViewWidth, listViewWidth)
+        XCTAssertEqual(sut.rightView.frame.width, iPadWidth - listViewWidth)
 
         // WHEN
         let compactWidth = round(iPadWidth / 3)
