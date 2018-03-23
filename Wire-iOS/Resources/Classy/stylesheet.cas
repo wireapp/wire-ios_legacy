@@ -73,12 +73,6 @@ IconButton.emoji-backspace {
 
 /* User client details screen */
 
-ConversationTitleView {
-    titleColor: $color-text-foreground;
-    titleColorSelected: $color-text-dimmed;
-    titleFont: $font-medium-semibold;
-}
-
 PlaceholderConversationViewController {
     view: @{
         backgroundColor: white;
