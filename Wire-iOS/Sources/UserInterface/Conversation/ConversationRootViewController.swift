@@ -72,7 +72,7 @@ import Cartography
         navbar.setBackgroundImage(UIImage(), for: .any, barMetrics: .default)
         navbar.shadowImage = UIImage()
         navbar.barTintColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorBarBackground)
-        navBar.tintColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorTextForeground)
+        navbar.tintColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorTextForeground)
 
         self.customNavBar = UINavigationBarContainer(navbar)
 

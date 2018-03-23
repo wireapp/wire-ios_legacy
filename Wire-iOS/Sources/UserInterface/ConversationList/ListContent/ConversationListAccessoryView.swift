@@ -45,6 +45,7 @@ final internal class ConversationListAccessoryView: UIView {
         textLabel.setContentHuggingPriority(UILayoutPriorityDefaultHigh, for: .horizontal)
         textLabel.setContentHuggingPriority(UILayoutPriorityDefaultHigh, for: .vertical)
         textLabel.textAlignment = .center
+        textLabel.font = FontSpec(.medium, .semibold).font!
         
         typingView.contentMode = .center
         typingView.setContentHuggingPriority(UILayoutPriorityDefaultHigh, for: .horizontal)

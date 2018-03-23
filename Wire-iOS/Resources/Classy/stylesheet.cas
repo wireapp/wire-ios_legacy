@@ -71,40 +71,6 @@ IconButton.emoji-backspace {
     borderWidth: 0.0;
 }
 
-/* User client details screen */
-
-ConversationListAccessoryView {
-    textLabel: @{
-        font: $font-medium-semibold;
-    }
-}
-
-ConversationListBottomBarController {
-    view: @{
-        backgroundColor: clear;
-    }
-    
-    startUIButton: @{
-        iconColor: $color-text-foreground-dark;
-    }
-
-    composeButton: @{
-        iconColor: $color-text-foreground-dark;
-    }
-
-    cameraButton: @{
-        iconColor: $color-text-foreground-dark;
-    }
-    
-    archivedButton: @{
-        iconColor: $color-text-foreground-dark;
-    }
-    
-    separator: @{
-        backgroundColor: $color-separator-light;
-    }
-}
-
 /* ConversationListAvatar */
 
 ConversationAvatarView UserImageView {

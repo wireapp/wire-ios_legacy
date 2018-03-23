@@ -65,6 +65,7 @@ import Cartography
     required init(delegate: ConversationListBottomBarControllerDelegate? = nil) {
         super.init(nibName: nil, bundle: nil)
         self.delegate = delegate
+        self.view.backgroundColor = UIColor.clear
         createViews()
     }
 
@@ -74,6 +75,8 @@ import Cartography
 
 
     private func createViews() {
+        separator.backgroundColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorSeparator, variant: .light)
+        
         archivedButton.setIcon(.archive, with: .tiny, for: UIControlState())
         archivedButton.addTarget(self, action: #selector(archivedButtonTapped), for: .touchUpInside)
         archivedButton.accessibilityIdentifier = "bottomBarArchivedButton"
@@ -97,6 +100,10 @@ import Cartography
         cameraButton.accessibilityIdentifier = "bottomBarCameraButton"
         cameraButton.accessibilityLabel = "conversation_list.voiceover.bottom_bar.camera_button.label".localized
         cameraButton.accessibilityHint = "conversation_list.voiceover.bottom_bar.camera_button.hint".localized
+
+        [archivedButton, startUIButton, composeButton, cameraButton].forEach { button in
+            button.setIconColor(UIColor.wr_color(fromColorScheme: ColorSchemeColorTextForeground, variant: .dark), for: .normal)
+        }
 
         addSubviews()
         [separator, archivedButton].forEach{ $0.isHidden = true }
