@@ -122,7 +122,11 @@ final class SplitViewControllerTests: XCTestCase {
         sut.leftViewController = UIViewController()
         sut.rightViewController = UIViewController()
 
-        sut.setLeftViewControllerRevealed(false, animated: false, completion: nil)
+        let compactTraitCollection = UITraitCollection(horizontalSizeClass: .compact)
+        mockParentViewController.setOverrideTraitCollection(compactTraitCollection, forChildViewController: sut)
+
+        sut.isLeftViewControllerRevealed = false
+        sut.view.layoutIfNeeded()
 
         XCTAssertEqual(sut.rightView.frame.origin.x, 0)
     }
