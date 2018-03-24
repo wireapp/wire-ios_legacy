@@ -74,7 +74,7 @@ final class SplitViewControllerTests: XCTestCase {
 
         sut.delegate = mockSplitViewControllerDelegate
         mockParentViewController = UIViewController()
-        mockParentViewController.addToSelf(sut) ///TODO: set size class before this line
+        mockParentViewController.addToSelf(sut)
     }
     
     override func tearDown() {
@@ -87,7 +87,7 @@ final class SplitViewControllerTests: XCTestCase {
         super.tearDown()
     }
 
-    func testThatWhenSwitchFromRegularModeToCompactModeChildViewsUpdatesTheirSize(){
+    func testThatSwitchFromRegularModeToCompactModeChildViewsUpdatesTheirSize(){
         // GIVEN
 
         // simulate iPad Pro 12.9 inch landscape mode
@@ -118,18 +118,18 @@ final class SplitViewControllerTests: XCTestCase {
         XCTAssertEqual(sut.rightView.frame.width, compactWidth)
     }
 
-    func testThatPanRightViewToLessThanHalfWouldBounceBack(){
-        // GIVEN
+    fileprivate func setupAsLeftViewUnrevealed(file: StaticString = #file, line: UInt = #line) {
         sut.leftViewController = UIViewController()
         sut.rightViewController = UIViewController()
 
-        let compactTraitCollection = UITraitCollection(horizontalSizeClass: .compact)
-        mockParentViewController.setOverrideTraitCollection(compactTraitCollection, forChildViewController: sut)
-
-        sut.isLeftViewControllerRevealed = false
-        sut.view.layoutIfNeeded()
+        sut.setLeftViewControllerRevealed(false, animated: false, completion: nil)
 
         XCTAssertEqual(sut.rightView.frame.origin.x, 0)
+    }
+
+    func testThatPanRightViewToLessThanHalfWouldBounceBack(){
+        // GIVEN
+        setupAsLeftViewUnrevealed()
 
         // WHEN
         let beganGestureRecognizer = MockPanGestureRecognizer(location: nil, translation: nil, state: .began)
@@ -153,16 +153,7 @@ final class SplitViewControllerTests: XCTestCase {
 
     func testThatPanRightViewToMoreThanHalfWouldRevealLeftView(){
         // GIVEN
-        sut.leftViewController = UIViewController()
-        sut.rightViewController = UIViewController()
-
-        let compactTraitCollection = UITraitCollection(horizontalSizeClass: .compact)
-        mockParentViewController.setOverrideTraitCollection(compactTraitCollection, forChildViewController: sut)
-
-        sut.isLeftViewControllerRevealed = false
-        sut.view.layoutIfNeeded()
-
-        XCTAssertEqual(sut.rightView.frame.origin.x, 0)
+        setupAsLeftViewUnrevealed()
 
         // WHEN
         let beganGestureRecognizer = MockPanGestureRecognizer(location: nil, translation: nil, state: .began)
