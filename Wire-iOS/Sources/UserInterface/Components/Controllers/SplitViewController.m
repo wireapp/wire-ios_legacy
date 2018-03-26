@@ -174,6 +174,11 @@ NSString *SplitLayoutObservableDidChangeToLayoutSizeNotification = @"SplitLayout
 
 @implementation SplitViewController
 
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
 - (void)viewDidLoad 
 {
     [super viewDidLoad];
@@ -197,6 +202,8 @@ NSString *SplitLayoutObservableDidChangeToLayoutSizeNotification = @"SplitLayout
     self.horizontalPanner = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(onHorizontalPan:)];
     self.horizontalPanner.delegate = self;
     [self.view addGestureRecognizer:self.horizontalPanner];
+
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateLayoutSizeAndLeftViewVisibility) name:UIApplicationDidChangeStatusBarFrameNotification object:nil];
 }
 
 - (void)viewWillLayoutSubviews
@@ -256,7 +263,6 @@ NSString *SplitLayoutObservableDidChangeToLayoutSizeNotification = @"SplitLayout
     
     [self updateConstraintsForSize:size];
     [self updateActiveConstraints];
-    [self updateLeftViewVisibility];
 
     self.futureTraitCollection = nil;
 
@@ -291,6 +297,12 @@ NSString *SplitLayoutObservableDidChangeToLayoutSizeNotification = @"SplitLayout
         self.leftViewWidthConstraint.constant = MIN(CGRound(size.width * 0.43), 336);
         self.rightViewWidthConstraint.constant = size.width - self.leftViewWidthConstraint.constant;
     }
+}
+
+- (void)updateLayoutSizeAndLeftViewVisibility
+{
+    [self updateLayoutSizeForTraitCollection:self.traitCollection size:self.view.bounds.size];
+    [self updateLeftViewVisibility];
 }
 
 - (void)updateLeftViewVisibility
