@@ -146,12 +146,6 @@ ConversationTitleView {
     titleFont: $font-medium-semibold;
 }
 
-PlaceholderConversationViewController {
-    view: @{
-        backgroundColor: white;
-    }
-}
-
 ConversationRootViewController {
     UINavigationBar {
         barTintColor: $color-bar-background;

@@ -20,27 +20,28 @@
 import Foundation
 import Cartography
 
-@objc class PlaceholderConversationViewController : UIViewController {
+@objc class PlaceholderConversationView : UIView {
     
     var shieldImageView: UIImageView!
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        self.view.backgroundColor = ColorScheme.default().color(withName: ColorSchemeColorBackground)
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+
+        self.backgroundColor = ColorScheme.default().color(withName: ColorSchemeColorBackground)
         
         let image = WireStyleKit.imageOfShield(with: UIColor(rgb: 0xbac8d1, alpha: 0.24))
         shieldImageView = UIImageView(image: image)
-        self.view.addSubview(shieldImageView)
+        self.addSubview(shieldImageView)
         
-        constrain(self.view, shieldImageView) {
+        constrain(self, shieldImageView) {
             selfView, shieldImageView in
-                shieldImageView.centerX == selfView.centerX
-                shieldImageView.centerY == selfView.centerY
+            shieldImageView.centerX == selfView.centerX
+            shieldImageView.centerY == selfView.centerY
         }
-        
     }
     
-    
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+    }
     
 }

@@ -896,7 +896,7 @@
 		CE8E4FC61DF17CFE0009F437 /* NSString+TextTransform.m in Sources */ = {isa = PBXBuildFile; fileRef = CE8E4FC41DF17CFE0009F437 /* NSString+TextTransform.m */; };
 		CEC0FE3B1C4FBF120093BF0D /* ConversationIgnoredDeviceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC0FE3A1C4FBF120093BF0D /* ConversationIgnoredDeviceCell.swift */; };
 		CEE02EAD1DDDEF3A00BA2BE2 /* avs.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEE02EAB1DDDD15200BA2BE2 /* avs.framework */; };
-		CEEEAF071CB562BF00111759 /* PlaceholderConversationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEEEAF061CB562BF00111759 /* PlaceholderConversationViewController.swift */; };
+		CEEEAF071CB562BF00111759 /* PlaceholderConversationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEEEAF061CB562BF00111759 /* PlaceholderConversationView.swift */; };
 		D50892FB2056BD51004D3AE2 /* ZMUser+ExpirationTimeFormatting.swift in Sources */ = {isa = PBXBuildFile; fileRef = D50892FA2056BD51004D3AE2 /* ZMUser+ExpirationTimeFormatting.swift */; };
 		D50892FD2056C2AA004D3AE2 /* WirelessExpirationTimeFormatterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D50892FC2056C2AA004D3AE2 /* WirelessExpirationTimeFormatterTests.swift */; };
 		D5168F282008ED0700F8222A /* KeyboardBlockObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5168F272008ED0700F8222A /* KeyboardBlockObserver.swift */; };
@@ -2457,7 +2457,7 @@
 		CE8E4FC41DF17CFE0009F437 /* NSString+TextTransform.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+TextTransform.m"; sourceTree = "<group>"; };
 		CEC0FE3A1C4FBF120093BF0D /* ConversationIgnoredDeviceCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConversationIgnoredDeviceCell.swift; sourceTree = "<group>"; };
 		CEE02EAB1DDDD15200BA2BE2 /* avs.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = avs.framework; path = Carthage/Build/iOS/avs.framework; sourceTree = "<group>"; };
-		CEEEAF061CB562BF00111759 /* PlaceholderConversationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaceholderConversationViewController.swift; sourceTree = "<group>"; };
+		CEEEAF061CB562BF00111759 /* PlaceholderConversationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaceholderConversationView.swift; sourceTree = "<group>"; };
 		D50892FA2056BD51004D3AE2 /* ZMUser+ExpirationTimeFormatting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ZMUser+ExpirationTimeFormatting.swift"; sourceTree = "<group>"; };
 		D50892FC2056C2AA004D3AE2 /* WirelessExpirationTimeFormatterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WirelessExpirationTimeFormatterTests.swift; sourceTree = "<group>"; };
 		D5168F272008ED0700F8222A /* KeyboardBlockObserver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardBlockObserver.swift; sourceTree = "<group>"; };
@@ -4604,7 +4604,7 @@
 				EA28157E1A0BA2C5001D6124 /* ConversationViewController+Private.h */,
 				87A752161E002F6C004317DB /* ConversationRootViewController.swift */,
 				BF38FAF01C9B1D0500E2ACBB /* ConversationTitleView.swift */,
-				CEEEAF061CB562BF00111759 /* PlaceholderConversationViewController.swift */,
+				CEEEAF061CB562BF00111759 /* PlaceholderConversationView.swift */,
 				87F18BD31E03FF9700C69D9B /* ConversationDetailsTransitioningDelegate.h */,
 				87F18BD41E03FF9700C69D9B /* ConversationDetailsTransitioningDelegate.m */,
 				8797A9B32046D687009865D5 /* GuestsBarController.swift */,
@@ -6533,7 +6533,7 @@
 				871BC3511D34F94200DF0793 /* AccentColorChangeHandler.m in Sources */,
 				1682AEC120483FA5003A052A /* GroupDetailsSectionController.swift in Sources */,
 				BF0BDF9A1DAD3806003C61DE /* Analytics+EmojiKeyboard.swift in Sources */,
-				CEEEAF071CB562BF00111759 /* PlaceholderConversationViewController.swift in Sources */,
+				CEEEAF071CB562BF00111759 /* PlaceholderConversationView.swift in Sources */,
 				872CB8B519E58816006752B4 /* ProfileIncomingConnectionRequestFooterView.m in Sources */,
 				870EB7701C60E9B400F274A3 /* CannotDecryptCell.swift in Sources */,
 				167AEA101B16031900890435 /* VoiceChannelParticipantCell.m in Sources */,
