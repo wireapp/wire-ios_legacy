@@ -243,7 +243,7 @@
 "conversation.input_bar.message_too_long.title" = "Message too long";
 "conversation.input_bar.message_too_long.message" = "You can send messages up to %d characters long.";
 
-"conversation.create.group_name.title" = "Group name";
+"conversation.create.group_name.title" = "Create group";
 "conversation.create.group_name.placeholder" = "Group name";
 "conversation.create.guidance.empty" = "At least 1 character";
 "conversation.create.guidance.toolong" = "Too many characters";
