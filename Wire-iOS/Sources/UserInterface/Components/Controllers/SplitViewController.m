@@ -242,8 +242,6 @@ NSString *SplitLayoutObservableDidChangeToLayoutSizeNotification = @"SplitLayout
     [super willTransitionToTraitCollection:newCollection withTransitionCoordinator:coordinator];
     
     [self updateActiveConstraints];
-    
-    [self updateLeftViewVisibility];
 }
 
 - (void)updateForSize:(CGSize)size
@@ -256,7 +254,6 @@ NSString *SplitLayoutObservableDidChangeToLayoutSizeNotification = @"SplitLayout
     
     [self updateConstraintsForSize:size];
     [self updateActiveConstraints];
-    [self updateLeftViewVisibility];
 
     self.futureTraitCollection = nil;
 
@@ -290,19 +287,6 @@ NSString *SplitLayoutObservableDidChangeToLayoutSizeNotification = @"SplitLayout
     else {
         self.leftViewWidthConstraint.constant = MIN(CGRound(size.width * 0.43), 336);
         self.rightViewWidthConstraint.constant = size.width - self.leftViewWidthConstraint.constant;
-    }
-}
-
-- (void)updateLeftViewVisibility
-{
-    switch(self.layoutSize) {
-        case SplitViewControllerLayoutSizeCompact: // fallthrough
-        case SplitViewControllerLayoutSizeRegularPortrait:
-            self.leftView.hidden = self.openPercentage == 0;
-            break;
-        case SplitViewControllerLayoutSizeRegularLandscape:
-            self.leftView.hidden = NO;
-            break;
     }
 }
 
@@ -525,8 +509,6 @@ NSString *SplitLayoutObservableDidChangeToLayoutSizeNotification = @"SplitLayout
         [self.view layoutIfNeeded];
     }
     
-    self.leftView.hidden = NO;
-    
     _leftViewControllerRevealed = leftViewControllerRevealed;
     [self resetOpenPercentage];
 
@@ -548,10 +530,6 @@ NSString *SplitLayoutObservableDidChangeToLayoutSizeNotification = @"SplitLayout
             if (self.layoutSize != SplitViewControllerLayoutSizeRegularLandscape) {
                 [self.leftViewController endAppearanceTransition];
                 [self.rightViewController endAppearanceTransition];
-            }
-            
-            if (self.openPercentage == 0 && self.layoutSize != SplitViewControllerLayoutSizeRegularLandscape) {
-                self.leftView.hidden = YES;
             }
         }];
     }
@@ -603,7 +581,6 @@ NSString *SplitLayoutObservableDidChangeToLayoutSizeNotification = @"SplitLayout
         case UIGestureRecognizerStateBegan:
             [self.leftViewController beginAppearanceTransition:! self.leftViewControllerRevealed animated:YES];
             [self.rightViewController beginAppearanceTransition:self.leftViewControllerRevealed animated:YES];
-            self.leftView.hidden = NO;
             break;
             
         case UIGestureRecognizerStateChanged:
