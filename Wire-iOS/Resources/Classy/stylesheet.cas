@@ -80,58 +80,6 @@ ConversationAvatarView UserImageView {
     }
 }
 
-
-/* Audio Recording */
-
-AudioButtonOverlay {
-    grayColor: $color-audio-button-overlay;
-    greenColor: $color-accent-green;
-    iconColor: $color-text-foreground;
-    iconColorHighlighted: $color-text-background;
-    superviewColor: $color-background;
-}
-
-AudioRecordViewController {
-    
-    bottomContainerView: @{
-        backgroundColor: $color-background;
-    }
-    
-    topContainerView: @{
-        backgroundColor: $color-background;
-    }
-    
-    topSeparator: @{
-        backgroundColor: $color-separator;
-    }
-    
-    rightSeparator: @{
-        backgroundColor: $color-separator;
-    }
-        
-    topTooltipLabel: @{
-        font: $font-small;
-        textColor: $color-text-dimmed;
-    }
-    
-    timeLabel: @{
-        font: $font-small;
-        textColor: $color-text-foreground;
-    }
-    
-    cancelButton: @{
-        iconColor: $color-text-foreground;
-    }
-}
-
-RecordingDotView {
-    backgroundColor: $color-accent-red;
-}
-
-AudioRecordViewController WaveFormView {
-    gradientColor: $color-background;
-}
-
 /* Archive */
 
 ArchivedNavigationBar {
