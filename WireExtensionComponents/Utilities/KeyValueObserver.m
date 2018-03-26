@@ -22,7 +22,7 @@
 
 
 @interface KeyValueObserver ()
-@property (nonatomic, retain) id observedObject;
+@property (nonatomic, weak) id observedObject;
 @property (nonatomic, copy) NSString* keyPath;
 @end
 
@@ -75,7 +75,6 @@
 - (void)dealloc;
 {
     [self.observedObject removeObserver:self forKeyPath:self.keyPath];
-    self.observedObject = nil;
 }
 
 @end
