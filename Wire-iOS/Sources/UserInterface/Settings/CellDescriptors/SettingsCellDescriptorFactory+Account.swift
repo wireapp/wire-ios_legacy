@@ -26,6 +26,7 @@ extension SettingsCellDescriptorFactory {
         let sections: [SettingsSectionDescriptorType] = [
             infoSection(),
             appearanceSection(),
+            conversationsSection(),
             actionsSection(),
             signOutSection()
         ]
@@ -54,6 +55,13 @@ extension SettingsCellDescriptorFactory {
         return SettingsSectionDescriptor(
             cellDescriptors: [pictureElement(), colorElement()],
             header: "self.settings.account_appearance_group.title".localized
+        )
+    }
+
+    func conversationsSection() -> SettingsSectionDescriptorType {
+        return SettingsSectionDescriptor(
+            cellDescriptors: [backUpElement()],
+            header: "self.settings.conversations.title".localized
         )
     }
 
@@ -191,6 +199,15 @@ extension SettingsCellDescriptorFactory {
         )
     }
 
+    func backUpElement() -> SettingsCellDescriptorType {
+        return SettingsExternalScreenCellDescriptor(
+            title: "self.settings.history_backup.title".localized,
+            isDestructive: false,
+            presentationStyle: .navigation,
+            presentationAction: BackupViewController.init
+        )
+    }
+    
     func ressetPasswordElement() -> SettingsCellDescriptorType {
         let resetPasswordTitle = "self.settings.password_reset_menu.title".localized
         return SettingsButtonCellDescriptor(title: resetPasswordTitle, isDestructive: false) { _ in
