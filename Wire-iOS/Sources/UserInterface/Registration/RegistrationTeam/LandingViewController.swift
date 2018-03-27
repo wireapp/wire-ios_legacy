@@ -187,9 +187,6 @@ final class LandingViewController: UIViewController {
         
         cancelButton.isHidden = SessionManager.shared?.firstAuthenticatedAccount == nil
 
-        let cancelButtonInsets = 44 - UIImage.size(for: .tiny)
-        cancelButton.contentEdgeInsets = UIEdgeInsetsMake(cancelButtonInsets, cancelButtonInsets, cancelButtonInsets, cancelButtonInsets)
-
         NotificationCenter.default.addObserver(
             forName: AccountManagerDidUpdateAccountsNotificationName,
             object: SessionManager.shared?.accountManager,
