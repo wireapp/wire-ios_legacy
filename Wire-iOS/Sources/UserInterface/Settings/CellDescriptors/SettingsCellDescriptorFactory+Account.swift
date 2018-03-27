@@ -200,12 +200,34 @@ extension SettingsCellDescriptorFactory {
     }
 
     func backUpElement() -> SettingsCellDescriptorType {
-        return SettingsExternalScreenCellDescriptor(
-            title: "self.settings.history_backup.title".localized,
-            isDestructive: false,
-            presentationStyle: .navigation,
-            presentationAction: BackupViewController.init
-        )
+        if ZMUser.selfUser().emailAddress.isEmpty {
+            let presentationAction: () -> UIViewController = {
+                let alert = UIAlertController(
+                    title: "self.settings.history_backup.set_email.title".localized,
+                    message: "self.settings.history_backup.set_email.message".localized,
+                    preferredStyle: .alert
+                )
+                let actionCancel = UIAlertAction(title: "general.ok".localized, style: .cancel, handler: nil)
+                alert.addAction(actionCancel)
+                
+                return alert
+            }
+            
+            return SettingsExternalScreenCellDescriptor(
+                title: "self.settings.history_backup.title".localized,
+                isDestructive: false,
+                presentationStyle: .modal,
+                presentationAction: presentationAction
+            )
+        }
+        else {
+            return SettingsExternalScreenCellDescriptor(
+                title: "self.settings.history_backup.title".localized,
+                isDestructive: false,
+                presentationStyle: .navigation,
+                presentationAction: { return BackupViewController.init(backupSource: SessionManager.shared!) }
+            )
+        }
     }
     
     func ressetPasswordElement() -> SettingsCellDescriptorType {
