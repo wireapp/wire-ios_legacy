@@ -98,6 +98,8 @@ class GiphySearchViewController: UICollectionViewController {
 
         super.init(collectionViewLayout: masonrylayout)
 
+        searchResultsController.delegate = self
+
         title = ""
 
         performSearch()
@@ -329,4 +331,13 @@ extension GiphySearchViewController: ARCollectionViewMasonryLayoutDelegate {
         return CGFloat(representation.height)
     }
 
+}
+
+extension GiphySearchViewController: ZiphySearchResultsControllerDelegate {
+    func resultsDidCleaned(ziphySearchResultsController: ZiphySearchResultsController) {
+        collectionView?.performBatchUpdates({
+            let indexSet = IndexSet(integer: 0)
+            self.collectionView?.reloadSections(indexSet)
+        }, completion: nil)
+    }
 }
