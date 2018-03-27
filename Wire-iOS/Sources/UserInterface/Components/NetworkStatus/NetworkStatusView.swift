@@ -208,19 +208,17 @@ class NetworkStatusView: UIView {
     }
 
     func createConstraints() {
-        let bottomMargin = delegate.bottomMargin
-
         constrain(self, offlineView, connectingView) { containerView, offlineView, connectingView in
             offlineView.left == containerView.left + CGFloat.NetworkStatusBar.horizontalMargin
             offlineView.right == containerView.right - CGFloat.NetworkStatusBar.horizontalMargin
-            offlineViewTopMargin = offlineView.top == containerView.top + topMargin
-            offlineViewBottomMargin = offlineView.bottom == containerView.bottom - bottomMargin
+            offlineViewTopMargin = offlineView.top == containerView.top
+            offlineViewBottomMargin = offlineView.bottom == containerView.bottom
 
             connectingView.left == offlineView.left
             connectingView.right == offlineView.right
             connectingView.top == offlineView.top
-            connectingViewHeight = connectingView.height == CGFloat.SyncBar.height
-            connectingViewBottomMargin = connectingView.bottom == containerView.bottom - bottomMargin
+            connectingViewHeight = connectingView.height == 0
+            connectingViewBottomMargin = connectingView.bottom == containerView.bottom
         }
     }
 
