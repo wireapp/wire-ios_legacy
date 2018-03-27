@@ -19,30 +19,34 @@
 import Foundation
 import UIKit
 
-extension UIView {
-    var layoutDirection: UIUserInterfaceLayoutDirection {
-        if #available(iOS 10, *) {
-            return self.traitCollection.layoutDirection == .leftToRight ? .leftToRight : .rightToLeft
-        }
-        else {
-            return UIView.userInterfaceLayoutDirection(for: .unspecified)
-        }
+struct EdgeInsets {
+    let top, leading, bottom, trailing: CGFloat
+    
+    static let zero = EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0)
+    
+    init(top: CGFloat, leading: CGFloat, bottom: CGFloat, trailing: CGFloat) {
+        self.top = top
+        self.leading = leading
+        self.bottom = bottom
+        self.trailing = trailing
     }
     
-    @discardableResult func fitInSuperview(with insets: UIEdgeInsets = .zero) -> [NSLayoutConstraint] {
+    init(margin: CGFloat) {
+        self = EdgeInsets(top: margin, leading: margin, bottom: margin, trailing: margin)
+    }
+}
+
+extension UIView {
+    @discardableResult func fitInSuperview(with insets: EdgeInsets = .zero) -> [NSLayoutConstraint] {
         guard let superview = self.superview else {
             fatal("Not in view hierarchy: self.superview = nil")
         }
         
-        let (leadingInset, trailingInset) = self.layoutDirection == .leftToRight ?
-                                                (insets.left, insets.right) :
-                                                (insets.right, insets.left)
-        
         let constraints = [
-            self.leadingAnchor.constraint(equalTo: superview.leadingAnchor, constant: leadingInset),
+            self.leadingAnchor.constraint(equalTo: superview.leadingAnchor, constant: insets.leading),
             self.topAnchor.constraint(equalTo: superview.topAnchor, constant: insets.top),
             self.bottomAnchor.constraint(equalTo: superview.bottomAnchor, constant: -insets.bottom),
-            self.trailingAnchor.constraint(equalTo: superview.trailingAnchor, constant: -trailingInset)
+            self.trailingAnchor.constraint(equalTo: superview.trailingAnchor, constant: -insets.trailing)
         ]
         NSLayoutConstraint.activate(constraints)
         

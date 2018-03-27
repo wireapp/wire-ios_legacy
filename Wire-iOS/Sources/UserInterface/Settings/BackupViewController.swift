@@ -48,7 +48,7 @@ final class BackupStatusCell: UITableViewCell {
         descriptionLabel.translatesAutoresizingMaskIntoConstraints = false
         descriptionLabel.numberOfLines = 0
         contentView.addSubview(descriptionLabel)
-        descriptionLabel.fitInSuperview(with: UIEdgeInsetsMake(24, 24, 24, 24))
+        descriptionLabel.fitInSuperview(with: EdgeInsets(margin: 24))
         
         descriptionLabel.text = "self.settings.history_backup.description".localized
         descriptionLabel.font = FontSpec(.normal, .light).font
