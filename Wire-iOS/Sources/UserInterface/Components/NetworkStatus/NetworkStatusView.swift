@@ -151,11 +151,7 @@ class NetworkStatusView: UIView {
 
     private lazy var topMargin = UIScreen.hasNotch ? CGFloat(0) : CGFloat.NetworkStatusBar.topMargin
 
-    public weak var delegate: NetworkStatusViewDelegate! {
-        didSet {
-            createConstraints()
-        }
-    }
+    public weak var delegate: NetworkStatusViewDelegate!
 
     var offlineViewTopMargin: NSLayoutConstraint?
     var offlineViewBottomMargin: NSLayoutConstraint?
