@@ -150,8 +150,6 @@ class NetworkStatusViewController : UIViewController {
     }
 
     fileprivate func enqueue(state: NetworkStatusViewState) {
-        print("⏰ time(ms) = \(round(Date().timeIntervalSince1970*1000)), applicationState = \(application.applicationState) state = \(state)")
-
         pendingState = state
         NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(applyPendingState), object: nil)
 
@@ -165,8 +163,6 @@ class NetworkStatusViewController : UIViewController {
     }
 
     func update(state: NetworkStatusViewState) {
-        print("🔔 time(ms) = \(round(Date().timeIntervalSince1970*1000)), applicationState = \(application.applicationState) state = \(state)")
-
         self.state = state
         guard shouldShowOnIPad() else { return }
 

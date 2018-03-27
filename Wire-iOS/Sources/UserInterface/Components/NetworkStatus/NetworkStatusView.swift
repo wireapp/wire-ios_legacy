@@ -219,9 +219,6 @@ class NetworkStatusView: UIView {
     }
 
     private func updateViewState(animated: Bool) {
-
-        print("⏳ time(ms) = \(round(Date().timeIntervalSince1970*1000)), animated = \(animated), applicationState = \(application.applicationState) state = \(state)")
-
         var connectingViewHidden = state != .onlineSynchronizing
         connectingView.animating = state == .onlineSynchronizing
         let offlineViewHidden = state != .offlineExpanded
