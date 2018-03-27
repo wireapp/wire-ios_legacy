@@ -83,11 +83,11 @@ extension ZMConversation {
 }
 
 extension ZMConversation.Action {
-    
-    fileprivate var style: UIAlertActionStyle {
+
+    fileprivate var isDestructive: Bool {
         switch self {
-        case .delete, .leave, .remove: return .destructive
-        default: return .default
+        case .delete, .leave, .remove: return true
+        default: return false
         }
     }
     
@@ -110,6 +110,10 @@ extension ZMConversation.Action {
     }
     
     func alertAction(handler: @escaping () -> Void) -> UIAlertAction {
-        return .init(title: title, style: style) { _ in handler() }
+        return .init(title: title, style: isDestructive ? .destructive : .default) { _ in handler() }
+    }
+
+    func previewAction(handler: @escaping () -> Void) -> UIPreviewAction {
+        return .init(title: title, style: isDestructive ? .destructive : .default, handler: { _, _ in handler() })
     }
 }

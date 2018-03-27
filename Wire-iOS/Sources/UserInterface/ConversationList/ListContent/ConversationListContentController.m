@@ -555,7 +555,7 @@ static NSString * const CellReuseIdConversation = @"CellId";
     }
     
     previewingContext.sourceRect = layoutAttributes.frame;
-    ConversationPreviewViewController *previewViewController = [[ConversationPreviewViewController alloc] initWithConversation:conversation];
+    ConversationPreviewViewController *previewViewController = [[ConversationPreviewViewController alloc] initWithConversation:conversation presentingViewController:self];
     
     return previewViewController;
 }
