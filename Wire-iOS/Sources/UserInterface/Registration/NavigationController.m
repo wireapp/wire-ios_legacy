@@ -262,8 +262,8 @@
     dispatch_block_t updateBlock = ^{
         self.rightTitledButton.alpha = (self.rightButtonEnabled && self.rightButtonIsTitledOne) ? 1 : 0;
         self.rightIconedButton.alpha = (self.rightButtonEnabled && ! self.rightButtonIsTitledOne) ? 1 : 0;
-        self.rightTitledButton.userInteractionEnabled = (self.rightButtonEnabled && self.rightButtonIsTitledOne);
-        self.rightIconedButton.userInteractionEnabled = (self.rightButtonEnabled && ! self.rightButtonIsTitledOne);
+        self.rightTitledButton.userInteractionEnabled = self.rightButtonIsTitledOne;
+        self.rightIconedButton.userInteractionEnabled = ! self.rightButtonIsTitledOne;
     };
     
     if (animated && self.transitionCoordinator) {
