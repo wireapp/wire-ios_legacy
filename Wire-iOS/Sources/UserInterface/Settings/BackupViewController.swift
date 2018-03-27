@@ -19,22 +19,6 @@
 import UIKit
 import Foundation
 
-/// Types are not hashable, so I need this wrapper
-struct HashableType<T: AnyObject>: Hashable {
-    
-    let type: T.Type
-    let hashValue: Int
-    
-    init(_ type: T.Type) {
-        self.type = type
-        self.hashValue = "\(type)".hashValue
-    }
-}
-
-func ==<T>(lhs: HashableType<T>, rhs: HashableType<T>) -> Bool {
-    return lhs.type == rhs.type
-}
-
 final class BackupStatusCell: UITableViewCell {
     let descriptionLabel = UILabel()
     
@@ -115,8 +99,8 @@ final class BackupViewController: UIViewController {
         tableView.tableFooterView = UIView()
         cells = [BackupStatusCell.self, BackupActionCell.self]
         
-        Set(cells.map { HashableType<UITableViewCell>($0) }).forEach {
-            tableView.register($0.type.self, forCellReuseIdentifier: $0.type.reuseIdentifier)
+        cells.forEach {
+            tableView.register($0.self, forCellReuseIdentifier: $0.reuseIdentifier)
         }
     }
     
@@ -165,8 +149,6 @@ extension BackupViewController: UITableViewDataSource, UITableViewDelegate {
                 shareDatabaseDocumentController.delegate = self.documentDelegate
                 shareDatabaseDocumentController.presentPreview(animated: true)
             }
-            
-            
         }
     }
 }
