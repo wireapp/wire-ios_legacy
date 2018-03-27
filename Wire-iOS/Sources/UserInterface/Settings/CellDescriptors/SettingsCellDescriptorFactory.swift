@@ -105,7 +105,7 @@ import Foundation
                                                     presentationAction: presentationAction,
                                                     previewGenerator: nil,
                                                     icon: .plus,
-                                                    accessoryViewMode: .alwaysShow)
+                                                    accessoryViewMode: .alwaysHide)
     }
     
     func settingsGroup() -> SettingsControllerGeneratorType & SettingsInternalGroupCellDescriptorType {
