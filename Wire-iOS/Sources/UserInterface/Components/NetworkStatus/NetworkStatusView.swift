@@ -139,7 +139,7 @@ class NetworkStatusView: UIView {
 
     private lazy var topMargin = UIScreen.hasNotch ? CGFloat(0) : CGFloat.NetworkStatusBar.topMargin
 
-    public weak var delegate: NetworkStatusViewDelegate!
+    public weak var delegate: NetworkStatusViewDelegate?
 
     var offlineViewTopMargin: NSLayoutConstraint?
     var offlineViewBottomMargin: NSLayoutConstraint?
@@ -269,11 +269,17 @@ class NetworkStatusView: UIView {
                   animated: Bool,
                   connectingViewHidden: Bool,
                   offlineViewHidden: Bool) {
-        offlineViewBottomMargin?.constant = offlineBarState == .expanded ? -delegate.bottomMargin : 0
+        var bottomMargin: CGFloat = 0
+
+        if let margin = delegate?.bottomMargin {
+            bottomMargin = margin
+        }
+
+        offlineViewBottomMargin?.constant = offlineBarState == .expanded ? -bottomMargin : 0
         offlineViewTopMargin?.constant = offlineBarState == .expanded ? topMargin : 0
 
         connectingViewHeight?.constant = connectingViewHidden ? 0 : CGFloat.SyncBar.height
-        connectingViewBottomMargin?.constant = connectingViewHidden ? 0 : -delegate.bottomMargin
+        connectingViewBottomMargin?.constant = connectingViewHidden ? 0 : -bottomMargin
 
         /// offlineViewBottomMargin is active iff connectingViewHidden is visible
         if offlineViewHidden && !connectingViewHidden {
