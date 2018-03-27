@@ -209,7 +209,7 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
     if ([self respondsToSelector:@selector(registerForPreviewingWithDelegate:sourceView:)] &&
         [[UIApplication sharedApplication] keyWindow].traitCollection.forceTouchCapability == UIForceTouchCapabilityAvailable) {
         
-        [self registerForPreviewingWithDelegate:self sourceView:self.view.superview];
+        [self registerForPreviewingWithDelegate:self sourceView:self.tableView];
     }
 
     [self scrollToLastUnreadMessageIfNeeded];
