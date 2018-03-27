@@ -71,10 +71,26 @@ final class BackupActionCell: UITableViewCell {
     }
 }
 
+protocol BackupSource {
+    func backupActiveAccount(completion: @escaping (Result<URL>) -> ())
+}
+
+extension SessionManager: BackupSource {}
+
 final class BackupViewController: UIViewController {
     fileprivate let tableView = UITableView(frame: .zero)
     fileprivate var cells: [UITableViewCell.Type] = []
     fileprivate let documentDelegate = DocumentDelegate()
+    let backupSource: BackupSource
+    
+    init(backupSource: BackupSource) {
+        self.backupSource = backupSource
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -129,13 +145,9 @@ extension BackupViewController: UITableViewDataSource, UITableViewDelegate {
             return
         }
         
-        guard let sessionManager = SessionManager.shared else {
-            fatal("Session manager is missing")
-        }
-        
         self.showLoadingView = true
 
-        sessionManager.backupActiveAccount { result in
+        backupSource.backupActiveAccount { result in
             self.showLoadingView = false
             
             switch result {
