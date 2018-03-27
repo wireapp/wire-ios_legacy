@@ -132,6 +132,18 @@ extension NetworkStatusViewDelegate where Self: UIViewController {
     }
 }
 
+extension UIApplicationState : CustomStringConvertible {
+    public var description: String {
+        switch self {
+        case .active: return "active"
+
+        case .inactive: return "inactive"
+
+        case .background: return "background"
+        }
+    }
+}
+
 class NetworkStatusView: UIView {
     private let connectingView: BreathLoadingBar
     private let offlineView: OfflineBar
@@ -213,6 +225,9 @@ class NetworkStatusView: UIView {
     }
 
     private func updateViewState(animated: Bool) {
+
+        print("⏳ time(ms) = \(round(Date().timeIntervalSince1970*1000)), animated = \(animated), applicationState = \(application.applicationState) state = \(state)")
+
         var connectingViewHidden = state != .onlineSynchronizing
         connectingView.animating = state == .onlineSynchronizing
         let offlineViewHidden = state != .offlineExpanded
