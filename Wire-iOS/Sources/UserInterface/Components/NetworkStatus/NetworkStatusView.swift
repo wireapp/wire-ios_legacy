@@ -185,6 +185,8 @@ class NetworkStatusView: UIView {
         [offlineView, connectingView].forEach(addSubview)
 
         state = .online
+
+        createConstraints()
     }
 
     required init?(coder aDecoder: NSCoder) {
