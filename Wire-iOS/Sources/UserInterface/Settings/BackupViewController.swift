@@ -80,7 +80,6 @@ extension SessionManager: BackupSource {}
 final class BackupViewController: UIViewController {
     fileprivate let tableView = UITableView(frame: .zero)
     fileprivate var cells: [UITableViewCell.Type] = []
-    fileprivate let documentDelegate = DocumentDelegate()
     let backupSource: BackupSource
     
     init(backupSource: BackupSource) {
@@ -157,9 +156,8 @@ extension BackupViewController: UITableViewDataSource, UITableViewDelegate {
                                               cancelButtonTitle: "general.ok".localized)
                 self.present(alert, animated: true)
             case .success(let url):
-                let shareDatabaseDocumentController = UIDocumentInteractionController(url: url)
-                shareDatabaseDocumentController.delegate = self.documentDelegate
-                shareDatabaseDocumentController.presentPreview(animated: true)
+                let activityController = UIActivityViewController(activityItems: [url], applicationActivities: nil)
+                self.present(activityController, animated: true)
             }
         }
     }
