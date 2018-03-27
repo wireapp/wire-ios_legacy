@@ -351,9 +351,8 @@
 
 - (void)loadPlaceholderConversationControllerAnimated:(BOOL)animated completion:(dispatch_block_t)completion;
 {
-    PlaceholderConversationViewController *vc = [[PlaceholderConversationViewController alloc] init];
     self.currentConversation = nil;
-    [self pushContentViewController:vc focusOnView:NO animated:animated completion:completion];
+    [self pushContentViewController: nil focusOnView:NO animated:animated completion:completion];
 }
 
 - (BOOL)loadConversation:(ZMConversation *)conversation focusOnView:(BOOL)focus animated:(BOOL)animated

@@ -26,6 +26,7 @@ extension SettingsCellDescriptorFactory {
         let sections: [SettingsSectionDescriptorType] = [
             infoSection(),
             appearanceSection(),
+            conversationsSection(),
             actionsSection(),
             signOutSection()
         ]
@@ -54,6 +55,13 @@ extension SettingsCellDescriptorFactory {
         return SettingsSectionDescriptor(
             cellDescriptors: [pictureElement(), colorElement()],
             header: "self.settings.account_appearance_group.title".localized
+        )
+    }
+
+    func conversationsSection() -> SettingsSectionDescriptorType {
+        return SettingsSectionDescriptor(
+            cellDescriptors: [backUpElement()],
+            header: "self.settings.conversations.title".localized
         )
     }
 
@@ -191,6 +199,37 @@ extension SettingsCellDescriptorFactory {
         )
     }
 
+    func backUpElement() -> SettingsCellDescriptorType {
+        if ZMUser.selfUser().emailAddress.isEmpty {
+            let presentationAction: () -> UIViewController = {
+                let alert = UIAlertController(
+                    title: "self.settings.history_backup.set_email.title".localized,
+                    message: "self.settings.history_backup.set_email.message".localized,
+                    preferredStyle: .alert
+                )
+                let actionCancel = UIAlertAction(title: "general.ok".localized, style: .cancel, handler: nil)
+                alert.addAction(actionCancel)
+                
+                return alert
+            }
+            
+            return SettingsExternalScreenCellDescriptor(
+                title: "self.settings.history_backup.title".localized,
+                isDestructive: false,
+                presentationStyle: .modal,
+                presentationAction: presentationAction
+            )
+        }
+        else {
+            return SettingsExternalScreenCellDescriptor(
+                title: "self.settings.history_backup.title".localized,
+                isDestructive: false,
+                presentationStyle: .navigation,
+                presentationAction: { return BackupViewController.init(backupSource: SessionManager.shared!) }
+            )
+        }
+    }
+    
     func ressetPasswordElement() -> SettingsCellDescriptorType {
         let resetPasswordTitle = "self.settings.password_reset_menu.title".localized
         return SettingsButtonCellDescriptor(title: resetPasswordTitle, isDestructive: false) { _ in

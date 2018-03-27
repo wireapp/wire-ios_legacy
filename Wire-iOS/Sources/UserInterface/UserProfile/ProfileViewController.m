@@ -228,6 +228,9 @@ typedef NS_ENUM(NSUInteger, ProfileViewControllerTabBarIndex) {
 
         self.profileTitleView.showVerifiedShield = showShield;
     }
+    else {
+        self.profileTitleView.showVerifiedShield = NO;
+    }
 }
 
 - (void)userDidChange:(UserChangeInfo *)note

@@ -243,7 +243,7 @@
 "conversation.input_bar.message_too_long.title" = "Message too long";
 "conversation.input_bar.message_too_long.message" = "You can send messages up to %d characters long.";
 
-"conversation.create.group_name.title" = "Group name";
+"conversation.create.group_name.title" = "Create group";
 "conversation.create.group_name.placeholder" = "Group name";
 "conversation.create.guidance.empty" = "At least 1 character";
 "conversation.create.guidance.toolong" = "Too many characters";
@@ -626,12 +626,9 @@
 "about.copyright.title"="© Wire Swiss GmbH";
 
 // Self new devices
-"self.new_device_alert.title" = "You have connected %@ to your Wire account";
-"self.new_device_alert.title_prefix.tablet" = "a tablet";
-"self.new_device_alert.title_prefix.phone" = "a phone";
-"self.new_device_alert.title_prefix.devices" = "%d devices";
-"self.new_device_alert.message" = "%@\n\nIf you didn’t do this, remove the device and reset your password.";
-"self.new_device_alert.message_plural" = "%@\n\nIf you didn’t do this, remove those devices and reset your password.";
+"self.new_device_alert.title" = "Your account was used on:";
+"self.new_device_alert.message" = "\n%@\n\nIf you don’t recognize the device above, remove it and reset your password.";
+"self.new_device_alert.message_plural" = "\n%@\n\nIf you don’t recognize the devices above, remove them and reset your password.";
 "self.new_device_alert.manage_devices" = "Manage devices";
 "self.new_device_alert.trust_devices" = "OK";
 
@@ -838,6 +835,17 @@
 
 // Invite from Settings
 "self.settings.invite_friends.title" = "Invite people";
+
+// History backup
+
+"self.settings.conversations.title" = "Conversations";
+"self.settings.history_backup.title" = "History backup";
+"self.settings.history_backup.description" = "Back up your conversation history to a safe place. If you lose your phone or switch to a new one, your conversation will be safe. You can restore your conversation history when you log in. You can only restore history from a backup of the same platform.\nThe back up is not protected by Wire end-to-end encryption.";
+"self.settings.history_backup.action" = "Back Up Now";
+"self.settings.history_backup.error.title" = "Error";
+
+"self.settings.history_backup.set_email.title" = "Set an email and password.";
+"self.settings.history_backup.set_email.message" = "You need an email and a password in order to back up your conversation history. You can do it from the account page in Settings.";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // System status

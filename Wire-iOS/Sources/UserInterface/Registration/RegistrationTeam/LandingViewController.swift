@@ -142,11 +142,11 @@ final class LandingViewController: UIViewController {
     
     let cancelButton: IconButton = {
         let button = IconButton()
-        button.setIcon(.cancel, with: .small, for: .normal)
-        button.tintColor = .black
         button.translatesAutoresizingMaskIntoConstraints = false
         button.accessibilityIdentifier = "CancelButton"
+        button.setIcon(.cancel, with: .small, for: .normal)
         button.addTarget(self, action: #selector(LandingViewController.cancelButtonTapped(_:)), for: .touchUpInside)
+
         return button
     }()
 
@@ -169,6 +169,8 @@ final class LandingViewController: UIViewController {
         tracker?.tagOpenedLandingScreen()
 
         self.view.backgroundColor = UIColor.Team.background
+        cancelButton.setIconColor(.black, for: .normal)
+        cancelButton.setIconColor(UIColor.black.withAlphaComponent(0.6), for: .highlighted)
 
         [headerContainerView, buttonStackView, loginHintsLabel, loginButton].forEach(view.addSubview)
 
@@ -186,9 +188,6 @@ final class LandingViewController: UIViewController {
         updateConstraintsForIPad()
         
         cancelButton.isHidden = SessionManager.shared?.firstAuthenticatedAccount == nil
-
-        let cancelButtonInsets = 44 - UIImage.size(for: .tiny)
-        cancelButton.contentEdgeInsets = UIEdgeInsetsMake(cancelButtonInsets, cancelButtonInsets, cancelButtonInsets, cancelButtonInsets)
 
         NotificationCenter.default.addObserver(
             forName: AccountManagerDidUpdateAccountsNotificationName,
