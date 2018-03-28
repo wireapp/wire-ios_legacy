@@ -51,6 +51,48 @@ import UIKit
         return attributes[NSLinkAttributeName] != nil
     }
     
+    /// Returns true if the substring in the given range is a link and its
+    /// attached URL is not described by this link.
+    private func link(in range: NSRange, hides url: URL) -> Bool {
+        
+        guard
+            // try to detect a link in the given range
+            let detector = try? NSDataDetector(types: NSTextCheckingResult.CheckingType.link.rawValue),
+            let match = detector.firstMatch(in: text, options: [], range: range),
+            let detectedURL = match.url, match.range == range
+            else { return true }
+        
+        return detectedURL.absoluteString != url.absoluteString
+    }
+    
+    /// Returns an alert controller configured to open the given URL.
+    private func openAlert(for url: URL) -> UIAlertController {
+        let alert = UIAlertController(
+            title: "Open Link",
+            message: "Do you want to open the link: \(url.absoluteString) ?",
+            preferredStyle: .alert
+        )
+        
+        let okAction = UIAlertAction(title: "Open", style: .default) { _ in
+            _ = self.interactionDelegate?.textView(self, open: url)
+        }
+        
+        alert.addAction(.cancel())
+        alert.addAction(okAction)
+        return alert
+    }
+    
+    /// An alert is shown (asking the user if they wish to open the url) if the link
+    /// attachment contains a hidden url, i.e the substring in the given range
+    /// doesn't not describe its attched url.
+    fileprivate func showAlertIfNeeded(for url: URL, in range: NSRange) -> Bool {
+        // if link has hidden url
+        if link(in: range, hides: url) {
+            ZClientViewController.shared()?.present(openAlert(for: url), animated: true, completion: nil)
+            return true
+        }
+        return false
+    }
 }
 
 
@@ -71,6 +113,9 @@ extension LinkInteractionTextView: UITextViewDelegate {
             interactionDelegate?.textViewDidLongPress(self)
             return false
         }
+        
+        // if alert shown, link opening is handled in alert actions
+        if showAlertIfNeeded(for: URL, in: characterRange) { return false }
         
         // data detector links should be handled by the system
         return URL.scheme == "x-apple-data-detectors" || !(interactionDelegate?.textView(self, open: URL) ?? false)
@@ -95,13 +140,16 @@ extension LinkInteractionTextView: UITextViewDelegate {
     public func textView(_ textView: UITextView, shouldInteractWith URL: URL, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
         switch interaction {
         case .invokeDefaultAction:
+            // if alert shown, link opening is handled in alert actions
+            if showAlertIfNeeded(for: URL, in: characterRange) { return false }
             // data detector links should be handle by the system
-            return URL.scheme == "x-apple-data-detectors" || !(interactionDelegate?.textView(self, open: URL) ?? false)
+            return  URL.scheme == "x-apple-data-detectors" || !(interactionDelegate?.textView(self, open: URL) ?? false)
         case .presentActions:
             interactionDelegate?.textViewDidLongPress(self)
             return false
-        default:
-            return true
+        case .preview:
+            // if no alert is shown, still allow preview peeking
+            return !showAlertIfNeeded(for: URL, in: characterRange)
         }
     }
 }
