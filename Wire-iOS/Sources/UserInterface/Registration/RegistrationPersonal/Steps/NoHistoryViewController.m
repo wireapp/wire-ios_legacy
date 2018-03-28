@@ -73,6 +73,8 @@
 {
     self.heroLabel = [[UILabel alloc] initForAutoLayout];
     self.heroLabel.numberOfLines = 0;
+    self.heroLabel.textColor = [[ColorScheme defaultColorScheme] colorWithName:ColorSchemeColorTextForeground
+                                                                       variant:ColorSchemeVariantDark];
     
     NSMutableParagraphStyle *paragraphStyle = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
     paragraphStyle.paragraphSpacing = 10;
@@ -89,6 +91,8 @@
 {
     self.subtitleLabel = [[UILabel alloc] initForAutoLayout];
     self.subtitleLabel.numberOfLines = 0;
+    self.subtitleLabel.textColor = [[ColorScheme defaultColorScheme] colorWithName:ColorSchemeColorTextForeground
+                                                                           variant:ColorSchemeVariantDark];
     NSMutableParagraphStyle *paragraphStyle = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
     paragraphStyle.paragraphSpacing = 10;
     NSString *subtitleText = [self localizableStringForPart:@"subtitle"];

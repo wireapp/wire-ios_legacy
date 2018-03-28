@@ -19,6 +19,8 @@
 
 #import "RegistrationStepViewController.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 typedef NS_ENUM(NSUInteger, ContextType) {
     ContextTypeNewDevice,
     ContextTypeLoggedOut
@@ -29,3 +31,6 @@ typedef NS_ENUM(NSUInteger, ContextType) {
 
 @property (nonatomic, readonly) UIView *contentView;
 @end
+
+NS_ASSUME_NONNULL_END
+
