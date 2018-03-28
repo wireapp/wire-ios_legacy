@@ -17,29 +17,65 @@
 //
 
 import XCTest
+@testable import Wire
 
 class LinkInteractionTextViewTests: XCTestCase {
     
+    var sut: LinkInteractionTextView!
+    
     override func setUp() {
         super.setUp()
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+        sut = LinkInteractionTextView(frame: .zero, textContainer: nil)
     }
     
     override func tearDown() {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
+        sut = nil
         super.tearDown()
     }
     
-    func testExample() {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
+    func testThatItDoesOpenLinkWithoutHiddenURL_iOS9() {
+        // GIVEN
+        let str = "http://www.wire.com"
+        let url = URL(string: str)!
+        sut.attributedText = NSAttributedString(string: str, attributes: [NSLinkAttributeName: url])
+        // WHEN
+        let shouldOpenURL = sut.delegate!.textView!(sut, shouldInteractWith: url, in: NSMakeRange(0, str.characters.count))
+        // THEN
+        XCTAssertTrue(shouldOpenURL)
     }
     
-    func testPerformanceExample() {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
-        }
+    func testThatItDoesNotOpenLinkWithHiddenURL_iOS9() {
+        // GIVEN
+        let str = "tap me!"
+        let url = URL(string: "www.wire.com")!
+        sut.attributedText = NSAttributedString(string: str, attributes: [NSLinkAttributeName: url])
+        // WHEN
+        let shouldOpenURL = sut.delegate!.textView!(sut, shouldInteractWith: url, in: NSMakeRange(0, str.characters.count))
+        // THEN
+        XCTAssertFalse(shouldOpenURL)
     }
     
+    @available(iOS 10.0, *)
+    func testThatItDoesOpenLinkWithoutHiddenURL_iOS10() {
+        // GIVEN
+        let str = "http://www.wire.com"
+        let url = URL(string: str)!
+        sut.attributedText = NSAttributedString(string: str, attributes: [NSLinkAttributeName: url])
+        // WHEN
+        let shouldOpenURL = sut.delegate!.textView!(sut, shouldInteractWith: url, in: NSMakeRange(0, str.characters.count), interaction: .invokeDefaultAction)
+        // THEN
+        XCTAssertTrue(shouldOpenURL)
+    }
+    
+    @available(iOS 10.0, *)
+    func testThatItDoesNotOpenLinkWithHiddenURL_iOS10() {
+        // GIVEN
+        let str = "tap me!"
+        let url = URL(string: "www.wire.com")!
+        sut.attributedText = NSAttributedString(string: str, attributes: [NSLinkAttributeName: url])
+        // WHEN
+        let shouldOpenURL = sut.delegate!.textView!(sut, shouldInteractWith: url, in: NSMakeRange(0, str.characters.count), interaction: .invokeDefaultAction)
+        // THEN
+        XCTAssertFalse(shouldOpenURL)
+    }
 }
