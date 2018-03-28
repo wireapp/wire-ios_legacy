@@ -136,6 +136,7 @@ class AppRootViewController: UIViewController {
         
         CallQualityScoreProvider.shared.nextProvider = analytics
         sessionManagerAnalytics = CallQualityScoreProvider.shared
+        SessionManager.clearPreviousBackups()
 
         SessionManager.create(
             appVersion: appVersion!,
