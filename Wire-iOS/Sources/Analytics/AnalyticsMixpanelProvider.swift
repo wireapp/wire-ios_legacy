@@ -75,6 +75,7 @@ final class AnalyticsMixpanelProvider: NSObject, AnalyticsProvider {
         "settings.opted_in_tracking",
         "settings.opted_out_tracking",
         "settings.changed_status",
+        "settings.changed_value",
         "e2ee.failed_message_decyption",
         "start.opened_start_screen",
         "start.opened_person_registration",
