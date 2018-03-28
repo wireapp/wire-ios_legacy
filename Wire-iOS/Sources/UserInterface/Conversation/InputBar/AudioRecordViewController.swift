@@ -130,6 +130,12 @@ import Classy
             self.audioPreviewView.color = color
         }
         
+        topContainerView.backgroundColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorBackground)
+        bottomContainerView.backgroundColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorBackground)
+        
+        topSeparator.backgroundColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorSeparator)
+        rightSeparator.backgroundColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorSeparator)
+        
         let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(topContainerTapped))
         topContainerView.addGestureRecognizer(tapRecognizer)
         
@@ -138,11 +144,16 @@ import Classy
         [topSeparator, rightSeparator, audioPreviewView, timeLabel, cancelButton, recordingDotView].forEach(bottomContainerView.addSubview)
         
         timeLabel.accessibilityLabel = "audioRecorderTimeLabel"
+        timeLabel.font = FontSpec(.small, .none).font!
+        timeLabel.textColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorTextForeground)
         
         topTooltipLabel.text = "conversation.input_bar.audio_message.tooltip.pull_send".localized.uppercased()
         topTooltipLabel.accessibilityLabel = "audioRecorderTopTooltipLabel"
+        topTooltipLabel.font = FontSpec(.small, .none).font!
+        topTooltipLabel.textColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorTextDimmed)
         
         cancelButton.setIcon(.cancel, with: .tiny, for: UIControlState())
+        cancelButton.setIconColor(UIColor.wr_color(fromColorScheme: ColorSchemeColorTextForeground), for: .normal)
         cancelButton.addTarget(self, action: #selector(cancelButtonPressed(_:)), for: .touchUpInside)
         cancelButton.accessibilityLabel = "audioRecorderCancel"
         updateRecordingState(recordingState)

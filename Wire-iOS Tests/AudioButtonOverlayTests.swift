@@ -18,7 +18,6 @@
 
 
 @testable import Wire
-import Classy
 
 class AudioButtonOverlayTests: ZMSnapshotTestCase {
     
@@ -30,7 +29,6 @@ class AudioButtonOverlayTests: ZMSnapshotTestCase {
         buttonTapHistory = []
         sut = AudioButtonOverlay()
         sut.buttonHandler = { self.buttonTapHistory.append($0) }
-        CASStyler.default().styleItem(sut)
     }
     
     func testThatItRendersTheButtonOverlayCorrectInitially_Recording() {

@@ -37,13 +37,9 @@ final class WaveFormView: UIView {
         }
     }
     
-    var gradientColor: UIColor? /* Set by Classy */ {
+    var gradientColor: UIColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorBackground) {
         didSet {
-            guard let color = gradientColor else { return }
-            let clearGradientColor = color.withAlphaComponent(0)
-            let leftColors = [color, clearGradientColor].map { $0.cgColor }
-            leftGradient.gradientLayer.colors = leftColors
-            rightGradient.gradientLayer.colors = leftColors
+            updateWaveFormColor()
         }
     }
     
@@ -54,8 +50,8 @@ final class WaveFormView: UIView {
     init() {
         super.init(frame: CGRect.zero)
         configureViews()
+        updateWaveFormColor()
         createConstraints()
-        CASStyler.default().styleItem(self)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -94,6 +90,13 @@ final class WaveFormView: UIView {
             leftGradientWidthConstraint = leftGradient.width == gradientWidth
             rightGradientWidthConstraint = rightGradient.width == gradientWidth
         }
+    }
+    
+    fileprivate func updateWaveFormColor() {
+        let clearGradientColor = gradientColor.withAlphaComponent(0)
+        let leftColors = [gradientColor, clearGradientColor].map { $0.cgColor }
+        leftGradient.gradientLayer.colors = leftColors
+        rightGradient.gradientLayer.colors = leftColors
     }
     
 }

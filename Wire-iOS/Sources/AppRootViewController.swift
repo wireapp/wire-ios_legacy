@@ -136,6 +136,7 @@ class AppRootViewController: UIViewController {
         
         CallQualityScoreProvider.shared.nextProvider = analytics
         sessionManagerAnalytics = CallQualityScoreProvider.shared
+        SessionManager.clearPreviousBackups()
 
         SessionManager.create(
             appVersion: appVersion!,
@@ -370,6 +371,7 @@ class AppRootViewController: UIViewController {
         ConversationListCell.invalidateCachedCellSize()
         let fontScheme = FontScheme(contentSizeCategory: UIApplication.shared.preferredContentSizeCategory)
         CASStyler.default().apply(fontScheme: fontScheme)
+        type(of: self).configureAppearance()
     }
 
     public func performWhenAuthenticated(_ block : @escaping () -> Void) {

@@ -528,6 +528,7 @@ extension VoiceChannelOverlay {
         centerStatusLabel.textAlignment = .center
         centerStatusLabel.numberOfLines = 2
         centerStatusLabel.text = "voice.status.video_not_available".localized.uppercasedWithCurrentLocale
+        centerStatusLabel.textColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorTextForeground, variant: .dark)
         centerStatusLabel.font = FontSpec(.small, .light).font!
         
         [topStatusLabel, centerStatusLabel, degradationTopLabel, degradationBottomLabel].forEach(contentContainer.addSubview)

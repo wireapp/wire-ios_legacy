@@ -71,7 +71,8 @@ import Cartography
         navbar.isOpaque = true
         navbar.setBackgroundImage(UIImage(), for: .any, barMetrics: .default)
         navbar.shadowImage = UIImage()
-        navbar.barTintColor = ColorScheme.default().color(withName: ColorSchemeColorBarBackground)
+        navbar.barTintColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorBarBackground)
+        navbar.tintColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorTextForeground)
 
         self.customNavBar = UINavigationBarContainer(navbar)
 

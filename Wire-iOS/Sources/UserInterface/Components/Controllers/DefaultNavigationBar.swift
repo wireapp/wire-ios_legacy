@@ -39,8 +39,10 @@ class DefaultNavigationBar : UINavigationBar {
         setBackgroundImage(UIImage.singlePixelImage(with: ColorScheme.default().color(withName: ColorSchemeColorBarBackground)), for: .default)
         shadowImage = UIImage.singlePixelImage(with: UIColor.clear)
         titleTextAttributes = DefaultNavigationBar.titleTextAttributes(for: ColorScheme.default().variant)
-        backIndicatorImage = UIImage(for: .backArrow, iconSize: .tiny, color: ColorScheme.default().color(withName: ColorSchemeColorTextForeground)).withInsets(UIEdgeInsets(top: 0, left: 4, bottom: 3, right: 0), backgroundColor: .clear)
-        backIndicatorTransitionMaskImage = UIImage(for: .backArrow, iconSize: .tiny, color: .black)
+        
+        let backIndicatorInsets = UIEdgeInsets(top: 0, left: 4, bottom: 2.5, right: 0)
+        backIndicatorImage = UIImage(for: .backArrow, iconSize: .tiny, color: ColorScheme.default().color(withName: ColorSchemeColorTextForeground)).withInsets(backIndicatorInsets, backgroundColor: .clear)
+        backIndicatorTransitionMaskImage = UIImage(for: .backArrow, iconSize: .tiny, color: .black).withInsets(backIndicatorInsets, backgroundColor: .clear)
     }
     
     static func titleTextAttributes(for variant: ColorSchemeVariant) -> [String : Any] {

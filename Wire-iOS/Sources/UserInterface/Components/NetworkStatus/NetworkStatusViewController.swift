@@ -92,7 +92,7 @@ class NetworkStatusViewController : UIViewController {
         }
 
         if let userSession = ZMUserSession.shared() {
-            update(state: viewState(from: userSession.networkState))
+            enqueue(state: viewState(from: userSession.networkState))
             networkStatusObserverToken = ZMNetworkAvailabilityChangeNotification.addNetworkAvailabilityObserver(self, userSession: userSession)
         }
 
@@ -106,7 +106,7 @@ class NetworkStatusViewController : UIViewController {
 
         finishedViewWillAppear = true
         if let userSession = ZMUserSession.shared() {
-            update(state: viewState(from: userSession.networkState))
+            enqueue(state: viewState(from: userSession.networkState))
         }
     }
 
