@@ -334,7 +334,7 @@ extension GiphySearchViewController: ARCollectionViewMasonryLayoutDelegate {
 }
 
 extension GiphySearchViewController: ZiphySearchResultsControllerDelegate {
-    func resultsDidCleaned(ziphySearchResultsController: ZiphySearchResultsController) {
+    func didCleanResults(ziphySearchResultsController: ZiphySearchResultsController) {
         collectionView?.performBatchUpdates({
             let indexSet = IndexSet(integer: 0)
             self.collectionView?.reloadSections(indexSet)
