@@ -118,6 +118,7 @@
 #import "Button.h"
 #import "ViewControllerDismissable.h"
 #import "PhoneSignInViewController.h"
+#import "NoHistoryViewController.h"
 
 // Helper objects
 #import "PushTransition.h"

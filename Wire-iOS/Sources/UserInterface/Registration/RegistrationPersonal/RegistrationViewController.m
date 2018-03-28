@@ -197,9 +197,8 @@
     if ([self.rootNavigationController.topViewController isKindOfClass:[NoHistoryViewController class]]) {
         return;
     }
-    NoHistoryViewController *noHistoryViewController = [[NoHistoryViewController alloc] init];
+    NoHistoryViewController *noHistoryViewController = [[NoHistoryViewController alloc] initWithContextType:type];
     noHistoryViewController.formStepDelegate = self;
-    noHistoryViewController.contextType = type;
 
     self.rootNavigationController.backButtonEnabled = NO;
     [self.rootNavigationController pushViewController:noHistoryViewController animated:YES];
