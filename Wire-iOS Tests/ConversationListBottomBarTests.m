@@ -21,7 +21,6 @@
 #import "Wire_iOS_Tests-Swift.h"
 #import "Wire-Swift.h"
 @import PureLayout;
-#import <Classy/Classy.h>
 
 
 @interface MockConversationListBottomBarDelegate : NSObject <ConversationListBottomBarControllerDelegate>
@@ -78,7 +77,6 @@
     [UIView performWithoutAnimation:^{
         self.sut = [[ConversationListBottomBarController alloc] initWithDelegate:self.mockDelegate];
     }];
-    [CASStyler.defaultStyler styleItem:self.sut];
  }
 
 - (void)testThatItRendersTheBottomBarCorrectlyInInitialState

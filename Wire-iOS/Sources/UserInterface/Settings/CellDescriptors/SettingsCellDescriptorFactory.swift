@@ -105,7 +105,7 @@ import Foundation
                                                     presentationAction: presentationAction,
                                                     previewGenerator: nil,
                                                     icon: .plus,
-                                                    accessoryViewMode: .alwaysShow)
+                                                    accessoryViewMode: .alwaysHide)
     }
     
     func settingsGroup() -> SettingsControllerGeneratorType & SettingsInternalGroupCellDescriptorType {
@@ -327,19 +327,6 @@ import Foundation
             previewGenerator: .none,
             icon: .wireLogo
         )
-    }
-    
-    // MARK: Subgroups
-    
-    func colorsSubgroup() -> SettingsSectionDescriptorType {
-        let cellDescriptors = ZMAccentColor.all().map { (color) -> SettingsCellDescriptorType in
-            let value = SettingsPropertyValue(color.rawValue)
-            return SettingsPropertySelectValueCellDescriptor(settingsProperty: self.settingsPropertyFactory.property(.accentColor), value: value, title: "", identifier: .none, selectAction: { _ in
-                
-                }, backgroundColor: color.color) as SettingsCellDescriptorType
-        }
-        let colorsSection = SettingsSectionDescriptor(cellDescriptors: cellDescriptors)
-        return colorsSection
     }
     
     // MARK: Actions

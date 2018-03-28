@@ -177,8 +177,6 @@ NSString *const MediaPlaybackManagerPlayerStateChangedNotification = @"MediaPlay
 
 - (void)stopObservingMediaPlayerChanges:(id<MediaPlayer>)mediaPlayer
 {
-    // We need to remove the observer manually, because deallocating it does not remove it
-    [((NSObject *)mediaPlayer) removeObserver:self.titleObserver forKeyPath:@"title"];
     self.titleObserver = nil;
 }
 

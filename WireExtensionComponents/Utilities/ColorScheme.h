@@ -70,6 +70,7 @@ extern NSString * const ColorSchemeColorLoadingDotInactive;
 
 extern NSString * const ColorSchemeColorPaleSeparator;
 extern NSString * const ColorSchemeColorListAvatarInitials;
+extern NSString * const ColorSchemeColorAudioButtonOverlay;
 
 extern NSString * const ColorSchemeColorNameAccentPrefix;
 

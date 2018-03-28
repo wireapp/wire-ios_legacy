@@ -19,7 +19,6 @@
 
 import UIKit
 import Cartography
-import Classy
 
 class ConversationTitleView: TitleView {
     var conversation: ZMConversation
@@ -29,7 +28,6 @@ class ConversationTitleView: TitleView {
         self.conversation = conversation
         self.interactive = interactive
         super.init()
-        CASStyler.default().styleItem(self)
         configure()
     }
     
@@ -38,6 +36,10 @@ class ConversationTitleView: TitleView {
     }
     
     func configure() {
+        titleColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorTextForeground)
+        titleColorSelected = UIColor.wr_color(fromColorScheme: ColorSchemeColorTextDimmed)
+        titleFont = FontSpec(.medium, .semibold).font!
+        
         var attachment : NSTextAttachment?
         if conversation.securityLevel == .secure {
             attachment = .verifiedShield()

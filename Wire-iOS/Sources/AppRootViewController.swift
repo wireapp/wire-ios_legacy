@@ -370,6 +370,7 @@ class AppRootViewController: UIViewController {
         ConversationListCell.invalidateCachedCellSize()
         let fontScheme = FontScheme(contentSizeCategory: UIApplication.shared.preferredContentSizeCategory)
         CASStyler.default().apply(fontScheme: fontScheme)
+        type(of: self).configureAppearance()
     }
 
     public func performWhenAuthenticated(_ block : @escaping () -> Void) {

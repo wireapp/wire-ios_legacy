@@ -20,7 +20,6 @@
 
 import Foundation
 import Cartography
-import Classy
 
 @objc public final class AudioButtonOverlay: UIView {
     
@@ -41,7 +40,11 @@ import Classy
     fileprivate var heightConstraint: NSLayoutConstraint?
     fileprivate var widthConstraint: NSLayoutConstraint?
     
-    var iconColor, iconColorHighlighted, greenColor, grayColor, superviewColor: UIColor?
+    let darkColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorTextForeground)
+    let brightColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorTextBackground)
+    let greenColor = ZMAccentColor.strongLimeGreen.color;
+    let grayColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorAudioButtonOverlay)
+    let superviewColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorBackground)
     
     let audioButton = IconButton()
     let playButton = IconButton()
@@ -51,7 +54,6 @@ import Classy
     
     init() {
         super.init(frame: CGRect.zero)
-        CASStyler.default().styleItem(self)
         configureViews()
         createConstraints()
         updateWithRecordingState(recordingState)
@@ -109,9 +111,6 @@ import Classy
         heightConstraint?.constant = state.height
         widthConstraint?.constant = state.width
         alpha = state.alpha
-        
-        guard let greenColor = greenColor, let grayColor = grayColor, let darkColor = iconColor,
-            let brightColor = iconColorHighlighted, let superviewColor = superviewColor else { return }
         
         let blendedGray = grayColor.removeAlphaByBlending(with: superviewColor)!
         sendButton.setIconColor(state.colorWithColors(greenColor, highlightedColor: brightColor), for: UIControlState())
