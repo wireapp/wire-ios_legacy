@@ -144,7 +144,7 @@ final class LandingViewController: UIViewController {
         let button = IconButton()
         button.translatesAutoresizingMaskIntoConstraints = false
         button.accessibilityIdentifier = "CancelButton"
-        button.setIcon(.cancel, with: .small, for: .normal)
+        button.setIcon(.cancel, with: .tiny, for: .normal)
         button.addTarget(self, action: #selector(LandingViewController.cancelButtonTapped(_:)), for: .touchUpInside)
 
         return button
@@ -217,9 +217,9 @@ final class LandingViewController: UIViewController {
             headline.height >= 18
             headlineStackView.bottom <= headerContainerView.bottom - 16
             
-            cancelButton.top == headerContainerView.top + (16 + 20)
+            cancelButton.top == headerContainerView.topMargin + 6
             cancelButton.trailing == headerContainerView.trailing - 16
-            cancelButton.width == 44
+            cancelButton.width == 18
             cancelButton.height == cancelButton.width
 
             if UIDevice.current.userInterfaceIdiom == .pad {
