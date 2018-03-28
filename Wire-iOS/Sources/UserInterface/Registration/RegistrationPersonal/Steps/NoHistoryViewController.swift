@@ -55,12 +55,9 @@ extension NoHistoryViewController {
     }
     
     fileprivate func showFilePicker() {
-        let picker = UIDocumentPickerViewController(documentTypes: [NoHistoryViewController.WireBackupUTI],
-                                                    in: .`import`)
+        let picker = UIDocumentMenuViewController(documentTypes: [NoHistoryViewController.WireBackupUTI],
+                                                  in: .`import`)
         picker.delegate = self
-        if #available(iOS 11, *) {
-            picker.allowsMultipleSelection = false
-        }
         self.present(picker, animated: true)
     }
     
@@ -85,9 +82,10 @@ extension NoHistoryViewController {
     }
 }
 
-extension NoHistoryViewController: UIDocumentPickerDelegate {
-    public func documentPickerWasCancelled(_ controller: UIDocumentPickerViewController) {
-        // No-op
+extension NoHistoryViewController: UIDocumentMenuDelegate, UIDocumentPickerDelegate {
+    public func documentMenu(_ documentMenu: UIDocumentMenuViewController,
+                             didPickDocumentPicker documentPicker: UIDocumentPickerViewController) {
+        self.present(documentPicker, animated: true)
     }
     
     public func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentAt url: URL) {
