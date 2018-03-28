@@ -68,12 +68,12 @@ import UIKit
     /// Returns an alert controller configured to open the given URL.
     private func openAlert(for url: URL) -> UIAlertController {
         let alert = UIAlertController(
-            title: "Open Link",
-            message: "Do you want to open the link: \(url.absoluteString) ?",
+            title: "content.message.open_link_alert.title".localized,
+            message: "content.message.open_link_alert.message".localized(args: url.absoluteString),
             preferredStyle: .alert
         )
         
-        let okAction = UIAlertAction(title: "Open", style: .default) { _ in
+        let okAction = UIAlertAction(title: "content.message.open_link_alert.open".localized, style: .default) { _ in
             _ = self.interactionDelegate?.textView(self, open: url)
         }
         
