@@ -25,5 +25,6 @@
 
 - (void)onHorizontalPan:(UIPanGestureRecognizer *)gestureRecognizer;
 - (void)resetOpenPercentage;
+- (void)setLeftViewControllerRevealedValue:(BOOL)leftViewControllerIsRevealed;
 
 @end

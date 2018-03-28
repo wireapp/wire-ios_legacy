@@ -24,9 +24,11 @@ extension SplitViewController {
             view.layoutIfNeeded()
         }
         leftView?.isHidden = false
-        print("◀️ leftView.hidden = \(String(describing: leftView?.isHidden))")
+        print("◀️ leftView.hidden = \(String(describing: (leftView?.isHidden)!))")
 
-        self.isLeftViewControllerRevealed = leftViewControllerRevealed
+        setLeftViewControllerRevealedValue(leftViewControllerRevealed)
+//        self.leftViewControllerIsRevealed = leftViewControllerRevealed
+//        self._leftViewControllerRevealed = leftViewControllerRevealed
         resetOpenPercentage()
         if layoutSize != .regularLandscape {
             leftViewController?.beginAppearanceTransition(leftViewControllerRevealed, animated: animated)
