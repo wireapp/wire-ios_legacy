@@ -37,14 +37,14 @@ open class TabBar: UIView {
     
     open fileprivate(set) var style : TabBarStyle
     open fileprivate(set) var items : [UITabBarItem] = []
+    open weak var delegate : TabBarDelegate?
+
     open fileprivate(set) var selectedIndex : Int {
         didSet {
-            updateArrowPosition()
             updateButtonSelection()
         }
     }
-    open weak var delegate : TabBarDelegate?
-    
+
     fileprivate var selectedButton : UIButton {
         get {
             return self.buttonRow.subviews[selectedIndex] as! UIButton
@@ -52,20 +52,13 @@ open class TabBar: UIView {
     }
     
     fileprivate let buttonRow : UIView
-    fileprivate let leftLineView : UIView
-    fileprivate let rightLineView : UIView
-    fileprivate let arrowView : UIImageView
-    fileprivate var arrowPosition : NSLayoutConstraint! = nil
-    
+
     required public init(items: [UITabBarItem], style: TabBarStyle, selectedIndex: Int = 0) {
         
         assert(items.count > 0, "TabBar must be initialized with at least one item")
         
         self.items = items
         self.selectedIndex = selectedIndex
-        self.leftLineView = UIView()
-        self.rightLineView = UIView()
-        self.arrowView = UIImageView()
         self.buttonRow = UIView()
         self.style = style
         
@@ -88,16 +81,8 @@ open class TabBar: UIView {
         for button in items.map(self.itemButton) {
             self.buttonRow.addSubview(button)
         }
-        
-        let lineColor = (self.style == TabBarStyle.colored) ? UIColor.white : ColorScheme.default().color(withName: ColorSchemeColorSeparator, variant: colorSchemeVariant())
-        self.arrowView.image = WireStyleKit.imageOfTab(with: lineColor)
-        self.leftLineView.backgroundColor = lineColor
-        self.rightLineView.backgroundColor = lineColor
-        
+
         self.addSubview(self.buttonRow)
-        self.addSubview(self.leftLineView)
-        self.addSubview(self.rightLineView)
-        self.addSubview(self.arrowView)
     }
     
     fileprivate func createConstraints() {
@@ -125,58 +110,31 @@ open class TabBar: UIView {
             }
             previous = current
         }
-        
-        constrain(self.buttonRow) { buttonRow in
+
+        constrain(self, self.buttonRow) { container, buttonRow in
             buttonRow.top == buttonRow.superview!.top
             buttonRow.left >= buttonRow.superview!.left
             buttonRow.right <= buttonRow.superview!.right
             buttonRow.centerX == buttonRow.superview!.centerX
             buttonRow.height == 40
             buttonRow.width == 375 ~ 750.0
+            container.bottom == buttonRow.bottom
         }
-        
-        constrain(self.leftLineView, self.buttonRow, self.arrowView) { leftLineView, buttonRow, arrowView in
-            leftLineView.height == 1
-            leftLineView.top == buttonRow.bottom
-            leftLineView.left == leftLineView.superview!.left
-            leftLineView.right == arrowView.left
-            leftLineView.bottom == leftLineView.superview!.bottom
-        }
-        
-        constrain(self.rightLineView, self.buttonRow, self.arrowView) { rightLineView, buttonRow, arrowView in
-            rightLineView.height == 1
-            rightLineView.top == buttonRow.bottom
-            rightLineView.left == arrowView.right
-            rightLineView.right == rightLineView.superview!.right
-            rightLineView.bottom == rightLineView.superview!.bottom
-        }
-        
-        constrain(self.arrowView, self.selectedButton) { arrowView, selectedButton in
-            arrowView.bottom == arrowView.superview!.bottom
-            self.arrowPosition = arrowView.centerX == selectedButton.centerX
-        }
+
     }
     
     fileprivate func updateButtonSelection() {
         for view in self.buttonRow.subviews {
-            if let button = view as? Button {
+            if let button = view as? Tab {
                 button.isSelected = false
             }
         }
         
         self.selectedButton.isSelected = true
     }
-    
-    fileprivate func updateArrowPosition() {
-        self.removeConstraint(self.arrowPosition)
         
-        constrain(self.arrowView, self.selectedButton) { arrowView, selectedButton in
-            self.arrowPosition = arrowView.centerX == selectedButton.centerX
-        }
-    }
-    
-    fileprivate func itemButton (_ item: UITabBarItem) -> Button {
-        let button = Button.init(type: .custom)
+    fileprivate func itemButton (_ item: UITabBarItem) -> Tab {
+        let button = Tab(variant: colorSchemeVariant())
         button.textTransform = .upper
         button.setTitle(item.title, for: .normal)
         button.addTarget(self, action: #selector(TabBar.itemSelected(_:)), for: .touchUpInside)

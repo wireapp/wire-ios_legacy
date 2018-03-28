@@ -141,7 +141,7 @@ open class TabBarController: UIViewController {
             fromViewController?.willMove(toParentViewController: nil)
             addChildViewController(toViewController)
 
-            self.transition(from: fromViewController!, to: toViewController, duration: 0.35, options: .transitionCrossDissolve, animations: {
+            self.transition(from: fromViewController!, to: toViewController, duration: 0.25, options: .transitionCrossDissolve, animations: {
                 self.isTransitioning = true
                 if toViewController.responds(to: #selector(UIViewController.takeFirstResponder)) {
                     toViewController.perform(#selector(UIViewController.takeFirstResponder))
@@ -165,8 +165,7 @@ open class TabBarController: UIViewController {
 extension TabBarController: TabBarDelegate {
 
     public func didSelectIndex(_ index: Int) {
-        selectIndex(index, animated: true)
+        selectIndex(index, animated: false)
     }
 
 }
-
