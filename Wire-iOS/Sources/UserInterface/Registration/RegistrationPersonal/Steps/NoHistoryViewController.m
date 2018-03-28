@@ -19,6 +19,7 @@
 
 #import "NoHistoryViewController.h"
 @import PureLayout;
+@import WireSyncEngine;
 #import "RegistrationFormController.h"
 #import "Button.h"
 #import "Wire-Swift.h"
@@ -28,10 +29,20 @@
 @property (nonatomic) UILabel *subtitleLabel;
 @property (nonatomic) UIView *contentView;
 @property (nonatomic) Button *OKButton;
+@property (nonatomic, readonly) ContextType contextType;
 @end
 
 @implementation NoHistoryViewController
 
+- (instancetype)initWithContextType:(ContextType)contextType
+{
+    self = [super initWithNibName:nil bundle:nil];
+    if (nil != self) {
+        _contextType = contextType;
+    }
+    return self;
+}
+    
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -44,6 +55,10 @@
     [self createOKButton];
     
     [self createViewConstraints];
+    
+    if (self.contextType == ContextTypeNewDevice) {
+        [self createRestoreButton];
+    }
     
     // Layout first to avoid the initial layout animation during the presentation. 
     [self.view layoutIfNeeded];

@@ -25,7 +25,7 @@ typedef NS_ENUM(NSUInteger, ContextType) {
 };
 
 @interface NoHistoryViewController : RegistrationStepViewController
+- (instancetype)initWithContextType:(ContextType)contextType;
 
-@property (nonatomic) ContextType contextType;
-
+@property (nonatomic, readonly) UIView *contentView;
 @end
