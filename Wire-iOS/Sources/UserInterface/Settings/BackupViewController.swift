@@ -160,6 +160,15 @@ extension BackupViewController: UITableViewDataSource, UITableViewDelegate {
                 let activityController = UIActivityViewController(activityItems: [url], applicationActivities: nil)
                 self.present(activityController, animated: true)
             }
+            
+            self.track(result)
+        }
+    }
+    
+    private func track(_ result: Result<URL>) {
+        switch result {
+        case .success(let url): BackupEvent.exportSucceeded(zipURL: url).track()
+        case .failure: BackupEvent.exportFailed.track()
         }
     }
 }

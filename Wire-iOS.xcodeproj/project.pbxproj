@@ -962,6 +962,7 @@
 		D5DBAAAE20064DFC00E9F65B /* TeamInviteTextFieldFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5DBAAAD20064DFC00E9F65B /* TeamInviteTextFieldFooterView.swift */; };
 		D5DBAAB020064E3B00E9F65B /* TeamMemberInviteTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5DBAAAF20064E3B00E9F65B /* TeamMemberInviteTableViewCell.swift */; };
 		D5F22D4C2048052900879444 /* UIAlertController+RemoveAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F22D4B2048052900879444 /* UIAlertController+RemoveAction.swift */; };
+		D5F4387B206BBBB9003F1F14 /* Analytics+HistoryBackup.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F4387A206BBBB9003F1F14 /* Analytics+HistoryBackup.swift */; };
 		D5F8BFF42007AC84008F8C3D /* UIView+TableViewHeaderFooterSizing.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F8BFF32007AC84008F8C3D /* UIView+TableViewHeaderFooterSizing.swift */; };
 		D5F8BFF62007C2DE008F8C3D /* TeamInviteTopBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F8BFF52007C2DE008F8C3D /* TeamInviteTopBar.swift */; };
 		DB3A47E01B4AD96C00391B5C /* MentionsCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = DB3A47DF1B4AD96C00391B5C /* MentionsCollectionViewCell.m */; };
@@ -2516,6 +2517,7 @@
 		D5DBAAAD20064DFC00E9F65B /* TeamInviteTextFieldFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamInviteTextFieldFooterView.swift; sourceTree = "<group>"; };
 		D5DBAAAF20064E3B00E9F65B /* TeamMemberInviteTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamMemberInviteTableViewCell.swift; sourceTree = "<group>"; };
 		D5F22D4B2048052900879444 /* UIAlertController+RemoveAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIAlertController+RemoveAction.swift"; sourceTree = "<group>"; };
+		D5F4387A206BBBB9003F1F14 /* Analytics+HistoryBackup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Analytics+HistoryBackup.swift"; sourceTree = "<group>"; };
 		D5F8BFF32007AC84008F8C3D /* UIView+TableViewHeaderFooterSizing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+TableViewHeaderFooterSizing.swift"; sourceTree = "<group>"; };
 		D5F8BFF52007C2DE008F8C3D /* TeamInviteTopBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamInviteTopBar.swift; sourceTree = "<group>"; };
 		D66DB0AA3B05E4047DF18402 /* Pods-Wire-iOS-Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Wire-iOS-Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Wire-iOS-Tests/Pods-Wire-iOS-Tests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -3364,6 +3366,7 @@
 				871BBFC81D34F56300DF0793 /* Analytics+MediaActionEvents.swift */,
 				BF7ED2DD1DF59974003A4397 /* Analytics+Usernames.swift */,
 				F112C58520497860007C1E8F /* Analytics+Guests.swift */,
+				D5F4387A206BBBB9003F1F14 /* Analytics+HistoryBackup.swift */,
 				D5D89781201A25E000FAF69C /* Analytics+Services.swift */,
 				D5168F2B200CBBF300F8222A /* Analytics+TeamInvites.swift */,
 				BFCF31E01DA64B970039B3DC /* Analytics+EmojiKeyboard.swift */,
@@ -6950,6 +6953,7 @@
 				BF0555BD1E6D785C00D3E9D4 /* CallCells.swift in Sources */,
 				EF21271B1FB9DFE300625A9B /* TermsOfUseStepViewController.m in Sources */,
 				871BC3691D34F94200DF0793 /* MediaPreviewViewController.m in Sources */,
+				D5F4387B206BBBB9003F1F14 /* Analytics+HistoryBackup.swift in Sources */,
 				BF606D6F1CAA8A78002BAC94 /* ConversationListBottomBar.swift in Sources */,
 				D5DBAAB020064E3B00E9F65B /* TeamMemberInviteTableViewCell.swift in Sources */,
 				871BC2901D34F8F800DF0793 /* UIView+PopoverBorder.m in Sources */,
