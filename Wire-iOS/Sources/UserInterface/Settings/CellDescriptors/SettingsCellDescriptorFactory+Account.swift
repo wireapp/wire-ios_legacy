@@ -200,7 +200,7 @@ extension SettingsCellDescriptorFactory {
     }
 
     func backUpElement() -> SettingsCellDescriptorType {
-        if ZMUser.selfUser().emailAddress.isEmpty {
+        if ZMUser.selfUser().emailAddress?.isEmpty != false {
             let presentationAction: () -> UIViewController = {
                 let alert = UIAlertController(
                     title: "self.settings.history_backup.set_email.title".localized,
