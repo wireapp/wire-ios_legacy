@@ -196,8 +196,7 @@ class GiphySearchViewController: UICollectionViewController {
 
         navigationController.navigationBar.backItem?.backBarButtonItem = UIBarButtonItem(title: " ", style: .plain, target: nil, action: nil)
         navigationController.navigationBar.tintColor = ColorScheme.default().color(withName: ColorSchemeColorTextForeground)
-        navigationController.navigationBar.titleTextAttributes = [NSFontAttributeName: FontSpec(.small, .semibold).font!,
-                                                                  NSForegroundColorAttributeName: ColorScheme.default().color(withName: ColorSchemeColorTextForeground)]
+        navigationController.navigationBar.titleTextAttributes = DefaultNavigationBar.titleTextAttributes(for: ColorScheme.default().variant)
         navigationController.navigationBar.barTintColor = ColorScheme.default().color(withName: ColorSchemeColorBackground)
         navigationController.navigationBar.isTranslucent = false
 

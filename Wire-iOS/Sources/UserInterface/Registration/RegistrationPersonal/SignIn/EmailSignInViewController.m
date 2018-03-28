@@ -360,6 +360,12 @@
     // Not necessary to remove the loading view, since the controller would not be used any more.
 }
 
+- (void)authenticationReadyToImportBackup
+{
+    self.navigationController.showLoadingView = NO;
+    [self.analyticsTracker tagEmailLogin];
+}
+
 - (void)authenticationDidFail:(NSError *)error
 {
     DDLogDebug(@"authenticationDidFail: error.code = %li", (long)error.code);

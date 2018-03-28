@@ -220,6 +220,11 @@
     }
 }
 
+- (void)authenticationReadyToImportBackup
+{
+    self.navigationController.showLoadingView = NO;
+}
+
 - (void)authenticationDidSucceed
 {
     [self.analyticsTracker tagPhoneLogin];

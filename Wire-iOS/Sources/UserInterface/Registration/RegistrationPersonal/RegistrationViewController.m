@@ -45,13 +45,14 @@
 #import "KeyboardAvoidingViewController.h"
 
 #import "PhoneSignInViewController.h"
+#import "EmailSignInViewController.h"
 
 #import "AnalyticsTracker+Registration.h"
 
 @interface RegistrationViewController (UserSessionObserver) <SessionManagerCreatedSessionObserver, PostLoginAuthenticationObserver>
 @end
 
-@interface RegistrationViewController () <UINavigationControllerDelegate, FormStepDelegate, ZMInitialSyncCompletionObserver>
+@interface RegistrationViewController () <UINavigationControllerDelegate, FormStepDelegate, ZMInitialSyncCompletionObserver, PreLoginAuthenticationObserver>
 
 @property (nonatomic) BOOL registeredInThisSession;
 
@@ -67,6 +68,7 @@
 @property (nonatomic) NSArray<UserClient *>* userClients;
 @property (nonatomic) id initialSyncObserverToken;
 @property (nonatomic) id postLoginToken;
+@property (nonatomic) id authenticationToken;
 @property (nonatomic) id sessionCreationObserverToken;
 @property (nonatomic) AuthenticationFlowType flowType;
 
@@ -105,6 +107,9 @@
     self.unregisteredUser.accentColorValue = [UIColor indexedAccentColor];
     self.postLoginToken = [PostLoginAuthenticationNotification addObserver:self];
     self.sessionCreationObserverToken = [[SessionManager shared] addSessionManagerCreatedSessionObserver:self];
+    self.authenticationToken = [PreLoginAuthenticationNotification registerObserver:self
+                                                          forUnauthenticatedSession:[SessionManager shared].unauthenticatedSession];
+
     
     [self setupBackgroundViewController];
     [self setupNavigationController];
@@ -195,7 +200,7 @@
     NoHistoryViewController *noHistoryViewController = [[NoHistoryViewController alloc] init];
     noHistoryViewController.formStepDelegate = self;
     noHistoryViewController.contextType = type;
-    
+
     self.rootNavigationController.backButtonEnabled = NO;
     [self.rootNavigationController pushViewController:noHistoryViewController animated:YES];
 }
@@ -204,29 +209,18 @@
 
 - (void)didCompleteFormStep:(UIViewController *)viewController
 {
-    BOOL isAddPhoneNumber = [viewController isKindOfClass:[AddPhoneNumberViewController class]];
-    BOOL isAddEmailPassword = [viewController isKindOfClass:[AddEmailPasswordViewController class]];
+    BOOL isEmailLogin = [viewController isKindOfClass:[EmailSignInViewController class]];
     BOOL isNoHistoryViewController = [viewController isKindOfClass:[NoHistoryViewController class]];
     BOOL isEmailRegistration = [viewController isKindOfClass:[RegistrationEmailFlowViewController class]];
     
     if (isEmailRegistration) {
         [self.delegate registrationViewControllerDidCompleteRegistration];
     }
-    else if (isAddPhoneNumber || isAddEmailPassword) {
+    else if (isEmailLogin) {
         [self presentNoHistoryViewController:ContextTypeNewDevice];
     }
     else if (isNoHistoryViewController) {
-        [self.delegate registrationViewControllerDidSignIn];
-    }
-}
-
-- (void)didSkipFormStep:(UIViewController *)viewController
-{
-    BOOL isAddPhoneNumber = [viewController isKindOfClass:[AddPhoneNumberViewController class]];
-    
-    if (isAddPhoneNumber) {
-        ContextType type =  [[ZMUserSession sharedSession] hadHistoryAtLastLogin] ? ContextTypeLoggedOut : ContextTypeNewDevice;
-        [self presentNoHistoryViewController:type];
+        [[UnauthenticatedSession sharedSession] continueAfterBackupImportStep];
     }
 }
 
@@ -268,6 +262,13 @@
     DDLogDebug(@"Failed to fetch invitation with error: %@", error);
 }
 
+#pragma mark - PreLoginAuthenticationObserver
+
+- (void)authenticationReadyToImportBackup
+{
+    [self presentNoHistoryViewController:ContextTypeNewDevice];
+}
+
 #pragma mark - ZMInitialSyncCompletionObserver
 
 - (void)initialSyncCompleted
@@ -297,10 +298,6 @@
         addEmailPasswordViewController.skipButtonType = AddEmailPasswordViewControllerSkipButtonTypeNone;
         
         [self.rootNavigationController pushViewController:addEmailPasswordViewController animated:YES];
-    }
-    else if (! [[ZMUserSession sharedSession] registeredOnThisDevice]) {
-        ContextType type = [[ZMUserSession sharedSession] hadHistoryAtLastLogin] ? ContextTypeLoggedOut : ContextTypeNewDevice;
-        [self presentNoHistoryViewController:type];
     }
     else if ([self.class registrationFlow] == RegistrationFlowPhone) {
         [self.delegate registrationViewControllerDidCompleteRegistration];

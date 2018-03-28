@@ -24,14 +24,11 @@ extension AppRootViewController {
     public static func configureAppearance() {
         let navigationBarTitleBaselineOffset: CGFloat = 2.5
         
-        let attributes: [String : Any] = [NSFontAttributeName: FontSpec(.small, .semibold).font!, NSBaselineOffsetAttributeName: navigationBarTitleBaselineOffset]
+        let attributes: [String : Any] = [NSFontAttributeName: UIFont.systemFont(ofSize: 11, weight: UIFontWeightSemibold), NSBaselineOffsetAttributeName: navigationBarTitleBaselineOffset]
         let barButtonItemAppearance = UIBarButtonItem.appearance(whenContainedInInstancesOf: [DefaultNavigationBar.self])
         barButtonItemAppearance.setTitleTextAttributes(attributes, for: .normal)
         barButtonItemAppearance.setTitleTextAttributes(attributes, for: .highlighted)
         barButtonItemAppearance.setTitleTextAttributes(attributes, for: .disabled)
-        
-        let defaultNavigationBarAppearance = DefaultNavigationBar.appearance()
-        defaultNavigationBarAppearance.setTitleVerticalPositionAdjustment(-navigationBarTitleBaselineOffset, for: .default)
     }
     
 }
