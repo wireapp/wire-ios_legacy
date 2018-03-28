@@ -46,8 +46,9 @@ class DefaultNavigationBar : UINavigationBar {
     }
     
     static func titleTextAttributes(for variant: ColorSchemeVariant) -> [String : Any] {
-        return [NSFontAttributeName: FontSpec(.small, .semibold).font!,
-                NSForegroundColorAttributeName: ColorScheme.default().color(withName: ColorSchemeColorTextForeground, variant: variant)]
+        return [NSFontAttributeName: UIFont.systemFont(ofSize: 11, weight: UIFontWeightSemibold),
+                NSForegroundColorAttributeName: ColorScheme.default().color(withName: ColorSchemeColorTextForeground, variant: variant),
+                NSBaselineOffsetAttributeName: 1.0]
     }
     
 }

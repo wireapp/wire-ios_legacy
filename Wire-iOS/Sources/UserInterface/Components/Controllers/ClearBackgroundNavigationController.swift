@@ -64,8 +64,7 @@ class ClearBackgroundNavigationController: UINavigationController {
         self.navigationBar.setBackgroundImage(UIImage(), for:.default)
         self.navigationBar.shadowImage = UIImage()
         self.navigationBar.isTranslucent = true
-        self.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.white,
-                                                  NSFontAttributeName: FontSpec(.small, .semibold).font!]
+        self.navigationBar.titleTextAttributes = DefaultNavigationBar.titleTextAttributes(for: .dark)
                 
         self.dismissGestureRecognizer = UIScreenEdgePanGestureRecognizer(target: self, action: #selector(ClearBackgroundNavigationController.onEdgeSwipe(gestureRecognizer:)))
         self.dismissGestureRecognizer.edges = [.left]
