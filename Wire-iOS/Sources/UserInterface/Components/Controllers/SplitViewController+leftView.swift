@@ -53,7 +53,7 @@ extension SplitViewController {
                     self.rightViewController?.endAppearanceTransition()
                 }
                 if self.openPercentage == 0 && self.layoutSize != .regularLandscape {
-                    self.leftView?.isHidden = true
+                    self.leftView?.isHidden = true ///TODO: cancel this action if new animation starts
                     print("🤛 leftView.hidden = YES")
                 }
             })
