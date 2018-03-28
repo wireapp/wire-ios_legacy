@@ -56,9 +56,7 @@
     
     [self createViewConstraints];
     
-    if (self.contextType == ContextTypeNewDevice) {
-        [self createRestoreButton];
-    }
+    [self createRestoreButton];
     
     // Layout first to avoid the initial layout animation during the presentation. 
     [self.view layoutIfNeeded];
