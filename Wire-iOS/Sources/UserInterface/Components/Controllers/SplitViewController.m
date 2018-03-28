@@ -165,7 +165,6 @@ NSString *SplitLayoutObservableDidChangeToLayoutSizeNotification = @"SplitLayout
 
 @property (nonatomic) UIPanGestureRecognizer *horizontalPanner;
 
-@property (nonatomic) CGFloat openPercentage;
 @property (nonatomic) UITraitCollection *futureTraitCollection;
 
 @property (nonatomic) SplitViewControllerLayoutSize layoutSize;
@@ -318,6 +317,8 @@ NSString *SplitLayoutObservableDidChangeToLayoutSizeNotification = @"SplitLayout
         case SplitViewControllerLayoutSizeCompact: // fallthrough
         case SplitViewControllerLayoutSizeRegularPortrait:
             self.leftView.hidden = self.openPercentage == 0;
+
+            NSLog(@"⏰ leftView.hidden = %d", self.leftView.hidden);
             break;
         case SplitViewControllerLayoutSizeRegularLandscape:
             self.leftView.hidden = NO;
@@ -540,6 +541,7 @@ NSString *SplitLayoutObservableDidChangeToLayoutSizeNotification = @"SplitLayout
     self.openPercentage = self.leftViewControllerRevealed ? 1 : 0;
 }
 
+/*
 - (void)setLeftViewControllerRevealed:(BOOL)leftViewControllerRevealed animated:(BOOL)animated completion:(nullable dispatch_block_t)completion
 {
     if (animated) {
@@ -547,7 +549,9 @@ NSString *SplitLayoutObservableDidChangeToLayoutSizeNotification = @"SplitLayout
     }
     
     self.leftView.hidden = NO;
-    
+
+    NSLog(@"◀️ leftView.hidden = %d", self.leftView.hidden);
+
     _leftViewControllerRevealed = leftViewControllerRevealed;
     [self resetOpenPercentage];
 
@@ -557,10 +561,13 @@ NSString *SplitLayoutObservableDidChangeToLayoutSizeNotification = @"SplitLayout
     }
     
     if (animated) {
+
         if (leftViewControllerRevealed) {
             [[UIApplication sharedApplication] wr_updateStatusBarForCurrentControllerAnimated:NO];
         }
         [[UIApplication sharedApplication] wr_updateStatusBarForCurrentControllerAnimated:YES];
+
+        
         [UIView wr_animateWithEasing:RBBEasingFunctionEaseOutExpo duration:0.55f animations:^{
             [self.view layoutIfNeeded];
         } completion:^(BOOL finished) {
@@ -573,6 +580,7 @@ NSString *SplitLayoutObservableDidChangeToLayoutSizeNotification = @"SplitLayout
             
             if (self.openPercentage == 0 && self.layoutSize != SplitViewControllerLayoutSizeRegularLandscape) {
                 self.leftView.hidden = YES;
+                NSLog(@"🕐 leftView.hidden = YES");
             }
         }];
     }
@@ -580,6 +588,7 @@ NSString *SplitLayoutObservableDidChangeToLayoutSizeNotification = @"SplitLayout
         [[UIApplication sharedApplication] wr_updateStatusBarForCurrentControllerAnimated:NO];
     }
 }
+*/
 
 - (void)setOpenPercentage:(CGFloat)percentage
 {
@@ -654,9 +663,10 @@ NSString *SplitLayoutObservableDidChangeToLayoutSizeNotification = @"SplitLayout
         case UIGestureRecognizerStateCancelled:
         case UIGestureRecognizerStateEnded:
         {
+            /*
             BOOL isRevealed = self.openPercentage > 0.5f;
             BOOL didCompleteTransition = isRevealed != self.leftViewControllerRevealed;
-            
+
             @weakify(self);
             [self setLeftViewControllerRevealed:isRevealed animated:YES completion:^{
                 
@@ -666,6 +676,8 @@ NSString *SplitLayoutObservableDidChangeToLayoutSizeNotification = @"SplitLayout
                     [self.rightViewController endAppearanceTransition];
                 }
             }];
+
+             */
         }
             break;
             
