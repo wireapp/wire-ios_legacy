@@ -1,4 +1,4 @@
-github "wireapp/wire-ios-ziphy" ~> 7.0
+github "wireapp/wire-ios-ziphy" "feature/ZIOS-9807_resultsDidCleaned_delegate_method"
 github "wireapp/Classy" "v0.2.6-swift3.0.2"
 github "wireapp/CocoaLumberjack" ~> 3.3
 github "wireapp/Cartography" ~> 3.0
