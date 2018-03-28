@@ -65,7 +65,7 @@ class SettingsClientViewController: UIViewController, UITableViewDelegate, UITab
                 userClient.fetchFingerprintOrPrekeys()
             })
         }
-        self.title = userClient.deviceClass?.capitalized(with: NSLocale.current)
+        self.title = userClient.deviceClass?.localizedUppercase
         self.credentials = credentials
     }
     
