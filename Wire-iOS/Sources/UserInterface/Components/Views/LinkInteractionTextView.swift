@@ -42,10 +42,10 @@ import UIKit
         let isInside = super.point(inside: point, with: event)
         guard let position = characterRange(at: point), isInside else { return false }
         let index = offset(from: beginningOfDocument, to: position.start)
-        return urlAttribtue(at: index)
+        return urlAttribute(at: index)
     }
 
-    private func urlAttribtue(at index: Int) -> Bool {
+    private func urlAttribute(at index: Int) -> Bool {
         guard attributedText.length > 0 else { return false }
         let attributes = attributedText.attributes(at: index, effectiveRange: nil)
         return attributes[NSLinkAttributeName] != nil
