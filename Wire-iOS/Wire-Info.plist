@@ -139,7 +139,7 @@
 				<string>com.pkware.zip-archive</string>
 			</array>
 			<key>UTTypeDescription</key>
-			<string>Wire iOS Back Up File</string>
+			<string>Wire iOS Backup File</string>
 			<key>UTTypeIdentifier</key>
 			<string>com.wire.backup-ios</string>
 			<key>UTTypeSize320IconFile</key>
