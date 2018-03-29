@@ -126,12 +126,16 @@ extension NoHistoryViewController {
         sessionManager.restoreFromBackup(at: url) { result in
             switch result {
             case .failure(let error):
+                BackupEvent.importFailed.track()
                 self.showRestoreError(error)
             case .success:
+                BackupEvent.importSucceeded.track()
                 self.formStepDelegate.didCompleteFormStep(self)
             }
+            
         }
     }
+
 }
 
 extension NoHistoryViewController: UIDocumentMenuDelegate, UIDocumentPickerDelegate {

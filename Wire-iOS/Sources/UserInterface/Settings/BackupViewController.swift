@@ -185,12 +185,13 @@ extension BackupViewController: UITableViewDataSource, UITableViewDelegate {
                                               message: error.localizedDescription,
                                               cancelButtonTitle: "general.ok".localized)
                 self.present(alert, animated: true)
+                BackupEvent.exportFailed.track()
             case .success(let url):
                 let activityController = UIActivityViewController(activityItems: [url], applicationActivities: nil)
                 self.present(activityController, animated: true)
+                BackupEvent.exportSucceeded.track()
             }
         }
     }
+
 }
-
-

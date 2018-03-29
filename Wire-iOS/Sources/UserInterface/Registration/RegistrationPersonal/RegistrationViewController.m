@@ -208,7 +208,6 @@
 
 - (void)didCompleteFormStep:(UIViewController *)viewController
 {
-    BOOL isEmailLogin = [viewController isKindOfClass:[EmailSignInViewController class]];
     BOOL isNoHistoryViewController = [viewController isKindOfClass:[NoHistoryViewController class]];
     BOOL isEmailRegistration = [viewController isKindOfClass:[RegistrationEmailFlowViewController class]];
     
@@ -270,7 +269,10 @@
 
 - (void)authenticationReadyToImportBackupWithExistingAccount:(BOOL)existingAccount
 {
-    [self presentNoHistoryViewController:existingAccount ? ContextTypeLoggedOut : ContextTypeNewDevice];
+    self.rootNavigationController.showLoadingView = NO;
+
+    ContextType type = existingAccount ? ContextTypeLoggedOut : ContextTypeNewDevice;
+    [self presentNoHistoryViewController:type];
 }
 
 #pragma mark - ZMInitialSyncCompletionObserver
