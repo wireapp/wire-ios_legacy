@@ -25,7 +25,6 @@ final class EmailVerificationStepViewControllerTests: ZMSnapshotTestCase {
 
     override func setUp() {
         super.setUp()
-        self.recordMode = true
     }
     
     func testEmailVerificationView() {
