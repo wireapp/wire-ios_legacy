@@ -22,6 +22,11 @@ import XCTest
 
 class NoHistoryViewControllerTests: ZMSnapshotTestCase {
     
+    override func setUp() {
+        super.setUp()
+        self.snapshotBackgroundColor = .darkGray
+    }
+    
     func testNoHistoryCase() {
         // GIVEN
         let sut = NoHistoryViewController(contextType: .newDevice)
