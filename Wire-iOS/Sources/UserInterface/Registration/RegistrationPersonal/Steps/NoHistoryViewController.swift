@@ -92,7 +92,7 @@ extension NoHistoryViewController: UIDocumentMenuDelegate, UIDocumentPickerDeleg
 
         self.showLoadingView = true
         // todo: read UUID()
-        SessionManager.shared?.restoreFromBackup(at: url, with: UUID()) { result in
+        SessionManager.shared?.restoreFromBackup(at: url) { result in
             switch result {
             case .failure(let error):
                 BackupEvent.importFailed.track()
