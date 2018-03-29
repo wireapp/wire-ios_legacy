@@ -33,7 +33,7 @@ final class BackupStatusCell: UITableViewCell {
         
         let color = ColorScheme.default().color(withName: ColorSchemeColorTextForeground, variant: .dark)
         
-        iconView.image = UIImage(for: .clock, iconSize: .large, color: color)
+        iconView.image = .imageForRestore(with: color, size: .large)
         iconView.contentMode = .center
         iconView.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(iconView)
