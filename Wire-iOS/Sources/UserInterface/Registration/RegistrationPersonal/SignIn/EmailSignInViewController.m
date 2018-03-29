@@ -94,7 +94,7 @@
         self.postLoginAuthenticationToken = [PostLoginAuthenticationNotification addObserver:self];
     }
     
-    if(AutomationHelper.sharedHelper.automationEmailCredentials != nil) {
+    if (AutomationHelper.sharedHelper.automationEmailCredentials != nil) {
         ZMEmailCredentials *emailCredentials = AutomationHelper.sharedHelper.automationEmailCredentials;
         self.emailField.text = emailCredentials.email;
         self.passwordField.text = emailCredentials.password;

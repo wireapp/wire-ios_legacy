@@ -216,7 +216,12 @@
         [self.delegate registrationViewControllerDidCompleteRegistration];
     }
     else if (isEmailLogin) {
-        [self presentNoHistoryViewController:ContextTypeNewDevice];
+        if (AutomationHelper.sharedHelper.automationEmailCredentials != nil) {
+            [[UnauthenticatedSession sharedSession] continueAfterBackupImportStep];
+        }
+        else {
+            [self presentNoHistoryViewController:ContextTypeNewDevice];
+        }
     }
     else if (isNoHistoryViewController) {
         [[UnauthenticatedSession sharedSession] continueAfterBackupImportStep];

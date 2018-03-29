@@ -142,6 +142,15 @@ final class BackupViewController: UIViewController {
     private func setupLayout() {
         tableView.fitInSuperview()
     }
+    
+    var loadingHostController: UIViewController {
+        if let navigation = self.navigationController {
+            return navigation
+        }
+        else {
+            return self
+        }
+    }
 }
 
 extension BackupViewController: UITableViewDataSource, UITableViewDelegate {
@@ -164,10 +173,11 @@ extension BackupViewController: UITableViewDataSource, UITableViewDelegate {
             return
         }
         
-        self.showLoadingView = true
+        loadingHostController.showLoadingView = true
 
         backupSource.backupActiveAccount { result in
-            self.showLoadingView = false
+            
+            self.loadingHostController.showLoadingView = false
             
             switch result {
             case .failure(let error):
