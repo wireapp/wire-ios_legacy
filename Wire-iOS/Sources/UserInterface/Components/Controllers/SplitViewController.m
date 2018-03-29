@@ -317,8 +317,6 @@ NSString *SplitLayoutObservableDidChangeToLayoutSizeNotification = @"SplitLayout
         case SplitViewControllerLayoutSizeCompact: // fallthrough
         case SplitViewControllerLayoutSizeRegularPortrait:
             self.leftView.hidden = self.openPercentage == 0;
-
-            NSLog(@"⏰ leftView.hidden = %d", self.leftView.hidden);
             break;
         case SplitViewControllerLayoutSizeRegularLandscape:
             self.leftView.hidden = NO;
