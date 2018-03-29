@@ -188,10 +188,13 @@ extension BackupViewController: UITableViewDataSource, UITableViewDelegate {
                 BackupEvent.exportFailed.track()
             case .success(let url):
                 let activityController = UIActivityViewController(activityItems: [url], applicationActivities: nil)
+                activityController.completionWithItemsHandler = { _, _, _, _ in
+                    SessionManager.clearPreviousBackups()
+                }
                 self.present(activityController, animated: true)
                 BackupEvent.exportSucceeded.track()
             }
         }
     }
-
 }
+

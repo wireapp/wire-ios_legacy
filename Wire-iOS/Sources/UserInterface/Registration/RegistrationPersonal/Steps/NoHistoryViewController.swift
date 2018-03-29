@@ -28,7 +28,12 @@ extension NoHistoryViewController {
                                      for: .normal)
         
         restoreBackupButton.addCallback(for: .touchUpInside) { [unowned self] _ in
-            self.showWarningMessage()
+            if self.contextType == .loggedOut {
+                self.showWarningMessage()
+            }
+            else {
+                self.showFilePicker()
+            }
         }
         
         restoreBackupButton.heightAnchor.constraint(equalToConstant: 40).isActive = true
@@ -128,14 +133,15 @@ extension NoHistoryViewController {
             case .failure(let error):
                 BackupEvent.importFailed.track()
                 self.showRestoreError(error)
+                self.showLoadingView = false
             case .success:
                 BackupEvent.importSucceeded.track()
-                self.formStepDelegate.didCompleteFormStep(self)
+                self.indicateLoadingSuccess {
+                    self.formStepDelegate.didCompleteFormStep(self)
+                }
             }
-            
         }
     }
-
 }
 
 extension NoHistoryViewController: UIDocumentPickerDelegate {
