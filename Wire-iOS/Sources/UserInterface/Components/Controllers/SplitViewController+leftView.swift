@@ -19,7 +19,7 @@
 import Foundation
 
 extension SplitViewController {
-    func setLeftViewControllerRevealed(_ leftViewControllerRevealed: Bool, animated: Bool, completion: (() -> Void)?) {
+    @objc func updateLeftViewController(animated: Bool, completion: (() -> Void)?) {
         if animated {
             view.layoutIfNeeded()
         }
@@ -27,12 +27,12 @@ extension SplitViewController {
 
         resetOpenPercentage()
         if layoutSize != .regularLandscape {
-            leftViewController?.beginAppearanceTransition(leftViewControllerRevealed, animated: animated)
-            rightViewController?.beginAppearanceTransition(!leftViewControllerRevealed, animated: animated)
+            leftViewController?.beginAppearanceTransition(self.isLeftViewControllerRevealed, animated: animated)
+            rightViewController?.beginAppearanceTransition(!self.isLeftViewControllerRevealed, animated: animated)
         }
 
         if animated {
-            if leftViewControllerRevealed {
+            if self.isLeftViewControllerRevealed {
                 UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(false)
             }
             UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(true)

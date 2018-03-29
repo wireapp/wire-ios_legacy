@@ -176,6 +176,6 @@ final class SplitViewControllerTests: XCTestCase {
         sut.onHorizontalPan(endedGestureRecognizer)
 
         // THEN
-        XCTAssertEqual(sut.rightView.frame.origin.x, sut.view.frame.size.width)
+        XCTAssertEqual(sut.rightView.frame.origin.x, sut.view.frame.size.width, "rightView should stop at the right edge of the sut.view!")
     }
 }

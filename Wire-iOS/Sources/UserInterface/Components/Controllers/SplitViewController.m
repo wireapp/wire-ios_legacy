@@ -532,7 +532,13 @@ NSString *SplitLayoutObservableDidChangeToLayoutSizeNotification = @"SplitLayout
 - (void)setLeftViewControllerRevealed:(BOOL)leftViewControllerIsRevealed
 {
     _leftViewControllerRevealed = leftViewControllerIsRevealed;
-    [self setLeftViewControllerRevealed:leftViewControllerIsRevealed animated:YES completion:nil];
+    [self updateLeftViewControllerWithAnimated:YES completion:nil];
+}
+
+- (void)setLeftViewControllerRevealed:(BOOL)leftViewControllerRevealed animated:(BOOL)animated completion:(nullable dispatch_block_t)completion
+{
+    _leftViewControllerRevealed = leftViewControllerIsRevealed;
+    [self updateLeftViewControllerWithAnimated:animated completion:completion];
 }
 
 - (void)resetOpenPercentage
