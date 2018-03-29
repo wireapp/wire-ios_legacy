@@ -28,6 +28,11 @@ class MockBackupSource: BackupSource {
 
 class BackupViewControllerTests: ZMSnapshotTestCase {
     
+    override func setUp() {
+        super.setUp()
+        self.snapshotBackgroundColor = .darkGray
+    }
+    
     func testInitialState() {
         // GIVEN
         let sut = BackupViewController(backupSource: MockBackupSource())

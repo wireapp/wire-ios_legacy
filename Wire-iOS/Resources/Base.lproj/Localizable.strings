@@ -988,7 +988,7 @@
 "registration.no_history.hero" = "It’s the first time you’re using Wire on this device.";
 "registration.no_history.subtitle" = "For privacy reasons, your conversation history will not appear here.";
 "registration.no_history.got_it" = "OK";
-"registration.no_history.restore_backup" = "Restore history from backup";
+"registration.no_history.restore_backup" = "Restore from backup";
 "registration.no_history.restore_backup_warning.title" = "Restoring history.";
 "registration.no_history.restore_backup_warning.message" = "Your backup will overwrite the conversations that you may have on this device.";
 "registration.no_history.restore_backup_warning.proceed" = "Proceed";

@@ -69,7 +69,6 @@ NSString * const UserDefaultDisableLinkPreviews = @"DisableLinkPreviews";
 @property (strong, readonly, nonatomic) NSUserDefaults *defaults;
 @property (nonatomic) BOOL shouldSend500Messages;
 @property (nonatomic) NSTimeInterval maxRecordingDurationDebug;
-@property (nonatomic) ZMEmailCredentials *automationTestEmailCredentials;
 @end
 
 

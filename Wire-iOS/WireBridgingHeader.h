@@ -117,6 +117,7 @@
 #import "StartUIViewController.h"
 #import "Button.h"
 #import "ViewControllerDismissable.h"
+#import "RegistrationFormController.h"
 #import "PhoneSignInViewController.h"
 #import "NoHistoryViewController.h"
 

@@ -225,7 +225,7 @@
 		7C17ECA81F7508980056600C /* PreviewHeightCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C17ECA71F7508980056600C /* PreviewHeightCalculator.swift */; };
 		7C232CD91FE029BD00792E9B /* Analytics+Availability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C232CD81FE029BD00792E9B /* Analytics+Availability.swift */; };
 		7C23A26D20247500005FEB54 /* ShareViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C23A26B20247474005FEB54 /* ShareViewControllerTests.swift */; };
-		7C3083AC1FE15FBF0036AFCC /* UICustomSpacingStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C3083AB1FE15FBF0036AFCC /* UICustomSpacingStackView.swift */; };
+		7C3083AC1FE15FBF0036AFCC /* CustomSpacingStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C3083AB1FE15FBF0036AFCC /* CustomSpacingStackView.swift */; };
 		7C374E4B1FDE7B8C00A43B9C /* unsplash_matterhorn_small_height.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 7C374E471FDE7B8B00A43B9C /* unsplash_matterhorn_small_height.jpg */; };
 		7C374E4C1FDE7B8C00A43B9C /* unsplash_matterhorn_exact_size.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 7C374E481FDE7B8B00A43B9C /* unsplash_matterhorn_exact_size.jpg */; };
 		7C374E4D1FDE7B8C00A43B9C /* unsplash_matterhorn_small_size.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 7C374E491FDE7B8C00A43B9C /* unsplash_matterhorn_small_size.jpg */; };
@@ -617,9 +617,9 @@
 		87BEB0E51C7363D30094BFE9 /* MockMessage+Creation.m in Sources */ = {isa = PBXBuildFile; fileRef = 87BEB0E41C7363D30094BFE9 /* MockMessage+Creation.m */; };
 		87C1A7BC1D8FDFD8002630BB /* VersionInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 87C1A7BB1D8FDFD8002630BB /* VersionInfoViewController.m */; };
 		87C39A8A206947A1008DA100 /* UIView+Constraints.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87C39A89206947A1008DA100 /* UIView+Constraints.swift */; };
-		87C39A90206BF00A008DA100 /* BackupViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87C39A8F206BF00A008DA100 /* BackupViewControllerTests.swift */; };
 		87C39A8C206BCD26008DA100 /* NoHistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87C39A8B206BCD26008DA100 /* NoHistoryViewController.swift */; };
 		87C39A8E206BE83C008DA100 /* NoHistoryViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87C39A8D206BE83C008DA100 /* NoHistoryViewControllerTests.swift */; };
+		87C39A90206BF00A008DA100 /* BackupViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87C39A8F206BF00A008DA100 /* BackupViewControllerTests.swift */; };
 		87C539561E8E516400084F94 /* BoundsAwareFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87C539551E8E516400084F94 /* BoundsAwareFlowLayout.swift */; };
 		87C70F141E826A890069563A /* NotificationFetchComponents.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BFAD53FB1E6972CC0015C677 /* NotificationFetchComponents.framework */; };
 		87CA886E1DDF0075004101B6 /* UserConnectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87CA886D1DDF0075004101B6 /* UserConnectionViewController.swift */; };
@@ -1455,7 +1455,7 @@
 		7C17ECA71F7508980056600C /* PreviewHeightCalculator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreviewHeightCalculator.swift; sourceTree = "<group>"; };
 		7C232CD81FE029BD00792E9B /* Analytics+Availability.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Analytics+Availability.swift"; sourceTree = "<group>"; };
 		7C23A26B20247474005FEB54 /* ShareViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareViewControllerTests.swift; sourceTree = "<group>"; };
-		7C3083AB1FE15FBF0036AFCC /* UICustomSpacingStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UICustomSpacingStackView.swift; sourceTree = "<group>"; };
+		7C3083AB1FE15FBF0036AFCC /* CustomSpacingStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSpacingStackView.swift; sourceTree = "<group>"; };
 		7C374E471FDE7B8B00A43B9C /* unsplash_matterhorn_small_height.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = unsplash_matterhorn_small_height.jpg; sourceTree = "<group>"; };
 		7C374E481FDE7B8B00A43B9C /* unsplash_matterhorn_exact_size.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = unsplash_matterhorn_exact_size.jpg; sourceTree = "<group>"; };
 		7C374E491FDE7B8C00A43B9C /* unsplash_matterhorn_small_size.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = unsplash_matterhorn_small_size.jpg; sourceTree = "<group>"; };
@@ -2014,9 +2014,9 @@
 		87C1A7BA1D8FDFD8002630BB /* VersionInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VersionInfoViewController.h; sourceTree = "<group>"; };
 		87C1A7BB1D8FDFD8002630BB /* VersionInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VersionInfoViewController.m; sourceTree = "<group>"; };
 		87C39A89206947A1008DA100 /* UIView+Constraints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Constraints.swift"; sourceTree = "<group>"; };
-		87C39A8F206BF00A008DA100 /* BackupViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackupViewControllerTests.swift; sourceTree = "<group>"; };
 		87C39A8B206BCD26008DA100 /* NoHistoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoHistoryViewController.swift; sourceTree = "<group>"; };
 		87C39A8D206BE83C008DA100 /* NoHistoryViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoHistoryViewControllerTests.swift; sourceTree = "<group>"; };
+		87C39A8F206BF00A008DA100 /* BackupViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackupViewControllerTests.swift; sourceTree = "<group>"; };
 		87C539551E8E516400084F94 /* BoundsAwareFlowLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BoundsAwareFlowLayout.swift; sourceTree = "<group>"; };
 		87C8D7FB1BA8261C00B0530B /* Entitlements-Dev.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = "Entitlements-Dev.entitlements"; path = "Wire-iOS/Entitlements-Dev.entitlements"; sourceTree = "<group>"; };
 		87C8D7FC1BA8261C00B0530B /* Entitlements-Prod.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = "Entitlements-Prod.entitlements"; path = "Wire-iOS/Entitlements-Prod.entitlements"; sourceTree = "<group>"; };
@@ -3754,7 +3754,7 @@
 				871BC3481D34F94200DF0793 /* WRFunctions.h */,
 				871BC3491D34F94200DF0793 /* WRFunctions.m */,
 				871BC34A1D34F94200DF0793 /* Youtube */,
-				7C3083AB1FE15FBF0036AFCC /* UICustomSpacingStackView.swift */,
+				7C3083AB1FE15FBF0036AFCC /* CustomSpacingStackView.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -6277,7 +6277,7 @@
 				87A6BD0F1F0D2A58006A3232 /* UIApplication+StatusBar.m in Sources */,
 				872E22221F600347007729D4 /* Cartography+Additions.swift in Sources */,
 				87A1F9DB200CEDCA0040E9A9 /* ClearBackgroundNavigationController.swift in Sources */,
-				7C3083AC1FE15FBF0036AFCC /* UICustomSpacingStackView.swift in Sources */,
+				7C3083AC1FE15FBF0036AFCC /* CustomSpacingStackView.swift in Sources */,
 				871BC2291D34F8F800DF0793 /* ConfirmAssetViewController.m in Sources */,
 				F16427001FCC5B3C00D2ABFC /* SetTeamNameStepDescription.swift in Sources */,
 				1E6579981B8F3632002E0869 /* UIImage+ZetaIconsNeue.m in Sources */,

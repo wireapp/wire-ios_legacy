@@ -213,7 +213,8 @@
     
     if (isEmailRegistration) {
         [self.delegate registrationViewControllerDidCompleteRegistration];
-    } else if (isNoHistoryViewController) {
+    }
+    else if (isNoHistoryViewController) {
         [[UnauthenticatedSession sharedSession] continueAfterBackupImportStep];
     }
 }
@@ -263,7 +264,13 @@
     self.rootNavigationController.showLoadingView = NO;
 
     ContextType type = existingAccount ? ContextTypeLoggedOut : ContextTypeNewDevice;
-    [self presentNoHistoryViewController:type];
+    
+    if (AutomationHelper.sharedHelper.automationEmailCredentials != nil) {
+        [[UnauthenticatedSession sharedSession] continueAfterBackupImportStep];
+    }
+    else {
+        [self presentNoHistoryViewController:type];
+    }
 }
 
 #pragma mark - ZMInitialSyncCompletionObserver

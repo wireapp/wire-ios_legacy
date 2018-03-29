@@ -86,7 +86,7 @@ typedef NS_ENUM(NSUInteger, ProfileUserAction) {
 @property (nonatomic) UILabel *remainingTimeLabel;
 @property (nonatomic) BOOL showGuestLabel;
 @property (nonatomic) AvailabilityTitleView *availabilityView;
-@property (nonatomic) UICustomSpacingStackView *stackView;
+@property (nonatomic) CustomSpacingStackView *stackView;
 
 @end
 
@@ -128,7 +128,7 @@ typedef NS_ENUM(NSUInteger, ProfileUserAction) {
     self.remainingTimeLabel.text = remainingTimeString;
     self.remainingTimeLabel.hidden = nil == remainingTimeString;
 
-    self.stackView = [[UICustomSpacingStackView alloc] initWithCustomSpacedArrangedSubviews:@[self.userImageView, self.teamsGuestIndicator, self.remainingTimeLabel, self.availabilityView]];
+    self.stackView = [[CustomSpacingStackView alloc] initWithCustomSpacedArrangedSubviews:@[self.userImageView, self.teamsGuestIndicator, self.remainingTimeLabel, self.availabilityView]];
     self.stackView.axis = UILayoutConstraintAxisVertical;
     self.stackView.spacing = 0;
     self.stackView.alignment = UIStackViewAlignmentCenter;
