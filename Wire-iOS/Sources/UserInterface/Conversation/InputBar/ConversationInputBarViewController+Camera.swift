@@ -74,14 +74,15 @@ extension ConversationInputBarViewController: CameraKeyboardViewControllerDelega
 
                 let popover = videoEditor.popoverPresentationController
                 popover?.sourceView = self.view
+                popover?.canOverlapSourceViewRect = true
+                let buttonRect = self.photoButton.frame
+                popover?.sourceRect = CGRect(origin: CGPoint(x: buttonRect.midX, y: buttonRect.midY), size: .zero)
 
             default:
                 self.present(videoEditor, animated: true) {
                     UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(false)
                 }
             }
-
-
         }
         else {
 
