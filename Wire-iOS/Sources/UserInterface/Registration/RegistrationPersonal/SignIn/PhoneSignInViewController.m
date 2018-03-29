@@ -220,7 +220,7 @@
     }
 }
 
-- (void)authenticationReadyToImportBackup
+- (void)authenticationReadyToImportBackupWithExistingAccount:(BOOL)existingAccount
 {
     self.navigationController.showLoadingView = NO;
 }

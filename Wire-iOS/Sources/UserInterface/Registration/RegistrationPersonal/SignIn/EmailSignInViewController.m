@@ -360,7 +360,7 @@
     // Not necessary to remove the loading view, since the controller would not be used any more.
 }
 
-- (void)authenticationReadyToImportBackup
+- (void)authenticationReadyToImportBackupWithExistingAccount:(BOOL)existingAccount
 {
     self.navigationController.showLoadingView = NO;
     [self.analyticsTracker tagEmailLogin];

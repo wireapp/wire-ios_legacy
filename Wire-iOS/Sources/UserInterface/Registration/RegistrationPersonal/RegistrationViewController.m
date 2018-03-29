@@ -263,9 +263,9 @@
 
 #pragma mark - PreLoginAuthenticationObserver
 
-- (void)authenticationReadyToImportBackup
+- (void)authenticationReadyToImportBackupWithExistingAccount:(BOOL)existingAccount
 {
-    [self presentNoHistoryViewController:ContextTypeNewDevice];
+    [self presentNoHistoryViewController:existingAccount ? ContextTypeLoggedOut : ContextTypeNewDevice];
 }
 
 #pragma mark - ZMInitialSyncCompletionObserver
