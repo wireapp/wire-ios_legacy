@@ -123,7 +123,7 @@ extension NoHistoryViewController {
         }
         
         self.showLoadingView = true
-        sessionManager.restoreFromBackup(at: url, with: UUID()) { result in
+        sessionManager.restoreFromBackup(at: url) { result in
             switch result {
             case .failure(let error):
                 self.showRestoreError(error)
