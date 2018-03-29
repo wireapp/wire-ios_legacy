@@ -127,9 +127,8 @@ final class SplitViewControllerTests: XCTestCase {
 
         sut.isLeftViewControllerRevealed = isLeftViewControllerRevealed
         sut.setLeftViewControllerRevealed(isLeftViewControllerRevealed, animated: animated, completion: nil)
-        sut.view.layoutIfNeeded()
 
-        XCTAssertEqual(sut.rightView.frame.origin.x, 0)
+        XCTAssertEqual(sut.rightView.frame.origin.x, isLeftViewControllerRevealed ? sut.leftView.frame.size.width : 0)
     }
 
     func testThatPanRightViewToLessThanHalfWouldBounceBack(){
@@ -180,7 +179,7 @@ final class SplitViewControllerTests: XCTestCase {
         XCTAssertEqual(sut.rightView.frame.origin.x, sut.view.frame.size.width, "rightView should stop at the right edge of the sut.view!")
     }
 
-    func testSetLeftViewControllerRevealedWithoutAnimationHidesLeftView(){
+    func testThatSetLeftViewControllerUnrevealedWithoutAnimationHidesLeftView(){
         // GIVEN
         setupLeftView(isLeftViewControllerRevealed: true, animated: false)
 
