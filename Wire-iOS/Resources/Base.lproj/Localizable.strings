@@ -411,6 +411,10 @@
 "content.message.open" = "Open";
 "content.message.copy" = "Copy";
 
+"content.message.open_link_alert.title" = "Visit Link";
+"content.message.open_link_alert.message" = "This will take you to %@";
+"content.message.open_link_alert.open" = "Open";
+
 "content.reactions_list.likers" = "Liked by";
 
 "content.file.too_big" = "You can send files up to %@";
