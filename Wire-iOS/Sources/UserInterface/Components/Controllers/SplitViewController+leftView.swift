@@ -26,7 +26,7 @@ extension SplitViewController {
         leftView?.isHidden = false
         print("◀️ leftView.hidden = \(String(describing: (leftView?.isHidden)!))")
 
-        setLeftViewControllerRevealedValue(leftViewControllerRevealed)
+        setLeftViewControllerRevealedValue(leftViewControllerRevealed) ///TODO: mv to setter
 //        self.leftViewControllerIsRevealed = leftViewControllerRevealed
 //        self._leftViewControllerRevealed = leftViewControllerRevealed
         resetOpenPercentage()
@@ -52,9 +52,14 @@ extension SplitViewController {
                     self.leftViewController?.endAppearanceTransition()
                     self.rightViewController?.endAppearanceTransition()
                 }
-                if self.openPercentage == 0 && self.layoutSize != .regularLandscape {
+                if self.openPercentage == 0 &&
+                    self.layoutSize != .regularLandscape &&
+                    (self.leftView.layer.presentation()?.frame == self.leftView.frame)
+
+                    ///TODO: check leftView is animating and position
+                { //self?.circle.layer.presentation()?.frame
                     self.leftView?.isHidden = true ///TODO: cancel this action if new animation starts
-                    print("🤛 leftView.hidden = YES")
+                    print("🤛 leftView.hidden = YES, layer.presentation()?.frame =\(String(describing: (self.leftView.layer.presentation()?.frame)!))")
                 }
             })
         }
