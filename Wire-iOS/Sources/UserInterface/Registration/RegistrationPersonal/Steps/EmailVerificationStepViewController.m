@@ -67,6 +67,8 @@
     [self createResendInstructions];
     [self createResendButton];
     
+    self.wr_navigationController.backButtonEnabled = YES;
+    
     [self updateViewConstraints];
 }
 
