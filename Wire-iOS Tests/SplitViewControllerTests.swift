@@ -118,14 +118,15 @@ final class SplitViewControllerTests: XCTestCase {
         XCTAssertEqual(sut.rightView.frame.width, compactWidth)
     }
 
-    fileprivate func setupAsLeftViewUnrevealed(file: StaticString = #file, line: UInt = #line) {
+    fileprivate func setupLeftView(isLeftViewControllerRevealed: Bool, animated: Bool = true, file: StaticString = #file, line: UInt = #line) {
         sut.leftViewController = UIViewController()
         sut.rightViewController = UIViewController()
 
         let compactTraitCollection = UITraitCollection(horizontalSizeClass: .compact)
         mockParentViewController.setOverrideTraitCollection(compactTraitCollection, forChildViewController: sut)
 
-        sut.isLeftViewControllerRevealed = false
+        sut.isLeftViewControllerRevealed = isLeftViewControllerRevealed
+        sut.setLeftViewControllerRevealed(isLeftViewControllerRevealed, animated: animated, completion: nil)
         sut.view.layoutIfNeeded()
 
         XCTAssertEqual(sut.rightView.frame.origin.x, 0)
@@ -133,7 +134,7 @@ final class SplitViewControllerTests: XCTestCase {
 
     func testThatPanRightViewToLessThanHalfWouldBounceBack(){
         // GIVEN
-        setupAsLeftViewUnrevealed()
+        setupLeftView(isLeftViewControllerRevealed: false)
 
         // WHEN
         let beganGestureRecognizer = MockPanGestureRecognizer(location: nil, translation: nil, state: .began)
@@ -157,7 +158,7 @@ final class SplitViewControllerTests: XCTestCase {
 
     func testThatPanRightViewToMoreThanHalfWouldRevealLeftView(){
         // GIVEN
-        setupAsLeftViewUnrevealed()
+        setupLeftView(isLeftViewControllerRevealed: false)
 
         // WHEN
         let beganGestureRecognizer = MockPanGestureRecognizer(location: nil, translation: nil, state: .began)
@@ -177,5 +178,16 @@ final class SplitViewControllerTests: XCTestCase {
 
         // THEN
         XCTAssertEqual(sut.rightView.frame.origin.x, sut.view.frame.size.width, "rightView should stop at the right edge of the sut.view!")
+    }
+
+    func testSetLeftViewControllerRevealedWithoutAnimationHidesLeftView(){
+        // GIVEN
+        setupLeftView(isLeftViewControllerRevealed: true, animated: false)
+
+        // WHEN
+        sut.setLeftViewControllerRevealed(false, animated: false, completion: nil)
+
+        // THEN
+        XCTAssert(sut.leftView.isHidden)
     }
 }

@@ -535,15 +535,15 @@ NSString *SplitLayoutObservableDidChangeToLayoutSizeNotification = @"SplitLayout
     [self updateLeftViewControllerWithAnimated:YES completion:nil];
 }
 
-- (void)resetOpenPercentage
-{
-    self.openPercentage = self.leftViewControllerRevealed ? 1 : 0;
-}
-
 - (void)setLeftViewControllerRevealed:(BOOL)leftViewControllerRevealed animated:(BOOL)animated completion:(nullable dispatch_block_t)completion
 {
     _leftViewControllerRevealed = leftViewControllerRevealed;
     [self updateLeftViewControllerWithAnimated:animated completion:completion];
+}
+
+- (void)resetOpenPercentage
+{
+    self.openPercentage = self.leftViewControllerRevealed ? 1 : 0;
 }
 
 - (void)setOpenPercentage:(CGFloat)percentage

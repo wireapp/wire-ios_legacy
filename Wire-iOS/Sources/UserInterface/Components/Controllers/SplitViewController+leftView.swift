@@ -32,10 +32,14 @@ extension SplitViewController {
             rightViewController?.beginAppearanceTransition(!self.isLeftViewControllerRevealed, animated: animated)
         }
 
-        let hideLeftViewBlock: () -> Void = {
+        let completionBlock: () -> Void = {
+            if let completion = completion {
+                completion()
+            }
+
             if self.openPercentage == 0 &&
                 self.layoutSize != .regularLandscape &&
-                self.leftView.layer.presentation()?.frame == self.leftView.frame {
+                (self.leftView.layer.presentation()?.frame == self.leftView.frame || (self.leftView.layer.presentation()?.frame == nil && !animated)) {
                 self.leftView?.isHidden = true
             }
         }
@@ -49,18 +53,15 @@ extension SplitViewController {
             UIView.wr_animate(easing: RBBEasingFunctionEaseOutExpo, duration: 0.55, animations: {() -> Void in
                 self.view.layoutIfNeeded()
             }, completion: {(_ finished: Bool) -> Void in
-                if let completion = completion {
-                    completion()
-                }
-
                 if self.layoutSize != .regularLandscape {
                     self.leftViewController?.endAppearanceTransition()
                     self.rightViewController?.endAppearanceTransition()
                 }
-                hideLeftViewBlock()
+                completionBlock()
             })
         } else {
-            hideLeftViewBlock()
+            self.view.layoutIfNeeded()
+            completionBlock()
         }
     }
 }
