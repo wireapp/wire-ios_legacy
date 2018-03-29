@@ -95,10 +95,14 @@ extension NoHistoryViewController: UIDocumentMenuDelegate, UIDocumentPickerDeleg
         SessionManager.shared?.restoreFromBackup(at: url, with: UUID()) { result in
             switch result {
             case .failure(let error):
+                BackupEvent.importFailed.track()
                 self.showRestoreError(error)
             case .success:
+                BackupEvent.importSucceeded.track()
                 self.formStepDelegate.didCompleteFormStep(self)
             }
+            
         }
     }
+
 }
