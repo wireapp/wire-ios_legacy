@@ -141,7 +141,7 @@
 			<key>UTTypeDescription</key>
 			<string>Wire iOS Back Up File</string>
 			<key>UTTypeIdentifier</key>
-			<string>com.wire.ios-backup</string>
+			<string>com.wire.backup-ios</string>
 			<key>UTTypeSize320IconFile</key>
 			<string>logo</string>
 			<key>UTTypeSize64IconFile</key>
@@ -149,7 +149,7 @@
 			<key>UTTypeTagSpecification</key>
 			<dict>
 				<key>com.apple.ostype</key>
-				<string>com.wire.ios-backup</string>
+				<string>com.wire.backup-ios</string>
 				<key>public.filename-extension</key>
 				<array>
 					<string>ios_wbu</string>

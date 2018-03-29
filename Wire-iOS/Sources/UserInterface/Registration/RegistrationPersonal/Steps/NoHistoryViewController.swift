@@ -19,7 +19,7 @@
 import Foundation
 
 extension NoHistoryViewController {
-    static let WireBackupUTI = "com.wire.ios-backup"
+    static let WireBackupUTI = "com.wire.backup-ios"
     
     @objc public func createButtons() {
         let restoreBackupButton = Button(style: .emptyMonochrome)
@@ -91,7 +91,7 @@ extension NoHistoryViewController {
             }
         #endif
         
-        let picker = UIDocumentMenuViewController(documentTypes: [NoHistoryViewController.WireBackupUTI],
+        let picker = UIDocumentPickerViewController(documentTypes: [NoHistoryViewController.WireBackupUTI],
                                                   in: .`import`)
         picker.delegate = self
         self.present(picker, animated: true)
@@ -138,12 +138,7 @@ extension NoHistoryViewController {
 
 }
 
-extension NoHistoryViewController: UIDocumentMenuDelegate, UIDocumentPickerDelegate {
-    public func documentMenu(_ documentMenu: UIDocumentMenuViewController,
-                             didPickDocumentPicker documentPicker: UIDocumentPickerViewController) {
-        self.present(documentPicker, animated: true)
-    }
-    
+extension NoHistoryViewController: UIDocumentPickerDelegate {
     public func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentAt url: URL) {
         self.restore(with: url)
     }
