@@ -47,13 +47,7 @@ class StatusBarVideoEditorController: UIVideoEditorController {
     }
 
     func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
-        switch UIDevice.current.userInterfaceIdiom {
-        case .pad:
-            return .none
-        default:
-            return .fullScreen
-        }
-
+        return traitCollection.horizontalSizeClass == .regular ? .popover : .overFullScreen
     }
 }
 
