@@ -84,7 +84,7 @@ extension NoHistoryViewController {
     fileprivate func showFilePicker() {
         // Test code to verify restore
         #if arch(i386) || arch(x86_64)
-            let testFilePath = "/var/tmp/backup.ios-bkp"
+            let testFilePath = "/var/tmp/backup.ios_wbu"
             if FileManager.default.fileExists(atPath: testFilePath) {
                 self.restore(with: URL(fileURLWithPath: testFilePath))
                 return

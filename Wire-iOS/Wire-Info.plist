@@ -152,7 +152,7 @@
 				<string>com.wire.ios-backup</string>
 				<key>public.filename-extension</key>
 				<array>
-					<string>ios-bkp</string>
+					<string>ios_wbu</string>
 				</array>
 			</dict>
 		</dict>
