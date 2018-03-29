@@ -19,31 +19,21 @@
 import Foundation
 
 enum BackupEvent: Event {
-    case importSuceeded
+    case importSucceeded
     case importFailed
-    case exportSucceeded(zipURL: URL)
+    case exportSucceeded
     case exportFailed
     
     var name: String {
         switch self {
-        case .importSuceeded: return "" // TODO
-        case .importFailed: return "" // TODO
-        case .exportSucceeded: return "" // TODO
-        case .exportFailed: return "" // TODO
+        case .importSucceeded: return "history.restore_succeeded"
+        case .importFailed: return "history.restore_failed"
+        case .exportSucceeded: return "history.backup_succeeded"
+        case .exportFailed: return "history.backup_failed"
         }
     }
     
     var attributes: [AnyHashable : Any]? {
-        switch self {
-        case .importSuceeded, .importFailed, .exportFailed: return nil
-        case .exportSucceeded(zipURL: let url): return ["size": url.fileSize ?? 0]
-        }
-    }
-}
-
-fileprivate extension URL {
-    var fileSize: Int? {
-        let attributes = try? FileManager.default.attributesOfItem(atPath: path)
-        return attributes?[.size] as? Int
+        return nil
     }
 }
