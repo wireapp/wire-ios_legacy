@@ -137,7 +137,7 @@ public class AddParticipantsViewController: UIViewController {
 
         searchHeaderViewController = SearchHeaderViewController(userSelection: userSelection, variant: self.variant)
         
-        searchGroupSelector = SearchGroupSelector(variant: self.variant)
+        searchGroupSelector = SearchGroupSelector(style: self.variant)
 
         searchResultsViewController = SearchResultsViewController(userSelection: userSelection,
                                                                   variant: self.variant,
@@ -169,6 +169,7 @@ public class AddParticipantsViewController: UIViewController {
             if group == .services {
                 self.searchHeaderViewController.clearInput()
             }
+            
             self.searchResultsViewController.searchGroup = group
             self.performSearch()
         }

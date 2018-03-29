@@ -19,8 +19,20 @@
 import UIKit
 import Cartography
 
-final class Tab: Button {
-    let colorSchemeVariant : ColorSchemeVariant
+class Tab: Button {
+    private let selectionLineView = UIView()
+
+    var title: String = "" {
+        didSet {
+            setTitle(title, for: .normal)
+        }
+    }
+
+    var colorSchemeVariant : ColorSchemeVariant {
+        didSet {
+            updateColors()
+        }
+    }
 
     init(variant: ColorSchemeVariant) {
         colorSchemeVariant = variant
@@ -42,30 +54,27 @@ final class Tab: Button {
         fatalError("init(coder:) has not been implemented")
     }
 
-    var title: String = "" {
-        didSet {
-            setTitle(title, for: .normal)
-        }
-    }
 
     override var intrinsicContentSize: CGSize {
         return CGSize(width: UIViewNoIntrinsicMetric, height: 48)
     }
 
-    private let selectionLineView = UIView()
-
     override var isSelected: Bool {
         didSet {
-            let selectionColor: UIColor
-            switch self.colorSchemeVariant {
-            case .dark:
-                selectionColor = .white
-            case .light:
-                selectionColor = .black
-            }
-
-            selectionLineView.backgroundColor = isSelected ? selectionColor : .clear
-            setTitleColor(isSelected ? selectionColor : selectionColor.withAlphaComponent(0.5), for: .normal)
+            updateColors()
         }
+    }
+
+    private func updateColors() {
+        let selectionColor: UIColor
+        switch self.colorSchemeVariant {
+        case .dark:
+            selectionColor = .white
+        case .light:
+            selectionColor = .black
+        }
+
+        selectionLineView.backgroundColor = isSelected ? selectionColor : .clear
+        setTitleColor(isSelected ? selectionColor : selectionColor.withAlphaComponent(0.5), for: .normal)
     }
 }

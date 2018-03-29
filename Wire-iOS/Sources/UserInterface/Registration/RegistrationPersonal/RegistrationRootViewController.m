@@ -95,13 +95,14 @@
     }
     
     self.registrationTabBarController = [[TabBarController alloc] initWithViewControllers:@[flowViewController, signInViewController]];
+
     self.signInViewController = signInViewController;
     
     if (self.showLogin) {
         [self.registrationTabBarController selectIndex:1 animated:NO];
     }
     
-    self.registrationTabBarController.style = TabBarStyleColored;
+    self.registrationTabBarController.style = ColorSchemeVariantDark;
     self.registrationTabBarController.view.translatesAutoresizingMaskIntoConstraints = NO;
     
     self.cancelButton = [[IconButton alloc] init];

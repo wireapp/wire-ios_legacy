@@ -19,47 +19,45 @@
 
 import Cartography
 
-
-@objc
-public enum TabBarStyle : UInt {
-    case `default`, light, dark, colored
-}
-
-
-public protocol TabBarDelegate : class {
-    
-    func didSelectIndex(_ index: Int)
-    
+protocol TabBarDelegate : class {
+    func tabBar(_ tabBar: TabBar, didSelectItemAt index: Int)
 }
 
 @objc
-open class TabBar: UIView {
-    
-    open fileprivate(set) var style : TabBarStyle
-    open fileprivate(set) var items : [UITabBarItem] = []
-    open weak var delegate : TabBarDelegate?
+class TabBar: UIView {
+    fileprivate let stackView = UIStackView()
 
-    open fileprivate(set) var selectedIndex : Int {
+    // MARK: - Properties
+
+    weak var delegate : TabBarDelegate?
+    var animatesTransition: Bool = true
+
+    fileprivate(set) var items : [UITabBarItem] = []
+    private(set) var tabs: [Tab] = []
+
+    var style: ColorSchemeVariant {
+        didSet {
+            tabs.forEach(updateTabStyle)
+        }
+    }
+
+    fileprivate(set) var selectedIndex : Int {
         didSet {
             updateButtonSelection()
         }
     }
 
-    fileprivate var selectedButton : UIButton {
-        get {
-            return self.buttonRow.subviews[selectedIndex] as! UIButton
-        }
+    fileprivate var selectedTab : Tab {
+        return self.tabs[selectedIndex]
     }
-    
-    fileprivate let buttonRow : UIView
 
-    required public init(items: [UITabBarItem], style: TabBarStyle, selectedIndex: Int = 0) {
-        
-        assert(items.count > 0, "TabBar must be initialized with at least one item")
+    // MARK: - Initialization
+
+    init(items: [UITabBarItem], style: ColorSchemeVariant, selectedIndex: Int = 0) {
+        precondition(items.count > 0, "TabBar must be initialized with at least one item")
         
         self.items = items
         self.selectedIndex = selectedIndex
-        self.buttonRow = UIView()
         self.style = style
         
         super.init(frame: CGRect.zero)
@@ -73,124 +71,84 @@ open class TabBar: UIView {
         updateButtonSelection()
     }
 
-    required public init?(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
     fileprivate func setupViews() {
-        for button in items.map(self.itemButton) {
-            self.buttonRow.addSubview(button)
-        }
+        tabs = items.map(makeButtonForItem)
+        tabs.forEach(stackView.addArrangedSubview)
 
-        self.addSubview(self.buttonRow)
+        stackView.distribution = .fillEqually
+        stackView.axis = .horizontal
+        stackView.alignment = .fill
+        addSubview(stackView)
     }
     
     fileprivate func createConstraints() {
-        
-        constrain(buttonRow.subviews.first!) { firstButton in
-            firstButton.leading == firstButton.superview!.leading
-        }
-        
-        constrain(buttonRow.subviews.last!) { lastButton in
-            lastButton.trailing == lastButton.superview!.trailing
-        }
-        
-        for button in buttonRow.subviews {
-            constrain(button) { button in
-                button.top == button.superview!.top
-                button.bottom == button.superview!.bottom
-            }
-        }
-        
-        var previous = buttonRow.subviews.first!
-        for current in buttonRow.subviews.dropFirst() {
-            constrain(previous, current) { previous, current in
-                previous.trailing == current.leading
-                previous.width == current.width
-            }
-            previous = current
-        }
+        constrain(self, stackView) { selfView, stackView in
+            stackView.left == selfView.left
+            stackView.right == selfView.right
+            stackView.top == selfView.top
+            stackView.height == 48
 
-        constrain(self, self.buttonRow) { container, buttonRow in
-            buttonRow.top == buttonRow.superview!.top
-            buttonRow.left >= buttonRow.superview!.left
-            buttonRow.right <= buttonRow.superview!.right
-            buttonRow.centerX == buttonRow.superview!.centerX
-            buttonRow.height == 40
-            buttonRow.width == 375 ~ 750.0
-            container.bottom == buttonRow.bottom
+            selfView.bottom == stackView.bottom
         }
+    }
 
+    fileprivate func makeButtonForItem(_ item: UITabBarItem) -> Tab {
+        let tab = Tab(variant: style)
+        tab.textTransform = .upper
+        tab.setTitle(item.title, for: .normal)
+        tab.addTarget(self, action: #selector(TabBar.itemSelected(_:)), for: .touchUpInside)
+        tab.cas_styleClass = styleClass()
+        return tab
+    }
+
+    // MARK: - Styling
+
+    fileprivate func updateTabStyle(_ tab: Tab) {
+        tab.colorSchemeVariant = style
+        tab.cas_styleClass = styleClass()
     }
     
-    fileprivate func updateButtonSelection() {
-        for view in self.buttonRow.subviews {
-            if let button = view as? Tab {
-                button.isSelected = false
-            }
+    fileprivate func styleClass() -> String {
+        switch (style) {
+        case .light:
+            return "tab-light"
+        case .dark:
+            return "tab-dark"
+        }
+    }
+
+    // MARK: - Actions
+    
+    func itemSelected(_ sender: AnyObject) {
+        guard
+            let tab = sender as? Tab,
+            let selectedIndex =  self.tabs.index(of: tab)
+        else {
+            return
         }
         
-        self.selectedButton.isSelected = true
+        self.delegate?.tabBar(self, didSelectItemAt: selectedIndex)
+        setSelectedIndex(selectedIndex, animated: animatesTransition)
     }
-        
-    fileprivate func itemButton (_ item: UITabBarItem) -> Tab {
-        let button = Tab(variant: colorSchemeVariant())
-        button.textTransform = .upper
-        button.setTitle(item.title, for: .normal)
-        button.addTarget(self, action: #selector(TabBar.itemSelected(_:)), for: .touchUpInside)
-        button.cas_styleClass = styleClass()
-        return button
-    }
-    
+
     func setSelectedIndex( _ index: Int, animated: Bool) {
         if (animated) {
-            UIView.animate(withDuration: 0.35, animations: {
+            UIView.transition(with: self, duration: 0.35, options: [.transitionCrossDissolve, .allowUserInteraction], animations: {
                 self.selectedIndex = index
                 self.layoutIfNeeded()
-            }) 
+            })
         } else {
             self.selectedIndex = index
             self.layoutIfNeeded()
         }
     }
-    
-    /// MARK - Styling
-    
-    fileprivate func styleClass() -> String {
-        switch (self.style) {
-        case .default:
-            return "tab"
-        case .light:
-            return "tab-light"
-        case .dark:
-            return "tab-dark"
-        case .colored:
-            return "tab-monochrome"
-        }
-    }
-    
-    fileprivate func colorSchemeVariant() -> ColorSchemeVariant {
-        switch (self.style) {
-        case .light:
-            return .light
-        case .dark:
-            return .dark
-        default:
-            return ColorScheme.default().variant
-        }
-    }
-    
-    /// MARK - Actions
-    
-    func itemSelected(_ sender: AnyObject) {
-        guard
-            let button = sender as? UIButton,
-            let selectedIndex =  self.buttonRow.subviews.index(of: button)
-        else {
-            return
-        }
-        
-        self.delegate?.didSelectIndex(selectedIndex)
-        setSelectedIndex(selectedIndex, animated: true)
+
+    fileprivate func updateButtonSelection() {
+        tabs.forEach { $0.isSelected = false }
+        tabs[selectedIndex].isSelected = true
     }
 }
