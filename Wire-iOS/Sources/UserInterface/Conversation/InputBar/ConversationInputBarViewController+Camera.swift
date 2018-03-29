@@ -80,17 +80,12 @@ extension ConversationInputBarViewController: CameraKeyboardViewControllerDelega
             switch UIDevice.current.userInterfaceIdiom {
             case .pad:
                 self.hideCameraKeyboardViewController {
-//                    self.shouldRefocusKeyboardAfterImagePickerDismiss = true
                     videoEditor.modalPresentationStyle = .popover
-                    if let size = self.parent?.view.frame.size {
-                        videoEditor.preferredContentSize = size
-                    }
 
                     self.present(videoEditor, animated: true)
 
                     let popover = videoEditor.popoverPresentationController
                     popover?.sourceView = self.parent?.view
-//                    popover?.canOverlapSourceViewRect = true
 
                     ///arrow point to camera button.
                     popover?.permittedArrowDirections = .down
@@ -98,6 +93,8 @@ extension ConversationInputBarViewController: CameraKeyboardViewControllerDelega
 //                        let buttonCenter = self.photoButton.convert(self.photoButton.frame.origin, to: parentView)
                         let buttonCenter = self.photoButton.convert(self.photoButton.center, to: parentView)
                         popover?.sourceRect = CGRect(origin: buttonCenter, size: .zero)
+
+                        videoEditor.preferredContentSize = parentView.frame.size
                     }
                 }
             default:
