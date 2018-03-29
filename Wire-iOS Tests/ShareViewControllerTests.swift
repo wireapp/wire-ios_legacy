@@ -31,6 +31,11 @@ class ShareViewControllerTests: CoreDataSnapshotTestCase {
         self.groupConversation = self.createGroupConversation()
     }
     
+    override func tearDown() {
+        self.groupConversation = nil
+        super.tearDown()
+    }
+    
     override var needsCaches: Bool {
         return true
     }

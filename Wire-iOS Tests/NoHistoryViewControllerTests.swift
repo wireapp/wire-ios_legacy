@@ -17,18 +17,22 @@
 //
 
 import Foundation
+import XCTest
+@testable import Wire
 
-extension AppRootViewController {
+class NoHistoryViewControllerTests: ZMSnapshotTestCase {
     
-    @objc
-    public static func configureAppearance() {
-        let navigationBarTitleBaselineOffset: CGFloat = 2.5
-        
-        let attributes: [String : Any] = [NSFontAttributeName: UIFont.systemFont(ofSize: 11, weight: UIFontWeightSemibold), NSBaselineOffsetAttributeName: navigationBarTitleBaselineOffset]
-        let barButtonItemAppearance = UIBarButtonItem.appearance(whenContainedInInstancesOf: [DefaultNavigationBar.self])
-        barButtonItemAppearance.setTitleTextAttributes(attributes, for: .normal)
-        barButtonItemAppearance.setTitleTextAttributes(attributes, for: .highlighted)
-        barButtonItemAppearance.setTitleTextAttributes(attributes, for: .disabled)
+    func testNoHistoryCase() {
+        // GIVEN
+        let sut = NoHistoryViewController(contextType: .newDevice)
+        // WHEN && THEN
+        self.verifyInIPhoneSize(view: sut.view)
     }
-    
+
+    func testHasHistoryCase() {
+        // GIVEN
+        let sut = NoHistoryViewController(contextType: .loggedOut)
+        // WHEN && THEN
+        self.verifyInIPhoneSize(view: sut.view)
+    }
 }

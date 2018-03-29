@@ -22,6 +22,7 @@ import WireSyncEngine
 
 final class BackupStatusCell: UITableViewCell {
     let descriptionLabel = UILabel()
+    let iconView = UIImageView()
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -30,14 +31,31 @@ final class BackupStatusCell: UITableViewCell {
         backgroundColor = .clear
         contentView.backgroundColor = .clear
         
+        let color = ColorScheme.default().color(withName: ColorSchemeColorTextForeground, variant: .dark)
+        
+        iconView.image = UIImage(for: .clock, iconSize: .large, color: color)
+        iconView.contentMode = .center
+        iconView.translatesAutoresizingMaskIntoConstraints = false
+        contentView.addSubview(iconView)
+        
         descriptionLabel.translatesAutoresizingMaskIntoConstraints = false
         descriptionLabel.numberOfLines = 0
         contentView.addSubview(descriptionLabel)
-        descriptionLabel.fitInSuperview(with: EdgeInsets(margin: 24))
+        
+        NSLayoutConstraint.activate([
+            iconView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 24),
+            iconView.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
+            iconView.heightAnchor.constraint(equalTo: iconView.widthAnchor),
+            iconView.widthAnchor.constraint(equalToConstant: 48),
+            descriptionLabel.topAnchor.constraint(equalTo: iconView.bottomAnchor, constant: 24),
+            descriptionLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 24),
+            descriptionLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -24),
+            descriptionLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -24),
+            ])
         
         descriptionLabel.text = "self.settings.history_backup.description".localized
         descriptionLabel.font = FontSpec(.normal, .light).font
-        descriptionLabel.textColor = ColorScheme.default().color(withName: ColorSchemeColorTextForeground, variant: .dark)
+        descriptionLabel.textColor = color
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -102,6 +120,7 @@ final class BackupViewController: UIViewController {
     private func setupViews() {
         view.backgroundColor = .clear
         
+        tableView.isScrollEnabled = false
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 80
         tableView.backgroundColor = .clear
