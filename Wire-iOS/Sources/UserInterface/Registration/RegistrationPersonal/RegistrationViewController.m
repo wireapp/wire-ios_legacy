@@ -208,20 +208,11 @@
 
 - (void)didCompleteFormStep:(UIViewController *)viewController
 {
-    BOOL isEmailLogin = [viewController isKindOfClass:[EmailSignInViewController class]];
     BOOL isNoHistoryViewController = [viewController isKindOfClass:[NoHistoryViewController class]];
     BOOL isEmailRegistration = [viewController isKindOfClass:[RegistrationEmailFlowViewController class]];
     
     if (isEmailRegistration) {
         [self.delegate registrationViewControllerDidCompleteRegistration];
-    }
-    else if (isEmailLogin) {
-        if (AutomationHelper.sharedHelper.automationEmailCredentials != nil) {
-            [[UnauthenticatedSession sharedSession] continueAfterBackupImportStep];
-        }
-        else {
-            [self presentNoHistoryViewController:ContextTypeNewDevice];
-        }
     }
     else if (isNoHistoryViewController) {
         [[UnauthenticatedSession sharedSession] continueAfterBackupImportStep];
@@ -273,7 +264,13 @@
     self.rootNavigationController.showLoadingView = NO;
 
     ContextType type = existingAccount ? ContextTypeLoggedOut : ContextTypeNewDevice;
-    [self presentNoHistoryViewController:type];
+    
+    if (AutomationHelper.sharedHelper.automationEmailCredentials != nil) {
+        [[UnauthenticatedSession sharedSession] continueAfterBackupImportStep];
+    }
+    else {
+        [self presentNoHistoryViewController:type];
+    }
 }
 
 #pragma mark - ZMInitialSyncCompletionObserver
