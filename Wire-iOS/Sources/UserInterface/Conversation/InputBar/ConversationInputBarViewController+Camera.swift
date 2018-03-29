@@ -45,6 +45,16 @@ class StatusBarVideoEditorController: UIVideoEditorController {
     override var preferredStatusBarStyle : UIStatusBarStyle {
         return UIStatusBarStyle.default
     }
+
+    func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
+        switch UIDevice.current.userInterfaceIdiom {
+        case .pad:
+            return .none
+        default:
+            return .fullScreen
+        }
+
+    }
 }
 
 extension ConversationInputBarViewController: CameraKeyboardViewControllerDelegate {
@@ -69,15 +79,27 @@ extension ConversationInputBarViewController: CameraKeyboardViewControllerDelega
 
             switch UIDevice.current.userInterfaceIdiom {
             case .pad:
-                videoEditor.modalPresentationStyle = .popover
-                self.present(videoEditor, animated: true)
+                self.hideCameraKeyboardViewController {
+//                    self.shouldRefocusKeyboardAfterImagePickerDismiss = true
+                    videoEditor.modalPresentationStyle = .popover
+                    if let size = self.parent?.view.frame.size {
+                        videoEditor.preferredContentSize = size
+                    }
 
-                let popover = videoEditor.popoverPresentationController
-                popover?.sourceView = self.view
-                popover?.canOverlapSourceViewRect = true
-                let buttonRect = self.photoButton.frame
-                popover?.sourceRect = CGRect(origin: CGPoint(x: buttonRect.midX, y: buttonRect.midY), size: .zero)
+                    self.present(videoEditor, animated: true)
 
+                    let popover = videoEditor.popoverPresentationController
+                    popover?.sourceView = self.parent?.view
+//                    popover?.canOverlapSourceViewRect = true
+
+                    ///arrow point to camera button.
+                    popover?.permittedArrowDirections = .down
+                    if let parentView = self.parent?.view {
+//                        let buttonCenter = self.photoButton.convert(self.photoButton.frame.origin, to: parentView)
+                        let buttonCenter = self.photoButton.convert(self.photoButton.center, to: parentView)
+                        popover?.sourceRect = CGRect(origin: buttonCenter, size: .zero)
+                    }
+                }
             default:
                 self.present(videoEditor, animated: true) {
                     UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(false)
