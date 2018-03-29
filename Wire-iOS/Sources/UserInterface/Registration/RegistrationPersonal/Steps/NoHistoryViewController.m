@@ -28,7 +28,6 @@
 @property (nonatomic) UILabel *subtitleLabel;
 @property (nonatomic) UIView *contentView;
 @property (nonatomic) UIStackView *stackView;
-@property (nonatomic, readonly) ContextType contextType;
 @end
 
 @implementation NoHistoryViewController
