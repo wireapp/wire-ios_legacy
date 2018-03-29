@@ -66,10 +66,22 @@ extension ConversationInputBarViewController: CameraKeyboardViewControllerDelega
             videoEditor.videoMaximumDuration = ConversationUploadMaxVideoDuration
             videoEditor.videoPath = videoURL.path
             videoEditor.videoQuality = UIImagePickerControllerQualityType.typeMedium
-            
-            self.present(videoEditor, animated: true) {
-                UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(false)
+
+            switch UIDevice.current.userInterfaceIdiom {
+            case .pad:
+                videoEditor.modalPresentationStyle = .popover
+                self.present(videoEditor, animated: true)
+
+                let popover = videoEditor.popoverPresentationController
+                popover?.sourceView = self.view
+
+            default:
+                self.present(videoEditor, animated: true) {
+                    UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(false)
+                }
             }
+
+
         }
         else {
 

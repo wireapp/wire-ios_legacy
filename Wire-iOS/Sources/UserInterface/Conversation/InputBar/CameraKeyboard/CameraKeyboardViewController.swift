@@ -287,8 +287,8 @@ open class CameraKeyboardViewController: UIViewController {
                 exportSession.outputFileType = AVFileTypeMPEG4
 
                 exportSession.exportAsynchronously {
-                    self.showLoadingView = false
                     DispatchQueue.main.async(execute: {
+                        self.showLoadingView = false
                         self.delegate?.cameraKeyboardViewController(self, didSelectVideo: exportSession.outputURL!, duration: CMTimeGetSeconds(exportSession.asset.duration))
                     })
                 }
