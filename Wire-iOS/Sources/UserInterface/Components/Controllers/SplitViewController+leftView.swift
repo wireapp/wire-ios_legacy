@@ -19,6 +19,7 @@
 import Foundation
 
 extension SplitViewController {
+
     @objc func updateLeftViewController(animated: Bool, completion: (() -> Void)?) {
         if animated {
             view.layoutIfNeeded()
@@ -29,6 +30,14 @@ extension SplitViewController {
         if layoutSize != .regularLandscape {
             leftViewController?.beginAppearanceTransition(self.isLeftViewControllerRevealed, animated: animated)
             rightViewController?.beginAppearanceTransition(!self.isLeftViewControllerRevealed, animated: animated)
+        }
+
+        let hideLeftViewBlock: () -> Void = {
+            if self.openPercentage == 0 &&
+                self.layoutSize != .regularLandscape &&
+                self.leftView.layer.presentation()?.frame == self.leftView.frame {
+                self.leftView?.isHidden = true
+            }
         }
 
         if animated {
@@ -48,12 +57,10 @@ extension SplitViewController {
                     self.leftViewController?.endAppearanceTransition()
                     self.rightViewController?.endAppearanceTransition()
                 }
-                if self.openPercentage == 0 &&
-                   self.layoutSize != .regularLandscape &&
-                   self.leftView.layer.presentation()?.frame == self.leftView.frame {
-                    self.leftView?.isHidden = true
-                }
+                hideLeftViewBlock()
             })
+        } else {
+            hideLeftViewBlock()
         }
     }
 }
