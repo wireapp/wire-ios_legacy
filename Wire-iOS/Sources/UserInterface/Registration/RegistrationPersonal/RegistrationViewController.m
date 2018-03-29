@@ -208,6 +208,7 @@
 
 - (void)didCompleteFormStep:(UIViewController *)viewController
 {
+    BOOL isEmailLogin = [viewController isKindOfClass:[EmailSignInViewController class]];
     BOOL isNoHistoryViewController = [viewController isKindOfClass:[NoHistoryViewController class]];
     BOOL isEmailRegistration = [viewController isKindOfClass:[RegistrationEmailFlowViewController class]];
     
