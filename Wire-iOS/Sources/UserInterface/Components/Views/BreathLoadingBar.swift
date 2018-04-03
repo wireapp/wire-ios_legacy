@@ -59,10 +59,10 @@ class BreathLoadingBar: UIView {
 
         _state = state
 
-        updateViews(animated: animated)
+        updateView(animated: animated)
     }
 
-    private func updateViews(animated: Bool = true) {
+    private func updateView(animated: Bool = true) {
         switch state {
         case .online:
             heightConstraint?.constant = 0
@@ -96,7 +96,7 @@ class BreathLoadingBar: UIView {
         animationDuration = duration
 
         createConstraints()
-        updateViews(animated: false)
+        updateView(animated: false)
 
         NotificationCenter.default.addObserver(self, selector: #selector(self.applicationDidBecomeActive), name: .UIApplicationDidBecomeActive, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(self.applicationDidEnterBackground), name: .UIApplicationDidEnterBackground, object: nil)
