@@ -166,9 +166,8 @@ final class LandingViewController: UIViewController {
         tracker?.tagOpenedLandingScreen()
 
         [headerContainerView, buttonStackView, loginHintsLabel, loginButton].forEach(view.addSubview)
-
         [logoView, headline].forEach(headlineStackView.addArrangedSubview)
-        [headlineStackView].forEach(headerContainerView.addSubview)
+        headerContainerView.addSubview(headlineStackView)
         
         [createAccountButton, createTeamButton].forEach() { button in
             buttonStackView.addArrangedSubview(button)
