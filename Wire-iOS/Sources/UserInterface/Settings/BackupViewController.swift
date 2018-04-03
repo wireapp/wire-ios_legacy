@@ -190,11 +190,6 @@ extension BackupViewController: UITableViewDataSource, UITableViewDelegate {
                 #if arch(i386) || arch(x86_64)
                     let tmpURL = URL(fileURLWithPath: "/var/tmp/").appendingPathComponent(url.lastPathComponent)
                     try! FileManager.default.moveItem(at: url, to: tmpURL)
-                    
-                    let alert = UIAlertController(title: "Debug",
-                                                  message: "Backup saved to \(tmpURL)",
-                                                  cancelButtonTitle: "general.ok".localized)
-                    self.present(alert, animated: true)
                 #else
                     let activityController = UIActivityViewController(activityItems: [url], applicationActivities: nil)
                     activityController.completionWithItemsHandler = { _, _, _, _ in
