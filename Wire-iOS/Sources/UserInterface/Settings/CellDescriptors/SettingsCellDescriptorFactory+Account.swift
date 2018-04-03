@@ -36,7 +36,7 @@ extension SettingsCellDescriptorFactory {
         let sections: [SettingsSectionDescriptorType] = [
             infoSection(),
             appearanceSection(),
-//            conversationsSection(), Disabled since export is broken
+            conversationsSection(),
             actionsSection(),
             signOutSection()
         ]
