@@ -93,20 +93,29 @@ const NSString *LoadingViewKey = @"loadingView";
 
 - (void)indicateLoadingSuccessWithCompletion:(dispatch_block_t)completion
 {
-    CheckAnimationView *checkView = [[CheckAnimationView alloc] init];
-    checkView.alpha = 0;
-    checkView.center = self.loadingView.center;
-    [self.loadingView addSubview:checkView];
+    CheckAnimationView __block *checkView = nil;
     
-    [UIView animateWithDuration:1 animations:^{
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.25 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        checkView = [[CheckAnimationView alloc] init];
+        checkView.center = self.loadingView.center;
+        [self.loadingView addSubview:checkView];
+        checkView.alpha = 0;
+        
+        [UIView animateWithDuration:0.5f animations:^{
+            checkView.alpha = 1;
+        } completion:nil];
+    });
+    
+    [UIView animateWithDuration:0.75f animations:^{
         self.activityIndicator.alpha = 0;
-        checkView.alpha = 1;
+        self.activityIndicator.transform = CGAffineTransformMakeScale(0.01, 0.01);
     } completion:^(BOOL completed){
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             if (completion != nil) {
                 completion();
             }
             self.activityIndicator.alpha = 1;
+            self.activityIndicator.transform = CGAffineTransformIdentity;
             [self setShowLoadingView:NO];
             [checkView removeFromSuperview];
         });

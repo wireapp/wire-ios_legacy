@@ -88,7 +88,7 @@ class CheckAnimationView: UIView
                 // strokeDraw
                 //
                 let strokeDrawAnimation = CABasicAnimation()
-                strokeDrawAnimation.beginTime = self.layer.convertTime(CACurrentMediaTime(), from: nil) + 0.129999
+                strokeDrawAnimation.beginTime = self.layer.convertTime(CACurrentMediaTime(), from: nil) + 0.15
                 strokeDrawAnimation.duration = 1.719
                 strokeDrawAnimation.speed = 2.5
                 strokeDrawAnimation.fillMode = kCAFillModeForwards
