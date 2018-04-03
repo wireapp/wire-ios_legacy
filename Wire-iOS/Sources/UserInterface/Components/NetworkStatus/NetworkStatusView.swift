@@ -135,63 +135,42 @@ class NetworkStatusView: UIView {
 
     private func updateViewState(animated: Bool) {
         var connectingViewHidden = state != .onlineSynchronizing
-        connectingView.animating = state == .onlineSynchronizing
         let offlineViewHidden = state != .offlineExpanded
-
-        // translate NetworkStatusViewState to OfflineBarState
-        var offlineBarState: OfflineBarState?
-        switch state {
-        case .offlineExpanded:
-            offlineBarState = .expanded
-        case .online, .onlineSynchronizing:
-            offlineBarState = .minimized
-        }
 
         // When the app is in background, hide the sync bar. It prevents the sync bar is "disappear in a blink" visual artifact.
         if application.applicationState == .background {
             connectingViewHidden = true
         }
 
-        if let offlineBarState = offlineBarState {
 
-            let updateUIBlock: () -> Void = {
-                self.updateUI(
-                    offlineBarState: offlineBarState,
-                    animated: animated,
-                    offlineViewHidden: offlineViewHidden
-                )
-            }
-
-            let completionBlock: (Bool) -> Void = { _ in
-                self.updateUICompletion(
-                    connectingViewHidden: connectingViewHidden,
-                    offlineViewHidden: offlineViewHidden
-                )
-            }
-
-            if animated {
-                if offlineBarState == .expanded {
-                    self.offlineView.isHidden = false
-                }
-
-                UIView.animate(
-                    withDuration: TimeInterval.NetworkStatusBar.resizeAnimationTime,
-                    delay: 0,
-                    options: [.curveEaseInOut, .beginFromCurrentState],
-                    animations: updateUIBlock,
-                    completion: completionBlock
-                )
-            } else {
-                updateUIBlock()
-                completionBlock(true)
-            }
-
-            delegate?.didChangeHeight(self, animated: animated, state: state)
+        let updateUIBlock: () -> Void = {
+            self.updateUI(animated: animated,
+                          offlineViewHidden: offlineViewHidden)
         }
+
+        let completionBlock: (Bool) -> Void = { _ in
+            self.updateUICompletion(connectingViewHidden: connectingViewHidden,
+                                    offlineViewHidden: offlineViewHidden)
+            self.connectingView.animating = self.state == .onlineSynchronizing
+        }
+
+        if animated {
+            UIView.animate(
+                withDuration: TimeInterval.NetworkStatusBar.resizeAnimationTime,
+                delay: 0,
+                options: [.curveEaseInOut, .beginFromCurrentState],
+                animations: updateUIBlock,
+                completion: completionBlock
+            )
+        } else {
+            updateUIBlock()
+            completionBlock(true)
+        }
+
+        delegate?.didChangeHeight(self, animated: animated, state: state)
     }
 
-    func updateUI(offlineBarState: OfflineBarState,
-                  animated: Bool,
+    func updateUI(animated: Bool,
                   offlineViewHidden: Bool) {
         var bottomMargin: CGFloat = 0
 
@@ -199,29 +178,29 @@ class NetworkStatusView: UIView {
             bottomMargin = margin
         }
 
-        offlineViewBottomMargin?.constant = offlineBarState == .expanded ? -bottomMargin : 0
-        offlineViewTopMargin?.constant = offlineBarState == .expanded ? topMargin : 0
-
-
         switch state {
         case .online:
             connectingViewBottomMargin?.constant = 0
+            offlineViewBottomMargin?.constant = 0
+            offlineViewTopMargin?.constant = 0
 
             connectingViewBottomMargin?.isActive = false
             offlineViewBottomMargin?.isActive = true
         case .onlineSynchronizing:
             connectingViewBottomMargin?.constant = -bottomMargin
+            offlineViewTopMargin?.constant = topMargin
 
             offlineViewBottomMargin?.isActive = false
             connectingViewBottomMargin?.isActive = true
         case .offlineExpanded:
-            connectingViewBottomMargin?.constant = -bottomMargin
+            offlineViewBottomMargin?.constant = -bottomMargin
+            offlineViewTopMargin?.constant = topMargin
 
             connectingViewBottomMargin?.isActive = false
             offlineViewBottomMargin?.isActive = true
         }
 
-        self.offlineView.update(state: offlineBarState, animated: animated)
+        self.offlineView.update(state: state, animated: animated)
         self.connectingView.update(state: state, animated: animated)
 
         self.layoutIfNeeded()

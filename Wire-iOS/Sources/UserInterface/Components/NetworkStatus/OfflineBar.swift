@@ -19,18 +19,13 @@
 import Foundation
 import Cartography
 
-enum OfflineBarState {
-    case minimized
-    case expanded
-}
-
 class OfflineBar: UIView {
 
     private let offlineLabel: UILabel
     private var heightConstraint: NSLayoutConstraint?
-    private var _state: OfflineBarState = .minimized
+    private var _state: NetworkStatusViewState = .online
 
-    var state: OfflineBarState {
+    var state: NetworkStatusViewState {
         set {
             update(state: newValue, animated: false)
         }
@@ -39,7 +34,7 @@ class OfflineBar: UIView {
         }
     }
 
-    func update(state: OfflineBarState, animated: Bool) {
+    func update(state: NetworkStatusViewState, animated: Bool) {
         guard self.state != state else { return }
 
         _state = state
@@ -85,9 +80,19 @@ class OfflineBar: UIView {
     }
 
     private func updateViews(animated: Bool = true) {
-        heightConstraint?.constant = state == .expanded ? CGFloat.OfflineBar.expandedHeight : 0
-        offlineLabel.alpha = state == .expanded ? 1 : 0
-        layer.cornerRadius = state == .expanded ? CGFloat.OfflineBar.cornerRadius : CGFloat.SyncBar.cornerRadius
+        switch state {
+        case .online:
+            heightConstraint?.constant = 0
+            offlineLabel.alpha = 1
+            layer.cornerRadius = 0
+        case .onlineSynchronizing:
+            heightConstraint?.constant = CGFloat.SyncBar.height
+            offlineLabel.alpha = 0
+            layer.cornerRadius = CGFloat.SyncBar.cornerRadius
+        case .offlineExpanded:
+            heightConstraint?.constant = CGFloat.OfflineBar.expandedHeight
+            offlineLabel.alpha = 1
+            layer.cornerRadius = CGFloat.OfflineBar.cornerRadius
+        }
     }
-
 }
