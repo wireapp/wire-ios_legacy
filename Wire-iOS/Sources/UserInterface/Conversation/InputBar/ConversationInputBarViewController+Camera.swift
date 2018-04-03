@@ -45,6 +45,10 @@ class StatusBarVideoEditorController: UIVideoEditorController {
     override var preferredStatusBarStyle : UIStatusBarStyle {
         return UIStatusBarStyle.default
     }
+
+    func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
+        return traitCollection.horizontalSizeClass == .regular ? .popover : .overFullScreen
+    }
 }
 
 extension ConversationInputBarViewController: CameraKeyboardViewControllerDelegate {
@@ -66,9 +70,30 @@ extension ConversationInputBarViewController: CameraKeyboardViewControllerDelega
             videoEditor.videoMaximumDuration = ConversationUploadMaxVideoDuration
             videoEditor.videoPath = videoURL.path
             videoEditor.videoQuality = UIImagePickerControllerQualityType.typeMedium
-            
-            self.present(videoEditor, animated: true) {
-                UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(false)
+
+            switch UIDevice.current.userInterfaceIdiom {
+            case .pad:
+                self.hideCameraKeyboardViewController {
+                    videoEditor.modalPresentationStyle = .popover
+
+                    self.present(videoEditor, animated: true)
+
+                    let popover = videoEditor.popoverPresentationController
+                    popover?.sourceView = self.parent?.view
+
+                    ///arrow point to camera button.
+                    popover?.permittedArrowDirections = .down
+                    if let parentView = self.parent?.view {
+                        let buttonCenter = self.photoButton.convert(self.photoButton.center, to: parentView)
+                        popover?.sourceRect = CGRect(origin: buttonCenter, size: .zero)
+
+                        videoEditor.preferredContentSize = parentView.frame.size
+                    }
+                }
+            default:
+                self.present(videoEditor, animated: true) {
+                    UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(false)
+                }
             }
         }
         else {
