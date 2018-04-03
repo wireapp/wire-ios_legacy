@@ -187,11 +187,16 @@ extension BackupViewController: UITableViewDataSource, UITableViewDelegate {
                 self.present(alert, animated: true)
                 BackupEvent.exportFailed.track()
             case .success(let url):
-                let activityController = UIActivityViewController(activityItems: [url], applicationActivities: nil)
-                activityController.completionWithItemsHandler = { _, _, _, _ in
-                    SessionManager.clearPreviousBackups()
-                }
-                self.present(activityController, animated: true)
+                #if arch(i386) || arch(x86_64)
+                    let tmpURL = URL(fileURLWithPath: "/var/tmp/").appendingPathComponent(url.lastPathComponent)
+                    try! FileManager.default.moveItem(at: url, to: tmpURL)
+                #else
+                    let activityController = UIActivityViewController(activityItems: [url], applicationActivities: nil)
+                    activityController.completionWithItemsHandler = { _, _, _, _ in
+                        SessionManager.clearPreviousBackups()
+                    }
+                    self.present(activityController, animated: true)
+                #endif
                 BackupEvent.exportSucceeded.track()
             }
         }
