@@ -30,7 +30,7 @@ class TabBar: UIView {
     // MARK: - Properties
 
     weak var delegate : TabBarDelegate?
-    var animatesTransition: Bool = true
+    var animatesTransition: Bool = false
 
     fileprivate(set) var items : [UITabBarItem] = []
     private(set) var tabs: [Tab] = []
