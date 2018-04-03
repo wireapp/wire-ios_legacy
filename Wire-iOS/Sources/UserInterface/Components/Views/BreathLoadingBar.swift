@@ -66,15 +66,15 @@ class BreathLoadingBar: UIView {
         switch state {
         case .online:
             heightConstraint?.constant = 0
-            self.alpha = 1
+            alpha = 1
             layer.cornerRadius = 0
         case .onlineSynchronizing:
             heightConstraint?.constant = CGFloat.SyncBar.height
-            self.alpha = 1
+            alpha = 1
             layer.cornerRadius = CGFloat.SyncBar.cornerRadius
         case .offlineExpanded:
             heightConstraint?.constant = CGFloat.OfflineBar.expandedHeight
-            self.alpha = 0
+            alpha = 0
             layer.cornerRadius = CGFloat.OfflineBar.cornerRadius
         }
     }

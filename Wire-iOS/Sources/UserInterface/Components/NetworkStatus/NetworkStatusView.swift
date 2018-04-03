@@ -134,14 +134,7 @@ class NetworkStatusView: UIView {
     }
 
     private func updateViewState(animated: Bool) {
-        var connectingViewHidden = state != .onlineSynchronizing
         let offlineViewHidden = state != .offlineExpanded
-
-        // When the app is in background, hide the sync bar. It prevents the sync bar is "disappear in a blink" visual artifact.
-        if application.applicationState == .background {
-            connectingViewHidden = true
-        }
-
 
         let updateUIBlock: () -> Void = {
             self.updateUI(animated: animated,
@@ -149,12 +142,13 @@ class NetworkStatusView: UIView {
         }
 
         let completionBlock: (Bool) -> Void = { _ in
-            self.updateUICompletion(connectingViewHidden: connectingViewHidden,
-                                    offlineViewHidden: offlineViewHidden)
+            self.updateUICompletion(offlineViewHidden: offlineViewHidden)
             self.connectingView.animating = self.state == .onlineSynchronizing
         }
 
         if animated {
+            self.connectingView.animating = false
+
             UIView.animate(
                 withDuration: TimeInterval.NetworkStatusBar.resizeAnimationTime,
                 delay: 0,
@@ -206,7 +200,7 @@ class NetworkStatusView: UIView {
         self.layoutIfNeeded()
     }
 
-    func updateUICompletion(connectingViewHidden: Bool, offlineViewHidden: Bool) {
+    func updateUICompletion(offlineViewHidden: Bool) {
         self.offlineView.isHidden = offlineViewHidden
     }
 
