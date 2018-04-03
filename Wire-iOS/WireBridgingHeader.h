@@ -96,7 +96,6 @@
 #import "ConfirmAssetViewController.h"
 #import "ProfileSelfPictureViewController.h"
 #import "AddEmailPasswordViewController.h"
-#import "EmailVerificationStepViewController.h"
 #import "AddPhoneNumberViewController.h"
 #import "VersionInfoViewController.h"
 #import "SketchColorPickerController.h"
