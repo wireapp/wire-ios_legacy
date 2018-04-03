@@ -876,10 +876,10 @@
 
 "landing.app_name" = "Wire";
 "landing.title" = "Secure messaging for everyone.";
-"landing.create_account.title" = "Create an account";
-"landing.create_account.subtitle" = "for personal use";
-"landing.create_team.title" = "Create a team";
-"landing.create_team.subtitle" = "for work";
+"landing.create_account.title" = "For personal use";
+"landing.create_account.subtitle" = "create an account";
+"landing.create_team.title" = "For organizations";
+"landing.create_team.subtitle" = "create a team";
 "landing.login.hints" = "Already have an account?";
 "landing.login.button.title" = "Log in";
 
