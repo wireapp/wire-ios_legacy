@@ -726,7 +726,7 @@ ProfileDevicesViewController {
     }
     
     view: @{
-        backgroundColor: $color-background;
+        backgroundColor: $color-content-background;
     }
 
 }
