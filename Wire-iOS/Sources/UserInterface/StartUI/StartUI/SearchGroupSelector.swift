@@ -66,7 +66,6 @@ final class SearchGroupSelector: UIView, TabBarDelegate {
 
     private func configureViews() {
         tabBar.delegate = self
-        tabBar.animatesTransition = false
         backgroundColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorBarBackground, variant: style)
         addSubview(tabBar)
     }
