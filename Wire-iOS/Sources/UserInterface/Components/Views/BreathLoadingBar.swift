@@ -18,6 +18,7 @@
 
 import UIKit
 import QuartzCore
+import Cartography
 
 protocol BreathLoadingBarDelegate: class {
     func animationDidStarted()
@@ -26,6 +27,8 @@ protocol BreathLoadingBarDelegate: class {
 
 class BreathLoadingBar: UIView {
     public weak var delegate: BreathLoadingBarDelegate?
+
+    private var heightConstraint: NSLayoutConstraint?
 
     public var animating: Bool = false {
         didSet {
@@ -37,6 +40,42 @@ class BreathLoadingBar: UIView {
                 stopAnimation()
             }
 
+        }
+    }
+
+    private var _state: NetworkStatusViewState = .online
+
+    var state: NetworkStatusViewState {
+        set {
+            update(state: newValue, animated: false)
+        }
+        get {
+            return _state
+        }
+    }
+
+    func update(state: NetworkStatusViewState, animated: Bool) {
+        guard self.state != state else { return }
+
+        _state = state
+
+        updateViews(animated: animated)
+    }
+
+    private func updateViews(animated: Bool = true) {
+        switch state {
+        case .online:
+            heightConstraint?.constant = 0
+            self.alpha = 1
+            layer.cornerRadius = 0
+        case .onlineSynchronizing:
+            heightConstraint?.constant = CGFloat.SyncBar.height
+            self.alpha = 1
+            layer.cornerRadius = CGFloat.SyncBar.cornerRadius
+        case .offlineExpanded:
+            heightConstraint?.constant = CGFloat.OfflineBar.expandedHeight
+            self.alpha = 0
+            layer.cornerRadius = CGFloat.OfflineBar.cornerRadius
         }
     }
 
@@ -55,9 +94,12 @@ class BreathLoadingBar: UIView {
         layer.cornerRadius = CGFloat.SyncBar.cornerRadius
 
         animationDuration = duration
+
+        createConstraints()
+        updateViews(animated: false)
+
         NotificationCenter.default.addObserver(self, selector: #selector(self.applicationDidBecomeActive), name: .UIApplicationDidBecomeActive, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(self.applicationDidEnterBackground), name: .UIApplicationDidEnterBackground, object: nil)
-
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -66,6 +108,12 @@ class BreathLoadingBar: UIView {
 
     deinit {
         NotificationCenter.default.removeObserver(self)
+    }
+
+    private func createConstraints() {
+        constrain(self) { selfView in
+            heightConstraint = selfView.height == 0
+        }
     }
 
     override func layoutSubviews() {

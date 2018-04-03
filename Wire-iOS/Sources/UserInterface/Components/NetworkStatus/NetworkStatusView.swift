@@ -19,79 +19,6 @@
 import Foundation
 import Cartography
 
-enum OfflineBarState {
-    case minimized
-    case expanded
-}
-
-class OfflineBar: UIView {
-
-    private let offlineLabel: UILabel
-    private var heightConstraint: NSLayoutConstraint?
-    private var _state: OfflineBarState = .minimized
-
-    var state: OfflineBarState {
-        set {
-            update(state: newValue, animated: false)
-        }
-        get {
-            return _state
-        }
-    }
-
-    func update(state: OfflineBarState, animated: Bool) {
-        guard self.state != state else { return }
-
-        _state = state
-
-        updateViews(animated: animated)
-    }
-
-    convenience init() {
-        self.init(frame: CGRect.zero)
-    }
-
-    override init(frame: CGRect) {
-        offlineLabel = UILabel()
-
-        super.init(frame: frame)
-        backgroundColor = UIColor(rgb:0xFEBF02, alpha: 1)
-
-        layer.cornerRadius = CGFloat.OfflineBar.cornerRadius
-        layer.masksToBounds = true
-
-        offlineLabel.font = FontSpec(FontSize.small, .medium).font
-        offlineLabel.textColor = UIColor.white
-        offlineLabel.text = "system_status_bar.no_internet.title".localized.uppercased()
-
-        addSubview(offlineLabel)
-
-        createConstraints()
-        updateViews(animated: false)
-    }
-
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-
-    private func createConstraints() {
-        constrain(self, offlineLabel) { containerView, offlineLabel in
-            offlineLabel.center == containerView.center
-            offlineLabel.left >= containerView.leftMargin
-            offlineLabel.right <= containerView.rightMargin
-
-            heightConstraint = containerView.height == 0
-        }
-    }
-
-    private func updateViews(animated: Bool = true) {
-        heightConstraint?.constant = state == .expanded ? CGFloat.OfflineBar.expandedHeight : 0
-        offlineLabel.alpha = state == .expanded ? 1 : 0
-        layer.cornerRadius = state == .expanded ? CGFloat.OfflineBar.cornerRadius : CGFloat.SyncBar.cornerRadius
-    }
-
-}
-
 enum NetworkStatusViewState {
     case online
     case onlineSynchronizing
@@ -143,7 +70,6 @@ class NetworkStatusView: UIView {
 
     var offlineViewTopMargin: NSLayoutConstraint?
     var offlineViewBottomMargin: NSLayoutConstraint?
-    var connectingViewHeight: NSLayoutConstraint?
     var connectingViewBottomMargin: NSLayoutConstraint?
     fileprivate var application: ApplicationProtocol = UIApplication.shared
 
@@ -203,7 +129,6 @@ class NetworkStatusView: UIView {
             connectingView.left == offlineView.left
             connectingView.right == offlineView.right
             connectingView.top == offlineView.top
-            connectingViewHeight = connectingView.height == 0
             connectingViewBottomMargin = connectingView.bottom == containerView.bottom
         }
     }
@@ -233,7 +158,6 @@ class NetworkStatusView: UIView {
                 self.updateUI(
                     offlineBarState: offlineBarState,
                     animated: animated,
-                    connectingViewHidden: connectingViewHidden,
                     offlineViewHidden: offlineViewHidden
                 )
             }
@@ -268,7 +192,6 @@ class NetworkStatusView: UIView {
 
     func updateUI(offlineBarState: OfflineBarState,
                   animated: Bool,
-                  connectingViewHidden: Bool,
                   offlineViewHidden: Bool) {
         var bottomMargin: CGFloat = 0
 
@@ -279,20 +202,27 @@ class NetworkStatusView: UIView {
         offlineViewBottomMargin?.constant = offlineBarState == .expanded ? -bottomMargin : 0
         offlineViewTopMargin?.constant = offlineBarState == .expanded ? topMargin : 0
 
-        connectingViewHeight?.constant = connectingViewHidden ? 0 : CGFloat.SyncBar.height
-        connectingViewBottomMargin?.constant = connectingViewHidden ? 0 : -bottomMargin
 
-        /// offlineViewBottomMargin is active iff connectingViewHidden is visible
-        if offlineViewHidden && !connectingViewHidden {
+        switch state {
+        case .online:
+            connectingViewBottomMargin?.constant = 0
+
+            connectingViewBottomMargin?.isActive = false
+            offlineViewBottomMargin?.isActive = true
+        case .onlineSynchronizing:
+            connectingViewBottomMargin?.constant = -bottomMargin
+
             offlineViewBottomMargin?.isActive = false
             connectingViewBottomMargin?.isActive = true
-        }
-        else {
+        case .offlineExpanded:
+            connectingViewBottomMargin?.constant = -bottomMargin
+
             connectingViewBottomMargin?.isActive = false
             offlineViewBottomMargin?.isActive = true
         }
 
         self.offlineView.update(state: offlineBarState, animated: animated)
+        self.connectingView.update(state: state, animated: animated)
 
         self.layoutIfNeeded()
     }
