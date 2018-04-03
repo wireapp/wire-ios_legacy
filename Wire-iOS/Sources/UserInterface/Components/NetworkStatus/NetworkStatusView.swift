@@ -57,7 +57,7 @@ class OfflineBar: UIView {
         super.init(frame: frame)
         backgroundColor = UIColor(rgb:0xFEBF02, alpha: 1)
 
-        layer.cornerRadius = CGFloat.OfflineBar.expandedCornerRadius
+        layer.cornerRadius = CGFloat.OfflineBar.cornerRadius
         layer.masksToBounds = true
 
         offlineLabel.font = FontSpec(FontSize.small, .medium).font
@@ -87,7 +87,7 @@ class OfflineBar: UIView {
     private func updateViews(animated: Bool = true) {
         heightConstraint?.constant = state == .expanded ? CGFloat.OfflineBar.expandedHeight : 0
         offlineLabel.alpha = state == .expanded ? 1 : 0
-        layer.cornerRadius = state == .expanded ? CGFloat.OfflineBar.expandedCornerRadius : CGFloat.SyncBar.cornerRadius
+        layer.cornerRadius = state == .expanded ? CGFloat.OfflineBar.cornerRadius : CGFloat.SyncBar.cornerRadius
     }
 
 }
@@ -213,6 +213,7 @@ class NetworkStatusView: UIView {
         connectingView.animating = state == .onlineSynchronizing
         let offlineViewHidden = state != .offlineExpanded
 
+        // translate NetworkStatusViewState to OfflineBarState
         var offlineBarState: OfflineBarState?
         switch state {
         case .offlineExpanded:
@@ -237,7 +238,7 @@ class NetworkStatusView: UIView {
                 )
             }
 
-            let completionBlock: () -> Void = {
+            let completionBlock: (Bool) -> Void = { _ in
                 self.updateUICompletion(
                     connectingViewHidden: connectingViewHidden,
                     offlineViewHidden: offlineViewHidden
@@ -254,11 +255,11 @@ class NetworkStatusView: UIView {
                     delay: 0,
                     options: [.curveEaseInOut, .beginFromCurrentState],
                     animations: updateUIBlock,
-                    completion: { _ in completionBlock() }
+                    completion: completionBlock
                 )
             } else {
                 updateUIBlock()
-                completionBlock()
+                completionBlock(true)
             }
 
             delegate?.didChangeHeight(self, animated: animated, state: state)
