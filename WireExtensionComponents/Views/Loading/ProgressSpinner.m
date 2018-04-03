@@ -55,7 +55,7 @@
 
 - (void)setup
 {
-    _iconSize = ZetaIconSizeMedium;
+    _iconSize = ZetaIconSizeRegistrationButton;
     _color = [UIColor whiteColor];
     
     [self createSpinner];
