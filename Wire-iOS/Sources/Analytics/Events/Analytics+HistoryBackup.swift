@@ -1,4 +1,4 @@
-//
+////
 // Wire
 // Copyright (C) 2018 Wire Swiss GmbH
 //
@@ -17,27 +17,23 @@
 //
 
 import Foundation
-import XCTest
-@testable import Wire
 
-class NoHistoryViewControllerTests: ZMSnapshotTestCase {
+enum BackupEvent: Event {
+    case importSucceeded
+    case importFailed
+    case exportSucceeded
+    case exportFailed
     
-    override func setUp() {
-        super.setUp()
-        self.snapshotBackgroundColor = .darkGray
+    var name: String {
+        switch self {
+        case .importSucceeded: return "history.restore_succeeded"
+        case .importFailed: return "history.restore_failed"
+        case .exportSucceeded: return "history.backup_succeeded"
+        case .exportFailed: return "history.backup_failed"
+        }
     }
     
-    func testNoHistoryCase() {
-        // GIVEN
-        let sut = NoHistoryViewController(contextType: .newDevice)
-        // WHEN && THEN
-        self.verifyInIPhoneSize(view: sut.view)
-    }
-
-    func testHasHistoryCase() {
-        // GIVEN
-        let sut = NoHistoryViewController(contextType: .loggedOut)
-        // WHEN && THEN
-        self.verifyInIPhoneSize(view: sut.view)
+    var attributes: [AnyHashable : Any]? {
+        return nil
     }
 }

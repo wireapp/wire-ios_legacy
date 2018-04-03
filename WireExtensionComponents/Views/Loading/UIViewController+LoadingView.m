@@ -22,7 +22,7 @@
 #import <objc/runtime.h>
 #import "ProgressSpinner.h"
 #import "NSLayoutConstraint+Helpers.h"
-
+#import <WireExtensionComponents/WireExtensionComponents-Swift.h>
 
 const NSString *ActivityIndicatorKey = @"activityIndicator";
 const NSString *LoadingViewKey = @"loadingView";
@@ -89,6 +89,28 @@ const NSString *LoadingViewKey = @"loadingView";
 {
     objc_setAssociatedObject(self, (__bridge void *) LoadingViewKey, loadingView, 
     OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
+- (void)indicateLoadingSuccessWithCompletion:(dispatch_block_t)completion
+{
+    CheckAnimationView *checkView = [[CheckAnimationView alloc] init];
+    checkView.alpha = 0;
+    checkView.center = self.loadingView.center;
+    [self.loadingView addSubview:checkView];
+    
+    [UIView animateWithDuration:1 animations:^{
+        self.activityIndicator.alpha = 0;
+        checkView.alpha = 1;
+    } completion:^(BOOL completed){
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            if (completion != nil) {
+                completion();
+            }
+            self.activityIndicator.alpha = 1;
+            [self setShowLoadingView:NO];
+            [checkView removeFromSuperview];
+        });
+    }];
 }
 
 @end

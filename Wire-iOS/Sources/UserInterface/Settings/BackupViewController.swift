@@ -33,7 +33,7 @@ final class BackupStatusCell: UITableViewCell {
         
         let color = ColorScheme.default().color(withName: ColorSchemeColorTextForeground, variant: .dark)
         
-        iconView.image = UIImage(for: .clock, iconSize: .large, color: color)
+        iconView.image = .imageForRestore(with: color, size: .large)
         iconView.contentMode = .center
         iconView.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(iconView)
@@ -142,6 +142,15 @@ final class BackupViewController: UIViewController {
     private func setupLayout() {
         tableView.fitInSuperview()
     }
+    
+    var loadingHostController: UIViewController {
+        if let navigation = self.navigationController {
+            return navigation
+        }
+        else {
+            return self
+        }
+    }
 }
 
 extension BackupViewController: UITableViewDataSource, UITableViewDelegate {
@@ -164,10 +173,11 @@ extension BackupViewController: UITableViewDataSource, UITableViewDelegate {
             return
         }
         
-        self.showLoadingView = true
+        loadingHostController.showLoadingView = true
 
         backupSource.backupActiveAccount { result in
-            self.showLoadingView = false
+            
+            self.loadingHostController.showLoadingView = false
             
             switch result {
             case .failure(let error):
@@ -175,12 +185,16 @@ extension BackupViewController: UITableViewDataSource, UITableViewDelegate {
                                               message: error.localizedDescription,
                                               cancelButtonTitle: "general.ok".localized)
                 self.present(alert, animated: true)
+                BackupEvent.exportFailed.track()
             case .success(let url):
                 let activityController = UIActivityViewController(activityItems: [url], applicationActivities: nil)
+                activityController.completionWithItemsHandler = { _, _, _, _ in
+                    SessionManager.clearPreviousBackups()
+                }
                 self.present(activityController, animated: true)
+                BackupEvent.exportSucceeded.track()
             }
         }
     }
 }
-
 

@@ -111,7 +111,11 @@ final class AnalyticsMixpanelProvider: NSObject, AnalyticsProvider {
         GuestLinkEvent.copied.name,
         GuestLinkEvent.revoked.name,
         GuestLinkEvent.shared.name,
-        GuestRoomEvent.created.name
+        GuestRoomEvent.created.name,
+        BackupEvent.importSucceeded.name,
+        BackupEvent.importFailed.name,
+        BackupEvent.exportSucceeded.name,
+        BackupEvent.exportFailed.name
         ])
     
     private static let enabledSuperProperties = Set<String>([

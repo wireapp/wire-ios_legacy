@@ -37,7 +37,7 @@ class CallQualityViewController : UIViewController, UIGestureRecognizerDelegate 
     let titleLabel = UILabel()
     let questionLabel = UILabel()
 
-    var callQualityStackView : UICustomSpacingStackView!
+    var callQualityStackView : CustomSpacingStackView!
     var scoreSelectorView : QualityScoreSelectorView!
     var dismissTapGestureRecognizer: UITapGestureRecognizer!
 
@@ -134,7 +134,7 @@ class CallQualityViewController : UIViewController, UIGestureRecognizerDelegate 
         questionLabel.textAlignment = .center
         questionLabel.numberOfLines = 0
 
-        callQualityStackView = UICustomSpacingStackView(customSpacedArrangedSubviews: [titleLabel, questionLabel, scoreSelectorView])
+        callQualityStackView = CustomSpacingStackView(customSpacedArrangedSubviews: [titleLabel, questionLabel, scoreSelectorView])
         callQualityStackView.alignment = .fill
         callQualityStackView.distribution = .fill
         callQualityStackView.axis = .vertical

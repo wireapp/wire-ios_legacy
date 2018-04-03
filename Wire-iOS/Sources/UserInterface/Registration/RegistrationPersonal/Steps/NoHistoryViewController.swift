@@ -19,27 +19,59 @@
 import Foundation
 
 extension NoHistoryViewController {
-    static let WireBackupUTI = "com.wire.ios-backup"
+    static let WireBackupUTI = "com.wire.backup-ios"
     
-    @objc public func createRestoreButton() {
-        let restoreBackupButton = UIButton(type: .custom)
+    @objc public func createButtons() {
+        let restoreBackupButton = Button(style: .emptyMonochrome)
         restoreBackupButton.translatesAutoresizingMaskIntoConstraints = false
         restoreBackupButton.setTitle("registration.no_history.restore_backup".localized.uppercased(),
                                      for: .normal)
-        restoreBackupButton.titleLabel?.font = FontSpec(.small, .regular).font
-    
+        
         restoreBackupButton.addCallback(for: .touchUpInside) { [unowned self] _ in
-            self.showWarningMessage()
+            if self.contextType == .loggedOut {
+                self.showWarningMessage()
+            }
+            else {
+                self.showFilePicker()
+            }
         }
+        
+        restoreBackupButton.heightAnchor.constraint(equalToConstant: 40).isActive = true
+        stackView.addArrangedSubview(restoreBackupButton)
     
-        contentView.addSubview(restoreBackupButton)
     
-        NSLayoutConstraint.activate([
-            restoreBackupButton.topAnchor.constraint(equalTo: safeTopAnchor),
-            restoreBackupButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -28)
-        ])
+        let okButton = Button(style: .fullMonochrome)
+        okButton.translatesAutoresizingMaskIntoConstraints = false
+        let gotItText = self.localizableString(forPart: "got_it")!
+        okButton.setTitle(gotItText.localized, for: .normal)
+        okButton.addCallback(for: .touchUpInside) { [unowned self] _ in
+            self.formStepDelegate.didCompleteFormStep(self)
+        }
+        
+        okButton.heightAnchor.constraint(equalToConstant: 40).isActive = true
+        stackView.addArrangedSubview(okButton)
     }
     
+    @objc public func createContentViewConstraints() {
+        if self.traitCollection.horizontalSizeClass == .regular {
+            NSLayoutConstraint.activate([
+                contentView.widthAnchor.constraint(equalToConstant: parent!.maximumFormSize.width),
+                contentView.heightAnchor.constraint(equalToConstant: parent!.maximumFormSize.height),
+                contentView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+                contentView.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+            ])
+        }
+        else {
+            contentView.fitInSuperview()
+        }
+        
+        NSLayoutConstraint.activate([
+            stackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 28),
+            stackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -28 - UIScreen.safeArea.bottom),
+            stackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -28)
+        ])
+    }
+
     fileprivate func showWarningMessage() {
         let alert = UIAlertController(title: "registration.no_history.restore_backup_warning.title".localized,
                                       message: "registration.no_history.restore_backup_warning.message".localized,
@@ -55,7 +87,16 @@ extension NoHistoryViewController {
     }
     
     fileprivate func showFilePicker() {
-        let picker = UIDocumentMenuViewController(documentTypes: [NoHistoryViewController.WireBackupUTI],
+        // Test code to verify restore
+        #if arch(i386) || arch(x86_64)
+            let testFilePath = "/var/tmp/backup.ios_wbu"
+            if FileManager.default.fileExists(atPath: testFilePath) {
+                self.restore(with: URL(fileURLWithPath: testFilePath))
+                return
+            }
+        #endif
+        
+        let picker = UIDocumentPickerViewController(documentTypes: [NoHistoryViewController.WireBackupUTI],
                                                   in: .`import`)
         picker.delegate = self
         self.present(picker, animated: true)
@@ -80,25 +121,31 @@ extension NoHistoryViewController {
         
         self.present(alert, animated: true)
     }
-}
-
-extension NoHistoryViewController: UIDocumentMenuDelegate, UIDocumentPickerDelegate {
-    public func documentMenu(_ documentMenu: UIDocumentMenuViewController,
-                             didPickDocumentPicker documentPicker: UIDocumentPickerViewController) {
-        self.present(documentPicker, animated: true)
-    }
     
-    public func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentAt url: URL) {
-
+    fileprivate func restore(with url: URL) {
+        guard let sessionManager = SessionManager.shared else {
+            return
+        }
+        
         self.showLoadingView = true
-        // todo: read UUID()
-        SessionManager.shared?.restoreFromBackup(at: url, with: UUID()) { result in
+        sessionManager.restoreFromBackup(at: url) { result in
             switch result {
             case .failure(let error):
+                BackupEvent.importFailed.track()
                 self.showRestoreError(error)
+                self.showLoadingView = false
             case .success:
-                self.formStepDelegate.didCompleteFormStep(self)
+                BackupEvent.importSucceeded.track()
+                self.indicateLoadingSuccess {
+                    self.formStepDelegate.didCompleteFormStep(self)
+                }
             }
         }
+    }
+}
+
+extension NoHistoryViewController: UIDocumentPickerDelegate {
+    public func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentAt url: URL) {
+        self.restore(with: url)
     }
 }

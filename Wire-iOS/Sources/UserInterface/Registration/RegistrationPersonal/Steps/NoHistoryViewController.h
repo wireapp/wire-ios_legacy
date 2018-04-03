@@ -29,7 +29,13 @@ typedef NS_ENUM(NSUInteger, ContextType) {
 @interface NoHistoryViewController : RegistrationStepViewController
 - (instancetype)initWithContextType:(ContextType)contextType;
 
+@property (nonatomic, readonly) ContextType contextType;
 @property (nonatomic, readonly) UIView *contentView;
+@property (nonatomic, readonly) UIStackView *stackView;
+@end
+
+@interface NoHistoryViewController ()
+- (nullable NSString *)localizableStringForPart:(NSString *)part;
 @end
 
 NS_ASSUME_NONNULL_END
