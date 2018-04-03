@@ -148,6 +148,9 @@ class NetworkStatusView: UIView {
 
         if animated {
             self.connectingView.animating = false
+            if state == .offlineExpanded {
+                self.offlineView.isHidden = false
+            }
 
             UIView.animate(
                 withDuration: TimeInterval.NetworkStatusBar.resizeAnimationTime,
