@@ -51,7 +51,6 @@ final class MockPanGestureRecognizer: UIPanGestureRecognizer {
     }
 }
 
-
 final class MockSplitViewControllerDelegate: NSObject, SplitViewControllerDelegate {
     func splitViewControllerShouldMoveLeftViewController(_ splitViewController: SplitViewController) -> Bool {
         return true
