@@ -77,6 +77,8 @@ class BreathLoadingBar: UIView {
             alpha = 0
             layer.cornerRadius = CGFloat.OfflineBar.cornerRadius
         }
+
+        self.layoutIfNeeded()
     }
 
     private let BreathLoadingAnimationKey: String = "breathLoadingAnimation"

@@ -83,7 +83,7 @@ class OfflineBar: UIView {
         switch state {
         case .online:
             heightConstraint?.constant = 0
-            offlineLabel.alpha = 1
+            offlineLabel.alpha = 0
             layer.cornerRadius = 0
         case .onlineSynchronizing:
             heightConstraint?.constant = CGFloat.SyncBar.height
