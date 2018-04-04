@@ -23,7 +23,7 @@ import XCTest
 class MockContainer: NetworkStatusViewDelegate {
     var shouldAnimateNetworkStatusView: Bool = true
 
-    var bottomMargin: CGFloat = CGFloat.NetworkStatusBar.bottomMargin
+    var bottomMargin: CGFloat = 0
 
     func didChangeHeight(_ networkStatusView: NetworkStatusView, animated: Bool, state: NetworkStatusViewState) {
 
