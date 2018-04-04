@@ -144,14 +144,11 @@ final class BackupViewController: UIViewController {
     }
     
     var loadingHostController: UIViewController {
-        if let navigation = self.navigationController {
-            return navigation
-        }
-        else {
-            return self
-        }
+        return navigationController ?? self
     }
 }
+
+// MARK: - UITableViewDataSource & UITableViewDelegate
 
 extension BackupViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -168,38 +165,62 @@ extension BackupViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        
-        guard indexPath.row == 1 else {
-            return
+        guard indexPath.row == 1 else { return }
+        backupActiveAccount()
+    }
+}
+
+// MARK: - Backup Logic
+
+fileprivate extension BackupViewController {
+
+    func backupActiveAccount() {
+        let passwordController = BackupPasswordViewController { controller, password in
+            controller.dismiss(animated: true) {
+                password.apply(self.performHistoryBackup)
+            }
         }
         
+        present(passwordController, animated: true, completion: nil)
+    }
+    
+    private func performHistoryBackup(using password: BackupPasswordViewController.HistoryPassword) {
         loadingHostController.showLoadingView = true
-
+        
+        // TODO: Use password parameter to encrypt
         backupSource.backupActiveAccount { result in
-            
             self.loadingHostController.showLoadingView = false
             
             switch result {
             case .failure(let error):
-                let alert = UIAlertController(title: "self.settings.history_backup.error.title".localized,
-                                              message: error.localizedDescription,
-                                              cancelButtonTitle: "general.ok".localized)
-                self.present(alert, animated: true)
+                self.presentAlert(for: error)
                 BackupEvent.exportFailed.track()
             case .success(let url):
-                #if arch(i386) || arch(x86_64)
-                    let tmpURL = URL(fileURLWithPath: "/var/tmp/").appendingPathComponent(url.lastPathComponent)
-                    try! FileManager.default.moveItem(at: url, to: tmpURL)
-                #else
-                    let activityController = UIActivityViewController(activityItems: [url], applicationActivities: nil)
-                    activityController.completionWithItemsHandler = { _, _, _, _ in
-                        SessionManager.clearPreviousBackups()
-                    }
-                    self.present(activityController, animated: true)
-                #endif
+                self.presentShareSheet(with: url)
                 BackupEvent.exportSucceeded.track()
             }
         }
     }
+    
+    private func presentAlert(for error: Error) {
+        let alert = UIAlertController(
+            title: "self.settings.history_backup.error.title".localized,
+            message: error.localizedDescription,
+            cancelButtonTitle: "general.ok".localized
+        )
+        present(alert, animated: true)
+    }
+    
+    private func presentShareSheet(with url: URL) {
+        #if arch(i386) || arch(x86_64)
+            let tmpURL = URL(fileURLWithPath: "/var/tmp/").appendingPathComponent(url.lastPathComponent)
+            try! FileManager.default.moveItem(at: url, to: tmpURL)
+        #else
+            let activityController = UIActivityViewController(activityItems: [url], applicationActivities: nil)
+            activityController.completionWithItemsHandler = { _, _, _, _ in
+                SessionManager.clearPreviousBackups()
+            }
+            self.present(activityController, animated: true)
+        #endif
+    }
 }
-
