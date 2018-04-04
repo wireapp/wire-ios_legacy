@@ -19,7 +19,6 @@
 @import WireSystem;
 
 #import "StopWatch.h"
-#import "Logging.h"
 #import <mach/mach_time.h>
 
 static NSString* ZMLogTag ZM_UNUSED = @"UI";

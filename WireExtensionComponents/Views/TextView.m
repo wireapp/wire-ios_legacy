@@ -20,7 +20,6 @@
 @import MobileCoreServices;
 
 #import "TextView.h"
-#import "Logging.h"
 
 @import PureLayout;
 #import "MediaAsset.h"

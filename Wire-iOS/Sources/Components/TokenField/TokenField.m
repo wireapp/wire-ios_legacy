@@ -22,7 +22,6 @@
 #import "TokenizedTextView.h"
 #import "TokenTextAttachment.h"
 #import "IconButton.h"
-#import "Logging.h"
 #import "ColorScheme.h"
 #import "Wire-Swift.h"
 

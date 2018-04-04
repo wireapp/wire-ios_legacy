@@ -741,7 +741,6 @@
 		BA79B0A51B6284D900F23AFB /* SoundEventRulesWatchDog.m in Sources */ = {isa = PBXBuildFile; fileRef = BA79B0A41B6284D900F23AFB /* SoundEventRulesWatchDog.m */; };
 		BA79B0A91B62851F00F23AFB /* SoundEventRulesWatchDogTests.m in Sources */ = {isa = PBXBuildFile; fileRef = BA79B0A81B62851F00F23AFB /* SoundEventRulesWatchDogTests.m */; };
 		BA8DC27C1B5FF5CF00103262 /* SketchColorPickerController.m in Sources */ = {isa = PBXBuildFile; fileRef = BA8DC27B1B5FF5CF00103262 /* SketchColorPickerController.m */; };
-		BA9AA4361B84D553000A484B /* AppDelegate+Logging.m in Sources */ = {isa = PBXBuildFile; fileRef = BA9AA4351B84D553000A484B /* AppDelegate+Logging.m */; };
 		BAA1F7E41B610D89002402B6 /* SketchColorCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BAA1F7E31B610D89002402B6 /* SketchColorCollectionViewCell.m */; };
 		BACB88561AF7C48900DDCDB0 /* AggregateArrayTests.m in Sources */ = {isa = PBXBuildFile; fileRef = BACB88551AF7C48900DDCDB0 /* AggregateArrayTests.m */; };
 		BAD4D0661B613D4E008585A5 /* ColorKnobView.m in Sources */ = {isa = PBXBuildFile; fileRef = BAD4D0651B613D4E008585A5 /* ColorKnobView.m */; };
@@ -2126,7 +2125,6 @@
 		8F41CFC5199297C600E3B032 /* ZMConversation+Additions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "ZMConversation+Additions.m"; sourceTree = "<group>"; };
 		8F41CFC6199297C600E3B032 /* Message+UI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Message+UI.h"; sourceTree = "<group>"; };
 		8F41CFC7199297C600E3B032 /* Message+UI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Message+UI.m"; sourceTree = "<group>"; };
-		8F42B5DC1993A31A00E13CBD /* Logging.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Logging.h; sourceTree = "<group>"; };
 		8F42C538199244A700288E4D /* Wire.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Wire.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8F48C85A1A026E120048E6EB /* Release.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Release.xcconfig; sourceTree = "<group>"; };
 		8F5A3E9A19AE2C9E00D0E9DA /* avs+iOS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "avs+iOS.h"; sourceTree = "<group>"; };
@@ -2265,8 +2263,6 @@
 		BA79B0A81B62851F00F23AFB /* SoundEventRulesWatchDogTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SoundEventRulesWatchDogTests.m; sourceTree = "<group>"; };
 		BA8DC27A1B5FF5CF00103262 /* SketchColorPickerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SketchColorPickerController.h; path = Sketchpad/SketchColorPickerController.h; sourceTree = "<group>"; };
 		BA8DC27B1B5FF5CF00103262 /* SketchColorPickerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SketchColorPickerController.m; path = Sketchpad/SketchColorPickerController.m; sourceTree = "<group>"; };
-		BA9AA4341B84D553000A484B /* AppDelegate+Logging.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "AppDelegate+Logging.h"; sourceTree = "<group>"; };
-		BA9AA4351B84D553000A484B /* AppDelegate+Logging.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "AppDelegate+Logging.m"; sourceTree = "<group>"; };
 		BA9EAFAA1AD8121800279A40 /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
 		BAA1F7E21B610D89002402B6 /* SketchColorCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SketchColorCollectionViewCell.h; path = Sketchpad/SketchColorCollectionViewCell.h; sourceTree = "<group>"; };
 		BAA1F7E31B610D89002402B6 /* SketchColorCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SketchColorCollectionViewCell.m; path = Sketchpad/SketchColorCollectionViewCell.m; sourceTree = "<group>"; };
@@ -4401,12 +4397,9 @@
 				8FC850F4199245760008B66B /* AppDelegate+Hockey.m */,
 				8FC850F5199245760008B66B /* AppDelegate.h */,
 				8FC850F6199245760008B66B /* AppDelegate.m */,
-				BA9AA4341B84D553000A484B /* AppDelegate+Logging.h */,
-				BA9AA4351B84D553000A484B /* AppDelegate+Logging.m */,
 				54F4BAB51E143B4C00603C6F /* AppDelegate+ErrorTracking.swift */,
 				163495881F015389004E80DB /* AppDelegate+Network.swift */,
 				F1141C961F5EB2DC005340B3 /* WireApplication.swift */,
-				8F42B5DC1993A31A00E13CBD /* Logging.h */,
 				870DC1E91C92F5CC005C1DB9 /* AVSLogObserver.h */,
 				870DC1EA1C92F5CC005C1DB9 /* AVSLogObserver.m */,
 				8741CFAE1A937EDF00A56A63 /* LaunchScreen.xib */,
@@ -6541,7 +6534,6 @@
 				87DCF4E61D34EA4500BB420F /* ShareItemProvider.m in Sources */,
 				8719FD691C888044005FBEC0 /* NSData+MD5.swift in Sources */,
 				BA79B0A51B6284D900F23AFB /* SoundEventRulesWatchDog.m in Sources */,
-				BA9AA4361B84D553000A484B /* AppDelegate+Logging.m in Sources */,
 				AF58EC7E1E9FA01700EB94CD /* UIBarButtonItem+ZetaIcon.swift in Sources */,
 				871BC0201D34F56300DF0793 /* AnalyticsTracker+Permissions.m in Sources */,
 				871BC2501D34F8F800DF0793 /* MediaAsset.m in Sources */,

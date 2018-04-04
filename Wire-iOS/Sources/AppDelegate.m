@@ -26,7 +26,6 @@
 #import "Constants.h"
 #import "AppDelegate+Hockey.h"
 #import "Application+runDuration.h"
-#import "AppDelegate+Logging.h"
 #import "ZClientViewController.h"
 #import "Analytics.h"
 #import "AnalyticsTracker+Registration.h"
@@ -96,8 +95,6 @@ static AppDelegate *sharedAppDelegate = nil;
 
 - (BOOL)application:(UIApplication *)application willFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    [self setupLogging];
-
     ZMLogInfo(@"application:willFinishLaunchingWithOptions %@ (applicationState = %ld)", launchOptions, (long)application.applicationState);
     
     // Initial log line to indicate the client version and build
