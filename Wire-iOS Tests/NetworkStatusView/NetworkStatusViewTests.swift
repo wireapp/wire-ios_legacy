@@ -23,7 +23,7 @@ import XCTest
 class MockContainer: NetworkStatusViewDelegate {
     var shouldAnimateNetworkStatusView: Bool = true
 
-    var bottomMargin: CGFloat = 0
+    var bottomMargin: CGFloat = CGFloat.NetworkStatusBar.bottomMargin
 
     func didChangeHeight(_ networkStatusView: NetworkStatusView, animated: Bool, state: NetworkStatusViewState) {
 
@@ -37,6 +37,9 @@ class NetworkStatusViewTests: XCTestCase {
 
     override func setUp() {
         super.setUp()
+
+        UIView.setAnimationsEnabled(false)
+
         mockApplication = MockApplication()
         mockContainer = MockContainer()
         sut = NetworkStatusView(application: mockApplication)
@@ -47,6 +50,9 @@ class NetworkStatusViewTests: XCTestCase {
         sut = nil
         mockApplication = nil
         mockContainer = nil
+
+        UIView.setAnimationsEnabled(true)
+
         super.tearDown()
     }
 
@@ -54,14 +60,14 @@ class NetworkStatusViewTests: XCTestCase {
         // GIVEN
         mockApplication.applicationState = .active
         sut.state = .onlineSynchronizing
-        XCTAssertEqual(sut.frame.size.height, CGFloat.SyncBar.height)
+        XCTAssertEqual(sut.frame.size.height, CGFloat.SyncBar.height, "NetworkStatusView should not be zero height")
 
         // WHEN
         mockApplication.applicationState = .background
         sut.state = .onlineSynchronizing
 
         // THEN
-        XCTAssertEqual(sut.frame.size.height, 0)
+        XCTAssertEqual(sut.frame.size.height, 0, "NetworkStatusView should be zero height")
     }
 }
 
@@ -76,7 +82,6 @@ class NetworkStatusViewSnapShotTests: ZMSnapshotTestCase {
         mockContainer = MockContainer()
         sut = NetworkStatusView()
         sut.delegate = mockContainer
-        recordMode = true
     }
 
     override func tearDown() {
