@@ -29,6 +29,8 @@
 #import <WireExtensionComponents/WireExtensionComponents-Swift.h>
 @import Classy;
 
+static NSString* ZMLogTag ZM_UNUSED = @"UI";
+
 @interface TextView ()
 
 @property (nonatomic) BOOL shouldDrawPlaceholder;
@@ -213,7 +215,7 @@
 - (void)paste:(id)sender
 {
     UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];
-    DDLogDebug(@"types available: %@", [pasteboard pasteboardTypes]);
+    ZMLogDebug(@"types available: %@", [pasteboard pasteboardTypes]);
     
     if ((pasteboard.wr_hasImages)
         && [self.delegate respondsToSelector:@selector(textView:hasImageToPaste:)]) {

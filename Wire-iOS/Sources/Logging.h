@@ -25,3 +25,4 @@ static const int ddLogLevel = LOG_LEVEL_CONFIG;
 #define LOG_FLAG_VOICE      (1 << 10)
 #define LOG_VOICE_CONTEXT   10
 #define DDLogVoice(frmt, ...)   LOG_MAYBE(LOG_ASYNC_ENABLED, LOG_LEVEL_DEF, LOG_FLAG_VOICE,   LOG_VOICE_CONTEXT, nil, __PRETTY_FUNCTION__, frmt, ##__VA_ARGS__); DDLogInfo(frmt, ##__VA_ARGS__)
+

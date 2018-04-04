@@ -43,8 +43,7 @@
 #import "StopWatch.h"
 #import "NSLayoutConstraint+Helpers.h"
 
-
-
+static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
 @interface EmailSignInViewController () <RegistrationTextFieldDelegate, ClientUnregisterViewControllerDelegate>
 
@@ -368,7 +367,7 @@
 
 - (void)authenticationDidFail:(NSError *)error
 {
-    DDLogDebug(@"authenticationDidFail: error.code = %li", (long)error.code);
+    ZMLogDebug(@"authenticationDidFail: error.code = %li", (long)error.code);
     
     [self.analyticsTracker tagEmailLoginFailedWithError:error];
     self.navigationController.showLoadingView = NO;

@@ -18,11 +18,14 @@
 
 
 @import MediaPlayer;
+@import WireSystem;
 
 #import "MediaPlaybackManager.h"
 #import "MediaPlayer.h"
 #import "AudioTrackPlayer.h"
 #import "KeyValueObserver.h"
+
+static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
 NSString *const MediaPlaybackManagerPlayerStateChangedNotification = @"MediaPlaybackManagerPlayerStateChangedNotification";
 
@@ -117,7 +120,7 @@ NSString *const MediaPlaybackManagerPlayerStateChangedNotification = @"MediaPlay
 
 - (void)mediaPlayer:(id<MediaPlayer>)mediaPlayer didChangeToState:(MediaPlayerState)state
 {
-    DDLogDebug(@"mediaPlayer changed state: %@", @(state));
+    ZMLogDebug(@"mediaPlayer changed state: %@", @(state));
     [self.changeObserver activeMediaPlayerStateDidChange];
 
     switch (state) {

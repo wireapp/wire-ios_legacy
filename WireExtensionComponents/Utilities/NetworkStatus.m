@@ -19,7 +19,7 @@
 
 #import "NetworkStatus.h"
 
-
+@import WireSystem;
 
 // helpers
 #import <SystemConfiguration/SystemConfiguration.h>
@@ -28,11 +28,8 @@
 #import <netdb.h>
 #import <sys/socket.h>
 #import <CoreTelephony/CTTelephonyNetworkInfo.h>
-#import <CocoaLumberjack/CocoaLumberjack.h>
 
-
-
-static const int ddLogLevel = DDLogLevelError;
+static NSString* ZMLogTag ZM_UNUSED = @"UI";
 static NSString *NetworkStatusNotificationName = @"NetworkStatusNotification";
 void ReachabilityCallback(SCNetworkReachabilityRef target, SCNetworkReachabilityFlags flags, void* info);
 
@@ -94,12 +91,12 @@ void ReachabilityCallback(SCNetworkReachabilityRef target, SCNetworkReachability
         
         if (SCNetworkReachabilitySetCallback(self.reachabilityRef, ReachabilityCallback, &context)) {
             if (SCNetworkReachabilityScheduleWithRunLoop(self.reachabilityRef, CFRunLoopGetCurrent(), kCFRunLoopDefaultMode)) {
-                DDLogInfo(@"Scheduled network reachability callback in runloop");
+                ZMLogInfo(@"Scheduled network reachability callback in runloop");
             } else {
-                DDLogError(@"Error scheduling network reachability in runloop");
+                ZMLogError(@"Error scheduling network reachability in runloop");
             }
         } else {
-            DDLogError(@"Error setting network reachability callback");
+            ZMLogError(@"Error setting network reachability callback");
         }
     }
 }
@@ -134,19 +131,19 @@ void ReachabilityCallback(SCNetworkReachabilityRef target, SCNetworkReachability
         BOOL connectionRequired = (flags & kSCNetworkReachabilityFlagsConnectionRequired);
         
         if (reachable && ! connectionRequired)  {
-            DDLogInfo(@"Reachability status: reachable and connected.");
+            ZMLogInfo(@"Reachability status: reachable and connected.");
             returnValue = ServerReachabilityOK;
             
         }
         else if (reachable && connectionRequired) {
-            DDLogInfo(@"Reachability status: reachable but connection required.");
+            ZMLogInfo(@"Reachability status: reachable but connection required.");
         }
         else {
-            DDLogInfo(@"Reachability status: not reachable.");
+            ZMLogInfo(@"Reachability status: not reachable.");
         }
     }
     else {
-        DDLogInfo(@"Reachability status could not be determined.");
+        ZMLogInfo(@"Reachability status could not be determined.");
     }
     return returnValue;
 }
