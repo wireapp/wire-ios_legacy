@@ -185,7 +185,16 @@ extension SettingsCellDescriptorFactory {
             
             if context.canEvaluatePolicy(LAPolicy.deviceOwnerAuthentication, error: &error) {
                 let lockApp = SettingsPropertyToggleCellDescriptor(settingsProperty: self.settingsPropertyFactory.property(.lockApp))
-                let section = SettingsSectionDescriptor(cellDescriptors: [lockApp], header: .none, footer: "self.settings.privacy_security.lock_app.subtitle".localized)
+                
+                let footerText = "self.settings.privacy_security.lock_app.subtitle".localized + " " + {
+                    switch AuthenticationType.current {
+                    case .none: return "self.settings.privacy_security.lock_app.subtitle.none".localized
+                    case .touchID: return "self.settings.privacy_security.lock_app.subtitle.touch_id".localized
+                    case .faceID: return "self.settings.privacy_security.lock_app.subtitle.face_id".localized
+                    }
+                }() as String
+                
+                let section = SettingsSectionDescriptor(cellDescriptors: [lockApp], header: .none, footer: footerText)
                 cellDescriptors.append(section)
             }
         }
