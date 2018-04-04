@@ -23,23 +23,13 @@ class OfflineBar: UIView {
 
     private let offlineLabel: UILabel
     private var heightConstraint: NSLayoutConstraint?
-    private var _state: NetworkStatusViewState = .online
 
-    var state: NetworkStatusViewState {
-        set {
-            update(state: newValue, animated: false)
+    var state: NetworkStatusViewState = .online {
+        didSet {
+            if oldValue != state {
+                updateView()
+            }
         }
-        get {
-            return _state
-        }
-    }
-
-    func update(state: NetworkStatusViewState, animated: Bool) {
-        guard self.state != state else { return }
-
-        _state = state
-
-        updateViews(animated: animated)
     }
 
     convenience init() {
@@ -62,7 +52,7 @@ class OfflineBar: UIView {
         addSubview(offlineLabel)
 
         createConstraints()
-        updateViews(animated: false)
+        updateView()
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -79,7 +69,7 @@ class OfflineBar: UIView {
         }
     }
 
-    private func updateViews(animated: Bool = true) {
+    private func updateView() {
         switch state {
         case .online:
             heightConstraint?.constant = 0

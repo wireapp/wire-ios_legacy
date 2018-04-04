@@ -45,7 +45,9 @@ class BreathLoadingBar: UIView {
 
     var state: NetworkStatusViewState = .online {
         didSet {
-            updateView()
+            if oldValue != state {
+                updateView()
+            }
       }
     }
 

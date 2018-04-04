@@ -209,8 +209,8 @@ class NetworkStatusView: UIView {
 
         updateConstraints(networkStatusViewState: networkStatusViewState)
 
-        self.offlineView.update(state: networkStatusViewState, animated: animated)
-        self.connectingView.update(state: networkStatusViewState, animated: animated)
+        self.offlineView.state = networkStatusViewState
+        self.connectingView.state = networkStatusViewState
 
         self.layoutIfNeeded()
     }
