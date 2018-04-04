@@ -928,7 +928,7 @@
     
     if ([self.parentViewController isKindOfClass:[ConversationRootViewController class]]) {
         ConversationRootViewController *convRootViewController = (ConversationRootViewController *)self.parentViewController;
-        [viewsToHide addObject:convRootViewController.customNavBar];
+        [viewsToHide addObject:convRootViewController.navBarContainer.view];
     }
     
     [viewsToHide addObject:self.inputBarController.view];

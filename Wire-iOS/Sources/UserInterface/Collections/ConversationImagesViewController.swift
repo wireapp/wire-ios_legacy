@@ -131,7 +131,6 @@ final class ConversationImagesViewController: UIViewController {
             navigationBar.barTintColor = ColorScheme.default().color(withName: ColorSchemeColorBarBackground)
 
             navBarContainer = UINavigationBarContainer(navigationBar)
-            navBarContainer?.backgroundColor = ColorScheme.default().color(withName: ColorSchemeColorBarBackground)
         }
         
         self.createPageController()
@@ -158,8 +157,11 @@ final class ConversationImagesViewController: UIViewController {
         }
         
         if let navBarContainer = navBarContainer {
-            view.addSubview(navBarContainer)
-            constrain(view, navBarContainer) { view, navigationBar in
+            addChildViewController(navBarContainer)
+            view.addSubview(navBarContainer.view)
+            navBarContainer.didMove(toParentViewController: self)
+
+            constrain(view, navBarContainer.view) { view, navigationBar in
                 navigationBar.top == view.top
                 navigationBar.width == view.width
                 navigationBar.centerX == view.centerX
@@ -283,7 +285,7 @@ final class ConversationImagesViewController: UIViewController {
     }
 
     fileprivate func updateBarsForPreview() {
-        navBarContainer?.isHidden = isPreviewing
+        navBarContainer?.view.isHidden = isPreviewing
         buttonsBar?.isHidden = isPreviewing
         separator.isHidden = isPreviewing
     }
@@ -468,12 +470,12 @@ extension ConversationImagesViewController: MenuVisibilityController {
         if !UIScreen.hasNotch {
             isVisible = isVisible && UIApplication.shared.isStatusBarHidden
         }
-        return  (navBarContainer?.isHidden ?? isVisible) && isVisible
+        return  (navBarContainer?.view.isHidden ?? isVisible) && isVisible
     }
     
     func fadeAndHideMenu(_ hidden: Bool) {
         let duration = UIApplication.shared.statusBarOrientationAnimationDuration
-        navBarContainer?.fadeAndHide(hidden, duration: duration)
+        navBarContainer?.view.fadeAndHide(hidden, duration: duration)
         buttonsBar.fadeAndHide(hidden, duration: duration)
         separator.fadeAndHide(hidden, duration: duration)
         
