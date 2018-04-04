@@ -91,7 +91,7 @@ const NSString *LoadingViewKey = @"loadingView";
     OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
-- (void)indicateLoadingSuccessWithCompletion:(dispatch_block_t)completion
+- (void)indicateLoadingSuccessWithCompletion:(dispatch_block_t)completion removeCheckmark:(BOOL)removeCheckmark
 {
     CheckAnimationView __block *checkView = nil;
     
@@ -114,10 +114,12 @@ const NSString *LoadingViewKey = @"loadingView";
             if (completion != nil) {
                 completion();
             }
-            self.activityIndicator.alpha = 1;
-            self.activityIndicator.transform = CGAffineTransformIdentity;
-            [self setShowLoadingView:NO];
-            [checkView removeFromSuperview];
+            if (removeCheckmark) {
+                self.activityIndicator.alpha = 1;
+                self.activityIndicator.transform = CGAffineTransformIdentity;
+                [self setShowLoadingView:NO];
+                [checkView removeFromSuperview];
+            }
         });
     }];
 }
