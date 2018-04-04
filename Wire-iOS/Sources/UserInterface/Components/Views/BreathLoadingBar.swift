@@ -43,26 +43,13 @@ class BreathLoadingBar: UIView {
         }
     }
 
-    private var _state: NetworkStatusViewState = .online
-
-    var state: NetworkStatusViewState {
-        set {
-            update(state: newValue, animated: false)
-        }
-        get {
-            return _state
-        }
+    var state: NetworkStatusViewState = .online {
+        didSet {
+            updateView()
+      }
     }
 
-    func update(state: NetworkStatusViewState, animated: Bool) {
-        guard self.state != state else { return }
-
-        _state = state
-
-        updateView(animated: animated)
-    }
-
-    private func updateView(animated: Bool = true) {
+    private func updateView() {
         switch state {
         case .online:
             heightConstraint?.constant = 0
@@ -98,7 +85,7 @@ class BreathLoadingBar: UIView {
         animationDuration = duration
 
         createConstraints()
-        updateView(animated: false)
+        updateView()
 
         NotificationCenter.default.addObserver(self, selector: #selector(self.applicationDidBecomeActive), name: .UIApplicationDidBecomeActive, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(self.applicationDidEnterBackground), name: .UIApplicationDidEnterBackground, object: nil)
