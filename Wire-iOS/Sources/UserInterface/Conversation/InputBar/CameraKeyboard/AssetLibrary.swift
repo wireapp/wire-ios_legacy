@@ -24,7 +24,7 @@ public protocol AssetLibraryDelegate: class {
     func assetLibraryDidChange(_ library: AssetLibrary)
 }
 
-open class AssetLibrary {
+open class AssetLibrary: NSObject, PHPhotoLibraryChangeObserver {
     open weak var delegate: AssetLibraryDelegate?
     fileprivate var fetchingAssets = false
     open let synchronous: Bool
@@ -62,18 +62,7 @@ open class AssetLibrary {
             let options = PHFetchOptions()
             options.sortDescriptors = [NSSortDescriptor(key: "creationDate", ascending: false)]
             self.fetch = PHAsset.fetchAssets(with: options)
-            
-            let completion = {
-                self.delegate?.assetLibraryDidChange(self)
-                self.fetchingAssets = false
-            }
-            
-            if synchronous {
-                completion()
-            }
-            else {
-                DispatchQueue.main.async(execute: completion)
-            }
+            self.notifyChangeToDelegate()
         }
         
         if synchronous {
@@ -83,11 +72,47 @@ open class AssetLibrary {
             DispatchQueue(label: "WireAssetLibrary", qos: DispatchQoS.background, attributes: [], autoreleaseFrequency: DispatchQueue.AutoreleaseFrequency.inherit, target: .none).async(execute: syncOperation)
         }
     }
+
+    open func photoLibraryDidChange(_ changeInstance: PHChange) {
+
+        guard let fetch = self.fetch else {
+            return
+        }
+
+        guard let changeDetails = changeInstance.changeDetails(for: fetch) else {
+            return
+        }
+
+        self.fetch = changeDetails.fetchResultAfterChanges
+        self.notifyChangeToDelegate()
+
+    }
     
     fileprivate var fetch: PHFetchResult<PHAsset>?
-    
+
+    fileprivate func notifyChangeToDelegate() {
+
+        let completion = {
+            self.delegate?.assetLibraryDidChange(self)
+            self.fetchingAssets = false
+        }
+
+        if synchronous {
+            completion()
+        } else {
+            DispatchQueue.main.async(execute: completion)
+        }
+
+    }
+
     init(synchronous: Bool = false) {
         self.synchronous = synchronous
+        super.init()
+        PHPhotoLibrary.shared().register(self)
         self.refetchAssets(synchronous: synchronous)
+    }
+
+    deinit {
+        PHPhotoLibrary.shared().unregisterChangeObserver(self)
     }
 }
