@@ -855,6 +855,14 @@
 "self.settings.history_backup.set_email.title" = "Set an email and password.";
 "self.settings.history_backup.set_email.message" = "You need an email and a password in order to back up your conversation history. You can do it from the account page in Settings.";
 
+// History backup password
+
+"self.settings.history_backup.password.title" = "Password";
+"self.settings.history_backup.password.cancel" = "Cancel";
+"self.settings.history_backup.password.next" = "Next";
+"self.settings.history_backup.password.placeholder" = "Password";
+"self.settings.history_backup.password.description" = "The backup will be compressed and encrypted with the password you set here. Minimum 8 characters.";
+
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // System status
 "system_status_bar.no_internet.title" = "No Internet";

@@ -960,6 +960,7 @@
 		D5CA8E572045718900D2F16E /* UINavigationController+CloseButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5CA8E562045718900D2F16E /* UINavigationController+CloseButton.swift */; };
 		D5CEBFC3202CA3BA00AFBD3A /* AddParticipantsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5CEBFC2202CA3BA00AFBD3A /* AddParticipantsViewModel.swift */; };
 		D5D65A0F2074CFBB00D7F3C3 /* AuthenticationType.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D65A0E2074CFBB00D7F3C3 /* AuthenticationType.swift */; };
+		D5D65A11207509F300D7F3C3 /* BackupPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D65A10207509F300D7F3C3 /* BackupPasswordViewController.swift */; };
 		D5D89780201A12D300FAF69C /* Account+ShareExtensionDisplayName.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D8977E201A121900FAF69C /* Account+ShareExtensionDisplayName.swift */; };
 		D5D89782201A25E000FAF69C /* Analytics+Services.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D89781201A25E000FAF69C /* Analytics+Services.swift */; };
 		D5DBAAA720064D5600E9F65B /* ArrayDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5DBAAA620064D5600E9F65B /* ArrayDataSource.swift */; };
@@ -2522,6 +2523,7 @@
 		D5CA8E562045718900D2F16E /* UINavigationController+CloseButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationController+CloseButton.swift"; sourceTree = "<group>"; };
 		D5CEBFC2202CA3BA00AFBD3A /* AddParticipantsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddParticipantsViewModel.swift; sourceTree = "<group>"; };
 		D5D65A0E2074CFBB00D7F3C3 /* AuthenticationType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationType.swift; sourceTree = "<group>"; };
+		D5D65A10207509F300D7F3C3 /* BackupPasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackupPasswordViewController.swift; sourceTree = "<group>"; };
 		D5D8977E201A121900FAF69C /* Account+ShareExtensionDisplayName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Account+ShareExtensionDisplayName.swift"; sourceTree = "<group>"; };
 		D5D89781201A25E000FAF69C /* Analytics+Services.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Analytics+Services.swift"; sourceTree = "<group>"; };
 		D5DBAAA620064D5600E9F65B /* ArrayDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrayDataSource.swift; sourceTree = "<group>"; };
@@ -4862,6 +4864,7 @@
 				87C1A7BB1D8FDFD8002630BB /* VersionInfoViewController.m */,
 				F19C3A8E20513532004387E4 /* DatabaseStatisticsController.swift */,
 				8751BA432069455E00DF8667 /* BackupViewController.swift */,
+				D5D65A10207509F300D7F3C3 /* BackupPasswordViewController.swift */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -6335,6 +6338,7 @@
 				BFA25DC71D9A8C7B0086DEBD /* ConversationInputBarViewController+Emoji.swift in Sources */,
 				D5168F532010F20B00F8222A /* BlurEffectTransition.swift in Sources */,
 				1671D6D1200CDC380022D289 /* InviteTeamMemberCell.swift in Sources */,
+				D5D65A11207509F300D7F3C3 /* BackupPasswordViewController.swift in Sources */,
 				87AC77DB1DE48C01009F6D56 /* Copyable.swift in Sources */,
 				87371C1A1B7355C400807499 /* ConversationListViewController+StartUI.m in Sources */,
 				8FC85451199245770008B66B /* ConversationContentViewController+Scrolling.m in Sources */,
