@@ -195,6 +195,10 @@ extension BackupViewController: UITableViewDataSource, UITableViewDelegate {
                     activityController.completionWithItemsHandler = { _, _, _, _ in
                         SessionManager.clearPreviousBackups()
                     }
+                    activityController.popoverPresentationController.apply {
+                        $0.sourceView = tableView
+                        $0.sourceRect = tableView.rectForRow(at: indexPath)
+                    }
                     self.present(activityController, animated: true)
                 #endif
                 BackupEvent.exportSucceeded.track()
