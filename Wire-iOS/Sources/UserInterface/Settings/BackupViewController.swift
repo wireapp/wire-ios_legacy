@@ -181,7 +181,7 @@ fileprivate extension BackupViewController {
             }
         }
         
-        present(passwordController, animated: true, completion: nil)
+        present(passwordController.wrapInNavigationController(), animated: true, completion: nil)
     }
     
     private func performHistoryBackup(using password: BackupPasswordViewController.HistoryPassword) {

@@ -55,19 +55,25 @@ final class BackupPasswordViewController: UIViewController {
     }
     
     private func setupViews() {
+        subtitleLabel.numberOfLines = 0
+        [passwordView, subtitleLabel].forEach {
+            view.addSubview($0)
+            $0.translatesAutoresizingMaskIntoConstraints = false
+        }
         title = "self.settings.history_backup.password.title".localized.uppercased()
         navigationItem.leftBarButtonItem = UIBarButtonItem(
-            title: "self.settings.history_backup.password.cancel".localized,
+            title: "self.settings.history_backup.password.cancel".localized.uppercased(),
             style: .plain,
             target: self,
             action: #selector(completeWithCurrentResult)
         )
         navigationItem.rightBarButtonItem = UIBarButtonItem(
-            title: "self.settings.history_backup.password.next".localized,
+            title: "self.settings.history_backup.password.next".localized.uppercased(),
             style: .done,
             target: self,
             action: #selector(completeWithCurrentResult)
         )
+        navigationItem.rightBarButtonItem?.isEnabled = false
         passwordView.textDidChange = { [unowned self] text in
             self.updateState(with: text)
         }
@@ -78,9 +84,9 @@ final class BackupPasswordViewController: UIViewController {
             passwordView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             passwordView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             passwordView.topAnchor.constraint(equalTo: view.topAnchor, constant: 32),
-            subtitleLabel.topAnchor.constraint(equalTo: passwordView.topAnchor, constant: 16),
-            subtitleLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            subtitleLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor)
+            subtitleLabel.topAnchor.constraint(equalTo: passwordView.bottomAnchor, constant: 16),
+            subtitleLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            subtitleLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16)
         ])
     }
     
@@ -96,8 +102,10 @@ final class BackupPasswordViewController: UIViewController {
 }
 
 fileprivate class PasswordView: UIView {
+    
     typealias TextChange = (String) -> Void
     var textDidChange: TextChange?
+    
     var text = "" {
         didSet {
             textDidChange?(text)
@@ -119,11 +127,15 @@ fileprivate class PasswordView: UIView {
     }
     
     private func setupViews() {
-        NotificationCenter.default.addObserver(self, selector: #selector(textFieldTextDidChange), name: .UITextFieldTextDidChange, object: textField)
+        textField.addTarget(self, action: #selector(textFieldTextDidChange), for: .editingChanged)
         [topSeparator, textField, bottomSeparator].forEach {
             addSubview($0)
             $0.translatesAutoresizingMaskIntoConstraints = false
         }
+        
+        topSeparator.backgroundColor = .wr_color(fromColorScheme: ColorSchemeColorCellSeparator, variant: .light)
+        bottomSeparator.backgroundColor = .wr_color(fromColorScheme: ColorSchemeColorCellSeparator, variant: .light)
+        textField.attributedPlaceholder = "self.settings.history_backup.password.placeholder".localized && .wr_color(fromColorScheme: ColorSchemeColorTextDimmed, variant: .light)
     }
     
     private func createConstraints() {
@@ -136,16 +148,16 @@ fileprivate class PasswordView: UIView {
             bottomSeparator.bottomAnchor.constraint(equalTo: bottomAnchor),
             bottomSeparator.trailingAnchor.constraint(equalTo: trailingAnchor),
             bottomSeparator.heightAnchor.constraint(equalToConstant: .hairline),
-            textField.leadingAnchor.constraint(equalTo: leadingAnchor),
+            textField.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
             textField.topAnchor.constraint(equalTo: topSeparator.bottomAnchor),
-            textField.trailingAnchor.constraint(equalTo: trailingAnchor),
+            textField.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
             textField.bottomAnchor.constraint(equalTo: bottomSeparator.topAnchor),
-            textField.heightAnchor.constraint(equalToConstant: 56)
+            heightAnchor.constraint(equalToConstant: 56)
         ])
     }
     
     @objc private func textFieldTextDidChange(_ sender: UITextField) {
-        guard sender === textField else { return }
+        guard sender == textField else { return }
         text = sender.text ?? ""
     }
     
