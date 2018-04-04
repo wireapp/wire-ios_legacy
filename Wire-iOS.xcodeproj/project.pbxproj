@@ -164,8 +164,6 @@
 		1E5E0D061B6B8EDB003B0CAC /* UIImage+ImageUtilities.h in Headers */ = {isa = PBXBuildFile; fileRef = 1E5E0CF71B6B8EDB003B0CAC /* UIImage+ImageUtilities.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		1E5E0D071B6B8EDB003B0CAC /* UIImage+ImageUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E5E0CF81B6B8EDB003B0CAC /* UIImage+ImageUtilities.m */; };
 		1E6579981B8F3632002E0869 /* UIImage+ZetaIconsNeue.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E5E0CEC1B6B8EDB003B0CAC /* UIImage+ZetaIconsNeue.m */; };
-		1E65799D1B8F3698002E0869 /* CocoaLumberjack.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1E7222A31B8335EA004180EC /* CocoaLumberjack.framework */; };
-		1E7222A41B8335EA004180EC /* CocoaLumberjack.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1E7222A31B8335EA004180EC /* CocoaLumberjack.framework */; };
 		1E80A3651B0DF6120049A809 /* MediaPlaybackManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E80A3641B0DF6120049A809 /* MediaPlaybackManager.m */; };
 		1E8772231B0C8B0F005BDDC6 /* EmoticonSubstitutionConfigurationMocks.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E8772221B0C8B0F005BDDC6 /* EmoticonSubstitutionConfigurationMocks.m */; };
 		1E8772281B0C8CAB005BDDC6 /* emo-test-03.json in Resources */ = {isa = PBXBuildFile; fileRef = 1E8772271B0C8CAB005BDDC6 /* emo-test-03.json */; };
@@ -529,8 +527,6 @@
 		8786071C1D33E3FF00971A19 /* Geometry.m in Sources */ = {isa = PBXBuildFile; fileRef = 878607031D33E3FF00971A19 /* Geometry.m */; };
 		8786071D1D33E3FF00971A19 /* KeyValueObserver.h in Headers */ = {isa = PBXBuildFile; fileRef = 878607041D33E3FF00971A19 /* KeyValueObserver.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8786071E1D33E3FF00971A19 /* KeyValueObserver.m in Sources */ = {isa = PBXBuildFile; fileRef = 878607051D33E3FF00971A19 /* KeyValueObserver.m */; };
-		8786071F1D33E3FF00971A19 /* LineNumberLogFormatter.h in Headers */ = {isa = PBXBuildFile; fileRef = 878607061D33E3FF00971A19 /* LineNumberLogFormatter.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		878607201D33E3FF00971A19 /* LineNumberLogFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 878607071D33E3FF00971A19 /* LineNumberLogFormatter.m */; };
 		878607211D33E3FF00971A19 /* NetworkStatus.h in Headers */ = {isa = PBXBuildFile; fileRef = 878607081D33E3FF00971A19 /* NetworkStatus.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		878607221D33E3FF00971A19 /* NetworkStatus.m in Sources */ = {isa = PBXBuildFile; fileRef = 878607091D33E3FF00971A19 /* NetworkStatus.m */; };
 		8786072F1D33E3FF00971A19 /* metamacros.h in Headers */ = {isa = PBXBuildFile; fileRef = 878607171D33E3FF00971A19 /* metamacros.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -1378,7 +1374,6 @@
 		1E5E0CF61B6B8EDB003B0CAC /* UIControl+Wire.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIControl+Wire.m"; sourceTree = "<group>"; };
 		1E5E0CF71B6B8EDB003B0CAC /* UIImage+ImageUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+ImageUtilities.h"; sourceTree = "<group>"; };
 		1E5E0CF81B6B8EDB003B0CAC /* UIImage+ImageUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+ImageUtilities.m"; sourceTree = "<group>"; };
-		1E7222A31B8335EA004180EC /* CocoaLumberjack.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CocoaLumberjack.framework; path = Carthage/Build/iOS/CocoaLumberjack.framework; sourceTree = "<group>"; };
 		1E80A3631B0DF6120049A809 /* MediaPlaybackManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MediaPlaybackManager.h; sourceTree = "<group>"; };
 		1E80A3641B0DF6120049A809 /* MediaPlaybackManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MediaPlaybackManager.m; sourceTree = "<group>"; };
 		1E8666E21BE21BC3000B013E /* Version.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Version.xcconfig; sourceTree = "<group>"; };
@@ -1908,8 +1903,6 @@
 		878607031D33E3FF00971A19 /* Geometry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Geometry.m; sourceTree = "<group>"; };
 		878607041D33E3FF00971A19 /* KeyValueObserver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeyValueObserver.h; sourceTree = "<group>"; };
 		878607051D33E3FF00971A19 /* KeyValueObserver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KeyValueObserver.m; sourceTree = "<group>"; };
-		878607061D33E3FF00971A19 /* LineNumberLogFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LineNumberLogFormatter.h; sourceTree = "<group>"; };
-		878607071D33E3FF00971A19 /* LineNumberLogFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LineNumberLogFormatter.m; sourceTree = "<group>"; };
 		878607081D33E3FF00971A19 /* NetworkStatus.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NetworkStatus.h; sourceTree = "<group>"; };
 		878607091D33E3FF00971A19 /* NetworkStatus.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NetworkStatus.m; sourceTree = "<group>"; };
 		878607171D33E3FF00971A19 /* metamacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = metamacros.h; sourceTree = "<group>"; };
@@ -2756,7 +2749,6 @@
 				CE8E4FB11DF0668F0009F437 /* AVFoundation.framework in Frameworks */,
 				CE8E4FB01DF0668A0009F437 /* ImageIO.framework in Frameworks */,
 				CE8E4FAE1DF066860009F437 /* MobileCoreServices.framework in Frameworks */,
-				1E65799D1B8F3698002E0869 /* CocoaLumberjack.framework in Frameworks */,
 				47DCFD484AF0319598A5FFFC /* libPods-WireExtensionComponents.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2798,7 +2790,6 @@
 				87023D7B1D76E4E2007B667E /* AFNetworking.framework in Frameworks */,
 				DBE6F98E1B1DE51C00B7DD32 /* ziphy.framework in Frameworks */,
 				5407B8C31A643CCE009090C6 /* UIKit.framework in Frameworks */,
-				1E7222A41B8335EA004180EC /* CocoaLumberjack.framework in Frameworks */,
 				876FAEDB1C762CFC00EBA732 /* TTTAttributedLabel.framework in Frameworks */,
 				54BB91E01E1FA6330039E91F /* WireShareEngine.framework in Frameworks */,
 				871608431E4DF7B000461934 /* HockeySDK.framework in Frameworks */,
@@ -3094,8 +3085,6 @@
 				878607031D33E3FF00971A19 /* Geometry.m */,
 				878607041D33E3FF00971A19 /* KeyValueObserver.h */,
 				878607051D33E3FF00971A19 /* KeyValueObserver.m */,
-				878607061D33E3FF00971A19 /* LineNumberLogFormatter.h */,
-				878607071D33E3FF00971A19 /* LineNumberLogFormatter.m */,
 				878607081D33E3FF00971A19 /* NetworkStatus.h */,
 				878607091D33E3FF00971A19 /* NetworkStatus.m */,
 				8795A5A61D34CF7A0024101B /* NSLayoutConstraint+Helpers.h */,
@@ -3276,7 +3265,6 @@
 				8741DB611C1EFE2D00BDB470 /* CoreLocation.framework */,
 				1E3FA0321B78AD9500A9743D /* WireSystem.framework */,
 				1EBA8C721B74EAB10089CC44 /* WireUtilities.framework */,
-				1E7222A31B8335EA004180EC /* CocoaLumberjack.framework */,
 				095275931B7E834400123BAF /* WireSyncEngine.framework */,
 				1EC719F71B67B59A00700A14 /* Classy.framework */,
 				1EC71A271B6A1B9200700A14 /* WireImages.framework */,
@@ -5538,7 +5526,6 @@
 				1677FD331BBC19A400491481 /* ColorScheme.h in Headers */,
 				1E5E0CFB1B6B8EDB003B0CAC /* UIImage+ZetaIconsNeue.h in Headers */,
 				8786071D1D33E3FF00971A19 /* KeyValueObserver.h in Headers */,
-				8786071F1D33E3FF00971A19 /* LineNumberLogFormatter.h in Headers */,
 				8786072F1D33E3FF00971A19 /* metamacros.h in Headers */,
 				EF1F99F81FBB06D400969DD1 /* UILabel+TextTransform.h in Headers */,
 				8795A5CC1D34D09E0024101B /* VoiceGainLayer.h in Headers */,
@@ -6093,7 +6080,6 @@
 			inputPaths = (
 				"$(SRCROOT)/Carthage/Build/iOS/ziphy.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/Classy.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/CocoaLumberjack.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/WireSystem.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/WireUtilities.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/WireTransport.framework",
@@ -6103,7 +6089,6 @@
 				"$(SRCROOT)/Carthage/Build/iOS/ProtocolBuffers.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/Cartography.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/WireSyncEngine.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/CocoaLumberjackSwift.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/TTTAttributedLabel.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/libPhoneNumberiOS.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/PINCache.framework",
@@ -6215,7 +6200,6 @@
 				BF7EF5451D953B3F003E3999 /* Date+Format.swift in Sources */,
 				87AAE41D1E42399E00E1D13A /* UIFont+DynamicType.swift in Sources */,
 				879D6AFC1E69E20900DC07A1 /* ImageMessageView.swift in Sources */,
-				878607201D33E3FF00971A19 /* LineNumberLogFormatter.m in Sources */,
 				1E5E0D051B6B8EDB003B0CAC /* UIControl+Wire.m in Sources */,
 				D5168F44200F6F2300F8222A /* CABasicAnimation+Rotation.m in Sources */,
 				876CC8991E966C5C00F6BABC /* IteratorProtocol+Histogram.swift in Sources */,
