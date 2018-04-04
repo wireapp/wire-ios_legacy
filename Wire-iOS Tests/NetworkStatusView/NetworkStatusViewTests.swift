@@ -38,8 +38,6 @@ class NetworkStatusViewTests: XCTestCase {
     override func setUp() {
         super.setUp()
 
-        UIView.setAnimationsEnabled(false)
-
         mockApplication = MockApplication()
         mockContainer = MockContainer()
         sut = NetworkStatusView(application: mockApplication)
@@ -51,8 +49,6 @@ class NetworkStatusViewTests: XCTestCase {
         mockApplication = nil
         mockContainer = nil
 
-        UIView.setAnimationsEnabled(true)
-
         super.tearDown()
     }
 
@@ -60,14 +56,14 @@ class NetworkStatusViewTests: XCTestCase {
         // GIVEN
         mockApplication.applicationState = .active
         sut.state = .onlineSynchronizing
-        XCTAssertEqual(sut.frame.size.height, CGFloat.SyncBar.height, "NetworkStatusView should not be zero height")
+        XCTAssertEqual(sut.connectingView.heightConstraint?.constant, CGFloat.SyncBar.height, "NetworkStatusView should not be zero height")
 
         // WHEN
         mockApplication.applicationState = .background
         sut.state = .onlineSynchronizing
 
         // THEN
-        XCTAssertEqual(sut.frame.size.height, 0, "NetworkStatusView should be zero height")
+        XCTAssertEqual(sut.connectingView.heightConstraint?.constant, 0, "NetworkStatusView should be zero height")
     }
 }
 

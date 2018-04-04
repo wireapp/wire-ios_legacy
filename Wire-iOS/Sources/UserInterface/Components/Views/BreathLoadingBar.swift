@@ -28,7 +28,7 @@ protocol BreathLoadingBarDelegate: class {
 class BreathLoadingBar: UIView {
     public weak var delegate: BreathLoadingBarDelegate?
 
-    private var heightConstraint: NSLayoutConstraint?
+    var heightConstraint: NSLayoutConstraint?
 
     public var animating: Bool = false {
         didSet {

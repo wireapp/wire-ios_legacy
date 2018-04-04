@@ -47,7 +47,7 @@ extension NetworkStatusViewDelegate where Self: UIViewController {
     func didChangeHeight(_ networkStatusView: NetworkStatusView, animated: Bool, state: NetworkStatusViewState) {
 
         guard shouldAnimateNetworkStatusView else { return }
-        
+
         if animated {
             UIView.animate(withDuration: TimeInterval.NetworkStatusBar.resizeAnimationTime, delay: 0, options: [.curveEaseInOut, .beginFromCurrentState], animations: {
                 self.view.layoutIfNeeded()
@@ -60,7 +60,7 @@ extension NetworkStatusViewDelegate where Self: UIViewController {
 }
 
 class NetworkStatusView: UIView {
-    private let connectingView: BreathLoadingBar
+    let connectingView: BreathLoadingBar
     private let offlineView: OfflineBar
     private var _state: NetworkStatusViewState = .online
 
@@ -108,7 +108,11 @@ class NetworkStatusView: UIView {
 
         connectingView.delegate = self
 
-        [offlineView, connectingView].forEach(addSubview)
+        let subviews: [UIView] = [offlineView, connectingView]
+        subviews.forEach { subview in
+            addSubview(subview)
+            subview.translatesAutoresizingMaskIntoConstraints = false
+        }
 
         state = .online
 
@@ -205,8 +209,8 @@ class NetworkStatusView: UIView {
 
         updateConstraints(networkStatusViewState: networkStatusViewState)
 
-        self.offlineView.update(state: state, animated: animated)
-        self.connectingView.update(state: state, animated: animated)
+        self.offlineView.update(state: networkStatusViewState, animated: animated)
+        self.connectingView.update(state: networkStatusViewState, animated: animated)
 
         self.layoutIfNeeded()
     }
@@ -230,4 +234,3 @@ extension NetworkStatusView: BreathLoadingBarDelegate {
         delegate?.didChangeHeight(self, animated: true, state: state)
     }
 }
-
