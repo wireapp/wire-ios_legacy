@@ -45,9 +45,9 @@ class UINavigationBarContainer: UIView {
             self.navHeight = navigationBar.height == portraitNavbarHeight
             navigationBar.left == view.left
             navigationBar.right == view.right
-            navigationBar.bottom == view.bottom
-            navigationBar.height == view.height
+            view.bottom == navigationBar.bottom
         }
+        navigationBar.topAnchor.constraint(equalTo: safeAreaLayoutGuideOrFallback.topAnchor).isActive = true
     }
 
     override func layoutSubviews() {

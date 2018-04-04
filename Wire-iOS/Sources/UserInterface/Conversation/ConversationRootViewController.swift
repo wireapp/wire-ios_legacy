@@ -88,6 +88,7 @@ import Cartography
 
             customNavBar.left == view.left
             customNavBar.right == view.right
+            customNavBar.top == view.top
 
             contentView.left == view.left
             contentView.right == view.right

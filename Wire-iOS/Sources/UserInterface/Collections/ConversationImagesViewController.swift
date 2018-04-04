@@ -129,11 +129,10 @@ final class ConversationImagesViewController: UIViewController {
             navigationBar.items = [navigationItem]
             navigationBar.isTranslucent = false
             navigationBar.barTintColor = ColorScheme.default().color(withName: ColorSchemeColorBarBackground)
-            
+
             navBarContainer = UINavigationBarContainer(navigationBar)
             navBarContainer?.backgroundColor = ColorScheme.default().color(withName: ColorSchemeColorBarBackground)
         }
-        
         
         self.createPageController()
         self.createControlsBar()
@@ -161,7 +160,7 @@ final class ConversationImagesViewController: UIViewController {
         if let navBarContainer = navBarContainer {
             view.addSubview(navBarContainer)
             constrain(view, navBarContainer) { view, navigationBar in
-                navigationBar.top == view.top + UIScreen.safeArea.top
+                navigationBar.top == view.top
                 navigationBar.width == view.width
                 navigationBar.centerX == view.centerX
             }
