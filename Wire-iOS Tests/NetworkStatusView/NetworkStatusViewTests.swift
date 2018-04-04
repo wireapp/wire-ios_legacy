@@ -76,6 +76,7 @@ class NetworkStatusViewSnapShotTests: ZMSnapshotTestCase {
         mockContainer = MockContainer()
         sut = NetworkStatusView()
         sut.delegate = mockContainer
+        recordMode = true
     }
 
     override func tearDown() {

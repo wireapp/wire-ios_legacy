@@ -137,8 +137,7 @@ class NetworkStatusView: UIView {
         let offlineViewHidden = state != .offlineExpanded
 
         let updateUIBlock: () -> Void = {
-            self.updateUI(animated: animated,
-                          offlineViewHidden: offlineViewHidden)
+            self.updateUI(animated: animated)
         }
 
         let completionBlock: (Bool) -> Void = { _ in
@@ -167,15 +166,14 @@ class NetworkStatusView: UIView {
         delegate?.didChangeHeight(self, animated: animated, state: state)
     }
 
-    func updateUI(animated: Bool,
-                  offlineViewHidden: Bool) {
+    func updateConstraints(networkStatusViewState: NetworkStatusViewState) {
         var bottomMargin: CGFloat = 0
 
         if let margin = delegate?.bottomMargin {
             bottomMargin = margin
         }
 
-        switch state {
+        switch networkStatusViewState {
         case .online:
             connectingViewBottomMargin?.constant = 0
             offlineViewBottomMargin?.constant = 0
@@ -196,6 +194,16 @@ class NetworkStatusView: UIView {
             connectingViewBottomMargin?.isActive = false
             offlineViewBottomMargin?.isActive = true
         }
+    }
+
+    func updateUI(animated: Bool) {
+        // When the app is in background, hide the sync bar and offline bar. It prevents the sync bar is "disappear in a blink" visual artifact.
+        var networkStatusViewState = state
+        if application.applicationState == .background {
+            networkStatusViewState = .online
+        }
+
+        updateConstraints(networkStatusViewState: networkStatusViewState)
 
         self.offlineView.update(state: state, animated: animated)
         self.connectingView.update(state: state, animated: animated)
