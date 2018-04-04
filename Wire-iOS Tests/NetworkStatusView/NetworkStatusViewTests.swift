@@ -54,14 +54,14 @@ class NetworkStatusViewTests: XCTestCase {
         // GIVEN
         mockApplication.applicationState = .active
         sut.state = .onlineSynchronizing
-        XCTAssertEqual(sut.connectingViewHeight?.constant, CGFloat.SyncBar.height)
+        XCTAssertEqual(sut.frame.size.height, CGFloat.SyncBar.height)
 
         // WHEN
         mockApplication.applicationState = .background
         sut.state = .onlineSynchronizing
 
         // THEN
-        XCTAssertEqual(sut.connectingViewHeight?.constant, 0)
+        XCTAssertEqual(sut.frame.size.height, 0)
     }
 }
 
