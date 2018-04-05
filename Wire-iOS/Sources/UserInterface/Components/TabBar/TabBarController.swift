@@ -23,16 +23,14 @@ import Cartography
     func tabBarController(_ controller: TabBarController, tabBarDidSelectIndex: Int)
 }
 
-public extension UIViewController {
-    public var wr_tabBarController: TabBarController? {
-        get {
-            if (parent == nil) {
-                return nil
-            } else if (parent?.isKind(of: TabBarController.self) != nil) {
-                return parent as? TabBarController
-            } else {
-                return parent?.wr_tabBarController
-            }
+extension UIViewController {
+    var wr_tabBarController: TabBarController? {
+        if (parent == nil) {
+            return nil
+        } else if (parent?.isKind(of: TabBarController.self) != nil) {
+            return parent as? TabBarController
+        } else {
+            return parent?.wr_tabBarController
         }
     }
 
@@ -40,40 +38,50 @@ public extension UIViewController {
         if UIAccessibilityIsVoiceOverRunning() {
             return
         }
-        // no-op
     }
 }
 
 @objc
-open class TabBarController: UIViewController {
+class TabBarController: UIViewController {
 
-    open fileprivate(set) var viewControllers: [UIViewController]
-    open fileprivate(set) var selectedIndex: Int
-    open var style: TabBarStyle = .default
-    open var enabled: Bool = true {
+    weak var delegate: TabBarControllerDelegate?
+
+    fileprivate(set) var viewControllers: [UIViewController]
+    fileprivate(set) var selectedIndex: Int
+
+    var style: ColorSchemeVariant = ColorScheme.default().variant {
         didSet {
-            self.tabBar?.isUserInteractionEnabled = self.enabled
+            tabBar?.style = style
         }
     }
 
-    weak var delegate: TabBarControllerDelegate?
+    @objc(enabled)
+    var isEnabled: Bool = true {
+        didSet {
+            self.tabBar?.isUserInteractionEnabled = self.isEnabled
+        }
+    }
+
+    // MARK: - Views
 
     fileprivate var presentedTabBarViewController: UIViewController?
     fileprivate var tabBar: TabBar?
     fileprivate var contentView: UIView!
     fileprivate var isTransitioning: Bool = false
 
-    required public init(viewControllers: [UIViewController]) {
+    // MARK: - Initialization
+
+    init(viewControllers: [UIViewController]) {
         self.viewControllers = viewControllers
         self.selectedIndex = 0
         super.init(nibName: nil, bundle: nil)
     }
 
-    required public init?(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    override open func viewDidLoad() {
+    override func viewDidLoad() {
         super.viewDidLoad()
 
         createViews()
@@ -89,7 +97,7 @@ open class TabBarController: UIViewController {
         let items = self.viewControllers.map({ viewController in viewController.tabBarItem! })
         self.tabBar = TabBar(items: items, style: self.style, selectedIndex: selectedIndex)
         self.tabBar?.delegate = self
-        self.tabBar?.isUserInteractionEnabled = self.enabled && items.count > 1
+        self.tabBar?.isUserInteractionEnabled = self.isEnabled && items.count > 1
         self.view.addSubview(self.tabBar!)
     }
 
@@ -112,7 +120,9 @@ open class TabBarController: UIViewController {
         }
     }
 
-    open func selectIndex(_ index: Int, animated: Bool) {
+    // MARK: - Interacting with the Tab Bar
+
+    func selectIndex(_ index: Int, animated: Bool) {
         selectedIndex = index
 
         let toViewController = self.viewControllers[index]
@@ -141,18 +151,20 @@ open class TabBarController: UIViewController {
             fromViewController?.willMove(toParentViewController: nil)
             addChildViewController(toViewController)
 
-            self.transition(from: fromViewController!, to: toViewController, duration: 0.35, options: .transitionCrossDissolve, animations: {
+            self.transition(from: fromViewController!, to: toViewController, duration: 0.25, options: .transitionCrossDissolve, animations: {
                 self.isTransitioning = true
                 if toViewController.responds(to: #selector(UIViewController.takeFirstResponder)) {
                     toViewController.perform(#selector(UIViewController.takeFirstResponder))
                 }
             }, completion: { (finished) in
                 self.isTransitioning = false
+                fromViewController?.view.removeFromSuperview()
                 fromViewController?.removeFromParentViewController()
                 toViewController.didMove(toParentViewController: self)
             }
             )
         } else {
+            fromViewController?.view.removeFromSuperview()
             fromViewController?.removeFromParentViewController()
             addChildViewController(toViewController)
             self.contentView.addSubview(toViewController.view)
@@ -164,9 +176,8 @@ open class TabBarController: UIViewController {
 
 extension TabBarController: TabBarDelegate {
 
-    public func didSelectIndex(_ index: Int) {
-        selectIndex(index, animated: true)
+    func tabBar(_ tabBar: TabBar, didSelectItemAt index: Int) {
+        selectIndex(index, animated: tabBar.animatesTransition)
     }
 
 }
-

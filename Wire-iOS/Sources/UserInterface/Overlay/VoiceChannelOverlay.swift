@@ -19,7 +19,6 @@
 import Foundation
 import Cartography
 import UIKit
-import CocoaLumberjackSwift
 import Classy
 
 fileprivate let zmLog = ZMSLog(tag: "calling")

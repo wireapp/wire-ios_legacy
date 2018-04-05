@@ -17,11 +17,12 @@
 // 
 
 
-import CocoaLumberjackSwift
 import Foundation
 import UIKit
 import Cartography
 import Classy
+
+private let zmLog = ZMSLog(tag: "UI")
 
 enum ClientSection: Int {
     case info = 0
@@ -281,7 +282,7 @@ class SettingsClientViewController: UIViewController, UITableViewDelegate, UITab
                         }
                         
                     case .right(let error):
-                        DDLogError("Error: \(error)")
+                        zmLog.error("Error: \(error)")
                     }
                 }
                 self.present(passwordRequest, animated: true, completion: .none)

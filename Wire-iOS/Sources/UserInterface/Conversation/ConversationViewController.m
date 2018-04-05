@@ -66,7 +66,7 @@
 
 #import "Wire-Swift.h"
 
-
+static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
 @interface ConversationViewController (Keyboard) <InvisibleInputAccessoryViewDelegate>
 
@@ -681,7 +681,7 @@
 - (void)conversationContentViewController:(ConversationContentViewController *)controller presentGuestOptionsFromView:(UIView *)sourceView
 {
     if (self.conversation.conversationType != ZMConversationTypeGroup) {
-        DDLogError(@"Illegal Operation: Trying to show guest options for non-group conversation");
+        ZMLogError(@"Illegal Operation: Trying to show guest options for non-group conversation");
         return;
     }
     GroupDetailsViewController *groupDetailsViewController = [[GroupDetailsViewController alloc] initWithConversation:self.conversation];
@@ -928,7 +928,7 @@
     
     if ([self.parentViewController isKindOfClass:[ConversationRootViewController class]]) {
         ConversationRootViewController *convRootViewController = (ConversationRootViewController *)self.parentViewController;
-        [viewsToHide addObject:convRootViewController.customNavBar];
+        [viewsToHide addObject:convRootViewController.navBarContainer.view];
     }
     
     [viewsToHide addObject:self.inputBarController.view];

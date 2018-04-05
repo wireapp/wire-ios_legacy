@@ -726,7 +726,7 @@ ProfileDevicesViewController {
     }
     
     view: @{
-        backgroundColor: $color-background;
+        backgroundColor: $color-content-background;
     }
 
 }
@@ -885,16 +885,6 @@ ClientTableViewCell {
 }
 
 /* Registration */
-
-NoHistoryViewController {
-    subtitleLabel: @{
-        textColor: $color-text-foreground-dark;
-    }
-    
-    heroLabel: @{
-        textColor: $color-text-foreground-dark;
-    }
-}
 
 UIView.status-bar-overlay {
     backgroundColor: $color-background;

@@ -19,6 +19,7 @@
 import UIKit
 import MessageUI
 import Cartography
+import WireSystem
 
 typealias TechnicalReport = [String: String]
 
@@ -63,13 +64,18 @@ class SettingsTechnicalReportViewController: UITableViewController, MFMailCompos
         tableView.separatorColor = UIColor(white: 1, alpha: 0.1)
     }
     
+    func fetchVoiceLogData() -> Data? {
+        let logs = ZMSLog.recordedContent
+        return logs.joined(separator: "\n").data(using: .utf8)
+    }
+    
     func sendReport() {
+        guard let attachmentData = fetchVoiceLogData() else { return }
         let fileName = "voice.log"
-        let attachmentData = AppDelegate.shared().currentVoiceLogData
         let mailRecipient = NSLocalizedString("self.settings.technical_report.mail.recipient", comment: "")
 
         guard MFMailComposeViewController.canSendMail() else {
-            DebugAlert.displayFallbackActivityController(logData: attachmentData(), logFileName: fileName, email: mailRecipient, from: self)
+            DebugAlert.displayFallbackActivityController(logData: attachmentData, logFileName: fileName, email: mailRecipient, from: self)
             return
         }
     
@@ -80,8 +86,8 @@ class SettingsTechnicalReportViewController: UITableViewController, MFMailCompos
         mailComposeViewController.setToRecipients([mailRecipient])
         mailComposeViewController.setSubject(NSLocalizedString("self.settings.technical_report.mail.subject", comment: ""))
         
-        if attachmentData().count > 0 && includedVoiceLogCell.accessoryType == .checkmark {
-            mailComposeViewController.addAttachmentData(attachmentData(), mimeType: "text/plain", fileName: fileName)
+        if attachmentData.count > 0 && includedVoiceLogCell.accessoryType == .checkmark {
+            mailComposeViewController.addAttachmentData(attachmentData, mimeType: "text/plain", fileName: fileName)
         }
     
         mailComposeViewController.setMessageBody(report, isHTML: false)

@@ -20,9 +20,10 @@
 
 import Foundation
 import Cartography
-import CocoaLumberjackSwift
 import MobileCoreServices
 import Classy
+
+private let zmLog = ZMSLog(tag: "UI")
 
 @objc public protocol AudioRecordBaseViewController: NSObjectProtocol {
     weak var delegate: AudioRecordViewControllerDelegate? { get set }
@@ -109,7 +110,7 @@ import Classy
         let upperThird = location.y < buttonOverlay.frame.height / 3
         let shouldSend = upperThird && sender.state == .ended
         
-        guard recorder.stopRecording() else { return DDLogWarn("Stopped recording but did not get file URL") }
+        guard recorder.stopRecording() else { return zmLog.warn("Stopped recording but did not get file URL") }
         
         if shouldSend {
             sendAudio(.afterSlideUp)
@@ -385,7 +386,7 @@ import Classy
     
     func sendAudio(_ context: AudioMessageContext) {
         recorder.stopPlaying()
-        guard let url = recorder.fileURL else { return DDLogWarn("Nil url passed to send as audio file") }
+        guard let url = recorder.fileURL else { return zmLog.warn("Nil url passed to send as audio file") }
         
         
         let effectPath = (NSTemporaryDirectory() as NSString).appendingPathComponent("effect.wav")

@@ -26,9 +26,8 @@
 
 @import WireExtensionComponents;
 
+static NSString* ZMLogTag ZM_UNUSED = @"UI";
 static ZMAccentColor overridenAccentColor = ZMAccentColorUndefined;
-
-
 
 @implementation UIColor (WAZExtensions)
 
@@ -70,7 +69,7 @@ static ZMAccentColor overridenAccentColor = ZMAccentColorUndefined;
                               [UIColor colorWithRed:0.615 green:0     blue:1     alpha:1]];
         
     if (accentColor < 1 || accentColor > (NSInteger)accentColors.count) {
-        DDLogError(@"Accent color index is out of bounds: %d", accentColor);
+        ZMLogError(@"Accent color index is out of bounds: %d", accentColor);
         return accentColors[0];
     }
     

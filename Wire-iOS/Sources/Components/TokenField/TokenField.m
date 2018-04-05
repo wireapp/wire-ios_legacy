@@ -22,10 +22,10 @@
 #import "TokenizedTextView.h"
 #import "TokenTextAttachment.h"
 #import "IconButton.h"
-#import "Logging.h"
 #import "ColorScheme.h"
 #import "Wire-Swift.h"
 
+static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
 CGFloat const accessoryButtonSize = 32.0f;
 
@@ -889,7 +889,7 @@ NS_INLINE BOOL RangeIncludesRange(NSRange range, NSRange includedRange)
 
 - (void)textViewDidChangeSelection:(UITextView *)textView
 {
-    DDLogDebug(@"Selection changed: %@", NSStringFromRange(textView.selectedRange));
+    ZMLogDebug(@"Selection changed: %@", NSStringFromRange(textView.selectedRange));
     
     __block NSRange modifiedSelectionRange = NSMakeRange(0, 0);
     __block BOOL hasModifiedSelection = NO;
@@ -906,7 +906,7 @@ NS_INLINE BOOL RangeIncludesRange(NSRange range, NSRange includedRange)
                                                  modifiedSelectionRange = NSUnionRange(hasModifiedSelection ? modifiedSelectionRange : range, range);
                                                  hasModifiedSelection = YES;
                                              }
-                                             DDLogVerbose(@"    person attachement: %@ at range: %@ selected: %d", tokenAttachment.token.title,  NSStringFromRange(range), tokenAttachment.selected);
+                                             ZMLogInfo(@"    person attachement: %@ at range: %@ selected: %d", tokenAttachment.token.title,  NSStringFromRange(range), tokenAttachment.selected);
                                          }
                                      }];
     

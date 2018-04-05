@@ -19,7 +19,6 @@
 import UIKit
 import WireCanvas
 import Cartography
-import CocoaLumberjackSwift
 
 @objc protocol CanvasViewControllerDelegate : NSObjectProtocol {
     func canvasViewController(_ canvasViewController : CanvasViewController,  didExportImage image: UIImage)
@@ -90,7 +89,7 @@ class CanvasViewController: UIViewController, UINavigationControllerDelegate {
     
         toolbar = SketchToolbar(buttons: [photoButton, drawButton, emojiButton, sendButton])
         separatorLine.backgroundColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorSeparator)
-        hintImageView.image = UIImage(for: .brush, fontSize: 172, color: ColorScheme.default().color(withName: ColorSchemeColorPlaceholderBackground))
+        hintImageView.image = UIImage(for: .brush, fontSize: 172, color: .wr_color(fromColorScheme: ColorSchemeColorPlaceholderBackground, variant: .light))
         hintLabel.text = "sketchpad.initial_hint".localized.uppercased(with: Locale.current)
         hintLabel.numberOfLines = 0
         hintLabel.font = FontSpec(.small, .regular).font!

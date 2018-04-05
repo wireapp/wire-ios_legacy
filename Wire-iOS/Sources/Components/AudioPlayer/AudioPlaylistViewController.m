@@ -36,6 +36,7 @@
 #import "LinkAttachment.h"
 #import "Wire-Swift.h"
 
+static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
 static NSString * const AudioPlaylistCellReuseIdentifier = @"AudioPlaylistCellReuseIdentifier";
 static NSString * const AudioTrackCellReuseIdentifier = @"AudioTrackCellReuseIdentifier";
@@ -424,7 +425,7 @@ static const CGFloat SeparatorLineOverflow = 4;
             if (loaded) {
                 [self.audioTrackPlayer play];
             } else {
-                DDLogWarn(@"Couldn't load audio track (%@): %@", audioTrack.title, error);
+                ZMLogWarn(@"Couldn't load audio track (%@): %@", audioTrack.title, error);
             }
         }];
     }

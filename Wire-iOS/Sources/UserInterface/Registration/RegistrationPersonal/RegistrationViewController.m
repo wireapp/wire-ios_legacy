@@ -49,6 +49,8 @@
 
 #import "AnalyticsTracker+Registration.h"
 
+static NSString* ZMLogTag ZM_UNUSED = @"UI";
+
 @interface RegistrationViewController (UserSessionObserver) <SessionManagerCreatedSessionObserver, PostLoginAuthenticationObserver>
 @end
 
@@ -197,9 +199,8 @@
     if ([self.rootNavigationController.topViewController isKindOfClass:[NoHistoryViewController class]]) {
         return;
     }
-    NoHistoryViewController *noHistoryViewController = [[NoHistoryViewController alloc] init];
+    NoHistoryViewController *noHistoryViewController = [[NoHistoryViewController alloc] initWithContextType:type];
     noHistoryViewController.formStepDelegate = self;
-    noHistoryViewController.contextType = type;
 
     self.rootNavigationController.backButtonEnabled = NO;
     [self.rootNavigationController pushViewController:noHistoryViewController animated:YES];
@@ -209,15 +210,11 @@
 
 - (void)didCompleteFormStep:(UIViewController *)viewController
 {
-    BOOL isEmailLogin = [viewController isKindOfClass:[EmailSignInViewController class]];
     BOOL isNoHistoryViewController = [viewController isKindOfClass:[NoHistoryViewController class]];
     BOOL isEmailRegistration = [viewController isKindOfClass:[RegistrationEmailFlowViewController class]];
     
     if (isEmailRegistration) {
         [self.delegate registrationViewControllerDidCompleteRegistration];
-    }
-    else if (isEmailLogin) {
-        [self presentNoHistoryViewController:ContextTypeNewDevice];
     }
     else if (isNoHistoryViewController) {
         [[UnauthenticatedSession sharedSession] continueAfterBackupImportStep];
@@ -259,14 +256,23 @@
 
 - (void)didFailToFetchPersonalInvitationWithError:(NSError *)error
 {
-    DDLogDebug(@"Failed to fetch invitation with error: %@", error);
+    ZMLogDebug(@"Failed to fetch invitation with error: %@", error);
 }
 
 #pragma mark - PreLoginAuthenticationObserver
 
-- (void)authenticationReadyToImportBackup
+- (void)authenticationReadyToImportBackupWithExistingAccount:(BOOL)existingAccount
 {
-    [self presentNoHistoryViewController:ContextTypeNewDevice];
+    self.rootNavigationController.showLoadingView = NO;
+
+    ContextType type = existingAccount ? ContextTypeLoggedOut : ContextTypeNewDevice;
+    
+    if (AutomationHelper.sharedHelper.automationEmailCredentials != nil) {
+        [[UnauthenticatedSession sharedSession] continueAfterBackupImportStep];
+    }
+    else {
+        [self presentNoHistoryViewController:type];
+    }
 }
 
 #pragma mark - ZMInitialSyncCompletionObserver

@@ -43,8 +43,7 @@
 #import "StopWatch.h"
 #import "NSLayoutConstraint+Helpers.h"
 
-
-
+static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
 @interface EmailSignInViewController () <RegistrationTextFieldDelegate, ClientUnregisterViewControllerDelegate>
 
@@ -94,7 +93,7 @@
         self.postLoginAuthenticationToken = [PostLoginAuthenticationNotification addObserver:self];
     }
     
-    if(AutomationHelper.sharedHelper.automationEmailCredentials != nil) {
+    if (AutomationHelper.sharedHelper.automationEmailCredentials != nil) {
         ZMEmailCredentials *emailCredentials = AutomationHelper.sharedHelper.automationEmailCredentials;
         self.emailField.text = emailCredentials.email;
         self.passwordField.text = emailCredentials.password;
@@ -360,7 +359,7 @@
     // Not necessary to remove the loading view, since the controller would not be used any more.
 }
 
-- (void)authenticationReadyToImportBackup
+- (void)authenticationReadyToImportBackupWithExistingAccount:(BOOL)existingAccount
 {
     self.navigationController.showLoadingView = NO;
     [self.analyticsTracker tagEmailLogin];
@@ -368,7 +367,7 @@
 
 - (void)authenticationDidFail:(NSError *)error
 {
-    DDLogDebug(@"authenticationDidFail: error.code = %li", (long)error.code);
+    ZMLogDebug(@"authenticationDidFail: error.code = %li", (long)error.code);
     
     [self.analyticsTracker tagEmailLoginFailedWithError:error];
     self.navigationController.showLoadingView = NO;

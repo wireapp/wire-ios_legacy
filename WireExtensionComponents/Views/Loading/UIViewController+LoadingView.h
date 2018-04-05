@@ -29,5 +29,6 @@
 @property (strong, nonatomic) ProgressSpinner *activityIndicator;
 @property (assign, nonatomic) BOOL showLoadingView;
 
+- (void)indicateLoadingSuccessWithCompletion:(dispatch_block_t)completion;
 
 @end

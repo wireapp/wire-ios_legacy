@@ -45,6 +45,7 @@
 #import "Wire-Swift.h"
 
 
+static NSString* ZMLogTag ZM_UNUSED = @"UI";
 static NSUInteger const StartUIInitiallyShowsKeyboardConversationThreshold = 10;
 
 
@@ -110,7 +111,7 @@ static NSUInteger const StartUIInitiallyShowsKeyboardConversationThreshold = 10;
     [self.view addSubview:self.searchHeaderViewController.view];
     [self.searchHeaderViewController didMoveToParentViewController:self];
     
-    self.groupSelector = [[SearchGroupSelector alloc] initWithVariant:ColorSchemeVariantDark];
+    self.groupSelector = [[SearchGroupSelector alloc] initWithStyle:ColorSchemeVariantDark];
     self.groupSelector.translatesAutoresizingMaskIntoConstraints = NO;
     self.groupSelector.backgroundColor = [UIColor wr_colorFromColorScheme:ColorSchemeColorSearchBarBackground variant:ColorSchemeVariantDark];
     @weakify(self);
@@ -121,11 +122,15 @@ static NSUInteger const StartUIInitiallyShowsKeyboardConversationThreshold = 10;
             // not going to be added to the new conversation with the bot.
             [self.searchHeaderViewController clearInput];
         }
+
         self.searchResultsViewController.searchGroup = group;
         [self performSearch];
     };
-    [self.view addSubview:self.groupSelector];
-    
+
+    if (SearchGroupSelector.shouldShowBotResults) {
+        [self.view addSubview:self.groupSelector];
+    }
+
     self.searchResultsViewController = [[SearchResultsViewController alloc] initWithUserSelection:self.userSelection
                                                                                           variant:ColorSchemeVariantDark
                                                                              isAddingParticipants:NO
@@ -175,12 +180,16 @@ static NSUInteger const StartUIInitiallyShowsKeyboardConversationThreshold = 10;
     [self.searchHeaderViewController.view autoPinEdgeToSuperviewEdge:ALEdgeTop];
     [self.searchHeaderViewController.view autoPinEdgeToSuperviewEdge:ALEdgeLeading];
     [self.searchHeaderViewController.view autoPinEdgeToSuperviewEdge:ALEdgeTrailing];
-    
-    [self.groupSelector autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.searchHeaderViewController.view];
-    [self.groupSelector autoPinEdgeToSuperviewEdge:ALEdgeLeading];
-    [self.groupSelector autoPinEdgeToSuperviewEdge:ALEdgeTrailing];
 
-    [self.searchResultsViewController.view autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.groupSelector];
+    if (SearchGroupSelector.shouldShowBotResults) {
+        [self.groupSelector autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.searchHeaderViewController.view];
+        [self.groupSelector autoPinEdgeToSuperviewEdge:ALEdgeLeading];
+        [self.groupSelector autoPinEdgeToSuperviewEdge:ALEdgeTrailing];
+        [self.searchResultsViewController.view autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.groupSelector];
+    } else {
+        [self.searchResultsViewController.view autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.searchHeaderViewController.view];
+    }
+
     [self.searchResultsViewController.view autoPinEdgeToSuperviewEdge:ALEdgeTrailing];
     [self.searchResultsViewController.view autoPinEdgeToSuperviewEdge:ALEdgeLeading];
     [self.searchResultsViewController.view autoPinEdgeToSuperviewEdge:ALEdgeBottom];
@@ -248,7 +257,7 @@ static NSUInteger const StartUIInitiallyShowsKeyboardConversationThreshold = 10;
 - (void)performSearch
 {
     NSString *searchString = self.searchHeaderViewController.query;
-    DDLogInfo(@"Search for %@", searchString);
+    ZMLogInfo(@"Search for %@", searchString);
     
     if (self.groupSelector.group == SearchGroupPeople) {
         if (searchString.length == 0) {

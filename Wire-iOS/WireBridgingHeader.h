@@ -117,7 +117,9 @@
 #import "StartUIViewController.h"
 #import "Button.h"
 #import "ViewControllerDismissable.h"
+#import "RegistrationFormController.h"
 #import "PhoneSignInViewController.h"
+#import "NoHistoryViewController.h"
 
 // Helper objects
 #import "PushTransition.h"
@@ -155,7 +157,6 @@
 #import "AVAsset+VideoConvert.h"
 #import "DeviceOrientationObserver.h"
 #import "Analytics+ConversationEvents.h"
-#import "AppDelegate+Logging.h"
 #import "LinkAttachment.h"
 #import "Message+Formatting.h"
 #import "UIImagePickerController+GetImage.h"

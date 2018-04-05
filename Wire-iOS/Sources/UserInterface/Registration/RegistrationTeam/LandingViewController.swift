@@ -139,15 +139,12 @@ final class LandingViewController: UIViewController {
 
         return button
     }()
-    
-    let cancelButton: IconButton = {
-        let button = IconButton()
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.accessibilityIdentifier = "CancelButton"
-        button.setIcon(.cancel, with: .small, for: .normal)
-        button.addTarget(self, action: #selector(LandingViewController.cancelButtonTapped(_:)), for: .touchUpInside)
 
-        return button
+    let navigationBar: UINavigationBar = {
+        let bar = UINavigationBar()
+        bar.shadowImage = UIImage()
+        bar.setBackgroundImage(UIImage(), for: .default)
+        return bar
     }()
 
     /// init method for injecting mock device
@@ -168,31 +165,30 @@ final class LandingViewController: UIViewController {
 
         tracker?.tagOpenedLandingScreen()
 
-        self.view.backgroundColor = UIColor.Team.background
-        cancelButton.setIconColor(.black, for: .normal)
-        cancelButton.setIconColor(UIColor.black.withAlphaComponent(0.6), for: .highlighted)
-
         [headerContainerView, buttonStackView, loginHintsLabel, loginButton].forEach(view.addSubview)
-
         [logoView, headline].forEach(headlineStackView.addArrangedSubview)
-        [headlineStackView, cancelButton].forEach(headerContainerView.addSubview)
+        headerContainerView.addSubview(headlineStackView)
         
         [createAccountButton, createTeamButton].forEach() { button in
             buttonStackView.addArrangedSubview(button)
         }
+
+        self.view.backgroundColor = UIColor.Team.background
+        navigationBar.pushItem(navigationItem, animated: false)
+        navigationBar.tintColor = .black
+        view.addSubview(navigationBar)
 
         self.createConstraints()
         self.configureAccessibilityElements()
 
         updateStackViewAxis()
         updateConstraintsForIPad()
-        
-        cancelButton.isHidden = SessionManager.shared?.firstAuthenticatedAccount == nil
+        updateBarButtonItem()
 
         NotificationCenter.default.addObserver(
             forName: AccountManagerDidUpdateAccountsNotificationName,
             object: SessionManager.shared?.accountManager,
-            queue: nil) { _ in self.cancelButton.isHidden = SessionManager.shared?.firstAuthenticatedAccount == nil }
+            queue: nil) { _ in self.updateBarButtonItem()  }
     }
 
     public override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
@@ -204,8 +200,16 @@ final class LandingViewController: UIViewController {
 
     private func createConstraints() {
 
-        constrain(headlineStackView, logoView, headline, cancelButton, headerContainerView) {
-            headlineStackView, logoView, headline, cancelButton, headerContainerView in
+        let safeArea = view.safeAreaLayoutGuideOrFallback
+        navigationBar.topAnchor.constraint(equalTo: safeArea.topAnchor).isActive = true
+
+        constrain(view, navigationBar) { selfView, navigationBar in
+            navigationBar.left == selfView.left
+            navigationBar.right == selfView.right
+        }
+
+        constrain(headlineStackView, logoView, headline, headerContainerView) {
+            headlineStackView, logoView, headline, headerContainerView in
 
             ///reserver space for status bar(20pt)
             headlineStackView.top >= headerContainerView.top + 36
@@ -216,11 +220,6 @@ final class LandingViewController: UIViewController {
 
             headline.height >= 18
             headlineStackView.bottom <= headerContainerView.bottom - 16
-            
-            cancelButton.top == headerContainerView.top + (16 + 20)
-            cancelButton.trailing == headerContainerView.trailing - 16
-            cancelButton.width == 44
-            cancelButton.height == cancelButton.width
 
             if UIDevice.current.userInterfaceIdiom == .pad {
                 headlineAlignBottom = headlineStackView.bottom == headerContainerView.bottom - 80
@@ -292,19 +291,31 @@ final class LandingViewController: UIViewController {
         }
     }
 
+    private func updateBarButtonItem() {
+
+        if SessionManager.shared?.firstAuthenticatedAccount == nil {
+            navigationBar.topItem?.rightBarButtonItem = nil
+        } else {
+            let cancelItem = UIBarButtonItem(icon: .cancel, target: self, action: #selector(cancelButtonTapped))
+            cancelItem.accessibilityIdentifier = "CancelButton"
+            cancelItem.accessibilityLabel = "general.cancel".localized
+            navigationBar.topItem?.rightBarButtonItem = cancelItem
+        }
+
+    }
+
     // MARK: - Accessibility
 
     private func configureAccessibilityElements() {
         logoView.isAccessibilityElement = false
         headline.isAccessibilityElement = false
-        cancelButton.accessibilityLabel = "general.cancel".localized
 
         headlineStackView.isAccessibilityElement = true
         headlineStackView.accessibilityLabel = "landing.app_name".localized + "\n" + "landing.title".localized
         headlineStackView.accessibilityTraits = UIAccessibilityTraitHeader
         headlineStackView.shouldGroupAccessibilityChildren = true
 
-        headerContainerView.accessibilityElements = [headlineStackView, cancelButton]
+        headerContainerView.accessibilityElements = [headlineStackView]
     }
 
     private static let createAccountButtonTitle: NSAttributedString = {
@@ -326,7 +337,7 @@ final class LandingViewController: UIViewController {
             return false
         }
 
-        cancelButtonTapped(cancelButton)
+        cancelButtonTapped()
         return true
     }
 
@@ -347,7 +358,7 @@ final class LandingViewController: UIViewController {
         delegate?.landingViewControllerDidChooseLogin()
     }
     
-    @objc public func cancelButtonTapped(_ sender: AnyObject!) {
+    @objc public func cancelButtonTapped() {
         guard let account = SessionManager.shared?.firstAuthenticatedAccount else { return }
         SessionManager.shared!.select(account)
     }

@@ -23,6 +23,7 @@
 #import "SoundcloudAudioTrack.h"
 #import "SoundcloudService+Testing.h"
 
+static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
 @interface SoundcloudService ()
 @property (nonatomic, weak) ZMUserSession *userSession;
@@ -64,7 +65,7 @@
         id audioObject = nil;
         
         void (^reportError)() = ^{
-            DDLogError(@"Error: %@, %@", response, error);
+            ZMLogError(@"Error: %@, %@", response, error);
             
             if (completionHandler) {
                 completionHandler(audioObject, error);

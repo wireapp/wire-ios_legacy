@@ -67,6 +67,9 @@
     [self createResendInstructions];
     [self createResendButton];
     
+    self.registrationNavigationController.backButtonEnabled = YES;
+    self.registrationNavigationController.wr_navigationController.logoEnabled = NO;
+    
     [self updateViewConstraints];
 }
 
@@ -75,6 +78,8 @@
     [super viewWillDisappear:animated];
     
     [[UnauthenticatedSession sharedSession] cancelWaitForEmailVerification];
+    self.registrationNavigationController.backButtonEnabled = NO;
+    self.registrationNavigationController.wr_navigationController.logoEnabled = YES;
 }
 
 - (void)createContainerView

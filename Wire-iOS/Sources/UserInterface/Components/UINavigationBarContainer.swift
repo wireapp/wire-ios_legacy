@@ -19,40 +19,43 @@
 import UIKit
 import Cartography
 
-class UINavigationBarContainer: UIView {
+class UINavigationBarContainer: UIViewController {
 
     let landscapeTopMargin: CGFloat = 20.0
     let landscapeNavbarHeight: CGFloat = 30.0
     let portraitNavbarHeight: CGFloat = 44.0
 
-    var navigationBar: UINavigationBar!
+    var navigationBar: UINavigationBar
     var navHeight: NSLayoutConstraint?
 
     init(_ navigationBar: UINavigationBar) {
-        super.init(frame: .zero)
         self.navigationBar = navigationBar
-        self.addSubview(navigationBar)
-        self.backgroundColor = ColorScheme.default().color(withName: ColorSchemeColorBarBackground)
+        super.init(nibName: nil, bundle: nil)
+        self.view.addSubview(navigationBar)
+        self.view.backgroundColor = ColorScheme.default().color(withName: ColorSchemeColorBarBackground)
         createConstraints()
     }
 
     required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
+        fatalError("init(coder:) has not been implemented")
     }
 
     func createConstraints() {
-        constrain(navigationBar, self) { navigationBar, view in
+        constrain(navigationBar, view) { navigationBar, view in
             self.navHeight = navigationBar.height == portraitNavbarHeight
             navigationBar.left == view.left
             navigationBar.right == view.right
-            navigationBar.bottom == view.bottom
-            navigationBar.height == view.height
+            view.bottom == navigationBar.bottom
         }
+
+        navigationBar.topAnchor.constraint(equalTo: safeTopAnchor).isActive = true
     }
 
-    override func layoutSubviews() {
-        super.layoutSubviews()
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+
         guard let navHeight = navHeight else { return }
+
         let orientation = UIApplication.shared.statusBarOrientation
         let deviceType = UIDevice.current.userInterfaceIdiom
 

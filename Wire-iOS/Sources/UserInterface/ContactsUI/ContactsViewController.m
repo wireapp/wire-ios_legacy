@@ -40,6 +40,7 @@
 
 #import "Wire-Swift.h"
 
+static NSString* ZMLogTag ZM_UNUSED = @"UI";
 static NSString * const ContactsViewControllerCellID = @"ContactsCell";
 static NSString * const ContactsViewControllerSectionHeaderID = @"ContactsSectionHeaderView";
 
@@ -561,7 +562,7 @@ static NSString * const ContactsViewControllerSectionHeaderID = @"ContactsSectio
         else {
             // Cannot invite
             if (contact.emailAddresses.count == 1 && ![ZMAddressBookContact canInviteLocallyWithEmail]) {
-                DDLogError(@"Cannot invite person: email is not configured");
+                ZMLogError(@"Cannot invite person: email is not configured");
                 
                 UIAlertController *unableToSendController = [UIAlertController alertControllerWithTitle:@""
                                                                                                 message:NSLocalizedString(@"error.invite.no_email_provider", @"")
@@ -575,7 +576,7 @@ static NSString * const ContactsViewControllerSectionHeaderID = @"ContactsSectio
                 return;
             }
             else if (contact.rawPhoneNumbers.count == 1 && ![ZMAddressBookContact canInviteLocallyWithPhoneNumber]) {
-                DDLogError(@"Cannot invite person: email is not configured");
+                ZMLogError(@"Cannot invite person: email is not configured");
                 
                 UIAlertController *unableToSendController = [UIAlertController alertControllerWithTitle:@""
                                                                                                 message:NSLocalizedString(@"error.invite.no_messaging_provider", @"")

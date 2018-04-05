@@ -43,10 +43,9 @@
 #import "ConversationContentViewController.h"
 #import "Wire-Swift.h"
 
+static NSString* ZMLogTag ZM_UNUSED = @"UI";
 static NSString * const CellReuseIdConnectionRequests = @"CellIdConnectionRequests";
 static NSString * const CellReuseIdConversation = @"CellId";
-
-
 
 @interface ConversationListContentController () <ConversationListViewModelDelegate, UICollectionViewDelegateFlowLayout>
 
@@ -91,7 +90,7 @@ static NSString * const CellReuseIdConversation = @"CellId";
         StopWatch *stopWatch = [StopWatch stopWatch];
         StopWatchEvent *loadContactListEvent = [stopWatch stopEvent:@"LoadContactList"];
         if (loadContactListEvent) {
-            DDLogDebug(@"Contact List load after %lums", (unsigned long)loadContactListEvent.elapsedTime);
+            ZMLogDebug(@"Contact List load after %lums", (unsigned long)loadContactListEvent.elapsedTime);
         }
         
         if (nil != [UISelectionFeedbackGenerator class]) {
