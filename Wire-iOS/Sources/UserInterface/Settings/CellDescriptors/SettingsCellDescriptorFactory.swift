@@ -75,7 +75,8 @@ import Foundation
                                                         return nil
                                                     },
                                                     previewGenerator: nil,
-                                                    icon: .team)
+                                                    icon: .team,
+                                                    accessoryViewMode: .alwaysHide)
     }
     
     func addAccountOrTeamCell() -> SettingsCellDescriptorType {
