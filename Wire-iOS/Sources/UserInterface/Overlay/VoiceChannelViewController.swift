@@ -384,6 +384,10 @@ extension VoiceChannelViewController : WireCallCenterCallStateObserver, Received
             }
         case .established, .establishedDataChannel:
             return .connected
+
+        case .terminating:
+            return .leavingCall
+
         default:
             return .invalid
         }

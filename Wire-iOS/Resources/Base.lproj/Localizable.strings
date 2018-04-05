@@ -446,6 +446,7 @@
 "voice.status.group_call.incoming" = "%@\nRinging";
 "voice.status.one_to_one.outgoing" = "%@\nRinging";
 "voice.status.joining" = "%@\nConnecting";
+"voice.status.leaving" = "%@\nCall ended";
 "voice.status.video_not_available" = "Video turned off";
 "voice.status.low_connection" = "Bad connection";
 "voice.network_error.title" = "No Internet Connection";

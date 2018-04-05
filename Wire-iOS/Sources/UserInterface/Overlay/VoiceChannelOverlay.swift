@@ -54,6 +54,7 @@ fileprivate let VoiceChannelOverlayVideoFeedPositionKey = "VideoFeedPosition"
     case outgoingCall
     case outgoingCallDegraded
     case connected
+    case leavingCall
     
     var description: String {
         switch self {
@@ -73,6 +74,8 @@ fileprivate let VoiceChannelOverlayVideoFeedPositionKey = "VideoFeedPosition"
             return "outgoingCallDegraded"
         case .connected:
             return "connected"
+        case .leavingCall:
+            return "leaving"
         }
     }
     
@@ -311,6 +314,11 @@ extension VoiceChannelOverlay {
             }
             
             return labelText(withFormat: statusText, name: conversationName)
+
+        case .leavingCall:
+            let statusText = "voice.status.leaving".localized.lowercasedWithCurrentLocale
+            return labelText(withFormat: statusText, name: conversationName)
+
         case .invalid, .incomingCallInactive:
             return nil
         }
@@ -349,6 +357,7 @@ extension VoiceChannelOverlay {
         case ignoreButton:
             delegate?.ignoreButtonTapped()
         case leaveButton:
+            transition(to: .leavingCall)
             delegate?.leaveButtonTapped()
         case muteButton:
             delegate?.muteButtonTapped()
@@ -845,6 +854,8 @@ extension VoiceChannelOverlay {
             visibleViews = [callingUserImage, topStatusLabel, speakerButton, muteButton, leaveButton]
         case .connected:
             visibleViews = connectedStateVisibleViews(videoEnabled: false)
+        case .leavingCall:
+            visibleViews = [callingUserImage, topStatusLabel]
         }
         
         if hidesSpeakerButton {
@@ -875,6 +886,8 @@ extension VoiceChannelOverlay {
             if !outgoingVideoActive {
                 visibleViews.remove(cameraPreviewView)
             }
+        case .leavingCall:
+            visibleViews = [callingTopUserImage, topStatusLabel]
         }
         
         return visibleViews
@@ -998,6 +1011,8 @@ extension VoiceChannelOverlay {
             return "OverlayOutgoingCallDegraded"
         case .connected:
             return "OverlayConnected"
+        case .leavingCall:
+            return "OverlayLeavingCall"
         }
     }
 }
