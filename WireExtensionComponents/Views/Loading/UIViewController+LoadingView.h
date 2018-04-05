@@ -29,6 +29,6 @@
 @property (strong, nonatomic) ProgressSpinner *activityIndicator;
 @property (assign, nonatomic) BOOL showLoadingView;
 
-- (void)indicateLoadingSuccessWithCompletion:(dispatch_block_t)completion removeCheckmark:(BOOL)removeCheckmark;
+- (void)indicateLoadingSuccessRemovingCheckmark:(BOOL)removingCheckmark completion:(dispatch_block_t)completion;
 
 @end

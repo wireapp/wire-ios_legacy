@@ -91,7 +91,7 @@ const NSString *LoadingViewKey = @"loadingView";
     OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
-- (void)indicateLoadingSuccessWithCompletion:(dispatch_block_t)completion removeCheckmark:(BOOL)removeCheckmark
+- (void)indicateLoadingSuccessRemovingCheckmark:(BOOL)removingCheckmark completion:(dispatch_block_t)completion
 {
     CheckAnimationView __block *checkView = nil;
     
@@ -114,7 +114,7 @@ const NSString *LoadingViewKey = @"loadingView";
             if (completion != nil) {
                 completion();
             }
-            if (removeCheckmark) {
+            if (removingCheckmark) {
                 self.activityIndicator.alpha = 1;
                 self.activityIndicator.transform = CGAffineTransformIdentity;
                 [self setShowLoadingView:NO];
