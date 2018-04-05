@@ -999,6 +999,8 @@
 
 "registration.no_history.restore_backup_failed.title" = "Restoring history failed.";
 "registration.no_history.restore_backup_failed.message" = "Your backup file might be corrupted or not compatible.";
+"registration.no_history.restore_backup_failed.wrong_account.message" = "Cannot read backup because it's from a different account.";
+"registration.no_history.restore_backup_failed.wrong_version.message" = "Cannot read backup because it's from an unsupported version (either outdated or newer).";
 "registration.no_history.restore_backup_failed.try_again" = "Try again";
 
 "registration.no_history.logged_out.hero" = "You’ve used Wire on this device before.";
