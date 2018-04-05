@@ -21,6 +21,8 @@
 
 @import WireSyncEngine;
 
+static NSString* ZMLogTag ZM_UNUSED = @"AVS";
+
 @interface AVSLogObserver () <AVSLogger>
 
 @property (nonatomic) id token;
@@ -42,7 +44,7 @@
 
 - (void)logMessage:(NSString *)message
 {
-    DDLogVoice(@"AVS: %@", message);
+    ZMLogDebug(@"%@", message);
 }
 
 @end

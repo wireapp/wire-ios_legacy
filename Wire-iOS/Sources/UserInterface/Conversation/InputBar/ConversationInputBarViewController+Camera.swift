@@ -20,9 +20,8 @@
 import Foundation
 import MobileCoreServices
 import Photos
-import CocoaLumberjackSwift
 
-
+private let zmLog = ZMSLog(tag: "UI")
 
 @objc class FastTransitioningDelegate: NSObject, UIViewControllerTransitioningDelegate {
     static let sharedDelegate = FastTransitioningDelegate()
@@ -128,7 +127,7 @@ extension ConversationInputBarViewController: CameraKeyboardViewControllerDelega
     
     @objc fileprivate func image(_ image: UIImage?, didFinishSavingWithError error: NSError?, contextInfo: AnyObject) {
         if let error = error {
-            DDLogError("didFinishSavingWithError: \(error)")
+            zmLog.error("didFinishSavingWithError: \(error)")
         }
     }
     
@@ -246,7 +245,7 @@ extension ConversationInputBarViewController: UIVideoEditorControllerDelegate {
     
     @nonobjc public func videoEditorController(_ editor: UIVideoEditorController, didFailWithError error: NSError) {
         editor.dismiss(animated: true, completion: .none)
-        DDLogError("Video editor failed with error: \(error)")
+        zmLog.error("Video editor failed with error: \(error)")
     }
 }
 

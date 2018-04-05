@@ -16,12 +16,12 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 // 
 
+@import WireSystem;
 
 #import "StopWatch.h"
-#import "Logging.h"
 #import <mach/mach_time.h>
 
-
+static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
 static StopWatch *stopWatch;
 
@@ -142,7 +142,7 @@ static StopWatch *stopWatch;
         {
             if (_state == StopWatchEventStateStarted) {
                 
-                DDLogWarn(@"Trying to start event %@, but %@ was already started. %s %d %s %s",
+                ZMLogWarn(@"Trying to start event %@, but %@ was already started. %s %d %s %s",
                       self.name,
                       self.name,
                       __FILE__,
@@ -161,7 +161,7 @@ static StopWatch *stopWatch;
         case StopWatchEventStateStopped:
         {
             if (_state == StopWatchEventStateUndefined) {
-                DDLogError(@"Trying to stop event %@, but %@ was never started. %s %d %s %s",
+                ZMLogError(@"Trying to stop event %@, but %@ was never started. %s %d %s %s",
                       self.name,
                       self.name,
                       __FILE__,
@@ -170,7 +170,7 @@ static StopWatch *stopWatch;
                       __FUNCTION__);
             }
             else if (_state == StopWatchEventStateStopped) {
-                DDLogWarn(@"Trying to stop event %@, but %@ was already stopped. %s %d %s %s",
+                ZMLogWarn(@"Trying to stop event %@, but %@ was already stopped. %s %d %s %s",
                       self.name,
                       self.name,
                       __FILE__,

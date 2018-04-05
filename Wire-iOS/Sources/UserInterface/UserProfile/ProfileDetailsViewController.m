@@ -49,6 +49,7 @@
 #import "ProfileIncomingConnectionRequestFooterView.h"
 #import "ProfileUnblockFooterView.h"
 
+static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
 typedef NS_ENUM(NSUInteger, ProfileViewContentMode) {
     ProfileViewContentModeUnknown,
@@ -565,7 +566,7 @@ typedef NS_ENUM(NSUInteger, ProfileUserAction) {
 - (void)openOneToOneConversation
 {
     if (self.fullUser == nil) {
-        DDLogError(@"No user to open conversation with");
+        ZMLogError(@"No user to open conversation with");
         return;
     }
     ZMConversation __block *conversation = nil;

@@ -19,9 +19,10 @@
 
 import Foundation
 import Mixpanel
-import CocoaLumberjackSwift
 
 let MixpanelDistinctIdKey = "MixpanelDistinctIdKey"
+
+private let zmLog = ZMSLog(tag: "Analytics")
 
 fileprivate enum MixpanelSuperProperties: String {
     case city = "$city"
@@ -128,7 +129,7 @@ final class AnalyticsMixpanelProvider: NSObject, AnalyticsProvider {
         ])
     
     deinit {
-        DDLogInfo("AnalyticsMixpanelProvider \(self) deallocated")
+        zmLog.info("AnalyticsMixpanelProvider \(self) deallocated")
     }
     
     override init() {
@@ -139,11 +140,11 @@ final class AnalyticsMixpanelProvider: NSObject, AnalyticsProvider {
         mixpanelInstance?.distinctId = mixpanelDistinctId
         mixpanelInstance?.minimumSessionDuration = 2_000
         mixpanelInstance?.loggingEnabled = false
-        DDLogInfo("AnalyticsMixpanelProvider \(self) started")
+        zmLog.info("AnalyticsMixpanelProvider \(self) started")
         
         if DeveloperMenuState.developerMenuEnabled(),
             let uuidString = mixpanelInstance?.distinctId {
-            DDLogError("Mixpanel distinctId = `\(uuidString)`")
+            zmLog.error("Mixpanel distinctId = `\(uuidString)`")
         }
         
         self.setSuperProperty("app", stringValue: "ios")
@@ -177,7 +178,7 @@ final class AnalyticsMixpanelProvider: NSObject, AnalyticsProvider {
         }
         
         guard AnalyticsMixpanelProvider.enabledEvents.contains(event) else {
-            DDLogInfo("Analytics: event \(event) is disabled")
+            zmLog.info("Analytics: event \(event) is disabled")
             return
         }
         
@@ -194,7 +195,7 @@ final class AnalyticsMixpanelProvider: NSObject, AnalyticsProvider {
         }
         
         guard AnalyticsMixpanelProvider.enabledSuperProperties.contains(name) else {
-            DDLogInfo("Analytics: Super property \(name) is disabled")
+            zmLog.info("Analytics: Super property \(name) is disabled")
             return
         }
         

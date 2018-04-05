@@ -43,6 +43,8 @@
 @import WireExtensionComponents;
 @import WireSyncEngine;
 
+static NSString* ZMLogTag ZM_UNUSED = @"UI";
+
 @interface RegistrationPhoneFlowViewController () <UINavigationControllerDelegate, FormStepDelegate, PhoneVerificationStepViewControllerDelegate, ZMRegistrationObserver, PreLoginAuthenticationObserver>
 
 @property (nonatomic) PhoneNumberStepViewController *phoneNumberStepViewController;
@@ -226,7 +228,7 @@
 
 - (void)authenticationDidFail:(NSError *)error
 {
-    DDLogDebug(@"authenticationDidFail: error.code = %li", (long)error.code);
+    ZMLogDebug(@"authenticationDidFail: error.code = %li", (long)error.code);
     
     [self.analyticsTracker tagPhoneLoginFailedWithError:error];
     self.navigationController.showLoadingView = NO;

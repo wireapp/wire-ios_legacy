@@ -47,6 +47,7 @@
 #import "WireSyncEngine+iOS.h"
 #import "Wire-Swift.h"
 
+static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
 @interface FirstReponderView : UIView
 @end
@@ -584,7 +585,7 @@
 
 - (void)setSelectedByMenu:(BOOL)selected animated:(BOOL)animated
 {
-    DDLogDebug(@"Setting selected: %@ animated: %@", @(selected), @(animated));
+    ZMLogDebug(@"Setting selected: %@ animated: %@", @(selected), @(animated));
     if (selected) {
 
         self.highlightLayer = [CALayer layer];

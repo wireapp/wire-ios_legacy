@@ -35,7 +35,7 @@
 #import "AnalyticsTracker+Registration.h"
 #import "Wire-Swift.h"
 
-
+static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
 @interface AddEmailPasswordViewController () <FormStepDelegate, UINavigationControllerDelegate, EmailVerificationStepViewControllerDelegate, UserProfileUpdateObserver, ZMUserObserver>
 
@@ -173,7 +173,7 @@
         BOOL result = [[SessionManager shared] updateWithCredentials:self.credentials];
 
         if (nil != error || result == NO) {
-            DDLogError(@"Error requesting to set email and password: %@", error);
+            ZMLogError(@"Error requesting to set email and password: %@", error);
         } else {
             self.showLoadingView = YES;
         }
@@ -189,7 +189,7 @@
     [self.userProfile requestSettingEmailAndPasswordWithCredentials:self.credentials error:&error];
 
     if (nil != error) {
-        DDLogError(@"Error requesting to set email and password: %@", error);
+        ZMLogError(@"Error requesting to set email and password: %@", error);
     }
 }
 

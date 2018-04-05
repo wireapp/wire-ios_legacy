@@ -18,8 +18,9 @@
 
 
 import Foundation
-import CocoaLumberjackSwift
 import AVFoundation
+
+private let zmLog = ZMSLog(tag: "UI")
 
 extension AVAsset {
 
@@ -30,7 +31,7 @@ extension AVAsset {
         let session = AVAssetExportSession(asset: alteredAsset, presetName: AVAssetExportPresetAppleM4A)
         
         guard let exportSession = session else {
-            DDLogError("Failed to create export session with asset \(alteredAsset)")
+            zmLog.error("Failed to create export session with asset \(alteredAsset)")
             completion?(false)
             return
         }
@@ -43,7 +44,7 @@ extension AVAsset {
         exportSession.exportAsynchronously { [unowned exportSession] in
             switch exportSession.status {
             case .failed:
-                DDLogError("Cannot transcode \(inPath) to \(outPath): \(String(describing: exportSession.error))")
+                zmLog.error("Cannot transcode \(inPath) to \(outPath): \(String(describing: exportSession.error))")
                 DispatchQueue.main.async {
                     completion?(false)
                 }

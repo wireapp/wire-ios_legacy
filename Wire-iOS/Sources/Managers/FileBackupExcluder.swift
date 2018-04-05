@@ -18,9 +18,9 @@
 
 
 import Foundation
-import CocoaLumberjackSwift
 import WireExtensionComponents
 
+private let zmLog = ZMSLog(tag: "UI")
 
 final internal class FileBackupExcluder: NSObject {
 
@@ -65,7 +65,7 @@ final internal class FileBackupExcluder: NSObject {
             }
         }
         catch (let error) {
-            DDLogError("Cannot exclude file from the backup: \(self): \(error)")
+            zmLog.error("Cannot exclude file from the backup: \(self): \(error)")
         }
     }
 
@@ -74,7 +74,7 @@ final internal class FileBackupExcluder: NSObject {
             let libraryURL = sharedContainerURL.appendingPathComponent("Library")
             try libraryURL.excludeFromBackupIfExists()
         } catch {
-            DDLogError("Cannot exclude file from the backup: \(self): \(error)")
+            zmLog.error("Cannot exclude file from the backup: \(self): \(error)")
         }
     }
 }
