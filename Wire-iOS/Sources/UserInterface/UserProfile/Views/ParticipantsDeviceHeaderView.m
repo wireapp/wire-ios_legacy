@@ -114,12 +114,19 @@
     }
 }
 
+- (NSMutableParagraphStyle *)paragraphStyleForFingerprint
+{
+    NSMutableParagraphStyle *paragraphStyle = NSParagraphStyle.defaultParagraphStyle.mutableCopy;
+    paragraphStyle.lineSpacing = 2;
+
+    return paragraphStyle;
+}
+
 - (NSAttributedString *)attributedFingerprintForUserName:(NSString *)userName message:(NSString *)message
 {
     NSString *fingerprintExplanation = [NSString stringWithFormat:message, userName];
 
-    NSMutableParagraphStyle *paragraphStyle = NSParagraphStyle.defaultParagraphStyle.mutableCopy;
-    paragraphStyle.lineSpacing = 2;
+    NSMutableParagraphStyle *paragraphStyle = [self paragraphStyleForFingerprint];
 
     NSDictionary *textAttributes = @{
                                      NSForegroundColorAttributeName: self.textColor,
@@ -135,8 +142,7 @@
 
 - (NSDictionary *)linkAttributes
 {
-    NSMutableParagraphStyle *paragraphStyle = NSParagraphStyle.defaultParagraphStyle.mutableCopy;
-    paragraphStyle.lineSpacing = 2;
+    NSMutableParagraphStyle *paragraphStyle = [self paragraphStyleForFingerprint];
 
     NSDictionary *linkAttributes = @{
                                      NSFontAttributeName: self.font,
