@@ -73,7 +73,7 @@ extension AnalyticsConsoleProvider: AnalyticsProvider {
         print(loggingData: loggingDict)
     }
     
-    func setSuperProperty(_ name: String, value: String?) {
+    func setSuperProperty(_ name: String, value: NSObject?) {
         print(loggingData: ["superProperty_\(name)" : value ?? "nil"])
     }
 

@@ -30,7 +30,8 @@ fileprivate enum MixpanelSuperProperties: String {
 }
 
 extension Dictionary where Key == String, Value == Any {
-    fileprivate static func bridgeOrDescription(for object: Any) -> MixpanelType? {
+    fileprivate static func bridgeOrDescription(for object: Any?) -> MixpanelType? {
+        guard let object = object else { return nil }
         if let object = object as? NSNumber {
             let numberType = CFNumberGetType(object)
 
@@ -145,9 +146,9 @@ final class AnalyticsMixpanelProvider: NSObject, AnalyticsProvider {
             DDLogError("Mixpanel distinctId = `\(uuidString)`")
         }
         
-        self.setSuperProperty("app", value: "ios")
-        self.setSuperProperty(MixpanelSuperProperties.city.rawValue, value: "")
-        self.setSuperProperty(MixpanelSuperProperties.region.rawValue, value: "")
+        self.setSuperProperty("app", stringValue: "ios")
+        self.setSuperProperty(MixpanelSuperProperties.city.rawValue, stringValue: "")
+        self.setSuperProperty(MixpanelSuperProperties.region.rawValue, stringValue: "")
     }
     
     var mixpanelDistinctId: String {
@@ -183,7 +184,11 @@ final class AnalyticsMixpanelProvider: NSObject, AnalyticsProvider {
         mixpanelInstance.track(event: event, properties: attributes.propertiesRemovingLocation())
     }
     
-    func setSuperProperty(_ name: String, value: String?) {
+    func setSuperProperty(_ name: String, stringValue: String?) {
+        self.setSuperProperty(name, value: stringValue as NSObject?)
+    }
+    
+    func setSuperProperty(_ name: String, value: NSObject?) {
         guard let mixpanelInstance = self.mixpanelInstance else {
             return
         }
@@ -193,7 +198,7 @@ final class AnalyticsMixpanelProvider: NSObject, AnalyticsProvider {
             return
         }
         
-        if let valueNotNil = value {
+        if let valueNotNil = Dictionary.bridgeOrDescription(for: value) {
             mixpanelInstance.registerSuperProperties([name: valueNotNil])
         }
         else {
