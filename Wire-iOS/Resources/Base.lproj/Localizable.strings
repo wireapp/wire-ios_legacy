@@ -446,9 +446,9 @@
 "library.alert.permission_warning.not_allowed.explaination" = "Go to Settings and allow Wire to access your photos.";
 
 // Voice
-"voice.status.one_to_one.incoming" = "%@\nCalling";
-"voice.status.group_call.incoming" = "%@\nRinging";
-"voice.status.one_to_one.outgoing" = "%@\nRinging";
+"voice.status.one_to_one.incoming" = "%@\ncalling";
+"voice.status.group_call.incoming" = "%@\nringing";
+"voice.status.one_to_one.outgoing" = "%@\nringing";
 "voice.status.joining" = "%@\nConnecting";
 "voice.status.leaving" = "%@\nCall ended";
 "voice.status.video_not_available" = "Video turned off";
