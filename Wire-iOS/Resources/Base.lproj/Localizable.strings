@@ -17,6 +17,7 @@
 //
 
 
+// General strings
 "general.ok" = "OK";
 "general.next" = "Next";
 "general.cancel" = "Cancel";
@@ -25,6 +26,9 @@
 "general.open_settings" = "Open Wire Settings";
 "general.edit" = "Edit";
 "general.done" = "Done";
+"general.confirm" = "OK";
+// Language like Chinese does not use space to sperate words or sentences.
+"general.space_between_words" = " ";
 
 "general.guest-room-name" = "Guest room";
 
@@ -577,7 +581,7 @@
 // Device list
 "profile.devices.title" = "Devices";
 "profile.devices.fingerprint_message_unencrypted" = "%@ is using an old version of Wire. No devices are shown here.";
-"profile.devices.fingerprint_message" = "Wire gives every device a unique fingerprint. Compare them with %@ and verify your conversation. Why verify conversations?";
+"profile.devices.fingerprint_message.title" = "Wire gives every device a unique fingerprint. Compare them with %@ and verify your conversation.";
 "profile.devices.fingerprint_message.link" = "Why verify conversations?";
 
 // Device detail
@@ -590,9 +594,6 @@
 "device.class.tablet" = "Tablet";
 "device.class.phone" = "Phone";
 "profile.devices.detail.reset_session.title" = "Reset Session";
-
-// General strings
-"general.confirm" = "OK";
 
 // Bot
 "participants.services.remove_integration.button" = "remove integration";
