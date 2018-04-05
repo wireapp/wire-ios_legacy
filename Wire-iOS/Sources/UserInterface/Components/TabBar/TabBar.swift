@@ -87,8 +87,8 @@ class TabBar: UIView {
     
     fileprivate func createConstraints() {
         constrain(self, stackView) { selfView, stackView in
-            stackView.left == selfView.left
-            stackView.right == selfView.right
+            stackView.left == selfView.left + 16
+            stackView.right == selfView.right - 16
             stackView.top == selfView.top
             stackView.height == 48
 
