@@ -359,7 +359,10 @@ extension VoiceChannelViewController : WireCallCenterCallStateObserver, Received
         zmLog.debug("Updating view state from: \(previousCallState) to: \(callState)")
         
         switch callState {
-        case .incoming(video: _, shouldRing: _, degraded: let degraded):
+        case .incoming(video: _, shouldRing: let shouldRing, degraded: let degraded):
+            guard shouldRing == true else {
+                return .leavingCall
+            }
             if degraded {
                 return .incomingCallDegraded
             } else {
@@ -384,6 +387,10 @@ extension VoiceChannelViewController : WireCallCenterCallStateObserver, Received
             }
         case .established, .establishedDataChannel:
             return .connected
+
+        case .terminating:
+            return .leavingCall
+
         default:
             return .invalid
         }

@@ -17,6 +17,7 @@
 //
 
 
+// General strings
 "general.ok" = "好";
 "general.next" = "继续";
 "general.cancel" = "取消";
@@ -24,6 +25,9 @@
 "general.open_settings" = "开启Wire设定";
 "general.edit" = "修改";
 "general.done" = "完成";
+"general.confirm" = "好";
+// Language like Chinese does not use space to sperate words or sentences.
+"general.space_between_words" = "";
 
 "general.guest-room-name" = "访客聊天室";
 
@@ -566,7 +570,7 @@
 // Device list
 "profile.devices.title" = "设备";
 "profile.devices.fingerprint_message_unencrypted" = "%@使用旧版本的Wire，无法显示设备。";
-"profile.devices.fingerprint_message" = "Wire 给每一台设备一组唯一的指纹，并比较它与%@来验证您的对话。为什么要验证？";
+"profile.devices.fingerprint_message.title" = "Wire 给每一台设备一组唯一的指纹，并比较它与%@来验证您的对话。";
 "profile.devices.fingerprint_message.link" = "为什么要验证对话？";
 
 // Device detail
@@ -579,9 +583,6 @@
 "device.class.tablet" = "平板电脑";
 "device.class.phone" = "电话";
 "profile.devices.detail.reset_session.title" = "重置Session";
-
-// General strings
-"general.confirm" = "好";
 
 // Bot
 "participants.services.remove_integration.button" = "移除服务";

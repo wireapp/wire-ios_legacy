@@ -47,6 +47,7 @@ extension NoHistoryViewController {
         let gotItText = self.localizableString(forPart: "got_it")!
         okButton.setTitle(gotItText.localized, for: .normal)
         okButton.addCallback(for: .touchUpInside) { [unowned self] _ in
+            self.showLoadingView = true
             self.formStepDelegate.didCompleteFormStep(self)
         }
         
@@ -156,7 +157,7 @@ extension NoHistoryViewController {
                 self.showLoadingView = false
             case .success:
                 BackupEvent.importSucceeded.track()
-                self.indicateLoadingSuccess {
+                self.indicateLoadingSuccessRemovingCheckmark(false) {
                     self.formStepDelegate.didCompleteFormStep(self)
                 }
             }

@@ -166,7 +166,7 @@ public extension ZMConversation {
 
     var ephemeralTrackingAttributes: [String: Any] {
         let ephemeral = destructionTimeout != .none
-        var attributes = ["is_ephemeral": ephemeral ? "true" : "false"]
+        var attributes: [String:Any] = ["is_ephemeral": ephemeral]
         guard ephemeral else { return attributes }
         attributes["ephemeral_time"] = "\(Int(destructionTimeout.rawValue))"
         return attributes
@@ -191,7 +191,7 @@ public extension Analytics {
         attributes["action"] = action.attributeValue
 
         if let typeAttribute = conversation.analyticsTypeString() {
-            attributes["with_service"] = conversation.includesServiceUser ? "true" : "false";
+            attributes["with_service"] = conversation.includesServiceUser
             attributes["conversation_type"] = typeAttribute
         }
 
