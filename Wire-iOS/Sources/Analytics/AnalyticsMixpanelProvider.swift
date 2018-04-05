@@ -185,6 +185,7 @@ final class AnalyticsMixpanelProvider: NSObject, AnalyticsProvider {
         mixpanelInstance.track(event: event, properties: attributes.propertiesRemovingLocation())
     }
     
+    //Fallback method to avoid repeated casts to NSObject
     func setSuperProperty(_ name: String, stringValue: String?) {
         self.setSuperProperty(name, value: stringValue as NSObject?)
     }
