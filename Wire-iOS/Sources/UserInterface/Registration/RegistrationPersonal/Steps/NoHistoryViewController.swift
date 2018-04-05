@@ -136,7 +136,7 @@ extension NoHistoryViewController {
                 self.showLoadingView = false
             case .success:
                 BackupEvent.importSucceeded.track()
-                self.indicateLoadingSuccess {
+                self.indicateLoadingSuccessRemovingCheckmark(false) {
                     self.formStepDelegate.didCompleteFormStep(self)
                 }
             }
