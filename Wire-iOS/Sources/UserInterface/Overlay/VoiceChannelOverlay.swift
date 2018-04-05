@@ -767,20 +767,20 @@ extension VoiceChannelOverlay {
         updateStatusLabelText()
         updateCallingUserImage()
         updateCallDegradedLabels()
+
+        let connected = (state == .connected)
         
+        muteButton.isEnabled = connected
+        videoButton.isEnabled = connected
+        videoButton.isSelected = videoButton.isEnabled && outgoingVideoActive
+
         visibleViews(for: state).forEach {
             $0.alpha = 1.0
         }
         hiddenViews(for: state).forEach {
             $0.alpha = 0.0
         }
-        
-        let connected = (state == .connected)
-        
-        muteButton.isEnabled = connected
-        videoButton.isEnabled = connected
-        videoButton.isSelected = videoButton.isEnabled && outgoingVideoActive
-        
+
         if isVideoCall {
             videoView?.isHidden = false
             videoPreview?.isHidden = false
@@ -789,7 +789,7 @@ extension VoiceChannelOverlay {
             videoView?.isHidden = true
             videoPreview?.isHidden = true
         }
-        
+
         cameraPreviewView.mutedPreviewOverlay.isHidden = !outgoingVideoActive || !muted
     }
     
@@ -855,7 +855,7 @@ extension VoiceChannelOverlay {
         case .connected:
             visibleViews = connectedStateVisibleViews(videoEnabled: false)
         case .leavingCall:
-            visibleViews = [callingUserImage, topStatusLabel]
+            visibleViews = [topStatusLabel]
         }
         
         if hidesSpeakerButton {
