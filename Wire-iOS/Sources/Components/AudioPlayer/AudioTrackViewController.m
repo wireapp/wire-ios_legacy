@@ -31,6 +31,8 @@
 #import "LinkAttachment.h"
 #import "SoundcloudService.h"
 
+static NSString* ZMLogTag ZM_UNUSED = @"UI";
+
 @import WireExtensionComponents;
 @import AVFoundation;
 
@@ -257,7 +259,7 @@
             if (loaded) {
                 [self.audioTrackPlayer play];
             } else {
-                DDLogWarn(@"Couldn't load audio track (%@): %@", self.audioTrack.title, error);
+                ZMLogWarn(@"Couldn't load audio track (%@): %@", self.audioTrack.title, error);
             }
         }];
     } else {

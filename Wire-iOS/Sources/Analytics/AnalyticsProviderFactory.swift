@@ -17,7 +17,8 @@
 //
 
 import Foundation
-import CocoaLumberjackSwift
+
+private let zmLog = ZMSLog(tag: "Analytics")
 
 fileprivate let ZMEnableConsoleLog = "ZMEnableAnalyticsLog"
 
@@ -29,15 +30,15 @@ fileprivate let ZMEnableConsoleLog = "ZMEnableAnalyticsLog"
   
     @objc public func analyticsProvider() -> AnalyticsProvider? {
         if self.useConsoleAnalytics || UserDefaults.standard.bool(forKey: ZMEnableConsoleLog) {
-            DDLogInfo("Creating analyticsProvider: AnalyticsConsoleProvider")
+            zmLog.info("Creating analyticsProvider: AnalyticsConsoleProvider")
             return AnalyticsConsoleProvider()
         }
         else if UseAnalytics.boolValue || AutomationHelper.sharedHelper.useAnalytics {
-            DDLogInfo("Creating analyticsProvider: AnalyticsMixpanelProvider")
+            zmLog.info("Creating analyticsProvider: AnalyticsMixpanelProvider")
             return AnalyticsMixpanelProvider()
         }
         else {
-            DDLogInfo("Creating analyticsProvider: no provider")
+            zmLog.info("Creating analyticsProvider: no provider")
             return nil
         }
     }

@@ -21,8 +21,8 @@ import UIKit
 import WireSyncEngine
 import Cartography
 import WireExtensionComponents
-import CocoaLumberjackSwift
 
+private let zmLog = ZMSLog(tag: "UI")
 
 @objc class ClientListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, ZMClientUpdateObserver {
     var clientsTableView: UITableView?
@@ -212,7 +212,7 @@ import CocoaLumberjackSwift
     func failedToFetchClientsWithError(_ error: Error!) {
         self.showLoadingView = false
         
-        DDLogError("Clients request failed: \(error)")
+        zmLog.error("Clients request failed: \(error)")
         
         self.displayError(NSLocalizedString("error.user.unkown_error", comment: ""))
     }
@@ -344,7 +344,7 @@ import CocoaLumberjackSwift
                             }
                         }
                     case .right(let error):
-                        DDLogError("Error: \(error)")
+                        zmLog.error("Error: \(error)")
                     }
                 }
                 self.present(passwordRequest, animated: true, completion: .none)

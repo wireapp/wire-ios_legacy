@@ -19,8 +19,9 @@
 
 import Foundation
 import Cartography
-import CocoaLumberjackSwift
 import WireExtensionComponents
+
+private let zmLog = ZMSLog(tag: "UI")
 
 final public class CollectionImageCell: CollectionCell {
     public static var imageCache: ImageCache = {
@@ -189,7 +190,7 @@ final public class CollectionImageCell: CollectionCell {
                 }
             }
             else {
-                DDLogInfo("finished loading image but cell is no longer on screen.")
+                zmLog.info("finished loading image but cell is no longer on screen.")
             }
         }
     }

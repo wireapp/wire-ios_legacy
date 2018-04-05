@@ -45,6 +45,7 @@
 #import "Wire-Swift.h"
 
 
+static NSString* ZMLogTag ZM_UNUSED = @"UI";
 static NSUInteger const StartUIInitiallyShowsKeyboardConversationThreshold = 10;
 
 
@@ -256,7 +257,7 @@ static NSUInteger const StartUIInitiallyShowsKeyboardConversationThreshold = 10;
 - (void)performSearch
 {
     NSString *searchString = self.searchHeaderViewController.query;
-    DDLogInfo(@"Search for %@", searchString);
+    ZMLogInfo(@"Search for %@", searchString);
     
     if (self.groupSelector.group == SearchGroupPeople) {
         if (searchString.length == 0) {

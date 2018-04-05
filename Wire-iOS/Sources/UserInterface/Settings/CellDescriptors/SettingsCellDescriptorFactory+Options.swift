@@ -185,7 +185,7 @@ extension SettingsCellDescriptorFactory {
             
             if context.canEvaluatePolicy(LAPolicy.deviceOwnerAuthentication, error: &error) {
                 let lockApp = SettingsPropertyToggleCellDescriptor(settingsProperty: self.settingsPropertyFactory.property(.lockApp))
-                let section = SettingsSectionDescriptor(cellDescriptors: [lockApp], header: .none, footer: "self.settings.privacy_security.lock_app.subtitle".localized)
+                let section = SettingsSectionDescriptor(cellDescriptors: [lockApp], header: .none, footer: appLockSectionSubtitle)
                 cellDescriptors.append(section)
             }
         }
@@ -200,6 +200,19 @@ extension SettingsCellDescriptorFactory {
         cellDescriptors.append(linkPreviewSection)
         
         return SettingsGroupCellDescriptor(items: cellDescriptors, title: "self.settings.options_menu.title".localized, icon: .settingsOptions)
+    }
+    
+    private var appLockSectionSubtitle: String {
+        let lockDescription = "self.settings.privacy_security.lock_app.subtitle.lock_description".localized
+        let typeKey: String = {
+            switch AuthenticationType.current {
+            case .none: return "self.settings.privacy_security.lock_app.subtitle.none"
+            case .touchID: return "self.settings.privacy_security.lock_app.subtitle.touch_id"
+            case .faceID: return "self.settings.privacy_security.lock_app.subtitle.face_id"
+            }
+        }()
+        
+        return lockDescription + " " + typeKey.localized
     }
 
     func twitterOpeningGroup(for property: SettingsProperty) -> SettingsCellDescriptorType {

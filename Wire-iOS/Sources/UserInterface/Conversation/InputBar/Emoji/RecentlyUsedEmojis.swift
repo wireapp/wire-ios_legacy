@@ -18,8 +18,8 @@
 
 
 import Foundation
-import CocoaLumberjackSwift
 
+private let zmLog = ZMSLog(tag: "UI")
 
 class RecentlyUsedEmojiSection: NSObject, EmojiSection {
 
@@ -85,7 +85,7 @@ class RecentlyUsedEmojiPeristenceCoordinator {
             try url.wr_excludeFromBackup()
         }
         catch (let exception) {
-            DDLogError("Error creating \(String(describing: directoryURL)): \(exception)")
+            zmLog.error("Error creating \(String(describing: directoryURL)): \(exception)")
         }
     }
 

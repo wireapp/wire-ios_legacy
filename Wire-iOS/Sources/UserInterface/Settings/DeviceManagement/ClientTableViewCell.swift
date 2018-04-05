@@ -21,7 +21,6 @@ import UIKit
 import Cartography
 import CoreLocation
 import Contacts
-import CocoaLumberjackSwift
 import Classy
 
 class ClientTableViewCell: UITableViewCell {

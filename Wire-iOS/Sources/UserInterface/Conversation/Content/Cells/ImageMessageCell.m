@@ -33,8 +33,9 @@
 #import "Wire-Swift.h"
 #import "UIImage+ZetaIconsNeue.h"
 #import "ConversationCell+Private.h"
-
 #import "UIView+Borders.h"
+
+static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
 @protocol MediaAsset;
 
@@ -349,7 +350,7 @@ static const CGFloat ImageToolbarMinimumSize = 192;
             }
             
             if (image == nil) {
-                DDLogError(@"Invalid image data returned from sync engine!");
+                ZMLogError(@"Invalid image data returned from sync engine!");
             }
             return image;
             
@@ -361,7 +362,7 @@ static const CGFloat ImageToolbarMinimumSize = 192;
                 self.image = image;
             }
             else {
-                DDLogInfo(@"finished loading image but cell is no longer on screen.");
+                ZMLogInfo(@"finished loading image but cell is no longer on screen.");
             }
         }];
     }
@@ -533,7 +534,7 @@ static const CGFloat ImageToolbarMinimumSize = 192;
 
 - (void)setSelectedByMenu:(BOOL)selected animated:(BOOL)animated
 {
-    DDLogDebug(@"Setting selected: %@ animated: %@", @(selected), @(animated));
+    ZMLogDebug(@"Setting selected: %@ animated: %@", @(selected), @(animated));
     
     dispatch_block_t animations = ^{
         self.fullImageView.alpha = selected ? ConversationCellSelectedOpacity : 1.0f;

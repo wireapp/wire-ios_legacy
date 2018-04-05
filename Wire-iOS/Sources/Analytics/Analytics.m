@@ -16,6 +16,7 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 // 
 
+@import WireSystem;
 
 #import "Analytics.h"
 #import "Analytics+SessionEvents.h"
@@ -35,6 +36,9 @@
 #import <avs/AVSFlowManager.h>
 
 #import "Wire-Swift.h"
+
+
+static NSString* ZMLogTag ZM_UNUSED = @"Analytics";
 
 
 NSString * LocalyticsAPIKey = @STRINGIZE(ANALYTICS_API_KEY);
@@ -78,7 +82,7 @@ static Analytics *sharedAnalytics = nil;
 {
     self = [super init];
     if (self) {
-        DDLogInfo(@"Analytics initWithOptedOut: %lu", (unsigned long)optedOut);
+        ZMLogInfo(@"Analytics initWithOptedOut: %lu", (unsigned long)optedOut);
         self.provider = optedOut ? nil : [[AnalyticsProviderFactory shared] analyticsProvider];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(userSessionDidBecomeAvailable:) name:ZMUserSessionDidBecomeAvailableNotification object:nil];
     }

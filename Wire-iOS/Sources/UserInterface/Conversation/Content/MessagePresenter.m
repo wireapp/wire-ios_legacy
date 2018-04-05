@@ -27,6 +27,7 @@
 @import AVKit;
 @import AVFoundation;
 
+static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
 @interface AVPlayerViewControllerWithoutStatusBar : AVPlayerViewController
 
@@ -96,7 +97,7 @@
     
     if (message.fileMessageData.fileURL == nil || ! [message.fileMessageData.fileURL isFileURL] || message.fileMessageData.fileURL.path.length == 0) {
         NSAssert(0, @"File URL is missing: %@ (%@)", message.fileMessageData.fileURL, message.fileMessageData);
-        DDLogError(@"File URL is missing: %@ (%@)", message.fileMessageData.fileURL, message.fileMessageData);
+        ZMLogError(@"File URL is missing: %@ (%@)", message.fileMessageData.fileURL, message.fileMessageData);
         [[ZMUserSession sharedSession] enqueueChanges:^{
             [message.fileMessageData requestFileDownload];
         }];
@@ -131,7 +132,7 @@
 {
     if (message.fileMessageData.fileURL == nil || ! [message.fileMessageData.fileURL isFileURL] || message.fileMessageData.fileURL.path.length == 0) {
         NSAssert(0, @"File URL is missing: %@ (%@)", message.fileMessageData.fileURL, message.fileMessageData);
-        DDLogError(@"File URL is missing: %@ (%@)", message.fileMessageData.fileURL, message.fileMessageData);
+        ZMLogError(@"File URL is missing: %@ (%@)", message.fileMessageData.fileURL, message.fileMessageData);
         [[ZMUserSession sharedSession] enqueueChanges:^{
             [message.fileMessageData requestFileDownload];
         }];
@@ -143,7 +144,7 @@
     NSString *tmpPath = [NSTemporaryDirectory() stringByAppendingPathComponent:message.fileMessageData.filename];
     [[NSFileManager defaultManager] linkItemAtPath:message.fileMessageData.fileURL.path toPath:tmpPath error:&error];
     if (nil != error) {
-        DDLogError(@"Cannot symlink %@ to %@: %@", message.fileMessageData.fileURL.path, tmpPath, error);
+        ZMLogError(@"Cannot symlink %@ to %@: %@", message.fileMessageData.fileURL.path, tmpPath, error);
         tmpPath =  message.fileMessageData.fileURL.path;
     }
     
@@ -162,7 +163,7 @@
     NSError *linkDeleteError = nil;
     [[NSFileManager defaultManager] removeItemAtURL:self.documentInteractionController.URL error:&linkDeleteError];
     if (linkDeleteError) {
-        DDLogError(@"Cannot delete temporary link %@: %@", self.documentInteractionController.URL, linkDeleteError);
+        ZMLogError(@"Cannot delete temporary link %@: %@", self.documentInteractionController.URL, linkDeleteError);
     }
 }
 

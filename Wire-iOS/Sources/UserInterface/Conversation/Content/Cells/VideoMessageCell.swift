@@ -19,8 +19,9 @@
 
 import Foundation
 import Cartography
-import CocoaLumberjackSwift
 import Classy
+
+private let zmLog = ZMSLog(tag: "UI")
 
 /// Displays the video message with different states
 public final class VideoMessageCell: ConversationCell {
@@ -184,7 +185,7 @@ public final class VideoMessageCell: ConversationCell {
     
     func video(_ videoPath: NSString, didFinishSavingWithError error: NSError?, contextInfo info: AnyObject) {
         if let error = error {
-            DDLogError("Cannot save video: \(error)")
+            zmLog.error("Cannot save video: \(error)")
         }
     }
     

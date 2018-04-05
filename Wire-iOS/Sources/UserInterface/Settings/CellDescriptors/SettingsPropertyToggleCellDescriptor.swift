@@ -18,7 +18,8 @@
 
 
 import Foundation
-import CocoaLumberjackSwift
+
+private let zmLog = ZMSLog(tag: "UI")
 
 /**
  * @abstract Generates the cell that displays toggle control
@@ -86,7 +87,7 @@ class SettingsPropertyToggleCellDescriptor: SettingsPropertyCellDescriptorType {
             try self.settingsProperty << SettingsPropertyValue(valueToSet)
         }
         catch(let e) {
-            DDLogError("Cannot set property: \(e)")
+            zmLog.error("Cannot set property: \(e)")
         }
     }
 }
