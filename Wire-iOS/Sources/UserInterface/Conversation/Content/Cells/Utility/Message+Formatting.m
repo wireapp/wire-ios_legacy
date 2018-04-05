@@ -110,6 +110,7 @@ static inline NSDataDetector *linkDataDetector(void)
         style.baseFont = UIFont.normalLightFont;
         style.baseFontColor = [UIColor wr_colorFromColorScheme:ColorSchemeColorTextForeground];
         style.baseParagraphStyle = cellParagraphStyle;
+        style.listItemPrefixColor = [style.baseFontColor colorWithAlphaComponent:0.64];
     }
 
     if (obfuscated) {
