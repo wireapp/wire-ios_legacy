@@ -86,7 +86,7 @@ extension ZMConversation.Action {
     
     fileprivate var style: UIAlertActionStyle {
         switch self {
-        case .delete, .leave, .remove: return .destructive
+        case .remove: return .destructive
         default: return .default
         }
     }
