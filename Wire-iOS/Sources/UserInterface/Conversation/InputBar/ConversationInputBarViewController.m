@@ -322,7 +322,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     
     self.inputBar = [[InputBar alloc] initWithButtons:@[self.photoButton, self.videoButton, self.sketchButton, self.gifButton, self.audioButton, self.pingButton, self.uploadFileButton, self.locationButton]];
     self.inputBar.translatesAutoresizingMaskIntoConstraints = NO;
-    self.inputBar.textView.delegate = self;///TODO
+    self.inputBar.textView.delegate = self;
     
     [self.view addSubview:self.inputBar];
     [self.inputBar autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero excludingEdge:ALEdgeBottom];
