@@ -22,7 +22,7 @@ import Cartography
 // This class wraps the conversation content view controller in order to display the navigation bar on the top
 @objc open class ConversationRootViewController: UIViewController {
 
-    fileprivate(set) var navBarContainer: UINavigationBarContainer!
+    let navBarContainer: UINavigationBarContainer
     fileprivate var contentView = UIView()
     var navHeight: NSLayoutConstraint?
     var networkStatusBarHeight: NSLayoutConstraint?
@@ -41,6 +41,16 @@ import Cartography
 
         networkStatusViewController = NetworkStatusViewController()
 
+        let navbar = UINavigationBar()
+        navbar.isTranslucent = false
+        navbar.isOpaque = true
+        navbar.setBackgroundImage(UIImage(), for: .any, barMetrics: .default)
+        navbar.shadowImage = UIImage()
+        navbar.barTintColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorBarBackground)
+        navbar.tintColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorTextForeground)
+
+        navBarContainer = UINavigationBarContainer(navbar)
+
         super.init(nibName: .none, bundle: .none)
 
         networkStatusViewController.delegate = self
@@ -50,7 +60,6 @@ import Cartography
         conversationController.didMove(toParentViewController: self)
 
         conversationViewController = conversationController
-
 
         configure()
     }
@@ -66,15 +75,6 @@ import Cartography
 
         self.view.backgroundColor = ColorScheme.default().color(withName: ColorSchemeColorBarBackground)
 
-        let navbar = UINavigationBar()
-        navbar.isTranslucent = false
-        navbar.isOpaque = true
-        navbar.setBackgroundImage(UIImage(), for: .any, barMetrics: .default)
-        navbar.shadowImage = UIImage()
-        navbar.barTintColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorBarBackground)
-        navbar.tintColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorTextForeground)
-
-        navBarContainer = UINavigationBarContainer(navbar)
         self.addChildViewController(navBarContainer)
         view.addSubview(navBarContainer.view)
         navBarContainer.didMove(toParentViewController: self)
