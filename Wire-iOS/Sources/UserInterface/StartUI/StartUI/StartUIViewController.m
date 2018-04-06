@@ -145,9 +145,6 @@ static NSUInteger const StartUIInitiallyShowsKeyboardConversationThreshold = 10;
     
     self.quickActionsBar = [[StartUIInviteActionBar alloc] init];
     [self.quickActionsBar.inviteButton addTarget:self action:@selector(inviteMoreButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
-
-    self.navigationController.navigationBar.barTintColor = [UIColor clearColor];
-    [self.navigationController.navigationBar setTranslucent:YES];
     
     self.view.backgroundColor = [UIColor clearColor];
     
@@ -167,6 +164,8 @@ static NSUInteger const StartUIInitiallyShowsKeyboardConversationThreshold = 10;
                                                                             action:@selector(onDismissPressed)];
     self.navigationItem.rightBarButtonItem.accessibilityIdentifier = @"close";
     
+    self.navigationController.navigationBar.barTintColor = [UIColor clearColor];
+    [self.navigationController.navigationBar setTranslucent:YES];
     self.navigationController.navigationBar.tintColor = [UIColor wr_colorFromColorScheme:ColorSchemeColorTextForeground variant:ColorSchemeVariantDark];
     self.navigationController.navigationBar.titleTextAttributes = [DefaultNavigationBar titleTextAttributesFor:ColorSchemeVariantDark];
     
