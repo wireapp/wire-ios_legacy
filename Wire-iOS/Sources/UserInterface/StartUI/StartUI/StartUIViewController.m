@@ -146,6 +146,9 @@ static NSUInteger const StartUIInitiallyShowsKeyboardConversationThreshold = 10;
     self.quickActionsBar = [[StartUIInviteActionBar alloc] init];
     [self.quickActionsBar.inviteButton addTarget:self action:@selector(inviteMoreButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
 
+    self.navigationController.navigationBar.barTintColor = [UIColor clearColor];
+    [self.navigationController.navigationBar setTranslucent:YES];
+    
     self.view.backgroundColor = [UIColor clearColor];
     
     [self createConstraints];
