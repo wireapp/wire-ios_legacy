@@ -34,10 +34,13 @@ import Cartography
 
     open fileprivate(set) weak var conversationViewController: ConversationViewController?
 
-    public init(conversation: ZMConversation, clientViewController: ZClientViewController) {
-        let conversationController = ConversationViewController()
-        conversationController.conversation = conversation
-        conversationController.zClientViewController = clientViewController
+    public init(conversation: ZMConversation?, clientViewController: ZClientViewController) {
+        var conversationController: ConversationViewController?
+        if let conversation = conversation {
+            conversationController = ConversationViewController()
+            conversationController?.conversation = conversation
+            conversationController?.zClientViewController = clientViewController
+        }
 
         networkStatusViewController = NetworkStatusViewController()
 
@@ -55,11 +58,14 @@ import Cartography
 
         networkStatusViewController.delegate = self
 
-        self.addChildViewController(conversationController)
-        self.contentView.addSubview(conversationController.view)
-        conversationController.didMove(toParentViewController: self)
 
-        conversationViewController = conversationController
+        if let conversationController = conversationController {
+            self.addChildViewController(conversationController)
+            self.contentView.addSubview(conversationController.view)
+            conversationController.didMove(toParentViewController: self)
+
+            conversationViewController = conversationController
+        }
 
         configure()
     }
@@ -85,7 +91,7 @@ import Cartography
         networkStatusViewController.createConstraintsInContainer(bottomView: navBarContainer.view,
                                                                  containerView: self.view, 
                                                                  topMargin: UIScreen.safeArea.top)
- 
+
         constrain(navBarContainer.view, view, contentView, conversationViewController.view) {
             navBarContainer, view, contentView, conversationViewControllerView in
 
@@ -102,7 +108,7 @@ import Cartography
 
         navBarContainer.navigationBar.pushItem(conversationViewController.navigationItem, animated: false)
     }
-
+    
     override open func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         delay(0.4) {
