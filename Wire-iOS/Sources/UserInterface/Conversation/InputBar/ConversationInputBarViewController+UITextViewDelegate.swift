@@ -45,7 +45,7 @@ extension ConversationInputBarViewController: UITextViewDelegate {
     public func textViewShouldBeginEditing(_ textView: UITextView) -> Bool {
         guard mode != .audioRecord else { return true }
         guard delegate.responds(to:  #selector(ConversationInputBarViewControllerDelegate.conversationInputBarViewControllerShouldBeginEditing(_:isEditingMessage:))) else { return true }
-        
+
         return delegate.conversationInputBarViewControllerShouldBeginEditing!(self, isEditingMessage: (nil != editingMessage))
     }
 
@@ -53,16 +53,16 @@ extension ConversationInputBarViewController: UITextViewDelegate {
         updateAccessoryViews()
         updateNewButtonTitleLabel()
         AppDelegate.checkNetwork()
-        if UIDevice.current.userInterfaceIdiom == .pad {
-            ///TODO: dismiss left view
+        if self.isIPadRegularPortrait(device: UIDevice.current, application: UIApplication.shared) {
+            ///TODO: check left view is closed?
+            wr_splitViewController?.setLeftViewControllerRevealed(false, animated: true)
         }
     }
 
     public func textViewShouldEndEditing(_ textView: UITextView) -> Bool {
-        if delegate.responds(to: #selector(ConversationInputBarViewControllerDelegate.conversationInputBarViewControllerShouldEndEditing(_:))) {
-            return delegate.conversationInputBarViewControllerShouldEndEditing!(self)
-        }
-        return true
+        guard delegate.responds(to: #selector(ConversationInputBarViewControllerDelegate.conversationInputBarViewControllerShouldEndEditing(_:))) else { return true }
+
+        return delegate.conversationInputBarViewControllerShouldEndEditing!(self)
     }
 
     public func textViewDidEndEditing(_ textView: UITextView) {
