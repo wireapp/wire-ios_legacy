@@ -157,7 +157,6 @@
 #import "AVAsset+VideoConvert.h"
 #import "DeviceOrientationObserver.h"
 #import "Analytics+ConversationEvents.h"
-#import "AppDelegate+Logging.h"
 #import "LinkAttachment.h"
 #import "Message+Formatting.h"
 #import "UIImagePickerController+GetImage.h"

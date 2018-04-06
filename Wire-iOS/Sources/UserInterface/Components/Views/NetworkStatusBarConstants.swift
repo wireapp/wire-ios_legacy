@@ -27,7 +27,7 @@ extension CGFloat {
 
     enum OfflineBar {
         static let expandedHeight: CGFloat = 20
-        static let expandedCornerRadius: CGFloat = 6
+        static let cornerRadius: CGFloat = 6
    }
 
     enum SyncBar {

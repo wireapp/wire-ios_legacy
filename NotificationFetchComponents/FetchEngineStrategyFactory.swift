@@ -18,7 +18,6 @@
 
 
 import Foundation
-import WireMessageStrategy
 import WireRequestStrategy
 import WireTransport.ZMRequestCancellation
 

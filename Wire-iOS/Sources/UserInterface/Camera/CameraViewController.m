@@ -43,6 +43,8 @@
 
 #import "Wire-Swift.h"
 
+static NSString* ZMLogTag ZM_UNUSED = @"UI";
+
 static CameraControllerCamera CameraViewControllerToCameraControllerCamera(CameraViewControllerCamera camera)
 {
     switch (camera) {
@@ -549,7 +551,7 @@ static CameraControllerCamera CameraViewControllerToCameraControllerCamera(Camer
 - (void)image:(UIImage *)image didFinishSavingWithError:(NSError *)error contextInfo:(void *)contextInfo
 {
     if (error != nil) {
-        DDLogError(@"Cannot save image to camera roll: %@", error);
+        ZMLogError(@"Cannot save image to camera roll: %@", error);
     }
 }
 

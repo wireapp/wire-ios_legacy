@@ -24,6 +24,8 @@
 #import "Settings.h"
 #import "Wire-Swift.h"
 
+static NSString* ZMLogTag ZM_UNUSED = @"UI";
+
 @implementation AppDelegate (Hockey)
 
 - (void)setupHockeyWithCompletion:(dispatch_block_t)completed
@@ -51,7 +53,7 @@
         [hockeyManager.authenticator authenticateInstallation];
         
         if (hockeyManager.crashManager.didCrashInLastSession && hockeyManager.crashManager.timeIntervalCrashInLastSessionOccurred < 5) {
-            DDLogError(@"HockeyIntegration: START Waiting for the crash log upload...");
+            ZMLogError(@"HockeyIntegration: START Waiting for the crash log upload...");
             self.hockeyInitCompletion = completed;
             
             // Timeout for crash log upload
@@ -72,10 +74,10 @@
 
 - (void)crashReportUploadDone
 {
-    DDLogError(@"HockeyIntegration: finished or timed out sending the crash report");
+    ZMLogError(@"HockeyIntegration: finished or timed out sending the crash report");
     if (nil != self.hockeyInitCompletion) {
         self.hockeyInitCompletion();
-        DDLogError(@"HockeyIntegration: END Waiting for the crash log upload...");
+        ZMLogError(@"HockeyIntegration: END Waiting for the crash log upload...");
         self.hockeyInitCompletion = nil;
     }
 }

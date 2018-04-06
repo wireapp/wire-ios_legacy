@@ -49,6 +49,8 @@
 
 #import "AnalyticsTracker+Registration.h"
 
+static NSString* ZMLogTag ZM_UNUSED = @"UI";
+
 @interface RegistrationViewController (UserSessionObserver) <SessionManagerCreatedSessionObserver, PostLoginAuthenticationObserver>
 @end
 
@@ -254,7 +256,7 @@
 
 - (void)didFailToFetchPersonalInvitationWithError:(NSError *)error
 {
-    DDLogDebug(@"Failed to fetch invitation with error: %@", error);
+    ZMLogDebug(@"Failed to fetch invitation with error: %@", error);
 }
 
 #pragma mark - PreLoginAuthenticationObserver
@@ -302,6 +304,9 @@
         addEmailPasswordViewController.skipButtonType = AddEmailPasswordViewControllerSkipButtonTypeNone;
         
         [self.rootNavigationController pushViewController:addEmailPasswordViewController animated:YES];
+    }
+    else if (! [[ZMUserSession sharedSession] registeredOnThisDevice]) {
+        [self.delegate registrationViewControllerDidSignIn];
     }
     else if ([self.class registrationFlow] == RegistrationFlowPhone) {
         [self.delegate registrationViewControllerDidCompleteRegistration];

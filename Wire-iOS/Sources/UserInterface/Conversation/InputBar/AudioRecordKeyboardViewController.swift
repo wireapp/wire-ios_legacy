@@ -19,8 +19,8 @@
 
 import Foundation
 import Cartography
-import CocoaLumberjackSwift
 
+private let zmLog = ZMSLog(tag: "UI")
 
 @objc final public class AudioRecordKeyboardViewController: UIViewController, AudioRecordBaseViewController {
     enum State {
@@ -346,13 +346,13 @@ import CocoaLumberjackSwift
     
     func sendAudioAsIs(_ context: AudioMessageContext) {
         recorder.stopPlaying()
-        guard let url = recorder.fileURL else { return DDLogWarn("Nil url passed to send as audio file") }
+        guard let url = recorder.fileURL else { return zmLog.warn("Nil url passed to send as audio file") }
         
         delegate?.audioRecordViewControllerWantsToSendAudio(self, recordingURL: url, duration: recorder.currentDuration, context: context, filter: .none)
     }
     
     fileprivate func openEffectsPicker() {
-        guard let url = recorder.fileURL else { return DDLogWarn("Nil url passed to add effect to audio file") }
+        guard let url = recorder.fileURL else { return zmLog.warn("Nil url passed to add effect to audio file") }
         
         let noizeReducePath = (NSTemporaryDirectory() as NSString).appendingPathComponent("noize-reduce.wav")
         noizeReducePath.deleteFileAtPath()
@@ -408,7 +408,7 @@ import CocoaLumberjackSwift
     func confirmButtonPressed(_ button: UIButton?) {
         
         guard let audioPath = self.currentEffectFilePath else {
-            DDLogError("No file to send")
+            zmLog.error("No file to send")
             return
         }
         

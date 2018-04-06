@@ -197,7 +197,6 @@ fileprivate extension BackupViewController {
                 BackupEvent.exportFailed.track()
             case .success(let url):
                 self.presentShareSheet(with: url)
-                BackupEvent.exportSucceeded.track()
             }
         }
     }
@@ -220,7 +219,12 @@ fileprivate extension BackupViewController {
             activityController.completionWithItemsHandler = { _, _, _, _ in
                 SessionManager.clearPreviousBackups()
             }
+            activityController.popoverPresentationController.apply {
+                $0.sourceView = tableView
+                $0.sourceRect = tableView.rectForRow(at: indexPath)
+            }
             self.present(activityController, animated: true)
         #endif
+        BackupEvent.exportSucceeded.track()
     }
 }

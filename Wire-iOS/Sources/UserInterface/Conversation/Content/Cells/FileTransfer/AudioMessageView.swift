@@ -18,8 +18,9 @@
 
 import Foundation
 import Cartography
-import CocoaLumberjackSwift
 import Classy
+
+private let zmLog = ZMSLog(tag: "UI")
 
 final class AudioMessageView: UIView, TransferView {
     public var fileMessage: ZMConversationMessage?
@@ -324,7 +325,7 @@ final class AudioMessageView: UIView, TransferView {
                     Analytics.shared().tagPlayedAudioMessage(duration, extensionString: ((fileMessageData.filename ?? "") as NSString).pathExtension)
                 }
                 else {
-                    DDLogWarn("Cannot load track \(track): \(String(describing: error))")
+                    zmLog.warn("Cannot load track \(track): \(String(describing: error))")
                 }
             }
         } else {
@@ -443,7 +444,7 @@ final class AudioMessageView: UIView, TransferView {
                 AVSMediaManager.sharedInstance().playbackRoute = .speaker
             }
         } catch {
-            DDLogError("Cannot set AVAudioSession category: \(error)")
+            zmLog.error("Cannot set AVAudioSession category: \(error)")
         }
     }
     

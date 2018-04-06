@@ -19,7 +19,6 @@
 import UIKit
 import WireCanvas
 import Cartography
-import CocoaLumberjackSwift
 
 @objc protocol CanvasViewControllerDelegate : NSObjectProtocol {
     func canvasViewController(_ canvasViewController : CanvasViewController,  didExportImage image: UIImage)

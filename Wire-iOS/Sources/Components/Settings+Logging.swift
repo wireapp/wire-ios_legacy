@@ -45,10 +45,12 @@ extension Settings {
     
     /// Loads from user default the list of logs that are enabled
     @objc public func loadEnabledLogs() {
-        guard DeveloperMenuState.developerMenuEnabled() else { return } // never record on non-internal
-        
-        let tagsToEnable = UserDefaults.shared().value(forKey: enabledLogsKey) as? Array<String> ?? ["Network", "Dependencies", "State machine", "Pingback", "SessionManager", "Conversations", "DuplicateEntity"]
-        enableLogs(tagsToEnable)
+        if DeveloperMenuState.developerMenuEnabled() {
+            let tagsToEnable = UserDefaults.shared().value(forKey: enabledLogsKey) as? Array<String> ?? ["Network", "SessionManager", "Conversations", "AVS", "calling"]
+            enableLogs(tagsToEnable)
+        } else {
+            enableLogs(["AVS"])
+        }
     }
     
     private func enableLogs(_ tags : [String]) {

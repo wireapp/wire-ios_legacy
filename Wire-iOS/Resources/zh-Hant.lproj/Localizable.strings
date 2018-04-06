@@ -15,15 +15,20 @@
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
+// General strings
 
 
 "general.ok" = "確認";
 "general.next" = "下一步";
 "general.cancel" = "取消";
 "general.close" = "關閉";
+"general.back" = "返回";
 "general.open_settings" = "開啟Wire設定";
 "general.edit" = "編輯";
 "general.done" = "完成";
+"general.confirm" = "確認";
+// Language like Chinese does not use space to sperate words or sentences.
+"general.space_between_words" = "\U200B";
 
 "general.guest-room-name" = "訪客聊天室";
 
@@ -226,8 +231,8 @@
 "conversation.input_bar.audio_message.too_long.message" = "語音訊息長度上限是%@。";
 "conversation.input_bar.audio_message.send" = "發送";
 
-"conversation.input_bar.audio_message.keyboard.record_tip" = "點擊來錄製語音訊息\n之後您可%@該訊息";
-"conversation.input_bar.audio_message.keyboard.filter_tip" = "選擇濾鏡";
+"conversation.input_bar.audio_message.keyboard.record_tip" = "點擊錄製語音訊息\n之後您可%@該訊息";
+"conversation.input_bar.audio_message.keyboard.filter_tip" = "選擇特效";
 
 "conversation.call.many_participants_confirmation.title" = "開始通話";
 "conversation.call.many_participants_confirmation.message" = "這將會打電話給%d位聯絡人";
@@ -242,6 +247,7 @@
 "conversation.input_bar.message_too_long.title" = "訊息過長";
 "conversation.input_bar.message_too_long.message" = "每則訊息最多只能包含%d個字元。";
 
+"conversation.create.group_name.title" = "建立群組";
 "conversation.create.group_name.placeholder" = "群組名稱";
 "conversation.create.guidance.empty" = "至少1個字元";
 "conversation.create.guidance.toolong" = "字數過多";
@@ -325,10 +331,10 @@
 
 "content.system.other_renamed_conv_to_nothing" = "%@刪除了聊天室名稱";
 "content.system.you_renamed_conv_to_nothing" = "您刪除了聊天室名稱";
-"content.system.pending_message_timestamp" = "正在發送...";
+"content.system.pending_message_timestamp" = "傳送中...";
 "content.system.message_sent_timestamp" = "已送出";
 "content.system.message_delivered_timestamp" = "已傳送";
-"content.system.failedtosend_message_timestamp" = "發送失敗。";
+"content.system.failedtosend_message_timestamp" = "傳送失敗。";
 "content.system.failedtosend_message_timestamp_resend" = "重新發送";
 "content.system.failedtosend_message_timestamp_delete" = "刪除";
 "content.system.like_tooltip" = "點一下讚好";
@@ -345,7 +351,7 @@
 
 "content.system.call.you" = "您";
 "content.system.call.called" = "%@曾打電話";
-"content.system.call.called-you" = "%@曾來電";
+"content.system.call.called-you" = "%@曾打電話";
 
 "content.system.renamed_conv.title" = "%@ 重新命名了聊天室";
 "content.system.renamed_conv.title-you" = "%@重新命名聊天室";
@@ -409,6 +415,10 @@
 "content.message.open" = "開啟";
 "content.message.copy" = "複製";
 
+"content.message.open_link_alert.title" = "瀏覽連結";
+"content.message.open_link_alert.message" = "This will take you to\n%@";
+"content.message.open_link_alert.open" = "開啟";
+
 "content.reactions_list.likers" = "讚好";
 
 "content.file.too_big" = "您可以發送最大%@的檔案。";
@@ -430,11 +440,17 @@
 "inbox.connection_request.connect_button_title" = "加為連絡人";
 "inbox.connection_request.ignore_button_title" = "忽略";
 
+// Save image errors
+"library.alert.permission_warning.title" = "Wire需要存取你的照片庫";
+"library.alert.permission_warning.restrictions.explaination" = "由於啟用了限制, Wire無法訪問您的資料庫。";
+"library.alert.permission_warning.not_allowed.explaination" = "請前往手機「設定」並允許Wire使用照片庫權限。";
+
 // Voice
 "voice.status.one_to_one.incoming" = "%@\n來電";
 "voice.status.group_call.incoming" = "%@\n群組來電";
 "voice.status.one_to_one.outgoing" = "%@\n撥號中";
 "voice.status.joining" = "%@\n連接中";
+"voice.status.leaving" = "%@\n通話結束";
 "voice.status.video_not_available" = "視訊關閉";
 "voice.status.low_connection" = "連線品質不佳";
 "voice.network_error.title" = "沒有網路連線";
@@ -471,7 +487,7 @@
 "participants.avatar.guest.title" = "訪客";
 
 "participants.title" = "詳細資訊";
-"participants.section.participants" = "人(%d)";
+"participants.section.participants" = "參與者(%d)";
 "participants.section.services" = "服務 (%d)";
 "participants.footer.add_title" = "加入參與者";
 
@@ -566,7 +582,7 @@
 // Device list
 "profile.devices.title" = "設備";
 "profile.devices.fingerprint_message_unencrypted" = "%@使用舊版本的Wire，無法顯示設備。";
-"profile.devices.fingerprint_message" = "Wire 給每一部裝置一組獨立的識別碼，請與%@校對識別碼以驗證您的對話。為何要驗證對話？";
+"profile.devices.fingerprint_message.title" = "Wire為每個設備設置了一個獨特的指紋。您可以和%@進行比對來驗證對話。";
 "profile.devices.fingerprint_message.link" = "為何要驗證對話？";
 
 // Device detail
@@ -579,9 +595,6 @@
 "device.class.tablet" = "平板電腦";
 "device.class.phone" = "手機";
 "profile.devices.detail.reset_session.title" = "重設工作階段";
-
-// General strings
-"general.confirm" = "確認";
 
 // Bot
 "participants.services.remove_integration.button" = "移除服務";
@@ -619,12 +632,9 @@
 "about.copyright.title" = "© Wire Swiss GmbH";
 
 // Self new devices
-"self.new_device_alert.title" = "您已經連接%@到Wire";
-"self.new_device_alert.title_prefix.tablet" = "一部平板電腦";
-"self.new_device_alert.title_prefix.phone" = "一部手機";
-"self.new_device_alert.title_prefix.devices" = "%d 裝置";
-"self.new_device_alert.message" = "%@\n若您沒有，請移除該裝置，並重新設定您的密碼。";
-"self.new_device_alert.message_plural" = "%@\n若您沒有，請移除這些裝置，並重新設定您的密碼。";
+"self.new_device_alert.title" = "您的帳號用於：";
+"self.new_device_alert.message" = "%@\n\n若您不認可該設備，請將它移除，並且重設您的密碼。";
+"self.new_device_alert.message_plural" = "%@\n\n若您不認可該設備，請將它移除，並且重設您的密碼。";
 "self.new_device_alert.manage_devices" = "管理設備";
 "self.new_device_alert.trust_devices" = "確認";
 
@@ -649,7 +659,7 @@
 "self.settings.account_section.handle.title" = "使用者名稱";
 "self.settings.account_section.add_handle.title" = "添加使用者名稱";
 
-"self.settings.account_details_group.info.footer" = "其他使用者能透過這些資料搜尋到您。";
+"self.settings.account_details_group.info.footer" = "其他使用者能透過這些資料找到您。";
 "self.settings.account_details_group.personal.footer" = "這個信息是隱藏的。";
 
 "self.settings.account_details.remove_device.title" = "移除設備";
@@ -789,7 +799,11 @@
 "self.settings.privacy_contacts_menu.description_disabled.title" = "分享您的通訊錄將幫助您找到其他連絡人。我們將您的資料匿名處理並且不與任何人分享。您可透過手機「設定」 > 隱私 > 聯絡資訊來開啟權限。";
 
 "self.settings.privacy_security.lock_app" = "使用Passcode鎖定";
-"self.settings.privacy_security.lock_app.subtitle" = "在背景運行10秒後鎖定Wire，可使用Touch ID或Passcode解鎖。";
+"self.settings.privacy_security.lock_app.subtitle.lock_description" = "在背景10秒後鎖定Wire。";
+"self.settings.privacy_security.lock_app.subtitle.touch_id" = "使用Touch ID解鎖或輸入你的密碼。";
+"self.settings.privacy_security.lock_app.subtitle.face_id" = "使用Face ID解鎖或輸入你的密碼。";
+"self.settings.privacy_security.lock_app.subtitle.none" = "輸入密碼解鎖。";
+
 "self.settings.privacy_security.lock_app.description" = "解鎖Wire";
 
 "self.settings.privacy_security.lock_cancelled.description" = "請使用Touch ID或Passcode解鎖Wire";
@@ -802,7 +816,7 @@
 
 "self.settings.privacy_analytics_section.title" = "使用資料和崩潰報告";
 "self.settings.privacy_analytics.title" = "寄送匿名資料";
-"self.settings.privacy_analytics_menu.description.title" = "通過發送匿名資訊讓Wire變得更好。\n";
+"self.settings.privacy_analytics_menu.description.title" = "傳送匿名資訊改善Wire。\n";
 
 "self.settings.privacy.clear_history.title" = "清除記錄";
 "self.settings.privacy.clear_history.subtitle" = "這將永久移除您的所有對話內容。";
@@ -832,6 +846,17 @@
 // Invite from Settings
 "self.settings.invite_friends.title" = "邀請朋友加入";
 
+// History backup
+
+"self.settings.conversations.title" = "對話";
+"self.settings.history_backup.title" = "歷史備份";
+"self.settings.history_backup.description" = "把你的對話歷史備份到一個安全的地方。如果你失去了你的手機或換一個新的，你的對話不會遺失。您可以在登錄時回復對話歷史記錄。你只能從同一平臺的備份中還原歷史記錄。備份不受Wire端到端加密的保護。";
+"self.settings.history_backup.action" = "立刻備份";
+"self.settings.history_backup.error.title" = "錯誤";
+
+"self.settings.history_backup.set_email.title" = "設定電子郵件信箱和密碼。";
+"self.settings.history_backup.set_email.message" = "您需要電子郵件和密碼才能備份您的對話歷史記錄。您可以在「設置」的「帳戶」分頁中設定。";
+
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // System status
 "system_status_bar.no_internet.title" = "沒有網路連線";
@@ -855,11 +880,12 @@
 
 // Landing screen
 
+"landing.app_name" = "Wire";
 "landing.title" = "保密每個人之通訊。";
-"landing.create_account.title" = "新增帳號";
-"landing.create_account.subtitle" = "供個人使用";
-"landing.create_team.title" = "建立團隊";
-"landing.create_team.subtitle" = "在工作中使用";
+"landing.create_account.title" = "供個人使用";
+"landing.create_account.subtitle" = "新增帳號";
+"landing.create_team.title" = "供機構使用";
+"landing.create_team.subtitle" = "建立團隊";
 "landing.login.hints" = "已有帳號？";
 "landing.login.button.title" = "登入";
 
@@ -939,6 +965,8 @@
 
 // Registration
 
+"registration.launch_back_button.label" = "返回";
+
 "registration.title" = "註冊";
 "registration.close_email_invitation_button.email_title" = "請使用另一個電子郵件";
 "registration.close_email_invitation_button.phone_title" = "透過電話註冊";
@@ -966,6 +994,16 @@
 "registration.no_history.hero" = "這是您首次在此設備使用Wire。";
 "registration.no_history.subtitle" = "基於隱私，將不會顯示您的聊天紀錄。";
 "registration.no_history.got_it" = "確認";
+"registration.no_history.restore_backup" = "從備份回復";
+"registration.no_history.restore_backup_warning.title" = "回復歷史紀錄。";
+"registration.no_history.restore_backup_warning.message" = "您的備份將覆蓋您在此設備上之對話紀錄。";
+"registration.no_history.restore_backup_warning.proceed" = "開始執行";
+
+"registration.no_history.restore_backup_failed.title" = "回復歷史記錄失敗。";
+"registration.no_history.restore_backup_failed.message" = "您的備份檔案可能已損壞或不相容。";
+"registration.no_history.restore_backup_failed.wrong_account.message" = "無法讀取備份，因為它來自不同的帳戶。";
+"registration.no_history.restore_backup_failed.wrong_version.message" = "無法讀取備份, 因為它來自不支援的版本 (過時或新版本)。";
+"registration.no_history.restore_backup_failed.try_again" = "請再試一次";
 
 "registration.no_history.logged_out.hero" = "您曾在此設備登錄Wire。";
 "registration.no_history.logged_out.subtitle" = "登出期間收到的訊息不會顯示。";
@@ -1024,7 +1062,19 @@
 "registration.devices.activated_in" = "啟動於";
 "registration.devices.id" = "ID:";
 
+"signin.use_email.label" = "以電子郵件登入";
+"signin.use_phone.label" = "使用電話號碼登錄";
 "signin.forgot_password" = "忘記密碼？";
+"signin.use_one_password.label" = "使用1Password 登錄";
+"signin.use_one_password.hint" = "雙擊以使用1Password 填寫密碼";
+"signin.confirm" = "登入";
+
+"registration.phone_country" = "國家";
+"registration.phone_code" = "國家/地區代碼";
+"registration.phone_country.hint" = "雙擊可選擇其他國家。";
+"registration.phone_code.hint" = "雙擊可選擇其他國家/地區代碼。";
+"registration.phone.verify.label" = "驗證電話號碼";
+"registration.phone.verify_field.label" = "驗證碼";
 
 "registration.add_phone_number.hero.title" = "新增手機號碼";
 "registration.add_phone_number.hero.paragraph" = "這將幫助我們找到您可能認識的人。我們不會和其他人分享您的手機號碼。";
@@ -1040,6 +1090,9 @@
 "registration.phone_invitation.title" = "邀請";
 "registration.phone_invitation.hero.title" = "您好，%@";
 "registration.phone_invitation.hero.paragraph" = "再一個步驟就將您的帳號建立完成。";
+
+"registration.confirm" = "註冊";
+"registration.phone.country_code.hint" = "雙擊以使用該國家/地區的電話號碼。";
 
 "error.name_and_email" = "請輸入您的全名和一個有效的電子郵件地址和密碼。";
 "error.full_name" = "請輸入您的全名";

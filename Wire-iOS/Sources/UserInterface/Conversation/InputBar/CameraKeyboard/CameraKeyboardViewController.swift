@@ -21,8 +21,9 @@ import Foundation
 import Photos
 import Cartography
 import WireExtensionComponents
-import CocoaLumberjackSwift
 import AVFoundation
+
+private let zmLog = ZMSLog(tag: "UI")
 
 public protocol CameraKeyboardViewControllerDelegate: class {
     func cameraKeyboardViewController(_ controller: CameraKeyboardViewController, didSelectVideo: URL, duration: TimeInterval)
@@ -222,7 +223,7 @@ open class CameraKeyboardViewController: UIViewController {
                         self.showLoadingView = false
                     })
                     guard let data = data else {
-                        DDLogError("Failure: cannot fetch image")
+                        zmLog.error("Failure: cannot fetch image")
                         return
                     }
                     
@@ -277,7 +278,7 @@ open class CameraKeyboardViewController: UIViewController {
                         try FileManager.default.removeItem(at: exportURL)
                     }
                     catch let error {
-                        DDLogError("Cannot remove \(exportURL): \(error)")
+                        zmLog.error("Cannot remove \(exportURL): \(error)")
                     }
                 }
                 

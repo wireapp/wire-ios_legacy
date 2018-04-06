@@ -36,6 +36,7 @@
 #import "AnalyticsTracker+Registration.h"
 #import "Wire-Swift.h"
 
+static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
 @interface PhoneSignInViewController () <FormStepDelegate, PreLoginAuthenticationObserver, PostLoginAuthenticationObserver, PhoneVerificationStepViewControllerDelegate>
 
@@ -203,7 +204,7 @@
 
 - (void)authenticationDidFail:(NSError *)error
 {
-    DDLogDebug(@"authenticationDidFail: error.code = %li", (long)error.code);
+    ZMLogDebug(@"authenticationDidFail: error.code = %li", (long)error.code);
     
     [self.analyticsTracker tagPhoneLoginFailedWithError:error];
     self.navigationController.showLoadingView = NO;

@@ -49,6 +49,7 @@
 #import "UIView+Borders.h"
 #import "ImageMessageCell.h"
 
+static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
 @interface ConversationInputBarViewController (Commands)
 
@@ -1000,7 +1001,7 @@
 - (void)video:(NSString *)videoPath didFinishSavingWithError:(NSError *)error contextInfo:(void *)contextInfo
 {
     if (nil != error) {
-        DDLogError(@"Error saving video: %@", error);
+        ZMLogError(@"Error saving video: %@", error);
     }
 }
 

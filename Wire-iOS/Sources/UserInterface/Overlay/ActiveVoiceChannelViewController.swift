@@ -198,7 +198,8 @@ extension ActiveVoiceChannelViewController : WireCallCenterCallStateObserver {
 
         if case let .terminating(reason) = callState {
             
-            guard let callStartDate = answeredCalls[conversation.remoteIdentifier!] else {
+            guard let callStartDate = answeredCalls[conversation.remoteIdentifier!],
+                AutomationHelper.sharedHelper.useAnalytics else {
                 return
             }
 

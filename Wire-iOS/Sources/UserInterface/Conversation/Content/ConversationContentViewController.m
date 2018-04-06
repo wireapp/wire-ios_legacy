@@ -245,7 +245,7 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
 
 - (void)didReceiveMemoryWarning
 {
-    DDLogWarn(@"Received system memory warning.");
+    ZMLogWarn(@"Received system memory warning.");
     [super didReceiveMemoryWarning];
 }
 
