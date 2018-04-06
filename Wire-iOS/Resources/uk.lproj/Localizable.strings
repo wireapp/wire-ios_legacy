@@ -416,7 +416,7 @@
 "content.message.copy" = "Скопіювати";
 
 "content.message.open_link_alert.title" = "Перейдіть за лінком";
-"content.message.open_link_alert.message" = "Це перенаправить вас на %@";
+"content.message.open_link_alert.message" = "This will take you to\n%@";
 "content.message.open_link_alert.open" = "Вiдкрити";
 
 "content.reactions_list.likers" = "Сподобалося";

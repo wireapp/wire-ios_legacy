@@ -416,7 +416,7 @@
 "content.message.copy" = "Копировать";
 
 "content.message.open_link_alert.title" = "Visit Link";
-"content.message.open_link_alert.message" = "Это приведет вас к %@";
+"content.message.open_link_alert.message" = "This will take you to\n%@";
 "content.message.open_link_alert.open" = "Открыть";
 
 "content.reactions_list.likers" = "Понравилось";

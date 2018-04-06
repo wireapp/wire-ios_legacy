@@ -416,7 +416,7 @@
 "content.message.copy" = "Kopijuoti";
 
 "content.message.open_link_alert.title" = "Visit Link";
-"content.message.open_link_alert.message" = "This will take you to %@";
+"content.message.open_link_alert.message" = "This will take you to\n%@";
 "content.message.open_link_alert.open" = "Atverti";
 
 "content.reactions_list.likers" = "Patinka";

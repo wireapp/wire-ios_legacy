@@ -416,7 +416,7 @@
 "content.message.copy" = "Kopieren";
 
 "content.message.open_link_alert.title" = "Link öffnen";
-"content.message.open_link_alert.message" = "Dies bringt Sie zu %@";
+"content.message.open_link_alert.message" = "This will take you to\n%@";
 "content.message.open_link_alert.open" = "Öffnen";
 
 "content.reactions_list.likers" = "Gefällt";

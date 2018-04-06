@@ -28,7 +28,7 @@
 "general.done" = "完成";
 "general.confirm" = "好";
 // Language like Chinese does not use space to sperate words or sentences.
-"general.space_between_words" = " ";
+"general.space_between_words" = "\U200B";
 
 "general.guest-room-name" = "访客聊天室";
 
@@ -416,7 +416,7 @@
 "content.message.copy" = "复制";
 
 "content.message.open_link_alert.title" = "打开链接";
-"content.message.open_link_alert.message" = "这会带你去%@";
+"content.message.open_link_alert.message" = "This will take you to\n%@";
 "content.message.open_link_alert.open" = "开启";
 
 "content.reactions_list.likers" = "赞好";
