@@ -54,8 +54,11 @@ extension ConversationInputBarViewController: UITextViewDelegate {
         updateNewButtonTitleLabel()
         AppDelegate.checkNetwork()
         if self.isIPadRegularPortrait(device: UIDevice.current, application: UIApplication.shared) {
-            ///TODO: check left view is closed?
-            wr_splitViewController?.setLeftViewControllerRevealed(false, animated: true)
+            if let splitViewController = wr_splitViewController {
+                if splitViewController.isLeftViewControllerRevealed {
+                    splitViewController.setLeftViewControllerRevealed(false, animated: true)
+                }
+            }
         }
     }
 
