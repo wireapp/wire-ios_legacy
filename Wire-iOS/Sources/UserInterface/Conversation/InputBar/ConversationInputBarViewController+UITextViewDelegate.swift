@@ -17,3 +17,24 @@
 //
 
 import Foundation
+extension ConversationInputBarViewController: UITextViewDelegate {
+    public func textViewShouldBeginEditing(_ textView: UITextView) -> Bool {
+        return true
+    }
+
+    public func textViewShouldEndEditing(_ textView: UITextView) -> Bool {
+        return true
+    }
+
+    public func textViewDidBeginEditing(_ textView: UITextView) {
+
+    }
+
+    public func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        return true
+    }
+
+    public func textViewDidChange(_ textView: UITextView) {
+
+    }
+}
