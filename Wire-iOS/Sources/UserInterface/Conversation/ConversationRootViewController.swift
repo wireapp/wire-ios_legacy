@@ -75,10 +75,7 @@ import Cartography
 
         self.view.backgroundColor = ColorScheme.default().color(withName: ColorSchemeColorBarBackground)
 
-        self.addChildViewController(navBarContainer)
-        view.addSubview(navBarContainer.view)
-        navBarContainer.didMove(toParentViewController: self)
-
+        self.addToSelf(navBarContainer)
         self.view.addSubview(self.contentView)
         self.addToSelf(networkStatusViewController)
 
