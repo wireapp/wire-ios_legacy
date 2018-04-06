@@ -54,6 +54,7 @@ fileprivate let VoiceChannelOverlayVideoFeedPositionKey = "VideoFeedPosition"
     case outgoingCall
     case outgoingCallDegraded
     case connected
+    case leavingCall
     
     var description: String {
         switch self {
@@ -73,6 +74,8 @@ fileprivate let VoiceChannelOverlayVideoFeedPositionKey = "VideoFeedPosition"
             return "outgoingCallDegraded"
         case .connected:
             return "connected"
+        case .leavingCall:
+            return "leaving"
         }
     }
     
@@ -289,14 +292,14 @@ extension VoiceChannelOverlay {
         switch state {
         case .incomingCall:
             if callingConversation.conversationType == .oneOnOne {
-                let statusText = "voice.status.one_to_one.incoming".localized.lowercasedWithCurrentLocale
+                let statusText = "voice.status.one_to_one.incoming".localized
                 return labelText(withFormat: statusText, name: conversationName)
             } else {
-                let statusText = "voice.status.group_call.incoming".localized.lowercasedWithCurrentLocale
+                let statusText = "voice.status.group_call.incoming".localized
                 return labelText(withFormat: statusText, name: conversationName)
             }
         case .outgoingCall:
-            let statusText = "voice.status.one_to_one.outgoing".localized.lowercasedWithCurrentLocale
+            let statusText = "voice.status.one_to_one.outgoing".localized
             return labelText(withFormat: statusText, name: conversationName)
         case .incomingCallDegraded, .outgoingCallDegraded:
             return labelText(withFormat: "%@\n", name: conversationName)
@@ -311,6 +314,11 @@ extension VoiceChannelOverlay {
             }
             
             return labelText(withFormat: statusText, name: conversationName)
+
+        case .leavingCall:
+            let statusText = "voice.status.leaving".localized.lowercasedWithCurrentLocale
+            return labelText(withFormat: statusText, name: conversationName)
+
         case .invalid, .incomingCallInactive:
             return nil
         }
@@ -349,6 +357,7 @@ extension VoiceChannelOverlay {
         case ignoreButton:
             delegate?.ignoreButtonTapped()
         case leaveButton:
+            transition(to: .leavingCall)
             delegate?.leaveButtonTapped()
         case muteButton:
             delegate?.muteButtonTapped()
@@ -758,20 +767,20 @@ extension VoiceChannelOverlay {
         updateStatusLabelText()
         updateCallingUserImage()
         updateCallDegradedLabels()
+
+        let connected = (state == .connected)
         
+        muteButton.isEnabled = connected
+        videoButton.isEnabled = connected
+        videoButton.isSelected = videoButton.isEnabled && outgoingVideoActive
+
         visibleViews(for: state).forEach {
             $0.alpha = 1.0
         }
         hiddenViews(for: state).forEach {
             $0.alpha = 0.0
         }
-        
-        let connected = (state == .connected)
-        
-        muteButton.isEnabled = connected
-        videoButton.isEnabled = connected
-        videoButton.isSelected = videoButton.isEnabled && outgoingVideoActive
-        
+
         if isVideoCall {
             videoView?.isHidden = false
             videoPreview?.isHidden = false
@@ -780,7 +789,7 @@ extension VoiceChannelOverlay {
             videoView?.isHidden = true
             videoPreview?.isHidden = true
         }
-        
+
         cameraPreviewView.mutedPreviewOverlay.isHidden = !outgoingVideoActive || !muted
     }
     
@@ -845,6 +854,8 @@ extension VoiceChannelOverlay {
             visibleViews = [callingUserImage, topStatusLabel, speakerButton, muteButton, leaveButton]
         case .connected:
             visibleViews = connectedStateVisibleViews(videoEnabled: false)
+        case .leavingCall:
+            visibleViews = [topStatusLabel]
         }
         
         if hidesSpeakerButton {
@@ -875,6 +886,8 @@ extension VoiceChannelOverlay {
             if !outgoingVideoActive {
                 visibleViews.remove(cameraPreviewView)
             }
+        case .leavingCall:
+            visibleViews = [callingTopUserImage, topStatusLabel]
         }
         
         return visibleViews
@@ -998,6 +1011,8 @@ extension VoiceChannelOverlay {
             return "OverlayOutgoingCallDegraded"
         case .connected:
             return "OverlayConnected"
+        case .leavingCall:
+            return "OverlayLeavingCall"
         }
     }
 }

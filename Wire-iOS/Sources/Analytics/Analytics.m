@@ -38,8 +38,8 @@
 #import "Wire-Swift.h"
 
 
+@class AnalyticsProvider;
 static NSString* ZMLogTag ZM_UNUSED = @"Analytics";
-
 
 NSString * LocalyticsAPIKey = @STRINGIZE(ANALYTICS_API_KEY);
 NSString * MixpanelAPIKey = @STRINGIZE(MIXPANEL_API_KEY);
@@ -123,11 +123,11 @@ static Analytics *sharedAnalytics = nil;
     _team = team;
     if (nil == team) {
         [self.provider setSuperProperty:@"team.size" value:@"0"];
-        [self.provider setSuperProperty:@"team.in_team" value:@"false"];
+        [self.provider setSuperProperty:@"team.in_team" value:@(NO)];
     }
     else {
         [self.provider setSuperProperty:@"team.size" value:[NSString stringWithFormat:@"%lu", (unsigned long)[team.members count]]];
-        [self.provider setSuperProperty:@"team.in_team" value:@"true"];
+        [self.provider setSuperProperty:@"team.in_team" value:@(YES)];
     }
 }
 

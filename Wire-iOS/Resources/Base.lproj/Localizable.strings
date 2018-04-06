@@ -17,6 +17,7 @@
 //
 
 
+// General strings
 "general.ok" = "OK";
 "general.next" = "Next";
 "general.cancel" = "Cancel";
@@ -25,6 +26,9 @@
 "general.open_settings" = "Open Wire Settings";
 "general.edit" = "Edit";
 "general.done" = "Done";
+"general.confirm" = "OK";
+// Language like Chinese does not use space to sperate words or sentences.
+"general.space_between_words" = " ";
 
 "general.guest-room-name" = "Guest room";
 
@@ -442,10 +446,11 @@
 "library.alert.permission_warning.not_allowed.explaination" = "Go to Settings and allow Wire to access your photos.";
 
 // Voice
-"voice.status.one_to_one.incoming" = "%@\nCalling";
-"voice.status.group_call.incoming" = "%@\nRinging";
-"voice.status.one_to_one.outgoing" = "%@\nRinging";
+"voice.status.one_to_one.incoming" = "%@\ncalling";
+"voice.status.group_call.incoming" = "%@\nringing";
+"voice.status.one_to_one.outgoing" = "%@\nringing";
 "voice.status.joining" = "%@\nConnecting";
+"voice.status.leaving" = "%@\nCall ended";
 "voice.status.video_not_available" = "Video turned off";
 "voice.status.low_connection" = "Bad connection";
 "voice.network_error.title" = "No Internet Connection";
@@ -577,7 +582,7 @@
 // Device list
 "profile.devices.title" = "Devices";
 "profile.devices.fingerprint_message_unencrypted" = "%@ is using an old version of Wire. No devices are shown here.";
-"profile.devices.fingerprint_message" = "Wire gives every device a unique fingerprint. Compare them with %@ and verify your conversation. Why verify conversations?";
+"profile.devices.fingerprint_message.title" = "Wire gives every device a unique fingerprint. Compare them with %@ and verify your conversation.";
 "profile.devices.fingerprint_message.link" = "Why verify conversations?";
 
 // Device detail
@@ -590,9 +595,6 @@
 "device.class.tablet" = "Tablet";
 "device.class.phone" = "Phone";
 "profile.devices.detail.reset_session.title" = "Reset Session";
-
-// General strings
-"general.confirm" = "OK";
 
 // Bot
 "participants.services.remove_integration.button" = "remove integration";
@@ -999,6 +1001,8 @@
 
 "registration.no_history.restore_backup_failed.title" = "Restoring history failed.";
 "registration.no_history.restore_backup_failed.message" = "Your backup file might be corrupted or not compatible.";
+"registration.no_history.restore_backup_failed.wrong_account.message" = "Cannot read backup because it's from a different account.";
+"registration.no_history.restore_backup_failed.wrong_version.message" = "Cannot read backup because it's from an unsupported version (either outdated or newer).";
 "registration.no_history.restore_backup_failed.try_again" = "Try again";
 
 "registration.no_history.logged_out.hero" = "You’ve used Wire on this device before.";

@@ -17,6 +17,8 @@
 //
 
 import Foundation
+import WireDataModel
+
 
 extension NoHistoryViewController {
     static let WireBackupUTI = "com.wire.backup-ios"
@@ -45,6 +47,7 @@ extension NoHistoryViewController {
         let gotItText = self.localizableString(forPart: "got_it")!
         okButton.setTitle(gotItText.localized, for: .normal)
         okButton.addCallback(for: .touchUpInside) { [unowned self] _ in
+            self.showLoadingView = true
             self.formStepDelegate.didCompleteFormStep(self)
         }
         
@@ -102,9 +105,27 @@ extension NoHistoryViewController {
         self.present(picker, animated: true)
     }
     
+    private func errorMessage(for error: Error) -> String {
+        switch error {
+        case StorageStack.BackupImportError.incompatibleBackup(let underlyingError):
+            switch underlyingError {
+            case BackupMetadata.VerificationError.backupFromNewerAppVersion:
+                return "registration.no_history.restore_backup_failed.wrong_version.message".localized
+            case BackupMetadata.VerificationError.userMismatch:
+                return "registration.no_history.restore_backup_failed.wrong_account.message".localized
+            default:
+                return "registration.no_history.restore_backup_failed.message".localized
+            }
+            
+        default:
+            return "registration.no_history.restore_backup_failed.message".localized
+        }
+    }
+
     fileprivate func showRestoreError(_ error: Error) {
+        
         let alert = UIAlertController(title: "registration.no_history.restore_backup_failed.title".localized,
-                                      message: "registration.no_history.restore_backup_failed.message".localized,
+                                      message: errorMessage(for: error),
                                       preferredStyle: .alert)
         
         let tryAgainAction = UIAlertAction(title: "registration.no_history.restore_backup_failed.try_again".localized,
@@ -136,7 +157,7 @@ extension NoHistoryViewController {
                 self.showLoadingView = false
             case .success:
                 BackupEvent.importSucceeded.track()
-                self.indicateLoadingSuccess {
+                self.indicateLoadingSuccessRemovingCheckmark(false) {
                     self.formStepDelegate.didCompleteFormStep(self)
                 }
             }
