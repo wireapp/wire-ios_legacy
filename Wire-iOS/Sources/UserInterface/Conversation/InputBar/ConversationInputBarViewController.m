@@ -852,6 +852,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 @end
 
 
+@implementation ConversationInputBarViewController(TextViewProtocol)
 #pragma mark - Informal TextView delegate methods
 
 - (void)textView:(UITextView *)textView hasImageToPaste:(id<MediaAsset>)image

@@ -47,6 +47,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)sendOrEditText:(NSString *)text;
 - (void)updateRightAccessoryView;
 - (void)updateButtonIconsForEphemeral;
+- (void)updateAccessoryViews;
+- (void)updateNewButtonTitleLabel;
 @end
 
 NS_ASSUME_NONNULL_END

@@ -18,23 +18,60 @@
 
 import Foundation
 extension ConversationInputBarViewController: UITextViewDelegate {
-    public func textViewShouldBeginEditing(_ textView: UITextView) -> Bool {
-        return true
-    }
+    public func textViewDidChange(_ textView: UITextView) {
+        // In case the conversation isDeleted
+        if conversation.managedObjectContext == nil {
+            return
+        }
 
-    public func textViewShouldEndEditing(_ textView: UITextView) -> Bool {
-        return true
-    }
+        conversation.setIsTyping(textView.text.count > 0)
 
-    public func textViewDidBeginEditing(_ textView: UITextView) {
-
+        updateRightAccessoryView()
     }
 
     public func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        // send only if send key pressed
+        if textView.returnKeyType == .send && (text == "\n") {
+            inputBar.textView.autocorrectLastWord()
+            let candidateText = inputBar.textView.preparedText
+            sendOrEditText(candidateText)
+            return false
+        }
+
+        inputBar.textView.respondToChange(text, inRange: range)
         return true
     }
 
-    public func textViewDidChange(_ textView: UITextView) {
+    public func textViewShouldBeginEditing(_ textView: UITextView) -> Bool {
+        guard mode != .audioRecord else { return true }
+        guard delegate.responds(to:  #selector(ConversationInputBarViewControllerDelegate.conversationInputBarViewControllerShouldBeginEditing(_:isEditingMessage:))) else { return true }
+        
+        return delegate.conversationInputBarViewControllerShouldBeginEditing!(self, isEditingMessage: (nil != editingMessage))
+    }
 
+    public func textViewDidBeginEditing(_ textView: UITextView) {
+        updateAccessoryViews()
+        updateNewButtonTitleLabel()
+        AppDelegate.checkNetwork()
+        if UIDevice.current.userInterfaceIdiom == .pad {
+            ///TODO: dismiss left view
+        }
+    }
+
+    public func textViewShouldEndEditing(_ textView: UITextView) -> Bool {
+        if delegate.responds(to: #selector(ConversationInputBarViewControllerDelegate.conversationInputBarViewControllerShouldEndEditing(_:))) {
+            return delegate.conversationInputBarViewControllerShouldEndEditing!(self)
+        }
+        return true
+    }
+
+    public func textViewDidEndEditing(_ textView: UITextView) {
+        if textView.text.count > 0 {
+            conversation.setIsTyping(false)
+        }
+        ZMUserSession.shared()?.enqueueChanges({() -> Void in
+            self.conversation.draftMessageText = textView.text
+        })
     }
 }
+
