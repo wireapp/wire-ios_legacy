@@ -138,7 +138,7 @@ class BreathLoadingBar: UIView {
         anim.fillMode = kCAFillModeForwards
         anim.repeatCount = .infinity
         anim.duration = animationDuration
-        anim.timingFunction = CAMediaTimingFunction.easeInOutQuart()
+        anim.timingFunction = CAMediaTimingFunction.easeInOutSine()
         self.layer.add(anim, forKey: BreathLoadingAnimationKey)
     }
 
@@ -149,8 +149,7 @@ class BreathLoadingBar: UIView {
     }
 
     static public func withDefaultAnimationDuration() -> BreathLoadingBar {
-        let animationDuration: TimeInterval = 1
-        return BreathLoadingBar(animationDuration: animationDuration)
+        return BreathLoadingBar(animationDuration: TimeInterval.SyncBar.defaultAnimationDuration)
     }
 
 }

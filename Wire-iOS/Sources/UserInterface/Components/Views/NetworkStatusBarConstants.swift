@@ -40,4 +40,8 @@ extension TimeInterval {
     enum NetworkStatusBar {
         static let resizeAnimationTime: TimeInterval = 0.5
     }
+
+    enum SyncBar {
+        static let defaultAnimationDuration: TimeInterval = 2
+    }
 }
