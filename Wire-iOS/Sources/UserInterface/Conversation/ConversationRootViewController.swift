@@ -22,7 +22,7 @@ import Cartography
 // This class wraps the conversation content view controller in order to display the navigation bar on the top
 @objc open class ConversationRootViewController: UIViewController {
 
-    fileprivate(set) var navBarContainer: UINavigationBarContainer?
+    fileprivate(set) var navBarContainer: UINavigationBarContainer!
     fileprivate var contentView = UIView()
     var navHeight: NSLayoutConstraint?
     var networkStatusBarHeight: NSLayoutConstraint?
@@ -74,7 +74,7 @@ import Cartography
         navbar.barTintColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorBarBackground)
         navbar.tintColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorTextForeground)
 
-        let navBarContainer = UINavigationBarContainer(navbar)
+        navBarContainer = UINavigationBarContainer(navbar)
         self.addChildViewController(navBarContainer)
         view.addSubview(navBarContainer.view)
         navBarContainer.didMove(toParentViewController: self)
@@ -82,14 +82,15 @@ import Cartography
         self.view.addSubview(self.contentView)
         self.addToSelf(networkStatusViewController)
 
-        networkStatusViewController.createConstraintsInContainer(bottomView: navBarContainer.view, containerView: self.view, topMargin: UIScreen.safeArea.top)
+        networkStatusViewController.createConstraintsInContainer(bottomView: navBarContainer.view,
+                                                                 containerView: self.view, 
+                                                                 topMargin: UIScreen.safeArea.top)
  
         constrain(navBarContainer.view, view, contentView, conversationViewController.view) {
             navBarContainer, view, contentView, conversationViewControllerView in
 
             navBarContainer.left == view.left
             navBarContainer.right == view.right
-            navBarContainer.top == view.top
 
             contentView.left == view.left
             contentView.right == view.right
@@ -100,7 +101,6 @@ import Cartography
         }
 
         navBarContainer.navigationBar.pushItem(conversationViewController.navigationItem, animated: false)
-        self.navBarContainer = navBarContainer
     }
 
     override open func viewDidAppear(_ animated: Bool) {
