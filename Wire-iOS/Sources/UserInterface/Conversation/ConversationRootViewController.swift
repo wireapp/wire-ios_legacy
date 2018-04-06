@@ -108,7 +108,7 @@ import Cartography
 
         navBarContainer.navigationBar.pushItem(conversationViewController.navigationItem, animated: false)
     }
-    
+
     override open func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         delay(0.4) {

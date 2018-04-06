@@ -19,28 +19,22 @@
 import XCTest
 @testable import Wire
 
-final class ConversationRootViewControllerTests: XCTestCase {
+final class ConversationRootViewControllerTests: ZMSnapshotTestCase {
     
     var sut: ConversationRootViewController!
-    var conversation: MockConversation!
 
     override func setUp() {
         super.setUp()
 
         let zClientViewController = MockZClientViewController()
         sut = ConversationRootViewController(conversation: nil, clientViewController: zClientViewController as Any as! ZClientViewController)
+
+        recordMode = true
     }
     
     override func tearDown() {
         sut = nil
         super.tearDown()
-    }
-
-
-
-    /// Example checker method which can be reused in different tests
-    fileprivate func checkerExample(file: StaticString = #file, line: UInt = #line) {
-        XCTAssert(true, file: file, line: line)
     }
 
     func testExample(){
@@ -49,6 +43,7 @@ final class ConversationRootViewControllerTests: XCTestCase {
         // WHEN
 
         // THEN
-        checkerExample()
+        sut.viewDidAppear(false)
+        self.verify(view: sut.view)
     }
 }
