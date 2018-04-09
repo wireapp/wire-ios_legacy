@@ -493,10 +493,10 @@
 
 // Meta Menu
 "meta.menu.rename" = "Rename";
-"meta.menu.leave" = "Leave";
+"meta.menu.leave" = "Leave…";
 "meta.menu.archive" = "Archive";
 "meta.menu.unarchive" = "Unarchive";
-"meta.menu.delete" = "Delete";
+"meta.menu.delete" = "Delete Content…";
 "meta.menu.silence.mute" = "Mute";
 "meta.menu.silence.unmute" = "Unmute";
 "meta.menu.cancel" = "Cancel";
@@ -504,7 +504,6 @@
 "meta.menu.mark_unread" = "Mark as Unread";
 "meta.menu.mark_read" = "Mark as Read";
 "shortcut.mark_all_as_read.title" = "Mark All as Read";
-
 
 // Delete conversation
 "meta.menu.delete_content.dialog_title" = "Delete content?";
@@ -956,7 +955,7 @@
 "guest_room.actions.copy_link" = "Copy Link";
 "guest_room.actions.copied_link" = "Link Copied!";
 "guest_room.actions.share_link" = "Share Link";
-"guest_room.actions.revoke_link" = "Revoke Link";
+"guest_room.actions.revoke_link" = "Revoke Link…";
 
 "guest_room.share.message" = "Join me in a conversation on Wire:\n%@";
 
