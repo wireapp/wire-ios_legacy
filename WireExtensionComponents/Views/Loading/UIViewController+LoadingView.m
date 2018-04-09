@@ -87,8 +87,7 @@ const NSString *LoadingViewKey = @"loadingView";
 
 - (void)setLoadingView:(UIView *)loadingView
 {
-    objc_setAssociatedObject(self, (__bridge void *) LoadingViewKey, loadingView, 
-    OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    objc_setAssociatedObject(self, (__bridge void *) LoadingViewKey, loadingView, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
 - (void)indicateLoadingSuccessRemovingCheckmark:(BOOL)removingCheckmark completion:(dispatch_block_t)completion

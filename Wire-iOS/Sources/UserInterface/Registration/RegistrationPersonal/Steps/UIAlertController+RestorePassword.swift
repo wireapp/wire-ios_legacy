@@ -20,7 +20,7 @@ import UIKit
 
 extension UIAlertController {
     
-    static func requestRestorePassword(completion: @escaping (Result<String>) -> Void) -> UIAlertController {
+    static func requestRestorePassword(completion: @escaping (String?) -> Void) -> UIAlertController {
         let controller = UIAlertController(
             title: "registration.no_history.restore_backup.password.title".localized,
             message: "registration.no_history.restore_backup.password.message".localized,
@@ -29,25 +29,24 @@ extension UIAlertController {
         
         var token: Any?
         
-        func complete(_ result: Result<String>) {
+        func complete(_ result: String?) {
             token.apply(NotificationCenter.default.removeObserver)
             completion(result)
         }
         
         let add = UIAlertAction(title: "general.ok".localized, style: .default) { [controller] _ in
-            let passwordTextfield = controller.textFields![0] as UITextField
-            completion(.success(passwordTextfield.text))
+            complete(controller.textFields?.first?.text)
         }
     
         controller.addTextField { textField in
             textField.isSecureTextEntry = true
             textField.placeholder = "registration.no_history.restore_backup.password.placeholder".localized
             token = NotificationCenter.default.addObserver(forName: .UITextFieldTextDidChange, object: textField, queue: .main) { _ in
-                add.isEnabled = textField.text?.count >= 8
+                add.isEnabled = textField.text?.count ?? 0 >= 8
             }
         }
     
-        controller.addAction(.cancel { complete(.failure) })
+        controller.addAction(.cancel { complete(nil) })
         controller.addAction(add)
         return controller
     }

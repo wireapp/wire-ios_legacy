@@ -19,7 +19,6 @@
 import Foundation
 import WireDataModel
 
-
 extension NoHistoryViewController {
     static let WireBackupUTI = "com.wire.backup-ios"
     
@@ -133,20 +132,16 @@ extension NoHistoryViewController {
                                             self.showFilePicker()
         }
         alert.addAction(tryAgainAction)
-        
-        let cancelAction = UIAlertAction(title: "general.cancel".localized,
-                                           style: .cancel) { [unowned self] _ in
-            self.formStepDelegate.didCompleteFormStep(self)
-        }
-        alert.addAction(cancelAction)
+        alert.addAction(.cancel { [formStepDelegate] _ in
+            formStepDelegate?.didCompleteFormStep(self)
+        })
         
         self.present(alert, animated: true)
     }
     
     fileprivate func restore(with url: URL) {
-        requestPassword { [weak self] password in
-            guard let `self` = self else { return }
-            self.performRestore(using: password, from: url)
+        requestPassword { [performRestore] password in
+            performRestore(password, url)
         }
     }
     
@@ -157,7 +152,7 @@ extension NoHistoryViewController {
         sessionManager.restoreFromBackup(at: url) { [weak self] result in
             guard let `self` = self else { return }
             switch result {
-            case .failure(let error) where error == StorageStack.BackupImportError.incompatibleBackup:
+            case .failure(StorageStack.BackupImportError.incompatibleBackup): // TODO: Use proper wrong password error case
                 self.showLoadingView = false
                 self.showWrongPasswordAlert {
                     self.restore(with: url)
