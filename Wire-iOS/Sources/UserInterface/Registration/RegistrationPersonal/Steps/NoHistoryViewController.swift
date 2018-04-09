@@ -144,13 +144,24 @@ extension NoHistoryViewController {
     }
     
     fileprivate func restore(with url: URL) {
-        guard let sessionManager = SessionManager.shared else {
-            return
+        requestPassword { [weak self] password in
+            guard let `self` = self else { return }
+            self.performRestore(using: password, from: url)
         }
+    }
+    
+    fileprivate func performRestore(using password: String, from url: URL) {
+        guard let sessionManager = SessionManager.shared else { return }
         
         self.showLoadingView = true
-        sessionManager.restoreFromBackup(at: url) { result in
+        sessionManager.restoreFromBackup(at: url) { [weak self] result in
+            guard let `self` = self else { return }
             switch result {
+            case .failure(let error) where error == StorageStack.BackupImportError.incompatibleBackup:
+                self.showLoadingView = false
+                self.showWrongPasswordAlert {
+                    self.restore(with: url)
+                }
             case .failure(let error):
                 BackupEvent.importFailed.track()
                 self.showRestoreError(error)
@@ -163,6 +174,20 @@ extension NoHistoryViewController {
             }
         }
     }
+    
+    fileprivate func requestPassword(completion: @escaping (String) -> Void) {
+        let controller = UIAlertController.requestRestorePassword { password in
+            password.apply(completion)
+        }
+        
+        present(controller, animated: true, completion: nil)
+    }
+    
+    fileprivate func showWrongPasswordAlert(completion: @escaping () -> Void) {
+        let controller = UIAlertController.importWrongPasswordError(completion: completion)
+        present(controller, animated: true, completion: nil)
+    }
+    
 }
 
 extension NoHistoryViewController: UIDocumentPickerDelegate {

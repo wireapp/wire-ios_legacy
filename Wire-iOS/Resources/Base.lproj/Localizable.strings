@@ -1004,6 +1004,12 @@
 "registration.no_history.restore_backup_failed.wrong_version.message" = "Cannot read backup because it's from an unsupported version (either outdated or newer).";
 "registration.no_history.restore_backup_failed.try_again" = "Try again";
 
+// Password Import Alert
+"registration.no_history.restore_backup.password.title" = "Restore backup";
+"registration.no_history.restore_backup.password.message" = "The password is required to restore this backup.";
+"registration.no_history.restore_backup.password.placeholder" = "Password";
+"registration.no_history.restore_backup.password_error.title" = "Wrong password";
+
 "registration.no_history.logged_out.hero" = "You’ve used Wire on this device before.";
 "registration.no_history.logged_out.subtitle" = "Messages sent in the meantime will not appear.";
 "registration.no_history.logged_out.got_it" = "OK";
