@@ -24,15 +24,15 @@ struct Password {
     let value: String
     
     init?(_ value: String) {
-        guard value.count >= Password.minimumCharacters else { return nil }
+        guard value.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines).count >= Password.minimumCharacters else { return nil }
         self.value = value
     }
 }
 
-func requestPassword(over controller: UIViewController, completion: @escaping (Result<Password>)->()) {
+func requestPassword(over controller: UIViewController, completion: @escaping (Password?)->()) {
     let passwordController = BackupPasswordViewController { controller, password in
         controller.dismiss(animated: true) {
-            completion(Result(optional: password))
+            completion(password)
         }
     }
     let keyboardAvoiding = KeyboardAvoidingViewController(viewController: passwordController)

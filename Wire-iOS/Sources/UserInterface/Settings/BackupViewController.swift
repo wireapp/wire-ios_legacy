@@ -202,23 +202,23 @@ fileprivate extension BackupViewController {
 
     fileprivate func backupActiveAccount() {
         requestPassword(over: self) { result in
-            switch result {
-            case .success(let password):
-                self.loadingHostController.showLoadingView = true
+            
+            guard let password = result else {
+                return
+            }
+            
+            self.loadingHostController.showLoadingView = true
 
-                self.backupSource.backupActiveAccount(password: password) { backupResult in
-                    self.loadingHostController.showLoadingView = false
-                    
-                    switch backupResult {
-                    case .failure(let error):
-                        self.presentAlert(for: error)
-                        BackupEvent.exportFailed.track()
-                    case .success(let url):
-                        self.presentShareSheet(with: url)
-                    }
+            self.backupSource.backupActiveAccount(password: password) { backupResult in
+                self.loadingHostController.showLoadingView = false
+                
+                switch backupResult {
+                case .failure(let error):
+                    self.presentAlert(for: error)
+                    BackupEvent.exportFailed.track()
+                case .success(let url):
+                    self.presentShareSheet(with: url)
                 }
-            default:
-                break
             }
         }
     }

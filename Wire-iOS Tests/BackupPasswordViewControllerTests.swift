@@ -50,5 +50,14 @@ class BackupPasswordViewControllerTests: ZMSnapshotTestCase {
         }
     }
     
+    func testThatWhitespacesPasswordIsNotGood() {
+        // GIVEN
+        let sut = BackupPasswordViewController { (_, password) in
+            XCTFail()
+        }
+        // WHEN
+        XCTAssertTrue(sut.textField(UITextField(), shouldChangeCharactersIn: NSMakeRange(0, 0) , replacementString: "              "))
+        XCTAssertFalse(sut.textField(UITextField(), shouldChangeCharactersIn: NSMakeRange(0, 0), replacementString: "\n"))
+    }
 }
 
