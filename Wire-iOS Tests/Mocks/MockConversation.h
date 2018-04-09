@@ -33,6 +33,3 @@
 @property (nonatomic) ZMConnectionStatus relatedConnectionState;
 
 @end
-
-@interface MockZClientViewController : NSObject<Mockable>
-@end

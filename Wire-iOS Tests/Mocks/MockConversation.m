@@ -18,30 +18,6 @@
 
 
 #import "MockConversation.h"
-#import "ZClientViewController.h"
-
-@implementation MockZClientViewController
-- (BOOL)isKindOfClass:(Class)aClass
-{
-    if ([aClass isSubclassOfClass:[ZClientViewController class]]) {
-        return YES;
-    } else {
-        return [super isKindOfClass:aClass];
-    }
-}
-- (instancetype)initWithJSONObject:(NSDictionary *)jsonObject {
-    self = [super init];
-
-    if (self) {
-        for (NSString *key in jsonObject.allKeys) {
-            id value = jsonObject[key];
-            [self setValue:value forKey:key];
-        }
-    }
-    return self;
-}
-
-@end
 
 @implementation MockConversation
 

@@ -34,13 +34,10 @@ import Cartography
 
     open fileprivate(set) weak var conversationViewController: ConversationViewController?
 
-    public init(conversation: ZMConversation?, clientViewController: ZClientViewController) {
-        var conversationController: ConversationViewController?
-        if let conversation = conversation {
-            conversationController = ConversationViewController()
-            conversationController?.conversation = conversation
-            conversationController?.zClientViewController = clientViewController
-        }
+    public init(conversation: ZMConversation, clientViewController: ZClientViewController) {
+        let conversationController = ConversationViewController()
+        conversationController.conversation = conversation
+        conversationController.zClientViewController = clientViewController
 
         networkStatusViewController = NetworkStatusViewController()
 
@@ -58,14 +55,8 @@ import Cartography
 
         networkStatusViewController.delegate = self
 
-
-        if let conversationController = conversationController {
-            self.addChildViewController(conversationController)
-            self.contentView.addSubview(conversationController.view)
-            conversationController.didMove(toParentViewController: self)
-
-            conversationViewController = conversationController
-        }
+        self.addToSelf(conversationController)
+        conversationViewController = conversationController
 
         configure()
     }
