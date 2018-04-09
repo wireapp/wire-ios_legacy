@@ -17,6 +17,18 @@
 //
 
 import Foundation
+
+// MARK: SplitViewController reveal
+
+extension ConversationInputBarViewController {
+    func unrevealLeftView() {
+        guard self.isIPadRegularPortrait(device: UIDevice.current, application: UIApplication.shared) else { return }
+        guard let splitViewController = wr_splitViewController, splitViewController.isLeftViewControllerRevealed else { return }
+
+        splitViewController.setLeftViewControllerRevealed(false, animated: true)
+    }
+}
+
 extension ConversationInputBarViewController: UITextViewDelegate {
     public func textViewDidChange(_ textView: UITextView) {
         // In case the conversation isDeleted
@@ -53,13 +65,7 @@ extension ConversationInputBarViewController: UITextViewDelegate {
         updateAccessoryViews()
         updateNewButtonTitleLabel()
         AppDelegate.checkNetwork()
-        if self.isIPadRegularPortrait(device: UIDevice.current, application: UIApplication.shared) {
-            if let splitViewController = wr_splitViewController {
-                if splitViewController.isLeftViewControllerRevealed {
-                    splitViewController.setLeftViewControllerRevealed(false, animated: true)
-                }
-            }
-        }
+        unrevealLeftView()
     }
 
     public func textViewShouldEndEditing(_ textView: UITextView) -> Bool {
