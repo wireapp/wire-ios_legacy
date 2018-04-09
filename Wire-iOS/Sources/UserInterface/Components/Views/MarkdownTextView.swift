@@ -548,7 +548,7 @@ extension DownStyle {
         style.codeFont = UIFont(name: "Menlo", size: style.baseFont.pointSize) ?? style.baseFont
         style.baseParagraphStyle = NSParagraphStyle.default
         style.listIndentation = 0
-        style.listItemPrefixSpacing = 4
+        style.listItemPrefixSpacing = 8
         return style
     }()
     
@@ -560,7 +560,7 @@ extension DownStyle {
         style.codeFont = UIFont(name: "Menlo", size: style.baseFont.pointSize) ?? style.baseFont
         style.baseParagraphStyle = NSParagraphStyle.default
         style.listIndentation = 0
-        style.listItemPrefixSpacing = 4
+        style.listItemPrefixSpacing = 8
         
         // headers all same size
         style.h1Size = style.baseFont.pointSize
