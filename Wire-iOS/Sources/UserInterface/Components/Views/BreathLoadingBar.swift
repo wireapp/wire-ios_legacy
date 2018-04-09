@@ -132,7 +132,7 @@ class BreathLoadingBar: UIView {
         delegate?.animationDidStarted()
 
         let anim = CAKeyframeAnimation(keyPath: "opacity")
-        anim.values = [0.64, 1, 0.64]
+        anim.values = [CGFloat.SyncBar.minOpacity, CGFloat.SyncBar.maxOpacity, CGFloat.SyncBar.minOpacity]
         anim.isRemovedOnCompletion = false
         anim.autoreverses = false
         anim.fillMode = kCAFillModeForwards

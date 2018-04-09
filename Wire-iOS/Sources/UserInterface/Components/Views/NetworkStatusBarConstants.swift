@@ -33,6 +33,9 @@ extension CGFloat {
     enum SyncBar {
         static let height: CGFloat = 4
         static let cornerRadius: CGFloat = 2
+
+        static let minOpacity: CGFloat = 0.4
+        static let maxOpacity: CGFloat = 1
     }
 }
 
@@ -42,6 +45,6 @@ extension TimeInterval {
     }
 
     enum SyncBar {
-        static let defaultAnimationDuration: TimeInterval = 2
+        static let defaultAnimationDuration: TimeInterval = 1
     }
 }
