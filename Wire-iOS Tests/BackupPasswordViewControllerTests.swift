@@ -20,33 +20,35 @@ import Foundation
 import XCTest
 @testable import Wire
 
-class MockBackupSource: BackupSource {
-    func backupActiveAccount(password: Password, completion: @escaping SessionManager.BackupResultClosure) {
-        
-    }
-}
-
-class BackupViewControllerTests: ZMSnapshotTestCase {
+class BackupPasswordViewControllerTests: ZMSnapshotTestCase {
     
     override func setUp() {
         super.setUp()
-        self.snapshotBackgroundColor = .darkGray
     }
     
-    func testInitialState() {
+    func testDefaultState() {
         // GIVEN
-        let sut = BackupViewController(backupSource: MockBackupSource())
-        // WHEN && THEN
+        let sut = BackupPasswordViewController { (_, _) in }
+        // WHEN & THEN
         self.verifyInIPhoneSize(view: sut.view)
     }
     
-    func testLoading() {
+    func testThatItCallsTheCallback() {
         // GIVEN
-        let sut = BackupViewController(backupSource: MockBackupSource())
-        sut.view.layer.speed = 0
-        sut.tableView(UITableView(), didSelectRowAt: IndexPath(row: 1, section: 0))
-        // WHEN && THEN
-        self.verifyInIPhoneSize(view: sut.view)
+        
+        let expectation = self.expectation(description: "Callback called")
+        let sut = BackupPasswordViewController { (_, password) in
+            XCTAssertEqual(password!.value, "new password")
+            expectation.fulfill()
+        }
+        // WHEN
+        XCTAssertTrue(sut.textField(UITextField(), shouldChangeCharactersIn: NSMakeRange(0, 0) , replacementString: "new password"))
+        XCTAssertFalse(sut.textField(UITextField(), shouldChangeCharactersIn: NSMakeRange(0, 0), replacementString: "\n"))
+        // THEN
+        self.waitForExpectations(timeout: 0.5) { error in
+            XCTAssertNil(error)
+        }
     }
+    
 }
 
