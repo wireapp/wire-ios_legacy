@@ -19,6 +19,7 @@
 
 #import "MockConversation.h"
 
+
 @implementation MockConversation
 
 #pragma mark - Mockable
