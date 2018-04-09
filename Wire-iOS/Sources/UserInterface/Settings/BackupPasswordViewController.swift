@@ -147,11 +147,11 @@ final class BackupPasswordViewController: UIViewController {
         navigationItem.rightBarButtonItem?.isEnabled = nil != password
     }
     
-    dynamic fileprivate func cancel() {
+    @objc dynamic fileprivate func cancel() {
         completion?(self, nil)
     }
     
-    dynamic fileprivate func completeWithCurrentResult() {
+    @objc dynamic fileprivate func completeWithCurrentResult() {
         completion?(self, password)
     }
 }
