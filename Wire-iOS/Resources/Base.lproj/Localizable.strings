@@ -849,7 +849,7 @@
 
 "self.settings.conversations.title" = "Conversations";
 "self.settings.history_backup.title" = "History backup";
-"self.settings.history_backup.description" = "Back up your conversation history to a safe place. If you lose your phone or switch to a new one, your conversation will be safe. You can restore your conversation history when you log in. You can only restore history from a backup of the same platform.\nThe back up is not protected by Wire end-to-end encryption.";
+"self.settings.history_backup.description" = "Create a backup to preserve your conversation history. You can use this to restore history if you lose your device or switch to a new one.\nThe backup file is not protected by Wire end-to-end encryption, so store it in a safe place.";
 "self.settings.history_backup.action" = "Back Up Now";
 "self.settings.history_backup.error.title" = "Error";
 
