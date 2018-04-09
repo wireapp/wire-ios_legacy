@@ -51,25 +51,6 @@ class BreathLoadingBar: UIView {
       }
     }
 
-    private func updateView() {
-        switch state {
-        case .online:
-            heightConstraint?.constant = 0
-            alpha = 0
-            layer.cornerRadius = 0
-        case .onlineSynchronizing:
-            heightConstraint?.constant = CGFloat.SyncBar.height
-            alpha = 1
-            layer.cornerRadius = CGFloat.SyncBar.cornerRadius
-        case .offlineExpanded:
-            heightConstraint?.constant = CGFloat.OfflineBar.expandedHeight
-            alpha = 0
-            layer.cornerRadius = CGFloat.OfflineBar.cornerRadius
-        }
-
-        self.layoutIfNeeded()
-    }
-
     private let BreathLoadingAnimationKey: String = "breathLoadingAnimation"
 
     var animationDuration: TimeInterval = 0.0
@@ -89,6 +70,8 @@ class BreathLoadingBar: UIView {
         createConstraints()
         updateView()
 
+        backgroundColor = UIColor.accent()
+
         NotificationCenter.default.addObserver(self, selector: #selector(self.applicationDidBecomeActive), name: .UIApplicationDidBecomeActive, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(self.applicationDidEnterBackground), name: .UIApplicationDidEnterBackground, object: nil)
     }
@@ -99,6 +82,27 @@ class BreathLoadingBar: UIView {
 
     deinit {
         NotificationCenter.default.removeObserver(self)
+    }
+
+    private func updateView() {
+        switch state {
+        case .online:
+            heightConstraint?.constant = 0
+            alpha = 0
+            layer.cornerRadius = 0
+        case .onlineSynchronizing:
+            heightConstraint?.constant = CGFloat.SyncBar.height
+            alpha = 1
+            layer.cornerRadius = CGFloat.SyncBar.cornerRadius
+
+            backgroundColor = UIColor.accent()
+        case .offlineExpanded:
+            heightConstraint?.constant = CGFloat.OfflineBar.expandedHeight
+            alpha = 0
+            layer.cornerRadius = CGFloat.OfflineBar.cornerRadius
+        }
+
+        self.layoutIfNeeded()
     }
 
     private func createConstraints() {
