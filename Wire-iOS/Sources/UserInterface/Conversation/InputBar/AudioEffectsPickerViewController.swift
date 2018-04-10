@@ -98,8 +98,7 @@ import Cartography
     fileprivate static let effectColumns = 4
     
     deinit {
-        self.audioPlayerController?.stop()
-        self.audioPlayerController = .none
+        cleanUp()
     }
     
     public required init?(coder aDecoder: NSCoder) {
@@ -110,6 +109,12 @@ import Cartography
         self.duration = duration
         self.recordingPath = recordingPath
         super.init(nibName: .none, bundle: .none)
+    }
+
+    func cleanUp() {
+        self.audioPlayerController?.stop()
+        self.audioPlayerController?.cleanUpMediaPlayer()
+        self.audioPlayerController = .none
     }
     
     fileprivate let collectionViewLayout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
@@ -183,8 +188,7 @@ import Cartography
     }
     
     public override func removeFromParentViewController() {
-        self.audioPlayerController?.stop()
-        self.audioPlayerController = nil
+        cleanUp()
         super.removeFromParentViewController()
     }
     
@@ -200,8 +204,7 @@ import Cartography
     
     public override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
-        self.audioPlayerController?.stop()
-        self.audioPlayerController = nil
+        cleanUp()
     }
     
     public override func viewDidLayoutSubviews() {
@@ -272,6 +275,9 @@ import Cartography
     
     fileprivate func playMedia(_ atPath: String) {
         Analytics.shared().tagPreviewedAudioMessageRecording(.keyboard)
+
+        self.audioPlayerController?.cleanUpMediaPlayer()
+
         self.audioPlayerController = try? AudioPlayerController(contentOf: URL(fileURLWithPath: atPath))
         self.audioPlayerController?.delegate = self
         self.audioPlayerController?.play()
@@ -350,6 +356,10 @@ private class AudioPlayerController : NSObject, MediaPlayer, AVAudioPlayerDelega
     }
     
     deinit {
+        cleanUpMediaPlayer()
+    }
+
+    func cleanUpMediaPlayer() {
         mediaManager?.mediaPlayer(self, didChangeTo: .completed)
     }
 
@@ -385,7 +395,7 @@ private class AudioPlayerController : NSObject, MediaPlayer, AVAudioPlayerDelega
     
     func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
         if player == self.player {
-            mediaManager?.mediaPlayer(self, didChangeTo: .completed)
+            cleanUpMediaPlayer()
             delegate?.audioPlayerControllerDidFinishPlaying()
         }
     }
