@@ -91,11 +91,11 @@ final class BackupActionCell: UITableViewCell {
 }
 
 protocol BackupSource {
-    func backupActiveAccount(password: Password, completion: @escaping WireSyncEngine.SessionManager.BackupResultClosure)
+    func backupActiveAccount(password: Password, completion: @escaping SessionManager.BackupResultClosure)
 }
 
 extension SessionManager: BackupSource {
-    func backupActiveAccount(password: Password, completion: @escaping WireSyncEngine.SessionManager.BackupResultClosure) {
+    func backupActiveAccount(password: Password, completion: @escaping SessionManager.BackupResultClosure) {
         backupActiveAccount(password: password.value, completion: completion)
     }
 }
