@@ -21,7 +21,7 @@ import XCTest
 @testable import Wire
 
 class MockBackupSource: BackupSource {
-    func backupActiveAccount(completion: @escaping WireSyncEngine.SessionManager.BackupResultClosure) {
+    func backupActiveAccount(password: Password, completion: @escaping SessionManager.BackupResultClosure) {
         
     }
 }

@@ -416,7 +416,7 @@
 "content.message.copy" = "Copy";
 
 "content.message.open_link_alert.title" = "Visit Link";
-"content.message.open_link_alert.message" = "This will take you to %@";
+"content.message.open_link_alert.message" = "This will take you to\n%@";
 "content.message.open_link_alert.open" = "Open";
 
 "content.reactions_list.likers" = "Liked by";
@@ -493,10 +493,10 @@
 
 // Meta Menu
 "meta.menu.rename" = "Rename";
-"meta.menu.leave" = "Leave";
+"meta.menu.leave" = "Leave…";
 "meta.menu.archive" = "Archive";
 "meta.menu.unarchive" = "Unarchive";
-"meta.menu.delete" = "Delete";
+"meta.menu.delete" = "Delete Content…";
 "meta.menu.silence.mute" = "Mute";
 "meta.menu.silence.unmute" = "Unmute";
 "meta.menu.cancel" = "Cancel";
@@ -504,7 +504,6 @@
 "meta.menu.mark_unread" = "Mark as Unread";
 "meta.menu.mark_read" = "Mark as Read";
 "shortcut.mark_all_as_read.title" = "Mark All as Read";
-
 
 // Delete conversation
 "meta.menu.delete_content.dialog_title" = "Delete content?";
@@ -848,14 +847,22 @@
 
 // History backup
 
-"self.settings.conversations.title" = "Conversations";
-"self.settings.history_backup.title" = "History backup";
-"self.settings.history_backup.description" = "Back up your conversation history to a safe place. If you lose your phone or switch to a new one, your conversation will be safe. You can restore your conversation history when you log in. You can only restore history from a backup of the same platform.\nThe back up is not protected by Wire end-to-end encryption.";
+"self.settings.conversations.title" = "History";
+"self.settings.history_backup.title" = "Backup conversations";
+"self.settings.history_backup.description" = "Create a backup to preserve your conversation history. You can use this to restore history if you lose your device or switch to a new one.\nThe backup file is not protected by Wire end-to-end encryption, so store it in a safe place.";
 "self.settings.history_backup.action" = "Back Up Now";
 "self.settings.history_backup.error.title" = "Error";
 
 "self.settings.history_backup.set_email.title" = "Set an email and password.";
 "self.settings.history_backup.set_email.message" = "You need an email and a password in order to back up your conversation history. You can do it from the account page in Settings.";
+
+// History backup password
+
+"self.settings.history_backup.password.title" = "Set Password";
+"self.settings.history_backup.password.cancel" = "Cancel";
+"self.settings.history_backup.password.next" = "Next";
+"self.settings.history_backup.password.placeholder" = "Password";
+"self.settings.history_backup.password.description" = "At least 8 characters\n\nThe backup will be compressed and encrypted with the password you set here.";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // System status
@@ -956,7 +963,7 @@
 "guest_room.actions.copy_link" = "Copy Link";
 "guest_room.actions.copied_link" = "Link Copied!";
 "guest_room.actions.share_link" = "Share Link";
-"guest_room.actions.revoke_link" = "Revoke Link";
+"guest_room.actions.revoke_link" = "Revoke Link…";
 
 "guest_room.share.message" = "Join me in a conversation on Wire:\n%@";
 
@@ -1001,6 +1008,8 @@
 
 "registration.no_history.restore_backup_failed.title" = "Restoring history failed.";
 "registration.no_history.restore_backup_failed.message" = "Your backup file might be corrupted or not compatible.";
+"registration.no_history.restore_backup_failed.wrong_account.message" = "Cannot read backup because it's from a different account.";
+"registration.no_history.restore_backup_failed.wrong_version.message" = "Cannot read backup because it's from an unsupported version (either outdated or newer).";
 "registration.no_history.restore_backup_failed.try_again" = "Try again";
 
 "registration.no_history.logged_out.hero" = "You’ve used Wire on this device before.";

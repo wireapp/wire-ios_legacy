@@ -15,15 +15,20 @@
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
+// General strings
 
 
 "general.ok" = "OK";
 "general.next" = "Seuraava";
 "general.cancel" = "Peruuta";
 "general.close" = "Sulje";
+"general.back" = "Back";
 "general.open_settings" = "Avaa Wiren Asetukset";
 "general.edit" = "Muokkaa";
 "general.done" = "Valmis";
+"general.confirm" = "OK";
+// Language like Chinese does not use space to sperate words or sentences.
+"general.space_between_words" = " ";
 
 "general.guest-room-name" = "Guest room";
 
@@ -242,6 +247,7 @@
 "conversation.input_bar.message_too_long.title" = "Viesti on liian pitkä";
 "conversation.input_bar.message_too_long.message" = "You can send messages up to %d characters long.";
 
+"conversation.create.group_name.title" = "Luo ryhmä";
 "conversation.create.group_name.placeholder" = "Ryhmän nimi";
 "conversation.create.guidance.empty" = "At least 1 character";
 "conversation.create.guidance.toolong" = "Liian monta merkkiä";
@@ -409,6 +415,10 @@
 "content.message.open" = "Avaa";
 "content.message.copy" = "Copy";
 
+"content.message.open_link_alert.title" = "Visit Link";
+"content.message.open_link_alert.message" = "This will take you to\n%@";
+"content.message.open_link_alert.open" = "Avaa";
+
 "content.reactions_list.likers" = "Tykätty";
 
 "content.file.too_big" = "Voit lähettää maksimissaan %@ n kokoisia tiedostoja";
@@ -430,11 +440,17 @@
 "inbox.connection_request.connect_button_title" = "Yhdistä";
 "inbox.connection_request.ignore_button_title" = "Hylkää";
 
+// Save image errors
+"library.alert.permission_warning.title" = "Wire needs access to your Photos";
+"library.alert.permission_warning.restrictions.explaination" = "Wire cannot access your library because restrictions are enabled.";
+"library.alert.permission_warning.not_allowed.explaination" = "Go to Settings and allow Wire to access your photos.";
+
 // Voice
-"voice.status.one_to_one.incoming" = "%@\nSoittaa";
-"voice.status.group_call.incoming" = "%@\nHälyyttää";
-"voice.status.one_to_one.outgoing" = "%@\nHälyyttää";
+"voice.status.one_to_one.incoming" = "%@\ncalling";
+"voice.status.group_call.incoming" = "%@\nringing";
+"voice.status.one_to_one.outgoing" = "%@\nringing";
 "voice.status.joining" = "%@\nYhdistää";
+"voice.status.leaving" = "%@\nCall ended";
 "voice.status.video_not_available" = "Video pois päältä";
 "voice.status.low_connection" = "Huono yhteys";
 "voice.network_error.title" = "Ei internet-yhteyttä";
@@ -566,7 +582,7 @@
 // Device list
 "profile.devices.title" = "Laitteet";
 "profile.devices.fingerprint_message_unencrypted" = "%@ käyttää vanhempaa versiota Wirestä. Laitteita ei näytetä täällä.";
-"profile.devices.fingerprint_message" = "Wire antaa jokaisella laiteelle yksilöllisen sormenjäljen. Vertaa niitä %@ n kanssa ja vahvista keskustelu. Miksi vahvistaa keskusteluja?";
+"profile.devices.fingerprint_message.title" = "Wire gives every device a unique fingerprint. Compare them with %@ and verify your conversation.";
 "profile.devices.fingerprint_message.link" = "Miksi vahvistaa keskusteluja?";
 
 // Device detail
@@ -579,9 +595,6 @@
 "device.class.tablet" = "Tabletti";
 "device.class.phone" = "Puhelinnumero";
 "profile.devices.detail.reset_session.title" = "Nollaa istunto";
-
-// General strings
-"general.confirm" = "OK";
 
 // Bot
 "participants.services.remove_integration.button" = "remove integration";
@@ -619,12 +632,9 @@
 "about.copyright.title" = "© Wire Swiss GmbH";
 
 // Self new devices
-"self.new_device_alert.title" = "Olet liittänyt %@ n Wire tiliisi";
-"self.new_device_alert.title_prefix.tablet" = "tabletti";
-"self.new_device_alert.title_prefix.phone" = "puhelin";
-"self.new_device_alert.title_prefix.devices" = "%d laitteet";
-"self.new_device_alert.message" = "%@\n\nJos et tehnyt tätä, poista laite ja vaihda salasanasi.";
-"self.new_device_alert.message_plural" = "%@\n\nJos et tehnyt tätä, poista laitteet ja vaihda salasanasi.";
+"self.new_device_alert.title" = "Your account was used on:";
+"self.new_device_alert.message" = "\n%@\n\nIf you don’t recognize the device above, remove it and reset your password.";
+"self.new_device_alert.message_plural" = "\n%@\n\nIf you don’t recognize the devices above, remove them and reset your password.";
 "self.new_device_alert.manage_devices" = "Hallitse laitteita";
 "self.new_device_alert.trust_devices" = "OK";
 
@@ -789,7 +799,11 @@
 "self.settings.privacy_contacts_menu.description_disabled.title" = "Tämä auttaa sinua löytämään tuttuja. Me anonymisoimme kaiken tiedon ja emme jaa sitä kenellekään muulle. Anna lupa Asetuksista > Yksityisyys > Yhteystiedot.";
 
 "self.settings.privacy_security.lock_app" = "Lukitse Salasanalla";
-"self.settings.privacy_security.lock_app.subtitle" = "Lukitse Wire 10 sekunnin jälkeen taustalla. Avaa Touch tunnuksella tai syötä salasanasi.";
+"self.settings.privacy_security.lock_app.subtitle.lock_description" = "Lock Wire after 10 seconds in the background.";
+"self.settings.privacy_security.lock_app.subtitle.touch_id" = "Unlock with Touch ID or enter your passcode.";
+"self.settings.privacy_security.lock_app.subtitle.face_id" = "Unlock with Face ID or enter your passcode.";
+"self.settings.privacy_security.lock_app.subtitle.none" = "Unlock by entering your passcode.";
+
 "self.settings.privacy_security.lock_app.description" = "Avata Wire";
 
 "self.settings.privacy_security.lock_cancelled.description" = "Avaa Wire Touch tunnuksella tai Salasanalla";
@@ -832,6 +846,17 @@
 // Invite from Settings
 "self.settings.invite_friends.title" = "Kutsu ihmisiä";
 
+// History backup
+
+"self.settings.conversations.title" = "Keskustelut";
+"self.settings.history_backup.title" = "History backup";
+"self.settings.history_backup.description" = "Back up your conversation history to a safe place. If you lose your phone or switch to a new one, your conversation will be safe. You can restore your conversation history when you log in. You can only restore history from a backup of the same platform.\nThe back up is not protected by Wire end-to-end encryption.";
+"self.settings.history_backup.action" = "Back Up Now";
+"self.settings.history_backup.error.title" = "Error";
+
+"self.settings.history_backup.set_email.title" = "Set an email and password.";
+"self.settings.history_backup.set_email.message" = "You need an email and a password in order to back up your conversation history. You can do it from the account page in Settings.";
+
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // System status
 "system_status_bar.no_internet.title" = "Ei Internet-yhteyttä";
@@ -855,11 +880,12 @@
 
 // Landing screen
 
+"landing.app_name" = "Wire";
 "landing.title" = "Secure messaging for everyone.";
-"landing.create_account.title" = "Luo käyttäjätili";
-"landing.create_account.subtitle" = "for personal use";
-"landing.create_team.title" = "Luo tiimi";
-"landing.create_team.subtitle" = "for work";
+"landing.create_account.title" = "For personal use";
+"landing.create_account.subtitle" = "create an account";
+"landing.create_team.title" = "For organizations";
+"landing.create_team.subtitle" = "create a team";
 "landing.login.hints" = "Onko sinulla jo tili?";
 "landing.login.button.title" = "Kirjaudu sisään";
 
@@ -939,6 +965,8 @@
 
 // Registration
 
+"registration.launch_back_button.label" = "Back";
+
 "registration.title" = "Rekisteröityminen";
 "registration.close_email_invitation_button.email_title" = "Käytä toista sähköpostiosoitetta";
 "registration.close_email_invitation_button.phone_title" = "Rekisteröidy puhelimella";
@@ -966,6 +994,16 @@
 "registration.no_history.hero" = "Käytät Wireä ensimmäistä kertaa tällä laitteella.";
 "registration.no_history.subtitle" = "Tietosuojasyistä keskusteluhistoriasi ei näy täällä.";
 "registration.no_history.got_it" = "OK";
+"registration.no_history.restore_backup" = "Restore from backup";
+"registration.no_history.restore_backup_warning.title" = "Restoring history.";
+"registration.no_history.restore_backup_warning.message" = "Your backup will overwrite the conversations that you may have on this device.";
+"registration.no_history.restore_backup_warning.proceed" = "Proceed";
+
+"registration.no_history.restore_backup_failed.title" = "Restoring history failed.";
+"registration.no_history.restore_backup_failed.message" = "Your backup file might be corrupted or not compatible.";
+"registration.no_history.restore_backup_failed.wrong_account.message" = "Cannot read backup because it's from a different account.";
+"registration.no_history.restore_backup_failed.wrong_version.message" = "Cannot read backup because it's from an unsupported version (either outdated or newer).";
+"registration.no_history.restore_backup_failed.try_again" = "Try again";
 
 "registration.no_history.logged_out.hero" = "Olet käyttänyt Wireä tällä laitteella aiemmin.";
 "registration.no_history.logged_out.subtitle" = "Sillä välin lähetetyt viestit eivät näy.";
@@ -1024,7 +1062,19 @@
 "registration.devices.activated_in" = "Aktivoitu paikassa";
 "registration.devices.id" = "ID:";
 
+"signin.use_email.label" = "Login with Email";
+"signin.use_phone.label" = "Login with Phone";
 "signin.forgot_password" = "Unohditko salasanan?";
+"signin.use_one_password.label" = "Log in with 1Password";
+"signin.use_one_password.hint" = "Double tap to fill your password with 1Password";
+"signin.confirm" = "Kirjaudu sisään";
+
+"registration.phone_country" = "Maa";
+"registration.phone_code" = "Country Code";
+"registration.phone_country.hint" = "Double tap to select another country.";
+"registration.phone_code.hint" = "Double tap to select another country code.";
+"registration.phone.verify.label" = "Verify phone number";
+"registration.phone.verify_field.label" = "Verification Code";
 
 "registration.add_phone_number.hero.title" = "Lisää puhelinnumero";
 "registration.add_phone_number.hero.paragraph" = "Tämä auttaa meitä löytämään ihmisiä joita saatat tuntea. Emme koskaan jaa sitä.";
@@ -1040,6 +1090,9 @@
 "registration.phone_invitation.title" = "Kutsu";
 "registration.phone_invitation.hero.title" = "Hei, %@";
 "registration.phone_invitation.hero.paragraph" = "Olet askeleen päässä viimeistelleksesi tilisi.";
+
+"registration.confirm" = "Sign Up";
+"registration.phone.country_code.hint" = "Double tap to use a phone number from this country.";
 
 "error.name_and_email" = "Syötä koko nimesi ja voimassa oleva sähköpostiosoite";
 "error.full_name" = "Kirjoita koko nimesi";

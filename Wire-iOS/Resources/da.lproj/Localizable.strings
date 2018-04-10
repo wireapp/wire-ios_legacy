@@ -15,15 +15,20 @@
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
+// General strings
 
 
 "general.ok" = "OK";
 "general.next" = "Next";
 "general.cancel" = "Annuller";
 "general.close" = "Luk";
+"general.back" = "Back";
 "general.open_settings" = "Åbn Wire Indstillinger";
 "general.edit" = "Rediger";
 "general.done" = "Done";
+"general.confirm" = "OK";
+// Language like Chinese does not use space to sperate words or sentences.
+"general.space_between_words" = " ";
 
 "general.guest-room-name" = "Guest room";
 
@@ -242,6 +247,7 @@
 "conversation.input_bar.message_too_long.title" = "Besked for lang";
 "conversation.input_bar.message_too_long.message" = "You can send messages up to %d characters long.";
 
+"conversation.create.group_name.title" = "Opret gruppe";
 "conversation.create.group_name.placeholder" = "Gruppenavn";
 "conversation.create.guidance.empty" = "At least 1 character";
 "conversation.create.guidance.toolong" = "For mange tegn";
@@ -409,6 +415,10 @@
 "content.message.open" = "Åbn";
 "content.message.copy" = "Copy";
 
+"content.message.open_link_alert.title" = "Visit Link";
+"content.message.open_link_alert.message" = "This will take you to\n%@";
+"content.message.open_link_alert.open" = "Åbn";
+
 "content.reactions_list.likers" = "Synes godt af";
 
 "content.file.too_big" = "Du kan sende filer op til %@";
@@ -430,11 +440,17 @@
 "inbox.connection_request.connect_button_title" = "Forbind";
 "inbox.connection_request.ignore_button_title" = "Ignorer";
 
+// Save image errors
+"library.alert.permission_warning.title" = "Wire needs access to your Photos";
+"library.alert.permission_warning.restrictions.explaination" = "Wire cannot access your library because restrictions are enabled.";
+"library.alert.permission_warning.not_allowed.explaination" = "Go to Settings and allow Wire to access your photos.";
+
 // Voice
-"voice.status.one_to_one.incoming" = "%@\nRinger";
-"voice.status.group_call.incoming" = "%@\nRinger";
-"voice.status.one_to_one.outgoing" = "%@\nRinger";
+"voice.status.one_to_one.incoming" = "%@\ncalling";
+"voice.status.group_call.incoming" = "%@\nringing";
+"voice.status.one_to_one.outgoing" = "%@\nringing";
 "voice.status.joining" = "%@\nForbinder";
+"voice.status.leaving" = "%@\nCall ended";
 "voice.status.video_not_available" = "Video slået fra";
 "voice.status.low_connection" = "Dårlig forbindelse";
 "voice.network_error.title" = "Ingen internetforbindelse";
@@ -566,7 +582,7 @@
 // Device list
 "profile.devices.title" = "Enheder";
 "profile.devices.fingerprint_message_unencrypted" = "%@ bruger en gammel version af Wire. Ingen enheder er vist her.";
-"profile.devices.fingerprint_message" = "Wire giver hver enhed et unikt fingeraftryk.\nSammenlign dem med %@ og verificer din samtale. Hvorfor verificere samtaler?";
+"profile.devices.fingerprint_message.title" = "Wire gives every device a unique fingerprint. Compare them with %@ and verify your conversation.";
 "profile.devices.fingerprint_message.link" = "Hvorfor verificere samtaler?";
 
 // Device detail
@@ -579,9 +595,6 @@
 "device.class.tablet" = "Tablet";
 "device.class.phone" = "Telefon";
 "profile.devices.detail.reset_session.title" = "Nulstil session";
-
-// General strings
-"general.confirm" = "OK";
 
 // Bot
 "participants.services.remove_integration.button" = "remove integration";
@@ -619,12 +632,9 @@
 "about.copyright.title" = "© Wire Swiss GmbH";
 
 // Self new devices
-"self.new_device_alert.title" = "Du har tilsluttet %@ til din Wire konto";
-"self.new_device_alert.title_prefix.tablet" = "en tablet";
-"self.new_device_alert.title_prefix.phone" = "en telefon";
-"self.new_device_alert.title_prefix.devices" = "%d enheder";
-"self.new_device_alert.message" = "%@\n\nHvis du ikke gjorde det, fjern enheden og nulstil din adgangskode.";
-"self.new_device_alert.message_plural" = "%@\n\nHvis du ikke gjorde det, fjern enhederne og nulstil din adgangskode.";
+"self.new_device_alert.title" = "Your account was used on:";
+"self.new_device_alert.message" = "\n%@\n\nIf you don’t recognize the device above, remove it and reset your password.";
+"self.new_device_alert.message_plural" = "\n%@\n\nIf you don’t recognize the devices above, remove them and reset your password.";
 "self.new_device_alert.manage_devices" = "Administrer enheder";
 "self.new_device_alert.trust_devices" = "OK";
 
@@ -789,7 +799,11 @@
 "self.settings.privacy_contacts_menu.description_disabled.title" = "Dette hjælper dig med at oprette forbindelse med andre. Vi anonymiserer alle informationer og deler ikke med andre. Tillad adgang via Indstillinger > Privatliv > Kontakter.";
 
 "self.settings.privacy_security.lock_app" = "Lås med adgangskode";
-"self.settings.privacy_security.lock_app.subtitle" = "Lås Wire efter 10 sekunder i baggrunden. Låse op med Touch ID eller indtaste din adgangskode.";
+"self.settings.privacy_security.lock_app.subtitle.lock_description" = "Lock Wire after 10 seconds in the background.";
+"self.settings.privacy_security.lock_app.subtitle.touch_id" = "Unlock with Touch ID or enter your passcode.";
+"self.settings.privacy_security.lock_app.subtitle.face_id" = "Unlock with Face ID or enter your passcode.";
+"self.settings.privacy_security.lock_app.subtitle.none" = "Unlock by entering your passcode.";
+
 "self.settings.privacy_security.lock_app.description" = "Åben Wire";
 
 "self.settings.privacy_security.lock_cancelled.description" = "Åben Wire med Touch ID eller adgangskode";
@@ -832,6 +846,17 @@
 // Invite from Settings
 "self.settings.invite_friends.title" = "Invitér personer";
 
+// History backup
+
+"self.settings.conversations.title" = "Conversations";
+"self.settings.history_backup.title" = "History backup";
+"self.settings.history_backup.description" = "Back up your conversation history to a safe place. If you lose your phone or switch to a new one, your conversation will be safe. You can restore your conversation history when you log in. You can only restore history from a backup of the same platform.\nThe back up is not protected by Wire end-to-end encryption.";
+"self.settings.history_backup.action" = "Back Up Now";
+"self.settings.history_backup.error.title" = "Error";
+
+"self.settings.history_backup.set_email.title" = "Set an email and password.";
+"self.settings.history_backup.set_email.message" = "You need an email and a password in order to back up your conversation history. You can do it from the account page in Settings.";
+
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // System status
 "system_status_bar.no_internet.title" = "Ingen forbindelse";
@@ -855,11 +880,12 @@
 
 // Landing screen
 
+"landing.app_name" = "Wire";
 "landing.title" = "Secure messaging for everyone.";
-"landing.create_account.title" = "Opret en konto";
-"landing.create_account.subtitle" = "for personal use";
-"landing.create_team.title" = "Opret team";
-"landing.create_team.subtitle" = "for work";
+"landing.create_account.title" = "For personal use";
+"landing.create_account.subtitle" = "create an account";
+"landing.create_team.title" = "For organizations";
+"landing.create_team.subtitle" = "create a team";
 "landing.login.hints" = "Already have an account?";
 "landing.login.button.title" = "Log ind";
 
@@ -939,6 +965,8 @@
 
 // Registration
 
+"registration.launch_back_button.label" = "Back";
+
 "registration.title" = "Registrering";
 "registration.close_email_invitation_button.email_title" = "Brug en anden e-mail";
 "registration.close_email_invitation_button.phone_title" = "Registrer via telefon";
@@ -966,6 +994,16 @@
 "registration.no_history.hero" = "Det er første gang du bruger Wire på denne enhed.";
 "registration.no_history.subtitle" = "Af hensyn til fortrolighed, vil din samtalehistorik ikke vises her.";
 "registration.no_history.got_it" = "OK";
+"registration.no_history.restore_backup" = "Restore from backup";
+"registration.no_history.restore_backup_warning.title" = "Restoring history.";
+"registration.no_history.restore_backup_warning.message" = "Your backup will overwrite the conversations that you may have on this device.";
+"registration.no_history.restore_backup_warning.proceed" = "Proceed";
+
+"registration.no_history.restore_backup_failed.title" = "Restoring history failed.";
+"registration.no_history.restore_backup_failed.message" = "Your backup file might be corrupted or not compatible.";
+"registration.no_history.restore_backup_failed.wrong_account.message" = "Cannot read backup because it's from a different account.";
+"registration.no_history.restore_backup_failed.wrong_version.message" = "Cannot read backup because it's from an unsupported version (either outdated or newer).";
+"registration.no_history.restore_backup_failed.try_again" = "Try again";
 
 "registration.no_history.logged_out.hero" = "Du har brugt Wire på denne enhed før.";
 "registration.no_history.logged_out.subtitle" = "Beskeder sendt i mellemtiden vises ikke.";
@@ -1024,7 +1062,19 @@
 "registration.devices.activated_in" = "Aktiveret i";
 "registration.devices.id" = "ID:";
 
+"signin.use_email.label" = "Login with Email";
+"signin.use_phone.label" = "Login with Phone";
 "signin.forgot_password" = "Glemt adgangskode?";
+"signin.use_one_password.label" = "Log in with 1Password";
+"signin.use_one_password.hint" = "Double tap to fill your password with 1Password";
+"signin.confirm" = "Log ind";
+
+"registration.phone_country" = "Land";
+"registration.phone_code" = "Country Code";
+"registration.phone_country.hint" = "Double tap to select another country.";
+"registration.phone_code.hint" = "Double tap to select another country code.";
+"registration.phone.verify.label" = "Verify phone number";
+"registration.phone.verify_field.label" = "Verification Code";
 
 "registration.add_phone_number.hero.title" = "Tilføj telefonnummer";
 "registration.add_phone_number.hero.paragraph" = "Dette hjælper os med at finde folk du måske kender. Vi deler det aldrig.";
@@ -1040,6 +1090,9 @@
 "registration.phone_invitation.title" = "Invitation";
 "registration.phone_invitation.hero.title" = "Hej, %@";
 "registration.phone_invitation.hero.paragraph" = "Du er et skridt væk fra at oprette din konto.";
+
+"registration.confirm" = "Sign Up";
+"registration.phone.country_code.hint" = "Double tap to use a phone number from this country.";
 
 "error.name_and_email" = "Indtast dit fulde navn og en gyldig e-mailadresse";
 "error.full_name" = "Indtast dit fulde navn";

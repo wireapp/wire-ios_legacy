@@ -34,7 +34,6 @@ final class MarkdownTextViewTests: XCTestCase {
         style.codeFont = UIFont(name: "Menlo", size: style.baseFont.pointSize) ?? style.baseFont
         style.codeColor = UIColor.red
         style.baseParagraphStyle = NSParagraphStyle.default
-        style.listIndentation = 0
         style.h1Size = 28
         style.h2Size = 24
         style.h3Size = 20

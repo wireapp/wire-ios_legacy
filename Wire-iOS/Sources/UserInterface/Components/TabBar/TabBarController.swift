@@ -147,29 +147,26 @@ class TabBarController: UIViewController {
         toViewController.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         toViewController.view.frame = self.contentView.bounds
 
-        if (animated && fromViewController != nil) {
-            fromViewController?.willMove(toParentViewController: nil)
-            addChildViewController(toViewController)
+        addChildViewController(toViewController)
+        self.contentView.addSubview(toViewController.view)
 
-            self.transition(from: fromViewController!, to: toViewController, duration: 0.25, options: .transitionCrossDissolve, animations: {
-                self.isTransitioning = true
-                if toViewController.responds(to: #selector(UIViewController.takeFirstResponder)) {
-                    toViewController.perform(#selector(UIViewController.takeFirstResponder))
-                }
-            }, completion: { (finished) in
-                self.isTransitioning = false
-                fromViewController?.view.removeFromSuperview()
-                fromViewController?.removeFromParentViewController()
-                toViewController.didMove(toParentViewController: self)
+        guard fromViewController != nil else {
+            toViewController.didMove(toParentViewController: self)
+            return
+        }
+
+        self.transition(from: fromViewController!, to: toViewController, duration: animated ? 0.25 : 0, options: .transitionCrossDissolve, animations: {
+            self.isTransitioning = true
+            if toViewController.responds(to: #selector(UIViewController.takeFirstResponder)) {
+                toViewController.perform(#selector(UIViewController.takeFirstResponder))
             }
-            )
-        } else {
+        }, completion: { (finished) in
+            self.isTransitioning = false
             fromViewController?.view.removeFromSuperview()
             fromViewController?.removeFromParentViewController()
-            addChildViewController(toViewController)
-            self.contentView.addSubview(toViewController.view)
             toViewController.didMove(toParentViewController: self)
-        }
+        })
+
     }
 
 }

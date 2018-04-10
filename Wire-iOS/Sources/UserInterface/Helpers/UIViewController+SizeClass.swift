@@ -22,4 +22,8 @@ extension UIViewController {
     func isIPadRegular(device: DeviceProtocol) -> Bool {
         return device.userInterfaceIdiom == .pad && self.traitCollection.horizontalSizeClass == .regular
     }
+
+    func isIPadRegularPortrait(device: DeviceProtocol, application: ApplicationProtocol) -> Bool {
+        return isIPadRegular(device: device) && application.statusBarOrientation.isPortrait
+    }
 }
