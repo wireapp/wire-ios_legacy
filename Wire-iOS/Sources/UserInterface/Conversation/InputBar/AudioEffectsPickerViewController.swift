@@ -357,10 +357,11 @@ private class AudioPlayerController : NSObject, MediaPlayer, AVAudioPlayerDelega
     
     deinit {
         tearDown()
+
+        delegate = nil
     }
 
     func tearDown() {
-        player.delegate = nil
         mediaManager?.mediaPlayer(self, didChangeTo: .completed)
     }
 
