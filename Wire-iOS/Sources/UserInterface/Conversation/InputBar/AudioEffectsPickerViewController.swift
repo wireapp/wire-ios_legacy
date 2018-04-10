@@ -113,7 +113,7 @@ import Cartography
 
     func tearDown() {
         self.audioPlayerController?.stop()
-        self.audioPlayerController?.tearDownMediaPlayer()
+        self.audioPlayerController?.tearDown()
         self.audioPlayerController = .none
     }
     
@@ -276,7 +276,7 @@ import Cartography
     fileprivate func playMedia(_ atPath: String) {
         Analytics.shared().tagPreviewedAudioMessageRecording(.keyboard)
 
-        self.audioPlayerController?.tearDownMediaPlayer()
+        self.audioPlayerController?.tearDown()
 
         self.audioPlayerController = try? AudioPlayerController(contentOf: URL(fileURLWithPath: atPath))
         self.audioPlayerController?.delegate = self
@@ -356,10 +356,11 @@ private class AudioPlayerController : NSObject, MediaPlayer, AVAudioPlayerDelega
     }
     
     deinit {
-        tearDownMediaPlayer()
+        tearDown()
     }
 
-    func tearDownMediaPlayer() {
+    func tearDown() {
+        player.delegate = nil
         mediaManager?.mediaPlayer(self, didChangeTo: .completed)
     }
 
@@ -395,7 +396,7 @@ private class AudioPlayerController : NSObject, MediaPlayer, AVAudioPlayerDelega
     
     func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
         if player == self.player {
-            tearDownMediaPlayer()
+            tearDown()
             delegate?.audioPlayerControllerDidFinishPlaying()
         }
     }
