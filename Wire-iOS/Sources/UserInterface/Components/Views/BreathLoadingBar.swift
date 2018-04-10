@@ -18,6 +18,7 @@
 
 import UIKit
 import QuartzCore
+import Cartography
 
 protocol BreathLoadingBarDelegate: class {
     func animationDidStarted()
@@ -26,6 +27,8 @@ protocol BreathLoadingBarDelegate: class {
 
 class BreathLoadingBar: UIView {
     public weak var delegate: BreathLoadingBarDelegate?
+
+    var heightConstraint: NSLayoutConstraint?
 
     public var animating: Bool = false {
         didSet {
@@ -38,6 +41,33 @@ class BreathLoadingBar: UIView {
             }
 
         }
+    }
+
+    var state: NetworkStatusViewState = .online {
+        didSet {
+            if oldValue != state {
+                updateView()
+            }
+      }
+    }
+
+    private func updateView() {
+        switch state {
+        case .online:
+            heightConstraint?.constant = 0
+            alpha = 0
+            layer.cornerRadius = 0
+        case .onlineSynchronizing:
+            heightConstraint?.constant = CGFloat.SyncBar.height
+            alpha = 1
+            layer.cornerRadius = CGFloat.SyncBar.cornerRadius
+        case .offlineExpanded:
+            heightConstraint?.constant = CGFloat.OfflineBar.expandedHeight
+            alpha = 0
+            layer.cornerRadius = CGFloat.OfflineBar.cornerRadius
+        }
+
+        self.layoutIfNeeded()
     }
 
     private let BreathLoadingAnimationKey: String = "breathLoadingAnimation"
@@ -55,9 +85,12 @@ class BreathLoadingBar: UIView {
         layer.cornerRadius = CGFloat.SyncBar.cornerRadius
 
         animationDuration = duration
+
+        createConstraints()
+        updateView()
+
         NotificationCenter.default.addObserver(self, selector: #selector(self.applicationDidBecomeActive), name: .UIApplicationDidBecomeActive, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(self.applicationDidEnterBackground), name: .UIApplicationDidEnterBackground, object: nil)
-
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -66,6 +99,12 @@ class BreathLoadingBar: UIView {
 
     deinit {
         NotificationCenter.default.removeObserver(self)
+    }
+
+    private func createConstraints() {
+        constrain(self) { selfView in
+            heightConstraint = selfView.height == 0
+        }
     }
 
     override func layoutSubviews() {

@@ -1063,6 +1063,7 @@
 		EF60FC412064FD400017D083 /* SplitViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF60FC402064FD400017D083 /* SplitViewControllerTests.swift */; };
 		EF6163A51FE9583400C6F5A9 /* Message+dayFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF6163A41FE9583400C6F5A9 /* Message+dayFormatter.swift */; };
 		EF6163A61FE9682700C6F5A9 /* TextMessageCellTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8EE5591D636F4600B0D6D7 /* TextMessageCellTests.swift */; };
+		EF6777062073C6C20062F122 /* OfflineBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF6777052073C6C20062F122 /* OfflineBar.swift */; };
 		EF7CCAFD204E96390050325B /* MockUser+PointOfView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF7CCAFC204E96390050325B /* MockUser+PointOfView.swift */; };
 		EF7D75A6201B6149003A8AF8 /* DeviceNativeBoundsSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF7D75A5201B6149003A8AF8 /* DeviceNativeBoundsSize.swift */; };
 		EF7F74041FCC033D0059C13F /* EmailAdresssValidatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF7F74021FCC01140059C13F /* EmailAdresssValidatorTests.swift */; };
@@ -2668,6 +2669,7 @@
 		EF6163A41FE9583400C6F5A9 /* Message+dayFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Message+dayFormatter.swift"; sourceTree = "<group>"; };
 		EF61B33F1FC84B0100D8E631 /* AccessoryTextFieldValidationTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccessoryTextFieldValidationTests.swift; sourceTree = "<group>"; };
 		EF61B3411FC8508400D8E631 /* TextFieldValidator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextFieldValidator.swift; sourceTree = "<group>"; };
+		EF6777052073C6C20062F122 /* OfflineBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfflineBar.swift; sourceTree = "<group>"; };
 		EF70E202201F7B7600083BCB /* StartUIViewController+internal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "StartUIViewController+internal.h"; sourceTree = "<group>"; };
 		EF7CCAFC204E96390050325B /* MockUser+PointOfView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MockUser+PointOfView.swift"; sourceTree = "<group>"; };
 		EF7D75A5201B6149003A8AF8 /* DeviceNativeBoundsSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceNativeBoundsSize.swift; sourceTree = "<group>"; };
@@ -4818,6 +4820,7 @@
 			children = (
 				162917C81F8BB991000F3E92 /* NetworkStatusView.swift */,
 				162917CD1F8CD327000F3E92 /* NetworkStatusViewController.swift */,
+				EF6777052073C6C20062F122 /* OfflineBar.swift */,
 			);
 			path = NetworkStatus;
 			sourceTree = "<group>";
@@ -6484,6 +6487,7 @@
 				8708B8331DDDFF0D00310A53 /* UserConnectionView.swift in Sources */,
 				D5168F4D2010B61D00F8222A /* URL+Wire.swift in Sources */,
 				8FC8543D199245770008B66B /* ConnectRequestsViewController.m in Sources */,
+				EF6777062073C6C20062F122 /* OfflineBar.swift in Sources */,
 				F16426F61FCC0FE200D2ABFC /* UIColor+Hex.swift in Sources */,
 				BFFD439E1DE47FFA00505C8C /* UIView+RightToLeft.swift in Sources */,
 				871BC2511D34F8F800DF0793 /* MediaPreviewData.m in Sources */,
