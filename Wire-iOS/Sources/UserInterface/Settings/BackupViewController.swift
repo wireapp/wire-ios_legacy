@@ -94,13 +94,10 @@ protocol BackupSource {
     func backupActiveAccount(password: Password, completion: @escaping WireSyncEngine.SessionManager.BackupResultClosure)
 }
 
-// TODO move to SE
 extension SessionManager: BackupSource {
     func backupActiveAccount(password: Password, completion: @escaping WireSyncEngine.SessionManager.BackupResultClosure) {
-        
-        backupActiveAccount(completion: completion)
+        backupActiveAccount(password: password.value, completion: completion)
     }
-    
 }
 
 final class BackupViewController: UIViewController {
@@ -201,12 +198,8 @@ extension BackupViewController: UITableViewDataSource, UITableViewDelegate {
 fileprivate extension BackupViewController {
 
     fileprivate func backupActiveAccount(indexPath: IndexPath) {
-        requestPassword(over: self) { result in
-            
-            guard let password = result else {
-                return
-            }
-            
+        requestPassword(over: self) { [weak self] result in
+            guard let `self` = self, let password = result else { return }
             self.loadingHostController.showLoadingView = true
 
             self.backupSource.backupActiveAccount(password: password) { backupResult in

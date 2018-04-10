@@ -98,8 +98,7 @@ extension NoHistoryViewController {
             }
         #endif
         
-        let picker = UIDocumentPickerViewController(documentTypes: [NoHistoryViewController.WireBackupUTI],
-                                                  in: .`import`)
+        let picker = UIDocumentPickerViewController(documentTypes: [NoHistoryViewController.WireBackupUTI], in: .`import`)
         picker.delegate = self
         self.present(picker, animated: true)
     }
@@ -147,11 +146,10 @@ extension NoHistoryViewController {
         spinnerView.subtitle = "registration.no_history.restore_backup.restoring".localized
         showLoadingView = true
         
-        // TODO: Use new API and pass in password
-        sessionManager.restoreFromBackup(at: url) { [weak self] result in
+        sessionManager.restoreFromBackup(at: url, password: password) { [weak self] result in
             guard let `self` = self else { return }
             switch result {
-            case .failure(StorageStack.BackupImportError.incompatibleBackup): // TODO: Use proper wrong password error case
+            case .failure(SessionManager.BackupError.decryptionFailed):
                 self.showLoadingView = false
                 self.showWrongPasswordAlert {
                     self.restore(with: url)

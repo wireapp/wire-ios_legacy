@@ -20,7 +20,7 @@ import UIKit
 import WireUtilities
 
 struct Password {
-    static fileprivate let minimumCharacters = 8
+    static let minimumCharacters = 8
     let value: String
     
     init?(_ value: String) {
