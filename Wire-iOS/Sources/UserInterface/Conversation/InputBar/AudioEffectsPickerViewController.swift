@@ -98,7 +98,7 @@ import Cartography
     fileprivate static let effectColumns = 4
     
     deinit {
-        cleanUp()
+        tearDown()
     }
     
     public required init?(coder aDecoder: NSCoder) {
@@ -111,9 +111,9 @@ import Cartography
         super.init(nibName: .none, bundle: .none)
     }
 
-    func cleanUp() {
+    func tearDown() {
         self.audioPlayerController?.stop()
-        self.audioPlayerController?.cleanUpMediaPlayer()
+        self.audioPlayerController?.tearDownMediaPlayer()
         self.audioPlayerController = .none
     }
     
@@ -188,7 +188,7 @@ import Cartography
     }
     
     public override func removeFromParentViewController() {
-        cleanUp()
+        tearDown()
         super.removeFromParentViewController()
     }
     
@@ -204,7 +204,7 @@ import Cartography
     
     public override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
-        cleanUp()
+        tearDown()
     }
     
     public override func viewDidLayoutSubviews() {
@@ -276,7 +276,7 @@ import Cartography
     fileprivate func playMedia(_ atPath: String) {
         Analytics.shared().tagPreviewedAudioMessageRecording(.keyboard)
 
-        self.audioPlayerController?.cleanUpMediaPlayer()
+        self.audioPlayerController?.tearDownMediaPlayer()
 
         self.audioPlayerController = try? AudioPlayerController(contentOf: URL(fileURLWithPath: atPath))
         self.audioPlayerController?.delegate = self
@@ -356,10 +356,10 @@ private class AudioPlayerController : NSObject, MediaPlayer, AVAudioPlayerDelega
     }
     
     deinit {
-        cleanUpMediaPlayer()
+        tearDownMediaPlayer()
     }
 
-    func cleanUpMediaPlayer() {
+    func tearDownMediaPlayer() {
         mediaManager?.mediaPlayer(self, didChangeTo: .completed)
     }
 
@@ -395,7 +395,7 @@ private class AudioPlayerController : NSObject, MediaPlayer, AVAudioPlayerDelega
     
     func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
         if player == self.player {
-            cleanUpMediaPlayer()
+            tearDownMediaPlayer()
             delegate?.audioPlayerControllerDidFinishPlaying()
         }
     }
