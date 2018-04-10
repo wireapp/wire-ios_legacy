@@ -158,7 +158,6 @@
     
     [self.guidanceLabel autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.passwordField withOffset:8];
     [self.guidanceLabel autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero excludingEdge:ALEdgeTop];
-    [self.guidanceLabel autoSetDimension:ALDimensionHeight toSize:10];
 }
 
 #pragma mark - TextField Events

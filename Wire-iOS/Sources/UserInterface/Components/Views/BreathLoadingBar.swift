@@ -51,25 +51,6 @@ class BreathLoadingBar: UIView {
       }
     }
 
-    private func updateView() {
-        switch state {
-        case .online:
-            heightConstraint?.constant = 0
-            alpha = 0
-            layer.cornerRadius = 0
-        case .onlineSynchronizing:
-            heightConstraint?.constant = CGFloat.SyncBar.height
-            alpha = 1
-            layer.cornerRadius = CGFloat.SyncBar.cornerRadius
-        case .offlineExpanded:
-            heightConstraint?.constant = CGFloat.OfflineBar.expandedHeight
-            alpha = 0
-            layer.cornerRadius = CGFloat.OfflineBar.cornerRadius
-        }
-
-        self.layoutIfNeeded()
-    }
-
     private let BreathLoadingAnimationKey: String = "breathLoadingAnimation"
 
     var animationDuration: TimeInterval = 0.0
@@ -89,6 +70,8 @@ class BreathLoadingBar: UIView {
         createConstraints()
         updateView()
 
+        backgroundColor = UIColor.accent()
+
         NotificationCenter.default.addObserver(self, selector: #selector(self.applicationDidBecomeActive), name: .UIApplicationDidBecomeActive, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(self.applicationDidEnterBackground), name: .UIApplicationDidEnterBackground, object: nil)
     }
@@ -99,6 +82,27 @@ class BreathLoadingBar: UIView {
 
     deinit {
         NotificationCenter.default.removeObserver(self)
+    }
+
+    private func updateView() {
+        switch state {
+        case .online:
+            heightConstraint?.constant = 0
+            alpha = 0
+            layer.cornerRadius = 0
+        case .onlineSynchronizing:
+            heightConstraint?.constant = CGFloat.SyncBar.height
+            alpha = 1
+            layer.cornerRadius = CGFloat.SyncBar.cornerRadius
+
+            backgroundColor = UIColor.accent()
+        case .offlineExpanded:
+            heightConstraint?.constant = CGFloat.OfflineBar.expandedHeight
+            alpha = 0
+            layer.cornerRadius = CGFloat.OfflineBar.cornerRadius
+        }
+
+        self.layoutIfNeeded()
     }
 
     private func createConstraints() {
@@ -132,13 +136,13 @@ class BreathLoadingBar: UIView {
         delegate?.animationDidStarted()
 
         let anim = CAKeyframeAnimation(keyPath: "opacity")
-        anim.values = [0.64, 1, 0.64]
+        anim.values = [CGFloat.SyncBar.minOpacity, CGFloat.SyncBar.maxOpacity, CGFloat.SyncBar.minOpacity]
         anim.isRemovedOnCompletion = false
         anim.autoreverses = false
         anim.fillMode = kCAFillModeForwards
         anim.repeatCount = .infinity
         anim.duration = animationDuration
-        anim.timingFunction = CAMediaTimingFunction.easeInOutQuart()
+        anim.timingFunction = CAMediaTimingFunction.easeInOutSine()
         self.layer.add(anim, forKey: BreathLoadingAnimationKey)
     }
 
@@ -149,8 +153,7 @@ class BreathLoadingBar: UIView {
     }
 
     static public func withDefaultAnimationDuration() -> BreathLoadingBar {
-        let animationDuration: TimeInterval = 1
-        return BreathLoadingBar(animationDuration: animationDuration)
+        return BreathLoadingBar(animationDuration: TimeInterval.SyncBar.defaultAnimationDuration)
     }
 
 }

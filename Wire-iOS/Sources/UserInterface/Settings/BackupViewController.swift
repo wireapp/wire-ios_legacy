@@ -73,10 +73,10 @@ final class BackupActionCell: UITableViewCell {
         backgroundColor = .clear
         contentView.backgroundColor = .clear
         
-        actionTitleLabel.textAlignment = .center
+        actionTitleLabel.textAlignment = .left
         actionTitleLabel.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(actionTitleLabel)
-        actionTitleLabel.fitInSuperview()
+        actionTitleLabel.fitInSuperview(with: EdgeInsets(top: 0, leading: 24, bottom: 0, trailing: 24))
         
         actionTitleLabel.heightAnchor.constraint(equalToConstant: 44).isActive = true
         
@@ -91,10 +91,17 @@ final class BackupActionCell: UITableViewCell {
 }
 
 protocol BackupSource {
-    func backupActiveAccount(completion: @escaping WireSyncEngine.SessionManager.BackupResultClosure)
+    func backupActiveAccount(password: Password, completion: @escaping WireSyncEngine.SessionManager.BackupResultClosure)
 }
 
-extension SessionManager: BackupSource {}
+// TODO move to SE
+extension SessionManager: BackupSource {
+    func backupActiveAccount(password: Password, completion: @escaping WireSyncEngine.SessionManager.BackupResultClosure) {
+        
+        backupActiveAccount(completion: completion)
+    }
+    
+}
 
 final class BackupViewController: UIViewController {
     fileprivate let tableView = UITableView(frame: .zero)
@@ -115,6 +122,24 @@ final class BackupViewController: UIViewController {
         title = "self.settings.history_backup.title".localized.uppercased()
         setupViews()
         setupLayout()
+    }
+    
+    override var prefersStatusBarHidden: Bool {
+        return false
+    }
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(animated)
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(animated)
     }
     
     private func setupViews() {
@@ -144,14 +169,11 @@ final class BackupViewController: UIViewController {
     }
     
     var loadingHostController: UIViewController {
-        if let navigation = self.navigationController {
-            return navigation
-        }
-        else {
-            return self
-        }
+        return navigationController ?? self
     }
 }
+
+// MARK: - UITableViewDataSource & UITableViewDelegate
 
 extension BackupViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -168,42 +190,63 @@ extension BackupViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        
-        guard indexPath.row == 1 else {
-            return
-        }
-        
-        loadingHostController.showLoadingView = true
+        guard indexPath.row == 1 else { return }
 
-        backupSource.backupActiveAccount { result in
-            
-            self.loadingHostController.showLoadingView = false
-            
-            switch result {
-            case .failure(let error):
-                let alert = UIAlertController(title: "self.settings.history_backup.error.title".localized,
-                                              message: error.localizedDescription,
-                                              cancelButtonTitle: "general.ok".localized)
-                self.present(alert, animated: true)
-                BackupEvent.exportFailed.track()
-            case .success(let url):
-                #if arch(i386) || arch(x86_64)
-                    let tmpURL = URL(fileURLWithPath: "/var/tmp/").appendingPathComponent(url.lastPathComponent)
-                    try! FileManager.default.moveItem(at: url, to: tmpURL)
-                #else
-                    let activityController = UIActivityViewController(activityItems: [url], applicationActivities: nil)
-                    activityController.completionWithItemsHandler = { _, _, _, _ in
-                        SessionManager.clearPreviousBackups()
-                    }
-                    activityController.popoverPresentationController.apply {
-                        $0.sourceView = tableView
-                        $0.sourceRect = tableView.rectForRow(at: indexPath)
-                    }
-                    self.present(activityController, animated: true)
-                #endif
-                BackupEvent.exportSucceeded.track()
-            }
-        }
+        backupActiveAccount(indexPath: indexPath)
     }
 }
 
+// MARK: - Backup Logic
+
+fileprivate extension BackupViewController {
+
+    fileprivate func backupActiveAccount(indexPath: IndexPath) {
+        requestPassword(over: self) { result in
+            
+            guard let password = result else {
+                return
+            }
+            
+            self.loadingHostController.showLoadingView = true
+
+            self.backupSource.backupActiveAccount(password: password) { backupResult in
+                self.loadingHostController.showLoadingView = false
+                
+                switch backupResult {
+                case .failure(let error):
+                    self.presentAlert(for: error)
+                    BackupEvent.exportFailed.track()
+                case .success(let url):
+                    self.presentShareSheet(with: url, from: indexPath)
+                }
+            }
+        }
+    }
+    
+    private func presentAlert(for error: Error) {
+        let alert = UIAlertController(
+            title: "self.settings.history_backup.error.title".localized,
+            message: error.localizedDescription,
+            cancelButtonTitle: "general.ok".localized
+        )
+        present(alert, animated: true)
+    }
+    
+    private func presentShareSheet(with url: URL, from indexPath: IndexPath) {
+        #if arch(i386) || arch(x86_64)
+            let tmpURL = URL(fileURLWithPath: "/var/tmp/").appendingPathComponent(url.lastPathComponent)
+            try! FileManager.default.moveItem(at: url, to: tmpURL)
+        #else
+            let activityController = UIActivityViewController(activityItems: [url], applicationActivities: nil)
+            activityController.completionWithItemsHandler = { _, _, _, _ in
+                SessionManager.clearPreviousBackups()
+            }
+            activityController.popoverPresentationController.apply {
+                $0.sourceView = tableView
+                $0.sourceRect = tableView.rectForRow(at: indexPath)
+            }
+            self.present(activityController, animated: true)
+        #endif
+        BackupEvent.exportSucceeded.track()
+    }
+}

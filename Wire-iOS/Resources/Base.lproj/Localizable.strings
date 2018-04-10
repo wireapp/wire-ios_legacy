@@ -847,14 +847,22 @@
 
 // History backup
 
-"self.settings.conversations.title" = "Conversations";
-"self.settings.history_backup.title" = "History backup";
-"self.settings.history_backup.description" = "Back up your conversation history to a safe place. If you lose your phone or switch to a new one, your conversation will be safe. You can restore your conversation history when you log in. You can only restore history from a backup of the same platform.\nThe back up is not protected by Wire end-to-end encryption.";
+"self.settings.conversations.title" = "History";
+"self.settings.history_backup.title" = "Backup conversations";
+"self.settings.history_backup.description" = "Create a backup to preserve your conversation history. You can use this to restore history if you lose your device or switch to a new one.\nThe backup file is not protected by Wire end-to-end encryption, so store it in a safe place.";
 "self.settings.history_backup.action" = "Back Up Now";
 "self.settings.history_backup.error.title" = "Error";
 
 "self.settings.history_backup.set_email.title" = "Set an email and password.";
 "self.settings.history_backup.set_email.message" = "You need an email and a password in order to back up your conversation history. You can do it from the account page in Settings.";
+
+// History backup password
+
+"self.settings.history_backup.password.title" = "Set Password";
+"self.settings.history_backup.password.cancel" = "Cancel";
+"self.settings.history_backup.password.next" = "Next";
+"self.settings.history_backup.password.placeholder" = "Password";
+"self.settings.history_backup.password.description" = "At least 8 characters\n\nThe backup will be compressed and encrypted with the password you set here.";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // System status
