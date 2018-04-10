@@ -106,31 +106,28 @@ extension NoHistoryViewController {
     
     private func errorMessage(for error: Error) -> String {
         switch error {
-        case StorageStack.BackupImportError.incompatibleBackup(let underlyingError):
-            switch underlyingError {
-            case BackupMetadata.VerificationError.backupFromNewerAppVersion:
-                return "registration.no_history.restore_backup_failed.wrong_version.message".localized
-            case BackupMetadata.VerificationError.userMismatch:
-                return "registration.no_history.restore_backup_failed.wrong_account.message".localized
-            default:
-                return "registration.no_history.restore_backup_failed.message".localized
-            }
-            
+        case StorageStack.BackupImportError.incompatibleBackup(BackupMetadata.VerificationError.backupFromNewerAppVersion):
+            return "registration.no_history.restore_backup_failed.wrong_version.message".localized
+        case StorageStack.BackupImportError.incompatibleBackup(BackupMetadata.VerificationError.userMismatch):
+            return "registration.no_history.restore_backup_failed.wrong_account.message".localized
         default:
             return "registration.no_history.restore_backup_failed.message".localized
         }
     }
 
     fileprivate func showRestoreError(_ error: Error) {
+        let alert = UIAlertController(
+            title: "registration.no_history.restore_backup_failed.title".localized,
+            message: errorMessage(for: error),
+            preferredStyle: .alert
+        )
         
-        let alert = UIAlertController(title: "registration.no_history.restore_backup_failed.title".localized,
-                                      message: errorMessage(for: error),
-                                      preferredStyle: .alert)
-        
-        let tryAgainAction = UIAlertAction(title: "registration.no_history.restore_backup_failed.try_again".localized,
-                                          style: .default) { [unowned self] _ in
-                                            self.showFilePicker()
-        }
+        let tryAgainAction = UIAlertAction(
+            title: "registration.no_history.restore_backup_failed.try_again".localized,
+            style: .default,
+            handler: { [showFilePicker] _ in showFilePicker() }
+        )
+
         alert.addAction(tryAgainAction)
         alert.addAction(.cancel { [formStepDelegate] _ in
             formStepDelegate?.didCompleteFormStep(self)
@@ -147,8 +144,10 @@ extension NoHistoryViewController {
     
     fileprivate func performRestore(using password: String, from url: URL) {
         guard let sessionManager = SessionManager.shared else { return }
+        spinnerView.subtitle = "registration.no_history.restore_backup.restoring".localized
+        showLoadingView = true
         
-        self.showLoadingView = true
+        // TODO: Use new API and pass in password
         sessionManager.restoreFromBackup(at: url) { [weak self] result in
             guard let `self` = self else { return }
             switch result {
@@ -163,6 +162,7 @@ extension NoHistoryViewController {
                 self.showLoadingView = false
             case .success:
                 BackupEvent.importSucceeded.track()
+                self.spinnerView.subtitle = "registration.no_history.restore_backup.completed".localized
                 self.indicateLoadingSuccessRemovingCheckmark(false) {
                     self.formStepDelegate.didCompleteFormStep(self)
                 }
@@ -174,7 +174,6 @@ extension NoHistoryViewController {
         let controller = UIAlertController.requestRestorePassword { password in
             password.apply(completion)
         }
-        
         present(controller, animated: true, completion: nil)
     }
     
@@ -182,7 +181,6 @@ extension NoHistoryViewController {
         let controller = UIAlertController.importWrongPasswordError(completion: completion)
         present(controller, animated: true, completion: nil)
     }
-    
 }
 
 extension NoHistoryViewController: UIDocumentPickerDelegate {

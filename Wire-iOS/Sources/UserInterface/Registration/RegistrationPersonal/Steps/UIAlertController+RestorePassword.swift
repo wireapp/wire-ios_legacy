@@ -42,7 +42,7 @@ extension UIAlertController {
             textField.isSecureTextEntry = true
             textField.placeholder = "registration.no_history.restore_backup.password.placeholder".localized
             token = NotificationCenter.default.addObserver(forName: .UITextFieldTextDidChange, object: textField, queue: .main) { _ in
-                add.isEnabled = textField.text?.count ?? 0 >= 8
+                add.isEnabled = textField.text?.count ?? 0 >= 8 // TODO: Replace with Password.minimumCharacters
             }
         }
     

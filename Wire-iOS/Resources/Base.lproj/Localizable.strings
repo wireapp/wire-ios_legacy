@@ -1004,6 +1004,9 @@
 "registration.no_history.restore_backup_failed.wrong_version.message" = "Cannot read backup because it's from an unsupported version (either outdated or newer).";
 "registration.no_history.restore_backup_failed.try_again" = "Try again";
 
+"registration.no_history.restore_backup.restoring" = "Restoring…";
+"registration.no_history.restore_backup.completed" = "Completed";
+
 // Password Import Alert
 "registration.no_history.restore_backup.password.title" = "Restore backup";
 "registration.no_history.restore_backup.password.message" = "The password is required to restore this backup.";
