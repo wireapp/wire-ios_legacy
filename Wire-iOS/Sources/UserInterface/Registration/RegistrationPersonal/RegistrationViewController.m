@@ -305,6 +305,9 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
         
         [self.rootNavigationController pushViewController:addEmailPasswordViewController animated:YES];
     }
+    else if (! [[ZMUserSession sharedSession] registeredOnThisDevice]) {
+        [self.delegate registrationViewControllerDidSignIn];
+    }
     else if ([self.class registrationFlow] == RegistrationFlowPhone) {
         [self.delegate registrationViewControllerDidCompleteRegistration];
     }

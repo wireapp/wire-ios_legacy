@@ -15,15 +15,20 @@
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
+// General strings
 
 
 "general.ok" = "Tamam";
 "general.next" = "İleri";
 "general.cancel" = "İptal";
 "general.close" = "Kapat";
+"general.back" = "Back";
 "general.open_settings" = "Wire Ayarlarını Aç";
 "general.edit" = "Düzenle";
 "general.done" = "Yapıldı";
+"general.confirm" = "TAMAM";
+// Language like Chinese does not use space to sperate words or sentences.
+"general.space_between_words" = " ";
 
 "general.guest-room-name" = "Guest room";
 
@@ -242,6 +247,7 @@
 "conversation.input_bar.message_too_long.title" = "Mesaj çok uzun";
 "conversation.input_bar.message_too_long.message" = "En fazla %d karakterlik mesajlar gönderebilirsiniz.";
 
+"conversation.create.group_name.title" = "Grup oluştur";
 "conversation.create.group_name.placeholder" = "Grup adı";
 "conversation.create.guidance.empty" = "At least 1 character";
 "conversation.create.guidance.toolong" = "Çok fazla karakter";
@@ -409,6 +415,10 @@
 "content.message.open" = "Aç";
 "content.message.copy" = "Copy";
 
+"content.message.open_link_alert.title" = "Visit Link";
+"content.message.open_link_alert.message" = "This will take you to\n%@";
+"content.message.open_link_alert.open" = "Aç";
+
 "content.reactions_list.likers" = "Beğenen";
 
 "content.file.too_big" = "En fazla %@ dosya yükleyebilirsin";
@@ -430,11 +440,17 @@
 "inbox.connection_request.connect_button_title" = "Bağlan";
 "inbox.connection_request.ignore_button_title" = "Yoksay";
 
+// Save image errors
+"library.alert.permission_warning.title" = "Wire needs access to your Photos";
+"library.alert.permission_warning.restrictions.explaination" = "Wire cannot access your library because restrictions are enabled.";
+"library.alert.permission_warning.not_allowed.explaination" = "Go to Settings and allow Wire to access your photos.";
+
 // Voice
-"voice.status.one_to_one.incoming" = "%@\nArıyor";
-"voice.status.group_call.incoming" = "%@\nÇalıyor";
-"voice.status.one_to_one.outgoing" = "%@\nÇalıyor";
+"voice.status.one_to_one.incoming" = "%@\ncalling";
+"voice.status.group_call.incoming" = "%@\nringing";
+"voice.status.one_to_one.outgoing" = "%@\nringing";
 "voice.status.joining" = "%@\nBağlanıyor";
+"voice.status.leaving" = "%@\nCall ended";
 "voice.status.video_not_available" = "Video kapandı";
 "voice.status.low_connection" = "Kötü bağlantı";
 "voice.network_error.title" = "Internet bağlantısı yok";
@@ -566,7 +582,7 @@
 // Device list
 "profile.devices.title" = "Cihazlar";
 "profile.devices.fingerprint_message_unencrypted" = "%@, Wire'ın eski bir versiyonunu kullanıyor. Hiçbir cihaz burada gösterilmiyor.";
-"profile.devices.fingerprint_message" = "Wire her cihaza eşsiz bir parmak izi verir. %@ ile karşılaştır ve konuşmayı doğrulayın. Neden konuşmaları doğrulamalıyız?";
+"profile.devices.fingerprint_message.title" = "Wire gives every device a unique fingerprint. Compare them with %@ and verify your conversation.";
 "profile.devices.fingerprint_message.link" = "Neden konuşmaları doğrulamalıyız?";
 
 // Device detail
@@ -579,9 +595,6 @@
 "device.class.tablet" = "Tablet";
 "device.class.phone" = "Telefon";
 "profile.devices.detail.reset_session.title" = "Oturumu sıfırla";
-
-// General strings
-"general.confirm" = "TAMAM";
 
 // Bot
 "participants.services.remove_integration.button" = "remove integration";
@@ -619,12 +632,9 @@
 "about.copyright.title" = "© Wire Swiss GmbH";
 
 // Self new devices
-"self.new_device_alert.title" = "%@'ı Wire hesabınıza bağladınız";
-"self.new_device_alert.title_prefix.tablet" = "bir tablet";
-"self.new_device_alert.title_prefix.phone" = "bir telefon";
-"self.new_device_alert.title_prefix.devices" = "%d cihaz";
-"self.new_device_alert.message" = "%@\n\nEğer bunu yapmadıysanız, cihazı kaldırın ve şifrenizi sıfırlayın.";
-"self.new_device_alert.message_plural" = "%@\n\nEğer bunu yapmadıysanız, cihazları kaldırın ve şifrenizi sıfırlayın.";
+"self.new_device_alert.title" = "Your account was used on:";
+"self.new_device_alert.message" = "\n%@\n\nIf you don’t recognize the device above, remove it and reset your password.";
+"self.new_device_alert.message_plural" = "\n%@\n\nIf you don’t recognize the devices above, remove them and reset your password.";
 "self.new_device_alert.manage_devices" = "Cihazları yönet";
 "self.new_device_alert.trust_devices" = "TAMAM";
 
@@ -789,7 +799,11 @@
 "self.settings.privacy_contacts_menu.description_disabled.title" = "Kişilerinizi paylaşmak, başkalarına bağlanmanızı kolaylaştırır. Biz size ait tüm bilgileri gizler ve başkalarıyla paylaşmayız. Ayarlar > Gizlilik > Kişiler'den bu erişimi aktifleştirebilirsiniz.";
 
 "self.settings.privacy_security.lock_app" = "Sistem şifresi ile kilitle";
-"self.settings.privacy_security.lock_app.subtitle" = "Kapandıktan 10 saniye sonra Wire'ı kilitle.\nTouch ID veya şifreniz girilerek açılabilir.";
+"self.settings.privacy_security.lock_app.subtitle.lock_description" = "Lock Wire after 10 seconds in the background.";
+"self.settings.privacy_security.lock_app.subtitle.touch_id" = "Unlock with Touch ID or enter your passcode.";
+"self.settings.privacy_security.lock_app.subtitle.face_id" = "Unlock with Face ID or enter your passcode.";
+"self.settings.privacy_security.lock_app.subtitle.none" = "Unlock by entering your passcode.";
+
 "self.settings.privacy_security.lock_app.description" = "Wire'ın kilidini aç";
 
 "self.settings.privacy_security.lock_cancelled.description" = "Lütfen Wire'ın Touch ID veya şifre ile kilidini açın";
@@ -832,6 +846,17 @@
 // Invite from Settings
 "self.settings.invite_friends.title" = "İnsanları davet et";
 
+// History backup
+
+"self.settings.conversations.title" = "Konuşmalar";
+"self.settings.history_backup.title" = "History backup";
+"self.settings.history_backup.description" = "Back up your conversation history to a safe place. If you lose your phone or switch to a new one, your conversation will be safe. You can restore your conversation history when you log in. You can only restore history from a backup of the same platform.\nThe back up is not protected by Wire end-to-end encryption.";
+"self.settings.history_backup.action" = "Back Up Now";
+"self.settings.history_backup.error.title" = "Error";
+
+"self.settings.history_backup.set_email.title" = "Set an email and password.";
+"self.settings.history_backup.set_email.message" = "You need an email and a password in order to back up your conversation history. You can do it from the account page in Settings.";
+
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // System status
 "system_status_bar.no_internet.title" = "İnternet Bağlantısı Yok";
@@ -855,11 +880,12 @@
 
 // Landing screen
 
+"landing.app_name" = "Wire";
 "landing.title" = "Herkes için güvenli mesajlaşma.";
-"landing.create_account.title" = "Bir hesap oluştur";
-"landing.create_account.subtitle" = "kişisel kullanım için";
-"landing.create_team.title" = "Bir takım oluştur";
-"landing.create_team.subtitle" = "iş için";
+"landing.create_account.title" = "For personal use";
+"landing.create_account.subtitle" = "create an account";
+"landing.create_team.title" = "For organizations";
+"landing.create_team.subtitle" = "create a team";
 "landing.login.hints" = "Zaten bir hesabınız var mı?";
 "landing.login.button.title" = "Giriş yap";
 
@@ -939,6 +965,8 @@
 
 // Registration
 
+"registration.launch_back_button.label" = "Back";
+
 "registration.title" = "Kayıt";
 "registration.close_email_invitation_button.email_title" = "Başka bir e-posta kullanın";
 "registration.close_email_invitation_button.phone_title" = "Telefon ile kaydol";
@@ -966,6 +994,16 @@
 "registration.no_history.hero" = "Wire'ı bu aygıtta ilk defa kullanıyorsunuz.";
 "registration.no_history.subtitle" = "Gizlilik nedenleriyle, konuşma geçmişiniz burada görünmeyecek.";
 "registration.no_history.got_it" = "TAMAM";
+"registration.no_history.restore_backup" = "Restore from backup";
+"registration.no_history.restore_backup_warning.title" = "Restoring history.";
+"registration.no_history.restore_backup_warning.message" = "Your backup will overwrite the conversations that you may have on this device.";
+"registration.no_history.restore_backup_warning.proceed" = "Proceed";
+
+"registration.no_history.restore_backup_failed.title" = "Restoring history failed.";
+"registration.no_history.restore_backup_failed.message" = "Your backup file might be corrupted or not compatible.";
+"registration.no_history.restore_backup_failed.wrong_account.message" = "Cannot read backup because it's from a different account.";
+"registration.no_history.restore_backup_failed.wrong_version.message" = "Cannot read backup because it's from an unsupported version (either outdated or newer).";
+"registration.no_history.restore_backup_failed.try_again" = "Try again";
 
 "registration.no_history.logged_out.hero" = "Bu cihazdan daha önce Wire kullanmışsınız.";
 "registration.no_history.logged_out.subtitle" = "Bu sürede gönderilen mesajlar gözükmeyecektir.";
@@ -1024,7 +1062,19 @@
 "registration.devices.activated_in" = "Etkinleştirildi";
 "registration.devices.id" = "ID:";
 
+"signin.use_email.label" = "Login with Email";
+"signin.use_phone.label" = "Login with Phone";
 "signin.forgot_password" = "Şifrenizi mi unuttunuz?";
+"signin.use_one_password.label" = "Log in with 1Password";
+"signin.use_one_password.hint" = "Double tap to fill your password with 1Password";
+"signin.confirm" = "Oturum Aç";
+
+"registration.phone_country" = "Ülke";
+"registration.phone_code" = "Country Code";
+"registration.phone_country.hint" = "Double tap to select another country.";
+"registration.phone_code.hint" = "Double tap to select another country code.";
+"registration.phone.verify.label" = "Verify phone number";
+"registration.phone.verify_field.label" = "Verification Code";
 
 "registration.add_phone_number.hero.title" = "Telefon numarası ekleyin";
 "registration.add_phone_number.hero.paragraph" = "Bu bildiğiniz insanlar bulmamıza yardımcı olur. Asla paylaşmayız.";
@@ -1040,6 +1090,9 @@
 "registration.phone_invitation.title" = "Davetiye";
 "registration.phone_invitation.hero.title" = "Merhaba, %@";
 "registration.phone_invitation.hero.paragraph" = "Hesabınızı oluşturmanıza bir adım kaldı.";
+
+"registration.confirm" = "Sign Up";
+"registration.phone.country_code.hint" = "Double tap to use a phone number from this country.";
 
 "error.name_and_email" = "Lütfen tam adınız ile geçerli bir e-posta adresi giriniz";
 "error.full_name" = "Lütfen tam adınızı girin";

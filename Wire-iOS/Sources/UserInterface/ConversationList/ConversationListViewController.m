@@ -511,7 +511,10 @@
     BOOL pushNotificationsDisabled = ! [[UIApplication sharedApplication] isRegisteredForRemoteNotifications] ||
     [[UIApplication sharedApplication] currentUserNotificationSettings].types == UIUserNotificationTypeNone;
     
-    if (pushNotificationsDisabled && pushAlertHappenedMoreThan1DayBefore) {
+    if (pushNotificationsDisabled &&
+        pushAlertHappenedMoreThan1DayBefore &&
+        !AutomationHelper.sharedHelper.skipFirstLoginAlerts) {
+        
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationDidBecomeActive:) name:UIApplicationDidBecomeActiveNotification object:nil];
         [[Settings sharedSettings] setLastPushAlertDate:[NSDate date]];
         PermissionDeniedViewController *permissions = [PermissionDeniedViewController pushDeniedViewController];

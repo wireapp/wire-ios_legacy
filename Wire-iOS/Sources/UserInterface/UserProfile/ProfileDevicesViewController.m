@@ -27,7 +27,7 @@
 #import "Wire-Swift.h"
 
 @import WireSyncEngine;
-@import WireMessageStrategy;
+@import WireRequestStrategy;
 
 @interface ProfileDevicesViewController () <ZMUserObserver, ParticipantDeviceHeaderViewDelegate>
 

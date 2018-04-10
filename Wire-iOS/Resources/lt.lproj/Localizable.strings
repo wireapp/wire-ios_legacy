@@ -15,15 +15,20 @@
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
+// General strings
 
 
 "general.ok" = "GERAI";
 "general.next" = "Kitas";
 "general.cancel" = "Atsisakyti";
 "general.close" = "Užverti";
+"general.back" = "Atgal";
 "general.open_settings" = "Atidaryti Wire nustatymus";
 "general.edit" = "Taisyti";
 "general.done" = "Baigta";
+"general.confirm" = "GERAI";
+// Language like Chinese does not use space to sperate words or sentences.
+"general.space_between_words" = " ";
 
 "general.guest-room-name" = "Svečių kambarys";
 
@@ -242,6 +247,7 @@
 "conversation.input_bar.message_too_long.title" = "Žinutė per ilga";
 "conversation.input_bar.message_too_long.message" = "Galite siųsti žinutes, kurių ilgis iki %d simbolių.";
 
+"conversation.create.group_name.title" = "Sukurti grupę";
 "conversation.create.group_name.placeholder" = "Grupės pavadinimas";
 "conversation.create.guidance.empty" = "Bent 1 simbolis";
 "conversation.create.guidance.toolong" = "Per daug simbolių";
@@ -409,12 +415,16 @@
 "content.message.open" = "Atverti";
 "content.message.copy" = "Kopijuoti";
 
+"content.message.open_link_alert.title" = "Visit Link";
+"content.message.open_link_alert.message" = "This will take you to\n%@";
+"content.message.open_link_alert.open" = "Atverti";
+
 "content.reactions_list.likers" = "Patinka";
 
 "content.file.too_big" = "Siunčiamų failų dydis negali viršyti %@";
 // Someone pinged
 "content.ping.text" = "%@ skambtelėjo";
-"content.ping.text-you" = "%@ skambtelėjo";
+"content.ping.text-you" = "%@ skambtelėjote";
 
 // Current user pinged
 "content.ping.text.you" = "Jūs";
@@ -430,11 +440,17 @@
 "inbox.connection_request.connect_button_title" = "Užmegzti kontaktą";
 "inbox.connection_request.ignore_button_title" = "Nepaisyti";
 
+// Save image errors
+"library.alert.permission_warning.title" = "„Wire“ reikia leidimo matyti jūsų nuotraukas";
+"library.alert.permission_warning.restrictions.explaination" = "„Wire“ negali prisijungti prie bibliotekos, nes yra draudžiama prieiga.";
+"library.alert.permission_warning.not_allowed.explaination" = "Eikite į nustatymus ir leiskite „Wire“ matyti jūsų nuotraukas.";
+
 // Voice
-"voice.status.one_to_one.incoming" = "%@\njums skambina";
-"voice.status.group_call.incoming" = "%@\nSkambina";
-"voice.status.one_to_one.outgoing" = "Skambinate kontaktui \n%@";
+"voice.status.one_to_one.incoming" = "%@\ncalling";
+"voice.status.group_call.incoming" = "%@\nringing";
+"voice.status.one_to_one.outgoing" = "%@\nringing";
 "voice.status.joining" = "%@\nJungiamasi";
+"voice.status.leaving" = "%@\nCall ended";
 "voice.status.video_not_available" = "Vaizdas nerodomas";
 "voice.status.low_connection" = "Prastas ryšys";
 "voice.network_error.title" = "Nėra interneto ryšio";
@@ -566,7 +582,7 @@
 // Device list
 "profile.devices.title" = "Įrenginiai";
 "profile.devices.fingerprint_message_unencrypted" = "%@ naudoja seną „Wire“ versiją. Čia įrenginiai nerodomi.";
-"profile.devices.fingerprint_message" = "„Wire“ suteikia kiekvienam įrenginiui unikalų kontrolinį kodą. Palyginkite jį su %@ įrenginiu ir patvirtinkite savo susirašinėjimą. Kam tvirtinti susirašinėjimus?";
+"profile.devices.fingerprint_message.title" = "Wire gives every device a unique fingerprint. Compare them with %@ and verify your conversation.";
 "profile.devices.fingerprint_message.link" = "Kam tvirtinti susirašinėjimus?";
 
 // Device detail
@@ -579,9 +595,6 @@
 "device.class.tablet" = "Planšetinis kompiuteris";
 "device.class.phone" = "Telefonas";
 "profile.devices.detail.reset_session.title" = "Sukurti seansą iš naujo";
-
-// General strings
-"general.confirm" = "GERAI";
 
 // Bot
 "participants.services.remove_integration.button" = "pašalinti integraciją";
@@ -619,12 +632,9 @@
 "about.copyright.title" = "© Wire Swiss GmbH";
 
 // Self new devices
-"self.new_device_alert.title" = "Susijungėte su %@ „Wire“ paskyroje";
-"self.new_device_alert.title_prefix.tablet" = "planšetinis kompiuteris";
-"self.new_device_alert.title_prefix.phone" = "telefonas";
-"self.new_device_alert.title_prefix.devices" = "%d įrenginiai";
-"self.new_device_alert.message" = "%@\n\nJei veiksmą atlikote ne jūs, pašalinkite įrenginį ir pasikeiskite slaptažodį.";
-"self.new_device_alert.message_plural" = "%@\n\nJei veiksmą atlikote ne jūs, pašalinkite įrenginius ir pasikeiskite slaptažodį.";
+"self.new_device_alert.title" = "Jūsų paskyra buvo naudota:";
+"self.new_device_alert.message" = "\n%@\n\nIf you don’t recognize the device above, remove it and reset your password.";
+"self.new_device_alert.message_plural" = "\n%@\n\nIf you don’t recognize the devices above, remove them and reset your password.";
 "self.new_device_alert.manage_devices" = "Tvarkyti įrenginius";
 "self.new_device_alert.trust_devices" = "GERAI";
 
@@ -789,7 +799,11 @@
 "self.settings.privacy_contacts_menu.description_disabled.title" = "Tai padeda jums susisiekti su kitais. Mes nuasmeniname visą informaciją ir nesidaliname su niekuo. Leiskite prisijungti per „Nustatymai“ > „Privatumas“ > „Kontaktai“.";
 
 "self.settings.privacy_security.lock_app" = "Užrakinti su slaptuoju kodu";
-"self.settings.privacy_security.lock_app.subtitle" = "Užrakinti „Wire“ po 10 sekundžių veikimo fone. Atrakinti su „Touch ID“ arba įrašius slaptąjį kodą.";
+"self.settings.privacy_security.lock_app.subtitle.lock_description" = "Lock Wire after 10 seconds in the background.";
+"self.settings.privacy_security.lock_app.subtitle.touch_id" = "Unlock with Touch ID or enter your passcode.";
+"self.settings.privacy_security.lock_app.subtitle.face_id" = "Unlock with Face ID or enter your passcode.";
+"self.settings.privacy_security.lock_app.subtitle.none" = "Unlock by entering your passcode.";
+
 "self.settings.privacy_security.lock_app.description" = "Atrakinti „Wire“";
 
 "self.settings.privacy_security.lock_cancelled.description" = "Atrakinti „Wire“ naudojant „Touch ID“ arba slaptąjį kodą";
@@ -832,6 +846,17 @@
 // Invite from Settings
 "self.settings.invite_friends.title" = "Pakviesti žmones";
 
+// History backup
+
+"self.settings.conversations.title" = "Susirašinėjimai";
+"self.settings.history_backup.title" = "History backup";
+"self.settings.history_backup.description" = "Back up your conversation history to a safe place. If you lose your phone or switch to a new one, your conversation will be safe. You can restore your conversation history when you log in. You can only restore history from a backup of the same platform.\nThe back up is not protected by Wire end-to-end encryption.";
+"self.settings.history_backup.action" = "Back Up Now";
+"self.settings.history_backup.error.title" = "Klaida";
+
+"self.settings.history_backup.set_email.title" = "Set an email and password.";
+"self.settings.history_backup.set_email.message" = "You need an email and a password in order to back up your conversation history. You can do it from the account page in Settings.";
+
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // System status
 "system_status_bar.no_internet.title" = "Nėra interneto";
@@ -855,11 +880,12 @@
 
 // Landing screen
 
+"landing.app_name" = "„Wire“";
 "landing.title" = "Saugus bendravimas visiems.";
-"landing.create_account.title" = "Sukurti paskyrą";
-"landing.create_account.subtitle" = "asmeniam naudojimui";
-"landing.create_team.title" = "Sukurti komandą";
-"landing.create_team.subtitle" = "darbo tikslais";
+"landing.create_account.title" = "For personal use";
+"landing.create_account.subtitle" = "create an account";
+"landing.create_team.title" = "For organizations";
+"landing.create_team.subtitle" = "create a team";
 "landing.login.hints" = "Jau turite paskyrą?";
 "landing.login.button.title" = "Prisijungti";
 
@@ -939,6 +965,8 @@
 
 // Registration
 
+"registration.launch_back_button.label" = "Atgal";
+
 "registration.title" = "Registracija";
 "registration.close_email_invitation_button.email_title" = "Naudoti kitą el. pašto adresą";
 "registration.close_email_invitation_button.phone_title" = "Registruotis telefonu";
@@ -966,6 +994,16 @@
 "registration.no_history.hero" = "Pirmą kartą naudojate „Wire“ šiame įrenginyje.";
 "registration.no_history.subtitle" = "Privatumo sumetimais, jūsų pokalbio istorija čia nebus rodoma.";
 "registration.no_history.got_it" = "GERAI";
+"registration.no_history.restore_backup" = "Restore from backup";
+"registration.no_history.restore_backup_warning.title" = "Restoring history.";
+"registration.no_history.restore_backup_warning.message" = "Your backup will overwrite the conversations that you may have on this device.";
+"registration.no_history.restore_backup_warning.proceed" = "Tęsti";
+
+"registration.no_history.restore_backup_failed.title" = "Restoring history failed.";
+"registration.no_history.restore_backup_failed.message" = "Your backup file might be corrupted or not compatible.";
+"registration.no_history.restore_backup_failed.wrong_account.message" = "Cannot read backup because it's from a different account.";
+"registration.no_history.restore_backup_failed.wrong_version.message" = "Cannot read backup because it's from an unsupported version (either outdated or newer).";
+"registration.no_history.restore_backup_failed.try_again" = "Try again";
 
 "registration.no_history.logged_out.hero" = "Jūs jau esate naudoję Wire šiame įrenginyje.";
 "registration.no_history.logged_out.subtitle" = "Tuo laikotarpiu išsiųstos žinutės nebus rodomos.";
@@ -1024,7 +1062,19 @@
 "registration.devices.activated_in" = "Aktyvuota";
 "registration.devices.id" = "ID:";
 
+"signin.use_email.label" = "Prisijungti el. paštu";
+"signin.use_phone.label" = "Prisijungti telefono numeriu";
 "signin.forgot_password" = "Pamiršote slaptažodį?";
+"signin.use_one_password.label" = "Prisijungti naudojant 1Password";
+"signin.use_one_password.hint" = "Spustelėję dukart įrašysite slaptažodį su 1Password";
+"signin.confirm" = "Prisijungti";
+
+"registration.phone_country" = "Šalis";
+"registration.phone_code" = "Šalies kodas";
+"registration.phone_country.hint" = "Dukart spustelėję galėsite pasirinkti kitą šalį.";
+"registration.phone_code.hint" = "Dukart spustelėję galėsite pasirinkite kitą šalies kodą.";
+"registration.phone.verify.label" = "Patvirtinti telefono numerį";
+"registration.phone.verify_field.label" = "Patvirtinimo kodas";
 
 "registration.add_phone_number.hero.title" = "Pridėti telefono numerį";
 "registration.add_phone_number.hero.paragraph" = "Tai padės mums rasti jūsų pažįstamus. Niekada šituo nesidaliname.";
@@ -1040,6 +1090,9 @@
 "registration.phone_invitation.title" = "Kvietimas";
 "registration.phone_invitation.hero.title" = "Sveiki, %@";
 "registration.phone_invitation.hero.paragraph" = "Liko tik vienas žingsnis ir baigsite kurti paskyrą.";
+
+"registration.confirm" = "Registruotis";
+"registration.phone.country_code.hint" = "Dukart spustelėję galėsite naudoti šios šalies telefono numerį.";
 
 "error.name_and_email" = "Įrašykite savo vardą ir pavardę ir naudojamą el. pašto adresą";
 "error.full_name" = "Įrašykite savo vardą ir pavardę";
@@ -1168,7 +1221,7 @@
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Call Quality Survey
 
-"calling.quality_survey.title" = "Call Quality Feedback";
+"calling.quality_survey.title" = "Pokalbio kokybės atsiliepimas";
 "calling.quality_survey.question" = "Kaip bendrai vertinate šio pokalbio kokybę?";
 "calling.quality_survey.answer.1" = "Bloga";
 "calling.quality_survey.answer.2" = "Vidutinė";

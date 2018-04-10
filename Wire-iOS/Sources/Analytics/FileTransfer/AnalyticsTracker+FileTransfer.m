@@ -132,7 +132,7 @@ FOUNDATION_EXPORT NSString *FileTransferContextToNSString(FileTransferContext co
 
 + (NSDictionary *)ephemeralAttributesForMessage:(id <ZMConversationMessage>)message
 {
-    NSMutableDictionary *attributes = @{@"is_ephemeral": message.isEphemeral ? @"true" : @"false"}.mutableCopy;
+    NSMutableDictionary *attributes = @{@"is_ephemeral": @(message.isEphemeral)}.mutableCopy;
     if (! message.isEphemeral) {
         return attributes;
     }
