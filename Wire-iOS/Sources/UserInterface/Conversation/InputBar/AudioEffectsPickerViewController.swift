@@ -77,8 +77,7 @@ import Cartography
             
             if self.selectedAudioEffect != .none {
                 self.audioPlayerController?.stop()
-                
-                
+
                 let effectPath = (NSTemporaryDirectory() as NSString).appendingPathComponent("effect.wav")
                 effectPath.deleteFileAtPath()
                 self.selectedAudioEffect.apply(self.recordingPath, outPath: effectPath) {
@@ -357,12 +356,11 @@ private class AudioPlayerController : NSObject, MediaPlayer, AVAudioPlayerDelega
     
     deinit {
         tearDown()
-
-        player.delegate = nil
     }
 
     func tearDown() {
         mediaManager?.mediaPlayer(self, didChangeTo: .completed)
+        player.delegate = nil
     }
 
     var state: MediaPlayerState {
@@ -384,6 +382,7 @@ private class AudioPlayerController : NSObject, MediaPlayer, AVAudioPlayerDelega
     func play() {
         mediaManager?.mediaPlayer(self, didChangeTo: .playing)
         player.currentTime = 0
+        player.delegate = self
         player.play()
     }
     
