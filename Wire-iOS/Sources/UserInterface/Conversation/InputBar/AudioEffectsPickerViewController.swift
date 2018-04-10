@@ -358,7 +358,7 @@ private class AudioPlayerController : NSObject, MediaPlayer, AVAudioPlayerDelega
     deinit {
         tearDown()
 
-        delegate = nil
+        player.delegate = nil
     }
 
     func tearDown() {
