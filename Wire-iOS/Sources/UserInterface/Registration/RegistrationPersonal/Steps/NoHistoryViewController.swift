@@ -149,7 +149,7 @@ extension NoHistoryViewController {
         sessionManager.restoreFromBackup(at: url, password: password) { [weak self] result in
             guard let `self` = self else { return }
             switch result {
-            case .failure(SessionManager.BackupError.decryptionFailed):
+            case .failure(SessionManager.BackupError.decryptionError):
                 self.showLoadingView = false
                 self.showWrongPasswordAlert {
                     self.restore(with: url)
