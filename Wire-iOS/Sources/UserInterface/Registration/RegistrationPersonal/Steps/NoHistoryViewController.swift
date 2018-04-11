@@ -27,13 +27,8 @@ extension NoHistoryViewController {
         restoreBackupButton.translatesAutoresizingMaskIntoConstraints = false
         restoreBackupButton.setTitle("registration.no_history.restore_backup".localized.uppercased(), for: .normal)
         
-        restoreBackupButton.addCallback(for: .touchUpInside) { [unowned self] _ in
-            if self.contextType == .loggedOut {
-                self.showWarningMessage()
-            }
-            else {
-                self.showFilePicker()
-            }
+        restoreBackupButton.addCallback(for: .touchUpInside) { [showWarningMessage] _ in
+            showWarningMessage()
         }
         
         restoreBackupButton.heightAnchor.constraint(equalToConstant: 40).isActive = true
@@ -95,7 +90,7 @@ extension NoHistoryViewController {
     
     fileprivate func performRestore(using password: String, from url: URL) {
         guard let sessionManager = SessionManager.shared else { return }
-        spinnerView.subtitle = "registration.no_history.restore_backup.restoring".localized
+        spinnerView.subtitle = "registration.no_history.restore_backup.restoring".localized.uppercased()
         showLoadingView = true
         
         sessionManager.restoreFromBackup(at: url, password: password) { [weak self] result in
@@ -112,7 +107,7 @@ extension NoHistoryViewController {
                 self.showLoadingView = false
             case .success:
                 BackupEvent.importSucceeded.track()
-                self.spinnerView.subtitle = "registration.no_history.restore_backup.completed".localized
+                self.spinnerView.subtitle = "registration.no_history.restore_backup.completed".localized.uppercased()
                 self.indicateLoadingSuccessRemovingCheckmark(false) {
                     self.formStepDelegate.didCompleteFormStep(self)
                 }

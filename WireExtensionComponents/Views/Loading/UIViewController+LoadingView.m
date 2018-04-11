@@ -112,7 +112,7 @@ const NSString *LoadingViewKey = @"loadingView";
         self.spinnerView.spinner.alpha = 0;
         self.spinnerView.spinner.transform = CGAffineTransformMakeScale(0.01, 0.01);
     } completion:^(BOOL completed){
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             if (completion != nil) {
                 completion();
             }
