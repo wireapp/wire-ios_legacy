@@ -88,13 +88,14 @@ final class BackupPasswordViewController: UIViewController {
         view.addSubview(navigationBarBackgroundView)
         
         subtitleLabel.numberOfLines = 0
-        subtitleLabel.textColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorTextForeground, variant: .light)
+        subtitleLabel.textColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorTextDimmed, variant: .light)
         [passwordView, subtitleLabel].forEach {
             view.addSubview($0)
             $0.translatesAutoresizingMaskIntoConstraints = false
         }
         
         setupNavigationBar()
+        passwordView.placeholder = "self.settings.history_backup.password.placeholder".localized.localizedUppercase
         passwordView.returnKeyType = .done
         passwordView.isSecureTextEntry = true
         passwordView.delegate = self

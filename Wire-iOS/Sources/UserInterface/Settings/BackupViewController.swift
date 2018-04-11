@@ -54,7 +54,7 @@ final class BackupStatusCell: UITableViewCell {
             ])
         
         descriptionLabel.text = "self.settings.history_backup.description".localized
-        descriptionLabel.font = FontSpec(.normal, .light).font
+        descriptionLabel.font = FontSpec(.medium, .light).font
         descriptionLabel.textColor = color
     }
     
