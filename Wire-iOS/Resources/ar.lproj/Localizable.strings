@@ -15,15 +15,20 @@
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
+// General strings
 
 
 "general.ok" = "موافق";
 "general.next" = "Next";
 "general.cancel" = "إلغاء";
 "general.close" = "إغلاق";
+"general.back" = "Back";
 "general.open_settings" = "فتح إعدادات Wire";
 "general.edit" = "تعديل";
 "general.done" = "تـم";
+"general.confirm" = "موافق";
+// Language like Chinese does not use space to sperate words or sentences.
+"general.space_between_words" = " ";
 
 "general.guest-room-name" = "Guest room";
 
@@ -242,6 +247,7 @@
 "conversation.input_bar.message_too_long.title" = "الرسالة طويلة جداً";
 "conversation.input_bar.message_too_long.message" = "يمكنك إرسال رسائل حتى %d حرفاً.";
 
+"conversation.create.group_name.title" = "إنشاء مجموعة";
 "conversation.create.group_name.placeholder" = "اسم المجموعة";
 "conversation.create.guidance.empty" = "At least 1 character";
 "conversation.create.guidance.toolong" = "حروف كثيرة عن الحد";
@@ -409,6 +415,10 @@
 "content.message.open" = "افتح";
 "content.message.copy" = "Copy";
 
+"content.message.open_link_alert.title" = "Visit Link";
+"content.message.open_link_alert.message" = "This will take you to\n%@";
+"content.message.open_link_alert.open" = "افتح";
+
 "content.reactions_list.likers" = "إعجاب من  ";
 
 "content.file.too_big" = "يمكنك إرسال ملفات حتى %@";
@@ -430,11 +440,17 @@
 "inbox.connection_request.connect_button_title" = "تواصل";
 "inbox.connection_request.ignore_button_title" = "تجاهل";
 
+// Save image errors
+"library.alert.permission_warning.title" = "Wire needs access to your Photos";
+"library.alert.permission_warning.restrictions.explaination" = "Wire cannot access your library because restrictions are enabled.";
+"library.alert.permission_warning.not_allowed.explaination" = "Go to Settings and allow Wire to access your photos.";
+
 // Voice
-"voice.status.one_to_one.incoming" = "%@\nيتصل";
-"voice.status.group_call.incoming" = "%@\nيرن";
-"voice.status.one_to_one.outgoing" = "%@\nيرن";
+"voice.status.one_to_one.incoming" = "%@\ncalling";
+"voice.status.group_call.incoming" = "%@\nringing";
+"voice.status.one_to_one.outgoing" = "%@\nringing";
 "voice.status.joining" = "%@\nجار الاتصال";
+"voice.status.leaving" = "%@\nCall ended";
 "voice.status.video_not_available" = "تم إيقاف الفيديو";
 "voice.status.low_connection" = "حالة الإتصال سيئة";
 "voice.network_error.title" = "لا يوجد اتصال بالإنترنت";
@@ -566,7 +582,7 @@
 // Device list
 "profile.devices.title" = "الأجهزة";
 "profile.devices.fingerprint_message_unencrypted" = "يستخدم %@ نسخة قديمة من Wire. لا توجد أجهزة معروضة هنا.";
-"profile.devices.fingerprint_message" = "يعطي Wire كل جهاز بصمة فريدة.\nقارنها مع %@ للتحقق من مُحادثتك.\nلِمَ أتحقق من مُحادثاتي؟";
+"profile.devices.fingerprint_message.title" = "Wire gives every device a unique fingerprint. Compare them with %@ and verify your conversation.";
 "profile.devices.fingerprint_message.link" = "لِمَ أتحقق من مُحادثاتي؟";
 
 // Device detail
@@ -579,9 +595,6 @@
 "device.class.tablet" = "الجهاز اللوحي";
 "device.class.phone" = "الهاتف";
 "profile.devices.detail.reset_session.title" = "إعادة تعيين الجلسة";
-
-// General strings
-"general.confirm" = "موافق";
 
 // Bot
 "participants.services.remove_integration.button" = "remove integration";
@@ -619,12 +632,9 @@
 "about.copyright.title" = "© Wire Swiss GmbH";
 
 // Self new devices
-"self.new_device_alert.title" = "قمت بربط %@ لحسابك في Wire";
-"self.new_device_alert.title_prefix.tablet" = "جهاز لوحي";
-"self.new_device_alert.title_prefix.phone" = "هاتف";
-"self.new_device_alert.title_prefix.devices" = "أجهزة %d";
-"self.new_device_alert.message" = "%@\n\nإذا لم يكن أنت من فعل هذا، أزل الجهاز وأعد تعيين كلمة المرور.";
-"self.new_device_alert.message_plural" = "%@\n\nإذا لم تفعل ذلك، أزل هذه الأجهزة وقُم بتعيين كلمة المرور.";
+"self.new_device_alert.title" = "Your account was used on:";
+"self.new_device_alert.message" = "\n%@\n\nIf you don’t recognize the device above, remove it and reset your password.";
+"self.new_device_alert.message_plural" = "\n%@\n\nIf you don’t recognize the devices above, remove them and reset your password.";
 "self.new_device_alert.manage_devices" = "إدارة الأجهزة";
 "self.new_device_alert.trust_devices" = "موافق";
 
@@ -789,7 +799,11 @@
 "self.settings.privacy_contacts_menu.description_disabled.title" = "يُساعدك هذا بالاتصال بالآخرين. نقوم بتمهية كل المعلومات ولا نشاركها مع أحد. اسمح بالوصول عبر الإعدادات > الخصوصية > جهات الاتصال.";
 
 "self.settings.privacy_security.lock_app" = "قفل برمز المرور";
-"self.settings.privacy_security.lock_app.subtitle" = "قفل Wire بعد ١٠ ثواني في الخلفية.\nفك القفل بإستخدام Touch ID أو أدخل رمز المرور.";
+"self.settings.privacy_security.lock_app.subtitle.lock_description" = "Lock Wire after 10 seconds in the background.";
+"self.settings.privacy_security.lock_app.subtitle.touch_id" = "Unlock with Touch ID or enter your passcode.";
+"self.settings.privacy_security.lock_app.subtitle.face_id" = "Unlock with Face ID or enter your passcode.";
+"self.settings.privacy_security.lock_app.subtitle.none" = "Unlock by entering your passcode.";
+
 "self.settings.privacy_security.lock_app.description" = "إلغاء تأمين Wire";
 
 "self.settings.privacy_security.lock_cancelled.description" = "فتح قفل Wire بإستخدام Touch ID أو رمز الدخول";
@@ -832,6 +846,17 @@
 // Invite from Settings
 "self.settings.invite_friends.title" = "دعوة أُناس";
 
+// History backup
+
+"self.settings.conversations.title" = "المحادثات";
+"self.settings.history_backup.title" = "History backup";
+"self.settings.history_backup.description" = "Back up your conversation history to a safe place. If you lose your phone or switch to a new one, your conversation will be safe. You can restore your conversation history when you log in. You can only restore history from a backup of the same platform.\nThe back up is not protected by Wire end-to-end encryption.";
+"self.settings.history_backup.action" = "Back Up Now";
+"self.settings.history_backup.error.title" = "Error";
+
+"self.settings.history_backup.set_email.title" = "Set an email and password.";
+"self.settings.history_backup.set_email.message" = "You need an email and a password in order to back up your conversation history. You can do it from the account page in Settings.";
+
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // System status
 "system_status_bar.no_internet.title" = "لا يوجد إنترنت";
@@ -855,11 +880,12 @@
 
 // Landing screen
 
+"landing.app_name" = "Wire";
 "landing.title" = "Secure messaging for everyone.";
-"landing.create_account.title" = "إنشاء حساب";
-"landing.create_account.subtitle" = "للاستخدام الشخصي";
-"landing.create_team.title" = "إنشاء فريق";
-"landing.create_team.subtitle" = "للعمل";
+"landing.create_account.title" = "For personal use";
+"landing.create_account.subtitle" = "create an account";
+"landing.create_team.title" = "For organizations";
+"landing.create_team.subtitle" = "create a team";
 "landing.login.hints" = "لديك حساب بالفعل ؟";
 "landing.login.button.title" = "تسجيل الدخول";
 
@@ -939,6 +965,8 @@
 
 // Registration
 
+"registration.launch_back_button.label" = "Back";
+
 "registration.title" = "تسجيل";
 "registration.close_email_invitation_button.email_title" = "استخدام بريد إلكتروني آخر";
 "registration.close_email_invitation_button.phone_title" = "تسجيل بواسطة رقم الهاتف";
@@ -966,6 +994,16 @@
 "registration.no_history.hero" = "أنها المرة الأولى التي تستخدم فيها واير على هذا الجهاز.";
 "registration.no_history.subtitle" = "لأسباب تتعلق بالخصوصية، لن يظهر تاريخ المحادثات الخاصة بك هنا.";
 "registration.no_history.got_it" = "موافق";
+"registration.no_history.restore_backup" = "Restore from backup";
+"registration.no_history.restore_backup_warning.title" = "Restoring history.";
+"registration.no_history.restore_backup_warning.message" = "Your backup will overwrite the conversations that you may have on this device.";
+"registration.no_history.restore_backup_warning.proceed" = "Proceed";
+
+"registration.no_history.restore_backup_failed.title" = "Restoring history failed.";
+"registration.no_history.restore_backup_failed.message" = "Your backup file might be corrupted or not compatible.";
+"registration.no_history.restore_backup_failed.wrong_account.message" = "Cannot read backup because it's from a different account.";
+"registration.no_history.restore_backup_failed.wrong_version.message" = "Cannot read backup because it's from an unsupported version (either outdated or newer).";
+"registration.no_history.restore_backup_failed.try_again" = "Try again";
 
 "registration.no_history.logged_out.hero" = "قمت بإستخدام Wire على هذا الجهاز من قبل.";
 "registration.no_history.logged_out.subtitle" = "الرسائل المُرسلة خلال ذلك الحين لن تظهر هنا.";
@@ -1024,7 +1062,19 @@
 "registration.devices.activated_in" = "تم تنشيطه في";
 "registration.devices.id" = "المُعرّف:";
 
+"signin.use_email.label" = "Login with Email";
+"signin.use_phone.label" = "Login with Phone";
 "signin.forgot_password" = "نسيتَ كلمة المرور؟";
+"signin.use_one_password.label" = "Log in with 1Password";
+"signin.use_one_password.hint" = "Double tap to fill your password with 1Password";
+"signin.confirm" = "تسجيل الدخول";
+
+"registration.phone_country" = "البلد";
+"registration.phone_code" = "Country Code";
+"registration.phone_country.hint" = "Double tap to select another country.";
+"registration.phone_code.hint" = "Double tap to select another country code.";
+"registration.phone.verify.label" = "Verify phone number";
+"registration.phone.verify_field.label" = "Verification Code";
 
 "registration.add_phone_number.hero.title" = "أضف رقم الهاتف";
 "registration.add_phone_number.hero.paragraph" = "يساعدنا هذا على إيجاد أشخاص لربما تعرفهم. نحن لا نشارك هذه المعلومات.";
@@ -1040,6 +1090,9 @@
 "registration.phone_invitation.title" = "دعوة";
 "registration.phone_invitation.hero.title" = "مرحبًا، %@";
 "registration.phone_invitation.hero.paragraph" = "أنت على بعد خطوة واحدة من إنشاء حسابك الخاص.";
+
+"registration.confirm" = "Sign Up";
+"registration.phone.country_code.hint" = "Double tap to use a phone number from this country.";
 
 "error.name_and_email" = "الرجاء إدخال اسمك الكامل وعنوان بريد إلكتروني صحيح";
 "error.full_name" = "ادخل اسمك الكامل";

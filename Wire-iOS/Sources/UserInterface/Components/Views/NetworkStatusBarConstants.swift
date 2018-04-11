@@ -27,17 +27,24 @@ extension CGFloat {
 
     enum OfflineBar {
         static let expandedHeight: CGFloat = 20
-        static let expandedCornerRadius: CGFloat = 6
+        static let cornerRadius: CGFloat = 6
    }
 
     enum SyncBar {
         static let height: CGFloat = 4
         static let cornerRadius: CGFloat = 2
+
+        static let minOpacity: CGFloat = 0.4
+        static let maxOpacity: CGFloat = 1
     }
 }
 
 extension TimeInterval {
     enum NetworkStatusBar {
         static let resizeAnimationTime: TimeInterval = 0.5
+    }
+
+    enum SyncBar {
+        static let defaultAnimationDuration: TimeInterval = 1
     }
 }

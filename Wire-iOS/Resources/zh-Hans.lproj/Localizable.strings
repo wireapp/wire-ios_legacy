@@ -15,15 +15,20 @@
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
+// General strings
 
 
-"general.ok" = "好";
+"general.ok" = "确定";
 "general.next" = "继续";
 "general.cancel" = "取消";
 "general.close" = "关闭";
+"general.back" = "返回";
 "general.open_settings" = "开启Wire设定";
 "general.edit" = "修改";
 "general.done" = "完成";
+"general.confirm" = "好";
+// Language like Chinese does not use space to sperate words or sentences.
+"general.space_between_words" = "\U200B";
 
 "general.guest-room-name" = "访客聊天室";
 
@@ -222,12 +227,12 @@
 
 "conversation.input_bar.audio_message.tooltip.pull_send" = "向上滑动发送";
 "conversation.input_bar.audio_message.tooltip.tap_send" = "点击发送";
-"conversation.input_bar.audio_message.too_long.title" = "停止记录";
+"conversation.input_bar.audio_message.too_long.title" = "录制停止";
 "conversation.input_bar.audio_message.too_long.message" = "语音讯息长度上限是%@。";
 "conversation.input_bar.audio_message.send" = "发送";
 
-"conversation.input_bar.audio_message.keyboard.record_tip" = "点击记录\n你之后可以 %@ 它，";
-"conversation.input_bar.audio_message.keyboard.filter_tip" = "选择一个筛选器";
+"conversation.input_bar.audio_message.keyboard.record_tip" = "点击录制语音讯息\n之后您可%@该讯息";
+"conversation.input_bar.audio_message.keyboard.filter_tip" = "选择特效";
 
 "conversation.call.many_participants_confirmation.title" = "开始呼叫";
 "conversation.call.many_participants_confirmation.message" = "这将会呼叫%d位联系人";
@@ -242,6 +247,7 @@
 "conversation.input_bar.message_too_long.title" = "消息过长。";
 "conversation.input_bar.message_too_long.message" = "您可以发送最长 %d 字符的信息。";
 
+"conversation.create.group_name.title" = "创建群聊\n";
 "conversation.create.group_name.placeholder" = "群组名称";
 "conversation.create.guidance.empty" = "至少1个字符";
 "conversation.create.guidance.toolong" = "超出字符限制";
@@ -313,7 +319,7 @@
 "content.system.conversation.other.removed" = "%@移除了%@";
 "content.system.conversation.other.left" = "%@ 离开了";
 
-"content.system.conversation.you.started" = "%@ 和 %@ 开始了聊天";
+"content.system.conversation.you.started" = "%@和%@开始了聊天";
 "content.system.conversation.you.added" = "%@加了%@";
 "content.system.conversation.you.removed" = "%@移除了%@";
 "content.system.conversation.you.left" = "%@ 离开了";
@@ -336,16 +342,16 @@
 "content.system.edited_message_prefix_timestamp" = "已编辑: %@";
 "content.system.connecting_to" = "正在连接%@。开始聊天";
 "content.system.connected_to" = "已连接%@为好友\n开始对话";
-"content.system.other_wanted_to_talk" = "%@ 发送过通话请求";
-"content.system.you_wanted_to_talk" = "您发送的通话要求结束";
+"content.system.other_wanted_to_talk" = "%@曾来电";
+"content.system.you_wanted_to_talk" = "您曾打电话";
 "content.system.ephemeral_time_remaining" = "还余%@";
 
 "content.system.you_started" = "你";
 "content.system.this_device" = "此设备";
 
 "content.system.call.you" = "你";
-"content.system.call.called" = "%@ 发送过通话请求";
-"content.system.call.called-you" = "%@ 发送过通话请求";
+"content.system.call.called" = "%@曾打电话";
+"content.system.call.called-you" = "%@曾打电话";
 
 "content.system.renamed_conv.title" = "%@ 重新命名了聊天室";
 "content.system.renamed_conv.title-you" = "%@ 重新命名了聊天室";
@@ -409,6 +415,10 @@
 "content.message.open" = "开启";
 "content.message.copy" = "复制";
 
+"content.message.open_link_alert.title" = "打开链接";
+"content.message.open_link_alert.message" = "This will take you to\n%@";
+"content.message.open_link_alert.open" = "开启";
+
 "content.reactions_list.likers" = "赞好";
 
 "content.file.too_big" = "您可以发送最大%@的文件。";
@@ -430,11 +440,17 @@
 "inbox.connection_request.connect_button_title" = "新增好友";
 "inbox.connection_request.ignore_button_title" = "取消";
 
+// Save image errors
+"library.alert.permission_warning.title" = "Wire needs access to your Photos";
+"library.alert.permission_warning.restrictions.explaination" = "Wire cannot access your library because restrictions are enabled.";
+"library.alert.permission_warning.not_allowed.explaination" = "Go to Settings and allow Wire to access your photos.";
+
 // Voice
 "voice.status.one_to_one.incoming" = "%@\n来电";
-"voice.status.group_call.incoming" = "%@\n拨号中";
+"voice.status.group_call.incoming" = "%@\n群组来电";
 "voice.status.one_to_one.outgoing" = "%@\n拨号中";
 "voice.status.joining" = "%@\n连接中";
+"voice.status.leaving" = "%@\n通话结束";
 "voice.status.video_not_available" = "视频关闭";
 "voice.status.low_connection" = "连接质量不佳";
 "voice.network_error.title" = "没有互联网讯号";
@@ -471,7 +487,7 @@
 "participants.avatar.guest.title" = "游客";
 
 "participants.title" = "详细信息";
-"participants.section.participants" = "人(%d)";
+"participants.section.participants" = "参与者(%d)";
 "participants.section.services" = "服务 (%d)";
 "participants.footer.add_title" = "添加参与者";
 
@@ -566,7 +582,7 @@
 // Device list
 "profile.devices.title" = "设备";
 "profile.devices.fingerprint_message_unencrypted" = "%@使用旧版本的Wire，无法显示设备。";
-"profile.devices.fingerprint_message" = "Wire 给每一台设备一组唯一的指纹，并比较它与%@来验证您的对话。为什么要验证？";
+"profile.devices.fingerprint_message.title" = "Wire为每个设备设置了一个唯一的指纹。您可以和%@进行比对来验证聊天室。";
 "profile.devices.fingerprint_message.link" = "为什么要验证对话？";
 
 // Device detail
@@ -579,9 +595,6 @@
 "device.class.tablet" = "平板电脑";
 "device.class.phone" = "电话";
 "profile.devices.detail.reset_session.title" = "重置Session";
-
-// General strings
-"general.confirm" = "好";
 
 // Bot
 "participants.services.remove_integration.button" = "移除服务";
@@ -619,12 +632,9 @@
 "about.copyright.title" = "© Wire Swiss GmbH";
 
 // Self new devices
-"self.new_device_alert.title" = "您已经连接%@到您的 Wire 账号";
-"self.new_device_alert.title_prefix.tablet" = "一台平板电脑";
-"self.new_device_alert.title_prefix.phone" = "一台手机";
-"self.new_device_alert.title_prefix.devices" = "%d 设备";
-"self.new_device_alert.message" = "%@ 如果您没有这样做 ，请移除此设备并重新设定您的密码。";
-"self.new_device_alert.message_plural" = "%@ 如果您没有这样做 ，请移除此设备并重新设定您的密码。";
+"self.new_device_alert.title" = "Your account was used on:";
+"self.new_device_alert.message" = "\n%@\n\nIf you don’t recognize the device above, remove it and reset your password.";
+"self.new_device_alert.message_plural" = "\n%@\n\nIf you don’t recognize the devices above, remove them and reset your password.";
 "self.new_device_alert.manage_devices" = "设备管理";
 "self.new_device_alert.trust_devices" = "好";
 
@@ -649,7 +659,7 @@
 "self.settings.account_section.handle.title" = "用户名";
 "self.settings.account_section.add_handle.title" = "添加用户名";
 
-"self.settings.account_details_group.info.footer" = "其他使用者能通过这些信息搜寻到您。";
+"self.settings.account_details_group.info.footer" = "其他使用者能通过这些信息查找到您。";
 "self.settings.account_details_group.personal.footer" = "这个信息将不会显示。";
 
 "self.settings.account_details.remove_device.title" = "删除设备";
@@ -789,7 +799,11 @@
 "self.settings.privacy_contacts_menu.description_disabled.title" = "这将帮助您找到其他好友。 我们将您的所有信息匿名处理并且不会泄漏给任何第三方。请通过设置 > 隐私 > 联系人来授权通讯录访问权限。";
 
 "self.settings.privacy_security.lock_app" = "通过Passcode锁定";
-"self.settings.privacy_security.lock_app.subtitle" = "在处于后台运行10秒后锁定Wire，通过Touch ID或Passcode解锁。";
+"self.settings.privacy_security.lock_app.subtitle.lock_description" = "Lock Wire after 10 seconds in the background.";
+"self.settings.privacy_security.lock_app.subtitle.touch_id" = "Unlock with Touch ID or enter your passcode.";
+"self.settings.privacy_security.lock_app.subtitle.face_id" = "Unlock with Face ID or enter your passcode.";
+"self.settings.privacy_security.lock_app.subtitle.none" = "Unlock by entering your passcode.";
+
 "self.settings.privacy_security.lock_app.description" = "解锁Wire";
 
 "self.settings.privacy_security.lock_cancelled.description" = "通过Touch ID或Passcode解锁";
@@ -832,9 +846,20 @@
 // Invite from Settings
 "self.settings.invite_friends.title" = "邀请联系人";
 
+// History backup
+
+"self.settings.conversations.title" = "会话";
+"self.settings.history_backup.title" = "History backup";
+"self.settings.history_backup.description" = "Back up your conversation history to a safe place. If you lose your phone or switch to a new one, your conversation will be safe. You can restore your conversation history when you log in. You can only restore history from a backup of the same platform.\nThe back up is not protected by Wire end-to-end encryption.";
+"self.settings.history_backup.action" = "Back Up Now";
+"self.settings.history_backup.error.title" = "Error";
+
+"self.settings.history_backup.set_email.title" = "Set an email and password.";
+"self.settings.history_backup.set_email.message" = "You need an email and a password in order to back up your conversation history. You can do it from the account page in Settings.";
+
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // System status
-"system_status_bar.no_internet.title" = "没有互联网";
+"system_status_bar.no_internet.title" = "没有网路连线";
 "system_status_bar.no_internet.explanation" = "您的互联网连线似乎出现了问题。请确保您有网路连线。";
 "system_status_bar.poor_connectivity.title" = "网速慢，现在不能进行通话";
 "system_status_bar.poor_connectivity.explanation" = "我们无法保证语音通话质量。连接到Wi-Fi或尝试改变您的连线位置。";
@@ -855,11 +880,12 @@
 
 // Landing screen
 
+"landing.app_name" = "Wire";
 "landing.title" = "保密每个人之通讯。";
-"landing.create_account.title" = "新增帐户";
-"landing.create_account.subtitle" = "供个人使用";
-"landing.create_team.title" = "创建团队";
-"landing.create_team.subtitle" = "在工作中使用";
+"landing.create_account.title" = "For personal use";
+"landing.create_account.subtitle" = "create an account";
+"landing.create_team.title" = "For organizations";
+"landing.create_team.subtitle" = "create a team";
 "landing.login.hints" = "已有帐户？";
 "landing.login.button.title" = "登录";
 
@@ -939,6 +965,8 @@
 
 // Registration
 
+"registration.launch_back_button.label" = "返回";
+
 "registration.title" = "注册";
 "registration.close_email_invitation_button.email_title" = "使用其他邮箱地址";
 "registration.close_email_invitation_button.phone_title" = "通过手机注册";
@@ -966,6 +994,16 @@
 "registration.no_history.hero" = "这是您第一次在此设备使用Wire。";
 "registration.no_history.subtitle" = "基于隐私考虑，您的历史聊天记录将不会被显示。";
 "registration.no_history.got_it" = "好";
+"registration.no_history.restore_backup" = "Restore from backup";
+"registration.no_history.restore_backup_warning.title" = "Restoring history.";
+"registration.no_history.restore_backup_warning.message" = "Your backup will overwrite the conversations that you may have on this device.";
+"registration.no_history.restore_backup_warning.proceed" = "Proceed";
+
+"registration.no_history.restore_backup_failed.title" = "Restoring history failed.";
+"registration.no_history.restore_backup_failed.message" = "Your backup file might be corrupted or not compatible.";
+"registration.no_history.restore_backup_failed.wrong_account.message" = "Cannot read backup because it's from a different account.";
+"registration.no_history.restore_backup_failed.wrong_version.message" = "Cannot read backup because it's from an unsupported version (either outdated or newer).";
+"registration.no_history.restore_backup_failed.try_again" = "Try again";
 
 "registration.no_history.logged_out.hero" = "您曾在此设备使用过Wire。";
 "registration.no_history.logged_out.subtitle" = "这段期间发送的信息将不会显示出来。";
@@ -1024,7 +1062,19 @@
 "registration.devices.activated_in" = "启动于";
 "registration.devices.id" = "ID:";
 
+"signin.use_email.label" = "Login with Email";
+"signin.use_phone.label" = "Login with Phone";
 "signin.forgot_password" = "忘记密码？";
+"signin.use_one_password.label" = "Log in with 1Password";
+"signin.use_one_password.hint" = "Double tap to fill your password with 1Password";
+"signin.confirm" = "登录";
+
+"registration.phone_country" = "国家";
+"registration.phone_code" = "Country Code";
+"registration.phone_country.hint" = "Double tap to select another country.";
+"registration.phone_code.hint" = "Double tap to select another country code.";
+"registration.phone.verify.label" = "Verify phone number";
+"registration.phone.verify_field.label" = "Verification Code";
 
 "registration.add_phone_number.hero.title" = "新增手机号码";
 "registration.add_phone_number.hero.paragraph" = "这将帮助我们找到您可能认识的人。我们不会向任何第三方泄漏您的信息。";
@@ -1040,6 +1090,9 @@
 "registration.phone_invitation.title" = "邀请";
 "registration.phone_invitation.hero.title" = "您好，%@";
 "registration.phone_invitation.hero.paragraph" = "再一个步骤就完成建立您的账户。";
+
+"registration.confirm" = "Sign Up";
+"registration.phone.country_code.hint" = "Double tap to use a phone number from this country.";
 
 "error.name_and_email" = "请输入您的全名和一个有效的电子邮箱和密码。";
 "error.full_name" = "请输入您的全名";

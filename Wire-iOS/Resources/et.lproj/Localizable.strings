@@ -15,15 +15,20 @@
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
+// General strings
 
 
 "general.ok" = "OK";
 "general.next" = "Järgmine";
 "general.cancel" = "Tühista";
 "general.close" = "Sulge";
+"general.back" = "Tagasi";
 "general.open_settings" = "Ava Wire sätted";
 "general.edit" = "Muuda";
 "general.done" = "Valmis";
+"general.confirm" = "OK";
+// Language like Chinese does not use space to sperate words or sentences.
+"general.space_between_words" = " ";
 
 "general.guest-room-name" = "Külalistetuba";
 
@@ -242,6 +247,7 @@
 "conversation.input_bar.message_too_long.title" = "Liiga pikk sõnum";
 "conversation.input_bar.message_too_long.message" = "Sõnum võib olla kuni %d tähemärki.";
 
+"conversation.create.group_name.title" = "Loo grupp";
 "conversation.create.group_name.placeholder" = "Grupi nimi";
 "conversation.create.guidance.empty" = "Vähemalt 1 tähemärk";
 "conversation.create.guidance.toolong" = "Liiga pikk nimi";
@@ -409,6 +415,10 @@
 "content.message.open" = "Ava";
 "content.message.copy" = "Kopeeri";
 
+"content.message.open_link_alert.title" = "Visit Link";
+"content.message.open_link_alert.message" = "This will take you to\n%@";
+"content.message.open_link_alert.open" = "Ava";
+
 "content.reactions_list.likers" = "Neile meeldib";
 
 "content.file.too_big" = "Saad saata faile suurusega %@";
@@ -430,11 +440,17 @@
 "inbox.connection_request.connect_button_title" = "Lisa kontakt";
 "inbox.connection_request.ignore_button_title" = "Ignoreeri";
 
+// Save image errors
+"library.alert.permission_warning.title" = "Wire vajab juurdepääsuõigust fotodele";
+"library.alert.permission_warning.restrictions.explaination" = "Wire cannot access your library because restrictions are enabled.";
+"library.alert.permission_warning.not_allowed.explaination" = "Ava Seaded ja luba Wire’le ligipääs fotodele.";
+
 // Voice
-"voice.status.one_to_one.incoming" = "%@\nHelistab";
-"voice.status.group_call.incoming" = "%@\nkutsub";
-"voice.status.one_to_one.outgoing" = "%@\nkutsub";
+"voice.status.one_to_one.incoming" = "%@\ncalling";
+"voice.status.group_call.incoming" = "%@\nringing";
+"voice.status.one_to_one.outgoing" = "%@\nringing";
 "voice.status.joining" = "%@\nÜhendatakse";
+"voice.status.leaving" = "%@\nCall ended";
 "voice.status.video_not_available" = "Video on välja lülitatud";
 "voice.status.low_connection" = "Kehv ühendus";
 "voice.network_error.title" = "Ühendus puudub";
@@ -566,7 +582,7 @@
 // Device list
 "profile.devices.title" = "Seadmed";
 "profile.devices.fingerprint_message_unencrypted" = "%@ kasutab vana Wire versioon. Seadmete kohta puudub info.";
-"profile.devices.fingerprint_message" = "Wire annab igale seadmele (mobiil, tahvel, arvuti) unikaalse sõrmejälje. Võrdle neid kasutajaga %@ ja kinnita selle vestluse turvalisust.\nMiks vestluste turvalisust kinnitada?";
+"profile.devices.fingerprint_message.title" = "Wire gives every device a unique fingerprint. Compare them with %@ and verify your conversation.";
 "profile.devices.fingerprint_message.link" = "Miks vestluste turvalisust kontrollida?";
 
 // Device detail
@@ -579,9 +595,6 @@
 "device.class.tablet" = "Tahvel";
 "device.class.phone" = "Telefon";
 "profile.devices.detail.reset_session.title" = "Lähtesta sessioon";
-
-// General strings
-"general.confirm" = "OK";
 
 // Bot
 "participants.services.remove_integration.button" = "eemalda integratsioon";
@@ -619,12 +632,9 @@
 "about.copyright.title" = "© Wire Swiss GmbH";
 
 // Self new devices
-"self.new_device_alert.title" = "Sa oled ühendanud seadme %@ oma Wire kontoga";
-"self.new_device_alert.title_prefix.tablet" = "tahvel";
-"self.new_device_alert.title_prefix.phone" = "telefon";
-"self.new_device_alert.title_prefix.devices" = "%d seadmed";
-"self.new_device_alert.message" = "%@\n\nKui sina seda ei teinud, eemalda see seade ja muuda oma parool.";
-"self.new_device_alert.message_plural" = "%@\n\nKui sina seda ei teinud, eemalda need seamed ja muuda oma parool.";
+"self.new_device_alert.title" = "Sinu kontot kasutati:";
+"self.new_device_alert.message" = "\n%@\n\nKui sa ei tunne mõnda ülalolevat seadet ära, eemalda see ja lähtesta oma parool.";
+"self.new_device_alert.message_plural" = "\n%@\n\nKui sa ei tunne ülalolevaid seadmeid ära, eemalda need ja lähtesta oma parool.";
 "self.new_device_alert.manage_devices" = "Halda seadmeid";
 "self.new_device_alert.trust_devices" = "OK";
 
@@ -789,7 +799,11 @@
 "self.settings.privacy_contacts_menu.description_disabled.title" = "See lubab sul teistega ühenduda. Me muudame kõik info anonüümseks ja ei jaga seda kellegi teisega. Mine Seaded > Privaatsus > Kontaktid, et lubada ligipääs.";
 
 "self.settings.privacy_security.lock_app" = "Lukusta koodiga";
-"self.settings.privacy_security.lock_app.subtitle" = "Lukusta Wire peale 10 sekundit selle sulgemist. Lahti lukustada saad Touch ID või PIN koodiga.";
+"self.settings.privacy_security.lock_app.subtitle.lock_description" = "Lock Wire after 10 seconds in the background.";
+"self.settings.privacy_security.lock_app.subtitle.touch_id" = "Unlock with Touch ID or enter your passcode.";
+"self.settings.privacy_security.lock_app.subtitle.face_id" = "Unlock with Face ID or enter your passcode.";
+"self.settings.privacy_security.lock_app.subtitle.none" = "Unlock by entering your passcode.";
+
 "self.settings.privacy_security.lock_app.description" = "Tee lukust lahti";
 
 "self.settings.privacy_security.lock_cancelled.description" = "Ava Wire Touch ID või parooliga";
@@ -832,6 +846,17 @@
 // Invite from Settings
 "self.settings.invite_friends.title" = "Jaga teistega";
 
+// History backup
+
+"self.settings.conversations.title" = "Vestlused";
+"self.settings.history_backup.title" = "Ajaloo varundamine";
+"self.settings.history_backup.description" = "Varunda oma vestluste ajalugu kindlasse kohta. Kui kaotad või vahetad oma telefoni, on su vestluste ajalugu alles. Sa saad oma vestluste ajaloo taastada kui logid sisse. Ajalugu saad taastada ainult sama platvormi varukoopiast.\nVarukoopia ei ole kaitstud Wire’i otsast-otsani krüpteeringuga.";
+"self.settings.history_backup.action" = "Varunda kohe";
+"self.settings.history_backup.error.title" = "Viga";
+
+"self.settings.history_backup.set_email.title" = "Määra e-posti aadress ja parool.";
+"self.settings.history_backup.set_email.message" = "Vajad e-posti aadressi ja parooli, et oma vestluste ajalugu varundada. Saad seda teha konto seadete lehel.";
+
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // System status
 "system_status_bar.no_internet.title" = "Puudub internetiühendus";
@@ -855,11 +880,12 @@
 
 // Landing screen
 
+"landing.app_name" = "Wire";
 "landing.title" = "Turvaline sõnumside kõigile.";
-"landing.create_account.title" = "Konto loomine";
-"landing.create_account.subtitle" = "isiklikuks kasutuseks";
-"landing.create_team.title" = "Loo meeskond";
-"landing.create_team.subtitle" = "töö jaoks";
+"landing.create_account.title" = "For personal use";
+"landing.create_account.subtitle" = "create an account";
+"landing.create_team.title" = "For organizations";
+"landing.create_team.subtitle" = "create a team";
 "landing.login.hints" = "Konto juba olemas?";
 "landing.login.button.title" = "Logi sisse";
 
@@ -939,6 +965,8 @@
 
 // Registration
 
+"registration.launch_back_button.label" = "Tagasi";
+
 "registration.title" = "Registreerimine";
 "registration.close_email_invitation_button.email_title" = "Kasuta teist e-posti aadressi";
 "registration.close_email_invitation_button.phone_title" = "Registreeri telefoninumbriga";
@@ -966,6 +994,16 @@
 "registration.no_history.hero" = "Kasutad sellel seadmel Wire’t esimest korda.";
 "registration.no_history.subtitle" = "Privaatuse tagamiseks ei ilmu siia sinu varasemad vestlused.";
 "registration.no_history.got_it" = "OK";
+"registration.no_history.restore_backup" = "Restore from backup";
+"registration.no_history.restore_backup_warning.title" = "Ajaloo taastamine.";
+"registration.no_history.restore_backup_warning.message" = "Varukoopia kirjutab üle vestlused, mis sul selles seadmes juba olemas on.";
+"registration.no_history.restore_backup_warning.proceed" = "Jätka";
+
+"registration.no_history.restore_backup_failed.title" = "Ajaloo taastamine ebaõnnestus.";
+"registration.no_history.restore_backup_failed.message" = "Sinu varukoopia fail võib olla rikutud või ei ole ühilduv.";
+"registration.no_history.restore_backup_failed.wrong_account.message" = "Cannot read backup because it's from a different account.";
+"registration.no_history.restore_backup_failed.wrong_version.message" = "Cannot read backup because it's from an unsupported version (either outdated or newer).";
+"registration.no_history.restore_backup_failed.try_again" = "Proovi uuesti";
 
 "registration.no_history.logged_out.hero" = "Oled sellel seadmel juba varem Wire’t kasutanud.";
 "registration.no_history.logged_out.subtitle" = "Vahepeal saadetud sõnumid ei ilmu siia.";
@@ -1024,7 +1062,19 @@
 "registration.devices.activated_in" = "Aktiveeritud";
 "registration.devices.id" = "ID:";
 
+"signin.use_email.label" = "Logi sisse e-posti aadresiga";
+"signin.use_phone.label" = "Logi sisse telefoniga";
 "signin.forgot_password" = "Unustasid parooli?";
+"signin.use_one_password.label" = "Logi sisse 1Password’ga";
+"signin.use_one_password.hint" = "Double tap to fill your password with 1Password";
+"signin.confirm" = "Logi sisse";
+
+"registration.phone_country" = "Riik";
+"registration.phone_code" = "Riigi kood";
+"registration.phone_country.hint" = "Double tap to select another country.";
+"registration.phone_code.hint" = "Double tap to select another country code.";
+"registration.phone.verify.label" = "Kinnita telefoninumber";
+"registration.phone.verify_field.label" = "Kinnituskood";
 
 "registration.add_phone_number.hero.title" = "Lisa mobiilinumber";
 "registration.add_phone_number.hero.paragraph" = "See aitab meil leida inimesi, keda sa võid tunda. Me ei jaga seda kunagi.";
@@ -1040,6 +1090,9 @@
 "registration.phone_invitation.title" = "Kutse";
 "registration.phone_invitation.hero.title" = "Tere, %@";
 "registration.phone_invitation.hero.paragraph" = "Üks samm veel ja konto loodud.";
+
+"registration.confirm" = "Loo konto";
+"registration.phone.country_code.hint" = "Double tap to use a phone number from this country.";
 
 "error.name_and_email" = "Palun sisesta oma täisnimi ja korrektne e-posti aadress";
 "error.full_name" = "Palun sisesta oma täisnimi";
