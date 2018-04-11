@@ -57,7 +57,7 @@
     self.circleView.clipsToBounds = YES;
 }
 
-- (void)revealWithAnimations:(void (^)())animations completion:(void (^)())completion
+- (void)revealWithAnimations:(void (^)(void))animations completion:(void (^)(void))completion
 {
     self.transform = CGAffineTransformMakeScale(1.8f, 1.8f);
     self.hidden = NO;
