@@ -212,6 +212,8 @@
 		5E3FB06C206BC7AC0075E910 /* TabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16AACE731C0CAEBD00E62C43 /* TabBar.swift */; };
 		5E3FB06D206BC7AF0075E910 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1621AFDA1C0DEE1500FAE41A /* TabBarController.swift */; };
 		5E3FB06E206BC7B40075E910 /* Tab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E3C0C65206B9EE900B0499C /* Tab.swift */; };
+		5E3A6C22206A3AD500907484 /* ConversationActionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E3A6C21206A3AD500907484 /* ConversationActionController.swift */; };
+		5E3A6C25206A4E4A00907484 /* LocationPreviewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E3A6C24206A4E4A00907484 /* LocationPreviewController.swift */; };
 		5E4B1385204FE58D00ED5DF1 /* TimeInterval+Days.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E4B1384204FE58D00ED5DF1 /* TimeInterval+Days.swift */; };
 		5E4B1387204FE7DA00ED5DF1 /* SystemAnimationCurves.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E4B1386204FE7DA00ED5DF1 /* SystemAnimationCurves.swift */; };
 		5E4B1389204FEFCD00ED5DF1 /* UIColor+CallQuality.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E4B1388204FEFCD00ED5DF1 /* UIColor+CallQuality.swift */; };
@@ -947,7 +949,6 @@
 		D5694B502044144500C84C8F /* ToggleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5694B4F2044144500C84C8F /* ToggleView.swift */; };
 		D5694B5220441EE900C84C8F /* UILabel+Convenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5694B5120441EE900C84C8F /* UILabel+Convenience.swift */; };
 		D586C51F20405CC200BBA492 /* GroupDetailsFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D586C51E20405CC200BBA492 /* GroupDetailsFooterView.swift */; };
-		D586C5212040675700BBA492 /* ConversationActionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D586C5202040675700BBA492 /* ConversationActionController.swift */; };
 		D594343A203DCB8F006AA0C0 /* ConversationOptionsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5943439203DCB8F006AA0C0 /* ConversationOptionsViewModel.swift */; };
 		D5943440203DCECA006AA0C0 /* ConversationOptionsViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D594343F203DCECA006AA0C0 /* ConversationOptionsViewControllerTests.swift */; };
 		D59EA0C520234EE300B17CE7 /* ConversationCellLayoutProperties+Preview.swift in Sources */ = {isa = PBXBuildFile; fileRef = D59EA0C420234EE300B17CE7 /* ConversationCellLayoutProperties+Preview.swift */; };
@@ -1444,6 +1445,8 @@
 		597184FEC66FBCEC21973EDC /* Pods-WireExtensionComponents.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WireExtensionComponents.release.xcconfig"; path = "Pods/Target Support Files/Pods-WireExtensionComponents/Pods-WireExtensionComponents.release.xcconfig"; sourceTree = "<group>"; };
 		5E0FB21A2057F50C00FD9867 /* CallQualitySurveyReview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallQualitySurveyReview.swift; sourceTree = "<group>"; };
 		5E3C0C65206B9EE900B0499C /* Tab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tab.swift; sourceTree = "<group>"; };
+		5E3A6C21206A3AD500907484 /* ConversationActionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationActionController.swift; sourceTree = "<group>"; };
+		5E3A6C24206A4E4A00907484 /* LocationPreviewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationPreviewController.swift; sourceTree = "<group>"; };
 		5E4B1384204FE58D00ED5DF1 /* TimeInterval+Days.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TimeInterval+Days.swift"; sourceTree = "<group>"; };
 		5E4B1386204FE7DA00ED5DF1 /* SystemAnimationCurves.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemAnimationCurves.swift; sourceTree = "<group>"; };
 		5E4B1388204FEFCD00ED5DF1 /* UIColor+CallQuality.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+CallQuality.swift"; sourceTree = "<group>"; };
@@ -2509,7 +2512,6 @@
 		D5694B4F2044144500C84C8F /* ToggleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToggleView.swift; sourceTree = "<group>"; };
 		D5694B5120441EE900C84C8F /* UILabel+Convenience.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+Convenience.swift"; sourceTree = "<group>"; };
 		D586C51E20405CC200BBA492 /* GroupDetailsFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupDetailsFooterView.swift; sourceTree = "<group>"; };
-		D586C5202040675700BBA492 /* ConversationActionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationActionController.swift; sourceTree = "<group>"; };
 		D5943439203DCB8F006AA0C0 /* ConversationOptionsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConversationOptionsViewModel.swift; sourceTree = "<group>"; };
 		D594343F203DCECA006AA0C0 /* ConversationOptionsViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationOptionsViewControllerTests.swift; sourceTree = "<group>"; };
 		D59EA0C420234EE300B17CE7 /* ConversationCellLayoutProperties+Preview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConversationCellLayoutProperties+Preview.swift"; sourceTree = "<group>"; };
@@ -3229,6 +3231,14 @@
 				5EB45760204EA75300BA217A /* CallQualityDismissalTransition.swift */,
 			);
 			path = CallQualityController;
+			sourceTree = "<group>";
+		};
+		5E3A6C23206A4DDF00907484 /* Previews */ = {
+			isa = PBXGroup;
+			children = (
+				5E3A6C24206A4E4A00907484 /* LocationPreviewController.swift */,
+			);
+			path = Previews;
 			sourceTree = "<group>";
 		};
 		7C5836621FD5AB98001CC843 /* Availability */ = {
@@ -4632,6 +4642,7 @@
 		8FC85180199245760008B66B /* Content */ = {
 			isa = PBXGroup;
 			children = (
+				5E3A6C23206A4DDF00907484 /* Previews */,
 				8FC85181199245760008B66B /* Cells */,
 				8FC851AB199245760008B66B /* ConversationContentViewControllerDelegate.h */,
 				8FC851A9199245760008B66B /* ConversationContentViewController.h */,
@@ -5190,8 +5201,8 @@
 		D550F57320444BE8009E09DD /* ConversationActions */ = {
 			isa = PBXGroup;
 			children = (
-				D586C5202040675700BBA492 /* ConversationActionController.swift */,
 				D550F5762044532D009E09DD /* ConversationAction.swift */,
+				5E3A6C21206A3AD500907484 /* ConversationActionController.swift */,
 				D5F22D4B2048052900879444 /* UIAlertController+RemoveAction.swift */,
 				D52F2C1D205BCA1D00E067C0 /* UIAlertController+ConnectionRequest.swift */,
 				D52F2C1F205BE0A600E067C0 /* UIAlertController+ConversationDegraded.swift */,
@@ -6454,7 +6465,6 @@
 				EF2127111FB9DFE300625A9B /* LoginCredentials.swift in Sources */,
 				EF2127091FB9DFE300625A9B /* EmailFormViewController.m in Sources */,
 				87DCF4E91D34EA4500BB420F /* ProfilePresenter.m in Sources */,
-				D586C5212040675700BBA492 /* ConversationActionController.swift in Sources */,
 				87F18BD21E03F13900C69D9B /* ZMLocationMessageData+Coordinates.swift in Sources */,
 				EF7D75A6201B6149003A8AF8 /* DeviceNativeBoundsSize.swift in Sources */,
 				F1199D351FC8490A0070FAC3 /* TeamCreationFlowController.swift in Sources */,
@@ -6500,6 +6510,7 @@
 				CEC0FE3B1C4FBF120093BF0D /* ConversationIgnoredDeviceCell.swift in Sources */,
 				8710673F1C0DC5570035603B /* SettingsPropertySelectValueCellDescriptor.swift in Sources */,
 				87C1A7BC1D8FDFD8002630BB /* VersionInfoViewController.m in Sources */,
+				5E3A6C25206A4E4A00907484 /* LocationPreviewController.swift in Sources */,
 				BF8ECC2D1E570A920015177D /* UIActivityViewController+FileSaving.swift in Sources */,
 				8708B8331DDDFF0D00310A53 /* UserConnectionView.swift in Sources */,
 				D5168F4D2010B61D00F8222A /* URL+Wire.swift in Sources */,
@@ -6669,6 +6680,7 @@
 				1693D9681CEDB26200D1F13C /* UIApplication+Permissions.m in Sources */,
 				16A95FFE1A6EC3210045E175 /* ZMConversationMessageWindow+Formatting.m in Sources */,
 				87DCF48E1D34E9BA00BB420F /* ContactsDataSource.m in Sources */,
+				5E3A6C22206A3AD500907484 /* ConversationActionController.swift in Sources */,
 				8710673E1C0DC5570035603B /* SettingsCellDescriptorFactory.swift in Sources */,
 				D5189477205045A100C095C1 /* LinkHeaderCell.swift in Sources */,
 				BF69C6C31F0CEBC500649C55 /* EphemeralTimeoutFormatter.swift in Sources */,
