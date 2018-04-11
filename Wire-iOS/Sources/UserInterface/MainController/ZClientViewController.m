@@ -152,7 +152,7 @@
     self.splitViewController.view.translatesAutoresizingMaskIntoConstraints = NO;
     [self.view addSubview:self.splitViewController.view];
     
-    [self.splitViewController.view autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero];
+    [self createTopViewConstraints];
     [self.splitViewController didMoveToParentViewController:self];
     
     self.splitViewController.view.backgroundColor = [UIColor clearColor];
