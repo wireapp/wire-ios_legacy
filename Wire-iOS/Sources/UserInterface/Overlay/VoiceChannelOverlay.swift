@@ -292,14 +292,14 @@ extension VoiceChannelOverlay {
         switch state {
         case .incomingCall:
             if callingConversation.conversationType == .oneOnOne {
-                let statusText = "voice.status.one_to_one.incoming".localized.lowercasedWithCurrentLocale
+                let statusText = "voice.status.one_to_one.incoming".localized
                 return labelText(withFormat: statusText, name: conversationName)
             } else {
-                let statusText = "voice.status.group_call.incoming".localized.lowercasedWithCurrentLocale
+                let statusText = "voice.status.group_call.incoming".localized
                 return labelText(withFormat: statusText, name: conversationName)
             }
         case .outgoingCall:
-            let statusText = "voice.status.one_to_one.outgoing".localized.lowercasedWithCurrentLocale
+            let statusText = "voice.status.one_to_one.outgoing".localized
             return labelText(withFormat: statusText, name: conversationName)
         case .incomingCallDegraded, .outgoingCallDegraded:
             return labelText(withFormat: "%@\n", name: conversationName)

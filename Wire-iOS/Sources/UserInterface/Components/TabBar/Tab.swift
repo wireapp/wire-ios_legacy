@@ -40,8 +40,8 @@ class Tab: Button {
 
         addSubview(selectionLineView)
         constrain(self, selectionLineView) { selfView, selectionLineView in
-            selectionLineView.leading == selfView.leading + 16
-            selectionLineView.trailing == selfView.trailing - 16
+            selectionLineView.leading == selfView.leading
+            selectionLineView.trailing == selfView.trailing
             selectionLineView.height == 1
             selectionLineView.bottom == selfView.bottom
         }

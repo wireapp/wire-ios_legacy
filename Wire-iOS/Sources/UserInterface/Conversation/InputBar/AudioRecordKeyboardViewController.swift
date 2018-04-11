@@ -330,6 +330,7 @@ private let zmLog = ZMSLog(tag: "UI")
         case .ready:
             self.closeEffectsPicker(animated: false)
             self.recordTapGestureRecognizer.isEnabled = true
+            updateTimeLabel(0)
         case .recording:
             self.closeEffectsPicker(animated: false)
             self.recordTapGestureRecognizer.isEnabled = false

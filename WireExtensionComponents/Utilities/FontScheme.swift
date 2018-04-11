@@ -136,6 +136,12 @@ public struct FontSpec {
     }
 }
 
+extension FontSpec {
+    var fontWithoutDynamicType: UIFont? {
+        return FontScheme(contentSizeCategory: .medium).font(for: self)
+    }
+}
+
 extension FontSpec: Hashable {
     public var hashValue: Int {
         get {

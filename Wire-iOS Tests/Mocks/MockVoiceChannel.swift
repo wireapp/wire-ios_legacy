@@ -20,7 +20,7 @@ import Foundation
 
 @objc
 class MockVoiceChannel : NSObject, CallProperties, VoiceChannel {
-    
+
     var isConstantBitRateAudioActive: Bool = false
     var initiator: ZMUser?
 
@@ -65,6 +65,10 @@ class MockVoiceChannel : NSObject, CallProperties, VoiceChannel {
     }
     
     // MARK - Call Actions
+    
+    func mute(_ muted: Bool, userSession: ZMUserSession) {
+        
+    }
     
     func join(video: Bool, userSession: ZMUserSession) -> Bool {
         return true

@@ -26,7 +26,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)tagEvent:(NSString *)event attributes:(NSDictionary<NSString *, id> *)attributes;
 
 /// Set a custom dimension
-- (void)setSuperProperty:(NSString *)name value:(nullable NSString *)value;
+- (void)setSuperProperty:(NSString *)name value:(nullable NSObject *)value;
 
 @end
 

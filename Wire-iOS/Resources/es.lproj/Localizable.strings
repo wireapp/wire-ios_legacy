@@ -15,15 +15,20 @@
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
+// General strings
 
 
 "general.ok" = "De acuerdo";
 "general.next" = "Siguiente";
 "general.cancel" = "Cancelar";
 "general.close" = "Cerrar";
+"general.back" = "Back";
 "general.open_settings" = "Abrir ajustes de Wire";
 "general.edit" = "Editar";
 "general.done" = "Listo";
+"general.confirm" = "OK";
+// Language like Chinese does not use space to sperate words or sentences.
+"general.space_between_words" = " ";
 
 "general.guest-room-name" = "Guest room";
 
@@ -242,6 +247,7 @@
 "conversation.input_bar.message_too_long.title" = "El mensaje es demasiado largo";
 "conversation.input_bar.message_too_long.message" = "Puede enviar mensajes de hasta %d caracteres.";
 
+"conversation.create.group_name.title" = "Crear grupo";
 "conversation.create.group_name.placeholder" = "Nombre del grupo";
 "conversation.create.guidance.empty" = "At least 1 character";
 "conversation.create.guidance.toolong" = "Demasiados caracteres";
@@ -409,6 +415,10 @@
 "content.message.open" = "Abrir";
 "content.message.copy" = "Copy";
 
+"content.message.open_link_alert.title" = "Visit Link";
+"content.message.open_link_alert.message" = "This will take you to\n%@";
+"content.message.open_link_alert.open" = "Abrir";
+
 "content.reactions_list.likers" = "Le ha gustado a";
 
 "content.file.too_big" = "Puedes enviar archivos de hasta %@";
@@ -430,11 +440,17 @@
 "inbox.connection_request.connect_button_title" = "Conectar";
 "inbox.connection_request.ignore_button_title" = "Ignorar";
 
+// Save image errors
+"library.alert.permission_warning.title" = "Wire needs access to your Photos";
+"library.alert.permission_warning.restrictions.explaination" = "Wire cannot access your library because restrictions are enabled.";
+"library.alert.permission_warning.not_allowed.explaination" = "Go to Settings and allow Wire to access your photos.";
+
 // Voice
-"voice.status.one_to_one.incoming" = "%@\nLlamando";
-"voice.status.group_call.incoming" = "%@\nSonando";
-"voice.status.one_to_one.outgoing" = "%@\nSonando";
+"voice.status.one_to_one.incoming" = "%@\ncalling";
+"voice.status.group_call.incoming" = "%@\nringing";
+"voice.status.one_to_one.outgoing" = "%@\nringing";
 "voice.status.joining" = "%@\nConectando";
+"voice.status.leaving" = "%@\nCall ended";
 "voice.status.video_not_available" = "Vídeo desactivado";
 "voice.status.low_connection" = "Mala conexión";
 "voice.network_error.title" = "No hay conexión a Internet";
@@ -566,7 +582,7 @@
 // Device list
 "profile.devices.title" = "Dispositivos";
 "profile.devices.fingerprint_message_unencrypted" = "%@ está utilizando una versión antigua de Wire. Sus dispositivos no se muestran aquí.";
-"profile.devices.fingerprint_message" = "Wire proporciona a cada dispositivo una huella digital única. Compárala con %@ y verifica tu chat. ¿Para qué verificar chats?";
+"profile.devices.fingerprint_message.title" = "Wire gives every device a unique fingerprint. Compare them with %@ and verify your conversation.";
 "profile.devices.fingerprint_message.link" = "¿Para qué verificar los chats?";
 
 // Device detail
@@ -579,9 +595,6 @@
 "device.class.tablet" = "Tableta";
 "device.class.phone" = "Teléfono";
 "profile.devices.detail.reset_session.title" = "Renovar sesión";
-
-// General strings
-"general.confirm" = "OK";
 
 // Bot
 "participants.services.remove_integration.button" = "remove integration";
@@ -619,12 +632,9 @@
 "about.copyright.title" = "© Wire Swiss GmbH";
 
 // Self new devices
-"self.new_device_alert.title" = "Has añadido %@ a tu cuenta de Wire";
-"self.new_device_alert.title_prefix.tablet" = "una tableta";
-"self.new_device_alert.title_prefix.phone" = "un teléfono";
-"self.new_device_alert.title_prefix.devices" = "%d dispositivos";
-"self.new_device_alert.message" = "%@\n\nSi tú no has hecho esto, elimina el dispositivo y cambia la contraseña.";
-"self.new_device_alert.message_plural" = "%@\n\nSi tú no has hecho esto, elimina los dispositivos y cambia la contraseña.";
+"self.new_device_alert.title" = "Your account was used on:";
+"self.new_device_alert.message" = "\n%@\n\nIf you don’t recognize the device above, remove it and reset your password.";
+"self.new_device_alert.message_plural" = "\n%@\n\nIf you don’t recognize the devices above, remove them and reset your password.";
 "self.new_device_alert.manage_devices" = "Administrar dispositivos";
 "self.new_device_alert.trust_devices" = "OK";
 
@@ -789,7 +799,11 @@
 "self.settings.privacy_contacts_menu.description_disabled.title" = "Compartir tus contactos permite a Wire encontrar amigos que ya son usuarios de Wire. Toda la información es anónima y no la compartimos con nadie. Permite acceder a Wire en Ajustes > Privacidad > Contactos.";
 
 "self.settings.privacy_security.lock_app" = "Bloquear aplicación";
-"self.settings.privacy_security.lock_app.subtitle" = "Wire se bloquea tras 10 segundos en segundo plano. Se desbloquea con Touch ID o introduciendo el código.";
+"self.settings.privacy_security.lock_app.subtitle.lock_description" = "Lock Wire after 10 seconds in the background.";
+"self.settings.privacy_security.lock_app.subtitle.touch_id" = "Unlock with Touch ID or enter your passcode.";
+"self.settings.privacy_security.lock_app.subtitle.face_id" = "Unlock with Face ID or enter your passcode.";
+"self.settings.privacy_security.lock_app.subtitle.none" = "Unlock by entering your passcode.";
+
 "self.settings.privacy_security.lock_app.description" = "Desbloquear Wire";
 
 "self.settings.privacy_security.lock_cancelled.description" = "Desbloquea Wire con Touch ID o el código";
@@ -832,6 +846,17 @@
 // Invite from Settings
 "self.settings.invite_friends.title" = "Invitar contactos";
 
+// History backup
+
+"self.settings.conversations.title" = "Chats";
+"self.settings.history_backup.title" = "History backup";
+"self.settings.history_backup.description" = "Back up your conversation history to a safe place. If you lose your phone or switch to a new one, your conversation will be safe. You can restore your conversation history when you log in. You can only restore history from a backup of the same platform.\nThe back up is not protected by Wire end-to-end encryption.";
+"self.settings.history_backup.action" = "Back Up Now";
+"self.settings.history_backup.error.title" = "Error";
+
+"self.settings.history_backup.set_email.title" = "Set an email and password.";
+"self.settings.history_backup.set_email.message" = "You need an email and a password in order to back up your conversation history. You can do it from the account page in Settings.";
+
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // System status
 "system_status_bar.no_internet.title" = "No hay Internet";
@@ -855,11 +880,12 @@
 
 // Landing screen
 
+"landing.app_name" = "Wire";
 "landing.title" = "Mensajería segura para todos.";
-"landing.create_account.title" = "Crear una cuenta";
-"landing.create_account.subtitle" = "para uso personal";
-"landing.create_team.title" = "Crear equipo";
-"landing.create_team.subtitle" = "para el trabajo";
+"landing.create_account.title" = "For personal use";
+"landing.create_account.subtitle" = "create an account";
+"landing.create_team.title" = "For organizations";
+"landing.create_team.subtitle" = "create a team";
 "landing.login.hints" = "¿Ya tienes una cuenta?";
 "landing.login.button.title" = "Iniciar sesión";
 
@@ -939,6 +965,8 @@
 
 // Registration
 
+"registration.launch_back_button.label" = "Back";
+
 "registration.title" = "Registro";
 "registration.close_email_invitation_button.email_title" = "Utilizar otro cemail";
 "registration.close_email_invitation_button.phone_title" = "Registrarse por teléfono";
@@ -966,6 +994,16 @@
 "registration.no_history.hero" = "Es la primera vez que usas Wire en este dispositivo.";
 "registration.no_history.subtitle" = "Por motivos de privacidad, tu historial de chat no aparecerá aquí.";
 "registration.no_history.got_it" = "OK";
+"registration.no_history.restore_backup" = "Restore from backup";
+"registration.no_history.restore_backup_warning.title" = "Restoring history.";
+"registration.no_history.restore_backup_warning.message" = "Your backup will overwrite the conversations that you may have on this device.";
+"registration.no_history.restore_backup_warning.proceed" = "Proceed";
+
+"registration.no_history.restore_backup_failed.title" = "Restoring history failed.";
+"registration.no_history.restore_backup_failed.message" = "Your backup file might be corrupted or not compatible.";
+"registration.no_history.restore_backup_failed.wrong_account.message" = "Cannot read backup because it's from a different account.";
+"registration.no_history.restore_backup_failed.wrong_version.message" = "Cannot read backup because it's from an unsupported version (either outdated or newer).";
+"registration.no_history.restore_backup_failed.try_again" = "Try again";
 
 "registration.no_history.logged_out.hero" = "Ya has utilizado Wire en este dispositivo antes.";
 "registration.no_history.logged_out.subtitle" = "Los mensajes enviados durante el intervalo de inactividad no aparecerán.";
@@ -1024,7 +1062,19 @@
 "registration.devices.activated_in" = "Activado en";
 "registration.devices.id" = "ID:";
 
+"signin.use_email.label" = "Login with Email";
+"signin.use_phone.label" = "Login with Phone";
 "signin.forgot_password" = "¿Olvidaste tu contraseña?";
+"signin.use_one_password.label" = "Log in with 1Password";
+"signin.use_one_password.hint" = "Double tap to fill your password with 1Password";
+"signin.confirm" = "Iniciar sesión";
+
+"registration.phone_country" = "País";
+"registration.phone_code" = "Country Code";
+"registration.phone_country.hint" = "Double tap to select another country.";
+"registration.phone_code.hint" = "Double tap to select another country code.";
+"registration.phone.verify.label" = "Verify phone number";
+"registration.phone.verify_field.label" = "Verification Code";
 
 "registration.add_phone_number.hero.title" = "Añadir número de teléfono";
 "registration.add_phone_number.hero.paragraph" = "Esto permite a Wire encontrar usuarios que tal vez conozcas. No compartimos la información con nadie.";
@@ -1040,6 +1090,9 @@
 "registration.phone_invitation.title" = "Invitación";
 "registration.phone_invitation.hero.title" = "Hola, %@";
 "registration.phone_invitation.hero.paragraph" = "Estás a un paso de crear tu cuenta.";
+
+"registration.confirm" = "Sign Up";
+"registration.phone.country_code.hint" = "Double tap to use a phone number from this country.";
 
 "error.name_and_email" = "Por favor introduce tu nombre completo y un email válido";
 "error.full_name" = "Por favor, introduce tu nombre completo";
