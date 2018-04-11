@@ -137,6 +137,7 @@ static const CGFloat BurstContainerExpandedHeight = 40;
     if (newWindow != nil) {
         [self scheduledTimerForUpdateBurstTimestamp];
     } else {
+        [self tearDownCountdownLink];
         [self.burstTimestampTimer invalidate];
         self.burstTimestampTimer = nil;
     }
