@@ -54,7 +54,7 @@ final class BackupStatusCell: UITableViewCell {
             ])
         
         descriptionLabel.text = "self.settings.history_backup.description".localized
-        descriptionLabel.font = FontSpec(.normal, .light).font
+        descriptionLabel.font = FontSpec(.medium, .light).font
         descriptionLabel.textColor = color
     }
     
@@ -91,16 +91,13 @@ final class BackupActionCell: UITableViewCell {
 }
 
 protocol BackupSource {
-    func backupActiveAccount(password: Password, completion: @escaping WireSyncEngine.SessionManager.BackupResultClosure)
+    func backupActiveAccount(password: Password, completion: @escaping SessionManager.BackupResultClosure)
 }
 
-// TODO move to SE
 extension SessionManager: BackupSource {
-    func backupActiveAccount(password: Password, completion: @escaping WireSyncEngine.SessionManager.BackupResultClosure) {
-        
-        backupActiveAccount(completion: completion)
+    func backupActiveAccount(password: Password, completion: @escaping SessionManager.BackupResultClosure) {
+        backupActiveAccount(password: password.value, completion: completion)
     }
-    
 }
 
 final class BackupViewController: UIViewController {
@@ -201,12 +198,8 @@ extension BackupViewController: UITableViewDataSource, UITableViewDelegate {
 fileprivate extension BackupViewController {
 
     fileprivate func backupActiveAccount(indexPath: IndexPath) {
-        requestPassword(over: self) { result in
-            
-            guard let password = result else {
-                return
-            }
-            
+        requestPassword(over: self) { [weak self] result in
+            guard let `self` = self, let password = result else { return }
             self.loadingHostController.showLoadingView = true
 
             self.backupSource.backupActiveAccount(password: password) { backupResult in

@@ -861,8 +861,8 @@
 "self.settings.history_backup.password.title" = "Set Password";
 "self.settings.history_backup.password.cancel" = "Cancel";
 "self.settings.history_backup.password.next" = "Next";
-"self.settings.history_backup.password.placeholder" = "Password";
-"self.settings.history_backup.password.description" = "At least 8 characters\n\nThe backup will be compressed and encrypted with the password you set here.";
+"self.settings.history_backup.password.placeholder" = "At least 8 characters";
+"self.settings.history_backup.password.description" = "The backup will be compressed and encrypted with the password you set here.";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // System status
@@ -1002,15 +1002,36 @@
 "registration.no_history.subtitle" = "For privacy reasons, your conversation history will not appear here.";
 "registration.no_history.got_it" = "OK";
 "registration.no_history.restore_backup" = "Restore from backup";
-"registration.no_history.restore_backup_warning.title" = "Restoring history.";
-"registration.no_history.restore_backup_warning.message" = "Your backup will overwrite the conversations that you may have on this device.";
-"registration.no_history.restore_backup_warning.proceed" = "Proceed";
 
-"registration.no_history.restore_backup_failed.title" = "Restoring history failed.";
-"registration.no_history.restore_backup_failed.message" = "Your backup file might be corrupted or not compatible.";
-"registration.no_history.restore_backup_failed.wrong_account.message" = "Cannot read backup because it's from a different account.";
-"registration.no_history.restore_backup_failed.wrong_version.message" = "Cannot read backup because it's from an unsupported version (either outdated or newer).";
+// Restore History Warning Alert
+"registration.no_history.restore_backup_warning.title" = "Restore history";
+"registration.no_history.restore_backup_warning.message" = "The backup contents will replace the conversation history on this device.\nYou can only restore history from a backup of the same platform.";
+"registration.no_history.restore_backup_warning.proceed" = "Choose Backup File";
+
+/// Restore History Failure Alerts
 "registration.no_history.restore_backup_failed.try_again" = "Try again";
+
+// Generic
+"registration.no_history.restore_backup_failed.title" = "Something went wrong";
+"registration.no_history.restore_backup_failed.message" = "Your history could not be restored.";
+
+// Wrong Account
+"registration.no_history.restore_backup_failed.wrong_account.title" = "Incompatible backup";
+"registration.no_history.restore_backup_failed.wrong_account.message" = "You cannot restore history from a different account.";
+
+// Incompatible Version
+"registration.no_history.restore_backup_failed.wrong_version.title" = "Incompatible backup";
+"registration.no_history.restore_backup_failed.wrong_version.message" = "This backup was created by a newer or outdated version of Wire and cannot be restored here.";
+
+// Restore In Progress Loading Titles
+"registration.no_history.restore_backup.restoring" = "Restoring…";
+"registration.no_history.restore_backup.completed" = "Completed";
+
+// Password Import Alert
+"registration.no_history.restore_backup.password.title" = "This backup is password protected.";
+"registration.no_history.restore_backup.password.message" = "The password is required to restore this backup.";
+"registration.no_history.restore_backup.password.placeholder" = "Password";
+"registration.no_history.restore_backup.password_error.title" = "Wrong Password";
 
 "registration.no_history.logged_out.hero" = "You’ve used Wire on this device before.";
 "registration.no_history.logged_out.subtitle" = "Messages sent in the meantime will not appear.";

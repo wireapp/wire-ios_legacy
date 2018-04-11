@@ -77,8 +77,7 @@ import Cartography
             
             if self.selectedAudioEffect != .none {
                 self.audioPlayerController?.stop()
-                
-                
+
                 let effectPath = (NSTemporaryDirectory() as NSString).appendingPathComponent("effect.wav")
                 effectPath.deleteFileAtPath()
                 self.selectedAudioEffect.apply(self.recordingPath, outPath: effectPath) {
@@ -113,7 +112,7 @@ import Cartography
 
     func tearDown() {
         self.audioPlayerController?.stop()
-        self.audioPlayerController?.tearDownMediaPlayer()
+        self.audioPlayerController?.tearDown()
         self.audioPlayerController = .none
     }
     
@@ -276,7 +275,7 @@ import Cartography
     fileprivate func playMedia(_ atPath: String) {
         Analytics.shared().tagPreviewedAudioMessageRecording(.keyboard)
 
-        self.audioPlayerController?.tearDownMediaPlayer()
+        self.audioPlayerController?.tearDown()
 
         self.audioPlayerController = try? AudioPlayerController(contentOf: URL(fileURLWithPath: atPath))
         self.audioPlayerController?.delegate = self
@@ -356,11 +355,12 @@ private class AudioPlayerController : NSObject, MediaPlayer, AVAudioPlayerDelega
     }
     
     deinit {
-        tearDownMediaPlayer()
+        tearDown()
     }
 
-    func tearDownMediaPlayer() {
+    func tearDown() {
         mediaManager?.mediaPlayer(self, didChangeTo: .completed)
+        player.delegate = nil
     }
 
     var state: MediaPlayerState {
@@ -382,6 +382,7 @@ private class AudioPlayerController : NSObject, MediaPlayer, AVAudioPlayerDelega
     func play() {
         mediaManager?.mediaPlayer(self, didChangeTo: .playing)
         player.currentTime = 0
+        player.delegate = self
         player.play()
     }
     
@@ -395,7 +396,7 @@ private class AudioPlayerController : NSObject, MediaPlayer, AVAudioPlayerDelega
     
     func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
         if player == self.player {
-            tearDownMediaPlayer()
+            tearDown()
             delegate?.audioPlayerControllerDidFinishPlaying()
         }
     }
