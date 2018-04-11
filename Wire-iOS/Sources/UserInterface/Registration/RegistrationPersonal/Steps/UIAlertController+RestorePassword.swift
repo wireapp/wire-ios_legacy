@@ -23,7 +23,7 @@ extension UIAlertController {
     static func requestRestorePassword(completion: @escaping (String?) -> Void) -> UIAlertController {
         let controller = UIAlertController(
             title: "registration.no_history.restore_backup.password.title".localized,
-            message: "registration.no_history.restore_backup.password.message".localized,
+            message: nil,
             preferredStyle: .alert
         )
         

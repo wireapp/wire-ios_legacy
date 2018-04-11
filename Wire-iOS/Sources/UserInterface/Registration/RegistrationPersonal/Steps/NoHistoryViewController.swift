@@ -25,8 +25,7 @@ extension NoHistoryViewController {
     @objc public func createButtons() {
         let restoreBackupButton = Button(style: .emptyMonochrome)
         restoreBackupButton.translatesAutoresizingMaskIntoConstraints = false
-        restoreBackupButton.setTitle("registration.no_history.restore_backup".localized.uppercased(),
-                                     for: .normal)
+        restoreBackupButton.setTitle("registration.no_history.restore_backup".localized.uppercased(), for: .normal)
         
         restoreBackupButton.addCallback(for: .touchUpInside) { [unowned self] _ in
             if self.contextType == .loggedOut {
@@ -39,7 +38,6 @@ extension NoHistoryViewController {
         
         restoreBackupButton.heightAnchor.constraint(equalToConstant: 40).isActive = true
         stackView.addArrangedSubview(restoreBackupButton)
-    
     
         let okButton = Button(style: .fullMonochrome)
         okButton.translatesAutoresizingMaskIntoConstraints = false
@@ -73,20 +71,6 @@ extension NoHistoryViewController {
             stackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -28)
         ])
     }
-
-    fileprivate func showWarningMessage() {
-        let alert = UIAlertController(title: "registration.no_history.restore_backup_warning.title".localized,
-                                      message: "registration.no_history.restore_backup_warning.message".localized,
-                                      cancelButtonTitle: "general.cancel".localized)
-        
-        let proceedAction = UIAlertAction(title: "registration.no_history.restore_backup_warning.proceed".localized,
-                                          style: .default) { [unowned self] _ in
-             self.showFilePicker()
-        }
-        alert.addAction(proceedAction)
-        
-        self.present(alert, animated: true)
-    }
     
     fileprivate func showFilePicker() {
         // Test code to verify restore
@@ -101,38 +85,6 @@ extension NoHistoryViewController {
         let picker = UIDocumentPickerViewController(documentTypes: [NoHistoryViewController.WireBackupUTI], in: .`import`)
         picker.delegate = self
         self.present(picker, animated: true)
-    }
-    
-    private func errorMessage(for error: Error) -> String {
-        switch error {
-        case StorageStack.BackupImportError.incompatibleBackup(BackupMetadata.VerificationError.backupFromNewerAppVersion):
-            return "registration.no_history.restore_backup_failed.wrong_version.message".localized
-        case StorageStack.BackupImportError.incompatibleBackup(BackupMetadata.VerificationError.userMismatch):
-            return "registration.no_history.restore_backup_failed.wrong_account.message".localized
-        default:
-            return "registration.no_history.restore_backup_failed.message".localized
-        }
-    }
-
-    fileprivate func showRestoreError(_ error: Error) {
-        let alert = UIAlertController(
-            title: "registration.no_history.restore_backup_failed.title".localized,
-            message: errorMessage(for: error),
-            preferredStyle: .alert
-        )
-        
-        let tryAgainAction = UIAlertAction(
-            title: "registration.no_history.restore_backup_failed.try_again".localized,
-            style: .default,
-            handler: { [showFilePicker] _ in showFilePicker() }
-        )
-
-        alert.addAction(tryAgainAction)
-        alert.addAction(.cancel { [formStepDelegate] _ in
-            formStepDelegate?.didCompleteFormStep(self)
-        })
-        
-        self.present(alert, animated: true)
     }
     
     fileprivate func restore(with url: URL) {
@@ -168,6 +120,15 @@ extension NoHistoryViewController {
         }
     }
     
+    // MARK: - Alerts
+    
+    fileprivate func showWarningMessage() {
+        let controller = UIAlertController.historyImportWarning { [showFilePicker] in
+            showFilePicker()
+        }
+        present(controller, animated: true)
+    }
+    
     fileprivate func requestPassword(completion: @escaping (String) -> Void) {
         let controller = UIAlertController.requestRestorePassword { password in
             password.apply(completion)
@@ -178,6 +139,16 @@ extension NoHistoryViewController {
     fileprivate func showWrongPasswordAlert(completion: @escaping () -> Void) {
         let controller = UIAlertController.importWrongPasswordError(completion: completion)
         present(controller, animated: true, completion: nil)
+    }
+    
+    fileprivate func showRestoreError(_ error: Error) {
+        let controller = UIAlertController.restoreBackupFailed(with: error) { [unowned self] action in
+            switch action {
+            case .tryAgain: self.showFilePicker()
+            case .cancel: self.formStepDelegate.didCompleteFormStep(self)
+            }
+        }
+        present(controller, animated: true)
     }
 }
 
