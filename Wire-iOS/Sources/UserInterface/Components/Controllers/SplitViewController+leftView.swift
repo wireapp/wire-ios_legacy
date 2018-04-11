@@ -20,7 +20,14 @@ import Foundation
 
 extension SplitViewController {
 
-    @objc func updateLeftViewController(animated: Bool, completion: (() -> Void)?) {
+
+    /// update left view UI depends on isLeftViewControllerRevealed
+    ///
+    /// - Parameters:
+    ///   - animated: animation enabled?
+    ///   - completion: completion closure
+    @objc(updateLeftViewControllerVisibilityAnimated:completion:)
+    func updateLeftViewController(animated: Bool, completion: (() -> Void)?) {
         if animated {
             view.layoutIfNeeded()
         }
