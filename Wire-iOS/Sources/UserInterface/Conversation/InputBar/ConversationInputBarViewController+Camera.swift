@@ -99,12 +99,12 @@ extension ConversationInputBarViewController: CameraKeyboardViewControllerDelega
 
             let confirmVideoViewController = ConfirmAssetViewController()
             confirmVideoViewController.transitioningDelegate = FastTransitioningDelegate.sharedDelegate
-            confirmVideoViewController.videoURL = videoURL as URL!
+            confirmVideoViewController.videoURL = videoURL as URL
             confirmVideoViewController.previewTitle = self.conversation.displayName.uppercased()
             confirmVideoViewController.onConfirm = { [unowned self] (editedImage: UIImage?)in
                 self.dismiss(animated: true, completion: .none)
                 Analytics.shared().tagSentVideoMessage(inConversation: self.conversation, context: .cameraKeyboard, duration: duration)
-                self.uploadFile(at: videoURL as URL!)
+                self.uploadFile(at: videoURL as URL)
             }
             
             confirmVideoViewController.onCancel = { [unowned self] in
@@ -166,7 +166,7 @@ extension ConversationInputBarViewController: CameraKeyboardViewControllerDelega
                 metadata.sketchSource = .cameraGallery
                 self.sendController.sendMessage(withImageData: editedImageData, completion: .none)
             } else {
-                self.sendController.sendMessage(withImageData: imageData as Data!, completion: .none)
+                self.sendController.sendMessage(withImageData: imageData as Data, completion: .none)
             }
             
             Analytics.shared().tagMediaSentPicture(inConversation: self.conversation, metadata: metadata)
@@ -239,7 +239,7 @@ extension ConversationInputBarViewController: UIVideoEditorControllerDelegate {
             }
             
             Analytics.shared().tagSentVideoMessage(inConversation: self.conversation, context: .cameraKeyboard, duration: duration)
-            self.uploadFile(at: NSURL(fileURLWithPath: path) as URL!)
+            self.uploadFile(at: NSURL(fileURLWithPath: path) as URL)
         }
     }
     

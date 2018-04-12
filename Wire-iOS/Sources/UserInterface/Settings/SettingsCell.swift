@@ -366,7 +366,7 @@ protocol SettingsCellType: class {
         super.setupAccessibiltyElements()
         
         var currentElements = self.accessibilityElements ?? []
-        currentElements.append(contentsOf: [textInput])
+        currentElements.append(contentsOf: [textInput!])
         self.accessibilityElements = currentElements
     }
     

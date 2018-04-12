@@ -27,7 +27,7 @@
 @property (nonatomic, nullable) id<MediaAsset> image;
 @property (nonatomic, nullable) NSURL *videoURL;
 @property (nonatomic, copy, nullable) void (^onConfirm)(UIImage * _Nullable editedImage);
-@property (nonatomic, copy, nullable) void (^onCancel)();
+@property (nonatomic, copy, nullable) void (^onCancel)(void);
 
 @property (nonatomic, copy, nullable) NSString *previewTitle;
 

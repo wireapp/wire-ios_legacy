@@ -37,7 +37,7 @@ final class MarkdownTextStorageTests: XCTestCase {
     func testThatItCorrectlyAddsMarkdownIDAttributeAfterAutocorrect() {
         // GIVEN
         let correction = "their"
-        let wholeRange = NSMakeRange(0, correction.characters.count)
+        let wholeRange = NSMakeRange(0, correction.count)
         sut.currentMarkdown = .bold
         // WHEN: simulate inserting autocorrected text
         sut.replaceCharacters(in: NSMakeRange(0, 0), with: correction)
