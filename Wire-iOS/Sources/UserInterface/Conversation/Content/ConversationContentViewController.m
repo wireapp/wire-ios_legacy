@@ -275,10 +275,21 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
 
 - (void)setConversationHeaderView:(UIView *)headerView
 {
-    CGSize fittingSize = CGSizeMake(self.tableView.bounds.size.width, self.tableView.bounds.size.height - 20);
+    CGSize fittingSize = CGSizeMake(self.tableView.bounds.size.width, self.headerHeight);
     CGSize requiredSize = [headerView systemLayoutSizeFittingSize:fittingSize withHorizontalFittingPriority:UILayoutPriorityRequired verticalFittingPriority:UILayoutPriorityDefaultLow];
     headerView.frame = CGRectMake(0, 0, requiredSize.width, requiredSize.height);
     self.tableView.tableHeaderView = headerView;
+}
+
+- (CGFloat)headerHeight
+{
+    CGFloat height = 20;
+    if (self.messageWindow.messages.count == 1) {
+        UITableViewCell *cell = [self cellForMessage:self.messageWindow.messages.firstObject];
+        height += CGRectGetHeight(cell.bounds);
+    }
+    
+    return self.tableView.bounds.size.height - height;
 }
 
 - (void)setSearchQueries:(NSArray<NSString *> *)searchQueries
