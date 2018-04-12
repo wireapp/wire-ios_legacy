@@ -64,18 +64,12 @@ class SettingsTechnicalReportViewController: UITableViewController, MFMailCompos
         tableView.separatorColor = UIColor(white: 1, alpha: 0.1)
     }
     
-    func fetchVoiceLogData() -> Data? {
-        let logs = ZMSLog.recordedContent
-        return logs.joined(separator: "\n").data(using: .utf8)
-    }
     
     func sendReport() {
-        guard let attachmentData = fetchVoiceLogData() else { return }
-        let fileName = "voice.log"
         let mailRecipient = NSLocalizedString("self.settings.technical_report.mail.recipient", comment: "")
 
         guard MFMailComposeViewController.canSendMail() else {
-            DebugAlert.displayFallbackActivityController(logData: attachmentData, logFileName: fileName, email: mailRecipient, from: self)
+            DebugAlert.displayFallbackActivityController(logPaths: ZMSLog.pathsForExistingLogs, email: mailRecipient, from: self)
             return
         }
     
@@ -86,10 +80,14 @@ class SettingsTechnicalReportViewController: UITableViewController, MFMailCompos
         mailComposeViewController.setToRecipients([mailRecipient])
         mailComposeViewController.setSubject(NSLocalizedString("self.settings.technical_report.mail.subject", comment: ""))
         
-        if attachmentData.count > 0 && includedVoiceLogCell.accessoryType == .checkmark {
-            mailComposeViewController.addAttachmentData(attachmentData, mimeType: "text/plain", fileName: fileName)
+        if includedVoiceLogCell.accessoryType == .checkmark {
+            if let currentLog = ZMSLog.currentLog, let currentPath = ZMSLog.currentLogPath {
+                mailComposeViewController.addAttachmentData(currentLog, mimeType: "text/plain", fileName: currentPath.lastPathComponent)
+            }
+            if let previousLog = ZMSLog.previousLog, let previousPath = ZMSLog.previousLogPath {
+                mailComposeViewController.addAttachmentData(previousLog, mimeType: "text/plain", fileName: previousPath.lastPathComponent)
+            }
         }
-    
         mailComposeViewController.setMessageBody(report, isHTML: false)
         self.present(mailComposeViewController, animated: true, completion: nil)
     }

@@ -127,6 +127,8 @@ static AppDelegate *sharedAppDelegate = nil;
     }];
     self.launchOptions = launchOptions;
     
+    [ZMSLog switchCurrentLogToPrevious];
+    
     ZMLogInfo(@"application:didFinishLaunchingWithOptions END %@", launchOptions);
     ZMLogInfo(@"Application was launched with arguments: %@",[[NSProcessInfo processInfo]arguments]);
 
