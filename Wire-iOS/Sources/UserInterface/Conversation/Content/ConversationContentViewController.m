@@ -203,13 +203,10 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    
     [self updateVisibleMessagesWindow];
-    
-    if ([self respondsToSelector:@selector(registerForPreviewingWithDelegate:sourceView:)] &&
-        [[UIApplication sharedApplication] keyWindow].traitCollection.forceTouchCapability == UIForceTouchCapabilityAvailable) {
-        
-        [self registerForPreviewingWithDelegate:self sourceView:self.tableView];
+
+    if (self.traitCollection.forceTouchCapability == UIForceTouchCapabilityAvailable) {
+        [self registerForPreviewingWithDelegate:self sourceView:self.view];
     }
 
     [self scrollToLastUnreadMessageIfNeeded];
