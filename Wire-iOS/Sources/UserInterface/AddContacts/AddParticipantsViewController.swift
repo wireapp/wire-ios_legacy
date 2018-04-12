@@ -323,11 +323,14 @@ public class AddParticipantsViewController: UIViewController {
     fileprivate func addSelectedParticipants(to conversation: ZMConversation) {
         let selectedUsers = self.userSelection.users
         
-        ZMUserSession.shared()?.enqueueChanges({
-            conversation.addParticipants(selectedUsers)
-        })
-
-        Analytics.shared().tagAddParticipants(source:.conversationDetails, selectedUsers, allowGuests: conversation.allowGuests, in: conversation)
+        conversation.addParticipants(selectedUsers, userSession: ZMUserSession.shared()!) { result in
+            switch result {
+            case .success:
+                Analytics.shared().tagAddParticipants(source:.conversationDetails, selectedUsers, allowGuests: conversation.allowGuests, in: conversation)
+            case .failure(let error):
+                self.showAlert(forError: error)
+            }
+        }
     }
 }
 

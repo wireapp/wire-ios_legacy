@@ -33,14 +33,19 @@ extension UIViewController {
         ) {
 
         let controller = UIAlertController.remove(user) { [weak self] remove in
-            guard remove, let `self` = self else { return }
-            ZMUserSession.shared()?.enqueueChanges({
-                conversation?.removeParticipant(user)
-            }, completionHandler: {
-                if user.isServiceUser {
-                    Analytics.shared().tagDidRemoveService(user)
+            guard remove, let `self` = self, let session = ZMUserSession.shared() else { return }
+            
+            conversation?.removeParticipant(user, userSession: session, completion: { (result) in
+                switch result {
+                case .success:
+                    if user.isServiceUser {
+                        Analytics.shared().tagDidRemoveService(user)
+                    }
+                    
+                    viewControllerDismissable?.viewControllerWants(toBeDismissed: self, completion: nil)
+                case .failure(let error):
+                    self.showAlert(forError: error)
                 }
-                viewControllerDismissable?.viewControllerWants(toBeDismissed: self, completion: nil)
             })
         }
         
