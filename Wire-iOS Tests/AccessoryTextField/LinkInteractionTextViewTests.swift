@@ -78,4 +78,33 @@ class LinkInteractionTextViewTests: XCTestCase {
         // THEN
         XCTAssertFalse(shouldOpenURL)
     }
+    
+    func testThatItDoesOpenDataDetectedLinks_iOS9() {
+        ["x-apple-data-detectors:some-detected-data", "tel:12345678", "mailto:bob@example.com"].forEach {
+            // GIVEN
+            let str = "tap me!"
+            let url = URL(string: $0)!
+    
+            sut.attributedText = NSAttributedString(string: str, attributes: [NSLinkAttributeName: url])
+            // WHEN
+            let shouldOpenURL = sut.delegate!.textView!(sut, shouldInteractWith: url, in: NSMakeRange(0, str.characters.count))
+            // THEN
+            XCTAssertTrue(shouldOpenURL)
+        }
+    }
+    
+    @available(iOS 10.0, *)
+    func testThatItDoesOpenDataDetectedLinks_iOS10() {
+        ["x-apple-data-detectors:some-detected-data", "tel:12345678", "mailto:bob@example.com"].forEach {
+            // GIVEN
+            let str = "tap me!"
+            let url = URL(string: $0)!
+            
+            sut.attributedText = NSAttributedString(string: str, attributes: [NSLinkAttributeName: url])
+            // WHEN
+            let shouldOpenURL = sut.delegate!.textView!(sut, shouldInteractWith: url, in: NSMakeRange(0, str.characters.count), interaction: .invokeDefaultAction)
+            // THEN
+            XCTAssertTrue(shouldOpenURL)
+        }
+    }
 }
