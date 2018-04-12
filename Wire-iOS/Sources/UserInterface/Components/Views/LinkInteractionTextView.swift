@@ -29,9 +29,13 @@ import UIKit
     
     public weak var interactionDelegate: TextViewInteractionDelegate?
     
+    // Any of these schemes will bypass the open link alert.
     fileprivate let whitelistedURLSchemes = [
+        // address, calendar/time, shipping no., flight no.
         "x-apple-data-detectors",
+        // phone number
         "tel",
+         // email address
         "mailto"
     ]
     
