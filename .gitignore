@@ -12,7 +12,6 @@ xcuserdata
 *.moved-aside
 .idea/
 Pods
-contents.xcworkspacedata
 Carthage/
 *.xcuserstate
 *.xcscmblueprint
