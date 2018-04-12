@@ -29,6 +29,12 @@ import UIKit
     
     public weak var interactionDelegate: TextViewInteractionDelegate?
     
+    fileprivate let whitelistedURLSchemes = [
+        "x-apple-data-detectors",
+        "tel",
+        "mailto"
+    ]
+    
     override init(frame: CGRect, textContainer: NSTextContainer?) {
         super.init(frame: frame, textContainer: textContainer)
         delegate = self
@@ -114,11 +120,12 @@ extension LinkInteractionTextView: UITextViewDelegate {
             return false
         }
         
+        // data detector links should be handled by the system
+        if whitelistedURLSchemes.contains(URL.scheme ?? "") { return true }
+        
         // if alert shown, link opening is handled in alert actions
         if showAlertIfNeeded(for: URL, in: characterRange) { return false }
-        
-        // data detector links should be handled by the system
-        return URL.scheme == "x-apple-data-detectors" || !(interactionDelegate?.textView(self, open: URL) ?? false)
+        else { return !(interactionDelegate?.textView(self, open: URL) ?? false) }
     }
     
     public func textView(_ textView: UITextView, shouldInteractWith textAttachment: NSTextAttachment, in characterRange: NSRange) -> Bool {
@@ -140,14 +147,20 @@ extension LinkInteractionTextView: UITextViewDelegate {
     public func textView(_ textView: UITextView, shouldInteractWith URL: URL, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
         switch interaction {
         case .invokeDefaultAction:
+            // data detector links should be handled by the system
+            if whitelistedURLSchemes.contains(URL.scheme ?? "") { return true }
+            
             // if alert shown, link opening is handled in alert actions
             if showAlertIfNeeded(for: URL, in: characterRange) { return false }
-            // data detector links should be handle by the system
-            return  URL.scheme == "x-apple-data-detectors" || !(interactionDelegate?.textView(self, open: URL) ?? false)
+            else { return !(interactionDelegate?.textView(self, open: URL) ?? false) }
+        
         case .presentActions:
             interactionDelegate?.textViewDidLongPress(self)
             return false
+            
         case .preview:
+            // data detector links should be handled by the system
+            if whitelistedURLSchemes.contains(URL.scheme ?? "") { return true }
             // if no alert is shown, still allow preview peeking
             return !showAlertIfNeeded(for: URL, in: characterRange)
         }
