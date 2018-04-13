@@ -113,6 +113,7 @@ static AppDelegate *sharedAppDelegate = nil;
 {
     ZMLogInfo(@"application:didFinishLaunchingWithOptions START %@ (applicationState = %ld)", launchOptions, (long)application.applicationState);
     
+    [ZMSLog switchCurrentLogToPrevious];
     
     [self setupBackendEnvironment];
 
@@ -126,8 +127,6 @@ static AppDelegate *sharedAppDelegate = nil;
         [self.rootViewController launchWith:launchOptions];
     }];
     self.launchOptions = launchOptions;
-    
-    [ZMSLog switchCurrentLogToPrevious];
     
     ZMLogInfo(@"application:didFinishLaunchingWithOptions END %@", launchOptions);
     ZMLogInfo(@"Application was launched with arguments: %@",[[NSProcessInfo processInfo]arguments]);
