@@ -30,7 +30,7 @@ struct Password {
 }
 
 extension BackupViewController {
-    func requestPassword(over controller: UIViewController, completion: @escaping (Password?) -> Void) {
+    func requestPassword(completion: @escaping (Password?) -> Void) {
         let passwordController = BackupPasswordViewController { controller, password in
             controller.dismiss(animated: true) {
                 completion(password)
@@ -38,7 +38,7 @@ extension BackupViewController {
         }
         let navigationController = KeyboardAvoidingViewController(viewController: passwordController).wrapInNavigationController()
         navigationController.modalPresentationStyle = .formSheet
-        controller.present(navigationController, animated: true, completion: nil)
+        present(navigationController, animated: true, completion: nil)
     }
 }
 
