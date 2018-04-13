@@ -53,8 +53,8 @@ final class BackupStatusCell: UITableViewCell {
             descriptionLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -24),
         ])
         
-        descriptionLabel.text = "self.settings.history_backup.description".localized
-        descriptionLabel.font = FontSpec(.medium, .light).font
+        descriptionLabel.attributedText = "self.settings.history_backup.description".localized && .paragraphSpacing(2)
+        descriptionLabel.font = .systemFont(ofSize: 14)
         descriptionLabel.textColor = color
     }
     
@@ -81,7 +81,7 @@ final class BackupActionCell: UITableViewCell {
         actionTitleLabel.heightAnchor.constraint(equalToConstant: 44).isActive = true
         
         actionTitleLabel.text = "self.settings.history_backup.action".localized
-        actionTitleLabel.font = FontSpec(.medium, .light).font
+        actionTitleLabel.font = FontSpec(.normal, .regular).font
         actionTitleLabel.textColor = ColorScheme.default().color(withName: ColorSchemeColorTextForeground, variant: .dark)
     }
     
@@ -188,7 +188,6 @@ extension BackupViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         guard indexPath.row == 1 else { return }
-
         backupActiveAccount(indexPath: indexPath)
     }
 }
