@@ -32,6 +32,7 @@
 #import "Wire-Swift.h"
 #import "Settings.h"
 #import "Constants.h"
+#import "Wire-Swift.h"
 
 @implementation ZMConversation (Additions)
 
@@ -42,7 +43,7 @@
     }
 
     if (self.conversationType == ZMConversationTypeGroup) {
-        [self addParticipants:participants];
+        [self addParticipantsOrShowError:participants];
         
         AnalyticsGroupConversationEvent *event = [AnalyticsGroupConversationEvent eventForAddParticipantsWithCount:participants.count];
         [[Analytics shared] tagEventObject:event];

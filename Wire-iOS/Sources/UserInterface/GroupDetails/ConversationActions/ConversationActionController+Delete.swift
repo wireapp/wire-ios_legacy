@@ -69,16 +69,7 @@ extension ConversationActionController {
             conversation.clearMessageHistory()
             self?.trackDeletion(of: conversation)
             if leave {
-                // TODO jacob: move to helper method
-                conversation.removeParticipant(.selfUser(), userSession: ZMUserSession.shared()!, completion: { (result) in
-                    switch result {
-                    case .success:
-                        self?.trackLeaving(of: conversation)
-                    case .failure(let error):
-                        // show error
-                        print("failed to leave: \(error)")
-                    }
-                })
+                conversation.removeOrShowError(participnant: .selfUser())
             }
         }
     }
