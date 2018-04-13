@@ -28,7 +28,9 @@ extension ConversationContentViewController: UIViewControllerPreviewingDelegate 
 
     public func previewingContext(_ previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint) -> UIViewController? {
 
-        guard let cellIndexPath = self.tableView.indexPathForRow(at: location),
+        let cellLocation = view.convert(location, to: tableView)
+
+        guard let cellIndexPath = self.tableView.indexPathForRow(at: cellLocation),
               let message = self.messageWindow.messages[cellIndexPath.row] as? ZMConversationMessage else {
             return .none
         }

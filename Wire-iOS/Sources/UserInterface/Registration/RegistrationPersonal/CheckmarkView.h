@@ -21,6 +21,6 @@
 
 @interface CheckmarkView : UIView
 
-- (void)revealWithAnimations:(void (^)())animations completion:(void (^)())completion;
+- (void)revealWithAnimations:(void (^)(void))animations completion:(void (^)(void))completion;
 
 @end

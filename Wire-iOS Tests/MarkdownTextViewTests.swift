@@ -750,7 +750,7 @@ final class MarkdownTextViewTests: XCTestCase {
         // GIVEN
         let text = "1. Oh Hai!"
         // WHEN
-        text.characters.forEach { insertText(String($0)) }
+        text.forEach { insertText(String($0)) }
         // THEN
         XCTAssertEqual(sut.text, text)
         checkAttributes(for: .oList, inRange: NSMakeRange(0, text.length))
@@ -761,7 +761,7 @@ final class MarkdownTextViewTests: XCTestCase {
         // GIVEN
         let text = "+ Oh Hai!"
         // WHEN
-        text.characters.forEach { insertText(String($0)) }
+        text.forEach { insertText(String($0)) }
         // THEN
         XCTAssertEqual(sut.text, text)
         checkAttributes(for: .uList, inRange: NSMakeRange(0, text.length))

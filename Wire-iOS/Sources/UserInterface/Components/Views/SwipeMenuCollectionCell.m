@@ -279,7 +279,7 @@ NSString * const SwipeMenuCollectionCellIDToCloseKey = @"IDToClose";
             CGPoint animStartInteractionPosition = [self.revealDrawerGestureRecognizer locationInView:self];
             
             [UIView wr_animateWithEasing:RBBEasingFunctionEaseOutExpo duration:0.35f animations:^{
-                self.scrollingFraction = _userInteractionHorizontalOffset / self.bounds.size.width;
+                self.scrollingFraction = self.userInteractionHorizontalOffset / self.bounds.size.width;
                 [self layoutIfNeeded];
             } completion:^(BOOL finished) {
                 // reset gesture state
