@@ -583,7 +583,7 @@ NSString * const CameraSettingExposureTargetBias = @"exposureTargetBias";
     });
 }
 
-- (void)performConfiguration:(void (^)())block
+- (void)performConfiguration:(void (^)(void))block
 {
     dispatch_async(self.sessionQueue, block);
 }
