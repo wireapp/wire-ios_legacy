@@ -41,7 +41,7 @@ class LinkInteractionTextViewTests: XCTestCase {
             let url = URL(string: str)!
             sut.attributedText = NSAttributedString(string: str, attributes: [NSLinkAttributeName: url])
             // WHEN
-            let shouldOpenURL = sut.delegate!.textView!(sut, shouldInteractWith: url, in: NSMakeRange(0, str.characters.count))
+            let shouldOpenURL = sut.delegate!.textView!(sut, shouldInteractWith: url, in: NSMakeRange(0, str.count))
             // THEN
             XCTAssertTrue(shouldOpenURL)
         }
@@ -55,7 +55,7 @@ class LinkInteractionTextViewTests: XCTestCase {
             let url = URL(string: str)!
             sut.attributedText = NSAttributedString(string: str, attributes: [NSLinkAttributeName: url])
             // WHEN
-            let shouldOpenURL = sut.delegate!.textView!(sut, shouldInteractWith: url, in: NSMakeRange(0, str.characters.count), interaction: .invokeDefaultAction)
+            let shouldOpenURL = sut.delegate!.textView!(sut, shouldInteractWith: url, in: NSMakeRange(0, str.count), interaction: .invokeDefaultAction)
             // THEN
             XCTAssertTrue(shouldOpenURL)
         }
@@ -69,7 +69,7 @@ class LinkInteractionTextViewTests: XCTestCase {
             let url = URL(string: str)!
             sut.attributedText = NSAttributedString(string: str, attributes: [NSLinkAttributeName: url])
             // WHEN
-            let shouldOpenURL = sut.delegate!.textView!(sut, shouldInteractWith: url, in: NSMakeRange(0, str.characters.count), interaction: .preview)
+            let shouldOpenURL = sut.delegate!.textView!(sut, shouldInteractWith: url, in: NSMakeRange(0, str.count), interaction: .preview)
             // THEN
             XCTAssertTrue(shouldOpenURL)
         }
@@ -86,7 +86,7 @@ class LinkInteractionTextViewTests: XCTestCase {
             let attrs: [String: Any] = [MarkdownIDAttributeName: Markdown.link, NSLinkAttributeName: url];
             sut.attributedText = NSAttributedString(string: str, attributes: attrs)
             // WHEN
-            let shouldOpenURL = sut.delegate!.textView!(sut, shouldInteractWith: url, in: NSMakeRange(0, str.characters.count))
+            let shouldOpenURL = sut.delegate!.textView!(sut, shouldInteractWith: url, in: NSMakeRange(0, str.count))
             // THEN
             XCTAssertFalse(shouldOpenURL)
         }
@@ -101,7 +101,7 @@ class LinkInteractionTextViewTests: XCTestCase {
             let attrs: [String: Any] = [MarkdownIDAttributeName: Markdown.link, NSLinkAttributeName: url];
             sut.attributedText = NSAttributedString(string: str, attributes: attrs)
             // WHEN
-            let shouldOpenURL = sut.delegate!.textView!(sut, shouldInteractWith: url, in: NSMakeRange(0, str.characters.count), interaction: .invokeDefaultAction)
+            let shouldOpenURL = sut.delegate!.textView!(sut, shouldInteractWith: url, in: NSMakeRange(0, str.count), interaction: .invokeDefaultAction)
             // THEN
             XCTAssertFalse(shouldOpenURL)
         }
@@ -116,7 +116,7 @@ class LinkInteractionTextViewTests: XCTestCase {
             let attrs: [String: Any] = [MarkdownIDAttributeName: Markdown.link, NSLinkAttributeName: url];
             sut.attributedText = NSAttributedString(string: str, attributes: attrs)
             // WHEN
-            let shouldOpenURL = sut.delegate!.textView!(sut, shouldInteractWith: url, in: NSMakeRange(0, str.characters.count), interaction: .preview)
+            let shouldOpenURL = sut.delegate!.textView!(sut, shouldInteractWith: url, in: NSMakeRange(0, str.count), interaction: .preview)
             // THEN
             XCTAssertFalse(shouldOpenURL)
         }
