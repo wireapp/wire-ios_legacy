@@ -29,14 +29,17 @@ struct Password {
     }
 }
 
-func requestPassword(over controller: UIViewController, completion: @escaping (Password?)->()) {
-    let passwordController = BackupPasswordViewController { controller, password in
-        controller.dismiss(animated: true) {
-            completion(password)
+extension BackupViewController {
+    func requestPassword(over controller: UIViewController, completion: @escaping (Password?) -> Void) {
+        let passwordController = BackupPasswordViewController { controller, password in
+            controller.dismiss(animated: true) {
+                completion(password)
+            }
         }
+        let navigationController = KeyboardAvoidingViewController(viewController: passwordController).wrapInNavigationController()
+        navigationController.modalPresentationStyle = .formSheet
+        controller.present(navigationController, animated: true, completion: nil)
     }
-    let keyboardAvoiding = KeyboardAvoidingViewController(viewController: passwordController)
-    controller.present(keyboardAvoiding.wrapInNavigationController(), animated: true, completion: nil)
 }
 
 final class BackupPasswordViewController: UIViewController {
@@ -44,10 +47,17 @@ final class BackupPasswordViewController: UIViewController {
     typealias Completion = (BackupPasswordViewController, Password?) -> Void
     var completion: Completion?
 
-    private var navigationBarBackgroundView = UIView()
-
     fileprivate var password: Password?
     private let passwordView = SimpleTextField()
+    
+    override var prefersStatusBarHidden: Bool {
+        return false
+    }
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .default
+    }
+
     private let subtitleLabel = UILabel(
         key: "self.settings.history_backup.password.description",
         size: .medium,
@@ -67,25 +77,19 @@ final class BackupPasswordViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override var prefersStatusBarHidden: Bool {
-        return false
-    }
-    
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .default
-    }
-    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        setupNavigationBar()
         UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(animated)
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        passwordView.becomeFirstResponder()
     }
 
     private func setupViews() {
         view.backgroundColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorContentBackground, variant: .light)
-
-        navigationBarBackgroundView.translatesAutoresizingMaskIntoConstraints = false
-        navigationBarBackgroundView.backgroundColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorBarBackground, variant: .light)
-        view.addSubview(navigationBarBackgroundView)
         
         subtitleLabel.numberOfLines = 0
         subtitleLabel.textColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorTextDimmed, variant: .light)
@@ -94,17 +98,12 @@ final class BackupPasswordViewController: UIViewController {
             $0.translatesAutoresizingMaskIntoConstraints = false
         }
         
-        setupNavigationBar()
+        passwordView.colorSchemeVariant = .light
         passwordView.placeholder = "self.settings.history_backup.password.placeholder".localized.localizedUppercase
         passwordView.accessibilityIdentifier = "password input"
         passwordView.returnKeyType = .done
         passwordView.isSecureTextEntry = true
         passwordView.delegate = self
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        passwordView.becomeFirstResponder()
     }
     
     private func createConstraints() {
@@ -115,17 +114,16 @@ final class BackupPasswordViewController: UIViewController {
             passwordView.heightAnchor.constraint(equalToConstant: 56),
             subtitleLabel.topAnchor.constraint(equalTo: passwordView.bottomAnchor, constant: 16),
             subtitleLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-            subtitleLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
-            navigationBarBackgroundView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            navigationBarBackgroundView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            navigationBarBackgroundView.topAnchor.constraint(equalTo: view.topAnchor),
-            navigationBarBackgroundView.bottomAnchor.constraint(equalTo: topLayoutGuide.bottomAnchor)
+            subtitleLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16)
         ])
     }
     
     private func setupNavigationBar() {
-        self.navigationController?.navigationBar.tintColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorTextForeground, variant: .light)
-        self.navigationController?.navigationBar.titleTextAttributes = DefaultNavigationBar.titleTextAttributes(for: .light)
+        navigationController?.navigationBar.backgroundColor = .wr_color(fromColorScheme: ColorSchemeColorBarBackground, variant: .light)
+        navigationController?.navigationBar.setBackgroundImage(.singlePixelImage(with: ColorScheme.default().color(withName: ColorSchemeColorBarBackground, variant: .light)), for: .default)
+        navigationController?.navigationBar.tintColor = .wr_color(fromColorScheme: ColorSchemeColorTextForeground, variant: .light)
+        navigationController?.navigationBar.barTintColor = .wr_color(fromColorScheme: ColorSchemeColorTextForeground, variant: .light)
+        navigationController?.navigationBar.titleTextAttributes = DefaultNavigationBar.titleTextAttributes(for: .light)
         
         title = "self.settings.history_backup.password.title".localized.uppercased()
         navigationItem.leftBarButtonItem = UIBarButtonItem(
