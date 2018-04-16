@@ -22,7 +22,7 @@ import Cartography
 protocol GiphyConfirmationViewControllerDelegate {
     
     func giphyConfirmationViewController(_ giphyConfirmationViewController: GiphyConfirmationViewController, didConfirmImageData imageData: Data)
-    
+    func didTapCloseButton(_ giphyConfirmationViewController: GiphyConfirmationViewController)
 }
 
 class GiphyConfirmationViewController: UIViewController {
@@ -60,8 +60,10 @@ class GiphyConfirmationViewController: UIViewController {
         }
         
         let closeImage = UIImage(for: .X, iconSize: .tiny, color: .black)
-        navigationItem.rightBarButtonItem = UIBarButtonItem(image: closeImage, style: .plain, target: self, action: #selector
-            (GiphySearchViewController.onDismiss))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: closeImage,
+                                                            style: .plain,
+                                                            target: self,
+                                                            action: #selector(GiphyConfirmationViewController.onClose))
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -122,8 +124,8 @@ class GiphyConfirmationViewController: UIViewController {
         }
     }
 
-    func onCancel() {
-        _ = navigationController?.popViewController(animated: true)
+    func onClose() {
+        delegate?.didTapCloseButton(self)
     }
 
     func onAccept() {
@@ -142,19 +144,19 @@ class GiphyConfirmationViewController: UIViewController {
             imagePreview.left == container.left
         }
 
-        let verticalMargin: CGFloat = 16
+        let buttonVerticalMargin: CGFloat = 16
         constrain(buttonContainer, acceptButton) { container, acceptButton in
             acceptButton.height == 40
             acceptButton.height == acceptButton.width
             acceptButton.centerX == container.centerX
             acceptButton.centerY == container.centerY
-            acceptButton.top == container.top + verticalMargin
-            acceptButton.bottom == container.bottom - verticalMargin
+            acceptButton.top == container.top + buttonVerticalMargin
+            acceptButton.bottom == container.bottom - buttonVerticalMargin
         }
         
         constrain(view, buttonContainer) { container, buttonContainer in
-            buttonContainer.left >= container.left + 32
-            buttonContainer.right <= container.right - 32
+            buttonContainer.left == container.left + 32
+            buttonContainer.right == container.right - 32
             buttonContainer.bottom  == container.bottom - 32
             buttonContainer.centerX == container.centerX
         }
