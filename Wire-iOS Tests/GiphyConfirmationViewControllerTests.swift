@@ -23,6 +23,7 @@ import FLAnimatedImage
 final class GiphyConfirmationViewControllerTests: ZMSnapshotTestCase {
     
     var sut: GiphyConfirmationViewController!
+    var mockNavigationController: UINavigationController!
     
     override func setUp() {
         super.setUp()
@@ -31,7 +32,9 @@ final class GiphyConfirmationViewControllerTests: ZMSnapshotTestCase {
         let image = FLAnimatedImage(animatedGIFData: data)
         sut = GiphyConfirmationViewController(withZiph: nil, previewImage: image, searchResultController: nil)
 
-        recordMode = true
+        mockNavigationController = wrapInsideNavigationController()
+
+        sut.title = "Giphy Test"
     }
     
     override func tearDown() {
@@ -39,12 +42,25 @@ final class GiphyConfirmationViewControllerTests: ZMSnapshotTestCase {
         super.tearDown()
     }
 
-    func testExample(){
-        // GIVEN
+    func wrapInsideNavigationController() -> UINavigationController {
+        let navigationController = GiphyNavigationController(rootViewController: sut)
 
-        // WHEN
+        var backButtonImage = UIImage(for: .backArrow, iconSize: .tiny, color: .black)
+        backButtonImage = backButtonImage?.withInsets(UIEdgeInsets(top: 0, left: 8, bottom: 0, right: 0), backgroundColor: .clear)
+        backButtonImage = backButtonImage?.withAlignmentRectInsets(UIEdgeInsets(top: 0, left: 0, bottom: -4, right: 0))
+        navigationController.navigationBar.backIndicatorImage = backButtonImage
+        navigationController.navigationBar.backIndicatorTransitionMaskImage = backButtonImage
 
-        // THEN
-        verify(view: sut.view)
+        navigationController.navigationBar.backItem?.backBarButtonItem = UIBarButtonItem(title: " ", style: .plain, target: nil, action: nil)
+        navigationController.navigationBar.tintColor = ColorScheme.default().color(withName: ColorSchemeColorTextForeground)
+        navigationController.navigationBar.titleTextAttributes = DefaultNavigationBar.titleTextAttributes(for: ColorScheme.default().variant)
+        navigationController.navigationBar.barTintColor = ColorScheme.default().color(withName: ColorSchemeColorBackground)
+        navigationController.navigationBar.isTranslucent = false
+
+        return navigationController
+    }
+
+    func testAcceptButtonIsDisableWhenInit(){
+        verify(view: mockNavigationController.view)
     }
 }
