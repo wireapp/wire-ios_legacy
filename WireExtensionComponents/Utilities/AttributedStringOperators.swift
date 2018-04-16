@@ -125,11 +125,13 @@ public extension String {
 
 public enum ParagraphStyleDescriptor {
     case lineSpacing(CGFloat)
+    case paragraphSpacing(CGFloat)
     
     var style: NSParagraphStyle {
         let style = NSMutableParagraphStyle()
         switch self {
         case .lineSpacing(let height): style.lineSpacing = height
+        case .paragraphSpacing(let spacing): style.paragraphSpacing = spacing
         }
         return style
     }
