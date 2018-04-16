@@ -28,7 +28,19 @@ protocol GiphyConfirmationViewControllerDelegate {
 class GiphyConfirmationViewController: UIViewController {
     
     var imagePreview = FLAnimatedImageView()
-    var acceptButton = Button(style: .full)
+    var acceptButton: IconButton = {
+        let iconButton = IconButton.iconButtonCircularLight()
+        iconButton.setIcon(.send, with: .like, for: [], renderingMode: .alwaysTemplate)
+        iconButton.circular = true
+        iconButton.borderWidth = 0
+        iconButton.setBackgroundImageColor(UIColor.accent(), for: .normal)
+
+        iconButton.accessibilityIdentifier = "giphy.confirm".localized
+        iconButton.accessibilityLabel = "giphy.confirm".localized
+
+        return iconButton
+    }()
+
     var buttonContainer = UIView()
     var delegate : GiphyConfirmationViewControllerDelegate?
     let searchResultController : ZiphySearchResultsController
@@ -68,10 +80,12 @@ class GiphyConfirmationViewController: UIViewController {
         titleLabel.sizeToFit()
         navigationItem.titleView = titleLabel
         
-        view.backgroundColor = .black
+        view.backgroundColor = UIColor(rgb: 0xF8F8F8)
         acceptButton.isEnabled = false
-        acceptButton.setTitle("giphy.confirm".localized, for: .normal)
         acceptButton.addTarget(self, action: #selector(GiphyConfirmationViewController.onAccept), for: .touchUpInside)
+
+        ///TODO:     self.sendButton = [IconButton iconButtonDefault];  ZetaIconTypeSend
+
 
         imagePreview.contentMode = .scaleAspectFit
         
@@ -104,10 +118,6 @@ class GiphyConfirmationViewController: UIViewController {
         }
     }
     
-    func onDismiss() {
-        dismiss(animated: true, completion: nil)
-    }
-    
     func onAccept() {
         if let imageData = imageData {
             delegate?.giphyConfirmationViewController(self, didConfirmImageData: imageData)
@@ -117,26 +127,27 @@ class GiphyConfirmationViewController: UIViewController {
     func configureConstraints() {
         let naviBarHeight = self.navigationController?.navigationBar.frame.maxY ?? 0
 
-        constrain(view, imagePreview) { container, imagePreview in
+        constrain(view, imagePreview, buttonContainer) { container, imagePreview, buttonContainer in
             imageViewTopMargin = imagePreview.top == container.top + naviBarHeight
-            imagePreview.bottom == container.bottom - 104
+            imagePreview.bottom == buttonContainer.top
             imagePreview.right == container.right
             imagePreview.left == container.left
         }
-        
-        constrain(buttonContainer, acceptButton) { container, rightButton in
-            rightButton.height == 40
-            rightButton.left == container.left
-            rightButton.right == container.right
-            rightButton.top == container.top
-            rightButton.bottom == container.bottom
+
+        let verticalMargin: CGFloat = 16
+        constrain(buttonContainer, acceptButton) { container, acceptButton in
+            acceptButton.height == 40
+            acceptButton.height == acceptButton.width
+            acceptButton.centerX == container.centerX
+            acceptButton.centerY == container.centerY
+            acceptButton.top == container.top + verticalMargin
+            acceptButton.bottom == container.bottom - verticalMargin
         }
         
         constrain(view, buttonContainer) { container, buttonContainer in
             buttonContainer.left >= container.left + 32
             buttonContainer.right <= container.right - 32
             buttonContainer.bottom  == container.bottom - 32
-            buttonContainer.width == 476 ~ 700.0
             buttonContainer.centerX == container.centerX
         }
     }
