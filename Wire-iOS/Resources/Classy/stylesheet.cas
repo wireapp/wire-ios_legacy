@@ -525,12 +525,6 @@ CameraViewController {
 
 /* Giphy */
 
-GiphyConfirmationViewController {
-    view: @{
-        backgroundColor: $color-background;
-    }
-}
-
 GiphySearchViewController {
     collectionView: @{
         backgroundColor: $color-background;

@@ -86,11 +86,10 @@ class GiphyConfirmationViewController: UIViewController {
         }
         
         view.backgroundColor = UIColor(rgb: 0xF8F8F8)
+        imagePreview.backgroundColor = UIColor(rgb: 0xF8F8F8)
+
         acceptButton.isEnabled = false
         acceptButton.addTarget(self, action: #selector(GiphyConfirmationViewController.onAccept), for: .touchUpInside)
-
-        ///TODO:     self.sendButton = [IconButton iconButtonDefault];  ZetaIconTypeSend
-
 
         imagePreview.contentMode = .scaleAspectFit
         
@@ -122,7 +121,11 @@ class GiphyConfirmationViewController: UIViewController {
             }
         }
     }
-    
+
+    func onCancel() {
+        _ = navigationController?.popViewController(animated: true)
+    }
+
     func onAccept() {
         if let imageData = imageData {
             delegate?.giphyConfirmationViewController(self, didConfirmImageData: imageData)
