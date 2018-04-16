@@ -45,7 +45,7 @@ class GroupConversationCellTests: CoreDataSnapshotTestCase {
     func testGroupConversation() {
         let groupConversation = createGroupConversation()
         for username in usernames.prefix(upTo: 3) {
-            groupConversation.addParticipant(createUser(name: username))
+            groupConversation.internalAddParticipants(Set([createUser(name: username)]))
         }
         
         verifyInAllColorSchemes(view: cell({ (cell) in
@@ -57,7 +57,7 @@ class GroupConversationCellTests: CoreDataSnapshotTestCase {
         let groupConversation = createGroupConversation()
         groupConversation.userDefinedName  = "Loooooooooooooooooooooooooong name"
         for username in usernames.prefix(upTo: 3) {
-            groupConversation.addParticipant(createUser(name: username))
+            groupConversation.internalAddParticipants(Set([createUser(name: username)]))
         }
         
         verifyInAllColorSchemes(view: cell({ (cell) in
