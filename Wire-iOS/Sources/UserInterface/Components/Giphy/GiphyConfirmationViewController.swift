@@ -59,6 +59,8 @@ class GiphyConfirmationViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        extendedLayoutIncludesOpaqueBars = true
+
         let titleLabel = UILabel()
         titleLabel.font = FontSpec(.small, .semibold).font!
         titleLabel.textColor = ColorScheme.default().color(withName: ColorSchemeColorTextForeground)
@@ -87,7 +89,7 @@ class GiphyConfirmationViewController: UIViewController {
 
         let naviBarHeight = self.navigationController?.navigationBar.frame.maxY ?? 0
 
-        imageViewTopMargin?.constant = naviBarHeight - 20
+        imageViewTopMargin?.constant = naviBarHeight
 
         self.view.setNeedsUpdateConstraints()
     }
