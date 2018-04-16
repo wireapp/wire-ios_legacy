@@ -123,6 +123,8 @@ class GiphySearchViewController: UICollectionViewController {
     }
 
     override func viewDidLoad() {
+        extendedLayoutIncludesOpaqueBars = true
+        
         noResultsLabel.text = "giphy.error.no_result".localized.uppercased()
         noResultsLabel.isHidden = true
         view.addSubview(noResultsLabel)
@@ -159,6 +161,10 @@ class GiphySearchViewController: UICollectionViewController {
     private func createConstraints() {
         constrain(view, noResultsLabel) { container, noResultsLabel in
             noResultsLabel.center == container.center
+        }
+
+        if #available(iOS 11.0, *) {
+//            searchBar.heightAnchor.constraint(equalToConstant: 44).isActive = true
         }
     }
 

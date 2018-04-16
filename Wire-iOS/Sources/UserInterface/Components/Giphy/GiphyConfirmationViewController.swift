@@ -29,13 +29,13 @@ class GiphyConfirmationViewController: UIViewController {
     
     var imagePreview = FLAnimatedImageView()
     var acceptButton = Button(style: .full)
-    var cancelButton = Button(style: .empty)
     var buttonContainer = UIView()
     var delegate : GiphyConfirmationViewControllerDelegate?
     let searchResultController : ZiphySearchResultsController
     let ziph : Ziph
     var imageData : Data?
-    
+
+    var imageViewTopMargin: NSLayoutConstraint?
     
     public init(withZiph ziph: Ziph, previewImage: FLAnimatedImage?, searchResultController: ZiphySearchResultsController) {
         self.ziph = ziph
@@ -70,20 +70,28 @@ class GiphyConfirmationViewController: UIViewController {
         acceptButton.isEnabled = false
         acceptButton.setTitle("giphy.confirm".localized, for: .normal)
         acceptButton.addTarget(self, action: #selector(GiphyConfirmationViewController.onAccept), for: .touchUpInside)
-        cancelButton.setTitle("giphy.cancel".localized, for: .normal)
-        cancelButton.addTarget(self, action: #selector(GiphyConfirmationViewController.onCancel), for: .touchUpInside)
-        
+
         imagePreview.contentMode = .scaleAspectFit
         
         view.addSubview(imagePreview)
         view.addSubview(buttonContainer)
         
-        [cancelButton, acceptButton].forEach(buttonContainer.addSubview)
+        [acceptButton].forEach(buttonContainer.addSubview)
         
         configureConstraints()
         fetchImage()
     }
-    
+
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+
+        let naviBarHeight = self.navigationController?.navigationBar.frame.maxY ?? 0
+
+        imageViewTopMargin?.constant = naviBarHeight - 20
+
+        self.view.setNeedsUpdateConstraints()
+    }
+
     func fetchImage() {
         searchResultController.fetchImageData(forZiph: ziph, imageType: .downsized) { [weak self] (imageData, _, error) in
             if let imageData = imageData, error == nil {
@@ -98,10 +106,6 @@ class GiphyConfirmationViewController: UIViewController {
         dismiss(animated: true, completion: nil)
     }
     
-    func onCancel() {
-        _ = navigationController?.popViewController(animated: true)
-    }
-    
     func onAccept() {
         if let imageData = imageData {
             delegate?.giphyConfirmationViewController(self, didConfirmImageData: imageData)
@@ -109,24 +113,21 @@ class GiphyConfirmationViewController: UIViewController {
     }
     
     func configureConstraints() {
+        let naviBarHeight = self.navigationController?.navigationBar.frame.maxY ?? 0
+
         constrain(view, imagePreview) { container, imagePreview in
-            imagePreview.edges == inset(container.edges, 32, 0, 104, 0)
+            imageViewTopMargin = imagePreview.top == container.top + naviBarHeight
+            imagePreview.bottom == container.bottom - 104
+            imagePreview.right == container.right
+            imagePreview.left == container.left
         }
         
-        constrain(buttonContainer, cancelButton, acceptButton) { container, leftButton, rightButton in
-            leftButton.height == 40
-            leftButton.width >= 100
-            leftButton.left == container.left
-            leftButton.top == container.top
-            leftButton.bottom == container.bottom
-            
+        constrain(buttonContainer, acceptButton) { container, rightButton in
             rightButton.height == 40
+            rightButton.left == container.left
             rightButton.right == container.right
             rightButton.top == container.top
             rightButton.bottom == container.bottom
-            
-            leftButton.width == rightButton.width
-            leftButton.right == rightButton.left - 16
         }
         
         constrain(view, buttonContainer) { container, buttonContainer in
