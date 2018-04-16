@@ -30,7 +30,7 @@ class GiphyConfirmationViewController: UIViewController {
     var imagePreview = FLAnimatedImageView()
     var acceptButton: IconButton = {
         let iconButton = IconButton.iconButtonCircularLight()
-        iconButton.setIcon(.send, with: .like, for: [], renderingMode: .alwaysTemplate)
+        iconButton.setIcon(.send, with: .searchBar, for: [], renderingMode: .alwaysTemplate)
         iconButton.circular = true
         iconButton.borderWidth = 0
         iconButton.setBackgroundImageColor(UIColor.accent(), for: .normal)
@@ -79,6 +79,11 @@ class GiphyConfirmationViewController: UIViewController {
         titleLabel.text = title?.uppercased()
         titleLabel.sizeToFit()
         navigationItem.titleView = titleLabel
+
+        if let navigationBar = self.navigationController?.navigationBar {
+            navigationBar.setBackgroundImage(UIImage(), for: .default)
+            navigationBar.shadowImage = UIImage()
+        }
         
         view.backgroundColor = UIColor(rgb: 0xF8F8F8)
         acceptButton.isEnabled = false
