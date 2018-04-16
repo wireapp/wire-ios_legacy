@@ -20,7 +20,7 @@ import Foundation
 
 fileprivate extension ZMConversation {
     var otherNonServiceParticipants: [ZMBareUser] {
-        guard let users = otherActiveParticipants.array as? [ZMBareUser] else { return [] }
+        guard let users = lastServerSyncedActiveParticipants.array as? [ZMBareUser] else { return [] }
         return users.filter { !$0.isServiceUser }
     }
 }
@@ -45,7 +45,7 @@ struct ServiceAddedEvent: Event {
     init(service: ServiceUser, conversation: ZMConversation, context: Context) {
         serviceIdentifier = service.serviceIdentifier ?? ""
         conversationSize = conversation.otherNonServiceParticipants.count // Without service users
-        servicesSize = conversation.otherActiveParticipants.count - conversationSize
+        servicesSize = conversation.lastServerSyncedActiveParticipants.count - conversationSize
         self.context = context
     }
     

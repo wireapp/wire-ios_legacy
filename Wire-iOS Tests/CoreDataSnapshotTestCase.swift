@@ -70,7 +70,7 @@ open class CoreDataSnapshotTestCase: ZMSnapshotTestCase {
         let conversation = ZMConversation.insertNewObject(in: uiMOC)
         conversation.remoteIdentifier = UUID.create()
         conversation.conversationType = .group
-        conversation.internalAddParticipants([selfUser, otherUser], isAuthoritative: true)
+        conversation.internalAddParticipants([selfUser, otherUser])
         return conversation
     }
     
