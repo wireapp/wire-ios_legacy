@@ -327,8 +327,8 @@ static NSString *const ConversationUnknownMessageCellId     = @"conversationUnkn
 
 - (void)configureConversationCell:(ConversationCell *)conversationCell withMessage:(id<ZMConversationMessage>)message
 {
-    // If a message has been deleted we don't try to configure it
-    if (message.hasBeenDeleted) {return; }
+    // If a message has been deleted or nil, we don't try to configure it
+    if (message == nil || message.hasBeenDeleted) {return; }
     
     ConversationCellLayoutProperties *layoutProperties = [self.messageWindow layoutPropertiesForMessage:message lastUnreadMessage:self.lastUnreadMessage];
     
