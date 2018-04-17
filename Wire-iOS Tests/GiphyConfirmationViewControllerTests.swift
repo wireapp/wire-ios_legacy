@@ -35,8 +35,6 @@ final class GiphyConfirmationViewControllerTests: ZMSnapshotTestCase {
         mockNavigationController = sut.wrapInsideNavigationController()
 
         sut.title = "Giphy Test"
-
-        recordMode = true
     }
     
     override func tearDown() {
