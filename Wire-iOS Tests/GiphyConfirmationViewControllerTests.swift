@@ -27,37 +27,21 @@ final class GiphyConfirmationViewControllerTests: ZMSnapshotTestCase {
     
     override func setUp() {
         super.setUp()
-        ///TODO: a gif
+
         let data = self.data(forResource: "animated", extension: "gif")!
         let image = FLAnimatedImage(animatedGIFData: data)
         sut = GiphyConfirmationViewController(withZiph: nil, previewImage: image, searchResultController: nil)
 
-        mockNavigationController = wrapInsideNavigationController()
+        mockNavigationController = sut.wrapInsideNavigationController()
 
         sut.title = "Giphy Test"
+
+        recordMode = true
     }
     
     override func tearDown() {
         sut = nil
         super.tearDown()
-    }
-
-    func wrapInsideNavigationController() -> UINavigationController {
-        let navigationController = GiphyNavigationController(rootViewController: sut)
-
-        var backButtonImage = UIImage(for: .backArrow, iconSize: .tiny, color: .black)
-        backButtonImage = backButtonImage?.withInsets(UIEdgeInsets(top: 0, left: 8, bottom: 0, right: 0), backgroundColor: .clear)
-        backButtonImage = backButtonImage?.withAlignmentRectInsets(UIEdgeInsets(top: 0, left: 0, bottom: -4, right: 0))
-        navigationController.navigationBar.backIndicatorImage = backButtonImage
-        navigationController.navigationBar.backIndicatorTransitionMaskImage = backButtonImage
-
-        navigationController.navigationBar.backItem?.backBarButtonItem = UIBarButtonItem(title: " ", style: .plain, target: nil, action: nil)
-        navigationController.navigationBar.tintColor = ColorScheme.default().color(withName: ColorSchemeColorTextForeground)
-        navigationController.navigationBar.titleTextAttributes = DefaultNavigationBar.titleTextAttributes(for: ColorScheme.default().variant)
-        navigationController.navigationBar.barTintColor = ColorScheme.default().color(withName: ColorSchemeColorBackground)
-        navigationController.navigationBar.isTranslucent = false
-
-        return navigationController
     }
 
     func testAcceptButtonIsDisableWhenInit(){

@@ -82,11 +82,6 @@ class GiphyConfirmationViewController: UIViewController {
         titleLabel.sizeToFit()
         navigationItem.titleView = titleLabel
 
-        if let navigationBar = self.navigationController?.navigationBar {
-            navigationBar.setBackgroundImage(UIImage(), for: .default)
-            navigationBar.shadowImage = UIImage()
-        }
-        
         view.backgroundColor = UIColor(rgb: 0xF8F8F8)
         imagePreview.backgroundColor = UIColor(rgb: 0xF8F8F8)
 
