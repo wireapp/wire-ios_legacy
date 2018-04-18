@@ -27,6 +27,7 @@ final class ConfirmPhoneViewControllerTests: ZMSnapshotTestCase {
         super.setUp()
         sut = ConfirmPhoneViewController(newNumber: "012345678901", delegate: nil)
         sut.view.backgroundColor = .black
+        sut.view.layer.speed = 0
     }
     
     override func tearDown() {
