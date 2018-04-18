@@ -84,7 +84,6 @@ final class ConfirmPhoneViewController: SettingsBaseTableViewController {
         
         tableView.sectionHeaderHeight = UITableViewAutomaticDimension
         tableView.estimatedSectionHeaderHeight = 60
-        tableView.contentInset = UIEdgeInsets(top: -32, left: 0, bottom: 0, right: 0)
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(
             title: "self.settings.account_section.phone_number.change.verify.save".localized,
