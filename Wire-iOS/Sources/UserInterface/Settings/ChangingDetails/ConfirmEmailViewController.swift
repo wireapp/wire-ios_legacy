@@ -46,7 +46,10 @@ final class ConfirmEmailViewController: SettingsBaseTableViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        observer = UserChangeInfo.add(observer: self, for: ZMUser.selfUser(), userSession: ZMUserSession.shared()!)
+
+        if let userSession = ZMUserSession.shared() {
+            observer = UserChangeInfo.add(observer: self, for: ZMUser.selfUser(), userSession: userSession)
+        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -63,7 +66,6 @@ final class ConfirmEmailViewController: SettingsBaseTableViewController {
         
         tableView.sectionHeaderHeight = UITableViewAutomaticDimension
         tableView.estimatedSectionHeaderHeight = 60;
-        tableView.contentInset = UIEdgeInsets(top: -32, left: 0, bottom: 0, right: 0)
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
