@@ -79,6 +79,10 @@ class SettingsBaseTableViewController: UIViewController {
         view.addSubview(footerContainer)
         footerContainer.addSubview(footerSeparator)
         footerSeparator.inverse = true
+
+        if #available(iOS 11.0, *) {
+            tableView.contentInsetAdjustmentBehavior = .always
+        }
     }
 
     private func createConstraints() {
