@@ -145,7 +145,12 @@ extension ConversationInputBarViewController: CameraKeyboardViewControllerDelega
             self.presentImagePicker(with: .photoLibrary, mediaTypes: [kUTTypeMovie as String, kUTTypeImage as String], allowsEditing: false)
         }
     }
-    
+
+    @objc func savedToPhotosAlbum(with image: UIImage) {
+        let selector = #selector(ConversationInputBarViewController.image(_:didFinishSavingWithError:contextInfo:))
+        UIImageWriteToSavedPhotosAlbum(image, self, selector, nil)
+    }
+
     @objc public func showConfirmationForImage(_ imageData: NSData, metadata: ImageMetadata) {
         let image = UIImage(data: imageData as Data)
         
@@ -157,8 +162,7 @@ extension ConversationInputBarViewController: CameraKeyboardViewControllerDelega
             self.dismiss(animated: true, completion: .none)
             
             if metadata.source == .camera {
-                let selector = #selector(ConversationInputBarViewController.image(_:didFinishSavingWithError:contextInfo:))
-                UIImageWriteToSavedPhotosAlbum(UIImage(data: imageData as Data)!, self, selector, nil)///TODO: copy to full camera interface
+                self.savedToPhotosAlbum(with: UIImage(data: imageData as Data)!)
             }
             
             if let editedImage = editedImage, let editedImageData = UIImagePNGRepresentation(editedImage) {
