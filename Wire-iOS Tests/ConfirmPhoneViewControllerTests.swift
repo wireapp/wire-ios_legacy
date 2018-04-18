@@ -36,8 +36,6 @@ final class ConfirmPhoneViewControllerTests: CoreDataSnapshotTestCase {
         sut.view.layer.speed = 0
 
         sut.view.isUserInteractionEnabled = false
-
-        recordMode = true
     }
     
     override func tearDown() {
