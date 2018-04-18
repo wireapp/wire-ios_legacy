@@ -19,13 +19,13 @@
 import XCTest
 @testable import Wire
 
-final class ConfirmEmailViewControllerTests: ZMSnapshotTestCase {
+final class ConfirmPhoneViewControllerTests: ZMSnapshotTestCase {
     
-    var sut: ConfirmEmailViewController!
+    var sut: ConfirmPhoneViewController!
     
     override func setUp() {
         super.setUp()
-        sut = ConfirmEmailViewController(newEmail: "bill@wire.com", delegate: nil)
+        sut = ConfirmPhoneViewController(newNumber: "012345678901", delegate: nil)
         sut.view.backgroundColor = .black
     }
     
@@ -34,7 +34,7 @@ final class ConfirmEmailViewControllerTests: ZMSnapshotTestCase {
         super.tearDown()
     }
 
-    func testConfirmationSentToEmail(){
+    func testConfirmationSentToPhoneNumber(){
         self.verify(view: sut.view)
     }
 }
