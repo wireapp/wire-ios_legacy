@@ -25,6 +25,7 @@ final class ConfirmPhoneViewControllerTests: ZMSnapshotTestCase {
     
     override func setUp() {
         super.setUp()
+        self.accentColor = .strongBlue
         sut = ConfirmPhoneViewController(newNumber: "012345678901", delegate: nil)
         sut.view.backgroundColor = .black
         sut.view.layer.speed = 0
