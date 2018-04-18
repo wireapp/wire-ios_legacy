@@ -158,7 +158,7 @@ extension ConversationInputBarViewController: CameraKeyboardViewControllerDelega
             
             if metadata.source == .camera {
                 let selector = #selector(ConversationInputBarViewController.image(_:didFinishSavingWithError:contextInfo:))
-                UIImageWriteToSavedPhotosAlbum(UIImage(data: imageData as Data)!, self, selector, nil)
+                UIImageWriteToSavedPhotosAlbum(UIImage(data: imageData as Data)!, self, selector, nil)///TODO: copy to full camera interface
             }
             
             if let editedImage = editedImage, let editedImageData = UIImagePNGRepresentation(editedImage) {
