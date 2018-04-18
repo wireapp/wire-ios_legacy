@@ -19,21 +19,32 @@
 import XCTest
 @testable import Wire
 
-final class ConfirmPhoneViewControllerTests: ZMSnapshotTestCase {
+final class ConfirmPhoneViewControllerTests: CoreDataSnapshotTestCase {
     
     var sut: ConfirmPhoneViewController!
-    
+    var textFieldTint: UIColor!
+
     override func setUp() {
         super.setUp()
-        self.accentColor = .strongBlue
+        if textFieldTint == nil {
+            textFieldTint = UITextField.appearance().tintColor
+        }
+        UITextField.appearance().tintColor = UIColor(for: .vividRed)!
+
         sut = ConfirmPhoneViewController(newNumber: "012345678901", delegate: nil)
         sut.view.backgroundColor = .black
         sut.view.layer.speed = 0
+
+        sut.view.isUserInteractionEnabled = false
+
+        recordMode = true
     }
     
     override func tearDown() {
         sut = nil
         super.tearDown()
+
+        UITextField.appearance().tintColor = textFieldTint
     }
 
     func testConfirmationSentToPhoneNumber(){
