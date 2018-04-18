@@ -29,6 +29,9 @@ import UIKit
     
     public weak var interactionDelegate: TextViewInteractionDelegate?
     
+    // URLs with these schemes should be handled by the os.
+    fileprivate let dataDetectedURLSchemes = [ "x-apple-data-detectors", "tel", "mailto"]
+    
     override init(frame: CGRect, textContainer: NSTextContainer?) {
         super.init(frame: frame, textContainer: textContainer)
         delegate = self
@@ -101,7 +104,7 @@ extension LinkInteractionTextView: UITextViewDelegate {
         if showAlertIfNeeded(for: URL, in: characterRange) { return false }
         
         // data detector links should be handled by the system
-        return URL.scheme == "x-apple-data-detectors" || !(interactionDelegate?.textView(self, open: URL) ?? false)
+        return dataDetectedURLSchemes.contains(URL.scheme ?? "") || !(interactionDelegate?.textView(self, open: URL) ?? false)
     }
     
     public func textView(_ textView: UITextView, shouldInteractWith textAttachment: NSTextAttachment, in characterRange: NSRange) -> Bool {
@@ -126,7 +129,7 @@ extension LinkInteractionTextView: UITextViewDelegate {
             // if alert shown, link opening is handled in alert actions
             if showAlertIfNeeded(for: URL, in: characterRange) { return false }
             // data detector links should be handle by the system
-            return  URL.scheme == "x-apple-data-detectors" || !(interactionDelegate?.textView(self, open: URL) ?? false)
+            return  dataDetectedURLSchemes.contains(URL.scheme ?? "") || !(interactionDelegate?.textView(self, open: URL) ?? false)
         case .presentActions:
             interactionDelegate?.textViewDidLongPress(self)
             return false
