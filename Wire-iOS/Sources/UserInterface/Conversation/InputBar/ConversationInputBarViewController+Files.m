@@ -378,7 +378,8 @@ const NSTimeInterval ConversationUploadMaxVideoDuration = 4.0f * 60.0f; // 4 min
                 ConversationMediaPictureCamera camera = picker.cameraDevice == UIImagePickerControllerCameraDeviceFront ? ConversationMediaPictureCameraFront : ConversationMediaPictureCameraBack;
                 
                 [Analytics.shared tagMediaSentPictureSourceCameraInConversation:self.conversation method:ConversationMediaPictureTakeMethodFullFromKeyboard camera:camera];
-                
+
+                [self savedToPhotosAlbumWith: image];
                 [self.sendController sendMessageWithImageData:UIImageJPEGRepresentation(image, 0.9) completion:^{
                     picker.showLoadingView = NO;
                     [self.parentViewController dismissViewControllerAnimated:YES completion:nil];
