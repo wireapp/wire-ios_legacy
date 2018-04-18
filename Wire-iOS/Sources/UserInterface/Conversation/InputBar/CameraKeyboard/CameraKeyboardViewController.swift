@@ -457,13 +457,9 @@ extension CameraKeyboardViewController: CameraCellDelegate {
         let isFrontCamera = cameraController.currentCamera == .front
         
         let camera: ConversationMediaPictureCamera = isFrontCamera ? ConversationMediaPictureCamera.front : ConversationMediaPictureCamera.back
-        
-        let metadata = ImageMetadata()
-        metadata.camera = camera
-        metadata.method = ConversationMediaPictureTakeMethod.keyboard
-        metadata.source = ConversationMediaPictureSource.camera
-        metadata.sketchSource = .none
-        
+
+        let metadata = ImageMetadata.metadata(with: camera, method: .keyboard)
+
         self.delegate?.cameraKeyboardViewController(self, didSelectImageData: imageData, metadata: metadata)
     }
 }
