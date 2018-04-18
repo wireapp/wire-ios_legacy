@@ -216,7 +216,7 @@ final class ServiceDetailViewController: UIViewController {
         case .addService:
             callback = createOnAddServicePressed()
         case .removeService:
-            callback = createRemoveServiceCallBack()
+            callback = createRemoveServiceCallback()
         }
 
         if let callback = callback {
@@ -292,14 +292,15 @@ final class ServiceDetailViewController: UIViewController {
 
     // MARK: - action button callback - remove service
 
-    func createRemoveServiceCallBack() -> Callback<Button> {
+    func createRemoveServiceCallback() -> Callback<Button> {
         let buttonCallback: Callback<Button> = { [weak self] _ in
-            guard let weakSelf = self else { return }
-            guard weakSelf.service.serviceUser.isKind(of: ZMUser.self)  else { return }
+            guard let `self` = self,
+                  let user = self.service.serviceUser as? ZMUser,
+                  let conversation = self.destinationConversation else { return }
 
-            weakSelf.presentRemoveFromConversationDialogue(user: weakSelf.service.serviceUser as! ZMUser,
-                                                           conversation: weakSelf.destinationConversation,
-                                                           viewControllerDismissable: weakSelf.viewControllerDismissable)
+            self.presentRemoveDialogue(for: user,
+                                       from: conversation,
+                                       dismissable: self.viewControllerDismissable)
         }
 
         return buttonCallback
