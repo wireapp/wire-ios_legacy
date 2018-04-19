@@ -64,7 +64,9 @@ final class ConfirmPhoneViewController: SettingsBaseTableViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         observerToken = userProfile?.add(observer: self)
-        observer = UserChangeInfo.add(observer: self, for: ZMUser.selfUser(), userSession: ZMUserSession.shared()!)
+        if let userSession = ZMUserSession.shared() {
+            observer = UserChangeInfo.add(observer: self, for: ZMUser.selfUser(), userSession: userSession)
+        }
         startTimer()
     }
     
@@ -84,7 +86,6 @@ final class ConfirmPhoneViewController: SettingsBaseTableViewController {
         
         tableView.sectionHeaderHeight = UITableViewAutomaticDimension
         tableView.estimatedSectionHeaderHeight = 60
-        tableView.contentInset = UIEdgeInsets(top: -32, left: 0, bottom: 0, right: 0)
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(
             title: "self.settings.account_section.phone_number.change.verify.save".localized,

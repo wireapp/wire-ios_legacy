@@ -136,6 +136,7 @@ class UserCell: UICollectionViewCell, Themeable {
         subtitleLabel.font = FontSpec.init(.small, .regular).font!
         subtitleLabel.accessibilityIdentifier = "user_cell.username"
         
+        avatar.userSession = ZMUserSession.shared()
         avatar.initials.font = UIFont.systemFont(ofSize: 11, weight: UIFontWeightLight)
         avatar.size = .tiny
         avatar.translatesAutoresizingMaskIntoConstraints = false
