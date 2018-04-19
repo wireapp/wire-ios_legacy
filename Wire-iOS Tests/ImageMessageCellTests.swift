@@ -29,8 +29,6 @@ class ImageMessageCellTests: ZMSnapshotTestCase {
         snapshotBackgroundColor = UIColor.white
         ColorScheme.default().variant = .light
         sut = ImageMessageCell(style: .default, reuseIdentifier: name!)
-
-        recordMode = true
     }
 
     func setToDarkTheme() {
