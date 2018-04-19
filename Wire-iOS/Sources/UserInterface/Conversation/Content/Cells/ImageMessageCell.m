@@ -158,7 +158,7 @@ static const CGFloat ImageToolbarMinimumSize = 192;
     self.imageViewContainer.translatesAutoresizingMaskIntoConstraints = NO;
     self.imageViewContainer.isAccessibilityElement = YES;
     self.imageViewContainer.accessibilityTraits = UIAccessibilityTraitImage;
-    [self.messageContentView addSubview:self.imageViewContainer]; ///TODO: bg color?
+    [self.messageContentView addSubview:self.imageViewContainer];
         
     self.fullImageView = [[FLAnimatedImageView alloc] init];
     self.fullImageView.translatesAutoresizingMaskIntoConstraints = NO;
