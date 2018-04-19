@@ -22,22 +22,34 @@ import Cartography
 protocol GiphyConfirmationViewControllerDelegate {
     
     func giphyConfirmationViewController(_ giphyConfirmationViewController: GiphyConfirmationViewController, didConfirmImageData imageData: Data)
-    
+    func didTapCloseButton(_ giphyConfirmationViewController: GiphyConfirmationViewController)
 }
 
 class GiphyConfirmationViewController: UIViewController {
     
     var imagePreview = FLAnimatedImageView()
-    var acceptButton = Button(style: .full)
-    var cancelButton = Button(style: .empty)
+    var acceptButton: IconButton = {
+        let iconButton = IconButton.iconButtonCircularLight()
+        iconButton.setIcon(.send, with: .searchBar, for: [], renderingMode: .alwaysTemplate)
+        iconButton.circular = true
+        iconButton.borderWidth = 0
+        iconButton.setBackgroundImageColor(UIColor.accent(), for: .normal)
+
+        iconButton.accessibilityIdentifier = "giphy.confirm".localized
+        iconButton.accessibilityLabel = "giphy.confirm".localized
+
+        return iconButton
+    }()
+
     var buttonContainer = UIView()
     var delegate : GiphyConfirmationViewControllerDelegate?
-    let searchResultController : ZiphySearchResultsController
-    let ziph : Ziph
+    let searchResultController : ZiphySearchResultsController?
+    let ziph : Ziph?
     var imageData : Data?
+
+    var imageViewTopMargin: NSLayoutConstraint?
     
-    
-    public init(withZiph ziph: Ziph, previewImage: FLAnimatedImage?, searchResultController: ZiphySearchResultsController) {
+    public init(withZiph ziph: Ziph?, previewImage: FLAnimatedImage?, searchResultController: ZiphySearchResultsController?) {
         self.ziph = ziph
         self.searchResultController = searchResultController
         
@@ -48,8 +60,10 @@ class GiphyConfirmationViewController: UIViewController {
         }
         
         let closeImage = UIImage(for: .X, iconSize: .tiny, color: .black)
-        navigationItem.rightBarButtonItem = UIBarButtonItem(image: closeImage, style: .plain, target: self, action: #selector
-            (GiphySearchViewController.onDismiss))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: closeImage,
+                                                            style: .plain,
+                                                            target: self,
+                                                            action: #selector(GiphyConfirmationViewController.onClose))
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -59,49 +73,58 @@ class GiphyConfirmationViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        extendedLayoutIncludesOpaqueBars = true
+
         let titleLabel = UILabel()
         titleLabel.font = FontSpec(.small, .semibold).font!
         titleLabel.textColor = ColorScheme.default().color(withName: ColorSchemeColorTextForeground)
         titleLabel.text = title?.uppercased()
         titleLabel.sizeToFit()
         navigationItem.titleView = titleLabel
-        
-        view.backgroundColor = .black
+
+        view.backgroundColor = UIColor(rgb: 0xF8F8F8)
+        imagePreview.backgroundColor = UIColor(rgb: 0xF8F8F8)
+
         acceptButton.isEnabled = false
-        acceptButton.setTitle("giphy.confirm".localized, for: .normal)
         acceptButton.addTarget(self, action: #selector(GiphyConfirmationViewController.onAccept), for: .touchUpInside)
-        cancelButton.setTitle("giphy.cancel".localized, for: .normal)
-        cancelButton.addTarget(self, action: #selector(GiphyConfirmationViewController.onCancel), for: .touchUpInside)
-        
+
         imagePreview.contentMode = .scaleAspectFit
         
         view.addSubview(imagePreview)
         view.addSubview(buttonContainer)
         
-        [cancelButton, acceptButton].forEach(buttonContainer.addSubview)
+        [acceptButton].forEach(buttonContainer.addSubview)
         
         configureConstraints()
         fetchImage()
     }
-    
+
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+
+        let naviBarHeight = self.navigationController?.navigationBar.frame.maxY ?? 0
+
+        imageViewTopMargin?.constant = naviBarHeight
+
+        self.view.setNeedsUpdateConstraints()
+    }
+
     func fetchImage() {
-        searchResultController.fetchImageData(forZiph: ziph, imageType: .downsized) { [weak self] (imageData, _, error) in
+        if let ziph = ziph {
+        searchResultController?.fetchImageData(forZiph: ziph, imageType: .downsized) { [weak self] (imageData, _, error) in
             if let imageData = imageData, error == nil {
                 self?.imagePreview.animatedImage = FLAnimatedImage(animatedGIFData: imageData)
                 self?.imageData = imageData
                 self?.acceptButton.isEnabled = true
             }
         }
+        }
     }
-    
-    func onDismiss() {
-        dismiss(animated: true, completion: nil)
+
+    func onClose() {
+        delegate?.didTapCloseButton(self)
     }
-    
-    func onCancel() {
-        _ = navigationController?.popViewController(animated: true)
-    }
-    
+
     func onAccept() {
         if let imageData = imageData {
             delegate?.giphyConfirmationViewController(self, didConfirmImageData: imageData)
@@ -109,31 +132,29 @@ class GiphyConfirmationViewController: UIViewController {
     }
     
     func configureConstraints() {
-        constrain(view, imagePreview) { container, imagePreview in
-            imagePreview.edges == inset(container.edges, 32, 0, 104, 0)
+        let naviBarHeight = self.navigationController?.navigationBar.frame.maxY ?? 0
+
+        constrain(view, imagePreview, buttonContainer) { container, imagePreview, buttonContainer in
+            imageViewTopMargin = imagePreview.top == container.top + naviBarHeight
+            imagePreview.bottom == buttonContainer.top
+            imagePreview.right == container.right
+            imagePreview.left == container.left
         }
-        
-        constrain(buttonContainer, cancelButton, acceptButton) { container, leftButton, rightButton in
-            leftButton.height == 40
-            leftButton.width >= 100
-            leftButton.left == container.left
-            leftButton.top == container.top
-            leftButton.bottom == container.bottom
-            
-            rightButton.height == 40
-            rightButton.right == container.right
-            rightButton.top == container.top
-            rightButton.bottom == container.bottom
-            
-            leftButton.width == rightButton.width
-            leftButton.right == rightButton.left - 16
+
+        let buttonVerticalMargin: CGFloat = 16
+        constrain(buttonContainer, acceptButton) { container, acceptButton in
+            acceptButton.height == 40
+            acceptButton.height == acceptButton.width
+            acceptButton.centerX == container.centerX
+            acceptButton.centerY == container.centerY
+            acceptButton.top == container.top + buttonVerticalMargin
+            acceptButton.bottom == container.bottom - buttonVerticalMargin
         }
         
         constrain(view, buttonContainer) { container, buttonContainer in
-            buttonContainer.left >= container.left + 32
-            buttonContainer.right <= container.right - 32
+            buttonContainer.left == container.left + 32
+            buttonContainer.right == container.right - 32
             buttonContainer.bottom  == container.bottom - 32
-            buttonContainer.width == 476 ~ 700.0
             buttonContainer.centerX == container.centerX
         }
     }
