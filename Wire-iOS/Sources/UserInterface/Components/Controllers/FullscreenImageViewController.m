@@ -174,12 +174,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     }
 }
 
-- (void)viewWillLayoutSubviews
-{
-    [super viewWillLayoutSubviews];
-    [self updateZoom];
-}
-
 - (BOOL)prefersStatusBarHidden
 {
     return NO;
