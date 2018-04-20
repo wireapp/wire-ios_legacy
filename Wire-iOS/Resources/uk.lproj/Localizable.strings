@@ -1179,6 +1179,7 @@
 "error.conversation.cannot_add" = "Не вдалося додати учасника(-цю)";
 "error.conversation.cannot_remove" = "Не вдалося видалити учасника(-цю)";
 "error.conversation.too_many_members" = "Розмова переповнена";
+"error.conversation.offline" = "There seems to be a problem with your Internet connection. Please make sure it’s working.";
 
 "sketchpad.initial_hint" = "Торкніться кольору, щоб змінити розмір пензля";
 

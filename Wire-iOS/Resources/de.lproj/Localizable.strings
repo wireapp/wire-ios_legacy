@@ -1179,6 +1179,7 @@
 "error.conversation.cannot_add" = "Teilnehmer konnte nicht hinzugefügt werden";
 "error.conversation.cannot_remove" = "Teilnehmer konnte nicht entfernt werden";
 "error.conversation.too_many_members" = "Die Unterhaltung ist voll";
+"error.conversation.offline" = "There seems to be a problem with your Internet connection. Please make sure it’s working.";
 
 "sketchpad.initial_hint" = "Tippe auf die Farben, um die Pinselgröße zu ändern";
 
