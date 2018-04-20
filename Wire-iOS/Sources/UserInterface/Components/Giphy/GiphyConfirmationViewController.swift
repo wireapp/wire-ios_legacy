@@ -58,7 +58,9 @@ class GiphyConfirmationViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
+        extendedLayoutIncludesOpaqueBars = true
+
         let titleLabel = UILabel()
         titleLabel.font = FontSpec(.small, .semibold).font!
         titleLabel.textColor = ColorScheme.default().color(withName: ColorSchemeColorTextForeground)

@@ -123,6 +123,10 @@ class GiphySearchViewController: UICollectionViewController {
     }
 
     override func viewDidLoad() {
+        super.viewDidLoad()
+
+        extendedLayoutIncludesOpaqueBars = true
+
         noResultsLabel.text = "giphy.error.no_result".localized.uppercased()
         noResultsLabel.isHidden = true
         view.addSubview(noResultsLabel)
