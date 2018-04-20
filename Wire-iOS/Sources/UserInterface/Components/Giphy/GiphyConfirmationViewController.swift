@@ -37,6 +37,12 @@ class GiphyConfirmationViewController: UIViewController {
     var imageData : Data?
     
     
+    /// init method with optional arguments for remove dependency for testing
+    ///
+    /// - Parameters:
+    ///   - ziph: provide nil for testing only
+    ///   - previewImage: image for preview
+    ///   - searchResultController: provide nil for testing only
     public init(withZiph ziph: Ziph?, previewImage: FLAnimatedImage?, searchResultController: ZiphySearchResultsController?) {
         self.ziph = ziph
         self.searchResultController = searchResultController
