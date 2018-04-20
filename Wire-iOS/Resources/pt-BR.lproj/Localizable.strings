@@ -416,7 +416,7 @@
 "content.message.copy" = "Copiar";
 
 "content.message.open_link_alert.title" = "Visitar Link";
-"content.message.open_link_alert.message" = "This will take you to\n%@";
+"content.message.open_link_alert.message" = "Isso levará você para\n%@";
 "content.message.open_link_alert.open" = "Abrir";
 
 "content.reactions_list.likers" = "Curtido por";
@@ -446,11 +446,11 @@
 "library.alert.permission_warning.not_allowed.explaination" = "Vá para Ajustes e permita que o Wire acesse suas fotos.";
 
 // Voice
-"voice.status.one_to_one.incoming" = "%@\ncalling";
-"voice.status.group_call.incoming" = "%@\nringing";
-"voice.status.one_to_one.outgoing" = "%@\nringing";
+"voice.status.one_to_one.incoming" = "%@\nchamando";
+"voice.status.group_call.incoming" = "%@\ntocando";
+"voice.status.one_to_one.outgoing" = "%@\ntocando";
 "voice.status.joining" = "%@\nConectando";
-"voice.status.leaving" = "%@\nCall ended";
+"voice.status.leaving" = "%@\nChamada encerrada";
 "voice.status.video_not_available" = "Vídeo desligado";
 "voice.status.low_connection" = "Conexão ruim";
 "voice.network_error.title" = "Sem conexão de internet";
@@ -493,10 +493,10 @@
 
 // Meta Menu
 "meta.menu.rename" = "Renomear";
-"meta.menu.leave" = "Deixar";
+"meta.menu.leave" = "Sair…";
 "meta.menu.archive" = "Arquivar";
 "meta.menu.unarchive" = "Desarquivar";
-"meta.menu.delete" = "Apagar";
+"meta.menu.delete" = "Apagar Conteúdo…";
 "meta.menu.silence.mute" = "Silenciar";
 "meta.menu.silence.unmute" = "Notificar";
 "meta.menu.cancel" = "Cancelar";
@@ -504,7 +504,6 @@
 "meta.menu.mark_unread" = "Marcar como Não Lida";
 "meta.menu.mark_read" = "Marcar como Lida";
 "shortcut.mark_all_as_read.title" = "Marcar Todas como Lidas";
-
 
 // Delete conversation
 "meta.menu.delete_content.dialog_title" = "Excluir conteúdo?";
@@ -564,7 +563,8 @@
 "profile.cancel_connection_request_dialog.button_yes" = "Sim";
 
 // Unblock button
-"profile.unblock_button_title" = "Desbloquear";
+"profile.block_button_title" = "Bloquear…";
+"profile.unblock_button_title" = "Desbloquear…";
 
 "profile.cancel_connection_button_title" = "CANCELAR PEDIDO";
 "profile.connection_request_state.blocked" = "BLOQUEADO";
@@ -582,7 +582,7 @@
 // Device list
 "profile.devices.title" = "Dispositivos";
 "profile.devices.fingerprint_message_unencrypted" = "%@ está usando uma versão antiga do Wire. Nenhum dispositivo será mostrado aqui.";
-"profile.devices.fingerprint_message.title" = "Wire gives every device a unique fingerprint. Compare them with %@ and verify your conversation.";
+"profile.devices.fingerprint_message.title" = "O Wire fornece para cada dispositivo uma única impressão digital. Compare-as com %@ e verifique a sua conversa.";
 "profile.devices.fingerprint_message.link" = "Por que verificar conversas?";
 
 // Device detail
@@ -799,10 +799,10 @@
 "self.settings.privacy_contacts_menu.description_disabled.title" = "Isso ajuda a você se conectar com outros. Nós tornamos secretas todas as informações e não compartilhamos com ninguém. Permita o acesso em Ajustes > Privacidade > Contatos.";
 
 "self.settings.privacy_security.lock_app" = "Bloquear Com Código";
-"self.settings.privacy_security.lock_app.subtitle.lock_description" = "Lock Wire after 10 seconds in the background.";
-"self.settings.privacy_security.lock_app.subtitle.touch_id" = "Unlock with Touch ID or enter your passcode.";
-"self.settings.privacy_security.lock_app.subtitle.face_id" = "Unlock with Face ID or enter your passcode.";
-"self.settings.privacy_security.lock_app.subtitle.none" = "Unlock by entering your passcode.";
+"self.settings.privacy_security.lock_app.subtitle.lock_description" = "Trave o Wire após 10 segundos no fundo.";
+"self.settings.privacy_security.lock_app.subtitle.touch_id" = "Debloqueie com o Touch ID ou entre sua senha.";
+"self.settings.privacy_security.lock_app.subtitle.face_id" = "Debloqueie com o Face ID ou entre sua senha.";
+"self.settings.privacy_security.lock_app.subtitle.none" = "Desbloquear digitando sua senha.";
 
 "self.settings.privacy_security.lock_app.description" = "Desbloquear Wire";
 
@@ -848,14 +848,22 @@
 
 // History backup
 
-"self.settings.conversations.title" = "Conversas";
-"self.settings.history_backup.title" = "Backup do Histórico";
-"self.settings.history_backup.description" = "Faça o backup do seu histórico de conversas em um local seguro. Se você perder seu telefone ou mudar para um novo, sua conversa estará segura. Você pode restaurar seu histórico de conversas quando fizer login. Você só pode restaurar seu histórico a partir de um backup da mesma plataforma.\nO backup não é protegido pela criptografia de ponta a ponta do Wire.";
+"self.settings.conversations.title" = "Histórico";
+"self.settings.history_backup.title" = "Backup de Conversas";
+"self.settings.history_backup.description" = "Crie um backup para preservar seu histórico de conversas. Você pode usar isto para restaurar seu histórico se você perder o seu dispositivo ou mudar para um novo. \n\nO arquivo de backup não é protegido pela criptografia de ponta a ponta do Wire, então armazene-o em um lugar seguro.";
 "self.settings.history_backup.action" = "Fazer Backup Agora";
 "self.settings.history_backup.error.title" = "Erro";
 
 "self.settings.history_backup.set_email.title" = "Defina um e-mail e senha.";
 "self.settings.history_backup.set_email.message" = "Você precisa de um e-mail e uma senha para fazer backup de seu histórico de conversas. Você pode fazer isso na página da conta em Configurações.";
+
+// History backup password
+
+"self.settings.history_backup.password.title" = "Definir Senha";
+"self.settings.history_backup.password.cancel" = "Cancelar";
+"self.settings.history_backup.password.next" = "Próximo";
+"self.settings.history_backup.password.placeholder" = "Pelo menos 8 caracteres";
+"self.settings.history_backup.password.description" = "O backup será compactado e criptografado com a senha que você definiu aqui.";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // System status
@@ -882,10 +890,10 @@
 
 "landing.app_name" = "Wire";
 "landing.title" = "Mensagens seguras para todos.";
-"landing.create_account.title" = "For personal use";
-"landing.create_account.subtitle" = "create an account";
-"landing.create_team.title" = "For organizations";
-"landing.create_team.subtitle" = "create a team";
+"landing.create_account.title" = "Para uso pessoal";
+"landing.create_account.subtitle" = "criar uma conta";
+"landing.create_team.title" = "Para organizações";
+"landing.create_team.subtitle" = "criar uma equipe";
 "landing.login.hints" = "Já tem uma conta?";
 "landing.login.button.title" = "Iniciar sessão";
 
@@ -956,7 +964,7 @@
 "guest_room.actions.copy_link" = "Copiar link";
 "guest_room.actions.copied_link" = "Link Copiado!";
 "guest_room.actions.share_link" = "Compartilhar Link";
-"guest_room.actions.revoke_link" = "Desativar Link";
+"guest_room.actions.revoke_link" = "Desativar Link…";
 
 "guest_room.share.message" = "Junte-se a mim em uma conversa no Wire:\n%@";
 
@@ -995,15 +1003,36 @@
 "registration.no_history.subtitle" = "Por questões de privacidade, o seu histórico de conversa não aparecerá aqui.";
 "registration.no_history.got_it" = "OK";
 "registration.no_history.restore_backup" = "Restaurar do backup";
-"registration.no_history.restore_backup_warning.title" = "Restaurando histórico.";
-"registration.no_history.restore_backup_warning.message" = "Seu backup irá sobrescrever as conversas que você tem neste dispositivo.";
-"registration.no_history.restore_backup_warning.proceed" = "Continuar";
 
-"registration.no_history.restore_backup_failed.title" = "A restauração do histórico falhou.";
-"registration.no_history.restore_backup_failed.message" = "Seu arquivo de backup pode ser corrompido ou não é compatível.";
-"registration.no_history.restore_backup_failed.wrong_account.message" = "Cannot read backup because it's from a different account.";
-"registration.no_history.restore_backup_failed.wrong_version.message" = "Cannot read backup because it's from an unsupported version (either outdated or newer).";
+// Restore History Warning Alert
+"registration.no_history.restore_backup_warning.title" = "Restaurar histórico";
+"registration.no_history.restore_backup_warning.message" = "O conteúdo do backup substituirá o histórico de conversas nesse dispositivo. \nVocê só pode restaurar o histórico de um backup da mesma plataforma.";
+"registration.no_history.restore_backup_warning.proceed" = "Escolha o Arquivo de Backup";
+
+/// Restore History Failure Alerts
 "registration.no_history.restore_backup_failed.try_again" = "Tentar novamente";
+
+// Generic
+"registration.no_history.restore_backup_failed.title" = "Algo deu errado";
+"registration.no_history.restore_backup_failed.message" = "Seu histórico não pode ser restaurado.";
+
+// Wrong Account
+"registration.no_history.restore_backup_failed.wrong_account.title" = "Backup Incompatível";
+"registration.no_history.restore_backup_failed.wrong_account.message" = "Você não pode restaurar o histórico de uma conta diferente.";
+
+// Incompatible Version
+"registration.no_history.restore_backup_failed.wrong_version.title" = "Backup Incompatível";
+"registration.no_history.restore_backup_failed.wrong_version.message" = "Este backup foi criado por uma versão mais recente ou desatualizada do Wire e não pode ser restaurado aqui.";
+
+// Restore In Progress Loading Titles
+"registration.no_history.restore_backup.restoring" = "Restaurando…";
+"registration.no_history.restore_backup.completed" = "Completo";
+
+// Password Import Alert
+"registration.no_history.restore_backup.password.title" = "Esse backup é protegido por senha.";
+"registration.no_history.restore_backup.password.message" = "A senha é necessária para restaurar este backup.";
+"registration.no_history.restore_backup.password.placeholder" = "Senha";
+"registration.no_history.restore_backup.password_error.title" = "Senha incorreta";
 
 "registration.no_history.logged_out.hero" = "Você não usou o Wire nesse dispositivo antes.";
 "registration.no_history.logged_out.subtitle" = "Mensagens enviadas nesse meio tempo não irão aparecer.";
@@ -1145,6 +1174,11 @@
 
 "error.invite.no_email_provider" = "Por favor, configure seu cliente de e-mail para poder enviar os convites via e-mail";
 "error.invite.no_messaging_provider" = "Por favor, configure seu SMS para ser capaz de enviar os convites através de SMS";
+
+"error.conversation.title" = "Erro";
+"error.conversation.cannot_add" = "Adicionar o participante falhou";
+"error.conversation.cannot_remove" = "Remover o participante falhou";
+"error.conversation.too_many_members" = "A conversa está cheia";
 
 "sketchpad.initial_hint" = "Toque em cores para alterar o tamanho do pincel";
 
