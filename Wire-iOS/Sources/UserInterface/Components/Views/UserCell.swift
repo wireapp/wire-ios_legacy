@@ -294,7 +294,7 @@ extension ZMBareUser {
             return AvailabilityStringBuilder.string(for: user, with: .list, color: color)
         } else {
             if let name = name {
-                return NSAttributedString(string: name) ///TODO: unwrap? name is nil when a guest adding a bot
+                return NSAttributedString(string: name)
             } else {
                 return nil
             }
