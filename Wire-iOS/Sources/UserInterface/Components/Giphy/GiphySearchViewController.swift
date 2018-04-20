@@ -288,10 +288,17 @@ class GiphySearchViewController: UICollectionViewController {
             previewImage = cell.imageView.animatedImage
         }
 
+        pushConfirmationViewController(ziph: ziph, previewImage: previewImage)
+    }
+
+    @discardableResult
+    func pushConfirmationViewController(ziph: Ziph?, previewImage: FLAnimatedImage?, animated: Bool = true) -> GiphyConfirmationViewController {
         let confirmationController = GiphyConfirmationViewController(withZiph: ziph, previewImage: previewImage, searchResultController: searchResultsController)
         confirmationController.title = conversation.displayName.uppercased()
         confirmationController.delegate = self
-        navigationController?.pushViewController(confirmationController, animated: true)
+        navigationController?.pushViewController(confirmationController, animated: animated)
+
+        return confirmationController
     }
 
     override func scrollViewDidScroll(_ scrollView: UIScrollView) {

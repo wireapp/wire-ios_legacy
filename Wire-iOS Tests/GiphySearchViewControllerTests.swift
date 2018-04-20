@@ -61,6 +61,7 @@ final class GiphySearchViewControllerTests: XCTestCase {
 
 final class GiphySnapshotTests: ZMSnapshotTestCase {
     var sut: GiphySearchViewController!
+
     var mockConversation: MockConversation!
     var mockNavigationController: UINavigationController!
 
@@ -68,7 +69,7 @@ final class GiphySnapshotTests: ZMSnapshotTestCase {
         super.setUp()
 
         mockConversation = MockConversation()
-        mockConversation.conversationType = .oneOnOne
+        mockConversation.conversationType = .oneOnOne ///TODO: mv to class method
         mockConversation.displayName = "John Doe"
         mockConversation.connectedUser = MockUser.mockUsers().last!
 
@@ -78,6 +79,8 @@ final class GiphySnapshotTests: ZMSnapshotTestCase {
 
         sut.collectionView?.backgroundColor = .white
 
+        UIView.setAnimationsEnabled(false)
+
         recordMode = true
     }
 
@@ -86,10 +89,22 @@ final class GiphySnapshotTests: ZMSnapshotTestCase {
         mockConversation = nil
         mockNavigationController = nil
 
+        UIView.setAnimationsEnabled(true)
+
         super.tearDown()
     }
 
     func testEmptySearchScreenWithKeyword(){
+        verify(view: mockNavigationController.view)
+    }
+
+    func testConfirmationScreenWithDisabledSendButton(){
+        let data = self.data(forResource: "animated", extension: "gif")!
+        let image = FLAnimatedImage(animatedGIFData: data)
+
+        let confirmationController = sut.pushConfirmationViewController(ziph: nil, previewImage: image, animated: false)
+        confirmationController.view.backgroundColor = .white
+
         verify(view: mockNavigationController.view)
     }
 }
