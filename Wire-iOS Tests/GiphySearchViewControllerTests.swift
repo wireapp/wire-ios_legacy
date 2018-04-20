@@ -58,3 +58,38 @@ final class GiphySearchViewControllerTests: XCTestCase {
     }
 
 }
+
+final class GiphySnapshotTests: ZMSnapshotTestCase {
+    var sut: GiphySearchViewController!
+    var mockConversation: MockConversation!
+    var mockNavigationController: UINavigationController!
+
+    override func setUp() {
+        super.setUp()
+
+        mockConversation = MockConversation()
+        mockConversation.conversationType = .oneOnOne
+        mockConversation.displayName = "John Doe"
+        mockConversation.connectedUser = MockUser.mockUsers().last!
+
+        let searchTerm: String = "apple"
+        sut = GiphySearchViewController(withSearchTerm: searchTerm, conversation: (mockConversation as Any) as! ZMConversation)
+        mockNavigationController = sut.wrapInsideNavigationController()
+
+        sut.collectionView?.backgroundColor = .white
+
+        recordMode = true
+    }
+
+    override func tearDown() {
+        sut = nil
+        mockConversation = nil
+        mockNavigationController = nil
+
+        super.tearDown()
+    }
+
+    func testEmptySearchScreenWithKeyword(){
+        verify(view: mockNavigationController.view)
+    }
+}
