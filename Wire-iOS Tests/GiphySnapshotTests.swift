@@ -53,8 +53,8 @@ final class GiphySnapshotTests: ZMSnapshotTestCase {
         verify(view: mockNavigationController.view)
     }
 
-    func DISABLED_testConfirmationScreenWithDisabledSendButton(){
-        let data = self.data(forResource: "animated", extension: "gif")!
+    func testConfirmationScreenWithDisabledSendButton(){
+        let data = self.data(forResource: "not_animated", extension: "gif")!
         let image = FLAnimatedImage(animatedGIFData: data)
 
         let confirmationController = sut.pushConfirmationViewController(ziph: nil, previewImage: image, animated: false)
