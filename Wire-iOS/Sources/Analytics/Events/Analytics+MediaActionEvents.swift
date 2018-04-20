@@ -132,6 +132,16 @@ public extension ConversationMediaSketchSource {
     var method: ConversationMediaPictureTakeMethod = .none
     var sketchSource: ConversationMediaSketchSource = .none
     var camera: ConversationMediaPictureCamera = .none
+
+    @objc static func metadata(with camera: ConversationMediaPictureCamera, method: ConversationMediaPictureTakeMethod) -> ImageMetadata {
+        let metadata = ImageMetadata()
+        metadata.camera = camera
+        metadata.method = method
+        metadata.source = ConversationMediaPictureSource.camera
+        metadata.sketchSource = .none
+
+        return metadata
+    }
 }
 
 extension AudioMessageContext {
