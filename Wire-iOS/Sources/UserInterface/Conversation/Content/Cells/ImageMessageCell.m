@@ -372,10 +372,13 @@ static const CGFloat ImageToolbarMinimumSize = 192;
             self.loadingView.hidden = YES;
             self.obfuscationView.hidden = NO;
             self.imageToolbarView.hidden = YES;
+            self.imageViewContainer.backgroundColor = [UIColor clearColor];
         } else {
             // We did not download the medium image yet, start the progress animation
             [self.loadingView startProgressAnimation];
             self.loadingView.hidden = NO;
+            self.imageViewContainer.backgroundColor = [UIColor wr_colorFromColorScheme:ColorSchemeColorPlaceholderBackground variant:[ColorScheme defaultColorScheme].variant];
+
         }
     }
 }

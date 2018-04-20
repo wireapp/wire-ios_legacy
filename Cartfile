@@ -1,15 +1,15 @@
 github "wireapp/wire-ios-ziphy" "feature/ZIOS-9807_resultsDidCleaned_delegate_method"
 github "wireapp/Classy" "v0.2.6-swift3.0.2"
-github "wireapp/Cartography" ~> 3.0
+github "wireapp/Cartography" "3.0.2"
 github "wireapp/TTTAttributedLabel" "2.0.0-swift3.0.2"
-github "wireapp/wire-ios-share-engine" ~> 69.0
-github "wireapp/wire-ios-sync-engine" ~> 158.0
+github "wireapp/wire-ios-share-engine" ~> 72.0
+github "wireapp/wire-ios-sync-engine" ~> 162.0
 github "wireapp/onepassword-app-extension" "framework/1.8.2-wire-swift3.0.2"
 github "wireapp/FormatterKit" "1.8.1-swift3.0.2"
 github "wireapp/AFNetworking" "2.6.3-iOS8"
-github "wireapp/wire-ios-canvas" ~> 5.0
+github "wireapp/wire-ios-canvas" ~> 6.0
 github "wireapp/HockeySDK-iOS" ~> 5.0
 github "wireapp/FLAnimatedImage" "1.0.12-wire"
 github "wireapp/PureLayout" "v3.0.0"
-github "wireapp/mixpanel-swift" ~> 2.2
-github "wireapp/Down" "v2.0.0"
+github "wireapp/mixpanel-swift" "v2.3.3"
+github "wireapp/Down" "v2.0.1"

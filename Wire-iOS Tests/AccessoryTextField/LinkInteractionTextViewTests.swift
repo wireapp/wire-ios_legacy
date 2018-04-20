@@ -18,6 +18,7 @@
 
 import XCTest
 @testable import Wire
+import Down
 
 class LinkInteractionTextViewTests: XCTestCase {
     
@@ -33,49 +34,91 @@ class LinkInteractionTextViewTests: XCTestCase {
         super.tearDown()
     }
     
-    func testThatItDoesOpenLinkWithoutHiddenURL_iOS9() {
-        // GIVEN
-        let str = "http://www.wire.com"
-        let url = URL(string: str)!
-        sut.attributedText = NSAttributedString(string: str, attributes: [NSLinkAttributeName: url])
-        // WHEN
-        let shouldOpenURL = sut.delegate!.textView!(sut, shouldInteractWith: url, in: NSMakeRange(0, str.characters.count))
-        // THEN
-        XCTAssertTrue(shouldOpenURL)
-    }
-    
-    func testThatItDoesNotOpenLinkWithHiddenURL_iOS9() {
-        // GIVEN
-        let str = "tap me!"
-        let url = URL(string: "www.wire.com")!
-        sut.attributedText = NSAttributedString(string: str, attributes: [NSLinkAttributeName: url])
-        // WHEN
-        let shouldOpenURL = sut.delegate!.textView!(sut, shouldInteractWith: url, in: NSMakeRange(0, str.characters.count))
-        // THEN
-        XCTAssertFalse(shouldOpenURL)
+    func testThatItOpensNormalLinks_iOS9() {
+        ["http://www.wire.com", "x-apple-data-detectors:some-detected-data", "tel:12345678", "mailto:bob@example.com"].forEach {
+            // GIVEN
+            let str = $0
+            let url = URL(string: str)!
+            sut.attributedText = NSAttributedString(string: str, attributes: [NSLinkAttributeName: url])
+            // WHEN
+            let shouldOpenURL = sut.delegate!.textView!(sut, shouldInteractWith: url, in: NSMakeRange(0, str.count))
+            // THEN
+            XCTAssertTrue(shouldOpenURL)
+        }
     }
     
     @available(iOS 10.0, *)
-    func testThatItDoesOpenLinkWithoutHiddenURL_iOS10() {
-        // GIVEN
-        let str = "http://www.wire.com"
-        let url = URL(string: str)!
-        sut.attributedText = NSAttributedString(string: str, attributes: [NSLinkAttributeName: url])
-        // WHEN
-        let shouldOpenURL = sut.delegate!.textView!(sut, shouldInteractWith: url, in: NSMakeRange(0, str.characters.count), interaction: .invokeDefaultAction)
-        // THEN
-        XCTAssertTrue(shouldOpenURL)
+    func testThatItOpensNormalLinks_iOS10() {
+        ["http://www.wire.com", "x-apple-data-detectors:some-detected-data", "tel:12345678", "mailto:bob@example.com"].forEach {
+            // GIVEN
+            let str = $0
+            let url = URL(string: str)!
+            sut.attributedText = NSAttributedString(string: str, attributes: [NSLinkAttributeName: url])
+            // WHEN
+            let shouldOpenURL = sut.delegate!.textView!(sut, shouldInteractWith: url, in: NSMakeRange(0, str.count), interaction: .invokeDefaultAction)
+            // THEN
+            XCTAssertTrue(shouldOpenURL)
+        }
     }
     
     @available(iOS 10.0, *)
-    func testThatItDoesNotOpenLinkWithHiddenURL_iOS10() {
-        // GIVEN
-        let str = "tap me!"
-        let url = URL(string: "www.wire.com")!
-        sut.attributedText = NSAttributedString(string: str, attributes: [NSLinkAttributeName: url])
-        // WHEN
-        let shouldOpenURL = sut.delegate!.textView!(sut, shouldInteractWith: url, in: NSMakeRange(0, str.characters.count), interaction: .invokeDefaultAction)
-        // THEN
-        XCTAssertFalse(shouldOpenURL)
+    func testThatItPreviewsNormalLinks_iOS10() {
+        ["http://www.wire.com", "x-apple-data-detectors:some-detected-data", "tel:12345678", "mailto:bob@example.com"].forEach {
+            // GIVEN
+            let str = $0
+            let url = URL(string: str)!
+            sut.attributedText = NSAttributedString(string: str, attributes: [NSLinkAttributeName: url])
+            // WHEN
+            let shouldOpenURL = sut.delegate!.textView!(sut, shouldInteractWith: url, in: NSMakeRange(0, str.count), interaction: .preview)
+            // THEN
+            XCTAssertTrue(shouldOpenURL)
+        }
+    }
+    
+    // Note: Markdown links should not be opened directly, but only after
+    // confirmation from the user.
+    
+    func testThatItDoesNotOpenMarkdownLinks_iOS9() {
+        ["http://www.wire.com", "x-apple-data-detectors:some-detected-data", "tel:12345678", "mailto:bob@example.com"].forEach {
+            // GIVEN
+            let str = "I'm a markdown link!"
+            let url = URL(string: $0)!
+            let attrs: [String: Any] = [MarkdownIDAttributeName: Markdown.link, NSLinkAttributeName: url];
+            sut.attributedText = NSAttributedString(string: str, attributes: attrs)
+            // WHEN
+            let shouldOpenURL = sut.delegate!.textView!(sut, shouldInteractWith: url, in: NSMakeRange(0, str.count))
+            // THEN
+            XCTAssertFalse(shouldOpenURL)
+        }
+    }
+    
+    @available(iOS 10.0, *)
+    func testThatItDoesNotOpenMarkdownLinks_iOS10() {
+        ["http://www.wire.com", "x-apple-data-detectors:some-detected-data", "tel:12345678", "mailto:bob@example.com"].forEach {
+            // GIVEN
+            let str = "I'm a markdown link!"
+            let url = URL(string: $0)!
+            let attrs: [String: Any] = [MarkdownIDAttributeName: Markdown.link, NSLinkAttributeName: url];
+            sut.attributedText = NSAttributedString(string: str, attributes: attrs)
+            // WHEN
+            let shouldOpenURL = sut.delegate!.textView!(sut, shouldInteractWith: url, in: NSMakeRange(0, str.count), interaction: .invokeDefaultAction)
+            // THEN
+            XCTAssertFalse(shouldOpenURL)
+        }
+    }
+    
+    @available(iOS 10.0, *)
+    func testThatItDoesNotPreviewMarkdownLinks_iOS10() {
+        ["http://www.wire.com", "x-apple-data-detectors:some-detected-data", "tel:12345678", "mailto:bob@example.com"].forEach {
+            // GIVEN
+            let str = "I'm a markdown link!"
+            let url = URL(string: $0)!
+            let attrs: [String: Any] = [MarkdownIDAttributeName: Markdown.link, NSLinkAttributeName: url];
+            sut.attributedText = NSAttributedString(string: str, attributes: attrs)
+            // WHEN
+            let shouldOpenURL = sut.delegate!.textView!(sut, shouldInteractWith: url, in: NSMakeRange(0, str.count), interaction: .preview)
+            // THEN
+            XCTAssertFalse(shouldOpenURL)
+        }
     }
 }

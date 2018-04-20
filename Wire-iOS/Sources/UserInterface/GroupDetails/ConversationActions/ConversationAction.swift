@@ -83,11 +83,11 @@ extension ZMConversation {
 }
 
 extension ZMConversation.Action {
-    
-    fileprivate var style: UIAlertActionStyle {
+
+    fileprivate var isDestructive: Bool {
         switch self {
-        case .remove: return .destructive
-        default: return .default
+        case .delete, .leave, .remove: return true
+        default: return false
         }
     }
     
@@ -105,11 +105,15 @@ extension ZMConversation.Action {
         case .silence(isSilenced: let muted): return "meta.menu.silence.\(muted ? "unmute" : "mute")"
         case .archive(isArchived: let archived): return "meta.menu.\(archived ? "unarchive" : "archive")"
         case .cancelRequest: return "meta.menu.cancel_connection_request"
-        case .block(isBlocked: let blocked): return blocked ? "profile.unblock_button_title" : "profile.block_dialog.button_block"
+        case .block(isBlocked: let blocked): return blocked ? "profile.unblock_button_title" : "profile.block_button_title"
         }
     }
     
     func alertAction(handler: @escaping () -> Void) -> UIAlertAction {
-        return .init(title: title, style: style) { _ in handler() }
+        return .init(title: title, style: isDestructive ? .destructive : .default) { _ in handler() }
+    }
+
+    func previewAction(handler: @escaping () -> Void) -> UIPreviewAction {
+        return .init(title: title, style: isDestructive ? .destructive : .default, handler: { _, _ in handler() })
     }
 }

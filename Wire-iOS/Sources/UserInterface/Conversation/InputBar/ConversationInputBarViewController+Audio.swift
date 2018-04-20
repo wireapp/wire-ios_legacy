@@ -169,7 +169,7 @@ extension ConversationInputBarViewController: AudioRecordViewControllerDelegate 
         let type: ConversationMediaRecordingType = audioRecordViewController is AudioRecordKeyboardViewController ? .keyboard : .minimised
         
         Analytics.shared().tagSentAudioMessage(in: conversation, duration: duration, context: context, filter: filter, type: type)
-        uploadFile(at: recordingURL as URL!)
+        uploadFile(at: recordingURL as URL)
         
         self.hideAudioRecordViewController()
     }

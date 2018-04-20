@@ -231,49 +231,10 @@ performActionForShortcutItem:(UIApplicationShortcutItem *)shortcutItem
 
 #pragma mark - URL handling
 
-- (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url
-{
-    ZMLogInfo(@"application:handleOpenURL: %@", url);
-    return YES;
-}
-
 - (BOOL)application:(UIApplication *)application continueUserActivity:(NSUserActivity *)userActivity restorationHandler:(void (^)(NSArray * _Nullable))restorationHandler
 {
     ZMLogInfo(@"application:continueUserActivity:restorationHandler: %@", userActivity);
     return [[SessionManager shared] continueUserActivity:userActivity restorationHandler:restorationHandler];
-}
-
-- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
-{
-    ZMLogInfo(@"application:openURL:sourceApplication:annotation: URL: %@, souce app: %@", url, sourceApplication);
-    
-    self.launchType = ApplicationLaunchURL;
-    [[Analytics shared] tagAppLaunchWithType:ApplicationLaunchURL];
-    self.trackedResumeEvent = YES;
-    
-    BOOL succeded = NO;
-    
-    if ([[url scheme] isEqualToString:WireURLScheme] || [[url scheme] isEqualToString:WireURLSchemeInvite]) {
-        succeded = YES;
-        
-        if ([[url host] isEqualToString:@"email-verified"]) {
-            [[Analytics shared] tagAppLaunchWithType:ApplicationLaunchRegistration];
-        }
-        else if ([[url scheme] isEqualToString:WireURLSchemeInvite]) {
-            [[AnalyticsTracker analyticsTrackerWithContext:nil] tagAcceptedGenericInvite];
-        }
-        
-        [self.rootViewController performWhenAuthenticated:^{
-            [[ZMUserSession sharedSession] didLaunchWithURL:url];
-        }];
-    }
-    
-    if (! succeded) {
-        // Intentional NSLog
-        NSLog(@"INFO: Received URL: %@", [url absoluteString]);
-    }
-
-    return NO;
 }
 
 #pragma mark - AppController
@@ -380,7 +341,7 @@ performActionForShortcutItem:(UIApplicationShortcutItem *)shortcutItem
 - (void)application:(UIApplication *)application
 handleActionWithIdentifier:(NSString *)identifier
 forLocalNotification:(UILocalNotification *)notification
-  completionHandler:(void (^)())completionHandler
+  completionHandler:(void (^)(void))completionHandler
 {
     ZMLogInfo(@"application:handleActionWithIdentifier:forLocalNotification: identifier: %@, notification: %@", identifier, notification);
     
@@ -395,7 +356,7 @@ forLocalNotification:(UILocalNotification *)notification
 handleActionWithIdentifier:(NSString *)identifier
 forLocalNotification:(UILocalNotification *)notification
    withResponseInfo:(NSDictionary *)responseInfo
-  completionHandler:(void(^)())completionHandler;
+  completionHandler:(void(^)(void))completionHandler;
 {
     ZMLogInfo(@"application:handleActionWithIdentifier:forLocalNotification: identifier: %@, notification: %@ responseInfo: %@", identifier, notification, responseInfo);
     
@@ -415,7 +376,7 @@ forLocalNotification:(UILocalNotification *)notification
     }];
 }
 
-- (void)application:(UIApplication *)application handleEventsForBackgroundURLSession:(NSString *)identifier completionHandler:(void (^)())completionHandler;
+- (void)application:(UIApplication *)application handleEventsForBackgroundURLSession:(NSString *)identifier completionHandler:(void (^)(void))completionHandler;
 {
     ZMLogInfo(@"application:handleEventsForBackgroundURLSession:completionHandler: session identifier: %@", identifier);
     

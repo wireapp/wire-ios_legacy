@@ -60,8 +60,9 @@
 
 - (void)setState:(VoiceUserImageViewState)state
 {
+    ZM_WEAK(self);
     [CALayer performWithoutAnimations:^{
-        
+        ZM_STRONG(self);
         // clean up old state
         switch (self.state) {
             case VoiceUserImageViewStateConnecting:
@@ -81,7 +82,7 @@
                 break;
         }
         
-        _state = state;
+        self->_state = state;
         
         switch (self.state) {
                 

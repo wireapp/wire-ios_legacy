@@ -34,20 +34,22 @@ extension UIAlertController {
             completion(result)
         }
         
-        let add = UIAlertAction(title: "general.ok".localized, style: .default) { [controller] _ in
+        let okAction = UIAlertAction(title: "general.ok".localized, style: .default) { [controller] _ in
             complete(controller.textFields?.first?.text)
         }
+        
+        okAction.isEnabled = false
     
         controller.addTextField { textField in
             textField.isSecureTextEntry = true
             textField.placeholder = "registration.no_history.restore_backup.password.placeholder".localized
             token = NotificationCenter.default.addObserver(forName: .UITextFieldTextDidChange, object: textField, queue: .main) { _ in
-                add.isEnabled = textField.text?.count ?? 0 >= Password.minimumCharacters
+                okAction.isEnabled = textField.text?.count ?? 0 >= Password.minimumCharacters
             }
         }
     
         controller.addAction(.cancel { complete(nil) })
-        controller.addAction(add)
+        controller.addAction(okAction)
         return controller
     }
     

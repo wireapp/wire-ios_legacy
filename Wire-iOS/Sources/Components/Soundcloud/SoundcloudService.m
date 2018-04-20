@@ -64,7 +64,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     return ^(NSData *data, NSURLResponse *response, NSError *error) {
         id audioObject = nil;
         
-        void (^reportError)() = ^{
+        void (^reportError)(void) = ^{
             ZMLogError(@"Error: %@, %@", response, error);
             
             if (completionHandler) {

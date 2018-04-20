@@ -563,7 +563,8 @@
 "profile.cancel_connection_request_dialog.button_yes" = "Yes";
 
 // Unblock button
-"profile.unblock_button_title" = "Unblock";
+"profile.block_button_title" = "Block…";
+"profile.unblock_button_title" = "Unblock…";
 
 "profile.cancel_connection_button_title" = "CANCEL REQUEST";
 "profile.connection_request_state.blocked" = "BLOCKED";
@@ -848,8 +849,8 @@
 // History backup
 
 "self.settings.conversations.title" = "History";
-"self.settings.history_backup.title" = "Backup conversations";
-"self.settings.history_backup.description" = "Create a backup to preserve your conversation history. You can use this to restore history if you lose your device or switch to a new one.\nThe backup file is not protected by Wire end-to-end encryption, so store it in a safe place.";
+"self.settings.history_backup.title" = "Back Up Conversations";
+"self.settings.history_backup.description" = "Create a backup to preserve your conversation history. You can use this to restore history if you lose your device or switch to a new one.\n\nThe backup file is not protected by Wire end-to-end encryption, so store it in a safe place.";
 "self.settings.history_backup.action" = "Back Up Now";
 "self.settings.history_backup.error.title" = "Error";
 
@@ -861,8 +862,8 @@
 "self.settings.history_backup.password.title" = "Set Password";
 "self.settings.history_backup.password.cancel" = "Cancel";
 "self.settings.history_backup.password.next" = "Next";
-"self.settings.history_backup.password.placeholder" = "Password";
-"self.settings.history_backup.password.description" = "At least 8 characters\n\nThe backup will be compressed and encrypted with the password you set here.";
+"self.settings.history_backup.password.placeholder" = "At least 8 characters";
+"self.settings.history_backup.password.description" = "The backup will be compressed and encrypted with the password you set here.";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // System status
@@ -1173,6 +1174,11 @@
 
 "error.invite.no_email_provider" = "Please configure your email client to be able to send the invites via email";
 "error.invite.no_messaging_provider" = "Please configure your SMS to be able to send the invites via SMS";
+
+"error.conversation.title" = "Error";
+"error.conversation.cannot_add" = "Adding the participant failed";
+"error.conversation.cannot_remove" = "Removing the participant failed";
+"error.conversation.too_many_members" = "The conversation is full";
 
 "sketchpad.initial_hint" = "Tap colors to change brush size";
 

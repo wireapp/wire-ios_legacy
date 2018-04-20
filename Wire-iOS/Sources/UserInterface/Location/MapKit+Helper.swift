@@ -61,8 +61,7 @@ extension MKMapView {
 
 extension MKCoordinateSpan {
     init(zoomLevel: Int, viewSize: Float) {
-        self.latitudeDelta = min(360 / pow(2, Double(zoomLevel)) * Double(viewSize) / 256, 180)
-        self.longitudeDelta = 0
+        self.init(latitudeDelta: min(360 / pow(2, Double(zoomLevel)) * Double(viewSize) / 256, 180), longitudeDelta: 0)
     }
 }
 

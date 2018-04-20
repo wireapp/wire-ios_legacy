@@ -16,6 +16,7 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 // 
 
+@import WireUtilities;
 
 #import "DeviceOrientationObserver.h"
 
@@ -71,9 +72,10 @@ static DeviceOrientationObserver *sharedInstance = nil;
             
             if (newDeviceOrientation != self.currentDeviceOrientation) {
                 self.currentDeviceOrientation = newDeviceOrientation;
-                
+                ZM_WEAK(self);
                 [[NSOperationQueue mainQueue] addOperationWithBlock:^{
-                    _deviceOrientation = newDeviceOrientation;
+                    ZM_STRONG(self);
+                    self.currentDeviceOrientation = newDeviceOrientation;
                     [self notifyAboutRotationToDeviceOrientation:newDeviceOrientation];
                 }];
             }

@@ -26,6 +26,6 @@
 @property (nonatomic) IncomingConnectionViewController *connectRequestViewController;
 
 @property (nonatomic, strong) ZMUser *user;
-@property (nonatomic, copy)   void (^acceptBlock)();
-@property (nonatomic, copy)   void (^ignoreBlock)();
+@property (nonatomic, copy)   void (^acceptBlock)(void);
+@property (nonatomic, copy)   void (^ignoreBlock)(void);
 @end

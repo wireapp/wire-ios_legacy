@@ -69,8 +69,7 @@ extension ConversationActionController {
             conversation.clearMessageHistory()
             self?.trackDeletion(of: conversation)
             if leave {
-                conversation.removeParticipant(.selfUser())
-                self?.trackLeaving(of: conversation)
+                conversation.removeOrShowError(participnant: .selfUser())
             }
         }
     }

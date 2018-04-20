@@ -68,7 +68,7 @@ extension CellConfiguration {
         return .iconAction(
             title: "guest_room.actions.revoke_link".localized,
             icon: .X,
-            color: .init(for: .vividRed),
+            color: nil,
             action: action
         )
     }

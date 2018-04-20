@@ -28,8 +28,8 @@ enum AuthenticationType {
         
         switch context.biometryType {
         case .none: return .none
-        case .typeTouchID: return .touchID
-        case .typeFaceID: return .faceID
+        case .touchID: return .touchID
+        case .faceID: return .faceID
         }
     }
 }

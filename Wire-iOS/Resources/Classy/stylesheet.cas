@@ -280,16 +280,6 @@ VideoMessageView {
     }
 }
 
-ImageMessageCell {
-    imageViewContainer: @{
-        backgroundColor: $color-placeholder-background;
-    }
-    
-    fullImageView: @{
-        backgroundColor: $color-background;
-    }
-}
-
 AudioMessageView {
     backgroundColor: $color-placeholder-background;
 
@@ -312,7 +302,7 @@ AudioMessageView {
     }
 }
 
-LocationMessageCell {
+LocationMessageCell, LocationPreviewController {
     labelTextColor: $color-text-foreground;
     labelFont: $font-normal;
     containerColor: $color-placeholder-background;

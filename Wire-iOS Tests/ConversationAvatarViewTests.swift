@@ -51,9 +51,8 @@ class ConversationAvatarViewTests: CoreDataSnapshotTestCase {
         let thirdUser = ZMUser.insertNewObject(in: uiMOC)
         thirdUser.name = "Anna"
         let conversation = ZMConversation.insertGroupConversation(into: uiMOC, withParticipants: [otherUser, thirdUser])
-        conversation?.removeParticipant(selfUser)
-        conversation?.removeParticipant(otherUser)
-        conversation?.removeParticipant(thirdUser)
+        conversation?.internalRemoveParticipants(Set([selfUser!, otherUser!, thirdUser]), sender: selfUser)
+
         // WHEN
         sut.conversation = conversation
         
@@ -78,9 +77,7 @@ class ConversationAvatarViewTests: CoreDataSnapshotTestCase {
         let thirdUser = ZMUser.insertNewObject(in: uiMOC)
         thirdUser.name = "Anna"
         let conversation = ZMConversation.insertGroupConversation(into: uiMOC, withParticipants: [otherUser, thirdUser])
-        conversation?.removeParticipant(selfUser)
-        conversation?.removeParticipant(otherUser)
-        conversation?.removeParticipant(thirdUser)
+        conversation?.internalRemoveParticipants(Set([selfUser!, otherUser!, thirdUser]), sender: selfUser)
         
         sut.conversation = conversation
         

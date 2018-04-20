@@ -23,7 +23,7 @@ public protocol TransferViewDelegate: class {
 }
 
 public protocol TransferView {
-    weak var delegate: TransferViewDelegate? { get set }
+    var delegate: TransferViewDelegate? { get set }
     var fileMessage: ZMConversationMessage? { get set }
     func configure(for: ZMConversationMessage, isInitial: Bool)
 }

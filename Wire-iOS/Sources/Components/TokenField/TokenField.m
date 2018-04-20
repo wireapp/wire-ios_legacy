@@ -499,9 +499,10 @@ CGFloat const accessoryButtonSize = 32.0f;
         [self invalidateIntrinsicContentSize];
         [self layoutIfNeeded];
     };
-    
+    ZM_WEAK(self);
     void (^compeltionBlock) (BOOL) = ^(BOOL finnished) {
-        if (_collapsed) {
+        ZM_STRONG(self);
+        if (self.collapsed) {
             self.textView.attributedText = [self collapsedString];
             [self invalidateIntrinsicContentSize];
             [UIView animateWithDuration:0.2 animations:^{

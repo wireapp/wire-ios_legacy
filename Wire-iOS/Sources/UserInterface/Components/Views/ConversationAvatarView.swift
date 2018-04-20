@@ -103,7 +103,7 @@ fileprivate enum Mode {
 
 extension Mode {
     fileprivate init(conversation: ZMConversation) {
-        self.init(users: conversation.otherActiveParticipants.array as! [ZMUser])
+        self.init(users: conversation.lastServerSyncedActiveParticipants.array as! [ZMUser])
     }
     
     fileprivate init(users: [ZMBareUser]) {

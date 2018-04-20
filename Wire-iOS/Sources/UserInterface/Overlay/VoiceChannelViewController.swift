@@ -212,10 +212,11 @@ extension VoiceChannelViewController : VoiceChannelOverlayDelegate {
     func muteButtonTapped() {
         zmLog.debug("muteButtonTapped")
         
-        guard let mediaManager = AVSMediaManager.sharedInstance() else { return }
+        guard let mediaManager = AVSMediaManager.sharedInstance(), let userSession = ZMUserSession.shared() else { return }
         
-        mediaManager.isMicrophoneMuted = !mediaManager.isMicrophoneMuted
-        voiceChannelView.muted = mediaManager.isMicrophoneMuted
+        let muted = !mediaManager.isMicrophoneMuted
+        conversation.voiceChannel?.mute(muted, userSession: userSession)
+        voiceChannelView.muted = muted
     }
     
     func speakerButtonTapped() {

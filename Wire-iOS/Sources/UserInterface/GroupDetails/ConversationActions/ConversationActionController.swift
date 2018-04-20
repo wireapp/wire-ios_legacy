@@ -71,40 +71,44 @@
         }
         target.present(controller, animated: true, completion: nil)
     }
+
+    func handleAction(_ action: ZMConversation.Action) {
+        switch action {
+        case .archive(isArchived: let isArchived): self.transitionToListAndEnqueue {
+            self.conversation.isArchived = !isArchived
+            Analytics.shared().tagArchivedConversation(!isArchived)
+            }
+        case .markRead: self.enqueue {
+            self.conversation.markAsRead()
+            }
+        case .markUnread: self.enqueue {
+            self.conversation.markAsUnread()
+            }
+        case .silence(isSilenced: let isSilenced): self.enqueue {
+            self.conversation.isSilenced = !isSilenced
+            }
+        case .leave: self.request(LeaveResult.self) { result in
+            self.handleLeaveResult(result, for: self.conversation)
+            }
+        case .delete: self.requestDeleteResult(for: self.conversation) { result in
+            self.handleDeleteResult(result, for: self.conversation)
+            }
+        case .cancelRequest:
+            guard let user = self.conversation.connectedUser else { return }
+            self.requestCancelConnectionRequestResult(for: user) { result in
+                self.handleConnectionRequestResult(result, for: self.conversation)
+            }
+        case .block: self.requestBlockResult(for: self.conversation) { result in
+            self.handleBlockResult(result, for: self.conversation)
+            }
+        case .remove: fatalError()
+        }
+    }
     
     private func alertAction(for action: ZMConversation.Action) -> UIAlertAction {
         return action.alertAction { [weak self] in
             guard let `self` = self else { return }
-            switch action {
-            case .archive(isArchived: let isArchived): self.transitionToListAndEnqueue {
-                self.conversation.isArchived = !isArchived
-                Analytics.shared().tagArchivedConversation(!isArchived)
-                }
-            case .markRead: self.enqueue {
-                self.conversation.markAsRead()
-                }
-            case .markUnread: self.enqueue {
-                self.conversation.markAsUnread()
-                }
-            case .silence(isSilenced: let isSilenced): self.enqueue {
-                self.conversation.isSilenced = !isSilenced
-                }
-            case .leave: self.request(LeaveResult.self) { result in
-                self.handleLeaveResult(result, for: self.conversation)
-                }
-            case .delete: self.requestDeleteResult(for: self.conversation) { result in
-                self.handleDeleteResult(result, for: self.conversation)
-                }
-            case .cancelRequest:
-                guard let user = self.conversation.connectedUser else { return }
-                self.requestCancelConnectionRequestResult(for: user) { result in
-                    self.handleConnectionRequestResult(result, for: self.conversation)
-                }
-            case .block: self.requestBlockResult(for: self.conversation) { result in
-                self.handleBlockResult(result, for: self.conversation)
-                }
-            case .remove: fatalError()
-            }
+            self.handleAction(action)
         }
     }
     

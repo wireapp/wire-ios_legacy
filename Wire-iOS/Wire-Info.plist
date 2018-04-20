@@ -136,10 +136,12 @@
 		<dict>
 			<key>UTTypeConformsTo</key>
 			<array>
-				<string>com.pkware.zip-archive</string>
+				<string>public.data</string>
 			</array>
 			<key>UTTypeDescription</key>
 			<string>Wire iOS Backup File</string>
+			<key>UTTypeIconFiles</key>
+			<array/>
 			<key>UTTypeIdentifier</key>
 			<string>com.wire.backup-ios</string>
 			<key>UTTypeSize320IconFile</key>

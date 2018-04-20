@@ -42,7 +42,7 @@ protocol SettingsCellDescriptorType: class {
     var visible: Bool {get}
     var title: String {get}
     var identifier: String? {get}
-    weak var group: SettingsGroupCellDescriptorType? {get}
+    var group: SettingsGroupCellDescriptorType? {get}
     
     func select(_: SettingsPropertyValue?)
     func featureCell(_: SettingsCellType)
@@ -61,7 +61,7 @@ func ==(left: SettingsCellDescriptorType, right: SettingsCellDescriptorType) -> 
 typealias PreviewGeneratorType = (SettingsCellDescriptorType) -> SettingsCellPreview
 
 protocol SettingsGroupCellDescriptorType: SettingsCellDescriptorType {
-    weak var viewController: UIViewController? {get set}
+    var viewController: UIViewController? {get set}
 }
 
 protocol SettingsSectionDescriptorType: class {

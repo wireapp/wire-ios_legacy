@@ -208,7 +208,7 @@ class AppRootViewController: UIViewController {
             
             // check if needs to reauthenticate
             var needsToReauthenticate = false
-            var addingNewAccount = true
+            var addingNewAccount = (SessionManager.shared?.accountManager.accounts.count == 0)
             if let error = error {
                 let errorCode = (error as NSError).userSessionErrorCode
                 needsToReauthenticate = [ZMUserSessionErrorCode.clientDeletedRemotely,
