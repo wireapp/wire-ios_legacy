@@ -37,8 +37,6 @@ final class GiphySnapshotTests: ZMSnapshotTestCase {
         sut.collectionView?.backgroundColor = .white
 
         UIView.setAnimationsEnabled(false)
-
-        recordMode = true
     }
 
     override func tearDown() {
