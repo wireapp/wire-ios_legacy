@@ -188,20 +188,16 @@ extension ConversationInputBarViewController : WireCallCenterCallStateObserver {
     
     public func callCenterDidChange(callState: CallState, conversation: ZMConversation, caller: ZMUser, timestamp: Date?) {
         
-        let isRecording = self.audioRecordKeyboardViewController?.recorder.state == .recording
+        let isRecording = self.audioRecordKeyboardViewController?.isRecording
         
-        switch callState {
+        switch (callState, isRecording, self.wasRecordingBeforeCall) {
             
-        case .incoming(_, let shouldRing, _) where shouldRing && isRecording && !self.wasRecordingBeforeCall:
-            fallthrough
-        case .outgoing where isRecording && !self.wasRecordingBeforeCall:
-            self.wasRecordingBeforeCall = true
-            
-        case .incoming(_, let shouldRing, _) where !shouldRing && self.wasRecordingBeforeCall:
-            fallthrough
-        case .terminating where self.wasRecordingBeforeCall:
-            displayRecordKeyboard()
-            
+        case (.incoming(_, true, _), true, false),      // receiving incoming call while recording an audio
+             (.outgoing, true, false):                  // making an outgoing call while recording an audio
+            self.wasRecordingBeforeCall = true          // -> remember that we were recording an audio
+        case (.incoming(_, false, _), _, true),         // refusing an incoming call
+             (.terminating, _, true):                   // terminating/closing the current call
+            displayRecordKeyboard()                     // -> show again the audio record keyboard
         default: break
         }
     }
