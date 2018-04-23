@@ -47,7 +47,7 @@ enum DeleteResult {
     }
     
     static func options(for conversation: ZMConversation) -> [DeleteResult] {
-        if conversation.conversationType == .oneOnOne {
+        if conversation.conversationType == .oneOnOne || !conversation.isSelfAnActiveMember {
             return [.delete(leave: false), .cancel]
         } else {
             return [.delete(leave: true), .delete(leave: false), .cancel]
