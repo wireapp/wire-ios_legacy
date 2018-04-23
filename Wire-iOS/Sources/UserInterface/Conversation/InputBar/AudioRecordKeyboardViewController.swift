@@ -81,7 +81,7 @@ private let zmLog = ZMSLog(tag: "UI")
     
     public override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        recorder.stopRecording()
+        //recorder.stopRecording()
     }
     
     func configureViews() {
@@ -250,6 +250,14 @@ private let zmLog = ZMSLog(tag: "UI")
             cancelButton.centerY == bottomToolbar.centerY
             cancelButton.right == bottomToolbar.right - 8
         }
+    }
+    
+    func stopRecording() {
+        recorder.stopRecording()
+    }
+    
+    var isRecording: Bool {
+        return self.recorder.state == .recording
     }
     
     public override func viewDidLayoutSubviews() {

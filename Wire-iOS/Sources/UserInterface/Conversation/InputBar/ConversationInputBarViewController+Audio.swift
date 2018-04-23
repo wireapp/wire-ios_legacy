@@ -24,6 +24,13 @@ import Cartography
 
 extension ConversationInputBarViewController {
     
+    
+    func setupCallStateObserver() {
+        if let userSession = ZMUserSession.shared() {
+            callStateObserverToken = WireCallCenterV3.addCallStateObserver(observer: self, userSession:userSession)
+        }
+    }
+    
     func configureAudioButton(_ button: IconButton) {
         let longPressRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(audioButtonLongPressed(_:)))
         longPressRecognizer.minimumPressDuration = 0.3
@@ -172,6 +179,27 @@ extension ConversationInputBarViewController: AudioRecordViewControllerDelegate 
         uploadFile(at: recordingURL as URL)
         
         self.hideAudioRecordViewController()
+    }
+    
+}
+
+
+extension ConversationInputBarViewController : WireCallCenterCallStateObserver {
+    
+    public func callCenterDidChange(callState: CallState, conversation: ZMConversation, caller: ZMUser, timestamp: Date?) {
+        
+        if case .incoming = callState, self.audioRecordKeyboardViewController?.recorder.state == .recording, !self.wasRecordingBeforeCall {
+            self.wasRecordingBeforeCall = true
+            self.audioRecordKeyboardViewController?.stopRecording()
+        }
+        
+        //better handle all the cases here (e.g. when you reply from another device)
+        
+        if case .terminating = callState, self.wasRecordingBeforeCall {
+            self.wasRecordingBeforeCall = false
+            self.mode = .audioRecord
+            self.inputBar.textView.becomeFirstResponder()
+        }
     }
     
 }
