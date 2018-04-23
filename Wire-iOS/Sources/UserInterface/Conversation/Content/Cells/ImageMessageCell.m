@@ -85,7 +85,7 @@ static const CGFloat ImageToolbarMinimumSize = 192;
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
     if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
-        self.colorScheme = [ColorScheme defaultColorScheme];
+        self.variant = [ColorScheme defaultColorScheme].variant;
         _autoStretchVertically = YES;
         [self createImageMessageViews];
         [self createConstraints];
@@ -379,7 +379,7 @@ static const CGFloat ImageToolbarMinimumSize = 192;
             [self.loadingView startProgressAnimation];
             self.loadingView.hidden = NO;
 
-            self.imageViewContainer.backgroundColor = [UIColor wr_colorFromColorScheme:ColorSchemeColorPlaceholderBackground variant:self.colorScheme.variant];
+            self.imageViewContainer.backgroundColor = [UIColor wr_colorFromColorScheme:ColorSchemeColorPlaceholderBackground variant:self.variant];
 
         }
     }

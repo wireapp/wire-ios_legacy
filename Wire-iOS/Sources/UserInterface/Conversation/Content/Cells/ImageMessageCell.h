@@ -26,6 +26,6 @@
 
 @property (nonatomic, readonly) FLAnimatedImageView *fullImageView;
 @property (nonatomic, readonly) SavableImage *savableImage;
-@property (nonatomic) ColorScheme *colorScheme;
+@property (nonatomic) ColorSchemeVariant variant;
 
 @end
