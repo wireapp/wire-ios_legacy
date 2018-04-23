@@ -29,8 +29,6 @@ class ImageMessageCellTests: ZMSnapshotTestCase {
         snapshotBackgroundColor = UIColor.white
         sut = ImageMessageCell(style: .default, reuseIdentifier: name!)
         sut.variant = .light
-
-        recordMode = true
     }
 
     override func tearDown() {
