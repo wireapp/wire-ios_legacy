@@ -28,19 +28,18 @@ class ImageMessageCellTests: ZMSnapshotTestCase {
         super.setUp()
         UIView.setAnimationsEnabled(false)
         snapshotBackgroundColor = UIColor.white
-        ColorScheme.default().variant = .light
         sut = ImageMessageCell(style: .default, reuseIdentifier: name!)
+        sut.colorScheme.variant = .light
     }
 
     override func tearDown() {
-        ColorScheme.default().variant = .light
         UIView.setAnimationsEnabled(true)
         super.tearDown()
     }
 
     func setToDarkTheme() {
         snapshotBackgroundColor = UIColor.black
-        ColorScheme.default().variant = .dark
+        sut.colorScheme.variant = .dark
     }
 
     func testThatItRendersImageMessagePlaceholderWhenNoImageIsSetInDarkTheme() {

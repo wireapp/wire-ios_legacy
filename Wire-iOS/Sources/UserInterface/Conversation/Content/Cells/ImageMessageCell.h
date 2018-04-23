@@ -20,10 +20,12 @@
 #import "ConversationCell.h"
 @class SavableImage;
 @class FLAnimatedImageView;
+@import WireExtensionComponents;
 
 @interface ImageMessageCell : ConversationCell
 
 @property (nonatomic, readonly) FLAnimatedImageView *fullImageView;
 @property (nonatomic, readonly) SavableImage *savableImage;
+@property (nonatomic) ColorScheme *colorScheme;
 
 @end
