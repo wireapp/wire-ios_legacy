@@ -193,6 +193,8 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 {
     [super viewDidLoad];
     
+    [self setupCallStateObserver];
+    
     [self createSingleTapGestureRecognizer];
     
     [self createInputBar]; // Creates all input bar buttons
@@ -795,9 +797,8 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     }
 }
 
-- (void)keyboardDidHide:(NSNotification *)notification
-{
-    if (!self.inRotation) {
+- (void)keyboardDidHide:(NSNotification *)notification {
+    if (!self.inRotation && !self.audioRecordKeyboardViewController.isRecording) {
         self.mode = ConversationInputBarViewControllerModeTextInput;
     }
 }
