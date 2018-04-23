@@ -416,7 +416,7 @@
 "content.message.copy" = "Копировать";
 
 "content.message.open_link_alert.title" = "Visit Link";
-"content.message.open_link_alert.message" = "This will take you to\n%@";
+"content.message.open_link_alert.message" = "Это приведет вас к\n%@";
 "content.message.open_link_alert.open" = "Открыть";
 
 "content.reactions_list.likers" = "Понравилось";
@@ -493,10 +493,10 @@
 
 // Meta Menu
 "meta.menu.rename" = "Переименовать";
-"meta.menu.leave" = "Покинуть";
+"meta.menu.leave" = "Leave…";
 "meta.menu.archive" = "Архивировать";
 "meta.menu.unarchive" = "Разархивировать";
-"meta.menu.delete" = "Удалить";
+"meta.menu.delete" = "Удалить содержимое…";
 "meta.menu.silence.mute" = "Выкл. звук";
 "meta.menu.silence.unmute" = "Вкл.звук";
 "meta.menu.cancel" = "Отменить";
@@ -504,7 +504,6 @@
 "meta.menu.mark_unread" = "Отметить как непрочитанное";
 "meta.menu.mark_read" = "Отметить как прочитанное";
 "shortcut.mark_all_as_read.title" = "Отметить все как прочитанные";
-
 
 // Delete conversation
 "meta.menu.delete_content.dialog_title" = "Удалить содержимое?";
@@ -564,7 +563,8 @@
 "profile.cancel_connection_request_dialog.button_yes" = "Да";
 
 // Unblock button
-"profile.unblock_button_title" = "Разблокировать";
+"profile.block_button_title" = "Блокировка…";
+"profile.unblock_button_title" = "Разблокировать…";
 
 "profile.cancel_connection_button_title" = "ОТМЕНИТЬ ЗАПРОС";
 "profile.connection_request_state.blocked" = "ЗАБЛОКИРОВАН";
@@ -848,14 +848,22 @@
 
 // History backup
 
-"self.settings.conversations.title" = "Разговоры";
-"self.settings.history_backup.title" = "История резервного копирования";
-"self.settings.history_backup.description" = "Back up your conversation history to a safe place. If you lose your phone or switch to a new one, your conversation will be safe. You can restore your conversation history when you log in. You can only restore history from a backup of the same platform.\nThe back up is not protected by Wire end-to-end encryption.";
+"self.settings.conversations.title" = "История";
+"self.settings.history_backup.title" = "Резервная копия разговоров";
+"self.settings.history_backup.description" = "Создайте резервную копию, чтобы сохранить историю разговоров. Это пригодится для восстановления истории в случае потери или замены устройства.\n\nРезервная копия не шифруется, поэтому храните ее в надежном месте.";
 "self.settings.history_backup.action" = "Создать резервную копию сейчас";
 "self.settings.history_backup.error.title" = "Ошибка";
 
 "self.settings.history_backup.set_email.title" = "Настройте email и пароль.";
 "self.settings.history_backup.set_email.message" = "Для создания резервной копии истории разговоров вам потребуется email и пароль. Вы можете сделать это в настройках учетной записи.";
+
+// History backup password
+
+"self.settings.history_backup.password.title" = "Установить пароль";
+"self.settings.history_backup.password.cancel" = "Отменить";
+"self.settings.history_backup.password.next" = "Вперед";
+"self.settings.history_backup.password.placeholder" = "Необходимо минимум 8 символов";
+"self.settings.history_backup.password.description" = "Резервная копия будет сжата и защищена с помощью пароля.";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // System status
@@ -956,7 +964,7 @@
 "guest_room.actions.copy_link" = "Скопировать ссылку";
 "guest_room.actions.copied_link" = "Ссылка скопирована!";
 "guest_room.actions.share_link" = "Поделиться ссылкой";
-"guest_room.actions.revoke_link" = "Отменить ссылку";
+"guest_room.actions.revoke_link" = "Отозвать ссылку…";
 
 "guest_room.share.message" = "Присоединяйтесь ко мне в Wire:\n%@";
 
@@ -995,15 +1003,36 @@
 "registration.no_history.subtitle" = "Из соображений конфиденциальности история ваших разговоров не будет показана здесь.";
 "registration.no_history.got_it" = "OK";
 "registration.no_history.restore_backup" = "Восстановить из резервной копии";
-"registration.no_history.restore_backup_warning.title" = "Восстановление истории.";
-"registration.no_history.restore_backup_warning.message" = "Резервная копия перезапишет ваши разговоры на этом устройстве.";
-"registration.no_history.restore_backup_warning.proceed" = "Продолжить";
 
-"registration.no_history.restore_backup_failed.title" = "Не удалось восстановить историю.";
-"registration.no_history.restore_backup_failed.message" = "Возможно, файл резервной копии поврежден или несовместим.";
-"registration.no_history.restore_backup_failed.wrong_account.message" = "Невозможно прочитать резервную копию, так как она от другой учетной записи.";
-"registration.no_history.restore_backup_failed.wrong_version.message" = "Невозможно прочитать резервную копию, так как она создана в неподдерживаемой версии (устаревшей или новейшей).";
+// Restore History Warning Alert
+"registration.no_history.restore_backup_warning.title" = "Восстановить историю";
+"registration.no_history.restore_backup_warning.message" = "Содержимое резервной копии заменит историю разговоров на этом устройстве.\nВосстановить историю можно только из резервной копии для одной и той же платформы.";
+"registration.no_history.restore_backup_warning.proceed" = "Выберите резервную копию";
+
+/// Restore History Failure Alerts
 "registration.no_history.restore_backup_failed.try_again" = "Повторить";
+
+// Generic
+"registration.no_history.restore_backup_failed.title" = "Что-то пошло не так";
+"registration.no_history.restore_backup_failed.message" = "Ваша история не может быть восстановлена.";
+
+// Wrong Account
+"registration.no_history.restore_backup_failed.wrong_account.title" = "Несовместимая резервная копия";
+"registration.no_history.restore_backup_failed.wrong_account.message" = "Вы не можете восстановить историю из другой учетной записи.";
+
+// Incompatible Version
+"registration.no_history.restore_backup_failed.wrong_version.title" = "Несовместимая резервная копия";
+"registration.no_history.restore_backup_failed.wrong_version.message" = "Эта резервная копия была создана в более новой или устаревшей версии Wire и не может быть восстановлена.";
+
+// Restore In Progress Loading Titles
+"registration.no_history.restore_backup.restoring" = "Восстановление…";
+"registration.no_history.restore_backup.completed" = "Завершено";
+
+// Password Import Alert
+"registration.no_history.restore_backup.password.title" = "Эта резервная копия защищена паролем.";
+"registration.no_history.restore_backup.password.message" = "Для восстановления этой резервной копии необходим пароль.";
+"registration.no_history.restore_backup.password.placeholder" = "Пароль";
+"registration.no_history.restore_backup.password_error.title" = "Неверный пароль";
 
 "registration.no_history.logged_out.hero" = "Вы уже использовали Wire на этом устройстве.";
 "registration.no_history.logged_out.subtitle" = "Сообщения, отправленные ранее, не будут показаны.";
@@ -1145,6 +1174,12 @@
 
 "error.invite.no_email_provider" = "Пожалуйста, настройте ваш почтовый клиент, чтобы иметь возможность отправлять приглашения по электронной почте";
 "error.invite.no_messaging_provider" = "Пожалуйста, настройте SMS, чтобы иметь возможность отправлять приглашения через SMS";
+
+"error.conversation.title" = "Ошибка";
+"error.conversation.cannot_add" = "Не удалось добавить участника";
+"error.conversation.cannot_remove" = "Не удалось удалить участника";
+"error.conversation.too_many_members" = "Разговор переполнен";
+"error.conversation.offline" = "There seems to be a problem with your Internet connection. Please make sure it’s working.";
 
 "sketchpad.initial_hint" = "Нажмите на цвет, чтобы изменить размер кисти";
 

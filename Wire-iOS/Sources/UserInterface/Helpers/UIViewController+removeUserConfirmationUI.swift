@@ -34,16 +34,16 @@ extension UIViewController {
         ) {
 
         let controller = UIAlertController.remove(participant) { [weak self] remove in
-            guard remove, let `self` = self, let session = ZMUserSession.shared() else { return }
+            guard remove else { return }
             
-            conversation.removeParticipant(participant, userSession: session, completion: { (result) in
+            conversation.removeOrShowError(participnant: participant) { result in
                 switch result {
                 case .success:
                     dismissable?.viewControllerWants(toBeDismissed: self, completion: nil)
                 case .failure(_):
                     break
                 }
-            })
+            }
         }
         
         present(controller, animated: true)

@@ -30,7 +30,7 @@
 // Language like Chinese does not use space to sperate words or sentences.
 "general.space_between_words" = " ";
 
-"general.guest-room-name" = "Gästezimmer";
+"general.guest-room-name" = "Gästebereich";
 
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -88,7 +88,7 @@
 "peoplepicker.invite_team_members" = "Lade weitere Mitglieder ein";
 "peoplepicker.quick-action.open-conversation" = "Öffnen";
 "peoplepicker.quick-action.create-conversation" = "Gruppe erstellen";
-"peoplepicker.quick-action.create-guest-room" = "Gästezimmer erstellen";
+"peoplepicker.quick-action.create-guest-room" = "Gästebereich erstellen";
 
 "add_participants.all_contacts_added" = "Alle sind hier.";
 
@@ -416,7 +416,7 @@
 "content.message.copy" = "Kopieren";
 
 "content.message.open_link_alert.title" = "Link öffnen";
-"content.message.open_link_alert.message" = "This will take you to\n%@";
+"content.message.open_link_alert.message" = "Dies führt Sie zu\n%@";
 "content.message.open_link_alert.open" = "Öffnen";
 
 "content.reactions_list.likers" = "Gefällt";
@@ -450,7 +450,7 @@
 "voice.status.group_call.incoming" = "%@\nAnruf";
 "voice.status.one_to_one.outgoing" = "%@\nAnruf";
 "voice.status.joining" = "%@\nVerbinden";
-"voice.status.leaving" = "%@\nCall ended";
+"voice.status.leaving" = "%@\nAnruf beendet";
 "voice.status.video_not_available" = "Video deaktiviert";
 "voice.status.low_connection" = "Schlechte Verbindung";
 "voice.network_error.title" = "Keine Internetverbindung";
@@ -493,10 +493,10 @@
 
 // Meta Menu
 "meta.menu.rename" = "Umbenennen";
-"meta.menu.leave" = "Verlassen";
+"meta.menu.leave" = "Verlassen …";
 "meta.menu.archive" = "Archivieren";
 "meta.menu.unarchive" = "Dearchivieren";
-"meta.menu.delete" = "Löschen";
+"meta.menu.delete" = "Inhalt löschen …";
 "meta.menu.silence.mute" = "Stumm";
 "meta.menu.silence.unmute" = "Benachrichtigen";
 "meta.menu.cancel" = "Abbrechen";
@@ -504,7 +504,6 @@
 "meta.menu.mark_unread" = "Als ungelesen markieren";
 "meta.menu.mark_read" = "Als gelesen markieren";
 "shortcut.mark_all_as_read.title" = "Alle als gelesen markieren";
-
 
 // Delete conversation
 "meta.menu.delete_content.dialog_title" = "Gesprächsverlauf löschen?";
@@ -564,7 +563,8 @@
 "profile.cancel_connection_request_dialog.button_yes" = "Ja";
 
 // Unblock button
-"profile.unblock_button_title" = "Freigeben";
+"profile.block_button_title" = "Sperren …";
+"profile.unblock_button_title" = "Entsperren …";
 
 "profile.cancel_connection_button_title" = "Anfrage abbrechen";
 "profile.connection_request_state.blocked" = "Blockiert";
@@ -848,14 +848,22 @@
 
 // History backup
 
-"self.settings.conversations.title" = "Unterhaltungen";
-"self.settings.history_backup.title" = "Sicherung der Chronik";
-"self.settings.history_backup.description" = "Sichern Sie Ihre Gesprächsübersicht an einem sicheren Ort. Wenn Sie Ihr Telefon verlieren oder zu einem neuen wechseln, sind Ihre Unterhaltungen sicher. Sie können Ihren Gesprächsverlauf wiederherstellen, wenn Sie sich abmelden. Sie können den Verlauf nur von einer Sicherung derselben Plattform wiederherstellen. Die Sicherung ist nicht durch die Ende-zu-Ende-Verschlüsselung von Wire geschützt.";
+"self.settings.conversations.title" = "Gesprächsverlauf";
+"self.settings.history_backup.title" = "Unterhaltungen sichern";
+"self.settings.history_backup.description" = "Erstelle ein Backup, um den Gesprächsverlauf zu sichern. Damit können Unterhaltungen wiederhergestellt werden, falls du dein Gerät verlierst oder ein neues Gerät nutzen möchtest.\n\nDie Backup-Datei wird nicht mit Wire Ende-zu-Ende-Verschlüsselung geschützt. Achte bitte darauf, sie an einem sicheren Ort zu speichern.";
 "self.settings.history_backup.action" = "Jetzt sichern";
 "self.settings.history_backup.error.title" = "Fehler";
 
 "self.settings.history_backup.set_email.title" = "Legen Sie eine E-Mail-Adresse und ein Passwort fest.";
 "self.settings.history_backup.set_email.message" = "Sie benötigen eine E-Mailadresse und ein Passwort, um Ihren Gesprächsverlauf zu sichern. Sie können dies von der Kontoseite unter Einstellungen aus tun.";
+
+// History backup password
+
+"self.settings.history_backup.password.title" = "Passwort festlegen";
+"self.settings.history_backup.password.cancel" = "Abbrechen";
+"self.settings.history_backup.password.next" = "Weiter";
+"self.settings.history_backup.password.placeholder" = "Mindestens 8 Zeichen";
+"self.settings.history_backup.password.description" = "Die Sicherung wird mit dem hier festgelegten Passwort komprimiert und verschlüsselt.";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // System status
@@ -942,21 +950,21 @@
 "guest_room.allow_guests.subtitle" = "Öffne diese Unterhaltung für Personen außerhalb deines Teams.";
 "guest_room.remove_guests.message" = "Aktuelle Gäste werden aus der Unterhaltung entfernt. Neue Gäste können nicht hinzugefügt werden.";
 "guest_room.remove_guests.action" = "Gäste entfernen";
-"guest_room.revoke_link.message" = "Neue Gäste werden sich nicht mehr mit diesem Link anmelden können. Aktuelle Gäste haben weiterhin Zugang zur Unterhaltung.";
+"guest_room.revoke_link.message" = "Neue Gäste werden sich nicht mehr mit diesem Link anmelden können. Aktuelle Gäste haben weiterhin Zugang zum Gästebereich.";
 "guest_room.revoke_link.action" = "Link widerrufen";
 
 "guest_room.error.generic.title" = "Ein Fehler ist aufgetreten";
 "guest_room.error.generic.message" = "Prüfen Sie Ihre Datenverbindung und versuchen Sie es erneut";
 
 "guest_room.link.header.title" = "Andere per Link einladen";
-"guest_room.link.header.subtitle" = "Jeder kann der Gruppe mit diesem Link beitreten - auch ohne eine Wire-Benutzerkonto.";
+"guest_room.link.header.subtitle" = "Jeder kann der Gruppe mit diesem Link beitreten – auch ohne ein Wire-Benutzerkonto.";
 
 "guest_room.link.button.title" = "Link erstellen";
 
 "guest_room.actions.copy_link" = "Link kopieren";
 "guest_room.actions.copied_link" = "Link kopiert!";
 "guest_room.actions.share_link" = "Link teilen";
-"guest_room.actions.revoke_link" = "Link widerrufen";
+"guest_room.actions.revoke_link" = "Link widerrufen…";
 
 "guest_room.share.message" = "Nimm an meiner Unterhaltung auf Wire teil:\n%@";
 
@@ -994,16 +1002,37 @@
 "registration.no_history.hero" = "Du benutzt Wire zum ersten Mal auf diesem Gerät.";
 "registration.no_history.subtitle" = "Aus Datenschutzgründen wird deine bisherige Unterhaltung nicht angezeigt.";
 "registration.no_history.got_it" = "OK";
-"registration.no_history.restore_backup" = "Aus Sicherung wiederherstellen";
-"registration.no_history.restore_backup_warning.title" = "Verlauf wird wiederhergestellt";
-"registration.no_history.restore_backup_warning.message" = "Ihr Sicherung überschreibt die Unterhaltungen, die Sie auf diesem Gerät haben könnten.";
-"registration.no_history.restore_backup_warning.proceed" = "Weiter";
+"registration.no_history.restore_backup" = "Backup wiederherstellen";
 
-"registration.no_history.restore_backup_failed.title" = "Wiederherstellung des Verlaufs fehlgeschlagen";
-"registration.no_history.restore_backup_failed.message" = "Ihre Sicherungsdatei ist möglicherweise beschädigt oder nicht kompatibel.";
-"registration.no_history.restore_backup_failed.wrong_account.message" = "Cannot read backup because it's from a different account.";
-"registration.no_history.restore_backup_failed.wrong_version.message" = "Cannot read backup because it's from an unsupported version (either outdated or newer).";
+// Restore History Warning Alert
+"registration.no_history.restore_backup_warning.title" = "Gesprächsverlauf wiederherstellen";
+"registration.no_history.restore_backup_warning.message" = "Der Inhalt der Backup-Datei ersetzt den Gesprächsverlauf auf diesem Gerät. Es können nur Backup-Dateien derselben Plattform wiederhergestellt werden.";
+"registration.no_history.restore_backup_warning.proceed" = "Backup-Datei auswählen";
+
+/// Restore History Failure Alerts
 "registration.no_history.restore_backup_failed.try_again" = "Erneut versuchen";
+
+// Generic
+"registration.no_history.restore_backup_failed.title" = "Ein Fehler ist aufgetreten";
+"registration.no_history.restore_backup_failed.message" = "Der Gesprächsverlauf konnte nicht wiederhergestellt werden.";
+
+// Wrong Account
+"registration.no_history.restore_backup_failed.wrong_account.title" = "Inkompatibles Backup";
+"registration.no_history.restore_backup_failed.wrong_account.message" = "Der Gesprächsverlauf eines anderen Kontos kann nicht wiederhergestellt werden.";
+
+// Incompatible Version
+"registration.no_history.restore_backup_failed.wrong_version.title" = "Inkompatibles Backup";
+"registration.no_history.restore_backup_failed.wrong_version.message" = "Diese Backup-Datei wurde von einer anderen Version von Wire erstellt und kann deshalb nicht wiederhergestellt werden.";
+
+// Restore In Progress Loading Titles
+"registration.no_history.restore_backup.restoring" = "Wiederherstellen…";
+"registration.no_history.restore_backup.completed" = "Wiederhergestellt";
+
+// Password Import Alert
+"registration.no_history.restore_backup.password.title" = "Dieses Backup ist passwortgeschützt.";
+"registration.no_history.restore_backup.password.message" = "Das Passwort wird benötigt, um dieses Backup wiederzuherstellen.";
+"registration.no_history.restore_backup.password.placeholder" = "Passwort";
+"registration.no_history.restore_backup.password_error.title" = "Ungültiges Passwort";
 
 "registration.no_history.logged_out.hero" = "Du hast Wire auf diesem Gerät bereits früher genutzt.";
 "registration.no_history.logged_out.subtitle" = "Nachrichten, die in der Zwischenzeit gesendet wurden, werden nicht angezeigt.";
@@ -1145,6 +1174,12 @@
 
 "error.invite.no_email_provider" = "Bitte konfiguriere deinen E-Mail-Client, um Einladungen per E-Mail zu senden";
 "error.invite.no_messaging_provider" = "Bitte konfiguriere iMessage, um Einladungen per SMS senden zu können";
+
+"error.conversation.title" = "Fehler";
+"error.conversation.cannot_add" = "Teilnehmer konnte nicht hinzugefügt werden";
+"error.conversation.cannot_remove" = "Teilnehmer konnte nicht entfernt werden";
+"error.conversation.too_many_members" = "Die Unterhaltung ist voll";
+"error.conversation.offline" = "There seems to be a problem with your Internet connection. Please make sure it’s working.";
 
 "sketchpad.initial_hint" = "Tippe auf die Farben, um die Pinselgröße zu ändern";
 
