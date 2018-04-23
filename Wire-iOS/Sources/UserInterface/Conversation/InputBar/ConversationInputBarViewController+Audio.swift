@@ -35,7 +35,7 @@ extension ConversationInputBarViewController {
         let longPressRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(audioButtonLongPressed(_:)))
         longPressRecognizer.minimumPressDuration = 0.3
         button.addGestureRecognizer(longPressRecognizer)
-        
+
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(audioButtonPressed(_:)))
         tapGestureRecognizer.require(toFail: longPressRecognizer)
         button.addGestureRecognizer(tapGestureRecognizer)
@@ -45,7 +45,7 @@ extension ConversationInputBarViewController {
         guard sender.state == .ended else {
             return
         }
-        
+
         if self.mode != .audioRecord {
             UIApplication.wr_requestOrWarnAboutMicrophoneAccess({ accepted in
                 if accepted {
@@ -110,13 +110,13 @@ extension ConversationInputBarViewController {
         guard let audioRecordViewController = self.audioRecordViewController else {
             return
         }
-        
+
         audioRecordViewController.setOverlayState(.hidden, animated: false)
         
         UIView.transition(with: inputBar, duration: 0.1, options: [.transitionCrossDissolve, .allowUserInteraction], animations: {
             audioRecordViewController.view.isHidden = false
-        }, completion: { _ in
-            audioRecordViewController.setOverlayState(.expanded(0), animated: true)
+            }, completion: { _ in
+                audioRecordViewController.setOverlayState(.expanded(0), animated: true)
         })
     }
     
@@ -144,7 +144,7 @@ extension ConversationInputBarViewController {
         
         UIView.transition(with: inputBar, duration: 0.2, options: .transitionCrossDissolve, animations: {
             audioRecordViewController.view.isHidden = true
-        }, completion: nil)
+            }, completion: nil)
     }
     
     public func hideCameraKeyboardViewController(_ completion: @escaping ()->()) {
