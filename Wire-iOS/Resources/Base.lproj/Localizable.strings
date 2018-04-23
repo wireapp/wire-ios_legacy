@@ -493,14 +493,14 @@
 
 // Meta Menu
 "meta.menu.rename" = "Rename";
-"meta.menu.leave" = "Leave…";
+"meta.menu.leave" = "Leave Group…";
 "meta.menu.archive" = "Archive";
 "meta.menu.unarchive" = "Unarchive";
 "meta.menu.delete" = "Delete Content…";
 "meta.menu.silence.mute" = "Mute";
 "meta.menu.silence.unmute" = "Unmute";
 "meta.menu.cancel" = "Cancel";
-"meta.menu.cancel_connection_request" = "Cancel Request";
+"meta.menu.cancel_connection_request" = "Cancel Request…";
 "meta.menu.mark_unread" = "Mark as Unread";
 "meta.menu.mark_read" = "Mark as Read";
 "shortcut.mark_all_as_read.title" = "Mark All as Read";
