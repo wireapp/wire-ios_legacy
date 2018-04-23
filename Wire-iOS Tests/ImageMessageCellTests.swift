@@ -26,6 +26,7 @@ class ImageMessageCellTests: ZMSnapshotTestCase {
 
     override func setUp() {
         super.setUp()
+        UIView.setAnimationsEnabled(false)
         snapshotBackgroundColor = UIColor.white
         ColorScheme.default().variant = .light
         sut = ImageMessageCell(style: .default, reuseIdentifier: name!)
@@ -33,6 +34,7 @@ class ImageMessageCellTests: ZMSnapshotTestCase {
 
     override func tearDown() {
         ColorScheme.default().variant = .light
+        UIView.setAnimationsEnabled(true)
         super.tearDown()
     }
 
