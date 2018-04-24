@@ -71,6 +71,8 @@ final class ConversationImagesViewController: TintColorCorrectedViewController {
     public var isPreviewing: Bool = false {
         didSet {
             updateBarsForPreview()
+
+            self.currentController?.updateZoom()
         }
     }
     
@@ -169,6 +171,12 @@ final class ConversationImagesViewController: TintColorCorrectedViewController {
         }
 
         updateBarsForPreview()
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+
+        self.currentController?.updateZoom()
     }
     
     private func createPageController() {

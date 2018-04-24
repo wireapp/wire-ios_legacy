@@ -99,8 +99,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
 @property (nonatomic) id messageObserverToken;
 
-@property (nonatomic) int doubleTapCount;
-
 @end
 
 @implementation FullscreenImageViewController
@@ -114,7 +112,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
         _forcePortraitMode = NO;
         _swipeToDismiss = YES;
         _showCloseButton = YES;
-        _doubleTapCount = 0;
         if (nil != [ZMUserSession sharedSession]) {
             self.messageObserverToken = [MessageChangeInfo addObserver:self forMessage:message userSession:[ZMUserSession sharedSession]];
         }
@@ -175,17 +172,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     if(self.parentViewController != nil) {
         [self updateZoomWithSize:self.parentViewController.view.frame.size];
     }
-}
-
-- (void)viewWillLayoutSubviews
-{
-    [super viewWillLayoutSubviews];
-
-    if (self.doubleTapCount == 1) {
-        return;
-    }
-
-    [self updateZoom];
 }
 
 - (BOOL)prefersStatusBarHidden
@@ -392,6 +378,8 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     [self dismissWithCompletion:nil];
 }
 
+#pragma mark - Zoom
+
 - (void)updateZoom
 {
     [self updateZoomWithSize:self.view.bounds.size];
@@ -414,7 +402,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
         minZoom += 0.000001;
     }
 
-    self.scrollView.zoomScale = minZoom;
+    self.scrollView.zoomScale = minZoom;////1.000000095 for second call?
     self.lastZoomScale = minZoom;
 }
 
@@ -468,14 +456,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
 - (void)handleDoubleTap:(UITapGestureRecognizer *)doubleTapper
 {
-    switch (doubleTapper.state) {
-        case UIGestureRecognizerStateEnded:
-            self.doubleTapCount++;
-            break;
-        default:
-            break;
-    }
-
     [self setSelectedByMenu:NO animated:NO];
     [[UIMenuController sharedMenuController] setMenuVisible:NO];
 
