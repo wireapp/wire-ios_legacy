@@ -19,47 +19,38 @@
 import Foundation
 @testable import Wire
 
-final class GiphySnapshotTests: ZMSnapshotTestCase {
-    var sut: GiphySearchViewController!
+final class GiphyConfirmationViewControllerSnapshotTests: ZMSnapshotTestCase {
+    var sut: GiphyConfirmationViewController!
 
     var mockConversation: MockConversation!
-    var mockNavigationController: UINavigationController!
 
     override func setUp() {
         super.setUp()
 
         mockConversation = MockConversation.oneOnOneConversation()
 
-        let searchTerm: String = "apple"
-        sut = GiphySearchViewController(withSearchTerm: searchTerm, conversation: (mockConversation as Any) as! ZMConversation)
-        mockNavigationController = sut.wrapInsideNavigationController()
+        let data = self.data(forResource: "not_animated", extension: "gif")!
+        let image = FLAnimatedImage(animatedGIFData: data)
 
-        sut.collectionView?.backgroundColor = .white
-
-        UIView.setAnimationsEnabled(false)
+        sut = GiphyConfirmationViewController(withZiph: nil, previewImage: image, searchResultController: nil)
+        sut.title = mockConversation.displayName.uppercased()
+        sut.view.backgroundColor = .white
     }
 
     override func tearDown() {
         sut = nil
         mockConversation = nil
-        mockNavigationController = nil
-
-        UIView.setAnimationsEnabled(true)
 
         super.tearDown()
     }
 
-    func testEmptySearchScreenWithKeyword(){
-        verify(view: mockNavigationController.view)
-    }
 
+    /// Notice: navigation bar is empty and it is differnet form the apperance on the app
     func testConfirmationScreenWithDisabledSendButton(){
-        let data = self.data(forResource: "not_animated", extension: "gif")!
-        let image = FLAnimatedImage(animatedGIFData: data)
+        let navigationController = NavigationController()
+        navigationController.pushViewController(UIViewController(), animated: false)
+        navigationController.pushViewController(sut, animated: false)
 
-        let confirmationController = sut.pushConfirmationViewController(ziph: nil, previewImage: image, animated: false)
-        confirmationController.view.backgroundColor = .white
-
-        verify(view: confirmationController.view)
+        verify(view: navigationController.view)
     }
 }
