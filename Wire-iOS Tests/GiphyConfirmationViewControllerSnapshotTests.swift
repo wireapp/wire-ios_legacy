@@ -1,6 +1,6 @@
 //
 // Wire
-// Copyright (C) 2017 Wire Swiss GmbH
+// Copyright (C) 2018 Wire Swiss GmbH
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -16,42 +16,38 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-import XCTest
+import Foundation
 @testable import Wire
 
-final class GiphySearchViewControllerTests: XCTestCase {
-    
-    weak var sut: GiphySearchViewController!
+final class GiphyConfirmationViewControllerSnapshotTests: ZMSnapshotTestCase {
+    var sut: GiphyConfirmationViewController!
+
     var mockConversation: MockConversation!
 
     override func setUp() {
         super.setUp()
 
         mockConversation = MockConversation.oneOnOneConversation()
+
+        let data = self.data(forResource: "not_animated", extension: "gif")!
+        let image = FLAnimatedImage(animatedGIFData: data)
+
+        sut = GiphyConfirmationViewController(withZiph: nil, previewImage: image, searchResultController: nil)
+        sut.title = mockConversation.displayName.uppercased()
+        sut.view.backgroundColor = .white
     }
-    
+
     override func tearDown() {
         sut = nil
         mockConversation = nil
+
         super.tearDown()
     }
 
-    func testGiphySearchViewControllerIsNotRetainedAfterTimerIsScheduled(){
-        autoreleasepool{
-            // GIVEN
-            let searchTerm: String = "apple"
 
-            var giphySearchViewController: GiphySearchViewController! = GiphySearchViewController(withSearchTerm: searchTerm, conversation: (mockConversation as Any) as! ZMConversation)
-            sut = giphySearchViewController
-
-
-            // WHEN
-            giphySearchViewController.performSearchAfter(delay: 0.1)
-            giphySearchViewController = nil
-        }
-
-        // THEN
-        XCTAssertNil(sut)
+    /// Notice: navigation bar is empty and it is differnet form the apperance on the app
+    func testConfirmationScreenWithDisabledSendButton(){
+        let navigationController = NavigationController(rootViewController: sut)
+        verify(view: navigationController.view)
     }
-
 }

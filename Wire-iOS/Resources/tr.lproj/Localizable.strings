@@ -391,7 +391,6 @@
 // Full sentence: "A message from %@ was not received. [...] (device d1b23c54f34a). This is a debug information.
 
 "content.system.unknown_message.body" = "Wire'ın bu mesajı gösteremeyecek kadar eski bir sürümünü kullanıyorsunuz.";
-"content.system.unknown_message.body.link" = "Bu neden oluyor?";
 
 "content.file.uploading" = "Yükleniyor…";
 "content.file.downloading" = "İndiriliyor…";
@@ -493,10 +492,10 @@
 
 // Meta Menu
 "meta.menu.rename" = "Yeniden adlandır";
-"meta.menu.leave" = "Ayrıl";
+"meta.menu.leave" = "Leave…";
 "meta.menu.archive" = "Arşivle";
 "meta.menu.unarchive" = "Arşivden kaldır";
-"meta.menu.delete" = "Sil";
+"meta.menu.delete" = "Delete Content…";
 "meta.menu.silence.mute" = "Sustur";
 "meta.menu.silence.unmute" = "Sesi aç";
 "meta.menu.cancel" = "İptal";
@@ -504,7 +503,6 @@
 "meta.menu.mark_unread" = "Mark as Unread";
 "meta.menu.mark_read" = "Mark as Read";
 "shortcut.mark_all_as_read.title" = "Mark All as Read";
-
 
 // Delete conversation
 "meta.menu.delete_content.dialog_title" = "İçerik silinsin?";
@@ -564,7 +562,8 @@
 "profile.cancel_connection_request_dialog.button_yes" = "Evet";
 
 // Unblock button
-"profile.unblock_button_title" = "Engeli kaldır";
+"profile.block_button_title" = "Block…";
+"profile.unblock_button_title" = "Unblock…";
 
 "profile.cancel_connection_button_title" = "İSTEĞİ İPTAL ET";
 "profile.connection_request_state.blocked" = "ENGELLENDİ";
@@ -848,14 +847,22 @@
 
 // History backup
 
-"self.settings.conversations.title" = "Konuşmalar";
-"self.settings.history_backup.title" = "History backup";
-"self.settings.history_backup.description" = "Back up your conversation history to a safe place. If you lose your phone or switch to a new one, your conversation will be safe. You can restore your conversation history when you log in. You can only restore history from a backup of the same platform.\nThe back up is not protected by Wire end-to-end encryption.";
+"self.settings.conversations.title" = "History";
+"self.settings.history_backup.title" = "Back Up Conversations";
+"self.settings.history_backup.description" = "Create a backup to preserve your conversation history. You can use this to restore history if you lose your device or switch to a new one.\n\nThe backup file is not protected by Wire end-to-end encryption, so store it in a safe place.";
 "self.settings.history_backup.action" = "Back Up Now";
 "self.settings.history_backup.error.title" = "Error";
 
 "self.settings.history_backup.set_email.title" = "Set an email and password.";
 "self.settings.history_backup.set_email.message" = "You need an email and a password in order to back up your conversation history. You can do it from the account page in Settings.";
+
+// History backup password
+
+"self.settings.history_backup.password.title" = "Set Password";
+"self.settings.history_backup.password.cancel" = "İptal";
+"self.settings.history_backup.password.next" = "İleri";
+"self.settings.history_backup.password.placeholder" = "En az 8 karakter";
+"self.settings.history_backup.password.description" = "The backup will be compressed and encrypted with the password you set here.";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // System status
@@ -956,7 +963,7 @@
 "guest_room.actions.copy_link" = "Copy Link";
 "guest_room.actions.copied_link" = "Link Copied!";
 "guest_room.actions.share_link" = "Share Link";
-"guest_room.actions.revoke_link" = "Revoke Link";
+"guest_room.actions.revoke_link" = "Revoke Link…";
 
 "guest_room.share.message" = "Join me in a conversation on Wire:\n%@";
 
@@ -995,15 +1002,36 @@
 "registration.no_history.subtitle" = "Gizlilik nedenleriyle, konuşma geçmişiniz burada görünmeyecek.";
 "registration.no_history.got_it" = "TAMAM";
 "registration.no_history.restore_backup" = "Restore from backup";
-"registration.no_history.restore_backup_warning.title" = "Restoring history.";
-"registration.no_history.restore_backup_warning.message" = "Your backup will overwrite the conversations that you may have on this device.";
-"registration.no_history.restore_backup_warning.proceed" = "Proceed";
 
-"registration.no_history.restore_backup_failed.title" = "Restoring history failed.";
-"registration.no_history.restore_backup_failed.message" = "Your backup file might be corrupted or not compatible.";
-"registration.no_history.restore_backup_failed.wrong_account.message" = "Cannot read backup because it's from a different account.";
-"registration.no_history.restore_backup_failed.wrong_version.message" = "Cannot read backup because it's from an unsupported version (either outdated or newer).";
+// Restore History Warning Alert
+"registration.no_history.restore_backup_warning.title" = "Restore history";
+"registration.no_history.restore_backup_warning.message" = "The backup contents will replace the conversation history on this device.\nYou can only restore history from a backup of the same platform.";
+"registration.no_history.restore_backup_warning.proceed" = "Choose Backup File";
+
+/// Restore History Failure Alerts
 "registration.no_history.restore_backup_failed.try_again" = "Try again";
+
+// Generic
+"registration.no_history.restore_backup_failed.title" = "Bir şeyler yanlış gitti";
+"registration.no_history.restore_backup_failed.message" = "Your history could not be restored.";
+
+// Wrong Account
+"registration.no_history.restore_backup_failed.wrong_account.title" = "Incompatible backup";
+"registration.no_history.restore_backup_failed.wrong_account.message" = "You cannot restore history from a different account.";
+
+// Incompatible Version
+"registration.no_history.restore_backup_failed.wrong_version.title" = "Incompatible backup";
+"registration.no_history.restore_backup_failed.wrong_version.message" = "This backup was created by a newer or outdated version of Wire and cannot be restored here.";
+
+// Restore In Progress Loading Titles
+"registration.no_history.restore_backup.restoring" = "Restoring…";
+"registration.no_history.restore_backup.completed" = "Completed";
+
+// Password Import Alert
+"registration.no_history.restore_backup.password.title" = "This backup is password protected.";
+"registration.no_history.restore_backup.password.message" = "The password is required to restore this backup.";
+"registration.no_history.restore_backup.password.placeholder" = "Parola";
+"registration.no_history.restore_backup.password_error.title" = "Wrong Password";
 
 "registration.no_history.logged_out.hero" = "Bu cihazdan daha önce Wire kullanmışsınız.";
 "registration.no_history.logged_out.subtitle" = "Bu sürede gönderilen mesajlar gözükmeyecektir.";
@@ -1145,6 +1173,12 @@
 
 "error.invite.no_email_provider" = "Lütfen e-posta ile davet göndermek için e-posta istemcinizi yapılandırın";
 "error.invite.no_messaging_provider" = "Lütfen SMS göndermek için SMS'inizi yapılandırın";
+
+"error.conversation.title" = "Error";
+"error.conversation.cannot_add" = "Adding the participant failed";
+"error.conversation.cannot_remove" = "Removing the participant failed";
+"error.conversation.too_many_members" = "The conversation is full";
+"error.conversation.offline" = "There seems to be a problem with your Internet connection. Please make sure it’s working.";
 
 "sketchpad.initial_hint" = "Fırça boyutunu değiştirmek için renklere tıklayın";
 

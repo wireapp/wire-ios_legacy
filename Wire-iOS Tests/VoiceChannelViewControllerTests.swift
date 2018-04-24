@@ -26,10 +26,7 @@ final class VoiceChannelViewControllerTests: XCTestCase {
 
     override func setUp() {
         super.setUp()
-        mockConversation = MockConversation()
-        mockConversation.conversationType = .oneOnOne
-        mockConversation.displayName = "John Doe"
-        mockConversation.connectedUser = MockUser.mockUsers().last!
+        mockConversation = MockConversation.oneOnOneConversation()
     }
     
     override func tearDown() {

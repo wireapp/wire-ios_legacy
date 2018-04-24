@@ -289,11 +289,15 @@ extension UserCell {
 
 extension ZMBareUser {
     
-    func nameIncludingAvailability(color: UIColor) -> NSAttributedString {
+    func nameIncludingAvailability(color: UIColor) -> NSAttributedString? {
         if ZMUser.selfUser().isTeamMember, let user = self as? ZMUser {
             return AvailabilityStringBuilder.string(for: user, with: .list, color: color)
         } else {
-            return NSAttributedString(string: name)
+            if let name = name {
+                return NSAttributedString(string: name)
+            } else {
+                return nil
+            }
         }
     }
     

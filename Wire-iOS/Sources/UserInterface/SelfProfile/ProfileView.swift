@@ -104,11 +104,13 @@ import Cartography
     }
     
     private func createConstraints() {
-        constrain(self, stackView) { selfView, stackView in
+        constrain(self, stackView, imageView) { selfView, stackView, imageView in
             stackView.top == selfView.top
             stackView.bottom <= selfView.bottom
             stackView.leading == selfView.leading
             stackView.trailing == selfView.trailing
+            imageView.leading >= selfView.leading + 40
+            imageView.trailing <= selfView.trailing - 40
         }
     }
     

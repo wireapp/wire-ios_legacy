@@ -252,6 +252,10 @@ private let zmLog = ZMSLog(tag: "UI")
         }
     }
     
+    var isRecording: Bool {
+        return self.recorder.state == .recording
+    }
+    
     public override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         self.confirmButton.layer.cornerRadius = self.confirmButton.bounds.size.width / 2

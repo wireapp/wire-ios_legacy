@@ -280,16 +280,6 @@ VideoMessageView {
     }
 }
 
-ImageMessageCell {
-    imageViewContainer: @{
-        backgroundColor: $color-placeholder-background;
-    }
-    
-    fullImageView: @{
-        backgroundColor: $color-background;
-    }
-}
-
 AudioMessageView {
     backgroundColor: $color-placeholder-background;
 

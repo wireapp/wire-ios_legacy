@@ -193,7 +193,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
         return nil;
     }
 
-    return [self imagesViewControllerFor:message actionResponder:delegate isPreviewing: YES];
+    return [self imagesViewControllerFor:message actionResponder:delegate isPreviewing:YES];
 }
 
 - (void)openImageMessage:(id<ZMConversationMessage>)message actionResponder:(nullable id<MessageActionResponder>)delegate

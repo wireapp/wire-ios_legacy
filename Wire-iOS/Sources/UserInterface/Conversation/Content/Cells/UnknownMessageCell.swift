@@ -56,13 +56,7 @@ public final class UnknownMessageCell : ConversationCell {
         messageLabel.font = messageLabelFont
         messageLabel.textColor = messageLabelTextColor
         
-        let text = "content.system.unknown_message.body".localized
-        let link = "content.system.unknown_message.body.link".localized
-        let message = text + " " + link
-        let range : NSRange = NSMakeRange(text.count + 1, link.count)
-        
-        messageLabel.text = message
-        messageLabel.addLink(to: NSURL.wr_unknownMessageHelp() as URL, with: range)
+        messageLabel.text = "content.system.unknown_message.body".localized
     }
         
 }

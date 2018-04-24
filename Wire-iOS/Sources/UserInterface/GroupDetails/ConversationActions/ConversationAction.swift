@@ -42,11 +42,11 @@ extension ZMConversation {
     private func availableOneToOneActions() -> [Action] {
         precondition(conversationType == .oneOnOne)
         var actions = [Action]()
+        actions.append(contentsOf: availableStandardActions())
+        actions.append(.delete)
         if nil == team, let connectedUser = connectedUser {
             actions.append(.block(isBlocked: connectedUser.isBlocked))
         }
-        actions.append(contentsOf: availableStandardActions())
-        actions.append(.delete)
         return actions
     }
     
@@ -67,10 +67,9 @@ extension ZMConversation {
     
     private func availableStandardActions() -> [Action] {
         var actions = [Action]()
-        if DeveloperMenuState.developerMenuEnabled() && unreadMessages.count > 0 {
-            actions.append(.markRead)
-        } else if DeveloperMenuState.developerMenuEnabled() && unreadMessages.count == 0 && canMarkAsUnread() {
-            actions.append(.markUnread)
+        
+        if let markReadAction = markAsReadAction() {
+            actions.append(markReadAction)
         }
         
         if !isReadOnly {
@@ -80,13 +79,23 @@ extension ZMConversation {
         actions.append(.archive(isArchived: isArchived))
         return actions
     }
+    
+    private func markAsReadAction() -> Action? {
+        guard DeveloperMenuState.developerMenuEnabled() else { return nil }
+        if unreadMessages.count > 0 {
+            return .markRead
+        } else if unreadMessages.count == 0 && canMarkAsUnread() {
+            return .markUnread
+        }
+        return nil
+    }
 }
 
 extension ZMConversation.Action {
 
     fileprivate var isDestructive: Bool {
         switch self {
-        case .delete, .leave, .remove: return true
+        case .remove: return true
         default: return false
         }
     }

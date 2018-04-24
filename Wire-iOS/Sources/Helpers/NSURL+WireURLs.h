@@ -47,8 +47,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (instancetype)wr_cannotDecryptNewRemoteIDHelpURL;
 
-+ (instancetype)wr_unknownMessageHelpURL;
-
 + (instancetype)wr_createTeamURL;
 
 + (instancetype)wr_createTeamFeaturesURL;
