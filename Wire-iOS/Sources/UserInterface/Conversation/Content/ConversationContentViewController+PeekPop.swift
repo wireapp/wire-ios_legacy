@@ -44,7 +44,7 @@ extension ConversationContentViewController: UIViewControllerPreviewingDelegate 
 
         if message.isText, let url = message.textMessageData?.linkPreview?.openableURL as URL? {
             lastPreviewURL = url
-            controller = SFSafariViewController(url: url)
+            controller = TintColorCorrectedSafariViewController(url: url)
         } else if message.isImage {
             controller = self.messagePresenter.viewController(forImageMessagePreview: message, actionResponder: self)
         } else if message.isLocation {
