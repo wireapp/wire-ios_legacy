@@ -32,7 +32,7 @@ setup_environment: &setup_environment
 
 version: 2
 jobs:
-  build:
+  build-manual:
     <<: *defaults
     branches:
       ignore:
@@ -72,7 +72,7 @@ workflows:
     jobs:
       - approve:
         type: approval
-      - build:
+      - build-manual:
           requires: 
             - approve
 
