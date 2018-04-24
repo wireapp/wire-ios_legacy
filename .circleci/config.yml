@@ -32,9 +32,9 @@ setup_environment: &setup_environment
 
 version: 2
 jobs:
-  trigger-build:
-    type: approval
   build:
+    type: 
+      - approval
     <<: *defaults
     requires:
       - trigger-build
