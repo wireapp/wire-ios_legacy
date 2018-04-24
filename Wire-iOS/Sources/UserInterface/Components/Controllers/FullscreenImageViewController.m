@@ -99,7 +99,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
 @property (nonatomic) id messageObserverToken;
 
-@property (nonatomic) BOOL isDoubleTapping;
+@property (nonatomic) int doubleTapCount;
 
 @end
 
@@ -114,7 +114,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
         _forcePortraitMode = NO;
         _swipeToDismiss = YES;
         _showCloseButton = YES;
-        _isDoubleTapping = NO;
+        _doubleTapCount = 0;
         if (nil != [ZMUserSession sharedSession]) {
             self.messageObserverToken = [MessageChangeInfo addObserver:self forMessage:message userSession:[ZMUserSession sharedSession]];
         }
@@ -181,7 +181,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 {
     [super viewWillLayoutSubviews];
 
-    if (self.isDoubleTapping) {
+    if (self.doubleTapCount == 1) {
         return;
     }
 
@@ -469,11 +469,10 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 - (void)handleDoubleTap:(UITapGestureRecognizer *)doubleTapper
 {
     switch (doubleTapper.state) {
-        case UIGestureRecognizerStateBegan:
-            self.isDoubleTapping = YES;
+        case UIGestureRecognizerStateEnded:
+            self.doubleTapCount++;
             break;
         default:
-            self.isDoubleTapping = NO;///TODO: set it when zoom animation ends.
             break;
     }
 
