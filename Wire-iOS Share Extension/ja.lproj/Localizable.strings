@@ -21,7 +21,7 @@
 
 
 "share_extension.general.ok" = "OK";
-"share_extension.conversation_selection.account" = "Account:";
+"share_extension.conversation_selection.account" = "アカウント";
 "share_extension.conversation_selection.title" = "会話";
 "share_extension.send_button.title" = "送信";
 "share_extension.conversation_selection.empty.value" = "選択する";
@@ -31,11 +31,11 @@
 "share_extension.no_internet_connection.title" = "インターネット接続がありません";
 "share_extension.not_signed_in.title" = "共有するためにはWireにサインインする必要があります";
 "share_extension.not_signed_in.close_button" = "閉じる";
-"share_extension.timeout.title" = "The connection has timed out.";
-"share_extension.timeout.message" = "Check your Internet connection and try again. The attachments were saved in the conversation.";
+"share_extension.timeout.title" = "接続がタイムアウトしました。";
+"share_extension.timeout.message" = "インターネット接続を確認して、もう一度やり直してください。添付ファイルは会話に保存されました。";
 "share_extension.privacy_security.lock_app.description" = "Wireのロックを解除する";
-"share_extension.logged_out.title" = "You've been logged out from this account.";
-"share_extension.logged_out.message" = "Please choose another account.";
+"share_extension.logged_out.title" = "このアカウントはログアウトされました。";
+"share_extension.logged_out.message" = "別のアカウントを選択してください";
 
 "conversation.displayname.emptygroup" = "誰もいないグループ";
 "meta.degraded.degradation_reason_message.singular" = "%@が新しいデバイスを使い始めました。";

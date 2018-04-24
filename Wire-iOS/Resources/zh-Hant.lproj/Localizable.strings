@@ -1179,7 +1179,7 @@
 "error.conversation.cannot_add" = "添加參與者失敗";
 "error.conversation.cannot_remove" = "刪除參與者失敗";
 "error.conversation.too_many_members" = "對話人數已達上限";
-"error.conversation.offline" = "There seems to be a problem with your Internet connection. Please make sure it’s working.";
+"error.conversation.offline" = "您的網路連線似乎有些問題，請確保網路正常運作。";
 
 "sketchpad.initial_hint" = "點擊顏色塊來改變筆刷大小";
 

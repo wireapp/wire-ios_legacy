@@ -22,7 +22,7 @@
 "general.next" = "次へ";
 "general.cancel" = "キャンセル";
 "general.close" = "閉じる";
-"general.back" = "Back";
+"general.back" = "戻る";
 "general.open_settings" = "Wireの設定を開く";
 "general.edit" = "編集";
 "general.done" = "完了";
@@ -30,7 +30,7 @@
 // Language like Chinese does not use space to sperate words or sentences.
 "general.space_between_words" = "\U200B";
 
-"general.guest-room-name" = "Guest room";
+"general.guest-room-name" = "ゲストルーム";
 
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -56,9 +56,9 @@
 "peoplepicker.header.services" = "サービス";
 "peoplepicker.services.create_conversation.item" = "会話を作成";
 "peoplepicker.services.add_service.button" = "サービスを追加";
-"peoplepicker.services.add_service.error.title" = "The service can't be added";
-"peoplepicker.services.add_service.error.default" = "The service is unavailable at the moment";
-"peoplepicker.services.add_service.error.full" = "The conversation is full";
+"peoplepicker.services.add_service.error.title" = "サービスを追加できません。";
+"peoplepicker.services.add_service.error.default" = "現在、サービスはご利用いただけません。";
+"peoplepicker.services.add_service.error.full" = "会話数が上限に達しました。";
 
 "peoplepicker.title.create_conversation" = "グループを作成します";
 "peoplepicker.title.add_to_conversation" = "人を追加します";
@@ -88,7 +88,7 @@
 "peoplepicker.invite_team_members" = "チームに招待する";
 "peoplepicker.quick-action.open-conversation" = "開く";
 "peoplepicker.quick-action.create-conversation" = "グループを作成します";
-"peoplepicker.quick-action.create-guest-room" = "Create guest room";
+"peoplepicker.quick-action.create-guest-room" = "ゲストルームを作成する";
 
 "add_participants.all_contacts_added" = "Everyone's here.";
 
@@ -105,7 +105,7 @@
 "contacts_ui.title" = "友達を招待する";
 
 "conversation_list.empty.all_archived.message" = "全てアーカイブ済み";
-"conversation_list.empty.no_contacts.message" = "Start a conversation or\ncreate a group.";
+"conversation_list.empty.no_contacts.message" = "会話を開始またはグループを作成します。";
 
 
 // Conversation List Indicator
@@ -120,13 +120,13 @@
 
 // Conversation list voiceover accessibility
 "conversation_list.voiceover.open_conversation.hint" = "会話を始めます";
-"conversation_list.voiceover.status.pending_connection" = "pending";
+"conversation_list.voiceover.status.pending_connection" = "保留中";
 "conversation_list.voiceover.status.active_call" = "active call";
 "conversation_list.voiceover.status.missed_call" = "不在着信";
 "conversation_list.voiceover.status.pause_media" = "pause media";
 "conversation_list.voiceover.status.play_media" = "play media";
 "conversation_list.voiceover.status.silenced" = "silenced";
-"conversation_list.voiceover.status.typing" = "typing";
+"conversation_list.voiceover.status.typing" = "入力中";
 "conversation_list.voiceover.status.ping" = "ping";
 "conversation_list.voiceover.bottom_bar.archived_button.label" = "archived";
 "conversation_list.voiceover.bottom_bar.archived_button.hint" = "list of archived conversations";
@@ -413,7 +413,7 @@
 "content.message.go_to_conversation" = "開く";
 "content.message.forward.to" = "検索...";
 "content.message.open" = "開く";
-"content.message.copy" = "Copy";
+"content.message.copy" = "コピー";
 
 "content.message.open_link_alert.title" = "Visit Link";
 "content.message.open_link_alert.message" = "This will take you to\n%@";
@@ -423,8 +423,8 @@
 
 "content.file.too_big" = "%@までのファイルを送信できます。";
 // Someone pinged
-"content.ping.text" = "%@ pinged";
-"content.ping.text-you" = "%@ pinged";
+"content.ping.text" = "%@ Pingしました";
+"content.ping.text-you" = "%@ Pingしました";
 
 // Current user pinged
 "content.ping.text.you" = "あなた";
@@ -502,8 +502,8 @@
 "meta.menu.cancel" = "キャンセル";
 "meta.menu.cancel_connection_request" = "リクエストを取り消す";
 "meta.menu.mark_unread" = "Mark as Unread";
-"meta.menu.mark_read" = "Mark as Read";
-"shortcut.mark_all_as_read.title" = "Mark All as Read";
+"meta.menu.mark_read" = "既読にする";
+"shortcut.mark_all_as_read.title" = "すべて既読にする";
 
 // Delete conversation
 "meta.menu.delete_content.dialog_title" = "コンテンツを削除しますか?";
@@ -511,7 +511,7 @@
 "meta.menu.delete_content.leave_as_well_message" = "会話からも退室する";
 "meta.menu.delete_content.button_cancel" = "キャンセル";
 "meta.menu.delete_content.button_delete" = "削除";
-"meta.menu.delete_content.button_delete_and_leave" = "Delete and leave";
+"meta.menu.delete_content.button_delete_and_leave" = "削除して退出";
 
 // Leave conversation
 "meta.leave_conversation_dialog_title" = "会話から退室しますか？";
@@ -519,7 +519,7 @@
 "meta.leave_conversation.delete_content_as_well_message" = "コンテンツも削除されます";
 "meta.leave_conversation_button_cancel" = "キャンセル";
 "meta.leave_conversation_button_leave" = "離れる";
-"meta.leave_conversation_button_leave_and_delete" = "Leave and delete content";
+"meta.leave_conversation_button_leave_and_delete" = "退出してアカウントを削除する";
 
 // Conversation Degraded (security level lowered)
 "meta.degraded.degradation_reason_message.singular" = "%@が新しいデバイスを使い始めました。";
@@ -563,8 +563,8 @@
 "profile.cancel_connection_request_dialog.button_yes" = "はい";
 
 // Unblock button
-"profile.block_button_title" = "Block…";
-"profile.unblock_button_title" = "Unblock…";
+"profile.block_button_title" = "ブロック中...";
+"profile.unblock_button_title" = "ブロック解除中...";
 
 "profile.cancel_connection_button_title" = "リクエストをキャンセルします";
 "profile.connection_request_state.blocked" = "ブロックしています";
@@ -576,13 +576,13 @@
 "profile.details.guest" = "ゲスト";
 
 "profile_view.accessibility.handle" = "ユーザーネーム";
-"profile_view.accessibility.name" = "Display name";
+"profile_view.accessibility.name" = "表示名";
 "profile_view.accessibility.team_name" = "チーム名";
 
 // Device list
 "profile.devices.title" = "デバイス";
 "profile.devices.fingerprint_message_unencrypted" = "%@は古いバージョンのWireを使用しています。端末は表示されません。";
-"profile.devices.fingerprint_message.title" = "Wire gives every device a unique fingerprint. Compare them with %@ and verify your conversation.";
+"profile.devices.fingerprint_message.title" = "Wire はそれぞれのデバイスに固有のフィンガープリントを付与します。それを %@ と比較して、会話を確認します。";
 "profile.devices.fingerprint_message.link" = "なぜ会話を確認するのですか? _";
 
 // Device detail
@@ -600,8 +600,8 @@
 "participants.services.remove_integration.button" = "remove integration";
 
 // Group details
-"group_details.guest_options_cell.title" = "Guest Options";
-"group_details.guest_options_cell.enabled" = "On";
+"group_details.guest_options_cell.title" = "ゲスト オプション";
+"group_details.guest_options_cell.enabled" = "オン";
 "group_details.guest_options_cell.disabled" = "オフ";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -618,8 +618,8 @@
 "self.sign_out" = "ログアウト";
 "self.report_abuse" = "悪用を報告する";
 "self.voiceover.label" = "プロフィール";
-"self.voiceover.hint" = "Open profile and settings";
-"self.new-device.voiceover.label" = "Profile, new devices added";
+"self.voiceover.hint" = "プロファイルと設定を開く";
+"self.new-device.voiceover.label" = "プロファイル, 新規デバイスの追加";
 
 "self.add_phone_number" = "電話番号を追加する";
 "self.add_email_password" = "メールアドレスとパスワードを追加";
@@ -632,7 +632,7 @@
 "about.copyright.title" = "© Wire Swiss GmbH";
 
 // Self new devices
-"self.new_device_alert.title" = "Your account was used on:";
+"self.new_device_alert.title" = "あなたのWireアカウントは次のデバイスで利用されています。";
 "self.new_device_alert.message" = "\n%@\n\nIf you don’t recognize the device above, remove it and reset your password.";
 "self.new_device_alert.message_plural" = "\n%@\n\nIf you don’t recognize the devices above, remove them and reset your password.";
 "self.new_device_alert.manage_devices" = "デバイスを管理";
@@ -973,7 +973,7 @@
 
 // Registration
 
-"registration.launch_back_button.label" = "Back";
+"registration.launch_back_button.label" = "戻る";
 
 "registration.title" = "登録";
 "registration.close_email_invitation_button.email_title" = "別のメール アドレスを使う";
@@ -1178,8 +1178,8 @@
 "error.conversation.title" = "Error";
 "error.conversation.cannot_add" = "Adding the participant failed";
 "error.conversation.cannot_remove" = "Removing the participant failed";
-"error.conversation.too_many_members" = "The conversation is full";
-"error.conversation.offline" = "There seems to be a problem with your Internet connection. Please make sure it’s working.";
+"error.conversation.too_many_members" = "会話数が上限に達しました。";
+"error.conversation.offline" = "インターネット接続に問題があるようです。インターネット接続を確認してください。";
 
 "sketchpad.initial_hint" = "色をタップしてブラシのサイズを変更します";
 

@@ -1179,7 +1179,7 @@
 "error.conversation.cannot_add" = "Adding the participant failed";
 "error.conversation.cannot_remove" = "Removing the participant failed";
 "error.conversation.too_many_members" = "Het gesprek is vol";
-"error.conversation.offline" = "There seems to be a problem with your Internet connection. Please make sure it’s working.";
+"error.conversation.offline" = "Er lijkt een probleem te zijn met je internetverbinding. Controleer of deze werkt.";
 
 "sketchpad.initial_hint" = "Klik op de kleuren om de penseelgrootte te veranderen";
 

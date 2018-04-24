@@ -441,7 +441,7 @@
 "inbox.connection_request.ignore_button_title" = "取消";
 
 // Save image errors
-"library.alert.permission_warning.title" = "Wire needs access to your Photos";
+"library.alert.permission_warning.title" = "Wire需要存取你的照片库";
 "library.alert.permission_warning.restrictions.explaination" = "Wire cannot access your library because restrictions are enabled.";
 "library.alert.permission_warning.not_allowed.explaination" = "Go to Settings and allow Wire to access your photos.";
 
@@ -1179,7 +1179,7 @@
 "error.conversation.cannot_add" = "Adding the participant failed";
 "error.conversation.cannot_remove" = "Removing the participant failed";
 "error.conversation.too_many_members" = "对话人数已达上限";
-"error.conversation.offline" = "There seems to be a problem with your Internet connection. Please make sure it’s working.";
+"error.conversation.offline" = "您的互联网连线似乎出现了问题。请确保您有网路连线。";
 
 "sketchpad.initial_hint" = "点击颜色更换画笔大小";
 

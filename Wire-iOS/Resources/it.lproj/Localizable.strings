@@ -416,7 +416,7 @@
 "content.message.copy" = "Copia";
 
 "content.message.open_link_alert.title" = "Apri Link";
-"content.message.open_link_alert.message" = "This will take you to\n%@";
+"content.message.open_link_alert.message" = "Ti porterà su %@";
 "content.message.open_link_alert.open" = "Apri";
 
 "content.reactions_list.likers" = "Piace a";
@@ -446,11 +446,11 @@
 "library.alert.permission_warning.not_allowed.explaination" = "Vai nelle Impostazioni e permetti a Wire di accedere alle tue foto.";
 
 // Voice
-"voice.status.one_to_one.incoming" = "%@\ncalling";
-"voice.status.group_call.incoming" = "%@\nringing";
-"voice.status.one_to_one.outgoing" = "%@\nringing";
+"voice.status.one_to_one.incoming" = "%@\nsta chiamando";
+"voice.status.group_call.incoming" = "%@\nsta squillando";
+"voice.status.one_to_one.outgoing" = "%@\nsta squillando";
 "voice.status.joining" = "%@\nIn attesa di connessione";
-"voice.status.leaving" = "%@\nCall ended";
+"voice.status.leaving" = "%@\nChiamata terminata";
 "voice.status.video_not_available" = "Video spento";
 "voice.status.low_connection" = "Connessione scarsa";
 "voice.network_error.title" = "Nessuna connessione internet";
@@ -493,10 +493,10 @@
 
 // Meta Menu
 "meta.menu.rename" = "Rinomina";
-"meta.menu.leave" = "Leave…";
+"meta.menu.leave" = "Lascia…";
 "meta.menu.archive" = "Archivia";
 "meta.menu.unarchive" = "Disarchivia";
-"meta.menu.delete" = "Delete Content…";
+"meta.menu.delete" = "Elimina contenuti…";
 "meta.menu.silence.mute" = "Silenzia";
 "meta.menu.silence.unmute" = "Riattiva audio";
 "meta.menu.cancel" = "Annulla";
@@ -563,8 +563,8 @@
 "profile.cancel_connection_request_dialog.button_yes" = "Sì";
 
 // Unblock button
-"profile.block_button_title" = "Block…";
-"profile.unblock_button_title" = "Unblock…";
+"profile.block_button_title" = "Blocca…";
+"profile.unblock_button_title" = "Sblocca…";
 
 "profile.cancel_connection_button_title" = "ANNULLA RICHIESTA";
 "profile.connection_request_state.blocked" = "BLOCCATO";
@@ -582,7 +582,7 @@
 // Device list
 "profile.devices.title" = "Dispositivi";
 "profile.devices.fingerprint_message_unencrypted" = "%@ sta utilizzando una vecchia versione di filo. Nessun dispositivo viene visualizzato qui.";
-"profile.devices.fingerprint_message.title" = "Wire gives every device a unique fingerprint. Compare them with %@ and verify your conversation.";
+"profile.devices.fingerprint_message.title" = "Wire dà un'impronta unica a ogni dispositivo. Confrontale con %@ e verifica la tua conversazione.";
 "profile.devices.fingerprint_message.link" = "Perché verificare le conversazioni?";
 
 // Device detail
@@ -799,10 +799,10 @@
 "self.settings.privacy_contacts_menu.description_disabled.title" = "Questo ti aiuta a connetterti con gli altri. Rendiamo tutte le informazioni dai contatti anonime e non sono cedute a nessun altro. Consenti l'accesso tramite Impostazioni > Privacy > Contatti.";
 
 "self.settings.privacy_security.lock_app" = "Blocca con codice";
-"self.settings.privacy_security.lock_app.subtitle.lock_description" = "Lock Wire after 10 seconds in the background.";
-"self.settings.privacy_security.lock_app.subtitle.touch_id" = "Unlock with Touch ID or enter your passcode.";
-"self.settings.privacy_security.lock_app.subtitle.face_id" = "Unlock with Face ID or enter your passcode.";
-"self.settings.privacy_security.lock_app.subtitle.none" = "Unlock by entering your passcode.";
+"self.settings.privacy_security.lock_app.subtitle.lock_description" = "Blocca Wire dopo 10 secondi in background.";
+"self.settings.privacy_security.lock_app.subtitle.touch_id" = "Sblocca con Touch ID o inserisci il tuo codice di accesso.";
+"self.settings.privacy_security.lock_app.subtitle.face_id" = "Sblocca con Face ID o inserisci il tuo codice di accesso.";
+"self.settings.privacy_security.lock_app.subtitle.none" = "Sblocca inserendo il tuo codice di accesso.";
 
 "self.settings.privacy_security.lock_app.description" = "Sblocca Wire";
 
@@ -848,9 +848,9 @@
 
 // History backup
 
-"self.settings.conversations.title" = "History";
-"self.settings.history_backup.title" = "Back Up Conversations";
-"self.settings.history_backup.description" = "Create a backup to preserve your conversation history. You can use this to restore history if you lose your device or switch to a new one.\n\nThe backup file is not protected by Wire end-to-end encryption, so store it in a safe place.";
+"self.settings.conversations.title" = "Cronologia";
+"self.settings.history_backup.title" = "Backup delle conversazioni";
+"self.settings.history_backup.description" = "Crea una copia di backup per conservare la cronologia delle conversazioni. Potrai utilizzarla per ripristinare la cronologia se perdi il tuo dispositivo o passi ad uno nuovo.\n\nIl file di backup non è protetto dalla crittografia end-to-end di Wire, perciò conservalo in un luogo sicuro.";
 "self.settings.history_backup.action" = "Esegui il backup ora";
 "self.settings.history_backup.error.title" = "Errore";
 
@@ -859,11 +859,11 @@
 
 // History backup password
 
-"self.settings.history_backup.password.title" = "Set Password";
+"self.settings.history_backup.password.title" = "Imposta password";
 "self.settings.history_backup.password.cancel" = "Annulla";
 "self.settings.history_backup.password.next" = "Avanti";
 "self.settings.history_backup.password.placeholder" = "Almeno 8 caratteri";
-"self.settings.history_backup.password.description" = "The backup will be compressed and encrypted with the password you set here.";
+"self.settings.history_backup.password.description" = "Il backup verrà compresso e crittografato con la password impostata qui.";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // System status
@@ -964,7 +964,7 @@
 "guest_room.actions.copy_link" = "Copia link";
 "guest_room.actions.copied_link" = "Link copiato!";
 "guest_room.actions.share_link" = "Condividi link";
-"guest_room.actions.revoke_link" = "Revoke Link…";
+"guest_room.actions.revoke_link" = "Revoca il link…";
 
 "guest_room.share.message" = "Unisciti a questa conversazione su Wire:\n%@";
 
@@ -1005,34 +1005,34 @@
 "registration.no_history.restore_backup" = "Ripristina da backup";
 
 // Restore History Warning Alert
-"registration.no_history.restore_backup_warning.title" = "Restore history";
-"registration.no_history.restore_backup_warning.message" = "The backup contents will replace the conversation history on this device.\nYou can only restore history from a backup of the same platform.";
-"registration.no_history.restore_backup_warning.proceed" = "Choose Backup File";
+"registration.no_history.restore_backup_warning.title" = "Ripristino della cronologia";
+"registration.no_history.restore_backup_warning.message" = "Il contenuto del backup sostituirà la cronologia delle conversazioni su questo dispositivo. È possibile ripristinare solo la cronologia da un backup dello stesso sistema operativo.";
+"registration.no_history.restore_backup_warning.proceed" = "Scegli il file di backup";
 
 /// Restore History Failure Alerts
 "registration.no_history.restore_backup_failed.try_again" = "Riprova";
 
 // Generic
 "registration.no_history.restore_backup_failed.title" = "Qualcosa è andato storto";
-"registration.no_history.restore_backup_failed.message" = "Your history could not be restored.";
+"registration.no_history.restore_backup_failed.message" = "La tua cronologia non può essere ripristinata.";
 
 // Wrong Account
-"registration.no_history.restore_backup_failed.wrong_account.title" = "Incompatible backup";
-"registration.no_history.restore_backup_failed.wrong_account.message" = "You cannot restore history from a different account.";
+"registration.no_history.restore_backup_failed.wrong_account.title" = "Backup incompatibile";
+"registration.no_history.restore_backup_failed.wrong_account.message" = "Non è possibile ripristinare le conversazioni da un altro account.";
 
 // Incompatible Version
-"registration.no_history.restore_backup_failed.wrong_version.title" = "Incompatible backup";
-"registration.no_history.restore_backup_failed.wrong_version.message" = "This backup was created by a newer or outdated version of Wire and cannot be restored here.";
+"registration.no_history.restore_backup_failed.wrong_version.title" = "Backup incompatibile";
+"registration.no_history.restore_backup_failed.wrong_version.message" = "Questo backup è stato creato con una versione più recente o obsoleta di Wire e non può essere ripristinato.";
 
 // Restore In Progress Loading Titles
-"registration.no_history.restore_backup.restoring" = "Restoring…";
-"registration.no_history.restore_backup.completed" = "Completed";
+"registration.no_history.restore_backup.restoring" = "Ripristino in corso…";
+"registration.no_history.restore_backup.completed" = "Completato";
 
 // Password Import Alert
-"registration.no_history.restore_backup.password.title" = "This backup is password protected.";
-"registration.no_history.restore_backup.password.message" = "The password is required to restore this backup.";
+"registration.no_history.restore_backup.password.title" = "Questo backup è protetto da password.";
+"registration.no_history.restore_backup.password.message" = "La password è necessaria per ripristinare questo backup.";
 "registration.no_history.restore_backup.password.placeholder" = "Password";
-"registration.no_history.restore_backup.password_error.title" = "Wrong Password";
+"registration.no_history.restore_backup.password_error.title" = "Password errata";
 
 "registration.no_history.logged_out.hero" = "Hai utilizzato Wire su questo dispositivo prima.";
 "registration.no_history.logged_out.subtitle" = "I messaggi inviati nel frattempo non verranno visualizzato.";
@@ -1176,10 +1176,10 @@
 "error.invite.no_messaging_provider" = "Per favore configura i tuoi SMS per essere in grado di inviare gli inviti via SMS";
 
 "error.conversation.title" = "Errore";
-"error.conversation.cannot_add" = "Adding the participant failed";
-"error.conversation.cannot_remove" = "Removing the participant failed";
+"error.conversation.cannot_add" = "Non è stato possibile aggiungere il partecipante";
+"error.conversation.cannot_remove" = "Non è stato possibile rimuovere il partecipante";
 "error.conversation.too_many_members" = "La conversazione è piena";
-"error.conversation.offline" = "There seems to be a problem with your Internet connection. Please make sure it’s working.";
+"error.conversation.offline" = "Sembra esserci un problema con la connessione a Internet. Per favore assicurati che funziona.";
 
 "sketchpad.initial_hint" = "Tocca il colore per cambiare la dimensione del pennello";
 

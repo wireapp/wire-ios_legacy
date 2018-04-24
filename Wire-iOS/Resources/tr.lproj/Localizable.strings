@@ -1179,7 +1179,7 @@
 "error.conversation.cannot_add" = "Adding the participant failed";
 "error.conversation.cannot_remove" = "Removing the participant failed";
 "error.conversation.too_many_members" = "The conversation is full";
-"error.conversation.offline" = "There seems to be a problem with your Internet connection. Please make sure it’s working.";
+"error.conversation.offline" = "İnternet bağlantınızla ilgili bir sorun var gibi görünüyor. Lütfen çalıştığından emin olun.";
 
 "sketchpad.initial_hint" = "Fırça boyutunu değiştirmek için renklere tıklayın";
 
