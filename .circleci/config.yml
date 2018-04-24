@@ -32,10 +32,12 @@ setup_environment: &setup_environment
 
 version: 2
 jobs:
-      
+  trigger-build:
+    type: approval
   build:
     <<: *defaults
-    type: approval
+    requires:
+      - trigger-build
     branches:
       ignore:
         - develop
