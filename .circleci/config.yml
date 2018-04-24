@@ -33,11 +33,7 @@ setup_environment: &setup_environment
 version: 2
 jobs:
   build:
-    type: 
-      - approval
     <<: *defaults
-    requires:
-      - trigger-build
     branches:
       ignore:
         - develop
@@ -64,3 +60,11 @@ jobs:
         path: build/junit
     - save_cache: *gems_cache
     - save_cache: *carthage_cache
+
+workflows:
+  version: 2
+  build_and_test:
+    jobs:
+      - build:
+        type: approval
+
