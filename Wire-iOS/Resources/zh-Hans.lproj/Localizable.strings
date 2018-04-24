@@ -391,7 +391,6 @@
 // Full sentence: "A message from %@ was not received. [...] (device d1b23c54f34a). This is a debug information.
 
 "content.system.unknown_message.body" = "您正在使用旧版本的Wire，因此无法显示该信息。";
-"content.system.unknown_message.body.link" = "为什么出现这个问题？";
 
 "content.file.uploading" = "上传...";
 "content.file.downloading" = "正在下载...";

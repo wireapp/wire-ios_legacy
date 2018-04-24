@@ -391,7 +391,6 @@
 // Full sentence: "A message from %@ was not received. [...] (device d1b23c54f34a). This is a debug information.
 
 "content.system.unknown_message.body" = "Você está usando uma versão antiga do Wire que não pode exibir esta mensagem.";
-"content.system.unknown_message.body.link" = "Por que isso acontece?";
 
 "content.file.uploading" = "Enviando…";
 "content.file.downloading" = "Baixando…";
