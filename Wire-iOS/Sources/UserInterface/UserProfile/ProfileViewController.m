@@ -222,9 +222,10 @@ typedef NS_ENUM(NSUInteger, ProfileViewControllerTabBarIndex) {
 {
     ZMUser *user = [self fullUser];
     if (nil != user) {
-        BOOL showShield = user.trusted && user.clients.count > 0 &&
-                        self.context != ProfileViewControllerContextDeviceList &&
-                        self.tabsController.selectedIndex != ProfileViewControllerTabBarIndexDevices;
+        BOOL showShield = user.trusted && user.clients.count > 0
+                       && self.context != ProfileViewControllerContextDeviceList
+                       && self.tabsController.selectedIndex != ProfileViewControllerTabBarIndexDevices
+                       && ZMUser.selfUser.trusted;
 
         self.profileTitleView.showVerifiedShield = showShield;
     }
