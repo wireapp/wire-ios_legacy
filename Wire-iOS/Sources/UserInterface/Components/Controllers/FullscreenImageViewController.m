@@ -99,6 +99,8 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
 @property (nonatomic) id messageObserverToken;
 
+@property (nonatomic) BOOL isDoubleTapping;
+
 @end
 
 @implementation FullscreenImageViewController
@@ -112,6 +114,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
         _forcePortraitMode = NO;
         _swipeToDismiss = YES;
         _showCloseButton = YES;
+        _isDoubleTapping = NO;
         if (nil != [ZMUserSession sharedSession]) {
             self.messageObserverToken = [MessageChangeInfo addObserver:self forMessage:message userSession:[ZMUserSession sharedSession]];
         }
@@ -177,6 +180,11 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 - (void)viewWillLayoutSubviews
 {
     [super viewWillLayoutSubviews];
+
+    if (self.isDoubleTapping) {
+        return;
+    }
+
     [self updateZoom];
 }
 
@@ -460,6 +468,15 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
 - (void)handleDoubleTap:(UITapGestureRecognizer *)doubleTapper
 {
+    switch (doubleTapper.state) {
+        case UIGestureRecognizerStateBegan:
+            self.isDoubleTapping = YES;
+            break;
+        default:
+            self.isDoubleTapping = NO;///TODO: set it when zoom animation ends.
+            break;
+    }
+
     [self setSelectedByMenu:NO animated:NO];
     [[UIMenuController sharedMenuController] setMenuVisible:NO];
 
