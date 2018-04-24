@@ -390,8 +390,7 @@
 "content.system.cannot_decrypt.otherDevice_part" = "(device %@)"; // example " (device d1b23c54f34a)".
                                                                             // Full sentence: "A message from %@ was not received. [...] (device d1b23c54f34a). This is a debug information.
 
-"content.system.unknown_message.body" = "You are using an older version of Wire that can’t display this message.";
-"content.system.unknown_message.body.link" = "Why is this happening?";
+"content.system.unknown_message.body" = "This message can’t be displayed. You may be using an older version of Wire.";
 
 "content.file.uploading" = "Uploading…";
 "content.file.downloading" = "Downloading…";

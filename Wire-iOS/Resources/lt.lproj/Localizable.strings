@@ -391,7 +391,6 @@
 // Full sentence: "A message from %@ was not received. [...] (device d1b23c54f34a). This is a debug information.
 
 "content.system.unknown_message.body" = "Naudojate senesnę „Wire“ versiją, kuri negali parodyti šios žinutės.";
-"content.system.unknown_message.body.link" = "Kodėl taip nutinka?";
 
 "content.file.uploading" = "Įkeliama…";
 "content.file.downloading" = "Atsiunčiama…";

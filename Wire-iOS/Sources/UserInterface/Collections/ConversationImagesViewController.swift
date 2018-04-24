@@ -41,7 +41,7 @@ extension UIView {
     }
 }
 
-final class ConversationImagesViewController: UIViewController {
+final class ConversationImagesViewController: TintColorCorrectedViewController {
     
     let collection: AssetCollectionWrapper
     
