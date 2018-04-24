@@ -27,7 +27,7 @@ final class GiphySearchViewControllerTests: XCTestCase {
     override func setUp() {
         super.setUp()
 
-        mockConversation = MockConversation.onoOnOneConversation()
+        mockConversation = MockConversation.oneOnOneConversation()
     }
     
     override func tearDown() {

@@ -28,7 +28,7 @@ final class GiphySnapshotTests: ZMSnapshotTestCase {
     override func setUp() {
         super.setUp()
 
-        mockConversation = MockConversation.onoOnOneConversation()
+        mockConversation = MockConversation.oneOnOneConversation()
 
         let searchTerm: String = "apple"
         sut = GiphySearchViewController(withSearchTerm: searchTerm, conversation: (mockConversation as Any) as! ZMConversation)
@@ -60,6 +60,6 @@ final class GiphySnapshotTests: ZMSnapshotTestCase {
         let confirmationController = sut.pushConfirmationViewController(ziph: nil, previewImage: image, animated: false)
         confirmationController.view.backgroundColor = .white
 
-        verify(view: mockNavigationController.view)
+        verify(view: confirmationController.view)
     }
 }
