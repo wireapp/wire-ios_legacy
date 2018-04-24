@@ -61,10 +61,18 @@ jobs:
     - save_cache: *gems_cache
     - save_cache: *carthage_cache
 
+  approve:
+    <<: *defaults
+    steps:
+      - run: echo "Stopping until approved!"
+
 workflows:
   version: 2
   build_and_test:
     jobs:
-      - build:
+      - approve:
         type: approval
+      - build:
+          requires: 
+            - approve
 
