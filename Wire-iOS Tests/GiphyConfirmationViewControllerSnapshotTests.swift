@@ -47,10 +47,7 @@ final class GiphyConfirmationViewControllerSnapshotTests: ZMSnapshotTestCase {
 
     /// Notice: navigation bar is empty and it is differnet form the apperance on the app
     func testConfirmationScreenWithDisabledSendButton(){
-        let navigationController = NavigationController()
-        navigationController.pushViewController(UIViewController(), animated: false)
-        navigationController.pushViewController(sut, animated: false)
-
+        let navigationController = NavigationController(rootViewController: sut)
         verify(view: navigationController.view)
     }
 }
