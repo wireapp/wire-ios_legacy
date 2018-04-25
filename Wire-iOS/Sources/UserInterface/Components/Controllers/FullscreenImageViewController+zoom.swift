@@ -23,13 +23,16 @@ extension FullscreenImageViewController {
     ///TODO: size class update
 
     override open func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
-//        coordinator.animate(alongsideTransition: { (context) in
-//
-//        })
+        guard let imageSize = imageView.image?.size else { return }
 
-        if let imageSize = imageView.image?.size {
-            updateScrollViewMinimumZoomScale(viewSize: size, imageSize: imageSize)
-        }
+        let isImageZoomed = scrollView.minimumZoomScale != scrollView.zoomScale
+        updateScrollViewMinimumZoomScale(viewSize: size, imageSize: imageSize)
+        
+        coordinator.animate(alongsideTransition: { (context) in
+            if isImageZoomed == false {
+                self.scrollView.zoomScale = self.scrollView.minimumZoomScale
+            }
+        })
     }
 
     func calculateMinZoom(viewSize: CGSize, imageSize: CGSize?) -> CGFloat {
