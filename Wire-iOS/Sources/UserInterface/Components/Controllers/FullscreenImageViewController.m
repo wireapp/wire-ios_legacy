@@ -241,6 +241,8 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
 - (void)loadImageAndSetupImageView
 {
+    CGSize parentSize = self.parentViewController.view.bounds.size;
+
     @weakify(self);
     
     const BOOL imageIsAnimatedGIF = self.message.imageMessageData.isAnimatedGIF;
@@ -264,9 +266,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
         dispatch_async(dispatch_get_main_queue(), ^{
             @strongify(self);
 
-            CGSize size = self.parentViewController.view.bounds.size;
-
-            [self updateScrollViewMinimumZoomScaleWithViewSize:size imageSize:image.size];
+            [self updateScrollViewMinimumZoomScaleWithViewSize:parentSize imageSize:image.size];
 
             UIImageView *imageView = [UIImageView imageViewWithMediaAsset:image];
             imageView.clipsToBounds = YES;
@@ -278,7 +278,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
             
             self.scrollView.contentSize = imageView.image.size;
             
-            [self updateZoomWithSize:size];
+            [self updateZoomWithSize:parentSize];
             [self centerScrollViewContent];
         });
     });

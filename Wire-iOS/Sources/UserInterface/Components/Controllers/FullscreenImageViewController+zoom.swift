@@ -62,11 +62,10 @@ extension FullscreenImageViewController {
     ///
     /// - Parameter size: size of the view which contains imageView
     func updateZoom(withSize size: CGSize) {
-        if imageView.image == nil || (size.width == 0 && size.height == 0) {
-            return
-        }
+        guard let image = imageView.image else { return }
+        guard !(size.width == 0 && size.height == 0) else { return }
 
-        var minZoom = size.minZoom(imageSize: imageView.image?.size)
+        var minZoom = size.minZoom(imageSize: image.size)
 
         // Force scrollViewDidZoom fire if zoom did not change
         if minZoom == lastZoomScale {

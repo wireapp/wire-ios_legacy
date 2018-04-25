@@ -20,6 +20,13 @@
 import XCTest
 @testable import Wire
 
+///TODO: mv to helper
+extension UIViewController {
+    func setBoundsSizeAsIPhone4_7Inch() {
+        self.view.bounds.size = CGSize(width: 375.0, height: 667.0)
+    }
+}
+
 class ConversationImagesViewControllerTests: CoreDataSnapshotTestCase {
     
     var sut: ConversationImagesViewController! = nil
@@ -43,7 +50,7 @@ class ConversationImagesViewControllerTests: CoreDataSnapshotTestCase {
     }
     
     func testThatItDisplaysCorrectToolbarForImage_Normal() {
-        sut.view.bounds.size = CGSize(width: 375.0, height: 667.0)
+        sut.setBoundsSizeAsIPhone4_7Inch()
         verify(view: sut.view)
     }
     
@@ -53,7 +60,7 @@ class ConversationImagesViewControllerTests: CoreDataSnapshotTestCase {
         message.isEphemeral = true
         sut.currentMessage = message
         
-        sut.view.bounds.size = CGSize(width: 375.0, height: 667.0)
+        sut.setBoundsSizeAsIPhone4_7Inch()
         verify(view: sut.view)
     }
 }

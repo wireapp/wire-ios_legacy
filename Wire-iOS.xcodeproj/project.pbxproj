@@ -1071,6 +1071,7 @@
 		EF4018BE205975C100CFBCB0 /* ApplicationProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4018BD205975C100CFBCB0 /* ApplicationProtocol.swift */; };
 		EF4018C02059761D00CFBCB0 /* MockApplication.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4018BF2059761D00CFBCB0 /* MockApplication.swift */; };
 		EF44784F20906DDD00BD9827 /* FullscreenImageViewController+zoom.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF44784E20906DDD00BD9827 /* FullscreenImageViewController+zoom.swift */; };
+		EF4478522090BF8700BD9827 /* FullscreenImageViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4478512090BF8700BD9827 /* FullscreenImageViewControllerTests.swift */; };
 		EF4795AD2077847E00334E32 /* ConversationInputBarViewController+UITextViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4795AC2077847E00334E32 /* ConversationInputBarViewController+UITextViewDelegate.swift */; };
 		EF60FC412064FD400017D083 /* SplitViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF60FC402064FD400017D083 /* SplitViewControllerTests.swift */; };
 		EF6163A51FE9583400C6F5A9 /* Message+dayFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF6163A41FE9583400C6F5A9 /* Message+dayFormatter.swift */; };
@@ -2691,6 +2692,7 @@
 		EF4018BF2059761D00CFBCB0 /* MockApplication.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockApplication.swift; sourceTree = "<group>"; };
 		EF44784E20906DDD00BD9827 /* FullscreenImageViewController+zoom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FullscreenImageViewController+zoom.swift"; sourceTree = "<group>"; };
 		EF4478502090BC1800BD9827 /* FullscreenImageViewController+internal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "FullscreenImageViewController+internal.h"; sourceTree = "<group>"; };
+		EF4478512090BF8700BD9827 /* FullscreenImageViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullscreenImageViewControllerTests.swift; sourceTree = "<group>"; };
 		EF4795AC2077847E00334E32 /* ConversationInputBarViewController+UITextViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConversationInputBarViewController+UITextViewDelegate.swift"; sourceTree = "<group>"; };
 		EF538FE02028AB6600EA4048 /* ProfileViewController+internal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ProfileViewController+internal.h"; sourceTree = "<group>"; };
 		EF60FC402064FD400017D083 /* SplitViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplitViewControllerTests.swift; sourceTree = "<group>"; };
@@ -5062,6 +5064,7 @@
 				870C92661E8CE55800A10995 /* RandomGeneratorFromDataTests.swift */,
 				876041531F5451B3003CB161 /* AccountViewTests.swift */,
 				EE2FC1D71F56F89800A9A418 /* ConversationImagesViewControllerTests.swift */,
+				EF4478512090BF8700BD9827 /* FullscreenImageViewControllerTests.swift */,
 				87B0ACA91FA20D7C001B2B9D /* AnalyticsTests.swift */,
 				87656FD01FB5FF0300D5286C /* FilePreviewGeneratorTests.swift */,
 				87FC0AE91FC719E80036E029 /* CharacterInputFieldTests.swift */,
@@ -7096,6 +7099,7 @@
 				F127BD5A1E2667170093B2F1 /* MockCollection.swift in Sources */,
 				EF6E3C7E208A0355003F6752 /* MockConversation+factory.swift in Sources */,
 				877ABB491E8127B200CBCF2B /* BackgroundViewControllerTests.swift in Sources */,
+				EF4478522090BF8700BD9827 /* FullscreenImageViewControllerTests.swift in Sources */,
 				EFC530A61FF3F277004D2B31 /* VoiceChannelViewControllerTests.swift in Sources */,
 				F127BD571E262E9F0093B2F1 /* CollectionsViewControllerTests.swift in Sources */,
 				1651F9C01D36789C00A9FAE8 /* Message+FormattingTests.swift in Sources */,
