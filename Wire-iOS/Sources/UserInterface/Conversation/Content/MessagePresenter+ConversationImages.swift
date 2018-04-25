@@ -21,17 +21,6 @@ import Classy
 
 extension MessagePresenter {
 
-    ///TODO: merge with minZoom func
-    func minRatio(imageSize: CGSize) -> CGFloat {
-        guard imageSize != .zero else { return 1 }
-
-        let size = UIScreen.main.bounds.size
-        let minZoom = min(size.width / imageSize.width,
-                          size.height / imageSize.height)
-
-        return minZoom
-    }
-
     func imagesViewController(for message: ZMConversationMessage, actionResponder: MessageActionResponder, isPreviewing: Bool) -> UIViewController {
         
         guard let conversation = message.conversation else {
@@ -51,7 +40,7 @@ extension MessagePresenter {
 
         // preferredContentSize should not excess view's size
         if isPreviewing {
-            let ratio = minRatio(imageSize: imageSize)
+            let ratio = UIScreen.main.bounds.size.minZoom(imageSize: imageSize)
             let preferredContentSize = CGSize(width: imageSize.width * ratio, height: imageSize.height * ratio)
 
             imagesController.preferredContentSize = preferredContentSize

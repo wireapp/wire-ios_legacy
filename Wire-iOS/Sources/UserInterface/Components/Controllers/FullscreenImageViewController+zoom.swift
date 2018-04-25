@@ -21,6 +21,8 @@ import Foundation
 extension CGSize {
     func minZoom(imageSize: CGSize?) -> CGFloat {
         guard let imageSize = imageSize else { return 1 }
+        guard imageSize != .zero else { return 1 }
+        guard self != .zero else { return 1 }
 
         var minZoom = min(self.width / imageSize.width, self.height / imageSize.height)
 
