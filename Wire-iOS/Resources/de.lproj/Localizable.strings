@@ -850,7 +850,7 @@
 
 "self.settings.conversations.title" = "Gesprächsverlauf";
 "self.settings.history_backup.title" = "Unterhaltungen sichern";
-"self.settings.history_backup.description" = "Erstelle ein Backup, um den Gesprächsverlauf zu sichern. Damit können Unterhaltungen wiederhergestellt werden, falls du dein Gerät verlierst oder ein neues Gerät nutzen möchtest.\n\nDie Backup-Datei wird nicht mit Wire Ende-zu-Ende-Verschlüsselung geschützt. Achte bitte darauf, sie an einem sicheren Ort zu speichern.";
+"self.settings.history_backup.description" = "Erstelle ein Backup, um den Gesprächsverlauf zu sichern. Damit können Unterhaltungen wiederhergestellt werden, falls du dein Gerät verlierst oder ein neues Gerät nutzen möchtest.\n\nWähle ein sicheres Passwort, um die Backup-Datei zu schützen.";
 "self.settings.history_backup.action" = "Jetzt sichern";
 "self.settings.history_backup.error.title" = "Fehler";
 
