@@ -693,6 +693,7 @@
 		87F6B6361D2E9CF500F057A5 /* EmojiOnlyStringTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F6B6351D2E9CF500F057A5 /* EmojiOnlyStringTests.swift */; };
 		87F6D1BB1C1590B7000AB4D2 /* RequestPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F6D1BA1C1590B7000AB4D2 /* RequestPasswordViewController.swift */; };
 		87FC0AEB1FC71C020036E029 /* CharacterInputFieldTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87FC0AE91FC719E80036E029 /* CharacterInputFieldTests.swift */; };
+		87FC98472090AC6B00015C34 /* AccessibilityWrapperController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87FC98462090AC6B00015C34 /* AccessibilityWrapperController.swift */; };
 		8F0DEDD51A693F58003F0ACC /* PingCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F0DEDD41A693F58003F0ACC /* PingCell.m */; };
 		8F41CFC319926B7A00E3B032 /* ZMUser+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F41CFC219926B7A00E3B032 /* ZMUser+Additions.m */; };
 		8F41CFC8199297C600E3B032 /* ZMConversation+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F41CFC5199297C600E3B032 /* ZMConversation+Additions.m */; };
@@ -2132,6 +2133,7 @@
 		87F6B6351D2E9CF500F057A5 /* EmojiOnlyStringTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmojiOnlyStringTests.swift; sourceTree = "<group>"; };
 		87F6D1BA1C1590B7000AB4D2 /* RequestPasswordViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestPasswordViewController.swift; sourceTree = "<group>"; };
 		87FC0AE91FC719E80036E029 /* CharacterInputFieldTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterInputFieldTests.swift; sourceTree = "<group>"; };
+		87FC98462090AC6B00015C34 /* AccessibilityWrapperController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessibilityWrapperController.swift; sourceTree = "<group>"; };
 		8F0DEDD31A693F58003F0ACC /* PingCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PingCell.h; sourceTree = "<group>"; };
 		8F0DEDD41A693F58003F0ACC /* PingCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PingCell.m; sourceTree = "<group>"; };
 		8F41CFC119926B7A00E3B032 /* ZMUser+Additions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ZMUser+Additions.h"; sourceTree = "<group>"; };
@@ -3539,6 +3541,7 @@
 				871BC1461D34F8F800DF0793 /* SplitViewController.m */,
 				87A1F9DA200CEDCA0040E9A9 /* ClearBackgroundNavigationController.swift */,
 				1682AEC2204840E7003A052A /* SectionCollectionViewController.swift */,
+				87FC98462090AC6B00015C34 /* AccessibilityWrapperController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -6858,6 +6861,7 @@
 				EF1F9A021FBB1FD800969DD1 /* LandingButton.swift in Sources */,
 				8733378A1DF5B43A006AE609 /* SwiftDependencies.swift in Sources */,
 				8759E2C11FC828ED008E17C9 /* CAAnimation+Cursor.swift in Sources */,
+				87FC98472090AC6B00015C34 /* AccessibilityWrapperController.swift in Sources */,
 				1660F23A1FBF32D400A0EE54 /* MediaPlayerController.swift in Sources */,
 				167961AF20445FB400B72ACC /* ProfileTitleView.swift in Sources */,
 				87A15FE11E08339500AED79B /* CollectionLinkCell.swift in Sources */,
