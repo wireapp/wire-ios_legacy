@@ -170,7 +170,7 @@ final class ConversationImagesViewController: TintColorCorrectedViewController {
 
         updateBarsForPreview()
     }
-
+    
     private func createPageController() {
         pageViewController.delegate = self
         pageViewController.dataSource = self

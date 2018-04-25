@@ -46,9 +46,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic) BOOL showCloseButton;
 @property (nonatomic, copy, nullable) void (^dismissAction)(__nullable dispatch_block_t);
 
-///TODO: internal
-@property (nonatomic) CGFloat lastZoomScale;
-
 - (instancetype)initWithMessage:(id<ZMConversationMessage>)message;
 
 - (void)showChrome:(BOOL)shouldShow;

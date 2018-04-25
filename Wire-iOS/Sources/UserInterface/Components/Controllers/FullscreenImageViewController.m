@@ -239,7 +239,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     [self.loadingSpinner autoCenterInSuperview];
 }
 
-///TODO: swift
 - (void)loadImageAndSetupImageView
 {
     @weakify(self);
@@ -436,7 +435,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
     CGFloat scaleDiff = self.scrollView.zoomScale - self.scrollView.minimumZoomScale;
 
-    // image view in minimum size, zoom in
+    // image view in minimum scale, zoom in
     if (scaleDiff < 0.0003) {
         CGPoint point = [doubleTapper locationInView:doubleTapper.view];
         CGRect zoomRect = CGRectMake(point.x - 25, point.y - 25, 50, 50);
