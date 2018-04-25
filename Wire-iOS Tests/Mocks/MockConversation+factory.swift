@@ -19,7 +19,7 @@
 import Foundation
 
 extension MockConversation {
-    static func onoOnOneConversation() -> MockConversation {
+    static func oneOnOneConversation() -> MockConversation {
         let mockConversation = MockConversation()
         mockConversation.conversationType = .oneOnOne
         mockConversation.displayName = "John Doe"

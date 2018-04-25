@@ -72,6 +72,8 @@ final class ConversationImagesViewController: TintColorCorrectedViewController {
         didSet {
             updateBarsForPreview()
 
+            preferredContentSize = .zero
+
             self.currentController?.updateZoom()
         }
     }

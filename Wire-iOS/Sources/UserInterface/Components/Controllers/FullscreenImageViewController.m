@@ -265,7 +265,13 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
         
         dispatch_async(dispatch_get_main_queue(), ^{
             @strongify(self);
-            
+
+            CGSize size = self.parentViewController.view.bounds.size;
+
+            float minZoom = MIN(size.width / image.size.width,
+                                size.height / image.size.height);
+            self.scrollView.minimumZoomScale = minZoom;
+
             UIImageView *imageView = [UIImageView imageViewWithMediaAsset:image];
             imageView.clipsToBounds = YES;
             imageView.layer.allowsEdgeAntialiasing = YES;
@@ -276,7 +282,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
             
             self.scrollView.contentSize = imageView.image.size;
             
-            [self updateZoomWithSize:self.view.bounds.size];
+            [self updateZoomWithSize:size];
             [self centerScrollViewContent];
         });
     });
@@ -382,20 +388,22 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
 - (void)updateZoom
 {
-    [self updateZoomWithSize:self.view.bounds.size];
+    [self updateZoomWithSize:self.parentViewController.view.frame.size];///FIXME: get size form screen?
 }
 
 // Zoom to show as much image as possible unless image is smaller than screen
 - (void)updateZoomWithSize:(CGSize)size
 {
+    if (self.imageView.image == nil || (size.width == 0 && size.height == 0)) {
+        return;
+    }
+
     float minZoom = MIN(size.width / self.imageView.image.size.width,
                         size.height / self.imageView.image.size.height);
 
     if (minZoom > 1) {
         minZoom = 1;
     }
-
-    self.scrollView.minimumZoomScale = minZoom;
 
     // Force scrollViewDidZoom fire if zoom did not change
     if (minZoom == self.lastZoomScale) {
@@ -459,18 +467,18 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     [self setSelectedByMenu:NO animated:NO];
     [[UIMenuController sharedMenuController] setMenuVisible:NO];
 
-    CGPoint point = [doubleTapper locationInView:doubleTapper.view];
-
-    CGRect zoomRect = CGRectMake(point.x - 25, point.y - 25, 50, 50);
-
-    CGRect finalRect = [self.imageView convertRect:zoomRect fromView:doubleTapper.view];
 
     CGFloat scaleDiff = self.scrollView.zoomScale - self.scrollView.minimumZoomScale;
 
+    // image view in minimum size, zoom in
     if (scaleDiff < 0.0003) {
+        CGPoint point = [doubleTapper locationInView:doubleTapper.view];
+        CGRect zoomRect = CGRectMake(point.x - 25, point.y - 25, 50, 50);
+        CGRect finalRect = [self.imageView convertRect:zoomRect fromView:doubleTapper.view];
+
         [self.scrollView zoomToRect:finalRect animated:YES];
     } else {
-        [self.scrollView setZoomScale:self.lastZoomScale animated:YES];
+        [self.scrollView setZoomScale:self.scrollView.minimumZoomScale animated:YES];
     }
 }
 
