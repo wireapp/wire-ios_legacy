@@ -47,8 +47,7 @@ extension ConversationContentViewController: UIViewControllerPreviewingDelegate 
             lastPreviewURL = url
             controller = TintColorCorrectedSafariViewController(url: url)
         } else if message.isImage {
-            let previewSize = cell.previewView.frame.size
-            controller = self.messagePresenter.viewController(forImageMessagePreview: message, actionResponder: self, previewSize: previewSize)
+            controller = self.messagePresenter.viewController(forImageMessagePreview: message, actionResponder: self)
         } else if message.isLocation {
             let locationController = LocationPreviewController(message: message)
             locationController.messageActionDelegate = self

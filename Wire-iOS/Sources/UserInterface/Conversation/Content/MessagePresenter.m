@@ -178,13 +178,11 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
         return nil;
     }
     
-    return [self imagesViewControllerFor:message actionResponder:delegate isPreviewing:NO previewSize:CGSizeZero];
+    return [self imagesViewControllerFor:message actionResponder:delegate isPreviewing: NO];
 }
 
-///TODO: swift
 - (nullable UIViewController *)viewControllerForImageMessagePreview:(id<ZMConversationMessage>)message
                                                     actionResponder:(nullable id<MessageActionResponder>)delegate
-                                                        previewSize:(CGSize)previewSize
 
 {
     if (! [Message isImageMessage:message]) {
@@ -195,7 +193,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
         return nil;
     }
 
-    return [self imagesViewControllerFor:message actionResponder:delegate isPreviewing:YES previewSize:previewSize];
+    return [self imagesViewControllerFor:message actionResponder:delegate isPreviewing:YES];
 }
 
 - (void)openImageMessage:(id<ZMConversationMessage>)message actionResponder:(nullable id<MessageActionResponder>)delegate

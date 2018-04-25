@@ -21,9 +21,9 @@ import Classy
 
 extension MessagePresenter {
 
-    func minRatio(previewSize: CGSize, imageSize: CGSize) -> CGFloat {
+    ///TODO: merge with minZoom func
+    func minRatio(imageSize: CGSize) -> CGFloat {
         guard imageSize != .zero else { return 1 }
-        guard previewSize != .zero else { return 1 }
 
         let size = UIScreen.main.bounds.size
         let minZoom = min(size.width / imageSize.width,
@@ -32,7 +32,7 @@ extension MessagePresenter {
         return minZoom
     }
 
-    func imagesViewController(for message: ZMConversationMessage, actionResponder: MessageActionResponder, isPreviewing: Bool, previewSize: CGSize) -> UIViewController { ///TODO: previewSize is optional
+    func imagesViewController(for message: ZMConversationMessage, actionResponder: MessageActionResponder, isPreviewing: Bool) -> UIViewController {
         
         guard let conversation = message.conversation else {
             fatal("Message \(message) has no conversation.")
@@ -49,11 +49,12 @@ extension MessagePresenter {
         let imagesController = ConversationImagesViewController(collection: collection, initialMessage: message, inverse: true)
         imagesController.isPreviewing = isPreviewing
 
+        // preferredContentSize should not excess view's size
         if isPreviewing {
-            let ratio = minRatio(previewSize: previewSize, imageSize: imageSize)
+            let ratio = minRatio(imageSize: imageSize)
             let preferredContentSize = CGSize(width: imageSize.width * ratio, height: imageSize.height * ratio)
 
-            imagesController.preferredContentSize = preferredContentSize ///TODO: scale down to fit the screen
+            imagesController.preferredContentSize = preferredContentSize
         }
         if (UIDevice.current.userInterfaceIdiom == .phone) {
             imagesController.modalPresentationStyle = .fullScreen;

@@ -42,13 +42,11 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)openFileMessage:(id<ZMConversationMessage>)message targetView:(UIView *)targetView;
 - (void)openDocumentControllerForMessage:(id<ZMConversationMessage>)message targetView:(UIView *)targetView withPreview:(BOOL)preview;
 
-///TODO: swift
 - (nullable UIViewController *)viewControllerForImageMessage:(id<ZMConversationMessage>)message
                                              actionResponder:(nullable id<MessageActionResponder>)delegate;
 
 - (nullable UIViewController *)viewControllerForImageMessagePreview:(id<ZMConversationMessage>)message
-                                                    actionResponder:(nullable id<MessageActionResponder>)delegate
-                                                        previewSize:(CGSize)previewSize;
+                                                    actionResponder:(nullable id<MessageActionResponder>)delegate;
 @end
 
 NS_ASSUME_NONNULL_END
