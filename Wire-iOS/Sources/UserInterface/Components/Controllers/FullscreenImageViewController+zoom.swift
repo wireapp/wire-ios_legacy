@@ -19,5 +19,56 @@
 import Foundation
 
 extension FullscreenImageViewController {
-    
+
+    ///TODO: size class update
+
+    override open func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+//        coordinator.animate(alongsideTransition: { (context) in
+//
+//        })
+
+        if let imageSize = imageView.image?.size {
+            updateScrollViewMinimumZoomScale(viewSize: size, imageSize: imageSize)
+        }
+    }
+
+    func calculateMinZoom(viewSize: CGSize, imageSize: CGSize?) -> CGFloat {
+        guard let imageSize = imageSize else { return 1 }
+
+        var minZoom = min(viewSize.width / imageSize.width, viewSize.height / imageSize.height)
+
+        if minZoom > 1 {
+            minZoom = 1
+        }
+
+        return minZoom
+    }
+
+    func updateScrollViewMinimumZoomScale(viewSize: CGSize, imageSize: CGSize) {
+        self.scrollView.minimumZoomScale = calculateMinZoom(viewSize: viewSize, imageSize: imageSize)
+    }
+
+    func updateZoom() {
+        guard let size = parent?.view?.frame.size else { return }
+        updateZoom(withSize: size)
+    }
+
+    /// Zoom to show as much image as possible unless image is smaller than screen
+    ///
+    /// - Parameter size: size of the view which contains imageView
+    func updateZoom(withSize size: CGSize) {
+        if imageView.image == nil || (size.width == 0 && size.height == 0) {
+            return
+        }
+
+        var minZoom = calculateMinZoom(viewSize: size, imageSize: imageView.image?.size)
+
+        // Force scrollViewDidZoom fire if zoom did not change
+        if minZoom == lastZoomScale {
+            minZoom += 0.000001
+        }
+        scrollView.zoomScale = CGFloat(minZoom)
+        lastZoomScale = minZoom
+    }
+
 }

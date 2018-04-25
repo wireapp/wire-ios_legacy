@@ -93,8 +93,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 @property (nonatomic) BOOL isShowingChrome;
 @property (nonatomic) BOOL assetWriteInProgress;
 
-@property (nonatomic) CGFloat lastZoomScale;
-
 @property (nonatomic) BOOL forcePortraitMode;
 
 @property (nonatomic) id messageObserverToken;
@@ -241,6 +239,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     [self.loadingSpinner autoCenterInSuperview];
 }
 
+///TODO: swift
 - (void)loadImageAndSetupImageView
 {
     @weakify(self);
@@ -268,9 +267,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
             CGSize size = self.parentViewController.view.bounds.size;
 
-            float minZoom = MIN(size.width / image.size.width,
-                                size.height / image.size.height);
-            self.scrollView.minimumZoomScale = minZoom;
+            [self updateScrollViewMinimumZoomScaleWithViewSize:size imageSize:image.size];
 
             UIImageView *imageView = [UIImageView imageViewWithMediaAsset:image];
             imageView.clipsToBounds = YES;
@@ -383,37 +380,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     }
     [self dismissWithCompletion:nil];
 }
-
-#pragma mark - Zoom
-
-- (void)updateZoom
-{
-    [self updateZoomWithSize:self.parentViewController.view.frame.size];///FIXME: get size form screen?
-}
-
-// Zoom to show as much image as possible unless image is smaller than screen
-- (void)updateZoomWithSize:(CGSize)size
-{
-    if (self.imageView.image == nil || (size.width == 0 && size.height == 0)) {
-        return;
-    }
-
-    float minZoom = MIN(size.width / self.imageView.image.size.width,
-                        size.height / self.imageView.image.size.height);
-
-    if (minZoom > 1) {
-        minZoom = 1;
-    }
-
-    // Force scrollViewDidZoom fire if zoom did not change
-    if (minZoom == self.lastZoomScale) {
-        minZoom += 0.000001;
-    }
-
-    self.scrollView.zoomScale = minZoom;////1.000000095 for second call?
-    self.lastZoomScale = minZoom;
-}
-
 
 #pragma mark - UIScrollViewDelegate
 
