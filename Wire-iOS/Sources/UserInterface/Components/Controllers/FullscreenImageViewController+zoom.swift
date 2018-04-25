@@ -17,3 +17,7 @@
 //
 
 import Foundation
+
+extension FullscreenImageViewController {
+    
+}

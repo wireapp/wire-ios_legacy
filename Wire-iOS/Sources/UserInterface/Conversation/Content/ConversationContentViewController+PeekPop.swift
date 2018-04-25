@@ -31,7 +31,8 @@ extension ConversationContentViewController: UIViewControllerPreviewingDelegate 
         let cellLocation = view.convert(location, to: tableView)
 
         guard let cellIndexPath = self.tableView.indexPathForRow(at: cellLocation),
-              let message = self.messageWindow.messages[cellIndexPath.row] as? ZMConversationMessage else {
+              let message = self.messageWindow.messages[cellIndexPath.row] as? ZMConversationMessage,
+              let cell = tableView.cellForRow(at: cellIndexPath) as? ConversationCell else {
             return .none
         }
 
@@ -46,14 +47,15 @@ extension ConversationContentViewController: UIViewControllerPreviewingDelegate 
             lastPreviewURL = url
             controller = TintColorCorrectedSafariViewController(url: url)
         } else if message.isImage {
-            controller = self.messagePresenter.viewController(forImageMessagePreview: message, actionResponder: self)
+            let previewSize = cell.previewView.frame.size
+            controller = self.messagePresenter.viewController(forImageMessagePreview: message, actionResponder: self, previewSize: previewSize)
         } else if message.isLocation {
             let locationController = LocationPreviewController(message: message)
             locationController.messageActionDelegate = self
             controller = locationController
         }
 
-        if nil != controller, let cell = tableView.cellForRow(at: cellIndexPath) as? ConversationCell, cell.previewView.bounds != .zero {
+        if nil != controller, cell.previewView.bounds != .zero {
             previewingContext.sourceRect = previewingContext.sourceView.convert(cell.previewView.frame, from: cell.previewView.superview!)
         }
 
