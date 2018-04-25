@@ -171,20 +171,6 @@ let videoDurationClusterizer: TimeIntervalClusterizer = {
     return TimeIntervalClusterizer.videoDuration()
 }()
 
-
-public extension ZMConversation {
-
-    var ephemeralTrackingAttributes: [String: Any] {
-        let ephemeral = destructionTimeout != .none
-        var attributes: [String:Any] = ["is_ephemeral": ephemeral]
-        guard ephemeral else { return attributes }
-        attributes["ephemeral_time"] = "\(Int(destructionTimeout.rawValue))"
-        return attributes
-    }
-
-}
-
-
 public extension Analytics {
 
     /// User clicked on any action in cursor, giphy button or audio / video call button from toolbar.
