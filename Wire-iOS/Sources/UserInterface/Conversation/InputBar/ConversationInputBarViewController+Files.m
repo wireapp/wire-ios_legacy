@@ -135,11 +135,13 @@ const NSTimeInterval ConversationUploadMaxVideoDuration = 4.0f * 60.0f; // 4 min
                                   [self presentImagePickerWithSourceType:UIImagePickerControllerSourceTypeCamera mediaTypes:@[(id)kUTTypeMovie] allowsEditing:false];
                               }];
     
-    UIPopoverPresentationController* popover = docController.popoverPresentationController;
+    UIViewController *accessibilityWrapper = [[AccessibilityWrapperController alloc] initWithWrappedController:docController];
+
+    UIPopoverPresentationController* popover = accessibilityWrapper.popoverPresentationController;
     popover.delegate = self;
     popover.sourceView = sender.superview;
     popover.sourceRect = sender.frame;
-    [self.parentViewController presentViewController:docController animated:YES completion:^() {
+    [self.parentViewController presentViewController:accessibilityWrapper animated:YES completion:^() {
         [[UIApplication sharedApplication] wr_updateStatusBarForCurrentControllerAnimated:YES];
     }];
 }

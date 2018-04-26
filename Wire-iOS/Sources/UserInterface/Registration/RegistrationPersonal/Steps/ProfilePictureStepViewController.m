@@ -232,7 +232,9 @@ NSString * const UnsplashRandomImageLowQualityURL = @"https://source.unsplash.co
     picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
     picker.delegate = self;
     
-    [self showController:picker inPopoverFromView:sender];
+    UIViewController *accessibilityWrapper = [[AccessibilityWrapperController alloc] initWithWrappedController:picker];
+    
+    [self showController:accessibilityWrapper inPopoverFromView:sender];
 }
 
 - (IBAction)keepPicture:(id)sender
