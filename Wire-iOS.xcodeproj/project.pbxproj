@@ -1066,6 +1066,7 @@
 		EF3052452087388000613C45 /* ConfirmEmailViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3052442087388000613C45 /* ConfirmEmailViewControllerTests.swift */; };
 		EF305247208742F300613C45 /* ConfirmPhoneViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF305246208742F300613C45 /* ConfirmPhoneViewControllerTests.swift */; };
 		EF30524B2088927D00613C45 /* transparent.png in Resources */ = {isa = PBXBuildFile; fileRef = EF30524A2088927D00613C45 /* transparent.png */; };
+		EF31DC7A2092008100A4F09F /* UIViewController+iPhoneSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF31DC792092008100A4F09F /* UIViewController+iPhoneSize.swift */; };
 		EF32A4CD204EFD8E003632FB /* CameraCellTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF32A4CC204EFD8E003632FB /* CameraCellTests.swift */; };
 		EF40005720568C4400E03347 /* NetworkStatusBarConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF40005620568C4400E03347 /* NetworkStatusBarConstants.swift */; };
 		EF4018BE205975C100CFBCB0 /* ApplicationProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4018BD205975C100CFBCB0 /* ApplicationProtocol.swift */; };
@@ -2686,6 +2687,7 @@
 		EF3052442087388000613C45 /* ConfirmEmailViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmEmailViewControllerTests.swift; sourceTree = "<group>"; };
 		EF305246208742F300613C45 /* ConfirmPhoneViewControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfirmPhoneViewControllerTests.swift; sourceTree = "<group>"; };
 		EF30524A2088927D00613C45 /* transparent.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = transparent.png; sourceTree = "<group>"; };
+		EF31DC792092008100A4F09F /* UIViewController+iPhoneSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+iPhoneSize.swift"; sourceTree = "<group>"; };
 		EF32A4CC204EFD8E003632FB /* CameraCellTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraCellTests.swift; sourceTree = "<group>"; };
 		EF40005620568C4400E03347 /* NetworkStatusBarConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkStatusBarConstants.swift; sourceTree = "<group>"; };
 		EF4018BD205975C100CFBCB0 /* ApplicationProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationProtocol.swift; sourceTree = "<group>"; };
@@ -4968,6 +4970,7 @@
 		BACB88521AF7C48900DDCDB0 /* Wire-iOS Tests */ = {
 			isa = PBXGroup;
 			children = (
+				EF31DC792092008100A4F09F /* UIViewController+iPhoneSize.swift */,
 				7C9E29192074F3F000827819 /* EmailVerificationStepViewControllerTests.swift */,
 				EF2128EB2056D4CB00C1673B /* NetworkStatusView */,
 				EEA747A71FCEBAD1000B529E /* AnalyticsMixpanelProviderTests.swift */,
@@ -5042,12 +5045,12 @@
 				BF58ABEC1D23F00000D5FF14 /* LocationSendViewControllerTests.swift */,
 				BF58ABEE1D23F3CD00D5FF14 /* ModalTopBarTests.swift */,
 				87DE06B21D26632E0009411F /* AudioEffectsPickerViewControllerTests.swift */,
+				BFA13E151D4A5F7100F0A91B /* ConfirmAssetViewControllerTests.swift */,
 				8732670C1D2D0C49005A62C1 /* AudioRecordKeyboardViewControllerTests.swift */,
 				87F6B6351D2E9CF500F057A5 /* EmojiOnlyStringTests.swift */,
 				873DC9581D4796C100C1C9B0 /* CameraKeyboardViewControllerTests.swift */,
 				EF32A4CC204EFD8E003632FB /* CameraCellTests.swift */,
 				BF78687D1D86B36D0063762F /* LocationDataTests.swift */,
-				BFA13E151D4A5F7100F0A91B /* ConfirmAssetViewControllerTests.swift */,
 				1651F9BF1D36789C00A9FAE8 /* Message+FormattingTests.swift */,
 				87CA886F1DE30AD0004101B6 /* UserConnectionViewTests.swift */,
 				BF7ED2DB1DF1D1CF003A4397 /* IncomingConnectionViewTests.swift */,
@@ -6793,6 +6796,7 @@
 				874D0EB31D3E6D77003DF418 /* ConversationInputBarViewController+Camera.swift in Sources */,
 				871BC2561D34F8F800DF0793 /* PopTransition.m in Sources */,
 				EF21270E1FB9DFE300625A9B /* CountryCodeTableViewController.m in Sources */,
+				EF31DC7A2092008100A4F09F /* UIViewController+iPhoneSize.swift in Sources */,
 				BFBDDBC61DB0D51C00BEED02 /* ConversationInputBarButtonState.swift in Sources */,
 				875F89141D6DD6D000D8748E /* ReactionsView.swift in Sources */,
 				871BC27A1D34F8F800DF0793 /* WebLinkTextView.m in Sources */,

@@ -380,17 +380,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     [self centerScrollViewContent];
 }
 
-
-//- (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView {
-////    [self centerScrollViewContent];
-//}
-
-//- (nullable UIView *)viewForZoomingInScrollView:(UIScrollView *)scrollView;     // return a view that will be scaled. if delegate returns nil, nothing happens
-//- (void)scrollViewWillBeginZooming:(UIScrollView *)scrollView withView:(nullable UIView *)view NS_AVAILABLE_IOS(3_2); // called before the scroll view begins zooming its content
-//- (void)scrollViewDidEndZooming:(UIScrollView *)scrollView withView:(nullable UIView *)view atScale:(CGFloat)scale{
-//    [self centerScrollViewContent];
-//}
-
 - (UIView *)viewForZoomingInScrollView:(UIScrollView *)scrollView
 {
     return self.imageView;
