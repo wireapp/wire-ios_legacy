@@ -52,15 +52,15 @@ final class FullscreenImageViewControllerTests: XCTestCase {
 
         UIView.setAnimationsEnabled(false)
 
-        // The image is 1280 * 854
+        // The image is 1280 * 854 W/H = ~1.5
         let data = self.data(forResource: "unsplash_matterhorn", extension: "jpg")!
         image = UIImage(data: data)
 
         let message = MockMessageFactory.imageMessage(with: image)!
 
         sut = FullscreenImageViewController(message: message)
-
         sut.setBoundsSizeAsIPhone4_7Inch()
+        sut.viewDidLoad()
 
         sut.setupImageView(image: image, parentSize: sut.view.bounds.size)
     }
@@ -88,7 +88,7 @@ final class FullscreenImageViewControllerTests: XCTestCase {
         sut.updateZoom(withSize: sut.view.bounds.size)
 
         // THEN
-        let delta: CGFloat = 0.0001
+        let delta: CGFloat = 0.0003
         XCTAssertLessThanOrEqual(fabs(sut.scrollView.zoomScale - sut.scrollView.minimumZoomScale), delta)
 
         // WHEN
@@ -96,6 +96,10 @@ final class FullscreenImageViewControllerTests: XCTestCase {
 
         sut.handleDoubleTap(mockTapGestureRecognizer)
         sut.view.layoutIfNeeded()
+        sut.view.layoutSubviews()
+
+//        sut.handleDoubleTap(mockTapGestureRecognizer)
+//        sut.view.layoutIfNeeded()
 
         // THEN
         XCTAssertEqual(sut.scrollView.zoomScale, 1) ///TODO: check zoom rect/image size

@@ -240,8 +240,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
 - (void)loadImageAndSetupImageView
 {
-    CGSize parentSize = self.parentViewController.view.bounds.size;
-
     @weakify(self);
     
     const BOOL imageIsAnimatedGIF = self.message.imageMessageData.isAnimatedGIF;
@@ -265,6 +263,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
         dispatch_async(dispatch_get_main_queue(), ^{
             @strongify(self);
 
+            CGSize parentSize = self.parentViewController.view.bounds.size;
             [self setupImageViewWithImage:image parentSize:parentSize];
         });
     });
@@ -379,6 +378,17 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     [[UIMenuController sharedMenuController] setMenuVisible:NO];
 
     [self centerScrollViewContent];
+}
+
+
+- (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView {
+//    [self centerScrollViewContent];
+}
+
+//- (nullable UIView *)viewForZoomingInScrollView:(UIScrollView *)scrollView;     // return a view that will be scaled. if delegate returns nil, nothing happens
+//- (void)scrollViewWillBeginZooming:(UIScrollView *)scrollView withView:(nullable UIView *)view NS_AVAILABLE_IOS(3_2); // called before the scroll view begins zooming its content
+- (void)scrollViewDidEndZooming:(UIScrollView *)scrollView withView:(nullable UIView *)view atScale:(CGFloat)scale{
+//    [self centerScrollViewContent];
 }
 
 - (UIView *)viewForZoomingInScrollView:(UIScrollView *)scrollView
