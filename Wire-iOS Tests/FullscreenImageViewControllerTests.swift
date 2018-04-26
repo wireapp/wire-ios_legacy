@@ -71,6 +71,13 @@ final class FullscreenImageViewControllerTests: XCTestCase {
         super.tearDown()
     }
 
+    func doubleTap() {
+        let mockTapGestureRecognizer = MockTapGestureRecognizer(location: CGPoint(x: sut.view.bounds.size.width / 2, y: sut.view.bounds.size.height / 2), state: .ended)
+
+        sut.handleDoubleTap(mockTapGestureRecognizer)
+        sut.view.layoutIfNeeded()
+    }
+
     func testThatScrollViewMinimumZoomScaleAndZoomScaleAreSet() {
         // GIVEN & WHEN
         sut.updateScrollViewMinimumZoomScale(viewSize: sut.view.bounds.size, imageSize: image.size)
@@ -88,10 +95,7 @@ final class FullscreenImageViewControllerTests: XCTestCase {
         sut.view.layoutIfNeeded()
 
         // WHEN
-        let mockTapGestureRecognizer = MockTapGestureRecognizer(location: CGPoint(x: sut.view.bounds.size.width / 2, y: sut.view.bounds.size.height / 2), state: .ended)
-
-        sut.handleDoubleTap(mockTapGestureRecognizer)
-        sut.view.layoutIfNeeded()
+        doubleTap()
 
         // THEN
         XCTAssertEqual(sut.scrollView.zoomScale, 1)
@@ -111,5 +115,26 @@ final class FullscreenImageViewControllerTests: XCTestCase {
         // THEN
         XCTAssertEqual(sut.scrollView.minimumZoomScale, sut.scrollView.zoomScale)
         XCTAssertEqual(sut.view.bounds.size.height / image.size.height, sut.scrollView.minimumZoomScale)
+    }
+
+    func testThatRotateScreenReserveZoomScaleIfDoubleTapped() {
+        // GIVEN
+        sut.updateScrollViewMinimumZoomScale(viewSize: sut.view.bounds.size, imageSize: image.size)
+        sut.updateZoom(withSize: sut.view.bounds.size)
+        sut.view.layoutIfNeeded()
+
+        // WHEN
+        doubleTap()
+
+        // THEN
+        XCTAssertEqual(1, sut.scrollView.zoomScale)
+
+        // WHEN
+        let landscapeSize = CGSize(width: CGSize.iPhoneSize.iPhone4_7.height, height: CGSize.iPhoneSize.iPhone4_7.width)
+        sut.view.bounds.size = landscapeSize
+        sut.viewWillTransition(to: landscapeSize, with: nil)
+
+        // THEN
+        XCTAssertEqual(1, sut.scrollView.zoomScale)
     }
 }
