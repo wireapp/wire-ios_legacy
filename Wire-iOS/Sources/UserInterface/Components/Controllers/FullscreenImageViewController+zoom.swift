@@ -37,7 +37,7 @@ extension CGSize {
 extension FullscreenImageViewController {
 
     override open func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
-        guard let imageSize = imageView.image?.size else { return }
+        guard let imageSize = imageView?.image?.size else { return }
 
         let isImageZoomed = scrollView.minimumZoomScale != scrollView.zoomScale
         updateScrollViewMinimumZoomScale(viewSize: size, imageSize: imageSize)
@@ -62,7 +62,7 @@ extension FullscreenImageViewController {
     ///
     /// - Parameter size: size of the view which contains imageView
     func updateZoom(withSize size: CGSize) {
-        guard let image = imageView.image else { return }
+        guard let image = imageView?.image else { return }
         guard !(size.width == 0 && size.height == 0) else { return }
 
         var minZoom = size.minZoom(imageSize: image.size)
@@ -76,7 +76,6 @@ extension FullscreenImageViewController {
     }
 
     func setupImageView(image: MediaAsset, parentSize: CGSize){
-        updateScrollViewMinimumZoomScale(viewSize: parentSize, imageSize: image.size)
         guard let imageView = UIImageView(mediaAsset: image) else { return }
         
         imageView.clipsToBounds = true
@@ -86,7 +85,10 @@ extension FullscreenImageViewController {
 
         scrollView.addSubview(imageView)
         scrollView.contentSize = imageView.image?.size ?? CGSize.zero
+
+        updateScrollViewMinimumZoomScale(viewSize: parentSize, imageSize: image.size)
         updateZoom(withSize: parentSize)
+
         centerScrollViewContent()
     }
 }

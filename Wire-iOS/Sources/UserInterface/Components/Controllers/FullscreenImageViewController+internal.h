@@ -19,9 +19,9 @@
 @interface FullscreenImageViewController ()
 
 @property (nonatomic) CGFloat lastZoomScale;
-@property (nonatomic, readwrite) UIImageView *imageView;
+@property (nullable, nonatomic, readwrite) UIImageView *imageView;
 
-- (void)handleDoubleTap:(UITapGestureRecognizer *)doubleTapper;
+- (void)handleDoubleTap:(nonnull UITapGestureRecognizer *)doubleTapper;
 - (void)centerScrollViewContent;
 
 @end

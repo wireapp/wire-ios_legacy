@@ -50,6 +50,8 @@ final class FullscreenImageViewControllerTests: XCTestCase {
     override func setUp() {
         super.setUp()
 
+        UIView.setAnimationsEnabled(false)
+
         // The image is 1280 * 854
         let data = self.data(forResource: "unsplash_matterhorn", extension: "jpg")!
         image = UIImage(data: data)
@@ -66,6 +68,9 @@ final class FullscreenImageViewControllerTests: XCTestCase {
     override func tearDown() {
         sut = nil
         image = nil
+
+        UIView.setAnimationsEnabled(true)
+
         super.tearDown()
     }
 
@@ -90,8 +95,9 @@ final class FullscreenImageViewControllerTests: XCTestCase {
         let mockTapGestureRecognizer = MockTapGestureRecognizer(location: CGPoint(x: sut.view.bounds.size.width / 2, y: sut.view.bounds.size.height / 2), state: .ended)
 
         sut.handleDoubleTap(mockTapGestureRecognizer)
+        sut.view.layoutIfNeeded()
 
         // THEN
-        XCTAssertEqual(sut.scrollView.zoomScale, 1)
+        XCTAssertEqual(sut.scrollView.zoomScale, 1) ///TODO: check zoom rect/image size
     }
 }
