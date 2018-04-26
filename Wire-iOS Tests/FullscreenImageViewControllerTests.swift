@@ -31,10 +31,7 @@ final class MockTapGestureRecognizer: UITapGestureRecognizer {
     }
 
     override func location(in view: UIView?) -> CGPoint {
-        if let mockLocation = mockLocation {
-            return mockLocation
-        }
-        return super.location(in: view)
+        return mockLocation ?? super.location(in: view)
     }
 
     override var state: UIGestureRecognizerState {
@@ -74,34 +71,30 @@ final class FullscreenImageViewControllerTests: XCTestCase {
         super.tearDown()
     }
 
-    func testThatScrollViewMinimumZoomScaleIsSet() {
+    func testThatScrollViewMinimumZoomScaleAndZoomScaleAreSet() {
         // GIVEN & WHEN
         sut.updateScrollViewMinimumZoomScale(viewSize: sut.view.bounds.size, imageSize: image.size)
 
         // THEN
         XCTAssertEqual(sut.scrollView.minimumZoomScale, sut.view.bounds.size.width / image.size.width)
+
+        let delta: CGFloat = 0.0003
+        XCTAssertLessThanOrEqual(fabs(sut.scrollView.zoomScale - sut.scrollView.minimumZoomScale), delta)
     }
 
     func testThatDoubleTapZoomInTheImage() {
-        // GIVEN & WHEN
+        // GIVEN
         sut.updateScrollViewMinimumZoomScale(viewSize: sut.view.bounds.size, imageSize: image.size)
         sut.updateZoom(withSize: sut.view.bounds.size)
-
-        // THEN
-        let delta: CGFloat = 0.0003
-        XCTAssertLessThanOrEqual(fabs(sut.scrollView.zoomScale - sut.scrollView.minimumZoomScale), delta)
+        sut.view.layoutIfNeeded()
 
         // WHEN
         let mockTapGestureRecognizer = MockTapGestureRecognizer(location: CGPoint(x: sut.view.bounds.size.width / 2, y: sut.view.bounds.size.height / 2), state: .ended)
 
         sut.handleDoubleTap(mockTapGestureRecognizer)
         sut.view.layoutIfNeeded()
-        sut.view.layoutSubviews()
-
-//        sut.handleDoubleTap(mockTapGestureRecognizer)
-//        sut.view.layoutIfNeeded()
 
         // THEN
-        XCTAssertEqual(sut.scrollView.zoomScale, 1) ///TODO: check zoom rect/image size
+        XCTAssertEqual(sut.scrollView.zoomScale, 1)
     }
 }
