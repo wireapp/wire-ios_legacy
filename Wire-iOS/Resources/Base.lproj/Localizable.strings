@@ -406,6 +406,8 @@
 "content.message.delete" = "Delete";
 "content.message.save" = "Save";
 
+"content.message.delete_ellipsis" = "Delete…";
+
 "content.message.like" = "Like";
 "content.message.unlike" = "Unlike";
 "content.message.forward" = "Share";
