@@ -16,6 +16,8 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
+static CGFloat const kZoomScaleDelta = 0.0003;
+
 @interface FullscreenImageViewController ()
 
 @property (nonatomic) CGFloat lastZoomScale;

@@ -18,8 +18,15 @@
 
 import Foundation
 
+extension CGSize {
+    enum iPhoneSize {
+        static let iPhone4_7: CGSize = CGSize(width: 375.0, height: 667.0)
+    }
+}
+
 extension UIViewController {
+
     func setBoundsSizeAsIPhone4_7Inch() {
-        self.view.bounds.size = CGSize(width: 375.0, height: 667.0)
+        self.view.bounds.size = CGSize.iPhoneSize.iPhone4_7
     }
 }

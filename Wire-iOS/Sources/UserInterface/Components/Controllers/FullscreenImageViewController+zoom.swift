@@ -36,17 +36,25 @@ extension CGSize {
 
 extension FullscreenImageViewController {
 
-    override open func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+    override open func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator?) {
         guard let imageSize = imageView?.image?.size else { return }
 
-        let isImageZoomed = scrollView.minimumZoomScale != scrollView.zoomScale
+        let isImageZoomed = fabs(scrollView.minimumZoomScale - scrollView.zoomScale) > kZoomScaleDelta
         updateScrollViewMinimumZoomScale(viewSize: size, imageSize: imageSize)
 
-        coordinator.animate(alongsideTransition: { (context) in
+        let animationBlock: () -> Void = { _ in
             if isImageZoomed == false {
                 self.scrollView.zoomScale = self.scrollView.minimumZoomScale
             }
-        })
+        }
+
+        if let coordinator = coordinator {
+            coordinator.animate(alongsideTransition: { (context) in
+                animationBlock()
+            })
+        } else {
+            animationBlock()
+        }
     }
 
     func updateScrollViewMinimumZoomScale(viewSize: CGSize, imageSize: CGSize) {

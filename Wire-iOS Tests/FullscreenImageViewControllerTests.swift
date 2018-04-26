@@ -78,8 +78,7 @@ final class FullscreenImageViewControllerTests: XCTestCase {
         // THEN
         XCTAssertEqual(sut.scrollView.minimumZoomScale, sut.view.bounds.size.width / image.size.width)
 
-        let delta: CGFloat = 0.0003
-        XCTAssertLessThanOrEqual(fabs(sut.scrollView.zoomScale - sut.scrollView.minimumZoomScale), delta)
+        XCTAssertLessThanOrEqual(fabs(sut.scrollView.zoomScale - sut.scrollView.minimumZoomScale), kZoomScaleDelta)
     }
 
     func testThatDoubleTapZoomInTheImage() {
@@ -96,5 +95,21 @@ final class FullscreenImageViewControllerTests: XCTestCase {
 
         // THEN
         XCTAssertEqual(sut.scrollView.zoomScale, 1)
+    }
+
+    func testThatRotateScreenResetsZoomScaleToMinZoomScale() {
+        // GIVEN
+        sut.updateScrollViewMinimumZoomScale(viewSize: sut.view.bounds.size, imageSize: image.size)
+        sut.updateZoom(withSize: sut.view.bounds.size)
+        sut.view.layoutIfNeeded()
+
+        // WHEN
+        let landscapeSize = CGSize(width: CGSize.iPhoneSize.iPhone4_7.height, height: CGSize.iPhoneSize.iPhone4_7.width)
+        sut.view.bounds.size = landscapeSize
+        sut.viewWillTransition(to: landscapeSize, with: nil)
+
+        // THEN
+        XCTAssertEqual(sut.scrollView.minimumZoomScale, sut.scrollView.zoomScale)
+        XCTAssertEqual(sut.view.bounds.size.height / image.size.height, sut.scrollView.minimumZoomScale)
     }
 }
