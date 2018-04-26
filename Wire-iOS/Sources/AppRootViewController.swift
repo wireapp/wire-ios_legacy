@@ -144,7 +144,6 @@ class AppRootViewController: UIViewController {
             analytics: sessionManagerAnalytics,
             delegate: appStateController,
             application: UIApplication.shared,
-            launchOptions: launchOptions,
             blacklistDownloadInterval: Settings.shared().blacklistDownloadInterval) { sessionManager in
             self.sessionManager = sessionManager
             self.sessionManagerCreatedSessionObserverToken = sessionManager.addSessionManagerCreatedSessionObserver(self)
@@ -153,6 +152,7 @@ class AppRootViewController: UIViewController {
             self.sessionManager?.requestToOpenViewDelegate = self
             sessionManager.updateCallNotificationStyleFromSettings()
             sessionManager.useConstantBitRateAudio = Settings.shared().callingConstantBitRate
+            sessionManager.start(launchOptions: launchOptions)
                 
             self.quickActionsManager = QuickActionsManager(sessionManager: sessionManager,
                                                            application: UIApplication.shared)
