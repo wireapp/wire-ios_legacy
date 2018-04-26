@@ -107,7 +107,8 @@ extension ConversationInputBarViewController {
     }
     
     fileprivate func showAudioRecordViewController() {
-        guard let audioRecordViewContainer = self.audioRecordViewContainer else {
+        guard let audioRecordViewContainer = self.audioRecordViewContainer,
+              let audioRecordViewController = self.audioRecordViewController else {
             return
         }
 
