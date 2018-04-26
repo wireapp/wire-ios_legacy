@@ -19,6 +19,29 @@
 import XCTest
 @testable import Wire
 
+final class MockTapGestureRecognizer: UITapGestureRecognizer {
+    let mockState: UIGestureRecognizerState
+    var mockLocation: CGPoint?
+
+    init(location: CGPoint?, state: UIGestureRecognizerState) {
+        mockLocation = location
+        mockState = state
+
+        super.init(target: nil, action: nil)
+    }
+
+    override func location(in view: UIView?) -> CGPoint {
+        if let mockLocation = mockLocation {
+            return mockLocation
+        }
+        return super.location(in: view)
+    }
+
+    override var state: UIGestureRecognizerState {
+        return mockState
+    }
+}
+
 final class FullscreenImageViewControllerTests: XCTestCase {
     
     var sut: FullscreenImageViewController!
@@ -34,6 +57,10 @@ final class FullscreenImageViewControllerTests: XCTestCase {
         let message = MockMessageFactory.imageMessage(with: image)!
 
         sut = FullscreenImageViewController(message: message)
+
+        sut.setBoundsSizeAsIPhone4_7Inch()
+
+        sut.setupImageView(image: image, parentSize: sut.view.bounds.size)
     }
     
     override func tearDown() {
@@ -43,13 +70,28 @@ final class FullscreenImageViewControllerTests: XCTestCase {
     }
 
     func testThatScrollViewMinimumZoomScaleIsSet() {
-        // GIVEN
-        sut.setBoundsSizeAsIPhone4_7Inch()
-
-        // WHEN
+        // GIVEN & WHEN
         sut.updateScrollViewMinimumZoomScale(viewSize: sut.view.bounds.size, imageSize: image.size)
 
         // THEN
         XCTAssertEqual(sut.scrollView.minimumZoomScale, sut.view.bounds.size.width / image.size.width)
+    }
+
+    func testThatDoubleTapZoomInTheImage() {
+        // GIVEN & WHEN
+        sut.updateScrollViewMinimumZoomScale(viewSize: sut.view.bounds.size, imageSize: image.size)
+        sut.updateZoom(withSize: sut.view.bounds.size)
+
+        // THEN
+        let delta: CGFloat = 0.0001
+        XCTAssertLessThanOrEqual(fabs(sut.scrollView.zoomScale - sut.scrollView.minimumZoomScale), delta)
+
+        // WHEN
+        let mockTapGestureRecognizer = MockTapGestureRecognizer(location: CGPoint(x: sut.view.bounds.size.width / 2, y: sut.view.bounds.size.height / 2), state: .ended)
+
+        sut.handleDoubleTap(mockTapGestureRecognizer)
+
+        // THEN
+        XCTAssertEqual(sut.scrollView.zoomScale, 1)
     }
 }

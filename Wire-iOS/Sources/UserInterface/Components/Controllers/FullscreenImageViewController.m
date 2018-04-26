@@ -23,6 +23,7 @@
 
 #import "FullscreenImageViewController.h"
 #import "FullscreenImageViewController+PullToDismiss.h"
+#import "FullscreenImageViewController+internal.h"
 
 // ui
 #import "UIView+Borders.h"
@@ -81,8 +82,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 @property (nonatomic) CALayer *highlightLayer;
 
 @property (nonatomic) IconButton *closeButton;
-
-@property (nonatomic, readwrite) UIImageView *imageView;
 
 @property (nonatomic) UITapGestureRecognizer *tapGestureRecognzier;
 @property (nonatomic) UITapGestureRecognizer *doubleTapGestureRecognizer;
@@ -266,20 +265,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
         dispatch_async(dispatch_get_main_queue(), ^{
             @strongify(self);
 
-            [self updateScrollViewMinimumZoomScaleWithViewSize:parentSize imageSize:image.size];
-
-            UIImageView *imageView = [UIImageView imageViewWithMediaAsset:image];
-            imageView.clipsToBounds = YES;
-            imageView.layer.allowsEdgeAntialiasing = YES;
-            
-            self.imageView = imageView;
-            self.imageView.translatesAutoresizingMaskIntoConstraints = NO;
-            [self.scrollView addSubview:self.imageView];
-            
-            self.scrollView.contentSize = imageView.image.size;
-            
-            [self updateZoomWithSize:parentSize];
-            [self centerScrollViewContent];
+            [self setupImageViewWithImage:image parentSize:parentSize];
         });
     });
 }
@@ -431,7 +417,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 {
     [self setSelectedByMenu:NO animated:NO];
     [[UIMenuController sharedMenuController] setMenuVisible:NO];
-
 
     CGFloat scaleDiff = self.scrollView.zoomScale - self.scrollView.minimumZoomScale;
 

@@ -75,4 +75,18 @@ extension FullscreenImageViewController {
         lastZoomScale = minZoom
     }
 
+    func setupImageView(image: MediaAsset, parentSize: CGSize){
+        updateScrollViewMinimumZoomScale(viewSize: parentSize, imageSize: image.size)
+        guard let imageView = UIImageView(mediaAsset: image) else { return }
+        
+        imageView.clipsToBounds = true
+        imageView.layer.allowsEdgeAntialiasing = true
+        self.imageView = imageView
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+
+        scrollView.addSubview(imageView)
+        scrollView.contentSize = imageView.image?.size ?? CGSize.zero
+        updateZoom(withSize: parentSize)
+        centerScrollViewContent()
+    }
 }

@@ -37,7 +37,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface FullscreenImageViewController : UIViewController
 
-@property (nonatomic, strong, readonly) UIImageView *imageView;
 @property (nonatomic, strong, readonly) UIScrollView *scrollView;
 @property (nonatomic, readonly) id<ZMConversationMessage> message;
 @property (nonatomic) UIView *snapshotBackgroundView;
