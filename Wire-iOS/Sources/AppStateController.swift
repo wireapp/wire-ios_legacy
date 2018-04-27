@@ -126,7 +126,6 @@ extension AppStateController : SessionManagerDelegate {
     func sessionManagerDidFailToLogin(account: Account?, error: Error) {
         loadingAccount = nil
         // We only care about the error if it concerns the selected account.
-        print("heqllo \(String(describing: SessionManager.shared?.debugDescription))")
         authenticationError = SessionManager.shared?.accountManager.selectedAccount == account ? error as NSError : nil
         isLoggedIn = false
         isLoggedOut = true
