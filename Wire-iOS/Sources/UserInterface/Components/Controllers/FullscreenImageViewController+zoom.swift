@@ -68,13 +68,10 @@ extension FullscreenImageViewController {
         let scaleDiff: CGFloat = scrollView.zoomScale - scrollView.minimumZoomScale
         // image view in minimum zoom scale, zoom in to a 50 x 50 rect
         if scaleDiff < kZoomScaleDelta {
-
-            // image is smaller than screen bound, no action for zoom in
-            if image.size.width < self.view.bounds.width &&
+            // image is smaller than screen bound and zoom sclae is max(1), do not zoom in
+            if (image.size.width < self.view.bounds.width &&
                 image.size.height < self.view.bounds.height &&
-                scrollView.zoomScale == 1 {
-
-            } else {
+                scrollView.zoomScale == 1) == false {
                 let point: CGPoint? = doubleTapper?.location(in: doubleTapper?.view)
                 let zoomRect = CGRect(x: (point?.x ?? 0.0) - 25, y: (point?.y ?? 0.0) - 25, width: 50, height: 50)
                 let finalRect: CGRect? = imageView?.convert(zoomRect, from: doubleTapper?.view)
