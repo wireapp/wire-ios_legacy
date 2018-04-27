@@ -68,7 +68,7 @@ extension ConversationInputBarViewController {
         
         switch sender.state {
         case .began:
-            self.createAudioRecord()///TODO: test
+            self.createAudioRecord()
             if let audioRecordViewController = self.audioRecordViewController , showAudioRecordViewControllerIfGrantedAccess() {
                 audioRecordViewController.setOverlayState(.expanded(0), animated: true)
                 audioRecordViewController.setRecordingState(.recording, animated: false)
