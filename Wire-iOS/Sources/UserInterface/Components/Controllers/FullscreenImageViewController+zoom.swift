@@ -57,6 +57,28 @@ extension FullscreenImageViewController {
         }
     }
 
+    // MARK: - Gesture Handling
+
+    func handleDoubleTap(_ doubleTapper: UITapGestureRecognizer?) {
+        setSelectedByMenu(false, animated: false)
+        UIMenuController.shared.isMenuVisible = false
+        let scaleDiff: CGFloat = scrollView.zoomScale - scrollView.minimumZoomScale
+        // image view in minimum zoom scale, zoom in to a 50 x 50 rect
+        if scaleDiff < kZoomScaleDelta {
+            let point: CGPoint? = doubleTapper?.location(in: doubleTapper?.view)
+            let zoomRect = CGRect(x: (point?.x ?? 0.0) - 25, y: (point?.y ?? 0.0) - 25, width: 50, height: 50)
+            let finalRect: CGRect? = imageView?.convert(zoomRect, from: doubleTapper?.view)
+            scrollView.zoom(to: finalRect ?? CGRect.zero, animated: true)
+            //        (origin = (x = 115.66665649414063, y = 78.333328247070313), size = (width = 50, height = 50))
+            //        po finalRect
+            //        (origin = (x = 195.33332824707031, y = 163), size = (width = 50, height = 50))
+        } else {
+            scrollView.setZoomScale(scrollView.minimumZoomScale, animated: true)
+        }
+    }
+
+    // MARK: - Zoom scale
+
     func updateScrollViewMinimumZoomScale(viewSize: CGSize, imageSize: CGSize) {
         self.scrollView.minimumZoomScale = viewSize.minZoom(imageSize: imageSize)
     }
@@ -82,6 +104,8 @@ extension FullscreenImageViewController {
         scrollView.zoomScale = CGFloat(minZoom)
         lastZoomScale = minZoom
     }
+
+    // MARK: - Image view
 
     func setupImageView(image: MediaAsset, parentSize: CGSize){
         guard let imageView = UIImageView(mediaAsset: image) else { return }

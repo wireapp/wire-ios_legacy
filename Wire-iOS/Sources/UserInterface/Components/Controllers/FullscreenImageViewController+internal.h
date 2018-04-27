@@ -25,5 +25,6 @@ static CGFloat const kZoomScaleDelta = 0.0003;
 
 - (void)handleDoubleTap:(nonnull UITapGestureRecognizer *)doubleTapper;
 - (void)centerScrollViewContent;
+- (void)setSelectedByMenu:(BOOL)selected animated:(BOOL)animated;
 
 @end
