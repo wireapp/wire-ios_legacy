@@ -113,7 +113,7 @@ final class FullscreenImageViewControllerTests: XCTestCase {
         sut.updateZoom(withSize: sut.view.bounds.size)
         sut.view.layoutIfNeeded()
 
-        XCTAssertEqual(sut.scrollView.zoomScale, sut.scrollView.minimumZoomScale)
+        XCTAssertLessThanOrEqual(fabs(sut.scrollView.zoomScale - sut.scrollView.minimumZoomScale), kZoomScaleDelta)
 
         // WHEN
         doubleTap()
