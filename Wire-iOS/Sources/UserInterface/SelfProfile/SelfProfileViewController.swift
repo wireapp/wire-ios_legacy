@@ -126,9 +126,18 @@ final internal class SelfProfileViewController: UIViewController {
     }
     
     private func createConstraints() {
+        var selfViewTopMargin: CGFloat = 12
+
+        if #available(iOS 10, *) {
+        } else {
+            if let naviBarHeight = self.navigationController?.navigationBar.frame.size.height {
+                selfViewTopMargin = 12 + naviBarHeight
+            }
+        }
+
         constrain(view, accountSelectorController.view, profileContainerView) { selfView, accountSelectorControllerView, profileContainerView in
             accountSelectorControllerView.height == 44
-            profileContainerView.top == selfView.topMargin + 12
+            profileContainerView.top == selfView.topMargin + selfViewTopMargin
         }
         
         let height = CGFloat(56 * settingsController.tableView.numberOfRows(inSection: 0))
