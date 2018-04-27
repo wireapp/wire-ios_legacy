@@ -18,6 +18,7 @@
 
 
 #import "FullscreenImageViewController+PullToDismiss.h"
+#import "FullscreenImageViewController+internal.h"
 
 @interface DynamicsProxy : NSObject <UIDynamicItem>
 @property (nonatomic) CGRect bounds;

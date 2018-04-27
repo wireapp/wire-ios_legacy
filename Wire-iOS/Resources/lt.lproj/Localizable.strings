@@ -854,7 +854,7 @@
 "self.settings.history_backup.error.title" = "Klaida";
 
 "self.settings.history_backup.set_email.title" = "Nustatykite el. pašto adresą ir slaptažodį.";
-"self.settings.history_backup.set_email.message" = "Norėdami sukurti susirašinėjimo praeitis atsarginę kopiją, jums būtina naudoti el. pašto adresą ir slaptažodį. Sukurti galite paskyros puslapyje Nustatymuose.";
+"self.settings.history_backup.set_email.message" = "Norėdami sukurti susirašinėjimo praeitis atsarginę kopiją, jums būtina naudoti el. pašto adresą ir slaptažodį. Sukurti galite paskyros puslapyje nustatymuose.";
 
 // History backup password
 
@@ -1178,7 +1178,7 @@
 "error.conversation.cannot_add" = "Pridėti pašnekovų nepavyko";
 "error.conversation.cannot_remove" = "Pašalinti pašnekovų nepavyko";
 "error.conversation.too_many_members" = "Susirašinėjimas pilnas";
-"error.conversation.offline" = "There seems to be a problem with your Internet connection. Please make sure it’s working.";
+"error.conversation.offline" = "Panašu, kad yra nesklandumų su interneto ryšiu. Įsitikinkite, kad jis yra.";
 
 "sketchpad.initial_hint" = "Spustelėkite spalvas, kad pakeistumėte teptuko dydį";
 

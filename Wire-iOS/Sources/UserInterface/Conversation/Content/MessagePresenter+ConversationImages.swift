@@ -20,6 +20,7 @@ import Foundation
 import Classy
 
 extension MessagePresenter {
+
     func imagesViewController(for message: ZMConversationMessage, actionResponder: MessageActionResponder, isPreviewing: Bool) -> UIViewController {
         
         guard let conversation = message.conversation else {
@@ -36,8 +37,14 @@ extension MessagePresenter {
         
         let imagesController = ConversationImagesViewController(collection: collection, initialMessage: message, inverse: true)
         imagesController.isPreviewing = isPreviewing
-        imagesController.preferredContentSize = imageSize
 
+        // preferredContentSize should not excess view's size
+        if isPreviewing {
+            let ratio = UIScreen.main.bounds.size.minZoom(imageSize: imageSize)
+            let preferredContentSize = CGSize(width: imageSize.width * ratio, height: imageSize.height * ratio)
+
+            imagesController.preferredContentSize = preferredContentSize
+        }
         if (UIDevice.current.userInterfaceIdiom == .phone) {
             imagesController.modalPresentationStyle = .fullScreen;
             imagesController.snapshotBackgroundView = UIScreen.main.snapshotView(afterScreenUpdates: true)

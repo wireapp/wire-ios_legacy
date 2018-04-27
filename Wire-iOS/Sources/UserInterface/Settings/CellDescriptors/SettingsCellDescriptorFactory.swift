@@ -370,7 +370,7 @@ import Foundation
         
         let builder = ZMExternal.builder()
         _ = builder?.setOtrKey("broken_key".data(using: .utf8))
-        let genericMessage = ZMGenericMessage.genericMessage(pbMessage: builder!.build(), messageID: UUID().transportString(), expiresAfter: nil)
+        let genericMessage = ZMGenericMessage.genericMessage(pbMessage: builder!.build(), messageID: UUID(), expiresAfter: nil)
         
         userSession.enqueueChanges {
             conversation.appendClientMessage(with: genericMessage, expires: false, hidden: false)

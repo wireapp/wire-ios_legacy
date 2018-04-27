@@ -64,7 +64,6 @@ extension ConversationInputBarViewController: UITextViewDelegate {
     public func textViewDidBeginEditing(_ textView: UITextView) {
         updateAccessoryViews()
         updateNewButtonTitleLabel()
-        AppDelegate.checkNetwork()
         hideLeftView()
     }
 

@@ -1178,7 +1178,7 @@
 "error.conversation.cannot_add" = "Не удалось добавить участника";
 "error.conversation.cannot_remove" = "Не удалось удалить участника";
 "error.conversation.too_many_members" = "Разговор переполнен";
-"error.conversation.offline" = "There seems to be a problem with your Internet connection. Please make sure it’s working.";
+"error.conversation.offline" = "Похоже, что есть проблема с подключением к интернету. Пожалуйста, убедитесь, что соединение установлено.";
 
 "sketchpad.initial_hint" = "Нажмите на цвет, чтобы изменить размер кисти";
 

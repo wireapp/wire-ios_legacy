@@ -1,6 +1,6 @@
 //
 // Wire
-// Copyright (C) 2017 Wire Swiss GmbH
+// Copyright (C) 2018 Wire Swiss GmbH
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -18,13 +18,15 @@
 
 import Foundation
 
-
-extension AppDelegate {
-
-    /// @return YES if network is offline
-    static var isOffline: Bool {
-        return .unreachable == NetworkStatus.shared().reachability()
+extension CGSize {
+    enum iPhoneSize {
+        static let iPhone4_7: CGSize = CGSize(width: 375.0, height: 667.0)
     }
-
 }
 
+extension UIViewController {
+
+    func setBoundsSizeAsIPhone4_7Inch() {
+        self.view.bounds.size = CGSize.iPhoneSize.iPhone4_7
+    }
+}
