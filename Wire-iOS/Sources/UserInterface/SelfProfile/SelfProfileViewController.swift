@@ -135,11 +135,16 @@ final internal class SelfProfileViewController: UIViewController {
             }
         }
 
-        constrain(view, accountSelectorController.view, profileContainerView) { selfView, accountSelectorControllerView, profileContainerView in
-            accountSelectorControllerView.height == 44
+        constrain(view, profileContainerView) { selfView, profileContainerView in
             profileContainerView.top == selfView.topMargin + selfViewTopMargin
         }
-        
+
+        constrain(accountSelectorController.view) {accountSelectorControllerView in
+            accountSelectorControllerView.height == 44
+            accountSelectorControllerView.centerX == accountSelectorControllerView.superview!.centerX
+            accountSelectorControllerView.centerY == accountSelectorControllerView.superview!.centerY
+        }
+
         let height = CGFloat(56 * settingsController.tableView.numberOfRows(inSection: 0))
         
         constrain(view, settingsController.view, profileView, profileContainerView, settingsController.tableView) { view, settingsControllerView, profileView, profileContainerView, tableView in
