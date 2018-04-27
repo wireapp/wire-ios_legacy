@@ -165,7 +165,7 @@ class LocationPreviewController: TintColorCorrectedViewController {
         // Delete
 
         if message.canBeDeleted {
-            let deleteAction = UIPreviewAction(title: "content.message.delete".localized, style: .destructive) { [weak self] _, _ in
+            let deleteAction = UIPreviewAction(title: "content.message.delete_ellipsis".localized, style: .default) { [weak self] _, _ in
                 guard let `self` = self else {
                     return
                 }
