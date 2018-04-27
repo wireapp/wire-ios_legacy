@@ -154,7 +154,7 @@ public final class InputBarButtonsView: UIView {
         
         guard !secondRow.isEmpty else { return }
         let filled = secondRow.count == numberOfButtons
-        constrainRowOfButtons(secondRow, inset: constants.buttonsBarHeight, rowIsFull: filled, referenceButton: firstRow[1]) ///TODO: crash when force touch a small image, firstRow has 1 btn, have 6 items for a norm size image
+        constrainRowOfButtons(secondRow, inset: constants.buttonsBarHeight, rowIsFull: filled, referenceButton: firstRow[1])
     }
     
     fileprivate func constrainRowOfButtons(_ buttons: [UIButton], inset: CGFloat, rowIsFull: Bool, referenceButton: UIButton?) {
