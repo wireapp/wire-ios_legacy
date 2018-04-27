@@ -156,6 +156,11 @@ class AppRootViewController: UIViewController {
                 
             self.quickActionsManager = QuickActionsManager(sessionManager: sessionManager,
                                                            application: UIApplication.shared)
+                
+            sessionManager.urlHandler.delegate = self
+            if let url = launchOptions[UIApplicationLaunchOptionsKey.url] as? URL {
+                sessionManager.urlHandler.openURL(url, options: [:])
+            }
         }
     }
 
@@ -548,5 +553,37 @@ public extension SessionManager {
         }
         
         return nil
+    }
+}
+
+extension AppRootViewController: SessionManagerURLHandlerDelegate {
+    func sessionManagerShouldExecute(URLAction: RawURLAction, callback: @escaping (Bool) -> (Void)) {
+        switch URLAction {
+        case .connectBot:
+            guard let _ = ZMUser.selfUser().team else {
+                callback(false)
+                return
+            }
+            
+            let alert = UIAlertController(title: "url_action.title".localized,
+                                          message: "url_action.connect_to_bot.message".localized,
+                                          preferredStyle: .alert)
+            
+            let agreeAction = UIAlertAction(title: "url_action.confirm".localized,
+                                            style: .default) { _ in
+                                                callback(true)
+            }
+            
+            alert.addAction(agreeAction)
+            
+            let cancelAction = UIAlertAction(title: "general.cancel".localized,
+                                             style: .cancel) { _ in
+                                                callback(false)
+            }
+            
+            alert.addAction(cancelAction)
+            
+            self.present(alert, animated: true, completion: nil)
+        }
     }
 }

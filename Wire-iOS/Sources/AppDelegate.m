@@ -174,6 +174,13 @@ static AppDelegate *sharedAppDelegate = nil;
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
+- (BOOL)application:(UIApplication *)app
+            openURL:(NSURL *)url
+            options:(NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options
+{
+    return [self.sessionManager.urlHandler openURL:url options:options];
+}
+
 - (void)applicationWillTerminate:(UIApplication *)application
 {
     ZMLogInfo(@"applicationWillTerminate:  (applicationState = %ld)", (long)application.applicationState);
