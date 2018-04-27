@@ -61,17 +61,25 @@ extension FullscreenImageViewController {
 
     func handleDoubleTap(_ doubleTapper: UITapGestureRecognizer?) {
         setSelectedByMenu(false, animated: false)
+
+        guard let image = imageView?.image else { return }
+
         UIMenuController.shared.isMenuVisible = false
         let scaleDiff: CGFloat = scrollView.zoomScale - scrollView.minimumZoomScale
         // image view in minimum zoom scale, zoom in to a 50 x 50 rect
         if scaleDiff < kZoomScaleDelta {
-            let point: CGPoint? = doubleTapper?.location(in: doubleTapper?.view)
-            let zoomRect = CGRect(x: (point?.x ?? 0.0) - 25, y: (point?.y ?? 0.0) - 25, width: 50, height: 50)
-            let finalRect: CGRect? = imageView?.convert(zoomRect, from: doubleTapper?.view)
-            scrollView.zoom(to: finalRect ?? CGRect.zero, animated: true)
-            //        (origin = (x = 115.66665649414063, y = 78.333328247070313), size = (width = 50, height = 50))
-            //        po finalRect
-            //        (origin = (x = 195.33332824707031, y = 163), size = (width = 50, height = 50))
+
+            // image is smaller than screen bound, no action for zoom in
+            if image.size.width < self.view.bounds.width &&
+                image.size.height < self.view.bounds.height &&
+                scrollView.zoomScale == 1 {
+
+            } else {
+                let point: CGPoint? = doubleTapper?.location(in: doubleTapper?.view)
+                let zoomRect = CGRect(x: (point?.x ?? 0.0) - 25, y: (point?.y ?? 0.0) - 25, width: 50, height: 50)
+                let finalRect: CGRect? = imageView?.convert(zoomRect, from: doubleTapper?.view)
+                scrollView.zoom(to: finalRect ?? CGRect.zero, animated: true)
+            }
         } else {
             scrollView.setZoomScale(scrollView.minimumZoomScale, animated: true)
         }
@@ -107,9 +115,9 @@ extension FullscreenImageViewController {
 
     // MARK: - Image view
 
-    func setupImageView(image: MediaAsset, parentSize: CGSize){
+    func setupImageView(image: MediaAsset, parentSize: CGSize) {
         guard let imageView = UIImageView(mediaAsset: image) else { return }
-        
+
         imageView.clipsToBounds = true
         imageView.layer.allowsEdgeAntialiasing = true
         self.imageView = imageView
