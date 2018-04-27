@@ -103,6 +103,7 @@
 #import "ConversationListViewController.h"
 #import "ConversationListViewController+Private.h"
 #import "FullscreenImageViewController.h"
+#import "FullscreenImageViewController+internal.h"
 #import "KeyboardAvoidingViewController.h"
 #import "PhoneNumberViewController.h"
 #import "CountryCodeTableViewController.h"

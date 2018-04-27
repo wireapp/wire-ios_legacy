@@ -1006,7 +1006,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
 - (void)giphyButtonPressed:(id)sender
 {
-    if (![AppDelegate checkNetwork]) {
+    if (![AppDelegate isOffline]) {
         
         [Analytics.shared tagMediaAction:ConversationMediaActionGif inConversation:self.conversation];
     

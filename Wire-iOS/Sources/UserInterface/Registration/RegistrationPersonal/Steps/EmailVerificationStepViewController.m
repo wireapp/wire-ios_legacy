@@ -67,10 +67,15 @@
     [self createResendInstructions];
     [self createResendButton];
     
+    [self updateViewConstraints];
+}
+
+-(void)viewWillAppear:(BOOL)animated{
+    
+    [super viewWillAppear:animated];
+    
     self.registrationNavigationController.backButtonEnabled = YES;
     self.registrationNavigationController.wr_navigationController.logoEnabled = NO;
-    
-    [self updateViewConstraints];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
