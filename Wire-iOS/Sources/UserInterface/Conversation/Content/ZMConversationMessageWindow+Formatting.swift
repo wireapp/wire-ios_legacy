@@ -19,7 +19,7 @@
 import Foundation
 
 extension ZMConversationMessageWindow {
-    func isPreviousSenderSame(for message: ZMConversationMessage?) -> Bool {
+    func isPreviousSenderSame(forMessage message: ZMConversationMessage?) -> Bool {
         guard let message = message,
               messages.index(of: message) != NSNotFound,
               Message.isNormal(message),
