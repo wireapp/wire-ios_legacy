@@ -29,7 +29,11 @@
 
 - (NSData *)data
 {
-    return UIImageJPEGRepresentation(self, 1.0);
+    if ([self isPNG]) {
+        return UIImagePNGRepresentation(self);
+    } else {
+        return UIImageJPEGRepresentation(self, 1.0);
+    }
 }
 
 - (BOOL)isGIF
