@@ -60,13 +60,3 @@
 @interface FLAnimatedImageView(MediaAssetView) <MediaAssetView>
 
 @end
-
-
-
-@interface UIPasteboard(MediaAsset)
-
-- (id<MediaAsset>)mediaAsset;
-- (void)setMediaAsset:(id<MediaAsset>)image;
-
-@end
-

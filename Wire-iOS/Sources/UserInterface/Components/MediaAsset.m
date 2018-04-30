@@ -107,30 +107,3 @@
 }
 
 @end
-
-
-
-@implementation UIPasteboard(MediaAsset)
-
-- (id<MediaAsset>)mediaAsset
-{
-    if ([self containsPasteboardTypes:@[(__bridge NSString *)kUTTypeGIF]]) {
-        NSData *data = [self dataForPasteboardType:(__bridge NSString *)kUTTypeGIF];
-        return [[FLAnimatedImage alloc] initWithAnimatedGIFData:data];
-    }
-    else if ([self containsPasteboardTypes:@[(__bridge NSString *)kUTTypePNG]]) {
-        NSData *data = [self dataForPasteboardType:(__bridge NSString *)kUTTypePNG];
-        return [[UIImage alloc] initWithData:data];
-    }
-    else if ([self wr_hasImages]) {
-        return [self image];
-    }
-    return nil;
-}
-
-- (void)setMediaAsset:(id<MediaAsset>)image
-{
-    [[UIPasteboard generalPasteboard] setData:image.data forPasteboardType:[self pasteboardTypeForMediaAsset:image]];
-}
-
-@end

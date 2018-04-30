@@ -185,7 +185,6 @@
 		1EE9DCBF1B5F9A6D00E347DF /* PageControl.h in Headers */ = {isa = PBXBuildFile; fileRef = 1EE9DCA61B5F9A6D00E347DF /* PageControl.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		1EE9DCC01B5F9A6D00E347DF /* PageControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 1EE9DCA71B5F9A6D00E347DF /* PageControl.m */; };
 		1EE9DCC11B5F9A6D00E347DF /* TextView.h in Headers */ = {isa = PBXBuildFile; fileRef = 1EE9DCA81B5F9A6D00E347DF /* TextView.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		1EE9DCC21B5F9A6D00E347DF /* TextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1EE9DCA91B5F9A6D00E347DF /* TextView.m */; };
 		1EF42D411B1889B300A3145D /* stylesheet.cas in Resources */ = {isa = PBXBuildFile; fileRef = 1EF42D401B1889B300A3145D /* stylesheet.cas */; };
 		1EF42D481B188C8A00A3145D /* colors.cas in Resources */ = {isa = PBXBuildFile; fileRef = 1EF42D471B188C8A00A3145D /* colors.cas */; };
 		1EFB23DC1ACEDE5400244571 /* Localizable.stringsdict in Resources */ = {isa = PBXBuildFile; fileRef = 1EFB23DE1ACEDE5400244571 /* Localizable.stringsdict */; };
@@ -1083,6 +1082,7 @@
 		EF6E3C80208A262B003F6752 /* not_animated.gif in Resources */ = {isa = PBXBuildFile; fileRef = EF6E3C7F208A262B003F6752 /* not_animated.gif */; };
 		EF7CCAFD204E96390050325B /* MockUser+PointOfView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF7CCAFC204E96390050325B /* MockUser+PointOfView.swift */; };
 		EF7D75A6201B6149003A8AF8 /* DeviceNativeBoundsSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF7D75A5201B6149003A8AF8 /* DeviceNativeBoundsSize.swift */; };
+		EF7E53C7209765E900EA8357 /* TextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1EE9DCA91B5F9A6D00E347DF /* TextView.m */; };
 		EF7F74041FCC033D0059C13F /* EmailAdresssValidatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF7F74021FCC01140059C13F /* EmailAdresssValidatorTests.swift */; };
 		EF91A0561FF3A05A00FE2F53 /* GiphySearchViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF91A0541FF3A04700FE2F53 /* GiphySearchViewControllerTests.swift */; };
 		EFA6E24C2056E0DB008AB47E /* UIViewController+SizeClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFA6E24B2056E0DA008AB47E /* UIViewController+SizeClass.swift */; };
@@ -1095,7 +1095,7 @@
 		EFE8062B1FDFF24C006A0EE7 /* NSDate+Format.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFE8062A1FDFF24C006A0EE7 /* NSDate+Format.swift */; };
 		EFE806301FE006A7006A0EE7 /* DateFormatterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFE8062E1FE005A7006A0EE7 /* DateFormatterTests.swift */; };
 		EFF3DA432097548A007A3358 /* UIImage+MediaAssert.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFF3DA422097548A007A3358 /* UIImage+MediaAssert.swift */; };
-		EFF3DA452097587F007A3358 /* UIPasteboard+contentType.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFF3DA442097587F007A3358 /* UIPasteboard+contentType.swift */; };
+		EFF3DA452097587F007A3358 /* UIPasteboard+MediaAsset.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFF3DA442097587F007A3358 /* UIPasteboard+MediaAsset.swift */; };
 		EFF6EA3E2020CF4100A7023B /* Button+ServiceButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFF6EA3D2020CF4100A7023B /* Button+ServiceButton.swift */; };
 		EFFF9E851FBF335700491F9A /* UIColor+TeamCreation.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFFF9E841FBF335700491F9A /* UIColor+TeamCreation.swift */; };
 		F10F46D420288CEB00261449 /* ConversationCreationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F10F46D320288CEB00261449 /* ConversationCreationController.swift */; };
@@ -2720,7 +2720,7 @@
 		EFE8062A1FDFF24C006A0EE7 /* NSDate+Format.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSDate+Format.swift"; sourceTree = "<group>"; };
 		EFE8062E1FE005A7006A0EE7 /* DateFormatterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateFormatterTests.swift; sourceTree = "<group>"; };
 		EFF3DA422097548A007A3358 /* UIImage+MediaAssert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+MediaAssert.swift"; sourceTree = "<group>"; };
-		EFF3DA442097587F007A3358 /* UIPasteboard+contentType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIPasteboard+contentType.swift"; sourceTree = "<group>"; };
+		EFF3DA442097587F007A3358 /* UIPasteboard+MediaAsset.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIPasteboard+MediaAsset.swift"; sourceTree = "<group>"; };
 		EFF6EA3D2020CF4100A7023B /* Button+ServiceButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Button+ServiceButton.swift"; sourceTree = "<group>"; };
 		EFF6EA482021BE6700A7023B /* ViewControllerDismissable.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewControllerDismissable.h; sourceTree = "<group>"; };
 		EFFF9E841FBF335700491F9A /* UIColor+TeamCreation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+TeamCreation.swift"; sourceTree = "<group>"; };
@@ -3510,7 +3510,7 @@
 				871BC18D1D34F8F800DF0793 /* MediaAsset.h */,
 				871BC18E1D34F8F800DF0793 /* MediaAsset.m */,
 				EFF3DA422097548A007A3358 /* UIImage+MediaAssert.swift */,
-				EFF3DA442097587F007A3358 /* UIPasteboard+contentType.swift */,
+				EFF3DA442097587F007A3358 /* UIPasteboard+MediaAsset.swift */,
 				871BC18F1D34F8F800DF0793 /* MediaPreview */,
 				871BC1971D34F8F800DF0793 /* Transitions */,
 				871BC1A61D34F8F800DF0793 /* Views */,
@@ -6231,7 +6231,6 @@
 				87A6761A206D426900596625 /* CheckAnimationView.swift in Sources */,
 				CE8E4FAC1DF066750009F437 /* FilePreviewGenerator.swift in Sources */,
 				87F18BC81E02E7BF00C69D9B /* Reusable.swift in Sources */,
-				1EE9DCC21B5F9A6D00E347DF /* TextView.m in Sources */,
 				87AAE4171E422E2300E1D13A /* FontScheme.swift in Sources */,
 				878607221D33E3FF00971A19 /* NetworkStatus.m in Sources */,
 				5423EF6D1E9B85C8007091DE /* DeveloperMenuState.m in Sources */,
@@ -6670,7 +6669,7 @@
 				873151111D75D0C000284C1F /* ReactionCell.swift in Sources */,
 				877A32601E892A100017DD9A /* ConversationListAccessoryView.swift in Sources */,
 				8F41CFC8199297C600E3B032 /* ZMConversation+Additions.m in Sources */,
-				EFF3DA452097587F007A3358 /* UIPasteboard+contentType.swift in Sources */,
+				EFF3DA452097587F007A3358 /* UIPasteboard+MediaAsset.swift in Sources */,
 				BAEF10FA1B8C8849005BFA48 /* AnimatedListMenuView.m in Sources */,
 				1682AEB620480C80003A052A /* UIViewController+Navigation.swift in Sources */,
 				871BC2551D34F8F800DF0793 /* CrossfadeTransition.m in Sources */,
@@ -7010,6 +7009,7 @@
 				D5168F522010F20700F8222A /* ShareDestinationCell.swift in Sources */,
 				873C5FE91C10426A00D5132A /* ClientUnregisterFlowViewController.swift in Sources */,
 				D59EA0C520234EE300B17CE7 /* ConversationCellLayoutProperties+Preview.swift in Sources */,
+				EF7E53C7209765E900EA8357 /* TextView.m in Sources */,
 				16D68E9B1CEF99C7003AB9E0 /* WaveformProgressView.swift in Sources */,
 				87BEB0441D3E478500DE9575 /* AssetLibrary.swift in Sources */,
 				EE43324B1F1A785800096D90 /* PopUpIconButtonView.swift in Sources */,
