@@ -135,7 +135,7 @@ NSString * const UserDefaultDisableLinkPreviews = @"DisableLinkPreviews";
 #if !(TARGET_OS_SIMULATOR)
         [self loadEnabledLogs];
 #else
-        [ZMSLog startRecordingWithSize: 100000];
+        [ZMSLog startRecordingWithIsInternal:[DeveloperMenuState developerMenuEnabled]];
 #endif
         
         [[NSNotificationCenter defaultCenter] addObserver:self

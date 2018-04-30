@@ -45,7 +45,7 @@ extension Settings {
     
     /// Loads from user default the list of logs that are enabled
     @objc public func loadEnabledLogs() {
-        if DeveloperMenuState.developerMenuEnabled() {
+        if isInternal {
             let tagsToEnable = UserDefaults.shared().value(forKey: enabledLogsKey) as? Array<String> ?? ["Network", "SessionManager", "Conversations", "AVS", "calling"]
             enableLogs(tagsToEnable)
         } else {
@@ -63,9 +63,13 @@ extension Settings {
     /// Sets whether recording is enabled
     private func setLogRecording(enabled: Bool) {
         if enabled {
-            ZMSLog.startRecording(size: 100000)
+            ZMSLog.startRecording(isInternal: isInternal)
         } else {
             ZMSLog.stopRecording()
         }
+    }
+    
+    private var isInternal: Bool {
+        return DeveloperMenuState.developerMenuEnabled()
     }
 }
