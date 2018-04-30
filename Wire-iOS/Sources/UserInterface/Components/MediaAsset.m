@@ -22,6 +22,7 @@
 
 #import <ImageIO/ImageIO.h>
 #import <MobileCoreServices/MobileCoreServices.h>
+#import "Wire-Swift.h"
 
 @implementation FLAnimatedImage(MediaAsset)
 
@@ -129,17 +130,7 @@
 
 - (void)setMediaAsset:(id<MediaAsset>)image
 {
-    NSString *type;
-
-    if ([image isGIF]) { ///TODO: mv to MediaAsset
-        type = (__bridge NSString *)kUTTypeGIF;
-    } else if ([image isPNG]) {
-        type = (__bridge NSString *)kUTTypePNG;
-    } else {
-        type = (__bridge NSString *)kUTTypeJPEG;
-    }
-
-    [[UIPasteboard generalPasteboard] setData:image.data forPasteboardType:type];
+    [[UIPasteboard generalPasteboard] setData:image.data forPasteboardType:[self pasteboardTypeForMediaAsset:image]];
 }
 
 @end
