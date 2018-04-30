@@ -51,6 +51,11 @@
     return nil;
 }
 
+- (NSArray *)messages;
+{
+    return nil;
+}
+
 - (BOOL)isCallingSupported;
 {
     return NO;
@@ -59,11 +64,6 @@
 - (NSTimeInterval)messageDestructionTimeout
 {
     return 15;
-}
-
-- (NSOrderedSet *)messages
-{
-    return nil;
 }
 
 @end

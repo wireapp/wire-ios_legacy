@@ -24,13 +24,12 @@
 
 @interface MockConversation : NSObject<Mockable>    
 
-@property (nonatomic, copy, nullable) NSString *displayName;
-@property (nonatomic, nullable) ZMUser *connectedUser;
+@property (nonatomic, copy) NSString *displayName;
+@property (nonatomic) ZMUser *connectedUser;
 @property (nonatomic) ZMConversationType conversationType;
-@property (nonatomic, nullable) NSOrderedSet *activeParticipants;
+@property (nonatomic) NSOrderedSet *activeParticipants;
 @property (nonatomic) ZMConversationSecurityLevel securityLevel;
 @property (nonatomic) NSTimeInterval messageDestructionTimeout;
 @property (nonatomic) ZMConnectionStatus relatedConnectionState;
-@property (nonatomic, nullable) NSOrderedSet *messages;
 
 @end
