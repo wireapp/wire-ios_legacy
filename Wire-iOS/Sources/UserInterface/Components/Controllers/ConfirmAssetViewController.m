@@ -131,7 +131,7 @@ static const CGFloat MarginInset = 24;
     self.imagePreviewView.userInteractionEnabled = YES;
     [self.view addSubview:self.imagePreviewView];
     
-    [self.imagePreviewView setMediaAsset:self.image];///not transparent here
+    [self.imagePreviewView setMediaAsset:self.image];
     
     if ([self showEditingOptions] && [self imageToolbarFitsInsideImage]) {
         self.imageToolbarViewInsideImage = [[ImageToolbarView alloc] initWithConfiguraton:ImageToolbarConfigurationPreview];

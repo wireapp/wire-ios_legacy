@@ -218,7 +218,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     
     if ((pasteboard.wr_hasImages)
         && [self.delegate respondsToSelector:@selector(textView:hasImageToPaste:)]) {
-        id<MediaAsset> image = [[UIPasteboard generalPasteboard] mediaAsset]; ///TODO: has BG color at this phrase
+        id<MediaAsset> image = [[UIPasteboard generalPasteboard] mediaAsset];
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Warc-performSelector-leaks"
         [self.delegate performSelector:@selector(textView:hasImageToPaste:) withObject:self withObject:image];
