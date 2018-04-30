@@ -23,43 +23,6 @@
 #import <ImageIO/ImageIO.h>
 #import <MobileCoreServices/MobileCoreServices.h>
 
-
-
-@implementation UIImage(MediaAsset)
-
-- (NSData *)data
-{
-    if ([self isPNG]) {
-        return UIImagePNGRepresentation(self);
-    } else {
-        return UIImageJPEGRepresentation(self, 1.0);
-    }
-}
-
-- (BOOL)isGIF
-{
-    return NO;
-}
-
-- (BOOL)isPNG
-{
-    return [self hasAlpha];
-}
-
-- (BOOL)hasAlpha
-{
-    CGImageAlphaInfo alpha = CGImageGetAlphaInfo(self.CGImage);
-    return (
-            alpha == kCGImageAlphaFirst ||
-            alpha == kCGImageAlphaLast ||
-            alpha == kCGImageAlphaPremultipliedFirst ||
-            alpha == kCGImageAlphaPremultipliedLast
-            );
-
-}
-
-@end
-
 @implementation FLAnimatedImage(MediaAsset)
 
 - (BOOL)isGIF
@@ -67,7 +30,7 @@
     return YES;
 }
 
-- (BOOL)isPNG
+- (BOOL)isTransparent
 {
     return NO;
 }

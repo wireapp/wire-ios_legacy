@@ -29,16 +29,9 @@
 
 - (NSData *)data;
 - (BOOL)isGIF;
-- (BOOL)isPNG; ///TODO: is transparent
+- (BOOL)isTransparent;
 
 @end
-
-
-
-@interface UIImage(MediaAsset) <MediaAsset>
-
-@end
-
 
 
 @interface FLAnimatedImage(MediaAsset) <MediaAsset>
