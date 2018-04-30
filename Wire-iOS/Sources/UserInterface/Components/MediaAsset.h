@@ -29,6 +29,7 @@
 
 - (NSData *)data;
 - (BOOL)isGIF;
+- (BOOL)isPNG; ///TODO: is transparent
 
 @end
 

@@ -37,6 +37,23 @@
     return NO;
 }
 
+- (BOOL)isPNG
+{
+    return [self hasAlpha];
+}
+
+- (BOOL)hasAlpha
+{
+    CGImageAlphaInfo alpha = CGImageGetAlphaInfo(self.CGImage);
+    return (
+            alpha == kCGImageAlphaFirst ||
+            alpha == kCGImageAlphaLast ||
+            alpha == kCGImageAlphaPremultipliedFirst ||
+            alpha == kCGImageAlphaPremultipliedLast
+            );
+
+}
+
 @end
 
 @implementation FLAnimatedImage(MediaAsset)
@@ -44,6 +61,11 @@
 - (BOOL)isGIF
 {
     return YES;
+}
+
+- (BOOL)isPNG
+{
+    return NO;
 }
 
 @end
@@ -128,6 +150,10 @@
         NSData *data = [self dataForPasteboardType:(__bridge NSString *)kUTTypeGIF];
         return [[FLAnimatedImage alloc] initWithAnimatedGIFData:data];
     }
+    else if ([self containsPasteboardTypes:@[(__bridge NSString *)kUTTypePNG]]) {
+        NSData *data = [self dataForPasteboardType:(__bridge NSString *)kUTTypePNG];
+        return [[UIImage alloc] initWithData:data];
+    }
     else if ([self wr_hasImages]) {
         return [self image];
     }
@@ -136,7 +162,16 @@
 
 - (void)setMediaAsset:(id<MediaAsset>)image
 {
-    NSString *type = [image isGIF] ? (__bridge NSString *)kUTTypeGIF : (__bridge NSString *)kUTTypeJPEG;
+    NSString *type;
+
+    if ([image isGIF]) { ///TODO: mv to MediaAsset
+        type = (__bridge NSString *)kUTTypeGIF;
+    } else if ([image isPNG]) {
+        type = (__bridge NSString *)kUTTypePNG;
+    } else {
+        type = (__bridge NSString *)kUTTypeJPEG;
+    }
+
     [[UIPasteboard generalPasteboard] setData:image.data forPasteboardType:type];
 }
 
