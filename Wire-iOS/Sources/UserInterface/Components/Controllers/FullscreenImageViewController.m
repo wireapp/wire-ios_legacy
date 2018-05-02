@@ -412,25 +412,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     [self.delegate fadeAndHideMenu:!self.delegate.menuVisible];
 }
 
-- (void)handleDoubleTap:(UITapGestureRecognizer *)doubleTapper
-{
-    [self setSelectedByMenu:NO animated:NO];
-    [[UIMenuController sharedMenuController] setMenuVisible:NO];
-
-    CGFloat scaleDiff = self.scrollView.zoomScale - self.scrollView.minimumZoomScale;
-
-    // image view in minimum zoom scale, zoom in to a 50 x 50 rect
-    if (scaleDiff < kZoomScaleDelta) {
-        CGPoint point = [doubleTapper locationInView:doubleTapper.view];
-        CGRect zoomRect = CGRectMake(point.x - 25, point.y - 25, 50, 50);
-        CGRect finalRect = [self.imageView convertRect:zoomRect fromView:doubleTapper.view];
-
-        [self.scrollView zoomToRect:finalRect animated:YES];
-    } else {
-        [self.scrollView setZoomScale:self.scrollView.minimumZoomScale animated:YES];
-    }
-}
-
 - (void)handleLongPress:(UILongPressGestureRecognizer *)longPressRecognizer
 {
     if ([longPressRecognizer state] == UIGestureRecognizerStateBegan) {

@@ -107,14 +107,15 @@ extension ConversationInputBarViewController {
     }
     
     fileprivate func showAudioRecordViewController() {
-        guard let audioRecordViewController = self.audioRecordViewController else {
+        guard let audioRecordViewContainer = self.audioRecordViewContainer,
+              let audioRecordViewController = self.audioRecordViewController else {
             return
         }
 
         audioRecordViewController.setOverlayState(.hidden, animated: false)
         
         UIView.transition(with: inputBar, duration: 0.1, options: [.transitionCrossDissolve, .allowUserInteraction], animations: {
-            audioRecordViewController.view.isHidden = false
+            audioRecordViewContainer.isHidden = false
             }, completion: { _ in
                 audioRecordViewController.setOverlayState(.expanded(0), animated: true)
         })
@@ -138,12 +139,12 @@ extension ConversationInputBarViewController {
     
     @objc fileprivate func hideInlineAudioRecordViewController() {
         self.inputBar.buttonContainer.isHidden = false
-        guard let audioRecordViewController = self.audioRecordViewController else {
+        guard let audioRecordViewContainer = self.audioRecordViewContainer else {
             return
         }
         
         UIView.transition(with: inputBar, duration: 0.2, options: .transitionCrossDissolve, animations: {
-            audioRecordViewController.view.isHidden = true
+            audioRecordViewContainer.isHidden = true
             }, completion: nil)
     }
     
