@@ -1,6 +1,6 @@
 //
 // Wire
-// Copyright (C) 2016 Wire Swiss GmbH
+// Copyright (C) 2018 Wire Swiss GmbH
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -16,18 +16,20 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
+import Foundation
 
-#import "ImageMessageCell.h"
-@import WireExtensionComponents;
+extension ImageMessageCell {
+    func updateImageBorder() {
+        let showBorder: Bool = !imageSmallerThanMinimumSize()
+        fullImageView.layer.borderWidth = showBorder ? UIScreen.hairline : 0
 
-@interface ImageMessageCell (Interal)
+        switch self.variant {
+        case .light:
+            fullImageView.layer.borderColor = UIColor(white: 0, alpha: 0.08).cgColor
+        case .dark:
+            fullImageView.layer.borderColor = UIColor(white: 1, alpha: 0.08).cgColor
+        }
 
-- (void)setImage:(id<MediaAsset>)image;
-- (BOOL)imageSmallerThanMinimumSize;
-
-@end
-
-@interface ImageMessageCell ()
-@property (nonatomic) BOOL autoStretchVertically;
-@property (nonatomic) UIEdgeInsets defaultLayoutMargins;
-@end
+        ///TODO: theme whiteAlpha8 or blackAlpha8
+    }
+}

@@ -1092,6 +1092,7 @@
 		EFB23D0A1FC852380055B866 /* TextFieldValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF61B3411FC8508400D8E631 /* TextFieldValidator.swift */; };
 		EFB23D0B1FC853CF0055B866 /* AccessoryTextFieldValidationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF61B33F1FC84B0100D8E631 /* AccessoryTextFieldValidationTests.swift */; };
 		EFC530A61FF3F277004D2B31 /* VoiceChannelViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFC530A31FF3F26D004D2B31 /* VoiceChannelViewControllerTests.swift */; };
+		EFCDA974209A0F6D004682EA /* ImageMessageCell+ImageBorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFCDA973209A0F6D004682EA /* ImageMessageCell+ImageBorder.swift */; };
 		EFE8062B1FDFF24C006A0EE7 /* NSDate+Format.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFE8062A1FDFF24C006A0EE7 /* NSDate+Format.swift */; };
 		EFE806301FE006A7006A0EE7 /* DateFormatterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFE8062E1FE005A7006A0EE7 /* DateFormatterTests.swift */; };
 		EFF3DA432097548A007A3358 /* UIImage+MediaAssert.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFF3DA422097548A007A3358 /* UIImage+MediaAssert.swift */; };
@@ -2718,6 +2719,7 @@
 		EFABC921202085A6001F9866 /* UserDetailViewControllerFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDetailViewControllerFactory.swift; sourceTree = "<group>"; };
 		EFABC92320208D80001F9866 /* UIViewController+removeUserConfirmationUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+removeUserConfirmationUI.swift"; sourceTree = "<group>"; };
 		EFC530A31FF3F26D004D2B31 /* VoiceChannelViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoiceChannelViewControllerTests.swift; sourceTree = "<group>"; };
+		EFCDA973209A0F6D004682EA /* ImageMessageCell+ImageBorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ImageMessageCell+ImageBorder.swift"; sourceTree = "<group>"; };
 		EFE8062A1FDFF24C006A0EE7 /* NSDate+Format.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSDate+Format.swift"; sourceTree = "<group>"; };
 		EFE8062E1FE005A7006A0EE7 /* DateFormatterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateFormatterTests.swift; sourceTree = "<group>"; };
 		EFF3DA422097548A007A3358 /* UIImage+MediaAssert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+MediaAssert.swift"; sourceTree = "<group>"; };
@@ -4720,6 +4722,7 @@
 				16E311D61A6024F400FF2C9E /* ImageMessageCell.h */,
 				BFE57B451D51FDE800CB0806 /* ImageMessageCell+Internal.h */,
 				16E311D71A6024F400FF2C9E /* ImageMessageCell.m */,
+				EFCDA973209A0F6D004682EA /* ImageMessageCell+ImageBorder.swift */,
 				8F0DEDD31A693F58003F0ACC /* PingCell.h */,
 				8F0DEDD41A693F58003F0ACC /* PingCell.m */,
 				EF106E87204DAE8600B9F0F6 /* PingCell+PointOfViewString.swift */,
@@ -6592,6 +6595,7 @@
 				D5173573201764DD00B473CE /* UIAlertAction+Convenience.swift in Sources */,
 				871BC00A1D34F56300DF0793 /* TimeIntervalClusterizer.m in Sources */,
 				EF2127201FB9DFE300625A9B /* NavigationController.m in Sources */,
+				EFCDA974209A0F6D004682EA /* ImageMessageCell+ImageBorder.swift in Sources */,
 				871BC0031D34F56300DF0793 /* AnalyticsFileTransferObserver.swift in Sources */,
 				871BC2971D34F8F800DF0793 /* UIViewController+WR_Additions.m in Sources */,
 				87EB6B871E2FCE080019B3C5 /* ZMConversationMessage+File.swift in Sources */,
