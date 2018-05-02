@@ -25,6 +25,7 @@ extension CallProperties {
             state: configurationState,
             type: type,
             variant: variant,
+            isConstantBitRate: isConstantBitRateAudioActive,
             title: conversation?.displayName ?? ""
         )
     }
@@ -148,11 +149,13 @@ final class CallStatusView: UIView {
         var state: State
         var type: CallType
         var variant: ColorSchemeVariant
+        var isConstantBitRate: Bool
         let title: String
     }
     
     private let titleLabel = UILabel()
     private let subtitleLabel = UILabel()
+    private let bitrateLabel = UILabel()
     private let stackView = UIStackView(axis: .vertical)
     
     var configuration: Configuration {
@@ -175,19 +178,24 @@ final class CallStatusView: UIView {
     }
     
     private func setupViews() {
-        addSubview(stackView)
+        [stackView, bitrateLabel].forEach(addSubview)
         stackView.distribution = .fill
         stackView.alignment = .center
         stackView.translatesAutoresizingMaskIntoConstraints = false
+        bitrateLabel.translatesAutoresizingMaskIntoConstraints = false
         stackView.spacing = 12
-        [titleLabel, subtitleLabel].forEach {
-            stackView.addArrangedSubview($0)
+        [titleLabel, subtitleLabel].forEach(stackView.addArrangedSubview)
+        [titleLabel, subtitleLabel, bitrateLabel].forEach {
             $0.textAlignment = .center
         }
-        
-        titleLabel.font = UIFont.systemFont(ofSize: 20, weight: UIFontWeightSemibold)
+
+        titleLabel.font = .systemFont(ofSize: 20, weight: UIFontWeightSemibold)
         subtitleLabel.font = FontSpec(.normal, .semibold).font
         subtitleLabel.alpha = 0.64
+
+        bitrateLabel.text = "call.status.constant_bitrate".localized.uppercased()
+        bitrateLabel.font = FontSpec(.small, .semibold).font
+        bitrateLabel.alpha = 0.64
     }
     
     private func createConstraints() {
@@ -195,14 +203,19 @@ final class CallStatusView: UIView {
             stackView.leadingAnchor.constraint(equalTo: leadingAnchor),
             stackView.trailingAnchor.constraint(equalTo: trailingAnchor),
             stackView.topAnchor.constraint(equalTo: topAnchor),
-            stackView.bottomAnchor.constraint(equalTo: bottomAnchor)
+            bitrateLabel.topAnchor.constraint(equalTo: stackView.bottomAnchor, constant: 16),
+            bitrateLabel.leadingAnchor.constraint(equalTo: leadingAnchor),
+            bitrateLabel.trailingAnchor.constraint(equalTo: trailingAnchor),
+            bitrateLabel.bottomAnchor.constraint(equalTo: bottomAnchor)
         ])
     }
     
     private func updateConfiguration() {
         titleLabel.text = configuration.title
         subtitleLabel.text = configuration.displayString
-        [titleLabel, subtitleLabel].forEach {
+        bitrateLabel.isHidden = !configuration.isConstantBitRate
+
+        [titleLabel, subtitleLabel, bitrateLabel].forEach {
             $0.textColor = .wr_color(fromColorScheme: ColorSchemeColorTextForeground, variant: configuration.effectiveColorVariant)
         }
     }
@@ -216,7 +229,7 @@ fileprivate extension CallStatusView.Configuration {
     private static let formatter: DateComponentsFormatter = {
         let formatter = DateComponentsFormatter()
         formatter.allowedUnits = [.minute, .second]
-        formatter.zeroFormattingBehavior = DateComponentsFormatter.ZeroFormattingBehavior(rawValue: 0)
+        formatter.zeroFormattingBehavior = .pad
         return formatter
     }()
     

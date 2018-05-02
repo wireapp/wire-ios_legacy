@@ -489,6 +489,7 @@
 "call.status.outgoing" = "Ringing…";
 "call.status.reconnecting" = "Reconnecting…";
 "call.status.terminating" = "Ending call…";
+"call.status.constant_bitrate" = "Constant Bit Rate";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Profile and Participants
