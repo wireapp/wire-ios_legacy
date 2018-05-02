@@ -194,3 +194,22 @@ extension SelfProfileViewController: UserImageViewDelegate {
         self.present(profileImageController, animated: true, completion: .none)
     }
 }
+
+extension SelfProfileViewController {
+    
+    static func displaySwitchAccountAlertIfNeeded(completion: @escaping ()->()) {
+        if let manager = SessionManager.shared, !manager.shouldSwitchAccounts {
+            completion()
+        } else {
+            if let controller = UIApplication.shared.wr_topmostController(onlyFullScreen: false) {
+                let alert = UIAlertController(title: "self.settings.add_account.switch_accounts.title", message: nil, preferredStyle: .actionSheet)
+                alert.addAction(UIAlertAction(title: "self.settings.add_account.switch_accounts.action", style: .default, handler: { (action) in
+                    completion()
+                }))
+                alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+                controller.present(alert, animated: true, completion: nil)
+            }
+        }
+    }
+    
+}
