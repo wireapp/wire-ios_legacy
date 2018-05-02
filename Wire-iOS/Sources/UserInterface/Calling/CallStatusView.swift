@@ -19,6 +19,115 @@
 import UIKit
 import WireExtensionComponents
 
+extension CallProperties {
+    func configuration(variant: ColorSchemeVariant) -> CallStatusView.Configuration {
+        return .init(
+            state: configurationState,
+            type: type,
+            variant: variant,
+            title: conversation?.displayName ?? ""
+        )
+    }
+    
+    private var configurationState: CallStatusView.Configuration.State {
+        // TODO: Add case returning .reconnecting?
+        switch state {
+        case .terminating: return .terminating
+        case .incoming: return .ringingIncoming(name: initiator?.displayName ?? "") // TODO
+        case .outgoing: return .ringingOutgoing
+        case .answered, .establishedDataChannel: return .connecting
+        case .established: return .established(duration: duration)
+        case .none, .unknown: return .none
+        }
+    }
+    
+    var duration: TimeInterval {
+        if let callStartDate = conversation?.voiceChannel?.callStartDate {
+            return -callStartDate.timeIntervalSinceNow
+        } else {
+            return 0
+        }
+    }
+    
+    private var type: CallStatusView.Configuration.CallType {
+        return isVideoCall ? .video : .audio
+    }
+}
+
+final class CallStatusViewController: UIViewController {
+    
+    var properties: CallProperties {
+        didSet {
+            updateState()
+        }
+    }
+    
+    private let statusView: CallStatusView
+    private weak var callDurationTimer: Timer?
+    
+    var variant: ColorSchemeVariant
+    
+    init(properties: CallProperties, variant: ColorSchemeVariant = ColorScheme.default().variant) {
+        self.variant = variant
+        self.properties = properties
+        statusView = CallStatusView(configuration: properties.configuration(variant: variant))
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    @available(*, unavailable)
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        setupViews()
+        createConstraints()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        updateState()
+    }
+    
+    deinit {
+        stopCallDurationTimer()
+    }
+    
+    private func setupViews() {
+        view.addSubview(statusView)
+    }
+    
+    private func createConstraints() {
+        NSLayoutConstraint.activate([
+            statusView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            statusView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            statusView.topAnchor.constraint(equalTo: view.topAnchor),
+            statusView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+        ])
+    }
+    
+    private func updateState() {
+        switch properties.state {
+        case .established: startCallDurationTimer()
+        case .terminating: stopCallDurationTimer()
+        default: break
+        }
+    }
+    
+    private func startCallDurationTimer() {
+        stopCallDurationTimer()
+        callDurationTimer = .allVersionCompatibleScheduledTimer(withTimeInterval: 0.1, repeats: true) { [statusView, properties, variant] _ in
+            statusView.configuration = properties.configuration(variant: variant)
+        }
+    }
+    
+    private func stopCallDurationTimer() {
+        callDurationTimer?.invalidate()
+        callDurationTimer = nil
+    }
+}
+
 final class CallStatusView: UIView {
     
     struct Configuration {
@@ -27,6 +136,7 @@ final class CallStatusView: UIView {
         }
         
         enum State {
+            case none
             case connecting
             case ringingIncoming(name: String) // Caller name + call type "XYZ is (video) calling..."
             case ringingOutgoing // "Ringing..."
@@ -112,6 +222,7 @@ fileprivate extension CallStatusView.Configuration {
     
     var displayString: String {
         switch state {
+        case .none: return ""
         case .connecting: return "call.status.connecting".localized
         case .ringingIncoming(name: let name) where type == .audio: return "call.status.incoming.audio".localized(args: name)
         case .ringingIncoming(name: let name): return "call.status.incoming.video".localized(args: name)
