@@ -19,7 +19,7 @@
 
 #import "Message+Private.h"
 #import "Message+Formatting.h"
-#import "Constants.h"
+
 #import "Settings.h"
 #import "Wire-Swift.h"
 

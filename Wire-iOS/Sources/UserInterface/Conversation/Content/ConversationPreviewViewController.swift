@@ -21,12 +21,11 @@ import Foundation
 import Cartography
 
 
-@objc class ConversationPreviewViewController: UIViewController {
+@objc class ConversationPreviewViewController: TintColorCorrectedViewController {
 
     let conversation: ZMConversation
     fileprivate let actionController: ConversationActionController
     fileprivate var contentViewController: ConversationContentViewController
-    private var windowTintColor: UIColor?
 
     init(conversation: ZMConversation, presentingViewController: UIViewController) {
         self.conversation = conversation
@@ -56,17 +55,6 @@ import Cartography
         constrain(view, contentViewController.view) { view, conversationView in
             conversationView.edges == view.edges
         }
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        windowTintColor = UIApplication.shared.delegate?.window??.tintColor
-        UIApplication.shared.delegate?.window??.tintColor = .wr_color(fromColorScheme: ColorSchemeColorTextForeground, variant: .light)
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        UIApplication.shared.delegate?.window??.tintColor = windowTintColor
     }
 
     // MARK: Preview Actions

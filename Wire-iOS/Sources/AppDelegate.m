@@ -23,7 +23,7 @@
 #import "Wire-Swift.h"
 
 // Helpers
-#import "Constants.h"
+
 #import "AppDelegate+Hockey.h"
 #import "Application+runDuration.h"
 #import "ZClientViewController.h"
@@ -111,8 +111,9 @@ static AppDelegate *sharedAppDelegate = nil;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    ZMLogInfo(@"application:didFinishLaunchingWithOptions START %@ (applicationState = %ld)", launchOptions, (long)application.applicationState);
+    [ZMSLog switchCurrentLogToPrevious];
     
+    ZMLogInfo(@"application:didFinishLaunchingWithOptions START %@ (applicationState = %ld)", launchOptions, (long)application.applicationState);
     
     [self setupBackendEnvironment];
 

@@ -21,7 +21,7 @@ import MapKit
 import Cartography
 
 /// Displays the preview of a location message.
-class LocationPreviewController: UIViewController {
+class LocationPreviewController: TintColorCorrectedViewController {
 
     let message: ZMConversationMessage
     weak var messageActionDelegate: MessageActionResponder?
@@ -90,10 +90,7 @@ class LocationPreviewController: UIViewController {
 
     private func createConstraints() {
         constrain(view, containerView, mapView) { contentView, container, mapView in
-            container.left == contentView.leftMargin
-            container.right == contentView.rightMargin
-            container.top == contentView.top
-            container.bottom == contentView.bottom
+            container.edges == contentView.edges
             mapView.edges == container.edges
         }
 
@@ -168,7 +165,7 @@ class LocationPreviewController: UIViewController {
         // Delete
 
         if message.canBeDeleted {
-            let deleteAction = UIPreviewAction(title: "content.message.delete".localized, style: .destructive) { [weak self] _, _ in
+            let deleteAction = UIPreviewAction(title: "content.message.delete_ellipsis".localized, style: .default) { [weak self] _, _ in
                 guard let `self` = self else {
                     return
                 }

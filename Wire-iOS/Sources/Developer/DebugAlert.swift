@@ -72,17 +72,12 @@ import MessageUI
         controller.present(alert, animated: true, completion: nil)
     }
     
-    static func displayFallbackActivityController(logData: Data, logFileName: String, email: String, from controller: UIViewController) {
+    static func displayFallbackActivityController(logPaths: [URL], email: String, from controller: UIViewController) {
         let alert = UIAlertController(title: "self.settings.technical_report_section.title".localized,
                                       message: "self.settings.technical_report.no_mail_alert".localized + email,
                                       cancelButtonTitle: "general.cancel".localized)
         alert.addAction(UIAlertAction(title: "general.ok".localized, style: .default, handler: { (action) in
-            let url = URL(fileURLWithPath: NSTemporaryDirectory().appendingPathComponent(logFileName))
-            try! logData.write(to: url)
-            let activity = UIActivityViewController(activityItems: [url], applicationActivities: nil)
-            activity.completionWithItemsHandler = { activityType, completed, returnedItems, error in
-                try! FileManager.default.removeItem(at: url)
-            }
+            let activity = UIActivityViewController(activityItems: logPaths, applicationActivities: nil)
             controller.present(activity, animated: true, completion: nil)
         }))
         controller.present(alert, animated: true, completion: nil)
@@ -101,8 +96,10 @@ import MessageUI
         guard let controller = UIApplication.shared.wr_topmostController(onlyFullScreen: false) else { return }
         guard self.senderInstance == nil else { return }
         
-        let logs = ZMSLog.recordedContent
-        guard !logs.isEmpty else {
+        let currentLog = ZMSLog.currentLog
+        let previousLog = ZMSLog.previousLog
+        
+        guard currentLog != nil || previousLog != nil else {
             DebugAlert.showGeneric(message: "There are no logs to send, have you enabled them from the debug menu > log settings BEFORE the issue happened?\nWARNING: restarting the app will discard all collected logs")
             return
         }
@@ -111,35 +108,31 @@ import MessageUI
         let user = ZMUser.selfUser()
         let userID = user?.remoteIdentifier?.transportString() ?? ""
         let device = UIDevice.current.name
-        let now = Date()
         let userDescription = "\(user?.name ?? "") [user: \(userID)] [device: \(device)]"
         let message = "Logs for: \(message)\n\n"
-        let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy-MM-dd_HH-mm-ss"
-        let timeStr = formatter.string(from: now)
-        let fileName = "logs_\(user?.name ?? userID)_T\(timeStr).txt"
-        let completeLog = logs.joined(separator: "\n")
         let mail = "ios@wire.com"
         
         guard MFMailComposeViewController.canSendMail() else {
-            // Adds user description and message (usually attached to the mail)
-            // on top of the complete log
-            let completeLogWithMessage = [userDescription, message, completeLog].joined(separator: "\n")
-            let logData = completeLogWithMessage.data(using: .utf8)!
-            DebugAlert.displayFallbackActivityController(logData: logData, logFileName: fileName, email: mail, from: controller)
+            DebugAlert.displayFallbackActivityController(logPaths: ZMSLog.pathsForExistingLogs, email: mail, from: controller)
             return
         }
         
         // compose
         
         let alert = DebugLogSender()
-        let logData = completeLog.data(using: .utf8)!
         
         let mailVC = MFMailComposeViewController()
         mailVC.setToRecipients([mail])
         mailVC.setSubject("iOS logs from \(userDescription)")
         mailVC.setMessageBody(message, isHTML: false)
-        mailVC.addAttachmentData(logData, mimeType: "text/plain", fileName: fileName)
+        
+        if let currentLog = currentLog, let currentPath = ZMSLog.currentLogPath {
+            mailVC.addAttachmentData(currentLog, mimeType: "text/plain", fileName: currentPath.lastPathComponent)
+        }
+        if let previousLog = previousLog, let previousPath = ZMSLog.previousLogPath {
+            mailVC.addAttachmentData(previousLog, mimeType: "text/plain", fileName: previousPath.lastPathComponent)
+        }
+        
         mailVC.mailComposeDelegate = alert
         alert.mailViewController = mailVC
         

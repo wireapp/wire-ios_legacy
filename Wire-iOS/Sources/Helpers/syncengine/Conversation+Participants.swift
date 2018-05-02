@@ -20,8 +20,18 @@
 import Foundation
 
 extension ZMConversation {
+    private enum NetworkError: Error {
+        case offline
+    }
+    
     @objc(addParticipantsOrShowError:)
     func addOrShowError(participants: Set<ZMUser>) {
+        guard let session = ZMUserSession.shared(),
+                session.networkState != .offline else {
+            self.showAlertForAdding(for: NetworkError.offline)
+            return
+        }
+        
         self.addParticipants(participants,
                              userSession: ZMUserSession.shared()!) { result in
                                 switch result {
@@ -35,6 +45,16 @@ extension ZMConversation {
     
     @objc (removeParticipantOrShowError:)
     func removeOrShowError(participnant user: ZMUser) {
+        removeOrShowError(participnant: user, completion: nil)
+    }
+    
+    func removeOrShowError(participnant user: ZMUser, completion: ((VoidResult)->())? = nil) {
+        guard let session = ZMUserSession.shared(),
+            session.networkState != .offline else {
+            self.showAlertForRemoval(for: NetworkError.offline)
+            return
+        }
+        
         self.removeParticipant(user,
                                userSession: ZMUserSession.shared()!) { result in
                                 switch result {
@@ -48,6 +68,8 @@ extension ZMConversation {
                                 case .failure(let error):
                                     self.showAlertForRemoval(for: error)
                                 }
+                                
+                                completion?(result)
         }
     }
     
@@ -56,19 +78,26 @@ extension ZMConversation {
                                                 message: message,
                                                 cancelButtonTitle: "general.ok".localized)
         
-        UIApplication.shared.wr_topmostController()?.present(alertController, animated: true)
+        UIApplication.shared.wr_topmostController(onlyFullScreen: false)?.present(alertController, animated: true)
     }
     
     private func showAlertForAdding(for error: Error) {
         switch error {
         case ConversationAddParticipantsError.tooManyMembers:
             showErrorAlert(message: "error.conversation.too_many_members".localized)
+        case NetworkError.offline:
+            showErrorAlert(message: "error.conversation.offline".localized)
         default:
             showErrorAlert(message: "error.conversation.cannot_add".localized)
         }
     }
     
     private func showAlertForRemoval(for error: Error) {
-        showErrorAlert(message: "error.conversation.cannot_remove".localized)
+        switch error {
+        case NetworkError.offline:
+            showErrorAlert(message: "error.conversation.offline".localized)
+        default:
+            showErrorAlert(message: "error.conversation.cannot_remove".localized)
+        }
     }
 }

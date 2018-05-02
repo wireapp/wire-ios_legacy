@@ -22,9 +22,7 @@ import Foundation
 extension AppDelegate {
 
     /// @return YES if network is offline
-    @discardableResult
-    @objc
-    static func checkNetwork() -> Bool {
+    static var isOffline: Bool {
         return .unreachable == NetworkStatus.shared().reachability()
     }
 

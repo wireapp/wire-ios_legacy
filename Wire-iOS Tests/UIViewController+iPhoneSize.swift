@@ -18,13 +18,15 @@
 
 import Foundation
 
-extension MockConversation {
-    static func oneOnOneConversation() -> MockConversation {
-        let mockConversation = MockConversation()
-        mockConversation.conversationType = .oneOnOne
-        mockConversation.displayName = "John Doe"
-        mockConversation.connectedUser = MockUser.mockUsers().last!
+extension CGSize {
+    enum iPhoneSize {
+        static let iPhone4_7: CGSize = CGSize(width: 375.0, height: 667.0)
+    }
+}
 
-        return mockConversation
+extension UIViewController {
+
+    func setBoundsSizeAsIPhone4_7Inch() {
+        self.view.bounds.size = CGSize.iPhoneSize.iPhone4_7
     }
 }

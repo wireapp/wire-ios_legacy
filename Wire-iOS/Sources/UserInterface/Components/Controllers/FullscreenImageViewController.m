@@ -23,6 +23,7 @@
 
 #import "FullscreenImageViewController.h"
 #import "FullscreenImageViewController+PullToDismiss.h"
+#import "FullscreenImageViewController+internal.h"
 
 // ui
 #import "UIView+Borders.h"
@@ -82,8 +83,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
 @property (nonatomic) IconButton *closeButton;
 
-@property (nonatomic, readwrite) UIImageView *imageView;
-
 @property (nonatomic) UITapGestureRecognizer *tapGestureRecognzier;
 @property (nonatomic) UITapGestureRecognizer *doubleTapGestureRecognizer;
 @property (nonatomic) UILongPressGestureRecognizer *longPressGestureRecognizer;
@@ -92,8 +91,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
 @property (nonatomic) BOOL isShowingChrome;
 @property (nonatomic) BOOL assetWriteInProgress;
-
-@property (nonatomic) CGFloat lastZoomScale;
 
 @property (nonatomic) BOOL forcePortraitMode;
 
@@ -170,7 +167,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     [super viewWillAppear:animated];
     self.closeButton.hidden = !self.showCloseButton;
     if(self.parentViewController != nil) {
-        [self updateZoomWithSize:self.parentViewController.view.frame.size];
+        [self updateZoom];
     }
 }
 
@@ -265,19 +262,9 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
         
         dispatch_async(dispatch_get_main_queue(), ^{
             @strongify(self);
-            
-            UIImageView *imageView = [UIImageView imageViewWithMediaAsset:image];
-            imageView.clipsToBounds = YES;
-            imageView.layer.allowsEdgeAntialiasing = YES;
-            
-            self.imageView = imageView;
-            self.imageView.translatesAutoresizingMaskIntoConstraints = NO;
-            [self.scrollView addSubview:self.imageView];
-            
-            self.scrollView.contentSize = imageView.image.size;
-            
-            [self updateZoomWithSize:self.view.bounds.size];
-            [self centerScrollViewContent];
+
+            CGSize parentSize = self.parentViewController.view.bounds.size;
+            [self setupImageViewWithImage:image parentSize:parentSize];
         });
     });
 }
@@ -378,33 +365,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     [self dismissWithCompletion:nil];
 }
 
-- (void)updateZoom
-{
-    [self updateZoomWithSize:self.view.bounds.size];
-}
-
-// Zoom to show as much image as possible unless image is smaller than screen
-- (void)updateZoomWithSize:(CGSize)size
-{
-    float minZoom = MIN(size.width / self.imageView.image.size.width,
-                        size.height / self.imageView.image.size.height);
-
-    if (minZoom > 1) {
-        minZoom = 1;
-    }
-
-    self.scrollView.minimumZoomScale = minZoom;
-
-    // Force scrollViewDidZoom fire if zoom did not change
-    if (minZoom == self.lastZoomScale) {
-        minZoom += 0.000001;
-    }
-
-    self.scrollView.zoomScale = minZoom;
-    self.lastZoomScale = minZoom;
-}
-
-
 #pragma mark - UIScrollViewDelegate
 
 - (void)scrollViewWillBeginZooming:(UIScrollView *)scrollView withView:(UIView *)view
@@ -457,18 +417,17 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     [self setSelectedByMenu:NO animated:NO];
     [[UIMenuController sharedMenuController] setMenuVisible:NO];
 
-    CGPoint point = [doubleTapper locationInView:doubleTapper.view];
-
-    CGRect zoomRect = CGRectMake(point.x - 25, point.y - 25, 50, 50);
-
-    CGRect finalRect = [self.imageView convertRect:zoomRect fromView:doubleTapper.view];
-
     CGFloat scaleDiff = self.scrollView.zoomScale - self.scrollView.minimumZoomScale;
 
-    if (scaleDiff < 0.0003) {
+    // image view in minimum zoom scale, zoom in to a 50 x 50 rect
+    if (scaleDiff < kZoomScaleDelta) {
+        CGPoint point = [doubleTapper locationInView:doubleTapper.view];
+        CGRect zoomRect = CGRectMake(point.x - 25, point.y - 25, 50, 50);
+        CGRect finalRect = [self.imageView convertRect:zoomRect fromView:doubleTapper.view];
+
         [self.scrollView zoomToRect:finalRect animated:YES];
     } else {
-        [self.scrollView setZoomScale:self.lastZoomScale animated:YES];
+        [self.scrollView setZoomScale:self.scrollView.minimumZoomScale animated:YES];
     }
 }
 

@@ -42,7 +42,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>lu</string>
         <key>other</key>
-        <string>have been added</string>
+        <string>が追加されました</string>
       </dict>
     </dict>
     <key>content.system.missing_messages.subtitle_removed</key>
@@ -56,7 +56,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>lu</string>
         <key>other</key>
-        <string>have been removed</string>
+        <string>が削除されました</string>
       </dict>
     </dict>
     <key>list.connect_request.people_waiting</key>
@@ -112,7 +112,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string> and %d others</string>
+        <string> と 他 %d 名</string>
       </dict>
       <key>d_new_devices</key>
       <dict>

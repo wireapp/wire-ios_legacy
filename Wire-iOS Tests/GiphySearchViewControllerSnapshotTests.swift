@@ -19,7 +19,7 @@
 import Foundation
 @testable import Wire
 
-final class GiphySnapshotTests: ZMSnapshotTestCase {
+final class GiphySearchViewControllerSnapshotTests: ZMSnapshotTestCase {
     var sut: GiphySearchViewController!
 
     var mockConversation: MockConversation!
@@ -28,15 +28,13 @@ final class GiphySnapshotTests: ZMSnapshotTestCase {
     override func setUp() {
         super.setUp()
 
-        mockConversation = MockConversation.onoOnOneConversation()
+        mockConversation = MockConversation.oneOnOneConversation()
 
         let searchTerm: String = "apple"
         sut = GiphySearchViewController(withSearchTerm: searchTerm, conversation: (mockConversation as Any) as! ZMConversation)
         mockNavigationController = sut.wrapInsideNavigationController()
 
         sut.collectionView?.backgroundColor = .white
-
-        UIView.setAnimationsEnabled(false)
     }
 
     override func tearDown() {
@@ -44,22 +42,10 @@ final class GiphySnapshotTests: ZMSnapshotTestCase {
         mockConversation = nil
         mockNavigationController = nil
 
-        UIView.setAnimationsEnabled(true)
-
         super.tearDown()
     }
 
     func testEmptySearchScreenWithKeyword(){
-        verify(view: mockNavigationController.view)
-    }
-
-    func testConfirmationScreenWithDisabledSendButton(){
-        let data = self.data(forResource: "animated", extension: "gif")!
-        let image = FLAnimatedImage(animatedGIFData: data)
-
-        let confirmationController = sut.pushConfirmationViewController(ziph: nil, previewImage: image, animated: false)
-        confirmationController.view.backgroundColor = .white
-
         verify(view: mockNavigationController.view)
     }
 }

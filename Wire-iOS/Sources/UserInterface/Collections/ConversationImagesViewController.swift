@@ -41,7 +41,7 @@ extension UIView {
     }
 }
 
-final class ConversationImagesViewController: UIViewController {
+final class ConversationImagesViewController: TintColorCorrectedViewController {
     
     let collection: AssetCollectionWrapper
     
@@ -494,29 +494,43 @@ extension MenuVisibilityController {
     }
 }
 
+fileprivate extension UIPreviewAction {
+    convenience init(titleKey: String, handler: @escaping () -> Void) {
+        self.init(
+            title: titleKey.localized,
+            style: .default,
+            handler: { _ in handler() }
+        )
+    }
+}
+
 extension ConversationImagesViewController {
 
     override var previewActionItems: [UIPreviewActionItem] {
-        let copyAction = UIPreviewAction(title: NSLocalizedString("content.message.copy", comment: ""), style: .default) { _ in
-            self.copyCurrent(nil)
-        }
+        let copyAction = UIPreviewAction(
+            titleKey: "content.message.copy",
+            handler: { self.copyCurrent(nil) }
+        )
+        
+        let likeAction = UIPreviewAction(
+            titleKey: "content.message.\(currentMessage.liked ? "unlike" : "like")",
+            handler: likeCurrent
+        )
 
-        let likeActionKey = currentMessage.liked ? "unlike" : "like"
-        let likeAction = UIPreviewAction(title: NSLocalizedString("content.message.\(likeActionKey)", comment: ""), style: .default) { _ in
-            self.likeCurrent()
-        }
+        let saveAction = UIPreviewAction(
+            titleKey: "content.message.save",
+            handler: { self.saveCurrent(nil) }
+        )
 
-        let saveAction = UIPreviewAction(title: NSLocalizedString("content.message.save", comment: ""), style: .default) { _ in
-            self.saveCurrent(nil)
-        }
+        let shareAction = UIPreviewAction(
+            titleKey: "content.message.forward",
+            handler: { self.shareCurrent(nil) }
+        )
 
-        let shareAction = UIPreviewAction(title: NSLocalizedString("content.message.forward", comment: ""), style: .default) { _ in
-            self.shareCurrent(nil)
-        }
-
-        let deleteAction = UIPreviewAction(title: NSLocalizedString("content.message.delete", comment: ""), style: .destructive) { _ in
-            self.deleteCurrent(nil)
-        }
+        let deleteAction = UIPreviewAction(
+            titleKey: "content.message.delete_ellipsis",
+            handler: { self.deleteCurrent(nil) }
+        )
 
         return [copyAction, likeAction, saveAction, shareAction, deleteAction]
     }

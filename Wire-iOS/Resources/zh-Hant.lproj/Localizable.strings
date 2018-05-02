@@ -156,7 +156,7 @@
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++x
 // In-app notifications (chat heads)
-"notifications.shared_a_photo" = "分享了一張圖片";
+"notifications.shared_a_photo" = "分享了一幀圖片";
 "notifications.pinged" = "打了聲招呼";
 "notifications.sent_file" = "分享了一個檔案";
 "notifications.sent_location" = "分享了一個位置";
@@ -182,7 +182,7 @@
 
 "conversation.status.message.text" = "%@";
 "conversation.status.message.link" = "分享一條連結";
-"conversation.status.message.image" = "分享了一張圖片";
+"conversation.status.message.image" = "分享了一幀圖片";
 "conversation.status.message.location" = "分享了一個位置";
 "conversation.status.message.audio" = "分享了一則語音訊息";
 "conversation.status.message.video" = "分享了一段影片";
@@ -391,7 +391,6 @@
 // Full sentence: "A message from %@ was not received. [...] (device d1b23c54f34a). This is a debug information.
 
 "content.system.unknown_message.body" = "您正在使用舊版本的Wire，因此無法顯示該信息。";
-"content.system.unknown_message.body.link" = "為甚麼有這個情況？";
 
 "content.file.uploading" = "正在上傳...";
 "content.file.downloading" = "正在下載...";
@@ -416,7 +415,7 @@
 "content.message.copy" = "複製";
 
 "content.message.open_link_alert.title" = "瀏覽連結";
-"content.message.open_link_alert.message" = "This will take you to\n%@";
+"content.message.open_link_alert.message" = "這會帶你去\n%@";
 "content.message.open_link_alert.open" = "開啟";
 
 "content.reactions_list.likers" = "讚好";
@@ -493,10 +492,10 @@
 
 // Meta Menu
 "meta.menu.rename" = "重新命名";
-"meta.menu.leave" = "離開";
+"meta.menu.leave" = "離開...";
 "meta.menu.archive" = "封存";
 "meta.menu.unarchive" = "解除封存";
-"meta.menu.delete" = "刪除";
+"meta.menu.delete" = "刪除內容...";
 "meta.menu.silence.mute" = "關閉訊息通知";
 "meta.menu.silence.unmute" = "開啟訊息通知";
 "meta.menu.cancel" = "取消";
@@ -504,7 +503,6 @@
 "meta.menu.mark_unread" = "標示為未讀";
 "meta.menu.mark_read" = "標示成已讀";
 "shortcut.mark_all_as_read.title" = "將全部標記為已讀";
-
 
 // Delete conversation
 "meta.menu.delete_content.dialog_title" = "確定刪除內容？";
@@ -564,7 +562,8 @@
 "profile.cancel_connection_request_dialog.button_yes" = "好";
 
 // Unblock button
-"profile.unblock_button_title" = "解除封鎖";
+"profile.block_button_title" = "封鎖...";
+"profile.unblock_button_title" = "解除封鎖...";
 
 "profile.cancel_connection_button_title" = "取消請求";
 "profile.connection_request_state.blocked" = "封鎖";
@@ -848,14 +847,22 @@
 
 // History backup
 
-"self.settings.conversations.title" = "對話";
-"self.settings.history_backup.title" = "歷史備份";
-"self.settings.history_backup.description" = "把你的對話歷史備份到一個安全的地方。如果你失去了你的手機或換一個新的，你的對話不會遺失。您可以在登錄時回復對話歷史記錄。你只能從同一平臺的備份中還原歷史記錄。備份不受Wire端到端加密的保護。";
+"self.settings.conversations.title" = "歷史";
+"self.settings.history_backup.title" = "備份對話";
+"self.settings.history_backup.description" = "建立備份以保留對話歷史記錄。如果丟失了或切換到一個新的設備，則可以使用此還原歷史記錄。\n\n備份檔案不受Wire端到端加密的保護，因此請將備份檔案儲存於安全的地方。";
 "self.settings.history_backup.action" = "立刻備份";
 "self.settings.history_backup.error.title" = "錯誤";
 
 "self.settings.history_backup.set_email.title" = "設定電子郵件信箱和密碼。";
 "self.settings.history_backup.set_email.message" = "您需要電子郵件和密碼才能備份您的對話歷史記錄。您可以在「設置」的「帳戶」分頁中設定。";
+
+// History backup password
+
+"self.settings.history_backup.password.title" = "設置密碼";
+"self.settings.history_backup.password.cancel" = "取消";
+"self.settings.history_backup.password.next" = "下一步";
+"self.settings.history_backup.password.placeholder" = "至少8個字元";
+"self.settings.history_backup.password.description" = "將使用您的密碼壓縮和加密備份。";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // System status
@@ -956,7 +963,7 @@
 "guest_room.actions.copy_link" = "複製連結";
 "guest_room.actions.copied_link" = "已複製連結！";
 "guest_room.actions.share_link" = "分享連結";
-"guest_room.actions.revoke_link" = "撤銷連結";
+"guest_room.actions.revoke_link" = "撤銷連結...";
 
 "guest_room.share.message" = "加我到Wire對話:\n%@";
 
@@ -987,7 +994,7 @@
 "registration.select_picture.subtitle" = "有了圖片，Wire變得更生色。";
 "registration.select_picture.button_title" = "自行選擇";
 "registration.keep_picture.button_title" = "使用";
-"registration.camera_action.title" = "拍張照片";
+"registration.camera_action.title" = "拍攝照片";
 "registration.photo_gallery_action.title" = "選擇照片";
 "registration.cancel_action.title" = "取消";
 
@@ -995,15 +1002,36 @@
 "registration.no_history.subtitle" = "基於隱私，將不會顯示您的聊天紀錄。";
 "registration.no_history.got_it" = "確認";
 "registration.no_history.restore_backup" = "從備份回復";
-"registration.no_history.restore_backup_warning.title" = "回復歷史紀錄。";
-"registration.no_history.restore_backup_warning.message" = "您的備份將覆蓋您在此設備上之對話紀錄。";
-"registration.no_history.restore_backup_warning.proceed" = "開始執行";
 
-"registration.no_history.restore_backup_failed.title" = "回復歷史記錄失敗。";
-"registration.no_history.restore_backup_failed.message" = "您的備份檔案可能已損壞或不相容。";
-"registration.no_history.restore_backup_failed.wrong_account.message" = "無法讀取備份，因為它來自不同的帳戶。";
-"registration.no_history.restore_backup_failed.wrong_version.message" = "無法讀取備份, 因為它來自不支援的版本 (過時或新版本)。";
+// Restore History Warning Alert
+"registration.no_history.restore_backup_warning.title" = "回復歷史紀錄";
+"registration.no_history.restore_backup_warning.message" = "備份內容將替代此設備上的會話歷史記錄。只能從同一平臺的備份中還原歷史記錄。";
+"registration.no_history.restore_backup_warning.proceed" = "選擇備份檔案";
+
+/// Restore History Failure Alerts
 "registration.no_history.restore_backup_failed.try_again" = "請再試一次";
+
+// Generic
+"registration.no_history.restore_backup_failed.title" = "出了點問題";
+"registration.no_history.restore_backup_failed.message" = "您的歷史紀錄無法回復。";
+
+// Wrong Account
+"registration.no_history.restore_backup_failed.wrong_account.title" = "不相容的備份";
+"registration.no_history.restore_backup_failed.wrong_account.message" = "無法還原其他帳戶歷史記錄到你的帳戶。";
+
+// Incompatible Version
+"registration.no_history.restore_backup_failed.wrong_version.title" = "不相容的備份";
+"registration.no_history.restore_backup_failed.wrong_version.message" = "此備份是由較新的或過時版本的Wire創建的，無法在此版本還原。";
+
+// Restore In Progress Loading Titles
+"registration.no_history.restore_backup.restoring" = "回復中...";
+"registration.no_history.restore_backup.completed" = "完成";
+
+// Password Import Alert
+"registration.no_history.restore_backup.password.title" = "此備份受密碼保護。";
+"registration.no_history.restore_backup.password.message" = "還原此備份需要密碼。";
+"registration.no_history.restore_backup.password.placeholder" = "密碼";
+"registration.no_history.restore_backup.password_error.title" = "密碼錯誤";
 
 "registration.no_history.logged_out.hero" = "您曾在此設備登錄Wire。";
 "registration.no_history.logged_out.subtitle" = "登出期間收到的訊息不會顯示。";
@@ -1145,6 +1173,12 @@
 
 "error.invite.no_email_provider" = "請設定您的 Email 用戶端以透過 Email 發送邀請。";
 "error.invite.no_messaging_provider" = "請設定您的簡訊服務以透過簡訊發送邀請。";
+
+"error.conversation.title" = "錯誤";
+"error.conversation.cannot_add" = "添加參與者失敗";
+"error.conversation.cannot_remove" = "刪除參與者失敗";
+"error.conversation.too_many_members" = "對話人數已達上限";
+"error.conversation.offline" = "您的網路連線似乎有些問題，請確保網路正常運作。";
 
 "sketchpad.initial_hint" = "點擊顏色塊來改變筆刷大小";
 
