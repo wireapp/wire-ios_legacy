@@ -51,7 +51,6 @@ final class MockPanGestureRecognizer: UIPanGestureRecognizer {
     }
 }
 
-
 final class MockSplitViewControllerDelegate: NSObject, SplitViewControllerDelegate {
     func splitViewControllerShouldMoveLeftViewController(_ splitViewController: SplitViewController) -> Bool {
         return true
@@ -118,22 +117,22 @@ final class SplitViewControllerTests: XCTestCase {
         XCTAssertEqual(sut.rightView.frame.width, compactWidth)
     }
 
-    fileprivate func setupAsLeftViewUnrevealed(file: StaticString = #file, line: UInt = #line) {
+    fileprivate func setupLeftView(isLeftViewControllerRevealed: Bool, animated: Bool = true, file: StaticString = #file, line: UInt = #line) {
         sut.leftViewController = UIViewController()
         sut.rightViewController = UIViewController()
 
         let compactTraitCollection = UITraitCollection(horizontalSizeClass: .compact)
         mockParentViewController.setOverrideTraitCollection(compactTraitCollection, forChildViewController: sut)
 
-        sut.isLeftViewControllerRevealed = false
-        sut.view.layoutIfNeeded()
+        sut.isLeftViewControllerRevealed = isLeftViewControllerRevealed
+        sut.setLeftViewControllerRevealed(isLeftViewControllerRevealed, animated: animated, completion: nil)
 
-        XCTAssertEqual(sut.rightView.frame.origin.x, 0)
+        XCTAssertEqual(sut.rightView.frame.origin.x, isLeftViewControllerRevealed ? sut.leftView.frame.size.width : 0)
     }
 
     func testThatPanRightViewToLessThanHalfWouldBounceBack(){
         // GIVEN
-        setupAsLeftViewUnrevealed()
+        setupLeftView(isLeftViewControllerRevealed: false)
 
         // WHEN
         let beganGestureRecognizer = MockPanGestureRecognizer(location: nil, translation: nil, state: .began)
@@ -157,7 +156,7 @@ final class SplitViewControllerTests: XCTestCase {
 
     func testThatPanRightViewToMoreThanHalfWouldRevealLeftView(){
         // GIVEN
-        setupAsLeftViewUnrevealed()
+        setupLeftView(isLeftViewControllerRevealed: false)
 
         // WHEN
         let beganGestureRecognizer = MockPanGestureRecognizer(location: nil, translation: nil, state: .began)
@@ -176,6 +175,17 @@ final class SplitViewControllerTests: XCTestCase {
         sut.onHorizontalPan(endedGestureRecognizer)
 
         // THEN
-        XCTAssertEqual(sut.rightView.frame.origin.x, sut.view.frame.size.width)
+        XCTAssertEqual(sut.rightView.frame.origin.x, sut.view.frame.size.width, "rightView should stop at the right edge of the sut.view!")
+    }
+
+    func testThatSetLeftViewControllerUnrevealedWithoutAnimationHidesLeftView(){
+        // GIVEN
+        setupLeftView(isLeftViewControllerRevealed: true, animated: false)
+
+        // WHEN
+        sut.setLeftViewControllerRevealed(false, animated: false, completion: nil)
+
+        // THEN
+        XCTAssert(sut.leftView.isHidden)
     }
 }

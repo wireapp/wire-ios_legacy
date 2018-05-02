@@ -21,6 +21,9 @@
 @property (nonatomic) UIView *leftView;
 @property (nonatomic) UIView *rightView;
 
+@property (nonatomic) CGFloat openPercentage;
+
 - (void)onHorizontalPan:(UIPanGestureRecognizer *)gestureRecognizer;
+- (void)resetOpenPercentage;
 
 @end
