@@ -88,7 +88,12 @@ class GiphySearchViewController: UICollectionViewController {
     var pendingSearchtask: CancelableTask?
     var pendingFetchTask: CancelableTask?
     fileprivate var lastLayoutSize: CGSize = .zero
-    fileprivate var ziphs: [Ziph] = []
+    fileprivate var ziphs: [Ziph] {
+        didSet {
+            self.collectionView?.reloadData()
+            self.noResultsLabel.isHidden = self.ziphs.count > 0
+        }
+    }
 
     public init(withSearchTerm searchTerm: String, conversation: ZMConversation) {
         self.conversation = conversation
@@ -96,10 +101,9 @@ class GiphySearchViewController: UICollectionViewController {
         searchResultsController = ZiphySearchResultsController(pageSize: 50, callbackQueue: DispatchQueue.main)
         searchResultsController.ziphyClient = ZiphyClient.wr_ziphyWithDefaultConfiguration()
         masonrylayout = ARCollectionViewMasonryLayout(direction: .vertical)
+        ziphs = []
 
         super.init(collectionViewLayout: masonrylayout)
-
-//        searchResultsController.delegate = self
 
         title = ""
 
@@ -225,14 +229,10 @@ class GiphySearchViewController: UICollectionViewController {
         if searchTerm.isEmpty {
             pendingSearchtask = searchResultsController.trending() { [weak self] (success, ziphs, error) in
                 self?.ziphs = ziphs
-                self?.collectionView?.reloadData()
-                self?.noResultsLabel.isHidden = self?.ziphs.count > 0
             }
         } else {
             pendingSearchtask = searchResultsController.search(withSearchTerm: searchTerm) { [weak self] (success, ziphs, error) in
                 self?.ziphs = ziphs
-                self?.collectionView?.reloadData()
-                self?.noResultsLabel.isHidden = self?.ziphs.count > 0
             }
         }
     }
@@ -243,8 +243,7 @@ class GiphySearchViewController: UICollectionViewController {
         }
 
         pendingFetchTask = searchResultsController.fetchMoreResults { [weak self] (success, ziphs, error) in
-            self?.ziphs = ziphs ///TODO didSet of ziphs
-            self?.collectionView?.reloadData()
+            self?.ziphs = ziphs
             self?.pendingFetchTask = nil
         }
     }
@@ -346,12 +345,3 @@ extension GiphySearchViewController: ARCollectionViewMasonryLayoutDelegate {
     }
 
 }
-
-//extension GiphySearchViewController: ZiphySearchResultsControllerDelegate {
-//    func didCleanResults(ziphySearchResultsController: ZiphySearchResultsController) {
-//        collectionView?.performBatchUpdates({
-//            let indexSet = IndexSet(integer: 0)
-//            self.collectionView?.reloadSections(indexSet)
-//        }, completion: nil)
-//    }
-//}
