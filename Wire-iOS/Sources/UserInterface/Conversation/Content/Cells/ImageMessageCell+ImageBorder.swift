@@ -29,7 +29,5 @@ extension ImageMessageCell {
         case .dark:
             fullImageView.layer.borderColor = UIColor(white: 1, alpha: 0.08).cgColor
         }
-
-        ///TODO: theme whiteAlpha8 or blackAlpha8
     }
 }
