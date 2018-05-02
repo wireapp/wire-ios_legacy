@@ -25,7 +25,6 @@ final class CallStatusViewTests: ZMSnapshotTestCase {
 
     override func setUp() {
         super.setUp()
-        recordMode = true
         snapshotBackgroundColor = .white
         sut = CallStatusView(configuration: .init(state: .connecting, type: .audio, variant: .dark, isConstantBitRate: false, title: "Italy Trip"))
         sut.translatesAutoresizingMaskIntoConstraints = false
