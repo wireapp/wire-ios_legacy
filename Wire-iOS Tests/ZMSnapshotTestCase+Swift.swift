@@ -118,6 +118,8 @@ extension ZMSnapshotTestCase {
             verifyView(view, extraLayoutPass: false, tolerance: tolerance, file: file.utf8SignedStart(), line: line, identifier: "LightTheme")
             themeable.colorSchemeVariant = .dark
             verifyView(view, extraLayoutPass: false, tolerance: tolerance, file: file.utf8SignedStart(), line: line, identifier: "DarkTheme")
+        } else {
+            XCTFail("View doesn't support Themable protocol")
         }
         
     }

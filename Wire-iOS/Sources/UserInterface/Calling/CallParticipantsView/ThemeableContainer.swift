@@ -1,6 +1,6 @@
 //
 // Wire
-// Copyright (C) 2016 Wire Swiss GmbH
+// Copyright (C) 2018 Wire Swiss GmbH
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -18,21 +18,22 @@
 
 import Foundation
 
-public protocol Reusable {
-    static var reuseIdentifier: String { get }
-    var reuseIdentifier: String? { get }
-}
-
-public extension Reusable {
-    static var reuseIdentifier: String {
-        guard let `class` = self as? AnyClass else { return "\(self)" }
-        return NSStringFromClass(`class`)
+class ThemableContainerView: UIView, Themeable {
+    
+    var colorSchemeVariant: ColorSchemeVariant = ColorScheme.default().variant {
+        didSet {
+            guard oldValue != colorSchemeVariant else { return }
+            
+            for subview in subviews {
+                if var themeableView = subview as? Themeable {
+                    themeableView.colorSchemeVariant = colorSchemeVariant
+                }
+            }
+        }
     }
     
-    var reuseIdentifier: String? {
-        return type(of: self).reuseIdentifier
+    func applyColorScheme(_ colorSchemeVariant: ColorSchemeVariant) {
+        
     }
+    
 }
-
-extension UITableViewCell: Reusable {}
-extension UICollectionReusableView: Reusable {}
