@@ -33,6 +33,12 @@ extension UIImage: MediaAsset {
 
     public func isTransparent() -> Bool {
         guard let alpha: CGImageAlphaInfo = self.cgImage?.alphaInfo else { return false }
-        return alpha == .first || alpha == .last || alpha == .premultipliedFirst || alpha == .premultipliedLast
+
+        switch alpha {
+        case .first, .last, .premultipliedFirst, .premultipliedLast, .alphaOnly:
+            return true
+        default:
+            return false
+        }
     }
 }
