@@ -59,7 +59,7 @@ extension FullscreenImageViewController {
 
     // MARK: - Gesture Handling
 
-    func handleDoubleTap(_ doubleTapper: UITapGestureRecognizer?) {
+    func handleDoubleTap(_ doubleTapper: UITapGestureRecognizer) {
         setSelectedByMenu(false, animated: false)
 
         guard let image = imageView?.image else { return }
@@ -72,10 +72,11 @@ extension FullscreenImageViewController {
             if (image.size.width < self.view.bounds.width &&
                 image.size.height < self.view.bounds.height &&
                 scrollView.zoomScale == 1) == false {
-                let point: CGPoint? = doubleTapper?.location(in: doubleTapper?.view)
-                let zoomRect = CGRect(x: (point?.x ?? 0.0) - 25, y: (point?.y ?? 0.0) - 25, width: 50, height: 50)
-                let finalRect: CGRect? = imageView?.convert(zoomRect, from: doubleTapper?.view)
-                scrollView.zoom(to: finalRect ?? CGRect.zero, animated: true)
+                let point = doubleTapper.location(in: doubleTapper.view)
+                let zoomRect = CGRect(x: (point.x) - 25, y: (point.y) - 25, width: 50, height: 50)
+                let finalRect = imageView?.convert(zoomRect, from: doubleTapper.view)
+
+                scrollView.zoom(to: finalRect ?? .zero, animated: true)
             }
         } else {
             scrollView.setZoomScale(scrollView.minimumZoomScale, animated: true)
