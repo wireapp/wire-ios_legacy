@@ -82,8 +82,21 @@ import Foundation
     func addAccountOrTeamCell() -> SettingsCellDescriptorType {
         
         let presentationAction: () -> UIViewController? = {
+            
             if SessionManager.shared?.accountManager.accounts.count < SessionManager.maxNumberAccounts {
-                SessionManager.shared?.addAccount()
+                
+                if let manager = SessionManager.shared, manager.shouldSwitchAccounts {
+                    SessionManager.shared?.addAccount()
+                } else {
+                    if let controller = UIApplication.shared.wr_topmostController(onlyFullScreen: false) {
+                        let alert = UIAlertController(title: "self.settings.add_account.switch_accounts.title", message: nil, preferredStyle: .actionSheet)
+                        alert.addAction(UIAlertAction(title: "self.settings.add_account.switch_accounts.action", style: .default, handler: { (action) in
+                            SessionManager.shared?.addAccount()
+                        }))
+                        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+                        controller.present(alert, animated: true, completion: nil)
+                    }
+                }
             }
             else {
                 if let controller = UIApplication.shared.wr_topmostController(onlyFullScreen: false) {
