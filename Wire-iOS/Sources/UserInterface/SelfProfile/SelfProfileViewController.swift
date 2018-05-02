@@ -198,7 +198,7 @@ extension SelfProfileViewController: UserImageViewDelegate {
 extension SelfProfileViewController {
     
     static func displaySwitchAccountAlertIfNeeded(completion: @escaping ()->()) {
-        if let manager = SessionManager.shared, !manager.shouldSwitchAccounts {
+        if let manager = SessionManager.shared, manager.shouldSwitchAccounts {
             completion()
         } else {
             if let controller = UIApplication.shared.wr_topmostController(onlyFullScreen: false) {
