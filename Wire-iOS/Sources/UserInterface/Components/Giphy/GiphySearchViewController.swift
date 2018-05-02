@@ -88,6 +88,12 @@ class GiphySearchViewController: UICollectionViewController {
     var pendingSearchtask: CancelableTask?
     var pendingFetchTask: CancelableTask?
     fileprivate var lastLayoutSize: CGSize = .zero
+    fileprivate var ziphs: [Ziph] {
+        didSet {
+            self.collectionView?.reloadData()
+            self.noResultsLabel.isHidden = self.ziphs.count > 0
+        }
+    }
 
     public init(withSearchTerm searchTerm: String, conversation: ZMConversation) {
         self.conversation = conversation
@@ -95,6 +101,7 @@ class GiphySearchViewController: UICollectionViewController {
         searchResultsController = ZiphySearchResultsController(pageSize: 50, callbackQueue: DispatchQueue.main)
         searchResultsController.ziphyClient = ZiphyClient.wr_ziphyWithDefaultConfiguration()
         masonrylayout = ARCollectionViewMasonryLayout(direction: .vertical)
+        ziphs = []
 
         super.init(collectionViewLayout: masonrylayout)
 
@@ -220,14 +227,12 @@ class GiphySearchViewController: UICollectionViewController {
         cleanUpPendingTimer()
 
         if searchTerm.isEmpty {
-            pendingSearchtask = searchResultsController.trending() { [weak self] (success, error) in
-                self?.collectionView?.reloadData()
-                self?.noResultsLabel.isHidden = self?.searchResultsController.results.count > 0
+            pendingSearchtask = searchResultsController.trending() { [weak self] (success, ziphs, error) in
+                self?.ziphs = ziphs
             }
         } else {
-            pendingSearchtask = searchResultsController.search(withSearchTerm: searchTerm) { [weak self] (success, error) in
-                self?.collectionView?.reloadData()
-                self?.noResultsLabel.isHidden = self?.searchResultsController.results.count > 0
+            pendingSearchtask = searchResultsController.search(withSearchTerm: searchTerm) { [weak self] (success, ziphs, error) in
+                self?.ziphs = ziphs
             }
         }
     }
@@ -237,8 +242,8 @@ class GiphySearchViewController: UICollectionViewController {
             return
         }
 
-        pendingFetchTask = searchResultsController.fetchMoreResults { [weak self] (success, error) in
-            self?.collectionView?.reloadData()
+        pendingFetchTask = searchResultsController.fetchMoreResults { [weak self] (success, ziphs, error) in
+            self?.ziphs = ziphs
             self?.pendingFetchTask = nil
         }
     }
@@ -253,12 +258,12 @@ class GiphySearchViewController: UICollectionViewController {
     }
 
     public override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return searchResultsController.results.count
+        return self.ziphs.count
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: GiphyCollectionViewCell.CellIdentifier, for: indexPath) as! GiphyCollectionViewCell
-        let ziph = searchResultsController.results[indexPath.row]
+        let ziph = ziphs[indexPath.row]
 
         if let representation = ziph.ziphyImages[ZiphyClient.fromZiphyImageTypeToString(.fixedWidthDownsampled)] {
             cell.ziph = ziph
@@ -272,7 +277,7 @@ class GiphySearchViewController: UICollectionViewController {
             }
         }
 
-        if indexPath.row == searchResultsController.results.count / 2 {
+        if indexPath.row == self.ziphs.count / 2 {
             fetchMoreResults()
         }
 
@@ -281,7 +286,7 @@ class GiphySearchViewController: UICollectionViewController {
     }
 
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let ziph = searchResultsController.results[indexPath.row]
+        let ziph = self.ziphs[indexPath.row]
         var previewImage: FLAnimatedImage?
 
         if let cell = collectionView.cellForItem(at: indexPath) as? GiphyCollectionViewCell {
@@ -330,7 +335,7 @@ extension GiphySearchViewController: UISearchBarDelegate {
 extension GiphySearchViewController: ARCollectionViewMasonryLayoutDelegate {
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: ARCollectionViewMasonryLayout, variableDimensionForItemAt indexPath: IndexPath) -> CGFloat {
-        let ziph = searchResultsController.results[indexPath.row]
+        let ziph = self.ziphs[indexPath.row]
 
         guard let representation = ziph.ziphyImages[ZiphyClient.fromZiphyImageTypeToString(.fixedWidthDownsampled)] else {
             return 0
