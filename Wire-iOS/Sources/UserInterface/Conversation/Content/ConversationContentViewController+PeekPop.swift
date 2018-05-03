@@ -26,12 +26,18 @@ private var lastPreviewURL: URL?
 
 extension ConversationContentViewController: UIViewControllerPreviewingDelegate {
 
-    @available(iOS 9.0, *)
     public func previewingContext(_ previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint) -> UIViewController? {
-        guard let superview = self.view.superview,
-              let cellIndexPath = self.tableView.indexPathForRow(at: self.tableView.convert(location, from: superview)),
-              let message = self.messageWindow.messages[cellIndexPath.row] as? ZMConversationMessage else {
+
+        let cellLocation = view.convert(location, to: tableView)
+
+        guard let cellIndexPath = self.tableView.indexPathForRow(at: cellLocation),
+              let message = self.messageWindow.messages[cellIndexPath.row] as? ZMConversationMessage,
+              let cell = tableView.cellForRow(at: cellIndexPath) as? ConversationCell else {
             return .none
+        }
+
+        guard message.isObfuscated == false else {
+            return nil
         }
 
         lastPreviewURL = nil
@@ -39,23 +45,33 @@ extension ConversationContentViewController: UIViewControllerPreviewingDelegate 
 
         if message.isText, let url = message.textMessageData?.linkPreview?.openableURL as URL? {
             lastPreviewURL = url
-            controller = SFSafariViewController(url: url)
+            controller = TintColorCorrectedSafariViewController(url: url)
         } else if message.isImage {
             controller = self.messagePresenter.viewController(forImageMessagePreview: message, actionResponder: self)
+        } else if message.isLocation {
+            let locationController = LocationPreviewController(message: message)
+            locationController.messageActionDelegate = self
+            controller = locationController
         }
 
-        if nil != controller, let cell = tableView.cellForRow(at: cellIndexPath) as? ConversationCell, cell.previewView.bounds != .zero {
+        if nil != controller, cell.previewView.bounds != .zero {
             previewingContext.sourceRect = previewingContext.sourceView.convert(cell.previewView.frame, from: cell.previewView.superview!)
         }
 
         return controller
     }
 
-    @available(iOS 9.0, *)
     public func previewingContext(_ previewingContext: UIViewControllerPreviewing, commit viewControllerToCommit: UIViewController) {
-        // Restore the navigation and button bars
+
+        // If the previewed item is an image, show the previously hidden controls.
         if let imagesViewController = viewControllerToCommit as? ConversationImagesViewController {
             imagesViewController.isPreviewing = false
+        }
+
+        // If the previewed item is a location, open it in Maps.
+        if let locationController = viewControllerToCommit as? LocationPreviewController {
+            Message.openInMaps(locationController.message.locationMessageData!)
+            return
         }
 
         // In case the user has set a 3rd party application to open the URL we do not 

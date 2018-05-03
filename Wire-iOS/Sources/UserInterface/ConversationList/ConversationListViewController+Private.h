@@ -23,6 +23,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @class SearchViewController;
 @class ConversationListTopBar;
+@class NetworkStatusViewController;
 @class ConversationListBottomBarController;
 @class ConversationListContentController;
 
@@ -31,7 +32,10 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic) ConversationListContentController *listContentController;
 @property (nonatomic, weak, readonly) id<UserProfile> userProfile;
 @property (nonatomic) ConversationListTopBar *topBar;
+@property (nonatomic) NetworkStatusViewController *networkStatusViewController;
 @property (nonatomic, readonly) ConversationListBottomBarController *bottomBarController;
+/// for NetworkStatusViewDelegate
+@property (nonatomic) BOOL shouldAnimateNetworkStatusView;
 
 - (void)removeUserProfileObserver;
 - (void)presentSettings;

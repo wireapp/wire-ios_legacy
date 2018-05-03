@@ -35,7 +35,7 @@
 
 - (void)conversationListDidScroll:(ConversationListContentController *)controller;
 
-- (void)conversationListContentController:(ConversationListContentController *)controller wantsActionMenuForConversation:(ZMConversation *)conversation;
+- (void)conversationListContentController:(ConversationListContentController *)controller wantsActionMenuForConversation:(ZMConversation *)conversation fromSourceView:(UIView *)sourceView;
 
 @end
 

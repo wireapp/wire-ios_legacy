@@ -23,10 +23,9 @@
 #import "Wire-Swift.h"
 
 // Helpers
-#import "Constants.h"
+
 #import "AppDelegate+Hockey.h"
 #import "Application+runDuration.h"
-#import "AppDelegate+Logging.h"
 #import "ZClientViewController.h"
 #import "Analytics.h"
 #import "AnalyticsTracker+Registration.h"
@@ -38,7 +37,7 @@
 
 NSString *const ZMUserSessionDidBecomeAvailableNotification = @"ZMUserSessionDidBecomeAvailableNotification";
 
-
+static NSString* ZMLogTag ZM_UNUSED = @"UI";
 static AppDelegate *sharedAppDelegate = nil;
 
 
@@ -86,22 +85,20 @@ static AppDelegate *sharedAppDelegate = nil;
     if (backendEnvironment.length == 0 || [backendEnvironment isEqualToString:@"default"]) {
         NSString *defaultBackend = @STRINGIZE(DEFAULT_BACKEND);
         
-        DDLogInfo(@"Backend environment is <not defined>. Using '%@'.", defaultBackend);
+        ZMLogInfo(@"Backend environment is <not defined>. Using '%@'.", defaultBackend);
         [[NSUserDefaults standardUserDefaults] setObject:defaultBackend forKey:BackendEnvironmentTypeKey];
         [[NSUserDefaults sharedUserDefaults] setObject:defaultBackend forKey:BackendEnvironmentTypeKey];
     } else {
-        DDLogInfo(@"Using '%@' backend environment", backendEnvironment);
+        ZMLogInfo(@"Using '%@' backend environment", backendEnvironment);
     }
 }
 
 - (BOOL)application:(UIApplication *)application willFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    [self setupLogging];
-
-    DDLogInfo(@"application:willFinishLaunchingWithOptions %@ (applicationState = %ld)", launchOptions, (long)application.applicationState);
+    ZMLogInfo(@"application:willFinishLaunchingWithOptions %@ (applicationState = %ld)", launchOptions, (long)application.applicationState);
     
     // Initial log line to indicate the client version and build
-    DDLogInfo(@"Wire-ios version %@ (%@)",
+    ZMLogInfo(@"Wire-ios version %@ (%@)",
               [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"],
               [[[NSBundle mainBundle] infoDictionary] objectForKey:(NSString *) kCFBundleVersionKey]);
     
@@ -114,8 +111,9 @@ static AppDelegate *sharedAppDelegate = nil;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    DDLogInfo(@"application:didFinishLaunchingWithOptions START %@ (applicationState = %ld)", launchOptions, (long)application.applicationState);
+    [ZMSLog switchCurrentLogToPrevious];
     
+    ZMLogInfo(@"application:didFinishLaunchingWithOptions START %@ (applicationState = %ld)", launchOptions, (long)application.applicationState);
     
     [self setupBackendEnvironment];
 
@@ -130,20 +128,20 @@ static AppDelegate *sharedAppDelegate = nil;
     }];
     self.launchOptions = launchOptions;
     
-    DDLogInfo(@"application:didFinishLaunchingWithOptions END %@", launchOptions);
-    DDLogInfo(@"Application was launched with arguments: %@",[[NSProcessInfo processInfo]arguments]);
+    ZMLogInfo(@"application:didFinishLaunchingWithOptions END %@", launchOptions);
+    ZMLogInfo(@"Application was launched with arguments: %@",[[NSProcessInfo processInfo]arguments]);
 
     return YES;
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application
 {
-    DDLogInfo(@"applicationWillEnterForeground: (applicationState = %ld)", (long)application.applicationState);
+    ZMLogInfo(@"applicationWillEnterForeground: (applicationState = %ld)", (long)application.applicationState);
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application;
 {
-    DDLogInfo(@"applicationDidBecomeActive START (applicationState = %ld)", (long)application.applicationState);
+    ZMLogInfo(@"applicationDidBecomeActive START (applicationState = %ld)", (long)application.applicationState);
     
     switch (self.launchType) {
         case ApplicationLaunchURL:
@@ -160,26 +158,33 @@ static AppDelegate *sharedAppDelegate = nil;
     
     self.trackedResumeEvent = NO;
     
-    DDLogInfo(@"applicationDidBecomeActive END");
+    ZMLogInfo(@"applicationDidBecomeActive END");
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application
 {
-    DDLogInfo(@"applicationWillResignActive:  (applicationState = %ld)", (long)application.applicationState);
+    ZMLogInfo(@"applicationWillResignActive:  (applicationState = %ld)", (long)application.applicationState);
 }
 
 - (void)applicationDidEnterBackground:(UIApplication *)application
 {
-    DDLogInfo(@"applicationDidEnterBackground:  (applicationState = %ld)", (long)application.applicationState);
+    ZMLogInfo(@"applicationDidEnterBackground:  (applicationState = %ld)", (long)application.applicationState);
     
     self.launchType = ApplicationLaunchUnknown;
     
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
+- (BOOL)application:(UIApplication *)app
+            openURL:(NSURL *)url
+            options:(NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options
+{
+    return [self.sessionManager.urlHandler openURL:url options:options];
+}
+
 - (void)applicationWillTerminate:(UIApplication *)application
 {
-    DDLogInfo(@"applicationWillTerminate:  (applicationState = %ld)", (long)application.applicationState);
+    ZMLogInfo(@"applicationWillTerminate:  (applicationState = %ld)", (long)application.applicationState);
     
     // In case of normal termination we do not need the run duration to persist
     [[UIApplication sharedApplication] resetRunDuration];
@@ -234,49 +239,10 @@ performActionForShortcutItem:(UIApplicationShortcutItem *)shortcutItem
 
 #pragma mark - URL handling
 
-- (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url
-{
-    DDLogInfo(@"application:handleOpenURL: %@", url);
-    return YES;
-}
-
 - (BOOL)application:(UIApplication *)application continueUserActivity:(NSUserActivity *)userActivity restorationHandler:(void (^)(NSArray * _Nullable))restorationHandler
 {
-    DDLogInfo(@"application:continueUserActivity:restorationHandler: %@", userActivity);
+    ZMLogInfo(@"application:continueUserActivity:restorationHandler: %@", userActivity);
     return [[SessionManager shared] continueUserActivity:userActivity restorationHandler:restorationHandler];
-}
-
-- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
-{
-    DDLogInfo(@"application:openURL:sourceApplication:annotation: URL: %@, souce app: %@", url, sourceApplication);
-    
-    self.launchType = ApplicationLaunchURL;
-    [[Analytics shared] tagAppLaunchWithType:ApplicationLaunchURL];
-    self.trackedResumeEvent = YES;
-    
-    BOOL succeded = NO;
-    
-    if ([[url scheme] isEqualToString:WireURLScheme] || [[url scheme] isEqualToString:WireURLSchemeInvite]) {
-        succeded = YES;
-        
-        if ([[url host] isEqualToString:@"email-verified"]) {
-            [[Analytics shared] tagAppLaunchWithType:ApplicationLaunchRegistration];
-        }
-        else if ([[url scheme] isEqualToString:WireURLSchemeInvite]) {
-            [[AnalyticsTracker analyticsTrackerWithContext:nil] tagAcceptedGenericInvite];
-        }
-        
-        [self.rootViewController performWhenAuthenticated:^{
-            [[ZMUserSession sharedSession] didLaunchWithURL:url];
-        }];
-    }
-    
-    if (! succeded) {
-        // Intentional NSLog
-        NSLog(@"INFO: Received URL: %@", [url absoluteString]);
-    }
-
-    return NO;
 }
 
 #pragma mark - AppController
@@ -336,19 +302,19 @@ performActionForShortcutItem:(UIApplicationShortcutItem *)shortcutItem
 
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)newDeviceToken
 {
-    DDLogWarn(@"Received APNS token: %@", newDeviceToken);
+    ZMLogWarn(@"Received APNS token: %@", newDeviceToken);
     
     [[SessionManager shared] didRegisteredForRemoteNotificationsWith:newDeviceToken];
 }
 
 - (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error
 {
-    DDLogInfo(@"application:didFailToRegisterForRemoteNotificationsWithError: %@", error);
+    ZMLogInfo(@"application:didFailToRegisterForRemoteNotificationsWithError: %@", error);
     if (error != nil) {
         [[Analytics shared] tagApplicationError:error.localizedDescription
                                   timeInSession:[[UIApplication sharedApplication] lastApplicationRunDuration]];
     }
-    DDLogWarn(@"Error registering for push with APNS: %@", error);
+    ZMLogWarn(@"Error registering for push with APNS: %@", error);
     
     AnalyticsTracker *analyticsTracker = [AnalyticsTracker analyticsTrackerWithContext:nil];
     [analyticsTracker tagPushNotificationsPermissions:NO];
@@ -360,7 +326,7 @@ performActionForShortcutItem:(UIApplicationShortcutItem *)shortcutItem
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult result))completionHandler
 {
-    DDLogInfo(@"application:didReceiveRemoteNotification:fetchCompletionHandler: notification: %@", userInfo);
+    ZMLogInfo(@"application:didReceiveRemoteNotification:fetchCompletionHandler: notification: %@", userInfo);
     if (application.applicationState == UIApplicationStateActive) {
         [[Analytics shared] tagAppLaunchWithType:ApplicationLaunchPush];
         self.trackedResumeEvent = YES;
@@ -373,7 +339,7 @@ performActionForShortcutItem:(UIApplicationShortcutItem *)shortcutItem
 
 - (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification
 {
-    DDLogInfo(@"application:didReceiveLocalNotification: %@", notification);
+    ZMLogInfo(@"application:didReceiveLocalNotification: %@", notification);
     
     [[SessionManager shared] didReceiveLocalNotification:notification application:application];
     
@@ -383,9 +349,9 @@ performActionForShortcutItem:(UIApplicationShortcutItem *)shortcutItem
 - (void)application:(UIApplication *)application
 handleActionWithIdentifier:(NSString *)identifier
 forLocalNotification:(UILocalNotification *)notification
-  completionHandler:(void (^)())completionHandler
+  completionHandler:(void (^)(void))completionHandler
 {
-    DDLogInfo(@"application:handleActionWithIdentifier:forLocalNotification: identifier: %@, notification: %@", identifier, notification);
+    ZMLogInfo(@"application:handleActionWithIdentifier:forLocalNotification: identifier: %@, notification: %@", identifier, notification);
     
     [[SessionManager shared] handleActionWithIdentifier:identifier
                                    forLocalNotification:notification
@@ -398,9 +364,9 @@ forLocalNotification:(UILocalNotification *)notification
 handleActionWithIdentifier:(NSString *)identifier
 forLocalNotification:(UILocalNotification *)notification
    withResponseInfo:(NSDictionary *)responseInfo
-  completionHandler:(void(^)())completionHandler;
+  completionHandler:(void(^)(void))completionHandler;
 {
-    DDLogInfo(@"application:handleActionWithIdentifier:forLocalNotification: identifier: %@, notification: %@ responseInfo: %@", identifier, notification, responseInfo);
+    ZMLogInfo(@"application:handleActionWithIdentifier:forLocalNotification: identifier: %@, notification: %@ responseInfo: %@", identifier, notification, responseInfo);
     
     [[SessionManager shared] handleActionWithIdentifier:identifier
                                    forLocalNotification:notification
@@ -411,16 +377,16 @@ forLocalNotification:(UILocalNotification *)notification
 
 - (void)application:(UIApplication *)application performFetchWithCompletionHandler:(void (^)(UIBackgroundFetchResult result))completionHandler;
 {
-    DDLogInfo(@"application:performFetchWithCompletionHandler:");
+    ZMLogInfo(@"application:performFetchWithCompletionHandler:");
     
     [self.rootViewController performWhenAuthenticated:^{
         [[ZMUserSession sharedSession] application:application performFetchWithCompletionHandler:completionHandler];
     }];
 }
 
-- (void)application:(UIApplication *)application handleEventsForBackgroundURLSession:(NSString *)identifier completionHandler:(void (^)())completionHandler;
+- (void)application:(UIApplication *)application handleEventsForBackgroundURLSession:(NSString *)identifier completionHandler:(void (^)(void))completionHandler;
 {
-    DDLogInfo(@"application:handleEventsForBackgroundURLSession:completionHandler: session identifier: %@", identifier);
+    ZMLogInfo(@"application:handleEventsForBackgroundURLSession:completionHandler: session identifier: %@", identifier);
     
     [self.rootViewController performWhenAuthenticated:^{
         [[ZMUserSession sharedSession] application:application handleEventsForBackgroundURLSession:identifier completionHandler:completionHandler];

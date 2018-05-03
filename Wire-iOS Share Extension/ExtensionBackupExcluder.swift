@@ -19,8 +19,8 @@
 
 import Foundation
 import WireExtensionComponents
-import CocoaLumberjackSwift
 
+private let zmLog = ZMSLog(tag: "UI")
 
 class ExtensionBackupExcluder {
 
@@ -38,7 +38,7 @@ class ExtensionBackupExcluder {
                 }
             }
         } catch {
-            DDLogError("Cannot exclude file from the backup: \(self): \(error)")
+            zmLog.error("Cannot exclude file from the backup: \(self): \(error)")
         }
     }
 

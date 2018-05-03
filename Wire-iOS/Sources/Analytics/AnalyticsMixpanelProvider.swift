@@ -19,9 +19,10 @@
 
 import Foundation
 import Mixpanel
-import CocoaLumberjackSwift
 
 let MixpanelDistinctIdKey = "MixpanelDistinctIdKey"
+
+private let zmLog = ZMSLog(tag: "Analytics")
 
 fileprivate enum MixpanelSuperProperties: String {
     case city = "$city"
@@ -30,7 +31,8 @@ fileprivate enum MixpanelSuperProperties: String {
 }
 
 extension Dictionary where Key == String, Value == Any {
-    fileprivate static func bridgeOrDescription(for object: Any) -> MixpanelType? {
+    fileprivate static func bridgeOrDescription(for object: Any?) -> MixpanelType? {
+        guard let object = object else { return nil }
         if let object = object as? NSNumber {
             let numberType = CFNumberGetType(object)
 
@@ -83,6 +85,7 @@ final class AnalyticsMixpanelProvider: NSObject, AnalyticsProvider {
         "team.verified",
         "team.accepted_terms",
         "team.created",
+        "team.added_team_name",
         "team.finished_invite_step",
         "settings.opened_manage_team",
         "registration.succeeded",
@@ -110,7 +113,11 @@ final class AnalyticsMixpanelProvider: NSObject, AnalyticsProvider {
         GuestLinkEvent.copied.name,
         GuestLinkEvent.revoked.name,
         GuestLinkEvent.shared.name,
-        GuestRoomEvent.created.name
+        GuestRoomEvent.created.name,
+        BackupEvent.importSucceeded.name,
+        BackupEvent.importFailed.name,
+        BackupEvent.exportSucceeded.name,
+        BackupEvent.exportFailed.name
         ])
     
     private static let enabledSuperProperties = Set<String>([
@@ -122,7 +129,7 @@ final class AnalyticsMixpanelProvider: NSObject, AnalyticsProvider {
         ])
     
     deinit {
-        DDLogInfo("AnalyticsMixpanelProvider \(self) deallocated")
+        zmLog.info("AnalyticsMixpanelProvider \(self) deallocated")
     }
     
     override init() {
@@ -133,16 +140,16 @@ final class AnalyticsMixpanelProvider: NSObject, AnalyticsProvider {
         mixpanelInstance?.distinctId = mixpanelDistinctId
         mixpanelInstance?.minimumSessionDuration = 2_000
         mixpanelInstance?.loggingEnabled = false
-        DDLogInfo("AnalyticsMixpanelProvider \(self) started")
+        zmLog.info("AnalyticsMixpanelProvider \(self) started")
         
         if DeveloperMenuState.developerMenuEnabled(),
             let uuidString = mixpanelInstance?.distinctId {
-            DDLogError("Mixpanel distinctId = `\(uuidString)`")
+            zmLog.error("Mixpanel distinctId = `\(uuidString)`")
         }
         
-        self.setSuperProperty("app", value: "ios")
-        self.setSuperProperty(MixpanelSuperProperties.city.rawValue, value: "")
-        self.setSuperProperty(MixpanelSuperProperties.region.rawValue, value: "")
+        self.setSuperProperty("app", stringValue: "ios")
+        self.setSuperProperty(MixpanelSuperProperties.city.rawValue, stringValue: "")
+        self.setSuperProperty(MixpanelSuperProperties.region.rawValue, stringValue: "")
     }
     
     var mixpanelDistinctId: String {
@@ -171,24 +178,29 @@ final class AnalyticsMixpanelProvider: NSObject, AnalyticsProvider {
         }
         
         guard AnalyticsMixpanelProvider.enabledEvents.contains(event) else {
-            DDLogInfo("Analytics: event \(event) is disabled")
+            zmLog.info("Analytics: event \(event) is disabled")
             return
         }
         
         mixpanelInstance.track(event: event, properties: attributes.propertiesRemovingLocation())
     }
     
-    func setSuperProperty(_ name: String, value: String?) {
+    //Fallback method to avoid repeated casts to NSObject
+    func setSuperProperty(_ name: String, stringValue: String?) {
+        self.setSuperProperty(name, value: stringValue as NSObject?)
+    }
+    
+    func setSuperProperty(_ name: String, value: NSObject?) {
         guard let mixpanelInstance = self.mixpanelInstance else {
             return
         }
         
         guard AnalyticsMixpanelProvider.enabledSuperProperties.contains(name) else {
-            DDLogInfo("Analytics: Super property \(name) is disabled")
+            zmLog.info("Analytics: Super property \(name) is disabled")
             return
         }
         
-        if let valueNotNil = value {
+        if let valueNotNil = Dictionary.bridgeOrDescription(for: value) {
             mixpanelInstance.registerSuperProperties([name: valueNotNil])
         }
         else {

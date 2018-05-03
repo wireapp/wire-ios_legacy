@@ -15,12 +15,22 @@
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
+// General strings
 
 
 "general.ok" = "OK";
 "general.next" = "Next";
 "general.cancel" = "Annuller";
+"general.close" = "Luk";
+"general.back" = "Back";
 "general.open_settings" = "Åbn Wire Indstillinger";
+"general.edit" = "Rediger";
+"general.done" = "Done";
+"general.confirm" = "OK";
+// Language like Chinese does not use space to sperate words or sentences.
+"general.space_between_words" = " ";
+
+"general.guest-room-name" = "Guest room";
 
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -40,10 +50,10 @@
 "peoplepicker.group.title.plural" = "Add People (%d)";
 "peoplepicker.group.skip" = "Skip";
 "peoplepicker.group.done" = "Done";
-"peoplepicker.group.create" = "Create";
+"peoplepicker.group.create" = "Opret";
 
-"peoplepicker.header.people" = "People";
-"peoplepicker.header.services" = "Services";
+"peoplepicker.header.people" = "Personer";
+"peoplepicker.header.services" = "Tjenester";
 "peoplepicker.services.create_conversation.item" = "Create a new conversation";
 "peoplepicker.services.add_service.button" = "Add service";
 "peoplepicker.services.add_service.error.title" = "The service can't be added";
@@ -78,6 +88,7 @@
 "peoplepicker.invite_team_members" = "Invite people to join the team";
 "peoplepicker.quick-action.open-conversation" = "Åbn";
 "peoplepicker.quick-action.create-conversation" = "Opret gruppe";
+"peoplepicker.quick-action.create-guest-room" = "Create guest room";
 
 "add_participants.all_contacts_added" = "Everyone's here.";
 
@@ -93,7 +104,7 @@
 "contacts_ui.notification.invitation_failed" = "Kunne ikke sende invitation";
 "contacts_ui.title" = "Invitér personer";
 
-"conversation_list.empty.all_archived.message" = "Everything archived";
+"conversation_list.empty.all_archived.message" = "Alt arkiveret";
 "conversation_list.empty.no_contacts.message" = "Start a conversation or\ncreate a group.";
 
 
@@ -233,10 +244,11 @@
 "conversation.input_bar.shortcut.edit_last_message" = "Edit Last Message";
 "conversation.input_bar.shortcut.cancel_editing_message" = "Annuller";
 
-"conversation.input_bar.message_too_long.title" = "Message too long";
+"conversation.input_bar.message_too_long.title" = "Besked for lang";
 "conversation.input_bar.message_too_long.message" = "You can send messages up to %d characters long.";
 
-"conversation.create.group_name.placeholder" = "Group name";
+"conversation.create.group_name.title" = "Opret gruppe";
+"conversation.create.group_name.placeholder" = "Gruppenavn";
 "conversation.create.guidance.empty" = "At least 1 character";
 "conversation.create.guidance.toolong" = "For mange tegn";
 "conversation.create.toggle.title" = "Allow guests";
@@ -314,6 +326,9 @@
 "content.system.conversation.team.member-leave" = "%@ was removed from the team.";
 "content.system.conversation.guest.joined" = "%@ joined";
 
+"content.system.conversation.invite.title" = "People outside your team can join this conversation.";
+"content.system.conversation.invite.button" = "Invitér personer";
+
 "content.system.other_renamed_conv_to_nothing" = "%@ fjernede samtalens navn";
 "content.system.you_renamed_conv_to_nothing" = "Du fjernede samtalens navn";
 "content.system.pending_message_timestamp" = "Sender…";
@@ -343,6 +358,7 @@
 "content.system.renamed_conv.title.you" = "Dig";
 
 "content.system.conversation.with_name.title" = "%@ started the conversation";
+"content.system.conversation.with_name.title-you" = "%@ started the conversation";
 
 "content.system.conversation.with_name.participants" = "with %@";
 
@@ -375,7 +391,6 @@
 // Full sentence: "A message from %@ was not received. [...] (device d1b23c54f34a). This is a debug information.
 
 "content.system.unknown_message.body" = "Du anvender en ældre version af Wire, der ikke kan vise denne meddelelse.";
-"content.system.unknown_message.body.link" = "Hvorfor sker dette?";
 
 "content.file.uploading" = "Uploader…";
 "content.file.downloading" = "Downloader…";
@@ -397,12 +412,18 @@
 "content.message.go_to_conversation" = "Vis";
 "content.message.forward.to" = "Send til…";
 "content.message.open" = "Åbn";
+"content.message.copy" = "Copy";
+
+"content.message.open_link_alert.title" = "Visit Link";
+"content.message.open_link_alert.message" = "This will take you to\n%@";
+"content.message.open_link_alert.open" = "Åbn";
 
 "content.reactions_list.likers" = "Synes godt af";
 
 "content.file.too_big" = "Du kan sende filer op til %@";
 // Someone pinged
-"content.ping.text" = "%1$@ pinged";
+"content.ping.text" = "%@ pinged";
+"content.ping.text-you" = "%@ pinged";
 
 // Current user pinged
 "content.ping.text.you" = "Dig";
@@ -418,11 +439,17 @@
 "inbox.connection_request.connect_button_title" = "Forbind";
 "inbox.connection_request.ignore_button_title" = "Ignorer";
 
+// Save image errors
+"library.alert.permission_warning.title" = "Wire needs access to your Photos";
+"library.alert.permission_warning.restrictions.explaination" = "Wire cannot access your library because restrictions are enabled.";
+"library.alert.permission_warning.not_allowed.explaination" = "Go to Settings and allow Wire to access your photos.";
+
 // Voice
-"voice.status.one_to_one.incoming" = "%@\nRinger";
-"voice.status.group_call.incoming" = "%@\nRinger";
-"voice.status.one_to_one.outgoing" = "%@\nRinger";
+"voice.status.one_to_one.incoming" = "%@\ncalling";
+"voice.status.group_call.incoming" = "%@\nringing";
+"voice.status.one_to_one.outgoing" = "%@\nringing";
 "voice.status.joining" = "%@\nForbinder";
+"voice.status.leaving" = "%@\nCall ended";
 "voice.status.video_not_available" = "Video slået fra";
 "voice.status.low_connection" = "Dårlig forbindelse";
 "voice.network_error.title" = "Ingen internetforbindelse";
@@ -455,7 +482,7 @@
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Profile and Participants
 
-"participants.add_people_button_title" = "Add";
+"participants.add_people_button_title" = "Tilføj";
 "participants.avatar.guest.title" = "Gæst";
 
 "participants.title" = "Detaljer";
@@ -465,14 +492,17 @@
 
 // Meta Menu
 "meta.menu.rename" = "Omdøb";
-"meta.menu.leave" = "Forlad";
+"meta.menu.leave" = "Leave…";
 "meta.menu.archive" = "Arkiv";
 "meta.menu.unarchive" = "Fjern fra arkiv";
-"meta.menu.delete" = "Slet";
+"meta.menu.delete" = "Delete Content…";
 "meta.menu.silence.mute" = "Lyd fra";
 "meta.menu.silence.unmute" = "Lyd til";
 "meta.menu.cancel" = "Annuller";
 "meta.menu.cancel_connection_request" = "Annuller anmodning";
+"meta.menu.mark_unread" = "Mark as Unread";
+"meta.menu.mark_read" = "Mark as Read";
+"shortcut.mark_all_as_read.title" = "Mark All as Read";
 
 // Delete conversation
 "meta.menu.delete_content.dialog_title" = "Slet indhold?";
@@ -532,7 +562,8 @@
 "profile.cancel_connection_request_dialog.button_yes" = "Ja";
 
 // Unblock button
-"profile.unblock_button_title" = "Fjern blokering";
+"profile.block_button_title" = "Block…";
+"profile.unblock_button_title" = "Unblock…";
 
 "profile.cancel_connection_button_title" = "ANNULER ANMODNING";
 "profile.connection_request_state.blocked" = "BLOKERET";
@@ -550,7 +581,7 @@
 // Device list
 "profile.devices.title" = "Enheder";
 "profile.devices.fingerprint_message_unencrypted" = "%@ bruger en gammel version af Wire. Ingen enheder er vist her.";
-"profile.devices.fingerprint_message" = "Wire giver hver enhed et unikt fingeraftryk.\nSammenlign dem med %@ og verificer din samtale. Hvorfor verificere samtaler?";
+"profile.devices.fingerprint_message.title" = "Wire gives every device a unique fingerprint. Compare them with %@ and verify your conversation.";
 "profile.devices.fingerprint_message.link" = "Hvorfor verificere samtaler?";
 
 // Device detail
@@ -564,16 +595,13 @@
 "device.class.phone" = "Telefon";
 "profile.devices.detail.reset_session.title" = "Nulstil session";
 
-// General strings
-"general.confirm" = "OK";
-
 // Bot
 "participants.services.remove_integration.button" = "remove integration";
 
 // Group details
 "group_details.guest_options_cell.title" = "Guest Options";
 "group_details.guest_options_cell.enabled" = "On";
-"group_details.guest_options_cell.disabled" = "Fra";
+"group_details.guest_options_cell.disabled" = "Slået fra";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Self profile
@@ -603,12 +631,9 @@
 "about.copyright.title" = "© Wire Swiss GmbH";
 
 // Self new devices
-"self.new_device_alert.title" = "Du har tilsluttet %@ til din Wire konto";
-"self.new_device_alert.title_prefix.tablet" = "en tablet";
-"self.new_device_alert.title_prefix.phone" = "en telefon";
-"self.new_device_alert.title_prefix.devices" = "%d enheder";
-"self.new_device_alert.message" = "%@\n\nHvis du ikke gjorde det, fjern enheden og nulstil din adgangskode.";
-"self.new_device_alert.message_plural" = "%@\n\nHvis du ikke gjorde det, fjern enhederne og nulstil din adgangskode.";
+"self.new_device_alert.title" = "Your account was used on:";
+"self.new_device_alert.message" = "\n%@\n\nIf you don’t recognize the device above, remove it and reset your password.";
+"self.new_device_alert.message_plural" = "\n%@\n\nIf you don’t recognize the devices above, remove them and reset your password.";
 "self.new_device_alert.manage_devices" = "Administrer enheder";
 "self.new_device_alert.trust_devices" = "OK";
 
@@ -773,7 +798,11 @@
 "self.settings.privacy_contacts_menu.description_disabled.title" = "Dette hjælper dig med at oprette forbindelse med andre. Vi anonymiserer alle informationer og deler ikke med andre. Tillad adgang via Indstillinger > Privatliv > Kontakter.";
 
 "self.settings.privacy_security.lock_app" = "Lås med adgangskode";
-"self.settings.privacy_security.lock_app.subtitle" = "Lås Wire efter 10 sekunder i baggrunden. Låse op med Touch ID eller indtaste din adgangskode.";
+"self.settings.privacy_security.lock_app.subtitle.lock_description" = "Lock Wire after 10 seconds in the background.";
+"self.settings.privacy_security.lock_app.subtitle.touch_id" = "Unlock with Touch ID or enter your passcode.";
+"self.settings.privacy_security.lock_app.subtitle.face_id" = "Unlock with Face ID or enter your passcode.";
+"self.settings.privacy_security.lock_app.subtitle.none" = "Unlock by entering your passcode.";
+
 "self.settings.privacy_security.lock_app.description" = "Åben Wire";
 
 "self.settings.privacy_security.lock_cancelled.description" = "Åben Wire med Touch ID eller adgangskode";
@@ -816,6 +845,25 @@
 // Invite from Settings
 "self.settings.invite_friends.title" = "Invitér personer";
 
+// History backup
+
+"self.settings.conversations.title" = "History";
+"self.settings.history_backup.title" = "Back Up Conversations";
+"self.settings.history_backup.description" = "Create a backup to preserve your conversation history. You can use this to restore history if you lose your device or switch to a new one.\n\nThe backup file is not protected by Wire end-to-end encryption, so store it in a safe place.";
+"self.settings.history_backup.action" = "Back Up Now";
+"self.settings.history_backup.error.title" = "Error";
+
+"self.settings.history_backup.set_email.title" = "Set an email and password.";
+"self.settings.history_backup.set_email.message" = "You need an email and a password in order to back up your conversation history. You can do it from the account page in Settings.";
+
+// History backup password
+
+"self.settings.history_backup.password.title" = "Set Password";
+"self.settings.history_backup.password.cancel" = "Annuller";
+"self.settings.history_backup.password.next" = "Next";
+"self.settings.history_backup.password.placeholder" = "Mindst 8 tegn";
+"self.settings.history_backup.password.description" = "The backup will be compressed and encrypted with the password you set here.";
+
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // System status
 "system_status_bar.no_internet.title" = "Ingen forbindelse";
@@ -829,7 +877,7 @@
 "name.guidance.toolong" = "For mange tegn";
 
 "email.placeholder" = "E-mail";
-"email.guidance.invalid" = "Invalid email address";
+"email.guidance.invalid" = "Ugyldig e-mailadresse";
 "email.guidance.tooshort" = "Email is too short";
 "email.guidance.toolong" = "For mange tegn";
 
@@ -839,13 +887,14 @@
 
 // Landing screen
 
+"landing.app_name" = "Wire";
 "landing.title" = "Secure messaging for everyone.";
-"landing.create_account.title" = "Create an account";
-"landing.create_account.subtitle" = "for personal use";
-"landing.create_team.title" = "Opret team";
-"landing.create_team.subtitle" = "for work";
+"landing.create_account.title" = "For personal use";
+"landing.create_account.subtitle" = "create an account";
+"landing.create_team.title" = "For organizations";
+"landing.create_team.subtitle" = "create a team";
 "landing.login.hints" = "Already have an account?";
-"landing.login.button.title" = "Log in";
+"landing.login.button.title" = "Log ind";
 
 // Create team
 
@@ -864,7 +913,7 @@
 "team.activation_code.headline" = "You've got mail";
 "team.activation_code.subheadline" = "Enter the verification code we sent to %@.";
 "team.activation_code.button.resend" = "Resend code";
-"team.activation_code.button.change_email" = "Change email";
+"team.activation_code.button.change_email" = "Ændre email";
 
 "team.full_name.headline" = "Your name";
 "team.full_name.textfield.placeholder" = "Full name";
@@ -903,10 +952,27 @@
 "guest_room.revoke_link.message" = "New guests will not be able to join with this link. Current guests will still have access.";
 "guest_room.revoke_link.action" = "Revoke Link";
 
-"guest_room.error.generic.title" = "Something went wrong";
+"guest_room.error.generic.title" = "Noget gik galt";
 "guest_room.error.generic.message" = "Check your connection and try again";
 
+"guest_room.link.header.title" = "Invite others with a link";
+"guest_room.link.header.subtitle" = "Anyone with the link can join the conversation, even if they don't have Wire.";
+
+"guest_room.link.button.title" = "Create Link";
+
+"guest_room.actions.copy_link" = "Copy Link";
+"guest_room.actions.copied_link" = "Link Copied!";
+"guest_room.actions.share_link" = "Share Link";
+"guest_room.actions.revoke_link" = "Revoke Link…";
+
+"guest_room.share.message" = "Join me in a conversation on Wire:\n%@";
+
+"guest_room.expiration.hours_left" = "%@h left";
+"guest_room.expiration.less_than_minutes_left" = "Less than %@m left";
+
 // Registration
+
+"registration.launch_back_button.label" = "Back";
 
 "registration.title" = "Registrering";
 "registration.close_email_invitation_button.email_title" = "Brug en anden e-mail";
@@ -935,6 +1001,37 @@
 "registration.no_history.hero" = "Det er første gang du bruger Wire på denne enhed.";
 "registration.no_history.subtitle" = "Af hensyn til fortrolighed, vil din samtalehistorik ikke vises her.";
 "registration.no_history.got_it" = "OK";
+"registration.no_history.restore_backup" = "Restore from backup";
+
+// Restore History Warning Alert
+"registration.no_history.restore_backup_warning.title" = "Restore history";
+"registration.no_history.restore_backup_warning.message" = "The backup contents will replace the conversation history on this device.\nYou can only restore history from a backup of the same platform.";
+"registration.no_history.restore_backup_warning.proceed" = "Choose Backup File";
+
+/// Restore History Failure Alerts
+"registration.no_history.restore_backup_failed.try_again" = "Try again";
+
+// Generic
+"registration.no_history.restore_backup_failed.title" = "Noget gik galt";
+"registration.no_history.restore_backup_failed.message" = "Your history could not be restored.";
+
+// Wrong Account
+"registration.no_history.restore_backup_failed.wrong_account.title" = "Incompatible backup";
+"registration.no_history.restore_backup_failed.wrong_account.message" = "You cannot restore history from a different account.";
+
+// Incompatible Version
+"registration.no_history.restore_backup_failed.wrong_version.title" = "Incompatible backup";
+"registration.no_history.restore_backup_failed.wrong_version.message" = "This backup was created by a newer or outdated version of Wire and cannot be restored here.";
+
+// Restore In Progress Loading Titles
+"registration.no_history.restore_backup.restoring" = "Restoring…";
+"registration.no_history.restore_backup.completed" = "Completed";
+
+// Password Import Alert
+"registration.no_history.restore_backup.password.title" = "This backup is password protected.";
+"registration.no_history.restore_backup.password.message" = "The password is required to restore this backup.";
+"registration.no_history.restore_backup.password.placeholder" = "Adgangskode";
+"registration.no_history.restore_backup.password_error.title" = "Wrong Password";
 
 "registration.no_history.logged_out.hero" = "Du har brugt Wire på denne enhed før.";
 "registration.no_history.logged_out.subtitle" = "Beskeder sendt i mellemtiden vises ikke.";
@@ -951,7 +1048,7 @@
 
 "registration.terms_of_use.terms.title" = "Vilkår for anvendelse";
 "registration.terms_of_use.terms.message" = "Please accept the Terms of Use to continue.";
-"registration.terms_of_use.terms.view" = "View";
+"registration.terms_of_use.terms.view" = "Vis";
 "registration.terms_of_use.accept" = "Besvar";
 
 "registration.email_flow.title" = "Registrer via e-mail";
@@ -993,7 +1090,19 @@
 "registration.devices.activated_in" = "Aktiveret i";
 "registration.devices.id" = "ID:";
 
+"signin.use_email.label" = "Login with Email";
+"signin.use_phone.label" = "Login with Phone";
 "signin.forgot_password" = "Glemt adgangskode?";
+"signin.use_one_password.label" = "Log in with 1Password";
+"signin.use_one_password.hint" = "Double tap to fill your password with 1Password";
+"signin.confirm" = "Log ind";
+
+"registration.phone_country" = "Land";
+"registration.phone_code" = "Country Code";
+"registration.phone_country.hint" = "Double tap to select another country.";
+"registration.phone_code.hint" = "Double tap to select another country code.";
+"registration.phone.verify.label" = "Verify phone number";
+"registration.phone.verify_field.label" = "Verification Code";
 
 "registration.add_phone_number.hero.title" = "Tilføj telefonnummer";
 "registration.add_phone_number.hero.paragraph" = "Dette hjælper os med at finde folk du måske kender. Vi deler det aldrig.";
@@ -1009,6 +1118,9 @@
 "registration.phone_invitation.title" = "Invitation";
 "registration.phone_invitation.hero.title" = "Hej, %@";
 "registration.phone_invitation.hero.paragraph" = "Du er et skridt væk fra at oprette din konto.";
+
+"registration.confirm" = "Sign Up";
+"registration.phone.country_code.hint" = "Double tap to use a phone number from this country.";
 
 "error.name_and_email" = "Indtast dit fulde navn og en gyldig e-mailadresse";
 "error.full_name" = "Indtast dit fulde navn";
@@ -1061,6 +1173,12 @@
 
 "error.invite.no_email_provider" = "Konfigurer din e-mail klient for at kunne sende invitationer via e-mail";
 "error.invite.no_messaging_provider" = "Konfigurer din SMS for at kunne sende invitationer vis SMS";
+
+"error.conversation.title" = "Error";
+"error.conversation.cannot_add" = "Adding the participant failed";
+"error.conversation.cannot_remove" = "Removing the participant failed";
+"error.conversation.too_many_members" = "The conversation is full";
+"error.conversation.offline" = "Det lader til at der er problemer med din internet forbindelse. Venligst undersøg at det virker.";
 
 "sketchpad.initial_hint" = "Tryk på farver for at ændre penselstørrelse";
 
@@ -1127,9 +1245,20 @@
 "availability.message.set_status" = "Set a status";
 
 "availability.none" = "Ingen";
-"availability.available" = "Available";
+"availability.available" = "Ledig";
 "availability.away" = "Away";
 "availability.busy" = "Busy";
 "availability.available.placeholder" = "%@ is available";
 "availability.away.placeholder" = "%@ is away";
 "availability.busy.placeholder" = "%@ is busy";
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Call Quality Survey
+
+"calling.quality_survey.title" = "Call Quality Feedback";
+"calling.quality_survey.question" = "How do you rate the overall quality of the call?";
+"calling.quality_survey.answer.1" = "Bad";
+"calling.quality_survey.answer.2" = "Poor";
+"calling.quality_survey.answer.3" = "Fair";
+"calling.quality_survey.answer.4" = "Good";
+"calling.quality_survey.answer.5" = "Excellent";

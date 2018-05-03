@@ -32,12 +32,18 @@ class GiphyConfirmationViewController: UIViewController {
     var cancelButton = Button(style: .empty)
     var buttonContainer = UIView()
     var delegate : GiphyConfirmationViewControllerDelegate?
-    let searchResultController : ZiphySearchResultsController
-    let ziph : Ziph
+    let searchResultController : ZiphySearchResultsController?
+    let ziph : Ziph?
     var imageData : Data?
     
     
-    public init(withZiph ziph: Ziph, previewImage: FLAnimatedImage?, searchResultController: ZiphySearchResultsController) {
+    /// init method with optional arguments for remove dependency for testing
+    ///
+    /// - Parameters:
+    ///   - ziph: provide nil for testing only
+    ///   - previewImage: image for preview
+    ///   - searchResultController: provide nil for testing only
+    public init(withZiph ziph: Ziph?, previewImage: FLAnimatedImage?, searchResultController: ZiphySearchResultsController?) {
         self.ziph = ziph
         self.searchResultController = searchResultController
         
@@ -58,9 +64,11 @@ class GiphyConfirmationViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
+        extendedLayoutIncludesOpaqueBars = true
+
         let titleLabel = UILabel()
-        titleLabel.font = UIFont(magicIdentifier: "style.text.title.font_spec")
+        titleLabel.font = FontSpec(.small, .semibold).font!
         titleLabel.textColor = ColorScheme.default().color(withName: ColorSchemeColorTextForeground)
         titleLabel.text = title?.uppercased()
         titleLabel.sizeToFit()
@@ -85,6 +93,8 @@ class GiphyConfirmationViewController: UIViewController {
     }
     
     func fetchImage() {
+        guard let ziph = ziph, let searchResultController = searchResultController else { return }
+        
         searchResultController.fetchImageData(forZiph: ziph, imageType: .downsized) { [weak self] (imageData, _, error) in
             if let imageData = imageData, error == nil {
                 self?.imagePreview.animatedImage = FLAnimatedImage(animatedGIFData: imageData)

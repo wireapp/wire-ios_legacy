@@ -22,8 +22,8 @@ import Foundation
 extension UIAlertController {
     static func remove(_ user: ZMUser, completion: @escaping (Bool) -> Void) -> UIAlertController {
         let controller = UIAlertController(
-            title: nil,
-            message: "profile.remove_dialog_message".localized(args: user.displayName),
+            title: "profile.remove_dialog_message".localized(args: user.displayName),
+            message: nil,
             preferredStyle: .actionSheet
         )
         controller.addAction(ZMConversation.Action.remove.alertAction { completion(true) })

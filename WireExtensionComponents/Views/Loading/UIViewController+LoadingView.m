@@ -22,23 +22,30 @@
 #import <objc/runtime.h>
 #import "ProgressSpinner.h"
 #import "NSLayoutConstraint+Helpers.h"
-
+#import <WireExtensionComponents/WireExtensionComponents-Swift.h>
 
 const NSString *ActivityIndicatorKey = @"activityIndicator";
 const NSString *LoadingViewKey = @"loadingView";
 
-
-
 @implementation UIViewController (LoadingView)
 
-- (UIActivityIndicatorView *)activityIndicator
+- (SpinnerSubtitleView *)spinnerView
 {
-    return objc_getAssociatedObject(self, (__bridge const void *) (ActivityIndicatorKey));
+   SpinnerSubtitleView *view = objc_getAssociatedObject(self, (__bridge const void *) (ActivityIndicatorKey));
+    
+    if (nil == view) {
+        view = [[SpinnerSubtitleView alloc] init];
+        view.translatesAutoresizingMaskIntoConstraints = NO;
+        view.spinner.hidesWhenStopped = NO;
+        [self setSpinnerView:view];
+    }
+    
+    return view;
 }
 
-- (void)setActivityIndicator:(UIActivityIndicatorView *)activityIndicator
+- (void)setSpinnerView:(SpinnerSubtitleView *)spinnerView
 {
-    objc_setAssociatedObject(self, (__bridge const void *) (ActivityIndicatorKey), activityIndicator, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    objc_setAssociatedObject(self, (__bridge const void *) (ActivityIndicatorKey), spinnerView, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
 - (BOOL)showLoadingView
@@ -51,12 +58,12 @@ const NSString *LoadingViewKey = @"loadingView";
 {
     self.loadingView.hidden = ! shouldShow;
     if (shouldShow) {
-        self.activityIndicator.hidden = NO;
-        [self.activityIndicator startAnimation:nil];
+        self.spinnerView.hidden = NO;
+        [self.spinnerView.spinner startAnimation:nil];
     }
     else {
-        self.activityIndicator.hidden = YES;
-        [self.activityIndicator stopAnimation:nil];
+        self.spinnerView.hidden = YES;
+        [self.spinnerView.spinner stopAnimation:nil];
     }
 }
 
@@ -72,12 +79,8 @@ const NSString *LoadingViewKey = @"loadingView";
         _loadingView.translatesAutoresizingMaskIntoConstraints = NO;
         _loadingView.backgroundColor = [UIColor colorWithWhite:0.0f alpha:0.5f];
         [_loadingView addConstraintsFittingToView:self.view];
-
-        self.activityIndicator = [[ProgressSpinner alloc] init];
-        self.activityIndicator.translatesAutoresizingMaskIntoConstraints = NO;
-        self.activityIndicator.hidesWhenStopped = NO;
-        [_loadingView addSubview:self.activityIndicator];
-        [self.activityIndicator addConstraintsCenteringToView:_loadingView];
+        [_loadingView addSubview:self.spinnerView];
+        [self.spinnerView addConstraintsCenteringToView:_loadingView];
 
         self.loadingView = _loadingView;
     }
@@ -87,8 +90,40 @@ const NSString *LoadingViewKey = @"loadingView";
 
 - (void)setLoadingView:(UIView *)loadingView
 {
-    objc_setAssociatedObject(self, (__bridge void *) LoadingViewKey, loadingView, 
-    OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    objc_setAssociatedObject(self, (__bridge void *) LoadingViewKey, loadingView, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
+- (void)indicateLoadingSuccessRemovingCheckmark:(BOOL)removingCheckmark completion:(dispatch_block_t)completion
+{
+    CheckAnimationView __block *checkView = nil;
+    
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.25 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        checkView = [[CheckAnimationView alloc] init];
+        checkView.center = self.loadingView.center;
+        [self.loadingView addSubview:checkView];
+        checkView.alpha = 0;
+        
+        [UIView animateWithDuration:0.5f animations:^{
+            checkView.alpha = 1;
+        } completion:nil];
+    });
+    
+    [UIView animateWithDuration:0.75f animations:^{
+        self.spinnerView.spinner.alpha = 0;
+        self.spinnerView.spinner.transform = CGAffineTransformMakeScale(0.01, 0.01);
+    } completion:^(BOOL completed){
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            if (completion != nil) {
+                completion();
+            }
+            if (removingCheckmark) {
+                self.spinnerView.spinner.alpha = 1;
+                self.spinnerView.spinner.transform = CGAffineTransformIdentity;
+                [self setShowLoadingView:NO];
+                [checkView removeFromSuperview];
+            }
+        });
+    }];
 }
 
 @end

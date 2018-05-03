@@ -26,7 +26,7 @@ typedef enum : NSInteger
     WireStyleKitResizingBehaviorAspectFill, //!< The content is proportionally resized to completely fill the target rectangle.
     WireStyleKitResizingBehaviorStretch, //!< The content is stretched to match the entire target rectangle.
     WireStyleKitResizingBehaviorCenter, //!< The content is centered in the target rectangle, but it is NOT resized.
-
+    
 } WireStyleKitResizingBehavior;
 
 extern CGRect WireStyleKitResizingBehaviorApply(WireStyleKitResizingBehavior behavior, CGRect rect, CGRect target);
@@ -201,6 +201,8 @@ extern CGRect WireStyleKitResizingBehaviorApply(WireStyleKitResizingBehavior beh
 + (void)drawSpaceWithFrame: (CGRect)targetFrame resizing: (WireStyleKitResizingBehavior)resizing color: (UIColor*)color;
 + (void)drawSpaceFocusWithColor: (UIColor*)color;
 + (void)drawSpaceFocusWithFrame: (CGRect)targetFrame resizing: (WireStyleKitResizingBehavior)resizing color: (UIColor*)color;
++ (void)drawRestoreWithColor: (UIColor*)color;
++ (void)drawRestoreWithFrame: (CGRect)targetFrame resizing: (WireStyleKitResizingBehavior)resizing color: (UIColor*)color;
 + (void)drawMentionsWithFrame: (CGRect)frame backgroundColor: (UIColor*)backgroundColor;
 + (void)drawTabWithColor: (UIColor*)color;
 
@@ -332,7 +334,10 @@ extern CGRect WireStyleKitResizingBehaviorApply(WireStyleKitResizingBehavior beh
 + (UIImage*)imageOfWireWithColor: (UIColor*)color;
 + (UIImage*)imageOfShieldverified;
 + (UIImage*)imageOfShieldnotverified;
++ (UIImage*)imageOfShieldWithColor: (UIColor*)color;
 + (UIImage*)imageOfSpaceFocusWithColor: (UIColor*)color;
++ (UIImage*)imageOfRestoreWithColor: (UIColor*)color;
 + (UIImage*)imageOfTabWithColor: (UIColor*)color;
 
 @end
+

@@ -19,7 +19,8 @@
 
 import Classy
 import Foundation
-import CocoaLumberjackSwift
+
+private let zmLog = ZMSLog(tag: "UI")
 
 extension Dictionary
 {
@@ -46,7 +47,7 @@ extension Dictionary
                 try FileManager.default.removeItem(atPath: type(of: self).casDirectory as String)
             }
             catch let error as NSError {
-                DDLogError("Cannot clear CAS cache: \(error)")
+                zmLog.error("Cannot clear CAS cache: \(error)")
             }
             type(of: self).lastAppBuild = currentAppBuild
         }
@@ -56,7 +57,7 @@ extension Dictionary
                 try FileManager.default.createDirectory(atPath: type(of: self).casDirectory as String, withIntermediateDirectories: true, attributes: .none)
             }
             catch let error as NSError {
-                DDLogError("Cannot create CAS cache: \(error)")
+                zmLog.error("Cannot create CAS cache: \(error)")
             }
         }
     }
@@ -122,16 +123,16 @@ extension Dictionary
             let bcasFolderPath = (bcasPath as NSString).deletingLastPathComponent
             
             guard ((try? FileManager.default.createDirectory(atPath: bcasFolderPath, withIntermediateDirectories: true, attributes: .none)) != nil) else {
-                DDLogError("Cannot create directory for bcas: " + bcasPath)
+                zmLog.error("Cannot create directory for bcas: " + bcasPath)
                 return
             }
             
             guard ((try? data.write(to: URL(fileURLWithPath: bcasPath), options: .atomicWrite)) != nil) else {
-                DDLogError("bcas cannot be saved to: " + bcasPath)
+                zmLog.error("bcas cannot be saved to: " + bcasPath)
                 return
             }
             
-            DDLogInfo("Saved bcas to: \(bcasPath) (\(data.count))")
+            zmLog.info("Saved bcas to: \(bcasPath) (\(data.count))")
         }
     }
     
@@ -143,18 +144,18 @@ extension Dictionary
         guard let attributes = try? FileManager.default.attributesOfItem(atPath: bcasPath),
             let fileSize = attributes[FileAttributeKey.size] as? Int
             , fileSize != 0 else {
-                DDLogInfo("bcas file not found")
+                zmLog.info("bcas file not found")
                 return .none
         }
         
-        DDLogInfo("Loading bcas file")
+        zmLog.info("Loading bcas file")
         
         
         if let array = NSKeyedUnarchiver.unarchiveObject(withFile: bcasPath) as? [AnyObject] {
             return array
         }
         else {
-            DDLogError("bcas cannot be decoded")
+            zmLog.error("bcas cannot be decoded")
             // We need to cleanup the archive since we cannot decode it
             _ = try? FileManager.default.removeItem(atPath: bcasPath)
             return .none

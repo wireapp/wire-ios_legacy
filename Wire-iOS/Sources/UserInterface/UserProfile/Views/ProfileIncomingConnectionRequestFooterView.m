@@ -18,9 +18,6 @@
 
 
 #import "ProfileIncomingConnectionRequestFooterView.h"
-
-#import "WAZUIMagicIOS.h"
-
 #import "Button.h"
 @import WireExtensionComponents;
 
@@ -44,11 +41,11 @@
 - (void)createViews
 {
     self.acceptButton = [Button buttonWithStyleClass:@"dialogue-button-full"];
-    [self.acceptButton setTitle:[NSLocalizedString(@"inbox.connection_request.connect_button_title", @"") transformStringWithMagicKey:@"connect.connect_button.text_transform"] forState:UIControlStateNormal];
+    [self.acceptButton setTitle:NSLocalizedString(@"inbox.connection_request.connect_button_title", @"").localizedUppercaseString forState:UIControlStateNormal];
     [self addSubview:self.acceptButton];
     
     self.ignoreButton = [Button buttonWithStyleClass:@"dialogue-button-empty"];;
-    [self.ignoreButton setTitle:[NSLocalizedString(@"inbox.connection_request.ignore_button_title", @"") transformStringWithMagicKey:@"connect.ignore_button.text_transform"] forState:UIControlStateNormal];
+    [self.ignoreButton setTitle:NSLocalizedString(@"inbox.connection_request.ignore_button_title", @"").localizedUppercaseString forState:UIControlStateNormal];
     [self addSubview:self.ignoreButton];
 }
 
@@ -56,16 +53,15 @@
 {
     self.acceptButton.translatesAutoresizingMaskIntoConstraints = NO;
     [self.acceptButton addConstraintForTopMargin:0 relativeToView:self];
-    [self.acceptButton addConstraintForBottomMargin:[WAZUIMagic cgFloatForIdentifier:@"profile_temp.content_bottom_margin"] relativeToView:self];
-    [self.acceptButton addConstraintForRightMargin:[WAZUIMagic cgFloatForIdentifier:@"profile_temp.content_right_margin"] relativeToView:self];
-    [self.acceptButton addConstraintForHeight:[WAZUIMagic cgFloatForIdentifier:@"connect.connect_button.height"]];
-    
+    [self.acceptButton addConstraintForBottomMargin:12 relativeToView:self];
+    [self.acceptButton addConstraintForRightMargin:8 relativeToView:self];
+    [self.acceptButton addConstraintForHeight:40];
     
     self.ignoreButton.translatesAutoresizingMaskIntoConstraints = NO;
     [self.ignoreButton addConstraintForTopMargin:0 relativeToView:self];
-    [self.ignoreButton addConstraintForBottomMargin:[WAZUIMagic cgFloatForIdentifier:@"profile_temp.content_bottom_margin"] relativeToView:self];
-    [self.ignoreButton addConstraintForLeftMargin:[WAZUIMagic cgFloatForIdentifier:@"profile_temp.content_left_margin"] relativeToView:self];
-    [self.ignoreButton addConstraintForHeight:[WAZUIMagic cgFloatForIdentifier:@"connect.ignore_button.height"]];
+    [self.ignoreButton addConstraintForBottomMargin:12 relativeToView:self];
+    [self.ignoreButton addConstraintForLeftMargin:16 relativeToView:self];
+    [self.ignoreButton addConstraintForHeight:40];
     
     [self.acceptButton addConstraintForAligningLeftToRightOfView:self.ignoreButton distance:16];
     [self.acceptButton addConstraintForEqualWidthToView:self.ignoreButton];

@@ -91,8 +91,12 @@ class AppStateController : NSObject {
     func updateAppState(completion: (() -> Void)? = nil) {
         let newAppState = calculateAppState()
         
-        if newAppState != .unauthenticated(error: nil) {
+        switch (appState, newAppState) {
+        case (_, .unauthenticated): break
+        case (.unauthenticated, _):
+            // only clear the error when transitioning out of the unauthenticated state
             authenticationError = nil
+        default: break
         }
         
         if newAppState != appState {
@@ -121,8 +125,12 @@ extension AppStateController : SessionManagerDelegate {
     
     func sessionManagerDidFailToLogin(account: Account?, error: Error) {
         loadingAccount = nil
+        
         // We only care about the error if it concerns the selected account.
-        authenticationError = SessionManager.shared?.accountManager.selectedAccount == account ? error as NSError : nil
+        if let selectedAccount = SessionManager.shared?.accountManager.selectedAccount, selectedAccount == account {
+            authenticationError = error as NSError
+        }
+        
         isLoggedIn = false
         isLoggedOut = true
         updateAppState()

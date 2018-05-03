@@ -32,7 +32,7 @@
                                  preferredStyle:UIAlertControllerStyleAlert];
     
     UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:cancelTitle
-                                                           style:UIAlertActionStyleDefault
+                                                           style:UIAlertActionStyleCancel
                                                          handler:nil];
     
     [alertController addAction:cancelAction];

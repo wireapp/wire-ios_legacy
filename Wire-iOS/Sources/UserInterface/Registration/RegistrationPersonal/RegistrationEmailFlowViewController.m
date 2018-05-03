@@ -98,6 +98,9 @@
 
 - (void)takeFirstResponder
 {
+    if (UIAccessibilityIsVoiceOverRunning()) {
+        return;
+    }
     [self.emailStepViewController takeFirstResponder];
 }
 

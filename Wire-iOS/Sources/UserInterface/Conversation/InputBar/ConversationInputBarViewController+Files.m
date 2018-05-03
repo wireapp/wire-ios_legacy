@@ -29,6 +29,8 @@
 #import "AVAsset+VideoConvert.h"
 #import "Wire-Swift.h"
 
+static NSString* ZMLogTag ZM_UNUSED = @"UI";
+
 const NSTimeInterval ConversationUploadMaxVideoDuration = 4.0f * 60.0f; // 4 minutes
 
 @implementation ConversationInputBarViewController (Files)
@@ -201,7 +203,7 @@ const NSTimeInterval ConversationUploadMaxVideoDuration = 4.0f * 60.0f; // 4 min
     BOOL isDirectory = NO;
     BOOL fileExists = [[NSFileManager defaultManager] fileExistsAtPath:itemPath isDirectory:&isDirectory];
     if (! fileExists) {
-        DDLogError(@"File not found for uploading: %@", itemURL);
+        ZMLogError(@"File not found for uploading: %@", itemURL);
         return;
     }
     
@@ -211,7 +213,7 @@ const NSTimeInterval ConversationUploadMaxVideoDuration = 4.0f * 60.0f; // 4 min
         NSError *error = nil;
         [[NSFileManager defaultManager] createDirectoryAtPath:tmpPath withIntermediateDirectories:YES attributes:nil error:&error];
         if (error != nil) {
-            DDLogError(@"Cannot create folder at path %@: %@", tmpPath, error);
+            ZMLogError(@"Cannot create folder at path %@: %@", tmpPath, error);
             return;
         }
         
@@ -219,7 +221,7 @@ const NSTimeInterval ConversationUploadMaxVideoDuration = 4.0f * 60.0f; // 4 min
                                                 toPath:[tmpPath stringByAppendingPathComponent:[itemPath lastPathComponent]]
                                                  error:&error];
         if (error != nil) {
-            DDLogError(@"Cannot move %@ to %@: %@", itemPath, tmpPath, error);
+            ZMLogError(@"Cannot move %@ to %@: %@", itemPath, tmpPath, error);
             [[NSFileManager defaultManager] removeItemAtPath:tmpPath error:nil];
             return;
         }
@@ -231,12 +233,12 @@ const NSTimeInterval ConversationUploadMaxVideoDuration = 4.0f * 60.0f; // 4 min
             [self uploadFileAtURL:[NSURL fileURLWithPath:archivePath]];
         }
         else {
-            DDLogError(@"Cannot archive folder at path: %@", itemURL);
+            ZMLogError(@"Cannot archive folder at path: %@", itemURL);
         }
         
         [[NSFileManager defaultManager] removeItemAtPath:tmpPath error:&error];
         if (error != nil) {
-            DDLogError(@"Cannot delete folder at path %@: %@", tmpPath, error);
+            ZMLogError(@"Cannot delete folder at path %@: %@", tmpPath, error);
             return;
         }
     }
@@ -255,12 +257,12 @@ const NSTimeInterval ConversationUploadMaxVideoDuration = 4.0f * 60.0f; // 4 min
         [[NSFileManager defaultManager] removeItemAtURL:url error:&deleteError];
         
         if (deleteError != nil) {
-            DDLogError(@"Error: cannot unlink document: %@", deleteError);
+            ZMLogError(@"Error: cannot unlink document: %@", deleteError);
         }
     };
     
     if (error != nil) {
-        DDLogError(@"Cannot get attributes on selected file: %@", error);
+        ZMLogError(@"Cannot get attributes on selected file: %@", error);
         [self.parentViewController dismissViewControllerAnimated:YES completion:nil];
         completion();
     }
@@ -323,7 +325,7 @@ const NSTimeInterval ConversationUploadMaxVideoDuration = 4.0f * 60.0f; // 4 min
         
         if (videoURL == nil) {
             [self.parentViewController dismissViewControllerAnimated:YES completion:nil];
-            DDLogError(@"Video not provided form %@: info %@", picker, info);
+            ZMLogError(@"Video not provided form %@: info %@", picker, info);
             return;
         }
         
@@ -333,14 +335,14 @@ const NSTimeInterval ConversationUploadMaxVideoDuration = 4.0f * 60.0f; // 4 min
             NSError *deleteError = nil;
             [[NSFileManager defaultManager] removeItemAtURL:videoTempURL error:&deleteError];
             if (deleteError != nil) {
-                DDLogError(@"Cannot delete old tmp video at %@: %@", videoTempURL, deleteError);
+                ZMLogError(@"Cannot delete old tmp video at %@: %@", videoTempURL, deleteError);
             }
         }
         
         NSError *moveError = nil;
         [[NSFileManager defaultManager] moveItemAtURL:videoURL toURL:videoTempURL error:&moveError];
         if (moveError != nil) {
-            DDLogError(@"Cannot move video from %@ to %@: %@", videoURL, videoTempURL, moveError);
+            ZMLogError(@"Cannot move video from %@ to %@: %@", videoURL, videoTempURL, moveError);
         }
         
         if (picker.sourceType == UIImagePickerControllerSourceTypeCamera && UIVideoAtPathIsCompatibleWithSavedPhotosAlbum(videoTempURL.path)) {
@@ -376,10 +378,11 @@ const NSTimeInterval ConversationUploadMaxVideoDuration = 4.0f * 60.0f; // 4 min
                 ConversationMediaPictureCamera camera = picker.cameraDevice == UIImagePickerControllerCameraDeviceFront ? ConversationMediaPictureCameraFront : ConversationMediaPictureCameraBack;
                 
                 [Analytics.shared tagMediaSentPictureSourceCameraInConversation:self.conversation method:ConversationMediaPictureTakeMethodFullFromKeyboard camera:camera];
-                
-                [self.sendController sendMessageWithImageData:UIImageJPEGRepresentation(image, 0.9) completion:^{
+
+                [self.parentViewController dismissViewControllerAnimated:YES completion:^(){
                     picker.showLoadingView = NO;
-                    [self.parentViewController dismissViewControllerAnimated:YES completion:nil];
+                    ImageMetadata *metadata = [ImageMetadata metadataWith:camera method:ConversationMediaPictureTakeMethodFullFromKeyboard];
+                    [self showConfirmationForImage:UIImageJPEGRepresentation(image, 0.9) metadata:metadata];
                 }];
             }
             else {

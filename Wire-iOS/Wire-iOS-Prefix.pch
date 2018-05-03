@@ -32,6 +32,5 @@
 #define STRINGIZE(x) STRINGIZE_INTERNAL(x)
 
 #import <WireExtensionComponents/weakify.h>
-#import "Logging.h"
 
 #endif

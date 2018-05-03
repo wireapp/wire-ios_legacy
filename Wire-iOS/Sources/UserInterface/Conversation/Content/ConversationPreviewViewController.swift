@@ -21,13 +21,15 @@ import Foundation
 import Cartography
 
 
-@objc class ConversationPreviewViewController: UIViewController {
+@objc class ConversationPreviewViewController: TintColorCorrectedViewController {
 
-    fileprivate(set) var conversation: ZMConversation
+    let conversation: ZMConversation
+    fileprivate let actionController: ConversationActionController
     fileprivate var contentViewController: ConversationContentViewController
 
-    init(conversation: ZMConversation) {
+    init(conversation: ZMConversation, presentingViewController: UIViewController) {
         self.conversation = conversation
+        self.actionController = ConversationActionController(conversation: conversation, target: presentingViewController)
         contentViewController = ConversationContentViewController(conversation: conversation)
         super.init(nibName: nil, bundle: nil)
     }
@@ -51,7 +53,20 @@ import Cartography
 
     func createConstraints() {
         constrain(view, contentViewController.view) { view, conversationView in
-            conversationView.edges == inset(view.edges, 0, 16)
+            conversationView.edges == view.edges
+        }
+    }
+
+    // MARK: Preview Actions
+
+    override var previewActionItems: [UIPreviewActionItem] {
+        return conversation.actions.map(makePreviewAction)
+    }
+
+    private func makePreviewAction(for action: ZMConversation.Action) -> UIPreviewAction {
+        return action.previewAction { [weak self] in
+            guard let `self` = self else { return }
+            self.actionController.handleAction(action)
         }
     }
 

@@ -24,8 +24,6 @@
 #import <WireSyncEngine/WireSyncEngine.h>
 
 #import "Constants.h"
-#import "WAZUIMagic.h"
-#import "UIColor+MagicAccess.h"
 #import "UIColor+WAZExtensions.h"
 @import FLAnimatedImage;
 #import "ImageCache.h"
@@ -35,8 +33,9 @@
 #import "Wire-Swift.h"
 #import "UIImage+ZetaIconsNeue.h"
 #import "ConversationCell+Private.h"
-
 #import "UIView+Borders.h"
+
+static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
 @protocol MediaAsset;
 
@@ -86,11 +85,12 @@ static const CGFloat ImageToolbarMinimumSize = 192;
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
     if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
+        self.variant = [ColorScheme defaultColorScheme].variant;
         _autoStretchVertically = YES;
         [self createImageMessageViews];
         [self createConstraints];
 
-        self.defaultLayoutMargins = [ImageMessageCell layoutDirectionAwareLayoutMargins];
+        self.defaultLayoutMargins = UIView.directionAwareConversationLayoutMargins;
 
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(applicationDidEnterBackground:)
@@ -351,7 +351,7 @@ static const CGFloat ImageToolbarMinimumSize = 192;
             }
             
             if (image == nil) {
-                DDLogError(@"Invalid image data returned from sync engine!");
+                ZMLogError(@"Invalid image data returned from sync engine!");
             }
             return image;
             
@@ -363,7 +363,7 @@ static const CGFloat ImageToolbarMinimumSize = 192;
                 self.image = image;
             }
             else {
-                DDLogInfo(@"finished loading image but cell is no longer on screen.");
+                ZMLogInfo(@"finished loading image but cell is no longer on screen.");
             }
         }];
     }
@@ -373,10 +373,14 @@ static const CGFloat ImageToolbarMinimumSize = 192;
             self.loadingView.hidden = YES;
             self.obfuscationView.hidden = NO;
             self.imageToolbarView.hidden = YES;
+            self.imageViewContainer.backgroundColor = [UIColor clearColor];
         } else {
             // We did not download the medium image yet, start the progress animation
             [self.loadingView startProgressAnimation];
             self.loadingView.hidden = NO;
+
+            self.imageViewContainer.backgroundColor = [UIColor wr_colorFromColorScheme:ColorSchemeColorPlaceholderBackground variant:self.variant];
+
         }
     }
 }
@@ -535,7 +539,7 @@ static const CGFloat ImageToolbarMinimumSize = 192;
 
 - (void)setSelectedByMenu:(BOOL)selected animated:(BOOL)animated
 {
-    DDLogDebug(@"Setting selected: %@ animated: %@", @(selected), @(animated));
+    ZMLogDebug(@"Setting selected: %@ animated: %@", @(selected), @(animated));
     
     dispatch_block_t animations = ^{
         self.fullImageView.alpha = selected ? ConversationCellSelectedOpacity : 1.0f;
@@ -597,7 +601,7 @@ static const CGFloat ImageToolbarMinimumSize = 192;
 - (void)traitCollectionDidChange:(nullable UITraitCollection *)previousTraitCollection {
     [super traitCollectionDidChange:previousTraitCollection];
 
-    self.defaultLayoutMargins = [ImageMessageCell layoutDirectionAwareLayoutMargins];
+    self.defaultLayoutMargins = UIView.directionAwareConversationLayoutMargins;
     [self updateImageMessageConstraintConstants];
 }
 

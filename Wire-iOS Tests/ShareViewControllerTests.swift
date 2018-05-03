@@ -31,6 +31,11 @@ class ShareViewControllerTests: CoreDataSnapshotTestCase {
         self.groupConversation = self.createGroupConversation()
     }
     
+    override func tearDown() {
+        self.groupConversation = nil
+        super.tearDown()
+    }
+    
     override var needsCaches: Bool {
         return true
     }
@@ -55,7 +60,7 @@ class ShareViewControllerTests: CoreDataSnapshotTestCase {
         let img = image(inTestBundleNamed: "unsplash_matterhorn.jpg")
         self.groupConversation.appendMessage(withImageData: img.data()!)
         
-        groupConversation.addParticipant(self.createUser(name: "John Appleseed"))
+        groupConversation.internalAddParticipants(Set([self.createUser(name: "John Appleseed")]))
         let oneToOneConversation = self.createGroupConversation()
         
         guard let message = groupConversation.messages.firstObject as? ZMMessage else {
@@ -78,7 +83,7 @@ class ShareViewControllerTests: CoreDataSnapshotTestCase {
     
     func makeTestForShareViewController() {
         
-        groupConversation.addParticipant(self.createUser(name: "John Appleseed"))
+        groupConversation.internalAddParticipants(Set([self.createUser(name: "John Appleseed")]))
         
         let oneToOneConversation = self.createGroupConversation()
         
@@ -103,8 +108,8 @@ class ShareViewControllerTests: CoreDataSnapshotTestCase {
         let serviceUser = createService(name: "Wire Mountain Bot")
         
         let serviceToAdd = Service(serviceUser: serviceUser)
-        groupConversation.addParticipant(self.createUser(name: "John Appleseed"))
-        groupConversation.addParticipant(self.createUser(name: "Frank Smith"))
+        groupConversation.internalAddParticipants(Set([self.createUser(name: "John Appleseed")]))
+        groupConversation.internalAddParticipants(Set([self.createUser(name: "Frank Smith")]))
         XCTAssert(groupConversation.activeParticipants.count == 4)
         
         let otherServiceUser = createService(name: "WireBurger Bot")
@@ -112,7 +117,7 @@ class ShareViewControllerTests: CoreDataSnapshotTestCase {
         let serviceConversation = ZMConversation.insertNewObject(in: uiMOC)
         serviceConversation.remoteIdentifier = UUID()
         serviceConversation.conversationType = .group
-        serviceConversation.internalAddParticipants([selfUser, otherServiceUser], isAuthoritative: true)
+        serviceConversation.internalAddParticipants([selfUser, otherServiceUser])
         
         let allConversations: [ServiceConversation] = [.new, .existing(groupConversation), .existing(serviceConversation)]
         

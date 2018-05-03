@@ -19,8 +19,8 @@
 
 import Foundation
 import Cartography
-import CocoaLumberjackSwift
 
+private let zmLog = ZMSLog(tag: "UI")
 
 @objc final public class AudioRecordKeyboardViewController: UIViewController, AudioRecordBaseViewController {
     enum State {
@@ -107,7 +107,7 @@ import CocoaLumberjackSwift
         
         self.createTipLabel()
         
-        self.timeLabel.font = UIFont(magicIdentifier: "style.text.small.font_spec_light")
+        self.timeLabel.font = FontSpec(.small, .light).font!
         self.timeLabel.textColor = colorScheme.color(withName: ColorSchemeColorTextForeground, variant: .dark)
         
         [self.audioPreviewView, self.timeLabel, self.tipLabel].forEach(self.topContainer.addSubview)
@@ -182,7 +182,7 @@ import CocoaLumberjackSwift
         attributedTipText.addAttribute(NSParagraphStyleAttributeName, value: style, range: NSMakeRange(0, (attributedTipText.string as NSString).length))
         self.tipLabel.attributedText = NSAttributedString(attributedString: attributedTipText)
         self.tipLabel.numberOfLines = 2
-        self.tipLabel.font = UIFont(magicIdentifier: "style.text.small.font_spec_light")
+        self.tipLabel.font = FontSpec(.small, .light).font!
         self.tipLabel.textColor = colorScheme.color(withName: ColorSchemeColorTextDimmed)
         self.tipLabel.textAlignment = .center
         
@@ -250,6 +250,10 @@ import CocoaLumberjackSwift
             cancelButton.centerY == bottomToolbar.centerY
             cancelButton.right == bottomToolbar.right - 8
         }
+    }
+    
+    var isRecording: Bool {
+        return self.recorder.state == .recording
     }
     
     public override func viewDidLayoutSubviews() {
@@ -330,6 +334,7 @@ import CocoaLumberjackSwift
         case .ready:
             self.closeEffectsPicker(animated: false)
             self.recordTapGestureRecognizer.isEnabled = true
+            updateTimeLabel(0)
         case .recording:
             self.closeEffectsPicker(animated: false)
             self.recordTapGestureRecognizer.isEnabled = false
@@ -346,13 +351,13 @@ import CocoaLumberjackSwift
     
     func sendAudioAsIs(_ context: AudioMessageContext) {
         recorder.stopPlaying()
-        guard let url = recorder.fileURL else { return DDLogWarn("Nil url passed to send as audio file") }
+        guard let url = recorder.fileURL else { return zmLog.warn("Nil url passed to send as audio file") }
         
         delegate?.audioRecordViewControllerWantsToSendAudio(self, recordingURL: url, duration: recorder.currentDuration, context: context, filter: .none)
     }
     
     fileprivate func openEffectsPicker() {
-        guard let url = recorder.fileURL else { return DDLogWarn("Nil url passed to add effect to audio file") }
+        guard let url = recorder.fileURL else { return zmLog.warn("Nil url passed to add effect to audio file") }
         
         let noizeReducePath = (NSTemporaryDirectory() as NSString).appendingPathComponent("noize-reduce.wav")
         noizeReducePath.deleteFileAtPath()
@@ -408,7 +413,7 @@ import CocoaLumberjackSwift
     func confirmButtonPressed(_ button: UIButton?) {
         
         guard let audioPath = self.currentEffectFilePath else {
-            DDLogError("No file to send")
+            zmLog.error("No file to send")
             return
         }
         

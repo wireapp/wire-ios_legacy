@@ -28,6 +28,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface ConversationInputBarViewController ()
 @property (nonatomic, nullable) AudioRecordViewController *audioRecordViewController;
+@property (nonatomic, nullable) UIView *audioRecordViewContainer;
+
 @property (nonatomic, nullable) AudioRecordKeyboardViewController *audioRecordKeyboardViewController;
 @property (nonatomic, nullable) CameraKeyboardViewController *cameraKeyboardViewController;
 @property (nonatomic, nullable) EmojiKeyboardViewController *emojiKeyboardViewController;
@@ -40,6 +42,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic)           BOOL shouldRefocusKeyboardAfterImagePickerDismiss;
 @property (nonatomic)           BOOL inputBarOverlapsContent;
 @property (nonatomic)           NSUInteger videoSendContext;
+@property (nonatomic) id callStateObserverToken;
+@property (nonatomic) BOOL wasRecordingBeforeCall;
 
 @property (nonatomic, nonnull) ConversationInputBarButtonState *sendButtonState;
 
@@ -47,10 +51,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)sendOrEditText:(NSString *)text;
 - (void)updateRightAccessoryView;
 - (void)updateButtonIconsForEphemeral;
-@end
-
-
-@interface ConversationInputBarViewController (UITextViewDelegate) <UITextViewDelegate>
+- (void)updateAccessoryViews;
+- (void)updateNewButtonTitleLabel;
 @end
 
 NS_ASSUME_NONNULL_END

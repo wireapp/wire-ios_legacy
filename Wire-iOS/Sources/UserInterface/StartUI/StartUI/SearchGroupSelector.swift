@@ -20,109 +20,71 @@
 import Foundation
 import Cartography
 
-final class SearchGroupButton: UIButton {
-    let colorSchemeVariant : ColorSchemeVariant
+final class SearchGroupSelector: UIView, TabBarDelegate {
 
-    init(variant: ColorSchemeVariant) {
-        colorSchemeVariant = variant
-        super.init(frame: .zero)
-        
-        addSubview(selectionLineView)
-        constrain(self, selectionLineView) { selfView, selectionLineView in
-            selectionLineView.leading == selfView.leading + 16
-            selectionLineView.trailing == selfView.trailing - 16
-            selectionLineView.height == 1
-            selectionLineView.bottom == selfView.bottom
-        }
-        
-        titleLabel?.font = FontSpec(.small, .semibold).font
-        
-        isSelected = false
+    @objc static var shouldShowBotResults: Bool {
+        return DeveloperMenuState.developerMenuEnabled() && ZMUser.selfUser().team != nil
     }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    var group: SearchGroup = .people {
-        didSet {
-            self.setTitle(group.name.uppercased(), for: .normal)
-        }
-    }
-    
-    override var intrinsicContentSize: CGSize {
-        return CGSize(width: UIViewNoIntrinsicMetric, height: 48)
-    }
-    
-    private let selectionLineView = UIView()
-    
-    override var isSelected: Bool {
-        didSet {
-            let selectionColor: UIColor
-            switch self.colorSchemeVariant {
-            case .dark:
-                selectionColor = .white
-            case .light:
-                selectionColor = .black
-            }
-            
-            selectionLineView.backgroundColor = isSelected ? selectionColor : .clear
-            setTitleColor(isSelected ? selectionColor : selectionColor.withAlphaComponent(0.5), for: .normal)
-        }
-    }
-}
 
-final class SearchGroupSelector: UIView {
-    private let radioButtonsView: RadioButtonsView<SearchGroupButton>
-    let colorSchemeVariant : ColorSchemeVariant
+    @objc public var onGroupSelected: ((SearchGroup)->())? = nil
 
-    
     @objc public var group: SearchGroup = .people {
         didSet {
             onGroupSelected?(group)
         }
     }
-    @objc public var onGroupSelected: ((SearchGroup)->())? = nil
+
+    // MARK: - Views
+
+    let style: ColorSchemeVariant
+
+    private let tabBar: TabBar
+    private let groups: [SearchGroup]
+
+    // MARK: - Initialization
     
-    private static var shouldShowBotResults: Bool {
-        return DeveloperMenuState.developerMenuEnabled() && ZMUser.selfUser().team != nil
-    }
-    
-    init(variant: ColorSchemeVariant) {
-        let radioButtons: [SearchGroupButton] = SearchGroup.all.map {
-            let button = SearchGroupButton(variant: variant)
-            button.group = $0
-            return button
+    init(style: ColorSchemeVariant) {
+
+        self.groups = SearchGroup.all
+        self.style = style
+
+        let groupItems: [UITabBarItem] = groups.enumerated().map { index, group in
+            UITabBarItem(title: group.name.uppercased(), image: nil, tag: index)
         }
-        radioButtonsView = RadioButtonsView(buttons: radioButtons)
-        colorSchemeVariant = variant
+
+        self.tabBar = TabBar(items: groupItems, style: style, selectedIndex: 0)
         super.init(frame: .zero)
-        
-        radioButtons.forEach {
-            $0.addCallback(for: .touchUpInside) { [weak self] button in
-                self?.group = button.group
-            }
-        }
-        
-        guard SearchGroupSelector.shouldShowBotResults else {
-            constrain(self) { selfView in
-                selfView.height == 0
-            }
-            return
-        }
-        
-        backgroundColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorBarBackground, variant: colorSchemeVariant)
 
-        addSubview(radioButtonsView)
+        configureViews()
+        configureConstraints()
 
-        constrain(self, radioButtonsView) { selfView, radioButtonsView in
-            radioButtonsView.edges == selfView.edges
-        }
-        
-        radioButtonsView.selectedIndex = 0
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+
+    private func configureViews() {
+        tabBar.delegate = self
+        backgroundColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorBarBackground, variant: style)
+        addSubview(tabBar)
+    }
+
+    private func configureConstraints() {
+
+        constrain(self, tabBar) { selfView, tabBar in
+            tabBar.top == selfView.top
+            tabBar.left == selfView.left
+            tabBar.right == selfView.right
+            selfView.bottom == tabBar.bottom
+        }
+
+    }
+
+    // MARK: - Tab Bar Delegate
+
+    func tabBar(_ tabBar: TabBar, didSelectItemAt index: Int) {
+        group = groups[index]
+    }
+
 }

@@ -25,10 +25,7 @@ private struct InputBarRowConstants {
     let minimumButtonWidthIPhone5: CGFloat = 53
     let minimumButtonWidth: CGFloat = 56
     let buttonsBarHeight: CGFloat = 56
-    let contentLeftMargin = WAZUIMagic.cgFloat(forIdentifier: "content.left_margin")
-    let contentRightMargin = WAZUIMagic.cgFloat(forIdentifier: "content.right_margin")
     let iconSize = UIImage.size(for: .tiny)
-    let buttonMargin = WAZUIMagic.cgFloat(forIdentifier: "content.left_margin") / 2 - UIImage.size(for: .tiny) / 2
     
     fileprivate let screenWidthIPhone5: CGFloat = 320
     
@@ -76,6 +73,7 @@ public final class InputBarButtonsView: UIView {
         
         buttonInnerContainer.clipsToBounds = true
         expandRowButton.accessibilityIdentifier = "showOtherRowButton"
+        expandRowButton.hitAreaPadding = .zero
         expandRowButton.setIcon(.ellipsis, with: .tiny, for: UIControlState())
         expandRowButton.addTarget(self, action: #selector(ellipsisButtonPressed), for: .touchUpInside)
         buttonOuterContainer.addSubview(buttonInnerContainer)
@@ -120,9 +118,13 @@ public final class InputBarButtonsView: UIView {
     
     // MARK: - Button Layout
     
+    fileprivate var buttonMargin: CGFloat {
+        return UIView.conversationLayoutMargins.left / 2 - UIImage.size(for: .tiny) / 2
+    }
+    
     fileprivate func layoutAndConstrainButtonRows() {
         guard bounds.size.width > 0 else { return }
-        
+
         // Drop existing constraints
         buttons.forEach {
             $0.removeFromSuperview()
@@ -152,7 +154,8 @@ public final class InputBarButtonsView: UIView {
         
         guard !secondRow.isEmpty else { return }
         let filled = secondRow.count == numberOfButtons
-        constrainRowOfButtons(secondRow, inset: constants.buttonsBarHeight, rowIsFull: filled, referenceButton: firstRow[1])
+        let referenceButton = firstRow.count > 1 ? firstRow[1] : firstRow[0]
+        constrainRowOfButtons(secondRow, inset: constants.buttonsBarHeight, rowIsFull: filled, referenceButton: referenceButton)
     }
     
     fileprivate func constrainRowOfButtons(_ buttons: [UIButton], inset: CGFloat, rowIsFull: Bool, referenceButton: UIButton?) {
@@ -184,7 +187,7 @@ public final class InputBarButtonsView: UIView {
         for current: UIView in buttons.dropFirst() {
             let isFirstButton = previous == buttons.first
             let isLastButton = rowIsFull && current == buttons.last
-            let offset = constants.iconSize / 2 + constants.buttonMargin
+            let offset = constants.iconSize / 2 + buttonMargin
             
             constrain(previous, current) { previous, current in
                 previous.trailing == current.leading
@@ -212,17 +215,17 @@ public final class InputBarButtonsView: UIView {
     fileprivate func setupInsets(forButtons buttons: [UIButton], rowIsFull: Bool) {
         let firstButton = buttons.first!
         let firstButtonLabelSize = firstButton.titleLabel!.intrinsicContentSize
-        let firstTitleMargin = (constants.contentLeftMargin / 2) - constants.iconSize - (firstButtonLabelSize.width / 2)
+        let firstTitleMargin = (UIView.conversationLayoutMargins.left / 2) - constants.iconSize - (firstButtonLabelSize.width / 2)
         firstButton.contentHorizontalAlignment = .left
-        firstButton.imageEdgeInsets = UIEdgeInsetsMake(0, constants.buttonMargin, 0, 0)
+        firstButton.imageEdgeInsets = UIEdgeInsetsMake(0, buttonMargin, 0, 0)
         firstButton.titleEdgeInsets = UIEdgeInsetsMake(constants.iconSize + firstButtonLabelSize.height + constants.titleTopMargin, firstTitleMargin, 0, 0)
         
         if rowIsFull {
             let lastButton = buttons.last!
             let lastButtonLabelSize = lastButton.titleLabel!.intrinsicContentSize
-            let lastTitleMargin = constants.contentLeftMargin / 2.0 - lastButtonLabelSize.width / 2.0
+            let lastTitleMargin = UIView.conversationLayoutMargins.left / 2.0 - lastButtonLabelSize.width / 2.0
             lastButton.contentHorizontalAlignment = .right
-            lastButton.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 0, constants.buttonMargin - lastButtonLabelSize.width)
+            lastButton.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 0, buttonMargin - lastButtonLabelSize.width)
             lastButton.titleEdgeInsets = UIEdgeInsetsMake(constants.iconSize + lastButtonLabelSize.height + constants.titleTopMargin, 0, 0, lastTitleMargin - 1)
             lastButton.titleLabel?.lineBreakMode = .byClipping
         }

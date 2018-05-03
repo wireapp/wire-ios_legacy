@@ -24,6 +24,13 @@ import Cartography
 
 extension ConversationInputBarViewController {
     
+    
+    func setupCallStateObserver() {
+        if let userSession = ZMUserSession.shared() {
+            callStateObserverToken = WireCallCenterV3.addCallStateObserver(observer: self, userSession:userSession)
+        }
+    }
+    
     func configureAudioButton(_ button: IconButton) {
         let longPressRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(audioButtonLongPressed(_:)))
         longPressRecognizer.minimumPressDuration = 0.3
@@ -100,14 +107,15 @@ extension ConversationInputBarViewController {
     }
     
     fileprivate func showAudioRecordViewController() {
-        guard let audioRecordViewController = self.audioRecordViewController else {
+        guard let audioRecordViewContainer = self.audioRecordViewContainer,
+              let audioRecordViewController = self.audioRecordViewController else {
             return
         }
 
         audioRecordViewController.setOverlayState(.hidden, animated: false)
         
         UIView.transition(with: inputBar, duration: 0.1, options: [.transitionCrossDissolve, .allowUserInteraction], animations: {
-            audioRecordViewController.view.isHidden = false
+            audioRecordViewContainer.isHidden = false
             }, completion: { _ in
                 audioRecordViewController.setOverlayState(.expanded(0), animated: true)
         })
@@ -131,12 +139,12 @@ extension ConversationInputBarViewController {
     
     @objc fileprivate func hideInlineAudioRecordViewController() {
         self.inputBar.buttonContainer.isHidden = false
-        guard let audioRecordViewController = self.audioRecordViewController else {
+        guard let audioRecordViewContainer = self.audioRecordViewContainer else {
             return
         }
         
         UIView.transition(with: inputBar, duration: 0.2, options: .transitionCrossDissolve, animations: {
-            audioRecordViewController.view.isHidden = true
+            audioRecordViewContainer.isHidden = true
             }, completion: nil)
     }
     
@@ -169,9 +177,36 @@ extension ConversationInputBarViewController: AudioRecordViewControllerDelegate 
         let type: ConversationMediaRecordingType = audioRecordViewController is AudioRecordKeyboardViewController ? .keyboard : .minimised
         
         Analytics.shared().tagSentAudioMessage(in: conversation, duration: duration, context: context, filter: filter, type: type)
-        uploadFile(at: recordingURL as URL!)
+        uploadFile(at: recordingURL as URL)
         
         self.hideAudioRecordViewController()
+    }
+    
+}
+
+
+extension ConversationInputBarViewController : WireCallCenterCallStateObserver {
+    
+    public func callCenterDidChange(callState: CallState, conversation: ZMConversation, caller: ZMUser, timestamp: Date?) {
+        
+        let isRecording = self.audioRecordKeyboardViewController?.isRecording
+        
+        switch (callState, isRecording, self.wasRecordingBeforeCall) {
+            
+        case (.incoming(_, true, _), true, false),      // receiving incoming call while recording an audio
+             (.outgoing, true, false):                  // making an outgoing call while recording an audio
+            self.wasRecordingBeforeCall = true          // -> remember that we were recording an audio
+        case (.incoming(_, false, _), _, true),         // refusing an incoming call
+             (.terminating, _, true):                   // terminating/closing the current call
+            displayRecordKeyboard()                     // -> show again the audio record keyboard
+        default: break
+        }
+    }
+    
+    private func displayRecordKeyboard() {
+        self.wasRecordingBeforeCall = false
+        self.mode = .audioRecord
+        self.inputBar.textView.becomeFirstResponder()
     }
     
 }

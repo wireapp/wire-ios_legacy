@@ -26,8 +26,6 @@
 #import "AppDelegate.h"
 #import "NotificationWindowRootViewController.h"
 
-#import "WAZUIMagicIOS.h"
-
 #import "ConversationListViewController.h"
 #import "ConversationViewController.h"
 #import "ConnectRequestsViewController.h"
@@ -353,9 +351,8 @@
 
 - (void)loadPlaceholderConversationControllerAnimated:(BOOL)animated completion:(dispatch_block_t)completion;
 {
-    PlaceholderConversationViewController *vc = [[PlaceholderConversationViewController alloc] init];
     self.currentConversation = nil;
-    [self pushContentViewController:vc focusOnView:NO animated:animated completion:completion];
+    [self pushContentViewController: nil focusOnView:NO animated:animated completion:completion];
 }
 
 - (BOOL)loadConversation:(ZMConversation *)conversation focusOnView:(BOOL)focus animated:(BOOL)animated
@@ -665,6 +662,8 @@
     if (list.count > 0) {
         // select the first conversation and don't focus on it
         [self selectConversation:list[0]];
+    } else {
+        [self loadPlaceholderConversationControllerAnimated:YES];
     }
 }
 

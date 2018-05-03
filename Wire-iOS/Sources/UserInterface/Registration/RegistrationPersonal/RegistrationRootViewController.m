@@ -40,6 +40,13 @@
 @property (nonatomic) IconButton *backButton;
 @property (nonatomic, readonly) Account *firstAuthenticatedAccount;
 
+@property (nonatomic) NSLayoutConstraint *contentWidthConstraint;
+@property (nonatomic) NSLayoutConstraint *contentHeightConstraint;
+@property (nonatomic) NSLayoutConstraint *contentCenterConstraint;
+
+@property (nonatomic) NSLayoutConstraint *contentLeadingConstraint;
+@property (nonatomic) NSLayoutConstraint *contentTrailingConstraint;
+
 @end
 
 @implementation RegistrationRootViewController
@@ -95,28 +102,36 @@
     }
     
     self.registrationTabBarController = [[TabBarController alloc] initWithViewControllers:@[flowViewController, signInViewController]];
+
     self.signInViewController = signInViewController;
     
     if (self.showLogin) {
         [self.registrationTabBarController selectIndex:1 animated:NO];
     }
     
-    self.registrationTabBarController.style = TabBarStyleColored;
+    self.registrationTabBarController.style = ColorSchemeVariantDark;
     self.registrationTabBarController.view.translatesAutoresizingMaskIntoConstraints = NO;
     
     self.cancelButton = [[IconButton alloc] init];
     [self.cancelButton setIcon:ZetaIconTypeCancel withSize:ZetaIconSizeTiny forState:UIControlStateNormal];
     [self.cancelButton setIconColor:UIColor.whiteColor forState:UIControlStateNormal];
-    self.cancelButton.accessibilityLabel = @"cancelAddAccount";
+    self.cancelButton.accessibilityIdentifier = @"cancelAddAccount";
     [self.cancelButton addTarget:self action:@selector(cancelAddAccount) forControlEvents:UIControlEventTouchUpInside];
     self.cancelButton.hidden = self.shouldHideCancelButton || self.firstAuthenticatedAccount == nil;
-    
+    self.cancelButton.accessibilityLabel = NSLocalizedString(@"registration.launch_back_button.label", @"");
+
     [self addChildViewController:self.registrationTabBarController];
     [self.view addSubview:self.registrationTabBarController.view];
     [self.view addSubview:self.cancelButton];
     [self.registrationTabBarController didMoveToParentViewController:self];
     
     [self createConstraints];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [self updateConstraintsForRegularLayout:self.traitCollection.horizontalSizeClass == UIUserInterfaceSizeClassRegular];
 }
 
 - (void)setupBackButton
@@ -128,6 +143,7 @@
 
     [self.backButton setIcon:iconType withSize:ZetaIconSizeSmall forState:UIControlStateNormal];
     self.backButton.accessibilityIdentifier = @"BackToLaunchScreenButton";
+    self.backButton.accessibilityLabel = NSLocalizedString(@"registration.launch_back_button.label", @"");
     [self.view addSubview:self.backButton];
 
     [self.backButton addTarget:self action:@selector(backButtonTapped) forControlEvents:UIControlEventTouchUpInside];
@@ -162,8 +178,15 @@
 
 - (void)createConstraints
 {
-    [self.registrationTabBarController.view autoPinEdgesToSuperviewEdgesWithInsets:UIScreen.safeArea excludingEdge:ALEdgeTop];
-    [self.registrationTabBarController.view autoSetDimension:ALDimensionHeight toSize:IS_IPAD_FULLSCREEN ? 262 : 244];
+    self.contentWidthConstraint = [self.registrationTabBarController.view.widthAnchor constraintEqualToConstant:self.maximumFormSize.width];
+    self.contentHeightConstraint = [self.registrationTabBarController.view.heightAnchor constraintEqualToConstant:0];
+    self.contentLeadingConstraint = [self.registrationTabBarController.view.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor];
+    self.contentTrailingConstraint = [self.registrationTabBarController.view.trailingAnchor constraintEqualToAnchor:self.view.trailingAnchor];
+    self.contentCenterConstraint = [self.registrationTabBarController.view.centerXAnchor constraintEqualToAnchor:self.view.centerXAnchor];
+
+    self.contentHeightConstraint.active = YES;
+    [self.registrationTabBarController.view.bottomAnchor constraintEqualToAnchor:self.safeBottomAnchor].active = YES;
+
     [self.cancelButton autoPinEdgeToSuperviewEdge:ALEdgeTop withInset:UIScreen.safeArea.top + 32];
     [self.cancelButton autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:16];
 
@@ -177,6 +200,24 @@
         [self.backButton autoPinEdgeToSuperviewEdge:ALEdgeTop withInset:topMargin];
         [self.backButton autoPinEdgeToSuperviewEdge:ALEdgeLeading withInset:leftMargin];
     }
+}
+
+- (void)updateConstraintsForRegularLayout:(BOOL)isRegular
+{
+    self.contentWidthConstraint.active = isRegular;
+    self.contentHeightConstraint.constant = isRegular ? 262 : 244;
+    self.contentCenterConstraint.active = isRegular;
+
+    self.contentLeadingConstraint.active = !isRegular;
+    self.contentTrailingConstraint.active = !isRegular;
+}
+
+- (void)willTransitionToTraitCollection:(UITraitCollection *)newCollection withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator
+{
+    [super willTransitionToTraitCollection:newCollection withTransitionCoordinator:coordinator];
+    [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext>  _Nonnull context) {
+        [self updateConstraintsForRegularLayout:newCollection.horizontalSizeClass == UIUserInterfaceSizeClassRegular];
+    } completion:nil];
 }
 
 - (void)presentLoginTab

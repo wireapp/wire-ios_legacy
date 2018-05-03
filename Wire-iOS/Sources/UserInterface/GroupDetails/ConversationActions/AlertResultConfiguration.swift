@@ -17,14 +17,14 @@
 //
 
 protocol AlertResultConfiguration {
-    static var message: String { get }
+    static var title: String { get }
     static var all: [Self] { get }
     func action(_ handler: @escaping (Self) -> Void) -> UIAlertAction
 }
 
 extension AlertResultConfiguration {
-    static fileprivate func controller(_ handler: @escaping (Self) -> Void) -> UIAlertController {
-        let controller = UIAlertController(title: nil, message: message, preferredStyle: .actionSheet)
+    static func controller(_ handler: @escaping (Self) -> Void) -> UIAlertController {
+        let controller = UIAlertController(title: title, message: nil, preferredStyle: .actionSheet)
         all.map { $0.action(handler) }.forEach(controller.addAction)
         return controller
     }
@@ -33,7 +33,7 @@ extension AlertResultConfiguration {
 extension ConversationActionController {
     
     func request<T: AlertResultConfiguration>(_ result: T.Type, handler: @escaping (T) -> Void) {
-        target.present(result.controller(handler), animated: true)
+        present(result.controller(handler))
     }
 
 }

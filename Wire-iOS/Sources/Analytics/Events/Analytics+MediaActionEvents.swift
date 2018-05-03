@@ -132,6 +132,16 @@ public extension ConversationMediaSketchSource {
     var method: ConversationMediaPictureTakeMethod = .none
     var sketchSource: ConversationMediaSketchSource = .none
     var camera: ConversationMediaPictureCamera = .none
+
+    @objc static func metadata(with camera: ConversationMediaPictureCamera, method: ConversationMediaPictureTakeMethod) -> ImageMetadata {
+        let metadata = ImageMetadata()
+        metadata.camera = camera
+        metadata.method = method
+        metadata.source = ConversationMediaPictureSource.camera
+        metadata.sketchSource = .none
+
+        return metadata
+    }
 }
 
 extension AudioMessageContext {
@@ -161,20 +171,6 @@ let videoDurationClusterizer: TimeIntervalClusterizer = {
     return TimeIntervalClusterizer.videoDuration()
 }()
 
-
-public extension ZMConversation {
-
-    var ephemeralTrackingAttributes: [String: Any] {
-        let ephemeral = destructionTimeout != .none
-        var attributes = ["is_ephemeral": ephemeral ? "true" : "false"]
-        guard ephemeral else { return attributes }
-        attributes["ephemeral_time"] = "\(Int(destructionTimeout.rawValue))"
-        return attributes
-    }
-
-}
-
-
 public extension Analytics {
 
     /// User clicked on any action in cursor, giphy button or audio / video call button from toolbar.
@@ -191,7 +187,7 @@ public extension Analytics {
         attributes["action"] = action.attributeValue
 
         if let typeAttribute = conversation.analyticsTypeString() {
-            attributes["with_service"] = conversation.includesServiceUser ? "true" : "false";
+            attributes["with_service"] = conversation.includesServiceUser
             attributes["conversation_type"] = typeAttribute
         }
 

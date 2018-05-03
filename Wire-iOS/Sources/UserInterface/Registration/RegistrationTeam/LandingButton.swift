@@ -45,6 +45,8 @@ class LandingButton: ButtonWithLargerHitArea {
         self.iconButton.setIcon(icon, with: UIScreen.main.bounds.size.height <= 480 ? ZetaIconSize.small : ZetaIconSize.registrationButton, for: .normal)
         self.iconButton.setBackgroundImageColor(iconBackgroundColor, for: .normal)
 
+        self.isAccessibilityElement = true
+        self.accessibilityLabel = title.string
         self.setup()
     }
 

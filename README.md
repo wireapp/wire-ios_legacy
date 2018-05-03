@@ -43,7 +43,7 @@ These differences are:
 ### Prerequisites
 In order to build Wire for iOS locally, it is necessary to install the following tools on the local machine:
 - OS X 10.11 or newer
-- Xcode 9.0.1 (https://itunes.apple.com/en/app/xcode/id497799835?mt=12).
+- Xcode 9.3.0 (https://itunes.apple.com/en/app/xcode/id497799835?mt=12).
 - Bundler (http://bundler.io)
 - Carthage 0.17.2 or newer (https://github.com/Carthage/Carthage)
 - CocoaPods 1.3.1 or newer (https://cocoapods.org/)
@@ -64,7 +64,7 @@ You can then use `carthage build --platform ios` to rebuild the dependency and u
 
 ### Known limitations
 
-Notifications send through Apple Push Notification service can only be received by the App Store Wire client, which is code signed with Wire's own certificate. This is a security feature enforced by Apple, as documented in Apple's [Local and Remote Notification Programming Guide](https://developer.apple.com/library/ios/documentation/NetworkingInternet/Conceptual/RemoteNotificationsPG/Chapters/ApplePushService.html#//apple_ref/doc/uid/TP40008194-CH100-SW3). Any client build from source will not be able to receive notifications.
+Notifications send through Apple Push Notification service can only be received by the App Store Wire client, which is code signed with Wire's own certificate. This is a security feature enforced by Apple, as documented in Apple's [Local and Remote Notification Programming Guide](https://developer.apple.com/library/content/documentation/NetworkingInternet/Conceptual/RemoteNotificationsPG/). Any client build from source will not be able to receive notifications.
 
 ### Translations
 

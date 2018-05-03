@@ -18,7 +18,8 @@
 
 
 import Foundation
-import CocoaLumberjackSwift
+
+private let zmLog = ZMSLog(tag: "UI")
 
 public enum PlayingState: UInt, CustomStringConvertible {
     case idle, playing
@@ -165,12 +166,12 @@ public final class AudioRecorder: NSObject, AudioRecorderType {
             
             if let maxDuration = self.maxRecordingDuration {
                 successfullyStarted = audioRecorder.record(forDuration: maxDuration)
-                if !successfullyStarted { DDLogError("Failed to start audio recording") }
+                if !successfullyStarted { zmLog.error("Failed to start audio recording") }
                 else { self.recordStartedCallback?() }
             }
             else {
                 successfullyStarted = audioRecorder.record()
-                if !successfullyStarted { DDLogError("Failed to start audio recording") }
+                if !successfullyStarted { zmLog.error("Failed to start audio recording") }
             }
             
             self.recordingStartTime = successfullyStarted ? audioRecorder.deviceCurrentTime : nil
@@ -187,7 +188,6 @@ public final class AudioRecorder: NSObject, AudioRecorderType {
         removeDisplayLink()
         guard let filePath = audioRecorder?.url.path , fm.fileExists(atPath: filePath) else { return false }
         fileURL = audioRecorder?.url
-        AVSMediaManager.sharedInstance().stopRecording()
         return true
     }
     
@@ -223,7 +223,7 @@ public final class AudioRecorder: NSObject, AudioRecorderType {
         do {
             try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback)
         } catch let error {
-            DDLogError("Failed change audio category for playback: \(error)")
+            zmLog.error("Failed change audio category for playback: \(error)")
         }
         
         state = .playback
@@ -295,10 +295,11 @@ extension AudioRecorder: AVAudioRecorderDelegate {
         if recordedToMaxDuration { _ = postRecordingProcessing() }
         
         self.recordEndedCallback?(recordedToMaxDuration)
+        AVSMediaManager.sharedInstance().stopRecording()
     }
-    
+        
     public func audioRecorderEncodeErrorDidOccur(_ recorder: AVAudioRecorder, error: Error?) {
-        DDLogError("Cannot finish recording: \(String(describing: error))")
+        zmLog.error("Cannot finish recording: \(String(describing: error))")
     }
 }
 

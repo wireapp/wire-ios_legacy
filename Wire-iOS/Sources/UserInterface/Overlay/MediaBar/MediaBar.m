@@ -20,12 +20,10 @@
 #import "MediaBar.h"
 
 @import PureLayout;
-#import <Classy/Classy.h>
-
 @import WireExtensionComponents;
 #import "UIImage+ZetaIconsNeue.h"
-#import "WAZUIMagicIOS.h"
 #import "Constants.h"
+#import "Wire-Swift.h"
 
 @interface MediaBar ()
 
@@ -67,6 +65,8 @@
     self.titleLabel.textAlignment = NSTextAlignmentCenter;
     self.titleLabel.lineBreakMode = NSLineBreakByTruncatingMiddle;
     self.titleLabel.accessibilityIdentifier = @"playingMediaTitle";
+    self.titleLabel.font = UIFont.smallRegularFont;
+    self.titleLabel.textColor = [UIColor wr_colorFromColorScheme:ColorSchemeColorTextForeground];
     
     [self.contentView addSubview:self.titleLabel];
 }
@@ -92,6 +92,7 @@
 {
     self.bottomSeparatorLine = [[UIView alloc] init];
     self.bottomSeparatorLine.translatesAutoresizingMaskIntoConstraints = NO;
+    self.bottomSeparatorLine.backgroundColor = [UIColor wr_colorFromColorScheme:ColorSchemeColorSeparator];
 
     [self addSubview:self.bottomSeparatorLine];
 }
@@ -102,7 +103,7 @@
         self.initialConstraintsCreated = YES;
         
         CGFloat iconSize = 16;
-        CGFloat buttonInsets = [WAZUIMagic cgFloatForIdentifier:@"media_bar.button_horizontal_inset"];
+        CGFloat buttonInsets = self.traitCollection.horizontalSizeClass == UIUserInterfaceSizeClassRegular ? 32 : 16;
         [self.contentView autoPinEdgesToSuperviewEdges];
         
         [self.titleLabel autoAlignAxis:ALAxisHorizontal toSameAxisOfView:self.contentView];
@@ -126,8 +127,7 @@
 
 - (CGSize)intrinsicContentSize
 {
-    CGFloat mediaBarHeight = [WAZUIMagic floatForIdentifier:@"media_bar.height"];
-    return CGSizeMake(UIViewNoIntrinsicMetric, mediaBarHeight);
+    return CGSizeMake(UIViewNoIntrinsicMetric, 44);
 }
 
 @end

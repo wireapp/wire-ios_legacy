@@ -132,7 +132,8 @@ class ChatHeadView: UIView {
     
     private func createImageView() {
         if let sender = sender {
-            let imageView = ContrastUserImageView(magicPrefix: "notifications")
+            let imageView = ContrastUserImageView()
+            imageView.initials.font = UIFont.systemFont(ofSize: 11, weight: UIFontWeightLight)
             imageView.userSession = SessionManager.shared?.backgroundUserSessions[userID]
             imageView.isUserInteractionEnabled = false
             imageView.translatesAutoresizingMaskIntoConstraints = false

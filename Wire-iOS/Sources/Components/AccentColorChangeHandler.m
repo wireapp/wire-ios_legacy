@@ -20,7 +20,6 @@
 #import "AccentColorChangeHandler.h"
 
 #import "WireSyncEngine+iOS.h"
-#import "WAZUIMagicIOS.h"
 #import "UIColor+WAZExtensions.h"
 
 

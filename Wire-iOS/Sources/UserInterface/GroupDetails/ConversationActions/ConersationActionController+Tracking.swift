@@ -23,9 +23,5 @@ extension ConversationActionController {
     func trackDeletion(of conversation: ZMConversation) {
         Analytics.shared().tagEventObject(AnalyticsGroupConversationEvent(forDeleteAction: "delete", withNumberOfParticipants: UInt(conversation.activeParticipants.count)))
     }
-    
-    func trackLeaving(of conversation: ZMConversation) {
-        Analytics.shared().tagEventObject(AnalyticsGroupConversationEvent(forLeave: .leave, participantCount: UInt(conversation.activeParticipants.count)))
-    }
-    
+
 }

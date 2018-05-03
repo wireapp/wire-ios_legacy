@@ -170,17 +170,26 @@ static NSParagraphStyle *cachedParagraphStyle;
 
 + (UIImage *)imageForLogoWithColor:(UIColor *)color iconSize:(ZetaIconSize)iconSize
 {
-    CGFloat logoSize = [self sizeForZetaIconSize:iconSize];
+    return [self resizedImageForImage:[WireStyleKit imageOfLogoWithColor:color] iconSize:iconSize];
+}
+
++ (UIImage *)imageForRestoreWithColor:(UIColor *)color iconSize:(ZetaIconSize)iconSize
+{
+    return [self resizedImageForImage:[WireStyleKit imageOfRestoreWithColor:color] iconSize:iconSize];
+}
+
++ (UIImage *)resizedImageForImage:(UIImage *)image iconSize:(ZetaIconSize)iconSize
+{
+    CGFloat size = [self sizeForZetaIconSize:iconSize];
     
-    UIImage *logoImage = [WireStyleKit imageOfLogoWithColor:color];
-    CGSize originalSize = logoImage.size;
-    CGSize targetSize = CGSizeMake(MIN(logoSize, logoSize * originalSize.width / originalSize.height),
-                                   MIN(logoSize, logoSize * originalSize.height / originalSize.width));
+    CGSize originalSize = image.size;
+    CGSize targetSize = CGSizeMake(MIN(size, size * originalSize.width / originalSize.height),
+                                   MIN(size, size * originalSize.height / originalSize.width));
     
     UIGraphicsBeginImageContextWithOptions(targetSize, NO, 0.0f);
     
-    [logoImage drawInRect:CGRectMake(0, 0, targetSize.width, targetSize.height)];
-
+    [image drawInRect:CGRectMake(0, 0, targetSize.width, targetSize.height)];
+    
     UIImage *result = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
     return result;

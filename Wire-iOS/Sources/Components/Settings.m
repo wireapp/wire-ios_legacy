@@ -69,7 +69,6 @@ NSString * const UserDefaultDisableLinkPreviews = @"DisableLinkPreviews";
 @property (strong, readonly, nonatomic) NSUserDefaults *defaults;
 @property (nonatomic) BOOL shouldSend500Messages;
 @property (nonatomic) NSTimeInterval maxRecordingDurationDebug;
-@property (nonatomic) ZMEmailCredentials *automationTestEmailCredentials;
 @end
 
 
@@ -135,6 +134,8 @@ NSString * const UserDefaultDisableLinkPreviews = @"DisableLinkPreviews";
         
 #if !(TARGET_OS_SIMULATOR)
         [self loadEnabledLogs];
+#else
+        [ZMSLog startRecordingWithSize: 100000];
 #endif
         
         [[NSNotificationCenter defaultCenter] addObserver:self

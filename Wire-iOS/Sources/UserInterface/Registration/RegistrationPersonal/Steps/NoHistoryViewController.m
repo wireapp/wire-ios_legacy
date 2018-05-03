@@ -18,9 +18,7 @@
 
 
 #import "NoHistoryViewController.h"
-@import PureLayout;
-#import "WAZUIMagicIOS.h"
-#import "UIFont+MagicAccess.h"
+@import WireSyncEngine;
 #import "RegistrationFormController.h"
 #import "Button.h"
 #import "Wire-Swift.h"
@@ -29,23 +27,30 @@
 @property (nonatomic) UILabel *heroLabel;
 @property (nonatomic) UILabel *subtitleLabel;
 @property (nonatomic) UIView *contentView;
-@property (nonatomic) Button *OKButton;
+@property (nonatomic) UIStackView *stackView;
 @end
 
 @implementation NoHistoryViewController
 
+- (instancetype)initWithContextType:(ContextType)contextType
+{
+    self = [super initWithNibName:nil bundle:nil];
+    if (nil != self) {
+        _contextType = contextType;
+    }
+    return self;
+}
+    
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    self.view.backgroundColor = [UIColor clearColor];
-    
     [self createContentView];
     [self createHeroLabel];
     [self createSubtitleLabel];
-    [self createOKButton];
     
-    [self createViewConstraints];
+    [self createContentViewConstraints];
+    
+    [self createButtons];
     
     // Layout first to avoid the initial layout animation during the presentation. 
     [self.view layoutIfNeeded];
@@ -53,79 +58,64 @@
 
 - (void)createContentView
 {
-    self.contentView = [[UIView alloc] initForAutoLayout];
+    self.contentView = [[UIView alloc] init];
+    self.contentView.translatesAutoresizingMaskIntoConstraints = NO;
     self.contentView.backgroundColor = [UIColor clearColor];
+    
+    self.view.backgroundColor = [UIColor clearColor];
+    
     [self.view addSubview:self.contentView];
+ 
+    self.stackView = [[UIStackView alloc] init];
+    self.stackView.translatesAutoresizingMaskIntoConstraints = NO;
+    self.stackView.spacing = 12;
+    self.stackView.distribution = UIStackViewDistributionFill;
+    self.stackView.axis = UILayoutConstraintAxisVertical;
+    self.stackView.alignment = UIStackViewAlignmentFill;
+    self.stackView.backgroundColor = [UIColor clearColor];
+    [self.contentView addSubview:self.stackView];
 }
 
 - (void)createHeroLabel
 {
-    self.heroLabel = [[UILabel alloc] initForAutoLayout];
+    self.heroLabel = [[UILabel alloc] init];
+    self.heroLabel.translatesAutoresizingMaskIntoConstraints = NO;
     self.heroLabel.numberOfLines = 0;
+    self.heroLabel.textColor = [[ColorScheme defaultColorScheme] colorWithName:ColorSchemeColorTextForeground
+                                                                       variant:ColorSchemeVariantDark];
     
     NSMutableParagraphStyle *paragraphStyle = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
     paragraphStyle.paragraphSpacing = 10;
     NSString *heroText = [self localizableStringForPart:@"hero"];
     NSMutableAttributedString *attributedText = [[NSMutableAttributedString alloc] initWithString:NSLocalizedString(heroText, nil)
                                                                                        attributes:@{ NSParagraphStyleAttributeName : paragraphStyle,
-                                                                                                     NSFontAttributeName: [UIFont fontWithMagicIdentifier:@"style.text.large.font_spec_medium"]}];
+                                                                                                     NSFontAttributeName: UIFont.largeSemiboldFont }];
     self.heroLabel.attributedText = attributedText;
-    
-    [self.contentView addSubview:self.heroLabel];
+    [self.stackView addArrangedSubview:self.heroLabel];
 }
 
 - (void)createSubtitleLabel
 {
-    self.subtitleLabel = [[UILabel alloc] initForAutoLayout];
+    self.subtitleLabel = [[UILabel alloc] init];
+    self.subtitleLabel.translatesAutoresizingMaskIntoConstraints = NO;
     self.subtitleLabel.numberOfLines = 0;
+    self.subtitleLabel.textColor = [[ColorScheme defaultColorScheme] colorWithName:ColorSchemeColorTextForeground
+                                                                           variant:ColorSchemeVariantDark];
     NSMutableParagraphStyle *paragraphStyle = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
     paragraphStyle.paragraphSpacing = 10;
     NSString *subtitleText = [self localizableStringForPart:@"subtitle"];
     NSMutableAttributedString *attributedText = [[NSMutableAttributedString alloc] initWithString:NSLocalizedString(subtitleText, nil)
                                                                                        attributes:@{ NSParagraphStyleAttributeName : paragraphStyle,
-                                                                                                     NSFontAttributeName: [UIFont fontWithMagicIdentifier:@"style.text.large.font_spec_thin"]}];
+                                                                                                     NSFontAttributeName: UIFont.largeThinFont}];
     self.subtitleLabel.attributedText = attributedText;
-    [self.contentView addSubview:self.subtitleLabel];
-}
-
-- (void)createOKButton
-{
-    self.OKButton = [Button buttonWithStyle:ButtonStyleFullMonochrome];
-    self.OKButton.translatesAutoresizingMaskIntoConstraints = NO;
-    NSString *gotItText = [self localizableStringForPart:@"got_it"];
-    [self.OKButton setTitle:NSLocalizedString(gotItText, nil) forState:UIControlStateNormal];
-    [self.OKButton addTarget:self action:@selector(okButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+    [self.stackView addArrangedSubview:self.subtitleLabel];
     
-    [self.contentView addSubview:self.OKButton];
+    UIView *placeholder = [[UIView alloc] init];
+    placeholder.backgroundColor = [UIColor clearColor];
+    placeholder.translatesAutoresizingMaskIntoConstraints = NO;
+    [placeholder.heightAnchor constraintEqualToConstant:24];
+    [self.stackView addArrangedSubview:placeholder];
 }
-
-- (void)okButtonPressed:(id)sender
-{
-    [self.formStepDelegate didCompleteFormStep:self];
-}
-
-- (void)createViewConstraints
-{
-    [self.heroLabel autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:28];
-    [self.heroLabel autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:28];
-    
-    [self.subtitleLabel autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:28];
-    [self.subtitleLabel autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:28];
-    [self.subtitleLabel autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.heroLabel withOffset:12];
-    
-    [self.OKButton autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.subtitleLabel withOffset:24];
-    [self.OKButton autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsMake(0, 28, 28 + UIScreen.safeArea.bottom, 28) excludingEdge:ALEdgeTop];
-    [self.OKButton autoSetDimension:ALDimensionHeight toSize:40];
-    
-    if (IS_IPAD_FULLSCREEN) {
-        [self.contentView autoSetDimension:ALDimensionWidth toSize:self.parentViewController.maximumFormSize.width];
-        [self.contentView autoSetDimension:ALDimensionHeight toSize:self.parentViewController.maximumFormSize.height];
-        [self.contentView autoCenterInSuperview];
-    } else {
-        [self.contentView autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero];
-    }
-}
-
 
 - (NSString *)localizableStringForPart:(NSString *)part
 {

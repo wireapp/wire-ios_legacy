@@ -18,6 +18,8 @@
 
 import Foundation
 
+private let zmLog = ZMSLog(tag: "Analytics")
+
 fileprivate let ZMEnableConsoleLog = "ZMEnableAnalyticsLog"
 
 @objc class AnalyticsProviderFactory: NSObject {
@@ -28,12 +30,15 @@ fileprivate let ZMEnableConsoleLog = "ZMEnableAnalyticsLog"
   
     @objc public func analyticsProvider() -> AnalyticsProvider? {
         if self.useConsoleAnalytics || UserDefaults.standard.bool(forKey: ZMEnableConsoleLog) {
+            zmLog.info("Creating analyticsProvider: AnalyticsConsoleProvider")
             return AnalyticsConsoleProvider()
         }
         else if UseAnalytics.boolValue || AutomationHelper.sharedHelper.useAnalytics {
+            zmLog.info("Creating analyticsProvider: AnalyticsMixpanelProvider")
             return AnalyticsMixpanelProvider()
         }
         else {
+            zmLog.info("Creating analyticsProvider: no provider")
             return nil
         }
     }

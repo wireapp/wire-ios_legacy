@@ -487,7 +487,7 @@ final internal class GroupActivityMatcher: TypedConversationStatusMatcher {
                 }
             }
             else {
-                if conversation.otherActiveParticipants.count == 0 {
+                if conversation.lastServerSyncedActiveParticipants.count == 0 {
                     return "conversation.status.everyone_left".localized && type(of: self).regularStyle
                 }
                 else if type(of: self).indicate3rdPartiesRemoval {

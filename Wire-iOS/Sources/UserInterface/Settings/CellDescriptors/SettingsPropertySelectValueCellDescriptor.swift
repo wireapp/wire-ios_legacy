@@ -18,7 +18,8 @@
 
 
 import Foundation
-import CocoaLumberjackSwift
+
+private let zmLog = ZMSLog(tag: "UI")
 
 class SettingsPropertySelectValueCellDescriptor: SettingsPropertyCellDescriptorType {
     static let cellType: SettingsTableCell.Type = SettingsValueCell.self
@@ -56,7 +57,7 @@ class SettingsPropertySelectValueCellDescriptor: SettingsPropertyCellDescriptorT
             try self.settingsProperty.set(newValue: self.value)
         }
         catch (let e) {
-            DDLogError("Cannot set property: \(e)")
+            zmLog.error("Cannot set property: \(e)")
         }
         if let selectAction = self.selectAction {
             selectAction(self)

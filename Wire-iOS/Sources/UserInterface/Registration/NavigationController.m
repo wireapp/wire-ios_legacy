@@ -23,7 +23,6 @@
 @import WireExtensionComponents;
 
 
-#import "WAZUIMagicIOS.h"
 #import "UIImage+ZetaIconsNeue.h"
 #import "UIColor+WAZExtensions.h"
 #import "UIResponder+FirstResponder.h"
@@ -88,6 +87,7 @@
 
     [self.backButton setIcon:iconType withSize:ZetaIconSizeSmall forState:UIControlStateNormal];
     self.backButton.accessibilityIdentifier = @"BackToWelcomeButton";
+    self.backButton.accessibilityLabel = NSLocalizedString(@"general.back", @"");
     [self.view addSubview:self.backButton];
 
     [self.backButton addTarget:self action:@selector(backButtonTapped:) forControlEvents:UIControlEventTouchUpInside];

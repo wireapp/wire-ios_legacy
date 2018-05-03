@@ -212,10 +212,11 @@ extension VoiceChannelViewController : VoiceChannelOverlayDelegate {
     func muteButtonTapped() {
         zmLog.debug("muteButtonTapped")
         
-        guard let mediaManager = AVSMediaManager.sharedInstance() else { return }
+        guard let mediaManager = AVSMediaManager.sharedInstance(), let userSession = ZMUserSession.shared() else { return }
         
-        mediaManager.isMicrophoneMuted = !mediaManager.isMicrophoneMuted
-        voiceChannelView.muted = mediaManager.isMicrophoneMuted
+        let muted = !mediaManager.isMicrophoneMuted
+        conversation.voiceChannel?.mute(muted, userSession: userSession)
+        voiceChannelView.muted = muted
     }
     
     func speakerButtonTapped() {
@@ -359,7 +360,10 @@ extension VoiceChannelViewController : WireCallCenterCallStateObserver, Received
         zmLog.debug("Updating view state from: \(previousCallState) to: \(callState)")
         
         switch callState {
-        case .incoming(video: _, shouldRing: _, degraded: let degraded):
+        case .incoming(video: _, shouldRing: let shouldRing, degraded: let degraded):
+            guard shouldRing == true else {
+                return .leavingCall
+            }
             if degraded {
                 return .incomingCallDegraded
             } else {
@@ -384,6 +388,10 @@ extension VoiceChannelViewController : WireCallCenterCallStateObserver, Received
             }
         case .established, .establishedDataChannel:
             return .connected
+
+        case .terminating:
+            return .leavingCall
+
         default:
             return .invalid
         }

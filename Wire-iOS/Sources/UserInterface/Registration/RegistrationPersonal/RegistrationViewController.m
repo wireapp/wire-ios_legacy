@@ -35,7 +35,6 @@
 #import "NavigationController.h"
 #import "SignInViewController.h"
 #import "Constants.h"
-#import "WAZUIMagicIOS.h"
 
 #import "UIColor+WAZExtensions.h"
 #import "UIViewController+Errors.h"
@@ -46,13 +45,16 @@
 #import "KeyboardAvoidingViewController.h"
 
 #import "PhoneSignInViewController.h"
+#import "EmailSignInViewController.h"
 
 #import "AnalyticsTracker+Registration.h"
+
+static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
 @interface RegistrationViewController (UserSessionObserver) <SessionManagerCreatedSessionObserver, PostLoginAuthenticationObserver>
 @end
 
-@interface RegistrationViewController () <UINavigationControllerDelegate, FormStepDelegate, ZMInitialSyncCompletionObserver>
+@interface RegistrationViewController () <UINavigationControllerDelegate, FormStepDelegate, ZMInitialSyncCompletionObserver, PreLoginAuthenticationObserver>
 
 @property (nonatomic) BOOL registeredInThisSession;
 
@@ -68,6 +70,7 @@
 @property (nonatomic) NSArray<UserClient *>* userClients;
 @property (nonatomic) id initialSyncObserverToken;
 @property (nonatomic) id postLoginToken;
+@property (nonatomic) id authenticationToken;
 @property (nonatomic) id sessionCreationObserverToken;
 @property (nonatomic) AuthenticationFlowType flowType;
 
@@ -106,6 +109,9 @@
     self.unregisteredUser.accentColorValue = [UIColor indexedAccentColor];
     self.postLoginToken = [PostLoginAuthenticationNotification addObserver:self];
     self.sessionCreationObserverToken = [[SessionManager shared] addSessionManagerCreatedSessionObserver:self];
+    self.authenticationToken = [PreLoginAuthenticationNotification registerObserver:self
+                                                          forUnauthenticatedSession:[SessionManager shared].unauthenticatedSession];
+
     
     [self setupBackgroundViewController];
     [self setupNavigationController];
@@ -193,10 +199,9 @@
     if ([self.rootNavigationController.topViewController isKindOfClass:[NoHistoryViewController class]]) {
         return;
     }
-    NoHistoryViewController *noHistoryViewController = [[NoHistoryViewController alloc] init];
+    NoHistoryViewController *noHistoryViewController = [[NoHistoryViewController alloc] initWithContextType:type];
     noHistoryViewController.formStepDelegate = self;
-    noHistoryViewController.contextType = type;
-    
+
     self.rootNavigationController.backButtonEnabled = NO;
     [self.rootNavigationController pushViewController:noHistoryViewController animated:YES];
 }
@@ -205,29 +210,14 @@
 
 - (void)didCompleteFormStep:(UIViewController *)viewController
 {
-    BOOL isAddPhoneNumber = [viewController isKindOfClass:[AddPhoneNumberViewController class]];
-    BOOL isAddEmailPassword = [viewController isKindOfClass:[AddEmailPasswordViewController class]];
     BOOL isNoHistoryViewController = [viewController isKindOfClass:[NoHistoryViewController class]];
     BOOL isEmailRegistration = [viewController isKindOfClass:[RegistrationEmailFlowViewController class]];
     
     if (isEmailRegistration) {
         [self.delegate registrationViewControllerDidCompleteRegistration];
     }
-    else if (isAddPhoneNumber || isAddEmailPassword) {
-        [self presentNoHistoryViewController:ContextTypeNewDevice];
-    }
     else if (isNoHistoryViewController) {
-        [self.delegate registrationViewControllerDidSignIn];
-    }
-}
-
-- (void)didSkipFormStep:(UIViewController *)viewController
-{
-    BOOL isAddPhoneNumber = [viewController isKindOfClass:[AddPhoneNumberViewController class]];
-    
-    if (isAddPhoneNumber) {
-        ContextType type =  [[ZMUserSession sharedSession] hadHistoryAtLastLogin] ? ContextTypeLoggedOut : ContextTypeNewDevice;
-        [self presentNoHistoryViewController:type];
+        [[UnauthenticatedSession sharedSession] continueAfterBackupImportStep];
     }
 }
 
@@ -266,7 +256,23 @@
 
 - (void)didFailToFetchPersonalInvitationWithError:(NSError *)error
 {
-    DDLogDebug(@"Failed to fetch invitation with error: %@", error);
+    ZMLogDebug(@"Failed to fetch invitation with error: %@", error);
+}
+
+#pragma mark - PreLoginAuthenticationObserver
+
+- (void)authenticationReadyToImportBackupWithExistingAccount:(BOOL)existingAccount
+{
+    self.rootNavigationController.showLoadingView = NO;
+
+    ContextType type = existingAccount ? ContextTypeLoggedOut : ContextTypeNewDevice;
+    
+    if (AutomationHelper.sharedHelper.automationEmailCredentials != nil) {
+        [[UnauthenticatedSession sharedSession] continueAfterBackupImportStep];
+    }
+    else {
+        [self presentNoHistoryViewController:type];
+    }
 }
 
 #pragma mark - ZMInitialSyncCompletionObserver
@@ -300,8 +306,7 @@
         [self.rootNavigationController pushViewController:addEmailPasswordViewController animated:YES];
     }
     else if (! [[ZMUserSession sharedSession] registeredOnThisDevice]) {
-        ContextType type = [[ZMUserSession sharedSession] hadHistoryAtLastLogin] ? ContextTypeLoggedOut : ContextTypeNewDevice;
-        [self presentNoHistoryViewController:type];
+        [self.delegate registrationViewControllerDidSignIn];
     }
     else if ([self.class registrationFlow] == RegistrationFlowPhone) {
         [self.delegate registrationViewControllerDidCompleteRegistration];

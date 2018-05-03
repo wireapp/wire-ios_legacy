@@ -36,7 +36,8 @@ final class WirelessExpirationTimeFormatter {
         return formatter
     }()
     
-    func string(for user: ZMUser) -> String? {
+    func string(for user: ZMBareUser) -> String? {
+        guard let user = user as? ZMUser else { return nil }
         return string(for: user.expiresAfter)
     }
     

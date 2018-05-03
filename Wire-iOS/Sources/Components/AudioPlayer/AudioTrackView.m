@@ -20,6 +20,7 @@
 #import "AudioTrackView.h"
 @import WireExtensionComponents;
 #import "AudioErrorView.h"
+#import "Wire-Swift.h"
 
 @import PureLayout;
 
@@ -59,12 +60,16 @@
         self.progressLayer.frame = [self progressLayerFrame];
         self.progressLayer.lineWidth = 3;
         self.progressLayer.fillColor = UIColor.clearColor.CGColor;
-        self.progressLayer.strokeColor = UIColor.orangeColor.CGColor;
+        self.progressLayer.strokeColor = UIColor.soundcloudOrange.CGColor;
         [self.layer addSublayer:self.progressLayer];
         
         self.playPauseButton = [[IconButton alloc] initForAutoLayout];
         [self.playPauseButton setIcon:ZetaIconTypePlay withSize:ZetaIconSizeLarge forState:UIControlStateNormal];
         self.playPauseButton.layer.shadowOpacity = 1;
+        self.playPauseButton.layer.shadowColor = UIColor.blackColor.CGColor;
+        self.playPauseButton.layer.shadowRadius = 1;
+        self.playPauseButton.layer.shadowOffset = CGSizeMake(0, 0);
+        [self.playPauseButton setIconColor:UIColor.whiteColor forState:UIControlStateNormal];
         [self addSubview:self.playPauseButton];
     }
     

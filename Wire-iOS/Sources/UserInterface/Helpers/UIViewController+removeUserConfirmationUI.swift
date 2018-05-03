@@ -23,25 +23,27 @@ extension UIViewController {
     /// Present an action sheet for user removal confirmation
     ///
     /// - Parameters:
-    ///   - user: user to remove
+    ///   - participant: user to remove
     ///   - conversation: the current converation contains that user
     ///   - viewControllerDismissable: a ViewControllerDismissable to call when this UIViewController is dismissed
-    @objc func presentRemoveFromConversationDialogue(
-        user: ZMUser,
-        conversation: ZMConversation?,
-        viewControllerDismissable: ViewControllerDismissable?
+    @objc(presentRemoveDialogueForParticipant:fromConversation:dismissable:)
+    func presentRemoveDialogue(
+        for participant: ZMUser,
+        from conversation: ZMConversation,
+        dismissable: ViewControllerDismissable? = nil
         ) {
 
-        let controller = UIAlertController.remove(user) { [weak self] remove in
-            guard remove, let `self` = self else { return }
-            ZMUserSession.shared()?.enqueueChanges({
-                conversation?.removeParticipant(user)
-            }, completionHandler: {
-                if user.isServiceUser {
-                    Analytics.shared().tagDidRemoveService(user)
+        let controller = UIAlertController.remove(participant) { [weak self] remove in
+            guard remove else { return }
+            
+            conversation.removeOrShowError(participnant: participant) { result in
+                switch result {
+                case .success:
+                    dismissable?.viewControllerWants(toBeDismissed: self, completion: nil)
+                case .failure(_):
+                    break
                 }
-                viewControllerDismissable?.viewControllerWants(toBeDismissed: self, completion: nil)
-            })
+            }
         }
         
         present(controller, animated: true)

@@ -20,7 +20,6 @@
 #import "ShareContactsViewController.h"
 #import "PermissionDeniedViewController.h"
 #import "Button.h"
-#import "WAZUIMagicIOS.h"
 #import "UIColor+WAZExtensions.h"
 #import "AnalyticsTracker+Permissions.h"
 #import "Wire-Swift.h"
@@ -76,8 +75,8 @@
 - (void)createHeroLabel
 {
     self.heroLabel = [[UILabel alloc] initForAutoLayout];
-    self.heroLabel.font = [UIFont fontWithMagicIdentifier:@"style.text.large.font_spec_medium"];
-    self.heroLabel.textColor = [UIColor colorWithMagicIdentifier:@"style.color.static_foreground.normal"];
+    self.heroLabel.font = UIFont.largeSemiboldFont;
+    self.heroLabel.textColor = [UIColor wr_colorFromColorScheme:ColorSchemeColorTextForeground variant:ColorSchemeVariantDark];
     self.heroLabel.attributedText = [self attributedHeroText];
     self.heroLabel.numberOfLines = 0;
     
@@ -95,8 +94,8 @@
     paragraphStyle.paragraphSpacing = 10;
     
     NSMutableAttributedString *attributedText = [[NSMutableAttributedString alloc] initWithString:text attributes:@{ NSParagraphStyleAttributeName : paragraphStyle }];
-    [attributedText addAttributes:@{ NSForegroundColorAttributeName : [UIColor colorWithMagicIdentifier:@"style.color.static_foreground.normal"],
-                                     NSFontAttributeName : [UIFont fontWithMagicIdentifier:@"style.text.large.font_spec_thin"] }
+    [attributedText addAttributes:@{ NSForegroundColorAttributeName : [UIColor wr_colorFromColorScheme:ColorSchemeColorTextForeground variant:ColorSchemeVariantDark],
+                                     NSFontAttributeName : UIFont.largeThinFont }
                             range:[text rangeOfString:paragraph]];
     
     return [[NSAttributedString alloc] initWithAttributedString:attributedText];
@@ -114,9 +113,9 @@
 - (void)createNotNowButton
 {
     self.notNowButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    self.notNowButton.titleLabel.font = [UIFont fontWithMagicIdentifier:@"style.text.small.font_spec_light"];
-    [self.notNowButton setTitleColor:[UIColor colorWithMagicIdentifier:@"style.color.static_foreground.faded"] forState:UIControlStateNormal];
-    [self.notNowButton setTitleColor:[[UIColor colorWithMagicIdentifier:@"style.color.static_foreground.faded"] colorWithAlphaComponent:0.2] forState:UIControlStateHighlighted];
+    self.notNowButton.titleLabel.font = UIFont.smallLightFont;
+    [self.notNowButton setTitleColor:[UIColor wr_colorFromColorScheme:ColorSchemeColorButtonFaded variant:ColorSchemeVariantDark] forState:UIControlStateNormal];
+    [self.notNowButton setTitleColor:[[UIColor wr_colorFromColorScheme:ColorSchemeColorButtonFaded variant:ColorSchemeVariantDark] colorWithAlphaComponent:0.2] forState:UIControlStateHighlighted];
     [self.notNowButton setTitle:[NSLocalizedString(@"registration.share_contacts.skip_button.title", nil) uppercasedWithCurrentLocale] forState:UIControlStateNormal];
     [self.notNowButton addTarget:self action:@selector(shareContactsLater:) forControlEvents:UIControlEventTouchUpInside];
     self.notNowButton.hidden = self.notNowButtonHidden;

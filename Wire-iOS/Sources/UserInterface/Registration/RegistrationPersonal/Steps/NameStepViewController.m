@@ -22,7 +22,6 @@
 @import PureLayout;
 
 #import "RegistrationTextField.h"
-#import "WAZUIMagicIOS.h"
 #import "Constants.h"
 #import "Wire-Swift.h"
 #import "WireSyncEngine+iOS.h"
@@ -78,8 +77,8 @@
 - (void)createHeroLabel
 {
     self.heroLabel = [[UILabel alloc] initForAutoLayout];
-    self.heroLabel.font = [UIFont fontWithMagicIdentifier:@"style.text.large.font_spec_light"];
-    self.heroLabel.textColor = [UIColor colorWithMagicIdentifier:@"style.color.static_foreground.normal"];
+    self.heroLabel.font = UIFont.largeLightFont;
+    self.heroLabel.textColor = [UIColor wr_colorFromColorScheme:ColorSchemeColorTextForeground variant:ColorSchemeVariantDark];
     self.heroLabel.numberOfLines = 0;
     self.heroLabel.text = NSLocalizedString(@"registration.enter_name.hero", nil);
     

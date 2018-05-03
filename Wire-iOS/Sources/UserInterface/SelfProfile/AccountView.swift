@@ -170,7 +170,7 @@ public class BaseAccountView: UIView, AccountViewType {
             dotView.height == dotSize
         }
         
-        let containerInset: CGFloat = 7
+        let containerInset: CGFloat = 6
         
         constrain(self, imageViewContainer, dotView) { selfView, imageViewContainer, dotView in
             imageViewContainer.top == selfView.top + containerInset

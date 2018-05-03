@@ -18,7 +18,6 @@
 
 
 import Foundation
-import CocoaLumberjackSwift
 import Cartography
 
 
@@ -78,8 +77,7 @@ import Cartography
             
             if self.selectedAudioEffect != .none {
                 self.audioPlayerController?.stop()
-                
-                
+
                 let effectPath = (NSTemporaryDirectory() as NSString).appendingPathComponent("effect.wav")
                 effectPath.deleteFileAtPath()
                 self.selectedAudioEffect.apply(self.recordingPath, outPath: effectPath) {
@@ -99,8 +97,7 @@ import Cartography
     fileprivate static let effectColumns = 4
     
     deinit {
-        self.audioPlayerController?.stop()
-        self.audioPlayerController = .none
+        tearDown()
     }
     
     public required init?(coder aDecoder: NSCoder) {
@@ -111,6 +108,12 @@ import Cartography
         self.duration = duration
         self.recordingPath = recordingPath
         super.init(nibName: .none, bundle: .none)
+    }
+
+    func tearDown() {
+        self.audioPlayerController?.stop()
+        self.audioPlayerController?.tearDown()
+        self.audioPlayerController = .none
     }
     
     fileprivate let collectionViewLayout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
@@ -127,7 +130,7 @@ import Cartography
         self.progressView.translatesAutoresizingMaskIntoConstraints = false
         
         self.subtitleLabel.textAlignment = .center
-        self.subtitleLabel.font = UIFont(magicIdentifier: "style.text.small.font_spec_light")
+        self.subtitleLabel.font = FontSpec(.small, .light).font!
         self.subtitleLabel.translatesAutoresizingMaskIntoConstraints = false
         self.statusBoxView.translatesAutoresizingMaskIntoConstraints = false
 
@@ -184,8 +187,7 @@ import Cartography
     }
     
     public override func removeFromParentViewController() {
-        self.audioPlayerController?.stop()
-        self.audioPlayerController = nil
+        tearDown()
         super.removeFromParentViewController()
     }
     
@@ -201,8 +203,7 @@ import Cartography
     
     public override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
-        self.audioPlayerController?.stop()
-        self.audioPlayerController = nil
+        tearDown()
     }
     
     public override func viewDidLayoutSubviews() {
@@ -273,6 +274,9 @@ import Cartography
     
     fileprivate func playMedia(_ atPath: String) {
         Analytics.shared().tagPreviewedAudioMessageRecording(.keyboard)
+
+        self.audioPlayerController?.tearDown()
+
         self.audioPlayerController = try? AudioPlayerController(contentOf: URL(fileURLWithPath: atPath))
         self.audioPlayerController?.delegate = self
         self.audioPlayerController?.play()
@@ -351,7 +355,12 @@ private class AudioPlayerController : NSObject, MediaPlayer, AVAudioPlayerDelega
     }
     
     deinit {
+        tearDown()
+    }
+
+    func tearDown() {
         mediaManager?.mediaPlayer(self, didChangeTo: .completed)
+        player.delegate = nil
     }
 
     var state: MediaPlayerState {
@@ -373,6 +382,7 @@ private class AudioPlayerController : NSObject, MediaPlayer, AVAudioPlayerDelega
     func play() {
         mediaManager?.mediaPlayer(self, didChangeTo: .playing)
         player.currentTime = 0
+        player.delegate = self
         player.play()
     }
     
@@ -386,7 +396,7 @@ private class AudioPlayerController : NSObject, MediaPlayer, AVAudioPlayerDelega
     
     func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
         if player == self.player {
-            mediaManager?.mediaPlayer(self, didChangeTo: .completed)
+            tearDown()
             delegate?.audioPlayerControllerDidFinishPlaying()
         }
     }

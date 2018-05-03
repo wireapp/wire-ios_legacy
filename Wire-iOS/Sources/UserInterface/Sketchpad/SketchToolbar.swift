@@ -20,7 +20,8 @@ import UIKit
 import Cartography
 
 class SketchToolbar : UIView {
-    
+
+    let containerView = UIView()
     let leftButton : UIButton!
     let rightButton : UIButton!
     let centerButtons : [UIButton]
@@ -30,6 +31,13 @@ class SketchToolbar : UIView {
     public init(buttons: [UIButton]) {
         
         guard buttons.count >= 2 else {  fatalError("SketchToolbar needs to be initialized with at least two buttons") }
+        
+        buttons.forEach { button in
+            let iconButton = button as? IconButton
+            iconButton?.setIconColor(UIColor.wr_color(fromColorScheme: ColorSchemeColorIconNormal), for: .normal)
+            iconButton?.setIconColor(UIColor.wr_color(fromColorScheme: ColorSchemeColorIconHighlighted), for: .highlighted)
+            iconButton?.setIconColor(UIColor.accent(), for: .selected)
+        }
         
         var unassignedButtons = buttons
         
@@ -50,9 +58,10 @@ class SketchToolbar : UIView {
     }
     
     func setupSubviews() {
-        backgroundColor = .white
+        backgroundColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorBackground)
+        addSubview(containerView)
         centerButtons.forEach(centerButtonContainer.addSubview)
-        [leftButton, centerButtonContainer, rightButton, separatorLine].forEach(addSubview)
+        [leftButton, centerButtonContainer, rightButton, separatorLine].forEach(containerView.addSubview)
     }
     
     func createButtonContraints(buttons: [UIButton]) {
@@ -66,8 +75,15 @@ class SketchToolbar : UIView {
     
     func createConstraints() {
         let buttonSpacing : CGFloat = 8
-        
-        constrain(self, leftButton, rightButton, centerButtonContainer, separatorLine) { container, leftButton, rightButton, centerButtonContainer, separatorLine in
+
+        constrain(self, containerView) { parentView, container in
+            container.left == parentView.left
+            container.right == parentView.right
+            container.top == parentView.top
+            container.bottom == parentView.bottom - UIScreen.safeArea.bottom
+        }
+
+        constrain(containerView, leftButton, rightButton, centerButtonContainer, separatorLine) { container, leftButton, rightButton, centerButtonContainer, separatorLine in
             container.height == 56
             
             leftButton.left == container.left + buttonSpacing

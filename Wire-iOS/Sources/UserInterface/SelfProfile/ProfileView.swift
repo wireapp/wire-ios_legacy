@@ -25,7 +25,7 @@ import Cartography
     public let handleLabel = UILabel()
     public let teamNameLabel = UILabel()
     public var availabilityView = AvailabilityTitleView(user: ZMUser.selfUser(), style: .selfProfile)
-    var stackView : UICustomSpacingStackView!
+    var stackView : CustomSpacingStackView!
     var userObserverToken: NSObjectProtocol?
     weak var source: UIViewController?
     
@@ -52,14 +52,20 @@ import Cartography
         nameLabel.accessibilityIdentifier = "name"
         nameLabel.setContentHuggingPriority(UILayoutPriorityRequired, for: .vertical)
         nameLabel.setContentCompressionResistancePriority(UILayoutPriorityRequired, for: .vertical)
+        nameLabel.textColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorTextForeground, variant: .dark)
+        nameLabel.font = FontSpec(.large, .light).font!
         handleLabel.accessibilityLabel = "profile_view.accessibility.handle".localized
         handleLabel.accessibilityIdentifier = "username"
         handleLabel.setContentHuggingPriority(UILayoutPriorityRequired, for: .vertical)
         handleLabel.setContentCompressionResistancePriority(UILayoutPriorityRequired, for: .vertical)
+        handleLabel.textColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorTextForeground, variant: .dark)
+        handleLabel.font = FontSpec(.small, .regular).font!
         teamNameLabel.accessibilityLabel = "profile_view.accessibility.team_name".localized
         teamNameLabel.accessibilityIdentifier = "team name"
         teamNameLabel.setContentHuggingPriority(UILayoutPriorityRequired, for: .vertical)
         teamNameLabel.setContentCompressionResistancePriority(UILayoutPriorityRequired, for: .vertical)
+        teamNameLabel.textColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorTextForeground, variant: .dark)
+        teamNameLabel.font = FontSpec(.small, .regular).font!
         
         nameLabel.text = user.name
         nameLabel.accessibilityValue = nameLabel.text
@@ -74,7 +80,7 @@ import Cartography
         
         updateHandleLabel(user: user)
         
-        stackView = UICustomSpacingStackView(customSpacedArrangedSubviews: [nameLabel, handleLabel, teamNameLabel, imageView, availabilityView])
+        stackView = CustomSpacingStackView(customSpacedArrangedSubviews: [nameLabel, handleLabel, teamNameLabel, imageView, availabilityView])
         stackView.alignment = .center
         stackView.axis = .vertical
         stackView.spacing = 2
@@ -98,11 +104,13 @@ import Cartography
     }
     
     private func createConstraints() {
-        constrain(self, stackView) { selfView, stackView in
+        constrain(self, stackView, imageView) { selfView, stackView, imageView in
             stackView.top == selfView.top
             stackView.bottom <= selfView.bottom
             stackView.leading == selfView.leading
             stackView.trailing == selfView.trailing
+            imageView.leading >= selfView.leading + 40
+            imageView.trailing <= selfView.trailing - 40
         }
     }
     

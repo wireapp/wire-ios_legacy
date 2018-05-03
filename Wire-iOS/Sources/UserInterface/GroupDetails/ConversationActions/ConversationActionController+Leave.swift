@@ -42,7 +42,7 @@ enum LeaveResult: AlertResultConfiguration {
         return .init(title: title, style: style) { _ in handler(self) }
     }
     
-    static var message: String {
+    static var title: String {
         return "meta.leave_conversation_dialog_message".localized
     }
     
@@ -60,8 +60,8 @@ extension ConversationActionController {
                 conversation.clearMessageHistory()
                 self?.trackDeletion(of: conversation)
             }
-            conversation.removeParticipant(.selfUser())
-            self?.trackLeaving(of: conversation)
+            
+            conversation.removeOrShowError(participnant: .selfUser())
         }
     }
     

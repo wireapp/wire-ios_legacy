@@ -21,6 +21,7 @@
 @import PureLayout;
 #import "UIImage+ZetaIconsNeue.h"
 #import "IconButton.h"
+#import "UIColor+WR_ColorScheme.h"
 
 @interface CameraPreviewView ()
 @property (nonatomic) UIView *videoFeedContainer;
@@ -49,11 +50,13 @@
         [self.mutedPreviewOverlay setImage:image];
         [self.mutedPreviewOverlay setContentMode:UIViewContentModeCenter];
         self.mutedPreviewOverlay.hidden = YES;
+        self.mutedPreviewOverlay.backgroundColor = [UIColor colorWithWhite:0 alpha:0.4];
         [self.videoFeedOuterContainer addSubview:self.mutedPreviewOverlay];
 
         self.switchCameraButton = [IconButton iconButtonDefault];
         self.switchCameraButton.translatesAutoresizingMaskIntoConstraints = NO;
         [self.switchCameraButton setIcon:ZetaIconTypeCameraSwitch withSize:ZetaIconSizeTiny forState:UIControlStateNormal];
+        [self.switchCameraButton setIconColor:[UIColor wr_colorFromColorScheme:ColorSchemeColorIconNormal variant:ColorSchemeVariantDark] forState:UIControlStateNormal];
         self.switchCameraButton.accessibilityIdentifier = @"SwitchCameraButton";
         [self addSubview:self.switchCameraButton];
         

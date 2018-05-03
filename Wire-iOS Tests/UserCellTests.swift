@@ -88,6 +88,19 @@ class UserCellTests: ZMSnapshotTestCase {
         }))
     }
     
+    func testGuestUser_Wireless() {
+        MockUser.mockSelf().isTeamMember = true
+        let user = MockUser.mockUsers()[0]
+        let mockUser = MockUser(for: user)
+        mockUser?.isGuestInConversation = true
+        mockUser?.expiresAfter = 5_200
+        mockUser?.handle = nil
+
+        verifyInAllColorSchemes(view: cell {
+            $0.configure(with: user, conversation: conversation)
+        })
+    }
+    
     func testTrustedGuestUser() {
         MockUser.mockSelf().isTeamMember = true
         let user = MockUser.mockUsers()[0]

@@ -54,8 +54,7 @@ extension MessageDeletedCellTests {
         layoutProperties.showBurstTimestamp = false
         layoutProperties.showUnreadMarker = false
         
-        cell.layoutMargins = UIEdgeInsetsMake(0, CGFloat(WAZUIMagic.float(forIdentifier: "content.left_margin")),
-                                             0, CGFloat(WAZUIMagic.float(forIdentifier: "content.right_margin")))
+        cell.layoutMargins = UIView.directionAwareConversationLayoutMargins
         cell.layer.speed = 0
         cell.configure(for: message, layoutProperties: layoutProperties)
         

@@ -25,6 +25,7 @@ final class AccessoryTextFieldTests: ZMSnapshotTestCase {
 
     override func setUp() {
         super.setUp()
+
         sut = AccessoryTextField()
         sut.frame = CGRect(x: 0, y: 0, width: 375, height: 56)
     }

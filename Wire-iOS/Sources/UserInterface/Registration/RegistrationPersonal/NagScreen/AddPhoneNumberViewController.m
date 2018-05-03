@@ -28,8 +28,6 @@
 #import "PushTransition.h"
 #import "RegistrationFormController.h"
 #import "WireSyncEngine+iOS.h"
-#import "UIColor+MagicAccess.h"
-#import "UIFont+MagicAccess.h"
 #import "UIViewController+Errors.h"
 #import "UIImage+ZetaIconsNeue.h"
 @import WireExtensionComponents;
@@ -124,8 +122,8 @@
     self.phoneNumberStepViewController = [[PhoneNumberStepViewController alloc] init];
     self.phoneNumberStepViewController.formStepDelegate = self;
     self.phoneNumberStepViewController.view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-    self.phoneNumberStepViewController.heroLabel.textColor = [UIColor colorWithMagicIdentifier:@"style.color.static_foreground.normal"];
-    self.phoneNumberStepViewController.heroLabel.font = [UIFont fontWithMagicIdentifier:@"style.text.large.font_spec_medium"];
+    self.phoneNumberStepViewController.heroLabel.textColor = [UIColor wr_colorFromColorScheme:ColorSchemeColorTextForeground variant:ColorSchemeVariantDark];
+    self.phoneNumberStepViewController.heroLabel.font = UIFont.largeSemiboldFont;
     self.phoneNumberStepViewController.heroLabel.attributedText = [self attributedHeroText];
     
     self.rootNavigationController = [[NavigationController alloc] initWithRootViewController:self.phoneNumberStepViewController.registrationFormViewController];
@@ -158,9 +156,9 @@
 {
     self.skipButton = [UIButton buttonWithType:UIButtonTypeCustom];
     self.skipButton.hidden = YES;
-    self.skipButton.titleLabel.font = [UIFont fontWithMagicIdentifier:@"style.text.small.font_spec_light"];
-    [self.skipButton setTitleColor:[UIColor colorWithMagicIdentifier:@"style.color.static_foreground.normal"] forState:UIControlStateNormal];
-    [self.skipButton setTitleColor:[[UIColor colorWithMagicIdentifier:@"style.color.static_foreground.normal"] colorWithAlphaComponent:0.2] forState:UIControlStateHighlighted];
+    self.skipButton.titleLabel.font = UIFont.smallLightFont;
+    [self.skipButton setTitleColor:[UIColor wr_colorFromColorScheme:ColorSchemeColorTextForeground variant:ColorSchemeVariantDark] forState:UIControlStateNormal];
+    [self.skipButton setTitleColor:[[UIColor wr_colorFromColorScheme:ColorSchemeColorTextForeground variant:ColorSchemeVariantDark] colorWithAlphaComponent:0.2] forState:UIControlStateHighlighted];
     [self.skipButton setTitle:[NSLocalizedString(@"registration.add_phone_number.skip_button.title", nil) uppercasedWithCurrentLocale] forState:UIControlStateNormal];
     [self.skipButton addTarget:self action:@selector(skip:) forControlEvents:UIControlEventTouchUpInside];
     
@@ -178,8 +176,8 @@
     paragraphStyle.paragraphSpacing = 10;
     
     NSMutableAttributedString *attributedText = [[NSMutableAttributedString alloc] initWithString:text attributes:@{ NSParagraphStyleAttributeName : paragraphStyle }];
-    [attributedText addAttributes:@{ NSForegroundColorAttributeName : [UIColor colorWithMagicIdentifier:@"style.color.static_foreground.normal"],
-                                     NSFontAttributeName: [UIFont fontWithMagicIdentifier:@"style.text.large.font_spec_light"] }
+    [attributedText addAttributes:@{ NSForegroundColorAttributeName : [UIColor wr_colorFromColorScheme:ColorSchemeColorTextForeground variant:ColorSchemeVariantDark],
+                                     NSFontAttributeName: UIFont.largeLightFont }
                             range:[text rangeOfString:paragraph]];
     
     return attributedText;

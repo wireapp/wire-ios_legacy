@@ -29,7 +29,6 @@
 #import "MockUser.h"
 #import "MockMessage+Creation.h"
 #import "SplitViewController.h"
-#import "WAZUIMagicIOS.h"
 #import <avs/AVSAudioEffect.h>
 #import "ImageMessageCell.h"
 #import "ImageMessageCell+Internal.h"
@@ -38,3 +37,4 @@
 #import "Message+Formatting.h"
 #import "MockConversation.h"
 #import "MockConversationFactory.h"
+#import "EmailVerificationStepViewController.h"

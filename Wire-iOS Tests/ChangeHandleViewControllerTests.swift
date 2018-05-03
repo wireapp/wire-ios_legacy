@@ -59,19 +59,8 @@ class ChangeHandleViewControllerTests: ZMSnapshotTestCase {
 fileprivate extension UIViewController {
 
     func prepareForSnapshots() -> UIView {
-        let navigationController = UINavigationController(rootViewController: self)
+        let navigationController = self.wrapInNavigationController(ClearBackgroundNavigationController.self)
         navigationController.navigationBar.tintColor = UIColor(for: .brightOrange)
-        navigationController.navigationBar.setBackgroundImage(UIImage(), for:.default)
-        navigationController.navigationBar.shadowImage = UIImage()
-        navigationController.navigationBar.isTranslucent = true
-        navigationController.navigationBar.titleTextAttributes = [
-            NSForegroundColorAttributeName: UIColor.white,
-            NSFontAttributeName: UIFont(magicIdentifier: "style.text.normal.font_spec").smallCaps()
-        ]
-
-        UIBarButtonItem.appearance(whenContainedInInstancesOf: [UINavigationBar.self]).setTitleTextAttributes([
-            NSFontAttributeName : UIFont(magicIdentifier: "style.text.normal.font_spec").smallCaps()
-            ], for: UIControlState.normal)
 
         beginAppearanceTransition(true, animated: false)
         endAppearanceTransition()

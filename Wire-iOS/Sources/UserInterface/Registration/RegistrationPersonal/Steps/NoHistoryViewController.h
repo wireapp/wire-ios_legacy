@@ -19,13 +19,24 @@
 
 #import "RegistrationStepViewController.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 typedef NS_ENUM(NSUInteger, ContextType) {
     ContextTypeNewDevice,
     ContextTypeLoggedOut
 };
 
 @interface NoHistoryViewController : RegistrationStepViewController
+- (instancetype)initWithContextType:(ContextType)contextType;
 
-@property (nonatomic) ContextType contextType;
-
+@property (nonatomic, readonly) ContextType contextType;
+@property (nonatomic, readonly) UIView *contentView;
+@property (nonatomic, readonly) UIStackView *stackView;
 @end
+
+@interface NoHistoryViewController ()
+- (nullable NSString *)localizableStringForPart:(NSString *)part;
+@end
+
+NS_ASSUME_NONNULL_END
+

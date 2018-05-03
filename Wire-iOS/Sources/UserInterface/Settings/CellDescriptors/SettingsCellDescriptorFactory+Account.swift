@@ -20,12 +20,23 @@
 import Foundation
 
 
+extension ZMUser {
+    var hasValidEmail: Bool {
+        guard let email = self.emailAddress,
+                !email.isEmpty else {
+            return false
+        }
+        return true
+    }
+}
+
 extension SettingsCellDescriptorFactory {
 
     func accountGroup() -> SettingsCellDescriptorType {
         let sections: [SettingsSectionDescriptorType] = [
             infoSection(),
             appearanceSection(),
+            conversationsSection(),
             actionsSection(),
             signOutSection()
         ]
@@ -54,6 +65,13 @@ extension SettingsCellDescriptorFactory {
         return SettingsSectionDescriptor(
             cellDescriptors: [pictureElement(), colorElement()],
             header: "self.settings.account_appearance_group.title".localized
+        )
+    }
+
+    func conversationsSection() -> SettingsSectionDescriptorType {
+        return SettingsSectionDescriptor(
+            cellDescriptors: [backUpElement()],
+            header: "self.settings.conversations.title".localized
         )
     }
 
@@ -191,6 +209,33 @@ extension SettingsCellDescriptorFactory {
         )
     }
 
+    func backUpElement() -> SettingsCellDescriptorType {
+        return SettingsExternalScreenCellDescriptor(
+            title: "self.settings.history_backup.title".localized,
+            isDestructive: false,
+            presentationStyle: .navigation,
+            presentationAction: {
+                if ZMUser.selfUser().hasValidEmail {
+                    return BackupViewController.init(backupSource: SessionManager.shared!)
+                }
+                else {
+                    let alert = UIAlertController(
+                        title: "self.settings.history_backup.set_email.title".localized,
+                        message: "self.settings.history_backup.set_email.message".localized,
+                        preferredStyle: .alert
+                    )
+                    let actionCancel = UIAlertAction(title: "general.ok".localized, style: .cancel, handler: nil)
+                    alert.addAction(actionCancel)
+                    
+                    guard let controller = UIApplication.shared.wr_topmostController(onlyFullScreen: false) else { return nil }
+
+                    controller.present(alert, animated: true)
+                    return nil
+                }
+            }
+        )
+    }
+    
     func ressetPasswordElement() -> SettingsCellDescriptorType {
         let resetPasswordTitle = "self.settings.password_reset_menu.title".localized
         return SettingsButtonCellDescriptor(title: resetPasswordTitle, isDestructive: false) { _ in
@@ -246,7 +291,7 @@ extension SettingsCellDescriptorFactory {
             )
             let actionCancel = UIAlertAction(title: "general.cancel".localized, style: .cancel, handler: nil)
             alert.addAction(actionCancel)
-                                                        let actionLogout = UIAlertAction(title: "general.ok".localized, style: .destructive, handler: { _ in logoutAction() })
+            let actionLogout = UIAlertAction(title: "general.ok".localized, style: .destructive, handler: { _ in logoutAction() })
             alert.addAction(actionLogout)
             return alert
         })

@@ -180,13 +180,14 @@ extension ActiveVoiceChannelViewController : WireCallCenterCallStateObserver {
 
         let changeDate = Date()
 
-        guard !TrackingManager.shared.disableCrashAndAnalyticsSharing,
-                AutomationHelper.sharedHelper.useAnalytics,
-                UseAnalytics.boolValue
-            else {
+        // Only show the survey in internal builds (review required)
+        guard DeveloperMenuState.developerMenuEnabled() else { return }
+
+        guard !Analytics.shared().isOptedOut,
+            !TrackingManager.shared.disableCrashAndAnalyticsSharing else {
                 return
         }
-        
+
         if case .established = callState {
             answeredCalls[conversation.remoteIdentifier!] = Date()
         }
@@ -197,7 +198,8 @@ extension ActiveVoiceChannelViewController : WireCallCenterCallStateObserver {
 
         if case let .terminating(reason) = callState {
             
-            guard let callStartDate = answeredCalls[conversation.remoteIdentifier!] else {
+            guard let callStartDate = answeredCalls[conversation.remoteIdentifier!],
+                AutomationHelper.sharedHelper.useAnalytics else {
                 return
             }
 

@@ -22,7 +22,6 @@
 
 @import PureLayout;
 
-#import "WAZUIMagicIOS.h"
 #import "UIColor+WAZExtensions.h"
 #import "Message+UI.h"
 #import "UIColor+WR_ColorScheme.h"
@@ -33,7 +32,6 @@
 #import "Analytics.h"
 #import "Analytics+ConversationEvents.h"
 #import "UIResponder+FirstResponder.h"
-#import "UserImageView+Magic.h"
 #import "UIScreen+Compact.h"
 
 const CGFloat ConversationCellSelectedOpacity = 0.4;
@@ -108,7 +106,7 @@ static const CGFloat BurstContainerExpandedHeight = 40;
         
         [self createViews];
 
-        self.contentLayoutMargins = self.class.layoutDirectionAwareLayoutMargins;
+        self.contentLayoutMargins = UIView.directionAwareConversationLayoutMargins;
 
         [NSLayoutConstraint autoCreateAndInstallConstraints:^{
             [self createBaseConstraints];
@@ -139,6 +137,7 @@ static const CGFloat BurstContainerExpandedHeight = 40;
     if (newWindow != nil) {
         [self scheduledTimerForUpdateBurstTimestamp];
     } else {
+        [self tearDownCountdownLink];
         [self.burstTimestampTimer invalidate];
         self.burstTimestampTimer = nil;
     }
@@ -166,7 +165,8 @@ static const CGFloat BurstContainerExpandedHeight = 40;
     self.authorImageContainer.translatesAutoresizingMaskIntoConstraints = NO;
     [self.marginContainer addSubview:self.authorImageContainer];
     
-    self.authorImageView = [[UserImageView alloc] initWithMagicPrefix:@"content.author_image"];
+    self.authorImageView = [[UserImageView alloc] init];
+    self.authorImageView.initials.font = [UIFont systemFontOfSize:11 weight:UIFontWeightLight];
     self.authorImageView.userSession = [ZMUserSession sharedSession];
     self.authorImageView.translatesAutoresizingMaskIntoConstraints = NO;
     self.authorImageView.delegate = self;
@@ -176,7 +176,7 @@ static const CGFloat BurstContainerExpandedHeight = 40;
     [self.authorImageContainer addSubview:self.authorImageView];
     
     NSMutableParagraphStyle *paragraphStyle = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
-    paragraphStyle.minimumLineHeight = [WAZUIMagic cgFloatForIdentifier:@"content.burst_timestamp.line_height"];
+    paragraphStyle.minimumLineHeight = 12;
     paragraphStyle.maximumLineHeight = paragraphStyle.minimumLineHeight;
 
     self.burstTimestampView = [[ConversationCellBurstTimestampView alloc] initForAutoLayout];
@@ -234,7 +234,7 @@ static const CGFloat BurstContainerExpandedHeight = 40;
 
 - (void)createBaseConstraints
 {
-    CGFloat authorImageDiameter = [WAZUIMagic floatForIdentifier:@"content.sender_image_tile_diameter"];
+    CGFloat authorImageDiameter = 24;
 
     self.topMarginConstraint = [self.burstTimestampView autoPinEdgeToSuperviewEdge:ALEdgeTop];
     [self.burstTimestampView autoPinEdgeToSuperviewEdge:ALEdgeLeading];
@@ -435,7 +435,7 @@ static const CGFloat BurstContainerExpandedHeight = 40;
 {
     [super traitCollectionDidChange:previousTraitCollection];
     if (!self.showsPreview) {
-        self.contentLayoutMargins = self.class.layoutDirectionAwareLayoutMargins;
+        self.contentLayoutMargins = UIView.directionAwareConversationLayoutMargins;
     }
 }
 

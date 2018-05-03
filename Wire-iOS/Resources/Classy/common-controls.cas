@@ -214,28 +214,3 @@ Button.tab-monochrome {
     titleColor[state:highlighted]: rgb(255, 255, 255, 0.56);
     titleColor[state:selected]: white;
 }
-
-IconLabelButton {
-    titleLabel: @{
-        font: $font-small-light;
-    }
-    subtitleLabel: @{
-        textAlignment: center;
-    }
-
-    iconButton: @{
-        borderWidth: 1;
-        borderColor[state:normal]: rgb(255, 255, 255, 0.48);
-        borderColor[state:selected]: clear;
-        borderColor[state:disabled]: rgb(255, 255, 255, 0.24);
-        iconColor[state:normal]: $color-text-foreground-dark;
-        iconColor[state:selected]: $color-text-foreground-light;
-        iconColor[state:disabled]: rgb(255, 255, 255, 0.4);
-        backgroundImageColor[state:normal]: clear;
-        backgroundImageColor[state:selected]: $color-text-foreground-dark;
-        backgroundImageColor[state:disabled]: clear;
-    }
-
-    titleColor[state:normal]: $color-text-foreground-dark;
-    titleColor[state:disabled]: rgb(255, 255, 255, 0.4);
-}

@@ -23,7 +23,7 @@ import Cartography
     fileprivate let messageTextLabel = SearchResultLabel()
     fileprivate let footerView = TextSearchResultFooter()
     fileprivate let userImageViewContainer = UIView()
-    fileprivate let userImageView = UserImageView(magicPrefix: "content.author_image")
+    fileprivate let userImageView = UserImageView()
     fileprivate let separatorView = UIView()
     public let resultCountView = RoundedTextBadge()
     
@@ -31,6 +31,7 @@ import Cartography
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
         self.userImageView.userSession = ZMUserSession.shared()
+        self.userImageView.initials.font = UIFont.systemFont(ofSize: 11, weight: UIFontWeightLight)
         
         self.accessibilityIdentifier = "search result cell"
         

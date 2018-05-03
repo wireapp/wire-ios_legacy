@@ -19,7 +19,7 @@
 
 import Foundation
 import WireSyncEngine
-import WireMessageStrategy
+import WireRequestStrategy
 
 
 @objc class AnalyticsFileTransferObserver: NSObject {

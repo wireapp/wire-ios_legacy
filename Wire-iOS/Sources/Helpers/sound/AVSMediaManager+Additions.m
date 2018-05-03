@@ -21,6 +21,7 @@
 #import <avs/AVSMediaManager+Client.h>
 #import "Wire-Swift.h"
 
+static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
 NSString *const MediaManagerSoundOutgoingKnockSound = @"ping_from_me";
 NSString *const MediaManagerSoundIncomingKnockSound = @"ping_from_them";
@@ -61,7 +62,7 @@ static NSDictionary *MediaManagerSoundConfig = nil;
         NSDictionary *soundConfig = [NSDictionary dictionaryWithContentsOfFile:path];
         
         if (! soundConfig) {
-            DDLogError(@"Couldn't load sound config file: %@", path);
+            ZMLogError(@"Couldn't load sound config file: %@", path);
             return;
         }
         

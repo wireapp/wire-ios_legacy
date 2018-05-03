@@ -38,8 +38,17 @@ private let smallCapsFeatureSettingsAttributeUpperCase = [
     UIFontFeatureSelectorIdentifierKey: kUpperCaseSmallCapsSelector,
 ]
 
+private let proportionalNumberSpacingFeatureSettingAttribute = [
+    UIFontFeatureTypeIdentifierKey: kNumberSpacingType,
+    UIFontFeatureSelectorIdentifierKey: kProportionalNumbersSelector
+]
+
 private let smallCapsAttribute = [
     UIFontDescriptorFeatureSettingsAttribute: [smallCapsFeatureSettingsAttributeLowerCase, smallCapsFeatureSettingsAttributeUpperCase]
+]
+
+private let proportionalNumberSpacingAttribute = [
+    UIFontDescriptorFeatureSettingsAttribute: [proportionalNumberSpacingFeatureSettingAttribute]
 ]
 
 extension UIFont {
@@ -54,6 +63,12 @@ extension UIFont {
         let descriptor = fontDescriptor
         let allCapsDescriptor = descriptor.addingAttributes(smallCapsAttribute)
         return UIFont(descriptor: allCapsDescriptor, size: 0.0)
+    }
+    
+    func proportionalNumberSpacing() -> UIFont {
+        let descriptor = fontDescriptor
+        let propertionalNumberSpacingDescriptor = descriptor.addingAttributes(proportionalNumberSpacingAttribute)
+        return UIFont(descriptor: propertionalNumberSpacingDescriptor, size: 0.0)
     }
     
 }

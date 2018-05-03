@@ -20,7 +20,6 @@
 #import "FormGuidance.h"
 
 #import "Guidance.h"
-#import "WAZUIMagicIOS.h"
 #import "UIColor+WAZExtensions.h"
 #import "Wire-Swift.h"
 
@@ -111,7 +110,7 @@
 {
     self.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
 
-    self.titleLabel.font = [UIFont fontWithMagicIdentifier:@"style.text.small.font_spec_bold"];
+    self.titleLabel.font = UIFont.smallMediumFont;
     self.titleLabel.numberOfLines = 0;
     self.titleLabel.textAlignment = NSTextAlignmentLeft;
 }

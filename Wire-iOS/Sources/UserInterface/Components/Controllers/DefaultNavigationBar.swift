@@ -38,11 +38,17 @@ class DefaultNavigationBar : UINavigationBar {
         barTintColor = ColorScheme.default().color(withName: ColorSchemeColorBarBackground)
         setBackgroundImage(UIImage.singlePixelImage(with: ColorScheme.default().color(withName: ColorSchemeColorBarBackground)), for: .default)
         shadowImage = UIImage.singlePixelImage(with: UIColor.clear)
-        titleTextAttributes = [NSFontAttributeName: FontSpec(.small, .semibold).font!,
-                               NSForegroundColorAttributeName: ColorScheme.default().color(withName: ColorSchemeColorTextForeground)]
-        setTitleVerticalPositionAdjustment(-2.0, for: .default)
-        backIndicatorImage = UIImage(for: .backArrow, iconSize: .tiny, color: ColorScheme.default().color(withName: ColorSchemeColorTextForeground)).withInsets(UIEdgeInsets(top: 0, left: 4, bottom: 0, right: 0), backgroundColor: .clear)
-        backIndicatorTransitionMaskImage = UIImage(for: .backArrow, iconSize: .tiny, color: .black)
+        titleTextAttributes = DefaultNavigationBar.titleTextAttributes(for: ColorScheme.default().variant)
+        
+        let backIndicatorInsets = UIEdgeInsets(top: 0, left: 4, bottom: 2.5, right: 0)
+        backIndicatorImage = UIImage(for: .backArrow, iconSize: .tiny, color: ColorScheme.default().color(withName: ColorSchemeColorTextForeground)).withInsets(backIndicatorInsets, backgroundColor: .clear)
+        backIndicatorTransitionMaskImage = UIImage(for: .backArrow, iconSize: .tiny, color: .black).withInsets(backIndicatorInsets, backgroundColor: .clear)
+    }
+    
+    static func titleTextAttributes(for variant: ColorSchemeVariant) -> [String : Any] {
+        return [NSFontAttributeName: UIFont.systemFont(ofSize: 11, weight: UIFontWeightSemibold),
+                NSForegroundColorAttributeName: ColorScheme.default().color(withName: ColorSchemeColorTextForeground, variant: variant),
+                NSBaselineOffsetAttributeName: 1.0]
     }
     
 }

@@ -118,7 +118,6 @@ class VoiceChannelOverlayTests: ZMSnapshotTestCase {
         let overlay = VoiceChannelOverlay(frame: UIScreen.main.bounds, callingConversation: callingConversation)
         overlay.selfUser = (mockUser as Any) as! ZMUser
         overlay.transition(to: state)
-        CASStyler.default().styleItem(overlay)
         overlay.backgroundColor = .darkGray
         overlay.videoView?.backgroundColor = .clear
         return overlay

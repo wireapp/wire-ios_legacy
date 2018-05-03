@@ -19,6 +19,7 @@
 import UIKit
 import MessageUI
 import Cartography
+import WireSystem
 
 typealias TechnicalReport = [String: String]
 
@@ -63,13 +64,12 @@ class SettingsTechnicalReportViewController: UITableViewController, MFMailCompos
         tableView.separatorColor = UIColor(white: 1, alpha: 0.1)
     }
     
+    
     func sendReport() {
-        let fileName = "voice.log"
-        let attachmentData = AppDelegate.shared().currentVoiceLogData
         let mailRecipient = NSLocalizedString("self.settings.technical_report.mail.recipient", comment: "")
 
         guard MFMailComposeViewController.canSendMail() else {
-            DebugAlert.displayFallbackActivityController(logData: attachmentData(), logFileName: fileName, email: mailRecipient, from: self)
+            DebugAlert.displayFallbackActivityController(logPaths: ZMSLog.pathsForExistingLogs, email: mailRecipient, from: self)
             return
         }
     
@@ -80,10 +80,14 @@ class SettingsTechnicalReportViewController: UITableViewController, MFMailCompos
         mailComposeViewController.setToRecipients([mailRecipient])
         mailComposeViewController.setSubject(NSLocalizedString("self.settings.technical_report.mail.subject", comment: ""))
         
-        if attachmentData().count > 0 && includedVoiceLogCell.accessoryType == .checkmark {
-            mailComposeViewController.addAttachmentData(attachmentData(), mimeType: "text/plain", fileName: fileName)
+        if includedVoiceLogCell.accessoryType == .checkmark {
+            if let currentLog = ZMSLog.currentLog, let currentPath = ZMSLog.currentLogPath {
+                mailComposeViewController.addAttachmentData(currentLog, mimeType: "text/plain", fileName: currentPath.lastPathComponent)
+            }
+            if let previousLog = ZMSLog.previousLog, let previousPath = ZMSLog.previousLogPath {
+                mailComposeViewController.addAttachmentData(previousLog, mimeType: "text/plain", fileName: previousPath.lastPathComponent)
+            }
         }
-    
         mailComposeViewController.setMessageBody(report, isHTML: false)
         self.present(mailComposeViewController, animated: true, completion: nil)
     }
@@ -115,7 +119,7 @@ class SettingsTechnicalReportViewController: UITableViewController, MFMailCompos
         label.text = "self.settings.technical_report.privacy_warning".localized
         label.textColor = ColorScheme.default().color(withName: ColorSchemeColorTextDimmed)
         label.backgroundColor = .clear
-        label.font = UIFont(magicIdentifier: "style.text.small.font_spec_light")
+        label.font = FontSpec(.small, .light).font!
         
         let container = UIView()
         container.addSubview(label)

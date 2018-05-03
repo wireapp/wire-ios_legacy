@@ -40,28 +40,12 @@
         
         [deviceNamesAndDates addObject:[NSString stringWithFormat:@"%@\n%@", deviceName, deviceDate]];
     }
-    
-    NSString *titleDevices = nil;
-    
-    if (clients.count > 1) {
-        titleDevices = [NSString stringWithFormat:NSLocalizedString(@"self.new_device_alert.title_prefix.devices", nil), clients.count];
-    } else {
-        NSString *deviceClass = clients.anyObject.deviceClass;
-        
-        if ([deviceClass isEqualToString:@"tablet"]) {
-            titleDevices = NSLocalizedString(@"self.new_device_alert.title_prefix.tablet", nil);
-        } else if ([deviceClass isEqualToString:@"phone"]) {
-            titleDevices = NSLocalizedString(@"self.new_device_alert.title_prefix.phone", nil);
-        } else {
-            titleDevices = [NSString stringWithFormat:NSLocalizedString(@"self.new_device_alert.title_prefix.devices", nil), 1];
-        }
-    }
-    
-    NSString *title = [NSString stringWithFormat:NSLocalizedString(@"self.new_device_alert.title", nil), titleDevices];
+
+    NSString *title = NSLocalizedString(@"self.new_device_alert.title", nil);
     
     NSString *messageFormat = clients.count > 1 ? NSLocalizedString(@"self.new_device_alert.message_plural", nil) : NSLocalizedString(@"self.new_device_alert.message", nil);
     
-    NSString *message = [NSString stringWithFormat:messageFormat, [deviceNamesAndDates componentsJoinedByString:@", "]];
+    NSString *message = [NSString stringWithFormat:messageFormat, [deviceNamesAndDates componentsJoinedByString:@"\n\n"]];
     
     UIAlertController* newLoginAlertController = [UIAlertController alertControllerWithTitle:title message:message preferredStyle:UIAlertControllerStyleAlert];
     

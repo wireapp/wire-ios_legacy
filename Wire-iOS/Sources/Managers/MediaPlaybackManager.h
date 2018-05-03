@@ -24,14 +24,27 @@
 
 
 @class AudioTrackPlayer;
+@class MediaPlaybackManager;
 
 FOUNDATION_EXPORT NSString *const MediaPlaybackManagerPlayerStateChangedNotification;
+
+/// An object that observes changes in the media playback manager.
+@protocol MediaPlaybackManagerChangeObserver
+
+/// The title of the active media player changed.
+- (void)activeMediaPlayerTitleDidChange;
+
+/// The state of the active media player changes.
+- (void)activeMediaPlayerStateDidChange;
+
+@end
 
 /// This object is an interface for AVS to control conversation media playback;
 @interface MediaPlaybackManager : NSObject <AVSMedia, MediaPlayerDelegate>
 
 @property (nonatomic, readonly) AudioTrackPlayer *audioTrackPlayer;
 @property (nonatomic, weak, readonly) id<MediaPlayer> activeMediaPlayer;
+@property (nonatomic, weak) id<MediaPlaybackManagerChangeObserver> changeObserver;
 
 - (instancetype)initWithName:(NSString *)name;
 

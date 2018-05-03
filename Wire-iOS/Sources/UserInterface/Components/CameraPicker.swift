@@ -20,7 +20,8 @@
 import Foundation
 import MobileCoreServices
 import AssetsLibrary
-import CocoaLumberjackSwift
+
+private let zmLog = ZMSLog(tag: "UI")
 
 enum CameraPickerResult {
     case image(UIImage)
@@ -103,7 +104,7 @@ extension CameraPicker: UIImagePickerControllerDelegate, UINavigationControllerD
         switch mediaType {
         case kUTTypeMovie.string:
             guard let videoURL = info[UIImagePickerControllerMediaURL] as? URL else {
-                DDLogError("Video not provided form \(picker): info \(info)")
+                zmLog.error("Video not provided form \(picker): info \(info)")
                 self.finishPicking()
                 return
             }
@@ -158,7 +159,7 @@ extension CameraPicker: UIImagePickerControllerDelegate, UINavigationControllerD
     
     func video(_ videoPath: NSString, didFinishSavingWithError error: NSError?, contextInfo info: AnyObject) {
         if let error = error {
-            DDLogError("Cannot save video: \(error)")
+            zmLog.error("Cannot save video: \(error)")
         }
     }
 

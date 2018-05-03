@@ -15,12 +15,22 @@
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
+// General strings
 
 
 "general.ok" = "OK";
-"general.next" = "Next";
+"general.next" = "Järgmine";
 "general.cancel" = "Tühista";
+"general.close" = "Sulge";
+"general.back" = "Tagasi";
 "general.open_settings" = "Ava Wire sätted";
+"general.edit" = "Muuda";
+"general.done" = "Valmis";
+"general.confirm" = "OK";
+// Language like Chinese does not use space to sperate words or sentences.
+"general.space_between_words" = " ";
+
+"general.guest-room-name" = "Külalistetuba";
 
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -37,18 +47,18 @@
 "peoplepicker.header.directory" = "Lisa kontakt";
 
 "peoplepicker.group.title.singular" = "Lisa inimesi";
-"peoplepicker.group.title.plural" = "Add People (%d)";
+"peoplepicker.group.title.plural" = "Lisa inimesi (%d)";
 "peoplepicker.group.skip" = "Jäta vahele";
 "peoplepicker.group.done" = "Valmis";
-"peoplepicker.group.create" = "Create";
+"peoplepicker.group.create" = "Loo";
 
 "peoplepicker.header.people" = "Inimesed";
 "peoplepicker.header.services" = "Teenused";
 "peoplepicker.services.create_conversation.item" = "Alusta vestlust";
 "peoplepicker.services.add_service.button" = "Lisa teenus";
-"peoplepicker.services.add_service.error.title" = "The service can't be added";
-"peoplepicker.services.add_service.error.default" = "The service is unavailable at the moment";
-"peoplepicker.services.add_service.error.full" = "The conversation is full";
+"peoplepicker.services.add_service.error.title" = "Teenust ei saa lisada";
+"peoplepicker.services.add_service.error.default" = "Teenus pole hetkel saadaval";
+"peoplepicker.services.add_service.error.full" = "Vestlus on täis";
 
 "peoplepicker.title.create_conversation" = "Loo grupp";
 "peoplepicker.title.add_to_conversation" = "Lisa inimesi";
@@ -78,6 +88,7 @@
 "peoplepicker.invite_team_members" = "Kutsu inimesi meeskonnaga liituma";
 "peoplepicker.quick-action.open-conversation" = "Ava";
 "peoplepicker.quick-action.create-conversation" = "Loo grupivestlus";
+"peoplepicker.quick-action.create-guest-room" = "Loo külalistetuba";
 
 "add_participants.all_contacts_added" = "Kõik kontaktid juba vestlusesse lisatud.";
 
@@ -185,7 +196,7 @@
 "conversation.status.added_multiple" = "Lisatud mitu inimest";
 "conversation.status.you_was_added" = "%@ lisas sinu";
 "conversation.status.added_users" = "%@ lisas kasutaja %@";
-"conversation.status.joined" = "%@ joined";
+"conversation.status.joined" = "%@ liitus";
 "conversation.status.removed_multiple" = "Mitu inimest eemaldatud";
 "conversation.status.you_were_removed" = "Sind eemaldati vestlusest";
 "conversation.status.you_left" = "Lahkusid vestlusest";
@@ -236,13 +247,14 @@
 "conversation.input_bar.message_too_long.title" = "Liiga pikk sõnum";
 "conversation.input_bar.message_too_long.message" = "Sõnum võib olla kuni %d tähemärki.";
 
-"conversation.create.group_name.placeholder" = "Group name";
-"conversation.create.guidance.empty" = "At least 1 character";
+"conversation.create.group_name.title" = "Loo grupp";
+"conversation.create.group_name.placeholder" = "Grupi nimi";
+"conversation.create.guidance.empty" = "Vähemalt 1 tähemärk";
 "conversation.create.guidance.toolong" = "Liiga pikk nimi";
-"conversation.create.toggle.title" = "Allow guests";
-"conversation.create.toggle.subtitle" = "Open this conversation to people outside your team. You can always change it later.";
+"conversation.create.toggle.title" = "Luba külalisi";
+"conversation.create.toggle.subtitle" = "Ava see vestlus meeskonnast väljas olevatele inimestele. Sa saad seda alati hiljem muuta.";
 
-"conversation.guests_present" = "Guests are present";
+"conversation.guests_present" = "Kohal on külalisi";
 
 // Image confirmation dialogue
 "image_confirmer.confirm" = "OK";
@@ -312,7 +324,10 @@
 "content.system.conversation.you.removed" = "%@ eemaldas kasutaja %@";
 "content.system.conversation.you.left" = "%@ lahkus";
 "content.system.conversation.team.member-leave" = "%@ eemaldati tiimist.";
-"content.system.conversation.guest.joined" = "%@ joined";
+"content.system.conversation.guest.joined" = "%@ liitus";
+
+"content.system.conversation.invite.title" = "Inimesed väljaspool sinu meeskonda saavad liituda selle vestlusega.";
+"content.system.conversation.invite.button" = "Kutsu inimesi";
 
 "content.system.other_renamed_conv_to_nothing" = "%@ eemaldas vestluselt nime";
 "content.system.you_renamed_conv_to_nothing" = "Eemaldasid vestluse nime";
@@ -342,7 +357,8 @@
 "content.system.renamed_conv.title-you" = "%@ nimetasid vestluse ümber";
 "content.system.renamed_conv.title.you" = "Sina";
 
-"content.system.conversation.with_name.title" = "%@ started the conversation";
+"content.system.conversation.with_name.title" = "%@ alustas vestlust";
+"content.system.conversation.with_name.title-you" = "%@ alustas vestlust";
 
 "content.system.conversation.with_name.participants" = "with %@";
 
@@ -375,7 +391,6 @@
 // Full sentence: "A message from %@ was not received. [...] (device d1b23c54f34a). This is a debug information.
 
 "content.system.unknown_message.body" = "Kasutad vana versiooni, mis ei oska seda sõnumitüüpi näidata.";
-"content.system.unknown_message.body.link" = "Mis selle põhjus on?";
 
 "content.file.uploading" = "Üleslaadimine…";
 "content.file.downloading" = "Allalaadimine…";
@@ -397,12 +412,18 @@
 "content.message.go_to_conversation" = "Näita";
 "content.message.forward.to" = "Otsi…";
 "content.message.open" = "Ava";
+"content.message.copy" = "Kopeeri";
+
+"content.message.open_link_alert.title" = "Visit Link";
+"content.message.open_link_alert.message" = "This will take you to\n%@";
+"content.message.open_link_alert.open" = "Ava";
 
 "content.reactions_list.likers" = "Neile meeldib";
 
 "content.file.too_big" = "Saad saata faile suurusega %@";
 // Someone pinged
-"content.ping.text" = "%1$@ pingis";
+"content.ping.text" = "%@ pingis";
+"content.ping.text-you" = "%@ pingis";
 
 // Current user pinged
 "content.ping.text.you" = "Sina";
@@ -418,11 +439,17 @@
 "inbox.connection_request.connect_button_title" = "Lisa kontakt";
 "inbox.connection_request.ignore_button_title" = "Ignoreeri";
 
+// Save image errors
+"library.alert.permission_warning.title" = "Wire vajab juurdepääsuõigust fotodele";
+"library.alert.permission_warning.restrictions.explaination" = "Wire cannot access your library because restrictions are enabled.";
+"library.alert.permission_warning.not_allowed.explaination" = "Ava Seaded ja luba Wire’le ligipääs fotodele.";
+
 // Voice
-"voice.status.one_to_one.incoming" = "%@\nHelistab";
-"voice.status.group_call.incoming" = "%@\nkutsub";
-"voice.status.one_to_one.outgoing" = "%@\nkutsub";
+"voice.status.one_to_one.incoming" = "%@\ncalling";
+"voice.status.group_call.incoming" = "%@\nringing";
+"voice.status.one_to_one.outgoing" = "%@\nringing";
 "voice.status.joining" = "%@\nÜhendatakse";
+"voice.status.leaving" = "%@\nCall ended";
 "voice.status.video_not_available" = "Video on välja lülitatud";
 "voice.status.low_connection" = "Kehv ühendus";
 "voice.network_error.title" = "Ühendus puudub";
@@ -455,32 +482,35 @@
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Profile and Participants
 
-"participants.add_people_button_title" = "Add";
+"participants.add_people_button_title" = "Lisa";
 "participants.avatar.guest.title" = "Külaline";
 
 "participants.title" = "Üksikasjad";
-"participants.section.participants" = "People (%d)";
-"participants.section.services" = "Services (%d)";
-"participants.footer.add_title" = "Add Participants";
+"participants.section.participants" = "Inimesed (%d)";
+"participants.section.services" = "Teenused (%d)";
+"participants.footer.add_title" = "Lisa osalejaid";
 
 // Meta Menu
 "meta.menu.rename" = "Nimeta ümber";
-"meta.menu.leave" = "Lahku";
+"meta.menu.leave" = "Leave…";
 "meta.menu.archive" = "Arhiveeri";
 "meta.menu.unarchive" = "Arhiivist tagasi";
-"meta.menu.delete" = "Kustuta";
+"meta.menu.delete" = "Delete Content…";
 "meta.menu.silence.mute" = "Hääletu";
 "meta.menu.silence.unmute" = "Heli sisse";
 "meta.menu.cancel" = "Tühista";
 "meta.menu.cancel_connection_request" = "Tühista ühendussoov";
+"meta.menu.mark_unread" = "Märgi mitteloetuks";
+"meta.menu.mark_read" = "Märgi loetuks";
+"shortcut.mark_all_as_read.title" = "Märgi kõik loetuks";
 
 // Delete conversation
 "meta.menu.delete_content.dialog_title" = "Kustuta sisu?";
-"meta.menu.delete_content.dialog_message" = "This will clear the conversation history on all your devices.";
+"meta.menu.delete_content.dialog_message" = "See tühjendab vestlusajaloo sinu kõigis seadmetes.";
 "meta.menu.delete_content.leave_as_well_message" = "Lahku samuti vestlusest";
 "meta.menu.delete_content.button_cancel" = "Tühista";
 "meta.menu.delete_content.button_delete" = "Kustuta";
-"meta.menu.delete_content.button_delete_and_leave" = "Delete and leave";
+"meta.menu.delete_content.button_delete_and_leave" = "Kustuta ja lahku";
 
 // Leave conversation
 "meta.leave_conversation_dialog_title" = "Lahku vestlusest?";
@@ -488,7 +518,7 @@
 "meta.leave_conversation.delete_content_as_well_message" = "Kustuta ka sisu";
 "meta.leave_conversation_button_cancel" = "Tühista";
 "meta.leave_conversation_button_leave" = "Lahku";
-"meta.leave_conversation_button_leave_and_delete" = "Leave and delete content";
+"meta.leave_conversation_button_leave_and_delete" = "Lahku ja kustuta sisu";
 
 // Conversation Degraded (security level lowered)
 "meta.degraded.degradation_reason_message.singular" = "%@ hakkas kasutama uut seadet.";
@@ -532,7 +562,8 @@
 "profile.cancel_connection_request_dialog.button_yes" = "Jah";
 
 // Unblock button
-"profile.unblock_button_title" = "Tühista blokeering";
+"profile.block_button_title" = "Block…";
+"profile.unblock_button_title" = "Unblock…";
 
 "profile.cancel_connection_button_title" = "TÜHISTA ÜHENDUSSOOV";
 "profile.connection_request_state.blocked" = "BLOKEERITUD";
@@ -550,7 +581,7 @@
 // Device list
 "profile.devices.title" = "Seadmed";
 "profile.devices.fingerprint_message_unencrypted" = "%@ kasutab vana Wire versioon. Seadmete kohta puudub info.";
-"profile.devices.fingerprint_message" = "Wire annab igale seadmele (mobiil, tahvel, arvuti) unikaalse sõrmejälje. Võrdle neid kasutajaga %@ ja kinnita selle vestluse turvalisust.\nMiks vestluste turvalisust kinnitada?";
+"profile.devices.fingerprint_message.title" = "Wire gives every device a unique fingerprint. Compare them with %@ and verify your conversation.";
 "profile.devices.fingerprint_message.link" = "Miks vestluste turvalisust kontrollida?";
 
 // Device detail
@@ -564,15 +595,12 @@
 "device.class.phone" = "Telefon";
 "profile.devices.detail.reset_session.title" = "Lähtesta sessioon";
 
-// General strings
-"general.confirm" = "OK";
-
 // Bot
-"participants.services.remove_integration.button" = "remove integration";
+"participants.services.remove_integration.button" = "eemalda integratsioon";
 
 // Group details
-"group_details.guest_options_cell.title" = "Guest Options";
-"group_details.guest_options_cell.enabled" = "On";
+"group_details.guest_options_cell.title" = "Külaliste valikud";
+"group_details.guest_options_cell.enabled" = "Sees";
 "group_details.guest_options_cell.disabled" = "Väljas";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -603,12 +631,9 @@
 "about.copyright.title" = "© Wire Swiss GmbH";
 
 // Self new devices
-"self.new_device_alert.title" = "Sa oled ühendanud seadme %@ oma Wire kontoga";
-"self.new_device_alert.title_prefix.tablet" = "tahvel";
-"self.new_device_alert.title_prefix.phone" = "telefon";
-"self.new_device_alert.title_prefix.devices" = "%d seadmed";
-"self.new_device_alert.message" = "%@\n\nKui sina seda ei teinud, eemalda see seade ja muuda oma parool.";
-"self.new_device_alert.message_plural" = "%@\n\nKui sina seda ei teinud, eemalda need seamed ja muuda oma parool.";
+"self.new_device_alert.title" = "Sinu kontot kasutati:";
+"self.new_device_alert.message" = "\n%@\n\nKui sa ei tunne mõnda ülalolevat seadet ära, eemalda see ja lähtesta oma parool.";
+"self.new_device_alert.message_plural" = "\n%@\n\nKui sa ei tunne ülalolevaid seadmeid ära, eemalda need ja lähtesta oma parool.";
 "self.new_device_alert.manage_devices" = "Halda seadmeid";
 "self.new_device_alert.trust_devices" = "OK";
 
@@ -773,7 +798,11 @@
 "self.settings.privacy_contacts_menu.description_disabled.title" = "See lubab sul teistega ühenduda. Me muudame kõik info anonüümseks ja ei jaga seda kellegi teisega. Mine Seaded > Privaatsus > Kontaktid, et lubada ligipääs.";
 
 "self.settings.privacy_security.lock_app" = "Lukusta koodiga";
-"self.settings.privacy_security.lock_app.subtitle" = "Lukusta Wire peale 10 sekundit selle sulgemist. Lahti lukustada saad Touch ID või PIN koodiga.";
+"self.settings.privacy_security.lock_app.subtitle.lock_description" = "Lock Wire after 10 seconds in the background.";
+"self.settings.privacy_security.lock_app.subtitle.touch_id" = "Unlock with Touch ID or enter your passcode.";
+"self.settings.privacy_security.lock_app.subtitle.face_id" = "Unlock with Face ID or enter your passcode.";
+"self.settings.privacy_security.lock_app.subtitle.none" = "Unlock by entering your passcode.";
+
 "self.settings.privacy_security.lock_app.description" = "Tee lukust lahti";
 
 "self.settings.privacy_security.lock_cancelled.description" = "Ava Wire Touch ID või parooliga";
@@ -808,13 +837,32 @@
 "self.settings.technical_report.mail.subject" = "Wire kõneraport";
 "self.settings.technical_report.include_log" = "Lisa detailide logi";
 "self.settings.technical_report.privacy_warning" = "Detailsed logid võivad sisaldada personaalseid andmeid";
-"self.settings.technical_report.no_mail_alert" = "No mail client detected. Tap \"OK\" and send logs manually to: ";
+"self.settings.technical_report.no_mail_alert" = "Meiliprogammi ei leitud. Vajuta “OK” ja saada logid käsitsi: ";
 
 // Password reset
 "self.settings.password_reset_menu.title" = "Lähtesta parool";
 
 // Invite from Settings
 "self.settings.invite_friends.title" = "Jaga teistega";
+
+// History backup
+
+"self.settings.conversations.title" = "History";
+"self.settings.history_backup.title" = "Back Up Conversations";
+"self.settings.history_backup.description" = "Create a backup to preserve your conversation history. You can use this to restore history if you lose your device or switch to a new one.\n\nThe backup file is not protected by Wire end-to-end encryption, so store it in a safe place.";
+"self.settings.history_backup.action" = "Varunda kohe";
+"self.settings.history_backup.error.title" = "Viga";
+
+"self.settings.history_backup.set_email.title" = "Määra e-posti aadress ja parool.";
+"self.settings.history_backup.set_email.message" = "Vajad e-posti aadressi ja parooli, et oma vestluste ajalugu varundada. Saad seda teha konto seadete lehel.";
+
+// History backup password
+
+"self.settings.history_backup.password.title" = "Set Password";
+"self.settings.history_backup.password.cancel" = "Tühista";
+"self.settings.history_backup.password.next" = "Järgmine";
+"self.settings.history_backup.password.placeholder" = "Vähemalt 8 tähte";
+"self.settings.history_backup.password.description" = "The backup will be compressed and encrypted with the password you set here.";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // System status
@@ -839,11 +887,12 @@
 
 // Landing screen
 
+"landing.app_name" = "Wire";
 "landing.title" = "Turvaline sõnumside kõigile.";
-"landing.create_account.title" = "Konto loomine";
-"landing.create_account.subtitle" = "isiklikuks kasutuseks";
-"landing.create_team.title" = "Loo uus tiim";
-"landing.create_team.subtitle" = "töö jaoks";
+"landing.create_account.title" = "For personal use";
+"landing.create_account.subtitle" = "create an account";
+"landing.create_team.title" = "For organizations";
+"landing.create_team.subtitle" = "create a team";
 "landing.login.hints" = "Konto juba olemas?";
 "landing.login.button.title" = "Logi sisse";
 
@@ -896,17 +945,34 @@
 
 // Guest Room
 
-"guest_room.allow_guests.title" = "Allow guests";
-"guest_room.allow_guests.subtitle" = "Open this conversation to people outside your team.";
-"guest_room.remove_guests.message" = "Current guests will be removed from the conversation. New guests will not be allowed.";
-"guest_room.remove_guests.action" = "Remove Guests";
-"guest_room.revoke_link.message" = "New guests will not be able to join with this link. Current guests will still have access.";
-"guest_room.revoke_link.action" = "Revoke Link";
+"guest_room.allow_guests.title" = "Luba külalisi";
+"guest_room.allow_guests.subtitle" = "Ava see vestlus meeskonnast väljas olevatele inimestele.";
+"guest_room.remove_guests.message" = "Praegused külalised eemaldatakse vestlusest. Uusi külalisi ei lubata.";
+"guest_room.remove_guests.action" = "Eemalda Külalised";
+"guest_room.revoke_link.message" = "Uued külalised ei saa selle lingi abil liituda. Praegustel külalistel on jätkuvalt ligipääs.";
+"guest_room.revoke_link.action" = "Tühista link";
 
-"guest_room.error.generic.title" = "Something went wrong";
-"guest_room.error.generic.message" = "Check your connection and try again";
+"guest_room.error.generic.title" = "Midagi läks valesti";
+"guest_room.error.generic.message" = "Kontrolli võrguühendust ja proovi uuesti";
+
+"guest_room.link.header.title" = "Kutsu teisi lingi abil";
+"guest_room.link.header.subtitle" = "Selle lingiga saab igaüks vestlusega liituda 24 tunniks, isegi kui neil pole Wire'it.";
+
+"guest_room.link.button.title" = "Loo link";
+
+"guest_room.actions.copy_link" = "Kopeeri link";
+"guest_room.actions.copied_link" = "Link kopeeritud!";
+"guest_room.actions.share_link" = "Jaga linki";
+"guest_room.actions.revoke_link" = "Revoke Link…";
+
+"guest_room.share.message" = "Liitu minuga Wire vestluses:\n%@";
+
+"guest_room.expiration.hours_left" = "%@h järel";
+"guest_room.expiration.less_than_minutes_left" = "Vähem kui %@min järel";
 
 // Registration
+
+"registration.launch_back_button.label" = "Tagasi";
 
 "registration.title" = "Registreerimine";
 "registration.close_email_invitation_button.email_title" = "Kasuta teist e-posti aadressi";
@@ -935,6 +1001,37 @@
 "registration.no_history.hero" = "Kasutad sellel seadmel Wire’t esimest korda.";
 "registration.no_history.subtitle" = "Privaatuse tagamiseks ei ilmu siia sinu varasemad vestlused.";
 "registration.no_history.got_it" = "OK";
+"registration.no_history.restore_backup" = "Restore from backup";
+
+// Restore History Warning Alert
+"registration.no_history.restore_backup_warning.title" = "Restore history";
+"registration.no_history.restore_backup_warning.message" = "The backup contents will replace the conversation history on this device.\nYou can only restore history from a backup of the same platform.";
+"registration.no_history.restore_backup_warning.proceed" = "Choose Backup File";
+
+/// Restore History Failure Alerts
+"registration.no_history.restore_backup_failed.try_again" = "Proovi uuesti";
+
+// Generic
+"registration.no_history.restore_backup_failed.title" = "Midagi läks valesti";
+"registration.no_history.restore_backup_failed.message" = "Your history could not be restored.";
+
+// Wrong Account
+"registration.no_history.restore_backup_failed.wrong_account.title" = "Incompatible backup";
+"registration.no_history.restore_backup_failed.wrong_account.message" = "You cannot restore history from a different account.";
+
+// Incompatible Version
+"registration.no_history.restore_backup_failed.wrong_version.title" = "Incompatible backup";
+"registration.no_history.restore_backup_failed.wrong_version.message" = "This backup was created by a newer or outdated version of Wire and cannot be restored here.";
+
+// Restore In Progress Loading Titles
+"registration.no_history.restore_backup.restoring" = "Restoring…";
+"registration.no_history.restore_backup.completed" = "Completed";
+
+// Password Import Alert
+"registration.no_history.restore_backup.password.title" = "This backup is password protected.";
+"registration.no_history.restore_backup.password.message" = "The password is required to restore this backup.";
+"registration.no_history.restore_backup.password.placeholder" = "Parool";
+"registration.no_history.restore_backup.password_error.title" = "Wrong Password";
 
 "registration.no_history.logged_out.hero" = "Oled sellel seadmel juba varem Wire’t kasutanud.";
 "registration.no_history.logged_out.subtitle" = "Vahepeal saadetud sõnumid ei ilmu siia.";
@@ -983,8 +1080,8 @@
 "registration.signin.email_button.title" = "E-post";
 "registration.signin.phone_button.title" = "Telefon";
 
-"registration.signin.alert.password_needed.title" = "Password needed";
-"registration.signin.alert.password_needed.message" = "Please enter your Password in order to log in.";
+"registration.signin.alert.password_needed.title" = "Parool on nõutud";
+"registration.signin.alert.password_needed.message" = "Sisselogimiseks sisesta palun oma parool.";
 
 "registration.devices.title" = "Seadmed";
 "registration.devices.active_list_header" = "Aktiivsed";
@@ -993,7 +1090,19 @@
 "registration.devices.activated_in" = "Aktiveeritud";
 "registration.devices.id" = "ID:";
 
+"signin.use_email.label" = "Logi sisse e-posti aadresiga";
+"signin.use_phone.label" = "Logi sisse telefoniga";
 "signin.forgot_password" = "Unustasid parooli?";
+"signin.use_one_password.label" = "Logi sisse 1Password’ga";
+"signin.use_one_password.hint" = "Double tap to fill your password with 1Password";
+"signin.confirm" = "Logi sisse";
+
+"registration.phone_country" = "Riik";
+"registration.phone_code" = "Riigi kood";
+"registration.phone_country.hint" = "Double tap to select another country.";
+"registration.phone_code.hint" = "Double tap to select another country code.";
+"registration.phone.verify.label" = "Kinnita telefoninumber";
+"registration.phone.verify_field.label" = "Kinnituskood";
 
 "registration.add_phone_number.hero.title" = "Lisa mobiilinumber";
 "registration.add_phone_number.hero.paragraph" = "See aitab meil leida inimesi, keda sa võid tunda. Me ei jaga seda kunagi.";
@@ -1009,6 +1118,9 @@
 "registration.phone_invitation.title" = "Kutse";
 "registration.phone_invitation.hero.title" = "Tere, %@";
 "registration.phone_invitation.hero.paragraph" = "Üks samm veel ja konto loodud.";
+
+"registration.confirm" = "Loo konto";
+"registration.phone.country_code.hint" = "Double tap to use a phone number from this country.";
 
 "error.name_and_email" = "Palun sisesta oma täisnimi ja korrektne e-posti aadress";
 "error.full_name" = "Palun sisesta oma täisnimi";
@@ -1061,6 +1173,12 @@
 
 "error.invite.no_email_provider" = "Palun seadista oma e-posti programm, et saaksid saata kutseid e-postiga";
 "error.invite.no_messaging_provider" = "Palun seadista oma SMS, et saaksid kutseid saata SMS-ga";
+
+"error.conversation.title" = "Viga";
+"error.conversation.cannot_add" = "Adding the participant failed";
+"error.conversation.cannot_remove" = "Removing the participant failed";
+"error.conversation.too_many_members" = "Vestlus on täis";
+"error.conversation.offline" = "Tundub, et sinu internetiühendusega on probleem. Palun kontrolli ühendust.";
 
 "sketchpad.initial_hint" = "Vajuta värvidel, et muuta pintsli suurust";
 
@@ -1133,3 +1251,14 @@
 "availability.available.placeholder" = "%@ on saadaval";
 "availability.away.placeholder" = "%@ on eemal";
 "availability.busy.placeholder" = "%@ on hõivatud";
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Call Quality Survey
+
+"calling.quality_survey.title" = "Kõne kvaliteedi tagasiside";
+"calling.quality_survey.question" = "Kuidas sa hindad kõne üldist kvaliteeti?";
+"calling.quality_survey.answer.1" = "Halb";
+"calling.quality_survey.answer.2" = "Kehv";
+"calling.quality_survey.answer.3" = "Rahuldav";
+"calling.quality_survey.answer.4" = "Hea";
+"calling.quality_survey.answer.5" = "Suurepärane";

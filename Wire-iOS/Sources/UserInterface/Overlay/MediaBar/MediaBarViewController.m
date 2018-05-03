@@ -30,25 +30,14 @@
 
 
 
-@interface MediaBarViewController ()
+@interface MediaBarViewController () <MediaPlaybackManagerChangeObserver>
 
 @property (nonatomic) MediaPlaybackManager *mediaPlaybackManager;
 @property (nonatomic, readonly) MediaBar *mediaBarView;
 
-@property (nonatomic) NSObject *mediaPlaybackStateObserver;
-@property (nonatomic) NSObject *mediaTitleObserver;
-
 @end
 
 @implementation MediaBarViewController
-
-- (void)dealloc
-{
-    // Observer must be deallocated before `mediaPlaybackManager`
-    self.mediaTitleObserver = nil;
-    self.mediaPlaybackStateObserver = nil;
-    self.mediaPlaybackManager = nil;
-}
 
 - (instancetype)initWithMediaPlaybackManager:(MediaPlaybackManager *)mediaPlaybackManager
 {
@@ -56,6 +45,7 @@
     
     if (self) {
         _mediaPlaybackManager = mediaPlaybackManager;
+        _mediaPlaybackManager.changeObserver = self;
     }
     
     return self;
@@ -74,18 +64,6 @@
     [self.mediaBarView.closeButton addTarget:self action:@selector(stop:) forControlEvents:UIControlEventTouchUpInside];
     
     [self updatePlayPauseButton];
-    
-    self.mediaPlaybackStateObserver = [KeyValueObserver observeObject:self.mediaPlaybackManager
-                                                              keyPath:@"activeMediaPlayer.state"
-                                                               target:self
-                                                             selector:@selector(mediaPlaybackStateChanged:)
-                                                              options:NSKeyValueObservingOptionInitial | NSKeyValueObservingOptionNew];
-    
-    self.mediaTitleObserver = [KeyValueObserver observeObject:self.mediaPlaybackManager
-                                                      keyPath:@"activeMediaPlayer.title"
-                                                       target:self
-                                                     selector:@selector(mediaTitleChanged:)
-                                                      options:NSKeyValueObservingOptionInitial | NSKeyValueObservingOptionNew];
 }
 
 - (MediaBar *)mediaBarView
@@ -128,18 +106,18 @@
     [self.mediaPlaybackManager stop];
 }
 
-#pragma mark - MediaPlaybackStateObserver
+#pragma mark - MediaPlaybackManagerChangeObserver
 
-- (void)mediaPlaybackStateChanged:(NSDictionary *)change
-{
-    [self updatePlayPauseButton];
-}
-
-- (void)mediaTitleChanged:(NSDictionary *)change
+- (void)activeMediaPlayerTitleDidChange
 {
     if (self.mediaPlaybackManager.activeMediaPlayer) {
         self.mediaBarView.titleLabel.text = [self.mediaPlaybackManager.activeMediaPlayer.title uppercasedWithCurrentLocale];
     }
+}
+
+- (void)activeMediaPlayerStateDidChange
+{
+    [self updatePlayPauseButton];
 }
 
 @end

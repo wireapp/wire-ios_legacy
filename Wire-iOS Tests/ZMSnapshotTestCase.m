@@ -22,7 +22,7 @@
 #import <WireSyncEngine/WireSyncEngine.h>
 #import "UIColor+WAZExtensions.h"
 #import "ColorScheme.h"
-#import "MagicConfig.h"
+#import "Wire-Swift.h"
 
 static CGSize const ZMDeviceSizeIPhone4 = (CGSize){ .width = 320, .height = 480 };
 static CGSize const ZMDeviceSizeIPhone5 = (CGSize){ .width = 320, .height = 568 };
@@ -73,16 +73,17 @@ static NSSet<NSNumber *> *phoneWidths(void) {
 - (void)setUp
 {
     [super setUp];
-    [MagicConfig sharedConfig];
     XCTAssertEqual(UIScreen.mainScreen.scale, 2, @"Snapshot tests need to be run on a device with a 2x scale");
 
     if ([UIDevice.currentDevice.systemVersion compare:@"10" options:NSNumericSearch] == NSOrderedAscending) {
         XCTFail(@"Snapshot tests need to be run on a device running at least iOS 10");
     }
 
+    [AppRootViewController configureAppearance];
     [UIView setAnimationsEnabled:NO];
     self.accentColor = ZMAccentColorVividRed;
     self.snapshotBackgroundColor = UIColor.clearColor;
+    
     // Enable when the design of the view has changed in order to update the reference snapshots
 #ifdef RECORDING_SNAPSHOTS
     self.recordMode = YES;

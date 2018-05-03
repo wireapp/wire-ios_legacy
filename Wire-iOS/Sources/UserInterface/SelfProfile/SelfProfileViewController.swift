@@ -30,30 +30,57 @@ extension IconButton {
     }
 }
 
+extension Notification.Name {
+    static let DismissSettings = Notification.Name("DismissSettings")
+}
+
 final internal class SelfProfileViewController: UIViewController {
+    
+     static let dismissNotificationName = "SettingsNavigationControllerDismissNotificationName"
+    
     private let settingsController: SettingsTableViewController
     private let accountSelectorController = AccountSelectorController()
     private let profileContainerView = UIView()
     private let profileView: ProfileView
-    private let accountLabel = UILabel()
-    @objc var dismissAction: (() -> ())? = .none
+    
+    internal var settingsCellDescriptorFactory: SettingsCellDescriptorFactory? = nil
+    internal var rootGroup: (SettingsControllerGeneratorType & SettingsInternalGroupCellDescriptorType)? = nil
 
+    convenience init() {
+        let settingsPropertyFactory = SettingsPropertyFactory(userSession: SessionManager.shared?.activeUserSession, selfUser: ZMUser.selfUser())
+        let settingsCellDescriptorFactory = SettingsCellDescriptorFactory(settingsPropertyFactory: settingsPropertyFactory)
+        let rootGroup = settingsCellDescriptorFactory.rootGroup()
+        
+        self.init(rootGroup: settingsCellDescriptorFactory.rootGroup())
+        self.settingsCellDescriptorFactory = settingsCellDescriptorFactory
+        self.rootGroup = rootGroup
+    }
     
     init(rootGroup: SettingsControllerGeneratorType & SettingsInternalGroupCellDescriptorType) {
         settingsController = rootGroup.generateViewController()! as! SettingsTableViewController
-        
         profileView = ProfileView(user: ZMUser.selfUser())
+        
         super.init(nibName: .none, bundle: .none)
+        
         profileView.source = self
+        profileView.imageView.delegate = self
         
         settingsController.tableView.isScrollEnabled = false
         
-        profileView.imageView.delegate = self
-        
+        NotificationCenter.default.addObserver(self, selector: #selector(SelfProfileViewController.soundIntensityChanged(_:)), name: NSNotification.Name(rawValue: SettingsPropertyName.soundAlerts.changeNotificationName), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(SelfProfileViewController.dismissNotification(_:)), name: NSNotification.Name.DismissSettings, object: nil)
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    override var supportedInterfaceOrientations : UIInterfaceOrientationMask {
+        return [.portrait]
+    }
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
     }
     
     override func viewDidLoad() {
@@ -66,68 +93,63 @@ final internal class SelfProfileViewController: UIViewController {
         view.addSubview(settingsController.view)
         addChildViewController(settingsController)
         
-        accountSelectorController.willMove(toParentViewController: self)
-        view.addSubview(accountSelectorController.view)
-        addChildViewController(accountSelectorController)
-        
-        view.addSubview(accountLabel)
-        
         settingsController.view.setContentHuggingPriority(UILayoutPriorityRequired, for: .vertical)
         settingsController.view.setContentCompressionResistancePriority(UILayoutPriorityRequired, for: .vertical)
         settingsController.tableView.setContentHuggingPriority(UILayoutPriorityRequired, for: .vertical)
         settingsController.tableView.setContentCompressionResistancePriority(UILayoutPriorityRequired, for: .vertical)
         
         createCloseButton()
-        configureAccountLabel()
+        configureAccountTitle()
         createConstraints()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        self.navigationController?.isNavigationBarHidden = true
+
+        presentNewLoginAlertControllerIfNeeded()
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        self.navigationController?.isNavigationBarHidden = false
+    func dismissNotification(_ notification: NSNotification) {
+        dismiss(animated: true)
     }
     
     private func createCloseButton() {
-        let closeButton = IconButton.closeButton()
-        closeButton.addTarget(self, action: #selector(onCloseTouchUpInside(_:)), for: .touchUpInside)
-        self.view.addSubview(closeButton)
-        constrain(closeButton, self.view) { closeButton, selfView in
-            closeButton.top == selfView.top + 12
-            closeButton.trailing == selfView.trailing - 24
-        }
+        navigationItem.rightBarButtonItem = navigationController?.closeItem()
     }
     
-    private func configureAccountLabel() {
-        accountLabel.textAlignment = .center
-        accountLabel.isHidden = SessionManager.shared?.accountManager.accounts.count > 1
-        accountLabel.text = "self.account".localized.uppercased()
-        accountLabel.accessibilityTraits = UIAccessibilityTraitHeader
-        accountLabel.textColor = ColorScheme.default().color(withName: ColorSchemeColorTextForeground, variant: .dark)
-        accountLabel.font = FontSpec(.medium, .semibold).font
+    private func configureAccountTitle() {
+        if SessionManager.shared?.accountManager.accounts.count > 1 {
+            navigationItem.titleView = accountSelectorController.view
+        } else {
+            title = "self.account".localized.uppercased()
+        }
     }
     
     private func createConstraints() {
-        constrain(view, accountSelectorController.view, profileContainerView, accountLabel) { selfView, accountSelectorControllerView, profileContainerView, accountLabel in
-            accountSelectorControllerView.leading >= selfView.leading
-            accountSelectorControllerView.trailing <= selfView.trailing
-            accountSelectorControllerView.top == selfView.top
-            accountSelectorControllerView.centerX == selfView.centerX
-            accountSelectorControllerView.height == 46
-            
-            accountLabel.top == selfView.top
-            accountLabel.leading >= selfView.leading
-            accountLabel.trailing >= selfView.trailing
-            accountLabel.centerX == selfView.centerX
-            accountLabel.height == 46
-            
-            profileContainerView.top == accountSelectorControllerView.bottom + 12
+        var selfViewTopMargin: CGFloat = 12
+
+        if #available(iOS 10, *) {
+        } else {
+            if let naviBarHeight = self.navigationController?.navigationBar.frame.size.height {
+                selfViewTopMargin = 12 + naviBarHeight
+            }
+
+            if let superview = accountSelectorController.view.superview {
+                constrain(accountSelectorController.view, superview) {accountSelectorControllerView, superview in
+                    accountSelectorControllerView.centerX == superview.centerX
+                    accountSelectorControllerView.centerY == superview.centerY
+                }
+            }
         }
-        
+
+        constrain(view, profileContainerView) { selfView, profileContainerView in
+            profileContainerView.top == selfView.topMargin + selfViewTopMargin
+        }
+
+        constrain(accountSelectorController.view) {accountSelectorControllerView in
+            accountSelectorControllerView.height == 44
+        }
+
         let height = CGFloat(56 * settingsController.tableView.numberOfRows(inSection: 0))
         
         constrain(view, settingsController.view, profileView, profileContainerView, settingsController.tableView) { view, settingsControllerView, profileView, profileContainerView, tableView in
@@ -150,9 +172,25 @@ final internal class SelfProfileViewController: UIViewController {
         }
     }
     
-    @objc func onCloseTouchUpInside(_ sender: AnyObject!) {
-        self.dismissAction?()
+}
+
+extension SelfProfileViewController {
+    
+    func soundIntensityChanged(_ notification: Notification) {
+        let soundProperty = settingsCellDescriptorFactory?.settingsPropertyFactory.property(.soundAlerts)
+        
+        if let intensivityLevel = soundProperty?.rawValue() as? AVSIntensityLevel {
+            switch(intensivityLevel) {
+            case .full:
+                Analytics.shared().tagSoundIntensityPreference(SoundIntensityTypeAlways)
+            case .some:
+                Analytics.shared().tagSoundIntensityPreference(SoundIntensityTypeFirstOnly)
+            case .none:
+                Analytics.shared().tagSoundIntensityPreference(SoundIntensityTypeNever)
+            }
+        }
     }
+    
 }
 
 extension SelfProfileViewController: UserImageViewDelegate {

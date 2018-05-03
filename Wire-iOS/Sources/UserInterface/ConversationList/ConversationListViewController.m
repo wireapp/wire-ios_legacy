@@ -41,7 +41,6 @@
 
 // helpers
 
-#import "WAZUIMagicIOS.h"
 #import "Analytics.h"
 #import "UIView+Borders.h"
 #import "NSAttributedString+Wire.h"
@@ -50,10 +49,6 @@
 #import "AppDelegate.h"
 #import "NotificationWindowRootViewController.h"
 #import "PassthroughTouchesView.h"
-
-
-#import "ActionSheetController.h"
-#import "ActionSheetController+Conversation.h"
 
 #import "Wire-Swift.h"
 
@@ -101,10 +96,16 @@
 @property (nonatomic) ConversationListBottomBarController *bottomBarController;
 
 @property (nonatomic) ConversationListTopBar *topBar;
+@property (nonatomic) NetworkStatusViewController *networkStatusViewController;
+
+/// for NetworkStatusViewDelegate
+@property (nonatomic) BOOL shouldAnimateNetworkStatusView;
+
 @property (nonatomic) UIView *contentContainer;
 @property (nonatomic) UIView *conversationListContainer;
 @property (nonatomic) UILabel *noConversationLabel;
 @property (nonatomic) ConversationListOnboardingHint *onboardingHint;
+@property (nonatomic) ConversationActionController *actionsController;
 
 @property (nonatomic) PermissionDeniedViewController *pushPermissionDeniedViewController;
 
@@ -142,6 +143,7 @@
 {
     [super viewDidLoad];
     self.contentControllerBottomInset = 16;
+    self.shouldAnimateNetworkStatusView = NO;
     
     self.contentContainer = [[UIView alloc] initForAutoLayout];
     self.contentContainer.backgroundColor = [UIColor clearColor];
@@ -163,6 +165,7 @@
     [self createListContentController];
     [self createBottomBarController];
     [self createTopBar];
+    [self createNetworkStatusBar];
 
     [self createViewConstraints];
     [self.listContentController.collectionView scrollRectToVisible:CGRectMake(0, 0, self.view.bounds.size.width, 1) animated:NO];
@@ -209,6 +212,8 @@
     
     [self updateBottomBarSeparatorVisibilityWithContentController:self.listContentController];
     [self closePushPermissionDialogIfNotNeeded];
+
+    self.shouldAnimateNetworkStatusView = YES;
 }
 
 - (void)requestSuggestedHandlesIfNeeded
@@ -253,7 +258,7 @@
 
     NSDictionary *titleAttributes = @{
                                       NSForegroundColorAttributeName : [UIColor whiteColor],
-                                      NSFontAttributeName : [UIFont fontWithMagicIdentifier:@"style.text.small.font_spec_bold"],
+                                      NSFontAttributeName : UIFont.smallMediumFont,
                                       NSParagraphStyleAttributeName : paragraphStyle
                                       };
 
@@ -292,11 +297,10 @@
     return startUIViewController;
 }
 
-- (SettingsNavigationController *)createSettingsViewController
+- (UIViewController *)createSettingsViewController
 {
-    SettingsNavigationController *settingsViewController = [SettingsNavigationController settingsNavigationController];
-
-    return settingsViewController;
+    SelfProfileViewController *selfProfileViewController = [[SelfProfileViewController alloc] init];
+    return [selfProfileViewController wrapInNavigationController:ClearBackgroundNavigationController.class];
 }
 
 - (void)createListContentController
@@ -384,8 +388,12 @@
     [self.bottomBarController.view autoPinEdgeToSuperviewEdge:ALEdgeLeft];
     [self.bottomBarController.view autoPinEdgeToSuperviewEdge:ALEdgeRight];
     self.bottomBarBottomOffset = [self.bottomBarController.view autoPinEdgeToSuperviewEdge:ALEdgeBottom];
+
+    [self.networkStatusViewController createConstraintsInContainerWithBottomView: self.topBar containerView:self.contentContainer topMargin:0];
     
-    [self.topBar autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero excludingEdge:ALEdgeBottom];
+    [self.topBar autoPinEdgeToSuperviewEdge:ALEdgeLeft];
+    [self.topBar autoPinEdgeToSuperviewEdge:ALEdgeRight];
+
     [self.topBar autoPinEdge:ALEdgeBottom toEdge:ALEdgeTop ofView:self.conversationListContainer];
     [self.contentContainer autoPinEdgesToSuperviewEdgesWithInsets:UIScreen.safeArea];
     
@@ -406,8 +414,8 @@
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator
 {
     [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {
-         // we reload on rotation to make sure that the list cells lay themselves out correctly for the new
-         // orientation
+        // we reload on rotation to make sure that the list cells lay themselves out correctly for the new
+        // orientation
         [self.listContentController reload];
     } completion:^(id<UIViewControllerTransitionCoordinatorContext> context) {
     }];
@@ -477,10 +485,10 @@
     [self.listContentController scrollToCurrentSelectionAnimated:animated];
 }
 
-- (void)showActionMenuForConversation:(ZMConversation *)conversation
+- (void)showActionMenuForConversation:(ZMConversation *)conversation fromView:(UIView *)view
 {
-    ActionSheetController *controller = [ActionSheetController dialogForConversationDetails:conversation style:ActionSheetControllerStyleDark];
-    [self presentViewController:controller animated:YES completion:nil];
+    self.actionsController = [[ConversationActionController alloc] initWithConversation:conversation target:self];
+    [self.actionsController presentMenuFromSourceView:view];
 }
 
 #pragma mark - Push permissions
@@ -503,7 +511,10 @@
     BOOL pushNotificationsDisabled = ! [[UIApplication sharedApplication] isRegisteredForRemoteNotifications] ||
     [[UIApplication sharedApplication] currentUserNotificationSettings].types == UIUserNotificationTypeNone;
     
-    if (pushNotificationsDisabled && pushAlertHappenedMoreThan1DayBefore) {
+    if (pushNotificationsDisabled &&
+        pushAlertHappenedMoreThan1DayBefore &&
+        !AutomationHelper.sharedHelper.skipFirstLoginAlerts) {
+        
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationDidBecomeActive:) name:UIApplicationDidBecomeActiveNotification object:nil];
         [[Settings sharedSettings] setLastPushAlertDate:[NSDate date]];
         PermissionDeniedViewController *permissions = [PermissionDeniedViewController pushDeniedViewController];
@@ -565,27 +576,15 @@
 
 - (void)presentSettings
 {
-    SettingsNavigationController *settingsViewController = [self createSettingsViewController];
+    UIViewController *settingsViewController = [self createSettingsViewController];
     KeyboardAvoidingViewController *keyboardAvoidingWrapperController = [[KeyboardAvoidingViewController alloc] initWithViewController:settingsViewController];
     
     if (self.wr_splitViewController.layoutSize == SplitViewControllerLayoutSizeCompact) {
         keyboardAvoidingWrapperController.topInset = UIScreen.safeArea.top;
-        @weakify(keyboardAvoidingWrapperController);
-        settingsViewController.dismissAction = ^(SettingsNavigationController *controller) {
-            @strongify(keyboardAvoidingWrapperController);
-            [keyboardAvoidingWrapperController dismissViewControllerAnimated:YES completion:nil];
-        };
-        
         keyboardAvoidingWrapperController.modalPresentationStyle = UIModalPresentationCurrentContext;
         keyboardAvoidingWrapperController.transitioningDelegate = self;
         [self presentViewController:keyboardAvoidingWrapperController animated:YES completion:nil];
-    }
-    else {
-        @weakify(self);
-        settingsViewController.dismissAction = ^(SettingsNavigationController *controller) {
-            @strongify(self);
-            [self.parentViewController dismissViewControllerAnimated:YES completion:nil];
-        };
+    } else {
         keyboardAvoidingWrapperController.modalPresentationStyle = UIModalPresentationFormSheet;
         keyboardAvoidingWrapperController.view.backgroundColor = [UIColor blackColor];
         [self.parentViewController presentViewController:keyboardAvoidingWrapperController animated:YES completion:nil];
@@ -630,7 +629,7 @@
 {
     ZMUserSession *session = ZMUserSession.sharedSession;
     NSUInteger conversationsCount = [ZMConversationList conversationsInUserSession:session].count +
-                                    [ZMConversationList pendingConnectionConversationsInUserSession:session].count;
+    [ZMConversationList pendingConnectionConversationsInUserSession:session].count;
     return conversationsCount > 0;
 }
 
@@ -676,9 +675,9 @@
     }
 }
 
-- (void)conversationListContentController:(ConversationListContentController *)controller wantsActionMenuForConversation:(ZMConversation *)conversation
+- (void)conversationListContentController:(ConversationListContentController *)controller wantsActionMenuForConversation:(ZMConversation *)conversation fromSourceView:(UIView *)sourceView
 {
-    [self showActionMenuForConversation:conversation];
+    [self showActionMenuForConversation:conversation fromView:sourceView];
 }
 
 @end
@@ -775,7 +774,7 @@
                        options:UIViewAnimationOptionTransitionCrossDissolve
                     animations:^{
                         self.bottomBarController.showArchived = showArchived;
-    } completion:nil];
+                    } completion:nil];
 }
 
 @end

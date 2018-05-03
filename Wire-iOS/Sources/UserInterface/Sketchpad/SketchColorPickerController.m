@@ -23,6 +23,7 @@
 #import "UIColor+WR_ColorScheme.h"
 @import PureLayout;
 
+static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
 /// Used only as fallback in case no brush width is set
 static NSUInteger const SketchColorPickerDefaultBrushWidth = 6;
@@ -155,7 +156,7 @@ static NSUInteger const SketchColorPickerDefaultBrushWidth = 6;
 - (NSUInteger)brushWidthForColor:(UIColor *)color
 {
     if (! color) {
-        DDLogError(@"Returning fallback brush for unset color key");
+        ZMLogError(@"Returning fallback brush for unset color key");
         return SketchColorPickerDefaultBrushWidth;
     }
     NSNumber *number = [self.colorToBrushWidthMapper objectForKey:color];

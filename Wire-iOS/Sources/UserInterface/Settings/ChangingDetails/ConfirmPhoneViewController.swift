@@ -64,7 +64,9 @@ final class ConfirmPhoneViewController: SettingsBaseTableViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         observerToken = userProfile?.add(observer: self)
-        observer = UserChangeInfo.add(observer: self, for: ZMUser.selfUser(), userSession: ZMUserSession.shared()!)
+        if let userSession = ZMUserSession.shared() {
+            observer = UserChangeInfo.add(observer: self, for: ZMUser.selfUser(), userSession: userSession)
+        }
         startTimer()
     }
     
@@ -84,7 +86,6 @@ final class ConfirmPhoneViewController: SettingsBaseTableViewController {
         
         tableView.sectionHeaderHeight = UITableViewAutomaticDimension
         tableView.estimatedSectionHeaderHeight = 60
-        tableView.contentInset = UIEdgeInsets(top: -32, left: 0, bottom: 0, right: 0)
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(
             title: "self.settings.account_section.phone_number.change.verify.save".localized,
@@ -136,9 +137,9 @@ final class ConfirmPhoneViewController: SettingsBaseTableViewController {
             let description = DescriptionHeaderView()
             let format = "self.settings.account_section.phone_number.change.verify.description".localized
             let text = String(format: format, newNumber)
-            if let font = UIFont(magicIdentifier: "style.text.normal.font_spec_bold") {
+            if let font = FontSpec(.normal, .medium).font {
                 let attributedString = NSAttributedString(string: text).addAttributes([NSFontAttributeName : font], toSubstring: newNumber)
-                description.descriptionLabel.font = UIFont(magicIdentifier: "style.text.normal.font_spec_medium")
+                description.descriptionLabel.font = FontSpec(.normal, .semibold).font!
                 description.descriptionLabel.attributedText = attributedString
             }
             return description

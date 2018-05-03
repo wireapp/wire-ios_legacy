@@ -18,7 +18,7 @@
 
 import Foundation
 
-enum DeleteResult: AlertResultConfiguration {
+enum DeleteResult {
     case delete(leave: Bool), cancel
     
     var title: String {
@@ -42,25 +42,34 @@ enum DeleteResult: AlertResultConfiguration {
         return .init(title: title, style: style) { _ in handler(self) }
     }
     
-    static var message: String {
+    static var title: String {
         return "meta.menu.delete_content.dialog_message".localized
     }
     
-    static var all: [DeleteResult] {
-        return [.delete(leave: true), .delete(leave: false), .cancel]
+    static func options(for conversation: ZMConversation) -> [DeleteResult] {
+        if conversation.conversationType == .oneOnOne || !conversation.isSelfAnActiveMember {
+            return [.delete(leave: false), .cancel]
+        } else {
+            return [.delete(leave: true), .delete(leave: false), .cancel]
+        }
     }
 }
 
 extension ConversationActionController {
     
- func handleDeleteResult(_ result: DeleteResult, for conversation: ZMConversation) {
+    func requestDeleteResult(for conversation: ZMConversation, handler: @escaping (DeleteResult) -> Void) {
+        let controller = UIAlertController(title: DeleteResult.title, message: nil, preferredStyle: .actionSheet)
+        DeleteResult.options(for: conversation) .map { $0.action(handler) }.forEach(controller.addAction)
+        present(controller)
+    }
+    
+    func handleDeleteResult(_ result: DeleteResult, for conversation: ZMConversation) {
         guard case .delete(leave: let leave) = result else { return }
         transitionToListAndEnqueue { [weak self] in
             conversation.clearMessageHistory()
             self?.trackDeletion(of: conversation)
             if leave {
-                conversation.removeParticipant(.selfUser())
-                self?.trackLeaving(of: conversation)
+                conversation.removeOrShowError(participnant: .selfUser())
             }
         }
     }

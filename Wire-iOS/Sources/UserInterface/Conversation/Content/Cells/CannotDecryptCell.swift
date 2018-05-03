@@ -90,10 +90,10 @@ class CannotDecryptCell: IconSystemCell {
     func attributedLabel(_ label: TTTAttributedLabel!, didSelectLinkWithURL URL: Foundation.URL!) {
         var url : Foundation.URL!
         if URL == type(of: self).generalErrorURL {
-            url = NSURL.wr_cannotDecryptHelp() as URL!
+            url = NSURL.wr_cannotDecryptHelp() as URL
         }
         else if URL == type(of: self).remoteIDErrorURL {
-            url = NSURL.wr_cannotDecryptNewRemoteIDHelp() as URL!
+            url = NSURL.wr_cannotDecryptNewRemoteIDHelp() as URL
         }
         UIApplication.shared.openURL(url)
     }

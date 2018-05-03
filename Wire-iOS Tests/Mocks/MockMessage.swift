@@ -180,6 +180,8 @@ import WireLinkPreview
         // no-op
     }
     
+    var canBeMarkedUnread = true
+    
     var hasBeenDeleted = false
     
     var systemMessageType: ZMSystemMessageType = ZMSystemMessageType.invalid

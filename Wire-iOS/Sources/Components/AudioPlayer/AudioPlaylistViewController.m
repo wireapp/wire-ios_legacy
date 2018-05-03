@@ -18,7 +18,6 @@
 
 
 @import PureLayout;
-@import Classy;
 @import WireExtensionComponents;
 
 #import "AudioPlaylistViewController.h"
@@ -35,9 +34,9 @@
 #import "LinkAttachmentCache.h"
 #import "SoundcloudService.h"
 #import "LinkAttachment.h"
-#import "WAZUIMagicIOS.h"
 #import "Wire-Swift.h"
 
+static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
 static NSString * const AudioPlaylistCellReuseIdentifier = @"AudioPlaylistCellReuseIdentifier";
 static NSString * const AudioTrackCellReuseIdentifier = @"AudioTrackCellReuseIdentifier";
@@ -102,6 +101,7 @@ static const CGFloat SeparatorLineOverflow = 4;
     
     self.view.translatesAutoresizingMaskIntoConstraints = NO;
     self.view.preservesSuperviewLayoutMargins = YES;
+    self.view.backgroundColor = UIColor.soundcloudOrange;
     _backgroundView = [[UIImageView alloc] initForAutoLayout];
     self.backgroundView.contentMode = UIViewContentModeScaleAspectFill;
     self.backgroundView.clipsToBounds = YES;
@@ -131,6 +131,7 @@ static const CGFloat SeparatorLineOverflow = 4;
     self.playlistTableView.separatorInset = UIEdgeInsetsZero;
     self.playlistTableView.rowHeight = 44;
     self.playlistTableView.showsVerticalScrollIndicator = NO;
+    self.playlistTableView.separatorColor = [UIColor wr_colorFromColorScheme:ColorSchemeColorSeparator variant:ColorSchemeVariantDark];
     
     [self.playlistTableView registerClass:AudioPlaylistCell.class forCellReuseIdentifier:AudioPlaylistCellReuseIdentifier];
     
@@ -149,11 +150,11 @@ static const CGFloat SeparatorLineOverflow = 4;
     
     _tracksSeparatorLine = [[UIView alloc] initForAutoLayout];
     [self.blurEffectView.contentView addSubview:self.tracksSeparatorLine];
-    self.tracksSeparatorLine.cas_styleClass = @"separatorLine";
+    self.tracksSeparatorLine.backgroundColor = [UIColor wr_colorFromColorScheme:ColorSchemeColorSeparator variant:ColorSchemeVariantDark];
     
     _playlistSeparatorLine = [[UIView alloc] initForAutoLayout];
     [self.blurEffectView.contentView addSubview:self.playlistSeparatorLine];
-    self.playlistSeparatorLine.cas_styleClass = @"separatorLine";
+    self.playlistSeparatorLine.backgroundColor = [UIColor wr_colorFromColorScheme:ColorSchemeColorSeparator variant:ColorSchemeVariantDark];
     
     [self createInitialConstraints];
     [self updateHeaderView];
@@ -290,11 +291,11 @@ static const CGFloat SeparatorLineOverflow = 4;
 
 - (void)updateForFailedState
 {
-    if (self.loadingFailed) {        
-        self.view.cas_styleClass = @"failed";
+    if (self.loadingFailed) {
+        self.view.backgroundColor = UIColor.blackColor;
     }
     else {
-        self.view.cas_styleClass = nil;
+        self.view.backgroundColor = UIColor.soundcloudOrange;
     }
     
     [self.tracksCollectionView reloadData];
@@ -424,7 +425,7 @@ static const CGFloat SeparatorLineOverflow = 4;
             if (loaded) {
                 [self.audioTrackPlayer play];
             } else {
-                DDLogWarn(@"Couldn't load audio track (%@): %@", audioTrack.title, error);
+                ZMLogWarn(@"Couldn't load audio track (%@): %@", audioTrack.title, error);
             }
         }];
     }

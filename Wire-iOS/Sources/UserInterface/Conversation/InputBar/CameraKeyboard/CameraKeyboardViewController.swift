@@ -21,8 +21,9 @@ import Foundation
 import Photos
 import Cartography
 import WireExtensionComponents
-import CocoaLumberjackSwift
 import AVFoundation
+
+private let zmLog = ZMSLog(tag: "UI")
 
 public protocol CameraKeyboardViewControllerDelegate: class {
     func cameraKeyboardViewController(_ controller: CameraKeyboardViewController, didSelectVideo: URL, duration: TimeInterval)
@@ -222,7 +223,7 @@ open class CameraKeyboardViewController: UIViewController {
                         self.showLoadingView = false
                     })
                     guard let data = data else {
-                        DDLogError("Failure: cannot fetch image")
+                        zmLog.error("Failure: cannot fetch image")
                         return
                     }
                     
@@ -277,7 +278,7 @@ open class CameraKeyboardViewController: UIViewController {
                         try FileManager.default.removeItem(at: exportURL)
                     }
                     catch let error {
-                        DDLogError("Cannot remove \(exportURL): \(error)")
+                        zmLog.error("Cannot remove \(exportURL): \(error)")
                     }
                 }
                 
@@ -287,8 +288,8 @@ open class CameraKeyboardViewController: UIViewController {
                 exportSession.outputFileType = AVFileTypeMPEG4
 
                 exportSession.exportAsynchronously {
-                    self.showLoadingView = false
                     DispatchQueue.main.async(execute: {
+                        self.showLoadingView = false
                         self.delegate?.cameraKeyboardViewController(self, didSelectVideo: exportSession.outputURL!, duration: CMTimeGetSeconds(exportSession.asset.duration))
                     })
                 }
@@ -456,13 +457,9 @@ extension CameraKeyboardViewController: CameraCellDelegate {
         let isFrontCamera = cameraController.currentCamera == .front
         
         let camera: ConversationMediaPictureCamera = isFrontCamera ? ConversationMediaPictureCamera.front : ConversationMediaPictureCamera.back
-        
-        let metadata = ImageMetadata()
-        metadata.camera = camera
-        metadata.method = ConversationMediaPictureTakeMethod.keyboard
-        metadata.source = ConversationMediaPictureSource.camera
-        metadata.sketchSource = .none
-        
+
+        let metadata = ImageMetadata.metadata(with: camera, method: .keyboard)
+
         self.delegate?.cameraKeyboardViewController(self, didSelectImageData: imageData, metadata: metadata)
     }
 }

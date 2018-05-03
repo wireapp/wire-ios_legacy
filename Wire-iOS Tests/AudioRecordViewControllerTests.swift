@@ -18,7 +18,6 @@
 
 
 import XCTest
-import Classy
 import Cartography
 @testable import Wire
 
@@ -46,7 +45,6 @@ class AudioRecordViewControllerTests: ZMSnapshotTestCase {
         sut = AudioRecordViewController()
         delegate = MockAudioRecordViewControllerDelegate()
         sut.delegate = delegate
-        CASStyler.default().styleItem(sut)
         sut.updateTimeLabel(123)
         sut.setOverlayState(.default, animated: false)
     }

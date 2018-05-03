@@ -20,7 +20,6 @@
 import UIKit
 import Cartography
 import TTTAttributedLabel
-import Classy
 
 
 protocol UserNameTakeOverViewControllerDelegate: NSObjectProtocol {
@@ -34,10 +33,6 @@ enum UserNameTakeOverViewControllerAction {
 
 
 final class UserNameTakeOverViewController: UIViewController {
-
-    public var linkFont: UIFont?
-    public var subtitleFont: UIFont?
-    public var subtitleColor: UIColor?
 
     public let displayNameLabel = UILabel()
     public let suggestedHandleLabel = UILabel()
@@ -68,18 +63,24 @@ final class UserNameTakeOverViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         contentView.layoutMargins = UIEdgeInsets(top: 28, left: 28, bottom: 28, right: 28)
-        CASStyler.default().styleItem(self)
         setupViews()
         createConstraints()
     }
 
     func setupViews() {
+        view.backgroundColor = UIColor.clear
         view.addSubview(contentView)
         [displayNameLabel, suggestedHandleLabel].forEach(topContainer.addSubview)
         [topContainer, subtitleLabel, chooseOwnButton, keepSuggestedButton].forEach(contentView.addSubview)
+        
+        displayNameLabel.font = FontSpec(.large, .thin).font!
+        displayNameLabel.textColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorTextDimmed, variant: .light)
         displayNameLabel.text = name
-        suggestedHandleLabel.text = "@" + suggestedHandle
         displayNameLabel.textAlignment = .center
+        
+        suggestedHandleLabel.font = FontSpec(.large, .none).font!
+        suggestedHandleLabel.textColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorTextForeground, variant: .dark)
+        suggestedHandleLabel.text = "@" + suggestedHandle
         suggestedHandleLabel.textAlignment = .center
 
         chooseOwnButton.setTitle("registration.select_handle.takeover.choose_own".localized, for: .normal)
@@ -97,8 +98,11 @@ final class UserNameTakeOverViewController: UIViewController {
         subtitleLabel.numberOfLines = 0
         subtitleLabel.linkAttributes = [NSUnderlineStyleAttributeName: NSUnderlineStyle.styleNone.rawValue]
         subtitleLabel.extendsLinkTouchArea = true
+        
+        let font = FontSpec(.large, .thin).font!
+        let linkFont = FontSpec(.large, .none).font!
+        let color = UIColor.wr_color(fromColorScheme: ColorSchemeColorTextForeground, variant: .dark)
 
-        guard let linkFont = linkFont, let font = subtitleFont, let color = subtitleColor else { return }
         let subtitle = "registration.select_handle.takeover.subtitle".localized
         let linkAttributes: [String: Any] = [
             NSFontAttributeName: linkFont,

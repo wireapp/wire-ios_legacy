@@ -28,6 +28,22 @@ class ImageMessageCellTests: ZMSnapshotTestCase {
         super.setUp()
         snapshotBackgroundColor = UIColor.white
         sut = ImageMessageCell(style: .default, reuseIdentifier: name!)
+        sut.variant = .light
+    }
+
+    override func tearDown() {
+        super.tearDown()
+    }
+
+    func setToDarkTheme() {
+        snapshotBackgroundColor = UIColor.black
+        sut.variant = .dark
+    }
+
+    func testThatItRendersImageMessagePlaceholderWhenNoImageIsSetInDarkTheme() {
+        setToDarkTheme()
+
+        verify(view: sut.prepareForSnapshot(CGSize(width: 450, height: 600)))
     }
 
     func testThatItRendersImageMessagePlaceholderWhenNoImageIsSet() {
@@ -40,6 +56,19 @@ class ImageMessageCellTests: ZMSnapshotTestCase {
 
     func testThatItRendersImageMessagePlaceholderWhenNoImageIsSet_SmallImage() {
         verify(view: sut.prepareForSnapshot(CGSize(width: 200, height: 200)))
+    }
+
+    func testThatItRendersImageMessageWhenTransparentPNGImageIsSet() {
+        let image = self.image(inTestBundleNamed: "transparent.png")
+        let wrap = sut.prepareForSnapshot(image.size, image: image)
+        verify(view: wrap)
+    }
+
+    func testThatItRendersImageMessageWhenTransparentPNGImageIsSetInDarkTheme() {
+        let image = self.image(inTestBundleNamed: "transparent.png")
+        setToDarkTheme()
+        let wrap = sut.prepareForSnapshot(image.size, image: image)
+        verify(view: wrap)
     }
 
     func testThatItRendersImageMessageWhenImageIsSet() {

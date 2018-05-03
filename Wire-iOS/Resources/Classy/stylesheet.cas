@@ -25,139 +25,6 @@ UIView.separator {
     backgroundColor: $color-separator;
 }
 
-MediaPreviewView {
-    titleLabel: @{
-        font: System-Light 16.0;
-        textColor: white;
-        numberOfLines: 2;
-    };
-    subtitleLabel: @{
-        font: $font-small;
-        textColor: white;
-    };
-    overlayView: @{
-        backgroundColor: rgb(0, 0, 0, 0.48);
-    };
-    playButton: @{
-        iconColor: white;
-        iconColor[state:selected]: white;
-    }
-}
-
-IconButton.conversation-toolbar {
-    circular: true;
-    borderWidth: 0;
-    adjustsImageWhenHighlighted: false;
-}
-
-StartUIInviteActionBar {
-    backgroundColor: rgb(0, 0, 0, 0.24);
-}
-
-StartUIInviteActionBar > Button {
-    titleEdgeInsets: 2, 8, 3, 8;
-}
-
-VoiceChannelOverlay > IconButton.circular {
-    borderWidth: 0.5;
-}
-
-VoiceChannelOverlay {
-    joinButton: @{
-        titleLabel @{
-            font: $font-small;
-        }
-        
-        imageEdgeInsets: 0 0 0 8;
-    }
-    
-    degradationTopLabel: @{
-        textColor: $color-text-foreground-dark;
-        font: $font-normal-light;
-    }
-    
-    degradationBottomLabel: @{
-        textColor: $color-text-foreground-dark;
-        font: $font-normal-light;
-    }
-
-    topStatusLabel: @{
-        textColor: $color-text-foreground-dark;
-    }
-    
-    centerStatusLabel: @{
-        textColor: $color-text-foreground-dark;
-        font: $font-small-light;
-    }
-    
-    callingProtocolLabel: @{
-        textColor: $color-text-foreground-dark;
-        font: $font-small-light;
-    }
-
-    acceptButton: @{
-        iconButton: @{
-            backgroundImageColor[state:normal]: $color-accent-green;
-            iconColor[state:normal]: white;
-            borderWidth: 0;
-        }
-    }
-    
-    acceptDegradedButton: @{
-        iconButton: @{
-            backgroundImageColor[state:normal]: $color-accent-green;
-            iconColor[state:normal]: white;
-            borderWidth: 0;
-        }
-    }
-    
-    makeDegradedCallButton: @{
-        iconButton: @{
-            backgroundImageColor[state:normal]: $color-accent-green;
-            iconColor[state:normal]: white;
-            borderWidth: 0;
-        }
-    }
-
-    acceptVideoButton: @{
-        iconButton: @{
-            backgroundImageColor[state:normal]: $color-accent-green;
-            iconColor[state:normal]: white;
-            borderWidth: 0;
-        }
-    }
-    
-    ignoreButton: @{
-        iconButton: @{
-            backgroundImageColor[state:normal]: $color-accent-red;
-            iconColor[state:normal]: white;
-            borderWidth: 0;
-        }
-    }
-    
-    leaveButton: @{
-        iconButton: @{
-            backgroundImageColor[state:normal]: $color-accent-red;
-            iconColor[state:normal]: white;
-            borderWidth: 0;
-        }
-    }
-    
-    VoiceChannelParticipantCell UILabel {
-        textColor: $color-text-foreground-dark;
-    }
-}
-
-CameraPreviewView {
-    switchCameraButton: @{
-        iconColor[state:normal]: $color-icon-normal-dark;
-    }
-    
-    mutedPreviewOverlay: @{
-        backgroundColor: rgb(0, 0, 0, 0.40);
-    }
-}
-
 IconButton.back-button {
     borderWidth: 0.5;
     borderColor[state: normal]: $color-separator;
@@ -204,357 +71,6 @@ IconButton.emoji-backspace {
     borderWidth: 0.0;
 }
 
-VoiceChannelParticipantCell {
-    nameLabel: @{
-        textAlignment: center;
-    }
-}
-
-AudioTrackViewController > UIView, AudioPlaylistViewController > UIView {
-    backgroundColor: $color-soundcloud;
-}
-
-AudioTrackViewController > UIView.failed, AudioPlaylistViewController > UIView.failed {
-    backgroundColor: black;
-}
-
-AudioTrackViewController {
-    subtitleLabel @{
-        textColor: $color-text-foreground-dark;
-        font: $font-small;
-    }
-}
-
-AudioPlaylistViewController UIView.separatorLine {
-    backgroundColor: $color-separator;
-}
-
-AudioPlaylistViewController UITableView {
-    separatorColor: $color-separator;
-}
-
-AudioTrackView {
-    
-    IconButton: {
-        iconColor: white;
-    }
-    
-    progressLayer: @{
-        strokeColor: $color-soundcloud;
-    }
-    
-    
-    playPauseButton: @{
-        layer: @{
-            shadowColor: rgb(0, 0, 0, 1);
-            shadowRadius: 1;
-            shadowOffset: 0, 0;
-        }
-    }
-}
-
-AudioHeaderView {
-    
-    UILabel: {
-        textColor: $color-text-foreground-dark;
-    }
-    
-    artistLabel: @{
-        font: $font-small-light;
-    }
-    
-    trackTitleLabel: @{
-        font: $font-small-semibold;
-    }
-}
-
-AudioPlaylistCell.selected {
-    
-    titleLabel: @{
-        font: $font-small-semibold;
-    }
-    
-    durationLabel: @{
-        textColor: $color-text-foreground-dark;
-    }
-}
-
-AudioPlaylistCell.highlighted {
-    
-    titleLabel: @{
-        textColor: $color-accent-current;
-    }
-}
-
-AudioPlaylistCell {
-    backgroundColor: clear;
-    
-    titleLabel: @{
-        font: $font-small;
-        textColor: $color-text-foreground-dark;
-    }
-    
-    durationLabel: @{
-        font: $font-small;
-        textColor: $color-text-dimmed-light;
-    }
-}
-
-MediaBar, TitleBar {
-    backgroundColor: $color-background;
-    UILabel {
-        font: $font-small;
-        textColor: $color-text-foreground;
-    }
-    
-    bottomSeparatorLine @{
-        backgroundColor: $color-separator;
-    }
-}
-
-TitleBar.invitation-status {
-    backgroundColor: $color-background-dark;
-    UILabel {
-        textColor: $color-text-foreground-dark;
-    }
-    
-    bottomSeparatorLine @{
-        backgroundColor: $color-separator-dark;
-    }
-}
-
-BrowserBarView {
-    backgroundColor: $color-background;
-    
-    titleLabel: @{
-        font: $font-small;
-        textColor: $color-text-foreground;
-        textAlignment: center;
-    }
-    
-    progressLayer: @{
-        strokeColor: $color-accent-current;
-    }
-}
-
-/* Sketch related */
-
-CanvasViewController {
-    
-    canvas: @{
-        backgroundColor: white
-    }
-    
-    hintLabel: @{
-        font: $font-small;
-        textColor: $color-text-placeholder;
-        textAlignment: center;
-    }
-    
-}
-
-SketchToolbar {
-    backgroundColor: $color-background;
-    
-    IconButton {
-        iconColor[state:normal]: $color-icon-normal;
-        iconColor[state:highlighted]: $color-icon-highlighted;
-        iconColor[state:selected]: $color-accent-current;
-    }
-}
-
-/* Self profile */
-
-ProfileView {
-    nameLabel: @{
-        textColor: $color-text-foreground-dark;
-        font: $font-large-light;
-    }
-    
-    handleLabel: @{
-        textColor: $color-text-foreground-dark;
-        font: $font-small;
-    }
-    
-    teamNameLabel: @{
-        textColor: $color-text-foreground-dark;
-        font: $font-small;
-    }
-}
-
-/* Profile */
-
-ProfileViewController {
-    view: @{
-        backgroundColor: $color-bar-background;
-    }
-    topSeparatorLineView: @{
-        backgroundColor: $color-separator;
-    }
-}
-
-ProfileViewController UserImageView {
-    borderWidth: 1;
-    borderColor: rgb(0, 0, 0, 0.08);
-}
-
-ProfileFooterView {
-    leftButton: @{
-        contentEdgeInsets: 0 0 0 16
-        titleEdgeInsets: 0 16 0 -16
-        titleColor[state:normal]: $color-text-foreground;
-        titleColor[state:highlighted]: $color-text-dimmed;
-        titleLabel: @{
-            font: $font-small-light;
-        }
-    }
-}
-
-UserNameTakeOverViewController {
-    view: @{
-        backgroundColor: clear;
-    }
-
-    displayNameLabel: @{
-        font: $font-large-thin;
-        textColor: $color-text-dimmed-light;
-    }
-
-    suggestedHandleLabel: @{
-        font: $font-large;
-        textColor: $color-text-foreground-dark;
-    }
-
-    titleLabel: @{
-        font: $font-large;
-        textColor: $color-text-foreground-dark;
-    }
-
-    linkFont: $font-large;
-    subtitleFont: $font-large-thin;
-    subtitleColor: $color-text-foreground-dark;
-}
-
-/* User client details screen */
-
-ProfileClientViewController {
-    view: @{
-        backgroundColor: $color-background;
-    }
-
-    descriptionTextFont: $font-normal-light;
-    
-    descriptionTextView: @{
-        textColor: $color-text-foreground;
-        backgroundColor: $color-text-background;
-    }
-    
-    showMyDeviceButton: @{
-        titleColor[state:normal]: $color-accent-current;
-        titleLabel: @{
-            font: $font-small-light;
-        }
-    }
-    
-    separatorLineView: @{
-        backgroundColor: $color-separator;
-    }
-    
-    typeLabel: @{
-        font: $font-small-semibold;
-        textColor: $color-text-foreground;
-    }
-    
-    IDLabel: @{
-        textColor: $color-text-foreground;
-    }
-    
-    fullIDLabel: @{
-        textColor: $color-text-foreground;
-    }
-    
-    verifiedToggle: @{
-        onTintColor: $color-endtoend;
-    }
-    
-    verifiedToggleLabel: @{
-        font: $font-small-light;
-        textColor: $color-text-foreground;
-    }
-    
-    resetButton: @{
-        titleColor[state:normal]: $color-accent-current;
-        titleLabel: @{
-            font: $font-small-light;
-        }
-    }
-    
-    deleteDeviceButton: @{
-        titleColor[state:normal]: $color-accent-current;
-        titleLabel: @{
-            font: $font-small-light;
-        }
-    }
-    
-    
-    fingerprintSmallFont: $font-small-light;
-    fingerprintSmallBoldFont: $font-small-semibold;
-    
-    fingerprintFont: $font-normal;
-    fingerprintBoldFont: $font-normal-semibold;
-}
-
-ConversationTitleView {
-    titleColor: $color-text-foreground;
-    titleColorSelected: $color-text-dimmed;
-    titleFont: $font-medium-semibold;
-}
-
-PlaceholderConversationViewController {
-    view: @{
-        backgroundColor: white;
-    }
-}
-
-ConversationRootViewController {
-    UINavigationBar {
-        barTintColor: $color-bar-background;
-        tintColor: $color-text-foreground;
-    }
-}
-
-ConversationListAccessoryView {
-    textLabel: @{
-        font: $font-medium-semibold;
-    }
-}
-
-ConversationListBottomBarController {
-    view: @{
-        backgroundColor: clear;
-    }
-    
-    startUIButton: @{
-        iconColor: $color-text-foreground-dark;
-    }
-
-    composeButton: @{
-        iconColor: $color-text-foreground-dark;
-    }
-
-    cameraButton: @{
-        iconColor: $color-text-foreground-dark;
-    }
-    
-    archivedButton: @{
-        iconColor: $color-text-foreground-dark;
-    }
-    
-    separator: @{
-        backgroundColor: $color-separator-light;
-    }
-}
-
 /* ConversationListAvatar */
 
 ConversationAvatarView UserImageView {
@@ -562,58 +78,6 @@ ConversationAvatarView UserImageView {
         font: $font-medium-semibold;
         textColor: $color-list-avatar-initials;
     }
-}
-
-
-/* Audio Recording */
-
-AudioButtonOverlay {
-    grayColor: $color-audio-button-overlay;
-    greenColor: $color-accent-green;
-    iconColor: $color-text-foreground;
-    iconColorHighlighted: $color-text-background;
-    superviewColor: $color-background;
-}
-
-AudioRecordViewController {
-    
-    bottomContainerView: @{
-        backgroundColor: $color-background;
-    }
-    
-    topContainerView: @{
-        backgroundColor: $color-background;
-    }
-    
-    topSeparator: @{
-        backgroundColor: $color-separator;
-    }
-    
-    rightSeparator: @{
-        backgroundColor: $color-separator;
-    }
-        
-    topTooltipLabel: @{
-        font: $font-small;
-        textColor: $color-text-dimmed;
-    }
-    
-    timeLabel: @{
-        font: $font-small;
-        textColor: $color-text-foreground;
-    }
-    
-    cancelButton: @{
-        iconColor: $color-text-foreground;
-    }
-}
-
-RecordingDotView {
-    backgroundColor: $color-accent-red;
-}
-
-AudioRecordViewController WaveFormView {
-    gradientColor: $color-background;
 }
 
 /* Archive */
@@ -816,16 +280,6 @@ VideoMessageView {
     }
 }
 
-ImageMessageCell {
-    imageViewContainer: @{
-        backgroundColor: $color-placeholder-background;
-    }
-    
-    fullImageView: @{
-        backgroundColor: $color-background;
-    }
-}
-
 AudioMessageView {
     backgroundColor: $color-placeholder-background;
 
@@ -848,7 +302,7 @@ AudioMessageView {
     }
 }
 
-LocationMessageCell {
+LocationMessageCell, LocationPreviewController {
     labelTextColor: $color-text-foreground;
     labelFont: $font-normal;
     containerColor: $color-placeholder-background;
@@ -893,11 +347,11 @@ InputBar: {
     writingSeparatorColor: $color-separator;
     ephemeralColor: $color-accent-current;
     placeholderColor: $color-text-placeholder;
+    textColor: $color-text-foreground;
 
     textView: @{
         font: $font-normal-light;
         placeholderFont: $font-small-semibold;
-        textColor: $color-text-foreground;
         backgroundColor: clear;
     }
 }
@@ -1090,63 +544,6 @@ UILabel.normal-light {
     textColor: white;
 }
 
-/* ActionSheetController */
-
-ActionSheetListView UIButton {
-    titleLabel: @{
-        font: $font-small-semibold;
-    }
-}
-
-ActionSheetAlertView {
-    titleLabel: @{
-        font: $font-normal-semibold;
-    }
-    
-    messageLabel: @{
-        font: $font-normal-light;
-    }
-}
-
-ActionSheetContainerView.light {
-    UILabel {
-        textColor: $color-text-foreground-light;
-    }
-    
-    ActionSheetListView UIView.separator-strong {
-        backgroundColor: black;
-    }
-    
-    ActionSheetListView UIView.separator {
-        backgroundColor: $color-separator-light;
-    }
-    
-    ActionSheetListView UIButton {
-        titleColor[state:normal]: $color-text-foreground-light;
-        titleColor[state:highlighted]: $color-text-dimmed-light;
-    }
-}
-
-ActionSheetContainerView.dark {
-    UILabel {
-        textColor: $color-text-foreground-dark;
-    }
-    
-    ActionSheetListView UIView.separator-strong {
-        backgroundColor: white;
-    }
-    
-    ActionSheetListView UIView.separator {
-        backgroundColor: $color-separator-dark;
-    }
-    
-    ActionSheetListView UIButton {
-        titleColor[state:normal]: $color-text-foreground-dark;
-        titleColor[state:highlighted]: $color-text-dimmed-dark;
-    }
-}
-
-
 /* Contacts */
 
 ContactsCell {
@@ -1307,7 +704,7 @@ ProfileDetailsViewController {
     
     remainingTimeLabel: @{
         textColor: $color-text-dimmed;
-        font: $font-normal-semibold;
+        font: $font-medium-semibold;
     }
 }
 
@@ -1319,7 +716,7 @@ ProfileDevicesViewController {
     }
     
     view: @{
-        backgroundColor: $color-background;
+        backgroundColor: $color-content-background;
     }
 
 }
@@ -1478,16 +875,6 @@ ClientTableViewCell {
 }
 
 /* Registration */
-
-NoHistoryViewController {
-    subtitleLabel: @{
-        textColor: $color-text-foreground-dark;
-    }
-    
-    heroLabel: @{
-        textColor: $color-text-foreground-dark;
-    }
-}
 
 UIView.status-bar-overlay {
     backgroundColor: $color-background;

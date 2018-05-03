@@ -16,11 +16,9 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 // 
 
+#import "BrowserBarView.h"
 
 @import PureLayout;
-#import <Classy/Classy.h>
-
-#import "BrowserBarView.h"
 @import WireExtensionComponents;
 
 @interface BrowserBarView ()
@@ -36,6 +34,8 @@
 {
     self = [super init];
     if (self) {
+        self.backgroundColor = [UIColor wr_colorFromColorScheme:ColorSchemeColorBackground];
+        
         self.shareButton = [IconButton iconButtonCircular];
         self.shareButton.translatesAutoresizingMaskIntoConstraints = NO;
         [self.shareButton setIcon:ZetaIconTypeExport withSize:ZetaIconSizeTiny forState:UIControlStateNormal];
@@ -48,11 +48,14 @@
 
         self.titleLabel = [[UILabel alloc] initForAutoLayout];
         self.titleLabel.lineBreakMode = NSLineBreakByTruncatingTail;
+        self.titleLabel.font = UIFont.smallRegularFont;
+        self.titleLabel.textAlignment = NSTextAlignmentCenter;
+        self.titleLabel.textColor = [UIColor wr_colorFromColorScheme:ColorSchemeColorTextForeground];
         [self addSubview:self.titleLabel];
 
         self.progressLayer = [[CAShapeLayer alloc] init];
         self.progressLayer.frame = [self progressLayerFrame];
-        self.progressLayer.strokeColor = [UIColor redColor].CGColor;
+        self.progressLayer.strokeColor = [UIColor accentColor].CGColor;
         self.progressLayer.strokeEnd = 0;
         self.progressLayer.lineWidth = 2;
         [self.layer addSublayer:self.progressLayer];

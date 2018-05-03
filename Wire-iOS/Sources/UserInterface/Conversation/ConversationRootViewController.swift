@@ -19,83 +19,101 @@
 import Foundation
 import Cartography
 
-
 // This class wraps the conversation content view controller in order to display the navigation bar on the top
 @objc open class ConversationRootViewController: UIViewController {
-    
-    fileprivate(set) var customNavBar : UINavigationBarContainer?
+
+    let navBarContainer: UINavigationBarContainer
     fileprivate var contentView = UIView()
-    
+    var navHeight: NSLayoutConstraint?
+    var networkStatusBarHeight: NSLayoutConstraint?
+
+    /// for NetworkStatusViewDelegate
+    var shouldAnimateNetworkStatusView = false
+
+    fileprivate let networkStatusViewController: NetworkStatusViewController
+
     open fileprivate(set) weak var conversationViewController: ConversationViewController?
-    
+
     public init(conversation: ZMConversation, clientViewController: ZClientViewController) {
         let conversationController = ConversationViewController()
         conversationController.conversation = conversation
         conversationController.zClientViewController = clientViewController
-        
-        super.init(nibName: .none, bundle: .none)
-        
-        self.addChildViewController(conversationController)
-        self.contentView.addSubview(conversationController.view)
-        conversationController.didMove(toParentViewController: self)
-        
-        conversationViewController = conversationController
-        configure()
-    }
-    
-    public required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    open func configure() {
-        guard let conversationViewController = self.conversationViewController else {
-            return
-        }
-        
-        self.view.backgroundColor = ColorScheme.default().color(withName: ColorSchemeColorBarBackground)
-        
+
+        networkStatusViewController = NetworkStatusViewController()
+
         let navbar = UINavigationBar()
         navbar.isTranslucent = false
         navbar.isOpaque = true
         navbar.setBackgroundImage(UIImage(), for: .any, barMetrics: .default)
         navbar.shadowImage = UIImage()
-        navbar.translatesAutoresizingMaskIntoConstraints = false
-        navbar.barTintColor = ColorScheme.default().color(withName: ColorSchemeColorBarBackground)
-        
-        self.customNavBar = UINavigationBarContainer(navbar)
-        
-        self.view.addSubview(self.customNavBar!)
+        navbar.barTintColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorBarBackground)
+        navbar.tintColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorTextForeground)
+
+        navBarContainer = UINavigationBarContainer(navbar)
+
+        super.init(nibName: .none, bundle: .none)
+
+        networkStatusViewController.delegate = self
+
+        self.addChildViewController(conversationController)
+        self.contentView.addSubview(conversationController.view)
+        conversationController.didMove(toParentViewController: self)
+
+        conversationViewController = conversationController
+
+        configure()
+    }
+
+    public required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    open func configure() {
+        guard let conversationViewController = self.conversationViewController else {
+            return
+        }
+
+        self.view.backgroundColor = ColorScheme.default().color(withName: ColorSchemeColorBarBackground)
+
+        self.addToSelf(navBarContainer)
         self.view.addSubview(self.contentView)
-        
-        constrain(self.customNavBar!, self.view, self.contentView, conversationViewController.view) { customNavBar, view, contentView, conversationViewControllerView in
-            
-            customNavBar.top == view.top
-            customNavBar.left == view.left
-            customNavBar.right == view.right
-            
+        self.addToSelf(networkStatusViewController)
+
+        networkStatusViewController.createConstraintsInContainer(bottomView: navBarContainer.view,
+                                                                 containerView: self.view, 
+                                                                 topMargin: UIScreen.safeArea.top)
+
+        constrain(navBarContainer.view, view, contentView, conversationViewController.view) {
+            navBarContainer, view, contentView, conversationViewControllerView in
+
+            navBarContainer.left == view.left
+            navBarContainer.right == view.right
+
             contentView.left == view.left
             contentView.right == view.right
             contentView.bottom == view.bottom - UIScreen.safeArea.bottom
-            contentView.top == customNavBar.bottom
-            
+            contentView.top == navBarContainer.bottom
+
             conversationViewControllerView.edges == contentView.edges
         }
-        
-        self.customNavBar!.navigationBar.pushItem(conversationViewController.navigationItem, animated: false)
+
+        navBarContainer.navigationBar.pushItem(conversationViewController.navigationItem, animated: false)
     }
-    
+
     override open func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         delay(0.4) {
             UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(true)
         }
+
+        shouldAnimateNetworkStatusView = true
     }
-    
-    open override var prefersStatusBarHidden : Bool {
+
+    open override var prefersStatusBarHidden: Bool {
         return false
     }
-    
-    open override var preferredStatusBarStyle : UIStatusBarStyle {
+
+    open override var preferredStatusBarStyle: UIStatusBarStyle {
         switch ColorScheme.default().variant {
         case .light:
             return .default
@@ -104,3 +122,16 @@ import Cartography
         }
     }
 }
+
+
+extension ConversationRootViewController: NetworkStatusBarDelegate {
+    var bottomMargin: CGFloat {
+        return 0
+    }
+
+    func showInIPad(networkStatusViewController: NetworkStatusViewController, with orientation: UIInterfaceOrientation) -> Bool {
+        // always show on iPad for any orientation in regular mode
+        return true
+    }
+}
+

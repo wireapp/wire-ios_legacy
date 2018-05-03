@@ -78,8 +78,18 @@ final class LandingViewController: UIViewController {
         label.text = "landing.title".localized
         label.font = LandingViewController.regularFont
         label.textColor = UIColor.Team.subtitleColor
-
+        label.setContentCompressionResistancePriority(UILayoutPriorityRequired, for: .horizontal)
         return label
+    }()
+
+    let headlineStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.distribution = .fillProportionally
+        stackView.alignment = .center
+        stackView.spacing = 16
+        stackView.axis = .vertical
+
+        return stackView
     }()
 
     let buttonStackView: UIStackView = {
@@ -92,10 +102,7 @@ final class LandingViewController: UIViewController {
     }()
 
     let createAccountButton: LandingButton = {
-        let title = "landing.create_account.title".localized && LandingViewController.buttonTitleAttribute
-        let subtitle = ("\n" + "landing.create_account.subtitle".localized) && LandingViewController.buttonSubtitleAttribute
-
-        let button = LandingButton(title: title + subtitle, icon: .selfProfile, iconBackgroundColor: UIColor.Team.createAccountBlue)
+        let button = LandingButton(title: createAccountButtonTitle, icon: .selfProfile, iconBackgroundColor: UIColor.Team.createAccountBlue)
         button.accessibilityIdentifier = "CreateAccountButton"
         button.addTarget(self, action: #selector(LandingViewController.createAccountButtonTapped(_:)), for: .touchUpInside)
 
@@ -103,10 +110,7 @@ final class LandingViewController: UIViewController {
     }()
 
     let createTeamButton: LandingButton = {
-        let title = "landing.create_team.title".localized && LandingViewController.buttonTitleAttribute
-        let subtitle = ("\n" + "landing.create_team.subtitle".localized) && LandingViewController.buttonSubtitleAttribute
-
-        let button = LandingButton(title: title + subtitle, icon: .team, iconBackgroundColor: UIColor.Team.createTeamGreen)
+        let button = LandingButton(title: createTeamButtonTitle, icon: .team, iconBackgroundColor: UIColor.Team.createTeamGreen)
         button.accessibilityIdentifier = "CreateTeamButton"
         button.addTarget(self, action: #selector(LandingViewController.createTeamButtonTapped(_:)), for: .touchUpInside)
 
@@ -135,15 +139,12 @@ final class LandingViewController: UIViewController {
 
         return button
     }()
-    
-    let cancelButton: IconButton = {
-        let button = IconButton()
-        button.setIcon(.cancel, with: .small, for: .normal)
-        button.tintColor = .black
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.accessibilityIdentifier = "CancelButton"
-        button.addTarget(self, action: #selector(LandingViewController.cancelButtonTapped(_:)), for: .touchUpInside)
-        return button
+
+    let navigationBar: UINavigationBar = {
+        let bar = UINavigationBar()
+        bar.shadowImage = UIImage()
+        bar.setBackgroundImage(UIImage(), for: .default)
+        return bar
     }()
 
     /// init method for injecting mock device
@@ -164,27 +165,30 @@ final class LandingViewController: UIViewController {
 
         tracker?.tagOpenedLandingScreen()
 
-        self.view.backgroundColor = UIColor.Team.background
-
         [headerContainerView, buttonStackView, loginHintsLabel, loginButton].forEach(view.addSubview)
-
-        [logoView, headline, cancelButton].forEach(headerContainerView.addSubview)
+        [logoView, headline].forEach(headlineStackView.addArrangedSubview)
+        headerContainerView.addSubview(headlineStackView)
         
         [createAccountButton, createTeamButton].forEach() { button in
             buttonStackView.addArrangedSubview(button)
         }
 
+        self.view.backgroundColor = UIColor.Team.background
+        navigationBar.pushItem(navigationItem, animated: false)
+        navigationBar.tintColor = .black
+        view.addSubview(navigationBar)
+
         self.createConstraints()
+        self.configureAccessibilityElements()
 
         updateStackViewAxis()
         updateConstraintsForIPad()
-        
-        cancelButton.isHidden = SessionManager.shared?.firstAuthenticatedAccount == nil
-        
+        updateBarButtonItem()
+
         NotificationCenter.default.addObserver(
             forName: AccountManagerDidUpdateAccountsNotificationName,
             object: SessionManager.shared?.accountManager,
-            queue: nil) { _ in self.cancelButton.isHidden = SessionManager.shared?.firstAuthenticatedAccount == nil }
+            queue: nil) { _ in self.updateBarButtonItem()  }
     }
 
     public override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
@@ -196,26 +200,29 @@ final class LandingViewController: UIViewController {
 
     private func createConstraints() {
 
-        constrain(logoView, headline, cancelButton, headerContainerView) { logoView, headline, cancelButton, headerContainerView in
+        let safeArea = view.safeAreaLayoutGuideOrFallback
+        navigationBar.topAnchor.constraint(equalTo: safeArea.topAnchor).isActive = true
+
+        constrain(view, navigationBar) { selfView, navigationBar in
+            navigationBar.left == selfView.left
+            navigationBar.right == selfView.right
+        }
+
+        constrain(headlineStackView, logoView, headline, headerContainerView) {
+            headlineStackView, logoView, headline, headerContainerView in
+
             ///reserver space for status bar(20pt)
-            logoView.top >= headerContainerView.top + 36
-            logoAlignTop = logoView.top == headerContainerView.top + 72 ~ 500.0
-            logoView.centerX == headerContainerView.centerX
+            headlineStackView.top >= headerContainerView.top + 36
+            logoAlignTop = headlineStackView.top == headerContainerView.top + 72 ~ 500.0
+            headlineStackView.centerX == headerContainerView.centerX
             logoView.width == 96
             logoView.height == 31
 
-            headline.top == logoView.bottom + 16
-            headline.centerX == headerContainerView.centerX
             headline.height >= 18
-            headline.bottom <= headerContainerView.bottom - 16
-            
-            cancelButton.top == headerContainerView.top + (16 + 20)
-            cancelButton.trailing == headerContainerView.trailing - 16
-            cancelButton.width == UIImage.size(for: .tiny)
-            cancelButton.height == cancelButton.width
+            headlineStackView.bottom <= headerContainerView.bottom - 16
 
             if UIDevice.current.userInterfaceIdiom == .pad {
-                headlineAlignBottom = headline.bottom == headerContainerView.bottom - 80
+                headlineAlignBottom = headlineStackView.bottom == headerContainerView.bottom - 80
             }
         }
 
@@ -244,6 +251,8 @@ final class LandingViewController: UIViewController {
 
             loginButton.top == loginHintsLabel.bottom + 4
             loginButton.centerX == selfView.centerX
+            loginButton.height >= 44
+            loginButton.width >= 44
             loginButtonAlignBottom = loginButton.bottom == selfView.bottomMargin - 32 ~ 500.0
         }
 
@@ -282,6 +291,56 @@ final class LandingViewController: UIViewController {
         }
     }
 
+    private func updateBarButtonItem() {
+
+        if SessionManager.shared?.firstAuthenticatedAccount == nil {
+            navigationBar.topItem?.rightBarButtonItem = nil
+        } else {
+            let cancelItem = UIBarButtonItem(icon: .cancel, target: self, action: #selector(cancelButtonTapped))
+            cancelItem.accessibilityIdentifier = "CancelButton"
+            cancelItem.accessibilityLabel = "general.cancel".localized
+            navigationBar.topItem?.rightBarButtonItem = cancelItem
+        }
+
+    }
+
+    // MARK: - Accessibility
+
+    private func configureAccessibilityElements() {
+        logoView.isAccessibilityElement = false
+        headline.isAccessibilityElement = false
+
+        headlineStackView.isAccessibilityElement = true
+        headlineStackView.accessibilityLabel = "landing.app_name".localized + "\n" + "landing.title".localized
+        headlineStackView.accessibilityTraits = UIAccessibilityTraitHeader
+        headlineStackView.shouldGroupAccessibilityChildren = true
+
+        headerContainerView.accessibilityElements = [headlineStackView]
+    }
+
+    private static let createAccountButtonTitle: NSAttributedString = {
+        let title = "landing.create_account.title".localized && LandingViewController.buttonTitleAttribute
+        let subtitle = ("\n" + "landing.create_account.subtitle".localized) && LandingViewController.buttonSubtitleAttribute
+
+        return title + subtitle
+    }()
+
+    private static let createTeamButtonTitle: NSAttributedString = {
+        let title = "landing.create_team.title".localized && LandingViewController.buttonTitleAttribute
+        let subtitle = ("\n" + "landing.create_team.subtitle".localized) && LandingViewController.buttonSubtitleAttribute
+
+        return title + subtitle
+    }()
+
+    override func accessibilityPerformEscape() -> Bool {
+        guard SessionManager.shared?.firstAuthenticatedAccount != nil else {
+            return false
+        }
+
+        cancelButtonTapped()
+        return true
+    }
+
     // MARK: - Button tapped target
 
     @objc public func createAccountButtonTapped(_ sender: AnyObject!) {
@@ -299,7 +358,7 @@ final class LandingViewController: UIViewController {
         delegate?.landingViewControllerDidChooseLogin()
     }
     
-    @objc public func cancelButtonTapped(_ sender: AnyObject!) {
+    @objc public func cancelButtonTapped() {
         guard let account = SessionManager.shared?.firstAuthenticatedAccount else { return }
         SessionManager.shared!.select(account)
     }

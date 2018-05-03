@@ -19,7 +19,18 @@
 
 import UIKit
 
-@objc open class RecordingDotView: UIView {
+@objc final class RecordingDotView: UIView {
+    
+    public init() {
+        super.init(frame: CGRect.zero)
+        
+        backgroundColor = ZMAccentColor.vividRed.color
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     open override func layoutSubviews() {
         super.layoutSubviews()
         self.layer.cornerRadius = self.bounds.width / 2

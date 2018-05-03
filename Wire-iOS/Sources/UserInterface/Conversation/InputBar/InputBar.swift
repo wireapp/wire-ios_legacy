@@ -74,8 +74,6 @@ public func ==(lhs: InputBarState, rhs: InputBarState) -> Bool {
 
 private struct InputBarConstants {
     let buttonsBarHeight: CGFloat = 56
-    let contentLeftMargin = WAZUIMagic.cgFloat(forIdentifier: "content.left_margin")
-    let contentRightMargin = WAZUIMagic.cgFloat(forIdentifier: "content.right_margin")
 }
 
 @objc public final class InputBar: UIView {
@@ -103,6 +101,7 @@ private struct InputBarConstants {
     public var writingSeparatorColor: UIColor?
     public var ephemeralColor: UIColor?
     public var placeholderColor: UIColor?
+    public var textColor: UIColor?
 
     fileprivate var rowTopInsetConstraint: NSLayoutConstraint? = nil
     
@@ -213,7 +212,7 @@ private struct InputBarConstants {
             leftAccessoryView.leading == leftAccessoryView.superview!.leading
             leftAccessoryView.top == leftAccessoryView.superview!.top
             leftAccessoryView.bottom == buttonContainer.top
-            leftAccessoryView.width == constants.contentLeftMargin
+            leftAccessoryView.width == UIView.conversationLayoutMargins.left
 
             rightAccessoryView.trailing == rightAccessoryView.superview!.trailing
             rightAccessoryView.top == rightAccessoryView.superview!.top
@@ -385,12 +384,14 @@ private struct InputBarConstants {
     }
     
     fileprivate func updateColors() {
+
         backgroundColor = backgroundColor(forInputBarState: inputBarState)
         buttonRowSeparator.backgroundColor = writingSeparatorColor
         textView.placeholderTextColor = self.inputBarState.isEphemeral && self.availabilityPlaceholder == nil ? ephemeralColor : placeholderColor
         fakeCursor.backgroundColor = .accent()
         textView.tintColor = .accent()
-        
+        textView.updateTextColor(base: textColor)
+
         var buttons = self.buttonsView.buttons
         
         buttons.append(self.buttonsView.expandRowButton)

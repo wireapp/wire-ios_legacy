@@ -41,7 +41,7 @@ open class AssetCell: UICollectionViewCell, Reusable {
         self.durationView.textAlignment = .center
         self.durationView.backgroundColor = UIColor(white: 0, alpha: 0.5)
         self.durationView.textColor = UIColor.white
-        self.durationView.font = UIFont(magicIdentifier: "style.text.small.font_spec_light")
+        self.durationView.font = FontSpec(.small, .light).font!
         self.contentView.addSubview(self.durationView)
         
         constrain(self.contentView, self.imageView, self.durationView) { contentView, imageView, durationView in

@@ -26,7 +26,7 @@
 "share_extension.send_button.title" = "發送";
 "share_extension.conversation_selection.empty.value" = "選擇";
 "share_extension.input.placeholder" = "請輸入訊息";
-"share_extension.sending_progress.title" = "正在發送...";
+"share_extension.sending_progress.title" = "傳送中...";
 "share_extension.preparing.title" = "準備中...";
 "share_extension.no_internet_connection.title" = "沒有網路連線";
 "share_extension.not_signed_in.title" = "您在登錄Wire後才可以使用分享功能";
@@ -34,12 +34,12 @@
 "share_extension.timeout.title" = "連線逾時。";
 "share_extension.timeout.message" = "請檢查您的互聯網連接並重試。附件會保存在對話中。";
 "share_extension.privacy_security.lock_app.description" = "解鎖Wire";
-"share_extension.logged_out.title" = "You've been logged out from this account.";
-"share_extension.logged_out.message" = "Please choose another account.";
+"share_extension.logged_out.title" = "您已登出此帳戶。";
+"share_extension.logged_out.message" = "請選擇另一帳戶";
 
 "conversation.displayname.emptygroup" = "空聊天室";
 "meta.degraded.degradation_reason_message.singular" = "%@開始使用新設備。";
 "meta.degraded.degradation_reason_message.plural" = "%@開始使用新設備。";
 "meta.degraded.dialog_message" = "您仍然要發送您的訊息嗎？";
-"meta.degraded.cancel_sending_button" = "不要傳送";
+"meta.degraded.cancel_sending_button" = "不傳送";
 "meta.degraded.send_anyway_button" = "確定發送";

@@ -18,70 +18,97 @@
 
 @objc final class ConversationActionController: NSObject {
     
+    struct PresentationContext {
+        let view: UIView
+        let rect: CGRect
+    }
+    
     private let conversation: ZMConversation
     unowned let target: UIViewController
+    private var currentContext: PresentationContext?
     
     @objc init(conversation: ZMConversation, target: UIViewController) {
-        // Does not support blocking yet (1-on-1)
-        requireInternal(conversation.conversationType == .group, "currently only allowed for group conversations")
         self.conversation = conversation
         self.target = target
         super.init()
     }
     
-    func presentMenu() {
+    @objc(presentMenuFromSourceView:)
+    func presentMenu(from sourceView: UIView?) {
+        currentContext = sourceView.map {
+            .init(
+                view: target.view,
+                rect: target.view.convert($0.frame, from: $0.superview).insetBy(dx: 8, dy: 8)
+            )
+        }
+        
         let controller = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         conversation.actions.map(alertAction).forEach(controller.addAction)
         controller.addAction(.cancel())
-        target.present(controller, animated: true)
+        present(controller)
     }
     
-    private func dismiss(_ block: @escaping () -> Void) {
-        target.dismiss(animated: true, completion: block)
+    func enqueue(_ block: @escaping () -> Void) {
+        ZMUserSession.shared()?.enqueueChanges(block)
     }
     
-    private func dismissAndEnqueue(_ block: @escaping () -> Void) {
-        target.dismiss(animated: true) {
+    func transitionToListAndEnqueue(_ block: @escaping () -> Void) {
+        ZClientViewController.shared()?.transitionToList(animated: true) {
             ZMUserSession.shared()?.enqueueChanges(block)
         }
     }
     
-    func transitionToListAndEnqueue(_ block: @escaping () -> Void) {
-        target.dismiss(animated: true) {
-            ZClientViewController.shared()?.transitionToList(animated: true) {
-                ZMUserSession.shared()?.enqueueChanges(block)
+    private func prepare(viewController: UIViewController, with context: PresentationContext) {
+        viewController.popoverPresentationController.apply {
+            $0.sourceView = context.view
+            $0.sourceRect = context.rect
+        }
+    }
+    
+    func present(_ controller: UIViewController) {
+        currentContext.apply {
+            prepare(viewController: controller, with: $0)
+        }
+        target.present(controller, animated: true, completion: nil)
+    }
+
+    func handleAction(_ action: ZMConversation.Action) {
+        switch action {
+        case .archive(isArchived: let isArchived): self.transitionToListAndEnqueue {
+            self.conversation.isArchived = !isArchived
+            Analytics.shared().tagArchivedConversation(!isArchived)
             }
+        case .markRead: self.enqueue {
+            self.conversation.markAsRead()
+            }
+        case .markUnread: self.enqueue {
+            self.conversation.markAsUnread()
+            }
+        case .silence(isSilenced: let isSilenced): self.enqueue {
+            self.conversation.isSilenced = !isSilenced
+            }
+        case .leave: self.request(LeaveResult.self) { result in
+            self.handleLeaveResult(result, for: self.conversation)
+            }
+        case .delete: self.requestDeleteResult(for: self.conversation) { result in
+            self.handleDeleteResult(result, for: self.conversation)
+            }
+        case .cancelRequest:
+            guard let user = self.conversation.connectedUser else { return }
+            self.requestCancelConnectionRequestResult(for: user) { result in
+                self.handleConnectionRequestResult(result, for: self.conversation)
+            }
+        case .block: self.requestBlockResult(for: self.conversation) { result in
+            self.handleBlockResult(result, for: self.conversation)
+            }
+        case .remove: fatalError()
         }
     }
     
     private func alertAction(for action: ZMConversation.Action) -> UIAlertAction {
-        switch action {
-        case .archive(isArchived: let isArchived): return action.alertAction { [weak self] in
+        return action.alertAction { [weak self] in
             guard let `self` = self else { return }
-            self.transitionToListAndEnqueue {
-                self.conversation.isArchived = !isArchived
-                Analytics.shared().tagArchivedConversation(!isArchived)
-            }
-        }
-        case .silence(isSilenced: let isSilenced): return action.alertAction { [weak self] in
-            guard let `self` = self else { return }
-            self.dismissAndEnqueue {
-                self.conversation.isSilenced = !isSilenced
-            }
-        }
-        case .leave: return action.alertAction { [weak self] in
-            guard let `self` = self else { return }
-            self.request(LeaveResult.self) { result in
-                self.handleLeaveResult(result, for: self.conversation)
-            }
-        }
-        case .delete: return action.alertAction { [weak self] in
-            guard let `self` = self else { return }
-            self.request(DeleteResult.self) { result in
-                self.handleDeleteResult(result, for: self.conversation)
-            }
-        }
-        default: fatalError() // Does not support blocking yet (1-on-1)
+            self.handleAction(action)
         }
     }
     

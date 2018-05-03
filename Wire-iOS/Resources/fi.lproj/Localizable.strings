@@ -15,12 +15,22 @@
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
+// General strings
 
 
 "general.ok" = "OK";
-"general.next" = "Next";
+"general.next" = "Seuraava";
 "general.cancel" = "Peruuta";
+"general.close" = "Sulje";
+"general.back" = "Back";
 "general.open_settings" = "Avaa Wiren Asetukset";
+"general.edit" = "Muokkaa";
+"general.done" = "Valmis";
+"general.confirm" = "OK";
+// Language like Chinese does not use space to sperate words or sentences.
+"general.space_between_words" = " ";
+
+"general.guest-room-name" = "Guest room";
 
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -39,11 +49,11 @@
 "peoplepicker.group.title.singular" = "Lisää ihmisiä";
 "peoplepicker.group.title.plural" = "Add People (%d)";
 "peoplepicker.group.skip" = "Skip";
-"peoplepicker.group.done" = "Done";
-"peoplepicker.group.create" = "Create";
+"peoplepicker.group.done" = "Valmis";
+"peoplepicker.group.create" = "Luo";
 
-"peoplepicker.header.people" = "People";
-"peoplepicker.header.services" = "Services";
+"peoplepicker.header.people" = "Ihmiset";
+"peoplepicker.header.services" = "Palvelut";
 "peoplepicker.services.create_conversation.item" = "Create a new conversation";
 "peoplepicker.services.add_service.button" = "Add service";
 "peoplepicker.services.add_service.error.title" = "The service can't be added";
@@ -78,6 +88,7 @@
 "peoplepicker.invite_team_members" = "Invite people to join the team";
 "peoplepicker.quick-action.open-conversation" = "Avaa";
 "peoplepicker.quick-action.create-conversation" = "Luo ryhmä";
+"peoplepicker.quick-action.create-guest-room" = "Create guest room";
 
 "add_participants.all_contacts_added" = "Kaikki ovat täällä.";
 
@@ -93,7 +104,7 @@
 "contacts_ui.notification.invitation_failed" = "Kutsun lähettäminen epäonnistui";
 "contacts_ui.title" = "Kutsu ihmisiä";
 
-"conversation_list.empty.all_archived.message" = "Everything archived";
+"conversation_list.empty.all_archived.message" = "Kaikki arkistoitu";
 "conversation_list.empty.no_contacts.message" = "Start a conversation or\ncreate a group.";
 
 
@@ -233,10 +244,11 @@
 "conversation.input_bar.shortcut.edit_last_message" = "Edit Last Message";
 "conversation.input_bar.shortcut.cancel_editing_message" = "Peruuta";
 
-"conversation.input_bar.message_too_long.title" = "Message too long";
+"conversation.input_bar.message_too_long.title" = "Viesti on liian pitkä";
 "conversation.input_bar.message_too_long.message" = "You can send messages up to %d characters long.";
 
-"conversation.create.group_name.placeholder" = "Group name";
+"conversation.create.group_name.title" = "Luo ryhmä";
+"conversation.create.group_name.placeholder" = "Ryhmän nimi";
 "conversation.create.guidance.empty" = "At least 1 character";
 "conversation.create.guidance.toolong" = "Liian monta merkkiä";
 "conversation.create.toggle.title" = "Allow guests";
@@ -314,6 +326,9 @@
 "content.system.conversation.team.member-leave" = "%@ poistettiin tiimistä.";
 "content.system.conversation.guest.joined" = "%@ joined";
 
+"content.system.conversation.invite.title" = "People outside your team can join this conversation.";
+"content.system.conversation.invite.button" = "Kutsu ihmisiä";
+
 "content.system.other_renamed_conv_to_nothing" = "%@ poisti keskustelun nimen";
 "content.system.you_renamed_conv_to_nothing" = "Sinä poistit keskustelun nimen";
 "content.system.pending_message_timestamp" = "Lähetetään…";
@@ -343,6 +358,7 @@
 "content.system.renamed_conv.title.you" = "Sinä";
 
 "content.system.conversation.with_name.title" = "%@ started the conversation";
+"content.system.conversation.with_name.title-you" = "%@ started the conversation";
 
 "content.system.conversation.with_name.participants" = "with %@";
 
@@ -375,7 +391,6 @@
 // Full sentence: "A message from %@ was not received. [...] (device d1b23c54f34a). This is a debug information.
 
 "content.system.unknown_message.body" = "Käytät vanhempaa Wire versiota, joka ei voi näyttää tätä viestiä.";
-"content.system.unknown_message.body.link" = "Miksi näin tapahtuu?";
 
 "content.file.uploading" = "Lähetetään…";
 "content.file.downloading" = "Ladataan…";
@@ -397,12 +412,18 @@
 "content.message.go_to_conversation" = "Näytä";
 "content.message.forward.to" = "Etsi…";
 "content.message.open" = "Avaa";
+"content.message.copy" = "Copy";
+
+"content.message.open_link_alert.title" = "Visit Link";
+"content.message.open_link_alert.message" = "This will take you to\n%@";
+"content.message.open_link_alert.open" = "Avaa";
 
 "content.reactions_list.likers" = "Tykätty";
 
 "content.file.too_big" = "Voit lähettää maksimissaan %@ n kokoisia tiedostoja";
 // Someone pinged
-"content.ping.text" = "%1$@ pinggasi";
+"content.ping.text" = "%@ pinged";
+"content.ping.text-you" = "%@ pinged";
 
 // Current user pinged
 "content.ping.text.you" = "Sinä";
@@ -418,11 +439,17 @@
 "inbox.connection_request.connect_button_title" = "Yhdistä";
 "inbox.connection_request.ignore_button_title" = "Hylkää";
 
+// Save image errors
+"library.alert.permission_warning.title" = "Wire needs access to your Photos";
+"library.alert.permission_warning.restrictions.explaination" = "Wire cannot access your library because restrictions are enabled.";
+"library.alert.permission_warning.not_allowed.explaination" = "Go to Settings and allow Wire to access your photos.";
+
 // Voice
-"voice.status.one_to_one.incoming" = "%@\nSoittaa";
-"voice.status.group_call.incoming" = "%@\nHälyyttää";
-"voice.status.one_to_one.outgoing" = "%@\nHälyyttää";
+"voice.status.one_to_one.incoming" = "%@\ncalling";
+"voice.status.group_call.incoming" = "%@\nringing";
+"voice.status.one_to_one.outgoing" = "%@\nringing";
 "voice.status.joining" = "%@\nYhdistää";
+"voice.status.leaving" = "%@\nCall ended";
 "voice.status.video_not_available" = "Video pois päältä";
 "voice.status.low_connection" = "Huono yhteys";
 "voice.network_error.title" = "Ei internet-yhteyttä";
@@ -455,7 +482,7 @@
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Profile and Participants
 
-"participants.add_people_button_title" = "Add";
+"participants.add_people_button_title" = "Lisää";
 "participants.avatar.guest.title" = "Vieras";
 
 "participants.title" = "Lisätietoja";
@@ -465,14 +492,17 @@
 
 // Meta Menu
 "meta.menu.rename" = "Nimeä uudelleen";
-"meta.menu.leave" = "Poistu";
+"meta.menu.leave" = "Leave…";
 "meta.menu.archive" = "Arkistoi";
 "meta.menu.unarchive" = "Palauta arkistosta";
-"meta.menu.delete" = "Poista";
+"meta.menu.delete" = "Delete Content…";
 "meta.menu.silence.mute" = "Mykistä";
 "meta.menu.silence.unmute" = "Poista mykistys";
 "meta.menu.cancel" = "Peruuta";
 "meta.menu.cancel_connection_request" = "Peru pyyntö";
+"meta.menu.mark_unread" = "Mark as Unread";
+"meta.menu.mark_read" = "Mark as Read";
+"shortcut.mark_all_as_read.title" = "Mark All as Read";
 
 // Delete conversation
 "meta.menu.delete_content.dialog_title" = "Poista sisältö?";
@@ -532,7 +562,8 @@
 "profile.cancel_connection_request_dialog.button_yes" = "Kyllä";
 
 // Unblock button
-"profile.unblock_button_title" = "Poista esto";
+"profile.block_button_title" = "Block…";
+"profile.unblock_button_title" = "Unblock…";
 
 "profile.cancel_connection_button_title" = "PERUUTA PYYNTÖ";
 "profile.connection_request_state.blocked" = "ESTETTY";
@@ -550,7 +581,7 @@
 // Device list
 "profile.devices.title" = "Laitteet";
 "profile.devices.fingerprint_message_unencrypted" = "%@ käyttää vanhempaa versiota Wirestä. Laitteita ei näytetä täällä.";
-"profile.devices.fingerprint_message" = "Wire antaa jokaisella laiteelle yksilöllisen sormenjäljen. Vertaa niitä %@ n kanssa ja vahvista keskustelu. Miksi vahvistaa keskusteluja?";
+"profile.devices.fingerprint_message.title" = "Wire gives every device a unique fingerprint. Compare them with %@ and verify your conversation.";
 "profile.devices.fingerprint_message.link" = "Miksi vahvistaa keskusteluja?";
 
 // Device detail
@@ -563,9 +594,6 @@
 "device.class.tablet" = "Tabletti";
 "device.class.phone" = "Puhelinnumero";
 "profile.devices.detail.reset_session.title" = "Nollaa istunto";
-
-// General strings
-"general.confirm" = "OK";
 
 // Bot
 "participants.services.remove_integration.button" = "remove integration";
@@ -603,12 +631,9 @@
 "about.copyright.title" = "© Wire Swiss GmbH";
 
 // Self new devices
-"self.new_device_alert.title" = "Olet liittänyt %@ n Wire tiliisi";
-"self.new_device_alert.title_prefix.tablet" = "tabletti";
-"self.new_device_alert.title_prefix.phone" = "puhelin";
-"self.new_device_alert.title_prefix.devices" = "%d laitteet";
-"self.new_device_alert.message" = "%@\n\nJos et tehnyt tätä, poista laite ja vaihda salasanasi.";
-"self.new_device_alert.message_plural" = "%@\n\nJos et tehnyt tätä, poista laitteet ja vaihda salasanasi.";
+"self.new_device_alert.title" = "Your account was used on:";
+"self.new_device_alert.message" = "\n%@\n\nIf you don’t recognize the device above, remove it and reset your password.";
+"self.new_device_alert.message_plural" = "\n%@\n\nIf you don’t recognize the devices above, remove them and reset your password.";
 "self.new_device_alert.manage_devices" = "Hallitse laitteita";
 "self.new_device_alert.trust_devices" = "OK";
 
@@ -773,7 +798,11 @@
 "self.settings.privacy_contacts_menu.description_disabled.title" = "Tämä auttaa sinua löytämään tuttuja. Me anonymisoimme kaiken tiedon ja emme jaa sitä kenellekään muulle. Anna lupa Asetuksista > Yksityisyys > Yhteystiedot.";
 
 "self.settings.privacy_security.lock_app" = "Lukitse Salasanalla";
-"self.settings.privacy_security.lock_app.subtitle" = "Lukitse Wire 10 sekunnin jälkeen taustalla. Avaa Touch tunnuksella tai syötä salasanasi.";
+"self.settings.privacy_security.lock_app.subtitle.lock_description" = "Lock Wire after 10 seconds in the background.";
+"self.settings.privacy_security.lock_app.subtitle.touch_id" = "Unlock with Touch ID or enter your passcode.";
+"self.settings.privacy_security.lock_app.subtitle.face_id" = "Unlock with Face ID or enter your passcode.";
+"self.settings.privacy_security.lock_app.subtitle.none" = "Unlock by entering your passcode.";
+
 "self.settings.privacy_security.lock_app.description" = "Avata Wire";
 
 "self.settings.privacy_security.lock_cancelled.description" = "Avaa Wire Touch tunnuksella tai Salasanalla";
@@ -816,6 +845,25 @@
 // Invite from Settings
 "self.settings.invite_friends.title" = "Kutsu ihmisiä";
 
+// History backup
+
+"self.settings.conversations.title" = "History";
+"self.settings.history_backup.title" = "Back Up Conversations";
+"self.settings.history_backup.description" = "Create a backup to preserve your conversation history. You can use this to restore history if you lose your device or switch to a new one.\n\nThe backup file is not protected by Wire end-to-end encryption, so store it in a safe place.";
+"self.settings.history_backup.action" = "Back Up Now";
+"self.settings.history_backup.error.title" = "Error";
+
+"self.settings.history_backup.set_email.title" = "Set an email and password.";
+"self.settings.history_backup.set_email.message" = "You need an email and a password in order to back up your conversation history. You can do it from the account page in Settings.";
+
+// History backup password
+
+"self.settings.history_backup.password.title" = "Set Password";
+"self.settings.history_backup.password.cancel" = "Peruuta";
+"self.settings.history_backup.password.next" = "Seuraava";
+"self.settings.history_backup.password.placeholder" = "Vähintään 8 merkkiä";
+"self.settings.history_backup.password.description" = "The backup will be compressed and encrypted with the password you set here.";
+
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // System status
 "system_status_bar.no_internet.title" = "Ei Internet-yhteyttä";
@@ -829,7 +877,7 @@
 "name.guidance.toolong" = "Liian monta merkkiä";
 
 "email.placeholder" = "Sähköposti";
-"email.guidance.invalid" = "Invalid email address";
+"email.guidance.invalid" = "Virheellinen sähköpostiosoite";
 "email.guidance.tooshort" = "Email is too short";
 "email.guidance.toolong" = "Liian monta merkkiä";
 
@@ -839,17 +887,18 @@
 
 // Landing screen
 
+"landing.app_name" = "Wire";
 "landing.title" = "Secure messaging for everyone.";
-"landing.create_account.title" = "Create an account";
-"landing.create_account.subtitle" = "for personal use";
-"landing.create_team.title" = "Luo tiimi";
-"landing.create_team.subtitle" = "for work";
-"landing.login.hints" = "Already have an account?";
-"landing.login.button.title" = "Log in";
+"landing.create_account.title" = "For personal use";
+"landing.create_account.subtitle" = "create an account";
+"landing.create_team.title" = "For organizations";
+"landing.create_team.subtitle" = "create a team";
+"landing.login.hints" = "Onko sinulla jo tili?";
+"landing.login.button.title" = "Kirjaudu sisään";
 
 // Create team
 
-"team.name.headline" = "Name your team";
+"team.name.headline" = "Nimeä tiimisi";
 "team.name.subheadline" = "You can always change it later.";
 "team.name.textfield.placeholder" = "team name";
 "team.name.textfield.accessibility" = "Set team name";
@@ -864,7 +913,7 @@
 "team.activation_code.headline" = "You've got mail";
 "team.activation_code.subheadline" = "Enter the verification code we sent to %@.";
 "team.activation_code.button.resend" = "Resend code";
-"team.activation_code.button.change_email" = "Change email";
+"team.activation_code.button.change_email" = "Vaihda sähköpostiosoite";
 
 "team.full_name.headline" = "Your name";
 "team.full_name.textfield.placeholder" = "Full name";
@@ -879,13 +928,13 @@
 
 // Invite Team Members
 
-"team.invite.header.title" = "Build your team";
-"team.invite.header.subtitle" = "Invite your colleagues to join.";
+"team.invite.header.title" = "Rakenna tiimisi";
+"team.invite.header.subtitle" = "Kutsu kollegat liittymään.";
 "team.invite.textfield.placeholder" = "colleague@yourcompany.com";
 "team.invite.textfield.accesibility" = "Enter e-mail address for colleague to invite.";
 "team.invite.learn_more.title" = "Lue lisää";
 "team.invite.top_bar.skip" = "Skip";
-"team.invite.top_bar.done" = "Done";
+"team.invite.top_bar.done" = "Valmis";
 
 // Team Invite Errors
 "team.invite.error.generic" = "Jokin meni pieleen, yritä uudelleen";
@@ -903,10 +952,27 @@
 "guest_room.revoke_link.message" = "New guests will not be able to join with this link. Current guests will still have access.";
 "guest_room.revoke_link.action" = "Revoke Link";
 
-"guest_room.error.generic.title" = "Something went wrong";
+"guest_room.error.generic.title" = "Jokin meni pieleen";
 "guest_room.error.generic.message" = "Check your connection and try again";
 
+"guest_room.link.header.title" = "Invite others with a link";
+"guest_room.link.header.subtitle" = "Anyone with the link can join the conversation, even if they don't have Wire.";
+
+"guest_room.link.button.title" = "Create Link";
+
+"guest_room.actions.copy_link" = "Copy Link";
+"guest_room.actions.copied_link" = "Link Copied!";
+"guest_room.actions.share_link" = "Share Link";
+"guest_room.actions.revoke_link" = "Revoke Link…";
+
+"guest_room.share.message" = "Join me in a conversation on Wire:\n%@";
+
+"guest_room.expiration.hours_left" = "%@h left";
+"guest_room.expiration.less_than_minutes_left" = "Less than %@m left";
+
 // Registration
+
+"registration.launch_back_button.label" = "Back";
 
 "registration.title" = "Rekisteröityminen";
 "registration.close_email_invitation_button.email_title" = "Käytä toista sähköpostiosoitetta";
@@ -935,6 +1001,37 @@
 "registration.no_history.hero" = "Käytät Wireä ensimmäistä kertaa tällä laitteella.";
 "registration.no_history.subtitle" = "Tietosuojasyistä keskusteluhistoriasi ei näy täällä.";
 "registration.no_history.got_it" = "OK";
+"registration.no_history.restore_backup" = "Restore from backup";
+
+// Restore History Warning Alert
+"registration.no_history.restore_backup_warning.title" = "Restore history";
+"registration.no_history.restore_backup_warning.message" = "The backup contents will replace the conversation history on this device.\nYou can only restore history from a backup of the same platform.";
+"registration.no_history.restore_backup_warning.proceed" = "Choose Backup File";
+
+/// Restore History Failure Alerts
+"registration.no_history.restore_backup_failed.try_again" = "Try again";
+
+// Generic
+"registration.no_history.restore_backup_failed.title" = "Jokin meni pieleen";
+"registration.no_history.restore_backup_failed.message" = "Your history could not be restored.";
+
+// Wrong Account
+"registration.no_history.restore_backup_failed.wrong_account.title" = "Incompatible backup";
+"registration.no_history.restore_backup_failed.wrong_account.message" = "You cannot restore history from a different account.";
+
+// Incompatible Version
+"registration.no_history.restore_backup_failed.wrong_version.title" = "Incompatible backup";
+"registration.no_history.restore_backup_failed.wrong_version.message" = "This backup was created by a newer or outdated version of Wire and cannot be restored here.";
+
+// Restore In Progress Loading Titles
+"registration.no_history.restore_backup.restoring" = "Restoring…";
+"registration.no_history.restore_backup.completed" = "Completed";
+
+// Password Import Alert
+"registration.no_history.restore_backup.password.title" = "This backup is password protected.";
+"registration.no_history.restore_backup.password.message" = "The password is required to restore this backup.";
+"registration.no_history.restore_backup.password.placeholder" = "Salasana";
+"registration.no_history.restore_backup.password_error.title" = "Wrong Password";
 
 "registration.no_history.logged_out.hero" = "Olet käyttänyt Wireä tällä laitteella aiemmin.";
 "registration.no_history.logged_out.subtitle" = "Sillä välin lähetetyt viestit eivät näy.";
@@ -951,7 +1048,7 @@
 
 "registration.terms_of_use.terms.title" = "Käyttöehdot";
 "registration.terms_of_use.terms.message" = "Please accept the Terms of Use to continue.";
-"registration.terms_of_use.terms.view" = "View";
+"registration.terms_of_use.terms.view" = "Näytä";
 "registration.terms_of_use.accept" = "Hyväksy";
 
 "registration.email_flow.title" = "Rekisteröidy sähköpostilla";
@@ -993,7 +1090,19 @@
 "registration.devices.activated_in" = "Aktivoitu paikassa";
 "registration.devices.id" = "ID:";
 
+"signin.use_email.label" = "Login with Email";
+"signin.use_phone.label" = "Login with Phone";
 "signin.forgot_password" = "Unohditko salasanan?";
+"signin.use_one_password.label" = "Log in with 1Password";
+"signin.use_one_password.hint" = "Double tap to fill your password with 1Password";
+"signin.confirm" = "Kirjaudu sisään";
+
+"registration.phone_country" = "Maa";
+"registration.phone_code" = "Country Code";
+"registration.phone_country.hint" = "Double tap to select another country.";
+"registration.phone_code.hint" = "Double tap to select another country code.";
+"registration.phone.verify.label" = "Verify phone number";
+"registration.phone.verify_field.label" = "Verification Code";
 
 "registration.add_phone_number.hero.title" = "Lisää puhelinnumero";
 "registration.add_phone_number.hero.paragraph" = "Tämä auttaa meitä löytämään ihmisiä joita saatat tuntea. Emme koskaan jaa sitä.";
@@ -1009,6 +1118,9 @@
 "registration.phone_invitation.title" = "Kutsu";
 "registration.phone_invitation.hero.title" = "Hei, %@";
 "registration.phone_invitation.hero.paragraph" = "Olet askeleen päässä viimeistelleksesi tilisi.";
+
+"registration.confirm" = "Sign Up";
+"registration.phone.country_code.hint" = "Double tap to use a phone number from this country.";
 
 "error.name_and_email" = "Syötä koko nimesi ja voimassa oleva sähköpostiosoite";
 "error.full_name" = "Kirjoita koko nimesi";
@@ -1061,6 +1173,12 @@
 
 "error.invite.no_email_provider" = "Määritä sähköpostiohjelmasi pystyäksesi lähettämään kutsuja sähköpostitse";
 "error.invite.no_messaging_provider" = "Määritä tekstiviesti-asetuksesi pystyäksesi lähettämään kutsuja sähköpostitse";
+
+"error.conversation.title" = "Error";
+"error.conversation.cannot_add" = "Adding the participant failed";
+"error.conversation.cannot_remove" = "Removing the participant failed";
+"error.conversation.too_many_members" = "The conversation is full";
+"error.conversation.offline" = "Vaikuttaa että Internet-yhteydessäsi on jokin ongelma. Varmista, että se toimii.";
 
 "sketchpad.initial_hint" = "Napauta värejä vaihtaaksesi siveltimen kokoa";
 
@@ -1127,9 +1245,20 @@
 "availability.message.set_status" = "Set a status";
 
 "availability.none" = "Ei mitään";
-"availability.available" = "Available";
+"availability.available" = "Saatavilla";
 "availability.away" = "Away";
 "availability.busy" = "Busy";
 "availability.available.placeholder" = "%@ is available";
 "availability.away.placeholder" = "%@ is away";
 "availability.busy.placeholder" = "%@ is busy";
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Call Quality Survey
+
+"calling.quality_survey.title" = "Call Quality Feedback";
+"calling.quality_survey.question" = "How do you rate the overall quality of the call?";
+"calling.quality_survey.answer.1" = "Bad";
+"calling.quality_survey.answer.2" = "Poor";
+"calling.quality_survey.answer.3" = "Fair";
+"calling.quality_survey.answer.4" = "Good";
+"calling.quality_survey.answer.5" = "Excellent";

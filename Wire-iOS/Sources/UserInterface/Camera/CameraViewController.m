@@ -34,7 +34,6 @@
 @import FLAnimatedImage;
 #import "UIImage+ZetaIconsNeue.h"
 #import "UIImage+ImageUtilities.h"
-#import "WAZUIMagicIOS.h"
 #import "IconButton.h"
 #import "Constants.h"
 #import "Settings.h"
@@ -43,6 +42,8 @@
 #import "AnalyticsTracker+Permissions.h"
 
 #import "Wire-Swift.h"
+
+static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
 static CameraControllerCamera CameraViewControllerToCameraControllerCamera(CameraViewControllerCamera camera)
 {
@@ -78,7 +79,7 @@ static CameraControllerCamera CameraViewControllerToCameraControllerCamera(Camer
 /// Stores the camera (edited) image
 @property (nonatomic) NSData *cameraImageData;
 
-@property (nonatomic, copy) void (^acceptedBlock)();
+@property (nonatomic, copy) void (^acceptedBlock)(void);
 @property (nonatomic, strong) ImageMetadata *imageMetadata;
 
 @property (nonatomic, readonly) CameraViewControllerPreviewSize previewSize;
@@ -141,8 +142,8 @@ static CameraControllerCamera CameraViewControllerToCameraControllerCamera(Camer
     self.cameraController.previewLayer.videoGravity = AVLayerVideoGravityResizeAspectFill;
     [self.view.layer addSublayer:self.cameraController.previewLayer];
     
-    self.topBarHeight = [WAZUIMagic floatForIdentifier:@"camera_overlay.top_bar.height"];
-    self.bottomBarHeight = [WAZUIMagic floatForIdentifier:@"camera_overlay.bottom_bar.height"];
+    self.topBarHeight = 56;
+    self.bottomBarHeight = 88;
     
     [self createCameraControls];
     [self createPreviewPanel];
@@ -426,7 +427,7 @@ static CameraControllerCamera CameraViewControllerToCameraControllerCamera(Camer
 
 #pragma mark - Animations / State Changes
 
-- (void)presentConfirmDialogForImageData:(NSData *)imageData mirror:(BOOL)mirror acceptedBlock:(void (^)())acceptedBlock
+- (void)presentConfirmDialogForImageData:(NSData *)imageData mirror:(BOOL)mirror acceptedBlock:(void (^)(void))acceptedBlock
 {
     self.imagePreviewView.image = [UIImage imageFromData:imageData withMaxSize:MAX(CGRectGetWidth(UIScreen.mainScreen.nativeBounds), CGRectGetHeight(UIScreen.mainScreen.nativeBounds))];
     self.imagePreviewView.transform = CGAffineTransformMakeScale(mirror ? -1 : 1, 1);
@@ -550,7 +551,7 @@ static CameraControllerCamera CameraViewControllerToCameraControllerCamera(Camer
 - (void)image:(UIImage *)image didFinishSavingWithError:(NSError *)error contextInfo:(void *)contextInfo
 {
     if (error != nil) {
-        DDLogError(@"Cannot save image to camera roll: %@", error);
+        ZMLogError(@"Cannot save image to camera roll: %@", error);
     }
 }
 

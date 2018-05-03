@@ -29,6 +29,9 @@ import UIKit
     
     public weak var interactionDelegate: TextViewInteractionDelegate?
     
+    // URLs with these schemes should be handled by the os.
+    fileprivate let dataDetectedURLSchemes = [ "x-apple-data-detectors", "tel", "mailto"]
+    
     override init(frame: CGRect, textContainer: NSTextContainer?) {
         super.init(frame: frame, textContainer: textContainer)
         delegate = self
@@ -42,15 +45,40 @@ import UIKit
         let isInside = super.point(inside: point, with: event)
         guard let position = characterRange(at: point), isInside else { return false }
         let index = offset(from: beginningOfDocument, to: position.start)
-        return urlAttribtue(at: index)
+        return urlAttribute(at: index)
     }
 
-    private func urlAttribtue(at index: Int) -> Bool {
+    private func urlAttribute(at index: Int) -> Bool {
         guard attributedText.length > 0 else { return false }
         let attributes = attributedText.attributes(at: index, effectiveRange: nil)
         return attributes[NSLinkAttributeName] != nil
     }
     
+    /// Returns an alert controller configured to open the given URL.
+    private func confirmationAlert(for url: URL) -> UIAlertController {
+        let alert = UIAlertController(
+            title: "content.message.open_link_alert.title".localized,
+            message: "content.message.open_link_alert.message".localized(args: url.absoluteString),
+            preferredStyle: .alert
+        )
+        
+        let okAction = UIAlertAction(title: "content.message.open_link_alert.open".localized, style: .default) { _ in
+            _ = self.interactionDelegate?.textView(self, open: url)
+        }
+        
+        alert.addAction(.cancel())
+        alert.addAction(okAction)
+        return alert
+    }
+    
+    /// An alert is shown (asking the user if they wish to open the url) if the
+    /// link in the specified range is a markdown link.
+    fileprivate func showAlertIfNeeded(for url: URL, in range: NSRange) -> Bool {
+        // only show alert if the link is a markdown link
+        guard attributedText.ranges(of: .link, inRange: range) == [range] else { return false }
+        ZClientViewController.shared()?.present(confirmationAlert(for: url), animated: true, completion: nil)
+        return true
+    }
 }
 
 
@@ -72,8 +100,11 @@ extension LinkInteractionTextView: UITextViewDelegate {
             return false
         }
         
+        // if alert shown, link opening is handled in alert actions
+        if showAlertIfNeeded(for: URL, in: characterRange) { return false }
+        
         // data detector links should be handled by the system
-        return URL.scheme == "x-apple-data-detectors" || !(interactionDelegate?.textView(self, open: URL) ?? false)
+        return dataDetectedURLSchemes.contains(URL.scheme ?? "") || !(interactionDelegate?.textView(self, open: URL) ?? false)
     }
     
     public func textView(_ textView: UITextView, shouldInteractWith textAttachment: NSTextAttachment, in characterRange: NSRange) -> Bool {
@@ -95,13 +126,16 @@ extension LinkInteractionTextView: UITextViewDelegate {
     public func textView(_ textView: UITextView, shouldInteractWith URL: URL, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
         switch interaction {
         case .invokeDefaultAction:
+            // if alert shown, link opening is handled in alert actions
+            if showAlertIfNeeded(for: URL, in: characterRange) { return false }
             // data detector links should be handle by the system
-            return URL.scheme == "x-apple-data-detectors" || !(interactionDelegate?.textView(self, open: URL) ?? false)
+            return  dataDetectedURLSchemes.contains(URL.scheme ?? "") || !(interactionDelegate?.textView(self, open: URL) ?? false)
         case .presentActions:
             interactionDelegate?.textViewDidLongPress(self)
             return false
-        default:
-            return true
+        case .preview:
+            // if no alert is shown, still allow preview peeking
+            return !showAlertIfNeeded(for: URL, in: characterRange)
         }
     }
 }

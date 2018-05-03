@@ -48,8 +48,8 @@
 #import "UIView+WR_ExtendedBlockAnimations.h"
 #import "UIView+Borders.h"
 #import "ImageMessageCell.h"
-#import "WAZUIMagic.h"
 
+static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
 @interface ConversationInputBarViewController (Commands)
 
@@ -192,6 +192,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    [self setupCallStateObserver];
     
     [self createSingleTapGestureRecognizer];
     
@@ -345,16 +347,25 @@
 {
     self.audioRecordViewController = [[AudioRecordViewController alloc] init];
     self.audioRecordViewController.view.translatesAutoresizingMaskIntoConstraints = NO;
-    self.audioRecordViewController.view.hidden = true;
     self.audioRecordViewController.delegate = self;
-    
+
+
+    self.audioRecordViewContainer = [UIView new];
+    self.audioRecordViewContainer.backgroundColor = [UIColor wr_colorFromColorScheme:ColorSchemeColorBackground];
+    self.audioRecordViewContainer.hidden = YES;
+
     [self addChildViewController:self.audioRecordViewController];
-    [self.inputBar addSubview:self.audioRecordViewController.view];
-    [self.audioRecordViewController.view autoPinEdge:ALEdgeLeading toEdge:ALEdgeLeading ofView:self.inputBar.buttonContainer];
+    [self.inputBar addSubview:self.audioRecordViewContainer];
+    [self.audioRecordViewContainer autoPinEdgesToSuperviewEdges];
+
+    [self.audioRecordViewContainer addSubview:self.audioRecordViewController.view];
+
+    [self.audioRecordViewContainer autoPinEdge:ALEdgeLeading toEdge:ALEdgeLeading ofView:self.inputBar.buttonContainer];
     
     CGRect recordButtonFrame = [self.inputBar convertRect:self.audioButton.bounds fromView:self.audioButton];
     CGFloat width = CGRectGetMaxX(recordButtonFrame) + 56;
     [self.audioRecordViewController.view autoSetDimension:ALDimensionWidth toSize:width];
+
     [self.audioRecordViewController.view autoPinEdgeToSuperviewEdge:ALEdgeBottom];
     [self.audioRecordViewController.view autoPinEdge:ALEdgeTop toEdge:ALEdgeTop ofView:self.inputBar withOffset:0.5];
 }
@@ -375,7 +386,7 @@
     [self.sendButton autoSetDimensionsToSize:CGSizeMake(edgeLength, edgeLength)];
     [self.sendButton autoPinEdgeToSuperviewEdge:ALEdgeLeading];
     [self.sendButton autoPinEdgeToSuperviewEdge:ALEdgeBottom withInset:14];
-    CGFloat rightInset = ([WAZUIMagic cgFloatForIdentifier:@"content.left_margin"] - edgeLength) / 2;
+    CGFloat rightInset = (UIView.conversationLayoutMargins.left - edgeLength) / 2;
     [self.sendButton autoPinEdgeToSuperviewEdge:ALEdgeTrailing withInset:rightInset relation:NSLayoutRelationGreaterThanOrEqual];
 }
 
@@ -795,9 +806,8 @@
     }
 }
 
-- (void)keyboardDidHide:(NSNotification *)notification
-{
-    if (!self.inRotation) {
+- (void)keyboardDidHide:(NSNotification *)notification {
+    if (!self.inRotation && !self.audioRecordKeyboardViewController.isRecording) {
         self.mode = ConversationInputBarViewControllerModeTextInput;
     }
 }
@@ -851,80 +861,8 @@
 
 @end
 
-#pragma mark - Categories
 
-@implementation ConversationInputBarViewController (UITextViewDelegate)
-
-- (void)textViewDidChange:(UITextView *)textView
-{
-    // In case the conversation isDeleted
-    if (self.conversation.managedObjectContext == nil)  {
-        return;
-    }
-    
-    if (textView.text.length > 0) {
-        [self.conversation setIsTyping:YES];
-    }
-    else {
-        [self.conversation setIsTyping:NO];
-    }
-    
-    [self updateRightAccessoryView];
-}
-
-- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
-{
-    // send only if send key pressed
-    if (textView.returnKeyType == UIReturnKeySend && [text isEqualToString:@"\n"]) {
-        [self.inputBar.textView autocorrectLastWord];
-        NSString *candidateText = self.inputBar.textView.preparedText;
-        [self sendOrEditText:candidateText];
-        return NO;
-    }
-    
-    [self.inputBar.textView respondToChange: text inRange: range];
-    return YES;
-}
-
-- (BOOL)textViewShouldBeginEditing:(UITextView *)textView
-{
-    if (self.mode == ConversationInputBarViewControllerModeAudioRecord) {
-        return YES;
-    }
-    else if ([self.delegate respondsToSelector:@selector(conversationInputBarViewControllerShouldBeginEditing:isEditingMessage:)]) {
-        return [self.delegate conversationInputBarViewControllerShouldBeginEditing:self isEditingMessage:(nil != self.editingMessage)];
-    }
-    else {
-        return YES;
-    }
-}
-
-- (void)textViewDidBeginEditing:(UITextView *)textView
-{
-    [self updateAccessoryViews];
-    [self updateNewButtonTitleLabel];
-    [AppDelegate checkNetworkAndFlashIndicatorIfNecessary];
-}
-
-- (BOOL)textViewShouldEndEditing:(UITextView *)textView
-{
-    if ([self.delegate respondsToSelector:@selector(conversationInputBarViewControllerShouldEndEditing:)]) {
-        return [self.delegate conversationInputBarViewControllerShouldEndEditing:self];
-    }
-
-    return YES;
-}
-
-- (void)textViewDidEndEditing:(UITextView *)textView
-{
-    if (textView.text.length > 0) {
-        [self.conversation setIsTyping:NO];
-    }
-    [[ZMUserSession sharedSession] enqueueChanges:^{
-        self.conversation.draftMessageText = textView.text;
-    }];
-}
-
+@implementation ConversationInputBarViewController(TextViewProtocol)
 #pragma mark - Informal TextView delegate methods
 
 - (void)textView:(UITextView *)textView hasImageToPaste:(id<MediaAsset>)image
@@ -1001,7 +939,7 @@
 - (void)video:(NSString *)videoPath didFinishSavingWithError:(NSError *)error contextInfo:(void *)contextInfo
 {
     if (nil != error) {
-        DDLogError(@"Error saving video: %@", error);
+        ZMLogError(@"Error saving video: %@", error);
     }
 }
 
@@ -1068,7 +1006,7 @@
 
 - (void)giphyButtonPressed:(id)sender
 {
-    if (![AppDelegate checkNetworkAndFlashIndicatorIfNecessary]) {
+    if (![AppDelegate isOffline]) {
         
         [Analytics.shared tagMediaAction:ConversationMediaActionGif inConversation:self.conversation];
     

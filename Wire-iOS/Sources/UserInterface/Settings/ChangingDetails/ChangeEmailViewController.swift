@@ -78,16 +78,17 @@ final class ChangeEmailViewController: SettingsBaseTableViewController {
     internal func setupViews() {
         RegistrationTextFieldCell.register(in: tableView)
         
-        title = "self.settings.account_section.email.change.title".localized
+        title = "self.settings.account_section.email.change.title".localized.localizedUppercase
         view.backgroundColor = .clear
         tableView.isScrollEnabled = false
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(
-            title: "self.settings.account_section.email.change.save".localized,
+            title: "self.settings.account_section.email.change.save".localized.localizedUppercase,
             style: .done,
             target: self,
             action: #selector(saveButtonTapped)
         )
+        navigationItem.rightBarButtonItem?.tintColor = UIColor.accent()
         updateSaveButtonState()
     }
     

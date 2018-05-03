@@ -28,7 +28,6 @@
 #import <WireExtensionComponents/WireExtensionComponents-Swift.h>
 @import PureLayout;
 
-#import "WAZUIMagicIOS.h"
 #import "Constants.h"
 #import "UIColor+WAZExtensions.h"
 #import "UIColor+WR_ColorScheme.h"
@@ -115,6 +114,7 @@ typedef NS_ENUM(NSUInteger, ProfileViewControllerTabBarIndex) {
     [super viewDidLoad];
     
     self.navigationController.delegate = self.navigationControllerDelegate;
+    self.view.backgroundColor = [UIColor wr_colorFromColorScheme:ColorSchemeColorBarBackground];
     
     if (nil != self.fullUser) {
         self.observerToken = [UserChangeInfo addObserver:self forUser:self.fullUser userSession:[ZMUserSession sharedSession]];
@@ -163,7 +163,7 @@ typedef NS_ENUM(NSUInteger, ProfileViewControllerTabBarIndex) {
         [viewControllers addObject:profileDetailsViewController];
     }
     
-    if (self.fullUser.isConnected || self.fullUser.isTeamMember) {
+    if (self.fullUser.isConnected || self.fullUser.isTeamMember || self.fullUser.isWirelessUser) {
         ProfileDevicesViewController *profileDevicesViewController = [[ProfileDevicesViewController alloc] initWithUser:self.fullUser];
         profileDevicesViewController.title = NSLocalizedString(@"profile.devices.title", nil);
         profileDevicesViewController.delegate = self;
@@ -222,11 +222,15 @@ typedef NS_ENUM(NSUInteger, ProfileViewControllerTabBarIndex) {
 {
     ZMUser *user = [self fullUser];
     if (nil != user) {
-        BOOL showShield = user.trusted && user.clients.count > 0 &&
-                        self.context != ProfileViewControllerContextDeviceList &&
-                        self.tabsController.selectedIndex != ProfileViewControllerTabBarIndexDevices;
+        BOOL showShield = user.trusted && user.clients.count > 0
+                       && self.context != ProfileViewControllerContextDeviceList
+                       && self.tabsController.selectedIndex != ProfileViewControllerTabBarIndexDevices
+                       && ZMUser.selfUser.trusted;
 
         self.profileTitleView.showVerifiedShield = showShield;
+    }
+    else {
+        self.profileTitleView.showVerifiedShield = NO;
     }
 }
 
@@ -311,17 +315,9 @@ typedef NS_ENUM(NSUInteger, ProfileViewControllerTabBarIndex) {
 - (void)conversationCreationController:(ConversationCreationController *)controller didSelectName:(NSString *)name participants:(NSSet<ZMUser *> *)participants allowGuests:(BOOL)allowGuests
 {
     [controller dismissViewControllerAnimated:YES completion:^{
-        [UIApplication.sharedApplication wr_updateStatusBarForCurrentControllerAnimated:YES];
         if ([self.delegate respondsToSelector:@selector(profileViewController:wantsToCreateConversationWithName:users:)]) {
             [self.delegate profileViewController:self wantsToCreateConversationWithName:name users:participants];
         }
-    }];
-}
-
-- (void)conversationCreationControllerDidCancel:(ConversationCreationController *)controller
-{
-    [controller dismissViewControllerAnimated:YES completion:^{
-        [UIApplication.sharedApplication wr_updateStatusBarForCurrentControllerAnimated:YES];
     }];
 }
 

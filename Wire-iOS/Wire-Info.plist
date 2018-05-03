@@ -2,16 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>NSFaceIDUsageDescription</key>
-	<string>In order to authenticate in the app allow Wire to access the Face ID feature.</string>
-	<key>UIAppFonts</key>
-	<array>
-		<string>RedactedScript-Regular.ttf</string>
-	</array>
-	<key>NSCameraUsageDescription</key>
-	<string>In order to take and send pictures Wire needs access to your camera.</string>
-	<key>NSPhotoLibraryUsageDescription</key>
-	<string>In order to send stored pictures Wire needs access to your photo library.</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
@@ -66,6 +56,10 @@
 	</array>
 	<key>CFBundleVersion</key>
 	<string>${WIRE_BUILD_NUMBER}</string>
+	<key>ITSAppUsesNonExemptEncryption</key>
+	<true/>
+	<key>ITSEncryptionExportComplianceCode</key>
+	<string>${APPLE_EXPORT_COMPLIANCE_CODE}</string>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>comgooglemaps</string>
@@ -83,14 +77,24 @@
 		<key>NSAllowsArbitraryLoads</key>
 		<true/>
 	</dict>
+	<key>NSCameraUsageDescription</key>
+	<string>In order to take and send pictures Wire needs access to your camera.</string>
 	<key>NSContactsUsageDescription</key>
 	<string>We’d like to access your Contacts so we can connect you with people you might know. Your data is safely stored with us and not shared with anyone else.</string>
-	<key>NSPhotoLibraryAddUsageDescription</key>
-	<string>In order to store pictures you take Wire needs access to your photo library.</string>
+	<key>NSFaceIDUsageDescription</key>
+	<string>In order to authenticate in the app allow Wire to access the Face ID feature.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>In order to send your location you have to authorize Wire to use it</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>You will be able to talk to people</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>In order to store pictures you take Wire needs access to your photo library.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>In order to send stored pictures Wire needs access to your photo library.</string>
+	<key>UIAppFonts</key>
+	<array>
+		<string>RedactedScript-Regular.ttf</string>
+	</array>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>audio</string>
@@ -127,9 +131,35 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+	<key>UTExportedTypeDeclarations</key>
+	<array>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.data</string>
+			</array>
+			<key>UTTypeDescription</key>
+			<string>Wire iOS Backup File</string>
+			<key>UTTypeIconFiles</key>
+			<array/>
+			<key>UTTypeIdentifier</key>
+			<string>com.wire.backup-ios</string>
+			<key>UTTypeSize320IconFile</key>
+			<string>logo</string>
+			<key>UTTypeSize64IconFile</key>
+			<string>logo</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>com.apple.ostype</key>
+				<string>com.wire.backup-ios</string>
+				<key>public.filename-extension</key>
+				<array>
+					<string>ios_wbu</string>
+				</array>
+			</dict>
+		</dict>
+	</array>
 	<key>WireGroupId</key>
 	<string>${WIRE_BUNDLE_ID}</string>
-	<key>ITSAppUsesNonExemptEncryption</key>
-	<false/>
 </dict>
 </plist>

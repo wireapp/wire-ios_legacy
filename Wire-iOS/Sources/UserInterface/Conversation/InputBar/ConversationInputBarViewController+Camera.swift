@@ -20,9 +20,8 @@
 import Foundation
 import MobileCoreServices
 import Photos
-import CocoaLumberjackSwift
 
-
+private let zmLog = ZMSLog(tag: "UI")
 
 @objc class FastTransitioningDelegate: NSObject, UIViewControllerTransitioningDelegate {
     static let sharedDelegate = FastTransitioningDelegate()
@@ -45,6 +44,10 @@ class StatusBarVideoEditorController: UIVideoEditorController {
     override var preferredStatusBarStyle : UIStatusBarStyle {
         return UIStatusBarStyle.default
     }
+
+    func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
+        return traitCollection.horizontalSizeClass == .regular ? .popover : .overFullScreen
+    }
 }
 
 extension ConversationInputBarViewController: CameraKeyboardViewControllerDelegate {
@@ -66,21 +69,42 @@ extension ConversationInputBarViewController: CameraKeyboardViewControllerDelega
             videoEditor.videoMaximumDuration = ConversationUploadMaxVideoDuration
             videoEditor.videoPath = videoURL.path
             videoEditor.videoQuality = UIImagePickerControllerQualityType.typeMedium
-            
-            self.present(videoEditor, animated: true) {
-                UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(false)
+
+            switch UIDevice.current.userInterfaceIdiom {
+            case .pad:
+                self.hideCameraKeyboardViewController {
+                    videoEditor.modalPresentationStyle = .popover
+
+                    self.present(videoEditor, animated: true)
+
+                    let popover = videoEditor.popoverPresentationController
+                    popover?.sourceView = self.parent?.view
+
+                    ///arrow point to camera button.
+                    popover?.permittedArrowDirections = .down
+                    if let parentView = self.parent?.view {
+                        let buttonCenter = self.photoButton.convert(self.photoButton.center, to: parentView)
+                        popover?.sourceRect = CGRect(origin: buttonCenter, size: .zero)
+
+                        videoEditor.preferredContentSize = parentView.frame.size
+                    }
+                }
+            default:
+                self.present(videoEditor, animated: true) {
+                    UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(false)
+                }
             }
         }
         else {
 
             let confirmVideoViewController = ConfirmAssetViewController()
             confirmVideoViewController.transitioningDelegate = FastTransitioningDelegate.sharedDelegate
-            confirmVideoViewController.videoURL = videoURL as URL!
+            confirmVideoViewController.videoURL = videoURL as URL
             confirmVideoViewController.previewTitle = self.conversation.displayName.uppercased()
             confirmVideoViewController.onConfirm = { [unowned self] (editedImage: UIImage?)in
                 self.dismiss(animated: true, completion: .none)
                 Analytics.shared().tagSentVideoMessage(inConversation: self.conversation, context: .cameraKeyboard, duration: duration)
-                self.uploadFile(at: videoURL as URL!)
+                self.uploadFile(at: videoURL as URL)
             }
             
             confirmVideoViewController.onCancel = { [unowned self] in
@@ -103,7 +127,7 @@ extension ConversationInputBarViewController: CameraKeyboardViewControllerDelega
     
     @objc fileprivate func image(_ image: UIImage?, didFinishSavingWithError error: NSError?, contextInfo: AnyObject) {
         if let error = error {
-            DDLogError("didFinishSavingWithError: \(error)")
+            zmLog.error("didFinishSavingWithError: \(error)")
         }
     }
     
@@ -142,7 +166,7 @@ extension ConversationInputBarViewController: CameraKeyboardViewControllerDelega
                 metadata.sketchSource = .cameraGallery
                 self.sendController.sendMessage(withImageData: editedImageData, completion: .none)
             } else {
-                self.sendController.sendMessage(withImageData: imageData as Data!, completion: .none)
+                self.sendController.sendMessage(withImageData: imageData as Data, completion: .none)
             }
             
             Analytics.shared().tagMediaSentPicture(inConversation: self.conversation, metadata: metadata)
@@ -215,13 +239,13 @@ extension ConversationInputBarViewController: UIVideoEditorControllerDelegate {
             }
             
             Analytics.shared().tagSentVideoMessage(inConversation: self.conversation, context: .cameraKeyboard, duration: duration)
-            self.uploadFile(at: NSURL(fileURLWithPath: path) as URL!)
+            self.uploadFile(at: NSURL(fileURLWithPath: path) as URL)
         }
     }
     
     @nonobjc public func videoEditorController(_ editor: UIVideoEditorController, didFailWithError error: NSError) {
         editor.dismiss(animated: true, completion: .none)
-        DDLogError("Video editor failed with error: \(error)")
+        zmLog.error("Video editor failed with error: \(error)")
     }
 }
 

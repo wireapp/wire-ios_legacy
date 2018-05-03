@@ -20,6 +20,17 @@
 import UIKit
 import Cartography
 
+extension ConversationListViewController: NetworkStatusBarDelegate {
+    var bottomMargin: CGFloat {
+        return CGFloat.NetworkStatusBar.bottomMargin
+    }
+
+    func showInIPad(networkStatusViewController: NetworkStatusViewController, with orientation: UIInterfaceOrientation) -> Bool {
+        // do not show on iPad for any orientation in regular mode
+        return false
+    }
+}
+
 extension ConversationListViewController {
     
     func currentAccountView() -> BaseAccountView {
@@ -31,8 +42,8 @@ extension ConversationListViewController {
         currentAccountView.unreadCountStyle = .others
         return currentAccountView
     }
-    
-    public func createTopBar() {
+
+    @objc func createTopBar() {
         let profileAccountView = self.currentAccountView()
         profileAccountView.selected = false
         profileAccountView.autoUpdateSelection = false
@@ -55,5 +66,11 @@ extension ConversationListViewController {
         self.topBar.layoutMargins = UIEdgeInsetsMake(0, 9, 0, 16)
         self.contentContainer.addSubview(self.topBar)
         self.topBar.leftView = profileAccountView
+    }
+
+    @objc func createNetworkStatusBar() {
+        self.networkStatusViewController = NetworkStatusViewController()
+        networkStatusViewController.delegate = self
+        self.addToSelf(networkStatusViewController)
     }
 }

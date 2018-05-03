@@ -15,12 +15,22 @@
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
+// General strings
 
 
 "general.ok" = "OK";
 "general.next" = "Avanti";
 "general.cancel" = "Annulla";
+"general.close" = "Chiudi";
+"general.back" = "Indietro";
 "general.open_settings" = "Apri le impostazioni di Wire";
+"general.edit" = "Modifica";
+"general.done" = "Fatto";
+"general.confirm" = "OK";
+// Language like Chinese does not use space to sperate words or sentences.
+"general.space_between_words" = " ";
+
+"general.guest-room-name" = "Stanza degli ospiti";
 
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -40,7 +50,7 @@
 "peoplepicker.group.title.plural" = "Aggiungi persone (%d)";
 "peoplepicker.group.skip" = "Salta";
 "peoplepicker.group.done" = "Fatto";
-"peoplepicker.group.create" = "Crea";
+"peoplepicker.group.create" = "Creare";
 
 "peoplepicker.header.people" = "Persone";
 "peoplepicker.header.services" = "Servizi";
@@ -78,6 +88,7 @@
 "peoplepicker.invite_team_members" = "Invita altre persone ad unirsi al team";
 "peoplepicker.quick-action.open-conversation" = "Apri";
 "peoplepicker.quick-action.create-conversation" = "Crea gruppo";
+"peoplepicker.quick-action.create-guest-room" = "Crea stanza degli ospiti";
 
 "add_participants.all_contacts_added" = "Ognuno è qui.";
 
@@ -236,6 +247,7 @@
 "conversation.input_bar.message_too_long.title" = "Il messaggio è troppo lungo";
 "conversation.input_bar.message_too_long.message" = "Puoi inviare messaggi lunghi al massimo %d caratteri.";
 
+"conversation.create.group_name.title" = "Crea gruppo";
 "conversation.create.group_name.placeholder" = "Nome del gruppo";
 "conversation.create.guidance.empty" = "Almeno 1 carattere";
 "conversation.create.guidance.toolong" = "Troppi caratteri";
@@ -314,6 +326,9 @@
 "content.system.conversation.team.member-leave" = "%@ è stato rimosso dal team.";
 "content.system.conversation.guest.joined" = "%@ è entrato";
 
+"content.system.conversation.invite.title" = "Le persone esterne al tuo team possono unirsi a questa conversazione.";
+"content.system.conversation.invite.button" = "Invita persone";
+
 "content.system.other_renamed_conv_to_nothing" = "%@ ha rimosso il nome della conversazione";
 "content.system.you_renamed_conv_to_nothing" = "Hai rimosso il nome della conversazione";
 "content.system.pending_message_timestamp" = "Invio in corso…";
@@ -343,6 +358,7 @@
 "content.system.renamed_conv.title.you" = "Tu";
 
 "content.system.conversation.with_name.title" = "%@ ha iniziato la conversatione";
+"content.system.conversation.with_name.title-you" = "%@ ha iniziato la conversatione";
 
 "content.system.conversation.with_name.participants" = "con %@";
 
@@ -375,7 +391,6 @@
 // Full sentence: "A message from %@ was not received. [...] (device d1b23c54f34a). This is a debug information.
 
 "content.system.unknown_message.body" = "Stai utilizzando una versione precedente di Wire che non può mostrare questo messaggio.";
-"content.system.unknown_message.body.link" = "Perché succede?";
 
 "content.file.uploading" = "Caricamento…";
 "content.file.downloading" = "Download in corso…";
@@ -397,12 +412,18 @@
 "content.message.go_to_conversation" = "Mostra";
 "content.message.forward.to" = "Ricerca…";
 "content.message.open" = "Apri";
+"content.message.copy" = "Copia";
+
+"content.message.open_link_alert.title" = "Apri Link";
+"content.message.open_link_alert.message" = "Ti porterà su %@";
+"content.message.open_link_alert.open" = "Apri";
 
 "content.reactions_list.likers" = "Piace a";
 
 "content.file.too_big" = "Puoi inviare file fino a %@";
 // Someone pinged
-"content.ping.text" = "%1$@ ti ha mandato un trillo";
+"content.ping.text" = "%1$@ ha mandato un trillo";
+"content.ping.text-you" = "%1$@ ha mandato un trillo";
 
 // Current user pinged
 "content.ping.text.you" = "Tu";
@@ -418,11 +439,17 @@
 "inbox.connection_request.connect_button_title" = "Connetti";
 "inbox.connection_request.ignore_button_title" = "Ignora";
 
+// Save image errors
+"library.alert.permission_warning.title" = "Wire ha bisogno di accedere alle tue foto";
+"library.alert.permission_warning.restrictions.explaination" = "Wire non può accedere alla tua libreria perchè sono presenti restrizioni.";
+"library.alert.permission_warning.not_allowed.explaination" = "Vai nelle Impostazioni e permetti a Wire di accedere alle tue foto.";
+
 // Voice
-"voice.status.one_to_one.incoming" = "%@\nChiamata in corso";
-"voice.status.group_call.incoming" = "%@\nSta squillando";
-"voice.status.one_to_one.outgoing" = "%@\nSta squillando";
+"voice.status.one_to_one.incoming" = "%@\nsta chiamando";
+"voice.status.group_call.incoming" = "%@\nsta squillando";
+"voice.status.one_to_one.outgoing" = "%@\nsta squillando";
 "voice.status.joining" = "%@\nIn attesa di connessione";
+"voice.status.leaving" = "%@\nChiamata terminata";
 "voice.status.video_not_available" = "Video spento";
 "voice.status.low_connection" = "Connessione scarsa";
 "voice.network_error.title" = "Nessuna connessione internet";
@@ -465,14 +492,17 @@
 
 // Meta Menu
 "meta.menu.rename" = "Rinomina";
-"meta.menu.leave" = "Abbandona";
+"meta.menu.leave" = "Lascia…";
 "meta.menu.archive" = "Archivia";
 "meta.menu.unarchive" = "Disarchivia";
-"meta.menu.delete" = "Elimina";
+"meta.menu.delete" = "Elimina contenuti…";
 "meta.menu.silence.mute" = "Silenzia";
 "meta.menu.silence.unmute" = "Riattiva audio";
 "meta.menu.cancel" = "Annulla";
 "meta.menu.cancel_connection_request" = "Annulla richiesta";
+"meta.menu.mark_unread" = "Segna come non letto";
+"meta.menu.mark_read" = "Segna come letto";
+"shortcut.mark_all_as_read.title" = "Segna tutti come letti";
 
 // Delete conversation
 "meta.menu.delete_content.dialog_title" = "Eliminare il contenuto?";
@@ -532,7 +562,8 @@
 "profile.cancel_connection_request_dialog.button_yes" = "Sì";
 
 // Unblock button
-"profile.unblock_button_title" = "Sblocca";
+"profile.block_button_title" = "Blocca…";
+"profile.unblock_button_title" = "Sblocca…";
 
 "profile.cancel_connection_button_title" = "ANNULLA RICHIESTA";
 "profile.connection_request_state.blocked" = "BLOCCATO";
@@ -550,7 +581,7 @@
 // Device list
 "profile.devices.title" = "Dispositivi";
 "profile.devices.fingerprint_message_unencrypted" = "%@ sta utilizzando una vecchia versione di filo. Nessun dispositivo viene visualizzato qui.";
-"profile.devices.fingerprint_message" = "Wire dà un'impronta unica a ogni dispositivo. Confrontale con %@ e verifica la tua conversazione. Perché verificare la conversazione?";
+"profile.devices.fingerprint_message.title" = "Wire dà un'impronta unica a ogni dispositivo. Confrontale con %@ e verifica la tua conversazione.";
 "profile.devices.fingerprint_message.link" = "Perché verificare le conversazioni?";
 
 // Device detail
@@ -563,9 +594,6 @@
 "device.class.tablet" = "Tablet";
 "device.class.phone" = "Telefono";
 "profile.devices.detail.reset_session.title" = "Resetta la sessione";
-
-// General strings
-"general.confirm" = "OK";
 
 // Bot
 "participants.services.remove_integration.button" = "rimuovi integrazione";
@@ -603,12 +631,9 @@
 "about.copyright.title" = "© Wire Swiss GmbH";
 
 // Self new devices
-"self.new_device_alert.title" = "Hai collegato %@ al tuo account Wire";
-"self.new_device_alert.title_prefix.tablet" = "un tablet";
-"self.new_device_alert.title_prefix.phone" = "un telefono";
-"self.new_device_alert.title_prefix.devices" = "%d dispositivi";
-"self.new_device_alert.message" = "%@\n\nSe non sei stato tu, rimuovi il dispositivo e reimposta la password.";
-"self.new_device_alert.message_plural" = "%@\n\nSe non sei stato tu, rimuovi quei dispositivi e reimposta la password.";
+"self.new_device_alert.title" = "Il tuo account è stato utilizzato su:";
+"self.new_device_alert.message" = "\n%@\n\nSe non riconosci questo dispositivo, rimuovilo e reimposta la password.";
+"self.new_device_alert.message_plural" = "\n%@\n\nSe non riconosci questi dispositivi, rimuovili e reimposta la password.";
 "self.new_device_alert.manage_devices" = "Gestione dei dispositivi";
 "self.new_device_alert.trust_devices" = "OK";
 
@@ -773,7 +798,11 @@
 "self.settings.privacy_contacts_menu.description_disabled.title" = "Questo ti aiuta a connetterti con gli altri. Rendiamo tutte le informazioni dai contatti anonime e non sono cedute a nessun altro. Consenti l'accesso tramite Impostazioni > Privacy > Contatti.";
 
 "self.settings.privacy_security.lock_app" = "Blocca con codice";
-"self.settings.privacy_security.lock_app.subtitle" = "Blocca Wire dopo 10 secondi in background. Sblocca con Touch ID o inserisci il tuo codice di accesso.";
+"self.settings.privacy_security.lock_app.subtitle.lock_description" = "Blocca Wire dopo 10 secondi in background.";
+"self.settings.privacy_security.lock_app.subtitle.touch_id" = "Sblocca con Touch ID o inserisci il tuo codice di accesso.";
+"self.settings.privacy_security.lock_app.subtitle.face_id" = "Sblocca con Face ID o inserisci il tuo codice di accesso.";
+"self.settings.privacy_security.lock_app.subtitle.none" = "Sblocca inserendo il tuo codice di accesso.";
+
 "self.settings.privacy_security.lock_app.description" = "Sblocca Wire";
 
 "self.settings.privacy_security.lock_cancelled.description" = "Sblocca Wire con Touch ID o Passcode";
@@ -816,6 +845,25 @@
 // Invite from Settings
 "self.settings.invite_friends.title" = "Invita persone";
 
+// History backup
+
+"self.settings.conversations.title" = "Cronologia";
+"self.settings.history_backup.title" = "Backup delle conversazioni";
+"self.settings.history_backup.description" = "Crea una copia di backup per conservare la cronologia delle conversazioni. Potrai utilizzarla per ripristinare la cronologia se perdi il tuo dispositivo o passi ad uno nuovo.\n\nIl file di backup non è protetto dalla crittografia end-to-end di Wire, perciò conservalo in un luogo sicuro.";
+"self.settings.history_backup.action" = "Esegui il backup ora";
+"self.settings.history_backup.error.title" = "Errore";
+
+"self.settings.history_backup.set_email.title" = "Imposta un indirizzo email e la password.";
+"self.settings.history_backup.set_email.message" = "Hai bisogno di una email e una password per eseguire il backup delle conversazioni. Potrai eseguirlo dalla schermata Account delle impostazioni.";
+
+// History backup password
+
+"self.settings.history_backup.password.title" = "Imposta password";
+"self.settings.history_backup.password.cancel" = "Annulla";
+"self.settings.history_backup.password.next" = "Avanti";
+"self.settings.history_backup.password.placeholder" = "Almeno 8 caratteri";
+"self.settings.history_backup.password.description" = "Il backup verrà compresso e crittografato con la password impostata qui.";
+
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // System status
 "system_status_bar.no_internet.title" = "Internet assente";
@@ -839,11 +887,12 @@
 
 // Landing screen
 
+"landing.app_name" = "Wire";
 "landing.title" = "Messaggistica sicura per tutti.";
-"landing.create_account.title" = "Crea un account";
-"landing.create_account.subtitle" = "per uso personale";
-"landing.create_team.title" = "Crea un team";
-"landing.create_team.subtitle" = "per lavoro";
+"landing.create_account.title" = "Per uso personale";
+"landing.create_account.subtitle" = "crea un account";
+"landing.create_team.title" = "Per organizzazioni";
+"landing.create_team.subtitle" = "crea un team";
 "landing.login.hints" = "Hai già un account?";
 "landing.login.button.title" = "Log in";
 
@@ -903,10 +952,27 @@
 "guest_room.revoke_link.message" = "I nuovi ospiti non saranno in grado di partecipare con questo link. Gli ospiti attuali avranno ancora accesso.";
 "guest_room.revoke_link.action" = "Revoca il link";
 
-"guest_room.error.generic.title" = "Si è verificato un errore";
+"guest_room.error.generic.title" = "Qualcosa è andato storto";
 "guest_room.error.generic.message" = "Controlla la tua connessione e riprova";
 
+"guest_room.link.header.title" = "Invita altre persone con un link";
+"guest_room.link.header.subtitle" = "Chiunque ha il link può unirsi alla conversazione, anche se non ha Wire.";
+
+"guest_room.link.button.title" = "Crea un link";
+
+"guest_room.actions.copy_link" = "Copia link";
+"guest_room.actions.copied_link" = "Link copiato!";
+"guest_room.actions.share_link" = "Condividi link";
+"guest_room.actions.revoke_link" = "Revoca il link…";
+
+"guest_room.share.message" = "Unisciti a questa conversazione su Wire:\n%@";
+
+"guest_room.expiration.hours_left" = "%@h rimanenti";
+"guest_room.expiration.less_than_minutes_left" = "Meno di %@m rimanenti";
+
 // Registration
+
+"registration.launch_back_button.label" = "Indietro";
 
 "registration.title" = "Registrazione";
 "registration.close_email_invitation_button.email_title" = "Usa un altro indirizzo email";
@@ -935,6 +1001,37 @@
 "registration.no_history.hero" = "È la prima volta che utilizzi Wire questo dispositivo.";
 "registration.no_history.subtitle" = "Per motivi di privacy, la cronologia delle tue conversazioni non apparirà qui.";
 "registration.no_history.got_it" = "OK";
+"registration.no_history.restore_backup" = "Ripristina da backup";
+
+// Restore History Warning Alert
+"registration.no_history.restore_backup_warning.title" = "Ripristino della cronologia";
+"registration.no_history.restore_backup_warning.message" = "Il contenuto del backup sostituirà la cronologia delle conversazioni su questo dispositivo. È possibile ripristinare solo la cronologia da un backup dello stesso sistema operativo.";
+"registration.no_history.restore_backup_warning.proceed" = "Scegli il file di backup";
+
+/// Restore History Failure Alerts
+"registration.no_history.restore_backup_failed.try_again" = "Riprova";
+
+// Generic
+"registration.no_history.restore_backup_failed.title" = "Qualcosa è andato storto";
+"registration.no_history.restore_backup_failed.message" = "La tua cronologia non può essere ripristinata.";
+
+// Wrong Account
+"registration.no_history.restore_backup_failed.wrong_account.title" = "Backup incompatibile";
+"registration.no_history.restore_backup_failed.wrong_account.message" = "Non è possibile ripristinare le conversazioni da un altro account.";
+
+// Incompatible Version
+"registration.no_history.restore_backup_failed.wrong_version.title" = "Backup incompatibile";
+"registration.no_history.restore_backup_failed.wrong_version.message" = "Questo backup è stato creato con una versione più recente o obsoleta di Wire e non può essere ripristinato.";
+
+// Restore In Progress Loading Titles
+"registration.no_history.restore_backup.restoring" = "Ripristino in corso…";
+"registration.no_history.restore_backup.completed" = "Completato";
+
+// Password Import Alert
+"registration.no_history.restore_backup.password.title" = "Questo backup è protetto da password.";
+"registration.no_history.restore_backup.password.message" = "La password è necessaria per ripristinare questo backup.";
+"registration.no_history.restore_backup.password.placeholder" = "Password";
+"registration.no_history.restore_backup.password_error.title" = "Password errata";
 
 "registration.no_history.logged_out.hero" = "Hai utilizzato Wire su questo dispositivo prima.";
 "registration.no_history.logged_out.subtitle" = "I messaggi inviati nel frattempo non verranno visualizzato.";
@@ -993,7 +1090,19 @@
 "registration.devices.activated_in" = "Attivato a";
 "registration.devices.id" = "ID:";
 
+"signin.use_email.label" = "Accedi tramite email";
+"signin.use_phone.label" = "Accedi tramite telefono";
 "signin.forgot_password" = "Hai dimenticato la password?";
+"signin.use_one_password.label" = "Accedi tramite 1Password";
+"signin.use_one_password.hint" = "Tocca due volte per inserire la tua password con 1Password";
+"signin.confirm" = "Log in";
+
+"registration.phone_country" = "Paese";
+"registration.phone_code" = "Prefisso internazionale";
+"registration.phone_country.hint" = "Tocca due volte per selezionare un altro paese.";
+"registration.phone_code.hint" = "Tocca due volte per selezionare un altro prefisso internazionale.";
+"registration.phone.verify.label" = "Verifica numero di telefono";
+"registration.phone.verify_field.label" = "Codice di verifica";
 
 "registration.add_phone_number.hero.title" = "Aggiungi numero di telefono";
 "registration.add_phone_number.hero.paragraph" = "Questo ci aiuta a trovare persone che potresti conoscere. Non lo condivideremo mai.";
@@ -1009,6 +1118,9 @@
 "registration.phone_invitation.title" = "Invito";
 "registration.phone_invitation.hero.title" = "Ciao, %@";
 "registration.phone_invitation.hero.paragraph" = "Sei a un passo dal creare il tuo account.";
+
+"registration.confirm" = "Registrati";
+"registration.phone.country_code.hint" = "Tocca due volte per utilizzare un numero di telefono da questa nazione.";
 
 "error.name_and_email" = "Inserisci il tuo nome e cognome e un indirizzo email valido";
 "error.full_name" = "Si prega di inserire il nome intero";
@@ -1061,6 +1173,12 @@
 
 "error.invite.no_email_provider" = "Per favore configura la tua posta elettronica per essere in grado di inviare gli inviti via email";
 "error.invite.no_messaging_provider" = "Per favore configura i tuoi SMS per essere in grado di inviare gli inviti via SMS";
+
+"error.conversation.title" = "Errore";
+"error.conversation.cannot_add" = "Non è stato possibile aggiungere il partecipante";
+"error.conversation.cannot_remove" = "Non è stato possibile rimuovere il partecipante";
+"error.conversation.too_many_members" = "La conversazione è piena";
+"error.conversation.offline" = "Sembra esserci un problema con la connessione a Internet. Per favore assicurati che funziona.";
 
 "sketchpad.initial_hint" = "Tocca il colore per cambiare la dimensione del pennello";
 
@@ -1133,3 +1251,14 @@
 "availability.available.placeholder" = "%@ è disponibile";
 "availability.away.placeholder" = "%@ è assente";
 "availability.busy.placeholder" = "%@ è occupato";
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Call Quality Survey
+
+"calling.quality_survey.title" = "Feedback sulla qualità di chiamata";
+"calling.quality_survey.question" = "Come giudichi la qualità complessiva della chiamata?";
+"calling.quality_survey.answer.1" = "Scarsa";
+"calling.quality_survey.answer.2" = "Insufficiente";
+"calling.quality_survey.answer.3" = "Discreta";
+"calling.quality_survey.answer.4" = "Buona";
+"calling.quality_survey.answer.5" = "Ottima";

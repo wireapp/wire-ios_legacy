@@ -42,6 +42,7 @@
 // specific method to return the logo
 + (UIImage *)imageForWordmarkWithColor:(UIColor *)color;
 + (UIImage *)imageForLogoWithColor:(UIColor *)color iconSize:(ZetaIconSize)iconSize;
++ (UIImage *)imageForRestoreWithColor:(UIColor *)color iconSize:(ZetaIconSize)iconSize NS_SWIFT_NAME(imageForRestore(with:size:));
 
 @end
 

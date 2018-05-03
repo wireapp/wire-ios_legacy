@@ -61,7 +61,6 @@ FOUNDATION_EXPORT const unsigned char WireExtensionComponentsVersionString[];
 #import <WireExtensionComponents/ColorScheme.h>
 #import <WireExtensionComponents/Geometry.h>
 #import <WireExtensionComponents/KeyValueObserver.h>
-#import <WireExtensionComponents/LineNumberLogFormatter.h>
 #import <WireExtensionComponents/NetworkStatus.h>
 #import <WireExtensionComponents/metamacros.h>
 #import <WireExtensionComponents/weakify.h>

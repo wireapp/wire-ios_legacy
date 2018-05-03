@@ -20,35 +20,85 @@ import Foundation
 import XCTest
 @testable import Wire
 
-class NetworkStatusViewTests: ZMSnapshotTestCase {
+class MockContainer: NetworkStatusViewDelegate {
+    var shouldAnimateNetworkStatusView: Bool = true
+
+    var bottomMargin: CGFloat = 0
+
+    func didChangeHeight(_ networkStatusView: NetworkStatusView, animated: Bool, state: NetworkStatusViewState) {
+
+    }
+}
+
+class NetworkStatusViewTests: XCTestCase {
+    var sut: NetworkStatusView!
+    var mockApplication: MockApplication!
+    var mockContainer: MockContainer!
+
+    override func setUp() {
+        super.setUp()
+
+        mockApplication = MockApplication()
+        mockContainer = MockContainer()
+        sut = NetworkStatusView(application: mockApplication)
+        sut.delegate = mockContainer
+    }
+
+    override func tearDown() {
+        sut = nil
+        mockApplication = nil
+        mockContainer = nil
+
+        super.tearDown()
+    }
+
+    func testThatSyncBarChangesToHiddenWhenTheAppGoesToBackground() {
+        // GIVEN
+        mockApplication.applicationState = .active
+        sut.state = .onlineSynchronizing
+        XCTAssertEqual(sut.connectingView.heightConstraint?.constant, CGFloat.SyncBar.height, "NetworkStatusView should not be zero height")
+
+        // WHEN
+        mockApplication.applicationState = .background
+        sut.state = .onlineSynchronizing
+
+        // THEN
+        XCTAssertEqual(sut.connectingView.heightConstraint?.constant, 0, "NetworkStatusView should be zero height")
+    }
+}
+
+class NetworkStatusViewSnapShotTests: ZMSnapshotTestCase {
+
+    var sut: NetworkStatusView!
+    var mockContainer: MockContainer!
+
     override func setUp() {
         super.setUp()
         accentColor = .violet
+        mockContainer = MockContainer()
+        sut = NetworkStatusView()
+        sut.delegate = mockContainer
     }
-    
+
+    override func tearDown() {
+        sut = nil
+        mockContainer = nil
+        super.tearDown()
+    }
+
     func testOfflineExpandedState() {
         // GIVEN
-        let sut = NetworkStatusView()
         sut.state = .offlineExpanded
         // WHEN && THEN
         verifyInAllPhoneWidths(view: sut)
     }
-    
-    func testOfflineCollapsedState() {
-        // GIVEN
-        let sut = NetworkStatusView()
-        sut.state = .offlineCollapsed
-        // WHEN && THEN
-        verifyInAllPhoneWidths(view: sut)
-    }
-    
+
     func testOnlineSynchronizing() {
         // GIVEN
-        let sut = NetworkStatusView()
         sut.state = .onlineSynchronizing
         sut.layer.speed = 0 // freeze animations for deterministic tests
         // WHEN && THEN
         verifyInAllPhoneWidths(view: sut)
     }
-    
+
 }

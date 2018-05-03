@@ -18,8 +18,8 @@
 
 
 import Foundation
-import CocoaLumberjackSwift
 
+private let zmLog = ZMSLog(tag: "UI")
 
 extension String {
     @discardableResult public func deleteFileAtPath() -> Bool {
@@ -27,7 +27,7 @@ extension String {
             try FileManager.default.removeItem(atPath: self)
         }
         catch (let error) {
-            DDLogError("Cannot delete file: \(self): \(error)")
+            zmLog.error("Cannot delete file: \(self): \(error)")
             return false
         }
         return true
@@ -132,7 +132,7 @@ extension AVSAudioEffectType: CustomStringConvertible {
         type(of: self).wr_convertQueue.async {
             
             let result = AVSAudioEffect().applyWav(nil, inFile: inPath, outFile: outPath, effect: self, nr_flag: true)
-            DDLogInfo("applyEffect \(self) from \(inPath) to \(outPath): \(result)")
+            zmLog.info("applyEffect \(self) from \(inPath) to \(outPath): \(result)")
             DispatchQueue.main.async {
                 completion?()
             }

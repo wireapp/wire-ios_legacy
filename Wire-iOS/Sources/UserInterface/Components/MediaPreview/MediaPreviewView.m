@@ -21,7 +21,6 @@
 
 #import "MediaPreviewView.h"
 @import WireExtensionComponents;
-#import "UIFont+MagicAccess.h"
 #import "Wire-Swift.h"
 
 
@@ -75,7 +74,7 @@
 {
     self.contentView = [[UIView alloc] initForAutoLayout];
     [self addSubview:self.contentView];
-    self.contentView.layoutMargins = UITableViewCell.layoutDirectionAwareLayoutMargins;
+    self.contentView.layoutMargins = UIView.directionAwareConversationLayoutMargins;
 
     self.containerView = [[UIView alloc] initForAutoLayout];
     self.containerView.clipsToBounds = YES;
@@ -92,10 +91,14 @@
     [self.containerView addSubview:self.overlayView];
     
     self.titleLabel = [[UILabel alloc] initForAutoLayout];
+    self.titleLabel.font = UIFont.normalLightFont;
+    self.titleLabel.textColor = UIColor.whiteColor;
+    self.titleLabel.numberOfLines = 2;
     [self.containerView addSubview:self.titleLabel];
     
     self.playButton = [[IconButton alloc] initForAutoLayout];
     [self.playButton setIcon:ZetaIconTypePlay withSize:ZetaIconSizeLarge forState:UIControlStateNormal];
+    [self.playButton setIconColor:UIColor.whiteColor forState:UIControlStateNormal];
     [self.containerView addSubview:self.playButton];
     
     self.providerImageView = [[UIImageView alloc] initForAutoLayout];

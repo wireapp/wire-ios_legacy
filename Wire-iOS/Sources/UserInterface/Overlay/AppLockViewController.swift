@@ -18,9 +18,9 @@
 
 import Foundation
 import Cartography
-import CocoaLumberjackSwift
 import WireExtensionComponents
 
+private let zmLog = ZMSLog(tag: "UI")
 
 @objc final class AppLockViewController: UIViewController {
     fileprivate var lockView: AppLockView!
@@ -138,7 +138,7 @@ import WireExtensionComponents
                 if let success = success, success {
                     AppLock.lastUnlockedDate = Date()
                 } else {
-                    DDLogError("Local authentication error: \(String(describing: error?.localizedDescription))")
+                    zmLog.error("Local authentication error: \(String(describing: error?.localizedDescription))")
                 }
             }
         }
@@ -159,7 +159,9 @@ extension AppLockViewController {
         if !self.localAuthenticationNeeded {
             AppLock.lastUnlockedDate = Date()
         }
-        
+
+        self.localAuthenticationCancelled = false
+
         self.localAuthenticationNeeded = true
         if AppLock.isActive {
             self.dimContents = true

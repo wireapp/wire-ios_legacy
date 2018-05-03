@@ -15,12 +15,22 @@
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
+// General strings
 
 
 "general.ok" = "OK";
 "general.next" = "Вперед";
 "general.cancel" = "Отменить";
+"general.close" = "Закрыть";
+"general.back" = "Назад";
 "general.open_settings" = "Открыть настройки Wire";
+"general.edit" = "Редактировать";
+"general.done" = "Готово";
+"general.confirm" = "OK";
+// Language like Chinese does not use space to sperate words or sentences.
+"general.space_between_words" = " ";
+
+"general.guest-room-name" = "Гостевая комната";
 
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -42,13 +52,13 @@
 "peoplepicker.group.done" = "Готово";
 "peoplepicker.group.create" = "Создать";
 
-"peoplepicker.header.people" = "Участники";
+"peoplepicker.header.people" = "Люди";
 "peoplepicker.header.services" = "Службы";
-"peoplepicker.services.create_conversation.item" = "Создать новую беседу";
+"peoplepicker.services.create_conversation.item" = "Создать новый разговор";
 "peoplepicker.services.add_service.button" = "Добавить службу";
 "peoplepicker.services.add_service.error.title" = "Не удается добавить службу";
 "peoplepicker.services.add_service.error.default" = "В данный момент служба недоступна";
-"peoplepicker.services.add_service.error.full" = "The conversation is full";
+"peoplepicker.services.add_service.error.full" = "Разговор переполнен";
 
 "peoplepicker.title.create_conversation" = "Создать группу";
 "peoplepicker.title.add_to_conversation" = "Добавить людей";
@@ -78,6 +88,7 @@
 "peoplepicker.invite_team_members" = "Пригласите людей в команду";
 "peoplepicker.quick-action.open-conversation" = "Открыть";
 "peoplepicker.quick-action.create-conversation" = "Создать группу";
+"peoplepicker.quick-action.create-guest-room" = "Создать гостевую комнату";
 
 "add_participants.all_contacts_added" = "Все пользователи добавлены.";
 
@@ -231,11 +242,12 @@
 
 "conversation.input_bar.shortcut.send" = "Отправить сообщение";
 "conversation.input_bar.shortcut.edit_last_message" = "Изм. последнее сообщение";
-"conversation.input_bar.shortcut.cancel_editing_message" = "Отменить";
+"conversation.input_bar.shortcut.cancel_editing_message" = "Отмена";
 
 "conversation.input_bar.message_too_long.title" = "Сообщение слишком длинное";
 "conversation.input_bar.message_too_long.message" = "Вы можете отправлять сообщения длиной до %d символов.";
 
+"conversation.create.group_name.title" = "Создать группу";
 "conversation.create.group_name.placeholder" = "Имя группы";
 "conversation.create.guidance.empty" = "Не менее 1 символа";
 "conversation.create.guidance.toolong" = "Слишком много символов";
@@ -314,6 +326,9 @@
 "content.system.conversation.team.member-leave" = "%@ был удален из команды.";
 "content.system.conversation.guest.joined" = "%@ присоединился";
 
+"content.system.conversation.invite.title" = "Участники не из вашей команды смогут присоединиться к этому разговору.";
+"content.system.conversation.invite.button" = "Пригласить людей";
+
 "content.system.other_renamed_conv_to_nothing" = "%@ удалил(-а) название разговора";
 "content.system.you_renamed_conv_to_nothing" = "Вы удалили название разговора";
 "content.system.pending_message_timestamp" = "Отправка...";
@@ -343,6 +358,7 @@
 "content.system.renamed_conv.title.you" = "Вы";
 
 "content.system.conversation.with_name.title" = "%@ начал разговор";
+"content.system.conversation.with_name.title-you" = "%@ начал разговор";
 
 "content.system.conversation.with_name.participants" = "с %@";
 
@@ -375,7 +391,6 @@
 // Full sentence: "A message from %@ was not received. [...] (device d1b23c54f34a). This is a debug information.
 
 "content.system.unknown_message.body" = "Вы используете старую версию Wire, которая не может отображать это сообщение.";
-"content.system.unknown_message.body.link" = "Почему это происходит?";
 
 "content.file.uploading" = "Отправка…";
 "content.file.downloading" = "Загрузка…";
@@ -397,12 +412,18 @@
 "content.message.go_to_conversation" = "Показать в разговоре";
 "content.message.forward.to" = "Поиск…";
 "content.message.open" = "Открыть";
+"content.message.copy" = "Копировать";
+
+"content.message.open_link_alert.title" = "Visit Link";
+"content.message.open_link_alert.message" = "Это приведет вас к\n%@";
+"content.message.open_link_alert.open" = "Открыть";
 
 "content.reactions_list.likers" = "Понравилось";
 
 "content.file.too_big" = "Вы можете отправлять файлы до %@";
 // Someone pinged
-"content.ping.text" = "%1$@ отправил(а) пинг";
+"content.ping.text" = "%@ пинганул";
+"content.ping.text-you" = "%@ пинганул";
 
 // Current user pinged
 "content.ping.text.you" = "Вы";
@@ -418,11 +439,17 @@
 "inbox.connection_request.connect_button_title" = "Добавить в контакты";
 "inbox.connection_request.ignore_button_title" = "Игнорировать";
 
+// Save image errors
+"library.alert.permission_warning.title" = "Wire необходим доступ к вашим фото";
+"library.alert.permission_warning.restrictions.explaination" = "Wire не может получить доступ к библиотеке, поскольку включены ограничения.";
+"library.alert.permission_warning.not_allowed.explaination" = "Перейдите в Настройки и разрешите Wire доступ к вашим фото.";
+
 // Voice
-"voice.status.one_to_one.incoming" = "%@\nЗвонит";
-"voice.status.group_call.incoming" = "%@\nЗвонит";
-"voice.status.one_to_one.outgoing" = "%@\nЗвонит";
+"voice.status.one_to_one.incoming" = "%@\nвызов";
+"voice.status.group_call.incoming" = "%@\nвызов";
+"voice.status.one_to_one.outgoing" = "%@\nвызов";
 "voice.status.joining" = "%@\nПодключение";
+"voice.status.leaving" = "%@\nВызов завершен";
 "voice.status.video_not_available" = "Видео выключено";
 "voice.status.low_connection" = "Плохое соединение";
 "voice.network_error.title" = "Отсутствует подключение к интернету";
@@ -458,21 +485,24 @@
 "participants.add_people_button_title" = "Добавить";
 "participants.avatar.guest.title" = "Гость";
 
-"participants.title" = "Подробнее";
+"participants.title" = "Профиль";
 "participants.section.participants" = "Участники (%d)";
 "participants.section.services" = "Сервисов (%d)";
 "participants.footer.add_title" = "Добавить участников";
 
 // Meta Menu
 "meta.menu.rename" = "Переименовать";
-"meta.menu.leave" = "Покинуть";
+"meta.menu.leave" = "Leave…";
 "meta.menu.archive" = "Архивировать";
 "meta.menu.unarchive" = "Разархивировать";
-"meta.menu.delete" = "Удалить";
+"meta.menu.delete" = "Удалить содержимое…";
 "meta.menu.silence.mute" = "Выкл. звук";
 "meta.menu.silence.unmute" = "Вкл.звук";
 "meta.menu.cancel" = "Отменить";
 "meta.menu.cancel_connection_request" = "Отменить запрос";
+"meta.menu.mark_unread" = "Отметить как непрочитанное";
+"meta.menu.mark_read" = "Отметить как прочитанное";
+"shortcut.mark_all_as_read.title" = "Отметить все как прочитанные";
 
 // Delete conversation
 "meta.menu.delete_content.dialog_title" = "Удалить содержимое?";
@@ -532,7 +562,8 @@
 "profile.cancel_connection_request_dialog.button_yes" = "Да";
 
 // Unblock button
-"profile.unblock_button_title" = "Разблокировать";
+"profile.block_button_title" = "Блокировка…";
+"profile.unblock_button_title" = "Разблокировать…";
 
 "profile.cancel_connection_button_title" = "ОТМЕНИТЬ ЗАПРОС";
 "profile.connection_request_state.blocked" = "ЗАБЛОКИРОВАН";
@@ -550,7 +581,7 @@
 // Device list
 "profile.devices.title" = "Устройства";
 "profile.devices.fingerprint_message_unencrypted" = "%@ использует устаревшую версию Wire. Устройства не отображаются.";
-"profile.devices.fingerprint_message" = "Wire присваивает каждому устройству уникальный отпечаток. Сравните их с %@ и верифицируйте ваш разговор. Зачем верифицировать разговоры?";
+"profile.devices.fingerprint_message.title" = "Wire дает каждому устройству уникальный отпечаток. Сравните их с %@ и верифицируйте ваш разговор.";
 "profile.devices.fingerprint_message.link" = "Зачем верифицировать разговоры?";
 
 // Device detail
@@ -563,9 +594,6 @@
 "device.class.tablet" = "Планшет";
 "device.class.phone" = "Телефон";
 "profile.devices.detail.reset_session.title" = "Сбросить сессию";
-
-// General strings
-"general.confirm" = "OK";
 
 // Bot
 "participants.services.remove_integration.button" = "удалить интеграцию";
@@ -603,12 +631,9 @@
 "about.copyright.title" = "© Wire Swiss GmbH";
 
 // Self new devices
-"self.new_device_alert.title" = "Вы подключили %@ к вашему аккаунту Wire";
-"self.new_device_alert.title_prefix.tablet" = "планшет";
-"self.new_device_alert.title_prefix.phone" = "телефон";
-"self.new_device_alert.title_prefix.devices" = "%d устройств";
-"self.new_device_alert.message" = "%@\n\nЕсли вы не делали этого, удалите устройство и измените ваш пароль.";
-"self.new_device_alert.message_plural" = "%@\n\nЕсли вы не делали этого, удалите устройства и измените ваш пароль.";
+"self.new_device_alert.title" = "Ваша учетная запись использовалась на:";
+"self.new_device_alert.message" = "\n%@\n\nЕсли вам не знакомо это устройство, удалите его и сбросьте свой пароль.";
+"self.new_device_alert.message_plural" = "\n%@\n\nЕсли вам не знакомы эти устройства, удалите их и сбросьте свой пароль.";
 "self.new_device_alert.manage_devices" = "Управление устройствами";
 "self.new_device_alert.trust_devices" = "OK";
 
@@ -773,7 +798,11 @@
 "self.settings.privacy_contacts_menu.description_disabled.title" = "Это поможет вам связаться с другими людьми. Мы анонимизируем всю информацию и не передаем ее третьим лицам. Разрешите доступ в Настройки > Конфиденциальность > Контакты.";
 
 "self.settings.privacy_security.lock_app" = "Заблокировать с помощью пароля";
-"self.settings.privacy_security.lock_app.subtitle" = "Заблокировать Wire после 10 секунд нахождения в фоновом режиме. Разблокировать приложение можно с помощью Touch ID или пароля.";
+"self.settings.privacy_security.lock_app.subtitle.lock_description" = "Lock Wire after 10 seconds in the background.";
+"self.settings.privacy_security.lock_app.subtitle.touch_id" = "Разблокируйте при помощи Touch ID или введите свой код доступа.";
+"self.settings.privacy_security.lock_app.subtitle.face_id" = "Разблокируйте при помощи Face ID или введите свой код доступа.";
+"self.settings.privacy_security.lock_app.subtitle.none" = "Для разблокировки введите свой код доступа.";
+
 "self.settings.privacy_security.lock_app.description" = "Разблокировать Wire";
 
 "self.settings.privacy_security.lock_cancelled.description" = "Разблокируйте Wire с помощью Touch ID или пароля";
@@ -816,6 +845,25 @@
 // Invite from Settings
 "self.settings.invite_friends.title" = "Пригласить людей";
 
+// History backup
+
+"self.settings.conversations.title" = "История";
+"self.settings.history_backup.title" = "Резервная копия разговоров";
+"self.settings.history_backup.description" = "Создайте резервную копию, чтобы сохранить историю разговоров. Это пригодится для восстановления истории в случае потери или замены устройства.\n\nРезервная копия не шифруется, поэтому храните ее в надежном месте.";
+"self.settings.history_backup.action" = "Создать резервную копию сейчас";
+"self.settings.history_backup.error.title" = "Ошибка";
+
+"self.settings.history_backup.set_email.title" = "Настройте email и пароль.";
+"self.settings.history_backup.set_email.message" = "Для создания резервной копии истории разговоров вам потребуется email и пароль. Вы можете сделать это в настройках учетной записи.";
+
+// History backup password
+
+"self.settings.history_backup.password.title" = "Установить пароль";
+"self.settings.history_backup.password.cancel" = "Отменить";
+"self.settings.history_backup.password.next" = "Вперед";
+"self.settings.history_backup.password.placeholder" = "Необходимо минимум 8 символов";
+"self.settings.history_backup.password.description" = "Резервная копия будет сжата и защищена с помощью пароля.";
+
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // System status
 "system_status_bar.no_internet.title" = "Нет доступа к интернету";
@@ -829,7 +877,7 @@
 "name.guidance.toolong" = "Слишком много символов";
 
 "email.placeholder" = "Email";
-"email.guidance.invalid" = "Недопустимый адрес email";
+"email.guidance.invalid" = "Неправильный email";
 "email.guidance.tooshort" = "Email слишком короткий";
 "email.guidance.toolong" = "Слишком много символов";
 
@@ -839,13 +887,14 @@
 
 // Landing screen
 
+"landing.app_name" = "Wire";
 "landing.title" = "Безопасный обмен сообщениями для всех.";
-"landing.create_account.title" = "Создать аккаунт";
-"landing.create_account.subtitle" = "для личного пользования";
-"landing.create_team.title" = "Создать команду";
-"landing.create_team.subtitle" = "для работы";
+"landing.create_account.title" = "Для личного пользования";
+"landing.create_account.subtitle" = "создать аккаунт";
+"landing.create_team.title" = "Для организаций";
+"landing.create_team.subtitle" = "создать команду";
 "landing.login.hints" = "Уже зарегистрированы?";
-"landing.login.button.title" = "Вход";
+"landing.login.button.title" = "Войти";
 
 // Create team
 
@@ -862,7 +911,7 @@
 "team.email.button.learn_more" = "Подробнее";
 
 "team.activation_code.headline" = "Вам письмо";
-"team.activation_code.subheadline" = "Введите код подтверждения, отправленный на номер %@.";
+"team.activation_code.subheadline" = "Введите код подтверждения, который был отправлен на номер %@.";
 "team.activation_code.button.resend" = "Запросить код повторно";
 "team.activation_code.button.change_email" = "Изменить email";
 
@@ -906,7 +955,24 @@
 "guest_room.error.generic.title" = "Что-то пошло не так";
 "guest_room.error.generic.message" = "Проверьте подключение и попробуйте еще раз";
 
+"guest_room.link.header.title" = "Пригласить других пользователей ссылкой";
+"guest_room.link.header.subtitle" = "Любой, у кого есть ссылка, может присоединиться к разговору, даже если у них нет Wire.";
+
+"guest_room.link.button.title" = "Создать ссылку";
+
+"guest_room.actions.copy_link" = "Скопировать ссылку";
+"guest_room.actions.copied_link" = "Ссылка скопирована!";
+"guest_room.actions.share_link" = "Поделиться ссылкой";
+"guest_room.actions.revoke_link" = "Отозвать ссылку…";
+
+"guest_room.share.message" = "Присоединяйтесь ко мне в Wire:\n%@";
+
+"guest_room.expiration.hours_left" = "Осталось %@ час.";
+"guest_room.expiration.less_than_minutes_left" = "Осталось менее %@ мин.";
+
 // Registration
+
+"registration.launch_back_button.label" = "Назад";
 
 "registration.title" = "Регистрация";
 "registration.close_email_invitation_button.email_title" = "Используйте другой email";
@@ -935,6 +1001,37 @@
 "registration.no_history.hero" = "Вы впервые используете Wire на этом устройстве.";
 "registration.no_history.subtitle" = "Из соображений конфиденциальности история ваших разговоров не будет показана здесь.";
 "registration.no_history.got_it" = "OK";
+"registration.no_history.restore_backup" = "Восстановить из резервной копии";
+
+// Restore History Warning Alert
+"registration.no_history.restore_backup_warning.title" = "Восстановить историю";
+"registration.no_history.restore_backup_warning.message" = "Содержимое резервной копии заменит историю разговоров на этом устройстве.\nВосстановить историю можно только из резервной копии для одной и той же платформы.";
+"registration.no_history.restore_backup_warning.proceed" = "Выберите резервную копию";
+
+/// Restore History Failure Alerts
+"registration.no_history.restore_backup_failed.try_again" = "Повторить";
+
+// Generic
+"registration.no_history.restore_backup_failed.title" = "Что-то пошло не так";
+"registration.no_history.restore_backup_failed.message" = "Ваша история не может быть восстановлена.";
+
+// Wrong Account
+"registration.no_history.restore_backup_failed.wrong_account.title" = "Несовместимая резервная копия";
+"registration.no_history.restore_backup_failed.wrong_account.message" = "Вы не можете восстановить историю из другой учетной записи.";
+
+// Incompatible Version
+"registration.no_history.restore_backup_failed.wrong_version.title" = "Несовместимая резервная копия";
+"registration.no_history.restore_backup_failed.wrong_version.message" = "Эта резервная копия была создана в более новой или устаревшей версии Wire и не может быть восстановлена.";
+
+// Restore In Progress Loading Titles
+"registration.no_history.restore_backup.restoring" = "Восстановление…";
+"registration.no_history.restore_backup.completed" = "Завершено";
+
+// Password Import Alert
+"registration.no_history.restore_backup.password.title" = "Эта резервная копия защищена паролем.";
+"registration.no_history.restore_backup.password.message" = "Для восстановления этой резервной копии необходим пароль.";
+"registration.no_history.restore_backup.password.placeholder" = "Пароль";
+"registration.no_history.restore_backup.password_error.title" = "Неверный пароль";
 
 "registration.no_history.logged_out.hero" = "Вы уже использовали Wire на этом устройстве.";
 "registration.no_history.logged_out.subtitle" = "Сообщения, отправленные ранее, не будут показаны.";
@@ -993,7 +1090,19 @@
 "registration.devices.activated_in" = "Активирован в";
 "registration.devices.id" = "ID:";
 
+"signin.use_email.label" = "Войти c email";
+"signin.use_phone.label" = "Войти с номером телефона";
 "signin.forgot_password" = "Забыли пароль?";
+"signin.use_one_password.label" = "Войти с 1Password";
+"signin.use_one_password.hint" = "Дважды кликните, чтобы заполнить ваш пароль из 1Password";
+"signin.confirm" = "Войти";
+
+"registration.phone_country" = "Страна";
+"registration.phone_code" = "Код страны";
+"registration.phone_country.hint" = "Дважды кликните, чтобы выбрать другую страну.";
+"registration.phone_code.hint" = "Дважды кликните, чтобы выбрать другой код страны.";
+"registration.phone.verify.label" = "Подтвердить номер телефона";
+"registration.phone.verify_field.label" = "Код подтверждения";
 
 "registration.add_phone_number.hero.title" = "Добавить номер телефона";
 "registration.add_phone_number.hero.paragraph" = "Это поможет нам найти людей, которых вы, возможно, знаете. Мы не разглашаем информацию о вас.";
@@ -1009,6 +1118,9 @@
 "registration.phone_invitation.title" = "Приглашение";
 "registration.phone_invitation.hero.title" = "Привет, %@";
 "registration.phone_invitation.hero.paragraph" = "Вы в одном шаге от создания аккаунта.";
+
+"registration.confirm" = "Регистрация";
+"registration.phone.country_code.hint" = "Дважды кликните, чтобы использовать телефонный номер этой страны.";
 
 "error.name_and_email" = "Пожалуйста, введите свое полное имя и правильный email";
 "error.full_name" = "Пожалуйста, введите свое полное имя";
@@ -1061,6 +1173,12 @@
 
 "error.invite.no_email_provider" = "Пожалуйста, настройте ваш почтовый клиент, чтобы иметь возможность отправлять приглашения по электронной почте";
 "error.invite.no_messaging_provider" = "Пожалуйста, настройте SMS, чтобы иметь возможность отправлять приглашения через SMS";
+
+"error.conversation.title" = "Ошибка";
+"error.conversation.cannot_add" = "Не удалось добавить участника";
+"error.conversation.cannot_remove" = "Не удалось удалить участника";
+"error.conversation.too_many_members" = "Разговор переполнен";
+"error.conversation.offline" = "Похоже, что есть проблема с подключением к интернету. Пожалуйста, убедитесь, что соединение установлено.";
 
 "sketchpad.initial_hint" = "Нажмите на цвет, чтобы изменить размер кисти";
 
@@ -1123,13 +1241,24 @@
 "compose.drafts.compose.dismiss.confirm.action.title" = "Сохранить";
 "compose.drafts.compose.dismiss.delete.action.title" = "Удалить";
 
-"availability.message.cancel" = "Отменить";
+"availability.message.cancel" = "Отмена";
 "availability.message.set_status" = "Установить статус";
 
 "availability.none" = "Отключены";
-"availability.available" = "Доступен";
+"availability.available" = "Доступно";
 "availability.away" = "Отошел";
 "availability.busy" = "Занят";
 "availability.available.placeholder" = "%@ доступен";
 "availability.away.placeholder" = "%@ отошел";
 "availability.busy.placeholder" = "%@ занят";
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Call Quality Survey
+
+"calling.quality_survey.title" = "Обратная связь";
+"calling.quality_survey.question" = "Как вы оцените общее качество обслуживания?";
+"calling.quality_survey.answer.1" = "Ужасно";
+"calling.quality_survey.answer.2" = "Плохо";
+"calling.quality_survey.answer.3" = "Приемлемо";
+"calling.quality_survey.answer.4" = "Хорошо";
+"calling.quality_survey.answer.5" = "Прекрасно";

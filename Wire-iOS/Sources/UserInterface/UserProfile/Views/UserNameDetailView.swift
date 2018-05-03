@@ -21,9 +21,9 @@ import UIKit
 import Cartography
 
 
-fileprivate let smallLightFont = UIFont(magicIdentifier: "style.text.small.font_spec_light")!
-fileprivate let smallBoldFont = UIFont(magicIdentifier: "style.text.small.font_spec_bold")!
-fileprivate let normalBoldFont = UIFont(magicIdentifier: "style.text.normal.font_spec_bold")!
+fileprivate let smallLightFont = FontSpec(.small, .light).font!
+fileprivate let smallBoldFont = FontSpec(.small, .medium).font!
+fileprivate let normalBoldFont = FontSpec(.normal, .medium).font!
 
 @objc public class AddressBookCorrelationFormatter: NSObject {
 

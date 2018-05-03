@@ -317,11 +317,16 @@ static CIContext *ciContext(void)
     self.imageView.hidden = userImage == nil;
     self.imageView.image = userImage;
     
+    BOOL isWireless = NO;
+    if ([self.user respondsToSelector:@selector(isWirelessUser)]) {
+        isWireless = [(id)self.user isWirelessUser];
+    }
+    
     if (userImage) {
         self.containerView.backgroundColor = [self containerBackgroundColorForUser:self.user];
     }
     else if ([self.user respondsToSelector:@selector(accentColor)] &&
-             (self.user.isConnected || self.user.isSelfUser || self.user.isTeamMember)) {
+             (self.user.isConnected || self.user.isSelfUser || self.user.isTeamMember || isWireless)) {
         self.containerView.backgroundColor = [(id)self.user accentColor];
     }
     else {

@@ -34,7 +34,6 @@ final class MarkdownTextViewTests: XCTestCase {
         style.codeFont = UIFont(name: "Menlo", size: style.baseFont.pointSize) ?? style.baseFont
         style.codeColor = UIColor.red
         style.baseParagraphStyle = NSParagraphStyle.default
-        style.listIndentation = 0
         style.h1Size = 28
         style.h2Size = 24
         style.h3Size = 20
@@ -206,6 +205,24 @@ final class MarkdownTextViewTests: XCTestCase {
         insertText(text)
         // THEN: it renders correct attributes
         checkAttributes(for: Markdown(md), inRange: NSMakeRange(0, text.length))
+    }
+
+    func testThatItUpdatesTextColor() {
+        // GIVEN: we're currently using the default color
+        sut.updateTextColor(base: nil)
+        insertText("Hieeee")
+
+        // WHEN: we update the colors
+        sut.updateTextColor(base: .red)
+
+        // THEN: the color of the text changes in the attributes
+        var attributedRange: NSRange = NSMakeRange(0, 0)
+        let attributedColor = sut.attributedText.attribute(NSForegroundColorAttributeName, at: 0, effectiveRange: &attributedRange) as? UIColor
+        XCTAssertEqual(attributedColor, .red)
+        XCTAssertEqual(attributedRange, NSMakeRange(0, 6))
+
+        XCTAssertEqual(style.baseFontColor, .red)
+        XCTAssertEqual(sut.textColor, .red)
     }
     
     // MARK: Atomic ☺️
@@ -615,7 +632,7 @@ final class MarkdownTextViewTests: XCTestCase {
     }
     
     func testThatSelectingListBelowExistingItemInsertsNewItemWithCorrectPrefix_Bullet() {
-        ["- ", "+ ", "* "].forEach {
+        ["• ", "- ", "+ ", "* "].forEach {
             // GIVEN
             insertText($0 + "Oh Hai!\n")
             insertText("OK Bai!")
@@ -733,7 +750,7 @@ final class MarkdownTextViewTests: XCTestCase {
         // GIVEN
         let text = "1. Oh Hai!"
         // WHEN
-        text.characters.forEach { insertText(String($0)) }
+        text.forEach { insertText(String($0)) }
         // THEN
         XCTAssertEqual(sut.text, text)
         checkAttributes(for: .oList, inRange: NSMakeRange(0, text.length))
@@ -744,7 +761,7 @@ final class MarkdownTextViewTests: XCTestCase {
         // GIVEN
         let text = "+ Oh Hai!"
         // WHEN
-        text.characters.forEach { insertText(String($0)) }
+        text.forEach { insertText(String($0)) }
         // THEN
         XCTAssertEqual(sut.text, text)
         checkAttributes(for: .uList, inRange: NSMakeRange(0, text.length))

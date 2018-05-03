@@ -20,8 +20,6 @@
 /// Private material for conversationContentViewController.
 
 #import "ConversationContentViewController.h"
-
-#import "WAZUIMagicIOS.h"
 #import <WireSyncEngine/WireSyncEngine.h>
 #import "MessageAction.h"
 

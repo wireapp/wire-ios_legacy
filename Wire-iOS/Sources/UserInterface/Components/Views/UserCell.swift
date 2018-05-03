@@ -42,7 +42,7 @@ class UserCell: UICollectionViewCell, Themeable {
     
     let separator = UIView()
     let avatarSpacer = UIView()
-    let avatar = BadgeUserImageView(magicPrefix: "people_picker.search_results_mode")
+    let avatar = BadgeUserImageView()
     let titleLabel = UILabel()
     let subtitleLabel = UILabel()
     let connectButton = IconButton()
@@ -136,6 +136,8 @@ class UserCell: UICollectionViewCell, Themeable {
         subtitleLabel.font = FontSpec.init(.small, .regular).font!
         subtitleLabel.accessibilityIdentifier = "user_cell.username"
         
+        avatar.userSession = ZMUserSession.shared()
+        avatar.initials.font = UIFont.systemFont(ofSize: 11, weight: UIFontWeightLight)
         avatar.size = .tiny
         avatar.translatesAutoresizingMaskIntoConstraints = false
 
@@ -249,6 +251,10 @@ extension UserCell {
             components.append("@\(handle)" && UserCell.boldFont)
         }
         
+        WirelessExpirationTimeFormatter.shared.string(for: user).apply {
+            components.append($0 && UserCell.boldFont)
+        }
+        
         if let user = user as? ZMUser, let addressBookName = user.addressBookEntry?.cachedName {
             let formatter = UserCell.correlationFormatter(for: colorSchemeVariant)
             components.append(formatter.correlationText(for: user, addressBookName: addressBookName))
@@ -283,11 +289,15 @@ extension UserCell {
 
 extension ZMBareUser {
     
-    func nameIncludingAvailability(color: UIColor) -> NSAttributedString {
+    func nameIncludingAvailability(color: UIColor) -> NSAttributedString? {
         if ZMUser.selfUser().isTeamMember, let user = self as? ZMUser {
             return AvailabilityStringBuilder.string(for: user, with: .list, color: color)
         } else {
-            return NSAttributedString(string: name)
+            if let name = name {
+                return NSAttributedString(string: name)
+            } else {
+                return nil
+            }
         }
     }
     

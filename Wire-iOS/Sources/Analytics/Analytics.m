@@ -16,6 +16,7 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 // 
 
+@import WireSystem;
 
 #import "Analytics.h"
 #import "Analytics+SessionEvents.h"
@@ -36,6 +37,9 @@
 
 #import "Wire-Swift.h"
 
+
+@class AnalyticsProvider;
+static NSString* ZMLogTag ZM_UNUSED = @"Analytics";
 
 NSString * LocalyticsAPIKey = @STRINGIZE(ANALYTICS_API_KEY);
 NSString * MixpanelAPIKey = @STRINGIZE(MIXPANEL_API_KEY);
@@ -78,6 +82,7 @@ static Analytics *sharedAnalytics = nil;
 {
     self = [super init];
     if (self) {
+        ZMLogInfo(@"Analytics initWithOptedOut: %lu", (unsigned long)optedOut);
         self.provider = optedOut ? nil : [[AnalyticsProviderFactory shared] analyticsProvider];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(userSessionDidBecomeAvailable:) name:ZMUserSessionDidBecomeAvailableNotification object:nil];
     }
@@ -118,11 +123,11 @@ static Analytics *sharedAnalytics = nil;
     _team = team;
     if (nil == team) {
         [self.provider setSuperProperty:@"team.size" value:@"0"];
-        [self.provider setSuperProperty:@"team.in_team" value:@"false"];
+        [self.provider setSuperProperty:@"team.in_team" value:@(NO)];
     }
     else {
         [self.provider setSuperProperty:@"team.size" value:[NSString stringWithFormat:@"%lu", (unsigned long)[team.members count]]];
-        [self.provider setSuperProperty:@"team.in_team" value:@"true"];
+        [self.provider setSuperProperty:@"team.in_team" value:@(YES)];
     }
 }
 

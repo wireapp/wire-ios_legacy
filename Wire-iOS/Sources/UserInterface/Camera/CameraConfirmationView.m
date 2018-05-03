@@ -23,7 +23,6 @@
 
 #import "Button.h"
 #import "UIColor+WAZExtensions.h"
-#import "WAZUIMagicIOS.h"
 
 #import "Wire-Swift.h"
 
@@ -67,7 +66,7 @@
 {
     if (! self.initialConstraintsCreated) {
         
-        const CGFloat Margin = [WAZUIMagic floatForIdentifier:@"camera_overlay.margin"];
+        const CGFloat Margin = 24;
         
         [self.acceptButton autoSetDimension:ALDimensionHeight toSize:40];
         [self.acceptButton autoAlignAxisToSuperviewAxis:ALAxisHorizontal];

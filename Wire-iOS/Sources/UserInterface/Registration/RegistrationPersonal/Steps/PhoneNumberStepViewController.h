@@ -18,7 +18,7 @@
 
 
 #import "RegistrationStepViewController.h"
-
+#import "PhoneNumberViewController.h"
 
 
 @class ZMIncompleteRegistrationUser;
@@ -34,6 +34,7 @@
 @property (nonatomic, readonly) UILabel *heroLabel;
 @property (nonatomic, copy, readonly) NSString *phoneNumber;
 @property (nonatomic) BOOL invitationButtonDisplayed;
+@property (nonatomic) PhoneNumberViewController *phoneNumberViewController;
 
 - (void)takeFirstResponder;
 - (void)reset;

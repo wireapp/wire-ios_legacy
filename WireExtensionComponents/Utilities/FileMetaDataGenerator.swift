@@ -19,9 +19,10 @@
 
 import Foundation
 import MobileCoreServices
-import CocoaLumberjackSwift
 import WireDataModel
 import AVFoundation
+
+private let zmLog = ZMSLog(tag: "UI")
 
 @objc public final class FileMetaDataGenerator: NSObject {
 
@@ -63,7 +64,7 @@ func audioSamplesFromAsset(_ asset: AVAsset, maxSamples: UInt64) -> [Float]? {
         reader = try AVAssetReader(asset: asset)
     }
     catch let error {
-        DDLogError("Cannot read asset metadata for \(asset): \(error)")
+        zmLog.error("Cannot read asset metadata for \(asset): \(error)")
         return .none
     }
     

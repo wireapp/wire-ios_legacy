@@ -19,9 +19,9 @@
 
 #import <UIKit/UIKit.h>
 #import "StyledTextField.h"
-#import "WAZUIMagicIOS.h"
 #import "UIView+Borders.h"
 #import "NSAttributedString+Wire.h"
+#import "Wire-Swift.h"
 
 
 
@@ -65,7 +65,7 @@
 - (void)setup
 {
     self.textColor = [UIColor whiteColor];
-    self.font = [UIFont fontWithMagicIdentifier:@"style.text.normal.font_spec"];
+    self.font = UIFont.normalLightFont;
     self.translatesAutoresizingMaskIntoConstraints = NO;
     self.originalFontSize = -1;
 
@@ -82,11 +82,11 @@
 - (void)setGuidanceType:(GuidanceType)guidanceType
 {
     _guidanceType = guidanceType;
-    UIColor *requiredColor = [UIColor colorWithMagicIdentifier:@"guidance.guidance_type_required_color"];
-    UIColor *optionalColor = [UIColor colorWithMagicIdentifier:@"guidance.guidance_type_optional_color"];
+    UIColor *requiredColor = [UIColor colorWithRed:0.811 green:0.243 blue:0.235 alpha:1];
+    UIColor *optionalColor = [UIColor colorWithRed:0.996 green:0.823 blue:0.019 alpha:1];
     UIColor *dotColor = guidanceType == GuidanceTypeInfo ? optionalColor : requiredColor;
 
-    CGFloat dotDiameter = [WAZUIMagic cgFloatForIdentifier:@"guidance.dot_size"];
+    CGFloat dotDiameter = 10;
 
     UIView *dotView = [[UIView alloc] initWithFrame:(CGRect) {CGPointZero, {dotDiameter, dotDiameter}}];
     dotView.backgroundColor = dotColor;
@@ -168,7 +168,7 @@
 
     NSAttributedString *attributedPlaceholder = [placeholder attributedStringWithAttributes:@{
             NSForegroundColorAttributeName : [UIColor colorWithWhite:1 alpha:0.4],
-            NSFontAttributeName : [UIFont fontWithMagicIdentifier:@"style.text.normal.font_spec"]
+            NSFontAttributeName : UIFont.normalLightFont
     }];
     return attributedPlaceholder;
 }

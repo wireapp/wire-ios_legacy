@@ -20,10 +20,9 @@
 #import "ImageCache.h"
 #import "weakify.h"
 
-@import CocoaLumberjack;
+@import WireSystem;
 
-
-static const int ddLogLevel = LOG_LEVEL_CONFIG;
+static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
 @interface ImageCache ()
 
@@ -197,7 +196,7 @@ static const int ddLogLevel = LOG_LEVEL_CONFIG;
                 [self.cache setObject:image forKey:cacheKey];
             }
             else {
-                DDLogError(@"Error creating image from data");
+                ZMLogError(@"Error creating image from data");
             }
             
             dispatch_async(dispatch_get_main_queue(), ^{
@@ -206,7 +205,7 @@ static const int ddLogLevel = LOG_LEVEL_CONFIG;
                 NSTimeInterval duration = endTime - startTime;
                 
                 if (duration > 10) {
-                    DDLogVerbose(@"Image took a really long time to create! (time: %.2f bytes: %ld)", duration, (unsigned long)imageData.length);
+                    ZMLogInfo(@"Image took a really long time to create! (time: %.2f bytes: %ld)", duration, (unsigned long)imageData.length);
                 }
                 if (nil != completion) {
                     completion(image, cacheKey);

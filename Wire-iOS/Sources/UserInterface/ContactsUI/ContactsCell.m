@@ -21,7 +21,6 @@
 #import "BadgeUserImageView.h"
 @import PureLayout;
 #import "WireSyncEngine+iOS.h"
-#import "UserImageView+Magic.h"
 @import WireExtensionComponents;
 
 
@@ -84,7 +83,8 @@ NS_ASSUME_NONNULL_END
 - (void)setupSubviews
 {
     self.selectionStyle = UITableViewCellSelectionStyleNone;
-    self.userImageView = [[BadgeUserImageView alloc] initWithMagicPrefix:@"address_book"];
+    self.userImageView = [[BadgeUserImageView alloc] init];
+    self.userImageView.initials.font = [UIFont systemFontOfSize:11 weight:UIFontWeightLight];
     self.userImageView.userSession = [ZMUserSession sharedSession];
     self.userImageView.size = UserImageViewSizeTiny;
     self.userImageView.translatesAutoresizingMaskIntoConstraints = NO;

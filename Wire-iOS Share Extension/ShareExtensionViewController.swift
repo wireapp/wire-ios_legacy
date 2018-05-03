@@ -23,8 +23,9 @@ import Cartography
 import MobileCoreServices
 import WireDataModel
 import WireExtensionComponents
-import CocoaLumberjackSwift
 import Classy
+
+private let zmLog = ZMSLog(tag: "UI")
 
 /// The delay after which a progess view controller will be displayed if all messages are not yet sent.
 private let progressDisplayDelay: TimeInterval = 0.5
@@ -396,7 +397,7 @@ class ShareExtensionViewController: SLComposeServiceViewController {
                     self?.localAuthenticationStatus = .granted
                 } else {
                     self?.localAuthenticationStatus = .denied
-                    DDLogError("Local authentication error: \(String(describing: error?.localizedDescription))")
+                    zmLog.error("Local authentication error: \(String(describing: error?.localizedDescription))")
                 }
                 callback(self?.localAuthenticationStatus)
             }

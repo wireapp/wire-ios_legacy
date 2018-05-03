@@ -75,7 +75,6 @@ class AppRootViewController: UIViewController {
         appStateController = AppStateController()
         fileBackupExcluder = FileBackupExcluder()
         avsLogObserver = AVSLogObserver()
-        MagicConfig.shared()
 
         mainWindow = UIWindow(frame: UIScreen.main.bounds)
         mainWindow.accessibilityIdentifier = "ZClientMainWindow"
@@ -99,6 +98,7 @@ class AppRootViewController: UIViewController {
         overlayWindow.makeKeyAndVisible()
         mainWindow.makeKey()
 
+        type(of: self).configureAppearance()
         configureMediaManager()
 
         if let appGroupIdentifier = Bundle.main.appGroupIdentifier {
@@ -136,6 +136,7 @@ class AppRootViewController: UIViewController {
         
         CallQualityScoreProvider.shared.nextProvider = analytics
         sessionManagerAnalytics = CallQualityScoreProvider.shared
+        SessionManager.clearPreviousBackups()
 
         SessionManager.create(
             appVersion: appVersion!,
@@ -143,7 +144,6 @@ class AppRootViewController: UIViewController {
             analytics: sessionManagerAnalytics,
             delegate: appStateController,
             application: UIApplication.shared,
-            launchOptions: launchOptions,
             blacklistDownloadInterval: Settings.shared().blacklistDownloadInterval) { sessionManager in
             self.sessionManager = sessionManager
             self.sessionManagerCreatedSessionObserverToken = sessionManager.addSessionManagerCreatedSessionObserver(self)
@@ -152,9 +152,15 @@ class AppRootViewController: UIViewController {
             self.sessionManager?.requestToOpenViewDelegate = self
             sessionManager.updateCallNotificationStyleFromSettings()
             sessionManager.useConstantBitRateAudio = Settings.shared().callingConstantBitRate
+            sessionManager.start(launchOptions: launchOptions)
                 
             self.quickActionsManager = QuickActionsManager(sessionManager: sessionManager,
                                                            application: UIApplication.shared)
+                
+            sessionManager.urlHandler.delegate = self
+            if let url = launchOptions[UIApplicationLaunchOptionsKey.url] as? URL {
+                sessionManager.urlHandler.openURL(url, options: [:])
+            }
         }
     }
 
@@ -207,7 +213,7 @@ class AppRootViewController: UIViewController {
             
             // check if needs to reauthenticate
             var needsToReauthenticate = false
-            var addingNewAccount = true
+            var addingNewAccount = (SessionManager.shared?.accountManager.accounts.count == 0)
             if let error = error {
                 let errorCode = (error as NSError).userSessionErrorCode
                 needsToReauthenticate = [ZMUserSessionErrorCode.clientDeletedRemotely,
@@ -366,11 +372,11 @@ class AppRootViewController: UIViewController {
 
     func onContentSizeCategoryChange() {
         Message.invalidateMarkdownStyle()
-        UIFont.wr_flushFontCache()
         NSAttributedString.wr_flushCellParagraphStyleCache()
         ConversationListCell.invalidateCachedCellSize()
         let fontScheme = FontScheme(contentSizeCategory: UIApplication.shared.preferredContentSizeCategory)
         CASStyler.default().apply(fontScheme: fontScheme)
+        type(of: self).configureAppearance()
     }
 
     public func performWhenAuthenticated(_ block : @escaping () -> Void) {
@@ -547,5 +553,37 @@ public extension SessionManager {
         }
         
         return nil
+    }
+}
+
+extension AppRootViewController: SessionManagerURLHandlerDelegate {
+    func sessionManagerShouldExecute(URLAction: RawURLAction, callback: @escaping (Bool) -> (Void)) {
+        switch URLAction {
+        case .connectBot:
+            guard let _ = ZMUser.selfUser().team else {
+                callback(false)
+                return
+            }
+            
+            let alert = UIAlertController(title: "url_action.title".localized,
+                                          message: "url_action.connect_to_bot.message".localized,
+                                          preferredStyle: .alert)
+            
+            let agreeAction = UIAlertAction(title: "url_action.confirm".localized,
+                                            style: .default) { _ in
+                                                callback(true)
+            }
+            
+            alert.addAction(agreeAction)
+            
+            let cancelAction = UIAlertAction(title: "general.cancel".localized,
+                                             style: .cancel) { _ in
+                                                callback(false)
+            }
+            
+            alert.addAction(cancelAction)
+            
+            self.present(alert, animated: true, completion: nil)
+        }
     }
 }

@@ -41,7 +41,7 @@ extension UIView {
     }
 }
 
-final class ConversationImagesViewController: UIViewController {
+final class ConversationImagesViewController: TintColorCorrectedViewController {
     
     let collection: AssetCollectionWrapper
     
@@ -129,11 +129,9 @@ final class ConversationImagesViewController: UIViewController {
             navigationBar.items = [navigationItem]
             navigationBar.isTranslucent = false
             navigationBar.barTintColor = ColorScheme.default().color(withName: ColorSchemeColorBarBackground)
-            
+
             navBarContainer = UINavigationBarContainer(navigationBar)
-            navBarContainer?.backgroundColor = ColorScheme.default().color(withName: ColorSchemeColorBarBackground)
         }
-        
         
         self.createPageController()
         self.createControlsBar()
@@ -159,8 +157,11 @@ final class ConversationImagesViewController: UIViewController {
         }
         
         if let navBarContainer = navBarContainer {
-            view.addSubview(navBarContainer)
-            constrain(view, navBarContainer) { view, navigationBar in
+            addChildViewController(navBarContainer)
+            view.addSubview(navBarContainer.view)
+            navBarContainer.didMove(toParentViewController: self)
+
+            constrain(view, navBarContainer.view) { view, navigationBar in
                 navigationBar.top == view.top
                 navigationBar.width == view.width
                 navigationBar.centerX == view.centerX
@@ -284,7 +285,7 @@ final class ConversationImagesViewController: UIViewController {
     }
 
     fileprivate func updateBarsForPreview() {
-        navBarContainer?.isHidden = isPreviewing
+        navBarContainer?.view.isHidden = isPreviewing
         buttonsBar?.isHidden = isPreviewing
         separator.isHidden = isPreviewing
     }
@@ -469,12 +470,12 @@ extension ConversationImagesViewController: MenuVisibilityController {
         if !UIScreen.hasNotch {
             isVisible = isVisible && UIApplication.shared.isStatusBarHidden
         }
-        return  (navBarContainer?.isHidden ?? isVisible) && isVisible
+        return  (navBarContainer?.view.isHidden ?? isVisible) && isVisible
     }
     
     func fadeAndHideMenu(_ hidden: Bool) {
         let duration = UIApplication.shared.statusBarOrientationAnimationDuration
-        navBarContainer?.fadeAndHide(hidden, duration: duration)
+        navBarContainer?.view.fadeAndHide(hidden, duration: duration)
         buttonsBar.fadeAndHide(hidden, duration: duration)
         separator.fadeAndHide(hidden, duration: duration)
         
@@ -493,29 +494,43 @@ extension MenuVisibilityController {
     }
 }
 
+fileprivate extension UIPreviewAction {
+    convenience init(titleKey: String, handler: @escaping () -> Void) {
+        self.init(
+            title: titleKey.localized,
+            style: .default,
+            handler: { _ in handler() }
+        )
+    }
+}
+
 extension ConversationImagesViewController {
 
     override var previewActionItems: [UIPreviewActionItem] {
-        let copyAction = UIPreviewAction(title: NSLocalizedString("content.message.copy", comment: ""), style: .default) { _ in
-            self.copyCurrent(nil)
-        }
+        let copyAction = UIPreviewAction(
+            titleKey: "content.message.copy",
+            handler: { self.copyCurrent(nil) }
+        )
+        
+        let likeAction = UIPreviewAction(
+            titleKey: "content.message.\(currentMessage.liked ? "unlike" : "like")",
+            handler: likeCurrent
+        )
 
-        let likeActionKey = currentMessage.liked ? "unlike" : "like"
-        let likeAction = UIPreviewAction(title: NSLocalizedString("content.message.\(likeActionKey)", comment: ""), style: .default) { _ in
-            self.likeCurrent()
-        }
+        let saveAction = UIPreviewAction(
+            titleKey: "content.message.save",
+            handler: { self.saveCurrent(nil) }
+        )
 
-        let saveAction = UIPreviewAction(title: NSLocalizedString("content.message.save", comment: ""), style: .default) { _ in
-            self.saveCurrent(nil)
-        }
+        let shareAction = UIPreviewAction(
+            titleKey: "content.message.forward",
+            handler: { self.shareCurrent(nil) }
+        )
 
-        let shareAction = UIPreviewAction(title: NSLocalizedString("content.message.forward", comment: ""), style: .default) { _ in
-            self.shareCurrent(nil)
-        }
-
-        let deleteAction = UIPreviewAction(title: NSLocalizedString("content.message.delete", comment: ""), style: .destructive) { _ in
-            self.deleteCurrent(nil)
-        }
+        let deleteAction = UIPreviewAction(
+            titleKey: "content.message.delete_ellipsis",
+            handler: { self.deleteCurrent(nil) }
+        )
 
         return [copyAction, likeAction, saveAction, shareAction, deleteAction]
     }

@@ -19,12 +19,13 @@
 
 #import "Message+Private.h"
 #import "Message+Formatting.h"
-#import "Constants.h"
+
 #import "Settings.h"
 #import "Wire-Swift.h"
 
 @import WireExtensionComponents;
 
+static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
 @implementation Message (UI)
 
@@ -140,7 +141,7 @@
 {
     NSString *identifier = message.imageMessageData.imageDataIdentifier;
     if (! identifier) {
-        DDLogWarn(@"Image cache key is nil!");
+        ZMLogWarn(@"Image cache key is nil!");
         return [NSString stringWithFormat:@"nonnil-%p", message.imageMessageData.imageData];
     }
     return identifier;

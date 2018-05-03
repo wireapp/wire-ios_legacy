@@ -115,8 +115,15 @@ class MarkdownTextView: NextResponderTextView {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     // MARK: - Public Interface
+
+    /// Updates the color of the text.
+    func updateTextColor(base: UIColor?) {
+        let baseColor = base ?? ColorScheme.default().color(withName: ColorSchemeColorTextForeground)
+        self.textColor = baseColor
+        self.style.baseFontColor = baseColor
+    }
     
     /// Clears active markdown & updates typing attributes.
     func resetMarkdown() { activeMarkdown = .none }
@@ -222,6 +229,12 @@ class MarkdownTextView: NextResponderTextView {
         var color = style.baseFontColor
         let paragraphyStyle = style.baseParagraphStyle
         
+        // if we will bolden the font, it should initially have no weight
+        // (inserting bold trait to light system font has no effect)
+        if markdown.containsHeader || markdown.contains(.bold) {
+            font = font.withoutLightWeight
+        }
+        
         // code should be processed first since it has it's own font.
         if markdown.contains(.code) {
             font = style.codeFont
@@ -285,7 +298,7 @@ class MarkdownTextView: NextResponderTextView {
     // MARK: - List Regex
     
     private lazy var emptyListItemRegex: NSRegularExpression = {
-        let pattern = "^((\\d+\\.)|[*+-])[\\t ]*$"
+        let pattern = "^((\\d+\\.)|[•*+-])[\\t ]*$"
         return try! NSRegularExpression(pattern: pattern, options: .anchorsMatchLines)
     }()
     
@@ -296,7 +309,7 @@ class MarkdownTextView: NextResponderTextView {
     
     private lazy var unorderedListItemRegex: NSRegularExpression = {
         // group 1: prefix, group 2: bullet, group 3: content
-        return try! NSRegularExpression(pattern: "^(([*+-])\\ )(.*$)", options: .anchorsMatchLines)
+        return try! NSRegularExpression(pattern: "^(([•*+-])\\ )(.*$)", options: .anchorsMatchLines)
     }()
     
     // MARK: - List Methods
@@ -534,8 +547,7 @@ extension DownStyle {
         style.baseFontColor = ColorScheme.default().color(withName: ColorSchemeColorTextForeground)
         style.codeFont = UIFont(name: "Menlo", size: style.baseFont.pointSize) ?? style.baseFont
         style.baseParagraphStyle = NSParagraphStyle.default
-        style.listIndentation = 0
-        style.listItemPrefixSpacing = 4
+        style.listItemPrefixSpacing = 8
         return style
     }()
     
@@ -546,8 +558,7 @@ extension DownStyle {
         style.baseFontColor = ColorScheme.default().color(withName: ColorSchemeColorTextForeground)
         style.codeFont = UIFont(name: "Menlo", size: style.baseFont.pointSize) ?? style.baseFont
         style.baseParagraphStyle = NSParagraphStyle.default
-        style.listIndentation = 0
-        style.listItemPrefixSpacing = 4
+        style.listItemPrefixSpacing = 8
         
         // headers all same size
         style.h1Size = style.baseFont.pointSize

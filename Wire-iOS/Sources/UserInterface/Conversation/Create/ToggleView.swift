@@ -19,11 +19,17 @@
 import UIKit
 import Cartography
 
-final class ToggleView: UIView {
-
+final class ToggleView: UIView, Themeable {
+    
+    dynamic var colorSchemeVariant: ColorSchemeVariant  = ColorScheme.default().variant {
+        didSet {
+            guard colorSchemeVariant != oldValue else { return }
+            applyColorScheme(colorSchemeVariant)
+        }
+    }
     typealias ToggleHandler = (Bool) -> Void
     private let toggle = UISwitch()
-    private let titleLabel = UILabel(weight: .light, color: ColorSchemeColorTextForeground, variant: .light)
+    private let titleLabel = UILabel()
     private let title: String
     
     var handler: ToggleHandler?
@@ -36,6 +42,7 @@ final class ToggleView: UIView {
         self.title = title
         super.init(frame: .zero)
         setupViews()
+        applyColorScheme(colorSchemeVariant)
         createConstraints()
         toggle.isOn = isOn
         toggle.accessibilityIdentifier = accessibilityIdentifier
@@ -47,9 +54,14 @@ final class ToggleView: UIView {
 
     private func setupViews() {
         [toggle, titleLabel].forEach(addSubview)
-        backgroundColor = .wr_color(fromColorScheme: ColorSchemeColorBackground, variant: .light)
         titleLabel.text = title
+        titleLabel.font = FontSpec(.normal, .light).font!
         toggle.addTarget(self, action: #selector(toggleValueChanged), for: .valueChanged)
+    }
+
+    func applyColorScheme(_ colorSchemeVariant: ColorSchemeVariant) {
+        backgroundColor = .wr_color(fromColorScheme: ColorSchemeColorBarBackground, variant: colorSchemeVariant)
+        titleLabel.textColor = .wr_color(fromColorScheme: ColorSchemeColorTextForeground, variant: colorSchemeVariant)
     }
     
     private func createConstraints() {

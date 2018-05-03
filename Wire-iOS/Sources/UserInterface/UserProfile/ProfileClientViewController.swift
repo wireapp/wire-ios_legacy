@@ -19,7 +19,6 @@
 
 import Foundation
 import Cartography
-import CocoaLumberjackSwift
 import Classy
 
 
@@ -41,7 +40,6 @@ class ProfileClientViewController: UIViewController {
 
     var userClientToken: NSObjectProtocol!
     var resetSessionPending: Bool = false
-    var descriptionTextFont: UIFont?
     var fromConversation: Bool = false
 
     /// Used for debugging purposes, disabled in public builds
@@ -53,29 +51,10 @@ class ProfileClientViewController: UIViewController {
         }
     }
     
-    var fingerprintSmallFont: UIFont? {
-        didSet {
-            self.updateIDLabel()
-        }
-    }
-    
-    var fingerprintSmallBoldFont: UIFont? {
-        didSet {
-            self.updateIDLabel()
-        }
-    }
-
-    var fingerprintFont: UIFont? {
-        didSet {
-            self.updateFingerprintLabel()
-        }
-    }
-    
-    var fingerprintBoldFont: UIFont? {
-        didSet {
-            self.updateFingerprintLabel()
-        }
-    }
+    fileprivate let fingerprintSmallFont = FontSpec(.small, .light).font!
+    fileprivate let fingerprintSmallBoldFont = FontSpec(.small, .semibold).font!
+    fileprivate let fingerprintFont = FontSpec(.normal, .none).font!
+    fileprivate let fingerprintBoldFont = FontSpec(.normal, .semibold).font!
 
     convenience init(client: UserClient, fromConversation: Bool) {
         self.init(client: client)
@@ -112,7 +91,8 @@ class ProfileClientViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        CASStyler.default().styleItem(self)
+        
+        view.backgroundColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorBackground)
 
         self.setupContentView()
         self.setupBackButton()
@@ -152,6 +132,8 @@ class ProfileClientViewController: UIViewController {
         showMyDeviceButton.accessibilityIdentifier = "show my device"
         showMyDeviceButton.setTitle(NSLocalizedString("profile.devices.detail.show_my_device.title", comment: "").uppercased(), for: UIControlState())
         showMyDeviceButton.addTarget(self, action: #selector(ProfileClientViewController.onShowMyDeviceTapped(_:)), for: .touchUpInside)
+        showMyDeviceButton.setTitleColor(UIColor.accent(), for: .normal)
+        showMyDeviceButton.titleLabel?.font = FontSpec(.small, .light).font!
         navigationItem.rightBarButtonItem = UIBarButtonItem(customView: showMyDeviceButton)
     }
     
@@ -159,8 +141,12 @@ class ProfileClientViewController: UIViewController {
         descriptionTextView.isScrollEnabled = false
         descriptionTextView.isEditable = false
         descriptionTextView.delegate = self
-        if let user = self.userClient.user,
-            let descriptionTextFont = self.descriptionTextFont {
+        descriptionTextView.textColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorTextForeground)
+        descriptionTextView.backgroundColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorTextBackground)
+        
+        let descriptionTextFont = FontSpec(.normal, .light).font!
+        
+        if let user = self.userClient.user {
             descriptionTextView.attributedText = (String(format: "profile.devices.detail.verify_message".localized, user.displayName) && descriptionTextFont) + "\n" +
                 ("profile.devices.detail.verify_message.link".localized && [NSFontAttributeName: descriptionTextFont, NSLinkAttributeName: NSURL.wr_fingerprintHowToVerify()])
         }
@@ -168,34 +154,39 @@ class ProfileClientViewController: UIViewController {
     }
     
     private func setupSeparatorLineView() {
+        separatorLineView.backgroundColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorSeparator)
         self.contentView.addSubview(separatorLineView)
     }
     
     private func setupTypeLabel() {
         typeLabel.text = self.userClient.deviceClass?.uppercased()
         typeLabel.numberOfLines = 1
+        typeLabel.font = FontSpec(.small, .semibold).font!
+        typeLabel.textColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorTextForeground)
         self.contentView.addSubview(typeLabel)
     }
     
     private func setupIDLabel() {
         IDLabel.numberOfLines = 1
+        IDLabel.textColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorTextForeground)
         self.contentView.addSubview(IDLabel)
         self.updateIDLabel()
     }
     
     private func updateIDLabel() {
-        if let fingerprintSmallMonospaceFont = self.fingerprintSmallFont?.monospaced(),
-            let fingerprintSmallBoldMonospaceFont = self.fingerprintSmallBoldFont?.monospaced() {
-                IDLabel.attributedText = self.userClient.attributedRemoteIdentifier(
-                    [NSFontAttributeName: fingerprintSmallMonospaceFont],
-                    boldAttributes: [NSFontAttributeName: fingerprintSmallBoldMonospaceFont],
-                    uppercase: true
-                )
-        }
+        let fingerprintSmallMonospaceFont = self.fingerprintSmallFont.monospaced()
+        let fingerprintSmallBoldMonospaceFont = self.fingerprintSmallBoldFont.monospaced()
+        
+        IDLabel.attributedText = self.userClient.attributedRemoteIdentifier(
+            [NSFontAttributeName: fingerprintSmallMonospaceFont],
+            boldAttributes: [NSFontAttributeName: fingerprintSmallBoldMonospaceFont],
+            uppercase: true
+        )
     }
 
     private func setupFullIDLabel() {
         fullIDLabel.numberOfLines = 0
+        fullIDLabel.textColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorTextForeground)
         self.contentView.addSubview(fullIDLabel)
     }
     
@@ -205,13 +196,13 @@ class ProfileClientViewController: UIViewController {
     }
 
     fileprivate func updateFingerprintLabel() {
-        if let fingerprintMonospaceFont = self.fingerprintFont?.monospaced(),
-            let fingerprintBoldMonospaceFont = self.fingerprintBoldFont?.monospaced(),
-            let attributedFingerprint = self.userClient.fingerprint?.attributedFingerprint(
-                attributes: [NSFontAttributeName: fingerprintMonospaceFont],
-                boldAttributes: [NSFontAttributeName: fingerprintBoldMonospaceFont],
-                uppercase: false
-            )
+        let fingerprintMonospaceFont = self.fingerprintFont.monospaced()
+        let fingerprintBoldMonospaceFont = self.fingerprintBoldFont.monospaced()
+        
+        if let attributedFingerprint = self.userClient.fingerprint?.attributedFingerprint(
+            attributes: [NSFontAttributeName: fingerprintMonospaceFont],
+            boldAttributes: [NSFontAttributeName: fingerprintBoldMonospaceFont],
+            uppercase: false)
         {
             fullIDLabel.attributedText = attributedFingerprint
             spinner.stopAnimating()
@@ -223,6 +214,7 @@ class ProfileClientViewController: UIViewController {
     }
 
     private func setupVerifiedToggle() {
+        verifiedToggle.onTintColor = UIColor(red: 0, green: 0.588, blue: 0.941, alpha: 1)
         verifiedToggle.isOn = self.userClient.verified
         verifiedToggle.accessibilityLabel = "device verified"
         verifiedToggle.addTarget(self, action: #selector(ProfileClientViewController.onTrustChanged(_:)), for: .valueChanged)
@@ -230,12 +222,16 @@ class ProfileClientViewController: UIViewController {
     }
     
     private func setupVerifiedToggleLabel() {
+        verifiedToggleLabel.font = FontSpec(.small, .light).font!
+        verifiedToggleLabel.textColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorTextForeground)
         verifiedToggleLabel.text = NSLocalizedString("device.verified", comment: "").uppercased()
         verifiedToggleLabel.numberOfLines = 0
         self.contentView.addSubview(verifiedToggleLabel)
     }
     
     private func setupResetButton() {
+        resetButton.setTitleColor(UIColor.accent(), for: .normal)
+        resetButton.titleLabel?.font = FontSpec(.small, .light).font!
         resetButton.setTitle(NSLocalizedString("profile.devices.detail.reset_session.title", comment: "").uppercased(), for: UIControlState())
         resetButton.addTarget(self, action: #selector(ProfileClientViewController.onResetTapped(_:)), for: .touchUpInside)
         resetButton.accessibilityIdentifier = "reset session"
@@ -245,6 +241,8 @@ class ProfileClientViewController: UIViewController {
     private func setupDeleteButton() {
         guard DeveloperMenuState.developerMenuEnabled() else { return }
         let deleteButton = ButtonWithLargerHitArea()
+        deleteButton.setTitleColor(UIColor.accent(), for: .normal)
+        deleteButton.titleLabel?.font = FontSpec(.small, .light).font!
         deleteButton.setTitle("DELETE (⚠️ will cause decryption errors later ⚠️)", for: UIControlState())
         deleteButton.addTarget(self, action: #selector(ProfileClientViewController.onDeleteDeviceTapped(_:)), for: .touchUpInside)
         self.contentView.addSubview(deleteButton)

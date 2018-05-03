@@ -25,11 +25,11 @@ class SettingsStyleNavigationController: UINavigationController {
         self.navigationBar.setBackgroundImage(UIImage(color: .black, andSize: CGSize(width: 1,height: 1)), for:.default)
         self.navigationBar.isTranslucent = false
         self.navigationBar.shadowImage = UIImage()
-        self.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.white, NSFontAttributeName: UIFont(magicIdentifier: "style.text.normal.font_spec_bold").smallCaps()]
+        self.navigationBar.titleTextAttributes = DefaultNavigationBar.titleTextAttributes(for: .dark)
         
         let navButtonAppearance = UIBarButtonItem.appearance(whenContainedInInstancesOf: [UINavigationBar.self])
         
-        let attributes = [NSFontAttributeName : UIFont(magicIdentifier: "style.text.normal.font_spec").smallCaps()]
+        let attributes = [NSFontAttributeName : UIFont.systemFont(ofSize: 11, weight: UIFontWeightSemibold)]
         navButtonAppearance.setTitleTextAttributes(attributes, for: UIControlState.normal)
         navButtonAppearance.setTitleTextAttributes(attributes, for: UIControlState.highlighted)
         

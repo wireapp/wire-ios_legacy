@@ -18,10 +18,9 @@
 
 
 #import "SignInViewController.h"
+#import "SignInViewController+internal.h"
 
 @import PureLayout;
-
-#import "WAZUIMagicIOS.h"
 
 #import "Constants.h"
 #import "PhoneSignInViewController.h"
@@ -36,11 +35,7 @@
 
 @interface SignInViewController () <PhoneSignInViewControllerDelegate>
 
-@property (nonatomic) PhoneSignInViewController *phoneSignInViewController;
 @property (nonatomic) EmailSignInViewController *emailSignInViewController;
-@property (nonatomic) UIViewController *presentedSignInViewController;
-@property (nonatomic) UIViewController *emailSignInViewControllerContainer;
-@property (nonatomic) UIViewController *phoneSignInViewControllerContainer;
 @property (nonatomic) UIView *viewControllerContainer;
 @property (nonatomic) UIView *buttonContainer;
 @property (nonatomic) Button *emailSignInButton;
@@ -75,7 +70,7 @@
     
     self.emailSignInButton = [[Button alloc] initForAutoLayout];
     self.emailSignInButton.contentEdgeInsets = UIEdgeInsetsMake(4, 16, 4, 16);
-    self.emailSignInButton.titleLabel.font = [UIFont fontWithMagicIdentifier:@"style.text.small.font_spec_light"];
+    self.emailSignInButton.titleLabel.font = UIFont.smallLightFont;
     [self.emailSignInButton setBorderColor:UIColor.whiteColor forState:UIControlStateNormal];
     [self.emailSignInButton setTitleColor:UIColor.whiteColor forState:UIControlStateNormal];
     self.emailSignInButton.circular = YES;
@@ -85,7 +80,7 @@
     
     self.phoneSignInButton = [[Button alloc] initForAutoLayout];
     self.phoneSignInButton.contentEdgeInsets = UIEdgeInsetsMake(4, 16, 4, 16);
-    self.phoneSignInButton.titleLabel.font = [UIFont fontWithMagicIdentifier:@"style.text.small.font_spec_light"];
+    self.phoneSignInButton.titleLabel.font = UIFont.smallLightFont;
     [self.phoneSignInButton setBorderColor:UIColor.whiteColor forState:UIControlStateNormal];
     [self.phoneSignInButton setTitleColor:UIColor.whiteColor forState:UIControlStateNormal];
     self.phoneSignInButton.circular = YES;
@@ -102,12 +97,13 @@
     if (hasAddedEmailAddress || ! hasAddedPhoneNumber) {
         [self presentSignInViewController:self.emailSignInViewControllerContainer];
     } else {
-        [self presentSignInViewController:self.phoneSignInViewController];
+        [self presentSignInViewController:self.phoneSignInViewControllerContainer];
     }
     
     self.view.opaque = NO;
     
     [self setupConstraints];
+    [self setupAccessibilityElements];
 }
 
 - (void)setupConstraints
@@ -127,8 +123,23 @@
     [self.viewControllerContainer autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero excludingEdge:ALEdgeTop];
 }
 
+- (void)setupAccessibilityElements
+{
+    self.buttonContainer.accessibilityTraits = UIAccessibilityTraitHeader;
+
+    if (@available(iOS 10, *)) {
+        self.buttonContainer.accessibilityTraits |= UIAccessibilityTraitTabBar;
+    }
+
+    self.emailSignInButton.accessibilityLabel = NSLocalizedString(@"signin.use_email.label", @"");
+    self.phoneSignInButton.accessibilityLabel = NSLocalizedString(@"signin.use_phone.label", @"");
+}
+
 - (void)takeFirstResponder
 {
+    if (UIAccessibilityIsVoiceOverRunning()) {
+        return;
+    }
     if (self.presentedSignInViewController == self.emailSignInViewControllerContainer) {
         [self.emailSignInViewController takeFirstResponder];
     } else {
@@ -189,11 +200,11 @@
     
     [fromViewController willMoveToParentViewController:nil];
     [self addChildViewController:toViewController];
-    
+
     toViewController.view.translatesAutoresizingMaskIntoConstraints = YES;
     toViewController.view.frame = fromViewController.view.frame;
     [toViewController.view layoutIfNeeded];
-    
+
     [self transitionFromViewController:fromViewController
                       toViewController:toViewController
                               duration:0.35 options:UIViewAnimationOptionTransitionCrossDissolve
@@ -243,9 +254,11 @@
     
     deselectedButton.layer.borderWidth = 0;
     deselectedButton.alpha = 0.5;
+    deselectedButton.accessibilityTraits &= ~UIAccessibilityTraitSelected;
     
     selectedButton.layer.borderWidth = 1;
     selectedButton.alpha = 1;
+    selectedButton.accessibilityTraits |= UIAccessibilityTraitSelected;
 }
 
 - (void)presentSignInViewControllerWithCredentials:(LoginCredentials*)credentials

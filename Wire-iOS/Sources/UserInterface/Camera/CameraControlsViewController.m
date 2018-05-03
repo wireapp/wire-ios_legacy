@@ -25,10 +25,7 @@
 #import "CameraController.h"
 #import "CameraFocusRing.h"
 #import "CameraExposureSlider.h"
-#import "UIFont+MagicAccess.h"
 #import "Wire-Swift.h"
-
-#import "WAZUIMagicIOS.h"
 
 
 
@@ -136,7 +133,7 @@ static float normalizeValue(float value, float min, float max) {
     
     self.focusExposureLockLabel = [[UILabel alloc] initForAutoLayout];
     self.focusExposureLockLabel.text = [NSLocalizedString(@"camera_controls.aeaf_lock", nil) uppercasedWithCurrentLocale];
-    self.focusExposureLockLabel.font = [UIFont fontWithMagicIdentifier:@"style.text.small.font_spec_bold"];
+    self.focusExposureLockLabel.font = UIFont.smallMediumFont;
     self.focusExposureLockLabel.textColor = [UIColor blackColor];
     [self.focusExposureLockLabelContainer addSubview:self.focusExposureLockLabel];
     
@@ -238,8 +235,8 @@ static float normalizeValue(float value, float min, float max) {
 
 - (void)animateContinousAutoFocus
 {
-    const CGFloat startSize = [WAZUIMagic floatForIdentifier:@"camera_overlay.focus_ring.autofocus.start_size"];
-    const CGFloat endSize = [WAZUIMagic floatForIdentifier:@"camera_overlay.focus_ring.autofocus.end_size"];
+    const CGFloat startSize = 140;
+    const CGFloat endSize = 100;
     
     CGSize fromSize = CGSizeMake(startSize, startSize);
     CGSize toSize = CGSizeMake(endSize, endSize);
@@ -264,8 +261,8 @@ static float normalizeValue(float value, float min, float max) {
 
 - (void)animateFocusRingAtPoint:(CGPoint)point
 {
-    const CGFloat startSize = [WAZUIMagic floatForIdentifier:@"camera_overlay.focus_ring.tap_to_focus.start_size"];
-    const CGFloat endSize = [WAZUIMagic floatForIdentifier:@"camera_overlay.focus_ring.tap_to_focus.end_size"];
+    const CGFloat startSize = 130;
+    const CGFloat endSize = 80;
     
     CGSize fromSize = CGSizeMake(startSize, startSize);
     CGSize toSize = CGSizeMake(endSize, endSize);
@@ -275,7 +272,7 @@ static float normalizeValue(float value, float min, float max) {
     
     self.focusRing.frame = fromRect;
     
-    const CGFloat exposuseSliderHeight = [WAZUIMagic floatForIdentifier:@"camera_overlay.exposure_slider_height"];
+    const CGFloat exposuseSliderHeight = 100;
     const CGFloat exposureSliderMargin = 10;
     const CGFloat exposureSliderWidth = self.exposureSlider.intrinsicContentSize.width;
     CGRect leftSideRect = CGRectMake(toRect.origin.x - exposureSliderMargin - exposureSliderWidth, CGRectGetMidY(toRect) - exposuseSliderHeight / 2, exposureSliderWidth, exposuseSliderHeight);

@@ -37,7 +37,7 @@ class CallQualityViewController : UIViewController, UIGestureRecognizerDelegate 
     let titleLabel = UILabel()
     let questionLabel = UILabel()
 
-    var callQualityStackView : UICustomSpacingStackView!
+    var callQualityStackView : CustomSpacingStackView!
     var scoreSelectorView : QualityScoreSelectorView!
     var dismissTapGestureRecognizer: UITapGestureRecognizer!
 
@@ -48,7 +48,11 @@ class CallQualityViewController : UIViewController, UIGestureRecognizerDelegate 
     private var iphone_leadingConstraint: NSLayoutConstraint!
     private var iphone_trailingConstraint: NSLayoutConstraint!
     private var iphone_bottomConstraint: NSLayoutConstraint!
-    
+    private var iphone_paddingLeftConstraint: NSLayoutConstraint!
+    private var iphone_paddingRightConstraint: NSLayoutConstraint!
+    private var ipad_paddingLeftConstraint: NSLayoutConstraint!
+    private var ipad_paddingRightConstraint: NSLayoutConstraint!
+
     // MARK: Initialization
     
     static func requestSurveyController(callDuration: TimeInterval) -> CallQualityViewController? {
@@ -122,6 +126,7 @@ class CallQualityViewController : UIViewController, UIGestureRecognizerDelegate 
         titleLabel.font = UIFont.systemFont(ofSize: 30, weight: UIFontWeightMedium)
         titleLabel.text = NSLocalizedString("calling.quality_survey.title", comment: "")
         titleLabel.adjustsFontSizeToFitWidth = true
+        titleLabel.textAlignment = .center
 
         questionLabel.text = questionLabelText
         questionLabel.font = FontSpec(.normal, .regular).font
@@ -129,8 +134,9 @@ class CallQualityViewController : UIViewController, UIGestureRecognizerDelegate 
         questionLabel.textAlignment = .center
         questionLabel.numberOfLines = 0
 
-        callQualityStackView = UICustomSpacingStackView(customSpacedArrangedSubviews: [titleLabel, questionLabel, scoreSelectorView])
-        callQualityStackView.alignment = .center
+        callQualityStackView = CustomSpacingStackView(customSpacedArrangedSubviews: [titleLabel, questionLabel, scoreSelectorView])
+        callQualityStackView.alignment = .fill
+        callQualityStackView.distribution = .fill
         callQualityStackView.axis = .vertical
         callQualityStackView.spacing = 10
         callQualityStackView.wr_addCustomSpacing(24, after: titleLabel)
@@ -164,7 +170,6 @@ class CallQualityViewController : UIViewController, UIGestureRecognizerDelegate 
 
         constrain(callQualityStackView) { callQualityView in
             callQualityView.centerX == callQualityView.superview!.centerX
-            callQualityView.width == (callQualityView.superview!.width - 32)
             callQualityView.bottom == (callQualityView.superview!.bottom - 24)
         }
 
@@ -187,6 +192,11 @@ class CallQualityViewController : UIViewController, UIGestureRecognizerDelegate 
         iphone_bottomConstraint = contentView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -8)
         ipad_centerYConstraint = contentView.centerYAnchor.constraint(equalTo: view.centerYAnchor)
         ipad_centerXConstraint = contentView.centerXAnchor.constraint(equalTo: view.centerXAnchor)
+
+        iphone_paddingLeftConstraint = callQualityStackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16)
+        iphone_paddingRightConstraint = callQualityStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16)
+        ipad_paddingLeftConstraint = callQualityStackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 44)
+        ipad_paddingRightConstraint = callQualityStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -44)
 
     }
     
@@ -222,6 +232,10 @@ class CallQualityViewController : UIViewController, UIGestureRecognizerDelegate 
         iphone_leadingConstraint.isActive = !isRegular
         iphone_trailingConstraint.isActive = !isRegular
         iphone_bottomConstraint.isActive = !isRegular
+        iphone_paddingLeftConstraint.isActive = !isRegular
+        iphone_paddingRightConstraint.isActive = !isRegular
+        ipad_paddingLeftConstraint.isActive = isRegular
+        ipad_paddingRightConstraint.isActive = isRegular
     }
 
     func updateLayout(for traitCollection: UITraitCollection) {
@@ -268,6 +282,7 @@ class CallQualityView : UIStackView {
         
         scoreButton.accessibilityLabel = labelText
         constrain(scoreButton){scoreButton in
+            scoreButton.width <= 48
             scoreButton.height == scoreButton.width
         }
         
@@ -297,7 +312,7 @@ class QualityScoreSelectorView : UIView {
         
         scoreStackView.axis = .horizontal
         scoreStackView.distribution = .fillEqually
-        scoreStackView.spacing = 8
+        scoreStackView.spacing = 12
         
         (1 ... 5)
             .map { (localizedNameForScore($0), $0) }
@@ -308,6 +323,18 @@ class QualityScoreSelectorView : UIView {
         constrain(self, scoreStackView) { selfView, scoreStackView in
             scoreStackView.edges == selfView.edges
         }
+    }
+
+    override func layoutSubviews() {
+
+        if traitCollection.horizontalSizeClass == .regular {
+            scoreStackView.spacing = 24
+        } else if let superviewWidth = superview?.frame.size.width {
+            scoreStackView.spacing = superviewWidth >= CGFloat(350) ? 24 : 12
+        } else {
+            scoreStackView.spacing = 12
+        }
+
     }
     
     func localizedNameForScore(_ score: Int) -> String {

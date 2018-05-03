@@ -37,7 +37,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface FullscreenImageViewController : UIViewController
 
-@property (nonatomic, strong, readonly) UIImageView *imageView;
 @property (nonatomic, strong, readonly) UIScrollView *scrollView;
 @property (nonatomic, readonly) id<ZMConversationMessage> message;
 @property (nonatomic) UIView *snapshotBackgroundView;
@@ -50,7 +49,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)showChrome:(BOOL)shouldShow;
 
-- (void)updateZoom;
 - (void)setupSnapshotBackgroundView;
 - (void)dismissWithCompletion:(nullable dispatch_block_t)completion;
 - (void)performSaveImageAnimationFromView:(UIView *)saveView;

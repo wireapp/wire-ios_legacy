@@ -22,7 +22,6 @@
 @import WireExtensionComponents;
 
 
-#import "WAZUIMagicIOS.h"
 #import "UIImage+ZetaIconsNeue.h"
 #import "GuidanceDotView.h"
 #import "CountryCodeView.h"
@@ -57,11 +56,15 @@ static const CGFloat GuidanceDotViewWidth = 40;
     if (self) {
         self.guidanceDotView = [[GuidanceDotView alloc] init];
         self.countryCodeView = [[CountryCodeView alloc] init];
-        
+        self.countryCodeView.isAccessibilityElement = YES;
+        self.countryCodeView.accessibilityTraits = UIAccessibilityTraitButton;
+        self.countryCodeView.accessibilityLabel = NSLocalizedString(@"registration.phone_code", @"");
+        self.countryCodeView.accessibilityHint = NSLocalizedString(@"registration.phone_code.hint", @"");
+
         [self setupConfirmButton];
         
-        self.font = [UIFont fontWithMagicIdentifier:@"style.text.normal.font_spec"];
-        self.textColor = [UIColor colorWithMagicIdentifier:@"style.color.static_foreground.normal"];
+        self.font = UIFont.normalLightFont;
+        self.textColor = [UIColor wr_colorFromColorScheme:ColorSchemeColorTextForeground variant:ColorSchemeVariantDark];
         self.textInsets = UIEdgeInsetsMake(0, 8, 0, 8);
         if ([[[UIDevice currentDevice] systemVersion] floatValue] < 11.0) {
             // Placeholder frame calculation is changed in iOS 11, therefore the TOP inset is not necessary
@@ -75,7 +78,7 @@ static const CGFloat GuidanceDotViewWidth = 40;
         self.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
         self.layer.cornerRadius = 4;
         self.layer.masksToBounds = YES;
-        self.backgroundColor = [UIColor colorWithMagicIdentifier:@"framework.input_field_background_color"];
+        self.backgroundColor = [UIColor.blackColor colorWithAlphaComponent:0.4];
     }
     
     return self;
@@ -87,7 +90,7 @@ static const CGFloat GuidanceDotViewWidth = 40;
     [self.confirmButton setBackgroundImageColor:[UIColor whiteColor] forState:UIControlStateNormal];
     ZetaIconType iconType = [UIApplication isLeftToRightLayout] ? ZetaIconTypeChevronRight : ZetaIconTypeChevronLeft;
     [self.confirmButton setIcon:iconType withSize:ZetaIconSizeSmall forState:UIControlStateNormal];
-    [self.confirmButton setIconColor:[UIColor colorWithMagicIdentifier:@"style.color.foreground.normal"] forState:UIControlStateNormal];
+    [self.confirmButton setIconColor:[UIColor colorWithRed:0.20 green:0.21 blue:0.22 alpha:1.0] forState:UIControlStateNormal];
     self.confirmButton.accessibilityIdentifier= @"RegistrationConfirmButton";
 }
 
@@ -98,8 +101,8 @@ static const CGFloat GuidanceDotViewWidth = 40;
 
 - (NSAttributedString *)attributedPlaceholderString:(NSString *)placeholder
 {
-    return [placeholder attributedStringWithAttributes:@{ NSForegroundColorAttributeName : [UIColor colorWithMagicIdentifier:@"style.color.static_foreground.faded"],
-                                                          NSFontAttributeName : [UIFont fontWithMagicIdentifier:@"style.text.small.font_spec_light"] }];
+    return [placeholder attributedStringWithAttributes:@{ NSForegroundColorAttributeName : [UIColor.whiteColor colorWithAlphaComponent:0.4],
+                                                          NSFontAttributeName : UIFont.smallLightFont }];
 }
 
 - (UIButton *)countryCodeButton
@@ -110,8 +113,9 @@ static const CGFloat GuidanceDotViewWidth = 40;
 - (void)setCountryCode:(NSUInteger)countryCode
 {
     _countryCode = countryCode;
-    
-    [self.countryCodeView.button setTitle:[NSString stringWithFormat:@"+%lu", (unsigned long)countryCode] forState:UIControlStateNormal];
+    NSString *countryCodeText = [NSString stringWithFormat:@"+%lu", (unsigned long)countryCode];
+    self.countryCodeView.accessibilityValue = countryCodeText;
+    [self.countryCodeView.button setTitle:countryCodeText forState:UIControlStateNormal];
 }
 
 - (void)setEnabled:(BOOL)enabled
@@ -119,9 +123,9 @@ static const CGFloat GuidanceDotViewWidth = 40;
     [super setEnabled:enabled];
     
     if (enabled) {
-        self.textColor = [UIColor colorWithMagicIdentifier:@"style.color.static_foreground.normal"];
+        self.textColor = [UIColor wr_colorFromColorScheme:ColorSchemeColorTextForeground variant:ColorSchemeVariantDark];
     } else {
-        self.textColor = [UIColor colorWithMagicIdentifier:@"style.color.static_foreground.faded"];
+        self.textColor = [UIColor.whiteColor colorWithAlphaComponent:0.4];
     }
 }
 

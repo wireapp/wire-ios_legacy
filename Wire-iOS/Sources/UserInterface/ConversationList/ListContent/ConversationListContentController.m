@@ -27,7 +27,6 @@
 
 #import "ConversationListViewModel.h"
 
-#import "WAZUIMagicIOS.h"
 #import "UIColor+WAZExtensions.h"
 #import "UIView+Borders.h"
 
@@ -44,10 +43,9 @@
 #import "ConversationContentViewController.h"
 #import "Wire-Swift.h"
 
+static NSString* ZMLogTag ZM_UNUSED = @"UI";
 static NSString * const CellReuseIdConnectionRequests = @"CellIdConnectionRequests";
 static NSString * const CellReuseIdConversation = @"CellId";
-
-
 
 @interface ConversationListContentController () <ConversationListViewModelDelegate, UICollectionViewDelegateFlowLayout>
 
@@ -92,7 +90,7 @@ static NSString * const CellReuseIdConversation = @"CellId";
         StopWatch *stopWatch = [StopWatch stopWatch];
         StopWatchEvent *loadContactListEvent = [stopWatch stopEvent:@"LoadContactList"];
         if (loadContactListEvent) {
-            DDLogDebug(@"Contact List load after %lums", (unsigned long)loadContactListEvent.elapsedTime);
+            ZMLogDebug(@"Contact List load after %lums", (unsigned long)loadContactListEvent.elapsedTime);
         }
         
         if (nil != [UISelectionFeedbackGenerator class]) {
@@ -529,8 +527,8 @@ static NSString * const CellReuseIdConversation = @"CellId";
         return;
     }
     
-    if ([self.contentDelegate respondsToSelector:@selector(conversationListContentController:wantsActionMenuForConversation:)]) {
-        [self.contentDelegate conversationListContentController:self wantsActionMenuForConversation:conversation];
+    if ([self.contentDelegate respondsToSelector:@selector(conversationListContentController:wantsActionMenuForConversation:fromSourceView:)]) {
+        [self.contentDelegate conversationListContentController:self wantsActionMenuForConversation:conversation fromSourceView:cell];
     }
 }
 
@@ -556,7 +554,7 @@ static NSString * const CellReuseIdConversation = @"CellId";
     }
     
     previewingContext.sourceRect = layoutAttributes.frame;
-    ConversationPreviewViewController *previewViewController = [[ConversationPreviewViewController alloc] initWithConversation:conversation];
+    ConversationPreviewViewController *previewViewController = [[ConversationPreviewViewController alloc] initWithConversation:conversation presentingViewController:self];
     
     return previewViewController;
 }

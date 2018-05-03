@@ -40,6 +40,10 @@ extension AnalyticsTracker {
         self.tagEvent("team.verified")
     }
     
+    func tagTeamCreationAddedTeamName() {
+        self.tagEvent("team.added_team_name")
+    }
+    
     func tagTeamCreationAcceptedTerms() {
         self.tagEvent("team.accepted_terms")
     }

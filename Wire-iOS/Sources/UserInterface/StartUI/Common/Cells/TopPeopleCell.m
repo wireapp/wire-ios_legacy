@@ -18,14 +18,13 @@
 
 
 #import "TopPeopleCell.h"
-#import "WAZUIMagiciOS.h"
 @import PureLayout;
 #import "BadgeUserImageView.h"
 #import "Constants.h"
 #import "WireSyncEngine+iOS.h"
 #import "UIView+Borders.h"
 #import <WireDataModel/ZMBareUser.h>
-#import "UserImageView+Magic.h"
+#import "Wire-Swift.h"
 
 @interface TopPeopleCell ()
 
@@ -81,7 +80,8 @@
 {
     [self.badgeUserImageView removeFromSuperview];
 
-    self.badgeUserImageView = [[BadgeUserImageView alloc] initWithMagicPrefix:@"people_picker.top_conversations_mode"];
+    self.badgeUserImageView = [[BadgeUserImageView alloc] init];
+    self.badgeUserImageView.initials.font = [UIFont systemFontOfSize:11 weight:UIFontWeightLight];
     self.badgeUserImageView.userSession = [ZMUserSession sharedSession];
     self.badgeUserImageView.size = UserImageViewSizeSmall;
     self.badgeUserImageView.translatesAutoresizingMaskIntoConstraints = NO;
@@ -110,8 +110,7 @@
         [self.conversationImageView autoPinEdgeToSuperviewEdge:ALEdgeTop withInset:0];
         [self.conversationImageView autoPinEdgeToSuperviewEdge:ALEdgeLeft];
 
-        [self.nameLabel autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.avatarContainer withOffset:[WAZUIMagic cgFloatForIdentifier:@"people_picker.top_conversations_mode.tile_name_vertical_spacing"]];
-
+        [self.nameLabel autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.avatarContainer withOffset:8];
         [self.nameLabel autoPinEdge:ALEdgeLeft toEdge:ALEdgeLeft ofView:self.avatarContainer];
         [self.nameLabel autoPinEdge:ALEdgeRight toEdge:ALEdgeRight ofView:self.avatarContainer];
 
@@ -123,10 +122,10 @@
 
 - (void)updateForContext
 {
-    self.nameLabel.font = [UIFont fontWithMagicIdentifier:@"people_picker.top_conversations_mode.name_label_font"];
-    self.nameLabel.textColor = [UIColor colorWithMagicIdentifier:@"people_picker.top_conversations_mode.context_add_people.name_label_font_color"];
+    self.nameLabel.font = UIFont.smallLightFont;
+    self.nameLabel.textColor = [UIColor wr_colorFromColorScheme:ColorSchemeColorTextForeground variant:ColorSchemeVariantDark];
 
-    CGFloat squareImageWidth = [WAZUIMagic cgFloatForIdentifier:@"people_picker.top_conversations_mode.tile_image_diameter"];
+    CGFloat squareImageWidth = 56;
     self.avatarViewSizeConstraint.constant = squareImageWidth;
     self.conversationImageViewSize.constant = squareImageWidth;
     
@@ -182,7 +181,7 @@
 
     _displayName = [displayName copy];
 
-    self.nameLabel.text = [_displayName transformStringWithMagicKey:@"people_picker.top_conversations_mode.name_label_text_transform"];
+    self.nameLabel.text = displayName.localizedUppercaseString;
 }
 
 - (void)setSelected:(BOOL)selected

@@ -29,7 +29,6 @@
 #import "RegistrationFormController.h"
 #import "NavigationController.h"
 #import "WireSyncEngine+iOS.h"
-#import "UIFont+MagicAccess.h"
 #import "UIViewController+Errors.h"
 #import <WireExtensionComponents/UIViewController+LoadingView.h>
 #import "CheckmarkViewController.h"
@@ -43,6 +42,8 @@
 
 @import WireExtensionComponents;
 @import WireSyncEngine;
+
+static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
 @interface RegistrationPhoneFlowViewController () <UINavigationControllerDelegate, FormStepDelegate, PhoneVerificationStepViewControllerDelegate, ZMRegistrationObserver, PreLoginAuthenticationObserver>
 
@@ -98,12 +99,16 @@
     [super viewDidLoad];
     
     [self createNavigationController];
-    
+
+    self.phoneNumberStepViewController.phoneNumberViewController.phoneNumberField.confirmButton.accessibilityLabel = NSLocalizedString(@"registration.confirm", @"");
     self.view.opaque = NO;
 }
 
 - (void)takeFirstResponder
 {
+    if (UIAccessibilityIsVoiceOverRunning()) {
+        return;
+    }
     [self.phoneNumberStepViewController takeFirstResponder];
 }
 
@@ -223,7 +228,7 @@
 
 - (void)authenticationDidFail:(NSError *)error
 {
-    DDLogDebug(@"authenticationDidFail: error.code = %li", (long)error.code);
+    ZMLogDebug(@"authenticationDidFail: error.code = %li", (long)error.code);
     
     [self.analyticsTracker tagPhoneLoginFailedWithError:error];
     self.navigationController.showLoadingView = NO;

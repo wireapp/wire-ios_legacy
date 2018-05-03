@@ -65,24 +65,7 @@
 
 - (void)createInitialConstraints
 {
-    if (IS_IPAD_FULLSCREEN) {
-        
-        [NSLayoutConstraint autoSetPriority:UILayoutPriorityDefaultHigh + 1 forConstraints:^{
-            [self.viewController.view autoSetDimension:ALDimensionWidth toSize:self.viewController.maximumFormSize.width];
-            [self.viewController.view autoSetDimension:ALDimensionHeight toSize:self.viewController.maximumFormSize.height];
-        }];
-        
-        [NSLayoutConstraint autoSetPriority:UILayoutPriorityDefaultHigh - 1 forConstraints:^{
-            [self.viewController.view autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero];
-        }];
-        
-        [self.viewController.view autoPinEdgeToSuperviewEdge:ALEdgeTop withInset:0 relation:NSLayoutRelationGreaterThanOrEqual];
-        [self.viewController.view autoPinEdgeToSuperviewEdge:ALEdgeBottom withInset:0 relation:NSLayoutRelationGreaterThanOrEqual];
-        
-        [self.viewController.view autoCenterInSuperview];
-    } else {
-        [self.viewController.view autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero];
-    }
+    [self.viewController.view autoPinEdgesToSuperviewEdges];
 }
 
 - (NSString *)title

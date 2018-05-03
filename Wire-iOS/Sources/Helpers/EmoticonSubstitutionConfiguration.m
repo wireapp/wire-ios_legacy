@@ -19,7 +19,9 @@
 
 #import "EmoticonSubstitutionConfiguration.h"
 
+@import WireSystem;
 
+static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
 @interface EmoticonSubstitutionConfiguration ()
 @property (strong, nonatomic) NSArray *sortedShortcuts;
@@ -48,13 +50,13 @@
         NSError *error = nil;
         NSData *data = [NSData dataWithContentsOfFile:filePath options:0 error:&error];
         if (data == nil) {
-            DDLogError(@"Failed to load emoticon substitution rule at path: %@, error: %@", filePath, error);
+            ZMLogError(@"Failed to load emoticon substitution rule at path: %@, error: %@", filePath, error);
             return nil;
         }
         
         NSDictionary *parsedJSONData = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
         if (parsedJSONData == nil) {
-            DDLogError(@"Failed to parse JSON at path: %@, error: %@", filePath, error);
+            ZMLogError(@"Failed to parse JSON at path: %@, error: %@", filePath, error);
             return nil;
         }
         
@@ -71,7 +73,7 @@
                 }
             }];
         } else {
-            DDLogWarn(@"Failed to parse emoticon substitution rules, object: %@ is not an array", parsedJSONData);
+            ZMLogWarn(@"Failed to parse emoticon substitution rules, object: %@ is not an array", parsedJSONData);
         }
         self.substitutionRules = rules;
     }

@@ -16,12 +16,15 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 // 
 
+@import WireSystem;
 
 #import "CameraController.h"
 
 #import <AVFoundation/AVFoundation.h>
 
 #import "DeviceOrientationObserver.h"
+
+static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
 NSString * const CameraControllerWillChangeCurrentCamera = @"CameraControllerWillChangeCurrentCamera";
 NSString * const CameraControllerDidChangeCurrentCamera = @"CameraControllerDidChangeCurrentCamera";
@@ -335,7 +338,7 @@ NSString * const CameraSettingExposureTargetBias = @"exposureTargetBias";
         }
         
         if (error != nil) {
-            DDLogError(@"Error while configuring device input: %@", error);
+            ZMLogError(@"Error while configuring device input: %@", error);
         }
     }
     
@@ -351,7 +354,7 @@ NSString * const CameraSettingExposureTargetBias = @"exposureTargetBias";
         }
         
         if (error != nil) {
-            DDLogError(@"Error while configuring device input: %@", error);
+            ZMLogError(@"Error while configuring device input: %@", error);
         }
     }
     
@@ -580,7 +583,7 @@ NSString * const CameraSettingExposureTargetBias = @"exposureTargetBias";
     });
 }
 
-- (void)performConfiguration:(void (^)())block
+- (void)performConfiguration:(void (^)(void))block
 {
     dispatch_async(self.sessionQueue, block);
 }

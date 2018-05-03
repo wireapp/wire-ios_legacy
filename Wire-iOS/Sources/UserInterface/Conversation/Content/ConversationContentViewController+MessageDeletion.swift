@@ -163,13 +163,13 @@ private extension UIAlertController {
 
         if configuration.showHide {
             let hideTitle = "message.delete_dialog.action.hide".localized
-            let hideAction = UIAlertAction(title: hideTitle, style: .default) { [unowned alert] _ in selectedAction(.delete(.local), alert) }
+            let hideAction = UIAlertAction(title: hideTitle, style: .destructive) { [unowned alert] _ in selectedAction(.delete(.local), alert) }
             alert.addAction(hideAction)
         }
 
         if configuration.showDelete {
             let deleteTitle = "message.delete_dialog.action.delete".localized
-            let deleteForEveryoneAction = UIAlertAction(title: deleteTitle, style: .default) { [unowned alert] _ in selectedAction(.delete(.everywhere), alert) }
+            let deleteForEveryoneAction = UIAlertAction(title: deleteTitle, style: .destructive) { [unowned alert] _ in selectedAction(.delete(.everywhere), alert) }
             alert.addAction(deleteForEveryoneAction)
         }
 

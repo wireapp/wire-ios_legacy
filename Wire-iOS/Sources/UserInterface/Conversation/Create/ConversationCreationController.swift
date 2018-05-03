@@ -33,17 +33,6 @@ final public class ConversationCreationValues {
     }
 }
 
-open class ConversationCreationTitleFactory {
-    static func createTitleLabel(for title: String, variant: ColorSchemeVariant) -> UILabel {
-        let titleLabel = UILabel()
-        titleLabel.font = FontSpec(.small, .semibold).font
-        titleLabel.textColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorIconNormal, variant: variant)
-        titleLabel.text = title.uppercased()
-        titleLabel.sizeToFit()
-        return titleLabel
-    }
-}
-
 @objc protocol ConversationCreationControllerDelegate: class {
     func conversationCreationController(
         _ controller: ConversationCreationController,
@@ -51,10 +40,7 @@ open class ConversationCreationTitleFactory {
         participants: Set<ZMUser>,
         allowGuests: Bool
     )
-
-    func conversationCreationControllerDidCancel(
-        _ controller: ConversationCreationController
-    )
+    
 }
 
 final class ConversationCreationController: UIViewController {
@@ -80,7 +66,6 @@ final class ConversationCreationController: UIViewController {
     )
 
     fileprivate var navigationBarBackgroundView = UIView()
-    fileprivate let nextButton = ButtonWithLargerHitArea(type: .custom)
 
     private var textField = SimpleTextField()
     
@@ -113,7 +98,7 @@ final class ConversationCreationController: UIViewController {
         Analytics.shared().tagLinearGroupOpened(with: self.source)
 
         view.backgroundColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorContentBackground, variant: colorSchemeVariant)
-        title = "profile.create_conversation_button_title".localized.uppercased()
+        title = "conversation.create.group_name.title".localized.uppercased()
         
         setupNavigationBar()
         createViews()
@@ -176,31 +161,18 @@ final class ConversationCreationController: UIViewController {
 
     private func setupNavigationBar() {
         self.navigationController?.navigationBar.tintColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorTextForeground, variant: colorSchemeVariant)
+        self.navigationController?.navigationBar.titleTextAttributes = DefaultNavigationBar.titleTextAttributes(for: colorSchemeVariant)
         
         if navigationController?.viewControllers.count ?? 0 <= 1 {
-            navigationItem.leftBarButtonItem = UIBarButtonItem(icon: .X, target: self, action: #selector(onCancel))
-            navigationItem.leftBarButtonItem?.accessibilityIdentifier = "button.newgroup.close"
-        }
-
-        // title view
-        navigationItem.titleView = ConversationCreationTitleFactory.createTitleLabel(for: self.title ?? "", variant: colorSchemeVariant)
-        
-        // right button
-        nextButton.frame = CGRect(x: 0, y: 0, width: 40, height: 20)
-        nextButton.accessibilityIdentifier = "button.newgroup.next"
-        nextButton.setTitle("general.next".localized.uppercased(), for: .normal)
-        nextButton.setTitleColor(.accent(), for: .normal)
-        nextButton.setTitleColor(UIColor.wr_color(fromColorScheme: ColorSchemeColorTextDimmed, variant: colorSchemeVariant), for: .highlighted)
-        nextButton.setTitleColor(UIColor.wr_color(fromColorScheme: ColorSchemeColorTextDimmed, variant: colorSchemeVariant), for: .disabled)
-        nextButton.titleLabel?.font = FontSpec(.medium, .semibold).font!
-        nextButton.sizeToFit()
-        
-        nextButton.addCallback(for: .touchUpInside) { [weak self] _ in
-            self?.tryToProceed()
+            navigationItem.leftBarButtonItem = navigationController?.closeItem()
         }
         
-        navigationItem.rightBarButtonItem = UIBarButtonItem(customView: nextButton)
-        nextButton.isEnabled = false
+        let nextButtonItem = UIBarButtonItem(title: "general.next".localized.uppercased(), style: .plain, target: self, action: #selector(tryToProceed))
+        nextButtonItem.accessibilityIdentifier = "button.newgroup.next"
+        nextButtonItem.tintColor = UIColor.accent()
+        nextButtonItem.isEnabled = false
+    
+        navigationItem.rightBarButtonItem = nextButtonItem
     }
     
     private func createConstraints() {
@@ -255,10 +227,6 @@ final class ConversationCreationController: UIViewController {
         }
     }
 
-    dynamic func onCancel() {
-        delegate?.conversationCreationControllerDidCancel(self)
-    }
-
     func proceedWith(value: SimpleTextField.Value) {
         switch value {
         case let .error(error):
@@ -277,7 +245,7 @@ final class ConversationCreationController: UIViewController {
         }
     }
     
-    fileprivate func tryToProceed() {
+    @objc fileprivate func tryToProceed() {
         guard let value = textField.value else { return }
         proceedWith(value: value)
     }
@@ -316,8 +284,8 @@ extension ConversationCreationController: SimpleTextFieldDelegate {
     func textField(_ textField: SimpleTextField, valueChanged value: SimpleTextField.Value) {
         clearError()
         switch value {
-        case .error(_): nextButton.isEnabled = false
-        case .valid(let text): nextButton.isEnabled = !text.isEmpty
+        case .error(_): navigationItem.rightBarButtonItem?.isEnabled = false
+        case .valid(let text): navigationItem.rightBarButtonItem?.isEnabled = !text.isEmpty
         }
         
     }

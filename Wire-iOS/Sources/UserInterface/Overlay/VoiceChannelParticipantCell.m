@@ -22,7 +22,6 @@
 @import PureLayout;
 
 #import "VoiceUserImageView.h"
-#import "WAZUIMagicIOS.h"
 #import "Wire-Swift.h"
 
 #import "CAMediaTimingFunction+AdditionalEquations.h"
@@ -78,14 +77,17 @@
     self = [super initWithFrame:frame];
     
     if (self) {
-        self.userImage = [[VoiceUserImageView alloc] initWithMagicPrefix:@"voice_overlay.user_image_view"];
+        self.userImage = [[VoiceUserImageView alloc] init];
+        self.userImage.initials.font =  [UIFont systemFontOfSize:20 weight:UIFontWeightLight];
         self.userImage.userSession = [ZMUserSession sharedSession];
         self.userImage.translatesAutoresizingMaskIntoConstraints = NO;
         self.userImage.state = VoiceUserImageViewStateTalking;
         [self.contentView addSubview:self.userImage];
         
         self.nameLabel = [[UILabel alloc] initForAutoLayout];
-        self.nameLabel.font = [UIFont fontWithMagicIdentifier:@"style.text.small.font_spec_light"];
+        self.nameLabel.font = UIFont.smallLightFont;
+        self.nameLabel.textAlignment = NSTextAlignmentCenter;
+        self.nameLabel.textColor = [UIColor wr_colorFromColorScheme:ColorSchemeColorTextForeground variant:ColorSchemeVariantDark];
         [self.contentView addSubview:self.nameLabel];
         
         [self createInitialConstraints];

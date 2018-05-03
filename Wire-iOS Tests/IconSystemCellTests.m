@@ -21,7 +21,6 @@
 #import "Wire_iOS_Tests-Swift.h"
 #import "Wire-Swift.h"
 #import "MockMessage+Creation.h"
-#import "WAZUIMagicIOS.h"
 @import WireSyncEngine;
 
 @interface IconSystemCellTests : ZMSnapshotTestCase
@@ -60,8 +59,7 @@
     [cell prepareForReuse];
     cell.bounds = CGRectMake(0.0, 0.0, 320.0, 9999);
     cell.contentView.bounds = CGRectMake(0.0, 0.0, 320, 9999);
-    cell.layoutMargins = UIEdgeInsetsMake(0, [WAZUIMagic floatForIdentifier:@"content.left_margin"],
-                                          0, [WAZUIMagic floatForIdentifier:@"content.right_margin"]);
+    cell.layoutMargins = UIView.directionAwareConversationLayoutMargins;
     
     [cell configureForMessage:systemMessage layoutProperties:layoutProperties];
     [cell layoutIfNeeded];

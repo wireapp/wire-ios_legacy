@@ -23,6 +23,4 @@ protocol DeviceProtocol {
     var orientation: UIDeviceOrientation { get }
 }
 
-extension UIDevice: DeviceProtocol {
-
-}
+extension UIDevice: DeviceProtocol {}

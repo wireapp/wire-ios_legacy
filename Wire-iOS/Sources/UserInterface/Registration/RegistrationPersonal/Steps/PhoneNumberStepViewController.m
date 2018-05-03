@@ -22,11 +22,9 @@
 @import PureLayout;
 
 #import "RegistrationTextField.h"
-#import "WAZUIMagicIOS.h"
 #import "UIView+Borders.h"
 #import "UIImage+ZetaIconsNeue.h"
 #import "Constants.h"
-#import "PhoneNumberViewController.h"
 #import "GuidanceLabel.h"
 #import "Country.h"
 #import "WireSyncEngine+iOS.h"
@@ -39,7 +37,6 @@
 
 @property (nonatomic, copy, readwrite) NSString *phoneNumber;
 @property (nonatomic) UILabel *heroLabel;
-@property (nonatomic) PhoneNumberViewController *phoneNumberViewController;
 @property (nonatomic) BOOL initialConstraintsCreated;
 @property (nonatomic) ZMIncompleteRegistrationUser *unregisteredUser;
 @property (nonatomic, readonly) BOOL phoneNumberIsEditable;
@@ -106,7 +103,7 @@
 - (void)createHeroLabel
 {
     self.heroLabel = [[UILabel alloc] initForAutoLayout];
-    self.heroLabel.textColor = [UIColor colorWithMagicIdentifier:@"style.color.static_foreground.normal"];
+    self.heroLabel.textColor = [UIColor wr_colorFromColorScheme:ColorSchemeColorTextForeground variant:ColorSchemeVariantDark];
     self.heroLabel.numberOfLines = 0;
     
     [self.view addSubview:self.heroLabel];
@@ -148,6 +145,9 @@
 
 - (void)takeFirstResponder
 {
+    if (UIAccessibilityIsVoiceOverRunning()) {
+        return;
+    }
     [self.phoneNumberViewController.phoneNumberField becomeFirstResponder];
 }
 

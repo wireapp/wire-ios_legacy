@@ -22,11 +22,7 @@ import Foundation
 extension AppDelegate {
 
     /// @return YES if network is offline
-    @discardableResult
-    @objc
-    static func checkNetworkAndFlashIndicatorIfNecessary() -> Bool {
-        NetworkStatusViewController.notifyWhenOffline()
-
+    static var isOffline: Bool {
         return .unreachable == NetworkStatus.shared().reachability()
     }
 

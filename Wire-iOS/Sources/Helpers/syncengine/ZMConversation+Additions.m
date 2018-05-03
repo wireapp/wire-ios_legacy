@@ -29,15 +29,10 @@
 #import "NotificationWindowRootViewController.h"
 #import "ZClientViewController.h"
 #import "UIApplication+Permissions.h"
-
 #import "Wire-Swift.h"
-
-#if (TARGET_OS_IPHONE)
-#import "WAZUIMagic.h"
-#endif
-
 #import "Settings.h"
 #import "Constants.h"
+#import "Wire-Swift.h"
 
 @implementation ZMConversation (Additions)
 
@@ -48,7 +43,7 @@
     }
 
     if (self.conversationType == ZMConversationTypeGroup) {
-        [self addParticipants:participants];
+        [self addParticipantsOrShowError:participants];
         
         AnalyticsGroupConversationEvent *event = [AnalyticsGroupConversationEvent eventForAddParticipantsWithCount:participants.count];
         [[Analytics shared] tagEventObject:event];
@@ -186,11 +181,7 @@
     BOOL showTimestamp = NO;
 
     NSTimeInterval seconds = [message.serverTimestamp timeIntervalSinceDate:previousMessage.serverTimestamp];
-
     NSTimeInterval referenceSeconds = 300;
-#if (TARGET_OS_IPHONE)
-    referenceSeconds = [WAZUIMagic floatForIdentifier:@"content.burst_time_interval"];
-#endif
 
     if (seconds > referenceSeconds) {
         showTimestamp = YES;

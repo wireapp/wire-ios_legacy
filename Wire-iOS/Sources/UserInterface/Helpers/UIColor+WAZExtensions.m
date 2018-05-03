@@ -19,7 +19,6 @@
 
 #import "UIColor+WAZExtensions.h"
 
-#import "WAZUIMagiciOS.h"
 #import "WireSyncEngine+iOS.h"
 #import "CASStyler+Variables.h"
 #import "ColorScheme.h"
@@ -27,9 +26,8 @@
 
 @import WireExtensionComponents;
 
+static NSString* ZMLogTag ZM_UNUSED = @"UI";
 static ZMAccentColor overridenAccentColor = ZMAccentColorUndefined;
-
-
 
 @implementation UIColor (WAZExtensions)
 
@@ -61,15 +59,17 @@ static ZMAccentColor overridenAccentColor = ZMAccentColorUndefined;
 	if (accentColor == ZMAccentColorUndefined) {
         return nil;
     }
-		
-    NSArray *accentColors = [UIColor colorArrayWithMagicIdentifier:@"accent_colors"];
     
-    if (accentColors.count == 0) {
-        return nil;
-    }
-    
+    NSArray *accentColors = @[[UIColor colorWithRed:0.141 green:0.552 blue:0.827 alpha:1],
+                              [UIColor colorWithRed:0     green:0.784 blue:0     alpha:1],
+                              [UIColor colorWithRed:0.996 green:0.749 blue:0.007 alpha:1],
+                              [UIColor colorWithRed:1     green:0.152 blue:0     alpha:1],
+                              [UIColor colorWithRed:1     green:0.537 blue:0     alpha:1],
+                              [UIColor colorWithRed:0.996 green:0.368 blue:0.741 alpha:1],
+                              [UIColor colorWithRed:0.615 green:0     blue:1     alpha:1]];
+        
     if (accentColor < 1 || accentColor > (NSInteger)accentColors.count) {
-        DDLogError(@"Accent color index is out of bounds: %d", accentColor);
+        ZMLogError(@"Accent color index is out of bounds: %d", accentColor);
         return accentColors[0];
     }
     

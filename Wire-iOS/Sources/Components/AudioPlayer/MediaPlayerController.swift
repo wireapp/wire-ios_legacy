@@ -27,6 +27,7 @@ class MediaPlayerController: NSObject {
     let message: ZMConversationMessage
     var player: AVPlayer?
     weak var delegate: MediaPlayerDelegate?
+    fileprivate var playerRateObserver : Any?
 
     init(player: AVPlayer, message: ZMConversationMessage, delegate: MediaPlayerDelegate) {
         self.player = player
@@ -35,13 +36,11 @@ class MediaPlayerController: NSObject {
 
         super.init()
 
-        NotificationCenter.default.addObserver(self, selector: #selector(playerRateChanged), name:NSNotification.Name(rawValue: "rate"), object: .none)
+        self.playerRateObserver = KeyValueObserver.observe(player, keyPath: "rate", target: self, selector: #selector(playerRateChanged))
     }
 
-    deinit {
-        NotificationCenter.default.removeObserver(self)
-
-        delegate?.mediaPlayer(self, didChangeTo: MediaPlayerState.completed)
+    func tearDown() {
+        self.delegate?.mediaPlayer(self, didChangeTo: .completed)
     }
 
 }

@@ -23,6 +23,7 @@
 
 #import "FullscreenImageViewController.h"
 #import "FullscreenImageViewController+PullToDismiss.h"
+#import "FullscreenImageViewController+internal.h"
 
 // ui
 #import "UIView+Borders.h"
@@ -34,9 +35,6 @@
 #import "NotificationWindowRootViewController.h"
 
 // helpers
-
-#import "WAZUIMagiciOS.h"
-#import "UIFont+MagicAccess.h"
 #import "UIColor+WR_ColorScheme.h"
 #import "NSDate+Format.h"
 
@@ -50,6 +48,7 @@
 #import "WireSyncEngine+iOS.h"
 #import "Wire-Swift.h"
 
+static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
 @interface FirstReponderView : UIView
 @end
@@ -84,8 +83,6 @@
 
 @property (nonatomic) IconButton *closeButton;
 
-@property (nonatomic, readwrite) UIImageView *imageView;
-
 @property (nonatomic) UITapGestureRecognizer *tapGestureRecognzier;
 @property (nonatomic) UITapGestureRecognizer *doubleTapGestureRecognizer;
 @property (nonatomic) UILongPressGestureRecognizer *longPressGestureRecognizer;
@@ -94,8 +91,6 @@
 
 @property (nonatomic) BOOL isShowingChrome;
 @property (nonatomic) BOOL assetWriteInProgress;
-
-@property (nonatomic) CGFloat lastZoomScale;
 
 @property (nonatomic) BOOL forcePortraitMode;
 
@@ -172,14 +167,8 @@
     [super viewWillAppear:animated];
     self.closeButton.hidden = !self.showCloseButton;
     if(self.parentViewController != nil) {
-        [self updateZoomWithSize:self.parentViewController.view.frame.size];
+        [self updateZoom];
     }
-}
-
-- (void)viewWillLayoutSubviews
-{
-    [super viewWillLayoutSubviews];
-    [self updateZoom];
 }
 
 - (BOOL)prefersStatusBarHidden
@@ -273,19 +262,9 @@
         
         dispatch_async(dispatch_get_main_queue(), ^{
             @strongify(self);
-            
-            UIImageView *imageView = [UIImageView imageViewWithMediaAsset:image];
-            imageView.clipsToBounds = YES;
-            imageView.layer.allowsEdgeAntialiasing = YES;
-            
-            self.imageView = imageView;
-            self.imageView.translatesAutoresizingMaskIntoConstraints = NO;
-            [self.scrollView addSubview:self.imageView];
-            
-            self.scrollView.contentSize = imageView.image.size;
-            
-            [self updateZoomWithSize:self.view.bounds.size];
-            [self centerScrollViewContent];
+
+            CGSize parentSize = self.parentViewController.view.bounds.size;
+            [self setupImageViewWithImage:image parentSize:parentSize];
         });
     });
 }
@@ -306,10 +285,11 @@
     self.closeButton.accessibilityIdentifier = @"fullScreenCloseButton";
     
     // Constraints
+    CGFloat topOverlayHeight = self.traitCollection.horizontalSizeClass == UIUserInterfaceSizeClassRegular ? 104 : 60;
     [self.topOverlay addConstraintForRightMargin:0 relativeToView:self.view];
     [self.topOverlay addConstraintForLeftMargin:0 relativeToView:self.view];
     [self.topOverlay addConstraintForTopMargin:0 relativeToView:self.view];
-    [self.topOverlay addConstraintForHeight:[WAZUIMagic floatForIdentifier:@"one_message.top_gradient_height"]];
+    [self.topOverlay addConstraintForHeight:topOverlayHeight];
 
     [self.closeButton addConstraintForAligningVerticallyWithView:self.topOverlay offset:10];
     [self.closeButton addConstraintForRightMargin:8 relativeToView:self.topOverlay];
@@ -364,7 +344,7 @@
 {
     NSString *text = [displayName uppercasedWithCurrentLocale];
     NSDictionary *attributes = @{
-                                 NSFontAttributeName : [UIFont fontWithMagicIdentifier:@"style.text.small.font_spec_bold"],
+                                 NSFontAttributeName : UIFont.smallMediumFont,
                                  NSForegroundColorAttributeName : [UIColor wr_colorFromColorScheme:ColorSchemeColorTextForeground],
                                  NSBackgroundColorAttributeName : [UIColor wr_colorFromColorScheme:ColorSchemeColorTextBackground] };
     
@@ -384,33 +364,6 @@
     }
     [self dismissWithCompletion:nil];
 }
-
-- (void)updateZoom
-{
-    [self updateZoomWithSize:self.view.bounds.size];
-}
-
-// Zoom to show as much image as possible unless image is smaller than screen
-- (void)updateZoomWithSize:(CGSize)size
-{
-    float minZoom = MIN(size.width / self.imageView.image.size.width,
-                        size.height / self.imageView.image.size.height);
-
-    if (minZoom > 1) {
-        minZoom = 1;
-    }
-
-    self.scrollView.minimumZoomScale = minZoom;
-
-    // Force scrollViewDidZoom fire if zoom did not change
-    if (minZoom == self.lastZoomScale) {
-        minZoom += 0.000001;
-    }
-
-    self.scrollView.zoomScale = minZoom;
-    self.lastZoomScale = minZoom;
-}
-
 
 #pragma mark - UIScrollViewDelegate
 
@@ -457,26 +410,6 @@
     [self setSelectedByMenu:NO animated:NO];
     [[UIMenuController sharedMenuController] setMenuVisible:NO];
     [self.delegate fadeAndHideMenu:!self.delegate.menuVisible];
-}
-
-- (void)handleDoubleTap:(UITapGestureRecognizer *)doubleTapper
-{
-    [self setSelectedByMenu:NO animated:NO];
-    [[UIMenuController sharedMenuController] setMenuVisible:NO];
-
-    CGPoint point = [doubleTapper locationInView:doubleTapper.view];
-
-    CGRect zoomRect = CGRectMake(point.x - 25, point.y - 25, 50, 50);
-
-    CGRect finalRect = [self.imageView convertRect:zoomRect fromView:doubleTapper.view];
-
-    CGFloat scaleDiff = self.scrollView.zoomScale - self.scrollView.minimumZoomScale;
-
-    if (scaleDiff < 0.0003) {
-        [self.scrollView zoomToRect:finalRect animated:YES];
-    } else {
-        [self.scrollView setZoomScale:self.lastZoomScale animated:YES];
-    }
 }
 
 - (void)handleLongPress:(UILongPressGestureRecognizer *)longPressRecognizer
@@ -586,7 +519,7 @@
 
 - (void)setSelectedByMenu:(BOOL)selected animated:(BOOL)animated
 {
-    DDLogDebug(@"Setting selected: %@ animated: %@", @(selected), @(animated));
+    ZMLogDebug(@"Setting selected: %@ animated: %@", @(selected), @(animated));
     if (selected) {
 
         self.highlightLayer = [CALayer layer];

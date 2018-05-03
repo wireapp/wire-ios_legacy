@@ -78,7 +78,7 @@ class ConversationNewDeviceCell: IconSystemCell {
         let startedUsingString = NSLocalizedString("content.system.started_using", comment: "") && attributes.startedUsingAttributes
         let userClientString = NSLocalizedString("content.system.new_device", comment: "") && attributes.linkAttributes
         
-        attributedText = senderName + " " + startedUsingString + " " + userClientString
+        attributedText = senderName + "general.space_between_words".localized + startedUsingString + "general.space_between_words".localized + userClientString
         self.leftIconView.isHidden = isSelfClient
     }
     
@@ -87,7 +87,7 @@ class ConversationNewDeviceCell: IconSystemCell {
         let startedUsingString = NSLocalizedString("content.system.started_using", comment: "") && attributes.startedUsingAttributes
         let userClientString = NSLocalizedString("content.system.this_device", comment: "") && attributes.linkAttributes
         
-        attributedText = senderName + " " + startedUsingString + " " + userClientString
+        attributedText = senderName + "general.space_between_words".localized + startedUsingString + "general.space_between_words".localized + userClientString
         self.leftIconView.isHidden = true
     }
     

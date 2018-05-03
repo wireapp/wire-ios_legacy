@@ -144,7 +144,4 @@ extension StartUIViewController: ConversationCreationControllerDelegate {
         delegate.startUI(self, createConversationWith: participants, name: name, allowGuests: allowGuests)
     }
     
-    func conversationCreationControllerDidCancel(_ controller: ConversationCreationController) {
-        dismiss(controller: controller)
-    }
 }

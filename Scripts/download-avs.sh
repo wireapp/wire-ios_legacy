@@ -93,7 +93,7 @@ else
 	# Get tag json: need to parse json to get assed URL
 	TEMP_FILE=`mktemp`
 	curl -sLJ "${AVS_RELEASE_TAG_PATH}${ACCESS_TOKEN_QUERY}" -o "${TEMP_FILE}"
-	ASSET_URL=`cat ${TEMP_FILE} | python -c 'import json; import sys; print json.load(sys.stdin)["assets"][1]["url"]'`
+	ASSET_URL=`cat ${TEMP_FILE} | python -c 'import json; import sys; print json.load(sys.stdin)["assets"][0]["url"]'`
 	rm "${TEMP_FILE}"
 	if [ -z "${ASSET_URL}" ]; then
 		echo "❌  Can't fetch release ${AVS_VERSION} ⚠️"

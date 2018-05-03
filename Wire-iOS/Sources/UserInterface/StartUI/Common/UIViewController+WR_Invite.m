@@ -19,7 +19,6 @@
 
 #import "UIViewController+WR_Invite.h"
 #import "UIActivityViewController+Invite.h"
-#import "ActionSheetController+Invite.h"
 
 @implementation UIViewController (WR_Invite)
 

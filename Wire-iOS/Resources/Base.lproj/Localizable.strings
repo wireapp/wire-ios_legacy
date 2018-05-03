@@ -17,11 +17,18 @@
 //
 
 
+// General strings
 "general.ok" = "OK";
 "general.next" = "Next";
 "general.cancel" = "Cancel";
 "general.close" = "Close";
+"general.back" = "Back";
 "general.open_settings" = "Open Wire Settings";
+"general.edit" = "Edit";
+"general.done" = "Done";
+"general.confirm" = "OK";
+// Language like Chinese does not use space to sperate words or sentences.
+"general.space_between_words" = " ";
 
 "general.guest-room-name" = "Guest room";
 
@@ -240,6 +247,7 @@
 "conversation.input_bar.message_too_long.title" = "Message too long";
 "conversation.input_bar.message_too_long.message" = "You can send messages up to %d characters long.";
 
+"conversation.create.group_name.title" = "Create group";
 "conversation.create.group_name.placeholder" = "Group name";
 "conversation.create.guidance.empty" = "At least 1 character";
 "conversation.create.guidance.toolong" = "Too many characters";
@@ -350,6 +358,7 @@
 "content.system.renamed_conv.title.you" = "You";
 
 "content.system.conversation.with_name.title" = "%@ started the conversation";
+"content.system.conversation.with_name.title-you" = "%@ started the conversation";
 
 "content.system.conversation.with_name.participants" = "with %@";
 
@@ -381,8 +390,7 @@
 "content.system.cannot_decrypt.otherDevice_part" = "(device %@)"; // example " (device d1b23c54f34a)".
                                                                             // Full sentence: "A message from %@ was not received. [...] (device d1b23c54f34a). This is a debug information.
 
-"content.system.unknown_message.body" = "You are using an older version of Wire that can’t display this message.";
-"content.system.unknown_message.body.link" = "Why is this happening?";
+"content.system.unknown_message.body" = "This message can’t be displayed. You may be using an older version of Wire.";
 
 "content.file.uploading" = "Uploading…";
 "content.file.downloading" = "Downloading…";
@@ -398,6 +406,8 @@
 "content.message.delete" = "Delete";
 "content.message.save" = "Save";
 
+"content.message.delete_ellipsis" = "Delete…";
+
 "content.message.like" = "Like";
 "content.message.unlike" = "Unlike";
 "content.message.forward" = "Share";
@@ -405,6 +415,10 @@
 "content.message.forward.to" = "Search…";
 "content.message.open" = "Open";
 "content.message.copy" = "Copy";
+
+"content.message.open_link_alert.title" = "Visit Link";
+"content.message.open_link_alert.message" = "This will take you to\n%@";
+"content.message.open_link_alert.open" = "Open";
 
 "content.reactions_list.likers" = "Liked by";
 
@@ -427,11 +441,17 @@
 "inbox.connection_request.connect_button_title" = "Connect";
 "inbox.connection_request.ignore_button_title" = "Ignore";
 
+// Save image errors
+"library.alert.permission_warning.title" = "Wire needs access to your Photos";
+"library.alert.permission_warning.restrictions.explaination" = "Wire cannot access your library because restrictions are enabled.";
+"library.alert.permission_warning.not_allowed.explaination" = "Go to Settings and allow Wire to access your photos.";
+
 // Voice
-"voice.status.one_to_one.incoming" = "%@\nCalling";
-"voice.status.group_call.incoming" = "%@\nRinging";
-"voice.status.one_to_one.outgoing" = "%@\nRinging";
+"voice.status.one_to_one.incoming" = "%@\ncalling";
+"voice.status.group_call.incoming" = "%@\nringing";
+"voice.status.one_to_one.outgoing" = "%@\nringing";
 "voice.status.joining" = "%@\nConnecting";
+"voice.status.leaving" = "%@\nCall ended";
 "voice.status.video_not_available" = "Video turned off";
 "voice.status.low_connection" = "Bad connection";
 "voice.network_error.title" = "No Internet Connection";
@@ -474,18 +494,17 @@
 
 // Meta Menu
 "meta.menu.rename" = "Rename";
-"meta.menu.leave" = "Leave";
+"meta.menu.leave" = "Leave Group…";
 "meta.menu.archive" = "Archive";
 "meta.menu.unarchive" = "Unarchive";
-"meta.menu.delete" = "Delete";
+"meta.menu.delete" = "Delete Content…";
 "meta.menu.silence.mute" = "Mute";
 "meta.menu.silence.unmute" = "Unmute";
 "meta.menu.cancel" = "Cancel";
-"meta.menu.cancel_connection_request" = "Cancel Request";
+"meta.menu.cancel_connection_request" = "Cancel Request…";
 "meta.menu.mark_unread" = "Mark as Unread";
 "meta.menu.mark_read" = "Mark as Read";
 "shortcut.mark_all_as_read.title" = "Mark All as Read";
-
 
 // Delete conversation
 "meta.menu.delete_content.dialog_title" = "Delete content?";
@@ -545,7 +564,8 @@
 "profile.cancel_connection_request_dialog.button_yes" = "Yes";
 
 // Unblock button
-"profile.unblock_button_title" = "Unblock";
+"profile.block_button_title" = "Block…";
+"profile.unblock_button_title" = "Unblock…";
 
 "profile.cancel_connection_button_title" = "CANCEL REQUEST";
 "profile.connection_request_state.blocked" = "BLOCKED";
@@ -563,7 +583,7 @@
 // Device list
 "profile.devices.title" = "Devices";
 "profile.devices.fingerprint_message_unencrypted" = "%@ is using an old version of Wire. No devices are shown here.";
-"profile.devices.fingerprint_message" = "Wire gives every device a unique fingerprint. Compare them with %@ and verify your conversation. Why verify conversations?";
+"profile.devices.fingerprint_message.title" = "Wire gives every device a unique fingerprint. Compare them with %@ and verify your conversation.";
 "profile.devices.fingerprint_message.link" = "Why verify conversations?";
 
 // Device detail
@@ -576,9 +596,6 @@
 "device.class.tablet" = "Tablet";
 "device.class.phone" = "Phone";
 "profile.devices.detail.reset_session.title" = "Reset Session";
-
-// General strings
-"general.confirm" = "OK";
 
 // Bot
 "participants.services.remove_integration.button" = "remove integration";
@@ -616,12 +633,9 @@
 "about.copyright.title"="© Wire Swiss GmbH";
 
 // Self new devices
-"self.new_device_alert.title" = "You have connected %@ to your Wire account";
-"self.new_device_alert.title_prefix.tablet" = "a tablet";
-"self.new_device_alert.title_prefix.phone" = "a phone";
-"self.new_device_alert.title_prefix.devices" = "%d devices";
-"self.new_device_alert.message" = "%@\n\nIf you didn’t do this, remove the device and reset your password.";
-"self.new_device_alert.message_plural" = "%@\n\nIf you didn’t do this, remove those devices and reset your password.";
+"self.new_device_alert.title" = "Your account was used on:";
+"self.new_device_alert.message" = "\n%@\n\nIf you don’t recognize the device above, remove it and reset your password.";
+"self.new_device_alert.message_plural" = "\n%@\n\nIf you don’t recognize the devices above, remove them and reset your password.";
 "self.new_device_alert.manage_devices" = "Manage devices";
 "self.new_device_alert.trust_devices" = "OK";
 
@@ -786,7 +800,11 @@
 "self.settings.privacy_contacts_menu.description_disabled.title" = "This helps you connect with others. We anonymize all the information and do not share it with anyone else. Allow access via Settings > Privacy > Contacts.";
 
 "self.settings.privacy_security.lock_app" = "Lock With Passcode";
-"self.settings.privacy_security.lock_app.subtitle" = "Lock Wire after 10 seconds in the background. Unlock with Touch ID or enter your passcode.";
+"self.settings.privacy_security.lock_app.subtitle.lock_description" = "Lock Wire after 10 seconds in the background.";
+"self.settings.privacy_security.lock_app.subtitle.touch_id" = "Unlock with Touch ID or enter your passcode.";
+"self.settings.privacy_security.lock_app.subtitle.face_id" = "Unlock with Face ID or enter your passcode.";
+"self.settings.privacy_security.lock_app.subtitle.none" = "Unlock by entering your passcode.";
+
 "self.settings.privacy_security.lock_app.description" = "Unlock Wire";
 
 "self.settings.privacy_security.lock_cancelled.description" = "Unlock Wire with Touch ID or Passcode";
@@ -829,6 +847,25 @@
 // Invite from Settings
 "self.settings.invite_friends.title" = "Invite people";
 
+// History backup
+
+"self.settings.conversations.title" = "History";
+"self.settings.history_backup.title" = "Back Up Conversations";
+"self.settings.history_backup.description" = "Create a backup to preserve your conversation history. You can use this to restore history if you lose your device or switch to a new one.\n\nChoose a strong password to protect the backup file.";
+"self.settings.history_backup.action" = "Back Up Now";
+"self.settings.history_backup.error.title" = "Error";
+
+"self.settings.history_backup.set_email.title" = "Set an email and password.";
+"self.settings.history_backup.set_email.message" = "You need an email and a password in order to back up your conversation history. You can do it from the account page in Settings.";
+
+// History backup password
+
+"self.settings.history_backup.password.title" = "Set Password";
+"self.settings.history_backup.password.cancel" = "Cancel";
+"self.settings.history_backup.password.next" = "Next";
+"self.settings.history_backup.password.placeholder" = "At least 8 characters";
+"self.settings.history_backup.password.description" = "The backup will be compressed and encrypted with the password you set here.";
+
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // System status
 "system_status_bar.no_internet.title" = "No Internet";
@@ -852,11 +889,12 @@
 
 // Landing screen
 
+"landing.app_name" = "Wire";
 "landing.title" = "Secure messaging for everyone.";
-"landing.create_account.title" = "Create an account";
-"landing.create_account.subtitle" = "for personal use";
-"landing.create_team.title" = "Create a team";
-"landing.create_team.subtitle" = "for work";
+"landing.create_account.title" = "For personal use";
+"landing.create_account.subtitle" = "create an account";
+"landing.create_team.title" = "For organizations";
+"landing.create_team.subtitle" = "create a team";
 "landing.login.hints" = "Already have an account?";
 "landing.login.button.title" = "Log in";
 
@@ -920,14 +958,14 @@
 "guest_room.error.generic.message" = "Check your connection and try again";
 
 "guest_room.link.header.title" = "Invite others with a link";
-"guest_room.link.header.subtitle" = "Anyone with the link can join the conversation for 24 hours, even if they don’t have Wire.";
+"guest_room.link.header.subtitle" = "Anyone with the link can join the conversation, even if they don't have Wire.";
 
 "guest_room.link.button.title" = "Create Link";
 
 "guest_room.actions.copy_link" = "Copy Link";
 "guest_room.actions.copied_link" = "Link Copied!";
 "guest_room.actions.share_link" = "Share Link";
-"guest_room.actions.revoke_link" = "Revoke Link";
+"guest_room.actions.revoke_link" = "Revoke Link…";
 
 "guest_room.share.message" = "Join me in a conversation on Wire:\n%@";
 
@@ -935,6 +973,8 @@
 "guest_room.expiration.less_than_minutes_left" = "Less than %@m left";
 
 // Registration
+
+"registration.launch_back_button.label" = "Back";
 
 "registration.title" = "Registration";
 "registration.close_email_invitation_button.email_title" = "Use another email";
@@ -963,6 +1003,37 @@
 "registration.no_history.hero" = "It’s the first time you’re using Wire on this device.";
 "registration.no_history.subtitle" = "For privacy reasons, your conversation history will not appear here.";
 "registration.no_history.got_it" = "OK";
+"registration.no_history.restore_backup" = "Restore from backup";
+
+// Restore History Warning Alert
+"registration.no_history.restore_backup_warning.title" = "Restore history";
+"registration.no_history.restore_backup_warning.message" = "The backup contents will replace the conversation history on this device.\nYou can only restore history from a backup of the same platform.";
+"registration.no_history.restore_backup_warning.proceed" = "Choose Backup File";
+
+/// Restore History Failure Alerts
+"registration.no_history.restore_backup_failed.try_again" = "Try again";
+
+// Generic
+"registration.no_history.restore_backup_failed.title" = "Something went wrong";
+"registration.no_history.restore_backup_failed.message" = "Your history could not be restored.";
+
+// Wrong Account
+"registration.no_history.restore_backup_failed.wrong_account.title" = "Incompatible backup";
+"registration.no_history.restore_backup_failed.wrong_account.message" = "You cannot restore history from a different account.";
+
+// Incompatible Version
+"registration.no_history.restore_backup_failed.wrong_version.title" = "Incompatible backup";
+"registration.no_history.restore_backup_failed.wrong_version.message" = "This backup was created by a newer or outdated version of Wire and cannot be restored here.";
+
+// Restore In Progress Loading Titles
+"registration.no_history.restore_backup.restoring" = "Restoring…";
+"registration.no_history.restore_backup.completed" = "Completed";
+
+// Password Import Alert
+"registration.no_history.restore_backup.password.title" = "This backup is password protected.";
+"registration.no_history.restore_backup.password.message" = "The password is required to restore this backup.";
+"registration.no_history.restore_backup.password.placeholder" = "Password";
+"registration.no_history.restore_backup.password_error.title" = "Wrong Password";
 
 "registration.no_history.logged_out.hero" = "You’ve used Wire on this device before.";
 "registration.no_history.logged_out.subtitle" = "Messages sent in the meantime will not appear.";
@@ -1021,7 +1092,19 @@
 "registration.devices.activated_in" = "Activated in";
 "registration.devices.id" = "ID:";
 
+"signin.use_email.label" = "Login with Email";
+"signin.use_phone.label" = "Login with Phone";
 "signin.forgot_password" = "Forgot password?";
+"signin.use_one_password.label" = "Log in with 1Password";
+"signin.use_one_password.hint" = "Double tap to fill your password with 1Password";
+"signin.confirm" = "Log In";
+
+"registration.phone_country" = "Country";
+"registration.phone_code" = "Country Code";
+"registration.phone_country.hint" = "Double tap to select another country.";
+"registration.phone_code.hint" = "Double tap to select another country code.";
+"registration.phone.verify.label" = "Verify phone number";
+"registration.phone.verify_field.label" = "Verification Code";
 
 "registration.add_phone_number.hero.title" = "Add phone number";
 "registration.add_phone_number.hero.paragraph" = "This helps us find people you may know. We never share it.";
@@ -1037,6 +1120,9 @@
 "registration.phone_invitation.title" = "Invitation";
 "registration.phone_invitation.hero.title" = "Hello, %@";
 "registration.phone_invitation.hero.paragraph" = "You are one step away from creating your account.";
+
+"registration.confirm" = "Sign Up";
+"registration.phone.country_code.hint" = "Double tap to use a phone number from this country.";
 
 "error.name_and_email" = "Please enter your full name and a valid email address";
 "error.full_name" = "Please enter your full name";
@@ -1089,6 +1175,12 @@
 
 "error.invite.no_email_provider" = "Please configure your email client to be able to send the invites via email";
 "error.invite.no_messaging_provider" = "Please configure your SMS to be able to send the invites via SMS";
+
+"error.conversation.title" = "Error";
+"error.conversation.cannot_add" = "Adding the participant failed";
+"error.conversation.cannot_remove" = "Removing the participant failed";
+"error.conversation.too_many_members" = "The conversation is full";
+"error.conversation.offline" = "There seems to be a problem with your Internet connection. Please make sure it’s working.";
 
 "sketchpad.initial_hint" = "Tap colors to change brush size";
 
@@ -1165,10 +1257,17 @@
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Call Quality Survey
 
-"calling.quality_survey.title" = "Call Quality Survey";
+"calling.quality_survey.title" = "Call Quality Feedback";
 "calling.quality_survey.question" = "How do you rate the overall quality of the call?";
 "calling.quality_survey.answer.1" = "Bad";
 "calling.quality_survey.answer.2" = "Poor";
 "calling.quality_survey.answer.3" = "Fair";
 "calling.quality_survey.answer.4" = "Good";
 "calling.quality_survey.answer.5" = "Excellent";
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// URL Action
+
+"url_action.confirm" = "Confirm";
+"url_action.title" = "Confirm URL action";
+"url_action.connect_to_bot.message" = "Would you like to connect to the bot?";
