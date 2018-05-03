@@ -27,6 +27,16 @@ class MockCallParticipantsViewModel: CallParticipantsViewModel {
         self.rows = rows
     }
     
+    static func viewModel(withParticipantCount participantCount: Int) -> CallParticipantsViewModel {
+        var rows: [CallParticipantsCellConfiguration] = []
+        
+        for index in 0..<participantCount {
+            rows.append(.callParticipant(user: MockUser.mockUsers()[index], sendsVideo: false))
+        }
+        
+        return MockCallParticipantsViewModel(rows: rows)
+    }
+    
 }
 
 class CallParticipantsViewTests: ZMSnapshotTestCase {
