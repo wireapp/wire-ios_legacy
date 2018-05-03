@@ -50,7 +50,6 @@ class AppStateController : NSObject {
     fileprivate var hasCompletedRegistration = false
     fileprivate var loadingAccount : Account?
     fileprivate var authenticationError : NSError?
-    fileprivate var authenticationAccount : Account?
     fileprivate let isRunningTests = ProcessInfo.processInfo.isRunningTests
     
     override init() {
@@ -92,7 +91,7 @@ class AppStateController : NSObject {
         }
         
         if isLoggedOut {
-            return .unauthenticated(error: authenticationError, account: authenticationAccount)
+            return .unauthenticated(error: authenticationError)
         }
         
         return .headless
@@ -137,12 +136,19 @@ extension AppStateController : SessionManagerDelegate {
     }
     
     func sessionManagerDidFailToLogin(account: Account?, error: Error) {
-        loadingAccount = nil
-        
-        // Record the error and the account user id
-        authenticationError = error as NSError
-        authenticationAccount = account
 
+
+
+        if selectedAccount == account || loadingAccount == account {
+            authenticationError = error as NSError
+        }
+        
+        // We only care about the error if it concerns the selected account.
+        if let selectedAccount = SessionManager.shared?.accountManager.selectedAccount, selectedAccount == account {
+            authenticationError = error as NSError
+        }
+
+        loadingAccount = nil
         isLoggedIn = false
         isLoggedOut = true
         updateAppState()

@@ -22,7 +22,7 @@ enum AppState : Equatable {
     
     case headless
     case authenticated(completedRegistration: Bool)
-    case unauthenticated(error : NSError?, account : Account?)
+    case unauthenticated(error : NSError?)
     case blacklisted
     case migrating
     case loading(account: Account, from: Account?)

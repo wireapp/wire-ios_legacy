@@ -196,14 +196,6 @@ class AppRootViewController: UIViewController {
         }
     }
 
-    func needsToReauthenticate(errorCode: ZMUserSessionErrorCode) -> Bool {
-        return [ZMUserSessionErrorCode.clientDeletedRemotely,
-                                 .accessTokenExpired,
-                                 .needsPasswordToRegisterClient,
-                                 .needsToRegisterEmailToRegisterClient,
-                                 ].contains(errorCode)
-    }
-
     func transition(to appState: AppState, completionHandler: (() -> Void)? = nil) {
         var viewController: UIViewController? = nil
         requestToOpenViewDelegate = nil
@@ -215,36 +207,28 @@ class AppRootViewController: UIViewController {
             let launchImageViewController = LaunchImageViewController()
             launchImageViewController.showLoadingScreen()
             viewController = launchImageViewController
-        case .unauthenticated(error: let error, account: let account):
+        case .unauthenticated(error: let error):
             UIColor.setAccentOverride(ZMUser.pickRandomAcceptableAccentColor())
             mainWindow.tintColor = UIColor.accent()
             
             // check if needs to reauthenticate
             var needsToReauthenticate = false
             var addingNewAccount = (SessionManager.shared?.accountManager.accounts.count == 0)
-            var authenticationFlow = AuthenticationFlowType.regular
+            if let error = error {
+                let errorCode = (error as NSError).userSessionErrorCode
+                needsToReauthenticate = [ZMUserSessionErrorCode.clientDeletedRemotely,
+                    .accessTokenExpired,
+                    .needsPasswordToRegisterClient,
+                    .needsToRegisterEmailToRegisterClient,
+                ].contains(errorCode)
 
-            if let errorCode = error?.userSessionErrorCode {
-                let selectedAccount = SessionManager.shared?.accountManager.selectedAccount
-                let isSelectedAccount = selectedAccount == account
-                let loadingAppState: AppState? = (account != nil) ? AppState.loading(account: account!, from: selectedAccount) : nil
-
-                if isSelectedAccount {
-                    needsToReauthenticate = self.needsToReauthenticate(errorCode: errorCode)
-
-                    addingNewAccount = [
-                        ZMUserSessionErrorCode.addAccountRequested
-                        ].contains(errorCode)
-                } else if appStateController.lastAppState == loadingAppState {
-                    // when loading another account, navigate to RegistrationViewController with login mode (allow user to go back to last selected account)
-                    needsToReauthenticate = self.needsToReauthenticate(errorCode: errorCode)
-
-                    authenticationFlow = AuthenticationFlowType.onlyLogin
-                }
+                addingNewAccount = [
+                    ZMUserSessionErrorCode.addAccountRequested
+                    ].contains(errorCode)
             }
-
+            
             if needsToReauthenticate {
-                let registrationViewController = RegistrationViewController(authenticationFlow: authenticationFlow)
+                let registrationViewController = RegistrationViewController()
                 registrationViewController.delegate = appStateController
                 registrationViewController.signInError = error
                 viewController = registrationViewController
