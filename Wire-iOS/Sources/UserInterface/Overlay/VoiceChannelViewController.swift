@@ -29,9 +29,9 @@ class VoiceChannelViewController: UIViewController {
     var blurEffectView : UIVisualEffectView!
     var participantsController : VoiceChannelParticipantsController?
     
-    var callStateObserverToken : Any?
-    var receivedVideoObserverToken : Any?
-    var constantBitRateObserverToken : Any?
+    var callStateObserverToken: Any?
+    var receivedVideoObserverToken: Any?
+    var constantBitRateObserverToken: Any?
     
     fileprivate var isSwitchingCamera = false
     fileprivate var currentCaptureDevice: CaptureDevice = .front
