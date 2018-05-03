@@ -109,7 +109,7 @@ class AppRootViewController: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(onContentSizeCategoryChange), name: Notification.Name.UIContentSizeCategoryDidChange, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(applicationWillEnterForeground), name: Notification.Name.UIApplicationWillEnterForeground, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(applicationDidEnterBackground), name: Notification.Name.UIApplicationDidEnterBackground, object: nil)
-         NotificationCenter.default.addObserver(self, selector: #selector(applicationDidBecomeActive), name: Notification.Name.UIApplicationDidBecomeActive, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(applicationDidBecomeActive), name: Notification.Name.UIApplicationDidBecomeActive, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(onUserGrantedAudioPermissions), name: Notification.Name.UserGrantedAudioPermissions, object: nil)
 
         transition(to: .headless)
@@ -145,22 +145,22 @@ class AppRootViewController: UIViewController {
             delegate: appStateController,
             application: UIApplication.shared,
             blacklistDownloadInterval: Settings.shared().blacklistDownloadInterval) { sessionManager in
-            self.sessionManager = sessionManager
-            self.sessionManagerCreatedSessionObserverToken = sessionManager.addSessionManagerCreatedSessionObserver(self)
-            self.sessionManagerDestroyedSessionObserverToken = sessionManager.addSessionManagerDestroyedSessionObserver(self)
-            self.sessionManager?.localNotificationResponder = self
-            self.sessionManager?.requestToOpenViewDelegate = self
-            sessionManager.updateCallNotificationStyleFromSettings()
-            sessionManager.useConstantBitRateAudio = Settings.shared().callingConstantBitRate
-            sessionManager.start(launchOptions: launchOptions)
+                self.sessionManager = sessionManager
+                self.sessionManagerCreatedSessionObserverToken = sessionManager.addSessionManagerCreatedSessionObserver(self)
+                self.sessionManagerDestroyedSessionObserverToken = sessionManager.addSessionManagerDestroyedSessionObserver(self)
+                self.sessionManager?.localNotificationResponder = self
+                self.sessionManager?.requestToOpenViewDelegate = self
+                sessionManager.updateCallNotificationStyleFromSettings()
+                sessionManager.useConstantBitRateAudio = Settings.shared().callingConstantBitRate
+                sessionManager.start(launchOptions: launchOptions)
                 
-            self.quickActionsManager = QuickActionsManager(sessionManager: sessionManager,
-                                                           application: UIApplication.shared)
+                self.quickActionsManager = QuickActionsManager(sessionManager: sessionManager,
+                                                               application: UIApplication.shared)
                 
-            sessionManager.urlHandler.delegate = self
-            if let url = launchOptions[UIApplicationLaunchOptionsKey.url] as? URL {
-                sessionManager.urlHandler.openURL(url, options: [:])
-            }
+                sessionManager.urlHandler.delegate = self
+                if let url = launchOptions[UIApplicationLaunchOptionsKey.url] as? URL {
+                    sessionManager.urlHandler.openURL(url, options: [:])
+                }
         }
     }
 
@@ -207,24 +207,32 @@ class AppRootViewController: UIViewController {
             let launchImageViewController = LaunchImageViewController()
             launchImageViewController.showLoadingScreen()
             viewController = launchImageViewController
-        case .unauthenticated(error: let error, userIdentifier: _):
+        case .unauthenticated(error: let error, account: let account):
             UIColor.setAccentOverride(ZMUser.pickRandomAcceptableAccentColor())
             mainWindow.tintColor = UIColor.accent()
             
             // check if needs to reauthenticate
             var needsToReauthenticate = false
             var addingNewAccount = (SessionManager.shared?.accountManager.accounts.count == 0)
-            if let error = error {
-                let errorCode = (error as NSError).userSessionErrorCode
-                needsToReauthenticate = [ZMUserSessionErrorCode.clientDeletedRemotely,
-                    .accessTokenExpired,
-                    .needsPasswordToRegisterClient,
-                    .needsToRegisterEmailToRegisterClient,
-                ].contains(errorCode)
+            if let errorCode = error?.userSessionErrorCode {
+                let selectedAccount = SessionManager.shared?.accountManager.selectedAccount
+                let isSelectedAccount = selectedAccount == account
+                let loadingAppState: AppState? = (account != nil) ? AppState.loading(account: account!, from: selectedAccount) : nil
+                r
+                if isSelectedAccount || (!isSelectedAccount && appStateController.lastAppState == loadingAppState) {
+                    needsToReauthenticate = [ZMUserSessionErrorCode.clientDeletedRemotely,
+                                             .accessTokenExpired,
+                                             .needsPasswordToRegisterClient,
+                                             .needsToRegisterEmailToRegisterClient,
+                                             ].contains(errorCode)
 
-                addingNewAccount = [
-                    ZMUserSessionErrorCode.addAccountRequested
-                    ].contains(errorCode)
+                    addingNewAccount = [
+                        ZMUserSessionErrorCode.addAccountRequested
+                        ].contains(errorCode)
+                } else {
+
+                }
+
             }
             
             if needsToReauthenticate {
@@ -302,11 +310,11 @@ class AppRootViewController: UIViewController {
                        options: .transitionCrossDissolve,
                        animations: nil,
                        completion: { (finished) in
-                    viewController.didMove(toParentViewController: self)
-                    previousViewController.removeFromParentViewController()
-                    self.visibleViewController = viewController
-                    UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(true)
-                    completionHandler?()
+                        viewController.didMove(toParentViewController: self)
+                        previousViewController.removeFromParentViewController()
+                        self.visibleViewController = viewController
+                        UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(true)
+                        completionHandler?()
             })
         } else {
             UIView.performWithoutAnimation {

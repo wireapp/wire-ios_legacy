@@ -30,7 +30,15 @@ protocol AppStateControllerDelegate : class {
 
 class AppStateController : NSObject {
     
-    private(set) var appState : AppState = .headless
+    var appState : AppState = .headless {
+        didSet {
+            if appState != oldValue {
+                lastAppState = oldValue
+            }
+        }
+    }
+    var lastAppState : AppState = .headless
+
     private var authenticationObserverToken : ZMAuthenticationStatusObserver?
     public weak var delegate : AppStateControllerDelegate? = nil
     
@@ -42,7 +50,7 @@ class AppStateController : NSObject {
     fileprivate var hasCompletedRegistration = false
     fileprivate var loadingAccount : Account?
     fileprivate var authenticationError : NSError?
-    fileprivate var authenticationUserIdentifier : UUID?
+    fileprivate var authenticationAccount : Account?
     fileprivate let isRunningTests = ProcessInfo.processInfo.isRunningTests
     
     override init() {
@@ -55,11 +63,12 @@ class AppStateController : NSObject {
     deinit {
         NotificationCenter.default.removeObserver(self)
     }
-    
+
+
     func calculateAppState() -> AppState {
         
         if isRunningTests {
-            return .unauthenticated(error: nil, userIdentifier: nil)
+            return .unauthenticated(error: nil, account: nil)
         }
         
         if !hasEnteredForeground {
@@ -83,7 +92,7 @@ class AppStateController : NSObject {
         }
         
         if isLoggedOut {
-            return .unauthenticated(error: authenticationError, userIdentifier: authenticationUserIdentifier)
+            return .unauthenticated(error: authenticationError, account: authenticationAccount)
         }
         
         return .headless
@@ -97,6 +106,7 @@ class AppStateController : NSObject {
         case (.unauthenticated, _):
             // only clear the error when transitioning out of the unauthenticated state
             authenticationError = nil
+            authenticationAccount = nil
         default: break
         }
         
@@ -117,6 +127,7 @@ extension AppStateController : SessionManagerDelegate {
     
     func sessionManagerWillLogout(error: Error?, userSessionCanBeTornDown: @escaping () -> Void) {
         authenticationError = error as NSError?
+        authenticationAccount = SessionManager.shared?.accountManager.selectedAccount
 
         isLoggedIn = false
         isLoggedOut = true
@@ -130,7 +141,7 @@ extension AppStateController : SessionManagerDelegate {
         
         // Record the error and the account user id
         authenticationError = error as NSError
-        authenticationUserIdentifier = account?.userIdentifier
+        authenticationAccount = account
 
         isLoggedIn = false
         isLoggedOut = true
