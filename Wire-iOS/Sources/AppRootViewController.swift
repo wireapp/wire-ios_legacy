@@ -214,12 +214,13 @@ class AppRootViewController: UIViewController {
             // check if needs to reauthenticate
             var needsToReauthenticate = false
             var addingNewAccount = (SessionManager.shared?.accountManager.accounts.count == 0)
+
             if let errorCode = error?.userSessionErrorCode {
                 let selectedAccount = SessionManager.shared?.accountManager.selectedAccount
                 let isSelectedAccount = selectedAccount == account
                 let loadingAppState: AppState? = (account != nil) ? AppState.loading(account: account!, from: selectedAccount) : nil
-                r
-                if isSelectedAccount || (!isSelectedAccount && appStateController.lastAppState == loadingAppState) {
+
+                if isSelectedAccount {
                     needsToReauthenticate = [ZMUserSessionErrorCode.clientDeletedRemotely,
                                              .accessTokenExpired,
                                              .needsPasswordToRegisterClient,
@@ -229,8 +230,8 @@ class AppRootViewController: UIViewController {
                     addingNewAccount = [
                         ZMUserSessionErrorCode.addAccountRequested
                         ].contains(errorCode)
-                } else {
-
+                } else if appStateController.lastAppState == loadingAppState {
+                    addingNewAccount = true
                 }
 
             }
