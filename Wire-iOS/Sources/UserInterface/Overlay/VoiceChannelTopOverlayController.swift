@@ -88,13 +88,18 @@ final class VoiceChannelTopOverlayController: UIViewController {
         tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(openCall(_:)))
         
         view.backgroundColor = UIColor(for: .strongLimeGreen)
+        view.accessibilityIdentifier = "OpenOngoingCallButton"
+        view.shouldGroupAccessibilityChildren = true
+        view.isAccessibilityElement = true
+        view.accessibilityLabel = "voice.top_overlay.accessibility_title".localized
+        view.accessibilityTraits = UIAccessibilityTraitButton
         
         interactiveView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(interactiveView)
         
         durationLabel.translatesAutoresizingMaskIntoConstraints = false
         interactiveView.addSubview(durationLabel)
-        durationLabel.font = FontSpec(.medium, .medium).font
+        durationLabel.font = FontSpec(.small, .semibold).font
         durationLabel.textColor = .white
         
         NSLayoutConstraint.activate([
@@ -104,7 +109,7 @@ final class VoiceChannelTopOverlayController: UIViewController {
             interactiveView.topAnchor.constraint(equalTo: view.topAnchor, constant: UIScreen.safeArea.top),
             durationLabel.centerXAnchor.constraint(equalTo: interactiveView.centerXAnchor),
             durationLabel.centerYAnchor.constraint(equalTo: interactiveView.centerYAnchor),
-            interactiveView.heightAnchor.constraint(equalToConstant: 44)
+            interactiveView.heightAnchor.constraint(equalToConstant: 24)
             ])
         
         interactiveView.addGestureRecognizer(tapGestureRecognizer)
@@ -143,7 +148,8 @@ final class VoiceChannelTopOverlayController: UIViewController {
     }
     
     private func updateLabel() {
-        durationLabel.text = ("voice.top_overlay.tap_to_return".localized + " " + statusString).uppercased()
+        durationLabel.text = ("voice.top_overlay.tap_to_return".localized + "   " + statusString).uppercased()
+        view.accessibilityValue = durationLabel.text
     }
     
     private var statusString: String {
@@ -169,7 +175,12 @@ final class VoiceChannelTopOverlayController: UIViewController {
         callDurationTimer = nil
     }
     
-    @objc dynamic func openCall(_ sender: UITapGestureRecognizer) {
+    override func accessibilityActivate() -> Bool {
+        openCall(nil)
+        return true
+    }
+    
+    @objc dynamic func openCall(_ sender: UITapGestureRecognizer?) {
         delegate?.voiceChannelTopOverlayWantsToRestoreCall(self)
     }
 }

@@ -482,6 +482,7 @@
 "voice.alert.camera_warning.explanation" = "Go to Settings and allow Wire to access the camera.";
 
 "voice.top_overlay.tap_to_return" = "Tap to return to call";
+"voice.top_overlay.accessibility_title" = "Ongoing call";
 
 // Voice New
 

@@ -48,28 +48,41 @@ extension ZClientViewController {
             }
         }
         else {
-            UIView.performWithoutAnimation {
-                topOverlayViewController?.removeFromParentViewController()
-                if let viewController = viewController {
-                    addChildViewController(viewController)
-                    viewController.view.frame = topOverlayContainer.bounds
+            topOverlayViewController?.removeFromParentViewController()
+            if let viewController = viewController {
+                addChildViewController(viewController)
+                viewController.view.frame = topOverlayContainer.bounds
+                
+                viewController.view.translatesAutoresizingMaskIntoConstraints = false
+                topOverlayContainer.addSubview(viewController.view)
+                NSLayoutConstraint.activate([
+                    viewController.view.topAnchor.constraint(equalTo: topOverlayContainer.topAnchor),
+                    viewController.view.leadingAnchor.constraint(equalTo: topOverlayContainer.leadingAnchor),
+                    viewController.view.bottomAnchor.constraint(equalTo: topOverlayContainer.bottomAnchor),
+                    viewController.view.trailingAnchor.constraint(equalTo: topOverlayContainer.trailingAnchor),
+                    ])
+                
+                topOverlayContainer.addSubview(viewController.view)
+                viewController.didMove(toParentViewController: self)
+                
+                if animated {
+                    let heightConstraint = viewController.view.heightAnchor.constraint(equalToConstant: 0)
+                    heightConstraint.isActive = true
+                    self.view.setNeedsLayout()
+                    self.view.layoutIfNeeded()
                     
-                    viewController.view.translatesAutoresizingMaskIntoConstraints = false
-                    topOverlayContainer.addSubview(viewController.view)
-                    NSLayoutConstraint.activate([
-                        viewController.view.topAnchor.constraint(equalTo: topOverlayContainer.topAnchor),
-                        viewController.view.leadingAnchor.constraint(equalTo: topOverlayContainer.leadingAnchor),
-                        viewController.view.bottomAnchor.constraint(equalTo: topOverlayContainer.bottomAnchor),
-                        viewController.view.trailingAnchor.constraint(equalTo: topOverlayContainer.trailingAnchor),
-                        ])
-                    
-                    topOverlayContainer.addSubview(viewController.view)
-                    viewController.didMove(toParentViewController: self)
-                    
-                    UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(false)
+                    UIView.wr_animate(easing: RBBEasingFunctionEaseOutExpo, duration: 0.35, delay: 1, animations: {
+                        heightConstraint.isActive = false
+                        self.view.setNeedsLayout()
+                        self.view.layoutIfNeeded()
+                    }, options: .beginFromCurrentState, completion: { completed in
+                        
+                    })
                 }
-                topOverlayViewController = viewController
+                
+                UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(animated)
             }
+            topOverlayViewController = viewController
         }
     }
     
