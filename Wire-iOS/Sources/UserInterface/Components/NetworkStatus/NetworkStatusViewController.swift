@@ -110,14 +110,15 @@ class NetworkStatusViewController : UIViewController {
         }
     }
 
-    @objc public func createConstraintsInContainer(bottomView: UIView, containerView: UIView, topMargin: CGFloat) {
-        constrain(bottomView, containerView, view) { bottomView, containerView, networkStatusViewControllerView in
+    @objc public func createConstraintsInParentController(bottomView: UIView, controller: UIViewController) {
+        constrain(bottomView, controller.view, view) { bottomView, containerView, networkStatusViewControllerView in
 
-            networkStatusViewControllerView.top == containerView.top + topMargin
-            networkStatusViewControllerView.left == containerView.left
-            networkStatusViewControllerView.right == containerView.right
+            networkStatusViewControllerView.leading == containerView.leading
+            networkStatusViewControllerView.trailing == containerView.trailing
             bottomView.top == networkStatusViewControllerView.bottom
         }
+        
+        view.topAnchor.constraint(equalTo: controller.safeTopAnchor).isActive = true
     }
 
     func showOfflineAlert() {

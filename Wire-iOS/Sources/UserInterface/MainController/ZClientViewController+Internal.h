@@ -52,7 +52,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface ZClientViewController ()
 
 @property (nonatomic, nonnull) UIView *topOverlayContainer;
-@property (nonatomic, nullable) UIView *topOverlayView;
+@property (nonatomic, nullable) UIViewController *topOverlayViewController;
 
 @end
 

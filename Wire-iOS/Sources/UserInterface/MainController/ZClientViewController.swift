@@ -22,23 +22,51 @@ import Foundation
 
 extension ZClientViewController {
     
-    public func updateTopOverlayView(to newView: UIView?) {
-        topOverlayView?.removeFromSuperview()
+    func setTopOverlay(to viewController: UIViewController?, animated: Bool = true) {
+        topOverlayViewController?.willMove(toParentViewController: nil)
         
-        topOverlayView = newView
-        
-        guard let newView = topOverlayView else {
-            return
+        if let previousViewController = topOverlayViewController, animated {
+            if let viewController = viewController {
+                addChildViewController(viewController)
+                transition(from: previousViewController,
+                           to: viewController,
+                           duration: 0.5,
+                           options: .transitionCrossDissolve,
+                           animations: nil,
+                           completion: { (finished) in
+                            viewController.didMove(toParentViewController: self)
+                            previousViewController.removeFromParentViewController()
+                            self.topOverlayViewController = viewController
+                })
+            }
+            else {
+                topOverlayViewController?.removeFromParentViewController()
+                previousViewController.view.removeFromSuperview()
+                topOverlayViewController = viewController
+            }
         }
-        
-        newView.translatesAutoresizingMaskIntoConstraints = false
-        topOverlayContainer.addSubview(newView)
-        NSLayoutConstraint.activate([
-            newView.topAnchor.constraint(equalTo: topOverlayContainer.topAnchor),
-            newView.leadingAnchor.constraint(equalTo: topOverlayContainer.leadingAnchor),
-            newView.bottomAnchor.constraint(equalTo: topOverlayContainer.bottomAnchor),
-            newView.trailingAnchor.constraint(equalTo: topOverlayContainer.trailingAnchor),
-            ])
+        else {
+            UIView.performWithoutAnimation {
+                topOverlayViewController?.removeFromParentViewController()
+                if let viewController = viewController {
+                    addChildViewController(viewController)
+                    viewController.view.frame = topOverlayContainer.bounds
+                    
+                    viewController.view.translatesAutoresizingMaskIntoConstraints = false
+                    topOverlayContainer.addSubview(viewController.view)
+                    NSLayoutConstraint.activate([
+                        viewController.view.topAnchor.constraint(equalTo: topOverlayContainer.topAnchor),
+                        viewController.view.leadingAnchor.constraint(equalTo: topOverlayContainer.leadingAnchor),
+                        viewController.view.bottomAnchor.constraint(equalTo: topOverlayContainer.bottomAnchor),
+                        viewController.view.trailingAnchor.constraint(equalTo: topOverlayContainer.trailingAnchor),
+                        ])
+                    
+                    topOverlayContainer.addSubview(viewController.view)
+                    viewController.didMove(toParentViewController: self)
+                }
+                topOverlayViewController = viewController
+            }
+        }
     }
     
     func createTopViewConstraints() {

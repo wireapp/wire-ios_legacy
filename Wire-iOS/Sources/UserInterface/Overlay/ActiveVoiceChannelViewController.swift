@@ -25,15 +25,28 @@ class ActiveVoiceChannelViewController : UIViewController {
     
     var callStateObserverToken : Any?
     var answeredCalls: [UUID: Date] = [:]
+    var minimisedCall: UUID? = nil {
+        didSet {
+            updateVisibleVoiceChannelViewController()
+        }
+    }
     
     deinit {
         visibleVoiceChannelViewController?.stopCallDurationTimer()
     }
     
-    var visibleVoiceChannelViewController : VoiceChannelViewController? {
+    var visibleVoiceChannelViewController: VoiceChannelViewController? {
         didSet {
             oldValue?.stopCallDurationTimer()
+            visibleVoiceChannelViewController?.delegate = self
             transition(to: visibleVoiceChannelViewController, from: oldValue)
+        }
+    }
+    
+    var visibleVoiceChannelTopOverlayVoiceController: VoiceChannelTopOverlayController? {
+        didSet {
+            visibleVoiceChannelTopOverlayVoiceController?.delegate = self
+            ZClientViewController.shared()?.setTopOverlay(to: visibleVoiceChannelTopOverlayVoiceController)
         }
     }
     
@@ -64,15 +77,28 @@ class ActiveVoiceChannelViewController : UIViewController {
     
     func updateVisibleVoiceChannelViewController() {
         let conversation = primaryCallingConversation
-        
-        guard visibleVoiceChannelViewController?.conversation != conversation else {
-            return
-        }
-        
+       
         if let conversation = conversation {
-            visibleVoiceChannelViewController = VoiceChannelViewController(conversation: conversation)
+            // Call was minimized
+            if conversation.remoteIdentifier == minimisedCall {
+                guard visibleVoiceChannelTopOverlayVoiceController?.conversation != conversation else {
+                    return
+                }
+                
+                visibleVoiceChannelViewController = nil
+                visibleVoiceChannelTopOverlayVoiceController = VoiceChannelTopOverlayController(conversation: conversation)
+            }
+            else {
+                guard visibleVoiceChannelViewController?.conversation != conversation else {
+                    return
+                }
+                
+                visibleVoiceChannelViewController = VoiceChannelViewController(conversation: conversation)
+                visibleVoiceChannelTopOverlayVoiceController = nil
+            }
         } else {
             visibleVoiceChannelViewController = nil
+            visibleVoiceChannelTopOverlayVoiceController = nil
         }
     }
     
@@ -188,8 +214,15 @@ extension ActiveVoiceChannelViewController : WireCallCenterCallStateObserver {
                 return
         }
 
-        if case .established = callState {
+        switch callState {
+        case .established:
             answeredCalls[conversation.remoteIdentifier!] = Date()
+        case .terminating(_):
+            if minimisedCall == conversation.remoteIdentifier! {
+                minimisedCall = nil
+            }
+        default:
+            break
         }
 
         if let presentedController = self.presentedViewController as? CallQualityViewController {
@@ -269,4 +302,16 @@ extension ActiveVoiceChannelViewController : CallQualityViewControllerDelegate {
         controller.dismiss(animated: true, completion: nil)
     }
 
+}
+
+extension ActiveVoiceChannelViewController: VoiceChannelViewControllerDelegate {
+    func voiceChannelViewControllerWantsToBeDismissed(_ voiceChannelViewController: VoiceChannelViewController) {
+        minimisedCall = voiceChannelViewController.conversation.remoteIdentifier!
+    }
+}
+
+extension ActiveVoiceChannelViewController: VoiceChannelTopOverlayControllerDelegate {
+    func voiceChannelTopOverlayWantsToRestoreCall(_ controller: VoiceChannelTopOverlayController) {
+        minimisedCall = nil
+    }
 }

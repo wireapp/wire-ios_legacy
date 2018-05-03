@@ -79,9 +79,7 @@ import Cartography
         self.view.addSubview(self.contentView)
         self.addToSelf(networkStatusViewController)
 
-        networkStatusViewController.createConstraintsInContainer(bottomView: navBarContainer.view,
-                                                                 containerView: self.view, 
-                                                                 topMargin: UIScreen.safeArea.top)
+        networkStatusViewController.createConstraintsInParentController(bottomView: navBarContainer.view, controller: self)
 
         constrain(navBarContainer.view, view, contentView, conversationViewController.view) {
             navBarContainer, view, contentView, conversationViewControllerView in
@@ -91,12 +89,13 @@ import Cartography
 
             contentView.left == view.left
             contentView.right == view.right
-            contentView.bottom == view.bottom - UIScreen.safeArea.bottom
             contentView.top == navBarContainer.bottom
 
             conversationViewControllerView.edges == contentView.edges
         }
-
+        
+        contentView.bottomAnchor.constraint(equalTo: self.safeBottomAnchor).isActive = true
+        
         navBarContainer.navigationBar.pushItem(conversationViewController.navigationItem, animated: false)
     }
 

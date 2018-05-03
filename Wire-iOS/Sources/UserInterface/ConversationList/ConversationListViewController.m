@@ -389,13 +389,17 @@
     [self.bottomBarController.view autoPinEdgeToSuperviewEdge:ALEdgeRight];
     self.bottomBarBottomOffset = [self.bottomBarController.view autoPinEdgeToSuperviewEdge:ALEdgeBottom];
 
-    [self.networkStatusViewController createConstraintsInContainerWithBottomView: self.topBar containerView:self.contentContainer topMargin:0];
+    [self.networkStatusViewController createConstraintsInParentControllerWithBottomView:self.topBar controller:self];
     
     [self.topBar autoPinEdgeToSuperviewEdge:ALEdgeLeft];
     [self.topBar autoPinEdgeToSuperviewEdge:ALEdgeRight];
 
     [self.topBar autoPinEdge:ALEdgeBottom toEdge:ALEdgeTop ofView:self.conversationListContainer];
-    [self.contentContainer autoPinEdgesToSuperviewEdgesWithInsets:UIScreen.safeArea];
+    [self.contentContainer autoPinEdge:ALEdgeLeading toEdge:ALEdgeLeading ofView:self.contentContainer.superview];
+    [self.contentContainer autoPinEdge:ALEdgeTrailing toEdge:ALEdgeTrailing ofView:self.contentContainer.superview];
+    
+    [[self.contentContainer.topAnchor constraintEqualToAnchor:self.safeTopAnchor] setActive:YES];
+    [[self.contentContainer.bottomAnchor constraintEqualToAnchor:self.safeBottomAnchor] setActive:YES];
     
     [self.noConversationLabel autoCenterInSuperview];
     [self.noConversationLabel autoSetDimension:ALDimensionHeight toSize:120.0f];

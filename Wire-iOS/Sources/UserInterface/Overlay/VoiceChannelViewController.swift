@@ -22,6 +22,10 @@ import Classy
 
 fileprivate let zmLog = ZMSLog(tag: "calling")
 
+protocol VoiceChannelViewControllerDelegate: class {
+    func voiceChannelViewControllerWantsToBeDismissed(_ voiceChannelViewController: VoiceChannelViewController)
+}
+
 class VoiceChannelViewController: UIViewController {
     
     let conversation : ZMConversation
@@ -32,6 +36,8 @@ class VoiceChannelViewController: UIViewController {
     var callStateObserverToken : Any?
     var receivedVideoObserverToken : Any?
     var constantBitRateObserverToken : Any?
+    
+    weak var delegate: VoiceChannelViewControllerDelegate?
     
     fileprivate var isSwitchingCamera = false
     fileprivate var currentCaptureDevice: CaptureDevice = .front
@@ -270,6 +276,10 @@ extension VoiceChannelViewController : VoiceChannelOverlayDelegate {
             zmLog.error("failed to toggle capture device: \(error)")
         }
         
+    }
+    
+    func dismissCallOverlayTapped() {
+        delegate?.voiceChannelViewControllerWantsToBeDismissed(self)
     }
     
 }
