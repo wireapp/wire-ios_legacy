@@ -124,6 +124,7 @@ class ActiveVoiceChannelViewController : UIViewController {
                 { (finished) in
                     toViewController.didMove(toParentViewController: self)
                     fromViewController.removeFromParentViewController()
+                    UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(true)
             })
         } else if let toViewController = to {
             addChildViewController(toViewController)
@@ -141,6 +142,7 @@ class ActiveVoiceChannelViewController : UIViewController {
                 toViewController.voiceChannelView.alpha = 1
             }, completion: { (finished) in
                 toViewController.didMove(toParentViewController: self)
+                UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(true)
             })
         } else if let fromViewController = from {
             fromViewController.willMove(toParentViewController: nil)
@@ -151,6 +153,7 @@ class ActiveVoiceChannelViewController : UIViewController {
             }, completion: { (finished) in
                 fromViewController.view.removeFromSuperview()
                 fromViewController.removeFromParentViewController()
+                UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(true)
             })
         }
     }

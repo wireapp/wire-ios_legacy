@@ -37,6 +37,8 @@ extension ZClientViewController {
                             viewController.didMove(toParentViewController: self)
                             previousViewController.removeFromParentViewController()
                             self.topOverlayViewController = viewController
+                            
+                            UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(true)
                 })
             }
             else {
@@ -63,6 +65,8 @@ extension ZClientViewController {
                     
                     topOverlayContainer.addSubview(viewController.view)
                     viewController.didMove(toParentViewController: self)
+                    
+                    UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(false)
                 }
                 topOverlayViewController = viewController
             }

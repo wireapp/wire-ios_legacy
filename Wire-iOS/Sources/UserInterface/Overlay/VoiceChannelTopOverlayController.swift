@@ -63,6 +63,8 @@ final class VoiceChannelTopOverlayController: UIViewController {
     
     init(conversation: ZMConversation) {
         self.conversation = conversation
+        callDurationFormatter.allowedUnits = [.minute, .second]
+        callDurationFormatter.zeroFormattingBehavior = DateComponentsFormatter.ZeroFormattingBehavior(rawValue: 0)
         super.init(nibName: nil, bundle: nil)
         
         self.observerToken = self.conversation.voiceChannel?.addCallStateObserver(self)
@@ -71,6 +73,14 @@ final class VoiceChannelTopOverlayController: UIViewController {
     @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
+    
+    override var prefersStatusBarHidden: Bool {
+        return false
     }
     
     override func viewDidLoad() {

@@ -204,7 +204,10 @@
 
 - (UIStatusBarStyle)preferredStatusBarStyle
 {
-    if (self.splitViewController.layoutSize == SplitViewControllerLayoutSizeCompact) {
+    if (nil != self.topOverlayViewController) {
+        return self.topOverlayViewController.preferredStatusBarStyle;
+    }
+    else if (self.splitViewController.layoutSize == SplitViewControllerLayoutSizeCompact) {
         if (self.presentedViewController) {
             return self.presentedViewController.preferredStatusBarStyle;
         }
@@ -218,7 +221,10 @@
 }
 
 - (BOOL)prefersStatusBarHidden {
-    if (self.splitViewController.layoutSize == SplitViewControllerLayoutSizeCompact) {
+    if (nil != self.topOverlayViewController) {
+        return self.topOverlayViewController.prefersStatusBarHidden;
+    }
+    else if (self.splitViewController.layoutSize == SplitViewControllerLayoutSizeCompact) {
         if (self.presentedViewController) {
             return self.presentedViewController.prefersStatusBarHidden;
         }
