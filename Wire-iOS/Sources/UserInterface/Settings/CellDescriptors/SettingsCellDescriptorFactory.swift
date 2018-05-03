@@ -84,9 +84,7 @@ import Foundation
         let presentationAction: () -> UIViewController? = {
             
             if SessionManager.shared?.accountManager.accounts.count < SessionManager.maxNumberAccounts {
-                SelfProfileViewController.displaySwitchAccountAlertIfNeeded {
-                    SessionManager.shared?.addAccount()
-                }
+                SessionManager.shared?.addAccount()
             }
             else {
                 if let controller = UIApplication.shared.wr_topmostController(onlyFullScreen: false) {

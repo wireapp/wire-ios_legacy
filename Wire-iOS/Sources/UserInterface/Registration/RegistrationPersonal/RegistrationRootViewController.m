@@ -237,7 +237,7 @@
 
 - (void)cancelAddAccount
 {
-    [SessionManager.shared select:self.firstAuthenticatedAccount completion:nil tearDownCompletion:nil];
+    [SessionManager.shared select:self.firstAuthenticatedAccount completion:nil uiSwitchingBlock:nil tearDownCompletion:nil];
 }
 
 #pragma mark - FormStepDelegate

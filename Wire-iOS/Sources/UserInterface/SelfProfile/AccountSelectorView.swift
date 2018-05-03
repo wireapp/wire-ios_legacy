@@ -87,11 +87,11 @@ final internal class AccountSelectorView: UIView {
                 accountView.onTap = { account in
                     guard let account = account, account != SessionManager.shared?.accountManager.selectedAccount else { return }
                     
-                    SelfProfileViewController.displaySwitchAccountAlertIfNeeded {
+                    SessionManager.shared?.select(account, completion: nil, uiSwitchingBlock: { completion in
                         ZClientViewController.shared()?.conversationListViewController.dismiss(animated: true, completion: {
-                            SessionManager.shared?.select(account)
+                            completion()
                         })
-                    }
+                    }, tearDownCompletion: nil)
                 }
             }
 
