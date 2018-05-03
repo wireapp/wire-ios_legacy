@@ -19,152 +19,44 @@
 import UIKit
 import WireExtensionComponents
 
-extension CallProperties {
-    func configuration(variant: ColorSchemeVariant) -> CallStatusView.Configuration {
-        return .init(
-            state: configurationState,
-            type: type,
-            variant: variant,
-            isConstantBitRate: isConstantBitRateAudioActive,
-            title: conversation?.displayName ?? ""
-        )
-    }
-    
-    private var configurationState: CallStatusView.Configuration.State {
-        // TODO: Add case returning .reconnecting?
-        switch state {
-        case .terminating: return .terminating
-        case .incoming: return .ringingIncoming(name: initiator?.displayName ?? "") // TODO
-        case .outgoing: return .ringingOutgoing
-        case .answered, .establishedDataChannel: return .connecting
-        case .established: return .established(duration: duration)
-        case .none, .unknown: return .none
-        }
-    }
-    
-    var duration: TimeInterval {
-        if let callStartDate = conversation?.voiceChannel?.callStartDate {
-            return -callStartDate.timeIntervalSinceNow
-        } else {
-            return 0
-        }
-    }
-    
-    private var type: CallStatusView.Configuration.CallType {
-        return isVideoCall ? .video : .audio
-    }
+protocol CallStatusViewInputType: CallTypeProvider, ColorVariantProvider {
+    var state: CallStatusViewState { get }
+    var isConstantBitRate: Bool { get }
+    var title: String { get }
 }
 
-final class CallStatusViewController: UIViewController {
-    
-    var properties: CallProperties {
-        didSet {
-            updateState()
-        }
-    }
-    
-    private let statusView: CallStatusView
-    private weak var callDurationTimer: Timer?
-    
-    var variant: ColorSchemeVariant
-    
-    init(properties: CallProperties, variant: ColorSchemeVariant = ColorScheme.default().variant) {
-        self.variant = variant
-        self.properties = properties
-        statusView = CallStatusView(configuration: properties.configuration(variant: variant))
-        super.init(nibName: nil, bundle: nil)
-    }
-    
-    @available(*, unavailable)
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        setupViews()
-        createConstraints()
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        updateState()
-    }
-    
-    deinit {
-        stopCallDurationTimer()
-    }
-    
-    private func setupViews() {
-        view.addSubview(statusView)
-    }
-    
-    private func createConstraints() {
-        NSLayoutConstraint.activate([
-            statusView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            statusView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            statusView.topAnchor.constraint(equalTo: view.topAnchor),
-            statusView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
-        ])
-    }
-    
-    private func updateState() {
-        switch properties.state {
-        case .established: startCallDurationTimer()
-        case .terminating: stopCallDurationTimer()
-        default: break
-        }
-    }
-    
-    private func startCallDurationTimer() {
-        stopCallDurationTimer()
-        callDurationTimer = .allVersionCompatibleScheduledTimer(withTimeInterval: 0.1, repeats: true) { [statusView, properties, variant] _ in
-            statusView.configuration = properties.configuration(variant: variant)
-        }
-    }
-    
-    private func stopCallDurationTimer() {
-        callDurationTimer?.invalidate()
-        callDurationTimer = nil
-    }
+protocol CallTypeProvider {
+    var isVideoCall: Bool { get }
+}
+
+protocol ColorVariantProvider {
+    var variant: ColorSchemeVariant { get }
+}
+
+enum CallStatusViewState {
+    case none
+    case connecting
+    case ringingIncoming(name: String) // Caller name + call type "XYZ is (video) calling..."
+    case ringingOutgoing // "Ringing..."
+    case established(duration: TimeInterval) // Call duration in seconds "04:18"
+    case reconnecting // "Reconnecting..."
+    case terminating // "Ending call..."
 }
 
 final class CallStatusView: UIView {
-    
-    struct Configuration {
-        enum CallType {
-            case audio, video
-        }
-        
-        enum State {
-            case none
-            case connecting
-            case ringingIncoming(name: String) // Caller name + call type "XYZ is (video) calling..."
-            case ringingOutgoing // "Ringing..."
-            case established(duration: TimeInterval) // Call duration in seconds "04:18"
-            case reconnecting // "Reconnecting..."
-            case terminating // "Ending call..."
-        }
-        
-        var state: State
-        var type: CallType
-        var variant: ColorSchemeVariant
-        var isConstantBitRate: Bool
-        let title: String
-    }
-    
+
     private let titleLabel = UILabel()
     private let subtitleLabel = UILabel()
     private let bitrateLabel = UILabel()
     private let stackView = UIStackView(axis: .vertical)
     
-    var configuration: Configuration {
+    var configuration: CallStatusViewInputType {
         didSet {
             updateConfiguration()
         }
     }
     
-    init(configuration: Configuration) {
+    init(configuration: CallStatusViewInputType) {
         self.configuration = configuration
         super.init(frame: .zero)
         setupViews()
@@ -224,30 +116,31 @@ final class CallStatusView: UIView {
 
 // MARK: - Helper
 
-fileprivate extension CallStatusView.Configuration {
-    
-    private static let formatter: DateComponentsFormatter = {
-        let formatter = DateComponentsFormatter()
-        formatter.allowedUnits = [.minute, .second]
-        formatter.zeroFormattingBehavior = .pad
-        return formatter
-    }()
-    
+private let callDurationFormatter: DateComponentsFormatter = {
+    let formatter = DateComponentsFormatter()
+    formatter.allowedUnits = [.minute, .second]
+    formatter.zeroFormattingBehavior = .pad
+    return formatter
+}()
+
+
+fileprivate extension CallStatusViewInputType {
+
     var displayString: String {
         switch state {
         case .none: return ""
         case .connecting: return "call.status.connecting".localized
-        case .ringingIncoming(name: let name) where type == .audio: return "call.status.incoming.audio".localized(args: name)
+        case .ringingIncoming(name: let name) where !isVideoCall: return "call.status.incoming.audio".localized(args: name)
         case .ringingIncoming(name: let name): return "call.status.incoming.video".localized(args: name)
         case .ringingOutgoing: return "call.status.outgoing".localized
-        case .established(duration: let duration): return CallStatusView.Configuration.formatter.string(from: duration) ?? ""
+        case .established(duration: let duration): return callDurationFormatter.string(from: duration) ?? ""
         case .reconnecting: return "call.status.reconnecting".localized
         case .terminating: return "call.status.terminating".localized
         }
     }
     
     var effectiveColorVariant: ColorSchemeVariant {
-        guard type == .audio else { return .dark }
+        guard !isVideoCall else { return .dark }
         return variant == .dark ? .dark : .light
     }
     

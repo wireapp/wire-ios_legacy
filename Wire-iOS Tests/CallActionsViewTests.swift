@@ -20,7 +20,7 @@ import XCTest
 @testable import Wire
 
 fileprivate struct CallActionsViewInput: CallActionsViewInputType {
-    let canToggleMediaType, isAudioCall, isMuted, canAccept, isTerminating: Bool
+    let canToggleMediaType, isVideoCall, isMuted, canAccept, isTerminating: Bool
     let mediaState: MediaState
 }
 
@@ -49,7 +49,7 @@ class CallActionsViewTests: ZMSnapshotTestCase {
         // Given
         let input = CallActionsViewInput(
             canToggleMediaType: false,
-            isAudioCall: false,
+            isVideoCall: true,
             isMuted: false,
             canAccept: true,
             isTerminating: false,
@@ -67,7 +67,7 @@ class CallActionsViewTests: ZMSnapshotTestCase {
         // Given
         let input = CallActionsViewInput(
             canToggleMediaType: true,
-            isAudioCall: false,
+            isVideoCall: true,
             isMuted: true,
             canAccept: true,
             isTerminating: false,
@@ -85,7 +85,7 @@ class CallActionsViewTests: ZMSnapshotTestCase {
         // Given
         let input = CallActionsViewInput(
             canToggleMediaType: false,
-            isAudioCall: false,
+            isVideoCall: true,
             isMuted: false,
             canAccept: false,
             isTerminating: false,
@@ -103,7 +103,7 @@ class CallActionsViewTests: ZMSnapshotTestCase {
         // Given
         let input = CallActionsViewInput(
             canToggleMediaType: false,
-            isAudioCall: false,
+            isVideoCall: true,
             isMuted: false,
             canAccept: false,
             isTerminating: false,
@@ -121,7 +121,7 @@ class CallActionsViewTests: ZMSnapshotTestCase {
         // Given
         let input = CallActionsViewInput(
             canToggleMediaType: true,
-            isAudioCall: false,
+            isVideoCall: true,
             isMuted: false,
             canAccept: true,
             isTerminating: false,
@@ -140,7 +140,7 @@ class CallActionsViewTests: ZMSnapshotTestCase {
         // Given
         let input = CallActionsViewInput(
             canToggleMediaType: true,
-            isAudioCall: false,
+            isVideoCall: true,
             isMuted: false,
             canAccept: false,
             isTerminating: false,
@@ -159,7 +159,7 @@ class CallActionsViewTests: ZMSnapshotTestCase {
         snapshotBackgroundColor = .white
         let input = CallActionsViewInput(
             canToggleMediaType: false,
-            isAudioCall: true,
+            isVideoCall: false,
             isMuted: false,
             canAccept: false,
             isTerminating: false,
@@ -178,7 +178,7 @@ class CallActionsViewTests: ZMSnapshotTestCase {
         snapshotBackgroundColor = .white
         let input = CallActionsViewInput(
             canToggleMediaType: false,
-            isAudioCall: true,
+            isVideoCall: false,
             isMuted: false,
             canAccept: false,
             isTerminating: false,
@@ -197,7 +197,7 @@ class CallActionsViewTests: ZMSnapshotTestCase {
         snapshotBackgroundColor = .black
         let input = CallActionsViewInput(
             canToggleMediaType: true,
-            isAudioCall: true,
+            isVideoCall: false,
             isMuted: true,
             canAccept: false,
             isTerminating: false,
@@ -217,7 +217,7 @@ class CallActionsViewTests: ZMSnapshotTestCase {
         snapshotBackgroundColor = .white
         let input = CallActionsViewInput(
             canToggleMediaType: false,
-            isAudioCall: true,
+            isVideoCall: false,
             isMuted: false,
             canAccept: false,
             isTerminating: true,
@@ -236,7 +236,7 @@ class CallActionsViewTests: ZMSnapshotTestCase {
         snapshotBackgroundColor = .white
         let input = CallActionsViewInput(
             canToggleMediaType: false,
-            isAudioCall: true,
+            isVideoCall: false,
             isMuted: true,
             canAccept: true,
             isTerminating: false,
@@ -255,7 +255,7 @@ class CallActionsViewTests: ZMSnapshotTestCase {
         snapshotBackgroundColor = .white
         let input = CallActionsViewInput(
             canToggleMediaType: true,
-            isAudioCall: true,
+            isVideoCall: false,
             isMuted: false,
             canAccept: false,
             isTerminating: false,
@@ -275,7 +275,7 @@ class CallActionsViewTests: ZMSnapshotTestCase {
         // Given
         let input = CallActionsViewInput(
             canToggleMediaType: true,
-            isAudioCall: false,
+            isVideoCall: true,
             isMuted: true,
             canAccept: true,
             isTerminating: false,

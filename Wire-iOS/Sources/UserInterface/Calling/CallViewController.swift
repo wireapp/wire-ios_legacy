@@ -18,23 +18,80 @@
 
 import Foundation
 
-private let log = ZMSLog(tag: "calling")
 
-final class CallViewController: UIViewController {
+// The ouput actions a `CallInfoViewController` can perform.
+enum CallAction {
+    case toggleMuteState
+    case toggleVideoState
+    case toggleSpeakerState
+    case acceptCall
+    case terminateCall
+    case flipCamera
+    case showParticipantsList
+    
+    static func action(for action: CallActionsViewAction) -> CallAction {
+        switch action {
+        case .toggleMuteState: return .toggleMuteState
+        case .toggleVideoState: return .toggleVideoState
+        case .toggleSpeakerState: return .toggleSpeakerState
+        case .acceptCall: return .acceptCall
+        case .terminateCall: return .terminateCall
+        case .flipCamera: return .flipCamera
+        }
+    }
+}
+
+protocol CallInfoViewControllerDelegate: class {
+    func infoViewController(_ viewController: CallInfoViewController, perform action: CallAction)
+}
+
+
+enum CallInfoViewControllerAccessoryType: CallParticipantsViewModel {
+    case avatar(ZMUser)
+    case participantsList(CallParticipantsViewModel)
+    
+    var showAvater: Bool {
+        guard case .avatar = self else { return false}
+        return true
+    }
+    
+    var rows: [CallParticipantsCellConfiguration] {
+        switch self {
+        case .avatar: return []
+        case .participantsList(let model): return model.rows
+        }
+    }
+}
+
+protocol CallInfoViewControllerInput: CallActionsViewInputType, CallStatusViewInputType  {
+    var accessoryType: CallInfoViewControllerAccessoryType { get }
+    
+}
+
+final class CallInfoViewController: UIViewController, CallActionsViewDelegate {
+    
+    weak var delegate: CallInfoViewControllerDelegate?
     
     private let actionsView = CallActionsView()
     private let statusViewController: CallStatusViewController
+    private let participantsViewController: CallParticipantsViewController
+    private let avatarView = UserImageView(size: .big)
+    
+    var configuration: CallInfoViewControllerInput {
+        didSet {
+            updateState()
+        }
+    }
     
     fileprivate var isSwitchingCamera = false
     fileprivate var currentCaptureDevice: CaptureDevice = .front
 
     var variant: ColorSchemeVariant = .dark
-    fileprivate var properties: CallProperties
     
-    
-    init(properties: CallProperties) {
-        self.properties = properties
-        statusViewController = CallStatusViewController(properties: properties, variant: variant)
+    init(configuration: CallInfoViewControllerInput) {
+        self.configuration = configuration
+        statusViewController = CallStatusViewController(configuration: configuration)
+        participantsViewController = CallParticipantsViewController(viewModel: configuration.accessoryType, allowsScrolling: false)
         super.init(nibName: nil, bundle: nil)
         actionsView.delegate = self
     }
@@ -44,78 +101,46 @@ final class CallViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    fileprivate func updateActionsState() {
-        guard let manager = AVSMediaManager.sharedInstance() else { return }
-        let input = CallActionsViewInput(mediaManager: manager, properties: properties)
-        actionsView.update(with: input)
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        setupViews()
+        createConstraints()
     }
-}
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        updateState()
+    }
 
-extension CallViewController: CallActionsViewDelegate {
-    func callActionsView(_ callActionsView: CallActionsView, perform action: CallActionsViewAction) {
-        guard let manager = AVSMediaManager.sharedInstance(), let session = ZMUserSession.shared() else { return }
-        log.debug("\(action) button tapped")
+    private func setupViews() {
+        add(statusViewController, to: view)
+        view.addSubview(actionsView)
+    }
 
-        switch action {
-        case .toggleMuteState: properties.conversation?.voiceChannel?.mute(manager.isMicrophoneMuted, userSession: session)
-        case .toggleVideoState: break // TODO
-        case .toggleSpeakerState: manager.toggleSpeaker()
-        case .acceptCall: properties.conversation?.joinCall()
-        case .terminateCall: properties.conversation?.voiceChannel?.leave(userSession: session)
-        case .flipCamera: toggleCaptureDevice() // TODO: Tell video view to animate / flip
-        }
+    private func createConstraints() {
+        NSLayoutConstraint.activate([
+            statusViewController.view.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            statusViewController.view.topAnchor.constraint(equalTo: view.topAnchor),
+            statusViewController.view.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            actionsView.leadingAnchor.constraint(greaterThanOrEqualTo: view.leadingAnchor, constant: 32),
+            actionsView.trailingAnchor.constraint(lessThanOrEqualTo: view.trailingAnchor, constant: -32),
+            actionsView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            actionsView.heightAnchor.constraint(lessThanOrEqualToConstant: 213),
+            actionsView.heightAnchor.constraint(greaterThanOrEqualToConstant: 213)
+        ])
+    }
+
+    private func updateState() {
+//        actionsView.update(with: configuration.callActionsViewInput)
+//        statusViewController.configuration = configuration.statusViewConfiguration
         
-        updateActionsState()
-    }
-    
-    func toggleCaptureDevice() {
-        do {
-            let device = currentCaptureDevice == .front ? CaptureDevice.back : .front
-            try properties.conversation?.voiceChannel?.setVideoCaptureDevice(device: device)
-            currentCaptureDevice = device
-        } catch {
-            log.error("failed to toggle capture device: \(error)")
-        }
-    }
-}
-
-extension CallState {
-    var isTerminating: Bool {
-        guard case .terminating = self else { return false }
-        return true
-    }
-    
-    var canToggleMediaType: Bool {
-        return .established == self
-    }
-    
-    var canAccept: Bool {
-        guard case .incoming = self else { return false }
-        return true
-    }
-}
-
-struct CallActionsViewInput: CallActionsViewInputType {
-    
-    var isMuted: Bool
-    var isAudioCall: Bool
-    var canToggleMediaType: Bool
-    var isTerminating: Bool
-    var canAccept: Bool
-    var mediaState: MediaState
-    
-    init(mediaManager: AVSMediaManager, properties: CallProperties) {
-        isMuted = mediaManager.isMicrophoneMuted
-        isAudioCall = !properties.isVideoCall
-        canToggleMediaType = properties.state.canToggleMediaType
-        isTerminating = properties.state.isTerminating
-        canAccept = properties.state.canAccept
-        mediaState = CallActionsViewInput.mediaState(for: mediaManager, properties: properties)
-    }
-    
-    private static func mediaState(for mediaManager: AVSMediaManager, properties: CallProperties) -> MediaState {
-        guard !properties.isVideoCall else { return .sendingVideo } // TODO: Adjust check whether we're sending video
-        return .notSendingVideo(speakerEnabled: mediaManager.isSpeakerEnabled)
+        avatarView.isHidden = !configuration.accessoryType.showAvater
+        participantsViewController.view.isHidden = configuration.accessoryType.showAvater
+        participantsViewController.viewModel = configuration.accessoryType
     }
 
+    func callActionsView(_ callActionsView: CallActionsView, perform action: CallActionsViewAction) {
+        Calling.log.debug("\(action) button tapped")
+        delegate?.infoViewController(self, perform: CallAction.action(for: action))
+    }
 }

@@ -18,11 +18,16 @@
 
 import Foundation
 
-class CallParticipantsViewController: UIViewController, CallParticipantsViewModel, UICollectionViewDelegateFlowLayout {
+class CallParticipantsViewController: UIViewController, UICollectionViewDelegateFlowLayout {
     
     let cellHeight: CGFloat = 56
-    let viewModel: CallParticipantsViewModel
-    var collectionView: UICollectionView!
+    var viewModel: CallParticipantsViewModel {
+        didSet {
+            updateRows()
+        }
+    }
+    
+    var collectionView: CallParticipantsView!
     let allowsScrolling: Bool
     
     init(viewModel: CallParticipantsViewModel, allowsScrolling: Bool) {
@@ -48,14 +53,13 @@ class CallParticipantsViewController: UIViewController, CallParticipantsViewMode
         collectionViewLayout.minimumInteritemSpacing = 12
         collectionViewLayout.minimumLineSpacing = 0
         
-        let collectionView = CallParticipantsView(frame: CGRect.zero, collectionViewLayout: collectionViewLayout, viewModel: self)
+        let collectionView = CallParticipantsView(frame: CGRect.zero, collectionViewLayout: collectionViewLayout)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.bounces = allowsScrolling
         collectionView.delegate = self
         self.collectionView = collectionView
         
         view.addSubview(collectionView)
-        
         CallParticipantsCellConfiguration.prepare(collectionView)
         
         createConstraints()
@@ -72,16 +76,20 @@ class CallParticipantsViewController: UIViewController, CallParticipantsViewMode
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        
-        collectionView.reloadData()
+        updateRows()
     }
-    
-    var rows: [CallParticipantsCellConfiguration] {
+
+    private func updateRows() {
+        collectionView.rows = computeVisibleRows()
+    }
+
+    func computeVisibleRows() -> [CallParticipantsCellConfiguration] {
         guard !allowsScrolling else {
             return viewModel.rows
         }
         
         let visibleRows = Int(collectionView.bounds.height / cellHeight)
+        guard visibleRows > 0 else { return [] }
         
         if viewModel.rows.count > visibleRows {
             return viewModel.rows[0..<(visibleRows - 1)] + [.showAll(totalCount: viewModel.rows.count)]

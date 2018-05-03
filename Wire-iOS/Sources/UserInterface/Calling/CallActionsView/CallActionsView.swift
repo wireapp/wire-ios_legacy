@@ -42,9 +42,8 @@ enum MediaState {
 }
 
 // This protocol describes the input for a `CallActionsView`.
-protocol CallActionsViewInputType {
+protocol CallActionsViewInputType: CallTypeProvider {
     var canToggleMediaType: Bool { get }
-    var isAudioCall: Bool { get }
     var isMuted: Bool { get }
     var isTerminating: Bool { get }
     var canAccept: Bool { get }
@@ -53,7 +52,8 @@ protocol CallActionsViewInputType {
 
 extension CallActionsViewInputType {
     func appearance(with variant: ColorSchemeVariant) -> CallActionAppearance {
-        return isAudioCall && variant == .light ? .light : .dark
+        guard !isVideoCall else { return .dark }
+        return variant == .light ? .light : .dark
     }
 }
 
