@@ -562,9 +562,9 @@ extension VoiceChannelOverlay {
         
         let videoViews: [UIView?] = [shadow, videoNotAvailableBackground]
         
-        constrain(self, self.safeAreaLayoutGuideOrFallback, dismissCallOverlayButton) { selfView, selfViewSafeLayoutGuide, dismissCallOverlayButton in
-            dismissCallOverlayButton.leading == selfView.leading + 28
-            dismissCallOverlayButton.top == selfViewSafeLayoutGuide.top + 28
+        constrain(contentContainer, dismissCallOverlayButton) { contentContainer, dismissCallOverlayButton in
+            dismissCallOverlayButton.leading == contentContainer.leadingMargin
+            dismissCallOverlayButton.top == contentContainer.topMargin
         }
         
         constrain(videoViews.flatMap{ $0 }) { views in
