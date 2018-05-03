@@ -723,6 +723,7 @@
 		8FC8549D199245770008B66B /* NotificationWindowRootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8FC85256199245760008B66B /* NotificationWindowRootViewController.m */; };
 		8FC854CC199245770008B66B /* ProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8FC852BF199245760008B66B /* ProfileViewController.m */; };
 		8FC8563E19924CBA0008B66B /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8FC8564019924CBA0008B66B /* Localizable.strings */; };
+		A9B02232209B6E4E00DF25D8 /* Hockey.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B02231209B6E4E00DF25D8 /* Hockey.swift */; };
 		AF1D126B1C7CF02A00959DF5 /* ParticipantDeviceCellTests.m in Sources */ = {isa = PBXBuildFile; fileRef = AF1D126A1C7CF02A00959DF5 /* ParticipantDeviceCellTests.m */; };
 		AF36C59F1E9F67B600FADECC /* DraftListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF36C59E1E9F67B600FADECC /* DraftListViewController.swift */; };
 		AF36C5A11E9F67E400FADECC /* MessageComposeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF36C5A01E9F67E400FADECC /* MessageComposeViewController.swift */; };
@@ -2209,6 +2210,7 @@
 		8FC856501992523C0008B66B /* Podfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		8FC856B019925B680008B66B /* WireSyncEngine+iOS.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "WireSyncEngine+iOS.h"; sourceTree = "<group>"; };
 		9F6E03BF56D0DC66F9853634 /* Pods-Wire-iOS-Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Wire-iOS-Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-Wire-iOS-Tests/Pods-Wire-iOS-Tests.release.xcconfig"; sourceTree = "<group>"; };
+		A9B02231209B6E4E00DF25D8 /* Hockey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Hockey.swift; sourceTree = "<group>"; };
 		AA61B87B5AC3C66825D6218E /* libPods-Wire-iOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Wire-iOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		AF1D126A1C7CF02A00959DF5 /* ParticipantDeviceCellTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ParticipantDeviceCellTests.m; sourceTree = "<group>"; };
 		AF36C59E1E9F67B600FADECC /* DraftListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DraftListViewController.swift; sourceTree = "<group>"; };
@@ -3147,6 +3149,7 @@
 				876376891E8413D900B2CCF0 /* RawRepresentable+AllValues.swift */,
 				876CC8981E966C5C00F6BABC /* IteratorProtocol+Histogram.swift */,
 				7CCBE24C1FC72FE500CBD55D /* SharedConstants.swift */,
+				A9B02231209B6E4E00DF25D8 /* Hockey.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -6226,6 +6229,7 @@
 			files = (
 				161541BC1E28FFAE00AC2FFB /* CircularProgressView.swift in Sources */,
 				87A6761A206D426900596625 /* CheckAnimationView.swift in Sources */,
+				A9B02232209B6E4E00DF25D8 /* Hockey.swift in Sources */,
 				CE8E4FAC1DF066750009F437 /* FilePreviewGenerator.swift in Sources */,
 				87F18BC81E02E7BF00C69D9B /* Reusable.swift in Sources */,
 				1EE9DCC21B5F9A6D00E347DF /* TextView.m in Sources */,
