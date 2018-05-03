@@ -466,6 +466,7 @@
 "voice.hang_up_button.title" = "Hang Up";
 "voice.mute_button.title" = "Mute";
 "voice.video_button.title" = "Video";
+"voice.flip_video_button.title" = "Flip";
 "voice.speaker_button.title" = "Speaker";
 "voice.cancel_button.title" = "Cancel";
 "voice.call_button.title" = "Call";
@@ -480,6 +481,17 @@
 "voice.alert.camera_warning.title" = "Wire needs access to the Camera.";
 "voice.alert.camera_warning.explanation" = "Go to Settings and allow Wire to access the camera.";
 
+// Voice New
+
+"call.status.connecting" = "Connecting…";
+"call.status.incoming.video" = "%@ is video calling…";
+"call.status.incoming.audio" = "%@ is calling…";
+"call.status.outgoing" = "Ringing…";
+"call.status.reconnecting" = "Reconnecting…";
+"call.status.terminating" = "Ending call…";
+"call.status.constant_bitrate" = "Constant Bit Rate";
+
+"call.participants.show_all" = "Show All (%@)";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Profile and Participants

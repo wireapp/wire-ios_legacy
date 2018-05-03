@@ -27,7 +27,7 @@ public enum DeniedAuthorizationType {
     case cameraAndPhotos
 }
 
-open class CameraKeyboardPermissionsCell: UICollectionViewCell, Reusable {
+open class CameraKeyboardPermissionsCell: UICollectionViewCell {
 
     let settingsButton = Button()
     let descriptionLabel = UILabel()

@@ -19,7 +19,7 @@
 import Foundation
 import Cartography
 
-class StartUIIconCell: UICollectionViewCell, Reusable {
+class StartUIIconCell: UICollectionViewCell {
     
     private let iconView = UIImageView()
     private let titleLabel = UILabel()

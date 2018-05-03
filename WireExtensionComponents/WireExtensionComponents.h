@@ -34,7 +34,6 @@ FOUNDATION_EXPORT const unsigned char WireExtensionComponentsVersionString[];
 #import <WireExtensionComponents/TextView.h>
 #import <WireExtensionComponents/CheckBoxButton.h>
 #import <WireExtensionComponents/IconButton.h>
-#import <WireExtensionComponents/IconLabelButton.h>
 #import <WireExtensionComponents/Button.h>
 #import <WireExtensionComponents/ButtonWithLargerHitArea.h>
 #import <WireExtensionComponents/FlexibleNavigationBar.h>

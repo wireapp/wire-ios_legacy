@@ -81,15 +81,6 @@ fileprivate let VoiceChannelOverlayVideoFeedPositionKey = "VideoFeedPosition"
     
 }
 
-fileprivate extension IconLabelButton {
-    convenience init(icon: ZetaIconType, label: String, accessibilityIdentifier: String) {
-        self.init()
-        self.iconButton.setIcon(icon, with: .small, for: .normal)
-        self.subtitleLabel.text = label
-        self.accessibilityIdentifier = accessibilityIdentifier
-    }
-}
-
 fileprivate extension UILabel {
     static var multiline: UILabel {
         let label = UILabel()
