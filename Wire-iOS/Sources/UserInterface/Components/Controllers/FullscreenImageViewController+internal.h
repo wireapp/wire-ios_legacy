@@ -23,7 +23,7 @@ static CGFloat const kZoomScaleDelta = 0.0003;
 @property (nonatomic) CGFloat lastZoomScale;
 @property (nullable, nonatomic, readwrite) UIImageView *imageView;
 
-- (void)handleDoubleTap:(nonnull UITapGestureRecognizer *)doubleTapper;
 - (void)centerScrollViewContent;
+- (void)setSelectedByMenu:(BOOL)selected animated:(BOOL)animated;
 
 @end

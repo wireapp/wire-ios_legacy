@@ -1264,3 +1264,10 @@
 "calling.quality_survey.answer.3" = "Fair";
 "calling.quality_survey.answer.4" = "Good";
 "calling.quality_survey.answer.5" = "Excellent";
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// URL Action
+
+"url_action.confirm" = "Confirm";
+"url_action.title" = "Confirm URL action";
+"url_action.connect_to_bot.message" = "Would you like to connect to the bot?";
