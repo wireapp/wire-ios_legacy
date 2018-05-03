@@ -47,17 +47,15 @@ extension Settings {
     @objc public func loadEnabledLogs() {
         let avsTag = "AVS"
         if isInternal {
-            var tagsToEnable = UserDefaults.shared().value(forKey: enabledLogsKey) as? Array<String> ?? ["Network", "SessionManager", "Conversations", avsTag, "calling"]
-            if !tagsToEnable.contains(avsTag) {
-                tagsToEnable.append(avsTag)
-            }
+            var tagsToEnable = UserDefaults.shared().value(forKey: enabledLogsKey) as? Set<String> ?? ["Network", "SessionManager", "Conversations", avsTag, "calling"]
+            tagsToEnable.insert(avsTag)
             enableLogs(tagsToEnable)
         } else {
             enableLogs([avsTag])
         }
     }
     
-    private func enableLogs(_ tags : [String]) {
+    private func enableLogs(_ tags : Set<String>) {
         tags.forEach { (tag) in
             ZMSLog.set(level: .debug, tag: tag)
         }
