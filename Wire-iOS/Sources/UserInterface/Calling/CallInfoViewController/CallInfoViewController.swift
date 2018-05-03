@@ -28,8 +28,11 @@ protocol CallInfoViewControllerInput: CallActionsViewInputType, CallStatusViewIn
 
 fileprivate extension CallInfoViewControllerInput {
     var overlayBackgroundColor: UIColor {
-        guard !isVideoCall else { return UIColor.black.withAlphaComponent(0.5) }
-        return .wr_color(fromColorScheme: ColorSchemeColorBackground, variant: variant)
+        switch (isVideoCall, state) {
+        case (false, _): return .wr_color(fromColorScheme: ColorSchemeColorBackground, variant: variant)
+        case (true, .ringingOutgoing), (true, .ringingIncoming): return UIColor.black.withAlphaComponent(0.4) 
+        case (true, _): return UIColor.black.withAlphaComponent(0.64)
+        }
     }
 }
 
@@ -45,7 +48,7 @@ final class CallInfoViewController: UIViewController, CallActionsViewDelegate {
     
     var configuration: CallInfoViewControllerInput {
         didSet {
-            updateState()
+            updateState(animated: true)
         }
     }
 
@@ -98,14 +101,17 @@ final class CallInfoViewController: UIViewController, CallActionsViewDelegate {
         ])
     }
 
-    private func updateState() {
+    private func updateState(animated: Bool = false) {
         actionsView.update(with: configuration)
         statusViewController.configuration = configuration
         avatarView.isHidden = !configuration.accessoryType.showAvatar
         avatarView.user = configuration.accessoryType.user
         participantsViewController.view.isHidden = configuration.accessoryType.showAvatar
         participantsViewController.viewModel = configuration.accessoryType
-        view.backgroundColor = configuration.overlayBackgroundColor
+        
+        UIView.animate(withDuration: 0.2) { [view, configuration] in
+            view?.backgroundColor = configuration.overlayBackgroundColor
+        }
     }
 
     func callActionsView(_ callActionsView: CallActionsView, perform action: CallAction) {
