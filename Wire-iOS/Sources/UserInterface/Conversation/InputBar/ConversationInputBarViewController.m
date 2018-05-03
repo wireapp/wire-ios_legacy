@@ -360,12 +360,11 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
     [self.audioRecordViewContainer addSubview:self.audioRecordViewController.view];
 
-    [self.audioRecordViewContainer autoPinEdge:ALEdgeLeading toEdge:ALEdgeLeading ofView:self.inputBar.buttonContainer];
-    
     CGRect recordButtonFrame = [self.inputBar convertRect:self.audioButton.bounds fromView:self.audioButton];
     CGFloat width = CGRectGetMaxX(recordButtonFrame) + 56;
     [self.audioRecordViewController.view autoSetDimension:ALDimensionWidth toSize:width];
 
+    [self.audioRecordViewController.view autoPinEdgeToSuperviewEdge:ALEdgeLeading];
     [self.audioRecordViewController.view autoPinEdgeToSuperviewEdge:ALEdgeBottom];
     [self.audioRecordViewController.view autoPinEdge:ALEdgeTop toEdge:ALEdgeTop ofView:self.inputBar withOffset:0.5];
 }
