@@ -111,8 +111,9 @@ static AppDelegate *sharedAppDelegate = nil;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    ZMLogInfo(@"application:didFinishLaunchingWithOptions START %@ (applicationState = %ld)", launchOptions, (long)application.applicationState);
+    [ZMSLog switchCurrentLogToPrevious];
     
+    ZMLogInfo(@"application:didFinishLaunchingWithOptions START %@ (applicationState = %ld)", launchOptions, (long)application.applicationState);
     
     [self setupBackendEnvironment];
 
@@ -172,6 +173,13 @@ static AppDelegate *sharedAppDelegate = nil;
     self.launchType = ApplicationLaunchUnknown;
     
     [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
+- (BOOL)application:(UIApplication *)app
+            openURL:(NSURL *)url
+            options:(NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options
+{
+    return [self.sessionManager.urlHandler openURL:url options:options];
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application
