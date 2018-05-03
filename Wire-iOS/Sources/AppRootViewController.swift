@@ -207,7 +207,7 @@ class AppRootViewController: UIViewController {
             let launchImageViewController = LaunchImageViewController()
             launchImageViewController.showLoadingScreen()
             viewController = launchImageViewController
-        case .unauthenticated(error: let error):
+        case .unauthenticated(error: let error, userIdentifier: _):
             UIColor.setAccentOverride(ZMUser.pickRandomAcceptableAccentColor())
             mainWindow.tintColor = UIColor.accent()
             
