@@ -18,104 +18,19 @@
 
 import Foundation
 
-
-// The ouput actions a `CallInfoViewController` can perform.
-enum CallAction {
-    case toggleMuteState
-    case toggleVideoState
-    case toggleSpeakerState
-    case acceptCall
-    case terminateCall
-    case flipCamera
-    case showParticipantsList
-    
-    static func action(for action: CallActionsViewAction) -> CallAction {
-        switch action {
-        case .toggleMuteState: return .toggleMuteState
-        case .toggleVideoState: return .toggleVideoState
-        case .toggleSpeakerState: return .toggleSpeakerState
-        case .acceptCall: return .acceptCall
-        case .terminateCall: return .terminateCall
-        case .flipCamera: return .flipCamera
-        }
-    }
-}
-
 protocol CallInfoViewControllerDelegate: class {
     func infoViewController(_ viewController: CallInfoViewController, perform action: CallAction)
 }
 
-enum CallInfoViewControllerAccessoryType: CallParticipantsViewModel {
-    case avatar(ZMUser)
-    case participantsList(CallParticipantsViewModel)
-    
-    var showAvatar: Bool {
-        return nil != user
-    }
-    
-    var user: ZMUser? {
-        guard case .avatar(let user) = self else { return nil }
-        return user
-    }
-    
-    var rows: [CallParticipantsCellConfiguration] {
-        switch self {
-        case .avatar: return []
-        case .participantsList(let model): return model.rows
-        }
-    }
-}
-
-final class UserImageViewContainer: UIView {
-    private let userImageView: UserImageView
-    private let maxSize: CGFloat
-    private let yOffset: CGFloat
-    
-    var user: ZMBareUser? {
-        didSet {
-            userImageView.user = user
-        }
-    }
-    
-    init(size: UserImageViewSize, maxSize: CGFloat, yOffset: CGFloat) {
-        userImageView = UserImageView(size: size)
-        self.maxSize = maxSize
-        self.yOffset = yOffset
-        super.init(frame: .zero)
-        setupViews()
-        createConstraints()
-    }
-    
-    @available(*, unavailable)
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    private func setupViews() {
-        userImageView.translatesAutoresizingMaskIntoConstraints = false
-        addSubview(userImageView)
-        userImageView.setContentHuggingPriority(249, for: .vertical)
-        userImageView.setContentHuggingPriority(249, for: .horizontal)
-        userImageView.setContentCompressionResistancePriority(249, for: .vertical)
-        userImageView.setContentCompressionResistancePriority(249, for: .horizontal)
-    }
-    
-    private func createConstraints() {
-        NSLayoutConstraint.activate([
-            userImageView.centerYAnchor.constraint(equalTo: centerYAnchor, constant: yOffset),
-            userImageView.centerXAnchor.constraint(equalTo: centerXAnchor),
-            userImageView.leadingAnchor.constraint(greaterThanOrEqualTo: leadingAnchor),
-            userImageView.topAnchor.constraint(greaterThanOrEqualTo: topAnchor),
-            userImageView.trailingAnchor.constraint(lessThanOrEqualTo: trailingAnchor),
-            userImageView.bottomAnchor.constraint(lessThanOrEqualTo: bottomAnchor),
-            userImageView.widthAnchor.constraint(lessThanOrEqualToConstant: maxSize),
-            userImageView.heightAnchor.constraint(lessThanOrEqualToConstant: maxSize)
-        ])
-    }
-}
-
 protocol CallInfoViewControllerInput: CallActionsViewInputType, CallStatusViewInputType  {
     var accessoryType: CallInfoViewControllerAccessoryType { get }
+}
+
+fileprivate extension CallInfoViewControllerInput {
+    var overlayBackgroundColor: UIColor {
+        guard !isVideoCall else { return UIColor.black.withAlphaComponent(0.5) }
+        return .wr_color(fromColorScheme: ColorSchemeColorBackground, variant: variant)
+    }
 }
 
 final class CallInfoViewController: UIViewController, CallActionsViewDelegate {
@@ -133,11 +48,6 @@ final class CallInfoViewController: UIViewController, CallActionsViewDelegate {
             updateState()
         }
     }
-    
-    fileprivate var isSwitchingCamera = false
-    fileprivate var currentCaptureDevice: CaptureDevice = .front
-
-    var variant: ColorSchemeVariant = .dark
 
     init(configuration: CallInfoViewControllerInput) {
         self.configuration = configuration
@@ -195,10 +105,11 @@ final class CallInfoViewController: UIViewController, CallActionsViewDelegate {
         avatarView.user = configuration.accessoryType.user
         participantsViewController.view.isHidden = configuration.accessoryType.showAvatar
         participantsViewController.viewModel = configuration.accessoryType
+        view.backgroundColor = configuration.overlayBackgroundColor
     }
 
-    func callActionsView(_ callActionsView: CallActionsView, perform action: CallActionsViewAction) {
+    func callActionsView(_ callActionsView: CallActionsView, perform action: CallAction) {
         Calling.log.debug("\(action) button tapped")
-        delegate?.infoViewController(self, perform: CallAction.action(for: action))
+        delegate?.infoViewController(self, perform: action)
     }
 }

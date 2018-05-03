@@ -19,7 +19,7 @@
 import UIKit
 
 protocol CallActionsViewDelegate: class {
-    func callActionsView(_ callActionsView: CallActionsView, perform action: CallActionsViewAction)
+    func callActionsView(_ callActionsView: CallActionsView, perform action: CallAction)
 }
 
 enum MediaState {
@@ -55,16 +55,6 @@ extension CallActionsViewInputType {
         guard !isVideoCall else { return .dark }
         return variant == .light ? .light : .dark
     }
-}
-
-// The ouput actions a `CallActionsView` can perform.
-enum CallActionsViewAction {
-    case toggleMuteState
-    case toggleVideoState
-    case toggleSpeakerState
-    case acceptCall
-    case terminateCall
-    case flipCamera
 }
 
 // A view showing multiple buttons depenging on the given `CallActionsView.Input`.
@@ -182,7 +172,7 @@ final class CallActionsView: UIView {
         delegate?.callActionsView(self, perform: action(for: sender))
     }
     
-    private func action(for button: IconLabelButton) -> CallActionsViewAction {
+    private func action(for button: IconLabelButton) -> CallAction {
         switch button {
         case muteCallButton: return .toggleMuteState
         case videoButton: return .toggleVideoState

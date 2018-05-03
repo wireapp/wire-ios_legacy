@@ -65,7 +65,6 @@ final class CallInfoViewControllerTests: CoreDataSnapshotTestCase {
     
     func testCallInfoViewController_Audio_NoCBR() {
         // Given
-        snapshotBackgroundColor = .white
         sut.beginAppearanceTransition(true, animated: false)
         sut.endAppearanceTransition()
         
@@ -75,7 +74,6 @@ final class CallInfoViewControllerTests: CoreDataSnapshotTestCase {
     
     func testCallInfoViewController_Audio_CBR() {
         // Given
-        snapshotBackgroundColor = .white
         
         sut.configuration = MockCallInfoViewControllerInput(
             accessoryType: .avatar(otherUser),
@@ -99,7 +97,6 @@ final class CallInfoViewControllerTests: CoreDataSnapshotTestCase {
     
     func testCallInfoViewController_Audio_NoCBR_SomeParticipants() {
         // Given
-        snapshotBackgroundColor = .white
         let participants = MockCallParticipantsViewModel.viewModel(withParticipantCount: 2)
         
         sut.configuration = MockCallInfoViewControllerInput(
@@ -124,7 +121,6 @@ final class CallInfoViewControllerTests: CoreDataSnapshotTestCase {
     
     func testCallInfoViewController_Audio_NoCBR_ManyParticipants() {
         // Given
-        snapshotBackgroundColor = .white
         let participants = MockCallParticipantsViewModel.viewModel(withParticipantCount: 4)
         
         sut.configuration = MockCallInfoViewControllerInput(
@@ -149,7 +145,6 @@ final class CallInfoViewControllerTests: CoreDataSnapshotTestCase {
     
     func testCallInfoViewController_Audio_NoCBR_ALotOfParticipants() {
         // Given
-        snapshotBackgroundColor = .white
         let participants = MockCallParticipantsViewModel.viewModel(withParticipantCount: 10)
         
         sut.configuration = MockCallInfoViewControllerInput(

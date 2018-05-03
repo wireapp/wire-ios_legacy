@@ -866,7 +866,7 @@
 		BFBC11E31ED84DB200502AF0 /* WireDataModel.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BFBC11E21ED84DB200502AF0 /* WireDataModel.framework */; };
 		BFBDDBC61DB0D51C00BEED02 /* ConversationInputBarButtonState.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFBDDBC51DB0D51C00BEED02 /* ConversationInputBarButtonState.swift */; };
 		BFBE45771E36205F009FBF60 /* Error+Logging.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFBE45761E36205F009FBF60 /* Error+Logging.swift */; };
-		BFC0673D2099DD7D00204179 /* CallViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFC0673C2099DD7D00204179 /* CallViewController.swift */; };
+		BFC0673D2099DD7D00204179 /* CallInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFC0673C2099DD7D00204179 /* CallInfoViewController.swift */; };
 		BFC914921D1814AF001F068B /* LocationMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFC914911D1814AF001F068B /* LocationMessageCell.swift */; };
 		BFC9149B1D181BE7001F068B /* LocationMessageCellTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFC914991D181B7C001F068B /* LocationMessageCellTests.swift */; };
 		BFCF31D51D9E91880039B3DC /* RecentlyUsedEmojis.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFCF31D41D9E91880039B3DC /* RecentlyUsedEmojis.swift */; };
@@ -883,6 +883,9 @@
 		BFE41863209B15F800503C7C /* Calling+Logs.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFE41862209B15F800503C7C /* Calling+Logs.swift */; };
 		BFE41865209B1C1F00503C7C /* CallStatusViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFE41864209B1C1F00503C7C /* CallStatusViewController.swift */; };
 		BFE41868209B3CC100503C7C /* CallInfoViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFE41866209B3CBD00503C7C /* CallInfoViewControllerTests.swift */; };
+		BFE4186A209B6E3700503C7C /* UserImageViewContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFE41869209B6E3700503C7C /* UserImageViewContainer.swift */; };
+		BFE4186D209B6FFA00503C7C /* CallAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFE4186C209B6FFA00503C7C /* CallAction.swift */; };
+		BFE4186F209B706600503C7C /* CallInfoViewControllerAccessoryType.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFE4186E209B706600503C7C /* CallInfoViewControllerAccessoryType.swift */; };
 		BFE49C321C0F39590061C16F /* NSString+FingerprintTests.m in Sources */ = {isa = PBXBuildFile; fileRef = BFE49C311C0F39580061C16F /* NSString+FingerprintTests.m */; };
 		BFE57B4B1D52335A00CB0806 /* ConversationPreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFE57B4A1D52335A00CB0806 /* ConversationPreviewViewController.swift */; };
 		BFEA26591D410F9F000D0ED5 /* audio_sample.m4a in Resources */ = {isa = PBXBuildFile; fileRef = BFEA26581D410F9F000D0ED5 /* audio_sample.m4a */; };
@@ -2463,7 +2466,7 @@
 		BFBC11E21ED84DB200502AF0 /* WireDataModel.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WireDataModel.framework; path = Carthage/Build/iOS/WireDataModel.framework; sourceTree = "<group>"; };
 		BFBDDBC51DB0D51C00BEED02 /* ConversationInputBarButtonState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConversationInputBarButtonState.swift; sourceTree = "<group>"; };
 		BFBE45761E36205F009FBF60 /* Error+Logging.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Error+Logging.swift"; sourceTree = "<group>"; };
-		BFC0673C2099DD7D00204179 /* CallViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallViewController.swift; sourceTree = "<group>"; };
+		BFC0673C2099DD7D00204179 /* CallInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallInfoViewController.swift; sourceTree = "<group>"; };
 		BFC914911D1814AF001F068B /* LocationMessageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationMessageCell.swift; sourceTree = "<group>"; };
 		BFC914991D181B7C001F068B /* LocationMessageCellTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationMessageCellTests.swift; sourceTree = "<group>"; };
 		BFCF31D41D9E91880039B3DC /* RecentlyUsedEmojis.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RecentlyUsedEmojis.swift; path = Emoji/RecentlyUsedEmojis.swift; sourceTree = "<group>"; };
@@ -2481,6 +2484,9 @@
 		BFE41862209B15F800503C7C /* Calling+Logs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Calling+Logs.swift"; sourceTree = "<group>"; };
 		BFE41864209B1C1F00503C7C /* CallStatusViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallStatusViewController.swift; sourceTree = "<group>"; };
 		BFE41866209B3CBD00503C7C /* CallInfoViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallInfoViewControllerTests.swift; sourceTree = "<group>"; };
+		BFE41869209B6E3700503C7C /* UserImageViewContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserImageViewContainer.swift; sourceTree = "<group>"; };
+		BFE4186C209B6FFA00503C7C /* CallAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallAction.swift; sourceTree = "<group>"; };
+		BFE4186E209B706600503C7C /* CallInfoViewControllerAccessoryType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallInfoViewControllerAccessoryType.swift; sourceTree = "<group>"; };
 		BFE49C311C0F39580061C16F /* NSString+FingerprintTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+FingerprintTests.m"; sourceTree = "<group>"; };
 		BFE57B451D51FDE800CB0806 /* ImageMessageCell+Internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ImageMessageCell+Internal.h"; sourceTree = "<group>"; };
 		BFE57B4A1D52335A00CB0806 /* ConversationPreviewViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConversationPreviewViewController.swift; sourceTree = "<group>"; };
@@ -5275,6 +5281,17 @@
 			path = NotificationFetchComponents;
 			sourceTree = "<group>";
 		};
+		BFE4186B209B6E6900503C7C /* CallInfoViewController */ = {
+			isa = PBXGroup;
+			children = (
+				BFC0673C2099DD7D00204179 /* CallInfoViewController.swift */,
+				BFE4186E209B706600503C7C /* CallInfoViewControllerAccessoryType.swift */,
+				BFE41869209B6E3700503C7C /* UserImageViewContainer.swift */,
+				BFE4186C209B6FFA00503C7C /* CallAction.swift */,
+			);
+			path = CallInfoViewController;
+			sourceTree = "<group>";
+		};
 		CE8E4FB61DF17BBE0009F437 /* TextTransform */ = {
 			isa = PBXGroup;
 			children = (
@@ -5317,10 +5334,10 @@
 			children = (
 				16A94AE72093235B008A5718 /* CallParticipantsView */,
 				D58192032091E3B8003BA7EC /* CallActionsView */,
-				BFE3FEE9209747D6003D9AB5 /* CallStatusView.swift */,
-				BFC0673C2099DD7D00204179 /* CallViewController.swift */,
+				BFE4186B209B6E6900503C7C /* CallInfoViewController */,
 				BFE4185C209B06D600503C7C /* AVSMediaManager+Helper.swift */,
 				BFE41860209B15D200503C7C /* CallState+Helper.swift */,
+				BFE3FEE9209747D6003D9AB5 /* CallStatusView.swift */,
 				BFE41862209B15F800503C7C /* Calling+Logs.swift */,
 				D58191FF2091CEBF003BA7EC /* UIStackView+Helper.swift */,
 			);
@@ -6446,6 +6463,7 @@
 				BF381FDF1D4F922F00075672 /* AnalyticsTracker+AddressBookPermissions.swift in Sources */,
 				EFABC922202085A6001F9866 /* UserDetailViewControllerFactory.swift in Sources */,
 				16A94AE920932386008A5718 /* CallParticipantsView.swift in Sources */,
+				BFE4186D209B6FFA00503C7C /* CallAction.swift in Sources */,
 				F195EB9D1E2F75BC00712118 /* FeedbackOverlayView.swift in Sources */,
 				F187D6C820162A4300A2DA8F /* ConversationCell+Sender.swift in Sources */,
 				87AAE4251E4347F000E1D13A /* ConversationContentViewController+PeekPop.swift in Sources */,
@@ -6683,6 +6701,7 @@
 				8FC8549D199245770008B66B /* NotificationWindowRootViewController.m in Sources */,
 				871BC3531D34F94200DF0793 /* AudioErrorView.m in Sources */,
 				87DCF4E61D34EA4500BB420F /* ShareItemProvider.m in Sources */,
+				BFE4186A209B6E3700503C7C /* UserImageViewContainer.swift in Sources */,
 				8719FD691C888044005FBEC0 /* NSData+MD5.swift in Sources */,
 				BA79B0A51B6284D900F23AFB /* SoundEventRulesWatchDog.m in Sources */,
 				AF58EC7E1E9FA01700EB94CD /* UIBarButtonItem+ZetaIcon.swift in Sources */,
@@ -6694,6 +6713,7 @@
 				EF266C612003B75C00A8C136 /* BreathLoadingBar.swift in Sources */,
 				871BC2601D34F8F800DF0793 /* IdentifiableColor+AccentColors.m in Sources */,
 				8FC853FE199245770008B66B /* AppDelegate+Hockey.m in Sources */,
+				BFE4186F209B706600503C7C /* CallInfoViewControllerAccessoryType.swift in Sources */,
 				8711A5A01E0C320100043ACF /* FloatingPoint.swift in Sources */,
 				87DCF47A1D34E95B00BB420F /* ShareContactsViewController.m in Sources */,
 				871BC00D1D34F56300DF0793 /* Analytics+MediaActionEvents.swift in Sources */,
@@ -6789,7 +6809,7 @@
 				1682AEBF20483F73003A052A /* ParticipantsSectionController.swift in Sources */,
 				871BC2301D34F8F800DF0793 /* FormGuidance.m in Sources */,
 				EF2127171FB9DFE300625A9B /* NoHistoryViewController.m in Sources */,
-				BFC0673D2099DD7D00204179 /* CallViewController.swift in Sources */,
+				BFC0673D2099DD7D00204179 /* CallInfoViewController.swift in Sources */,
 				54F4BAB61E143B4C00603C6F /* AppDelegate+ErrorTracking.swift in Sources */,
 				879718921D1C109900163C07 /* AudioRecordKeyboardViewController.swift in Sources */,
 				F1A989D01FD1630300B8A82E /* SecondaryViewDescription.swift in Sources */,
