@@ -29,7 +29,7 @@ import Foundation
 //            title: conversation?.displayName ?? ""
 //        )
 //    }
-//    
+//
 //    private var configurationState: CallStatusViewState {
 //        // TODO: Add case returning .reconnecting?
 //        switch state {
@@ -41,7 +41,7 @@ import Foundation
 //        case .none, .unknown: return .none
 //        }
 //    }
-//    
+//
 //    var duration: TimeInterval {
 //        if let callStartDate = conversation?.voiceChannel?.callStartDate {
 //            return -callStartDate.timeIntervalSinceNow
@@ -89,6 +89,7 @@ final class CallStatusViewController: UIViewController {
     }
     
     private func setupViews() {
+        statusView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(statusView)
     }
     
@@ -98,10 +99,12 @@ final class CallStatusViewController: UIViewController {
             statusView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             statusView.topAnchor.constraint(equalTo: view.topAnchor),
             statusView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
-            ])
+        ])
     }
     
     private func updateState() {
+        statusView.configuration = configuration
+
         switch configuration.state {
         case .established: startCallDurationTimer()
         case .terminating: stopCallDurationTimer()

@@ -45,14 +45,17 @@ protocol CallInfoViewControllerDelegate: class {
     func infoViewController(_ viewController: CallInfoViewController, perform action: CallAction)
 }
 
-
 enum CallInfoViewControllerAccessoryType: CallParticipantsViewModel {
     case avatar(ZMUser)
     case participantsList(CallParticipantsViewModel)
     
-    var showAvater: Bool {
-        guard case .avatar = self else { return false}
-        return true
+    var showAvatar: Bool {
+        return nil != user
+    }
+    
+    var user: ZMUser? {
+        guard case .avatar(let user) = self else { return nil }
+        return user
     }
     
     var rows: [CallParticipantsCellConfiguration] {
@@ -63,19 +66,67 @@ enum CallInfoViewControllerAccessoryType: CallParticipantsViewModel {
     }
 }
 
+final class UserImageViewContainer: UIView {
+    private let userImageView: UserImageView
+    private let maxSize: CGFloat
+    private let yOffset: CGFloat
+    
+    var user: ZMBareUser? {
+        didSet {
+            userImageView.user = user
+        }
+    }
+    
+    init(size: UserImageViewSize, maxSize: CGFloat, yOffset: CGFloat) {
+        userImageView = UserImageView(size: size)
+        self.maxSize = maxSize
+        self.yOffset = yOffset
+        super.init(frame: .zero)
+        setupViews()
+        createConstraints()
+    }
+    
+    @available(*, unavailable)
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    private func setupViews() {
+        userImageView.translatesAutoresizingMaskIntoConstraints = false
+        addSubview(userImageView)
+        userImageView.setContentHuggingPriority(249, for: .vertical)
+        userImageView.setContentHuggingPriority(249, for: .horizontal)
+        userImageView.setContentCompressionResistancePriority(249, for: .vertical)
+        userImageView.setContentCompressionResistancePriority(249, for: .horizontal)
+    }
+    
+    private func createConstraints() {
+        NSLayoutConstraint.activate([
+            userImageView.centerYAnchor.constraint(equalTo: centerYAnchor, constant: yOffset),
+            userImageView.centerXAnchor.constraint(equalTo: centerXAnchor),
+            userImageView.leadingAnchor.constraint(greaterThanOrEqualTo: leadingAnchor),
+            userImageView.topAnchor.constraint(greaterThanOrEqualTo: topAnchor),
+            userImageView.trailingAnchor.constraint(lessThanOrEqualTo: trailingAnchor),
+            userImageView.bottomAnchor.constraint(lessThanOrEqualTo: bottomAnchor),
+            userImageView.widthAnchor.constraint(lessThanOrEqualToConstant: maxSize),
+            userImageView.heightAnchor.constraint(lessThanOrEqualToConstant: maxSize)
+        ])
+    }
+}
+
 protocol CallInfoViewControllerInput: CallActionsViewInputType, CallStatusViewInputType  {
     var accessoryType: CallInfoViewControllerAccessoryType { get }
-    
 }
 
 final class CallInfoViewController: UIViewController, CallActionsViewDelegate {
     
     weak var delegate: CallInfoViewControllerDelegate?
     
-    private let actionsView = CallActionsView()
+    private let stackView = UIStackView(axis: .vertical)
     private let statusViewController: CallStatusViewController
     private let participantsViewController: CallParticipantsViewController
-    private let avatarView = UserImageView(size: .big)
+    private let avatarView = UserImageViewContainer(size: .big, maxSize: 240, yOffset: -8)
+    private let actionsView = CallActionsView()
     
     var configuration: CallInfoViewControllerInput {
         didSet {
@@ -87,7 +138,7 @@ final class CallInfoViewController: UIViewController, CallActionsViewDelegate {
     fileprivate var currentCaptureDevice: CaptureDevice = .front
 
     var variant: ColorSchemeVariant = .dark
-    
+
     init(configuration: CallInfoViewControllerInput) {
         self.configuration = configuration
         statusViewController = CallStatusViewController(configuration: configuration)
@@ -113,29 +164,35 @@ final class CallInfoViewController: UIViewController, CallActionsViewDelegate {
     }
 
     private func setupViews() {
-        add(statusViewController, to: view)
-        view.addSubview(actionsView)
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(stackView)
+        stackView.alignment = .center
+        stackView.distribution = .fill
+        stackView.spacing = 40
+        
+        addChildViewController(statusViewController)
+        [statusViewController.view, avatarView, participantsViewController.view, actionsView].forEach(stackView.addArrangedSubview)
+        statusViewController.didMove(toParentViewController: self)
     }
 
     private func createConstraints() {
         NSLayoutConstraint.activate([
-            statusViewController.view.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            statusViewController.view.topAnchor.constraint(equalTo: view.topAnchor),
-            statusViewController.view.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            actionsView.leadingAnchor.constraint(greaterThanOrEqualTo: view.leadingAnchor, constant: 32),
-            actionsView.trailingAnchor.constraint(lessThanOrEqualTo: view.trailingAnchor, constant: -32),
-            actionsView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            stackView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            stackView.topAnchor.constraint(equalTo: view.topAnchor),
+            stackView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            stackView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuideOrFallback.bottomAnchor, constant: -32),
+            actionsView.widthAnchor.constraint(greaterThanOrEqualToConstant: 256),
             actionsView.heightAnchor.constraint(lessThanOrEqualToConstant: 213),
-            actionsView.heightAnchor.constraint(greaterThanOrEqualToConstant: 213)
+            actionsView.heightAnchor.constraint(greaterThanOrEqualToConstant: 173)
         ])
     }
 
     private func updateState() {
-//        actionsView.update(with: configuration.callActionsViewInput)
-//        statusViewController.configuration = configuration.statusViewConfiguration
-        
-        avatarView.isHidden = !configuration.accessoryType.showAvater
-        participantsViewController.view.isHidden = configuration.accessoryType.showAvater
+        actionsView.update(with: configuration)
+        statusViewController.configuration = configuration
+        avatarView.isHidden = !configuration.accessoryType.showAvatar
+        avatarView.user = configuration.accessoryType.user
+        participantsViewController.view.isHidden = configuration.accessoryType.showAvatar
         participantsViewController.viewModel = configuration.accessoryType
     }
 
