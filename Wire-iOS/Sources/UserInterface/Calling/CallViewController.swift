@@ -183,7 +183,8 @@ final class CallInfoViewController: UIViewController, CallActionsViewDelegate {
             stackView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuideOrFallback.bottomAnchor, constant: -32),
             actionsView.widthAnchor.constraint(greaterThanOrEqualToConstant: 256),
             actionsView.heightAnchor.constraint(lessThanOrEqualToConstant: 213),
-            actionsView.heightAnchor.constraint(greaterThanOrEqualToConstant: 173)
+            actionsView.heightAnchor.constraint(greaterThanOrEqualToConstant: 173),
+            participantsViewController.view.widthAnchor.constraint(equalTo: view.widthAnchor)
         ])
     }
 

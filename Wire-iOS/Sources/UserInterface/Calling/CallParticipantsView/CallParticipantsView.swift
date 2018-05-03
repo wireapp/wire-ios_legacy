@@ -77,6 +77,7 @@ class CallParticipantsView: UICollectionView, Themeable {
     override init(frame: CGRect, collectionViewLayout: UICollectionViewLayout) {
         super.init(frame: frame, collectionViewLayout: collectionViewLayout)
         self.dataSource = self
+        backgroundColor = .clear
     }
     
     required init?(coder aDecoder: NSCoder) {

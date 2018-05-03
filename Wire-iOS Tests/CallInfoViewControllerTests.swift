@@ -67,6 +67,7 @@ final class CallInfoViewControllerTests: CoreDataSnapshotTestCase {
         // Given
         snapshotBackgroundColor = .white
         sut.beginAppearanceTransition(true, animated: false)
+        sut.endAppearanceTransition()
         
         // Then
         verifyInAllIPhoneSizes(view: sut.view)
@@ -90,12 +91,38 @@ final class CallInfoViewControllerTests: CoreDataSnapshotTestCase {
             variant: .light
         )
         sut.beginAppearanceTransition(true, animated: false)
+        sut.endAppearanceTransition()
         
         // Then
         verifyInAllIPhoneSizes(view: sut.view)
     }
     
     func testCallInfoViewController_Audio_NoCBR_SomeParticipants() {
+        // Given
+        snapshotBackgroundColor = .white
+        let participants = MockCallParticipantsViewModel.viewModel(withParticipantCount: 2)
+        
+        sut.configuration = MockCallInfoViewControllerInput(
+            accessoryType: .participantsList(participants),
+            canToggleMediaType: true,
+            isMuted: false,
+            isTerminating: false,
+            canAccept: true,
+            mediaState: .notSendingVideo(speakerEnabled: false),
+            state: .connecting,
+            isConstantBitRate: false,
+            title: "Delaney Winston",
+            isVideoCall: false,
+            variant: .light
+        )
+        sut.beginAppearanceTransition(true, animated: false)
+        sut.endAppearanceTransition()
+        
+        // Then
+        verifyInAllIPhoneSizes(view: sut.view)
+    }
+    
+    func testCallInfoViewController_Audio_NoCBR_ManyParticipants() {
         // Given
         snapshotBackgroundColor = .white
         let participants = MockCallParticipantsViewModel.viewModel(withParticipantCount: 4)
@@ -114,6 +141,7 @@ final class CallInfoViewControllerTests: CoreDataSnapshotTestCase {
             variant: .light
         )
         sut.beginAppearanceTransition(true, animated: false)
+        sut.endAppearanceTransition()
         
         // Then
         verifyInAllIPhoneSizes(view: sut.view)
@@ -122,7 +150,7 @@ final class CallInfoViewControllerTests: CoreDataSnapshotTestCase {
     func testCallInfoViewController_Audio_NoCBR_ALotOfParticipants() {
         // Given
         snapshotBackgroundColor = .white
-        let participants = MockCallParticipantsViewModel.viewModel(withParticipantCount: 20)
+        let participants = MockCallParticipantsViewModel.viewModel(withParticipantCount: 10)
         
         sut.configuration = MockCallInfoViewControllerInput(
             accessoryType: .participantsList(participants),
@@ -138,6 +166,7 @@ final class CallInfoViewControllerTests: CoreDataSnapshotTestCase {
             variant: .light
         )
         sut.beginAppearanceTransition(true, animated: false)
+        sut.endAppearanceTransition()
         
         // Then
         verifyInAllIPhoneSizes(view: sut.view)
