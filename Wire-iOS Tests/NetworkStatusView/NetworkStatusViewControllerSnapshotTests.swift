@@ -55,7 +55,7 @@ final class NetworkStatusViewControllerSnapshotTests: ZMSnapshotTestCase {
         mockContentView.backgroundColor = .white
         mockContainerViewController.view.addSubview(mockContentView)
 
-        sut.createConstraintsInContainer(bottomView: mockContentView, containerView: mockContainerViewController.view)
+        sut.createConstraintsInParentController(bottomView: mockContentView, controller: mockContainerViewController)
 
         constrain(mockContentView, mockContainerViewController.view) { mockContentView, view in
             mockContentView.left == view.left
