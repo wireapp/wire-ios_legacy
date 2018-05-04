@@ -30,15 +30,7 @@ protocol AppStateControllerDelegate : class {
 
 class AppStateController : NSObject {
     
-    var appState : AppState = .headless {
-        didSet {
-            if appState != oldValue {
-                lastAppState = oldValue
-            }
-        }
-    }
-    var lastAppState : AppState = .headless
-
+    private(set) var appState : AppState = .headless
     private var authenticationObserverToken : ZMAuthenticationStatusObserver?
     public weak var delegate : AppStateControllerDelegate? = nil
     
@@ -62,7 +54,6 @@ class AppStateController : NSObject {
     deinit {
         NotificationCenter.default.removeObserver(self)
     }
-
 
     func calculateAppState() -> AppState {
         
