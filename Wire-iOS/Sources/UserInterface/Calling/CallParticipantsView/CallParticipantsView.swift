@@ -113,9 +113,8 @@ extension UserCell: CallParticipantsCellConfigurationConfigurable {
     
     func configure(with configuration: CallParticipantsCellConfiguration, variant: ColorSchemeVariant) {
         guard case let .callParticipant(user, _) = configuration else { preconditionFailure() }
-        
-        self.colorSchemeVariant = variant
-        
+        colorSchemeVariant = variant
+        contentBackgroundColor = .clear
         configure(with: user)
     }
     

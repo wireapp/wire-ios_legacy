@@ -34,6 +34,7 @@ struct MockCallInfoViewControllerInput: CallInfoViewControllerInput {
 }
 
 final class CallInfoViewControllerTests: CoreDataSnapshotTestCase {
+
     var sut: CallInfoViewController!
     var input: CallInfoViewControllerInput!
     
@@ -74,7 +75,6 @@ final class CallInfoViewControllerTests: CoreDataSnapshotTestCase {
     
     func testCallInfoViewController_Audio_CBR() {
         // Given
-        
         sut.configuration = MockCallInfoViewControllerInput(
             accessoryType: .avatar(otherUser),
             canToggleMediaType: true,
@@ -166,6 +166,122 @@ final class CallInfoViewControllerTests: CoreDataSnapshotTestCase {
         // Then
         verifyInAllIPhoneSizes(view: sut.view)
     }
+
+    func testCallInfoViewController_Video_NoCBR() {
+        // Given
+        sut.configuration = MockCallInfoViewControllerInput(
+            accessoryType: .avatar(otherUser),
+            canToggleMediaType: true,
+            isMuted: false,
+            isTerminating: false,
+            canAccept: true,
+            mediaState: .notSendingVideo(speakerEnabled: false),
+            state: .connecting,
+            isConstantBitRate: false,
+            title: "Delaney Winston",
+            isVideoCall: true,
+            variant: .light
+        )
+        
+        sut.beginAppearanceTransition(true, animated: false)
+        sut.endAppearanceTransition()
+        
+        // Then
+        verifyInAllIPhoneSizes(view: sut.view)
+    }
+
+    func testCallInfoViewController_Video_CBR() {
+        // Given
+        sut.configuration = MockCallInfoViewControllerInput(
+            accessoryType: .avatar(otherUser),
+            canToggleMediaType: true,
+            isMuted: false,
+            isTerminating: false,
+            canAccept: true,
+            mediaState: .notSendingVideo(speakerEnabled: false),
+            state: .connecting,
+            isConstantBitRate: true,
+            title: "Delaney Winston",
+            isVideoCall: true,
+            variant: .light
+        )
+        sut.beginAppearanceTransition(true, animated: false)
+        sut.endAppearanceTransition()
+        
+        // Then
+        verifyInAllIPhoneSizes(view: sut.view)
+    }
     
+    func testCallInfoViewController_Video_NoCBR_SomeParticipants() {
+        // Given
+        let participants = MockCallParticipantsViewModel.viewModel(withParticipantCount: 2)
+        
+        sut.configuration = MockCallInfoViewControllerInput(
+            accessoryType: .participantsList(participants),
+            canToggleMediaType: true,
+            isMuted: false,
+            isTerminating: false,
+            canAccept: true,
+            mediaState: .notSendingVideo(speakerEnabled: false),
+            state: .connecting,
+            isConstantBitRate: false,
+            title: "Delaney Winston",
+            isVideoCall: true,
+            variant: .light
+        )
+        sut.beginAppearanceTransition(true, animated: false)
+        sut.endAppearanceTransition()
+        
+        // Then
+        verifyInAllIPhoneSizes(view: sut.view)
+    }
     
+    func testCallInfoViewController_Video_NoCBR_ManyParticipants() {
+        // Given
+        let participants = MockCallParticipantsViewModel.viewModel(withParticipantCount: 4)
+        
+        sut.configuration = MockCallInfoViewControllerInput(
+            accessoryType: .participantsList(participants),
+            canToggleMediaType: true,
+            isMuted: false,
+            isTerminating: false,
+            canAccept: true,
+            mediaState: .notSendingVideo(speakerEnabled: false),
+            state: .connecting,
+            isConstantBitRate: false,
+            title: "Delaney Winston",
+            isVideoCall: true,
+            variant: .light
+        )
+        sut.beginAppearanceTransition(true, animated: false)
+        sut.endAppearanceTransition()
+        
+        // Then
+        verifyInAllIPhoneSizes(view: sut.view)
+    }
+    
+    func testCallInfoViewController_Video_NoCBR_ALotOfParticipants() {
+        // Given
+        let participants = MockCallParticipantsViewModel.viewModel(withParticipantCount: 10)
+        
+        sut.configuration = MockCallInfoViewControllerInput(
+            accessoryType: .participantsList(participants),
+            canToggleMediaType: true,
+            isMuted: false,
+            isTerminating: false,
+            canAccept: true,
+            mediaState: .notSendingVideo(speakerEnabled: false),
+            state: .connecting,
+            isConstantBitRate: false,
+            title: "Delaney Winston",
+            isVideoCall: true,
+            variant: .light
+        )
+        sut.beginAppearanceTransition(true, animated: false)
+        sut.endAppearanceTransition()
+        
+        // Then
+        verifyInAllIPhoneSizes(view: sut.view)
+    }
+
 }

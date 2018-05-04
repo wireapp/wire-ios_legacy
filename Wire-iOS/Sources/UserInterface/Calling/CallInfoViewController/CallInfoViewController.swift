@@ -30,7 +30,7 @@ fileprivate extension CallInfoViewControllerInput {
     var overlayBackgroundColor: UIColor {
         switch (isVideoCall, state) {
         case (false, _): return .wr_color(fromColorScheme: ColorSchemeColorBackground, variant: variant)
-        case (true, .ringingOutgoing), (true, .ringingIncoming): return UIColor.black.withAlphaComponent(0.4) 
+        case (true, .ringingOutgoing), (true, .ringingIncoming): return UIColor.black.withAlphaComponent(0.4)
         case (true, _): return UIColor.black.withAlphaComponent(0.64)
         }
     }
@@ -108,7 +108,8 @@ final class CallInfoViewController: UIViewController, CallActionsViewDelegate {
         avatarView.user = configuration.accessoryType.user
         participantsViewController.view.isHidden = configuration.accessoryType.showAvatar
         participantsViewController.viewModel = configuration.accessoryType
-        
+        participantsViewController.variant = configuration.effectiveColorVariant
+
         UIView.animate(withDuration: 0.2) { [view, configuration] in
             view?.backgroundColor = configuration.overlayBackgroundColor
         }

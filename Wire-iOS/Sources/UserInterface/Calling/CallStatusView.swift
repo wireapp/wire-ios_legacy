@@ -124,7 +124,7 @@ private let callDurationFormatter: DateComponentsFormatter = {
 }()
 
 
-fileprivate extension CallStatusViewInputType {
+extension CallStatusViewInputType {
 
     var displayString: String {
         switch state {

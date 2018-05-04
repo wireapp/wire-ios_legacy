@@ -30,10 +30,15 @@ class CallParticipantsViewController: UIViewController, UICollectionViewDelegate
     var collectionView: CallParticipantsView!
     let allowsScrolling: Bool
     
+    var variant: ColorSchemeVariant = .light {
+        didSet {
+            updateAppearance()
+        }
+    }
+    
     init(viewModel: CallParticipantsViewModel, allowsScrolling: Bool) {
         self.viewModel = viewModel
         self.allowsScrolling = allowsScrolling
-        
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -47,7 +52,12 @@ class CallParticipantsViewController: UIViewController, UICollectionViewDelegate
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        setupViews()
+        createConstraints()
+        updateAppearance()
+    }
+    
+    private func setupViews() {
         let collectionViewLayout = UICollectionViewFlowLayout()
         collectionViewLayout.scrollDirection = .vertical
         collectionViewLayout.minimumInteritemSpacing = 12
@@ -61,8 +71,6 @@ class CallParticipantsViewController: UIViewController, UICollectionViewDelegate
         
         view.addSubview(collectionView)
         CallParticipantsCellConfiguration.prepare(collectionView)
-        
-        createConstraints()
     }
     
     private func createConstraints() {
@@ -84,9 +92,7 @@ class CallParticipantsViewController: UIViewController, UICollectionViewDelegate
     }
 
     func computeVisibleRows() -> [CallParticipantsCellConfiguration] {
-        guard !allowsScrolling else {
-            return viewModel.rows
-        }
+        guard !allowsScrolling else { return viewModel.rows }
         
         let visibleRows = Int(collectionView.bounds.height / cellHeight)
         guard visibleRows > 0 else { return [] }
@@ -100,6 +106,10 @@ class CallParticipantsViewController: UIViewController, UICollectionViewDelegate
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: collectionView.bounds.size.width, height: cellHeight)
+    }
+    
+    private func updateAppearance() {
+        collectionView.colorSchemeVariant = variant
     }
     
 }
