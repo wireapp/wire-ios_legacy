@@ -153,6 +153,13 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
 @implementation ConversationInputBarViewController
 
+
+/**
+ init with a ZMConversation objcet
+
+ @param conversation provide nil only for tests
+ @return a ConversationInputBarViewController
+ */
 - (instancetype)initWithConversation:(ZMConversation *)conversation
 {
     self = [super init];
