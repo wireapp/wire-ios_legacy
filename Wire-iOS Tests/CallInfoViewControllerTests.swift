@@ -40,7 +40,7 @@ final class CallInfoViewControllerTests: CoreDataSnapshotTestCase {
     
     override func setUp() {
         super.setUp()
-        
+
         input = MockCallInfoViewControllerInput(
             accessoryType: .avatar(otherUser),
             canToggleMediaType: true,
@@ -71,6 +71,16 @@ final class CallInfoViewControllerTests: CoreDataSnapshotTestCase {
         
         // Then
         verifyInAllIPhoneSizes(view: sut.view)
+    }
+    
+    @available(iOS 11.0, *)
+    func testCallInfoViewController_Audio_NoCBR_iPhoneX() {
+        // Given
+        sut.beginAppearanceTransition(true, animated: false)
+        sut.endAppearanceTransition()
+        
+        // Then
+        verifySafeAreas(viewController: sut)
     }
     
     func testCallInfoViewController_Audio_CBR() {

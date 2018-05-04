@@ -185,5 +185,5 @@ extension CallInfoConfiguration: CallInfoViewControllerInput {
     var variant: ColorSchemeVariant {
         return .light
     }
-    
+
 }

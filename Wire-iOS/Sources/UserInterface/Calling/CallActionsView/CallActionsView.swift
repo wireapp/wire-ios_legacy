@@ -162,8 +162,8 @@ final class CallActionsView: UIView {
             let iconCount = topStackView.visibleSubviews.count + bottomStackView.visibleSubviews.count
             return (bounds.width - (CGFloat(iconCount) * IconButton.width)) / CGFloat(iconCount - 1)
         }()
-        topStackView.spacing = isCompact ? verticalStackView.spacing : 0
-        bottomStackView.spacing = isCompact ? verticalStackView.spacing : 0
+        topStackView.spacing = isCompact ? verticalStackView.spacing : 32
+        bottomStackView.spacing = isCompact ? verticalStackView.spacing : 32
     }
     
     // MARK: - Action Output

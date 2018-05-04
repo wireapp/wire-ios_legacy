@@ -39,7 +39,7 @@ fileprivate extension CallInfoViewControllerInput {
 final class CallInfoViewController: UIViewController, CallActionsViewDelegate {
     
     weak var delegate: CallInfoViewControllerDelegate?
-    
+
     private let stackView = UIStackView(axis: .vertical)
     private let statusViewController: CallStatusViewController
     private let participantsViewController: CallParticipantsViewController
@@ -82,7 +82,7 @@ final class CallInfoViewController: UIViewController, CallActionsViewDelegate {
         stackView.alignment = .center
         stackView.distribution = .fill
         stackView.spacing = 40
-        
+
         addChildViewController(statusViewController)
         [statusViewController.view, avatarView, participantsViewController.view, actionsView].forEach(stackView.addArrangedSubview)
         statusViewController.didMove(toParentViewController: self)
@@ -91,17 +91,19 @@ final class CallInfoViewController: UIViewController, CallActionsViewDelegate {
     private func createConstraints() {
         NSLayoutConstraint.activate([
             stackView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            stackView.topAnchor.constraint(equalTo: view.topAnchor),
+            stackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuideOrFallback.topAnchor),
             stackView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            stackView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuideOrFallback.bottomAnchor, constant: -32),
-            actionsView.widthAnchor.constraint(greaterThanOrEqualToConstant: 256),
-            actionsView.heightAnchor.constraint(lessThanOrEqualToConstant: 213),
+            stackView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuideOrFallback.bottomAnchor, constant: -40),
+            actionsView.widthAnchor.constraint(equalToConstant: 288),
             actionsView.heightAnchor.constraint(greaterThanOrEqualToConstant: 173),
+            actionsView.leadingAnchor.constraint(greaterThanOrEqualTo: view.leadingAnchor, constant: 32),
+            actionsView.trailingAnchor.constraint(lessThanOrEqualTo: view.trailingAnchor, constant: -32),
             participantsViewController.view.widthAnchor.constraint(equalTo: view.widthAnchor)
         ])
     }
 
     private func updateState(animated: Bool = false) {
+        Calling.log.debug("updating calling info controller with state: \(configuration)")
         actionsView.update(with: configuration)
         statusViewController.configuration = configuration
         avatarView.isHidden = !configuration.accessoryType.showAvatar

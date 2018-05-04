@@ -887,6 +887,7 @@
 		BFE4186A209B6E3700503C7C /* UserImageViewContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFE41869209B6E3700503C7C /* UserImageViewContainer.swift */; };
 		BFE4186D209B6FFA00503C7C /* CallAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFE4186C209B6FFA00503C7C /* CallAction.swift */; };
 		BFE4186F209B706600503C7C /* CallInfoViewControllerAccessoryType.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFE4186E209B706600503C7C /* CallInfoViewControllerAccessoryType.swift */; };
+		BFE41871209C8AFD00503C7C /* CallInfoConfiguration+Debug.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFE41870209C8AFD00503C7C /* CallInfoConfiguration+Debug.swift */; };
 		BFE49C321C0F39590061C16F /* NSString+FingerprintTests.m in Sources */ = {isa = PBXBuildFile; fileRef = BFE49C311C0F39580061C16F /* NSString+FingerprintTests.m */; };
 		BFE57B4B1D52335A00CB0806 /* ConversationPreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFE57B4A1D52335A00CB0806 /* ConversationPreviewViewController.swift */; };
 		BFEA26591D410F9F000D0ED5 /* audio_sample.m4a in Resources */ = {isa = PBXBuildFile; fileRef = BFEA26581D410F9F000D0ED5 /* audio_sample.m4a */; };
@@ -2490,6 +2491,7 @@
 		BFE41869209B6E3700503C7C /* UserImageViewContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserImageViewContainer.swift; sourceTree = "<group>"; };
 		BFE4186C209B6FFA00503C7C /* CallAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallAction.swift; sourceTree = "<group>"; };
 		BFE4186E209B706600503C7C /* CallInfoViewControllerAccessoryType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallInfoViewControllerAccessoryType.swift; sourceTree = "<group>"; };
+		BFE41870209C8AFD00503C7C /* CallInfoConfiguration+Debug.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CallInfoConfiguration+Debug.swift"; sourceTree = "<group>"; };
 		BFE49C311C0F39580061C16F /* NSString+FingerprintTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+FingerprintTests.m"; sourceTree = "<group>"; };
 		BFE57B451D51FDE800CB0806 /* ImageMessageCell+Internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ImageMessageCell+Internal.h"; sourceTree = "<group>"; };
 		BFE57B4A1D52335A00CB0806 /* ConversationPreviewViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConversationPreviewViewController.swift; sourceTree = "<group>"; };
@@ -5346,6 +5348,7 @@
 				BFE41862209B15F800503C7C /* Calling+Logs.swift */,
 				D58191FF2091CEBF003BA7EC /* UIStackView+Helper.swift */,
 				16A94AFA209C553A008A5718 /* CallViewController.swift */,
+				BFE41870209C8AFD00503C7C /* CallInfoConfiguration+Debug.swift */,
 			);
 			path = Calling;
 			sourceTree = "<group>";
@@ -6930,6 +6933,7 @@
 				BD979D2E1D8F41E700E8E3CB /* String+WireLocales.swift in Sources */,
 				D5DBAAAA20064D8800E9F65B /* InviteResult.swift in Sources */,
 				1682AEBB20483D48003A052A /* GuestOptionsSectionController.swift in Sources */,
+				BFE41871209C8AFD00503C7C /* CallInfoConfiguration+Debug.swift in Sources */,
 				8716851220346E7400AC9F81 /* Analytics+LinearGroupCreation.swift in Sources */,
 				871BC3631D34F94200DF0793 /* SoundcloudAudioTrack.m in Sources */,
 				8797A9B42046D687009865D5 /* GuestsBarController.swift in Sources */,

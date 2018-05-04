@@ -123,6 +123,18 @@ extension ZMSnapshotTestCase {
         } else {
             XCTFail("View doesn't support Themable protocol")
         }
-        
+    }
+    
+    @available(iOS 11.0, *)
+    func verifySafeAreas(
+        viewController: UIViewController,
+        tolerance: Float = 0,
+        file: StaticString = #file,
+        line: UInt = #line
+        ) {
+        viewController.additionalSafeAreaInsets = UIEdgeInsets(top: 44, left: 0, bottom: 34, right: 0)
+        viewController.viewSafeAreaInsetsDidChange()
+        viewController.view.frame = CGRect(x: 0, y: 0, width: 375, height: 812)
+        verify(view: viewController.view)
     }
 }
