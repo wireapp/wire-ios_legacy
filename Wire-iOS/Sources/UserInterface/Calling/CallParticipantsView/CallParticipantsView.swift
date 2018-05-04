@@ -116,6 +116,7 @@ extension UserCell: CallParticipantsCellConfigurationConfigurable {
         colorSchemeVariant = variant
         contentBackgroundColor = .clear
         configure(with: user)
+        accessoryIconView.isHidden = true
     }
     
 }

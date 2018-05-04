@@ -115,8 +115,10 @@ extension ZMSnapshotTestCase {
     func verifyInAllColorSchemes(view: UIView, tolerance: Float = 0, file: StaticString = #file, line: UInt = #line) {
         if var themeable = view as? Themeable {
             themeable.colorSchemeVariant = .light
+            snapshotBackgroundColor = .white
             verifyView(view, extraLayoutPass: false, tolerance: tolerance, file: file.utf8SignedStart(), line: line, identifier: "LightTheme")
             themeable.colorSchemeVariant = .dark
+            snapshotBackgroundColor = .black
             verifyView(view, extraLayoutPass: false, tolerance: tolerance, file: file.utf8SignedStart(), line: line, identifier: "DarkTheme")
         } else {
             XCTFail("View doesn't support Themable protocol")
