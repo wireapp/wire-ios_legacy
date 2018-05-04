@@ -127,7 +127,7 @@ extension AppStateController : SessionManagerDelegate {
     func sessionManagerDidFailToLogin(account: Account?, error: Error) {
         let selectedAccount = SessionManager.shared?.accountManager.selectedAccount
 
-        // We only care about the error if it concerns the selected account.
+        // We only care about the error if it concerns the selected account, or the loading account.
         if selectedAccount == account || loadingAccount == account {
             authenticationError = error as NSError
         }
