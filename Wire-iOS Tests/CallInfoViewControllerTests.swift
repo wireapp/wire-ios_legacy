@@ -97,7 +97,7 @@ final class CallInfoViewControllerTests: CoreDataSnapshotTestCase {
     
     func testCallInfoViewController_Audio_NoCBR_SomeParticipants() {
         // Given
-        let participants = MockCallParticipantsViewModel.viewModel(withParticipantCount: 2)
+        let participants = CallParticipantsViewTests.participants(count: 2)
         
         sut.configuration = MockCallInfoViewControllerInput(
             accessoryType: .participantsList(participants),
@@ -121,7 +121,7 @@ final class CallInfoViewControllerTests: CoreDataSnapshotTestCase {
     
     func testCallInfoViewController_Audio_NoCBR_ManyParticipants() {
         // Given
-        let participants = MockCallParticipantsViewModel.viewModel(withParticipantCount: 4)
+        let participants = CallParticipantsViewTests.participants(count: 4)
         
         sut.configuration = MockCallInfoViewControllerInput(
             accessoryType: .participantsList(participants),
@@ -145,7 +145,7 @@ final class CallInfoViewControllerTests: CoreDataSnapshotTestCase {
     
     func testCallInfoViewController_Audio_NoCBR_ALotOfParticipants() {
         // Given
-        let participants = MockCallParticipantsViewModel.viewModel(withParticipantCount: 10)
+        let participants = CallParticipantsViewTests.participants(count: 10)
         
         sut.configuration = MockCallInfoViewControllerInput(
             accessoryType: .participantsList(participants),
@@ -214,7 +214,7 @@ final class CallInfoViewControllerTests: CoreDataSnapshotTestCase {
     
     func testCallInfoViewController_Video_NoCBR_SomeParticipants() {
         // Given
-        let participants = MockCallParticipantsViewModel.viewModel(withParticipantCount: 2)
+        let participants = CallParticipantsViewTests.participants(count: 2)
         
         sut.configuration = MockCallInfoViewControllerInput(
             accessoryType: .participantsList(participants),
@@ -238,7 +238,7 @@ final class CallInfoViewControllerTests: CoreDataSnapshotTestCase {
     
     func testCallInfoViewController_Video_NoCBR_ManyParticipants() {
         // Given
-        let participants = MockCallParticipantsViewModel.viewModel(withParticipantCount: 4)
+        let participants = CallParticipantsViewTests.participants(count: 4)
         
         sut.configuration = MockCallInfoViewControllerInput(
             accessoryType: .participantsList(participants),
@@ -262,7 +262,7 @@ final class CallInfoViewControllerTests: CoreDataSnapshotTestCase {
     
     func testCallInfoViewController_Video_NoCBR_ALotOfParticipants() {
         // Given
-        let participants = MockCallParticipantsViewModel.viewModel(withParticipantCount: 10)
+        let participants = CallParticipantsViewTests.participants(count: 10)
         
         sut.configuration = MockCallInfoViewControllerInput(
             accessoryType: .participantsList(participants),
