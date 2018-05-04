@@ -19,6 +19,26 @@
 import XCTest
 @testable import Wire
 
+final class MockLongPressGestureRecognizer: UILongPressGestureRecognizer {
+    let mockState: UIGestureRecognizerState
+    var mockLocation: CGPoint?
+
+    init(location: CGPoint?, state: UIGestureRecognizerState) {
+        mockLocation = location
+        mockState = state
+
+        super.init(target: nil, action: nil)
+    }
+
+    override func location(in view: UIView?) -> CGPoint {
+        return mockLocation ?? super.location(in: view)
+    }
+
+    override var state: UIGestureRecognizerState {
+        return mockState
+    }
+}
+
 final class ConversationInputBarViewControllerTests: ZMSnapshotTestCase {
     
     var sut: ConversationInputBarViewController!
@@ -37,10 +57,14 @@ final class ConversationInputBarViewControllerTests: ZMSnapshotTestCase {
 
     func testAudioRecorder(){
         // GIVEN
+        sut.viewDidLoad()
+        sut.createAudioRecord()
 
         // WHEN
+        let mockLongPressGestureRecognizer = MockLongPressGestureRecognizer(location: .zero, state: .began)
+        sut.audioButtonLongPressed(mockLongPressGestureRecognizer)
 
         // THEN
-        self.verifyInAllPhoneWidths(view: sut.view)
+        self.verifyInIPhoneSize(view: sut.view)
     }
 }

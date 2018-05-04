@@ -167,10 +167,14 @@ extension ConversationInputBarViewController: AudioRecordViewControllerDelegate 
         let type: ConversationMediaRecordingType = audioRecordViewController is AudioRecordKeyboardViewController ? .keyboard : .minimised
         
         if type == .minimised {
-            Analytics.shared().tagMediaAction(.audioMessage, inConversation: self.conversation)
+            if let conversation = self.conversation {
+                Analytics.shared().tagMediaAction(.audioMessage, inConversation: conversation)
+            }
         }
-        
-        Analytics.shared().tagStartedAudioMessageRecording(inConversation: self.conversation, type: type)
+
+        if let conversation = self.conversation {
+            Analytics.shared().tagStartedAudioMessageRecording(inConversation: conversation, type: type)
+        }
     }
     
     public func audioRecordViewControllerWantsToSendAudio(_ audioRecordViewController: AudioRecordBaseViewController, recordingURL: URL, duration: TimeInterval, context: AudioMessageContext, filter: AVSAudioEffectType) {
