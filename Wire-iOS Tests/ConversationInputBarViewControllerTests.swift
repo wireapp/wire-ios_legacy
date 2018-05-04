@@ -49,7 +49,7 @@ final class ConversationInputBarViewControllerTests: ZMSnapshotTestCase {
         sut = ConversationInputBarViewController(conversation: nil)
         sut.view.layoutIfNeeded()
 
-        recordMode = true
+        sut.view.layer.speed = 0
     }
 
     func testNormalState(){
