@@ -200,6 +200,11 @@ static id<ZMBareUser> mockSelfUser = nil;
     return false;
 }
 
+- (BOOL)hasTeam
+{
+    return false;
+}
+
 - (BOOL)isKindOfClass:(Class)aClass
 {
     if ([aClass isSubclassOfClass:[ZMUser class]]) {

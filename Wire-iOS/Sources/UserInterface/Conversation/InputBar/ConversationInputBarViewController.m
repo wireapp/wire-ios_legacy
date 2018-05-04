@@ -157,13 +157,15 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 {
     self = [super init];
     if (self) {
-        self.conversation = conversation;
-        self.sendController = [[ConversationInputBarSendController alloc] initWithConversation:self.conversation];
-        self.conversationObserverToken = [ConversationChangeInfo addObserver:self forConversation:self.conversation];
+        if (conversation != nil) {
+            self.conversation = conversation;
+            self.sendController = [[ConversationInputBarSendController alloc] initWithConversation:self.conversation];
+            self.conversationObserverToken = [ConversationChangeInfo addObserver:self forConversation:self.conversation];
+            self.typingObserverToken = [conversation addTypingObserver:self];
+            self.typingUsers = conversation.typingUsers;
+        }
         self.sendButtonState = [[ConversationInputBarButtonState alloc] init];
-        self.typingObserverToken = [conversation addTypingObserver:self];
-        self.typingUsers = conversation.typingUsers;
-        
+
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidHide:) name:UIKeyboardDidHideNotification object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didEnterBackground:) name:UIApplicationDidEnterBackgroundNotification object:nil];
         
@@ -225,7 +227,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     [self.gifButton addTarget:self action:@selector(giphyButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     [self.locationButton addTarget:self action:@selector(locationButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     
-    if (self.conversationObserverToken == nil) {
+    if (self.conversationObserverToken == nil && self.conversation != nil) {
         self.conversationObserverToken = [ConversationChangeInfo addObserver:self forConversation:self.conversation];
     }
     
