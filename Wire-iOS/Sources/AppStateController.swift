@@ -67,7 +67,7 @@ class AppStateController : NSObject {
     func calculateAppState() -> AppState {
         
         if isRunningTests {
-            return .unauthenticated(error: nil, account: nil)
+            return .unauthenticated(error: nil)
         }
         
         if !hasEnteredForeground {
@@ -105,7 +105,6 @@ class AppStateController : NSObject {
         case (.unauthenticated, _):
             // only clear the error when transitioning out of the unauthenticated state
             authenticationError = nil
-            authenticationAccount = nil
         default: break
         }
         
@@ -126,7 +125,6 @@ extension AppStateController : SessionManagerDelegate {
     
     func sessionManagerWillLogout(error: Error?, userSessionCanBeTornDown: @escaping () -> Void) {
         authenticationError = error as NSError?
-        authenticationAccount = SessionManager.shared?.accountManager.selectedAccount
 
         isLoggedIn = false
         isLoggedOut = true
@@ -136,15 +134,10 @@ extension AppStateController : SessionManagerDelegate {
     }
     
     func sessionManagerDidFailToLogin(account: Account?, error: Error) {
+        let selectedAccount = SessionManager.shared?.accountManager.selectedAccount
 
-
-
-        if selectedAccount == account || loadingAccount == account {
-            authenticationError = error as NSError
-        }
-        
         // We only care about the error if it concerns the selected account.
-        if let selectedAccount = SessionManager.shared?.accountManager.selectedAccount, selectedAccount == account {
+        if selectedAccount == account || loadingAccount == account {
             authenticationError = error as NSError
         }
 
