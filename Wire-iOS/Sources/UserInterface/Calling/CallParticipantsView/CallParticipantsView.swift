@@ -18,9 +18,7 @@
 
 import Foundation
 
-protocol CallParticipantsViewModel {
-    var rows: [CallParticipantsCellConfiguration] { get }
-}
+typealias CallParticipantsList = [CallParticipantsCellConfiguration]
 
 protocol CallParticipantsCellConfigurationConfigurable: Reusable {
     
@@ -57,7 +55,7 @@ enum CallParticipantsCellConfiguration {
 
 class CallParticipantsView: UICollectionView, Themeable {
     
-    var rows = [CallParticipantsCellConfiguration]() {
+    var rows = CallParticipantsList() {
         didSet {
             reloadData()
         }

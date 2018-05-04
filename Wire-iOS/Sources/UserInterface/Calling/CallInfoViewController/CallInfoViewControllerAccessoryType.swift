@@ -16,24 +16,34 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-enum CallInfoViewControllerAccessoryType: CallParticipantsViewModel {
+enum CallInfoViewControllerAccessoryType {
+    case none
     case avatar(ZMUser)
-    case participantsList(CallParticipantsViewModel)
+    case participantsList(CallParticipantsList)
     
-    var showAvatar: Bool {
-        return nil != user
-    }
-    
-    var user: ZMUser? {
-        guard case .avatar(let user) = self else { return nil }
-        return user
-    }
-    
-    var rows: [CallParticipantsCellConfiguration] {
-        switch self {
-        case .avatar: return []
-        case .participantsList(let model): return model.rows
+    var showParticipantList: Bool {
+        if case .participantsList = self {
+            return true
+        } else {
+            return false
         }
     }
-
+    
+    var showAvatar: Bool {
+        if case .avatar = self {
+            return true
+        } else {
+            return false
+        }
+    }
+    
+    var participants: CallParticipantsList {
+        switch self {
+        case .participantsList(let participants):
+            return participants
+        default:
+            return []
+        }
+    }
+    
 }

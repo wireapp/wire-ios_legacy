@@ -53,9 +53,9 @@ final class CallInfoViewController: UIViewController, CallActionsViewDelegate {
     }
 
     init(configuration: CallInfoViewControllerInput) {
-        self.configuration = configuration
+        self.configuration = configuration        
         statusViewController = CallStatusViewController(configuration: configuration)
-        participantsViewController = CallParticipantsViewController(viewModel: configuration.accessoryType, allowsScrolling: false)
+        participantsViewController = CallParticipantsViewController(participants: configuration.accessoryType.participants, allowsScrolling: false)
         super.init(nibName: nil, bundle: nil)
         actionsView.delegate = self
     }
@@ -104,12 +104,20 @@ final class CallInfoViewController: UIViewController, CallActionsViewDelegate {
     private func updateState(animated: Bool = false) {
         actionsView.update(with: configuration)
         statusViewController.configuration = configuration
+        
+        switch configuration.accessoryType {
+        case .avatar(let user):
+            avatarView.user = user
+        case .participantsList(let participants):
+            participantsViewController.participants = participants
+        case .none:
+            break
+        }
+        
         avatarView.isHidden = !configuration.accessoryType.showAvatar
-        avatarView.user = configuration.accessoryType.user
-        participantsViewController.view.isHidden = configuration.accessoryType.showAvatar
-        participantsViewController.viewModel = configuration.accessoryType
+        participantsViewController.view.isHidden = !configuration.accessoryType.showParticipantList
         participantsViewController.variant = configuration.effectiveColorVariant
-
+        
         UIView.animate(withDuration: 0.2) { [view, configuration] in
             view?.backgroundColor = configuration.overlayBackgroundColor
         }

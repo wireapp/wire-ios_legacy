@@ -105,19 +105,35 @@ struct CallInfoConfiguration  {
 extension CallInfoConfiguration: CallInfoViewControllerInput {
     
     var accessoryType: CallInfoViewControllerAccessoryType {
+        
+        guard !voiceChannel.isVideoCall else { return .none }
+        
         switch voiceChannel.state {
         case .incoming:
-            return CallInfoViewControllerAccessoryType.avatar(voiceChannel.initiator ?? ZMUser.selfUser())
-        case .outgoing:
-            if voiceChannel.conversation?.conversationType == .oneOnOne {
-                return CallInfoViewControllerAccessoryType.avatar(voiceChannel.conversation?.firstActiveParticipantOtherThanSelf() ?? ZMUser.selfUser())
+            if let initiator = voiceChannel.initiator {
+                return .avatar(initiator)
             } else {
-                return CallInfoViewControllerAccessoryType.avatar(ZMUser.selfUser())
+                return .none
             }
-        default:
-            return CallInfoViewControllerAccessoryType.avatar(voiceChannel.initiator ?? ZMUser.selfUser())
+        case .answered, .establishedDataChannel, .outgoing:
+            if voiceChannel.conversation?.conversationType == .oneOnOne, let remoteParticipant = voiceChannel.conversation?.firstActiveParticipantOtherThanSelf() {
+                return .avatar(remoteParticipant)
+            } else {
+                return .none
+            }
+        case .unknown, .none, .terminating, .established:
+            if voiceChannel.conversation?.conversationType == .group {
+                let participants = voiceChannel.participants.flatMap({ $0 as? ZMUser }).map({ user in
+                    CallParticipantsCellConfiguration.callParticipant(user: user, sendsVideo: false)
+                })
+                
+                return .participantsList(participants)
+            } else if let remoteParticipant = voiceChannel.conversation?.firstActiveParticipantOtherThanSelf() {
+                return .avatar(remoteParticipant)
+            } else {
+                return .none
+            }
         }
-        
     }
     
     var canToggleMediaType: Bool {

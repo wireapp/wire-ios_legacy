@@ -21,7 +21,7 @@ import Foundation
 class CallParticipantsViewController: UIViewController, UICollectionViewDelegateFlowLayout {
     
     let cellHeight: CGFloat = 56
-    var viewModel: CallParticipantsViewModel {
+    var participants: CallParticipantsList {
         didSet {
             updateRows()
         }
@@ -36,8 +36,8 @@ class CallParticipantsViewController: UIViewController, UICollectionViewDelegate
         }
     }
     
-    init(viewModel: CallParticipantsViewModel, allowsScrolling: Bool) {
-        self.viewModel = viewModel
+    init(participants: CallParticipantsList, allowsScrolling: Bool) {
+        self.participants = participants
         self.allowsScrolling = allowsScrolling
         super.init(nibName: nil, bundle: nil)
     }
@@ -91,16 +91,16 @@ class CallParticipantsViewController: UIViewController, UICollectionViewDelegate
         collectionView.rows = computeVisibleRows()
     }
 
-    func computeVisibleRows() -> [CallParticipantsCellConfiguration] {
-        guard !allowsScrolling else { return viewModel.rows }
+    func computeVisibleRows() -> CallParticipantsList {
+        guard !allowsScrolling else { return participants }
         
         let visibleRows = Int(collectionView.bounds.height / cellHeight)
         guard visibleRows > 0 else { return [] }
         
-        if viewModel.rows.count > visibleRows {
-            return viewModel.rows[0..<(visibleRows - 1)] + [.showAll(totalCount: viewModel.rows.count)]
+        if participants.count > visibleRows {
+            return participants[0..<(visibleRows - 1)] + [.showAll(totalCount: participants.count)]
         } else {
-            return viewModel.rows
+            return participants
         }
     }
     
