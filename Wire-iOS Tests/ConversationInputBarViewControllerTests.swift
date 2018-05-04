@@ -47,6 +47,7 @@ final class ConversationInputBarViewControllerTests: ZMSnapshotTestCase {
         super.setUp()
 
         sut = ConversationInputBarViewController(conversation: nil)
+        sut.view.layoutIfNeeded()
 
         recordMode = true
     }
@@ -55,16 +56,34 @@ final class ConversationInputBarViewControllerTests: ZMSnapshotTestCase {
         self.verifyInAllPhoneWidths(view: sut.view)
     }
 
-    func testAudioRecorder(){
+    func testAudioRecorderTouchBegan(){
         // GIVEN
         sut.viewDidLoad()
         sut.createAudioRecord()
+        sut.view.layoutIfNeeded()
 
         // WHEN
         let mockLongPressGestureRecognizer = MockLongPressGestureRecognizer(location: .zero, state: .began)
         sut.audioButtonLongPressed(mockLongPressGestureRecognizer)
+        sut.view.layoutIfNeeded()
 
         // THEN
-        self.verifyInIPhoneSize(view: sut.view)
+        self.verifyInAllPhoneWidths(view: sut.view)
+    }
+
+    func testAudioRecorderTouchEnded(){
+        // GIVEN
+        sut.viewDidLoad()
+        sut.createAudioRecord()
+        sut.view.layoutIfNeeded()
+
+        // WHEN
+        sut.audioButtonLongPressed(MockLongPressGestureRecognizer(location: .zero, state: .began))
+        let mockLongPressGestureRecognizer = MockLongPressGestureRecognizer(location: .zero, state: .ended)
+        sut.audioButtonLongPressed(mockLongPressGestureRecognizer)
+        sut.view.layoutIfNeeded()
+
+        // THEN
+        self.verifyInAllPhoneWidths(view: sut.view)
     }
 }
