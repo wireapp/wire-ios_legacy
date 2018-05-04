@@ -26,13 +26,8 @@ class ActiveVoiceChannelViewController : UIViewController {
     var callStateObserverToken : Any?
     var answeredCalls: [UUID: Date] = [:]
     
-    deinit {
-        visibleVoiceChannelViewController?.stopCallDurationTimer()
-    }
-    
-    var visibleVoiceChannelViewController : VoiceChannelViewController? {
+    var visibleVoiceChannelViewController : CallViewController? {
         didSet {
-            oldValue?.stopCallDurationTimer()
             transition(to: visibleVoiceChannelViewController, from: oldValue)
         }
     }
@@ -69,14 +64,14 @@ class ActiveVoiceChannelViewController : UIViewController {
             return
         }
         
-        if let conversation = conversation {
-            visibleVoiceChannelViewController = VoiceChannelViewController(conversation: conversation)
+        if let voiceChannel = conversation?.voiceChannel {
+            visibleVoiceChannelViewController = CallViewController(voiceChannel: voiceChannel)
         } else {
             visibleVoiceChannelViewController = nil
         }
     }
     
-    func transition(to : VoiceChannelViewController?, from : VoiceChannelViewController?) {
+    func transition(to : CallViewController?, from : CallViewController?) {
         guard to != from else { return }
         
         zmLog.debug(String(format: "transitioning to VoiceChannelViewController: %p from: %p", to ?? 0, from ?? 0))
@@ -106,22 +101,18 @@ class ActiveVoiceChannelViewController : UIViewController {
             toViewController.view.autoresizingMask = [.flexibleHeight, .flexibleWidth]
             view.addSubview(toViewController.view)
             
-            let visualEffect = toViewController.blurEffectView.effect
-            toViewController.blurEffectView.effect = nil
-            toViewController.voiceChannelView.alpha = 0
+            toViewController.view.alpha = 0
             
-            UIView.animate(withDuration: 0.35, animations: { 
-                toViewController.blurEffectView.effect = visualEffect
-                toViewController.voiceChannelView.alpha = 1
+            UIView.animate(withDuration: 0.35, animations: {
+                toViewController.view.alpha = 1
             }, completion: { (finished) in
                 toViewController.didMove(toParentViewController: self)
             })
         } else if let fromViewController = from {
             fromViewController.willMove(toParentViewController: nil)
             
-            UIView.animate(withDuration: 0.35, animations: { 
-                fromViewController.blurEffectView.effect = nil
-                fromViewController.voiceChannelView.alpha = 0
+            UIView.animate(withDuration: 0.35, animations: {
+                fromViewController.view.alpha = 0
             }, completion: { (finished) in
                 fromViewController.view.removeFromSuperview()
                 fromViewController.removeFromParentViewController()
