@@ -71,6 +71,22 @@ final class ConversationInputBarViewControllerTests: ZMSnapshotTestCase {
         self.verifyInAllPhoneWidths(view: sut.view)
     }
 
+    func testAudioRecorderTouchChanged(){
+        // GIVEN
+        sut.viewDidLoad()
+        sut.createAudioRecord()
+        sut.view.layoutIfNeeded()
+
+        // WHEN
+        sut.audioButtonLongPressed(MockLongPressGestureRecognizer(location: .zero, state: .began))
+        let mockLongPressGestureRecognizer = MockLongPressGestureRecognizer(location: CGPoint(x: 0, y: 30), state: .changed)
+        sut.audioButtonLongPressed(mockLongPressGestureRecognizer)
+        sut.view.layoutIfNeeded()
+
+        // THEN
+        self.verifyInAllPhoneWidths(view: sut.view)
+    }
+
     func testAudioRecorderTouchEnded(){
         // GIVEN
         sut.viewDidLoad()
