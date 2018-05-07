@@ -64,6 +64,7 @@ class CallParticipantsViewController: UIViewController, UICollectionViewDelegate
     }
     
     private func setupViews() {
+        title = "call.participants.list.title".localized.uppercased()
         let collectionViewLayout = UICollectionViewFlowLayout()
         collectionViewLayout.scrollDirection = .vertical
         collectionViewLayout.minimumInteritemSpacing = 12
@@ -114,7 +115,7 @@ class CallParticipantsViewController: UIViewController, UICollectionViewDelegate
         return CGSize(width: collectionView.bounds.size.width, height: cellHeight)
     }
     
-    func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
+    func collectionView(_ collectionView: UICollectionView, shouldHighlightItemAt indexPath: IndexPath) -> Bool {
         guard case .showAll = self.collectionView.rows[indexPath.item] else { return false }
         return true
     }
@@ -125,7 +126,7 @@ class CallParticipantsViewController: UIViewController, UICollectionViewDelegate
     }
     
     private func updateAppearance() {
-        collectionView.colorSchemeVariant = variant
+        collectionView?.colorSchemeVariant = variant
     }
-    
+
 }
