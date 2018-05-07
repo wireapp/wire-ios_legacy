@@ -42,7 +42,7 @@ enum MediaState {
 }
 
 // This protocol describes the input for a `CallActionsView`.
-protocol CallActionsViewInputType: CallTypeProvider {
+protocol CallActionsViewInputType: CallTypeProvider, ColorVariantProvider {
     var canToggleMediaType: Bool { get }
     var isMuted: Bool { get }
     var isTerminating: Bool { get }
@@ -51,7 +51,7 @@ protocol CallActionsViewInputType: CallTypeProvider {
 }
 
 extension CallActionsViewInputType {
-    func appearance(with variant: ColorSchemeVariant) -> CallActionAppearance {
+    var appearance: CallActionAppearance {
         guard !isVideoCall else { return .dark }
         return variant == .light ? .light : .dark
     }
@@ -64,12 +64,6 @@ final class CallActionsView: UIView {
     weak var delegate: CallActionsViewDelegate?
     
     var isCompact = false {
-        didSet {
-            lastInput.apply(update)
-        }
-    }
-
-    var variant: ColorSchemeVariant = .light {
         didSet {
             lastInput.apply(update)
         }
@@ -147,7 +141,7 @@ final class CallActionsView: UIView {
         firstBottomRowSpacer.isHidden = input.canAccept || isCompact
         secondBottomRowSpacer.isHidden = isCompact
         verticalStackView.axis = isCompact ? .horizontal : .vertical
-        [muteCallButton, videoButton, flipCameraButton, speakerButton].forEach { $0.appearance = input.appearance(with: variant) }
+        [muteCallButton, videoButton, flipCameraButton, speakerButton].forEach { $0.appearance = input.appearance }
         alpha = input.isTerminating ? 0.4 : 1
         isUserInteractionEnabled = !input.isTerminating
         lastInput = input
