@@ -130,10 +130,7 @@ public final class InputBarButtonsView: UIView {
         // Drop existing constraints
         buttons.forEach {
             $0.removeFromSuperview()
-            $0.frame = .zero
-//            $0.hitAreaPadding = .zero
             buttonInnerContainer.addSubview($0)
-//            NSLayoutConstraint.deactivate($0.constraints)
         }
 
         let numberOfButtons = Int(floorf(Float(bounds.width / minButtonWidth)))
