@@ -132,7 +132,7 @@ extension CallInfoConfiguration: CallInfoViewControllerInput {
         guard !voiceChannel.isVideoCall else { return .none }
         
         switch voiceChannel.state {
-        case .incoming:
+        case .incoming(_, shouldRing: true, _):
             if let initiator = voiceChannel.initiator {
                 return .avatar(initiator)
             } else {
@@ -144,7 +144,7 @@ extension CallInfoConfiguration: CallInfoViewControllerInput {
             } else {
                 return .none
             }
-        case .unknown, .none, .terminating, .established:
+        case .unknown, .none, .terminating, .established, .incoming(_, shouldRing: false, _):
             if voiceChannel.conversation?.conversationType == .group {
                 let participants = voiceChannel.participants.flatMap({ $0 as? ZMUser }).map({ user in
                     CallParticipantsCellConfiguration.callParticipant(user: user, sendsVideo: false)

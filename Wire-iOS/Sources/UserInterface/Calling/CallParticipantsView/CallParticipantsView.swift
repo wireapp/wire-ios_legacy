@@ -113,6 +113,7 @@ extension UserCell: CallParticipantsCellConfigurationConfigurable {
         guard case let .callParticipant(user, _) = configuration else { preconditionFailure() }
         colorSchemeVariant = variant
         contentBackgroundColor = .clear
+        hidesSubtitle = true
         configure(with: user)
         accessoryIconView.isHidden = true
     }
