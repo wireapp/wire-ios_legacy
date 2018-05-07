@@ -92,6 +92,8 @@ extension CallViewController: CallInfoViewControllerDelegate {
         default:
             break
         }
+        
+        callInfoViewController.configuration = callInfoConfiguration
     }
     
 }

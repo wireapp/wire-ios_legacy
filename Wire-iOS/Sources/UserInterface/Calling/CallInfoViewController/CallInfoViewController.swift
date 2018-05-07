@@ -36,14 +36,13 @@ fileprivate extension CallInfoViewControllerInput {
     }
 }
 
-final class CallInfoViewController: UIViewController, CallActionsViewDelegate {
+final class CallInfoViewController: UIViewController, CallActionsViewDelegate, CallParticipantsViewControllerDelegate {
     
     weak var delegate: CallInfoViewControllerDelegate?
 
     private let stackView = UIStackView(axis: .vertical)
     private let statusViewController: CallStatusViewController
-    private let participantsViewController: CallParticipantsViewController
-    private let avatarView = UserImageViewContainer(size: .big, maxSize: 240, yOffset: -8)
+    private let accessoryViewController: CallAccessoryViewController
     private let actionsView = CallActionsView()
     
     var configuration: CallInfoViewControllerInput {
@@ -55,7 +54,7 @@ final class CallInfoViewController: UIViewController, CallActionsViewDelegate {
     init(configuration: CallInfoViewControllerInput) {
         self.configuration = configuration        
         statusViewController = CallStatusViewController(configuration: configuration)
-        participantsViewController = CallParticipantsViewController(participants: configuration.accessoryType.participants, allowsScrolling: false)
+        accessoryViewController = CallAccessoryViewController(configuration: configuration)
         super.init(nibName: nil, bundle: nil)
         actionsView.delegate = self
     }
@@ -84,7 +83,7 @@ final class CallInfoViewController: UIViewController, CallActionsViewDelegate {
         stackView.spacing = 40
 
         addChildViewController(statusViewController)
-        [statusViewController.view, avatarView, participantsViewController.view, actionsView].forEach(stackView.addArrangedSubview)
+        [statusViewController.view, accessoryViewController.view, actionsView].forEach(stackView.addArrangedSubview)
         statusViewController.didMove(toParentViewController: self)
     }
 
@@ -98,7 +97,7 @@ final class CallInfoViewController: UIViewController, CallActionsViewDelegate {
             actionsView.heightAnchor.constraint(greaterThanOrEqualToConstant: 173),
             actionsView.leadingAnchor.constraint(greaterThanOrEqualTo: view.leadingAnchor, constant: 32),
             actionsView.trailingAnchor.constraint(lessThanOrEqualTo: view.trailingAnchor, constant: -32),
-            participantsViewController.view.widthAnchor.constraint(equalTo: view.widthAnchor)
+            accessoryViewController.view.widthAnchor.constraint(equalTo: view.widthAnchor)
         ])
     }
 
@@ -106,27 +105,23 @@ final class CallInfoViewController: UIViewController, CallActionsViewDelegate {
         Calling.log.debug("updating calling info controller with state: \(configuration)")
         actionsView.update(with: configuration)
         statusViewController.configuration = configuration
-        
-        switch configuration.accessoryType {
-        case .avatar(let user):
-            avatarView.user = user
-        case .participantsList(let participants):
-            participantsViewController.participants = participants
-        case .none:
-            break
-        }
-        
-        avatarView.isHidden = !configuration.accessoryType.showAvatar
-        participantsViewController.view.isHidden = !configuration.accessoryType.showParticipantList
-        participantsViewController.variant = configuration.effectiveColorVariant
+        accessoryViewController.configuration = configuration
         
         UIView.animate(withDuration: 0.2) { [view, configuration] in
             view?.backgroundColor = configuration.overlayBackgroundColor
         }
     }
+    
+    // MARK: - Actions + Delegates
 
     func callActionsView(_ callActionsView: CallActionsView, perform action: CallAction) {
         Calling.log.debug("\(action) button tapped")
         delegate?.infoViewController(self, perform: action)
+    }
+    
+    func callParticipantsViewControllerDidSelectShowMore(viewController: CallParticipantsViewController) {
+        Calling.log.debug("Show more participants tapped")
+        // TODO: Do we need this or should we directly push the new controller?
+        delegate?.infoViewController(self, perform: .showParticipantsList)
     }
 }

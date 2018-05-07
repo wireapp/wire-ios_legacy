@@ -18,9 +18,15 @@
 
 import Foundation
 
+protocol CallParticipantsViewControllerDelegate: class {
+    func callParticipantsViewControllerDidSelectShowMore(viewController: CallParticipantsViewController)
+}
+
 class CallParticipantsViewController: UIViewController, UICollectionViewDelegateFlowLayout {
     
-    let cellHeight: CGFloat = 56
+    private let cellHeight: CGFloat = 56
+    weak var delegate: CallParticipantsViewControllerDelegate?
+    
     var participants: CallParticipantsList {
         didSet {
             updateRows()
@@ -63,7 +69,7 @@ class CallParticipantsViewController: UIViewController, UICollectionViewDelegate
         collectionViewLayout.minimumInteritemSpacing = 12
         collectionViewLayout.minimumLineSpacing = 0
         
-        let collectionView = CallParticipantsView(frame: CGRect.zero, collectionViewLayout: collectionViewLayout)
+        let collectionView = CallParticipantsView(frame: .zero, collectionViewLayout: collectionViewLayout)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.bounces = allowsScrolling
         collectionView.delegate = self
@@ -88,7 +94,7 @@ class CallParticipantsViewController: UIViewController, UICollectionViewDelegate
     }
 
     private func updateRows() {
-        collectionView.rows = computeVisibleRows()
+        collectionView?.rows = computeVisibleRows()
     }
 
     func computeVisibleRows() -> CallParticipantsList {
@@ -106,6 +112,16 @@ class CallParticipantsViewController: UIViewController, UICollectionViewDelegate
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: collectionView.bounds.size.width, height: cellHeight)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
+        guard case .showAll = self.collectionView.rows[indexPath.item] else { return false }
+        return true
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        collectionView.deselectItem(at: indexPath, animated: true)
+        delegate?.callParticipantsViewControllerDidSelectShowMore(viewController: self)
     }
     
     private func updateAppearance() {

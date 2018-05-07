@@ -293,5 +293,27 @@ final class CallInfoViewControllerTests: CoreDataSnapshotTestCase {
         // Then
         verifyInAllIPhoneSizes(view: sut.view)
     }
+    
+    func testCallInfoViewController_Audio_NoCBR_NoAccessoryView_SpeakerEnabled() {
+        // Given
+        sut.configuration = MockCallInfoViewControllerInput(
+            accessoryType: .none,
+            canToggleMediaType: true,
+            isMuted: false,
+            isTerminating: false,
+            canAccept: true,
+            mediaState: .notSendingVideo(speakerEnabled: true),
+            state: .established(duration: 102),
+            isConstantBitRate: false,
+            title: "Delaney Winston",
+            isVideoCall: false,
+            variant: .light
+        )
+        sut.beginAppearanceTransition(true, animated: false)
+        sut.endAppearanceTransition()
+        
+        // Then
+        verifyInAllIPhoneSizes(view: sut.view)
+    }
 
 }

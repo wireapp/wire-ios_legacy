@@ -890,6 +890,7 @@
 		BFE41871209C8AFD00503C7C /* CallInfoConfiguration+Debug.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFE41870209C8AFD00503C7C /* CallInfoConfiguration+Debug.swift */; };
 		BFE49C321C0F39590061C16F /* NSString+FingerprintTests.m in Sources */ = {isa = PBXBuildFile; fileRef = BFE49C311C0F39580061C16F /* NSString+FingerprintTests.m */; };
 		BFE57B4B1D52335A00CB0806 /* ConversationPreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFE57B4A1D52335A00CB0806 /* ConversationPreviewViewController.swift */; };
+		BFE65AB320A047EB00689063 /* CallAccessoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFE65AB220A047EB00689063 /* CallAccessoryViewController.swift */; };
 		BFEA26591D410F9F000D0ED5 /* audio_sample.m4a in Resources */ = {isa = PBXBuildFile; fileRef = BFEA26581D410F9F000D0ED5 /* audio_sample.m4a */; };
 		BFF655741E81235900D48337 /* ConversationAvatarViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFF655731E81235900D48337 /* ConversationAvatarViewTests.swift */; };
 		BFFD439E1DE47FFA00505C8C /* UIView+RightToLeft.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFFD439D1DE47FFA00505C8C /* UIView+RightToLeft.swift */; };
@@ -2495,6 +2496,7 @@
 		BFE49C311C0F39580061C16F /* NSString+FingerprintTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+FingerprintTests.m"; sourceTree = "<group>"; };
 		BFE57B451D51FDE800CB0806 /* ImageMessageCell+Internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ImageMessageCell+Internal.h"; sourceTree = "<group>"; };
 		BFE57B4A1D52335A00CB0806 /* ConversationPreviewViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConversationPreviewViewController.swift; sourceTree = "<group>"; };
+		BFE65AB220A047EB00689063 /* CallAccessoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallAccessoryViewController.swift; sourceTree = "<group>"; };
 		BFEA26581D410F9F000D0ED5 /* audio_sample.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = audio_sample.m4a; sourceTree = "<group>"; };
 		BFF655731E81235900D48337 /* ConversationAvatarViewTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConversationAvatarViewTests.swift; sourceTree = "<group>"; };
 		BFFD439D1DE47FFA00505C8C /* UIView+RightToLeft.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+RightToLeft.swift"; sourceTree = "<group>"; };
@@ -5292,8 +5294,9 @@
 			isa = PBXGroup;
 			children = (
 				BFC0673C2099DD7D00204179 /* CallInfoViewController.swift */,
-				BFE4186E209B706600503C7C /* CallInfoViewControllerAccessoryType.swift */,
+				BFE65AB220A047EB00689063 /* CallAccessoryViewController.swift */,
 				BFE41869209B6E3700503C7C /* UserImageViewContainer.swift */,
+				BFE4186E209B706600503C7C /* CallInfoViewControllerAccessoryType.swift */,
 				BFE4186C209B6FFA00503C7C /* CallAction.swift */,
 			);
 			path = CallInfoViewController;
@@ -6958,6 +6961,7 @@
 				87D56DFA1E0046FE00DFF722 /* CollectionImageCell.swift in Sources */,
 				EF2127151FB9DFE300625A9B /* NameStepViewController.m in Sources */,
 				EF25F7DE1FC45F8E0040C3CC /* AccessoryTextField.swift in Sources */,
+				BFE65AB320A047EB00689063 /* CallAccessoryViewController.swift in Sources */,
 				8759E2C31FC82BDF008E17C9 /* AnalyticsTracker+Registration.swift in Sources */,
 				871BC28D1D34F8F800DF0793 /* UITableView+RowCount.m in Sources */,
 				87F18BC21E02E4B600C69D9B /* CollectionVideoCell.swift in Sources */,
