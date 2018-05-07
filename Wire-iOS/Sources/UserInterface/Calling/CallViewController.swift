@@ -18,12 +18,14 @@
 
 import Foundation
 
-class CallViewController: UIViewController {
+final class CallViewController: UIViewController {
     
-    var observerTokens: [Any] = []
-    let voiceChannel: VoiceChannel
-    let callInfoConfiguration: CallInfoConfiguration
-    let callInfoRootViewController: CallInfoRootViewController
+    private var observerTokens: [Any] = []
+    fileprivate let voiceChannel: VoiceChannel
+    private let videoConfiguration: VideoConfiguration
+    private let callInfoConfiguration: CallInfoConfiguration
+    private let callInfoRootViewController: CallInfoRootViewController
+    private let videoGridViewController: VideoGridViewController
     weak var dismisser: ViewControllerDismisser? = nil
     
     var conversation: ZMConversation? {
@@ -32,11 +34,16 @@ class CallViewController: UIViewController {
     
     init(voiceChannel: VoiceChannel) {
         self.voiceChannel = voiceChannel
+        videoConfiguration = VideoConfiguration(voiceChannel: voiceChannel)
         callInfoConfiguration = CallInfoConfiguration(voiceChannel: voiceChannel)
         callInfoRootViewController = CallInfoRootViewController(configuration: callInfoConfiguration)
+        videoGridViewController = VideoGridViewController(configuration: videoConfiguration)
+        
         super.init(nibName: nil, bundle: nil)
+
         callInfoRootViewController.delegate = self
         observerTokens += [voiceChannel.addCallStateObserver(self)]
+        observerTokens += [voiceChannel.addParticipantObserver(self)]
     }
     
     override func viewDidLoad() {
@@ -45,6 +52,10 @@ class CallViewController: UIViewController {
     }
     
     private func setupViews() {
+        addChildViewController(videoGridViewController)
+        view.addSubview(videoGridViewController.view)
+        videoGridViewController.didMove(toParentViewController: self)
+        
         addChildViewController(callInfoRootViewController)
         view.addSubview(callInfoRootViewController.view)
         callInfoRootViewController.didMove(toParentViewController: self)
@@ -56,6 +67,10 @@ class CallViewController: UIViewController {
             callInfoRootViewController.view.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             callInfoRootViewController.view.topAnchor.constraint(equalTo: view.topAnchor),
             callInfoRootViewController.view.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            videoGridViewController.view.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            videoGridViewController.view.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            videoGridViewController.view.topAnchor.constraint(equalTo: view.topAnchor),
+            videoGridViewController.view.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
     }
     
@@ -69,6 +84,7 @@ class CallViewController: UIViewController {
     
     fileprivate func updateConfiguration() {
         callInfoRootViewController.configuration = callInfoConfiguration
+        videoGridViewController.configuration = videoConfiguration
     }
     
 }
@@ -76,6 +92,14 @@ class CallViewController: UIViewController {
 extension CallViewController: WireCallCenterCallStateObserver {
     
     func callCenterDidChange(callState: CallState, conversation: ZMConversation, caller: ZMUser, timestamp: Date?) {
+        updateConfiguration()
+    }
+    
+}
+
+extension CallViewController: VoiceChannelParticipantObserver {
+    
+    func voiceChannelParticipantsDidChange(_ changeInfo: VoiceChannelParticipantNotification) {
         updateConfiguration()
     }
     
@@ -105,6 +129,34 @@ extension VoiceChannel {
     func toggleMuteState(userSession: ZMUserSession) {
         mute(!AVSMediaManager.sharedInstance().isMicrophoneMuted, userSession: userSession)
     }
+}
+
+struct VideoConfiguration {
+    
+    let voiceChannel: VoiceChannel
+    
+}
+
+extension VideoConfiguration: VideoGridConfiguration {
+    
+    var floatingVideoStream: UUID? {
+        return nil
+    }
+    
+    var videoStreams: [UUID] {
+        let otherParticipants: [UUID] = voiceChannel.participants.flatMap({ user in
+            guard let user = user as? ZMUser else { return nil }
+            
+            if case .connected(.started) = voiceChannel.state(forParticipant: user) {
+                return user.remoteIdentifier
+            }
+            
+            return nil
+        })
+        
+        return [ZMUser.selfUser().remoteIdentifier] + otherParticipants
+    }
+    
 }
 
 struct CallInfoConfiguration  {
