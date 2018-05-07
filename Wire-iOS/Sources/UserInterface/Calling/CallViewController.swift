@@ -186,7 +186,7 @@ extension CallInfoConfiguration: CallInfoViewControllerInput {
     
     var state: CallStatusViewState {
         switch voiceChannel.state {
-        case .incoming:
+        case .incoming(_ , shouldRing: true, _):
             return CallStatusViewState.ringingIncoming(name: voiceChannel.initiator?.displayName ?? "")
         case .outgoing:
             return CallStatusViewState.ringingOutgoing
@@ -194,8 +194,8 @@ extension CallInfoConfiguration: CallInfoViewControllerInput {
             return CallStatusViewState.connecting
         case .established:
             return CallStatusViewState.established(duration: -(voiceChannel.callStartDate?.timeIntervalSinceNow ?? 0))
-        case .terminating:
-            return CallStatusViewState.terminating
+        case .terminating, .incoming(_ , shouldRing: false, _):
+            return .terminating
         case .none, .unknown:
             return CallStatusViewState.none
         }
