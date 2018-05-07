@@ -43,7 +43,7 @@ class ActiveVoiceChannelViewController : UIViewController {
         }
     }
     
-    var visibleVoiceChannelTopOverlayVoiceController: VoiceChannelTopOverlayController? {
+    var visibleVoiceChannelTopOverlayVoiceController: CallTopOverlayController? {
         didSet {
             visibleVoiceChannelTopOverlayVoiceController?.delegate = self
             ZClientViewController.shared()?.setTopOverlay(to: visibleVoiceChannelTopOverlayVoiceController)
@@ -86,7 +86,7 @@ class ActiveVoiceChannelViewController : UIViewController {
                 }
                 
                 visibleVoiceChannelViewController = nil
-                visibleVoiceChannelTopOverlayVoiceController = VoiceChannelTopOverlayController(conversation: conversation)
+                visibleVoiceChannelTopOverlayVoiceController = CallTopOverlayController(conversation: conversation)
             }
             else {
                 if let voiceChannel = conversation.voiceChannel {
@@ -307,8 +307,8 @@ extension ActiveVoiceChannelViewController: VoiceChannelViewControllerDelegate {
     }
 }
 
-extension ActiveVoiceChannelViewController: VoiceChannelTopOverlayControllerDelegate {
-    func voiceChannelTopOverlayWantsToRestoreCall(_ controller: VoiceChannelTopOverlayController) {
+extension ActiveVoiceChannelViewController: CallTopOverlayControllerDelegate {
+    func voiceChannelTopOverlayWantsToRestoreCall(_ controller: CallTopOverlayController) {
         minimisedCall = nil
     }
 }

@@ -19,8 +19,8 @@
 
 import Foundation
 
-protocol VoiceChannelTopOverlayControllerDelegate: class {
-    func voiceChannelTopOverlayWantsToRestoreCall(_ controller: VoiceChannelTopOverlayController)
+protocol CallTopOverlayControllerDelegate: class {
+    func voiceChannelTopOverlayWantsToRestoreCall(_ controller: CallTopOverlayController)
 }
 
 extension CallState: CustomStringConvertible {
@@ -40,7 +40,7 @@ extension CallState: CustomStringConvertible {
     }
 }
 
-final class VoiceChannelTopOverlayController: UIViewController {
+final class CallTopOverlayController: UIViewController {
     private let durationLabel = UILabel()
     private let interactiveView = UIView()
     private var tapGestureRecognizer: UITapGestureRecognizer!
@@ -49,7 +49,7 @@ final class VoiceChannelTopOverlayController: UIViewController {
     private let callDurationFormatter = DateComponentsFormatter()
     
     let conversation: ZMConversation
-    weak var delegate: VoiceChannelTopOverlayControllerDelegate? = nil
+    weak var delegate: CallTopOverlayControllerDelegate? = nil
     
     private var callDuration: TimeInterval = 0 {
         didSet {
@@ -186,7 +186,7 @@ final class VoiceChannelTopOverlayController: UIViewController {
     }
 }
 
-extension VoiceChannelTopOverlayController: WireCallCenterCallStateObserver {
+extension CallTopOverlayController: WireCallCenterCallStateObserver {
     func callCenterDidChange(callState: CallState, conversation: ZMConversation, caller: ZMUser, timestamp: Date?) {
         updateCallDurationTimer(for: callState)
     }
