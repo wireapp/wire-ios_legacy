@@ -26,16 +26,6 @@ protocol CallInfoViewControllerInput: CallActionsViewInputType, CallStatusViewIn
     var accessoryType: CallInfoViewControllerAccessoryType { get }
 }
 
-extension CallInfoViewControllerInput {
-    var overlayBackgroundColor: UIColor {
-        switch (isVideoCall, state) {
-        case (false, _): return .wr_color(fromColorScheme: ColorSchemeColorBackground, variant: variant)
-        case (true, .ringingOutgoing), (true, .ringingIncoming): return UIColor.black.withAlphaComponent(0.4)
-        case (true, _): return UIColor.black.withAlphaComponent(0.64)
-        }
-    }
-}
-
 final class CallInfoViewController: UIViewController, CallActionsViewDelegate, CallAccessoryViewControllerDelegate {
     
     weak var delegate: CallInfoViewControllerDelegate?
@@ -47,7 +37,7 @@ final class CallInfoViewController: UIViewController, CallActionsViewDelegate, C
     
     var configuration: CallInfoViewControllerInput {
         didSet {
-            updateState(animated: true)
+            updateState()
         }
     }
 
@@ -69,6 +59,7 @@ final class CallInfoViewController: UIViewController, CallActionsViewDelegate, C
         super.viewDidLoad()
         setupViews()
         createConstraints()
+        updateNavigationItem()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -101,19 +92,27 @@ final class CallInfoViewController: UIViewController, CallActionsViewDelegate, C
             accessoryViewController.view.widthAnchor.constraint(equalTo: view.widthAnchor)
         ])
     }
+    
+    private func updateNavigationItem() {
+     navigationItem.leftBarButtonItem = UIBarButtonItem(
+        icon: .downArrow,
+        target: self,
+        action: #selector(minimizeCallOverlay)
+        )
+    }
 
-    private func updateState(animated: Bool = false) {
+    private func updateState() {
         Calling.log.debug("updating info controller with state: \(configuration)")
         actionsView.update(with: configuration)
         statusViewController.configuration = configuration
         accessoryViewController.configuration = configuration
-        
-        UIView.animate(withDuration: 0.2) { [view, configuration] in
-            view?.backgroundColor = configuration.overlayBackgroundColor
-        }
     }
     
     // MARK: - Actions + Delegates
+    
+    func minimizeCallOverlay(_ sender: UIBarButtonItem) {
+        delegate?.infoViewController(self, perform: .minimizeOverlay)
+    }
 
     func callActionsView(_ callActionsView: CallActionsView, perform action: CallAction) {
         delegate?.infoViewController(self, perform: action)

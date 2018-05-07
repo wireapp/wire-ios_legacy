@@ -24,5 +24,6 @@ enum CallAction {
     case acceptCall
     case terminateCall
     case flipCamera
+    case minimizeOverlay
     case showParticipantsList
 }

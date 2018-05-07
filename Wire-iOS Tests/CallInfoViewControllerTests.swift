@@ -40,7 +40,6 @@ final class CallInfoViewControllerTests: CoreDataSnapshotTestCase {
     
     override func setUp() {
         super.setUp()
-
         input = MockCallInfoViewControllerInput(
             accessoryType: .avatar(otherUser),
             canToggleMediaType: true,
@@ -55,6 +54,7 @@ final class CallInfoViewControllerTests: CoreDataSnapshotTestCase {
             variant: .light
         )
         
+        snapshotBackgroundColor = input.overlayBackgroundColor
         sut = CallInfoViewController(configuration: input)
     }
     
@@ -68,6 +68,7 @@ final class CallInfoViewControllerTests: CoreDataSnapshotTestCase {
         // Given
         sut.beginAppearanceTransition(true, animated: false)
         sut.endAppearanceTransition()
+        snapshotBackgroundColor = input.overlayBackgroundColor
         
         // Then
         verifyInAllIPhoneSizes(view: sut.view)
@@ -78,6 +79,7 @@ final class CallInfoViewControllerTests: CoreDataSnapshotTestCase {
         // Given
         sut.beginAppearanceTransition(true, animated: false)
         sut.endAppearanceTransition()
+        snapshotBackgroundColor = input.overlayBackgroundColor
         
         // Then
         verifySafeAreas(viewController: sut)
@@ -98,6 +100,7 @@ final class CallInfoViewControllerTests: CoreDataSnapshotTestCase {
             isVideoCall: false,
             variant: .light
         )
+        snapshotBackgroundColor = input.overlayBackgroundColor
         sut.beginAppearanceTransition(true, animated: false)
         sut.endAppearanceTransition()
         
@@ -122,6 +125,8 @@ final class CallInfoViewControllerTests: CoreDataSnapshotTestCase {
             isVideoCall: false,
             variant: .light
         )
+        
+        snapshotBackgroundColor = input.overlayBackgroundColor
         sut.beginAppearanceTransition(true, animated: false)
         sut.endAppearanceTransition()
         
@@ -146,6 +151,8 @@ final class CallInfoViewControllerTests: CoreDataSnapshotTestCase {
             isVideoCall: false,
             variant: .light
         )
+        
+        snapshotBackgroundColor = input.overlayBackgroundColor
         sut.beginAppearanceTransition(true, animated: false)
         sut.endAppearanceTransition()
         
@@ -170,6 +177,8 @@ final class CallInfoViewControllerTests: CoreDataSnapshotTestCase {
             isVideoCall: false,
             variant: .light
         )
+        
+        snapshotBackgroundColor = input.overlayBackgroundColor
         sut.beginAppearanceTransition(true, animated: false)
         sut.endAppearanceTransition()
         
@@ -193,6 +202,7 @@ final class CallInfoViewControllerTests: CoreDataSnapshotTestCase {
             variant: .light
         )
         
+        snapshotBackgroundColor = sut.configuration.overlayBackgroundColor
         sut.beginAppearanceTransition(true, animated: false)
         sut.endAppearanceTransition()
         
@@ -215,6 +225,8 @@ final class CallInfoViewControllerTests: CoreDataSnapshotTestCase {
             isVideoCall: true,
             variant: .light
         )
+        
+        snapshotBackgroundColor = sut.configuration.overlayBackgroundColor
         sut.beginAppearanceTransition(true, animated: false)
         sut.endAppearanceTransition()
         
@@ -239,6 +251,8 @@ final class CallInfoViewControllerTests: CoreDataSnapshotTestCase {
             isVideoCall: true,
             variant: .light
         )
+        
+        snapshotBackgroundColor = sut.configuration.overlayBackgroundColor
         sut.beginAppearanceTransition(true, animated: false)
         sut.endAppearanceTransition()
         
@@ -263,6 +277,8 @@ final class CallInfoViewControllerTests: CoreDataSnapshotTestCase {
             isVideoCall: true,
             variant: .light
         )
+        
+        snapshotBackgroundColor = sut.configuration.overlayBackgroundColor
         sut.beginAppearanceTransition(true, animated: false)
         sut.endAppearanceTransition()
         
@@ -287,6 +303,8 @@ final class CallInfoViewControllerTests: CoreDataSnapshotTestCase {
             isVideoCall: true,
             variant: .light
         )
+        
+        snapshotBackgroundColor = sut.configuration.overlayBackgroundColor
         sut.beginAppearanceTransition(true, animated: false)
         sut.endAppearanceTransition()
         
@@ -309,6 +327,8 @@ final class CallInfoViewControllerTests: CoreDataSnapshotTestCase {
             isVideoCall: false,
             variant: .light
         )
+        
+        snapshotBackgroundColor = input.overlayBackgroundColor
         sut.beginAppearanceTransition(true, animated: false)
         sut.endAppearanceTransition()
         

@@ -39,11 +39,10 @@ class ActiveVoiceChannelViewController : UIViewController {
         didSet {
             if let newController = visibleVoiceChannelViewController {
                 newController.dismisser = self
-                let navigationWrapper = newController.wrapInNavigationController()
-                transition(to: navigationWrapper, from: oldValue?.navigationController)
+                transition(to: newController, from: oldValue)
             }
             else {
-                transition(to: nil, from: oldValue?.navigationController)
+                transition(to: nil, from: oldValue)
             }
         }
     }
@@ -77,7 +76,7 @@ class ActiveVoiceChannelViewController : UIViewController {
     }
 
     override var prefersStatusBarHidden: Bool {
-        return true
+        return false
     }
     
     func updateVisibleVoiceChannelViewController() {
