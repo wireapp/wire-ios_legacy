@@ -193,7 +193,7 @@ open class CameraKeyboardViewController: UIViewController {
     }
     
     func openCameraRollPressed(_ sender: AnyObject) {
-        self.delegate?.cameraKeyboardViewControllerWantsToOpenCameraRoll(self)
+        self.delegate?.cameraKeyboardViewControllerWantsToOpenCameraRoll(self) ///TODO: sender
     }
     
     @objc func splitLayoutChanged(_ notification: Notification!) {

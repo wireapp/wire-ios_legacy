@@ -163,7 +163,17 @@ const NSTimeInterval ConversationUploadMaxVideoDuration = 4.0f * 60.0f; // 4 min
         pickerController.allowsEditing = allowsEditing;
         pickerController.mediaTypes = mediaTypes;
         pickerController.videoMaximumDuration = ConversationUploadMaxVideoDuration;
-        pickerController.transitioningDelegate = [FastTransitioningDelegate sharedDelegate];
+        if (IS_IPAD_FULLSCREEN) {
+            pickerController.modalPresentationStyle = UIModalPresentationPopover;
+            UIPopoverPresentationController *popover = pickerController.popoverPresentationController;
+            popover.sourceRect = CGRectInset([self.view bounds], 4, 4);
+            popover.sourceView = self.view;
+            popover.backgroundColor = UIColor.whiteColor;
+        }
+        else {
+            pickerController.transitioningDelegate = [FastTransitioningDelegate sharedDelegate];
+        }
+
         if (sourceType == UIImagePickerControllerSourceTypeCamera) {
             switch ([Settings sharedSettings].preferredCamera) {
                 case CameraControllerCameraBack:
@@ -174,6 +184,7 @@ const NSTimeInterval ConversationUploadMaxVideoDuration = 4.0f * 60.0f; // 4 min
                     break;
             }
         }
+
         [self.parentViewController presentViewController:pickerController animated:YES completion:nil];
     };
     
