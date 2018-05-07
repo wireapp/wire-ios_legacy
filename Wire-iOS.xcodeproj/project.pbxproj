@@ -885,8 +885,6 @@
 		BFE3FEEA209747D6003D9AB5 /* CallStatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFE3FEE9209747D6003D9AB5 /* CallStatusView.swift */; };
 		BFE3FEEC20975D1E003D9AB5 /* CallStatusViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFE3FEEB20975D1E003D9AB5 /* CallStatusViewTests.swift */; };
 		BFE4185D209B06D600503C7C /* AVSMediaManager+Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFE4185C209B06D600503C7C /* AVSMediaManager+Helper.swift */; };
-		BFE4185F209B0ECD00503C7C /* CallActionsViewInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFE4185E209B0ECD00503C7C /* CallActionsViewInput.swift */; };
-		BFE41861209B15D200503C7C /* CallState+Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFE41860209B15D200503C7C /* CallState+Helper.swift */; };
 		BFE41863209B15F800503C7C /* Calling+Logs.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFE41862209B15F800503C7C /* Calling+Logs.swift */; };
 		BFE41865209B1C1F00503C7C /* CallStatusViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFE41864209B1C1F00503C7C /* CallStatusViewController.swift */; };
 		BFE41868209B3CC100503C7C /* CallInfoViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFE41866209B3CBD00503C7C /* CallInfoViewControllerTests.swift */; };
@@ -2496,8 +2494,6 @@
 		BFE3FEE9209747D6003D9AB5 /* CallStatusView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallStatusView.swift; sourceTree = "<group>"; };
 		BFE3FEEB20975D1E003D9AB5 /* CallStatusViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallStatusViewTests.swift; sourceTree = "<group>"; };
 		BFE4185C209B06D600503C7C /* AVSMediaManager+Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AVSMediaManager+Helper.swift"; sourceTree = "<group>"; };
-		BFE4185E209B0ECD00503C7C /* CallActionsViewInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallActionsViewInput.swift; sourceTree = "<group>"; };
-		BFE41860209B15D200503C7C /* CallState+Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CallState+Helper.swift"; sourceTree = "<group>"; };
 		BFE41862209B15F800503C7C /* Calling+Logs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Calling+Logs.swift"; sourceTree = "<group>"; };
 		BFE41864209B1C1F00503C7C /* CallStatusViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallStatusViewController.swift; sourceTree = "<group>"; };
 		BFE41866209B3CBD00503C7C /* CallInfoViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallInfoViewControllerTests.swift; sourceTree = "<group>"; };
@@ -5370,7 +5366,6 @@
 				D58192032091E3B8003BA7EC /* CallActionsView */,
 				BFE4186B209B6E6900503C7C /* CallInfoViewController */,
 				BFE4185C209B06D600503C7C /* AVSMediaManager+Helper.swift */,
-				BFE41860209B15D200503C7C /* CallState+Helper.swift */,
 				BFE3FEE9209747D6003D9AB5 /* CallStatusView.swift */,
 				BFE41862209B15F800503C7C /* Calling+Logs.swift */,
 				D58191FF2091CEBF003BA7EC /* UIStackView+Helper.swift */,
@@ -5385,7 +5380,6 @@
 			children = (
 				D58191FC2091CAE8003BA7EC /* CallActionsView.swift */,
 				BFE41864209B1C1F00503C7C /* CallStatusViewController.swift */,
-				BFE4185E209B0ECD00503C7C /* CallActionsViewInput.swift */,
 				D525426C209363AF001C04C1 /* IconLabelButton.swift */,
 				D525426E209363DC001C04C1 /* CallActionAppearance.swift */,
 				D58192012091E2C0003BA7EC /* IconLabelButton+CallActions.swift */,
@@ -6633,7 +6627,6 @@
 				877ABB471E8118E300CBCF2B /* BackgroundViewController.swift in Sources */,
 				870815861BF4E76A00D321BC /* SettingsCell.swift in Sources */,
 				BFBB03061D5DF4CB0065AF4F /* InputBarButtonsView.swift in Sources */,
-				BFE4185F209B0ECD00503C7C /* CallActionsViewInput.swift in Sources */,
 				7C5836641FD5ABE7001CC843 /* AvailabilityTitleView.swift in Sources */,
 				163FB98F20514DB700E74F83 /* UIView+LayoutMargins.swift in Sources */,
 				D5CA8E572045718900D2F16E /* UINavigationController+CloseButton.swift in Sources */,
@@ -6669,7 +6662,6 @@
 				871BC2311D34F8F800DF0793 /* Guidance.m in Sources */,
 				16E2A09A1F6ADE75005F4DB1 /* ActiveVoiceChannelViewController.swift in Sources */,
 				871BC36A1D34F94200DF0793 /* YoutubeService.m in Sources */,
-				BFE41861209B15D200503C7C /* CallState+Helper.swift in Sources */,
 				CE2402811E0A992200665A91 /* AnalyticsConsoleProvider.swift in Sources */,
 				871BC28F1D34F8F800DF0793 /* UIView+Borders.m in Sources */,
 				D5168F562010F25000F8222A /* TokenField.m in Sources */,

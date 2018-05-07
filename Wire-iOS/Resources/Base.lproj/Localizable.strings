@@ -496,6 +496,7 @@
 "call.status.constant_bitrate" = "Constant Bit Rate";
 
 "call.participants.show_all" = "Show All (%@)";
+"call.participants.list.title" = "Participants";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Profile and Participants

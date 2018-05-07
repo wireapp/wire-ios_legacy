@@ -40,6 +40,8 @@ class UserCell: UICollectionViewCell, Themeable {
         case none, disclosure, connect
     }
     
+    var hidesSubtitle: Bool = false
+    
     let separator = UIView()
     let avatarSpacer = UIView()
     let avatar = BadgeUserImageView()
@@ -94,6 +96,7 @@ class UserCell: UICollectionViewCell, Themeable {
         super.prepareForReuse()
         
         UIView.performWithoutAnimation {
+            hidesSubtitle = false
             verifiedIconView.isHidden = true
             connectButton.isHidden = true
             accessoryIconView.isHidden = false
@@ -222,7 +225,7 @@ class UserCell: UICollectionViewCell, Themeable {
             verifiedIconView.isHidden  = true
         }
         
-        if let subtitle = subtitle(for: user), subtitle.length > 0 {
+        if let subtitle = subtitle(for: user), subtitle.length > 0, !hidesSubtitle {
             subtitleLabel.isHidden = false
             subtitleLabel.attributedText = subtitle
         } else {

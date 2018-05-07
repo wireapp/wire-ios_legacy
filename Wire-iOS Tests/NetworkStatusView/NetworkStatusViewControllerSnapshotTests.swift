@@ -39,7 +39,6 @@ final class NetworkStatusViewControllerSnapshotTests: ZMSnapshotTestCase {
 
     override func setUp() {
         super.setUp()
-
         UIView.setAnimationsEnabled(false)
 
         mockContainerViewController = MockContainerViewController()
@@ -98,4 +97,3 @@ final class NetworkStatusViewControllerSnapshotTests: ZMSnapshotTestCase {
     }
 
 }
-

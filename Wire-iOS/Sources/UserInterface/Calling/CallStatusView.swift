@@ -123,7 +123,6 @@ private let callDurationFormatter: DateComponentsFormatter = {
     return formatter
 }()
 
-
 extension CallStatusViewInputType {
 
     var displayString: String {

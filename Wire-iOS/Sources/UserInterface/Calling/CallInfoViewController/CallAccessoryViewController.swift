@@ -18,8 +18,13 @@
 
 import Foundation
 
-final class CallAccessoryViewController: UIViewController {
+protocol CallAccessoryViewControllerDelegate: class {
+    func callAccessoryViewControllerDidSelectShowMore(viewController: CallAccessoryViewController)
+}
+
+final class CallAccessoryViewController: UIViewController, CallParticipantsViewControllerDelegate {
     
+    weak var delegate: CallAccessoryViewControllerDelegate?
     private let participantsViewController: CallParticipantsViewController
     private let avatarView = UserImageViewContainer(size: .big, maxSize: 240, yOffset: -8)
     
@@ -33,6 +38,7 @@ final class CallAccessoryViewController: UIViewController {
         self.configuration = configuration
         participantsViewController = CallParticipantsViewController(participants: configuration.accessoryType.participants, allowsScrolling: false)
         super.init(nibName: nil, bundle: nil)
+        participantsViewController.delegate = self
     }
 
     @available(*, unavailable)
@@ -81,4 +87,8 @@ final class CallAccessoryViewController: UIViewController {
         participantsViewController.variant = configuration.effectiveColorVariant
     }
     
+    func callParticipantsViewControllerDidSelectShowMore(viewController: CallParticipantsViewController) {
+        delegate?.callAccessoryViewControllerDidSelectShowMore(viewController: self)
+    }
+
 }

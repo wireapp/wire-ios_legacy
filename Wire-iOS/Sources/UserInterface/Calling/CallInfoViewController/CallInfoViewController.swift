@@ -26,7 +26,7 @@ protocol CallInfoViewControllerInput: CallActionsViewInputType, CallStatusViewIn
     var accessoryType: CallInfoViewControllerAccessoryType { get }
 }
 
-fileprivate extension CallInfoViewControllerInput {
+extension CallInfoViewControllerInput {
     var overlayBackgroundColor: UIColor {
         switch (isVideoCall, state) {
         case (false, _): return .wr_color(fromColorScheme: ColorSchemeColorBackground, variant: variant)
@@ -36,7 +36,7 @@ fileprivate extension CallInfoViewControllerInput {
     }
 }
 
-final class CallInfoViewController: UIViewController, CallActionsViewDelegate, CallParticipantsViewControllerDelegate {
+final class CallInfoViewController: UIViewController, CallActionsViewDelegate, CallAccessoryViewControllerDelegate {
     
     weak var delegate: CallInfoViewControllerDelegate?
 
@@ -56,6 +56,7 @@ final class CallInfoViewController: UIViewController, CallActionsViewDelegate, C
         statusViewController = CallStatusViewController(configuration: configuration)
         accessoryViewController = CallAccessoryViewController(configuration: configuration)
         super.init(nibName: nil, bundle: nil)
+        accessoryViewController.delegate = self
         actionsView.delegate = self
     }
     
@@ -102,7 +103,7 @@ final class CallInfoViewController: UIViewController, CallActionsViewDelegate, C
     }
 
     private func updateState(animated: Bool = false) {
-        Calling.log.debug("updating calling info controller with state: \(configuration)")
+        Calling.log.debug("updating info controller with state: \(configuration)")
         actionsView.update(with: configuration)
         statusViewController.configuration = configuration
         accessoryViewController.configuration = configuration
@@ -115,13 +116,11 @@ final class CallInfoViewController: UIViewController, CallActionsViewDelegate, C
     // MARK: - Actions + Delegates
 
     func callActionsView(_ callActionsView: CallActionsView, perform action: CallAction) {
-        Calling.log.debug("\(action) button tapped")
         delegate?.infoViewController(self, perform: action)
     }
     
-    func callParticipantsViewControllerDidSelectShowMore(viewController: CallParticipantsViewController) {
-        Calling.log.debug("Show more participants tapped")
-        // TODO: Do we need this or should we directly push the new controller?
+    func callAccessoryViewControllerDidSelectShowMore(viewController: CallAccessoryViewController) {
         delegate?.infoViewController(self, perform: .showParticipantsList)
     }
+
 }
