@@ -25,11 +25,13 @@ public enum DeniedAuthorizationType {
     case camera
     case photos
     case cameraAndPhotos
+    case ongoingCall
 }
 
 open class CameraKeyboardPermissionsCell: UICollectionViewCell, Reusable {
 
     let settingsButton = Button()
+    let cameraIcon = IconButton()
     let descriptionLabel = UILabel()
     
     private let containerView = UIView()
@@ -38,16 +40,16 @@ open class CameraKeyboardPermissionsCell: UICollectionViewCell, Reusable {
         super.init(frame: frame)
         self.backgroundColor = ColorScheme.default().color(withName: ColorSchemeColorGraphite)
         
-        let textSize: CGFloat = 16.0
+        cameraIcon.setIcon(.cameraLens, with: .tiny, for: .normal)
+        cameraIcon.setIconColor(.white, for: .normal)
         
         descriptionLabel.backgroundColor = .clear
         descriptionLabel.textColor = .white
-        descriptionLabel.font = UIFont.systemFont(ofSize: textSize, weight: UIFontWeightLight)
         descriptionLabel.numberOfLines = 0
         descriptionLabel.textAlignment = .center
         
         settingsButton.setTitleColor(.white, for: .normal)
-        settingsButton.titleLabel?.font = UIFont.systemFont(ofSize: textSize, weight: UIFontWeightSemibold)
+        settingsButton.titleLabel?.font = UIFont.systemFont(ofSize: 16.0, weight: UIFontWeightSemibold)
         settingsButton.setTitle("keyboard_photos_access.denied.keyboard.settings".localized, for: .normal)
         settingsButton.contentEdgeInsets = UIEdgeInsetsMake(10, 30, 10, 30)
         settingsButton.layer.cornerRadius = 4.0
@@ -57,10 +59,9 @@ open class CameraKeyboardPermissionsCell: UICollectionViewCell, Reusable {
         settingsButton.setBackgroundImageColor(UIColor.white.withAlphaComponent(0.24), for: .highlighted)
         containerView.backgroundColor = .clear
         
-        [descriptionLabel, settingsButton].forEach(containerView.addSubview)
-        addSubview(containerView)
+        containerView.addSubview(descriptionLabel)
         
-        createConstraints()
+        addSubview(containerView)
     }
     
     required public init?(coder aDecoder: NSCoder) {
@@ -74,14 +75,20 @@ open class CameraKeyboardPermissionsCell: UICollectionViewCell, Reusable {
     
     func configure(deniedAuthorization: DeniedAuthorizationType) {
         var title = ""
+        let deniedAuthorization: DeniedAuthorizationType = .ongoingCall
         
-        switch deniedAuthorization {
+       /* switch deniedAuthorization {
         case .camera:           title = "keyboard_photos_access.denied.keyboard.camera"
         case .photos:           title = "keyboard_photos_access.denied.keyboard.photos"
         case .cameraAndPhotos:  title = "keyboard_photos_access.denied.keyboard.camera_and_photos"
-        }
+        case .ongoingCall:      */title = "keyboard_photos_access.denied.keyboard.ongoing_call"
+       // }
         
+        descriptionLabel.font = UIFont.systemFont(ofSize: (deniedAuthorization == .ongoingCall ? 14.0 : 16.0),
+                                                  weight: UIFontWeightLight)
         descriptionLabel.text = title.localized
+        
+        createConstraints(deniedAuthorization: deniedAuthorization)
     }
     
     @objc private func openSettings() {
@@ -89,18 +96,37 @@ open class CameraKeyboardPermissionsCell: UICollectionViewCell, Reusable {
         UIApplication.shared.openURL(url)
     }
     
-    private func createConstraints() {
+    private func createConstraints(deniedAuthorization: DeniedAuthorizationType) {
         
-        constrain(self, containerView, descriptionLabel, settingsButton) { (selfView, container, description, settings) in
+        if deniedAuthorization == .ongoingCall {
+            if settingsButton.superview != nil {
+                settingsButton.removeFromSuperview()
+            }
+            containerView.addSubview(cameraIcon)
+        } else {
+            if cameraIcon.superview != nil {
+                cameraIcon.removeFromSuperview()
+            }
+            containerView.addSubview(settingsButton)
+        }
+        
+        constrain(self, containerView, descriptionLabel, settingsButton, cameraIcon) { (selfView, container, description, settings, cameraIcon) in
             
             description.leading == container.leading + 16
             description.trailing == container.trailing - 16
-            description.top == container.top
+            
+            if deniedAuthorization == .ongoingCall {
+                description.bottom == container.bottom
+                description.top == cameraIcon.bottom
+                cameraIcon.top == container.top
+            } else {
+                settings.bottom == container.bottom
+                settings.top == description.bottom + 24
+                description.top == container.top
+            }
             
             settings.height == 44.0
             settings.centerX == container.centerX
-            settings.bottom == container.bottom
-            settings.top == description.bottom + 24
             
             container.centerY == selfView.centerY
             container.leading == selfView.leading
