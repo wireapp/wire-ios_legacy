@@ -24,6 +24,7 @@ class CallViewController: UIViewController {
     let voiceChannel: VoiceChannel
     let callInfoConfiguration: CallInfoConfiguration
     let callInfoViewController: CallInfoViewController
+    weak var dismisser: ViewControllerDismisser? = nil
     
     var conversation: ZMConversation? {
         return voiceChannel.conversation
@@ -39,6 +40,8 @@ class CallViewController: UIViewController {
         callInfoViewController.delegate = self
         
         observerTokens += [voiceChannel.addCallStateObserver(self)]
+        
+        updateNavigationItem()
     }
     
     override func viewDidLoad() {
@@ -59,6 +62,16 @@ class CallViewController: UIViewController {
             callInfoViewController.view.topAnchor.constraint(equalTo: view.topAnchor),
             callInfoViewController.view.bottomAnchor.constraint(equalTo: view.bottomAnchor),
         ])
+    }
+    
+    private func updateNavigationItem() {
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(icon: .downArrow,
+                                                                target: self,
+                                                                action: #selector(minimizeCallOverlay(_:)))
+    }
+    
+    @objc dynamic func minimizeCallOverlay(_ sender: AnyObject!) {
+        dismisser?.dismiss(viewController: self, completion: nil)
     }
     
     required init?(coder aDecoder: NSCoder) {

@@ -37,9 +37,14 @@ class ActiveVoiceChannelViewController : UIViewController {
     
     var visibleVoiceChannelViewController : CallViewController? {
         didSet {
-            // TODO: call delegate: VoiceChannelViewControllerDelegate
-//            visibleVoiceChannelViewController?.delegate = self
-            transition(to: visibleVoiceChannelViewController, from: oldValue)
+            if let newController = visibleVoiceChannelViewController {
+                newController.dismisser = self
+                let navigationWrapper = newController.wrapInNavigationController()
+                transition(to: navigationWrapper, from: oldValue?.navigationController)
+            }
+            else {
+                transition(to: nil, from: oldValue?.navigationController)
+            }
         }
     }
     
@@ -81,10 +86,6 @@ class ActiveVoiceChannelViewController : UIViewController {
         if let conversation = conversation {
             // Call was minimized
             if conversation.remoteIdentifier == minimisedCall {
-                guard visibleVoiceChannelViewController?.conversation != conversation else {
-                    return
-                }
-                
                 visibleVoiceChannelViewController = nil
                 visibleVoiceChannelTopOverlayVoiceController = CallTopOverlayController(conversation: conversation)
             }
@@ -100,7 +101,7 @@ class ActiveVoiceChannelViewController : UIViewController {
         }
     }
     
-    func transition(to : CallViewController?, from : CallViewController?) {
+    func transition(to: UIViewController?, from: UIViewController?) {
         guard to != from else { return }
         
         zmLog.debug(String(format: "transitioning to VoiceChannelViewController: %p from: %p", to ?? 0, from ?? 0))
@@ -301,9 +302,10 @@ extension ActiveVoiceChannelViewController : CallQualityViewControllerDelegate {
 
 }
 
-extension ActiveVoiceChannelViewController: VoiceChannelViewControllerDelegate {
-    func voiceChannelViewControllerWantsToBeDismissed(_ voiceChannelViewController: VoiceChannelViewController) {
-        minimisedCall = voiceChannelViewController.conversation.remoteIdentifier!
+extension ActiveVoiceChannelViewController: ViewControllerDismisser {
+    func dismiss(viewController: UIViewController, completion: (() -> ())?) {
+        minimisedCall = visibleVoiceChannelViewController?.conversation?.remoteIdentifier
+        completion?()
     }
 }
 

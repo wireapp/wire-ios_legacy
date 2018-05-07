@@ -445,7 +445,7 @@
         ProfileViewController *profileViewController = [[ProfileViewController alloc] initWithUser:user context:ProfileViewControllerContextDeviceList];
         if ([self.conversationRootViewController isKindOfClass:ConversationRootViewController.class]) {
             profileViewController.delegate = (id <ProfileViewControllerDelegate>)[(ConversationRootViewController *)self.conversationRootViewController conversationViewController];
-            profileViewController.viewControllerDismissable = (id <ViewControllerDismissable>)[(ConversationRootViewController *)self.conversationRootViewController conversationViewController];
+            profileViewController.viewControllerDismisser = (id <ViewControllerDismisser>)[(ConversationRootViewController *)self.conversationRootViewController conversationViewController];
         }
         UINavigationController *navWrapperController = [[UINavigationController alloc] initWithRootViewController:profileViewController];
         navWrapperController.modalPresentationStyle = UIModalPresentationFormSheet;
