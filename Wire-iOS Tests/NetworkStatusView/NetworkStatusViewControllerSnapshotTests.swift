@@ -98,4 +98,3 @@ final class NetworkStatusViewControllerSnapshotTests: ZMSnapshotTestCase {
     }
 
 }
-
