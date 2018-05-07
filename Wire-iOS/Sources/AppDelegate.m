@@ -200,9 +200,7 @@ performActionForShortcutItem:(UIApplicationShortcutItem *)shortcutItem
 
 - (void)setupTracking
 {
-    // Migrate analytics settings
-    [[TrackingManager shared] migrateFromLocalytics];
-    
+    // Migrate analytics settings    
     BOOL containsConsoleAnalytics = [[[NSProcessInfo processInfo] arguments] indexOfObjectPassingTest:^BOOL(NSString * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         if ([obj isEqualToString:AnalyticsProviderFactory.ZMConsoleAnalyticsArgumentKey]) {
             *stop = YES;
