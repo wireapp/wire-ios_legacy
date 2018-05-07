@@ -38,6 +38,10 @@ class GridView: UIStackView {
         self.addArrangedSubview(lowerHorizontalStackerView)
     }
     
+    var gridSubviews: [UIView] {
+        return upperHorizontalStackerView.arrangedSubviews + lowerHorizontalStackerView.arrangedSubviews
+    }
+    
     required init(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

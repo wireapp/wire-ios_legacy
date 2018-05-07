@@ -69,7 +69,7 @@ class VoiceChannelViewController: UIViewController {
         voiceChannelView.constantBitRate = conversation.voiceChannel?.isConstantBitRateAudioActive ?? false
         
         callStateObserverToken = conversation.voiceChannel?.addCallStateObserver(self)
-        receivedVideoObserverToken = conversation.voiceChannel?.addReceivedVideoObserver(self)
+//        receivedVideoObserverToken = conversation.voiceChannel?.addReceivedVideoObserver(self)
         constantBitRateObserverToken = conversation.voiceChannel?.addConstantBitRateObserver(self)
         AVSMediaManagerClientChangeNotification.add(self)
         
