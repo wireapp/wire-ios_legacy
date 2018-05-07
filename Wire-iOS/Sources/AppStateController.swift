@@ -54,7 +54,7 @@ class AppStateController : NSObject {
     deinit {
         NotificationCenter.default.removeObserver(self)
     }
-    
+
     func calculateAppState() -> AppState {
         
         if isRunningTests {
@@ -116,6 +116,7 @@ extension AppStateController : SessionManagerDelegate {
     
     func sessionManagerWillLogout(error: Error?, userSessionCanBeTornDown: @escaping () -> Void) {
         authenticationError = error as NSError?
+
         isLoggedIn = false
         isLoggedOut = true
         updateAppState {
@@ -124,13 +125,14 @@ extension AppStateController : SessionManagerDelegate {
     }
     
     func sessionManagerDidFailToLogin(account: Account?, error: Error) {
-        loadingAccount = nil
-        
-        // We only care about the error if it concerns the selected account.
-        if let selectedAccount = SessionManager.shared?.accountManager.selectedAccount, selectedAccount == account {
+        let selectedAccount = SessionManager.shared?.accountManager.selectedAccount
+
+        // We only care about the error if it concerns the selected account, or the loading account.
+        if selectedAccount == account || loadingAccount == account {
             authenticationError = error as NSError
         }
-        
+
+        loadingAccount = nil
         isLoggedIn = false
         isLoggedOut = true
         updateAppState()
