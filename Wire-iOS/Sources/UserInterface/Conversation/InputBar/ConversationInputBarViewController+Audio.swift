@@ -45,6 +45,10 @@ extension ConversationInputBarViewController {
         guard sender.state == .ended else {
             return
         }
+        
+        if displayAudioMessageAlertIfNeeded() {
+            return
+        }
 
         if self.mode != .audioRecord {
             UIApplication.wr_requestOrWarnAboutMicrophoneAccess({ accepted in
@@ -57,6 +61,17 @@ extension ConversationInputBarViewController {
         else {
             hideInKeyboardAudioRecordViewController()
         }
+    }
+    
+    private func displayAudioMessageAlertIfNeeded() -> Bool {
+        
+        guard ConversationViewController.shouldBlockCallingRelatedActions else { return false }
+        
+        let alert = UIAlertController(title: "conversation.input_bar.ongoing_call_alert.title".localized,
+                                      message: "conversation.input_bar.ongoing_call_alert.message".localized,
+                                      cancelButtonTitle: "general.ok".localized)
+        self.present(alert, animated: true, completion: nil)
+        return true
     }
     
     func audioButtonLongPressed(_ sender: UILongPressGestureRecognizer) {
