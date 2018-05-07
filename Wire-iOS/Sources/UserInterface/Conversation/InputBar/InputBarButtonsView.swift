@@ -136,7 +136,7 @@ public final class InputBarButtonsView: UIView {
         multilineLayout = numberOfButtons < buttons.count
         
         let (firstRow, secondRow): ([UIButton], [UIButton])
-        let customButtonCount = numberOfButtons - 1 // Last one is alway the expand button
+        let customButtonCount = numberOfButtons >= 1 ? numberOfButtons - 1 : 0 // Last one is alway the expand button
 
         expandRowButton.isHidden = !multilineLayout
 
