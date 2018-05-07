@@ -33,6 +33,7 @@ class ActiveVoiceChannelViewController : UIViewController {
     
     deinit {
         visibleVoiceChannelViewController?.stopCallDurationTimer()
+        visibleVoiceChannelTopOverlayVoiceController?.stopCallDurationTimer()
     }
     
     var visibleVoiceChannelViewController: VoiceChannelViewController? {

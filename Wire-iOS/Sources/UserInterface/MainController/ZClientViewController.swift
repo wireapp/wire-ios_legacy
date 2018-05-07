@@ -42,9 +42,20 @@ extension ZClientViewController {
                 })
             }
             else {
-                topOverlayViewController?.removeFromParentViewController()
-                previousViewController.view.removeFromSuperview()
-                topOverlayViewController = viewController
+                let heightConstraint = topOverlayContainer.heightAnchor.constraint(equalToConstant: 0)
+
+                UIView.wr_animate(easing: RBBEasingFunctionEaseInExpo, duration: 0.35, delay: 0, animations: {
+                    heightConstraint.isActive = true
+                    
+                    self.view.setNeedsLayout()
+                    self.view.layoutIfNeeded()
+                }, options: .beginFromCurrentState, completion: { completed in
+                    heightConstraint.autoRemove()
+                    
+                    self.topOverlayViewController?.removeFromParentViewController()
+                    previousViewController.view.removeFromSuperview()
+                    self.topOverlayViewController = viewController
+                })
             }
         }
         else {
@@ -72,7 +83,7 @@ extension ZClientViewController {
                     self.view.layoutIfNeeded()
                     
                     UIView.wr_animate(easing: RBBEasingFunctionEaseOutExpo, duration: 0.35, delay: 1, animations: {
-                        heightConstraint.isActive = false
+                        heightConstraint.autoRemove()
                         self.view.setNeedsLayout()
                         self.view.layoutIfNeeded()
                     }, options: .beginFromCurrentState, completion: { completed in

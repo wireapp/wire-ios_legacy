@@ -85,8 +85,8 @@ class NetworkStatusViewController : UIViewController {
         view.addSubview(networkStatusView)
 
         constrain(self.view, networkStatusView) { containerView, networkStatusView in
-            networkStatusView.left == containerView.left
-            networkStatusView.right == containerView.right
+            networkStatusView.leading == containerView.leading
+            networkStatusView.trailing == containerView.trailing
             networkStatusView.top == containerView.top
             networkStatusView.height == containerView.height
         }
@@ -112,7 +112,6 @@ class NetworkStatusViewController : UIViewController {
 
     @objc public func createConstraintsInParentController(bottomView: UIView, controller: UIViewController) {
         constrain(bottomView, controller.view, view) { bottomView, containerView, networkStatusViewControllerView in
-
             networkStatusViewControllerView.leading == containerView.leading
             networkStatusViewControllerView.trailing == containerView.trailing
             bottomView.top == networkStatusViewControllerView.bottom

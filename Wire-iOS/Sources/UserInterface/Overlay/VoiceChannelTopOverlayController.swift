@@ -87,6 +87,7 @@ final class VoiceChannelTopOverlayController: UIViewController {
         super.viewDidLoad()
         tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(openCall(_:)))
         
+        view.clipsToBounds = true
         view.backgroundColor = UIColor(for: .strongLimeGreen)
         view.accessibilityIdentifier = "OpenOngoingCallButton"
         view.shouldGroupAccessibilityChildren = true
@@ -170,7 +171,7 @@ final class VoiceChannelTopOverlayController: UIViewController {
         }
     }
     
-    private func stopCallDurationTimer() {
+    func stopCallDurationTimer() {
         callDurationTimer?.invalidate()
         callDurationTimer = nil
     }

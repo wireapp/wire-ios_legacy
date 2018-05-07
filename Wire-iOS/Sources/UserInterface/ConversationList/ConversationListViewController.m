@@ -395,12 +395,8 @@
     [self.topBar autoPinEdgeToSuperviewEdge:ALEdgeRight];
 
     [self.topBar autoPinEdge:ALEdgeBottom toEdge:ALEdgeTop ofView:self.conversationListContainer];
-    [self.contentContainer autoPinEdge:ALEdgeLeading toEdge:ALEdgeLeading ofView:self.contentContainer.superview];
-    [self.contentContainer autoPinEdge:ALEdgeTrailing toEdge:ALEdgeTrailing ofView:self.contentContainer.superview];
-    
-    [[self.contentContainer.topAnchor constraintEqualToAnchor:self.safeTopAnchor] setActive:YES];
-    [[self.contentContainer.bottomAnchor constraintEqualToAnchor:self.safeBottomAnchor] setActive:YES];
-    
+    [self.contentContainer autoPinEdgesToSuperviewEdges];
+
     [self.noConversationLabel autoCenterInSuperview];
     [self.noConversationLabel autoSetDimension:ALDimensionHeight toSize:120.0f];
     [self.noConversationLabel autoSetDimension:ALDimensionWidth toSize:240.0f];
