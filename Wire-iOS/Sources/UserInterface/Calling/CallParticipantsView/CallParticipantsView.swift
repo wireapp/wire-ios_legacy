@@ -18,11 +18,7 @@
 
 import Foundation
 
-protocol CallParticipantsViewModel: class {
-    
-    var rows: [CallParticipantsCellConfiguration] { get }
-    
-}
+typealias CallParticipantsList = [CallParticipantsCellConfiguration]
 
 protocol CallParticipantsCellConfigurationConfigurable: Reusable {
     
@@ -59,7 +55,11 @@ enum CallParticipantsCellConfiguration {
 
 class CallParticipantsView: UICollectionView, Themeable {
     
-    weak var viewModel: CallParticipantsViewModel? = nil
+    var rows = CallParticipantsList() {
+        didSet {
+            reloadData()
+        }
+    }
     
     dynamic var colorSchemeVariant: ColorSchemeVariant = ColorScheme.default().variant {
         didSet {
@@ -72,12 +72,10 @@ class CallParticipantsView: UICollectionView, Themeable {
         reloadData()
     }
     
-    init(frame: CGRect, collectionViewLayout: UICollectionViewLayout, viewModel: CallParticipantsViewModel) {
-        self.viewModel = viewModel
-        
+    override init(frame: CGRect, collectionViewLayout: UICollectionViewLayout) {
         super.init(frame: frame, collectionViewLayout: collectionViewLayout)
-        
         self.dataSource = self
+        backgroundColor = .clear
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -93,11 +91,11 @@ extension CallParticipantsView: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return viewModel?.rows.count ?? 0
+        return rows.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cellConfiguration = viewModel!.rows[indexPath.row]
+        let cellConfiguration = rows[indexPath.row]
         let cell =  collectionView.dequeueReusableCell(withReuseIdentifier: cellConfiguration.cellType.reuseIdentifier, for: indexPath)
         
         if let configurableCell = cell as? CallParticipantsCellConfigurationConfigurable {
@@ -113,10 +111,10 @@ extension UserCell: CallParticipantsCellConfigurationConfigurable {
     
     func configure(with configuration: CallParticipantsCellConfiguration, variant: ColorSchemeVariant) {
         guard case let .callParticipant(user, _) = configuration else { preconditionFailure() }
-        
-        self.colorSchemeVariant = variant
-        
+        colorSchemeVariant = variant
+        contentBackgroundColor = .clear
         configure(with: user)
+        accessoryIconView.isHidden = true
     }
     
 }

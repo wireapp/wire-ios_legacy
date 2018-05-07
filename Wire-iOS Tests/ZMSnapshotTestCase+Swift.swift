@@ -115,12 +115,26 @@ extension ZMSnapshotTestCase {
     func verifyInAllColorSchemes(view: UIView, tolerance: Float = 0, file: StaticString = #file, line: UInt = #line) {
         if var themeable = view as? Themeable {
             themeable.colorSchemeVariant = .light
+            snapshotBackgroundColor = .white
             verifyView(view, extraLayoutPass: false, tolerance: tolerance, file: file.utf8SignedStart(), line: line, identifier: "LightTheme")
             themeable.colorSchemeVariant = .dark
+            snapshotBackgroundColor = .black
             verifyView(view, extraLayoutPass: false, tolerance: tolerance, file: file.utf8SignedStart(), line: line, identifier: "DarkTheme")
         } else {
             XCTFail("View doesn't support Themable protocol")
         }
-        
+    }
+    
+    @available(iOS 11.0, *)
+    func verifySafeAreas(
+        viewController: UIViewController,
+        tolerance: Float = 0,
+        file: StaticString = #file,
+        line: UInt = #line
+        ) {
+        viewController.additionalSafeAreaInsets = UIEdgeInsets(top: 44, left: 0, bottom: 34, right: 0)
+        viewController.viewSafeAreaInsetsDidChange()
+        viewController.view.frame = CGRect(x: 0, y: 0, width: 375, height: 812)
+        verify(view: viewController.view)
     }
 }

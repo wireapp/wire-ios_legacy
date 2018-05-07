@@ -33,9 +33,9 @@ class VoiceChannelViewController: UIViewController {
     var blurEffectView : UIVisualEffectView!
     var participantsController : VoiceChannelParticipantsController?
     
-    var callStateObserverToken : Any?
-    var receivedVideoObserverToken : Any?
-    var constantBitRateObserverToken : Any?
+    var callStateObserverToken: Any?
+    var receivedVideoObserverToken: Any?
+    var constantBitRateObserverToken: Any?
     
     weak var delegate: VoiceChannelViewControllerDelegate?
     

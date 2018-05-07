@@ -35,7 +35,7 @@ class IconLabelButton: ButtonWithLargerHitArea {
         super.init(frame: .zero)
         setupViews()
         createConstraints()
-        iconButton.setIcon(icon, with: .small, for: .normal)
+        iconButton.setIcon(icon, with: .tiny, for: .normal)
         subtitleLabel.text = label
         self.accessibilityIdentifier = accessibilityIdentifier
     }
@@ -58,7 +58,7 @@ class IconLabelButton: ButtonWithLargerHitArea {
         subtitleLabel.translatesAutoresizingMaskIntoConstraints = false
         subtitleLabel.textTransform = .upper
         subtitleLabel.textAlignment = .center
-        titleLabel?.font = FontSpec(.small, .light).font!
+        titleLabel?.font = FontSpec(.small, .semibold).font!
         [iconButton, subtitleLabel].forEach(addSubview)
     }
     

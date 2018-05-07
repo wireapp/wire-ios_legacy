@@ -19,16 +19,6 @@
 import Foundation
 @testable import Wire
 
-class MockCallParticipantsViewModel: CallParticipantsViewModel {
-    
-    var rows: [CallParticipantsCellConfiguration]
-    
-    init(rows: [CallParticipantsCellConfiguration]) {
-        self.rows = rows
-    }
-    
-}
-
 class CallParticipantsViewTests: ZMSnapshotTestCase {
     
     var sut: CallParticipantsViewController!
@@ -43,22 +33,19 @@ class CallParticipantsViewTests: ZMSnapshotTestCase {
         super.tearDown()
     }
     
-    func viewModel(withParticipantCount participantCount: Int) -> CallParticipantsViewModel {
+    static func participants(count participantCount: Int) -> CallParticipantsList {
         var rows: [CallParticipantsCellConfiguration] = []
         
         for index in 0..<participantCount {
             rows.append(.callParticipant(user: MockUser.mockUsers()[index], sendsVideo: false))
         }
         
-        return MockCallParticipantsViewModel(rows: rows)
+        return rows
     }
     
     func testCallParticipants_overflowing() {
-        // Given
-        let viewModel = self.viewModel(withParticipantCount: 10)
-        
         // When
-        sut = CallParticipantsViewController(viewModel: viewModel, allowsScrolling: true)
+        sut = CallParticipantsViewController(participants: type(of: self).participants(count: 10), allowsScrolling: true)
         sut.view.frame = CGRect(x: 0, y: 0, width: 325, height: 336)
         sut.view.setNeedsLayout()
         sut.view.layoutIfNeeded()
@@ -68,11 +55,8 @@ class CallParticipantsViewTests: ZMSnapshotTestCase {
     }
     
     func testCallParticipants_truncated() {
-        // Given
-        let viewModel = self.viewModel(withParticipantCount: 10)
-        
         // When
-        sut = CallParticipantsViewController(viewModel: viewModel, allowsScrolling: false)
+        sut = CallParticipantsViewController(participants: type(of: self).participants(count: 10), allowsScrolling: false)
         sut.view.frame = CGRect(x: 0, y: 0, width: 325, height: 336)
         
         // Then

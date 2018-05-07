@@ -19,7 +19,7 @@
 import UIKit
 
 protocol CallActionsViewDelegate: class {
-    func callActionsView(_ callActionsView: CallActionsView, perform action: CallActionsViewAction)
+    func callActionsView(_ callActionsView: CallActionsView, perform action: CallAction)
 }
 
 enum MediaState {
@@ -42,9 +42,8 @@ enum MediaState {
 }
 
 // This protocol describes the input for a `CallActionsView`.
-protocol CallActionsViewInputType {
+protocol CallActionsViewInputType: CallTypeProvider {
     var canToggleMediaType: Bool { get }
-    var isAudioCall: Bool { get }
     var isMuted: Bool { get }
     var isTerminating: Bool { get }
     var canAccept: Bool { get }
@@ -53,18 +52,9 @@ protocol CallActionsViewInputType {
 
 extension CallActionsViewInputType {
     func appearance(with variant: ColorSchemeVariant) -> CallActionAppearance {
-        return isAudioCall && variant == .light ? .light : .dark
+        guard !isVideoCall else { return .dark }
+        return variant == .light ? .light : .dark
     }
-}
-
-// The ouput actions a `CallActionsView` can perform.
-enum CallActionsViewAction {
-    case toggleMuteState
-    case toggleVideoState
-    case toggleSpeakerState
-    case acceptCall
-    case terminateCall
-    case flipCamera
 }
 
 // A view showing multiple buttons depenging on the given `CallActionsView.Input`.
@@ -172,8 +162,8 @@ final class CallActionsView: UIView {
             let iconCount = topStackView.visibleSubviews.count + bottomStackView.visibleSubviews.count
             return (bounds.width - (CGFloat(iconCount) * IconButton.width)) / CGFloat(iconCount - 1)
         }()
-        topStackView.spacing = isCompact ? verticalStackView.spacing : 0
-        bottomStackView.spacing = isCompact ? verticalStackView.spacing : 0
+        topStackView.spacing = isCompact ? verticalStackView.spacing : 32
+        bottomStackView.spacing = isCompact ? verticalStackView.spacing : 32
     }
     
     // MARK: - Action Output
@@ -182,7 +172,7 @@ final class CallActionsView: UIView {
         delegate?.callActionsView(self, perform: action(for: sender))
     }
     
-    private func action(for button: IconLabelButton) -> CallActionsViewAction {
+    private func action(for button: IconLabelButton) -> CallAction {
         switch button {
         case muteCallButton: return .toggleMuteState
         case videoButton: return .toggleVideoState

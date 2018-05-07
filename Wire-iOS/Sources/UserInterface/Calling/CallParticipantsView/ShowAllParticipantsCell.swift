@@ -29,7 +29,7 @@ class ShowAllParticipantsCell: UICollectionViewCell {
         didSet {
             backgroundColor = isHighlighted
                 ? .init(white: 0, alpha: 0.08)
-                : .wr_color(fromColorScheme: ColorSchemeColorBarBackground, variant: variant)
+                : .clear
         }
     }
     
@@ -91,7 +91,7 @@ class ShowAllParticipantsCell: UICollectionViewCell {
     
     private func configureColors() {
         let sectionTextColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorSectionText, variant: variant)
-        backgroundColor = .wr_color(fromColorScheme: ColorSchemeColorBarBackground, variant: variant)
+        backgroundColor = .clear
         participantIconView.image = UIImage(for: .person, iconSize: .tiny, color: UIColor.wr_color(fromColorScheme: ColorSchemeColorTextForeground, variant: variant))
         accessoryIconView.image = UIImage(for: .disclosureIndicator, iconSize: .like, color: sectionTextColor)
         titleLabel.textColor = .wr_color(fromColorScheme: ColorSchemeColorTextForeground, variant: variant)
