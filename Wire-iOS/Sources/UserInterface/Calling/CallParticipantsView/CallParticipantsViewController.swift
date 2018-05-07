@@ -48,6 +48,12 @@ class CallParticipantsViewController: UIViewController, UICollectionViewDelegate
         super.init(nibName: nil, bundle: nil)
     }
     
+    convenience init(scrollableWithConfiguration configuration: CallInfoConfiguration) {
+        self.init(participants: configuration.accessoryType.participants, allowsScrolling: true)
+        variant = configuration.effectiveColorVariant
+        view.backgroundColor = configuration.overlayBackgroundColor
+    }
+    
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

@@ -107,9 +107,7 @@ extension CallViewController: CallInfoViewControllerDelegate {
     }
     
     private func presentParticipantsList() {
-        let participantsList = CallParticipantsViewController(participants: callInfoConfiguration.accessoryType.participants, allowsScrolling: true)
-        participantsList.variant = callInfoConfiguration.effectiveColorVariant
-        participantsList.view.backgroundColor = callInfoConfiguration.overlayBackgroundColor
+        let participantsList = CallParticipantsViewController(scrollableWithConfiguration: callInfoConfiguration)
         navigationController?.pushViewController(participantsList, animated: true)
     }
 
