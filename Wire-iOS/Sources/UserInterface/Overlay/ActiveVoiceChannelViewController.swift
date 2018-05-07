@@ -86,10 +86,20 @@ class ActiveVoiceChannelViewController : UIViewController {
         if let conversation = conversation {
             // Call was minimized
             if conversation.remoteIdentifier == minimisedCall {
+                guard visibleVoiceChannelTopOverlayVoiceController == nil ||
+                    visibleVoiceChannelTopOverlayVoiceController!.conversation != conversation else {
+                    return
+                }
+                
                 visibleVoiceChannelViewController = nil
                 visibleVoiceChannelTopOverlayVoiceController = CallTopOverlayController(conversation: conversation)
             }
             else {
+                guard visibleVoiceChannelViewController == nil ||
+                    visibleVoiceChannelViewController!.conversation != conversation else {
+                    return
+                }
+                
                 if let voiceChannel = conversation.voiceChannel {
                     visibleVoiceChannelViewController = CallViewController(voiceChannel: voiceChannel)
                 }
