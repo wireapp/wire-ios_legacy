@@ -80,9 +80,8 @@ class SettingsBaseTableViewController: UIViewController {
         footerContainer.addSubview(footerSeparator)
         footerSeparator.inverse = true
 
-        // do not set top inset for iOS 9 or 11
         if #available(iOS 11.0, *) {
-        } else if #available(iOS 10.0, *) {
+        } else {
             tableView.contentInset = UIEdgeInsets(top: -32, left: 0, bottom: 0, right: 0)
         }
     }
@@ -163,7 +162,9 @@ class SettingsTableViewController: SettingsBaseTableViewController {
             }
         }
 
-        self.selfUserObserver = UserChangeInfo.add(observer: self, for: ZMUser.selfUser(), userSession: ZMUserSession.shared()!)
+        if let userSession = ZMUserSession.shared() {
+            self.selfUserObserver = UserChangeInfo.add(observer: self, for: ZMUser.selfUser(), userSession: userSession)
+        }
     }
 
     required init?(coder aDecoder: NSCoder) {

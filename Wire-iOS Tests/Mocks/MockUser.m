@@ -200,6 +200,11 @@ static id<ZMBareUser> mockSelfUser = nil;
     return false;
 }
 
+- (BOOL)canManageTeam
+{
+    return false;
+}
+
 - (BOOL)hasTeam
 {
     return false;
