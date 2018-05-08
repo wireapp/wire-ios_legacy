@@ -385,13 +385,6 @@ static const CGFloat ImageToolbarMinimumSize = 192;
     }
 }
 
-- (void)updateImageBorder
-{
-    BOOL showBorder = !self.imageSmallerThanMinimumSize;
-    self.fullImageView.layer.borderWidth = showBorder ? UIScreen.hairline : 0;
-    self.fullImageView.layer.borderColor = [UIColor colorWithWhite:0 alpha:0.08].CGColor;
-}
-
 - (void)setImage:(id<MediaAsset>)image
 {
     if (_image == image) {

@@ -1,6 +1,6 @@
 //
 // Wire
-// Copyright (C) 2016 Wire Swiss GmbH
+// Copyright (C) 2018 Wire Swiss GmbH
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -16,18 +16,25 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
+import XCTest
+@testable import Wire
 
-#import "ImageMessageCell.h"
-@import WireExtensionComponents;
+final class SelfProfileViewControllerTests: ZMSnapshotTestCase {
+    
+    var sut: SelfProfileViewController!
+    
+    override func setUp() {
+        super.setUp()
+        sut = SelfProfileViewController()
+        sut.view.backgroundColor = .black
+    }
+    
+    override func tearDown() {
+        sut = nil
+        super.tearDown()
+    }
 
-@interface ImageMessageCell (Interal)
-
-- (void)setImage:(id<MediaAsset>)image;
-- (BOOL)imageSmallerThanMinimumSize;
-
-@end
-
-@interface ImageMessageCell ()
-@property (nonatomic) BOOL autoStretchVertically;
-@property (nonatomic) UIEdgeInsets defaultLayoutMargins;
-@end
+    func testTestForAUserWithNoTeam(){
+        self.verify(view: sut.view)
+    }
+}

@@ -185,7 +185,6 @@
 		1EE9DCBF1B5F9A6D00E347DF /* PageControl.h in Headers */ = {isa = PBXBuildFile; fileRef = 1EE9DCA61B5F9A6D00E347DF /* PageControl.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		1EE9DCC01B5F9A6D00E347DF /* PageControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 1EE9DCA71B5F9A6D00E347DF /* PageControl.m */; };
 		1EE9DCC11B5F9A6D00E347DF /* TextView.h in Headers */ = {isa = PBXBuildFile; fileRef = 1EE9DCA81B5F9A6D00E347DF /* TextView.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		1EE9DCC21B5F9A6D00E347DF /* TextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1EE9DCA91B5F9A6D00E347DF /* TextView.m */; };
 		1EF42D411B1889B300A3145D /* stylesheet.cas in Resources */ = {isa = PBXBuildFile; fileRef = 1EF42D401B1889B300A3145D /* stylesheet.cas */; };
 		1EF42D481B188C8A00A3145D /* colors.cas in Resources */ = {isa = PBXBuildFile; fileRef = 1EF42D471B188C8A00A3145D /* colors.cas */; };
 		1EFB23DC1ACEDE5400244571 /* Localizable.stringsdict in Resources */ = {isa = PBXBuildFile; fileRef = 1EFB23DE1ACEDE5400244571 /* Localizable.stringsdict */; };
@@ -1059,6 +1058,7 @@
 		EF25F7DE1FC45F8E0040C3CC /* AccessoryTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF25F7DD1FC45F8E0040C3CC /* AccessoryTextField.swift */; };
 		EF25F8871FC57F320040C3CC /* AccessoryTextFieldTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF25F8851FC57EE90040C3CC /* AccessoryTextFieldTests.swift */; };
 		EF266C612003B75C00A8C136 /* BreathLoadingBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF266C602003B75C00A8C136 /* BreathLoadingBar.swift */; };
+		EF2971582099AD8700EFE6A4 /* SelfProfileViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF2971552099AD3000EFE6A4 /* SelfProfileViewControllerTests.swift */; };
 		EF2C189E1FED0D6900E9F2FD /* ConversationCellTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF2C189C1FED0D3000E9F2FD /* ConversationCellTests.swift */; };
 		EF2C18A01FED435600E9F2FD /* ConversationCell+BurstTimestamp.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF2C189F1FED435600E9F2FD /* ConversationCell+BurstTimestamp.swift */; };
 		EF2C18A21FED541F00E9F2FD /* Timer+allVersionCompatibleScheduledTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF2C18A11FED541F00E9F2FD /* Timer+allVersionCompatibleScheduledTimer.swift */; };
@@ -1083,6 +1083,7 @@
 		EF6E3C80208A262B003F6752 /* not_animated.gif in Resources */ = {isa = PBXBuildFile; fileRef = EF6E3C7F208A262B003F6752 /* not_animated.gif */; };
 		EF7CCAFD204E96390050325B /* MockUser+PointOfView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF7CCAFC204E96390050325B /* MockUser+PointOfView.swift */; };
 		EF7D75A6201B6149003A8AF8 /* DeviceNativeBoundsSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF7D75A5201B6149003A8AF8 /* DeviceNativeBoundsSize.swift */; };
+		EF7E53C7209765E900EA8357 /* TextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1EE9DCA91B5F9A6D00E347DF /* TextView.m */; };
 		EF7F74041FCC033D0059C13F /* EmailAdresssValidatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF7F74021FCC01140059C13F /* EmailAdresssValidatorTests.swift */; };
 		EF80C0022097106D00E0040B /* ZMConversationMessageWindow+Formatting.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF80C0012097106D00E0040B /* ZMConversationMessageWindow+Formatting.swift */; };
 		EF80C0042097151C00E0040B /* ZMConversationMessageWindowTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF80C0032097151C00E0040B /* ZMConversationMessageWindowTests.swift */; };
@@ -1094,8 +1095,11 @@
 		EFB23D0A1FC852380055B866 /* TextFieldValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF61B3411FC8508400D8E631 /* TextFieldValidator.swift */; };
 		EFB23D0B1FC853CF0055B866 /* AccessoryTextFieldValidationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF61B33F1FC84B0100D8E631 /* AccessoryTextFieldValidationTests.swift */; };
 		EFC530A61FF3F277004D2B31 /* VoiceChannelViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFC530A31FF3F26D004D2B31 /* VoiceChannelViewControllerTests.swift */; };
+		EFCDA974209A0F6D004682EA /* ImageMessageCell+ImageBorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFCDA973209A0F6D004682EA /* ImageMessageCell+ImageBorder.swift */; };
 		EFE8062B1FDFF24C006A0EE7 /* NSDate+Format.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFE8062A1FDFF24C006A0EE7 /* NSDate+Format.swift */; };
 		EFE806301FE006A7006A0EE7 /* DateFormatterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFE8062E1FE005A7006A0EE7 /* DateFormatterTests.swift */; };
+		EFF3DA432097548A007A3358 /* UIImage+MediaAssert.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFF3DA422097548A007A3358 /* UIImage+MediaAssert.swift */; };
+		EFF3DA452097587F007A3358 /* UIPasteboard+MediaAsset.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFF3DA442097587F007A3358 /* UIPasteboard+MediaAsset.swift */; };
 		EFF6DCB4206BE94600437C71 /* SplitViewController+leftView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFF6DCB3206BE94600437C71 /* SplitViewController+leftView.swift */; };
 		EFF6EA3E2020CF4100A7023B /* Button+ServiceButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFF6EA3D2020CF4100A7023B /* Button+ServiceButton.swift */; };
 		EFFF9E851FBF335700491F9A /* UIColor+TeamCreation.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFFF9E841FBF335700491F9A /* UIColor+TeamCreation.swift */; };
@@ -2681,6 +2685,7 @@
 		EF25F7DD1FC45F8E0040C3CC /* AccessoryTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessoryTextField.swift; sourceTree = "<group>"; };
 		EF25F8851FC57EE90040C3CC /* AccessoryTextFieldTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessoryTextFieldTests.swift; sourceTree = "<group>"; };
 		EF266C602003B75C00A8C136 /* BreathLoadingBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BreathLoadingBar.swift; sourceTree = "<group>"; };
+		EF2971552099AD3000EFE6A4 /* SelfProfileViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelfProfileViewControllerTests.swift; sourceTree = "<group>"; };
 		EF2C189C1FED0D3000E9F2FD /* ConversationCellTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationCellTests.swift; sourceTree = "<group>"; };
 		EF2C189F1FED435600E9F2FD /* ConversationCell+BurstTimestamp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConversationCell+BurstTimestamp.swift"; sourceTree = "<group>"; };
 		EF2C18A11FED541F00E9F2FD /* Timer+allVersionCompatibleScheduledTimer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Timer+allVersionCompatibleScheduledTimer.swift"; sourceTree = "<group>"; };
@@ -2720,8 +2725,11 @@
 		EFABC921202085A6001F9866 /* UserDetailViewControllerFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDetailViewControllerFactory.swift; sourceTree = "<group>"; };
 		EFABC92320208D80001F9866 /* UIViewController+removeUserConfirmationUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+removeUserConfirmationUI.swift"; sourceTree = "<group>"; };
 		EFC530A31FF3F26D004D2B31 /* VoiceChannelViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoiceChannelViewControllerTests.swift; sourceTree = "<group>"; };
+		EFCDA973209A0F6D004682EA /* ImageMessageCell+ImageBorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ImageMessageCell+ImageBorder.swift"; sourceTree = "<group>"; };
 		EFE8062A1FDFF24C006A0EE7 /* NSDate+Format.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSDate+Format.swift"; sourceTree = "<group>"; };
 		EFE8062E1FE005A7006A0EE7 /* DateFormatterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateFormatterTests.swift; sourceTree = "<group>"; };
+		EFF3DA422097548A007A3358 /* UIImage+MediaAssert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+MediaAssert.swift"; sourceTree = "<group>"; };
+		EFF3DA442097587F007A3358 /* UIPasteboard+MediaAsset.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIPasteboard+MediaAsset.swift"; sourceTree = "<group>"; };
 		EFF6DCB3206BE94600437C71 /* SplitViewController+leftView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SplitViewController+leftView.swift"; sourceTree = "<group>"; };
 		EFF6EA3D2020CF4100A7023B /* Button+ServiceButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Button+ServiceButton.swift"; sourceTree = "<group>"; };
 		EFF6EA482021BE6700A7023B /* ViewControllerDismissable.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewControllerDismissable.h; sourceTree = "<group>"; };
@@ -3511,6 +3519,8 @@
 				871BC1631D34F8F800DF0793 /* KeyboardFrameObserver.m */,
 				871BC18D1D34F8F800DF0793 /* MediaAsset.h */,
 				871BC18E1D34F8F800DF0793 /* MediaAsset.m */,
+				EFF3DA422097548A007A3358 /* UIImage+MediaAssert.swift */,
+				EFF3DA442097587F007A3358 /* UIPasteboard+MediaAsset.swift */,
 				871BC18F1D34F8F800DF0793 /* MediaPreview */,
 				871BC1971D34F8F800DF0793 /* Transitions */,
 				871BC1A61D34F8F800DF0793 /* Views */,
@@ -4719,6 +4729,7 @@
 				16E311D61A6024F400FF2C9E /* ImageMessageCell.h */,
 				BFE57B451D51FDE800CB0806 /* ImageMessageCell+Internal.h */,
 				16E311D71A6024F400FF2C9E /* ImageMessageCell.m */,
+				EFCDA973209A0F6D004682EA /* ImageMessageCell+ImageBorder.swift */,
 				8F0DEDD31A693F58003F0ACC /* PingCell.h */,
 				8F0DEDD41A693F58003F0ACC /* PingCell.m */,
 				EF106E87204DAE8600B9F0F6 /* PingCell+PointOfViewString.swift */,
@@ -5096,6 +5107,7 @@
 				87AE8BDB207B99540058715E /* BackupPasswordViewControllerTests.swift */,
 				EF3052442087388000613C45 /* ConfirmEmailViewControllerTests.swift */,
 				EF305246208742F300613C45 /* ConfirmPhoneViewControllerTests.swift */,
+				EF2971552099AD3000EFE6A4 /* SelfProfileViewControllerTests.swift */,
 				EF80C0032097151C00E0040B /* ZMConversationMessageWindowTests.swift */,
 			);
 			path = "Wire-iOS Tests";
@@ -6234,7 +6246,6 @@
 				87A6761A206D426900596625 /* CheckAnimationView.swift in Sources */,
 				CE8E4FAC1DF066750009F437 /* FilePreviewGenerator.swift in Sources */,
 				87F18BC81E02E7BF00C69D9B /* Reusable.swift in Sources */,
-				1EE9DCC21B5F9A6D00E347DF /* TextView.m in Sources */,
 				87AAE4171E422E2300E1D13A /* FontScheme.swift in Sources */,
 				878607221D33E3FF00971A19 /* NetworkStatus.m in Sources */,
 				5423EF6D1E9B85C8007091DE /* DeveloperMenuState.m in Sources */,
@@ -6594,6 +6605,7 @@
 				D5173573201764DD00B473CE /* UIAlertAction+Convenience.swift in Sources */,
 				871BC00A1D34F56300DF0793 /* TimeIntervalClusterizer.m in Sources */,
 				EF2127201FB9DFE300625A9B /* NavigationController.m in Sources */,
+				EFCDA974209A0F6D004682EA /* ImageMessageCell+ImageBorder.swift in Sources */,
 				871BC0031D34F56300DF0793 /* AnalyticsFileTransferObserver.swift in Sources */,
 				871BC2971D34F8F800DF0793 /* UIViewController+WR_Additions.m in Sources */,
 				87EB6B871E2FCE080019B3C5 /* ZMConversationMessage+File.swift in Sources */,
@@ -6674,6 +6686,7 @@
 				873151111D75D0C000284C1F /* ReactionCell.swift in Sources */,
 				877A32601E892A100017DD9A /* ConversationListAccessoryView.swift in Sources */,
 				8F41CFC8199297C600E3B032 /* ZMConversation+Additions.m in Sources */,
+				EFF3DA452097587F007A3358 /* UIPasteboard+MediaAsset.swift in Sources */,
 				BAEF10FA1B8C8849005BFA48 /* AnimatedListMenuView.m in Sources */,
 				1682AEB620480C80003A052A /* UIViewController+Navigation.swift in Sources */,
 				871BC2551D34F8F800DF0793 /* CrossfadeTransition.m in Sources */,
@@ -6808,6 +6821,7 @@
 				8F8914111A9F287E0056AB0C /* ConversationListCell.m in Sources */,
 				F16427061FCC5BE400D2ABFC /* SetFullNameStepDescription.swift in Sources */,
 				160C311F1E4C78480012E4BC /* UnknownMessageCell.swift in Sources */,
+				EFF3DA432097548A007A3358 /* UIImage+MediaAssert.swift in Sources */,
 				87DCF4921D34E9BA00BB420F /* ContactsViewController+ShareContacts.m in Sources */,
 				16E2A09E1F6BD551005F4DB1 /* VoiceChannelParticipantCell.swift in Sources */,
 				D5DBAAAE20064DFC00E9F65B /* TeamInviteTextFieldFooterView.swift in Sources */,
@@ -7012,6 +7026,7 @@
 				D5168F522010F20700F8222A /* ShareDestinationCell.swift in Sources */,
 				873C5FE91C10426A00D5132A /* ClientUnregisterFlowViewController.swift in Sources */,
 				D59EA0C520234EE300B17CE7 /* ConversationCellLayoutProperties+Preview.swift in Sources */,
+				EF7E53C7209765E900EA8357 /* TextView.m in Sources */,
 				16D68E9B1CEF99C7003AB9E0 /* WaveformProgressView.swift in Sources */,
 				87BEB0441D3E478500DE9575 /* AssetLibrary.swift in Sources */,
 				EE43324B1F1A785800096D90 /* PopUpIconButtonView.swift in Sources */,
@@ -7118,6 +7133,7 @@
 				EF2128EE2056D55400C1673B /* NetworkStatusViewControllerTests.swift in Sources */,
 				EE75B774203C6F5300855099 /* MarkdownTextStorageTests.swift in Sources */,
 				87D5E4431C3E79DA00EB8289 /* UserClient+Fingerprint.swift in Sources */,
+				EF2971582099AD8700EFE6A4 /* SelfProfileViewControllerTests.swift in Sources */,
 				87C39A8E206BE83C008DA100 /* NoHistoryViewControllerTests.swift in Sources */,
 				BF7ED2DC1DF1D1CF003A4397 /* IncomingConnectionViewTests.swift in Sources */,
 				BA79B0A91B62851F00F23AFB /* SoundEventRulesWatchDogTests.m in Sources */,
