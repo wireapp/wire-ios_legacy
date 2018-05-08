@@ -42,6 +42,7 @@ open class CameraKeyboardPermissionsCell: UICollectionViewCell, Reusable {
         
         cameraIcon.setIcon(.cameraLens, with: .tiny, for: .normal)
         cameraIcon.setIconColor(.white, for: .normal)
+        cameraIcon.isUserInteractionEnabled = false
         
         descriptionLabel.backgroundColor = .clear
         descriptionLabel.textColor = .white
@@ -114,23 +115,23 @@ open class CameraKeyboardPermissionsCell: UICollectionViewCell, Reusable {
             
             description.leading == container.leading + 16
             description.trailing == container.trailing - 16
-            
-            if deniedAuthorization == .ongoingCall {
-                description.bottom == container.bottom
-                description.top == cameraIcon.bottom
-                cameraIcon.top == container.top
-            } else {
-                settings.bottom == container.bottom
-                settings.top == description.bottom + 24
-                description.top == container.top
-            }
-            
-            settings.height == 44.0
-            settings.centerX == container.centerX
-            
+
             container.centerY == selfView.centerY
             container.leading == selfView.leading
             container.trailing == selfView.trailing
+            
+            if deniedAuthorization == .ongoingCall {
+                description.bottom == container.bottom
+                description.top == cameraIcon.bottom + 16
+                cameraIcon.top == container.top
+                cameraIcon.centerX == container.centerX
+            } else {
+                settings.bottom == container.bottom
+                settings.top == description.bottom + 24
+                settings.height == 44.0
+                settings.centerX == container.centerX
+                description.top == container.top
+            }
         }
     }
 
